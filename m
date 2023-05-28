@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297A7611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:20:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB26FC433EF;
-	Sun, 28 May 2023 19:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DA2611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:20:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E62EC433D2;
+	Sun, 28 May 2023 19:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301613;
-	bh=RdySPeVJRC1Kiq69KN3zyT/FG7T8LN/hOOLfj/zqKQg=;
+	s=korg; t=1685301615;
+	bh=Jk04oLCR4uxu0mnexxQZDSDcwfLJI52lvp18/Wrop24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LW8F2ipr5ao8d/1/z5lKiQerFkQQ2IqYukIQqAVCQaduHc7v9D27Dp3cyRJ62lEmz
-	 Zk0fcRCed96SVa2URAQcgNv4bHvDf3AWsbWjzEQQ+6Fa6UIRK3bWAnWLY4TAHF6rH8
-	 U45IJHQtwFpDB1ZPqrg7CYyWA4fq3dLtxq3xqnCA=
+	b=m+84g2jtBJXSXPfYP+hdXh2EInP9zGYIDnn11vDr+oFeTIypDPCjYPdaf2rAndDbR
+	 V9eWcbQhXYQooEcwfsJ94mTxKEzUkg4nWDi6xjIcKVb7sq44tu54Nm9+n9DLuSYpnD
+	 Ox+drmwMMBirPhRba34iBUiE2RZp3m08pkVKqiAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jslaby@suse.cz>,
+	stable <stable@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	George Kennedy <george.kennedy@oracle.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 099/132] vc_screen: rewrite vcs_size to accept vc, not inode
-Date: Sun, 28 May 2023 20:10:38 +0100
-Message-Id: <20230528190836.689282105@linuxfoundation.org>
+Subject: [PATCH 4.19 100/132] vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF
+Date: Sun, 28 May 2023 20:10:39 +0100
+Message-Id: <20230528190836.727468203@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -34,124 +37,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby <jslaby@suse.cz>
+From: George Kennedy <george.kennedy@oracle.com>
 
-[ Upstream commit 71d4abfab322e827a75304431fe0fad3c805cb80 ]
+[ Upstream commit 8fb9ea65c9d1338b0d2bb0a9122dc942cdd32357 ]
 
-It is weird to fetch the information from the inode over and over. Read
-and write already have the needed information, so rewrite vcs_size to
-accept a vc, attr and unicode and adapt vcs_lseek to that.
+After a call to console_unlock() in vcs_write() the vc_data struct can be
+freed by vc_port_destruct(). Because of that, the struct vc_data pointer
+must be reloaded in the while loop in vcs_write() after console_lock() to
+avoid a UAF when vcs_size() is called.
 
-Also make sure all sites check the return value of vcs_size for errors.
+Syzkaller reported a UAF in vcs_size().
 
-And document it using kernel-doc.
+BUG: KASAN: slab-use-after-free in vcs_size (drivers/tty/vt/vc_screen.c:215)
+Read of size 4 at addr ffff8880beab89a8 by task repro_vcs_size/4119
 
-Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-Link: https://lore.kernel.org/r/20200818085706.12163-5-jslaby@suse.cz
+Call Trace:
+ <TASK>
+__asan_report_load4_noabort (mm/kasan/report_generic.c:380)
+vcs_size (drivers/tty/vt/vc_screen.c:215)
+vcs_write (drivers/tty/vt/vc_screen.c:664)
+vfs_write (fs/read_write.c:582 fs/read_write.c:564)
+...
+ <TASK>
+
+Allocated by task 1213:
+kmalloc_trace (mm/slab_common.c:1064)
+vc_allocate (./include/linux/slab.h:559 ./include/linux/slab.h:680
+    drivers/tty/vt/vt.c:1078 drivers/tty/vt/vt.c:1058)
+con_install (drivers/tty/vt/vt.c:3334)
+tty_init_dev (drivers/tty/tty_io.c:1303 drivers/tty/tty_io.c:1415
+    drivers/tty/tty_io.c:1392)
+tty_open (drivers/tty/tty_io.c:2082 drivers/tty/tty_io.c:2128)
+chrdev_open (fs/char_dev.c:415)
+do_dentry_open (fs/open.c:921)
+vfs_open (fs/open.c:1052)
+...
+
+Freed by task 4116:
+kfree (mm/slab_common.c:1016)
+vc_port_destruct (drivers/tty/vt/vt.c:1044)
+tty_port_destructor (drivers/tty/tty_port.c:296)
+tty_port_put (drivers/tty/tty_port.c:312)
+vt_disallocate_all (drivers/tty/vt/vt_ioctl.c:662 (discriminator 2))
+vt_ioctl (drivers/tty/vt/vt_ioctl.c:903)
+tty_ioctl (drivers/tty/tty_io.c:2778)
+...
+
+The buggy address belongs to the object at ffff8880beab8800
+ which belongs to the cache kmalloc-1k of size 1024
+The buggy address is located 424 bytes inside of
+ freed 1024-byte region [ffff8880beab8800, ffff8880beab8c00)
+
+The buggy address belongs to the physical page:
+page:00000000afc77580 refcount:1 mapcount:0 mapping:0000000000000000
+    index:0x0 pfn:0xbeab8
+head:00000000afc77580 order:3 entire_mapcount:0 nr_pages_mapped:0
+    pincount:0
+flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
+page_type: 0xffffffff()
+raw: 000fffffc0010200 ffff888100042dc0 ffffea000426de00 dead000000000002
+raw: 0000000000000000 0000000000100010 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff8880beab8880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff8880beab8900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff8880beab8980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                  ^
+ ffff8880beab8a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff8880beab8a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+Disabling lock debugging due to kernel taint
+
+Fixes: ac751efa6a0d ("console: rename acquire/release_console_sem() to console_lock/unlock()")
+Cc: stable <stable@kernel.org>
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/1683889728-10411-1-git-send-email-george.kennedy@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 8fb9ea65c9d1 ("vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vt/vc_screen.c | 46 ++++++++++++++++++++++++--------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ drivers/tty/vt/vc_screen.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/tty/vt/vc_screen.c b/drivers/tty/vt/vc_screen.c
-index 28bc9c70de3ec..5decdbad2d65c 100644
+index 5decdbad2d65c..78ea9b9c64501 100644
 --- a/drivers/tty/vt/vc_screen.c
 +++ b/drivers/tty/vt/vc_screen.c
-@@ -182,39 +182,47 @@ vcs_vc(struct inode *inode, int *viewed)
- 	return vc_cons[currcons].d;
- }
+@@ -504,10 +504,17 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
+ 			}
+ 		}
  
--/*
-- * Returns size for VC carried by inode.
-+/**
-+ * vcs_size -- return size for a VC in @vc
-+ * @vc: which VC
-+ * @attr: does it use attributes?
-+ * @unicode: is it unicode?
-+ *
-  * Must be called with console_lock.
-  */
--static int
--vcs_size(struct inode *inode)
-+static int vcs_size(const struct vc_data *vc, bool attr, bool unicode)
- {
- 	int size;
--	struct vc_data *vc;
- 
- 	WARN_CONSOLE_UNLOCKED();
- 
--	vc = vcs_vc(inode, NULL);
--	if (!vc)
--		return -ENXIO;
--
- 	size = vc->vc_rows * vc->vc_cols;
- 
--	if (use_attributes(inode)) {
--		if (use_unicode(inode))
-+	if (attr) {
-+		if (unicode)
- 			return -EOPNOTSUPP;
--		size = 2*size + HEADER_SIZE;
--	} else if (use_unicode(inode))
-+
-+		size = 2 * size + HEADER_SIZE;
-+	} else if (unicode)
- 		size *= 4;
-+
- 	return size;
- }
- 
- static loff_t vcs_lseek(struct file *file, loff_t offset, int orig)
- {
-+	struct inode *inode = file_inode(file);
-+	struct vc_data *vc;
- 	int size;
- 
- 	console_lock();
--	size = vcs_size(file_inode(file));
-+	vc = vcs_vc(inode, NULL);
-+	if (!vc) {
-+		console_unlock();
-+		return -ENXIO;
-+	}
-+
-+	size = vcs_size(vc, use_attributes(inode), use_unicode(inode));
- 	console_unlock();
- 	if (size < 0)
- 		return size;
-@@ -276,7 +284,7 @@ vcs_read(struct file *file, char __user *buf, size_t count, loff_t *ppos)
- 		 * as copy_to_user at the end of this loop
- 		 * could sleep.
- 		 */
--		size = vcs_size(inode);
-+		size = vcs_size(vc, attr, uni_mode);
- 		if (size < 0) {
- 			ret = size;
- 			break;
-@@ -457,7 +465,11 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
- 	if (!vc)
- 		goto unlock_out;
- 
--	size = vcs_size(inode);
-+	size = vcs_size(vc, attr, false);
-+	if (size < 0) {
-+		ret = size;
-+		goto unlock_out;
-+	}
- 	ret = -EINVAL;
- 	if (pos < 0 || pos > size)
- 		goto unlock_out;
-@@ -496,7 +508,7 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
- 		 * the user buffer, so recheck.
+-		/* The vcs_size might have changed while we slept to grab
+-		 * the user buffer, so recheck.
++		/* The vc might have been freed or vcs_size might have changed
++		 * while we slept to grab the user buffer, so recheck.
  		 * Return data written up to now on failure.
  		 */
--		size = vcs_size(inode);
-+		size = vcs_size(vc, attr, false);
++		vc = vcs_vc(inode, &viewed);
++		if (!vc) {
++			if (written)
++				break;
++			ret = -ENXIO;
++			goto unlock_out;
++		}
+ 		size = vcs_size(vc, attr, false);
  		if (size < 0) {
  			if (written)
- 				break;
 -- 
 2.39.2
 
