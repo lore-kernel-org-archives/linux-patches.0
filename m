@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81BC611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414CEC433EF;
-	Sun, 28 May 2023 19:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4DB611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1D9C433EF;
+	Sun, 28 May 2023 19:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301310;
-	bh=YJEINVjHXav0HLqcmNQGE/KV/xKH+xvCjdy/dQUhkzQ=;
+	s=korg; t=1685301313;
+	bh=raJ7UOvbzEiF6jhLLESVpnSwVJsn0yefrSaGrIGIFZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIyF3FVkxqOeJv61pCjf6GKk+nMx3D5T5u+APRPrrYfxVn/mufbgGG4M+NvUl1IKf
-	 gWxZRRXzi5QSJbu6jWUMnRW/YzFNhTFP5ipESvPOPz0J74CK8GA61CodltmXYM86bq
-	 6WLHdYojhdJdizQAGFeyNeroEgtsGfi01Jkl5eZQ=
+	b=wzcBt7zkwaKZkRK1urIBExBa446755Z2QWQJfW1X+hC8RQBUPfK7dcoIXINoF2eTJ
+	 KReGE8i8q1s+TNengo0OAsdfiXMRM9c5iuv9+DXetNB4j4VFXvsmDMU7Ce915zoLor
+	 0O56U8iar8wwVn3Y8tLaVDcBihT8XhVCtedGhv+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugues ANGUELKOV <hanguelkov@randorisec.fr>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.14 66/86] netfilter: nf_tables: stricter validation of element data
-Date: Sun, 28 May 2023 20:10:40 +0100
-Message-Id: <20230528190831.087932516@linuxfoundation.org>
+	Nikhil Mahale <nmahale@nvidia.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.14 49/86] ALSA: hda: Add NVIDIA codec IDs a3 through a7 to patch table
+Date: Sun, 28 May 2023 20:10:23 +0100
+Message-Id: <20230528190830.419297498@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,44 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Nikhil Mahale <nmahale@nvidia.com>
 
-[ 7e6bc1f6cabcd30aba0b11219d8e01b952eacbb6 ]
+commit dc4f2ccaedddb489a83e7b12ebbdc347272aacc9 upstream.
 
-Make sure element data type and length do not mismatch the one specified
-by the set declaration.
+These IDs are for AD102, AD103, AD104, AD106, and AD107 gpus with
+audio functions that are largely similar to the existing ones.
 
-Fixes: 7d7402642eaf ("netfilter: nf_tables: variable sized set element keys / data")
-Reported-by: Hugues ANGUELKOV <hanguelkov@randorisec.fr>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Tested audio using gnome-settings, over HDMI, DP-SST and DP-MST
+connections on AD106 gpu.
+
+Signed-off-by: Nikhil Mahale <nmahale@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230517090736.15088-1-nmahale@nvidia.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_hdmi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3959,13 +3959,20 @@ static int nft_setelem_parse_data(struct
- 				  struct nft_data *data,
- 				  struct nlattr *attr)
- {
-+	u32 dtype;
- 	int err;
- 
- 	err = nft_data_init(ctx, data, NFT_DATA_VALUE_MAXLEN, desc, attr);
- 	if (err < 0)
- 		return err;
- 
--	if (desc->type != NFT_DATA_VERDICT && desc->len != set->dlen) {
-+	if (set->dtype == NFT_DATA_VERDICT)
-+		dtype = NFT_DATA_VERDICT;
-+	else
-+		dtype = NFT_DATA_VALUE;
-+
-+	if (dtype != desc->type ||
-+	    set->dlen != desc->len) {
- 		nft_data_release(data, desc->type);
- 		return -EINVAL;
- 	}
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -3889,6 +3889,11 @@ HDA_CODEC_ENTRY(0x10de009d, "GPU 9d HDMI
+ HDA_CODEC_ENTRY(0x10de009e, "GPU 9e HDMI/DP",	patch_nvhdmi),
+ HDA_CODEC_ENTRY(0x10de009f, "GPU 9f HDMI/DP",	patch_nvhdmi),
+ HDA_CODEC_ENTRY(0x10de00a0, "GPU a0 HDMI/DP",	patch_nvhdmi),
++HDA_CODEC_ENTRY(0x10de00a3, "GPU a3 HDMI/DP",	patch_nvhdmi),
++HDA_CODEC_ENTRY(0x10de00a4, "GPU a4 HDMI/DP",	patch_nvhdmi),
++HDA_CODEC_ENTRY(0x10de00a5, "GPU a5 HDMI/DP",	patch_nvhdmi),
++HDA_CODEC_ENTRY(0x10de00a6, "GPU a6 HDMI/DP",	patch_nvhdmi),
++HDA_CODEC_ENTRY(0x10de00a7, "GPU a7 HDMI/DP",	patch_nvhdmi),
+ HDA_CODEC_ENTRY(0x10de8001, "MCP73 HDMI",	patch_nvhdmi_2ch),
+ HDA_CODEC_ENTRY(0x10de8067, "MCP67/68 HDMI",	patch_nvhdmi_2ch),
+ HDA_CODEC_ENTRY(0x11069f80, "VX900 HDMI/DP",	patch_via_hdmi),
 
 
