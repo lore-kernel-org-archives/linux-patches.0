@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31882569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532C6C433EF;
-	Sun, 28 May 2023 19:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3200D569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06FEC433D2;
+	Sun, 28 May 2023 19:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302358;
-	bh=NV1TH6hlbzc3g1jriiJ3ketLS5xIsDJhOAFWfNDmhVk=;
+	s=korg; t=1685302361;
+	bh=tlN1MXKmvWwtwLomffp7nqQLqUEEJ6ofhs2tEj/TMlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xs6YPZDcJSePZuEzifVD4Oxn9CJuIFJ2cvY9pSdLA40i7XBVE5V6uWw8W3TARwY/B
-	 1ranWrDT8FosnJggiDuoMRLft0q8maOPs9q+Yk2RYmbuxfcepWLp9B1f1VoG48tB15
-	 DdAMBBmjRtMDXr0R+lGD/FbbuxLopiHq5RSBaONg=
+	b=eIXI7QVkBSfh4l8sqcVrB7I3bWusLYEuXDp9wLS9yXUDSiRDf0NE9M1nOfOeFGNe2
+	 r6lmT064xaO5gxpshpQAMQHT3PpaaKz/bkN114DPkEyS/+SbD/I5n7KQXtUYPv6/c/
+	 AwyMKFOSfmXssDV/G9ioDOxjdpwRQSb0HwRH3REw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.3 103/127] cxl: Wait Memory_Info_Valid before access memory related info
-Date: Sun, 28 May 2023 20:11:19 +0100
-Message-Id: <20230528190839.630456414@linuxfoundation.org>
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.3 104/127] cxl: Move cxl_await_media_ready() to before capacity info retrieval
+Date: Sun, 28 May 2023 20:11:20 +0100
+Message-Id: <20230528190839.661683140@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -37,146 +37,143 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-commit ce17ad0d54985e2595a3e615fda31df61808a08c upstream.
+commit e764f12208b99ac7892c4e3f6bf88d71ca71036f upstream.
 
-The Memory_Info_Valid bit (CXL 3.0 8.1.3.8.2) indicates that the CXL
-Range Size High and Size Low registers are valid. The bit must be set
-within 1 second of reset deassertion to the device. Check valid bit
-before we check the Memory_Active bit when waiting for
-cxl_await_media_ready() to ensure that the memory info is valid for
-consumption. Also ensures both DVSEC ranges 1 and 2 are ready if DVSEC
-Capability indicates they are both supported.
+Move cxl_await_media_ready() to cxl_pci probe before driver starts issuing
+IDENTIFY and retrieving memory device information to ensure that the
+device is ready to provide the information. Allow cxl_pci_probe() to succeed
+even if media is not ready. Cache the media failure in cxlds and don't ask
+the device for any media information.
 
-Fixes: 523e594d9cc0 ("cxl/pci: Implement wait for media active")
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+The rationale for proceeding in the !media_ready case is to allow for
+mailbox operations to interrogate and/or remediate the device. After
+media is repaired then rebinding the cxl_pci driver is expected to
+restart the capacity scan.
+
+Suggested-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: b39cb1052a5c ("cxl/mem: Register CXL memX devices")
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/168444687469.3134781.11033518965387297327.stgit@djiang5-mobl3
+Link: https://lore.kernel.org/r/168445310026.3251520.8124296540679268206.stgit@djiang5-mobl3
+[djbw: fixup cxl_test]
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/pci.c |   85 +++++++++++++++++++++++++++++++++++++++++++------
- drivers/cxl/cxlpci.h   |    2 +
- 2 files changed, 78 insertions(+), 9 deletions(-)
+ drivers/cxl/core/mbox.c      |   15 ++++++++++-----
+ drivers/cxl/cxlmem.h         |    2 ++
+ drivers/cxl/mem.c            |    3 +++
+ drivers/cxl/pci.c            |    6 ++++++
+ drivers/cxl/port.c           |    6 ------
+ tools/testing/cxl/test/mem.c |    1 +
+ 6 files changed, 22 insertions(+), 11 deletions(-)
 
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -101,23 +101,57 @@ int devm_cxl_port_enumerate_dports(struc
- }
- EXPORT_SYMBOL_NS_GPL(devm_cxl_port_enumerate_dports, CXL);
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -984,7 +984,7 @@ static int cxl_mem_get_partition_info(st
+  * cxl_dev_state_identify() - Send the IDENTIFY command to the device.
+  * @cxlds: The device data for the operation
+  *
+- * Return: 0 if identify was executed successfully.
++ * Return: 0 if identify was executed successfully or media not ready.
+  *
+  * This will dispatch the identify command to the device and on success populate
+  * structures to be exported to sysfs.
+@@ -996,6 +996,9 @@ int cxl_dev_state_identify(struct cxl_de
+ 	struct cxl_mbox_cmd mbox_cmd;
+ 	int rc;
  
--/*
-- * Wait up to @media_ready_timeout for the device to report memory
-- * active.
-- */
--int cxl_await_media_ready(struct cxl_dev_state *cxlds)
-+static int cxl_dvsec_mem_range_valid(struct cxl_dev_state *cxlds, int id)
-+{
-+	struct pci_dev *pdev = to_pci_dev(cxlds->dev);
-+	int d = cxlds->cxl_dvsec;
-+	bool valid = false;
-+	int rc, i;
-+	u32 temp;
++	if (!cxlds->media_ready)
++		return 0;
 +
-+	if (id > CXL_DVSEC_RANGE_MAX)
-+		return -EINVAL;
-+
-+	/* Check MEM INFO VALID bit first, give up after 1s */
-+	i = 1;
-+	do {
-+		rc = pci_read_config_dword(pdev,
-+					   d + CXL_DVSEC_RANGE_SIZE_LOW(id),
-+					   &temp);
-+		if (rc)
-+			return rc;
-+
-+		valid = FIELD_GET(CXL_DVSEC_MEM_INFO_VALID, temp);
-+		if (valid)
-+			break;
-+		msleep(1000);
-+	} while (i--);
-+
-+	if (!valid) {
-+		dev_err(&pdev->dev,
-+			"Timeout awaiting memory range %d valid after 1s.\n",
-+			id);
-+		return -ETIMEDOUT;
-+	}
-+
-+	return 0;
-+}
-+
-+static int cxl_dvsec_mem_range_active(struct cxl_dev_state *cxlds, int id)
- {
- 	struct pci_dev *pdev = to_pci_dev(cxlds->dev);
- 	int d = cxlds->cxl_dvsec;
- 	bool active = false;
--	u64 md_status;
- 	int rc, i;
-+	u32 temp;
- 
--	for (i = media_ready_timeout; i; i--) {
--		u32 temp;
-+	if (id > CXL_DVSEC_RANGE_MAX)
-+		return -EINVAL;
- 
-+	/* Check MEM ACTIVE bit, up to 60s timeout by default */
-+	for (i = media_ready_timeout; i; i--) {
- 		rc = pci_read_config_dword(
--			pdev, d + CXL_DVSEC_RANGE_SIZE_LOW(0), &temp);
-+			pdev, d + CXL_DVSEC_RANGE_SIZE_LOW(id), &temp);
- 		if (rc)
- 			return rc;
- 
-@@ -134,6 +168,39 @@ int cxl_await_media_ready(struct cxl_dev
- 		return -ETIMEDOUT;
+ 	mbox_cmd = (struct cxl_mbox_cmd) {
+ 		.opcode = CXL_MBOX_OP_IDENTIFY,
+ 		.size_out = sizeof(id),
+@@ -1065,10 +1068,12 @@ int cxl_mem_create_range_info(struct cxl
+ 				   cxlds->persistent_only_bytes, "pmem");
  	}
  
-+	return 0;
-+}
-+
-+/*
-+ * Wait up to @media_ready_timeout for the device to report memory
-+ * active.
-+ */
-+int cxl_await_media_ready(struct cxl_dev_state *cxlds)
-+{
-+	struct pci_dev *pdev = to_pci_dev(cxlds->dev);
-+	int d = cxlds->cxl_dvsec;
-+	int rc, i, hdm_count;
-+	u64 md_status;
-+	u16 cap;
-+
-+	rc = pci_read_config_word(pdev,
-+				  d + CXL_DVSEC_CAP_OFFSET, &cap);
-+	if (rc)
-+		return rc;
-+
-+	hdm_count = FIELD_GET(CXL_DVSEC_HDM_COUNT_MASK, cap);
-+	for (i = 0; i < hdm_count; i++) {
-+		rc = cxl_dvsec_mem_range_valid(cxlds, i);
-+		if (rc)
+-	rc = cxl_mem_get_partition_info(cxlds);
+-	if (rc) {
+-		dev_err(dev, "Failed to query partition information\n");
+-		return rc;
++	if (cxlds->media_ready) {
++		rc = cxl_mem_get_partition_info(cxlds);
++		if (rc) {
++			dev_err(dev, "Failed to query partition information\n");
 +			return rc;
-+	}
-+
-+	for (i = 0; i < hdm_count; i++) {
-+		rc = cxl_dvsec_mem_range_active(cxlds, i);
-+		if (rc)
-+			return rc;
-+	}
-+
- 	md_status = readq(cxlds->regs.memdev + CXLMDEV_STATUS_OFFSET);
- 	if (!CXLMDEV_READY(md_status))
- 		return -EIO;
---- a/drivers/cxl/cxlpci.h
-+++ b/drivers/cxl/cxlpci.h
-@@ -31,6 +31,8 @@
- #define   CXL_DVSEC_RANGE_BASE_LOW(i)	(0x24 + (i * 0x10))
- #define     CXL_DVSEC_MEM_BASE_LOW_MASK	GENMASK(31, 28)
++		}
+ 	}
  
-+#define CXL_DVSEC_RANGE_MAX		2
-+
- /* CXL 2.0 8.1.4: Non-CXL Function Map DVSEC */
- #define CXL_DVSEC_FUNCTION_MAP					2
+ 	rc = add_dpa_res(dev, &cxlds->dpa_res, &cxlds->ram_res, 0,
+--- a/drivers/cxl/cxlmem.h
++++ b/drivers/cxl/cxlmem.h
+@@ -227,6 +227,7 @@ struct cxl_event_state {
+  * @regs: Parsed register blocks
+  * @cxl_dvsec: Offset to the PCIe device DVSEC
+  * @rcd: operating in RCD mode (CXL 3.0 9.11.8 CXL Devices Attached to an RCH)
++ * @media_ready: Indicate whether the device media is usable
+  * @payload_size: Size of space for payload
+  *                (CXL 2.0 8.2.8.4.3 Mailbox Capabilities Register)
+  * @lsa_size: Size of Label Storage Area
+@@ -264,6 +265,7 @@ struct cxl_dev_state {
+ 	int cxl_dvsec;
  
+ 	bool rcd;
++	bool media_ready;
+ 	size_t payload_size;
+ 	size_t lsa_size;
+ 	struct mutex mbox_mutex; /* Protects device mailbox and firmware */
+--- a/drivers/cxl/mem.c
++++ b/drivers/cxl/mem.c
+@@ -104,6 +104,9 @@ static int cxl_mem_probe(struct device *
+ 	struct dentry *dentry;
+ 	int rc;
+ 
++	if (!cxlds->media_ready)
++		return -EBUSY;
++
+ 	/*
+ 	 * Someone is trying to reattach this device after it lost its port
+ 	 * connection (an endpoint port previously registered by this memdev was
+--- a/drivers/cxl/pci.c
++++ b/drivers/cxl/pci.c
+@@ -757,6 +757,12 @@ static int cxl_pci_probe(struct pci_dev
+ 	if (rc)
+ 		dev_dbg(&pdev->dev, "Failed to map RAS capability.\n");
+ 
++	rc = cxl_await_media_ready(cxlds);
++	if (rc == 0)
++		cxlds->media_ready = true;
++	else
++		dev_warn(&pdev->dev, "Media not active (%d)\n", rc);
++
+ 	rc = cxl_pci_setup_mailbox(cxlds);
+ 	if (rc)
+ 		return rc;
+--- a/drivers/cxl/port.c
++++ b/drivers/cxl/port.c
+@@ -117,12 +117,6 @@ static int cxl_endpoint_port_probe(struc
+ 	if (rc)
+ 		return rc;
+ 
+-	rc = cxl_await_media_ready(cxlds);
+-	if (rc) {
+-		dev_err(&port->dev, "Media not active (%d)\n", rc);
+-		return rc;
+-	}
+-
+ 	rc = devm_cxl_enumerate_decoders(cxlhdm, &info);
+ 	if (rc)
+ 		return rc;
+--- a/tools/testing/cxl/test/mem.c
++++ b/tools/testing/cxl/test/mem.c
+@@ -1010,6 +1010,7 @@ static int cxl_mock_mem_probe(struct pla
+ 	if (rc)
+ 		return rc;
+ 
++	cxlds->media_ready = true;
+ 	rc = cxl_dev_state_identify(cxlds);
+ 	if (rc)
+ 		return rc;
 
 
