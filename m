@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FEA611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:40:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60105C433EF;
-	Sun, 28 May 2023 19:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA01611B;
+	Sun, 28 May 2023 19:40:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE60C433A0;
+	Sun, 28 May 2023 19:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302830;
-	bh=IGfIzOT7oHVhB9sFos7UW2q2/INaAcipA+hvzY46HZ0=;
+	s=korg; t=1685302833;
+	bh=Wn4gTbf57LwpDRCHeR+QJZofpS9uoSncq21OSvW/Kd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CylxNqm8z0PT5UXRVeeYE1dN53Qa8JdE+u9ogRGH9AA09vDfc6k6om65BGHpXyD97
-	 avccFwuzAJfD2sNj73xwgX9fk8U1f8phtXiJbwUKzKonhcVXU8wCSIRUzVb1GfqILK
-	 0f2EvHINBiuyjBiDcOIl4V72a7BlNBNdTFxaayoI=
+	b=h/7PKlF3umLug0RyblJ1YEcKVu5L3oxf3eQ8lWIwZkvyNfucnlTyfOgodkdqk2J1H
+	 DGAzlzGkFIvlDglGTrL42AqHnF67VzH/WiyE9gz2DhDHlLOhbRLMQy/U7b6HC1TQIx
+	 t619M+mtryKMTmFWsKSr2D3Ppr/Twl/Kmgy/g2Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	erhard_f@mailbox.org,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/211] drm/amd: Fix an out of bounds error in BIOS parser
-Date: Sun, 28 May 2023 20:09:24 +0100
-Message-Id: <20230528190844.632471127@linuxfoundation.org>
+Subject: [PATCH 5.10 044/211] wifi: ath: Silence memcpy run-time false positive warning
+Date: Sun, 28 May 2023 20:09:25 +0100
+Message-Id: <20230528190844.660748045@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -37,47 +42,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit d116db180decec1b21bba31d2ff495ac4d8e1b83 ]
+[ Upstream commit bfcc8ba45eb87bfaaff900bbad2b87b204899d41 ]
 
-The array is hardcoded to 8 in atomfirmware.h, but firmware provides
-a bigger one sometimes. Deferencing the larger array causes an out
-of bounds error.
+The memcpy() in ath_key_config() was attempting to write across
+neighboring struct members in struct ath_keyval. Introduce a wrapping
+struct_group, kv_values, to be the addressable target of the memcpy
+without overflowing an individual member. Silences the false positive
+run-time warning:
 
-commit 4fc1ba4aa589 ("drm/amd/display: fix array index out of bound error
-in bios parser") fixed some of this, but there are two other cases
-not covered by it.  Fix those as well.
+  memcpy: detected field-spanning write (size 32) of single field "hk.kv_val" at drivers/net/wireless/ath/key.c:506 (size 16)
 
-Reported-by: erhard_f@mailbox.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=214853
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2473
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://bbs.archlinux.org/viewtopic.php?id=282254
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: linux-wireless@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230210054310.never.554-kees@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath.h | 12 +++++++-----
+ drivers/net/wireless/ath/key.c |  2 +-
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-index 930d2b7d34489..9dd41eaf32cb5 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -406,11 +406,8 @@ static enum bp_result get_gpio_i2c_info(
- 	info->i2c_slave_address = record->i2c_slave_addr;
+diff --git a/drivers/net/wireless/ath/ath.h b/drivers/net/wireless/ath/ath.h
+index f083fb9038c36..f02a308a9ffc5 100644
+--- a/drivers/net/wireless/ath/ath.h
++++ b/drivers/net/wireless/ath/ath.h
+@@ -96,11 +96,13 @@ struct ath_keyval {
+ 	u8 kv_type;
+ 	u8 kv_pad;
+ 	u16 kv_len;
+-	u8 kv_val[16]; /* TK */
+-	u8 kv_mic[8]; /* Michael MIC key */
+-	u8 kv_txmic[8]; /* Michael MIC TX key (used only if the hardware
+-			 * supports both MIC keys in the same key cache entry;
+-			 * in that case, kv_mic is the RX key) */
++	struct_group(kv_values,
++		u8 kv_val[16]; /* TK */
++		u8 kv_mic[8]; /* Michael MIC key */
++		u8 kv_txmic[8]; /* Michael MIC TX key (used only if the hardware
++				 * supports both MIC keys in the same key cache entry;
++				 * in that case, kv_mic is the RX key) */
++	);
+ };
  
- 	/* TODO: check how to get register offset for en, Y, etc. */
--	info->gpio_info.clk_a_register_index =
--			le16_to_cpu(
--			header->gpio_pin[table_index].data_a_reg_index);
--	info->gpio_info.clk_a_shift =
--			header->gpio_pin[table_index].gpio_bitshift;
-+	info->gpio_info.clk_a_register_index = le16_to_cpu(pin->data_a_reg_index);
-+	info->gpio_info.clk_a_shift = pin->gpio_bitshift;
+ enum ath_cipher {
+diff --git a/drivers/net/wireless/ath/key.c b/drivers/net/wireless/ath/key.c
+index 61b59a804e308..b7b61d4f02bae 100644
+--- a/drivers/net/wireless/ath/key.c
++++ b/drivers/net/wireless/ath/key.c
+@@ -503,7 +503,7 @@ int ath_key_config(struct ath_common *common,
  
- 	return BP_RESULT_OK;
- }
+ 	hk.kv_len = key->keylen;
+ 	if (key->keylen)
+-		memcpy(hk.kv_val, key->key, key->keylen);
++		memcpy(&hk.kv_values, key->key, key->keylen);
+ 
+ 	if (!(key->flags & IEEE80211_KEY_FLAG_PAIRWISE)) {
+ 		switch (vif->type) {
 -- 
 2.39.2
 
