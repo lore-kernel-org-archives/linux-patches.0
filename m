@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4A3569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3F7C433EF;
-	Sun, 28 May 2023 19:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D055E569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C763C433D2;
+	Sun, 28 May 2023 19:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302102;
-	bh=zhYrvrBl7yOD5XDZWfeYiAAI2oYvw4HPuXoPfLcXYR8=;
+	s=korg; t=1685302104;
+	bh=Xmn2Z8Z9eaFBeK87manB5YuvLxwT+xq9M78+bMOEhGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwr7fLfZoI2m39qhfty3v/RJPUW3R2zz/QedR0IBdWuS35MeTVL7ojPot75KpUq+L
-	 7dwgyEZeta/BIcjqMl0MjQ4XRs1ftLlYbcV2rbCX+ZwUBPg2lHqQJ8QtJ7hsRFaKs3
-	 lv+2jdlrBwrc95JCNqIKzlstFHhrztmijmmQG4Tg=
+	b=s5WkJ49+8vZsw1ebWBICipQriOktpJt5qhd8gp77EVbQAUYFhB3MgozqaGXG+wQ8w
+	 E7DXirk/Ivv7m/2zLfc9bl+mk8wVv4ayQcL5gNLyjbywWGhQKaeIztyOekqStNaBKE
+	 +d6FPRrRiMqmXWzVdXZviUOYz44kLTHBsMb5LaFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Daniel Sneddon <daniel.sneddon@linux.intel.com>
-Subject: [PATCH 5.4 134/161] x86/mm: Avoid incomplete Global INVLPG flushes
-Date: Sun, 28 May 2023 20:10:58 +0100
-Message-Id: <20230528190841.236204773@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.4 125/161] spi: fsl-cpm: Use 16 bit mode for large transfers with even size
+Date: Sun, 28 May 2023 20:10:49 +0100
+Message-Id: <20230528190840.986535211@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,101 +34,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit ce0b15d11ad837fbacc5356941712218e38a0a83 upstream.
+(cherry picked from upstream fc96ec826bced75cc6b9c07a4ac44bbf651337ab)
 
-The INVLPG instruction is used to invalidate TLB entries for a
-specified virtual address.  When PCIDs are enabled, INVLPG is supposed
-to invalidate TLB entries for the specified address for both the
-current PCID *and* Global entries.  (Note: Only kernel mappings set
-Global=1.)
+On CPM, the RISC core is a lot more efficiant when doing transfers
+in 16-bits chunks than in 8-bits chunks, but unfortunately the
+words need to be byte swapped as seen in a previous commit.
 
-Unfortunately, some INVLPG implementations can leave Global
-translations unflushed when PCIDs are enabled.
+So, for large tranfers with an even size, allocate a temporary tx
+buffer and byte-swap data before and after transfer.
 
-As a workaround, never enable PCIDs on affected processors.
+This change allows setting higher speed for transfer. For instance
+on an MPC 8xx (CPM1 comms RISC processor), the documentation tells
+that transfer in byte mode at 1 kbit/s uses 0.200% of CPM load
+at 25 MHz while a word transfer at the same speed uses 0.032%
+of CPM load. This means the speed can be 6 times higher in
+word mode for the same CPM load.
 
-I expect there to eventually be microcode mitigations to replace this
-software workaround.  However, the exact version numbers where that
-will happen are not known today.  Once the version numbers are set in
-stone, the processor list can be tweaked to only disable PCIDs on
-affected processors with affected microcode.
+For the time being, only do it on CPM1 as there must be a
+trade-off between the CPM load reduction and the CPU load required
+to byte swap the data.
 
-Note: if anyone wants a quick fix that doesn't require patching, just
-stick 'nopcid' on your kernel command-line.
-
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/f2e981f20f92dd28983c3949702a09248c23845c.1680371809.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/intel-family.h |    5 +++++
- arch/x86/mm/init.c                  |   25 +++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+ drivers/spi/spi-fsl-cpm.c |   23 +++++++++++++++++++++++
+ drivers/spi/spi-fsl-spi.c |    3 +++
+ 2 files changed, 26 insertions(+)
 
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -96,6 +96,11 @@
- #define	INTEL_FAM6_LAKEFIELD		0x8A
- #define INTEL_FAM6_ALDERLAKE		0x97
- #define INTEL_FAM6_ALDERLAKE_L		0x9A
-+#define INTEL_FAM6_ALDERLAKE_N		0xBE
-+
-+#define INTEL_FAM6_RAPTORLAKE		0xB7
-+#define INTEL_FAM6_RAPTORLAKE_P		0xBA
-+#define INTEL_FAM6_RAPTORLAKE_S		0xBF
+--- a/drivers/spi/spi-fsl-cpm.c
++++ b/drivers/spi/spi-fsl-cpm.c
+@@ -21,6 +21,7 @@
+ #include <linux/spi/spi.h>
+ #include <linux/types.h>
+ #include <linux/platform_device.h>
++#include <linux/byteorder/generic.h>
  
- /* "Small Core" Processors (Atom) */
- 
---- a/arch/x86/mm/init.c
-+++ b/arch/x86/mm/init.c
-@@ -9,6 +9,7 @@
- #include <linux/sched/task.h>
- 
- #include <asm/set_memory.h>
-+#include <asm/cpu_device_id.h>
- #include <asm/e820/api.h>
- #include <asm/init.h>
- #include <asm/page.h>
-@@ -208,6 +209,24 @@ static void __init probe_page_size_mask(
+ #include "spi-fsl-cpm.h"
+ #include "spi-fsl-lib.h"
+@@ -120,6 +121,21 @@ int fsl_spi_cpm_bufs(struct mpc8xxx_spi
+ 		mspi->rx_dma = mspi->dma_dummy_rx;
+ 		mspi->map_rx_dma = 0;
  	}
- }
- 
-+#define INTEL_MATCH(_model) { .vendor  = X86_VENDOR_INTEL,	\
-+			      .family  = 6,			\
-+			      .model = _model,			\
-+			    }
-+/*
-+ * INVLPG may not properly flush Global entries
-+ * on these CPUs when PCIDs are enabled.
-+ */
-+static const struct x86_cpu_id invlpg_miss_ids[] = {
-+	INTEL_MATCH(INTEL_FAM6_ALDERLAKE   ),
-+	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_L ),
-+	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_N ),
-+	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE  ),
-+	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_P),
-+	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_S),
-+	{}
-+};
++	if (t->bits_per_word == 16 && t->tx_buf) {
++		const u16 *src = t->tx_buf;
++		u16 *dst;
++		int i;
 +
- static void setup_pcid(void)
- {
- 	if (!IS_ENABLED(CONFIG_X86_64))
-@@ -216,6 +235,12 @@ static void setup_pcid(void)
- 	if (!boot_cpu_has(X86_FEATURE_PCID))
- 		return;
- 
-+	if (x86_match_cpu(invlpg_miss_ids)) {
-+		pr_info("Incomplete global flushes, disabling PCID");
-+		setup_clear_cpu_cap(X86_FEATURE_PCID);
-+		return;
++		dst = kmalloc(t->len, GFP_KERNEL);
++		if (!dst)
++			return -ENOMEM;
++
++		for (i = 0; i < t->len >> 1; i++)
++			dst[i] = cpu_to_le16p(src + i);
++
++		mspi->tx = dst;
++		mspi->map_tx_dma = 1;
 +	}
+ 
+ 	if (mspi->map_tx_dma) {
+ 		void *nonconst_tx = (void *)mspi->tx; /* shut up gcc */
+@@ -173,6 +189,13 @@ void fsl_spi_cpm_bufs_complete(struct mp
+ 	if (mspi->map_rx_dma)
+ 		dma_unmap_single(dev, mspi->rx_dma, t->len, DMA_FROM_DEVICE);
+ 	mspi->xfer_in_progress = NULL;
 +
- 	if (boot_cpu_has(X86_FEATURE_PGE)) {
- 		/*
- 		 * This can't be cr4_set_bits_and_update_boot() -- the
++	if (t->bits_per_word == 16 && t->rx_buf) {
++		int i;
++
++		for (i = 0; i < t->len; i += 2)
++			le16_to_cpus(t->rx_buf + i);
++	}
+ }
+ EXPORT_SYMBOL_GPL(fsl_spi_cpm_bufs_complete);
+ 
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -369,6 +369,9 @@ static int fsl_spi_do_one_msg(struct spi
+ 				return -EINVAL;
+ 			if (t->bits_per_word == 16 || t->bits_per_word == 32)
+ 				t->bits_per_word = 8; /* pretend its 8 bits */
++			if (t->bits_per_word == 8 && t->len >= 256 &&
++			    (mpc8xxx_spi->flags & SPI_CPM1))
++				t->bits_per_word = 16;
+ 		}
+ 	}
+ 
 
 
