@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F188611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:41:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6CEC433EF;
-	Sun, 28 May 2023 19:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93741611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:41:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F247C433EF;
+	Sun, 28 May 2023 19:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302882;
-	bh=eZWI3dRHsIx1RpAB5HDrNocvVuzqBgfa0egrTSoO9CE=;
+	s=korg; t=1685302884;
+	bh=L09HCa16HlNY9sRK3znjKlX3Ugqny+reixwRKj4fFZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGcJJATiNop1zqtxW7b1Ik7u83Vn8BpXwcJVRMbKMDrow2B0n6t+dIZBxbbGDe/H5
-	 oS9iCYbOg9wyobkhhpfUsxHe+SwmPT1yfNUwyklr9VXBbYRRTNplfcpHKweQPnDGI0
-	 zXiKw2BtMPxtE6d8+aoKo49DkYrI7Tkvx8et5Hdg=
+	b=0lGPDIhW648idOFnR6Se3YRlkfvYJqV/3DeS5so/dEeapX7/n9jy9oxArsbxgbO+O
+	 sp1bPajuVtb9lF8mP1T/BeVef7OkcmwrY0LdavEDgFllh5zftwIQshqsUJX2C8Uel5
+	 JwDVjVxpGyeLoWuiePQkgAqd44LkCoIwtfgKeCGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	syzbot+9519d6b5b79cf7787cf3@syzkaller.appspotmail.com,
+	Min Li <lm0963hack@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 065/211] Bluetooth: hci_bcm: Fall back to getting bdaddr from EFI if not set
-Date: Sun, 28 May 2023 20:09:46 +0100
-Message-Id: <20230528190845.239056831@linuxfoundation.org>
+Subject: [PATCH 5.10 066/211] Bluetooth: L2CAP: fix "bad unlock balance" in l2cap_disconnect_rsp
+Date: Sun, 28 May 2023 20:09:47 +0100
+Message-Id: <20230528190845.264852541@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,111 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Min Li <lm0963hack@gmail.com>
 
-[ Upstream commit 0d218c3642b9ccf71f44987cd03c19320f3bd918 ]
+[ Upstream commit 25e97f7b1866e6b8503be349eeea44bb52d661ce ]
 
-On some devices the BCM Bluetooth adapter does not have a valid bdaddr set.
+conn->chan_lock isn't acquired before l2cap_get_chan_by_scid,
+if l2cap_get_chan_by_scid returns NULL, then 'bad unlock balance'
+is triggered.
 
-btbcm.c currently sets HCI_QUIRK_INVALID_BDADDR to indicate when this is
-the case. But this requires users to manual setup a btaddr, by doing e.g.:
-
-btmgmt -i hci0 public-addr 'B0:F1:EC:82:1D:B3'
-
-Which means that Bluetooth will not work out of the box on such devices.
-To avoid this (where possible) hci_bcm sets: HCI_QUIRK_USE_BDADDR_PROPERTY
-which tries to get the bdaddr from devicetree.
-
-But this only works on devicetree platforms. On UEFI based platforms
-there is a special Broadcom UEFI variable which when present contains
-the devices bdaddr, just like how there is another UEFI variable which
-contains wifi nvram contents including the wifi MAC address.
-
-Add support for getting the bdaddr from this Broadcom UEFI variable,
-so that Bluetooth will work OOTB for users on devices where this
-UEFI variable is present.
-
-This fixes Bluetooth not working on for example Asus T100HA 2-in-1s.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reported-by: syzbot+9519d6b5b79cf7787cf3@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/000000000000894f5f05f95e9f4d@google.com/
+Signed-off-by: Min Li <lm0963hack@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btbcm.c | 47 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 44 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
-index d263eac784daa..636db3b7e470b 100644
---- a/drivers/bluetooth/btbcm.c
-+++ b/drivers/bluetooth/btbcm.c
-@@ -6,6 +6,7 @@
-  *  Copyright (C) 2015  Intel Corporation
-  */
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index f9d2ce9cee369..b85ce276e2a3c 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4689,7 +4689,6 @@ static inline int l2cap_disconnect_rsp(struct l2cap_conn *conn,
  
-+#include <linux/efi.h>
- #include <linux/module.h>
- #include <linux/firmware.h>
- #include <asm/unaligned.h>
-@@ -32,6 +33,43 @@
- /* For kmalloc-ing the fw-name array instead of putting it on the stack */
- typedef char bcm_fw_name[BCM_FW_NAME_LEN];
- 
-+#ifdef CONFIG_EFI
-+static int btbcm_set_bdaddr_from_efi(struct hci_dev *hdev)
-+{
-+	efi_guid_t guid = EFI_GUID(0x74b00bd9, 0x805a, 0x4d61, 0xb5, 0x1f,
-+				   0x43, 0x26, 0x81, 0x23, 0xd1, 0x13);
-+	bdaddr_t efi_bdaddr, bdaddr;
-+	efi_status_t status;
-+	unsigned long len;
-+	int ret;
-+
-+	if (!efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE))
-+		return -EOPNOTSUPP;
-+
-+	len = sizeof(efi_bdaddr);
-+	status = efi.get_variable(L"BDADDR", &guid, NULL, &len, &efi_bdaddr);
-+	if (status != EFI_SUCCESS)
-+		return -ENXIO;
-+
-+	if (len != sizeof(efi_bdaddr))
-+		return -EIO;
-+
-+	baswap(&bdaddr, &efi_bdaddr);
-+
-+	ret = btbcm_set_bdaddr(hdev, &bdaddr);
-+	if (ret)
-+		return ret;
-+
-+	bt_dev_info(hdev, "BCM: Using EFI device address (%pMR)", &bdaddr);
-+	return 0;
-+}
-+#else
-+static int btbcm_set_bdaddr_from_efi(struct hci_dev *hdev)
-+{
-+	return -EOPNOTSUPP;
-+}
-+#endif
-+
- int btbcm_check_bdaddr(struct hci_dev *hdev)
- {
- 	struct hci_rp_read_bd_addr *bda;
-@@ -85,9 +123,12 @@ int btbcm_check_bdaddr(struct hci_dev *hdev)
- 	    !bacmp(&bda->bdaddr, BDADDR_BCM4345C5) ||
- 	    !bacmp(&bda->bdaddr, BDADDR_BCM43430A0) ||
- 	    !bacmp(&bda->bdaddr, BDADDR_BCM43341B)) {
--		bt_dev_info(hdev, "BCM: Using default device address (%pMR)",
--			    &bda->bdaddr);
--		set_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks);
-+		/* Try falling back to BDADDR EFI variable */
-+		if (btbcm_set_bdaddr_from_efi(hdev) != 0) {
-+			bt_dev_info(hdev, "BCM: Using default device address (%pMR)",
-+				    &bda->bdaddr);
-+			set_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks);
-+		}
+ 	chan = l2cap_get_chan_by_scid(conn, scid);
+ 	if (!chan) {
+-		mutex_unlock(&conn->chan_lock);
+ 		return 0;
  	}
  
- 	kfree_skb(skb);
 -- 
 2.39.2
 
