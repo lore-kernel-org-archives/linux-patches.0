@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE7C611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702E7C433D2;
-	Sun, 28 May 2023 19:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA02611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C66C433D2;
+	Sun, 28 May 2023 19:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301761;
-	bh=3XUjR0Yuaid0YY9QqH2MkY2nc4b2+qzTNLaMT3WfB/c=;
+	s=korg; t=1685301764;
+	bh=4LF0XKj7irR7X2JXIKKtAhKxZntiSv1je4UdTmZXwD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+ZWNY00xxFOljiE2L4TnL2UYphhlXC6e4TOQ5DYWmV2Hvu/AwnECjjUcRFCcDwI3
-	 +Pu2cjXdYGiksCk163huAO7zUlLvU+oxvnnKp6ga874Wsvk7T7UJyuuvztLLILtLDr
-	 iLWDAfZQpFODWoP2hbHUTulRVHTaNk9EUYRGrjFs=
+	b=cXy0IDLztMibAe0vZ07fAQVcb48t9g9cN+FFNyh0Oi+FaoPIT6EQkrEDt/fuo6+sp
+	 /G4yHH+xzDR81dxbtyQdmK6g8zqhJIrmhEtgIzIXaqnYWOs+J0R4NYX1bKx9h6XcR2
+	 XLKd8YhKko64CIF1cSHz6noyBr6KG5fU9GSy//F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4fec412f59eba8c01b77@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 025/161] ext2: Check block size validity during mount
-Date: Sun, 28 May 2023 20:09:09 +0100
-Message-Id: <20230528190837.976274357@linuxfoundation.org>
+Subject: [PATCH 5.4 026/161] scsi: lpfc: Prevent lpfc_debugfs_lockstat_write() buffer overflow
+Date: Sun, 28 May 2023 20:09:10 +0100
+Message-Id: <20230528190838.008468811@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,52 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 62aeb94433fcec80241754b70d0d1836d5926b0a ]
+[ Upstream commit c6087b82a9146826564a55c5ca0164cac40348f5 ]
 
-Check that log of block size stored in the superblock has sensible
-value. Otherwise the shift computing the block size can overflow leading
-to undefined behavior.
+A static code analysis tool flagged the possibility of buffer overflow when
+using copy_from_user() for a debugfs entry.
 
-Reported-by: syzbot+4fec412f59eba8c01b77@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Currently, it is possible that copy_from_user() copies more bytes than what
+would fit in the mybuf char array.  Add a min() restriction check between
+sizeof(mybuf) - 1 and nbytes passed from the userspace buffer to protect
+against buffer overflow.
+
+Link: https://lore.kernel.org/r/20230301231626.9621-2-justintee8345@gmail.com
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/ext2.h  | 1 +
- fs/ext2/super.c | 7 +++++++
- 2 files changed, 8 insertions(+)
+ drivers/scsi/lpfc/lpfc_debugfs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext2/ext2.h b/fs/ext2/ext2.h
-index 10ab238de9a65..a89b43d759052 100644
---- a/fs/ext2/ext2.h
-+++ b/fs/ext2/ext2.h
-@@ -177,6 +177,7 @@ static inline struct ext2_sb_info *EXT2_SB(struct super_block *sb)
- #define EXT2_MIN_BLOCK_SIZE		1024
- #define	EXT2_MAX_BLOCK_SIZE		4096
- #define EXT2_MIN_BLOCK_LOG_SIZE		  10
-+#define EXT2_MAX_BLOCK_LOG_SIZE		  16
- #define EXT2_BLOCK_SIZE(s)		((s)->s_blocksize)
- #define	EXT2_ADDR_PER_BLOCK(s)		(EXT2_BLOCK_SIZE(s) / sizeof (__u32))
- #define EXT2_BLOCK_SIZE_BITS(s)		((s)->s_blocksize_bits)
-diff --git a/fs/ext2/super.c b/fs/ext2/super.c
-index 644c83c115bc2..6e8e47871fa26 100644
---- a/fs/ext2/super.c
-+++ b/fs/ext2/super.c
-@@ -967,6 +967,13 @@ static int ext2_fill_super(struct super_block *sb, void *data, int silent)
- 		goto failed_mount;
+diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
+index 69551132f304c..291fccf02d453 100644
+--- a/drivers/scsi/lpfc/lpfc_debugfs.c
++++ b/drivers/scsi/lpfc/lpfc_debugfs.c
+@@ -2046,6 +2046,7 @@ lpfc_debugfs_lockstat_write(struct file *file, const char __user *buf,
+ 	char mybuf[64];
+ 	char *pbuf;
+ 	int i;
++	size_t bsize;
+ 
+ 	/* Protect copy from user */
+ 	if (!access_ok(buf, nbytes))
+@@ -2053,7 +2054,9 @@ lpfc_debugfs_lockstat_write(struct file *file, const char __user *buf,
+ 
+ 	memset(mybuf, 0, sizeof(mybuf));
+ 
+-	if (copy_from_user(mybuf, buf, nbytes))
++	bsize = min(nbytes, (sizeof(mybuf) - 1));
++
++	if (copy_from_user(mybuf, buf, bsize))
+ 		return -EFAULT;
+ 	pbuf = &mybuf[0];
+ 
+@@ -2074,7 +2077,7 @@ lpfc_debugfs_lockstat_write(struct file *file, const char __user *buf,
+ 			qp->lock_conflict.wq_access = 0;
+ 		}
  	}
+-	return nbytes;
++	return bsize;
+ }
+ #endif
  
-+	if (le32_to_cpu(es->s_log_block_size) >
-+	    (EXT2_MAX_BLOCK_LOG_SIZE - BLOCK_SIZE_BITS)) {
-+		ext2_msg(sb, KERN_ERR,
-+			 "Invalid log block size: %u",
-+			 le32_to_cpu(es->s_log_block_size));
-+		goto failed_mount;
-+	}
- 	blocksize = BLOCK_SIZE << le32_to_cpu(sbi->s_es->s_log_block_size);
- 
- 	if (test_opt(sb, DAX)) {
 -- 
 2.39.2
 
