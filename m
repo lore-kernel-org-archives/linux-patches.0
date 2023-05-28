@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7481B569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:31:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007FFC433D2;
-	Sun, 28 May 2023 19:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7156569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:31:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651E0C4339B;
+	Sun, 28 May 2023 19:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302265;
-	bh=i6FBoeECACKt1pvh281YTXRR4k/KDad4V/Zf/tzrb6o=;
+	s=korg; t=1685302267;
+	bh=AUC+80xPv2EzU/2h4Bnsv/x++UyytesuMvmny7AOhfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1tnXajGElTqbU5p0sB254zyoyhONj3pB7dTiRb5uI4cgnzLtoir4ee+vp91U0aw5
-	 44LYeBSyW28ZN2H7C3Mvo7CoBYRZZzteq/7mxJCKnZCQVdArypVLsvOj00RbSfBdFS
-	 mWoOyfj2u7W0/ysPm+j9ze7Ync5UqIrEihCbAD54=
+	b=a2njJ5HGM0/wWV6CIX7SgQlmiR6eKfAkVqKVVYqE7jwfl4JT6gZ7a1N/DZhd2Hpn6
+	 YrP6w1UEb9ThKX+x6v8AGftSy3dxIPhaf20H7y3M8R7A7fxpTRmngJu92Ba/Qavio1
+	 DcGfSn7U/4Kx1pxaAvCoR0IFnxNRpA20bP5zu4tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Brian Foster <bfoster@redhat.com>
-Subject: [PATCH 6.3 037/127] xfs: fix livelock in delayed allocation at ENOSPC
-Date: Sun, 28 May 2023 20:10:13 +0100
-Message-Id: <20230528190837.533619394@linuxfoundation.org>
+	Derick Marks <derick.w.marks@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.3 038/127] cxl/port: Enable the HDM decoder capability for switch ports
+Date: Sun, 28 May 2023 20:10:14 +0100
+Message-Id: <20230528190837.563914405@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -35,54 +35,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 9419092fb2630c30e4ffeb9ef61007ef0c61827a upstream.
+commit eb0764b822b9b26880b28ccb9100b2983e01bc17 upstream.
 
-On a filesystem with a non-zero stripe unit and a large sequential
-write, delayed allocation will set a minimum allocation length of
-the stripe unit. If allocation fails because there are no extents
-long enough for an aligned minlen allocation, it is supposed to
-fall back to unaligned allocation which allows single block extents
-to be allocated.
+Derick noticed, when testing hot plug, that hot-add behaves nominally
+after a removal. However, if the hot-add is done without a prior
+removal, CXL.mem accesses fail. It turns out that the original
+implementation of the port driver and region programming wrongly assumed
+that platform-firmware always enables the host-bridge HDM decoder
+capability. Add support turning on switch-level HDM decoders in the case
+where platform-firmware has not.
 
-When the allocator code was rewritting in the 6.3 cycle, this
-fallback was broken - the old code used args->fsbno as the both the
-allocation target and the allocation result, the new code passes the
-target as a separate parameter. The conversion didn't handle the
-aligned->unaligned fallback path correctly - it reset args->fsbno to
-the target fsbno on failure which broke allocation failure detection
-in the high level code and so it never fell back to unaligned
-allocations.
+The implementation is careful to only arrange for the enable to be
+undone if the current instance of the driver was the one that did the
+enable. This is to interoperate with platform-firmware that may expect
+CXL.mem to remain active after the driver is shutdown. This comes at the
+cost of potentially not shutting down the enable on kexec flows, but it
+is mitigated by the fact that the related HDM decoders still need to be
+enabled on an individual basis.
 
-This resulted in a loop in writeback trying to allocate an aligned
-block, getting a false positive success, trying to insert the result
-in the BMBT. This did nothing because the extent already was in the
-BMBT (merge results in an unchanged extent) and so it returned the
-prior extent to the conversion code as the current iomap.
-
-Because the iomap returned didn't cover the offset we tried to map,
-xfs_convert_blocks() then retries the allocation, which fails in the
-same way and now we have a livelock.
-
-Reported-and-tested-by: Brian Foster <bfoster@redhat.com>
-Fixes: 85843327094f ("xfs: factor xfs_bmap_btalloc()")
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: <stable@vger.kernel.org>
+Reported-by: Derick Marks <derick.w.marks@intel.com>
+Fixes: 54cdbf845cf7 ("cxl/port: Add a driver for 'struct cxl_port' objects")
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://lore.kernel.org/r/168437998331.403037.15719879757678389217.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_bmap.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/cxl/core/pci.c        |   27 +++++++++++++++++++++++----
+ drivers/cxl/cxl.h             |    1 +
+ drivers/cxl/port.c            |   14 +++++++++-----
+ tools/testing/cxl/Kbuild      |    1 +
+ tools/testing/cxl/test/mock.c |   15 +++++++++++++++
+ 5 files changed, 49 insertions(+), 9 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_bmap.c
-+++ b/fs/xfs/libxfs/xfs_bmap.c
-@@ -3505,7 +3505,6 @@ xfs_bmap_btalloc_at_eof(
- 	 * original non-aligned state so the caller can proceed on allocation
- 	 * failure as if this function was never called.
- 	 */
--	args->fsbno = ap->blkno;
- 	args->alignment = 1;
- 	return 0;
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -241,17 +241,36 @@ static void disable_hdm(void *_cxlhdm)
+ 	       hdm + CXL_HDM_DECODER_CTRL_OFFSET);
  }
+ 
+-static int devm_cxl_enable_hdm(struct device *host, struct cxl_hdm *cxlhdm)
++int devm_cxl_enable_hdm(struct cxl_port *port, struct cxl_hdm *cxlhdm)
+ {
+-	void __iomem *hdm = cxlhdm->regs.hdm_decoder;
++	void __iomem *hdm;
+ 	u32 global_ctrl;
+ 
++	/*
++	 * If the hdm capability was not mapped there is nothing to enable and
++	 * the caller is responsible for what happens next.  For example,
++	 * emulate a passthrough decoder.
++	 */
++	if (IS_ERR(cxlhdm))
++		return 0;
++
++	hdm = cxlhdm->regs.hdm_decoder;
+ 	global_ctrl = readl(hdm + CXL_HDM_DECODER_CTRL_OFFSET);
++
++	/*
++	 * If the HDM decoder capability was enabled on entry, skip
++	 * registering disable_hdm() since this decode capability may be
++	 * owned by platform firmware.
++	 */
++	if (global_ctrl & CXL_HDM_DECODER_ENABLE)
++		return 0;
++
+ 	writel(global_ctrl | CXL_HDM_DECODER_ENABLE,
+ 	       hdm + CXL_HDM_DECODER_CTRL_OFFSET);
+ 
+-	return devm_add_action_or_reset(host, disable_hdm, cxlhdm);
++	return devm_add_action_or_reset(&port->dev, disable_hdm, cxlhdm);
+ }
++EXPORT_SYMBOL_NS_GPL(devm_cxl_enable_hdm, CXL);
+ 
+ int cxl_dvsec_rr_decode(struct device *dev, int d,
+ 			struct cxl_endpoint_dvsec_info *info)
+@@ -425,7 +444,7 @@ int cxl_hdm_decode_init(struct cxl_dev_s
+ 	if (info->mem_enabled)
+ 		return 0;
+ 
+-	rc = devm_cxl_enable_hdm(&port->dev, cxlhdm);
++	rc = devm_cxl_enable_hdm(port, cxlhdm);
+ 	if (rc)
+ 		return rc;
+ 
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -710,6 +710,7 @@ struct cxl_endpoint_dvsec_info {
+ struct cxl_hdm;
+ struct cxl_hdm *devm_cxl_setup_hdm(struct cxl_port *port,
+ 				   struct cxl_endpoint_dvsec_info *info);
++int devm_cxl_enable_hdm(struct cxl_port *port, struct cxl_hdm *cxlhdm);
+ int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm,
+ 				struct cxl_endpoint_dvsec_info *info);
+ int devm_cxl_add_passthrough_decoder(struct cxl_port *port);
+--- a/drivers/cxl/port.c
++++ b/drivers/cxl/port.c
+@@ -60,13 +60,17 @@ static int discover_region(struct device
+ static int cxl_switch_port_probe(struct cxl_port *port)
+ {
+ 	struct cxl_hdm *cxlhdm;
+-	int rc;
++	int rc, nr_dports;
+ 
+-	rc = devm_cxl_port_enumerate_dports(port);
+-	if (rc < 0)
+-		return rc;
++	nr_dports = devm_cxl_port_enumerate_dports(port);
++	if (nr_dports < 0)
++		return nr_dports;
+ 
+ 	cxlhdm = devm_cxl_setup_hdm(port, NULL);
++	rc = devm_cxl_enable_hdm(port, cxlhdm);
++	if (rc)
++		return rc;
++
+ 	if (!IS_ERR(cxlhdm))
+ 		return devm_cxl_enumerate_decoders(cxlhdm, NULL);
+ 
+@@ -75,7 +79,7 @@ static int cxl_switch_port_probe(struct
+ 		return PTR_ERR(cxlhdm);
+ 	}
+ 
+-	if (rc == 1) {
++	if (nr_dports == 1) {
+ 		dev_dbg(&port->dev, "Fallback to passthrough decoder\n");
+ 		return devm_cxl_add_passthrough_decoder(port);
+ 	}
+--- a/tools/testing/cxl/Kbuild
++++ b/tools/testing/cxl/Kbuild
+@@ -6,6 +6,7 @@ ldflags-y += --wrap=acpi_pci_find_root
+ ldflags-y += --wrap=nvdimm_bus_register
+ ldflags-y += --wrap=devm_cxl_port_enumerate_dports
+ ldflags-y += --wrap=devm_cxl_setup_hdm
++ldflags-y += --wrap=devm_cxl_enable_hdm
+ ldflags-y += --wrap=devm_cxl_add_passthrough_decoder
+ ldflags-y += --wrap=devm_cxl_enumerate_decoders
+ ldflags-y += --wrap=cxl_await_media_ready
+--- a/tools/testing/cxl/test/mock.c
++++ b/tools/testing/cxl/test/mock.c
+@@ -149,6 +149,21 @@ struct cxl_hdm *__wrap_devm_cxl_setup_hd
+ }
+ EXPORT_SYMBOL_NS_GPL(__wrap_devm_cxl_setup_hdm, CXL);
+ 
++int __wrap_devm_cxl_enable_hdm(struct cxl_port *port, struct cxl_hdm *cxlhdm)
++{
++	int index, rc;
++	struct cxl_mock_ops *ops = get_cxl_mock_ops(&index);
++
++	if (ops && ops->is_mock_port(port->uport))
++		rc = 0;
++	else
++		rc = devm_cxl_enable_hdm(port, cxlhdm);
++	put_cxl_mock_ops(index);
++
++	return rc;
++}
++EXPORT_SYMBOL_NS_GPL(__wrap_devm_cxl_enable_hdm, CXL);
++
+ int __wrap_devm_cxl_add_passthrough_decoder(struct cxl_port *port)
+ {
+ 	int rc, index;
 
 
