@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE217611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B433C433EF;
-	Sun, 28 May 2023 19:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56D2611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC5CC433D2;
+	Sun, 28 May 2023 19:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303113;
-	bh=erdNnoZgfd/iNtqADvIk3GyLIYvRZ/U+gVLnY8eI2cQ=;
+	s=korg; t=1685303116;
+	bh=svX6p8RpOfbWOOhKfH6X87MPrUCKFo6yKVCFjmgu7FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAF44KKVOwKyDgWjgJLC/fVKPv5x+EGKAYSnW+23YLWQfrnpc9s3zzdaNIfZQz0f/
-	 En+Vq8cAgDCF1p90NvCvewqNdgzZ2pnld6ahw9gkL5UpYbfnvMH/8ASrSfENkPAXSJ
-	 sUV7CvcVXlB6LPvbD5oMuhLsaN6kzCcOrhRUK3i4=
+	b=HdXYfIr9nZzvR+eSQwS9VM9Me8cnm1rvLo2X4eT/1pTP1y7pOLFCsGgIZx9ZDL1Y3
+	 Bv8+CypDZ4g0zVWydNpx4mczx/5uuDrLv+Wvm6hOxCO15Cjn+BGd8kBHl8PeVHgQH1
+	 TDc/aHJPbRH6ft7Sp6yAg5j/6+5BgloxK1K0fjdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Marek Vasut <marex@denx.de>
-Subject: [PATCH 5.10 160/211] ARM: dts: stm32: fix AV96 board SAI2 pin muxing on stm32mp15
-Date: Sun, 28 May 2023 20:11:21 +0100
-Message-Id: <20230528190847.479320747@linuxfoundation.org>
+	Greg Thelen <gthelen@google.com>
+Subject: [PATCH 5.10 161/211] writeback, cgroup: remove extra percpu_ref_exit()
+Date: Sun, 28 May 2023 20:11:22 +0100
+Message-Id: <20230528190847.502997819@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,33 +33,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Moysan <olivier.moysan@foss.st.com>
+From: Greg Thelen <gthelen@google.com>
 
-commit ee2aacb6f3a901a95b1dd68964b69c92cdbbf213 upstream.
+5.10 stable commit 2b00b2a0e642 ("writeback, cgroup: fix null-ptr-deref
+write in bdi_split_work_to_wbs") is a backport of upstream 6.3 commit
+1ba1199ec574.
 
-Replace sai2a-2 node name by sai2a-sleep-2, to avoid name
-duplication.
+In the 5.10 stable commit backport percpu_ref_exit() is called twice:
+first in cgwb_release_workfn() and then in cgwb_free_rcu(). The 2nd call
+is benign as percpu_ref_exit() internally detects there's nothing to do.
 
-Fixes: 1a9a9d226f0f ("ARM: dts: stm32: fix AV96 board SAI2 pin muxing on stm32mp15")
+This fixes an non-upstream issue that only applies to 5.10.y.
 
-Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: Marek Vasut <marex@denx.de>
+Fixes: 2b00b2a0e642 ("writeback, cgroup: fix null-ptr-deref write in bdi_split_work_to_wbs")
+Signed-off-by: Greg Thelen <gthelen@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/stm32mp15-pinctrl.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/backing-dev.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi
-@@ -1102,7 +1102,7 @@
- 		};
- 	};
+--- a/mm/backing-dev.c
++++ b/mm/backing-dev.c
+@@ -404,7 +404,6 @@ static void cgwb_release_workfn(struct w
+ 	blkcg_unpin_online(blkcg);
  
--	sai2a_sleep_pins_c: sai2a-2 {
-+	sai2a_sleep_pins_c: sai2a-sleep-2 {
- 		pins {
- 			pinmux = <STM32_PINMUX('D', 13, ANALOG)>, /* SAI2_SCK_A */
- 				 <STM32_PINMUX('D', 11, ANALOG)>, /* SAI2_SD_A */
+ 	fprop_local_destroy_percpu(&wb->memcg_completions);
+-	percpu_ref_exit(&wb->refcnt);
+ 	wb_exit(wb);
+ 	call_rcu(&wb->rcu, cgwb_free_rcu);
+ }
 
 
