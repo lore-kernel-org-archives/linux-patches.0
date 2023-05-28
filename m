@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444A5611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70AEC433EF;
-	Sun, 28 May 2023 19:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB4F611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6B2C433D2;
+	Sun, 28 May 2023 19:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302775;
-	bh=2i5rl0T7r5dQ0zNhfbtTJGobJvi98+IV0QbPBzKLZBM=;
+	s=korg; t=1685302777;
+	bh=+xuEf/1ExUTyBa98kx2TRpnYGYVcduMSKDC5qkBlMlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yT/fes3WChXNJPTcL3afYtkPrCC8psVHuSfHORhoDbF9OnlaC1ySr8eBxh0j7xufD
-	 idqJnKeo9Piy9I2O8K/q/kjKYLGnSNPg7ZytuMiQe9BR8jesY/KDXxSN83iWiLYrAk
-	 laIeEVFHmhmn/sEj+zu11PRl69JaJA/oa29g+Frk=
+	b=qdP/O796XywayR0IZ2f7GSjdSQDHBotwr6f4iTIyPBtscznJRavrJmvBOOup2wQa7
+	 a1aP0LHgx5tqWHcIPpGFuadn2NeVDHO1s06TXh0z6VmAzt4UFg7blSYnU7BQ/ifw4D
+	 b/Ag9EaxRc5Td49J+8wm0Xdi6PQOIC21Iaps3u4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongjie Li <u202112089@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Helge Deller <deller@gmx.de>,
+	Austin Kim <austindh.kim@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/211] fbdev: arcfb: Fix error handling in arcfb_probe()
-Date: Sun, 28 May 2023 20:09:01 +0100
-Message-Id: <20230528190844.028690598@linuxfoundation.org>
+Subject: [PATCH 5.10 021/211] ext4: remove an unused variable warning with CONFIG_QUOTA=n
+Date: Sun, 28 May 2023 20:09:02 +0100
+Message-Id: <20230528190844.051359664@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,79 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zongjie Li <u202112089@hust.edu.cn>
+From: Austin Kim <austindh.kim@gmail.com>
 
-[ Upstream commit 5a6bef734247c7a8c19511664ff77634ab86f45b ]
+[ Upstream commit 3bbef91bdd2180c67407285ba160b023eb4d5306 ]
 
-Smatch complains that:
-arcfb_probe() warn: 'irq' from request_irq() not released on lines: 587.
+The 'enable_quota' variable is only used in an CONFIG_QUOTA.
+With CONFIG_QUOTA=n, compiler causes a harmless warning:
 
-Fix error handling in the arcfb_probe() function. If IO addresses are
-not provided or framebuffer registration fails, the code will jump to
-the err_addr or err_register_fb label to release resources.
-If IRQ request fails, previously allocated resources will be freed.
+fs/ext4/super.c: In function ‘ext4_remount’:
+fs/ext4/super.c:5840:6: warning: variable ‘enable_quota’ set but not used
+  [-Wunused-but-set-variable]
+  int enable_quota = 0;
+              ^~~~~
 
-Fixes: 1154ea7dcd8e ("[PATCH] Framebuffer driver for Arc LCD board")
-Signed-off-by: Zongjie Li <u202112089@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Move 'enable_quota' into the same #ifdef CONFIG_QUOTA block
+to remove an unused variable warning.
+
+Signed-off-by: Austin Kim <austindh.kim@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20210824034929.GA13415@raspberrypi
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting r/w until quota is re-enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/arcfb.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ fs/ext4/super.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/arcfb.c b/drivers/video/fbdev/arcfb.c
-index 1447324ed0b64..08da436265d92 100644
---- a/drivers/video/fbdev/arcfb.c
-+++ b/drivers/video/fbdev/arcfb.c
-@@ -523,7 +523,7 @@ static int arcfb_probe(struct platform_device *dev)
- 
- 	info = framebuffer_alloc(sizeof(struct arcfb_par), &dev->dev);
- 	if (!info)
--		goto err;
-+		goto err_fb_alloc;
- 
- 	info->screen_base = (char __iomem *)videomemory;
- 	info->fbops = &arcfb_ops;
-@@ -535,7 +535,7 @@ static int arcfb_probe(struct platform_device *dev)
- 
- 	if (!dio_addr || !cio_addr || !c2io_addr) {
- 		printk(KERN_WARNING "no IO addresses supplied\n");
--		goto err1;
-+		goto err_addr;
- 	}
- 	par->dio_addr = dio_addr;
- 	par->cio_addr = cio_addr;
-@@ -551,12 +551,12 @@ static int arcfb_probe(struct platform_device *dev)
- 			printk(KERN_INFO
- 				"arcfb: Failed req IRQ %d\n", par->irq);
- 			retval = -EBUSY;
--			goto err1;
-+			goto err_addr;
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 8694be5132415..d75aa45a846d1 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5792,11 +5792,11 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	unsigned long old_sb_flags, vfs_flags;
+ 	struct ext4_mount_options old_opts;
+-	int enable_quota = 0;
+ 	ext4_group_t g;
+ 	unsigned int journal_ioprio = DEFAULT_JOURNAL_IOPRIO;
+ 	int err = 0;
+ #ifdef CONFIG_QUOTA
++	int enable_quota = 0;
+ 	int i, j;
+ 	char *to_free[EXT4_MAXQUOTAS];
+ #endif
+@@ -5994,7 +5994,9 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
+ 					err = -EROFS;
+ 					goto restore_opts;
+ 				}
++#ifdef CONFIG_QUOTA
+ 			enable_quota = 1;
++#endif
  		}
  	}
- 	retval = register_framebuffer(info);
- 	if (retval < 0)
--		goto err1;
-+		goto err_register_fb;
- 	platform_set_drvdata(dev, info);
- 	fb_info(info, "Arc frame buffer device, using %dK of video memory\n",
- 		videomemorysize >> 10);
-@@ -580,9 +580,12 @@ static int arcfb_probe(struct platform_device *dev)
- 	}
  
- 	return 0;
--err1:
-+
-+err_register_fb:
-+	free_irq(par->irq, info);
-+err_addr:
- 	framebuffer_release(info);
--err:
-+err_fb_alloc:
- 	vfree(videomemory);
- 	return retval;
- }
 -- 
 2.39.2
 
