@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D72569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0088CC433EF;
-	Sun, 28 May 2023 19:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D54569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EC4C433EF;
+	Sun, 28 May 2023 19:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301907;
-	bh=H5j809lpuaksRj9LHOrAYqVs7Xnh09O8W/qaGjcD42M=;
+	s=korg; t=1685301909;
+	bh=SBSauO/Isw7x+hrwevVKs1A8CSZfB8/4fA7n3jW1zg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bmC5k6I+AeQBpxPX1S0JX3c0Dvldhr/VS4delbbfg9VmnYR8dE2me98bGVanNDqjL
-	 3lQaoyWQfcKTHrZcLSzc6BqkeMavSF+0p2fgfgr5sqkNA5Sr8tRXGD7j++ph/6vR4d
-	 Hvyj6IZje1uNG1qLg2g9uW6V8pIhiL6Ih8FND9Ok=
+	b=LHHoyD9PBzPjL54Rg0iVB70hpXrXj4rHZduk64OuPjisX0a3TR9+DQQc5I6Lw2LUb
+	 GxftkhjwaH44wDyKwY59I1AbjOpKLfNMLjAouWK6lJBd75b7Iv62htAETaEGQ5DIEd
+	 a3jIkRbeCEZng2nIKgpZmE5TaAWzsogR03BN+GPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Udipto Goswami <quic_ugoswami@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.4 084/161] usb: dwc3: debugfs: Resume dwc3 before accessing registers
-Date: Sun, 28 May 2023 20:10:08 +0100
-Message-Id: <20230528190839.811908941@linuxfoundation.org>
+	Peilin Ye <peilin.ye@bytedance.com>,
+	William Tu <u9012063@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 067/161] ip6_gre: Make o_seqno start from 0 in native mode
+Date: Sun, 28 May 2023 20:09:51 +0100
+Message-Id: <20230528190839.301133921@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,379 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Udipto Goswami <quic_ugoswami@quicinc.com>
+From: Peilin Ye <peilin.ye@bytedance.com>
 
-commit 614ce6a2ea50068b45339257891e51e639ac9001 upstream.
+[ Upstream commit fde98ae91f79cab4e020f40c35ed23cbdc59661c ]
 
-When the dwc3 device is runtime suspended, various required clocks are in
-disabled state and it is not guaranteed that access to any registers would
-work. Depending on the SoC glue, a register read could be as benign as
-returning 0 or be fatal enough to hang the system.
+For IP6GRE and IP6GRETAP devices, currently o_seqno starts from 1 in
+native mode.  According to RFC 2890 2.2., "The first datagram is sent
+with a sequence number of 0."  Fix it.
 
-In order to prevent such scenarios of fatal errors, make sure to resume
-dwc3 then allow the function to proceed.
+It is worth mentioning that o_seqno already starts from 0 in collect_md
+mode, see the "if (tunnel->parms.collect_md)" clause in __gre6_xmit(),
+where tunnel->o_seqno is passed to gre_build_header() before getting
+incremented.
 
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
-Cc: stable@vger.kernel.org #3.2: 30332eeefec8: debugfs: regset32: Add Runtime PM support
-Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20230509144836.6803-1-quic_ugoswami@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c12b395a4664 ("gre: Support GRE over IPv6")
+Signed-off-by: Peilin Ye <peilin.ye@bytedance.com>
+Acked-by: William Tu <u9012063@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: d80fc101d2eb ("erspan: get the proto with the md version for collect_md")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/debugfs.c |  109 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 109 insertions(+)
+ net/ipv6/ip6_gre.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/dwc3/debugfs.c
-+++ b/drivers/usb/dwc3/debugfs.c
-@@ -327,6 +327,11 @@ static int dwc3_lsp_show(struct seq_file
- 	unsigned int		current_mode;
- 	unsigned long		flags;
- 	u32			reg;
-+	int			ret;
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index a1fd3c9c1da3e..e3c65e7681ad4 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -711,6 +711,7 @@ static netdev_tx_t __gre6_xmit(struct sk_buff *skb,
+ {
+ 	struct ip6_tnl *tunnel = netdev_priv(dev);
+ 	__be16 protocol;
++	__be16 flags;
+ 
+ 	if (dev->type == ARPHRD_ETHER)
+ 		IPCB(skb)->flags = 0;
+@@ -726,7 +727,6 @@ static netdev_tx_t __gre6_xmit(struct sk_buff *skb,
+ 	if (tunnel->parms.collect_md) {
+ 		struct ip_tunnel_info *tun_info;
+ 		const struct ip_tunnel_key *key;
+-		__be16 flags;
+ 		int tun_hlen;
+ 
+ 		tun_info = skb_tunnel_info(skb);
+@@ -758,15 +758,14 @@ static netdev_tx_t __gre6_xmit(struct sk_buff *skb,
+ 						      : 0);
+ 
+ 	} else {
+-		if (tunnel->parms.o_flags & TUNNEL_SEQ)
+-			tunnel->o_seqno++;
+-
+ 		if (skb_cow_head(skb, dev->needed_headroom ?: tunnel->hlen))
+ 			return -ENOMEM;
+ 
+-		gre_build_header(skb, tunnel->tun_hlen, tunnel->parms.o_flags,
++		flags = tunnel->parms.o_flags;
 +
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_GSTS);
-@@ -345,6 +350,8 @@ static int dwc3_lsp_show(struct seq_file
- 	}
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -390,6 +397,11 @@ static int dwc3_mode_show(struct seq_fil
- 	struct dwc3		*dwc = s->private;
- 	unsigned long		flags;
- 	u32			reg;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_GCTL);
-@@ -409,6 +421,8 @@ static int dwc3_mode_show(struct seq_fil
- 		seq_printf(s, "UNKNOWN %08x\n", DWC3_GCTL_PRTCAP(reg));
- 	}
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -455,6 +469,11 @@ static int dwc3_testmode_show(struct seq
- 	struct dwc3		*dwc = s->private;
- 	unsigned long		flags;
- 	u32			reg;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
-@@ -485,6 +504,8 @@ static int dwc3_testmode_show(struct seq
- 		seq_printf(s, "UNKNOWN %d\n", reg);
++		gre_build_header(skb, tunnel->tun_hlen, flags,
+ 				 protocol, tunnel->parms.o_key,
+-				 htonl(tunnel->o_seqno));
++				 (flags & TUNNEL_SEQ) ? htonl(tunnel->o_seqno++) : 0);
  	}
  
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -501,6 +522,7 @@ static ssize_t dwc3_testmode_write(struc
- 	unsigned long		flags;
- 	u32			testmode = 0;
- 	char			buf[32];
-+	int			ret;
- 
- 	if (copy_from_user(&buf, ubuf, min_t(size_t, sizeof(buf) - 1, count)))
- 		return -EFAULT;
-@@ -518,10 +540,16 @@ static ssize_t dwc3_testmode_write(struc
- 	else
- 		testmode = 0;
- 
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	dwc3_gadget_set_test_mode(dwc, testmode);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return count;
- }
- 
-@@ -540,12 +568,18 @@ static int dwc3_link_state_show(struct s
- 	enum dwc3_link_state	state;
- 	u32			reg;
- 	u8			speed;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_GSTS);
- 	if (DWC3_GSTS_CURMOD(reg) != DWC3_GSTS_CURMOD_DEVICE) {
- 		seq_puts(s, "Not available\n");
- 		spin_unlock_irqrestore(&dwc->lock, flags);
-+		pm_runtime_put_sync(dwc->dev);
- 		return 0;
- 	}
- 
-@@ -558,6 +592,8 @@ static int dwc3_link_state_show(struct s
- 		   dwc3_gadget_hs_link_string(state));
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -576,6 +612,7 @@ static ssize_t dwc3_link_state_write(str
- 	char			buf[32];
- 	u32			reg;
- 	u8			speed;
-+	int			ret;
- 
- 	if (copy_from_user(&buf, ubuf, min_t(size_t, sizeof(buf) - 1, count)))
- 		return -EFAULT;
-@@ -595,10 +632,15 @@ static ssize_t dwc3_link_state_write(str
- 	else
- 		return -EINVAL;
- 
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_GSTS);
- 	if (DWC3_GSTS_CURMOD(reg) != DWC3_GSTS_CURMOD_DEVICE) {
- 		spin_unlock_irqrestore(&dwc->lock, flags);
-+		pm_runtime_put_sync(dwc->dev);
- 		return -EINVAL;
- 	}
- 
-@@ -608,12 +650,15 @@ static ssize_t dwc3_link_state_write(str
- 	if (speed < DWC3_DSTS_SUPERSPEED &&
- 	    state != DWC3_LINK_STATE_RECOV) {
- 		spin_unlock_irqrestore(&dwc->lock, flags);
-+		pm_runtime_put_sync(dwc->dev);
- 		return -EINVAL;
- 	}
- 
- 	dwc3_gadget_set_link_state(dwc, state);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return count;
- }
- 
-@@ -636,6 +681,11 @@ static int dwc3_tx_fifo_size_show(struct
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_TXFIFO);
-@@ -646,6 +696,8 @@ static int dwc3_tx_fifo_size_show(struct
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -655,6 +707,11 @@ static int dwc3_rx_fifo_size_show(struct
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_RXFIFO);
-@@ -665,6 +722,8 @@ static int dwc3_rx_fifo_size_show(struct
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -674,12 +733,19 @@ static int dwc3_tx_request_queue_show(st
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_TXREQQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -689,12 +755,19 @@ static int dwc3_rx_request_queue_show(st
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_RXREQQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -704,12 +777,19 @@ static int dwc3_rx_info_queue_show(struc
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_RXINFOQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -719,12 +799,19 @@ static int dwc3_descriptor_fetch_queue_s
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_DESCFETCHQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -734,12 +821,19 @@ static int dwc3_event_queue_show(struct
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_EVENTQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -785,6 +879,11 @@ static int dwc3_trb_ring_show(struct seq
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	int			i;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	if (dep->number <= 1) {
-@@ -814,6 +913,8 @@ static int dwc3_trb_ring_show(struct seq
- out:
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -826,6 +927,11 @@ static int dwc3_ep_info_register_show(st
- 	u32			lower_32_bits;
- 	u32			upper_32_bits;
- 	u32			reg;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = DWC3_GDBGLSPMUX_EPSELECT(dep->number);
-@@ -838,6 +944,8 @@ static int dwc3_ep_info_register_show(st
- 	seq_printf(s, "0x%016llx\n", ep_info);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -899,6 +1007,7 @@ void dwc3_debugfs_init(struct dwc3 *dwc)
- 	dwc->regset->regs = dwc3_regs;
- 	dwc->regset->nregs = ARRAY_SIZE(dwc3_regs);
- 	dwc->regset->base = dwc->regs - DWC3_GLOBALS_REGS_START;
-+	dwc->regset->dev = dwc->dev;
- 
- 	root = debugfs_create_dir(dev_name(dwc->dev), NULL);
- 	dwc->root = root;
+ 	return ip6_tnl_xmit(skb, dev, dsfield, fl6, encap_limit, pmtu,
+-- 
+2.39.2
+
 
 
