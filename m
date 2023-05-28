@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF703611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:34:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A099C433EF;
-	Sun, 28 May 2023 19:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8AB611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:34:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB8BC433D2;
+	Sun, 28 May 2023 19:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302455;
-	bh=3W3wsoUU1mIsb4tYuJG/RRtkd0sDh3JAMYEds54qB94=;
+	s=korg; t=1685302458;
+	bh=abbRKnp1zzMnJdGS4SO2xGzuHR5HXAct+6UKDH2yqbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ONGhg8DSQ2gyla4+f6RuJjeAFQaMUP2cXgurLr1vLwGPHQZ0jdgMd6/rkM7/5tjad
-	 jAqKuKsdXQ+pBG4eQqpG7eKn/BWzSrkPlndDJAYxPM6eIk9MZKtKMmWs6F8uIbQdnF
-	 yyDnQ4ZuPRmiK+flSgG7IB2+32rus1DAVUxz+Bo4=
+	b=qL/O/3Hznc9zmr3Xm4KRY4d/W1QdZZUBxiaGMsIvGuY1OXgwGP1kn5+oZN8S1cXyM
+	 2kqeXoQA831Ow6RuROJQxERKVePVn3VLqQvPVF1ibXbpl6GO6Njll4+npwFWIJmheS
+	 QsJ6eU3rGoD8k3rRgUvUphZJbdZfp54gaGn1UGZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/119] tpm, tpm_tis: Avoid cache incoherency in test for interrupts
-Date: Sun, 28 May 2023 20:10:02 +0100
-Message-Id: <20230528190835.462201336@linuxfoundation.org>
+Subject: [PATCH 6.1 003/119] tpm, tpm_tis: Only handle supported interrupts
+Date: Sun, 28 May 2023 20:10:03 +0100
+Message-Id: <20230528190835.490380620@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -38,22 +38,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit 858e8b792d06f45c427897bd90205a1d90bf430f ]
+[ Upstream commit e87fcf0dc2b47fac5b4824f00f74dfbcd4acd363 ]
 
-The interrupt handler that sets the boolean variable irq_tested may run on
-another CPU as the thread that checks irq_tested as part of the irq test in
-tpm_tis_send().
+According to the TPM Interface Specification (TIS) support for "stsValid"
+and "commandReady" interrupts is only optional.
+This has to be taken into account when handling the interrupts in functions
+like wait_for_tpm_stat(). To determine the supported interrupts use the
+capability query.
 
-Since nothing guarantees cache coherency between CPUs for unsynchronized
-accesses to boolean variables the testing thread might not perceive the
-value change done in the interrupt handler.
-
-Avoid this issue by setting the bit TPM_TIS_IRQ_TESTED in the flags field
-of the tpm_tis_data struct and by accessing this field with the bit
-manipulating functions that provide cache coherency.
-
-Also convert all other existing sites to use the proper macros when
-accessing this bitfield.
+Also adjust wait_for_tpm_stat() to only wait for interrupt reported status
+changes. After that process all the remaining status changes by polling
+the status register.
 
 Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 Tested-by: Michael Niewöhner <linux@mniewoehner.de>
@@ -63,122 +58,201 @@ Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Stable-dep-of: 1398aa803f19 ("tpm_tis: Use tpm_chip_{start,stop} decoration inside tpm_tis_resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis.c      |  2 +-
- drivers/char/tpm/tpm_tis_core.c | 21 +++++++++++----------
- drivers/char/tpm/tpm_tis_core.h |  2 +-
- 3 files changed, 13 insertions(+), 12 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 120 +++++++++++++++++++-------------
+ drivers/char/tpm/tpm_tis_core.h |   1 +
+ 2 files changed, 73 insertions(+), 48 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis.c b/drivers/char/tpm/tpm_tis.c
-index 4be19d8f3ca95..0d084d6652c41 100644
---- a/drivers/char/tpm/tpm_tis.c
-+++ b/drivers/char/tpm/tpm_tis.c
-@@ -243,7 +243,7 @@ static int tpm_tis_init(struct device *dev, struct tpm_info *tpm_info)
- 		irq = tpm_info->irq;
- 
- 	if (itpm || is_itpm(ACPI_COMPANION(dev)))
--		phy->priv.flags |= TPM_TIS_ITPM_WORKAROUND;
-+		set_bit(TPM_TIS_ITPM_WORKAROUND, &phy->priv.flags);
- 
- 	return tpm_tis_core_init(dev, &phy->priv, irq, &tpm_tcg,
- 				 ACPI_HANDLE(dev));
 diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index eecfbd7e97867..6b05a84c3a206 100644
+index 6b05a84c3a206..a35c117ee7c80 100644
 --- a/drivers/char/tpm/tpm_tis_core.c
 +++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -376,7 +376,7 @@ static int tpm_tis_send_data(struct tpm_chip *chip, const u8 *buf, size_t len)
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
- 	int rc, status, burstcnt;
- 	size_t count = 0;
--	bool itpm = priv->flags & TPM_TIS_ITPM_WORKAROUND;
-+	bool itpm = test_bit(TPM_TIS_ITPM_WORKAROUND, &priv->flags);
+@@ -53,41 +53,63 @@ static int wait_for_tpm_stat(struct tpm_chip *chip, u8 mask,
+ 	long rc;
+ 	u8 status;
+ 	bool canceled = false;
++	u8 sts_mask = 0;
++	int ret = 0;
  
- 	status = tpm_tis_status(chip);
- 	if ((status & TPM_STS_COMMAND_READY) == 0) {
-@@ -509,7 +509,8 @@ static int tpm_tis_send(struct tpm_chip *chip, u8 *buf, size_t len)
- 	int rc, irq;
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
- 
--	if (!(chip->flags & TPM_CHIP_FLAG_IRQ) || priv->irq_tested)
-+	if (!(chip->flags & TPM_CHIP_FLAG_IRQ) ||
-+	     test_bit(TPM_TIS_IRQ_TESTED, &priv->flags))
- 		return tpm_tis_send_main(chip, buf, len);
- 
- 	/* Verify receipt of the expected IRQ */
-@@ -519,11 +520,11 @@ static int tpm_tis_send(struct tpm_chip *chip, u8 *buf, size_t len)
- 	rc = tpm_tis_send_main(chip, buf, len);
- 	priv->irq = irq;
- 	chip->flags |= TPM_CHIP_FLAG_IRQ;
--	if (!priv->irq_tested)
-+	if (!test_bit(TPM_TIS_IRQ_TESTED, &priv->flags))
- 		tpm_msleep(1);
--	if (!priv->irq_tested)
-+	if (!test_bit(TPM_TIS_IRQ_TESTED, &priv->flags))
- 		disable_interrupts(chip);
--	priv->irq_tested = true;
-+	set_bit(TPM_TIS_IRQ_TESTED, &priv->flags);
- 	return rc;
- }
- 
-@@ -666,7 +667,7 @@ static int probe_itpm(struct tpm_chip *chip)
- 	size_t len = sizeof(cmd_getticks);
- 	u16 vendor;
- 
--	if (priv->flags & TPM_TIS_ITPM_WORKAROUND)
-+	if (test_bit(TPM_TIS_ITPM_WORKAROUND, &priv->flags))
+ 	/* check current status */
+ 	status = chip->ops->status(chip);
+ 	if ((status & mask) == mask)
  		return 0;
  
- 	rc = tpm_tis_read16(priv, TPM_DID_VID(0), &vendor);
-@@ -686,13 +687,13 @@ static int probe_itpm(struct tpm_chip *chip)
+-	stop = jiffies + timeout;
++	/* check what status changes can be handled by irqs */
++	if (priv->int_mask & TPM_INTF_STS_VALID_INT)
++		sts_mask |= TPM_STS_VALID;
  
- 	tpm_tis_ready(chip);
+-	if (chip->flags & TPM_CHIP_FLAG_IRQ) {
++	if (priv->int_mask & TPM_INTF_DATA_AVAIL_INT)
++		sts_mask |= TPM_STS_DATA_AVAIL;
++
++	if (priv->int_mask & TPM_INTF_CMD_READY_INT)
++		sts_mask |= TPM_STS_COMMAND_READY;
++
++	sts_mask &= mask;
++
++	stop = jiffies + timeout;
++	/* process status changes with irq support */
++	if (sts_mask) {
++		ret = -ETIME;
+ again:
+ 		timeout = stop - jiffies;
+ 		if ((long)timeout <= 0)
+ 			return -ETIME;
+ 		rc = wait_event_interruptible_timeout(*queue,
+-			wait_for_tpm_stat_cond(chip, mask, check_cancel,
++			wait_for_tpm_stat_cond(chip, sts_mask, check_cancel,
+ 					       &canceled),
+ 			timeout);
+ 		if (rc > 0) {
+ 			if (canceled)
+ 				return -ECANCELED;
+-			return 0;
++			ret = 0;
+ 		}
+ 		if (rc == -ERESTARTSYS && freezing(current)) {
+ 			clear_thread_flag(TIF_SIGPENDING);
+ 			goto again;
+ 		}
+-	} else {
+-		do {
+-			usleep_range(priv->timeout_min,
+-				     priv->timeout_max);
+-			status = chip->ops->status(chip);
+-			if ((status & mask) == mask)
+-				return 0;
+-		} while (time_before(jiffies, stop));
+ 	}
++
++	if (ret)
++		return ret;
++
++	mask &= ~sts_mask;
++	if (!mask) /* all done */
++		return 0;
++	/* process status changes without irq support */
++	do {
++		status = chip->ops->status(chip);
++		if ((status & mask) == mask)
++			return 0;
++		usleep_range(priv->timeout_min,
++			     priv->timeout_max);
++	} while (time_before(jiffies, stop));
+ 	return -ETIME;
+ }
  
--	priv->flags |= TPM_TIS_ITPM_WORKAROUND;
-+	set_bit(TPM_TIS_ITPM_WORKAROUND, &priv->flags);
+@@ -1032,8 +1054,40 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 	if (rc < 0)
+ 		goto out_err;
  
- 	rc = tpm_tis_send_data(chip, cmd_getticks, len);
- 	if (rc == 0)
- 		dev_info(&chip->dev, "Detected an iTPM.\n");
- 	else {
--		priv->flags &= ~TPM_TIS_ITPM_WORKAROUND;
-+		clear_bit(TPM_TIS_ITPM_WORKAROUND, &priv->flags);
- 		rc = -EFAULT;
+-	intmask |= TPM_INTF_CMD_READY_INT | TPM_INTF_LOCALITY_CHANGE_INT |
+-		   TPM_INTF_DATA_AVAIL_INT | TPM_INTF_STS_VALID_INT;
++	/* Figure out the capabilities */
++	rc = tpm_tis_read32(priv, TPM_INTF_CAPS(priv->locality), &intfcaps);
++	if (rc < 0)
++		goto out_err;
++
++	dev_dbg(dev, "TPM interface capabilities (0x%x):\n",
++		intfcaps);
++	if (intfcaps & TPM_INTF_BURST_COUNT_STATIC)
++		dev_dbg(dev, "\tBurst Count Static\n");
++	if (intfcaps & TPM_INTF_CMD_READY_INT) {
++		intmask |= TPM_INTF_CMD_READY_INT;
++		dev_dbg(dev, "\tCommand Ready Int Support\n");
++	}
++	if (intfcaps & TPM_INTF_INT_EDGE_FALLING)
++		dev_dbg(dev, "\tInterrupt Edge Falling\n");
++	if (intfcaps & TPM_INTF_INT_EDGE_RISING)
++		dev_dbg(dev, "\tInterrupt Edge Rising\n");
++	if (intfcaps & TPM_INTF_INT_LEVEL_LOW)
++		dev_dbg(dev, "\tInterrupt Level Low\n");
++	if (intfcaps & TPM_INTF_INT_LEVEL_HIGH)
++		dev_dbg(dev, "\tInterrupt Level High\n");
++	if (intfcaps & TPM_INTF_LOCALITY_CHANGE_INT) {
++		intmask |= TPM_INTF_LOCALITY_CHANGE_INT;
++		dev_dbg(dev, "\tLocality Change Int Support\n");
++	}
++	if (intfcaps & TPM_INTF_STS_VALID_INT) {
++		intmask |= TPM_INTF_STS_VALID_INT;
++		dev_dbg(dev, "\tSts Valid Int Support\n");
++	}
++	if (intfcaps & TPM_INTF_DATA_AVAIL_INT) {
++		intmask |= TPM_INTF_DATA_AVAIL_INT;
++		dev_dbg(dev, "\tData Avail Int Support\n");
++	}
++
+ 	intmask &= ~TPM_GLOBAL_INT_ENABLE;
+ 
+ 	rc = tpm_tis_request_locality(chip, 0);
+@@ -1067,32 +1121,6 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 		goto out_err;
  	}
  
-@@ -736,7 +737,7 @@ static irqreturn_t tis_int_handler(int dummy, void *dev_id)
- 	if (interrupt == 0)
- 		return IRQ_NONE;
+-	/* Figure out the capabilities */
+-	rc = tpm_tis_read32(priv, TPM_INTF_CAPS(priv->locality), &intfcaps);
+-	if (rc < 0)
+-		goto out_err;
+-
+-	dev_dbg(dev, "TPM interface capabilities (0x%x):\n",
+-		intfcaps);
+-	if (intfcaps & TPM_INTF_BURST_COUNT_STATIC)
+-		dev_dbg(dev, "\tBurst Count Static\n");
+-	if (intfcaps & TPM_INTF_CMD_READY_INT)
+-		dev_dbg(dev, "\tCommand Ready Int Support\n");
+-	if (intfcaps & TPM_INTF_INT_EDGE_FALLING)
+-		dev_dbg(dev, "\tInterrupt Edge Falling\n");
+-	if (intfcaps & TPM_INTF_INT_EDGE_RISING)
+-		dev_dbg(dev, "\tInterrupt Edge Rising\n");
+-	if (intfcaps & TPM_INTF_INT_LEVEL_LOW)
+-		dev_dbg(dev, "\tInterrupt Level Low\n");
+-	if (intfcaps & TPM_INTF_INT_LEVEL_HIGH)
+-		dev_dbg(dev, "\tInterrupt Level High\n");
+-	if (intfcaps & TPM_INTF_LOCALITY_CHANGE_INT)
+-		dev_dbg(dev, "\tLocality Change Int Support\n");
+-	if (intfcaps & TPM_INTF_STS_VALID_INT)
+-		dev_dbg(dev, "\tSts Valid Int Support\n");
+-	if (intfcaps & TPM_INTF_DATA_AVAIL_INT)
+-		dev_dbg(dev, "\tData Avail Int Support\n");
+-
+ 	/* INTERRUPT Setup */
+ 	init_waitqueue_head(&priv->read_queue);
+ 	init_waitqueue_head(&priv->int_queue);
+@@ -1123,7 +1151,9 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 		else
+ 			tpm_tis_probe_irq(chip, intmask);
  
--	priv->irq_tested = true;
-+	set_bit(TPM_TIS_IRQ_TESTED, &priv->flags);
- 	if (interrupt & TPM_INTF_DATA_AVAIL_INT)
- 		wake_up_interruptible(&priv->read_queue);
- 	if (interrupt & TPM_INTF_LOCALITY_CHANGE_INT)
-@@ -819,7 +820,7 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+-		if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
++		if (chip->flags & TPM_CHIP_FLAG_IRQ) {
++			priv->int_mask = intmask;
++		} else {
+ 			dev_err(&chip->dev, FW_BUG
+ 					"TPM interrupt not working, polling instead\n");
+ 
+@@ -1170,13 +1200,7 @@ static void tpm_tis_reenable_interrupts(struct tpm_chip *chip)
  	if (rc < 0)
- 		goto restore_irqs;
+ 		goto out;
  
--	priv->irq_tested = false;
-+	clear_bit(TPM_TIS_IRQ_TESTED, &priv->flags);
+-	rc = tpm_tis_read32(priv, TPM_INT_ENABLE(priv->locality), &intmask);
+-	if (rc < 0)
+-		goto out;
+-
+-	intmask |= TPM_INTF_CMD_READY_INT
+-	    | TPM_INTF_LOCALITY_CHANGE_INT | TPM_INTF_DATA_AVAIL_INT
+-	    | TPM_INTF_STS_VALID_INT | TPM_GLOBAL_INT_ENABLE;
++	intmask = priv->int_mask | TPM_GLOBAL_INT_ENABLE;
  
- 	/* Generate an interrupt by having the core call through to
- 	 * tpm_tis_send
+ 	tpm_tis_write32(priv, TPM_INT_ENABLE(priv->locality), intmask);
+ 
 diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
-index 1d51d5168fb6e..4a58b870b4188 100644
+index 4a58b870b4188..e978f457fd4d4 100644
 --- a/drivers/char/tpm/tpm_tis_core.h
 +++ b/drivers/char/tpm/tpm_tis_core.h
-@@ -87,6 +87,7 @@ enum tpm_tis_flags {
- 	TPM_TIS_ITPM_WORKAROUND		= BIT(0),
- 	TPM_TIS_INVALID_STATUS		= BIT(1),
- 	TPM_TIS_DEFAULT_CANCELLATION	= BIT(2),
-+	TPM_TIS_IRQ_TESTED		= BIT(3),
- };
- 
- struct tpm_tis_data {
-@@ -95,7 +96,6 @@ struct tpm_tis_data {
+@@ -96,6 +96,7 @@ struct tpm_tis_data {
  	unsigned int locality_count;
  	int locality;
  	int irq;
--	bool irq_tested;
++	unsigned int int_mask;
  	unsigned long flags;
  	void __iomem *ilb_base_addr;
  	u16 clkrun_enabled;
