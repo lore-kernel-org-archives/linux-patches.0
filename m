@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62684569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D87C433EF;
-	Sun, 28 May 2023 19:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC71569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDF3C433D2;
+	Sun, 28 May 2023 19:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302323;
-	bh=0qtbxcdGWP0QtyzSBLTJhlMnLc+/ENc2JkSDgjIQd6I=;
+	s=korg; t=1685302326;
+	bh=bxaHnaQZItMC+Gq94XHcrr8I2j9jtglZ0GuJj8ia62Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SMtJs1XCAHAeXoWoc2gPyjN+6jZwyhLbTWuIH9dBnsmCmBVpXZUj1l+GzHSpNQs9F
-	 n9ghiIp38oE5kyyuTZJws/GAIn99BCAeezDFP15mb3s6ewMGwiqGqmo5wp7sXweV+l
-	 VQN383Qh7YljX1VMZvIjxchJSUNlHdMdVqaT7IDo=
+	b=xV/z7JVWJBUiVVIdbkdJcgp6y8LXnm76lLP3rPvzkMcQ92Udef+SDPZgazJa2W1zn
+	 cHvQ0pSfsB5BzNo+wnS42kGW3n88IO33B+kYX6WHrMdDiQoFNPbPa2xKSULV7sdGuj
+	 HEGjj8fT9XCCy+n2NAwBK01GZfqc10is5HMCXcFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daisuke Nojiri <dnojiri@chromium.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.3 088/127] power: supply: sbs-charger: Fix INHIBITED bit for Status reg
-Date: Sun, 28 May 2023 20:11:04 +0100
-Message-Id: <20230528190839.197737514@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Etienne Carriere <etienne.carriere@linaro.org>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 6.3 089/127] optee: fix uninited async notif value
+Date: Sun, 28 May 2023 20:11:05 +0100
+Message-Id: <20230528190839.224761417@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -34,31 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daisuke Nojiri <dnojiri@chromium.org>
+From: Etienne Carriere <etienne.carriere@linaro.org>
 
-commit b2f2a3c9800208b0db2c2e34b05323757117faa2 upstream.
+commit 654d0310007146fae87b0c1a68f81e53ad519b14 upstream.
 
-CHARGE_INHIBITED bit position of the ChargerStatus register is actually
-0 not 1. This patch corrects it.
+Fixes an uninitialized variable in irq_handler() that could lead to
+unpredictable behavior in case OP-TEE fails to handle SMC function ID
+OPTEE_SMC_GET_ASYNC_NOTIF_VALUE. This change ensures that in that case
+get_async_notif_value() properly reports there are no notification
+event.
 
-Fixes: feb583e37f8a8 ("power: supply: add sbs-charger driver")
-Signed-off-by: Daisuke Nojiri <dnojiri@chromium.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/202304200755.OoiuclDZ-lkp@intel.com/
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/all/d9b7f69b-c737-4cb3-8e74-79fe00c934f9@kili.mountain/
+Fixes: 6749e69c4dad ("optee: add asynchronous notifications")
+Signed-off-by: Etienne Carriere <etienne.carriere@linaro.org>
+Reviewed-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/sbs-charger.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tee/optee/smc_abi.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/sbs-charger.c
-+++ b/drivers/power/supply/sbs-charger.c
-@@ -24,7 +24,7 @@
- #define SBS_CHARGER_REG_STATUS			0x13
- #define SBS_CHARGER_REG_ALARM_WARNING		0x16
+--- a/drivers/tee/optee/smc_abi.c
++++ b/drivers/tee/optee/smc_abi.c
+@@ -984,8 +984,10 @@ static u32 get_async_notif_value(optee_i
  
--#define SBS_CHARGER_STATUS_CHARGE_INHIBITED	BIT(1)
-+#define SBS_CHARGER_STATUS_CHARGE_INHIBITED	BIT(0)
- #define SBS_CHARGER_STATUS_RES_COLD		BIT(9)
- #define SBS_CHARGER_STATUS_RES_HOT		BIT(10)
- #define SBS_CHARGER_STATUS_BATTERY_PRESENT	BIT(14)
+ 	invoke_fn(OPTEE_SMC_GET_ASYNC_NOTIF_VALUE, 0, 0, 0, 0, 0, 0, 0, &res);
+ 
+-	if (res.a0)
++	if (res.a0) {
++		*value_valid = false;
+ 		return 0;
++	}
+ 	*value_valid = (res.a2 & OPTEE_SMC_ASYNC_NOTIF_VALUE_VALID);
+ 	*value_pending = (res.a2 & OPTEE_SMC_ASYNC_NOTIF_VALUE_PENDING);
+ 	return res.a1;
 
 
