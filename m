@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301E6611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE8BC433D2;
-	Sun, 28 May 2023 19:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85345611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1629EC433D2;
+	Sun, 28 May 2023 19:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301288;
-	bh=CzGxuQbX8Ecz9PJKVkJSdxiuFWlqI8LMQw5sn7EbAGA=;
+	s=korg; t=1685301290;
+	bh=VMvMEnceWN9CVjgHwJtJSmNIcVeowMLb6zuTvaG+fUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6/sQ6RcRcefa2KA7qBWYX83lYlBV8Y8MuwR70/JByp7dqXp+3OU4j6Wd8iNA7EZr
-	 Fuxoj0jubm/m5L3g99vvVEyQYtQvMS10qrU94Fa2VpB5AGjuFSJGsxwNP8IixcrpJu
-	 Br8rkd1qyq25xQN6F+21wuZuXsH4rReOCrFuhMjU=
+	b=tf6DBv1GfchYayo9cKT7eRzMbUpy5hNF7MfPu1fHYBntVaWs8ZqhF0nUTZd4mx/Ce
+	 bnnOHShvZTgpmZnuskTn9sM9uDs7SqjVlcEMAAjbC941ctnZI76NzQ30qQYtu29DTL
+	 AbS2HIa+mejtBc8Yc3Kb+FuQAXhC867CJgcj/EmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 4.14 57/86] spi: fsl-cpm: Use 16 bit mode for large transfers with even size
-Date: Sun, 28 May 2023 20:10:31 +0100
-Message-Id: <20230528190830.718485853@linuxfoundation.org>
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>
+Subject: [PATCH 4.14 58/86] m68k: Move signal frame following exception on 68020/030
+Date: Sun, 28 May 2023 20:10:32 +0100
+Message-Id: <20230528190830.750201030@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -34,94 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Finn Thain <fthain@linux-m68k.org>
 
-(cherry picked from upstream fc96ec826bced75cc6b9c07a4ac44bbf651337ab)
+commit b845b574f86dcb6a70dfa698aa87a237b0878d2a upstream.
 
-On CPM, the RISC core is a lot more efficiant when doing transfers
-in 16-bits chunks than in 8-bits chunks, but unfortunately the
-words need to be byte swapped as seen in a previous commit.
+On 68030/020, an instruction such as, moveml %a2-%a3/%a5,%sp@- may cause
+a stack page fault during instruction execution (i.e. not at an
+instruction boundary) and produce a format 0xB exception frame.
 
-So, for large tranfers with an even size, allocate a temporary tx
-buffer and byte-swap data before and after transfer.
+In this situation, the value of USP will be unreliable.  If a signal is
+to be delivered following the exception, this USP value is used to
+calculate the location for a signal frame.  This can result in a
+corrupted user stack.
 
-This change allows setting higher speed for transfer. For instance
-on an MPC 8xx (CPM1 comms RISC processor), the documentation tells
-that transfer in byte mode at 1 kbit/s uses 0.200% of CPM load
-at 25 MHz while a word transfer at the same speed uses 0.032%
-of CPM load. This means the speed can be 6 times higher in
-word mode for the same CPM load.
+The corruption was detected in dash (actually in glibc) where it showed
+up as an intermittent "stack smashing detected" message and crash
+following signal delivery for SIGCHLD.
 
-For the time being, only do it on CPM1 as there must be a
-trade-off between the CPM load reduction and the CPU load required
-to byte swap the data.
+It was hard to reproduce that failure because delivery of the signal
+raced with the page fault and because the kernel places an unpredictable
+gap of up to 7 bytes between the USP and the signal frame.
 
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/f2e981f20f92dd28983c3949702a09248c23845c.1680371809.git.christophe.leroy@csgroup.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+A format 0xB exception frame can be produced by a bus error or an
+address error.  The 68030 Users Manual says that address errors occur
+immediately upon detection during instruction prefetch.  The instruction
+pipeline allows prefetch to overlap with other instructions, which means
+an address error can arise during the execution of a different
+instruction.  So it seems likely that this patch may help in the address
+error case also.
+
+Reported-and-tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://lore.kernel.org/all/CAMuHMdW3yD22_ApemzW_6me3adq6A458u1_F0v-1EYwK_62jPA@mail.gmail.com/
+Cc: Michael Schmitz <schmitzmic@gmail.com>
+Cc: Andreas Schwab <schwab@linux-m68k.org>
+Cc: stable@vger.kernel.org
+Co-developed-by: Michael Schmitz <schmitzmic@gmail.com>
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/9e66262a754fcba50208aa424188896cc52a1dd1.1683365892.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-cpm.c |   23 +++++++++++++++++++++++
- drivers/spi/spi-fsl-spi.c |    3 +++
- 2 files changed, 26 insertions(+)
+ arch/m68k/kernel/signal.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/spi/spi-fsl-cpm.c
-+++ b/drivers/spi/spi-fsl-cpm.c
-@@ -25,6 +25,7 @@
- #include <linux/spi/spi.h>
- #include <linux/types.h>
- #include <linux/platform_device.h>
-+#include <linux/byteorder/generic.h>
- 
- #include "spi-fsl-cpm.h"
- #include "spi-fsl-lib.h"
-@@ -124,6 +125,21 @@ int fsl_spi_cpm_bufs(struct mpc8xxx_spi
- 		mspi->rx_dma = mspi->dma_dummy_rx;
- 		mspi->map_rx_dma = 0;
- 	}
-+	if (t->bits_per_word == 16 && t->tx_buf) {
-+		const u16 *src = t->tx_buf;
-+		u16 *dst;
-+		int i;
-+
-+		dst = kmalloc(t->len, GFP_KERNEL);
-+		if (!dst)
-+			return -ENOMEM;
-+
-+		for (i = 0; i < t->len >> 1; i++)
-+			dst[i] = cpu_to_le16p(src + i);
-+
-+		mspi->tx = dst;
-+		mspi->map_tx_dma = 1;
-+	}
- 
- 	if (mspi->map_tx_dma) {
- 		void *nonconst_tx = (void *)mspi->tx; /* shut up gcc */
-@@ -177,6 +193,13 @@ void fsl_spi_cpm_bufs_complete(struct mp
- 	if (mspi->map_rx_dma)
- 		dma_unmap_single(dev, mspi->rx_dma, t->len, DMA_FROM_DEVICE);
- 	mspi->xfer_in_progress = NULL;
-+
-+	if (t->bits_per_word == 16 && t->rx_buf) {
-+		int i;
-+
-+		for (i = 0; i < t->len; i += 2)
-+			le16_to_cpus(t->rx_buf + i);
-+	}
+--- a/arch/m68k/kernel/signal.c
++++ b/arch/m68k/kernel/signal.c
+@@ -819,11 +819,17 @@ static inline int rt_setup_ucontext(stru
  }
- EXPORT_SYMBOL_GPL(fsl_spi_cpm_bufs_complete);
  
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -366,6 +366,9 @@ static int fsl_spi_do_one_msg(struct spi
- 				return -EINVAL;
- 			if (t->bits_per_word == 16 || t->bits_per_word == 32)
- 				t->bits_per_word = 8; /* pretend its 8 bits */
-+			if (t->bits_per_word == 8 && t->len >= 256 &&
-+			    (mpc8xxx_spi->flags & SPI_CPM1))
-+				t->bits_per_word = 16;
- 		}
+ static inline void __user *
+-get_sigframe(struct ksignal *ksig, size_t frame_size)
++get_sigframe(struct ksignal *ksig, struct pt_regs *tregs, size_t frame_size)
+ {
+ 	unsigned long usp = sigsp(rdusp(), ksig);
++	unsigned long gap = 0;
+ 
+-	return (void __user *)((usp - frame_size) & -8UL);
++	if (CPU_IS_020_OR_030 && tregs->format == 0xb) {
++		/* USP is unreliable so use worst-case value */
++		gap = 256;
++	}
++
++	return (void __user *)((usp - gap - frame_size) & -8UL);
+ }
+ 
+ static int setup_frame(struct ksignal *ksig, sigset_t *set,
+@@ -841,7 +847,7 @@ static int setup_frame(struct ksignal *k
+ 		return -EFAULT;
  	}
  
+-	frame = get_sigframe(ksig, sizeof(*frame) + fsize);
++	frame = get_sigframe(ksig, tregs, sizeof(*frame) + fsize);
+ 
+ 	if (fsize)
+ 		err |= copy_to_user (frame + 1, regs + 1, fsize);
+@@ -912,7 +918,7 @@ static int setup_rt_frame(struct ksignal
+ 		return -EFAULT;
+ 	}
+ 
+-	frame = get_sigframe(ksig, sizeof(*frame));
++	frame = get_sigframe(ksig, tregs, sizeof(*frame));
+ 
+ 	if (fsize)
+ 		err |= copy_to_user (&frame->uc.uc_extra, regs + 1, fsize);
 
 
