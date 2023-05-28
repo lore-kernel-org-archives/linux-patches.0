@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE0F569E
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B96C433EF;
-	Sun, 28 May 2023 19:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACF2569E
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6DAC433EF;
+	Sun, 28 May 2023 19:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301192;
-	bh=BIy+edq2XVvUduQjxjkgZSoIp/xMl+PJzABG6hrPSh8=;
+	s=korg; t=1685301194;
+	bh=nhV7KGgkMqY2g/XLwvQZElIC26CIz2CgGzK4ssMKeHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SuGu17Eo9iKYRIuroJnruKubLIBKmdD2K5A7TvOtsQl+UvsBZ16PAGY19YIN2hLKs
-	 EvZ86lbKR4jSgSj6aFCvag9/u79UjZpv6jMg20mKx8v1CAW5TEwu0XOM/5ruQHouzK
-	 HUMekRHR5ENHFwP5oeSZjOZcLegXWl5MuFSuPSKw=
+	b=X1nrxqRc1tsH8KoqmNrJK4yyyDglZrp9GNv6tDkb6Vo/uBLkiB+w26aCb6YGFuI4r
+	 +q+6P3YpcFn4vJU4d1Fcw1ekQgCHnzTii+GvamMcDZwfGv95jUDolRWsXTw2hOHbP5
+	 h5aTvF08gxOVWvFsvh1uT2gWmz3DNUPJbbWmwVm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"t.feng" <fengtao40@huawei.com>,
-	Florian Westphal <fw@strlen.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 04/86] ipvlan:Fix out-of-bounds caused by unclear skb->cb
-Date: Sun, 28 May 2023 20:09:38 +0100
-Message-Id: <20230528190828.721719852@linuxfoundation.org>
+Subject: [PATCH 4.14 05/86] af_unix: Fix a data race of sk->sk_receive_queue->qlen.
+Date: Sun, 28 May 2023 20:09:39 +0100
+Message-Id: <20230528190828.755150621@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -37,170 +38,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: t.feng <fengtao40@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 90cbed5247439a966b645b34eb0a2e037836ea8e ]
+[ Upstream commit 679ed006d416ea0cecfe24a99d365d1dea69c683 ]
 
-If skb enqueue the qdisc, fq_skb_cb(skb)->time_to_send is changed which
-is actually skb->cb, and IPCB(skb_in)->opt will be used in
-__ip_options_echo. It is possible that memcpy is out of bounds and lead
-to stack overflow.
-We should clear skb->cb before ip_local_out or ip6_local_out.
+KCSAN found a data race of sk->sk_receive_queue->qlen where recvmsg()
+updates qlen under the queue lock and sendmsg() checks qlen under
+unix_state_sock(), not the queue lock, so the reader side needs
+READ_ONCE().
 
-v2:
-1. clean the stack info
-2. use IPCB/IP6CB instead of skb->cb
+BUG: KCSAN: data-race in __skb_try_recv_from_queue / unix_wait_for_peer
 
-crash on stable-5.10(reproduce in kasan kernel).
-Stack info:
-[ 2203.651571] BUG: KASAN: stack-out-of-bounds in
-__ip_options_echo+0x589/0x800
-[ 2203.653327] Write of size 4 at addr ffff88811a388f27 by task
-swapper/3/0
-[ 2203.655460] CPU: 3 PID: 0 Comm: swapper/3 Kdump: loaded Not tainted
-5.10.0-60.18.0.50.h856.kasan.eulerosv2r11.x86_64 #1
-[ 2203.655466] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-BIOS rel-1.10.2-0-g5f4c7b1-20181220_000000-szxrtosci10000 04/01/2014
-[ 2203.655475] Call Trace:
-[ 2203.655481]  <IRQ>
-[ 2203.655501]  dump_stack+0x9c/0xd3
-[ 2203.655514]  print_address_description.constprop.0+0x19/0x170
-[ 2203.655530]  __kasan_report.cold+0x6c/0x84
-[ 2203.655586]  kasan_report+0x3a/0x50
-[ 2203.655594]  check_memory_region+0xfd/0x1f0
-[ 2203.655601]  memcpy+0x39/0x60
-[ 2203.655608]  __ip_options_echo+0x589/0x800
-[ 2203.655654]  __icmp_send+0x59a/0x960
-[ 2203.655755]  nf_send_unreach+0x129/0x3d0 [nf_reject_ipv4]
-[ 2203.655763]  reject_tg+0x77/0x1bf [ipt_REJECT]
-[ 2203.655772]  ipt_do_table+0x691/0xa40 [ip_tables]
-[ 2203.655821]  nf_hook_slow+0x69/0x100
-[ 2203.655828]  __ip_local_out+0x21e/0x2b0
-[ 2203.655857]  ip_local_out+0x28/0x90
-[ 2203.655868]  ipvlan_process_v4_outbound+0x21e/0x260 [ipvlan]
-[ 2203.655931]  ipvlan_xmit_mode_l3+0x3bd/0x400 [ipvlan]
-[ 2203.655967]  ipvlan_queue_xmit+0xb3/0x190 [ipvlan]
-[ 2203.655977]  ipvlan_start_xmit+0x2e/0xb0 [ipvlan]
-[ 2203.655984]  xmit_one.constprop.0+0xe1/0x280
-[ 2203.655992]  dev_hard_start_xmit+0x62/0x100
-[ 2203.656000]  sch_direct_xmit+0x215/0x640
-[ 2203.656028]  __qdisc_run+0x153/0x1f0
-[ 2203.656069]  __dev_queue_xmit+0x77f/0x1030
-[ 2203.656173]  ip_finish_output2+0x59b/0xc20
-[ 2203.656244]  __ip_finish_output.part.0+0x318/0x3d0
-[ 2203.656312]  ip_finish_output+0x168/0x190
-[ 2203.656320]  ip_output+0x12d/0x220
-[ 2203.656357]  __ip_queue_xmit+0x392/0x880
-[ 2203.656380]  __tcp_transmit_skb+0x1088/0x11c0
-[ 2203.656436]  __tcp_retransmit_skb+0x475/0xa30
-[ 2203.656505]  tcp_retransmit_skb+0x2d/0x190
-[ 2203.656512]  tcp_retransmit_timer+0x3af/0x9a0
-[ 2203.656519]  tcp_write_timer_handler+0x3ba/0x510
-[ 2203.656529]  tcp_write_timer+0x55/0x180
-[ 2203.656542]  call_timer_fn+0x3f/0x1d0
-[ 2203.656555]  expire_timers+0x160/0x200
-[ 2203.656562]  run_timer_softirq+0x1f4/0x480
-[ 2203.656606]  __do_softirq+0xfd/0x402
-[ 2203.656613]  asm_call_irq_on_stack+0x12/0x20
-[ 2203.656617]  </IRQ>
-[ 2203.656623]  do_softirq_own_stack+0x37/0x50
-[ 2203.656631]  irq_exit_rcu+0x134/0x1a0
-[ 2203.656639]  sysvec_apic_timer_interrupt+0x36/0x80
-[ 2203.656646]  asm_sysvec_apic_timer_interrupt+0x12/0x20
-[ 2203.656654] RIP: 0010:default_idle+0x13/0x20
-[ 2203.656663] Code: 89 f0 5d 41 5c 41 5d 41 5e c3 cc cc cc cc cc cc cc
-cc cc cc cc cc cc 0f 1f 44 00 00 0f 1f 44 00 00 0f 00 2d 9f 32 57 00 fb
-f4 <c3> cc cc cc cc 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 41 54 be 08
-[ 2203.656668] RSP: 0018:ffff88810036fe78 EFLAGS: 00000256
-[ 2203.656676] RAX: ffffffffaf2a87f0 RBX: ffff888100360000 RCX:
-ffffffffaf290191
-[ 2203.656681] RDX: 0000000000098b5e RSI: 0000000000000004 RDI:
-ffff88811a3c4f60
-[ 2203.656686] RBP: 0000000000000000 R08: 0000000000000001 R09:
-ffff88811a3c4f63
-[ 2203.656690] R10: ffffed10234789ec R11: 0000000000000001 R12:
-0000000000000003
-[ 2203.656695] R13: ffff888100360000 R14: 0000000000000000 R15:
-0000000000000000
-[ 2203.656729]  default_idle_call+0x5a/0x150
-[ 2203.656735]  cpuidle_idle_call+0x1c6/0x220
-[ 2203.656780]  do_idle+0xab/0x100
-[ 2203.656786]  cpu_startup_entry+0x19/0x20
-[ 2203.656793]  secondary_startup_64_no_verify+0xc2/0xcb
+write (marked) to 0xffff888019fe7c68 of 4 bytes by task 49792 on cpu 0:
+ __skb_unlink include/linux/skbuff.h:2347 [inline]
+ __skb_try_recv_from_queue+0x3de/0x470 net/core/datagram.c:197
+ __skb_try_recv_datagram+0xf7/0x390 net/core/datagram.c:263
+ __unix_dgram_recvmsg+0x109/0x8a0 net/unix/af_unix.c:2452
+ unix_dgram_recvmsg+0x94/0xa0 net/unix/af_unix.c:2549
+ sock_recvmsg_nosec net/socket.c:1019 [inline]
+ ____sys_recvmsg+0x3a3/0x3b0 net/socket.c:2720
+ ___sys_recvmsg+0xc8/0x150 net/socket.c:2764
+ do_recvmmsg+0x182/0x560 net/socket.c:2858
+ __sys_recvmmsg net/socket.c:2937 [inline]
+ __do_sys_recvmmsg net/socket.c:2960 [inline]
+ __se_sys_recvmmsg net/socket.c:2953 [inline]
+ __x64_sys_recvmmsg+0x153/0x170 net/socket.c:2953
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-[ 2203.657409] The buggy address belongs to the page:
-[ 2203.658648] page:0000000027a9842f refcount:1 mapcount:0
-mapping:0000000000000000 index:0x0 pfn:0x11a388
-[ 2203.658665] flags:
-0x17ffffc0001000(reserved|node=0|zone=2|lastcpupid=0x1fffff)
-[ 2203.658675] raw: 0017ffffc0001000 ffffea000468e208 ffffea000468e208
-0000000000000000
-[ 2203.658682] raw: 0000000000000000 0000000000000000 00000001ffffffff
-0000000000000000
-[ 2203.658686] page dumped because: kasan: bad access detected
+read to 0xffff888019fe7c68 of 4 bytes by task 49793 on cpu 1:
+ skb_queue_len include/linux/skbuff.h:2127 [inline]
+ unix_recvq_full net/unix/af_unix.c:229 [inline]
+ unix_wait_for_peer+0x154/0x1a0 net/unix/af_unix.c:1445
+ unix_dgram_sendmsg+0x13bc/0x14b0 net/unix/af_unix.c:2048
+ sock_sendmsg_nosec net/socket.c:724 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:747
+ ____sys_sendmsg+0x20e/0x620 net/socket.c:2503
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2557
+ __sys_sendmmsg+0x11d/0x370 net/socket.c:2643
+ __do_sys_sendmmsg net/socket.c:2672 [inline]
+ __se_sys_sendmmsg net/socket.c:2669 [inline]
+ __x64_sys_sendmmsg+0x58/0x70 net/socket.c:2669
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-To reproduce(ipvlan with IPVLAN_MODE_L3):
-Env setting:
-=======================================================
-modprobe ipvlan ipvlan_default_mode=1
-sysctl net.ipv4.conf.eth0.forwarding=1
-iptables -t nat -A POSTROUTING -s 20.0.0.0/255.255.255.0 -o eth0 -j
-MASQUERADE
-ip link add gw link eth0 type ipvlan
-ip -4 addr add 20.0.0.254/24 dev gw
-ip netns add net1
-ip link add ipv1 link eth0 type ipvlan
-ip link set ipv1 netns net1
-ip netns exec net1 ip link set ipv1 up
-ip netns exec net1 ip -4 addr add 20.0.0.4/24 dev ipv1
-ip netns exec net1 route add default gw 20.0.0.254
-ip netns exec net1 tc qdisc add dev ipv1 root netem loss 10%
-ifconfig gw up
-iptables -t filter -A OUTPUT -p tcp --dport 8888 -j REJECT --reject-with
-icmp-port-unreachable
-=======================================================
-And then excute the shell(curl any address of eth0 can reach):
+value changed: 0x0000000b -> 0x00000001
 
-for((i=1;i<=100000;i++))
-do
-        ip netns exec net1 curl x.x.x.x:8888
-done
-=======================================================
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 49793 Comm: syz-executor.0 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
 
-Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
-Signed-off-by: "t.feng" <fengtao40@huawei.com>
-Suggested-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/unix/af_unix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
-index 71fd45137ee44..6283cbc9f6ed1 100644
---- a/drivers/net/ipvlan/ipvlan_core.c
-+++ b/drivers/net/ipvlan/ipvlan_core.c
-@@ -394,6 +394,9 @@ static int ipvlan_process_v4_outbound(struct sk_buff *skb)
- 		goto err;
- 	}
- 	skb_dst_set(skb, &rt->dst);
-+
-+	memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
-+
- 	err = ip_local_out(net, skb->sk, skb);
- 	if (unlikely(net_xmit_eval(err)))
- 		dev->stats.tx_errors++;
-@@ -431,6 +434,9 @@ static int ipvlan_process_v6_outbound(struct sk_buff *skb)
- 		goto err;
- 	}
- 	skb_dst_set(skb, dst);
-+
-+	memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
-+
- 	err = ip6_local_out(net, skb->sk, skb);
- 	if (unlikely(net_xmit_eval(err)))
- 		dev->stats.tx_errors++;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 0e494902fadaa..375d4e20efd6b 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1236,7 +1236,7 @@ static long unix_wait_for_peer(struct sock *other, long timeo)
+ 
+ 	sched = !sock_flag(other, SOCK_DEAD) &&
+ 		!(other->sk_shutdown & RCV_SHUTDOWN) &&
+-		unix_recvq_full(other);
++		unix_recvq_full_lockless(other);
+ 
+ 	unix_state_unlock(other);
+ 
 -- 
 2.39.2
 
