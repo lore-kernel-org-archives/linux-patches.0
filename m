@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B67C611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:43:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D014C433EF;
-	Sun, 28 May 2023 19:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794D4611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:43:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07556C433A0;
+	Sun, 28 May 2023 19:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302996;
-	bh=T91vhwxfKDt8nLzl/QL3jMmXr7RD7t3Ds6JFl4myVEA=;
+	s=korg; t=1685302999;
+	bh=LI4b+9tFb/RqbTrXw9A7qgu7+paR6/5YEOhHq/OMQwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYcQYA19vX/Ui6XV4K/PbmlBTXxkZtJiqJdaKVqkKaarjp71sAbfk8PiZ/4hKnxSv
-	 Mo08JhtYxI09KgdHrJMH8WkbYRF2nFpPcmEJO4grdZVTv7rx+f3kDgFJjCS48Zo7R1
-	 fyMF6VJmY22cmtt5WtRgsuykTpSbQIR5GDJFY8EU=
+	b=hY+45ONQT3dViGBBWmSSXkOFLZnWZ5YZd0r4eZZvEKBLaTbzYikUYRpq3gS+s0wKB
+	 99OvFYz0owbM85H9fJNUoah/Cp2jUaKKMjhLmwGJxbh4DMo1ELqPdGFI/EfLO38jbw
+	 0wOGHwEukLYkuxZr65vOsv3HXQfIdvP4fmK1Q87U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuang Li <shuali@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jon Maloy <jmaloy@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Anand Jain <anand.jain@oracle.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/211] tipc: do not update mtu if msg_max is too small in mtu negotiation
-Date: Sun, 28 May 2023 20:10:32 +0100
-Message-Id: <20230528190846.329378083@linuxfoundation.org>
+Subject: [PATCH 5.10 086/211] btrfs: fix space cache inconsistency after error loading it from disk
+Date: Sun, 28 May 2023 20:10:07 +0100
+Message-Id: <20230528190845.756865604@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -37,90 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 56077b56cd3fb78e1c8619e29581ba25a5c55e86 ]
+[ Upstream commit 0004ff15ea26015a0a3a6182dca3b9d1df32e2b7 ]
 
-When doing link mtu negotiation, a malicious peer may send Activate msg
-with a very small mtu, e.g. 4 in Shuang's testing, without checking for
-the minimum mtu, l->mtu will be set to 4 in tipc_link_proto_rcv(), then
-n->links[bearer_id].mtu is set to 4294967228, which is a overflow of
-'4 - INT_H_SIZE - EMSG_OVERHEAD' in tipc_link_mss().
+When loading a free space cache from disk, at __load_free_space_cache(),
+if we fail to insert a bitmap entry, we still increment the number of
+total bitmaps in the btrfs_free_space_ctl structure, which is incorrect
+since we failed to add the bitmap entry. On error we then empty the
+cache by calling __btrfs_remove_free_space_cache(), which will result
+in getting the total bitmaps counter set to 1.
 
-With tipc_link.mtu = 4, tipc_link_xmit() kept printing the warning:
+A failure to load a free space cache is not critical, so if a failure
+happens we just rebuild the cache by scanning the extent tree, which
+happens at block-group.c:caching_thread(). Yet the failure will result
+in having the total bitmaps of the btrfs_free_space_ctl always bigger
+by 1 then the number of bitmap entries we have. So fix this by having
+the total bitmaps counter be incremented only if we successfully added
+the bitmap entry.
 
- tipc: Too large msg, purging xmit list 1 5 0 40 4!
- tipc: Too large msg, purging xmit list 1 15 0 60 4!
-
-And with tipc_link_entry.mtu 4294967228, a huge skb was allocated in
-named_distribute(), and when purging it in tipc_link_xmit(), a crash
-was even caused:
-
-  general protection fault, probably for non-canonical address 0x2100001011000dd: 0000 [#1] PREEMPT SMP PTI
-  CPU: 0 PID: 0 Comm: swapper/0 Kdump: loaded Not tainted 6.3.0.neta #19
-  RIP: 0010:kfree_skb_list_reason+0x7e/0x1f0
-  Call Trace:
-   <IRQ>
-   skb_release_data+0xf9/0x1d0
-   kfree_skb_reason+0x40/0x100
-   tipc_link_xmit+0x57a/0x740 [tipc]
-   tipc_node_xmit+0x16c/0x5c0 [tipc]
-   tipc_named_node_up+0x27f/0x2c0 [tipc]
-   tipc_node_write_unlock+0x149/0x170 [tipc]
-   tipc_rcv+0x608/0x740 [tipc]
-   tipc_udp_recv+0xdc/0x1f0 [tipc]
-   udp_queue_rcv_one_skb+0x33e/0x620
-   udp_unicast_rcv_skb.isra.72+0x75/0x90
-   __udp4_lib_rcv+0x56d/0xc20
-   ip_protocol_deliver_rcu+0x100/0x2d0
-
-This patch fixes it by checking the new mtu against tipc_bearer_min_mtu(),
-and not updating mtu if it is too small.
-
-Fixes: ed193ece2649 ("tipc: simplify link mtu negotiation")
-Reported-by: Shuang Li <shuali@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: a67509c30079 ("Btrfs: add a io_ctl struct and helpers for dealing with the space cache")
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+CC: stable@vger.kernel.org # 4.4+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/link.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/btrfs/free-space-cache.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/tipc/link.c b/net/tipc/link.c
-index c1e56d1f21b38..dbb1bc722ba9b 100644
---- a/net/tipc/link.c
-+++ b/net/tipc/link.c
-@@ -2164,7 +2164,7 @@ static int tipc_link_proto_rcv(struct tipc_link *l, struct sk_buff *skb,
- 	struct tipc_msg *hdr = buf_msg(skb);
- 	struct tipc_gap_ack_blks *ga = NULL;
- 	bool reply = msg_probe(hdr), retransmitted = false;
--	u32 dlen = msg_data_sz(hdr), glen = 0;
-+	u32 dlen = msg_data_sz(hdr), glen = 0, msg_max;
- 	u16 peers_snd_nxt =  msg_next_sent(hdr);
- 	u16 peers_tol = msg_link_tolerance(hdr);
- 	u16 peers_prio = msg_linkprio(hdr);
-@@ -2203,6 +2203,9 @@ static int tipc_link_proto_rcv(struct tipc_link *l, struct sk_buff *skb,
- 	switch (mtyp) {
- 	case RESET_MSG:
- 	case ACTIVATE_MSG:
-+		msg_max = msg_max_pkt(hdr);
-+		if (msg_max < tipc_bearer_min_mtu(l->net, l->bearer_id))
-+			break;
- 		/* Complete own link name with peer's interface name */
- 		if_name =  strrchr(l->name, ':') + 1;
- 		if (sizeof(l->name) - (if_name - l->name) <= TIPC_MAX_IF_NAME)
-@@ -2247,8 +2250,8 @@ static int tipc_link_proto_rcv(struct tipc_link *l, struct sk_buff *skb,
- 		l->peer_session = msg_session(hdr);
- 		l->in_session = true;
- 		l->peer_bearer_id = msg_bearer_id(hdr);
--		if (l->mtu > msg_max_pkt(hdr))
--			l->mtu = msg_max_pkt(hdr);
-+		if (l->mtu > msg_max)
-+			l->mtu = msg_max;
- 		break;
+diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
+index ba280707d5ec2..4989c60b1df9c 100644
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -794,15 +794,16 @@ static int __load_free_space_cache(struct btrfs_root *root, struct inode *inode,
+ 			}
+ 			spin_lock(&ctl->tree_lock);
+ 			ret = link_free_space(ctl, e);
+-			ctl->total_bitmaps++;
+-			ctl->op->recalc_thresholds(ctl);
+-			spin_unlock(&ctl->tree_lock);
+ 			if (ret) {
++				spin_unlock(&ctl->tree_lock);
+ 				btrfs_err(fs_info,
+ 					"Duplicate entries in free space cache, dumping");
+ 				kmem_cache_free(btrfs_free_space_cachep, e);
+ 				goto free_cache;
+ 			}
++			ctl->total_bitmaps++;
++			ctl->op->recalc_thresholds(ctl);
++			spin_unlock(&ctl->tree_lock);
+ 			list_add_tail(&e->list, &bitmaps);
+ 		}
  
- 	case STATE_MSG:
 -- 
 2.39.2
 
