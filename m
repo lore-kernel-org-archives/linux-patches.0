@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C011B569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E40CC433D2;
-	Sun, 28 May 2023 19:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4387A569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4533C433EF;
+	Sun, 28 May 2023 19:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302173;
-	bh=WXusbuxJxNLUtiC90KbgHLYQVt7wvRu9vcnskZDucdA=;
+	s=korg; t=1685302176;
+	bh=ABme0fA1hR0JaUJkzAQNv2U73OO1LdrZ+mPK12nhfO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FpSwcZjx2rJ5iBJjEDmcaYC4jX7iwfirmvYYNgJRPn1mei4IeqrkCeBV38CKJ4ptF
-	 Ch833Dhl1gZ82cZALa1jtyIKuyxJCoplS8YRm1UlonS/KVeCIQ0AeoFcPI4N1Zkk7y
-	 F9gPdZbW3AH47w8R6NPetcOy3ck9jSSNCVtdBOIs=
+	b=ArvWJPfPXshGyiQik5i+cQ0NNvu4MJNEESJcRsLkVkDzDsXC4WNRT6XJ3rGaUpKA1
+	 8tFGYCE2MQY0okkAqyfaj+EQN5cl0a6KFWj49WTQ6MPvlmkabExwAZUtmXKBlC20w5
+	 pccvEL69LJpkLyXMs89O+v8M7HSx3dMRjWOmk4b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.3 028/127] ipv{4,6}/raw: fix output xfrm lookup wrt protocol
-Date: Sun, 28 May 2023 20:10:04 +0100
-Message-Id: <20230528190837.194993963@linuxfoundation.org>
+	Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PATCH 6.3 029/127] xtensa: fix signal delivery to FDPIC process
+Date: Sun, 28 May 2023 20:10:05 +0100
+Message-Id: <20230528190837.233319608@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -34,125 +33,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Max Filippov <jcmvbkbc@gmail.com>
 
-commit 3632679d9e4f879f49949bb5b050e0de553e4739 upstream.
+commit 9c2cc74fb31ec76b8b118c97041a6a154a3ff219 upstream.
 
-With a raw socket bound to IPPROTO_RAW (ie with hdrincl enabled), the
-protocol field of the flow structure, build by raw_sendmsg() /
-rawv6_sendmsg()),  is set to IPPROTO_RAW. This breaks the ipsec policy
-lookup when some policies are defined with a protocol in the selector.
+Fetch function descriptor pointed to by the signal handler pointer from
+userspace on signal delivery and function pointer pointed to by the
+sa_restorer on return from the signal handler.
 
-For ipv6, the sin6_port field from 'struct sockaddr_in6' could be used to
-specify the protocol. Just accept all values for IPPROTO_RAW socket.
-
-For ipv4, the sin_port field of 'struct sockaddr_in' could not be used
-without breaking backward compatibility (the value of this field was never
-checked). Let's add a new kind of control message, so that the userland
-could specify which protocol is used.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-CC: stable@vger.kernel.org
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://lore.kernel.org/r/20230522120820.1319391-1-nicolas.dichtel@6wind.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: e3ddb8bbe0f8 ("xtensa: add FDPIC and static PIE support for noMMU")
+Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ip.h        |    2 ++
- include/uapi/linux/in.h |    1 +
- net/ipv4/ip_sockglue.c  |   12 +++++++++++-
- net/ipv4/raw.c          |    5 ++++-
- net/ipv6/raw.c          |    3 ++-
- 5 files changed, 20 insertions(+), 3 deletions(-)
+ arch/xtensa/kernel/signal.c |   35 +++++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
 
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -76,6 +76,7 @@ struct ipcm_cookie {
- 	__be32			addr;
- 	int			oif;
- 	struct ip_options_rcu	*opt;
-+	__u8			protocol;
- 	__u8			ttl;
- 	__s16			tos;
- 	char			priority;
-@@ -96,6 +97,7 @@ static inline void ipcm_init_sk(struct i
- 	ipcm->sockc.tsflags = inet->sk.sk_tsflags;
- 	ipcm->oif = READ_ONCE(inet->sk.sk_bound_dev_if);
- 	ipcm->addr = inet->inet_saddr;
-+	ipcm->protocol = inet->inet_num;
- }
+--- a/arch/xtensa/kernel/signal.c
++++ b/arch/xtensa/kernel/signal.c
+@@ -343,7 +343,19 @@ static int setup_frame(struct ksignal *k
+ 	struct rt_sigframe *frame;
+ 	int err = 0, sig = ksig->sig;
+ 	unsigned long sp, ra, tp, ps;
++	unsigned long handler = (unsigned long)ksig->ka.sa.sa_handler;
++	unsigned long handler_fdpic_GOT = 0;
+ 	unsigned int base;
++	bool fdpic = IS_ENABLED(CONFIG_BINFMT_ELF_FDPIC) &&
++		(current->personality & FDPIC_FUNCPTRS);
++
++	if (fdpic) {
++		unsigned long __user *fdpic_func_desc =
++			(unsigned long __user *)handler;
++		if (__get_user(handler, &fdpic_func_desc[0]) ||
++		    __get_user(handler_fdpic_GOT, &fdpic_func_desc[1]))
++			return -EFAULT;
++	}
  
- #define IPCB(skb) ((struct inet_skb_parm*)((skb)->cb))
---- a/include/uapi/linux/in.h
-+++ b/include/uapi/linux/in.h
-@@ -163,6 +163,7 @@ struct in_addr {
- #define IP_MULTICAST_ALL		49
- #define IP_UNICAST_IF			50
- #define IP_LOCAL_PORT_RANGE		51
-+#define IP_PROTOCOL			52
+ 	sp = regs->areg[1];
  
- #define MCAST_EXCLUDE	0
- #define MCAST_INCLUDE	1
---- a/net/ipv4/ip_sockglue.c
-+++ b/net/ipv4/ip_sockglue.c
-@@ -317,7 +317,14 @@ int ip_cmsg_send(struct sock *sk, struct
- 			ipc->tos = val;
- 			ipc->priority = rt_tos2priority(ipc->tos);
- 			break;
+@@ -373,20 +385,26 @@ static int setup_frame(struct ksignal *k
+ 	err |= __copy_to_user(&frame->uc.uc_sigmask, set, sizeof(*set));
+ 
+ 	if (ksig->ka.sa.sa_flags & SA_RESTORER) {
+-		ra = (unsigned long)ksig->ka.sa.sa_restorer;
++		if (fdpic) {
++			unsigned long __user *fdpic_func_desc =
++				(unsigned long __user *)ksig->ka.sa.sa_restorer;
++
++			err |= __get_user(ra, fdpic_func_desc);
++		} else {
++			ra = (unsigned long)ksig->ka.sa.sa_restorer;
++		}
+ 	} else {
+ 
+ 		/* Create sys_rt_sigreturn syscall in stack frame */
+ 
+ 		err |= gen_return_code(frame->retcode);
 -
-+		case IP_PROTOCOL:
-+			if (cmsg->cmsg_len != CMSG_LEN(sizeof(int)))
-+				return -EINVAL;
-+			val = *(int *)CMSG_DATA(cmsg);
-+			if (val < 1 || val > 255)
-+				return -EINVAL;
-+			ipc->protocol = val;
-+			break;
- 		default:
- 			return -EINVAL;
- 		}
-@@ -1761,6 +1768,9 @@ int do_ip_getsockopt(struct sock *sk, in
- 	case IP_LOCAL_PORT_RANGE:
- 		val = inet->local_port_range.hi << 16 | inet->local_port_range.lo;
- 		break;
-+	case IP_PROTOCOL:
-+		val = inet_sk(sk)->inet_num;
-+		break;
- 	default:
- 		sockopt_release_sock(sk);
- 		return -ENOPROTOOPT;
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -532,6 +532,9 @@ static int raw_sendmsg(struct sock *sk,
+-		if (err) {
+-			return -EFAULT;
+-		}
+ 		ra = (unsigned long) frame->retcode;
  	}
  
- 	ipcm_init_sk(&ipc, inet);
-+	/* Keep backward compat */
-+	if (hdrincl)
-+		ipc.protocol = IPPROTO_RAW;
+-	/* 
++	if (err)
++		return -EFAULT;
++
++	/*
+ 	 * Create signal handler execution context.
+ 	 * Return context not modified until this point.
+ 	 */
+@@ -394,8 +412,7 @@ static int setup_frame(struct ksignal *k
+ 	/* Set up registers for signal handler; preserve the threadptr */
+ 	tp = regs->threadptr;
+ 	ps = regs->ps;
+-	start_thread(regs, (unsigned long) ksig->ka.sa.sa_handler,
+-		     (unsigned long) frame);
++	start_thread(regs, handler, (unsigned long)frame);
  
- 	if (msg->msg_controllen) {
- 		err = ip_cmsg_send(sk, msg, &ipc, false);
-@@ -599,7 +602,7 @@ static int raw_sendmsg(struct sock *sk,
+ 	/* Set up a stack frame for a call4 if userspace uses windowed ABI */
+ 	if (ps & PS_WOE_MASK) {
+@@ -413,6 +430,8 @@ static int setup_frame(struct ksignal *k
+ 	regs->areg[base + 4] = (unsigned long) &frame->uc;
+ 	regs->threadptr = tp;
+ 	regs->ps = ps;
++	if (fdpic)
++		regs->areg[base + 11] = handler_fdpic_GOT;
  
- 	flowi4_init_output(&fl4, ipc.oif, ipc.sockc.mark, tos,
- 			   RT_SCOPE_UNIVERSE,
--			   hdrincl ? IPPROTO_RAW : sk->sk_protocol,
-+			   hdrincl ? ipc.protocol : sk->sk_protocol,
- 			   inet_sk_flowi_flags(sk) |
- 			    (hdrincl ? FLOWI_FLAG_KNOWN_NH : 0),
- 			   daddr, saddr, 0, 0, sk->sk_uid);
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -793,7 +793,8 @@ static int rawv6_sendmsg(struct sock *sk
- 
- 		if (!proto)
- 			proto = inet->inet_num;
--		else if (proto != inet->inet_num)
-+		else if (proto != inet->inet_num &&
-+			 inet->inet_num != IPPROTO_RAW)
- 			return -EINVAL;
- 
- 		if (proto > 255)
+ 	pr_debug("SIG rt deliver (%s:%d): signal=%d sp=%p pc=%08lx\n",
+ 		 current->comm, current->pid, sig, frame, regs->pc);
 
 
