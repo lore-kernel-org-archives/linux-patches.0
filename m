@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B873F569E
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:12:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C53FC433EF;
-	Sun, 28 May 2023 19:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396BC569E
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:12:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC37C433D2;
+	Sun, 28 May 2023 19:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301176;
-	bh=RuYs2oxVaw26xXUG6UGRExQkAqtgvH0zeAidQM9doPw=;
+	s=korg; t=1685301179;
+	bh=NWcAK2jZaWIg8oh2/zqFwf5x7GS/Tjlh3ak4HK9Z0bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkPluSiqYwketPi+KlGBsmKsP4Qw89RSqVqgVS7mXAQAyjFJOojCRh1YX1qw0Pfu9
-	 28zBtuhHkR1k9SkHLBlABzoKSZh1j1N4Yp7laUYMt/NGL0Vp+LgeCOVD7i7d4hit0h
-	 OQj5s2DkbHeH/66BYj0jeE27LBB1coj4h2t8EvjE=
+	b=woPJWlu55dndm+DCsfmNau9wUUcE3cvSVkud/4X33z22hHXLK5iIyvBSVWZEjMx3c
+	 SznIX3ESbhtul7otYqDXwk6u+Wj9cQosGJRMtVyBXi1uGyWqTk83f79c3I3Li059XH
+	 JOQ+nNNZNlJnj1WUaC6oAUM1OyR4mlJUufcBw+Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Hector Martin <marcan@marcan.st>,
-	Kalle Valo <kvalo@kernel.org>,
+	syzbot+4fec412f59eba8c01b77@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 13/86] wifi: brcmfmac: cfg80211: Pass the PMK in binary instead of hex
-Date: Sun, 28 May 2023 20:09:47 +0100
-Message-Id: <20230528190829.039878931@linuxfoundation.org>
+Subject: [PATCH 4.14 14/86] ext2: Check block size validity during mount
+Date: Sun, 28 May 2023 20:09:48 +0100
+Message-Id: <20230528190829.079586890@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -37,55 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hector Martin <marcan@marcan.st>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 89b89e52153fda2733562776c7c9d9d3ebf8dd6d ]
+[ Upstream commit 62aeb94433fcec80241754b70d0d1836d5926b0a ]
 
-Apparently the hex passphrase mechanism does not work on newer
-chips/firmware (e.g. BCM4387). It seems there was a simple way of
-passing it in binary all along, so use that and avoid the hexification.
+Check that log of block size stored in the superblock has sensible
+value. Otherwise the shift computing the block size can overflow leading
+to undefined behavior.
 
-OpenBSD has been doing it like this from the beginning, so this should
-work on all chips.
-
-Also clear the structure before setting the PMK. This was leaking
-uninitialized stack contents to the device.
-
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230214092423.15175-6-marcan@marcan.st
+Reported-by: syzbot+4fec412f59eba8c01b77@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ fs/ext2/ext2.h  | 1 +
+ fs/ext2/super.c | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index df0e48e4cf5b3..4abb948f607fa 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -1349,13 +1349,14 @@ static u16 brcmf_map_fw_linkdown_reason(const struct brcmf_event_msg *e)
- static int brcmf_set_pmk(struct brcmf_if *ifp, const u8 *pmk_data, u16 pmk_len)
- {
- 	struct brcmf_wsec_pmk_le pmk;
--	int i, err;
-+	int err;
-+
-+	memset(&pmk, 0, sizeof(pmk));
+diff --git a/fs/ext2/ext2.h b/fs/ext2/ext2.h
+index 032295e1d3865..b500fed96a692 100644
+--- a/fs/ext2/ext2.h
++++ b/fs/ext2/ext2.h
+@@ -177,6 +177,7 @@ static inline struct ext2_sb_info *EXT2_SB(struct super_block *sb)
+ #define EXT2_MIN_BLOCK_SIZE		1024
+ #define	EXT2_MAX_BLOCK_SIZE		4096
+ #define EXT2_MIN_BLOCK_LOG_SIZE		  10
++#define EXT2_MAX_BLOCK_LOG_SIZE		  16
+ #define EXT2_BLOCK_SIZE(s)		((s)->s_blocksize)
+ #define	EXT2_ADDR_PER_BLOCK(s)		(EXT2_BLOCK_SIZE(s) / sizeof (__u32))
+ #define EXT2_BLOCK_SIZE_BITS(s)		((s)->s_blocksize_bits)
+diff --git a/fs/ext2/super.c b/fs/ext2/super.c
+index 5f7079b65426c..7ca9fb0bfc324 100644
+--- a/fs/ext2/super.c
++++ b/fs/ext2/super.c
+@@ -965,6 +965,13 @@ static int ext2_fill_super(struct super_block *sb, void *data, int silent)
+ 		goto failed_mount;
+ 	}
  
--	/* convert to firmware key format */
--	pmk.key_len = cpu_to_le16(pmk_len << 1);
--	pmk.flags = cpu_to_le16(BRCMF_WSEC_PASSPHRASE);
--	for (i = 0; i < pmk_len; i++)
--		snprintf(&pmk.key[2 * i], 3, "%02x", pmk_data[i]);
-+	/* pass pmk directly */
-+	pmk.key_len = cpu_to_le16(pmk_len);
-+	pmk.flags = cpu_to_le16(0);
-+	memcpy(pmk.key, pmk_data, pmk_len);
++	if (le32_to_cpu(es->s_log_block_size) >
++	    (EXT2_MAX_BLOCK_LOG_SIZE - BLOCK_SIZE_BITS)) {
++		ext2_msg(sb, KERN_ERR,
++			 "Invalid log block size: %u",
++			 le32_to_cpu(es->s_log_block_size));
++		goto failed_mount;
++	}
+ 	blocksize = BLOCK_SIZE << le32_to_cpu(sbi->s_es->s_log_block_size);
  
- 	/* store psk in firmware */
- 	err = brcmf_fil_cmd_data_set(ifp, BRCMF_C_SET_WSEC_PMK,
+ 	if (sbi->s_mount_opt & EXT2_MOUNT_DAX) {
 -- 
 2.39.2
 
