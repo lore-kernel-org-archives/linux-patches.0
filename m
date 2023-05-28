@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CADC611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E9AC4339E;
-	Sun, 28 May 2023 19:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12D2611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C53C433D2;
+	Sun, 28 May 2023 19:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301779;
-	bh=GCHkReou4jJjNT5cqxJZQuHk4/KtdGj+DRNUnUpQ64U=;
+	s=korg; t=1685301781;
+	bh=p0q0mMosvivQT2FFQw0lZPZ/WTgoCKn7jHt41ML0rco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMYp2NaJ/iY+bwi4mp5s9/Ye/ZjySGNaodLIFaXaeyrz/mflCOSECLHg5mkR+8LQA
-	 wH8Ri7ojUp2c6RqstM3VJUp6HPBrPd6/kPFrj1LQX/cHbSrlWxrYLDkyPLxP92YfM+
-	 eMbU72FBHeEaYtuu0pB5EEvi2GxEo9CGXKZO/CqY=
+	b=vdXmeLbmfcDq0W5L5+x/ip8E6/oX/wB0mE2BbiJuTznqmYU2E+9zlvva4AGoEew1L
+	 f3g6bEYc7lFE2D3ttNdpI8kLFEXFRcTZcTxdMYtGvhCwVxC8KFNrcabn85vMHCCV1n
+	 8MZHpQAlpBbQR9dSwUsFckKd5HaMFqRabOGQSixk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+45d4691b1ed3c48eba05@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 032/161] gfs2: Fix inode height consistency check
-Date: Sun, 28 May 2023 20:09:16 +0100
-Message-Id: <20230528190838.212423384@linuxfoundation.org>
+Subject: [PATCH 5.4 033/161] ext4: set goal start correctly in ext4_mb_normalize_request
+Date: Sun, 28 May 2023 20:09:17 +0100
+Message-Id: <20230528190838.243636442@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,46 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit cfcdb5bad34f600aed7613c3c1a5e618111f77b7 ]
+[ Upstream commit b07ffe6927c75d99af534d685282ea188d9f71a6 ]
 
-The maximum allowed height of an inode's metadata tree depends on the
-filesystem block size; it is lower for bigger-block filesystems.  When
-reading in an inode, make sure that the height doesn't exceed the
-maximum allowed height.
+We need to set ac_g_ex to notify the goal start used in
+ext4_mb_find_by_goal. Set ac_g_ex instead of ac_f_ex in
+ext4_mb_normalize_request.
+Besides we should assure goal start is in range [first_data_block,
+blocks_count) as ext4_mb_initialize_context does.
 
-Arrays like sd_heightsize are sized to be big enough for any filesystem
-block size; they will often be slightly bigger than what's needed for a
-specific filesystem.
+[ Added a check to make sure size is less than ar->pright; otherwise
+  we could end up passing an underflowed value of ar->pright - size to
+  ext4_get_group_no_and_offset(), which will trigger a BUG_ON later on.
+  - TYT ]
 
-Reported-by: syzbot+45d4691b1ed3c48eba05@syzkaller.appspotmail.com
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20230303172120.3800725-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 69106a1545fad..092223a8b1201 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -362,6 +362,7 @@ static int inode_go_demote_ok(const struct gfs2_glock *gl)
- 
- static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index caab9781bee7d..bdab18942e302 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3091,6 +3091,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 				struct ext4_allocation_request *ar)
  {
-+	struct gfs2_sbd *sdp = GFS2_SB(&ip->i_inode);
- 	const struct gfs2_dinode *str = buf;
- 	struct timespec64 atime;
- 	u16 height, depth;
-@@ -401,7 +402,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	/* i_diskflags and i_eattr must be set before gfs2_set_inode_flags() */
- 	gfs2_set_inode_flags(&ip->i_inode);
- 	height = be16_to_cpu(str->di_height);
--	if (unlikely(height > GFS2_MAX_META_HEIGHT))
-+	if (unlikely(height > sdp->sd_max_height))
- 		goto corrupt;
- 	ip->i_height = (u8)height;
+ 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
++	struct ext4_super_block *es = sbi->s_es;
+ 	int bsbits, max;
+ 	ext4_lblk_t end;
+ 	loff_t size, start_off;
+@@ -3271,18 +3272,21 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 	ac->ac_g_ex.fe_len = EXT4_NUM_B2C(sbi, size);
+ 
+ 	/* define goal start in order to merge */
+-	if (ar->pright && (ar->lright == (start + size))) {
++	if (ar->pright && (ar->lright == (start + size)) &&
++	    ar->pright >= size &&
++	    ar->pright - size >= le32_to_cpu(es->s_first_data_block)) {
+ 		/* merge to the right */
+ 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pright - size,
+-						&ac->ac_f_ex.fe_group,
+-						&ac->ac_f_ex.fe_start);
++						&ac->ac_g_ex.fe_group,
++						&ac->ac_g_ex.fe_start);
+ 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
+ 	}
+-	if (ar->pleft && (ar->lleft + 1 == start)) {
++	if (ar->pleft && (ar->lleft + 1 == start) &&
++	    ar->pleft + 1 < ext4_blocks_count(es)) {
+ 		/* merge to the left */
+ 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pleft + 1,
+-						&ac->ac_f_ex.fe_group,
+-						&ac->ac_f_ex.fe_start);
++						&ac->ac_g_ex.fe_group,
++						&ac->ac_g_ex.fe_start);
+ 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
+ 	}
  
 -- 
 2.39.2
