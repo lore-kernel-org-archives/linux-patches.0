@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43982611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:19:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC9EC433EF;
-	Sun, 28 May 2023 19:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E85611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:19:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D395C433D2;
+	Sun, 28 May 2023 19:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301592;
-	bh=Cc1VnL6Phn3nTT6nMn48qDkdPiRcIU1+m86pS5D0sxw=;
+	s=korg; t=1685301594;
+	bh=hs0yN7OBybA8SMRvCaZzmnOGpY14uevurk2UC/iSmcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwSStuLAhZqJ4Hx3XQKoJcbsRj5IKJGT9hpxkA5++5z7fgnD4l/4zY0PY/p3NXsG/
-	 l14to51mVdYulOemvkXHteU1bsADJRShjJqoxzwH1KnRFYA3GUb+4J2QWaBr3KhO35
-	 mKFVF6xsHCWRy9dS3df3R6SaV8uuWlGBXQrkQvSc=
+	b=cPpHigHebrJh+Iigim+L2N/KTv2ruIxThJcB3WL3deuHTE9nmZRtrnzw6YxtUEWKY
+	 tc36ZWPgZIujKeYQ7GECiISWSsmHkhvAhrN6InQDGRqVlcVqKsS2ZT8jrK9rUypCdM
+	 Gd+SUgPfIMb8b6uUxpva06IINgsDO43qJrAQ9nE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 083/132] netfilter: nf_tables: validate NFTA_SET_ELEM_OBJREF based on NFT_SET_OBJECT flag
-Date: Sun, 28 May 2023 20:10:22 +0100
-Message-Id: <20230528190836.088879002@linuxfoundation.org>
+	Hui Wang <hui.wang@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	msd <msd.mmq@gmail.com>
+Subject: [PATCH 4.19 092/132] ALSA: hda/realtek: Fix the mic type detection issue for ASUS G551JW
+Date: Sun, 28 May 2023 20:10:31 +0100
+Message-Id: <20230528190836.432481429@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -34,54 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ 5a2f3dc31811e93be15522d9eb13ed61460b76c8 ]
+[ Upstream commit a3fd1a986e499a06ac5ef95c3a39aa4611e7444c ]
 
-If the NFTA_SET_ELEM_OBJREF netlink attribute is present and
-NFT_SET_OBJECT flag is set on, report EINVAL.
+We need to define the codec pin 0x1b to be the mic, but somehow
+the mic doesn't support hot plugging detection, and Windows also has
+this issue, so we set it to phantom headset-mic.
 
-Move existing sanity check earlier to validate that NFT_SET_OBJECT
-requires NFTA_SET_ELEM_OBJREF.
+Also the determine_headset_type() often returns the omtp type by a
+mistake when we plug a ctia headset, this makes the mic can't record
+sound at all. Because most of the headset are ctia type nowadays and
+some machines have the fixed ctia type audio jack, it is possible this
+machine has the fixed ctia jack too. Here we set this mic jack to
+fixed ctia type, this could avoid the mic type detection mistake and
+make the ctia headset work stable.
 
-Fixes: 8aeff920dcc9 ("netfilter: nf_tables: add stateful object reference to set elements")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=214537
+Reported-and-tested-by: msd <msd.mmq@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Link: https://lore.kernel.org/r/20211012114748.5238-1-hui.wang@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 90670ef774a8 ("ALSA: hda/realtek: Add a quirk for HP EliteDesk 805")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index ab1e0f0962a2b..5cafa90f9d807 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4440,6 +4440,15 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 			return -EINVAL;
- 	}
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index faef696b17989..1f535504ee907 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -8650,6 +8650,9 @@ enum {
+ 	ALC671_FIXUP_HP_HEADSET_MIC2,
+ 	ALC662_FIXUP_ACER_X2660G_HEADSET_MODE,
+ 	ALC662_FIXUP_ACER_NITRO_HEADSET_MODE,
++	ALC668_FIXUP_ASUS_NO_HEADSET_MIC,
++	ALC668_FIXUP_HEADSET_MIC,
++	ALC668_FIXUP_MIC_DET_COEF,
+ };
  
-+	if (set->flags & NFT_SET_OBJECT) {
-+		if (!nla[NFTA_SET_ELEM_OBJREF] &&
-+		    !(flags & NFT_SET_ELEM_INTERVAL_END))
-+			return -EINVAL;
-+	} else {
-+		if (nla[NFTA_SET_ELEM_OBJREF])
-+			return -EINVAL;
-+	}
-+
- 	if ((flags & NFT_SET_ELEM_INTERVAL_END) &&
- 	     (nla[NFTA_SET_ELEM_DATA] ||
- 	      nla[NFTA_SET_ELEM_OBJREF] ||
-@@ -4474,10 +4483,6 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	}
+ static const struct hda_fixup alc662_fixups[] = {
+@@ -9026,6 +9029,29 @@ static const struct hda_fixup alc662_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC662_FIXUP_USI_FUNC
+ 	},
++	[ALC668_FIXUP_ASUS_NO_HEADSET_MIC] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1b, 0x04a1112c },
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC668_FIXUP_HEADSET_MIC
++	},
++	[ALC668_FIXUP_HEADSET_MIC] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc269_fixup_headset_mic,
++		.chained = true,
++		.chain_id = ALC668_FIXUP_MIC_DET_COEF
++	},
++	[ALC668_FIXUP_MIC_DET_COEF] = {
++		.type = HDA_FIXUP_VERBS,
++		.v.verbs = (const struct hda_verb[]) {
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x15 },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x0d60 },
++			{}
++		},
++	},
+ };
  
- 	if (nla[NFTA_SET_ELEM_OBJREF] != NULL) {
--		if (!(set->flags & NFT_SET_OBJECT)) {
--			err = -EINVAL;
--			goto err2;
--		}
- 		obj = nft_obj_lookup(ctx->table, nla[NFTA_SET_ELEM_OBJREF],
- 				     set->objtype, genmask);
- 		if (IS_ERR(obj)) {
+ static const struct snd_pci_quirk alc662_fixup_tbl[] = {
+@@ -9060,6 +9086,7 @@ static const struct snd_pci_quirk alc662_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x15a7, "ASUS UX51VZH", ALC662_FIXUP_BASS_16),
+ 	SND_PCI_QUIRK(0x1043, 0x177d, "ASUS N551", ALC668_FIXUP_ASUS_Nx51),
+ 	SND_PCI_QUIRK(0x1043, 0x17bd, "ASUS N751", ALC668_FIXUP_ASUS_Nx51),
++	SND_PCI_QUIRK(0x1043, 0x185d, "ASUS G551JW", ALC668_FIXUP_ASUS_NO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1963, "ASUS X71SL", ALC662_FIXUP_ASUS_MODE8),
+ 	SND_PCI_QUIRK(0x1043, 0x1b73, "ASUS N55SF", ALC662_FIXUP_BASS_16),
+ 	SND_PCI_QUIRK(0x1043, 0x1bf3, "ASUS N76VZ", ALC662_FIXUP_BASS_MODE4_CHMAP),
 -- 
 2.39.2
 
