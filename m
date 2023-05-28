@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E2D569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED76C433D2;
-	Sun, 28 May 2023 19:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477AD569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C754EC433EF;
+	Sun, 28 May 2023 19:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302141;
-	bh=ulAiqf3Wh/sKNdNcNnHeYS83HpokaczVlx0v7YCWL7I=;
+	s=korg; t=1685302144;
+	bh=3Uf595Jknc3eLB79ThMn9PGVeA3zUR2SdQBQF6VlH5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vuyLMveunCksn2mgYkquhyOwR8Db1kMu5WSIf7Ru8Nm2hSNVfdY8N5zCjpiTapzs/
-	 YWd5KeAWc2LUBog1oVecu3tET3+99e9g7ue14DnaFMhx0eHYqZha/CoWEL2DqvMbrr
-	 2kRh6GFCJd3029qaFIBXZB0ujxUDIi6UaHILZS3I=
+	b=BYnRVsZrm52Mq7STBgO/cJsp/s/eJFkc3qKXE8HPC1w8kH5yGF1NNNNr4VfT1SOnu
+	 Wkl0dX1/kXUqPSETsIYmjFp4ivQ6zNcC0qs5PVqEHVlXmlHMgxNnjqBqrSOaX4ld0E
+	 nCIq4VnVEQvaUWXcsAi06Nj/8+OsMy/nN2UBZRM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kris Karas (Bug Reporting)" <bugs-a21@moonlit-rail.com>,
-	Woody Suwalski <terraluna977@gmail.com>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 016/127] cifs: fix smb1 mount regression
-Date: Sun, 28 May 2023 20:09:52 +0100
-Message-Id: <20230528190836.750455510@linuxfoundation.org>
+	Adam Stylinski <kungfujesus06@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.3 017/127] ALSA: hda/ca0132: add quirk for EVGA X299 DARK
+Date: Sun, 28 May 2023 20:09:53 +0100
+Message-Id: <20230528190836.786646303@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -36,40 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Adam Stylinski <kungfujesus06@gmail.com>
 
-commit 72a7804a667eeac98888610521179f0418883158 upstream.
+commit 7843380d07bbeffd3ce6504e73cf61f840ae76ca upstream.
 
-cifs.ko maps NT_STATUS_NOT_FOUND to -EIO when SMB1 servers couldn't
-resolve referral paths.  Proceed to tree connect when we get -EIO from
-dfs_get_referral() as well.
+This quirk is necessary for surround and other DSP effects to work
+with the onboard ca0132 based audio chipset for the EVGA X299 dark
+mainboard.
 
-Reported-by: Kris Karas (Bug Reporting) <bugs-a21@moonlit-rail.com>
-Tested-by: Woody Suwalski <terraluna977@gmail.com>
-Fixes: 8e3554150d6c ("cifs: fix sharing of DFS connections")
-Cc: stable@vger.kernel.org # v6.2+
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Adam Stylinski <kungfujesus06@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=67071
+Link: https://lore.kernel.org/r/ZGopOe19T1QOwizS@eggsbenedict.adamsnet
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/dfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_ca0132.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/cifs/dfs.c b/fs/cifs/dfs.c
-index a93dbca1411b..2f93bf8c3325 100644
---- a/fs/cifs/dfs.c
-+++ b/fs/cifs/dfs.c
-@@ -303,7 +303,7 @@ int dfs_mount_share(struct cifs_mount_ctx *mnt_ctx, bool *isdfs)
- 	if (!nodfs) {
- 		rc = dfs_get_referral(mnt_ctx, ctx->UNC + 1, NULL, NULL);
- 		if (rc) {
--			if (rc != -ENOENT && rc != -EOPNOTSUPP)
-+			if (rc != -ENOENT && rc != -EOPNOTSUPP && rc != -EIO)
- 				goto out;
- 			nodfs = true;
- 		}
--- 
-2.40.1
-
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -1306,6 +1306,7 @@ static const struct snd_pci_quirk ca0132
+ 	SND_PCI_QUIRK(0x1458, 0xA026, "Gigabyte G1.Sniper Z97", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x1458, 0xA036, "Gigabyte GA-Z170X-Gaming 7", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x3842, 0x1038, "EVGA X99 Classified", QUIRK_R3DI),
++	SND_PCI_QUIRK(0x3842, 0x104b, "EVGA X299 Dark", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x3842, 0x1055, "EVGA Z390 DARK", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x1102, 0x0013, "Recon3D", QUIRK_R3D),
+ 	SND_PCI_QUIRK(0x1102, 0x0018, "Recon3D", QUIRK_R3D),
 
 
