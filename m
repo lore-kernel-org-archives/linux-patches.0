@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACE8611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45302C433EF;
-	Sun, 28 May 2023 19:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E727611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF72EC433D2;
+	Sun, 28 May 2023 19:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302755;
-	bh=2jHSGTNis6eoirjI6LmQoch4FleTBskUs1PCt+f+Wcw=;
+	s=korg; t=1685302758;
+	bh=YTMabrVIr0q+z0cVkpwJ35twOdEaWYntl3cCPnUiMqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h93x2mSgYxJn2oMDMVOaE5R5zACe1POeLLb9pOSz71ST6T2quQPTvS013a3V93quR
-	 t5j6gembsaMC9TwJ4RWI6puekbewnGo8Qjo6HXrXtKmlcer/OyA3UZFhqoagACqdaL
-	 7S1fnYwDMUDHDizRs0alCo6tmv33A9KBEA1lwjGU=
+	b=i22L46Kyc/j/V+JrwMXVORM8D2pmyNaet3QOghUWE311fBl+AGS1mJ0fwuo1y6Sbh
+	 HCfiEwwHDd0E9tBolE7i9WZC/CmEdIQ1howeaycs693B2En202lvkSXDm0VtiHamoU
+	 yIIv0eLNFxumH+n3NY62pM5GQHtu7sPoM2cfS+WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/211] tcp: factor out __tcp_close() helper
-Date: Sun, 28 May 2023 20:08:54 +0100
-Message-Id: <20230528190843.853097084@linuxfoundation.org>
+Subject: [PATCH 5.10 014/211] tcp: add annotations around sk->sk_shutdown accesses
+Date: Sun, 28 May 2023 20:08:55 +0100
+Message-Id: <20230528190843.878657647@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,66 +36,156 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 77c3c95637526f1e4330cc9a4b2065f668c2c4fe ]
+[ Upstream commit e14cadfd80d76f01bfaa1a8d745b1db19b57d6be ]
 
-unlocked version of protocol level close, will be used by
-MPTCP to allow decouple orphaning and subflow level close.
+Now sk->sk_shutdown is no longer a bitfield, we can add
+standard READ_ONCE()/WRITE_ONCE() annotations to silence
+KCSAN reports like the following:
 
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e14cadfd80d7 ("tcp: add annotations around sk->sk_shutdown accesses")
+BUG: KCSAN: data-race in tcp_disconnect / tcp_poll
+
+write to 0xffff88814588582c of 1 bytes by task 3404 on cpu 1:
+tcp_disconnect+0x4d6/0xdb0 net/ipv4/tcp.c:3121
+__inet_stream_connect+0x5dd/0x6e0 net/ipv4/af_inet.c:715
+inet_stream_connect+0x48/0x70 net/ipv4/af_inet.c:727
+__sys_connect_file net/socket.c:2001 [inline]
+__sys_connect+0x19b/0x1b0 net/socket.c:2018
+__do_sys_connect net/socket.c:2028 [inline]
+__se_sys_connect net/socket.c:2025 [inline]
+__x64_sys_connect+0x41/0x50 net/socket.c:2025
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffff88814588582c of 1 bytes by task 3374 on cpu 0:
+tcp_poll+0x2e6/0x7d0 net/ipv4/tcp.c:562
+sock_poll+0x253/0x270 net/socket.c:1383
+vfs_poll include/linux/poll.h:88 [inline]
+io_poll_check_events io_uring/poll.c:281 [inline]
+io_poll_task_func+0x15a/0x820 io_uring/poll.c:333
+handle_tw_list io_uring/io_uring.c:1184 [inline]
+tctx_task_work+0x1fe/0x4d0 io_uring/io_uring.c:1246
+task_work_run+0x123/0x160 kernel/task_work.c:179
+get_signal+0xe64/0xff0 kernel/signal.c:2635
+arch_do_signal_or_restart+0x89/0x2a0 arch/x86/kernel/signal.c:306
+exit_to_user_mode_loop+0x6f/0xe0 kernel/entry/common.c:168
+exit_to_user_mode_prepare+0x6c/0xb0 kernel/entry/common.c:204
+__syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
+syscall_exit_to_user_mode+0x26/0x140 kernel/entry/common.c:297
+do_syscall_64+0x4d/0xc0 arch/x86/entry/common.c:86
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x03 -> 0x00
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h | 1 +
- net/ipv4/tcp.c    | 9 +++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ net/ipv4/af_inet.c   |  2 +-
+ net/ipv4/tcp.c       | 14 ++++++++------
+ net/ipv4/tcp_input.c |  4 ++--
+ 3 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 9a8d98639b20f..d213b86a48227 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -381,6 +381,7 @@ void tcp_update_metrics(struct sock *sk);
- void tcp_init_metrics(struct sock *sk);
- void tcp_metrics_init(void);
- bool tcp_peer_is_proven(struct request_sock *req, struct dst_entry *dst);
-+void __tcp_close(struct sock *sk, long timeout);
- void tcp_close(struct sock *sk, long timeout);
- void tcp_init_sock(struct sock *sk);
- void tcp_init_transfer(struct sock *sk, int bpf_op, struct sk_buff *skb);
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index 8dab0d311aba3..800c2c7607e1a 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -884,7 +884,7 @@ int inet_shutdown(struct socket *sock, int how)
+ 		   EPOLLHUP, even on eg. unconnected UDP sockets -- RR */
+ 		fallthrough;
+ 	default:
+-		sk->sk_shutdown |= how;
++		WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | how);
+ 		if (sk->sk_prot->shutdown)
+ 			sk->sk_prot->shutdown(sk, how);
+ 		break;
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 6a0560a735ce4..3666fa307d0f0 100644
+index 3666fa307d0f0..eecce63ba25e3 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -2510,13 +2510,12 @@ bool tcp_check_oom(struct sock *sk, int shift)
- 	return too_many_orphans || out_of_socket_memory;
- }
+@@ -506,6 +506,7 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
+ 	__poll_t mask;
+ 	struct sock *sk = sock->sk;
+ 	const struct tcp_sock *tp = tcp_sk(sk);
++	u8 shutdown;
+ 	int state;
  
--void tcp_close(struct sock *sk, long timeout)
-+void __tcp_close(struct sock *sk, long timeout)
- {
- 	struct sk_buff *skb;
+ 	sock_poll_wait(file, sock, wait);
+@@ -548,9 +549,10 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
+ 	 * NOTE. Check for TCP_CLOSE is added. The goal is to prevent
+ 	 * blocking on fresh not-connected or disconnected socket. --ANK
+ 	 */
+-	if (sk->sk_shutdown == SHUTDOWN_MASK || state == TCP_CLOSE)
++	shutdown = READ_ONCE(sk->sk_shutdown);
++	if (shutdown == SHUTDOWN_MASK || state == TCP_CLOSE)
+ 		mask |= EPOLLHUP;
+-	if (sk->sk_shutdown & RCV_SHUTDOWN)
++	if (shutdown & RCV_SHUTDOWN)
+ 		mask |= EPOLLIN | EPOLLRDNORM | EPOLLRDHUP;
+ 
+ 	/* Connected or passive Fast Open socket? */
+@@ -566,7 +568,7 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
+ 		if (tcp_stream_is_readable(tp, target, sk))
+ 			mask |= EPOLLIN | EPOLLRDNORM;
+ 
+-		if (!(sk->sk_shutdown & SEND_SHUTDOWN)) {
++		if (!(shutdown & SEND_SHUTDOWN)) {
+ 			if (__sk_stream_is_writeable(sk, 1)) {
+ 				mask |= EPOLLOUT | EPOLLWRNORM;
+ 			} else {  /* send SIGIO later */
+@@ -2516,7 +2518,7 @@ void __tcp_close(struct sock *sk, long timeout)
  	int data_was_unread = 0;
  	int state;
  
--	lock_sock(sk);
- 	sk->sk_shutdown = SHUTDOWN_MASK;
+-	sk->sk_shutdown = SHUTDOWN_MASK;
++	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
  
  	if (sk->sk_state == TCP_LISTEN) {
-@@ -2680,6 +2679,12 @@ void tcp_close(struct sock *sk, long timeout)
- out:
- 	bh_unlock_sock(sk);
- 	local_bh_enable();
-+}
-+
-+void tcp_close(struct sock *sk, long timeout)
-+{
-+	lock_sock(sk);
-+	__tcp_close(sk, timeout);
- 	release_sock(sk);
- 	sock_put(sk);
- }
+ 		tcp_set_state(sk, TCP_CLOSE);
+@@ -2782,7 +2784,7 @@ int tcp_disconnect(struct sock *sk, int flags)
+ 	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
+ 		inet_reset_saddr(sk);
+ 
+-	sk->sk_shutdown = 0;
++	WRITE_ONCE(sk->sk_shutdown, 0);
+ 	sock_reset_flag(sk, SOCK_DONE);
+ 	tp->srtt_us = 0;
+ 	tp->mdev_us = jiffies_to_usecs(TCP_TIMEOUT_INIT);
+@@ -4169,7 +4171,7 @@ void tcp_done(struct sock *sk)
+ 	if (req)
+ 		reqsk_fastopen_remove(sk, req, false);
+ 
+-	sk->sk_shutdown = SHUTDOWN_MASK;
++	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
+ 
+ 	if (!sock_flag(sk, SOCK_DEAD))
+ 		sk->sk_state_change(sk);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 541758cd0b81f..b98b7920c4029 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4323,7 +4323,7 @@ void tcp_fin(struct sock *sk)
+ 
+ 	inet_csk_schedule_ack(sk);
+ 
+-	sk->sk_shutdown |= RCV_SHUTDOWN;
++	WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | RCV_SHUTDOWN);
+ 	sock_set_flag(sk, SOCK_DONE);
+ 
+ 	switch (sk->sk_state) {
+@@ -6504,7 +6504,7 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
+ 			break;
+ 
+ 		tcp_set_state(sk, TCP_FIN_WAIT2);
+-		sk->sk_shutdown |= SEND_SHUTDOWN;
++		WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | SEND_SHUTDOWN);
+ 
+ 		sk_dst_confirm(sk);
+ 
 -- 
 2.39.2
 
