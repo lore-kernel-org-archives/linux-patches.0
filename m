@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65868569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E50A3C433EF;
-	Sun, 28 May 2023 19:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7098569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517E2C433EF;
+	Sun, 28 May 2023 19:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301819;
-	bh=toR2bLyq3hM+oXjKQG0SLyCCD/d68pj9onuC5lV3trw=;
+	s=korg; t=1685301821;
+	bh=V+SRqTeOIQkCJr1YG3oqjich7N1hefNlgQc35gKG3p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0qhhTyQUFrFCRoSdaWI4Z0BoMO3f4GJt6VlH78Jx+cPrbwbhTOhMiQrrV+k+LalY
-	 aDMdL3J4JHj7k1aHYLXAaPy+BBZRmYQ6Xq7ckSA/crq+BT3GQ6mfxUM+ooM1aLCKUD
-	 I7nhbssCxl3V2PwBTq33/sU21rdySbaJ8jiKh0JE=
+	b=lE10SBwyMiVZ4VfJ/Ckeh07q9LPO8CbjF5bsQ/FIoqNjtT2z5YtQL8NTYl5R+5eGr
+	 Oi7kZNdwK1SDbrGdPBeSAX3I27gqi0bnDNlokz718VLMH5REIbhyN4nxUN3bp9dojX
+	 dq8jGQ7zPrha64a0IUt5zW0Z51KTfGbmF6d81ckY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hao Zeng <zenghao@kylinos.cn>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 049/161] sched: Fix KCSAN noinstr violation
-Date: Sun, 28 May 2023 20:09:33 +0100
-Message-Id: <20230528190838.768174035@linuxfoundation.org>
+Subject: [PATCH 5.4 050/161] recordmcount: Fix memory leaks in the uwrite function
+Date: Sun, 28 May 2023 20:09:34 +0100
+Message-Id: <20230528190838.796909615@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,38 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Hao Zeng <zenghao@kylinos.cn>
 
-[ Upstream commit e0b081d17a9f4e5c0cbb0e5fbeb1abe3de0f7e4e ]
+[ Upstream commit fa359d068574d29e7d2f0fdd0ebe4c6a12b5cfb9 ]
 
-With KCSAN enabled, end_of_stack() can get out-of-lined.  Force it
-inline.
+Common realloc mistake: 'file_append' nulled but not freed upon failure
 
-Fixes the following warnings:
+Link: https://lkml.kernel.org/r/20230426010527.703093-1-zenghao@kylinos.cn
 
-  vmlinux.o: warning: objtool: check_stackleak_irqoff+0x2b: call to end_of_stack() leaves .noinstr.text section
-
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/cc1b4d73d3a428a00d206242a68fdf99a934ca7b.1681320026.git.jpoimboe@kernel.org
+Signed-off-by: Hao Zeng <zenghao@kylinos.cn>
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/task_stack.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/recordmcount.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/sched/task_stack.h b/include/linux/sched/task_stack.h
-index 1009b6b5ce403..879a5c8f930b6 100644
---- a/include/linux/sched/task_stack.h
-+++ b/include/linux/sched/task_stack.h
-@@ -23,7 +23,7 @@ static __always_inline void *task_stack_page(const struct task_struct *task)
- 
- #define setup_thread_stack(new,old)	do { } while(0)
- 
--static inline unsigned long *end_of_stack(const struct task_struct *task)
-+static __always_inline unsigned long *end_of_stack(const struct task_struct *task)
+diff --git a/scripts/recordmcount.c b/scripts/recordmcount.c
+index cce12e1971d85..ec692af8ce9eb 100644
+--- a/scripts/recordmcount.c
++++ b/scripts/recordmcount.c
+@@ -102,6 +102,7 @@ static ssize_t uwrite(void const *const buf, size_t const count)
  {
- #ifdef CONFIG_STACK_GROWSUP
- 	return (unsigned long *)((unsigned long)task->stack + THREAD_SIZE) - 1;
+ 	size_t cnt = count;
+ 	off_t idx = 0;
++	void *p = NULL;
+ 
+ 	file_updated = 1;
+ 
+@@ -109,7 +110,10 @@ static ssize_t uwrite(void const *const buf, size_t const count)
+ 		off_t aoffset = (file_ptr + count) - file_end;
+ 
+ 		if (aoffset > file_append_size) {
+-			file_append = realloc(file_append, aoffset);
++			p = realloc(file_append, aoffset);
++			if (!p)
++				free(file_append);
++			file_append = p;
+ 			file_append_size = aoffset;
+ 		}
+ 		if (!file_append) {
 -- 
 2.39.2
 
