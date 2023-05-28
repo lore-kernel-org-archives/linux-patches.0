@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FD2611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F78C433EF;
-	Sun, 28 May 2023 19:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3475B611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B3DC433EF;
+	Sun, 28 May 2023 19:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301263;
-	bh=Hg7DBqBtYag5QpKeoq/83vqIAQydv1M5+8cySSzBjfI=;
+	s=korg; t=1685301266;
+	bh=IC4n0M9NuCFEXiWcUoxckSWnsUB7GjCuB48otpgvaZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhVAUmpPZocYjFOn5/qsAvd7aoBUkM0/V6NFd+aQTBMqRPPNxZ5w5DWy0QO44Qmlc
-	 6AZinrh6tBdWk/tKcts/rq5oUdXi3yAY5AuITmvw+pQ2BfnvmuVGk+XLZcqe7afcXv
-	 1qEpXnFMiko3NSE+l+VXlEOhZvu07yBQ0mtsT9Dw=
+	b=hY4D3iqGwQ3soA/fIaBmQ0it3NJ/I3xcJTgmOxtfc3Yz1rQGbYJhBIVjc/anNehgv
+	 9aMtRxxzTOCleGHJWXmnqorKoZcf6DY8dA/mAe8/dNfZgHRyW7ScR5iI87TDq8EsG3
+	 NhE+8HukgfIZyrGOo13QISVzb/VpdCApn9wtH8rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 46/86] vlan: fix a potential uninit-value in vlan_dev_hard_start_xmit()
-Date: Sun, 28 May 2023 20:10:20 +0100
-Message-Id: <20230528190830.308702396@linuxfoundation.org>
+Subject: [PATCH 4.14 20/86] ext4: set goal start correctly in ext4_mb_normalize_request
+Date: Sun, 28 May 2023 20:09:54 +0100
+Message-Id: <20230528190829.304704358@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -36,91 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit dacab578c7c6cd06c50c89dfa36b0e0f10decd4e ]
+[ Upstream commit b07ffe6927c75d99af534d685282ea188d9f71a6 ]
 
-syzbot triggered the following splat [1], sending an empty message
-through pppoe_sendmsg().
+We need to set ac_g_ex to notify the goal start used in
+ext4_mb_find_by_goal. Set ac_g_ex instead of ac_f_ex in
+ext4_mb_normalize_request.
+Besides we should assure goal start is in range [first_data_block,
+blocks_count) as ext4_mb_initialize_context does.
 
-When VLAN_FLAG_REORDER_HDR flag is set, vlan_dev_hard_header()
-does not push extra bytes for the VLAN header, because vlan is offloaded.
+[ Added a check to make sure size is less than ar->pright; otherwise
+  we could end up passing an underflowed value of ar->pright - size to
+  ext4_get_group_no_and_offset(), which will trigger a BUG_ON later on.
+  - TYT ]
 
-Unfortunately vlan_dev_hard_start_xmit() first reads veth->h_vlan_proto
-before testing (vlan->flags & VLAN_FLAG_REORDER_HDR).
-
-We need to swap the two conditions.
-
-[1]
-BUG: KMSAN: uninit-value in vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
-vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
-__netdev_start_xmit include/linux/netdevice.h:4883 [inline]
-netdev_start_xmit include/linux/netdevice.h:4897 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x253/0xa20 net/core/dev.c:3596
-__dev_queue_xmit+0x3c7f/0x5ac0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3053 [inline]
-pppoe_sendmsg+0xa93/0xb80 drivers/net/ppp/pppoe.c:900
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
-___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
-__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
-__do_sys_sendmmsg net/socket.c:2670 [inline]
-__se_sys_sendmmsg net/socket.c:2667 [inline]
-__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Uninit was created at:
-slab_post_alloc_hook+0x12d/0xb60 mm/slab.h:774
-slab_alloc_node mm/slub.c:3452 [inline]
-kmem_cache_alloc_node+0x543/0xab0 mm/slub.c:3497
-kmalloc_reserve+0x148/0x470 net/core/skbuff.c:520
-__alloc_skb+0x3a7/0x850 net/core/skbuff.c:606
-alloc_skb include/linux/skbuff.h:1277 [inline]
-sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2583
-pppoe_sendmsg+0x3af/0xb80 drivers/net/ppp/pppoe.c:867
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
-___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
-__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
-__do_sys_sendmmsg net/socket.c:2670 [inline]
-__se_sys_sendmmsg net/socket.c:2667 [inline]
-__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-CPU: 0 PID: 29770 Comm: syz-executor.0 Not tainted 6.3.0-rc6-syzkaller-gc478e5b17829 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20230303172120.3800725-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_dev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/mballoc.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index e871d3b27c479..c436c9973455b 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -115,8 +115,8 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
- 	 * NOTE: THIS ASSUMES DIX ETHERNET, SPECIFICALLY NOT SUPPORTING
- 	 * OTHER THINGS LIKE FDDI/TokenRing/802.3 SNAPs...
- 	 */
--	if (veth->h_vlan_proto != vlan->vlan_proto ||
--	    vlan->flags & VLAN_FLAG_REORDER_HDR) {
-+	if (vlan->flags & VLAN_FLAG_REORDER_HDR ||
-+	    veth->h_vlan_proto != vlan->vlan_proto) {
- 		u16 vlan_tci;
- 		vlan_tci = vlan->vlan_id;
- 		vlan_tci |= vlan_dev_get_egress_qos_mask(dev, skb->priority);
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index d9f2fde2e3e92..36ace5eef84ec 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3116,6 +3116,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 				struct ext4_allocation_request *ar)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
++	struct ext4_super_block *es = sbi->s_es;
+ 	int bsbits, max;
+ 	ext4_lblk_t end;
+ 	loff_t size, start_off;
+@@ -3296,18 +3297,21 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 	ac->ac_g_ex.fe_len = EXT4_NUM_B2C(sbi, size);
+ 
+ 	/* define goal start in order to merge */
+-	if (ar->pright && (ar->lright == (start + size))) {
++	if (ar->pright && (ar->lright == (start + size)) &&
++	    ar->pright >= size &&
++	    ar->pright - size >= le32_to_cpu(es->s_first_data_block)) {
+ 		/* merge to the right */
+ 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pright - size,
+-						&ac->ac_f_ex.fe_group,
+-						&ac->ac_f_ex.fe_start);
++						&ac->ac_g_ex.fe_group,
++						&ac->ac_g_ex.fe_start);
+ 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
+ 	}
+-	if (ar->pleft && (ar->lleft + 1 == start)) {
++	if (ar->pleft && (ar->lleft + 1 == start) &&
++	    ar->pleft + 1 < ext4_blocks_count(es)) {
+ 		/* merge to the left */
+ 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pleft + 1,
+-						&ac->ac_f_ex.fe_group,
+-						&ac->ac_f_ex.fe_start);
++						&ac->ac_g_ex.fe_group,
++						&ac->ac_g_ex.fe_start);
+ 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
+ 	}
+ 
 -- 
 2.39.2
 
