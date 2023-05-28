@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BC6611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81078C433D2;
-	Sun, 28 May 2023 19:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0AC611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E088DC433EF;
+	Sun, 28 May 2023 19:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303206;
-	bh=+tGk2iaxhtkOFDugsJqkibyfMfZ57vn5twDf783OVf4=;
+	s=korg; t=1685303209;
+	bh=1CIL6RBnOq5tntTeeM/NFFFXukTpZtqo4uw+ny1yCVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSg8obc50G79lt1YBpC8px8iGbkpvwBCTCB1CCvcgzUrifrQQTDUxvc/1D08fy6Z6
-	 sQnlquCN2D33TlM7/G+gUYCPfiZCfQgRV8P6M7G56EB4x2tOXjVk0/aAV3bsjIJ5Cu
-	 J0yFRfV0ig0RvnQQW8t+KqmBmakkuGNQLBy0rCQ4=
+	b=Vc9eGbyu9ej4o3RS+nfEOkV93WyQ63K/1EH9QI81dJrbOsydIgy+pz4sh6yEzXpQW
+	 Iq9srGys9BSKFTNu1loemPOP9pw52WuqmVw7r64yQr5m9dvG7AbzoFVVhx/I6QA1XZ
+	 R4y8xrhc+Lf/YBL5EjYWCDs+UkugfCYpkDkL1HfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	Daisuke Nojiri <dnojiri@chromium.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.10 197/211] power: supply: bq27xxx: Fix poll_interval handling and races on remove
-Date: Sun, 28 May 2023 20:11:58 +0100
-Message-Id: <20230528190848.392995998@linuxfoundation.org>
+Subject: [PATCH 5.10 198/211] power: supply: sbs-charger: Fix INHIBITED bit for Status reg
+Date: Sun, 28 May 2023 20:11:59 +0100
+Message-Id: <20230528190848.416769687@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -34,94 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Daisuke Nojiri <dnojiri@chromium.org>
 
-commit c00bc80462afc7963f449d7f21d896d2f629cacc upstream.
+commit b2f2a3c9800208b0db2c2e34b05323757117faa2 upstream.
 
-Before this patch bq27xxx_battery_teardown() was setting poll_interval = 0
-to avoid bq27xxx_battery_update() requeuing the delayed_work item.
+CHARGE_INHIBITED bit position of the ChargerStatus register is actually
+0 not 1. This patch corrects it.
 
-There are 2 problems with this:
-
-1. If the driver is unbound through sysfs, rather then the module being
-   rmmod-ed, this changes poll_interval unexpectedly
-
-2. This is racy, after it being set poll_interval could be changed
-   before bq27xxx_battery_update() checks it through
-   /sys/module/bq27xxx_battery/parameters/poll_interval
-
-Fix this by added a removed attribute to struct bq27xxx_device_info and
-using that instead of setting poll_interval to 0.
-
-There also is another poll_interval related race on remove(), writing
-/sys/module/bq27xxx_battery/parameters/poll_interval will requeue
-the delayed_work item for all devices on the bq27xxx_battery_devices
-list and the device being removed was only removed from that list
-after cancelling the delayed_work item.
-
-Fix this by moving the removal from the bq27xxx_battery_devices list
-to before cancelling the delayed_work item.
-
-Fixes: 8cfaaa811894 ("bq27x00_battery: Fix OOPS caused by unregistring bq27x00 driver")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: feb583e37f8a8 ("power: supply: add sbs-charger driver")
+Signed-off-by: Daisuke Nojiri <dnojiri@chromium.org>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq27xxx_battery.c |   22 +++++++++-------------
- include/linux/power/bq27xxx_battery.h  |    1 +
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ drivers/power/supply/sbs-charger.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1733,7 +1733,7 @@ static void bq27xxx_battery_update_unloc
+--- a/drivers/power/supply/sbs-charger.c
++++ b/drivers/power/supply/sbs-charger.c
+@@ -25,7 +25,7 @@
+ #define SBS_CHARGER_REG_STATUS			0x13
+ #define SBS_CHARGER_REG_ALARM_WARNING		0x16
  
- 	di->last_update = jiffies;
- 
--	if (poll_interval > 0)
-+	if (!di->removed && poll_interval > 0)
- 		mod_delayed_work(system_wq, &di->work, poll_interval * HZ);
- }
- 
-@@ -2063,22 +2063,18 @@ EXPORT_SYMBOL_GPL(bq27xxx_battery_setup)
- 
- void bq27xxx_battery_teardown(struct bq27xxx_device_info *di)
- {
--	/*
--	 * power_supply_unregister call bq27xxx_battery_get_property which
--	 * call bq27xxx_battery_poll.
--	 * Make sure that bq27xxx_battery_poll will not call
--	 * schedule_delayed_work again after unregister (which cause OOPS).
--	 */
--	poll_interval = 0;
--
--	cancel_delayed_work_sync(&di->work);
--
--	power_supply_unregister(di->bat);
--
- 	mutex_lock(&bq27xxx_list_lock);
- 	list_del(&di->list);
- 	mutex_unlock(&bq27xxx_list_lock);
- 
-+	/* Set removed to avoid bq27xxx_battery_update() re-queuing the work */
-+	mutex_lock(&di->lock);
-+	di->removed = true;
-+	mutex_unlock(&di->lock);
-+
-+	cancel_delayed_work_sync(&di->work);
-+
-+	power_supply_unregister(di->bat);
- 	mutex_destroy(&di->lock);
- }
- EXPORT_SYMBOL_GPL(bq27xxx_battery_teardown);
---- a/include/linux/power/bq27xxx_battery.h
-+++ b/include/linux/power/bq27xxx_battery.h
-@@ -67,6 +67,7 @@ struct bq27xxx_device_info {
- 	struct bq27xxx_access_methods bus;
- 	struct bq27xxx_reg_cache cache;
- 	int charge_design_full;
-+	bool removed;
- 	unsigned long last_update;
- 	struct delayed_work work;
- 	struct power_supply *bat;
+-#define SBS_CHARGER_STATUS_CHARGE_INHIBITED	BIT(1)
++#define SBS_CHARGER_STATUS_CHARGE_INHIBITED	BIT(0)
+ #define SBS_CHARGER_STATUS_RES_COLD		BIT(9)
+ #define SBS_CHARGER_STATUS_RES_HOT		BIT(10)
+ #define SBS_CHARGER_STATUS_BATTERY_PRESENT	BIT(14)
 
 
