@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBFA611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCDCC433EF;
-	Sun, 28 May 2023 19:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB028611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A890C433EF;
+	Sun, 28 May 2023 19:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303265;
-	bh=LLD/YNdSs9CiOnKKPPoHuqGsRejom82hxh5tAzSSe7g=;
+	s=korg; t=1685303268;
+	bh=Hl1H2rFRCSg+hV/GRj5sIFexry/BrLLp28dRit4/m3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDp54lAcX+1PkYGaKC6KpGNBBbre3hbwT1cNzXdRYhmw9U1A/6Ejll9U0NMgWF21l
-	 NJ56Z9jzWhf7F75Hc51zGDuBfhj9nkTzX9J2ZA2tphFa7lw94DioSP/AcaHEZ03Mvo
-	 fKn/wupHogmbW4/8CD8Zmg0e+mkL2SBy9POEbkoU=
+	b=JGiJ0f3lumDxcwFmrLM5CXLEHRHp3lqBeU3KtJ4+LhhI6XJocYPBwVkjCKkHHV2uf
+	 Ia7lkRgqRbkFD3Fnv80cuBgFEN8uYDWrPsNc2+dxV04NsCFNEKO96KNrQjYH116Hp0
+	 Udv73ZscptYSBGAOwtQJs/ccdKgh4MmqohzvDy34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Linyu Yuan <quic_linyyuan@quicinc.com>,
+	Piyush Mehta <piyush.mehta@xilinx.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 02/69] usb: dwc3: fix gadget mode suspend interrupt handler issue
-Date: Sun, 28 May 2023 20:11:22 +0100
-Message-Id: <20230528190828.437588639@linuxfoundation.org>
+Subject: [PATCH 5.15 03/69] dt-bindings: ata: ahci-ceva: convert to yaml
+Date: Sun, 28 May 2023 20:11:23 +0100
+Message-Id: <20230528190828.468441436@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -36,96 +35,288 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linyu Yuan <quic_linyyuan@quicinc.com>
+From: Piyush Mehta <piyush.mehta@xilinx.com>
 
-[ Upstream commit 4e8ef34e36f2839ef8c8da521ab7035956436818 ]
+[ Upstream commit f2fb1b50fbac4a0a462e1705ac913abf52aae906 ]
 
-When work in gadget mode, currently driver doesn't update software level
-link_state correctly as link state change event is not enabled for most
-devices, in function dwc3_gadget_suspend_interrupt(), it will only pass
-suspend event to UDC core when software level link state changes, so when
-interrupt generated in sequences of suspend -> reset -> conndone ->
-suspend, link state is not updated during reset and conndone, so second
-suspend interrupt event will not pass to UDC core.
+Convert the ahci-ceva doc to yaml.
 
-Remove link_state compare in dwc3_gadget_suspend_interrupt() and add a
-suspended flag to replace the compare function.
-
-Fixes: 799e9dc82968 ("usb: dwc3: gadget: conditionally disable Link State change events")
-Cc: stable <stable@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Linyu Yuan <quic_linyyuan@quicinc.com>
-Link: https://lore.kernel.org/r/20230512004524.31950-1-quic_linyyuan@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Piyush Mehta <piyush.mehta@xilinx.com>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20220620073717.3079-1-piyush.mehta@xilinx.com
+Stable-dep-of: a78445287226 ("dt-bindings: ata: ahci-ceva: Cover all 4 iommus entries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.h   |  2 ++
- drivers/usb/dwc3/gadget.c | 10 +++++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ .../devicetree/bindings/ata/ahci-ceva.txt     |  63 ------
+ .../bindings/ata/ceva,ahci-1v84.yaml          | 189 ++++++++++++++++++
+ 2 files changed, 189 insertions(+), 63 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/ata/ahci-ceva.txt
+ create mode 100644 Documentation/devicetree/bindings/ata/ceva,ahci-1v84.yaml
 
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 725653711411d..84cdac33cb359 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1085,6 +1085,7 @@ struct dwc3_scratchpad_array {
-  *	3	- Reserved
-  * @dis_metastability_quirk: set to disable metastability quirk.
-  * @dis_split_quirk: set to disable split boundary.
-+ * @suspended: set to track suspend event due to U3/L2.
-  * @imod_interval: set the interrupt moderation interval in 250ns
-  *			increments or 0 to disable.
-  * @max_cfg_eps: current max number of IN eps used across all USB configs.
-@@ -1298,6 +1299,7 @@ struct dwc3 {
- 
- 	unsigned		dis_split_quirk:1;
- 	unsigned		async_callbacks:1;
-+	unsigned		suspended:1;
- 
- 	u16			imod_interval;
- 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 7ff77a0de5152..e42d50e4aba30 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3694,6 +3694,8 @@ static void dwc3_gadget_disconnect_interrupt(struct dwc3 *dwc)
- {
- 	int			reg;
- 
-+	dwc->suspended = false;
+diff --git a/Documentation/devicetree/bindings/ata/ahci-ceva.txt b/Documentation/devicetree/bindings/ata/ahci-ceva.txt
+deleted file mode 100644
+index bfb6da0281ecd..0000000000000
+--- a/Documentation/devicetree/bindings/ata/ahci-ceva.txt
++++ /dev/null
+@@ -1,63 +0,0 @@
+-Binding for CEVA AHCI SATA Controller
+-
+-Required properties:
+-  - reg: Physical base address and size of the controller's register area.
+-  - compatible: Compatibility string. Must be 'ceva,ahci-1v84'.
+-  - clocks: Input clock specifier. Refer to common clock bindings.
+-  - interrupts: Interrupt specifier. Refer to interrupt binding.
+-  - ceva,p0-cominit-params: OOB timing value for COMINIT parameter for port 0.
+-  - ceva,p1-cominit-params: OOB timing value for COMINIT parameter for port 1.
+-			The fields for the above parameter must be as shown below:
+-			ceva,pN-cominit-params = /bits/ 8 <CIBGMN CIBGMX CIBGN CINMP>;
+-			CINMP : COMINIT Negate Minimum Period.
+-			CIBGN : COMINIT Burst Gap Nominal.
+-			CIBGMX: COMINIT Burst Gap Maximum.
+-			CIBGMN: COMINIT Burst Gap Minimum.
+-  - ceva,p0-comwake-params: OOB timing value for COMWAKE parameter for port 0.
+-  - ceva,p1-comwake-params: OOB timing value for COMWAKE parameter for port 1.
+-			The fields for the above parameter must be as shown below:
+-			ceva,pN-comwake-params = /bits/ 8 <CWBGMN CWBGMX CWBGN CWNMP>;
+-			CWBGMN: COMWAKE Burst Gap Minimum.
+-			CWBGMX: COMWAKE Burst Gap Maximum.
+-			CWBGN: COMWAKE Burst Gap Nominal.
+-			CWNMP: COMWAKE Negate Minimum Period.
+-  - ceva,p0-burst-params: Burst timing value for COM parameter for port 0.
+-  - ceva,p1-burst-params: Burst timing value for COM parameter for port 1.
+-			The fields for the above parameter must be as shown below:
+-			ceva,pN-burst-params = /bits/ 8 <BMX BNM SFD PTST>;
+-			BMX: COM Burst Maximum.
+-			BNM: COM Burst Nominal.
+-			SFD: Signal Failure Detection value.
+-			PTST: Partial to Slumber timer value.
+-  - ceva,p0-retry-params: Retry interval timing value for port 0.
+-  - ceva,p1-retry-params: Retry interval timing value for port 1.
+-			The fields for the above parameter must be as shown below:
+-			ceva,pN-retry-params = /bits/ 16 <RIT RCT>;
+-			RIT:  Retry Interval Timer.
+-			RCT:  Rate Change Timer.
+-
+-Optional properties:
+-  - ceva,broken-gen2: limit to gen1 speed instead of gen2.
+-  - phys: phandle for the PHY device
+-  - resets: phandle to the reset controller for the SATA IP
+-
+-Examples:
+-	ahci@fd0c0000 {
+-		compatible = "ceva,ahci-1v84";
+-		reg = <0xfd0c0000 0x200>;
+-		interrupt-parent = <&gic>;
+-		interrupts = <0 133 4>;
+-		clocks = <&clkc SATA_CLK_ID>;
+-		ceva,p0-cominit-params = /bits/ 8 <0x0F 0x25 0x18 0x29>;
+-		ceva,p0-comwake-params = /bits/ 8 <0x04 0x0B 0x08 0x0F>;
+-		ceva,p0-burst-params = /bits/ 8 <0x0A 0x08 0x4A 0x06>;
+-		ceva,p0-retry-params = /bits/ 16 <0x0216 0x7F06>;
+-
+-		ceva,p1-cominit-params = /bits/ 8 <0x0F 0x25 0x18 0x29>;
+-		ceva,p1-comwake-params = /bits/ 8 <0x04 0x0B 0x08 0x0F>;
+-		ceva,p1-burst-params = /bits/ 8 <0x0A 0x08 0x4A 0x06>;
+-		ceva,p1-retry-params = /bits/ 16 <0x0216 0x7F06>;
+-		ceva,broken-gen2;
+-		phys = <&psgtr 1 PHY_TYPE_SATA 1 1>;
+-		resets = <&zynqmp_reset ZYNQMP_RESET_SATA>;
+-	};
+diff --git a/Documentation/devicetree/bindings/ata/ceva,ahci-1v84.yaml b/Documentation/devicetree/bindings/ata/ceva,ahci-1v84.yaml
+new file mode 100644
+index 0000000000000..9b31f864e071e
+--- /dev/null
++++ b/Documentation/devicetree/bindings/ata/ceva,ahci-1v84.yaml
+@@ -0,0 +1,189 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/ata/ceva,ahci-1v84.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- 	dwc3_gadget_set_link_state(dwc, DWC3_LINK_STATE_RX_DET);
- 
- 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
-@@ -3714,6 +3716,8 @@ static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
- {
- 	u32			reg;
- 
-+	dwc->suspended = false;
++title: Ceva AHCI SATA Controller
 +
- 	/*
- 	 * Ideally, dwc3_reset_gadget() would trigger the function
- 	 * drivers to stop any active transfers through ep disable.
-@@ -3919,6 +3923,8 @@ static void dwc3_gadget_conndone_interrupt(struct dwc3 *dwc)
- 
- static void dwc3_gadget_wakeup_interrupt(struct dwc3 *dwc)
- {
-+	dwc->suspended = false;
++maintainers:
++  - Piyush Mehta <piyush.mehta@xilinx.com>
 +
- 	/*
- 	 * TODO take core out of low power mode when that's
- 	 * implemented.
-@@ -4034,8 +4040,10 @@ static void dwc3_gadget_suspend_interrupt(struct dwc3 *dwc,
- {
- 	enum dwc3_link_state next = evtinfo & DWC3_LINK_STATE_MASK;
- 
--	if (dwc->link_state != next && next == DWC3_LINK_STATE_U3)
-+	if (!dwc->suspended && next == DWC3_LINK_STATE_U3) {
-+		dwc->suspended = true;
- 		dwc3_suspend_gadget(dwc);
-+	}
- 
- 	dwc->link_state = next;
- }
++description: |
++  The Ceva SATA controller mostly conforms to the AHCI interface with some
++  special extensions to add functionality, is a high-performance dual-port
++  SATA host controller with an AHCI compliant command layer which supports
++  advanced features such as native command queuing and frame information
++  structure (FIS) based switching for systems employing port multipliers.
++
++properties:
++  compatible:
++    const: ceva,ahci-1v84
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  dma-coherent: true
++
++  interrupts:
++    maxItems: 1
++
++  iommus:
++    maxItems: 1
++
++  power-domains:
++    maxItems: 1
++
++  ceva,p0-cominit-params:
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    description: |
++      OOB timing value for COMINIT parameter for port 0.
++      The fields for the above parameter must be as shown below:-
++      ceva,p0-cominit-params = /bits/ 8 <CIBGMN CIBGMX CIBGN CINMP>;
++    items:
++      - description: CINMP - COMINIT Negate Minimum Period.
++      - description: CIBGN - COMINIT Burst Gap Nominal.
++      - description: CIBGMX - COMINIT Burst Gap Maximum.
++      - description: CIBGMN - COMINIT Burst Gap Minimum.
++
++  ceva,p0-comwake-params:
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    description: |
++      OOB timing value for COMWAKE parameter for port 0.
++      The fields for the above parameter must be as shown below:-
++      ceva,p0-comwake-params = /bits/ 8 <CWBGMN CWBGMX CWBGN CWNMP>;
++    items:
++      - description: CWBGMN - COMWAKE Burst Gap Minimum.
++      - description: CWBGMX - COMWAKE Burst Gap Maximum.
++      - description: CWBGN - COMWAKE Burst Gap Nominal.
++      - description: CWNMP - COMWAKE Negate Minimum Period.
++
++  ceva,p0-burst-params:
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    description: |
++      Burst timing value for COM parameter for port 0.
++      The fields for the above parameter must be as shown below:-
++      ceva,p0-burst-params = /bits/ 8 <BMX BNM SFD PTST>;
++    items:
++      - description: BMX - COM Burst Maximum.
++      - description: BNM - COM Burst Nominal.
++      - description: SFD - Signal Failure Detection value.
++      - description: PTST - Partial to Slumber timer value.
++
++  ceva,p0-retry-params:
++    $ref: /schemas/types.yaml#/definitions/uint16-array
++    description: |
++      Retry interval timing value for port 0.
++      The fields for the above parameter must be as shown below:-
++      ceva,p0-retry-params = /bits/ 16 <RIT RCT>;
++    items:
++      - description: RIT - Retry Interval Timer.
++      - description: RCT - Rate Change Timer.
++
++  ceva,p1-cominit-params:
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    description: |
++      OOB timing value for COMINIT parameter for port 1.
++      The fields for the above parameter must be as shown below:-
++      ceva,p1-cominit-params = /bits/ 8 <CIBGMN CIBGMX CIBGN CINMP>;
++    items:
++      - description: CINMP - COMINIT Negate Minimum Period.
++      - description: CIBGN - COMINIT Burst Gap Nominal.
++      - description: CIBGMX - COMINIT Burst Gap Maximum.
++      - description: CIBGMN - COMINIT Burst Gap Minimum.
++
++  ceva,p1-comwake-params:
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    description: |
++      OOB timing value for COMWAKE parameter for port 1.
++      The fields for the above parameter must be as shown below:-
++      ceva,p1-comwake-params = /bits/ 8 <CWBGMN CWBGMX CWBGN CWNMP>;
++    items:
++      - description: CWBGMN - COMWAKE Burst Gap Minimum.
++      - description: CWBGMX - COMWAKE Burst Gap Maximum.
++      - description: CWBGN - COMWAKE Burst Gap Nominal.
++      - description: CWNMP - COMWAKE Negate Minimum Period.
++
++  ceva,p1-burst-params:
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    description: |
++      Burst timing value for COM parameter for port 1.
++      The fields for the above parameter must be as shown below:-
++      ceva,p1-burst-params = /bits/ 8 <BMX BNM SFD PTST>;
++    items:
++      - description: BMX - COM Burst Maximum.
++      - description: BNM - COM Burst Nominal.
++      - description: SFD - Signal Failure Detection value.
++      - description: PTST - Partial to Slumber timer value.
++
++  ceva,p1-retry-params:
++    $ref: /schemas/types.yaml#/definitions/uint16-array
++    description: |
++      Retry interval timing value for port 1.
++      The fields for the above parameter must be as shown below:-
++      ceva,pN-retry-params = /bits/ 16 <RIT RCT>;
++    items:
++      - description: RIT - Retry Interval Timer.
++      - description: RCT - Rate Change Timer.
++
++  ceva,broken-gen2:
++    $ref: /schemas/types.yaml#/definitions/flag
++    description: |
++      limit to gen1 speed instead of gen2.
++
++  phys:
++    maxItems: 1
++
++  phy-names:
++    items:
++      - const: sata-phy
++
++  resets:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - interrupts
++  - ceva,p0-cominit-params
++  - ceva,p0-comwake-params
++  - ceva,p0-burst-params
++  - ceva,p0-retry-params
++  - ceva,p1-cominit-params
++  - ceva,p1-comwake-params
++  - ceva,p1-burst-params
++  - ceva,p1-retry-params
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/xlnx-zynqmp-clk.h>
++    #include <dt-bindings/interrupt-controller/irq.h>
++    #include <dt-bindings/power/xlnx-zynqmp-power.h>
++    #include <dt-bindings/reset/xlnx-zynqmp-resets.h>
++    #include <dt-bindings/clock/xlnx-zynqmp-clk.h>
++    #include <dt-bindings/phy/phy.h>
++
++    sata: ahci@fd0c0000 {
++        compatible = "ceva,ahci-1v84";
++        reg = <0xfd0c0000 0x200>;
++        interrupt-parent = <&gic>;
++        interrupts = <0 133 IRQ_TYPE_LEVEL_HIGH>;
++        clocks = <&zynqmp_clk SATA_REF>;
++        ceva,p0-cominit-params = /bits/ 8 <0x0F 0x25 0x18 0x29>;
++        ceva,p0-comwake-params = /bits/ 8 <0x04 0x0B 0x08 0x0F>;
++        ceva,p0-burst-params = /bits/ 8 <0x0A 0x08 0x4A 0x06>;
++        ceva,p0-retry-params = /bits/ 16 <0x0216 0x7F06>;
++        ceva,p1-cominit-params = /bits/ 8 <0x0F 0x25 0x18 0x29>;
++        ceva,p1-comwake-params = /bits/ 8 <0x04 0x0B 0x08 0x0F>;
++        ceva,p1-burst-params = /bits/ 8 <0x0A 0x08 0x4A 0x06>;
++        ceva,p1-retry-params = /bits/ 16 <0x0216 0x7F06>;
++        ceva,broken-gen2;
++        phys = <&psgtr 1 PHY_TYPE_SATA 1 1>;
++        resets = <&zynqmp_reset ZYNQMP_RESET_SATA>;
++    };
 -- 
 2.39.2
 
