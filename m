@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFAA611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:21:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD282C4339B;
-	Sun, 28 May 2023 19:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D3A611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:21:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317C6C4339B;
+	Sun, 28 May 2023 19:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301717;
-	bh=y95bWQOXTnZ37ppDVgo6fIVggRSSc6SsBJgV8ZAEbxQ=;
+	s=korg; t=1685301719;
+	bh=RY1vdKIff9EFwG/nDJVNeHn+RVI2qJk0erV2d756UTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yn0w44xHaqC0QfTjouOiSrWNos45pRaX2BvzzvK8psKYzhctSCeduccL9SDY73f0y
-	 ePXxDle+WQIUTjoExdakap2BgAPTAOoJkNF//omVEuDNSVhGh8wWcVjf+EkmIGbS0D
-	 agjo6gdW7fwdxq40/Me0gVCIu2T2TovE0HCNGpEA=
+	b=sByv1TRZTvLG9GnTISxOhvDtL0f2oCTwy9Hvpr0RkmWGDWYlHrpbaIGkMC3WX+M31
+	 PglKcVNlhyxxXJSuUPJ68A5UbZC4DPs7yExCkskb7BZs/h4xLyQOW8+gctBiYPvsjr
+	 yjsuJu9OGsW3nuK2OTe7swsj74RrUYrr6HTFtWxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 113/132] ALSA: hda/realtek - Fixed one of HP ALC671 platform Headset Mic supported
-Date: Sun, 28 May 2023 20:10:52 +0100
-Message-Id: <20230528190837.231772319@linuxfoundation.org>
+	Andrew Lunn <andrew@lunn.ch>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 001/161] driver core: add a helper to setup both the of_node and fwnode of a device
+Date: Sun, 28 May 2023 20:08:45 +0100
+Message-Id: <20230528190837.109851685@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
-References: <20230528190833.565872088@linuxfoundation.org>
+In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
+References: <20230528190837.051205996@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,31 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kailang Yang <kailang@realtek.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-commit f2adbae0cb20c8eaf06914b2187043ea944b0aff upstream.
+[ Upstream commit 43e76d463c09a0272b84775bcc727c1eb8b384b2 ]
 
-HP want to keep BIOS verb table for release platform.
-So, it need to add 0x19 pin for quirk.
+There are many places where both the fwnode_handle and the of_node of a
+device need to be populated. Add a function which does both so that we
+have consistency.
 
-Fixes: 5af29028fd6d ("ALSA: hda/realtek - Add Headset Mic supported for HP cPC")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/r/74636ccb700a4cbda24c58a99dc430ce@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: a26cc2934331 ("drm/mipi-dsi: Set the fwnode for mipi_dsi_device")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/core.c    | 7 +++++++
+ include/linux/device.h | 1 +
+ 2 files changed, 8 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9290,6 +9290,7 @@ static const struct snd_hda_pin_quirk al
- 	SND_HDA_PIN_QUIRK(0x10ec0671, 0x103c, "HP cPC", ALC671_FIXUP_HP_HEADSET_MIC2,
- 		{0x14, 0x01014010},
- 		{0x17, 0x90170150},
-+		{0x19, 0x02a11060},
- 		{0x1b, 0x01813030},
- 		{0x21, 0x02211020}),
- 	SND_HDA_PIN_QUIRK(0x10ec0671, 0x103c, "HP cPC", ALC671_FIXUP_HP_HEADSET_MIC2,
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 1b016fdd1a750..f8e157ede44f8 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -3474,6 +3474,13 @@ void device_set_of_node_from_dev(struct device *dev, const struct device *dev2)
+ }
+ EXPORT_SYMBOL_GPL(device_set_of_node_from_dev);
+ 
++void device_set_node(struct device *dev, struct fwnode_handle *fwnode)
++{
++	dev->fwnode = fwnode;
++	dev->of_node = to_of_node(fwnode);
++}
++EXPORT_SYMBOL_GPL(device_set_node);
++
+ int device_match_name(struct device *dev, const void *name)
+ {
+ 	return sysfs_streq(dev_name(dev), name);
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 3414b5a67b466..d74275e2047a4 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1528,6 +1528,7 @@ extern int device_online(struct device *dev);
+ extern void set_primary_fwnode(struct device *dev, struct fwnode_handle *fwnode);
+ extern void set_secondary_fwnode(struct device *dev, struct fwnode_handle *fwnode);
+ void device_set_of_node_from_dev(struct device *dev, const struct device *dev2);
++void device_set_node(struct device *dev, struct fwnode_handle *fwnode);
+ 
+ static inline int dev_num_vf(struct device *dev)
+ {
+-- 
+2.39.2
+
 
 
