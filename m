@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF870611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1B3C433EF;
-	Sun, 28 May 2023 19:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F45D611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C14C433EF;
+	Sun, 28 May 2023 19:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301327;
-	bh=2MoMWExnZSUBjyiAeqQHwxYdgC6498XHvZRNTygb2Yo=;
+	s=korg; t=1685301330;
+	bh=jMGjM7zeoL3ydsudJqWj3nhh7pXanbVX4p8lM2yN1c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEdaiNRc78ouL4Nuaj58pVV+d4szn9gFpvfXJ6sEqtq9LZqODdFnH0bA2koM5gt4w
-	 vyiM1cY9zg6Anz+wJNrMuXSCPSbKq01NzJhcRf1Io8wh4DII0qdO3naHy6dD7v9aXE
-	 lD2IhCgqCwGCfzmwI1vTZPqsKXLIEKI6xbCh4jVQ=
+	b=pB/FAaLl1vutfq7wNiDUAYb/XBzmf5Z2FguGHftTHl5cQ0H/2InHhFPnF/qSqM1Pd
+	 5zEEBTLkjV+FGkPIS/mcsn64NLg8H32PMrw+Ru1bfUw1zOMzvh20XH5vkpkyfFQ8l2
+	 zebcQdjLxH7PEOSsopi6IzwCf9VrzQ0VrgdBiarE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hardik Garg <hargar@linux.microsoft.com>,
-	"Tyler Hicks (Microsoft)" <code@tyhicks.com>
-Subject: [PATCH 4.14 72/86] selftests/memfd: Fix unknown type name build failure
-Date: Sun, 28 May 2023 20:10:46 +0100
-Message-Id: <20230528190831.316183924@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 4.14 73/86] USB: core: Add routines for endpoint checks in old drivers
+Date: Sun, 28 May 2023 20:10:47 +0100
+Message-Id: <20230528190831.356022055@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -34,35 +33,150 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hardik Garg <hargar@linux.microsoft.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-Partially backport v6.3 commit 11f75a01448f ("selftests/memfd: add tests
-for MFD_NOEXEC_SEAL MFD_EXEC") to fix an unknown type name build error.
-In some systems, the __u64 typedef is not present due to differences in
-system headers, causing compilation errors like this one:
+commit 13890626501ffda22b18213ddaf7930473da5792 upstream.
 
-fuse_test.c:64:8: error: unknown type name '__u64'
-   64 | static __u64 mfd_assert_get_seals(int fd)
+Many of the older USB drivers in the Linux USB stack were written
+based simply on a vendor's device specification.  They use the
+endpoint information in the spec and assume these endpoints will
+always be present, with the properties listed, in any device matching
+the given vendor and product IDs.
 
-This header includes the  __u64 typedef which increases the likelihood
-of successful compilation on a wider variety of systems.
+While that may have been true back then, with spoofing and fuzzing it
+is not true any more.  More and more we are finding that those old
+drivers need to perform at least a minimum of checking before they try
+to use any endpoint other than ep0.
 
-Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
-Reviewed-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
+To make this checking as simple as possible, we now add a couple of
+utility routines to the USB core.  usb_check_bulk_endpoints() and
+usb_check_int_endpoints() take an interface pointer together with a
+list of endpoint addresses (numbers and directions).  They check that
+the interface's current alternate setting includes endpoints with
+those addresses and that each of these endpoints has the right type:
+bulk or interrupt, respectively.
+
+Although we already have usb_find_common_endpoints() and related
+routines meant for a similar purpose, they are not well suited for
+this kind of checking.  Those routines find endpoints of various
+kinds, but only one (either the first or the last) of each kind, and
+they don't verify that the endpoints' addresses agree with what the
+caller expects.
+
+In theory the new routines could be more general: They could take a
+particular altsetting as their argument instead of always using the
+interface's current altsetting.  In practice I think this won't matter
+too much; multiple altsettings tend to be used for transferring media
+(audio or visual) over isochronous endpoints, not bulk or interrupt.
+Drivers for such devices will generally require more sophisticated
+checking than these simplistic routines provide.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/dd2c8e8c-2c87-44ea-ba17-c64b97e201c9@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/memfd/fuse_test.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/core/usb.c |   76 +++++++++++++++++++++++++++++++++++++++++++++++++
+ include/linux/usb.h    |    5 +++
+ 2 files changed, 81 insertions(+)
 
---- a/tools/testing/selftests/memfd/fuse_test.c
-+++ b/tools/testing/selftests/memfd/fuse_test.c
-@@ -22,6 +22,7 @@
- #include <linux/falloc.h>
- #include <linux/fcntl.h>
- #include <linux/memfd.h>
-+#include <linux/types.h>
- #include <sched.h>
- #include <stdio.h>
- #include <stdlib.h>
+--- a/drivers/usb/core/usb.c
++++ b/drivers/usb/core/usb.c
+@@ -210,6 +210,82 @@ int usb_find_common_endpoints_reverse(st
+ EXPORT_SYMBOL_GPL(usb_find_common_endpoints_reverse);
+ 
+ /**
++ * usb_find_endpoint() - Given an endpoint address, search for the endpoint's
++ * usb_host_endpoint structure in an interface's current altsetting.
++ * @intf: the interface whose current altsetting should be searched
++ * @ep_addr: the endpoint address (number and direction) to find
++ *
++ * Search the altsetting's list of endpoints for one with the specified address.
++ *
++ * Return: Pointer to the usb_host_endpoint if found, %NULL otherwise.
++ */
++static const struct usb_host_endpoint *usb_find_endpoint(
++		const struct usb_interface *intf, unsigned int ep_addr)
++{
++	int n;
++	const struct usb_host_endpoint *ep;
++
++	n = intf->cur_altsetting->desc.bNumEndpoints;
++	ep = intf->cur_altsetting->endpoint;
++	for (; n > 0; (--n, ++ep)) {
++		if (ep->desc.bEndpointAddress == ep_addr)
++			return ep;
++	}
++	return NULL;
++}
++
++/**
++ * usb_check_bulk_endpoints - Check whether an interface's current altsetting
++ * contains a set of bulk endpoints with the given addresses.
++ * @intf: the interface whose current altsetting should be searched
++ * @ep_addrs: 0-terminated array of the endpoint addresses (number and
++ * direction) to look for
++ *
++ * Search for endpoints with the specified addresses and check their types.
++ *
++ * Return: %true if all the endpoints are found and are bulk, %false otherwise.
++ */
++bool usb_check_bulk_endpoints(
++		const struct usb_interface *intf, const u8 *ep_addrs)
++{
++	const struct usb_host_endpoint *ep;
++
++	for (; *ep_addrs; ++ep_addrs) {
++		ep = usb_find_endpoint(intf, *ep_addrs);
++		if (!ep || !usb_endpoint_xfer_bulk(&ep->desc))
++			return false;
++	}
++	return true;
++}
++EXPORT_SYMBOL_GPL(usb_check_bulk_endpoints);
++
++/**
++ * usb_check_int_endpoints - Check whether an interface's current altsetting
++ * contains a set of interrupt endpoints with the given addresses.
++ * @intf: the interface whose current altsetting should be searched
++ * @ep_addrs: 0-terminated array of the endpoint addresses (number and
++ * direction) to look for
++ *
++ * Search for endpoints with the specified addresses and check their types.
++ *
++ * Return: %true if all the endpoints are found and are interrupt,
++ * %false otherwise.
++ */
++bool usb_check_int_endpoints(
++		const struct usb_interface *intf, const u8 *ep_addrs)
++{
++	const struct usb_host_endpoint *ep;
++
++	for (; *ep_addrs; ++ep_addrs) {
++		ep = usb_find_endpoint(intf, *ep_addrs);
++		if (!ep || !usb_endpoint_xfer_int(&ep->desc))
++			return false;
++	}
++	return true;
++}
++EXPORT_SYMBOL_GPL(usb_check_int_endpoints);
++
++/**
+  * usb_find_alt_setting() - Given a configuration, find the alternate setting
+  * for the given interface.
+  * @config: the configuration to search (not necessarily the current config).
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -279,6 +279,11 @@ void usb_put_intf(struct usb_interface *
+ #define USB_MAXINTERFACES	32
+ #define USB_MAXIADS		(USB_MAXINTERFACES/2)
+ 
++bool usb_check_bulk_endpoints(
++		const struct usb_interface *intf, const u8 *ep_addrs);
++bool usb_check_int_endpoints(
++		const struct usb_interface *intf, const u8 *ep_addrs);
++
+ /*
+  * USB Resume Timer: Every Host controller driver should drive the resume
+  * signalling on the bus for the amount of time defined by this macro.
 
 
