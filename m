@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAE3569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:31:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08935C433D2;
-	Sun, 28 May 2023 19:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64BC569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:31:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667C0C433D2;
+	Sun, 28 May 2023 19:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302306;
-	bh=XlBIkYPAB0uVzQExwnRcUijQC5hZXW6gfzBfn9JlQNg=;
+	s=korg; t=1685302308;
+	bh=ACnsGrDB10fBpebDRNKrCyNxB08zK3w7CiMEPv7FCJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9Cs8eTWT1SrN0SPE+w1Rwy3sedUYiB8/KP8Pqga7EJOcbqcz5LkSrx0XzOD/BuoL
-	 3TindeYZtSlSr7LvDHvipqCS44Wy4Gxj7QqxYPhj9tjmmaqi5lzkf4Djzr6tGkYqyR
-	 zFWu8ZuajeJsP3Eg41JQGyi4wWujUkOmQYCwX+nY=
+	b=hAiLsS/VV9+l9oAuPvNMNHkZ1KfWBhjo8ziXeFG9m+BgdltLPtPUw8itlm1e44Oop
+	 37lO1MmCzxQSU848ivfLCAlENOAOLMqZygE+l2zUpC0IKSTnT2JYrDCzxtwzfAZEwX
+	 1o5mrcL+4ul9jaXg/WysQVDsyc0TYqUdmFIBZM5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.3 064/127] USB: core: Add routines for endpoint checks in old drivers
-Date: Sun, 28 May 2023 20:10:40 +0100
-Message-Id: <20230528190838.476764331@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.3 082/127] power: supply: bq27xxx: Add cache parameter to bq27xxx_battery_current_and_status()
+Date: Sun, 28 May 2023 20:10:58 +0100
+Message-Id: <20230528190839.029779970@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -33,150 +34,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 13890626501ffda22b18213ddaf7930473da5792 upstream.
+commit 35092c5819f8c5acc7bafe3fdbb13d6307c4f5e1 upstream.
 
-Many of the older USB drivers in the Linux USB stack were written
-based simply on a vendor's device specification.  They use the
-endpoint information in the spec and assume these endpoints will
-always be present, with the properties listed, in any device matching
-the given vendor and product IDs.
+Add a cache parameter to bq27xxx_battery_current_and_status() so that
+it can optionally use cached flags instead of re-reading them itself.
 
-While that may have been true back then, with spoofing and fuzzing it
-is not true any more.  More and more we are finding that those old
-drivers need to perform at least a minimum of checking before they try
-to use any endpoint other than ep0.
+This is a preparation patch for making bq27xxx_battery_update() check
+the status and have it call power_supply_changed() on status changes.
 
-To make this checking as simple as possible, we now add a couple of
-utility routines to the USB core.  usb_check_bulk_endpoints() and
-usb_check_int_endpoints() take an interface pointer together with a
-list of endpoint addresses (numbers and directions).  They check that
-the interface's current alternate setting includes endpoints with
-those addresses and that each of these endpoints has the right type:
-bulk or interrupt, respectively.
-
-Although we already have usb_find_common_endpoints() and related
-routines meant for a similar purpose, they are not well suited for
-this kind of checking.  Those routines find endpoints of various
-kinds, but only one (either the first or the last) of each kind, and
-they don't verify that the endpoints' addresses agree with what the
-caller expects.
-
-In theory the new routines could be more general: They could take a
-particular altsetting as their argument instead of always using the
-interface's current altsetting.  In practice I think this won't matter
-too much; multiple altsettings tend to be used for transferring media
-(audio or visual) over isochronous endpoints, not bulk or interrupt.
-Drivers for such devices will generally require more sophisticated
-checking than these simplistic routines provide.
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/dd2c8e8c-2c87-44ea-ba17-c64b97e201c9@rowland.harvard.edu
+Fixes: 297a533b3e62 ("bq27x00: Cache battery registers")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/usb.c |   76 +++++++++++++++++++++++++++++++++++++++++++++++++
- include/linux/usb.h    |    5 +++
- 2 files changed, 81 insertions(+)
+ drivers/power/supply/bq27xxx_battery.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/core/usb.c
-+++ b/drivers/usb/core/usb.c
-@@ -207,6 +207,82 @@ int usb_find_common_endpoints_reverse(st
- EXPORT_SYMBOL_GPL(usb_find_common_endpoints_reverse);
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1840,7 +1840,8 @@ static bool bq27xxx_battery_is_full(stru
+ static int bq27xxx_battery_current_and_status(
+ 	struct bq27xxx_device_info *di,
+ 	union power_supply_propval *val_curr,
+-	union power_supply_propval *val_status)
++	union power_supply_propval *val_status,
++	struct bq27xxx_reg_cache *cache)
+ {
+ 	bool single_flags = (di->opts & BQ27XXX_O_ZERO);
+ 	int curr;
+@@ -1852,10 +1853,14 @@ static int bq27xxx_battery_current_and_s
+ 		return curr;
+ 	}
  
- /**
-+ * usb_find_endpoint() - Given an endpoint address, search for the endpoint's
-+ * usb_host_endpoint structure in an interface's current altsetting.
-+ * @intf: the interface whose current altsetting should be searched
-+ * @ep_addr: the endpoint address (number and direction) to find
-+ *
-+ * Search the altsetting's list of endpoints for one with the specified address.
-+ *
-+ * Return: Pointer to the usb_host_endpoint if found, %NULL otherwise.
-+ */
-+static const struct usb_host_endpoint *usb_find_endpoint(
-+		const struct usb_interface *intf, unsigned int ep_addr)
-+{
-+	int n;
-+	const struct usb_host_endpoint *ep;
-+
-+	n = intf->cur_altsetting->desc.bNumEndpoints;
-+	ep = intf->cur_altsetting->endpoint;
-+	for (; n > 0; (--n, ++ep)) {
-+		if (ep->desc.bEndpointAddress == ep_addr)
-+			return ep;
-+	}
-+	return NULL;
-+}
-+
-+/**
-+ * usb_check_bulk_endpoints - Check whether an interface's current altsetting
-+ * contains a set of bulk endpoints with the given addresses.
-+ * @intf: the interface whose current altsetting should be searched
-+ * @ep_addrs: 0-terminated array of the endpoint addresses (number and
-+ * direction) to look for
-+ *
-+ * Search for endpoints with the specified addresses and check their types.
-+ *
-+ * Return: %true if all the endpoints are found and are bulk, %false otherwise.
-+ */
-+bool usb_check_bulk_endpoints(
-+		const struct usb_interface *intf, const u8 *ep_addrs)
-+{
-+	const struct usb_host_endpoint *ep;
-+
-+	for (; *ep_addrs; ++ep_addrs) {
-+		ep = usb_find_endpoint(intf, *ep_addrs);
-+		if (!ep || !usb_endpoint_xfer_bulk(&ep->desc))
-+			return false;
-+	}
-+	return true;
-+}
-+EXPORT_SYMBOL_GPL(usb_check_bulk_endpoints);
-+
-+/**
-+ * usb_check_int_endpoints - Check whether an interface's current altsetting
-+ * contains a set of interrupt endpoints with the given addresses.
-+ * @intf: the interface whose current altsetting should be searched
-+ * @ep_addrs: 0-terminated array of the endpoint addresses (number and
-+ * direction) to look for
-+ *
-+ * Search for endpoints with the specified addresses and check their types.
-+ *
-+ * Return: %true if all the endpoints are found and are interrupt,
-+ * %false otherwise.
-+ */
-+bool usb_check_int_endpoints(
-+		const struct usb_interface *intf, const u8 *ep_addrs)
-+{
-+	const struct usb_host_endpoint *ep;
-+
-+	for (; *ep_addrs; ++ep_addrs) {
-+		ep = usb_find_endpoint(intf, *ep_addrs);
-+		if (!ep || !usb_endpoint_xfer_int(&ep->desc))
-+			return false;
-+	}
-+	return true;
-+}
-+EXPORT_SYMBOL_GPL(usb_check_int_endpoints);
-+
-+/**
-  * usb_find_alt_setting() - Given a configuration, find the alternate setting
-  * for the given interface.
-  * @config: the configuration to search (not necessarily the current config).
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -291,6 +291,11 @@ void usb_put_intf(struct usb_interface *
- #define USB_MAXINTERFACES	32
- #define USB_MAXIADS		(USB_MAXINTERFACES/2)
+-	flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, single_flags);
+-	if (flags < 0) {
+-		dev_err(di->dev, "error reading flags\n");
+-		return flags;
++	if (cache) {
++		flags = cache->flags;
++	} else {
++		flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, single_flags);
++		if (flags < 0) {
++			dev_err(di->dev, "error reading flags\n");
++			return flags;
++		}
+ 	}
  
-+bool usb_check_bulk_endpoints(
-+		const struct usb_interface *intf, const u8 *ep_addrs);
-+bool usb_check_int_endpoints(
-+		const struct usb_interface *intf, const u8 *ep_addrs);
-+
- /*
-  * USB Resume Timer: Every Host controller driver should drive the resume
-  * signalling on the bus for the amount of time defined by this macro.
+ 	if (di->opts & BQ27XXX_O_ZERO) {
+@@ -2001,7 +2006,7 @@ static int bq27xxx_battery_get_property(
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_STATUS:
+-		ret = bq27xxx_battery_current_and_status(di, NULL, val);
++		ret = bq27xxx_battery_current_and_status(di, NULL, val, NULL);
+ 		break;
+ 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
+ 		ret = bq27xxx_battery_voltage(di, val);
+@@ -2010,7 +2015,7 @@ static int bq27xxx_battery_get_property(
+ 		val->intval = di->cache.flags < 0 ? 0 : 1;
+ 		break;
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+-		ret = bq27xxx_battery_current_and_status(di, val, NULL);
++		ret = bq27xxx_battery_current_and_status(di, val, NULL, NULL);
+ 		break;
+ 	case POWER_SUPPLY_PROP_CAPACITY:
+ 		ret = bq27xxx_simple_value(di->cache.capacity, val);
 
 
