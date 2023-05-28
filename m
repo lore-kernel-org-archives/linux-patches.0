@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB236611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77717C433D2;
-	Sun, 28 May 2023 19:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639BC611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3461C433EF;
+	Sun, 28 May 2023 19:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301280;
-	bh=7ADUiHZS/SIeohP0AoapQcEWSWTEIvGy4MJC2Le0n7o=;
+	s=korg; t=1685301283;
+	bh=m51mPhvK+CqdrYQsaeKqNgmOl9Z79RIoIWygm3wIsJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNXT4Pxtn2YghKJzo+u6yU6SWfqBNbQHNU5N9KDp493AY8Z/OZeVfSNHLZ/8bzzsV
-	 z4U9zNOhkCOXnu3181KAbASAt3dmnwM1pQaJknBU1bxL1Ht/kgdlrrIM1Xgq+RmnT8
-	 8f08iwWY0lAphy90ZC/lrCFwk/hAkwjpsjIOjzPc=
+	b=wctL/qv1ERVB6KMh2I7rFbDn4rV2e++oxLn33g1GNlVDDVwGUCO5TtfTFybuAAI2g
+	 v8i7H7MpTsd0lKp9PC7x5gTlkHoZfV6cXG3cOpWuzv3fINszqHRyOBdyb5ZdBIWv6c
+	 Ew4BlDd2jHzug9QN4/BvktvmY72ofk94Mp92ADBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Nocera <hadess@hadess.net>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Eli Cohen <elic@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 26/86] HID: logitech-hidpp: Dont use the USB serial for USB devices
-Date: Sun, 28 May 2023 20:10:00 +0100
-Message-Id: <20230528190829.530509506@linuxfoundation.org>
+Subject: [PATCH 4.14 17/86] lib: cpu_rmap: Avoid use after free on rmap->obj array entries
+Date: Sun, 28 May 2023 20:09:51 +0100
+Message-Id: <20230528190829.189895339@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,99 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bastien Nocera <hadess@hadess.net>
+From: Eli Cohen <elic@nvidia.com>
 
-[ Upstream commit 7ad1fe0da0fa91bf920b79ab05ae97bfabecc4f4 ]
+[ Upstream commit 4e0473f1060aa49621d40a113afde24818101d37 ]
 
-For devices that support the 0x0003 feature (Device Information) version 4,
-set the serial based on the output of that feature, rather than relying
-on the usbhid code setting the USB serial.
+When calling irq_set_affinity_notifier() with NULL at the notify
+argument, it will cause freeing of the glue pointer in the
+corresponding array entry but will leave the pointer in the array. A
+subsequent call to free_irq_cpu_rmap() will try to free this entry again
+leading to possible use after free.
 
-This should allow the serial when connected through USB to (nearly)
-match the one when connected through a unifying receiver.
+Fix that by setting NULL to the array entry and checking that we have
+non-zero at the array entry when iterating over the array in
+free_irq_cpu_rmap().
 
-For example, on the serials on a G903 wired/wireless mouse:
-- Unifying: 4067-e8-ce-cd-45
-- USB before patch: 017C385C3837
-- USB after patch: c086-e8-ce-cd-45
+The current code does not suffer from this since there are no cases
+where irq_set_affinity_notifier(irq, NULL) (note the NULL passed for the
+notify arg) is called, followed by a call to free_irq_cpu_rmap() so we
+don't hit and issue. Subsequent patches in this series excersize this
+flow, hence the required fix.
 
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Link: https://lore.kernel.org/r/20230302130117.3975-1-hadess@hadess.net
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Eli Cohen <elic@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 51 ++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ lib/cpu_rmap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 6ad776b4711b7..e2db4731eb825 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -777,6 +777,55 @@ static bool hidpp_is_connected(struct hidpp_device *hidpp)
- 	return ret == 0;
+diff --git a/lib/cpu_rmap.c b/lib/cpu_rmap.c
+index f610b2a10b3ed..f52389054a24f 100644
+--- a/lib/cpu_rmap.c
++++ b/lib/cpu_rmap.c
+@@ -235,7 +235,8 @@ void free_irq_cpu_rmap(struct cpu_rmap *rmap)
+ 
+ 	for (index = 0; index < rmap->used; index++) {
+ 		glue = rmap->obj[index];
+-		irq_set_affinity_notifier(glue->notify.irq, NULL);
++		if (glue)
++			irq_set_affinity_notifier(glue->notify.irq, NULL);
+ 	}
+ 
+ 	cpu_rmap_put(rmap);
+@@ -271,6 +272,7 @@ static void irq_cpu_rmap_release(struct kref *ref)
+ 		container_of(ref, struct irq_glue, notify.kref);
+ 
+ 	cpu_rmap_put(glue->rmap);
++	glue->rmap->obj[glue->index] = NULL;
+ 	kfree(glue);
  }
  
-+/* -------------------------------------------------------------------------- */
-+/* 0x0003: Device Information                                                 */
-+/* -------------------------------------------------------------------------- */
-+
-+#define HIDPP_PAGE_DEVICE_INFORMATION			0x0003
-+
-+#define CMD_GET_DEVICE_INFO				0x00
-+
-+static int hidpp_get_serial(struct hidpp_device *hidpp, u32 *serial)
-+{
-+	struct hidpp_report response;
-+	u8 feature_type;
-+	u8 feature_index;
-+	int ret;
-+
-+	ret = hidpp_root_get_feature(hidpp, HIDPP_PAGE_DEVICE_INFORMATION,
-+				     &feature_index,
-+				     &feature_type);
-+	if (ret)
-+		return ret;
-+
-+	ret = hidpp_send_fap_command_sync(hidpp, feature_index,
-+					  CMD_GET_DEVICE_INFO,
-+					  NULL, 0, &response);
-+	if (ret)
-+		return ret;
-+
-+	/* See hidpp_unifying_get_serial() */
-+	*serial = *((u32 *)&response.rap.params[1]);
-+	return 0;
-+}
-+
-+static int hidpp_serial_init(struct hidpp_device *hidpp)
-+{
-+	struct hid_device *hdev = hidpp->hid_dev;
-+	u32 serial;
-+	int ret;
-+
-+	ret = hidpp_get_serial(hidpp, &serial);
-+	if (ret)
-+		return ret;
-+
-+	snprintf(hdev->uniq, sizeof(hdev->uniq), "%04x-%4phD",
-+		 hdev->product, &serial);
-+	dbg_hid("HID++ DeviceInformation: Got serial: %s\n", hdev->uniq);
-+
-+	return 0;
-+}
-+
- /* -------------------------------------------------------------------------- */
- /* 0x0005: GetDeviceNameType                                                  */
- /* -------------------------------------------------------------------------- */
-@@ -3039,6 +3088,8 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 
- 	if (hidpp->quirks & HIDPP_QUIRK_UNIFYING)
- 		hidpp_unifying_init(hidpp);
-+	else if (hid_is_usb(hidpp->hid_dev))
-+		hidpp_serial_init(hidpp);
- 
- 	connected = hidpp_is_connected(hidpp);
- 	atomic_set(&hidpp->connected, connected);
+@@ -300,6 +302,7 @@ int irq_cpu_rmap_add(struct cpu_rmap *rmap, int irq)
+ 	rc = irq_set_affinity_notifier(irq, &glue->notify);
+ 	if (rc) {
+ 		cpu_rmap_put(glue->rmap);
++		rmap->obj[glue->index] = NULL;
+ 		kfree(glue);
+ 	}
+ 	return rc;
 -- 
 2.39.2
 
