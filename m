@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C82611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AE8C433D2;
-	Sun, 28 May 2023 19:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56305611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A4EC433EF;
+	Sun, 28 May 2023 19:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301734;
-	bh=aFs3qgdrR15h+SxW8RuFS3808pVzsn0pZquaSH7HA8o=;
+	s=korg; t=1685301737;
+	bh=YPvELhmPw/DxVGQuv/5qTcS6D7urEQkVjvxtiTCqZok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZIpbrub0eqOHR47qMVJ+/5qWWj03W2gYS/j7w88sacXDjOXft1pIVRXquJBh3qsr
-	 6qPwsPIX/hFzseilvEoUwfCmzZGUA7ekYfRsCp+aDVTHn5kEehc8NKKB/EZ5T7It/i
-	 m+34sUWySY5UlRgzJLhG9g4TSKrHG231gBQE+XIM=
+	b=nIfWdcEsYxMVWFwBE/91Zbr4of7Y4MvZWonkb26fyGR/Sg4YVLXwnBoyTgAw0tCGQ
+	 gvgh7t4cciyx5YFpBRhIuh333iF2HrBAnOhWO27kJD01A940GMUhpXw9b1+7MRcow0
+	 8YQvYsdSTfR7bWaBbfBCgIBFKE3rV9BK3s4IWD3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+e2787430e752a92b8750@syzkaller.appspotmail.com>,
-	syzbot <syzbot+4913dca2ea6e4d43f3f1@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Harry Wentland <Harry.Wentland@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 015/161] fs: hfsplus: remove WARN_ON() from hfsplus_cat_{read,write}_inode()
-Date: Sun, 28 May 2023 20:08:59 +0100
-Message-Id: <20230528190837.606104979@linuxfoundation.org>
+Subject: [PATCH 5.4 016/161] drm/amd/display: Use DC_LOG_DC in the trasform pixel function
+Date: Sun, 28 May 2023 20:09:00 +0100
+Message-Id: <20230528190837.642653788@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -38,106 +38,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit 81b21c0f0138ff5a499eafc3eb0578ad2a99622c ]
+[ Upstream commit 7222f5841ff49709ca666b05ff336776e0664a20 ]
 
-syzbot is hitting WARN_ON() in hfsplus_cat_{read,write}_inode(), for
-crafted filesystem image can contain bogus length. There conditions are
-not kernel bugs that can justify kernel to panic.
+[Why & How]
+DC now uses a new commit sequence which is more robust since it
+addresses cases where we need to reorganize pipes based on planes and
+other parameters. As a result, this new commit sequence reset the DC
+state by cleaning plane states and re-creating them accordingly with the
+need. For this reason, the dce_transform_set_pixel_storage_depth can be
+invoked after a plane state is destroyed and before its re-creation. In
+this situation and on DCE devices, DC will hit a condition that will
+trigger a dmesg log that looks like this:
 
-Reported-by: syzbot <syzbot+e2787430e752a92b8750@syzkaller.appspotmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=e2787430e752a92b8750
-Reported-by: syzbot <syzbot+4913dca2ea6e4d43f3f1@syzkaller.appspotmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=4913dca2ea6e4d43f3f1
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Message-Id: <15308173-5252-d6a3-ae3b-e96d46cb6f41@I-love.SAKURA.ne.jp>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Console: switching to colour frame buffer device 240x67
+------------[ cut here ]------------
+[..]
+Hardware name: System manufacturer System Product Name/PRIME X370-PRO, BIOS 5603 07/28/2020
+RIP: 0010:dce_transform_set_pixel_storage_depth+0x3f8/0x480 [amdgpu]
+[..]
+RSP: 0018:ffffc9000202b850 EFLAGS: 00010293
+RAX: ffffffffa081d100 RBX: ffff888110790000 RCX: 000000000000000c
+RDX: ffff888100bedbf8 RSI: 0000000000001a50 RDI: ffff88810463c900
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000007
+R10: 0000000000000001 R11: 0000000000000f00 R12: ffff88810f500010
+R13: ffff888100bedbf8 R14: ffff88810f515688 R15: 0000000000000000
+FS:  00007ff0159249c0(0000) GS:ffff88840e940000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ff01528e550 CR3: 0000000002a10000 CR4: 00000000003506e0
+Call Trace:
+ <TASK>
+ ? dm_write_reg_func+0x21/0x80 [amdgpu 340dadd3f7c8cf4be11cf0bdc850245e99abe0e8]
+ dc_stream_set_dither_option+0xfb/0x130 [amdgpu 340dadd3f7c8cf4be11cf0bdc850245e99abe0e8]
+ amdgpu_dm_crtc_configure_crc_source+0x10b/0x190 [amdgpu 340dadd3f7c8cf4be11cf0bdc850245e99abe0e8]
+ amdgpu_dm_atomic_commit_tail+0x20a8/0x2a90 [amdgpu 340dadd3f7c8cf4be11cf0bdc850245e99abe0e8]
+ ? free_unref_page_commit+0x98/0x170
+ ? free_unref_page+0xcc/0x150
+ commit_tail+0x94/0x120
+ drm_atomic_helper_commit+0x10f/0x140
+ drm_atomic_commit+0x94/0xc0
+ ? drm_plane_get_damage_clips.cold+0x1c/0x1c
+ drm_client_modeset_commit_atomic+0x203/0x250
+ drm_client_modeset_commit_locked+0x56/0x150
+ drm_client_modeset_commit+0x21/0x40
+ drm_fb_helper_lastclose+0x42/0x70
+ amdgpu_driver_lastclose_kms+0xa/0x10 [amdgpu 340dadd3f7c8cf4be11cf0bdc850245e99abe0e8]
+ drm_release+0xda/0x110
+ __fput+0x89/0x240
+ task_work_run+0x5c/0x90
+ do_exit+0x333/0xae0
+ do_group_exit+0x2d/0x90
+ __x64_sys_exit_group+0x14/0x20
+ do_syscall_64+0x5b/0x80
+ ? exit_to_user_mode_prepare+0x1e/0x140
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+RIP: 0033:0x7ff016ceaca1
+Code: Unable to access opcode bytes at RIP 0x7ff016ceac77.
+RSP: 002b:00007ffe7a2357e8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00007ff016e15a00 RCX: 00007ff016ceaca1
+RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000000
+RBP: 0000000000000000 R08: ffffffffffffff78 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007ff016e15a00
+R13: 0000000000000000 R14: 00007ff016e1aee8 R15: 00007ff016e1af00
+ </TASK>
+
+Since this issue only happens in a transition state on DC, this commit
+replace BREAK_TO_DEBUGGER with DC_LOG_DC.
+
+Reviewed-by: Harry Wentland <Harry.Wentland@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/inode.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce/dce_transform.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
-index 76501d905099b..15c14a6a9f7fe 100644
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -497,7 +497,11 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
- 	if (type == HFSPLUS_FOLDER) {
- 		struct hfsplus_cat_folder *folder = &entry.folder;
- 
--		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_folder));
-+		if (fd->entrylength < sizeof(struct hfsplus_cat_folder)) {
-+			pr_err("bad catalog folder entry\n");
-+			res = -EIO;
-+			goto out;
-+		}
- 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
- 					sizeof(struct hfsplus_cat_folder));
- 		hfsplus_get_perms(inode, &folder->permissions, 1);
-@@ -517,7 +521,11 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
- 	} else if (type == HFSPLUS_FILE) {
- 		struct hfsplus_cat_file *file = &entry.file;
- 
--		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_file));
-+		if (fd->entrylength < sizeof(struct hfsplus_cat_file)) {
-+			pr_err("bad catalog file entry\n");
-+			res = -EIO;
-+			goto out;
-+		}
- 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
- 					sizeof(struct hfsplus_cat_file));
- 
-@@ -548,6 +556,7 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
- 		pr_err("bad catalog entry used to create inode\n");
- 		res = -EIO;
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
+index 6fd57cfb112f5..96fdc18ecb3bf 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
+@@ -778,7 +778,7 @@ static void dce_transform_set_pixel_storage_depth(
+ 		color_depth = COLOR_DEPTH_101010;
+ 		pixel_depth = 0;
+ 		expan_mode  = 1;
+-		BREAK_TO_DEBUGGER();
++		DC_LOG_DC("The pixel depth %d is not valid, set COLOR_DEPTH_101010 instead.", depth);
+ 		break;
  	}
-+out:
- 	return res;
+ 
+@@ -792,8 +792,7 @@ static void dce_transform_set_pixel_storage_depth(
+ 	if (!(xfm_dce->lb_pixel_depth_supported & depth)) {
+ 		/*we should use unsupported capabilities
+ 		 *  unless it is required by w/a*/
+-		DC_LOG_WARNING("%s: Capability not supported",
+-			__func__);
++		DC_LOG_DC("%s: Capability not supported", __func__);
+ 	}
  }
  
-@@ -556,6 +565,7 @@ int hfsplus_cat_write_inode(struct inode *inode)
- 	struct inode *main_inode = inode;
- 	struct hfs_find_data fd;
- 	hfsplus_cat_entry entry;
-+	int res = 0;
- 
- 	if (HFSPLUS_IS_RSRC(inode))
- 		main_inode = HFSPLUS_I(inode)->rsrc_inode;
-@@ -574,7 +584,11 @@ int hfsplus_cat_write_inode(struct inode *inode)
- 	if (S_ISDIR(main_inode->i_mode)) {
- 		struct hfsplus_cat_folder *folder = &entry.folder;
- 
--		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_folder));
-+		if (fd.entrylength < sizeof(struct hfsplus_cat_folder)) {
-+			pr_err("bad catalog folder entry\n");
-+			res = -EIO;
-+			goto out;
-+		}
- 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
- 					sizeof(struct hfsplus_cat_folder));
- 		/* simple node checks? */
-@@ -599,7 +613,11 @@ int hfsplus_cat_write_inode(struct inode *inode)
- 	} else {
- 		struct hfsplus_cat_file *file = &entry.file;
- 
--		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_file));
-+		if (fd.entrylength < sizeof(struct hfsplus_cat_file)) {
-+			pr_err("bad catalog file entry\n");
-+			res = -EIO;
-+			goto out;
-+		}
- 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
- 					sizeof(struct hfsplus_cat_file));
- 		hfsplus_inode_write_fork(inode, &file->data_fork);
-@@ -620,5 +638,5 @@ int hfsplus_cat_write_inode(struct inode *inode)
- 	set_bit(HFSPLUS_I_CAT_DIRTY, &HFSPLUS_I(inode)->flags);
- out:
- 	hfs_find_exit(&fd);
--	return 0;
-+	return res;
- }
 -- 
 2.39.2
 
