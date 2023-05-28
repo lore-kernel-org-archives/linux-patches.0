@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CC9569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5012C433EF;
-	Sun, 28 May 2023 19:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC069569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC5EC433EF;
+	Sun, 28 May 2023 19:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302112;
-	bh=LklwT/v2dKTYOtf/P7utV9OsUeegKAI6uksag9BtbZ8=;
+	s=korg; t=1685302114;
+	bh=glwm0XPTDE45ot7si0Nl9OnZg9KN1zzQXht50iLz8QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sU8ju4oq0AWrDSOYO2P8XUrnTcfCc4GX+YjnEbtaAzmMZNqbi8RXHm3aiPcWK2XOe
-	 5/W1aoeNjIhiakY/MVstIyayo1kYtQZQMAfvHMmzyAkeE53ofxlyZZxXS4mcDTiHhe
-	 3++5VMumwpGUKvIaSTa1gnSjUKe6zAH652A53ZCI=
+	b=aazISdy7z/5VYaEtfVmHk86hPuFpYRKSo3JNxgIT0SoYDbpv+TcBP6Z/nuKujVoAp
+	 b9bJppCGQNdiu3fszrvo7rdVIXH4khR3HRAolz3QuMXfkTWVwq6ulnOL99j8yB/Sc+
+	 gsBy1O/SdiOrbNZkt0Ls1NBW3wxU/but5HA7xn1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Zhu Yanjun <zyjzyj2000@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 158/161] forcedeth: Fix an error handling path in nv_probe()
-Date: Sun, 28 May 2023 20:11:22 +0100
-Message-Id: <20230528190841.847162818@linuxfoundation.org>
+	Roi Dayan <roid@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>
+Subject: [PATCH 5.4 159/161] net/mlx5: Fix error message when failing to allocate device memory
+Date: Sun, 28 May 2023 20:11:23 +0100
+Message-Id: <20230528190841.872362475@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,35 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Roi Dayan <roid@nvidia.com>
 
-commit 5b17a4971d3b2a073f4078dd65331efbe35baa2d upstream.
+commit a65735148e0328f80c0f72f9f8d2f609bfcf4aff upstream.
 
-If an error occures after calling nv_mgmt_acquire_sema(), it should be
-undone with a corresponding nv_mgmt_release_sema() call.
+Fix spacing for the error and also the correct error code pointer.
 
-Add it in the error handling path of the probe as already done in the
-remove function.
-
-Fixes: cac1c52c3621 ("forcedeth: mgmt unit interface")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Zhu Yanjun <zyjzyj2000@gmail.com>
-Link: https://lore.kernel.org/r/355e9a7d351b32ad897251b6f81b5886fcdc6766.1684571393.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c9b9dcb430b3 ("net/mlx5: Move device memory management to mlx5_core")
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -6099,6 +6099,7 @@ static int nv_probe(struct pci_dev *pci_
- 	return 0;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -887,7 +887,7 @@ static int mlx5_init_once(struct mlx5_co
  
- out_error:
-+	nv_mgmt_release_sema(dev);
- 	if (phystate_orig)
- 		writel(phystate|NVREG_ADAPTCTL_RUNNING, base + NvRegAdapterControl);
- out_freering:
+ 	dev->dm = mlx5_dm_create(dev);
+ 	if (IS_ERR(dev->dm))
+-		mlx5_core_warn(dev, "Failed to init device memory%d\n", err);
++		mlx5_core_warn(dev, "Failed to init device memory %ld\n", PTR_ERR(dev->dm));
+ 
+ 	dev->tracer = mlx5_fw_tracer_create(dev);
+ 	dev->hv_vhca = mlx5_hv_vhca_create(dev);
 
 
