@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D8D611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:41:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8BFC433D2;
-	Sun, 28 May 2023 19:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C5B611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:41:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44441C433D2;
+	Sun, 28 May 2023 19:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302894;
-	bh=t3zYhH8EdQHTX5cyn/Lu16El4qqVeYJmv9TixjufrzM=;
+	s=korg; t=1685302896;
+	bh=84L+E4OOV9pryRDZerTuqMgutY3cW55qYJrDRDYvfCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X3VmAADB2R760evf94zr5r9HokTeZXd87VPOhFYxNqZd27OLhn1Czea9W1kp43ug6
-	 JZI12cFmO9RRL7GsVxLD3fNBnk8QZNMekxDXTJsz5vyOZHhfVYVTfRoDn5j3pj41mf
-	 6Bbe5RRpkYZtN6Hg54n3B/nu1pkFExzB5QZ2TNZg=
+	b=DhEomDZUhxBhxVsxrcmGeehcc8zPKkuEDVF5MW/QG6c8mA182YWFj6eudlUtlg4ek
+	 baWBnljqiOtCmQuJzJbfUAD72d7oO8HVPy05miXtgr9XntZpO2tg0hmMtt05T+2eWe
+	 W3HPoyOLeRLcTH/qY57iO6NGoSVxemtObr+CJeRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Groeneveld <kgroeneveld@lenbrook.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/211] spi: spi-imx: fix MX51_ECSPI_* macros when cs > 3
-Date: Sun, 28 May 2023 20:09:51 +0100
-Message-Id: <20230528190845.366566623@linuxfoundation.org>
+Subject: [PATCH 5.10 071/211] HID: wacom: generic: Set battery quirk only when we see battery data
+Date: Sun, 28 May 2023 20:09:52 +0100
+Message-Id: <20230528190845.390233290@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,75 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kevin Groeneveld <kgroeneveld@lenbrook.com>
+From: Jason Gerecke <killertofu@gmail.com>
 
-[ Upstream commit 87c614175bbf28d3fd076dc2d166bac759e41427 ]
+[ Upstream commit bea407a427baa019758f29f4d31b26f008bb8cc6 ]
 
-When using gpio based chip select the cs value can go outside the range
-0 – 3. The various MX51_ECSPI_* macros did not take this into consideration
-resulting in possible corruption of the configuration.
+Some devices will include battery status usages in the HID descriptor
+but we won't see that battery data for one reason or another. For example,
+AES sensors won't send battery data unless an AES pen is in proximity.
+If a user does not have an AES pen but instead only interacts with the
+AES touchscreen with their fingers then there is no need for us to create
+a battery object. Similarly, if a family of peripherals shares the same
+HID descriptor between wired-only and wireless-capable SKUs, users of the
+former may never see a battery event and will not want a power_supply
+object created.
 
-For example for any cs value over 3 the SCLKPHA bits would not be set and
-other values in the register possibly corrupted.
-
-One way to fix this is to just mask the cs bits to 2 bits. This still
-allows all 4 native chip selects to work as well as gpio chip selects
-(which can use any of the 4 chip select configurations).
-
-Signed-off-by: Kevin Groeneveld <kgroeneveld@lenbrook.com>
-Link: https://lore.kernel.org/r/20230318222132.3373-1-kgroeneveld@lenbrook.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217062
+Link: https://gitlab.gnome.org/GNOME/gnome-control-center/-/issues/2354
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Tested-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/hid/wacom_wac.c | 33 +++++++++++----------------------
+ 1 file changed, 11 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index bbc420865f0fd..21297cc62571a 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -242,6 +242,18 @@ static bool spi_imx_can_dma(struct spi_master *master, struct spi_device *spi,
- 	return true;
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index 6c64165fae13e..d82df2393d20c 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1927,18 +1927,7 @@ static void wacom_map_usage(struct input_dev *input, struct hid_usage *usage,
+ static void wacom_wac_battery_usage_mapping(struct hid_device *hdev,
+ 		struct hid_field *field, struct hid_usage *usage)
+ {
+-	struct wacom *wacom = hid_get_drvdata(hdev);
+-	struct wacom_wac *wacom_wac = &wacom->wacom_wac;
+-	struct wacom_features *features = &wacom_wac->features;
+-	unsigned equivalent_usage = wacom_equivalent_usage(usage->hid);
+-
+-	switch (equivalent_usage) {
+-	case HID_DG_BATTERYSTRENGTH:
+-	case WACOM_HID_WD_BATTERY_LEVEL:
+-	case WACOM_HID_WD_BATTERY_CHARGING:
+-		features->quirks |= WACOM_QUIRK_BATTERY;
+-		break;
+-	}
++	return;
  }
  
-+/*
-+ * Note the number of natively supported chip selects for MX51 is 4. Some
-+ * devices may have less actual SS pins but the register map supports 4. When
-+ * using gpio chip selects the cs values passed into the macros below can go
-+ * outside the range 0 - 3. We therefore need to limit the cs value to avoid
-+ * corrupting bits outside the allocated locations.
-+ *
-+ * The simplest way to do this is to just mask the cs bits to 2 bits. This
-+ * still allows all 4 native chip selects to work as well as gpio chip selects
-+ * (which can use any of the 4 chip select configurations).
-+ */
-+
- #define MX51_ECSPI_CTRL		0x08
- #define MX51_ECSPI_CTRL_ENABLE		(1 <<  0)
- #define MX51_ECSPI_CTRL_XCH		(1 <<  2)
-@@ -250,16 +262,16 @@ static bool spi_imx_can_dma(struct spi_master *master, struct spi_device *spi,
- #define MX51_ECSPI_CTRL_DRCTL(drctl)	((drctl) << 16)
- #define MX51_ECSPI_CTRL_POSTDIV_OFFSET	8
- #define MX51_ECSPI_CTRL_PREDIV_OFFSET	12
--#define MX51_ECSPI_CTRL_CS(cs)		((cs) << 18)
-+#define MX51_ECSPI_CTRL_CS(cs)		((cs & 3) << 18)
- #define MX51_ECSPI_CTRL_BL_OFFSET	20
- #define MX51_ECSPI_CTRL_BL_MASK		(0xfff << 20)
+ static void wacom_wac_battery_event(struct hid_device *hdev, struct hid_field *field,
+@@ -1959,18 +1948,21 @@ static void wacom_wac_battery_event(struct hid_device *hdev, struct hid_field *f
+ 			wacom_wac->hid_data.bat_connected = 1;
+ 			wacom_wac->hid_data.bat_status = WACOM_POWER_SUPPLY_STATUS_AUTO;
+ 		}
++		wacom_wac->features.quirks |= WACOM_QUIRK_BATTERY;
+ 		break;
+ 	case WACOM_HID_WD_BATTERY_LEVEL:
+ 		value = value * 100 / (field->logical_maximum - field->logical_minimum);
+ 		wacom_wac->hid_data.battery_capacity = value;
+ 		wacom_wac->hid_data.bat_connected = 1;
+ 		wacom_wac->hid_data.bat_status = WACOM_POWER_SUPPLY_STATUS_AUTO;
++		wacom_wac->features.quirks |= WACOM_QUIRK_BATTERY;
+ 		break;
+ 	case WACOM_HID_WD_BATTERY_CHARGING:
+ 		wacom_wac->hid_data.bat_charging = value;
+ 		wacom_wac->hid_data.ps_connected = value;
+ 		wacom_wac->hid_data.bat_connected = 1;
+ 		wacom_wac->hid_data.bat_status = WACOM_POWER_SUPPLY_STATUS_AUTO;
++		wacom_wac->features.quirks |= WACOM_QUIRK_BATTERY;
+ 		break;
+ 	}
+ }
+@@ -1986,18 +1978,15 @@ static void wacom_wac_battery_report(struct hid_device *hdev,
+ {
+ 	struct wacom *wacom = hid_get_drvdata(hdev);
+ 	struct wacom_wac *wacom_wac = &wacom->wacom_wac;
+-	struct wacom_features *features = &wacom_wac->features;
  
- #define MX51_ECSPI_CONFIG	0x0c
--#define MX51_ECSPI_CONFIG_SCLKPHA(cs)	(1 << ((cs) +  0))
--#define MX51_ECSPI_CONFIG_SCLKPOL(cs)	(1 << ((cs) +  4))
--#define MX51_ECSPI_CONFIG_SBBCTRL(cs)	(1 << ((cs) +  8))
--#define MX51_ECSPI_CONFIG_SSBPOL(cs)	(1 << ((cs) + 12))
--#define MX51_ECSPI_CONFIG_SCLKCTL(cs)	(1 << ((cs) + 20))
-+#define MX51_ECSPI_CONFIG_SCLKPHA(cs)	(1 << ((cs & 3) +  0))
-+#define MX51_ECSPI_CONFIG_SCLKPOL(cs)	(1 << ((cs & 3) +  4))
-+#define MX51_ECSPI_CONFIG_SBBCTRL(cs)	(1 << ((cs & 3) +  8))
-+#define MX51_ECSPI_CONFIG_SSBPOL(cs)	(1 << ((cs & 3) + 12))
-+#define MX51_ECSPI_CONFIG_SCLKCTL(cs)	(1 << ((cs & 3) + 20))
+-	if (features->quirks & WACOM_QUIRK_BATTERY) {
+-		int status = wacom_wac->hid_data.bat_status;
+-		int capacity = wacom_wac->hid_data.battery_capacity;
+-		bool charging = wacom_wac->hid_data.bat_charging;
+-		bool connected = wacom_wac->hid_data.bat_connected;
+-		bool powered = wacom_wac->hid_data.ps_connected;
++	int status = wacom_wac->hid_data.bat_status;
++	int capacity = wacom_wac->hid_data.battery_capacity;
++	bool charging = wacom_wac->hid_data.bat_charging;
++	bool connected = wacom_wac->hid_data.bat_connected;
++	bool powered = wacom_wac->hid_data.ps_connected;
  
- #define MX51_ECSPI_INT		0x10
- #define MX51_ECSPI_INT_TEEN		(1 <<  0)
+-		wacom_notify_battery(wacom_wac, status, capacity, charging,
+-				     connected, powered);
+-	}
++	wacom_notify_battery(wacom_wac, status, capacity, charging,
++			     connected, powered);
+ }
+ 
+ static void wacom_wac_pad_usage_mapping(struct hid_device *hdev,
 -- 
 2.39.2
 
