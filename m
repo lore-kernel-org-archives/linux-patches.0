@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1A4569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927CDC433D2;
-	Sun, 28 May 2023 19:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C2F569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B04C433D2;
+	Sun, 28 May 2023 19:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302131;
-	bh=4770lBRo9TXj0AKT9kb9lvq21IBngGKUXHO0O2oTCOE=;
+	s=korg; t=1685302134;
+	bh=v1AzI48KgcIz3eQqxquYp9HYGY7HNyZq3ssHUE4xPPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYgUQF/fSfO7+VgK4PY/SnL1jCmPQ0teX8W61lCV3oHY0xq0LNqOgGfla6ZMlRDEX
-	 Y+B7wboIPBJOcbJQ4tAgcdxolqSZFOqKG00kmtkJkO/80AKyaxDFWUEqOsM978XUBV
-	 etLrPqvAcnQEl3iPRRrFwDn+BoKj66aJme33uBxY=
+	b=raRTx9riE/AdYryQ+A+JJfduyqaiVh0EfyF6GWIdCvCmReHcr6VcsFdiHDXckm8f6
+	 bIfBzbcexHseYT7WwyfwelMlHqxCmEsrrricAQ3YXzl3/CaeKxK7/Ys2Dyd4rh01hF
+	 C/pcET/d/qca31uNm5txu0foSmBTanU7TzLQK4xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.3 012/127] ocfs2: Switch to security_inode_init_security()
-Date: Sun, 28 May 2023 20:09:48 +0100
-Message-Id: <20230528190836.615408916@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.3 013/127] x86/mm: Avoid incomplete Global INVLPG flushes
+Date: Sun, 28 May 2023 20:09:49 +0100
+Message-Id: <20230528190836.652784806@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -37,118 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-commit de3004c874e740304cc4f4a83d6200acb511bbda upstream.
+commit ce0b15d11ad837fbacc5356941712218e38a0a83 upstream.
 
-In preparation for removing security_old_inode_init_security(), switch to
-security_inode_init_security().
+The INVLPG instruction is used to invalidate TLB entries for a
+specified virtual address.  When PCIDs are enabled, INVLPG is supposed
+to invalidate TLB entries for the specified address for both the
+current PCID *and* Global entries.  (Note: Only kernel mappings set
+Global=1.)
 
-Extend the existing ocfs2_initxattrs() to take the
-ocfs2_security_xattr_info structure from fs_info, and populate the
-name/value/len triple with the first xattr provided by LSMs.
+Unfortunately, some INVLPG implementations can leave Global
+translations unflushed when PCIDs are enabled.
 
-As fs_info was not used before, ocfs2_initxattrs() can now handle the case
-of replicating the behavior of security_old_inode_init_security(), i.e.
-just obtaining the xattr, in addition to setting all xattrs provided by
-LSMs.
+As a workaround, never enable PCIDs on affected processors.
 
-Supporting multiple xattrs is not currently supported where
-security_old_inode_init_security() was called (mknod, symlink), as it
-requires non-trivial changes that can be done at a later time. Like for
-reiserfs, even if EVM is invoked, it will not provide an xattr (if it is
-not the first to set it, its xattr will be discarded; if it is the first,
-it does not have xattrs to calculate the HMAC on).
+I expect there to eventually be microcode mitigations to replace this
+software workaround.  However, the exact version numbers where that
+will happen are not known today.  Once the version numbers are set in
+stone, the processor list can be tweaked to only disable PCIDs on
+affected processors with affected microcode.
 
-Finally, since security_inode_init_security(), unlike
-security_old_inode_init_security(), returns zero instead of -EOPNOTSUPP if
-no xattrs were provided by LSMs or if inodes are private, additionally
-check in ocfs2_init_security_get() if the xattr name is set.
+Note: if anyone wants a quick fix that doesn't require patching, just
+stick 'nopcid' on your kernel command-line.
 
-If not, act as if security_old_inode_init_security() returned -EOPNOTSUPP,
-and set si->enable to zero to notify to the functions following
-ocfs2_init_security_get() that no xattrs are available.
-
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Casey Schaufler <casey@schaufler-ca.com>
-Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/namei.c |    2 ++
- fs/ocfs2/xattr.c |   30 ++++++++++++++++++++++++++----
- 2 files changed, 28 insertions(+), 4 deletions(-)
+ arch/x86/mm/init.c |   25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -242,6 +242,7 @@ static int ocfs2_mknod(struct mnt_idmap
- 	int want_meta = 0;
- 	int xattr_credits = 0;
- 	struct ocfs2_security_xattr_info si = {
-+		.name = NULL,
- 		.enable = 1,
- 	};
- 	int did_quota_inode = 0;
-@@ -1805,6 +1806,7 @@ static int ocfs2_symlink(struct mnt_idma
- 	int want_clusters = 0;
- 	int xattr_credits = 0;
- 	struct ocfs2_security_xattr_info si = {
-+		.name = NULL,
- 		.enable = 1,
- 	};
- 	int did_quota = 0, did_quota_inode = 0;
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -7259,9 +7259,21 @@ static int ocfs2_xattr_security_set(cons
- static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array,
- 		     void *fs_info)
- {
-+	struct ocfs2_security_xattr_info *si = fs_info;
- 	const struct xattr *xattr;
- 	int err = 0;
+--- a/arch/x86/mm/init.c
++++ b/arch/x86/mm/init.c
+@@ -9,6 +9,7 @@
+ #include <linux/sched/task.h>
  
-+	if (si) {
-+		si->value = kmemdup(xattr_array->value, xattr_array->value_len,
-+				    GFP_KERNEL);
-+		if (!si->value)
-+			return -ENOMEM;
+ #include <asm/set_memory.h>
++#include <asm/cpu_device_id.h>
+ #include <asm/e820/api.h>
+ #include <asm/init.h>
+ #include <asm/page.h>
+@@ -261,6 +262,24 @@ static void __init probe_page_size_mask(
+ 	}
+ }
+ 
++#define INTEL_MATCH(_model) { .vendor  = X86_VENDOR_INTEL,	\
++			      .family  = 6,			\
++			      .model = _model,			\
++			    }
++/*
++ * INVLPG may not properly flush Global entries
++ * on these CPUs when PCIDs are enabled.
++ */
++static const struct x86_cpu_id invlpg_miss_ids[] = {
++	INTEL_MATCH(INTEL_FAM6_ALDERLAKE   ),
++	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_L ),
++	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_N ),
++	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE  ),
++	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_P),
++	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_S),
++	{}
++};
 +
-+		si->name = xattr_array->name;
-+		si->value_len = xattr_array->value_len;
-+		return 0;
+ static void setup_pcid(void)
+ {
+ 	if (!IS_ENABLED(CONFIG_X86_64))
+@@ -269,6 +288,12 @@ static void setup_pcid(void)
+ 	if (!boot_cpu_has(X86_FEATURE_PCID))
+ 		return;
+ 
++	if (x86_match_cpu(invlpg_miss_ids)) {
++		pr_info("Incomplete global flushes, disabling PCID");
++		setup_clear_cpu_cap(X86_FEATURE_PCID);
++		return;
 +	}
 +
- 	for (xattr = xattr_array; xattr->name != NULL; xattr++) {
- 		err = ocfs2_xattr_set(inode, OCFS2_XATTR_INDEX_SECURITY,
- 				      xattr->name, xattr->value,
-@@ -7277,13 +7289,23 @@ int ocfs2_init_security_get(struct inode
- 			    const struct qstr *qstr,
- 			    struct ocfs2_security_xattr_info *si)
- {
-+	int ret;
-+
- 	/* check whether ocfs2 support feature xattr */
- 	if (!ocfs2_supports_xattr(OCFS2_SB(dir->i_sb)))
- 		return -EOPNOTSUPP;
--	if (si)
--		return security_old_inode_init_security(inode, dir, qstr,
--							&si->name, &si->value,
--							&si->value_len);
-+	if (si) {
-+		ret = security_inode_init_security(inode, dir, qstr,
-+						   &ocfs2_initxattrs, si);
-+		/*
-+		 * security_inode_init_security() does not return -EOPNOTSUPP,
-+		 * we have to check the xattr ourselves.
-+		 */
-+		if (!ret && !si->name)
-+			si->enable = 0;
-+
-+		return ret;
-+	}
- 
- 	return security_inode_init_security(inode, dir, qstr,
- 					    &ocfs2_initxattrs, NULL);
+ 	if (boot_cpu_has(X86_FEATURE_PGE)) {
+ 		/*
+ 		 * This can't be cr4_set_bits_and_update_boot() -- the
 
 
