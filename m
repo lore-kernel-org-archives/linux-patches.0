@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE93611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1F0C433D2;
-	Sun, 28 May 2023 19:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE217611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B433C433EF;
+	Sun, 28 May 2023 19:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303111;
-	bh=eyqas7sO+vJFszcK8jXe2BwXwaCkO6kpqqhCtjjYa0s=;
+	s=korg; t=1685303113;
+	bh=erdNnoZgfd/iNtqADvIk3GyLIYvRZ/U+gVLnY8eI2cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClqV0HheLRaPvM4hb7zCNsV+xoYcpzXiNT0Xyge8168wl5S+/lf+DTG94BV2T8Jk7
-	 4G/t6wesvDB5qUFnH7HAYfkrK1udmmOHmuJa5BTrqmzUvFlYKNTqIOKOA2JjAwKR7D
-	 R+NlOfjDLRgTr1hBCvG8DobQ2OO4ssLBzJvTFwZY=
+	b=ZAF44KKVOwKyDgWjgJLC/fVKPv5x+EGKAYSnW+23YLWQfrnpc9s3zzdaNIfZQz0f/
+	 En+Vq8cAgDCF1p90NvCvewqNdgzZ2pnld6ahw9gkL5UpYbfnvMH/8ASrSfENkPAXSJ
+	 sUV7CvcVXlB6LPvbD5oMuhLsaN6kzCcOrhRUK3i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Oakes <gregory.oakes@amd.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 5.10 159/211] watchdog: sp5100_tco: Immediately trigger upon starting.
-Date: Sun, 28 May 2023 20:11:20 +0100
-Message-Id: <20230528190847.455682689@linuxfoundation.org>
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Marek Vasut <marex@denx.de>
+Subject: [PATCH 5.10 160/211] ARM: dts: stm32: fix AV96 board SAI2 pin muxing on stm32mp15
+Date: Sun, 28 May 2023 20:11:21 +0100
+Message-Id: <20230528190847.479320747@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,41 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gregory Oakes <gregory.oakes@amd.com>
+From: Olivier Moysan <olivier.moysan@foss.st.com>
 
-commit 4eda19cc8a29cde3580ed73bf11dc73b4e757697 upstream.
+commit ee2aacb6f3a901a95b1dd68964b69c92cdbbf213 upstream.
 
-The watchdog countdown is supposed to begin when the device file is
-opened. Instead, it would begin countdown upon the first write to or
-close of the device file. Now, the ping operation is called within the
-start operation which ensures the countdown begins. From experimenation,
-it does not appear possible to do this with a single write including
-both the start bit and the trigger bit. So, it is done as two distinct
-writes.
+Replace sai2a-2 node name by sai2a-sleep-2, to avoid name
+duplication.
 
-Signed-off-by: Gregory Oakes <gregory.oakes@amd.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230316201312.17538-1-gregory.oakes@amd.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
+Fixes: 1a9a9d226f0f ("ARM: dts: stm32: fix AV96 board SAI2 pin muxing on stm32mp15")
+
+Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc: Marek Vasut <marex@denx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/sp5100_tco.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/boot/dts/stm32mp15-pinctrl.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/watchdog/sp5100_tco.c
-+++ b/drivers/watchdog/sp5100_tco.c
-@@ -104,6 +104,10 @@ static int tco_timer_start(struct watchd
- 	val |= SP5100_WDT_START_STOP_BIT;
- 	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
+--- a/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi
++++ b/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi
+@@ -1102,7 +1102,7 @@
+ 		};
+ 	};
  
-+	/* This must be a distinct write. */
-+	val |= SP5100_WDT_TRIGGER_BIT;
-+	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
-+
- 	return 0;
- }
- 
+-	sai2a_sleep_pins_c: sai2a-2 {
++	sai2a_sleep_pins_c: sai2a-sleep-2 {
+ 		pins {
+ 			pinmux = <STM32_PINMUX('D', 13, ANALOG)>, /* SAI2_SCK_A */
+ 				 <STM32_PINMUX('D', 11, ANALOG)>, /* SAI2_SD_A */
 
 
