@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E7F611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A06C433EF;
-	Sun, 28 May 2023 19:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10C4611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDA8C4339B;
+	Sun, 28 May 2023 19:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302770;
-	bh=8xPGom0cN2xcrGVN2A3VWwTDf1O1z13B8CoLSoKcQNQ=;
+	s=korg; t=1685302772;
+	bh=fQH2TIwSsVeb4f8Ix4xJYBGztYhkHabBITxRGXHEXZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AB4A7Z+z5tYk2xorftQ+2866uXWiRrOe8fsJtN4uXXmQzEvAspEog/GEUuCAMywiB
-	 764TwNfeady1DPB5sewOpSY+SohYYrcb1BYlnsNROm5FWVNFYRaSrfzw4epgGHuinz
-	 4KxSzn9dHrBH+EaK6H2qMKJ4kMufEbTFA0xQudsg=
+	b=0hD7u4HnYgJ40wAwxYQSotaiOf4qMHJWOO1PWgBGVL4S9lbritqxA1t8aVWXIJdkJ
+	 gTv+3pVv14Mb4U53Bx80MmTK8eWtTF6K4S863dA+zGSk0G8whssobe4/f3XDXnYEe9
+	 4zR3a+nt++6bzLqrxlPKRPwL3e1aSXIHiOSevvSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Martin Kepplinger <martin.kepplinger@puri.sm>,
+	Saravana Kannan <saravanak@google.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/211] drm/i915/dp: prevent potential div-by-zero
-Date: Sun, 28 May 2023 20:09:00 +0100
-Message-Id: <20230528190844.005799149@linuxfoundation.org>
+Subject: [PATCH 5.10 002/211] drm/mipi-dsi: Set the fwnode for mipi_dsi_device
+Date: Sun, 28 May 2023 20:08:43 +0100
+Message-Id: <20230528190843.577689404@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,48 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 0ff80028e2702c7c3d78b69705dc47c1ccba8c39 ]
+[ Upstream commit a26cc2934331b57b5a7164bff344f0a2ec245fc0 ]
 
-drm_dp_dsc_sink_max_slice_count() may return 0 if something goes
-wrong on the part of the DSC sink and its DPCD register. This null
-value may be later used as a divisor in intel_dsc_compute_params(),
-which will lead to an error.
-In the unlikely event that this issue occurs, fix it by testing the
-return value of drm_dp_dsc_sink_max_slice_count() against zero.
+After commit 3fb16866b51d ("driver core: fw_devlink: Make cycle
+detection more robust"), fw_devlink prints an error when consumer
+devices don't have their fwnode set. This used to be ignored silently.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+Set the fwnode mipi_dsi_device so fw_devlink can find them and properly
+track their dependencies.
 
-Fixes: a4a157777c80 ("drm/i915/dp: Compute DSC pipe config in atomic check")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230418140430.69902-1-n.zhandarovich@fintech.ru
-(cherry picked from commit 51f7008239de011370c5067bbba07f0207f06b72)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+This fixes errors like this:
+[    0.334054] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with regulator-lcd-1v8
+[    0.346964] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with backlight-dsi
+
+Reported-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+Link: https://lore.kernel.org/lkml/2a8e407f4f18c9350f8629a2b5fa18673355b2ae.camel@puri.sm/
+Fixes: 068a00233969 ("drm: Add MIPI DSI bus support")
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+Link: https://lore.kernel.org/r/20230310063910.2474472-1-saravanak@google.com
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/drm_mipi_dsi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 1c1931f5c958b..7f633f8b3239a 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -2281,6 +2281,11 @@ static int intel_dp_dsc_compute_config(struct intel_dp *intel_dp,
- 		pipe_config->dsc.slice_count =
- 			drm_dp_dsc_sink_max_slice_count(intel_dp->dsc_dpcd,
- 							true);
-+		if (!pipe_config->dsc.slice_count) {
-+			drm_dbg_kms(&dev_priv->drm, "Unsupported Slice Count %d\n",
-+				    pipe_config->dsc.slice_count);
-+			return -EINVAL;
-+		}
- 	} else {
- 		u16 dsc_max_output_bpp;
- 		u8 dsc_dp_slice_count;
+diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+index 19fb1d93a4f07..0c806e99e8690 100644
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -221,7 +221,7 @@ mipi_dsi_device_register_full(struct mipi_dsi_host *host,
+ 		return dsi;
+ 	}
+ 
+-	dsi->dev.of_node = info->node;
++	device_set_node(&dsi->dev, of_fwnode_handle(info->node));
+ 	dsi->channel = info->channel;
+ 	strlcpy(dsi->name, info->type, sizeof(dsi->name));
+ 
 -- 
 2.39.2
 
