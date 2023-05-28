@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976E7569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6B6C433EF;
-	Sun, 28 May 2023 19:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0DE569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898F7C433EF;
+	Sun, 28 May 2023 19:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301809;
-	bh=oexZKZr6/5cKWby2jukdlYdWx758CaTd9xzXpzooX9A=;
+	s=korg; t=1685301811;
+	bh=/iUXaNDT7alYUMx3eEkk5Db82StVg7wrmF8S1M+pKgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bz935Z/FPe+31jBcYgCo4RFIULfqFKq0hv46hZiui7MqSpDLEYO9cYGkQz6sWaa/
-	 Rp7nWH2ZF028mYQTA9I3wL8k8ETRUdwu6FckOUvMuWuwLp0l0fUi2fKT7qKbJGTG75
-	 LiYkYikG7UdwXDViLbOH1adPKpyjNLwHnzGmjfhA=
+	b=BOw+X38ehulV55yxrHpzNC/8rquP4YsjZpYcBH8bw1az+AxLKPhOX5YYtT/SSSA9M
+	 D0fDHBGYP2c+IRu8ypomDlV9bQfxkNIz1b8Z3PIhXzTWnFfESy7AIiALo3BNGITJDx
+	 u7pMhX5JjRIkNLmP0Yt+HrQfORrHBf85uAvO2h6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Frank Wang <frank.wang@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 045/161] HID: wacom: generic: Set battery quirk only when we see battery data
-Date: Sun, 28 May 2023 20:09:29 +0100
-Message-Id: <20230528190838.641731069@linuxfoundation.org>
+Subject: [PATCH 5.4 046/161] usb: typec: tcpm: fix multiple times discover svids error
+Date: Sun, 28 May 2023 20:09:30 +0100
+Message-Id: <20230528190838.672446042@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -36,102 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gerecke <killertofu@gmail.com>
+From: Frank Wang <frank.wang@rock-chips.com>
 
-[ Upstream commit bea407a427baa019758f29f4d31b26f008bb8cc6 ]
+[ Upstream commit dac3b192107b978198e89ec0f77375738352e0c8 ]
 
-Some devices will include battery status usages in the HID descriptor
-but we won't see that battery data for one reason or another. For example,
-AES sensors won't send battery data unless an AES pen is in proximity.
-If a user does not have an AES pen but instead only interacts with the
-AES touchscreen with their fingers then there is no need for us to create
-a battery object. Similarly, if a family of peripherals shares the same
-HID descriptor between wired-only and wireless-capable SKUs, users of the
-former may never see a battery event and will not want a power_supply
-object created.
+PD3.0 Spec 6.4.4.3.2 say that only Responder supports 12 or more SVIDs,
+the Discover SVIDs Command Shall be executed multiple times until a
+Discover SVIDs VDO is returned ending either with a SVID value of
+0x0000 in the last part of the last VDO or with a VDO containing two
+SVIDs with values of 0x0000.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217062
-Link: https://gitlab.gnome.org/GNOME/gnome-control-center/-/issues/2354
-Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
-Tested-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+In the current implementation, if the last VDO does not find that the
+Discover SVIDs Command would be executed multiple times even if the
+Responder SVIDs are less than 12, and we found some odd dockers just
+meet this case. So fix it.
+
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Frank Wang <frank.wang@rock-chips.com>
+Link: https://lore.kernel.org/r/20230316081149.24519-1-frank.wang@rock-chips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_wac.c | 33 +++++++++++----------------------
- 1 file changed, 11 insertions(+), 22 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
-index 339bc7f1fcedb..819e6d2ca2f3e 100644
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1927,18 +1927,7 @@ static void wacom_map_usage(struct input_dev *input, struct hid_usage *usage,
- static void wacom_wac_battery_usage_mapping(struct hid_device *hdev,
- 		struct hid_field *field, struct hid_usage *usage)
- {
--	struct wacom *wacom = hid_get_drvdata(hdev);
--	struct wacom_wac *wacom_wac = &wacom->wacom_wac;
--	struct wacom_features *features = &wacom_wac->features;
--	unsigned equivalent_usage = wacom_equivalent_usage(usage->hid);
--
--	switch (equivalent_usage) {
--	case HID_DG_BATTERYSTRENGTH:
--	case WACOM_HID_WD_BATTERY_LEVEL:
--	case WACOM_HID_WD_BATTERY_CHARGING:
--		features->quirks |= WACOM_QUIRK_BATTERY;
--		break;
--	}
-+	return;
- }
- 
- static void wacom_wac_battery_event(struct hid_device *hdev, struct hid_field *field,
-@@ -1959,18 +1948,21 @@ static void wacom_wac_battery_event(struct hid_device *hdev, struct hid_field *f
- 			wacom_wac->hid_data.bat_connected = 1;
- 			wacom_wac->hid_data.bat_status = WACOM_POWER_SUPPLY_STATUS_AUTO;
- 		}
-+		wacom_wac->features.quirks |= WACOM_QUIRK_BATTERY;
- 		break;
- 	case WACOM_HID_WD_BATTERY_LEVEL:
- 		value = value * 100 / (field->logical_maximum - field->logical_minimum);
- 		wacom_wac->hid_data.battery_capacity = value;
- 		wacom_wac->hid_data.bat_connected = 1;
- 		wacom_wac->hid_data.bat_status = WACOM_POWER_SUPPLY_STATUS_AUTO;
-+		wacom_wac->features.quirks |= WACOM_QUIRK_BATTERY;
- 		break;
- 	case WACOM_HID_WD_BATTERY_CHARGING:
- 		wacom_wac->hid_data.bat_charging = value;
- 		wacom_wac->hid_data.ps_connected = value;
- 		wacom_wac->hid_data.bat_connected = 1;
- 		wacom_wac->hid_data.bat_status = WACOM_POWER_SUPPLY_STATUS_AUTO;
-+		wacom_wac->features.quirks |= WACOM_QUIRK_BATTERY;
- 		break;
+diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
+index fb18264b702e6..b259a4a28f81a 100644
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -1018,7 +1018,21 @@ static bool svdm_consume_svids(struct tcpm_port *port, const __le32 *payload,
+ 		pmdata->svids[pmdata->nsvids++] = svid;
+ 		tcpm_log(port, "SVID %d: 0x%x", pmdata->nsvids, svid);
  	}
- }
-@@ -1986,18 +1978,15 @@ static void wacom_wac_battery_report(struct hid_device *hdev,
- {
- 	struct wacom *wacom = hid_get_drvdata(hdev);
- 	struct wacom_wac *wacom_wac = &wacom->wacom_wac;
--	struct wacom_features *features = &wacom_wac->features;
- 
--	if (features->quirks & WACOM_QUIRK_BATTERY) {
--		int status = wacom_wac->hid_data.bat_status;
--		int capacity = wacom_wac->hid_data.battery_capacity;
--		bool charging = wacom_wac->hid_data.bat_charging;
--		bool connected = wacom_wac->hid_data.bat_connected;
--		bool powered = wacom_wac->hid_data.ps_connected;
-+	int status = wacom_wac->hid_data.bat_status;
-+	int capacity = wacom_wac->hid_data.battery_capacity;
-+	bool charging = wacom_wac->hid_data.bat_charging;
-+	bool connected = wacom_wac->hid_data.bat_connected;
-+	bool powered = wacom_wac->hid_data.ps_connected;
- 
--		wacom_notify_battery(wacom_wac, status, capacity, charging,
--				     connected, powered);
--	}
-+	wacom_notify_battery(wacom_wac, status, capacity, charging,
-+			     connected, powered);
- }
- 
- static void wacom_wac_pad_usage_mapping(struct hid_device *hdev,
+-	return true;
++
++	/*
++	 * PD3.0 Spec 6.4.4.3.2: The SVIDs are returned 2 per VDO (see Table
++	 * 6-43), and can be returned maximum 6 VDOs per response (see Figure
++	 * 6-19). If the Respondersupports 12 or more SVID then the Discover
++	 * SVIDs Command Shall be executed multiple times until a Discover
++	 * SVIDs VDO is returned ending either with a SVID value of 0x0000 in
++	 * the last part of the last VDO or with a VDO containing two SVIDs
++	 * with values of 0x0000.
++	 *
++	 * However, some odd dockers support SVIDs less than 12 but without
++	 * 0x0000 in the last VDO, so we need to break the Discover SVIDs
++	 * request and return false here.
++	 */
++	return cnt == 7;
+ abort:
+ 	tcpm_log(port, "SVID_DISCOVERY_MAX(%d) too low!", SVID_DISCOVERY_MAX);
+ 	return false;
 -- 
 2.39.2
 
