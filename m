@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C79569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3909C433EF;
-	Sun, 28 May 2023 19:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE48C569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C845C433EF;
+	Sun, 28 May 2023 19:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301922;
-	bh=TGn4x4JUbPpaZp1HHUKRTrCPsH3o4ZDBmuTAV/JuVqk=;
+	s=korg; t=1685301924;
+	bh=f/B95GWl0V89cK7SWyr8lHVD5SuLpvXDoOEZ6S7HRCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShnhbL4cWJYg80JIXcn+ws/OgLol5w9np8qOw3/EcqRRwnYKhAaD6UX6u6o80N+0j
-	 KKGx90KafOJQyuyWW4cp59qpq0VfMTaHHnavrSkSXuy2QvuXbzqmMPIbFveIxkZYro
-	 vscd5ojWxxiqxt3ONZhIrepLBRow1DZkAsfa/rO4=
+	b=XwC1GN3FU5CLK1usz0kEyfpEQEKBzW7fWom7I1Yy1GsybFxe0At7dZfuWLUTNa1D6
+	 oBh1vyLRXzg/id6Vz59hnYLFaK84TQuX1Ry4pnBTx9Ee/woCC5eaQ7zQtTwah1JxbC
+	 r+HRk7tyHbFlfpkC1CCyLm+1IqRvoccz11//EPOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luke D. Jones" <luke@ljones.dev>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 089/161] ALSA: hda/realtek: Add quirk for 2nd ASUS GU603
-Date: Sun, 28 May 2023 20:10:13 +0100
-Message-Id: <20230528190839.952549559@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>
+Subject: [PATCH 5.4 090/161] can: j1939: recvmsg(): allow MSG_CMSG_COMPAT flag
+Date: Sun, 28 May 2023 20:10:14 +0100
+Message-Id: <20230528190839.981979754@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -34,30 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luke D. Jones <luke@ljones.dev>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit a4671b7fba59775845ee60cfbdfc4ba64300211b upstream.
+commit 1db080cbdbab28752bbb1c86d64daf96253a5da1 upstream.
 
-Add quirk for GU603 with 0x1c62 variant of codec.
+The control message provided by J1939 support MSG_CMSG_COMPAT but
+blocked recvmsg() syscalls that have set this flag, i.e. on 32bit user
+space on 64 bit kernels.
 
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230505235824.49607-2-luke@ljones.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://github.com/hartkopp/can-isotp/issues/59
+Cc: Oleksij Rempel <o.rempel@pengutronix.de>
+Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Link: https://lore.kernel.org/20230505110308.81087-3-mkl@pengutronix.de
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/can/j1939/socket.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -8273,6 +8273,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1043, 0x1b13, "Asus U41SV", ALC269_FIXUP_INV_DMIC),
- 	SND_PCI_QUIRK(0x1043, 0x1bbd, "ASUS Z550MA", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1c23, "Asus X55U", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0x1043, 0x1c62, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
- 	SND_PCI_QUIRK(0x1043, 0x1c92, "ASUS ROG Strix G15", ALC285_FIXUP_ASUS_G533Z_PINS),
- 	SND_PCI_QUIRK(0x1043, 0x1ccd, "ASUS X555UB", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1d42, "ASUS Zephyrus G14 2022", ALC289_FIXUP_ASUS_GA401),
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -798,7 +798,7 @@ static int j1939_sk_recvmsg(struct socke
+ 	struct j1939_sk_buff_cb *skcb;
+ 	int ret = 0;
+ 
+-	if (flags & ~(MSG_DONTWAIT | MSG_ERRQUEUE))
++	if (flags & ~(MSG_DONTWAIT | MSG_ERRQUEUE | MSG_CMSG_COMPAT))
+ 		return -EINVAL;
+ 
+ 	if (flags & MSG_ERRQUEUE)
 
 
