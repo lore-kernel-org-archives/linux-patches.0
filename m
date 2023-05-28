@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA7C569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:33:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCE8C433D2;
-	Sun, 28 May 2023 19:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323D6569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:33:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E41C433EF;
+	Sun, 28 May 2023 19:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302412;
-	bh=9BKyev+518rQldhDX1QxrEjMhZaklJY6jqcegD1kM/g=;
+	s=korg; t=1685302415;
+	bh=ayn8WPNBmwxt++QIuaoYDi/Ugbh0R12xKITBoF5kzyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHuY/dyzPijnoqx/GDCGQ8X8AYKGCJFZ/Q2u+jvJKyyzfUGltSBNwYjTjgTku043q
-	 RQti3OE2BrN/Osctw8Rivg5MKDGAMwyLSZTj0j+y9cQxsHMTZp31UCouPYt7xJ/8Vr
-	 8I47Of0073w0zetSeX4OOniM7G4XKk3UtSEYWHSM=
+	b=HqCZMaVeBUJCslfOKNZEzYuKMUE9bJvmBwQ3/GbZQqBgBeLm8KGlMFAi5YOLshrnB
+	 2QyqxFRFWXIEbrpLWcR1KtH3Rs5GRfCM+YYeHR74EqNX7WkUtbijofh3nzW1QrrRgg
+	 A13BTE1UZsD4gwSfb1AzSVcbMNZGxUvO8NY1BFW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Bonnici <marc.bonnici@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.3 120/127] firmware: arm_ffa: Set reserved/MBZ fields to zero in the memory descriptors
-Date: Sun, 28 May 2023 20:11:36 +0100
-Message-Id: <20230528190840.147476322@linuxfoundation.org>
+	Steve Wahl <steve.wahl@hpe.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.3 094/127] platform/x86: ISST: Remove 8 socket limit
+Date: Sun, 28 May 2023 20:11:10 +0100
+Message-Id: <20230528190839.368312849@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -34,59 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Steve Wahl <steve.wahl@hpe.com>
 
-commit 111a833dc5cbef3d05b2a796a7e23cb7f6ff2192 upstream.
+commit bbb320bfe2c3e9740fe89cfa0a7089b4e8bfc4ff upstream.
 
-The transmit buffers allocated by the driver can be used to transmit data
-by any messages/commands needing the buffer. However, it is not guaranteed
-to have been zero-ed before every new transmission and hence it will just
-contain residual value from the previous transmission. There are several
-reserved fields in the memory descriptors that must be zero(MBZ). The
-receiver can reject the transmission if any such MBZ fields are non-zero.
+Stop restricting the PCI search to a range of PCI domains fed to
+pci_get_domain_bus_and_slot().  Instead, use for_each_pci_dev() and
+look at all PCI domains in one pass.
 
-While we can set the whole page to zero, it is not optimal as most of the
-fields get initialised to the value required for the current transmission.
+On systems with more than 8 sockets, this avoids error messages like
+"Information: Invalid level, Can't get TDP control information at
+specified levels on cpu 480" from the intel speed select utility.
 
-So, just set the reserved/MBZ fields to zero in the memory descriptors
-explicitly to honour the requirement and keep the receiver happy.
-
-Fixes: cc2195fe536c ("firmware: arm_ffa: Add support for MEM_* interfaces")
-Reported-by: Marc Bonnici <marc.bonnici@arm.com>
-Link: https://lore.kernel.org/r/20230503131252.12585-1-sudeep.holla@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: aa2ddd242572 ("platform/x86: ISST: Use numa node id for cpu pci dev mapping")
+Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230519160420.2588475-1-steve.wahl@hpe.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_ffa/driver.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/platform/x86/intel/speed_select_if/isst_if_common.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -420,12 +420,17 @@ ffa_setup_and_transmit(u32 func_id, void
- 		ep_mem_access->receiver = args->attrs[idx].receiver;
- 		ep_mem_access->attrs = args->attrs[idx].attrs;
- 		ep_mem_access->composite_off = COMPOSITE_OFFSET(args->nattrs);
-+		ep_mem_access->flag = 0;
-+		ep_mem_access->reserved = 0;
- 	}
-+	mem_region->reserved_0 = 0;
-+	mem_region->reserved_1 = 0;
- 	mem_region->ep_count = args->nattrs;
+--- a/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
+@@ -295,14 +295,13 @@ struct isst_if_pkg_info {
+ static struct isst_if_cpu_info *isst_cpu_info;
+ static struct isst_if_pkg_info *isst_pkg_info;
  
- 	composite = buffer + COMPOSITE_OFFSET(args->nattrs);
- 	composite->total_pg_cnt = ffa_get_num_pages_sg(args->sg);
- 	composite->addr_range_cnt = num_entries;
-+	composite->reserved = 0;
+-#define ISST_MAX_PCI_DOMAINS	8
+-
+ static struct pci_dev *_isst_if_get_pci_dev(int cpu, int bus_no, int dev, int fn)
+ {
+ 	struct pci_dev *matched_pci_dev = NULL;
+ 	struct pci_dev *pci_dev = NULL;
++	struct pci_dev *_pci_dev = NULL;
+ 	int no_matches = 0, pkg_id;
+-	int i, bus_number;
++	int bus_number;
  
- 	length = COMPOSITE_CONSTITUENTS_OFFSET(args->nattrs, num_entries);
- 	frag_len = COMPOSITE_CONSTITUENTS_OFFSET(args->nattrs, 0);
-@@ -460,6 +465,7 @@ ffa_setup_and_transmit(u32 func_id, void
+ 	if (bus_no < 0 || bus_no >= ISST_MAX_BUS_NUMBER || cpu < 0 ||
+ 	    cpu >= nr_cpu_ids || cpu >= num_possible_cpus())
+@@ -314,12 +313,11 @@ static struct pci_dev *_isst_if_get_pci_
+ 	if (bus_number < 0)
+ 		return NULL;
  
- 		constituents->address = sg_phys(args->sg);
- 		constituents->pg_cnt = args->sg->length / FFA_PAGE_SIZE;
-+		constituents->reserved = 0;
- 		constituents++;
- 		frag_len += sizeof(struct ffa_mem_region_addr_range);
- 	} while ((args->sg = sg_next(args->sg)));
+-	for (i = 0; i < ISST_MAX_PCI_DOMAINS; ++i) {
+-		struct pci_dev *_pci_dev;
++	for_each_pci_dev(_pci_dev) {
+ 		int node;
+ 
+-		_pci_dev = pci_get_domain_bus_and_slot(i, bus_number, PCI_DEVFN(dev, fn));
+-		if (!_pci_dev)
++		if (_pci_dev->bus->number != bus_number ||
++		    _pci_dev->devfn != PCI_DEVFN(dev, fn))
+ 			continue;
+ 
+ 		++no_matches;
 
 
