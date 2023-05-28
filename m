@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEB6611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:49:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA81FC433D2;
-	Sun, 28 May 2023 19:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4102611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:49:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A2EC433EF;
+	Sun, 28 May 2023 19:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303394;
-	bh=6rLwADuKztTH7pFxDMsBG7tagrMOiXwNxep2IgypiYo=;
+	s=korg; t=1685303396;
+	bh=9Y0rT6L80FJuDiXy66NCxzCArPI7PyYaNrSfytyHMyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kbsc53otESXg6MXV1D8ROHgvh7j8OB7NCgG3a0NO4LWyWybsvdgLyWMLVVL+80Ckx
-	 gaL/Ka8zI0WsCj6LUzwQeP/DwmvREpryoF7uojNiCmoeqQH4l7xlqGQLHQFpCeViZU
-	 nz6rNqcL2inPouHBPfWxNPj4nhYflc54B3KwPGyE=
+	b=ISHRjXbikTwAU5OjnsqNl9/C6eIW3dw/nwLEMh9FQ8M2rTtgu98AthWJJ0BgsaMVl
+	 UP7gnDgRwGLvn3nc5RxNu1IgwNszTEtcDpdtrybf0AKwLLzL/qhAUK1U2EebT78lWM
+	 tEOwZpK97zML+2p6x6hWy2hrJ0LlkyOkvnMN+JWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Zhu Yanjun <zyjzyj2000@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 58/69] forcedeth: Fix an error handling path in nv_probe()
-Date: Sun, 28 May 2023 20:12:18 +0100
-Message-Id: <20230528190830.550766533@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.15 59/69] platform/mellanox: mlxbf-pmc: fix sscanf() error checking
+Date: Sun, 28 May 2023 20:12:19 +0100
+Message-Id: <20230528190830.580901288@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -35,35 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 5b17a4971d3b2a073f4078dd65331efbe35baa2d upstream.
+commit 95e4b25192e9238fd2dbe85d96dd2f8fd1ce9d14 upstream.
 
-If an error occures after calling nv_mgmt_acquire_sema(), it should be
-undone with a corresponding nv_mgmt_release_sema() call.
+The sscanf() function never returns negatives.  It returns the number of
+items successfully read.
 
-Add it in the error handling path of the probe as already done in the
-remove function.
-
-Fixes: cac1c52c3621 ("forcedeth: mgmt unit interface")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Zhu Yanjun <zyjzyj2000@gmail.com>
-Link: https://lore.kernel.org/r/355e9a7d351b32ad897251b6f81b5886fcdc6766.1684571393.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/4ccdfd28-099b-40bf-8d77-ad4ea2e76b93@kili.mountain
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/mellanox/mlxbf-pmc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -6129,6 +6129,7 @@ static int nv_probe(struct pci_dev *pci_
- 	return 0;
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index c2c9b0d3244c..be967d797c28 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -1348,9 +1348,8 @@ static int mlxbf_pmc_map_counters(struct device *dev)
  
- out_error:
-+	nv_mgmt_release_sema(dev);
- 	if (phystate_orig)
- 		writel(phystate|NVREG_ADAPTCTL_RUNNING, base + NvRegAdapterControl);
- out_freering:
+ 	for (i = 0; i < pmc->total_blocks; ++i) {
+ 		if (strstr(pmc->block_name[i], "tile")) {
+-			ret = sscanf(pmc->block_name[i], "tile%d", &tile_num);
+-			if (ret < 0)
+-				return ret;
++			if (sscanf(pmc->block_name[i], "tile%d", &tile_num) != 1)
++				return -EINVAL;
+ 
+ 			if (tile_num >= pmc->tile_count)
+ 				continue;
+-- 
+2.40.1
+
 
 
