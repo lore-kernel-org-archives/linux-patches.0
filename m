@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E9B611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5F6C433D2;
-	Sun, 28 May 2023 19:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D807611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF33FC433EF;
+	Sun, 28 May 2023 19:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302784;
-	bh=V3QgCQRFaZUZCgWhOEnasoZlTbLKFH2JR8tf9wMfth8=;
+	s=korg; t=1685302787;
+	bh=CPnhfC65kJJOyV32CmtJ1fCJzO85FOCorZQHf6Hm9Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KhPd5cbt6M4T7MFRRYRytXTpwuk6ekYGLv0Rnuv/P2A8yAyafcZxi0nN/+zVeeHFR
-	 LtVVkNruD5OfykQPuE3BxEcxrf2UbPVcaOQlz+5qSmxinGXYTxMERKpvJScmjWibDw
-	 nhTKhe7Mcj6tdPjY77HBc2pEzLyx8IG7L5/pN8NU=
+	b=gar30DwvgRQ1ilI4yte5ozGlU2OmH8MyNQX2SvU9lDCpQh1K0avhjOnU4gyxQiVL5
+	 ROREPfXbveYw1oZ3YzrluAmy5uQ/xNy+KdxEACY0xnL+ImIPO8cA1uBCRIruHznZkC
+	 WrHTlEflVGLtLE80C65I261C7sMMyWsOV/ciZlS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roy Novich <royno@nvidia.com>,
-	Aya Levin <ayal@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/211] linux/dim: Do nothing if no time delta between samples
-Date: Sun, 28 May 2023 20:08:46 +0100
-Message-Id: <20230528190843.651083064@linuxfoundation.org>
+Subject: [PATCH 5.10 006/211] net: Fix load-tearing on sk->sk_stamp in sock_recv_cmsgs().
+Date: Sun, 28 May 2023 20:08:47 +0100
+Message-Id: <20230528190843.678109677@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -40,106 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roy Novich <royno@nvidia.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 162bd18eb55adf464a0fa2b4144b8d61c75ff7c2 ]
+[ Upstream commit dfd9248c071a3710c24365897459538551cb7167 ]
 
-Add return value for dim_calc_stats. This is an indication for the
-caller if curr_stats was assigned by the function. Avoid using
-curr_stats uninitialized over {rdma/net}_dim, when no time delta between
-samples. Coverity reported this potential use of an uninitialized
-variable.
+KCSAN found a data race in sock_recv_cmsgs() where the read access
+to sk->sk_stamp needs READ_ONCE().
 
-Fixes: 4c4dbb4a7363 ("net/mlx5e: Move dynamic interrupt coalescing code to include/linux")
-Fixes: cb3c7fd4f839 ("net/mlx5e: Support adaptive RX coalescing")
-Signed-off-by: Roy Novich <royno@nvidia.com>
-Reviewed-by: Aya Levin <ayal@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://lore.kernel.org/r/20230507135743.138993-1-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+BUG: KCSAN: data-race in packet_recvmsg / packet_recvmsg
+
+write (marked) to 0xffff88803c81f258 of 8 bytes by task 19171 on cpu 0:
+ sock_write_timestamp include/net/sock.h:2670 [inline]
+ sock_recv_cmsgs include/net/sock.h:2722 [inline]
+ packet_recvmsg+0xb97/0xd00 net/packet/af_packet.c:3489
+ sock_recvmsg_nosec net/socket.c:1019 [inline]
+ sock_recvmsg+0x11a/0x130 net/socket.c:1040
+ sock_read_iter+0x176/0x220 net/socket.c:1118
+ call_read_iter include/linux/fs.h:1845 [inline]
+ new_sync_read fs/read_write.c:389 [inline]
+ vfs_read+0x5e0/0x630 fs/read_write.c:470
+ ksys_read+0x163/0x1a0 fs/read_write.c:613
+ __do_sys_read fs/read_write.c:623 [inline]
+ __se_sys_read fs/read_write.c:621 [inline]
+ __x64_sys_read+0x41/0x50 fs/read_write.c:621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+read to 0xffff88803c81f258 of 8 bytes by task 19183 on cpu 1:
+ sock_recv_cmsgs include/net/sock.h:2721 [inline]
+ packet_recvmsg+0xb64/0xd00 net/packet/af_packet.c:3489
+ sock_recvmsg_nosec net/socket.c:1019 [inline]
+ sock_recvmsg+0x11a/0x130 net/socket.c:1040
+ sock_read_iter+0x176/0x220 net/socket.c:1118
+ call_read_iter include/linux/fs.h:1845 [inline]
+ new_sync_read fs/read_write.c:389 [inline]
+ vfs_read+0x5e0/0x630 fs/read_write.c:470
+ ksys_read+0x163/0x1a0 fs/read_write.c:613
+ __do_sys_read fs/read_write.c:623 [inline]
+ __se_sys_read fs/read_write.c:621 [inline]
+ __x64_sys_read+0x41/0x50 fs/read_write.c:621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+value changed: 0xffffffffc4653600 -> 0x0000000000000000
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 19183 Comm: syz-executor.5 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 6c7c98bad488 ("sock: avoid dirtying sk_stamp, if possible")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230508175543.55756-1-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dim.h | 3 ++-
- lib/dim/dim.c       | 5 +++--
- lib/dim/net_dim.c   | 3 ++-
- lib/dim/rdma_dim.c  | 3 ++-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ include/net/sock.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/dim.h b/include/linux/dim.h
-index 6c5733981563e..f343bc9aa2ec9 100644
---- a/include/linux/dim.h
-+++ b/include/linux/dim.h
-@@ -236,8 +236,9 @@ void dim_park_tired(struct dim *dim);
-  *
-  * Calculate the delta between two samples (in data rates).
-  * Takes into consideration counter wrap-around.
-+ * Returned boolean indicates whether curr_stats are reliable.
-  */
--void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
-+bool dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 		    struct dim_stats *curr_stats);
- 
- /**
-diff --git a/lib/dim/dim.c b/lib/dim/dim.c
-index 38045d6d05381..e89aaf07bde50 100644
---- a/lib/dim/dim.c
-+++ b/lib/dim/dim.c
-@@ -54,7 +54,7 @@ void dim_park_tired(struct dim *dim)
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 1d8529311d6f9..651dc0a7bbd58 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2535,7 +2535,7 @@ static inline void sock_recv_ts_and_drops(struct msghdr *msg, struct sock *sk,
+ 		__sock_recv_ts_and_drops(msg, sk, skb);
+ 	else if (unlikely(sock_flag(sk, SOCK_TIMESTAMP)))
+ 		sock_write_timestamp(sk, skb->tstamp);
+-	else if (unlikely(sk->sk_stamp == SK_DEFAULT_STAMP))
++	else if (unlikely(sock_read_timestamp(sk) == SK_DEFAULT_STAMP))
+ 		sock_write_timestamp(sk, 0);
  }
- EXPORT_SYMBOL(dim_park_tired);
  
--void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
-+bool dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 		    struct dim_stats *curr_stats)
- {
- 	/* u32 holds up to 71 minutes, should be enough */
-@@ -66,7 +66,7 @@ void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 			     start->comp_ctr);
- 
- 	if (!delta_us)
--		return;
-+		return false;
- 
- 	curr_stats->ppms = DIV_ROUND_UP(npkts * USEC_PER_MSEC, delta_us);
- 	curr_stats->bpms = DIV_ROUND_UP(nbytes * USEC_PER_MSEC, delta_us);
-@@ -79,5 +79,6 @@ void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 	else
- 		curr_stats->cpe_ratio = 0;
- 
-+	return true;
- }
- EXPORT_SYMBOL(dim_calc_stats);
-diff --git a/lib/dim/net_dim.c b/lib/dim/net_dim.c
-index dae3b51ac3d9b..0e4f3a686f1de 100644
---- a/lib/dim/net_dim.c
-+++ b/lib/dim/net_dim.c
-@@ -227,7 +227,8 @@ void net_dim(struct dim *dim, struct dim_sample end_sample)
- 				  dim->start_sample.event_ctr);
- 		if (nevents < DIM_NEVENTS)
- 			break;
--		dim_calc_stats(&dim->start_sample, &end_sample, &curr_stats);
-+		if (!dim_calc_stats(&dim->start_sample, &end_sample, &curr_stats))
-+			break;
- 		if (net_dim_decision(&curr_stats, dim)) {
- 			dim->state = DIM_APPLY_NEW_PROFILE;
- 			schedule_work(&dim->work);
-diff --git a/lib/dim/rdma_dim.c b/lib/dim/rdma_dim.c
-index f7e26c7b4749f..d32c8b105adc9 100644
---- a/lib/dim/rdma_dim.c
-+++ b/lib/dim/rdma_dim.c
-@@ -88,7 +88,8 @@ void rdma_dim(struct dim *dim, u64 completions)
- 		nevents = curr_sample->event_ctr - dim->start_sample.event_ctr;
- 		if (nevents < DIM_NEVENTS)
- 			break;
--		dim_calc_stats(&dim->start_sample, curr_sample, &curr_stats);
-+		if (!dim_calc_stats(&dim->start_sample, curr_sample, &curr_stats))
-+			break;
- 		if (rdma_dim_decision(&curr_stats, dim)) {
- 			dim->state = DIM_APPLY_NEW_PROFILE;
- 			schedule_work(&dim->work);
 -- 
 2.39.2
 
