@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9099611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37AD9C433D2;
-	Sun, 28 May 2023 19:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2282D611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A244EC433EF;
+	Sun, 28 May 2023 19:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301236;
-	bh=6sGfIeAH+EYa3fOLxgPHH2fMnwBuBPM3BpmYiynwUQo=;
+	s=korg; t=1685301239;
+	bh=DWXXE1Qgt5ylhoBrjl8jRrgrireq5/zhBXbxdggqznM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+7d0jRY1IOvsym+iDsopKtE5HNGxRTeReIRcy9/JZZGzcWL3GKRrETzP9hPKX8oz
-	 EkQ+8XzfpyboSm7+6izvTKGoRvUJqsadGOIbyyrfPmC+bO+9p8H35LZPSG83ohzjBG
-	 bUZfz3TnBolin9QCNhFdbQY3q1CdcZ2mYk+Zdj8o=
+	b=vmbOoPN89Cz4IzRTIsfPr65yRJmBxl/K2uw3oYfySriov/ldTn3Ejp0a/cvwRG8l4
+	 z89pw/g/hUh1j1R7fLmVQFg/uDXKwNcld3t3pMPE6IOXL4b955b4LGgwGWUaNUj30e
+	 7fl6AafV0TYlyh8UXGzhv5xdgTdn0pKZp6iuhxCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <avolmat@me.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	syzbot+45d4691b1ed3c48eba05@syzkaller.appspotmail.com,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 36/86] phy: st: miphy28lp: use _poll_timeout functions for waits
-Date: Sun, 28 May 2023 20:10:10 +0100
-Message-Id: <20230528190829.924283597@linuxfoundation.org>
+Subject: [PATCH 4.14 19/86] gfs2: Fix inode height consistency check
+Date: Sun, 28 May 2023 20:09:53 +0100
+Message-Id: <20230528190829.267764240@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -36,111 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alain Volmat <avolmat@me.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit e3be4dd2c8d8aabfd2c3127d0e2e5754d3ae82d6 ]
+[ Upstream commit cfcdb5bad34f600aed7613c3c1a5e618111f77b7 ]
 
-This commit introduces _poll_timeout functions usage instead of
-wait loops waiting for a status bit.
+The maximum allowed height of an inode's metadata tree depends on the
+filesystem block size; it is lower for bigger-block filesystems.  When
+reading in an inode, make sure that the height doesn't exceed the
+maximum allowed height.
 
-Signed-off-by: Alain Volmat <avolmat@me.com>
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Link: https://lore.kernel.org/r/20230210224309.98452-1-avolmat@me.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Arrays like sd_heightsize are sized to be big enough for any filesystem
+block size; they will often be slightly bigger than what's needed for a
+specific filesystem.
+
+Reported-by: syzbot+45d4691b1ed3c48eba05@syzkaller.appspotmail.com
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/st/phy-miphy28lp.c | 42 ++++++++--------------------------
- 1 file changed, 10 insertions(+), 32 deletions(-)
+ fs/gfs2/glops.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/st/phy-miphy28lp.c b/drivers/phy/st/phy-miphy28lp.c
-index 213e2e15339c4..fe23432e5b1a6 100644
---- a/drivers/phy/st/phy-miphy28lp.c
-+++ b/drivers/phy/st/phy-miphy28lp.c
-@@ -13,6 +13,7 @@
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index f1844af4005b6..4838e26c06f74 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -333,6 +333,7 @@ static int inode_go_demote_ok(const struct gfs2_glock *gl)
  
- #include <linux/platform_device.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-@@ -488,19 +489,11 @@ static inline void miphy28lp_pcie_config_gen(struct miphy28lp_phy *miphy_phy)
- 
- static inline int miphy28lp_wait_compensation(struct miphy28lp_phy *miphy_phy)
+ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
  {
--	unsigned long finish = jiffies + 5 * HZ;
- 	u8 val;
++	struct gfs2_sbd *sdp = GFS2_SB(&ip->i_inode);
+ 	const struct gfs2_dinode *str = buf;
+ 	struct timespec atime;
+ 	u16 height, depth;
+@@ -372,7 +373,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	/* i_diskflags and i_eattr must be set before gfs2_set_inode_flags() */
+ 	gfs2_set_inode_flags(&ip->i_inode);
+ 	height = be16_to_cpu(str->di_height);
+-	if (unlikely(height > GFS2_MAX_META_HEIGHT))
++	if (unlikely(height > sdp->sd_max_height))
+ 		goto corrupt;
+ 	ip->i_height = (u8)height;
  
- 	/* Waiting for Compensation to complete */
--	do {
--		val = readb_relaxed(miphy_phy->base + MIPHY_COMP_FSM_6);
--
--		if (time_after_eq(jiffies, finish))
--			return -EBUSY;
--		cpu_relax();
--	} while (!(val & COMP_DONE));
--
--	return 0;
-+	return readb_relaxed_poll_timeout(miphy_phy->base + MIPHY_COMP_FSM_6,
-+					  val, val & COMP_DONE, 1, 5 * USEC_PER_SEC);
- }
- 
- 
-@@ -809,7 +802,6 @@ static inline void miphy28lp_configure_usb3(struct miphy28lp_phy *miphy_phy)
- 
- static inline int miphy_is_ready(struct miphy28lp_phy *miphy_phy)
- {
--	unsigned long finish = jiffies + 5 * HZ;
- 	u8 mask = HFC_PLL | HFC_RDY;
- 	u8 val;
- 
-@@ -820,21 +812,14 @@ static inline int miphy_is_ready(struct miphy28lp_phy *miphy_phy)
- 	if (miphy_phy->type == PHY_TYPE_SATA)
- 		mask |= PHY_RDY;
- 
--	do {
--		val = readb_relaxed(miphy_phy->base + MIPHY_STATUS_1);
--		if ((val & mask) != mask)
--			cpu_relax();
--		else
--			return 0;
--	} while (!time_after_eq(jiffies, finish));
--
--	return -EBUSY;
-+	return readb_relaxed_poll_timeout(miphy_phy->base + MIPHY_STATUS_1,
-+					  val, (val & mask) == mask, 1,
-+					  5 * USEC_PER_SEC);
- }
- 
- static int miphy_osc_is_ready(struct miphy28lp_phy *miphy_phy)
- {
- 	struct miphy28lp_dev *miphy_dev = miphy_phy->phydev;
--	unsigned long finish = jiffies + 5 * HZ;
- 	u32 val;
- 
- 	if (!miphy_phy->osc_rdy)
-@@ -843,17 +828,10 @@ static int miphy_osc_is_ready(struct miphy28lp_phy *miphy_phy)
- 	if (!miphy_phy->syscfg_reg[SYSCFG_STATUS])
- 		return -EINVAL;
- 
--	do {
--		regmap_read(miphy_dev->regmap,
--				miphy_phy->syscfg_reg[SYSCFG_STATUS], &val);
--
--		if ((val & MIPHY_OSC_RDY) != MIPHY_OSC_RDY)
--			cpu_relax();
--		else
--			return 0;
--	} while (!time_after_eq(jiffies, finish));
--
--	return -EBUSY;
-+	return regmap_read_poll_timeout(miphy_dev->regmap,
-+					miphy_phy->syscfg_reg[SYSCFG_STATUS],
-+					val, val & MIPHY_OSC_RDY, 1,
-+					5 * USEC_PER_SEC);
- }
- 
- static int miphy28lp_get_resource_byname(struct device_node *child,
 -- 
 2.39.2
 
