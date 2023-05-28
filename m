@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEA1611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B49AC433EF;
-	Sun, 28 May 2023 19:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6AB611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C6AC433D2;
+	Sun, 28 May 2023 19:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301241;
-	bh=xqECVp95j0ASjkgq/jmJaVtAt5Mj5ws54d3kcCXk9os=;
+	s=korg; t=1685301243;
+	bh=nH/toalEzVo2/o1Taz0tVWXd3gRJySjVLbuWOffDaOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oal8EXQYFQaPj+EVg77X71qiZ+FWNDcwFbJFH4vJ6U+jctSTCJoPNNAFECQ+1/dIB
-	 CkQ0+hW28aMHIDuUtxDeDaIPrlPvuHdtHItmWpq/4IlfIxTha1zyQTeuBoLPzAijfH
-	 AS7EQV2tmGj/m8V+xCzU0EwTTIDyyY74If/XiUbU=
+	b=Alpq2wgMZTgPHRgeea/aLgdGAkoDc3bhISJX3BIGmfIOwFu+kjW/v/pb+gSk4QwEv
+	 Ha8M+X5RFFOehhGb/DN9Mw9OUZNDr1dCjFocBK3haad59Q/xVHj3ZZq/pkvoybxoAW
+	 hOqfmWGIr026SfDOsMRbatpI9bMpKkvJe6aJjJJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ning <qning0106@126.com>,
-	Lee Jones <lee@kernel.org>,
+	Thomas Renninger <trenn@suse.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Wyes Karny <wyes.karny@amd.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 37/86] mfd: dln2: Fix memory leak in dln2_probe()
-Date: Sun, 28 May 2023 20:10:11 +0100
-Message-Id: <20230528190829.964401192@linuxfoundation.org>
+Subject: [PATCH 4.14 38/86] cpupower: Make TSC read per CPU for Mperf monitor
+Date: Sun, 28 May 2023 20:10:12 +0100
+Message-Id: <20230528190830.010048635@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,36 +38,157 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiang Ning <qning0106@126.com>
+From: Wyes Karny <wyes.karny@amd.com>
 
-[ Upstream commit 96da8f148396329ba769246cb8ceaa35f1ddfc48 ]
+[ Upstream commit c2adb1877b76fc81ae041e1db1a6ed2078c6746b ]
 
-When dln2_setup_rx_urbs() in dln2_probe() fails, error out_free forgets
-to call usb_put_dev() to decrease the refcount of dln2->usb_dev.
+System-wide TSC read could cause a drift in C0 percentage calculation.
+Because if first TSC is read and then one by one mperf is read for all
+cpus, this introduces drift between mperf reading of later CPUs and TSC
+reading.  To lower this drift read TSC per CPU and also just after mperf
+read.  This technique improves C0 percentage calculation in Mperf monitor.
 
-Fix this by adding usb_put_dev() in the error handling code of
-dln2_probe().
+Before fix: (System 100% busy)
 
-Signed-off-by: Qiang Ning <qning0106@126.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230330024353.4503-1-qning0106@126.com
+              | Mperf              || RAPL        || Idle_Stats
+ PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
+   0|   0|   0| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   0| 256| 84.62| 15.38|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   1|   1| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   1| 257| 84.08| 15.92|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   2|   2| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   2| 258| 83.26| 16.74|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   3|   3| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   3| 259| 83.60| 16.40|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   4|   4| 86.33| 13.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   4| 260| 83.33| 16.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   5|   5| 86.06| 13.94|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   5| 261| 83.05| 16.95|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   6|   6| 85.51| 14.49|  2695||168659003|3970468||  0.00|  0.00| 0.00
+
+After fix: (System 100% busy)
+
+             | Mperf              || RAPL        || Idle_Stats
+ PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
+   0|   0|   0| 98.03|  1.97|  2415||163295480|3811189||  0.00|  0.00| 0.00
+   0|   0| 256| 98.50|  1.50|  2394||163295480|3811189||  0.00|  0.00| 0.00
+   0|   1|   1| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   1| 257| 99.99|  0.01|  2375||163295480|3811189||  0.00|  0.00| 0.00
+   0|   2|   2| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   2| 258|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   3|   3|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   3| 259| 99.99|  0.01|  2435||163295480|3811189||  0.00|  0.00| 0.00
+   0|   4|   4|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   4| 260|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
+   0|   5|   5| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   5| 261|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
+   0|   6|   6|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   6| 262|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
+
+Cc: Thomas Renninger <trenn@suse.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Dominik Brodowski <linux@dominikbrodowski.net>
+
+Fixes: 7fe2f6399a84 ("cpupowerutils - cpufrequtils extended with quite some features")
+Signed-off-by: Wyes Karny <wyes.karny@amd.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/dln2.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../utils/idle_monitor/mperf_monitor.c        | 31 +++++++++----------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/mfd/dln2.c b/drivers/mfd/dln2.c
-index 97a69cd6f1278..a0ad99ca495fd 100644
---- a/drivers/mfd/dln2.c
-+++ b/drivers/mfd/dln2.c
-@@ -804,6 +804,7 @@ static int dln2_probe(struct usb_interface *interface,
- 	dln2_stop_rx_urbs(dln2);
+diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+index d7c2a6d13dea1..2221e43c63ce0 100644
+--- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
++++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+@@ -67,8 +67,8 @@ static int max_freq_mode;
+  */
+ static unsigned long max_frequency;
  
- out_free:
-+	usb_put_dev(dln2->usb_dev);
- 	dln2_free(dln2);
+-static unsigned long long tsc_at_measure_start;
+-static unsigned long long tsc_at_measure_end;
++static unsigned long long *tsc_at_measure_start;
++static unsigned long long *tsc_at_measure_end;
+ static unsigned long long *mperf_previous_count;
+ static unsigned long long *aperf_previous_count;
+ static unsigned long long *mperf_current_count;
+@@ -131,7 +131,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
+ 	aperf_diff = aperf_current_count[cpu] - aperf_previous_count[cpu];
  
- 	return ret;
+ 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
+-		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
++		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
+ 		*percent = 100.0 * mperf_diff / tsc_diff;
+ 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
+ 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
+@@ -168,7 +168,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
+ 
+ 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
+ 		/* Calculate max_freq from TSC count */
+-		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
++		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
+ 		time_diff = timespec_diff_us(time_start, time_end);
+ 		max_frequency = tsc_diff / time_diff;
+ 	}
+@@ -187,33 +187,27 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
+ static int mperf_start(void)
+ {
+ 	int cpu;
+-	unsigned long long dbg;
+ 
+ 	clock_gettime(CLOCK_REALTIME, &time_start);
+-	mperf_get_tsc(&tsc_at_measure_start);
+ 
+-	for (cpu = 0; cpu < cpu_count; cpu++)
++	for (cpu = 0; cpu < cpu_count; cpu++) {
++		mperf_get_tsc(&tsc_at_measure_start[cpu]);
+ 		mperf_init_stats(cpu);
++	}
+ 
+-	mperf_get_tsc(&dbg);
+-	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_start);
+ 	return 0;
+ }
+ 
+ static int mperf_stop(void)
+ {
+-	unsigned long long dbg;
+ 	int cpu;
+ 
+-	for (cpu = 0; cpu < cpu_count; cpu++)
++	for (cpu = 0; cpu < cpu_count; cpu++) {
+ 		mperf_measure_stats(cpu);
++		mperf_get_tsc(&tsc_at_measure_end[cpu]);
++	}
+ 
+-	mperf_get_tsc(&tsc_at_measure_end);
+ 	clock_gettime(CLOCK_REALTIME, &time_end);
+-
+-	mperf_get_tsc(&dbg);
+-	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_end);
+-
+ 	return 0;
+ }
+ 
+@@ -311,7 +305,8 @@ struct cpuidle_monitor *mperf_register(void)
+ 	aperf_previous_count = calloc(cpu_count, sizeof(unsigned long long));
+ 	mperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
+ 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
+-
++	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
++	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
+ 	mperf_monitor.name_len = strlen(mperf_monitor.name);
+ 	return &mperf_monitor;
+ }
+@@ -322,6 +317,8 @@ void mperf_unregister(void)
+ 	free(aperf_previous_count);
+ 	free(mperf_current_count);
+ 	free(aperf_current_count);
++	free(tsc_at_measure_start);
++	free(tsc_at_measure_end);
+ 	free(is_valid);
+ }
+ 
 -- 
 2.39.2
 
