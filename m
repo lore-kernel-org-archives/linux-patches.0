@@ -1,26 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6B3569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5A8C433D2;
-	Sun, 28 May 2023 19:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D3E569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78486C433EF;
+	Sun, 28 May 2023 19:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302333;
-	bh=h5aiiAEjyEl1uNNhvlVTcntRTiG83g6Js8kuozyrJd0=;
+	s=korg; t=1685302335;
+	bh=K46aWIFHdXi11oQIaFLg9AP7Zv4eCGNAAQeOb6ot5cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fgbHiqyG3EM61S/6vIUkAm3Qxjf9rpnCR+a7egpAxjjkG92fIci+QCM9brBHn2pU4
-	 Euph2pCXnfQKyp3bP7lChrWeg+VsDNJYN7Ip2Q+tOkpUb/BwiasMhw5iFYc+xC/QDj
-	 zETXWbXuVx4LBTbFv05VeDXTeiiSCm8kM3Cj+lnM=
+	b=fiY6cLkLs4SQXDExjPn2+xfr3XKTqcoJmrWOE0NvdySfJbrHTsIaOUhI6K4gWmUT5
+	 K1eFSOZEM0opralgB2QsVKeaoj5EA6bAydDxuNewjl0BbjUG1r+TqjvU9LP+oTJuCe
+	 9Kgmz3lBBQjZrWyJllgrz2XhEJ+tHBjZbN9EsE4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+4b3f8190f6e13b3efd74@syzkaller.appspotmail.com
-Subject: [PATCH 6.3 066/127] media: radio-shark: Add endpoint checks
-Date: Sun, 28 May 2023 20:10:42 +0100
-Message-Id: <20230528190838.551529362@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH 6.3 067/127] ASoC: lpass: Fix for KASAN use_after_free out of bounds
+Date: Sun, 28 May 2023 20:10:43 +0100
+Message-Id: <20230528190838.577757138@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -34,92 +32,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Ravulapati Vishnu Vardhan Rao <quic_visr@quicinc.com>
 
-commit 76e31045ba030e94e72105c01b2e98f543d175ac upstream.
+commit 75e5fab7db0cecb6e16b22c34608f0b40a4c7cd1 upstream.
 
-The syzbot fuzzer was able to provoke a WARNING from the radio-shark2
-driver:
+When we run syzkaller we get below Out of Bounds error.
 
-------------[ cut here ]------------
-usb 1-1: BOGUS urb xfer, pipe 1 != type 3
-WARNING: CPU: 0 PID: 3271 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed2/0x1880 drivers/usb/core/urb.c:504
-Modules linked in:
-CPU: 0 PID: 3271 Comm: kworker/0:3 Not tainted 6.1.0-rc4-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Workqueue: usb_hub_wq hub_event
-RIP: 0010:usb_submit_urb+0xed2/0x1880 drivers/usb/core/urb.c:504
-Code: 7c 24 18 e8 00 36 ea fb 48 8b 7c 24 18 e8 36 1c 02 ff 41 89 d8 44 89 e1 4c 89 ea 48 89 c6 48 c7 c7 a0 b6 90 8a e8 9a 29 b8 03 <0f> 0b e9 58 f8 ff ff e8 d2 35 ea fb 48 81 c5 c0 05 00 00 e9 84 f7
-RSP: 0018:ffffc90003876dd0 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: 0000000000000003 RCX: 0000000000000000
-RDX: ffff8880750b0040 RSI: ffffffff816152b8 RDI: fffff5200070edac
-RBP: ffff8880172d81e0 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000080000000 R11: 0000000000000000 R12: 0000000000000001
-R13: ffff8880285c5040 R14: 0000000000000002 R15: ffff888017158200
-FS:  0000000000000000(0000) GS:ffff8880b9a00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffe03235b90 CR3: 000000000bc8e000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
- usb_bulk_msg+0x226/0x550 drivers/usb/core/message.c:387
- shark_write_reg+0x1ff/0x2e0 drivers/media/radio/radio-shark2.c:88
-...
+"KASAN: slab-out-of-bounds Read in regcache_flat_read"
 
-The problem was caused by the fact that the driver does not check
-whether the endpoints it uses are actually present and have the
-appropriate types.  This can be fixed by adding a simple check of
-these endpoints (and similarly for the radio-shark driver).
+Below is the backtrace of the issue:
 
-Link: https://syzkaller.appspot.com/bug?extid=4b3f8190f6e13b3efd74
-Reported-and-tested-by: syzbot+4b3f8190f6e13b3efd74@syzkaller.appspotmail.com
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/e2858ab4-4adf-46e5-bbf6-c56742034547@rowland.harvard.edu
+BUG: KASAN: slab-out-of-bounds in regcache_flat_read+0x10c/0x110
+Read of size 4 at addr ffffff8088fbf714 by task syz-executor.4/14144
+CPU: 6 PID: 14144 Comm: syz-executor.4 Tainted: G        W
+Hardware name: Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+) (DT)
+Call trace:
+dump_backtrace+0x0/0x4ec
+show_stack+0x34/0x50
+dump_stack_lvl+0xdc/0x11c
+print_address_description+0x30/0x2d8
+kasan_report+0x178/0x1e4
+__asan_report_load4_noabort+0x44/0x50
+regcache_flat_read+0x10c/0x110
+regcache_read+0xf8/0x5a0
+_regmap_read+0x45c/0x86c
+_regmap_update_bits+0x128/0x290
+regmap_update_bits_base+0xc0/0x15c
+snd_soc_component_update_bits+0xa8/0x22c
+snd_soc_component_write_field+0x68/0xd4
+tx_macro_put_dec_enum+0x1d0/0x268
+snd_ctl_elem_write+0x288/0x474
+
+By Error checking and checking valid values issue gets rectifies.
+
+Signed-off-by: Ravulapati Vishnu Vardhan Rao <quic_visr@quicinc.com
+Link: https://lore.kernel.org/r/20230511112532.16106-1-quic_visr@quicinc.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/radio/radio-shark.c  |   10 ++++++++++
- drivers/media/radio/radio-shark2.c |   10 ++++++++++
- 2 files changed, 20 insertions(+)
+ sound/soc/codecs/lpass-tx-macro.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/radio/radio-shark.c
-+++ b/drivers/media/radio/radio-shark.c
-@@ -316,6 +316,16 @@ static int usb_shark_probe(struct usb_in
- {
- 	struct shark_device *shark;
- 	int retval = -ENOMEM;
-+	static const u8 ep_addresses[] = {
-+		SHARK_IN_EP | USB_DIR_IN,
-+		SHARK_OUT_EP | USB_DIR_OUT,
-+		0};
-+
-+	/* Are the expected endpoints present? */
-+	if (!usb_check_int_endpoints(intf, ep_addresses)) {
-+		dev_err(&intf->dev, "Invalid radioSHARK device\n");
-+		return -EINVAL;
-+	}
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -746,6 +746,8 @@ static int tx_macro_put_dec_enum(struct
+ 	struct tx_macro *tx = snd_soc_component_get_drvdata(component);
  
- 	shark = kzalloc(sizeof(struct shark_device), GFP_KERNEL);
- 	if (!shark)
---- a/drivers/media/radio/radio-shark2.c
-+++ b/drivers/media/radio/radio-shark2.c
-@@ -282,6 +282,16 @@ static int usb_shark_probe(struct usb_in
- {
- 	struct shark_device *shark;
- 	int retval = -ENOMEM;
-+	static const u8 ep_addresses[] = {
-+		SHARK_IN_EP | USB_DIR_IN,
-+		SHARK_OUT_EP | USB_DIR_OUT,
-+		0};
-+
-+	/* Are the expected endpoints present? */
-+	if (!usb_check_int_endpoints(intf, ep_addresses)) {
-+		dev_err(&intf->dev, "Invalid radioSHARK2 device\n");
+ 	val = ucontrol->value.enumerated.item[0];
++	if (val >= e->items)
 +		return -EINVAL;
-+	}
  
- 	shark = kzalloc(sizeof(struct shark_device), GFP_KERNEL);
- 	if (!shark)
+ 	switch (e->reg) {
+ 	case CDC_TX_INP_MUX_ADC_MUX0_CFG0:
+@@ -772,6 +774,9 @@ static int tx_macro_put_dec_enum(struct
+ 	case CDC_TX_INP_MUX_ADC_MUX7_CFG0:
+ 		mic_sel_reg = CDC_TX7_TX_PATH_CFG0;
+ 		break;
++	default:
++		dev_err(component->dev, "Error in configuration!!\n");
++		return -EINVAL;
+ 	}
+ 
+ 	if (val != 0) {
 
 
