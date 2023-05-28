@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBAB569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:26:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2C7C433D2;
-	Sun, 28 May 2023 19:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7893569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:26:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427EDC433EF;
+	Sun, 28 May 2023 19:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301989;
-	bh=9YiUokAwzvfOZddzUNJbmXxT+pnMi4TLKierQzPtqSI=;
+	s=korg; t=1685301991;
+	bh=KCP5upIRgXbExMq8f8lpTFfS6XCbCwhyzXTfE5WB04o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkFeDfT8Lmu2hRCqI6O7UUoFT3mka7bq2JSDO7GbmHJFgysVWJjxx+Dy9UzvO+JUz
-	 0n9lHS2PuFmIxMS8YbUrtzsy8ZRryG5ZPDzchPdLnTa5BrKGhas2iUEU9QL3eu8wMc
-	 By/bR5Z6yNOK7+gjbqjC9RtJhQE6JhA2+c3pS8sw=
+	b=ECFbzjoCAo047X2REAc9ZjTV7RQz3MW5kIHoGP/eUR4pyEt7mehthBSYiAvbYoDAJ
+	 3vGjWLxYSWFxnHc9/pw6X+qJeBXMmtJcd7kfsev6LUKhNQac0nNCdYBitHc/j0ub2c
+	 E39oRmmlUUuShbBRCTSH3Fuj4fPvhuB/zjnU4TjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Pasternak <vadimp@mellanox.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 116/161] lib/string_helpers: Introduce string_upper() and string_lower() helpers
-Date: Sun, 28 May 2023 20:10:40 +0100
-Message-Id: <20230528190840.749134525@linuxfoundation.org>
+Subject: [PATCH 5.4 117/161] usb: gadget: u_ether: Convert prints to device prints
+Date: Sun, 28 May 2023 20:10:41 +0100
+Message-Id: <20230528190840.775293535@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,53 +34,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vadim Pasternak <vadimp@mellanox.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 58eeba0bdb52afe5c18ce2a760ca9fe2901943e9 ]
+[ Upstream commit 938fc645317632d79c048608689683b5437496ea ]
 
-Provide the helpers for string conversions to upper and lower cases.
+The USB ethernet gadget driver implements its own print macros which
+call printk. Device drivers should use the device prints that print the
+device name. Fortunately, the same macro names are defined in the header
+file 'linux/usb/composite.h' and these use the device prints. Therefore,
+remove the local definitions in the USB ethernet gadget driver and use
+those in 'linux/usb/composite.h'. The only difference is that now the
+device name is printed instead of the ethernet interface name.
 
-Signed-off-by: Vadim Pasternak <vadimp@mellanox.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested using ethernet gadget on Jetson AGX Orin.
+
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20230209125319.18589-1-jonathanh@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 3c0f4f09c063 ("usb: gadget: u_ether: Fix host MAC address case")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/string_helpers.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/usb/gadget/function/u_ether.c | 36 +--------------------------
+ 1 file changed, 1 insertion(+), 35 deletions(-)
 
-diff --git a/include/linux/string_helpers.h b/include/linux/string_helpers.h
-index c289551322342..86f150c2a6b66 100644
---- a/include/linux/string_helpers.h
-+++ b/include/linux/string_helpers.h
-@@ -2,6 +2,7 @@
- #ifndef _LINUX_STRING_HELPERS_H_
- #define _LINUX_STRING_HELPERS_H_
+diff --git a/drivers/usb/gadget/function/u_ether.c b/drivers/usb/gadget/function/u_ether.c
+index 3f053b11e2cee..d9f9c7a678d8b 100644
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -17,6 +17,7 @@
+ #include <linux/etherdevice.h>
+ #include <linux/ethtool.h>
+ #include <linux/if_vlan.h>
++#include <linux/usb/composite.h>
  
-+#include <linux/ctype.h>
- #include <linux/types.h>
+ #include "u_ether.h"
  
- struct file;
-@@ -75,6 +76,20 @@ static inline int string_escape_str_any_np(const char *src, char *dst,
- 	return string_escape_str(src, dst, sz, ESCAPE_ANY_NP, only);
- }
+@@ -102,41 +103,6 @@ static inline int qlen(struct usb_gadget *gadget, unsigned qmult)
  
-+static inline void string_upper(char *dst, const char *src)
-+{
-+	do {
-+		*dst++ = toupper(*src);
-+	} while (*src++);
-+}
-+
-+static inline void string_lower(char *dst, const char *src)
-+{
-+	do {
-+		*dst++ = tolower(*src);
-+	} while (*src++);
-+}
-+
- char *kstrdup_quotable(const char *src, gfp_t gfp);
- char *kstrdup_quotable_cmdline(struct task_struct *task, gfp_t gfp);
- char *kstrdup_quotable_file(struct file *file, gfp_t gfp);
+ /*-------------------------------------------------------------------------*/
+ 
+-/* REVISIT there must be a better way than having two sets
+- * of debug calls ...
+- */
+-
+-#undef DBG
+-#undef VDBG
+-#undef ERROR
+-#undef INFO
+-
+-#define xprintk(d, level, fmt, args...) \
+-	printk(level "%s: " fmt , (d)->net->name , ## args)
+-
+-#ifdef DEBUG
+-#undef DEBUG
+-#define DBG(dev, fmt, args...) \
+-	xprintk(dev , KERN_DEBUG , fmt , ## args)
+-#else
+-#define DBG(dev, fmt, args...) \
+-	do { } while (0)
+-#endif /* DEBUG */
+-
+-#ifdef VERBOSE_DEBUG
+-#define VDBG	DBG
+-#else
+-#define VDBG(dev, fmt, args...) \
+-	do { } while (0)
+-#endif /* DEBUG */
+-
+-#define ERROR(dev, fmt, args...) \
+-	xprintk(dev , KERN_ERR , fmt , ## args)
+-#define INFO(dev, fmt, args...) \
+-	xprintk(dev , KERN_INFO , fmt , ## args)
+-
+-/*-------------------------------------------------------------------------*/
+-
+ /* NETWORK DRIVER HOOKUP (to the layer above this driver) */
+ 
+ static void eth_get_drvinfo(struct net_device *net, struct ethtool_drvinfo *p)
 -- 
 2.39.2
 
