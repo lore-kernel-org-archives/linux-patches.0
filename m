@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECF4611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6E6C433EF;
-	Sun, 28 May 2023 19:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0AC611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AE6C433EF;
+	Sun, 28 May 2023 19:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301354;
-	bh=Ds1oPxA4pcKs7mfPVvilOIrHkUwSh15RqQ9O/PrK3Og=;
+	s=korg; t=1685301357;
+	bh=Ahf/pz05PJxZ0mY1z3FlS2gFwCMiL9+Px7wNZx4F13Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dsL5SuB0K/FIUj7Mci7EPQzo3bYXCF8eQ5j0hcTxJWpVzAiTQAwgnJi9xiG/Z70sJ
-	 e1SkF0ue2pASIt+spGNcjBJssEYRk2dnnvoJr0UWuDNRRLFVSrmx70Ogbn5XTUFqHr
-	 8vbxPNjuWmUIc9ULpFraDcs1imL4TbbrL3OIVqAQ=
+	b=KSHcF2m58aajeuMFDXK7EKqcZ/pY2h2HpSj2JoxISso3Ntbb9Sr03ZWytVTT8RDmP
+	 aHdXuywYIItlaCEPTjYuYzB+imSyI12Bdafo7EoIT8ia8dP83FF67vywfWsQTr9vAN
+	 cTwr0jzK6tlseiz97zc87BnbvFyinmUAHcMf1BLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 4.14 56/86] spi: fsl-spi: Re-organise transfer bits_per_word adaptation
-Date: Sun, 28 May 2023 20:10:30 +0100
-Message-Id: <20230528190830.678184308@linuxfoundation.org>
+	Maxime Bizon <mbizon@freebox.fr>,
+	linux-usb@vger.kernel.org,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 4.14 47/86] usb-storage: fix deadlock when a scsi command timeouts more than once
+Date: Sun, 28 May 2023 20:10:21 +0100
+Message-Id: <20230528190830.341018603@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -34,115 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Maxime Bizon <mbizon@freebox.fr>
 
-(backported from upstream 8a5299a1278eadf1e08a598a5345c376206f171e)
+commit a398d5eac6984316e71474e25b975688f282379b upstream.
 
-For different reasons, fsl-spi driver performs bits_per_word
-modifications for different reasons:
-- On CPU mode, to minimise amount of interrupts
-- On CPM/QE mode to work around controller byte order
+With faulty usb-storage devices, read/write can timeout, in that case
+the SCSI layer will abort and re-issue the command. USB storage has no
+internal timeout, it relies on SCSI layer aborting commands via
+.eh_abort_handler() for non those responsive devices.
 
-For CPU mode that's done in fsl_spi_prepare_message() while
-for CPM mode that's done in fsl_spi_setup_transfer().
+After two consecutive timeouts of the same command, SCSI layer calls
+.eh_device_reset_handler(), without calling .eh_abort_handler() first.
 
-Reunify all of it in fsl_spi_prepare_message(), and catch
-impossible cases early through master's bits_per_word_mask
-instead of returning EINVAL later.
+With usb-storage, this causes a deadlock:
 
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/0ce96fe96e8b07cba0613e4097cfd94d09b8919a.1680371809.git.christophe.leroy@csgroup.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  -> .eh_device_reset_handler
+    -> device_reset
+      -> mutex_lock(&(us->dev_mutex));
+
+mutex already by usb_stor_control_thread(), which is waiting for
+command completion:
+
+  -> usb_stor_control_thread (mutex taken here)
+    -> usb_stor_invoke_transport
+      -> usb_stor_Bulk_transport
+        -> usb_stor_bulk_srb
+	  -> usb_stor_bulk_transfer_sglist
+	    -> usb_sg_wait
+
+Make sure we cancel any pending command in .eh_device_reset_handler()
+to avoid this.
+
+Signed-off-by: Maxime Bizon <mbizon@freebox.fr>
+Cc: linux-usb@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/all/ZEllnjMKT8ulZbJh@sakura/
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20230505114759.1189741-1-mbizon@freebox.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-spi.c |   50 +++++++++++++++++++++-------------------------
- 1 file changed, 23 insertions(+), 27 deletions(-)
+ drivers/usb/storage/scsiglue.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -201,26 +201,6 @@ static int mspi_apply_cpu_mode_quirks(st
- 	return bits_per_word;
- }
+--- a/drivers/usb/storage/scsiglue.c
++++ b/drivers/usb/storage/scsiglue.c
+@@ -408,22 +408,25 @@ static DEF_SCSI_QCMD(queuecommand)
+  ***********************************************************************/
  
--static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
--				struct spi_device *spi,
--				int bits_per_word)
--{
--	/* CPM/QE uses Little Endian for words > 8
--	 * so transform 16 and 32 bits words into 8 bits
--	 * Unfortnatly that doesn't work for LSB so
--	 * reject these for now */
--	/* Note: 32 bits word, LSB works iff
--	 * tfcr/rfcr is set to CPMFCR_GBL */
--	if (spi->mode & SPI_LSB_FIRST &&
--	    bits_per_word > 8)
--		return -EINVAL;
--	if (bits_per_word <= 8)
--		return bits_per_word;
--	if (bits_per_word == 16 || bits_per_word == 32)
--		return 8; /* pretend its 8 bits */
--	return -EINVAL;
--}
--
- static int fsl_spi_setup_transfer(struct spi_device *spi,
- 					struct spi_transfer *t)
+ /* Command timeout and abort */
+-static int command_abort(struct scsi_cmnd *srb)
++static int command_abort_matching(struct us_data *us, struct scsi_cmnd *srb_match)
  {
-@@ -248,9 +228,6 @@ static int fsl_spi_setup_transfer(struct
- 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
- 							   mpc8xxx_spi,
- 							   bits_per_word);
--	else
--		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
--							  bits_per_word);
- 
- 	if (bits_per_word < 0)
- 		return bits_per_word;
-@@ -368,14 +345,27 @@ static int fsl_spi_do_one_msg(struct spi
- 	 * In CPU mode, optimize large byte transfers to use larger
- 	 * bits_per_word values to reduce number of interrupts taken.
+-	struct us_data *us = host_to_us(srb->device->host);
+-
+-	usb_stor_dbg(us, "%s called\n", __func__);
+-
+ 	/*
+ 	 * us->srb together with the TIMED_OUT, RESETTING, and ABORTING
+ 	 * bits are protected by the host lock.
  	 */
--	if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
--		list_for_each_entry(t, &m->transfers, transfer_list) {
-+	list_for_each_entry(t, &m->transfers, transfer_list) {
-+		if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
- 			if (t->len < 256 || t->bits_per_word != 8)
- 				continue;
- 			if ((t->len & 3) == 0)
- 				t->bits_per_word = 32;
- 			else if ((t->len & 1) == 0)
- 				t->bits_per_word = 16;
-+		} else {
-+			/*
-+			 * CPM/QE uses Little Endian for words > 8
-+			 * so transform 16 and 32 bits words into 8 bits
-+			 * Unfortnatly that doesn't work for LSB so
-+			 * reject these for now
-+			 * Note: 32 bits word, LSB works iff
-+			 * tfcr/rfcr is set to CPMFCR_GBL
-+			 */
-+			if (m->spi->mode & SPI_LSB_FIRST && t->bits_per_word > 8)
-+				return -EINVAL;
-+			if (t->bits_per_word == 16 || t->bits_per_word == 32)
-+				t->bits_per_word = 8; /* pretend its 8 bits */
- 		}
+ 	scsi_lock(us_to_host(us));
+ 
+-	/* Is this command still active? */
+-	if (us->srb != srb) {
++	/* is there any active pending command to abort ? */
++	if (!us->srb) {
+ 		scsi_unlock(us_to_host(us));
+ 		usb_stor_dbg(us, "-- nothing to abort\n");
++		return SUCCESS;
++	}
++
++	/* Does the command match the passed srb if any ? */
++	if (srb_match && us->srb != srb_match) {
++		scsi_unlock(us_to_host(us));
++		usb_stor_dbg(us, "-- pending command mismatch\n");
+ 		return FAILED;
  	}
  
-@@ -658,8 +648,14 @@ static struct spi_master * fsl_spi_probe
- 	if (mpc8xxx_spi->type == TYPE_GRLIB)
- 		fsl_spi_grlib_probe(dev);
+@@ -446,6 +449,14 @@ static int command_abort(struct scsi_cmn
+ 	return SUCCESS;
+ }
  
--	master->bits_per_word_mask =
--		(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32)) &
-+	if (mpc8xxx_spi->flags & SPI_CPM_MODE)
-+		master->bits_per_word_mask =
-+			(SPI_BPW_RANGE_MASK(4, 8) | SPI_BPW_MASK(16) | SPI_BPW_MASK(32));
-+	else
-+		master->bits_per_word_mask =
-+			(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32));
++static int command_abort(struct scsi_cmnd *srb)
++{
++	struct us_data *us = host_to_us(srb->device->host);
 +
-+	master->bits_per_word_mask &=
- 		SPI_BPW_RANGE_MASK(1, mpc8xxx_spi->max_bits_per_word);
++	usb_stor_dbg(us, "%s called\n", __func__);
++	return command_abort_matching(us, srb);
++}
++
+ /*
+  * This invokes the transport reset mechanism to reset the state of the
+  * device
+@@ -457,6 +468,9 @@ static int device_reset(struct scsi_cmnd
  
- 	if (mpc8xxx_spi->flags & SPI_QE_CPU_MODE)
+ 	usb_stor_dbg(us, "%s called\n", __func__);
+ 
++	/* abort any pending command before reset */
++	command_abort_matching(us, NULL);
++
+ 	/* lock the device pointers and do the reset */
+ 	mutex_lock(&(us->dev_mutex));
+ 	result = us->transport_reset(us);
 
 
