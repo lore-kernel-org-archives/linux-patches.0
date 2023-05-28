@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115E1611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:48:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92974C433D2;
-	Sun, 28 May 2023 19:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECA4611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:48:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25E1C433EF;
+	Sun, 28 May 2023 19:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303314;
-	bh=wRHBaeDhawOPG5Ib5RCrD356vYPyA33SmBx6wdrBBSI=;
+	s=korg; t=1685303317;
+	bh=7OmCtundpP8qjlKK40vgClQHTLXscEQd/cGiTN0VE8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DF/0La94k63NTXOTnisD8ss1TA8O60oeT8wg0JUToMaUo1JhaNIyl3rFfGifZI7Ez
-	 F2E146OHN35iNYXoEzA9YYIyePTuyArSb3bzTD8w0zafJLm9qXZszHbt8uv98jo3CO
-	 E2N6tMW9BnEZtyOuyRodnl7+r9fXcwbL+vCWL9fU=
+	b=LHbDT2yqJXNhN6aWM3igiCWErlupoMdo7+58fLD/KALiT/VIDyZdXXtJPQ0UMr8x4
+	 deZUUjYSpoQf5swxi9GpvZc545Nxrr5zLYAOWM4qqAIOILwIPH4LS9AjIP6hc/hHpD
+	 fvE7KHVFHKVyahyBb5pmJT8TmgTUtjq7LlP/hTuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+fe0c72f0ccbb93786380@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.15 28/69] debugobjects: Dont wake up kswapd from fill_pool()
-Date: Sun, 28 May 2023 20:11:48 +0100
-Message-Id: <20230528190829.421780799@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Pavel Skripkin <paskripkin@gmail.com>,
+	Helge Deller <deller@gmx.de>,
+	syzbot+0e22d63dcebb802b9bc8@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 29/69] fbdev: udlfb: Fix endpoint check
+Date: Sun, 28 May 2023 20:11:49 +0100
+Message-Id: <20230528190829.467077466@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -35,41 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit eb799279fb1f9c63c520fe8c1c41cb9154252db6 upstream.
+commit ed9de4ed39875706607fb08118a58344ae6c5f42 upstream.
 
-syzbot is reporting a lockdep warning in fill_pool() because the allocation
-from debugobjects is using GFP_ATOMIC, which is (__GFP_HIGH | __GFP_KSWAPD_RECLAIM)
-and therefore tries to wake up kswapd, which acquires kswapd_wait::lock.
+The syzbot fuzzer detected a problem in the udlfb driver, caused by an
+endpoint not having the expected type:
 
-Since fill_pool() might be called with arbitrary locks held, fill_pool()
-should not assume that acquiring kswapd_wait::lock is safe.
+usb 1-1: Read EDID byte 0 failed: -71
+usb 1-1: Unable to get valid EDID from device/display
+------------[ cut here ]------------
+usb 1-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 0 PID: 9 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880
+drivers/usb/core/urb.c:504
+Modules linked in:
+CPU: 0 PID: 9 Comm: kworker/0:1 Not tainted
+6.4.0-rc1-syzkaller-00016-ga4422ff22142 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google
+04/28/2023
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
+...
+Call Trace:
+ <TASK>
+ dlfb_submit_urb+0x92/0x180 drivers/video/fbdev/udlfb.c:1980
+ dlfb_set_video_mode+0x21f0/0x2950 drivers/video/fbdev/udlfb.c:315
+ dlfb_ops_set_par+0x2a7/0x8d0 drivers/video/fbdev/udlfb.c:1111
+ dlfb_usb_probe+0x149a/0x2710 drivers/video/fbdev/udlfb.c:1743
 
-Use __GFP_HIGH instead and remove __GFP_NORETRY as it is pointless for
-!__GFP_DIRECT_RECLAIM allocation.
+The current approach for this issue failed to catch the problem
+because it only checks for the existence of a bulk-OUT endpoint; it
+doesn't check whether this endpoint is the one that the driver will
+actually use.
 
-Fixes: 3ac7fe5a4aab ("infrastructure to debug (dynamic) objects")
-Reported-by: syzbot <syzbot+fe0c72f0ccbb93786380@syzkaller.appspotmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/6577e1fa-b6ee-f2be-2414-a2b51b1c5e30@I-love.SAKURA.ne.jp
-Closes: https://syzkaller.appspot.com/bug?extid=fe0c72f0ccbb93786380
+We can fix the problem by instead checking that the endpoint used by
+the driver does exist and is bulk-OUT.
+
+Reported-and-tested-by: syzbot+0e22d63dcebb802b9bc8@syzkaller.appspotmail.com
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+CC: Pavel Skripkin <paskripkin@gmail.com>
+Fixes: aaf7dbe07385 ("video: fbdev: udlfb: properly check endpoint type")
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/udlfb.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -129,7 +129,7 @@ static const char *obj_states[ODEBUG_STA
+--- a/drivers/video/fbdev/udlfb.c
++++ b/drivers/video/fbdev/udlfb.c
+@@ -27,6 +27,8 @@
+ #include <video/udlfb.h>
+ #include "edid.h"
  
- static void fill_pool(void)
- {
--	gfp_t gfp = GFP_ATOMIC | __GFP_NORETRY | __GFP_NOWARN;
-+	gfp_t gfp = __GFP_HIGH | __GFP_NOWARN;
- 	struct debug_obj *obj;
- 	unsigned long flags;
++#define OUT_EP_NUM	1	/* The endpoint number we will use */
++
+ static const struct fb_fix_screeninfo dlfb_fix = {
+ 	.id =           "udlfb",
+ 	.type =         FB_TYPE_PACKED_PIXELS,
+@@ -1651,7 +1653,7 @@ static int dlfb_usb_probe(struct usb_int
+ 	struct fb_info *info;
+ 	int retval;
+ 	struct usb_device *usbdev = interface_to_usbdev(intf);
+-	struct usb_endpoint_descriptor *out;
++	static u8 out_ep[] = {OUT_EP_NUM + USB_DIR_OUT, 0};
+ 
+ 	/* usb initialization */
+ 	dlfb = kzalloc(sizeof(*dlfb), GFP_KERNEL);
+@@ -1665,9 +1667,9 @@ static int dlfb_usb_probe(struct usb_int
+ 	dlfb->udev = usb_get_dev(usbdev);
+ 	usb_set_intfdata(intf, dlfb);
+ 
+-	retval = usb_find_common_endpoints(intf->cur_altsetting, NULL, &out, NULL, NULL);
+-	if (retval) {
+-		dev_err(&intf->dev, "Device should have at lease 1 bulk endpoint!\n");
++	if (!usb_check_bulk_endpoints(intf, out_ep)) {
++		dev_err(&intf->dev, "Invalid DisplayLink device!\n");
++		retval = -EINVAL;
+ 		goto error;
+ 	}
+ 
+@@ -1926,7 +1928,8 @@ retry:
+ 		}
+ 
+ 		/* urb->transfer_buffer_length set to actual before submit */
+-		usb_fill_bulk_urb(urb, dlfb->udev, usb_sndbulkpipe(dlfb->udev, 1),
++		usb_fill_bulk_urb(urb, dlfb->udev,
++			usb_sndbulkpipe(dlfb->udev, OUT_EP_NUM),
+ 			buf, size, dlfb_urb_completion, unode);
+ 		urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
  
 
 
