@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFC1569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7209FC4339B;
-	Sun, 28 May 2023 19:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A57569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B562C433EF;
+	Sun, 28 May 2023 19:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302126;
-	bh=Kb3gha+QRyLhTBByHOdCLLRi9uxdzO/GNpXHLXRtQOA=;
+	s=korg; t=1685302129;
+	bh=2q7wgJ2rTXpnnQuOtI06xvZXFfgFbae/YxtHR0ceDVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9OxlVBjgpv0u5JuI5L237oKZZGlS9a25X/Ni50f+jSqHNRmklmYaQzwOyrsANQ5t
-	 U4ge5G9EA3qMiNhewUxPuVAETWWdF8UDkOjuJ6WYFPq5IQyHsPyBqI4w/Mv79YX8zU
-	 hBWinYWTT7e9t2cNDWNiz8Ciu7QXwiz63+FT0T8U=
+	b=ZkhkvEaQHI3xOvFzk3d5vPShFTdKF0Npc5sjRhH73USC/qaGU6geF4Db4L7M0RxHN
+	 kfMahKg7LvAlFtb/DJA9Qoegkgc9Q8h+vKdFSQvFc4h4pQk4oCORvJceamesyOtzsi
+	 gNZMXvhOHX92GrXoTNplc9wVsKRZG8qsHfTtLCeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Linyu Yuan <quic_linyyuan@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 002/127] usb: dwc3: fix gadget mode suspend interrupt handler issue
-Date: Sun, 28 May 2023 20:09:38 +0100
-Message-Id: <20230528190836.254121450@linuxfoundation.org>
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Tarun Sahu <tsahu@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Piyush Sachdeva <piyushs@linux.ibm.com>
+Subject: [PATCH 6.3 011/127] mm/vmemmap/devdax: fix kernel crash when probing devdax devices
+Date: Sun, 28 May 2023 20:09:47 +0100
+Message-Id: <20230528190836.576332411@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -36,98 +40,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linyu Yuan <quic_linyyuan@quicinc.com>
+From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 
-[ Upstream commit 4e8ef34e36f2839ef8c8da521ab7035956436818 ]
+commit 87a7ae75d7383afa998f57656d1d14e2a730cc47 upstream.
 
-When work in gadget mode, currently driver doesn't update software level
-link_state correctly as link state change event is not enabled for most
-devices, in function dwc3_gadget_suspend_interrupt(), it will only pass
-suspend event to UDC core when software level link state changes, so when
-interrupt generated in sequences of suspend -> reset -> conndone ->
-suspend, link state is not updated during reset and conndone, so second
-suspend interrupt event will not pass to UDC core.
+commit 4917f55b4ef9 ("mm/sparse-vmemmap: improve memory savings for
+compound devmaps") added support for using optimized vmmemap for devdax
+devices.  But how vmemmap mappings are created are architecture specific.
+For example, powerpc with hash translation doesn't have vmemmap mappings
+in init_mm page table instead they are bolted table entries in the
+hardware page table
 
-Remove link_state compare in dwc3_gadget_suspend_interrupt() and add a
-suspended flag to replace the compare function.
+vmemmap_populate_compound_pages() used by vmemmap optimization code is not
+aware of these architecture-specific mapping.  Hence allow architecture to
+opt for this feature.  I selected architectures supporting
+HUGETLB_PAGE_OPTIMIZE_VMEMMAP option as also supporting this feature.
 
-Fixes: 799e9dc82968 ("usb: dwc3: gadget: conditionally disable Link State change events")
-Cc: stable <stable@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Linyu Yuan <quic_linyyuan@quicinc.com>
-Link: https://lore.kernel.org/r/20230512004524.31950-1-quic_linyyuan@quicinc.com
+This patch fixes the below crash on ppc64.
+
+BUG: Unable to handle kernel data access on write at 0xc00c000100400038
+Faulting instruction address: 0xc000000001269d90
+Oops: Kernel access of bad area, sig: 11 [#1]
+LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
+Modules linked in:
+CPU: 7 PID: 1 Comm: swapper/0 Not tainted 6.3.0-rc5-150500.34-default+ #2 5c90a668b6bbd142599890245c2fb5de19d7d28a
+Hardware name: IBM,9009-42G POWER9 (raw) 0x4e0202 0xf000005 of:IBM,FW950.40 (VL950_099) hv:phyp pSeries
+NIP:  c000000001269d90 LR: c0000000004c57d4 CTR: 0000000000000000
+REGS: c000000003632c30 TRAP: 0300   Not tainted  (6.3.0-rc5-150500.34-default+)
+MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24842228  XER: 00000000
+CFAR: c0000000004c57d0 DAR: c00c000100400038 DSISR: 42000000 IRQMASK: 0
+....
+NIP [c000000001269d90] __init_single_page.isra.74+0x14/0x4c
+LR [c0000000004c57d4] __init_zone_device_page+0x44/0xd0
+Call Trace:
+[c000000003632ed0] [c000000003632f60] 0xc000000003632f60 (unreliable)
+[c000000003632f10] [c0000000004c5ca0] memmap_init_zone_device+0x170/0x250
+[c000000003632fe0] [c0000000005575f8] memremap_pages+0x2c8/0x7f0
+[c0000000036330c0] [c000000000557b5c] devm_memremap_pages+0x3c/0xa0
+[c000000003633100] [c000000000d458a8] dev_dax_probe+0x108/0x3e0
+[c0000000036331a0] [c000000000d41430] dax_bus_probe+0xb0/0x140
+[c0000000036331d0] [c000000000cef27c] really_probe+0x19c/0x520
+[c000000003633260] [c000000000cef6b4] __driver_probe_device+0xb4/0x230
+[c0000000036332e0] [c000000000cef888] driver_probe_device+0x58/0x120
+[c000000003633320] [c000000000cefa6c] __device_attach_driver+0x11c/0x1e0
+[c0000000036333a0] [c000000000cebc58] bus_for_each_drv+0xa8/0x130
+[c000000003633400] [c000000000ceefcc] __device_attach+0x15c/0x250
+[c0000000036334a0] [c000000000ced458] bus_probe_device+0x108/0x110
+[c0000000036334f0] [c000000000ce92dc] device_add+0x7fc/0xa10
+[c0000000036335b0] [c000000000d447c8] devm_create_dev_dax+0x1d8/0x530
+[c000000003633640] [c000000000d46b60] __dax_pmem_probe+0x200/0x270
+[c0000000036337b0] [c000000000d46bf0] dax_pmem_probe+0x20/0x70
+[c0000000036337d0] [c000000000d2279c] nvdimm_bus_probe+0xac/0x2b0
+[c000000003633860] [c000000000cef27c] really_probe+0x19c/0x520
+[c0000000036338f0] [c000000000cef6b4] __driver_probe_device+0xb4/0x230
+[c000000003633970] [c000000000cef888] driver_probe_device+0x58/0x120
+[c0000000036339b0] [c000000000cefd08] __driver_attach+0x1d8/0x240
+[c000000003633a30] [c000000000cebb04] bus_for_each_dev+0xb4/0x130
+[c000000003633a90] [c000000000cee564] driver_attach+0x34/0x50
+[c000000003633ab0] [c000000000ced878] bus_add_driver+0x218/0x300
+[c000000003633b40] [c000000000cf1144] driver_register+0xa4/0x1b0
+[c000000003633bb0] [c000000000d21a0c] __nd_driver_register+0x5c/0x100
+[c000000003633c10] [c00000000206a2e8] dax_pmem_init+0x34/0x48
+[c000000003633c30] [c0000000000132d0] do_one_initcall+0x60/0x320
+[c000000003633d00] [c0000000020051b0] kernel_init_freeable+0x360/0x400
+[c000000003633de0] [c000000000013764] kernel_init+0x34/0x1d0
+[c000000003633e50] [c00000000000de14] ret_from_kernel_thread+0x5c/0x64
+
+Link: https://lkml.kernel.org/r/20230411142214.64464-1-aneesh.kumar@linux.ibm.com
+Fixes: 4917f55b4ef9 ("mm/sparse-vmemmap: improve memory savings for compound devmaps")
+Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Reported-by: Tarun Sahu <tsahu@linux.ibm.com>
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Piyush Sachdeva <piyushs@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.h   |  2 ++
- drivers/usb/dwc3/gadget.c | 10 +++++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ include/linux/mm.h  |   16 ++++++++++++++++
+ mm/page_alloc.c     |   10 ++++++----
+ mm/sparse-vmemmap.c |    3 +--
+ 3 files changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 4743e918dcafa..54ce9907a408c 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1110,6 +1110,7 @@ struct dwc3_scratchpad_array {
-  *	3	- Reserved
-  * @dis_metastability_quirk: set to disable metastability quirk.
-  * @dis_split_quirk: set to disable split boundary.
-+ * @suspended: set to track suspend event due to U3/L2.
-  * @imod_interval: set the interrupt moderation interval in 250ns
-  *			increments or 0 to disable.
-  * @max_cfg_eps: current max number of IN eps used across all USB configs.
-@@ -1327,6 +1328,7 @@ struct dwc3 {
- 
- 	unsigned		dis_split_quirk:1;
- 	unsigned		async_callbacks:1;
-+	unsigned		suspended:1;
- 
- 	u16			imod_interval;
- 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 80ae308448451..1cf352fbe7039 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3838,6 +3838,8 @@ static void dwc3_gadget_disconnect_interrupt(struct dwc3 *dwc)
- {
- 	int			reg;
- 
-+	dwc->suspended = false;
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -3425,6 +3425,22 @@ void vmemmap_populate_print_last(void);
+ void vmemmap_free(unsigned long start, unsigned long end,
+ 		struct vmem_altmap *altmap);
+ #endif
 +
- 	dwc3_gadget_set_link_state(dwc, DWC3_LINK_STATE_RX_DET);
- 
- 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
-@@ -3869,6 +3871,8 @@ static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
- {
- 	u32			reg;
- 
-+	dwc->suspended = false;
++#ifdef CONFIG_ARCH_WANT_HUGETLB_PAGE_OPTIMIZE_VMEMMAP
++static inline bool vmemmap_can_optimize(struct vmem_altmap *altmap,
++					   struct dev_pagemap *pgmap)
++{
++	return is_power_of_2(sizeof(struct page)) &&
++		pgmap && (pgmap_vmemmap_nr(pgmap) > 1) && !altmap;
++}
++#else
++static inline bool vmemmap_can_optimize(struct vmem_altmap *altmap,
++					   struct dev_pagemap *pgmap)
++{
++	return false;
++}
++#endif
 +
- 	/*
- 	 * Ideally, dwc3_reset_gadget() would trigger the function
- 	 * drivers to stop any active transfers through ep disable.
-@@ -4098,6 +4102,8 @@ static void dwc3_gadget_conndone_interrupt(struct dwc3 *dwc)
+ void register_page_bootmem_memmap(unsigned long section_nr, struct page *map,
+ 				  unsigned long nr_pages);
  
- static void dwc3_gadget_wakeup_interrupt(struct dwc3 *dwc)
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -6905,10 +6905,12 @@ static void __ref __init_zone_device_pag
+  * of an altmap. See vmemmap_populate_compound_pages().
+  */
+ static inline unsigned long compound_nr_pages(struct vmem_altmap *altmap,
+-					      unsigned long nr_pages)
++					      struct dev_pagemap *pgmap)
  {
-+	dwc->suspended = false;
+-	return is_power_of_2(sizeof(struct page)) &&
+-		!altmap ? 2 * (PAGE_SIZE / sizeof(struct page)) : nr_pages;
++	if (!vmemmap_can_optimize(altmap, pgmap))
++		return pgmap_vmemmap_nr(pgmap);
 +
- 	/*
- 	 * TODO take core out of low power mode when that's
- 	 * implemented.
-@@ -4213,8 +4219,10 @@ static void dwc3_gadget_suspend_interrupt(struct dwc3 *dwc,
- {
- 	enum dwc3_link_state next = evtinfo & DWC3_LINK_STATE_MASK;
- 
--	if (dwc->link_state != next && next == DWC3_LINK_STATE_U3)
-+	if (!dwc->suspended && next == DWC3_LINK_STATE_U3) {
-+		dwc->suspended = true;
- 		dwc3_suspend_gadget(dwc);
-+	}
- 
- 	dwc->link_state = next;
++	return 2 * (PAGE_SIZE / sizeof(struct page));
  }
--- 
-2.39.2
-
+ 
+ static void __ref memmap_init_compound(struct page *head,
+@@ -6973,7 +6975,7 @@ void __ref memmap_init_zone_device(struc
+ 			continue;
+ 
+ 		memmap_init_compound(page, pfn, zone_idx, nid, pgmap,
+-				     compound_nr_pages(altmap, pfns_per_compound));
++				     compound_nr_pages(altmap, pgmap));
+ 	}
+ 
+ 	pr_info("%s initialised %lu pages in %ums\n", __func__,
+--- a/mm/sparse-vmemmap.c
++++ b/mm/sparse-vmemmap.c
+@@ -458,8 +458,7 @@ struct page * __meminit __populate_secti
+ 		!IS_ALIGNED(nr_pages, PAGES_PER_SUBSECTION)))
+ 		return NULL;
+ 
+-	if (is_power_of_2(sizeof(struct page)) &&
+-	    pgmap && pgmap_vmemmap_nr(pgmap) > 1 && !altmap)
++	if (vmemmap_can_optimize(altmap, pgmap))
+ 		r = vmemmap_populate_compound_pages(pfn, start, end, nid, pgmap);
+ 	else
+ 		r = vmemmap_populate(start, end, nid, altmap);
 
 
