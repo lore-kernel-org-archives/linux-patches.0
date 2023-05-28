@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80A9611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A98C433D2;
-	Sun, 28 May 2023 19:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB64611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA11AC433EF;
+	Sun, 28 May 2023 19:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301526;
-	bh=KIj8Ku161zfpYEHHycQ8WJCSMxb85QMZrgFWzBJT/YU=;
+	s=korg; t=1685301529;
+	bh=ix7Zlo2wEhgrYrjU0RCJYqpXIXSck7jDSRzxu3rRb/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qCDoWo6R7ufHN1uaXWTp4LAQHm/wXcXf3R6O4t4WnfHfsTMQoy9bld/2wVlyHaM4y
-	 /TA6dW9tkiCtzCMQBX81xE6U8giu7f7itDt4RdHXK4hn6xxbY21pJVSNJzIJ+nXjqQ
-	 /DEvH0bUfnsr4XLvEIy5Wla6bBMwJXewzqPdP/fs=
+	b=OCgiWXcOFsiDXmFH8xdJyd7FLYOCtWwRvJc659n4fzyEdBrHCN8mQQbilfPhU53FF
+	 foRfYerNGpQVOjvyGubOzDIkxzY7GJxlkHiys5/gW/8anHvtetdCSM87HgDEdSORWu
+	 MVaY28DBJs30tZTNrKpKcpLafvg5Y5BUvBwyDDMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 4.19 065/132] igb: fix bit_shift to be in [1..8] range
-Date: Sun, 28 May 2023 20:10:04 +0100
-Message-Id: <20230528190835.541203879@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 066/132] vlan: fix a potential uninit-value in vlan_dev_hard_start_xmit()
+Date: Sun, 28 May 2023 20:10:05 +0100
+Message-Id: <20230528190835.571066014@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -37,48 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 60d758659f1fb49e0d5b6ac2691ede8c0958795b ]
+[ Upstream commit dacab578c7c6cd06c50c89dfa36b0e0f10decd4e ]
 
-In igb_hash_mc_addr() the expression:
-        "mc_addr[4] >> 8 - bit_shift", right shifting "mc_addr[4]"
-shift by more than 7 bits always yields zero, so hash becomes not so different.
-Add initialization with bit_shift = 1 and add a loop condition to ensure
-bit_shift will be always in [1..8] range.
+syzbot triggered the following splat [1], sending an empty message
+through pppoe_sendmsg().
 
-Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+When VLAN_FLAG_REORDER_HDR flag is set, vlan_dev_hard_header()
+does not push extra bytes for the VLAN header, because vlan is offloaded.
+
+Unfortunately vlan_dev_hard_start_xmit() first reads veth->h_vlan_proto
+before testing (vlan->flags & VLAN_FLAG_REORDER_HDR).
+
+We need to swap the two conditions.
+
+[1]
+BUG: KMSAN: uninit-value in vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
+vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
+__netdev_start_xmit include/linux/netdevice.h:4883 [inline]
+netdev_start_xmit include/linux/netdevice.h:4897 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x253/0xa20 net/core/dev.c:3596
+__dev_queue_xmit+0x3c7f/0x5ac0 net/core/dev.c:4246
+dev_queue_xmit include/linux/netdevice.h:3053 [inline]
+pppoe_sendmsg+0xa93/0xb80 drivers/net/ppp/pppoe.c:900
+sock_sendmsg_nosec net/socket.c:724 [inline]
+sock_sendmsg net/socket.c:747 [inline]
+____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
+___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
+__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
+__do_sys_sendmmsg net/socket.c:2670 [inline]
+__se_sys_sendmmsg net/socket.c:2667 [inline]
+__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Uninit was created at:
+slab_post_alloc_hook+0x12d/0xb60 mm/slab.h:774
+slab_alloc_node mm/slub.c:3452 [inline]
+kmem_cache_alloc_node+0x543/0xab0 mm/slub.c:3497
+kmalloc_reserve+0x148/0x470 net/core/skbuff.c:520
+__alloc_skb+0x3a7/0x850 net/core/skbuff.c:606
+alloc_skb include/linux/skbuff.h:1277 [inline]
+sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2583
+pppoe_sendmsg+0x3af/0xb80 drivers/net/ppp/pppoe.c:867
+sock_sendmsg_nosec net/socket.c:724 [inline]
+sock_sendmsg net/socket.c:747 [inline]
+____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
+___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
+__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
+__do_sys_sendmmsg net/socket.c:2670 [inline]
+__se_sys_sendmmsg net/socket.c:2667 [inline]
+__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+CPU: 0 PID: 29770 Comm: syz-executor.0 Not tainted 6.3.0-rc6-syzkaller-gc478e5b17829 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/e1000_mac.c | 4 ++--
+ net/8021q/vlan_dev.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/e1000_mac.c b/drivers/net/ethernet/intel/igb/e1000_mac.c
-index 79ee0a7472608..4e69cb2c025fd 100644
---- a/drivers/net/ethernet/intel/igb/e1000_mac.c
-+++ b/drivers/net/ethernet/intel/igb/e1000_mac.c
-@@ -425,7 +425,7 @@ void igb_mta_set(struct e1000_hw *hw, u32 hash_value)
- static u32 igb_hash_mc_addr(struct e1000_hw *hw, u8 *mc_addr)
- {
- 	u32 hash_value, hash_mask;
--	u8 bit_shift = 0;
-+	u8 bit_shift = 1;
- 
- 	/* Register count multiplied by bits per register */
- 	hash_mask = (hw->mac.mta_reg_count * 32) - 1;
-@@ -433,7 +433,7 @@ static u32 igb_hash_mc_addr(struct e1000_hw *hw, u8 *mc_addr)
- 	/* For a mc_filter_type of 0, bit_shift is the number of left-shifts
- 	 * where 0xFF would still fall within the hash mask.
+diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
+index c80add6edf598..ba9b8980f100d 100644
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -115,8 +115,8 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
+ 	 * NOTE: THIS ASSUMES DIX ETHERNET, SPECIFICALLY NOT SUPPORTING
+ 	 * OTHER THINGS LIKE FDDI/TokenRing/802.3 SNAPs...
  	 */
--	while (hash_mask >> bit_shift != 0xFF)
-+	while (hash_mask >> bit_shift != 0xFF && bit_shift < 4)
- 		bit_shift++;
- 
- 	/* The portion of the address that is used for the hash table
+-	if (veth->h_vlan_proto != vlan->vlan_proto ||
+-	    vlan->flags & VLAN_FLAG_REORDER_HDR) {
++	if (vlan->flags & VLAN_FLAG_REORDER_HDR ||
++	    veth->h_vlan_proto != vlan->vlan_proto) {
+ 		u16 vlan_tci;
+ 		vlan_tci = vlan->vlan_id;
+ 		vlan_tci |= vlan_dev_get_egress_qos_mask(dev, skb->priority);
 -- 
 2.39.2
 
