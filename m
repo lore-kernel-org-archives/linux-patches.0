@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3718611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:44:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFC4C433D2;
-	Sun, 28 May 2023 19:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4233C611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:44:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49D7C433EF;
+	Sun, 28 May 2023 19:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303086;
-	bh=I0gRVigCHeU5plZqCKqUw+xQMB4LE+7cQh0hh8fi06E=;
+	s=korg; t=1685303089;
+	bh=sF6+TQ1GwFfaDmSfQjDe9uINE+FnvGGIpJsnfY9PnxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1Mw3R1fkRhhxsB0GgWuWZRyVLKFaW1MI9P3No/7VycZ20KnS1+6JK1zwYVzsw1ao
-	 UORFKiCwhfxUsNEsHfh6EzAEHvYl7L85XEcshLrN7XjmKrH71OU494Tq+s0DUpwTfg
-	 e5ldAh5ozq+KXDcYqMP5Y61Eik7pwlTHktAyYf/s=
+	b=BHy2RsNNjCqQ4L/+7/P/ZB8RjFj+R9+qQwfgTpIldi4w6y8/aTm5u8pcE19FEzZog
+	 zfqrFI5d21qR1btUYb9XNhbsAw4gCdX1o8OTIRhOn4+2T1C5Y8j/3O0G8EzqaiaNuZ
+	 UBkosCy6uQUZYAXiLxRKAXevf5vKAbdIs8cJLVzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/211] vlan: fix a potential uninit-value in vlan_dev_hard_start_xmit()
-Date: Sun, 28 May 2023 20:10:41 +0100
-Message-Id: <20230528190846.539779588@linuxfoundation.org>
+Subject: [PATCH 5.10 121/211] netfilter: nft_set_rbtree: fix null deref on element insertion
+Date: Sun, 28 May 2023 20:10:42 +0100
+Message-Id: <20230528190846.563009332@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,91 +34,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit dacab578c7c6cd06c50c89dfa36b0e0f10decd4e ]
+[ Upstream commit 61ae320a29b0540c16931816299eb86bf2b66c08 ]
 
-syzbot triggered the following splat [1], sending an empty message
-through pppoe_sendmsg().
+There is no guarantee that rb_prev() will not return NULL in nft_rbtree_gc_elem():
 
-When VLAN_FLAG_REORDER_HDR flag is set, vlan_dev_hard_header()
-does not push extra bytes for the VLAN header, because vlan is offloaded.
+general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+ nft_add_set_elem+0x14b0/0x2990
+  nf_tables_newsetelem+0x528/0xb30
 
-Unfortunately vlan_dev_hard_start_xmit() first reads veth->h_vlan_proto
-before testing (vlan->flags & VLAN_FLAG_REORDER_HDR).
+Furthermore, there is a possible use-after-free while iterating,
+'node' can be free'd so we need to cache the next value to use.
 
-We need to swap the two conditions.
-
-[1]
-BUG: KMSAN: uninit-value in vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
-vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
-__netdev_start_xmit include/linux/netdevice.h:4883 [inline]
-netdev_start_xmit include/linux/netdevice.h:4897 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x253/0xa20 net/core/dev.c:3596
-__dev_queue_xmit+0x3c7f/0x5ac0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3053 [inline]
-pppoe_sendmsg+0xa93/0xb80 drivers/net/ppp/pppoe.c:900
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
-___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
-__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
-__do_sys_sendmmsg net/socket.c:2670 [inline]
-__se_sys_sendmmsg net/socket.c:2667 [inline]
-__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Uninit was created at:
-slab_post_alloc_hook+0x12d/0xb60 mm/slab.h:774
-slab_alloc_node mm/slub.c:3452 [inline]
-kmem_cache_alloc_node+0x543/0xab0 mm/slub.c:3497
-kmalloc_reserve+0x148/0x470 net/core/skbuff.c:520
-__alloc_skb+0x3a7/0x850 net/core/skbuff.c:606
-alloc_skb include/linux/skbuff.h:1277 [inline]
-sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2583
-pppoe_sendmsg+0x3af/0xb80 drivers/net/ppp/pppoe.c:867
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
-___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
-__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
-__do_sys_sendmmsg net/socket.c:2670 [inline]
-__se_sys_sendmmsg net/socket.c:2667 [inline]
-__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-CPU: 0 PID: 29770 Comm: syz-executor.0 Not tainted 6.3.0-rc6-syzkaller-gc478e5b17829 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_dev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index 929f85c6cf112..8edac9307868a 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -108,8 +108,8 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
- 	 * NOTE: THIS ASSUMES DIX ETHERNET, SPECIFICALLY NOT SUPPORTING
- 	 * OTHER THINGS LIKE FDDI/TokenRing/802.3 SNAPs...
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 4b9a499fe8f4d..1ffb24f4c74ca 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -220,7 +220,7 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ {
+ 	struct nft_set *set = (struct nft_set *)__set;
+ 	struct rb_node *prev = rb_prev(&rbe->node);
+-	struct nft_rbtree_elem *rbe_prev;
++	struct nft_rbtree_elem *rbe_prev = NULL;
+ 	struct nft_set_gc_batch *gcb;
+ 
+ 	gcb = nft_set_gc_batch_check(set, NULL, GFP_ATOMIC);
+@@ -228,17 +228,21 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ 		return -ENOMEM;
+ 
+ 	/* search for expired end interval coming before this element. */
+-	do {
++	while (prev) {
+ 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
+ 		if (nft_rbtree_interval_end(rbe_prev))
+ 			break;
+ 
+ 		prev = rb_prev(prev);
+-	} while (prev != NULL);
++	}
++
++	if (rbe_prev) {
++		rb_erase(&rbe_prev->node, &priv->root);
++		atomic_dec(&set->nelems);
++	}
+ 
+-	rb_erase(&rbe_prev->node, &priv->root);
+ 	rb_erase(&rbe->node, &priv->root);
+-	atomic_sub(2, &set->nelems);
++	atomic_dec(&set->nelems);
+ 
+ 	nft_set_gc_batch_add(gcb, rbe);
+ 	nft_set_gc_batch_complete(gcb);
+@@ -267,7 +271,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 			       struct nft_set_ext **ext)
+ {
+ 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
+-	struct rb_node *node, *parent, **p, *first = NULL;
++	struct rb_node *node, *next, *parent, **p, *first = NULL;
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	u8 genmask = nft_genmask_next(net);
+ 	int d, err;
+@@ -306,7 +310,9 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 	 * Values stored in the tree are in reversed order, starting from
+ 	 * highest to lowest value.
  	 */
--	if (veth->h_vlan_proto != vlan->vlan_proto ||
--	    vlan->flags & VLAN_FLAG_REORDER_HDR) {
-+	if (vlan->flags & VLAN_FLAG_REORDER_HDR ||
-+	    veth->h_vlan_proto != vlan->vlan_proto) {
- 		u16 vlan_tci;
- 		vlan_tci = vlan->vlan_id;
- 		vlan_tci |= vlan_dev_get_egress_qos_mask(dev, skb->priority);
+-	for (node = first; node != NULL; node = rb_next(node)) {
++	for (node = first; node != NULL; node = next) {
++		next = rb_next(node);
++
+ 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
+ 
+ 		if (!nft_set_elem_active(&rbe->ext, genmask))
 -- 
 2.39.2
 
