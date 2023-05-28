@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F64569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13C4C433D2;
-	Sun, 28 May 2023 19:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB439569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB26C433D2;
+	Sun, 28 May 2023 19:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301900;
-	bh=g8y3q0XKQCofd11GyvGsu6v1WGKiu/p9oKJM9NreuTY=;
+	s=korg; t=1685301902;
+	bh=xZ455jMDhB0RdiKwxwnNu9wuMeZgXRP5pt6WSDU0Xao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XKieG2WXlQC7VX/z0KDb+ZdI1lKNJP8lzij04Pjw1hVivxTfph1QyYepPVrKpm/Do
-	 HmKhhWX+8sFxHBHzQH9I+VUNF2WRQkI4AMHQdV4JGCEfYVGu678IG4LIc5CFbbSqwW
-	 dh6dSqf0r13KFOFC0UcAWC7SA9IQY3b/JU0gqS1Q=
+	b=C9hNBV5NJ1L+4EqqycyLAZZ1/bpFPGkUVLE3I94rZArG7ZxOnusIXpgI4f5xXlrKu
+	 fH3QMYWmTMOqrKeKIDdNu6szo7+6bPALyBSK2iFisB1tTPRg3PlAu0UseKgiQzRcoM
+	 v7TTRvSIo10JLVICk52JLun6e3b6NfglApx2Or9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+ce77725b89b7bd52425c@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 081/161] USB: usbtmc: Fix direction for 0-length ioctl control messages
-Date: Sun, 28 May 2023 20:10:05 +0100
-Message-Id: <20230528190839.717824829@linuxfoundation.org>
+	Maxime Bizon <mbizon@freebox.fr>,
+	linux-usb@vger.kernel.org,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.4 082/161] usb-storage: fix deadlock when a scsi command timeouts more than once
+Date: Sun, 28 May 2023 20:10:06 +0100
+Message-Id: <20230528190839.745816256@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -34,64 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Maxime Bizon <mbizon@freebox.fr>
 
-commit 94d25e9128988c6a1fc9070f6e98215a95795bd8 upstream.
+commit a398d5eac6984316e71474e25b975688f282379b upstream.
 
-The syzbot fuzzer found a problem in the usbtmc driver: When a user
-submits an ioctl for a 0-length control transfer, the driver does not
-check that the direction is set to OUT:
+With faulty usb-storage devices, read/write can timeout, in that case
+the SCSI layer will abort and re-issue the command. USB storage has no
+internal timeout, it relies on SCSI layer aborting commands via
+.eh_abort_handler() for non those responsive devices.
 
-------------[ cut here ]------------
-usb 3-1: BOGUS control dir, pipe 80000b80 doesn't match bRequestType fd
-WARNING: CPU: 0 PID: 5100 at drivers/usb/core/urb.c:411 usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
-Modules linked in:
-CPU: 0 PID: 5100 Comm: syz-executor428 Not tainted 6.3.0-syzkaller-12049-g58390c8ce1bd #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/14/2023
-RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
-Code: 7c 24 40 e8 1b 13 5c fb 48 8b 7c 24 40 e8 21 1d f0 fe 45 89 e8 44 89 f1 4c 89 e2 48 89 c6 48 c7 c7 e0 b5 fc 8a e8 19 c8 23 fb <0f> 0b e9 9f ee ff ff e8 ed 12 5c fb 0f b6 1d 12 8a 3c 08 31 ff 41
-RSP: 0018:ffffc90003d2fb00 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff8880789e9058 RCX: 0000000000000000
-RDX: ffff888029593b80 RSI: ffffffff814c1447 RDI: 0000000000000001
-RBP: ffff88801ea742f8 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000001 R12: ffff88802915e528
-R13: 00000000000000fd R14: 0000000080000b80 R15: ffff8880222b3100
-FS:  0000555556ca63c0(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f9ef4d18150 CR3: 0000000073e5b000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
- usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
- usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
- usbtmc_ioctl_request drivers/usb/class/usbtmc.c:1954 [inline]
- usbtmc_ioctl+0x1b3d/0x2840 drivers/usb/class/usbtmc.c:2097
+After two consecutive timeouts of the same command, SCSI layer calls
+.eh_device_reset_handler(), without calling .eh_abort_handler() first.
 
-To fix this, we must override the direction in the bRequestType field
-of the control request structure when the length is 0.
+With usb-storage, this causes a deadlock:
 
-Reported-and-tested-by: syzbot+ce77725b89b7bd52425c@syzkaller.appspotmail.com
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/linux-usb/000000000000716a3705f9adb8ee@google.com/
-CC: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/ede1ee02-b718-49e7-a44c-51339fec706b@rowland.harvard.edu
+  -> .eh_device_reset_handler
+    -> device_reset
+      -> mutex_lock(&(us->dev_mutex));
+
+mutex already by usb_stor_control_thread(), which is waiting for
+command completion:
+
+  -> usb_stor_control_thread (mutex taken here)
+    -> usb_stor_invoke_transport
+      -> usb_stor_Bulk_transport
+        -> usb_stor_bulk_srb
+	  -> usb_stor_bulk_transfer_sglist
+	    -> usb_sg_wait
+
+Make sure we cancel any pending command in .eh_device_reset_handler()
+to avoid this.
+
+Signed-off-by: Maxime Bizon <mbizon@freebox.fr>
+Cc: linux-usb@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/all/ZEllnjMKT8ulZbJh@sakura/
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20230505114759.1189741-1-mbizon@freebox.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/storage/scsiglue.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -1898,6 +1898,8 @@ static int usbtmc_ioctl_request(struct u
+--- a/drivers/usb/storage/scsiglue.c
++++ b/drivers/usb/storage/scsiglue.c
+@@ -407,22 +407,25 @@ static DEF_SCSI_QCMD(queuecommand)
+  ***********************************************************************/
  
- 	if (request.req.wLength > USBTMC_BUFSIZE)
- 		return -EMSGSIZE;
-+	if (request.req.wLength == 0)	/* Length-0 requests are never IN */
-+		request.req.bRequestType &= ~USB_DIR_IN;
+ /* Command timeout and abort */
+-static int command_abort(struct scsi_cmnd *srb)
++static int command_abort_matching(struct us_data *us, struct scsi_cmnd *srb_match)
+ {
+-	struct us_data *us = host_to_us(srb->device->host);
+-
+-	usb_stor_dbg(us, "%s called\n", __func__);
+-
+ 	/*
+ 	 * us->srb together with the TIMED_OUT, RESETTING, and ABORTING
+ 	 * bits are protected by the host lock.
+ 	 */
+ 	scsi_lock(us_to_host(us));
  
- 	is_in = request.req.bRequestType & USB_DIR_IN;
+-	/* Is this command still active? */
+-	if (us->srb != srb) {
++	/* is there any active pending command to abort ? */
++	if (!us->srb) {
+ 		scsi_unlock(us_to_host(us));
+ 		usb_stor_dbg(us, "-- nothing to abort\n");
++		return SUCCESS;
++	}
++
++	/* Does the command match the passed srb if any ? */
++	if (srb_match && us->srb != srb_match) {
++		scsi_unlock(us_to_host(us));
++		usb_stor_dbg(us, "-- pending command mismatch\n");
+ 		return FAILED;
+ 	}
  
+@@ -445,6 +448,14 @@ static int command_abort(struct scsi_cmn
+ 	return SUCCESS;
+ }
+ 
++static int command_abort(struct scsi_cmnd *srb)
++{
++	struct us_data *us = host_to_us(srb->device->host);
++
++	usb_stor_dbg(us, "%s called\n", __func__);
++	return command_abort_matching(us, srb);
++}
++
+ /*
+  * This invokes the transport reset mechanism to reset the state of the
+  * device
+@@ -456,6 +467,9 @@ static int device_reset(struct scsi_cmnd
+ 
+ 	usb_stor_dbg(us, "%s called\n", __func__);
+ 
++	/* abort any pending command before reset */
++	command_abort_matching(us, NULL);
++
+ 	/* lock the device pointers and do the reset */
+ 	mutex_lock(&(us->dev_mutex));
+ 	result = us->transport_reset(us);
 
 
