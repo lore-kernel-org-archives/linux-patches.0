@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CC6611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093C4C433D2;
-	Sun, 28 May 2023 19:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BAA611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C56C433EF;
+	Sun, 28 May 2023 19:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303192;
-	bh=d/x17/jd7iQLxKtO5qTgvwAuERRzsguRisOTzBKf9x4=;
+	s=korg; t=1685303194;
+	bh=NC02CyY1fmYDD2cYljWEHn5w2M38f9qnQm9uJFDm4sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oRrTVzksUhzO2SQN8sYrz7WJFt01Jic4ZP8efm8/fYgJMExi4+4ImkZl7FMfdjgYI
-	 SmPBiM1o+wutpv4Rh7LF3W1XkPc/Kf7fYS/T7uiyohbQ1aQqe2wcrpsxejYWgL44p4
-	 /etnAAqVBwn8iLs6ulENp07Esu4ZFLuh87rX0AMk=
+	b=XDcm2K5jbiV70NjJyMZFLuKO8Qmn18+jH6T0HBhLLRMlT/5d37+uF6oeMXbunH4eP
+	 lLoDBvv71ihRxJdTtRDG/kQTb7V0ZSk6ZNvg3h1G3PaImvX59U0HGdqMoQcI8RvsPL
+	 PH090zmErRSb1oHc+mb88gk5h0UsFHEcdOrmxNFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Krzesimir Nowak <krzesimir@kinvolk.io>,
-	Andrey Ignatov <rdna@fb.com>,
-	Yonghong Song <yhs@fb.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.10 192/211] bpf: Fix mask generation for 32-bit narrow loads of 64-bit fields
-Date: Sun, 28 May 2023 20:11:53 +0100
-Message-Id: <20230528190848.270380591@linuxfoundation.org>
+	Zev Weiss <zev@bewilderbeest.net>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	stable@kernel.org
+Subject: [PATCH 5.10 175/211] gpio: mockup: Fix mode of debugfs files
+Date: Sun, 28 May 2023 20:11:36 +0100
+Message-Id: <20230528190847.839598840@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -39,58 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Will Deacon <will@kernel.org>
+From: Zev Weiss <zev@bewilderbeest.net>
 
-commit 0613d8ca9ab382caabe9ed2dceb429e9781e443f upstream.
+commit 0a1bb16e0fe6650c3841e611de374bfd5578ad70 upstream.
 
-A narrow load from a 64-bit context field results in a 64-bit load
-followed potentially by a 64-bit right-shift and then a bitwise AND
-operation to extract the relevant data.
+This driver's debugfs files have had a read operation since commit
+2a9e27408e12 ("gpio: mockup: rework debugfs interface"), but were
+still being created with write-only mode bits.  Update them to
+indicate that the files can also be read.
 
-In the case of a 32-bit access, an immediate mask of 0xffffffff is used
-to construct a 64-bit BPP_AND operation which then sign-extends the mask
-value and effectively acts as a glorified no-op. For example:
-
-0:	61 10 00 00 00 00 00 00	r0 = *(u32 *)(r1 + 0)
-
-results in the following code generation for a 64-bit field:
-
-	ldr	x7, [x7]	// 64-bit load
-	mov	x10, #0xffffffffffffffff
-	and	x7, x7, x10
-
-Fix the mask generation so that narrow loads always perform a 32-bit AND
-operation:
-
-	ldr	x7, [x7]	// 64-bit load
-	mov	w10, #0xffffffff
-	and	w7, w7, w10
-
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Krzesimir Nowak <krzesimir@kinvolk.io>
-Cc: Andrey Ignatov <rdna@fb.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Fixes: 31fd85816dbe ("bpf: permits narrower load from bpf program context fields")
-Signed-off-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20230518102528.1341-1-will@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Fixes: 2a9e27408e12 ("gpio: mockup: rework debugfs interface")
+Cc: stable@kernel.org # v5.1+
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    2 +-
+ drivers/gpio/gpio-mockup.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -11146,7 +11146,7 @@ static int convert_ctx_accesses(struct b
- 					insn_buf[cnt++] = BPF_ALU64_IMM(BPF_RSH,
- 									insn->dst_reg,
- 									shift);
--				insn_buf[cnt++] = BPF_ALU64_IMM(BPF_AND, insn->dst_reg,
-+				insn_buf[cnt++] = BPF_ALU32_IMM(BPF_AND, insn->dst_reg,
- 								(1ULL << size * 8) - 1);
- 			}
- 		}
+--- a/drivers/gpio/gpio-mockup.c
++++ b/drivers/gpio/gpio-mockup.c
+@@ -370,7 +370,7 @@ static void gpio_mockup_debugfs_setup(st
+ 		priv->offset = i;
+ 		priv->desc = &gc->gpiodev->descs[i];
+ 
+-		debugfs_create_file(name, 0200, chip->dbg_dir, priv,
++		debugfs_create_file(name, 0600, chip->dbg_dir, priv,
+ 				    &gpio_mockup_debugfs_ops);
+ 	}
+ }
 
 
