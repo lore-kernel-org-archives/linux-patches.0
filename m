@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF981611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C407C433EF;
-	Sun, 28 May 2023 19:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DDE611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34A3C433D2;
+	Sun, 28 May 2023 19:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302972;
-	bh=h67YwGsBDeTa94CobgOOyHgk/AS9UF/cKa9jzmBNIFg=;
+	s=korg; t=1685302975;
+	bh=OBUcu1w51IRoD/4NMiI5IpxulOztIiM3KU25XyaU98c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8yz1s7MWDbiTv8u4JuiWM+QQAxcd8jWi/V3E8HMAeYdBvcbg8utLiovrTDPgBisk
-	 qwQ9/sue3ym3qfGXTb6n3iTI6rgOr7r6zSxSvlLCxxT5bj7BXO8lw+lSCTfdqGboTE
-	 v3EqSG2b4qrAeKd9kAFcKnt5a+H50w+MHZ0HK+4o=
+	b=FOIU69PgNHZhHASrU0t10nwnvsFm0r5IaehmsO0MHaqQ0cJhxpSSThVX566sgXkFm
+	 5T8h/hLpky5HDx3bL6nJRz77q2mnkOstxJBjGEZKqgxGJqjP1GQH8/nHBr4Wi6SWzM
+	 byCFCJqZdHUC5/E44Hu3BeDsfmEdV0K+/vbULD/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Traynor <ktraynor@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	William Tu <u9012063@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Nikolay Borisov <nborisov@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/211] erspan: get the proto with the md version for collect_md
-Date: Sun, 28 May 2023 20:10:23 +0100
-Message-Id: <20230528190846.122258352@linuxfoundation.org>
+Subject: [PATCH 5.10 085/211] btrfs: replace calls to btrfs_find_free_ino with btrfs_find_free_objectid
+Date: Sun, 28 May 2023 20:10:06 +0100
+Message-Id: <20230528190845.734048641@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -38,79 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Nikolay Borisov <nborisov@suse.com>
 
-[ Upstream commit d80fc101d2eb9b3188c228d61223890aeea480a4 ]
+[ Upstream commit abadc1fcd72e887a8f875dabe4a07aa8c28ac8af ]
 
-In commit 20704bd1633d ("erspan: build the header with the right proto
-according to erspan_ver"), it gets the proto with t->parms.erspan_ver,
-but t->parms.erspan_ver is not used by collect_md branch, and instead
-it should get the proto with md->version for collect_md.
+The former is going away as part of the inode map removal so switch
+callers to btrfs_find_free_objectid. No functional changes since with
+INODE_MAP disabled (default) find_free_objectid was called anyway.
 
-Thanks to Kevin for pointing this out.
-
-Fixes: 20704bd1633d ("erspan: build the header with the right proto according to erspan_ver")
-Fixes: 94d7d8f29287 ("ip6_gre: add erspan v2 support")
-Reported-by: Kevin Traynor <ktraynor@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: William Tu <u9012063@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Nikolay Borisov <nborisov@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 0004ff15ea26 ("btrfs: fix space cache inconsistency after error loading it from disk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ fs/btrfs/inode.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 2332b5b81c551..7b50e1811678e 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1015,12 +1015,14 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 					    ntohl(tun_id),
- 					    ntohl(md->u.index), truncate,
- 					    false);
-+			proto = htons(ETH_P_ERSPAN);
- 		} else if (md->version == 2) {
- 			erspan_build_header_v2(skb,
- 					       ntohl(tun_id),
- 					       md->u.md2.dir,
- 					       get_hwid(&md->u.md2),
- 					       truncate, false);
-+			proto = htons(ETH_P_ERSPAN2);
- 		} else {
- 			goto tx_err;
- 		}
-@@ -1043,24 +1045,25 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 			break;
- 		}
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 779b7745cdc48..c900a39666e38 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -6273,7 +6273,7 @@ static int btrfs_mknod(struct inode *dir, struct dentry *dentry,
+ 	if (IS_ERR(trans))
+ 		return PTR_ERR(trans);
  
--		if (t->parms.erspan_ver == 1)
-+		if (t->parms.erspan_ver == 1) {
- 			erspan_build_header(skb, ntohl(t->parms.o_key),
- 					    t->parms.index,
- 					    truncate, false);
--		else if (t->parms.erspan_ver == 2)
-+			proto = htons(ETH_P_ERSPAN);
-+		} else if (t->parms.erspan_ver == 2) {
- 			erspan_build_header_v2(skb, ntohl(t->parms.o_key),
- 					       t->parms.dir,
- 					       t->parms.hwid,
- 					       truncate, false);
--		else
-+			proto = htons(ETH_P_ERSPAN2);
-+		} else {
- 			goto tx_err;
-+		}
+-	err = btrfs_find_free_ino(root, &objectid);
++	err = btrfs_find_free_objectid(root, &objectid);
+ 	if (err)
+ 		goto out_unlock;
  
- 		fl6.daddr = t->parms.raddr;
- 	}
+@@ -6337,7 +6337,7 @@ static int btrfs_create(struct inode *dir, struct dentry *dentry,
+ 	if (IS_ERR(trans))
+ 		return PTR_ERR(trans);
  
- 	/* Push GRE header. */
--	proto = (t->parms.erspan_ver == 1) ? htons(ETH_P_ERSPAN)
--					   : htons(ETH_P_ERSPAN2);
- 	gre_build_header(skb, 8, TUNNEL_SEQ, proto, 0, htonl(atomic_fetch_inc(&t->o_seqno)));
+-	err = btrfs_find_free_ino(root, &objectid);
++	err = btrfs_find_free_objectid(root, &objectid);
+ 	if (err)
+ 		goto out_unlock;
  
- 	/* TooBig packet may have updated dst->dev's mtu */
+@@ -6481,7 +6481,7 @@ static int btrfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode)
+ 	if (IS_ERR(trans))
+ 		return PTR_ERR(trans);
+ 
+-	err = btrfs_find_free_ino(root, &objectid);
++	err = btrfs_find_free_objectid(root, &objectid);
+ 	if (err)
+ 		goto out_fail;
+ 
+@@ -9135,7 +9135,7 @@ static int btrfs_whiteout_for_rename(struct btrfs_trans_handle *trans,
+ 	u64 objectid;
+ 	u64 index;
+ 
+-	ret = btrfs_find_free_ino(root, &objectid);
++	ret = btrfs_find_free_objectid(root, &objectid);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -9631,7 +9631,7 @@ static int btrfs_symlink(struct inode *dir, struct dentry *dentry,
+ 	if (IS_ERR(trans))
+ 		return PTR_ERR(trans);
+ 
+-	err = btrfs_find_free_ino(root, &objectid);
++	err = btrfs_find_free_objectid(root, &objectid);
+ 	if (err)
+ 		goto out_unlock;
+ 
+@@ -9962,7 +9962,7 @@ static int btrfs_tmpfile(struct inode *dir, struct dentry *dentry, umode_t mode)
+ 	if (IS_ERR(trans))
+ 		return PTR_ERR(trans);
+ 
+-	ret = btrfs_find_free_ino(root, &objectid);
++	ret = btrfs_find_free_objectid(root, &objectid);
+ 	if (ret)
+ 		goto out;
+ 
 -- 
 2.39.2
 
