@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B10611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBEB0C433EF;
-	Sun, 28 May 2023 19:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC670611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA07C433D2;
+	Sun, 28 May 2023 19:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301251;
-	bh=Wofvu0uYSW1dsOaFF3klLrihLIDNEaJRFZsG87h1pLA=;
+	s=korg; t=1685301253;
+	bh=oIWvGqV8wuTetTozHOc5UGuB0pGZIr3+4N1N2pDBtuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rR44UOIWfs5eHU+YL2WY0DDWLnirtsAZk3H2c10yjXKrUr63qxH5hNFryCgnRbed9
-	 1pxLzlDlim1FfUJu9ej+VHVshzcr/okGKCmN05HrQ8bYbREqC5+zBNMRQaLm0oNUki
-	 NY0SgRNBBifSPEM6UXThbosK2LbU3tFqzQoisJUs=
+	b=dcruxHl4YrhxRgCZp6rhE7me8+ivMLS4m4n2iPFHtpkLeqBqiTUDqIDbG55X4QtDX
+	 GlJ2sKyfS6ro6yAnV0dy478FC96M7l7cY3Caw6XJ5yyC2Xtnfo8LOvRnaVRzmvYz+V
+	 A09Xr24Nnbt4lZZ48o6Gz7wFkNyrk+ainK588gQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhuang Shengen <zhuangshengen@huawei.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 41/86] vsock: avoid to close connected socket after the timeout
-Date: Sun, 28 May 2023 20:10:15 +0100
-Message-Id: <20230528190830.119083940@linuxfoundation.org>
+Subject: [PATCH 4.14 42/86] media: netup_unidvb: fix use-after-free at del_timer()
+Date: Sun, 28 May 2023 20:10:16 +0100
+Message-Id: <20230528190830.158879558@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -36,49 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhuang Shengen <zhuangshengen@huawei.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 6d4486efe9c69626cab423456169e250a5cd3af5 ]
+[ Upstream commit 0f5bb36bf9b39a2a96e730bf4455095b50713f63 ]
 
-When client and server establish a connection through vsock,
-the client send a request to the server to initiate the connection,
-then start a timer to wait for the server's response. When the server's
-RESPONSE message arrives, the timer also times out and exits. The
-server's RESPONSE message is processed first, and the connection is
-established. However, the client's timer also times out, the original
-processing logic of the client is to directly set the state of this vsock
-to CLOSE and return ETIMEDOUT. It will not notify the server when the port
-is released, causing the server port remain.
-when client's vsock_connect timeout，it should check sk state is
-ESTABLISHED or not. if sk state is ESTABLISHED, it means the connection
-is established, the client should not set the sk state to CLOSE
+When Universal DVB card is detaching, netup_unidvb_dma_fini()
+uses del_timer() to stop dma->timeout timer. But when timer
+handler netup_unidvb_dma_timeout() is running, del_timer()
+could not stop it. As a result, the use-after-free bug could
+happen. The process is shown below:
 
-Note: I encountered this issue on kernel-4.18, which can be fixed by
-this patch. Then I checked the latest code in the community
-and found similar issue.
+    (cleanup routine)          |        (timer routine)
+                               | mod_timer(&dev->tx_sim_timer, ..)
+netup_unidvb_finidev()         | (wait a time)
+  netup_unidvb_dma_fini()      | netup_unidvb_dma_timeout()
+    del_timer(&dma->timeout);  |
+                               |   ndev->pci_dev->dev //USE
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Signed-off-by: Zhuang Shengen <zhuangshengen@huawei.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix by changing del_timer() to del_timer_sync().
+
+Link: https://lore.kernel.org/linux-media/20230308125514.4208-1-duoming@zju.edu.cn
+Fixes: 52b1eaf4c59a ("[media] netup_unidvb: NetUP Universal DVB-S/S2/T/T2/C PCI-E card driver")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 2 +-
+ drivers/media/pci/netup_unidvb/netup_unidvb_core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 2ec4359d7321d..356f5525a0028 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1247,7 +1247,7 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
- 			vsock_transport_cancel_pkt(vsk);
- 			vsock_remove_connected(vsk);
- 			goto out_wait;
--		} else if (timeout == 0) {
-+		} else if ((sk->sk_state != TCP_ESTABLISHED) && (timeout == 0)) {
- 			err = -ETIMEDOUT;
- 			sk->sk_state = TCP_CLOSE;
- 			sock->state = SS_UNCONNECTED;
+diff --git a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+index 03239fba87bf2..4f2ea0f035ae5 100644
+--- a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
++++ b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+@@ -707,7 +707,7 @@ static void netup_unidvb_dma_fini(struct netup_unidvb_dev *ndev, int num)
+ 	netup_unidvb_dma_enable(dma, 0);
+ 	msleep(50);
+ 	cancel_work_sync(&dma->work);
+-	del_timer(&dma->timeout);
++	del_timer_sync(&dma->timeout);
+ }
+ 
+ static int netup_unidvb_dma_setup(struct netup_unidvb_dev *ndev)
 -- 
 2.39.2
 
