@@ -1,123 +1,219 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD48B79F0
-	for <patches@lists.linux.dev>; Mon, 29 May 2023 17:48:08 +0000 (UTC)
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-973f78329e3so284364766b.3
-        for <patches@lists.linux.dev>; Mon, 29 May 2023 10:48:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369B479F0
+	for <patches@lists.linux.dev>; Mon, 29 May 2023 17:55:43 +0000 (UTC)
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-457080dc902so981601e0c.2
+        for <patches@lists.linux.dev>; Mon, 29 May 2023 10:55:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1685382487; x=1687974487;
+        d=linaro.org; s=google; t=1685382942; x=1687974942;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HMdOshEWsCUccpZDIFZZY9qEaKeS/wKY+PKyVf4UtLw=;
-        b=ebxoUHMAoHjBwRTQQFj5NAVEDHva9Q+73M4/Q/jpzXMPHcw9bjP39wSyvA7bdgirQc
-         hDUdZY8YVnGr12KA2uzMWc133w/odbrTDg9Nbdl8mv3qwoqkKKvfDmu9tG58tYTnLjTP
-         yg1PQODaY05oxTogUAi/p3cS8p+y2FjkdNlYA=
+        bh=GuXd+KSvwPuhQTamSBP5Q/DKAIDp88AuCgUa261KgHU=;
+        b=Lrz4NW0cje9C4EpIvHOzWBLxpOF3hmXry15NXnPZ77zauvtVwsvC0c7fmMwMMtGbjT
+         865FUowdRJ1f3NgjmTwXiSE897gBvdUMKoMEjcNM8p7gWxVmUmJOn94lKj2qHeXLCMv4
+         OwG0I5YJl1Xaw5mw+akdctLlL8wa6QkvDRVlGnWCwwk6m3M+ilJZwG7AcdDTJB4RNr3E
+         2K+vv9mOagrH4XYfCFKNtCxP/hWe1iqnh1ekhwbyItv6KZ+e0pqKrUb3JcDbq2KRsdhc
+         BoYeO3GZT9y8ilvNl9sldRvxcXOAEoeCnJk44UKqWK/ihE3zwDxpLb8bxP51SVfAlpTj
+         ZMbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685382487; x=1687974487;
+        d=1e100.net; s=20221208; t=1685382942; x=1687974942;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HMdOshEWsCUccpZDIFZZY9qEaKeS/wKY+PKyVf4UtLw=;
-        b=BmIrAgawWRFw9SrjQ54qWtnejrH7qMuqckg6k7TScvqt9Mv9jZr64UmQbzP4Sc0JGN
-         38KwHbNQ+cWP6bzhe4Dv0ZqTSJoRlZbEdpKWGtmVwcQQG/HpsOhWxcA6o/ZKjlxIflfl
-         4iqKwXr1QJ4P+cmi+mLzYl2E00mD9nUjlkWHB5U3yeZ4mVXrI848XgELK9WgajXhBjxh
-         YQUUpGWQpoysldKHnZqJMujsnFwsKxDnp9SB1n0DFXUkRsa3PZ5Cxwa8HTPcNyj9Ftoz
-         JiOPDEc7IL6kroNyEDqfs1guCftDVT41eclQWRrC9F9vK1A/RQqwOTKk00pzZOridKGL
-         AIZA==
-X-Gm-Message-State: AC+VfDxpFQnr5eKrk30ig0Hxxd9XTIH4VOeem5rHNYRBKX+C63C2YZ2x
-	SR+LVVzVbFqb7TGPP3VIvaNRABPnwETqWrjNw82Qq+Y4
-X-Google-Smtp-Source: ACHHUZ6NJoxOgX64iqs2Cll2J3UZIwERjCG5Xfn34rC7XxGdnigwYYbqjcASCxsasOoBSV0i92oo8g==
-X-Received: by 2002:a17:906:eec5:b0:95e:ce3b:a471 with SMTP id wu5-20020a170906eec500b0095ece3ba471mr12168133ejb.55.1685382486798;
-        Mon, 29 May 2023 10:48:06 -0700 (PDT)
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com. [209.85.208.45])
-        by smtp.gmail.com with ESMTPSA id b7-20020a1709062b4700b0096f6a131b9fsm6111264ejg.23.2023.05.29.10.48.06
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 May 2023 10:48:06 -0700 (PDT)
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-51475e981f0so6018642a12.1
-        for <patches@lists.linux.dev>; Mon, 29 May 2023 10:48:06 -0700 (PDT)
-X-Received: by 2002:a17:907:36cd:b0:96f:7d09:7deb with SMTP id
- bj13-20020a17090736cd00b0096f7d097debmr13772127ejc.69.1685382465126; Mon, 29
- May 2023 10:47:45 -0700 (PDT)
+        bh=GuXd+KSvwPuhQTamSBP5Q/DKAIDp88AuCgUa261KgHU=;
+        b=WKwFLTqUHMjCebJw4fol5qtPtw6VAu/Heyew/hT5GGtWqask1g58VJEW6lyYQ6YNjv
+         j+yKETga0vxkskZaukXqSKXSxH+IM8SQwH/M78oieZeZcmRHSZ1gxyove3ol/4SZKbyF
+         pnHhKh1p6uAPuUHm0qCU9U366hlV6aNnklp1sINMhUVKsXE0eBaRBChQG+5OObbkXvmg
+         +vGWgIWw25knP1j7GjFfvOR1RnkBwMApvA/d7xE0Prkqyfxvw3qj0as9FdqFWfefgZps
+         sezP1LkLNxJjE4+3KoOdWEHeu8xi4Qufc3DOKODQnP+ZebPlHv20ydZQdtdFNz/l5UuQ
+         KT1Q==
+X-Gm-Message-State: AC+VfDxCAw9SU3FhTMYsv5xNrQGzpR9Im8o+8VxOtg6IQsIhOm5oYQIM
+	Jxk8rANb8xpqzaJxAgE8xfTycyDKyKJ7M64TdNA1lQ==
+X-Google-Smtp-Source: ACHHUZ4PV0yw/DDjQRCmIM3enlo7jc04a2FmQ1+Ep6v9zr+Hu+k+2ytJ8iE094iUnGSv/q7eHCxo5yD4M4AGCvExe/k=
+X-Received: by 2002:a1f:5e55:0:b0:443:ddb3:1512 with SMTP id
+ s82-20020a1f5e55000000b00443ddb31512mr2405661vkb.3.1685382941974; Mon, 29 May
+ 2023 10:55:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230524213620.3509138-1-mcgrof@kernel.org> <20230524213620.3509138-3-mcgrof@kernel.org>
- <8fc5b26b-d2f6-0c8f-34a1-af085dbef155@suse.com> <CAHk-=wiPjcPL_50WRWOi-Fmi9TYO6yp_oj63a_N84FzG-rxGKQ@mail.gmail.com>
- <6gwjomw6sxxmlglxfoilelswv4hgygqelomevb4k4wrlrk3gtm@wrakbmwztgeu>
- <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
- <ZG/a+nrt4/AAUi5z@bombadil.infradead.org> <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
- <ZHRpH-JXAxA6DnzR@hovoldconsulting.com> <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
- <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
-In-Reply-To: <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Mon, 29 May 2023 13:47:28 -0400
-X-Gmail-Original-Message-ID: <CAHk-=whHRAntqwt_iGAdezj4i33GTmN+Oa8z3CNz4LO0Puo85g@mail.gmail.com>
-Message-ID: <CAHk-=whHRAntqwt_iGAdezj4i33GTmN+Oa8z3CNz4LO0Puo85g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
-To: Johan Hovold <johan@kernel.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, Lucas De Marchi <lucas.demarchi@intel.com>, 
-	Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org, rafael@kernel.org, 
-	song@kernel.org, lucas.de.marchi@gmail.com, christophe.leroy@csgroup.eu, 
-	peterz@infradead.org, rppt@kernel.org, dave@stgolabs.net, willy@infradead.org, 
-	vbabka@suse.cz, mhocko@suse.com, dave.hansen@linux.intel.com, 
-	colin.i.king@gmail.com, jim.cromie@gmail.com, catalin.marinas@arm.com, 
-	jbaron@akamai.com, rick.p.edgecombe@intel.com, yujie.liu@intel.com, 
-	david@redhat.com, tglx@linutronix.de, hch@lst.de, patches@lists.linux.dev, 
-	linux-modules@vger.kernel.org, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com, 
-	lennart@poettering.net
+References: <20230528190828.564682883@linuxfoundation.org>
+In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Mon, 29 May 2023 23:25:30 +0530
+Message-ID: <CA+G9fYvdx9eNxM0Jdr0hS_C-CNzQCihxVRHqy_8KxdWP2cNPcw@mail.gmail.com>
+Subject: Re: [PATCH 4.14 00/86] 4.14.316-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 29, 2023 at 8:44=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
-te:
+On Mon, 29 May 2023 at 00:43, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> Yes, those two changes are enough to make the problem go away.
-
-Ok, good. Expected, but just verifying that it wasn't some silly
-incidental thinko.
-
-> > I do wonder what it is that is different in your setup, and maybe you
-> > could also enable the
-> >
-> >         pr_debug("finit_module: fd=3D%d, uargs=3D%p, flags=3D%i\n", fd,=
- uargs, flags);
+> This is the start of the stable review cycle for the 4.14.316 release.
+> There are 86 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> Below is the corresponding output with a working kernel: 174 requests
-> for the 131 modules that end up being loaded (without the revert there
-> is only around 110 modules loaded).
+> Responses should be made by Tue, 30 May 2023 19:08:13 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
+4.14.316-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-4.14.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Ok, your setup doesn't sound *too* different from mine. I have 176
-kernel modules on my laptop right now, and that exclusive open
-obviously worked fine for me.
 
-But it could easily be some random small difference just from
-different hardware, so...
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-And yeah, that dmesg output is useless, I didn't think of the fact
-that it only prints out the file descriptor, not the actual path to
-the file. In fact, without that change in place, the module code never
-actually looks at the file and leaves it all to
-kernel_read_file_from_fd().
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-With my change, it woul dhave been trivial to use "%pD" and point it
-at the file pointer instead, and get the dentry name that way, but
-never mind.  I think you're entirely right that it's probably due to a
-shared dependency module, and I just didn't happen to trigger that
-case.
+## Build
+* kernel: 4.14.316-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-4.14.y
+* git commit: 102232d7564c0309a3860a21180d09bb04978f5f
+* git describe: v4.14.315-87-g102232d7564c
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4.14=
+.315-87-g102232d7564c
 
-Sadly, the whole idea was to figure out the exclusion so early that we
-don't have the module data structures lookup up yet, so there's no
-really obvious thing to serialize the load on.
+## Test Regressions (compared to v4.14.315)
 
-I'll have to think about this more. Serializing on a per-inode lock
-would seem to be the simplest thing, but they are all for IO, and we
-can't just take them over the read.
+## Metric Regressions (compared to v4.14.315)
 
-                     Linus
+## Test Fixes (compared to v4.14.315)
+
+## Metric Fixes (compared to v4.14.315)
+
+## Test result summary
+total: 84485, pass: 70491, fail: 3766, skip: 10063, xfail: 165
+
+## Build Summary
+* arc: 10 total, 10 passed, 0 failed
+* arm: 108 total, 104 passed, 4 failed
+* arm64: 35 total, 31 passed, 4 failed
+* i386: 21 total, 18 passed, 3 failed
+* mips: 21 total, 21 passed, 0 failed
+* parisc: 6 total, 6 passed, 0 failed
+* powerpc: 8 total, 7 passed, 1 failed
+* s390: 6 total, 5 passed, 1 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 27 total, 23 passed, 4 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
