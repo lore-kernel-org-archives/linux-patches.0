@@ -1,62 +1,97 @@
-Received: from phobos.denx.de (phobos.denx.de [85.214.62.61])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB7E23B8
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 23:57:41 +0000 (UTC)
-Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: marex@denx.de)
-	by phobos.denx.de (Postfix) with ESMTPSA id 202808215F;
-	Mon, 29 May 2023 01:48:06 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-	s=phobos-20191101; t=1685317686;
-	bh=w81jPivu3y5bF3adPCm1pXsnjb8Fhcj5vQLQBslFxvw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LjhltQg0mTBWu3GshJUZ3R2Ll0kWG2w6Yi7EgW+/DzEzHLOVvwzgbs4Hv06lJsMcZ
-	 US4NynN2L+jXt9vb7wX+iHEb+FMtr5EqsVonrMQs+jdz3pZKrbyAxv+zTjdYzNr/Vy
-	 Oa2j/YUSHT8GZv3EuLQpfmxrnEg2MGJBc0Jx4SFeAGRMp/ts7KCRCKoqmxnEiSqyqD
-	 IWtIQBlsnJz12TCpd+Rw0bkX4BbhkNy+iASlRAD6p6iDiaSivLdmuUssPwIVRyv55h
-	 KVGrP/CTuzlrryckoGT/oCvZP8mMuhyzhZGtTvUE8Xo1SkjwBLl8lJkX/P2vqXtNKS
-	 xRhgDHb5bqlkA==
-Message-ID: <511be6c7-7e58-02a9-46fa-e9a134eac8af@denx.de>
-Date: Mon, 29 May 2023 01:48:05 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560D27E
+	for <patches@lists.linux.dev>; Mon, 29 May 2023 05:03:26 +0000 (UTC)
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-64d44b198baso1983446b3a.0
+        for <patches@lists.linux.dev>; Sun, 28 May 2023 22:03:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685336606; x=1687928606;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZS7IsfdpubWMWbMIpSsxRx+ub93QQK4IFCY1BnBE+eM=;
+        b=r/iPY92YyEc5+MDaILsPQQqvI9WFXX+4hU774+EUv6Sqsc2YqL7KPtQ5bQGcEXW8mX
+         +wfnF1Wd1JC725MQ65yleNXQGCN5sNqZBGFLeXe9c9JYT1hcJmaF+DLqea1zxM1hOocZ
+         GsQ0yos8BRDmLZIbrRjMAwwrxcxpO+V6CvmOUxPVly6aG3IJk1G7ItqJneFF26nhb3ng
+         pbh3Zl8V9Gwryk+KAoM2xU7k/h0/igVs6Bgj5ZHU2d67rVjVZgxytvSr18thOCEU/Cut
+         o73z8IxRLP6NQJooHynGhT5Q30/6sOrRyridqlWe3bkI9ooWNiUL0yEqZ+YhPAt/OfIA
+         mOgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685336606; x=1687928606;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZS7IsfdpubWMWbMIpSsxRx+ub93QQK4IFCY1BnBE+eM=;
+        b=bzXCUlT+IlC4VIxNL1fyy0C+fAuFkIjFQGvGUsQ9EFH9so1E8YXEu4InVPydndu7cG
+         5ffOJVVmrUf/YYCHxWxP+s3OsqJ9y4busnn+HZ9Cf4bUAipNiqlQBpcvDm09eqBcZGx6
+         6YdC+FxqeF4QfaJTqeeesUWhAW4y+6TrPnSUDof+kIgJkaVaetGwWAzyQ8ol42ZKd3dN
+         UnIdX4ollWESP9qexsVRuzqJ7xWFaZa2WwxZxzgGdIBaitDNWTpsH47EiPpg5dfRWxek
+         vDhWiEYQ9mFoy5JwB9XD65y5szuU8bHyms3bejdxv2rU0AjwuEREyE/9w6Xhf5ryY+eq
+         yL9g==
+X-Gm-Message-State: AC+VfDw+MguDUNnQL63BgQf020z8MwTqtJ6noF17CRWA3ZHZue8Very7
+	EczB3Bs9SSdtEdGz7n/18fs=
+X-Google-Smtp-Source: ACHHUZ6mtt6tvQ+KHq1AAuJM6+9hmFCBIzLzhkXZXBEj9JRLqflfZsYHasXuQ+bzxBYhWfG4TKy1nA==
+X-Received: by 2002:a05:6a00:2315:b0:646:c56c:f0e0 with SMTP id h21-20020a056a00231500b00646c56cf0e0mr7293552pfh.15.1685336605533;
+        Sun, 28 May 2023 22:03:25 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-18.three.co.id. [180.214.232.18])
+        by smtp.gmail.com with ESMTPSA id u5-20020aa78385000000b0064305676b61sm5921609pfm.203.2023.05.28.22.03.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 May 2023 22:03:24 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id 4AB191069EE; Mon, 29 May 2023 12:03:21 +0700 (WIB)
+Date: Mon, 29 May 2023 12:03:20 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 00/69] 5.15.114-rc1 review
+Message-ID: <ZHQyGGR2TBzuW_3I@debian.me>
+References: <20230528190828.358612414@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 6.3 127/127] Revert "arm64: dts: imx8mp: Drop simple-bus
- from fsl,imx8mp-media-blk-ctrl"
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Marc Kleine-Budde <mkl@pengutronix.de>,
- Alexander Stein <alexander.stein@ew.tq-group.com>,
- Liu Ying <victor.liu@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
- Sasha Levin <sashal@kernel.org>
-References: <20230528190836.161231414@linuxfoundation.org>
- <20230528190840.351644456@linuxfoundation.org>
-Content-Language: en-US
-From: Marek Vasut <marex@denx.de>
-In-Reply-To: <20230528190840.351644456@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
-X-Virus-Status: Clean
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="WJgiagu4JoyStVG+"
+Content-Disposition: inline
+In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 
-On 5/28/23 21:11, Greg Kroah-Hartman wrote:
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> 
-> This reverts commit bd2573ee0f91c0e6d2bee8599110453e2909060e which is
-> commit 5a51e1f2b083423f75145c512ee284862ab33854 upstream.
-> 
-> Marc writes:
-> 	can you please revert this patch, without the corresponding driver patch
-> 	[1] it breaks probing of the device, as no one populates the sub-nodes.
-> 
-> 	[1] 9cb6d1b39a8f ("soc: imx: imx8m-blk-ctrl: Scan subnodes and bind
-> 	drivers to them")
 
-Would it make more sense to pick the missing blk-ctrl patch instead ?
+--WJgiagu4JoyStVG+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, May 28, 2023 at 08:11:20PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.114 release.
+> There are 69 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+
+Successfully compiled and installed bindeb-pkgs on my computer (Acer
+Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
+
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--WJgiagu4JoyStVG+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZHQyFAAKCRD2uYlJVVFO
+o29dAQCZe88o+K8RGhFVMiRABqfAHr4p6ODLJ6bGua9Ecn6mlAEA8GVDkv0+b4W1
+AIujQRnwo0ml5L4phj70108U21h5mw8=
+=Y/iw
+-----END PGP SIGNATURE-----
+
+--WJgiagu4JoyStVG+--
