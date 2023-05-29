@@ -1,81 +1,123 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194A879F0
-	for <patches@lists.linux.dev>; Mon, 29 May 2023 17:34:24 +0000 (UTC)
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-256a41d3e81so355001a91.1
-        for <patches@lists.linux.dev>; Mon, 29 May 2023 10:34:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD48B79F0
+	for <patches@lists.linux.dev>; Mon, 29 May 2023 17:48:08 +0000 (UTC)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-973f78329e3so284364766b.3
+        for <patches@lists.linux.dev>; Mon, 29 May 2023 10:48:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685381663; x=1687973663;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wjXhXfKhF2yk36YQMCuS8AIma0LdxrDbNwpb9Q4Wbp4=;
-        b=P4cNhvUPQQrPZ27uoNkGo6AyGHJtpXLSkcnhvCAk4czGo5S5rev3y4kaUEBHOp6T85
-         HGUJPFyWPt90DuSjjbv1Z3nQHvSQRfx65OHpfnBrpb+RUKF7i2U3PkRGH0f1G3FtFE4k
-         MsE8xSxZka1KjHDav9yn0kYCl9x1PhxxIr83/44H/gdgfkn/wmbVbXuf3AZtLQ4JLHSH
-         NOktvReRq3IsCtUAh5N+chWtKpsVIiXZYky00FZkS5j87mFDfK85NOCrO/RmUrjM8GwS
-         +0xTXJGTNyuehR5XdSItokcBM2HvNQGMsuN+1aE1r6Jg5vd1DYwbKat+J/AnxVs89X3A
-         N9KA==
+        d=linux-foundation.org; s=google; t=1685382487; x=1687974487;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HMdOshEWsCUccpZDIFZZY9qEaKeS/wKY+PKyVf4UtLw=;
+        b=ebxoUHMAoHjBwRTQQFj5NAVEDHva9Q+73M4/Q/jpzXMPHcw9bjP39wSyvA7bdgirQc
+         hDUdZY8YVnGr12KA2uzMWc133w/odbrTDg9Nbdl8mv3qwoqkKKvfDmu9tG58tYTnLjTP
+         yg1PQODaY05oxTogUAi/p3cS8p+y2FjkdNlYA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685381663; x=1687973663;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1685382487; x=1687974487;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wjXhXfKhF2yk36YQMCuS8AIma0LdxrDbNwpb9Q4Wbp4=;
-        b=Z7dKgLqiduHfWAkLvuk8IHPy5nIHt00dLQNi5SGDMvc1tpq39T64jvpFZXWc9lcpJz
-         jCWQuGwgIPGaJtpYyuNpjqgAKizCbNjV4jinhLZfbetZTBozwkElxzP0cAinaSriUSN3
-         r5UXzL6qPpIxcTjkXTAhrEKcoawTmHl2HjnhM+IlEwxzG2Y0UfE9sRUS1gIZafSnm3qd
-         qW7jdTOymFvpl4cVQHj/2kz43umkIs7GtgiH6KK+Upa9DyAhJoUNyjxBJ8Jd5MljXy/g
-         hYIcnIjyia0jIeBIDECl6bn4RjFASog75EKvn4UHtcxb+eyjXaw4/q1A6Uk8J92lT050
-         jK8w==
-X-Gm-Message-State: AC+VfDw+kl111vRsU8L3BFu0AdjV9fN7xyACZtmd+y93+VyKNtbqhauI
-	+WSmj/DdcvNjrkcajhYAg8w=
-X-Google-Smtp-Source: ACHHUZ6sPom/NcIrUcHdPzwJWrwk2F9VMAsUUJ1L2FYw2L/0c7UeGSjOZM9kKjWHoh+5L2cezAcRNw==
-X-Received: by 2002:a17:902:6bc4:b0:1aa:cddd:57d8 with SMTP id m4-20020a1709026bc400b001aacddd57d8mr10626402plt.30.1685381663435;
-        Mon, 29 May 2023 10:34:23 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id c2-20020a170902b68200b001aaf2e7b06csm8451575pls.132.2023.05.29.10.34.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 May 2023 10:34:22 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Mon, 29 May 2023 10:34:20 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 4.19 000/133] 4.19.284-rc2 review
-Message-ID: <371de68a-36a9-4b87-a847-f8fba1516a23@roeck-us.net>
-References: <20230529153919.729418186@linuxfoundation.org>
+        bh=HMdOshEWsCUccpZDIFZZY9qEaKeS/wKY+PKyVf4UtLw=;
+        b=BmIrAgawWRFw9SrjQ54qWtnejrH7qMuqckg6k7TScvqt9Mv9jZr64UmQbzP4Sc0JGN
+         38KwHbNQ+cWP6bzhe4Dv0ZqTSJoRlZbEdpKWGtmVwcQQG/HpsOhWxcA6o/ZKjlxIflfl
+         4iqKwXr1QJ4P+cmi+mLzYl2E00mD9nUjlkWHB5U3yeZ4mVXrI848XgELK9WgajXhBjxh
+         YQUUpGWQpoysldKHnZqJMujsnFwsKxDnp9SB1n0DFXUkRsa3PZ5Cxwa8HTPcNyj9Ftoz
+         JiOPDEc7IL6kroNyEDqfs1guCftDVT41eclQWRrC9F9vK1A/RQqwOTKk00pzZOridKGL
+         AIZA==
+X-Gm-Message-State: AC+VfDxpFQnr5eKrk30ig0Hxxd9XTIH4VOeem5rHNYRBKX+C63C2YZ2x
+	SR+LVVzVbFqb7TGPP3VIvaNRABPnwETqWrjNw82Qq+Y4
+X-Google-Smtp-Source: ACHHUZ6NJoxOgX64iqs2Cll2J3UZIwERjCG5Xfn34rC7XxGdnigwYYbqjcASCxsasOoBSV0i92oo8g==
+X-Received: by 2002:a17:906:eec5:b0:95e:ce3b:a471 with SMTP id wu5-20020a170906eec500b0095ece3ba471mr12168133ejb.55.1685382486798;
+        Mon, 29 May 2023 10:48:06 -0700 (PDT)
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com. [209.85.208.45])
+        by smtp.gmail.com with ESMTPSA id b7-20020a1709062b4700b0096f6a131b9fsm6111264ejg.23.2023.05.29.10.48.06
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 May 2023 10:48:06 -0700 (PDT)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-51475e981f0so6018642a12.1
+        for <patches@lists.linux.dev>; Mon, 29 May 2023 10:48:06 -0700 (PDT)
+X-Received: by 2002:a17:907:36cd:b0:96f:7d09:7deb with SMTP id
+ bj13-20020a17090736cd00b0096f7d097debmr13772127ejc.69.1685382465126; Mon, 29
+ May 2023 10:47:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230529153919.729418186@linuxfoundation.org>
+References: <20230524213620.3509138-1-mcgrof@kernel.org> <20230524213620.3509138-3-mcgrof@kernel.org>
+ <8fc5b26b-d2f6-0c8f-34a1-af085dbef155@suse.com> <CAHk-=wiPjcPL_50WRWOi-Fmi9TYO6yp_oj63a_N84FzG-rxGKQ@mail.gmail.com>
+ <6gwjomw6sxxmlglxfoilelswv4hgygqelomevb4k4wrlrk3gtm@wrakbmwztgeu>
+ <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
+ <ZG/a+nrt4/AAUi5z@bombadil.infradead.org> <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
+ <ZHRpH-JXAxA6DnzR@hovoldconsulting.com> <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
+ <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
+In-Reply-To: <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Mon, 29 May 2023 13:47:28 -0400
+X-Gmail-Original-Message-ID: <CAHk-=whHRAntqwt_iGAdezj4i33GTmN+Oa8z3CNz4LO0Puo85g@mail.gmail.com>
+Message-ID: <CAHk-=whHRAntqwt_iGAdezj4i33GTmN+Oa8z3CNz4LO0Puo85g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
+To: Johan Hovold <johan@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, Lucas De Marchi <lucas.demarchi@intel.com>, 
+	Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org, rafael@kernel.org, 
+	song@kernel.org, lucas.de.marchi@gmail.com, christophe.leroy@csgroup.eu, 
+	peterz@infradead.org, rppt@kernel.org, dave@stgolabs.net, willy@infradead.org, 
+	vbabka@suse.cz, mhocko@suse.com, dave.hansen@linux.intel.com, 
+	colin.i.king@gmail.com, jim.cromie@gmail.com, catalin.marinas@arm.com, 
+	jbaron@akamai.com, rick.p.edgecombe@intel.com, yujie.liu@intel.com, 
+	david@redhat.com, tglx@linutronix.de, hch@lst.de, patches@lists.linux.dev, 
+	linux-modules@vger.kernel.org, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com, 
+	lennart@poettering.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 29, 2023 at 04:40:38PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.284 release.
-> There are 133 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 31 May 2023 15:39:00 +0000.
-> Anything received after that time might be too late.
-> 
+On Mon, May 29, 2023 at 8:44=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
+te:
+>
+> Yes, those two changes are enough to make the problem go away.
 
-Build results:
-	total: 155 pass: 155 fail: 0
-Qemu test results:
-	total: 431 pass: 431 fail: 0
+Ok, good. Expected, but just verifying that it wasn't some silly
+incidental thinko.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+> > I do wonder what it is that is different in your setup, and maybe you
+> > could also enable the
+> >
+> >         pr_debug("finit_module: fd=3D%d, uargs=3D%p, flags=3D%i\n", fd,=
+ uargs, flags);
+>
+> Below is the corresponding output with a working kernel: 174 requests
+> for the 131 modules that end up being loaded (without the revert there
+> is only around 110 modules loaded).
 
-Guenter
+Ok, your setup doesn't sound *too* different from mine. I have 176
+kernel modules on my laptop right now, and that exclusive open
+obviously worked fine for me.
+
+But it could easily be some random small difference just from
+different hardware, so...
+
+And yeah, that dmesg output is useless, I didn't think of the fact
+that it only prints out the file descriptor, not the actual path to
+the file. In fact, without that change in place, the module code never
+actually looks at the file and leaves it all to
+kernel_read_file_from_fd().
+
+With my change, it woul dhave been trivial to use "%pD" and point it
+at the file pointer instead, and get the dentry name that way, but
+never mind.  I think you're entirely right that it's probably due to a
+shared dependency module, and I just didn't happen to trigger that
+case.
+
+Sadly, the whole idea was to figure out the exclusion so early that we
+don't have the module data structures lookup up yet, so there's no
+really obvious thing to serialize the load on.
+
+I'll have to think about this more. Serializing on a per-inode lock
+would seem to be the simplest thing, but they are all for IO, and we
+can't just take them over the read.
+
+                     Linus
