@@ -1,63 +1,105 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from qproxy3-pub.mail.unifiedlayer.com (qproxy3-pub.mail.unifiedlayer.com [67.222.38.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47798D51A
-	for <patches@lists.linux.dev>; Mon, 29 May 2023 20:26:09 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id E028D1C0C8C; Mon, 29 May 2023 22:26:00 +0200 (CEST)
-Date: Mon, 29 May 2023 22:26:00 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 4.19 000/133] 4.19.284-rc2 review
-Message-ID: <ZHUKWMOi1UvO+zGc@duo.ucw.cz>
-References: <20230529153919.729418186@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1847C
+	for <patches@lists.linux.dev>; Mon, 29 May 2023 21:51:25 +0000 (UTC)
+Received: from outbound-ss-761.bluehost.com (outbound-ss-761.bluehost.com [74.220.211.250])
+	by qproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id A251B8028BE9
+	for <patches@lists.linux.dev>; Mon, 29 May 2023 21:51:19 +0000 (UTC)
+Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
+	by progateway8.mail.pro1.eigbox.com (Postfix) with ESMTP id F074A1004CA63
+	for <patches@lists.linux.dev>; Mon, 29 May 2023 21:49:10 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id 3kjmqKPm2gJQd3kjmqzlFN; Mon, 29 May 2023 21:49:10 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=e/rD9Yl/ c=1 sm=1 tr=0 ts=64751dd6
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=P0xRbXHiH_UA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Mtz8ncBQGc66NOqAbAq0X0do/oA1vIqXijZszyCtM+I=; b=oWMHLDLFP0QknohAJo9k1pTdRz
+	DlXh9bOYamzbYN+c2tq0588Xdb79OmHf4Dlfx6OjWAGqymjt3T08IoZJBC99nAzjS69a3a/pyV/al
+	UjaV7hZoMZJuQZy0HBPELwwsHHLa6d29E+izNQeyJSlYOVL7uTaHbKmrxU/x6oZUnT2rRys7GC5p0
+	ku2O9foIuCmuvIrVCj0zd37mZMWYwaTKgMqnyakFqt5XtS7kOSwgDyC4/0BGsxyl2Vi5eYF54T740
+	A1Wxh4C8K61QwS7Eq2x9Ocxczx5YJOP24LZNuuNRKhLVcVLLYmgW0Hj4quW0RnjoeQHu9UHCvBr/2
+	tlFQV6Tg==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:42034 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1q3kjl-0024Oe-CQ;
+	Mon, 29 May 2023 15:49:09 -0600
+Subject: Re: [PATCH 6.1 000/119] 6.1.31-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230528190835.386670951@linuxfoundation.org>
+In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <2ea97484-7ad0-a844-27e5-19085cb36ae7@w6rz.net>
+Date: Mon, 29 May 2023 14:49:06 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="69hb2LpofLhtNFeV"
-Content-Disposition: inline
-In-Reply-To: <20230529153919.729418186@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1q3kjl-0024Oe-CQ
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:42034
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-
---69hb2LpofLhtNFeV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 4.19.284 release.
-> There are 133 patches in this series, all will be posted as a response
+On 5/28/23 12:10 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.31 release.
+> There are 119 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Tue, 30 May 2023 19:08:13 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.31-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-You'll likely get official tested-by from Chris later, but for now -
-4.19.284-rc2 and 5.10/6.1/4.14 branches seem to be okay.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+Tested-by: Ron Economos <re@w6rz.net>
 
---69hb2LpofLhtNFeV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZHUKWAAKCRAw5/Bqldv6
-8pxeAKCgDnB3aWxiXNqx7tbSMMxTzeSyFwCgs2qJyrmo6DbH03P/HDnD8sx3YWE=
-=dfpy
------END PGP SIGNATURE-----
-
---69hb2LpofLhtNFeV--
