@@ -1,117 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5D6168CC
-	for <patches@lists.linux.dev>; Tue, 30 May 2023 18:38:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9ABC433D2;
-	Tue, 30 May 2023 18:38:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1685471894;
-	bh=R428jiSZDAX6DHR8ts6m0vqcXTKepKpchm6a+qPH+OY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=KQgZuTkKWqoSq+oilWFqPQsNCxBJxAeihlJDeYTAtEuDHMYOdqDQkmJl3amI46C9J
-	 pWXOYdIUCMk4m6qoUhhZEjRU6HIjP47Y+4GeblN8FdPkd9i/tYxsf8uarNY7Br5an8
-	 8ulaJkIr3VDPDWD/aVFQWG+TgOO6V13itO+pU5GzcRUh9+M3J22MpmxGq5/Dn0HbHa
-	 BQDMpzKrw4VuIzR5wFUYXEV5Feqdn4SitYR4vi7TUKrTZrxj/S7Dps64R1BIKDcKNs
-	 jHMillahFPpCsHjuM09bT59iqQaS7G4zSK6FAh5YAPO0ugAOpNdvcSSnjadwAzFSPP
-	 fJ2IO7bGwfC1A==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 30 May 2023 11:37:56 -0700
-Subject: [PATCH] drm/i915/pxp: Fix size_t format specifier in
- gsccs_send_message()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7726E19924
+	for <patches@lists.linux.dev>; Tue, 30 May 2023 18:53:02 +0000 (UTC)
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-61cd6191a62so25487616d6.3
+        for <patches@lists.linux.dev>; Tue, 30 May 2023 11:53:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685472781; x=1688064781;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RL9pdM2o2z5T2G6D8vKneXdh0c/zBkvXlO/Xd4J2Dvo=;
+        b=DGgqnQd/dBiyyqsSxI+b2XTa+20cfxjVDJaDl2Epu6HDMH7RF4AeYJTD9iPfaUwL3w
+         iAY5W7YZ9rivRl5OuGSRHcY6/yINZLmUEFlzhu9K02PMfLF67tj/gAOWMqMHqqgZXkDy
+         /J81plLJ7DELb92OJxLfTMrCHnZ8Wg62yKwIMU4YOfITqdjChrgxsgHHMHjVDgPWbIfE
+         x2inywZXeRdPh06LntO61d5faRcUgT3uTRCfgMW8avu7wrOiiYgNBQPGgJeA1qECtlKi
+         b3D20uG/j0drXlLl1wAE9kGB7Z8ndbXCNpzpfvQLBpmwxN9EpHdxj9ldWFvjHaunRK9u
+         8ybQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685472781; x=1688064781;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RL9pdM2o2z5T2G6D8vKneXdh0c/zBkvXlO/Xd4J2Dvo=;
+        b=CeGd1hkBxkT82VFmBd7cRFBSYRWawUf47aqhXA1/SkosKxGJVdoDoWeyjo1LzOXh3o
+         YLz5U0MJb7LJDhCsigpvHrwloyZt+FAXkRy/+rqtQukQTz96Oyby6zGEDQnXOFOs703A
+         Fwg22vn8ErIvccYCJgodHvSUpJX/XL9Mt6mNO6MQPfxfkI+1Ov7FLd+5uwTdbyZyYpMY
+         wXLmX2ikMerqKGRNMibv8Sj+xol7yGdZ8eaaFU8V/EVFhIZysGEeXKcsJN3VKZGn0PRe
+         nSiMcHFfD0s/asjORudSiLDV/9TiYmPeLec7KjJFCByibbMYX/xmCWp+MPSSooMRqbgl
+         19cQ==
+X-Gm-Message-State: AC+VfDylhrZDHx+i30FTjcHzT6yOHk6IU1E8UJ1TuZ5gvt7wW5wvygY3
+	0bXr+m8tqKhTiaXeF2nJ/9QrEIHKLnRSVg==
+X-Google-Smtp-Source: ACHHUZ6s76j5kRhXWMwfpodXJ9vyN0EYG6XWzpPvY+UVc5uwXrLtoAlo4bG9Ra7fznbwLOtrZ3SLvw==
+X-Received: by 2002:a05:6214:c4c:b0:5e3:d150:3163 with SMTP id r12-20020a0562140c4c00b005e3d1503163mr3754919qvj.20.1685472781325;
+        Tue, 30 May 2023 11:53:01 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id f16-20020a05621400d000b006262d158ab9sm1343897qvs.124.2023.05.30.11.52.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 May 2023 11:53:00 -0700 (PDT)
+Message-ID: <904bcc86-71a0-021f-55cd-bbef94b13801@gmail.com>
+Date: Tue, 30 May 2023 11:52:48 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 5.15 00/69] 5.15.114-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230528190828.358612414@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230530-i915-pxp-size_t-wformat-v1-1-9631081e2e5b@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAINCdmQC/x2OywqDMBAAf6Xk3KVqKn38SimSx0YXNIZkq7biv
- zd6nMMMs4qEkTCJ52kVESdKNPoM5fkkTKd8i0A2s6iKSha1LIAeZQ1hCZDohw3D7MY4KIbS3iT
- a0t1tJUW2tUoIOipvut3X18thtgxGmQ6bHifsYSZvxiEoJt0juI83nAcgjOQZI/A3YILEkQzv0
- RDR0XLsvt7b9gdOnW01vgAAAA==
-To: jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com, 
- rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com
-Cc: daniele.ceraolospurio@intel.com, alan.previn.teres.alexis@intel.com, 
- radhakrishna.sripada@intel.com, intel-gfx@lists.freedesktop.org, 
- dri-devel@lists.freedesktop.org, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3570; i=nathan@kernel.org;
- h=from:subject:message-id; bh=R428jiSZDAX6DHR8ts6m0vqcXTKepKpchm6a+qPH+OY=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCllTlOb4sWfnmhTt26wrGvfxtNbGXHq7tye9b0L+nZsZ
- cplXbaxo5SFQYyDQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAExEn42R4U+tj+aCk76qZczz
- o+ZFdz78xK4z9eFc1SibGae3OTvEejP8r7z2e9pVc2+97RWC3x7nrzju/v3bLv05BpIBi2+xM0z
- xZAIA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-When building ARCH=i386 allmodconfig, the following warning occurs:
+On 5/28/23 12:11, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.114 release.
+> There are 69 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Tue, 30 May 2023 19:08:13 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.114-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-  In file included from include/linux/device.h:15,
-                   from include/linux/node.h:18,
-                   from include/linux/cpu.h:17,
-                   from include/linux/static_call.h:135,
-                   from arch/x86/include/asm/perf_event.h:5,
-                   from include/linux/perf_event.h:25,
-                   from drivers/gpu/drm/i915/i915_pmu.h:11,
-                   from drivers/gpu/drm/i915/gt/intel_engine_types.h:21,
-                   from drivers/gpu/drm/i915/gt/intel_context_types.h:18,
-                   from drivers/gpu/drm/i915/gem/i915_gem_context_types.h:20,
-                   from drivers/gpu/drm/i915/i915_request.h:34,
-                   from drivers/gpu/drm/i915/i915_active.h:13,
-                   from drivers/gpu/drm/i915/gt/intel_context.h:13,
-                   from drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.c:8:
-  drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.c: In function 'gsccs_send_message':
-  include/drm/drm_print.h:456:39: error: format '%ld' expects argument of type 'long int', but argument 4 has type 'size_t' {aka 'unsigned int'} [-Werror=format=]
-    456 |         dev_##level##type((drm)->dev, "[drm] " fmt, ##__VA_ARGS__)
-        |                                       ^~~~~~~~
-  include/linux/dev_printk.h:110:30: note: in definition of macro 'dev_printk_index_wrap'
-    110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-        |                              ^~~
-  include/linux/dev_printk.h:146:61: note: in expansion of macro 'dev_fmt'
-    146 |         dev_printk_index_wrap(_dev_warn, KERN_WARNING, dev, dev_fmt(fmt), ##__VA_ARGS__)
-        |                                                             ^~~~~~~
-  include/drm/drm_print.h:456:9: note: in expansion of macro 'dev_warn'
-    456 |         dev_##level##type((drm)->dev, "[drm] " fmt, ##__VA_ARGS__)
-        |         ^~~~
-  include/drm/drm_print.h:466:9: note: in expansion of macro '__drm_printk'
-    466 |         __drm_printk((drm), warn,, fmt, ##__VA_ARGS__)
-        |         ^~~~~~~~~~~~
-  drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.c:146:17: note: in expansion of macro 'drm_warn'
-    146 |                 drm_warn(&i915->drm, "caller with insufficient PXP reply size %u (%ld)\n",
-        |                 ^~~~~~~~
-  cc1: all warnings being treated as errors
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Use the '%zu' format specifier, as the variable is a 'size_t'.
-
-Fixes: dc9ac125d81f ("drm/i915/pxp: Add GSC-CS backend to send GSC fw messages")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.c b/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.c
-index 8dc41de3f6f7..a217821eb0fb 100644
---- a/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.c
-+++ b/drivers/gpu/drm/i915/pxp/intel_pxp_gsccs.c
-@@ -143,7 +143,7 @@ gsccs_send_message(struct intel_pxp *pxp,
- 
- 	reply_size = header->message_size - sizeof(*header);
- 	if (reply_size > msg_out_size_max) {
--		drm_warn(&i915->drm, "caller with insufficient PXP reply size %u (%ld)\n",
-+		drm_warn(&i915->drm, "caller with insufficient PXP reply size %u (%zu)\n",
- 			 reply_size, msg_out_size_max);
- 		reply_size = msg_out_size_max;
- 	}
-
----
-base-commit: 08264f85c5c05ecc38d409c84d48cfb00ccd3bc4
-change-id: 20230530-i915-pxp-size_t-wformat-1d73ed1f8d23
-
-Best regards,
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-Nathan Chancellor <nathan@kernel.org>
+Florian
 
