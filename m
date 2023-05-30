@@ -1,96 +1,122 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D403C200AD
-	for <patches@lists.linux.dev>; Tue, 30 May 2023 20:21:08 +0000 (UTC)
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-64d4e45971bso3359379b3a.2
-        for <patches@lists.linux.dev>; Tue, 30 May 2023 13:21:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED613200BC
+	for <patches@lists.linux.dev>; Tue, 30 May 2023 22:17:51 +0000 (UTC)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-970056276acso781054766b.2
+        for <patches@lists.linux.dev>; Tue, 30 May 2023 15:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685478068; x=1688070068;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=of/5JX7VoIfv2vkTLNC734+oWn6zTGlkdNIC+/hQkxs=;
-        b=YbF1y+09eGaHy2Xl3Ml8zXD0Azdj2fIUxummi4R9sae43co5UZJ5o6SAFb5FnXnDv2
-         ci5trNLC0NwMjK2jgf3mOKrzILCOr3zKzwlL1FKL4LD0jiTLnJK7Kz7X5owrDFF+9Ida
-         9BiU+PsPOcrbbEwhU14LBf1b1YcEBx4rEgIzUIfoCAtayRN8v6YHWFjUZbV5yCAKS2E5
-         2yzLXHTSWPR5ZfGvv8K1UlQg9Oa0eFqCoXQz87nHMxOKFCS5DZw9A8pbx/X7iwqSNTDb
-         1P8YCWI9cqJp7AvLlNr7IsND8MRXSqZB/7KqkCttiHtstpRCAdt5iVBV4Co3wdHMFxds
-         FlYQ==
+        d=linux-foundation.org; s=google; t=1685485070; x=1688077070;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o5DUvOnBbNjICLS8rqmJBzZV+nxJEkq4dfwQCNKJREU=;
+        b=UfeedNdeoLrVx4A/HM6fQhmzFaQnWlmLcx/7ycZv+F9FLOUPPvvWAyy+mvDqCyIbjW
+         1V6GG20aa8VsCIlIyny1+5Cxnk2S+E34VwhES2uMpNt9uBP2s3uUyQVLwZ9nuz3B1PYQ
+         NuMigSOVoEz9S3s7MLyMFb0Sce2wPUmkaBLuI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685478068; x=1688070068;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=of/5JX7VoIfv2vkTLNC734+oWn6zTGlkdNIC+/hQkxs=;
-        b=WDRm2jeYDbZrPTI5sCoR2UeioaU1JKnXm3FZA2dBXqcaFS6Fm+uzq8x3T+JiRFQD2Z
-         wWIwsyBfcOY1+AZoDfnlWv7tJj6ZMOvpSAkbe4zkAqnimcHn/Ub1FCvLdkiGmFdIGhcA
-         VwseB4dkpu6HeYz0TNglLSeEl/oXea/oXpUhgPOKzOCgwWI3A29G2F1yJOD1A5tk1b2F
-         F6PX7ptp6fvTrfdvr22OI2/5cL4sQXxYJbXoH6ofzes/4OeC2aSPrGfqGHSjR4r19+LQ
-         0+v+S7RqfVQ5oc17cmGowtj5m6u1ytpMF6COAHZPVdWxbCb024ghDCashsTUqAirf4UL
-         WjOg==
-X-Gm-Message-State: AC+VfDxUsaCtlRUL4kf/jxBQNVPMLIiARwBiXqivLL4s7gIggzfZCRKx
-	8Lc9BLhqNZFyWsCpyU7Vl+k=
-X-Google-Smtp-Source: ACHHUZ7jRcRh4P3u2z+95acFIKMHna4RlASa/Q0HdpnihncQw9jnZvn54oSpx187GKhPpaYM2PW9fg==
-X-Received: by 2002:a17:903:1110:b0:1b0:2658:daf7 with SMTP id n16-20020a170903111000b001b02658daf7mr4010622plh.36.1685478068122;
-        Tue, 30 May 2023 13:21:08 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id iy11-20020a170903130b00b001afba6edc8esm5645126plb.166.2023.05.30.13.20.59
+        d=1e100.net; s=20221208; t=1685485070; x=1688077070;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o5DUvOnBbNjICLS8rqmJBzZV+nxJEkq4dfwQCNKJREU=;
+        b=WZlPKrWbwLggPT+gNwyZkiSoWkdqL0Eqwg6xg0t+pa9FNqLna9XpuSSr4dMlfrWvCc
+         xoLS3FG0DsLFJdb2rOQ9L8qf00ZjayKQVH+jlc5VwDQQkryNSg1t0/YSBIq8sfP+8CA8
+         fM4r8DL3hOq1WNdDUTGZYZbZ89jjMDUQ1PuG7f8oFCFR3W+78MjUN6cMITti4CP5L8CN
+         gNfFcqPSHb2ymlAvuvJ2LoWYpq4sBVKhE+uCtnbLg9N4B+UjPZ9xk1JQym1m/PMLAqDG
+         nBmDBCLYyN8zJZpN/Q4zJqwecqQrQJR2mz+vC5FT1pbZ/qZZcaXIXcN+CE4BltRc3ffg
+         0ONw==
+X-Gm-Message-State: AC+VfDxIWfCYO50c1XKAPUuPmKeuHJUcF5UIaOGZd6sSHtMszOWWeBdq
+	R9NseP/FtB+d2R/DZws+3dvrovCwd66aT7DvYzFCiYXh
+X-Google-Smtp-Source: ACHHUZ6ossZz3OntCDpSKiK2NUvbblYizWjYHJUAjjvgLy7+K5epF10IMUHI5y0IfiHLhaZlRXvLKg==
+X-Received: by 2002:a17:907:3d94:b0:96f:71bc:9d9e with SMTP id he20-20020a1709073d9400b0096f71bc9d9emr3618109ejc.28.1685485069996;
+        Tue, 30 May 2023 15:17:49 -0700 (PDT)
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com. [209.85.221.53])
+        by smtp.gmail.com with ESMTPSA id j11-20020a170906410b00b0096f689848desm7868553ejk.195.2023.05.30.15.17.49
+        for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 13:21:07 -0700 (PDT)
-Message-ID: <99bac91c-eb98-91f0-cfb5-c198b1c747db@gmail.com>
-Date: Tue, 30 May 2023 13:20:56 -0700
+        Tue, 30 May 2023 15:17:49 -0700 (PDT)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-30959c0dfd6so5205528f8f.3
+        for <patches@lists.linux.dev>; Tue, 30 May 2023 15:17:49 -0700 (PDT)
+X-Received: by 2002:a17:906:7945:b0:965:6d21:48bc with SMTP id
+ l5-20020a170906794500b009656d2148bcmr3770717ejo.75.1685485048586; Tue, 30 May
+ 2023 15:17:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 6.3 000/127] 6.3.5-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230528190836.161231414@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
+ <ZG/a+nrt4/AAUi5z@bombadil.infradead.org> <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
+ <ZHRpH-JXAxA6DnzR@hovoldconsulting.com> <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
+ <ZHSeOUpKtyc8VKx5@hovoldconsulting.com> <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
+ <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
+ <ZHYitt7P7W+8ZlSB@bombadil.infradead.org> <bav73qu5khl2dxkwpvy2hq34lyi56jn6yp7h5qlennka65kre3@zwwmrr55d2by>
+ <ZHZRaFWvLEvkoCMA@bombadil.infradead.org>
+In-Reply-To: <ZHZRaFWvLEvkoCMA@bombadil.infradead.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Tue, 30 May 2023 18:17:11 -0400
+X-Gmail-Original-Message-ID: <CAHk-=wicgDftP9ogSagxiRNvVTm7+YfQpEBuEsoRbkWzsw=EZw@mail.gmail.com>
+Message-ID: <CAHk-=wicgDftP9ogSagxiRNvVTm7+YfQpEBuEsoRbkWzsw=EZw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>, Johan Hovold <johan@kernel.org>, 
+	Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org, rafael@kernel.org, 
+	song@kernel.org, lucas.de.marchi@gmail.com, christophe.leroy@csgroup.eu, 
+	peterz@infradead.org, rppt@kernel.org, dave@stgolabs.net, willy@infradead.org, 
+	vbabka@suse.cz, mhocko@suse.com, dave.hansen@linux.intel.com, 
+	colin.i.king@gmail.com, jim.cromie@gmail.com, catalin.marinas@arm.com, 
+	jbaron@akamai.com, rick.p.edgecombe@intel.com, yujie.liu@intel.com, 
+	david@redhat.com, tglx@linutronix.de, hch@lst.de, patches@lists.linux.dev, 
+	linux-modules@vger.kernel.org, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com, 
+	lennart@poettering.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 5/28/23 12:09, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.5 release.
-> There are 127 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Tue, 30 May 2023 19:08:13 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Tue, May 30, 2023 at 3:41=E2=80=AFPM Luis Chamberlain <mcgrof@kernel.org=
+> wrote:
+>
+> OK thanks! So just to confirm, it seems fine to return the same error
+> code if duplicates wait, or do you prefer for some reason for there to
+> be an exception and return -EEXIST if the module did succeed in the
+> duplicate case?
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+I think either should be fine, since either was possible before.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+By definition, these are module loads being done in parallel, and so
+any of them "could" have been the first, and returned success before.
 
-if there is a need for a rc2, mind picking up:
+And by extension, any of them could have been not first, and returned
+-EEXIST if somebody else loaded the same module first.
 
-https://lore.kernel.org/lkml/20230530201955.848176-1-florian.fainelli@broadcom.com/T/#u
+So that "somebody else did a load" code:
 
-Thanks!
--- 
-Florian
+        if (idempotent(&idem, file_inode(f))) {
+                wait_for_completion(&idem.complete);
+                return idem.ret;
+        }
 
+could certainly have made the return value be something like
+
+        return idem.ret ? : -EEXIST;
+
+instead of that "return idem.ret".
+
+But it does seem simpler - and more in line with the conceptual
+"loading the same module is an idempotent operation" of the patch -
+to just always return the success value to all of them.
+
+After all, they all did in some sense succeed to get that module
+loaded, even if it was a communal effort, and some threads did more
+than others...
+
+As mentioned, I don't think it can matter either way, since any of the
+callers might as well have been the successful one, and they would
+basically have to act the same way regardless (ie "somebody else
+succeeded" and "you succeeded" are basically equivalent return
+values). If the module was a prerequisite for another module being
+loaded, either -EEXIST or 0 _is_ a success case.
+
+             Linus
