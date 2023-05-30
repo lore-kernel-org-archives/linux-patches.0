@@ -1,133 +1,134 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2074.outbound.protection.outlook.com [40.107.93.74])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438E913AC8
-	for <patches@lists.linux.dev>; Tue, 30 May 2023 09:19:42 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G0fq26uE3/FL/kyP7V/JKG1GYQyLjcnUUhgTsYLRkww51JZGOy3F5Z9he/+5a4mNq1SRDWCEMJen3YwVwfwT1Q9rcZlK9nZeP0Yk9oPjejHPOyxVCZ48TXcdMqXOw0bXtyb3VjtqU8V81qH0mcyMGnq/KvjK2dYmUQvMYFiYLuzkzS/fOIAW4KaUf7f7mNj2oQgLprbP9pObE1V5eRjfAjgao1561NI+oUkjlnI5UJAEz5HlLVr47EC8T+CYjnOXeyjQ/3E3M2L3+dr5jmvCjxnlDV3bwfSIXlpMhOBAa/sXs1qaZ4VjFKl3ZtgoSqg6c2u+MWxb/i9Gjio2VuCVgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vkhvm/79K7yYuGz/vav6LOkluDgVnoLSZz/f2hJdFL0=;
- b=oCCbJLKiKNZDfBIw9pMHC8kaxj7ue5LKmQ1hemZ7PU1Za5/pMRxTrcaZQDhXV35gaL6Wyxz521a+BslXlEopstcwrTXHZMP0jS5WLkeTvg55ZOlA4RKTLHSW4gGFSazo6i/L03eOa95+l+kSrBPC4Hu025mxhuV40VPdQiTMahrTDx47dGbYxsFy5qJTGviIhoNlY3T+iesvbXGM2EJwgNUr7rvoy5pPIk6gLxVIBTmgMudYG4KLt5xrF2SW+m9rn0h/hxe6mAQQ9VSf5q0HLOKzX+c1EhHZweiWRxxdW3nfF/kYUdm10H2JJdguDWIwuwGjjW+ZLBJdVoKfQtN7Dw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vkhvm/79K7yYuGz/vav6LOkluDgVnoLSZz/f2hJdFL0=;
- b=doduNLwLbbeMeBwFldNAD0zsERRfrsCutSxOlk/2adrevsfolRPvildwkhEtwPdMCufVFE5OnLIX394/PyFZ6fC9fBxjP2dEIxnGLQ2UTLDm3vpTAyPq301vEsIWFbFZysN+mMcp9f5JmsJwqIaBkCehA7B6O/R5ouMYt/RmfrSvXFj8cuWqedT1O2MORZYZCas2yx1jz8w0WqRyLQ2d+A8ENXVDuEm7wTwUKzFnc1zDYKVsUR2dPjWjwRnBvwiqpW3VJzDGFYyAF8SQEqYMmF9kx2JFK6vLozJ/MuzaYNAhf2dUITJWZRwcfIZ6+T90xGrV7zoyQby6bmwmiZt2Mg==
-Received: from DM6PR14CA0055.namprd14.prod.outlook.com (2603:10b6:5:18f::32)
- by IA1PR12MB7544.namprd12.prod.outlook.com (2603:10b6:208:42c::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.23; Tue, 30 May
- 2023 09:19:40 +0000
-Received: from DM6NAM11FT041.eop-nam11.prod.protection.outlook.com
- (2603:10b6:5:18f:cafe::a) by DM6PR14CA0055.outlook.office365.com
- (2603:10b6:5:18f::32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.23 via Frontend
- Transport; Tue, 30 May 2023 09:19:39 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- DM6NAM11FT041.mail.protection.outlook.com (10.13.172.98) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6455.22 via Frontend Transport; Tue, 30 May 2023 09:19:39 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Tue, 30 May 2023
- 02:19:27 -0700
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.37; Tue, 30 May 2023 02:19:26 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
- Transport; Tue, 30 May 2023 02:19:26 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH 4.19 000/133] 4.19.284-rc2 review
-In-Reply-To: <20230529153919.729418186@linuxfoundation.org>
-References: <20230529153919.729418186@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E9F12B9C
+	for <patches@lists.linux.dev>; Tue, 30 May 2023 09:40:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6904C433EF;
+	Tue, 30 May 2023 09:40:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1685439634;
+	bh=rNtDxPIemUYMFmDRq+2vO1N6CRtzqiO5qUW2YSDslnE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fVWCl+PdPozcwC62Y6L97YzJzDzJtHQQMnW9S2GOh4IlKRTtDE1NzxUxWU59ZEc4W
+	 iPECpa8+tqxLd3ZkYeYq4ROellwQksMrelI2RSqOljy2x5OT1wolysjDdffhmBms+X
+	 /i0tiBcH5MSwvo6em5tPHOA9/QaOytmnBVwVAL+2TtNpSw5fdUiSOX5r9N+Sco7nBI
+	 aK0BQsipGmChcVfwRSE9LZXPOaCUVBCizzVlgw1m9mG4bbZdLjkSVTjhlPTfdrGPg+
+	 BvRQOXd5jiIRC5GcyHmIgY2+CB1EmpfgwUO+GZnoJRtF0PlfGF/yxDmDEOYNaUxwkL
+	 Q+YqAQLhAZs4w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+	(envelope-from <johan@kernel.org>)
+	id 1q3vqE-0008S2-F8; Tue, 30 May 2023 11:40:35 +0200
+Date: Tue, 30 May 2023 11:40:34 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org,
+	rafael@kernel.org, song@kernel.org, lucas.de.marchi@gmail.com,
+	christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org,
+	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
+	mhocko@suse.com, dave.hansen@linux.intel.com,
+	colin.i.king@gmail.com, jim.cromie@gmail.com,
+	catalin.marinas@arm.com, jbaron@akamai.com,
+	rick.p.edgecombe@intel.com, yujie.liu@intel.com, david@redhat.com,
+	tglx@linutronix.de, hch@lst.de, patches@lists.linux.dev,
+	linux-modules@vger.kernel.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com,
+	lennart@poettering.net
+Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
+Message-ID: <ZHXEktFq7NPYLtGn@hovoldconsulting.com>
+References: <CAHk-=wiPjcPL_50WRWOi-Fmi9TYO6yp_oj63a_N84FzG-rxGKQ@mail.gmail.com>
+ <6gwjomw6sxxmlglxfoilelswv4hgygqelomevb4k4wrlrk3gtm@wrakbmwztgeu>
+ <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
+ <ZG/a+nrt4/AAUi5z@bombadil.infradead.org>
+ <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
+ <ZHRpH-JXAxA6DnzR@hovoldconsulting.com>
+ <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
+ <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
+ <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
+ <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <399d0c6d-997c-4ce0-a181-db1823bb1951@drhqmail201.nvidia.com>
-Date: Tue, 30 May 2023 02:19:26 -0700
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6NAM11FT041:EE_|IA1PR12MB7544:EE_
-X-MS-Office365-Filtering-Correlation-Id: e96d5128-569a-46f0-7f97-08db60eefeb9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	a0a4wLDe3EqGFRgL/XyVVFiSIyOY8b5eaTaHy1pF4241CIEN/EGcx4qRDJLXR0otNZRY6luJq2pJEBIbwBjXLFyz4tNAEhGSQCCrTYRWlt2IJ51YXpbSCe4qB8UEwPFQCBiE0xYmT3oXBj0cr5gC/ecjgACuUqFzKxxN48iRKMUGGRXWzIQWewjb5+UqZECLNgfy9HWGocG4WRdu1dTs+zpTV0YP809V96ygP1NWIR3VzUnwgThRJNnluvpZ6c2fPpS/UqmvihGwF1BfEhiyBdgS6rIjROQUiu/OJ/ic5iDIfBuRRhyGRSDde+7Z/xTR6WMYvifUHFgA/NIRV6IP6b93nK3njT2XFxGE6++DkaVCE34AFpXxmb4x4XdDllX7dFessSjMwcacrHTw9ROXOSMzKGchJHwEdyIZSnTRmiR1ERoT5NVE0c1RUmcpUnlzEcG0JlmklSk0hZu2utfOi1bJHjzKPFIWATdOUWvcj3gKKyFp73rcSO+bCwwjJpDjfpSJr+DHS+CjsenS6pKW293BMNcchPFI+mYKI/aDmNDpLP2AzTa5y5S+W7BwiWSyJY40jYL/IZGBEqeKmlxcFiCGSyfoCLGvlRZ7wMfXn2J0nOlFpdwJ2kcx/mH3mtNymwfZMjmv40mYpTxKMwu9v33JUB9qsHa1EixZEWrseIsa0KeMr4Vk5vNoXevEZlPhongFdqO+eudig5l3LXFexbg+NGFMRRAwF+CeAejn74svsEy6wCLt3G7glY60pf0yqd5RAMqNEIjIvXqFZKOmaAmSE4iXWCjiAS3whJ9mXSM=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(376002)(396003)(39860400002)(136003)(346002)(451199021)(36840700001)(46966006)(40470700004)(8676002)(8936002)(47076005)(36860700001)(186003)(82740400003)(7636003)(356005)(54906003)(5660300002)(478600001)(7416002)(426003)(336012)(26005)(31686004)(966005)(31696002)(86362001)(41300700001)(82310400005)(6916009)(40460700003)(4326008)(316002)(70586007)(40480700001)(2906002)(70206006);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2023 09:19:39.3859
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e96d5128-569a-46f0-7f97-08db60eefeb9
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DM6NAM11FT041.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7544
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
 
-On Mon, 29 May 2023 16:40:38 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.284 release.
-> There are 133 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon, May 29, 2023 at 09:55:15PM -0400, Linus Torvalds wrote:
+> On Mon, May 29, 2023 at 11:18 AM Johan Hovold <johan@kernel.org> wrote:
+> >
+> > I took a closer look at some of the modules that failed to load and
+> > noticed a pattern in that they have dependencies that are needed by more
+> > than one device.
 > 
-> Responses should be made by Wed, 31 May 2023 15:39:00 +0000.
-> Anything received after that time might be too late.
+> Ok, this is a "maybe something like this" RFC series of two patches -
+> one trivial one to re-organize things a bit so that we can then do the
+> real one which uses a filter based on the inode pointer to return an
+> "idempotent return value" for module loads that share the same inode.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.284-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
+> It's entirely untested, and since I'm on the road I'm going to not
+> really be able to test it. It compiles for me, and the code looks
+> fairly straightforward, but it's probably buggy.
 > 
-> thanks,
+> It's very loosely based on Luis' attempt,  but it
+>  (a) is internal to module loading
+>  (b) uses a reliable cookie
+>  (c) doesn't leave the cookie around randomly for later
+>  (d) has seen absolutely no testing
 > 
-> greg k-h
+> Put another way: if somebody wants to play with this, please treat it
+> as a starting point, not the final thing. You might need to debug
+> things, and fix silly mistakes.
 
-All tests passing for Tegra ...
+With the missing spinlock initialisation fixed:
 
-Test results for stable-v4.19:
-    10 builds:	10 pass, 0 fail
-    20 boots:	20 pass, 0 fail
-    40 tests:	40 pass, 0 fail
+-static struct spinlock idem_lock;
++static DEFINE_SPINLOCK(idem_lock);
 
-Linux version:	4.19.284-rc2-g1b63443ed3b0
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra20-ventana,
-                tegra210-p2371-2180, tegra30-cardhu-a04
+this passes basic smoke testing and allows the X13s to boot.
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+It does not seem to have any significant impact on boot time, but it
+avoids some of the unnecessary load attempts as intended:
 
-Jon
+Before:
+
+         Mods ever loaded       131
+     Mods failed on kread       0
+Mods failed on decompress       0
+  Mods failed on becoming       24
+      Mods failed on load       14
+        Total module size       12587008
+      Total mod text size       5058560
+       Failed kread bytes       0
+  Failed decompress bytes       0
+    Failed becoming bytes       2437992
+        Failed kmod bytes       1858992
+ Virtual mem wasted bytes       4296984
+         Average mod size       96085
+    Average mod text size       38615
+  Avg fail becoming bytes       101583
+  Average fail load bytes       132786
+
+After:
+
+         Mods ever loaded       131
+     Mods failed on kread       0
+Mods failed on decompress       0
+  Mods failed on becoming       4
+      Mods failed on load       0
+        Total module size       12587008
+      Total mod text size       5058560
+       Failed kread bytes       0
+  Failed decompress bytes       0
+    Failed becoming bytes       109776
+        Failed kmod bytes       0
+ Virtual mem wasted bytes       109776
+         Average mod size       96085
+    Average mod text size       38615
+  Avg fail becoming bytes       27444
+
+Johan
