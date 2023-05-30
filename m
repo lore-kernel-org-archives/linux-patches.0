@@ -1,90 +1,76 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C64C1EA76
-	for <patches@lists.linux.dev>; Tue, 30 May 2023 17:45:00 +0000 (UTC)
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-51f6461af24so3026791a12.2
-        for <patches@lists.linux.dev>; Tue, 30 May 2023 10:45:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685468700; x=1688060700;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j94aGplfWMWnGkDbJHhE7nVaNFJFqF4WYHNvsj+rgEo=;
-        b=YJArRZNFf+RSZO4eguHpQ17S708oTlO2GHgqc2Er11eeFBXH1nanH2JOU/HL6gfj+M
-         aKro0+ZdCJWt21QXdpCmtX3znlG5UiyOCRoc0stGDaQRMtDl1bHDXW3ey6go9xtOuw5d
-         ebtbFFZwqA07eDGkw58RqVDjbnLXMBz6I/Xnsrl94mLMBimArWA1QO4nYcRlQOaYmkuH
-         CCxdiBZnwdNX6uoy5Z1dz2WBDe9tXaLBwIEQSYPw8eqpMb1znQ+ojg//hjWUmkx/SsZS
-         13UiMDhr2AFprvKSRPo8kQV/dX6tkU7fDGRNZCkpPVUU43YgqTt5lpKixu+wotoPohyZ
-         cEwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685468700; x=1688060700;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j94aGplfWMWnGkDbJHhE7nVaNFJFqF4WYHNvsj+rgEo=;
-        b=CPeKhOK/Pd3kUOqBTlIZjoV/JfltnTTi82jgJPFvhArhNz2NnOyMqQvdbCeQAj64Xw
-         ZTzECyN6KEWbNyQR+lQ+AlzEv9yzgNYmK+mE7VzDRSfMnlYQu0znqYFS8t+rPfjKx7XL
-         MsvzsjVNZL+QC7vm2OKc2E2O4RXdK7B746kT3AcFPrAvyW5uObcePCZ3542k9XumKmdX
-         luZK4sKptuEX5XnVtfPP9SGc7ybm6fz0MUNbw29/PQpfH/U7BGKRMTQbUk610ry3aFfr
-         xGM7GUpA1XTLIqZJxLSGRRAbtMu/zDGBX04z7LozExE78wxp/rexPAmm49t7QeSVdzHE
-         F6IQ==
-X-Gm-Message-State: AC+VfDxNkyW/QqcC+5FxWUMpig9u9mAwPNJf0HpcBhSdwgPFZzCxsMpU
-	AhOcGfzu3bLkdlkQSc286jY=
-X-Google-Smtp-Source: ACHHUZ5ybmzpjjvmXl3VzRqDUllxyO//rJaSr3NFWUJGddhGQMcPonWwzMNL0AlMHyvXEbj9ggYvEA==
-X-Received: by 2002:a17:90a:c217:b0:256:4b34:8bdf with SMTP id e23-20020a17090ac21700b002564b348bdfmr3157550pjt.39.1685468699682;
-        Tue, 30 May 2023 10:44:59 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id g4-20020a17090a128400b0024e026444b6sm6535430pja.2.2023.05.30.10.44.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 10:44:59 -0700 (PDT)
-Message-ID: <7bfcd9d3-38bf-26f7-ef1f-51c9a0104e17@gmail.com>
-Date: Tue, 30 May 2023 10:44:48 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200FE1EA76;
+	Tue, 30 May 2023 18:25:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D4EC433D2;
+	Tue, 30 May 2023 18:25:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1685471109;
+	bh=5Z/L4aaUTHJKLlI+7HjDSf1F8Ul0/QVqmqZRqapzsSE=;
+	h=From:Subject:Date:To:Cc:From;
+	b=aTdwD6M+jTY6IjHIJA3boSGFWL2+d7dVsH18stkyEgeBvj+YIMzS7AdTXQ0MSUp0w
+	 C/Q6ep83yLJfeaLiJYq43yMvt0ki9dQSlD2hbKMEjlcKIn1d/Exailp2FrNRMvRYL/
+	 D4yicdLH3EkCUxTopUDe6nlQZnap2sMB4JNTFy1T0ebSwiJfBG267VHwjIjUCbOmGS
+	 8yzK0TWuHBBtbZADFL9XGN3iCfKYuHLl5Iy65GeWf0eveNWmlqM0ON8mDsVE8gFcQP
+	 ZHzGnpjX6Vs2+ARxnSGC44mQth8/vEc1L2kPsGduAgv+8GPe2OeuHH7CF90Hra4dZ3
+	 5HaPNPhmdkqXw==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 0/2] drm/i915/gt: Fix recent kCFI violations
+Date: Tue, 30 May 2023 11:24:37 -0700
+Message-Id: <20230530-i915-gt-cache_level-wincompatible-function-pointer-types-strict-v1-0-54501d598229@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 5.4 000/161] 5.4.244-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230528190837.051205996@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGU/dmQC/x2OUQqDMBBEryL57oImTcFepZSybldd0BiSrW0R7
+ 97Yz8cw82YzmZNwNtdqM4lXybKEAs2pMjRiGBjkWdjY2rrauxqkbTwMCoQ08mPilSd4S6Bljqj
+ STQz9K5CWGYiLBOUE+o2cIWsSUnAWPV28PbfoTbF0mBm6hIHGwzNjLpUjiIl7+fyv3e77/gOl7
+ 9YnqgAAAA==
+To: jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com, 
+ rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com
+Cc: ndesaulniers@google.com, trix@redhat.com, andi.shyti@linux.intel.com, 
+ fei.yang@intel.com, intel-gfx@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1064; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=5Z/L4aaUTHJKLlI+7HjDSf1F8Ul0/QVqmqZRqapzsSE=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCll9i1ZsbmlOizaVwK3GyY8sX/Hby9/3HrTEouvl60y2
+ rWOyrzsKGVhEONgkBVTZKl+rHrc0HDOWcYbpybBzGFlAhnCwMUpABPRsWL4p5oSt/HEtPJzi/3E
+ bnGe2ajbGuCfYSt6wNNXcNnFP40z5zP8z/kS/bqvzOFORcTHLzk3H2WfP5542u2C9Ix5GvGzl9V
+ dZAcA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 5/28/23 12:08, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.244 release.
-> There are 161 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Tue, 30 May 2023 19:08:13 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.244-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi all,
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+This series fixes a few clang kernel Control Flow Integrity (kCFI)
+violations that appear after commit 9275277d5324 ("drm/i915: use
+pat_index instead of cache_level"). They were found between run time
+testing on real hardware and compile time testing with
+-Wincompatible-function-pointer-types-strict (which is not yet enabled
+for the kernel but I build with it locally to catch new instances).
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+If there are any problems or questions, please let me know.
+
+---
+Nathan Chancellor (2):
+      drm/i915/gt: Fix second parameter type of pre-gen8 pte_encode callbacks
+      drm/i915/gt: Fix parameter in gmch_ggtt_insert_{entries,page}()
+
+ drivers/gpu/drm/i915/gt/intel_ggtt.c      | 26 +++++++++++++-------------
+ drivers/gpu/drm/i915/gt/intel_ggtt_gmch.c |  8 ++++----
+ 2 files changed, 17 insertions(+), 17 deletions(-)
+---
+base-commit: 08264f85c5c05ecc38d409c84d48cfb00ccd3bc4
+change-id: 20230530-i915-gt-cache_level-wincompatible-function-pointer-types-strict-32a5c65249a5
+
+Best regards,
 -- 
-Florian
+Nathan Chancellor <nathan@kernel.org>
 
