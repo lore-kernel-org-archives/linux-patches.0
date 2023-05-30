@@ -1,179 +1,82 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095081DDC5
-	for <patches@lists.linux.dev>; Tue, 30 May 2023 16:51:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:
-	Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Reply-To:Content-ID:Content-Description;
-	bh=OKvaapgeQMVDtYwYP0fBPFm+b6Rfi1ryNmTUaP7iQd0=; b=jTnn1rrBV+YMYu5T2aj651h2R/
-	Vx4nklA8RxnZo62s6kTDE1whWTxD24y9rWU8ncWTY7jEMMSJg+TDW/nteJczKkJ4ZYzuevfdcV3kp
-	mCNx0GHGNAH48YKLTqFayax0hWKZuIDEr6n6+V/3AZb+LhdX+V4/iWsdSV0oBX+WoLuyP0fb0j25B
-	opY7MM14lNwIs6xGPsv9JclUpqfFL8tscWxl1pzTPTURDLsnJp3FZFDu6MtQJGMeiIfv4IecGlpGe
-	kUqWQR432rVMANb+DDuG4EWc8u5VrRcEDftWkQIN/vWU0epPt4WtRtPAALeCzrdP/TFpAKRDxxM5B
-	TZPHg1vg==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q426w-00EYNG-0V;
-	Tue, 30 May 2023 16:22:14 +0000
-Date: Tue, 30 May 2023 09:22:14 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Johan Hovold <johan@kernel.org>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org,
-	rafael@kernel.org, song@kernel.org, lucas.de.marchi@gmail.com,
-	christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org,
-	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
-	mhocko@suse.com, dave.hansen@linux.intel.com,
-	colin.i.king@gmail.com, jim.cromie@gmail.com,
-	catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com, yujie.liu@intel.com, david@redhat.com,
-	tglx@linutronix.de, hch@lst.de, patches@lists.linux.dev,
-	linux-modules@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com,
-	lennart@poettering.net
-Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
-Message-ID: <ZHYitt7P7W+8ZlSB@bombadil.infradead.org>
-References: <CAHk-=wiPjcPL_50WRWOi-Fmi9TYO6yp_oj63a_N84FzG-rxGKQ@mail.gmail.com>
- <6gwjomw6sxxmlglxfoilelswv4hgygqelomevb4k4wrlrk3gtm@wrakbmwztgeu>
- <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
- <ZG/a+nrt4/AAUi5z@bombadil.infradead.org>
- <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
- <ZHRpH-JXAxA6DnzR@hovoldconsulting.com>
- <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
- <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
- <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
- <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C0D125CC
+	for <patches@lists.linux.dev>; Tue, 30 May 2023 17:00:41 +0000 (UTC)
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2567b589d3bso1601826a91.0
+        for <patches@lists.linux.dev>; Tue, 30 May 2023 10:00:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685466041; x=1688058041;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=x0qR7smAkK4kDLopfJWgEbFX/81Ri845pzZXPCnDXIM=;
+        b=TlQB0g+aA3Uzr8Ge+7dBgVQube+GQqQ+9O945+kHFjPAmP1pKvggR6ejjw64IuOnho
+         Xt/vuMKzO80foYf1HHi05M/aZdyM6g69fVgvYHHyYyEXPYZknDHr0nOAyVHana2fRLZD
+         ffMdVtAs0xmYahUI+rsVO6ZABNzFxqY/KSmrupxV83cJPtFa8l2Pa2pDd1Z6dtEbpSEe
+         rKyeoQgo30Vlkudh6c2qaP4GXalR6TR7+eSXoaYr16m6LZPDPKSRFzasZBGX0CZhk+Ru
+         +BtGlLBJ2GWQJM1JB6X13jCvk0P9AvcEjyaa+di8IejClb3JZu2qK9rVOtTzH5apNAWe
+         fy5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685466041; x=1688058041;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x0qR7smAkK4kDLopfJWgEbFX/81Ri845pzZXPCnDXIM=;
+        b=Rl093ddl/hl0JixpW1Id4WelM+tzfTQfrxe/Ju/nrqmEeDQdZNtMIVYStMhdueM/LY
+         tQ6KJot95lWDczXJVRkB59fFN1XDJ2QtKWZlwOaATswBy7y27SU9StIPAHw6AWQeopj6
+         FNUMQOQ3kLIzSdIoLyOizcQdB5Nh72eXF+reh20SK53ex0AdSc+0tNartvk5EAW+GoPk
+         6GI8it00gbtfKkd7/x6lFcFKPsFmxCzSS9XDHIGyk5Y7hRZuTTs8DnCFoKMxfHH+JnQw
+         PgEL7+9C1WTfnA6SHPTkEzQWGTw7pAl2rACDNp6l/JdqM2vh1U5qnPwMlpg1xwvUrayH
+         3Eyg==
+X-Gm-Message-State: AC+VfDy+Kr+CmiR7ibZvakqwoKAbbLsNiuzCWuViI9sKwHRjAYzEkIZ0
+	D1rtVnkl327tgdj4FDBrWHe+p1zYFvCNc6JHCw4=
+X-Google-Smtp-Source: ACHHUZ429R5dVpOqWe0cVfpWG/0kSCoroolR1a8nyQU1biaJEVIrOT2mzmXEFLwW/GtirmmkddG1uovcBMBYvSa5LfU=
+X-Received: by 2002:a17:90b:3715:b0:255:75e5:b456 with SMTP id
+ mg21-20020a17090b371500b0025575e5b456mr3346109pjb.1.1685466041252; Tue, 30
+ May 2023 10:00:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+References: <20230528190828.358612414@linuxfoundation.org>
+In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
+From: Allen Pais <stable.kernel.dev@gmail.com>
+Date: Tue, 30 May 2023 10:00:30 -0700
+Message-ID: <CAJq+SaBTqE+sYVGLoOZmv0U9DW=4P8riPwzi2Jwjd=7VsqHviQ@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/69] 5.15.114-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, May 29, 2023 at 09:55:15PM -0400, Linus Torvalds wrote:
-> On Mon, May 29, 2023 at 11:18 AM Johan Hovold <johan@kernel.org> wrote:
-> >
-> > I took a closer look at some of the modules that failed to load and
-> > noticed a pattern in that they have dependencies that are needed by more
-> > than one device.
-> 
-> Ok, this is a "maybe something like this" RFC series of two patches -
-> one trivial one to re-organize things a bit so that we can then do the
-> real one which uses a filter based on the inode pointer to return an
-> "idempotent return value" for module loads that share the same inode.
-> 
-> It's entirely untested, and since I'm on the road I'm going to not
-> really be able to test it. It compiles for me, and the code looks
-> fairly straightforward, but it's probably buggy.
-> 
-> It's very loosely based on Luis' attempt,  but it
->  (a) is internal to module loading
->  (b) uses a reliable cookie
->  (c) doesn't leave the cookie around randomly for later
->  (d) has seen absolutely no testing
-> 
-> Put another way: if somebody wants to play with this, please treat it
-> as a starting point, not the final thing. You might need to debug
-> things, and fix silly mistakes.
-> 
-> The idea is to just have a simple hash list of currently executing
-> module loads, protected by a trivial spinlock. Every module loader
-> adds itself to the right hash list, and if they were the *first* one
-> (ie no other pending module loads for that inode), will actually do
-> the module load.
-> 
-> Everybody who *isn't* the first one will just wait for completion and
-> return the same error code that the first one returned.
+> This is the start of the stable review cycle for the 5.15.114 release.
+> There are 69 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 30 May 2023 19:08:13 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.114-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-That's also a hell much more snazzier MODULE_DEBUG_AUTOLOAD_DUPS if we
-ever wanted to do something similar there if we wanted to also
-join request_module() calls, instead of it hiding under debug.
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-> This is technically bogus. The first one might fail due to arguments.
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-For boot it's fine, as I can't think of boot wanting to support trying
-to load a module with different arguments but who knows. But I can't
-see it sensible to issue concurrent multiple requests for modules
-with different arguments without waiting in userspace for the first
-to fail.
-
-Even post-boot, doing that sounds rather insane, but it would certainly
-be a compromise and should probably be clearly documented. I think just
-a comment acknolwedging that corner case seems sensible.
-
-Because we won't be able to get the arguments until we process the
-module, so it would be too late for this optimization on kread. So it is
-why I had also stuck to the original feature being in kread, as then it
-provides a uniq kread call and the caller is aware of it. But indeed I
-had not considered the effects of arguments.
-
-Lucas, any thoughts from modules kmod userspace perspective into
-supporting anyone likely issuing concurrent modules requests with
-differing arguments?
-
-> So the cookie shouldn't be just the inode, it should be the inode and
-> a hash of the arguments or something like that.
-
-Personally I think it's a fine optimization without the arguments.
-
-> But it is what it is,
-> and apart from possible show-stopper bugs this is no worse than the
-> failed "exclusive write deny" attempt. IOW - maybe worth trying?
-
-The only thing I can think of is allowing threads other than the
-first one to complete before the one that actually loaded the
-module. I thought about this race for module auto-loading, see
-the comment in kmod_dup_request_announce(), so that just
-further delays the completion to other thread with a stupid
-queue_work(). That seems more important for module auto-loading
-duplicates than for boot finit_module() duplicates. But not sure
-if odering matters in the end due to a preemtible kernel and maybe
-that concern is hysteria.
-
-> And if *that* didn't sell people on this patch series, I don't know
-> what will. I should be in marketing! Two drink minimums, here I come!
-
-Sold:
-
-on 255 vcpus 0 duplicates found with this setup:
-
-root@kmod ~ # cat /sys/kernel/debug/modules/stats
-         Mods ever loaded       66
-     Mods failed on kread       0
-Mods failed on decompress       0
-  Mods failed on becoming       0
-      Mods failed on load       0
-        Total module size       11268096
-      Total mod text size       4149248
-       Failed kread bytes       0
-  Failed decompress bytes       0
-    Failed becoming bytes       0
-        Failed kmod bytes       0
- Virtual mem wasted bytes       0
-         Average mod size       170729
-    Average mod text size       62868
-
-So:
-
-Tested-by: Luis Chamberlain <mcgrof@kernel.org>
-
-In terms of bootup timing:
-
-Before:
-Startup finished in 41.653s (kernel) + 44.305s (userspace) = 1min 25.958s        
-graphical.target reached after 44.178s in userspace.                             
-                                                                                 
-After:                                                                           
-Startup finished in 23.995s (kernel) + 40.350s (userspace) = 1min 4.345s         
-graphical.target reached after 40.226s in userspace. 
-
-So other than the brain farts above, I think this is pretty sexy.
-
-  Luis
+Thanks.
