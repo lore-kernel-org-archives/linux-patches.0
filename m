@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7270A927
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB2634CFA
 	for <patches@lists.linux.dev>; Tue, 30 May 2023 23:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=8kZDmW7u1BAwE+M5sWH6dCUNdnC2eoBRZLZS/mk42z4=; b=FpoywbOee5kJx6j7BsroAWkapc
-	C8vpYY7F0mBdwtR9djLjY1oi4UXRWCW8OjSs0qYtgy3atfS47cAhj6mhbBP+9J4UMCCCGohcAunY4
-	x3yRDL/6/zJZPiqVxcqZt/lvFNyWOiruXvpDHPp3OcRvHq3KYyfv5qPULQO4qZ7x0XtVxU+9f4g/t
-	3j4PhZWEuZaJzfz0C30Kmwbs2XobhTuO+/Z1F8dhsUUi2XKs3AaiVYC6l+ZhXWSX3GqWCJ+tJE6ll
-	2dKpTX0UglWP6jBS25td4J+tS0IIfCWgk1/GgBEhZpcqMyjkHGv2nMMFvPJemJEF0NtJfV3in9ZiO
-	uLb6Nv2Q==;
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=2DkCxac7yJ7TTpJrbvC4aJ9GEUlIf19GJMG2RCNYbhA=; b=jeHbujSluGut688450mAUhQVVb
+	tyqrByE3iKY/irqUq/PHyN/8gduxh2e1lxNVGDev/KOiX/FxEsmiwhsiXnU9Tln7zxOdOQSt6Aeup
+	DRltTHZbg0wtsi6wwis/abNrnQPjSPNqg/jyYXnAE25Nyt4LzdQQqTFQSg7E4OD+JZuorF/xQIQIF
+	z9NToC59ws913amKocI0bm7nXxKh2UA6Fn296mrCrKj0UcORwXFDgJrxNDXQq6YXephZX7qbke12C
+	s+UqI+nv7LhTxOVvSA8tB1MMjyq4FafNY6DmeR4bA/LIr4lQ770MRMwanHUkoC+k+cYesjVIsDWrU
+	wF3kb9oA==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q48mB-00FTri-0j;
+	id 1q48mB-00FTrm-0z;
 	Tue, 30 May 2023 23:29:15 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: keescook@chromium.org,
@@ -33,10 +33,12 @@ Cc: ebiederm@xmission.com,
 	linux-security-module@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 0/2] sysctl: move umh and keys sysctls
-Date: Tue, 30 May 2023 16:29:12 -0700
-Message-Id: <20230530232914.3689712-1-mcgrof@kernel.org>
+Subject: [PATCH 2/2] sysctl: move security keys sysctl registration to its own file
+Date: Tue, 30 May 2023 16:29:14 -0700
+Message-Id: <20230530232914.3689712-3-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20230530232914.3689712-1-mcgrof@kernel.org>
+References: <20230530232914.3689712-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,30 +48,76 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-If you look at kernel/sysctl.c there are two sysctl arrays which
-are declared in header files but registered with no good reason now
-on kernel/sysctl.c instead of the place they belong. So just do
-the registration where it belongs.
+The security keys sysctls are already declared on its own file,
+just move the sysctl registration to its own file to help avoid
+merge conflicts on sysctls.c, and help with clearing up sysctl.c
+further.
 
-The penalty of this is just 66 bytes for moving both registrations
-to its own file, but soon we'll be removing all sysctl empty entries
-at each array, and we've already done tons of cleanup on fs/proc/proc_sysctl.c
-which saved us hundreds of bytes so we have few karma points.
+This creates a small penalty of 23 bytes:
 
-With this, we no now only have two sysctl arrays left to start clearing
-up the kernel one and the vm one.
+./scripts/bloat-o-meter vmlinux.1 vmlinux.2
+add/remove: 2/0 grow/shrink: 0/1 up/down: 49/-26 (23)
+Function                                     old     new   delta
+init_security_keys_sysctls                     -      33     +33
+__pfx_init_security_keys_sysctls               -      16     +16
+sysctl_init_bases                             85      59     -26
+Total: Before=21256937, After=21256960, chg +0.00%
 
-Luis Chamberlain (2):
-  sysctl: move umh sysctl registration to its own file
-  sysctl: move security keys sysctl registration to its own file
+But soon we'll be saving tons of bytes anyway, as we modify the
+sysctl registrations to use ARRAY_SIZE and so we get rid of all the
+empty array elements so let's just clean this up now.
 
- include/linux/key.h    |  3 ---
- include/linux/umh.h    |  2 --
- kernel/sysctl.c        |  5 -----
- kernel/umh.c           | 11 ++++++++++-
- security/keys/sysctl.c |  7 +++++++
- 5 files changed, 17 insertions(+), 11 deletions(-)
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ include/linux/key.h    | 3 ---
+ kernel/sysctl.c        | 4 ----
+ security/keys/sysctl.c | 7 +++++++
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
+diff --git a/include/linux/key.h b/include/linux/key.h
+index 8dc7f7c3088b..938d7ecfb495 100644
+--- a/include/linux/key.h
++++ b/include/linux/key.h
+@@ -490,9 +490,6 @@ do {									\
+ 	rcu_assign_pointer((KEY)->payload.rcu_data0, (PAYLOAD));	\
+ } while (0)
+ 
+-#ifdef CONFIG_SYSCTL
+-extern struct ctl_table key_sysctls[];
+-#endif
+ /*
+  * the userspace interface
+  */
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index caf4a91522a1..48046932d573 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -2322,10 +2322,6 @@ static struct ctl_table vm_table[] = {
+ int __init sysctl_init_bases(void)
+ {
+ 	register_sysctl_init("kernel", kern_table);
+-#ifdef CONFIG_KEYS
+-	register_sysctl_init("kernel/keys", key_sysctls);
+-#endif
+-
+ 	register_sysctl_init("vm", vm_table);
+ 
+ 	return 0;
+diff --git a/security/keys/sysctl.c b/security/keys/sysctl.c
+index b46b651b3c4c..b72b82bb20c6 100644
+--- a/security/keys/sysctl.c
++++ b/security/keys/sysctl.c
+@@ -68,3 +68,10 @@ struct ctl_table key_sysctls[] = {
+ #endif
+ 	{ }
+ };
++
++static int __init init_security_keys_sysctls(void)
++{
++	register_sysctl_init("kernel/keys", key_sysctls);
++	return 0;
++}
++early_initcall(init_security_keys_sysctls);
 -- 
 2.39.2
 
