@@ -1,90 +1,108 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7726E19924
-	for <patches@lists.linux.dev>; Tue, 30 May 2023 18:53:02 +0000 (UTC)
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-61cd6191a62so25487616d6.3
-        for <patches@lists.linux.dev>; Tue, 30 May 2023 11:53:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685472781; x=1688064781;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RL9pdM2o2z5T2G6D8vKneXdh0c/zBkvXlO/Xd4J2Dvo=;
-        b=DGgqnQd/dBiyyqsSxI+b2XTa+20cfxjVDJaDl2Epu6HDMH7RF4AeYJTD9iPfaUwL3w
-         iAY5W7YZ9rivRl5OuGSRHcY6/yINZLmUEFlzhu9K02PMfLF67tj/gAOWMqMHqqgZXkDy
-         /J81plLJ7DELb92OJxLfTMrCHnZ8Wg62yKwIMU4YOfITqdjChrgxsgHHMHjVDgPWbIfE
-         x2inywZXeRdPh06LntO61d5faRcUgT3uTRCfgMW8avu7wrOiiYgNBQPGgJeA1qECtlKi
-         b3D20uG/j0drXlLl1wAE9kGB7Z8ndbXCNpzpfvQLBpmwxN9EpHdxj9ldWFvjHaunRK9u
-         8ybQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685472781; x=1688064781;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RL9pdM2o2z5T2G6D8vKneXdh0c/zBkvXlO/Xd4J2Dvo=;
-        b=CeGd1hkBxkT82VFmBd7cRFBSYRWawUf47aqhXA1/SkosKxGJVdoDoWeyjo1LzOXh3o
-         YLz5U0MJb7LJDhCsigpvHrwloyZt+FAXkRy/+rqtQukQTz96Oyby6zGEDQnXOFOs703A
-         Fwg22vn8ErIvccYCJgodHvSUpJX/XL9Mt6mNO6MQPfxfkI+1Ov7FLd+5uwTdbyZyYpMY
-         wXLmX2ikMerqKGRNMibv8Sj+xol7yGdZ8eaaFU8V/EVFhIZysGEeXKcsJN3VKZGn0PRe
-         nSiMcHFfD0s/asjORudSiLDV/9TiYmPeLec7KjJFCByibbMYX/xmCWp+MPSSooMRqbgl
-         19cQ==
-X-Gm-Message-State: AC+VfDylhrZDHx+i30FTjcHzT6yOHk6IU1E8UJ1TuZ5gvt7wW5wvygY3
-	0bXr+m8tqKhTiaXeF2nJ/9QrEIHKLnRSVg==
-X-Google-Smtp-Source: ACHHUZ6s76j5kRhXWMwfpodXJ9vyN0EYG6XWzpPvY+UVc5uwXrLtoAlo4bG9Ra7fznbwLOtrZ3SLvw==
-X-Received: by 2002:a05:6214:c4c:b0:5e3:d150:3163 with SMTP id r12-20020a0562140c4c00b005e3d1503163mr3754919qvj.20.1685472781325;
-        Tue, 30 May 2023 11:53:01 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id f16-20020a05621400d000b006262d158ab9sm1343897qvs.124.2023.05.30.11.52.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 11:53:00 -0700 (PDT)
-Message-ID: <904bcc86-71a0-021f-55cd-bbef94b13801@gmail.com>
-Date: Tue, 30 May 2023 11:52:48 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0642819924;
+	Tue, 30 May 2023 18:54:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1685472848; x=1717008848;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=0kulKMLy7Yg0yE/BDh7sWLThl83dTtSuMe48DHfeets=;
+  b=IuL/bkgXQhAIh4IEZho/w9SWhQ+FaFChrwkMlTijfnPshTjOG85T5Qp6
+   cdl7aMFd/VsA9RgQMxh6AxQoNz9bbZGbE0XEqPGH34ms2443Pe8dYiBlT
+   3igrNBUAbhpV3+ZBGk9VUK5A4RUI7HL9EX8EOp8WmXLI0hoNpzgeCOb+z
+   PsEnynsasNCHBsPfq2j93zKLVb51pdW3dOgXRsoM3rGFwc5Uc/+VvL0qW
+   SyUAnOBFxUEr9z1kiOzG25EDVXlGX8zBs80hALvk28Fif6ew+mftDP4H1
+   10n2gJJLtboa0lRpV7sj5Ae08Th+xw8QjViYxsf9wJmmR5zfsU74hxkfs
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10726"; a="418504062"
+X-IronPort-AV: E=Sophos;i="6.00,205,1681196400"; 
+   d="scan'208";a="418504062"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2023 11:54:07 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10726"; a="796381521"
+X-IronPort-AV: E=Sophos;i="6.00,205,1681196400"; 
+   d="scan'208";a="796381521"
+Received: from amyachev-mobl3.ccr.corp.intel.com (HELO intel.com) ([10.252.53.184])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 May 2023 11:54:04 -0700
+Date: Tue, 30 May 2023 20:54:01 +0200
+From: Andi Shyti <andi.shyti@linux.intel.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com,
+	rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com,
+	ndesaulniers@google.com, trix@redhat.com,
+	andi.shyti@linux.intel.com, fei.yang@intel.com,
+	intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH 1/2] drm/i915/gt: Fix second parameter type of pre-gen8
+ pte_encode callbacks
+Message-ID: <ZHZGSbiIG3PNAfCQ@ashyti-mobl2.lan>
+References: <20230530-i915-gt-cache_level-wincompatible-function-pointer-types-strict-v1-0-54501d598229@kernel.org>
+ <20230530-i915-gt-cache_level-wincompatible-function-pointer-types-strict-v1-1-54501d598229@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 5.15 00/69] 5.15.114-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230528190828.358612414@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230530-i915-gt-cache_level-wincompatible-function-pointer-types-strict-v1-1-54501d598229@kernel.org>
 
-On 5/28/23 12:11, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.114 release.
-> There are 69 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Tue, 30 May 2023 19:08:13 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.114-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi Nathan,
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+On Tue, May 30, 2023 at 11:24:38AM -0700, Nathan Chancellor wrote:
+> When booting a kernel compiled with CONFIG_CFI_CLANG (kCFI), there is a
+> CFI failure in ggtt_probe_common() when trying to call hsw_pte_encode()
+> via an indirect call:
+> 
+>   [    5.030027] CFI failure at ggtt_probe_common+0xd1/0x130 [i915] (target: hsw_pte_encode+0x0/0x30 [i915]; expected type: 0xf5c1d0fc)
+> 
+> With kCFI, indirect calls are validated against their expected type
+> versus actual type and failures occur when the two types do not match.
+> 
+> clang's -Wincompatible-function-pointer-types-strict can catch this at
+> compile time but it is not enabled for the kernel yet:
+> 
+>   drivers/gpu/drm/i915/gt/intel_ggtt.c:1155:23: error: incompatible function pointer types assigning to 'u64 (*)(dma_addr_t, unsigned int, u32)' (aka 'unsigned long long (*)(unsigned int, unsigned int, unsigned int)') from 'u64 (dma_addr_t,
+>   enum i915_cache_level, u32)' (aka 'unsigned long long (unsigned int, enum i915_cache_level, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+>                   ggtt->vm.pte_encode = iris_pte_encode;
+>                                       ^ ~~~~~~~~~~~~~~~
+>   drivers/gpu/drm/i915/gt/intel_ggtt.c:1157:23: error: incompatible function pointer types assigning to 'u64 (*)(dma_addr_t, unsigned int, u32)' (aka 'unsigned long long (*)(unsigned int, unsigned int, unsigned int)') from 'u64 (dma_addr_t,
+>   enum i915_cache_level, u32)' (aka 'unsigned long long (unsigned int, enum i915_cache_level, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+>                   ggtt->vm.pte_encode = hsw_pte_encode;
+>                                       ^ ~~~~~~~~~~~~~~
+>   drivers/gpu/drm/i915/gt/intel_ggtt.c:1159:23: error: incompatible function pointer types assigning to 'u64 (*)(dma_addr_t, unsigned int, u32)' (aka 'unsigned long long (*)(unsigned int, unsigned int, unsigned int)') from 'u64 (dma_addr_t,
+>   enum i915_cache_level, u32)' (aka 'unsigned long long (unsigned int, enum i915_cache_level, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+>                   ggtt->vm.pte_encode = byt_pte_encode;
+>                                       ^ ~~~~~~~~~~~~~~
+>   drivers/gpu/drm/i915/gt/intel_ggtt.c:1161:23: error: incompatible function pointer types assigning to 'u64 (*)(dma_addr_t, unsigned int, u32)' (aka 'unsigned long long (*)(unsigned int, unsigned int, unsigned int)') from 'u64 (dma_addr_t,
+>   enum i915_cache_level, u32)' (aka 'unsigned long long (unsigned int, enum i915_cache_level, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+>                   ggtt->vm.pte_encode = ivb_pte_encode;
+>                                       ^ ~~~~~~~~~~~~~~
+>   drivers/gpu/drm/i915/gt/intel_ggtt.c:1163:23: error: incompatible function pointer types assigning to 'u64 (*)(dma_addr_t, unsigned int, u32)' (aka 'unsigned long long (*)(unsigned int, unsigned int, unsigned int)') from 'u64 (dma_addr_t,
+>   enum i915_cache_level, u32)' (aka 'unsigned long long (unsigned int, enum i915_cache_level, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+>                   ggtt->vm.pte_encode = snb_pte_encode;
+>                                       ^ ~~~~~~~~~~~~~~
+>   5 errors generated.
+> 
+> In this case, the pre-gen8 pte_encode functions have a second parameter
+> type of 'enum i915_cache_level' whereas the function pointer prototype
+> in 'struct i915_address_space' expects a second parameter type of
+> 'unsigned int'.
+> 
+> Update the second parameter of the callbacks and the comment above them
+> noting that these statements are still valid, which matches other
+> functions and files, to clear up the kCFI failures at run time.
+> 
+> Fixes: 9275277d5324 ("drm/i915: use pat_index instead of cache_level")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+That's correct!
 
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com> 
+
+Thanks,
+Andi
