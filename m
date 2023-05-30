@@ -1,11 +1,11 @@
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0ED0168CC
-	for <patches@lists.linux.dev>; Tue, 30 May 2023 10:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F5512B8A
+	for <patches@lists.linux.dev>; Tue, 30 May 2023 10:46:52 +0000 (UTC)
 Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id A70BB1C0D20; Tue, 30 May 2023 12:26:38 +0200 (CEST)
-Date: Tue, 30 May 2023 12:26:37 +0200
+	id 8290B1C0D20; Tue, 30 May 2023 12:46:50 +0200 (CEST)
+Date: Tue, 30 May 2023 12:46:49 +0200
 From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -14,10 +14,11 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	kch@nvidia.com, avolmat@me.com, arnd@arndb.de, vi@endrift.com
-Subject: Re: [PATCH 4.14 00/86] 4.14.316-rc1 review
-Message-ID: <ZHXPXaPPWuslRI6A@duo.ucw.cz>
-References: <20230528190828.564682883@linuxfoundation.org>
+	l.sanfilippo@kunbus.com, jarkko@kernel.org
+Subject: Wrong/strange TPM patches was Re: [PATCH 6.1 000/119] 6.1.31-rc1
+ review
+Message-ID: <ZHXUGdFMIcB5HL8s@duo.ucw.cz>
+References: <20230528190835.386670951@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -25,68 +26,81 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HoT0r7ZN4EsSbGiN"
+	protocol="application/pgp-signature"; boundary="r+EjDeRDCk4IF0FL"
 Content-Disposition: inline
-In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
+In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 
 
---HoT0r7ZN4EsSbGiN
+--r+EjDeRDCk4IF0FL
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Hi!
 
-> This is the start of the stable review cycle for the 4.14.316 release.
-> There are 86 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.31 release.
+> There are 119 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-> Chaitanya Kulkarni <kch@nvidia.com>
->     null_blk: Always check queue mode setting from configfs
+> Lino Sanfilippo <l.sanfilippo@kunbus.com>
+>     tpm, tpm_tis: Avoid cache incoherency in test for interrupts
 
-This one is in 4.14 and 5.10, but not in 4.19.
+Description on this one is wrong/confused. There's no cache problem in
+the code. Plus test_bit and friend already use bit number, so
 
-> Alain Volmat <avolmat@me.com>
->     phy: st: miphy28lp: use _poll_timeout functions for waits
+-       bool itpm =3D priv->flags & TPM_TIS_ITPM_WORKAROUND;
++       bool itpm =3D test_bit(TPM_TIS_ITPM_WORKAROUND, &priv->flags);
 
-This is just a cleanup, we don't really need it in stable.
+@@ -87,6 +87,7 @@ enum tpm_tis_flags {
+        TPM_TIS_ITPM_WORKAROUND         =3D BIT(0),
+        TPM_TIS_INVALID_STATUS          =3D BIT(1),
+        TPM_TIS_DEFAULT_CANCELLATION    =3D BIT(2),
++       TPM_TIS_IRQ_TESTED              =3D BIT(3),
+ };
 
-> Arnd Bergmann <arnd@arndb.de>
->     clk: tegra20: fix gcc-7 constant overflow warning
+this enum needs to go from BIT() to raw numbers.
 
-Something went wrong here:
+You can just do return tpm_pm_resume();
 
- #define OSC_FREQ_DET_STATUS 0x5c
--#define OSC_FREQ_DET_BUSY (1<<31)
--#define OSC_FREQ_DET_CNT_MASK 0xFFFF
-+#define OSC_FREQ_DET_BUSYu (1<<31)
-+#define OSC_FREQ_DET_CNT_MASK 0xFFFFu
+> Jarkko Sakkinen <jarkko@kernel.org>
+>     tpm: Prevent hwrng from activating during resume
 
-First, we don't really need u after hex constants. Second, we normally
-use upperspace U for this. Third, u should not really be appended to
-the constant name.
+@@ -429,6 +431,14 @@ int tpm_pm_resume(struct device *dev)
+        if (chip =3D=3D NULL)
+                return -ENODEV;
+=20
++       chip->flags &=3D ~TPM_CHIP_FLAG_SUSPENDED;
++
++       /*
++        * Guarantee that SUSPENDED is written last, so that hwrng does not
++        * activate before the chip has been fully resumed.
++        */
++       wmb();
++
+        return 0;
+ }
+ EXPORT_SYMBOL_GPL(tpm_pm_resume);
 
-> Vicki Pfau <vi@endrift.com>
->     Input: xpad - add constants for GIP interface numbers
-
-This is just a cleanup, we don't really need it in stable.
+This code is confused. First, either you don't need memory barriers
+here, or you need real locking. Second, if you want to guarantee flags
+are written last, you need to put the barrier before the
+assignment. (But ... get rid of that confusion, first).
 
 Best regards,
 								Pavel
-
 --=20
 DENX Software Engineering GmbH,        Managing Director: Erika Unter
 HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
---HoT0r7ZN4EsSbGiN
+--r+EjDeRDCk4IF0FL
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZHXPXQAKCRAw5/Bqldv6
-8qj3AKCDLbIXFtCX4xd31flyfX4Chme4ngCfapt3x8fLAKlpwUMRFeGiFCeTepI=
-=P7xE
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZHXUGQAKCRAw5/Bqldv6
+8vR3AJ4nYbfXozM6RjMtZmKWdj4QU5PQEwCfY+5LyyJ/Ps5vEN0Kd3dHPkF55gM=
+=wiN5
 -----END PGP SIGNATURE-----
 
---HoT0r7ZN4EsSbGiN--
+--r+EjDeRDCk4IF0FL--
