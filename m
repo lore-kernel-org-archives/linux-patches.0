@@ -1,93 +1,96 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D6B200AD
-	for <patches@lists.linux.dev>; Tue, 30 May 2023 19:41:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=JADWF5FGfjqal0Tm4srMFuXcLVsdz79srAuWZWBhE0U=; b=h83GzI9GcktWKcxm3mM6r0dFZw
-	gDFov6i/D/ln27TGWCDBsfM8Dp2YSXIPS/PadQ/vuOP1h3KfOXRt/Ai8fqtSLwMPPA12Cqi9fsxx1
-	busls/x8Bbmq5as1k5M4iPcu+jv5Y4OzfZeFCee+0guhE8+nmfE57I6/H7B7Ihh6piFFztXsoWYjP
-	OYAhAjIj5Zrcp5vuE6HXHhK6/EWyS8a9n0RzpJbz+hN84xLsxNNYkNlVBLucSrghgbLJaaYT0asy9
-	fMykJWPxnNC1FQbewSoj16im5rO8ZVWciD6VuY92UqYF/2BExw7xImmCHnXCRQD1CvyE6kA4zoUJp
-	3FXLT1pw==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q45Dk-00F0Eb-2F;
-	Tue, 30 May 2023 19:41:28 +0000
-Date: Tue, 30 May 2023 12:41:28 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Johan Hovold <johan@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>,
-	gregkh@linuxfoundation.org, rafael@kernel.org, song@kernel.org,
-	lucas.de.marchi@gmail.com, christophe.leroy@csgroup.eu,
-	peterz@infradead.org, rppt@kernel.org, dave@stgolabs.net,
-	willy@infradead.org, vbabka@suse.cz, mhocko@suse.com,
-	dave.hansen@linux.intel.com, colin.i.king@gmail.com,
-	jim.cromie@gmail.com, catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com, yujie.liu@intel.com, david@redhat.com,
-	tglx@linutronix.de, hch@lst.de, patches@lists.linux.dev,
-	linux-modules@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com,
-	lennart@poettering.net
-Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
-Message-ID: <ZHZRaFWvLEvkoCMA@bombadil.infradead.org>
-References: <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
- <ZG/a+nrt4/AAUi5z@bombadil.infradead.org>
- <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
- <ZHRpH-JXAxA6DnzR@hovoldconsulting.com>
- <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
- <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
- <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
- <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
- <ZHYitt7P7W+8ZlSB@bombadil.infradead.org>
- <bav73qu5khl2dxkwpvy2hq34lyi56jn6yp7h5qlennka65kre3@zwwmrr55d2by>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D403C200AD
+	for <patches@lists.linux.dev>; Tue, 30 May 2023 20:21:08 +0000 (UTC)
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-64d4e45971bso3359379b3a.2
+        for <patches@lists.linux.dev>; Tue, 30 May 2023 13:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685478068; x=1688070068;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=of/5JX7VoIfv2vkTLNC734+oWn6zTGlkdNIC+/hQkxs=;
+        b=YbF1y+09eGaHy2Xl3Ml8zXD0Azdj2fIUxummi4R9sae43co5UZJ5o6SAFb5FnXnDv2
+         ci5trNLC0NwMjK2jgf3mOKrzILCOr3zKzwlL1FKL4LD0jiTLnJK7Kz7X5owrDFF+9Ida
+         9BiU+PsPOcrbbEwhU14LBf1b1YcEBx4rEgIzUIfoCAtayRN8v6YHWFjUZbV5yCAKS2E5
+         2yzLXHTSWPR5ZfGvv8K1UlQg9Oa0eFqCoXQz87nHMxOKFCS5DZw9A8pbx/X7iwqSNTDb
+         1P8YCWI9cqJp7AvLlNr7IsND8MRXSqZB/7KqkCttiHtstpRCAdt5iVBV4Co3wdHMFxds
+         FlYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685478068; x=1688070068;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=of/5JX7VoIfv2vkTLNC734+oWn6zTGlkdNIC+/hQkxs=;
+        b=WDRm2jeYDbZrPTI5sCoR2UeioaU1JKnXm3FZA2dBXqcaFS6Fm+uzq8x3T+JiRFQD2Z
+         wWIwsyBfcOY1+AZoDfnlWv7tJj6ZMOvpSAkbe4zkAqnimcHn/Ub1FCvLdkiGmFdIGhcA
+         VwseB4dkpu6HeYz0TNglLSeEl/oXea/oXpUhgPOKzOCgwWI3A29G2F1yJOD1A5tk1b2F
+         F6PX7ptp6fvTrfdvr22OI2/5cL4sQXxYJbXoH6ofzes/4OeC2aSPrGfqGHSjR4r19+LQ
+         0+v+S7RqfVQ5oc17cmGowtj5m6u1ytpMF6COAHZPVdWxbCb024ghDCashsTUqAirf4UL
+         WjOg==
+X-Gm-Message-State: AC+VfDxUsaCtlRUL4kf/jxBQNVPMLIiARwBiXqivLL4s7gIggzfZCRKx
+	8Lc9BLhqNZFyWsCpyU7Vl+k=
+X-Google-Smtp-Source: ACHHUZ7jRcRh4P3u2z+95acFIKMHna4RlASa/Q0HdpnihncQw9jnZvn54oSpx187GKhPpaYM2PW9fg==
+X-Received: by 2002:a17:903:1110:b0:1b0:2658:daf7 with SMTP id n16-20020a170903111000b001b02658daf7mr4010622plh.36.1685478068122;
+        Tue, 30 May 2023 13:21:08 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id iy11-20020a170903130b00b001afba6edc8esm5645126plb.166.2023.05.30.13.20.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 May 2023 13:21:07 -0700 (PDT)
+Message-ID: <99bac91c-eb98-91f0-cfb5-c198b1c747db@gmail.com>
+Date: Tue, 30 May 2023 13:20:56 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bav73qu5khl2dxkwpvy2hq34lyi56jn6yp7h5qlennka65kre3@zwwmrr55d2by>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 6.3 000/127] 6.3.5-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230528190836.161231414@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 30, 2023 at 10:16:22AM -0700, Lucas De Marchi wrote:
-> On Tue, May 30, 2023 at 09:22:14AM -0700, Luis Chamberlain wrote:
-> > Lucas, any thoughts from modules kmod userspace perspective into
-> > supporting anyone likely issuing concurrent modules requests with
-> > differing arguments?
+On 5/28/23 12:09, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.3.5 release.
+> There are 127 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Changing module params like that without first explicitly removing the
-> module was never supported by kmod or module-init-tools (I'm not digging
-> the history before 2.6 kernel)
+> Responses should be made by Tue, 30 May 2023 19:08:13 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-That's good enough.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-> During boot, note there is already a shortcut
-> if we have the sysfs node already in the "live" state or if the module is
-> built-in. In that case we will return success or -EEXIST (if the
-> KMOD_PROBE_IGNORE_LOADED flag was passed).
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 
-Linus' code would make duplicates wait and share the same return value,
-ie, no new odd error code is returned. Or are you suggesting -EEXIST
-should be returned to duplicates if the module succeeded to load
-instead of 0 ?
+if there is a need for a rc2, mind picking up:
 
-> The only scenario I can think of during boot in which the module params
-> could change would be when a buggy initrd is created, i.e.
-> /etc/modprobed.d/*.conf is in the rootfs but absent from initrd.
+https://lore.kernel.org/lkml/20230530201955.848176-1-florian.fainelli@broadcom.com/T/#u
 
-This helps thanks.
+Thanks!
+-- 
+Florian
 
-> So returning the same error code seems good to me.
-
-OK thanks! So just to confirm, it seems fine to return the same error
-code if duplicates wait, or do you prefer for some reason for there to
-be an exception and return -EEXIST if the module did succeed in the
-duplicate case?
-
-  Luis
