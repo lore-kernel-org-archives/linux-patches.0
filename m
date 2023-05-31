@@ -1,74 +1,75 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FEB17736
-	for <patches@lists.linux.dev>; Wed, 31 May 2023 17:10:04 +0000 (UTC)
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-bacf7060678so530276.0
-        for <patches@lists.linux.dev>; Wed, 31 May 2023 10:10:04 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F364514294
+	for <patches@lists.linux.dev>; Wed, 31 May 2023 17:11:42 +0000 (UTC)
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-bacf5b89da7so8639397276.2
+        for <patches@lists.linux.dev>; Wed, 31 May 2023 10:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685553003; x=1688145003;
+        d=gmail.com; s=20221208; t=1685553102; x=1688145102;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j5hNAeMykYH6m+pjlK4ZKQGtK0LDuyxxmWVTG0iy4gk=;
-        b=RgBb769DkAHCjoOyku0LjFwuuuVlYaimpuChbm/e6uqQonNgWj6Wkw86cPMdU6eXz3
-         IKYl4uH6w2nuanrD3CiroKb7ap7n18bm2RMoeLg/lKSqp/8MdBmzkuXUOIldyx2OkRT3
-         ZzxCY3GKi2PQtdVqYrIBrp+fD4+xUvumOR+8v200q+Pmz6dY7YhinaEm8VmIbSzMeb3H
-         S0ZI1aUrGebHJfqc29jWbkXjDdoLXBgdVvnvhT1Hd/QL3kg3qRFs8A5YuV4dpOsgxydk
-         6tsP9dzvIlUb7JwM8sIneb6X4//FQJ755f8Khi6Ktc4kjIQAgt/l6LC7qbc8+/mXs584
-         Hgaw==
+        bh=ebXJVsSOUn2ugmT4rghMz7fEudpo4P8yANA/KrthHSQ=;
+        b=rWOXBBOyOrBpuPMg0lDoyufRLZkgu0GznDnPFyWVtJFifHw7Tw6NjeMYjynx7qz/46
+         SbPowBCnn5Lk0cECatibpEFOHYw25O9dkF8KZTssbGCQvS2bETkGgaFsDoPaVQFCgFF8
+         1Ag+EMJveJF1qPYsr7gYEYsuMPnSYtYucxdk8ZEODhO03hSbn8SKM+wKE5ZTsAfKfoGz
+         TRKvv0kCsk4cQuTvEyzYhPpwcN13N2MsgYpBhyqaUG77IHqcoPNzESguACv0Xag1z7x+
+         2rNMIFLpeUGL9PyE50gUuhWvoXnhXrmkTinHm30tpSKqm/dDqJU2GcxhmqFSrmAG1rnM
+         xVJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685553003; x=1688145003;
+        d=1e100.net; s=20221208; t=1685553102; x=1688145102;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=j5hNAeMykYH6m+pjlK4ZKQGtK0LDuyxxmWVTG0iy4gk=;
-        b=FNx7FeM58rHG4GsbK0rPKcpZS1jRIRn0FZqwRHZMT2EBhtjIoyl6e95QUdCZp15ZHn
-         X+ygnSAzrolGe33XMEfMELqyCpJqEC1HlX/+gjQIHfqpn2UkDIrte4yzsPg2oW6RdZ2A
-         4X3mNCZT8vGqUtaWtNTM/iA2ro7JcU3P51nq05hQhOWInrrE5V6k+A5UW9bPADV7hU2M
-         wtONHBUkQvwBhFbLHG5fVUaQ+bpeVJ7pUujDM53jbK3ZagnTOpYTLl+ikUEt+fe2Edvf
-         Ym99VJEFfNncdaNrb2SAFNyi+qvmAUoZr/TfFFYr1Ku9cYZTRXZzlaekgt89cc0sXBKr
-         YGzg==
-X-Gm-Message-State: AC+VfDyt+eqAA2blX2QjlCxuZzILctr+Kx1DlSm33A7PsEdIT167gAiW
-	6BzZUEClxJA6yQ1oOc6+rVuFPISqw0N+whttDjU=
-X-Google-Smtp-Source: ACHHUZ6gziPlD75sFBIWzYJKukeguq7CTPeNtKJWb7F/xT/sDpz2WsRUhNOlU+011ytGs8Qg/NrtXYae3YXJc9tUeRs=
-X-Received: by 2002:a25:e64f:0:b0:bac:fd8d:94b5 with SMTP id
- d76-20020a25e64f000000b00bacfd8d94b5mr18876773ybh.13.1685553003652; Wed, 31
- May 2023 10:10:03 -0700 (PDT)
+        bh=ebXJVsSOUn2ugmT4rghMz7fEudpo4P8yANA/KrthHSQ=;
+        b=BwhvDw0/GhiMxqcP9KQiljJUt8mYkz8MrGd+crv73K/dJUW3rLibnPYiCpUUNlt9i9
+         GIFLXXVaZGEQehOkI11RJyut4EDoXL40l3mi3/8+rd2B9OMIV762V7lHX5JlLGsAogmw
+         snMJS0D5PgZaXfo4NIzLcvc+IOl/3UYUjoU60On8EZflJaaey7N8lTcYVITiGrKUmW0j
+         rLTHki0qYiqXmoa2QFQ3dPW97huVwBipBU43iNyOSkw7VrT7UbbQE01zFC+UCOvQYsuS
+         RWgp6eDwk6FEKTiAnfyVMFLYWoTHlyqKidFzWe49t3IekpPmhtFX7eibmWmDTJUrSYmu
+         grFg==
+X-Gm-Message-State: AC+VfDxWpqHcWDWV+v3+mTfIxeaSlNgbaoVNI6TjNFO1+uznYPFrwLKT
+	JZOE5878+rcCgEEZI8plKHY7B+2z7C3v1IUVYY0=
+X-Google-Smtp-Source: ACHHUZ70MMpnGtaiZiK8Wa0uRar/BTF3XWEcNJkZ9HluytIz1Q1g/E693M33BQVNFcwmkJ0i279u/zrdRM/51wlt1/8=
+X-Received: by 2002:a25:af54:0:b0:bad:13c4:3070 with SMTP id
+ c20-20020a25af54000000b00bad13c43070mr6775546ybj.47.1685553101927; Wed, 31
+ May 2023 10:11:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230503141016.683634-1-aliceryhl@google.com>
-In-Reply-To: <20230503141016.683634-1-aliceryhl@google.com>
+References: <20230504064854.774820-1-aliceryhl@google.com>
+In-Reply-To: <20230504064854.774820-1-aliceryhl@google.com>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 31 May 2023 19:09:52 +0200
-Message-ID: <CANiq72k6kSHPNjQr+PEB3KGO05M0mGet5un7jVeNeS_02uEzZQ@mail.gmail.com>
-Subject: Re: [PATCH v2] rust: str: add conversion from `CStr` to `CString`
+Date: Wed, 31 May 2023 19:11:31 +0200
+Message-ID: <CANiq72=S+gUXcsp1k1ZUnRbsecnP5KCKVW-tJoqZB_NsT-2K+A@mail.gmail.com>
+Subject: Re: [PATCH v2] rust: error: add missing error codes
 To: Alice Ryhl <aliceryhl@google.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
 	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Martin Rodriguez Reboredo <yakoyoku@gmail.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
+	Benno Lossin <benno.lossin@proton.me>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 3, 2023 at 4:10=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> wr=
+On Thu, May 4, 2023 at 8:49=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> wr=
 ote:
 >
-> These methods can be used to copy the data in a temporary c string into
-> a separate allocation, so that it can be accessed later even if the
-> original is deallocated.
+> This adds the error codes from `include/linux/errno.h` to the list of
+> Rust error constants. These errors were not included originally, because
+> they are not supposed to be visible from userspace. However, they are
+> still a perfectly valid error to use when writing a kernel driver. For
+> example, you might want to return ERESTARTSYS if you receive a signal
+> during a call to `schedule`.
 >
-> The API in this change mirrors the standard library API for the `&str`
-> and `String` types. The `ToOwned` trait is not implemented because it
-> assumes that allocations are infallible.
+> This patch inserts an annotation to skip rustfmt on the list of error
+> codes. Without it, three of the error codes are split over several
+> lines, which looks terribly inconsistent.
 >
-> Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 
 Applied to `rust-next` -- thanks everyone!
