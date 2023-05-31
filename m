@@ -1,98 +1,198 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F69C8FF
-	for <patches@lists.linux.dev>; Wed, 31 May 2023 15:03:00 +0000 (UTC)
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-ba8cf175f5bso2299651276.0
-        for <patches@lists.linux.dev>; Wed, 31 May 2023 08:03:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1685545380; x=1688137380;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1lJ5Uf+EcwGNh0b/3i4Z2YdTIWfA6+IGf6dwAn0jzq8=;
-        b=5OgM51JSEe6PSOdk5CNCvcME9wVy09vhid7JxBNb7qJiDjF7E4J7ZYoqTcZXK7G/4Q
-         fBVGQRIPzqWJ4sY8Qc07prjIwDuUtokHF0Ed2I4HNciIkLqmXpEkND10y5X5aZpnha+V
-         JLsxaK5gm0+gDI/poxo2GLrXFxNVTsbSH75EjWelp+iT0fqpaAFlShM/OEEAy9Q/Z1oH
-         U4OocqQZEmuNGhc3RV03kZUW3fYLSdLdiSfHU6Vi4FDgN/sFLOHJKfa+8/E/hJkpUra5
-         Sjmd9/kBBv4MLQcWszMrplLIURaRI+p5FKBw8o4fAZ4CJcaOMFqdKw5U+Lr+aVFM4OvC
-         h9Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685545380; x=1688137380;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1lJ5Uf+EcwGNh0b/3i4Z2YdTIWfA6+IGf6dwAn0jzq8=;
-        b=Hw5NnCyVbs4DuQmi2yaxrBaEq2WBoL1+8gC+6wvP/ayWlxF7BNiSU6LtbaocfxUOCA
-         4apL1BKBhKe62rSQUW3buffYpi8js+KtQl8wUI4zq00RRNjd46yfpVng64Gt8JWT1l76
-         kaLJ5NYXJhR9Y5LdAMIcEX+msHsSpHNdAsDfmw4UA3wMyn0Djky8sduKAtacVagJL2SP
-         cqvCMn7hvxnucdEOC0pgciY2AE//m/8u4QHAQht7RvZvtTMbwGYC1/+AxEaSvMQj3kNT
-         Q2MfAKur1ovqktcdOJNoWGCC+9I7HhRI6nVXPw4CyQsNWFfJ3YvgXTB/UOjP7aQt1HGX
-         4tuA==
-X-Gm-Message-State: AC+VfDzO53r8A1DovBI+bnAjs+gXSfog6buFTDVwCbXal6yhCXeGP2k/
-	rBjZw7+xb6W3pTndyevK1ntPTPPJ7hLYwDo=
-X-Google-Smtp-Source: ACHHUZ7jvbBEzbGMgkGfuh3So2mtf2RBfJvxuGuJkkzHzas325wMoQJCyO0TQgPDMkaiP/e7MDeDFu9c3SC1WFw=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a05:6902:100e:b0:bb1:569c:f381 with SMTP
- id w14-20020a056902100e00b00bb1569cf381mr1335253ybt.1.1685545379836; Wed, 31
- May 2023 08:02:59 -0700 (PDT)
-Date: Wed, 31 May 2023 14:59:39 +0000
-In-Reply-To: <20230531145939.3714886-1-aliceryhl@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FAA17736
+	for <patches@lists.linux.dev>; Wed, 31 May 2023 16:57:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:
+	Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Reply-To:Content-ID:Content-Description;
+	bh=sQf6qkA4MEbn8EichAXNjYGf8MDrQBBNv2l2z1zQPA0=; b=tc2HCj6Cn1LdEc84oXW9SaHEtv
+	3siyUr4dMxMBLVDobevnbEEiCz21oQMPxV9VZh6Q9LNtEMcFBYS0/98cfaEVHv8thxxgjG1cmFn4t
+	AcjBb3Ci7Pgy5/CA0pGmkxdp0M6zIjPEWocIqCFxop9tJ1i9uOZAB9ZjTQk5fpLmBNM5NoLqG66ee
+	qQ8q8/a6Rfm3a/iqnYo9R71yfBAtth+4fOyhrcuBFOBpMTxkZC20xc2lkU7XBk0In0NvoBlgaJeRQ
+	8G8wiV1+qXn6rNrksuo1Zi5gsUGzMKxkcYxW2iYrtCLBf78sPNkwEC7a8wXP0dUfjh9zrHddk0v1y
+	UYFFygGg==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1q4P8O-000XDH-2D;
+	Wed, 31 May 2023 16:57:16 +0000
+Date: Wed, 31 May 2023 09:57:16 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: David Hildenbrand <david@redhat.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johan Hovold <johan@kernel.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org,
+	rafael@kernel.org, song@kernel.org, lucas.de.marchi@gmail.com,
+	christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org,
+	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
+	mhocko@suse.com, dave.hansen@linux.intel.com,
+	colin.i.king@gmail.com, jim.cromie@gmail.com,
+	catalin.marinas@arm.com, jbaron@akamai.com,
+	rick.p.edgecombe@intel.com, yujie.liu@intel.com, tglx@linutronix.de,
+	hch@lst.de, patches@lists.linux.dev, linux-modules@vger.kernel.org,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org, pmladek@suse.com,
+	prarit@redhat.com, lennart@poettering.net
+Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
+Message-ID: <ZHd8bLPY4OQCb/Z5@bombadil.infradead.org>
+References: <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
+ <ZG/a+nrt4/AAUi5z@bombadil.infradead.org>
+ <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
+ <ZHRpH-JXAxA6DnzR@hovoldconsulting.com>
+ <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
+ <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
+ <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
+ <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
+ <ZHYitt7P7W+8ZlSB@bombadil.infradead.org>
+ <499e30cc-d015-8353-1364-50d17da58f47@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20230531145939.3714886-1-aliceryhl@google.com>
-X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
-Message-ID: <20230531145939.3714886-5-aliceryhl@google.com>
-Subject: [PATCH v3 4/4] rust: task: add `Send` marker to `Task`
-From: Alice Ryhl <aliceryhl@google.com>
-To: rust-for-linux@vger.kernel.org
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, 
-	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
-	Alice Ryhl <aliceryhl@google.com>, Ingo Molnar <mingo@redhat.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Will Deacon <will@kernel.org>, 
-	Mark Rutland <mark.rutland@arm.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <499e30cc-d015-8353-1364-50d17da58f47@redhat.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-When a type also implements `Sync`, the meaning of `Send` is just "this
-type may be accessed mutably from threads other than the one it is
-created on". That's ok for this type.
+On Wed, May 31, 2023 at 09:51:41AM +0200, David Hildenbrand wrote:
+> On 30.05.23 18:22, Luis Chamberlain wrote:
+> > On Mon, May 29, 2023 at 09:55:15PM -0400, Linus Torvalds wrote:
+> > > On Mon, May 29, 2023 at 11:18 AM Johan Hovold <johan@kernel.org> wrote:
+> > > > 
+> > > > I took a closer look at some of the modules that failed to load and
+> > > > noticed a pattern in that they have dependencies that are needed by more
+> > > > than one device.
+> > > 
+> > > Ok, this is a "maybe something like this" RFC series of two patches -
+> > > one trivial one to re-organize things a bit so that we can then do the
+> > > real one which uses a filter based on the inode pointer to return an
+> > > "idempotent return value" for module loads that share the same inode.
+> > > 
+> > > It's entirely untested, and since I'm on the road I'm going to not
+> > > really be able to test it. It compiles for me, and the code looks
+> > > fairly straightforward, but it's probably buggy.
+> > > 
+> > > It's very loosely based on Luis' attempt,  but it
+> > >   (a) is internal to module loading
+> > >   (b) uses a reliable cookie
+> > >   (c) doesn't leave the cookie around randomly for later
+> > >   (d) has seen absolutely no testing
+> > > 
+> > > Put another way: if somebody wants to play with this, please treat it
+> > > as a starting point, not the final thing. You might need to debug
+> > > things, and fix silly mistakes.
+> > > 
+> > > The idea is to just have a simple hash list of currently executing
+> > > module loads, protected by a trivial spinlock. Every module loader
+> > > adds itself to the right hash list, and if they were the *first* one
+> > > (ie no other pending module loads for that inode), will actually do
+> > > the module load.
+> > > 
+> > > Everybody who *isn't* the first one will just wait for completion and
+> > > return the same error code that the first one returned.
+> > 
+> > That's also a hell much more snazzier MODULE_DEBUG_AUTOLOAD_DUPS if we
+> > ever wanted to do something similar there if we wanted to also
+> > join request_module() calls, instead of it hiding under debug.
+> > 
+> > > This is technically bogus. The first one might fail due to arguments.
+> > 
+> > For boot it's fine, as I can't think of boot wanting to support trying
+> > to load a module with different arguments but who knows. But I can't
+> > see it sensible to issue concurrent multiple requests for modules
+> > with different arguments without waiting in userspace for the first
+> > to fail.
+> > 
+> > Even post-boot, doing that sounds rather insane, but it would certainly
+> > be a compromise and should probably be clearly documented. I think just
+> > a comment acknolwedging that corner case seems sensible.
+> > 
+> > Because we won't be able to get the arguments until we process the
+> > module, so it would be too late for this optimization on kread. So it is
+> > why I had also stuck to the original feature being in kread, as then it
+> > provides a uniq kread call and the caller is aware of it. But indeed I
+> > had not considered the effects of arguments.
+> > 
+> > Lucas, any thoughts from modules kmod userspace perspective into
+> > supporting anyone likely issuing concurrent modules requests with
+> > differing arguments?
+> > 
+> > > So the cookie shouldn't be just the inode, it should be the inode and
+> > > a hash of the arguments or something like that.
+> > 
+> > Personally I think it's a fine optimization without the arguments.
+> > 
+> > > But it is what it is,
+> > > and apart from possible show-stopper bugs this is no worse than the
+> > > failed "exclusive write deny" attempt. IOW - maybe worth trying?
+> > 
+> > The only thing I can think of is allowing threads other than the
+> > first one to complete before the one that actually loaded the
+> > module. I thought about this race for module auto-loading, see
+> > the comment in kmod_dup_request_announce(), so that just
+> > further delays the completion to other thread with a stupid
+> > queue_work(). That seems more important for module auto-loading
+> > duplicates than for boot finit_module() duplicates. But not sure
+> > if odering matters in the end due to a preemtible kernel and maybe
+> > that concern is hysteria.
+> > 
+> > > And if *that* didn't sell people on this patch series, I don't know
+> > > what will. I should be in marketing! Two drink minimums, here I come!
+> > 
+> > Sold:
+> > 
+> > on 255 vcpus 0 duplicates found with this setup:
+> > 
+> > root@kmod ~ # cat /sys/kernel/debug/modules/stats
+> >           Mods ever loaded       66
+> >       Mods failed on kread       0
+> > Mods failed on decompress       0
+> >    Mods failed on becoming       0
+> >        Mods failed on load       0
+> >          Total module size       11268096
+> >        Total mod text size       4149248
+> >         Failed kread bytes       0
+> >    Failed decompress bytes       0
+> >      Failed becoming bytes       0
+> >          Failed kmod bytes       0
+> >   Virtual mem wasted bytes       0
+> >           Average mod size       170729
+> >      Average mod text size       62868
+> > 
+> > So:
+> > 
+> > Tested-by: Luis Chamberlain <mcgrof@kernel.org>
+> > 
+> > In terms of bootup timing:
+> > 
+> > Before:
+> > Startup finished in 41.653s (kernel) + 44.305s (userspace) = 1min 25.958s
+> > graphical.target reached after 44.178s in userspace.
+> > After:
+> > Startup finished in 23.995s (kernel) + 40.350s (userspace) = 1min 4.345s
+> > graphical.target reached after 40.226s in userspace.
+> 
+> I'll try grabbing the system where we saw the KASAN-related issues [1] and
+> give it a churn with and without the two patches. Might take a bit (~1 day),
+> unfortunately.
+> 
+> [1] https://lkml.kernel.org/r/20221013180518.217405-1-david@redhat.com
 
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
----
- rust/kernel/task.rs | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Great, don't forget:
 
-diff --git a/rust/kernel/task.rs b/rust/kernel/task.rs
-index 526d29a0ae27..7eda15e5f1b3 100644
---- a/rust/kernel/task.rs
-+++ b/rust/kernel/task.rs
-@@ -64,8 +64,14 @@ macro_rules! current {
- #[repr(transparent)]
- pub struct Task(pub(crate) Opaque<bindings::task_struct>);
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 82b0dcc1fe77..222015093eeb 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -3066,7 +3066,7 @@ struct idempotent {
  
--// SAFETY: It's OK to access `Task` through references from other threads because we're either
--// accessing properties that don't change (e.g., `pid`, `group_leader`) or that are properly
-+// SAFETY: By design, the only way to access a `Task` is via the `current` function or via an
-+// `ARef<Task>` obtained through the `AlwaysRefCounted` impl. This means that the only situation in
-+// which a `Task` can be accessed mutably is when the refcount drops to zero and the destructor
-+// runs. It is safe for that to happen on any thread, so it is ok for this type to be `Send`.
-+unsafe impl Send for Task {}
-+
-+// SAFETY: It's OK to access `Task` through shared references from other threads because we're
-+// either accessing properties that don't change (e.g., `pid`, `group_leader`) or that are properly
- // synchronised by C code (e.g., `signal_pending`).
- unsafe impl Sync for Task {}
+ #define IDEM_HASH_BITS 8
+ static struct hlist_head idem_hash[1 << IDEM_HASH_BITS];
+-static struct spinlock idem_lock;
++static DEFINE_SPINLOCK(idem_lock);
  
--- 
-2.41.0.rc0.172.g3f132b7071-goog
-
+ static bool idempotent(struct idempotent *u, const void *cookie)
+ {
