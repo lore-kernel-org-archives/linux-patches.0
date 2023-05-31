@@ -1,92 +1,96 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09D531F07
-	for <patches@lists.linux.dev>; Wed, 31 May 2023 19:48:32 +0000 (UTC)
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-19f515f0229so120328fac.0
-        for <patches@lists.linux.dev>; Wed, 31 May 2023 12:48:32 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189A31640F
+	for <patches@lists.linux.dev>; Wed, 31 May 2023 21:20:58 +0000 (UTC)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-568f9caff33so701087b3.2
+        for <patches@lists.linux.dev>; Wed, 31 May 2023 14:20:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685562511; x=1688154511;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+4Wcgl0rHsjPEzn2Tf0MuvPr782eDL8Xj3y55NIs4UI=;
-        b=Y3gH3jzjra2jFRV8Sv0VyvPZUpq1haLVKBPrHLAJSu+lhIq8GupxcqLGx67HXO4941
-         bVXZ76fkQNBwiTc4cEDL2Jgd+70woAzpIk3IJVCSaBYvJWrMEmOONY2xG78CS2WYz3jL
-         yrgZsLTROQwslkJ9c5fHcHzIUx7cSCgpVdH0/RqRcgeePjwW9D9MdSEXXVkbz3IkXdHP
-         HEvBSPDsktsCh3Kaijj9kRu0DZBnTT8emJS0nfqDYW21Ixp6dvTR6tI24kIR7ZZbi1HZ
-         W7yuUWs3gpE5AN7ey47pXIYMVYZOOnlUET4Gp12tMkqSeYtsl26uYc0h2xyk4VfynvEi
-         xaYA==
+        d=paul-moore.com; s=google; t=1685568057; x=1688160057;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LoZ0QonL7GpvkzVGqoB0gV8pXc0xldAiiia3lsdp4Jw=;
+        b=bV4CEIauWya7OBEvEJZ8O8BySgJRaCgtsOwV6TTfZUxO5baLK/jxr8/dThczBffNj1
+         g1gilTPiZQifPjEoO+IN/kk9i9ttCodVZ8VAZQtdacEO/I73YOsQw1P3KDX0Q7NmzVl5
+         fWejNhHweIU62YqvrPCRW4133WGgKrli3JmhqeqvcL8piPMRhv5kXzRVBqPq9qLq/qnk
+         DYPmRx+V/9Ra/NmqVGiyPe/eqdSrEtP3EsfkjQln612yGRhW29oLVVtt+CMN+/kCRLon
+         kft2gp88qfJMj0vw5N1jDI9nRjKoMbdmze8lCQUhFECmOfrFLAjt2nlsqiJvMXmcx5wf
+         sMDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685562511; x=1688154511;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+4Wcgl0rHsjPEzn2Tf0MuvPr782eDL8Xj3y55NIs4UI=;
-        b=RglDie22FCHPHbQw2GlZ1Ry2oQLdtPgp2RNnOcf2NqyBKzDZ4eNzrl6lC5J58786Nd
-         yKcqD5B3yG2DpgEm67irpiCfl//775EJ+Y1esRfym/+P84ESrCeQwxWeWuHmL1QE1IDV
-         aUTS2sJ+cd9PfbvPexnY48hWubce04CFa4Z5BdTM0jVJWrwtMsgLaqrWMFFUY9ysZCtm
-         Q7aiWn99ifriqvYER96/xVQa4yRVaEZjz1Lwf2BH/XiI7kHKw8oA945qryIVoVwBnvmb
-         h84kgnczXsptmbhWdmkVJgswZF7TAZxAGlE3//073fcGOZLetv7JqFQ//ZvlSuc9IAiJ
-         7Aaw==
-X-Gm-Message-State: AC+VfDwJtkfhsoFUDVPq+o0sbKc63kE28av4F6a/N6hF3G52dUvMoKPj
-	CwopJzMD6XYDNgGDWtVdstv5cSRMyd8=
-X-Google-Smtp-Source: ACHHUZ5YvVXylqQGY0foLp4Ey+r/irkQjeCZLrWViC4Aae+jMtqh3si45xqC9phUz+jjk16oL6F9lg==
-X-Received: by 2002:a05:6871:a78a:b0:19a:1324:5875 with SMTP id wj10-20020a056871a78a00b0019a13245875mr2605771oab.26.1685562511717;
-        Wed, 31 May 2023 12:48:31 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id e20-20020a05683013d400b006b0f58724d8sm785339otq.66.2023.05.31.12.48.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 12:48:31 -0700 (PDT)
-Message-ID: <22ac8a99-d243-c537-41c7-ff2c5e69d28f@gmail.com>
-Date: Wed, 31 May 2023 16:48:27 -0300
+        d=1e100.net; s=20221208; t=1685568057; x=1688160057;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LoZ0QonL7GpvkzVGqoB0gV8pXc0xldAiiia3lsdp4Jw=;
+        b=eNpcg01y2Sr7ZfFO7/F5lf8oBHkA+vRYspDR7GpFRRhZxKtbKJopE4tTnK2k0bRVzg
+         nF9F7DLuvqPspS5csmmP9+HCDht717ok6YLpmapNmtlpJVwPamusu8ohU4g4ef+gZU4Y
+         5EoepYZCm7mJZY0dgmrUwZq5pWNGWps2vn9cGFKBXxDKcenOqy3GpmnBERMWNsXC0DBG
+         4iEFl5jrAn2FgY46GpYeElNSFvAyf3hUOLY4GB81QQOM538A8MXoN1C2ZRCcjFHWVdY2
+         SoTL15CsAK4zWPaeqc57Z+Ze28JJF+f8isYptj4sH+PDGCQQAWmVhQ8AbCITsztGl1pm
+         GRag==
+X-Gm-Message-State: AC+VfDx9BTrEX/6t14bGS4d4J6eEEHc9Lzy13AvmUbfOsinm0XleSOV3
+	yp+GLZf+zLpNXLCxIbhqznbaTe0TjsazOHoR77AS
+X-Google-Smtp-Source: ACHHUZ7xDxpY+qZ+kHStKpfyGCUmSZFIrAOaNegLCNmyLU6OfWoFLFoTJ5KIVySJiQxq5mqHTIQOq8i1T+EuU78aXoc=
+X-Received: by 2002:a81:d246:0:b0:561:9051:d2d3 with SMTP id
+ m6-20020a81d246000000b005619051d2d3mr6586195ywl.11.1685568057462; Wed, 31 May
+ 2023 14:20:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 3/3] rust: upgrade to Rust 1.68.2
-Content-Language: en-US
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: ojeda@kernel.org, alex.gaynor@gmail.com, benno.lossin@proton.me,
- bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net,
- gyakovlev@gentoo.org, jan.steffens@gmail.com, jistone@redhat.com,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- rust-for-linux@vger.kernel.org, wedsonaf@gmail.com, william.brown@suse.com
-References: <20230418214347.324156-4-ojeda@kernel.org>
- <20230419030243.540348-1-yakoyoku@gmail.com>
- <CANiq72knVpyaKdT2iwrBNYorAt3Y5M-r6pXHc9JAZRCVmBYusQ@mail.gmail.com>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <CANiq72knVpyaKdT2iwrBNYorAt3Y5M-r6pXHc9JAZRCVmBYusQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20230530232914.3689712-1-mcgrof@kernel.org> <20230530232914.3689712-3-mcgrof@kernel.org>
+In-Reply-To: <20230530232914.3689712-3-mcgrof@kernel.org>
+From: Paul Moore <paul@paul-moore.com>
+Date: Wed, 31 May 2023 17:20:46 -0400
+Message-ID: <CAHC9VhRA_XkkiZpg=d1RiME+VUYe7bsuV6pOpsseDRWfwV+q9A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] sysctl: move security keys sysctl registration to its
+ own file
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: keescook@chromium.org, yzaikin@google.com, dhowells@redhat.com, 
+	jarkko@kernel.org, jmorris@namei.org, serge@hallyn.com, 
+	j.granados@samsung.com, brauner@kernel.org, ebiederm@xmission.com, 
+	patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, 
+	keyrings@vger.kernel.org, linux-security-module@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 5/31/23 14:02, Miguel Ojeda wrote:
-> On Wed, Apr 19, 2023 at 5:02 AM Martin Rodriguez Reboredo
-> <yakoyoku@gmail.com> wrote:
->>
->> Kinda bunch to review, although may I ask if each time the `alloc`
->> crate is updated is worth to mention the changes upon it [1], can be
->> skipped otherwise.
->>
->> Link: https://github.com/rust-lang/rust/commits/master/library/alloc [1]
-> 
-> That could be nice if we could give a link similar to, say, what:
-> 
->      git log 1.62.0..1.68.2 -- library/alloc/src/
-> 
-> produces (or perhaps a list of PRs) -- is it possible to do so with a
-> GitHub URL? If so, please let me know!
-> 
-> Cheers,
-> Miguel
+On Tue, May 30, 2023 at 7:29=E2=80=AFPM Luis Chamberlain <mcgrof@kernel.org=
+> wrote:
+>
+> The security keys sysctls are already declared on its own file,
+> just move the sysctl registration to its own file to help avoid
+> merge conflicts on sysctls.c, and help with clearing up sysctl.c
+> further.
+>
+> This creates a small penalty of 23 bytes:
+>
+> ./scripts/bloat-o-meter vmlinux.1 vmlinux.2
+> add/remove: 2/0 grow/shrink: 0/1 up/down: 49/-26 (23)
+> Function                                     old     new   delta
+> init_security_keys_sysctls                     -      33     +33
+> __pfx_init_security_keys_sysctls               -      16     +16
+> sysctl_init_bases                             85      59     -26
+> Total: Before=3D21256937, After=3D21256960, chg +0.00%
+>
+> But soon we'll be saving tons of bytes anyway, as we modify the
+> sysctl registrations to use ARRAY_SIZE and so we get rid of all the
+> empty array elements so let's just clean this up now.
+>
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>  include/linux/key.h    | 3 ---
+>  kernel/sysctl.c        | 4 ----
+>  security/keys/sysctl.c | 7 +++++++
+>  3 files changed, 7 insertions(+), 7 deletions(-)
 
+Ultimately I'll leave the ACK to David or Jarkko, but this looks
+reasonable to me.
 
-It seems that kind of URL comparisons in GitHub aren't supported yet
-per the docs say [1]. Sad but maybe in the future they are going to be
-supported, or at least I hope GitLab or Gitea do it.
+Reviewed-by: Paul Moore <paul@paul-moore.com>
 
-Link: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/viewing-and-comparing-commits/comparing-commits [1]
+--=20
+paul-moore.com
