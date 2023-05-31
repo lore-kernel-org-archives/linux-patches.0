@@ -1,85 +1,72 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894AE171C4
-	for <patches@lists.linux.dev>; Wed, 31 May 2023 17:05:43 +0000 (UTC)
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-565a6837a0bso78088977b3.3
-        for <patches@lists.linux.dev>; Wed, 31 May 2023 10:05:43 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACCA182B1
+	for <patches@lists.linux.dev>; Wed, 31 May 2023 17:07:46 +0000 (UTC)
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-b9a7e639656so10336531276.0
+        for <patches@lists.linux.dev>; Wed, 31 May 2023 10:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685552742; x=1688144742;
+        d=gmail.com; s=20221208; t=1685552866; x=1688144866;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jLI3C77UUH8a7vo/UtwCwZu01ZTIS8d3sU+aRADHIYU=;
-        b=G4nllCdJCOjAFj8ZxauXRVVq7uw3y0OzOdsiezqKZ5DfFZNlEkLII7Hc7TJdeKh15W
-         eLLTQmortFLT8AesUuBvWfjQ4B8Ene6kWHDmTjfJ3PgG53lkEywPKBTOSQ7nEvVYc5N9
-         hqBGIrLP/kl+rwSgNz22YgWGan8dh0MG1T6q4N7Cuw8D59P6pTH0cIeQsCLSZE3vnVv0
-         sVM65wKdQI4y/thZgJoRv5TOWcSalI0Rmj+V7cdo0Ma/nr4etRXgjHTyt/TpOwjOXfyV
-         8XXrYhdlCvsQjWwrjIUpYSgrI+Djq9ea9+qe20Iq2aAfVOG25FogpBOjRa2bsnVtj8XC
-         C5/Q==
+        bh=76vg60iW/EsEINmD+Bil9N8BO8s1pVlIY0spf2KHpnw=;
+        b=AqFFPdnWQgjfaEVYQJhTRCZLbnnoP1T/OuVLPkM82QjyaLFvqLZkQvnLuFiUKznvbg
+         5mnVnDzBYCxL/hKfAytTdiJQOLdEgoCvVB6AsWcKlQhmLeM+4GvfhyiTSKwYPOLeHCCr
+         tKsAHo6lumCftCJDl3h3MmoFksS2OV/aCzedbK+fKrjLdgkBktemgwYem72t/j5R6V2U
+         dXvny0xVl+mUZs5tJWBoYgmrvu6ydBZH+L8ohdlnNwHbsfpSkJkkjqZOpjXj7C1UA6It
+         YihUAZcK76QDC7mPDkjbTJd7R2xdv95bumAe3vbat6Ttu/5QCDTK70W5HCpqe9JAsNCm
+         BEUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685552742; x=1688144742;
+        d=1e100.net; s=20221208; t=1685552866; x=1688144866;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jLI3C77UUH8a7vo/UtwCwZu01ZTIS8d3sU+aRADHIYU=;
-        b=bl0hVZKzu+d7iwWWzMaqFIYQloGRLws+Zz2/oqnGZNjJrgJNWRK1RDXozQ0GMYPF41
-         Gskk3Ft98t/OB3UR79E2S3nRPUzxr1zvgGpJOJ/W4hybYflMALMcN09j1ChXoLOWTkVf
-         nX1ffrkOOzpbr821yVMmg0jcD2LQInnhDtJ1jF3hC/52cu8zYuFerSsCSh25gnjRKwWw
-         UG5UF9VH/Qw6bS3UBk976F/6CCUW/5l7YRYPID5nGxT11GhNCA8Vx1nyxf4G5dygbYhp
-         /w6Ov0gD6HeGEMY+QSulB+SRm/IKjqNLkGzUxfUhNLe/NHOtF5j2WTmxOHsXINgmzP2z
-         Snwg==
-X-Gm-Message-State: AC+VfDwxdxRI2squ7TO5GlKrYAz2l/c2qCIZJz4RorBgBH5Zp7UJT9XN
-	Pi3HIc3/9P71Yu9f3dwRoqrpPpBLdAf5VnZ7oKU=
-X-Google-Smtp-Source: ACHHUZ7T5FWtaCksEYIGCfBxBoHHCSoylR97os4Rjz45cR+S5pJnqL6TG4nigKhZP13Jl/iqOnTvmluSNUoNaVjYCL4=
-X-Received: by 2002:a25:242:0:b0:bad:c64:4e0d with SMTP id 63-20020a250242000000b00bad0c644e0dmr6780393ybc.35.1685552742397;
- Wed, 31 May 2023 10:05:42 -0700 (PDT)
+        bh=76vg60iW/EsEINmD+Bil9N8BO8s1pVlIY0spf2KHpnw=;
+        b=FiXjs78wc5DLJx4x8owbcTbiLnxNge0j8J/WlEyA2RW0MM/lWOYnFUqW8ckzDbb9it
+         U1RDjGW0gtHVBx/L5p7dkzSU+PVW0HnjHJJHXcjfBfEhbCixiAXZZ7SYBAkwkpAfKAaN
+         2Ulmq9HzG2Tvvscp2TcHwKqmWTN9c1jA16TdaaXPO6624rgfsd0gA8pYA3NWUhqbTP2L
+         Ly6VSY/VnHZZI9qdLLR5hxUQw8eVv3+tRYMVkkeG47ZIHw4tdgGHm43Le2fffemDDl1U
+         K4LeWfPfOOdPPbK5dANDuXJYP9cvUz0x2CqcmONNKHFFYf+IFqY842vQFlbsj73kwDdG
+         /ZCg==
+X-Gm-Message-State: AC+VfDx1rDagrqVe4ibD09NCqag4uze2kNXK24s3xMo7lfVrbmaIWzSY
+	G6RS7cN2/iAGG6lopR7Co1H0pmOsoqFgAHRcEMqlKgImtykdKE4P
+X-Google-Smtp-Source: ACHHUZ4uqNma9e3+EYkNu8p5+bzGEjXLgfIeVC5PLIfPRxyx/cw9q8ArFbk7Z8GRYiv9JC2uWP48jpw4dudhtW6vhuA=
+X-Received: by 2002:a25:5087:0:b0:ba2:ca56:7206 with SMTP id
+ e129-20020a255087000000b00ba2ca567206mr7209029ybb.17.1685552865848; Wed, 31
+ May 2023 10:07:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230306220959.240235-1-ojeda@kernel.org>
-In-Reply-To: <20230306220959.240235-1-ojeda@kernel.org>
+References: <20230424081112.99890-1-benno.lossin@proton.me>
+In-Reply-To: <20230424081112.99890-1-benno.lossin@proton.me>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 31 May 2023 19:05:31 +0200
-Message-ID: <CANiq72kun_ZLRBB_h3-Dtby3G0brDV+xWb-mda=3QC_oRyzMfQ@mail.gmail.com>
-Subject: Re: [PATCH] docs: rust: point directly to the standalone installers
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	linux-doc@vger.kernel.org, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Date: Wed, 31 May 2023 19:07:34 +0200
+Message-ID: <CANiq72=OFioNTZiVR+vBkYs2Xum6Pv14x4kwNDqxJB0utB2dyA@mail.gmail.com>
+Subject: Re: [PATCH 1/4] rust: macros: fix usage of `#[allow]` in `quote!`
+To: Benno Lossin <benno.lossin@proton.me>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 6, 2023 at 11:10=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
+On Mon, Apr 24, 2023 at 10:11=E2=80=AFAM Benno Lossin <benno.lossin@proton.=
+me> wrote:
 >
-> The Quick Start guide points to the Rust programming language front
-> page when it mentions the possibility of using the standalone
-> installers instead of `rustup`.
+> When using `quote!` as part of an expression that was not the last one
+> in a function, the `#[allow(clippy::vec_init_then_push)]` attribute
+> would be present on an expression, which is not allowed.
+> This patch refactors that part of the macro to use a statement instead.
 >
-> This was done to have a hopefully stable link, but it is not too
-> helpful: readers need to figure out how to reach the standalone
-> installers from there.
->
-> Thus point directly to the page (and anchor) with the table that
-> contains the standalone installers (plus signing key etc.).
->
-> If the link breaks in the future, we can always update it as
-> needed. And anyway having the full link includes the domain and
-> gives more information about where the old docs were in such
-> a broken link case, which may help.
->
-> Link: https://lore.kernel.org/linux-doc/CANiq72=3DgpzQyh1ExGbBWWNdgH-mTAT=
-dG5F600jKD1=3DNLLCn7wg@mail.gmail.com/
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 
-Applied to `rust-next` (with Andreas' suggestion applied) -- thanks everyon=
-e!
+Series applied to `rust-next` (with the newline added) -- thanks everyone!
 
 Cheers,
 Miguel
