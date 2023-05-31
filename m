@@ -1,69 +1,67 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E5B15481
-	for <patches@lists.linux.dev>; Wed, 31 May 2023 14:02:37 +0000 (UTC)
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-556011695d1so103174877b3.1
-        for <patches@lists.linux.dev>; Wed, 31 May 2023 07:02:37 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EFA14AA8
+	for <patches@lists.linux.dev>; Wed, 31 May 2023 14:03:49 +0000 (UTC)
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-bb0d11a56abso3058051276.2
+        for <patches@lists.linux.dev>; Wed, 31 May 2023 07:03:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1685541756; x=1688133756;
+        d=google.com; s=20221208; t=1685541828; x=1688133828;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LkdmJU7MS1CA/Dj/0Gr76+y/wuVU2Ut+UYAk4XMq1Lg=;
-        b=Ul62Teod+ZCunAd2EaQQxKG83SZcds9E9ARf6Guo7N40whc2dZSgIbAE/efE5+07k3
-         6J8STcdoUa+bUIB5012q2gLmDiwH85tW8sZnC4zKBkPsfswcvG55+lsK8NU7nhTwjESI
-         y+XhYHIYN8tNQHohIYV427qwc0uyQXSz+F/vrpiroQ+0WX2t1IYKHoTOGDsmJpMdDtKl
-         M2XO1w/dieA+wC7EV+O7Pb1QnNcZPegV/y1rhq/zDznyxUsQPTRXAn2IOrEB9axqM6b3
-         osENZfZYT9q6lZTWEFOfHmGlHjB81v0DYFQQr2RzPVDB68XIFPbNjZnKTb9+icmY9Suk
-         lvjg==
+        bh=zgZNa9EtHrAIwO3wPspMKG7VOPoKw+bLM8tIqIzljU4=;
+        b=73dq1vBSAi729Lilf8hsEKhqFYXzhRCBI6uMLZyuvErH5WN8nLHGymQsclfH1xkkds
+         +6qlOW1V0G/D72xBKfuy805DJKiqGU7jlVl9I4OHIcm2kJXPH0nINc3ZYotFu4YITGC8
+         2xTH5sY9WC25b/N2LfFTeCJAZSMhYGlOgQI1yfrwpRfCnNIqb+JBCt1Mx2N4U8vorlD0
+         FDY1w0Neh0xfk1ErY/wQC70kl5CmojKosloDEqjNLa6zSAPbiY5V63vnIPxsoCHGBSIt
+         rP66wSjY08cx2dXI60q6pBlD0u1cD4rKvT2s0DnC/vcelPtgnbW6H/dzVyqzMEPCrI1k
+         Qfpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685541756; x=1688133756;
+        d=1e100.net; s=20221208; t=1685541828; x=1688133828;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LkdmJU7MS1CA/Dj/0Gr76+y/wuVU2Ut+UYAk4XMq1Lg=;
-        b=ROjq1Hb8Mwa/r2/hszcpLs+OMeKLRxs9S/+PcJkK6+rQhqRj8cbfs3ncHnK4ecIyqo
-         SeuRdvPdRmnQJ65a59FwZPMgrDaSd1+mo+doYSl6fjikuiwH5ODMorumQQ+7sMbVRAkh
-         XdwTix1IR/2VyFlBHua+Cf+8MxTeR1Zk6J44uCFrVh659Cer5p3P5+bX6bBQdpcOo4WY
-         AyVBFNPEIgQrhf73pyatozNhzc3dEkeQUgMF9RbpPpD9K3zfzCFta0aSJ+CVQ+49OJxJ
-         u2tEw2olWPFkYcSE8SbQwVYVKm4uDa3ctmXG4tdVBXlgd7jlNlGENF6zXWbttfv6Ebz9
-         9yvg==
-X-Gm-Message-State: AC+VfDy6S1ApW9I2nG9fxNUvPmnN3pzFGKNbnB/DkienCXzA2TDFl/FO
-	XoirxJ/cap5X5jrMgkOAO1hliRTjWjjziUQ=
-X-Google-Smtp-Source: ACHHUZ50A+8qlR08pz8bSpq1xdjUBTlxwXtgKuxqeCBhz/sJHN7MEZ8M5JmPDryHbJli2rjh2e3mkYiU0zWrKlQ=
+        bh=zgZNa9EtHrAIwO3wPspMKG7VOPoKw+bLM8tIqIzljU4=;
+        b=eshkjrsxN4octetejdcirXTJqiNRfNZiGCylRBIniOmlf3tQDnssBNWurYt+MBrrHb
+         ASZ5ibUYFroinq16+34l8MBkMeBEHH6Pug1q7ZRTsaYP2vK9gPVAdzrHa9MkrMJJvxhh
+         PN7nnPZVxlDbksQWti2+yXZsPoLL7iAR+oBtMrmQYbAkegq8wilGXdb0OvF0/5AZLIYd
+         jKqaUTHL6BkgqsCh5FbN/HrtEL4hefjTgWY41gxnXK6bnDKZBVAdLx5TAIMVucCO9el/
+         Jrw3bycsLUp0a2aJyZSxzaG+vr0lxwM49J0KTXdTVmuushq9lHHSVDtRRpTha2lcqhdx
+         djEA==
+X-Gm-Message-State: AC+VfDxIBDMKhA7EDbfpyrNt44etqpNzPLxM6p0rc8C59qALYGws6t61
+	SGm5X+D35XLs0gBLWhk/ZmsdMigcSl0Ca+Y=
+X-Google-Smtp-Source: ACHHUZ6DEtgX4K6pdimvH3NmwoYvDCaDL753Abz2f/W5Qjy+z7CORXWoLXb2LvEYZj0nfLJnZLh7+T0qXaxZI94=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a81:af15:0:b0:568:ee6d:3364 with SMTP id
- n21-20020a81af15000000b00568ee6d3364mr1151085ywh.4.1685541756307; Wed, 31 May
- 2023 07:02:36 -0700 (PDT)
-Date: Wed, 31 May 2023 14:02:33 +0000
-In-Reply-To: <875y8geiye.fsf@metaspace.dk>
+ (user=aliceryhl job=sendgmr) by 2002:a25:3444:0:b0:ba8:37f6:a586 with SMTP id
+ b65-20020a253444000000b00ba837f6a586mr3364248yba.3.1685541828239; Wed, 31 May
+ 2023 07:03:48 -0700 (PDT)
+Date: Wed, 31 May 2023 14:03:46 +0000
+In-Reply-To: <xAv635eVJdklAFBXcwxhVWRvgkMs37YDjANEArFkcOdoyH27NSHwbBGgJ6b9Q1EvX8gACiNqkaDYNvwdMWy6YHbeGM4qz1xW54-02UjzzZA=@proton.me>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <875y8geiye.fsf@metaspace.dk>
+References: <xAv635eVJdklAFBXcwxhVWRvgkMs37YDjANEArFkcOdoyH27NSHwbBGgJ6b9Q1EvX8gACiNqkaDYNvwdMWy6YHbeGM4qz1xW54-02UjzzZA=@proton.me>
 X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
-Message-ID: <20230531140233.3707302-1-aliceryhl@google.com>
-Subject: Re: [PATCH v1 4/7] rust: workqueue: define built-in queues
+Message-ID: <20230531140346.3707802-1-aliceryhl@google.com>
+Subject: Re: [PATCH v1 7/7] rust: workqueue: add `try_spawn` helper method
 From: Alice Ryhl <aliceryhl@google.com>
-To: nmi@metaspace.dk
-Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
-	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net, 
-	jiangshanlai@gmail.com, linux-kernel@vger.kernel.org, ojeda@kernel.org, 
-	patches@lists.linux.dev, rust-for-linux@vger.kernel.org, tj@kernel.org, 
-	wedsonaf@gmail.com
+To: benno.lossin@proton.me
+Cc: alex.gaynor@gmail.com, aliceryhl@google.com, bjorn3_gh@protonmail.com, 
+	boqun.feng@gmail.com, gary@garyguo.net, jiangshanlai@gmail.com, 
+	linux-kernel@vger.kernel.org, ojeda@kernel.org, patches@lists.linux.dev, 
+	rust-for-linux@vger.kernel.org, tj@kernel.org, wedsonaf@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 
-Andreas Hindborg <nmi@metaspace.dk> writes:
-> Alice Ryhl <aliceryhl@google.com> writes:
->> +/// Returns the system freezable work queue (`system_freezable_wq`).
->> +///
->> +/// It is equivalent to the one returned by [`system`] except that it's freezable.
+Benno Lossin <benno.lossin@proton.me> writes:
+>> +    /// Tries to spawn the given function or closure as a work item.
+>> +    ///
+>> +    /// This method can fail because it allocates memory to store the work item.
+>> +    pub fn try_spawn<T: 'static + Send + Fn()>(&self, func: T) -> Result {
 > 
-> Can we add a short definition of what "freezable" means?
+> Why is this `Fn()` instead of `FnOnce()`?
 
-I don't know what it means, but I would be happy to add an explanation
-if you have one.
+That's a mistake. Good catch. It will be fixed in the next version.
 
 Alice
