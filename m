@@ -1,130 +1,72 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CB934CFB
-	for <patches@lists.linux.dev>; Tue, 30 May 2023 23:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAEB14A92
+	for <patches@lists.linux.dev>; Wed, 31 May 2023 00:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=BSR4qq8aCJWAXG1SGHud/O/d8RMI3POVcQHNCrs2Ev8=; b=p7iuDQk6eHZ9s0VNn/i6O9mIAO
-	OGe9d2b6sbQrFGXETIoCpjdPBwJMaPXfQzJj3my9di58/QzCn+Ip9TuIOETbcIY7ityxIqhHxHzHZ
-	wx164Nh2q8u7KNdo/b2XPdkA2K+e9RudDIxMw6V7uvoZdJ2u7xd5FE5mGqrv50BmCzzUgKQ6+9sBk
-	W8YlvEJCYxhkNNZHfrwIJmZRdqB48bId5uYltfQXknMa8wSuz8Ah9MIFt+zmn3AuRdNSbBPEM5Tpo
-	MnEEi1PKsrdaUapQ4iv5cFBXIeRmCPkK3UzA6UDvightLuboqqCM1jYbBRBYqXMkHPvO8gCh58oSn
-	RNGR+BtQ==;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=VEudGuTbI8GghvYngS74lz28bkiQJqXeUNzo7Tr5OoA=; b=BJgiRlz0je11Z1r1LNqL92W3fQ
+	a5OOoj2ob+vV+XocxtjGdUPW5vnwZ9G9KKW/erh/BgetQknKnUYXdKE9iKx/6VxdrBnkm+FA7pWcg
+	96O8PiVEQ3GgJ+CpXuxSW4KGZ+Dk9tBzllKTEwT7SFKXxVnzfUsoDoH+NjX1NxDkqs8fmzxmpz8tn
+	Bi0sQDjGjh0jmgQxgE7/gGomNqwNm6Gk9Lg0ycVEMSyWn38xepB30Ihk/23dFfZNn5AqJRiSutzbX
+	y1Pey7omE9jMXy+HjVL+Zirk0r5Pq08G3sR/z8nk83Vwtucla6f+jIuHA+EzW/G+Umep7qjBO5FuV
+	8LOjjCpg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q48mB-00FTrk-0r;
-	Tue, 30 May 2023 23:29:15 +0000
+	id 1q49kG-00Fbuq-11;
+	Wed, 31 May 2023 00:31:20 +0000
+Date: Tue, 30 May 2023 17:31:20 -0700
 From: Luis Chamberlain <mcgrof@kernel.org>
-To: keescook@chromium.org,
-	yzaikin@google.com,
-	dhowells@redhat.com,
-	jarkko@kernel.org,
-	paul@paul-moore.com,
-	jmorris@namei.org,
-	serge@hallyn.com,
-	j.granados@samsung.com,
-	brauner@kernel.org
-Cc: ebiederm@xmission.com,
-	patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	keyrings@vger.kernel.org,
-	linux-security-module@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 1/2] sysctl: move umh sysctl registration to its own file
-Date: Tue, 30 May 2023 16:29:13 -0700
-Message-Id: <20230530232914.3689712-2-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230530232914.3689712-1-mcgrof@kernel.org>
-References: <20230530232914.3689712-1-mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Johan Hovold <johan@kernel.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org,
+	rafael@kernel.org, song@kernel.org, lucas.de.marchi@gmail.com,
+	christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org,
+	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
+	mhocko@suse.com, dave.hansen@linux.intel.com,
+	colin.i.king@gmail.com, jim.cromie@gmail.com,
+	catalin.marinas@arm.com, jbaron@akamai.com,
+	rick.p.edgecombe@intel.com, yujie.liu@intel.com, david@redhat.com,
+	tglx@linutronix.de, hch@lst.de, patches@lists.linux.dev,
+	linux-modules@vger.kernel.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com,
+	lennart@poettering.net
+Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
+Message-ID: <ZHaVWJzFm0vuAxJv@bombadil.infradead.org>
+References: <6gwjomw6sxxmlglxfoilelswv4hgygqelomevb4k4wrlrk3gtm@wrakbmwztgeu>
+ <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
+ <ZG/a+nrt4/AAUi5z@bombadil.infradead.org>
+ <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
+ <ZHRpH-JXAxA6DnzR@hovoldconsulting.com>
+ <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
+ <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
+ <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
+ <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
+ <ZHYitt7P7W+8ZlSB@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZHYitt7P7W+8ZlSB@bombadil.infradead.org>
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Move the umh sysctl registration to its own file, the array is
-already there. We do this to remove the clutter out of kernel/sysctl.c
-to avoid merge conflicts.
+On Tue, May 30, 2023 at 09:22:14AM -0700, Luis Chamberlain wrote:
+> The only thing I can think of is allowing threads other than the
+> first one to complete before the one that actually loaded the
+> module. I thought about this race for module auto-loading, see
+> the comment in kmod_dup_request_announce(), so that just
+> further delays the completion to other thread with a stupid
+> queue_work(). That seems more important for module auto-loading
+> duplicates than for boot finit_module() duplicates. But not sure
+> if odering matters in the end due to a preemtible kernel and maybe
+> that concern is hysteria.
 
-This also lets the sysctls not be built at all now when CONFIG_SYSCTL
-is not enabled.
+I think I'm OK to accept this ordering concern as hysteria for now.
 
-This has a small penalty of 23 bytes but soon we'll be removing
-all the empty entries on sysctl arrays so just do this cleanup
-now:
-
-./scripts/bloat-o-meter vmlinux.base vmlinux.1
-add/remove: 2/0 grow/shrink: 0/1 up/down: 49/-26 (23)
-Function                                     old     new   delta
-init_umh_sysctls                               -      33     +33
-__pfx_init_umh_sysctls                         -      16     +16
-sysctl_init_bases                            111      85     -26
-Total: Before=21256914, After=21256937, chg +0.00%
-
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- include/linux/umh.h |  2 --
- kernel/sysctl.c     |  1 -
- kernel/umh.c        | 11 ++++++++++-
- 3 files changed, 10 insertions(+), 4 deletions(-)
-
-diff --git a/include/linux/umh.h b/include/linux/umh.h
-index 5d1f6129b847..daa6a7048c11 100644
---- a/include/linux/umh.h
-+++ b/include/linux/umh.h
-@@ -42,8 +42,6 @@ call_usermodehelper_setup(const char *path, char **argv, char **envp,
- extern int
- call_usermodehelper_exec(struct subprocess_info *info, int wait);
- 
--extern struct ctl_table usermodehelper_table[];
--
- enum umh_disable_depth {
- 	UMH_ENABLED = 0,
- 	UMH_FREEZING,
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 241b817c0240..caf4a91522a1 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -2322,7 +2322,6 @@ static struct ctl_table vm_table[] = {
- int __init sysctl_init_bases(void)
- {
- 	register_sysctl_init("kernel", kern_table);
--	register_sysctl_init("kernel/usermodehelper", usermodehelper_table);
- #ifdef CONFIG_KEYS
- 	register_sysctl_init("kernel/keys", key_sysctls);
- #endif
-diff --git a/kernel/umh.c b/kernel/umh.c
-index 60aa9e764a38..41088c5c39fd 100644
---- a/kernel/umh.c
-+++ b/kernel/umh.c
-@@ -544,7 +544,8 @@ static int proc_cap_handler(struct ctl_table *table, int write,
- 	return 0;
- }
- 
--struct ctl_table usermodehelper_table[] = {
-+#if defined(CONFIG_SYSCTL)
-+static struct ctl_table usermodehelper_table[] = {
- 	{
- 		.procname	= "bset",
- 		.data		= &usermodehelper_bset,
-@@ -561,3 +562,11 @@ struct ctl_table usermodehelper_table[] = {
- 	},
- 	{ }
- };
-+
-+static int __init init_umh_sysctls(void)
-+{
-+	register_sysctl_init("kernel/usermodehelper", usermodehelper_table);
-+	return 0;
-+}
-+early_initcall(init_umh_sysctls);
-+#endif /* CONFIG_SYSCTL */
--- 
-2.39.2
-
+  Luis
