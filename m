@@ -1,96 +1,77 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189A31640F
-	for <patches@lists.linux.dev>; Wed, 31 May 2023 21:20:58 +0000 (UTC)
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-568f9caff33so701087b3.2
-        for <patches@lists.linux.dev>; Wed, 31 May 2023 14:20:58 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFB31640F
+	for <patches@lists.linux.dev>; Wed, 31 May 2023 21:27:43 +0000 (UTC)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-4f3a611b3ddso1831862e87.0
+        for <patches@lists.linux.dev>; Wed, 31 May 2023 14:27:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paul-moore.com; s=google; t=1685568057; x=1688160057;
+        d=gmail.com; s=20221208; t=1685568461; x=1688160461;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LoZ0QonL7GpvkzVGqoB0gV8pXc0xldAiiia3lsdp4Jw=;
-        b=bV4CEIauWya7OBEvEJZ8O8BySgJRaCgtsOwV6TTfZUxO5baLK/jxr8/dThczBffNj1
-         g1gilTPiZQifPjEoO+IN/kk9i9ttCodVZ8VAZQtdacEO/I73YOsQw1P3KDX0Q7NmzVl5
-         fWejNhHweIU62YqvrPCRW4133WGgKrli3JmhqeqvcL8piPMRhv5kXzRVBqPq9qLq/qnk
-         DYPmRx+V/9Ra/NmqVGiyPe/eqdSrEtP3EsfkjQln612yGRhW29oLVVtt+CMN+/kCRLon
-         kft2gp88qfJMj0vw5N1jDI9nRjKoMbdmze8lCQUhFECmOfrFLAjt2nlsqiJvMXmcx5wf
-         sMDg==
+        bh=HmGRIWXBp3HvZBL8UWz5wMSP/7nqOL/RMhMi6KYkHks=;
+        b=FcpN/mh8cXkbNo+CIlVmIrUGdutwSm4/R1pMOT/IyhLP+I83WWkChubz9sfDC/kuqn
+         p7ClzAQ65KzsACCu+go1zZnqt7FGXsQS2bKayXgqP5hTAGnw3ZhXiEAtzzer0JEebME3
+         xNvkJ6uLwkzGJmK9wKQvaaXrdsRciyVbm8Tc8YkIZZGKb50hTzblYXsFAccwUJuEDFFf
+         WvEAFs+kFyw0zQ7LVmb9PatmBSVjAN8jVT9wvu/qDzAmbYuNosmc2bJEYhox7rXQlett
+         tMGDHOphJoUjepHjumcdOJ6SBH2x8F171xzexjuDB8zn2xYF3267ebNlMvvdEqd5W7wi
+         Op8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685568057; x=1688160057;
+        d=1e100.net; s=20221208; t=1685568461; x=1688160461;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LoZ0QonL7GpvkzVGqoB0gV8pXc0xldAiiia3lsdp4Jw=;
-        b=eNpcg01y2Sr7ZfFO7/F5lf8oBHkA+vRYspDR7GpFRRhZxKtbKJopE4tTnK2k0bRVzg
-         nF9F7DLuvqPspS5csmmP9+HCDht717ok6YLpmapNmtlpJVwPamusu8ohU4g4ef+gZU4Y
-         5EoepYZCm7mJZY0dgmrUwZq5pWNGWps2vn9cGFKBXxDKcenOqy3GpmnBERMWNsXC0DBG
-         4iEFl5jrAn2FgY46GpYeElNSFvAyf3hUOLY4GB81QQOM538A8MXoN1C2ZRCcjFHWVdY2
-         SoTL15CsAK4zWPaeqc57Z+Ze28JJF+f8isYptj4sH+PDGCQQAWmVhQ8AbCITsztGl1pm
-         GRag==
-X-Gm-Message-State: AC+VfDx9BTrEX/6t14bGS4d4J6eEEHc9Lzy13AvmUbfOsinm0XleSOV3
-	yp+GLZf+zLpNXLCxIbhqznbaTe0TjsazOHoR77AS
-X-Google-Smtp-Source: ACHHUZ7xDxpY+qZ+kHStKpfyGCUmSZFIrAOaNegLCNmyLU6OfWoFLFoTJ5KIVySJiQxq5mqHTIQOq8i1T+EuU78aXoc=
-X-Received: by 2002:a81:d246:0:b0:561:9051:d2d3 with SMTP id
- m6-20020a81d246000000b005619051d2d3mr6586195ywl.11.1685568057462; Wed, 31 May
- 2023 14:20:57 -0700 (PDT)
+        bh=HmGRIWXBp3HvZBL8UWz5wMSP/7nqOL/RMhMi6KYkHks=;
+        b=Qa9AccgSXbjXzydXOedbuotg5o7CWAbcvW1aqrMJVc4XcRLJbZD9nZIT3qGrKa7YYm
+         AntEI2WHedcadGipvA6e8w8j/G1U1eHsj+HASpHrClOdqqVLBYjUyK7hCmeKFY30TL7e
+         +aQbxu1ey5G0ljq8Y3IyJty4KGHf7omkvoQX6kg9gzVzIK5b06ZKOkYGvMDTyK+qPBac
+         mOhPe9Xz3I6UXKs354zH9NZXdcN1hwyXcymlBzgIZm3CRh4erJWxUIvDBDGedde5VJqh
+         G9ykHbWuwlDzwWGXYQBQdHWYSw0GSS3TQy9K9UCTNucXsKRP1VLkQQlDLQwsJHgfDSf+
+         8ynA==
+X-Gm-Message-State: AC+VfDz9qr3wYctyN6fd4pIDSRNyncikgQBJ4rsEea16aDVGpGjWJxIL
+	qH/W+9WB/P10baqpwrlJy3i7iGpJ14FuJLnLqWw=
+X-Google-Smtp-Source: ACHHUZ5Xg3flrGOmNSIrwETWIc0iScTUfmpexxAf15uqKG+Hq+PHPLzlZ1IpahHdKGlwqsGnFkKrYJ82lMO98YSQTr0=
+X-Received: by 2002:a05:6512:4013:b0:4f3:a763:ccb7 with SMTP id
+ br19-20020a056512401300b004f3a763ccb7mr122967lfb.2.1685568460892; Wed, 31 May
+ 2023 14:27:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230530232914.3689712-1-mcgrof@kernel.org> <20230530232914.3689712-3-mcgrof@kernel.org>
-In-Reply-To: <20230530232914.3689712-3-mcgrof@kernel.org>
-From: Paul Moore <paul@paul-moore.com>
-Date: Wed, 31 May 2023 17:20:46 -0400
-Message-ID: <CAHC9VhRA_XkkiZpg=d1RiME+VUYe7bsuV6pOpsseDRWfwV+q9A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] sysctl: move security keys sysctl registration to its
- own file
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: keescook@chromium.org, yzaikin@google.com, dhowells@redhat.com, 
-	jarkko@kernel.org, jmorris@namei.org, serge@hallyn.com, 
-	j.granados@samsung.com, brauner@kernel.org, ebiederm@xmission.com, 
-	patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, 
-	keyrings@vger.kernel.org, linux-security-module@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+References: <20230531174450.3733220-1-aliceryhl@google.com>
+In-Reply-To: <20230531174450.3733220-1-aliceryhl@google.com>
+From: Sven Van Asbroeck <thesven73@gmail.com>
+Date: Wed, 31 May 2023 17:27:28 -0400
+Message-ID: <CAGngYiW_3HfebWZO5S=RXFqhNnsbnix-NaA0UGYRnRLd4SK65w@mail.gmail.com>
+Subject: Re: [PATCH v1] rust: error: integrate Rust error type with `errname`
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Wedson Almeida Filho <walmeida@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 30, 2023 at 7:29=E2=80=AFPM Luis Chamberlain <mcgrof@kernel.org=
-> wrote:
->
-> The security keys sysctls are already declared on its own file,
-> just move the sysctl registration to its own file to help avoid
-> merge conflicts on sysctls.c, and help with clearing up sysctl.c
-> further.
->
-> This creates a small penalty of 23 bytes:
->
-> ./scripts/bloat-o-meter vmlinux.1 vmlinux.2
-> add/remove: 2/0 grow/shrink: 0/1 up/down: 49/-26 (23)
-> Function                                     old     new   delta
-> init_security_keys_sysctls                     -      33     +33
-> __pfx_init_security_keys_sysctls               -      16     +16
-> sysctl_init_bases                             85      59     -26
-> Total: Before=3D21256937, After=3D21256960, chg +0.00%
->
-> But soon we'll be saving tons of bytes anyway, as we modify the
-> sysctl registrations to use ARRAY_SIZE and so we get rid of all the
-> empty array elements so let's just clean this up now.
->
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> ---
->  include/linux/key.h    | 3 ---
->  kernel/sysctl.c        | 4 ----
->  security/keys/sysctl.c | 7 +++++++
->  3 files changed, 7 insertions(+), 7 deletions(-)
+Hello Alice, as we discussed through a separate channel,
+you have my permission to use my name in
+Co-Developed-by and Signed-off-by tags.
 
-Ultimately I'll leave the ACK to David or Jarkko, but this looks
-reasonable to me.
-
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-
---=20
-paul-moore.com
+On Wed, May 31, 2023 at 1:45=E2=80=AFPM Alice Ryhl <aliceryhl@google.com> w=
+rote:
+>
+> From: Gary Guo <gary@garyguo.net>
+>
+> This integrates the `Error` type with the `errname` by making it
+> accessible via the `name` method or via the `Debug` trait.
+>
+> Co-Developed-by: Wedson Almeida Filho <walmeida@microsoft.com>
+> Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
+> Co-Developed-by: Sven Van Asbroeck <thesven73@gmail.com>
+> Signed-off-by: Sven Van Asbroeck <thesven73@gmail.com>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
