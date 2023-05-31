@@ -1,40 +1,40 @@
-Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com [209.85.208.73])
+Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43303C8FF
-	for <patches@lists.linux.dev>; Wed, 31 May 2023 15:00:42 +0000 (UTC)
-Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-506a7b4f141so5168710a12.2
-        for <patches@lists.linux.dev>; Wed, 31 May 2023 08:00:42 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A70C8FF
+	for <patches@lists.linux.dev>; Wed, 31 May 2023 15:01:35 +0000 (UTC)
+Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-96f6944c529so479835866b.2
+        for <patches@lists.linux.dev>; Wed, 31 May 2023 08:01:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1685545240; x=1688137240;
+        d=google.com; s=20221208; t=1685545293; x=1688137293;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v7AwI9/GAng9F6JU881/rPRp6iZXP9LwiNNuLduw3ys=;
-        b=OMfl8/Z1UwxPwIyaHYkJ8H7XXz53ExBje25D3fSggmAEgqJKexyNv/r05uILaNVDH3
-         T5pW/a/d7fWKUhDGhaJRx9W6nzSAhQEKxq4NCO9CY3nxTH5muUNEJCcdJEwE4FDKS5YE
-         mYtD4BXfm5MS0N3+F6W6wTY8BVSX/OtnsTIl/ym9yDrzKwkqbJuxky5teH0ZIc6hZGV+
-         4zu2xJq1E0BdirdqaHNQC6za3BZrmsP+frmwlo6ZL3kMQZ+wZwP9hNv7crfRZDRjX8oC
-         c0qI0l8MuhuhbctU5kMcULymtY0J4dWQT3OiUwRNBTlaEv30nTmYbag6K13T0WiAy6ga
-         xXMw==
+        bh=1Q+2I5zSt9CeXJ84cI2DkRkCdZ4Svm4rmosqyRFgB4Q=;
+        b=bnNa4BzNnMkAV8sNhlJArseXSoa/Cp3RaANBWBzd9VxjyIDTlr4hV7uLR/Fqr9sPFg
+         V3T4M1u/Cqm0TGKtaApBthh754cK9SVYKk7sf7q3cjbDyz6YZOGdIstimjRAUVz5u2hR
+         8m671arTsCNlICRB/UITLp9bQ0bfiVv7ZPXC8NfTxKukxFdruO1EVpr8lAweg52Zhtt/
+         L3D8bfG+9M6OBkd6fuW1h7I971Cedkt4wE2UQtCSpAXNcu0eSmZhV39uhvD0x4mx1YER
+         ls/kFUZu9/H1vEW7IHInniok08Iozig+z3zNg4JUoo/DWBFqr6kTLIvM4uP263wWuHu9
+         tIyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685545240; x=1688137240;
+        d=1e100.net; s=20221208; t=1685545293; x=1688137293;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v7AwI9/GAng9F6JU881/rPRp6iZXP9LwiNNuLduw3ys=;
-        b=IjaLruY5dVmytTWDcwaTpVClEw1w+0iw93ebXh5nMi9uRB2ZkBuhCUuGYCySlXdwFu
-         8t3Y1SZrNtsNBG1LO8IKhoplB/La7WfZ+AfWhouI42dqzLXhjpkY27U42LvvA0BiFeRg
-         +m1Sq8WDwwZ0Y/V3UlXEiMYI+xroByvrjAwfAkhPA3I0FDFvANju66X3wI7Z2g73NvVb
-         OtGl/3p+ZnSRojwucAKbvP/DGw+PBTV+Y8O2pvoItZfOGfque2GnxihqoV3vzOxDFzgn
-         UnE+5d/i7K5OpEnxMATNga0hRhyQ0BLLJikuHF8TiDezFrHNDjUvVnAz8gDVX9yYQZIU
-         +L3g==
-X-Gm-Message-State: AC+VfDw3Dhpdt2OXUNR/29Einaj9dC/ppofYxYgFzrHcD8XwfdxBZKGx
-	EP7aTDr224iu99lcII30cBPNmJCgqMX7H1U=
-X-Google-Smtp-Source: ACHHUZ68XPwYHak3RB9bb2krSE7KWIbi6M9HKaemsTXiQeyDGltkWQmmatoHjKKHCoSRCi/az8D3w9Kajgq9dOk=
+        bh=1Q+2I5zSt9CeXJ84cI2DkRkCdZ4Svm4rmosqyRFgB4Q=;
+        b=MzHPuQovU+FOrPt6CUdnZE9SrAnGSgBO9XBhe8vQnE/n78kGLnhFlsKVjRGBsW5DgF
+         ChnPJRRa97XQ2LnVvQkfJoDt+sYFT0LZmWw8raJuPoVMimsmiI/fGG4PH/A+TeTX6sey
+         jsBfZ6n37EMmhc1mlWQc/dkIpyfzcS8GO4lgVUOEPhZVZlH0ZxU7DigKs4Xg1guLvM05
+         EUt3YUlfAyfnfrc2onrbTHUJPoXiNnn5Qv572YyTw32650Smv46EUWppEmRjpPnnC54m
+         R9WsEax4jCOFK+UHdNvPnxdLtLGQsXPuqj5O1/T4dhnMtcwenrQ961iO6LKxC3SzUid/
+         uKGQ==
+X-Gm-Message-State: AC+VfDyrfYT05Or7gdbg39H2OrhcN5P9mHyfVz+3u8vkOq3JK6+5HaDI
+	MWtBejiHjqvKNYfgsoDWUgc6/oI5O8kRkeo=
+X-Google-Smtp-Source: ACHHUZ4rFIpC5Ll9CIoCxXSbzxO4gKHoA+ZHFByEbtLUbWCcxVxu8ZUSKtcxpuigVxxLU6jw6KkDmlloVWmty3w=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a50:cdc1:0:b0:504:fcf5:63ee with SMTP id
- h1-20020a50cdc1000000b00504fcf563eemr1888238edj.0.1685545240591; Wed, 31 May
- 2023 08:00:40 -0700 (PDT)
-Date: Wed, 31 May 2023 14:59:36 +0000
+ (user=aliceryhl job=sendgmr) by 2002:a17:906:846d:b0:96f:5348:6ce0 with SMTP
+ id hx13-20020a170906846d00b0096f53486ce0mr2119526ejc.5.1685545293508; Wed, 31
+ May 2023 08:01:33 -0700 (PDT)
+Date: Wed, 31 May 2023 14:59:37 +0000
 In-Reply-To: <20230531145939.3714886-1-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,8 +44,8 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20230531145939.3714886-1-aliceryhl@google.com>
 X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
-Message-ID: <20230531145939.3714886-2-aliceryhl@google.com>
-Subject: [PATCH v3 1/4] rust: sync: reword the `Arc` safety comment for `Send`
+Message-ID: <20230531145939.3714886-3-aliceryhl@google.com>
+Subject: [PATCH v3 2/4] rust: sync: reword the `Arc` safety comment for `Sync`
 From: Alice Ryhl <aliceryhl@google.com>
 To: rust-for-linux@vger.kernel.org
 Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
@@ -59,36 +59,39 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>,
 	Martin Rodriguez Reboredo <yakoyoku@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-The safety comment on `impl Send for Arc` talks about "directly"
-accessing the value, when it really means "accessing the value with a
-mutable reference". This commit clarifies that.
+The safety comment on `impl Sync for Arc` references the Send safety
+comment. This commit avoids that in case the two comments drift apart in
+the future.
 
-Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+Suggested-by: Andreas Hindborg <a.hindborg@samsung.com>
 Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
 Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
 Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 ---
- rust/kernel/sync/arc.rs | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/kernel/sync/arc.rs | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-index e6d206242465..3ad831603cf4 100644
+index 3ad831603cf4..3da84187ecf4 100644
 --- a/rust/kernel/sync/arc.rs
 +++ b/rust/kernel/sync/arc.rs
-@@ -146,8 +146,8 @@ impl<T: ?Sized + Unsize<U>, U: ?Sized> core::ops::DispatchFromDyn<Arc<U>> for Ar
- 
- // SAFETY: It is safe to send `Arc<T>` to another thread when the underlying `T` is `Sync` because
- // it effectively means sharing `&T` (which is safe because `T` is `Sync`); additionally, it needs
--// `T` to be `Send` because any thread that has an `Arc<T>` may ultimately access `T` directly, for
--// example, when the reference count reaches zero and `T` is dropped.
-+// `T` to be `Send` because any thread that has an `Arc<T>` may ultimately access `T` using a
-+// mutable reference when the reference count reaches zero and `T` is dropped.
+@@ -150,9 +150,11 @@ impl<T: ?Sized + Unsize<U>, U: ?Sized> core::ops::DispatchFromDyn<Arc<U>> for Ar
+ // mutable reference when the reference count reaches zero and `T` is dropped.
  unsafe impl<T: ?Sized + Sync + Send> Send for Arc<T> {}
  
- // SAFETY: It is safe to send `&Arc<T>` to another thread when the underlying `T` is `Sync` for the
+-// SAFETY: It is safe to send `&Arc<T>` to another thread when the underlying `T` is `Sync` for the
+-// same reason as above. `T` needs to be `Send` as well because a thread can clone an `&Arc<T>`
+-// into an `Arc<T>`, which may lead to `T` being accessed by the same reasoning as above.
++// SAFETY: It is safe to send `&Arc<T>` to another thread when the underlying `T` is `Sync`
++// because it effectively means sharing `&T` (which is safe because `T` is `Sync`); additionally,
++// it needs `T` to be `Send` because any thread that has a `&Arc<T>` may clone it and get an
++// `Arc<T>` on that thread, so the thread may ultimately access `T` using a mutable reference when
++// the reference count reaches zero and `T` is dropped.
+ unsafe impl<T: ?Sized + Sync + Send> Sync for Arc<T> {}
+ 
+ impl<T> Arc<T> {
 -- 
 2.41.0.rc0.172.g3f132b7071-goog
 
