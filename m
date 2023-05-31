@@ -1,132 +1,69 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D559F1C11
-	for <patches@lists.linux.dev>; Wed, 31 May 2023 10:40:57 +0000 (UTC)
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-96fa4a6a79bso811846166b.3
-        for <patches@lists.linux.dev>; Wed, 31 May 2023 03:40:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E5B15481
+	for <patches@lists.linux.dev>; Wed, 31 May 2023 14:02:37 +0000 (UTC)
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-556011695d1so103174877b3.1
+        for <patches@lists.linux.dev>; Wed, 31 May 2023 07:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1685529655; x=1688121655;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
-         :subject:cc:to:from:user-agent:references:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D9wK23t2sGNzjDkReOB3GT1QVBAdm3GmQJMkozq40P0=;
-        b=AIu+b8G09ha8tBpJpcXJQCPeq0ed4+ggJKcW4dwZrO08fXZdQ2tw23V6SU1enf/pLe
-         xz7/xU4WnxBkRiTFOQY9UCLBHxkOl1HE1FQp14w8Cb7OqtWtkqHxU47p2MWZTfI2rljF
-         +mWsRulFmiOLUXs3IAEPomaoUPhs2XbihXDKeq1AlPIa3OBboQjHMM190lvIxiLU+Mur
-         8q0igSTFZcpB+JYr1Jbrn+mKnOrrESw+GQZI21hx5lIF3gAFAk3QitJ81ceVFc+szrCF
-         iR6Sqn5FZHQDvrZJEEMh4BDAEHMTi3Sen5rp4moPXJwgg0MXry5YG4eBhHEnI2SFicW7
-         yCqg==
+        d=google.com; s=20221208; t=1685541756; x=1688133756;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LkdmJU7MS1CA/Dj/0Gr76+y/wuVU2Ut+UYAk4XMq1Lg=;
+        b=Ul62Teod+ZCunAd2EaQQxKG83SZcds9E9ARf6Guo7N40whc2dZSgIbAE/efE5+07k3
+         6J8STcdoUa+bUIB5012q2gLmDiwH85tW8sZnC4zKBkPsfswcvG55+lsK8NU7nhTwjESI
+         y+XhYHIYN8tNQHohIYV427qwc0uyQXSz+F/vrpiroQ+0WX2t1IYKHoTOGDsmJpMdDtKl
+         M2XO1w/dieA+wC7EV+O7Pb1QnNcZPegV/y1rhq/zDznyxUsQPTRXAn2IOrEB9axqM6b3
+         osENZfZYT9q6lZTWEFOfHmGlHjB81v0DYFQQr2RzPVDB68XIFPbNjZnKTb9+icmY9Suk
+         lvjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685529655; x=1688121655;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
-         :subject:cc:to:from:user-agent:references:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=D9wK23t2sGNzjDkReOB3GT1QVBAdm3GmQJMkozq40P0=;
-        b=N2+OgFAxlz/ZdNINfCU+/vJZ9xzIEGElcNF8yInuqduze94XB5FnyxyzTplQSpwYZP
-         2qcxVzgGbRSIBc9fRcorZ04QvMWbqVKIKqmBlgmYHEwc9XFtwLmTXyGD8X6gGmxVxiVy
-         aZtn8I+UYple9cp8WJG1jCBOiMHjjrOSi0eSdv3GAO+9EX/gbOOhaNbH+53Vsrr3/r/q
-         iM3ELoE243BO7LVY6JVDFcVvCOiN/V67aFmesuTCbqZtMISDINjZAyBD4RPRt80A9u9K
-         oNNGBgnBVwTjnV9enikcvTxQzLezbZ5PnX2Bng8uciohDljRaHq7C5YXMhtc0UZh+dwD
-         SkNA==
-X-Gm-Message-State: AC+VfDxCmvq+tQMi29UmcNyntFvObANlNeG5QfCTgKrCP4N6Pna05U68
-	m52i3Cpgollo3KWBnW4aFa24Jw==
-X-Google-Smtp-Source: ACHHUZ7gkn3xn/E4i2JfCKzoMtUX7uPofz9OD1IYCOir3fHI3gRcIYfxWM4KiKVknbBOQRkWmqzCmA==
-X-Received: by 2002:a17:907:ea1:b0:957:48c8:b081 with SMTP id ho33-20020a1709070ea100b0095748c8b081mr4688011ejc.24.1685529655648;
-        Wed, 31 May 2023 03:40:55 -0700 (PDT)
-Received: from localhost ([79.142.230.34])
-        by smtp.gmail.com with ESMTPSA id lh27-20020a170906f8db00b0096f03770be2sm8697953ejb.52.2023.05.31.03.40.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 May 2023 03:40:55 -0700 (PDT)
-References: <87leh69par.fsf@metaspace.dk>
- <20230531090032.3667467-1-aliceryhl@google.com>
-User-agent: mu4e 1.10.3; emacs 28.2.50
-From: Andreas Hindborg <nmi@metaspace.dk>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: alex.gaynor@gmail.com, benno.lossin@proton.me, bjorn3_gh@protonmail.com,
- boqun.feng@gmail.com, gary@garyguo.net, jiangshanlai@gmail.com,
- linux-kernel@vger.kernel.org, ojeda@kernel.org, patches@lists.linux.dev,
- rust-for-linux@vger.kernel.org, tj@kernel.org, wedsonaf@gmail.com
-Subject: Re: [PATCH v1 5/7] rust: workqueue: add helper for defining
- work_struct fields
-Date: Wed, 31 May 2023 12:18:47 +0200
-In-reply-to: <20230531090032.3667467-1-aliceryhl@google.com>
-Message-ID: <87zg5k3hs9.fsf@metaspace.dk>
+        d=1e100.net; s=20221208; t=1685541756; x=1688133756;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LkdmJU7MS1CA/Dj/0Gr76+y/wuVU2Ut+UYAk4XMq1Lg=;
+        b=ROjq1Hb8Mwa/r2/hszcpLs+OMeKLRxs9S/+PcJkK6+rQhqRj8cbfs3ncHnK4ecIyqo
+         SeuRdvPdRmnQJ65a59FwZPMgrDaSd1+mo+doYSl6fjikuiwH5ODMorumQQ+7sMbVRAkh
+         XdwTix1IR/2VyFlBHua+Cf+8MxTeR1Zk6J44uCFrVh659Cer5p3P5+bX6bBQdpcOo4WY
+         AyVBFNPEIgQrhf73pyatozNhzc3dEkeQUgMF9RbpPpD9K3zfzCFta0aSJ+CVQ+49OJxJ
+         u2tEw2olWPFkYcSE8SbQwVYVKm4uDa3ctmXG4tdVBXlgd7jlNlGENF6zXWbttfv6Ebz9
+         9yvg==
+X-Gm-Message-State: AC+VfDy6S1ApW9I2nG9fxNUvPmnN3pzFGKNbnB/DkienCXzA2TDFl/FO
+	XoirxJ/cap5X5jrMgkOAO1hliRTjWjjziUQ=
+X-Google-Smtp-Source: ACHHUZ50A+8qlR08pz8bSpq1xdjUBTlxwXtgKuxqeCBhz/sJHN7MEZ8M5JmPDryHbJli2rjh2e3mkYiU0zWrKlQ=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a81:af15:0:b0:568:ee6d:3364 with SMTP id
+ n21-20020a81af15000000b00568ee6d3364mr1151085ywh.4.1685541756307; Wed, 31 May
+ 2023 07:02:36 -0700 (PDT)
+Date: Wed, 31 May 2023 14:02:33 +0000
+In-Reply-To: <875y8geiye.fsf@metaspace.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <875y8geiye.fsf@metaspace.dk>
+X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
+Message-ID: <20230531140233.3707302-1-aliceryhl@google.com>
+Subject: Re: [PATCH v1 4/7] rust: workqueue: define built-in queues
+From: Alice Ryhl <aliceryhl@google.com>
+To: nmi@metaspace.dk
+Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
+	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net, 
+	jiangshanlai@gmail.com, linux-kernel@vger.kernel.org, ojeda@kernel.org, 
+	patches@lists.linux.dev, rust-for-linux@vger.kernel.org, tj@kernel.org, 
+	wedsonaf@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
+Andreas Hindborg <nmi@metaspace.dk> writes:
+> Alice Ryhl <aliceryhl@google.com> writes:
+>> +/// Returns the system freezable work queue (`system_freezable_wq`).
+>> +///
+>> +/// It is equivalent to the one returned by [`system`] except that it's freezable.
+> 
+> Can we add a short definition of what "freezable" means?
 
-Alice Ryhl <aliceryhl@google.com> writes:
+I don't know what it means, but I would be happy to add an explanation
+if you have one.
 
-> Andreas Hindborg <nmi@metaspace.dk> writes:
->> Alice Ryhl <aliceryhl@google.com> writes:
->>> +/// Used to safely implement the [`HasWork<T>`] trait.
->>> +///
->>> +/// # Examples
->>> +///
->>> +/// ```
->>> +/// use kernel::sync::Arc;
->>> +///
->>> +/// struct MyStruct {
->>> +///     work_field: Work<Arc<MyStruct>>,
->>> +/// }
->>> +///
->>> +/// impl_has_work! {
->>> +///     impl HasWork<Arc<MyStruct>> for MyStruct { self.work_field }
->>> +/// }
->>> +/// ```
->>> +///
->>> +/// [`HasWork<T>`]: HasWork
->>> +#[macro_export]
->>> +macro_rules! impl_has_work {
->>> +    ($(impl$(<$($implarg:ident),*>)?
->>> +       HasWork<$work_type:ty>
->>> +       for $self:ident $(<$($selfarg:ident),*>)?
->>> +       { self.$field:ident }
->>> +    )*) =3D> {$(
->>> +        // SAFETY: The implementation of `raw_get_work` only compiles =
-if the field has the right
->>> +        // type.
->>> +        unsafe impl$(<$($implarg),*>)? $crate::workqueue::HasWork<$wor=
-k_type> for $self $(<$($selfarg),*>)? {
->>> +            const OFFSET: usize =3D $crate::offset_of!(Self, $field) a=
-s usize;
->>> +
->>> +            #[inline]
->>> +            unsafe fn raw_get_work(ptr: *mut Self) -> *mut $crate::wor=
-kqueue::Work<$work_type> {
->>> +                // SAFETY: The caller promises that the pointer is not=
- dangling.
->>> +                unsafe {
->>> +                    ::core::ptr::addr_of_mut!((*ptr).$field)
->>> +                }
->>> +            }
->>=20
->> What is the reason for overriding the default implementation of `raw_get=
-_work()`?
->>=20
->> BR Andreas
->
-> That's how the macro checks that the field actually has the type you
-> claim it has. If you lie about the type, then `raw_get_work` will not
-> compile. (See the safety comment on the impl block.)
-
-Got it =F0=9F=91=8D
-
-I was thinking we could do the type check without redefining the method,
-but that blows up complexity wise fast, since we need a trait to do it
-to support `Self` in `$work_type`. It strikes me as a bit of a hack to
-overwrite an otherwise fine implementation, but I guess it is the least
-complex way.
-
-Also I am a bit annoyed that we need to state the `$work_type` type at
-all, since it is available in `work_field`. But I can see no way around
-that.
-
-BR Andreas
+Alice
