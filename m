@@ -1,54 +1,53 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F6223DF;
-	Thu,  1 Jun 2023 18:46:47 +0000 (UTC)
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-75afa109e60so100804485a.2;
-        Thu, 01 Jun 2023 11:46:47 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B4523DF;
+	Thu,  1 Jun 2023 19:21:33 +0000 (UTC)
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6261890b4d7so11259246d6.1;
+        Thu, 01 Jun 2023 12:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685645206; x=1688237206;
+        d=gmail.com; s=20221208; t=1685647292; x=1688239292;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8hvF2IOpQDKKFJsjxOYinWe29JU4zPVFXfARnEjYEpc=;
-        b=CudqLc3iGXdiDlwjQ87B0qlglY0tFiDqdOoRiRGDe2IPiAeGkxawJXLplzRWbsYwbQ
-         nrtaOpAejeXrWToc1nALUJQXjFOhG7gep1FNh1kJhYWLxWTyeofFe8v4CkAZEmOtL2ZS
-         HUkTOCtslz9vR+OyKGbYMh3yn30xIMV641o55kWqv+tanPWV704AWQor2ywTvm9I6xHB
-         2KHeLxR/hvyMoeu6Zydn+r3ORXdoQ4pkUDrYHJFNK5iNCtxBsalkAuHcEIL8fFwL5lrW
-         32DWyuHAK+i+CF7FFrrZXriZrwEcmmT/h64pa8JZkZ8nSW7fgLZRcVtdRfO4guUCFdgJ
-         mxhA==
+        bh=V+p9XIZJG/A6xmQ4kFGTK7aR6dtQd2oet/kCPom82kk=;
+        b=rfpYO41fkXDWP4QQsgPDC8asAst8GxcVu9e6BWaGIAFZTNq0m8jWBr/wGETMqRZgId
+         l9lumKeDbuKaKlds+JBfU/0BPXVdGxvo1bSTAqbjJG2L7O5Mk6aa8XFIuLLCAMmW0eTr
+         FIejmDcM4QfsPxiobduZEODF70BPd8PS2R85Rt5Og8fMW2kJfRCGqV1b0oVFL8r3/KOr
+         Eptr0m/jYQmoxerdR2xGnjIvYzrIlEiVu1SbuA1DSrB3NCquAM9EgJKYB7e8IOyiUFIh
+         1PE02+DlzMzWmhNqU8TGVv0s+cnoGuTG92AvYik+D/WFS7yI+7UrYA0OZ02hgIs3ZYHM
+         BnIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685645206; x=1688237206;
+        d=1e100.net; s=20221208; t=1685647292; x=1688239292;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8hvF2IOpQDKKFJsjxOYinWe29JU4zPVFXfARnEjYEpc=;
-        b=k9whErKEYEPQfGl2OLW8os/wRt1ldvgjBUkj70ohZ+mGDCY7Yk8f/Vg7lrOH6iIHpC
-         JX7y3D6gdUpmg3/gMf73PcprZ0v9D5RSmFU2WuPJG1Dctk4J8Q1W2Uk0xYBTGk0Vk73F
-         vQ28Q38H5mGOeIWQGH7VfFfqvNbdZCNptk+lA6ynfW5+tJrmOuka6/SFh4rpuw2wJ/mt
-         X0ZlZjN99XyNodcZiY+UYE6EfI/B73Aav5RpGUQUm4Wus43zkAawxDW/M3DtKqxUpOzu
-         fv01dD9hMxZez+hQwK3ZkeExtVsat1t2y2L+azJI03iIucZCjO5+koBywEbynmjcTfYl
-         qGnA==
-X-Gm-Message-State: AC+VfDwkuMBocjSt+MjxCnKDQGDhFs+TeHRqiSwVJfg9RmnBSaeiWd+W
-	fGQgZEjLMddgDUAS0G8cA79p68O6N4kMPEAUxjQ=
-X-Google-Smtp-Source: ACHHUZ5UwRU26uBSdsIbRD1oAwk2ErCsS1QlxAyzOGA6fKt8uEjAfypc/nihEAbgl9nKyKFuT8xLRIuQfOfh/LV2MB4=
-X-Received: by 2002:a05:6214:da9:b0:625:aa49:19f1 with SMTP id
- h9-20020a0562140da900b00625aa4919f1mr12128770qvh.62.1685645205917; Thu, 01
- Jun 2023 11:46:45 -0700 (PDT)
+        bh=V+p9XIZJG/A6xmQ4kFGTK7aR6dtQd2oet/kCPom82kk=;
+        b=aGlH/IR88HAmcQkSTzrUZFgqm5+bnJVCav2s1anp+IjB0muG6MWFNYK8pPULuhGPIs
+         FXM7ACJARuw9enF8cmhttBSjCBwQ0Ez8+zAAQ6nTaIxA0uK6YwO6Cql6AcwU0wwSzcuM
+         JJoaMkycTIFCnnNmlydm+xfVXGeREXi7zuAtakcVqe+7HUxFbLqhA0Zz/gavwZgKe7J/
+         n+LfQO5U4iRUkIbMVewn2+RZwBTjUGcyJCQ5zH6omIVEl3mMBd/H+uWB4oCiX4Bj3Zt+
+         UXlvuD+kKzGyA3M6nC4gCvaDSthowWYfXDkaSFrgPmPNU800kdGCAQz5N6ZGmenpg8sn
+         NSlA==
+X-Gm-Message-State: AC+VfDwcm9pfTJOok1qGvihlQ6B1Y37W3qiu/5z1VlV8ZkIXT8OcOw3N
+	K/ZuPLb4XBY2lv0udmwaKVL4Anjww+k/UzyqByA=
+X-Google-Smtp-Source: ACHHUZ7Q5WF2c1H0jlery4o2IQf3X/dz60h5oQj06l0/Lo5V5iRN1dyj9i+/klKbMcQvuYlj4gSASFFbjczTnIAdaZY=
+X-Received: by 2002:a05:6214:62e:b0:624:fedf:48ec with SMTP id
+ a14-20020a056214062e00b00624fedf48ecmr10943476qvx.37.1685647292019; Thu, 01
+ Jun 2023 12:21:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230601-zswap-cgroup-wsometimes-uninitialized-v1-1-35debdd19293@kernel.org>
- <CAJD7tkYZxbEyP6-yjcobws_6Cvjib9c9YnBQRBjhwrK3KaHs7A@mail.gmail.com>
- <20230601181849.GA1528196@dev-arch.thelio-3990X> <CAJD7tkZHfmY_0-Many96y5YCb2K_+nfoe2WHkPDPXb2x3hBRdQ@mail.gmail.com>
-In-Reply-To: <CAJD7tkZHfmY_0-Many96y5YCb2K_+nfoe2WHkPDPXb2x3hBRdQ@mail.gmail.com>
+References: <20230601-zswap-cgroup-wsometimes-uninitialized-v2-1-84912684ac35@kernel.org>
+ <CAJD7tkYymYNHt9NfYq3s5KR0BytzD8bCo7oaR8T7C2hXZdgGpw@mail.gmail.com>
+In-Reply-To: <CAJD7tkYymYNHt9NfYq3s5KR0BytzD8bCo7oaR8T7C2hXZdgGpw@mail.gmail.com>
 From: Nhat Pham <nphamcs@gmail.com>
-Date: Thu, 1 Jun 2023 11:46:34 -0700
-Message-ID: <CAKEwX=NEFcESOhHTkKneY5i8t9-LOTS_Y=Pfpz7ZaEi5cdk71Q@mail.gmail.com>
-Subject: Re: [PATCH] zswap: Avoid uninitialized use of ret in zswap_frontswap_store()
+Date: Thu, 1 Jun 2023 12:21:21 -0700
+Message-ID: <CAKEwX=OCC+W2+wdryiO3ieWT0cMzqcim_5N3y4ZQisQBL9F9LA@mail.gmail.com>
+Subject: Re: [PATCH v2] zswap: Avoid uninitialized use of ret in zswap_frontswap_store()
 To: Yosry Ahmed <yosryahmed@google.com>
 Cc: Nathan Chancellor <nathan@kernel.org>, akpm@linux-foundation.org, sjenning@redhat.com, 
 	ddstreet@ieee.org, vitaly.wool@konsulko.com, ndesaulniers@google.com, 
@@ -57,109 +56,83 @@ Cc: Nathan Chancellor <nathan@kernel.org>, akpm@linux-foundation.org, sjenning@r
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 1, 2023 at 11:26=E2=80=AFAM Yosry Ahmed <yosryahmed@google.com>=
+On Thu, Jun 1, 2023 at 11:36=E2=80=AFAM Yosry Ahmed <yosryahmed@google.com>=
  wrote:
 >
-> On Thu, Jun 1, 2023 at 11:18=E2=80=AFAM Nathan Chancellor <nathan@kernel.=
+> On Thu, Jun 1, 2023 at 11:34=E2=80=AFAM Nathan Chancellor <nathan@kernel.=
 org> wrote:
 > >
-> > On Thu, Jun 01, 2023 at 11:09:48AM -0700, Yosry Ahmed wrote:
-> > > On Thu, Jun 1, 2023 at 8:26=E2=80=AFAM Nathan Chancellor <nathan@kern=
-el.org> wrote:
-> > > >
-> > > > Clang warns:
-> > > >
-> > > >   mm/zswap.c:1183:6: error: variable 'ret' is used uninitialized wh=
-enever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-> > > >    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
-> > > >         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > > >   mm/zswap.c:1327:9: note: uninitialized use occurs here
-> > > >    1327 |         return ret;
-> > > >         |                ^~~
-> > > >   mm/zswap.c:1183:2: note: remove the 'if' if its condition is alwa=
-ys false
-> > > >    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
-> > > >         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > > >    1184 |                 goto reject;
-> > > >         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > > >   mm/zswap.c:1158:9: note: initialize the variable 'ret' to silence=
- this warning
-> > > >    1158 |         int ret;
-> > > >         |                ^
-> > > >         |                 =3D 0
-> > > >   1 error generated.
-Ooops that's my bad. Thanks for the fix!
-> > > >
-> > > > Set ret to -EINVAL, which seems to best match the situation the com=
-ment
-> > > > mentions and matches an earlier bailout due to an unsupported type =
-or
-> > > > situation.
-> > >
-> > > Shouldn't this be -ENOMEM? I think this was the error code returned i=
-n
-> > > this situation before 6804144bf1cf.
+> > Clang warns:
 > >
-> > Sure, I can update this to be -ENOMEM if that is appropriate. I am not
-> > sure it actually matters though, since as far as I can tell, this
-> > function is only called via the ->store() call in __frontswap_store(),
-> > which is only called by frontswap_store(), which in turn is only called=
- by
-> > swap_writepage() and its return value is only checked against 0, no
-> > other error values. I could be missing a macro call though.
+> >   mm/zswap.c:1183:6: error: variable 'ret' is used uninitialized whenev=
+er 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+> >    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
+> >         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >   mm/zswap.c:1327:9: note: uninitialized use occurs here
+> >    1327 |         return ret;
+> >         |                ^~~
+> >   mm/zswap.c:1183:2: note: remove the 'if' if its condition is always f=
+alse
+> >    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
+> >         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >    1184 |                 goto reject;
+> >         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >   mm/zswap.c:1158:9: note: initialize the variable 'ret' to silence thi=
+s warning
+> >    1158 |         int ret;
+> >         |                ^
+> >         |                 =3D 0
+> >   1 error generated.
 > >
-> > If I should send a v2, please let me know.
+> > This condition used to return -ENOMEM by going to the shrink label, so
+> > set ret to -ENOMEM in the if block explicitly to avoid using it
+> > uninitialized.
+> >
+> > Fixes: 6804144bf1cf ("zswap: do not shrink if cgroup may not zswap")
+> > Reported-by: kernel test robot <lkp@intel.com>
+> > Closes: https://lore.kernel.org/202306011435.2BxsHFUE-lkp@intel.com/
+> > Closes: https://lore.kernel.org/202306012152.o4FL7Y6J-lkp@intel.com/
+> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1861
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 >
-> You are right that no one actually checks the error code now, but it
-> would be nice to stay consistent, just in case we want to do proper
-> error handling at some point :)
-I agree with Yosry - I think ENOMEM is more appropriate here as well.
-
-
-
+> Thanks!
 >
+> Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
+>
+> > ---
+> > Changes in v2:
+> > - Change ret to -ENOMEM to match this condition's previous return value
+> >   (Yosry)
+> > - Link to v1: https://lore.kernel.org/r/20230601-zswap-cgroup-wsometime=
+s-uninitialized-v1-1-35debdd19293@kernel.org
+> > ---
+> >  mm/zswap.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
 > >
-> > Cheers,
-> > Nathan
+> > diff --git a/mm/zswap.c b/mm/zswap.c
+> > index cff93643a6ab..30092d9a3b23 100644
+> > --- a/mm/zswap.c
+> > +++ b/mm/zswap.c
+> > @@ -1180,8 +1180,10 @@ static int zswap_frontswap_store(unsigned type, =
+pgoff_t offset,
+> >          * local cgroup limits.
+> >          */
+> >         objcg =3D get_obj_cgroup_from_page(page);
+> > -       if (objcg && !obj_cgroup_may_zswap(objcg))
+> > +       if (objcg && !obj_cgroup_may_zswap(objcg)) {
+> > +               ret =3D -ENOMEM;
+> >                 goto reject;
+> > +       }
 > >
-> > > > Fixes: 6804144bf1cf ("zswap: do not shrink if cgroup may not zswap"=
-)
-> > > > Reported-by: kernel test robot <lkp@intel.com>
-> > > > Closes: https://lore.kernel.org/202306011435.2BxsHFUE-lkp@intel.com=
-/
-> > > > Closes: https://lore.kernel.org/202306012152.o4FL7Y6J-lkp@intel.com=
-/
-> > > > Closes: https://github.com/ClangBuiltLinux/linux/issues/1861
-> > > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > > > ---
-> > > >  mm/zswap.c | 4 +++-
-> > > >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > > >
-> > > > diff --git a/mm/zswap.c b/mm/zswap.c
-> > > > index cff93643a6ab..e8313e2f5807 100644
-> > > > --- a/mm/zswap.c
-> > > > +++ b/mm/zswap.c
-> > > > @@ -1180,8 +1180,10 @@ static int zswap_frontswap_store(unsigned ty=
-pe, pgoff_t offset,
-> > > >          * local cgroup limits.
-> > > >          */
-> > > >         objcg =3D get_obj_cgroup_from_page(page);
-> > > > -       if (objcg && !obj_cgroup_may_zswap(objcg))
-> > > > +       if (objcg && !obj_cgroup_may_zswap(objcg)) {
-> > > > +               ret =3D -EINVAL;
-> > > >                 goto reject;
-> > > > +       }
-> > > >
-> > > >         /* reclaim space if needed */
-> > > >         if (zswap_is_full()) {
-> > > >
-> > > > ---
-> > > > base-commit: b2424568bd9b947b2698b693ff24fec63bb4b36a
-> > > > change-id: 20230601-zswap-cgroup-wsometimes-uninitialized-b549ff424=
-7ed
-> > > >
-> > > > Best regards,
-> > > > --
-> > > > Nathan Chancellor <nathan@kernel.org>
-> > > >
-> > > >
+> >         /* reclaim space if needed */
+> >         if (zswap_is_full()) {
+> >
+> > ---
+> > base-commit: b2424568bd9b947b2698b693ff24fec63bb4b36a
+> > change-id: 20230601-zswap-cgroup-wsometimes-uninitialized-b549ff4247ed
+> >
+> > Best regards,
+> > --
+> > Nathan Chancellor <nathan@kernel.org>
+> >
+Acked-by: Nhat Pham <nphamcs@gmail.com>
