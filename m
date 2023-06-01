@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6115FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538EDC433D2;
-	Thu,  1 Jun 2023 13:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36436FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CA3C433EF;
+	Thu,  1 Jun 2023 13:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626122;
-	bh=8cPrpwpUSHGwTVsLhEmDkOUS2HMtpoNlheNK71BGlsU=;
+	s=korg; t=1685626125;
+	bh=JARYz9SM1UOeuEx0fqLtV0MCdgCdlpyZFz4bWic7OTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFK0hcXHf8VK6g2N/0ISVAJsdWlxNh6jm82UncXJMIgolGBQjYx7NmnfzwulP/hpS
-	 G+NeGvhARV50Br3yY9pHMtpS0t80M7Axci8G41CzldfTtkFSw8mEjGgwdS/M0I+MpG
-	 ZrnWX+p/wzwi6Ta0sdz+HoYoqe9e1rkQj6CCHN00=
+	b=fhieG0jDkFOgTMfCiQw733PJUy+fQVcEeBAEuJnCCv7JLyvzT/mfftSpXZJ/lfDHK
+	 /nVj1GvTci6yoPknlnTqdIhPVQ3Rp5APxRLd9ETmY3deThRz/6JALN63408le0m2m/
+	 47PiF/qXN51nCLsWDYb3M269szO/rBjZM10jGqZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wyes Karny <wyes.karny@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 39/42] cpufreq: amd-pstate: Update policy->cur in amd_pstate_adjust_perf()
-Date: Thu,  1 Jun 2023 14:21:48 +0100
-Message-Id: <20230601131940.808879850@linuxfoundation.org>
+	William Findlay <will@isovalent.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 14/42] bpf, sockmap: Pass skb ownership through read_skb
+Date: Thu,  1 Jun 2023 14:21:23 +0100
+Message-Id: <20230601131939.690379328@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
 References: <20230601131939.051934720@linuxfoundation.org>
@@ -34,76 +37,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wyes Karny <wyes.karny@amd.com>
+From: John Fastabend <john.fastabend@gmail.com>
 
-commit 3bf8c6307bad5c0cc09cde982e146d847859b651 upstream.
+[ Upstream commit 78fa0d61d97a728d306b0c23d353c0e340756437 ]
 
-Driver should update policy->cur after updating the frequency.
-Currently amd_pstate doesn't update policy->cur when `adjust_perf`
-is used. Which causes /proc/cpuinfo to show wrong cpu frequency.
-Fix this by updating policy->cur with correct frequency value in
-adjust_perf function callback.
+The read_skb hook calls consume_skb() now, but this means that if the
+recv_actor program wants to use the skb it needs to inc the ref cnt
+so that the consume_skb() doesn't kfree the sk_buff.
 
-- Before the fix: (setting min freq to 1.5 MHz)
+This is problematic because in some error cases under memory pressure
+we may need to linearize the sk_buff from sk_psock_skb_ingress_enqueue().
+Then we get this,
 
-[root@amd]# cat /proc/cpuinfo | grep "cpu MHz" | sort | uniq --count
-      1 cpu MHz         : 1777.016
-      1 cpu MHz         : 1797.160
-      1 cpu MHz         : 1797.270
-    189 cpu MHz         : 400.000
+ skb_linearize()
+   __pskb_pull_tail()
+     pskb_expand_head()
+       BUG_ON(skb_shared(skb))
 
-- After the fix: (setting min freq to 1.5 MHz)
+Because we incremented users refcnt from sk_psock_verdict_recv() we
+hit the bug on with refcnt > 1 and trip it.
 
-[root@amd]# cat /proc/cpuinfo | grep "cpu MHz" | sort | uniq --count
-      1 cpu MHz         : 1753.353
-      1 cpu MHz         : 1756.838
-      1 cpu MHz         : 1776.466
-      1 cpu MHz         : 1776.873
-      1 cpu MHz         : 1777.308
-      1 cpu MHz         : 1779.900
-    183 cpu MHz         : 1805.231
-      1 cpu MHz         : 1956.815
-      1 cpu MHz         : 2246.203
-      1 cpu MHz         : 2259.984
+To fix lets simply pass ownership of the sk_buff through the skb_read
+call. Then we can drop the consume from read_skb handlers and assume
+the verdict recv does any required kfree.
 
-Fixes: 1d215f0319c2 ("cpufreq: amd-pstate: Add fast switch function for AMD P-State")
-Signed-off-by: Wyes Karny <wyes.karny@amd.com>
-[ rjw: Subject edits ]
-Cc: 5.17+ <stable@vger.kernel.org> # 5.17+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Bug found while testing in our CI which runs in VMs that hit memory
+constraints rather regularly. William tested TCP read_skb handlers.
+
+[  106.536188] ------------[ cut here ]------------
+[  106.536197] kernel BUG at net/core/skbuff.c:1693!
+[  106.536479] invalid opcode: 0000 [#1] PREEMPT SMP PTI
+[  106.536726] CPU: 3 PID: 1495 Comm: curl Not tainted 5.19.0-rc5 #1
+[  106.537023] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS ArchLinux 1.16.0-1 04/01/2014
+[  106.537467] RIP: 0010:pskb_expand_head+0x269/0x330
+[  106.538585] RSP: 0018:ffffc90000138b68 EFLAGS: 00010202
+[  106.538839] RAX: 000000000000003f RBX: ffff8881048940e8 RCX: 0000000000000a20
+[  106.539186] RDX: 0000000000000002 RSI: 0000000000000000 RDI: ffff8881048940e8
+[  106.539529] RBP: ffffc90000138be8 R08: 00000000e161fd1a R09: 0000000000000000
+[  106.539877] R10: 0000000000000018 R11: 0000000000000000 R12: ffff8881048940e8
+[  106.540222] R13: 0000000000000003 R14: 0000000000000000 R15: ffff8881048940e8
+[  106.540568] FS:  00007f277dde9f00(0000) GS:ffff88813bd80000(0000) knlGS:0000000000000000
+[  106.540954] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  106.541227] CR2: 00007f277eeede64 CR3: 000000000ad3e000 CR4: 00000000000006e0
+[  106.541569] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  106.541915] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  106.542255] Call Trace:
+[  106.542383]  <IRQ>
+[  106.542487]  __pskb_pull_tail+0x4b/0x3e0
+[  106.542681]  skb_ensure_writable+0x85/0xa0
+[  106.542882]  sk_skb_pull_data+0x18/0x20
+[  106.543084]  bpf_prog_b517a65a242018b0_bpf_skskb_http_verdict+0x3a9/0x4aa9
+[  106.543536]  ? migrate_disable+0x66/0x80
+[  106.543871]  sk_psock_verdict_recv+0xe2/0x310
+[  106.544258]  ? sk_psock_write_space+0x1f0/0x1f0
+[  106.544561]  tcp_read_skb+0x7b/0x120
+[  106.544740]  tcp_data_queue+0x904/0xee0
+[  106.544931]  tcp_rcv_established+0x212/0x7c0
+[  106.545142]  tcp_v4_do_rcv+0x174/0x2a0
+[  106.545326]  tcp_v4_rcv+0xe70/0xf60
+[  106.545500]  ip_protocol_deliver_rcu+0x48/0x290
+[  106.545744]  ip_local_deliver_finish+0xa7/0x150
+
+Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
+Reported-by: William Findlay <will@isovalent.com>
+Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: William Findlay <will@isovalent.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20230523025618.113937-2-john.fastabend@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/core/skmsg.c   | 2 --
+ net/ipv4/tcp.c     | 1 -
+ net/ipv4/udp.c     | 7 ++-----
+ net/unix/af_unix.c | 7 ++-----
+ 4 files changed, 4 insertions(+), 13 deletions(-)
 
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -284,12 +284,14 @@ static void amd_pstate_adjust_perf(unsig
- 				   unsigned long capacity)
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 53d0251788aa2..2b6d9519ff29c 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1180,8 +1180,6 @@ static int sk_psock_verdict_recv(struct sock *sk, struct sk_buff *skb)
+ 	int ret = __SK_DROP;
+ 	int len = skb->len;
+ 
+-	skb_get(skb);
+-
+ 	rcu_read_lock();
+ 	psock = sk_psock(sk);
+ 	if (unlikely(!psock)) {
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 1fb67f819de49..31156ebb759c0 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1772,7 +1772,6 @@ int tcp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 		WARN_ON_ONCE(!skb_set_owner_sk_safe(skb, sk));
+ 		tcp_flags = TCP_SKB_CB(skb)->tcp_flags;
+ 		used = recv_actor(sk, skb);
+-		consume_skb(skb);
+ 		if (used < 0) {
+ 			if (!copied)
+ 				copied = used;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 3ffa30c37293e..956d6797c76f3 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1806,7 +1806,7 @@ EXPORT_SYMBOL(__skb_recv_udp);
+ int udp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
  {
- 	unsigned long max_perf, min_perf, des_perf,
--		      cap_perf, lowest_nonlinear_perf;
-+		      cap_perf, lowest_nonlinear_perf, max_freq;
- 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
- 	struct amd_cpudata *cpudata = policy->driver_data;
-+	unsigned int target_freq;
+ 	struct sk_buff *skb;
+-	int err, copied;
++	int err;
  
- 	cap_perf = READ_ONCE(cpudata->highest_perf);
- 	lowest_nonlinear_perf = READ_ONCE(cpudata->lowest_nonlinear_perf);
-+	max_freq = READ_ONCE(cpudata->max_freq);
+ try_again:
+ 	skb = skb_recv_udp(sk, MSG_DONTWAIT, &err);
+@@ -1825,10 +1825,7 @@ int udp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 	}
  
- 	des_perf = cap_perf;
- 	if (target_perf < capacity)
-@@ -306,6 +308,10 @@ static void amd_pstate_adjust_perf(unsig
- 	if (max_perf < min_perf)
- 		max_perf = min_perf;
- 
-+	des_perf = clamp_t(unsigned long, des_perf, min_perf, max_perf);
-+	target_freq = div_u64(des_perf * max_freq, max_perf);
-+	policy->cur = target_freq;
-+
- 	amd_pstate_update(cpudata, min_perf, des_perf, max_perf, true);
- 	cpufreq_cpu_put(policy);
+ 	WARN_ON_ONCE(!skb_set_owner_sk_safe(skb, sk));
+-	copied = recv_actor(sk, skb);
+-	kfree_skb(skb);
+-
+-	return copied;
++	return recv_actor(sk, skb);
  }
+ EXPORT_SYMBOL(udp_read_skb);
+ 
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 70eb3bc67126d..5b19b6c53a2cb 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2552,7 +2552,7 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ {
+ 	struct unix_sock *u = unix_sk(sk);
+ 	struct sk_buff *skb;
+-	int err, copied;
++	int err;
+ 
+ 	mutex_lock(&u->iolock);
+ 	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
+@@ -2560,10 +2560,7 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 	if (!skb)
+ 		return err;
+ 
+-	copied = recv_actor(sk, skb);
+-	kfree_skb(skb);
+-
+-	return copied;
++	return recv_actor(sk, skb);
+ }
+ 
+ /*
+-- 
+2.39.2
+
 
 
