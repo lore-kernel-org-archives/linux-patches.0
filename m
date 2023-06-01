@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBE8E54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:24:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36ED2C4339C;
-	Thu,  1 Jun 2023 13:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A766E54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:24:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF3FC433D2;
+	Thu,  1 Jun 2023 13:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625855;
-	bh=ZSvC1kB0VU9E5dBB6PvCczUyuXalCIGudJdlx9Pzttc=;
+	s=korg; t=1685625857;
+	bh=blpFw6Hs25H0Wrulu6P5M0Y/actFofid44YwKWg/m0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZmDPwyIUyQ0DMkCZoHfwEQr5u8DoaTPb2VEprMWIm04HZ7kLsavgV3r++qjmvjre
-	 dYjZlNwJ0KY4MX8kyDvAdJHaBm/R6jdou2NpqLnLDjNWdjhnKMoa1SVQauWV4tfsK1
-	 C9ShR3vI4RI36vMgaKPUBhWuTO6GXvuOAVqPkxQk=
+	b=vTq+wKmTOtxOTqWiIg+Qvi8AlOCkVCQOuRdRkIoo9HxSUf/x3uuN2IuezSrFiktZs
+	 UvblIwCLgT4ogMFP7F1ji1tvuUW+d3cf/MGS0P8IYzt8yVV4FFq37imqp5ZLcnvMjg
+	 RkFUjv76uamMjXOJTvJmuaHHveWDhSO4tYHeOHiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 20/42] KVM: s390: fix race in gmap_make_secure()
-Date: Thu,  1 Jun 2023 14:21:07 +0100
-Message-Id: <20230601131937.629922352@linuxfoundation.org>
+Subject: [PATCH 5.15 21/42] net: dsa: introduce helpers for iterating through ports using dp
+Date: Thu,  1 Jun 2023 14:21:08 +0100
+Message-Id: <20230601131937.674646135@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131936.699199833@linuxfoundation.org>
 References: <20230601131936.699199833@linuxfoundation.org>
@@ -35,92 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit c148dc8e2fa403be501612ee409db866eeed35c0 ]
+[ Upstream commit 82b318983c515f29b8b3a0dad9f6a5fe8a68a7f4 ]
 
-Fix a potential race in gmap_make_secure() and remove the last user of
-follow_page() without FOLL_GET.
+Since the DSA conversion from the ds->ports array into the dst->ports
+list, the DSA API has encouraged driver writers, as well as the core
+itself, to write inefficient code.
 
-The old code is locking something it doesn't have a reference to, and
-as explained by Jason and David in this discussion:
-https://lore.kernel.org/linux-mm/Y9J4P%2FRNvY1Ztn0Q@nvidia.com/
-it can lead to all kind of bad things, including the page getting
-unmapped (MADV_DONTNEED), freed, reallocated as a larger folio and the
-unlock_page() would target the wrong bit.
-There is also another race with the FOLL_WRITE, which could race
-between the follow_page() and the get_locked_pte().
+Currently, code that wants to filter by a specific type of port when
+iterating, like {!unused, user, cpu, dsa}, uses the dsa_is_*_port helper.
+Under the hood, this uses dsa_to_port which iterates again through
+dst->ports. But the driver iterates through the port list already, so
+the complexity is quadratic for the typical case of a single-switch
+tree.
 
-The main point is to remove the last use of follow_page() without
-FOLL_GET or FOLL_PIN, removing the races can be considered a nice
-bonus.
+This patch introduces some iteration helpers where the iterator is
+already a struct dsa_port *dp, so that the other variant of the
+filtering functions, dsa_port_is_{unused,user,cpu_dsa}, can be used
+directly on the iterator. This eliminates the second lookup.
 
-Link: https://lore.kernel.org/linux-mm/Y9J4P%2FRNvY1Ztn0Q@nvidia.com/
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Fixes: 214d9bbcd3a6 ("s390/mm: provide memory management functions for protected KVM guests")
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-Id: <20230428092753.27913-2-imbrenda@linux.ibm.com>
+These functions can be used both by the core and by drivers.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 120a56b01bee ("net: dsa: mt7530: fix network connectivity with multiple CPU ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/uv.c | 32 +++++++++++---------------------
- 1 file changed, 11 insertions(+), 21 deletions(-)
+ include/net/dsa.h | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
-index 7d7961c7b1281..66d1248c8c923 100644
---- a/arch/s390/kernel/uv.c
-+++ b/arch/s390/kernel/uv.c
-@@ -160,21 +160,10 @@ static int expected_page_refs(struct page *page)
- 	return res;
+diff --git a/include/net/dsa.h b/include/net/dsa.h
+index d784e76113b8d..bec439c4a0859 100644
+--- a/include/net/dsa.h
++++ b/include/net/dsa.h
+@@ -472,6 +472,34 @@ static inline bool dsa_is_user_port(struct dsa_switch *ds, int p)
+ 	return dsa_to_port(ds, p)->type == DSA_PORT_TYPE_USER;
  }
  
--static int make_secure_pte(pte_t *ptep, unsigned long addr,
--			   struct page *exp_page, struct uv_cb_header *uvcb)
-+static int make_page_secure(struct page *page, struct uv_cb_header *uvcb)
++#define dsa_tree_for_each_user_port(_dp, _dst) \
++	list_for_each_entry((_dp), &(_dst)->ports, list) \
++		if (dsa_port_is_user((_dp)))
++
++#define dsa_switch_for_each_port(_dp, _ds) \
++	list_for_each_entry((_dp), &(_ds)->dst->ports, list) \
++		if ((_dp)->ds == (_ds))
++
++#define dsa_switch_for_each_port_safe(_dp, _next, _ds) \
++	list_for_each_entry_safe((_dp), (_next), &(_ds)->dst->ports, list) \
++		if ((_dp)->ds == (_ds))
++
++#define dsa_switch_for_each_port_continue_reverse(_dp, _ds) \
++	list_for_each_entry_continue_reverse((_dp), &(_ds)->dst->ports, list) \
++		if ((_dp)->ds == (_ds))
++
++#define dsa_switch_for_each_available_port(_dp, _ds) \
++	dsa_switch_for_each_port((_dp), (_ds)) \
++		if (!dsa_port_is_unused((_dp)))
++
++#define dsa_switch_for_each_user_port(_dp, _ds) \
++	dsa_switch_for_each_port((_dp), (_ds)) \
++		if (dsa_port_is_user((_dp)))
++
++#define dsa_switch_for_each_cpu_port(_dp, _ds) \
++	dsa_switch_for_each_port((_dp), (_ds)) \
++		if (dsa_port_is_cpu((_dp)))
++
+ static inline u32 dsa_user_ports(struct dsa_switch *ds)
  {
--	pte_t entry = READ_ONCE(*ptep);
--	struct page *page;
- 	int expected, rc = 0;
- 
--	if (!pte_present(entry))
--		return -ENXIO;
--	if (pte_val(entry) & _PAGE_INVALID)
--		return -ENXIO;
--
--	page = pte_page(entry);
--	if (page != exp_page)
--		return -ENXIO;
- 	if (PageWriteback(page))
- 		return -EAGAIN;
- 	expected = expected_page_refs(page);
-@@ -252,17 +241,18 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
- 		goto out;
- 
- 	rc = -ENXIO;
--	page = follow_page(vma, uaddr, FOLL_WRITE);
--	if (IS_ERR_OR_NULL(page))
--		goto out;
--
--	lock_page(page);
- 	ptep = get_locked_pte(gmap->mm, uaddr, &ptelock);
--	if (should_export_before_import(uvcb, gmap->mm))
--		uv_convert_from_secure(page_to_phys(page));
--	rc = make_secure_pte(ptep, uaddr, page, uvcb);
-+	if (pte_present(*ptep) && !(pte_val(*ptep) & _PAGE_INVALID) && pte_write(*ptep)) {
-+		page = pte_page(*ptep);
-+		rc = -EAGAIN;
-+		if (trylock_page(page)) {
-+			if (should_export_before_import(uvcb, gmap->mm))
-+				uv_convert_from_secure(page_to_phys(page));
-+			rc = make_page_secure(page, uvcb);
-+			unlock_page(page);
-+		}
-+	}
- 	pte_unmap_unlock(ptep, ptelock);
--	unlock_page(page);
- out:
- 	mmap_read_unlock(gmap->mm);
- 
+ 	u32 mask = 0;
 -- 
 2.39.2
 
