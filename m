@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9DFE54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:24:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592A9C433D2;
-	Thu,  1 Jun 2023 13:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DDDE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:24:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3556C433EF;
+	Thu,  1 Jun 2023 13:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625850;
-	bh=cgL6P8mK4oe27gSHKHnEjDlukWGS2CkKrCne481kdR4=;
+	s=korg; t=1685625853;
+	bh=HrSnKsT0CEKtiGz96gQ3ZubLQ7pkKN6ZHueH0n0A2YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFQrW1XyVMo+9jhDGDw59VbdMUU6FjSCW7AgItkNlUu7RUYfn1Z0SOJuXKe6juex4
-	 ADj6pfHaj/xIKqv9Klve8G+M7FOVq5DPNUmLkwPLAwFwjDpn+L8YC1Tla88jkOuuOu
-	 OP/WvVCqkZKWK8dyhdfqsymx3vN9zEBiE/t24ShI=
+	b=TtMt4HuF2eW8uXjcDBPPWwmI/liFlXJZ7pIHQ++hMGtiMYA/f1ajJR4a/XDD+UkUM
+	 FCwS+QJeyeHcLUjdOUv5Tb+2bG0XVhOp7YSsmF4xRZHIwIFSCFm0POlScQC25D1ClK
+	 Cn9V3bUVCzF5NLH5KjaxNx0fXF6yxmiNCxGDAvTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/42] dmaengine: at_xdmac: restore the content of grws register
-Date: Thu,  1 Jun 2023 14:21:05 +0100
-Message-Id: <20230601131937.546872629@linuxfoundation.org>
+Subject: [PATCH 5.15 19/42] KVM: s390: pv: add export before import
+Date: Thu,  1 Jun 2023 14:21:06 +0100
+Message-Id: <20230601131937.588176314@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131936.699199833@linuxfoundation.org>
 References: <20230601131936.699199833@linuxfoundation.org>
@@ -35,45 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit 7c5eb63d16b01c202aaa95f374ae15a807745a73 ]
+[ Upstream commit 72b1daff2671cef2c8cccc6c4e52f8d5ce4ebe58 ]
 
-In case the system suspends to a deep sleep state where power to DMA
-controller is cut-off we need to restore the content of GRWS register.
-This is a write only register and writing bit X tells the controller
-to suspend read and write requests for channel X. Thus set GRWS before
-restoring the content of GE (Global Enable) regiter.
+Due to upcoming changes, it will be possible to temporarily have
+multiple protected VMs in the same address space, although only one
+will be actually active.
 
-Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230214151827.1050280-5-claudiu.beznea@microchip.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+In that scenario, it is necessary to perform an export of every page
+that is to be imported, since the hardware does not allow a page
+belonging to a protected guest to be imported into a different
+protected guest.
+
+This also applies to pages that are shared, and thus accessible by the
+host.
+
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Link: https://lore.kernel.org/r/20220628135619.32410-7-imbrenda@linux.ibm.com
+Message-Id: <20220628135619.32410-7-imbrenda@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Stable-dep-of: c148dc8e2fa4 ("KVM: s390: fix race in gmap_make_secure()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/at_xdmac.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/s390/kernel/uv.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index 4965961f55aa2..66bf570a8bd98 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -2063,6 +2063,15 @@ static int atmel_xdmac_resume(struct device *dev)
- 		if (at_xdmac_chan_is_cyclic(atchan)) {
- 			if (at_xdmac_chan_is_paused(atchan))
- 				at_xdmac_device_resume_internal(atchan);
+diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
+index f95ccbd396925..7d7961c7b1281 100644
+--- a/arch/s390/kernel/uv.c
++++ b/arch/s390/kernel/uv.c
+@@ -189,6 +189,32 @@ static int make_secure_pte(pte_t *ptep, unsigned long addr,
+ 	return rc;
+ }
+ 
++/**
++ * should_export_before_import - Determine whether an export is needed
++ * before an import-like operation
++ * @uvcb: the Ultravisor control block of the UVC to be performed
++ * @mm: the mm of the process
++ *
++ * Returns whether an export is needed before every import-like operation.
++ * This is needed for shared pages, which don't trigger a secure storage
++ * exception when accessed from a different guest.
++ *
++ * Although considered as one, the Unpin Page UVC is not an actual import,
++ * so it is not affected.
++ *
++ * No export is needed also when there is only one protected VM, because the
++ * page cannot belong to the wrong VM in that case (there is no "other VM"
++ * it can belong to).
++ *
++ * Return: true if an export is needed before every import, otherwise false.
++ */
++static bool should_export_before_import(struct uv_cb_header *uvcb, struct mm_struct *mm)
++{
++	if (uvcb->cmd == UVC_CMD_UNPIN_PAGE_SHARED)
++		return false;
++	return atomic_read(&mm->context.protected_count) > 1;
++}
 +
-+			/*
-+			 * We may resume from a deep sleep state where power
-+			 * to DMA controller is cut-off. Thus, restore the
-+			 * suspend state of channels set though dmaengine API.
-+			 */
-+			else if (at_xdmac_chan_is_paused(atchan))
-+				at_xdmac_device_pause_set(atxdmac, atchan);
-+
- 			at_xdmac_chan_write(atchan, AT_XDMAC_CNDA, atchan->save_cnda);
- 			at_xdmac_chan_write(atchan, AT_XDMAC_CNDC, atchan->save_cndc);
- 			at_xdmac_chan_write(atchan, AT_XDMAC_CIE, atchan->save_cim);
+ /*
+  * Requests the Ultravisor to make a page accessible to a guest.
+  * If it's brought in the first time, it will be cleared. If
+@@ -232,6 +258,8 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
+ 
+ 	lock_page(page);
+ 	ptep = get_locked_pte(gmap->mm, uaddr, &ptelock);
++	if (should_export_before_import(uvcb, gmap->mm))
++		uv_convert_from_secure(page_to_phys(page));
+ 	rc = make_secure_pte(ptep, uaddr, page, uvcb);
+ 	pte_unmap_unlock(ptep, ptelock);
+ 	unlock_page(page);
 -- 
 2.39.2
 
