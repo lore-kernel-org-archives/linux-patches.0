@@ -1,35 +1,35 @@
-Received: from GBR01-LO2-obe.outbound.protection.outlook.com (mail-lo2gbr01on2130.outbound.protection.outlook.com [40.107.10.130])
+Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2127.outbound.protection.outlook.com [40.107.11.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA0842501
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 17:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5F142501
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 17:32:14 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RY/nGeFm9rXYoDwQMxUOYSjXa0drO/s9qXCwdaB8kz7NI+tJzX4owRE4/562x54xwsn8RVsvNmsFUS8c962EwMfwqkp+uEFqGaG8QSVU1oQ7ge1aBI0S02AnFgrBS2bfRrxVMP6SgBMiBK9zXry27JV2r/xuM3IoqFmNmQAyRDrRXOyD+zKOM1fbddZw53nMyvhcoNcLjo8RQm1bLv2iGhFQwHOhqhtcGVxC37l/ODmazXqB3OzeW82pEb/IfZFoNWnRG7a7zYcPgwuH4Aucl2GiGv5XJ5WXyGTJ68TtywbJxBuEqyIHR1RXj5XggBcgLIkQjj8aLoew8eDpzUO4/w==
+ b=CI2QuGcPVlUkSkqzWy39ykBXkeDsX9TQkmWm29NiGt/dlba3TQmp/QDV+q481h763qurdy+GdKZvlQTxtCJGJwpTZ1z2wnNNotGHXX46TUneHvQoxyNkaIofuRMG8aH/wMLDk/eVE3e8BwtXndCB1IyucClT5w1Phazz7b433FbVa/PNEmofsQ2E7zgLRNQleCIdNlGeIADNTZHL96TcWU5QCsBku9h7tcVIY11N6W6LrxeckVkx2tTyYKK1Oa/3xztDiPASuybjNiF742D+hP4RFKvjLJ1yIWTEpX3xW2bqUjtAph1EIcNyXAjFQfbH9JuqC+9hLv6Shh9xeYx5XQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=P9mcdGaREydp49ZO5SXEluSw2J9rKS1aZ9g+/1UOKow=;
- b=cXtDTOkCGTSVQMdKWpaByUHnWQF0/xYZUoFIcp1ihp8M1jVsjy4mxiWt+Gm60Mqlt3fcfYchSzqtvue0Lf+J0ZJ+WJBCZ1Y/nKLq8OSggwkGlMv3+6/qTokrl+bIal8TB2rrfzVxsTO+EZFzcJiWRA8SPgp+ihRKNwTmSHB0CqYv0wORmeZlQvDXEZeyGbt1XwLKOw5fCxhAGz2B1Pawnp/91r5Xy3K+UWxL4Ke3b6BI4BtgA6juay1IRdoxnqCjPlFRz4EbmMZ88RJJ22o1J11zIlccbXhzdBO/mSwdnSFFYh3P1KT8sXc/zHzvh/gsn6O/EC7HBgShejMfwqIhtg==
+ bh=oFbj3xbAxkuFVUlJS7R2ul3JZ+NTfOsPahmTvZnxJbg=;
+ b=CRBe/K3SZnDW0nE2w8yWt1HqXfg0OSa1Ri6QqnmefCmWWN6spt52MakUYspyfdwrHKJ/IdYs9Rlw3fCqwYg7UsQu3B1N8KoxmjvJ7nuhcIHISla8rMYQLvkAadSyx9m6wJauBdsQhdR5CGxwiJ4PgcroG7t3uyhGCf/v9DhZk1F69Hl79HBip3Wfmq3qcUx9obzz+j7qAjWLEYUBGsQgHRPCdf2wyywKW33K+F0eMQmadUB4/rXZ446kzUq2MpQjTI8tZiKF3zlvM/L5yzsUugRqVHRhigD9EmMNeo+dyuZxZJSY2qPpRAqF2EiCoBuG694LcCkq57fvrxYgWI3AbQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
  dkim=pass header.d=garyguo.net; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=P9mcdGaREydp49ZO5SXEluSw2J9rKS1aZ9g+/1UOKow=;
- b=cBK+oDWIi0OdvTQEPDH7BluazmC2Lg7v5r0f5TLlS4oVpg08nupLcDjLhuv4hi9w7VHQG5vkrED0Csiq2OS1hyezk0UzuqptYywit7vtW0A6Ss6Lak7stAFtb+L6OvZdoeNo5Q9ZK2GzXfYhu/lHSAPpuXWnjPOiZlcydnzQc94=
+ bh=oFbj3xbAxkuFVUlJS7R2ul3JZ+NTfOsPahmTvZnxJbg=;
+ b=zyXzkP2ITyMqj1l+yNjAmWtVIhBSfvdgZ3GNfGvWIWyFEBwf4J6SnfRCxvng90ffJmzIo5iwxDitbPDXbvCVu1M9aH0q9KivT5zm00kDn6aoA82aE8HBzz8hRJDc5MqHPj0/zUPXaPxtslkDDX9dEJbcZLBbPHbEpTBCLx1Kg18=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=garyguo.net;
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
  by LO6P265MB6987.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:321::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6477.9; Thu, 1 Jun
- 2023 17:30:04 +0000
+ 2023 17:32:11 +0000
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::2e6d:c339:6006:9013]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::2e6d:c339:6006:9013%5]) with mapi id 15.20.6477.008; Thu, 1 Jun 2023
- 17:30:04 +0000
-Date: Thu, 1 Jun 2023 18:30:02 +0100
+ 17:32:11 +0000
+Date: Thu, 1 Jun 2023 18:32:09 +0100
 From: Gary Guo <gary@garyguo.net>
 To: Alice Ryhl <aliceryhl@google.com>
 Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson
@@ -37,18 +37,17 @@ Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson
  Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>,
  Boqun Feng <boqun.feng@gmail.com>, "=?UTF-8?B?QmrDtnJu?= Roy Baron"
  <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev, Wedson Almeida Filho
- <walmeida@microsoft.com>, Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Subject: Re: [PATCH v2 4/8] rust: workqueue: define built-in queues
-Message-ID: <20230601183002.237a31fa.gary@garyguo.net>
-In-Reply-To: <20230601134946.3887870-5-aliceryhl@google.com>
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2 8/8] rust: workqueue: add examples
+Message-ID: <20230601183209.371fd898.gary@garyguo.net>
+In-Reply-To: <20230601134946.3887870-9-aliceryhl@google.com>
 References: <20230601134946.3887870-1-aliceryhl@google.com>
-	<20230601134946.3887870-5-aliceryhl@google.com>
+	<20230601134946.3887870-9-aliceryhl@google.com>
 X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P265CA0075.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2bd::16) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-ClientProxiedBy: LO2P123CA0106.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:139::21) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -58,163 +57,191 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO6P265MB6987:EE_
-X-MS-Office365-Filtering-Correlation-Id: bb36c1b3-440f-49c2-7472-08db62c5d640
+X-MS-Office365-Filtering-Correlation-Id: 865f09ee-a4ea-46f4-9555-08db62c621d7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	HLbLdkoTCQj81nVljyDfG4Zjq+qzYCK90MNBc0QBFMhMPW40O5ZPhPTIV3/hp7QmZWafZRmTAn0E6Ge5tQbgmN2nBsyBTImX0GfKcTSF1q3s/fVpEn/AhWSDRkPu7sZnHOaDQ/PvQ2nQIIz8P/n2C+XCrWNMlQUTqgFKcHXE+VNsHTKDCbiu6rFOTemsfXytrX7Caa1jnrcggt5n1lrniw/rJjZTX2RslKHoapue2pGOSBJ3UDFqbYhDmnedFKzbq67Hry2tZyl9N33p5RxaiUqsCRchrCtmMAIM0w+WtdL8VNVCOoQgLAII+w07ze0QvJuGDAmPuEnL70O3U1cSiwxG26GCdMqaFJys5kzQy/W7ISfOVDVX/a1INbZ944/EvrA3bRKk41Mvx75+/wqEfpp4VGTGQ7PKHPor+XATEty06g+OLGyJ+pzcocFEV/VtbZECqtGb06D2rDpoxmyp0ajJrAa6Mo2C5LVx0fYiH/OjRt1cyqToqId2cAgjiohYkiGI3Wm0tZG2X1sAChbAisjWo1iAbxfWiUDAq6D0uA2aaHSXmTtlp2HLEFmD9xT5
+	vaWdJOI/sU27OMgZGMU6Ykvh4MtttAmeA/OUfCScw89vV4mV6/adgQuSNUVI0a7jI8PBQuNNmfva4s+Wy0QKQc7IbG7nx0+1+mIf+mh6tHrdhoZEnXLAanHfq77g5ZfY1N/KkzTQ5ow6hsD0ZJ7DSZBLSmkjWE7qiFppYcDJcDyt9utikK9QCY4bP9BsnuNDwcIa5eIy4FQyTbFfV0tkbHfFg9O9n9R7jdkh0kY+HCDoIF8HI6eur8Ht2Dbv+++LCn4ZOz+yoW8pBVWzsMnC6gEPaN69xm08EtKOnxUdb9V3UfhrbN4AYQLb4XtG+jUTqdIgM5JuFb4ggfYnM36lnsrHDzKpxC7emJ8wf9cDjx1v8KZxsxkhxnSafSK7So/2YKRQyITQUayrITTgAd9AbukVnvPlDVKJ+zjI6zw5Kv1XrVOQDaHsrXmAM95qwuZdpC41uaXbEMoeH00aauGIFpIfALM3z08HVgcucEkOiJvhwCjU/VjytCTLa+sBYfotoB9iz2F0kIEyCcYKFh5NTqOpYuIprrCUzeQ+YyiOtf1Lcv3hrr+oIl8aSMvfRIe4
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(346002)(39830400003)(376002)(366004)(136003)(396003)(451199021)(38100700002)(7416002)(2906002)(41300700001)(316002)(8676002)(8936002)(83380400001)(5660300002)(6486002)(6916009)(66946007)(66556008)(4326008)(66476007)(2616005)(36756003)(86362001)(186003)(1076003)(54906003)(26005)(6512007)(478600001)(6506007)(45080400002);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(346002)(39830400003)(376002)(366004)(136003)(396003)(451199021)(38100700002)(7416002)(2906002)(41300700001)(316002)(8676002)(8936002)(83380400001)(5660300002)(6486002)(6916009)(66946007)(66556008)(4326008)(66476007)(2616005)(36756003)(86362001)(186003)(1076003)(54906003)(26005)(6512007)(478600001)(6506007);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?i0qSQWwDvPjBEPTm1/qYCNmIYSegYC6GARnfZZUUVjhf/Z82mZ2XwjlMPDBf?=
- =?us-ascii?Q?j2xzzG7r2Ke8rT4qaIAWvpdauGPsLnint5nQrunRRqiqF5wucvtuJ+kiD3wo?=
- =?us-ascii?Q?jm+JS8vuUVBRI8P44unHEsthDTZcQpsrRVFuWLLh0SYNfaqWpPa+U4+tspZN?=
- =?us-ascii?Q?yNs3cM0kL+foTPgOI+TKkPMRExIjkq5qivtcap1fVJUikGqAna+Q0Juu1+nR?=
- =?us-ascii?Q?9ucAppHWUdOXNe8UW7LowUpz88fl6p0wweK82whyKpDzrhlp90cH4OYrUaoq?=
- =?us-ascii?Q?k7qbT9FyfyGpzlyy5rDh8ZpJvWN3H7RnVUqThlkX16e9H4i5OHVC2V00g1M6?=
- =?us-ascii?Q?+wzHbhegM3/ER+XuZIJzdbFzlApwGw66DrPTOeWlVzC/25QGLm0YiccPFJuY?=
- =?us-ascii?Q?bTHP/2Puzd11ZKQLzOlfI68NO3wlelc0LdG0A6geZAiBKm7sHyb8lEpfonCq?=
- =?us-ascii?Q?3AlAnIvo45JTmF5eew+W/UZmKiTJuNFUcaIuN1SdfsUWudfTR10PtshaNUHm?=
- =?us-ascii?Q?nrvpOhwS8KRXZyUPtAkTCFG+NFbyr68QFsw7/gazyeO1Z0ZGyHcarDZUGnUC?=
- =?us-ascii?Q?s0MBw/ZuklSWQk37f1sJog78BQkF9kbtuo7Hg6fy673H5wnzm1hAx2+HDhDm?=
- =?us-ascii?Q?OPN6v8ioU3JGlylOyBykSbSXfKPHBVON2pNZHNru8DTfRapHQorOodVE/sIs?=
- =?us-ascii?Q?IxFDbht6mlgnOYmcnuZN3jXGu4v5+0oUOiNVKAd+D7dctJX1mKxld+S1zSmO?=
- =?us-ascii?Q?9xVGdGlysrYSeKUJGGeHsWfKuZQuhEQ2JWJ+I/FxeFOHGyRbsRI8EFJhaZ3L?=
- =?us-ascii?Q?a4qBfURoe+51VaVqy6Uxn+l6AhCBBkfc55oiNoPUV8LFYy97kyzT/FtGEBnj?=
- =?us-ascii?Q?w1mknLI5ZRdpALR1nmkviZOglNVLmlOA2ZbUCo/gNwU7oMJdC5dfxoIFp0SH?=
- =?us-ascii?Q?i+GN3355Go3oInJCwk/PPjF3GqN/sHmhWrbNs0N4We0KcuGkKVXHNCDCAJY2?=
- =?us-ascii?Q?ohCOcVkdgD18GwIQPcEciPaI7BnuXBIuJ5BkbcfYhm3C8kmOf5FRk27RnYSf?=
- =?us-ascii?Q?qawzyJlAtwaeKNFrpunCfRz43TYveH66dZCtrFu/jsTCTvZxQFhInq2lN7Dm?=
- =?us-ascii?Q?Vvsxa1XczOgp2ZLM99hj/MvPppF9WVFLvrJHGfICBpvSMlrYt9ibq1JvtGOr?=
- =?us-ascii?Q?nmGUz9G/5JmMwN605XW4onhCfQprZ9OSAhZeN9Q0drEPxgqcp/2HMkoFXhel?=
- =?us-ascii?Q?BwBxo+aTFiRvMKIk0LjEhCIDHIaDMdxyE0r5DxaL67DVR4W1wR1R91ifTAbv?=
- =?us-ascii?Q?FOc17pasOfDst5vn1GWMBKjEuevu1qpmXo5LiKVM4+J9rGAWbvSKuCf+qnnp?=
- =?us-ascii?Q?EwaFz3iIdyMRDT7NBbROWPqYvQmLn1O6M346dCxmW2qdXkzZcadu0ic3QcFQ?=
- =?us-ascii?Q?nzj4W+SEaWIapzD6q3j1Ot65Ss5XDX05rWB1XAgpNVcTnlM7sd9NqKG9+5Nf?=
- =?us-ascii?Q?vjUZVp01+bjQgLgPG15cLTocrVZTvL61GSqrYpZvqBLXKiFZAplMoqLsM/ig?=
- =?us-ascii?Q?A47OWAszJoQUNva0TnMhMDSxoGZjyZz47BrRSnxH?=
+	=?us-ascii?Q?Vql5g18yLzlwT1NnvyKg39vjKwd75rxvg2p5PCKYXcXFt/QuyFPOs8pye2dd?=
+ =?us-ascii?Q?qAwYJi/wnVDkn2wbP/g2SxfTI+iD+GP8GJJS2SKKod0RdipDylCsyzb1B1cz?=
+ =?us-ascii?Q?bVeObPOPuPJ4RQ2VKL7YXiHU9wKvAiZXg+XKUN+qWw6b3IXOyUpgwC7lx/5k?=
+ =?us-ascii?Q?h4pTNdNlP1IJq/i+w1iiE2ZXK0hl+JRc6Wt8Kn3LRwZC9GBmLrm5qqqL9hXp?=
+ =?us-ascii?Q?W6Yek+Mz8hAeO5tpVAISc9kZN1uTGHGzlSGgxsutvVOGlaHXNibW/QzYcxiC?=
+ =?us-ascii?Q?xEBCIIlRbh07KGqGw4NATiHo3g+jtcA/JHahFNYaA+7U1HUYCVB5Jks+anUa?=
+ =?us-ascii?Q?+grgPbGhfaPOPUWSzbNo0/XAUDqUKCayR3ySF0HQVXQ2MbrgxvPX4vtJcB+l?=
+ =?us-ascii?Q?UAHllB24KV4VyE0EKZdD6OTtTz8feFKf0dmI9oHh9xri4keoiJG2j7gjSQ+E?=
+ =?us-ascii?Q?PBlGRUtxMbuvdJ0+pr6u7VENF129GyiOsDARQZe9ES1SezWjkXQ3PZ5x0mBl?=
+ =?us-ascii?Q?gVvpTW10TZknWG9KEvI6L3JHZojmFMtMe3i5InUsYWGscalrcZujow/EM4Y5?=
+ =?us-ascii?Q?NCAxlqzTKRv6ma7yu/m1AAFmEn77eh6BouY76OHJDqlgJyjOqOwtabf+LkhK?=
+ =?us-ascii?Q?PfqtHFpz0GEK8baUO0JWbUalfpJ/k018RGI+qs0lhHnu0GnE//gxi4122RSp?=
+ =?us-ascii?Q?MiKe899R5MOJtyaeOioaZukNBlfcAiktsn9QP1eepp7w6HuhdJ0iGsp8zCdt?=
+ =?us-ascii?Q?f1RKHNkyKDqoxnMjHCpeGwacZdoQ9ltvSoXuUC7YP2E56Hamfvf4qRYQEo7e?=
+ =?us-ascii?Q?cME7G2XF4mZJWhtqmIll9Q3UVxoWuCwtV5ZazSv4FOfjQNRrCmFbt8vFo6cR?=
+ =?us-ascii?Q?flKlqWhttvgM5mSgUAD8CDRGWgLu8qs+e5LGK4/AbHLbGKzy+FbOPejXEJrB?=
+ =?us-ascii?Q?XtPssoqEq4Qol9ipUVeDleMXcuJa1ZnUJ1hs288CNHXHlU+HfE3Pm3Pnw1YE?=
+ =?us-ascii?Q?MzjKfXF5fMwDq2qU3RKu48bn9PZJ0pIdfefKHOIa5+2n9VhzQHFrZ+BMJdbx?=
+ =?us-ascii?Q?4W9f+MQHneamLudccixZNlXdIhFW0nWrqcabkXPO+Ddfu05kzCuPKcp50814?=
+ =?us-ascii?Q?SywqEiUqB18k4QMoQpUxhTLgcgeroB8jghZcWwIP/Z4hlIgiXg3RFfzGhJQX?=
+ =?us-ascii?Q?exKc/KLT6v+1abDVDNojA82SwHmBbbhU97gU27tVlCgM337GHJAwB9+2tdWg?=
+ =?us-ascii?Q?n+qHZL81T1BQqE7RycZs8UYOWpLlcefMOobpPW4CZrOqKnttY9piTh2PfCch?=
+ =?us-ascii?Q?1yxVMngrkUgNaLXMCmf/zXDBxf1+hulmTfHGDRjyPzlpOey5DcKOAWiEP5bS?=
+ =?us-ascii?Q?gDz/XVPjLv9eshYnmrCTLGkN9WDaVTqP1lmq+lT4Sfx4r08nU18wEg844ZAq?=
+ =?us-ascii?Q?HNqHkinqqe8uzs8VFzwtQqlfD99X7RTtg3o2lZFmV+GNGRj07QTMu0WiwJHL?=
+ =?us-ascii?Q?xk88l+kwXAMtrWrqlVvWZI5odMYz5bbsWRbZaYtsFUeLzHiqnFMkL10BczAR?=
+ =?us-ascii?Q?fkIzhGkNsyuuTtttnWOzuWGnLmJy6bpEcxaS2uDN?=
 X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: bb36c1b3-440f-49c2-7472-08db62c5d640
+X-MS-Exchange-CrossTenant-Network-Message-Id: 865f09ee-a4ea-46f4-9555-08db62c621d7
 X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2023 17:30:04.7191
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2023 17:32:11.5029
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Ik5EdyK1HO04EnVWrdYI65WZjwc/xJdmIq3pmt7kXWwUp7qDwJl8Grvm7NgThbO0VsZNabzoZJ40c9CtRHi1fQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: J0e4Tq0uQzSFp2I8DOTwLaXB4veMBLLKBDWBrSo2Lzj6Hg1Xa+Hx2Y7JjcXjiu47MTj62VipT+unTVMYoFjoXw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO6P265MB6987
 
-On Thu,  1 Jun 2023 13:49:42 +0000
+On Thu,  1 Jun 2023 13:49:46 +0000
 Alice Ryhl <aliceryhl@google.com> wrote:
 
-> From: Wedson Almeida Filho <walmeida@microsoft.com>
+> This adds two examples of how to use the workqueue. The first example
+> shows how to use it when you only have one `work_struct` field, and the
+> second example shows how to use it when you have multiple `work_struct`
+> fields.
 > 
-> We provide these methods because it lets us access these queues from
-> Rust without using unsafe code.
-> 
-> These methods return `&'static Queue`. References annotated with the
-> 'static lifetime are used when the referent will stay alive forever.
-> That is ok for these queues because they are global variables and cannot
-> be destroyed.
-> 
-> Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
-> Co-developed-by: Alice Ryhl <aliceryhl@google.com>
 > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+> ---
+>  rust/kernel/workqueue.rs | 104 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 104 insertions(+)
+> 
+> diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
+> index c302e8b8624b..cefcf43ff40e 100644
+> --- a/rust/kernel/workqueue.rs
+> +++ b/rust/kernel/workqueue.rs
+> @@ -26,6 +26,110 @@
+>  //!  * The `WorkItemPointer` trait is implemented for the pointer type that points at a something
+>  //!    that implements `WorkItem`.
+>  //!
+> +//! ## Example
+> +//!
+> +//! This example defines a struct that holds an integer and can be scheduled on the workqueue. When
+> +//! the struct is executed, it will print the integer. Since there is only one `work_struct` field,
+> +//! we do not need to specify ids for the fields.
+> +//!
+> +//! ```
+> +//! use kernel::prelude::*;
+> +//! use kernel::sync::Arc;
+> +//! use kernel::workqueue::{self, Work, WorkItem};
+> +//!
+> +//! #[pin_data]
+> +//! struct MyStruct {
+> +//!     value: i32,
+> +//!     #[pin]
+> +//!     work: Work<MyStruct>,
+> +//! }
+> +//!
+> +//! impl_has_work! {
+> +//!     impl HasWork<Self> for MyStruct { self.work }
+> +//! }
+> +//!
+> +//! impl MyStruct {
+> +//!     fn new(value: i32) -> Result<Arc<Self>> {
+> +//!         Arc::pin_init(pin_init!(MyStruct {
+> +//!             value,
+> +//!             work <- Work::new(),
+> +//!         }))
+> +//!     }
+> +//! }
+> +//!
+> +//! impl WorkItem for MyStruct {
+> +//!     type Pointer = Arc<MyStruct>;
+> +//!
+> +//!     fn run(this: Arc<MyStruct>) {
+> +//!         pr_info!("The value is: {}", this.value);
+> +//!     }
+> +//! }
+> +//!
+> +//! /// This method will enqueue the struct for execution on the system workqueue, where its value
+> +//! /// will be printed.
+> +//! fn print_later(val: Arc<MyStruct>) {
+> +//!     let _ = workqueue::system().enqueue(val);
+> +//! }
+> +//! ```
+> +//!
+> +//! The following example shows how multiple `work_struct` fields can be used:
+> +//!
+> +//! ```
+> +//! use kernel::prelude::*;
+> +//! use kernel::sync::Arc;
+> +//! use kernel::workqueue::{self, Work, WorkItem};
+> +//!
+> +//! #[pin_data]
+> +//! struct MyStruct {
+> +//!     value_1: i32,
+> +//!     value_2: i32,
+> +//!     #[pin]
+> +//!     work_1: Work<MyStruct, 1>,
+> +//!     #[pin]
+> +//!     work_2: Work<MyStruct, 2>,
+> +//! }
+> +//!
+> +//! impl_has_work! {
+> +//!     impl HasWork<Self, 1> for MyStruct { self.work_1 }
+> +//!     impl HasWork<Self, 2> for MyStruct { self.work_2 }
+> +//! }
+> +//!
+> +//! impl MyStruct {
+> +//!     fn new(value_1: i32, value_2: i32) -> Result<Arc<Self>> {
+> +//!         Arc::pin_init(pin_init!(MyStruct {
+> +//!             value_1,
+> +//!             value_2,
+> +//!             work_1 <- Work::new(),
+> +//!             work_2 <- Work::new(),
+> +//!         }))
+> +//!     }
+> +//! }
+> +//!
+> +//! impl WorkItem<1> for MyStruct {
+> +//!     type Pointer = Arc<MyStruct>;
+> +//!
+> +//!     fn run(this: Arc<MyStruct>) {
+> +//!         pr_info!("The value is: {}", this.value_1);
+> +//!     }
+> +//! }
+> +//!
+> +//! impl WorkItem<2> for MyStruct {
+> +//!     type Pointer = Arc<MyStruct>;
+> +//!
+> +//!     fn run(this: Arc<MyStruct>) {
+> +//!         pr_info!("The second value is: {}", this.value_2);
+> +//!     }
+> +//! }
+> +//!
+> +//! fn print_1_later(val: Arc<MyStruct>) {
+> +//!     let _ = workqueue::system().enqueue::<Arc<MyStruct>, 1>(val);
 
-This looks fine to me, so:
+Nothing bad about explicit, but I just want to confirm that you could
+write
+
+	let _ = workqueue::system().enqueue::<_, 1>(val);
+
+here, right?
 
 Reviewed-by: Gary Guo <gary@garyguo.net>
 
-Just one question about style: would people prefer:
-
-	kernel::workqueue::system().enqueue(...)
-
-or
-
-	use kernel::workqueue::Queue;
-	Queue::system().enqueue(...)
-
-?
-
-> ---
->  rust/kernel/workqueue.rs | 65 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 65 insertions(+)
-> 
-> diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-> index 9c630840039b..e37820f253f6 100644
-> --- a/rust/kernel/workqueue.rs
-> +++ b/rust/kernel/workqueue.rs
-> @@ -105,3 +105,68 @@ unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutput
->      where
->          F: FnOnce(*mut bindings::work_struct) -> bool;
->  }
-> +
-> +/// Returns the system work queue (`system_wq`).
-> +///
-> +/// It is the one used by `schedule[_delayed]_work[_on]()`. Multi-CPU multi-threaded. There are
-> +/// users which expect relatively short queue flush time.
-> +///
-> +/// Callers shouldn't queue work items which can run for too long.
-> +pub fn system() -> &'static Queue {
-> +    // SAFETY: `system_wq` is a C global, always available.
-> +    unsafe { Queue::from_raw(bindings::system_wq) }
-> +}
-> +
-> +/// Returns the system high-priority work queue (`system_highpri_wq`).
-> +///
-> +/// It is similar to the one returned by [`system`] but for work items which require higher
-> +/// scheduling priority.
-> +pub fn system_highpri() -> &'static Queue {
-> +    // SAFETY: `system_highpri_wq` is a C global, always available.
-> +    unsafe { Queue::from_raw(bindings::system_highpri_wq) }
-> +}
-> +
-> +/// Returns the system work queue for potentially long-running work items (`system_long_wq`).
-> +///
-> +/// It is similar to the one returned by [`system`] but may host long running work items. Queue
-> +/// flushing might take relatively long.
-> +pub fn system_long() -> &'static Queue {
-> +    // SAFETY: `system_long_wq` is a C global, always available.
-> +    unsafe { Queue::from_raw(bindings::system_long_wq) }
-> +}
-> +
-> +/// Returns the system unbound work queue (`system_unbound_wq`).
-> +///
-> +/// Workers are not bound to any specific CPU, not concurrency managed, and all queued work items
-> +/// are executed immediately as long as `max_active` limit is not reached and resources are
-> +/// available.
-> +pub fn system_unbound() -> &'static Queue {
-> +    // SAFETY: `system_unbound_wq` is a C global, always available.
-> +    unsafe { Queue::from_raw(bindings::system_unbound_wq) }
-> +}
-> +
-> +/// Returns the system freezable work queue (`system_freezable_wq`).
-> +///
-> +/// It is equivalent to the one returned by [`system`] except that it's freezable.
-> +pub fn system_freezable() -> &'static Queue {
-> +    // SAFETY: `system_freezable_wq` is a C global, always available.
-> +    unsafe { Queue::from_raw(bindings::system_freezable_wq) }
-> +}
-> +
-> +/// Returns the system power-efficient work queue (`system_power_efficient_wq`).
-> +///
-> +/// It is inclined towards saving power and is converted to "unbound" variants if the
-> +/// `workqueue.power_efficient` kernel parameter is specified; otherwise, it is similar to the one
-> +/// returned by [`system`].
-> +pub fn system_power_efficient() -> &'static Queue {
-> +    // SAFETY: `system_power_efficient_wq` is a C global, always available.
-> +    unsafe { Queue::from_raw(bindings::system_power_efficient_wq) }
-> +}
-> +
-> +/// Returns the system freezable power-efficient work queue (`system_freezable_power_efficient_wq`).
-> +///
-> +/// It is similar to the one returned by [`system_power_efficient`] except that is freezable.
-> +pub fn system_freezable_power_efficient() -> &'static Queue {
-> +    // SAFETY: `system_freezable_power_efficient_wq` is a C global, always available.
-> +    unsafe { Queue::from_raw(bindings::system_freezable_power_efficient_wq) }
-> +}
+> +//! }
+> +//!
+> +//! fn print_2_later(val: Arc<MyStruct>) {
+> +//!     let _ = workqueue::system().enqueue::<Arc<MyStruct>, 2>(val);
+> +//! }
+> +//! ```
+> +//!
+>  //! C header: [`include/linux/workqueue.h`](../../../../include/linux/workqueue.h)
+>  
+>  use crate::{bindings, prelude::*, sync::Arc, types::Opaque};
 
