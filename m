@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E31FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34145C433EF;
-	Thu,  1 Jun 2023 13:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4664CFBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CF1C4339B;
+	Thu,  1 Jun 2023 13:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626083;
-	bh=pQ5AMwfN0f1HgZXJEDjsIOwVfRZs2m++UiXpxG5RUmQ=;
+	s=korg; t=1685626086;
+	bh=Av6Qp9Uh8t3sKnlxPA/NEwE1ChSJ4ZUeAMOBvYH+PfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kE8U/ddPSV+7Nmk3ympUR+rvN9PcUDI5YPL75OU93HdyMwWZFLHgpI+nReiFJsgoA
-	 2HkOEvMzReBVuaSxU2ZixXM2JnBlBvEMHyJYyuPkHr/Sx1mn2deqXN98TWMSY4E/K9
-	 KMH9c7nRQ+ZjRl3L/kwEpQvy5Odcn7BnzqMSxjYc=
+	b=kKQuOKi4FlxkTKtIJ5oQgSKaFcPsotWuYB7D9gYTm2AXFIqVFnTX2ATMJ/BqEg/zu
+	 qgYCB3i4hlZx/dLwLNocbqGR1fzWE+OzdrHA8jvGWuMY8hEYIcOeE1Ith4hENLvlMU
+	 2ZZcVeb29igoi8Gm0NLTHHVNC+jDscoiSxBRRjd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang DENG <qingfang.deng@siflower.com.cn>,
-	Felix Fietkau <nbd@nbd.name>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yunsheng Lin <linyunsheng@huawei.com>,
+	Jesper Dangaard Brouer <brouer@redhat.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 24/42] net: page_pool: use in_softirq() instead
-Date: Thu,  1 Jun 2023 14:21:33 +0100
-Message-Id: <20230601131940.103152438@linuxfoundation.org>
+Subject: [PATCH 6.1 25/42] page_pool: fix inconsistency for page_pool_ring_[un]lock()
+Date: Thu,  1 Jun 2023 14:21:34 +0100
+Message-Id: <20230601131940.143968395@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
 References: <20230601131939.051934720@linuxfoundation.org>
@@ -36,73 +37,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qingfang DENG <qingfang.deng@siflower.com.cn>
+From: Yunsheng Lin <linyunsheng@huawei.com>
 
-[ Upstream commit 542bcea4be866b14b3a5c8e90773329066656c43 ]
+[ Upstream commit 368d3cb406cdd074d1df2ad9ec06d1bfcb664882 ]
 
-We use BH context only for synchronization, so we don't care if it's
-actually serving softirq or not.
+page_pool_ring_[un]lock() use in_softirq() to decide which
+spin lock variant to use, and when they are called in the
+context with in_softirq() being false, spin_lock_bh() is
+called in page_pool_ring_lock() while spin_unlock() is
+called in page_pool_ring_unlock(), because spin_lock_bh()
+has disabled the softirq in page_pool_ring_lock(), which
+causes inconsistency for spin lock pair calling.
 
-As a side node, in case of threaded NAPI, in_serving_softirq() will
-return false because it's in process context with BH off, making
-page_pool_recycle_in_cache() unreachable.
+This patch fixes it by returning in_softirq state from
+page_pool_producer_lock(), and use it to decide which
+spin lock variant to use in page_pool_producer_unlock().
 
-Signed-off-by: Qingfang DENG <qingfang.deng@siflower.com.cn>
-Tested-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 368d3cb406cd ("page_pool: fix inconsistency for page_pool_ring_[un]lock()")
+As pool->ring has both producer and consumer lock, so
+rename it to page_pool_producer_[un]lock() to reflect
+the actual usage. Also move them to page_pool.c as they
+are only used there, and remove the 'inline' as the
+compiler may have better idea to do inlining or not.
+
+Fixes: 7886244736a4 ("net: page_pool: Add bulk support for ptr_ring")
+Signed-off-by: Yunsheng Lin <linyunsheng@huawei.com>
+Acked-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Link: https://lore.kernel.org/r/20230522031714.5089-1-linyunsheng@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/page_pool.h | 4 ++--
- net/core/page_pool.c    | 6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ include/net/page_pool.h | 18 ------------------
+ net/core/page_pool.c    | 28 ++++++++++++++++++++++++++--
+ 2 files changed, 26 insertions(+), 20 deletions(-)
 
 diff --git a/include/net/page_pool.h b/include/net/page_pool.h
-index 813c93499f201..34bf531ffc8d6 100644
+index 34bf531ffc8d6..ad0bafc877d48 100644
 --- a/include/net/page_pool.h
 +++ b/include/net/page_pool.h
-@@ -386,7 +386,7 @@ static inline void page_pool_nid_changed(struct page_pool *pool, int new_nid)
- static inline void page_pool_ring_lock(struct page_pool *pool)
- 	__acquires(&pool->ring.producer_lock)
- {
--	if (in_serving_softirq())
-+	if (in_softirq())
- 		spin_lock(&pool->ring.producer_lock);
- 	else
- 		spin_lock_bh(&pool->ring.producer_lock);
-@@ -395,7 +395,7 @@ static inline void page_pool_ring_lock(struct page_pool *pool)
- static inline void page_pool_ring_unlock(struct page_pool *pool)
- 	__releases(&pool->ring.producer_lock)
- {
--	if (in_serving_softirq())
-+	if (in_softirq())
- 		spin_unlock(&pool->ring.producer_lock);
- 	else
- 		spin_unlock_bh(&pool->ring.producer_lock);
+@@ -383,22 +383,4 @@ static inline void page_pool_nid_changed(struct page_pool *pool, int new_nid)
+ 		page_pool_update_nid(pool, new_nid);
+ }
+ 
+-static inline void page_pool_ring_lock(struct page_pool *pool)
+-	__acquires(&pool->ring.producer_lock)
+-{
+-	if (in_softirq())
+-		spin_lock(&pool->ring.producer_lock);
+-	else
+-		spin_lock_bh(&pool->ring.producer_lock);
+-}
+-
+-static inline void page_pool_ring_unlock(struct page_pool *pool)
+-	__releases(&pool->ring.producer_lock)
+-{
+-	if (in_softirq())
+-		spin_unlock(&pool->ring.producer_lock);
+-	else
+-		spin_unlock_bh(&pool->ring.producer_lock);
+-}
+-
+ #endif /* _NET_PAGE_POOL_H */
 diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 9b203d8660e47..193c187998650 100644
+index 193c187998650..2396c99bedeaa 100644
 --- a/net/core/page_pool.c
 +++ b/net/core/page_pool.c
-@@ -511,8 +511,8 @@ static void page_pool_return_page(struct page_pool *pool, struct page *page)
- static bool page_pool_recycle_in_ring(struct page_pool *pool, struct page *page)
+@@ -133,6 +133,29 @@ EXPORT_SYMBOL(page_pool_ethtool_stats_get);
+ #define recycle_stat_add(pool, __stat, val)
+ #endif
+ 
++static bool page_pool_producer_lock(struct page_pool *pool)
++	__acquires(&pool->ring.producer_lock)
++{
++	bool in_softirq = in_softirq();
++
++	if (in_softirq)
++		spin_lock(&pool->ring.producer_lock);
++	else
++		spin_lock_bh(&pool->ring.producer_lock);
++
++	return in_softirq;
++}
++
++static void page_pool_producer_unlock(struct page_pool *pool,
++				      bool in_softirq)
++	__releases(&pool->ring.producer_lock)
++{
++	if (in_softirq)
++		spin_unlock(&pool->ring.producer_lock);
++	else
++		spin_unlock_bh(&pool->ring.producer_lock);
++}
++
+ static int page_pool_init(struct page_pool *pool,
+ 			  const struct page_pool_params *params)
  {
- 	int ret;
--	/* BH protection not needed if current is serving softirq */
--	if (in_serving_softirq())
-+	/* BH protection not needed if current is softirq */
-+	if (in_softirq())
- 		ret = ptr_ring_produce(&pool->ring, page);
- 	else
- 		ret = ptr_ring_produce_bh(&pool->ring, page);
-@@ -570,7 +570,7 @@ __page_pool_put_page(struct page_pool *pool, struct page *page,
- 			page_pool_dma_sync_for_device(pool, page,
- 						      dma_sync_size);
+@@ -615,6 +638,7 @@ void page_pool_put_page_bulk(struct page_pool *pool, void **data,
+ 			     int count)
+ {
+ 	int i, bulk_len = 0;
++	bool in_softirq;
  
--		if (allow_direct && in_serving_softirq() &&
-+		if (allow_direct && in_softirq() &&
- 		    page_pool_recycle_in_cache(page, pool))
- 			return NULL;
+ 	for (i = 0; i < count; i++) {
+ 		struct page *page = virt_to_head_page(data[i]);
+@@ -633,7 +657,7 @@ void page_pool_put_page_bulk(struct page_pool *pool, void **data,
+ 		return;
  
+ 	/* Bulk producer into ptr_ring page_pool cache */
+-	page_pool_ring_lock(pool);
++	in_softirq = page_pool_producer_lock(pool);
+ 	for (i = 0; i < bulk_len; i++) {
+ 		if (__ptr_ring_produce(&pool->ring, data[i])) {
+ 			/* ring full */
+@@ -642,7 +666,7 @@ void page_pool_put_page_bulk(struct page_pool *pool, void **data,
+ 		}
+ 	}
+ 	recycle_stat_add(pool, ring, i);
+-	page_pool_ring_unlock(pool);
++	page_pool_producer_unlock(pool, in_softirq);
+ 
+ 	/* Hopefully all pages was return into ptr_ring */
+ 	if (likely(i == bulk_len))
 -- 
 2.39.2
 
