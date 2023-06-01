@@ -1,130 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f74.google.com (mail-ej1-f74.google.com [209.85.218.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4A8FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:29:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6DAC433EF;
-	Thu,  1 Jun 2023 13:29:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626149;
-	bh=0gQE4kISWtQk4+U8e4MuMW+y4uFIpHJBnW3l5++bCrI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sX125/j0rWvh0r8v7b9sAwxpGlRW+jcYaqNLFBLI6HSZQMii2HIL665xS9ATrQNpj
-	 jalOzUD6x1QBiI5w/wP5nY7JSSX1T+mU2ZA7MX/FOVu8ByLhb36LvqsepJGZboMqYW
-	 3O8A1FJwaWGvOKQKstK96RB1KdHM4kE7/wqjL2PY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Wyes Karny <wyes.karny@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 40/42] cpufreq: amd-pstate: Add ->fast_switch() callback
-Date: Thu,  1 Jun 2023 14:21:49 +0100
-Message-Id: <20230601131940.857550671@linuxfoundation.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
-References: <20230601131939.051934720@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A408C21079
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:49:57 +0000 (UTC)
+Received: by mail-ej1-f74.google.com with SMTP id a640c23a62f3a-96fffd1ba46so57666466b.0
+        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 06:49:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1685627395; x=1688219395;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=az0YAt2KTk16nw2JnbQbsBwE6ykYTuim3D59K9WH+fw=;
+        b=f0NVKnLT6zT+WJcXI/mgsB1RJu7ayQo/PmjvmqEjy4BKO1oF0CUDIGmF1Py4hgizlm
+         cC/GDDrvtyAPc0iyKHkXMfEaBm/kRQYss84Gj02VgxmApJh9i1J5Y9EzwpjOI4zcofff
+         6KL5DSSGvLYDJ37W3hL8/4o0N/nXPCAlLEHH3RX3gDbz1jqH3ri8sfosyh9YBI/WNvDi
+         tGfSmu8Y9tuPYhuhMT853gwRACSeGK3X9kzCyRBKRfHKZGyAortUk8PiebJlG1JXdwMJ
+         peRS9BRK08EB08n/nfekR46px7ccFRpU6h8jzGakPHG7M9E2IfPsF20HOA2CpGYdriYS
+         ASHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685627395; x=1688219395;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=az0YAt2KTk16nw2JnbQbsBwE6ykYTuim3D59K9WH+fw=;
+        b=Xw+nKzKf1lgDBD9WuHMRBw66/uMQj5SBdeugKyS5TCkcaxt+WEdevfXad4srj65tnM
+         GtNV2/q/4mHjF/SUeEOvWdHRYCYM4KaQR2lQVfhppU/Uqdovtv3nKUirChx8N+qq/Qnd
+         SDbycxFRQ4BsLWSo48TW/hogdXSa+Fg/ksJlo36kxr2ZzjfAbJp25CQEdhkviA2F9ZY/
+         Ktmd50TUpQHlZ4ZC3IirqvPcRm0EXWqHlkV/paQHZmC0cGAPaHqOyZXShESwfhO6/Iwr
+         xNsY6Wt69lukgQy8LnnFYevyjkjntnebGm9MN+Y3jxxW1vfhStNBXuJVS2+J+ZwJrdus
+         6gZQ==
+X-Gm-Message-State: AC+VfDy0WU92RX8E/wk8P7NLW6D4O/7uVNoI0vgNIvPQi2qdfwOdeoMU
+	ESO8urTEI2YFwOrv3zEKgp2DUr4SoQqQgwY=
+X-Google-Smtp-Source: ACHHUZ6y558j5AwsRrstwPTYGwrzuoI4R2q5Hll3BeCCQsm0d7NK4qsQFtXx0QME/IjY8y5dnLNNjCUJZBL7QmI=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a17:907:270c:b0:965:b935:91f6 with SMTP
+ id w12-20020a170907270c00b00965b93591f6mr2284491ejk.14.1685627395637; Thu, 01
+ Jun 2023 06:49:55 -0700 (PDT)
+Date: Thu,  1 Jun 2023 13:49:38 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
+Message-ID: <20230601134946.3887870-1-aliceryhl@google.com>
+Subject: [PATCH v2 0/8] rust: workqueue: add bindings for the workqueue
+From: Alice Ryhl <aliceryhl@google.com>
+To: rust-for-linux@vger.kernel.org
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, 
+	Lai Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
+	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+This patchset contains bindings for the kernel workqueue.
 
-commit 4badf2eb1e986bdbf34dd2f5d4c979553a86fe54 upstream.
+One of the primary goals behind the design used in this patch is that we
+must support embedding the `work_struct` as a field in user-provided
+types, because this allows you to submit things to the workqueue without
+having to allocate, making the submission infallible. If we didn't have
+to support this, then the patch would be much simpler. One of the main
+things that make it complicated is that we must ensure that the function
+pointer in the `work_struct` is compatible with the struct it is
+contained within.
 
-Schedutil normally calls the adjust_perf callback for drivers with
-adjust_perf callback available and fast_switch_possible flag set.
-However, when frequency invariance is disabled and schedutil tries to
-invoke fast_switch. So, there is a chance of kernel crash if this
-function pointer is not set. To protect against this scenario add
-fast_switch callback to amd_pstate driver.
+The original version of the workqueue bindings was written by Wedson,
+but I have rewritten much of it so that it uses the pin-init
+infrastructure and can be used with containers other than `Arc`.
 
-Fixes: 1d215f0319c2 ("cpufreq: amd-pstate: Add fast switch function for AMD P-State")
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Signed-off-by: Wyes Karny <wyes.karny@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/cpufreq/amd-pstate.c |   37 ++++++++++++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 7 deletions(-)
+Changes since v1:
 
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -249,9 +249,8 @@ static int amd_pstate_verify(struct cpuf
- 	return 0;
- }
- 
--static int amd_pstate_target(struct cpufreq_policy *policy,
--			     unsigned int target_freq,
--			     unsigned int relation)
-+static int amd_pstate_update_freq(struct cpufreq_policy *policy,
-+				  unsigned int target_freq, bool fast_switch)
- {
- 	struct cpufreq_freqs freqs;
- 	struct amd_cpudata *cpudata = policy->driver_data;
-@@ -270,14 +269,36 @@ static int amd_pstate_target(struct cpuf
- 	des_perf = DIV_ROUND_CLOSEST(target_freq * cap_perf,
- 				     cpudata->max_freq);
- 
--	cpufreq_freq_transition_begin(policy, &freqs);
--	amd_pstate_update(cpudata, min_perf, des_perf,
--			  max_perf, false);
--	cpufreq_freq_transition_end(policy, &freqs, false);
-+	WARN_ON(fast_switch && !policy->fast_switch_enabled);
-+	/*
-+	 * If fast_switch is desired, then there aren't any registered
-+	 * transition notifiers. See comment for
-+	 * cpufreq_enable_fast_switch().
-+	 */
-+	if (!fast_switch)
-+		cpufreq_freq_transition_begin(policy, &freqs);
-+
-+	amd_pstate_update(cpudata, min_perf, des_perf, max_perf, fast_switch);
-+
-+	if (!fast_switch)
-+		cpufreq_freq_transition_end(policy, &freqs, false);
- 
- 	return 0;
- }
- 
-+static int amd_pstate_target(struct cpufreq_policy *policy,
-+			     unsigned int target_freq,
-+			     unsigned int relation)
-+{
-+	return amd_pstate_update_freq(policy, target_freq, false);
-+}
-+
-+static unsigned int amd_pstate_fast_switch(struct cpufreq_policy *policy,
-+				  unsigned int target_freq)
-+{
-+	return amd_pstate_update_freq(policy, target_freq, true);
-+}
-+
- static void amd_pstate_adjust_perf(unsigned int cpu,
- 				   unsigned long _min_perf,
- 				   unsigned long target_perf,
-@@ -523,6 +544,7 @@ static int amd_pstate_cpu_exit(struct cp
- 
- 	freq_qos_remove_request(&cpudata->req[1]);
- 	freq_qos_remove_request(&cpudata->req[0]);
-+	policy->fast_switch_possible = false;
- 	kfree(cpudata);
- 
- 	return 0;
-@@ -614,6 +636,7 @@ static struct cpufreq_driver amd_pstate_
- 	.flags		= CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
- 	.verify		= amd_pstate_verify,
- 	.target		= amd_pstate_target,
-+	.fast_switch    = amd_pstate_fast_switch,
- 	.init		= amd_pstate_cpu_init,
- 	.exit		= amd_pstate_cpu_exit,
- 	.suspend	= amd_pstate_cpu_suspend,
+Most of this patchset was rewritten based on Gary's example for how
+field projections can be used with the workqueue.
 
+I have also added some examples of how the workqueue bindings will be
+used. You can find those in the last patch of this patchset.
+
+v1: https://lore.kernel.org/all/20230517203119.3160435-1-aliceryhl@google.com/
+
+Alice Ryhl (5):
+  rust: workqueue: add low-level workqueue bindings
+  rust: workqueue: add helper for defining work_struct fields
+  rust: workqueue: implement `WorkItemPointer` for pointer types
+  rust: workqueue: add `try_spawn` helper method
+  rust: workqueue: add examples
+
+Wedson Almeida Filho (3):
+  rust: add offset_of! macro
+  rust: sync: add `Arc::{from_raw, into_raw}`
+  rust: workqueue: define built-in queues
+
+ rust/bindings/bindings_helper.h |   1 +
+ rust/helpers.c                  |   8 +
+ rust/kernel/lib.rs              |  37 ++
+ rust/kernel/sync/arc.rs         |  42 ++-
+ rust/kernel/workqueue.rs        | 631 ++++++++++++++++++++++++++++++++
+ scripts/Makefile.build          |   2 +-
+ 6 files changed, 719 insertions(+), 2 deletions(-)
+ create mode 100644 rust/kernel/workqueue.rs
+
+
+base-commit: d09a61024f6b78c6a08892fc916cdafd87b50365
+-- 
+2.41.0.rc0.172.g3f132b7071-goog
 
