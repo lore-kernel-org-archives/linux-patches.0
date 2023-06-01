@@ -1,47 +1,45 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4E8FC1D
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 14:39:57 +0000 (UTC)
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-517ab9a4a13so836737a12.1
-        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 07:39:57 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EA223A1
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 14:58:14 +0000 (UTC)
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-6af812703b6so532604a34.1
+        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 07:58:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685630397; x=1688222397;
+        d=gmail.com; s=20221208; t=1685631493; x=1688223493;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=vAtDJ4UZJBm7+uLnpiZVzFRiwuCQbc5zdoMX8rHHbbU=;
-        b=qt7Q1bUpshWH93RKlnxUNBqecIEtKUcuPoKkhnCZxE2gPC4w/HAKWUFxEhX0tLVXUe
-         S8jOYv048Br31vztTF78G6zqhLr8ZEPx5/MKGpurvWErugkg8dzfAeAbWdJ76CQksWXA
-         CU9Tv319FOi24XK7aa4QW3qGckz/P6VC3W1qVM3iwms5RpwRVU63bVis1PVsnpvXKrem
-         edL1YH8fqp3jMwPd8JW7/49rfG68WADIhR6IW6rdnueZ6RtHH4sV2CrJH8ytApV6AGtg
-         sHaN2TVVIq71aSbOvo6wPhcghG2/LZyY8TkSYspa7TsfklM65Mrm3PEcsA9ZbAsaX336
-         Orxg==
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X7JUXb4aekIO7D0dwVI5AuAQfE3+chmPdfkriZKP4oc=;
+        b=hUtoI2Xw9zWxiDj/JBLrkcDDAhfU/tIFo3Ygbc1lvfNWZeeMG/Y0A2tU/mGCGwp5vX
+         Em13bPhvXK/egyjaa2iz2O92KWyyEFX6flvLFNvKPP8k7hww5wkwMmOJ3OkNXIYpneB7
+         DDe2Qn3htGY7pp6PKL/E2r8etImEyb4WkeqYRRA8OmWldZmZX06VoQ8EqEEb1NWMvwCf
+         nhhE2DsdGl5ELAF0nhgeL/J0z5r6b29PlWpK29HRKv4sbPhozZ6S/bxZWYEgeIBCxf1V
+         XLyvXmdfb8PdUEjExyV76DzTMKNg6Ciq9IuM+HaiODcBQqmKySJpDx59DJn8L9f8mmEV
+         /pFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685630397; x=1688222397;
+        d=1e100.net; s=20221208; t=1685631493; x=1688223493;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vAtDJ4UZJBm7+uLnpiZVzFRiwuCQbc5zdoMX8rHHbbU=;
-        b=cz894RrImY2uq/9WD4pOMatKporrx9z/v5VZFcPWIb1tiJ1thDiAILEznGxUpU4YZD
-         IrnwIA+Bz9VardlbicPGQ8HsEohaEOLrV55BAdQSfJOFJpB5fCxyTfNJLGwN3AhwZ87U
-         v4izdBrzVwsYOYc6YaPzLYFz3tASCKoXH3gOlvVld6zIBXafJs4ZhvF5hK+ykbu2qSIN
-         OgSVrwKbC62p7AoEjGPLpSAYAKe29n9KAMJh03Qxb7g013K7dNSKJ2qdTusoBTY/F5xj
-         C6/SMkCr2k/In3ctlqf9qQTXngzHDKKjRPuYHKIBaPPsvSUzEaMBO8Y8kxRH3p6I8zeY
-         6Mcg==
-X-Gm-Message-State: AC+VfDwPw5U1PR4CWZ2WSjNRtWB8ctN3Qc7a/K68A+w23q2HBshpPAB3
-	c/y+zCEJf5br88YF+ojyeWc=
-X-Google-Smtp-Source: ACHHUZ6Jv02LlEGCNcPy0HmfO3xCPRrdohvyHO41n2g1iUckmlF9UBgI5AF/WMluGfIiSqOD4lOFXQ==
-X-Received: by 2002:a05:6a20:604:b0:110:9210:f6b8 with SMTP id 4-20020a056a20060400b001109210f6b8mr7456893pzl.35.1685630396922;
-        Thu, 01 Jun 2023 07:39:56 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id m15-20020aa7900f000000b0064d6b6aac5dsm5143732pfo.73.2023.06.01.07.39.55
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X7JUXb4aekIO7D0dwVI5AuAQfE3+chmPdfkriZKP4oc=;
+        b=dxbwTg45Y7N0yMAcggiMJI6PwN0/HjWzWNStDfajI+3AVx6WSeVQJmGtE6TbOeloY/
+         jG1zw/fl8nEMjz0Cnad5Uf5eS6XUgY69yZyj7FlWtkWQxFPu/ya7KM6/T79M8rLVapxE
+         ss0hOKeegYmZJwLM0MJNga4Y2tlaJYGTh9z7V5yFvoS30RuRUEOkC/QCMDLM1Bo9EH+U
+         Fqx0L/pqDYvJGPbYRJ6/UUzfp67/zzw7tZVrN+gCe7Mt2bY40cO9oo15CVyDMmmLhKrq
+         m9FwqfeUreeU7by10DrAUMzNP0EMrDx/yfjD+Q7uTuufEEfwr7HHWWawfmqxBKPxB6QM
+         9xTQ==
+X-Gm-Message-State: AC+VfDwPmZUQT26NBkCkra0ZPnmDiRaveVUtl6KiMz/6fkZNWcCXda2D
+	BhdWnbwTRJSdIn4DZGV/MnwcxJIsVf0=
+X-Google-Smtp-Source: ACHHUZ4YgNF1X1qC5DtatbgdKTWP9tAFJUDfB6mX3y1C/RZoBttT9v2AoVM3fzFwTLLeRJ3zs0p8sA==
+X-Received: by 2002:a9d:6213:0:b0:6b0:c711:8dd1 with SMTP id g19-20020a9d6213000000b006b0c7118dd1mr3410348otj.14.1685631493201;
+        Thu, 01 Jun 2023 07:58:13 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id w15-20020a9d638f000000b006a42e87aee4sm1593045otk.32.2023.06.01.07.58.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 07:39:56 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <e7f9cbd1-f19d-2f08-8876-45163910ad93@roeck-us.net>
-Date: Thu, 1 Jun 2023 07:39:54 -0700
+        Thu, 01 Jun 2023 07:58:12 -0700 (PDT)
+Message-ID: <77706c31-7fc6-9af7-bcbc-bd27a9757806@gmail.com>
+Date: Thu, 1 Jun 2023 11:29:11 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,81 +47,35 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 6.1 00/42] 6.1.32-rc1 review
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2 1/8] rust: workqueue: add low-level workqueue bindings
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230601131939.051934720@linuxfoundation.org>
- <CA+G9fYuHjNhe-5TboAbrOeZrL3xL-CYYSaEnL=8onebLUqDt8g@mail.gmail.com>
- <2023060101-coconut-smugness-4c7a@gregkh>
-From: Guenter Roeck <linux@roeck-us.net>
-In-Reply-To: <2023060101-coconut-smugness-4c7a@gregkh>
+To: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
+ <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>,
+ Lai Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>,
+ Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20230601134946.3887870-1-aliceryhl@google.com>
+ <20230601134946.3887870-2-aliceryhl@google.com>
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <20230601134946.3887870-2-aliceryhl@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 6/1/23 07:26, Greg Kroah-Hartman wrote:
-> On Thu, Jun 01, 2023 at 07:41:08PM +0530, Naresh Kamboju wrote:
->> On Thu, 1 Jun 2023 at 18:57, Greg Kroah-Hartman
->> <gregkh@linuxfoundation.org> wrote:
->>>
->>> This is the start of the stable review cycle for the 6.1.32 release.
->>> There are 42 patches in this series, all will be posted as a response
->>> to this one.  If anyone has any issues with these being applied, please
->>> let me know.
->>>
->>> Responses should be made by Sat, 03 Jun 2023 13:19:19 +0000.
->>> Anything received after that time might be too late.
->>>
->>> The whole patch series can be found in one patch at:
->>>          https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.32-rc1.gz
->>> or in the git tree and branch at:
->>>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
->>> and the diffstat can be found below.
->>>
->>> thanks,
->>>
->>> greg k-h
->>
->>
->> Following build errors noticed on 6.1 and 5.15.
->>
->> drivers/dma/at_xdmac.c: In function 'atmel_xdmac_resume':
->> drivers/dma/at_xdmac.c:2049:9: error: implicit declaration of function
->> 'pm_runtime_get_noresume' [-Werror=implicit-function-declaration]
->>   2049 |         pm_runtime_get_noresume(atxdmac->dev);
->>        |         ^~~~~~~~~~~~~~~~~~~~~~~
->> drivers/dma/at_xdmac.c:2049:40: error: 'struct at_xdmac' has no member
->> named 'dev'
->>   2049 |         pm_runtime_get_noresume(atxdmac->dev);
->>        |                                        ^~
->> cc1: some warnings being treated as errors
->>
->> reported link:
->> https://lore.kernel.org/stable/CA+G9fYswtPyrYJbwcGFhc5o7mkRmWZEWCCeSjmR64M+N-odQhQ@mail.gmail.com/
->>
->> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+On 6/1/23 10:49, Alice Ryhl wrote:
+> Define basic low-level bindings to a kernel workqueue. The API defined
+> here can only be used unsafely. Later commits will provide safe
+> wrappers.
 > 
-> Ah, the .h file was added by 650b0e990cbd ("dmaengine: at_xdmac: add
-> runtime pm support"), which isn't needed here.  I'll go add it by hand
+> Co-developed-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> ---
+> [...]
 
-Really ? Some of the dma patches seem to fix runtime pm support, and
-"dmaengine: at_xdmac: disable/enable clock directly on suspend/resume"
-is even tagged with
+My Reviewed-by is missing.
 
-Fixes: 650b0e990cbd ("dmaengine: at_xdmac: add runtime pm support")
-
-Why do we need to fix code which isn't present in 6.1.y ?
-
-Guenter
-
-> and push out some -rc2 releases for this and 5.15.y, thanks!
-> 
-> greg k-h
-
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
