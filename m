@@ -1,138 +1,88 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B4523DF;
-	Thu,  1 Jun 2023 19:21:33 +0000 (UTC)
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6261890b4d7so11259246d6.1;
-        Thu, 01 Jun 2023 12:21:33 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E0123DF
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 20:27:05 +0000 (UTC)
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3357fc32a31so36825ab.1
+        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 13:27:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685647292; x=1688239292;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V+p9XIZJG/A6xmQ4kFGTK7aR6dtQd2oet/kCPom82kk=;
-        b=rfpYO41fkXDWP4QQsgPDC8asAst8GxcVu9e6BWaGIAFZTNq0m8jWBr/wGETMqRZgId
-         l9lumKeDbuKaKlds+JBfU/0BPXVdGxvo1bSTAqbjJG2L7O5Mk6aa8XFIuLLCAMmW0eTr
-         FIejmDcM4QfsPxiobduZEODF70BPd8PS2R85Rt5Og8fMW2kJfRCGqV1b0oVFL8r3/KOr
-         Eptr0m/jYQmoxerdR2xGnjIvYzrIlEiVu1SbuA1DSrB3NCquAM9EgJKYB7e8IOyiUFIh
-         1PE02+DlzMzWmhNqU8TGVv0s+cnoGuTG92AvYik+D/WFS7yI+7UrYA0OZ02hgIs3ZYHM
-         BnIg==
+        d=linuxfoundation.org; s=google; t=1685651224; x=1688243224;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QWBKQP7vVkJhhBssZg4awleL2zGJW9kgrjr0/VfEE8k=;
+        b=cWBGFQpN/mtiiE0qRp0NzVkvAC9GFTramLfyxZv5vxQ8dm9SrCS2C3hnG0Iys/eiLO
+         707L5uSmdZhe0xS28D2gJg2eW8W/ULeHjPs3oR+j6dbfv/jxqgf/qRGIL471Sj+EtQ4E
+         VZAL0Y6J/QWrpoGjFph3vDqdWeHQGI9ZJTS24=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685647292; x=1688239292;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V+p9XIZJG/A6xmQ4kFGTK7aR6dtQd2oet/kCPom82kk=;
-        b=aGlH/IR88HAmcQkSTzrUZFgqm5+bnJVCav2s1anp+IjB0muG6MWFNYK8pPULuhGPIs
-         FXM7ACJARuw9enF8cmhttBSjCBwQ0Ez8+zAAQ6nTaIxA0uK6YwO6Cql6AcwU0wwSzcuM
-         JJoaMkycTIFCnnNmlydm+xfVXGeREXi7zuAtakcVqe+7HUxFbLqhA0Zz/gavwZgKe7J/
-         n+LfQO5U4iRUkIbMVewn2+RZwBTjUGcyJCQ5zH6omIVEl3mMBd/H+uWB4oCiX4Bj3Zt+
-         UXlvuD+kKzGyA3M6nC4gCvaDSthowWYfXDkaSFrgPmPNU800kdGCAQz5N6ZGmenpg8sn
-         NSlA==
-X-Gm-Message-State: AC+VfDwcm9pfTJOok1qGvihlQ6B1Y37W3qiu/5z1VlV8ZkIXT8OcOw3N
-	K/ZuPLb4XBY2lv0udmwaKVL4Anjww+k/UzyqByA=
-X-Google-Smtp-Source: ACHHUZ7Q5WF2c1H0jlery4o2IQf3X/dz60h5oQj06l0/Lo5V5iRN1dyj9i+/klKbMcQvuYlj4gSASFFbjczTnIAdaZY=
-X-Received: by 2002:a05:6214:62e:b0:624:fedf:48ec with SMTP id
- a14-20020a056214062e00b00624fedf48ecmr10943476qvx.37.1685647292019; Thu, 01
- Jun 2023 12:21:32 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685651224; x=1688243224;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QWBKQP7vVkJhhBssZg4awleL2zGJW9kgrjr0/VfEE8k=;
+        b=jv43T464zPyTUwWwjBQxBNJF7EYKerFPyyRif7MQZ220FQIQPQwAveoyW0Fuc9lIdE
+         ydVKuIZdVw8VOKf6f+du12DEWT7QIRy0tMafTe/VGkdZ+eMPDrfFE2+zL/QWXv02EWsM
+         to0IaUEjlZcaICem9aEOVympOj0XsCuMQ4qPbVLKAZfneeJmcrsOJfzHjrRQ1aMw+a4F
+         6l8702ss1BuHhCz4mYqgjLWQVJo8LBOYMvKng7FSMNzuHl3T3X957QawxChH5r1Pz5zm
+         YUUEsfIenVIybP58hN9ci985Ix01iOW4yvKJoWMxIZrPDOTlOyz/ZoO7x2Q8EKXLqkjD
+         +Kcw==
+X-Gm-Message-State: AC+VfDxID2HYl4G2bbEMK30b+53b16b5inyKeq0PlTPWOUGsw2wnkcl4
+	+mm6DebQo0w73OPyswaaOC1NCw==
+X-Google-Smtp-Source: ACHHUZ6JlTDpujIStID5N1PWmlkzLws2U6mW19OXDwAS09wixvCF06e5l9QOZwBFKp5eTDQEbl7AGg==
+X-Received: by 2002:a05:6602:2c49:b0:76c:5c79:81bf with SMTP id x9-20020a0566022c4900b0076c5c7981bfmr6465399iov.2.1685651224704;
+        Thu, 01 Jun 2023 13:27:04 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id g186-20020a025bc3000000b0041643b78cbesm2547800jab.120.2023.06.01.13.27.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Jun 2023 13:27:04 -0700 (PDT)
+Message-ID: <0fa8408e-81d6-db13-4f97-c975a4647aac@linuxfoundation.org>
+Date: Thu, 1 Jun 2023 14:27:03 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230601-zswap-cgroup-wsometimes-uninitialized-v2-1-84912684ac35@kernel.org>
- <CAJD7tkYymYNHt9NfYq3s5KR0BytzD8bCo7oaR8T7C2hXZdgGpw@mail.gmail.com>
-In-Reply-To: <CAJD7tkYymYNHt9NfYq3s5KR0BytzD8bCo7oaR8T7C2hXZdgGpw@mail.gmail.com>
-From: Nhat Pham <nphamcs@gmail.com>
-Date: Thu, 1 Jun 2023 12:21:21 -0700
-Message-ID: <CAKEwX=OCC+W2+wdryiO3ieWT0cMzqcim_5N3y4ZQisQBL9F9LA@mail.gmail.com>
-Subject: Re: [PATCH v2] zswap: Avoid uninitialized use of ret in zswap_frontswap_store()
-To: Yosry Ahmed <yosryahmed@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, akpm@linux-foundation.org, sjenning@redhat.com, 
-	ddstreet@ieee.org, vitaly.wool@konsulko.com, ndesaulniers@google.com, 
-	trix@redhat.com, linux-mm@kvack.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev, kernel test robot <lkp@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 6.3 00/45] 6.3.6-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230601131938.702671708@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 1, 2023 at 11:36=E2=80=AFAM Yosry Ahmed <yosryahmed@google.com>=
- wrote:
->
-> On Thu, Jun 1, 2023 at 11:34=E2=80=AFAM Nathan Chancellor <nathan@kernel.=
-org> wrote:
-> >
-> > Clang warns:
-> >
-> >   mm/zswap.c:1183:6: error: variable 'ret' is used uninitialized whenev=
-er 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-> >    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
-> >         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >   mm/zswap.c:1327:9: note: uninitialized use occurs here
-> >    1327 |         return ret;
-> >         |                ^~~
-> >   mm/zswap.c:1183:2: note: remove the 'if' if its condition is always f=
-alse
-> >    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
-> >         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >    1184 |                 goto reject;
-> >         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >   mm/zswap.c:1158:9: note: initialize the variable 'ret' to silence thi=
-s warning
-> >    1158 |         int ret;
-> >         |                ^
-> >         |                 =3D 0
-> >   1 error generated.
-> >
-> > This condition used to return -ENOMEM by going to the shrink label, so
-> > set ret to -ENOMEM in the if block explicitly to avoid using it
-> > uninitialized.
-> >
-> > Fixes: 6804144bf1cf ("zswap: do not shrink if cgroup may not zswap")
-> > Reported-by: kernel test robot <lkp@intel.com>
-> > Closes: https://lore.kernel.org/202306011435.2BxsHFUE-lkp@intel.com/
-> > Closes: https://lore.kernel.org/202306012152.o4FL7Y6J-lkp@intel.com/
-> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1861
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->
-> Thanks!
->
-> Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
->
-> > ---
-> > Changes in v2:
-> > - Change ret to -ENOMEM to match this condition's previous return value
-> >   (Yosry)
-> > - Link to v1: https://lore.kernel.org/r/20230601-zswap-cgroup-wsometime=
-s-uninitialized-v1-1-35debdd19293@kernel.org
-> > ---
-> >  mm/zswap.c | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/mm/zswap.c b/mm/zswap.c
-> > index cff93643a6ab..30092d9a3b23 100644
-> > --- a/mm/zswap.c
-> > +++ b/mm/zswap.c
-> > @@ -1180,8 +1180,10 @@ static int zswap_frontswap_store(unsigned type, =
-pgoff_t offset,
-> >          * local cgroup limits.
-> >          */
-> >         objcg =3D get_obj_cgroup_from_page(page);
-> > -       if (objcg && !obj_cgroup_may_zswap(objcg))
-> > +       if (objcg && !obj_cgroup_may_zswap(objcg)) {
-> > +               ret =3D -ENOMEM;
-> >                 goto reject;
-> > +       }
-> >
-> >         /* reclaim space if needed */
-> >         if (zswap_is_full()) {
-> >
-> > ---
-> > base-commit: b2424568bd9b947b2698b693ff24fec63bb4b36a
-> > change-id: 20230601-zswap-cgroup-wsometimes-uninitialized-b549ff4247ed
-> >
-> > Best regards,
-> > --
-> > Nathan Chancellor <nathan@kernel.org>
-> >
-Acked-by: Nhat Pham <nphamcs@gmail.com>
+On 6/1/23 07:20, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.3.6 release.
+> There are 45 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 03 Jun 2023 13:19:19 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.6-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
+
+Compiled and booted on my test system. No dmesg regressions.
+
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+
+thanks,
+-- Shuah
