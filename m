@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96568FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260EEC433D2;
-	Thu,  1 Jun 2023 13:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F61AFBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D71C433EF;
+	Thu,  1 Jun 2023 13:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626024;
-	bh=MILY39kd8rCMkR/XdLUoPwEY904DFCAaG/DiuQJQ4f0=;
+	s=korg; t=1685626026;
+	bh=XUeEaJx8O5Ql4cHjKXrktV9MBQ7NFKrSs1iCs1SeYdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6vHKpi+qYVWqeWF73ZbvwsWP3546VEQ54yRBNlewFw6ifuYKmA3h3DYG8sAtecyv
-	 Qoiq+2UkCXjROtbg5DZNO2Wxw1HhqiPTCTT0cS7hKXfjpEy4Rid95Y/RCIDHzutjku
-	 Zluks0ZG7J4TNMrn2ydN0V1O//3V1ncYU+RI0VoU=
+	b=QDcfV+3h0SwZBkfk+5rQHPM8qnpfFNXZkTwL/8rgINfKrc5nzelfPwQfjtcIylpWW
+	 oumk854sR3uZrlnEXll0icWbjQ6e6Z/plePXrommLYxUXvxIoDsrW/JOGUBYRMgL41
+	 lOnZzajgwmLDzWYszR5NkHqx68UlT53rS0UGkt2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Blakey <paulb@nvidia.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Demi Marie Obenour <demi@invisiblethingslab.com>
-Subject: [PATCH 6.3 45/45] netfilter: ctnetlink: Support offloaded conntrack entry deletion
-Date: Thu,  1 Jun 2023 14:21:41 +0100
-Message-Id: <20230601131940.779545951@linuxfoundation.org>
+	Imre Deak <imre.deak@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Mika Kahola <mika.kahola@intel.com>
+Subject: [PATCH 6.3 21/45] drm/i915: Move shared DPLL disabling into CRTC disable hook
+Date: Thu,  1 Jun 2023 14:21:17 +0100
+Message-Id: <20230601131939.678247433@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -37,57 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Blakey <paulb@nvidia.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 9b7c68b3911aef84afa4cbfc31bce20f10570d51 upstream.
+[ Upstream commit 3acac2d06a7e0f0b182b86b25bb8a2e9b3300406 ]
 
-Currently, offloaded conntrack entries (flows) can only be deleted
-after they are removed from offload, which is either by timeout,
-tcp state change or tc ct rule deletion. This can cause issues for
-users wishing to manually delete or flush existing entries.
+The spec requires disabling the PLL on TC ports before disconnecting the
+port's PHY. Prepare for that by moving the PLL disabling to the CRTC
+disable hook, while disconnecting the PHY will be moved to the
+post_pll_disable() encoder hook in the next patch.
 
-Support deletion of offloaded conntrack entries.
+v2: Move the call from intel_crtc_disable_noatomic() as well.
 
-Example usage:
- # Delete all offloaded (and non offloaded) conntrack entries
- # whose source address is 1.2.3.4
- $ conntrack -D -s 1.2.3.4
- # Delete all entries
- $ conntrack -F
-
-Signed-off-by: Paul Blakey <paulb@nvidia.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Cc: Demi Marie Obenour <demi@invisiblethingslab.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com> # v1
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230323142035.1432621-27-imre.deak@intel.com
+Stable-dep-of: 45dfbd992923 ("drm/i915: Fix PIPEDMC disabling for a bigjoiner configuration")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c |    8 --------
- 1 file changed, 8 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display.c       | 5 ++++-
+ drivers/gpu/drm/i915/display/intel_modeset_setup.c | 1 -
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -1559,9 +1559,6 @@ static const struct nla_policy ct_nla_po
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index 2bef50ab0ad19..df4c6e000961c 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -2000,6 +2000,8 @@ static void ilk_crtc_disable(struct intel_atomic_state *state,
  
- static int ctnetlink_flush_iterate(struct nf_conn *ct, void *data)
- {
--	if (test_bit(IPS_OFFLOAD_BIT, &ct->status))
--		return 0;
--
- 	return ctnetlink_filter_match(ct, data);
+ 	intel_set_cpu_fifo_underrun_reporting(dev_priv, pipe, true);
+ 	intel_set_pch_fifo_underrun_reporting(dev_priv, pipe, true);
++
++	intel_disable_shared_dpll(old_crtc_state);
  }
  
-@@ -1631,11 +1628,6 @@ static int ctnetlink_del_conntrack(struc
+ static void hsw_crtc_disable(struct intel_atomic_state *state,
+@@ -2018,6 +2020,8 @@ static void hsw_crtc_disable(struct intel_atomic_state *state,
+ 		intel_encoders_post_disable(state, crtc);
+ 	}
  
- 	ct = nf_ct_tuplehash_to_ctrack(h);
++	intel_disable_shared_dpll(old_crtc_state);
++
+ 	intel_dmc_disable_pipe(i915, crtc->pipe);
+ }
  
--	if (test_bit(IPS_OFFLOAD_BIT, &ct->status)) {
--		nf_ct_put(ct);
--		return -EBUSY;
--	}
--
- 	if (cda[CTA_ID]) {
- 		__be32 id = nla_get_be32(cda[CTA_ID]);
+@@ -7140,7 +7144,6 @@ static void intel_old_crtc_state_disables(struct intel_atomic_state *state,
+ 	dev_priv->display.funcs.display->crtc_disable(state, crtc);
+ 	crtc->active = false;
+ 	intel_fbc_disable(crtc);
+-	intel_disable_shared_dpll(old_crtc_state);
  
+ 	if (!new_crtc_state->hw.active)
+ 		intel_initial_watermarks(state, crtc);
+diff --git a/drivers/gpu/drm/i915/display/intel_modeset_setup.c b/drivers/gpu/drm/i915/display/intel_modeset_setup.c
+index 52cdbd4fc2fa0..48b726e408057 100644
+--- a/drivers/gpu/drm/i915/display/intel_modeset_setup.c
++++ b/drivers/gpu/drm/i915/display/intel_modeset_setup.c
+@@ -96,7 +96,6 @@ static void intel_crtc_disable_noatomic(struct intel_crtc *crtc,
+ 
+ 	intel_fbc_disable(crtc);
+ 	intel_update_watermarks(i915);
+-	intel_disable_shared_dpll(crtc_state);
+ 
+ 	intel_display_power_put_all_in_set(i915, &crtc->enabled_power_domains);
+ 
+-- 
+2.39.2
+
 
 
