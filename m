@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A33EFBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06657C433D2;
-	Thu,  1 Jun 2023 13:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B79FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FF1C4339B;
+	Thu,  1 Jun 2023 13:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626051;
-	bh=dnW/J7C8hE4M8oSGV64mWIURFgh2BY5C1ING8uAuiuc=;
+	s=korg; t=1685626053;
+	bh=5oM24HllQOFmwuOKRwqWlkMqXTA6vgapnVIE0BLxjJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ek14UL876NQJtt/LxlxdBZdL0JEWBf2IYIEyb1TES69Djh5lcAOkYwK4Kd6vIsK3q
-	 ur+nk6r9p6xCwgvFNVdurjy4euf5em6m3f71tTlfPTrZdPCV+aQ3155kAuAOB2TBZ2
-	 7Vmq0XdLWvsjEJwpXvwHvTlxSzCAX6xZAMmk48dw=
+	b=sAdMMb9nOqk6CydWL0kUKMfJUaMHZaOtUcwZRYkaip+3Qn2ko8X7jl1EVeEj6/tzX
+	 L2bkDjAekZU3SLcSZt5n+g09eAKQO/U9mDTNPRwCnN3QEyyKbCaFuzoTwjhmH6Nofw
+	 tjctxDORT1ZRRw50FRi4phjAoX9OYbThV7RhWwH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Marc Bonnici <marc.bonnici@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 02/42] ipv{4,6}/raw: fix output xfrm lookup wrt protocol
-Date: Thu,  1 Jun 2023 14:21:11 +0100
-Message-Id: <20230601131939.164265431@linuxfoundation.org>
+Subject: [PATCH 6.1 03/42] firmware: arm_ffa: Fix usage of partition info get count flag
+Date: Thu,  1 Jun 2023 14:21:12 +0100
+Message-Id: <20230601131939.207108422@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
 References: <20230601131939.051934720@linuxfoundation.org>
@@ -35,136 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit 3632679d9e4f879f49949bb5b050e0de553e4739 ]
+[ Upstream commit c6e045361a27ecd4fac6413164e0d091d80eee99 ]
 
-With a raw socket bound to IPPROTO_RAW (ie with hdrincl enabled), the
-protocol field of the flow structure, build by raw_sendmsg() /
-rawv6_sendmsg()),  is set to IPPROTO_RAW. This breaks the ipsec policy
-lookup when some policies are defined with a protocol in the selector.
+Commit bb1be7498500 ("firmware: arm_ffa: Add v1.1 get_partition_info support")
+adds support to discovery the UUIDs of the partitions or just fetch the
+partition count using the PARTITION_INFO_GET_RETURN_COUNT_ONLY flag.
 
-For ipv6, the sin6_port field from 'struct sockaddr_in6' could be used to
-specify the protocol. Just accept all values for IPPROTO_RAW socket.
+However the commit doesn't handle the fact that the older version doesn't
+understand the flag and must be MBZ which results in firmware returning
+invalid parameter error. That results in the failure of the driver probe
+which is in correct.
 
-For ipv4, the sin_port field of 'struct sockaddr_in' could not be used
-without breaking backward compatibility (the value of this field was never
-checked). Let's add a new kind of control message, so that the userland
-could specify which protocol is used.
+Limit the usage of the PARTITION_INFO_GET_RETURN_COUNT_ONLY flag for the
+versions above v1.0(i.e v1.1 and onwards) which fixes the issue.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-CC: stable@vger.kernel.org
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://lore.kernel.org/r/20230522120820.1319391-1-nicolas.dichtel@6wind.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: bb1be7498500 ("firmware: arm_ffa: Add v1.1 get_partition_info support")
+Reported-by: Jens Wiklander <jens.wiklander@linaro.org>
+Reported-by: Marc Bonnici <marc.bonnici@arm.com>
+Tested-by: Jens Wiklander <jens.wiklander@linaro.org>
+Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
+Link: https://lore.kernel.org/r/20230419-ffa_fixes_6-4-v2-2-d9108e43a176@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h        |  2 ++
- include/uapi/linux/in.h |  1 +
- net/ipv4/ip_sockglue.c  | 12 +++++++++++-
- net/ipv4/raw.c          |  5 ++++-
- net/ipv6/raw.c          |  3 ++-
- 5 files changed, 20 insertions(+), 3 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index c3fffaa92d6e0..acec504c469a0 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -76,6 +76,7 @@ struct ipcm_cookie {
- 	__be32			addr;
- 	int			oif;
- 	struct ip_options_rcu	*opt;
-+	__u8			protocol;
- 	__u8			ttl;
- 	__s16			tos;
- 	char			priority;
-@@ -96,6 +97,7 @@ static inline void ipcm_init_sk(struct ipcm_cookie *ipcm,
- 	ipcm->sockc.tsflags = inet->sk.sk_tsflags;
- 	ipcm->oif = READ_ONCE(inet->sk.sk_bound_dev_if);
- 	ipcm->addr = inet->inet_saddr;
-+	ipcm->protocol = inet->inet_num;
- }
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 737f36e7a9035..5904a679d3512 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -274,7 +274,8 @@ __ffa_partition_info_get(u32 uuid0, u32 uuid1, u32 uuid2, u32 uuid3,
+ 	int idx, count, flags = 0, sz, buf_sz;
+ 	ffa_value_t partition_info;
  
- #define IPCB(skb) ((struct inet_skb_parm*)((skb)->cb))
-diff --git a/include/uapi/linux/in.h b/include/uapi/linux/in.h
-index 4b7f2df66b995..e682ab628dfa6 100644
---- a/include/uapi/linux/in.h
-+++ b/include/uapi/linux/in.h
-@@ -163,6 +163,7 @@ struct in_addr {
- #define IP_MULTICAST_ALL		49
- #define IP_UNICAST_IF			50
- #define IP_LOCAL_PORT_RANGE		51
-+#define IP_PROTOCOL			52
+-	if (!buffer || !num_partitions) /* Just get the count for now */
++	if (drv_info->version > FFA_VERSION_1_0 &&
++	    (!buffer || !num_partitions)) /* Just get the count for now */
+ 		flags = PARTITION_INFO_GET_RETURN_COUNT_ONLY;
  
- #define MCAST_EXCLUDE	0
- #define MCAST_INCLUDE	1
-diff --git a/net/ipv4/ip_sockglue.c b/net/ipv4/ip_sockglue.c
-index d05f631ea6401..a7fd035b5b4f9 100644
---- a/net/ipv4/ip_sockglue.c
-+++ b/net/ipv4/ip_sockglue.c
-@@ -317,7 +317,14 @@ int ip_cmsg_send(struct sock *sk, struct msghdr *msg, struct ipcm_cookie *ipc,
- 			ipc->tos = val;
- 			ipc->priority = rt_tos2priority(ipc->tos);
- 			break;
--
-+		case IP_PROTOCOL:
-+			if (cmsg->cmsg_len != CMSG_LEN(sizeof(int)))
-+				return -EINVAL;
-+			val = *(int *)CMSG_DATA(cmsg);
-+			if (val < 1 || val > 255)
-+				return -EINVAL;
-+			ipc->protocol = val;
-+			break;
- 		default:
- 			return -EINVAL;
- 		}
-@@ -1760,6 +1767,9 @@ int do_ip_getsockopt(struct sock *sk, int level, int optname,
- 	case IP_LOCAL_PORT_RANGE:
- 		val = inet->local_port_range.hi << 16 | inet->local_port_range.lo;
- 		break;
-+	case IP_PROTOCOL:
-+		val = inet_sk(sk)->inet_num;
-+		break;
- 	default:
- 		sockopt_release_sock(sk);
- 		return -ENOPROTOOPT;
-diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
-index af03aa8a8e513..86197634dcf5d 100644
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -530,6 +530,9 @@ static int raw_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	}
- 
- 	ipcm_init_sk(&ipc, inet);
-+	/* Keep backward compat */
-+	if (hdrincl)
-+		ipc.protocol = IPPROTO_RAW;
- 
- 	if (msg->msg_controllen) {
- 		err = ip_cmsg_send(sk, msg, &ipc, false);
-@@ -597,7 +600,7 @@ static int raw_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 
- 	flowi4_init_output(&fl4, ipc.oif, ipc.sockc.mark, tos,
- 			   RT_SCOPE_UNIVERSE,
--			   hdrincl ? IPPROTO_RAW : sk->sk_protocol,
-+			   hdrincl ? ipc.protocol : sk->sk_protocol,
- 			   inet_sk_flowi_flags(sk) |
- 			    (hdrincl ? FLOWI_FLAG_KNOWN_NH : 0),
- 			   daddr, saddr, 0, 0, sk->sk_uid);
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index f44b99f7ecdcc..33852fc38ad91 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -791,7 +791,8 @@ static int rawv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 
- 		if (!proto)
- 			proto = inet->inet_num;
--		else if (proto != inet->inet_num)
-+		else if (proto != inet->inet_num &&
-+			 inet->inet_num != IPPROTO_RAW)
- 			return -EINVAL;
- 
- 		if (proto > 255)
+ 	mutex_lock(&drv_info->rx_lock);
 -- 
 2.39.2
 
