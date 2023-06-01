@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0039DE54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:24:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CBBC433D2;
-	Thu,  1 Jun 2023 13:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C71EE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:24:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD316C433EF;
+	Thu,  1 Jun 2023 13:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625872;
-	bh=kL/7YVwNXKNZSDU9ufknGWAWzer1ICGv/CRpvKg2Kts=;
+	s=korg; t=1685625875;
+	bh=BhWiK7EPq2okNiz29dPWI15pHGrSenDuRHN4yJe8cDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pfCPok6FxFu+JBjmfedM5wX5bo3HzPn/2aqWy2fz4iV7BLk6CNAfdo32pOLTLuBeu
-	 BBXWFPCNwemEFjenGik2PaUKU/2FxL6W1lQANaFhFx+TsREu5cd22ailXx6pTTc+nr
-	 Lfut3Wv3veSHGKLMWYR3vOaAhkAi6MKNF0aQrpM8=
+	b=p+YlL6f5Br/D2M2yAWUve9jP4QJ8JD1AVZM2CLw4BqL2nq5NjK3Kzm6hvpmX99br2
+	 30ed7Fehf6UY58mK8PhXaWh5DIpMqzDlXEttygzgKLwGd93Qf8APEB1BJ9Dmitno2U
+	 UnM9JarP9wDlthiy8hbykN6wdUT5dEzPqLKShMZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Li <liali@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zi Fan Tan <zifantan@google.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Todd Kjos <tkjos@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 26/42] bonding: fix send_peer_notif overflow
-Date: Thu,  1 Jun 2023 14:21:13 +0100
-Message-Id: <20230601131937.887030491@linuxfoundation.org>
+Subject: [PATCH 5.15 27/42] binder: fix UAF caused by faulty buffer cleanup
+Date: Thu,  1 Jun 2023 14:21:14 +0100
+Message-Id: <20230601131937.929315190@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131936.699199833@linuxfoundation.org>
 References: <20230601131936.699199833@linuxfoundation.org>
@@ -36,97 +36,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-[ Upstream commit 9949e2efb54eb3001cb2f6512ff3166dddbfb75d ]
+[ Upstream commit bdc1c5fac982845a58d28690cdb56db8c88a530d ]
 
-Bonding send_peer_notif was defined as u8. Since commit 07a4ddec3ce9
-("bonding: add an option to specify a delay between peer notifications").
-the bond->send_peer_notif will be num_peer_notif multiplied by
-peer_notif_delay, which is u8 * u32. This would cause the send_peer_notif
-overflow easily. e.g.
+In binder_transaction_buffer_release() the 'failed_at' offset indicates
+the number of objects to clean up. However, this function was changed by
+commit 44d8047f1d87 ("binder: use standard functions to allocate fds"),
+to release all the objects in the buffer when 'failed_at' is zero.
 
-  ip link add bond0 type bond mode 1 miimon 100 num_grat_arp 30 peer_notify_delay 1000
+This introduced an issue when a transaction buffer is released without
+any objects having been processed so far. In this case, 'failed_at' is
+indeed zero yet it is misinterpreted as releasing the entire buffer.
 
-To fix the overflow, let's set the send_peer_notif to u32 and limit
-peer_notif_delay to 300s.
+This leads to use-after-free errors where nodes are incorrectly freed
+and subsequently accessed. Such is the case in the following KASAN
+report:
 
-Reported-by: Liang Li <liali@redhat.com>
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2090053
-Fixes: 07a4ddec3ce9 ("bonding: add an option to specify a delay between peer notifications")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in binder_thread_read+0xc40/0x1f30
+  Read of size 8 at addr ffff4faf037cfc58 by task poc/474
+
+  CPU: 6 PID: 474 Comm: poc Not tainted 6.3.0-12570-g7df047b3f0aa #5
+  Hardware name: linux,dummy-virt (DT)
+  Call trace:
+   dump_backtrace+0x94/0xec
+   show_stack+0x18/0x24
+   dump_stack_lvl+0x48/0x60
+   print_report+0xf8/0x5b8
+   kasan_report+0xb8/0xfc
+   __asan_load8+0x9c/0xb8
+   binder_thread_read+0xc40/0x1f30
+   binder_ioctl+0xd9c/0x1768
+   __arm64_sys_ioctl+0xd4/0x118
+   invoke_syscall+0x60/0x188
+  [...]
+
+  Allocated by task 474:
+   kasan_save_stack+0x3c/0x64
+   kasan_set_track+0x2c/0x40
+   kasan_save_alloc_info+0x24/0x34
+   __kasan_kmalloc+0xb8/0xbc
+   kmalloc_trace+0x48/0x5c
+   binder_new_node+0x3c/0x3a4
+   binder_transaction+0x2b58/0x36f0
+   binder_thread_write+0x8e0/0x1b78
+   binder_ioctl+0x14a0/0x1768
+   __arm64_sys_ioctl+0xd4/0x118
+   invoke_syscall+0x60/0x188
+  [...]
+
+  Freed by task 475:
+   kasan_save_stack+0x3c/0x64
+   kasan_set_track+0x2c/0x40
+   kasan_save_free_info+0x38/0x5c
+   __kasan_slab_free+0xe8/0x154
+   __kmem_cache_free+0x128/0x2bc
+   kfree+0x58/0x70
+   binder_dec_node_tmpref+0x178/0x1fc
+   binder_transaction_buffer_release+0x430/0x628
+   binder_transaction+0x1954/0x36f0
+   binder_thread_write+0x8e0/0x1b78
+   binder_ioctl+0x14a0/0x1768
+   __arm64_sys_ioctl+0xd4/0x118
+   invoke_syscall+0x60/0x188
+  [...]
+  ==================================================================
+
+In order to avoid these issues, let's always calculate the intended
+'failed_at' offset beforehand. This is renamed and wrapped in a helper
+function to make it clear and convenient.
+
+Fixes: 32e9f56a96d8 ("binder: don't detect sender/target during buffer cleanup")
+Reported-by: Zi Fan Tan <zifantan@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Acked-by: Todd Kjos <tkjos@google.com>
+Link: https://lore.kernel.org/r/20230505203020.4101154-1-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_netlink.c | 7 ++++++-
- drivers/net/bonding/bond_options.c | 8 +++++++-
- include/net/bonding.h              | 2 +-
- 3 files changed, 14 insertions(+), 3 deletions(-)
+ drivers/android/binder.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
-index 1007bf6d385d4..7398accd46805 100644
---- a/drivers/net/bonding/bond_netlink.c
-+++ b/drivers/net/bonding/bond_netlink.c
-@@ -79,6 +79,11 @@ static int bond_fill_slave_info(struct sk_buff *skb,
- 	return -EMSGSIZE;
+diff --git a/drivers/android/binder.c b/drivers/android/binder.c
+index c8d33c5dbe295..a4749b6c3d730 100644
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -1903,24 +1903,23 @@ static void binder_deferred_fd_close(int fd)
+ static void binder_transaction_buffer_release(struct binder_proc *proc,
+ 					      struct binder_thread *thread,
+ 					      struct binder_buffer *buffer,
+-					      binder_size_t failed_at,
++					      binder_size_t off_end_offset,
+ 					      bool is_failure)
+ {
+ 	int debug_id = buffer->debug_id;
+-	binder_size_t off_start_offset, buffer_offset, off_end_offset;
++	binder_size_t off_start_offset, buffer_offset;
+ 
+ 	binder_debug(BINDER_DEBUG_TRANSACTION,
+ 		     "%d buffer release %d, size %zd-%zd, failed at %llx\n",
+ 		     proc->pid, buffer->debug_id,
+ 		     buffer->data_size, buffer->offsets_size,
+-		     (unsigned long long)failed_at);
++		     (unsigned long long)off_end_offset);
+ 
+ 	if (buffer->target_node)
+ 		binder_dec_node(buffer->target_node, 1, 0);
+ 
+ 	off_start_offset = ALIGN(buffer->data_size, sizeof(void *));
+-	off_end_offset = is_failure && failed_at ? failed_at :
+-				off_start_offset + buffer->offsets_size;
++
+ 	for (buffer_offset = off_start_offset; buffer_offset < off_end_offset;
+ 	     buffer_offset += sizeof(binder_size_t)) {
+ 		struct binder_object_header *hdr;
+@@ -2080,6 +2079,21 @@ static void binder_transaction_buffer_release(struct binder_proc *proc,
+ 	}
  }
  
-+/* Limit the max delay range to 300s */
-+static struct netlink_range_validation delay_range = {
-+	.max = 300000,
-+};
++/* Clean up all the objects in the buffer */
++static inline void binder_release_entire_buffer(struct binder_proc *proc,
++						struct binder_thread *thread,
++						struct binder_buffer *buffer,
++						bool is_failure)
++{
++	binder_size_t off_end_offset;
 +
- static const struct nla_policy bond_policy[IFLA_BOND_MAX + 1] = {
- 	[IFLA_BOND_MODE]		= { .type = NLA_U8 },
- 	[IFLA_BOND_ACTIVE_SLAVE]	= { .type = NLA_U32 },
-@@ -109,7 +114,7 @@ static const struct nla_policy bond_policy[IFLA_BOND_MAX + 1] = {
- 	[IFLA_BOND_AD_ACTOR_SYSTEM]	= { .type = NLA_BINARY,
- 					    .len  = ETH_ALEN },
- 	[IFLA_BOND_TLB_DYNAMIC_LB]	= { .type = NLA_U8 },
--	[IFLA_BOND_PEER_NOTIF_DELAY]    = { .type = NLA_U32 },
-+	[IFLA_BOND_PEER_NOTIF_DELAY]    = NLA_POLICY_FULL_RANGE(NLA_U32, &delay_range),
- 	[IFLA_BOND_MISSED_MAX]		= { .type = NLA_U8 },
- };
- 
-diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
-index 2e8484a91a0e7..5f883a18bbabd 100644
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -165,6 +165,12 @@ static const struct bond_opt_value bond_num_peer_notif_tbl[] = {
- 	{ NULL,      -1,  0}
- };
- 
-+static const struct bond_opt_value bond_peer_notif_delay_tbl[] = {
-+	{ "off",     0,   0},
-+	{ "maxval",  300000, BOND_VALFLAG_MAX},
-+	{ NULL,      -1,  0}
-+};
++	off_end_offset = ALIGN(buffer->data_size, sizeof(void *));
++	off_end_offset += buffer->offsets_size;
 +
- static const struct bond_opt_value bond_primary_reselect_tbl[] = {
- 	{ "always",  BOND_PRI_RESELECT_ALWAYS,  BOND_VALFLAG_DEFAULT},
- 	{ "better",  BOND_PRI_RESELECT_BETTER,  0},
-@@ -467,7 +473,7 @@ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
- 		.id = BOND_OPT_PEER_NOTIF_DELAY,
- 		.name = "peer_notif_delay",
- 		.desc = "Delay between each peer notification on failover event, in milliseconds",
--		.values = bond_intmax_tbl,
-+		.values = bond_peer_notif_delay_tbl,
- 		.set = bond_option_peer_notif_delay_set
++	binder_transaction_buffer_release(proc, thread, buffer,
++					  off_end_offset, is_failure);
++}
++
+ static int binder_translate_binder(struct flat_binder_object *fp,
+ 				   struct binder_transaction *t,
+ 				   struct binder_thread *thread)
+@@ -3578,7 +3592,7 @@ binder_free_buf(struct binder_proc *proc,
+ 		binder_node_inner_unlock(buf_node);
  	}
- };
-diff --git a/include/net/bonding.h b/include/net/bonding.h
-index 0db3c5f36868b..e4453cf4f0171 100644
---- a/include/net/bonding.h
-+++ b/include/net/bonding.h
-@@ -228,7 +228,7 @@ struct bonding {
- 	 */
- 	spinlock_t mode_lock;
- 	spinlock_t stats_lock;
--	u8	 send_peer_notif;
-+	u32	 send_peer_notif;
- 	u8       igmp_retrans;
- #ifdef CONFIG_PROC_FS
- 	struct   proc_dir_entry *proc_entry;
+ 	trace_binder_transaction_buffer_release(buffer);
+-	binder_transaction_buffer_release(proc, thread, buffer, 0, is_failure);
++	binder_release_entire_buffer(proc, thread, buffer, is_failure);
+ 	binder_alloc_free_buf(&proc->alloc, buffer);
+ }
+ 
 -- 
 2.39.2
 
