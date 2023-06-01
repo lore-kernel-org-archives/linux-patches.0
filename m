@@ -1,152 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3CDE54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:22:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C05C433D2;
-	Thu,  1 Jun 2023 13:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA174E54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:22:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F34C433EF;
+	Thu,  1 Jun 2023 13:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625768;
-	bh=J/f6faeRfVz1/CP022sJVxdUHJWxvOp4f5UITT+pH50=;
-	h=From:To:Cc:Subject:Date:From;
-	b=aBeBDQi/x5QNE3GQR2ZcI2hDvWk78IkjIwQm02ThJDHWzyroQpfZWYVBswg/xc5Ll
-	 kHqEuxSNvzbVvuD0RnNVKeCYLhW/OWiebb9vpptUqm0JGXqtIif2lE5IvPHGelez5v
-	 oz9TkiRZccrqoD/u9z/a4xqy7pAoZbUKbMZM0yaM=
+	s=korg; t=1685625770;
+	bh=D4MTCTpjvm7IxHqwydvDGEjfVeHiLOxANXVHVdYa/fE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=TOR0WIf15/3/yIkvCo+8VHjIQkpflRU+GKfmSSsN49JSdL0jN+GFkprqqr9KyBECT
+	 WQnwOXujzjrj12lDRnazYdKp20L8DNVf+XYDLorvjLmyQ1B59XPHHFEqZJjpUSO2Jj
+	 OCkZj+O6uSNSmedhU4SSYbz4HIJx0988z/L/MIvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.4 00/16] 5.4.245-rc1 review
-Date: Thu,  1 Jun 2023 14:20:55 +0100
-Message-Id: <20230601131931.947241286@linuxfoundation.org>
+	Tony Luck <tony.luck@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 01/22] x86/cpu: Add Raptor Lake to Intel family
+Date: Thu,  1 Jun 2023 14:20:59 +0100
+Message-Id: <20230601131933.793055249@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230601131933.727832920@linuxfoundation.org>
+References: <20230601131933.727832920@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.245-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.245-rc1
-X-KernelTest-Deadline: 2023-06-03T13:19+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.4.245 release.
-There are 16 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Tony Luck <tony.luck@intel.com>
 
-Responses should be made by Sat, 03 Jun 2023 13:19:19 +0000.
-Anything received after that time might be too late.
+[ Upstream commit fbdb5e8f2926ae9636c9fa6f42c7426132ddeeb2 ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.245-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
+Add model ID for Raptor Lake.
 
-thanks,
+[ dhansen: These get added as soon as possible so that folks doing
+  development can leverage them. ]
 
-greg k-h
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lkml.kernel.org/r/20211112182835.924977-1-tony.luck@intel.com
+Stable-dep-of: ce0b15d11ad8 ("x86/mm: Avoid incomplete Global INVLPG flushes")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/x86/include/asm/intel-family.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
--------------
-Pseudo-Shortlog of commits:
+diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
+index 14b52718917f6..7a602d79bc38d 100644
+--- a/arch/x86/include/asm/intel-family.h
++++ b/arch/x86/include/asm/intel-family.h
+@@ -104,6 +104,8 @@
+ #define INTEL_FAM6_RAPTORLAKE_P		0xBA
+ #define INTEL_FAM6_RAPTORLAKE_S		0xBF
+ 
++#define INTEL_FAM6_RAPTOR_LAKE		0xB7
++
+ /* "Small Core" Processors (Atom) */
+ 
+ #define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
+-- 
+2.39.2
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.245-rc1
-
-Paul Blakey <paulb@nvidia.com>
-    netfilter: ctnetlink: Support offloaded conntrack entry deletion
-
-Nicolas Dichtel <nicolas.dichtel@6wind.com>
-    ipv{4,6}/raw: fix output xfrm lookup wrt protocol
-
-Carlos Llamas <cmllamas@google.com>
-    binder: fix UAF caused by faulty buffer cleanup
-
-Ruihan Li <lrh2000@pku.edu.cn>
-    bluetooth: Add cmd validity checks at the start of hci_sock_ioctl()
-
-Jens Axboe <axboe@kernel.dk>
-    io_uring: have io_kill_timeout() honor the request references
-
-Jens Axboe <axboe@kernel.dk>
-    io_uring: don't drop completion lock before timer is fully initialized
-
-Jens Axboe <axboe@kernel.dk>
-    io_uring: always grab lock in io_cancel_async_work()
-
-Alexander Bersenev <bay@hackerdom.ru>
-    cdc_ncm: Fix the build warning
-
-Shay Drory <shayd@nvidia.com>
-    net/mlx5: Devcom, serialize devcom registration
-
-Mark Bloch <mbloch@nvidia.com>
-    net/mlx5: devcom only supports 2 ports
-
-Hao Ge <gehao@kylinos.cn>
-    fs: fix undefined behavior in bit shift for SB_NOUSER
-
-Hans de Goede <hdegoede@redhat.com>
-    power: supply: bq24190: Call power_supply_changed() after updating input current
-
-Hans de Goede <hdegoede@redhat.com>
-    power: supply: core: Refactor power_supply_set_input_current_limit_from_supplier()
-
-Hans de Goede <hdegoede@redhat.com>
-    power: supply: bq27xxx: After charger plug in/out wait 0.5s for things to stabilize
-
-Tudor Ambarus <tudor.ambarus@linaro.org>
-    net: cdc_ncm: Deal with too low values of dwNtbOutMaxSize
-
-Alexander Bersenev <bay@hackerdom.ru>
-    cdc_ncm: Implement the 32-bit version of NCM Transfer Block
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- drivers/android/binder.c                           |  26 +-
- .../net/ethernet/mellanox/mlx5/core/lib/devcom.c   |  35 +-
- .../net/ethernet/mellanox/mlx5/core/lib/devcom.h   |   2 +
- drivers/net/usb/cdc_ncm.c                          | 435 ++++++++++++++++-----
- drivers/net/usb/huawei_cdc_ncm.c                   |   8 +-
- drivers/power/supply/bq24190_charger.c             |  13 +-
- drivers/power/supply/bq27xxx_battery.c             |   4 +-
- drivers/power/supply/power_supply_core.c           |  57 +--
- fs/io_uring.c                                      |   8 +-
- include/linux/fs.h                                 |  40 +-
- include/linux/power_supply.h                       |   5 +-
- include/linux/usb/cdc_ncm.h                        |  15 +-
- include/net/ip.h                                   |   2 +
- include/uapi/linux/in.h                            |   2 +
- net/bluetooth/hci_sock.c                           |  28 ++
- net/ipv4/ip_sockglue.c                             |  12 +-
- net/ipv4/raw.c                                     |   5 +-
- net/ipv6/raw.c                                     |   3 +-
- net/netfilter/nf_conntrack_netlink.c               |   8 -
- 20 files changed, 521 insertions(+), 191 deletions(-)
 
 
