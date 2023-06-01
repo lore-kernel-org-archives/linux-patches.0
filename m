@@ -1,40 +1,40 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3651821CC9
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:56:13 +0000 (UTC)
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-5655d99da53so23152597b3.0
-        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 06:56:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC46821CC9
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:56:49 +0000 (UTC)
+Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-96fd3757bd1so64005966b.1
+        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 06:56:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1685627773; x=1688219773;
+        d=google.com; s=20221208; t=1685627808; x=1688219808;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TyRNG5KT1C+kxxh+8DvNZVfySdIBr+c+luuNQvW24B8=;
-        b=rqoKpkOtbw5E7aZUP5vKjWc3Rud11Cj869FSLBYeNDUpqqAOXnkZIPl7lj5T2v5p7s
-         DmMa94afp5CNZFk1ywR4ew+ffsOd7nOjrFz827+LCZEp8XI49xI9Wdw9RtCEvPkuo8im
-         TbhBhsVdo138vg3Nl4AMaccmsNOCCPZENyu59Kaii+poHD6Mc9UdWgsN3jNMxvyt2W4I
-         y2/H0+6GzKgtGlccHAiV83rBObv6Oqk4nXU9rcSvjnEk0GniwrycnB1qvh3JpmxgcBKs
-         vNmUwJcJLMtZRaxTJ5rpjwixRZNRXubZmOhOpkg300KRq2lF92feTXVc6m+zgHMAsqIc
-         FyaA==
+        bh=vB1KTXT+BDPTSPss1nKfZFCllt9cnJRUrJkIndsk9bQ=;
+        b=ONUw1Bi/LF6RsZlr45Sb+TKYR/o9wrpaSOn2lrXAM6QYiczLPUguB/OtTWl2nFQb/z
+         QHCJFovGIHfcYE7ZKxME4rHu0QrQ4t0lkAsZaKzOuoP35MgMHVzXbqZ9Js6mYq3jSxzW
+         iQhJQID+sbpuY6rX1Kr1tInXmFVQ8bpfhl7KPdzG/3nj30erauVwt9zGGqKaupzxvtkk
+         zJUHWqC/9bRRmif13gTcB23wiU9s0WW2SS+C2rW0b1KB96pBbzxeXvLAmsDK+Q6B9hpm
+         WC4RIxiwCa89hBCrOaMs11hNEoZ8Mf+uzlLbeKiVPw4rmcJHNzBDHeol1J09Swzd8q5c
+         6l1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685627773; x=1688219773;
+        d=1e100.net; s=20221208; t=1685627808; x=1688219808;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TyRNG5KT1C+kxxh+8DvNZVfySdIBr+c+luuNQvW24B8=;
-        b=D955xm+u1DWQMHOf03oNu16DYkMBxSWFJnyfgw+GFA8nSxIErBsqBvXb1j4jvDCF8F
-         aM7bZCqHoRaG8IiT4hdthh6q4bLOV+etcPky44jcHYV2FysnIiwaSCCFyAzI23T/bu3g
-         5Hbhj8EbyOTey04d06vOhzh6WwLBb4RSMIQpk3lvbyGPilb9xLi1ffEciw0EveVaKx6p
-         IbR7eSaLxKHJzjAhDZayvBLXmInY3GTCXBtf1ZAz9vMfZH30bUs+jUpbhyvudTnUYNyB
-         N8AHcBkj8em9rUdzBPxcMfAIWa1Kochl5OI4OFpCzfthtYsjfGxwloT8fMNesIZwSdxw
-         wgqA==
-X-Gm-Message-State: AC+VfDxHPgaAGIWDwAhOnM3IcXdBLqyGu3MSXtQiCS2pRn5umsTtDfka
-	jCCM45pUgo1q64eoeQ3NxJgKyhHmwBwHUU4=
-X-Google-Smtp-Source: ACHHUZ5aHph4tvkKB0c6QYrmRqC0Hw9+Se7T+ePGC68o9O2DFJVKozkWFG8onb0G18ETbUursPX9HxukD6gKR/M=
+        bh=vB1KTXT+BDPTSPss1nKfZFCllt9cnJRUrJkIndsk9bQ=;
+        b=Eq+zavKWTLo9qyegkhR6FWix/BVjvPj8u4iOmooW/Va9UUs+/bXFSbrM4BgLJ9xhLF
+         O0PjcuXNSGk6AOe5a/MQ6XTa0Zu7Rq0DT9CAYEKz4Wgu3EmTDbOQ8YOEvOWkIB5NX3+J
+         1avfeIoQHC8m22lUbsWzbVg0ezhtVgyjAV6glTAPsAPEi01xrbU+kPQkrCpAA+qR4DmR
+         Zp9wYjc9noMYSUbtF6WcyoScHfTdu0LpbYgDMMNNIBosXZeFN6wvHlwueJCYqT/+vKuv
+         ZlPKww1JRCMv/l1CSLxGFdSRmxlEh3V8JDmis7nfCCZcoZw+A1c91nrKsqprKb4DTJKG
+         c7Zg==
+X-Gm-Message-State: AC+VfDznbE7mFo2L+4aarpOXUvz7sqDF71qICbVRbvC+04YmEAQadbJT
+	TkIvcH/1qLeiL1u9fH2nRHSCgSrLvtgR6mg=
+X-Google-Smtp-Source: ACHHUZ6wvWf7QDEiZpOYRmHr1ZokpvS+ySsWXbKzAtbGtHwYA1ojE0HCynF9ToBu5yxSIkNVCdyZ/ezhgmRDm2s=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a81:7813:0:b0:561:ec3e:62fd with SMTP id
- t19-20020a817813000000b00561ec3e62fdmr1402978ywc.5.1685627773081; Thu, 01 Jun
- 2023 06:56:13 -0700 (PDT)
-Date: Thu,  1 Jun 2023 13:49:44 +0000
+ (user=aliceryhl job=sendgmr) by 2002:a17:907:2cd9:b0:973:867b:399e with SMTP
+ id hg25-20020a1709072cd900b00973867b399emr2256552ejc.4.1685627807883; Thu, 01
+ Jun 2023 06:56:47 -0700 (PDT)
+Date: Thu,  1 Jun 2023 13:49:45 +0000
 In-Reply-To: <20230601134946.3887870-1-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,9 +44,8 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20230601134946.3887870-1-aliceryhl@google.com>
 X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
-Message-ID: <20230601134946.3887870-7-aliceryhl@google.com>
-Subject: [PATCH v2 6/8] rust: workqueue: implement `WorkItemPointer` for
- pointer types
+Message-ID: <20230601134946.3887870-8-aliceryhl@google.com>
+Subject: [PATCH v2 7/8] rust: workqueue: add `try_spawn` helper method
 From: Alice Ryhl <aliceryhl@google.com>
 To: rust-for-linux@vger.kernel.org
 Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, 
@@ -57,134 +56,85 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 
-This implements the `WorkItemPointer` trait for the pointer types that
-you are likely to use the workqueue with. The `Arc` type is for
-reference counted objects, and the `Pin<Box<T>>` type is for objects
-where the caller has exclusive ownership of the object.
+This adds a convenience method that lets you spawn a closure for
+execution on a workqueue. This will be the most convenient way to use
+workqueues, but it is fallible because it needs to allocate memory.
 
 Co-developed-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 ---
- rust/kernel/workqueue.rs | 97 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 96 insertions(+), 1 deletion(-)
+ rust/kernel/workqueue.rs | 43 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
 diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-index dbf0aab29a85..f06a2f036d8b 100644
+index f06a2f036d8b..c302e8b8624b 100644
 --- a/rust/kernel/workqueue.rs
 +++ b/rust/kernel/workqueue.rs
-@@ -28,8 +28,10 @@
- //!
+@@ -29,6 +29,7 @@
  //! C header: [`include/linux/workqueue.h`](../../../../include/linux/workqueue.h)
  
--use crate::{bindings, prelude::*, types::Opaque};
-+use crate::{bindings, prelude::*, sync::Arc, types::Opaque};
-+use alloc::boxed::Box;
+ use crate::{bindings, prelude::*, sync::Arc, types::Opaque};
++use alloc::alloc::AllocError;
+ use alloc::boxed::Box;
  use core::marker::{PhantomData, PhantomPinned};
-+use core::pin::Pin;
+ use core::pin::Pin;
+@@ -87,6 +88,44 @@ pub fn enqueue<W, const ID: u64>(&self, w: W) -> W::EnqueueOutput
+             })
+         }
+     }
++
++    /// Tries to spawn the given function or closure as a work item.
++    ///
++    /// This method can fail because it allocates memory to store the work item.
++    pub fn try_spawn<T: 'static + Send + FnOnce()>(&self, func: T) -> Result<(), AllocError> {
++        let init = pin_init!(ClosureWork {
++            work <- Work::new(),
++            func: Some(func),
++        });
++
++        self.enqueue(Box::pin_init(init).map_err(|_| AllocError)?);
++        Ok(())
++    }
++}
++
++/// A helper type used in `try_spawn`.
++#[pin_data]
++struct ClosureWork<T> {
++    #[pin]
++    work: Work<ClosureWork<T>>,
++    func: Option<T>,
++}
++
++impl<T> ClosureWork<T> {
++    fn project(self: Pin<&mut Self>) -> &mut Option<T> {
++        // SAFETY: The `func` field is not structurally pinned.
++        unsafe { &mut self.get_unchecked_mut().func }
++    }
++}
++
++impl<T: FnOnce()> WorkItem for ClosureWork<T> {
++    type Pointer = Pin<Box<Self>>;
++
++    fn run(mut this: Pin<Box<Self>>) {
++        if let Some(func) = this.as_mut().project().take() {
++            (func)()
++        }
++    }
+ }
  
- /// A kernel work queue.
- ///
-@@ -323,6 +325,99 @@ unsafe fn raw_get_work(ptr: *mut Self) -> *mut $crate::workqueue::Work<$work_typ
+ /// A raw work item.
+@@ -325,6 +364,10 @@ unsafe fn raw_get_work(ptr: *mut Self) -> *mut $crate::workqueue::Work<$work_typ
      )*};
  }
  
-+unsafe impl<T, const ID: u64> WorkItemPointer<ID> for Arc<T>
-+where
-+    T: WorkItem<ID, Pointer = Self>,
-+    T: HasWork<T, ID>,
-+{
-+    unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
-+        // SAFETY: The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
-+        let ptr = ptr as *mut Work<T, ID>;
-+        // SAFETY: This computes the pointer that `__enqueue` got from `Arc::into_raw`.
-+        let ptr = unsafe { T::work_container_of(ptr) };
-+        // SAFETY: This pointer comes from `Arc::into_raw` and we've been given back ownership.
-+        let arc = unsafe { Arc::from_raw(ptr) };
-+
-+        T::run(arc)
-+    }
++impl_has_work! {
++    impl<T> HasWork<Self> for ClosureWork<T> { self.work }
 +}
 +
-+unsafe impl<T, const ID: u64> RawWorkItem<ID> for Arc<T>
-+where
-+    T: WorkItem<ID, Pointer = Self>,
-+    T: HasWork<T, ID>,
-+{
-+    type EnqueueOutput = Result<(), Self>;
-+
-+    unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutput
-+    where
-+        F: FnOnce(*mut bindings::work_struct) -> bool,
-+    {
-+        // Casting between const and mut is not a problem as long as the pointer is a raw pointer.
-+        let ptr = Arc::into_raw(self) as *mut T;
-+
-+        // SAFETY: Pointers into an `Arc` point at a valid value.
-+        let work_ptr = unsafe { T::raw_get_work(ptr) };
-+        // SAFETY: `raw_get_work` returns a pointer to a valid value.
-+        let work_ptr = unsafe { Work::raw_get(work_ptr) };
-+
-+        if queue_work_on(work_ptr) {
-+            Ok(())
-+        } else {
-+            // SAFETY: The work queue has not taken ownership of the pointer.
-+            Err(unsafe { Arc::from_raw(ptr) })
-+        }
-+    }
-+}
-+
-+unsafe impl<T, const ID: u64> WorkItemPointer<ID> for Pin<Box<T>>
-+where
-+    T: WorkItem<ID, Pointer = Self>,
-+    T: HasWork<T, ID>,
-+{
-+    unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
-+        // SAFETY: The `__enqueue` method always uses a `work_struct` stored in a `Work<T, ID>`.
-+        let ptr = ptr as *mut Work<T, ID>;
-+        // SAFETY: This computes the pointer that `__enqueue` got from `Arc::into_raw`.
-+        let ptr = unsafe { T::work_container_of(ptr) };
-+        // SAFETY: This pointer comes from `Arc::into_raw` and we've been given back ownership.
-+        let boxed = unsafe { Box::from_raw(ptr) };
-+        // SAFETY: The box was already pinned when it was enqueued.
-+        let pinned = unsafe { Pin::new_unchecked(boxed) };
-+
-+        T::run(pinned)
-+    }
-+}
-+
-+unsafe impl<T, const ID: u64> RawWorkItem<ID> for Pin<Box<T>>
-+where
-+    T: WorkItem<ID, Pointer = Self>,
-+    T: HasWork<T, ID>,
-+{
-+    type EnqueueOutput = ();
-+
-+    unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutput
-+    where
-+        F: FnOnce(*mut bindings::work_struct) -> bool,
-+    {
-+        // SAFETY: We're not going to move `self` or any of its fields, so its okay to temporarily
-+        // remove the `Pin` wrapper.
-+        let boxed = unsafe { Pin::into_inner_unchecked(self) };
-+        let ptr = Box::into_raw(boxed);
-+
-+        // SAFETY: Pointers into a `Box` point at a valid value.
-+        let work_ptr = unsafe { T::raw_get_work(ptr) };
-+        // SAFETY: `raw_get_work` returns a pointer to a valid value.
-+        let work_ptr = unsafe { Work::raw_get(work_ptr) };
-+
-+        if !queue_work_on(work_ptr) {
-+            // SAFETY: This method requires exclusive ownership of the box, so it cannot be in a
-+            // workqueue.
-+            unsafe { ::core::hint::unreachable_unchecked() }
-+        }
-+    }
-+}
-+
- /// Returns the system work queue (`system_wq`).
- ///
- /// It is the one used by `schedule[_delayed]_work[_on]()`. Multi-CPU multi-threaded. There are
+ unsafe impl<T, const ID: u64> WorkItemPointer<ID> for Arc<T>
+ where
+     T: WorkItem<ID, Pointer = Self>,
 -- 
 2.41.0.rc0.172.g3f132b7071-goog
 
