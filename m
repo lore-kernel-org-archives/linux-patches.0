@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834BFE54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C3CC4339B;
-	Thu,  1 Jun 2023 13:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F705E54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:24:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B15C433EF;
+	Thu,  1 Jun 2023 13:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625838;
-	bh=BvkoDVpI+K4Ov/GcRbDmWWgBYi4fPCl/flUv0npKG1M=;
+	s=korg; t=1685625841;
+	bh=QnE435xznLLcqTTswvht5s7v04+a+DYWWd36gUVuwGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovctPCzbgogNp0slIMe+FSB3/BbFyKgCTSIs2jhA6lZVjlcUWu5SnXWVS+MfwGd41
-	 cgIaBT8RhiQwHF270hVPdzYNeIc/zcbg7Z4NXqQkhkkBe/Hq043jeiupxek+F2eCXg
-	 rGQU6NVei74EkmzEtaggIJIjreaV5AiPMNAwnnlk=
+	b=KUUy5RiLvTyCTfwI40zOz1gwaB1AaIe9zf71UCt8pBkRG/TTlcEiKZtkxk1C+re2o
+	 ctVqPQvycn0aHmo5xxedmtO94VHqBh0+jgMQO5cqxWS8QTH3HTv81IXw35bZXi/Y92
+	 fy6v/d5hDJFh1hAEo1KhzoMng2ShpM48Tw+4ejbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/42] power: supply: core: Refactor power_supply_set_input_current_limit_from_supplier()
-Date: Thu,  1 Jun 2023 14:20:52 +0100
-Message-Id: <20230601131936.936055721@linuxfoundation.org>
+Subject: [PATCH 5.15 14/42] dmaengine: at_xdmac: Move the free desc to the tail of the desc list
+Date: Thu,  1 Jun 2023 14:21:01 +0100
+Message-Id: <20230601131937.362210344@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131936.699199833@linuxfoundation.org>
 References: <20230601131936.699199833@linuxfoundation.org>
@@ -36,168 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-[ Upstream commit 2220af8ca61ae67de4ec3deec1c6395a2f65b9fd ]
+[ Upstream commit 801db90bf294f647b967e8d99b9ae121bea63d0d ]
 
-Some (USB) charger ICs have variants with USB D+ and D- pins to do their
-own builtin charger-type detection, like e.g. the bq24190 and bq25890 and
-also variants which lack this functionality, e.g. the bq24192 and bq25892.
+Move the free desc to the tail of the list, so that the sequence of
+descriptors is more track-able in case of debug. One would know which
+descriptor should come next and could easier catch concurrency over
+descriptors for example. virt-dma uses list_splice_tail_init() as well,
+follow the core driver.
 
-In case the charger-type; and thus the input-current-limit detection is
-done outside the charger IC then we need some way to communicate this to
-the charger IC. In the past extcon was used for this, but if the external
-detection does e.g. full USB PD negotiation then the extcon cable-types do
-not convey enough information.
-
-For these setups it was decided to model the external charging "brick"
-and the parameters negotiated with it as a power_supply class-device
-itself; and power_supply_set_input_current_limit_from_supplier() was
-introduced to allow drivers to get the input-current-limit this way.
-
-But in some cases psy drivers may want to know other properties, e.g. the
-bq25892 can do "quick-charge" negotiation by pulsing its current draw,
-but this should only be done if the usb_type psy-property of its supplier
-is set to DCP (and device-properties indicate the board allows higher
-voltages).
-
-Instead of adding extra helper functions for each property which
-a psy-driver wants to query from its supplier, refactor
-power_supply_set_input_current_limit_from_supplier() into a
-more generic power_supply_get_property_from_supplier() function.
-
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: 77c2a3097d70 ("power: supply: bq24190: Call power_supply_changed() after updating input current")
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Link: https://lore.kernel.org/r/20211215110115.191749-7-tudor.ambarus@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 44fe8440bda5 ("dmaengine: at_xdmac: do not resume channels paused by consumers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq24190_charger.c   | 12 ++++-
- drivers/power/supply/power_supply_core.c | 57 +++++++++++++-----------
- include/linux/power_supply.h             |  5 ++-
- 3 files changed, 44 insertions(+), 30 deletions(-)
+ drivers/dma/at_xdmac.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
-index ebb5ba7f8bb63..19537bd75013d 100644
---- a/drivers/power/supply/bq24190_charger.c
-+++ b/drivers/power/supply/bq24190_charger.c
-@@ -1201,8 +1201,18 @@ static void bq24190_input_current_limit_work(struct work_struct *work)
- 	struct bq24190_dev_info *bdi =
- 		container_of(work, struct bq24190_dev_info,
- 			     input_current_limit_work.work);
-+	union power_supply_propval val;
-+	int ret;
-+
-+	ret = power_supply_get_property_from_supplier(bdi->charger,
-+						      POWER_SUPPLY_PROP_CURRENT_MAX,
-+						      &val);
-+	if (ret)
-+		return;
+diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+index 80c609aa2a91c..b45437aab1434 100644
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -732,7 +732,8 @@ at_xdmac_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 		if (!desc) {
+ 			dev_err(chan2dev(chan), "can't get descriptor\n");
+ 			if (first)
+-				list_splice_init(&first->descs_list, &atchan->free_descs_list);
++				list_splice_tail_init(&first->descs_list,
++						      &atchan->free_descs_list);
+ 			goto spin_unlock;
+ 		}
  
--	power_supply_set_input_current_limit_from_supplier(bdi->charger);
-+	bq24190_charger_set_property(bdi->charger,
-+				     POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT,
-+				     &val);
- }
+@@ -820,7 +821,8 @@ at_xdmac_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t buf_addr,
+ 		if (!desc) {
+ 			dev_err(chan2dev(chan), "can't get descriptor\n");
+ 			if (first)
+-				list_splice_init(&first->descs_list, &atchan->free_descs_list);
++				list_splice_tail_init(&first->descs_list,
++						      &atchan->free_descs_list);
+ 			spin_unlock_irqrestore(&atchan->lock, irqflags);
+ 			return NULL;
+ 		}
+@@ -1054,8 +1056,8 @@ at_xdmac_prep_interleaved(struct dma_chan *chan,
+ 							       src_addr, dst_addr,
+ 							       xt, chunk);
+ 			if (!desc) {
+-				list_splice_init(&first->descs_list,
+-						 &atchan->free_descs_list);
++				list_splice_tail_init(&first->descs_list,
++						      &atchan->free_descs_list);
+ 				return NULL;
+ 			}
  
- /* Sync the input-current-limit with our parent supply (if we have one) */
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 8161fad081a96..daf76d7885c05 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -375,46 +375,49 @@ int power_supply_is_system_supplied(void)
- }
- EXPORT_SYMBOL_GPL(power_supply_is_system_supplied);
+@@ -1135,7 +1137,8 @@ at_xdmac_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dest, dma_addr_t src,
+ 		if (!desc) {
+ 			dev_err(chan2dev(chan), "can't get descriptor\n");
+ 			if (first)
+-				list_splice_init(&first->descs_list, &atchan->free_descs_list);
++				list_splice_tail_init(&first->descs_list,
++						      &atchan->free_descs_list);
+ 			return NULL;
+ 		}
  
--static int __power_supply_get_supplier_max_current(struct device *dev,
--						   void *data)
-+struct psy_get_supplier_prop_data {
-+	struct power_supply *psy;
-+	enum power_supply_property psp;
-+	union power_supply_propval *val;
-+};
-+
-+static int __power_supply_get_supplier_property(struct device *dev, void *_data)
- {
--	union power_supply_propval ret = {0,};
- 	struct power_supply *epsy = dev_get_drvdata(dev);
--	struct power_supply *psy = data;
-+	struct psy_get_supplier_prop_data *data = _data;
+@@ -1311,8 +1314,8 @@ at_xdmac_prep_dma_memset_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 						   sg_dma_len(sg),
+ 						   value);
+ 		if (!desc && first)
+-			list_splice_init(&first->descs_list,
+-					 &atchan->free_descs_list);
++			list_splice_tail_init(&first->descs_list,
++					      &atchan->free_descs_list);
  
--	if (__power_supply_is_supplied_by(epsy, psy))
--		if (!epsy->desc->get_property(epsy,
--					      POWER_SUPPLY_PROP_CURRENT_MAX,
--					      &ret))
--			return ret.intval;
-+	if (__power_supply_is_supplied_by(epsy, data->psy))
-+		if (!epsy->desc->get_property(epsy, data->psp, data->val))
-+			return 1; /* Success */
+ 		if (!first)
+ 			first = desc;
+@@ -1709,7 +1712,8 @@ static void at_xdmac_tasklet(struct tasklet_struct *t)
  
--	return 0;
-+	return 0; /* Continue iterating */
- }
+ 		spin_lock_irq(&atchan->lock);
+ 		/* Move the xfer descriptors into the free descriptors list. */
+-		list_splice_init(&desc->descs_list, &atchan->free_descs_list);
++		list_splice_tail_init(&desc->descs_list,
++				      &atchan->free_descs_list);
+ 		at_xdmac_advance_work(atchan);
+ 		spin_unlock_irq(&atchan->lock);
+ 	}
+@@ -1858,7 +1862,8 @@ static int at_xdmac_device_terminate_all(struct dma_chan *chan)
+ 	/* Cancel all pending transfers. */
+ 	list_for_each_entry_safe(desc, _desc, &atchan->xfers_list, xfer_node) {
+ 		list_del(&desc->xfer_node);
+-		list_splice_init(&desc->descs_list, &atchan->free_descs_list);
++		list_splice_tail_init(&desc->descs_list,
++				      &atchan->free_descs_list);
+ 	}
  
--int power_supply_set_input_current_limit_from_supplier(struct power_supply *psy)
-+int power_supply_get_property_from_supplier(struct power_supply *psy,
-+					    enum power_supply_property psp,
-+					    union power_supply_propval *val)
- {
--	union power_supply_propval val = {0,};
--	int curr;
--
--	if (!psy->desc->set_property)
--		return -EINVAL;
-+	struct psy_get_supplier_prop_data data = {
-+		.psy = psy,
-+		.psp = psp,
-+		.val = val,
-+	};
-+	int ret;
- 
- 	/*
- 	 * This function is not intended for use with a supply with multiple
--	 * suppliers, we simply pick the first supply to report a non 0
--	 * max-current.
-+	 * suppliers, we simply pick the first supply to report the psp.
- 	 */
--	curr = class_for_each_device(power_supply_class, NULL, psy,
--				      __power_supply_get_supplier_max_current);
--	if (curr <= 0)
--		return (curr == 0) ? -ENODEV : curr;
--
--	val.intval = curr;
-+	ret = class_for_each_device(power_supply_class, NULL, &data,
-+				    __power_supply_get_supplier_property);
-+	if (ret < 0)
-+		return ret;
-+	if (ret == 0)
-+		return -ENODEV;
- 
--	return psy->desc->set_property(psy,
--				POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT, &val);
-+	return 0;
- }
--EXPORT_SYMBOL_GPL(power_supply_set_input_current_limit_from_supplier);
-+EXPORT_SYMBOL_GPL(power_supply_get_property_from_supplier);
- 
- int power_supply_set_battery_charged(struct power_supply *psy)
- {
-diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
-index 9ca1f120a2117..0735b8963e0af 100644
---- a/include/linux/power_supply.h
-+++ b/include/linux/power_supply.h
-@@ -420,8 +420,9 @@ power_supply_temp2resist_simple(struct power_supply_resistance_temp_table *table
- 				int table_len, int temp);
- extern void power_supply_changed(struct power_supply *psy);
- extern int power_supply_am_i_supplied(struct power_supply *psy);
--extern int power_supply_set_input_current_limit_from_supplier(
--					 struct power_supply *psy);
-+int power_supply_get_property_from_supplier(struct power_supply *psy,
-+					    enum power_supply_property psp,
-+					    union power_supply_propval *val);
- extern int power_supply_set_battery_charged(struct power_supply *psy);
- 
- #ifdef CONFIG_POWER_SUPPLY
+ 	clear_bit(AT_XDMAC_CHAN_IS_PAUSED, &atchan->status);
 -- 
 2.39.2
 
