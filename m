@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A477EFBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BA7C433EF;
-	Thu,  1 Jun 2023 13:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A068FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4EFC433D2;
+	Thu,  1 Jun 2023 13:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625992;
-	bh=ZygP9RLRz5Dumf7czzZlKzvTWETKIdGWqRL74UhU8wo=;
+	s=korg; t=1685625994;
+	bh=m0T6xrzFocfdT22P6mJhxRtBYH05CZ6TETTJvxe7+bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMtJRgKtAc71yKi4A8NAeXhnKmXSEJo0jDa/rmRqqVCL7LwW0YQwc6O84Hl7uxave
-	 4mQWtRGH32BmU5Km2jeUOmJQkGajVXlFfyOfsfBfApTs+kadR67cSXfk7UhEtRltoD
-	 Y8VDKKTUII+Xt9VSbrfA4IhmKCeKqR/BEoXhPguI=
+	b=gE208K/W2xsOEIckAVsxhfwgQJLlc2/1vfNo7n0siYEYpc2+/PzZMalPKc0ic1Gc2
+	 H55P4Xp6yaWVf0djQbJ2ayQ8j32M1p/Bl3RWKK7yrfenQ4UVS22okTygs3ZH7CgyX7
+	 sgMfCrhtFLRDtNgy5qOUdW+kQdS4MAdgUTcX0D+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	John Fastabend <john.fastabend@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	William Findlay <will@isovalent.com>,
 	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 33/45] bpf, sockmap: Handle fin correctly
-Date: Thu,  1 Jun 2023 14:21:29 +0100
-Message-Id: <20230601131940.175444671@linuxfoundation.org>
+Subject: [PATCH 6.3 34/45] bpf, sockmap: TCP data stall on recv before accept
+Date: Thu,  1 Jun 2023 14:21:30 +0100
+Message-Id: <20230601131940.215812256@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -39,79 +38,92 @@ Content-Transfer-Encoding: 8bit
 
 From: John Fastabend <john.fastabend@gmail.com>
 
-[ Upstream commit 901546fd8f9ca4b5c481ce00928ab425ce9aacc0 ]
+[ Upstream commit ea444185a6bf7da4dd0df1598ee953e4f7174858 ]
 
-The sockmap code is returning EAGAIN after a FIN packet is received and no
-more data is on the receive queue. Correct behavior is to return 0 to the
-user and the user can then close the socket. The EAGAIN causes many apps
-to retry which masks the problem. Eventually the socket is evicted from
-the sockmap because its released from sockmap sock free handling. The
-issue creates a delay and can cause some errors on application side.
+A common mechanism to put a TCP socket into the sockmap is to hook the
+BPF_SOCK_OPS_{ACTIVE_PASSIVE}_ESTABLISHED_CB event with a BPF program
+that can map the socket info to the correct BPF verdict parser. When
+the user adds the socket to the map the psock is created and the new
+ops are assigned to ensure the verdict program will 'see' the sk_buffs
+as they arrive.
 
-To fix this check on sk_msg_recvmsg side if length is zero and FIN flag
-is set then set return to zero. A selftest will be added to check this
-condition.
+Part of this process hooks the sk_data_ready op with a BPF specific
+handler to wake up the BPF verdict program when data is ready to read.
+The logic is simple enough (posted here for easy reading)
+
+ static void sk_psock_verdict_data_ready(struct sock *sk)
+ {
+	struct socket *sock = sk->sk_socket;
+
+	if (unlikely(!sock || !sock->ops || !sock->ops->read_skb))
+		return;
+	sock->ops->read_skb(sk, sk_psock_verdict_recv);
+ }
+
+The oversight here is sk->sk_socket is not assigned until the application
+accepts() the new socket. However, its entirely ok for the peer application
+to do a connect() followed immediately by sends. The socket on the receiver
+is sitting on the backlog queue of the listening socket until its accepted
+and the data is queued up. If the peer never accepts the socket or is slow
+it will eventually hit data limits and rate limit the session. But,
+important for BPF sockmap hooks when this data is received TCP stack does
+the sk_data_ready() call but the read_skb() for this data is never called
+because sk_socket is missing. The data sits on the sk_receive_queue.
+
+Then once the socket is accepted if we never receive more data from the
+peer there will be no further sk_data_ready calls and all the data
+is still on the sk_receive_queue(). Then user calls recvmsg after accept()
+and for TCP sockets in sockmap we use the tcp_bpf_recvmsg_parser() handler.
+The handler checks for data in the sk_msg ingress queue expecting that
+the BPF program has already run from the sk_data_ready hook and enqueued
+the data as needed. So we are stuck.
+
+To fix do an unlikely check in recvmsg handler for data on the
+sk_receive_queue and if it exists wake up data_ready. We have the sock
+locked in both read_skb and recvmsg so should avoid having multiple
+runners.
 
 Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
 Signed-off-by: John Fastabend <john.fastabend@gmail.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: William Findlay <will@isovalent.com>
 Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/20230523025618.113937-6-john.fastabend@gmail.com
+Link: https://lore.kernel.org/bpf/20230523025618.113937-7-john.fastabend@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ net/ipv4/tcp_bpf.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 2e9547467edbe..73c13642d47f6 100644
+index 73c13642d47f6..01dd76be1a584 100644
 --- a/net/ipv4/tcp_bpf.c
 +++ b/net/ipv4/tcp_bpf.c
-@@ -174,6 +174,24 @@ static int tcp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
- 	return ret;
- }
+@@ -212,6 +212,26 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
+ 		return tcp_recvmsg(sk, msg, len, flags, addr_len);
  
-+static bool is_next_msg_fin(struct sk_psock *psock)
-+{
-+	struct scatterlist *sge;
-+	struct sk_msg *msg_rx;
-+	int i;
-+
-+	msg_rx = sk_psock_peek_msg(psock);
-+	i = msg_rx->sg.start;
-+	sge = sk_msg_elem(msg_rx, i);
-+	if (!sge->length) {
-+		struct sk_buff *skb = msg_rx->skb;
-+
-+		if (skb && TCP_SKB_CB(skb)->tcp_flags & TCPHDR_FIN)
-+			return true;
-+	}
-+	return false;
-+}
-+
- static int tcp_bpf_recvmsg_parser(struct sock *sk,
- 				  struct msghdr *msg,
- 				  size_t len,
-@@ -196,6 +214,19 @@ static int tcp_bpf_recvmsg_parser(struct sock *sk,
  	lock_sock(sk);
- msg_bytes_ready:
- 	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
-+	/* The typical case for EFAULT is the socket was gracefully
-+	 * shutdown with a FIN pkt. So check here the other case is
-+	 * some error on copy_page_to_iter which would be unexpected.
-+	 * On fin return correct return code to zero.
-+	 */
-+	if (copied == -EFAULT) {
-+		bool is_fin = is_next_msg_fin(psock);
 +
-+		if (is_fin) {
-+			copied = 0;
++	/* We may have received data on the sk_receive_queue pre-accept and
++	 * then we can not use read_skb in this context because we haven't
++	 * assigned a sk_socket yet so have no link to the ops. The work-around
++	 * is to check the sk_receive_queue and in these cases read skbs off
++	 * queue again. The read_skb hook is not running at this point because
++	 * of lock_sock so we avoid having multiple runners in read_skb.
++	 */
++	if (unlikely(!skb_queue_empty(&sk->sk_receive_queue))) {
++		tcp_data_ready(sk);
++		/* This handles the ENOMEM errors if we both receive data
++		 * pre accept and are already under memory pressure. At least
++		 * let user know to retry.
++		 */
++		if (unlikely(!skb_queue_empty(&sk->sk_receive_queue))) {
++			copied = -EAGAIN;
 +			goto out;
 +		}
 +	}
- 	if (!copied) {
- 		long timeo;
- 		int data;
++
+ msg_bytes_ready:
+ 	copied = sk_msg_recvmsg(sk, psock, msg, len, flags);
+ 	/* The typical case for EFAULT is the socket was gracefully
 -- 
 2.39.2
 
