@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF0AE54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:22:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090C4C4339B;
-	Thu,  1 Jun 2023 13:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12FAE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:22:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B142C433EF;
+	Thu,  1 Jun 2023 13:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625763;
-	bh=csGBHSLMTywrf+G5mxuLNvCLcQ3JOfYfd77tWemtpQA=;
+	s=korg; t=1685625765;
+	bh=aiYXE7OjtZw5d+fA+53xrBfr0NXXx+y/x4JybuWeWkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d4mlShwBVgLM0a6CeViJdFKLhr9QUq/w2LUsIrnXgqmVGW3pArx76O3M45rVyfPZA
-	 OhSheqBtZG14O6Y3VR+ORsHF7NdJeBvsxvU3egm5YQez8/fivOzeqMNdbnmZ7y5Ysv
-	 Agz/LLH9Gag5B/UJ3TbCK6Db0KRpwriXbmVgJB7A=
+	b=GMI2nz5myAKj4U11JD0+JZx2qVxdJ41PAKXhh0e2NxtMcKTy5y59kmsTZNTadCv2f
+	 aiJ3QnwexdjXsgM0uPO7E56EvXo30Bia8Sflxd7sl8+swZbEz3O9Ka9uPd36ftcVJo
+	 Eg6ikQdV1zY1Tl3sCi371CpNXO+gwSxT5OB2V4Us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Alexander Bersenev <bay@hackerdom.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 08/16] net/mlx5: Devcom, serialize devcom registration
-Date: Thu,  1 Jun 2023 14:21:03 +0100
-Message-Id: <20230601131932.337498337@linuxfoundation.org>
+Subject: [PATCH 5.4 09/16] cdc_ncm: Fix the build warning
+Date: Thu,  1 Jun 2023 14:21:04 +0100
+Message-Id: <20230601131932.389174924@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131931.947241286@linuxfoundation.org>
 References: <20230601131931.947241286@linuxfoundation.org>
@@ -36,98 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Alexander Bersenev <bay@hackerdom.ru>
 
-[ Upstream commit 1f893f57a3bf9fe1f4bcb25b55aea7f7f9712fe7 ]
+[ Upstream commit 5d0ab06b63fc9c727a7bb72c81321c0114be540b ]
 
->From one hand, mlx5 driver is allowing to probe PFs in parallel.
->From the other hand, devcom, which is a share resource between PFs, is
-registered without any lock. This might resulted in memory problems.
+The ndp32->wLength is two bytes long, so replace cpu_to_le32 with cpu_to_le16.
 
-Hence, use the global mlx5_dev_list_lock in order to serialize devcom
-registration.
-
-Fixes: fadd59fc50d0 ("net/mlx5: Introduce inter-device communication mechanism")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 0fa81b304a79 ("cdc_ncm: Implement the 32-bit version of NCM Transfer Block")
+Signed-off-by: Alexander Bersenev <bay@hackerdom.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/lib/devcom.c  | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/usb/cdc_ncm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-index 617eea1b1701b..438be215bbd45 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-@@ -3,6 +3,7 @@
+diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
+index 5fb4f74c26efd..4824385fe2c79 100644
+--- a/drivers/net/usb/cdc_ncm.c
++++ b/drivers/net/usb/cdc_ncm.c
+@@ -1177,7 +1177,7 @@ static struct usb_cdc_ncm_ndp32 *cdc_ncm_ndp32(struct cdc_ncm_ctx *ctx, struct s
+ 		ndp32 = ctx->delayed_ndp32;
  
- #include <linux/mlx5/vport.h>
- #include "lib/devcom.h"
-+#include "mlx5_core.h"
- 
- static LIST_HEAD(devcom_list);
- 
-@@ -77,6 +78,7 @@ struct mlx5_devcom *mlx5_devcom_register_device(struct mlx5_core_dev *dev)
- 	if (MLX5_CAP_GEN(dev, num_lag_ports) != MLX5_DEVCOM_PORTS_SUPPORTED)
- 		return NULL;
- 
-+	mlx5_dev_list_lock();
- 	sguid0 = mlx5_query_nic_system_image_guid(dev);
- 	list_for_each_entry(iter, &devcom_list, list) {
- 		struct mlx5_core_dev *tmp_dev = NULL;
-@@ -102,8 +104,10 @@ struct mlx5_devcom *mlx5_devcom_register_device(struct mlx5_core_dev *dev)
- 
- 	if (!priv) {
- 		priv = mlx5_devcom_list_alloc();
--		if (!priv)
--			return ERR_PTR(-ENOMEM);
-+		if (!priv) {
-+			devcom = ERR_PTR(-ENOMEM);
-+			goto out;
-+		}
- 
- 		idx = 0;
- 		new_priv = true;
-@@ -114,12 +118,14 @@ struct mlx5_devcom *mlx5_devcom_register_device(struct mlx5_core_dev *dev)
- 	if (!devcom) {
- 		if (new_priv)
- 			kfree(priv);
--		return ERR_PTR(-ENOMEM);
-+		devcom = ERR_PTR(-ENOMEM);
-+		goto out;
- 	}
- 
- 	if (new_priv)
- 		list_add(&priv->list, &devcom_list);
--
-+out:
-+	mlx5_dev_list_unlock();
- 	return devcom;
+ 	ndp32->dwSignature = sign;
+-	ndp32->wLength = cpu_to_le32(sizeof(struct usb_cdc_ncm_ndp32) + sizeof(struct usb_cdc_ncm_dpe32));
++	ndp32->wLength = cpu_to_le16(sizeof(struct usb_cdc_ncm_ndp32) + sizeof(struct usb_cdc_ncm_dpe32));
+ 	return ndp32;
  }
  
-@@ -132,6 +138,7 @@ void mlx5_devcom_unregister_device(struct mlx5_devcom *devcom)
- 	if (IS_ERR_OR_NULL(devcom))
- 		return;
- 
-+	mlx5_dev_list_lock();
- 	priv = devcom->priv;
- 	priv->devs[devcom->idx] = NULL;
- 
-@@ -142,10 +149,12 @@ void mlx5_devcom_unregister_device(struct mlx5_devcom *devcom)
- 			break;
- 
- 	if (i != MLX5_DEVCOM_PORTS_SUPPORTED)
--		return;
-+		goto out;
- 
- 	list_del(&priv->list);
- 	kfree(priv);
-+out:
-+	mlx5_dev_list_unlock();
- }
- 
- void mlx5_devcom_register_component(struct mlx5_devcom *devcom,
 -- 
 2.39.2
 
