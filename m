@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECC4FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699F9C433AA;
-	Thu,  1 Jun 2023 13:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A33EFBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06657C433D2;
+	Thu,  1 Jun 2023 13:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626048;
-	bh=LOj8PO2IKk4isEWSiuS7dpvXhrsKiGN/aU7Iwv3lRpY=;
+	s=korg; t=1685626051;
+	bh=dnW/J7C8hE4M8oSGV64mWIURFgh2BY5C1ING8uAuiuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfAh7cBTNFMfVfQB6N0BCgNk426VrPZAqK3ZkzKx/z+Z+dSh8KKWQCDu3CZW2/HJb
-	 duHXk/lwBk5byVVtU1Zj5gRMzinwL4FF+9Ml2EKbMsK8mQ7AvZSOy837JjMAET+Ary
-	 c2Oiv7y7h9w9LZJSNXAljvjS9oiIrJga4ymKAbRY=
+	b=Ek14UL876NQJtt/LxlxdBZdL0JEWBf2IYIEyb1TES69Djh5lcAOkYwK4Kd6vIsK3q
+	 ur+nk6r9p6xCwgvFNVdurjy4euf5em6m3f71tTlfPTrZdPCV+aQ3155kAuAOB2TBZ2
+	 7Vmq0XdLWvsjEJwpXvwHvTlxSzCAX6xZAMmk48dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shai Amiram <samiram@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/42] tls: rx: strp: factor out copying skb data
-Date: Thu,  1 Jun 2023 14:21:19 +0100
-Message-Id: <20230601131939.518003084@linuxfoundation.org>
+Subject: [PATCH 6.1 02/42] ipv{4,6}/raw: fix output xfrm lookup wrt protocol
+Date: Thu,  1 Jun 2023 14:21:11 +0100
+Message-Id: <20230601131939.164265431@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
 References: <20230601131939.051934720@linuxfoundation.org>
@@ -37,82 +35,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-[ Upstream commit c1c607b1e5d5477d82ca6a86a05a4f10907b33ee ]
+[ Upstream commit 3632679d9e4f879f49949bb5b050e0de553e4739 ]
 
-We'll need to copy input skbs individually in the next patch.
-Factor that code out (without assuming we're copying a full record).
+With a raw socket bound to IPPROTO_RAW (ie with hdrincl enabled), the
+protocol field of the flow structure, build by raw_sendmsg() /
+rawv6_sendmsg()),  is set to IPPROTO_RAW. This breaks the ipsec policy
+lookup when some policies are defined with a protocol in the selector.
 
-Tested-by: Shai Amiram <samiram@nvidia.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: eca9bfafee3a ("tls: rx: strp: preserve decryption status of skbs when needed")
+For ipv6, the sin6_port field from 'struct sockaddr_in6' could be used to
+specify the protocol. Just accept all values for IPPROTO_RAW socket.
+
+For ipv4, the sin_port field of 'struct sockaddr_in' could not be used
+without breaking backward compatibility (the value of this field was never
+checked). Let's add a new kind of control message, so that the userland
+could specify which protocol is used.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+CC: stable@vger.kernel.org
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://lore.kernel.org/r/20230522120820.1319391-1-nicolas.dichtel@6wind.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_strp.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ include/net/ip.h        |  2 ++
+ include/uapi/linux/in.h |  1 +
+ net/ipv4/ip_sockglue.c  | 12 +++++++++++-
+ net/ipv4/raw.c          |  5 ++++-
+ net/ipv6/raw.c          |  3 ++-
+ 5 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
-index e2e48217e7ac9..61fbf84baf9e0 100644
---- a/net/tls/tls_strp.c
-+++ b/net/tls/tls_strp.c
-@@ -34,31 +34,44 @@ static void tls_strp_anchor_free(struct tls_strparser *strp)
- 	strp->anchor = NULL;
+diff --git a/include/net/ip.h b/include/net/ip.h
+index c3fffaa92d6e0..acec504c469a0 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -76,6 +76,7 @@ struct ipcm_cookie {
+ 	__be32			addr;
+ 	int			oif;
+ 	struct ip_options_rcu	*opt;
++	__u8			protocol;
+ 	__u8			ttl;
+ 	__s16			tos;
+ 	char			priority;
+@@ -96,6 +97,7 @@ static inline void ipcm_init_sk(struct ipcm_cookie *ipcm,
+ 	ipcm->sockc.tsflags = inet->sk.sk_tsflags;
+ 	ipcm->oif = READ_ONCE(inet->sk.sk_bound_dev_if);
+ 	ipcm->addr = inet->inet_saddr;
++	ipcm->protocol = inet->inet_num;
  }
  
--/* Create a new skb with the contents of input copied to its page frags */
--static struct sk_buff *tls_strp_msg_make_copy(struct tls_strparser *strp)
-+static struct sk_buff *
-+tls_strp_skb_copy(struct tls_strparser *strp, struct sk_buff *in_skb,
-+		  int offset, int len)
- {
--	struct strp_msg *rxm;
- 	struct sk_buff *skb;
--	int i, err, offset;
-+	int i, err;
+ #define IPCB(skb) ((struct inet_skb_parm*)((skb)->cb))
+diff --git a/include/uapi/linux/in.h b/include/uapi/linux/in.h
+index 4b7f2df66b995..e682ab628dfa6 100644
+--- a/include/uapi/linux/in.h
++++ b/include/uapi/linux/in.h
+@@ -163,6 +163,7 @@ struct in_addr {
+ #define IP_MULTICAST_ALL		49
+ #define IP_UNICAST_IF			50
+ #define IP_LOCAL_PORT_RANGE		51
++#define IP_PROTOCOL			52
  
--	skb = alloc_skb_with_frags(0, strp->stm.full_len, TLS_PAGE_ORDER,
-+	skb = alloc_skb_with_frags(0, len, TLS_PAGE_ORDER,
- 				   &err, strp->sk->sk_allocation);
- 	if (!skb)
- 		return NULL;
- 
--	offset = strp->stm.offset;
- 	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
- 		skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
- 
--		WARN_ON_ONCE(skb_copy_bits(strp->anchor, offset,
-+		WARN_ON_ONCE(skb_copy_bits(in_skb, offset,
- 					   skb_frag_address(frag),
- 					   skb_frag_size(frag)));
- 		offset += skb_frag_size(frag);
+ #define MCAST_EXCLUDE	0
+ #define MCAST_INCLUDE	1
+diff --git a/net/ipv4/ip_sockglue.c b/net/ipv4/ip_sockglue.c
+index d05f631ea6401..a7fd035b5b4f9 100644
+--- a/net/ipv4/ip_sockglue.c
++++ b/net/ipv4/ip_sockglue.c
+@@ -317,7 +317,14 @@ int ip_cmsg_send(struct sock *sk, struct msghdr *msg, struct ipcm_cookie *ipc,
+ 			ipc->tos = val;
+ 			ipc->priority = rt_tos2priority(ipc->tos);
+ 			break;
+-
++		case IP_PROTOCOL:
++			if (cmsg->cmsg_len != CMSG_LEN(sizeof(int)))
++				return -EINVAL;
++			val = *(int *)CMSG_DATA(cmsg);
++			if (val < 1 || val > 255)
++				return -EINVAL;
++			ipc->protocol = val;
++			break;
+ 		default:
+ 			return -EINVAL;
+ 		}
+@@ -1760,6 +1767,9 @@ int do_ip_getsockopt(struct sock *sk, int level, int optname,
+ 	case IP_LOCAL_PORT_RANGE:
+ 		val = inet->local_port_range.hi << 16 | inet->local_port_range.lo;
+ 		break;
++	case IP_PROTOCOL:
++		val = inet_sk(sk)->inet_num;
++		break;
+ 	default:
+ 		sockopt_release_sock(sk);
+ 		return -ENOPROTOOPT;
+diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
+index af03aa8a8e513..86197634dcf5d 100644
+--- a/net/ipv4/raw.c
++++ b/net/ipv4/raw.c
+@@ -530,6 +530,9 @@ static int raw_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
  	}
  
--	skb->len = strp->stm.full_len;
--	skb->data_len = strp->stm.full_len;
--	skb_copy_header(skb, strp->anchor);
-+	skb->len = len;
-+	skb->data_len = len;
-+	skb_copy_header(skb, in_skb);
-+	return skb;
-+}
-+
-+/* Create a new skb with the contents of input copied to its page frags */
-+static struct sk_buff *tls_strp_msg_make_copy(struct tls_strparser *strp)
-+{
-+	struct strp_msg *rxm;
-+	struct sk_buff *skb;
-+
-+	skb = tls_strp_skb_copy(strp, strp->anchor, strp->stm.offset,
-+				strp->stm.full_len);
-+	if (!skb)
-+		return NULL;
-+
- 	rxm = strp_msg(skb);
- 	rxm->offset = 0;
- 	return skb;
+ 	ipcm_init_sk(&ipc, inet);
++	/* Keep backward compat */
++	if (hdrincl)
++		ipc.protocol = IPPROTO_RAW;
+ 
+ 	if (msg->msg_controllen) {
+ 		err = ip_cmsg_send(sk, msg, &ipc, false);
+@@ -597,7 +600,7 @@ static int raw_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 
+ 	flowi4_init_output(&fl4, ipc.oif, ipc.sockc.mark, tos,
+ 			   RT_SCOPE_UNIVERSE,
+-			   hdrincl ? IPPROTO_RAW : sk->sk_protocol,
++			   hdrincl ? ipc.protocol : sk->sk_protocol,
+ 			   inet_sk_flowi_flags(sk) |
+ 			    (hdrincl ? FLOWI_FLAG_KNOWN_NH : 0),
+ 			   daddr, saddr, 0, 0, sk->sk_uid);
+diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
+index f44b99f7ecdcc..33852fc38ad91 100644
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -791,7 +791,8 @@ static int rawv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 
+ 		if (!proto)
+ 			proto = inet->inet_num;
+-		else if (proto != inet->inet_num)
++		else if (proto != inet->inet_num &&
++			 inet->inet_num != IPPROTO_RAW)
+ 			return -EINVAL;
+ 
+ 		if (proto > 255)
 -- 
 2.39.2
 
