@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC34AFBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58EA3C433D2;
-	Thu,  1 Jun 2023 13:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68201FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAFFC433D2;
+	Thu,  1 Jun 2023 13:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626009;
-	bh=0eGkgerWLIqgVz1Y1CWJlD6bP0DyEuV56HfFecinMts=;
+	s=korg; t=1685626012;
+	bh=l8Sp1rRdzkG/FxY65CYqI3d8YVfl+w3I91K39+OAy5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEAfE8D2LkNqOAoL2gVRTqc6I+6nDOl/3JgRGKqpdkxTOXDfUDbgGPuBKsxPNYQyR
-	 pJ8eBWY8bV9kbVIUsDnyetEV17yhvtIFBAHcGEk9L8jQlNuV/l7Yxj/QW00yyjJTK+
-	 fOunPPaLC6gWd/hl3dlgqboK960sldA6gU45qmas=
+	b=yfISMLZSvJDzefWxxSkWGjafFqdIO11uuwg0GTyLfmF7/YOaobenlIqSTXCerTLt0
+	 1dRBRRR/y2DjCASeJF/113k+bjWyyr4P+ITBqEozKvGXyOSF+c4uTq4YsQxymToQ6q
+	 iixWXE26DuYML0t4kpGwZOwZSOPu3mntvOxAvQ58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Yan Zhao <yan.y.zhao@intel.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Wyes Karny <wyes.karny@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 39/45] vfio/type1: check pfn valid before converting to struct page
-Date: Thu,  1 Jun 2023 14:21:35 +0100
-Message-Id: <20230601131940.489855547@linuxfoundation.org>
+Subject: [PATCH 6.3 40/45] cpufreq: amd-pstate: Remove fast_switch_possible flag from active driver
+Date: Thu,  1 Jun 2023 14:21:36 +0100
+Message-Id: <20230601131940.538835001@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -37,62 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yan Zhao <yan.y.zhao@intel.com>
+From: Wyes Karny <wyes.karny@amd.com>
 
-[ Upstream commit 4752354af71043e6fd72ef5490ed6da39e6cab4a ]
+[ Upstream commit 249b62c448de7117c18531d626aed6e153cdfd75 ]
 
-Check physical PFN is valid before converting the PFN to a struct page
-pointer to be returned to caller of vfio_pin_pages().
+amd_pstate active mode driver is only compatible with static governors.
+Therefore it doesn't need fast_switch functionality. Remove
+fast_switch_possible flag from amd_pstate active mode driver.
 
-vfio_pin_pages() pins user pages with contiguous IOVA.
-If the IOVA of a user page to be pinned belongs to vma of vm_flags
-VM_PFNMAP, pin_user_pages_remote() will return -EFAULT without returning
-struct page address for this PFN. This is because usually this kind of PFN
-(e.g. MMIO PFN) has no valid struct page address associated.
-Upon this error, vaddr_get_pfns() will obtain the physical PFN directly.
-
-While previously vfio_pin_pages() returns to caller PFN arrays directly,
-after commit
-34a255e67615 ("vfio: Replace phys_pfn with pages for vfio_pin_pages()"),
-PFNs will be converted to "struct page *" unconditionally and therefore
-the returned "struct page *" array may contain invalid struct page
-addresses.
-
-Given current in-tree users of vfio_pin_pages() only expect "struct page *
-returned, check PFN validity and return -EINVAL to let the caller be
-aware of IOVAs to be pinned containing PFN not able to be returned in
-"struct page *" array. So that, the caller will not consume the returned
-pointer (e.g. test PageReserved()) and avoid error like "supervisor read
-access in kernel mode".
-
-Fixes: 34a255e67615 ("vfio: Replace phys_pfn with pages for vfio_pin_pages()")
-Cc: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Yan Zhao <yan.y.zhao@intel.com>
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/20230519065843.10653-1-yan.y.zhao@intel.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: ffa5096a7c33 ("cpufreq: amd-pstate: implement Pstate EPP support for the AMD processors")
+Signed-off-by: Wyes Karny <wyes.karny@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/vfio_iommu_type1.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/cpufreq/amd-pstate.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 493c31de0edb9..0620dbe5cca0c 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -860,6 +860,11 @@ static int vfio_iommu_type1_pin_pages(void *iommu_data,
- 		if (ret)
- 			goto pin_unwind;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 8dd46fad151eb..fda15b4a0770f 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -996,7 +996,6 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
+ 	policy->policy = CPUFREQ_POLICY_POWERSAVE;
  
-+		if (!pfn_valid(phys_pfn)) {
-+			ret = -EINVAL;
-+			goto pin_unwind;
-+		}
-+
- 		ret = vfio_add_to_pfn_list(dma, iova, phys_pfn);
- 		if (ret) {
- 			if (put_pfn(phys_pfn, dma->prot) && do_accounting)
+ 	if (boot_cpu_has(X86_FEATURE_CPPC)) {
+-		policy->fast_switch_possible = true;
+ 		ret = rdmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ, &value);
+ 		if (ret)
+ 			return ret;
+@@ -1019,7 +1018,6 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
+ static int amd_pstate_epp_cpu_exit(struct cpufreq_policy *policy)
+ {
+ 	pr_debug("CPU %d exiting\n", policy->cpu);
+-	policy->fast_switch_possible = false;
+ 	return 0;
+ }
+ 
 -- 
 2.39.2
 
