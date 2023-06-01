@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA124FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B648C433D2;
-	Thu,  1 Jun 2023 13:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810B9FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3615C4339C;
+	Thu,  1 Jun 2023 13:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625965;
-	bh=K/xKNoIuzB7rDEgRy7eOXxRaaUq/nom7QM8tG9venyI=;
+	s=korg; t=1685625968;
+	bh=4pl3bzXbQb+AMVNEM2UaNk2EwidArJcoHzS78gffqlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cqJNPhz/lC1aJRZ0F0N91Q3TeaceS346ANdqEaLPoSUMGc9pKgc6okxgXwEqy0X1D
-	 vE5O7JTcwZMgZ0ie20QHVO8rk6Thqnwz+nRUwjL27KgR6M0u3jlJAzsC4oSxj4nn6X
-	 9rK+dJ1nPK7t1GUkR+rvTgw8Ze080AdIRQpPZM88=
+	b=ZcDJefWv4vGBr3V+puucys7yliexbc+9+AlvLt5hd9pqratTqy5+lCeFklA7Qv5hP
+	 OJOsp3BQstKjd2DVsq6aXoVJXrO3hD8pfjfZtmKvrK8Hp0er7Bn/X8qFqmY1m0hqri
+	 r8Z89zqY9AyuvStzUuCgzJMhtrm5ED7bakO8MoPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	ChiaEn Wu <chiaen_wu@richtek.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 06/45] selftests/bpf: Fix pkg-config call building sign-file
-Date: Thu,  1 Jun 2023 14:21:02 +0100
-Message-Id: <20230601131938.994669081@linuxfoundation.org>
+Subject: [PATCH 6.3 07/45] power: supply: rt9467: Fix passing zero to dev_err_probe
+Date: Thu,  1 Jun 2023 14:21:03 +0100
+Message-Id: <20230601131939.037641616@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -37,49 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: ChiaEn Wu <chiaen_wu@richtek.com>
 
-[ Upstream commit 5f5486b620cd43b16a1787ef92b9bc21bd72ef2e ]
+[ Upstream commit bc97139ff13598fa5becf6b582ef99ab428c03ef ]
 
-When building sign-file, the call to get the CFLAGS for libcrypto is
-missing white-space between `pkg-config` and `--cflags`:
+Fix passing zero to 'dev_err_probe()' in 'rt9467_request_interrupt()'
 
-  $(shell $(HOSTPKG_CONFIG)--cflags libcrypto 2> /dev/null)
-
-Removing the redirection of stderr, we see:
-
-  $ make -C tools/testing/selftests/bpf sign-file
-  make: Entering directory '[...]/tools/testing/selftests/bpf'
-  make: pkg-config--cflags: No such file or directory
-    SIGN-FILE sign-file
-  make: Leaving directory '[...]/tools/testing/selftests/bpf'
-
-Add the missing space.
-
-Fixes: fc97590668ae ("selftests/bpf: Add test for bpf_verify_pkcs7_signature() kfunc")
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Link: https://lore.kernel.org/bpf/20230426215032.415792-1-jeremy@azazel.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 6f7f70e3a8dd ("power: supply: rt9467: Add Richtek RT9467 charger driver")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/202305111228.bHLWU6bq-lkp@intel.com/
+Signed-off-by: ChiaEn Wu <chiaen_wu@richtek.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/Makefile | 2 +-
+ drivers/power/supply/rt9467-charger.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-index b677dcd0b77af..ad01c9e1ff12b 100644
---- a/tools/testing/selftests/bpf/Makefile
-+++ b/tools/testing/selftests/bpf/Makefile
-@@ -197,7 +197,7 @@ $(OUTPUT)/urandom_read: urandom_read.c urandom_read_aux.c $(OUTPUT)/liburandom_r
+diff --git a/drivers/power/supply/rt9467-charger.c b/drivers/power/supply/rt9467-charger.c
+index 73f744a3155d4..ea33693b69779 100644
+--- a/drivers/power/supply/rt9467-charger.c
++++ b/drivers/power/supply/rt9467-charger.c
+@@ -1023,7 +1023,7 @@ static int rt9467_request_interrupt(struct rt9467_chg_data *data)
+ 	for (i = 0; i < num_chg_irqs; i++) {
+ 		virq = regmap_irq_get_virq(data->irq_chip_data, chg_irqs[i].hwirq);
+ 		if (virq <= 0)
+-			return dev_err_probe(dev, virq, "Failed to get (%s) irq\n",
++			return dev_err_probe(dev, -EINVAL, "Failed to get (%s) irq\n",
+ 					     chg_irqs[i].name);
  
- $(OUTPUT)/sign-file: ../../../../scripts/sign-file.c
- 	$(call msg,SIGN-FILE,,$@)
--	$(Q)$(CC) $(shell $(HOSTPKG_CONFIG)--cflags libcrypto 2> /dev/null) \
-+	$(Q)$(CC) $(shell $(HOSTPKG_CONFIG) --cflags libcrypto 2> /dev/null) \
- 		  $< -o $@ \
- 		  $(shell $(HOSTPKG_CONFIG) --libs libcrypto 2> /dev/null || echo -lcrypto)
- 
+ 		ret = devm_request_threaded_irq(dev, virq, NULL, chg_irqs[i].handler,
 -- 
 2.39.2
 
