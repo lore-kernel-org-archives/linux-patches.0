@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6650EFBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:25:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74DDC433D2;
-	Thu,  1 Jun 2023 13:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41A3FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:25:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECBAC433EF;
+	Thu,  1 Jun 2023 13:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625921;
-	bh=F6e+tRtPck4CiqDKOP1ijt0erdJztUWmRMHwr4X4fXo=;
+	s=korg; t=1685625923;
+	bh=RajZ+qqeo9GLi8dRKwrGiq+uTkh0CUqtHKfm39flKLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dfyI0Jzp3k+nr58HF+0L97LVR5VWWo4IWttluOqZj1Eoql4GLNq99GzHth4YoutZ+
-	 9uelo6MB1vhokPHZfdrvDch+N/mjb1DfpEL2pYDzSCMdgbDGv6HLM8f4upbOXUvguo
-	 HOJ/EVLvWqiE0uoX6e7nn2giHBSI5Lguhx7+OePM=
+	b=PR8dTDoC95mSGCPHRrCINY87wjU14M/dA2eA/6QqlfQHe6MU1WK1UzPrJZ4UCwGkR
+	 /SSYimlKBF/SEyL0Q0psIH+hd2hgbJJTzFOxhMH9oLu+bXjKS1dBNuv6cm4TPHnEDE
+	 PyVy9qISbT+OuQp+m/xsjYWGX1xxLlGb8EopD4go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jann Horn <jannh@google.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
 	Liam Howlett <liam.howlett@oracle.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.15 39/42] binder: add lockless binder_alloc_(set|get)_vma()
-Date: Thu,  1 Jun 2023 14:21:26 +0100
-Message-Id: <20230601131938.459836957@linuxfoundation.org>
+	Carlos Llamas <cmllamas@google.com>,
+	Todd Kjos <tkjos@google.com>
+Subject: [PATCH 5.15 40/42] binder: fix UAF of alloc->vma in race with munmap()
+Date: Thu,  1 Jun 2023 14:21:27 +0100
+Message-Id: <20230601131938.501869400@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131936.699199833@linuxfoundation.org>
 References: <20230601131936.699199833@linuxfoundation.org>
@@ -37,83 +40,142 @@ Content-Transfer-Encoding: 8bit
 
 From: Carlos Llamas <cmllamas@google.com>
 
-commit 0fa53349c3acba0239369ba4cd133740a408d246 upstream.
+commit d1d8875c8c13517f6fd1ff8d4d3e1ac366a17e07 upstream.
 
-Bring back the original lockless design in binder_alloc to determine
-whether the buffer setup has been completed by the ->mmap() handler.
-However, this time use smp_load_acquire() and smp_store_release() to
-wrap all the ordering in a single macro call.
+[ cmllamas: clean forward port from commit 015ac18be7de ("binder: fix
+  UAF of alloc->vma in race with munmap()") in 5.10 stable. It is needed
+  in mainline after the revert of commit a43cfc87caaf ("android: binder:
+  stop saving a pointer to the VMA") as pointed out by Liam. The commit
+  log and tags have been tweaked to reflect this. ]
 
-Also, add comments to make it evident that binder uses alloc->vma to
-determine when the binder_alloc has been fully initialized. In these
-scenarios acquiring the mmap_lock is not required.
+In commit 720c24192404 ("ANDROID: binder: change down_write to
+down_read") binder assumed the mmap read lock is sufficient to protect
+alloc->vma inside binder_update_page_range(). This used to be accurate
+until commit dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in
+munmap"), which now downgrades the mmap_lock after detaching the vma
+from the rbtree in munmap(). Then it proceeds to teardown and free the
+vma with only the read lock held.
 
-Fixes: a43cfc87caaf ("android: binder: stop saving a pointer to the VMA")
+This means that accesses to alloc->vma in binder_update_page_range() now
+will race with vm_area_free() in munmap() and can cause a UAF as shown
+in the following KASAN trace:
+
+  ==================================================================
+  BUG: KASAN: use-after-free in vm_insert_page+0x7c/0x1f0
+  Read of size 8 at addr ffff16204ad00600 by task server/558
+
+  CPU: 3 PID: 558 Comm: server Not tainted 5.10.150-00001-gdc8dcf942daa #1
+  Hardware name: linux,dummy-virt (DT)
+  Call trace:
+   dump_backtrace+0x0/0x2a0
+   show_stack+0x18/0x2c
+   dump_stack+0xf8/0x164
+   print_address_description.constprop.0+0x9c/0x538
+   kasan_report+0x120/0x200
+   __asan_load8+0xa0/0xc4
+   vm_insert_page+0x7c/0x1f0
+   binder_update_page_range+0x278/0x50c
+   binder_alloc_new_buf+0x3f0/0xba0
+   binder_transaction+0x64c/0x3040
+   binder_thread_write+0x924/0x2020
+   binder_ioctl+0x1610/0x2e5c
+   __arm64_sys_ioctl+0xd4/0x120
+   el0_svc_common.constprop.0+0xac/0x270
+   do_el0_svc+0x38/0xa0
+   el0_svc+0x1c/0x2c
+   el0_sync_handler+0xe8/0x114
+   el0_sync+0x180/0x1c0
+
+  Allocated by task 559:
+   kasan_save_stack+0x38/0x6c
+   __kasan_kmalloc.constprop.0+0xe4/0xf0
+   kasan_slab_alloc+0x18/0x2c
+   kmem_cache_alloc+0x1b0/0x2d0
+   vm_area_alloc+0x28/0x94
+   mmap_region+0x378/0x920
+   do_mmap+0x3f0/0x600
+   vm_mmap_pgoff+0x150/0x17c
+   ksys_mmap_pgoff+0x284/0x2dc
+   __arm64_sys_mmap+0x84/0xa4
+   el0_svc_common.constprop.0+0xac/0x270
+   do_el0_svc+0x38/0xa0
+   el0_svc+0x1c/0x2c
+   el0_sync_handler+0xe8/0x114
+   el0_sync+0x180/0x1c0
+
+  Freed by task 560:
+   kasan_save_stack+0x38/0x6c
+   kasan_set_track+0x28/0x40
+   kasan_set_free_info+0x24/0x4c
+   __kasan_slab_free+0x100/0x164
+   kasan_slab_free+0x14/0x20
+   kmem_cache_free+0xc4/0x34c
+   vm_area_free+0x1c/0x2c
+   remove_vma+0x7c/0x94
+   __do_munmap+0x358/0x710
+   __vm_munmap+0xbc/0x130
+   __arm64_sys_munmap+0x4c/0x64
+   el0_svc_common.constprop.0+0xac/0x270
+   do_el0_svc+0x38/0xa0
+   el0_svc+0x1c/0x2c
+   el0_sync_handler+0xe8/0x114
+   el0_sync+0x180/0x1c0
+
+  [...]
+  ==================================================================
+
+To prevent the race above, revert back to taking the mmap write lock
+inside binder_update_page_range(). One might expect an increase of mmap
+lock contention. However, binder already serializes these calls via top
+level alloc->mutex. Also, there was no performance impact shown when
+running the binder benchmark tests.
+
+Fixes: c0fd2101781e ("Revert "android: binder: stop saving a pointer to the VMA"")
+Fixes: dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in munmap")
+Reported-by: Jann Horn <jannh@google.com>
+Closes: https://lore.kernel.org/all/20230518144052.xkj6vmddccq4v66b@revolver
+Cc: <stable@vger.kernel.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
 Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: stable@vger.kernel.org
 Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20230502201220.1756319-3-cmllamas@google.com
+Acked-by: Todd Kjos <tkjos@google.com>
+Link: https://lore.kernel.org/r/20230519195950.1775656-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[cmllamas: fixed minor merge conflict in binder_alloc_set_vma()]
 Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder_alloc.c |   22 +++++++---------------
- 1 file changed, 7 insertions(+), 15 deletions(-)
+ drivers/android/binder_alloc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/drivers/android/binder_alloc.c
 +++ b/drivers/android/binder_alloc.c
-@@ -309,29 +309,18 @@ err_no_vma:
- 	return vma ? -ENOMEM : -ESRCH;
- }
+@@ -212,7 +212,7 @@ static int binder_update_page_range(stru
+ 		mm = alloc->vma_vm_mm;
  
--
- static inline void binder_alloc_set_vma(struct binder_alloc *alloc,
- 		struct vm_area_struct *vma)
- {
--	/*
--	 * If we see alloc->vma is not NULL, buffer data structures set up
--	 * completely. Look at smp_rmb side binder_alloc_get_vma.
--	 */
--	smp_wmb();
--	alloc->vma = vma;
-+	/* pairs with smp_load_acquire in binder_alloc_get_vma() */
-+	smp_store_release(&alloc->vma, vma);
- }
+ 	if (mm) {
+-		mmap_read_lock(mm);
++		mmap_write_lock(mm);
+ 		vma = alloc->vma;
+ 	}
  
- static inline struct vm_area_struct *binder_alloc_get_vma(
- 		struct binder_alloc *alloc)
- {
--	struct vm_area_struct *vma = NULL;
--
--	if (alloc->vma) {
--		/* Look at description in binder_alloc_set_vma */
--		smp_rmb();
--		vma = alloc->vma;
--	}
--	return vma;
-+	/* pairs with smp_store_release in binder_alloc_set_vma() */
-+	return smp_load_acquire(&alloc->vma);
- }
- 
- static bool debug_low_async_space_locked(struct binder_alloc *alloc, int pid)
-@@ -394,6 +383,7 @@ static struct binder_buffer *binder_allo
- 	size_t size, data_offsets_size;
- 	int ret;
- 
-+	/* Check binder_alloc is fully initialized */
- 	if (!binder_alloc_get_vma(alloc)) {
- 		binder_alloc_debug(BINDER_DEBUG_USER_ERROR,
- 				   "%d: binder_alloc_buf, no vma\n",
-@@ -789,6 +779,8 @@ int binder_alloc_mmap_handler(struct bin
- 	buffer->free = 1;
- 	binder_insert_free_buffer(alloc, buffer);
- 	alloc->free_async_space = alloc->buffer_size / 2;
-+
-+	/* Signal binder_alloc is fully initialized */
- 	binder_alloc_set_vma(alloc, vma);
- 
+@@ -270,7 +270,7 @@ static int binder_update_page_range(stru
+ 		trace_binder_alloc_page_end(alloc, index);
+ 	}
+ 	if (mm) {
+-		mmap_read_unlock(mm);
++		mmap_write_unlock(mm);
+ 		mmput(mm);
+ 	}
  	return 0;
+@@ -303,7 +303,7 @@ err_page_ptr_cleared:
+ 	}
+ err_no_vma:
+ 	if (mm) {
+-		mmap_read_unlock(mm);
++		mmap_write_unlock(mm);
+ 		mmput(mm);
+ 	}
+ 	return vma ? -ENOMEM : -ESRCH;
 
 
