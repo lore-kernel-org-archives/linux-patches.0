@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50223FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:25:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B005CC433D2;
-	Thu,  1 Jun 2023 13:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD52EFBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:25:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480B5C433EF;
+	Thu,  1 Jun 2023 13:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625936;
-	bh=kfCji33tP3engLPwCPTMoQkxImsQ/d3ZtMKTiTCcSrk=;
+	s=korg; t=1685625938;
+	bh=Q66oGo6YHunqdLXo+Uqi03t/BOE+7faoNHZDZl5VWLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qrspXRjOPx6xlJrdFsLCb89M9cCQYDKvup3BEitNokiw0zzk/lyDhy8T6bqPGTtJI
-	 vyCbsRZUoIweYsOzAw7uGmvqWTGqb/y3H/o0AVauvjI8PcYWEUrHGNzdyVHw2e2MDQ
-	 ArlvbS2FSIELfxn+a8B3464Ol9aesZiRl07JaUxU=
+	b=MBKRACMn2YJ8LSgXiI6LPknVvQkmqqLv3JT9IhZh0IUaCrHj+/osGIxx4BHO8r503
+	 r7KJ6mLRwTvi2FACECzivRGOxsEPeogoGt8Vnxl7b3WN3p+KXWSyejHfXtYS2T78di
+	 arwVm93hFq1Y98WW34Ni3yAn0S/LPGntlZ6kii44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	christophe.leroy@csgroup.eu,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Shai Amiram <samiram@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 10/45] gpiolib: fix allocation of mixed dynamic/static GPIOs
-Date: Thu,  1 Jun 2023 14:21:06 +0100
-Message-Id: <20230601131939.179196890@linuxfoundation.org>
+Subject: [PATCH 6.3 11/45] tls: rx: device: fix checking decryption status
+Date: Thu,  1 Jun 2023 14:21:07 +0100
+Message-Id: <20230601131939.226042884@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -38,63 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7dd3d9bd873f138675cb727eaa51a498d99f0e89 ]
+[ Upstream commit b3a03b540e3cf62a255213d084d76d71c02793d5 ]
 
-If static allocation and dynamic allocation GPIOs are present,
-dynamic allocation pollutes the numberspace for static allocation,
-causing static allocation to fail.
-Enforce dynamic allocation above GPIO_DYNAMIC_BASE.
+skb->len covers the entire skb, including the frag_list.
+In fact we're guaranteed that rxm->full_len <= skb->len,
+so since the change under Fixes we were not checking decrypt
+status of any skb but the first.
 
-Seen on a GTA04 when omap-gpio (static) and twl-gpio (dynamic)
-raced:
-[some successful registrations of omap_gpio instances]
-[    2.553833] twl4030_gpio twl4030-gpio: gpio (irq 145) chaining IRQs 161..178
-[    2.561401] gpiochip_find_base: found new base at 160
-[    2.564392] gpio gpiochip5: (twl4030): added GPIO chardev (254:5)
-[    2.564544] gpio gpiochip5: registered GPIOs 160 to 177 on twl4030
-[...]
-[    2.692169] omap-gpmc 6e000000.gpmc: GPMC revision 5.0
-[    2.697357] gpmc_mem_init: disabling cs 0 mapped at 0x0-0x1000000
-[    2.703643] gpiochip_find_base: found new base at 178
-[    2.704376] gpio gpiochip6: (omap-gpmc): added GPIO chardev (254:6)
-[    2.704589] gpio gpiochip6: registered GPIOs 178 to 181 on omap-gpmc
-[...]
-[    2.840393] gpio gpiochip7: Static allocation of GPIO base is deprecated, use dynamic allocation.
-[    2.849365] gpio gpiochip7: (gpio-160-191): GPIO integer space overlap, cannot add chip
-[    2.857513] gpiochip_add_data_with_key: GPIOs 160..191 (gpio-160-191) failed to register, -16
-[    2.866149] omap_gpio 48310000.gpio: error -EBUSY: Could not register gpio chip
+Note that the skb_pagelen() added here may feel a bit costly,
+but it's removed by subsequent fixes, anyway.
 
-On that device it is fixed invasively by
-commit 92bf78b33b0b4 ("gpio: omap: use dynamic allocation of base")
-but let's also fix that for devices where there is still
-a mixture of static and dynamic allocation.
-
-Fixes: 7b61212f2a07 ("gpiolib: Get rid of ARCH_NR_GPIOS")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Reviewed-by: <christophe.leroy@csgroup.eu>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reported-by: Tariq Toukan <tariqt@nvidia.com>
+Fixes: 86b259f6f888 ("tls: rx: device: bound the frag walk")
+Tested-by: Shai Amiram <samiram@nvidia.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/tls/tls_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 19bd23044b017..4472214fcd43a 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -193,6 +193,8 @@ static int gpiochip_find_base(int ngpio)
- 			break;
- 		/* nope, check the space right after the chip */
- 		base = gdev->base + gdev->ngpio;
-+		if (base < GPIO_DYNAMIC_BASE)
-+			base = GPIO_DYNAMIC_BASE;
- 	}
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index a7cc4f9faac28..3b87c7b04ac87 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -1012,7 +1012,7 @@ int tls_device_decrypted(struct sock *sk, struct tls_context *tls_ctx)
+ 	struct sk_buff *skb_iter;
+ 	int left;
  
- 	if (gpio_is_valid(base)) {
+-	left = rxm->full_len - skb->len;
++	left = rxm->full_len + rxm->offset - skb_pagelen(skb);
+ 	/* Check if all the data is decrypted already */
+ 	skb_iter = skb_shinfo(skb)->frag_list;
+ 	while (skb_iter && left > 0) {
 -- 
 2.39.2
 
