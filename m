@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC0BE54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD9BC4339E;
-	Thu,  1 Jun 2023 13:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EEAE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FEAC433EF;
+	Thu,  1 Jun 2023 13:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625818;
-	bh=6buz5UZK3whBTQE1CHIHhLx8/M4ktO98hSQspIxTSh8=;
+	s=korg; t=1685625820;
+	bh=ncWtDGqcy0qJCKDJ2tPDV5aK6Txdd060JRdohn/53eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xs4xyQQhT1snYVgScaEL+nntlJeUwDmvewy700mY5pVcxZ9AKACqUP0V5GXtTqYrR
-	 xI2uQsRY4xapp5khkXLbO8QrCLZtRbAKHOoYeV2MNzMEPIVYqIHeTGnMYfwNdq3/kD
-	 +dpN4JGWTGisX0xPL10z9vtEXqgOvO4bnhNkyi6c=
+	b=wHoUag5qIYElYfMqEjZAKCz062KrWQsKpOpDo5WTiB7u1qnrqjDUjAJZiB1DvsX9y
+	 lmg0yffqrljmjb+UzXHZBh9CAAFDjuSKbJXRz9laxs4g3h0mHZVctFnPBcuMjecO8/
+	 JOb4pzTT6tpGAojbT5fT3EBkVEHdfkGTk3t1AK5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 09/22] power: supply: bq27xxx: Ensure power_supply_changed() is called on current sign changes
-Date: Thu,  1 Jun 2023 14:21:07 +0100
-Message-Id: <20230601131934.167894989@linuxfoundation.org>
+Subject: [PATCH 5.10 10/22] power: supply: bq27xxx: After charger plug in/out wait 0.5s for things to stabilize
+Date: Thu,  1 Jun 2023 14:21:08 +0100
+Message-Id: <20230601131934.216000375@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131933.727832920@linuxfoundation.org>
 References: <20230601131933.727832920@linuxfoundation.org>
@@ -37,93 +37,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 939a116142012926e25de0ea6b7e2f8d86a5f1b6 ]
+[ Upstream commit 59a99cd462fbdf71f4e845e09f37783035088b4f ]
 
-On gauges where the current register is signed, there is no charging
-flag in the flags register. So only checking flags will not result
-in power_supply_changed() getting called when e.g. a charger is plugged
-in and the current sign changes from negative (discharging) to
-positive (charging).
+bq27xxx_external_power_changed() gets called when the charger is plugged
+in or out. Rather then immediately scheduling an update wait 0.5 seconds
+for things to stabilize, so that e.g. the (dis)charge current is stable
+when bq27xxx_battery_update() runs.
 
-This causes userspace's notion of the status to lag until userspace
-does a poll.
-
-And when a power_supply_leds.c LED trigger is used to indicate charging
-status with a LED, this LED will lag until the capacity percentage
-changes, which may take many minutes (because the LED trigger only is
-updated on power_supply_changed() calls).
-
-Fix this by calling bq27xxx_battery_current_and_status() on gauges with
-a signed current register and checking if the status has changed.
-
-Fixes: 297a533b3e62 ("bq27x00: Cache battery registers")
+Fixes: 740b755a3b34 ("bq27x00: Poll battery state")
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 13 ++++++++++++-
- include/linux/power/bq27xxx_battery.h  |  3 +++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/power/supply/bq27xxx_battery.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 160ab53065f8e..8984f66bd2bc3 100644
+index 8984f66bd2bc3..235647b21af71 100644
 --- a/drivers/power/supply/bq27xxx_battery.c
 +++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1762,6 +1762,7 @@ static int bq27xxx_battery_current_and_status(
- 
- static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
+@@ -2022,8 +2022,8 @@ static void bq27xxx_external_power_changed(struct power_supply *psy)
  {
-+	union power_supply_propval status = di->last_status;
- 	struct bq27xxx_reg_cache cache = {0, };
- 	bool has_singe_flag = di->opts & BQ27XXX_O_ZERO;
+ 	struct bq27xxx_device_info *di = power_supply_get_drvdata(psy);
  
-@@ -1786,14 +1787,24 @@ static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
- 		if (di->regs[BQ27XXX_REG_CYCT] != INVALID_REG_ADDR)
- 			cache.cycle_count = bq27xxx_battery_read_cyct(di);
+-	cancel_delayed_work_sync(&di->work);
+-	schedule_delayed_work(&di->work, 0);
++	/* After charger plug in/out wait 0.5s for things to stabilize */
++	mod_delayed_work(system_wq, &di->work, HZ / 2);
+ }
  
-+		/*
-+		 * On gauges with signed current reporting the current must be
-+		 * checked to detect charging <-> discharging status changes.
-+		 */
-+		if (!(di->opts & BQ27XXX_O_ZERO))
-+			bq27xxx_battery_current_and_status(di, NULL, &status, &cache);
-+
- 		/* We only have to read charge design full once */
- 		if (di->charge_design_full <= 0)
- 			di->charge_design_full = bq27xxx_battery_read_dcap(di);
- 	}
- 
- 	if ((di->cache.capacity != cache.capacity) ||
--	    (di->cache.flags != cache.flags))
-+	    (di->cache.flags != cache.flags) ||
-+	    (di->last_status.intval != status.intval)) {
-+		di->last_status.intval = status.intval;
- 		power_supply_changed(di->bat);
-+	}
- 
- 	if (memcmp(&di->cache, &cache, sizeof(cache)) != 0)
- 		di->cache = cache;
-diff --git a/include/linux/power/bq27xxx_battery.h b/include/linux/power/bq27xxx_battery.h
-index 705b94bd091e3..63964196a436e 100644
---- a/include/linux/power/bq27xxx_battery.h
-+++ b/include/linux/power/bq27xxx_battery.h
-@@ -2,6 +2,8 @@
- #ifndef __LINUX_BQ27X00_BATTERY_H__
- #define __LINUX_BQ27X00_BATTERY_H__
- 
-+#include <linux/power_supply.h>
-+
- enum bq27xxx_chip {
- 	BQ27000 = 1, /* bq27000, bq27200 */
- 	BQ27010, /* bq27010, bq27210 */
-@@ -69,6 +71,7 @@ struct bq27xxx_device_info {
- 	int charge_design_full;
- 	bool removed;
- 	unsigned long last_update;
-+	union power_supply_propval last_status;
- 	struct delayed_work work;
- 	struct power_supply *bat;
- 	struct list_head list;
+ int bq27xxx_battery_setup(struct bq27xxx_device_info *di)
 -- 
 2.39.2
 
