@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFF2E54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:25:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79456C4339B;
-	Thu,  1 Jun 2023 13:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ACFE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:25:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E292CC433EF;
+	Thu,  1 Jun 2023 13:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625901;
-	bh=nhyMnnQgX7jpXljlgHLHbEzNS4uQQWL+pnAbSlL+Gfk=;
+	s=korg; t=1685625904;
+	bh=y/zMLJXNXb8QNTNU1dGgSGQaqgpmOv3kIhBt1bZGcq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2pN7IdPrauS0Au9h4YlBaRfRSMXbXc35XBuYYk+V9/WRswq00ifwR8Pzn25Nripar
-	 ifZGuKCHZp03ngcCcong9r+EDPgv04Exh1UxS/wlUIdEnc7FKZpBG6ClIP2OM1VPE6
-	 FOcFlzLw9MthLyBCBEJMkmZhDfjymvHm67U5N8H0=
+	b=LD3Xek2HplnysJE5LnrgOSK0Dhs86hekrm3WtXfZ6AvNP74uliEbXM0ZuBoMjkD4z
+	 mV3t3H+cF3t54oGVUC5ENmTYleWfC0fNs9sL+GH/jTQbrPnTwvoiKQ3vQ4d2MfceGa
+	 4NVV/KKTS6MhrbT/SwYxFv47NXri3OwHDr0tI29k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	David Epping <david.epping@missinglinkelectronics.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 12/42] platform/x86: ISST: Remove 8 socket limit
-Date: Thu,  1 Jun 2023 14:20:59 +0100
-Message-Id: <20230601131937.265279817@linuxfoundation.org>
+Subject: [PATCH 5.15 13/42] net: phy: mscc: enable VSC8501/2 RGMII RX clock
+Date: Thu,  1 Jun 2023 14:21:00 +0100
+Message-Id: <20230601131937.313310246@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131936.699199833@linuxfoundation.org>
 References: <20230601131936.699199833@linuxfoundation.org>
@@ -36,65 +37,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve Wahl <steve.wahl@hpe.com>
+From: David Epping <david.epping@missinglinkelectronics.com>
 
-[ Upstream commit bbb320bfe2c3e9740fe89cfa0a7089b4e8bfc4ff ]
+[ Upstream commit 71460c9ec5c743e9ffffca3c874d66267c36345e ]
 
-Stop restricting the PCI search to a range of PCI domains fed to
-pci_get_domain_bus_and_slot().  Instead, use for_each_pci_dev() and
-look at all PCI domains in one pass.
+By default the VSC8501 and VSC8502 RGMII/GMII/MII RX_CLK output is
+disabled. To allow packet forwarding towards the MAC it needs to be
+enabled.
 
-On systems with more than 8 sockets, this avoids error messages like
-"Information: Invalid level, Can't get TDP control information at
-specified levels on cpu 480" from the intel speed select utility.
+For other PHYs supported by this driver the clock output is enabled
+by default.
 
-Fixes: aa2ddd242572 ("platform/x86: ISST: Use numa node id for cpu pci dev mapping")
-Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230519160420.2588475-1-steve.wahl@hpe.com
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: d3169863310d ("net: phy: mscc: add support for VSC8502")
+Signed-off-by: David Epping <david.epping@missinglinkelectronics.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../x86/intel/speed_select_if/isst_if_common.c       | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/net/phy/mscc/mscc.h      |  1 +
+ drivers/net/phy/mscc/mscc_main.c | 54 +++++++++++++++++---------------
+ 2 files changed, 29 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/speed_select_if/isst_if_common.c b/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
-index fd102678c75f6..f6b32d31c5110 100644
---- a/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_if_common.c
-@@ -294,14 +294,13 @@ struct isst_if_pkg_info {
- static struct isst_if_cpu_info *isst_cpu_info;
- static struct isst_if_pkg_info *isst_pkg_info;
+diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
+index a50235fdf7d99..055e4ca5b3b5c 100644
+--- a/drivers/net/phy/mscc/mscc.h
++++ b/drivers/net/phy/mscc/mscc.h
+@@ -179,6 +179,7 @@ enum rgmii_clock_delay {
+ #define VSC8502_RGMII_CNTL		  20
+ #define VSC8502_RGMII_RX_DELAY_MASK	  0x0070
+ #define VSC8502_RGMII_TX_DELAY_MASK	  0x0007
++#define VSC8502_RGMII_RX_CLK_DISABLE	  0x0800
  
--#define ISST_MAX_PCI_DOMAINS	8
--
- static struct pci_dev *_isst_if_get_pci_dev(int cpu, int bus_no, int dev, int fn)
+ #define MSCC_PHY_WOL_LOWER_MAC_ADDR	  21
+ #define MSCC_PHY_WOL_MID_MAC_ADDR	  22
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index 74f3aa752724f..cef43b1344a94 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -527,14 +527,27 @@ static int vsc85xx_mac_if_set(struct phy_device *phydev,
+  *  * 2.0 ns (which causes the data to be sampled at exactly half way between
+  *    clock transitions at 1000 Mbps) if delays should be enabled
+  */
+-static int vsc85xx_rgmii_set_skews(struct phy_device *phydev, u32 rgmii_cntl,
+-				   u16 rgmii_rx_delay_mask,
+-				   u16 rgmii_tx_delay_mask)
++static int vsc85xx_update_rgmii_cntl(struct phy_device *phydev, u32 rgmii_cntl,
++				     u16 rgmii_rx_delay_mask,
++				     u16 rgmii_tx_delay_mask)
  {
- 	struct pci_dev *matched_pci_dev = NULL;
- 	struct pci_dev *pci_dev = NULL;
-+	struct pci_dev *_pci_dev = NULL;
- 	int no_matches = 0, pkg_id;
--	int i, bus_number;
-+	int bus_number;
+ 	u16 rgmii_rx_delay_pos = ffs(rgmii_rx_delay_mask) - 1;
+ 	u16 rgmii_tx_delay_pos = ffs(rgmii_tx_delay_mask) - 1;
+ 	u16 reg_val = 0;
+-	int rc;
++	u16 mask = 0;
++	int rc = 0;
++
++	/* For traffic to pass, the VSC8502 family needs the RX_CLK disable bit
++	 * to be unset for all PHY modes, so do that as part of the paged
++	 * register modification.
++	 * For some family members (like VSC8530/31/40/41) this bit is reserved
++	 * and read-only, and the RX clock is enabled by default.
++	 */
++	if (rgmii_cntl == VSC8502_RGMII_CNTL)
++		mask |= VSC8502_RGMII_RX_CLK_DISABLE;
++
++	if (phy_interface_is_rgmii(phydev))
++		mask |= rgmii_rx_delay_mask | rgmii_tx_delay_mask;
  
- 	if (bus_no < 0 || bus_no >= ISST_MAX_BUS_NUMBER || cpu < 0 ||
- 	    cpu >= nr_cpu_ids || cpu >= num_possible_cpus())
-@@ -313,12 +312,11 @@ static struct pci_dev *_isst_if_get_pci_dev(int cpu, int bus_no, int dev, int fn
- 	if (bus_number < 0)
- 		return NULL;
+ 	mutex_lock(&phydev->lock);
  
--	for (i = 0; i < ISST_MAX_PCI_DOMAINS; ++i) {
--		struct pci_dev *_pci_dev;
-+	for_each_pci_dev(_pci_dev) {
- 		int node;
+@@ -545,10 +558,9 @@ static int vsc85xx_rgmii_set_skews(struct phy_device *phydev, u32 rgmii_cntl,
+ 	    phydev->interface == PHY_INTERFACE_MODE_RGMII_ID)
+ 		reg_val |= RGMII_CLK_DELAY_2_0_NS << rgmii_tx_delay_pos;
  
--		_pci_dev = pci_get_domain_bus_and_slot(i, bus_number, PCI_DEVFN(dev, fn));
--		if (!_pci_dev)
-+		if (_pci_dev->bus->number != bus_number ||
-+		    _pci_dev->devfn != PCI_DEVFN(dev, fn))
- 			continue;
+-	rc = phy_modify_paged(phydev, MSCC_PHY_PAGE_EXTENDED_2,
+-			      rgmii_cntl,
+-			      rgmii_rx_delay_mask | rgmii_tx_delay_mask,
+-			      reg_val);
++	if (mask)
++		rc = phy_modify_paged(phydev, MSCC_PHY_PAGE_EXTENDED_2,
++				      rgmii_cntl, mask, reg_val);
  
- 		++no_matches;
+ 	mutex_unlock(&phydev->lock);
+ 
+@@ -557,19 +569,11 @@ static int vsc85xx_rgmii_set_skews(struct phy_device *phydev, u32 rgmii_cntl,
+ 
+ static int vsc85xx_default_config(struct phy_device *phydev)
+ {
+-	int rc;
+-
+ 	phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
+ 
+-	if (phy_interface_mode_is_rgmii(phydev->interface)) {
+-		rc = vsc85xx_rgmii_set_skews(phydev, VSC8502_RGMII_CNTL,
+-					     VSC8502_RGMII_RX_DELAY_MASK,
+-					     VSC8502_RGMII_TX_DELAY_MASK);
+-		if (rc)
+-			return rc;
+-	}
+-
+-	return 0;
++	return vsc85xx_update_rgmii_cntl(phydev, VSC8502_RGMII_CNTL,
++					 VSC8502_RGMII_RX_DELAY_MASK,
++					 VSC8502_RGMII_TX_DELAY_MASK);
+ }
+ 
+ static int vsc85xx_get_tunable(struct phy_device *phydev,
+@@ -1766,13 +1770,11 @@ static int vsc8584_config_init(struct phy_device *phydev)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (phy_interface_is_rgmii(phydev)) {
+-		ret = vsc85xx_rgmii_set_skews(phydev, VSC8572_RGMII_CNTL,
+-					      VSC8572_RGMII_RX_DELAY_MASK,
+-					      VSC8572_RGMII_TX_DELAY_MASK);
+-		if (ret)
+-			return ret;
+-	}
++	ret = vsc85xx_update_rgmii_cntl(phydev, VSC8572_RGMII_CNTL,
++					VSC8572_RGMII_RX_DELAY_MASK,
++					VSC8572_RGMII_TX_DELAY_MASK);
++	if (ret)
++		return ret;
+ 
+ 	ret = genphy_soft_reset(phydev);
+ 	if (ret)
 -- 
 2.39.2
 
