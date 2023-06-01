@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161A8E54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9651AC433D2;
-	Thu,  1 Jun 2023 13:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB7BE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4C4C433EF;
+	Thu,  1 Jun 2023 13:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625800;
-	bh=DkBxdDW6+VzUY3ta3ik2N2ZSDmm42F2GBWuM6uT4AeA=;
+	s=korg; t=1685625803;
+	bh=F3awYTmNQuERjbkpEeLb5xpFZNod9Dy7EaDMGqeaw8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ef62kq7Mr5mnuSRtlQbdYx0Nvj6G6YDXl1mY73u36sviOH9DA6wWAV/gZEvqhYCAF
-	 XG73beHGJuP4hYSqXRM93zlV7sjkL2FvXzRVUtFOKTOsi241yXzuAC1TP4TPAAb0EF
-	 WsnUyEYUi4eTwOxm+PFgfKo+DYfY/DuJvFXjZREw=
+	b=SyiQLRO6wBt3mrMBLNfDxTIcTSstG1VvBqoDDiFRK2k1MdozjwXt/sm7aZUfKd+Cj
+	 i4ydjumRdaLtzMBhSJ+eLXfS92INqI+W1UNdZcOEbmj+dZbryS7tHZIbn7y7ZUlWEw
+	 p2LfqG5UoOcB/WfqDxsWp2c9PYOP/248T/khPb44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 21/22] ipv{4,6}/raw: fix output xfrm lookup wrt protocol
-Date: Thu,  1 Jun 2023 14:21:19 +0100
-Message-Id: <20230601131934.725913577@linuxfoundation.org>
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 04/22] power: supply: bq27xxx: fix sign of current_now for newer ICs
+Date: Thu,  1 Jun 2023 14:21:02 +0100
+Message-Id: <20230601131933.922681198@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131933.727832920@linuxfoundation.org>
 References: <20230601131933.727832920@linuxfoundation.org>
@@ -34,127 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-commit 3632679d9e4f879f49949bb5b050e0de553e4739 upstream.
+[ Upstream commit b67fdcb7099e9c640bad625c4dd6399debb3376a ]
 
-With a raw socket bound to IPPROTO_RAW (ie with hdrincl enabled), the
-protocol field of the flow structure, build by raw_sendmsg() /
-rawv6_sendmsg()),  is set to IPPROTO_RAW. This breaks the ipsec policy
-lookup when some policies are defined with a protocol in the selector.
+Commit cd060b4d0868 ("power: supply: bq27xxx: fix polarity of current_now")
+changed the sign of current_now for all bq27xxx variants, but on BQ28Z610
+I'm now seeing negated values *with* that patch.
 
-For ipv6, the sin6_port field from 'struct sockaddr_in6' could be used to
-specify the protocol. Just accept all values for IPPROTO_RAW socket.
+The GTA04/Openmoko device that was used for testing uses a BQ27000 or
+BQ27010 IC, so I assume only the BQ27XXX_O_ZERO code path was incorrect.
+Revert the behaviour for newer ICs.
 
-For ipv4, the sin_port field of 'struct sockaddr_in' could not be used
-without breaking backward compatibility (the value of this field was never
-checked). Let's add a new kind of control message, so that the userland
-could specify which protocol is used.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-CC: stable@vger.kernel.org
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://lore.kernel.org/r/20230522120820.1319391-1-nicolas.dichtel@6wind.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cd060b4d0868 "power: supply: bq27xxx: fix polarity of current_now"
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: 35092c5819f8 ("power: supply: bq27xxx: Add cache parameter to bq27xxx_battery_current_and_status()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h        |    2 ++
- include/uapi/linux/in.h |    2 ++
- net/ipv4/ip_sockglue.c  |   12 +++++++++++-
- net/ipv4/raw.c          |    5 ++++-
- net/ipv6/raw.c          |    3 ++-
- 5 files changed, 21 insertions(+), 3 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -75,6 +75,7 @@ struct ipcm_cookie {
- 	__be32			addr;
- 	int			oif;
- 	struct ip_options_rcu	*opt;
-+	__u8			protocol;
- 	__u8			ttl;
- 	__s16			tos;
- 	char			priority;
-@@ -95,6 +96,7 @@ static inline void ipcm_init_sk(struct i
- 	ipcm->sockc.tsflags = inet->sk.sk_tsflags;
- 	ipcm->oif = inet->sk.sk_bound_dev_if;
- 	ipcm->addr = inet->inet_saddr;
-+	ipcm->protocol = inet->inet_num;
- }
- 
- #define IPCB(skb) ((struct inet_skb_parm*)((skb)->cb))
---- a/include/uapi/linux/in.h
-+++ b/include/uapi/linux/in.h
-@@ -159,6 +159,8 @@ struct in_addr {
- #define MCAST_MSFILTER			48
- #define IP_MULTICAST_ALL		49
- #define IP_UNICAST_IF			50
-+#define IP_LOCAL_PORT_RANGE		51
-+#define IP_PROTOCOL			52
- 
- #define MCAST_EXCLUDE	0
- #define MCAST_INCLUDE	1
---- a/net/ipv4/ip_sockglue.c
-+++ b/net/ipv4/ip_sockglue.c
-@@ -317,7 +317,14 @@ int ip_cmsg_send(struct sock *sk, struct
- 			ipc->tos = val;
- 			ipc->priority = rt_tos2priority(ipc->tos);
- 			break;
--
-+		case IP_PROTOCOL:
-+			if (cmsg->cmsg_len != CMSG_LEN(sizeof(int)))
-+				return -EINVAL;
-+			val = *(int *)CMSG_DATA(cmsg);
-+			if (val < 1 || val > 255)
-+				return -EINVAL;
-+			ipc->protocol = val;
-+			break;
- 		default:
- 			return -EINVAL;
- 		}
-@@ -1724,6 +1731,9 @@ static int do_ip_getsockopt(struct sock
- 	case IP_MINTTL:
- 		val = inet->min_ttl;
- 		break;
-+	case IP_PROTOCOL:
-+		val = inet_sk(sk)->inet_num;
-+		break;
- 	default:
- 		release_sock(sk);
- 		return -ENOPROTOOPT;
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -559,6 +559,9 @@ static int raw_sendmsg(struct sock *sk,
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 79eee63a2041e..d34f1fceadbb4 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1781,7 +1781,7 @@ static int bq27xxx_battery_current(struct bq27xxx_device_info *di,
+ 		val->intval = curr * BQ27XXX_CURRENT_CONSTANT / BQ27XXX_RS;
+ 	} else {
+ 		/* Other gauges return signed value */
+-		val->intval = -(int)((s16)curr) * 1000;
++		val->intval = (int)((s16)curr) * 1000;
  	}
  
- 	ipcm_init_sk(&ipc, inet);
-+	/* Keep backward compat */
-+	if (hdrincl)
-+		ipc.protocol = IPPROTO_RAW;
- 
- 	if (msg->msg_controllen) {
- 		err = ip_cmsg_send(sk, msg, &ipc, false);
-@@ -626,7 +629,7 @@ static int raw_sendmsg(struct sock *sk,
- 
- 	flowi4_init_output(&fl4, ipc.oif, ipc.sockc.mark, tos,
- 			   RT_SCOPE_UNIVERSE,
--			   hdrincl ? IPPROTO_RAW : sk->sk_protocol,
-+			   hdrincl ? ipc.protocol : sk->sk_protocol,
- 			   inet_sk_flowi_flags(sk) |
- 			    (hdrincl ? FLOWI_FLAG_KNOWN_NH : 0),
- 			   daddr, saddr, 0, 0, sk->sk_uid);
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -828,7 +828,8 @@ static int rawv6_sendmsg(struct sock *sk
- 
- 		if (!proto)
- 			proto = inet->inet_num;
--		else if (proto != inet->inet_num)
-+		else if (proto != inet->inet_num &&
-+			 inet->inet_num != IPPROTO_RAW)
- 			return -EINVAL;
- 
- 		if (proto > 255)
+ 	return 0;
+-- 
+2.39.2
+
 
 
