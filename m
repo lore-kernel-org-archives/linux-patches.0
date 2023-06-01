@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA91FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAC0C433EF;
-	Thu,  1 Jun 2023 13:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F6CFBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81509C4339E;
+	Thu,  1 Jun 2023 13:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626098;
-	bh=359lv94pmb18SsYPMqNMczWp4yRjNEf8ZrhqBQWceck=;
+	s=korg; t=1685626100;
+	bh=03I1+lMVnPSrcRvbkcK/XVlzcxyXw6Fx0z6omMs9Rm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rbb62urZgYM8STwFcZZRZ1KrlNlk81l1M+fnywJyzvvv4kliNvR4k+W82uIXjNfYE
-	 mq04l+6i+2DxBooDjSg4vWwGDcfCMR9lFZb+VuorZytLXI8yUO8MFfAmtcoZmXMHow
-	 uG224dr1LkWDiCtdNYuYZkasGMfW/LkehRlb+QTc=
+	b=Yl8a5oD3eTAWZ0/Af7F62dYFPWVMj9y2WiqZronSAmGwtj3BV/7gWxK6fGa+iU/WF
+	 W7/jP3aXcskBnYwusBQPhwcqi/H0LQ/pmVbfgFXD4/gqimP+ErgQ3VJfMmEBKXy6yn
+	 TY1ZtUxCkX9hgUDa27E+kJt6AEx6ET/mnyx7LuyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cfcc1a3c85be15a40cba@syzkaller.appspotmail.com,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Xing Tong Wu <xingtong.wu@siemens.com>,
+	Henning Schild <henning.schild@siemens.com>,
+	Simon Guinot <simon.guinot@sequanux.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 30/42] RDMA/rxe: Fix the error "trying to register non-static key in rxe_cleanup_task"
-Date: Thu,  1 Jun 2023 14:21:39 +0100
-Message-Id: <20230601131940.387734306@linuxfoundation.org>
+Subject: [PATCH 6.1 13/42] gpio-f7188x: fix chip name and pin count on Nuvoton chip
+Date: Thu,  1 Jun 2023 14:21:22 +0100
+Message-Id: <20230601131939.645633569@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
 References: <20230601131939.051934720@linuxfoundation.org>
@@ -36,50 +37,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Henning Schild <henning.schild@siemens.com>
 
-[ Upstream commit b2b1ddc457458fecd1c6f385baa9fbda5f0c63ad ]
+[ Upstream commit 3002b8642f016d7fe3ff56240dacea1075f6b877 ]
 
-In the function rxe_create_qp(), rxe_qp_from_init() is called to
-initialize qp, internally things like rxe_init_task are not setup until
-rxe_qp_init_req().
+In fact the device with chip id 0xD283 is called NCT6126D, and that is
+the chip id the Nuvoton code was written for. Correct that name to avoid
+confusion, because a NCT6116D in fact exists as well but has another
+chip id, and is currently not supported.
 
-If an error occurred before this point then the unwind will call
-rxe_cleanup() and eventually to rxe_qp_do_cleanup()/rxe_cleanup_task()
-which will oops when trying to access the uninitialized spinlock.
+The look at the spec also revealed that GPIO group7 in fact has 8 pins,
+so correct the pin count in that group as well.
 
-If rxe_init_task is not executed, rxe_cleanup_task will not be called.
-
-Reported-by: syzbot+cfcc1a3c85be15a40cba@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=fd85757b74b3eb59f904138486f755f71e090df8
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Fixes: 2d4b21e0a291 ("IB/rxe: Prevent from completer to operate on non valid QP")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://lore.kernel.org/r/20230413101115.1366068-1-yanjun.zhu@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: d0918a84aff0 ("gpio-f7188x: Add GPIO support for Nuvoton NCT6116")
+Reported-by: Xing Tong Wu <xingtong.wu@siemens.com>
+Signed-off-by: Henning Schild <henning.schild@siemens.com>
+Acked-by: Simon Guinot <simon.guinot@sequanux.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpio/Kconfig       |  2 +-
+ drivers/gpio/gpio-f7188x.c | 28 ++++++++++++++--------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index e459fb542b83a..1f6e006c51c4a 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -792,8 +792,11 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
- 		del_timer_sync(&qp->rnr_nak_timer);
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index e3af86f06c630..3e8e5f4ffa59f 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -882,7 +882,7 @@ config GPIO_F7188X
+ 	help
+ 	  This option enables support for GPIOs found on Fintek Super-I/O
+ 	  chips F71869, F71869A, F71882FG, F71889F and F81866.
+-	  As well as Nuvoton Super-I/O chip NCT6116D.
++	  As well as Nuvoton Super-I/O chip NCT6126D.
+ 
+ 	  To compile this driver as a module, choose M here: the module will
+ 	  be called f7188x-gpio.
+diff --git a/drivers/gpio/gpio-f7188x.c b/drivers/gpio/gpio-f7188x.c
+index 9effa7769bef5..f54ca5a1775ea 100644
+--- a/drivers/gpio/gpio-f7188x.c
++++ b/drivers/gpio/gpio-f7188x.c
+@@ -48,7 +48,7 @@
+ /*
+  * Nuvoton devices.
+  */
+-#define SIO_NCT6116D_ID		0xD283  /* NCT6116D chipset ID */
++#define SIO_NCT6126D_ID		0xD283  /* NCT6126D chipset ID */
+ 
+ #define SIO_LD_GPIO_NUVOTON	0x07	/* GPIO logical device */
+ 
+@@ -62,7 +62,7 @@ enum chips {
+ 	f81866,
+ 	f81804,
+ 	f81865,
+-	nct6116d,
++	nct6126d,
+ };
+ 
+ static const char * const f7188x_names[] = {
+@@ -74,7 +74,7 @@ static const char * const f7188x_names[] = {
+ 	"f81866",
+ 	"f81804",
+ 	"f81865",
+-	"nct6116d",
++	"nct6126d",
+ };
+ 
+ struct f7188x_sio {
+@@ -187,8 +187,8 @@ static int f7188x_gpio_set_config(struct gpio_chip *chip, unsigned offset,
+ /* Output mode register (0:open drain 1:push-pull). */
+ #define f7188x_gpio_out_mode(base) ((base) + 3)
+ 
+-#define f7188x_gpio_dir_invert(type)	((type) == nct6116d)
+-#define f7188x_gpio_data_single(type)	((type) == nct6116d)
++#define f7188x_gpio_dir_invert(type)	((type) == nct6126d)
++#define f7188x_gpio_data_single(type)	((type) == nct6126d)
+ 
+ static struct f7188x_gpio_bank f71869_gpio_bank[] = {
+ 	F7188X_GPIO_BANK(0, 6, 0xF0, DRVNAME "-0"),
+@@ -274,7 +274,7 @@ static struct f7188x_gpio_bank f81865_gpio_bank[] = {
+ 	F7188X_GPIO_BANK(60, 5, 0x90, DRVNAME "-6"),
+ };
+ 
+-static struct f7188x_gpio_bank nct6116d_gpio_bank[] = {
++static struct f7188x_gpio_bank nct6126d_gpio_bank[] = {
+ 	F7188X_GPIO_BANK(0, 8, 0xE0, DRVNAME "-0"),
+ 	F7188X_GPIO_BANK(10, 8, 0xE4, DRVNAME "-1"),
+ 	F7188X_GPIO_BANK(20, 8, 0xE8, DRVNAME "-2"),
+@@ -282,7 +282,7 @@ static struct f7188x_gpio_bank nct6116d_gpio_bank[] = {
+ 	F7188X_GPIO_BANK(40, 8, 0xF0, DRVNAME "-4"),
+ 	F7188X_GPIO_BANK(50, 8, 0xF4, DRVNAME "-5"),
+ 	F7188X_GPIO_BANK(60, 8, 0xF8, DRVNAME "-6"),
+-	F7188X_GPIO_BANK(70, 1, 0xFC, DRVNAME "-7"),
++	F7188X_GPIO_BANK(70, 8, 0xFC, DRVNAME "-7"),
+ };
+ 
+ static int f7188x_gpio_get_direction(struct gpio_chip *chip, unsigned offset)
+@@ -490,9 +490,9 @@ static int f7188x_gpio_probe(struct platform_device *pdev)
+ 		data->nr_bank = ARRAY_SIZE(f81865_gpio_bank);
+ 		data->bank = f81865_gpio_bank;
+ 		break;
+-	case nct6116d:
+-		data->nr_bank = ARRAY_SIZE(nct6116d_gpio_bank);
+-		data->bank = nct6116d_gpio_bank;
++	case nct6126d:
++		data->nr_bank = ARRAY_SIZE(nct6126d_gpio_bank);
++		data->bank = nct6126d_gpio_bank;
+ 		break;
+ 	default:
+ 		return -ENODEV;
+@@ -559,9 +559,9 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
+ 	case SIO_F81865_ID:
+ 		sio->type = f81865;
+ 		break;
+-	case SIO_NCT6116D_ID:
++	case SIO_NCT6126D_ID:
+ 		sio->device = SIO_LD_GPIO_NUVOTON;
+-		sio->type = nct6116d;
++		sio->type = nct6126d;
+ 		break;
+ 	default:
+ 		pr_info("Unsupported Fintek device 0x%04x\n", devid);
+@@ -569,7 +569,7 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
  	}
  
--	rxe_cleanup_task(&qp->req.task);
--	rxe_cleanup_task(&qp->comp.task);
-+	if (qp->req.task.func)
-+		rxe_cleanup_task(&qp->req.task);
-+
-+	if (qp->comp.task.func)
-+		rxe_cleanup_task(&qp->comp.task);
+ 	/* double check manufacturer where possible */
+-	if (sio->type != nct6116d) {
++	if (sio->type != nct6126d) {
+ 		manid = superio_inw(addr, SIO_FINTEK_MANID);
+ 		if (manid != SIO_FINTEK_ID) {
+ 			pr_debug("Not a Fintek device at 0x%08x\n", addr);
+@@ -581,7 +581,7 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
+ 	err = 0;
  
- 	/* flush out any receive wr's or pending requests */
- 	if (qp->req.task.func)
+ 	pr_info("Found %s at %#x\n", f7188x_names[sio->type], (unsigned int)addr);
+-	if (sio->type != nct6116d)
++	if (sio->type != nct6126d)
+ 		pr_info("   revision %d\n", superio_inb(addr, SIO_FINTEK_DEVREV));
+ 
+ err:
 -- 
 2.39.2
 
