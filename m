@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17513FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:25:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98448C433EF;
-	Thu,  1 Jun 2023 13:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871EFFBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:25:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BB7C433EF;
+	Thu,  1 Jun 2023 13:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625945;
-	bh=cEhoQ4B3ZTPZ5GFTmov+YtP5xJBvDYhwxNbn5V3EcB4=;
+	s=korg; t=1685625948;
+	bh=LOj8PO2IKk4isEWSiuS7dpvXhrsKiGN/aU7Iwv3lRpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GLLD+21Z4B29Zkzabi0poVjqXgZUXYB+E5qRN9wR6vg9DkCmvyJgKGSSGO1uO8dxI
-	 jq/vj5TykyjmgTneKko52kzDHk+EW+fWZ0LtW6u9nrFR5+Dp7GiFQbW4H0899k4hAN
-	 IJlxPzhx9gW5qYYo13U1FTtKvlxdBwA97xVIzZPM=
+	b=RgYObuu2flOMxK9AGcx5pDJhDgjAyKxG6ZGM7bgE8ASeL8aWQN7pbDUAcAViz2DO4
+	 7cAFkw5lD6xo72SqlGY+/XoRhrYp2Mf/haEK7zNnH3kP51Fyyq3muMIvuWMfgEEb93
+	 d1//geJm4grcMosa/dayKbe4hSOj8NiBCSXcbTMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 14/45] tls: rx: strp: force mixed decrypted records into copy mode
-Date: Thu,  1 Jun 2023 14:21:10 +0100
-Message-Id: <20230601131939.362102447@linuxfoundation.org>
+Subject: [PATCH 6.3 15/45] tls: rx: strp: factor out copying skb data
+Date: Thu,  1 Jun 2023 14:21:11 +0100
+Message-Id: <20230601131939.406712918@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -39,14 +39,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 14c4be92ebb3e36e392aa9dd8f314038a9f96f3c ]
+[ Upstream commit c1c607b1e5d5477d82ca6a86a05a4f10907b33ee ]
 
-If a record is partially decrypted we'll have to CoW it, anyway,
-so go into copy mode and allocate a writable skb right away.
-
-This will make subsequent fix simpler because we won't have to
-teach tls_strp_msg_make_copy() how to copy skbs while preserving
-decrypt status.
+We'll need to copy input skbs individually in the next patch.
+Factor that code out (without assuming we're copying a full record).
 
 Tested-by: Shai Amiram <samiram@nvidia.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
@@ -55,77 +51,68 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: eca9bfafee3a ("tls: rx: strp: preserve decryption status of skbs when needed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 10 ++++++++++
- net/tls/tls_strp.c     | 16 +++++++++++-----
- 2 files changed, 21 insertions(+), 5 deletions(-)
+ net/tls/tls_strp.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index dbcaac8b69665..4a882f9ba1f1f 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -1577,6 +1577,16 @@ static inline void skb_copy_hash(struct sk_buff *to, const struct sk_buff *from)
- 	to->l4_hash = from->l4_hash;
- };
- 
-+static inline int skb_cmp_decrypted(const struct sk_buff *skb1,
-+				    const struct sk_buff *skb2)
-+{
-+#ifdef CONFIG_TLS_DEVICE
-+	return skb2->decrypted - skb1->decrypted;
-+#else
-+	return 0;
-+#endif
-+}
-+
- static inline void skb_copy_decrypted(struct sk_buff *to,
- 				      const struct sk_buff *from)
- {
 diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
-index 9889df5ce0660..e2e48217e7ac9 100644
+index e2e48217e7ac9..61fbf84baf9e0 100644
 --- a/net/tls/tls_strp.c
 +++ b/net/tls/tls_strp.c
-@@ -326,15 +326,19 @@ static int tls_strp_read_copy(struct tls_strparser *strp, bool qshort)
- 	return 0;
+@@ -34,31 +34,44 @@ static void tls_strp_anchor_free(struct tls_strparser *strp)
+ 	strp->anchor = NULL;
  }
  
--static bool tls_strp_check_no_dup(struct tls_strparser *strp)
-+static bool tls_strp_check_queue_ok(struct tls_strparser *strp)
+-/* Create a new skb with the contents of input copied to its page frags */
+-static struct sk_buff *tls_strp_msg_make_copy(struct tls_strparser *strp)
++static struct sk_buff *
++tls_strp_skb_copy(struct tls_strparser *strp, struct sk_buff *in_skb,
++		  int offset, int len)
  {
- 	unsigned int len = strp->stm.offset + strp->stm.full_len;
--	struct sk_buff *skb;
-+	struct sk_buff *first, *skb;
- 	u32 seq;
+-	struct strp_msg *rxm;
+ 	struct sk_buff *skb;
+-	int i, err, offset;
++	int i, err;
  
--	skb = skb_shinfo(strp->anchor)->frag_list;
--	seq = TCP_SKB_CB(skb)->seq;
-+	first = skb_shinfo(strp->anchor)->frag_list;
-+	skb = first;
-+	seq = TCP_SKB_CB(first)->seq;
+-	skb = alloc_skb_with_frags(0, strp->stm.full_len, TLS_PAGE_ORDER,
++	skb = alloc_skb_with_frags(0, len, TLS_PAGE_ORDER,
+ 				   &err, strp->sk->sk_allocation);
+ 	if (!skb)
+ 		return NULL;
  
-+	/* Make sure there's no duplicate data in the queue,
-+	 * and the decrypted status matches.
-+	 */
- 	while (skb->len < len) {
- 		seq += skb->len;
- 		len -= skb->len;
-@@ -342,6 +346,8 @@ static bool tls_strp_check_no_dup(struct tls_strparser *strp)
+-	offset = strp->stm.offset;
+ 	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
+ 		skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
  
- 		if (TCP_SKB_CB(skb)->seq != seq)
- 			return false;
-+		if (skb_cmp_decrypted(first, skb))
-+			return false;
+-		WARN_ON_ONCE(skb_copy_bits(strp->anchor, offset,
++		WARN_ON_ONCE(skb_copy_bits(in_skb, offset,
+ 					   skb_frag_address(frag),
+ 					   skb_frag_size(frag)));
+ 		offset += skb_frag_size(frag);
  	}
  
- 	return true;
-@@ -422,7 +428,7 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
- 			return tls_strp_read_copy(strp, true);
- 	}
- 
--	if (!tls_strp_check_no_dup(strp))
-+	if (!tls_strp_check_queue_ok(strp))
- 		return tls_strp_read_copy(strp, false);
- 
- 	strp->msg_ready = 1;
+-	skb->len = strp->stm.full_len;
+-	skb->data_len = strp->stm.full_len;
+-	skb_copy_header(skb, strp->anchor);
++	skb->len = len;
++	skb->data_len = len;
++	skb_copy_header(skb, in_skb);
++	return skb;
++}
++
++/* Create a new skb with the contents of input copied to its page frags */
++static struct sk_buff *tls_strp_msg_make_copy(struct tls_strparser *strp)
++{
++	struct strp_msg *rxm;
++	struct sk_buff *skb;
++
++	skb = tls_strp_skb_copy(strp, strp->anchor, strp->stm.offset,
++				strp->stm.full_len);
++	if (!skb)
++		return NULL;
++
+ 	rxm = strp_msg(skb);
+ 	rxm->offset = 0;
+ 	return skb;
 -- 
 2.39.2
 
