@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F07E54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDC7C433EF;
-	Thu,  1 Jun 2023 13:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552FEE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6539C433EF;
+	Thu,  1 Jun 2023 13:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625810;
-	bh=2U97B8zRhkqNLuQvTLDR1rSrT5PFQctU0d15Je/k/fM=;
+	s=korg; t=1685625813;
+	bh=pvZBzXrBCl/wrEylhnY32IcgYDe5mt5w103aSpl1GMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJkNDpRa7BMsejoT1Q/GlO+zcz1N+RAclSDsmDZ8pzhrXYxxh8Ulw+JeYhdE0v0nt
-	 JgS3OOBv0s2Gpn9PTiai1O4fUbPN5aFvyxgAyfMcaODG4w10QeyqjhXbJr3ejPZXOu
-	 f5RlswCZgTcFS7BPxoFAiQSEKfDESgQEBciSbUGg=
+	b=qlg5Q3CM+CY7tTPMM09seAHFlZMwi/xzyzi/sQ/sG67pSQEHdvCyVYTx0dv6201xI
+	 R7JhFR+NgMW7WYsF7+MhuSkZK2RbDQ9LuMfJ67Bey5xb9JaSj+DhJAx2E9Q0OeYQZJ
+	 774dlBNDhxbGFAnWMLEdeMOwpSNnAyIRa5unpbDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	"Sicelo A. Mhlongo" <absicsz@gmail.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 06/22] power: supply: bq27xxx: Add cache parameter to bq27xxx_battery_current_and_status()
-Date: Thu,  1 Jun 2023 14:21:04 +0100
-Message-Id: <20230601131934.015925500@linuxfoundation.org>
+Subject: [PATCH 5.10 07/22] power: supply: bq27xxx: expose battery data when CI=1
+Date: Thu,  1 Jun 2023 14:21:05 +0100
+Message-Id: <20230601131934.071587343@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131933.727832920@linuxfoundation.org>
 References: <20230601131933.727832920@linuxfoundation.org>
@@ -35,75 +36,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Sicelo A. Mhlongo <absicsz@gmail.com>
 
-[ Upstream commit 35092c5819f8c5acc7bafe3fdbb13d6307c4f5e1 ]
+[ Upstream commit 68fdbe090c362e8be23890a7333d156e18c27781 ]
 
-Add a cache parameter to bq27xxx_battery_current_and_status() so that
-it can optionally use cached flags instead of re-reading them itself.
+When the Capacity Inaccurate flag is set, the chip still provides data
+about the battery, albeit inaccurate. Instead of discarding capacity
+values for CI=1, expose the stale data and use the
+POWER_SUPPLY_HEALTH_CALIBRATION_REQUIRED property to indicate that the
+values should be used with care.
 
-This is a preparation patch for making bq27xxx_battery_update() check
-the status and have it call power_supply_changed() on status changes.
-
-Fixes: 297a533b3e62 ("bq27x00: Cache battery registers")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Sicelo A. Mhlongo <absicsz@gmail.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: ff4c4a2a4437 ("power: supply: bq27xxx: Move bq27xxx_battery_update() down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 60 ++++++++++++--------------
+ 1 file changed, 27 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 681fa81f4dbde..d09ce7d6351d9 100644
+index d09ce7d6351d9..bd6e53525065d 100644
 --- a/drivers/power/supply/bq27xxx_battery.c
 +++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1772,7 +1772,8 @@ static bool bq27xxx_battery_is_full(struct bq27xxx_device_info *di, int flags)
- static int bq27xxx_battery_current_and_status(
- 	struct bq27xxx_device_info *di,
- 	union power_supply_propval *val_curr,
--	union power_supply_propval *val_status)
-+	union power_supply_propval *val_status,
-+	struct bq27xxx_reg_cache *cache)
+@@ -1507,14 +1507,6 @@ static int bq27xxx_battery_read_charge(struct bq27xxx_device_info *di, u8 reg)
+  */
+ static inline int bq27xxx_battery_read_nac(struct bq27xxx_device_info *di)
  {
- 	bool single_flags = (di->opts & BQ27XXX_O_ZERO);
- 	int curr;
-@@ -1784,10 +1785,14 @@ static int bq27xxx_battery_current_and_status(
- 		return curr;
- 	}
+-	int flags;
+-
+-	if (di->opts & BQ27XXX_O_ZERO) {
+-		flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, true);
+-		if (flags >= 0 && (flags & BQ27000_FLAG_CI))
+-			return -ENODATA;
+-	}
+-
+ 	return bq27xxx_battery_read_charge(di, BQ27XXX_REG_NAC);
+ }
  
--	flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, single_flags);
--	if (flags < 0) {
--		dev_err(di->dev, "error reading flags\n");
--		return flags;
-+	if (cache) {
-+		flags = cache->flags;
-+	} else {
-+		flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, single_flags);
-+		if (flags < 0) {
-+			dev_err(di->dev, "error reading flags\n");
-+			return flags;
-+		}
- 	}
+@@ -1668,6 +1660,18 @@ static bool bq27xxx_battery_dead(struct bq27xxx_device_info *di, u16 flags)
+ 		return flags & (BQ27XXX_FLAG_SOC1 | BQ27XXX_FLAG_SOCF);
+ }
  
- 	if (di->opts & BQ27XXX_O_ZERO) {
-@@ -1933,7 +1938,7 @@ static int bq27xxx_battery_get_property(struct power_supply *psy,
++/*
++ * Returns true if reported battery capacity is inaccurate
++ */
++static bool bq27xxx_battery_capacity_inaccurate(struct bq27xxx_device_info *di,
++						 u16 flags)
++{
++	if (di->opts & BQ27XXX_O_HAS_CI)
++		return (flags & BQ27000_FLAG_CI);
++	else
++		return false;
++}
++
+ static int bq27xxx_battery_read_health(struct bq27xxx_device_info *di)
+ {
+ 	/* Unlikely but important to return first */
+@@ -1677,6 +1681,8 @@ static int bq27xxx_battery_read_health(struct bq27xxx_device_info *di)
+ 		return POWER_SUPPLY_HEALTH_COLD;
+ 	if (unlikely(bq27xxx_battery_dead(di, di->cache.flags)))
+ 		return POWER_SUPPLY_HEALTH_DEAD;
++	if (unlikely(bq27xxx_battery_capacity_inaccurate(di, di->cache.flags)))
++		return POWER_SUPPLY_HEALTH_CALIBRATION_REQUIRED;
  
- 	switch (psp) {
- 	case POWER_SUPPLY_PROP_STATUS:
--		ret = bq27xxx_battery_current_and_status(di, NULL, val);
-+		ret = bq27xxx_battery_current_and_status(di, NULL, val, NULL);
- 		break;
- 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
- 		ret = bq27xxx_battery_voltage(di, val);
-@@ -1942,7 +1947,7 @@ static int bq27xxx_battery_get_property(struct power_supply *psy,
- 		val->intval = di->cache.flags < 0 ? 0 : 1;
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
--		ret = bq27xxx_battery_current_and_status(di, val, NULL);
-+		ret = bq27xxx_battery_current_and_status(di, val, NULL, NULL);
- 		break;
- 	case POWER_SUPPLY_PROP_CAPACITY:
- 		ret = bq27xxx_simple_value(di->cache.capacity, val);
+ 	return POWER_SUPPLY_HEALTH_GOOD;
+ }
+@@ -1684,7 +1690,6 @@ static int bq27xxx_battery_read_health(struct bq27xxx_device_info *di)
+ static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
+ {
+ 	struct bq27xxx_reg_cache cache = {0, };
+-	bool has_ci_flag = di->opts & BQ27XXX_O_HAS_CI;
+ 	bool has_singe_flag = di->opts & BQ27XXX_O_ZERO;
+ 
+ 	cache.flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, has_singe_flag);
+@@ -1692,30 +1697,19 @@ static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
+ 		cache.flags = -1; /* read error */
+ 	if (cache.flags >= 0) {
+ 		cache.temperature = bq27xxx_battery_read_temperature(di);
+-		if (has_ci_flag && (cache.flags & BQ27000_FLAG_CI)) {
+-			dev_info_once(di->dev, "battery is not calibrated! ignoring capacity values\n");
+-			cache.capacity = -ENODATA;
+-			cache.energy = -ENODATA;
+-			cache.time_to_empty = -ENODATA;
+-			cache.time_to_empty_avg = -ENODATA;
+-			cache.time_to_full = -ENODATA;
+-			cache.charge_full = -ENODATA;
+-			cache.health = -ENODATA;
+-		} else {
+-			if (di->regs[BQ27XXX_REG_TTE] != INVALID_REG_ADDR)
+-				cache.time_to_empty = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTE);
+-			if (di->regs[BQ27XXX_REG_TTECP] != INVALID_REG_ADDR)
+-				cache.time_to_empty_avg = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTECP);
+-			if (di->regs[BQ27XXX_REG_TTF] != INVALID_REG_ADDR)
+-				cache.time_to_full = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTF);
+-
+-			cache.charge_full = bq27xxx_battery_read_fcc(di);
+-			cache.capacity = bq27xxx_battery_read_soc(di);
+-			if (di->regs[BQ27XXX_REG_AE] != INVALID_REG_ADDR)
+-				cache.energy = bq27xxx_battery_read_energy(di);
+-			di->cache.flags = cache.flags;
+-			cache.health = bq27xxx_battery_read_health(di);
+-		}
++		if (di->regs[BQ27XXX_REG_TTE] != INVALID_REG_ADDR)
++			cache.time_to_empty = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTE);
++		if (di->regs[BQ27XXX_REG_TTECP] != INVALID_REG_ADDR)
++			cache.time_to_empty_avg = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTECP);
++		if (di->regs[BQ27XXX_REG_TTF] != INVALID_REG_ADDR)
++			cache.time_to_full = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTF);
++
++		cache.charge_full = bq27xxx_battery_read_fcc(di);
++		cache.capacity = bq27xxx_battery_read_soc(di);
++		if (di->regs[BQ27XXX_REG_AE] != INVALID_REG_ADDR)
++			cache.energy = bq27xxx_battery_read_energy(di);
++		di->cache.flags = cache.flags;
++		cache.health = bq27xxx_battery_read_health(di);
+ 		if (di->regs[BQ27XXX_REG_CYCT] != INVALID_REG_ADDR)
+ 			cache.cycle_count = bq27xxx_battery_read_cyct(di);
+ 
 -- 
 2.39.2
 
