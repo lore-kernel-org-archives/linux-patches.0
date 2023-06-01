@@ -1,106 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A9F23400;
-	Thu,  1 Jun 2023 15:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7334C433D2;
-	Thu,  1 Jun 2023 15:26:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1685633190;
-	bh=ZEqKq2MGPwE7UmZkmGx9PfcvEwEnm43p6Kqjn+YHD54=;
-	h=From:Date:Subject:To:Cc:From;
-	b=pJlEQRFcI1KzDRh4BpUI27GOM3eku6JhOS/Ayy53bJhJuapS07hiAcwnTvVmzm33U
-	 xcN5uXQprcvLy/XkjzidhfE2B4FreQ0htuC9/gQs/EVlPMnvWuKcOZHsV8AfAb8N2c
-	 Alezdo7LrD/SWzCggR89nYqDOgVt0l2KJpYZxfZvguVFKriRy/RHb443PFZJAjCYX5
-	 dx02TK8eJkab4dvfDANuTuj8A0SBrDOvg4oGVKZ39QeRciohsdasVqsLNkQJc6sHPe
-	 EAWqSSSXEitfwpYOds4m2XqtbPYUlZ5slVRsm1ZWdf5kNzEEf731l2k3+lRzuswRUI
-	 qtIpPYzOROyCA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 01 Jun 2023 08:26:16 -0700
-Subject: [PATCH] zswap: Avoid uninitialized use of ret in
- zswap_frontswap_store()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFE5BA2F
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 15:58:37 +0000 (UTC)
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1b00ffb4186so5858715ad.0
+        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 08:58:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685635117; x=1688227117;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Tdo1BT7zY5jhyUPqroUtUjnXkFXuc+CaZiA5H8uHP1k=;
+        b=W6AMR2wuXVBEF216FQyc9671QMNLxsrZsTY226oQf/776+kGNZoLb8A0hLHNHh3e9r
+         QG4m9eCwH3SgtU+75i8LiiZTAsbRChN6hnMdTi5l91dl93mfSqjS6kkAxxn4iPN5lScA
+         LdiYRt+gVDNIvmICvNEGL8lLD28zW+JkteVL/0OBDgeURBy1DyHc54c7TvIdxfvwtj+z
+         2q9ouj1ExOD139OWgCecEMJ7Z02mRUMPXoa+eS7bhctpvYbAok7BHNTs2WmyLwb8G1/r
+         n8SoQXGGu+5WxjPWHScusd6tMGyMD/XV8fFO4qzwBUrMVheh+qbSf/n4pVonROlrez22
+         NT4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685635117; x=1688227117;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tdo1BT7zY5jhyUPqroUtUjnXkFXuc+CaZiA5H8uHP1k=;
+        b=h+N9wrCsqHEtRDwW0gs9rfMjs7IjYDF3hGNXQxY9mYxztAYUf8Bh/EccHH26OOv3XE
+         yASLEcBwS93Q5wjXj9borsewLa2SYOrpnJbKrs7vYtkDmX0kffopSMlbHzdHY/NN/fQu
+         nXJ024ioARDsWiAYvzelAR2leQNvHwKMGLicSMLFeQppcfS0JKZOx47RdxE9ibQAxaEj
+         lCRDNm2SibAn2IAYlofs2KlLuTrTN3lXEHj0olPtOdjv5fKfJGigUts5ol5PcDxhYCjd
+         fzeLG52gNM7xwtJlYmGSSFBGecO+Z7fzOve8Oxp3omJ2HJzDUix4ozeDmLw33oUEPgYS
+         rLOw==
+X-Gm-Message-State: AC+VfDxc5Lljivrq9rkMcYwefAgHxgiygDO2pgaRLW8WXBT/QxRHKSyf
+	wWSGHo/dQn1kvIUAW5QWnZg=
+X-Google-Smtp-Source: ACHHUZ7o1nsP0aRLIFzpNb6EDRUCEYYUOY9hg2FCBv7jz3JfpIdh+lwJy9xTpEbcaZktUxLUvEI/HA==
+X-Received: by 2002:a17:902:988d:b0:1a6:45e5:a26a with SMTP id s13-20020a170902988d00b001a645e5a26amr5354940plp.27.1685635116641;
+        Thu, 01 Jun 2023 08:58:36 -0700 (PDT)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id ik8-20020a170902ab0800b001a194df5a58sm3712243plb.167.2023.06.01.08.58.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Jun 2023 08:58:35 -0700 (PDT)
+Message-ID: <09f64b6e-ddbe-61d4-b229-95a31b2acb50@gmail.com>
+Date: Thu, 1 Jun 2023 08:58:34 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 5.4 00/16] 5.4.245-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230601131931.947241286@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230601131931.947241286@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230601-zswap-cgroup-wsometimes-uninitialized-v1-1-35debdd19293@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAJe4eGQC/x2OywrCMBAAf6Xk7EIao6K/Ih7y2LQLJg3Z1EpL/
- 93U4zAwzCYYCyGLR7eJgh9imlKD/tQJN5o0IJBvLJRUZ3mVPay8mAxuKNOcYeEpYqWIDHOiRJX
- Mm1b0YC/6HoJW+oZetJY1jGCLSW48atFwxXKIXDDQ9z/wfO37D9EgKUOQAAAA
-To: akpm@linux-foundation.org, sjenning@redhat.com, ddstreet@ieee.org, 
- vitaly.wool@konsulko.com
-Cc: ndesaulniers@google.com, trix@redhat.com, nphamcs@gmail.com, 
- linux-mm@kvack.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2147; i=nathan@kernel.org;
- h=from:subject:message-id; bh=ZEqKq2MGPwE7UmZkmGx9PfcvEwEnm43p6Kqjn+YHD54=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCkVO5bed5S7uD8+/sOyRdGsao9Xmk2Yvnz1dOWbW/bWC
- /dotL071FHKwiDGwSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmYsbHyNDCZ6By9rVc22rm
- aT/vpyya/5YhwNDziVVFTOyV9S+z9/Mw/E+oFVHuYWPSKJ54UmRy+7anmQLf/JJuO3uE3j7OoeD
- 3mgkA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Clang warns:
 
-  mm/zswap.c:1183:6: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-   1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
-        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  mm/zswap.c:1327:9: note: uninitialized use occurs here
-   1327 |         return ret;
-        |                ^~~
-  mm/zswap.c:1183:2: note: remove the 'if' if its condition is always false
-   1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   1184 |                 goto reject;
-        | ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  mm/zswap.c:1158:9: note: initialize the variable 'ret' to silence this warning
-   1158 |         int ret;
-        |                ^
-        |                 = 0
-  1 error generated.
 
-Set ret to -EINVAL, which seems to best match the situation the comment
-mentions and matches an earlier bailout due to an unsupported type or
-situation.
+On 6/1/2023 6:20 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.245 release.
+> There are 16 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 03 Jun 2023 13:19:19 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.245-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Fixes: 6804144bf1cf ("zswap: do not shrink if cgroup may not zswap")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/202306011435.2BxsHFUE-lkp@intel.com/
-Closes: https://lore.kernel.org/202306012152.o4FL7Y6J-lkp@intel.com/
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1861
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- mm/zswap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-diff --git a/mm/zswap.c b/mm/zswap.c
-index cff93643a6ab..e8313e2f5807 100644
---- a/mm/zswap.c
-+++ b/mm/zswap.c
-@@ -1180,8 +1180,10 @@ static int zswap_frontswap_store(unsigned type, pgoff_t offset,
- 	 * local cgroup limits.
- 	 */
- 	objcg = get_obj_cgroup_from_page(page);
--	if (objcg && !obj_cgroup_may_zswap(objcg))
-+	if (objcg && !obj_cgroup_may_zswap(objcg)) {
-+		ret = -EINVAL;
- 		goto reject;
-+	}
- 
- 	/* reclaim space if needed */
- 	if (zswap_is_full()) {
-
----
-base-commit: b2424568bd9b947b2698b693ff24fec63bb4b36a
-change-id: 20230601-zswap-cgroup-wsometimes-uninitialized-b549ff4247ed
-
-Best regards,
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-Nathan Chancellor <nathan@kernel.org>
-
+Florian
