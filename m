@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4664CFBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CF1C4339B;
-	Thu,  1 Jun 2023 13:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61D9FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51279C4339C;
+	Thu,  1 Jun 2023 13:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626086;
-	bh=Av6Qp9Uh8t3sKnlxPA/NEwE1ChSJ4ZUeAMOBvYH+PfM=;
+	s=korg; t=1685626088;
+	bh=IxNP1LtZNXekOXPOHE1fPBtCVtdISsOR+6AHnLz68PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKQuOKi4FlxkTKtIJ5oQgSKaFcPsotWuYB7D9gYTm2AXFIqVFnTX2ATMJ/BqEg/zu
-	 qgYCB3i4hlZx/dLwLNocbqGR1fzWE+OzdrHA8jvGWuMY8hEYIcOeE1Ith4hENLvlMU
-	 2ZZcVeb29igoi8Gm0NLTHHVNC+jDscoiSxBRRjd4=
+	b=yZk6F6qWLO+IYHLXjErjqqT+ONmflI+TJll9cFSkXp/tQZ3kAnIRRj0e/C72MDxsw
+	 HnMQqggGpU1sx8X9j+nuNU5qT5qTE8zMv7a1nDtierDdJPDjP5Bgy5Uv3CE87rRxi4
+	 rgj4OH31GpPbhQ5SGF0HO9Ls0tlL1x9OvcYiqkz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunsheng Lin <linyunsheng@huawei.com>,
-	Jesper Dangaard Brouer <brouer@redhat.com>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	David Epping <david.epping@missinglinkelectronics.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 25/42] page_pool: fix inconsistency for page_pool_ring_[un]lock()
-Date: Thu,  1 Jun 2023 14:21:34 +0100
-Message-Id: <20230601131940.143968395@linuxfoundation.org>
+Subject: [PATCH 6.1 26/42] net: phy: mscc: enable VSC8501/2 RGMII RX clock
+Date: Thu,  1 Jun 2023 14:21:35 +0100
+Message-Id: <20230601131940.186157083@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
 References: <20230601131939.051934720@linuxfoundation.org>
@@ -37,127 +37,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunsheng Lin <linyunsheng@huawei.com>
+From: David Epping <david.epping@missinglinkelectronics.com>
 
-[ Upstream commit 368d3cb406cdd074d1df2ad9ec06d1bfcb664882 ]
+[ Upstream commit 71460c9ec5c743e9ffffca3c874d66267c36345e ]
 
-page_pool_ring_[un]lock() use in_softirq() to decide which
-spin lock variant to use, and when they are called in the
-context with in_softirq() being false, spin_lock_bh() is
-called in page_pool_ring_lock() while spin_unlock() is
-called in page_pool_ring_unlock(), because spin_lock_bh()
-has disabled the softirq in page_pool_ring_lock(), which
-causes inconsistency for spin lock pair calling.
+By default the VSC8501 and VSC8502 RGMII/GMII/MII RX_CLK output is
+disabled. To allow packet forwarding towards the MAC it needs to be
+enabled.
 
-This patch fixes it by returning in_softirq state from
-page_pool_producer_lock(), and use it to decide which
-spin lock variant to use in page_pool_producer_unlock().
+For other PHYs supported by this driver the clock output is enabled
+by default.
 
-As pool->ring has both producer and consumer lock, so
-rename it to page_pool_producer_[un]lock() to reflect
-the actual usage. Also move them to page_pool.c as they
-are only used there, and remove the 'inline' as the
-compiler may have better idea to do inlining or not.
-
-Fixes: 7886244736a4 ("net: page_pool: Add bulk support for ptr_ring")
-Signed-off-by: Yunsheng Lin <linyunsheng@huawei.com>
-Acked-by: Jesper Dangaard Brouer <brouer@redhat.com>
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Link: https://lore.kernel.org/r/20230522031714.5089-1-linyunsheng@huawei.com
+Fixes: d3169863310d ("net: phy: mscc: add support for VSC8502")
+Signed-off-by: David Epping <david.epping@missinglinkelectronics.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/page_pool.h | 18 ------------------
- net/core/page_pool.c    | 28 ++++++++++++++++++++++++++--
- 2 files changed, 26 insertions(+), 20 deletions(-)
+ drivers/net/phy/mscc/mscc.h      |  1 +
+ drivers/net/phy/mscc/mscc_main.c | 54 +++++++++++++++++---------------
+ 2 files changed, 29 insertions(+), 26 deletions(-)
 
-diff --git a/include/net/page_pool.h b/include/net/page_pool.h
-index 34bf531ffc8d6..ad0bafc877d48 100644
---- a/include/net/page_pool.h
-+++ b/include/net/page_pool.h
-@@ -383,22 +383,4 @@ static inline void page_pool_nid_changed(struct page_pool *pool, int new_nid)
- 		page_pool_update_nid(pool, new_nid);
+diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
+index a50235fdf7d99..055e4ca5b3b5c 100644
+--- a/drivers/net/phy/mscc/mscc.h
++++ b/drivers/net/phy/mscc/mscc.h
+@@ -179,6 +179,7 @@ enum rgmii_clock_delay {
+ #define VSC8502_RGMII_CNTL		  20
+ #define VSC8502_RGMII_RX_DELAY_MASK	  0x0070
+ #define VSC8502_RGMII_TX_DELAY_MASK	  0x0007
++#define VSC8502_RGMII_RX_CLK_DISABLE	  0x0800
+ 
+ #define MSCC_PHY_WOL_LOWER_MAC_ADDR	  21
+ #define MSCC_PHY_WOL_MID_MAC_ADDR	  22
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index f778e4f8b5080..7bd940baec595 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -527,14 +527,27 @@ static int vsc85xx_mac_if_set(struct phy_device *phydev,
+  *  * 2.0 ns (which causes the data to be sampled at exactly half way between
+  *    clock transitions at 1000 Mbps) if delays should be enabled
+  */
+-static int vsc85xx_rgmii_set_skews(struct phy_device *phydev, u32 rgmii_cntl,
+-				   u16 rgmii_rx_delay_mask,
+-				   u16 rgmii_tx_delay_mask)
++static int vsc85xx_update_rgmii_cntl(struct phy_device *phydev, u32 rgmii_cntl,
++				     u16 rgmii_rx_delay_mask,
++				     u16 rgmii_tx_delay_mask)
+ {
+ 	u16 rgmii_rx_delay_pos = ffs(rgmii_rx_delay_mask) - 1;
+ 	u16 rgmii_tx_delay_pos = ffs(rgmii_tx_delay_mask) - 1;
+ 	u16 reg_val = 0;
+-	int rc;
++	u16 mask = 0;
++	int rc = 0;
++
++	/* For traffic to pass, the VSC8502 family needs the RX_CLK disable bit
++	 * to be unset for all PHY modes, so do that as part of the paged
++	 * register modification.
++	 * For some family members (like VSC8530/31/40/41) this bit is reserved
++	 * and read-only, and the RX clock is enabled by default.
++	 */
++	if (rgmii_cntl == VSC8502_RGMII_CNTL)
++		mask |= VSC8502_RGMII_RX_CLK_DISABLE;
++
++	if (phy_interface_is_rgmii(phydev))
++		mask |= rgmii_rx_delay_mask | rgmii_tx_delay_mask;
+ 
+ 	mutex_lock(&phydev->lock);
+ 
+@@ -545,10 +558,9 @@ static int vsc85xx_rgmii_set_skews(struct phy_device *phydev, u32 rgmii_cntl,
+ 	    phydev->interface == PHY_INTERFACE_MODE_RGMII_ID)
+ 		reg_val |= RGMII_CLK_DELAY_2_0_NS << rgmii_tx_delay_pos;
+ 
+-	rc = phy_modify_paged(phydev, MSCC_PHY_PAGE_EXTENDED_2,
+-			      rgmii_cntl,
+-			      rgmii_rx_delay_mask | rgmii_tx_delay_mask,
+-			      reg_val);
++	if (mask)
++		rc = phy_modify_paged(phydev, MSCC_PHY_PAGE_EXTENDED_2,
++				      rgmii_cntl, mask, reg_val);
+ 
+ 	mutex_unlock(&phydev->lock);
+ 
+@@ -557,19 +569,11 @@ static int vsc85xx_rgmii_set_skews(struct phy_device *phydev, u32 rgmii_cntl,
+ 
+ static int vsc85xx_default_config(struct phy_device *phydev)
+ {
+-	int rc;
+-
+ 	phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
+ 
+-	if (phy_interface_mode_is_rgmii(phydev->interface)) {
+-		rc = vsc85xx_rgmii_set_skews(phydev, VSC8502_RGMII_CNTL,
+-					     VSC8502_RGMII_RX_DELAY_MASK,
+-					     VSC8502_RGMII_TX_DELAY_MASK);
+-		if (rc)
+-			return rc;
+-	}
+-
+-	return 0;
++	return vsc85xx_update_rgmii_cntl(phydev, VSC8502_RGMII_CNTL,
++					 VSC8502_RGMII_RX_DELAY_MASK,
++					 VSC8502_RGMII_TX_DELAY_MASK);
  }
  
--static inline void page_pool_ring_lock(struct page_pool *pool)
--	__acquires(&pool->ring.producer_lock)
--{
--	if (in_softirq())
--		spin_lock(&pool->ring.producer_lock);
--	else
--		spin_lock_bh(&pool->ring.producer_lock);
--}
--
--static inline void page_pool_ring_unlock(struct page_pool *pool)
--	__releases(&pool->ring.producer_lock)
--{
--	if (in_softirq())
--		spin_unlock(&pool->ring.producer_lock);
--	else
--		spin_unlock_bh(&pool->ring.producer_lock);
--}
--
- #endif /* _NET_PAGE_POOL_H */
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 193c187998650..2396c99bedeaa 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -133,6 +133,29 @@ EXPORT_SYMBOL(page_pool_ethtool_stats_get);
- #define recycle_stat_add(pool, __stat, val)
- #endif
+ static int vsc85xx_get_tunable(struct phy_device *phydev,
+@@ -1766,13 +1770,11 @@ static int vsc8584_config_init(struct phy_device *phydev)
+ 	if (ret)
+ 		return ret;
  
-+static bool page_pool_producer_lock(struct page_pool *pool)
-+	__acquires(&pool->ring.producer_lock)
-+{
-+	bool in_softirq = in_softirq();
-+
-+	if (in_softirq)
-+		spin_lock(&pool->ring.producer_lock);
-+	else
-+		spin_lock_bh(&pool->ring.producer_lock);
-+
-+	return in_softirq;
-+}
-+
-+static void page_pool_producer_unlock(struct page_pool *pool,
-+				      bool in_softirq)
-+	__releases(&pool->ring.producer_lock)
-+{
-+	if (in_softirq)
-+		spin_unlock(&pool->ring.producer_lock);
-+	else
-+		spin_unlock_bh(&pool->ring.producer_lock);
-+}
-+
- static int page_pool_init(struct page_pool *pool,
- 			  const struct page_pool_params *params)
- {
-@@ -615,6 +638,7 @@ void page_pool_put_page_bulk(struct page_pool *pool, void **data,
- 			     int count)
- {
- 	int i, bulk_len = 0;
-+	bool in_softirq;
+-	if (phy_interface_is_rgmii(phydev)) {
+-		ret = vsc85xx_rgmii_set_skews(phydev, VSC8572_RGMII_CNTL,
+-					      VSC8572_RGMII_RX_DELAY_MASK,
+-					      VSC8572_RGMII_TX_DELAY_MASK);
+-		if (ret)
+-			return ret;
+-	}
++	ret = vsc85xx_update_rgmii_cntl(phydev, VSC8572_RGMII_CNTL,
++					VSC8572_RGMII_RX_DELAY_MASK,
++					VSC8572_RGMII_TX_DELAY_MASK);
++	if (ret)
++		return ret;
  
- 	for (i = 0; i < count; i++) {
- 		struct page *page = virt_to_head_page(data[i]);
-@@ -633,7 +657,7 @@ void page_pool_put_page_bulk(struct page_pool *pool, void **data,
- 		return;
- 
- 	/* Bulk producer into ptr_ring page_pool cache */
--	page_pool_ring_lock(pool);
-+	in_softirq = page_pool_producer_lock(pool);
- 	for (i = 0; i < bulk_len; i++) {
- 		if (__ptr_ring_produce(&pool->ring, data[i])) {
- 			/* ring full */
-@@ -642,7 +666,7 @@ void page_pool_put_page_bulk(struct page_pool *pool, void **data,
- 		}
- 	}
- 	recycle_stat_add(pool, ring, i);
--	page_pool_ring_unlock(pool);
-+	page_pool_producer_unlock(pool, in_softirq);
- 
- 	/* Hopefully all pages was return into ptr_ring */
- 	if (likely(i == bulk_len))
+ 	ret = genphy_soft_reset(phydev);
+ 	if (ret)
 -- 
 2.39.2
 
