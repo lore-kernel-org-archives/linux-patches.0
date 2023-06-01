@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179C1FBEA
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752DCC4339B;
-	Thu,  1 Jun 2023 13:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63281FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66B8C433EF;
+	Thu,  1 Jun 2023 13:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625977;
-	bh=fplDzVp6B3/ORRrKudlbN0BsEAEHoivu2HIEGJvfbaY=;
+	s=korg; t=1685625980;
+	bh=ButedDyARNPCEM+8Bd7CjZ17mo9aFfQE4Rrb9oHZ3cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LU4TZxJGj7WYA7uANWYXvQxYwJ6nuzotT+Ud4GOfPPwhb6C0WB5KycQeqN4Jes8aQ
-	 CKQALuhKT50+MWTFLvciXEgMtsk2r+QhTjZ9t9Xy81TOUn8TmLwErUieiAA8Nnan0t
-	 iX3SNvBlpLsvKEY8VY+NtXLgOJ39ew7ZuLANsGjU=
+	b=GkmIxTXLd372WYd9ms0CEN5Qv2HuE65y+HDxGNMiey8TQr40w41cMBRvxowckmK96
+	 spF7j6e3evrY1rxMlqXoAchS80ZNGWA1sUakSqGQhTQD8DZu2jKdZ9qdb0E+WH+Ss0
+	 Mcfj3ZR8Cre5q4UT8T3rz178FbwPRqTIWj6w6MUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Richter <rrichter@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Xing Tong Wu <xingtong.wu@siemens.com>,
+	Henning Schild <henning.schild@siemens.com>,
+	Simon Guinot <simon.guinot@sequanux.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 19/45] cxl/port: Fix NULL pointer access in devm_cxl_add_port()
-Date: Thu,  1 Jun 2023 14:21:15 +0100
-Message-Id: <20230601131939.595852162@linuxfoundation.org>
+Subject: [PATCH 6.3 28/45] gpio-f7188x: fix chip name and pin count on Nuvoton chip
+Date: Thu,  1 Jun 2023 14:21:24 +0100
+Message-Id: <20230601131939.966217322@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -36,44 +37,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Richter <rrichter@amd.com>
+From: Henning Schild <henning.schild@siemens.com>
 
-[ Upstream commit a70fc4ed20a6118837b0aecbbf789074935f473b ]
+[ Upstream commit 3002b8642f016d7fe3ff56240dacea1075f6b877 ]
 
-In devm_cxl_add_port() the port creation may fail and its associated
-pointer does not contain a valid address. During error message
-generation this invalid port address is used. Fix that wrong address
-access.
+In fact the device with chip id 0xD283 is called NCT6126D, and that is
+the chip id the Nuvoton code was written for. Correct that name to avoid
+confusion, because a NCT6116D in fact exists as well but has another
+chip id, and is currently not supported.
 
-Fixes: f3cd264c4ec1 ("cxl: Unify debug messages when calling devm_cxl_add_port()")
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20230519215436.3394532-1-rrichter@amd.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+The look at the spec also revealed that GPIO group7 in fact has 8 pins,
+so correct the pin count in that group as well.
+
+Fixes: d0918a84aff0 ("gpio-f7188x: Add GPIO support for Nuvoton NCT6116")
+Reported-by: Xing Tong Wu <xingtong.wu@siemens.com>
+Signed-off-by: Henning Schild <henning.schild@siemens.com>
+Acked-by: Simon Guinot <simon.guinot@sequanux.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpio/Kconfig       |  2 +-
+ drivers/gpio/gpio-f7188x.c | 28 ++++++++++++++--------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 4d1f9c5b5029a..27cbf457416d2 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -751,11 +751,10 @@ struct cxl_port *devm_cxl_add_port(struct device *host, struct device *uport,
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index badbe05823180..14b655411aa0a 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -879,7 +879,7 @@ config GPIO_F7188X
+ 	help
+ 	  This option enables support for GPIOs found on Fintek Super-I/O
+ 	  chips F71869, F71869A, F71882FG, F71889F and F81866.
+-	  As well as Nuvoton Super-I/O chip NCT6116D.
++	  As well as Nuvoton Super-I/O chip NCT6126D.
  
- 	parent_port = parent_dport ? parent_dport->port : NULL;
- 	if (IS_ERR(port)) {
--		dev_dbg(uport, "Failed to add %s%s%s%s: %ld\n",
--			dev_name(&port->dev),
--			parent_port ? " to " : "",
-+		dev_dbg(uport, "Failed to add%s%s%s: %ld\n",
-+			parent_port ? " port to " : "",
- 			parent_port ? dev_name(&parent_port->dev) : "",
--			parent_port ? "" : " (root port)",
-+			parent_port ? "" : " root port",
- 			PTR_ERR(port));
- 	} else {
- 		dev_dbg(uport, "%s added%s%s%s\n",
+ 	  To compile this driver as a module, choose M here: the module will
+ 	  be called f7188x-gpio.
+diff --git a/drivers/gpio/gpio-f7188x.c b/drivers/gpio/gpio-f7188x.c
+index 9effa7769bef5..f54ca5a1775ea 100644
+--- a/drivers/gpio/gpio-f7188x.c
++++ b/drivers/gpio/gpio-f7188x.c
+@@ -48,7 +48,7 @@
+ /*
+  * Nuvoton devices.
+  */
+-#define SIO_NCT6116D_ID		0xD283  /* NCT6116D chipset ID */
++#define SIO_NCT6126D_ID		0xD283  /* NCT6126D chipset ID */
+ 
+ #define SIO_LD_GPIO_NUVOTON	0x07	/* GPIO logical device */
+ 
+@@ -62,7 +62,7 @@ enum chips {
+ 	f81866,
+ 	f81804,
+ 	f81865,
+-	nct6116d,
++	nct6126d,
+ };
+ 
+ static const char * const f7188x_names[] = {
+@@ -74,7 +74,7 @@ static const char * const f7188x_names[] = {
+ 	"f81866",
+ 	"f81804",
+ 	"f81865",
+-	"nct6116d",
++	"nct6126d",
+ };
+ 
+ struct f7188x_sio {
+@@ -187,8 +187,8 @@ static int f7188x_gpio_set_config(struct gpio_chip *chip, unsigned offset,
+ /* Output mode register (0:open drain 1:push-pull). */
+ #define f7188x_gpio_out_mode(base) ((base) + 3)
+ 
+-#define f7188x_gpio_dir_invert(type)	((type) == nct6116d)
+-#define f7188x_gpio_data_single(type)	((type) == nct6116d)
++#define f7188x_gpio_dir_invert(type)	((type) == nct6126d)
++#define f7188x_gpio_data_single(type)	((type) == nct6126d)
+ 
+ static struct f7188x_gpio_bank f71869_gpio_bank[] = {
+ 	F7188X_GPIO_BANK(0, 6, 0xF0, DRVNAME "-0"),
+@@ -274,7 +274,7 @@ static struct f7188x_gpio_bank f81865_gpio_bank[] = {
+ 	F7188X_GPIO_BANK(60, 5, 0x90, DRVNAME "-6"),
+ };
+ 
+-static struct f7188x_gpio_bank nct6116d_gpio_bank[] = {
++static struct f7188x_gpio_bank nct6126d_gpio_bank[] = {
+ 	F7188X_GPIO_BANK(0, 8, 0xE0, DRVNAME "-0"),
+ 	F7188X_GPIO_BANK(10, 8, 0xE4, DRVNAME "-1"),
+ 	F7188X_GPIO_BANK(20, 8, 0xE8, DRVNAME "-2"),
+@@ -282,7 +282,7 @@ static struct f7188x_gpio_bank nct6116d_gpio_bank[] = {
+ 	F7188X_GPIO_BANK(40, 8, 0xF0, DRVNAME "-4"),
+ 	F7188X_GPIO_BANK(50, 8, 0xF4, DRVNAME "-5"),
+ 	F7188X_GPIO_BANK(60, 8, 0xF8, DRVNAME "-6"),
+-	F7188X_GPIO_BANK(70, 1, 0xFC, DRVNAME "-7"),
++	F7188X_GPIO_BANK(70, 8, 0xFC, DRVNAME "-7"),
+ };
+ 
+ static int f7188x_gpio_get_direction(struct gpio_chip *chip, unsigned offset)
+@@ -490,9 +490,9 @@ static int f7188x_gpio_probe(struct platform_device *pdev)
+ 		data->nr_bank = ARRAY_SIZE(f81865_gpio_bank);
+ 		data->bank = f81865_gpio_bank;
+ 		break;
+-	case nct6116d:
+-		data->nr_bank = ARRAY_SIZE(nct6116d_gpio_bank);
+-		data->bank = nct6116d_gpio_bank;
++	case nct6126d:
++		data->nr_bank = ARRAY_SIZE(nct6126d_gpio_bank);
++		data->bank = nct6126d_gpio_bank;
+ 		break;
+ 	default:
+ 		return -ENODEV;
+@@ -559,9 +559,9 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
+ 	case SIO_F81865_ID:
+ 		sio->type = f81865;
+ 		break;
+-	case SIO_NCT6116D_ID:
++	case SIO_NCT6126D_ID:
+ 		sio->device = SIO_LD_GPIO_NUVOTON;
+-		sio->type = nct6116d;
++		sio->type = nct6126d;
+ 		break;
+ 	default:
+ 		pr_info("Unsupported Fintek device 0x%04x\n", devid);
+@@ -569,7 +569,7 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
+ 	}
+ 
+ 	/* double check manufacturer where possible */
+-	if (sio->type != nct6116d) {
++	if (sio->type != nct6126d) {
+ 		manid = superio_inw(addr, SIO_FINTEK_MANID);
+ 		if (manid != SIO_FINTEK_ID) {
+ 			pr_debug("Not a Fintek device at 0x%08x\n", addr);
+@@ -581,7 +581,7 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
+ 	err = 0;
+ 
+ 	pr_info("Found %s at %#x\n", f7188x_names[sio->type], (unsigned int)addr);
+-	if (sio->type != nct6116d)
++	if (sio->type != nct6126d)
+ 		pr_info("   revision %d\n", superio_inb(addr, SIO_FINTEK_DEVREV));
+ 
+ err:
 -- 
 2.39.2
 
