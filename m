@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87380E574
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145D3C433EF;
-	Thu,  1 Jun 2023 13:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE7DE574
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F14BC433EF;
+	Thu,  1 Jun 2023 13:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625970;
-	bh=z7WCTmD4fDz35QUruiaMPQauvoIyXOgnvS8RGV3SJQg=;
+	s=korg; t=1685625972;
+	bh=DHbeZIlCJD/8jt1CjNFc6VqW0nOJJ4BR9ZXicu9RwkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6sYvIfp68GbLXcZNlSTodX3bspkUpFZbuBIyr6+EHP0+gse/nIyjAi4O/Xz/TP/o
-	 g2cKTekyexo39y8gRnltwwjLKE+gmnqNIPkR+j3XcxiJ8D3/6r0t1+iZHqyqRfFL/Y
-	 xP+xiCZ7rGzKLuBBvAoupCbVEEJHX0qySkc6BuF0=
+	b=SpQjnqVAoOMX786E1yeDt6otAGPz6NcJe1yad3Yom0bIPLKpTU4VvPGHm5tsJHtJt
+	 6xnU/Dcf9Mlx8wH+n3WfGwY6Y2/of3KSyK7+cJAUAZkf/XDbwNRlCSjVE3Ho0gi9O0
+	 K7gtMfpqoVhhFF3HFY7hza//NbNfsyMqE1Mj0iso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Stanislav Fomichev <sdf@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 08/45] platform/x86/amd/pmf: Fix CnQF and auto-mode after resume
-Date: Thu,  1 Jun 2023 14:21:04 +0100
-Message-Id: <20230601131939.081050313@linuxfoundation.org>
+Subject: [PATCH 6.3 09/45] bpf: netdev: init the offload table earlier
+Date: Thu,  1 Jun 2023 14:21:05 +0100
+Message-Id: <20230601131939.130808037@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -35,101 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit b54147fa374dbeadcb01b1762db1a793e06e37de ]
+[ Upstream commit e1505c1cc8d527fcc5bcaf9c1ad82eed817e3e10 ]
 
-After suspend/resume cycle there is an error message and auto-mode
-or CnQF stops working.
+Some netdevices may get unregistered before late_initcall(),
+we have to move the hashtable init earlier.
 
-[ 5741.447511] amd-pmf AMDI0100:00: SMU cmd failed. err: 0xff
-[ 5741.447523] amd-pmf AMDI0100:00: AMD_PMF_REGISTER_RESPONSE:ff
-[ 5741.447527] amd-pmf AMDI0100:00: AMD_PMF_REGISTER_ARGUMENT:7
-[ 5741.447531] amd-pmf AMDI0100:00: AMD_PMF_REGISTER_MESSAGE:16
-[ 5741.447540] amd-pmf AMDI0100:00: [AUTO_MODE] avg power: 0 mW mode: QUIET
-
-This is because the DRAM address used for accessing metrics table
-needs to be refreshed after a suspend resume cycle. Add a resume
-callback to reset this again.
-
-Fixes: 1a409b35c995 ("platform/x86/amd/pmf: Get performance metrics from PMFW")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20230513011408.958-1-mario.limonciello@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: f1fc43d03946 ("bpf: Move offload initialization into late_initcall")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217399
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20230505215836.491485-1-kuba@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/core.c | 32 ++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ kernel/bpf/offload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
-index 0acc0b6221290..dc9803e1a4b9b 100644
---- a/drivers/platform/x86/amd/pmf/core.c
-+++ b/drivers/platform/x86/amd/pmf/core.c
-@@ -245,24 +245,29 @@ static const struct pci_device_id pmf_pci_ids[] = {
- 	{ }
- };
- 
--int amd_pmf_init_metrics_table(struct amd_pmf_dev *dev)
-+static void amd_pmf_set_dram_addr(struct amd_pmf_dev *dev)
- {
- 	u64 phys_addr;
- 	u32 hi, low;
- 
--	INIT_DELAYED_WORK(&dev->work_buffer, amd_pmf_get_metrics);
-+	phys_addr = virt_to_phys(dev->buf);
-+	hi = phys_addr >> 32;
-+	low = phys_addr & GENMASK(31, 0);
-+
-+	amd_pmf_send_cmd(dev, SET_DRAM_ADDR_HIGH, 0, hi, NULL);
-+	amd_pmf_send_cmd(dev, SET_DRAM_ADDR_LOW, 0, low, NULL);
-+}
- 
-+int amd_pmf_init_metrics_table(struct amd_pmf_dev *dev)
-+{
- 	/* Get Metrics Table Address */
- 	dev->buf = kzalloc(sizeof(dev->m_table), GFP_KERNEL);
- 	if (!dev->buf)
- 		return -ENOMEM;
- 
--	phys_addr = virt_to_phys(dev->buf);
--	hi = phys_addr >> 32;
--	low = phys_addr & GENMASK(31, 0);
-+	INIT_DELAYED_WORK(&dev->work_buffer, amd_pmf_get_metrics);
- 
--	amd_pmf_send_cmd(dev, SET_DRAM_ADDR_HIGH, 0, hi, NULL);
--	amd_pmf_send_cmd(dev, SET_DRAM_ADDR_LOW, 0, low, NULL);
-+	amd_pmf_set_dram_addr(dev);
- 
- 	/*
- 	 * Start collecting the metrics data after a small delay
-@@ -273,6 +278,18 @@ int amd_pmf_init_metrics_table(struct amd_pmf_dev *dev)
- 	return 0;
+diff --git a/kernel/bpf/offload.c b/kernel/bpf/offload.c
+index 0c85e06f7ea7f..ee146430d9984 100644
+--- a/kernel/bpf/offload.c
++++ b/kernel/bpf/offload.c
+@@ -853,4 +853,4 @@ static int __init bpf_offload_init(void)
+ 	return rhashtable_init(&offdevs, &offdevs_params);
  }
  
-+static int amd_pmf_resume_handler(struct device *dev)
-+{
-+	struct amd_pmf_dev *pdev = dev_get_drvdata(dev);
-+
-+	if (pdev->buf)
-+		amd_pmf_set_dram_addr(pdev);
-+
-+	return 0;
-+}
-+
-+static DEFINE_SIMPLE_DEV_PM_OPS(amd_pmf_pm, NULL, amd_pmf_resume_handler);
-+
- static void amd_pmf_init_features(struct amd_pmf_dev *dev)
- {
- 	int ret;
-@@ -414,6 +431,7 @@ static struct platform_driver amd_pmf_driver = {
- 		.name = "amd-pmf",
- 		.acpi_match_table = amd_pmf_acpi_ids,
- 		.dev_groups = amd_pmf_driver_groups,
-+		.pm = pm_sleep_ptr(&amd_pmf_pm),
- 	},
- 	.probe = amd_pmf_probe,
- 	.remove = amd_pmf_remove,
+-late_initcall(bpf_offload_init);
++core_initcall(bpf_offload_init);
 -- 
 2.39.2
 
