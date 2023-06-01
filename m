@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72624FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BD4C433EF;
-	Thu,  1 Jun 2023 13:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D710CFBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6428DC433D2;
+	Thu,  1 Jun 2023 13:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626029;
-	bh=AuWkn0cGR/4t4dFzzB6Ssg1RmVdzV/AP4ldZK4QR+hE=;
+	s=korg; t=1685626031;
+	bh=WOs93kXykVaacUYA1ZnyRnPSg86coQKN0xmVM7ZBFzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0LwfS+EO+iN9YkKUynxzDdlbnSliGx5AiHfX/vOofXKB2N1eq8dwNkVaw/JNjfQPz
-	 LhNtGoXNLsSOX2W1kBzvLPJqzhjDM4wg8H6Nqr2FDHXq8eZzVTi+aPS+CmzwTL6GBX
-	 wHbK3BNIoWSzyGAurbf4Fo5Hkjhzjm0l20XeqcvQ=
+	b=ZSdC/V+6XJx3/BdvMZQnlUD/pZSLuN7YPLoQIDR4wMdxp/u3ycYHG/ojH5IXPXh0D
+	 xOz1CsoQlr2Oy+lJ8z6rzO0VnG4l8tmgeOpD1YewcTD0M+AVZcI+t+X+fo0p6D/h2H
+	 jXnZRwGGeZh4VVKOKX0mV0m4012juRDAyoSSwes0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Kahola <mika.kahola@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Imre Deak <imre.deak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 22/45] drm/i915: Disable DPLLs before disconnecting the TC PHY
-Date: Thu,  1 Jun 2023 14:21:18 +0100
-Message-Id: <20230601131939.719965868@linuxfoundation.org>
+Subject: [PATCH 6.3 23/45] drm/i915: Fix PIPEDMC disabling for a bigjoiner configuration
+Date: Thu,  1 Jun 2023 14:21:19 +0100
+Message-Id: <20230601131939.760754008@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -37,109 +39,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit b108bdd0e22a402bd3e4a6391acbb6aefad31a9e ]
+[ Upstream commit 45dfbd992923f4df174db4e23b96fca7e30d73e2 ]
 
-Bspec requires disabling the DPLLs on TC ports before disconnecting the
-port's PHY. Add a post_pll_disable encoder hook and move the call to
-disconnect the port's PHY from the post_disable hook to the new hook.
+For a bigjoiner configuration display->crtc_disable() will be called
+first for the slave CRTCs and then for the master CRTC. However slave
+CRTCs will be actually disabled only after the master CRTC is disabled
+(from the encoder disable hooks called with the master CRTC state).
+Hence the slave PIPEDMCs can be disabled only after the master CRTC is
+disabled, make this so.
 
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+intel_encoders_post_pll_disable() must be called only for the master
+CRTC, as for the other two encoder disable hooks. While at it fix this
+up as well. This didn't cause a problem, since
+intel_encoders_post_pll_disable() will call the corresponding hook only
+for an encoder/connector connected to the given CRTC, however slave
+CRTCs will have no associated encoder/connector.
+
+Fixes: 3af2ff0840be ("drm/i915: Enable a PIPEDMC whenever its corresponding pipe is enabled")
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
 Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230323142035.1432621-28-imre.deak@intel.com
-Stable-dep-of: 45dfbd992923 ("drm/i915: Fix PIPEDMC disabling for a bigjoiner configuration")
+Link: https://patchwork.freedesktop.org/patch/msgid/20230510103131.1618266-2-imre.deak@intel.com
+(cherry picked from commit 7eeef32719f6af935a1554813e6bc206446339cd)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_ddi.c     | 15 ++++++++++++---
- drivers/gpu/drm/i915/display/intel_display.c |  2 ++
- drivers/gpu/drm/i915/display/intel_dp_mst.c  | 15 +++++++++++++++
- 3 files changed, 29 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_ddi.c b/drivers/gpu/drm/i915/display/intel_ddi.c
-index 254559abedfba..379050d228941 100644
---- a/drivers/gpu/drm/i915/display/intel_ddi.c
-+++ b/drivers/gpu/drm/i915/display/intel_ddi.c
-@@ -2731,9 +2731,6 @@ static void intel_ddi_post_disable(struct intel_atomic_state *state,
- 				   const struct drm_connector_state *old_conn_state)
- {
- 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
--	struct intel_digital_port *dig_port = enc_to_dig_port(encoder);
--	enum phy phy = intel_port_to_phy(dev_priv, encoder->port);
--	bool is_tc_port = intel_phy_is_tc(dev_priv, phy);
- 	struct intel_crtc *slave_crtc;
- 
- 	if (!intel_crtc_has_type(old_crtc_state, INTEL_OUTPUT_DP_MST)) {
-@@ -2783,6 +2780,17 @@ static void intel_ddi_post_disable(struct intel_atomic_state *state,
- 	else
- 		intel_ddi_post_disable_dp(state, encoder, old_crtc_state,
- 					  old_conn_state);
-+}
-+
-+static void intel_ddi_post_pll_disable(struct intel_atomic_state *state,
-+				       struct intel_encoder *encoder,
-+				       const struct intel_crtc_state *old_crtc_state,
-+				       const struct drm_connector_state *old_conn_state)
-+{
-+	struct drm_i915_private *i915 = to_i915(encoder->base.dev);
-+	struct intel_digital_port *dig_port = enc_to_dig_port(encoder);
-+	enum phy phy = intel_port_to_phy(i915, encoder->port);
-+	bool is_tc_port = intel_phy_is_tc(i915, phy);
- 
- 	main_link_aux_power_domain_put(dig_port, old_crtc_state);
- 
-@@ -4381,6 +4389,7 @@ void intel_ddi_init(struct drm_i915_private *dev_priv, enum port port)
- 	encoder->pre_pll_enable = intel_ddi_pre_pll_enable;
- 	encoder->pre_enable = intel_ddi_pre_enable;
- 	encoder->disable = intel_disable_ddi;
-+	encoder->post_pll_disable = intel_ddi_post_pll_disable;
- 	encoder->post_disable = intel_ddi_post_disable;
- 	encoder->update_pipe = intel_ddi_update_pipe;
- 	encoder->get_hw_state = intel_ddi_get_hw_state;
 diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index df4c6e000961c..963680ea6fedd 100644
+index 963680ea6fedd..c84b581c61c6b 100644
 --- a/drivers/gpu/drm/i915/display/intel_display.c
 +++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -2022,6 +2022,8 @@ static void hsw_crtc_disable(struct intel_atomic_state *state,
+@@ -2022,9 +2022,17 @@ static void hsw_crtc_disable(struct intel_atomic_state *state,
  
  	intel_disable_shared_dpll(old_crtc_state);
  
-+	intel_encoders_post_pll_disable(state, crtc);
+-	intel_encoders_post_pll_disable(state, crtc);
++	if (!intel_crtc_is_bigjoiner_slave(old_crtc_state)) {
++		struct intel_crtc *slave_crtc;
 +
- 	intel_dmc_disable_pipe(i915, crtc->pipe);
++		intel_encoders_post_pll_disable(state, crtc);
+ 
+-	intel_dmc_disable_pipe(i915, crtc->pipe);
++		intel_dmc_disable_pipe(i915, crtc->pipe);
++
++		for_each_intel_crtc_in_pipe_mask(&i915->drm, slave_crtc,
++						 intel_crtc_bigjoiner_slave_pipes(old_crtc_state))
++			intel_dmc_disable_pipe(i915, slave_crtc->pipe);
++	}
  }
  
-diff --git a/drivers/gpu/drm/i915/display/intel_dp_mst.c b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-index 7c9b328bc2d73..a93018ce0e312 100644
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-@@ -623,6 +623,20 @@ static void intel_mst_post_disable_dp(struct intel_atomic_state *state,
- 		    intel_dp->active_mst_links);
- }
- 
-+static void intel_mst_post_pll_disable_dp(struct intel_atomic_state *state,
-+					  struct intel_encoder *encoder,
-+					  const struct intel_crtc_state *old_crtc_state,
-+					  const struct drm_connector_state *old_conn_state)
-+{
-+	struct intel_dp_mst_encoder *intel_mst = enc_to_mst(encoder);
-+	struct intel_digital_port *dig_port = intel_mst->primary;
-+	struct intel_dp *intel_dp = &dig_port->dp;
-+
-+	if (intel_dp->active_mst_links == 0 &&
-+	    dig_port->base.post_pll_disable)
-+		dig_port->base.post_pll_disable(state, encoder, old_crtc_state, old_conn_state);
-+}
-+
- static void intel_mst_pre_pll_enable_dp(struct intel_atomic_state *state,
- 					struct intel_encoder *encoder,
- 					const struct intel_crtc_state *pipe_config,
-@@ -1146,6 +1160,7 @@ intel_dp_create_fake_mst_encoder(struct intel_digital_port *dig_port, enum pipe
- 	intel_encoder->compute_config_late = intel_dp_mst_compute_config_late;
- 	intel_encoder->disable = intel_mst_disable_dp;
- 	intel_encoder->post_disable = intel_mst_post_disable_dp;
-+	intel_encoder->post_pll_disable = intel_mst_post_pll_disable_dp;
- 	intel_encoder->update_pipe = intel_ddi_update_pipe;
- 	intel_encoder->pre_pll_enable = intel_mst_pre_pll_enable_dp;
- 	intel_encoder->pre_enable = intel_mst_pre_enable_dp;
+ static void i9xx_pfit_enable(const struct intel_crtc_state *crtc_state)
 -- 
 2.39.2
 
