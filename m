@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9116E54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:22:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470D9C433EF;
-	Thu,  1 Jun 2023 13:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3FCE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:22:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9707C433D2;
+	Thu,  1 Jun 2023 13:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625775;
-	bh=Zt26YdEXW3xdOjwxCyEekt37/R+kVK2LUMAdvvojyx4=;
+	s=korg; t=1685625778;
+	bh=FDmF5mDlASdDyByVMqNUgffnOU9sMzu8qnKuEqxk2go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5Zct0LGBHfE6vXrbULUvCKxxU3DmHPfAoy9l1exWl7SyVqAM7+PzYI867FWPf9Z2
-	 6bXiZlPUIKMKlT6ATE+yRFxSA5W8TnrfG6lRQd7heDgc250Mb1Rs9cHC57J0agxpnr
-	 kyFjImtXXOVXw/ajzn0zjWywAO7qP4qgVPui4CD4=
+	b=we5+K8fID0LSuKJUl/7KWdyvPHHpCJeKLi30hsU/EikK+rwOe1RjLB9HoIImren7g
+	 /9eLGXmRXvAPvxjFpHNwIXaaVEgRm29qz8HXuA7DHtx5twEHNO9dbji5tR80hqIwaQ
+	 +41rrZBlvRVpCoYB+1hKO7Hv/3s7pTpH0S+P8OdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 03/22] power: supply: bq27xxx: fix polarity of current_now
-Date: Thu,  1 Jun 2023 14:21:01 +0100
-Message-Id: <20230601131933.881797295@linuxfoundation.org>
+Subject: [PATCH 5.10 12/22] power: supply: bq24190: Call power_supply_changed() after updating input current
+Date: Thu,  1 Jun 2023 14:21:10 +0100
+Message-Id: <20230601131934.305774382@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131933.727832920@linuxfoundation.org>
 References: <20230601131933.727832920@linuxfoundation.org>
@@ -35,45 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit cd060b4d0868c806c2738a5e64e8ab9bd0fbec07 ]
+[ Upstream commit 77c2a3097d7029441e8a91aa0de1b4e5464593da ]
 
-current_now has to be negative during discharging and positive during
-charging, the behavior seen is the other way round.
+The bq24192 model relies on external charger-type detection and once
+that is done the bq24190_charger code will update the input current.
 
-Tested on GTA04 with Openmoko battery.
+In this case, when the initial power_supply_changed() call is made
+from the interrupt handler, the input settings are 5V/0.5A which
+on many devices is not enough power to charge (while the device is on).
 
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+On many devices the fuel-gauge relies in its external_power_changed
+callback to timely signal userspace about charging <-> discharging
+status changes. Add a power_supply_changed() call after updating
+the input current. This allows the fuel-gauge driver to timely recheck
+if the battery is charging after the new input current has been applied
+and then it can immediately notify userspace about this.
+
+Fixes: 18f8e6f695ac ("power: supply: bq24190_charger: Get input_current_limit from our supplier")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: 35092c5819f8 ("power: supply: bq27xxx: Add cache parameter to bq27xxx_battery_current_and_status()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/bq24190_charger.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index c08dd4e6d35ad..79eee63a2041e 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1773,7 +1773,7 @@ static int bq27xxx_battery_current(struct bq27xxx_device_info *di,
+diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
+index 7a7b03b09ea64..5769b36851c34 100644
+--- a/drivers/power/supply/bq24190_charger.c
++++ b/drivers/power/supply/bq24190_charger.c
+@@ -1215,6 +1215,7 @@ static void bq24190_input_current_limit_work(struct work_struct *work)
+ 	bq24190_charger_set_property(bdi->charger,
+ 				     POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT,
+ 				     &val);
++	power_supply_changed(bdi->charger);
+ }
  
- 	if (di->opts & BQ27XXX_O_ZERO) {
- 		flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, true);
--		if (flags & BQ27000_FLAG_CHGS) {
-+		if (!(flags & BQ27000_FLAG_CHGS)) {
- 			dev_dbg(di->dev, "negative current!\n");
- 			curr = -curr;
- 		}
-@@ -1781,7 +1781,7 @@ static int bq27xxx_battery_current(struct bq27xxx_device_info *di,
- 		val->intval = curr * BQ27XXX_CURRENT_CONSTANT / BQ27XXX_RS;
- 	} else {
- 		/* Other gauges return signed value */
--		val->intval = (int)((s16)curr) * 1000;
-+		val->intval = -(int)((s16)curr) * 1000;
- 	}
- 
- 	return 0;
+ /* Sync the input-current-limit with our parent supply (if we have one) */
 -- 
 2.39.2
 
