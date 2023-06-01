@@ -1,32 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5BCFBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8726CC433EF;
-	Thu,  1 Jun 2023 13:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D58FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED96C433EF;
+	Thu,  1 Jun 2023 13:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626043;
-	bh=l1+wkJBql6UtkIYpV7h81XObR2QkUArtaDh2lgwwvy0=;
+	s=korg; t=1685626046;
+	bh=WOCNylwgkcCc9QBDhDQLwu9kYOWvtGl6cIKxgqnayWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3DprAeuHwSweg2vojZsOetFL8gXUzKpv5ecYYvb8z07SJ072vuDrFRn050yWa33D
-	 JsK9+zsdApxIdWCrUkxHTOn4AX2ISOxEkE85w2F0UzmUo9EX3kgjpzASzi+hEITbXK
-	 QXTUfrHajF8tScN1T/DUzC7qpVO3PMoAgqCxHXcQ=
+	b=MW1kCii4RmvFbxJG2qQqlR24ieX4JJszMNbtOyGfCpl9fPOGuvHLibf+itqMdb8nL
+	 J2H2pYuTfdnaCC+9AJWINTKecM/kJOJ/3V3ZSnyfeS0l/uNi0QE3aDDj4Cv0+kW4K1
+	 Wq3vEm96K3Eh4IJolP5fJkpm0E/6ar5WfNx/Q2u4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marek Majkowski <marek@cloudflare.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 18/45] net: fec: add dma_wmb to ensure correct descriptor values
-Date: Thu,  1 Jun 2023 14:21:14 +0100
-Message-Id: <20230601131939.544331582@linuxfoundation.org>
+Subject: [PATCH 6.1 01/42] inet: Add IP_LOCAL_PORT_RANGE socket option
+Date: Thu,  1 Jun 2023 14:21:10 +0100
+Message-Id: <20230601131939.122327167@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
-References: <20230601131938.702671708@linuxfoundation.org>
+In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
+References: <20230601131939.051934720@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,73 +40,309 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit 9025944fddfed5966c8f102f1fe921ab3aee2c12 ]
+[ Upstream commit 91d0b78c5177f3e42a4d8738af8ac19c3a90d002 ]
 
-Two dma_wmb() are added in the XDP TX path to ensure proper ordering of
-descriptor and buffer updates:
-1. A dma_wmb() is added after updating the last BD to make sure
-   the updates to rest of the descriptor are visible before
-   transferring ownership to FEC.
-2. A dma_wmb() is also added after updating the bdp to ensure these
-   updates are visible before updating txq->bd.cur.
-3. Start the xmit of the frame immediately right after configuring the
-   tx descriptor.
+Users who want to share a single public IP address for outgoing connections
+between several hosts traditionally reach for SNAT. However, SNAT requires
+state keeping on the node(s) performing the NAT.
 
-Fixes: 6d6b39f180b8 ("net: fec: add initial XDP support")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+A stateless alternative exists, where a single IP address used for egress
+can be shared between several hosts by partitioning the available ephemeral
+port range. In such a setup:
+
+1. Each host gets assigned a disjoint range of ephemeral ports.
+2. Applications open connections from the host-assigned port range.
+3. Return traffic gets routed to the host based on both, the destination IP
+   and the destination port.
+
+An application which wants to open an outgoing connection (connect) from a
+given port range today can choose between two solutions:
+
+1. Manually pick the source port by bind()'ing to it before connect()'ing
+   the socket.
+
+   This approach has a couple of downsides:
+
+   a) Search for a free port has to be implemented in the user-space. If
+      the chosen 4-tuple happens to be busy, the application needs to retry
+      from a different local port number.
+
+      Detecting if 4-tuple is busy can be either easy (TCP) or hard
+      (UDP). In TCP case, the application simply has to check if connect()
+      returned an error (EADDRNOTAVAIL). That is assuming that the local
+      port sharing was enabled (REUSEADDR) by all the sockets.
+
+        # Assume desired local port range is 60_000-60_511
+        s = socket(AF_INET, SOCK_STREAM)
+        s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        s.bind(("192.0.2.1", 60_000))
+        s.connect(("1.1.1.1", 53))
+        # Fails only if 192.0.2.1:60000 -> 1.1.1.1:53 is busy
+        # Application must retry with another local port
+
+      In case of UDP, the network stack allows binding more than one socket
+      to the same 4-tuple, when local port sharing is enabled
+      (REUSEADDR). Hence detecting the conflict is much harder and involves
+      querying sock_diag and toggling the REUSEADDR flag [1].
+
+   b) For TCP, bind()-ing to a port within the ephemeral port range means
+      that no connecting sockets, that is those which leave it to the
+      network stack to find a free local port at connect() time, can use
+      the this port.
+
+      IOW, the bind hash bucket tb->fastreuse will be 0 or 1, and the port
+      will be skipped during the free port search at connect() time.
+
+2. Isolate the app in a dedicated netns and use the use the per-netns
+   ip_local_port_range sysctl to adjust the ephemeral port range bounds.
+
+   The per-netns setting affects all sockets, so this approach can be used
+   only if:
+
+   - there is just one egress IP address, or
+   - the desired egress port range is the same for all egress IP addresses
+     used by the application.
+
+   For TCP, this approach avoids the downsides of (1). Free port search and
+   4-tuple conflict detection is done by the network stack:
+
+     system("sysctl -w net.ipv4.ip_local_port_range='60000 60511'")
+
+     s = socket(AF_INET, SOCK_STREAM)
+     s.setsockopt(SOL_IP, IP_BIND_ADDRESS_NO_PORT, 1)
+     s.bind(("192.0.2.1", 0))
+     s.connect(("1.1.1.1", 53))
+     # Fails if all 4-tuples 192.0.2.1:60000-60511 -> 1.1.1.1:53 are busy
+
+  For UDP this approach has limited applicability. Setting the
+  IP_BIND_ADDRESS_NO_PORT socket option does not result in local source
+  port being shared with other connected UDP sockets.
+
+  Hence relying on the network stack to find a free source port, limits the
+  number of outgoing UDP flows from a single IP address down to the number
+  of available ephemeral ports.
+
+To put it another way, partitioning the ephemeral port range between hosts
+using the existing Linux networking API is cumbersome.
+
+To address this use case, add a new socket option at the SOL_IP level,
+named IP_LOCAL_PORT_RANGE. The new option can be used to clamp down the
+ephemeral port range for each socket individually.
+
+The option can be used only to narrow down the per-netns local port
+range. If the per-socket range lies outside of the per-netns range, the
+latter takes precedence.
+
+UAPI-wise, the low and high range bounds are passed to the kernel as a pair
+of u16 values in host byte order packed into a u32. This avoids pointer
+passing.
+
+  PORT_LO = 40_000
+  PORT_HI = 40_511
+
+  s = socket(AF_INET, SOCK_STREAM)
+  v = struct.pack("I", PORT_HI << 16 | PORT_LO)
+  s.setsockopt(SOL_IP, IP_LOCAL_PORT_RANGE, v)
+  s.bind(("127.0.0.1", 0))
+  s.getsockname()
+  # Local address between ("127.0.0.1", 40_000) and ("127.0.0.1", 40_511),
+  # if there is a free port. EADDRINUSE otherwise.
+
+[1] https://github.com/cloudflare/cloudflare-blog/blob/232b432c1d57/2022-02-connectx/connectx.py#L116
+
+Reviewed-by: Marek Majkowski <marek@cloudflare.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 3632679d9e4f ("ipv{4,6}/raw: fix output xfrm lookup wrt protocol")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ include/net/inet_sock.h         |  4 ++++
+ include/net/ip.h                |  3 ++-
+ include/uapi/linux/in.h         |  1 +
+ net/ipv4/inet_connection_sock.c | 25 +++++++++++++++++++++++--
+ net/ipv4/inet_hashtables.c      |  2 +-
+ net/ipv4/ip_sockglue.c          | 18 ++++++++++++++++++
+ net/ipv4/udp.c                  |  2 +-
+ net/sctp/socket.c               |  2 +-
+ 8 files changed, 51 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 577d94821b3e7..38e5b5abe067c 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3834,6 +3834,11 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
- 	index = fec_enet_get_bd_index(last_bdp, &txq->bd);
- 	txq->tx_skbuff[index] = NULL;
+diff --git a/include/net/inet_sock.h b/include/net/inet_sock.h
+index bf5654ce711ef..51857117ac099 100644
+--- a/include/net/inet_sock.h
++++ b/include/net/inet_sock.h
+@@ -249,6 +249,10 @@ struct inet_sock {
+ 	__be32			mc_addr;
+ 	struct ip_mc_socklist __rcu	*mc_list;
+ 	struct inet_cork_full	cork;
++	struct {
++		__u16 lo;
++		__u16 hi;
++	}			local_port_range;
+ };
  
-+	/* Make sure the updates to rest of the descriptor are performed before
-+	 * transferring ownership.
-+	 */
-+	dma_wmb();
-+
- 	/* Send it on its way.  Tell FEC it's ready, interrupt when done,
- 	 * it's the last BD of the frame, and to put the CRC on the end.
- 	 */
-@@ -3843,8 +3848,14 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
- 	/* If this was the last BD in the ring, start at the beginning again. */
- 	bdp = fec_enet_get_nextdesc(last_bdp, &txq->bd);
- 
-+	/* Make sure the update to bdp are performed before txq->bd.cur. */
-+	dma_wmb();
-+
- 	txq->bd.cur = bdp;
- 
-+	/* Trigger transmission start */
-+	writel(0, txq->bd.reg_desc_active);
-+
- 	return 0;
+ #define IPCORK_OPT	1	/* ip-options has been held in ipcork.opt */
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 144bdfbb25afe..c3fffaa92d6e0 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -340,7 +340,8 @@ static inline u64 snmp_fold_field64(void __percpu *mib, int offt, size_t syncp_o
+ 	} \
  }
  
-@@ -3873,12 +3884,6 @@ static int fec_enet_xdp_xmit(struct net_device *dev,
- 		sent_frames++;
- 	}
+-void inet_get_local_port_range(struct net *net, int *low, int *high);
++void inet_get_local_port_range(const struct net *net, int *low, int *high);
++void inet_sk_get_local_port_range(const struct sock *sk, int *low, int *high);
  
--	/* Make sure the update to bdp and tx_skbuff are performed. */
--	wmb();
--
--	/* Trigger transmission start */
--	writel(0, txq->bd.reg_desc_active);
--
- 	__netif_tx_unlock(nq);
+ #ifdef CONFIG_SYSCTL
+ static inline bool inet_is_local_reserved_port(struct net *net, unsigned short port)
+diff --git a/include/uapi/linux/in.h b/include/uapi/linux/in.h
+index 07a4cb149305b..4b7f2df66b995 100644
+--- a/include/uapi/linux/in.h
++++ b/include/uapi/linux/in.h
+@@ -162,6 +162,7 @@ struct in_addr {
+ #define MCAST_MSFILTER			48
+ #define IP_MULTICAST_ALL		49
+ #define IP_UNICAST_IF			50
++#define IP_LOCAL_PORT_RANGE		51
  
- 	return sent_frames;
+ #define MCAST_EXCLUDE	0
+ #define MCAST_INCLUDE	1
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 7152ede18f115..916075e00d066 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -117,7 +117,7 @@ bool inet_rcv_saddr_any(const struct sock *sk)
+ 	return !sk->sk_rcv_saddr;
+ }
+ 
+-void inet_get_local_port_range(struct net *net, int *low, int *high)
++void inet_get_local_port_range(const struct net *net, int *low, int *high)
+ {
+ 	unsigned int seq;
+ 
+@@ -130,6 +130,27 @@ void inet_get_local_port_range(struct net *net, int *low, int *high)
+ }
+ EXPORT_SYMBOL(inet_get_local_port_range);
+ 
++void inet_sk_get_local_port_range(const struct sock *sk, int *low, int *high)
++{
++	const struct inet_sock *inet = inet_sk(sk);
++	const struct net *net = sock_net(sk);
++	int lo, hi, sk_lo, sk_hi;
++
++	inet_get_local_port_range(net, &lo, &hi);
++
++	sk_lo = inet->local_port_range.lo;
++	sk_hi = inet->local_port_range.hi;
++
++	if (unlikely(lo <= sk_lo && sk_lo <= hi))
++		lo = sk_lo;
++	if (unlikely(lo <= sk_hi && sk_hi <= hi))
++		hi = sk_hi;
++
++	*low = lo;
++	*high = hi;
++}
++EXPORT_SYMBOL(inet_sk_get_local_port_range);
++
+ static bool inet_use_bhash2_on_bind(const struct sock *sk)
+ {
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -316,7 +337,7 @@ inet_csk_find_open_port(const struct sock *sk, struct inet_bind_bucket **tb_ret,
+ ports_exhausted:
+ 	attempt_half = (sk->sk_reuse == SK_CAN_REUSE) ? 1 : 0;
+ other_half_scan:
+-	inet_get_local_port_range(net, &low, &high);
++	inet_sk_get_local_port_range(sk, &low, &high);
+ 	high++; /* [32768, 60999] -> [32768, 61000[ */
+ 	if (high - low < 4)
+ 		attempt_half = 0;
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index f0750c06d5ffc..e8734ffca85a8 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -1022,7 +1022,7 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
+ 
+ 	l3mdev = inet_sk_bound_l3mdev(sk);
+ 
+-	inet_get_local_port_range(net, &low, &high);
++	inet_sk_get_local_port_range(sk, &low, &high);
+ 	high++; /* [32768, 60999] -> [32768, 61000[ */
+ 	remaining = high - low;
+ 	if (likely(remaining > 1))
+diff --git a/net/ipv4/ip_sockglue.c b/net/ipv4/ip_sockglue.c
+index 6e19cad154f5c..d05f631ea6401 100644
+--- a/net/ipv4/ip_sockglue.c
++++ b/net/ipv4/ip_sockglue.c
+@@ -922,6 +922,7 @@ int do_ip_setsockopt(struct sock *sk, int level, int optname,
+ 	case IP_CHECKSUM:
+ 	case IP_RECVFRAGSIZE:
+ 	case IP_RECVERR_RFC4884:
++	case IP_LOCAL_PORT_RANGE:
+ 		if (optlen >= sizeof(int)) {
+ 			if (copy_from_sockptr(&val, optval, sizeof(val)))
+ 				return -EFAULT;
+@@ -1364,6 +1365,20 @@ int do_ip_setsockopt(struct sock *sk, int level, int optname,
+ 		WRITE_ONCE(inet->min_ttl, val);
+ 		break;
+ 
++	case IP_LOCAL_PORT_RANGE:
++	{
++		const __u16 lo = val;
++		const __u16 hi = val >> 16;
++
++		if (optlen != sizeof(__u32))
++			goto e_inval;
++		if (lo != 0 && hi != 0 && lo > hi)
++			goto e_inval;
++
++		inet->local_port_range.lo = lo;
++		inet->local_port_range.hi = hi;
++		break;
++	}
+ 	default:
+ 		err = -ENOPROTOOPT;
+ 		break;
+@@ -1742,6 +1757,9 @@ int do_ip_getsockopt(struct sock *sk, int level, int optname,
+ 	case IP_MINTTL:
+ 		val = inet->min_ttl;
+ 		break;
++	case IP_LOCAL_PORT_RANGE:
++		val = inet->local_port_range.hi << 16 | inet->local_port_range.lo;
++		break;
+ 	default:
+ 		sockopt_release_sock(sk);
+ 		return -ENOPROTOOPT;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 2eaf47e23b221..3ffa30c37293e 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -243,7 +243,7 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
+ 		int low, high, remaining;
+ 		unsigned int rand;
+ 
+-		inet_get_local_port_range(net, &low, &high);
++		inet_sk_get_local_port_range(sk, &low, &high);
+ 		remaining = (high - low) + 1;
+ 
+ 		rand = get_random_u32();
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 17185200079d5..bc3d08bd7cef3 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -8325,7 +8325,7 @@ static int sctp_get_port_local(struct sock *sk, union sctp_addr *addr)
+ 		int low, high, remaining, index;
+ 		unsigned int rover;
+ 
+-		inet_get_local_port_range(net, &low, &high);
++		inet_sk_get_local_port_range(sk, &low, &high);
+ 		remaining = (high - low) + 1;
+ 		rover = prandom_u32_max(remaining) + low;
+ 
 -- 
 2.39.2
 
