@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A45E54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98BDC433D2;
-	Thu,  1 Jun 2023 13:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3ADFE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32149C433EF;
+	Thu,  1 Jun 2023 13:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625826;
-	bh=6hQR2alFunVx/frTJvBSGz/QABVxSkAdwSYQHzZBQvE=;
+	s=korg; t=1685625828;
+	bh=8COC0BuCbT5HYoj6R94AO+/7obDR1Opyoz7hIHqA43I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTGCvhDCaCiyaJ5+oKxApbLhB2iCoR52tLrl4a1B99pekmsyazFNpMP5EbDE8rGQC
-	 U1dFfyLMGNAxhWfg+6G9gT6UGJdkDPo9vMz3+O2b0j16eIevAOQ+8JL+50VIQDcHME
-	 0b+j//KGjFqgreja3jO0qNNAjSrNO7lyOIxPiL3k=
+	b=uLmjHJfz9v2y+9a8bdznX35E9OoIEH/TM6BtHfmNfCgoWXPL/W/706IeeSzaFRMBL
+	 uwtSJuh0ijk2ZU4cC/SfvS053fqd3cOS+av0RgWzDcEmx0Tc9W7/NzJDRf0b1nLBJx
+	 Vozy/3BuFGvMqOwPaeasucrvi8JSgJHXK62OtvGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Zhang <rui.zhang@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	"Sicelo A. Mhlongo" <absicsz@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 02/22] x86/cpu: Drop spurious underscore from RAPTOR_LAKE #define
-Date: Thu,  1 Jun 2023 14:21:00 +0100
-Message-Id: <20230601131933.835316756@linuxfoundation.org>
+Subject: [PATCH 5.15 01/42] power: supply: bq27xxx: expose battery data when CI=1
+Date: Thu,  1 Jun 2023 14:20:48 +0100
+Message-Id: <20230601131936.765376822@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230601131933.727832920@linuxfoundation.org>
-References: <20230601131933.727832920@linuxfoundation.org>
+In-Reply-To: <20230601131936.699199833@linuxfoundation.org>
+References: <20230601131936.699199833@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,37 +38,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Luck <tony.luck@intel.com>
+From: Sicelo A. Mhlongo <absicsz@gmail.com>
 
-[ Upstream commit 7d697f0d5737768fa1039b8953b67c08d8d406d1 ]
+[ Upstream commit 68fdbe090c362e8be23890a7333d156e18c27781 ]
 
-Convention for all the other "lake" CPUs is all one word.
+When the Capacity Inaccurate flag is set, the chip still provides data
+about the battery, albeit inaccurate. Instead of discarding capacity
+values for CI=1, expose the stale data and use the
+POWER_SUPPLY_HEALTH_CALIBRATION_REQUIRED property to indicate that the
+values should be used with care.
 
-So s/RAPTOR_LAKE/RAPTORLAKE/
-
-Fixes: fbdb5e8f2926 ("x86/cpu: Add Raptor Lake to Intel family")
-Reported-by: Rui Zhang <rui.zhang@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lkml.kernel.org/r/20211119170832.1034220-1-tony.luck@intel.com
-Stable-dep-of: ce0b15d11ad8 ("x86/mm: Avoid incomplete Global INVLPG flushes")
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Sicelo A. Mhlongo <absicsz@gmail.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: ff4c4a2a4437 ("power: supply: bq27xxx: Move bq27xxx_battery_update() down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/intel-family.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/bq27xxx_battery.c | 60 ++++++++++++--------------
+ 1 file changed, 27 insertions(+), 33 deletions(-)
 
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 7a602d79bc38d..0de49e33d422e 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -104,7 +104,7 @@
- #define INTEL_FAM6_RAPTORLAKE_P		0xBA
- #define INTEL_FAM6_RAPTORLAKE_S		0xBF
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 7334a8b8007e5..66199f1c1c5d1 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1572,14 +1572,6 @@ static int bq27xxx_battery_read_charge(struct bq27xxx_device_info *di, u8 reg)
+  */
+ static inline int bq27xxx_battery_read_nac(struct bq27xxx_device_info *di)
+ {
+-	int flags;
+-
+-	if (di->opts & BQ27XXX_O_ZERO) {
+-		flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, true);
+-		if (flags >= 0 && (flags & BQ27000_FLAG_CI))
+-			return -ENODATA;
+-	}
+-
+ 	return bq27xxx_battery_read_charge(di, BQ27XXX_REG_NAC);
+ }
  
--#define INTEL_FAM6_RAPTOR_LAKE		0xB7
-+#define INTEL_FAM6_RAPTORLAKE		0xB7
+@@ -1742,6 +1734,18 @@ static bool bq27xxx_battery_dead(struct bq27xxx_device_info *di, u16 flags)
+ 		return flags & (BQ27XXX_FLAG_SOC1 | BQ27XXX_FLAG_SOCF);
+ }
  
- /* "Small Core" Processors (Atom) */
++/*
++ * Returns true if reported battery capacity is inaccurate
++ */
++static bool bq27xxx_battery_capacity_inaccurate(struct bq27xxx_device_info *di,
++						 u16 flags)
++{
++	if (di->opts & BQ27XXX_O_HAS_CI)
++		return (flags & BQ27000_FLAG_CI);
++	else
++		return false;
++}
++
+ static int bq27xxx_battery_read_health(struct bq27xxx_device_info *di)
+ {
+ 	/* Unlikely but important to return first */
+@@ -1751,6 +1755,8 @@ static int bq27xxx_battery_read_health(struct bq27xxx_device_info *di)
+ 		return POWER_SUPPLY_HEALTH_COLD;
+ 	if (unlikely(bq27xxx_battery_dead(di, di->cache.flags)))
+ 		return POWER_SUPPLY_HEALTH_DEAD;
++	if (unlikely(bq27xxx_battery_capacity_inaccurate(di, di->cache.flags)))
++		return POWER_SUPPLY_HEALTH_CALIBRATION_REQUIRED;
+ 
+ 	return POWER_SUPPLY_HEALTH_GOOD;
+ }
+@@ -1758,7 +1764,6 @@ static int bq27xxx_battery_read_health(struct bq27xxx_device_info *di)
+ static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
+ {
+ 	struct bq27xxx_reg_cache cache = {0, };
+-	bool has_ci_flag = di->opts & BQ27XXX_O_HAS_CI;
+ 	bool has_singe_flag = di->opts & BQ27XXX_O_ZERO;
+ 
+ 	cache.flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, has_singe_flag);
+@@ -1766,30 +1771,19 @@ static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
+ 		cache.flags = -1; /* read error */
+ 	if (cache.flags >= 0) {
+ 		cache.temperature = bq27xxx_battery_read_temperature(di);
+-		if (has_ci_flag && (cache.flags & BQ27000_FLAG_CI)) {
+-			dev_info_once(di->dev, "battery is not calibrated! ignoring capacity values\n");
+-			cache.capacity = -ENODATA;
+-			cache.energy = -ENODATA;
+-			cache.time_to_empty = -ENODATA;
+-			cache.time_to_empty_avg = -ENODATA;
+-			cache.time_to_full = -ENODATA;
+-			cache.charge_full = -ENODATA;
+-			cache.health = -ENODATA;
+-		} else {
+-			if (di->regs[BQ27XXX_REG_TTE] != INVALID_REG_ADDR)
+-				cache.time_to_empty = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTE);
+-			if (di->regs[BQ27XXX_REG_TTECP] != INVALID_REG_ADDR)
+-				cache.time_to_empty_avg = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTECP);
+-			if (di->regs[BQ27XXX_REG_TTF] != INVALID_REG_ADDR)
+-				cache.time_to_full = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTF);
+-
+-			cache.charge_full = bq27xxx_battery_read_fcc(di);
+-			cache.capacity = bq27xxx_battery_read_soc(di);
+-			if (di->regs[BQ27XXX_REG_AE] != INVALID_REG_ADDR)
+-				cache.energy = bq27xxx_battery_read_energy(di);
+-			di->cache.flags = cache.flags;
+-			cache.health = bq27xxx_battery_read_health(di);
+-		}
++		if (di->regs[BQ27XXX_REG_TTE] != INVALID_REG_ADDR)
++			cache.time_to_empty = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTE);
++		if (di->regs[BQ27XXX_REG_TTECP] != INVALID_REG_ADDR)
++			cache.time_to_empty_avg = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTECP);
++		if (di->regs[BQ27XXX_REG_TTF] != INVALID_REG_ADDR)
++			cache.time_to_full = bq27xxx_battery_read_time(di, BQ27XXX_REG_TTF);
++
++		cache.charge_full = bq27xxx_battery_read_fcc(di);
++		cache.capacity = bq27xxx_battery_read_soc(di);
++		if (di->regs[BQ27XXX_REG_AE] != INVALID_REG_ADDR)
++			cache.energy = bq27xxx_battery_read_energy(di);
++		di->cache.flags = cache.flags;
++		cache.health = bq27xxx_battery_read_health(di);
+ 		if (di->regs[BQ27XXX_REG_CYCT] != INVALID_REG_ADDR)
+ 			cache.cycle_count = bq27xxx_battery_read_cyct(di);
  
 -- 
 2.39.2
