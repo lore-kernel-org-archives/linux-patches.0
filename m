@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97C8FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7629EC433D2;
-	Thu,  1 Jun 2023 13:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE46FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:29:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F06FAC433D2;
+	Thu,  1 Jun 2023 13:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626139;
-	bh=gQX4XUar3UWHeN9dNE4GmrysgoMlMDVnpP29rl99bLk=;
+	s=korg; t=1685626142;
+	bh=d8+VB8xeYHoLU6AYiD+PlHXIKgd9dY8l+NNlNPqUBKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHamcouEBPaGRyez4yn/dJd00I3aZc+W95/ynXeqkyCCqtbFnluJvEghZlCfsNqaX
-	 PzB+e4DZyy1C+uLzGwH0TVZECjnAYCqClGGuO23wdt02izCJ4r1CN2QZualCqUb6yd
-	 qHU6PINqDjbZN2q6vwyKugZ1ATLRtZYs2ZTriXLw=
+	b=l78uYXQpblXz5rX8WmNxRBDux4oNygxZN1sVeI6sVsWUOrWo57T1Cgej/rvWS3LdH
+	 zv9q3lQwOyj6UZ23+AuseHEi+WD0ACv75BNQce2iXrs22JwDOWB7pHt+t1v6hvlJuW
+	 Lyb3hRCCAB8YQlDLwIQ/rLZjIPCPzP69w9ClUrpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
+	Shai Amiram <samiram@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 20/42] bpf, sockmap: Wake up polling after data copy
-Date: Thu,  1 Jun 2023 14:21:29 +0100
-Message-Id: <20230601131939.941082244@linuxfoundation.org>
+Subject: [PATCH 6.1 11/42] tls: rx: strp: preserve decryption status of skbs when needed
+Date: Thu,  1 Jun 2023 14:21:20 +0100
+Message-Id: <20230601131939.560170765@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
 References: <20230601131939.051934720@linuxfoundation.org>
@@ -36,58 +37,260 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 6df7f764cd3cf5a03a4a47b23be47e57e41fcd85 ]
+[ Upstream commit eca9bfafee3a0487e59c59201ae14c7594ba940a ]
 
-When TCP stack has data ready to read sk_data_ready() is called. Sockmap
-overwrites this with its own handler to call into BPF verdict program.
-But, the original TCP socket had sock_def_readable that would additionally
-wake up any user space waiters with sk_wake_async().
+When receive buffer is small we try to copy out the data from
+TCP into a skb maintained by TLS to prevent connection from
+stalling. Unfortunately if a single record is made up of a mix
+of decrypted and non-decrypted skbs combining them into a single
+skb leads to loss of decryption status, resulting in decryption
+errors or data corruption.
 
-Sockmap saved the callback when the socket was created so call the saved
-data ready callback and then we can wake up any epoll() logic waiting
-on the read.
+Similarly when trying to use TCP receive queue directly we need
+to make sure that all the skbs within the record have the same
+status. If we don't the mixed status will be detected correctly
+but we'll CoW the anchor, again collapsing it into a single paged
+skb without decrypted status preserved. So the "fixup" code will
+not know which parts of skb to re-encrypt.
 
-Note we call on 'copied >= 0' to account for returning 0 when a FIN is
-received because we need to wake up user for this as well so they
-can do the recvmsg() -> 0 and detect the shutdown.
-
-Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/20230523025618.113937-8-john.fastabend@gmail.com
+Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
+Tested-by: Shai Amiram <samiram@nvidia.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ include/net/tls.h    |   1 +
+ net/tls/tls.h        |   5 ++
+ net/tls/tls_device.c |  22 +++-----
+ net/tls/tls_strp.c   | 117 ++++++++++++++++++++++++++++++++++++-------
+ 4 files changed, 114 insertions(+), 31 deletions(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index d3ffca1b96462..062612ee508c0 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1196,10 +1196,19 @@ static int sk_psock_verdict_recv(struct sock *sk, struct sk_buff *skb)
- static void sk_psock_verdict_data_ready(struct sock *sk)
- {
- 	struct socket *sock = sk->sk_socket;
-+	int copied;
+diff --git a/include/net/tls.h b/include/net/tls.h
+index 154949c7b0c88..c36bf4c50027e 100644
+--- a/include/net/tls.h
++++ b/include/net/tls.h
+@@ -124,6 +124,7 @@ struct tls_strparser {
+ 	u32 mark : 8;
+ 	u32 stopped : 1;
+ 	u32 copy_mode : 1;
++	u32 mixed_decrypted : 1;
+ 	u32 msg_ready : 1;
  
- 	if (unlikely(!sock || !sock->ops || !sock->ops->read_skb))
- 		return;
--	sock->ops->read_skb(sk, sk_psock_verdict_recv);
-+	copied = sock->ops->read_skb(sk, sk_psock_verdict_recv);
-+	if (copied >= 0) {
-+		struct sk_psock *psock;
-+
-+		rcu_read_lock();
-+		psock = sk_psock(sk);
-+		psock->saved_data_ready(sk);
-+		rcu_read_unlock();
-+	}
+ 	struct strp_msg stm;
+diff --git a/net/tls/tls.h b/net/tls/tls.h
+index 0e840a0c3437b..17737a65c643a 100644
+--- a/net/tls/tls.h
++++ b/net/tls/tls.h
+@@ -165,6 +165,11 @@ static inline bool tls_strp_msg_ready(struct tls_sw_context_rx *ctx)
+ 	return ctx->strp.msg_ready;
  }
  
- void sk_psock_start_verdict(struct sock *sk, struct sk_psock *psock)
++static inline bool tls_strp_msg_mixed_decrypted(struct tls_sw_context_rx *ctx)
++{
++	return ctx->strp.mixed_decrypted;
++}
++
+ #ifdef CONFIG_TLS_DEVICE
+ int tls_device_init(void);
+ void tls_device_cleanup(void);
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 3b87c7b04ac87..bf69c9d6d06c0 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -1007,20 +1007,14 @@ int tls_device_decrypted(struct sock *sk, struct tls_context *tls_ctx)
+ 	struct tls_sw_context_rx *sw_ctx = tls_sw_ctx_rx(tls_ctx);
+ 	struct sk_buff *skb = tls_strp_msg(sw_ctx);
+ 	struct strp_msg *rxm = strp_msg(skb);
+-	int is_decrypted = skb->decrypted;
+-	int is_encrypted = !is_decrypted;
+-	struct sk_buff *skb_iter;
+-	int left;
+-
+-	left = rxm->full_len + rxm->offset - skb_pagelen(skb);
+-	/* Check if all the data is decrypted already */
+-	skb_iter = skb_shinfo(skb)->frag_list;
+-	while (skb_iter && left > 0) {
+-		is_decrypted &= skb_iter->decrypted;
+-		is_encrypted &= !skb_iter->decrypted;
+-
+-		left -= skb_iter->len;
+-		skb_iter = skb_iter->next;
++	int is_decrypted, is_encrypted;
++
++	if (!tls_strp_msg_mixed_decrypted(sw_ctx)) {
++		is_decrypted = skb->decrypted;
++		is_encrypted = !is_decrypted;
++	} else {
++		is_decrypted = 0;
++		is_encrypted = 0;
+ 	}
+ 
+ 	trace_tls_device_decrypted(sk, tcp_sk(sk)->copied_seq - rxm->full_len,
+diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
+index 61fbf84baf9e0..da95abbb7ea32 100644
+--- a/net/tls/tls_strp.c
++++ b/net/tls/tls_strp.c
+@@ -29,7 +29,8 @@ static void tls_strp_anchor_free(struct tls_strparser *strp)
+ 	struct skb_shared_info *shinfo = skb_shinfo(strp->anchor);
+ 
+ 	DEBUG_NET_WARN_ON_ONCE(atomic_read(&shinfo->dataref) != 1);
+-	shinfo->frag_list = NULL;
++	if (!strp->copy_mode)
++		shinfo->frag_list = NULL;
+ 	consume_skb(strp->anchor);
+ 	strp->anchor = NULL;
+ }
+@@ -195,22 +196,22 @@ static void tls_strp_flush_anchor_copy(struct tls_strparser *strp)
+ 	for (i = 0; i < shinfo->nr_frags; i++)
+ 		__skb_frag_unref(&shinfo->frags[i], false);
+ 	shinfo->nr_frags = 0;
++	if (strp->copy_mode) {
++		kfree_skb_list(shinfo->frag_list);
++		shinfo->frag_list = NULL;
++	}
+ 	strp->copy_mode = 0;
++	strp->mixed_decrypted = 0;
+ }
+ 
+-static int tls_strp_copyin(read_descriptor_t *desc, struct sk_buff *in_skb,
+-			   unsigned int offset, size_t in_len)
++static int tls_strp_copyin_frag(struct tls_strparser *strp, struct sk_buff *skb,
++				struct sk_buff *in_skb, unsigned int offset,
++				size_t in_len)
+ {
+-	struct tls_strparser *strp = (struct tls_strparser *)desc->arg.data;
+-	struct sk_buff *skb;
+-	skb_frag_t *frag;
+ 	size_t len, chunk;
++	skb_frag_t *frag;
+ 	int sz;
+ 
+-	if (strp->msg_ready)
+-		return 0;
+-
+-	skb = strp->anchor;
+ 	frag = &skb_shinfo(skb)->frags[skb->len / PAGE_SIZE];
+ 
+ 	len = in_len;
+@@ -228,10 +229,8 @@ static int tls_strp_copyin(read_descriptor_t *desc, struct sk_buff *in_skb,
+ 		skb_frag_size_add(frag, chunk);
+ 
+ 		sz = tls_rx_msg_size(strp, skb);
+-		if (sz < 0) {
+-			desc->error = sz;
+-			return 0;
+-		}
++		if (sz < 0)
++			return sz;
+ 
+ 		/* We may have over-read, sz == 0 is guaranteed under-read */
+ 		if (unlikely(sz && sz < skb->len)) {
+@@ -271,15 +270,99 @@ static int tls_strp_copyin(read_descriptor_t *desc, struct sk_buff *in_skb,
+ 		offset += chunk;
+ 	}
+ 
+-	if (strp->stm.full_len == skb->len) {
++read_done:
++	return in_len - len;
++}
++
++static int tls_strp_copyin_skb(struct tls_strparser *strp, struct sk_buff *skb,
++			       struct sk_buff *in_skb, unsigned int offset,
++			       size_t in_len)
++{
++	struct sk_buff *nskb, *first, *last;
++	struct skb_shared_info *shinfo;
++	size_t chunk;
++	int sz;
++
++	if (strp->stm.full_len)
++		chunk = strp->stm.full_len - skb->len;
++	else
++		chunk = TLS_MAX_PAYLOAD_SIZE + PAGE_SIZE;
++	chunk = min(chunk, in_len);
++
++	nskb = tls_strp_skb_copy(strp, in_skb, offset, chunk);
++	if (!nskb)
++		return -ENOMEM;
++
++	shinfo = skb_shinfo(skb);
++	if (!shinfo->frag_list) {
++		shinfo->frag_list = nskb;
++		nskb->prev = nskb;
++	} else {
++		first = shinfo->frag_list;
++		last = first->prev;
++		last->next = nskb;
++		first->prev = nskb;
++	}
++
++	skb->len += chunk;
++	skb->data_len += chunk;
++
++	if (!strp->stm.full_len) {
++		sz = tls_rx_msg_size(strp, skb);
++		if (sz < 0)
++			return sz;
++
++		/* We may have over-read, sz == 0 is guaranteed under-read */
++		if (unlikely(sz && sz < skb->len)) {
++			int over = skb->len - sz;
++
++			WARN_ON_ONCE(over > chunk);
++			skb->len -= over;
++			skb->data_len -= over;
++			__pskb_trim(nskb, nskb->len - over);
++
++			chunk -= over;
++		}
++
++		strp->stm.full_len = sz;
++	}
++
++	return chunk;
++}
++
++static int tls_strp_copyin(read_descriptor_t *desc, struct sk_buff *in_skb,
++			   unsigned int offset, size_t in_len)
++{
++	struct tls_strparser *strp = (struct tls_strparser *)desc->arg.data;
++	struct sk_buff *skb;
++	int ret;
++
++	if (strp->msg_ready)
++		return 0;
++
++	skb = strp->anchor;
++	if (!skb->len)
++		skb_copy_decrypted(skb, in_skb);
++	else
++		strp->mixed_decrypted |= !!skb_cmp_decrypted(skb, in_skb);
++
++	if (IS_ENABLED(CONFIG_TLS_DEVICE) && strp->mixed_decrypted)
++		ret = tls_strp_copyin_skb(strp, skb, in_skb, offset, in_len);
++	else
++		ret = tls_strp_copyin_frag(strp, skb, in_skb, offset, in_len);
++	if (ret < 0) {
++		desc->error = ret;
++		ret = 0;
++	}
++
++	if (strp->stm.full_len && strp->stm.full_len == skb->len) {
+ 		desc->count = 0;
+ 
+ 		strp->msg_ready = 1;
+ 		tls_rx_msg_ready(strp);
+ 	}
+ 
+-read_done:
+-	return in_len - len;
++	return ret;
+ }
+ 
+ static int tls_strp_read_copyin(struct tls_strparser *strp)
 -- 
 2.39.2
 
