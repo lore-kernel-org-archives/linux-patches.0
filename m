@@ -1,260 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084D3FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63907C4339C;
-	Thu,  1 Jun 2023 13:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A767FBEA
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FDBC433D2;
+	Thu,  1 Jun 2023 13:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626070;
-	bh=lYvcMNrBCOjDHywtvbagoDsSmsFgmvin0K6p9+lv3jg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=PV4b5T3BBN9kjHKxjAiPXIkYli+CfyTJJkA+5Q1VJLuaXQhewc76YYH3zimdbNPmO
-	 hIopYe9UjqsLfREZPQEMeA6I4RovknSDZriHPfNk+0DrWXHAYnKSpu+8hnDZPHzKRa
-	 k7LwgpIUv23M0YdiPuQB1Xpzm66xQXnBPWuGK8RY=
+	s=korg; t=1685626073;
+	bh=CjvYxRR58wZbkTSnAWdbO1Zkt6+g0LBERQVs85dpOkc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kptNDJP0XMgT3cEZwlAJ0sbToVzGJLokvlbbFeFLFK85xRZis0WWsJ7UqknbQMP78
+	 iLXcH6cr+6UbA6cHRRk18uoLMnamrJfrzGSnKwlMJ3njIHhf+XVvyFds+BgpzKHfaS
+	 XZNksKC+YOsLO3jRwzxpH770xma45/3UjJpeFS9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 6.1 00/42] 6.1.32-rc1 review
-Date: Thu,  1 Jun 2023 14:21:09 +0100
-Message-Id: <20230601131939.051934720@linuxfoundation.org>
+	Shay Drory <shayd@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 12/42] net/mlx5: E-switch, Devcom, sync devcom events and devcom comp register
+Date: Thu,  1 Jun 2023 14:21:21 +0100
+Message-Id: <20230601131939.600837561@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
+References: <20230601131939.051934720@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.32-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.32-rc1
-X-KernelTest-Deadline: 2023-06-03T13:19+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.1.32 release.
-There are 42 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Shay Drory <shayd@nvidia.com>
 
-Responses should be made by Sat, 03 Jun 2023 13:19:19 +0000.
-Anything received after that time might be too late.
+[ Upstream commit 8c253dfc89efde6b5faddf9e7400e5d17884e042 ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.32-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
+devcom events are sent to all registered component. Following the
+cited patch, it is possible for two components, e.g.: two eswitches,
+to send devcom events, while both components are registered. This
+means eswitch layer will do double un/pairing, which is double
+allocation and free of resources, even though only one un/pairing is
+needed. flow example:
 
-thanks,
+	cpu0					cpu1
+	----					----
 
-greg k-h
+ mlx5_devlink_eswitch_mode_set(dev0)
+  esw_offloads_devcom_init()
+   mlx5_devcom_register_component(esw0)
+                                         mlx5_devlink_eswitch_mode_set(dev1)
+                                          esw_offloads_devcom_init()
+                                           mlx5_devcom_register_component(esw1)
+                                           mlx5_devcom_send_event()
+   mlx5_devcom_send_event()
 
--------------
-Pseudo-Shortlog of commits:
+Hence, check whether the eswitches are already un/paired before
+free/allocation of resources.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.32-rc1
+Fixes: 09b278462f16 ("net: devlink: enable parallel ops on netlink interface")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch.h        | 1 +
+ .../net/ethernet/mellanox/mlx5/core/eswitch_offloads.c   | 9 ++++++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-Yanteng Si <siyanteng@loongson.cn>
-    tools headers UAPI: Sync the linux/in.h with the kernel sources
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index 821c78bab3732..a3daca44f74b1 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -340,6 +340,7 @@ struct mlx5_eswitch {
+ 	}  params;
+ 	struct blocking_notifier_head n_head;
+ 	struct dentry *dbgfs;
++	bool paired[MLX5_MAX_PORTS];
+ };
+ 
+ void esw_offloads_disable(struct mlx5_eswitch *esw);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 5235b5a7b9637..433cdd0a2cf34 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -2827,6 +2827,9 @@ static int mlx5_esw_offloads_devcom_event(int event,
+ 		    mlx5_eswitch_vport_match_metadata_enabled(peer_esw))
+ 			break;
+ 
++		if (esw->paired[mlx5_get_dev_index(peer_esw->dev)])
++			break;
++
+ 		err = mlx5_esw_offloads_set_ns_peer(esw, peer_esw, true);
+ 		if (err)
+ 			goto err_out;
+@@ -2838,14 +2841,18 @@ static int mlx5_esw_offloads_devcom_event(int event,
+ 		if (err)
+ 			goto err_pair;
+ 
++		esw->paired[mlx5_get_dev_index(peer_esw->dev)] = true;
++		peer_esw->paired[mlx5_get_dev_index(esw->dev)] = true;
+ 		mlx5_devcom_set_paired(devcom, MLX5_DEVCOM_ESW_OFFLOADS, true);
+ 		break;
+ 
+ 	case ESW_OFFLOADS_DEVCOM_UNPAIR:
+-		if (!mlx5_devcom_is_paired(devcom, MLX5_DEVCOM_ESW_OFFLOADS))
++		if (!esw->paired[mlx5_get_dev_index(peer_esw->dev)])
+ 			break;
+ 
+ 		mlx5_devcom_set_paired(devcom, MLX5_DEVCOM_ESW_OFFLOADS, false);
++		esw->paired[mlx5_get_dev_index(peer_esw->dev)] = false;
++		peer_esw->paired[mlx5_get_dev_index(esw->dev)] = false;
+ 		mlx5_esw_offloads_unpair(peer_esw);
+ 		mlx5_esw_offloads_unpair(esw);
+ 		mlx5_esw_offloads_set_ns_peer(esw, peer_esw, false);
+-- 
+2.39.2
 
-Paul Blakey <paulb@nvidia.com>
-    netfilter: ctnetlink: Support offloaded conntrack entry deletion
-
-Gautham R. Shenoy <gautham.shenoy@amd.com>
-    cpufreq: amd-pstate: Add ->fast_switch() callback
-
-Wyes Karny <wyes.karny@amd.com>
-    cpufreq: amd-pstate: Update policy->cur in amd_pstate_adjust_perf()
-
-Anuj Gupta <anuj20.g@samsung.com>
-    block: fix bio-cache for passthru IO
-
-Ido Schimmel <idosch@nvidia.com>
-    Revert "thermal/drivers/mellanox: Use generic thermal_zone_get_trip() function"
-
-Ruihan Li <lrh2000@pku.edu.cn>
-    bluetooth: Add cmd validity checks at the start of hci_sock_ioctl()
-
-Mario Limonciello <mario.limonciello@amd.com>
-    drm/amd: Don't allow s0ix on APUs older than Raven
-
-Hariprasad Kelam <hkelam@marvell.com>
-    octeontx2-af: Add validation for lmac type
-
-Claudiu Beznea <claudiu.beznea@microchip.com>
-    dmaengine: at_xdmac: restore the content of grws register
-
-Claudiu Beznea <claudiu.beznea@microchip.com>
-    dmaengine: at_xdmac: do not resume channels paused by consumers
-
-Claudiu Beznea <claudiu.beznea@microchip.com>
-    dmaengine: at_xdmac: disable/enable clock directly on suspend/resume
-
-Zhu Yanjun <yanjun.zhu@linux.dev>
-    RDMA/rxe: Fix the error "trying to register non-static key in rxe_cleanup_task"
-
-Johannes Berg <johannes.berg@intel.com>
-    wifi: iwlwifi: mvm: fix potential memory leak
-
-Haim Dreyfuss <haim.dreyfuss@intel.com>
-    wifi: iwlwifi: mvm: support wowlan info notification version 2
-
-Eric Huang <echuang@realtek.com>
-    wifi: rtw89: correct 5 MHz mask setting
-
-David Epping <david.epping@missinglinkelectronics.com>
-    net: phy: mscc: enable VSC8501/2 RGMII RX clock
-
-Yunsheng Lin <linyunsheng@huawei.com>
-    page_pool: fix inconsistency for page_pool_ring_[un]lock()
-
-Qingfang DENG <qingfang.deng@siflower.com.cn>
-    net: page_pool: use in_softirq() instead
-
-Yan Zhao <yan.y.zhao@intel.com>
-    vfio/type1: check pfn valid before converting to struct page
-
-Tian Lan <tian.lan@twosigma.com>
-    blk-mq: fix race condition in active queue accounting
-
-John Fastabend <john.fastabend@gmail.com>
-    bpf, sockmap: Incorrectly handling copied_seq
-
-John Fastabend <john.fastabend@gmail.com>
-    bpf, sockmap: Wake up polling after data copy
-
-John Fastabend <john.fastabend@gmail.com>
-    bpf, sockmap: TCP data stall on recv before accept
-
-John Fastabend <john.fastabend@gmail.com>
-    bpf, sockmap: Handle fin correctly
-
-John Fastabend <john.fastabend@gmail.com>
-    bpf, sockmap: Improved check for empty queue
-
-John Fastabend <john.fastabend@gmail.com>
-    bpf, sockmap: Reschedule is now done through backlog
-
-John Fastabend <john.fastabend@gmail.com>
-    bpf, sockmap: Convert schedule_work into delayed_work
-
-John Fastabend <john.fastabend@gmail.com>
-    bpf, sockmap: Pass skb ownership through read_skb
-
-Henning Schild <henning.schild@siemens.com>
-    gpio-f7188x: fix chip name and pin count on Nuvoton chip
-
-Shay Drory <shayd@nvidia.com>
-    net/mlx5: E-switch, Devcom, sync devcom events and devcom comp register
-
-Jakub Kicinski <kuba@kernel.org>
-    tls: rx: strp: preserve decryption status of skbs when needed
-
-Jakub Kicinski <kuba@kernel.org>
-    tls: rx: strp: factor out copying skb data
-
-Jakub Kicinski <kuba@kernel.org>
-    tls: rx: strp: force mixed decrypted records into copy mode
-
-Jakub Kicinski <kuba@kernel.org>
-    tls: rx: strp: fix determining record length in copy mode
-
-Jakub Kicinski <kuba@kernel.org>
-    tls: rx: strp: set the skb->len of detached / CoW'ed skbs
-
-Jakub Kicinski <kuba@kernel.org>
-    tls: rx: device: fix checking decryption status
-
-Mario Limonciello <mario.limonciello@amd.com>
-    platform/x86/amd/pmf: Fix CnQF and auto-mode after resume
-
-Jeremy Sowden <jeremy@azazel.net>
-    selftests/bpf: Fix pkg-config call building sign-file
-
-Sudeep Holla <sudeep.holla@arm.com>
-    firmware: arm_ffa: Fix usage of partition info get count flag
-
-Nicolas Dichtel <nicolas.dichtel@6wind.com>
-    ipv{4,6}/raw: fix output xfrm lookup wrt protocol
-
-Jakub Sitnicki <jakub@cloudflare.com>
-    inet: Add IP_LOCAL_PORT_RANGE socket option
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- block/blk-map.c                                    |   2 +-
- block/blk-mq-tag.c                                 |  12 +-
- drivers/cpufreq/amd-pstate.c                       |  45 ++++-
- drivers/dma/at_xdmac.c                             |  60 +++++-
- drivers/firmware/arm_ffa/driver.c                  |   3 +-
- drivers/gpio/Kconfig                               |   2 +-
- drivers/gpio/gpio-f7188x.c                         |  28 +--
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c           |   3 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c            |   7 +-
- drivers/infiniband/sw/rxe/rxe_qp.c                 |   7 +-
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c    |   8 +
- drivers/net/ethernet/mellanox/mlx5/core/eswitch.h  |   1 +
- .../ethernet/mellanox/mlx5/core/eswitch_offloads.c |   9 +-
- drivers/net/ethernet/mellanox/mlxsw/core_thermal.c | 209 ++++++++++++++++-----
- drivers/net/phy/mscc/mscc.h                        |   1 +
- drivers/net/phy/mscc/mscc_main.c                   |  54 +++---
- drivers/net/wireless/intel/iwlwifi/fw/api/d3.h     |  37 +++-
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c        |  35 +++-
- drivers/net/wireless/realtek/rtw89/rtw8852c.c      |   9 +-
- drivers/platform/x86/amd/pmf/core.c                |  32 +++-
- drivers/vfio/vfio_iommu_type1.c                    |   5 +
- include/linux/skbuff.h                             |  10 +
- include/linux/skmsg.h                              |   3 +-
- include/net/inet_sock.h                            |   4 +
- include/net/ip.h                                   |   5 +-
- include/net/page_pool.h                            |  18 --
- include/net/tcp.h                                  |  10 +
- include/net/tls.h                                  |   1 +
- include/uapi/linux/in.h                            |   2 +
- net/bluetooth/hci_sock.c                           |  28 +++
- net/core/page_pool.c                               |  34 +++-
- net/core/skmsg.c                                   |  81 ++++----
- net/core/sock_map.c                                |   3 +-
- net/ipv4/inet_connection_sock.c                    |  25 ++-
- net/ipv4/inet_hashtables.c                         |   2 +-
- net/ipv4/ip_sockglue.c                             |  30 ++-
- net/ipv4/raw.c                                     |   5 +-
- net/ipv4/tcp.c                                     |  11 +-
- net/ipv4/tcp_bpf.c                                 |  79 +++++++-
- net/ipv4/udp.c                                     |   9 +-
- net/ipv6/raw.c                                     |   3 +-
- net/netfilter/nf_conntrack_netlink.c               |   8 -
- net/sctp/socket.c                                  |   2 +-
- net/tls/tls.h                                      |   5 +
- net/tls/tls_device.c                               |  22 +--
- net/tls/tls_strp.c                                 | 185 ++++++++++++++----
- net/unix/af_unix.c                                 |   7 +-
- tools/include/uapi/linux/in.h                      |   1 +
- tools/testing/selftests/bpf/Makefile               |   2 +-
- 50 files changed, 881 insertions(+), 287 deletions(-)
 
 
