@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63281FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66B8C433EF;
-	Thu,  1 Jun 2023 13:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D155BFBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB82C433D2;
+	Thu,  1 Jun 2023 13:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625980;
-	bh=ButedDyARNPCEM+8Bd7CjZ17mo9aFfQE4Rrb9oHZ3cA=;
+	s=korg; t=1685625982;
+	bh=YsUGUmfh8lwUOFVPujmwwMPA/1hDGBrd/FNL2A2jY2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GkmIxTXLd372WYd9ms0CEN5Qv2HuE65y+HDxGNMiey8TQr40w41cMBRvxowckmK96
-	 spF7j6e3evrY1rxMlqXoAchS80ZNGWA1sUakSqGQhTQD8DZu2jKdZ9qdb0E+WH+Ss0
-	 Mcfj3ZR8Cre5q4UT8T3rz178FbwPRqTIWj6w6MUM=
+	b=eMK4SOa6s5dWUBjhfGQYFSx5rGDIJdNrwygf71rjYlsb9S44TpzlO6ytH42yIazUk
+	 Zc9kUM2h90UkgCUbIqHvmqygpIQ5z3C0ySh7Z+xaxXqa522BHlTjOI6T90R0GniAc+
+	 iLBkz3GOcrj48TB75r0TLnNgAclFWhGAJ6JF9e9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xing Tong Wu <xingtong.wu@siemens.com>,
-	Henning Schild <henning.schild@siemens.com>,
-	Simon Guinot <simon.guinot@sequanux.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	William Findlay <will@isovalent.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 28/45] gpio-f7188x: fix chip name and pin count on Nuvoton chip
-Date: Thu,  1 Jun 2023 14:21:24 +0100
-Message-Id: <20230601131939.966217322@linuxfoundation.org>
+Subject: [PATCH 6.3 29/45] bpf, sockmap: Pass skb ownership through read_skb
+Date: Thu,  1 Jun 2023 14:21:25 +0100
+Message-Id: <20230601131940.007484698@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -37,145 +37,157 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Henning Schild <henning.schild@siemens.com>
+From: John Fastabend <john.fastabend@gmail.com>
 
-[ Upstream commit 3002b8642f016d7fe3ff56240dacea1075f6b877 ]
+[ Upstream commit 78fa0d61d97a728d306b0c23d353c0e340756437 ]
 
-In fact the device with chip id 0xD283 is called NCT6126D, and that is
-the chip id the Nuvoton code was written for. Correct that name to avoid
-confusion, because a NCT6116D in fact exists as well but has another
-chip id, and is currently not supported.
+The read_skb hook calls consume_skb() now, but this means that if the
+recv_actor program wants to use the skb it needs to inc the ref cnt
+so that the consume_skb() doesn't kfree the sk_buff.
 
-The look at the spec also revealed that GPIO group7 in fact has 8 pins,
-so correct the pin count in that group as well.
+This is problematic because in some error cases under memory pressure
+we may need to linearize the sk_buff from sk_psock_skb_ingress_enqueue().
+Then we get this,
 
-Fixes: d0918a84aff0 ("gpio-f7188x: Add GPIO support for Nuvoton NCT6116")
-Reported-by: Xing Tong Wu <xingtong.wu@siemens.com>
-Signed-off-by: Henning Schild <henning.schild@siemens.com>
-Acked-by: Simon Guinot <simon.guinot@sequanux.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+ skb_linearize()
+   __pskb_pull_tail()
+     pskb_expand_head()
+       BUG_ON(skb_shared(skb))
+
+Because we incremented users refcnt from sk_psock_verdict_recv() we
+hit the bug on with refcnt > 1 and trip it.
+
+To fix lets simply pass ownership of the sk_buff through the skb_read
+call. Then we can drop the consume from read_skb handlers and assume
+the verdict recv does any required kfree.
+
+Bug found while testing in our CI which runs in VMs that hit memory
+constraints rather regularly. William tested TCP read_skb handlers.
+
+[  106.536188] ------------[ cut here ]------------
+[  106.536197] kernel BUG at net/core/skbuff.c:1693!
+[  106.536479] invalid opcode: 0000 [#1] PREEMPT SMP PTI
+[  106.536726] CPU: 3 PID: 1495 Comm: curl Not tainted 5.19.0-rc5 #1
+[  106.537023] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS ArchLinux 1.16.0-1 04/01/2014
+[  106.537467] RIP: 0010:pskb_expand_head+0x269/0x330
+[  106.538585] RSP: 0018:ffffc90000138b68 EFLAGS: 00010202
+[  106.538839] RAX: 000000000000003f RBX: ffff8881048940e8 RCX: 0000000000000a20
+[  106.539186] RDX: 0000000000000002 RSI: 0000000000000000 RDI: ffff8881048940e8
+[  106.539529] RBP: ffffc90000138be8 R08: 00000000e161fd1a R09: 0000000000000000
+[  106.539877] R10: 0000000000000018 R11: 0000000000000000 R12: ffff8881048940e8
+[  106.540222] R13: 0000000000000003 R14: 0000000000000000 R15: ffff8881048940e8
+[  106.540568] FS:  00007f277dde9f00(0000) GS:ffff88813bd80000(0000) knlGS:0000000000000000
+[  106.540954] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  106.541227] CR2: 00007f277eeede64 CR3: 000000000ad3e000 CR4: 00000000000006e0
+[  106.541569] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  106.541915] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  106.542255] Call Trace:
+[  106.542383]  <IRQ>
+[  106.542487]  __pskb_pull_tail+0x4b/0x3e0
+[  106.542681]  skb_ensure_writable+0x85/0xa0
+[  106.542882]  sk_skb_pull_data+0x18/0x20
+[  106.543084]  bpf_prog_b517a65a242018b0_bpf_skskb_http_verdict+0x3a9/0x4aa9
+[  106.543536]  ? migrate_disable+0x66/0x80
+[  106.543871]  sk_psock_verdict_recv+0xe2/0x310
+[  106.544258]  ? sk_psock_write_space+0x1f0/0x1f0
+[  106.544561]  tcp_read_skb+0x7b/0x120
+[  106.544740]  tcp_data_queue+0x904/0xee0
+[  106.544931]  tcp_rcv_established+0x212/0x7c0
+[  106.545142]  tcp_v4_do_rcv+0x174/0x2a0
+[  106.545326]  tcp_v4_rcv+0xe70/0xf60
+[  106.545500]  ip_protocol_deliver_rcu+0x48/0x290
+[  106.545744]  ip_local_deliver_finish+0xa7/0x150
+
+Fixes: 04919bed948dc ("tcp: Introduce tcp_read_skb()")
+Reported-by: William Findlay <will@isovalent.com>
+Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: William Findlay <will@isovalent.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20230523025618.113937-2-john.fastabend@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/Kconfig       |  2 +-
- drivers/gpio/gpio-f7188x.c | 28 ++++++++++++++--------------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ net/core/skmsg.c   | 2 --
+ net/ipv4/tcp.c     | 1 -
+ net/ipv4/udp.c     | 7 ++-----
+ net/unix/af_unix.c | 7 ++-----
+ 4 files changed, 4 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-index badbe05823180..14b655411aa0a 100644
---- a/drivers/gpio/Kconfig
-+++ b/drivers/gpio/Kconfig
-@@ -879,7 +879,7 @@ config GPIO_F7188X
- 	help
- 	  This option enables support for GPIOs found on Fintek Super-I/O
- 	  chips F71869, F71869A, F71882FG, F71889F and F81866.
--	  As well as Nuvoton Super-I/O chip NCT6116D.
-+	  As well as Nuvoton Super-I/O chip NCT6126D.
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index f81883759d381..4a3dc8d272957 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1183,8 +1183,6 @@ static int sk_psock_verdict_recv(struct sock *sk, struct sk_buff *skb)
+ 	int ret = __SK_DROP;
+ 	int len = skb->len;
  
- 	  To compile this driver as a module, choose M here: the module will
- 	  be called f7188x-gpio.
-diff --git a/drivers/gpio/gpio-f7188x.c b/drivers/gpio/gpio-f7188x.c
-index 9effa7769bef5..f54ca5a1775ea 100644
---- a/drivers/gpio/gpio-f7188x.c
-+++ b/drivers/gpio/gpio-f7188x.c
-@@ -48,7 +48,7 @@
- /*
-  * Nuvoton devices.
-  */
--#define SIO_NCT6116D_ID		0xD283  /* NCT6116D chipset ID */
-+#define SIO_NCT6126D_ID		0xD283  /* NCT6126D chipset ID */
+-	skb_get(skb);
+-
+ 	rcu_read_lock();
+ 	psock = sk_psock(sk);
+ 	if (unlikely(!psock)) {
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 6c7c666554ced..01ea2705deea9 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1772,7 +1772,6 @@ int tcp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 		WARN_ON_ONCE(!skb_set_owner_sk_safe(skb, sk));
+ 		tcp_flags = TCP_SKB_CB(skb)->tcp_flags;
+ 		used = recv_actor(sk, skb);
+-		consume_skb(skb);
+ 		if (used < 0) {
+ 			if (!copied)
+ 				copied = used;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index c605d171eb2d9..8aaae82e78aeb 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1813,7 +1813,7 @@ EXPORT_SYMBOL(__skb_recv_udp);
+ int udp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ {
+ 	struct sk_buff *skb;
+-	int err, copied;
++	int err;
  
- #define SIO_LD_GPIO_NUVOTON	0x07	/* GPIO logical device */
- 
-@@ -62,7 +62,7 @@ enum chips {
- 	f81866,
- 	f81804,
- 	f81865,
--	nct6116d,
-+	nct6126d,
- };
- 
- static const char * const f7188x_names[] = {
-@@ -74,7 +74,7 @@ static const char * const f7188x_names[] = {
- 	"f81866",
- 	"f81804",
- 	"f81865",
--	"nct6116d",
-+	"nct6126d",
- };
- 
- struct f7188x_sio {
-@@ -187,8 +187,8 @@ static int f7188x_gpio_set_config(struct gpio_chip *chip, unsigned offset,
- /* Output mode register (0:open drain 1:push-pull). */
- #define f7188x_gpio_out_mode(base) ((base) + 3)
- 
--#define f7188x_gpio_dir_invert(type)	((type) == nct6116d)
--#define f7188x_gpio_data_single(type)	((type) == nct6116d)
-+#define f7188x_gpio_dir_invert(type)	((type) == nct6126d)
-+#define f7188x_gpio_data_single(type)	((type) == nct6126d)
- 
- static struct f7188x_gpio_bank f71869_gpio_bank[] = {
- 	F7188X_GPIO_BANK(0, 6, 0xF0, DRVNAME "-0"),
-@@ -274,7 +274,7 @@ static struct f7188x_gpio_bank f81865_gpio_bank[] = {
- 	F7188X_GPIO_BANK(60, 5, 0x90, DRVNAME "-6"),
- };
- 
--static struct f7188x_gpio_bank nct6116d_gpio_bank[] = {
-+static struct f7188x_gpio_bank nct6126d_gpio_bank[] = {
- 	F7188X_GPIO_BANK(0, 8, 0xE0, DRVNAME "-0"),
- 	F7188X_GPIO_BANK(10, 8, 0xE4, DRVNAME "-1"),
- 	F7188X_GPIO_BANK(20, 8, 0xE8, DRVNAME "-2"),
-@@ -282,7 +282,7 @@ static struct f7188x_gpio_bank nct6116d_gpio_bank[] = {
- 	F7188X_GPIO_BANK(40, 8, 0xF0, DRVNAME "-4"),
- 	F7188X_GPIO_BANK(50, 8, 0xF4, DRVNAME "-5"),
- 	F7188X_GPIO_BANK(60, 8, 0xF8, DRVNAME "-6"),
--	F7188X_GPIO_BANK(70, 1, 0xFC, DRVNAME "-7"),
-+	F7188X_GPIO_BANK(70, 8, 0xFC, DRVNAME "-7"),
- };
- 
- static int f7188x_gpio_get_direction(struct gpio_chip *chip, unsigned offset)
-@@ -490,9 +490,9 @@ static int f7188x_gpio_probe(struct platform_device *pdev)
- 		data->nr_bank = ARRAY_SIZE(f81865_gpio_bank);
- 		data->bank = f81865_gpio_bank;
- 		break;
--	case nct6116d:
--		data->nr_bank = ARRAY_SIZE(nct6116d_gpio_bank);
--		data->bank = nct6116d_gpio_bank;
-+	case nct6126d:
-+		data->nr_bank = ARRAY_SIZE(nct6126d_gpio_bank);
-+		data->bank = nct6126d_gpio_bank;
- 		break;
- 	default:
- 		return -ENODEV;
-@@ -559,9 +559,9 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
- 	case SIO_F81865_ID:
- 		sio->type = f81865;
- 		break;
--	case SIO_NCT6116D_ID:
-+	case SIO_NCT6126D_ID:
- 		sio->device = SIO_LD_GPIO_NUVOTON;
--		sio->type = nct6116d;
-+		sio->type = nct6126d;
- 		break;
- 	default:
- 		pr_info("Unsupported Fintek device 0x%04x\n", devid);
-@@ -569,7 +569,7 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
+ try_again:
+ 	skb = skb_recv_udp(sk, MSG_DONTWAIT, &err);
+@@ -1832,10 +1832,7 @@ int udp_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
  	}
  
- 	/* double check manufacturer where possible */
--	if (sio->type != nct6116d) {
-+	if (sio->type != nct6126d) {
- 		manid = superio_inw(addr, SIO_FINTEK_MANID);
- 		if (manid != SIO_FINTEK_ID) {
- 			pr_debug("Not a Fintek device at 0x%08x\n", addr);
-@@ -581,7 +581,7 @@ static int __init f7188x_find(int addr, struct f7188x_sio *sio)
- 	err = 0;
+ 	WARN_ON_ONCE(!skb_set_owner_sk_safe(skb, sk));
+-	copied = recv_actor(sk, skb);
+-	kfree_skb(skb);
+-
+-	return copied;
++	return recv_actor(sk, skb);
+ }
+ EXPORT_SYMBOL(udp_read_skb);
  
- 	pr_info("Found %s at %#x\n", f7188x_names[sio->type], (unsigned int)addr);
--	if (sio->type != nct6116d)
-+	if (sio->type != nct6126d)
- 		pr_info("   revision %d\n", superio_inb(addr, SIO_FINTEK_DEVREV));
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 29c6083a37daf..9383afe3e570b 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2553,7 +2553,7 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ {
+ 	struct unix_sock *u = unix_sk(sk);
+ 	struct sk_buff *skb;
+-	int err, copied;
++	int err;
  
- err:
+ 	mutex_lock(&u->iolock);
+ 	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
+@@ -2561,10 +2561,7 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ 	if (!skb)
+ 		return err;
+ 
+-	copied = recv_actor(sk, skb);
+-	kfree_skb(skb);
+-
+-	return copied;
++	return recv_actor(sk, skb);
+ }
+ 
+ /*
 -- 
 2.39.2
 
