@@ -1,127 +1,117 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7570F4823D
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 18:10:27 +0000 (UTC)
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-96f818c48fbso166619566b.0
-        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 11:10:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1685643025; x=1688235025;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fN4dOkqKjC6yYa0WCy0PPXkew6vDz5s8phQTNj9Uuro=;
-        b=LMamD9ZGqhsd796VPhVqGOUsh95L92VoivoPgRU5UCTYTQFubX9A+mz4OvotmLxtp5
-         UP7BcmGvfxEEmXDFfkfYvpewgcnSFAhne6LHWjRUcMPkk68fb+yrkTlMOpX+31hwPIi9
-         DPdSsC0DMD8A9Xa4ujsuEECTBLUi8zMGCrpSkdqjt3AWwQn8K7KuYZ2KobXr9sGbAaXX
-         eIuEmthfQKrdS07eUYRYVkQx45iLu1tNIUSsos8pJ7yi8IlD5SGmmm5i7+chGKRztc5o
-         UuO+b8qsb6vi7FwIEczQpLjmUk012qzSET9RVVVVQIxNDz/pb3kfKKQfXGXl1cg/LNpu
-         WWLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685643025; x=1688235025;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fN4dOkqKjC6yYa0WCy0PPXkew6vDz5s8phQTNj9Uuro=;
-        b=NqdbYNymf9yig5UA67LDcKYFwPlj6c7SsysSVj6Z/nlgTCE9fpAJqAV3iy1V+J4AWE
-         7FzPUI0Wki2cxD5BCuaHOoubrisArXvHRDQyI9NY+FWWrFbg4CU21BCHNQp3scbEe2CY
-         Ev4vsavwtIl8IXUX1NtPbCkm/ybQcNu3bqZ+gcIEVuhnU0eaLUU4BBAbZ4xil6eD+B6S
-         Cx6G1DBT1t95qgIb6yHVPNfQ+5W9RDLKLR0mWieGzQHOTO3sJ7yMpl5fuuxbFPOeEohR
-         6wBrr2W4PRCX80NjVvh8pTRHITEzJfJ2DJiYeNhcaw6LWbRaVJ5c8pMwaC6TlY3+R0y5
-         GizQ==
-X-Gm-Message-State: AC+VfDxpbqYu6NQLZvr6L6snRWdGq5UBBnM3nP6Ctf2wMX0qFEW4nZc6
-	rsdOkxdE7nf0qox34PC6j1CzJjyNfEi9FmVcPm37Jw==
-X-Google-Smtp-Source: ACHHUZ7igvhtiibQfA61bCZ+csGUB2mQgm5JSsigI+IF4r18gJt2/M9hdQNEH7zPfMRhvLmhwccp2hTEPWr+q9TRMIo=
-X-Received: by 2002:a17:907:7293:b0:966:1984:9d21 with SMTP id
- dt19-20020a170907729300b0096619849d21mr8288661ejc.9.1685643025187; Thu, 01
- Jun 2023 11:10:25 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250AE47017;
+	Thu,  1 Jun 2023 18:18:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E854FC433EF;
+	Thu,  1 Jun 2023 18:18:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1685643532;
+	bh=/pASa9nYu0GQ6X+4TGm6dsvrDfwDZ84co19JC4bfX/A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Zzz8x779rci/K4PmAn5tV9wPzZKfQLkoeR9XIFYcEemkcUe3zBFqr4gP6ar2K3ZL6
+	 P7xh7ugxWXobjq21GjLofnOIkP9cZg9i3lIzk16L0KjNN+PfxcbddjJW38cpCpzjTN
+	 7u8rHTrR2t0wT+FxL4/7P9cYKCYxYeRuSTC9wxpA3tJt0a9FkW9N5Om7H5nf7RPPRU
+	 7RfxB84DZt1MnPhZq6sLD9+4ctbszfKnUe5zlHxHjRTs6tyowv08o0MtetYDW/4vVY
+	 iFNnPUMHvcQIpSypAcPXSKg30UaxreFNvUH1AdyXdYw/qcJlgT8EOC5U90TenX8jGZ
+	 w/m/gPWP6J7uw==
+Date: Thu, 1 Jun 2023 11:18:49 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Yosry Ahmed <yosryahmed@google.com>
+Cc: akpm@linux-foundation.org, sjenning@redhat.com, ddstreet@ieee.org,
+	vitaly.wool@konsulko.com, ndesaulniers@google.com, trix@redhat.com,
+	nphamcs@gmail.com, linux-mm@kvack.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH] zswap: Avoid uninitialized use of ret in
+ zswap_frontswap_store()
+Message-ID: <20230601181849.GA1528196@dev-arch.thelio-3990X>
+References: <20230601-zswap-cgroup-wsometimes-uninitialized-v1-1-35debdd19293@kernel.org>
+ <CAJD7tkYZxbEyP6-yjcobws_6Cvjib9c9YnBQRBjhwrK3KaHs7A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230601-zswap-cgroup-wsometimes-uninitialized-v1-1-35debdd19293@kernel.org>
-In-Reply-To: <20230601-zswap-cgroup-wsometimes-uninitialized-v1-1-35debdd19293@kernel.org>
-From: Yosry Ahmed <yosryahmed@google.com>
-Date: Thu, 1 Jun 2023 11:09:48 -0700
-Message-ID: <CAJD7tkYZxbEyP6-yjcobws_6Cvjib9c9YnBQRBjhwrK3KaHs7A@mail.gmail.com>
-Subject: Re: [PATCH] zswap: Avoid uninitialized use of ret in zswap_frontswap_store()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: akpm@linux-foundation.org, sjenning@redhat.com, ddstreet@ieee.org, 
-	vitaly.wool@konsulko.com, ndesaulniers@google.com, trix@redhat.com, 
-	nphamcs@gmail.com, linux-mm@kvack.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev, kernel test robot <lkp@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJD7tkYZxbEyP6-yjcobws_6Cvjib9c9YnBQRBjhwrK3KaHs7A@mail.gmail.com>
 
-On Thu, Jun 1, 2023 at 8:26=E2=80=AFAM Nathan Chancellor <nathan@kernel.org=
-> wrote:
->
-> Clang warns:
->
->   mm/zswap.c:1183:6: error: variable 'ret' is used uninitialized whenever=
- 'if' condition is true [-Werror,-Wsometimes-uninitialized]
->    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
->         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   mm/zswap.c:1327:9: note: uninitialized use occurs here
->    1327 |         return ret;
->         |                ^~~
->   mm/zswap.c:1183:2: note: remove the 'if' if its condition is always fal=
-se
->    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
->         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->    1184 |                 goto reject;
->         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~
->   mm/zswap.c:1158:9: note: initialize the variable 'ret' to silence this =
-warning
->    1158 |         int ret;
->         |                ^
->         |                 =3D 0
->   1 error generated.
->
-> Set ret to -EINVAL, which seems to best match the situation the comment
-> mentions and matches an earlier bailout due to an unsupported type or
-> situation.
+On Thu, Jun 01, 2023 at 11:09:48AM -0700, Yosry Ahmed wrote:
+> On Thu, Jun 1, 2023 at 8:26 AM Nathan Chancellor <nathan@kernel.org> wrote:
+> >
+> > Clang warns:
+> >
+> >   mm/zswap.c:1183:6: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+> >    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
+> >         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >   mm/zswap.c:1327:9: note: uninitialized use occurs here
+> >    1327 |         return ret;
+> >         |                ^~~
+> >   mm/zswap.c:1183:2: note: remove the 'if' if its condition is always false
+> >    1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
+> >         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >    1184 |                 goto reject;
+> >         | ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >   mm/zswap.c:1158:9: note: initialize the variable 'ret' to silence this warning
+> >    1158 |         int ret;
+> >         |                ^
+> >         |                 = 0
+> >   1 error generated.
+> >
+> > Set ret to -EINVAL, which seems to best match the situation the comment
+> > mentions and matches an earlier bailout due to an unsupported type or
+> > situation.
+> 
+> Shouldn't this be -ENOMEM? I think this was the error code returned in
+> this situation before 6804144bf1cf.
 
-Shouldn't this be -ENOMEM? I think this was the error code returned in
-this situation before 6804144bf1cf.
+Sure, I can update this to be -ENOMEM if that is appropriate. I am not
+sure it actually matters though, since as far as I can tell, this
+function is only called via the ->store() call in __frontswap_store(),
+which is only called by frontswap_store(), which in turn is only called by
+swap_writepage() and its return value is only checked against 0, no
+other error values. I could be missing a macro call though.
 
->
-> Fixes: 6804144bf1cf ("zswap: do not shrink if cgroup may not zswap")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/202306011435.2BxsHFUE-lkp@intel.com/
-> Closes: https://lore.kernel.org/202306012152.o4FL7Y6J-lkp@intel.com/
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/1861
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  mm/zswap.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/mm/zswap.c b/mm/zswap.c
-> index cff93643a6ab..e8313e2f5807 100644
-> --- a/mm/zswap.c
-> +++ b/mm/zswap.c
-> @@ -1180,8 +1180,10 @@ static int zswap_frontswap_store(unsigned type, pg=
-off_t offset,
->          * local cgroup limits.
->          */
->         objcg =3D get_obj_cgroup_from_page(page);
-> -       if (objcg && !obj_cgroup_may_zswap(objcg))
-> +       if (objcg && !obj_cgroup_may_zswap(objcg)) {
-> +               ret =3D -EINVAL;
->                 goto reject;
-> +       }
->
->         /* reclaim space if needed */
->         if (zswap_is_full()) {
->
-> ---
-> base-commit: b2424568bd9b947b2698b693ff24fec63bb4b36a
-> change-id: 20230601-zswap-cgroup-wsometimes-uninitialized-b549ff4247ed
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
->
+If I should send a v2, please let me know.
+
+Cheers,
+Nathan
+
+> > Fixes: 6804144bf1cf ("zswap: do not shrink if cgroup may not zswap")
+> > Reported-by: kernel test robot <lkp@intel.com>
+> > Closes: https://lore.kernel.org/202306011435.2BxsHFUE-lkp@intel.com/
+> > Closes: https://lore.kernel.org/202306012152.o4FL7Y6J-lkp@intel.com/
+> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1861
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >  mm/zswap.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/mm/zswap.c b/mm/zswap.c
+> > index cff93643a6ab..e8313e2f5807 100644
+> > --- a/mm/zswap.c
+> > +++ b/mm/zswap.c
+> > @@ -1180,8 +1180,10 @@ static int zswap_frontswap_store(unsigned type, pgoff_t offset,
+> >          * local cgroup limits.
+> >          */
+> >         objcg = get_obj_cgroup_from_page(page);
+> > -       if (objcg && !obj_cgroup_may_zswap(objcg))
+> > +       if (objcg && !obj_cgroup_may_zswap(objcg)) {
+> > +               ret = -EINVAL;
+> >                 goto reject;
+> > +       }
+> >
+> >         /* reclaim space if needed */
+> >         if (zswap_is_full()) {
+> >
+> > ---
+> > base-commit: b2424568bd9b947b2698b693ff24fec63bb4b36a
+> > change-id: 20230601-zswap-cgroup-wsometimes-uninitialized-b549ff4247ed
+> >
+> > Best regards,
+> > --
+> > Nathan Chancellor <nathan@kernel.org>
+> >
+> >
