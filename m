@@ -1,131 +1,257 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1E7E54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1543EC433A0;
-	Thu,  1 Jun 2023 13:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F20E54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D490C433D2;
+	Thu,  1 Jun 2023 13:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625833;
-	bh=J/5EYDpPwtjb3AhlHwexGmBIfkKSLpuFO+7Er/4BHpI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mF704b4palQBTcXJkAuGDacEOJFluk0gpLpvFDw9wFoKabR5HovVCjRfrxOzo5FLa
-	 ZYgFBr/RiwMjg9KUiQuiHcpg5AZKZKDcbTUyW3AGflW3KyJoCF07Po57Z8HOMqF2Dx
-	 DKh1pYpgW+Cbr6wLpZqB4DBlKZYE5E9H31vMEAcg=
+	s=korg; t=1685625835;
+	bh=BIkV3D1VQf/JQIllKsX4ajtAa8sp67rS2uataATbJGU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=FUs3o9b9vBruQPKG/NyNfyO+Q0vgOcmOafvPD4vacZXRshwyVKcRKX9aGCsrTnGeo
+	 p/Wx/g+Eq1pNuF7FrerORYjIJZtk6OYadWkDP2q5SbGdiXDkLN6trfUfVRK3NuZTUW
+	 NzxbOYsBULevLjQVcN4VT6zyGyJGriUx6eToEgKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 03/42] power: supply: bq27xxx: Ensure power_supply_changed() is called on current sign changes
-Date: Thu,  1 Jun 2023 14:20:50 +0100
-Message-Id: <20230601131936.852843263@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.15 00/42] 5.15.115-rc1 review
+Date: Thu,  1 Jun 2023 14:20:47 +0100
+Message-Id: <20230601131936.699199833@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230601131936.699199833@linuxfoundation.org>
-References: <20230601131936.699199833@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.115-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.15.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.15.115-rc1
+X-KernelTest-Deadline: 2023-06-03T13:19+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+This is the start of the stable review cycle for the 5.15.115 release.
+There are 42 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 939a116142012926e25de0ea6b7e2f8d86a5f1b6 ]
+Responses should be made by Sat, 03 Jun 2023 13:19:19 +0000.
+Anything received after that time might be too late.
 
-On gauges where the current register is signed, there is no charging
-flag in the flags register. So only checking flags will not result
-in power_supply_changed() getting called when e.g. a charger is plugged
-in and the current sign changes from negative (discharging) to
-positive (charging).
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.115-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+and the diffstat can be found below.
 
-This causes userspace's notion of the status to lag until userspace
-does a poll.
+thanks,
 
-And when a power_supply_leds.c LED trigger is used to indicate charging
-status with a LED, this LED will lag until the capacity percentage
-changes, which may take many minutes (because the LED trigger only is
-updated on power_supply_changed() calls).
+greg k-h
 
-Fix this by calling bq27xxx_battery_current_and_status() on gauges with
-a signed current register and checking if the status has changed.
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: 297a533b3e62 ("bq27x00: Cache battery registers")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/power/supply/bq27xxx_battery.c | 13 ++++++++++++-
- include/linux/power/bq27xxx_battery.h  |  3 +++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.15.115-rc1
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 2fca4b9403ff9..e6d67655732aa 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1836,6 +1836,7 @@ static int bq27xxx_battery_current_and_status(
- 
- static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
- {
-+	union power_supply_propval status = di->last_status;
- 	struct bq27xxx_reg_cache cache = {0, };
- 	bool has_singe_flag = di->opts & BQ27XXX_O_ZERO;
- 
-@@ -1860,14 +1861,24 @@ static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
- 		if (di->regs[BQ27XXX_REG_CYCT] != INVALID_REG_ADDR)
- 			cache.cycle_count = bq27xxx_battery_read_cyct(di);
- 
-+		/*
-+		 * On gauges with signed current reporting the current must be
-+		 * checked to detect charging <-> discharging status changes.
-+		 */
-+		if (!(di->opts & BQ27XXX_O_ZERO))
-+			bq27xxx_battery_current_and_status(di, NULL, &status, &cache);
-+
- 		/* We only have to read charge design full once */
- 		if (di->charge_design_full <= 0)
- 			di->charge_design_full = bq27xxx_battery_read_dcap(di);
- 	}
- 
- 	if ((di->cache.capacity != cache.capacity) ||
--	    (di->cache.flags != cache.flags))
-+	    (di->cache.flags != cache.flags) ||
-+	    (di->last_status.intval != status.intval)) {
-+		di->last_status.intval = status.intval;
- 		power_supply_changed(di->bat);
-+	}
- 
- 	if (memcmp(&di->cache, &cache, sizeof(cache)) != 0)
- 		di->cache = cache;
-diff --git a/include/linux/power/bq27xxx_battery.h b/include/linux/power/bq27xxx_battery.h
-index e3322dad9c85c..7c8d65414a70a 100644
---- a/include/linux/power/bq27xxx_battery.h
-+++ b/include/linux/power/bq27xxx_battery.h
-@@ -2,6 +2,8 @@
- #ifndef __LINUX_BQ27X00_BATTERY_H__
- #define __LINUX_BQ27X00_BATTERY_H__
- 
-+#include <linux/power_supply.h>
-+
- enum bq27xxx_chip {
- 	BQ27000 = 1, /* bq27000, bq27200 */
- 	BQ27010, /* bq27010, bq27210 */
-@@ -70,6 +72,7 @@ struct bq27xxx_device_info {
- 	int charge_design_full;
- 	bool removed;
- 	unsigned long last_update;
-+	union power_supply_propval last_status;
- 	struct delayed_work work;
- 	struct power_supply *bat;
- 	struct list_head list;
--- 
-2.39.2
+Paul Blakey <paulb@nvidia.com>
+    netfilter: ctnetlink: Support offloaded conntrack entry deletion
 
+Nicolas Dichtel <nicolas.dichtel@6wind.com>
+    ipv{4,6}/raw: fix output xfrm lookup wrt protocol
+
+Carlos Llamas <cmllamas@google.com>
+    binder: fix UAF of alloc->vma in race with munmap()
+
+Carlos Llamas <cmllamas@google.com>
+    binder: add lockless binder_alloc_(set|get)_vma()
+
+Carlos Llamas <cmllamas@google.com>
+    Revert "android: binder: stop saving a pointer to the VMA"
+
+Carlos Llamas <cmllamas@google.com>
+    Revert "binder_alloc: add missing mmap_lock calls when using the VMA"
+
+Ruihan Li <lrh2000@pku.edu.cn>
+    bluetooth: Add cmd validity checks at the start of hci_sock_ioctl()
+
+Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+    xdp: xdp_mem_allocator can be NULL in trace_mem_connect().
+
+Jiaxun Yang <jiaxun.yang@flygoat.com>
+    irqchip/mips-gic: Don't touch vl_map if a local interrupt is not routable
+
+Yunsheng Lin <linyunsheng@huawei.com>
+    page_pool: fix inconsistency for page_pool_ring_[un]lock()
+
+Qingfang DENG <qingfang.deng@siflower.com.cn>
+    net: page_pool: use in_softirq() instead
+
+Toke Høiland-Jørgensen <toke@redhat.com>
+    xdp: Allow registering memory model without rxq reference
+
+Rahul Rameshbabu <rrameshbabu@nvidia.com>
+    net/mlx5e: Fix SQ wake logic in ptp napi_poll context
+
+Jiaxun Yang <jiaxun.yang@flygoat.com>
+    irqchip/mips-gic: Use raw spinlock for gic_lock
+
+Marc Zyngier <maz@kernel.org>
+    irqchip/mips-gic: Get rid of the reliance on irq_cpu_online()
+
+Carlos Llamas <cmllamas@google.com>
+    binder: fix UAF caused by faulty buffer cleanup
+
+Hangbin Liu <liuhangbin@gmail.com>
+    bonding: fix send_peer_notif overflow
+
+Hangbin Liu <liuhangbin@gmail.com>
+    Bonding: add arp_missed_max option
+
+Arınç ÜNAL <arinc.unal@arinc9.com>
+    net: dsa: mt7530: fix network connectivity with multiple CPU ports
+
+Daniel Golle <daniel@makrotopia.org>
+    net: dsa: mt7530: split-off common parts from mt7531_setup
+
+Frank Wunderlich <frank-w@public-files.de>
+    net: dsa: mt7530: rework mt753[01]_setup
+
+Vladimir Oltean <vladimir.oltean@nxp.com>
+    net: dsa: introduce helpers for iterating through ports using dp
+
+Claudio Imbrenda <imbrenda@linux.ibm.com>
+    KVM: s390: fix race in gmap_make_secure()
+
+Claudio Imbrenda <imbrenda@linux.ibm.com>
+    KVM: s390: pv: add export before import
+
+Claudiu Beznea <claudiu.beznea@microchip.com>
+    dmaengine: at_xdmac: restore the content of grws register
+
+Claudiu Beznea <claudiu.beznea@microchip.com>
+    dmaengine: at_xdmac: do not resume channels paused by consumers
+
+Claudiu Beznea <claudiu.beznea@microchip.com>
+    dmaengine: at_xdmac: disable/enable clock directly on suspend/resume
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_xdmac: Remove a level of indentation in at_xdmac_tasklet()
+
+Tudor Ambarus <tudor.ambarus@microchip.com>
+    dmaengine: at_xdmac: Move the free desc to the tail of the desc list
+
+David Epping <david.epping@missinglinkelectronics.com>
+    net: phy: mscc: enable VSC8501/2 RGMII RX clock
+
+Steve Wahl <steve.wahl@hpe.com>
+    platform/x86: ISST: Remove 8 socket limit
+
+Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+    platform/x86: ISST: PUNIT device mapping with Sub-NUMA clustering
+
+Shay Drory <shayd@nvidia.com>
+    net/mlx5: Devcom, serialize devcom registration
+
+Vlad Buslov <vladbu@nvidia.com>
+    net/mlx5e: Fix deadlock in tc route query code
+
+Mark Bloch <mbloch@nvidia.com>
+    net/mlx5: devcom only supports 2 ports
+
+Anton Protopopov <aspsk@isovalent.com>
+    bpf: fix a memory leak in the LRU and LRU_PERCPU hash maps
+
+Hans de Goede <hdegoede@redhat.com>
+    power: supply: bq24190: Call power_supply_changed() after updating input current
+
+Hans de Goede <hdegoede@redhat.com>
+    power: supply: core: Refactor power_supply_set_input_current_limit_from_supplier()
+
+Hans de Goede <hdegoede@redhat.com>
+    power: supply: bq27xxx: After charger plug in/out wait 0.5s for things to stabilize
+
+Hans de Goede <hdegoede@redhat.com>
+    power: supply: bq27xxx: Ensure power_supply_changed() is called on current sign changes
+
+Hans de Goede <hdegoede@redhat.com>
+    power: supply: bq27xxx: Move bq27xxx_battery_update() down
+
+Sicelo A. Mhlongo <absicsz@gmail.com>
+    power: supply: bq27xxx: expose battery data when CI=1
+
+
+-------------
+
+Diffstat:
+
+ Documentation/networking/bonding.rst               |  11 ++
+ Makefile                                           |   4 +-
+ arch/s390/kernel/uv.c                              |  56 ++++---
+ drivers/android/binder.c                           |  26 +++-
+ drivers/android/binder_alloc.c                     |  64 +++-----
+ drivers/android/binder_alloc.h                     |   2 +-
+ drivers/android/binder_alloc_selftest.c            |   2 +-
+ drivers/dma/at_xdmac.c                             | 145 +++++++++++------
+ drivers/irqchip/irq-mips-gic.c                     |  65 +++++---
+ drivers/net/bonding/bond_main.c                    |  17 +-
+ drivers/net/bonding/bond_netlink.c                 |  22 ++-
+ drivers/net/bonding/bond_options.c                 |  36 ++++-
+ drivers/net/bonding/bond_procfs.c                  |   2 +
+ drivers/net/bonding/bond_sysfs.c                   |  13 ++
+ drivers/net/dsa/mt7530.c                           | 124 +++++++++------
+ drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c   |   2 +
+ drivers/net/ethernet/mellanox/mlx5/core/en/txrx.h  |   2 +
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c    |  19 +--
+ drivers/net/ethernet/mellanox/mlx5/core/en_tx.c    |  19 ++-
+ .../net/ethernet/mellanox/mlx5/core/lib/devcom.c   |  81 +++++++---
+ .../net/ethernet/mellanox/mlx5/core/lib/devcom.h   |   3 +
+ drivers/net/phy/mscc/mscc.h                        |   1 +
+ drivers/net/phy/mscc/mscc_main.c                   |  54 +++----
+ .../x86/intel/speed_select_if/isst_if_common.c     |  49 ++++--
+ drivers/power/supply/bq24190_charger.c             |  13 +-
+ drivers/power/supply/bq27xxx_battery.c             | 171 +++++++++++----------
+ drivers/power/supply/power_supply_core.c           |  57 +++----
+ include/linux/power/bq27xxx_battery.h              |   3 +
+ include/linux/power_supply.h                       |   5 +-
+ include/net/bond_options.h                         |   1 +
+ include/net/bonding.h                              |   3 +-
+ include/net/dsa.h                                  |  28 ++++
+ include/net/ip.h                                   |   2 +
+ include/net/page_pool.h                            |  18 ---
+ include/net/xdp.h                                  |   3 +
+ include/uapi/linux/if_link.h                       |   1 +
+ include/uapi/linux/in.h                            |   2 +
+ kernel/bpf/hashtab.c                               |   6 +-
+ net/bluetooth/hci_sock.c                           |  28 ++++
+ net/core/page_pool.c                               |  34 +++-
+ net/core/xdp.c                                     |  93 +++++++----
+ net/ipv4/ip_sockglue.c                             |  12 +-
+ net/ipv4/raw.c                                     |   5 +-
+ net/ipv6/raw.c                                     |   3 +-
+ net/netfilter/nf_conntrack_netlink.c               |   8 -
+ tools/include/uapi/linux/if_link.h                 |   1 +
+ 46 files changed, 861 insertions(+), 455 deletions(-)
 
 
