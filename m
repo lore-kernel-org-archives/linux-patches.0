@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81F1FBEA
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4513BC433EF;
-	Thu,  1 Jun 2023 13:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A50FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:27:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63DAC433D2;
+	Thu,  1 Jun 2023 13:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626058;
-	bh=z7WCTmD4fDz35QUruiaMPQauvoIyXOgnvS8RGV3SJQg=;
+	s=korg; t=1685626061;
+	bh=Q66oGo6YHunqdLXo+Uqi03t/BOE+7faoNHZDZl5VWLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uLPrlCVuCNm/EP7E79tXBMYVSVWqb3daeh57+Gw3HroSDtrnecVwAvak3B0nJZ+uz
-	 3R1AkGfnDw5PjxdJFrg2LOxoGivHiqqD164T4HCthmAZgDUjPL6G4jvwBZGw0FDdag
-	 BF+bkqXsjmd17G2BM+XFvcdbZoKX7leHV+R7rCgc=
+	b=p69Fv0y77m4xwgVbzgQ1RiQFaEeR8HeNme//4BLLdW61wmToOX0ciAeRqh86EoQCQ
+	 1TcE3mzDCUoyozsPtUFOTVnV25juMtDJLp1bkFmy4dU3L2Gbg/6a0Bvw/sgrEWEKs5
+	 RDHQBk/bYX+HKsVHVIgSxYoL7JiiD9eCfWUfnSgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Shai Amiram <samiram@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 05/42] platform/x86/amd/pmf: Fix CnQF and auto-mode after resume
-Date: Thu,  1 Jun 2023 14:21:14 +0100
-Message-Id: <20230601131939.296909185@linuxfoundation.org>
+Subject: [PATCH 6.1 06/42] tls: rx: device: fix checking decryption status
+Date: Thu,  1 Jun 2023 14:21:15 +0100
+Message-Id: <20230601131939.338500118@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
 References: <20230601131939.051934720@linuxfoundation.org>
@@ -35,101 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit b54147fa374dbeadcb01b1762db1a793e06e37de ]
+[ Upstream commit b3a03b540e3cf62a255213d084d76d71c02793d5 ]
 
-After suspend/resume cycle there is an error message and auto-mode
-or CnQF stops working.
+skb->len covers the entire skb, including the frag_list.
+In fact we're guaranteed that rxm->full_len <= skb->len,
+so since the change under Fixes we were not checking decrypt
+status of any skb but the first.
 
-[ 5741.447511] amd-pmf AMDI0100:00: SMU cmd failed. err: 0xff
-[ 5741.447523] amd-pmf AMDI0100:00: AMD_PMF_REGISTER_RESPONSE:ff
-[ 5741.447527] amd-pmf AMDI0100:00: AMD_PMF_REGISTER_ARGUMENT:7
-[ 5741.447531] amd-pmf AMDI0100:00: AMD_PMF_REGISTER_MESSAGE:16
-[ 5741.447540] amd-pmf AMDI0100:00: [AUTO_MODE] avg power: 0 mW mode: QUIET
+Note that the skb_pagelen() added here may feel a bit costly,
+but it's removed by subsequent fixes, anyway.
 
-This is because the DRAM address used for accessing metrics table
-needs to be refreshed after a suspend resume cycle. Add a resume
-callback to reset this again.
-
-Fixes: 1a409b35c995 ("platform/x86/amd/pmf: Get performance metrics from PMFW")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20230513011408.958-1-mario.limonciello@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reported-by: Tariq Toukan <tariqt@nvidia.com>
+Fixes: 86b259f6f888 ("tls: rx: device: bound the frag walk")
+Tested-by: Shai Amiram <samiram@nvidia.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/core.c | 32 ++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ net/tls/tls_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
-index 0acc0b6221290..dc9803e1a4b9b 100644
---- a/drivers/platform/x86/amd/pmf/core.c
-+++ b/drivers/platform/x86/amd/pmf/core.c
-@@ -245,24 +245,29 @@ static const struct pci_device_id pmf_pci_ids[] = {
- 	{ }
- };
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index a7cc4f9faac28..3b87c7b04ac87 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -1012,7 +1012,7 @@ int tls_device_decrypted(struct sock *sk, struct tls_context *tls_ctx)
+ 	struct sk_buff *skb_iter;
+ 	int left;
  
--int amd_pmf_init_metrics_table(struct amd_pmf_dev *dev)
-+static void amd_pmf_set_dram_addr(struct amd_pmf_dev *dev)
- {
- 	u64 phys_addr;
- 	u32 hi, low;
- 
--	INIT_DELAYED_WORK(&dev->work_buffer, amd_pmf_get_metrics);
-+	phys_addr = virt_to_phys(dev->buf);
-+	hi = phys_addr >> 32;
-+	low = phys_addr & GENMASK(31, 0);
-+
-+	amd_pmf_send_cmd(dev, SET_DRAM_ADDR_HIGH, 0, hi, NULL);
-+	amd_pmf_send_cmd(dev, SET_DRAM_ADDR_LOW, 0, low, NULL);
-+}
- 
-+int amd_pmf_init_metrics_table(struct amd_pmf_dev *dev)
-+{
- 	/* Get Metrics Table Address */
- 	dev->buf = kzalloc(sizeof(dev->m_table), GFP_KERNEL);
- 	if (!dev->buf)
- 		return -ENOMEM;
- 
--	phys_addr = virt_to_phys(dev->buf);
--	hi = phys_addr >> 32;
--	low = phys_addr & GENMASK(31, 0);
-+	INIT_DELAYED_WORK(&dev->work_buffer, amd_pmf_get_metrics);
- 
--	amd_pmf_send_cmd(dev, SET_DRAM_ADDR_HIGH, 0, hi, NULL);
--	amd_pmf_send_cmd(dev, SET_DRAM_ADDR_LOW, 0, low, NULL);
-+	amd_pmf_set_dram_addr(dev);
- 
- 	/*
- 	 * Start collecting the metrics data after a small delay
-@@ -273,6 +278,18 @@ int amd_pmf_init_metrics_table(struct amd_pmf_dev *dev)
- 	return 0;
- }
- 
-+static int amd_pmf_resume_handler(struct device *dev)
-+{
-+	struct amd_pmf_dev *pdev = dev_get_drvdata(dev);
-+
-+	if (pdev->buf)
-+		amd_pmf_set_dram_addr(pdev);
-+
-+	return 0;
-+}
-+
-+static DEFINE_SIMPLE_DEV_PM_OPS(amd_pmf_pm, NULL, amd_pmf_resume_handler);
-+
- static void amd_pmf_init_features(struct amd_pmf_dev *dev)
- {
- 	int ret;
-@@ -414,6 +431,7 @@ static struct platform_driver amd_pmf_driver = {
- 		.name = "amd-pmf",
- 		.acpi_match_table = amd_pmf_acpi_ids,
- 		.dev_groups = amd_pmf_driver_groups,
-+		.pm = pm_sleep_ptr(&amd_pmf_pm),
- 	},
- 	.probe = amd_pmf_probe,
- 	.remove = amd_pmf_remove,
+-	left = rxm->full_len - skb->len;
++	left = rxm->full_len + rxm->offset - skb_pagelen(skb);
+ 	/* Check if all the data is decrypted already */
+ 	skb_iter = skb_shinfo(skb)->frag_list;
+ 	while (skb_iter && left > 0) {
 -- 
 2.39.2
 
