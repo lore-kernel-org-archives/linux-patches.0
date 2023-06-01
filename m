@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C106E54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:22:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A8DC433EF;
-	Thu,  1 Jun 2023 13:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F96CE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:22:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5EA7C433EF;
+	Thu,  1 Jun 2023 13:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625748;
-	bh=5FstkzQePsqqw9vODII2qGx9xoeqIV6MtLeGszhJDAA=;
+	s=korg; t=1685625751;
+	bh=d+zUvn4wqNLb0hFva8lzevle76nwN20nIFV96HKfP7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2OIU/DkgQxnyLByvx347+XgFo4Q2gXCXAF/cN8psgGaawBZPABztanNzy9SF1kTP2
-	 8pPBPhQeXaN31N9NtVo48uF3hwT98DI9M8C1fsBh3MyPvHuGCqUry+7YCuz/qjSfPV
-	 wnWe09RmPZzyVqNQJQeqlbzU4vDelbJzhDYF94kU=
+	b=tdOgVF+SwIVA9R9CDDUBjR6JVtLxlRPrk7KJFQfIWAZmOa5/FWUXj6aHFJsTFobEJ
+	 g8UoaDv+2bENpYhRYp+fY9uAReRLD61Jnnt8hKCqIF3lGPfIee9NMMmY7XW6SwTrO8
+	 j4xHyhdP79UCdgXhmhHzi8P8RlSXT35c9TcyVfYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9f575a1f15fc0c01ed69@syzkaller.appspotmail.com,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 02/16] net: cdc_ncm: Deal with too low values of dwNtbOutMaxSize
-Date: Thu,  1 Jun 2023 14:20:57 +0100
-Message-Id: <20230601131932.064785665@linuxfoundation.org>
+Subject: [PATCH 5.4 03/16] power: supply: bq27xxx: After charger plug in/out wait 0.5s for things to stabilize
+Date: Thu,  1 Jun 2023 14:20:58 +0100
+Message-Id: <20230601131932.106478456@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131931.947241286@linuxfoundation.org>
 References: <20230601131931.947241286@linuxfoundation.org>
@@ -37,130 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 7e01c7f7046efc2c7c192c3619db43292b98e997 ]
+[ Upstream commit 59a99cd462fbdf71f4e845e09f37783035088b4f ]
 
-Currently in cdc_ncm_check_tx_max(), if dwNtbOutMaxSize is lower than
-the calculated "min" value, but greater than zero, the logic sets
-tx_max to dwNtbOutMaxSize. This is then used to allocate a new SKB in
-cdc_ncm_fill_tx_frame() where all the data is handled.
+bq27xxx_external_power_changed() gets called when the charger is plugged
+in or out. Rather then immediately scheduling an update wait 0.5 seconds
+for things to stabilize, so that e.g. the (dis)charge current is stable
+when bq27xxx_battery_update() runs.
 
-For small values of dwNtbOutMaxSize the memory allocated during
-alloc_skb(dwNtbOutMaxSize, GFP_ATOMIC) will have the same size, due to
-how size is aligned at alloc time:
-	size = SKB_DATA_ALIGN(size);
-        size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
-Thus we hit the same bug that we tried to squash with
-commit 2be6d4d16a084 ("net: cdc_ncm: Allow for dwNtbOutMaxSize to be unset or zero")
-
-Low values of dwNtbOutMaxSize do not cause an issue presently because at
-alloc_skb() time more memory (512b) is allocated than required for the
-SKB headers alone (320b), leaving some space (512b - 320b = 192b)
-for CDC data (172b).
-
-However, if more elements (for example 3 x u64 = [24b]) were added to
-one of the SKB header structs, say 'struct skb_shared_info',
-increasing its original size (320b [320b aligned]) to something larger
-(344b [384b aligned]), then suddenly the CDC data (172b) no longer
-fits in the spare SKB data area (512b - 384b = 128b).
-
-Consequently the SKB bounds checking semantics fails and panics:
-
-skbuff: skb_over_panic: text:ffffffff831f755b len:184 put:172 head:ffff88811f1c6c00 data:ffff88811f1c6c00 tail:0xb8 end:0x80 dev:<NULL>
-------------[ cut here ]------------
-kernel BUG at net/core/skbuff.c:113!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-CPU: 0 PID: 57 Comm: kworker/0:2 Not tainted 5.15.106-syzkaller-00249-g19c0ed55a470 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/14/2023
-Workqueue: mld mld_ifc_work
-RIP: 0010:skb_panic net/core/skbuff.c:113 [inline]
-RIP: 0010:skb_over_panic+0x14c/0x150 net/core/skbuff.c:118
-[snip]
-Call Trace:
- <TASK>
- skb_put+0x151/0x210 net/core/skbuff.c:2047
- skb_put_zero include/linux/skbuff.h:2422 [inline]
- cdc_ncm_ndp16 drivers/net/usb/cdc_ncm.c:1131 [inline]
- cdc_ncm_fill_tx_frame+0x11ab/0x3da0 drivers/net/usb/cdc_ncm.c:1308
- cdc_ncm_tx_fixup+0xa3/0x100
-
-Deal with too low values of dwNtbOutMaxSize, clamp it in the range
-[USB_CDC_NCM_NTB_MIN_OUT_SIZE, CDC_NCM_NTB_MAX_SIZE_TX]. We ensure
-enough data space is allocated to handle CDC data by making sure
-dwNtbOutMaxSize is not smaller than USB_CDC_NCM_NTB_MIN_OUT_SIZE.
-
-Fixes: 289507d3364f ("net: cdc_ncm: use sysfs for rx/tx aggregation tuning")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+9f575a1f15fc0c01ed69@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=b982f1059506db48409d
-Link: https://lore.kernel.org/all/20211202143437.1411410-1-lee.jones@linaro.org/
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230517133808.1873695-2-tudor.ambarus@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 740b755a3b34 ("bq27x00: Poll battery state")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_ncm.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
-index 28e306e3ee8d9..5fb4f74c26efd 100644
---- a/drivers/net/usb/cdc_ncm.c
-+++ b/drivers/net/usb/cdc_ncm.c
-@@ -180,9 +180,12 @@ static u32 cdc_ncm_check_tx_max(struct usbnet *dev, u32 new_tx)
- 	else
- 		min = ctx->max_datagram_size + ctx->max_ndp_size + sizeof(struct usb_cdc_ncm_nth32);
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index b45cbd40294b9..ffdd646d7ebc0 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1862,8 +1862,8 @@ static void bq27xxx_external_power_changed(struct power_supply *psy)
+ {
+ 	struct bq27xxx_device_info *di = power_supply_get_drvdata(psy);
  
--	max = min_t(u32, CDC_NCM_NTB_MAX_SIZE_TX, le32_to_cpu(ctx->ncm_parm.dwNtbOutMaxSize));
--	if (max == 0)
-+	if (le32_to_cpu(ctx->ncm_parm.dwNtbOutMaxSize) == 0)
- 		max = CDC_NCM_NTB_MAX_SIZE_TX; /* dwNtbOutMaxSize not set */
-+	else
-+		max = clamp_t(u32, le32_to_cpu(ctx->ncm_parm.dwNtbOutMaxSize),
-+			      USB_CDC_NCM_NTB_MIN_OUT_SIZE,
-+			      CDC_NCM_NTB_MAX_SIZE_TX);
+-	cancel_delayed_work_sync(&di->work);
+-	schedule_delayed_work(&di->work, 0);
++	/* After charger plug in/out wait 0.5s for things to stabilize */
++	mod_delayed_work(system_wq, &di->work, HZ / 2);
+ }
  
- 	/* some devices set dwNtbOutMaxSize too low for the above default */
- 	min = min(min, max);
-@@ -1229,6 +1232,9 @@ cdc_ncm_fill_tx_frame(struct usbnet *dev, struct sk_buff *skb, __le32 sign)
- 			 * further.
- 			 */
- 			if (skb_out == NULL) {
-+				/* If even the smallest allocation fails, abort. */
-+				if (ctx->tx_curr_size == USB_CDC_NCM_NTB_MIN_OUT_SIZE)
-+					goto alloc_failed;
- 				ctx->tx_low_mem_max_cnt = min(ctx->tx_low_mem_max_cnt + 1,
- 							      (unsigned)CDC_NCM_LOW_MEM_MAX_CNT);
- 				ctx->tx_low_mem_val = ctx->tx_low_mem_max_cnt;
-@@ -1247,13 +1253,8 @@ cdc_ncm_fill_tx_frame(struct usbnet *dev, struct sk_buff *skb, __le32 sign)
- 			skb_out = alloc_skb(ctx->tx_curr_size, GFP_ATOMIC);
- 
- 			/* No allocation possible so we will abort */
--			if (skb_out == NULL) {
--				if (skb != NULL) {
--					dev_kfree_skb_any(skb);
--					dev->net->stats.tx_dropped++;
--				}
--				goto exit_no_skb;
--			}
-+			if (!skb_out)
-+				goto alloc_failed;
- 			ctx->tx_low_mem_val--;
- 		}
- 		if (ctx->is_ndp16) {
-@@ -1446,6 +1447,11 @@ cdc_ncm_fill_tx_frame(struct usbnet *dev, struct sk_buff *skb, __le32 sign)
- 
- 	return skb_out;
- 
-+alloc_failed:
-+	if (skb) {
-+		dev_kfree_skb_any(skb);
-+		dev->net->stats.tx_dropped++;
-+	}
- exit_no_skb:
- 	/* Start timer, if there is a remaining non-empty skb */
- 	if (ctx->tx_curr_skb != NULL && n > 0)
+ int bq27xxx_battery_setup(struct bq27xxx_device_info *di)
 -- 
 2.39.2
 
