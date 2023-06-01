@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCB2FBEA
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09ECC433D2;
-	Thu,  1 Jun 2023 13:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6115FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:28:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538EDC433D2;
+	Thu,  1 Jun 2023 13:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685626120;
-	bh=V5XCCy1Y5T06uGJ0Mn5XJxdSzPZaj3Ua39Jf+spkDnE=;
+	s=korg; t=1685626122;
+	bh=8cPrpwpUSHGwTVsLhEmDkOUS2HMtpoNlheNK71BGlsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ubRHO8n57ENgQo2O/NVsl9wOJQ2n/IbOsxKhVGX2UpsYB38d7dpddqZUaHb/NIOku
-	 4947S9c3EBKsC2GP5aSt7WP3DWisH9hcmS11uKoUSCSo1lJN/Z5FWf7Qjv/OEm44vf
-	 vu0OUaAqo7LViPCDeCAKiFbrlZhGcygZkRDTX0Vc=
+	b=mFK0hcXHf8VK6g2N/0ISVAJsdWlxNh6jm82UncXJMIgolGBQjYx7NmnfzwulP/hpS
+	 G+NeGvhARV50Br3yY9pHMtpS0t80M7Axci8G41CzldfTtkFSw8mEjGgwdS/M0I+MpG
+	 ZrnWX+p/wzwi6Ta0sdz+HoYoqe9e1rkQj6CCHN00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anuj Gupta <anuj20.g@samsung.com>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 38/42] block: fix bio-cache for passthru IO
-Date: Thu,  1 Jun 2023 14:21:47 +0100
-Message-Id: <20230601131940.761752786@linuxfoundation.org>
+	Wyes Karny <wyes.karny@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 39/42] cpufreq: amd-pstate: Update policy->cur in amd_pstate_adjust_perf()
+Date: Thu,  1 Jun 2023 14:21:48 +0100
+Message-Id: <20230601131940.808879850@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131939.051934720@linuxfoundation.org>
 References: <20230601131939.051934720@linuxfoundation.org>
@@ -35,42 +34,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anuj Gupta <anuj20.g@samsung.com>
+From: Wyes Karny <wyes.karny@amd.com>
 
-commit 46930b7cc7727271c9c27aac1fdc97a8645e2d00 upstream.
+commit 3bf8c6307bad5c0cc09cde982e146d847859b651 upstream.
 
-commit <8af870aa5b847> ("block: enable bio caching use for passthru IO")
-introduced bio-cache for passthru IO. In case when nr_vecs are greater
-than BIO_INLINE_VECS, bio and bvecs are allocated from mempool (instead
-of percpu cache) and REQ_ALLOC_CACHE is cleared. This causes the side
-effect of not freeing bio/bvecs into mempool on completion.
+Driver should update policy->cur after updating the frequency.
+Currently amd_pstate doesn't update policy->cur when `adjust_perf`
+is used. Which causes /proc/cpuinfo to show wrong cpu frequency.
+Fix this by updating policy->cur with correct frequency value in
+adjust_perf function callback.
 
-This patch lets the passthru IO fallback to allocation using bio_kmalloc
-when nr_vecs are greater than BIO_INLINE_VECS. The corresponding bio
-is freed during call to blk_mq_map_bio_put during completion.
+- Before the fix: (setting min freq to 1.5 MHz)
 
-Cc: stable@vger.kernel.org # 6.1
-fixes <8af870aa5b847> ("block: enable bio caching use for passthru IO")
+[root@amd]# cat /proc/cpuinfo | grep "cpu MHz" | sort | uniq --count
+      1 cpu MHz         : 1777.016
+      1 cpu MHz         : 1797.160
+      1 cpu MHz         : 1797.270
+    189 cpu MHz         : 400.000
 
-Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
-Signed-off-by: Kanchan Joshi <joshi.k@samsung.com>
-Link: https://lore.kernel.org/r/20230523111709.145676-1-anuj20.g@samsung.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+- After the fix: (setting min freq to 1.5 MHz)
+
+[root@amd]# cat /proc/cpuinfo | grep "cpu MHz" | sort | uniq --count
+      1 cpu MHz         : 1753.353
+      1 cpu MHz         : 1756.838
+      1 cpu MHz         : 1776.466
+      1 cpu MHz         : 1776.873
+      1 cpu MHz         : 1777.308
+      1 cpu MHz         : 1779.900
+    183 cpu MHz         : 1805.231
+      1 cpu MHz         : 1956.815
+      1 cpu MHz         : 2246.203
+      1 cpu MHz         : 2259.984
+
+Fixes: 1d215f0319c2 ("cpufreq: amd-pstate: Add fast switch function for AMD P-State")
+Signed-off-by: Wyes Karny <wyes.karny@amd.com>
+[ rjw: Subject edits ]
+Cc: 5.17+ <stable@vger.kernel.org> # 5.17+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-map.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/amd-pstate.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/block/blk-map.c
-+++ b/block/blk-map.c
-@@ -246,7 +246,7 @@ static struct bio *blk_rq_map_bio_alloc(
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -284,12 +284,14 @@ static void amd_pstate_adjust_perf(unsig
+ 				   unsigned long capacity)
  {
- 	struct bio *bio;
+ 	unsigned long max_perf, min_perf, des_perf,
+-		      cap_perf, lowest_nonlinear_perf;
++		      cap_perf, lowest_nonlinear_perf, max_freq;
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
+ 	struct amd_cpudata *cpudata = policy->driver_data;
++	unsigned int target_freq;
  
--	if (rq->cmd_flags & REQ_POLLED) {
-+	if (rq->cmd_flags & REQ_POLLED && (nr_vecs <= BIO_INLINE_VECS)) {
- 		blk_opf_t opf = rq->cmd_flags | REQ_ALLOC_CACHE;
+ 	cap_perf = READ_ONCE(cpudata->highest_perf);
+ 	lowest_nonlinear_perf = READ_ONCE(cpudata->lowest_nonlinear_perf);
++	max_freq = READ_ONCE(cpudata->max_freq);
  
- 		bio = bio_alloc_bioset(NULL, nr_vecs, opf, gfp_mask,
+ 	des_perf = cap_perf;
+ 	if (target_perf < capacity)
+@@ -306,6 +308,10 @@ static void amd_pstate_adjust_perf(unsig
+ 	if (max_perf < min_perf)
+ 		max_perf = min_perf;
+ 
++	des_perf = clamp_t(unsigned long, des_perf, min_perf, max_perf);
++	target_freq = div_u64(des_perf * max_freq, max_perf);
++	policy->cur = target_freq;
++
+ 	amd_pstate_update(cpudata, min_perf, des_perf, max_perf, true);
+ 	cpufreq_cpu_put(policy);
+ }
 
 
