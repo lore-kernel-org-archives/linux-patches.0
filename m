@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB7BE54A
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4C4C433EF;
-	Thu,  1 Jun 2023 13:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0BBE54A
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E164C4339B;
+	Thu,  1 Jun 2023 13:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625803;
-	bh=F3awYTmNQuERjbkpEeLb5xpFZNod9Dy7EaDMGqeaw8w=;
+	s=korg; t=1685625805;
+	bh=9mpPBw8OifPZDgjRrL5fnptSl1oa4ikovN2fugjsuVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SyiQLRO6wBt3mrMBLNfDxTIcTSstG1VvBqoDDiFRK2k1MdozjwXt/sm7aZUfKd+Cj
-	 i4ydjumRdaLtzMBhSJ+eLXfS92INqI+W1UNdZcOEbmj+dZbryS7tHZIbn7y7ZUlWEw
-	 p2LfqG5UoOcB/WfqDxsWp2c9PYOP/248T/khPb44=
+	b=qYhCX/yb6bRw+LrgJKz9bF1x84Uo2NFK4EsCqHUg4pHhpNrNVoZtRS6LIa2ACvcJh
+	 7XCO+ULa3wDHE+lI6EfZ7FhQjb9Viw5GQtplBOarJim8IcOFxxBOd1T+c8cVu+w0dE
+	 V8B0uygGcn/8iWvlll1SN+yrgApAP0mzhK7LsX4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 04/22] power: supply: bq27xxx: fix sign of current_now for newer ICs
-Date: Thu,  1 Jun 2023 14:21:02 +0100
-Message-Id: <20230601131933.922681198@linuxfoundation.org>
+	Paul Blakey <paulb@nvidia.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	Demi Marie Obenour <demi@invisiblethingslab.com>
+Subject: [PATCH 5.10 22/22] netfilter: ctnetlink: Support offloaded conntrack entry deletion
+Date: Thu,  1 Jun 2023 14:21:20 +0100
+Message-Id: <20230601131934.770916033@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131933.727832920@linuxfoundation.org>
 References: <20230601131933.727832920@linuxfoundation.org>
@@ -35,42 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Paul Blakey <paulb@nvidia.com>
 
-[ Upstream commit b67fdcb7099e9c640bad625c4dd6399debb3376a ]
+commit 9b7c68b3911aef84afa4cbfc31bce20f10570d51 upstream.
 
-Commit cd060b4d0868 ("power: supply: bq27xxx: fix polarity of current_now")
-changed the sign of current_now for all bq27xxx variants, but on BQ28Z610
-I'm now seeing negated values *with* that patch.
+Currently, offloaded conntrack entries (flows) can only be deleted
+after they are removed from offload, which is either by timeout,
+tcp state change or tc ct rule deletion. This can cause issues for
+users wishing to manually delete or flush existing entries.
 
-The GTA04/Openmoko device that was used for testing uses a BQ27000 or
-BQ27010 IC, so I assume only the BQ27XXX_O_ZERO code path was incorrect.
-Revert the behaviour for newer ICs.
+Support deletion of offloaded conntrack entries.
 
-Fixes: cd060b4d0868 "power: supply: bq27xxx: fix polarity of current_now"
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: 35092c5819f8 ("power: supply: bq27xxx: Add cache parameter to bq27xxx_battery_current_and_status()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Example usage:
+ # Delete all offloaded (and non offloaded) conntrack entries
+ # whose source address is 1.2.3.4
+ $ conntrack -D -s 1.2.3.4
+ # Delete all entries
+ $ conntrack -F
+
+Signed-off-by: Paul Blakey <paulb@nvidia.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Cc: Demi Marie Obenour <demi@invisiblethingslab.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_netlink.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 79eee63a2041e..d34f1fceadbb4 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1781,7 +1781,7 @@ static int bq27xxx_battery_current(struct bq27xxx_device_info *di,
- 		val->intval = curr * BQ27XXX_CURRENT_CONSTANT / BQ27XXX_RS;
- 	} else {
- 		/* Other gauges return signed value */
--		val->intval = -(int)((s16)curr) * 1000;
-+		val->intval = (int)((s16)curr) * 1000;
- 	}
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -1493,9 +1493,6 @@ static const struct nla_policy ct_nla_po
  
- 	return 0;
--- 
-2.39.2
-
+ static int ctnetlink_flush_iterate(struct nf_conn *ct, void *data)
+ {
+-	if (test_bit(IPS_OFFLOAD_BIT, &ct->status))
+-		return 0;
+-
+ 	return ctnetlink_filter_match(ct, data);
+ }
+ 
+@@ -1561,11 +1558,6 @@ static int ctnetlink_del_conntrack(struc
+ 
+ 	ct = nf_ct_tuplehash_to_ctrack(h);
+ 
+-	if (test_bit(IPS_OFFLOAD_BIT, &ct->status)) {
+-		nf_ct_put(ct);
+-		return -EBUSY;
+-	}
+-
+ 	if (cda[CTA_ID]) {
+ 		__be32 id = nla_get_be32(cda[CTA_ID]);
+ 
 
 
