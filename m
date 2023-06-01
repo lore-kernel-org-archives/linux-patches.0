@@ -1,78 +1,106 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3366521CE7
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 14:58:38 +0000 (UTC)
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-19a13476ffeso1091710fac.0
-        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 07:58:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685631518; x=1688223518;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kKA7bXeTxOFAGtKnHALKsnYjOqM8LI5Ovc7qv8nHXy4=;
-        b=VbnEgHTh9xF4ebL07QtrT7IKBEyHLCw0QVrUCnHaD6hD1lvRPslcpTX91zn3hAvWzx
-         ulibMwWZFHmSArR1Js46N5RKP2nJv9bdUpXM2WSng5LizAhofHiXTVQQfqca6v+jPXKe
-         HvtDu/CfmB1slVve+kXxvvQ0BgNQJ3XFLLqvuZMoYiQKb3LIzutxDOewUsQMmH2E5ZVa
-         nUHXWQZZVE+BdWPLsAQyGecmA2uHxI7IzhaUVupAxOYA0OiDDmvfeGiXAf73/Shha1Et
-         jaG3ST69YQfcksirDQfDNwj+0zv225EuOKqX49xfmOB8NdSNiTprBZaCstS6qLkW7u3s
-         Wowg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685631518; x=1688223518;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kKA7bXeTxOFAGtKnHALKsnYjOqM8LI5Ovc7qv8nHXy4=;
-        b=FQp4khVUuwqq+yHqenLEOuoraFUSMJ/t5qc8ZBW+EtSS+LpiuHE+UpJYG7L30IA+99
-         U+6KiFTq1g8oFBsaCbvjW62H9T3C+4ZD8T8zvre8qZca+WUtygjQd1/OLwq2UDlFXs6i
-         9IJtc0bVlox1ve9eNn0V5hS/peXuw2ECDLVpTpU+L9Mq0fhKxXeotdSJaDPNLc5wZcA6
-         Gyfx/OKAgq/Dbl0HFdeH0ixENq+ZDahhlwE1YV4GI4FvnVwBBpdJFbw/g+S3Pqq/CptK
-         JA9YuAZgsTYerB5NdCCu+QSY6ttsd1aU4oUhYdWn73n3tNaWARxl1UKq9baj5p4WvyFv
-         fE5g==
-X-Gm-Message-State: AC+VfDz3CuZqyebvyFkcNa+wrDyrPqjB3V6QiCYeZKoDAqjAizYOFxV5
-	GPn7TiwLQidRYqA8tuOf/+o=
-X-Google-Smtp-Source: ACHHUZ6yE1Id0grKqywwZgmTdnr0O2dPuH6cit6vXBQMcYrvks7tA0S44ZEnYsykFDZRKmPXN90PAQ==
-X-Received: by 2002:a05:6871:6bb0:b0:19f:af14:9e60 with SMTP id zh48-20020a0568716bb000b0019faf149e60mr5853140oab.8.1685631518122;
-        Thu, 01 Jun 2023 07:58:38 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id q7-20020a056870e60700b0019ea8771fb0sm1757100oag.13.2023.06.01.07.58.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 07:58:37 -0700 (PDT)
-Message-ID: <5e5e1590-ad97-4590-1db8-8ce89840b9e3@gmail.com>
-Date: Thu, 1 Jun 2023 11:58:01 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A9F23400;
+	Thu,  1 Jun 2023 15:26:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7334C433D2;
+	Thu,  1 Jun 2023 15:26:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1685633190;
+	bh=ZEqKq2MGPwE7UmZkmGx9PfcvEwEnm43p6Kqjn+YHD54=;
+	h=From:Date:Subject:To:Cc:From;
+	b=pJlEQRFcI1KzDRh4BpUI27GOM3eku6JhOS/Ayy53bJhJuapS07hiAcwnTvVmzm33U
+	 xcN5uXQprcvLy/XkjzidhfE2B4FreQ0htuC9/gQs/EVlPMnvWuKcOZHsV8AfAb8N2c
+	 Alezdo7LrD/SWzCggR89nYqDOgVt0l2KJpYZxfZvguVFKriRy/RHb443PFZJAjCYX5
+	 dx02TK8eJkab4dvfDANuTuj8A0SBrDOvg4oGVKZ39QeRciohsdasVqsLNkQJc6sHPe
+	 EAWqSSSXEitfwpYOds4m2XqtbPYUlZ5slVRsm1ZWdf5kNzEEf731l2k3+lRzuswRUI
+	 qtIpPYzOROyCA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 01 Jun 2023 08:26:16 -0700
+Subject: [PATCH] zswap: Avoid uninitialized use of ret in
+ zswap_frontswap_store()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 8/8] rust: workqueue: add examples
-Content-Language: en-US
-To: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
- <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>,
- Lai Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>,
- Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20230601134946.3887870-1-aliceryhl@google.com>
- <20230601134946.3887870-9-aliceryhl@google.com>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230601134946.3887870-9-aliceryhl@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20230601-zswap-cgroup-wsometimes-uninitialized-v1-1-35debdd19293@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAJe4eGQC/x2OywrCMBAAf6Xk7EIao6K/Ih7y2LQLJg3Z1EpL/
+ 93U4zAwzCYYCyGLR7eJgh9imlKD/tQJN5o0IJBvLJRUZ3mVPay8mAxuKNOcYeEpYqWIDHOiRJX
+ Mm1b0YC/6HoJW+oZetJY1jGCLSW48atFwxXKIXDDQ9z/wfO37D9EgKUOQAAAA
+To: akpm@linux-foundation.org, sjenning@redhat.com, ddstreet@ieee.org, 
+ vitaly.wool@konsulko.com
+Cc: ndesaulniers@google.com, trix@redhat.com, nphamcs@gmail.com, 
+ linux-mm@kvack.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2147; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=ZEqKq2MGPwE7UmZkmGx9PfcvEwEnm43p6Kqjn+YHD54=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCkVO5bed5S7uD8+/sOyRdGsao9Xmk2Yvnz1dOWbW/bWC
+ /dotL071FHKwiDGwSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmYsbHyNDCZ6By9rVc22rm
+ aT/vpyya/5YhwNDziVVFTOyV9S+z9/Mw/E+oFVHuYWPSKJ54UmRy+7anmQLf/JJuO3uE3j7OoeD
+ 3mgkA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 6/1/23 10:49, Alice Ryhl wrote:
-> This adds two examples of how to use the workqueue. The first example
-> shows how to use it when you only have one `work_struct` field, and the
-> second example shows how to use it when you have multiple `work_struct`
-> fields.
-> 
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> ---
-> [...]
+Clang warns:
 
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+  mm/zswap.c:1183:6: error: variable 'ret' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+   1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
+        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  mm/zswap.c:1327:9: note: uninitialized use occurs here
+   1327 |         return ret;
+        |                ^~~
+  mm/zswap.c:1183:2: note: remove the 'if' if its condition is always false
+   1183 |         if (objcg && !obj_cgroup_may_zswap(objcg))
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   1184 |                 goto reject;
+        | ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  mm/zswap.c:1158:9: note: initialize the variable 'ret' to silence this warning
+   1158 |         int ret;
+        |                ^
+        |                 = 0
+  1 error generated.
+
+Set ret to -EINVAL, which seems to best match the situation the comment
+mentions and matches an earlier bailout due to an unsupported type or
+situation.
+
+Fixes: 6804144bf1cf ("zswap: do not shrink if cgroup may not zswap")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/202306011435.2BxsHFUE-lkp@intel.com/
+Closes: https://lore.kernel.org/202306012152.o4FL7Y6J-lkp@intel.com/
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1861
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ mm/zswap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/mm/zswap.c b/mm/zswap.c
+index cff93643a6ab..e8313e2f5807 100644
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -1180,8 +1180,10 @@ static int zswap_frontswap_store(unsigned type, pgoff_t offset,
+ 	 * local cgroup limits.
+ 	 */
+ 	objcg = get_obj_cgroup_from_page(page);
+-	if (objcg && !obj_cgroup_may_zswap(objcg))
++	if (objcg && !obj_cgroup_may_zswap(objcg)) {
++		ret = -EINVAL;
+ 		goto reject;
++	}
+ 
+ 	/* reclaim space if needed */
+ 	if (zswap_is_full()) {
+
+---
+base-commit: b2424568bd9b947b2698b693ff24fec63bb4b36a
+change-id: 20230601-zswap-cgroup-wsometimes-uninitialized-b549ff4247ed
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
