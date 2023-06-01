@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CD4FBE8
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6E7C433EF;
-	Thu,  1 Jun 2023 13:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA124FBE8
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 13:26:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B648C433D2;
+	Thu,  1 Jun 2023 13:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685625963;
-	bh=NUoxTZV/5qM4RbvWUWzC5OiA5G9fSYk9x5tSBkQQipk=;
+	s=korg; t=1685625965;
+	bh=K/xKNoIuzB7rDEgRy7eOXxRaaUq/nom7QM8tG9venyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDTPdfZBAeDlV/Kd2dZVsHfQS6ZZ1RQOfeAPDLjVCNkyZTOijLwI4SJeC7GxcO5bn
-	 F0eY3/KboNSp3VNXNcrE57j7LYreRsR/FZxaO1PugjxcYxqg1iIUAmPIfu+EMbPbs4
-	 FCZ+gDCXK3y+LbNzQgh71FYxdXLKhfolz+TSCQy4=
+	b=cqJNPhz/lC1aJRZ0F0N91Q3TeaceS346ANdqEaLPoSUMGc9pKgc6okxgXwEqy0X1D
+	 vE5O7JTcwZMgZ0ie20QHVO8rk6Thqnwz+nRUwjL27KgR6M0u3jlJAzsC4oSxj4nn6X
+	 9rK+dJ1nPK7t1GUkR+rvTgw8Ze080AdIRQpPZM88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
-	Marek Vasut <marex@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 05/45] ARM: dts: imx6ull-dhcor: Set and limit the mode for PMIC buck 1, 2 and 3
-Date: Thu,  1 Jun 2023 14:21:01 +0100
-Message-Id: <20230601131938.944127083@linuxfoundation.org>
+Subject: [PATCH 6.3 06/45] selftests/bpf: Fix pkg-config call building sign-file
+Date: Thu,  1 Jun 2023 14:21:02 +0100
+Message-Id: <20230601131938.994669081@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 References: <20230601131938.702671708@linuxfoundation.org>
@@ -36,69 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit 892943d7729bbfb2edeed9e323eba9a5cec21c49 ]
+[ Upstream commit 5f5486b620cd43b16a1787ef92b9bc21bd72ef2e ]
 
-According to Renesas Electronics (formerly Dialog Semiconductor), the
-standard AUTO mode of the PMIC DA9061 can lead to stability problems
-depending on the hardware revision. It is recommended to set a defined
-mode such as PFM or PWM permanently. So set and limit the mode for
-buck 1, 2 and 3 to a fixed one.
+When building sign-file, the call to get the CFLAGS for libcrypto is
+missing white-space between `pkg-config` and `--cflags`:
 
-Fixes: 611b6c891e40 ("ARM: dts: imx6ull-dhcom: Add DH electronics DHCOM i.MX6ULL SoM and PDK2 board")
-Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+  $(shell $(HOSTPKG_CONFIG)--cflags libcrypto 2> /dev/null)
+
+Removing the redirection of stderr, we see:
+
+  $ make -C tools/testing/selftests/bpf sign-file
+  make: Entering directory '[...]/tools/testing/selftests/bpf'
+  make: pkg-config--cflags: No such file or directory
+    SIGN-FILE sign-file
+  make: Leaving directory '[...]/tools/testing/selftests/bpf'
+
+Add the missing space.
+
+Fixes: fc97590668ae ("selftests/bpf: Add test for bpf_verify_pkcs7_signature() kfunc")
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Link: https://lore.kernel.org/bpf/20230426215032.415792-1-jeremy@azazel.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6ull-dhcor-som.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/testing/selftests/bpf/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/imx6ull-dhcor-som.dtsi b/arch/arm/boot/dts/imx6ull-dhcor-som.dtsi
-index 5882c7565f649..32a6022625d97 100644
---- a/arch/arm/boot/dts/imx6ull-dhcor-som.dtsi
-+++ b/arch/arm/boot/dts/imx6ull-dhcor-som.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/leds/common.h>
- #include <dt-bindings/pwm/pwm.h>
-+#include <dt-bindings/regulator/dlg,da9063-regulator.h>
- #include "imx6ull.dtsi"
+diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
+index b677dcd0b77af..ad01c9e1ff12b 100644
+--- a/tools/testing/selftests/bpf/Makefile
++++ b/tools/testing/selftests/bpf/Makefile
+@@ -197,7 +197,7 @@ $(OUTPUT)/urandom_read: urandom_read.c urandom_read_aux.c $(OUTPUT)/liburandom_r
  
- / {
-@@ -84,16 +85,20 @@ onkey {
+ $(OUTPUT)/sign-file: ../../../../scripts/sign-file.c
+ 	$(call msg,SIGN-FILE,,$@)
+-	$(Q)$(CC) $(shell $(HOSTPKG_CONFIG)--cflags libcrypto 2> /dev/null) \
++	$(Q)$(CC) $(shell $(HOSTPKG_CONFIG) --cflags libcrypto 2> /dev/null) \
+ 		  $< -o $@ \
+ 		  $(shell $(HOSTPKG_CONFIG) --libs libcrypto 2> /dev/null || echo -lcrypto)
  
- 		regulators {
- 			vdd_soc_in_1v4: buck1 {
-+				regulator-allowed-modes = <DA9063_BUCK_MODE_SLEEP>; /* PFM */
- 				regulator-always-on;
- 				regulator-boot-on;
-+				regulator-initial-mode = <DA9063_BUCK_MODE_SLEEP>;
- 				regulator-max-microvolt = <1400000>;
- 				regulator-min-microvolt = <1400000>;
- 				regulator-name = "vdd_soc_in_1v4";
- 			};
- 
- 			vcc_3v3: buck2 {
-+				regulator-allowed-modes = <DA9063_BUCK_MODE_SYNC>; /* PWM */
- 				regulator-always-on;
- 				regulator-boot-on;
-+				regulator-initial-mode = <DA9063_BUCK_MODE_SYNC>;
- 				regulator-max-microvolt = <3300000>;
- 				regulator-min-microvolt = <3300000>;
- 				regulator-name = "vcc_3v3";
-@@ -106,8 +111,10 @@ vcc_3v3: buck2 {
- 			 * the voltage is set to 1.5V.
- 			 */
- 			vcc_ddr_1v35: buck3 {
-+				regulator-allowed-modes = <DA9063_BUCK_MODE_SYNC>; /* PWM */
- 				regulator-always-on;
- 				regulator-boot-on;
-+				regulator-initial-mode = <DA9063_BUCK_MODE_SYNC>;
- 				regulator-max-microvolt = <1500000>;
- 				regulator-min-microvolt = <1500000>;
- 				regulator-name = "vcc_ddr_1v35";
 -- 
 2.39.2
 
