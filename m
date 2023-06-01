@@ -1,241 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB38101D6
-	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 14:36:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D5AC433EF;
-	Thu,  1 Jun 2023 14:36:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685630168;
-	bh=/xK7oMYZYUP4DJKjzDrCOCYODgLlz31gSGqfZuxsvp4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ShlBKkZxsn9Zji6NNyspbCGu03d/o/KDauuHeJa3dbnJeG+D3HVvdj1Y3ktbYQkLI
-	 5ChVW6QfyXx9neTbXJmLT4upiAG3Kegae2grCC41VjUVJABp7nnN05Mk75Cmvdq3jo
-	 cB+cMW6i3Kh97FUF3V8nWJpKwsX4J+6OU61IP7Iw=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.15 00/37] 5.15.115-rc2 review
-Date: Thu,  1 Jun 2023 15:36:06 +0100
-Message-Id: <20230601143331.405588582@linuxfoundation.org>
-X-Mailer: git-send-email 2.40.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4E8FC1D
+	for <patches@lists.linux.dev>; Thu,  1 Jun 2023 14:39:57 +0000 (UTC)
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-517ab9a4a13so836737a12.1
+        for <patches@lists.linux.dev>; Thu, 01 Jun 2023 07:39:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685630397; x=1688222397;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=vAtDJ4UZJBm7+uLnpiZVzFRiwuCQbc5zdoMX8rHHbbU=;
+        b=qt7Q1bUpshWH93RKlnxUNBqecIEtKUcuPoKkhnCZxE2gPC4w/HAKWUFxEhX0tLVXUe
+         S8jOYv048Br31vztTF78G6zqhLr8ZEPx5/MKGpurvWErugkg8dzfAeAbWdJ76CQksWXA
+         CU9Tv319FOi24XK7aa4QW3qGckz/P6VC3W1qVM3iwms5RpwRVU63bVis1PVsnpvXKrem
+         edL1YH8fqp3jMwPd8JW7/49rfG68WADIhR6IW6rdnueZ6RtHH4sV2CrJH8ytApV6AGtg
+         sHaN2TVVIq71aSbOvo6wPhcghG2/LZyY8TkSYspa7TsfklM65Mrm3PEcsA9ZbAsaX336
+         Orxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685630397; x=1688222397;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vAtDJ4UZJBm7+uLnpiZVzFRiwuCQbc5zdoMX8rHHbbU=;
+        b=cz894RrImY2uq/9WD4pOMatKporrx9z/v5VZFcPWIb1tiJ1thDiAILEznGxUpU4YZD
+         IrnwIA+Bz9VardlbicPGQ8HsEohaEOLrV55BAdQSfJOFJpB5fCxyTfNJLGwN3AhwZ87U
+         v4izdBrzVwsYOYc6YaPzLYFz3tASCKoXH3gOlvVld6zIBXafJs4ZhvF5hK+ykbu2qSIN
+         OgSVrwKbC62p7AoEjGPLpSAYAKe29n9KAMJh03Qxb7g013K7dNSKJ2qdTusoBTY/F5xj
+         C6/SMkCr2k/In3ctlqf9qQTXngzHDKKjRPuYHKIBaPPsvSUzEaMBO8Y8kxRH3p6I8zeY
+         6Mcg==
+X-Gm-Message-State: AC+VfDwPw5U1PR4CWZ2WSjNRtWB8ctN3Qc7a/K68A+w23q2HBshpPAB3
+	c/y+zCEJf5br88YF+ojyeWc=
+X-Google-Smtp-Source: ACHHUZ6Jv02LlEGCNcPy0HmfO3xCPRrdohvyHO41n2g1iUckmlF9UBgI5AF/WMluGfIiSqOD4lOFXQ==
+X-Received: by 2002:a05:6a20:604:b0:110:9210:f6b8 with SMTP id 4-20020a056a20060400b001109210f6b8mr7456893pzl.35.1685630396922;
+        Thu, 01 Jun 2023 07:39:56 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id m15-20020aa7900f000000b0064d6b6aac5dsm5143732pfo.73.2023.06.01.07.39.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Jun 2023 07:39:56 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <e7f9cbd1-f19d-2f08-8876-45163910ad93@roeck-us.net>
+Date: Thu, 1 Jun 2023 07:39:54 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.115-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.15.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.15.115-rc2
-X-KernelTest-Deadline: 2023-06-03T14:33+00:00
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 6.1 00/42] 6.1.32-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230601131939.051934720@linuxfoundation.org>
+ <CA+G9fYuHjNhe-5TboAbrOeZrL3xL-CYYSaEnL=8onebLUqDt8g@mail.gmail.com>
+ <2023060101-coconut-smugness-4c7a@gregkh>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <2023060101-coconut-smugness-4c7a@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This is the start of the stable review cycle for the 5.15.115 release.
-There are 37 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+On 6/1/23 07:26, Greg Kroah-Hartman wrote:
+> On Thu, Jun 01, 2023 at 07:41:08PM +0530, Naresh Kamboju wrote:
+>> On Thu, 1 Jun 2023 at 18:57, Greg Kroah-Hartman
+>> <gregkh@linuxfoundation.org> wrote:
+>>>
+>>> This is the start of the stable review cycle for the 6.1.32 release.
+>>> There are 42 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>
+>>> Responses should be made by Sat, 03 Jun 2023 13:19:19 +0000.
+>>> Anything received after that time might be too late.
+>>>
+>>> The whole patch series can be found in one patch at:
+>>>          https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.32-rc1.gz
+>>> or in the git tree and branch at:
+>>>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+>>> and the diffstat can be found below.
+>>>
+>>> thanks,
+>>>
+>>> greg k-h
+>>
+>>
+>> Following build errors noticed on 6.1 and 5.15.
+>>
+>> drivers/dma/at_xdmac.c: In function 'atmel_xdmac_resume':
+>> drivers/dma/at_xdmac.c:2049:9: error: implicit declaration of function
+>> 'pm_runtime_get_noresume' [-Werror=implicit-function-declaration]
+>>   2049 |         pm_runtime_get_noresume(atxdmac->dev);
+>>        |         ^~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/dma/at_xdmac.c:2049:40: error: 'struct at_xdmac' has no member
+>> named 'dev'
+>>   2049 |         pm_runtime_get_noresume(atxdmac->dev);
+>>        |                                        ^~
+>> cc1: some warnings being treated as errors
+>>
+>> reported link:
+>> https://lore.kernel.org/stable/CA+G9fYswtPyrYJbwcGFhc5o7mkRmWZEWCCeSjmR64M+N-odQhQ@mail.gmail.com/
+>>
+>> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Ah, the .h file was added by 650b0e990cbd ("dmaengine: at_xdmac: add
+> runtime pm support"), which isn't needed here.  I'll go add it by hand
 
-Responses should be made by Sat, 03 Jun 2023 14:33:22 +0000.
-Anything received after that time might be too late.
+Really ? Some of the dma patches seem to fix runtime pm support, and
+"dmaengine: at_xdmac: disable/enable clock directly on suspend/resume"
+is even tagged with
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.115-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-and the diffstat can be found below.
+Fixes: 650b0e990cbd ("dmaengine: at_xdmac: add runtime pm support")
 
-thanks,
+Why do we need to fix code which isn't present in 6.1.y ?
 
-greg k-h
+Guenter
 
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.15.115-rc2
-
-Paul Blakey <paulb@nvidia.com>
-    netfilter: ctnetlink: Support offloaded conntrack entry deletion
-
-Nicolas Dichtel <nicolas.dichtel@6wind.com>
-    ipv{4,6}/raw: fix output xfrm lookup wrt protocol
-
-Carlos Llamas <cmllamas@google.com>
-    binder: fix UAF of alloc->vma in race with munmap()
-
-Carlos Llamas <cmllamas@google.com>
-    binder: add lockless binder_alloc_(set|get)_vma()
-
-Carlos Llamas <cmllamas@google.com>
-    Revert "android: binder: stop saving a pointer to the VMA"
-
-Carlos Llamas <cmllamas@google.com>
-    Revert "binder_alloc: add missing mmap_lock calls when using the VMA"
-
-Ruihan Li <lrh2000@pku.edu.cn>
-    bluetooth: Add cmd validity checks at the start of hci_sock_ioctl()
-
-Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-    xdp: xdp_mem_allocator can be NULL in trace_mem_connect().
-
-Jiaxun Yang <jiaxun.yang@flygoat.com>
-    irqchip/mips-gic: Don't touch vl_map if a local interrupt is not routable
-
-Yunsheng Lin <linyunsheng@huawei.com>
-    page_pool: fix inconsistency for page_pool_ring_[un]lock()
-
-Qingfang DENG <qingfang.deng@siflower.com.cn>
-    net: page_pool: use in_softirq() instead
-
-Toke Høiland-Jørgensen <toke@redhat.com>
-    xdp: Allow registering memory model without rxq reference
-
-Rahul Rameshbabu <rrameshbabu@nvidia.com>
-    net/mlx5e: Fix SQ wake logic in ptp napi_poll context
-
-Jiaxun Yang <jiaxun.yang@flygoat.com>
-    irqchip/mips-gic: Use raw spinlock for gic_lock
-
-Marc Zyngier <maz@kernel.org>
-    irqchip/mips-gic: Get rid of the reliance on irq_cpu_online()
-
-Carlos Llamas <cmllamas@google.com>
-    binder: fix UAF caused by faulty buffer cleanup
-
-Hangbin Liu <liuhangbin@gmail.com>
-    bonding: fix send_peer_notif overflow
-
-Hangbin Liu <liuhangbin@gmail.com>
-    Bonding: add arp_missed_max option
-
-Arınç ÜNAL <arinc.unal@arinc9.com>
-    net: dsa: mt7530: fix network connectivity with multiple CPU ports
-
-Daniel Golle <daniel@makrotopia.org>
-    net: dsa: mt7530: split-off common parts from mt7531_setup
-
-Frank Wunderlich <frank-w@public-files.de>
-    net: dsa: mt7530: rework mt753[01]_setup
-
-Vladimir Oltean <vladimir.oltean@nxp.com>
-    net: dsa: introduce helpers for iterating through ports using dp
-
-Claudio Imbrenda <imbrenda@linux.ibm.com>
-    KVM: s390: fix race in gmap_make_secure()
-
-Claudio Imbrenda <imbrenda@linux.ibm.com>
-    KVM: s390: pv: add export before import
-
-David Epping <david.epping@missinglinkelectronics.com>
-    net: phy: mscc: enable VSC8501/2 RGMII RX clock
-
-Steve Wahl <steve.wahl@hpe.com>
-    platform/x86: ISST: Remove 8 socket limit
-
-Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-    platform/x86: ISST: PUNIT device mapping with Sub-NUMA clustering
-
-Shay Drory <shayd@nvidia.com>
-    net/mlx5: Devcom, serialize devcom registration
-
-Vlad Buslov <vladbu@nvidia.com>
-    net/mlx5e: Fix deadlock in tc route query code
-
-Mark Bloch <mbloch@nvidia.com>
-    net/mlx5: devcom only supports 2 ports
-
-Anton Protopopov <aspsk@isovalent.com>
-    bpf: fix a memory leak in the LRU and LRU_PERCPU hash maps
-
-Hans de Goede <hdegoede@redhat.com>
-    power: supply: bq24190: Call power_supply_changed() after updating input current
-
-Hans de Goede <hdegoede@redhat.com>
-    power: supply: core: Refactor power_supply_set_input_current_limit_from_supplier()
-
-Hans de Goede <hdegoede@redhat.com>
-    power: supply: bq27xxx: After charger plug in/out wait 0.5s for things to stabilize
-
-Hans de Goede <hdegoede@redhat.com>
-    power: supply: bq27xxx: Ensure power_supply_changed() is called on current sign changes
-
-Hans de Goede <hdegoede@redhat.com>
-    power: supply: bq27xxx: Move bq27xxx_battery_update() down
-
-Sicelo A. Mhlongo <absicsz@gmail.com>
-    power: supply: bq27xxx: expose battery data when CI=1
-
-
--------------
-
-Diffstat:
-
- Documentation/networking/bonding.rst               |  11 ++
- Makefile                                           |   4 +-
- arch/s390/kernel/uv.c                              |  56 ++++---
- drivers/android/binder.c                           |  26 +++-
- drivers/android/binder_alloc.c                     |  64 +++-----
- drivers/android/binder_alloc.h                     |   2 +-
- drivers/android/binder_alloc_selftest.c            |   2 +-
- drivers/irqchip/irq-mips-gic.c                     |  65 +++++---
- drivers/net/bonding/bond_main.c                    |  17 +-
- drivers/net/bonding/bond_netlink.c                 |  22 ++-
- drivers/net/bonding/bond_options.c                 |  36 ++++-
- drivers/net/bonding/bond_procfs.c                  |   2 +
- drivers/net/bonding/bond_sysfs.c                   |  13 ++
- drivers/net/dsa/mt7530.c                           | 124 +++++++++------
- drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c   |   2 +
- drivers/net/ethernet/mellanox/mlx5/core/en/txrx.h  |   2 +
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c    |  19 +--
- drivers/net/ethernet/mellanox/mlx5/core/en_tx.c    |  19 ++-
- .../net/ethernet/mellanox/mlx5/core/lib/devcom.c   |  81 +++++++---
- .../net/ethernet/mellanox/mlx5/core/lib/devcom.h   |   3 +
- drivers/net/phy/mscc/mscc.h                        |   1 +
- drivers/net/phy/mscc/mscc_main.c                   |  54 +++----
- .../x86/intel/speed_select_if/isst_if_common.c     |  49 ++++--
- drivers/power/supply/bq24190_charger.c             |  13 +-
- drivers/power/supply/bq27xxx_battery.c             | 171 +++++++++++----------
- drivers/power/supply/power_supply_core.c           |  57 +++----
- include/linux/power/bq27xxx_battery.h              |   3 +
- include/linux/power_supply.h                       |   5 +-
- include/net/bond_options.h                         |   1 +
- include/net/bonding.h                              |   3 +-
- include/net/dsa.h                                  |  28 ++++
- include/net/ip.h                                   |   2 +
- include/net/page_pool.h                            |  18 ---
- include/net/xdp.h                                  |   3 +
- include/uapi/linux/if_link.h                       |   1 +
- include/uapi/linux/in.h                            |   2 +
- kernel/bpf/hashtab.c                               |   6 +-
- net/bluetooth/hci_sock.c                           |  28 ++++
- net/core/page_pool.c                               |  34 +++-
- net/core/xdp.c                                     |  93 +++++++----
- net/ipv4/ip_sockglue.c                             |  12 +-
- net/ipv4/raw.c                                     |   5 +-
- net/ipv6/raw.c                                     |   3 +-
- net/netfilter/nf_conntrack_netlink.c               |   8 -
- tools/include/uapi/linux/if_link.h                 |   1 +
- 45 files changed, 763 insertions(+), 408 deletions(-)
-
+> and push out some -rc2 releases for this and 5.15.y, thanks!
+> 
+> greg k-h
 
