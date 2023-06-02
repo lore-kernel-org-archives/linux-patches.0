@@ -1,91 +1,280 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0771B1B909
-	for <patches@lists.linux.dev>; Fri,  2 Jun 2023 15:52:14 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1b034ca1195so11382185ad.2
-        for <patches@lists.linux.dev>; Fri, 02 Jun 2023 08:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685721134; x=1688313134;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RQGRyMSZUt/6c6PELzSK9Ea1CB49w5/1U7+T+0QRn98=;
-        b=DdXScspeUAbL65cM76ZTFa6R5bJhg2L8MMGxOh7ZpaUvt7jM0Pg2SC1z7WucpdwY6q
-         PoeKLJ0rs4JNrEFwXFBtM+90jWWlNQdY9HR3wg3OD4EUCCktaI6cHHfsAOxl38Vd/wjn
-         DBfLflVmH61VOgTY2frkSSiBC7lLH6WgvMtBwFKs42KwJ5pOuqLx9BSalDWPALwpv8wl
-         5ERgY10SPuKBmCJyUsHr7/H5XoEC2AJ5WvHLF/PG4h3+P+G+m+q2eR7FwtFu0otpIpl9
-         OH+xRkl53BwhIiC+g9SfekbC016jPXJ02CalseTsdWvIby5nPRnrV4dqmDc5u6XCQz20
-         Uo6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685721134; x=1688313134;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RQGRyMSZUt/6c6PELzSK9Ea1CB49w5/1U7+T+0QRn98=;
-        b=I8AEyE3CAJBFyW/Yow4JrZSnB5dWjoyMFxneu0mXC8CUIHwos1yIWk//DirQeHo5U0
-         xT0EJ58kua/r5kfNAtIukUtYO//f+QcMAbS2lNdsiE51dgK1ANbea1at1Is8WAbJXQD6
-         A3v+16uGz77XjsVIDJlQJdH9fQnBz/73NSCztf+oyT6P530kNDe3UU8ghYHKQrVMeUhc
-         v0/9Ql16aeQmmt1Pcwo30N0ImCd3MZGrVh9kyOfwDuYDK5oJFhHLIZP+IV0MvnE4ygJm
-         uPPBvI6n1S/3gt8PdW8DnU9YMq3k/Bb33D0tI1GekU62KLzuoVz16sT1SqkwlUrjSpZu
-         9oPQ==
-X-Gm-Message-State: AC+VfDxEe933a41G3YulGfB1hNG7ShuntLIRBmVr3At/RfDiIaPgc4Vs
-	vS67SacsXv7Ku2c1G1+Z/pQ=
-X-Google-Smtp-Source: ACHHUZ7p6RW3biIByHhy5Y+CQ4NRQY2owtw81j+RLN78oHosjmV7mITRtuSKxQ9TN9mxJBwB8+sFAw==
-X-Received: by 2002:a17:902:f691:b0:1ad:b5b4:e424 with SMTP id l17-20020a170902f69100b001adb5b4e424mr340204plg.38.1685721134044;
-        Fri, 02 Jun 2023 08:52:14 -0700 (PDT)
-Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
-        by smtp.gmail.com with ESMTPSA id r19-20020a170902be1300b001ab12ccc2a7sm1533390pls.98.2023.06.02.08.52.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Jun 2023 08:52:13 -0700 (PDT)
-Message-ID: <3dd4d2d9-e95b-55b7-6b19-33267a648485@gmail.com>
-Date: Fri, 2 Jun 2023 08:52:11 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F2A1B909
+	for <patches@lists.linux.dev>; Fri,  2 Jun 2023 16:04:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:
+	Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Reply-To:Content-ID:Content-Description;
+	bh=6T2J0Gv8y0l2pIuTyjrwgwYHikyeOTi38B9VMQ4I2Nc=; b=OYNGnBNp61YqfJLfV5Ye3PydBa
+	kN84wCqGJkfutr/+9vDIVHx15Cn5uDj44t1lVwTADYMZPDjQtfigwAi8oUgR+Cen091xMqahKLvWO
+	Da0EScO1fPYoN9Y1ByMoaGfGOU/L/0CeF6G/oDa+o3iMkoEZi1nOxzCWxbK14S50FVa25rb2i9byI
+	IsRcW3pIsrdeMesgkaySHtVa3v8kxOq79eySVx9OLKw4EE2M4TDNU924onhUqCOuH+AdlrYzgK6fO
+	J4mcOBwJCeAwXv0ORl+vZlQuebADI6jLhlTXqmmF30oegfsIe7Z/VvoYbH92fOVHzbNpbqnesgh41
+	/y5J5cbA==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1q57GW-007KjW-1U;
+	Fri, 02 Jun 2023 16:04:36 +0000
+Date: Fri, 2 Jun 2023 09:04:36 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: David Hildenbrand <david@redhat.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johan Hovold <johan@kernel.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org,
+	rafael@kernel.org, song@kernel.org, lucas.de.marchi@gmail.com,
+	christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org,
+	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
+	mhocko@suse.com, dave.hansen@linux.intel.com,
+	colin.i.king@gmail.com, jim.cromie@gmail.com,
+	catalin.marinas@arm.com, jbaron@akamai.com,
+	rick.p.edgecombe@intel.com, yujie.liu@intel.com, tglx@linutronix.de,
+	hch@lst.de, patches@lists.linux.dev, linux-modules@vger.kernel.org,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org, pmladek@suse.com,
+	prarit@redhat.com, lennart@poettering.net
+Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
+Message-ID: <ZHoTFDkPIgglW0sU@bombadil.infradead.org>
+References: <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
+ <ZHRpH-JXAxA6DnzR@hovoldconsulting.com>
+ <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
+ <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
+ <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
+ <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
+ <ZHYitt7P7W+8ZlSB@bombadil.infradead.org>
+ <499e30cc-d015-8353-1364-50d17da58f47@redhat.com>
+ <ZHd8bLPY4OQCb/Z5@bombadil.infradead.org>
+ <ba60bca6-b682-4c27-3c54-2512b6f16151@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 6.1 00/39] 6.1.32-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230601143327.479886832@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230601143327.479886832@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ba60bca6-b682-4c27-3c54-2512b6f16151@redhat.com>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-
-
-On 6/1/2023 7:35 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.32 release.
-> There are 39 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Fri, Jun 02, 2023 at 05:19:58PM +0200, David Hildenbrand wrote:
+> On 31.05.23 18:57, Luis Chamberlain wrote:
+> > On Wed, May 31, 2023 at 09:51:41AM +0200, David Hildenbrand wrote:
+> > > On 30.05.23 18:22, Luis Chamberlain wrote:
+> > > > On Mon, May 29, 2023 at 09:55:15PM -0400, Linus Torvalds wrote:
+> > > > > On Mon, May 29, 2023 at 11:18 AM Johan Hovold <johan@kernel.org> wrote:
+> > > > > > 
+> > > > > > I took a closer look at some of the modules that failed to load and
+> > > > > > noticed a pattern in that they have dependencies that are needed by more
+> > > > > > than one device.
+> > > > > 
+> > > > > Ok, this is a "maybe something like this" RFC series of two patches -
+> > > > > one trivial one to re-organize things a bit so that we can then do the
+> > > > > real one which uses a filter based on the inode pointer to return an
+> > > > > "idempotent return value" for module loads that share the same inode.
+> > > > > 
+> > > > > It's entirely untested, and since I'm on the road I'm going to not
+> > > > > really be able to test it. It compiles for me, and the code looks
+> > > > > fairly straightforward, but it's probably buggy.
+> > > > > 
+> > > > > It's very loosely based on Luis' attempt,  but it
+> > > > >    (a) is internal to module loading
+> > > > >    (b) uses a reliable cookie
+> > > > >    (c) doesn't leave the cookie around randomly for later
+> > > > >    (d) has seen absolutely no testing
+> > > > > 
+> > > > > Put another way: if somebody wants to play with this, please treat it
+> > > > > as a starting point, not the final thing. You might need to debug
+> > > > > things, and fix silly mistakes.
+> > > > > 
+> > > > > The idea is to just have a simple hash list of currently executing
+> > > > > module loads, protected by a trivial spinlock. Every module loader
+> > > > > adds itself to the right hash list, and if they were the *first* one
+> > > > > (ie no other pending module loads for that inode), will actually do
+> > > > > the module load.
+> > > > > 
+> > > > > Everybody who *isn't* the first one will just wait for completion and
+> > > > > return the same error code that the first one returned.
+> > > > 
+> > > > That's also a hell much more snazzier MODULE_DEBUG_AUTOLOAD_DUPS if we
+> > > > ever wanted to do something similar there if we wanted to also
+> > > > join request_module() calls, instead of it hiding under debug.
+> > > > 
+> > > > > This is technically bogus. The first one might fail due to arguments.
+> > > > 
+> > > > For boot it's fine, as I can't think of boot wanting to support trying
+> > > > to load a module with different arguments but who knows. But I can't
+> > > > see it sensible to issue concurrent multiple requests for modules
+> > > > with different arguments without waiting in userspace for the first
+> > > > to fail.
+> > > > 
+> > > > Even post-boot, doing that sounds rather insane, but it would certainly
+> > > > be a compromise and should probably be clearly documented. I think just
+> > > > a comment acknolwedging that corner case seems sensible.
+> > > > 
+> > > > Because we won't be able to get the arguments until we process the
+> > > > module, so it would be too late for this optimization on kread. So it is
+> > > > why I had also stuck to the original feature being in kread, as then it
+> > > > provides a uniq kread call and the caller is aware of it. But indeed I
+> > > > had not considered the effects of arguments.
+> > > > 
+> > > > Lucas, any thoughts from modules kmod userspace perspective into
+> > > > supporting anyone likely issuing concurrent modules requests with
+> > > > differing arguments?
+> > > > 
+> > > > > So the cookie shouldn't be just the inode, it should be the inode and
+> > > > > a hash of the arguments or something like that.
+> > > > 
+> > > > Personally I think it's a fine optimization without the arguments.
+> > > > 
+> > > > > But it is what it is,
+> > > > > and apart from possible show-stopper bugs this is no worse than the
+> > > > > failed "exclusive write deny" attempt. IOW - maybe worth trying?
+> > > > 
+> > > > The only thing I can think of is allowing threads other than the
+> > > > first one to complete before the one that actually loaded the
+> > > > module. I thought about this race for module auto-loading, see
+> > > > the comment in kmod_dup_request_announce(), so that just
+> > > > further delays the completion to other thread with a stupid
+> > > > queue_work(). That seems more important for module auto-loading
+> > > > duplicates than for boot finit_module() duplicates. But not sure
+> > > > if odering matters in the end due to a preemtible kernel and maybe
+> > > > that concern is hysteria.
+> > > > 
+> > > > > And if *that* didn't sell people on this patch series, I don't know
+> > > > > what will. I should be in marketing! Two drink minimums, here I come!
+> > > > 
+> > > > Sold:
+> > > > 
+> > > > on 255 vcpus 0 duplicates found with this setup:
+> > > > 
+> > > > root@kmod ~ # cat /sys/kernel/debug/modules/stats
+> > > >            Mods ever loaded       66
+> > > >        Mods failed on kread       0
+> > > > Mods failed on decompress       0
+> > > >     Mods failed on becoming       0
+> > > >         Mods failed on load       0
+> > > >           Total module size       11268096
+> > > >         Total mod text size       4149248
+> > > >          Failed kread bytes       0
+> > > >     Failed decompress bytes       0
+> > > >       Failed becoming bytes       0
+> > > >           Failed kmod bytes       0
+> > > >    Virtual mem wasted bytes       0
+> > > >            Average mod size       170729
+> > > >       Average mod text size       62868
+> > > > 
+> > > > So:
+> > > > 
+> > > > Tested-by: Luis Chamberlain <mcgrof@kernel.org>
+> > > > 
+> > > > In terms of bootup timing:
+> > > > 
+> > > > Before:
+> > > > Startup finished in 41.653s (kernel) + 44.305s (userspace) = 1min 25.958s
+> > > > graphical.target reached after 44.178s in userspace.
+> > > > After:
+> > > > Startup finished in 23.995s (kernel) + 40.350s (userspace) = 1min 4.345s
+> > > > graphical.target reached after 40.226s in userspace.
+> > > 
+> > > I'll try grabbing the system where we saw the KASAN-related issues [1] and
+> > > give it a churn with and without the two patches. Might take a bit (~1 day),
+> > > unfortunately.
+> > > 
+> > > [1] https://lkml.kernel.org/r/20221013180518.217405-1-david@redhat.com
+> > 
+> > Great, don't forget:
+> > 
+> > diff --git a/kernel/module/main.c b/kernel/module/main.c
+> > index 82b0dcc1fe77..222015093eeb 100644
+> > --- a/kernel/module/main.c
+> > +++ b/kernel/module/main.c
+> > @@ -3066,7 +3066,7 @@ struct idempotent {
+> >   #define IDEM_HASH_BITS 8
+> >   static struct hlist_head idem_hash[1 << IDEM_HASH_BITS];
+> > -static struct spinlock idem_lock;
+> > +static DEFINE_SPINLOCK(idem_lock);
+> >   static bool idempotent(struct idempotent *u, const void *cookie)
+> >   {
+> > 
 > 
-> Responses should be made by Sat, 03 Jun 2023 14:33:15 +0000.
-> Anything received after that time might be too late.
+> Finally was able to run it on that ThinkSystem SR950 with 8 populated
+> sockets -> 224 cores and 448 logical CPUs.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.32-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
+> The KASAN vmap issues on that system were already no longer reproducible with your
+> (Luis) previous work that's already in master.
 > 
-> thanks,
+> I tested a !debug and debug config (both based on corresponding RHEL9 configs), comparing
+> 929ed21dfdb6 ("master") with 929ed21dfdb6 + Linus' patches ("patched").
 > 
-> greg k-h
+> 
+> Unfortunately, boot times vary a lot, and I did not figure out how to reduce
+> the noise. I captured the "systemd-analyze blame" output as well.
+> 
+> 
+> 1) !debug config (not enabling KASAN)
+> 
+> a) master
+> 
+> Startup finished in 32.225s (kernel) + 7.399s (initrd) + 20.378s (userspace) = 1min 3ms
+> multi-user.target reached after 20.352s in userspace.
+> Startup finished in 43.734s (kernel) + 7.288s (initrd) + 19.827s (userspace) = 1min 10.851s
+> multi-user.target reached after 19.800s in userspace.
+> Startup finished in 50.514s (kernel) + 7.171s (initrd) + 24.757s (userspace) = 1min 22.443s
+> multi-user.target reached after 24.734s in userspace.
+> Startup finished in 26.722s (kernel) + 7.249s (initrd) + 23.923s (userspace) = 57.895s
+> multi-user.target reached after 23.892s in userspace.
+> 
+> b) patched
+> 
+> Startup finished in 36.318s (kernel) + 7.177s (initrd) + 21.383s (userspace) = 1min 4.879s
+> multi-user.target reached after 21.355s in userspace.
+> Startup finished in 36.318s (kernel) + 7.177s (initrd) + 21.383s (userspace) = 1min 4.879s
+> multi-user.target reached after 21.355s in userspace.
+> Startup finished in 1min 34.678s (kernel) + 7.239s (initrd) + 24.066s (userspace) = 2min 5.985s
+> multi-user.target reached after 24.040s in userspace.
+> Startup finished in 25.879s (kernel) + 7.144s (initrd) + 29.665s (userspace) = 1min 2.689s
+> multi-user.target reached after 29.637s in userspace.
+> 
+> 
+> 
+> 2) debug config (enabling KASAN)
+> 
+> a) master
+> 
+> Startup finished in 2min 12.695s (kernel) + 25.058s (initrd) + 1min 13.012s (userspace) = 3min 50.765s
+> multi-user.target reached after 1min 12.903s in userspace.
+> Startup finished in 1min 45.400s (kernel) + 24.294s (initrd) + 1min 8.910s (userspace) = 3min 18.606s
+> multi-user.target reached after 1min 8.786s in userspace.
+> Startup finished in 2min 4.857s (kernel) + 24.715s (initrd) + 1min 5.088s (userspace) = 3min 34.660s
+> multi-user.target reached after 1min 4.967s in userspace.
+> Startup finished in 3min 20.400s (kernel) + 24.703s (initrd) + 1min 5.469s (userspace) = 4min 50.573s
+> multi-user.target reached after 1min 5.344s in userspace.
+> 
+> b) patched
+> 
+> Startup finished in 2min 5.250s (kernel) + 25.049s (initrd) + 1min 1.961s (userspace) = 3min 32.262s
+> multi-user.target reached after 1min 1.844s in userspace.
+> Startup finished in 1min 52.524s (kernel) + 24.897s (initrd) + 1min 5.062s (userspace) = 3min 22.484s
+> multi-user.target reached after 1min 4.916s in userspace.
+> Startup finished in 9min 36.817s (kernel) + 24.859s (initrd) + 1min 18.657s (userspace) = 11min 20.335s
+> multi-user.target reached after 1min 18.455s in userspace.
+> Startup finished in 30min 20.715s (kernel) + 24.722s (initrd) + 1min 7.039s (userspace) = 31min 52.476s
+> multi-user.target reached after 1min 6.907s in userspace.
+> 
+> 
+> What concerns me a bit, is that on the patched kernel we seem to hit more cases where
+> boot takes much longer (in both kernel configs).
+> 
+> I'll do some more runs/investigation to see if this is reproducible or just some system oddity.
+> 
+> Staring just at the udev settle time (systemd-analyze blame), it's very similar between both kernel
+> versions.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested: 
-BMIPS_GENERIC:
+Thanks for these tests, having MODULE_STATS enabled +
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+cat /sys/kernel/debug/modules/stats
+
+would be of huge value, both on master and + patched.
+
+  Luis
