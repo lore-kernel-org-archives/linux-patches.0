@@ -1,81 +1,233 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE55E17FFE
-	for <patches@lists.linux.dev>; Fri,  2 Jun 2023 10:24:30 +0000 (UTC)
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-4f4f8b94c06so2516564e87.1
-        for <patches@lists.linux.dev>; Fri, 02 Jun 2023 03:24:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE315243
+	for <patches@lists.linux.dev>; Fri,  2 Jun 2023 10:33:10 +0000 (UTC)
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-3f6bafd4782so15594831cf.0
+        for <patches@lists.linux.dev>; Fri, 02 Jun 2023 03:33:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1685701468; x=1688293468;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q536vrpXoLbpW1C6zFSYlWNTwScKe+fs0vNmAKc7wXU=;
-        b=jT7/+uAamD3DLHz7oiaOZg0sQP1OAIuAhTDoJLae+Jt4QEkTX7WREA3ZPBcYtnFzHz
-         h+o+tpdqA+JYtbSGDmUBqfDCS+zBpdeQvfGShi1mQQMXe2gcZG645CUBr7vgijDWvlcF
-         ESyjD0nzAnO8LFCnOw9rudoGR7BOwJzDujFzBmMX/ssOTjFcCRt3k6ZhnW2Uq3Xj4VNi
-         r8EL9XD6s7VP2KRfDTlIqNb42UgIaY/NvkearDZuBnIaUEVJIjWt7KFRqHRfhLAr0y1j
-         hrK49NsIel0xZjvaHn01rtSQlfyICGZcjdlPncya7DgY8Uhu6B7qnH9pNXcUFEz8m4O0
-         lpYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685701468; x=1688293468;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1685701989; x=1688293989;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q536vrpXoLbpW1C6zFSYlWNTwScKe+fs0vNmAKc7wXU=;
-        b=mCNV6oLu+azrPYcb4e0RWifrZT3Y9eLcPgQL6xda7HItMnsKdwUoGpN+p4wESUpoEM
-         IyhILgM57oDBi4oXjndIWRAFhrz7Tv8ceiDF/UcNPHYkltMTq9f6KC0IB9TJlhfyPAAb
-         M7gUleVIY7gGmN1yGX2jFrjmfSkPIv0xZKktQ7JY+x86ycsNwRDMzNMZULWJCL6AAMic
-         yD1ggBDqG8PFlE+4pTc0mg3OLDCNYe9nsFuYI6spLrMI9zoqE/r67c3kr31ueOSFe9/D
-         V89exl7LwsvZXA0bMQnxw+jWNBk/sfzP/VrCsDOQUWsE3nce1ImUzwLyionMDfkIpyHx
-         d9OA==
-X-Gm-Message-State: AC+VfDwrjJm9TQGZhuxAn2/HFsFMysxxhrnqMcRTDT8DMCcfVdnjUSak
-	jkXRJoUyQWNe73k91VZWdzmQRQ==
-X-Google-Smtp-Source: ACHHUZ5uOxWjuD+Th59XeUlTguQfW9Gr2KdRw3X8oPchY9B/eGOj8lCOVC6x4lt8OsrILhj5hOOuEQ==
-X-Received: by 2002:ac2:51b1:0:b0:4f3:9f9b:ad09 with SMTP id f17-20020ac251b1000000b004f39f9bad09mr1377240lfk.38.1685701468351;
-        Fri, 02 Jun 2023 03:24:28 -0700 (PDT)
-Received: from localhost ([147.161.155.99])
-        by smtp.gmail.com with ESMTPSA id g26-20020a7bc4da000000b003f50e88ffc1sm5150674wmk.0.2023.06.02.03.24.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 03:24:27 -0700 (PDT)
-References: <875y8geiye.fsf@metaspace.dk>
- <20230531140233.3707302-1-aliceryhl@google.com>
-User-agent: mu4e 1.10.3; emacs 28.2.50
-From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: alex.gaynor@gmail.com, benno.lossin@proton.me, bjorn3_gh@protonmail.com,
- boqun.feng@gmail.com, gary@garyguo.net, jiangshanlai@gmail.com,
- linux-kernel@vger.kernel.org, ojeda@kernel.org, patches@lists.linux.dev,
- rust-for-linux@vger.kernel.org, tj@kernel.org, wedsonaf@gmail.com
-Subject: Re: [PATCH v1 4/7] rust: workqueue: define built-in queues
-Date: Fri, 02 Jun 2023 12:23:21 +0200
-In-reply-to: <20230531140233.3707302-1-aliceryhl@google.com>
-Message-ID: <87a5xi2mcl.fsf@metaspace.dk>
+        bh=zDCJcmMTRuNdKbBB3fxyRRrPDxYeS0o0RfK5IFdaXeU=;
+        b=oZDJlCEjfId4ijtiJlL+uyRinTysFVgG6NaayWFC/tNTOFHhRN8spkwDOsA2mCWTal
+         pzO6gF6SiOn8IJIPWUqNIq1+hUVqOO/9kORsbz8/BJfp3Y6is3DoBiSALDlLWokpbnQw
+         IPHrKqEWW3jL6Ij630iP9kd+JeDz03wekDwu+FYQ0hyTlUCfT4n9WTi/haRDuMo5MHsF
+         VMTpkB0r2iKRVmEPseG4eREbynaxSOj1j2aeKa6AwN+805ZTtMpp3KwAZlEZ6/T8uUoD
+         coT8uXdpvNR9Ka8lBmw7jMZfQdJb23YMVPxjEp/EkdMGwGhjURHdyumR0ab1F4tH/ZkO
+         1ddQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685701989; x=1688293989;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zDCJcmMTRuNdKbBB3fxyRRrPDxYeS0o0RfK5IFdaXeU=;
+        b=JJ8xOOZMfuJBKFimbqNDXDAzfaKnbPEGFf5fEAmq7JGRdv4pzqHY+hULEHH0BdE2QF
+         KbxyBUpAu73PPD00nhzL9yEkh9vmlMjE2AQufv8dRM4m/fqDKwbGyTk1w6vefxxQng4C
+         TE8ckHekDeUefLiH11Rw2EHrGYr6MUbPfFPyzGv5u6Cq2sDO3SBoJFBkCA/d3O8b1zyQ
+         LAREPcvLuYWicOVUDHha4DOAQCNtQbWniEx88N3nw+3y6hAVjPfY2AfKySGU2o/28ujn
+         MLXyvaErKmGwRLiI0s9dNUqrLxwmfNjFP6c2bu3sP0LhZ7wxS4tWibPjledNZoiwe+cp
+         RNrg==
+X-Gm-Message-State: AC+VfDzHUzJsawosk0sq0YHBeg/aWP4yW3rPd2f/3vZlzABDLjBi+VgR
+	PgNeFiaX9jMybNgDr2JP/H7GXtUf1z9BfmSrE7cbacYpcBguIXpjftg=
+X-Google-Smtp-Source: ACHHUZ6WttLleiAeiW3+Btx3MgQu8sOJPqiiS3At5H3I9ythwEFMxDNMPHGBvwtZgpwMNxYzpAOK/+RtoYRIXzm5D/g=
+X-Received: by 2002:ac8:59c6:0:b0:3f5:44c4:fbb with SMTP id
+ f6-20020ac859c6000000b003f544c40fbbmr14156217qtf.21.1685701989229; Fri, 02
+ Jun 2023 03:33:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20230601143327.479886832@linuxfoundation.org>
+In-Reply-To: <20230601143327.479886832@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 2 Jun 2023 16:02:57 +0530
+Message-ID: <CA+G9fYuz5D+jqyV4tJThLFN3XMqKaaB9s4cx3UvmG5j5RcMFLQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 00/39] 6.1.32-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-Alice Ryhl <aliceryhl@google.com> writes:
-
-> Andreas Hindborg <nmi@metaspace.dk> writes:
->> Alice Ryhl <aliceryhl@google.com> writes:
->>> +/// Returns the system freezable work queue (`system_freezable_wq`).
->>> +///
->>> +/// It is equivalent to the one returned by [`system`] except that it's freezable.
->> 
->> Can we add a short definition of what "freezable" means?
+On Thu, 1 Jun 2023 at 20:06, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> I don't know what it means, but I would be happy to add an explanation
-> if you have one.
+> This is the start of the stable review cycle for the 6.1.32 release.
+> There are 39 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 03 Jun 2023 14:33:15 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.32-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-From https://docs.kernel.org/core-api/workqueue.html:
 
-"A freezable wq participates in the freeze phase of the system suspend
-operations. Work items on the wq are drained and no new work item starts
-execution until thawed."
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-BR Andreas
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 6.1.32-rc2
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git branch: linux-6.1.y
+* git commit: 7d0a9678d27663bef481e0ed18226dab66fd884b
+* git describe: v6.1.31-40-g7d0a9678d276
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.3=
+1-40-g7d0a9678d276
+
+## Test Regressions (compared to v6.1.31)
+
+## Metric Regressions (compared to v6.1.31)
+
+## Test Fixes (compared to v6.1.31)
+
+## Metric Fixes (compared to v6.1.31)
+
+## Test result summary
+total: 163841, pass: 141318, fail: 3662, skip: 18572, xfail: 289
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 151 total, 150 passed, 1 failed
+* arm64: 57 total, 56 passed, 1 failed
+* i386: 41 total, 38 passed, 3 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 38 total, 36 passed, 2 failed
+* riscv: 16 total, 15 passed, 1 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 46 total, 46 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
