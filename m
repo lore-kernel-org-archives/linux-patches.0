@@ -1,211 +1,83 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0011332E1
-	for <patches@lists.linux.dev>; Fri,  2 Jun 2023 16:37:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1685723834;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WIPSNWBQXPxxS791JlgpzSYCeZvx3Su3TMXyqeGUJho=;
-	b=FXl2KhN62SLyT5p9u/MnFF6pWrLkIS8/w0/6g9/G+zJW/CxByWBtVp4+QUWzq5t6yDHqfc
-	UuqTqhywOqp0H6JohXhiGVccvcD+8x+ecGGAlipBn6GoUjXz/kuWCedhYzhr2OAMNVLZLN
-	JKU5ZAwnub7hn2VPydn7lfyBIcp0l+A=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-498-BUAGoQ89NdmOfr8gqK78Kg-1; Fri, 02 Jun 2023 12:37:13 -0400
-X-MC-Unique: BUAGoQ89NdmOfr8gqK78Kg-1
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-30ad0812151so1149951f8f.3
-        for <patches@lists.linux.dev>; Fri, 02 Jun 2023 09:37:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685723832; x=1688315832;
-        h=content-transfer-encoding:in-reply-to:subject:organization:from
-         :references:cc:to:content-language:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE772332EE
+	for <patches@lists.linux.dev>; Fri,  2 Jun 2023 16:56:50 +0000 (UTC)
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-6af812703b6so1318086a34.1
+        for <patches@lists.linux.dev>; Fri, 02 Jun 2023 09:56:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1685725009; x=1688317009;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WIPSNWBQXPxxS791JlgpzSYCeZvx3Su3TMXyqeGUJho=;
-        b=G9p2nkg+CKqMf2hpCGaOSPVaSkOMHGWsDrBwGfuDnRMiRaIWcR0w5YwniaujxUUmVZ
-         rGr6xqtKLOEDjCalDFVWuSo0g5wMzVUqUZNOhiEkYxv0562q3iUNyRsYfJcn1GJNFunG
-         8D8hLLn2Sly173nvU8KJmcMrUjqRlbgVyXuUWhpi5y7zuARho11b/Acz5UZVYcoDSjfM
-         htdrDhBCee5ham0heTxtrUNhIVIrw1A7Mb7k0J2ZJFd8EI7AqGJsZI62SfBb4U07J+fR
-         PgNDumWT9MPw858EYlsJfFEtkRu3qBoqIOP6TdqGKzcnvZkaDEN+3HulUiZqKRNIXwAv
-         Wijw==
-X-Gm-Message-State: AC+VfDxW2qepQHbDqq5rU0cLz+aQpyXyxXPeZaJrW3gDljx8sFkguJ2y
-	eWSs++So3c7MYa5hWpro4WVmWL3LOzNG88RUC001LtNLF2xRiv9W/UCj6EI61SddS/SvDRef8bJ
-	4Dwd5i0E9F8dViW7hAA==
-X-Received: by 2002:a5d:440f:0:b0:30a:e647:fc2e with SMTP id z15-20020a5d440f000000b0030ae647fc2emr387275wrq.19.1685723832192;
-        Fri, 02 Jun 2023 09:37:12 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ4FLY9lVp/RbHs95OsTWq3deEM5dUJjhfQSHWkPRE6RJLhFVpSAsoCuKdrt8Q/kzIkm3oqtbQ==
-X-Received: by 2002:a5d:440f:0:b0:30a:e647:fc2e with SMTP id z15-20020a5d440f000000b0030ae647fc2emr387266wrq.19.1685723831850;
-        Fri, 02 Jun 2023 09:37:11 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f2e:ae00:f2e3:50e0:73f7:451? (p200300d82f2eae00f2e350e073f70451.dip0.t-ipconnect.de. [2003:d8:2f2e:ae00:f2e3:50e0:73f7:451])
-        by smtp.gmail.com with ESMTPSA id y5-20020adfd085000000b003095bd71159sm2165442wrh.7.2023.06.02.09.37.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Jun 2023 09:37:11 -0700 (PDT)
-Message-ID: <6711d7ba-1349-de28-6d35-9dce91be7996@redhat.com>
-Date: Fri, 2 Jun 2023 18:37:09 +0200
+        bh=UpFkoBOgIhm6mVYnAm3/uE52vs/uGNgQbLUnzZ8e50A=;
+        b=OYTGcuM33CecRMp0bGXgKRvNrSjIqKgpvkYDOSRdh6fe8CHOCEdAr1Frby7/3YtOWq
+         seQc9WxsFfEXsBsVEPABs2F5x4iUvW4Fju58l4vzqWHstTxWJun+rg22pagiK7Z6HpEA
+         W/72rYdED9jIxY/+FA+YrIo2TEfPcD2bQNRT4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685725009; x=1688317009;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UpFkoBOgIhm6mVYnAm3/uE52vs/uGNgQbLUnzZ8e50A=;
+        b=frH73nYPqJSE7zIb83W3xNVP30P+NmNvOqJ8aG8YMKHr1mgO07fhb333Hm1fGvz/EG
+         tjHMvu9bqy4HmXIioPKr9/U+qYgkNWE2NTDlo4odbZCVr5Ka3xt4MtUMKM+hX7QSrteP
+         7R6UXV6mH6QujGdbZq5mJ1wU+sKr8CrYEhVWBhfXyHYrXnJwWCgMiaD1Y09Jgc9DImVW
+         ZA8sd0TwIQDLjiBSkDSQVuTfBse9fq8G+3RHQYW3CnoHdurinsU5NcDcWukkwt2aqczo
+         hKbOQ6OU8IRC5kStTcLygKFU3s6GdfbrM0LgAi6Olp4DJJzHBzTEYmkLuQV3r9JOy1W6
+         uOOQ==
+X-Gm-Message-State: AC+VfDyxf5zeHCAc99d/63rusxb7AQAmgNYCmjenjqPybjj+ehkU2HO5
+	0/PMP9Df4lENx61kil6l8XPnDw==
+X-Google-Smtp-Source: ACHHUZ7/PTjo9k0bGsi3dIeEZREUXDAf8wSbxwJM45eAIKUPenOyP0DS66nNoBJMRzqoRnm6VX+zDg==
+X-Received: by 2002:a05:6830:1042:b0:6af:7493:79be with SMTP id b2-20020a056830104200b006af749379bemr1930925otp.10.1685725009629;
+        Fri, 02 Jun 2023 09:56:49 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id l2-20020a0568301d6200b006ab305429e7sm807579oti.0.2023.06.02.09.56.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Jun 2023 09:56:49 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Fri, 2 Jun 2023 11:56:47 -0500
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.3 00/45] 6.3.6-rc1 review
+Message-ID: <ZHofTwvKfnZmRhww@fedora64.linuxtx.org>
+References: <20230601131938.702671708@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, Johan Hovold <johan@kernel.org>,
- Lucas De Marchi <lucas.demarchi@intel.com>, Petr Pavlu
- <petr.pavlu@suse.com>, gregkh@linuxfoundation.org, rafael@kernel.org,
- song@kernel.org, lucas.de.marchi@gmail.com, christophe.leroy@csgroup.eu,
- peterz@infradead.org, rppt@kernel.org, dave@stgolabs.net,
- willy@infradead.org, vbabka@suse.cz, mhocko@suse.com,
- dave.hansen@linux.intel.com, colin.i.king@gmail.com, jim.cromie@gmail.com,
- catalin.marinas@arm.com, jbaron@akamai.com, rick.p.edgecombe@intel.com,
- yujie.liu@intel.com, tglx@linutronix.de, hch@lst.de,
- patches@lists.linux.dev, linux-modules@vger.kernel.org, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com,
- lennart@poettering.net
-References: <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
- <ZG/a+nrt4/AAUi5z@bombadil.infradead.org>
- <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
- <ZHRpH-JXAxA6DnzR@hovoldconsulting.com>
- <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
- <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
- <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
- <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
- <ZHYitt7P7W+8ZlSB@bombadil.infradead.org>
- <499e30cc-d015-8353-1364-50d17da58f47@redhat.com>
- <ZHd8bLPY4OQCb/Z5@bombadil.infradead.org>
- <ba60bca6-b682-4c27-3c54-2512b6f16151@redhat.com>
- <CAHk-=whwFoC30zoTfsQAvkDRvgMCovwKGW_R1PPnqiF+YemcOA@mail.gmail.com>
-From: David Hildenbrand <david@redhat.com>
-Organization: Red Hat
-Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
-In-Reply-To: <CAHk-=whwFoC30zoTfsQAvkDRvgMCovwKGW_R1PPnqiF+YemcOA@mail.gmail.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
 
-On 02.06.23 18:06, Linus Torvalds wrote:
-> On Fri, Jun 2, 2023 at 11:20 AM David Hildenbrand <david@redhat.com> wrote:
->>
->> What concerns me a bit, is that on the patched kernel we seem to hit more cases where
->> boot takes much longer (in both kernel configs).
+On Thu, Jun 01, 2023 at 02:20:56PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.3.6 release.
+> There are 45 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> So it potentially serializes the loads to the same file more, but in
-> the process uses much less memory (since the ones waiting will not
-> have done any of the "load file contents and uncompress them"). So
-> it's a bit of a trade-off.
-
-I have the feeling that -- on this system -- it's some inaccurate 
-accounting of firmware+loader times to the kernel startup time. Combined 
-with some other noise. Especially the firmware loading time seems to be 
-fairly randomized.
-
-I guess what we care about regarding module loading is the 
-initrd+userspace loading times, and they are fairly stable. But we 
-mostly care about udev.
-
-So let's look only at "systemd-udev" services:
-
-1) !debug
-
-a) master
-
-5.672s systemd-udev-settle.service
-  505ms systemd-udev-trigger.service
-  272ms systemd-udevd.service
-5.418s systemd-udev-settle.service
-  487ms systemd-udev-trigger.service
-  258ms systemd-udevd.service
-5.707s systemd-udev-settle.service
-  527ms systemd-udev-trigger.service
-  273ms systemd-udevd.service
-6.250s systemd-udev-settle.service
-  455ms systemd-udev-trigger.service
-  283ms systemd-udevd.service
-
-
-b) patched
-
-4.652s systemd-udev-settle.service
-  461ms systemd-udev-trigger.service
-  302ms systemd-udevd.service
-4.652s systemd-udev-settle.service
-  461ms systemd-udev-trigger.service
-  302ms systemd-udevd.service
-4.634s systemd-udev-settle.service
-  444ms systemd-udev-trigger.service
-  296ms systemd-udevd.service
-4.745s systemd-udev-settle.service
-  444ms systemd-udev-trigger.service
-  273ms systemd-udevd.service
-
-
-2) debug
-
-a) master
-
-32.806s systemd-udev-settle.service
-  9.584s systemd-udev-trigger.service
-   471ms systemd-udevd.service
-29.901s systemd-udev-settle.service
-  8.914s systemd-udev-trigger.service
-   400ms systemd-udevd.service
-28.640s systemd-udev-settle.service
-  9.260s systemd-udev-trigger.service
-   477ms systemd-udevd.service
-29.498s systemd-udev-settle.service
-  9.073s systemd-udev-trigger.service
-   444ms systemd-udevd.service
-
-
-b) patched
-
-28.765s systemd-udev-settle.service
-  8.898s systemd-udev-trigger.service
-   400ms systemd-udevd.service
-28.292s systemd-udev-settle.service
-  8.903s systemd-udev-trigger.service
-   401ms systemd-udevd.service
-34.588s systemd-udev-settle.service
-  8.959s systemd-udev-trigger.service
-   455ms systemd-udevd.service
-28.641s systemd-udev-settle.service
-  8.953s systemd-udev-trigger.service
-   389ms systemd-udevd.service
-
-
-
-So except some noise, in the general case the patched version seems to 
-be faster just looking at systemd-udev.
-
+> Responses should be made by Sat, 03 Jun 2023 13:19:19 +0000.
+> Anything received after that time might be too late.
 > 
-> We could complicate things a bit, and let other callers return -EEXIST
-> a bit earlier, but I'm not convinced it really matters.
-
-Looking at the numbers, agreed.
-
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.6-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
+> and the diffstat can be found below.
 > 
-> Honestly, taking too long because user space does something stupid and
-> wrong is not a kernel bug. Not booting because we use too much memory
-> - that's problematic. But booting slowly because udev does several
-> thousand unnecessary module loads is entirely on udev.
+> thanks,
+> 
+> greg k-h
 
-Yes.
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-
-I'll do some more experiments, but from what I can tell
-
-Tested-by: David Hildenbrand <david@redhat.com>
-
--- 
-Cheers,
-
-David / dhildenb
-
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
