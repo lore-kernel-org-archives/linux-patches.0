@@ -1,81 +1,81 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95073C13B
-	for <patches@lists.linux.dev>; Fri,  2 Jun 2023 22:36:16 +0000 (UTC)
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3982f09df74so2136050b6e.0
-        for <patches@lists.linux.dev>; Fri, 02 Jun 2023 15:36:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685745375; x=1688337375;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=of674XRvlx3/FzSHdFSRdMppyBXBB7Firiv2U8wT/bU=;
-        b=cYOr6LStbQ3rQIrtdbTdHjzgR5m6u66Bo5p+KO8lEDSsdK8HUE0hUIuzQhYafkDwix
-         xPzTdY14ks52OKikb5o2jLwC48FeqNWi1t/OK84cHM+EcKQLvrtlqZVRaj+5LuJoFdQu
-         72uoCT0nbZlxTA6co0a9D6H+nB2Jdu4BEsoxCz8DBJzk2FZzN4RTHtP+hxo1Xhe1pjBm
-         hfTHp4S4rxZ5uzvR0FY+BXZoAzdHEJHh8mjm1naOlRZ0day1BL9FwysO+cefR0O6JRNO
-         1KsBRF91rqOg9a/CFBEXzkiwarjUl0FNrnp8vy1eZD1xo2bmcqH2ZpUzaAw76bhITfJD
-         xPPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685745375; x=1688337375;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=of674XRvlx3/FzSHdFSRdMppyBXBB7Firiv2U8wT/bU=;
-        b=NHzLSQAmzKOg5f7X/D22OtgcjAmKRh4dXydghQ8k/KB39N2q8R/9XoMqdOIUP8LGTQ
-         nK6Ek5O+aLjylxveAZyXzxTz8GQ1QMjYgr03ZYhS2bg0AMsQsrHjpfHBZidgi6UkK8JK
-         3zMpcHXiaMGK4ed6UF7vYI9BmcohxayfbNMps/DWDubqUHGxiWJfFhW8XxWr2fS5Qdft
-         K4w4GLsOmGljGUAu9eNtUFuZycLDLIr+AFZ6P+eQEXOvWXZ0Z3d0txVjJzvdQDk3kwws
-         70X1c2QzDxsLwbTeIkFXIaLfmOMEipu3GQpKUVpzxqLTmSweFnnUNxf+gomguOdQzHCb
-         w6wA==
-X-Gm-Message-State: AC+VfDwHQeshPxKpj9Tm4iH6yMFKEHmwnY7jxrEB/v0P+1PeRB8nNLAf
-	icOmoletF2xg/LjiZZ4fM34=
-X-Google-Smtp-Source: ACHHUZ7lSmvU5fH9/0RO8nspGwMqr/NGHrSuB7aPRrWM4oGtYd3eyKrAsG/6f17WVxdltdL/VQJFYA==
-X-Received: by 2002:a05:6808:8c5:b0:398:59fe:6ee3 with SMTP id k5-20020a05680808c500b0039859fe6ee3mr1106424oij.54.1685745375577;
-        Fri, 02 Jun 2023 15:36:15 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id x4-20020a170902ea8400b001a2104d706fsm1835249plb.225.2023.06.02.15.36.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 15:36:15 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 2 Jun 2023 15:36:14 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6DC20EB
+	for <patches@lists.linux.dev>; Sat,  3 Jun 2023 14:36:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98DAC433EF;
+	Sat,  3 Jun 2023 14:36:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1685802967;
+	bh=B+VdiPG1FamBWIcbL30jkM0gvYJcncxHC7Q7s8oufQY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=0jY4nmSgiELJKYg4YCDn9bXebdz06ax8y8CzYZvrdNYupY+uwwQtxj67CJgz3d4pY
+	 EsrI/O6jlYkqzgwFoQYxVqXPvny7sCRSm8MSEdZd1gjT3F3E/b14yvabxfPuq0kASa
+	 zTU0z2EdtQwg1tfPBt3WveI8rK4kSk0/OGgnRkCE=
+Date: Sat, 3 Jun 2023 16:36:04 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.3 00/45] 6.3.6-rc1 review
-Message-ID: <f3c90f5e-696f-4458-9fef-ff82f5d41e1c@roeck-us.net>
-References: <20230601131938.702671708@linuxfoundation.org>
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 00/37] 5.15.115-rc2 review
+Message-ID: <2023060350-mountable-deploy-09bd@gregkh>
+References: <20230601143331.405588582@linuxfoundation.org>
+ <CAEUSe7-qcYwBbeFGKAOvf-rPMdgAMfE6t42Urnhjam9nWN-gFg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20230601131938.702671708@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAEUSe7-qcYwBbeFGKAOvf-rPMdgAMfE6t42Urnhjam9nWN-gFg@mail.gmail.com>
 
-On Thu, Jun 01, 2023 at 02:20:56PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.6 release.
-> There are 45 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Thu, Jun 01, 2023 at 10:17:48PM -0600, Daniel Díaz wrote:
+> Hello!
 > 
-> Responses should be made by Sat, 03 Jun 2023 13:19:19 +0000.
-> Anything received after that time might be too late.
+> On Thu, 1 Jun 2023 at 08:36, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 5.15.115 release.
+> > There are 37 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Sat, 03 Jun 2023 14:33:22 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.115-rc2.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
 > 
+> Build failures on System/390:
+> -----8<-----
+>   /builds/linux/arch/s390/kernel/uv.c: In function
+> 'should_export_before_import':
+>   /builds/linux/arch/s390/kernel/uv.c:204:40: error: 'mm_context_t'
+> has no member named 'protected_count'
+>     204 |         return atomic_read(&mm->context.protected_count) > 1;
+>         |                                        ^
+>   /builds/linux/arch/s390/kernel/uv.c:205:1: error: control reaches
+> end of non-void function [-Werror=return-type]
+>     205 | }
+>         | ^
+> ----->8-----
+> 
+> That's with defconfig and GCC-8, GCC-12, Clang-16.
 
-Build results:
-	total: 153 pass: 153 fail: 0
-Qemu test results:
-	total: 520 pass: 520 fail: 0
+Thanks, I've dropped the broken patches now and will push out a -rc3.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-
-Guenter
+greg k-h
