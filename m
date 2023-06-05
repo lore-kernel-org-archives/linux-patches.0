@@ -1,140 +1,501 @@
-Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2132.outbound.protection.outlook.com [40.107.113.132])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF64804
-	for <patches@lists.linux.dev>; Mon,  5 Jun 2023 09:19:52 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gHVmeHWF2KNBeDkhJSnt33bTuafP6OYet/v2EWAxCOG8RgnaK42WHNwV+Om7wBJ4uFXspQkVtS83jx4i4kkZh+ETxxDA6Z4nzpB80yXgnvyJyoHt97qz+DUBHNVD0dtJxmmMnfuIIwtJrRCGi2BsRFJSD7lPMiy4oMgD+HKv3L7+XHeJSECLDVE2qMhUwo0dLuXvWbX9zCkxRa9KzYC45r5hv2IPT8Nzx2caKnVxW12gb1jeDl+jzKQACcnU8O/GlfRhnQNcRABrwLBlqT0MhKJWj7QkTu/UmCBJq6U8UFFkXR2S+q88vosYQ3TU9+9CyHf5I/Sr+Zt1JCR4iyBM5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uzEecKdep3Mh8OXSOpGyvUglmSLhhopPgLQ/SB6R9PU=;
- b=fxRX/JKeEnVWoHl/qvCoifK92H8omwhcU4n3BagU53mQSI0aWFn7aZAqGgJrMUwNMYWwyEsb9/ETvGrviqJypzu4gMXbyoo7M/Sjh1QQliJ0qeOr4A+U3yBWfHJEK3Lw2CihD7WuKvDy76oyARvdN3rPUeESfDpTYDJABCfsIIVc5DdurDMqMx3CjJe+AJLPNob1todOUya5zT7D2NWwn5+VqRjbVbKKCrcczS5RaWH9wJrJwvsiQu6mntJUNSRP/MHDGtvAkfSXHn34cl2AScMI4d9Yl33zoqCDke0vJgJx3YXnXlwAyhGRSVuHPPu0p8K1HvybgNOCxE4D3WziUA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uzEecKdep3Mh8OXSOpGyvUglmSLhhopPgLQ/SB6R9PU=;
- b=pqakMhBIqM2xfa89Dbs969aGMn7e/aOgjBK1RMDZtbDiT3/Ac991zzVd2yjxIEKH9J5mkTrXjyypHeGFPN1VNileVk+wb92I9/Nps+UjZ1wnZMgbG3ExfaKBttEW5fbIl0z0/Mk6xbCofAvLW04RKnuW2y9/ZopauajVDrQ04jU=
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
- by TYWPR01MB11377.jpnprd01.prod.outlook.com (2603:1096:400:3f6::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.32; Mon, 5 Jun
- 2023 09:19:49 +0000
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a4f8:4204:cbe6:6cb3]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a4f8:4204:cbe6:6cb3%3]) with mapi id 15.20.6455.030; Mon, 5 Jun 2023
- 09:19:49 +0000
-From: Chris Paterson <Chris.Paterson2@renesas.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>
-CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
-	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
-	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
-	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
-	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
-	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
-	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
-	"rwarsow@gmx.de" <rwarsow@gmx.de>
-Subject: RE: [PATCH 5.15 00/35] 5.15.115-rc3 review
-Thread-Topic: [PATCH 5.15 00/35] 5.15.115-rc3 review
-Thread-Index: AQHZlisAlwKpt9b2UUmocHMRZi3hC69774SQ
-Date: Mon, 5 Jun 2023 09:19:49 +0000
-Message-ID:
- <TY2PR01MB3788BBA0C12F9454906ED14DB74DA@TY2PR01MB3788.jpnprd01.prod.outlook.com>
-References: <20230603143543.855276091@linuxfoundation.org>
-In-Reply-To: <20230603143543.855276091@linuxfoundation.org>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|TYWPR01MB11377:EE_
-x-ms-office365-filtering-correlation-id: 6f53e3e2-294f-4458-77fc-08db65a6035a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- g+7QOuac7vsAba381Jwb8tgDv1GMRLxsumDstfSNl4Drmuo0PFoKncNKlAiD6DlBwEWmYXffgmbndw/vtjmMBHtwuYWE/d+dqXAek0Ui1wGa0w3VLtw71i/vbNUOphcrRguf3i3iC1siPemA/iO2haUkm5O6nFJAL/WiTBfxImAtoLVnDXSmOBPwGtqdTs3juhPvurC/j5tdA5x+4LLphO3VNvWwET5vVRDYbin+0yc3O/PIMmVtUo77kCG2XxoJEW0fvg/tTIDwDAh54mRXR6A4x9/ehUF4yMTSE+cKayMf8rxd1eFA1kSrMRspV+mOYzvBHFcBu6WvPEvL2Weq5bElE6SPzDlFoIYOf43E5Pya6ooWR4h29BFqtRldowDpy2UU1t3cRbBgx1xXxE2w2dsvKLaXln7Oht6bkmjDFcted4rxXRUuW8ABQroKYsqq7B+iUqlFBAc3Dzv1xF7iCApchwzZfg7LH22ibzTIE3z1a0cmL3AE35ZG/8UbGzUzH6aL/4yrik6vr+78TufUhvzqrknmvY5D2OAB1ESZngDcWKtcKKZqvQnMtzAB3ubDBoHermTLliwcgbtooR699kmuQXxvTgNxWKhm36Nh31s=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(346002)(39860400002)(136003)(376002)(396003)(451199021)(9686003)(26005)(6506007)(38100700002)(41300700001)(7696005)(186003)(966005)(71200400001)(478600001)(54906003)(110136005)(4326008)(122000001)(66446008)(66476007)(66556008)(64756008)(55016003)(76116006)(316002)(66946007)(7416002)(8936002)(8676002)(52536014)(5660300002)(2906002)(4744005)(86362001)(33656002)(38070700005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-9?Q?J4VtA63+QGn/ihGZvCKY3mfKTeyjTA0lTADA1WhSPYMdl9BrfLgPY+p8GJ?=
- =?iso-8859-9?Q?vayqMtjCP8QMgW2QRQWeWnkuTTLpd9LjXBWzwVV2pFaVBHA3P1lPX8PIJ8?=
- =?iso-8859-9?Q?lR2/+CO4HFwTKBr822maP8pkQsp7XsZHP4G4RhfSGhAAxJbx8aIP693E9x?=
- =?iso-8859-9?Q?ubeVZ28tYZTeeaub3TymSR6vmQTnWBuigzV9NbkIQZXv8hk42QiwA8iGIp?=
- =?iso-8859-9?Q?TmBp+q3JWIcSxlMmCjJmFg2fSrz/+t3A2TUvgKHkGDHe+XMyau/IeYUe+V?=
- =?iso-8859-9?Q?DMoP21tfngTeTAiSIqemB6v9duMqxUxSN68qEL2OgkvgZ85JH0tu/su5TP?=
- =?iso-8859-9?Q?lRKk/aGnzWB7DvdaZrjnTOczW5I+67yuYFUZP12iHF4BwOruspgIhjfnbv?=
- =?iso-8859-9?Q?mTdEDUt62ZrQHKhncEW1Tx/U62sA0An8+lOYCd89raqiHxLCIZatPYAej0?=
- =?iso-8859-9?Q?+93ADQANYS+QjD0Ks0h2RcqXp6s+f/hP9/7Udqe+6DciAFbv7Ki+KIBSYg?=
- =?iso-8859-9?Q?6SI+Zs3v0eR7sOaqoqabuZXGkU8f0j1wnCB/qzWt3X1KClATq7nVzdbeFB?=
- =?iso-8859-9?Q?4Q7lTAwjwV6dZ5qVMZn8ESHLwO9gVaUnjkZmsnWWkIZVGzmxRmzguD5EOU?=
- =?iso-8859-9?Q?7HFZzKRqexvJi3tao1RtYTOKkk15QqMy1MDT6aMbMHGPwxWcZCcFHkCKe8?=
- =?iso-8859-9?Q?Rh32FYSem+MNraHhrqxaCnx4pCN3yp2E3B8xcR22TA8uUDKzq+Rxqxg924?=
- =?iso-8859-9?Q?N2yOabK26rBF05RrvWdd7XciXqwK6aPtGEGoPTGkbtaPDx1dYoq/XIzJ8d?=
- =?iso-8859-9?Q?Hxsv4PDuswtbIYt2pynv8HCimwoLNER2oJ6tP0FVX9BU4OQTOJScCTniZd?=
- =?iso-8859-9?Q?tJYf6oJZLMLeA4e0KfxZjLbreT0RW8NFfKWJ0Z3+4qHVqATwADlOGGqsU4?=
- =?iso-8859-9?Q?O9oOQkK0wI/DMIYNIOjzhiADx1HECRzlWbwGpb6Crff1Vba4cehQgzgYJj?=
- =?iso-8859-9?Q?H2cZhg56fpXGW/jxHQ6utXMzEg8/xLq+YnhwrmiajcHrXAuGmg5vGx+n6X?=
- =?iso-8859-9?Q?jbEQhsbfhSoEGaadShatgFby12jjXgQ2dWU3nV//iP5hs9olcC11GmOST/?=
- =?iso-8859-9?Q?o8kg3PZW50gj1tRNcbqUVsUjjcDje2aXnerXvMRA169+M7OrvUDqcNbzsc?=
- =?iso-8859-9?Q?7fGQCP14NfaPHL6RbWLM0AzGleLUL0fYA1PRDxblUbeHTaYc78d81Ae447?=
- =?iso-8859-9?Q?ckNU6VM8lBirqH4dPjZ7bZ8rPf7xX2nNEmt7P4jBWFPmCUT/f4Vm6uiOEY?=
- =?iso-8859-9?Q?M/0+OM3GkGjxRF+gQtnAZttLvpu60o6lK0BBf9MdSL2yWodFNlY8fXpVEG?=
- =?iso-8859-9?Q?/LEg9E3nsq0D/5MksqII0hwDCDRLM52pcwSO0cqymVgmHn8uAvq6wzGjIP?=
- =?iso-8859-9?Q?sea2VFzMcbDt4Y1aObTBafQ2d3W0qMxx00VkcjNtWf6sW6Edaet+zBZcx5?=
- =?iso-8859-9?Q?Z8afxTKvv19FtKt5yIciyTetHYuPDJlrX3f5tG3JMhH18RiaFXws/Sskp/?=
- =?iso-8859-9?Q?XjawuoNWUMx4F1IA52LeufvhcvFlkwnAF5eJRD11vq729PMbCIepv1HdSG?=
- =?iso-8859-9?Q?NHU4aNZvpd6T7ETriH8HE+RZTUMO+pPh8tWEDv7Mw75Xj+8ygnsl8MgA?=
- =?iso-8859-9?Q?=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-9"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABB3525E
+	for <patches@lists.linux.dev>; Mon,  5 Jun 2023 11:26:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1685964365;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nu9/UJ05GmGMdlY8zv0TMF1pLalxFizp/2Lh8UrDm0s=;
+	b=jJA13n1Xi363hh+yh6JBZjZZchWdK14c6kqi98uN1INc3cGBAddt0oqV3pUQDBsVf4swVu
+	B5iHclXZkx3XQgFKitb4A6vH7E3bIETUJonHzfW76pr7WXEifjg89ReH01BShxTWuDOAmV
+	PatSyfGZrBvGQmy9ChnTybtXJdJL9FI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-504-c1xyX11FMWe1JGUHEpB5BQ-1; Mon, 05 Jun 2023 07:26:04 -0400
+X-MC-Unique: c1xyX11FMWe1JGUHEpB5BQ-1
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-3f736116989so7315815e9.1
+        for <patches@lists.linux.dev>; Mon, 05 Jun 2023 04:26:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685964363; x=1688556363;
+        h=content-transfer-encoding:in-reply-to:subject:organization:from
+         :references:cc:to:content-language:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nu9/UJ05GmGMdlY8zv0TMF1pLalxFizp/2Lh8UrDm0s=;
+        b=deWMdERU5pgctSVZc50lng51iiaRNH1HMtbsuS62MlOHY0ry1kWuavJne7Wjir4kN1
+         0QmGhh6mcZQ+v0Hqzln3/NvVgTVKZqYpr2WsF36xQZuFZFd0kX6xt/fXeqXkkvrFSOZu
+         ODe6SIPMEuH54qZsw9655wpOIxWHIWB4H+ljP6Em5NGZdGNJzjlwoxTqkSJzuT/O+Q4i
+         bbqVZxh9YFgh/faIrF0d4R3lGCCvisRjpq/Eew6YXHif0aqsS5GDkuoIhJ9a0kV8TcU/
+         K1d2OdS4GJ/9uuZnJ0HbaT6ZI2mzYFGBvZ7O4m4uf7Oba0CVQp5irP95KhpDINXijZZf
+         Mcfg==
+X-Gm-Message-State: AC+VfDz9wHvpSfF5FuROnPj11Ng4aEnBP4RV5QLnPlk1spiM2AHlKzd/
+	8P9lC5bNV772f0+YVwJQs8ecEe+PUGXJTXD1/Zx3FSl7NgQPkjKbP0dpW999PFc0I6m0aOxTc4J
+	ZPILXlVCKhdgILThbzg==
+X-Received: by 2002:a1c:7217:0:b0:3f4:2a69:409 with SMTP id n23-20020a1c7217000000b003f42a690409mr7918732wmc.11.1685964362699;
+        Mon, 05 Jun 2023 04:26:02 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ52l2nNfYdRL0/tTDYacX5nCUAhQsJ3OdNJg+upRqFfnFrCCP3ViixDPw6m51Xn9fu6HOidgQ==
+X-Received: by 2002:a1c:7217:0:b0:3f4:2a69:409 with SMTP id n23-20020a1c7217000000b003f42a690409mr7918715wmc.11.1685964362268;
+        Mon, 05 Jun 2023 04:26:02 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c737:8f00:ed9:16b8:4e22:5820? (p200300cbc7378f000ed916b84e225820.dip0.t-ipconnect.de. [2003:cb:c737:8f00:ed9:16b8:4e22:5820])
+        by smtp.gmail.com with ESMTPSA id u12-20020a05600c00cc00b003f7678a07c4sm3775227wmm.29.2023.06.05.04.26.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jun 2023 04:26:01 -0700 (PDT)
+Message-ID: <fa3f1a1f-edc6-f13b-cc84-f3264b03b0b1@redhat.com>
+Date: Mon, 5 Jun 2023 13:26:00 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6f53e3e2-294f-4458-77fc-08db65a6035a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jun 2023 09:19:49.7701
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ek7OnS79QhwUiDsNWOKDGowrgh/Ulwgt5MilTYdHWtdNJDkbQW7oocxKy/WR1uzem8cE6A3j62xRL+pr8T5c3jwAbwfBPqWGlern5rk8pOA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB11377
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+ Johan Hovold <johan@kernel.org>, Lucas De Marchi <lucas.demarchi@intel.com>,
+ Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org,
+ rafael@kernel.org, song@kernel.org, lucas.de.marchi@gmail.com,
+ christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org,
+ dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz, mhocko@suse.com,
+ dave.hansen@linux.intel.com, colin.i.king@gmail.com, jim.cromie@gmail.com,
+ catalin.marinas@arm.com, jbaron@akamai.com, rick.p.edgecombe@intel.com,
+ yujie.liu@intel.com, tglx@linutronix.de, hch@lst.de,
+ patches@lists.linux.dev, linux-modules@vger.kernel.org, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com,
+ lennart@poettering.net
+References: <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
+ <ZHRpH-JXAxA6DnzR@hovoldconsulting.com>
+ <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
+ <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
+ <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
+ <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
+ <ZHYitt7P7W+8ZlSB@bombadil.infradead.org>
+ <499e30cc-d015-8353-1364-50d17da58f47@redhat.com>
+ <ZHd8bLPY4OQCb/Z5@bombadil.infradead.org>
+ <ba60bca6-b682-4c27-3c54-2512b6f16151@redhat.com>
+ <ZHoTFDkPIgglW0sU@bombadil.infradead.org>
+From: David Hildenbrand <david@redhat.com>
+Organization: Red Hat
+Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
+In-Reply-To: <ZHoTFDkPIgglW0sU@bombadil.infradead.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hello Greg,
+On 02.06.23 18:04, Luis Chamberlain wrote:
+> On Fri, Jun 02, 2023 at 05:19:58PM +0200, David Hildenbrand wrote:
+>> On 31.05.23 18:57, Luis Chamberlain wrote:
+>>> On Wed, May 31, 2023 at 09:51:41AM +0200, David Hildenbrand wrote:
+>>>> On 30.05.23 18:22, Luis Chamberlain wrote:
+>>>>> On Mon, May 29, 2023 at 09:55:15PM -0400, Linus Torvalds wrote:
+>>>>>> On Mon, May 29, 2023 at 11:18 AM Johan Hovold <johan@kernel.org> wrote:
+>>>>>>>
+>>>>>>> I took a closer look at some of the modules that failed to load and
+>>>>>>> noticed a pattern in that they have dependencies that are needed by more
+>>>>>>> than one device.
+>>>>>>
+>>>>>> Ok, this is a "maybe something like this" RFC series of two patches -
+>>>>>> one trivial one to re-organize things a bit so that we can then do the
+>>>>>> real one which uses a filter based on the inode pointer to return an
+>>>>>> "idempotent return value" for module loads that share the same inode.
+>>>>>>
+>>>>>> It's entirely untested, and since I'm on the road I'm going to not
+>>>>>> really be able to test it. It compiles for me, and the code looks
+>>>>>> fairly straightforward, but it's probably buggy.
+>>>>>>
+>>>>>> It's very loosely based on Luis' attempt,  but it
+>>>>>>     (a) is internal to module loading
+>>>>>>     (b) uses a reliable cookie
+>>>>>>     (c) doesn't leave the cookie around randomly for later
+>>>>>>     (d) has seen absolutely no testing
+>>>>>>
+>>>>>> Put another way: if somebody wants to play with this, please treat it
+>>>>>> as a starting point, not the final thing. You might need to debug
+>>>>>> things, and fix silly mistakes.
+>>>>>>
+>>>>>> The idea is to just have a simple hash list of currently executing
+>>>>>> module loads, protected by a trivial spinlock. Every module loader
+>>>>>> adds itself to the right hash list, and if they were the *first* one
+>>>>>> (ie no other pending module loads for that inode), will actually do
+>>>>>> the module load.
+>>>>>>
+>>>>>> Everybody who *isn't* the first one will just wait for completion and
+>>>>>> return the same error code that the first one returned.
+>>>>>
+>>>>> That's also a hell much more snazzier MODULE_DEBUG_AUTOLOAD_DUPS if we
+>>>>> ever wanted to do something similar there if we wanted to also
+>>>>> join request_module() calls, instead of it hiding under debug.
+>>>>>
+>>>>>> This is technically bogus. The first one might fail due to arguments.
+>>>>>
+>>>>> For boot it's fine, as I can't think of boot wanting to support trying
+>>>>> to load a module with different arguments but who knows. But I can't
+>>>>> see it sensible to issue concurrent multiple requests for modules
+>>>>> with different arguments without waiting in userspace for the first
+>>>>> to fail.
+>>>>>
+>>>>> Even post-boot, doing that sounds rather insane, but it would certainly
+>>>>> be a compromise and should probably be clearly documented. I think just
+>>>>> a comment acknolwedging that corner case seems sensible.
+>>>>>
+>>>>> Because we won't be able to get the arguments until we process the
+>>>>> module, so it would be too late for this optimization on kread. So it is
+>>>>> why I had also stuck to the original feature being in kread, as then it
+>>>>> provides a uniq kread call and the caller is aware of it. But indeed I
+>>>>> had not considered the effects of arguments.
+>>>>>
+>>>>> Lucas, any thoughts from modules kmod userspace perspective into
+>>>>> supporting anyone likely issuing concurrent modules requests with
+>>>>> differing arguments?
+>>>>>
+>>>>>> So the cookie shouldn't be just the inode, it should be the inode and
+>>>>>> a hash of the arguments or something like that.
+>>>>>
+>>>>> Personally I think it's a fine optimization without the arguments.
+>>>>>
+>>>>>> But it is what it is,
+>>>>>> and apart from possible show-stopper bugs this is no worse than the
+>>>>>> failed "exclusive write deny" attempt. IOW - maybe worth trying?
+>>>>>
+>>>>> The only thing I can think of is allowing threads other than the
+>>>>> first one to complete before the one that actually loaded the
+>>>>> module. I thought about this race for module auto-loading, see
+>>>>> the comment in kmod_dup_request_announce(), so that just
+>>>>> further delays the completion to other thread with a stupid
+>>>>> queue_work(). That seems more important for module auto-loading
+>>>>> duplicates than for boot finit_module() duplicates. But not sure
+>>>>> if odering matters in the end due to a preemtible kernel and maybe
+>>>>> that concern is hysteria.
+>>>>>
+>>>>>> And if *that* didn't sell people on this patch series, I don't know
+>>>>>> what will. I should be in marketing! Two drink minimums, here I come!
+>>>>>
+>>>>> Sold:
+>>>>>
+>>>>> on 255 vcpus 0 duplicates found with this setup:
+>>>>>
+>>>>> root@kmod ~ # cat /sys/kernel/debug/modules/stats
+>>>>>             Mods ever loaded       66
+>>>>>         Mods failed on kread       0
+>>>>> Mods failed on decompress       0
+>>>>>      Mods failed on becoming       0
+>>>>>          Mods failed on load       0
+>>>>>            Total module size       11268096
+>>>>>          Total mod text size       4149248
+>>>>>           Failed kread bytes       0
+>>>>>      Failed decompress bytes       0
+>>>>>        Failed becoming bytes       0
+>>>>>            Failed kmod bytes       0
+>>>>>     Virtual mem wasted bytes       0
+>>>>>             Average mod size       170729
+>>>>>        Average mod text size       62868
+>>>>>
+>>>>> So:
+>>>>>
+>>>>> Tested-by: Luis Chamberlain <mcgrof@kernel.org>
+>>>>>
+>>>>> In terms of bootup timing:
+>>>>>
+>>>>> Before:
+>>>>> Startup finished in 41.653s (kernel) + 44.305s (userspace) = 1min 25.958s
+>>>>> graphical.target reached after 44.178s in userspace.
+>>>>> After:
+>>>>> Startup finished in 23.995s (kernel) + 40.350s (userspace) = 1min 4.345s
+>>>>> graphical.target reached after 40.226s in userspace.
+>>>>
+>>>> I'll try grabbing the system where we saw the KASAN-related issues [1] and
+>>>> give it a churn with and without the two patches. Might take a bit (~1 day),
+>>>> unfortunately.
+>>>>
+>>>> [1] https://lkml.kernel.org/r/20221013180518.217405-1-david@redhat.com
+>>>
+>>> Great, don't forget:
+>>>
+>>> diff --git a/kernel/module/main.c b/kernel/module/main.c
+>>> index 82b0dcc1fe77..222015093eeb 100644
+>>> --- a/kernel/module/main.c
+>>> +++ b/kernel/module/main.c
+>>> @@ -3066,7 +3066,7 @@ struct idempotent {
+>>>    #define IDEM_HASH_BITS 8
+>>>    static struct hlist_head idem_hash[1 << IDEM_HASH_BITS];
+>>> -static struct spinlock idem_lock;
+>>> +static DEFINE_SPINLOCK(idem_lock);
+>>>    static bool idempotent(struct idempotent *u, const void *cookie)
+>>>    {
+>>>
+>>
+>> Finally was able to run it on that ThinkSystem SR950 with 8 populated
+>> sockets -> 224 cores and 448 logical CPUs.
+>>
+>> The KASAN vmap issues on that system were already no longer reproducible with your
+>> (Luis) previous work that's already in master.
+>>
+>> I tested a !debug and debug config (both based on corresponding RHEL9 configs), comparing
+>> 929ed21dfdb6 ("master") with 929ed21dfdb6 + Linus' patches ("patched").
+>>
+>>
+>> Unfortunately, boot times vary a lot, and I did not figure out how to reduce
+>> the noise. I captured the "systemd-analyze blame" output as well.
+>>
+>>
+>> 1) !debug config (not enabling KASAN)
+>>
+>> a) master
+>>
+>> Startup finished in 32.225s (kernel) + 7.399s (initrd) + 20.378s (userspace) = 1min 3ms
+>> multi-user.target reached after 20.352s in userspace.
+>> Startup finished in 43.734s (kernel) + 7.288s (initrd) + 19.827s (userspace) = 1min 10.851s
+>> multi-user.target reached after 19.800s in userspace.
+>> Startup finished in 50.514s (kernel) + 7.171s (initrd) + 24.757s (userspace) = 1min 22.443s
+>> multi-user.target reached after 24.734s in userspace.
+>> Startup finished in 26.722s (kernel) + 7.249s (initrd) + 23.923s (userspace) = 57.895s
+>> multi-user.target reached after 23.892s in userspace.
+>>
+>> b) patched
+>>
+>> Startup finished in 36.318s (kernel) + 7.177s (initrd) + 21.383s (userspace) = 1min 4.879s
+>> multi-user.target reached after 21.355s in userspace.
+>> Startup finished in 36.318s (kernel) + 7.177s (initrd) + 21.383s (userspace) = 1min 4.879s
+>> multi-user.target reached after 21.355s in userspace.
+>> Startup finished in 1min 34.678s (kernel) + 7.239s (initrd) + 24.066s (userspace) = 2min 5.985s
+>> multi-user.target reached after 24.040s in userspace.
+>> Startup finished in 25.879s (kernel) + 7.144s (initrd) + 29.665s (userspace) = 1min 2.689s
+>> multi-user.target reached after 29.637s in userspace.
+>>
+>>
+>>
+>> 2) debug config (enabling KASAN)
+>>
+>> a) master
+>>
+>> Startup finished in 2min 12.695s (kernel) + 25.058s (initrd) + 1min 13.012s (userspace) = 3min 50.765s
+>> multi-user.target reached after 1min 12.903s in userspace.
+>> Startup finished in 1min 45.400s (kernel) + 24.294s (initrd) + 1min 8.910s (userspace) = 3min 18.606s
+>> multi-user.target reached after 1min 8.786s in userspace.
+>> Startup finished in 2min 4.857s (kernel) + 24.715s (initrd) + 1min 5.088s (userspace) = 3min 34.660s
+>> multi-user.target reached after 1min 4.967s in userspace.
+>> Startup finished in 3min 20.400s (kernel) + 24.703s (initrd) + 1min 5.469s (userspace) = 4min 50.573s
+>> multi-user.target reached after 1min 5.344s in userspace.
+>>
+>> b) patched
+>>
+>> Startup finished in 2min 5.250s (kernel) + 25.049s (initrd) + 1min 1.961s (userspace) = 3min 32.262s
+>> multi-user.target reached after 1min 1.844s in userspace.
+>> Startup finished in 1min 52.524s (kernel) + 24.897s (initrd) + 1min 5.062s (userspace) = 3min 22.484s
+>> multi-user.target reached after 1min 4.916s in userspace.
+>> Startup finished in 9min 36.817s (kernel) + 24.859s (initrd) + 1min 18.657s (userspace) = 11min 20.335s
+>> multi-user.target reached after 1min 18.455s in userspace.
+>> Startup finished in 30min 20.715s (kernel) + 24.722s (initrd) + 1min 7.039s (userspace) = 31min 52.476s
+>> multi-user.target reached after 1min 6.907s in userspace.
+>>
+>>
+>> What concerns me a bit, is that on the patched kernel we seem to hit more cases where
+>> boot takes much longer (in both kernel configs).
+>>
+>> I'll do some more runs/investigation to see if this is reproducible or just some system oddity.
+>>
+>> Staring just at the udev settle time (systemd-analyze blame), it's very similar between both kernel
+>> versions.
+> 
+> Thanks for these tests, having MODULE_STATS enabled +
+> 
+> cat /sys/kernel/debug/modules/stats
+> 
+> would be of huge value, both on master and + patched.
 
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Sent: Saturday, June 3, 2023 3:37 PM
->=20
-> This is the start of the stable review cycle for the 5.15.115 release.
-> There are 35 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Mon, 05 Jun 2023 14:35:25 +0000.
-> Anything received after that time might be too late.
+Sure! Sorry for the slight delay, had to recompile the kernels.
 
-CIP configurations built and booted with Linux 5.15.115-rc3 (e43ef124b08b):
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/8=
-88485438
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
-ux-5.15.y
+I only did a single run on each kernel, should be good enough for the purpose here.
 
-Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
 
-Kind regards, Chris
+1) !debug config (not enabling KASAN)
+
+a) master
+
+# cat /sys/kernel/debug/modules/stats
+          Mods ever loaded       75
+      Mods failed on kread       0
+Mods failed on decompress       0
+   Mods failed on becoming       8052
+       Mods failed on load       531
+         Total module size       16343040
+       Total mod text size       4767744
+        Failed kread bytes       0
+   Failed decompress bytes       0
+     Failed becoming bytes       19185958488
+         Failed kmod bytes       1172591936
+  Virtual mem wasted bytes       20358550424
+          Average mod size       217908
+     Average mod text size       63570
+   Avg fail becoming bytes       2382757
+   Average fail load bytes       2208272
+Duplicate failed modules:
+               Module-name        How-many-times                    Reason
+         intel_rapl_common                   447                  Becoming
+    intel_uncore_frequency                   447                  Becoming
+intel_uncore_frequency_common               445           Becoming & Load
+          isst_if_mbox_msr                   447                  Becoming
+            isst_if_common                   447           Becoming & Load
+                  skx_edac                   447           Becoming & Load
+                      nfit                   447                  Becoming
+                 libnvdimm                   447                  Becoming
+      x86_pkg_temp_thermal                   447                  Becoming
+          intel_powerclamp                   447                  Becoming
+                  coretemp                   447           Becoming & Load
+                 kvm_intel                   447                  Becoming
+                       kvm                   447           Becoming & Load
+                     irdma                     3                      Load
+                       ice                     3                  Becoming
+                 irqbypass                   447           Becoming & Load
+                      rapl                   393           Becoming & Load
+                      gnss                     2           Becoming & Load
+                   ioatdma                    63           Becoming & Load
+                 ib_uverbs                     3           Becoming & Load
+              intel_cstate                   447           Becoming & Load
+                   ipmi_si                     1                      Load
+              intel_uncore                   447           Becoming & Load
+                   ib_core                     3           Becoming & Load
+              ipmi_devintf                     1                      Load
+           ipmi_msghandler                     1                  Becoming
+                       dca                    63                  Becoming
+                      ahci                     1                  Becoming
+                      i40e                     3                  Becoming
+                   libahci                     1                  Becoming
+          crct10dif_pclmul                   195                  Becoming
+              crc32_pclmul                   262                  Becoming
+              crc32c_intel                   126           Becoming & Load
+                    libata                     1                      Load
+       ghash_clmulni_intel                   297           Becoming & Load
+                      fjes                    11                  Becoming
+
+
+b) patched
+
+# cat /sys/kernel/debug/modules/stats
+          Mods ever loaded       75
+      Mods failed on kread       0
+Mods failed on decompress       0
+   Mods failed on becoming       0
+       Mods failed on load       0
+         Total module size       16343040
+       Total mod text size       4767744
+        Failed kread bytes       0
+   Failed decompress bytes       0
+     Failed becoming bytes       0
+         Failed kmod bytes       0
+  Virtual mem wasted bytes       0
+          Average mod size       217908
+     Average mod text size       63570
+
+
+
+2) debug config (enabling KASAN)
+
+a) master
+
+# cat /sys/kernel/debug/modules/stats
+          Mods ever loaded       75
+      Mods failed on kread       0
+Mods failed on decompress       0
+   Mods failed on becoming       3173
+       Mods failed on load       923
+         Total module size       32288768
+       Total mod text size       14819328
+        Failed kread bytes       0
+   Failed decompress bytes       0
+     Failed becoming bytes       4279728952
+         Failed kmod bytes       2174133088
+  Virtual mem wasted bytes       6453862040
+          Average mod size       430517
+     Average mod text size       197592
+   Avg fail becoming bytes       1348796
+   Average fail load bytes       2355508
+Duplicate failed modules:
+               Module-name        How-many-times                    Reason
+                   ioatdma                    63           Becoming & Load
+         intel_rapl_common                   313                  Becoming
+    intel_uncore_frequency                   136           Becoming & Load
+intel_uncore_frequency_common                38                  Becoming
+          isst_if_mbox_msr                   443           Becoming & Load
+            isst_if_common                   210           Becoming & Load
+                  skx_edac                   257           Becoming & Load
+                      nfit                   180           Becoming & Load
+                 libnvdimm                   294           Becoming & Load
+      x86_pkg_temp_thermal                   321           Becoming & Load
+          intel_powerclamp                   247           Becoming & Load
+                  coretemp                    55           Becoming & Load
+                 kvm_intel                     2                  Becoming
+                       kvm                     3           Becoming & Load
+                 irqbypass                     3                  Becoming
+                      rapl                     1                  Becoming
+              intel_cstate                   444                      Load
+              intel_uncore                   447           Becoming & Load
+                 ib_uverbs                     1                      Load
+                   ib_core                     3           Becoming & Load
+                   ipmi_si                     1                  Becoming
+                       dca                    20           Becoming & Load
+                        sg                     1                  Becoming
+                      i40e                     3           Becoming & Load
+                      ahci                     1                  Becoming
+          crct10dif_pclmul                   160           Becoming & Load
+              crc32_pclmul                   151           Becoming & Load
+              crc32c_intel                   146           Becoming & Load
+       ghash_clmulni_intel                   140                  Becoming
+                    libata                     1                      Load
+                      fjes                    11           Becoming & Load
+
+
+
+b) patched
+
+# cat /sys/kernel/debug/modules/stats
+          Mods ever loaded       75
+      Mods failed on kread       0
+Mods failed on decompress       0
+   Mods failed on becoming       19
+       Mods failed on load       0
+         Total module size       32288768
+       Total mod text size       14819328
+        Failed kread bytes       0
+   Failed decompress bytes       0
+     Failed becoming bytes       6441296
+         Failed kmod bytes       0
+  Virtual mem wasted bytes       6441296
+          Average mod size       430517
+     Average mod text size       197592
+   Avg fail becoming bytes       339016
+Duplicate failed modules:
+               Module-name        How-many-times                    Reason
+         intel_rapl_common                     2                  Becoming
+intel_uncore_frequency_common                 5                  Becoming
+            isst_if_common                     3                  Becoming
+          intel_powerclamp                     2                  Becoming
+                 irqbypass                     5                  Becoming
+          crct10dif_pclmul                     1                  Becoming
+              crc32c_intel                     1                  Becoming
+
+
+
+So, with these (helpful) stats, the improvement is obvious (and explains the ~1s
+improvement I saw staring at the startup times of the udev services).
+
+There are still some failed module loads with the debug config (only in the
+becoming state), I did not dive deeply into the actual code changes (-EBUSY),
+just spelling it out so we can decide if this is to be expected or some corner
+case that shouldn't be happening.
+
+
+Thanks!
+
+-- 
+Cheers,
+
+David / dhildenb
+
