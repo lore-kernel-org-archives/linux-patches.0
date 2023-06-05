@@ -1,220 +1,90 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018CB20EA
-	for <patches@lists.linux.dev>; Mon,  5 Jun 2023 18:47:44 +0000 (UTC)
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-96fdc081cb3so760284466b.2
-        for <patches@lists.linux.dev>; Mon, 05 Jun 2023 11:47:44 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE35323E
+	for <patches@lists.linux.dev>; Mon,  5 Jun 2023 20:38:47 +0000 (UTC)
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-3f829e958bdso49920381cf.3
+        for <patches@lists.linux.dev>; Mon, 05 Jun 2023 13:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1685990863; x=1688582863;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=QKLg1ub3QLvqs44m/Kyl00r/aR+KfWT5fRNSdNPBVaA=;
-        b=D3PY2SpXRXhmI+VRHSFhX74K72xfYGs4bg3CwY/L4eq9suCeFWG/+rIZkKabYOY7yR
-         oCUF+9wvRRrQgCCbs0xDQPzXYf9DqdAoqNKInLcvzw6isxkfF8941P2NM5Koe2UaNjEJ
-         YS7sQNa6jE3+f1TgZGm8ohHci8XSwy3OumZO0U+sliuqtN6HkB9TQF0+62hr0TbWs2g3
-         g/kMp9wDv6UrQHevgj2hPPTUBUkoqcjWO8S/X+6IsaCxH+VYss3ehSby3DVQZ3nLb5c+
-         Ya09nZKTyi6eH7PobYs9+BEOKqSa+NXQ+r/BnnHe95sfNfsLdE6v2mRvDz+zbHYhy+T+
-         hyYA==
+        d=gmail.com; s=20221208; t=1685997526; x=1688589526;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tBzUGtWYUz/h/GEtZLWVJ9w7DC65D2cvEG+PU1++rdk=;
+        b=GiYGyKA/2hN1rkG7MtNWRc4nL1bnZ7G8u+iQG2a1SvNE64Q9yKIMAmVeLgV0Qx2ByW
+         OrZ0XpvL45XOMZzfDajXu+uW9HdrRURuiRaEdz/rlp0t/TkUbAhrp7uk2JlLtoZb8USQ
+         sntoMWGDApTL8H799RGcSw9+tYHQlEWUc67Cb/svn/UNiAjuCk/Bxz6qjnFV8yg5o24r
+         uFhUTJDN04dJUnEschdXrtLF9LV2xpDskausF+trh7tPHOO6h9LenJ8mOJU8Dmm5kdAS
+         MNGV5FiXMxtLGJeRIvRfMSj0ZaUVjJzUT6cTKtHKlGVpUqRd4SNt/FDqFhH5WEI5ApF6
+         QogA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685990863; x=1688582863;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QKLg1ub3QLvqs44m/Kyl00r/aR+KfWT5fRNSdNPBVaA=;
-        b=OzZtxiC2EGtQLUyg0plRut5F8Pz7hQNCQw5ZzMcKfyq7kWgLP+G+VC50pHdcozwlnI
-         nf5iilaT8MV6jKau1RjbCVkEK2I3VrNFzWlGLl1b6GsUfr7GWe6XfZl068tqDzzb9wYZ
-         L5vE342v4/z5EHBu4G5st67Vtc35xMpCPzZoGrqKwi7OmStkyLftTmYeyk4LQr6AFlx2
-         81KjZkWvLr3XYXL4tFdJ6wqX9RAagmOjWJCaVVELKaqScTg4GykiUNTG3m0T7dAPyjd/
-         cAbJmyVPjwJ9DMQizF7DmzDPgO7ZkTLe6Kd/WWTt80uSyd7drXTCr/TRG3fIfQz6TeJM
-         yorA==
-X-Gm-Message-State: AC+VfDzZqZyRxBkoyAku/GTiAJ0B5sYNMNmteHS6CYvHJzSuRqbltjVf
-	df+CGQUXKyrlFL65ONFqTuPHEQ==
-X-Google-Smtp-Source: ACHHUZ66dLziEHTGGDZdVtvXcecgb6CoOrlaZmrhRU/KNjgiKUc/Y+Olvmx1iiwQfSXjcJRZcicEFg==
-X-Received: by 2002:a17:906:58ce:b0:974:1e0e:9bd2 with SMTP id e14-20020a17090658ce00b009741e0e9bd2mr7286872ejs.14.1685990862652;
-        Mon, 05 Jun 2023 11:47:42 -0700 (PDT)
-Received: from localhost ([79.142.230.34])
-        by smtp.gmail.com with ESMTPSA id l18-20020a1709067d5200b0096a27dbb5b2sm4483515ejp.209.2023.06.05.11.47.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jun 2023 11:47:42 -0700 (PDT)
-References: <20230601134946.3887870-1-aliceryhl@google.com>
- <20230601134946.3887870-4-aliceryhl@google.com>
- <87v8g61119.fsf@metaspace.dk> <20230605153142.28a4093c.gary@garyguo.net>
- <ZH34psABEaq1bHtg@Boquns-Mac-mini.local>
-User-agent: mu4e 1.10.3; emacs 28.2.50
-From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: Gary Guo <gary@garyguo.net>, Alice Ryhl <aliceryhl@google.com>,
- rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson
- Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, Lai
- Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>,
- =?utf-8?Q?Bj=C3=B6rn?= Roy Baron <bjorn3_gh@protonmail.com>, Benno Lossin
- <benno.lossin@proton.me>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Wedson Almeida Filho <walmeida@microsoft.com>,
- Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Subject: Re: [PATCH v2 3/8] rust: sync: add `Arc::{from_raw, into_raw}`
-Date: Mon, 05 Jun 2023 20:34:24 +0200
-In-reply-to: <ZH34psABEaq1bHtg@Boquns-Mac-mini.local>
-Message-ID: <87pm69zqya.fsf@metaspace.dk>
+        d=1e100.net; s=20221208; t=1685997526; x=1688589526;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tBzUGtWYUz/h/GEtZLWVJ9w7DC65D2cvEG+PU1++rdk=;
+        b=cwrJVMV/xTsaiLSNnr4hAMSJqfIAfRrU48Ct3mHOabFdz0T8Z9+OVcy3d2XcYV47Sl
+         GKBEb5tmIp4sUIjcOu6sv12wzl1dKNe1b1B0/Uelpar9p7ldTFUw2gKlF2h0Pc/OlLWE
+         tSoIjzdck27rCPWhZZtEP4Kg+z1nKEqhA4QbFOGSEcJEDIeh94SBMTcxi0/h+cXRHHe6
+         3FH4C53BGmaNbkaPVm9BAeVsQOBvgoak4L7P/ZoG5j9DIBgDgdSg5oddPLnc1VyfIloV
+         KGYOztH2VCJu4KYq40me0f9vYdDdkxSq54K7N3Yu0rjK1hOeJ3z/WJpepJqxybUYWAFn
+         kNzA==
+X-Gm-Message-State: AC+VfDx4JCjhbrnPG+vteTvyApWbmrvqMKZ/t2bFNnGUMBVbJrT4hvKO
+	So7dY7yYYznj0GrOk80bdqU=
+X-Google-Smtp-Source: ACHHUZ72TxA5rtCZJe9S6Nu0SPOvnqmAh41OVTEXtwof33pAaD38MPlQwbZ5A/HVVMrDpdVBbJnpww==
+X-Received: by 2002:a05:622a:1055:b0:3f6:aff0:6dfd with SMTP id f21-20020a05622a105500b003f6aff06dfdmr9548580qte.32.1685997526080;
+        Mon, 05 Jun 2023 13:38:46 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id f10-20020ac8068a000000b003eabcc29132sm4986051qth.29.2023.06.05.13.38.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jun 2023 13:38:45 -0700 (PDT)
+Message-ID: <6f75392b-7cef-3595-5422-1aa00384dab3@gmail.com>
+Date: Mon, 5 Jun 2023 13:38:36 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 5.15 00/35] 5.15.115-rc3 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230603143543.855276091@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230603143543.855276091@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 6/3/23 07:37, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.115 release.
+> There are 35 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Mon, 05 Jun 2023 14:35:25 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.115-rc3.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Boqun Feng <boqun.feng@gmail.com> writes:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-> On Mon, Jun 05, 2023 at 03:31:42PM +0100, Gary Guo wrote:
->> On Fri, 02 Jun 2023 12:51:08 +0200
->> "Andreas Hindborg (Samsung)" <nmi@metaspace.dk> wrote:
->> 
->> > Alice Ryhl <aliceryhl@google.com> writes:
->> > 
->> > > From: Wedson Almeida Filho <walmeida@microsoft.com>
->> > >
->> > > These methods can be used to turn an `Arc` into a raw pointer and back,
->> > > in a way that preserves the metadata for fat pointers.
->> > >
->> > > This is done using the unstable ptr_metadata feature [1]. However, it
->> > > could also be done using the unstable pointer_byte_offsets feature [2],
->> > > which is likely to have a shorter path to stabilization than
->> > > ptr_metadata.
->> > >
->> > > Link: https://github.com/rust-lang/rust/issues/81513 [1]
->> > > Link: https://github.com/rust-lang/rust/issues/96283 [2]
->> > > Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
->> > > Co-developed-by: Alice Ryhl <aliceryhl@google.com>
->> > > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
->> > > Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
->> > > ---
->> > >  rust/kernel/lib.rs      |  1 +
->> > >  rust/kernel/sync/arc.rs | 42 ++++++++++++++++++++++++++++++++++++++++-
->> > >  2 files changed, 42 insertions(+), 1 deletion(-)
->> > >
->> > > diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
->> > > index 7ea777b731e6..ad9142928fb1 100644
->> > > --- a/rust/kernel/lib.rs
->> > > +++ b/rust/kernel/lib.rs
->> > > @@ -17,6 +17,7 @@
->> > >  #![feature(const_refs_to_cell)]
->> > >  #![feature(dispatch_from_dyn)]
->> > >  #![feature(new_uninit)]
->> > > +#![feature(ptr_metadata)]
->> > >  #![feature(receiver_trait)]
->> > >  #![feature(unsize)]
->> > >  
->> > > diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
->> > > index a89843cacaad..684be9f73aca 100644
->> > > --- a/rust/kernel/sync/arc.rs
->> > > +++ b/rust/kernel/sync/arc.rs
->> > > @@ -24,7 +24,7 @@
->> > >  };
->> > >  use alloc::boxed::Box;
->> > >  use core::{
->> > > -    alloc::AllocError,
->> > > +    alloc::{AllocError, Layout},
->> > >      fmt,
->> > >      marker::{PhantomData, Unsize},
->> > >      mem::{ManuallyDrop, MaybeUninit},
->> > > @@ -212,6 +212,46 @@ unsafe fn from_inner(inner: NonNull<ArcInner<T>>) -> Self {
->> > >          }
->> > >      }
->> > >  
->> > > +    /// Convert the [`Arc`] into a raw pointer.
->> > > +    ///
->> > > +    /// The raw pointer has ownership of the refcount that this Arc object owned.
->> > > +    pub fn into_raw(self) -> *const T {
->> > > +        let ptr = self.ptr.as_ptr();
->> > > +        core::mem::forget(self);
->> > > +        // SAFETY: The pointer is valid.
->> > > +        unsafe { core::ptr::addr_of!((*ptr).data) }
->> > > +    }
->> > > +
->> > > +    /// Recreates an [`Arc`] instance previously deconstructed via [`Arc::into_raw`].
->> > > +    ///
->> > > +    /// This code relies on the `repr(C)` layout of structs as described in
->> > > +    /// <https://doc.rust-lang.org/reference/type-layout.html#reprc-structs>.
->> > > +    ///
->> > > +    /// # Safety
->> > > +    ///
->> > > +    /// `ptr` must have been returned by a previous call to [`Arc::into_raw`]. Additionally, it
->> > > +    /// can only be called once for each previous call to [`Arc::into_raw`].
->> > > +    pub unsafe fn from_raw(ptr: *const T) -> Self {
->> > > +        let refcount_layout = Layout::new::<bindings::refcount_t>();
->> > > +        // SAFETY: The caller guarantees that the pointer is valid.
->> > > +        let val_layout = unsafe { Layout::for_value(&*ptr) };
->> > > +        // SAFETY: We're computing the layout of a real struct that existed when compiling this
->> > > +        // binary, so its layout is not so large that it can trigger arithmetic overflow.
->> > > +        let val_offset = unsafe { refcount_layout.extend(val_layout).unwrap_unchecked().1 };
->> > > +
->> > > +        // This preserves the metadata in the pointer, if any.
->> > > +        //
->> > > +        // Note that `*const T` and `*const ArcInner<T>` have the same metadata as documented at
->> > > +        // <https://doc.rust-lang.org/std/ptr/trait.Pointee.html>.
->> > > +        let metadata = core::ptr::metadata(ptr as *const ArcInner<T>);  
->> > 
->> > Thanks for updating the comment with the link. I looked into this and I
->> > find that what we are doing here, even though it works, does not feel
->> > right at all. We should be able to do this:
->> > 
->> >         let metadata = core::ptr::metadata(ptr);
->> >         let ptr = (ptr as *mut u8).wrapping_sub(val_offset) as *mut ();
->> >         let ptr = core::ptr::from_raw_parts_mut(ptr, metadata);
->> > 
->> > but the way `Pointee::Metadata` is defined will not allow this, even
->> > though we know it is valid. I would suggest the following instead:
->> > 
->> >         let metadata = core::ptr::metadata(ptr);
->> >         // Convert <T as Pointee>::Metadata to <ArcInner<T> as
->> >         // Pointee>::Metadata. We know they have identical representation and thus this is OK.
->> >         let metadata: <ArcInner<T> as Pointee>::Metadata = *unsafe {
->> >             &*((&metadata as *const <T as Pointee>::Metadata as *const ())
->> >                 as *const <ArcInner<T> as Pointee>::Metadata)
->> >         };
->> 
->> This could just be a `transmute_copy`.
->> 
->
-> Or just `transmute`:
->
-> 	let metadata = unsafe {
-> 		core::mem::transmute<_, <ArcInner<T> as
-> 		Pointee>>::Metadata>(metadata)
-> 	};
->
-> ? Since `Pointee::Metadata` is `Copy`.
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-I like `transmute_copy()` better for being more explicit.
-
->
-> Regards,
-> Boqun
->
->> >         let ptr = (ptr as *mut u8).wrapping_sub(val_offset) as *mut ();
->> >         let ptr = core::ptr::from_raw_parts_mut(ptr, metadata);
->> > 
->> > Even though it is a bit more complex, it captures what we are trying to
->> > do better.
->> 
->> I agree this captures the semantics better.
->> 
->
-> I actually wish that we could use `wrapping_byte_offset`[1], and just
->
-> 	// `*const T` and `*const ArcInner<T>` should have the same
-> 	// metdata, so convert the pointer type first.
-> 	let ptr = ptr as *const ArcInner<T>;
->
-> 	// .. and then adjust the byte offset.
-> 	let ptr = ptr.wrapping_byte_offset(-val_offset);
->
-> This may be the opposite direction as Andreas proposed ;-), but the
-> result is less code.
-
-Idk, it is sort of similar to the original approach. I think it is a
-good idea to be a bit explicit about what we are doing here.
-
-BR Andreas
