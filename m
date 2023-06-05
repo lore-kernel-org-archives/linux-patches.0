@@ -1,100 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7221323E;
-	Mon,  5 Jun 2023 21:15:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE844C433D2;
-	Mon,  5 Jun 2023 21:15:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1685999720;
-	bh=WpgQiMJgnt6HBcNQNIb/5Xa2UnrztLQBfn1ZUDQLobI=;
-	h=From:Date:Subject:To:Cc:From;
-	b=OGbUcy8KpJRebsXetgYi9snsvx0EUtJyXpxRM2HAsn0xfwrkOv76KEPjcUIQIf7VN
-	 jXZpmuP+Y+MUdft1KftTa0XRRv45DH9itbYVEgxqhyuAt7ZVXg5wKTS9jZuNI6w3Vn
-	 VTx67iJpp2NdCwpcDPESGusAw9UuJGeVCFSqjmFxBm+FKARvs/GCxWRNeQ1xPxcLQL
-	 C4sGthQsGiGBBwiEoyacAbT8JRh0kSGId3Z3jZrV34QsJ/88ittkXEvEaviffrH2mD
-	 jDzaWf3AxnlSOzVJSxqumz16JhPPeXSKEv28SNTx856g6xNS+Mg79shDntPN82p0s0
-	 7AaAeQRZ1vw5w==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 05 Jun 2023 14:15:08 -0700
-Subject: [PATCH 6.3] riscv: vmlinux.lds.S: Explicitly handle '.got' section
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6292C323E
+	for <patches@lists.linux.dev>; Mon,  5 Jun 2023 21:16:11 +0000 (UTC)
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-543d90cc675so477414a12.3
+        for <patches@lists.linux.dev>; Mon, 05 Jun 2023 14:16:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685999770; x=1688591770;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pgABzOJPJ5VIj4UQYjPtZhIHLv/LvJQylDwcub2S5pU=;
+        b=NDEefdGqTeKN0VC0nVdBRObxZBclc8lfeYbbNMC5GVI5QfRrLVsk2VstFZXB6x9Qax
+         1tfj5Tc7k067Ym30bUuSAL9cTG9J6DGO/XG28pO0o6sU+zE3gfmgfAOFZFAR0HtfTPxe
+         WkMARgoT1VI7LgZDdRlHTb9Fw9rL39+GWvpsK/qH6rsNcF7v/QEA48HsPQ8oLeq54aD+
+         PTEYEuOWBYxz1dDHA2XQwfwgETw2P/OzhLpHiNgyUZvWE/2bhseAupxSLPZLSHMD2jfb
+         Uo/se/6iBxktgiORd8b/+wienQArE0DMPsRF5xP3PoXkU71PL95E0/y684Jg6Df6SBOv
+         zqMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685999770; x=1688591770;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pgABzOJPJ5VIj4UQYjPtZhIHLv/LvJQylDwcub2S5pU=;
+        b=ADr7uIMOtpCRFImoFCEkgXN6FPVfJH18oLPXvLgIRNu5RKIuQFoRrpd+L3qtGthXYt
+         ij1lGnTIQOIo20rTVoMVUNPcb9NXkGn0U1gnl7DoFQVEZu/0jMxvCZxEE8jzCX/PYPin
+         cUhoCMlGqp+pKGuBRPh4M2Njx7SD/OeYutaVRy9AyFW4xjGABq9xdfcDV2sKZt/4rm7e
+         K/97LRDcKyhIM2wlvrqr+ee0ozFZTpZCb2XC/+xR7xYGCpVVFePuOKct1f2m6bYYhsne
+         +Zv+dRuIXX+5AvitOGTWGpEZc4NiLqN1xG/0N57aRGPYpf+QPs5iUVlyX5H9tN6WJvfi
+         zL6A==
+X-Gm-Message-State: AC+VfDyvmlzF2jCqKUbdfqKjpZHR0GS/N2bLD5R8FwiLtdUoEVp51P+I
+	KEfA1ErRyyShFTDTkVmskI+nNr0xUCUC8z7D0PorWpQNh6o=
+X-Google-Smtp-Source: ACHHUZ4gRcnOB7eeFTHK9+AFV1iotvVJC3lxKfkE/D67ktnXzZGsaN6ap1I2IvSB3gRUYgCA8JtK9+wDW9pXTlLj57k=
+X-Received: by 2002:a17:90a:f98f:b0:24b:2fc1:8a9c with SMTP id
+ cq15-20020a17090af98f00b0024b2fc18a9cmr3824386pjb.11.1685999770620; Mon, 05
+ Jun 2023 14:16:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230605-6-3-riscv-got-orphan-warning-llvm-17-v1-1-72c4f11e020f@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAFtQfmQC/yVO3Q6CIBR+lXauO6Vo6nqV1hwg4lkIDIzanO8e2
- uX3/60QVSAV4X5aIahEkZzNoDyfQE7caoU0ZAysYFXRFDdssMJAUSbUbkEXfHbhhwdLVqMxaca
- yxU7WohAtYx3jkKsEjwpF4FZOe5mory/xJjPg7JJCafJQPxquIy4O/1IvvT+oPe+DGul73HxAc
- 6nguW0/1XED9LsAAAA=
-To: gregkh@linuxfoundation.org, sashal@kernel.org, palmer@dabbelt.com, 
- conor@kernel.org
-Cc: paul.walmsley@sifive.com, aou@eecs.berkeley.edu, 
- ndesaulniers@google.com, trix@redhat.com, stable@vger.kernel.org, 
- linux-riscv@lists.infradead.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1875; i=nathan@kernel.org;
- h=from:subject:message-id; bh=WpgQiMJgnt6HBcNQNIb/5Xa2UnrztLQBfn1ZUDQLobI=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCl1Ael//Pbt0ClzWZLUfrM5KVHtae8Hx4yT9pMTOv97d
- xXM9XzZUcrCIMbBICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACYy6zrDP92NC6ZkOu7zMTiz
- 4VDiIs859RZbpd2P7lSVunjq3MOrouUM/wx0gxTzpec8E7z//3CT5Z6pEhYd9yMf5F0RnhX181x
- IJjsA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20230603143543.855276091@linuxfoundation.org>
+In-Reply-To: <20230603143543.855276091@linuxfoundation.org>
+From: Allen Pais <stable.kernel.dev@gmail.com>
+Date: Mon, 5 Jun 2023 14:15:59 -0700
+Message-ID: <CAJq+SaC3jGqmM1k2FbpSoe=3uZC5BaO=SPgHW2JuAhxqeLk7ug@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/35] 5.15.115-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-This patch is for linux-6.3.y only, it has no direct mainline
-equivalent.
+> This is the start of the stable review cycle for the 5.15.115 release.
+> There are 35 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Mon, 05 Jun 2023 14:35:25 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.115-rc3.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-LLVM 17 will now use the GOT for extern weak symbols when using the
-medany model, which causes a linker orphan section warning on
-linux-6.3.y:
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-  ld.lld: warning: <internal>:(.got) is being placed in '.got'
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-This is not an issue in mainline because handling of the .got section
-was added by commit 39b33072941f ("riscv: Introduce CONFIG_RELOCATABLE")
-and further extended by commit 26e7aacb83df ("riscv: Allow to downgrade
-paging mode from the command line") in 6.4-rc1. Neither of these changes
-are suitable for stable, so add explicit handling of the .got section in
-a standalone change to align 6.3 and mainline, which addresses the
-warning.
-
-This is only an issue for 6.3 because commit f4b71bff8d85 ("riscv:
-select ARCH_WANT_LD_ORPHAN_WARN for !XIP_KERNEL") landed in 6.3-rc1, so
-earlier releases will not see this warning because it will not be
-enabled.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1865
-Link: https://github.com/llvm/llvm-project/commit/a178ba9fbd0a27057dc2fa4cb53c76caa013caac
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/riscv/kernel/vmlinux.lds.S | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/arch/riscv/kernel/vmlinux.lds.S b/arch/riscv/kernel/vmlinux.lds.S
-index 53a8ad65b255..db56c38f0e19 100644
---- a/arch/riscv/kernel/vmlinux.lds.S
-+++ b/arch/riscv/kernel/vmlinux.lds.S
-@@ -129,6 +129,8 @@ SECTIONS
- 		*(.sdata*)
- 	}
- 
-+	.got : { *(.got*) }
-+
- #ifdef CONFIG_EFI
- 	.pecoff_edata_padding : { BYTE(0); . = ALIGN(PECOFF_FILE_ALIGNMENT); }
- 	__pecoff_data_raw_size = ABSOLUTE(. - __pecoff_text_end);
-
----
-base-commit: abfd9cf1c3d4d143a889b76af835078897e46c55
-change-id: 20230605-6-3-riscv-got-orphan-warning-llvm-17-8c4b0b72282a
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Thanks.
