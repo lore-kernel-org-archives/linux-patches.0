@@ -1,112 +1,134 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2059.outbound.protection.outlook.com [40.107.244.59])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA74033F2
-	for <patches@lists.linux.dev>; Sun,  4 Jun 2023 14:26:25 +0000 (UTC)
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-653fcd58880so874368b3a.0
-        for <patches@lists.linux.dev>; Sun, 04 Jun 2023 07:26:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google; t=1685888785; x=1688480785;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HA5YrIYH9MawD+4VRjcWbjHM//DpBE3FGKspT1TvJ+c=;
-        b=CcQtwON+W3n7y7rA9m3IbuMZf1gq/6rWVzSIyiMZaJ9Vp4L7cwZl7Eptdo7f5/JYrH
-         VY96BmCnZdcD+JuKrA0Kjp42bz0LLhrV3VQlkDWcACaWtSQ2lb+QUxFB38AQn87H3lTj
-         U+n4Q9vvxFpFS30gxqxlMKuZ5R50iQVSLSHXU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685888785; x=1688480785;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HA5YrIYH9MawD+4VRjcWbjHM//DpBE3FGKspT1TvJ+c=;
-        b=NGaR1jjJnSiWP6Q52XBfcxPfJELV6YNxK79PLve1jyTcK2b0hkDS7fwh/N6aLXtWri
-         xa8GlfbN2m1zxhCLegZ2ZiqZYFFhqASBaRQUFXDb42GwIHPjTkt+alOMT2hTPaYP5cHd
-         Wir/N5jvCDoLgTyZyFZfdzmn2kt3G8edSxwFqUbG8SeqDRr0F13wAfrPfkowR37xFTce
-         IqCgEp8H2TFubEHhhT2v/LYcNNcVZNj81n3DpMRRX/l7GdPLy/Vsh6A+BjqUn1GHCzGz
-         Q5YIAJaVpTiyZ6C2uQvzfRVNUm0JHgVE+lLKjNnpyB3G+MO7xoCf995oF+A3M3n0AdE7
-         1jfw==
-X-Gm-Message-State: AC+VfDxpoMdLAy5h64Yt/AIpvbkvor0CjPf7KGc3swP8z53j250/G+90
-	MVacmSYzyiqx+/2tCmH1V3WFfQ==
-X-Google-Smtp-Source: ACHHUZ5L7kPdWHNyYrkbAXFw/Ud0NVHz/4s8+yRhJJX2mlG+9wCBm0pRDUZD3gxZ8iMp5wqgAPDJQQ==
-X-Received: by 2002:a05:6a20:158b:b0:10c:4c76:e909 with SMTP id h11-20020a056a20158b00b0010c4c76e909mr1573877pzj.8.1685888784842;
-        Sun, 04 Jun 2023 07:26:24 -0700 (PDT)
-Received: from 80e1dc6c40da ([122.199.31.3])
-        by smtp.gmail.com with ESMTPSA id h6-20020a62b406000000b00637b0c719c5sm3657475pfn.201.2023.06.04.07.26.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Jun 2023 07:26:23 -0700 (PDT)
-Date: Sun, 4 Jun 2023 14:26:12 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Johan Hovold <johan@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Petr Pavlu <petr.pavlu@suse.com>, gregkh@linuxfoundation.org,
-	rafael@kernel.org, song@kernel.org, lucas.de.marchi@gmail.com,
-	christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org,
-	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz,
-	mhocko@suse.com, dave.hansen@linux.intel.com,
-	colin.i.king@gmail.com, jim.cromie@gmail.com,
-	catalin.marinas@arm.com, jbaron@akamai.com,
-	rick.p.edgecombe@intel.com, yujie.liu@intel.com, david@redhat.com,
-	tglx@linutronix.de, hch@lst.de, patches@lists.linux.dev,
-	linux-modules@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com,
-	lennart@poettering.net, imre.deak@intel.com
-Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
-Message-ID: <ZHyfBLbZCE4cUMdV@80e1dc6c40da>
-References: <CAHk-=wiPjcPL_50WRWOi-Fmi9TYO6yp_oj63a_N84FzG-rxGKQ@mail.gmail.com>
- <6gwjomw6sxxmlglxfoilelswv4hgygqelomevb4k4wrlrk3gtm@wrakbmwztgeu>
- <CAHk-=whu8Wh4JP1hrc80ZvGgVW4GV6hw1vwzSiwOo9-1=Y1dWw@mail.gmail.com>
- <ZG/a+nrt4/AAUi5z@bombadil.infradead.org>
- <CAHk-=whiXzqprmQNRui3LbKQwvM8fg4nyAzWcU5qZs+kxBVzrA@mail.gmail.com>
- <ZHRpH-JXAxA6DnzR@hovoldconsulting.com>
- <CAHk-=wh6sXSO63kka+EWEqq0tGwtOnXYFWMXPQ6T_wZa+Np3MQ@mail.gmail.com>
- <ZHSeOUpKtyc8VKx5@hovoldconsulting.com>
- <ZHTCK2_1pF61yWIr@hovoldconsulting.com>
- <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2615CF9E7
+	for <patches@lists.linux.dev>; Mon,  5 Jun 2023 07:50:27 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=JpZF4x5P/y7bebFiByn9fAtsyJ+6MMna+whxNYrvSeOTHYnfNc9FIEczmtFg8qY8r2OiTXVHgaKl5fZV70/chZU00LUVKPNJa9kfhJv/ELkgf0TWA8RIrJso2Y/sQ3b5uL9h3Q+1TUPanv+9KVlK9B/JYd5ycTY9CnVIyiEkSqsdHx3RlbtoTamcTGJloc+CCgJirGqnvvQ0XV6QTQ+E16y4tfvdSmthVByjRIVNIrliEXqEA4UCFZ5iq1U3XzJL5lSvF9rlgClnt20W9xGDmRQzPqMN+snT8LsLp/XLlUYaJStZhjt39u3labXZBVJTdZn6Ha2lhcyMfvjkfaNmwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3KTeH/XWMLfQN05sh2JSyV5e7eCHK5ifmzHw5GzpnmE=;
+ b=oL70Hb2hTAIBuV7an9euQyXxkBC2XH5d+ZnHpdsqSMNR5a5Mo8MP5oXvmtmUYXEpnJEpO9pjPyiQr0sXj4htDZIfRNj+fC5tpRqlHaCwZwRek82fNQYmcBJB6PKmHsQBRpeyQe61rJ73eeO+6oz2NShXB5cYb1bSON2HvGwUNOLfS3yDn0QGSaZReNdcG8a+zsy31FJqiNvuhXXGY/7I9DboCMt3FxqVM/hiRXY1JomWskTKgjX7SdRAGJpmlTGcmavqGcerxUmG+tLK+RixoVdpFYpy4jRwawIKp6JwZ543ZZF+I/OjKPTnS13dmhE/phujtYffzXLDLAilQqe2Uw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3KTeH/XWMLfQN05sh2JSyV5e7eCHK5ifmzHw5GzpnmE=;
+ b=nv4gFaXfnQX9FxLXUMBUBzBA7rBxrDGdtcOJhsjNP863AP/B6FqiYMH1g3JVjmusDiK3mHwzLi7K3BgVnx9VNEPlJK6PRnO91M1HHZPJ9BNM0yuRG1Lwe1rIYoZgCOCwjrKxkX7xTP1qpFDqp9W6+WsxgcsPjC+YmWbrMMI4qWzMTA77b8LSCY5dxApX6rEGdQk1TeIP4+2aarL92+4+T0Pcyir4tTziajHXCkef14z4cmRj1T6RW7qxfPOQuw/WaPI4qeV4l7urdMUkLmj5KpklFEZum87hnMdXcdHEmgDB6CXAKwXnHL+gyW7cImR5bh6dS9LGteQXMkZqUAcScw==
+Received: from MW4PR03CA0051.namprd03.prod.outlook.com (2603:10b6:303:8e::26)
+ by SJ2PR12MB8783.namprd12.prod.outlook.com (2603:10b6:a03:4d0::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.22; Mon, 5 Jun
+ 2023 07:50:25 +0000
+Received: from CO1NAM11FT093.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:303:8e:cafe::ce) by MW4PR03CA0051.outlook.office365.com
+ (2603:10b6:303:8e::26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.33 via Frontend
+ Transport; Mon, 5 Jun 2023 07:50:25 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CO1NAM11FT093.mail.protection.outlook.com (10.13.175.59) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6455.33 via Frontend Transport; Mon, 5 Jun 2023 07:50:24 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Mon, 5 Jun 2023
+ 00:50:10 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Mon, 5 Jun 2023
+ 00:50:10 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Mon, 5 Jun 2023 00:50:10 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 5.15 00/35] 5.15.115-rc3 review
+In-Reply-To: <20230603143543.855276091@linuxfoundation.org>
+References: <20230603143543.855276091@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
+Message-ID: <99f2e59f-4101-4755-b6ec-bbebbb427752@rnnvmail205.nvidia.com>
+Date: Mon, 5 Jun 2023 00:50:10 -0700
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT093:EE_|SJ2PR12MB8783:EE_
+X-MS-Office365-Filtering-Correlation-Id: 13c63995-f1c4-4c4b-66ed-08db659985b1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	NF8zE6QT2A0zBcONV5E/QRQGZrDChuTdyq35LY8ZsEowOOyE/5k0d6l5b12af3y4B3hrrKwM7Z2aWTm1nR+Duu/zZxnrBUNp3W9IcIR3W85+rQ8GhsrHyA2VTpkoYhtRwKP+3UlIPUyhdDSc6DyabQPzixpNSWPaSlkYgHHgbjVs3DIAZX6OkRmgi2iwverjHVEINY9k/1RkUbS5ePisxQIRU+zySaimOufk/0wvBRWWNZU878wCFZHH8sNxu07+xjWkgRhT0fCCZIGb92ciwE8eRvvpt2JYMqHw+3JqKeGUdyF7JoZCYSdkoe2huHaWkpWMsjcAzuldWUret02KiOrfVDzclPUmoBayISdNDyzKwNB7ahtTtmdFqnTpGpHxb1l/ZCAyJAdugvsKJSyjIO6l2h8bPEdQBU/mK2oUwzDxYYT3YmCO0Yc1UJqd6Dy/v7VJSR2+Bs+/MNxpb1FoashYw2Bqj3v1hM4FhMhJSMq4/Ym2Ld8lyuVfpLDcxmao+sTz4Zyz4WT3LENE3CF+bSs1MrRwX+bwXfv2A/0Inwk2h4rhO75H/lfEVhL2baA7fQ3WocJV3vlbd5AcyE2FceIop8XvRevZX7izLQFBB4fRiNscyUqpAvF9Su5Fz/7AcbQip2LfUKSmHQ/Od+KRYPlxIHnw6GtLKVvfGc1QWxfonKLx1kSoRdtz2aEiF2jqHGu0OeEssA5V//3zuS0ul/hkUZVZjkToK8tq6J11xl9aozd7L6N5xALbTMiQH73uPbUGUyrIv58PTak//mk8sKhHPJ5mmKbTteWwMv99/V8=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(346002)(376002)(136003)(39860400002)(396003)(451199021)(40470700004)(36840700001)(46966006)(4326008)(6916009)(70586007)(70206006)(8676002)(31686004)(7416002)(41300700001)(316002)(5660300002)(54906003)(8936002)(2906002)(40460700003)(82310400005)(36860700001)(82740400003)(966005)(478600001)(356005)(26005)(40480700001)(426003)(186003)(7636003)(47076005)(336012)(86362001)(31696002);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2023 07:50:24.8892
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 13c63995-f1c4-4c4b-66ed-08db659985b1
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1NAM11FT093.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8783
 
-On Mon, May 29, 2023 at 09:55:15PM -0400, Linus Torvalds wrote:
-> On Mon, May 29, 2023 at 11:18 AM Johan Hovold <johan@kernel.org> wrote:
-> >
-> > I took a closer look at some of the modules that failed to load and
-> > noticed a pattern in that they have dependencies that are needed by more
-> > than one device.
+On Sat, 03 Jun 2023 16:37:18 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.115 release.
+> There are 35 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Ok, this is a "maybe something like this" RFC series of two patches -
-> one trivial one to re-organize things a bit so that we can then do the
-> real one which uses a filter based on the inode pointer to return an
-> "idempotent return value" for module loads that share the same inode.
+> Responses should be made by Mon, 05 Jun 2023 14:35:25 +0000.
+> Anything received after that time might be too late.
 > 
-> It's entirely untested, and since I'm on the road I'm going to not
-> really be able to test it. It compiles for me, and the code looks
-> fairly straightforward, but it's probably buggy.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.115-rc3.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-The updated patches fix the issue experienced with 6.4-rc4 where the Intel
-NUC12 booted fine, but on media playback resulted in the video stuttering,
-then freezing - and that audio was not coming though.
+All tests passing for Tegra ...
 
-# diff modules-rc4 modules-rc4-patched
-< snd_hda_codec_hdmi     77824  0
-< snd_hda_codec_realtek   159744  0
----
-> snd_hda_codec_hdmi     77824  1
-> snd_hda_codec_realtek   159744  1
+Test results for stable-v5.15:
+    11 builds:	11 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    114 tests:	114 pass, 0 fail
 
- Revert "module: error out early on concurrent load of the same module file"
- module: split up 'finit_module()' into init_module_from_file() helper
- modules: catch concurrent module loads, take two
- Johan's fix:
-  -static struct spinlock idem_lock;
-  +static DEFINE_SPINLOCK(idem_lock);
+Linux version:	5.15.115-rc3-ge43ef124b08b
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-Tested-by: Rudi Heitbaum <rudi@heitbaum..com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
