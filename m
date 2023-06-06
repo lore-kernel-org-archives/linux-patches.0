@@ -1,72 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE881ED36
-	for <patches@lists.linux.dev>; Tue,  6 Jun 2023 20:39:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBC7C433D2;
-	Tue,  6 Jun 2023 20:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EA87E4;
+	Tue,  6 Jun 2023 22:40:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC8DC433D2;
+	Tue,  6 Jun 2023 22:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686083961;
-	bh=4LWysxv5nCwtynK3qS1kWwwU6nmxSsvm8Ql6bGca8eQ=;
-	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
-	b=byxcVfbsphXB0kwZukntfYzhk2vydJFqH3Y59ERQtq4PmhFYbmavWBWl3XDznKbDR
-	 /+f8z6oNc4z/TFsMu3CLcjwLvIIgRw6ympyvfFvxy4QdrutpubaQwq7HqkzXIMTBcG
-	 w+tF3oydEGRuSJ3EbOnV1Lp+huyj0zY4vy/Ei6vNQ86e2uSEd+bJifojrXRLQfs7xl
-	 4dI1JZkSKJ+GeQt4dla0K+1Kdpe3hbhU5fNgJqFPgHnuEtpm519bhXEki79sJq8Nui
-	 Az1+bxiI5i1cq/Jhc2iB7wC+JGlUxQfJbFBRuTsrT4MkkAUW+2HIjdbXdbZfNTQiuY
-	 6+HiwpnOTo84w==
+	s=k20201202; t=1686091249;
+	bh=7ULdjUkdkkr+vu+/oiYN5S/oKq5p52x/BGvXGSKtQA8=;
+	h=From:Date:Subject:To:Cc:From;
+	b=CUso6cj4sWCjd3IHr9SOnT1MzY0q52hnzeOgY8b/Wam8mw1Xizs7ob1Z5kPstvvzi
+	 4kxZBFIkml3VaoGrimFZMqGJ/kEYDFrzerXemdYyDLVfcUEI9gUq4X1fg4PSWKJjQ0
+	 E7UAqrfcwU6q9up0ZF37rzOQB8dOIJORgyQ3hVugmQuDEsWvlt56zaO1ssrc/FKRcU
+	 r9RAULcvNQfJmnQL8JDh+7foByANVLItqgYZOTOZtrg+cFN/D8QQ7FmNKVEnshV/q7
+	 M2F8cmZUiuXNP0lFkPzyyogkfMGwRG2Sh4nqjjFY8kdZUIpuXgoHATGOgBtfpgJTdu
+	 GInV+uJmiL19Q==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 06 Jun 2023 15:40:35 -0700
+Subject: [PATCH] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 06 Jun 2023 23:39:15 +0300
-Message-Id: <CT5UVNZYSAPZ.1PJWWUUOCHODW@suppilovahvero>
-Cc: <ebiederm@xmission.com>, <patches@lists.linux.dev>,
- <linux-fsdevel@vger.kernel.org>, <keyrings@vger.kernel.org>,
- <linux-security-module@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] sysctl: move security keys sysctl registration to
- its own file
-From: "Jarkko Sakkinen" <jarkko@kernel.org>
-To: "Luis Chamberlain" <mcgrof@kernel.org>, <keescook@chromium.org>,
- <yzaikin@google.com>, <dhowells@redhat.com>, <paul@paul-moore.com>,
- <jmorris@namei.org>, <serge@hallyn.com>, <j.granados@samsung.com>,
- <brauner@kernel.org>
-X-Mailer: aerc 0.14.0
-References: <20230530232914.3689712-1-mcgrof@kernel.org>
- <20230530232914.3689712-3-mcgrof@kernel.org>
-In-Reply-To: <20230530232914.3689712-3-mcgrof@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230606-fix-as-option-after-clang_flags-move-v1-1-a7f7b23a35e3@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAOK1f2QC/1WOwQqDMBBEf0Vy7tJUi2h/pUjZpJsYsIlsghTEf
+ ++aW48zvHnMrjJxoKweza6YtpBDihJul0bZGaMnCG/JqtVtp3vdgwtfwAxpLUICukIMdhHy5Rb
+ 0GT5pIzA0DDSOnTWISlQGs5SM0c6nzNyv/5oqgILsqVTDOVqZhKrfntNx/ACaqV1RqwAAAA==
+To: masahiroy@kernel.org
+Cc: naresh.kamboju@linaro.org, ndesaulniers@google.com, nicolas@fjasle.eu, 
+ trix@redhat.com, linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Linux Kernel Functional Testing <lkft@linaro.org>, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2639; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=7ULdjUkdkkr+vu+/oiYN5S/oKq5p52x/BGvXGSKtQA8=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCn1Wz8ccKgqU+TL4JT3k1OXmKLxJub2x5UmLzd+c7mma
+ ZAgMnl+RykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZhIETcjw4xnpyL+NfFJcu37
+ +Flsc35yup/q9b2vVn1OCGabIfdR9grDP3W3YDMH8Xnbf2b8Or5q49J5KWkl259vubpb4zZ3/Kc
+ 785kB
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Wed May 31, 2023 at 2:29 AM EEST, Luis Chamberlain wrote:
-> The security keys sysctls are already declared on its own file,
-> just move the sysctl registration to its own file to help avoid
-> merge conflicts on sysctls.c, and help with clearing up sysctl.c
-> further.
->
-> This creates a small penalty of 23 bytes:
->
-> ./scripts/bloat-o-meter vmlinux.1 vmlinux.2
-> add/remove: 2/0 grow/shrink: 0/1 up/down: 49/-26 (23)
-> Function                                     old     new   delta
-> init_security_keys_sysctls                     -      33     +33
-> __pfx_init_security_keys_sysctls               -      16     +16
-> sysctl_init_bases                             85      59     -26
-> Total: Before=3D21256937, After=3D21256960, chg +0.00%
->
-> But soon we'll be saving tons of bytes anyway, as we modify the
-> sysctl registrations to use ARRAY_SIZE and so we get rid of all the
-> empty array elements so let's just clean this up now.
->
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> ---
->  include/linux/key.h    | 3 ---
->  kernel/sysctl.c        | 4 ----
->  security/keys/sysctl.c | 7 +++++++
->  3 files changed, 7 insertions(+), 7 deletions(-)
+After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
+KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
+assembly files with clang:
 
-Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
+  arch/powerpc/lib/copypage_power7.S: Assembler messages:
+  arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
+  clang: error: assembler command failed with exit code 1 (use -v to see invocation)
 
-BR, Jarkko
+as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
+KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
+result of those missing flags, the host target
+will be tested during as-option calls and likely fail, meaning necessary
+flags may not get added when building assembly files, resulting in
+errors like seen above.
+
+Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
+This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
+assembler calls to use proper flags and language target"), which
+switched from using the assembler target to the assembler-with-cpp
+target, so flags that affect preprocessing are passed along in all
+relevant tests. as-option now mirrors cc-option.
+
+Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ scripts/Makefile.compiler | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
+index 437013f8def3..e31f18625fcf 100644
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -32,7 +32,7 @@ try-run = $(shell set -e;		\
+ # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
+ 
+ as-option = $(call try-run,\
+-	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
++	$(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
+ 
+ # as-instr
+ # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+
+---
+base-commit: feb843a469fb0ab00d2d23cfb9bcc379791011bb
+change-id: 20230606-fix-as-option-after-clang_flags-move-be88e993cbaa
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
