@@ -1,104 +1,145 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EA87E4;
-	Tue,  6 Jun 2023 22:40:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC8DC433D2;
-	Tue,  6 Jun 2023 22:40:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686091249;
-	bh=7ULdjUkdkkr+vu+/oiYN5S/oKq5p52x/BGvXGSKtQA8=;
-	h=From:Date:Subject:To:Cc:From;
-	b=CUso6cj4sWCjd3IHr9SOnT1MzY0q52hnzeOgY8b/Wam8mw1Xizs7ob1Z5kPstvvzi
-	 4kxZBFIkml3VaoGrimFZMqGJ/kEYDFrzerXemdYyDLVfcUEI9gUq4X1fg4PSWKJjQ0
-	 E7UAqrfcwU6q9up0ZF37rzOQB8dOIJORgyQ3hVugmQuDEsWvlt56zaO1ssrc/FKRcU
-	 r9RAULcvNQfJmnQL8JDh+7foByANVLItqgYZOTOZtrg+cFN/D8QQ7FmNKVEnshV/q7
-	 M2F8cmZUiuXNP0lFkPzyyogkfMGwRG2Sh4nqjjFY8kdZUIpuXgoHATGOgBtfpgJTdu
-	 GInV+uJmiL19Q==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 06 Jun 2023 15:40:35 -0700
-Subject: [PATCH] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7648A7E4
+	for <patches@lists.linux.dev>; Tue,  6 Jun 2023 23:37:58 +0000 (UTC)
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-75d5469c856so304366885a.2
+        for <patches@lists.linux.dev>; Tue, 06 Jun 2023 16:37:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686094677; x=1688686677;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HFhBhTIzREHG9mACtwO9tRyPWU+4u6gN6/PkdzEJpag=;
+        b=d77x79NsgBLTq06/VgrnLBA18mMJknfbUXrr8BhhI2XbWKK0dzqJBz6jeI7vB0upeP
+         sKwQNSh6Ps6CqjjxsGRgsfbkakooZs+V8GFZeNf+gQZoXksuHxbOAMllHpf3iHEl2IO/
+         v8CqEY99D46jjyyS/1VWxIVoy6EW71uRClKKED/q7v/oQW6RYgbvP5hSfO+QbCqKArzU
+         z0T7B4ArSaaqShjjCTPYTH/MNa07lYUkmSqhytjrsm1nCkwcuyH/u5Wd09149+JvnF94
+         iRrkB4GTqzmhX4P1k8KifMiD2Cg8sGLoaL3sUdX97vzG/IgtSCwGB0ZNa/MklTZaLICg
+         EbKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686094677; x=1688686677;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HFhBhTIzREHG9mACtwO9tRyPWU+4u6gN6/PkdzEJpag=;
+        b=F0NXkVu9JeiA+kR6am1jwsb5SAQ0bIH5GE/txPKVj5muzaQyh1R8kMG9GZ3dKKKEfh
+         mAfPStTAOuI18NpAazYLXstA01rSB1SjdQBcnhhVA0qzTgqKn1e4DO+nJZOgScZ0qUM+
+         YMlrh+530sHsq84g6/8qenXKXv/9Jw8sAkTlvKkswoiMjYIACxBP7xXsEIUBfVX8+O+D
+         zVIJVCQPLBDLYX/ABbRmrPXpDFGZ9Dh6/PK/4LM5cx9knJKooflY5thmvn5IMkXOGnWw
+         1JFyQSCd/NyVxwC+aMtfrKpGmXe2H+MzxETod25CTncnuhLRB3YEQU6qsjh04UK2GLCD
+         jo4g==
+X-Gm-Message-State: AC+VfDx377qnWfaAtQXeMIm3In3yvx3fKGih90So58kyJJBGP4799tC8
+	k88TkZVUg9/wXHt2XLPKEmk=
+X-Google-Smtp-Source: ACHHUZ4+Dpgv5vgO099EF2l/tWaCHrZtfxBMs8Ph0KvZ2JA0RvuUAModS84I6+1h0Uk6bj4bZOxRHA==
+X-Received: by 2002:a05:620a:2221:b0:75b:23a1:367f with SMTP id n1-20020a05620a222100b0075b23a1367fmr137834qkh.64.1686094677149;
+        Tue, 06 Jun 2023 16:37:57 -0700 (PDT)
+Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com. [66.111.4.228])
+        by smtp.gmail.com with ESMTPSA id m10-20020ae9f20a000000b0075772c756e0sm5237129qkg.101.2023.06.06.16.37.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jun 2023 16:37:56 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailauth.nyi.internal (Postfix) with ESMTP id 1970A27C0054;
+	Tue,  6 Jun 2023 19:37:55 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Tue, 06 Jun 2023 19:37:56 -0400
+X-ME-Sender: <xms:UsN_ZOcGJeHlqVPcJvE7x1Nfow7WPPDeV70cAPzLSJVggrWyCqNiQw>
+    <xme:UsN_ZIOW4RetvFzgJmrpv6MUBSuQb81jbuQDRftBmsSZ-Ixv8xmJwOheHizp_aCOY
+    Df6PaxGdTDpCox5MA>
+X-ME-Received: <xmr:UsN_ZPgfayrHRKXbEeFo3F_nHGlmrc1sg6w-Cq0CnoVfePCX48CM2h18i-Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedtvddgvdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehoqhhu
+    nhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrg
+    htthgvrhhnpeehudfgudffffetuedtvdehueevledvhfelleeivedtgeeuhfegueeviedu
+    ffeivdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    gsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdei
+    gedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfih
+    igmhgvrdhnrghmvg
+X-ME-Proxy: <xmx:U8N_ZL_Y2Bu1QhknI37Sc89lkMnsHJDg6FOT76JiExlmhVXbwLK6Lg>
+    <xmx:U8N_ZKunZ1wEKQWhC3mFMoj0og0QMPI8OPKMXQAtDEmcZ1BtTFunLA>
+    <xmx:U8N_ZCGiUNXTHW5t_sLxfosfgwnO4sarjcrSrQj_AP-_Dr6v1tGP6Q>
+    <xmx:U8N_ZCF_R-BE9s0l0uTdkE3kMErg8abKaM9wpC6fB4X27XiBFvPbMA>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Jun 2023 19:37:54 -0400 (EDT)
+Date: Tue, 6 Jun 2023 16:36:30 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Tejun Heo <tj@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v2 1/8] rust: workqueue: add low-level workqueue bindings
+Message-ID: <ZH/C/lKeYxM7tbYA@boqun-archlinux>
+References: <20230601134946.3887870-1-aliceryhl@google.com>
+ <20230601134946.3887870-2-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230606-fix-as-option-after-clang_flags-move-v1-1-a7f7b23a35e3@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAOK1f2QC/1WOwQqDMBBEf0Vy7tJUi2h/pUjZpJsYsIlsghTEf
- ++aW48zvHnMrjJxoKweza6YtpBDihJul0bZGaMnCG/JqtVtp3vdgwtfwAxpLUICukIMdhHy5Rb
- 0GT5pIzA0DDSOnTWISlQGs5SM0c6nzNyv/5oqgILsqVTDOVqZhKrfntNx/ACaqV1RqwAAAA==
-To: masahiroy@kernel.org
-Cc: naresh.kamboju@linaro.org, ndesaulniers@google.com, nicolas@fjasle.eu, 
- trix@redhat.com, linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Linux Kernel Functional Testing <lkft@linaro.org>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2639; i=nathan@kernel.org;
- h=from:subject:message-id; bh=7ULdjUkdkkr+vu+/oiYN5S/oKq5p52x/BGvXGSKtQA8=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCn1Wz8ccKgqU+TL4JT3k1OXmKLxJub2x5UmLzd+c7mma
- ZAgMnl+RykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZhIETcjw4xnpyL+NfFJcu37
- +Flsc35yup/q9b2vVn1OCGabIfdR9grDP3W3YDMH8Xnbf2b8Or5q49J5KWkl259vubpb4zZ3/Kc
- 785kB
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230601134946.3887870-2-aliceryhl@google.com>
 
-After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
-KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
-assembly files with clang:
+On Thu, Jun 01, 2023 at 01:49:39PM +0000, Alice Ryhl wrote:
+[...]
+> +/// A raw work item.
+> +///
+> +/// This is the low-level trait that is designed for being as general as possible.
+> +///
+> +/// The `ID` parameter to this trait exists so that a single type can provide multiple
+> +/// implementations of this trait. For example, if a struct has multiple `work_struct` fields, then
+> +/// you will implement this trait once for each field, using a different id for each field. The
+> +/// actual value of the id is not important as long as you use different ids for different fields
+> +/// of the same struct. (Fields of different structs need not use different ids.)
+> +///
+> +/// Note that the id is used only to select the right method to call during compilation. It wont be
+> +/// part of the final executable.
+> +///
+> +/// # Safety
+> +///
+> +/// Implementers must ensure that any pointers passed to a `queue_work_on` closure by `__enqueue`
+> +/// remain valid for the duration specified in the documentation for `__enqueue`.
 
-  arch/powerpc/lib/copypage_power7.S: Assembler messages:
-  arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
-  arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
-  arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
-  arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
-  arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
-  clang: error: assembler command failed with exit code 1 (use -v to see invocation)
+^ better to say "the #Guarantees section in the documentation for
+`__enqueue`"?
 
-as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
-KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
-result of those missing flags, the host target
-will be tested during as-option calls and likely fail, meaning necessary
-flags may not get added when building assembly files, resulting in
-errors like seen above.
+Regards,
+Boqun
 
-Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
-This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
-assembler calls to use proper flags and language target"), which
-switched from using the assembler target to the assembler-with-cpp
-target, so flags that affect preprocessing are passed along in all
-relevant tests. as-option now mirrors cc-option.
-
-Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- scripts/Makefile.compiler | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
-index 437013f8def3..e31f18625fcf 100644
---- a/scripts/Makefile.compiler
-+++ b/scripts/Makefile.compiler
-@@ -32,7 +32,7 @@ try-run = $(shell set -e;		\
- # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
- 
- as-option = $(call try-run,\
--	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
-+	$(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
- 
- # as-instr
- # Usage: aflags-y += $(call as-instr,instr,option1,option2)
-
----
-base-commit: feb843a469fb0ab00d2d23cfb9bcc379791011bb
-change-id: 20230606-fix-as-option-after-clang_flags-move-be88e993cbaa
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+> +pub unsafe trait RawWorkItem<const ID: u64> {
+> +    /// The return type of [`Queue::enqueue`].
+> +    type EnqueueOutput;
+> +
+> +    /// Enqueues this work item on a queue using the provided `queue_work_on` method.
+> +    ///
+> +    /// # Guarantees
+> +    ///
+> +    /// If this method calls the provided closure, then the raw pointer is guaranteed to point at a
+> +    /// valid `work_struct` for the duration of the call to the closure. If the closure returns
+> +    /// true, then it is further guaranteed that the pointer remains valid until someone calls the
+> +    /// function pointer stored in the `work_struct`.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The provided closure may only return `false` if the `work_struct` is already in a workqueue.
+> +    ///
+> +    /// If the work item type is annotated with any lifetimes, then you must not call the function
+> +    /// pointer after any such lifetime expires. (Never calling the function pointer is okay.)
+> +    ///
+> +    /// If the work item type is not [`Send`], then the function pointer must be called on the same
+> +    /// thread as the call to `__enqueue`.
+> +    unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutput
+> +    where
+> +        F: FnOnce(*mut bindings::work_struct) -> bool;
+> +}
+> -- 
+> 2.41.0.rc0.172.g3f132b7071-goog
+> 
