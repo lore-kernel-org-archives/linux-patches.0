@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C763AE6E
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AFDC433D2;
-	Wed,  7 Jun 2023 20:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA9D3AE74
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8569C433EF;
+	Wed,  7 Jun 2023 20:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169863;
-	bh=Xv/CykolLP4zraQW4RmEZ8TaFwChsfvq9WNkj5Ye4G8=;
+	s=korg; t=1686169866;
+	bh=1XKROggtTqe3Z6mZV1Jv46BZhKMWmGIQZaHlvZ2FYe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZYcb1MHvOKh4MXByudNFyzZu1FFj/modjPlwPVQGwoILl3ppiDuSxDQMfrkjWiBD
-	 cd8xkE+L2e/KMfverP2CWNXIkrRznRAb5ALY26IyZ7ASlmc2pCHzlY3R6WkzCbqMQZ
-	 tLaXfHt/Y7Ck5fnA9B8P0uDzYOOAx5ne7GIkbIO4=
+	b=HvBV1N6dUh2Z8ibMrDUVmrzemlTzQR5V3u0s7C368mc6KjN8Xoilh0/YjQmDkFK5u
+	 kuVdCr61dtIpJPR61SS9crCQ+YF+UgO6j4UsPxRtBlxMo8cjcblqV/jEEgrRxa/uPk
+	 0k27Xfi8Uc7d3TyVV+32R6AfLOvphAgxksKW6Pw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Noordhuis <info@bnoordhuis.nl>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.3 243/286] io_uring: undeprecate epoll_ctl support
-Date: Wed,  7 Jun 2023 22:15:42 +0200
-Message-ID: <20230607200931.223409783@linuxfoundation.org>
+	Erwan Velu <e.velu@criteo.com>,
+	Luiz Capitulino <luizcap@amazon.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.3 244/286] selinux: dont use makes grouped targets feature yet
+Date: Wed,  7 Jun 2023 22:15:43 +0200
+Message-ID: <20230607200931.265791360@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -34,35 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Noordhuis <info@bnoordhuis.nl>
+From: Paul Moore <paul@paul-moore.com>
 
-commit 4ea0bf4b98d66a7a790abb285539f395596bae92 upstream.
+commit 42c4e97e06a839b07d834f640a10911ad84ec8b3 upstream.
 
-Libuv recently started using it so there is at least one consumer now.
+The Linux Kernel currently only requires make v3.82 while the grouped
+target functionality requires make v4.3.  Removed the grouped target
+introduced in 4ce1f694eb5d ("selinux: ensure av_permissions.h is
+built when needed") as well as the multiple header file targets in
+the make rule.  This effectively reverts the problem commit.
+
+We will revisit this change when make >= 4.3 is required by the rest
+of the kernel.
 
 Cc: stable@vger.kernel.org
-Fixes: 61a2732af4b0 ("io_uring: deprecate epoll_ctl support")
-Link: https://github.com/libuv/libuv/pull/3979
-Signed-off-by: Ben Noordhuis <info@bnoordhuis.nl>
-Link: https://lore.kernel.org/r/20230506095502.13401-1-info@bnoordhuis.nl
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4ce1f694eb5d ("selinux: ensure av_permissions.h is built when needed")
+Reported-by: Erwan Velu <e.velu@criteo.com>
+Reported-by: Luiz Capitulino <luizcap@amazon.com>
+Tested-by: Luiz Capitulino <luizcap@amazon.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/epoll.c |    4 ----
- 1 file changed, 4 deletions(-)
+ security/selinux/Makefile |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/io_uring/epoll.c
-+++ b/io_uring/epoll.c
-@@ -25,10 +25,6 @@ int io_epoll_ctl_prep(struct io_kiocb *r
- {
- 	struct io_epoll *epoll = io_kiocb_to_cmd(req, struct io_epoll);
+--- a/security/selinux/Makefile
++++ b/security/selinux/Makefile
+@@ -26,5 +26,9 @@ quiet_cmd_flask = GEN     $(obj)/flask.h
+       cmd_flask = $< $(obj)/flask.h $(obj)/av_permissions.h
  
--	pr_warn_once("%s: epoll_ctl support in io_uring is deprecated and will "
--		     "be removed in a future Linux kernel version.\n",
--		     current->comm);
--
- 	if (sqe->buf_index || sqe->splice_fd_in)
- 		return -EINVAL;
- 
+ targets += flask.h av_permissions.h
+-$(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/genheaders/genheaders FORCE
++# once make >= 4.3 is required, we can use grouped targets in the rule below,
++# which basically involves adding both headers and a '&' before the colon, see
++# the example below:
++#   $(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/...
++$(obj)/flask.h: scripts/selinux/genheaders/genheaders FORCE
+ 	$(call if_changed,flask)
 
 
