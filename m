@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41993AE6E
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547C7C433D2;
-	Wed,  7 Jun 2023 20:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5783AE6B
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9F7C4339C;
+	Wed,  7 Jun 2023 20:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169836;
-	bh=Vf5bpZvMGHudPznYQxYqkJMqr00OB0bh8RaNt5HJTtQ=;
+	s=korg; t=1686169839;
+	bh=cWQsk801mYWJ/p1NlRo+kI+kx33HxlJKhA8YIWmDMwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNPzEkBojo3Horo3bxZCvND4NYF9Y59mMEuP/ogEYv8qbLX23/rYNxrTOCogMFP2m
-	 N+MnlUhLldtWzDTRcjUExQpTtC3Ko6R6VzteTDR6YhEqRTmnaLMfY25wchS3cmExSH
-	 cJwzPx18EPOYoVf7peSvVIipzIoWCPp6ilM3ZqCE=
+	b=ScvmXeHHq5Ok2FYLmhUjaQE4pHVjY0AYuUITHBEEx4rI0mcRjCve4oEFn7QX3muWu
+	 TtrtxYrI2B5HcxocfvaeOwDqa8f4db3Y7NpyYNQdrlexjnOtsG72Rna0s1qob5hwvf
+	 kPte+lQ5ndw3TwtYMANTo7R1HuKOkyzN9z9Lz3Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.3 193/286] iio: ad4130: Make sure clock provider gets removed
-Date: Wed,  7 Jun 2023 22:14:52 +0200
-Message-ID: <20230607200929.568029773@linuxfoundation.org>
+	Marek Vasut <marex@denx.de>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.3 226/286] mmc: pwrseq: sd8787: Fix WILC CHIP_EN and RESETN toggling order
+Date: Wed,  7 Jun 2023 22:15:25 +0200
+Message-ID: <20230607200930.662135431@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,61 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Marek Vasut <marex@denx.de>
 
-commit 28f73ded19d403697f87473c9b85a27eb8ed9cf2 upstream.
+commit 0b5d5c436a5c572a45f976cfd34a6741e143e5d9 upstream.
 
-The ad4130 driver registers a clock provider, but never removes it. This
-leaves a stale clock provider behind that references freed clocks when the
-device is unbound.
+Chapter "5.3 Power-Up/Down Sequence" of WILC1000 [1] and WILC3000 [2]
+states that CHIP_EN must be pulled HIGH first, RESETN second. Fix the
+order of these signals in the driver.
 
-Register a managed action to remove the clock provider when the device is
-removed.
+Use the mmc_pwrseq_ops as driver data as the delay between signals is
+specific to SDIO card type anyway.
 
-Fixes: 62094060cf3a ("iio: adc: ad4130: add AD4130 driver")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20230414150702.518441-1-lars@metafoo.de
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[1] https://ww1.microchip.com/downloads/aemDocuments/documents/WSG/ProductDocuments/DataSheets/ATWILC1000-MR110XB-IEEE-802.11-b-g-n-Link-Controller-Module-DS70005326E.pdf
+[2] https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/IEEE-802.11-b-g-n-Link-Controller-Module-with-Integrated-Bluetooth-5.0-DS70005327B.pdf
+
+Fixes: b2832b96fcf5 ("mmc: pwrseq: sd8787: add support for wilc1000")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230513192352.479627-1-marex@denx.de
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad4130.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/mmc/core/pwrseq_sd8787.c |   34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
---- a/drivers/iio/adc/ad4130.c
-+++ b/drivers/iio/adc/ad4130.c
-@@ -1817,6 +1817,11 @@ static const struct clk_ops ad4130_int_c
- 	.unprepare = ad4130_int_clk_unprepare,
+--- a/drivers/mmc/core/pwrseq_sd8787.c
++++ b/drivers/mmc/core/pwrseq_sd8787.c
+@@ -28,7 +28,6 @@ struct mmc_pwrseq_sd8787 {
+ 	struct mmc_pwrseq pwrseq;
+ 	struct gpio_desc *reset_gpio;
+ 	struct gpio_desc *pwrdn_gpio;
+-	u32 reset_pwrdwn_delay_ms;
  };
  
-+static void ad4130_clk_del_provider(void *of_node)
-+{
-+	of_clk_del_provider(of_node);
-+}
-+
- static int ad4130_setup_int_clk(struct ad4130_state *st)
- {
- 	struct device *dev = &st->spi->dev;
-@@ -1824,6 +1829,7 @@ static int ad4130_setup_int_clk(struct a
- 	struct clk_init_data init;
- 	const char *clk_name;
- 	struct clk *clk;
-+	int ret;
+ #define to_pwrseq_sd8787(p) container_of(p, struct mmc_pwrseq_sd8787, pwrseq)
+@@ -39,7 +38,7 @@ static void mmc_pwrseq_sd8787_pre_power_
  
- 	if (st->int_pin_sel == AD4130_INT_PIN_CLK ||
- 	    st->mclk_sel != AD4130_MCLK_76_8KHZ)
-@@ -1843,7 +1849,11 @@ static int ad4130_setup_int_clk(struct a
- 	if (IS_ERR(clk))
- 		return PTR_ERR(clk);
+ 	gpiod_set_value_cansleep(pwrseq->reset_gpio, 1);
  
--	return of_clk_add_provider(of_node, of_clk_src_simple_get, clk);
-+	ret = of_clk_add_provider(of_node, of_clk_src_simple_get, clk);
-+	if (ret)
-+		return ret;
-+
-+	return devm_add_action_or_reset(dev, ad4130_clk_del_provider, of_node);
+-	msleep(pwrseq->reset_pwrdwn_delay_ms);
++	msleep(300);
+ 	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 1);
  }
  
- static int ad4130_setup(struct iio_dev *indio_dev)
+@@ -51,17 +50,37 @@ static void mmc_pwrseq_sd8787_power_off(
+ 	gpiod_set_value_cansleep(pwrseq->reset_gpio, 0);
+ }
+ 
++static void mmc_pwrseq_wilc1000_pre_power_on(struct mmc_host *host)
++{
++	struct mmc_pwrseq_sd8787 *pwrseq = to_pwrseq_sd8787(host->pwrseq);
++
++	/* The pwrdn_gpio is really CHIP_EN, reset_gpio is RESETN */
++	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 1);
++	msleep(5);
++	gpiod_set_value_cansleep(pwrseq->reset_gpio, 1);
++}
++
++static void mmc_pwrseq_wilc1000_power_off(struct mmc_host *host)
++{
++	struct mmc_pwrseq_sd8787 *pwrseq = to_pwrseq_sd8787(host->pwrseq);
++
++	gpiod_set_value_cansleep(pwrseq->reset_gpio, 0);
++	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 0);
++}
++
+ static const struct mmc_pwrseq_ops mmc_pwrseq_sd8787_ops = {
+ 	.pre_power_on = mmc_pwrseq_sd8787_pre_power_on,
+ 	.power_off = mmc_pwrseq_sd8787_power_off,
+ };
+ 
+-static const u32 sd8787_delay_ms = 300;
+-static const u32 wilc1000_delay_ms = 5;
++static const struct mmc_pwrseq_ops mmc_pwrseq_wilc1000_ops = {
++	.pre_power_on = mmc_pwrseq_wilc1000_pre_power_on,
++	.power_off = mmc_pwrseq_wilc1000_power_off,
++};
+ 
+ static const struct of_device_id mmc_pwrseq_sd8787_of_match[] = {
+-	{ .compatible = "mmc-pwrseq-sd8787", .data = &sd8787_delay_ms },
+-	{ .compatible = "mmc-pwrseq-wilc1000", .data = &wilc1000_delay_ms },
++	{ .compatible = "mmc-pwrseq-sd8787", .data = &mmc_pwrseq_sd8787_ops },
++	{ .compatible = "mmc-pwrseq-wilc1000", .data = &mmc_pwrseq_wilc1000_ops },
+ 	{/* sentinel */},
+ };
+ MODULE_DEVICE_TABLE(of, mmc_pwrseq_sd8787_of_match);
+@@ -77,7 +96,6 @@ static int mmc_pwrseq_sd8787_probe(struc
+ 		return -ENOMEM;
+ 
+ 	match = of_match_node(mmc_pwrseq_sd8787_of_match, pdev->dev.of_node);
+-	pwrseq->reset_pwrdwn_delay_ms = *(u32 *)match->data;
+ 
+ 	pwrseq->pwrdn_gpio = devm_gpiod_get(dev, "powerdown", GPIOD_OUT_LOW);
+ 	if (IS_ERR(pwrseq->pwrdn_gpio))
+@@ -88,7 +106,7 @@ static int mmc_pwrseq_sd8787_probe(struc
+ 		return PTR_ERR(pwrseq->reset_gpio);
+ 
+ 	pwrseq->pwrseq.dev = dev;
+-	pwrseq->pwrseq.ops = &mmc_pwrseq_sd8787_ops;
++	pwrseq->pwrseq.ops = match->data;
+ 	pwrseq->pwrseq.owner = THIS_MODULE;
+ 	platform_set_drvdata(pdev, pwrseq);
+ 
 
 
