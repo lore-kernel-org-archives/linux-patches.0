@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5536D3AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3F2C433D2;
-	Wed,  7 Jun 2023 20:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18793AE5C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B3FC433D2;
+	Wed,  7 Jun 2023 20:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169784;
-	bh=KV/i11XG/lWp64QQWcJy6Zm5eBpF2PRGxJS2tKrP694=;
+	s=korg; t=1686169786;
+	bh=pvKmf3n0fXBvmrXDPWVd8WoBFNnQWRVhKHqqCyBcX20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvAaJC3AroI0lKmq0GXeBCEs5CQ+l4jL3Ha6SPNLubc0vBYgrfJJp7mBnjsVvHThS
-	 BTpcyhbh8i+Xao4ynciOLZMropYaPNmZaEQYz2yjJ6OOkDSqFMlJRi7cv0k3egAhN+
-	 qajiDuqUFO0JHE0RqkKY6Uq4yEiFu8I1zng5eZxE=
+	b=aLefI3uFZnn1LqGSD60JpIdq0UWQO042j8/xF3Y2l3SlUJj5xj6RZxCBBumGI9gy6
+	 6xzw2F8bIbjnvDcVV/T5V9W4E2guTdmYXY1qPgcRYNhcFwLuJzwWfmOdFRgzrek/i/
+	 6fK2BC5bm4H4qHG4PgN0AFe3sQ5SxrMHomGfyZSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung-Chi Li <lschyi@chromium.org>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 6.3 195/286] HID: google: add jewel USB id
-Date: Wed,  7 Jun 2023 22:14:54 +0200
-Message-ID: <20230607200929.629883542@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.3 213/286] misc: fastrpc: Reassign memory ownership only for remote heap
+Date: Wed,  7 Jun 2023 22:15:12 +0200
+Message-ID: <20230607200930.210199708@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -34,40 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sung-Chi Li <lschyi@chromium.org>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit ed84c4517a5bc536e8572a01dfa11bc22a280d06 upstream.
+commit 3c7d0079a1831118ef232bd9c2f34d058a1f31c2 upstream.
 
-Add 1 additional hammer-like device.
+The userspace map request for remote heap allocates CMA memory.
+The ownership of this memory needs to be reassigned to proper
+owners to allow access from the protection domain running on
+DSP. This reassigning of ownership is not correct if done for
+any other supported flags.
 
-Signed-off-by: Sung-Chi Li <lschyi@chromium.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+When any other flag is requested from userspace, fastrpc is
+trying to reassign the ownership of memory and this reassignment
+is getting skipped for remote heap request which is incorrect.
+Add proper flag check to reassign the memory only if remote heap
+is requested.
+
+Fixes: 532ad70c6d44 ("misc: fastrpc: Add mmap request assigning for static PD pool")
+Cc: stable <stable@kernel.org>
+Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230523152550.438363-3-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-google-hammer.c |    2 ++
- drivers/hid/hid-ids.h           |    1 +
- 2 files changed, 3 insertions(+)
+ drivers/misc/fastrpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-google-hammer.c
-+++ b/drivers/hid/hid-google-hammer.c
-@@ -587,6 +587,8 @@ static const struct hid_device_id hammer
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_HAMMER) },
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
-+		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_JEWEL) },
-+	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_MAGNEMITE) },
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_MASTERBALL) },
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -529,6 +529,7 @@
- #define USB_DEVICE_ID_GOOGLE_MOONBALL	0x5044
- #define USB_DEVICE_ID_GOOGLE_DON	0x5050
- #define USB_DEVICE_ID_GOOGLE_EEL	0x5057
-+#define USB_DEVICE_ID_GOOGLE_JEWEL	0x5061
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 32a5415624bf..a654dc416480 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1904,7 +1904,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 	req.vaddrout = rsp_msg.vaddr;
  
- #define USB_VENDOR_ID_GOTOP		0x08f2
- #define USB_DEVICE_ID_SUPER_Q2		0x007f
+ 	/* Add memory to static PD pool, protection thru hypervisor */
+-	if (req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
++	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
+ 		struct qcom_scm_vmperm perm;
+ 
+ 		perm.vmid = QCOM_SCM_VMID_HLOS;
+-- 
+2.41.0
+
 
 
