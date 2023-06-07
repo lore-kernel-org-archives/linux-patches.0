@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096003922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:56:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8113CC433EF;
-	Wed,  7 Jun 2023 20:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7F33922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:56:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21166C433D2;
+	Wed,  7 Jun 2023 20:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171408;
-	bh=B3HOxQ6SeThlfptbPHq7i7PovKLToKNVPFQGrFGC9rA=;
+	s=korg; t=1686171411;
+	bh=kCfysWGPr0GW7224XhZOKoTWBEDNsdA5cXnN6vUQLJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=008s3nlE2kfuVkU4bv9s/G+6jf4gmbfhIK3fpDh3KFsNo3FYKGkOmZonpd9VxxLzI
-	 WUP+XlzTU7fPFLr0R8Y9tZo58dYViwdpbOW1JJ5KmHaT3hew4nypC7W8YWumO5Uzmt
-	 AWT7Gh+SOvsEygyY1/iVCCtAhcHofbmUNU7aVKmc=
+	b=n4/oqpnLJ+pn2fQUfIvlVu3mF502ZHDFrMtYHn9J2yQ/1MF83/3wD9UGhCujeLJZP
+	 7Td2x1MBEIybkc7Yyq0EXdFuvOJ6WW3Ekwh0evffbdmf9OJzrUyVtdp4frPlBq7qmH
+	 Iyec6HjgG+975v9PkAoXEdVSHLP3kB0LmsyFEzGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deren Wu <deren.wu@mediatek.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 82/99] mmc: vub300: fix invalid response handling
-Date: Wed,  7 Jun 2023 22:17:14 +0200
-Message-ID: <20230607200902.791616016@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 73/99] flow_dissector: work around stack frame size warning
+Date: Wed,  7 Jun 2023 22:17:05 +0200
+Message-ID: <20230607200902.517691022@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -34,64 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deren Wu <deren.wu@mediatek.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit a99d21cefd351c8aaa20b83a3c942340e5789d45 upstream.
+commit 0af413bd3e2de73bcf0742ed556be4af83c71964 upstream.
 
-We may get an empty response with zero length at the beginning of
-the driver start and get following UBSAN error. Since there is no
-content(SDRT_NONE) for the response, just return and skip the response
-handling to avoid this problem.
+The fl_flow_key structure is around 500 bytes, so having two of them
+on the stack in one function now exceeds the warning limit after an
+otherwise correct change:
 
-Test pass : SDIO wifi throughput test with this patch
+net/sched/cls_flower.c:298:12: error: stack frame size of 1056 bytes in function 'fl_classify' [-Werror,-Wframe-larger-than=]
 
-[  126.980684] UBSAN: array-index-out-of-bounds in drivers/mmc/host/vub300.c:1719:12
-[  126.980709] index -1 is out of range for type 'u32 [4]'
-[  126.980729] CPU: 4 PID: 9 Comm: kworker/u16:0 Tainted: G            E      6.3.0-rc4-mtk-local-202304272142 #1
-[  126.980754] Hardware name: Intel(R) Client Systems NUC8i7BEH/NUC8BEB, BIOS BECFL357.86A.0081.2020.0504.1834 05/04/2020
-[  126.980770] Workqueue: kvub300c vub300_cmndwork_thread [vub300]
-[  126.980833] Call Trace:
-[  126.980845]  <TASK>
-[  126.980860]  dump_stack_lvl+0x48/0x70
-[  126.980895]  dump_stack+0x10/0x20
-[  126.980916]  ubsan_epilogue+0x9/0x40
-[  126.980944]  __ubsan_handle_out_of_bounds+0x70/0x90
-[  126.980979]  vub300_cmndwork_thread+0x58e7/0x5e10 [vub300]
-[  126.981018]  ? _raw_spin_unlock+0x18/0x40
-[  126.981042]  ? finish_task_switch+0x175/0x6f0
-[  126.981070]  ? __switch_to+0x42e/0xda0
-[  126.981089]  ? __switch_to_asm+0x3a/0x80
-[  126.981129]  ? __pfx_vub300_cmndwork_thread+0x10/0x10 [vub300]
-[  126.981174]  ? __kasan_check_read+0x11/0x20
-[  126.981204]  process_one_work+0x7ee/0x13d0
-[  126.981246]  worker_thread+0x53c/0x1240
-[  126.981291]  kthread+0x2b8/0x370
-[  126.981312]  ? __pfx_worker_thread+0x10/0x10
-[  126.981336]  ? __pfx_kthread+0x10/0x10
-[  126.981359]  ret_from_fork+0x29/0x50
-[  126.981400]  </TASK>
+I suspect the fl_classify function could be reworked to only have one
+of them on the stack and modify it in place, but I could not work out
+how to do that.
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/048cd6972c50c33c2e8f81d5228fed928519918b.1683987673.git.deren.wu@mediatek.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+As a somewhat hacky workaround, move one of them into an out-of-line
+function to reduce its scope. This does not necessarily reduce the stack
+usage of the outer function, but at least the second copy is removed
+from the stack during most of it and does not add up to whatever is
+called from there.
+
+I now see 552 bytes of stack usage for fl_classify(), plus 528 bytes
+for fl_mask_lookup().
+
+Fixes: 58cff782cc55 ("flow_dissector: Parse multiple MPLS Label Stack Entries")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Acked-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/cls_flower.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -1715,6 +1715,9 @@ static void construct_request_response(s
- 	int bytes = 3 & less_cmd;
- 	int words = less_cmd >> 2;
- 	u8 *r = vub300->resp.response.command_response;
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -270,14 +270,16 @@ static struct cls_fl_filter *fl_lookup_r
+ 	return NULL;
+ }
+ 
+-static struct cls_fl_filter *fl_lookup(struct fl_flow_mask *mask,
+-				       struct fl_flow_key *mkey,
+-				       struct fl_flow_key *key)
++static noinline_for_stack
++struct cls_fl_filter *fl_mask_lookup(struct fl_flow_mask *mask, struct fl_flow_key *key)
+ {
++	struct fl_flow_key mkey;
 +
-+	if (!resp_len)
-+		return;
- 	if (bytes == 3) {
- 		cmd->resp[words] = (r[1 + (words << 2)] << 24)
- 			| (r[2 + (words << 2)] << 16)
++	fl_set_masked_key(&mkey, key, mask);
+ 	if ((mask->flags & TCA_FLOWER_MASK_FLAGS_RANGE))
+-		return fl_lookup_range(mask, mkey, key);
++		return fl_lookup_range(mask, &mkey, key);
+ 
+-	return __fl_lookup(mask, mkey);
++	return __fl_lookup(mask, &mkey);
+ }
+ 
+ static u16 fl_ct_info_to_flower_map[] = {
+@@ -297,7 +299,6 @@ static int fl_classify(struct sk_buff *s
+ 		       struct tcf_result *res)
+ {
+ 	struct cls_fl_head *head = rcu_dereference_bh(tp->root);
+-	struct fl_flow_key skb_mkey;
+ 	struct fl_flow_key skb_key;
+ 	struct fl_flow_mask *mask;
+ 	struct cls_fl_filter *f;
+@@ -317,9 +318,7 @@ static int fl_classify(struct sk_buff *s
+ 				    ARRAY_SIZE(fl_ct_info_to_flower_map));
+ 		skb_flow_dissect(skb, &mask->dissector, &skb_key, 0);
+ 
+-		fl_set_masked_key(&skb_mkey, &skb_key, mask);
+-
+-		f = fl_lookup(mask, &skb_mkey, &skb_key);
++		f = fl_mask_lookup(mask, &skb_key);
+ 		if (f && !tc_skip_sw(f->flags)) {
+ 			*res = f->res;
+ 			return tcf_exts_exec(skb, &f->exts, res);
 
 
