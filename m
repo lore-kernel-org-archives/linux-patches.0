@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C416D19E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:36:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412F3C4339B;
-	Wed,  7 Jun 2023 20:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CD619E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:36:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D697BC433D2;
+	Wed,  7 Jun 2023 20:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170198;
-	bh=R0DELvf/YMrD0zJkos1kwz8fEahoXM96yNAJdbs+Qls=;
+	s=korg; t=1686170201;
+	bh=W7w3/jmrMIhLDOQyYgpXvQJSrKw6lHZsADF8iVzwpLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9v68e81TLhf7WGo6AbExF8kLbofH8wDk5zluCShaoVFppZ0RgCHYvZRhGOhwLlPs
-	 ltyoO8velR5wKtFIX1KwG6UOv3LFozv2xfqCd/ZQS8LlLCK4J5S9XdeA4HpetSOg46
-	 Lq8GBnDxl047wCaW6sbFCIFnJ2VXJNrRwAgXht1A=
+	b=OVssyi0K4hIe3VVxRp3ClyHqIigUoTPERFedv7pE7uje5bN6HN3iy+cnkUm9K0UZK
+	 EQ2U8o48NVS5t1SA41KOzGMq9IFXp2a+tEiF+GqQI0FCKbt9Pj1E0IGqh8SUX2tRcS
+	 vsOx8zK6CLNpuHaBm3A6miiQRLOQX9R8a7R8tl8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erwan Velu <e.velu@criteo.com>,
-	Luiz Capitulino <luizcap@amazon.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 4.19 82/88] selinux: dont use makes grouped targets feature yet
-Date: Wed,  7 Jun 2023 22:16:39 +0200
-Message-ID: <20230607200901.787498806@linuxfoundation.org>
+	stable@kernel.org,
+	syzbot+298c5d8fb4a128bc27b0@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 83/88] ext4: add lockdep annotations for i_data_sem for ea_inodes
+Date: Wed,  7 Jun 2023 22:16:40 +0200
+Message-ID: <20230607200901.818514365@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -35,42 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Moore <paul@paul-moore.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 42c4e97e06a839b07d834f640a10911ad84ec8b3 upstream.
+commit aff3bea95388299eec63440389b4545c8041b357 upstream.
 
-The Linux Kernel currently only requires make v3.82 while the grouped
-target functionality requires make v4.3.  Removed the grouped target
-introduced in 4ce1f694eb5d ("selinux: ensure av_permissions.h is
-built when needed") as well as the multiple header file targets in
-the make rule.  This effectively reverts the problem commit.
+Treat i_data_sem for ea_inodes as being in their own lockdep class to
+avoid lockdep complaints about ext4_setattr's use of inode_lock() on
+normal inodes potentially causing lock ordering with i_data_sem on
+ea_inodes in ext4_xattr_inode_write().  However, ea_inodes will be
+operated on by ext4_setattr(), so this isn't a problem.
 
-We will revisit this change when make >= 4.3 is required by the rest
-of the kernel.
-
-Cc: stable@vger.kernel.org
-Fixes: 4ce1f694eb5d ("selinux: ensure av_permissions.h is built when needed")
-Reported-by: Erwan Velu <e.velu@criteo.com>
-Reported-by: Luiz Capitulino <luizcap@amazon.com>
-Tested-by: Luiz Capitulino <luizcap@amazon.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Cc: stable@kernel.org
+Link: https://syzkaller.appspot.com/bug?extid=298c5d8fb4a128bc27b0
+Reported-by: syzbot+298c5d8fb4a128bc27b0@syzkaller.appspotmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20230524034951.779531-5-tytso@mit.edu
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/Makefile |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ext4/ext4.h  |    2 ++
+ fs/ext4/xattr.c |    4 ++++
+ 2 files changed, 6 insertions(+)
 
---- a/security/selinux/Makefile
-+++ b/security/selinux/Makefile
-@@ -22,5 +22,9 @@ quiet_cmd_flask = GEN     $(obj)/flask.h
-       cmd_flask = $< $(obj)/flask.h $(obj)/av_permissions.h
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -929,11 +929,13 @@ do {									       \
+  *			  where the second inode has larger inode number
+  *			  than the first
+  *  I_DATA_SEM_QUOTA  - Used for quota inodes only
++ *  I_DATA_SEM_EA     - Used for ea_inodes only
+  */
+ enum {
+ 	I_DATA_SEM_NORMAL = 0,
+ 	I_DATA_SEM_OTHER,
+ 	I_DATA_SEM_QUOTA,
++	I_DATA_SEM_EA
+ };
  
- targets += flask.h av_permissions.h
--$(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/genheaders/genheaders FORCE
-+# once make >= 4.3 is required, we can use grouped targets in the rule below,
-+# which basically involves adding both headers and a '&' before the colon, see
-+# the example below:
-+#   $(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/...
-+$(obj)/flask.h: scripts/selinux/genheaders/genheaders FORCE
- 	$(call if_changed,flask)
+ 
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -121,7 +121,11 @@ ext4_expand_inode_array(struct ext4_xatt
+ #ifdef CONFIG_LOCKDEP
+ void ext4_xattr_inode_set_class(struct inode *ea_inode)
+ {
++	struct ext4_inode_info *ei = EXT4_I(ea_inode);
++
+ 	lockdep_set_subclass(&ea_inode->i_rwsem, 1);
++	(void) ei;	/* shut up clang warning if !CONFIG_LOCKDEP */
++	lockdep_set_subclass(&ei->i_data_sem, I_DATA_SEM_EA);
+ }
+ #endif
+ 
 
 
