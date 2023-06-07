@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD153925E
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5DAC433EF;
-	Wed,  7 Jun 2023 20:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913CA3925E
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DDEC433EF;
+	Wed,  7 Jun 2023 20:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169297;
-	bh=17L55NsQn/JO1fhwW7Z5oAOkBc/zfFpEmTO+AjjHJ8w=;
+	s=korg; t=1686169300;
+	bh=rBJ71GZZOOTPA8B7CHjKHw13knRUgTi8FD1+5mQmbVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E3/gtwUTv4P7Yb1akZJ+2eZTrEB1yCe+CV9GyGDspA/oSaaua74XMsE9X/kn3Akwr
-	 9sYBGPeGZMRRxadIbFnuJHSBbXQlHlBcql84TEPmH0e7atYYdMcS1erfi8juj9p/eY
-	 9AsZCGaYLZXEY1xsm/G1Q3bTNU74FxkUMYfJhPmY=
+	b=mObZJkYROyKg0zG2RykeoUjLEc0KWz/IRHyjFTjkpE2tZKxaEO91IL+BPrp5G3qpZ
+	 CaqI6V1qENT0KZZRg/1O18qMpPvZl+N769DWuGH52eA7uGK01ifJpCfPtYQd0OHw6m
+	 34q+ktGls3+OcI4NQrf/zXqImZDxRFTN0MYzoSDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Moshe Shemesh <moshe@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 027/286] net/mlx5: SF, Drain health before removing device
-Date: Wed,  7 Jun 2023 22:12:06 +0200
-Message-ID: <20230607200923.904348667@linuxfoundation.org>
+Subject: [PATCH 6.3 028/286] net/mlx5: fw_tracer, Fix event handling
+Date: Wed,  7 Jun 2023 22:12:07 +0200
+Message-ID: <20230607200923.934093465@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -38,35 +38,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit b4646da0573fae9dfa2b8f1f10936cb6eedd7230 ]
+[ Upstream commit 341a80de2468f481b1f771683709b5649cbfe513 ]
 
-There is no point in recovery during device removal. Also, if health
-work started need to wait for it to avoid races and NULL pointer
-access.
+mlx5 driver needs to parse traces with event_id inside the range of
+first_string_trace and num_string_trace. However, mlx5 is parsing all
+events with event_id >= first_string_trace.
 
-Hence, drain health WQ before removing device.
+Fix it by checking for the correct range.
 
-Fixes: 1958fc2f0712 ("net/mlx5: SF, Add auxiliary device driver")
+Fixes: c71ad41ccb0c ("net/mlx5: FW tracer, events handling")
 Signed-off-by: Shay Drory <shayd@nvidia.com>
 Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-index a7377619ba6f2..2424cdf9cca99 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-@@ -63,6 +63,7 @@ static void mlx5_sf_dev_remove(struct auxiliary_device *adev)
- 	struct mlx5_sf_dev *sf_dev = container_of(adev, struct mlx5_sf_dev, adev);
- 	struct devlink *devlink = priv_to_devlink(sf_dev->mdev);
- 
-+	mlx5_drain_health_wq(sf_dev->mdev);
- 	devlink_unregister(devlink);
- 	mlx5_uninit_one(sf_dev->mdev);
- 	iounmap(sf_dev->mdev->iseg);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index f40497823e65f..7c0f2adbea000 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -490,7 +490,7 @@ static void poll_trace(struct mlx5_fw_tracer *tracer,
+ 				(u64)timestamp_low;
+ 		break;
+ 	default:
+-		if (tracer_event->event_id >= tracer->str_db.first_string_trace ||
++		if (tracer_event->event_id >= tracer->str_db.first_string_trace &&
+ 		    tracer_event->event_id <= tracer->str_db.first_string_trace +
+ 					      tracer->str_db.num_string_trace) {
+ 			tracer_event->type = TRACER_EVENT_TYPE_STRING;
 -- 
 2.39.2
 
