@@ -1,79 +1,122 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FAD1104
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 08:37:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1686127019;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=CGNGuZdb3YfUa/RgZYBAS20b4KQ6QaroF4WQ7qei7lo=;
-	b=g00XpsYu6hKespguJJy/MK1b2zmoUbfdIGUWlE785EZFdTp8chntqu1ZAp8ZTz2PNiaJ4N
-	VTYzIrrHyouPX5Q2cLl9XFjqY0ArNfT8vrXY5n5YFY+bYDc8Gj6IQrY7Vx2+WDyNnz4eqp
-	P+EzQtDrcDvpb3C46wxi71Wej9XQ8bU=
-Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
- [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-321-GM9I-4gjMCKvH9c3tuCwwQ-1; Wed, 07 Jun 2023 04:36:54 -0400
-X-MC-Unique: GM9I-4gjMCKvH9c3tuCwwQ-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com [10.11.54.8])
-	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9674D3801FF5;
-	Wed,  7 Jun 2023 08:36:53 +0000 (UTC)
-Received: from warthog.procyon.org.uk (unknown [10.42.28.182])
-	by smtp.corp.redhat.com (Postfix) with ESMTP id 10C6EC1603B;
-	Wed,  7 Jun 2023 08:36:49 +0000 (UTC)
-Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
-	Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
-	Kingdom.
-	Registered in England and Wales under Company Registration No. 3798903
-From: David Howells <dhowells@redhat.com>
-In-Reply-To: <20230530232914.3689712-3-mcgrof@kernel.org>
-References: <20230530232914.3689712-3-mcgrof@kernel.org> <20230530232914.3689712-1-mcgrof@kernel.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: dhowells@redhat.com, keescook@chromium.org, yzaikin@google.com,
-    jarkko@kernel.org, paul@paul-moore.com, jmorris@namei.org,
-    serge@hallyn.com, j.granados@samsung.com, brauner@kernel.org,
-    ebiederm@xmission.com, patches@lists.linux.dev,
-    linux-fsdevel@vger.kernel.org, keyrings@vger.kernel.org,
-    linux-security-module@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] sysctl: move security keys sysctl registration to its own file
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695653D64
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 11:00:32 +0000 (UTC)
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-78a5384a5daso399048241.0
+        for <patches@lists.linux.dev>; Wed, 07 Jun 2023 04:00:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686135631; x=1688727631;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=utFv2n7Nj2e/FDpN7qyLak8UIusvCi1A8IvvGYMYwhU=;
+        b=DrwRvvr8wkCc60q+4TeytNMzG5yzg5YRzsakXJGC5Mw51JiiVpXEblZqcTLneUGJvd
+         Sl1NFLHdxszDECCn/BTwb2PY65GlWu1yjId2I5ebbKULn5NN/9Cywfn2KeU4LYcUzD+0
+         aVBVXuToS3UQiftn4+QXSg3fTT84fIo8/VwwmdS5+Lg32ucMC7dWX9sGw7asFrNqJ+du
+         hRQ0EqOTlYd/EM2OtCPk9uRb5YTjsFKSOxVMzz9S86hL9AVjoxpqKux72m5Kks0rLNHY
+         cq6HGMLo/dx7PHz6Z3KK0P6idgtfCnvnfrQ5B2WadXP6Zo+1J7Ugkd1IMVrZcKxtB8W7
+         c0mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686135631; x=1688727631;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=utFv2n7Nj2e/FDpN7qyLak8UIusvCi1A8IvvGYMYwhU=;
+        b=AUJf6sOxq1ZfH3zuTqVSZplG+tZU1ar1PD8fe17zgcVRkDIqdPPh3L7G0AaT0xwoiq
+         D0KoiLLKDv6ZNidvDmuTNxEl9clYJUcVfbuBocXygI2Vu01H3AG1VSA2GYNUrOmtqgJc
+         yCFs6fCKR33EFtPMQ8sTBkXpaS5MeNaHbIt/4ZRc/YsB6SBYgRXUgC6yZCACJswzVUt8
+         rJjhpvH1L3DrqOK1pOcN1+/RhUc+U6sL0iuzXvzwIBm+W7QqjvenLGig6Tz/ugt9r3eW
+         noEMszBmOSsYx2V1l8zUUXv8rvlH5+fQKCBhCfhR6DfeaqrG7XVGdIIIXHo27z6H9WzM
+         nDsg==
+X-Gm-Message-State: AC+VfDzI/IhFtoDhrzax7ZFQeL4GMPwcKrsPwv3GLqEF6TC41wTejSI5
+	vW9o72ej1sthtscI5l+dFURT7L5HQc2B61AcQ8tRAA==
+X-Google-Smtp-Source: ACHHUZ4HFfYgNv7o5eIp7Pa4GlU+Wn3luys2k3t/inbdIsV5+uKmMsly2J5/GaooqGXZqbfoG+Fnb0Er/HoYVgIr5bQ=
+X-Received: by 2002:a67:f7c4:0:b0:436:22fe:1d9 with SMTP id
+ a4-20020a67f7c4000000b0043622fe01d9mr874244vsp.10.1686135630486; Wed, 07 Jun
+ 2023 04:00:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <2003476.1686127009.1@warthog.procyon.org.uk>
-Date: Wed, 07 Jun 2023 09:36:49 +0100
-Message-ID: <2003477.1686127009@warthog.procyon.org.uk>
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.8
+References: <20230606-fix-as-option-after-clang_flags-move-v1-1-a7f7b23a35e3@kernel.org>
+In-Reply-To: <20230606-fix-as-option-after-clang_flags-move-v1-1-a7f7b23a35e3@kernel.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 7 Jun 2023 16:30:19 +0530
+Message-ID: <CA+G9fYs8HCjaBzTDdXsQoEt3KP5rS=M34awGs8em7Jmx=yQkkw@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: masahiroy@kernel.org, ndesaulniers@google.com, nicolas@fjasle.eu, 
+	trix@redhat.com, linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev, 
+	Linux Kernel Functional Testing <lkft@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Luis Chamberlain <mcgrof@kernel.org> wrote:
+On Wed, 7 Jun 2023 at 04:10, Nathan Chancellor <nathan@kernel.org> wrote:
+>
+> After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
+> KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
+> assembly files with clang:
+>
+>   arch/powerpc/lib/copypage_power7.S: Assembler messages:
+>   arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
+>   arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
+>   arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
+>   arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
+>   arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
+>   clang: error: assembler command failed with exit code 1 (use -v to see invocation)
+>
+> as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
+> KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
+> result of those missing flags, the host target
+> will be tested during as-option calls and likely fail, meaning necessary
+> flags may not get added when building assembly files, resulting in
+> errors like seen above.
+>
+> Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
+> This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
+> assembler calls to use proper flags and language target"), which
+> switched from using the assembler target to the assembler-with-cpp
+> target, so flags that affect preprocessing are passed along in all
+> relevant tests. as-option now mirrors cc-option.
+>
+> Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-> The security keys sysctls are already declared on its own file,
-> just move the sysctl registration to its own file to help avoid
-> merge conflicts on sysctls.c, and help with clearing up sysctl.c
-> further.
-> 
-> This creates a small penalty of 23 bytes:
-> 
-> ./scripts/bloat-o-meter vmlinux.1 vmlinux.2
-> add/remove: 2/0 grow/shrink: 0/1 up/down: 49/-26 (23)
-> Function                                     old     new   delta
-> init_security_keys_sysctls                     -      33     +33
-> __pfx_init_security_keys_sysctls               -      16     +16
-> sysctl_init_bases                             85      59     -26
-> Total: Before=21256937, After=21256960, chg +0.00%
-> 
-> But soon we'll be saving tons of bytes anyway, as we modify the
-> sysctl registrations to use ARRAY_SIZE and so we get rid of all the
-> empty array elements so let's just clean this up now.
-> 
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
 
-Acked-by: David Howells <dhowells@redhat.com>
+This proposed fix patch applied on top of Linux next and
+built with clang and build test pass.
+https://storage.tuxsuite.com/public/linaro/naresh/builds/2QsEzqEij2M3F1JkQAQfhpIpsXG/
 
+> ---
+>  scripts/Makefile.compiler | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
+> index 437013f8def3..e31f18625fcf 100644
+> --- a/scripts/Makefile.compiler
+> +++ b/scripts/Makefile.compiler
+> @@ -32,7 +32,7 @@ try-run = $(shell set -e;             \
+>  # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
+>
+>  as-option = $(call try-run,\
+> -       $(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
+> +       $(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
+>
+>  # as-instr
+>  # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+>
+> ---
+> base-commit: feb843a469fb0ab00d2d23cfb9bcc379791011bb
+> change-id: 20230606-fix-as-option-after-clang_flags-move-be88e993cbaa
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+
+Best regards
+Naresh Kamboju
