@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D153AE6F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E6CC433D2;
-	Wed,  7 Jun 2023 20:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41993AE6E
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547C7C433D2;
+	Wed,  7 Jun 2023 20:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169834;
-	bh=+/uUPiNKP6XTa6nO7f2KMIkLt3h0LH2qbjEpl6gAL2s=;
+	s=korg; t=1686169836;
+	bh=Vf5bpZvMGHudPznYQxYqkJMqr00OB0bh8RaNt5HJTtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=isIBMn2Aq/fcNHq15NxpAT3pNAfoLARX166sMbABlIX03egXma+QpOGrUW6s678Mo
-	 fh1DiYbKJdFclzubcdkvjKVpoqtoTx5SU4THHzocaGNIoxFAigYLAbW1QiwRvIRdtX
-	 ksQV5wzeh0GAhH/km/y/HcySQPG8daxR2Y27Wtww=
+	b=uNPzEkBojo3Horo3bxZCvND4NYF9Y59mMEuP/ogEYv8qbLX23/rYNxrTOCogMFP2m
+	 N+MnlUhLldtWzDTRcjUExQpTtC3Ko6R6VzteTDR6YhEqRTmnaLMfY25wchS3cmExSH
+	 cJwzPx18EPOYoVf7peSvVIipzIoWCPp6ilM3ZqCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Honda <honda@mechatrax.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.3 202/286] iio: adc: ad_sigma_delta: Fix IRQ issue by setting IRQ_DISABLE_UNLAZY flag
-Date: Wed,  7 Jun 2023 22:15:01 +0200
-Message-ID: <20230607200929.856647673@linuxfoundation.org>
+Subject: [PATCH 6.3 193/286] iio: ad4130: Make sure clock provider gets removed
+Date: Wed,  7 Jun 2023 22:14:52 +0200
+Message-ID: <20230607200929.568029773@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,49 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Honda <honda@mechatrax.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-commit 626d312028bec44209d0ecd5beaa9b1aa8945f7d upstream.
+commit 28f73ded19d403697f87473c9b85a27eb8ed9cf2 upstream.
 
-The Sigma-Delta ADCs supported by this driver can use SDO as an interrupt
-line to indicate the completion of a conversion. However, some devices
-cannot properly detect the completion of a conversion by an interrupt.
-This is for the reason mentioned in the following commit.
+The ad4130 driver registers a clock provider, but never removes it. This
+leaves a stale clock provider behind that references freed clocks when the
+device is unbound.
 
-commit e9849777d0e2 ("genirq: Add flag to force mask in
-                      disable_irq[_nosync]()")
+Register a managed action to remove the clock provider when the device is
+removed.
 
-A read operation is performed by an extra interrupt before the completion
-of a conversion. At this time, the value read from the ADC data register
-is the same as the previous conversion result. This patch fixes the issue
-by setting IRQ_DISABLE_UNLAZY flag.
-
-Fixes: 0c6ef985a1fd ("iio: adc: ad7791: fix IRQ flags")
-Fixes: 1a913270e57a ("iio: adc: ad7793: Fix IRQ flag")
-Fixes: e081102f3077 ("iio: adc: ad7780: Fix IRQ flag")
-Fixes: 89a86da5cb8e ("iio: adc: ad7192: Add IRQ flag")
-Fixes: 79ef91493f54 ("iio: adc: ad7124: Set IRQ type to falling")
-Signed-off-by: Masahiro Honda <honda@mechatrax.com>
-Link: https://lore.kernel.org/r/20230518110816.248-1-honda@mechatrax.com
+Fixes: 62094060cf3a ("iio: adc: ad4130: add AD4130 driver")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Link: https://lore.kernel.org/r/20230414150702.518441-1-lars@metafoo.de
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/adc/ad4130.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -584,6 +584,10 @@ static int devm_ad_sd_probe_trigger(stru
- 	init_completion(&sigma_delta->completion);
+--- a/drivers/iio/adc/ad4130.c
++++ b/drivers/iio/adc/ad4130.c
+@@ -1817,6 +1817,11 @@ static const struct clk_ops ad4130_int_c
+ 	.unprepare = ad4130_int_clk_unprepare,
+ };
  
- 	sigma_delta->irq_dis = true;
++static void ad4130_clk_del_provider(void *of_node)
++{
++	of_clk_del_provider(of_node);
++}
 +
-+	/* the IRQ core clears IRQ_DISABLE_UNLAZY flag when freeing an IRQ */
-+	irq_set_status_flags(sigma_delta->spi->irq, IRQ_DISABLE_UNLAZY);
+ static int ad4130_setup_int_clk(struct ad4130_state *st)
+ {
+ 	struct device *dev = &st->spi->dev;
+@@ -1824,6 +1829,7 @@ static int ad4130_setup_int_clk(struct a
+ 	struct clk_init_data init;
+ 	const char *clk_name;
+ 	struct clk *clk;
++	int ret;
+ 
+ 	if (st->int_pin_sel == AD4130_INT_PIN_CLK ||
+ 	    st->mclk_sel != AD4130_MCLK_76_8KHZ)
+@@ -1843,7 +1849,11 @@ static int ad4130_setup_int_clk(struct a
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
+ 
+-	return of_clk_add_provider(of_node, of_clk_src_simple_get, clk);
++	ret = of_clk_add_provider(of_node, of_clk_src_simple_get, clk);
++	if (ret)
++		return ret;
 +
- 	ret = devm_request_irq(dev, sigma_delta->spi->irq,
- 			       ad_sd_data_rdy_trig_poll,
- 			       sigma_delta->info->irq_flags | IRQF_NO_AUTOEN,
++	return devm_add_action_or_reset(dev, ad4130_clk_del_provider, of_node);
+ }
+ 
+ static int ad4130_setup(struct iio_dev *indio_dev)
 
 
