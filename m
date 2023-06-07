@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F379139234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A4FC4339B;
-	Wed,  7 Jun 2023 20:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D93734CF6
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F202C433EF;
+	Wed,  7 Jun 2023 20:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169192;
-	bh=+KXX0pkDVrwxls1xANPzrragmwSQkYYEJj7K5lltQSE=;
+	s=korg; t=1686169195;
+	bh=YLc9GN0GSM/O54+XZ6nwsLy2ta3P/IFHFq20s1AvMxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOe7IRdw7k45De+62VNI0apEUywagi53IAaCPH7saYd+7Q7fj6oqeKb+/HYwugi5x
-	 +p0vE2uqLCvdG01sfnFnWc0Kg9yD6fvGcAc8rouwl5SZHZTSkKdb4QBAviVv6dbPO8
-	 dFw72woz+YNvmc+mC/jmWVYXeE5F227+Jg1BxGGY=
+	b=mbvAWxBs2eGizPl9xlkFkjNtpOvzVZa1IAhcyUjkZbt56b5GqMzphRo49MM6L2qhR
+	 jslVlUTEcTfgiYsUlb3ekJfi8bG6Q2OyB2x5fz0H9iyWA08VWZ8+sk9ZD+xnlVwR6+
+	 1gIWbKlR5QbbfXqEOcYtrC2iEQpkI385iEPo1g3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 32/61] ALSA: oss: avoid missing-prototype warnings
-Date: Wed,  7 Jun 2023 22:15:46 +0200
-Message-ID: <20230607200846.510270355@linuxfoundation.org>
+	Deren Wu <deren.wu@mediatek.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.14 50/61] mmc: vub300: fix invalid response handling
+Date: Wed,  7 Jun 2023 22:16:04 +0200
+Message-ID: <20230607200852.474689201@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -35,64 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Deren Wu <deren.wu@mediatek.com>
 
-[ Upstream commit 040b5a046a9e18098580d3ccd029e2318fca7859 ]
+commit a99d21cefd351c8aaa20b83a3c942340e5789d45 upstream.
 
-Two functions are defined and used in pcm_oss.c but also optionally
-used from io.c, with an optional prototype. If CONFIG_SND_PCM_OSS_PLUGINS
-is disabled, this causes a warning as the functions are not static
-and have no prototype:
+We may get an empty response with zero length at the beginning of
+the driver start and get following UBSAN error. Since there is no
+content(SDRT_NONE) for the response, just return and skip the response
+handling to avoid this problem.
 
-sound/core/oss/pcm_oss.c:1235:19: error: no previous prototype for 'snd_pcm_oss_write3' [-Werror=missing-prototypes]
-sound/core/oss/pcm_oss.c:1266:19: error: no previous prototype for 'snd_pcm_oss_read3' [-Werror=missing-prototypes]
+Test pass : SDIO wifi throughput test with this patch
 
-Avoid this by making the prototypes unconditional.
+[  126.980684] UBSAN: array-index-out-of-bounds in drivers/mmc/host/vub300.c:1719:12
+[  126.980709] index -1 is out of range for type 'u32 [4]'
+[  126.980729] CPU: 4 PID: 9 Comm: kworker/u16:0 Tainted: G            E      6.3.0-rc4-mtk-local-202304272142 #1
+[  126.980754] Hardware name: Intel(R) Client Systems NUC8i7BEH/NUC8BEB, BIOS BECFL357.86A.0081.2020.0504.1834 05/04/2020
+[  126.980770] Workqueue: kvub300c vub300_cmndwork_thread [vub300]
+[  126.980833] Call Trace:
+[  126.980845]  <TASK>
+[  126.980860]  dump_stack_lvl+0x48/0x70
+[  126.980895]  dump_stack+0x10/0x20
+[  126.980916]  ubsan_epilogue+0x9/0x40
+[  126.980944]  __ubsan_handle_out_of_bounds+0x70/0x90
+[  126.980979]  vub300_cmndwork_thread+0x58e7/0x5e10 [vub300]
+[  126.981018]  ? _raw_spin_unlock+0x18/0x40
+[  126.981042]  ? finish_task_switch+0x175/0x6f0
+[  126.981070]  ? __switch_to+0x42e/0xda0
+[  126.981089]  ? __switch_to_asm+0x3a/0x80
+[  126.981129]  ? __pfx_vub300_cmndwork_thread+0x10/0x10 [vub300]
+[  126.981174]  ? __kasan_check_read+0x11/0x20
+[  126.981204]  process_one_work+0x7ee/0x13d0
+[  126.981246]  worker_thread+0x53c/0x1240
+[  126.981291]  kthread+0x2b8/0x370
+[  126.981312]  ? __pfx_worker_thread+0x10/0x10
+[  126.981336]  ? __pfx_kthread+0x10/0x10
+[  126.981359]  ret_from_fork+0x29/0x50
+[  126.981400]  </TASK>
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230516195046.550584-2-arnd@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/048cd6972c50c33c2e8f81d5228fed928519918b.1683987673.git.deren.wu@mediatek.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/oss/pcm_plugin.h | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/mmc/host/vub300.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/core/oss/pcm_plugin.h b/sound/core/oss/pcm_plugin.h
-index c9cd29d86efda..64a2057aa0610 100644
---- a/sound/core/oss/pcm_plugin.h
-+++ b/sound/core/oss/pcm_plugin.h
-@@ -156,6 +156,14 @@ int snd_pcm_area_copy(const struct snd_pcm_channel_area *src_channel,
- 
- void *snd_pcm_plug_buf_alloc(struct snd_pcm_substream *plug, snd_pcm_uframes_t size);
- void snd_pcm_plug_buf_unlock(struct snd_pcm_substream *plug, void *ptr);
-+#else
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -1718,6 +1718,9 @@ static void construct_request_response(s
+ 	int bytes = 3 & less_cmd;
+ 	int words = less_cmd >> 2;
+ 	u8 *r = vub300->resp.response.command_response;
 +
-+static inline snd_pcm_sframes_t snd_pcm_plug_client_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t drv_size) { return drv_size; }
-+static inline snd_pcm_sframes_t snd_pcm_plug_slave_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t clt_size) { return clt_size; }
-+static inline int snd_pcm_plug_slave_format(int format, const struct snd_mask *format_mask) { return format; }
-+
-+#endif
-+
- snd_pcm_sframes_t snd_pcm_oss_write3(struct snd_pcm_substream *substream,
- 				     const char *ptr, snd_pcm_uframes_t size,
- 				     int in_kernel);
-@@ -166,14 +174,6 @@ snd_pcm_sframes_t snd_pcm_oss_writev3(struct snd_pcm_substream *substream,
- snd_pcm_sframes_t snd_pcm_oss_readv3(struct snd_pcm_substream *substream,
- 				     void **bufs, snd_pcm_uframes_t frames);
- 
--#else
--
--static inline snd_pcm_sframes_t snd_pcm_plug_client_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t drv_size) { return drv_size; }
--static inline snd_pcm_sframes_t snd_pcm_plug_slave_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t clt_size) { return clt_size; }
--static inline int snd_pcm_plug_slave_format(int format, const struct snd_mask *format_mask) { return format; }
--
--#endif
--
- #ifdef PLUGIN_DEBUG
- #define pdprintf(fmt, args...) printk(KERN_DEBUG "plugin: " fmt, ##args)
- #else
--- 
-2.39.2
-
++	if (!resp_len)
++		return;
+ 	if (bytes == 3) {
+ 		cmd->resp[words] = (r[1 + (words << 2)] << 24)
+ 			| (r[2 + (words << 2)] << 16)
 
 
