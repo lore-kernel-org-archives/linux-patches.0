@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B719819E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376CFC433D2;
-	Wed,  7 Jun 2023 20:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C7419E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE69DC433EF;
+	Wed,  7 Jun 2023 20:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170237;
-	bh=YcToNtZhEDHQuwln3PcZjkZEFxrJjtiVhXurDLkXs4Q=;
+	s=korg; t=1686170240;
+	bh=i3YLo5f0VEPgDE1NfO7JSCLM91WAMc+8Myv8hRN5/Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U+8XS4ps62B/t7flyEJanw6oghUz+hzDrFRYpGZMS9EiMLSF+VoSiuLC+9tJWN40U
-	 b0q0ixuqHTvHcInUP6l+p9NKDGi+EtZ1GPE6gFvxVpUoaK0dCnBAYRZh9Ce8SpdXOq
-	 C3BKSL7TtsxfHpoVSMjNz/aRmwU5Mt6zjcV1LtlY=
+	b=p1+Xec+0Ry6WKKyzyunbFswkO8nVvojV9xoJcAFdycZDmtU686IgykhwLpCjTh1fA
+	 aQlZSZju22D/YQP3YYCOUh3IGbprgntvSdUw5rK3LuT3K7BgM+JhNwhz1lKGtrmLx8
+	 CtKYgZeuQv5fL3BkupZpjuYHTaFCBbbdcn7AWtu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Chao Wang <D202280639@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/225] RDMA/bnxt_re: Fix the page_size used during the MR creation
-Date: Wed,  7 Jun 2023 22:13:14 +0200
-Message-ID: <20230607200913.386846654@linuxfoundation.org>
+Subject: [PATCH 6.1 010/225] iommu/rockchip: Fix unwind goto issue
+Date: Wed,  7 Jun 2023 22:13:23 +0200
+Message-ID: <20230607200913.680855564@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,81 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Chao Wang <D202280639@hust.edu.cn>
 
-[ Upstream commit 08c7f09356e45d093d1867c7a3c6ac6526e2f98b ]
+[ Upstream commit ec014683c564fb74fc68e8f5e84691d3b3839d24 ]
 
-Driver populates the list of pages used for Memory region wrongly when
-page size is more than system page size. This is causing a failure when
-some of the applications that creates MR with page size as 2M.  Since HW
-can support multiple page sizes, pass the correct page size while creating
-the MR.
+Smatch complains that
+drivers/iommu/rockchip-iommu.c:1306 rk_iommu_probe() warn: missing unwind goto?
 
-Also, driver need not adjust the number of pages when HW Queues are
-created with user memory. It should work with the number of dma blocks
-returned by ib_umem_num_dma_blocks. Fix this calculation also.
+The rk_iommu_probe function, after obtaining the irq value through
+platform_get_irq, directly returns an error if the returned value
+is negative, without releasing any resources.
 
-Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
-Fixes: f6919d56388c ("RDMA/bnxt_re: Code refactor while populating user MRs")
-Link: https://lore.kernel.org/r/1683484169-9539-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fix this by adding a new error handling label "err_pm_disable" and
+use a goto statement to redirect to the error handling process. In
+order to preserve the original semantics, set err to the value of irq.
+
+Fixes: 1aa55ca9b14a ("iommu/rockchip: Move irq request past pm_runtime_enable")
+Signed-off-by: Chao Wang <D202280639@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20230417030421.2777-1-D202280639@hust.edu.cn
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 12 ++----------
- drivers/infiniband/hw/bnxt_re/qplib_sp.c  |  7 +++----
- 2 files changed, 5 insertions(+), 14 deletions(-)
+ drivers/iommu/rockchip-iommu.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 126d4f26f75ad..81b0c5e879f9e 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -215,17 +215,9 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
- 			return -EINVAL;
- 		hwq_attr->sginfo->npages = npages;
- 	} else {
--		unsigned long sginfo_num_pages = ib_umem_num_dma_blocks(
--			hwq_attr->sginfo->umem, hwq_attr->sginfo->pgsize);
--
-+		npages = ib_umem_num_dma_blocks(hwq_attr->sginfo->umem,
-+						hwq_attr->sginfo->pgsize);
- 		hwq->is_user = true;
--		npages = sginfo_num_pages;
--		npages = (npages * PAGE_SIZE) /
--			  BIT_ULL(hwq_attr->sginfo->pgshft);
--		if ((sginfo_num_pages * PAGE_SIZE) %
--		     BIT_ULL(hwq_attr->sginfo->pgshft))
--			if (!npages)
--				npages++;
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index a68eadd64f38d..f7e9b56be174f 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -1303,20 +1303,22 @@ static int rk_iommu_probe(struct platform_device *pdev)
+ 	for (i = 0; i < iommu->num_irq; i++) {
+ 		int irq = platform_get_irq(pdev, i);
+ 
+-		if (irq < 0)
+-			return irq;
++		if (irq < 0) {
++			err = irq;
++			goto err_pm_disable;
++		}
+ 
+ 		err = devm_request_irq(iommu->dev, irq, rk_iommu_irq,
+ 				       IRQF_SHARED, dev_name(dev), iommu);
+-		if (err) {
+-			pm_runtime_disable(dev);
+-			goto err_remove_sysfs;
+-		}
++		if (err)
++			goto err_pm_disable;
  	}
  
- 	if (npages == MAX_PBL_LVL_0_PGS && !hwq_attr->sginfo->nopte) {
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index b802981b71716..bae7d89261439 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -584,16 +584,15 @@ int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
- 		/* Free the hwq if it already exist, must be a rereg */
- 		if (mr->hwq.max_elements)
- 			bnxt_qplib_free_hwq(res, &mr->hwq);
--		/* Use system PAGE_SIZE */
- 		hwq_attr.res = res;
- 		hwq_attr.depth = pages;
--		hwq_attr.stride = buf_pg_size;
-+		hwq_attr.stride = sizeof(dma_addr_t);
- 		hwq_attr.type = HWQ_TYPE_MR;
- 		hwq_attr.sginfo = &sginfo;
- 		hwq_attr.sginfo->umem = umem;
- 		hwq_attr.sginfo->npages = pages;
--		hwq_attr.sginfo->pgsize = PAGE_SIZE;
--		hwq_attr.sginfo->pgshft = PAGE_SHIFT;
-+		hwq_attr.sginfo->pgsize = buf_pg_size;
-+		hwq_attr.sginfo->pgshft = ilog2(buf_pg_size);
- 		rc = bnxt_qplib_alloc_init_hwq(&mr->hwq, &hwq_attr);
- 		if (rc) {
- 			dev_err(&res->pdev->dev,
+ 	dma_set_mask_and_coherent(dev, rk_ops->dma_bit_mask);
+ 
+ 	return 0;
++err_pm_disable:
++	pm_runtime_disable(dev);
+ err_remove_sysfs:
+ 	iommu_device_sysfs_remove(&iommu->iommu);
+ err_put_group:
 -- 
 2.39.2
 
