@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3551D2A5
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08C7C433D2;
-	Wed,  7 Jun 2023 20:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3E21D2A5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29B6C433EF;
+	Wed,  7 Jun 2023 20:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170853;
-	bh=lQba0g0GOwP76HL9SmwXCE8zweSnZUAXBFtML6Vl5wM=;
+	s=korg; t=1686170856;
+	bh=UigIrFpwxxjD5z62wWTRedqfnpX3zmyLWXz8HVU/Cb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBsHVUWhpKGDW3uOOu4bnHfGdLV7Y0F8Oi7JZW9s6BFUfqOiUeeg+PpcCDsXmJE58
-	 5cyA7I768JHPZwct48wzNxfcBkobrIi9HEphJMoh6ZuonjKG7pOXWzfYgb9c/Wd6nt
-	 gijEDz/Ndyy+O/LD86B4nKNdqKaVGaKJBLy2KGf0=
+	b=02P00wcVhHdrUbqW3nBztDz9GBJFOpCd6FoWlPNjmeugvKfvB1E2w/oGPLtAUXrL1
+	 5WdEdnvAWg+oeMZ+36lRYZCJHLaNBPu7GUlXvlLb+fEVjxAI55ZAnBNBVddbQDQSHF
+	 INzt1XPSoJdmdNsuhOsZBdsG0jOZhyiuXW+SOLyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/120] mtd: rawnand: ingenic: fix empty stub helper definitions
-Date: Wed,  7 Jun 2023 22:15:33 +0200
-Message-ID: <20230607200901.459150550@linuxfoundation.org>
+Subject: [PATCH 5.10 018/120] af_packet: do not use READ_ONCE() in packet_bind()
+Date: Wed,  7 Jun 2023 22:15:34 +0200
+Message-ID: <20230607200901.490678656@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -36,65 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 650a8884a364ff2568b51cde9009cfd43cdae6ad ]
+[ Upstream commit 6ffc57ea004234d9373c57b204fd10370a69f392 ]
 
-A few functions provide an empty interface definition when
-CONFIG_MTD_NAND_INGENIC_ECC is disabled, but they are accidentally
-defined as global functions in the header:
+A recent patch added READ_ONCE() in packet_bind() and packet_bind_spkt()
 
-drivers/mtd/nand/raw/ingenic/ingenic_ecc.h:39:5: error: no previous prototype for 'ingenic_ecc_calculate'
-drivers/mtd/nand/raw/ingenic/ingenic_ecc.h:46:5: error: no previous prototype for 'ingenic_ecc_correct'
-drivers/mtd/nand/raw/ingenic/ingenic_ecc.h:53:6: error: no previous prototype for 'ingenic_ecc_release'
-drivers/mtd/nand/raw/ingenic/ingenic_ecc.h:57:21: error: no previous prototype for 'of_ingenic_ecc_get'
+This is better handled by reading pkt_sk(sk)->num later
+in packet_do_bind() while appropriate lock is held.
 
-Turn them into 'static inline' definitions instead.
+READ_ONCE() in writers are often an evidence of something being wrong.
 
-Fixes: 15de8c6efd0e ("mtd: rawnand: ingenic: Separate top-level and SoC specific code")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230516202133.559488-1-arnd@kernel.org
+Fixes: 822b5a1c17df ("af_packet: Fix data-races of pkt_sk(sk)->num.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230526154342.2533026-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/ingenic/ingenic_ecc.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/packet/af_packet.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h b/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h
-index 2cda439b5e11b..017868f59f222 100644
---- a/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h
-+++ b/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h
-@@ -36,25 +36,25 @@ int ingenic_ecc_correct(struct ingenic_ecc *ecc,
- void ingenic_ecc_release(struct ingenic_ecc *ecc);
- struct ingenic_ecc *of_ingenic_ecc_get(struct device_node *np);
- #else /* CONFIG_MTD_NAND_INGENIC_ECC */
--int ingenic_ecc_calculate(struct ingenic_ecc *ecc,
-+static inline int ingenic_ecc_calculate(struct ingenic_ecc *ecc,
- 			  struct ingenic_ecc_params *params,
- 			  const u8 *buf, u8 *ecc_code)
- {
- 	return -ENODEV;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 542d5285e99e9..c7129616dd530 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3157,6 +3157,9 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
+ 
+ 	lock_sock(sk);
+ 	spin_lock(&po->bind_lock);
++	if (!proto)
++		proto = po->num;
++
+ 	rcu_read_lock();
+ 
+ 	if (po->fanout) {
+@@ -3259,7 +3262,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
+ 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
+ 	name[sizeof(uaddr->sa_data)] = 0;
+ 
+-	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, name, 0, 0);
  }
  
--int ingenic_ecc_correct(struct ingenic_ecc *ecc,
-+static inline int ingenic_ecc_correct(struct ingenic_ecc *ecc,
- 			struct ingenic_ecc_params *params, u8 *buf,
- 			u8 *ecc_code)
- {
- 	return -ENODEV;
+ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+@@ -3276,8 +3279,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
+ 	if (sll->sll_family != AF_PACKET)
+ 		return -EINVAL;
+ 
+-	return packet_do_bind(sk, NULL, sll->sll_ifindex,
+-			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, NULL, sll->sll_ifindex, sll->sll_protocol);
  }
  
--void ingenic_ecc_release(struct ingenic_ecc *ecc)
-+static inline void ingenic_ecc_release(struct ingenic_ecc *ecc)
- {
- }
- 
--struct ingenic_ecc *of_ingenic_ecc_get(struct device_node *np)
-+static inline struct ingenic_ecc *of_ingenic_ecc_get(struct device_node *np)
- {
- 	return ERR_PTR(-ENODEV);
- }
+ static struct proto packet_proto = {
 -- 
 2.39.2
 
