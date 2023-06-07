@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98963AE70
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B14CC433D2;
-	Wed,  7 Jun 2023 20:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840B93AE70
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FA3C433EF;
+	Wed,  7 Jun 2023 20:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169913;
-	bh=7L8cY1/FfTpIww6poA0DK9pAvBkFIbJCwCOQD29Wgns=;
+	s=korg; t=1686169916;
+	bh=ec36qRJ+96QD5+UG1onfEI4gozfWtT/oTghPRPgB+vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBQYPSIGVmbNpSaeasqwO0nCiPgP3UdRmZalT2a3WNzqn1/ZjRm6DFzMYouB3cQE6
-	 tfsEnzFrNUpOn+chu3jr42BNFLp5zitjMc14TtaMnVB64KwK5EF4oTDIw8V3eMd4Xk
-	 IuVTQT4rKPft7gPCgyQ3hD2hel4QwhP1f5eFsz1Y=
+	b=cp9njp6pktRFNB6myPsRcG/BL0Que/2B6QcV4PMxrY3PQJ16CZFYganYuB+ffNgRS
+	 SFzK42xcxzHYMkUfw8sY6NQgwi5SUQhw4Ki4ZywIcMEu6uZjS6DpqjymLOQLF3cZGz
+	 yoHi1HhIUMmW8oc2kOn84Vx1XvWiFcVtslK77TwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.vnet.ibm.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.3 232/286] powerpc/iommu: Limit number of TCEs to 512 for H_STUFF_TCE hcall
-Date: Wed,  7 Jun 2023 22:15:31 +0200
-Message-ID: <20230607200930.873239193@linuxfoundation.org>
+	Jon Pan-Doh <pandoh@google.com>,
+	Sudheer Dantuluri <dantuluris@google.com>,
+	Gary Zibrat <gzibrat@google.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Nadav Amit <namit@vmware.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.3 233/286] iommu/amd: Fix domain flush size when syncing iotlb
+Date: Wed,  7 Jun 2023 22:15:32 +0200
+Message-ID: <20230607200930.908120514@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,56 +38,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaurav Batra <gbatra@linux.vnet.ibm.com>
+From: Jon Pan-Doh <pandoh@google.com>
 
-commit 9d2ccf00bddc268045e3d65a8108d61ada0e4b4e upstream.
+commit 2212fc2acf3f6ee690ea36506fb882a19d1bfcab upstream.
 
-Currently in tce_freemulti_pSeriesLP() there is no limit on how many
-TCEs are passed to the H_STUFF_TCE hcall. This has not caused an issue
-until now, but newer firmware releases have started enforcing a limit of
-512 TCEs per call.
+When running on an AMD vIOMMU, we observed multiple invalidations (of
+decreasing power of 2 aligned sizes) when unmapping a single page.
 
-The limit is correct per the specification (PAPR v2.12 § 14.5.4.2.3).
+Domain flush takes gather bounds (end-start) as size param. However,
+gather->end is defined as the last inclusive address (start + size - 1).
+This leads to an off by 1 error.
 
-The code has been in it's current form since it was initially merged.
+With this patch, verified that 1 invalidation occurs when unmapping a
+single page.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Gaurav Batra <gbatra@linux.vnet.ibm.com>
-Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
-[mpe: Tweak change log wording & add PAPR reference]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230525143454.56878-1-gbatra@linux.vnet.ibm.com
+Fixes: a270be1b3fdf ("iommu/amd: Use only natural aligned flushes in a VM")
+Cc: stable@vger.kernel.org # >= 5.15
+Signed-off-by: Jon Pan-Doh <pandoh@google.com>
+Tested-by: Sudheer Dantuluri <dantuluris@google.com>
+Suggested-by: Gary Zibrat <gzibrat@google.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Acked-by: Nadav Amit <namit@vmware.com>
+Link: https://lore.kernel.org/r/20230426203256.237116-1-pandoh@google.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/iommu.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/iommu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/platforms/pseries/iommu.c
-+++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -311,13 +311,22 @@ static void tce_free_pSeriesLP(unsigned
- static void tce_freemulti_pSeriesLP(struct iommu_table *tbl, long tcenum, long npages)
- {
- 	u64 rc;
-+	long rpages = npages;
-+	unsigned long limit;
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2387,7 +2387,7 @@ static void amd_iommu_iotlb_sync(struct
+ 	unsigned long flags;
  
- 	if (!firmware_has_feature(FW_FEATURE_STUFF_TCE))
- 		return tce_free_pSeriesLP(tbl->it_index, tcenum,
- 					  tbl->it_page_shift, npages);
- 
--	rc = plpar_tce_stuff((u64)tbl->it_index,
--			     (u64)tcenum << tbl->it_page_shift, 0, npages);
-+	do {
-+		limit = min_t(unsigned long, rpages, 512);
-+
-+		rc = plpar_tce_stuff((u64)tbl->it_index,
-+				     (u64)tcenum << tbl->it_page_shift, 0, limit);
-+
-+		rpages -= limit;
-+		tcenum += limit;
-+	} while (rpages > 0 && !rc);
- 
- 	if (rc && printk_ratelimit()) {
- 		printk("tce_freemulti_pSeriesLP: plpar_tce_stuff failed\n");
+ 	spin_lock_irqsave(&dom->lock, flags);
+-	domain_flush_pages(dom, gather->start, gather->end - gather->start, 1);
++	domain_flush_pages(dom, gather->start, gather->end - gather->start + 1, 1);
+ 	amd_iommu_domain_flush_complete(dom);
+ 	spin_unlock_irqrestore(&dom->lock, flags);
+ }
 
 
