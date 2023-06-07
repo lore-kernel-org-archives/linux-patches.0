@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCC33925A
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30FCC433D2;
-	Wed,  7 Jun 2023 20:21:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EA03925A
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97484C4339B;
+	Wed,  7 Jun 2023 20:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169287;
-	bh=qJPvvcsODxvbUerKFC0YMyRQDNuDY2sM4i3q6ac9O9s=;
+	s=korg; t=1686169290;
+	bh=6DXz/ecHY7fJTbfYNIpI8YRmJJaotOG8gNooPZIp51U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FyKm4hkORGDESO1rjYAwbcMiXDFnnfa0tWfhMt5HDguCpHtnbB68wbrUm64hV/ipa
-	 hCjCYK3S0Op6YPsYTvHv8LgPzl+S7ANHRpiLhiiHG8LIA1AUiR3awmoxSdPjEPVrCq
-	 zS61V8s8bg0qzdJamAod8ligwM41CgWGMqU0VIgk=
+	b=rEm1CCmOPl5pox3esQH5OhBZAsxhhWM3fxgujpwkAw+P0oO6LlNVsJ6PFs6xQrd5m
+	 ukAaUWC+dUjVXSHeS8mgnIbIKqXn6ZmTz0s0GpS1AHm7FjVPQK/GX/TzLz52UdlDmx
+	 oy3BMDp5roTNeDD9IuOuVgKXk6ZjhwOhcq9XusE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mi <cmi@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 023/286] net/mlx5e: Prevent encap offload when neigh update is running
-Date: Wed,  7 Jun 2023 22:12:02 +0200
-Message-ID: <20230607200923.772443770@linuxfoundation.org>
+Subject: [PATCH 6.3 024/286] net/mlx5e: Consider internal buffers size in port buffer calculations
+Date: Wed,  7 Jun 2023 22:12:03 +0200
+Message-ID: <20230607200923.809545905@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,196 +36,206 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Mi <cmi@nvidia.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 37c3b9fa7ccf5caad6d87ba4d42bf00be46be1cf ]
+[ Upstream commit 81fe2be062915e2a2fdc494c3cd90e946e946c25 ]
 
-The cited commit adds a compeletion to remove dependency on rtnl
-lock. But it causes a deadlock for multiple encapsulations:
+Currently, when a user triggers a change in port buffer headroom
+(buffers 0-7), the driver checks that the requested headroom does
+not exceed the total port buffer size. However, this check does not
+take into account the internal buffers (buffers 8-9), which are also
+part of the total port buffer. This can result in treating invalid port
+buffer change requests as valid, causing unintended changes to the shared
+buffer.
 
- crash> bt ffff8aece8a64000
- PID: 1514557  TASK: ffff8aece8a64000  CPU: 3    COMMAND: "tc"
-  #0 [ffffa6d14183f368] __schedule at ffffffffb8ba7f45
-  #1 [ffffa6d14183f3f8] schedule at ffffffffb8ba8418
-  #2 [ffffa6d14183f418] schedule_preempt_disabled at ffffffffb8ba8898
-  #3 [ffffa6d14183f428] __mutex_lock at ffffffffb8baa7f8
-  #4 [ffffa6d14183f4d0] mutex_lock_nested at ffffffffb8baabeb
-  #5 [ffffa6d14183f4e0] mlx5e_attach_encap at ffffffffc0f48c17 [mlx5_core]
-  #6 [ffffa6d14183f628] mlx5e_tc_add_fdb_flow at ffffffffc0f39680 [mlx5_core]
-  #7 [ffffa6d14183f688] __mlx5e_add_fdb_flow at ffffffffc0f3b636 [mlx5_core]
-  #8 [ffffa6d14183f6f0] mlx5e_tc_add_flow at ffffffffc0f3bcdf [mlx5_core]
-  #9 [ffffa6d14183f728] mlx5e_configure_flower at ffffffffc0f3c1d1 [mlx5_core]
- #10 [ffffa6d14183f790] mlx5e_rep_setup_tc_cls_flower at ffffffffc0f3d529 [mlx5_core]
- #11 [ffffa6d14183f7a0] mlx5e_rep_setup_tc_cb at ffffffffc0f3d714 [mlx5_core]
- #12 [ffffa6d14183f7b0] tc_setup_cb_add at ffffffffb8931bb8
- #13 [ffffa6d14183f810] fl_hw_replace_filter at ffffffffc0dae901 [cls_flower]
- #14 [ffffa6d14183f8d8] fl_change at ffffffffc0db5c57 [cls_flower]
- #15 [ffffa6d14183f970] tc_new_tfilter at ffffffffb8936047
- #16 [ffffa6d14183fac8] rtnetlink_rcv_msg at ffffffffb88c7c31
- #17 [ffffa6d14183fb50] netlink_rcv_skb at ffffffffb8942853
- #18 [ffffa6d14183fbc0] rtnetlink_rcv at ffffffffb88c1835
- #19 [ffffa6d14183fbd0] netlink_unicast at ffffffffb8941f27
- #20 [ffffa6d14183fc18] netlink_sendmsg at ffffffffb8942245
- #21 [ffffa6d14183fc98] sock_sendmsg at ffffffffb887d482
- #22 [ffffa6d14183fcb8] ____sys_sendmsg at ffffffffb887d81a
- #23 [ffffa6d14183fd38] ___sys_sendmsg at ffffffffb88806e2
- #24 [ffffa6d14183fe90] __sys_sendmsg at ffffffffb88807a2
- #25 [ffffa6d14183ff28] __x64_sys_sendmsg at ffffffffb888080f
- #26 [ffffa6d14183ff38] do_syscall_64 at ffffffffb8b9b6a8
- #27 [ffffa6d14183ff50] entry_SYSCALL_64_after_hwframe at ffffffffb8c0007c
- crash> bt 0xffff8aeb07544000
- PID: 1110766  TASK: ffff8aeb07544000  CPU: 0    COMMAND: "kworker/u20:9"
-  #0 [ffffa6d14e6b7bd8] __schedule at ffffffffb8ba7f45
-  #1 [ffffa6d14e6b7c68] schedule at ffffffffb8ba8418
-  #2 [ffffa6d14e6b7c88] schedule_timeout at ffffffffb8baef88
-  #3 [ffffa6d14e6b7d10] wait_for_completion at ffffffffb8ba968b
-  #4 [ffffa6d14e6b7d60] mlx5e_take_all_encap_flows at ffffffffc0f47ec4 [mlx5_core]
-  #5 [ffffa6d14e6b7da0] mlx5e_rep_update_flows at ffffffffc0f3e734 [mlx5_core]
-  #6 [ffffa6d14e6b7df8] mlx5e_rep_neigh_update at ffffffffc0f400bb [mlx5_core]
-  #7 [ffffa6d14e6b7e50] process_one_work at ffffffffb80acc9c
-  #8 [ffffa6d14e6b7ed0] worker_thread at ffffffffb80ad012
-  #9 [ffffa6d14e6b7f10] kthread at ffffffffb80b615d
- #10 [ffffa6d14e6b7f50] ret_from_fork at ffffffffb8001b2f
+To address this, include the internal buffers size in the calculation of
+available port buffer space which ensures that port buffer requests do not
+exceed the correct limit.
 
-After the first encap is attached, flow will be added to encap
-entry's flows list. If neigh update is running at this time, the
-following encaps of the flow can't hold the encap_tbl_lock and
-sleep. If neigh update thread is waiting for that flow's init_done,
-deadlock happens.
+Furthermore, remove internal buffers (8-9) size from the total_size
+calculation as these buffers are reserved for internal use and are not
+exposed to the user.
 
-Fix it by holding lock outside of the for loop. If neigh update is
-running, prevent encap flows from offloading. Since the lock is held
-outside of the for loop, concurrent creation of encap entries is not
-allowed. So remove unnecessary wait_for_completion call for res_ready.
+While at it, add verbosity to the debug prints in
+mlx5e_port_query_buffer() function to ease future debugging.
 
-Fixes: 95435ad7999b ("net/mlx5e: Only access fully initialized flows in neigh update")
-Signed-off-by: Chris Mi <cmi@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
+Fixes: ecdf2dadee8e ("net/mlx5e: Receive buffer support for DCBX")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en/tc_tun_encap.c      | 37 ++++++++++---------
- 1 file changed, 20 insertions(+), 17 deletions(-)
+ .../mellanox/mlx5/core/en/port_buffer.c       | 42 ++++++++++++-------
+ .../mellanox/mlx5/core/en/port_buffer.h       |  8 ++--
+ .../ethernet/mellanox/mlx5/core/en_dcbnl.c    |  7 ++--
+ 3 files changed, 36 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-index 7655526222570..bbab164eab546 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-@@ -492,6 +492,19 @@ void mlx5e_encap_put(struct mlx5e_priv *priv, struct mlx5e_encap_entry *e)
- 	mlx5e_encap_dealloc(priv, e);
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
+index 7ac1ad9c46de0..0d78527451bca 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
+@@ -51,7 +51,7 @@ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto out;
  
-+static void mlx5e_encap_put_locked(struct mlx5e_priv *priv, struct mlx5e_encap_entry *e)
-+{
-+	struct mlx5_eswitch *esw = priv->mdev->priv.eswitch;
+-	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
++	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
+ 		buffer = MLX5_ADDR_OF(pbmc_reg, out, buffer[i]);
+ 		port_buffer->buffer[i].lossy =
+ 			MLX5_GET(bufferx_reg, buffer, lossy);
+@@ -73,14 +73,24 @@ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
+ 			  port_buffer->buffer[i].lossy);
+ 	}
+ 
+-	port_buffer->headroom_size = total_used;
++	port_buffer->internal_buffers_size = 0;
++	for (i = MLX5E_MAX_NETWORK_BUFFER; i < MLX5E_TOTAL_BUFFERS; i++) {
++		buffer = MLX5_ADDR_OF(pbmc_reg, out, buffer[i]);
++		port_buffer->internal_buffers_size +=
++			MLX5_GET(bufferx_reg, buffer, size) * port_buff_cell_sz;
++	}
 +
-+	lockdep_assert_held(&esw->offloads.encap_tbl_lock);
-+
-+	if (!refcount_dec_and_test(&e->refcnt))
-+		return;
-+	list_del(&e->route_list);
-+	hash_del_rcu(&e->encap_hlist);
-+	mlx5e_encap_dealloc(priv, e);
-+}
-+
- static void mlx5e_decap_put(struct mlx5e_priv *priv, struct mlx5e_decap_entry *d)
- {
- 	struct mlx5_eswitch *esw = priv->mdev->priv.eswitch;
-@@ -785,6 +798,8 @@ int mlx5e_attach_encap(struct mlx5e_priv *priv,
- 	uintptr_t hash_key;
- 	int err = 0;
- 
-+	lockdep_assert_held(&esw->offloads.encap_tbl_lock);
-+
- 	parse_attr = attr->parse_attr;
- 	tun_info = parse_attr->tun_info[out_index];
- 	mpls_info = &parse_attr->mpls_info[out_index];
-@@ -798,7 +813,6 @@ int mlx5e_attach_encap(struct mlx5e_priv *priv,
- 
- 	hash_key = hash_encap_info(&key);
- 
--	mutex_lock(&esw->offloads.encap_tbl_lock);
- 	e = mlx5e_encap_get(priv, &key, hash_key);
- 
- 	/* must verify if encap is valid or not */
-@@ -809,15 +823,6 @@ int mlx5e_attach_encap(struct mlx5e_priv *priv,
- 			goto out_err;
- 		}
- 
--		mutex_unlock(&esw->offloads.encap_tbl_lock);
--		wait_for_completion(&e->res_ready);
+ 	port_buffer->port_buffer_size =
+ 		MLX5_GET(pbmc_reg, out, port_buffer_size) * port_buff_cell_sz;
+-	port_buffer->spare_buffer_size =
+-		port_buffer->port_buffer_size - total_used;
 -
--		/* Protect against concurrent neigh update. */
--		mutex_lock(&esw->offloads.encap_tbl_lock);
--		if (e->compl_result < 0) {
--			err = -EREMOTEIO;
--			goto out_err;
--		}
- 		goto attach_flow;
- 	}
- 
-@@ -846,15 +851,12 @@ int mlx5e_attach_encap(struct mlx5e_priv *priv,
- 	INIT_LIST_HEAD(&e->flows);
- 	hash_add_rcu(esw->offloads.encap_tbl, &e->encap_hlist, hash_key);
- 	tbl_time_before = mlx5e_route_tbl_get_last_update(priv);
--	mutex_unlock(&esw->offloads.encap_tbl_lock);
- 
- 	if (family == AF_INET)
- 		err = mlx5e_tc_tun_create_header_ipv4(priv, mirred_dev, e);
- 	else if (family == AF_INET6)
- 		err = mlx5e_tc_tun_create_header_ipv6(priv, mirred_dev, e);
- 
--	/* Protect against concurrent neigh update. */
--	mutex_lock(&esw->offloads.encap_tbl_lock);
- 	complete_all(&e->res_ready);
- 	if (err) {
- 		e->compl_result = err;
-@@ -889,18 +891,15 @@ int mlx5e_attach_encap(struct mlx5e_priv *priv,
- 	} else {
- 		flow_flag_set(flow, SLOW);
- 	}
--	mutex_unlock(&esw->offloads.encap_tbl_lock);
- 
- 	return err;
- 
- out_err:
--	mutex_unlock(&esw->offloads.encap_tbl_lock);
- 	if (e)
--		mlx5e_encap_put(priv, e);
-+		mlx5e_encap_put_locked(priv, e);
- 	return err;
- 
- out_err_init:
--	mutex_unlock(&esw->offloads.encap_tbl_lock);
- 	kfree(tun_info);
- 	kfree(e);
- 	return err;
-@@ -996,6 +995,7 @@ int mlx5e_tc_tun_encap_dests_set(struct mlx5e_priv *priv,
- 	struct net_device *encap_dev = NULL;
- 	struct mlx5e_rep_priv *rpriv;
- 	struct mlx5e_priv *out_priv;
-+	struct mlx5_eswitch *esw;
- 	int out_index;
- 	int err = 0;
- 
-@@ -1006,6 +1006,8 @@ int mlx5e_tc_tun_encap_dests_set(struct mlx5e_priv *priv,
- 	esw_attr = attr->esw_attr;
- 	*vf_tun = false;
- 
-+	esw = priv->mdev->priv.eswitch;
-+	mutex_lock(&esw->offloads.encap_tbl_lock);
- 	for (out_index = 0; out_index < MLX5_MAX_FLOW_FWD_VPORTS; out_index++) {
- 		struct net_device *out_dev;
- 		int mirred_ifindex;
-@@ -1044,6 +1046,7 @@ int mlx5e_tc_tun_encap_dests_set(struct mlx5e_priv *priv,
- 	}
- 
+-	mlx5e_dbg(HW, priv, "total buffer size=%d, spare buffer size=%d\n",
+-		  port_buffer->port_buffer_size,
++	port_buffer->headroom_size = total_used;
++	port_buffer->spare_buffer_size = port_buffer->port_buffer_size -
++					 port_buffer->internal_buffers_size -
++					 port_buffer->headroom_size;
++
++	mlx5e_dbg(HW, priv,
++		  "total buffer size=%u, headroom buffer size=%u, internal buffers size=%u, spare buffer size=%u\n",
++		  port_buffer->port_buffer_size, port_buffer->headroom_size,
++		  port_buffer->internal_buffers_size,
+ 		  port_buffer->spare_buffer_size);
  out:
-+	mutex_unlock(&esw->offloads.encap_tbl_lock);
- 	return err;
- }
+ 	kfree(out);
+@@ -206,11 +216,11 @@ static int port_update_pool_cfg(struct mlx5_core_dev *mdev,
+ 	if (!MLX5_CAP_GEN(mdev, sbcam_reg))
+ 		return 0;
  
+-	for (i = 0; i < MLX5E_MAX_BUFFER; i++)
++	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++)
+ 		lossless_buff_count += ((port_buffer->buffer[i].size) &&
+ 				       (!(port_buffer->buffer[i].lossy)));
+ 
+-	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
++	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
+ 		p = select_sbcm_params(&port_buffer->buffer[i], lossless_buff_count);
+ 		err = mlx5e_port_set_sbcm(mdev, 0, i,
+ 					  MLX5_INGRESS_DIR,
+@@ -293,7 +303,7 @@ static int port_set_buffer(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto out;
+ 
+-	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
++	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
+ 		void *buffer = MLX5_ADDR_OF(pbmc_reg, in, buffer[i]);
+ 		u64 size = port_buffer->buffer[i].size;
+ 		u64 xoff = port_buffer->buffer[i].xoff;
+@@ -351,7 +361,7 @@ static int update_xoff_threshold(struct mlx5e_port_buffer *port_buffer,
+ {
+ 	int i;
+ 
+-	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
++	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
+ 		if (port_buffer->buffer[i].lossy) {
+ 			port_buffer->buffer[i].xoff = 0;
+ 			port_buffer->buffer[i].xon  = 0;
+@@ -408,7 +418,7 @@ static int update_buffer_lossy(struct mlx5_core_dev *mdev,
+ 	int err;
+ 	int i;
+ 
+-	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
++	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
+ 		prio_count = 0;
+ 		lossy_count = 0;
+ 
+@@ -515,7 +525,7 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 
+ 	if (change & MLX5E_PORT_BUFFER_PRIO2BUFFER) {
+ 		update_prio2buffer = true;
+-		for (i = 0; i < MLX5E_MAX_BUFFER; i++)
++		for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++)
+ 			mlx5e_dbg(HW, priv, "%s: requested to map prio[%d] to buffer %d\n",
+ 				  __func__, i, prio2buffer[i]);
+ 
+@@ -530,7 +540,7 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 	}
+ 
+ 	if (change & MLX5E_PORT_BUFFER_SIZE) {
+-		for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
++		for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
+ 			mlx5e_dbg(HW, priv, "%s: buffer[%d]=%d\n", __func__, i, buffer_size[i]);
+ 			if (!port_buffer.buffer[i].lossy && !buffer_size[i]) {
+ 				mlx5e_dbg(HW, priv, "%s: lossless buffer[%d] size cannot be zero\n",
+@@ -544,7 +554,9 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 
+ 		mlx5e_dbg(HW, priv, "%s: total buffer requested=%d\n", __func__, total_used);
+ 
+-		if (total_used > port_buffer.port_buffer_size)
++		if (total_used > port_buffer.headroom_size &&
++		    (total_used - port_buffer.headroom_size) >
++			    port_buffer.spare_buffer_size)
+ 			return -EINVAL;
+ 
+ 		update_buffer = true;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
+index a6ef118de758f..f4a19ffbb641c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
+@@ -35,7 +35,8 @@
+ #include "en.h"
+ #include "port.h"
+ 
+-#define MLX5E_MAX_BUFFER 8
++#define MLX5E_MAX_NETWORK_BUFFER 8
++#define MLX5E_TOTAL_BUFFERS 10
+ #define MLX5E_DEFAULT_CABLE_LEN 7 /* 7 meters */
+ 
+ #define MLX5_BUFFER_SUPPORTED(mdev) (MLX5_CAP_GEN(mdev, pcam_reg) && \
+@@ -60,8 +61,9 @@ struct mlx5e_bufferx_reg {
+ struct mlx5e_port_buffer {
+ 	u32                       port_buffer_size;
+ 	u32                       spare_buffer_size;
+-	u32                       headroom_size;
+-	struct mlx5e_bufferx_reg  buffer[MLX5E_MAX_BUFFER];
++	u32                       headroom_size;	  /* Buffers 0-7 */
++	u32                       internal_buffers_size;  /* Buffers 8-9 */
++	struct mlx5e_bufferx_reg  buffer[MLX5E_MAX_NETWORK_BUFFER];
+ };
+ 
+ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 89de92d064836..ebee52a8361aa 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -926,9 +926,10 @@ static int mlx5e_dcbnl_getbuffer(struct net_device *dev,
+ 	if (err)
+ 		return err;
+ 
+-	for (i = 0; i < MLX5E_MAX_BUFFER; i++)
++	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++)
+ 		dcb_buffer->buffer_size[i] = port_buffer.buffer[i].size;
+-	dcb_buffer->total_size = port_buffer.port_buffer_size;
++	dcb_buffer->total_size = port_buffer.port_buffer_size -
++				 port_buffer.internal_buffers_size;
+ 
+ 	return 0;
+ }
+@@ -970,7 +971,7 @@ static int mlx5e_dcbnl_setbuffer(struct net_device *dev,
+ 	if (err)
+ 		return err;
+ 
+-	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
++	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
+ 		if (port_buffer.buffer[i].size != dcb_buffer->buffer_size[i]) {
+ 			changed |= MLX5E_PORT_BUFFER_SIZE;
+ 			buffer_size = dcb_buffer->buffer_size;
 -- 
 2.39.2
 
