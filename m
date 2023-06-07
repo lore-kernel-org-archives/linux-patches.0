@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E263AE70
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5708EC433EF;
-	Wed,  7 Jun 2023 20:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786743AE6D
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D35C433D2;
+	Wed,  7 Jun 2023 20:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169868;
-	bh=rW0YwDgq3ZgQP0BS4c50aWuZLQv3qUkX4OPbOU6JKH8=;
+	s=korg; t=1686169871;
+	bh=GwBaXoNiSoSFSpiNL3cErcNCcIVhHLLYcgqU77N4EW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qlY0j5yaPiNPocIYmAHx03puBAzsRYDVtFNvIZYvE7Wmcy5HLG7Z8YJ8QnfZ6eoV3
-	 VsR97g7AZx/YLR91U9DrnzbqA3pAkUuIeLtIMEsoFYORLS8BvdOzOKcmvaayWzvXLh
-	 Q1F9LBFsHjYqEn3yn1JYL/9Emv+KYtmb2JImw9Rg=
+	b=FJwWzj5EXXjMggrgEY/eF4mkMGvYRYnJVIGY3ue4us3fuuCTkJjLf+rSjRE9XvppD
+	 1y7OCDVe4U2t0l41gc7mxKLSXqIxYAFpL4ukJdBqllrfNHhejCu66HbvBzy9Tf3lrG
+	 L9wQ6fzgSqySddDnflyr1voLhgJTgdtBt1IiBvts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>
-Subject: [PATCH 6.3 227/286] tty: serial: fsl_lpuart: use UARTCTRL_TXINV to send break instead of UARTCTRL_SBK
-Date: Wed,  7 Jun 2023 22:15:26 +0200
-Message-ID: <20230607200930.703861473@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Richard Weinberger <richard@nod.at>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.3 245/286] mtdchar: mark bits of ioctl handler noinline
+Date: Wed,  7 Jun 2023 22:15:44 +0200
+Message-ID: <20230607200931.296822388@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -34,107 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sherry Sun <sherry.sun@nxp.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 2474e05467c00f7d51af3039b664de6886325257 upstream.
+commit 0ea923f443350c8c5cca6eef5b748d52b903f46c upstream.
 
-LPUART IP now has two known bugs, one is that CTS has higher priority
-than the break signal, which causes the break signal sending through
-UARTCTRL_SBK may impacted by the CTS input if the HW flow control is
-enabled. It exists on all platforms we support in this driver.
-So we add a workaround patch for this issue: commit c4c81db5cf8b
-("tty: serial: fsl_lpuart: disable the CTS when send break signal").
+The addition of the mtdchar_read_ioctl() function caused the stack usage
+of mtdchar_ioctl() to grow beyond the warning limit on 32-bit architectures
+with gcc-13:
 
-Another IP bug is i.MX8QM LPUART may have an additional break character
-being sent after SBK was cleared. It may need to add some delay between
-clearing SBK and re-enabling CTS to ensure that the SBK latch are
-completely cleared.
+drivers/mtd/mtdchar.c: In function 'mtdchar_ioctl':
+drivers/mtd/mtdchar.c:1229:1: error: the frame size of 1488 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
 
-But we found that during the delay period before CTS is enabled, there
-is still a risk that Bluetooth data in TX FIFO may be sent out during
-this period because of break off and CTS disabled(even if BT sets CTS
-line deasserted, data is still sent to BT).
+Mark both the read and write portions as noinline_for_stack to ensure
+they don't get inlined and use separate stack slots to reduce the
+maximum usage, both in the mtdchar_ioctl() and combined with any
+of its callees.
 
-Due to this risk, we have to drop the CTS-disabling workaround for SBK
-bugs, use TXINV seems to be a better way to replace SBK feature and
-avoid above risk. Also need to disable the transmitter to prevent any
-data from being sent out during break, then invert the TX line to send
-break. Then disable the TXINV when turn off break and re-enable
-transmitter.
-
-Fixes: c4c81db5cf8b ("tty: serial: fsl_lpuart: disable the CTS when send break signal")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://lore.kernel.org/r/20230519094751.28948-1-sherry.sun@nxp.com
+Fixes: 095bb6e44eb1 ("mtdchar: add MEMREAD ioctl")
+Cc: stable@vger.kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230417205654.1982368-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 44 +++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 21 deletions(-)
+ drivers/mtd/mtdchar.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index c91916e13648..7486a2b8556c 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1495,34 +1495,36 @@ static void lpuart_break_ctl(struct uart_port *port, int break_state)
- 
- static void lpuart32_break_ctl(struct uart_port *port, int break_state)
- {
--	unsigned long temp, modem;
--	struct tty_struct *tty;
--	unsigned int cflag = 0;
-+	unsigned long temp;
- 
--	tty = tty_port_tty_get(&port->state->port);
--	if (tty) {
--		cflag = tty->termios.c_cflag;
--		tty_kref_put(tty);
--	}
--
--	temp = lpuart32_read(port, UARTCTRL) & ~UARTCTRL_SBK;
--	modem = lpuart32_read(port, UARTMODIR);
-+	temp = lpuart32_read(port, UARTCTRL);
- 
-+	/*
-+	 * LPUART IP now has two known bugs, one is CTS has higher priority than the
-+	 * break signal, which causes the break signal sending through UARTCTRL_SBK
-+	 * may impacted by the CTS input if the HW flow control is enabled. It
-+	 * exists on all platforms we support in this driver.
-+	 * Another bug is i.MX8QM LPUART may have an additional break character
-+	 * being sent after SBK was cleared.
-+	 * To avoid above two bugs, we use Transmit Data Inversion function to send
-+	 * the break signal instead of UARTCTRL_SBK.
-+	 */
- 	if (break_state != 0) {
--		temp |= UARTCTRL_SBK;
- 		/*
--		 * LPUART CTS has higher priority than SBK, need to disable CTS before
--		 * asserting SBK to avoid any interference if flow control is enabled.
-+		 * Disable the transmitter to prevent any data from being sent out
-+		 * during break, then invert the TX line to send break.
- 		 */
--		if (cflag & CRTSCTS && modem & UARTMODIR_TXCTSE)
--			lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
-+		temp &= ~UARTCTRL_TE;
-+		lpuart32_write(port, temp, UARTCTRL);
-+		temp |= UARTCTRL_TXINV;
-+		lpuart32_write(port, temp, UARTCTRL);
- 	} else {
--		/* Re-enable the CTS when break off. */
--		if (cflag & CRTSCTS && !(modem & UARTMODIR_TXCTSE))
--			lpuart32_write(port, modem | UARTMODIR_TXCTSE, UARTMODIR);
-+		/* Disable the TXINV to turn off break and re-enable transmitter. */
-+		temp &= ~UARTCTRL_TXINV;
-+		lpuart32_write(port, temp, UARTCTRL);
-+		temp |= UARTCTRL_TE;
-+		lpuart32_write(port, temp, UARTCTRL);
- 	}
--
--	lpuart32_write(port, temp, UARTCTRL);
+--- a/drivers/mtd/mtdchar.c
++++ b/drivers/mtd/mtdchar.c
+@@ -590,8 +590,8 @@ static void adjust_oob_length(struct mtd
+ 			    (end_page - start_page + 1) * oob_per_page);
  }
  
- static void lpuart_setup_watermark(struct lpuart_port *sport)
--- 
-2.41.0
-
+-static int mtdchar_write_ioctl(struct mtd_info *mtd,
+-		struct mtd_write_req __user *argp)
++static noinline_for_stack int
++mtdchar_write_ioctl(struct mtd_info *mtd, struct mtd_write_req __user *argp)
+ {
+ 	struct mtd_info *master = mtd_get_master(mtd);
+ 	struct mtd_write_req req;
+@@ -688,8 +688,8 @@ static int mtdchar_write_ioctl(struct mt
+ 	return ret;
+ }
+ 
+-static int mtdchar_read_ioctl(struct mtd_info *mtd,
+-		struct mtd_read_req __user *argp)
++static noinline_for_stack int
++mtdchar_read_ioctl(struct mtd_info *mtd, struct mtd_read_req __user *argp)
+ {
+ 	struct mtd_info *master = mtd_get_master(mtd);
+ 	struct mtd_read_req req;
 
 
