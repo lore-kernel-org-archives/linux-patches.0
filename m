@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EB73AE70
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4DEC433EF;
-	Wed,  7 Jun 2023 20:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A433AE6C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957AAC433D2;
+	Wed,  7 Jun 2023 20:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169961;
-	bh=bbYln/TBSXi6pqCBFc2FsJJomM1MWNuhG6eEghATqjY=;
+	s=korg; t=1686169963;
+	bh=nvxxCqzQSJniYD7SMvM7DQAEKt9nmhMautvZMiswPdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNA4qZKZnXxKZ0k/ZT7Tv+8JabX3oOQp+iAx2VgwKoULiYsNtt64GzURcEXstIp3j
-	 ReJCGlXHqFZNIVQGNXTvbSRfPtR39831VzB0ZaznL3dVO/49zHOC0gF8b7RBslcvDE
-	 u2B9FXire80GyNgPp4nAmY32EyUiNhENhHtFiVnY=
+	b=SdfVz3ebI+EefLY93JkEJ2O1cFVbreuZx00YBdDFdbyuE9B6ymdGpgOk9wB+eD0zS
+	 K6a5qhhwrTe91D/PGqFwxU3gnTwMmvpBxigxAGp6o3u9+w6RJcIWtsRMhFH/BBBBO9
+	 ZGwKipxFOSvp0SGC1wcLU/c989E71XiLzHY5xPHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Ting Chen <h3xrabbit@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 279/286] ksmbd: fix multiple out-of-bounds read during context decoding
-Date: Wed,  7 Jun 2023 22:16:18 +0200
-Message-ID: <20230607200932.398741900@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH 6.3 280/286] KEYS: asymmetric: Copy sig and digest in public_key_verify_signature()
+Date: Wed,  7 Jun 2023 22:16:19 +0200
+Message-ID: <20230607200932.428568936@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,151 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuan-Ting Chen <h3xrabbit@gmail.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-commit 0512a5f89e1fae74251fde6893ff634f1c96c6fb upstream.
+commit c3d03e8e35e005e1a614e51bb59053eeb5857f76 upstream.
 
-Check the remaining data length before accessing the context structure
-to ensure that the entire structure is contained within the packet.
-Additionally, since the context data length `ctxt_len` has already been
-checked against the total packet length `len_of_ctxts`, update the
-comparison to use `ctxt_len`.
+Commit ac4e97abce9b8 ("scatterlist: sg_set_buf() argument must be in linear
+mapping") checks that both the signature and the digest reside in the
+linear mapping area.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuan-Ting Chen <h3xrabbit@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+However, more recently commit ba14a194a434c ("fork: Add generic vmalloced
+stack support") made it possible to move the stack in the vmalloc area,
+which is not contiguous, and thus not suitable for sg_set_buf() which needs
+adjacent pages.
+
+Always make a copy of the signature and digest in the same buffer used to
+store the key and its parameters, and pass them to sg_init_one(). Prefer it
+to conditionally doing the copy if necessary, to keep the code simple. The
+buffer allocated with kmalloc() is in the linear mapping area.
+
+Cc: stable@vger.kernel.org # 4.9.x
+Fixes: ba14a194a434 ("fork: Add generic vmalloced stack support")
+Link: https://lore.kernel.org/linux-integrity/Y4pIpxbjBdajymBJ@sol.localdomain/
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Tested-by: Stefan Berger <stefanb@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |   53 ++++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 34 insertions(+), 19 deletions(-)
+ crypto/asymmetric_keys/public_key.c |   38 +++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -873,13 +873,14 @@ static void assemble_neg_contexts(struct
+--- a/crypto/asymmetric_keys/public_key.c
++++ b/crypto/asymmetric_keys/public_key.c
+@@ -380,9 +380,10 @@ int public_key_verify_signature(const st
+ 	struct crypto_wait cwait;
+ 	struct crypto_akcipher *tfm;
+ 	struct akcipher_request *req;
+-	struct scatterlist src_sg[2];
++	struct scatterlist src_sg;
+ 	char alg_name[CRYPTO_MAX_ALG_NAME];
+-	char *key, *ptr;
++	char *buf, *ptr;
++	size_t buf_len;
+ 	int ret;
  
- static __le32 decode_preauth_ctxt(struct ksmbd_conn *conn,
- 				  struct smb2_preauth_neg_context *pneg_ctxt,
--				  int len_of_ctxts)
-+				  int ctxt_len)
- {
- 	/*
- 	 * sizeof(smb2_preauth_neg_context) assumes SMB311_SALT_SIZE Salt,
- 	 * which may not be present. Only check for used HashAlgorithms[1].
- 	 */
--	if (len_of_ctxts < MIN_PREAUTH_CTXT_DATA_LEN)
-+	if (ctxt_len <
-+	    sizeof(struct smb2_neg_context) + MIN_PREAUTH_CTXT_DATA_LEN)
- 		return STATUS_INVALID_PARAMETER;
+ 	pr_devel("==>%s()\n", __func__);
+@@ -420,34 +421,37 @@ int public_key_verify_signature(const st
+ 	if (!req)
+ 		goto error_free_tfm;
  
- 	if (pneg_ctxt->HashAlgorithms != SMB2_PREAUTH_INTEGRITY_SHA512)
-@@ -891,15 +892,23 @@ static __le32 decode_preauth_ctxt(struct
- 
- static void decode_encrypt_ctxt(struct ksmbd_conn *conn,
- 				struct smb2_encryption_neg_context *pneg_ctxt,
--				int len_of_ctxts)
-+				int ctxt_len)
- {
--	int cph_cnt = le16_to_cpu(pneg_ctxt->CipherCount);
--	int i, cphs_size = cph_cnt * sizeof(__le16);
-+	int cph_cnt;
-+	int i, cphs_size;
+-	key = kmalloc(pkey->keylen + sizeof(u32) * 2 + pkey->paramlen,
+-		      GFP_KERNEL);
+-	if (!key)
++	buf_len = max_t(size_t, pkey->keylen + sizeof(u32) * 2 + pkey->paramlen,
++			sig->s_size + sig->digest_size);
 +
-+	if (sizeof(struct smb2_encryption_neg_context) > ctxt_len) {
-+		pr_err("Invalid SMB2_ENCRYPTION_CAPABILITIES context size\n");
-+		return;
-+	}
++	buf = kmalloc(buf_len, GFP_KERNEL);
++	if (!buf)
+ 		goto error_free_req;
  
- 	conn->cipher_type = 0;
+-	memcpy(key, pkey->key, pkey->keylen);
+-	ptr = key + pkey->keylen;
++	memcpy(buf, pkey->key, pkey->keylen);
++	ptr = buf + pkey->keylen;
+ 	ptr = pkey_pack_u32(ptr, pkey->algo);
+ 	ptr = pkey_pack_u32(ptr, pkey->paramlen);
+ 	memcpy(ptr, pkey->params, pkey->paramlen);
  
-+	cph_cnt = le16_to_cpu(pneg_ctxt->CipherCount);
-+	cphs_size = cph_cnt * sizeof(__le16);
-+
- 	if (sizeof(struct smb2_encryption_neg_context) + cphs_size >
--	    len_of_ctxts) {
-+	    ctxt_len) {
- 		pr_err("Invalid cipher count(%d)\n", cph_cnt);
- 		return;
+ 	if (pkey->key_is_private)
+-		ret = crypto_akcipher_set_priv_key(tfm, key, pkey->keylen);
++		ret = crypto_akcipher_set_priv_key(tfm, buf, pkey->keylen);
+ 	else
+-		ret = crypto_akcipher_set_pub_key(tfm, key, pkey->keylen);
++		ret = crypto_akcipher_set_pub_key(tfm, buf, pkey->keylen);
+ 	if (ret)
+-		goto error_free_key;
++		goto error_free_buf;
+ 
+ 	if (strcmp(pkey->pkey_algo, "sm2") == 0 && sig->data_size) {
+ 		ret = cert_sig_digest_update(sig, tfm);
+ 		if (ret)
+-			goto error_free_key;
++			goto error_free_buf;
  	}
-@@ -947,15 +956,22 @@ static void decode_compress_ctxt(struct
  
- static void decode_sign_cap_ctxt(struct ksmbd_conn *conn,
- 				 struct smb2_signing_capabilities *pneg_ctxt,
--				 int len_of_ctxts)
-+				 int ctxt_len)
- {
--	int sign_algo_cnt = le16_to_cpu(pneg_ctxt->SigningAlgorithmCount);
--	int i, sign_alos_size = sign_algo_cnt * sizeof(__le16);
-+	int sign_algo_cnt;
-+	int i, sign_alos_size;
+-	sg_init_table(src_sg, 2);
+-	sg_set_buf(&src_sg[0], sig->s, sig->s_size);
+-	sg_set_buf(&src_sg[1], sig->digest, sig->digest_size);
+-	akcipher_request_set_crypt(req, src_sg, NULL, sig->s_size,
++	memcpy(buf, sig->s, sig->s_size);
++	memcpy(buf + sig->s_size, sig->digest, sig->digest_size);
 +
-+	if (sizeof(struct smb2_signing_capabilities) > ctxt_len) {
-+		pr_err("Invalid SMB2_SIGNING_CAPABILITIES context length\n");
-+		return;
-+	}
++	sg_init_one(&src_sg, buf, sig->s_size + sig->digest_size);
++	akcipher_request_set_crypt(req, &src_sg, NULL, sig->s_size,
+ 				   sig->digest_size);
+ 	crypto_init_wait(&cwait);
+ 	akcipher_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG |
+@@ -455,8 +459,8 @@ int public_key_verify_signature(const st
+ 				      crypto_req_done, &cwait);
+ 	ret = crypto_wait_req(crypto_akcipher_verify(req), &cwait);
  
- 	conn->signing_negotiated = false;
-+	sign_algo_cnt = le16_to_cpu(pneg_ctxt->SigningAlgorithmCount);
-+	sign_alos_size = sign_algo_cnt * sizeof(__le16);
- 
- 	if (sizeof(struct smb2_signing_capabilities) + sign_alos_size >
--	    len_of_ctxts) {
-+	    ctxt_len) {
- 		pr_err("Invalid signing algorithm count(%d)\n", sign_algo_cnt);
- 		return;
- 	}
-@@ -993,18 +1009,16 @@ static __le32 deassemble_neg_contexts(st
- 	len_of_ctxts = len_of_smb - offset;
- 
- 	while (i++ < neg_ctxt_cnt) {
--		int clen;
--
--		/* check that offset is not beyond end of SMB */
--		if (len_of_ctxts == 0)
--			break;
-+		int clen, ctxt_len;
- 
- 		if (len_of_ctxts < sizeof(struct smb2_neg_context))
- 			break;
- 
- 		pctx = (struct smb2_neg_context *)((char *)pctx + offset);
- 		clen = le16_to_cpu(pctx->DataLength);
--		if (clen + sizeof(struct smb2_neg_context) > len_of_ctxts)
-+		ctxt_len = clen + sizeof(struct smb2_neg_context);
-+
-+		if (ctxt_len > len_of_ctxts)
- 			break;
- 
- 		if (pctx->ContextType == SMB2_PREAUTH_INTEGRITY_CAPABILITIES) {
-@@ -1015,7 +1029,7 @@ static __le32 deassemble_neg_contexts(st
- 
- 			status = decode_preauth_ctxt(conn,
- 						     (struct smb2_preauth_neg_context *)pctx,
--						     len_of_ctxts);
-+						     ctxt_len);
- 			if (status != STATUS_SUCCESS)
- 				break;
- 		} else if (pctx->ContextType == SMB2_ENCRYPTION_CAPABILITIES) {
-@@ -1026,7 +1040,7 @@ static __le32 deassemble_neg_contexts(st
- 
- 			decode_encrypt_ctxt(conn,
- 					    (struct smb2_encryption_neg_context *)pctx,
--					    len_of_ctxts);
-+					    ctxt_len);
- 		} else if (pctx->ContextType == SMB2_COMPRESSION_CAPABILITIES) {
- 			ksmbd_debug(SMB,
- 				    "deassemble SMB2_COMPRESSION_CAPABILITIES context\n");
-@@ -1045,9 +1059,10 @@ static __le32 deassemble_neg_contexts(st
- 		} else if (pctx->ContextType == SMB2_SIGNING_CAPABILITIES) {
- 			ksmbd_debug(SMB,
- 				    "deassemble SMB2_SIGNING_CAPABILITIES context\n");
-+
- 			decode_sign_cap_ctxt(conn,
- 					     (struct smb2_signing_capabilities *)pctx,
--					     len_of_ctxts);
-+					     ctxt_len);
- 		}
- 
- 		/* offsets must be 8 byte aligned */
+-error_free_key:
+-	kfree(key);
++error_free_buf:
++	kfree(buf);
+ error_free_req:
+ 	akcipher_request_free(req);
+ error_free_tfm:
 
 
