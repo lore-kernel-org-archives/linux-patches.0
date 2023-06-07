@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F9837325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2928CC433EF;
-	Wed,  7 Jun 2023 20:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924951D2A5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E1AC433EF;
+	Wed,  7 Jun 2023 20:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171010;
-	bh=+S96KXUuZRYiirsXrHe1YzXZhgwKZfcsFCX6sz2X0n8=;
+	s=korg; t=1686171013;
+	bh=TioVpWTIMZ3lovXqix+AuORzxm9tsqxRhU0kzNkH7KY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mqGkxTLPF1K3834AM0rzFzJc2CekyPIPx1KaeplQZJ4BorPhi5j1WViU+/2QGOKL8
-	 nkKWtq3dy/ZHfaN/RXKE5ygKmVV3erHXxc46t1VZwNyARcHnNMLCL/G0G2TQoEVBXH
-	 v4yjKO8tslFvmRITX/2ijJ8HeWh91g784vI/NXOQ=
+	b=WA9KAke1QGu1kWzWLGxX5TCW2QZ/9GcHHOiuvODPd07TUb28X2NC3THuw7IGACu4z
+	 E7cSBvBe/81sE9nbB7qr9ymK7PB3RNVjXFzOe1bRIZMrITCTdorMP44FOWDsXcFdNq
+	 604dCqLiFUKi9JBgpYMRThoSjAOlEvASTr1kk4DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Marek Vasut <marex@denx.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 077/120] iio: light: vcnl4035: fixed chip ID check
-Date: Wed,  7 Jun 2023 22:16:33 +0200
-Message-ID: <20230607200903.328483382@linuxfoundation.org>
+Subject: [PATCH 5.10 078/120] iio: dac: mcp4725: Fix i2c_master_send() return value handling
+Date: Wed,  7 Jun 2023 22:16:34 +0200
+Message-ID: <20230607200903.358624096@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -35,57 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Marek Vasut <marex@denx.de>
 
-commit a551c26e8e568fad42120843521529241b9bceec upstream.
+commit 09d3bec7009186bdba77039df01e5834788b3f95 upstream.
 
-VCNL4035 register(0xE) ID_L and ID_M define as:
+The i2c_master_send() returns number of sent bytes on success,
+or negative on error. The suspend/resume callbacks expect zero
+on success and non-zero on error. Adapt the return value of the
+i2c_master_send() to the expectation of the suspend and resume
+callbacks, including proper validation of the return value.
 
- ID_L: 0x80
- ID_H: 7:6 (0:0)
-       5:4 (0:0) slave address = 0x60 (7-bit)
-           (0:1) slave address = 0x51 (7-bit)
-           (1:0) slave address = 0x40 (7-bit)
-           (1:0) slave address = 0x41 (7-bit)
-       3:0 Version code default	(0:0:0:0)
-
-So just check ID_L.
-
-Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20230501143605.1615549-1-Frank.Li@nxp.com
+Fixes: cf35ad61aca2 ("iio: add mcp4725 I2C DAC driver")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230511004330.206942-1-marex@denx.de
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/vcnl4035.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/dac/mcp4725.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/light/vcnl4035.c
-+++ b/drivers/iio/light/vcnl4035.c
-@@ -8,6 +8,7 @@
-  * TODO: Proximity
-  */
- #include <linux/bitops.h>
-+#include <linux/bitfield.h>
- #include <linux/i2c.h>
- #include <linux/module.h>
- #include <linux/pm_runtime.h>
-@@ -42,6 +43,7 @@
- #define VCNL4035_ALS_PERS_MASK		GENMASK(3, 2)
- #define VCNL4035_INT_ALS_IF_H_MASK	BIT(12)
- #define VCNL4035_INT_ALS_IF_L_MASK	BIT(13)
-+#define VCNL4035_DEV_ID_MASK		GENMASK(7, 0)
+--- a/drivers/iio/dac/mcp4725.c
++++ b/drivers/iio/dac/mcp4725.c
+@@ -47,12 +47,18 @@ static int __maybe_unused mcp4725_suspen
+ 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
+ 		to_i2c_client(dev)));
+ 	u8 outbuf[2];
++	int ret;
  
- /* Default values */
- #define VCNL4035_MODE_ALS_ENABLE	BIT(0)
-@@ -415,6 +417,7 @@ static int vcnl4035_init(struct vcnl4035
- 		return ret;
- 	}
+ 	outbuf[0] = (data->powerdown_mode + 1) << 4;
+ 	outbuf[1] = 0;
+ 	data->powerdown = true;
  
-+	id = FIELD_GET(VCNL4035_DEV_ID_MASK, id);
- 	if (id != VCNL4035_DEV_ID_VAL) {
- 		dev_err(&data->client->dev, "Wrong id, got %x, expected %x\n",
- 			id, VCNL4035_DEV_ID_VAL);
+-	return i2c_master_send(data->client, outbuf, 2);
++	ret = i2c_master_send(data->client, outbuf, 2);
++	if (ret < 0)
++		return ret;
++	else if (ret != 2)
++		return -EIO;
++	return 0;
+ }
+ 
+ static int __maybe_unused mcp4725_resume(struct device *dev)
+@@ -60,13 +66,19 @@ static int __maybe_unused mcp4725_resume
+ 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
+ 		to_i2c_client(dev)));
+ 	u8 outbuf[2];
++	int ret;
+ 
+ 	/* restore previous DAC value */
+ 	outbuf[0] = (data->dac_value >> 8) & 0xf;
+ 	outbuf[1] = data->dac_value & 0xff;
+ 	data->powerdown = false;
+ 
+-	return i2c_master_send(data->client, outbuf, 2);
++	ret = i2c_master_send(data->client, outbuf, 2);
++	if (ret < 0)
++		return ret;
++	else if (ret != 2)
++		return -EIO;
++	return 0;
+ }
+ static SIMPLE_DEV_PM_OPS(mcp4725_pm_ops, mcp4725_suspend, mcp4725_resume);
+ 
 
 
