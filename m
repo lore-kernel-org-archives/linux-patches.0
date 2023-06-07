@@ -1,39 +1,28 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695653D64
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 11:00:32 +0000 (UTC)
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-78a5384a5daso399048241.0
-        for <patches@lists.linux.dev>; Wed, 07 Jun 2023 04:00:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686135631; x=1688727631;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=utFv2n7Nj2e/FDpN7qyLak8UIusvCi1A8IvvGYMYwhU=;
-        b=DrwRvvr8wkCc60q+4TeytNMzG5yzg5YRzsakXJGC5Mw51JiiVpXEblZqcTLneUGJvd
-         Sl1NFLHdxszDECCn/BTwb2PY65GlWu1yjId2I5ebbKULn5NN/9Cywfn2KeU4LYcUzD+0
-         aVBVXuToS3UQiftn4+QXSg3fTT84fIo8/VwwmdS5+Lg32ucMC7dWX9sGw7asFrNqJ+du
-         hRQ0EqOTlYd/EM2OtCPk9uRb5YTjsFKSOxVMzz9S86hL9AVjoxpqKux72m5Kks0rLNHY
-         cq6HGMLo/dx7PHz6Z3KK0P6idgtfCnvnfrQ5B2WadXP6Zo+1J7Ugkd1IMVrZcKxtB8W7
-         c0mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686135631; x=1688727631;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=utFv2n7Nj2e/FDpN7qyLak8UIusvCi1A8IvvGYMYwhU=;
-        b=AUJf6sOxq1ZfH3zuTqVSZplG+tZU1ar1PD8fe17zgcVRkDIqdPPh3L7G0AaT0xwoiq
-         D0KoiLLKDv6ZNidvDmuTNxEl9clYJUcVfbuBocXygI2Vu01H3AG1VSA2GYNUrOmtqgJc
-         yCFs6fCKR33EFtPMQ8sTBkXpaS5MeNaHbIt/4ZRc/YsB6SBYgRXUgC6yZCACJswzVUt8
-         rJjhpvH1L3DrqOK1pOcN1+/RhUc+U6sL0iuzXvzwIBm+W7QqjvenLGig6Tz/ugt9r3eW
-         noEMszBmOSsYx2V1l8zUUXv8rvlH5+fQKCBhCfhR6DfeaqrG7XVGdIIIXHo27z6H9WzM
-         nDsg==
-X-Gm-Message-State: AC+VfDzI/IhFtoDhrzax7ZFQeL4GMPwcKrsPwv3GLqEF6TC41wTejSI5
-	vW9o72ej1sthtscI5l+dFURT7L5HQc2B61AcQ8tRAA==
-X-Google-Smtp-Source: ACHHUZ4HFfYgNv7o5eIp7Pa4GlU+Wn3luys2k3t/inbdIsV5+uKmMsly2J5/GaooqGXZqbfoG+Fnb0Er/HoYVgIr5bQ=
-X-Received: by 2002:a67:f7c4:0:b0:436:22fe:1d9 with SMTP id
- a4-20020a67f7c4000000b0043622fe01d9mr874244vsp.10.1686135630486; Wed, 07 Jun
- 2023 04:00:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F8B139F;
+	Wed,  7 Jun 2023 13:40:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8684FC433D2;
+	Wed,  7 Jun 2023 13:40:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1686145215;
+	bh=SNCVxE2wrdQKzyySHbHvUG+bSoAJiX15ywJ8wsEKhGU=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=UpOYu5F+ysiBloC09ECUTMARBl5FodyCioP6hcWfuE9CXFfrRXpViAKZiD3LlNexq
+	 eWuzSRPPMqM3Y1t/5534mE8X8DRIyO+D4VggTBXmjrUzF78trhZRVwLdj6Mek9Bd+1
+	 1STbY6pp0G9YFjrb5BfWqv2HTEzPcMcpZlTyJC5An3xW/NxcYVJLjno5flwzlmLEXb
+	 uAQ3qcm9mKr8GhNN/wkfxrSz7d0wm58XDSyZj2YWYV9NieXrF1jTCILtEyRFqOC7F1
+	 b/pk374IKozc7CVugv3jn2jbXnFgZNq6QqNg9rVrF0gkNbKm8WxLucmTuL3nUgha0w
+	 lxkgw1sNlBC+A==
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-39aa825c299so406142b6e.0;
+        Wed, 07 Jun 2023 06:40:15 -0700 (PDT)
+X-Gm-Message-State: AC+VfDz7Qtq5vFZNGwCSgtTLbaCm9RwI2l6jwlphemtt8YAhXj3Rkh10
+	ExcnAomsHJVp+ecKHRKC1RkyvLOF2SIR8DTnW4Y=
+X-Google-Smtp-Source: ACHHUZ4/GXwyywl7SpLOvRacOyzGB77x6C4lOebtqwbMKWUbtBOpqojrapAP9u2lQMYGmCAAGxRYELO0iegYuJ6INhI=
+X-Received: by 2002:aca:efd5:0:b0:39a:4170:6840 with SMTP id
+ n204-20020acaefd5000000b0039a41706840mr6804736oih.21.1686145214823; Wed, 07
+ Jun 2023 06:40:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,33 +31,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20230606-fix-as-option-after-clang_flags-move-v1-1-a7f7b23a35e3@kernel.org>
 In-Reply-To: <20230606-fix-as-option-after-clang_flags-move-v1-1-a7f7b23a35e3@kernel.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 7 Jun 2023 16:30:19 +0530
-Message-ID: <CA+G9fYs8HCjaBzTDdXsQoEt3KP5rS=M34awGs8em7Jmx=yQkkw@mail.gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Wed, 7 Jun 2023 22:39:38 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARAnyYo-Xdx9c528=Pw7cVbt1peWTTCu6LQkLmeMsp+hA@mail.gmail.com>
+Message-ID: <CAK7LNARAnyYo-Xdx9c528=Pw7cVbt1peWTTCu6LQkLmeMsp+hA@mail.gmail.com>
 Subject: Re: [PATCH] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
 To: Nathan Chancellor <nathan@kernel.org>
-Cc: masahiroy@kernel.org, ndesaulniers@google.com, nicolas@fjasle.eu, 
+Cc: naresh.kamboju@linaro.org, ndesaulniers@google.com, nicolas@fjasle.eu, 
 	trix@redhat.com, linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	llvm@lists.linux.dev, patches@lists.linux.dev, 
 	Linux Kernel Functional Testing <lkft@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 7 Jun 2023 at 04:10, Nathan Chancellor <nathan@kernel.org> wrote:
+On Wed, Jun 7, 2023 at 7:40=E2=80=AFAM Nathan Chancellor <nathan@kernel.org=
+> wrote:
 >
 > After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
 > KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
 > assembly files with clang:
 >
 >   arch/powerpc/lib/copypage_power7.S: Assembler messages:
->   arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
->   arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
->   arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
->   arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
->   arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
->   clang: error: assembler command failed with exit code 1 (use -v to see invocation)
+>   arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b0=
+1000'
+>   arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b0=
+1010'
+>   arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b0=
+1000'
+>   arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b0=
+1010'
+>   arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b0=
+1010'
+>   clang: error: assembler command failed with exit code 1 (use -v to see =
+invocation)
 >
 > as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
-> KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
+> KBUILD_AFLAGS, there is no more '--target=3D' or '--prefix=3D' flags. As =
+a
 > result of those missing flags, the host target
 > will be tested during as-option calls and likely fail, meaning necessary
 > flags may not get added when building assembly files, resulting in
@@ -83,16 +82,16 @@ On Wed, 7 Jun 2023 at 04:10, Nathan Chancellor <nathan@kernel.org> wrote:
 >
 > Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
 > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
+> Closes: https://lore.kernel.org/CA+G9fYs=3DkoW9WardsTtora+nMgLR3raHz-LSLr=
+58tgX4T5Mxag@mail.gmail.com/
 > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-
-This proposed fix patch applied on top of Linux next and
-built with clang and build test pass.
-https://storage.tuxsuite.com/public/linaro/naresh/builds/2QsEzqEij2M3F1JkQAQfhpIpsXG/
-
 > ---
+
+Applied to linux-kbuild.
+Thanks.
+
+
+
 >  scripts/Makefile.compiler | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
@@ -100,15 +99,17 @@ https://storage.tuxsuite.com/public/linaro/naresh/builds/2QsEzqEij2M3F1JkQAQfhpI
 > index 437013f8def3..e31f18625fcf 100644
 > --- a/scripts/Makefile.compiler
 > +++ b/scripts/Makefile.compiler
-> @@ -32,7 +32,7 @@ try-run = $(shell set -e;             \
->  # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
+> @@ -32,7 +32,7 @@ try-run =3D $(shell set -e;             \
+>  # Usage: aflags-y +=3D $(call as-option,-Wa$(comma)-isa=3Dfoo,)
 >
->  as-option = $(call try-run,\
-> -       $(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
-> +       $(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
+>  as-option =3D $(call try-run,\
+> -       $(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev=
+/null -o "$$TMP",$(1),$(2))
+> +       $(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x asse=
+mbler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
 >
 >  # as-instr
->  # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+>  # Usage: aflags-y +=3D $(call as-instr,instr,option1,option2)
 >
 > ---
 > base-commit: feb843a469fb0ab00d2d23cfb9bcc379791011bb
@@ -117,6 +118,9 @@ https://storage.tuxsuite.com/public/linaro/naresh/builds/2QsEzqEij2M3F1JkQAQfhpI
 > Best regards,
 > --
 > Nathan Chancellor <nathan@kernel.org>
+>
 
-Best regards
-Naresh Kamboju
+
+--=20
+Best Regards
+Masahiro Yamada
