@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40CB19E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640AEC433D2;
-	Wed,  7 Jun 2023 20:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAC619E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D91C433D2;
+	Wed,  7 Jun 2023 20:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170229;
-	bh=9/IyJn0IgiwHspJi4zQ0p07NCFhdpu98U1555qRM39s=;
+	s=korg; t=1686170232;
+	bh=JZCit1xpHd8E5VM4UE6ZB2UjCs13e8xrKdywqYVZ8t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MpvwVr9S+/dVOw+VGRsfqXbhV1+tsLZkFISX+siXVJ2FEO1SNryO6rPRdoYKCVXxd
-	 k8X/yo8YP4pRvDRfXXpclY+OBXx2Z9uuqNTgPBfaTN9pa9FIt+Jrbx0ujCcxaHd7aS
-	 YwRznAMCQY7fqd+sy+CwNReBmbbflrAX5gTJSKGc=
+	b=Z+zqln35WPUkoUg4ddyzCQTXpB93VZj6kHtrrc6x076Ijx4gu8v/Ml+RwU3i67CTx
+	 MlfZSoGERDvhfMkja/rdZX9wQ57d+mdAwygF35svhwhwz5f3jKQgzYICNu8w7xHmDz
+	 nqVtNxkLuw2SEdszs3G9u4nRN8n+0oQj4VXpkYkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.19 64/88] iio: dac: mcp4725: Fix i2c_master_send() return value handling
-Date: Wed,  7 Jun 2023 22:16:21 +0200
-Message-ID: <20230607200901.237570134@linuxfoundation.org>
+	Wenchao Hao <haowenchao2@huawei.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 55/88] scsi: core: Decrease scsi_devices iorequest_cnt if dispatch failed
+Date: Wed,  7 Jun 2023 22:16:12 +0200
+Message-ID: <20230607200900.962757395@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -36,69 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Wenchao Hao <haowenchao2@huawei.com>
 
-commit 09d3bec7009186bdba77039df01e5834788b3f95 upstream.
+[ Upstream commit 09e797c8641f6ad435c33ae24c223351197ea29a ]
 
-The i2c_master_send() returns number of sent bytes on success,
-or negative on error. The suspend/resume callbacks expect zero
-on success and non-zero on error. Adapt the return value of the
-i2c_master_send() to the expectation of the suspend and resume
-callbacks, including proper validation of the return value.
+If scsi_dispatch_cmd() failed, the SCSI command was not sent to the target,
+scsi_queue_rq() would return BLK_STS_RESOURCE and the related request would
+be requeued. The timeout of this request would not fire, no one would
+increase iodone_cnt.
 
-Fixes: cf35ad61aca2 ("iio: add mcp4725 I2C DAC driver")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230511004330.206942-1-marex@denx.de
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The above flow would result the iodone_cnt smaller than iorequest_cnt.  So
+decrease the iorequest_cnt if dispatch failed to workaround the issue.
+
+Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
+Reported-by: Ming Lei <ming.lei@redhat.com>
+Closes: https://lore.kernel.org/r/ZF+zB+bB7iqe0wGd@ovpn-8-17.pek2.redhat.com
+Link: https://lore.kernel.org/r/20230515070156.1790181-3-haowenchao2@huawei.com
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/mcp4725.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_lib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/dac/mcp4725.c
-+++ b/drivers/iio/dac/mcp4725.c
-@@ -50,12 +50,18 @@ static int mcp4725_suspend(struct device
- 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
- 		to_i2c_client(dev)));
- 	u8 outbuf[2];
-+	int ret;
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index ace4a7230bcf2..c8a8c6c62c9c2 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1804,6 +1804,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 		 */
+ 		SCSI_LOG_MLQUEUE(3, scmd_printk(KERN_INFO, cmd,
+ 			"queuecommand : device blocked\n"));
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		return SCSI_MLQUEUE_DEVICE_BUSY;
+ 	}
  
- 	outbuf[0] = (data->powerdown_mode + 1) << 4;
- 	outbuf[1] = 0;
- 	data->powerdown = true;
- 
--	return i2c_master_send(data->client, outbuf, 2);
-+	ret = i2c_master_send(data->client, outbuf, 2);
-+	if (ret < 0)
-+		return ret;
-+	else if (ret != 2)
-+		return -EIO;
-+	return 0;
- }
- 
- static int mcp4725_resume(struct device *dev)
-@@ -63,13 +69,19 @@ static int mcp4725_resume(struct device
- 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
- 		to_i2c_client(dev)));
- 	u8 outbuf[2];
-+	int ret;
- 
- 	/* restore previous DAC value */
- 	outbuf[0] = (data->dac_value >> 8) & 0xf;
- 	outbuf[1] = data->dac_value & 0xff;
- 	data->powerdown = false;
- 
--	return i2c_master_send(data->client, outbuf, 2);
-+	ret = i2c_master_send(data->client, outbuf, 2);
-+	if (ret < 0)
-+		return ret;
-+	else if (ret != 2)
-+		return -EIO;
-+	return 0;
- }
- 
- #ifdef CONFIG_PM_SLEEP
+@@ -1836,6 +1837,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 	trace_scsi_dispatch_cmd_start(cmd);
+ 	rtn = host->hostt->queuecommand(host, cmd);
+ 	if (rtn) {
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		trace_scsi_dispatch_cmd_error(cmd, rtn);
+ 		if (rtn != SCSI_MLQUEUE_DEVICE_BUSY &&
+ 		    rtn != SCSI_MLQUEUE_TARGET_BUSY)
+-- 
+2.39.2
+
 
 
