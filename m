@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AD3370E4
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:03:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1037AC433EF;
-	Wed,  7 Jun 2023 21:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BFD370E4
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:03:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1870C433EF;
+	Wed,  7 Jun 2023 21:03:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171825;
-	bh=wAQKrnLMTbjrBRltM3Dp68jT6dYe4jW4y3QlIFiNXkU=;
+	s=korg; t=1686171828;
+	bh=bmu1QLg/DywlH+5TBXa+qmwSNdE+kBJRTPG8kqOqZ+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=osO5IZKDmJA5fT0KkfeYQoAudzpsZnjkZdYMFFsEp6UYZmGESNe/mDoZV8cf90LP5
-	 kUBORDb99Fy3DE+Ru9FlUp0ApvIfeikRAWx7W6ns9vrNsNQLDB3h0aRTa+FtY/nGz+
-	 0QMkJoHQ7U55qJQUa3KDHnbwAealOdpnpArsz85E=
+	b=yJEFPWlbV29i8EiLgCAuZrmzOE/sxDtUlwRs4H0M3w3TVKtBn3VkMeJhggWzF5RO2
+	 X08rinEaEsVMyLX11KEGVzinW1rlJQi17yMt9hk9R+cf1tJpqHBhv5HzfTHoGI5Yb7
+	 eFhs8M5ZlBqdjiRmV+e5WspTvgGF/zghl9U7Ahnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.15 148/159] tpm, tpm_tis: Request threaded interrupt handler
-Date: Wed,  7 Jun 2023 22:17:31 +0200
-Message-ID: <20230607200908.509076356@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 5.15 149/159] drm/rcar: stop using imply for dependencies
+Date: Wed,  7 Jun 2023 22:17:32 +0200
+Message-ID: <20230607200908.539916767@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,42 +37,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 0c7e66e5fd69bf21034c9a9b081d7de7c3eb2cea upstream.
+commit 42d95d1b3a9c649bf5ee881fee5938e00126479a upstream.
 
-The TIS interrupt handler at least has to read and write the interrupt
-status register. In case of SPI both operations result in a call to
-tpm_tis_spi_transfer() which uses the bus_lock_mutex of the spi device
-and thus must only be called from a sleepable context.
+The meaning of the 'imply' keyword has changed recently, and neither the
+old meaning (select the symbol if its dependencies are met) nor the new
+meaning (enable it by default, but let the user set any other setting)
+is what we want here.
 
-To ensure this request a threaded interrupt handler.
+Work around this by adding two more Kconfig options that lead to
+the correct behavior: if DRM_RCAR_USE_CMM and DRM_RCAR_USE_LVDS
+are enabled, that portion of the driver becomes usable, and no
+configuration results in a link error.
 
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Tested-by: Michael Niewöhner <linux@mniewoehner.de>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+This avoids a link failure:
+
+arm-linux-gnueabi-ld: drivers/gpu/drm/rcar-du/rcar_du_crtc.o: in function `rcar_du_crtc_atomic_begin':
+rcar_du_crtc.c:(.text+0x1444): undefined reference to `rcar_cmm_setup'
+arm-linux-gnueabi-ld: drivers/gpu/drm/rcar-du/rcar_du_crtc.o: in function `rcar_du_crtc_atomic_enable':
+rcar_du_crtc.c:(.text+0x14d4): undefined reference to `rcar_cmm_enable'
+arm-linux-gnueabi-ld: rcar_du_crtc.c:(.text+0x1548): undefined reference to `rcar_cmm_setup'
+arm-linux-gnueabi-ld: drivers/gpu/drm/rcar-du/rcar_du_crtc.o: in function `rcar_du_crtc_atomic_disable':
+rcar_du_crtc.c:(.text+0x18b8): undefined reference to `rcar_cmm_disable'
+arm-linux-gnueabi-ld: drivers/gpu/drm/rcar-du/rcar_du_kms.o: in function `rcar_du_modeset_init':
+
+Link: https://lore.kernel.org/all/20200417155553.675905-5-arnd@arndb.de/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rcar-du/Kconfig |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -764,8 +764,11 @@ static int tpm_tis_probe_irq_single(stru
- 	int rc;
- 	u32 int_status;
+--- a/drivers/gpu/drm/rcar-du/Kconfig
++++ b/drivers/gpu/drm/rcar-du/Kconfig
+@@ -4,8 +4,6 @@ config DRM_RCAR_DU
+ 	depends on DRM && OF
+ 	depends on ARM || ARM64
+ 	depends on ARCH_RENESAS || COMPILE_TEST
+-	imply DRM_RCAR_CMM
+-	imply DRM_RCAR_LVDS
+ 	select DRM_KMS_HELPER
+ 	select DRM_KMS_CMA_HELPER
+ 	select DRM_GEM_CMA_HELPER
+@@ -14,13 +12,17 @@ config DRM_RCAR_DU
+ 	  Choose this option if you have an R-Car chipset.
+ 	  If M is selected the module will be called rcar-du-drm.
  
--	if (devm_request_irq(chip->dev.parent, irq, tis_int_handler, flags,
--			     dev_name(&chip->dev), chip) != 0) {
+-config DRM_RCAR_CMM
+-	tristate "R-Car DU Color Management Module (CMM) Support"
+-	depends on DRM && OF
++config DRM_RCAR_USE_CMM
++	bool "R-Car DU Color Management Module (CMM) Support"
+ 	depends on DRM_RCAR_DU
++	default DRM_RCAR_DU
+ 	help
+ 	  Enable support for R-Car Color Management Module (CMM).
+ 
++config DRM_RCAR_CMM
++	def_tristate DRM_RCAR_DU
++	depends on DRM_RCAR_USE_CMM
 +
-+	rc = devm_request_threaded_irq(chip->dev.parent, irq, NULL,
-+				       tis_int_handler, IRQF_ONESHOT | flags,
-+				       dev_name(&chip->dev), chip);
-+	if (rc) {
- 		dev_info(&chip->dev, "Unable to request irq: %d for probe\n",
- 			 irq);
- 		return -1;
+ config DRM_RCAR_DW_HDMI
+ 	tristate "R-Car Gen3 and RZ/G2 DU HDMI Encoder Support"
+ 	depends on DRM && OF
+@@ -28,15 +30,20 @@ config DRM_RCAR_DW_HDMI
+ 	help
+ 	  Enable support for R-Car Gen3 or RZ/G2 internal HDMI encoder.
+ 
++config DRM_RCAR_USE_LVDS
++	bool "R-Car DU LVDS Encoder Support"
++	depends on DRM_BRIDGE && OF
++	default DRM_RCAR_DU
++	help
++	  Enable support for the R-Car Display Unit embedded LVDS encoders.
++
+ config DRM_RCAR_LVDS
+-	tristate "R-Car DU LVDS Encoder Support"
+-	depends on DRM && DRM_BRIDGE && OF
++	def_tristate DRM_RCAR_DU
++	depends on DRM_RCAR_USE_LVDS
+ 	select DRM_KMS_HELPER
+ 	select DRM_PANEL
+ 	select OF_FLATTREE
+ 	select OF_OVERLAY
+-	help
+-	  Enable support for the R-Car Display Unit embedded LVDS encoders.
+ 
+ config DRM_RCAR_VSP
+ 	bool "R-Car DU VSP Compositor Support" if ARM
 
 
