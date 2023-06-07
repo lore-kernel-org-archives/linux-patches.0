@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A2F370DE
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58817C4339C;
-	Wed,  7 Jun 2023 20:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F7737325
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED622C433D2;
+	Wed,  7 Jun 2023 20:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170810;
-	bh=Rfc8FVa3EmDZrkjVY98z7BNwarxJsKCcOvt1SKfKOCE=;
+	s=korg; t=1686170813;
+	bh=clTYUuMytkN+dr85e+//wymuxnRRhUaIozyPwxmHaNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NFD3EWQjJFDUWt7U4yK36RZRKToHimESZGPzrZXsjo1V4u/cNmlhkc3wNEfczJ9rS
-	 J6wwWkdB7KMLDBGkVBNKukwNx+WTCf4Vjx8+xvYEKAey4K7nEa8lBkeOPPwaxoWgWN
-	 7B//RszZVl85Qe08dMkRMZi2wtYQzYmuWum014o0=
+	b=ad9+EQFhfey5E2XlKk1TgC+hs8/7Zp6FTXlOdsVh0aXuaZ6mllzvO/5koDrzzwKJ7
+	 9tpDQdlxNZgbvWDyXizfNk7tffDqb8EkPPPMQyQLCs/75Gc1dEvPofLNw6dhCCwuBg
+	 CsDX4CGUbwWuvFQFhvg1sM25QoKUw/H1cjeAWRkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.1 216/225] tpm, tpm_tis: Request threaded interrupt handler
-Date: Wed,  7 Jun 2023 22:16:49 +0200
-Message-ID: <20230607200921.434739113@linuxfoundation.org>
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Stable@vger.kernel.org
+Subject: [PATCH 6.1 217/225] iommu/amd/pgtbl_v2: Fix domain max address
+Date: Wed,  7 Jun 2023 22:16:50 +0200
+Message-ID: <20230607200921.466349327@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,42 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-commit 0c7e66e5fd69bf21034c9a9b081d7de7c3eb2cea upstream.
+commit 11c439a19466e7feaccdbce148a75372fddaf4e9 upstream.
 
-The TIS interrupt handler at least has to read and write the interrupt
-status register. In case of SPI both operations result in a call to
-tpm_tis_spi_transfer() which uses the bus_lock_mutex of the spi device
-and thus must only be called from a sleepable context.
+IOMMU v2 page table supports 4 level (47 bit) or 5 level (56 bit) virtual
+address space. Current code assumes it can support 64bit IOVA address
+space. If IOVA allocator allocates virtual address > 47/56 bit (depending
+on page table level) then it will do wrong mapping and cause invalid
+translation.
 
-To ensure this request a threaded interrupt handler.
+Hence adjust aperture size to use max address supported by the page table.
 
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Tested-by: Michael Niewöhner <linux@mniewoehner.de>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reported-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Fixes: aaac38f61487 ("iommu/amd: Initial support for AMD IOMMU v2 page table")
+Cc: <Stable@vger.kernel.org>  # v6.0+
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Link: https://lore.kernel.org/r/20230518054351.9626-1-vasant.hegde@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+[ Modified to work with "V2 with 4 level page table" only - Vasant ]
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/iommu.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -805,8 +805,11 @@ static int tpm_tis_probe_irq_single(stru
- 	int rc;
- 	u32 int_status;
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2101,6 +2101,15 @@ out_err:
+ 	return NULL;
+ }
  
--	if (devm_request_irq(chip->dev.parent, irq, tis_int_handler, flags,
--			     dev_name(&chip->dev), chip) != 0) {
++static inline u64 dma_max_address(void)
++{
++	if (amd_iommu_pgtable == AMD_IOMMU_V1)
++		return ~0ULL;
 +
-+	rc = devm_request_threaded_irq(chip->dev.parent, irq, NULL,
-+				       tis_int_handler, IRQF_ONESHOT | flags,
-+				       dev_name(&chip->dev), chip);
-+	if (rc) {
- 		dev_info(&chip->dev, "Unable to request irq: %d for probe\n",
- 			 irq);
- 		return -1;
++	/* V2 with 4 level page table */
++	return ((1ULL << PM_LEVEL_SHIFT(PAGE_MODE_4_LEVEL)) - 1);
++}
++
+ static struct iommu_domain *amd_iommu_domain_alloc(unsigned type)
+ {
+ 	struct protection_domain *domain;
+@@ -2117,7 +2126,7 @@ static struct iommu_domain *amd_iommu_do
+ 		return NULL;
+ 
+ 	domain->domain.geometry.aperture_start = 0;
+-	domain->domain.geometry.aperture_end   = ~0ULL;
++	domain->domain.geometry.aperture_end   = dma_max_address();
+ 	domain->domain.geometry.force_aperture = true;
+ 
+ 	return &domain->domain;
 
 
