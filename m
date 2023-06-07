@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E2F24EA0
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843BFC433D2;
-	Wed,  7 Jun 2023 20:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B5C1D2A5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BECDC433D2;
+	Wed,  7 Jun 2023 20:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170848;
-	bh=FK8NB+Og3rstWFWVcYKXJr/qfFHK6sCpyVxivwCvzZI=;
+	s=korg; t=1686170850;
+	bh=AkVgsui+DWeBxHipwYBGwMD3ggh3LnnlcYTMXt1bwLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azGa0+zV5PWkaCkZ7YOaJzeM93IERk3rs+79CLd0/weO19NjrR4H79NwrcwlsSeCH
-	 ia3cPzh3Eh6m9hdFKsDKFJobeM/cc04i8k5D4tr/g3ibfXEMbqK0cTfE58YMLXeqwA
-	 JY4YqY3lp34pvkmrQV+z2CpRB7xLh898uI8CoWqc=
+	b=GX4n/CvqJSoATVbx38ZR4SdqWEOKbSnBbfmm5DlbV/btQY8I//MUWBeATNgTOvcwN
+	 oWlj63P9+FqUJY2xZDDp6iQru7dyULqmp5T0+knbMrE8bK+Kdxy84u8uRnA7T1ulL8
+	 XfqX59uTkRZX6DxLzjPchl76SX0iy/WRSYDRqj8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sudheesh Mavila <sudheesh.mavila@amd.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/120] af_packet: Fix data-races of pkt_sk(sk)->num.
-Date: Wed,  7 Jun 2023 22:15:31 +0200
-Message-ID: <20230607200901.396415828@linuxfoundation.org>
+Subject: [PATCH 5.10 016/120] amd-xgbe: fix the false linkup in xgbe_phy_status
+Date: Wed,  7 Jun 2023 22:15:32 +0200
+Message-ID: <20230607200901.427556467@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -37,96 +38,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 822b5a1c17df7e338b9f05d1cfe5764e37c7f74f ]
+[ Upstream commit dc362e20cd6ab7a93d1b09669730c406f0910c35 ]
 
-syzkaller found a data race of pkt_sk(sk)->num.
+In the event of a change in XGBE mode, the current auto-negotiation
+needs to be reset and the AN cycle needs to be re-triggerred. However,
+the current code ignores the return value of xgbe_set_mode(), leading to
+false information as the link is declared without checking the status
+register.
 
-The value is changed under lock_sock() and po->bind_lock, so we
-need READ_ONCE() to access pkt_sk(sk)->num without these locks in
-packet_bind_spkt(), packet_bind(), and sk_diag_fill().
+Fix this by propagating the mode switch status information to
+xgbe_phy_status().
 
-Note that WRITE_ONCE() is already added by commit c7d2ef5dd4b0
-("net/packet: annotate accesses to po->bind").
-
-BUG: KCSAN: data-race in packet_bind / packet_do_bind
-
-write (marked) to 0xffff88802ffd1cee of 2 bytes by task 7322 on cpu 0:
- packet_do_bind+0x446/0x640 net/packet/af_packet.c:3236
- packet_bind+0x99/0xe0 net/packet/af_packet.c:3321
- __sys_bind+0x19b/0x1e0 net/socket.c:1803
- __do_sys_bind net/socket.c:1814 [inline]
- __se_sys_bind net/socket.c:1812 [inline]
- __x64_sys_bind+0x40/0x50 net/socket.c:1812
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-read to 0xffff88802ffd1cee of 2 bytes by task 7318 on cpu 1:
- packet_bind+0xbf/0xe0 net/packet/af_packet.c:3322
- __sys_bind+0x19b/0x1e0 net/socket.c:1803
- __do_sys_bind net/socket.c:1814 [inline]
- __se_sys_bind net/socket.c:1812 [inline]
- __x64_sys_bind+0x40/0x50 net/socket.c:1812
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0x0300 -> 0x0000
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 7318 Comm: syz-executor.4 Not tainted 6.3.0-13380-g7fddb5b5300c #4
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 96ec6327144e ("packet: Diag core and basic socket info dumping")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20230524232934.50950-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e57f7a3feaef ("amd-xgbe: Prepare for working with more than one type of phy")
+Co-developed-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
+Signed-off-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 4 ++--
- net/packet/diag.c      | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 3c05414cd3f83..542d5285e99e9 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3259,7 +3259,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
- 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
- 	name[sizeof(uaddr->sa_data)] = 0;
- 
--	return packet_do_bind(sk, name, 0, pkt_sk(sk)->num);
-+	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index 43fdd111235a6..ca7372369b3e6 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -1312,7 +1312,7 @@ static enum xgbe_mode xgbe_phy_status_aneg(struct xgbe_prv_data *pdata)
+ 	return pdata->phy_if.phy_impl.an_outcome(pdata);
  }
  
- static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
-@@ -3277,7 +3277,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
- 		return -EINVAL;
+-static void xgbe_phy_status_result(struct xgbe_prv_data *pdata)
++static bool xgbe_phy_status_result(struct xgbe_prv_data *pdata)
+ {
+ 	struct ethtool_link_ksettings *lks = &pdata->phy.lks;
+ 	enum xgbe_mode mode;
+@@ -1347,8 +1347,13 @@ static void xgbe_phy_status_result(struct xgbe_prv_data *pdata)
  
- 	return packet_do_bind(sk, NULL, sll->sll_ifindex,
--			      sll->sll_protocol ? : pkt_sk(sk)->num);
-+			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
+ 	pdata->phy.duplex = DUPLEX_FULL;
+ 
+-	if (xgbe_set_mode(pdata, mode) && pdata->an_again)
++	if (!xgbe_set_mode(pdata, mode))
++		return false;
++
++	if (pdata->an_again)
+ 		xgbe_phy_reconfig_aneg(pdata);
++
++	return true;
  }
  
- static struct proto packet_proto = {
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index d704c7bf51b20..a68a84574c739 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -143,7 +143,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb,
- 	rp = nlmsg_data(nlh);
- 	rp->pdiag_family = AF_PACKET;
- 	rp->pdiag_type = sk->sk_type;
--	rp->pdiag_num = ntohs(po->num);
-+	rp->pdiag_num = ntohs(READ_ONCE(po->num));
- 	rp->pdiag_ino = sk_ino;
- 	sock_diag_save_cookie(sk, rp->pdiag_cookie);
+ static void xgbe_phy_status(struct xgbe_prv_data *pdata)
+@@ -1378,7 +1383,8 @@ static void xgbe_phy_status(struct xgbe_prv_data *pdata)
+ 			return;
+ 		}
  
+-		xgbe_phy_status_result(pdata);
++		if (xgbe_phy_status_result(pdata))
++			return;
+ 
+ 		if (test_bit(XGBE_LINK_INIT, &pdata->dev_state))
+ 			clear_bit(XGBE_LINK_INIT, &pdata->dev_state);
 -- 
 2.39.2
 
