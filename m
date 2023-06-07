@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E49E3AE4D
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75203C433D2;
-	Wed,  7 Jun 2023 20:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B6E3AE4D
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1084EC4339B;
+	Wed,  7 Jun 2023 20:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169679;
-	bh=MbXiQsOyKVYLrWLaXJr1xXMr5ghwZ8+AOma1oX5S37M=;
+	s=korg; t=1686169682;
+	bh=g+cLRP6mr9VygFT6r+Pyge0IkNSzrys++cPM57EkTJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z2q7UjKeA9Vhc3gcwHaOcvIRL/0/1qW7UGurjn8u/QbnDIUsPvTPWsvBWgbYPr/fM
-	 XuvGZ8r1RYE+/5AJPbauLVRV8XkxWfMA10S+UmilSjMn62rVeXx53CbrFIs/NtEyMv
-	 ZhiSndZt1elobDiu31k61bqlKbmvlvHPA/WKp7t4=
+	b=Ka8g46InpyplvMsIHMzBHXqWA/KQ3Sjpkmfs8Mb0Mgtl7zePxv2UxodWYkqGqCeNs
+	 nKCtZpkQ/Sp86wa92fa85IqXyMGqWT0AnXeO1BZqBckwcvO0mae6jLVGuYuYBbfuLZ
+	 qGSqcQWTQ23mC6Cmi3tE0pNTj36XGBg50ZPE6StM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@linaro.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dan Carpenter <error27@gmail.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 173/286] block: Deny writable memory mapping if block is read-only
-Date: Wed,  7 Jun 2023 22:14:32 +0200
-Message-ID: <20230607200928.774923087@linuxfoundation.org>
+Subject: [PATCH 6.3 174/286] iio: adc: imx93: fix a signedness bug in imx93_adc_read_raw()
+Date: Wed,  7 Jun 2023 22:14:33 +0200
+Message-ID: <20230607200928.806658241@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,66 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Loic Poulain <loic.poulain@linaro.org>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 69baa3a623fd2e58624f24f2f23d46f87b817c93 ]
+[ Upstream commit 20f291b88ecf23f674ee2ed980a4d93b7f16a06f ]
 
-User should not be able to write block device if it is read-only at
-block level (e.g force_ro attribute). This is ensured in the regular
-fops write operation (blkdev_write_iter) but not when writing via
-user mapping (mmap), allowing user to actually write a read-only
-block device via a PROT_WRITE mapping.
+The problem is these lines:
 
-Example: This can lead to integrity issue of eMMC boot partition
-(e.g mmcblk0boot0) which is read-only by default.
+	ret = vref_uv = regulator_get_voltage(adc->vref);
+	if (ret < 0)
 
-To fix this issue, simply deny shared writable mapping if the block
-is readonly.
+The "ret" variable is type long and "vref_uv" is u32 so that means
+the condition can never be true on a 64bit system.  A negative error
+code from regulator_get_voltage() would be cast to a high positive
+u32 value and then remain a high positive value when cast to a long.
 
-Note: Block remains writable if switch to read-only is performed
-after the initial mapping, but this is expected behavior according
-to commit a32e236eb93e ("Partially revert "block: fail op_is_write()
-requests to read-only partitions"")'.
+The "ret" variable only ever stores ints so it should be declared as
+an int.  We can delete the "vref_uv" variable and use "ret" directly.
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230510074223.991297-1-loic.poulain@linaro.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 7d02296ac8b8 ("iio: adc: add imx93 adc support")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
+Link: https://lore.kernel.org/r/Y+utEvjfjQRQo2QB@kili
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/iio/adc/imx93_adc.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/block/fops.c b/block/fops.c
-index d2e6be4e3d1c7..58d0aebc7313a 100644
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -678,6 +678,16 @@ static long blkdev_fallocate(struct file *file, int mode, loff_t start,
- 	return error;
- }
+diff --git a/drivers/iio/adc/imx93_adc.c b/drivers/iio/adc/imx93_adc.c
+index a775d2e405671..dce9ec91e4a77 100644
+--- a/drivers/iio/adc/imx93_adc.c
++++ b/drivers/iio/adc/imx93_adc.c
+@@ -236,8 +236,7 @@ static int imx93_adc_read_raw(struct iio_dev *indio_dev,
+ {
+ 	struct imx93_adc *adc = iio_priv(indio_dev);
+ 	struct device *dev = adc->dev;
+-	long ret;
+-	u32 vref_uv;
++	int ret;
  
-+static int blkdev_mmap(struct file *file, struct vm_area_struct *vma)
-+{
-+	struct inode *bd_inode = bdev_file_inode(file);
-+
-+	if (bdev_read_only(I_BDEV(bd_inode)))
-+		return generic_file_readonly_mmap(file, vma);
-+
-+	return generic_file_mmap(file, vma);
-+}
-+
- const struct file_operations def_blk_fops = {
- 	.open		= blkdev_open,
- 	.release	= blkdev_close,
-@@ -685,7 +695,7 @@ const struct file_operations def_blk_fops = {
- 	.read_iter	= blkdev_read_iter,
- 	.write_iter	= blkdev_write_iter,
- 	.iopoll		= iocb_bio_iopoll,
--	.mmap		= generic_file_mmap,
-+	.mmap		= blkdev_mmap,
- 	.fsync		= blkdev_fsync,
- 	.unlocked_ioctl	= blkdev_ioctl,
- #ifdef CONFIG_COMPAT
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW:
+@@ -253,10 +252,10 @@ static int imx93_adc_read_raw(struct iio_dev *indio_dev,
+ 		return IIO_VAL_INT;
+ 
+ 	case IIO_CHAN_INFO_SCALE:
+-		ret = vref_uv = regulator_get_voltage(adc->vref);
++		ret = regulator_get_voltage(adc->vref);
+ 		if (ret < 0)
+ 			return ret;
+-		*val = vref_uv / 1000;
++		*val = ret / 1000;
+ 		*val2 = 12;
+ 		return IIO_VAL_FRACTIONAL_LOG2;
+ 
 -- 
 2.39.2
 
