@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDBF3AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C388EC433EF;
-	Wed,  7 Jun 2023 20:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76D83AE5C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FFAC433D2;
+	Wed,  7 Jun 2023 20:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169771;
-	bh=4Do0RjYpz0Yh0zWhwAWNNRzFDuPxiLO8wyEhh9zpnoA=;
+	s=korg; t=1686169773;
+	bh=CBrdSp2n2kHs/ug4HkD2TUoKIySAJZQWTvqqglXS1rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qW4KbEYewiJyZlOi3CQz11MsqAFABordc5OowicBaof5Z236RSpohQfNZtRG6nUVw
-	 HBYVYscakamPoGNsGJWHVr9mBfELkmBsf3n689G2AGBCuwSJycnEYNUJFh/dlkf0Ce
-	 6E+VK9X8O81lk5OniVwLqd04fowl5Accsb5HURJo=
+	b=uhmwsn+j3ILh6mv3KGxk4DBFhTst8taKkxd4Nw7KMmFBpoduDT/lR6FcX9A7GSs5+
+	 a9TiVzhk+Go3fdsKnWKtZU6/HU42RFQaBxe9URssps42wnm78wNM1QMI1PvkeIdvYn
+	 Hddj584Jd6H6oyD0e7KiX66stFznzZ27YRqRU8hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 208/286] net: usb: qmi_wwan: Set DTR quirk for BroadMobi BM818
-Date: Wed,  7 Jun 2023 22:15:07 +0200
-Message-ID: <20230607200930.048366294@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Marek Vasut <marex@denx.de>
+Subject: [PATCH 6.3 209/286] dt-bindings: usb: snps,dwc3: Fix "snps,hsphy_interface" type
+Date: Wed,  7 Jun 2023 22:15:08 +0200
+Message-ID: <20230607200930.079298652@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,33 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+From: Marek Vasut <marex@denx.de>
 
-commit 36936a56e1814f6c526fe71fbf980beab4f5577a upstream.
+commit 7b32040f6d7f885ffc09a6df7c17992d56d2eab8 upstream.
 
-BM818 is based on Qualcomm MDM9607 chipset.
+The "snps,hsphy_interface" is string, not u8. Fix the type.
 
-Fixes: 9a07406b00cd ("net: usb: qmi_wwan: Add the BroadMobi BM818 card")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
-Acked-by: Bjørn Mork <bjorn@mork.no>
-Link: https://lore.kernel.org/r/20230526-bm818-dtr-v1-1-64bbfa6ba8af@puri.sm
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 389d77658801 ("dt-bindings: usb: Convert DWC USB3 bindings to DT schema")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20230515172456.179049-1-marex@denx.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/qmi_wwan.c |    2 +-
+ Documentation/devicetree/bindings/usb/snps,dwc3.yaml |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1325,7 +1325,7 @@ static const struct usb_device_id produc
- 	{QMI_FIXED_INTF(0x2001, 0x7e3d, 4)},	/* D-Link DWM-222 A2 */
- 	{QMI_FIXED_INTF(0x2020, 0x2031, 4)},	/* Olicard 600 */
- 	{QMI_FIXED_INTF(0x2020, 0x2033, 4)},	/* BroadMobi BM806U */
--	{QMI_FIXED_INTF(0x2020, 0x2060, 4)},	/* BroadMobi BM818 */
-+	{QMI_QUIRK_SET_DTR(0x2020, 0x2060, 4)},	/* BroadMobi BM818 */
- 	{QMI_FIXED_INTF(0x0f3d, 0x68a2, 8)},    /* Sierra Wireless MC7700 */
- 	{QMI_FIXED_INTF(0x114f, 0x68a2, 8)},    /* Sierra Wireless MC7750 */
- 	{QMI_FIXED_INTF(0x1199, 0x68a2, 8)},	/* Sierra Wireless MC7710 in QMI mode */
+--- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+@@ -270,7 +270,7 @@ properties:
+     description:
+       High-Speed PHY interface selection between UTMI+ and ULPI when the
+       DWC_USB3_HSPHY_INTERFACE has value 3.
+-    $ref: /schemas/types.yaml#/definitions/uint8
++    $ref: /schemas/types.yaml#/definitions/string
+     enum: [utmi, ulpi]
+ 
+   snps,quirk-frame-length-adjustment:
 
 
