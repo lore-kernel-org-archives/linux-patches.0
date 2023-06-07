@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417003922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4DEC4339B;
-	Wed,  7 Jun 2023 20:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4523922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF13C4339B;
+	Wed,  7 Jun 2023 20:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171254;
-	bh=/rBeYQlibcqn5fzQSak2topt9pj/KiQJNTyVZ/Oqy+8=;
+	s=korg; t=1686171256;
+	bh=wXSSdQyJmNc1+zAqIpCgTXO4z+1cRBkB4VzOjiIEOew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZB/Si9dEfoHTUsu9l1qP2oZP8IfEkI1y5IIJnSpD7G/b8HeZblEZCRyDzGdNasS6
-	 CO2OgQBDUxH1ho7vNBOreXzUuPDdQ+SZhZmncPUQmEGixxxuHjCummLkqkr6UNUbFJ
-	 arOFu9a2uHntAnln9jKqiyyRRZgoCw8RuCEGGP2I=
+	b=tpLPV19t8iUvJXOIgr0adMCknbhvNigB1tGrqg4boeShMEsg4KmqY58w3VAIjKX2U
+	 /OXkak9PkY0gm+y179spGua6dBsWrjHzTxwqNbqFIoM5IFcGheurBpHBUiKrTvMDed
+	 XcKIzNLIk8p7MhENzIq8aenfW6+/9lJzfV7TKYVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Peilin Ye <peilin.ye@bytedance.com>,
+	Simon Kapadia <szymon@kapadia.pl>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 18/99] net/sched: Reserve TC_H_INGRESS (TC_H_CLSACT) for ingress (clsact) Qdiscs
-Date: Wed,  7 Jun 2023 22:16:10 +0200
-Message-ID: <20230607200900.826926556@linuxfoundation.org>
+Subject: [PATCH 5.4 09/99] netrom: fix info-leak in nr_write_internal()
+Date: Wed,  7 Jun 2023 22:16:01 +0200
+Message-ID: <20230607200900.529524529@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -38,84 +37,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peilin Ye <peilin.ye@bytedance.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f85fa45d4a9408d98c46c8fa45ba2e3b2f4bf219 ]
+[ Upstream commit 31642e7089df8fd3f54ca7843f7ee2952978cad1 ]
 
-Currently it is possible to add e.g. an HTB Qdisc under ffff:fff1
-(TC_H_INGRESS, TC_H_CLSACT):
+Simon Kapadia reported the following issue:
 
-  $ ip link add name ifb0 type ifb
-  $ tc qdisc add dev ifb0 parent ffff:fff1 htb
-  $ tc qdisc add dev ifb0 clsact
-  Error: Exclusivity flag on, cannot modify.
-  $ drgn
-  ...
-  >>> ifb0 = netdev_get_by_name(prog, "ifb0")
-  >>> qdisc = ifb0.ingress_queue.qdisc_sleeping
-  >>> print(qdisc.ops.id.string_().decode())
-  htb
-  >>> qdisc.flags.value_() # TCQ_F_INGRESS
-  2
+<quote>
 
-Only allow ingress and clsact Qdiscs under ffff:fff1.  Return -EINVAL
-for everything else.  Make TCQ_F_INGRESS a static flag of ingress and
-clsact Qdiscs.
+The Online Amateur Radio Community (OARC) has recently been experimenting
+with building a nationwide packet network in the UK.
+As part of our experimentation, we have been testing out packet on 300bps HF,
+and playing with net/rom.  For HF packet at this baud rate you really need
+to make sure that your MTU is relatively low; AX.25 suggests a PACLEN of 60,
+and a net/rom PACLEN of 40 to go with that.
+However the Linux net/rom support didn't work with a low PACLEN;
+the mkiss module would truncate packets if you set the PACLEN below about 200 or so, e.g.:
+
+Apr 19 14:00:51 radio kernel: [12985.747310] mkiss: ax1: truncating oversized transmit packet!
+
+This didn't make any sense to me (if the packets are smaller why would they
+be truncated?) so I started investigating.
+I looked at the packets using ethereal, and found that many were just huge
+compared to what I would expect.
+A simple net/rom connection request packet had the request and then a bunch
+of what appeared to be random data following it:
+
+</quote>
+
+Simon provided a patch that I slightly revised:
+Not only we must not use skb_tailroom(), we also do
+not want to count NR_NETWORK_LEN twice.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 1f211a1b929c ("net, sched: add clsact qdisc")
-Tested-by: Pedro Tammela <pctammela@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
-Signed-off-by: Peilin Ye <peilin.ye@bytedance.com>
+Co-Developed-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Simon Kapadia <szymon@kapadia.pl>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230524141456.1045467-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c     | 7 ++++++-
- net/sched/sch_ingress.c | 4 ++--
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ net/netrom/nr_subr.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 67d6bc97e5fe9..cd6af51bd9ff2 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1214,7 +1214,12 @@ static struct Qdisc *qdisc_create(struct net_device *dev,
- 	sch->parent = parent;
+diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
+index 3f99b432ea707..e2d2af924cff4 100644
+--- a/net/netrom/nr_subr.c
++++ b/net/netrom/nr_subr.c
+@@ -123,7 +123,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	unsigned char  *dptr;
+ 	int len, timeout;
  
- 	if (handle == TC_H_INGRESS) {
--		sch->flags |= TCQ_F_INGRESS;
-+		if (!(sch->flags & TCQ_F_INGRESS)) {
-+			NL_SET_ERR_MSG(extack,
-+				       "Specified parent ID is reserved for ingress and clsact Qdiscs");
-+			err = -EINVAL;
-+			goto err_out3;
-+		}
- 		handle = TC_H_MAKE(TC_H_INGRESS, 0);
- 	} else {
- 		if (handle == 0) {
-diff --git a/net/sched/sch_ingress.c b/net/sched/sch_ingress.c
-index 9f1ed810b7b89..28168799ca1b8 100644
---- a/net/sched/sch_ingress.c
-+++ b/net/sched/sch_ingress.c
-@@ -133,7 +133,7 @@ static struct Qdisc_ops ingress_qdisc_ops __read_mostly = {
- 	.cl_ops			=	&ingress_class_ops,
- 	.id			=	"ingress",
- 	.priv_size		=	sizeof(struct ingress_sched_data),
--	.static_flags		=	TCQ_F_CPUSTATS,
-+	.static_flags		=	TCQ_F_INGRESS | TCQ_F_CPUSTATS,
- 	.init			=	ingress_init,
- 	.destroy		=	ingress_destroy,
- 	.dump			=	ingress_dump,
-@@ -272,7 +272,7 @@ static struct Qdisc_ops clsact_qdisc_ops __read_mostly = {
- 	.cl_ops			=	&clsact_class_ops,
- 	.id			=	"clsact",
- 	.priv_size		=	sizeof(struct clsact_sched_data),
--	.static_flags		=	TCQ_F_CPUSTATS,
-+	.static_flags		=	TCQ_F_INGRESS | TCQ_F_CPUSTATS,
- 	.init			=	clsact_init,
- 	.destroy		=	clsact_destroy,
- 	.dump			=	ingress_dump,
+-	len = NR_NETWORK_LEN + NR_TRANSPORT_LEN;
++	len = NR_TRANSPORT_LEN;
+ 
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
+@@ -141,7 +141,8 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 		return;
+ 	}
+ 
+-	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
++	skb = alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
++	if (!skb)
+ 		return;
+ 
+ 	/*
+@@ -149,7 +150,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	 */
+ 	skb_reserve(skb, NR_NETWORK_LEN);
+ 
+-	dptr = skb_put(skb, skb_tailroom(skb));
++	dptr = skb_put(skb, len);
+ 
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
 -- 
 2.39.2
 
