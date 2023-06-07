@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613F73AE43
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:22:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59F8C433EF;
-	Wed,  7 Jun 2023 20:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741CE3AE43
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:22:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC70C433D2;
+	Wed,  7 Jun 2023 20:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169361;
-	bh=DBg4dF8Dr1xM7cDQc2plJHzvAUgdd9D9KA/bs1zI+Q8=;
+	s=korg; t=1686169363;
+	bh=mEVaM32k5ehqzp8aTF66SDa94OeHpc+i4y7Vr3n4ows=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+kwFgZgSDLWBZ/cKRDb4IQrtFg1An8NtdfVaoaI/2CATL7MXm2/Yb0c7Z40JXkqL
-	 SMpbCzfBHxTJOpuVxj+SAaTyjsfXeodgj28MHacqRNibCg5VM5GVz7NFkuZeKrpOWx
-	 cgjQQcOopk3cJM12qWBZFxmnRyH7KDURfIw9RlNo=
+	b=Az2TpYkTOPOMzRuB3gCGwNPGzGN0EH1NrIZVGxWZvh3TJOMoxwWZ034QKGzudHYTR
+	 0md8qV27c2rQqXOzLzNsFQNfRPJI11+XCEJb/6tjONB6ezNJTMYK4WEkHIlhxruq0B
+	 SYIEdDV/tZmRZGdMLeLf90U2iOa0XBGluR1bzKv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+b53a9c0d1ea4ad62da8b@syzkaller.appspotmail.com,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Peilin Ye <peilin.ye@bytedance.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 051/286] net/smc: Dont use RMBs not mapped to new link in SMCRv2 ADD LINK
-Date: Wed,  7 Jun 2023 22:12:30 +0200
-Message-ID: <20230607200924.712375347@linuxfoundation.org>
+Subject: [PATCH 6.3 052/286] net/sched: sch_ingress: Only create under TC_H_INGRESS
+Date: Wed,  7 Jun 2023 22:12:31 +0200
+Message-ID: <20230607200924.741181812@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,85 +39,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wen Gu <guwen@linux.alibaba.com>
+From: Peilin Ye <peilin.ye@bytedance.com>
 
-[ Upstream commit 71c6aa0305e3d2365d3bfd0134b4025d9e7ba388 ]
+[ Upstream commit c7cfbd115001f94de9e4053657946a383147e803 ]
 
-We encountered a crash when using SMCRv2. It is caused by a logical
-error in smc_llc_fill_ext_v2().
+ingress Qdiscs are only supposed to be created under TC_H_INGRESS.
+Return -EOPNOTSUPP if 'parent' is not TC_H_INGRESS, similar to
+mq_init().
 
- BUG: kernel NULL pointer dereference, address: 0000000000000014
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: 0000 [#1] PREEMPT SMP PTI
- CPU: 7 PID: 453 Comm: kworker/7:4 Kdump: loaded Tainted: G        W   E      6.4.0-rc3+ #44
- Workqueue: events smc_llc_add_link_work [smc]
- RIP: 0010:smc_llc_fill_ext_v2+0x117/0x280 [smc]
- RSP: 0018:ffffacb5c064bd88 EFLAGS: 00010282
- RAX: ffff9a6bc1c3c02c RBX: ffff9a6be3558000 RCX: 0000000000000000
- RDX: 0000000000000002 RSI: 0000000000000002 RDI: 000000000000000a
- RBP: ffffacb5c064bdb8 R08: 0000000000000040 R09: 000000000000000c
- R10: ffff9a6bc0910300 R11: 0000000000000002 R12: 0000000000000000
- R13: 0000000000000002 R14: ffff9a6bc1c3c02c R15: ffff9a6be3558250
- FS:  0000000000000000(0000) GS:ffff9a6eefdc0000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000014 CR3: 000000010b078003 CR4: 00000000003706e0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- Call Trace:
-  <TASK>
-  smc_llc_send_add_link+0x1ae/0x2f0 [smc]
-  smc_llc_srv_add_link+0x2c9/0x5a0 [smc]
-  ? cc_mkenc+0x40/0x60
-  smc_llc_add_link_work+0xb8/0x140 [smc]
-  process_one_work+0x1e5/0x3f0
-  worker_thread+0x4d/0x2f0
-  ? __pfx_worker_thread+0x10/0x10
-  kthread+0xe5/0x120
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x2c/0x50
-  </TASK>
-
-When an alernate RNIC is available in system, SMC will try to add a new
-link based on the RNIC for resilience. All the RMBs in use will be mapped
-to the new link. Then the RMBs' MRs corresponding to the new link will be
-filled into SMCRv2 LLC ADD LINK messages.
-
-However, smc_llc_fill_ext_v2() mistakenly accesses to unused RMBs which
-haven't been mapped to the new link and have no valid MRs, thus causing
-a crash. So this patch fixes the logic.
-
-Fixes: b4ba4652b3f8 ("net/smc: extend LLC layer for SMC-Rv2")
-Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+b53a9c0d1ea4ad62da8b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/0000000000006cf87705f79acf1a@google.com/
+Tested-by: Pedro Tammela <pctammela@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
+Signed-off-by: Peilin Ye <peilin.ye@bytedance.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_llc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_ingress.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index 8423e8e0063f4..7a8d9163d186e 100644
---- a/net/smc/smc_llc.c
-+++ b/net/smc/smc_llc.c
-@@ -617,6 +617,8 @@ static int smc_llc_fill_ext_v2(struct smc_llc_msg_add_link_v2_ext *ext,
- 		goto out;
- 	buf_pos = smc_llc_get_first_rmb(lgr, &buf_lst);
- 	for (i = 0; i < ext->num_rkeys; i++) {
-+		while (buf_pos && !(buf_pos)->used)
-+			buf_pos = smc_llc_get_next_rmb(lgr, &buf_lst, buf_pos);
- 		if (!buf_pos)
- 			break;
- 		rmb = buf_pos;
-@@ -626,8 +628,6 @@ static int smc_llc_fill_ext_v2(struct smc_llc_msg_add_link_v2_ext *ext,
- 			cpu_to_be64((uintptr_t)rmb->cpu_addr) :
- 			cpu_to_be64((u64)sg_dma_address(rmb->sgt[lnk_idx].sgl));
- 		buf_pos = smc_llc_get_next_rmb(lgr, &buf_lst, buf_pos);
--		while (buf_pos && !(buf_pos)->used)
--			buf_pos = smc_llc_get_next_rmb(lgr, &buf_lst, buf_pos);
- 	}
- 	len += i * sizeof(ext->rt[0]);
- out:
+diff --git a/net/sched/sch_ingress.c b/net/sched/sch_ingress.c
+index 84838128b9c5b..f9ef6deb27709 100644
+--- a/net/sched/sch_ingress.c
++++ b/net/sched/sch_ingress.c
+@@ -80,6 +80,9 @@ static int ingress_init(struct Qdisc *sch, struct nlattr *opt,
+ 	struct net_device *dev = qdisc_dev(sch);
+ 	int err;
+ 
++	if (sch->parent != TC_H_INGRESS)
++		return -EOPNOTSUPP;
++
+ 	net_inc_ingress_queue();
+ 
+ 	mini_qdisc_pair_init(&q->miniqp, sch, &dev->miniq_ingress);
+@@ -101,6 +104,9 @@ static void ingress_destroy(struct Qdisc *sch)
+ {
+ 	struct ingress_sched_data *q = qdisc_priv(sch);
+ 
++	if (sch->parent != TC_H_INGRESS)
++		return;
++
+ 	tcf_block_put_ext(q->block, sch, &q->block_info);
+ 	net_dec_ingress_queue();
+ }
 -- 
 2.39.2
 
