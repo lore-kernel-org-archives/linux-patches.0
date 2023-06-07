@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CE319535
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51550C433D2;
-	Wed,  7 Jun 2023 20:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7168219535
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2935C433D2;
+	Wed,  7 Jun 2023 20:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170093;
-	bh=A8ULlcQibeRv5/XRV6pzSuBwEK0Z4KulxfFokGK6j9U=;
+	s=korg; t=1686170096;
+	bh=TYKqWagi7LEsfJh+w9eDLA4+KzVotDdmn8BCjg7m8pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhDI6bSRMlYnIHEX93iQgFAuZTe0zNFtglhSzitWNYwLC8ggGUKuUF4yjIgPZnVEz
-	 BYc0nsER9petLb9a9OSQ+wdC1nfxg3HiMkHRyoW13gBV5KInlZmozJrCYpe2ieRYX+
-	 LTTvHC2BxmnRffFrYzTZb8fMmNUy5s6oD76wKYv0=
+	b=R2PX6mb+EUCPcW3q6VX9O45HGO+yq9qidT361QG+B/IPQV13p9JfczpUfUwpstSZK
+	 4UF5yyvKeZsOKQoT8IywNBdRYENguJoRhaxuKnK6/HZi/Z1b5nXdC2ofQ+FOj2f//h
+	 nAtpSaJAEr5pC+uM8RD99G7tPZ9MLGFvt9VxX3BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladislav Efanov <VEfanov@ispras.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 25/88] udp6: Fix race condition in udp6_sendmsg & connect
-Date: Wed,  7 Jun 2023 22:15:42 +0200
-Message-ID: <20230607200859.862034006@linuxfoundation.org>
+Subject: [PATCH 4.19 43/88] media: dvb-usb: digitv: fix null-ptr-deref in digitv_i2c_xfer()
+Date: Wed,  7 Jun 2023 22:16:00 +0200
+Message-ID: <20230607200900.574998345@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -36,61 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 448a5ce1120c5bdbce1f1ccdabcd31c7d029f328 ]
+[ Upstream commit 9ded5bd2a49ce3015b7c936743eec0a0e6e11f0c ]
 
-Syzkaller got the following report:
-BUG: KASAN: use-after-free in sk_setup_caps+0x621/0x690 net/core/sock.c:2018
-Read of size 8 at addr ffff888027f82780 by task syz-executor276/3255
+In digitv_i2c_xfer, msg is controlled by user. When msg[i].buf
+is null and msg[i].len is zero, former checks on msg[i].buf would be
+passed. Malicious data finally reach digitv_i2c_xfer. If accessing
+msg[i].buf[0] without sanity check, null ptr deref would happen. We add
+check on msg[i].len to prevent crash.
 
-The function sk_setup_caps (called by ip6_sk_dst_store_flow->
-ip6_dst_store) referenced already freed memory as this memory was
-freed by parallel task in udpv6_sendmsg->ip6_sk_dst_lookup_flow->
-sk_dst_check.
+Similar commit:
+commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
 
-          task1 (connect)              task2 (udp6_sendmsg)
-        sk_setup_caps->sk_dst_set |
-                                  |  sk_dst_check->
-                                  |      sk_dst_set
-                                  |      dst_release
-        sk_setup_caps references  |
-        to already freed dst_entry|
-
-The reason for this race condition is: sk_setup_caps() keeps using
-the dst after transferring the ownership to the dst cache.
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/linux-media/20230313095008.1039689-1-harperchen1110@gmail.com
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb/digitv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index cd23a8e4556ca..347a55519d0a5 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1795,7 +1795,6 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
- {
- 	u32 max_segs = 1;
+diff --git a/drivers/media/usb/dvb-usb/digitv.c b/drivers/media/usb/dvb-usb/digitv.c
+index e66df4fd1a296..6e556a2a74103 100644
+--- a/drivers/media/usb/dvb-usb/digitv.c
++++ b/drivers/media/usb/dvb-usb/digitv.c
+@@ -66,6 +66,10 @@ static int digitv_i2c_xfer(struct i2c_adapter *adap,struct i2c_msg msg[],int num
+ 		warn("more than 2 i2c messages at a time is not handled yet. TODO.");
  
--	sk_dst_set(sk, dst);
- 	sk->sk_route_caps = dst->dev->features | sk->sk_route_forced_caps;
- 	if (sk->sk_route_caps & NETIF_F_GSO)
- 		sk->sk_route_caps |= NETIF_F_GSO_SOFTWARE;
-@@ -1810,6 +1809,7 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
- 		}
- 	}
- 	sk->sk_gso_max_segs = max_segs;
-+	sk_dst_set(sk, dst);
- }
- EXPORT_SYMBOL_GPL(sk_setup_caps);
- 
+ 	for (i = 0; i < num; i++) {
++		if (msg[i].len < 1) {
++			i = -EOPNOTSUPP;
++			break;
++		}
+ 		/* write/read request */
+ 		if (i+1 < num && (msg[i+1].flags & I2C_M_RD)) {
+ 			if (digitv_ctrl_msg(d, USB_READ_COFDM, msg[i].buf[0], NULL, 0,
 -- 
 2.39.2
 
