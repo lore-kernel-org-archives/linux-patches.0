@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD4619BC9
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0E9C433EF;
-	Wed,  7 Jun 2023 20:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435CF19BC9
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD40AC433EF;
+	Wed,  7 Jun 2023 20:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170333;
-	bh=7Q1b9kfb0jGjN7g3QZr3FPW6LLQNiR+QDFLs5F6K/b0=;
+	s=korg; t=1686170336;
+	bh=CybE0iE6rgEoeRVhthStPKm5oBpVm2M9EK7ca0vsVug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twqLwI3CY4s0Mu+2/UgK4R7qXXCRn3qW/fP4N6NyFmoGZsM8RknwY62ZkQUgRHWCV
-	 bltfN9dnatO81cwodbxJqn9TUGcBToiyn6JG8vlKIrv2DyaHkrPc0m9B/J7/E33eHy
-	 fISHtZB4khO5VkKdMaWyqBBjL1E8p05VsmbP9UFc=
+	b=1TB8Cot4gn2u2u1siuTgR9P0I2D6ic5iBIvvk7aELWe97h1HeqWuNAPEfWSoAq2+K
+	 68Us/STgkjkzT9SBALGvCKQe1BcgjYsYXqbpRabyZUIu+B51pteLt3nVnM4+L5RmjR
+	 pUMA+T14NyLVZ4MMQmKbekW4ksVdC3o9Y5WDiCaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/225] net/mlx5e: Fix error handling in mlx5e_refresh_tirs
-Date: Wed,  7 Jun 2023 22:13:57 +0200
-Message-ID: <20230607200915.799807093@linuxfoundation.org>
+Subject: [PATCH 6.1 045/225] net/mlx5: Read embedded cpu after init bit cleared
+Date: Wed,  7 Jun 2023 22:13:58 +0200
+Message-ID: <20230607200915.829801958@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,56 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saeed Mahameed <saeedm@nvidia.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit b6193d7030e3c59f1d4c75648c9c8fa40cad2bcd ]
+[ Upstream commit bbfa4b58997e3d38ba629c9f6fc0bd1c163aaf43 ]
 
-Allocation failure is outside the critical lock section and should
-return immediately rather than jumping to the unlock section.
+During driver load it reads embedded_cpu bit from initialization
+segment, but the initialization segment is readable only after
+initialization bit is cleared.
 
-Also unlock as soon as required and remove the now redundant jump label.
+Move the call to mlx5_read_embedded_cpu() right after initialization bit
+cleared.
 
-Fixes: 80a2a9026b24 ("net/mlx5e: Add a lock on tir list")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Fixes: 591905ba9679 ("net/mlx5: Introduce Mellanox SmartNIC and modify page management logic")
+Reviewed-by: Shay Drory <shayd@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_common.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_common.c b/drivers/net/ethernet/mellanox/mlx5/core/en_common.c
-index 68f19324db93c..03a99918a8942 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_common.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_common.c
-@@ -139,10 +139,8 @@ int mlx5e_refresh_tirs(struct mlx5e_priv *priv, bool enable_uc_lb,
- 
- 	inlen = MLX5_ST_SZ_BYTES(modify_tir_in);
- 	in = kvzalloc(inlen, GFP_KERNEL);
--	if (!in) {
--		err = -ENOMEM;
--		goto out;
--	}
-+	if (!in)
-+		return -ENOMEM;
- 
- 	if (enable_uc_lb)
- 		lb_flags = MLX5_TIRC_SELF_LB_BLOCK_BLOCK_UNICAST;
-@@ -160,14 +158,13 @@ int mlx5e_refresh_tirs(struct mlx5e_priv *priv, bool enable_uc_lb,
- 		tirn = tir->tirn;
- 		err = mlx5_core_modify_tir(mdev, tirn, in);
- 		if (err)
--			goto out;
-+			break;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 1a06493da4121..077204929fe4a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -896,7 +896,6 @@ static int mlx5_pci_init(struct mlx5_core_dev *dev, struct pci_dev *pdev,
  	}
-+	mutex_unlock(&mdev->mlx5e_res.hw_objs.td.list_lock);
  
--out:
- 	kvfree(in);
- 	if (err)
- 		netdev_err(priv->netdev, "refresh tir(0x%x) failed, %d\n", tirn, err);
--	mutex_unlock(&mdev->mlx5e_res.hw_objs.td.list_lock);
+ 	mlx5_pci_vsc_init(dev);
+-	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
+ 	return 0;
  
- 	return err;
- }
+ err_clr_master:
+@@ -1130,6 +1129,7 @@ static int mlx5_function_setup(struct mlx5_core_dev *dev, bool boot, u64 timeout
+ 		goto err_cmd_cleanup;
+ 	}
+ 
++	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
+ 	mlx5_cmd_set_state(dev, MLX5_CMDIF_STATE_UP);
+ 
+ 	mlx5_start_health_poll(dev);
 -- 
 2.39.2
 
