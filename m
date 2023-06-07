@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCE719BC9
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:42:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3484DC433D2;
-	Wed,  7 Jun 2023 20:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B9719BC9
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:42:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BACC433D2;
+	Wed,  7 Jun 2023 20:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170576;
-	bh=0v8Pmqr/5nGSIfTDDZwsBt1fsBtIeH8OhGXUdpTmTds=;
+	s=korg; t=1686170579;
+	bh=jXyeWu7J1vpGdlWJwZfkHZ8ILypI0JONqg8icPURwSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BdkfkZpIVRhMciJdJ43J3ElQszevvYxuCfgIup7G8sWG5lT2nLMRwkHguaNeo9J6a
-	 H9FBmAQVTbmgFwRNVJOL4Sge/e4xoaXsKVYo0StQDEyArUIRcLHChoLNl0F1+VUlGp
-	 +w7m1MPL2YvLvg4JV7J2KCMDkXMGzCTFBRlL1bEE=
+	b=meT0AHoApbf3k8raJi7cmuGs8GNYvoEu7hPaKP6zzOIFreA0Qku86j+tkPSD8yfUz
+	 9+2UfbFqdl8vogJjAHBXUp+4nBLEit5L50EhGX5ZkSOjiGKi+AFrLbVeMG8hceXPTa
+	 czoLCOxR0RAr4ygQyyRnsg6oPMA09/WDSsfujk7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Lee Jones <lee@kernel.org>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/225] media: mediatek: vcodec: Only apply 4K frame sizes on decoder formats
-Date: Wed,  7 Jun 2023 22:15:30 +0200
-Message-ID: <20230607200918.855577461@linuxfoundation.org>
+Subject: [PATCH 6.1 138/225] mailbox: mailbox-test: fix a locking issue in mbox_test_message_write()
+Date: Wed,  7 Jun 2023 22:15:31 +0200
+Message-ID: <20230607200918.898745343@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -38,39 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit ed17f89e9502f03af493e130620a9bb74c07cf28 ]
+[ Upstream commit 8fe72b76db79d694858e872370df49676bc3be8c ]
 
-When VCODEC_CAPABILITY_4K_DISABLED is not set in dec_capability, skip
-formats that are not MTK_FMT_DEC so only decoder formats is updated in
-mtk_init_vdec_params.
+There was a bug where this code forgot to unlock the tdev->mutex if the
+kzalloc() failed.  Fix this issue, by moving the allocation outside the
+lock.
 
-Fixes: e25528e1dbe5 ("media: mediatek: vcodec: Use 4K frame size when supported by stateful decoder")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 2d1e952a2b8e ("mailbox: mailbox-test: Fix potential double-free in mbox_test_message_write()")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/mediatek/vcodec/mtk_vcodec_dec_stateful.c   | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mailbox/mailbox-test.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateful.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateful.c
-index 29991551cf614..0fbd030026c72 100644
---- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateful.c
-+++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateful.c
-@@ -584,6 +584,9 @@ static void mtk_init_vdec_params(struct mtk_vcodec_ctx *ctx)
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index 6dd5b9614452b..abcee58e851c2 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -97,6 +97,7 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 				       size_t count, loff_t *ppos)
+ {
+ 	struct mbox_test_device *tdev = filp->private_data;
++	char *message;
+ 	void *data;
+ 	int ret;
  
- 	if (!(ctx->dev->dec_capability & VCODEC_CAPABILITY_4K_DISABLED)) {
- 		for (i = 0; i < num_supported_formats; i++) {
-+			if (mtk_video_formats[i].type != MTK_FMT_DEC)
-+				continue;
+@@ -112,12 +113,13 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&tdev->mutex);
+-
+-	tdev->message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
+-	if (!tdev->message)
++	message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
++	if (!message)
+ 		return -ENOMEM;
+ 
++	mutex_lock(&tdev->mutex);
 +
- 			mtk_video_formats[i].frmsize.max_width =
- 				VCODEC_DEC_4K_CODED_WIDTH;
- 			mtk_video_formats[i].frmsize.max_height =
++	tdev->message = message;
+ 	ret = copy_from_user(tdev->message, userbuf, count);
+ 	if (ret) {
+ 		ret = -EFAULT;
 -- 
 2.39.2
 
