@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7EF39251
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:20:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0196C4339B;
-	Wed,  7 Jun 2023 20:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF0F939251
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:20:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB10C433D2;
+	Wed,  7 Jun 2023 20:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169227;
-	bh=pQ/5k1AQ+zLaXa874EIKPhb50W9/u7lSf26AGbJiuDw=;
+	s=korg; t=1686169229;
+	bh=t5kX8PXAa11pa+Ztrpq+oh0UE6PY8s4hoc0cdrP9YvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbytxvJpAACsYAZhNrCr6xDHrdD/eic1CX1on0VvPC0//iM77HyJqjce02KZWq3Mh
-	 ILVkXQASpO5xGyC8+ZViNhW5cNLIcwvVsXYTuewr2uL4u33kJvpzOWSpZsA1nw6TTr
-	 2lCR/NWPPNrMd948dmhGdvpx77qVX6TntwJXlsmk=
+	b=X98/srykS2qmbFyGVAIWCqRuZuT4hXqP1kC8xuX3/s9HCD8UZNHAgPPMM7pg00Uge
+	 P7H073bVdgCuZXSrxl1sc5FYs4fMU/xusZ+R8xLIu+bxWKDU0c/RbZPvEGHN7AF3mV
+	 ZRTuujVEqFxQJn/HaKMbQZ/XmhdbzRYF5u83evE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 4.14 61/61] wifi: rtlwifi: 8192de: correct checking of IQK reload
-Date: Wed,  7 Jun 2023 22:16:15 +0200
-Message-ID: <20230607200856.233687007@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Lee Jones <lee@kernel.org>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 34/61] mailbox: mailbox-test: fix a locking issue in mbox_test_message_write()
+Date: Wed,  7 Jun 2023 22:15:48 +0200
+Message-ID: <20230607200847.208350969@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -34,47 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 93fbc1ebd978cf408ef5765e9c1630fce9a8621b upstream.
+[ Upstream commit 8fe72b76db79d694858e872370df49676bc3be8c ]
 
-Since IQK could spend time, we make a cache of IQK result matrix that looks
-like iqk_matrix[channel_idx].val[x][y], and we can reload the matrix if we
-have made a cache. To determine a cache is made, we check
-iqk_matrix[channel_idx].val[0][0].
+There was a bug where this code forgot to unlock the tdev->mutex if the
+kzalloc() failed.  Fix this issue, by moving the allocation outside the
+lock.
 
-The initial commit 7274a8c22980 ("rtlwifi: rtl8192de: Merge phy routines")
-make a mistake that checks incorrect iqk_matrix[channel_idx].val[0] that
-is always true, and this mistake is found by commit ee3db469dd31
-("wifi: rtlwifi: remove always-true condition pointed out by GCC 12"), so
-I recall the vendor driver to find fix and apply the correctness.
-
-Fixes: 7274a8c22980 ("rtlwifi: rtl8192de: Merge phy routines")
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20220801113345.42016-1-pkshih@realtek.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2d1e952a2b8e ("mailbox: mailbox-test: Fix potential double-free in mbox_test_message_write()")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/mailbox/mailbox-test.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-@@ -2414,11 +2414,10 @@ void rtl92d_phy_reload_iqk_setting(struc
- 			RT_TRACE(rtlpriv, COMP_SCAN, DBG_LOUD,
- 				 "Just Read IQK Matrix reg for channel:%d....\n",
- 				 channel);
--			_rtl92d_phy_patha_fill_iqk_matrix(hw, true,
--					rtlphy->iqk_matrix[
--					indexforchannel].value,	0,
--					(rtlphy->iqk_matrix[
--					indexforchannel].value[0][2] == 0));
-+			if (rtlphy->iqk_matrix[indexforchannel].value[0][0] != 0)
-+				_rtl92d_phy_patha_fill_iqk_matrix(hw, true,
-+					rtlphy->iqk_matrix[indexforchannel].value, 0,
-+					rtlphy->iqk_matrix[indexforchannel].value[0][2] == 0);
- 			if (IS_92D_SINGLEPHY(rtlhal->version)) {
- 				if ((rtlphy->iqk_matrix[
- 					indexforchannel].value[0][4] != 0)
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index c23acd994d783..1dbbc9036bb8e 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -101,6 +101,7 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 				       size_t count, loff_t *ppos)
+ {
+ 	struct mbox_test_device *tdev = filp->private_data;
++	char *message;
+ 	void *data;
+ 	int ret;
+ 
+@@ -116,12 +117,13 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&tdev->mutex);
+-
+-	tdev->message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
+-	if (!tdev->message)
++	message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
++	if (!message)
+ 		return -ENOMEM;
+ 
++	mutex_lock(&tdev->mutex);
++
++	tdev->message = message;
+ 	ret = copy_from_user(tdev->message, userbuf, count);
+ 	if (ret) {
+ 		ret = -EFAULT;
+-- 
+2.39.2
+
 
 
