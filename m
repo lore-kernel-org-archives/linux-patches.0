@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC74D3AE6D
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2655BC433EF;
-	Wed,  7 Jun 2023 20:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA023AE69
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B1CC433D2;
+	Wed,  7 Jun 2023 20:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169844;
-	bh=+L6YcshGykYMPZuOZDELl3G9cY8tIkIudZnLVsYCTkI=;
+	s=korg; t=1686169847;
+	bh=IrzoZRcJ1pQ3a+wCRzrBYdXoNkbPya36QSZTwlbQHiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SG9SZaJ5uHLAgPkt6VDCXlW7E9LRM3SttmdBXl9PKGHLmYTVgDcLgVxwmZl16kCwg
-	 fdpGqSq4K7w4zPYr48TQ0W95nr2wYSWnz51pcZsiIkVnoii16oBYKYISr/c+IVUa6q
-	 bdrTePG0n9XdOXUbJaCEpXNL4WBHmAbJjsRDn10A=
+	b=nzXit2dReQJkDHlsVoCuLsuTnnp55WFB3kuPKoRkbRPT7Y6X2oPPecBSZFyFyb+g0
+	 aer/FFbxVWgt8jONz8EamzPJvY9Cv1ElssZ8YyR/5q4Fw9Al+P/2HJXFiNqhbYbKYr
+	 rwgjxtZeFCnQ+iNCEhHXJR5R0UsC8/1kjZalvkWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.3 236/286] firmware: qcom_scm: Use fixed width src vm bitmap
-Date: Wed,  7 Jun 2023 22:15:35 +0200
-Message-ID: <20230607200931.005930285@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 237/286] misc: fastrpc: Pass proper scm arguments for secure map request
+Date: Wed,  7 Jun 2023 22:15:36 +0200
+Message-ID: <20230607200931.038603732@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,177 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Elliot Berman <quic_eberman@quicinc.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-[ Upstream commit 968a26a07f75377afbd4f7bb18ef587a1443c244 ]
+[ Upstream commit a6e766dea0a22918735176e4af862d535962f11e ]
 
-The maximum VMID for assign_mem is 63. Use a u64 to represent this
-bitmap instead of architecture-dependent "unsigned int" which varies in
-size on 32-bit and 64-bit platforms.
+If a map request is made with securemap attribute, the memory
+ownership needs to be reassigned to new VMID to allow access
+from protection domain. Currently only DSP VMID is passed to
+the reassign call which is incorrect as only a combination of
+HLOS and DSP VMID is allowed for memory ownership reassignment
+and passing only DSP VMID will cause assign call failure.
 
-Acked-by: Kalle Valo <kvalo@kernel.org> (ath10k)
-Tested-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230213181832.3489174-1-quic_eberman@quicinc.com
-Stable-dep-of: a6e766dea0a2 ("misc: fastrpc: Pass proper scm arguments for secure map request")
+Also pass proper restoring permissions to HLOS as the source
+permission will now carry both HLOS and DSP VMID permission.
+
+Change is also made to get valid physical address from
+scatter/gather for this allocation request.
+
+Fixes: e90d91190619 ("misc: fastrpc: Add support to secure memory map")
+Cc: stable <stable@kernel.org>
+Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230523152550.438363-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom_scm.c            | 12 +++++++-----
- drivers/misc/fastrpc.c                 |  2 +-
- drivers/net/wireless/ath/ath10k/qmi.c  |  4 ++--
- drivers/remoteproc/qcom_q6v5_mss.c     |  8 ++++----
- drivers/remoteproc/qcom_q6v5_pas.c     |  2 +-
- drivers/soc/qcom/rmtfs_mem.c           |  2 +-
- include/linux/firmware/qcom/qcom_scm.h |  2 +-
- 7 files changed, 17 insertions(+), 15 deletions(-)
+ drivers/misc/fastrpc.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 5f281cb1ae6ba..75cf3556b99a1 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -905,7 +905,7 @@ static int __qcom_scm_assign_mem(struct device *dev, phys_addr_t mem_region,
-  * Return negative errno on failure or 0 on success with @srcvm updated.
-  */
- int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
--			unsigned int *srcvm,
-+			u64 *srcvm,
- 			const struct qcom_scm_vmperm *newvm,
- 			unsigned int dest_cnt)
- {
-@@ -922,9 +922,9 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	__le32 *src;
- 	void *ptr;
- 	int ret, i, b;
--	unsigned long srcvm_bits = *srcvm;
-+	u64 srcvm_bits = *srcvm;
- 
--	src_sz = hweight_long(srcvm_bits) * sizeof(*src);
-+	src_sz = hweight64(srcvm_bits) * sizeof(*src);
- 	mem_to_map_sz = sizeof(*mem_to_map);
- 	dest_sz = dest_cnt * sizeof(*destvm);
- 	ptr_sz = ALIGN(src_sz, SZ_64) + ALIGN(mem_to_map_sz, SZ_64) +
-@@ -937,8 +937,10 @@ int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
- 	/* Fill source vmid detail */
- 	src = ptr;
- 	i = 0;
--	for_each_set_bit(b, &srcvm_bits, BITS_PER_LONG)
--		src[i++] = cpu_to_le32(b);
-+	for (b = 0; b < BITS_PER_TYPE(u64); b++) {
-+		if (srcvm_bits & BIT(b))
-+			src[i++] = cpu_to_le32(b);
-+	}
- 
- 	/* Fill details of mem buff to map */
- 	mem_to_map = ptr + ALIGN(src_sz, SZ_64);
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 2be67022263bd..f3f2671d7ac7c 100644
+index f3f2671d7ac7c..30d4d0476248f 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -262,7 +262,7 @@ struct fastrpc_channel_ctx {
- 	int domain_id;
- 	int sesscount;
- 	int vmcount;
--	u32 perms;
-+	u64 perms;
- 	struct qcom_scm_vmperm vmperms[FASTRPC_MAX_VMIDS];
- 	struct rpmsg_device *rpdev;
- 	struct fastrpc_session_ctx session[FASTRPC_MAX_SESSIONS];
-diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
-index 90f457b8e1feb..038c5903c0dc1 100644
---- a/drivers/net/wireless/ath/ath10k/qmi.c
-+++ b/drivers/net/wireless/ath/ath10k/qmi.c
-@@ -33,7 +33,7 @@ static int ath10k_qmi_map_msa_permission(struct ath10k_qmi *qmi,
- {
- 	struct qcom_scm_vmperm dst_perms[3];
- 	struct ath10k *ar = qmi->ar;
--	unsigned int src_perms;
-+	u64 src_perms;
- 	u32 perm_count;
- 	int ret;
+@@ -316,12 +316,14 @@ static void fastrpc_free_map(struct kref *ref)
+ 	if (map->table) {
+ 		if (map->attr & FASTRPC_ATTR_SECUREMAP) {
+ 			struct qcom_scm_vmperm perm;
++			int vmid = map->fl->cctx->vmperms[0].vmid;
++			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS) | BIT(vmid);
+ 			int err = 0;
  
-@@ -65,7 +65,7 @@ static int ath10k_qmi_unmap_msa_permission(struct ath10k_qmi *qmi,
- {
- 	struct qcom_scm_vmperm dst_perms;
- 	struct ath10k *ar = qmi->ar;
--	unsigned int src_perms;
-+	u64 src_perms;
- 	int ret;
- 
- 	src_perms = BIT(QCOM_SCM_VMID_MSS_MSA) | BIT(QCOM_SCM_VMID_WLAN);
-diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-index ab053084f7a22..1ba711bc01000 100644
---- a/drivers/remoteproc/qcom_q6v5_mss.c
-+++ b/drivers/remoteproc/qcom_q6v5_mss.c
-@@ -235,8 +235,8 @@ struct q6v5 {
- 	bool has_qaccept_regs;
- 	bool has_ext_cntl_regs;
- 	bool has_vq6;
--	int mpss_perm;
--	int mba_perm;
-+	u64 mpss_perm;
-+	u64 mba_perm;
- 	const char *hexagon_mdt_image;
- 	int version;
- };
-@@ -414,7 +414,7 @@ static void q6v5_pds_disable(struct q6v5 *qproc, struct device **pds,
+ 			perm.vmid = QCOM_SCM_VMID_HLOS;
+ 			perm.perm = QCOM_SCM_PERM_RWX;
+ 			err = qcom_scm_assign_mem(map->phys, map->size,
+-				&map->fl->cctx->perms, &perm, 1);
++				&src_perms, &perm, 1);
+ 			if (err) {
+ 				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+ 						map->phys, map->size, err);
+@@ -787,8 +789,12 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+ 		goto map_err;
  	}
- }
  
--static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, int *current_perm,
-+static int q6v5_xfer_mem_ownership(struct q6v5 *qproc, u64 *current_perm,
- 				   bool local, bool remote, phys_addr_t addr,
- 				   size_t size)
- {
-@@ -967,7 +967,7 @@ static int q6v5_mpss_init_image(struct q6v5 *qproc, const struct firmware *fw,
- 	unsigned long dma_attrs = DMA_ATTR_FORCE_CONTIGUOUS;
- 	dma_addr_t phys;
- 	void *metadata;
--	int mdata_perm;
-+	u64 mdata_perm;
- 	int xferop_ret;
- 	size_t size;
- 	void *ptr;
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 0871108fb4dc5..c99a205426851 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -94,7 +94,7 @@ struct qcom_adsp {
- 	size_t region_assign_size;
- 
- 	int region_assign_idx;
--	int region_assign_perms;
-+	u64 region_assign_perms;
- 
- 	struct qcom_rproc_glink glink_subdev;
- 	struct qcom_rproc_subdev smd_subdev;
-diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-index 538fa182169a4..0d31377f178d5 100644
---- a/drivers/soc/qcom/rmtfs_mem.c
-+++ b/drivers/soc/qcom/rmtfs_mem.c
-@@ -31,7 +31,7 @@ struct qcom_rmtfs_mem {
- 
- 	unsigned int client_id;
- 
--	unsigned int perms;
-+	u64 perms;
- };
- 
- static ssize_t qcom_rmtfs_mem_show(struct device *dev,
-diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
-index 1e449a5d7f5c1..250ea4efb7cb6 100644
---- a/include/linux/firmware/qcom/qcom_scm.h
-+++ b/include/linux/firmware/qcom/qcom_scm.h
-@@ -94,7 +94,7 @@ extern int qcom_scm_mem_protect_video_var(u32 cp_start, u32 cp_size,
- 					  u32 cp_nonpixel_start,
- 					  u32 cp_nonpixel_size);
- extern int qcom_scm_assign_mem(phys_addr_t mem_addr, size_t mem_sz,
--			       unsigned int *src,
-+			       u64 *src,
- 			       const struct qcom_scm_vmperm *newvm,
- 			       unsigned int dest_cnt);
- 
+-	map->phys = sg_dma_address(map->table->sgl);
+-	map->phys += ((u64)fl->sctx->sid << 32);
++	if (attr & FASTRPC_ATTR_SECUREMAP) {
++		map->phys = sg_phys(map->table->sgl);
++	} else {
++		map->phys = sg_dma_address(map->table->sgl);
++		map->phys += ((u64)fl->sctx->sid << 32);
++	}
+ 	map->size = len;
+ 	map->va = sg_virt(map->table->sgl);
+ 	map->len = len;
+@@ -798,9 +804,15 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+ 		 * If subsystem VMIDs are defined in DTSI, then do
+ 		 * hyp_assign from HLOS to those VM(s)
+ 		 */
++		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
++		struct qcom_scm_vmperm dst_perms[2] = {0};
++
++		dst_perms[0].vmid = QCOM_SCM_VMID_HLOS;
++		dst_perms[0].perm = QCOM_SCM_PERM_RW;
++		dst_perms[1].vmid = fl->cctx->vmperms[0].vmid;
++		dst_perms[1].perm = QCOM_SCM_PERM_RWX;
+ 		map->attr = attr;
+-		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &fl->cctx->perms,
+-				fl->cctx->vmperms, fl->cctx->vmcount);
++		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &src_perms, dst_perms, 2);
+ 		if (err) {
+ 			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
+ 					map->phys, map->size, err);
 -- 
 2.39.2
 
