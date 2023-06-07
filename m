@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B354319E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3578CC433EF;
-	Wed,  7 Jun 2023 20:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57FC119E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD49C433D2;
+	Wed,  7 Jun 2023 20:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170224;
-	bh=opXPETBpp1S+FD6YUrSUapQkYdqAx0geDp4Z8mZilkE=;
+	s=korg; t=1686170227;
+	bh=K6XDrCjId0MI42df+y4zJ6d3LFizzgee48/3855eNvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOGzY93ToZMXOCM8pH3omtn7DBebQKwk0nzuaGZvNbj3B2LOibqZfgpqzOk4GDFAy
-	 g6CWYafRc8FikcowSM/tL6gy+IjJrHxX8wYVC3Y78LIB1+Ui9SMgnnMaquVATVkrf9
-	 DAomfc+2ona+k3ym3uCCWC37558CSVsDNIhqIIik=
+	b=LelpHotOOOAw9wgbACW72unhTpMS6of/FaGgk63cgiKXIp6OP+b6hNaKAq2mir5dQ
+	 nycv2IGDjzvQP14aGEk2pfHgKshcdqZ6FEd/3nqI25c7wVFWRE2pcvWIrroQywOdb9
+	 ct+K7P4FUoDE1YmAYH2dElBNFw/yWuCBr6PWqeAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung-Chi Li <lschyi@chromium.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Ping Cheng <ping.cheng@wacom.com>,
 	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 4.19 62/88] HID: google: add jewel USB id
-Date: Wed,  7 Jun 2023 22:16:19 +0200
-Message-ID: <20230607200901.177018816@linuxfoundation.org>
+Subject: [PATCH 4.19 63/88] HID: wacom: avoid integer overflow in wacom_intuos_inout()
+Date: Wed,  7 Jun 2023 22:16:20 +0200
+Message-ID: <20230607200901.206895482@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -34,40 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sung-Chi Li <lschyi@chromium.org>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit ed84c4517a5bc536e8572a01dfa11bc22a280d06 upstream.
+commit bd249b91977b768ea02bf84d04625d2690ad2b98 upstream.
 
-Add 1 additional hammer-like device.
+If high bit is set to 1 in ((data[3] & 0x0f << 28), after all arithmetic
+operations and integer promotions are done, high bits in
+wacom->serial[idx] will be filled with 1s as well.
+Avoid this, albeit unlikely, issue by specifying left operand's __u64
+type for the right operand.
 
-Signed-off-by: Sung-Chi Li <lschyi@chromium.org>
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 3bea733ab212 ("USB: wacom tablet driver reorganization")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-google-hammer.c |    2 ++
- drivers/hid/hid-ids.h           |    1 +
- 2 files changed, 3 insertions(+)
+ drivers/hid/wacom_wac.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-google-hammer.c
-+++ b/drivers/hid/hid-google-hammer.c
-@@ -125,6 +125,8 @@ static const struct hid_device_id hammer
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_HAMMER) },
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
-+		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_JEWEL) },
-+	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_MAGNEMITE) },
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_MASTERBALL) },
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -480,6 +480,7 @@
- #define USB_DEVICE_ID_GOOGLE_MOONBALL	0x5044
- #define USB_DEVICE_ID_GOOGLE_DON	0x5050
- #define USB_DEVICE_ID_GOOGLE_EEL	0x5057
-+#define USB_DEVICE_ID_GOOGLE_JEWEL	0x5061
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -781,7 +781,7 @@ static int wacom_intuos_inout(struct wac
+ 	/* Enter report */
+ 	if ((data[1] & 0xfc) == 0xc0) {
+ 		/* serial number of the tool */
+-		wacom->serial[idx] = ((data[3] & 0x0f) << 28) +
++		wacom->serial[idx] = ((__u64)(data[3] & 0x0f) << 28) +
+ 			(data[4] << 20) + (data[5] << 12) +
+ 			(data[6] << 4) + (data[7] >> 4);
  
- #define USB_VENDOR_ID_GOTOP		0x08f2
- #define USB_DEVICE_ID_SUPER_Q2		0x007f
 
 
