@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5940370DE
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDEAC433EF;
-	Wed,  7 Jun 2023 20:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6680B370DE
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6925C433EF;
+	Wed,  7 Jun 2023 20:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170882;
-	bh=+CMClU2x/+ye7AO4QkcGAw9FVRqL4xhy7xhfqFMTa3Q=;
+	s=korg; t=1686170885;
+	bh=cnZqmU6XKQ1LnKjYxGZbF5tNLBpeh4utC7RkstxFJBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTYg8orvQPVvNrTS0NBW5datpR2XNc7wEllduLI6yUZX4y2D6/tRFM2gQ9lGA89t+
-	 h3DV2eDxzybpcfpbCufK46nB/WdpwdD4w429nfu5gj7dfNvED0w7A0AoXrEtcyHeKL
-	 2Pmde9oaptZtbdHbG4PxSMbujDqvWUBbZ9wanX74=
+	b=07CtFiBYIxPvgnJbHT1YRvGcmURJVudmzPSZiwjdsSezoThyvPs5bNZk+OSgfLtMA
+	 f4JkK7fy2sTiodngR+6OhTz/iO6klVzIVyqq3gN1mp5BaD1h++wxLCC19jjNv7gQUt
+	 Mx3KQZeVk4+gqZTO6UmkbgltyYWfZssGU2l8a+N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladislav Efanov <VEfanov@ispras.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/120] udp6: Fix race condition in udp6_sendmsg & connect
-Date: Wed,  7 Jun 2023 22:15:43 +0200
-Message-ID: <20230607200901.768493851@linuxfoundation.org>
+Subject: [PATCH 5.10 028/120] net/mlx5: Read embedded cpu after init bit cleared
+Date: Wed,  7 Jun 2023 22:15:44 +0200
+Message-ID: <20230607200901.799748549@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -36,58 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 448a5ce1120c5bdbce1f1ccdabcd31c7d029f328 ]
+[ Upstream commit bbfa4b58997e3d38ba629c9f6fc0bd1c163aaf43 ]
 
-Syzkaller got the following report:
-BUG: KASAN: use-after-free in sk_setup_caps+0x621/0x690 net/core/sock.c:2018
-Read of size 8 at addr ffff888027f82780 by task syz-executor276/3255
+During driver load it reads embedded_cpu bit from initialization
+segment, but the initialization segment is readable only after
+initialization bit is cleared.
 
-The function sk_setup_caps (called by ip6_sk_dst_store_flow->
-ip6_dst_store) referenced already freed memory as this memory was
-freed by parallel task in udpv6_sendmsg->ip6_sk_dst_lookup_flow->
-sk_dst_check.
+Move the call to mlx5_read_embedded_cpu() right after initialization bit
+cleared.
 
-          task1 (connect)              task2 (udp6_sendmsg)
-        sk_setup_caps->sk_dst_set |
-                                  |  sk_dst_check->
-                                  |      sk_dst_set
-                                  |      dst_release
-        sk_setup_caps references  |
-        to already freed dst_entry|
-
-The reason for this race condition is: sk_setup_caps() keeps using
-the dst after transferring the ownership to the dst cache.
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Fixes: 591905ba9679 ("net/mlx5: Introduce Mellanox SmartNIC and modify page management logic")
+Reviewed-by: Shay Drory <shayd@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c |    2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2016,7 +2016,6 @@ void sk_setup_caps(struct sock *sk, stru
- {
- 	u32 max_segs = 1;
- 
--	sk_dst_set(sk, dst);
- 	sk->sk_route_caps = dst->dev->features | sk->sk_route_forced_caps;
- 	if (sk->sk_route_caps & NETIF_F_GSO)
- 		sk->sk_route_caps |= NETIF_F_GSO_SOFTWARE;
-@@ -2031,6 +2030,7 @@ void sk_setup_caps(struct sock *sk, stru
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index da4ca0f67e9ce..22907f6364f54 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -783,7 +783,6 @@ static int mlx5_pci_init(struct mlx5_core_dev *dev, struct pci_dev *pdev,
  	}
- 	sk->sk_gso_max_segs = max_segs;
-+	sk_dst_set(sk, dst);
- }
- EXPORT_SYMBOL_GPL(sk_setup_caps);
  
+ 	mlx5_pci_vsc_init(dev);
+-	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
+ 	return 0;
+ 
+ err_clr_master:
+@@ -978,6 +977,7 @@ static int mlx5_function_setup(struct mlx5_core_dev *dev, bool boot)
+ 		goto err_cmd_cleanup;
+ 	}
+ 
++	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
+ 	mlx5_cmd_set_state(dev, MLX5_CMDIF_STATE_UP);
+ 
+ 	err = mlx5_core_enable_hca(dev, 0);
+-- 
+2.39.2
+
 
 
