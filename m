@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D6E3AE6C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DC7C433D2;
-	Wed,  7 Jun 2023 20:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4003AE6D
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93948C433EF;
+	Wed,  7 Jun 2023 20:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169884;
-	bh=ceu71PuV/Z6a1HJQpNtFi4mV1nhVwlkwKSISn98G9i4=;
+	s=korg; t=1686169886;
+	bh=p3WJ7x9/NlbwO4sWMj75fLaKz2XEnuRmSvEzdOTEgrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W89ON9xQuOfWkiQva/7dk1v8Mn3z9+lKj/NnjmrZ5U9naMaeZ+R3jqhU41TpU9JX1
-	 Pgi4mxZSD6TGqWNFMprvr9GCPkYE8Jmn8x6csd0paFlFLzPvFbJEOKfREFSMJzKpFh
-	 IJqgBjXJgOM5MMWicS9TL1Og+c6klX6UYB7gUzOE=
+	b=fwTskRhXlY9pS88BQqhwXps8iPuUULzfxttj8ojgx/4H6XxfsNKPcOv104D3qPywn
+	 kRMJ++ujXaq/7WCDSmxvtlxT1xrNYwmtsvyECNCg7LQ5yWbZFbRWIiN9aTBY05MgRJ
+	 56jurUM5T4+jVt/TPBJwVdUpGkCMqu4Yd+xyCFGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH 6.3 250/286] selftests: mptcp: pm nl: skip if MPTCP is not supported
-Date: Wed,  7 Jun 2023 22:15:49 +0200
-Message-ID: <20230607200931.465706703@linuxfoundation.org>
+Subject: [PATCH 6.3 251/286] selftests: mptcp: join: skip if MPTCP is not supported
+Date: Wed,  7 Jun 2023 22:15:50 +0200
+Message-ID: <20230607200931.498806206@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,7 +36,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 0f4955a40dafe18a1122e3714d8173e4b018e869 upstream.
+commit 715c78a82e00f848f99ef76e6f6b89216ccba268 upstream.
 
 Selftests are supposed to run on any kernels, including the old ones not
 supporting MPTCP.
@@ -45,35 +45,35 @@ A new check is then added to make sure MPTCP is supported. If not, the
 test stops and is marked as "skipped".
 
 Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: eedbc685321b ("selftests: add PM netlink functional tests")
+Fixes: b08fbf241064 ("selftests: add test-cases for MPTCP MP_JOIN")
 Cc: stable@vger.kernel.org
 Acked-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/pm_netlink.sh |    4 ++++
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++++
  1 file changed, 4 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
-+++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
-@@ -1,6 +1,8 @@
- #!/bin/bash
- # SPDX-License-Identifier: GPL-2.0
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -6,6 +6,8 @@
+ # address all other issues detected by shellcheck.
+ #shellcheck disable=SC2086
  
 +. "$(dirname "${0}")/mptcp_lib.sh"
 +
- ksft_skip=4
  ret=0
+ sin=""
+ sinfail=""
+@@ -132,6 +134,8 @@ cleanup_partial()
  
-@@ -34,6 +36,8 @@ cleanup()
- 	ip netns del $ns1
- }
- 
-+mptcp_lib_check_mptcp
+ check_tools()
+ {
++	mptcp_lib_check_mptcp
 +
- ip -Version > /dev/null 2>&1
- if [ $? -ne 0 ];then
- 	echo "SKIP: Could not run test without ip tool"
+ 	if ! ip -Version &> /dev/null; then
+ 		echo "SKIP: Could not run test without ip tool"
+ 		exit $ksft_skip
 
 
