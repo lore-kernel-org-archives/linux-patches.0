@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1482A34459
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0FDC4339B;
-	Wed,  7 Jun 2023 20:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CEE34459
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F56C433D2;
+	Wed,  7 Jun 2023 20:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171115;
-	bh=zJK4Lz5YrZyMtMc6jpR5XpNCZCfD/A+9gpmhZuahO0w=;
+	s=korg; t=1686171118;
+	bh=5X0e6hINHGwPlV2KHVK0N12Ft0kj9AfhnSYfaom3LvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yLX3sYeC2kSheUV9YPQ9As+1dleXBYW6VU37vn7oGPQnAzM/sPA8RtpkEUJRuzSu5
-	 P0/N6aC6OEeuiT6aJiB0zs3J51jqUoBf6aqNBuVTkIAugg6WJGFthFMo6zo8CikahF
-	 qYRv+e+xTMAJ4uxUT1T7iM/qL9uO30u1XxQnuB0w=
+	b=fQGhB+EjsjcUObiBnxC1pGNB4nB65lGh9U5bgcTvq4uTTIQRBll7rWzlw0F4kI9dB
+	 fG2nYCQiJ5C3WImSvDglCMOVdBegOfG43VLPMT6cfw0/l7Iaj5BtlhLuAwpGRqUxuG
+	 OKRzPW4K6dpAUfixkPDPHJy5GvCweowi9vbTQqiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH 5.10 116/120] selftests: mptcp: diag: skip if MPTCP is not supported
-Date: Wed,  7 Jun 2023 22:17:12 +0200
-Message-ID: <20230607200904.586168110@linuxfoundation.org>
+Subject: [PATCH 5.10 117/120] selftests: mptcp: simult flows: skip if MPTCP is not supported
+Date: Wed,  7 Jun 2023 22:17:13 +0200
+Message-ID: <20230607200904.617616966@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -36,7 +36,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 46565acdd29facbf418a11e4a3791b3c8967308d upstream.
+commit 9161f21c74a1a0e7bb39eb84ea0c86b23c92fc87 upstream.
 
 Selftests are supposed to run on any kernels, including the old ones not
 supporting MPTCP.
@@ -45,18 +45,18 @@ A new check is then added to make sure MPTCP is supported. If not, the
 test stops and is marked as "skipped".
 
 Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: df62f2ec3df6 ("selftests/mptcp: add diag interface tests")
+Fixes: 1a418cb8e888 ("mptcp: simult flow self-tests")
 Cc: stable@vger.kernel.org
 Acked-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/diag.sh |    4 ++++
+ tools/testing/selftests/net/mptcp/simult_flows.sh |    4 ++++
  1 file changed, 4 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/diag.sh
-+++ b/tools/testing/selftests/net/mptcp/diag.sh
+--- a/tools/testing/selftests/net/mptcp/simult_flows.sh
++++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
 @@ -1,6 +1,8 @@
  #!/bin/bash
  # SPDX-License-Identifier: GPL-2.0
@@ -64,9 +64,9 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +. "$(dirname "${0}")/mptcp_lib.sh"
 +
  rndh=$(printf %x $sec)-$(mktemp -u XXXXXX)
- ns="ns1-$rndh"
- ksft_skip=4
-@@ -28,6 +30,8 @@ cleanup()
+ ns1="ns1-$rndh"
+ ns2="ns2-$rndh"
+@@ -31,6 +33,8 @@ cleanup()
  	done
  }
  
