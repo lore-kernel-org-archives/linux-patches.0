@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672B434D8D
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:22:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE711C433D2;
-	Wed,  7 Jun 2023 20:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D6034D8D
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:22:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B74C433EF;
+	Wed,  7 Jun 2023 20:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169374;
-	bh=6VgSV1cmqLNPmSfcOhcsHrkic9HBdBj/A0f1OAvwvUU=;
+	s=korg; t=1686169376;
+	bh=ElF/sF9SWQbw58MmChNAfbK6iPYTNBXbaBCeogY13Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9YWaD1qEQR2jZC90h3IVNokYm7fCtD0tud2jcYny0YvHVHpU1VvZ4G3meDJpa0Ey
-	 hEd7WsmZfV7x2ToIgvUuKOs//xGna4cL39iGlatvLKVY0nogI/Qp/rJ0euDW0bFsiR
-	 Cm2lr6uCPZfP//xTBNfL4ldDrW9KKDoARrHFQFa4=
+	b=J8Stb5y3lYgN/WV9D1R+bjD7cpv6ZvJ4IN5cWgpbQ8jtqOs5mv9ACZFnXxgMKniz0
+	 TahbojdOQ9k/GVu734YCIstrwR5XhLLSOxZB808q5rNpiBOZdbId7R0F+7sRyGaJCU
+	 CL5dO58Uvji/yoqlQOJ2Lg3GhYOwzqhpQUmcknSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Peilin Ye <peilin.ye@bytedance.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 056/286] net: sched: fix NULL pointer dereference in mq_attach
-Date: Wed,  7 Jun 2023 22:12:35 +0200
-Message-ID: <20230607200924.904316267@linuxfoundation.org>
+Subject: [PATCH 6.3 057/286] net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report
+Date: Wed,  7 Jun 2023 22:12:36 +0200
+Message-ID: <20230607200924.935851871@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,91 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 36eec020fab668719b541f34d97f44e232ffa165 ]
+[ Upstream commit f4e4534850a9d18c250a93f8d7fbb51310828110 ]
 
-When use the following command to test:
-1)ip link add bond0 type bond
-2)ip link set bond0 up
-3)tc qdisc add dev bond0 root handle ffff: mq
-4)tc qdisc replace dev bond0 parent ffff:fff1 handle ffff: mq
+The current code for the length calculation wrongly truncates the reported
+length of the groups array, causing an under report of the subscribed
+groups. To fix this, use 'BITS_TO_BYTES()' which rounds up the
+division by 8.
 
-The kernel reports NULL pointer dereference issue. The stack information
-is as follows:
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-Internal error: Oops: 0000000096000006 [#1] SMP
-Modules linked in:
-pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : mq_attach+0x44/0xa0
-lr : qdisc_graft+0x20c/0x5cc
-sp : ffff80000e2236a0
-x29: ffff80000e2236a0 x28: ffff0000c0e59d80 x27: ffff0000c0be19c0
-x26: ffff0000cae3e800 x25: 0000000000000010 x24: 00000000fffffff1
-x23: 0000000000000000 x22: ffff0000cae3e800 x21: ffff0000c9df4000
-x20: ffff0000c9df4000 x19: 0000000000000000 x18: ffff80000a934000
-x17: ffff8000f5b56000 x16: ffff80000bb08000 x15: 0000000000000000
-x14: 0000000000000000 x13: 6b6b6b6b6b6b6b6b x12: 6b6b6b6b00000001
-x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-x8 : ffff0000c0be0730 x7 : bbbbbbbbbbbbbbbb x6 : 0000000000000008
-x5 : ffff0000cae3e864 x4 : 0000000000000000 x3 : 0000000000000001
-x2 : 0000000000000001 x1 : ffff8000090bc23c x0 : 0000000000000000
-Call trace:
-mq_attach+0x44/0xa0
-qdisc_graft+0x20c/0x5cc
-tc_modify_qdisc+0x1c4/0x664
-rtnetlink_rcv_msg+0x354/0x440
-netlink_rcv_skb+0x64/0x144
-rtnetlink_rcv+0x28/0x34
-netlink_unicast+0x1e8/0x2a4
-netlink_sendmsg+0x308/0x4a0
-sock_sendmsg+0x64/0xac
-____sys_sendmsg+0x29c/0x358
-___sys_sendmsg+0x90/0xd0
-__sys_sendmsg+0x7c/0xd0
-__arm64_sys_sendmsg+0x2c/0x38
-invoke_syscall+0x54/0x114
-el0_svc_common.constprop.1+0x90/0x174
-do_el0_svc+0x3c/0xb0
-el0_svc+0x24/0xec
-el0t_64_sync_handler+0x90/0xb4
-el0t_64_sync+0x174/0x178
-
-This is because when mq is added for the first time, qdiscs in mq is set
-to NULL in mq_attach(). Therefore, when replacing mq after adding mq, we
-need to initialize qdiscs in the mq before continuing to graft. Otherwise,
-it will couse NULL pointer dereference issue in mq_attach(). And the same
-issue will occur in the attach functions of mqprio, taprio and htb.
-ffff:fff1 means that the repalce qdisc is ingress. Ingress does not allow
-any qdisc to be attached. Therefore, ffff:fff1 is incorrectly used, and
-the command should be dropped.
-
-Fixes: 6ec1c69a8f64 ("net_sched: add classful multiqueue dummy scheduler")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Tested-by: Peilin Ye <peilin.ye@bytedance.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/20230527093747.3583502-1-shaozhengchao@huawei.com
+Fixes: b42be38b2778 ("netlink: add API to retrieve all group memberships")
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230529153335.389815-1-pctammela@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netlink/af_netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index a686d7cae5130..7045b67b5533e 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1604,6 +1604,10 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 					NL_SET_ERR_MSG(extack, "Qdisc parent/child loop detected");
- 					return -ELOOP;
- 				}
-+				if (clid == TC_H_INGRESS) {
-+					NL_SET_ERR_MSG(extack, "Ingress cannot graft directly");
-+					return -EINVAL;
-+				}
- 				qdisc_refcount_inc(q);
- 				goto graft;
- 			} else {
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 45d47b39de225..717e27a4b66a0 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1779,7 +1779,7 @@ static int netlink_getsockopt(struct socket *sock, int level, int optname,
+ 				break;
+ 			}
+ 		}
+-		if (put_user(ALIGN(nlk->ngroups / 8, sizeof(u32)), optlen))
++		if (put_user(ALIGN(BITS_TO_BYTES(nlk->ngroups), sizeof(u32)), optlen))
+ 			err = -EFAULT;
+ 		netlink_unlock_table();
+ 		return err;
 -- 
 2.39.2
 
