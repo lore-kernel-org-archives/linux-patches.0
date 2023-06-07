@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C70839234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5DBC433EF;
-	Wed,  7 Jun 2023 20:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35EB39234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EDCC433EF;
+	Wed,  7 Jun 2023 20:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169177;
-	bh=huwuyLbBEwY/BuTJsLSs9ftPZ3OdpzGHLAHOkXymJu4=;
+	s=korg; t=1686169179;
+	bh=bpiNzH47AFQQYnd9kHBcxczZq2BFDNXC5xPFULCNMGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xDsS3gD1MOrXnbuIC/SBDOuB9wFb7UbQKI8XZZbI9ySctpCs6L/Y6pLXu8aqPP4dA
-	 MnaEBdYL9Y06UY9c8XZqnOyZ/V6KfuoHTdZEp7Ql6ZkQ78XCeg9767GRtg6UPuhD1A
-	 S8AqHcpmENEa8/VTPFE7yE+BxjW3XbMHqugJmHJI=
+	b=Htq0/tNyIrscRpppmxxS1L4KAF0R4BO09V9lXIaPAqVoLZUDiibhWyJVNd2NVH6Jj
+	 I3+SRM+hjCcop61EdRCjZdv0r4l9V00On9oY2Im79DWV4uMZp61lNrgRe5VJsZvdSj
+	 r0f8aQIdbHbHSM/PrjmELuOXGGyAeEgjvtjZ8bgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 44/61] gcc-12: disable -Wdangling-pointer warning for now
-Date: Wed,  7 Jun 2023 22:15:58 +0200
-Message-ID: <20230607200850.394221758@linuxfoundation.org>
+	Martin Liska <mliska@suse.cz>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.14 45/61] eth: sun: cassini: remove dead code
+Date: Wed,  7 Jun 2023 22:15:59 +0200
+Message-ID: <20230607200850.713694756@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -34,65 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Martin Liška <mliska@suse.cz>
 
-commit f7d63b50898172b9eb061b9e2daad61b428792d0 upstream.
+commit 32329216ca1d6ee29c41215f18b3053bb6158541 upstream.
 
-[ Upstream commit 49beadbd47c270a00754c107a837b4f29df4c822 ]
+Fixes the following GCC warning:
 
-While the concept of checking for dangling pointers to local variables
-at function exit is really interesting, the gcc-12 implementation is not
-compatible with reality, and results in false positives.
+drivers/net/ethernet/sun/cassini.c:1316:29: error: comparison between two arrays [-Werror=array-compare]
+drivers/net/ethernet/sun/cassini.c:3783:34: error: comparison between two arrays [-Werror=array-compare]
 
-For example, gcc sees us putting things on a local list head allocated
-on the stack, which involves exactly those kinds of pointers to the
-local stack entry:
+Note that 2 arrays should be compared by comparing of their addresses:
+note: use ‘&cas_prog_workaroundtab[0] == &cas_prog_null[0]’ to compare the addresses
 
-  In function ‘__list_add’,
-      inlined from ‘list_add_tail’ at include/linux/list.h:102:2,
-      inlined from ‘rebuild_snap_realms’ at fs/ceph/snap.c:434:2:
-  include/linux/list.h:74:19: warning: storing the address of local variable ‘realm_queue’ in ‘*&realm_27(D)->rebuild_item.prev’ [-Wdangling-pointer=]
-     74 |         new->prev = prev;
-        |         ~~~~~~~~~~^~~~~~
-
-But then gcc - understandably - doesn't really understand the big
-picture how the doubly linked list works, so doesn't see how we then end
-up emptying said list head in a loop and the pointer we added has been
-removed.
-
-Gcc also complains about us (intentionally) using this as a way to store
-a kind of fake stack trace, eg
-
-  drivers/acpi/acpica/utdebug.c:40:38: warning: storing the address of local variable ‘current_sp’ in ‘acpi_gbl_entry_stack_pointer’ [-Wdangling-pointer=]
-     40 |         acpi_gbl_entry_stack_pointer = &current_sp;
-        |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
-
-which is entirely reasonable from a compiler standpoint, and we may want
-to change those kinds of patterns, but not not.
-
-So this is one of those "it would be lovely if the compiler were to
-complain about us leaving dangling pointers to the stack", but not this
-way.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Martin Liska <mliska@suse.cz>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/sun/cassini.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -731,6 +731,10 @@ endif
- KBUILD_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)
+--- a/drivers/net/ethernet/sun/cassini.c
++++ b/drivers/net/ethernet/sun/cassini.c
+@@ -1349,7 +1349,7 @@ static void cas_init_rx_dma(struct cas *
+ 	writel(val, cp->regs + REG_RX_PAGE_SIZE);
  
- KBUILD_CFLAGS += $(call cc-disable-warning, unused-const-variable)
-+
-+# These result in bogus false positives
-+KBUILD_CFLAGS += $(call cc-disable-warning, dangling-pointer)
-+
- ifdef CONFIG_FRAME_POINTER
- KBUILD_CFLAGS	+= -fno-omit-frame-pointer -fno-optimize-sibling-calls
- else
+ 	/* enable the header parser if desired */
+-	if (CAS_HP_FIRMWARE == cas_prog_null)
++	if (&CAS_HP_FIRMWARE[0] == &cas_prog_null[0])
+ 		return;
+ 
+ 	val = CAS_BASE(HP_CFG_NUM_CPU, CAS_NCPUS > 63 ? 0 : CAS_NCPUS);
+@@ -3819,7 +3819,7 @@ static void cas_reset(struct cas *cp, in
+ 
+ 	/* program header parser */
+ 	if ((cp->cas_flags & CAS_FLAG_TARGET_ABORT) ||
+-	    (CAS_HP_ALT_FIRMWARE == cas_prog_null)) {
++	    (&CAS_HP_ALT_FIRMWARE[0] == &cas_prog_null[0])) {
+ 		cas_load_firmware(cp, CAS_HP_FIRMWARE);
+ 	} else {
+ 		cas_load_firmware(cp, CAS_HP_ALT_FIRMWARE);
 
 
