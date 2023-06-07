@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF1234CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B86AC433D2;
-	Wed,  7 Jun 2023 20:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB1934CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A31C433EF;
+	Wed,  7 Jun 2023 20:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170679;
-	bh=Gn1rHmsq5DJv8v7xZ3HGtpSksLy3EIOWjOcBitBUE00=;
+	s=korg; t=1686170682;
+	bh=O+6FnCMBc0toMCm7AYWINAO4Tv/33jE50aLTPC9FI9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEQd5LSA/NLfRkRZlc6AOpdVq73zwrEnsq3KNRXkZnhwrgdnCXB9Of3RpNxwefaT6
-	 C2rekEV0bZD0zjZ8U+uIat7m42S8g5hkCq3QXW+oOqz0lv19OT6V2fHvzpAV35PczQ
-	 /QiVYS+Hk9/AxbJA5CLSR20fgoOU937PRJuk5sag=
+	b=CH0cNNav39uXLcKN2mdProg7uk130W2n8CvWWl3aExk8csDGXgdbtYKBb97IxbWP6
+	 EyaR7UrXnmSXcEDbdld5CTCInDz0714HF7CLLIDi7u3xJdFnEr428XiTAJoxKUmSHY
+	 YnyAk/zz+3h4DxLlgmu9LtsXCdPMt97W4gmIil40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 176/225] phy: qcom-qmp-combo: fix init-count imbalance
-Date: Wed,  7 Jun 2023 22:16:09 +0200
-Message-ID: <20230607200920.145563689@linuxfoundation.org>
+Subject: [PATCH 6.1 177/225] phy: qcom-qmp-pcie-msm8996: fix init-count imbalance
+Date: Wed,  7 Jun 2023 22:16:10 +0200
+Message-ID: <20230607200920.178098657@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -37,29 +37,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 9bf03a0cbd80a256bc1e1c4bcc80bc2b06b8b2b9 upstream.
+commit e42f110700ed7293700c26145e1ed07ea05ac3f6 upstream.
 
 The init counter is not decremented on initialisation errors, which
-prevents retrying initialisation and can lead to the runtime suspend
-callback attempting to disable resources that have never been enabled.
+prevents retrying initialisation.
 
 Add the missing decrement on initialisation errors so that the counter
 reflects the state of the device.
 
 Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
-Cc: stable@vger.kernel.org	# 4.12
+Cc: stable@vger.kernel.org      # 4.12
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230502103810.12061-2-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230502103810.12061-3-johan+linaro@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    5 +++--
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c |    5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -1993,7 +1993,7 @@ static int qmp_combo_com_init(struct qmp
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
+@@ -425,7 +425,7 @@ static int qmp_pcie_msm8996_com_init(str
  	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
  	if (ret) {
  		dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
@@ -68,7 +67,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	}
  
  	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-@@ -2048,7 +2048,8 @@ err_assert_reset:
+@@ -455,7 +455,8 @@ err_assert_reset:
  	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
  err_disable_regulators:
  	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
