@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A3110FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52507C433D2;
-	Wed,  7 Jun 2023 20:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32E610FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9A6C4339B;
+	Wed,  7 Jun 2023 20:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169666;
-	bh=L8fZ+7nTh++J2ahGh3qsAwOWAKqODYwA+vjf4wtxFWE=;
+	s=korg; t=1686169669;
+	bh=jKrNuBwFBASeoYEA5DGc1XNcj2STVtp2XXCpYrs7yV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SaEQmqO2MZ5YQtZvr0hI8G87LtON5rWKyfVt/OgT9rCQ9f2Hs68IbL/0ZQ3CxXXRp
-	 2QlWmwQ18D6IMFtHPX4Q4o2yHkICeevQ6ASwl40qArfLe4Uzoovj5nJWnKBZ4Qs+Oc
-	 gldTkaW2Kn37umfu69ziwW+/pmatZ7nSxNBdmImQ=
+	b=n08jquuoCqkQOWGTlETp0SDy0/Ej9q24ll6s7yOVaWyltKbLUUfG1XdSn7CI+OPhS
+	 SL51TmI0kik5PrdnPajvIqXZtpkThWbSUZ+oyfNDtvmcekjIsBXNY5DV3mx9w9s4Yg
+	 E1Yp7yzJSK4b4ZEM2m8yhgnIfIZxXWq1ETK1GY6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 138/286] media: dvb-core: Fix use-after-free due to race at dvb_register_device()
-Date: Wed,  7 Jun 2023 22:13:57 +0200
-Message-ID: <20230607200927.594744975@linuxfoundation.org>
+Subject: [PATCH 6.3 129/286] media: dvb-usb-v2: rtl28xxu: fix null-ptr-deref in rtl28xxu_i2c_xfer
+Date: Wed,  7 Jun 2023 22:13:48 +0200
+Message-ID: <20230607200927.312044593@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,252 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 627bb528b086b4136315c25d6a447a98ea9448d3 ]
+[ Upstream commit aa4a447b81b84f69c1a89ad899df157f386d7636 ]
 
-dvb_register_device() dynamically allocates fops with kmemdup()
-to set the fops->owner.
-And these fops are registered in 'file->f_ops' using replace_fops()
-in the dvb_device_open() process, and kfree()d in dvb_free_device().
+In rtl28xxu_i2c_xfer, msg is controlled by user. When msg[i].buf
+is null and msg[i].len is zero, former checks on msg[i].buf would be
+passed. Malicious data finally reach rtl28xxu_i2c_xfer. If accessing
+msg[i].buf[0] without sanity check, null ptr deref would happen.
+We add check on msg[i].len to prevent crash.
 
-However, it is not common to use dynamically allocated fops instead
-of 'static const' fops as an argument of replace_fops(),
-and UAF may occur.
-These UAFs can occur on any dvb type using dvb_register_device(),
-such as dvb_dvr, dvb_demux, dvb_frontend, dvb_net, etc.
+Similar commit:
+commit 0ed554fd769a
+("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
 
-So, instead of kfree() the fops dynamically allocated in
-dvb_register_device() in dvb_free_device() called during the
-.disconnect() process, kfree() it collectively in exit_dvbdev()
-called when the dvbdev.c module is removed.
-
-Link: https://lore.kernel.org/linux-media/20221117045925.14297-4-imv4bel@gmail.com
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/linux-media/tencent_3623572106754AC2F266B316798B0F6CCA05@qq.com
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvbdev.c | 84 ++++++++++++++++++++++++---------
- include/media/dvbdev.h          | 15 ++++++
- 2 files changed, 78 insertions(+), 21 deletions(-)
+ drivers/media/usb/dvb-usb-v2/rtl28xxu.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index 0ed087caf7f3b..73d296f27ff92 100644
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -27,6 +27,7 @@
- #include <media/tuner.h>
- 
- static DEFINE_MUTEX(dvbdev_mutex);
-+static LIST_HEAD(dvbdevfops_list);
- static int dvbdev_debug;
- 
- module_param(dvbdev_debug, int, 0644);
-@@ -453,14 +454,15 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- 			enum dvb_device_type type, int demux_sink_pads)
- {
- 	struct dvb_device *dvbdev;
--	struct file_operations *dvbdevfops;
-+	struct file_operations *dvbdevfops = NULL;
-+	struct dvbdevfops_node *node = NULL, *new_node = NULL;
- 	struct device *clsdev;
- 	int minor;
- 	int id, ret;
- 
- 	mutex_lock(&dvbdev_register_lock);
- 
--	if ((id = dvbdev_get_free_id (adap, type)) < 0){
-+	if ((id = dvbdev_get_free_id (adap, type)) < 0) {
- 		mutex_unlock(&dvbdev_register_lock);
- 		*pdvbdev = NULL;
- 		pr_err("%s: couldn't find free device id\n", __func__);
-@@ -468,18 +470,45 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- 	}
- 
- 	*pdvbdev = dvbdev = kzalloc(sizeof(*dvbdev), GFP_KERNEL);
--
- 	if (!dvbdev){
- 		mutex_unlock(&dvbdev_register_lock);
- 		return -ENOMEM;
- 	}
- 
--	dvbdevfops = kmemdup(template->fops, sizeof(*dvbdevfops), GFP_KERNEL);
-+	/*
-+	 * When a device of the same type is probe()d more than once,
-+	 * the first allocated fops are used. This prevents memory leaks
-+	 * that can occur when the same device is probe()d repeatedly.
-+	 */
-+	list_for_each_entry(node, &dvbdevfops_list, list_head) {
-+		if (node->fops->owner == adap->module &&
-+				node->type == type &&
-+				node->template == template) {
-+			dvbdevfops = node->fops;
-+			break;
-+		}
-+	}
- 
--	if (!dvbdevfops){
--		kfree (dvbdev);
--		mutex_unlock(&dvbdev_register_lock);
--		return -ENOMEM;
-+	if (dvbdevfops == NULL) {
-+		dvbdevfops = kmemdup(template->fops, sizeof(*dvbdevfops), GFP_KERNEL);
-+		if (!dvbdevfops) {
-+			kfree(dvbdev);
-+			mutex_unlock(&dvbdev_register_lock);
-+			return -ENOMEM;
-+		}
-+
-+		new_node = kzalloc(sizeof(struct dvbdevfops_node), GFP_KERNEL);
-+		if (!new_node) {
-+			kfree(dvbdevfops);
-+			kfree(dvbdev);
-+			mutex_unlock(&dvbdev_register_lock);
-+			return -ENOMEM;
-+		}
-+
-+		new_node->fops = dvbdevfops;
-+		new_node->type = type;
-+		new_node->template = template;
-+		list_add_tail (&new_node->list_head, &dvbdevfops_list);
- 	}
- 
- 	memcpy(dvbdev, template, sizeof(struct dvb_device));
-@@ -490,20 +519,20 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- 	dvbdev->priv = priv;
- 	dvbdev->fops = dvbdevfops;
- 	init_waitqueue_head (&dvbdev->wait_queue);
--
- 	dvbdevfops->owner = adap->module;
--
- 	list_add_tail (&dvbdev->list_head, &adap->device_list);
--
- 	down_write(&minor_rwsem);
- #ifdef CONFIG_DVB_DYNAMIC_MINORS
- 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
- 		if (dvb_minors[minor] == NULL)
- 			break;
--
- 	if (minor == MAX_DVB_MINORS) {
-+		if (new_node) {
-+			list_del (&new_node->list_head);
-+			kfree(dvbdevfops);
-+			kfree(new_node);
-+		}
- 		list_del (&dvbdev->list_head);
--		kfree(dvbdevfops);
- 		kfree(dvbdev);
- 		up_write(&minor_rwsem);
- 		mutex_unlock(&dvbdev_register_lock);
-@@ -512,41 +541,47 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- #else
- 	minor = nums2minor(adap->num, type, id);
- #endif
--
- 	dvbdev->minor = minor;
- 	dvb_minors[minor] = dvb_device_get(dvbdev);
- 	up_write(&minor_rwsem);
--
- 	ret = dvb_register_media_device(dvbdev, type, minor, demux_sink_pads);
- 	if (ret) {
- 		pr_err("%s: dvb_register_media_device failed to create the mediagraph\n",
- 		      __func__);
--
-+		if (new_node) {
-+			list_del (&new_node->list_head);
-+			kfree(dvbdevfops);
-+			kfree(new_node);
-+		}
- 		dvb_media_device_free(dvbdev);
- 		list_del (&dvbdev->list_head);
--		kfree(dvbdevfops);
- 		kfree(dvbdev);
- 		mutex_unlock(&dvbdev_register_lock);
- 		return ret;
- 	}
- 
--	mutex_unlock(&dvbdev_register_lock);
--
- 	clsdev = device_create(dvb_class, adap->device,
- 			       MKDEV(DVB_MAJOR, minor),
- 			       dvbdev, "dvb%d.%s%d", adap->num, dnames[type], id);
- 	if (IS_ERR(clsdev)) {
- 		pr_err("%s: failed to create device dvb%d.%s%d (%ld)\n",
- 		       __func__, adap->num, dnames[type], id, PTR_ERR(clsdev));
-+		if (new_node) {
-+			list_del (&new_node->list_head);
-+			kfree(dvbdevfops);
-+			kfree(new_node);
-+		}
- 		dvb_media_device_free(dvbdev);
- 		list_del (&dvbdev->list_head);
--		kfree(dvbdevfops);
- 		kfree(dvbdev);
-+		mutex_unlock(&dvbdev_register_lock);
- 		return PTR_ERR(clsdev);
- 	}
-+
- 	dprintk("DVB: register adapter%d/%s%d @ minor: %i (0x%02x)\n",
- 		adap->num, dnames[type], id, minor, minor);
- 
-+	mutex_unlock(&dvbdev_register_lock);
- 	return 0;
- }
- EXPORT_SYMBOL(dvb_register_device);
-@@ -575,7 +610,6 @@ static void dvb_free_device(struct kref *ref)
- {
- 	struct dvb_device *dvbdev = container_of(ref, struct dvb_device, ref);
- 
--	kfree (dvbdev->fops);
- 	kfree (dvbdev);
- }
- 
-@@ -1081,9 +1115,17 @@ static int __init init_dvbdev(void)
- 
- static void __exit exit_dvbdev(void)
- {
-+	struct dvbdevfops_node *node, *next;
-+
- 	class_destroy(dvb_class);
- 	cdev_del(&dvb_device_cdev);
- 	unregister_chrdev_region(MKDEV(DVB_MAJOR, 0), MAX_DVB_MINORS);
-+
-+	list_for_each_entry_safe(node, next, &dvbdevfops_list, list_head) {
-+		list_del (&node->list_head);
-+		kfree(node->fops);
-+		kfree(node);
-+	}
- }
- 
- subsys_initcall(init_dvbdev);
-diff --git a/include/media/dvbdev.h b/include/media/dvbdev.h
-index 29d25c8a6f13f..8958e5e2fc5b7 100644
---- a/include/media/dvbdev.h
-+++ b/include/media/dvbdev.h
-@@ -193,6 +193,21 @@ struct dvb_device {
- 	void *priv;
- };
- 
-+/**
-+ * struct dvbdevfops_node - fops nodes registered in dvbdevfops_list
-+ *
-+ * @fops:		Dynamically allocated fops for ->owner registration
-+ * @type:		type of dvb_device
-+ * @template:		dvb_device used for registration
-+ * @list_head:		list_head for dvbdevfops_list
-+ */
-+struct dvbdevfops_node {
-+	struct file_operations *fops;
-+	enum dvb_device_type type;
-+	const struct dvb_device *template;
-+	struct list_head list_head;
-+};
-+
- /**
-  * dvb_device_get - Increase dvb_device reference
-  *
+diff --git a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+index 795a012d40200..f7884bb56fccf 100644
+--- a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
++++ b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+@@ -176,6 +176,10 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			ret = -EOPNOTSUPP;
+ 			goto err_mutex_unlock;
+ 		} else if (msg[0].addr == 0x10) {
++			if (msg[0].len < 1 || msg[1].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 1 - integrated demod */
+ 			if (msg[0].buf[0] == 0x00) {
+ 				/* return demod page from driver cache */
+@@ -189,6 +193,10 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 				ret = rtl28xxu_ctrl_msg(d, &req);
+ 			}
+ 		} else if (msg[0].len < 2) {
++			if (msg[0].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 2 - old I2C */
+ 			req.value = (msg[0].buf[0] << 8) | (msg[0].addr << 1);
+ 			req.index = CMD_I2C_RD;
+@@ -217,8 +225,16 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			ret = -EOPNOTSUPP;
+ 			goto err_mutex_unlock;
+ 		} else if (msg[0].addr == 0x10) {
++			if (msg[0].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 1 - integrated demod */
+ 			if (msg[0].buf[0] == 0x00) {
++				if (msg[0].len < 2) {
++					ret = -EOPNOTSUPP;
++					goto err_mutex_unlock;
++				}
+ 				/* save demod page for later demod access */
+ 				dev->page = msg[0].buf[1];
+ 				ret = 0;
+@@ -231,6 +247,10 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 				ret = rtl28xxu_ctrl_msg(d, &req);
+ 			}
+ 		} else if ((msg[0].len < 23) && (!dev->new_i2c_write)) {
++			if (msg[0].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 2 - old I2C */
+ 			req.value = (msg[0].buf[0] << 8) | (msg[0].addr << 1);
+ 			req.index = CMD_I2C_WR;
 -- 
 2.39.2
 
