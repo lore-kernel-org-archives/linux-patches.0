@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD391ACB2
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB36C433EF;
-	Wed,  7 Jun 2023 20:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBE41ACB2
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06945C433EF;
+	Wed,  7 Jun 2023 20:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170414;
-	bh=jsYfAxDx4ObD1vfF5x3d3a/uIX78yh7ya8cB0KMvays=;
+	s=korg; t=1686170417;
+	bh=YidXSXZuVQGVC88iQewwQq9ZpUUZJBtypV01GQdCanc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWGgtJ7SW/VYeKzDvjFat6U9xWZimRhwI+oVIFpIFFRvMWYc0MdJ1qFJO49RVFv5N
-	 gbX/2CHEVJBDZa3Gebc3Lo/v7XGj+H32M+DieJhF9I11/n5qnqf+VbZotuiDFzDsdU
-	 9gDwZctLBwfIfRO9LRJqlX60VkAPwEyxicRy3dxw=
+	b=ZUr1CHw/d4X5b6x1g+jCkv6njTmgwdAnB/tI69S+2QLHRgsXZbtg9/xLcu18lG2va
+	 IPXwWHfksywT3V3ycrcljAts0uKJrQNJ87XQrOBpOqjTWKJwXZU0SA73PcjKL6GNNK
+	 apW8HuYYIUiHbnZZPIVuQHGJsmVhWo4BaU+zLJjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Lang Yu <lang.yu@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/225] drm/amdgpu: set gfx9 onwards APU atomics support to be true
-Date: Wed,  7 Jun 2023 22:14:28 +0200
-Message-ID: <20230607200916.828105739@linuxfoundation.org>
+Subject: [PATCH 6.1 076/225] fbdev: imsttfb: Fix use after free bug in imsttfb_probe
+Date: Wed,  7 Jun 2023 22:14:29 +0200
+Message-ID: <20230607200916.864976716@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -37,41 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yifan Zhang <yifan1.zhang@amd.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit af7828fbceed4f9e503034111066a0adef3db383 ]
+[ Upstream commit c75f5a55061091030a13fef71b9995b89bc86213 ]
 
-APUs w/ gfx9 onwards doesn't reply on PCIe atomics, rather
-it is internal path w/ native atomic support. Set have_atomics_support
-to true.
+A use-after-free bug may occur if init_imstt invokes framebuffer_release
+and free the info ptr. The caller, imsttfb_probe didn't notice that and
+still keep the ptr as private data in pdev.
 
-Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Lang Yu <lang.yu@amd.com>
-Acked-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+If we remove the driver which will call imsttfb_remove to make cleanup,
+UAF happens.
+
+Fix it by return error code if bad case happens in init_imstt.
+
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/video/fbdev/imsttfb.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 9556df0dfefad..ef0a94c70859b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3734,6 +3734,12 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 		adev->have_atomics_support = ((struct amd_sriov_msg_pf2vf_info *)
- 			adev->virt.fw_reserve.p_pf2vf)->pcie_atomic_ops_support_flags ==
- 			(PCI_EXP_DEVCAP2_ATOMIC_COMP32 | PCI_EXP_DEVCAP2_ATOMIC_COMP64);
-+	/* APUs w/ gfx9 onwards doesn't reply on PCIe atomics, rather it is a
-+	 * internal path natively support atomics, set have_atomics_support to true.
-+	 */
-+	else if ((adev->flags & AMD_IS_APU) &&
-+		(adev->ip_versions[GC_HWIP][0] > IP_VERSION(9, 0, 0)))
-+		adev->have_atomics_support = true;
- 	else
- 		adev->have_atomics_support =
- 			!pci_enable_atomic_ops_to_root(adev->pdev,
+diff --git a/drivers/video/fbdev/imsttfb.c b/drivers/video/fbdev/imsttfb.c
+index d7edb9c5d3a3f..e6adb2890ecfe 100644
+--- a/drivers/video/fbdev/imsttfb.c
++++ b/drivers/video/fbdev/imsttfb.c
+@@ -1347,7 +1347,7 @@ static const struct fb_ops imsttfb_ops = {
+ 	.fb_ioctl 	= imsttfb_ioctl,
+ };
+ 
+-static void init_imstt(struct fb_info *info)
++static int init_imstt(struct fb_info *info)
+ {
+ 	struct imstt_par *par = info->par;
+ 	__u32 i, tmp, *ip, *end;
+@@ -1420,7 +1420,7 @@ static void init_imstt(struct fb_info *info)
+ 	    || !(compute_imstt_regvals(par, info->var.xres, info->var.yres))) {
+ 		printk("imsttfb: %ux%ux%u not supported\n", info->var.xres, info->var.yres, info->var.bits_per_pixel);
+ 		framebuffer_release(info);
+-		return;
++		return -ENODEV;
+ 	}
+ 
+ 	sprintf(info->fix.id, "IMS TT (%s)", par->ramdac == IBM ? "IBM" : "TVP");
+@@ -1456,12 +1456,13 @@ static void init_imstt(struct fb_info *info)
+ 
+ 	if (register_framebuffer(info) < 0) {
+ 		framebuffer_release(info);
+-		return;
++		return -ENODEV;
+ 	}
+ 
+ 	tmp = (read_reg_le32(par->dc_regs, SSTATUS) & 0x0f00) >> 8;
+ 	fb_info(info, "%s frame buffer; %uMB vram; chip version %u\n",
+ 		info->fix.id, info->fix.smem_len >> 20, tmp);
++	return 0;
+ }
+ 
+ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+@@ -1529,10 +1530,10 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (!par->cmap_regs)
+ 		goto error;
+ 	info->pseudo_palette = par->palette;
+-	init_imstt(info);
+-
+-	pci_set_drvdata(pdev, info);
+-	return 0;
++	ret = init_imstt(info);
++	if (!ret)
++		pci_set_drvdata(pdev, info);
++	return ret;
+ 
+ error:
+ 	if (par->dc_regs)
 -- 
 2.39.2
 
