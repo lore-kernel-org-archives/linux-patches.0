@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00B73AE6B
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA0BC4339B;
-	Wed,  7 Jun 2023 20:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7D83AE6D
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0816C433D2;
+	Wed,  7 Jun 2023 20:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169823;
-	bh=F1IG6M+ByKOpBxEAtlUr2+CtScqMVcGuygu6gm48aT4=;
+	s=korg; t=1686169826;
+	bh=FYJR6qWSJWlnYbwYLYW3Kfbp2BqXiYtyYtr+SGGnWy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1HvMWODhOIFjuqEx4Q4FsGHt5/H/3c9gCvLSL6HmT7I1o1NOSjLsLKt/4JKM16quI
-	 X213u8FbRoslpxwONF1d2Z5tntezXyR+fn+Nt+rg+soQWnnxqsYtgxWc14OUPRehtJ
-	 p/T1pEtvdmLvl2OYs52XxKg4yBHiFPnh5VUbUfN0=
+	b=2BWUBTgkdZMqi1zqZgCCGT/GAO4uUsyiFJlAHawH3SbXBf2Ya0jHZaR5DrUhQIJ6M
+	 0iGE1/yI8eg8vT8xr5XYYt8Va9/zG7MdOWJFaEMzCpAedSRq0FZ5OyeZwzVFfwTcYK
+	 f/YsPcTGq5DfZJyljKwpEaxNhFGxcWbhBpJVrCCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.3 198/286] dt-bindings: iio: adc: renesas,rcar-gyroadc: Fix adi,ad7476 compatible value
-Date: Wed,  7 Jun 2023 22:14:57 +0200
-Message-ID: <20230607200929.725895826@linuxfoundation.org>
+Subject: [PATCH 6.3 199/286] iio: light: vcnl4035: fixed chip ID check
+Date: Wed,  7 Jun 2023 22:14:58 +0200
+Message-ID: <20230607200929.757649660@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -38,36 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 55720d242052e860b9fde445e302e0425722e7f1 upstream.
+commit a551c26e8e568fad42120843521529241b9bceec upstream.
 
-The conversion to json-schema accidentally dropped the "ad" part prefix
-from the compatible value.
+VCNL4035 register(0xE) ID_L and ID_M define as:
 
-Fixes: 8c41245872e2 ("dt-bindings:iio:adc:renesas,rcar-gyroadc: txt to yaml conversion.")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/6b328a3f52657c20759f3a5bb2fe033d47644ba8.1683635404.git.geert+renesas@glider.be
+ ID_L: 0x80
+ ID_H: 7:6 (0:0)
+       5:4 (0:0) slave address = 0x60 (7-bit)
+           (0:1) slave address = 0x51 (7-bit)
+           (1:0) slave address = 0x40 (7-bit)
+           (1:0) slave address = 0x41 (7-bit)
+       3:0 Version code default	(0:0:0:0)
+
+So just check ID_L.
+
+Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20230501143605.1615549-1-Frank.Li@nxp.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/iio/adc/renesas,rcar-gyroadc.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/vcnl4035.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/Documentation/devicetree/bindings/iio/adc/renesas,rcar-gyroadc.yaml
-+++ b/Documentation/devicetree/bindings/iio/adc/renesas,rcar-gyroadc.yaml
-@@ -86,7 +86,7 @@ patternProperties:
-             of the MAX chips to the GyroADC, while MISO line of each Maxim
-             ADC connects to a shared input pin of the GyroADC.
-         enum:
--          - adi,7476
-+          - adi,ad7476
-           - fujitsu,mb88101a
-           - maxim,max1162
-           - maxim,max11100
+--- a/drivers/iio/light/vcnl4035.c
++++ b/drivers/iio/light/vcnl4035.c
+@@ -8,6 +8,7 @@
+  * TODO: Proximity
+  */
+ #include <linux/bitops.h>
++#include <linux/bitfield.h>
+ #include <linux/i2c.h>
+ #include <linux/module.h>
+ #include <linux/pm_runtime.h>
+@@ -42,6 +43,7 @@
+ #define VCNL4035_ALS_PERS_MASK		GENMASK(3, 2)
+ #define VCNL4035_INT_ALS_IF_H_MASK	BIT(12)
+ #define VCNL4035_INT_ALS_IF_L_MASK	BIT(13)
++#define VCNL4035_DEV_ID_MASK		GENMASK(7, 0)
+ 
+ /* Default values */
+ #define VCNL4035_MODE_ALS_ENABLE	BIT(0)
+@@ -413,6 +415,7 @@ static int vcnl4035_init(struct vcnl4035
+ 		return ret;
+ 	}
+ 
++	id = FIELD_GET(VCNL4035_DEV_ID_MASK, id);
+ 	if (id != VCNL4035_DEV_ID_VAL) {
+ 		dev_err(&data->client->dev, "Wrong id, got %x, expected %x\n",
+ 			id, VCNL4035_DEV_ID_VAL);
 
 
