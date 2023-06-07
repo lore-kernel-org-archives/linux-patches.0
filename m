@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6FC34CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEF5C433EF;
-	Wed,  7 Jun 2023 21:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E62134CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59E4C433D2;
+	Wed,  7 Jun 2023 21:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171642;
-	bh=JLm+5J+efrb1heGzEK9s88H9Xk3QhW3U3jVl5mqYkbU=;
+	s=korg; t=1686171645;
+	bh=Yc+fw8dJSwWtziIzALiOg5ckIQKauQRx4Tf7K/v+xbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxlstmdXptt1Zg0HkkdVzsQ9vJTI1V2Dec5PgWGX0R2Lg2jE+O9BKA4B6FBApPkPc
-	 eeBgZaXRobVgW77K6QZMSvBvmaKAUXALdv4PBNdag6kSloyfTtXVrs06sp+hwrtOn8
-	 7ow+Xv4JiULgsG2DppofRsnBxknxgBrVWywDGL/Y=
+	b=NhqHYib6mS+n6wRADbKQJzmJT/a3p7gY+CEwlOaUhtoxDsIXefSv+jqcbwH2UQeYI
+	 CiJHAjTRO17MOlUZAk79nen6kKO3SVsLnaUWXNKfRrzNqkq+4fmZjI0U81D5hwFIAs
+	 PkiOFp/ORx501ba8fMEgiiKa/HEZgFgm/h9rGWhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/159] media: uvcvideo: Dont expose unsupported formats to userspace
-Date: Wed,  7 Jun 2023 22:16:39 +0200
-Message-ID: <20230607200906.834474585@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Marius Hoch <mail@mariushoch.de>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 097/159] iio: accel: st_accel: Fix invalid mount_matrix on devices without ACPI _ONT method
+Date: Wed,  7 Jun 2023 22:16:40 +0200
+Message-ID: <20230607200906.865466434@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,81 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 81f3affa19d6ab0c32aef46b053838219eef7e71 ]
+commit 79b8ded9d9c595db9bd5b2f62f5f738b36de1e22 upstream.
 
-When the uvcvideo driver encounters a format descriptor with an unknown
-format GUID, it creates a corresponding struct uvc_format instance with
-the fcc field set to 0. Since commit 50459f103edf ("media: uvcvideo:
-Remove format descriptions"), the driver relies on the V4L2 core to
-provide the format description string, which the V4L2 core can't do
-without a valid 4CC. This triggers a WARN_ON.
+When apply_acpi_orientation() fails, st_accel_common_probe() will fall back
+to iio_read_mount_matrix(), which checks for a mount-matrix device property
+and if that is not set falls back to the identity matrix.
 
-As a format with a zero 4CC can't be selected, it is unusable for
-applications. Ignore the format completely without creating a uvc_format
-instance, which fixes the warning.
+But when a sensor has no ACPI companion fwnode, or when the ACPI fwnode
+does not have a "_ONT" method apply_acpi_orientation() was returning 0,
+causing iio_read_mount_matrix() to never get called resulting in an
+invalid mount_matrix:
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217252
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2180107
+[root@fedora ~]# cat /sys/bus/iio/devices/iio\:device0/mount_matrix
+(null), (null), (null); (null), (null), (null); (null), (null), (null)
 
-Fixes: 50459f103edf ("media: uvcvideo: Remove format descriptions")
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by making apply_acpi_orientation() always return an error when
+it did not set the mount_matrix.
+
+Fixes: 3d8ad94bb175 ("iio: accel: st_sensors: Support generic mounting matrix")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Tested-by: Marius Hoch <mail@mariushoch.de>
+Link: https://lore.kernel.org/r/20230416212409.310936-1-hdegoede@redhat.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/iio/accel/st_accel_core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 2e7df1de0af9a..b19c75a6f5952 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -530,14 +530,17 @@ static int uvc_parse_format(struct uvc_device *dev,
- 		/* Find the format descriptor from its GUID. */
- 		fmtdesc = uvc_format_by_guid(&buffer[5]);
+--- a/drivers/iio/accel/st_accel_core.c
++++ b/drivers/iio/accel/st_accel_core.c
+@@ -1212,12 +1212,12 @@ static int apply_acpi_orientation(struct
  
--		if (fmtdesc != NULL) {
--			format->fcc = fmtdesc->fcc;
--		} else {
-+		if (!fmtdesc) {
-+			/*
-+			 * Unknown video formats are not fatal errors, the
-+			 * caller will skip this descriptor.
-+			 */
- 			dev_info(&streaming->intf->dev,
- 				 "Unknown video format %pUl\n", &buffer[5]);
--			format->fcc = 0;
-+			return 0;
- 		}
+ 	adev = ACPI_COMPANION(adata->dev);
+ 	if (!adev)
+-		return 0;
++		return -ENXIO;
  
-+		format->fcc = fmtdesc->fcc;
- 		format->bpp = buffer[21];
- 
- 		/* Some devices report a format that doesn't match what they
-@@ -945,7 +948,7 @@ static int uvc_parse_streaming(struct uvc_device *dev,
- 	interval = (u32 *)&frame[nframes];
- 
- 	streaming->format = format;
--	streaming->nformats = nformats;
-+	streaming->nformats = 0;
- 
- 	/* Parse the format descriptors. */
- 	while (buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE) {
-@@ -959,7 +962,10 @@ static int uvc_parse_streaming(struct uvc_device *dev,
- 				&interval, buffer, buflen);
- 			if (ret < 0)
- 				goto error;
-+			if (!ret)
-+				break;
- 
-+			streaming->nformats++;
- 			frame += format->nframes;
- 			format++;
- 
--- 
-2.39.2
-
+ 	/* Read _ONT data, which should be a package of 6 integers. */
+ 	status = acpi_evaluate_object(adev->handle, "_ONT", NULL, &buffer);
+ 	if (status == AE_NOT_FOUND) {
+-		return 0;
++		return -ENXIO;
+ 	} else if (ACPI_FAILURE(status)) {
+ 		dev_warn(&indio_dev->dev, "failed to execute _ONT: %d\n",
+ 			 status);
 
 
