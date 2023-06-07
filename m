@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160B334CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E108C433D2;
-	Wed,  7 Jun 2023 20:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8DB34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5C6C433A7;
+	Wed,  7 Jun 2023 20:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170650;
-	bh=SJP1j1mqezHUwWoWnS+Bz2wz1y41OZ+EeoLAPXJhf1c=;
+	s=korg; t=1686170653;
+	bh=S1Er6tAk46+EiTlGcl6Te+QtUjIMiIoQspoSNzceCOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MP6uyg9GcWtLGpJHjRkPQ1OA/1TuGwf5WFafLv+WbNZypN/LRtQud32FzEuDYiQLP
-	 BlHVmQ6ewgdsbePqHZl1My+6XWzhlX8J5HnVavADYYbzSjaJ2AkhLMGCl1H7El773j
-	 xBIyI1DR4y4+DzeWvcAaQ2vtNWVfipOEFTp3x3u0=
+	b=O1l9z6hGRIh8MGO3ABsD7R24m2BopQsZengsCwUZQLC4B6Gs1w6NlGqal1u8HcbE6
+	 ZSpQAFQHv2PJZytWecdoxCzKWTQq9v4Obr1/CJGaFLaASID62gY5P+DurpaoCkaXcW
+	 gTbikxcjTF13Ozc69+Vka/1N+WYtdPJd4lQTKZcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
+	Zhenneng Li <lizhenneng@kylinos.cn>,
+	Guchun Chen <guchun.chen@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 166/225] drm/amd/pm: reverse mclk and fclk clocks levels for vangogh
-Date: Wed,  7 Jun 2023 22:15:59 +0200
-Message-ID: <20230607200919.828702222@linuxfoundation.org>
+Subject: [PATCH 6.1 167/225] drm/amd/pm: resolve reboot exception for si oland
+Date: Wed,  7 Jun 2023 22:16:00 +0200
+Message-ID: <20230607200919.859865499@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,73 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Guchun Chen <guchun.chen@amd.com>
 
-commit bfc03568d9d81332382c73a1985a90c4506bd36c upstream.
+commit e490d60a2f76bff636c68ce4fe34c1b6c34bbd86 upstream.
 
-This patch reverses the DPM clocks levels output of pp_dpm_mclk
-and pp_dpm_fclk.
+During reboot test on arm64 platform, it may failure on boot.
 
-On dGPUs and older APUs we expose the levels from lowest clocks
-to highest clocks. But for some APUs, the clocks levels that from
-the DFPstateTable are given the reversed orders by PMFW. Like the
-memory DPM clocks that are exposed by pp_dpm_mclk.
+The error message are as follows:
+[    1.706570][ 3] [  T273] [drm:si_thermal_enable_alert [amdgpu]] *ERROR* Could not enable thermal interrupts.
+[    1.716547][ 3] [  T273] [drm:amdgpu_device_ip_late_init [amdgpu]] *ERROR* late_init of IP block <si_dpm> failed -22
+[    1.727064][ 3] [  T273] amdgpu 0000:02:00.0: amdgpu_device_ip_late_init failed
+[    1.734367][ 3] [  T273] amdgpu 0000:02:00.0: Fatal error during GPU init
 
-It's not intuitive that they are reversed on these APUs. All tools
-and software that talks to the driver then has to know different ways
-to interpret the data depending on the asic.
+v2: squash in built warning fix (Alex)
 
-So we need to reverse them to expose the clocks levels from the
-driver consistently.
-
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Zhenneng Li <lizhenneng@kylinos.cn>
+Reviewed-by: Guchun Chen <guchun.chen@amd.com>
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |   29 -----------------------------
+ 1 file changed, 29 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-@@ -580,7 +580,7 @@ static int vangogh_print_legacy_clk_leve
- 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
- 	SmuMetrics_legacy_t metrics;
- 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
--	int i, size = 0, ret = 0;
-+	int i, idx, size = 0, ret = 0;
- 	uint32_t cur_value = 0, value = 0, count = 0;
- 	bool cur_value_match_level = false;
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -6925,23 +6925,6 @@ static int si_dpm_enable(struct amdgpu_d
+ 	return 0;
+ }
  
-@@ -654,7 +654,8 @@ static int vangogh_print_legacy_clk_leve
- 	case SMU_MCLK:
- 	case SMU_FCLK:
- 		for (i = 0; i < count; i++) {
--			ret = vangogh_get_dpm_clk_limited(smu, clk_type, i, &value);
-+			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
-+			ret = vangogh_get_dpm_clk_limited(smu, clk_type, idx, &value);
- 			if (ret)
- 				return ret;
- 			if (!value)
-@@ -681,7 +682,7 @@ static int vangogh_print_clk_levels(stru
- 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
- 	SmuMetrics_t metrics;
- 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
--	int i, size = 0, ret = 0;
-+	int i, idx, size = 0, ret = 0;
- 	uint32_t cur_value = 0, value = 0, count = 0;
- 	bool cur_value_match_level = false;
- 	uint32_t min, max;
-@@ -763,7 +764,8 @@ static int vangogh_print_clk_levels(stru
- 	case SMU_MCLK:
- 	case SMU_FCLK:
- 		for (i = 0; i < count; i++) {
--			ret = vangogh_get_dpm_clk_limited(smu, clk_type, i, &value);
-+			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
-+			ret = vangogh_get_dpm_clk_limited(smu, clk_type, idx, &value);
- 			if (ret)
- 				return ret;
- 			if (!value)
+-static int si_set_temperature_range(struct amdgpu_device *adev)
+-{
+-	int ret;
+-
+-	ret = si_thermal_enable_alert(adev, false);
+-	if (ret)
+-		return ret;
+-	ret = si_thermal_set_temperature_range(adev, R600_TEMP_RANGE_MIN, R600_TEMP_RANGE_MAX);
+-	if (ret)
+-		return ret;
+-	ret = si_thermal_enable_alert(adev, true);
+-	if (ret)
+-		return ret;
+-
+-	return ret;
+-}
+-
+ static void si_dpm_disable(struct amdgpu_device *adev)
+ {
+ 	struct rv7xx_power_info *pi = rv770_get_pi(adev);
+@@ -7626,18 +7609,6 @@ static int si_dpm_process_interrupt(stru
+ 
+ static int si_dpm_late_init(void *handle)
+ {
+-	int ret;
+-	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+-
+-	if (!adev->pm.dpm_enabled)
+-		return 0;
+-
+-	ret = si_set_temperature_range(adev);
+-	if (ret)
+-		return ret;
+-#if 0 //TODO ?
+-	si_dpm_powergate_uvd(adev, true);
+-#endif
+ 	return 0;
+ }
+ 
 
 
