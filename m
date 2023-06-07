@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E4A1D2A5
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C847C4339B;
-	Wed,  7 Jun 2023 20:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EF61D2A5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD211C433D2;
+	Wed,  7 Jun 2023 20:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170861;
-	bh=K8KiffCR2elB8+WF9NCPLLZxrcBDCfAMexPt7arapEE=;
+	s=korg; t=1686170864;
+	bh=6xU3bxK06pZcXU5zwEakjhVrfC2z5Re0ERRiqEWHEv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vw/xHmg+xHGvjA4SVPIfm38q7RyqwbJHLZEnkxEW8/w9HF12WWiT/ccPl6EFYBZtI
-	 TCf2tZa75FrFcAI3DyvU8HDZe4GIaB/24Lyol5xRMrBJWkvnoAYRcr6T/QV4JPgWKL
-	 YJxoIWTCL8RT4aIF/Ak/NOcUoAzuiuzyn1ZVqiuI=
+	b=VToMPSHoR1fxN0UK7329zCzHsz4nH8CMQvF34FzFH0/f2/XtuvMIF7UgT1mDjmIYY
+	 5nf5kERWCkinNGJVXOIjOW7WH5zY9ow1zlCjcSr82rsuFfmZzqHX1xwKs3GR8k2Udq
+	 hbGACJ5mOUWmpuv6pvzAKa/FP2Tv0VIKXmDqLDE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jack Yang <mingliang@linux.alibaba.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Cambda Zhu <cambda@linux.alibaba.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/120] RDMA/bnxt_re: Fix the page_size used during the MR creation
-Date: Wed,  7 Jun 2023 22:15:18 +0200
-Message-ID: <20230607200900.997284119@linuxfoundation.org>
+Subject: [PATCH 5.10 020/120] tcp: Return user_mss for TCP_MAXSEG in CLOSE/LISTEN state if user_mss set
+Date: Wed,  7 Jun 2023 22:15:36 +0200
+Message-ID: <20230607200901.553700716@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -37,81 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Cambda Zhu <cambda@linux.alibaba.com>
 
-[ Upstream commit 08c7f09356e45d093d1867c7a3c6ac6526e2f98b ]
+[ Upstream commit 34dfde4ad87b84d21278a7e19d92b5b2c68e6c4d ]
 
-Driver populates the list of pages used for Memory region wrongly when
-page size is more than system page size. This is causing a failure when
-some of the applications that creates MR with page size as 2M.  Since HW
-can support multiple page sizes, pass the correct page size while creating
-the MR.
+This patch replaces the tp->mss_cache check in getting TCP_MAXSEG
+with tp->rx_opt.user_mss check for CLOSE/LISTEN sock. Since
+tp->mss_cache is initialized with TCP_MSS_DEFAULT, checking if
+it's zero is probably a bug.
 
-Also, driver need not adjust the number of pages when HW Queues are
-created with user memory. It should work with the number of dma blocks
-returned by ib_umem_num_dma_blocks. Fix this calculation also.
+With this change, getting TCP_MAXSEG before connecting will return
+default MSS normally, and return user_mss if user_mss is set.
 
-Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
-Fixes: f6919d56388c ("RDMA/bnxt_re: Code refactor while populating user MRs")
-Link: https://lore.kernel.org/r/1683484169-9539-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Jack Yang <mingliang@linux.alibaba.com>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/netdev/CANn89i+3kL9pYtkxkwxwNMzvC_w3LNUum_2=3u+UyLBmGmifHA@mail.gmail.com/#t
+Signed-off-by: Cambda Zhu <cambda@linux.alibaba.com>
+Link: https://lore.kernel.org/netdev/14D45862-36EA-4076-974C-EA67513C92F6@linux.alibaba.com/
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230527040317.68247-1-cambda@linux.alibaba.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 12 ++----------
- drivers/infiniband/hw/bnxt_re/qplib_sp.c  |  7 +++----
- 2 files changed, 5 insertions(+), 14 deletions(-)
+ net/ipv4/tcp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 754dcebeb4ca1..123ea759f2826 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -215,17 +215,9 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
- 			return -EINVAL;
- 		hwq_attr->sginfo->npages = npages;
- 	} else {
--		unsigned long sginfo_num_pages = ib_umem_num_dma_blocks(
--			hwq_attr->sginfo->umem, hwq_attr->sginfo->pgsize);
--
-+		npages = ib_umem_num_dma_blocks(hwq_attr->sginfo->umem,
-+						hwq_attr->sginfo->pgsize);
- 		hwq->is_user = true;
--		npages = sginfo_num_pages;
--		npages = (npages * PAGE_SIZE) /
--			  BIT_ULL(hwq_attr->sginfo->pgshft);
--		if ((sginfo_num_pages * PAGE_SIZE) %
--		     BIT_ULL(hwq_attr->sginfo->pgshft))
--			if (!npages)
--				npages++;
- 	}
- 
- 	if (npages == MAX_PBL_LVL_0_PGS) {
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index 4afa33f58b105..f53d94c812ec8 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -679,16 +679,15 @@ int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
- 		/* Free the hwq if it already exist, must be a rereg */
- 		if (mr->hwq.max_elements)
- 			bnxt_qplib_free_hwq(res, &mr->hwq);
--		/* Use system PAGE_SIZE */
- 		hwq_attr.res = res;
- 		hwq_attr.depth = pages;
--		hwq_attr.stride = buf_pg_size;
-+		hwq_attr.stride = sizeof(dma_addr_t);
- 		hwq_attr.type = HWQ_TYPE_MR;
- 		hwq_attr.sginfo = &sginfo;
- 		hwq_attr.sginfo->umem = umem;
- 		hwq_attr.sginfo->npages = pages;
--		hwq_attr.sginfo->pgsize = PAGE_SIZE;
--		hwq_attr.sginfo->pgshft = PAGE_SHIFT;
-+		hwq_attr.sginfo->pgsize = buf_pg_size;
-+		hwq_attr.sginfo->pgshft = ilog2(buf_pg_size);
- 		rc = bnxt_qplib_alloc_init_hwq(&mr->hwq, &hwq_attr);
- 		if (rc) {
- 			dev_err(&res->pdev->dev,
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index edb743bcbc391..82abbf1929851 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3719,7 +3719,8 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
+ 	switch (optname) {
+ 	case TCP_MAXSEG:
+ 		val = tp->mss_cache;
+-		if (!val && ((1 << sk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)))
++		if (tp->rx_opt.user_mss &&
++		    ((1 << sk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)))
+ 			val = tp->rx_opt.user_mss;
+ 		if (tp->repair)
+ 			val = tp->rx_opt.mss_clamp;
 -- 
 2.39.2
 
