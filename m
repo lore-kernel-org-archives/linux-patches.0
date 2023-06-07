@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0EF34CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F421FC433EF;
-	Wed,  7 Jun 2023 20:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD4534CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931D5C433D2;
+	Wed,  7 Jun 2023 20:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170708;
-	bh=ccY9kNcRCwAvdcz5NUVxfEw3Gr/8eP2fXagni27mMW4=;
+	s=korg; t=1686170710;
+	bh=cnISmTRNsQh7lKORKF+UO8Nfv6hDwksG9Jae3Fa0v+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ypb7jlA0Y/Qh9+78ixWC2DqdfoVfd57uC0EJLYEUDb+zTq/XI2Rp7fwKe+Yh5QzVG
-	 v0bq3/Ctpc7Oj7UB0L2xRM+PVhfhnbulYmqSzMeeMnygwcl8rBfyQxmqYpWP/mFgfN
-	 v1lpVLmoD+ILbjjQoBgJHKneUll/NF8AF9SIKDww=
+	b=ogZxSHmzATHnEp08aNIdoWt6sVHAfwMDC4NRwh/THQu4TGkzzE2596M/Pnhc/WP8D
+	 HlsuIfitn4gJtkhKS/pBPaMWeZAziZCRTzjs5KhL2/fZN26QbJBVVqzHUQ99QnfINq
+	 J8MVlsI8XTAL7FO+FG1BHr4pYu9ZzQfIEHsQC4LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.1 159/225] md/raid5: fix miscalculation of end_sector in raid5_read_one_chunk()
-Date: Wed,  7 Jun 2023 22:15:52 +0200
-Message-ID: <20230607200919.603401471@linuxfoundation.org>
+	Marek Vasut <marex@denx.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 150/225] iio: dac: mcp4725: Fix i2c_master_send() return value handling
+Date: Wed,  7 Jun 2023 22:15:43 +0200
+Message-ID: <20230607200919.320731799@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,36 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Marek Vasut <marex@denx.de>
 
-commit 8557dc27126949c702bd3aafe8a7e0b7e4fcb44c upstream.
+commit 09d3bec7009186bdba77039df01e5834788b3f95 upstream.
 
-'end_sector' is compared to 'rdev->recovery_offset', which is offset to
-rdev, however, commit e82ed3a4fbb5 ("md/raid6: refactor
-raid5_read_one_chunk") changes the calculation of 'end_sector' to offset
-to the array. Fix this miscalculation.
+The i2c_master_send() returns number of sent bytes on success,
+or negative on error. The suspend/resume callbacks expect zero
+on success and non-zero on error. Adapt the return value of the
+i2c_master_send() to the expectation of the suspend and resume
+callbacks, including proper validation of the return value.
 
-Fixes: e82ed3a4fbb5 ("md/raid6: refactor raid5_read_one_chunk")
-Cc: stable@vger.kernel.org # v5.12+
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230524014118.3172781-1-yukuai1@huaweicloud.com
+Fixes: cf35ad61aca2 ("iio: add mcp4725 I2C DAC driver")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230511004330.206942-1-marex@denx.de
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/dac/mcp4725.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -5516,7 +5516,7 @@ static int raid5_read_one_chunk(struct m
+--- a/drivers/iio/dac/mcp4725.c
++++ b/drivers/iio/dac/mcp4725.c
+@@ -47,12 +47,18 @@ static int mcp4725_suspend(struct device
+ 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
+ 		to_i2c_client(dev)));
+ 	u8 outbuf[2];
++	int ret;
  
- 	sector = raid5_compute_sector(conf, raid_bio->bi_iter.bi_sector, 0,
- 				      &dd_idx, NULL);
--	end_sector = bio_end_sector(raid_bio);
-+	end_sector = sector + bio_sectors(raid_bio);
+ 	outbuf[0] = (data->powerdown_mode + 1) << 4;
+ 	outbuf[1] = 0;
+ 	data->powerdown = true;
  
- 	rcu_read_lock();
- 	if (r5c_big_stripe_cached(conf, sector))
+-	return i2c_master_send(data->client, outbuf, 2);
++	ret = i2c_master_send(data->client, outbuf, 2);
++	if (ret < 0)
++		return ret;
++	else if (ret != 2)
++		return -EIO;
++	return 0;
+ }
+ 
+ static int mcp4725_resume(struct device *dev)
+@@ -60,13 +66,19 @@ static int mcp4725_resume(struct device
+ 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
+ 		to_i2c_client(dev)));
+ 	u8 outbuf[2];
++	int ret;
+ 
+ 	/* restore previous DAC value */
+ 	outbuf[0] = (data->dac_value >> 8) & 0xf;
+ 	outbuf[1] = data->dac_value & 0xff;
+ 	data->powerdown = false;
+ 
+-	return i2c_master_send(data->client, outbuf, 2);
++	ret = i2c_master_send(data->client, outbuf, 2);
++	if (ret < 0)
++		return ret;
++	else if (ret != 2)
++		return -EIO;
++	return 0;
+ }
+ static DEFINE_SIMPLE_DEV_PM_OPS(mcp4725_pm_ops, mcp4725_suspend,
+ 				mcp4725_resume);
 
 
