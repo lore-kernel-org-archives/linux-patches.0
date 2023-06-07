@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A157E3AE70
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F25C433D2;
-	Wed,  7 Jun 2023 20:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF923AE69
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBE5C433D2;
+	Wed,  7 Jun 2023 20:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169852;
-	bh=MKy8W4TcMGirM56Harss8Og5lfgLTlOGam4pi4oZM5c=;
+	s=korg; t=1686169855;
+	bh=kC9LOLN41BDeUI089Se9e6y0RGWuDxlP7H0Whrq/qtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yBbq5ud6NWdhKkYD38k9H4DWGmy+ge37I29XDwbJ7t/d87HOCa3wQk8Bdkn3GoBoJ
-	 fW2TOx00byZUCQf5gCvuYArrms+mDH0RzHzWvb7SeRN153bhsal8dgJFyl4ijLlJVr
-	 yLEjIpjHiscbyItKPFAKBayNXUk+x04Z8V64cPjU=
+	b=Zs/DNTFxIm5Cv3KOT535lr+6c0SaVHwXItm5iNJL09+ro+Vy3EeXStu2UkdB74l4K
+	 5HL11ufCqHns1Wy7DwN29xJXK+IBL1i9dNKkPRc7i1Y4HyaarpTXQITUYeC9L2F5Mm
+	 7QHe6jbpo+R3wp/QnRx6DTnwo+bPsOjskm0FJ6Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Lord <mlord@pobox.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 6.3 239/286] HID: hidpp: terminate retry loop on success
-Date: Wed,  7 Jun 2023 22:15:38 +0200
-Message-ID: <20230607200931.101345364@linuxfoundation.org>
+	Peter Rosin <peda@axentia.se>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.3 240/286] dmaengine: at_hdmac: Repair bitfield macros for peripheral ID handling
+Date: Wed,  7 Jun 2023 22:15:39 +0200
+Message-ID: <20230607200931.130982662@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,84 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+From: Peter Rosin <peda@axentia.se>
 
-commit 7c28afd5512e371773dbb2bf95a31ed5625651d9 upstream.
+commit 2a6c7e8cc74e58ba94b8c897035a8ef7f7349f76 upstream.
 
-It seems we forgot the normal case to terminate the retry loop,
-making us asking 3 times each command, which is probably a little bit
-too much.
+The MSB part of the peripheral IDs need to go into the ATC_SRC_PER_MSB
+and ATC_DST_PER_MSB fields. Not the LSB part.
 
-And remove the ugly "goto exit" that can be replaced by a simpler "break"
+This fixes a severe regression for TSE-850 devices (compatible
+axentia,tse850v3) where output to the audio I2S codec (the main
+purpose of the device) simply do not work.
 
-Fixes: 586e8fede795 ("HID: logitech-hidpp: Retry commands when device is busy")
-Suggested-by: Mark Lord <mlord@pobox.com>
-Tested-by: Mark Lord <mlord@pobox.com>
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: d8840a7edcf0 ("dmaengine: at_hdmac: Use bitfield access macros")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Rosin <peda@axentia.se>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/01e5dae1-d4b0-cf31-516b-423b11b077f1@axentia.se
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-logitech-hidpp.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/dma/at_hdmac.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -283,7 +283,7 @@ static int hidpp_send_message_sync(struc
- 	struct hidpp_report *message,
- 	struct hidpp_report *response)
- {
--	int ret;
-+	int ret = -1;
- 	int max_retries = 3;
+diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+index 8858470246e1..6362013b90df 100644
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -153,8 +153,6 @@
+ #define ATC_AUTO		BIT(31)		/* Auto multiple buffer tx enable */
  
- 	mutex_lock(&hidpp->send_mutex);
-@@ -297,13 +297,13 @@ static int hidpp_send_message_sync(struc
- 	 */
- 	*response = *message;
+ /* Bitfields in CFG */
+-#define ATC_PER_MSB(h)	((0x30U & (h)) >> 4)	/* Extract most significant bits of a handshaking identifier */
+-
+ #define ATC_SRC_PER		GENMASK(3, 0)	/* Channel src rq associated with periph handshaking ifc h */
+ #define ATC_DST_PER		GENMASK(7, 4)	/* Channel dst rq associated with periph handshaking ifc h */
+ #define ATC_SRC_REP		BIT(8)		/* Source Replay Mod */
+@@ -181,10 +179,15 @@
+ #define ATC_DPIP_HOLE		GENMASK(15, 0)
+ #define ATC_DPIP_BOUNDARY	GENMASK(25, 16)
  
--	for (; max_retries != 0; max_retries--) {
-+	for (; max_retries != 0 && ret; max_retries--) {
- 		ret = __hidpp_send_report(hidpp->hid_dev, message);
+-#define ATC_SRC_PER_ID(id)	(FIELD_PREP(ATC_SRC_PER_MSB, (id)) |	\
+-				 FIELD_PREP(ATC_SRC_PER, (id)))
+-#define ATC_DST_PER_ID(id)	(FIELD_PREP(ATC_DST_PER_MSB, (id)) |	\
+-				 FIELD_PREP(ATC_DST_PER, (id)))
++#define ATC_PER_MSB		GENMASK(5, 4)	/* Extract MSBs of a handshaking identifier */
++#define ATC_SRC_PER_ID(id)					       \
++	({ typeof(id) _id = (id);				       \
++	   FIELD_PREP(ATC_SRC_PER_MSB, FIELD_GET(ATC_PER_MSB, _id)) |  \
++	   FIELD_PREP(ATC_SRC_PER, _id); })
++#define ATC_DST_PER_ID(id)					       \
++	({ typeof(id) _id = (id);				       \
++	   FIELD_PREP(ATC_DST_PER_MSB, FIELD_GET(ATC_PER_MSB, _id)) |  \
++	   FIELD_PREP(ATC_DST_PER, _id); })
  
- 		if (ret) {
- 			dbg_hid("__hidpp_send_report returned err: %d\n", ret);
- 			memset(response, 0, sizeof(struct hidpp_report));
--			goto exit;
-+			break;
- 		}
  
- 		if (!wait_event_timeout(hidpp->wait, hidpp->answer_available,
-@@ -311,14 +311,14 @@ static int hidpp_send_message_sync(struc
- 			dbg_hid("%s:timeout waiting for response\n", __func__);
- 			memset(response, 0, sizeof(struct hidpp_report));
- 			ret = -ETIMEDOUT;
--			goto exit;
-+			break;
- 		}
  
- 		if (response->report_id == REPORT_ID_HIDPP_SHORT &&
- 		    response->rap.sub_id == HIDPP_ERROR) {
- 			ret = response->rap.params[1];
- 			dbg_hid("%s:got hidpp error %02X\n", __func__, ret);
--			goto exit;
-+			break;
- 		}
- 
- 		if ((response->report_id == REPORT_ID_HIDPP_LONG ||
-@@ -327,13 +327,12 @@ static int hidpp_send_message_sync(struc
- 			ret = response->fap.params[1];
- 			if (ret != HIDPP20_ERROR_BUSY) {
- 				dbg_hid("%s:got hidpp 2.0 error %02X\n", __func__, ret);
--				goto exit;
-+				break;
- 			}
- 			dbg_hid("%s:got busy hidpp 2.0 error %02X, retrying\n", __func__, ret);
- 		}
- 	}
- 
--exit:
- 	mutex_unlock(&hidpp->send_mutex);
- 	return ret;
- 
+-- 
+2.41.0
+
 
 
