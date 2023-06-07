@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6871835B30
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AF0C433EF;
-	Wed,  7 Jun 2023 20:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D9035B30
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0D8C433D2;
+	Wed,  7 Jun 2023 20:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171047;
-	bh=d3cNt5lw8G2FzFfwyQa4sHJN8DSVnQSgTbP2Akkes9A=;
+	s=korg; t=1686171049;
+	bh=gBgeHmLk0aCW/ckKhBoiy1vVQq1kmbPVOY94ZtX/UwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwUKuAfSyxv8IF5E87N4prO8MfjoUA4LfRqNIrY5cTGJhDFyPye4vDQuvwGyrxuZA
-	 1OhBSzOnEF9QDKFNQfYbCVhMOH7+3ciJrCijNmG2rLDnGxDrygyJPREBPEdo+cBBTa
-	 gzA/GZWXgoySrRtNbXkRWUpMMvbilEDs5xYQfvXg=
+	b=UWcjFbbU7hhUO/kdCtK2N6h+ona6PHlJw7ylzy71FoBLXgCZm/7m3eTTQzRwgze8M
+	 XNss2VfSidOd+5rwJhigiWDxbej/He186++rOTXCGGv0TI/0guU2G9dS84/aAmHQ2+
+	 DH0JHVa3oulDYhkgpB0YCdmasD6u5FXK/edqclio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 090/120] gcc-12: disable -Wdangling-pointer warning for now
-Date: Wed,  7 Jun 2023 22:16:46 +0200
-Message-ID: <20230607200903.737478800@linuxfoundation.org>
+Subject: [PATCH 5.10 064/120] ARM: dts: stm32: add pin map for CAN controller on stm32f7
+Date: Wed,  7 Jun 2023 22:16:20 +0200
+Message-ID: <20230607200902.898409313@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -34,65 +35,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-commit f7d63b50898172b9eb061b9e2daad61b428792d0 upstream.
+[ Upstream commit 011644249686f2675e142519cd59e81e04cfc231 ]
 
-[ Upstream commit 49beadbd47c270a00754c107a837b4f29df4c822 ]
+Add pin configurations for using CAN controller on stm32f7.
 
-While the concept of checking for dangling pointers to local variables
-at function exit is really interesting, the gcc-12 implementation is not
-compatible with reality, and results in false positives.
-
-For example, gcc sees us putting things on a local list head allocated
-on the stack, which involves exactly those kinds of pointers to the
-local stack entry:
-
-  In function ‘__list_add’,
-      inlined from ‘list_add_tail’ at include/linux/list.h:102:2,
-      inlined from ‘rebuild_snap_realms’ at fs/ceph/snap.c:434:2:
-  include/linux/list.h:74:19: warning: storing the address of local variable ‘realm_queue’ in ‘*&realm_27(D)->rebuild_item.prev’ [-Wdangling-pointer=]
-     74 |         new->prev = prev;
-        |         ~~~~~~~~~~^~~~~~
-
-But then gcc - understandably - doesn't really understand the big
-picture how the doubly linked list works, so doesn't see how we then end
-up emptying said list head in a loop and the pointer we added has been
-removed.
-
-Gcc also complains about us (intentionally) using this as a way to store
-a kind of fake stack trace, eg
-
-  drivers/acpi/acpica/utdebug.c:40:38: warning: storing the address of local variable ‘current_sp’ in ‘acpi_gbl_entry_stack_pointer’ [-Wdangling-pointer=]
-     40 |         acpi_gbl_entry_stack_pointer = &current_sp;
-        |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~
-
-which is entirely reasonable from a compiler standpoint, and we may want
-to change those kinds of patterns, but not not.
-
-So this is one of those "it would be lovely if the compiler were to
-complain about us leaving dangling pointers to the stack", but not this
-way.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Link: https://lore.kernel.org/all/20230427204540.3126234-4-dario.binacchi@amarulasolutions.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/boot/dts/stm32f7-pinctrl.dtsi | 82 ++++++++++++++++++++++++++
+ 1 file changed, 82 insertions(+)
 
---- a/Makefile
-+++ b/Makefile
-@@ -808,6 +808,10 @@ endif
- KBUILD_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)
- 
- KBUILD_CFLAGS += $(call cc-disable-warning, unused-const-variable)
+diff --git a/arch/arm/boot/dts/stm32f7-pinctrl.dtsi b/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
+index fe4cfda72a476..4e1b8b3359e21 100644
+--- a/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
++++ b/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
+@@ -284,6 +284,88 @@
+ 					slew-rate = <2>;
+ 				};
+ 			};
 +
-+# These result in bogus false positives
-+KBUILD_CFLAGS += $(call cc-disable-warning, dangling-pointer)
++			can1_pins_a: can1-0 {
++				pins1 {
++					pinmux = <STM32_PINMUX('A', 12, AF9)>; /* CAN1_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('A', 11, AF9)>; /* CAN1_RX */
++					bias-pull-up;
++				};
++			};
 +
- ifdef CONFIG_FRAME_POINTER
- KBUILD_CFLAGS	+= -fno-omit-frame-pointer -fno-optimize-sibling-calls
- else
++			can1_pins_b: can1-1 {
++				pins1 {
++					pinmux = <STM32_PINMUX('B', 9, AF9)>; /* CAN1_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('B', 8, AF9)>; /* CAN1_RX */
++					bias-pull-up;
++				};
++			};
++
++			can1_pins_c: can1-2 {
++				pins1 {
++					pinmux = <STM32_PINMUX('D', 1, AF9)>; /* CAN1_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('D', 0, AF9)>; /* CAN1_RX */
++					bias-pull-up;
++
++				};
++			};
++
++			can1_pins_d: can1-3 {
++				pins1 {
++					pinmux = <STM32_PINMUX('H', 13, AF9)>; /* CAN1_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('H', 14, AF9)>; /* CAN1_RX */
++					bias-pull-up;
++
++				};
++			};
++
++			can2_pins_a: can2-0 {
++				pins1 {
++					pinmux = <STM32_PINMUX('B', 6, AF9)>; /* CAN2_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('B', 5, AF9)>; /* CAN2_RX */
++					bias-pull-up;
++				};
++			};
++
++			can2_pins_b: can2-1 {
++				pins1 {
++					pinmux = <STM32_PINMUX('B', 13, AF9)>; /* CAN2_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('B', 12, AF9)>; /* CAN2_RX */
++					bias-pull-up;
++				};
++			};
++
++			can3_pins_a: can3-0 {
++				pins1 {
++					pinmux = <STM32_PINMUX('A', 15, AF11)>; /* CAN3_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('A', 8, AF11)>; /* CAN3_RX */
++					bias-pull-up;
++				};
++			};
++
++			can3_pins_b: can3-1 {
++				pins1 {
++					pinmux = <STM32_PINMUX('B', 4, AF11)>;  /* CAN3_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('B', 3, AF11)>; /* CAN3_RX */
++					bias-pull-up;
++				};
++			};
+ 		};
+ 	};
+ };
+-- 
+2.39.2
+
 
 
