@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F4C3AE61
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD23C4339B;
-	Wed,  7 Jun 2023 20:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BBD370E4
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85C2C433EF;
+	Wed,  7 Jun 2023 20:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169903;
-	bh=R8ekxwRF6Gzl+hPQUuXBlb6lVhKemx0J0o+fpXRtopo=;
+	s=korg; t=1686169906;
+	bh=p2mr7ctiCs+Gtldc4f7kErsOgxIGbwiqY6XVuX/eN/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TqcYNcYPS55hs2eavCZTmkQ0+kGCg8pIgC+8oipuluWOu2hoMidJtf37CK6YpjRlt
-	 /HNlSHObLQrBCJUjkInjACxlEYHiXFFK/JSGvpDUdoCRwe8P3dNGB4Vsu1/cL3O3Gl
-	 Aa34EOsKJSRxriFvwPJds6yVAjPCvTduVZD7CFKM=
+	b=CJZw4/ya80hHcwQ+yVdbicP/z4vjMC+DXpczmY9j4n4s/9fK2iXmb1+N6IIMDjNP4
+	 hxdBROBx3obGEpvqsLsX9ysywW3K494KyUlhwaeMWvvtpZA5/wwIoy8jTkzgR8PBZ1
+	 QTn34xAb01+4FCf21Mff/0+7ejeUKlYAkbX1kAl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH 6.3 256/286] selftests: mptcp: userspace pm: skip if MPTCP is not supported
-Date: Wed,  7 Jun 2023 22:15:55 +0200
-Message-ID: <20230607200931.678969159@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.3 229/286] phy: qcom-qmp-combo: fix init-count imbalance
+Date: Wed,  7 Jun 2023 22:15:28 +0200
+Message-ID: <20230607200930.774930865@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -34,39 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 63212608a92a1ff10ae56dbb14e9fb685f7e4ffa upstream.
+commit 9bf03a0cbd80a256bc1e1c4bcc80bc2b06b8b2b9 upstream.
 
-Selftests are supposed to run on any kernels, including the old ones not
-supporting MPTCP.
+The init counter is not decremented on initialisation errors, which
+prevents retrying initialisation and can lead to the runtime suspend
+callback attempting to disable resources that have never been enabled.
 
-A new check is then added to make sure MPTCP is supported. If not, the
-test stops and is marked as "skipped".
+Add the missing decrement on initialisation errors so that the counter
+reflects the state of the device.
 
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: 259a834fadda ("selftests: mptcp: functional tests for the userspace PM type")
-Cc: stable@vger.kernel.org
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
+Cc: stable@vger.kernel.org	# 4.12
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230502103810.12061-2-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/userspace_pm.sh |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
-+++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-@@ -1,6 +1,10 @@
- #!/bin/bash
- # SPDX-License-Identifier: GPL-2.0
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -2487,7 +2487,7 @@ static int qmp_combo_com_init(struct qmp
+ 	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
+ 	if (ret) {
+ 		dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
+-		goto err_unlock;
++		goto err_decrement_count;
+ 	}
  
-+. "$(dirname "${0}")/mptcp_lib.sh"
-+
-+mptcp_lib_check_mptcp
-+
- ip -Version > /dev/null 2>&1
- if [ $? -ne 0 ];then
- 	echo "SKIP: Cannot not run test without ip tool"
+ 	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+@@ -2537,7 +2537,8 @@ err_assert_reset:
+ 	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+ err_disable_regulators:
+ 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+-err_unlock:
++err_decrement_count:
++	qmp->init_count--;
+ 	mutex_unlock(&qmp->phy_mutex);
+ 
+ 	return ret;
 
 
