@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1C037325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:49:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE6CC433D2;
-	Wed,  7 Jun 2023 20:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1ED37325
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:49:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BADDC433A4;
+	Wed,  7 Jun 2023 20:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170968;
-	bh=R6SybSXv5P06H23W6QQCuXpAXaaLj3YimdPktbViVRs=;
+	s=korg; t=1686170971;
+	bh=V6Qe5K1QN9D8bDEoRk94m8xGFrxEn6EKWIgVEI2ErEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1sSNkYK0C92P2xTlZORHSU+6chb4udwvEdacK7ZG7F0k25m9GrQDE4V4kRan9ec0r
-	 /SLB74iU3jXg9JfbMY8PSPKBsJGzpi6QZu2NNcxCgHJkqSVYLEsTbf0zY+SxrBh0Dk
-	 SKW4tEtSY5dlK6GIu3iQd8UKQxtMUhDmfw2Nuv5M=
+	b=CdcUQbc8XP7dF9A0TAydSo8dRWAeMedeS5g2Mxc2CVopN/Fa7GN18Qh9tBMDM1zxZ
+	 SqDj7iH3P/z6nrmiy6nz0Ll1NxMLHWzncBIUNVHM+t8QFKjjlh2dPMVudY2ImND7jZ
+	 P2DtExUmSUJa1FC0wdT/FTnbS4ajOgyBaD6/sNWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
+	Yu Hao <yhao016@ucr.edu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/120] media: dvb-core: Fix use-after-free due on race condition at dvb_net
-Date: Wed,  7 Jun 2023 22:16:15 +0200
-Message-ID: <20230607200902.748181576@linuxfoundation.org>
+Subject: [PATCH 5.10 060/120] media: dvb-core: Fix kernel WARNING for blocking operation in wait_event*()
+Date: Wed,  7 Jun 2023 22:16:16 +0200
+Message-ID: <20230607200902.777526506@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -35,136 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 4172385b0c9ac366dcab78eda48c26814b87ed1a ]
+[ Upstream commit b8c75e4a1b325ea0a9433fa8834be97b5836b946 ]
 
-A race condition may occur between the .disconnect function, which
-is called when the device is disconnected, and the dvb_device_open()
-function, which is called when the device node is open()ed.
-This results in several types of UAFs.
+Using a semaphore in the wait_event*() condition is no good idea.
+It hits a kernel WARN_ON() at prepare_to_wait_event() like:
+  do not call blocking ops when !TASK_RUNNING; state=1 set at
+  prepare_to_wait_event+0x6d/0x690
 
-The root cause of this is that you use the dvb_device_open() function,
-which does not implement a conditional statement
-that checks 'dvbnet->exit'.
+For avoiding the potential deadlock, rewrite to an open-coded loop
+instead.  Unlike the loop in wait_event*(), this uses wait_woken()
+after the condition check, hence the task state stays consistent.
 
-So, add 'remove_mutex` to protect 'dvbnet->exit' and use
-locked_dvb_net_open() function to check 'dvbnet->exit'.
+CVE-2023-31084 was assigned to this bug.
 
-[mchehab: fix a checkpatch warning]
+Link: https://lore.kernel.org/r/CA+UBctCu7fXn4q41O_3=id1+OdyQ85tZY1x+TkT-6OVBL6KAUw@mail.gmail.com/
 
-Link: https://lore.kernel.org/linux-media/20221117045925.14297-3-imv4bel@gmail.com
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/linux-media/20230512151800.1874-1-tiwai@suse.de
+Reported-by: Yu Hao <yhao016@ucr.edu>
+Closes: https://nvd.nist.gov/vuln/detail/CVE-2023-31084
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_net.c | 38 +++++++++++++++++++++++++++++---
- include/media/dvb_net.h          |  4 ++++
- 2 files changed, 39 insertions(+), 3 deletions(-)
+ drivers/media/dvb-core/dvb_frontend.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvb_net.c b/drivers/media/dvb-core/dvb_net.c
-index dddebea644bb8..c594b1bdfcaa5 100644
---- a/drivers/media/dvb-core/dvb_net.c
-+++ b/drivers/media/dvb-core/dvb_net.c
-@@ -1564,15 +1564,43 @@ static long dvb_net_ioctl(struct file *file,
- 	return dvb_usercopy(file, cmd, arg, dvb_net_do_ioctl);
- }
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index b04638321b75b..ad3e42a4eaf73 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -292,14 +292,22 @@ static int dvb_frontend_get_event(struct dvb_frontend *fe,
+ 	}
  
-+static int locked_dvb_net_open(struct inode *inode, struct file *file)
-+{
-+	struct dvb_device *dvbdev = file->private_data;
-+	struct dvb_net *dvbnet = dvbdev->priv;
-+	int ret;
-+
-+	if (mutex_lock_interruptible(&dvbnet->remove_mutex))
-+		return -ERESTARTSYS;
-+
-+	if (dvbnet->exit) {
-+		mutex_unlock(&dvbnet->remove_mutex);
-+		return -ENODEV;
-+	}
-+
-+	ret = dvb_generic_open(inode, file);
-+
-+	mutex_unlock(&dvbnet->remove_mutex);
-+
-+	return ret;
-+}
-+
- static int dvb_net_close(struct inode *inode, struct file *file)
- {
- 	struct dvb_device *dvbdev = file->private_data;
- 	struct dvb_net *dvbnet = dvbdev->priv;
+ 	if (events->eventw == events->eventr) {
+-		int ret;
++		struct wait_queue_entry wait;
++		int ret = 0;
  
-+	mutex_lock(&dvbnet->remove_mutex);
-+
- 	dvb_generic_release(inode, file);
+ 		if (flags & O_NONBLOCK)
+ 			return -EWOULDBLOCK;
  
--	if(dvbdev->users == 1 && dvbnet->exit == 1)
-+	if (dvbdev->users == 1 && dvbnet->exit == 1) {
-+		mutex_unlock(&dvbnet->remove_mutex);
- 		wake_up(&dvbdev->wait_queue);
-+	} else {
-+		mutex_unlock(&dvbnet->remove_mutex);
-+	}
-+
- 	return 0;
- }
- 
-@@ -1580,7 +1608,7 @@ static int dvb_net_close(struct inode *inode, struct file *file)
- static const struct file_operations dvb_net_fops = {
- 	.owner = THIS_MODULE,
- 	.unlocked_ioctl = dvb_net_ioctl,
--	.open =	dvb_generic_open,
-+	.open =	locked_dvb_net_open,
- 	.release = dvb_net_close,
- 	.llseek = noop_llseek,
- };
-@@ -1599,10 +1627,13 @@ void dvb_net_release (struct dvb_net *dvbnet)
- {
- 	int i;
- 
-+	mutex_lock(&dvbnet->remove_mutex);
- 	dvbnet->exit = 1;
-+	mutex_unlock(&dvbnet->remove_mutex);
-+
- 	if (dvbnet->dvbdev->users < 1)
- 		wait_event(dvbnet->dvbdev->wait_queue,
--				dvbnet->dvbdev->users==1);
-+				dvbnet->dvbdev->users == 1);
- 
- 	dvb_unregister_device(dvbnet->dvbdev);
- 
-@@ -1621,6 +1652,7 @@ int dvb_net_init (struct dvb_adapter *adap, struct dvb_net *dvbnet,
- 	int i;
- 
- 	mutex_init(&dvbnet->ioctl_mutex);
-+	mutex_init(&dvbnet->remove_mutex);
- 	dvbnet->demux = dmx;
- 
- 	for (i=0; i<DVB_NET_DEVICES_MAX; i++)
-diff --git a/include/media/dvb_net.h b/include/media/dvb_net.h
-index 5e31d37f25fac..cc01dffcc9f35 100644
---- a/include/media/dvb_net.h
-+++ b/include/media/dvb_net.h
-@@ -41,6 +41,9 @@
-  * @exit:		flag to indicate when the device is being removed.
-  * @demux:		pointer to &struct dmx_demux.
-  * @ioctl_mutex:	protect access to this struct.
-+ * @remove_mutex:	mutex that avoids a race condition between a callback
-+ *			called when the hardware is disconnected and the
-+ *			file_operations of dvb_net.
-  *
-  * Currently, the core supports up to %DVB_NET_DEVICES_MAX (10) network
-  * devices.
-@@ -53,6 +56,7 @@ struct dvb_net {
- 	unsigned int exit:1;
- 	struct dmx_demux *demux;
- 	struct mutex ioctl_mutex;
-+	struct mutex remove_mutex;
- };
- 
- /**
+-		ret = wait_event_interruptible(events->wait_queue,
+-					       dvb_frontend_test_event(fepriv, events));
+-
++		init_waitqueue_entry(&wait, current);
++		add_wait_queue(&events->wait_queue, &wait);
++		while (!dvb_frontend_test_event(fepriv, events)) {
++			wait_woken(&wait, TASK_INTERRUPTIBLE, 0);
++			if (signal_pending(current)) {
++				ret = -ERESTARTSYS;
++				break;
++			}
++		}
++		remove_wait_queue(&events->wait_queue, &wait);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
 -- 
 2.39.2
 
