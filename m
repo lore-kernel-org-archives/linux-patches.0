@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDF934CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A4EC433EF;
-	Wed,  7 Jun 2023 21:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062E534CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB5EC4339B;
+	Wed,  7 Jun 2023 21:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171650;
-	bh=xjSFqEXFNEEJVpr54YlItuR7Mfdx6sYSsTzNIpCfwQY=;
+	s=korg; t=1686171652;
+	bh=2SJV6eMjT3Wl+GyAUm5efsc9bJ7TXK+SjpNAOdgTsoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7Y9ASPqEIbqVhcS5O7D7O8PvJedUGtP21T7gBrTTmOF05NtFiCxetmdxhFbaL3NI
-	 CXjw8dRbhx2gHfGhV2RYtMaJAzm3pwtfLJPnB/R7XIcEEoBP7DeJKip64JQL/8/zRu
-	 TZtA1aHtD3CIKLmr9KUTB6pggN/lYDH14+6/5ElQ=
+	b=aBXuRd1Hk0DpyBoDsU5jPeZrAfVswvcifAz7ClLOV2wy6J17mCMs6oWw0GCan3gF1
+	 YSFYXEn5WN53wHaGL/q74R4MSBTVscrwiG4MGB2jz+aYw9sLVJu0cugO8hJtaRY8H8
+	 6+sMjbrvAEZFuf3itvNm8kW3zzkvZ/Jenpqi+wVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiakai Luo <jkluo@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 098/159] iio: adc: mxs-lradc: fix the order of two cleanup operations
-Date: Wed,  7 Jun 2023 22:16:41 +0200
-Message-ID: <20230607200906.897168307@linuxfoundation.org>
+	Sung-Chi Li <lschyi@chromium.org>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 5.15 099/159] HID: google: add jewel USB id
+Date: Wed,  7 Jun 2023 22:16:42 +0200
+Message-ID: <20230607200906.927760539@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,83 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiakai Luo <jkluo@hust.edu.cn>
+From: Sung-Chi Li <lschyi@chromium.org>
 
-commit 27b2ed5b6d53cd62fc61c3f259ae52f5cac23b66 upstream.
+commit ed84c4517a5bc536e8572a01dfa11bc22a280d06 upstream.
 
-Smatch reports:
-drivers/iio/adc/mxs-lradc-adc.c:766 mxs_lradc_adc_probe() warn:
-missing unwind goto?
+Add 1 additional hammer-like device.
 
-the order of three init operation:
-1.mxs_lradc_adc_trigger_init
-2.iio_triggered_buffer_setup
-3.mxs_lradc_adc_hw_init
-
-thus, the order of three cleanup operation should be:
-1.mxs_lradc_adc_hw_stop
-2.iio_triggered_buffer_cleanup
-3.mxs_lradc_adc_trigger_remove
-
-we exchange the order of two cleanup operations,
-introducing the following differences:
-1.if mxs_lradc_adc_trigger_init fails, returns directly;
-2.if trigger_init succeeds but iio_triggered_buffer_setup fails,
-goto err_trig and remove the trigger.
-
-In addition, we also reorder the unwind that goes on in the
-remove() callback to match the new ordering.
-
-Fixes: 6dd112b9f85e ("iio: adc: mxs-lradc: Add support for ADC driver")
-Signed-off-by: Jiakai Luo <jkluo@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230422133407.72908-1-jkluo@hust.edu.cn
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sung-Chi Li <lschyi@chromium.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/mxs-lradc-adc.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/hid/hid-google-hammer.c |    2 ++
+ drivers/hid/hid-ids.h           |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/iio/adc/mxs-lradc-adc.c
-+++ b/drivers/iio/adc/mxs-lradc-adc.c
-@@ -757,13 +757,13 @@ static int mxs_lradc_adc_probe(struct pl
+--- a/drivers/hid/hid-google-hammer.c
++++ b/drivers/hid/hid-google-hammer.c
+@@ -590,6 +590,8 @@ static const struct hid_device_id hammer
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_HAMMER) },
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
++		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_JEWEL) },
++	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_MAGNEMITE) },
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_MASTERBALL) },
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -502,6 +502,7 @@
+ #define USB_DEVICE_ID_GOOGLE_MOONBALL	0x5044
+ #define USB_DEVICE_ID_GOOGLE_DON	0x5050
+ #define USB_DEVICE_ID_GOOGLE_EEL	0x5057
++#define USB_DEVICE_ID_GOOGLE_JEWEL	0x5061
  
- 	ret = mxs_lradc_adc_trigger_init(iio);
- 	if (ret)
--		goto err_trig;
-+		return ret;
- 
- 	ret = iio_triggered_buffer_setup(iio, &iio_pollfunc_store_time,
- 					 &mxs_lradc_adc_trigger_handler,
- 					 &mxs_lradc_adc_buffer_ops);
- 	if (ret)
--		return ret;
-+		goto err_trig;
- 
- 	adc->vref_mv = mxs_lradc_adc_vref_mv[lradc->soc];
- 
-@@ -801,9 +801,9 @@ static int mxs_lradc_adc_probe(struct pl
- 
- err_dev:
- 	mxs_lradc_adc_hw_stop(adc);
--	mxs_lradc_adc_trigger_remove(iio);
--err_trig:
- 	iio_triggered_buffer_cleanup(iio);
-+err_trig:
-+	mxs_lradc_adc_trigger_remove(iio);
- 	return ret;
- }
- 
-@@ -814,8 +814,8 @@ static int mxs_lradc_adc_remove(struct p
- 
- 	iio_device_unregister(iio);
- 	mxs_lradc_adc_hw_stop(adc);
--	mxs_lradc_adc_trigger_remove(iio);
- 	iio_triggered_buffer_cleanup(iio);
-+	mxs_lradc_adc_trigger_remove(iio);
- 
- 	return 0;
- }
+ #define USB_VENDOR_ID_GOTOP		0x08f2
+ #define USB_DEVICE_ID_SUPER_Q2		0x007f
 
 
