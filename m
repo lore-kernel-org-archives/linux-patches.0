@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B974519E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B969C433D2;
-	Wed,  7 Jun 2023 20:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8091119E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0200BC433EF;
+	Wed,  7 Jun 2023 20:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170156;
-	bh=4uYHvJkTHMV3F/NNDQkoNgAGPVlgjuLnA3yU6VYyjrI=;
+	s=korg; t=1686170159;
+	bh=k1Wdy5HiceOrL4Jp5EksUTPQuP7HKsxxnSx9Ib5bA7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pw3CdTQaPQ/gRujBaEivny781Jxd9jqN089iFzJXDn7RvdZBDvzQwDCP4LKQ8eKQE
-	 sMRHQY6vp7jVLewUpYEqj78wbrfCoiZYjtA0ZfSSAQQs9ScVYQDGxGLCzRfawrfRMc
-	 1QWn8CG7PfEbN/adEAJT7FsZpk1GMGyqUilnaaz4=
+	b=e2fj6dfAWsO74gq6y4ueeg5Zha8qOj5Mjh8xItE5ydgOZgsnudvmHJiigzPiG3Oh5
+	 XXiiJkvSIAWb8tUTN+rWZYpM27UbF0P/a8fakptOoDNWZmRNOUaF8qs8RFEZSCT+qU
+	 HM2wEcmGGIraKaQ37R1mwZUFX5XLMZZDsFYcgTwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Subject: [PATCH 4.19 67/88] usb: gadget: f_fs: Add unbind event before functionfs_unbind
-Date: Wed,  7 Jun 2023 22:16:24 +0200
-Message-ID: <20230607200901.330242261@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 4.19 68/88] scsi: stex: Fix gcc 13 warnings
+Date: Wed,  7 Jun 2023 22:16:25 +0200
+Message-ID: <20230607200901.360129108@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -34,65 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit efb6b535207395a5c7317993602e2503ca8cb4b3 upstream.
+commit 6d074ce231772c66e648a61f6bd2245e7129d1f5 upstream.
 
-While exercising the unbind path, with the current implementation
-the functionfs_unbind would be calling which waits for the ffs->mutex
-to be available, however within the same time ffs_ep0_read is invoked
-& if no setup packets are pending, it will invoke function
-wait_event_interruptible_exclusive_locked_irq which by definition waits
-for the ev.count to be increased inside the same mutex for which
-functionfs_unbind is waiting.
-This creates deadlock situation because the functionfs_unbind won't
-get the lock until ev.count is increased which can only happen if
-the caller ffs_func_unbind can proceed further.
+gcc 13 may assign another type to enumeration constants than gcc 12. Split
+the large enum at the top of source file stex.c such that the type of the
+constants used in time expressions is changed back to the same type chosen
+by gcc 12. This patch suppresses compiler warnings like this one:
 
-Following is the illustration:
+In file included from ./include/linux/bitops.h:7,
+                 from ./include/linux/kernel.h:22,
+                 from drivers/scsi/stex.c:13:
+drivers/scsi/stex.c: In function ‘stex_common_handshake’:
+./include/linux/typecheck.h:12:25: error: comparison of distinct pointer types lacks a cast [-Werror]
+   12 |         (void)(&__dummy == &__dummy2); \
+      |                         ^~
+./include/linux/jiffies.h:106:10: note: in expansion of macro ‘typecheck’
+  106 |          typecheck(unsigned long, b) && \
+      |          ^~~~~~~~~
+drivers/scsi/stex.c:1035:29: note: in expansion of macro ‘time_after’
+ 1035 |                         if (time_after(jiffies, before + MU_MAX_DELAY * HZ)) {
+      |                             ^~~~~~~~~~
 
-	CPU1				CPU2
+See also https://gcc.gnu.org/bugzilla/show_bug.cgi?id=107405.
 
-ffs_func_unbind()		ffs_ep0_read()
-				mutex_lock(ffs->mutex)
-				wait_event(ffs->ev.count)
-functionfs_unbind()
-  mutex_lock(ffs->mutex)
-  mutex_unlock(ffs->mutex)
-
-ffs_event_add()
-
-<deadlock>
-
-Fix this by moving the event unbind before functionfs_unbind
-to ensure the ev.count is incrased properly.
-
-Fixes: 6a19da111057 ("usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Link: https://lore.kernel.org/r/20230525092854.7992-1-quic_uaggarwa@quicinc.com
+Cc: stable@vger.kernel.org
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230529195034.3077-1-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/stex.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -3510,6 +3510,7 @@ static void ffs_func_unbind(struct usb_c
- 	/* Drain any pending AIO completions */
- 	drain_workqueue(ffs->io_completion_wq);
+--- a/drivers/scsi/stex.c
++++ b/drivers/scsi/stex.c
+@@ -114,7 +114,9 @@ enum {
+ 	TASK_ATTRIBUTE_HEADOFQUEUE		= 0x1,
+ 	TASK_ATTRIBUTE_ORDERED			= 0x2,
+ 	TASK_ATTRIBUTE_ACA			= 0x4,
++};
  
-+	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
- 	if (!--opts->refcnt)
- 		functionfs_unbind(ffs);
++enum {
+ 	SS_STS_NORMAL				= 0x80000000,
+ 	SS_STS_DONE				= 0x40000000,
+ 	SS_STS_HANDSHAKE			= 0x20000000,
+@@ -126,7 +128,9 @@ enum {
+ 	SS_I2H_REQUEST_RESET			= 0x2000,
  
-@@ -3534,7 +3535,6 @@ static void ffs_func_unbind(struct usb_c
- 	func->function.ssp_descriptors = NULL;
- 	func->interfaces_nums = NULL;
+ 	SS_MU_OPERATIONAL			= 0x80000000,
++};
  
--	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
- }
++enum {
+ 	STEX_CDB_LENGTH				= 16,
+ 	STATUS_VAR_LEN				= 128,
  
- static struct usb_function *ffs_alloc(struct usb_function_instance *fi)
 
 
