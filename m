@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D15370DE
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660CCC433EF;
-	Wed,  7 Jun 2023 20:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA813370DE
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BACFC433EF;
+	Wed,  7 Jun 2023 20:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170802;
-	bh=6YsYYRAJbpN9oOEQnpDa7qJZI+T9Lc/w9ciHPgIEx9A=;
+	s=korg; t=1686170805;
+	bh=QApk/VwEIbliCQ9MVsAlFv86NncCUVR+bpsIv9j5IT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4XLADtkoS0jlc5TjNQ3O+Rek/0lV4wxfVLnyEfrRLW1Q2WG3AaoMjQf8uaD2h0lC
-	 VoKE/vSMFp7pyrNE7Hl77lgkwd95qLIkOwbI49bdm0/a6IPpNZG54+kTE4S6ftyZgP
-	 4nkl+DnKgu8lCIZ9kORSAKAaynJ3jetPdXOSK8bk=
+	b=1y1PuwAvzWkwmYcDiZRsspcqgrKi2mupJC+nPOruEOApVz88jwc1si8l4mQ6VYGws
+	 zX2/ktPk+MD5LgA4+FmYC56deqwnNaG1O0Bvm1+BoGGLuqpiH91DzUrHrGNPNsVEru
+	 hStQIZK4hon2krzpRpp5aR/yocTZvm7n7CMZXsxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH 6.1 224/225] selftests: mptcp: join: avoid using cmp --bytes
-Date: Wed,  7 Jun 2023 22:16:57 +0200
-Message-ID: <20230607200921.710630563@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 225/225] ext4: enable the lazy init thread when remounting read/write
+Date: Wed,  7 Jun 2023 22:16:58 +0200
+Message-ID: <20230607200921.743978335@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,75 +33,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit d328fe87067480cf2bd0b58dab428a98d31dbb7e upstream.
+commit eb1f822c76beeaa76ab8b6737ab9dc9f9798408c upstream.
 
-BusyBox's 'cmp' command doesn't support the '--bytes' parameter.
+In commit a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting
+r/w until quota is re-enabled") we defer clearing tyhe SB_RDONLY flag
+in struct super.  However, we didn't defer when we checked sb_rdonly()
+to determine the lazy itable init thread should be enabled, with the
+next result that the lazy inode table initialization would not be
+properly started.  This can cause generic/231 to fail in ext4's
+nojournal mode.
 
-Some CIs -- i.e. LKFT -- use BusyBox and have the mptcp_join.sh test
-failing [1] because their 'cmp' command doesn't support this '--bytes'
-option:
+Fix this by moving when we decide to start or stop the lazy itable
+init thread to after we clear the SB_RDONLY flag when we are
+remounting the file system read/write.
 
-    cmp: unrecognized option '--bytes=1024'
-    BusyBox v1.35.0 () multi-call binary.
+Fixes a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting r/w until...")
 
-    Usage: cmp [-ls] [-n NUM] FILE1 [FILE2]
-
-Instead, 'head --bytes' can be used as this option is supported by
-BusyBox. A temporary file is needed for this operation.
-
-Because it is apparently quite common to use BusyBox, it is certainly
-better to backport this fix to impacted kernels.
-
-Fixes: 6bf41020b72b ("selftests: mptcp: update and extend fastclose test-cases")
-Cc: stable@vger.kernel.org
-Link: https://qa-reports.linaro.org/lkft/linux-mainline-master/build/v6.3-rc5-5-g148341f0a2f5/testrun/16088933/suite/kselftest-net-mptcp/test/net_mptcp_userspace_pm_sh/log [1]
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20230527035729.1001605-1-tytso@mit.edu
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/ext4/super.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -15,6 +15,7 @@ sout=""
- cin=""
- cinfail=""
- cinsent=""
-+tmpfile=""
- cout=""
- capout=""
- ns1=""
-@@ -168,6 +169,7 @@ cleanup()
- {
- 	rm -f "$cin" "$cout" "$sinfail"
- 	rm -f "$sin" "$sout" "$cinsent" "$cinfail"
-+	rm -f "$tmpfile"
- 	cleanup_partial
- }
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6542,18 +6542,6 @@ static int __ext4_remount(struct fs_cont
+ 	}
  
-@@ -362,9 +364,16 @@ check_transfer()
- 			fail_test
- 			return 1
- 		fi
--		bytes="--bytes=${bytes}"
+ 	/*
+-	 * Reinitialize lazy itable initialization thread based on
+-	 * current settings
+-	 */
+-	if (sb_rdonly(sb) || !test_opt(sb, INIT_INODE_TABLE))
+-		ext4_unregister_li_request(sb);
+-	else {
+-		ext4_group_t first_not_zeroed;
+-		first_not_zeroed = ext4_has_uninit_itable(sb);
+-		ext4_register_li_request(sb, first_not_zeroed);
+-	}
+-
+-	/*
+ 	 * Handle creation of system zone data early because it can fail.
+ 	 * Releasing of existing data is done when we are sure remount will
+ 	 * succeed.
+@@ -6590,6 +6578,18 @@ static int __ext4_remount(struct fs_cont
+ 	if (enable_rw)
+ 		sb->s_flags &= ~SB_RDONLY;
+ 
++	/*
++	 * Reinitialize lazy itable initialization thread based on
++	 * current settings
++	 */
++	if (sb_rdonly(sb) || !test_opt(sb, INIT_INODE_TABLE))
++		ext4_unregister_li_request(sb);
++	else {
++		ext4_group_t first_not_zeroed;
++		first_not_zeroed = ext4_has_uninit_itable(sb);
++		ext4_register_li_request(sb, first_not_zeroed);
++	}
 +
-+		# note: BusyBox's "cmp" command doesn't support --bytes
-+		tmpfile=$(mktemp)
-+		head --bytes="$bytes" "$in" > "$tmpfile"
-+		mv "$tmpfile" "$in"
-+		head --bytes="$bytes" "$out" > "$tmpfile"
-+		mv "$tmpfile" "$out"
-+		tmpfile=""
- 	fi
--	cmp -l "$in" "$out" ${bytes} | while read -r i a b; do
-+	cmp -l "$in" "$out" | while read -r i a b; do
- 		local sum=$((0${a} + 0${b}))
- 		if [ $check_invert -eq 0 ] || [ $sum -ne $((0xff)) ]; then
- 			echo "[ FAIL ] $what does not match (in, out):"
+ 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
+ 		ext4_stop_mmpd(sbi);
+ 
 
 
