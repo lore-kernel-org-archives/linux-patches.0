@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C5534CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B81EC433EF;
-	Wed,  7 Jun 2023 20:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C8534CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF519C4339B;
+	Wed,  7 Jun 2023 20:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170687;
-	bh=7L8cY1/FfTpIww6poA0DK9pAvBkFIbJCwCOQD29Wgns=;
+	s=korg; t=1686170690;
+	bh=kXg0VRiq1HvTPTg20ktQW2tm8uqGv4kUk5v7w0vgB2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZRq4l8aQ+PJ76gEH6lVHWEuMSA3G0SGUrWULFPO5RLrR+CvtEd964391io3mDTmR
-	 Svh6Z1r7iVbWIdUCJKAEcNcbDFMjBiEVIxfxHNB0/HDbnJvyjEpQleaaPoziWGabc2
-	 YFhMXbiHvZKwMsXqy+7a1BtJtyKZVBpRkMYqSh7o=
+	b=KFqvCm5Skomy8FmNoOsR4me5QN9KKoGfkB+JPhC7+ATvayVeiwS7wOIL/x0bvwiH+
+	 rubMuZZLA7qIoT743FKX2xtOdL7LMwpnTvJtcpEMDJ4vbQyPbwKNsLLPqo67Qk8BE1
+	 dCPgHOrB1/nWn6F0Gtgz+vmKDmBZ3Ht0r+hjGAdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.vnet.ibm.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 179/225] powerpc/iommu: Limit number of TCEs to 512 for H_STUFF_TCE hcall
-Date: Wed,  7 Jun 2023 22:16:12 +0200
-Message-ID: <20230607200920.240520581@linuxfoundation.org>
+	Sean Nyekjaer <sean@geanix.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 153/225] iio: adc: stm32-adc: skip adc-diff-channels setup if none is present
+Date: Wed,  7 Jun 2023 22:15:46 +0200
+Message-ID: <20230607200919.414822828@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,56 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaurav Batra <gbatra@linux.vnet.ibm.com>
+From: Sean Nyekjaer <sean@geanix.com>
 
-commit 9d2ccf00bddc268045e3d65a8108d61ada0e4b4e upstream.
+commit 9c0d6ccd7d6bbd275e390b55a3390b4274291d95 upstream.
 
-Currently in tce_freemulti_pSeriesLP() there is no limit on how many
-TCEs are passed to the H_STUFF_TCE hcall. This has not caused an issue
-until now, but newer firmware releases have started enforcing a limit of
-512 TCEs per call.
+If no adc differential channels are defined driver will fail with EINVAL:
+stm32-adc: probe of 48003000.adc:adc@0 failed with error -22
 
-The limit is correct per the specification (PAPR v2.12 § 14.5.4.2.3).
+Fix this by skipping the initialization if no channels are defined.
 
-The code has been in it's current form since it was initially merged.
+This applies only to the legacy way of initializing adc channels.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Gaurav Batra <gbatra@linux.vnet.ibm.com>
-Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
-[mpe: Tweak change log wording & add PAPR reference]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230525143454.56878-1-gbatra@linux.vnet.ibm.com
+Fixes: d7705f35448a ("iio: adc: stm32-adc: convert to device properties")
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://lore.kernel.org/r/20230503162029.3654093-1-sean@geanix.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/iommu.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/iio/adc/stm32-adc.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/arch/powerpc/platforms/pseries/iommu.c
-+++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -311,13 +311,22 @@ static void tce_free_pSeriesLP(unsigned
- static void tce_freemulti_pSeriesLP(struct iommu_table *tbl, long tcenum, long npages)
- {
- 	u64 rc;
-+	long rpages = npages;
-+	unsigned long limit;
+--- a/drivers/iio/adc/stm32-adc.c
++++ b/drivers/iio/adc/stm32-adc.c
+@@ -1882,16 +1882,15 @@ static int stm32_adc_get_legacy_chan_cou
+ 	 * to get the *real* number of channels.
+ 	 */
+ 	ret = device_property_count_u32(dev, "st,adc-diff-channels");
+-	if (ret < 0)
+-		return ret;
+-
+-	ret /= (int)(sizeof(struct stm32_adc_diff_channel) / sizeof(u32));
+-	if (ret > adc_info->max_channels) {
+-		dev_err(&indio_dev->dev, "Bad st,adc-diff-channels?\n");
+-		return -EINVAL;
+-	} else if (ret > 0) {
+-		adc->num_diff = ret;
+-		num_channels += ret;
++	if (ret > 0) {
++		ret /= (int)(sizeof(struct stm32_adc_diff_channel) / sizeof(u32));
++		if (ret > adc_info->max_channels) {
++			dev_err(&indio_dev->dev, "Bad st,adc-diff-channels?\n");
++			return -EINVAL;
++		} else if (ret > 0) {
++			adc->num_diff = ret;
++			num_channels += ret;
++		}
+ 	}
  
- 	if (!firmware_has_feature(FW_FEATURE_STUFF_TCE))
- 		return tce_free_pSeriesLP(tbl->it_index, tcenum,
- 					  tbl->it_page_shift, npages);
- 
--	rc = plpar_tce_stuff((u64)tbl->it_index,
--			     (u64)tcenum << tbl->it_page_shift, 0, npages);
-+	do {
-+		limit = min_t(unsigned long, rpages, 512);
-+
-+		rc = plpar_tce_stuff((u64)tbl->it_index,
-+				     (u64)tcenum << tbl->it_page_shift, 0, limit);
-+
-+		rpages -= limit;
-+		tcenum += limit;
-+	} while (rpages > 0 && !rc);
- 
- 	if (rc && printk_ratelimit()) {
- 		printk("tce_freemulti_pSeriesLP: plpar_tce_stuff failed\n");
+ 	/* Optional sample time is provided either for each, or all channels */
 
 
