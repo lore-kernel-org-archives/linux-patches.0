@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50033922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28543C433D2;
-	Wed,  7 Jun 2023 21:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EA13922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD08EC433D2;
+	Wed,  7 Jun 2023 21:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171608;
-	bh=+c/hg+pn6YqJJKirv+KPqU8DGCISXulUy2B44R/iVk8=;
+	s=korg; t=1686171611;
+	bh=IxY9yD28x09t6EP3qwL6MxSZUKwa8NFQn8cpurereZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=If58CWm/lwXQTUBQuw7Uow/XuP6NNRR375xfJ4gFbaSO1v3O5wz/Hlk28aFay41C0
-	 NZsarPErUrDgXCBf8veJL2dUfOxDUHv5UtZhFNhyAUG29InIxbc8DVt+jhPM7JVV2c
-	 7RIDzS1kVKcuj/ZCd/VuNdZ2arj3imCcII2+VKGI=
+	b=jQ5RDEibn+lWpQTt2P3hluAzN4Rcwkusv7wq+vgWyrSOBOiE4NOksqSc/vmKcnLoZ
+	 A4Q+jNGGWedFyMcMhvO6ep8lZ9ll7Pqvy5YGflU4qrs/tkKcVhq5aNg0Q5sm6PmEFn
+	 NCIPEl/pTKCbop1JlfkF9Fou4zdH3Sii1BgRQsRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 052/159] fbdev: modedb: Add 1920x1080 at 60 Hz video mode
-Date: Wed,  7 Jun 2023 22:15:55 +0200
-Message-ID: <20230607200905.390518646@linuxfoundation.org>
+Subject: [PATCH 5.15 053/159] fbdev: stifb: Fix info entry in sti_struct on error path
+Date: Wed,  7 Jun 2023 22:15:56 +0200
+Message-ID: <20230607200905.424257895@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,32 +36,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit c8902258b2b8ecaa1b8d88c312853c5b14c2553d ]
+[ Upstream commit 0bdf1ad8d10bd4e50a8b1a2c53d15984165f7fea ]
 
-Add typical resolution for Full-HD monitors.
+Minor fix to reset the info field to NULL in case of error.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/modedb.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/video/fbdev/stifb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/video/fbdev/core/modedb.c b/drivers/video/fbdev/core/modedb.c
-index 6473e0dfe1464..e78ec7f728463 100644
---- a/drivers/video/fbdev/core/modedb.c
-+++ b/drivers/video/fbdev/core/modedb.c
-@@ -257,6 +257,11 @@ static const struct fb_videomode modedb[] = {
- 	{ NULL, 72, 480, 300, 33386, 40, 24, 11, 19, 80, 3, 0,
- 		FB_VMODE_DOUBLE },
+diff --git a/drivers/video/fbdev/stifb.c b/drivers/video/fbdev/stifb.c
+index ef8a4c5fc6875..63f51783352dc 100644
+--- a/drivers/video/fbdev/stifb.c
++++ b/drivers/video/fbdev/stifb.c
+@@ -1413,6 +1413,7 @@ static int __init stifb_init_fb(struct sti_struct *sti, int bpp_pref)
+ 	iounmap(info->screen_base);
+ out_err0:
+ 	kfree(fb);
++	sti->info = NULL;
+ 	return -ENXIO;
+ }
  
-+	/* 1920x1080 @ 60 Hz, 67.3 kHz hsync */
-+	{ NULL, 60, 1920, 1080, 6734, 148, 88, 36, 4, 44, 5, 0,
-+		FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,
-+		FB_VMODE_NONINTERLACED },
-+
- 	/* 1920x1200 @ 60 Hz, 74.5 Khz hsync */
- 	{ NULL, 60, 1920, 1200, 5177, 128, 336, 1, 38, 208, 3,
- 		FB_SYNC_HOR_HIGH_ACT | FB_SYNC_VERT_HIGH_ACT,
 -- 
 2.39.2
 
