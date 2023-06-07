@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453CA3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD36AC4339B;
-	Wed,  7 Jun 2023 20:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F673922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A36C4339B;
+	Wed,  7 Jun 2023 20:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171267;
-	bh=3SbaqRbH2oSNUkTcwM2/rB6CqOh2rl8SqM/zl4acoxM=;
+	s=korg; t=1686171269;
+	bh=lRszj8c8nrCfK5xuDq5S/n49YLwti7gEva5S+XlmNAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lt9kqIG5gw58M3ttZVe8C7JdYjiajsPM0sq4cgLJB8XNDfNzJCc3T68E3Dcx7NrA4
-	 qiQs2J1z6hctJl573ZW41daaMQd/UPImL+4tslS+afCxNCWMVqOQ+CSW77kn3Yk093
-	 cDKKNyXGJDiuNf1fETwXl+DiMssRnY3zTHlGi4Z0=
+	b=DiyiRD8nGGXSx0VzkPX/bNtFXamvQr2J7UKhaIyIw+7UjAc3vYd3qcru0GDC48zcj
+	 xuXsTIjxAOOg7BCQgeWLxL/KcA3SKnGFpENOophz0+jHKSz3Fgq57blpQ93o0xXF8A
+	 sF49kNSOceixcNwEmju+7a4MYSi+fse2IakyEkgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	kernel test robot <lkp@intel.com>,
+	Min-Hua Chen <minhuadotchen@gmail.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 53/99] ARM: dts: stm32: add pin map for CAN controller on stm32f7
-Date: Wed,  7 Jun 2023 22:16:45 +0200
-Message-ID: <20230607200901.908961609@linuxfoundation.org>
+Subject: [PATCH 5.4 54/99] arm64/mm: mark private VM_FAULT_X defines as vm_fault_t
+Date: Wed,  7 Jun 2023 22:16:46 +0200
+Message-ID: <20230607200901.939956857@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -35,113 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Min-Hua Chen <minhuadotchen@gmail.com>
 
-[ Upstream commit 011644249686f2675e142519cd59e81e04cfc231 ]
+[ Upstream commit d91d580878064b880f3574ac35b98d8b70ee8620 ]
 
-Add pin configurations for using CAN controller on stm32f7.
+This patch fixes several sparse warnings for fault.c:
 
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Link: https://lore.kernel.org/all/20230427204540.3126234-4-dario.binacchi@amarulasolutions.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+arch/arm64/mm/fault.c:493:24: sparse: warning: incorrect type in return expression (different base types)
+arch/arm64/mm/fault.c:493:24: sparse:    expected restricted vm_fault_t
+arch/arm64/mm/fault.c:493:24: sparse:    got int
+arch/arm64/mm/fault.c:501:32: sparse: warning: incorrect type in return expression (different base types)
+arch/arm64/mm/fault.c:501:32: sparse:    expected restricted vm_fault_t
+arch/arm64/mm/fault.c:501:32: sparse:    got int
+arch/arm64/mm/fault.c:503:32: sparse: warning: incorrect type in return expression (different base types)
+arch/arm64/mm/fault.c:503:32: sparse:    expected restricted vm_fault_t
+arch/arm64/mm/fault.c:503:32: sparse:    got int
+arch/arm64/mm/fault.c:511:24: sparse: warning: incorrect type in return expression (different base types)
+arch/arm64/mm/fault.c:511:24: sparse:    expected restricted vm_fault_t
+arch/arm64/mm/fault.c:511:24: sparse:    got int
+arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
+arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
+arch/arm64/mm/fault.c:713:39: sparse: warning: restricted vm_fault_t degrades to integer
+
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
+Link: https://lore.kernel.org/r/20230502151909.128810-1-minhuadotchen@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32f7-pinctrl.dtsi | 82 ++++++++++++++++++++++++++
- 1 file changed, 82 insertions(+)
+ arch/arm64/mm/fault.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/stm32f7-pinctrl.dtsi b/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
-index 9314128df1859..639a6b65749f2 100644
---- a/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
-+++ b/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
-@@ -284,6 +284,88 @@
- 					slew-rate = <2>;
- 				};
- 			};
-+
-+			can1_pins_a: can1-0 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('A', 12, AF9)>; /* CAN1_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('A', 11, AF9)>; /* CAN1_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can1_pins_b: can1-1 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('B', 9, AF9)>; /* CAN1_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('B', 8, AF9)>; /* CAN1_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can1_pins_c: can1-2 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('D', 1, AF9)>; /* CAN1_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('D', 0, AF9)>; /* CAN1_RX */
-+					bias-pull-up;
-+
-+				};
-+			};
-+
-+			can1_pins_d: can1-3 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('H', 13, AF9)>; /* CAN1_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('H', 14, AF9)>; /* CAN1_RX */
-+					bias-pull-up;
-+
-+				};
-+			};
-+
-+			can2_pins_a: can2-0 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('B', 6, AF9)>; /* CAN2_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('B', 5, AF9)>; /* CAN2_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can2_pins_b: can2-1 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('B', 13, AF9)>; /* CAN2_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('B', 12, AF9)>; /* CAN2_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can3_pins_a: can3-0 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('A', 15, AF11)>; /* CAN3_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('A', 8, AF11)>; /* CAN3_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can3_pins_b: can3-1 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('B', 4, AF11)>;  /* CAN3_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('B', 3, AF11)>; /* CAN3_RX */
-+					bias-pull-up;
-+				};
-+			};
- 		};
- 	};
- };
+diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
+index a8e9c98147a19..af9a6e1fa0d3d 100644
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -403,8 +403,8 @@ static void do_bad_area(unsigned long addr, unsigned int esr, struct pt_regs *re
+ 	}
+ }
+ 
+-#define VM_FAULT_BADMAP		0x010000
+-#define VM_FAULT_BADACCESS	0x020000
++#define VM_FAULT_BADMAP		((__force vm_fault_t)0x010000)
++#define VM_FAULT_BADACCESS	((__force vm_fault_t)0x020000)
+ 
+ static vm_fault_t __do_page_fault(struct mm_struct *mm, unsigned long addr,
+ 			   unsigned int mm_flags, unsigned long vm_flags)
 -- 
 2.39.2
 
