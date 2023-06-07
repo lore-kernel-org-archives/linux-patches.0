@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC58370E4
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:52:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3697C433D2;
-	Wed,  7 Jun 2023 20:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C283734F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:52:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A85DC433D2;
+	Wed,  7 Jun 2023 20:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171145;
-	bh=iMrw7UTqM+qQ+0oFHVPW1g0o6T0cmEbmzkHIE2Kq2aI=;
+	s=korg; t=1686171147;
+	bh=/WiqoBavaBtYYbo7s1sSybCasoh1uNk+YtbaijrrQag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IG+0zld5SPJfF+TjX3doBgCh2RsdqA/m3e8SL+2B+1CYPhvO4OwSCReSMFrESPbmo
-	 1pd36O3//XYkF8vxcUd8Nxcett1SDIJS3gi48QedgyHJS4mrbdSgsZ0kp4sw+VwPVR
-	 TbYiIY3pNKj0/o9OuC6PdlnNBTtLadVCxplfMe3Y=
+	b=WTq0VfMUogQU+3/mLft2WPTsykFVkYJYvfsOyCiYWlw+p8XobBSGe6VkReXOuEdBz
+	 V1hN0PBmWxLj/+t/4diBxVy+/16fwEZypHJ6Ls2B7spdNayT2cNbxEKGdwuq5BgKNs
+	 9rm3db4otizPzaALt5eiww22fRtwJxkeDrMoAXi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+298c5d8fb4a128bc27b0@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 102/120] ext4: add lockdep annotations for i_data_sem for ea_inodes
-Date: Wed,  7 Jun 2023 22:16:58 +0200
-Message-ID: <20230607200904.129295442@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>
+Subject: [PATCH 5.10 093/120] tty: serial: fsl_lpuart: use UARTCTRL_TXINV to send break instead of UARTCTRL_SBK
+Date: Wed,  7 Jun 2023 22:16:49 +0200
+Message-ID: <20230607200903.835357422@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -35,57 +34,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-commit aff3bea95388299eec63440389b4545c8041b357 upstream.
+commit 2474e05467c00f7d51af3039b664de6886325257 upstream.
 
-Treat i_data_sem for ea_inodes as being in their own lockdep class to
-avoid lockdep complaints about ext4_setattr's use of inode_lock() on
-normal inodes potentially causing lock ordering with i_data_sem on
-ea_inodes in ext4_xattr_inode_write().  However, ea_inodes will be
-operated on by ext4_setattr(), so this isn't a problem.
+LPUART IP now has two known bugs, one is that CTS has higher priority
+than the break signal, which causes the break signal sending through
+UARTCTRL_SBK may impacted by the CTS input if the HW flow control is
+enabled. It exists on all platforms we support in this driver.
+So we add a workaround patch for this issue: commit c4c81db5cf8b
+("tty: serial: fsl_lpuart: disable the CTS when send break signal").
 
-Cc: stable@kernel.org
-Link: https://syzkaller.appspot.com/bug?extid=298c5d8fb4a128bc27b0
-Reported-by: syzbot+298c5d8fb4a128bc27b0@syzkaller.appspotmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230524034951.779531-5-tytso@mit.edu
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Another IP bug is i.MX8QM LPUART may have an additional break character
+being sent after SBK was cleared. It may need to add some delay between
+clearing SBK and re-enabling CTS to ensure that the SBK latch are
+completely cleared.
+
+But we found that during the delay period before CTS is enabled, there
+is still a risk that Bluetooth data in TX FIFO may be sent out during
+this period because of break off and CTS disabled(even if BT sets CTS
+line deasserted, data is still sent to BT).
+
+Due to this risk, we have to drop the CTS-disabling workaround for SBK
+bugs, use TXINV seems to be a better way to replace SBK feature and
+avoid above risk. Also need to disable the transmitter to prevent any
+data from being sent out during break, then invert the TX line to send
+break. Then disable the TXINV when turn off break and re-enable
+transmitter.
+
+Fixes: c4c81db5cf8b ("tty: serial: fsl_lpuart: disable the CTS when send break signal")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20230519094751.28948-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h  |    2 ++
- fs/ext4/xattr.c |    4 ++++
- 2 files changed, 6 insertions(+)
+ drivers/tty/serial/fsl_lpuart.c |   44 ++++++++++++++++++++--------------------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -980,11 +980,13 @@ do {									       \
-  *			  where the second inode has larger inode number
-  *			  than the first
-  *  I_DATA_SEM_QUOTA  - Used for quota inodes only
-+ *  I_DATA_SEM_EA     - Used for ea_inodes only
-  */
- enum {
- 	I_DATA_SEM_NORMAL = 0,
- 	I_DATA_SEM_OTHER,
- 	I_DATA_SEM_QUOTA,
-+	I_DATA_SEM_EA
- };
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1455,34 +1455,36 @@ static void lpuart_break_ctl(struct uart
  
- 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -123,7 +123,11 @@ ext4_expand_inode_array(struct ext4_xatt
- #ifdef CONFIG_LOCKDEP
- void ext4_xattr_inode_set_class(struct inode *ea_inode)
+ static void lpuart32_break_ctl(struct uart_port *port, int break_state)
  {
-+	struct ext4_inode_info *ei = EXT4_I(ea_inode);
-+
- 	lockdep_set_subclass(&ea_inode->i_rwsem, 1);
-+	(void) ei;	/* shut up clang warning if !CONFIG_LOCKDEP */
-+	lockdep_set_subclass(&ei->i_data_sem, I_DATA_SEM_EA);
- }
- #endif
+-	unsigned long temp, modem;
+-	struct tty_struct *tty;
+-	unsigned int cflag = 0;
++	unsigned long temp;
  
+-	tty = tty_port_tty_get(&port->state->port);
+-	if (tty) {
+-		cflag = tty->termios.c_cflag;
+-		tty_kref_put(tty);
+-	}
+-
+-	temp = lpuart32_read(port, UARTCTRL) & ~UARTCTRL_SBK;
+-	modem = lpuart32_read(port, UARTMODIR);
++	temp = lpuart32_read(port, UARTCTRL);
+ 
++	/*
++	 * LPUART IP now has two known bugs, one is CTS has higher priority than the
++	 * break signal, which causes the break signal sending through UARTCTRL_SBK
++	 * may impacted by the CTS input if the HW flow control is enabled. It
++	 * exists on all platforms we support in this driver.
++	 * Another bug is i.MX8QM LPUART may have an additional break character
++	 * being sent after SBK was cleared.
++	 * To avoid above two bugs, we use Transmit Data Inversion function to send
++	 * the break signal instead of UARTCTRL_SBK.
++	 */
+ 	if (break_state != 0) {
+-		temp |= UARTCTRL_SBK;
+ 		/*
+-		 * LPUART CTS has higher priority than SBK, need to disable CTS before
+-		 * asserting SBK to avoid any interference if flow control is enabled.
++		 * Disable the transmitter to prevent any data from being sent out
++		 * during break, then invert the TX line to send break.
+ 		 */
+-		if (cflag & CRTSCTS && modem & UARTMODIR_TXCTSE)
+-			lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
++		temp &= ~UARTCTRL_TE;
++		lpuart32_write(port, temp, UARTCTRL);
++		temp |= UARTCTRL_TXINV;
++		lpuart32_write(port, temp, UARTCTRL);
+ 	} else {
+-		/* Re-enable the CTS when break off. */
+-		if (cflag & CRTSCTS && !(modem & UARTMODIR_TXCTSE))
+-			lpuart32_write(port, modem | UARTMODIR_TXCTSE, UARTMODIR);
++		/* Disable the TXINV to turn off break and re-enable transmitter. */
++		temp &= ~UARTCTRL_TXINV;
++		lpuart32_write(port, temp, UARTCTRL);
++		temp |= UARTCTRL_TE;
++		lpuart32_write(port, temp, UARTCTRL);
+ 	}
+-
+-	lpuart32_write(port, temp, UARTCTRL);
+ }
+ 
+ static void lpuart_setup_watermark(struct lpuart_port *sport)
 
 
