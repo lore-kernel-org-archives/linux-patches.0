@@ -1,25 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453E134459
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF5DC4339B;
-	Wed,  7 Jun 2023 20:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FDC34459
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D625C433D2;
+	Wed,  7 Jun 2023 20:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171108;
-	bh=OEd4sc6FG+ouAnkupxem+7o9Tyht6WI5KtGcon8gV/0=;
+	s=korg; t=1686171110;
+	bh=yVZUa91cC4AjJsDmOCeAkbo4Wi1nABQ4RHqQaHMya8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIA1OzBSXRN01NQ6Gxj+ZKFj6+92DB98bvapLm3i5fOWd4BwozTTuBhRUyS80nwY0
-	 hk3axGpzZGj9BcE/HsNd8Z76saSItR0zMeFCyhFOfzY9b2iUVc2aJ6k6FzAaF8KWeJ
-	 HDW1CazoL3l5rfBEG2U27aJfOrVSVpgb5lJc3mLc=
+	b=gyhKWKsHHo4Kc3u658INM465owmg/b53iUlZp5/eZu08VLSuOy/Bxhf47Wx2vX55z
+	 XasU5pYMOTVynuB+kg81beYxLuKXgKCtdtViZUM2afxKNQ00ZjbVCZjxUSgTOlnl+Z
+	 2dqWqYRr/gdUGISmfFAMEFAXlB+VAH1iC/Yk8qVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Brijesh Singh <brijesh.singh@amd.com>,
+	Borislav Petkov <bp@suse.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Ben Hutchings <benh@debian.org>
-Subject: [PATCH 5.10 113/120] scsi: dpt_i2o: Do not process completions with invalid addresses
-Date: Wed,  7 Jun 2023 22:17:09 +0200
-Message-ID: <20230607200904.489036624@linuxfoundation.org>
+Subject: [PATCH 5.10 114/120] crypto: ccp: Reject SEV commands with mismatching command buffer
+Date: Wed,  7 Jun 2023 22:17:10 +0200
+Message-ID: <20230607200904.520857466@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -33,59 +38,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Hutchings <benh@debian.org>
+From: Sean Christopherson <seanjc@google.com>
 
-adpt_isr() reads reply addresses from a hardware register, which
-should always be within the DMA address range of the device's pool of
-reply address buffers.  In case the address is out of range, it tries
-to muddle on, converting to a virtual address using bus_to_virt().
+commit d5760dee127bf6f390b05e747369d7c37ae1a7b8 upstream.
 
-bus_to_virt() does not take DMA addresses, and it doesn't make sense
-to try to handle the completion in this case.  Ignore it and continue
-looping to service the interrupt.  If a completion has been lost then
-the SCSI core should eventually time-out and trigger a reset.
+WARN on and reject SEV commands that provide a valid data pointer, but do
+not have a known, non-zero length.  And conversely, reject commands that
+take a command buffer but none is provided (data is null).
 
-There is no corresponding upstream commit, because this driver was
-removed upstream.
+Aside from sanity checking input, disallowing a non-null pointer without
+a non-zero size will allow a future patch to cleanly handle vmalloc'd
+data by copying the data to an internal __pa() friendly buffer.
 
-Fixes: 67af2b060e02 ("[SCSI] dpt_i2o: move from virt_to_bus/bus_to_virt ...")
-Signed-off-by: Ben Hutchings <benh@debian.org>
+Note, this also effectively prevents callers from using commands that
+have a non-zero length and are not known to the kernel.  This is not an
+explicit goal, but arguably the side effect is a good thing from the
+kernel's perspective.
+
+Cc: Brijesh Singh <brijesh.singh@amd.com>
+Cc: Borislav Petkov <bp@suse.de>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20210406224952.4177376-4-seanjc@google.com>
+Reviewed-by: Brijesh Singh <brijesh.singh@amd.com>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Ben Hutchings <benh@debian.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/Kconfig   |    2 +-
- drivers/scsi/dpt_i2o.c |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/Kconfig
-+++ b/drivers/scsi/Kconfig
-@@ -444,7 +444,7 @@ config SCSI_MVUMI
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -156,6 +156,7 @@ static int __sev_do_cmd_locked(int cmd,
+ 	struct sev_device *sev;
+ 	unsigned int phys_lsb, phys_msb;
+ 	unsigned int reg, ret = 0;
++	int buf_len;
  
- config SCSI_DPT_I2O
- 	tristate "Adaptec I2O RAID support "
--	depends on SCSI && PCI && VIRT_TO_BUS
-+	depends on SCSI && PCI
- 	help
- 	  This driver supports all of Adaptec's I2O based RAID controllers as 
- 	  well as the DPT SmartRaid V cards.  This is an Adaptec maintained
---- a/drivers/scsi/dpt_i2o.c
-+++ b/drivers/scsi/dpt_i2o.c
-@@ -56,7 +56,7 @@ MODULE_DESCRIPTION("Adaptec I2O RAID Dri
- #include <linux/mutex.h>
+ 	if (!psp || !psp->sev_data)
+ 		return -ENODEV;
+@@ -165,6 +166,10 @@ static int __sev_do_cmd_locked(int cmd,
  
- #include <asm/processor.h>	/* for boot_cpu_data */
--#include <asm/io.h>		/* for virt_to_bus, etc. */
-+#include <asm/io.h>
+ 	sev = psp->sev_data;
  
- #include <scsi/scsi.h>
- #include <scsi/scsi_cmnd.h>
-@@ -1865,7 +1865,7 @@ static irqreturn_t adpt_isr(int irq, voi
- 		} else {
- 			/* Ick, we should *never* be here */
- 			printk(KERN_ERR "dpti: reply frame not from pool\n");
--			reply = (u8 *)bus_to_virt(m);
-+			continue;
- 		}
++	buf_len = sev_cmd_buffer_len(cmd);
++	if (WARN_ON_ONCE(!data != !buf_len))
++		return -EINVAL;
++
+ 	if (data && WARN_ON_ONCE(!virt_addr_valid(data)))
+ 		return -EINVAL;
  
- 		if (readl(reply) & MSG_FAIL) {
+@@ -176,7 +181,7 @@ static int __sev_do_cmd_locked(int cmd,
+ 		cmd, phys_msb, phys_lsb, psp_timeout);
+ 
+ 	print_hex_dump_debug("(in):  ", DUMP_PREFIX_OFFSET, 16, 2, data,
+-			     sev_cmd_buffer_len(cmd), false);
++			     buf_len, false);
+ 
+ 	iowrite32(phys_lsb, sev->io_regs + sev->vdata->cmdbuff_addr_lo_reg);
+ 	iowrite32(phys_msb, sev->io_regs + sev->vdata->cmdbuff_addr_hi_reg);
+@@ -212,7 +217,7 @@ static int __sev_do_cmd_locked(int cmd,
+ 	}
+ 
+ 	print_hex_dump_debug("(out): ", DUMP_PREFIX_OFFSET, 16, 2, data,
+-			     sev_cmd_buffer_len(cmd), false);
++			     buf_len, false);
+ 
+ 	return ret;
+ }
 
 
