@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DEB1EA8C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B8BC433EF;
-	Wed,  7 Jun 2023 20:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602BC1EA8C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7278C433EF;
+	Wed,  7 Jun 2023 20:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170448;
-	bh=XhCsoPWVyoEY2O9W9vhCn/DhXr7VslGofdYJ8XFaJ/k=;
+	s=korg; t=1686170451;
+	bh=sDiLEDZR6+iS6qtK76OkxXXFsgBGB8M7tOyqmkb/sGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2egJkpshFEZAjfheEzf2fALkbwZGKL0f55jEawoiwgLewt0QlG1RbVx7fGbTFWyS
-	 45zRj9Zm2aNaZOnkyBYnsC9KCJg9jRxfP225HJD/e8Mtrn9Wh+mPK9HZW7tuvrSUR6
-	 qrps0eBu9P1O+rUZ88MHaDugqwQP3DDx2cbbfqco=
+	b=pdtegNtuHKct8bErn3nOeHV1UYKGyuRmYU0RiQdGRntuXnBDQGAd+clDbSy+sl/p9
+	 ydeJcy8AMPMhsDvJEJyA3Cr0ozU9S9onDPZ3TIqqAhV+hlQqVyvEaI4GnKAI2Gauhe
+	 OFrlP4fgwbWzdfd08ant47ywhKEfMcVWw8nZm1Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chong Li <chongli2@amd.com>,
+	JingWen.Chen2@amd.com,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/225] mptcp: add annotations around sk->sk_shutdown accesses
-Date: Wed,  7 Jun 2023 22:14:12 +0200
-Message-ID: <20230607200916.282398106@linuxfoundation.org>
+Subject: [PATCH 6.1 060/225] drm/amdgpu: release gpu full access after "amdgpu_device_ip_late_init"
+Date: Wed,  7 Jun 2023 22:14:13 +0200
+Message-ID: <20230607200916.314315889@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -37,122 +36,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Chong Li <chongli2@amd.com>
 
-[ Upstream commit 6b9831bfd9322b297eb6d44257808cc055fdc586 ]
+[ Upstream commit 38eecbe086a4e52f54b2bbda8feba65d44addbef ]
 
-Christoph reported the mptcp variant of a recently addressed plain
-TCP issue. Similar to commit e14cadfd80d7 ("tcp: add annotations around
-sk->sk_shutdown accesses") add READ/WRITE ONCE annotations to silence
-KCSAN reports around lockless sk_shutdown access.
+[WHY]
+ Function "amdgpu_irq_update()" called by "amdgpu_device_ip_late_init()" is an atomic context.
+ We shouldn't access registers through KIQ since "msleep()" may be called in "amdgpu_kiq_rreg()".
 
-Fixes: 71ba088ce0aa ("mptcp: cleanup accept and poll")
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/401
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[HOW]
+ Move function "amdgpu_virt_release_full_gpu()" after function "amdgpu_device_ip_late_init()",
+ to ensure that registers be accessed through RLCG instead of KIQ.
+
+Call Trace:
+  <TASK>
+  show_stack+0x52/0x69
+  dump_stack_lvl+0x49/0x6d
+  dump_stack+0x10/0x18
+  __schedule_bug.cold+0x4f/0x6b
+  __schedule+0x473/0x5d0
+  ? __wake_up_klogd.part.0+0x40/0x70
+  ? vprintk_emit+0xbe/0x1f0
+  schedule+0x68/0x110
+  schedule_timeout+0x87/0x160
+  ? timer_migration_handler+0xa0/0xa0
+  msleep+0x2d/0x50
+  amdgpu_kiq_rreg+0x18d/0x1f0 [amdgpu]
+  amdgpu_device_rreg.part.0+0x59/0xd0 [amdgpu]
+  amdgpu_device_rreg+0x3a/0x50 [amdgpu]
+  amdgpu_sriov_rreg+0x3c/0xb0 [amdgpu]
+  gfx_v10_0_set_gfx_eop_interrupt_state.constprop.0+0x16c/0x190 [amdgpu]
+  gfx_v10_0_set_eop_interrupt_state+0xa5/0xb0 [amdgpu]
+  amdgpu_irq_update+0x53/0x80 [amdgpu]
+  amdgpu_irq_get+0x7c/0xb0 [amdgpu]
+  amdgpu_fence_driver_hw_init+0x58/0x90 [amdgpu]
+  amdgpu_device_init.cold+0x16b7/0x2022 [amdgpu]
+
+Signed-off-by: Chong Li <chongli2@amd.com>
+Reviewed-by: JingWen.Chen2@amd.com
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 32 ++++++++++++----------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index f4206001e2fe5..c25796eacd95f 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -599,7 +599,7 @@ static bool mptcp_check_data_fin(struct sock *sk)
- 		WRITE_ONCE(msk->ack_seq, msk->ack_seq + 1);
- 		WRITE_ONCE(msk->rcv_data_fin, 0);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 011e4fbe27f10..c83df8b78b7de 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -2512,8 +2512,6 @@ static int amdgpu_device_ip_init(struct amdgpu_device *adev)
+ 	amdgpu_fru_get_product_info(adev);
  
--		sk->sk_shutdown |= RCV_SHUTDOWN;
-+		WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | RCV_SHUTDOWN);
- 		smp_mb__before_atomic(); /* SHUTDOWN must be visible first */
+ init_failed:
+-	if (amdgpu_sriov_vf(adev))
+-		amdgpu_virt_release_full_gpu(adev, true);
  
- 		switch (sk->sk_state) {
-@@ -906,7 +906,7 @@ static void mptcp_check_for_eof(struct mptcp_sock *msk)
- 		/* hopefully temporary hack: propagate shutdown status
- 		 * to msk, when all subflows agree on it
- 		 */
--		sk->sk_shutdown |= RCV_SHUTDOWN;
-+		WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | RCV_SHUTDOWN);
- 
- 		smp_mb__before_atomic(); /* SHUTDOWN must be visible first */
- 		sk->sk_data_ready(sk);
-@@ -2512,7 +2512,7 @@ static void mptcp_check_fastclose(struct mptcp_sock *msk)
- 	}
- 
- 	inet_sk_state_store(sk, TCP_CLOSE);
--	sk->sk_shutdown = SHUTDOWN_MASK;
-+	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
- 	smp_mb__before_atomic(); /* SHUTDOWN must be visible first */
- 	set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags);
- 
-@@ -2941,7 +2941,7 @@ bool __mptcp_close(struct sock *sk, long timeout)
- 	bool do_cancel_work = false;
- 	int subflows_alive = 0;
- 
--	sk->sk_shutdown = SHUTDOWN_MASK;
-+	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
- 
- 	if ((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE)) {
- 		inet_sk_state_store(sk, TCP_CLOSE);
-@@ -3079,7 +3079,7 @@ static int mptcp_disconnect(struct sock *sk, int flags)
- 	mptcp_pm_data_reset(msk);
- 	mptcp_ca_reset(sk);
- 
--	sk->sk_shutdown = 0;
-+	WRITE_ONCE(sk->sk_shutdown, 0);
- 	sk_error_report(sk);
- 	return 0;
+ 	return r;
  }
-@@ -3815,9 +3815,6 @@ static __poll_t mptcp_check_writeable(struct mptcp_sock *msk)
- {
- 	struct sock *sk = (struct sock *)msk;
+@@ -3838,18 +3836,6 @@ int amdgpu_device_init(struct amdgpu_device *adev,
  
--	if (unlikely(sk->sk_shutdown & SEND_SHUTDOWN))
--		return EPOLLOUT | EPOLLWRNORM;
--
- 	if (sk_stream_is_writeable(sk))
- 		return EPOLLOUT | EPOLLWRNORM;
- 
-@@ -3835,6 +3832,7 @@ static __poll_t mptcp_poll(struct file *file, struct socket *sock,
- 	struct sock *sk = sock->sk;
- 	struct mptcp_sock *msk;
- 	__poll_t mask = 0;
-+	u8 shutdown;
- 	int state;
- 
- 	msk = mptcp_sk(sk);
-@@ -3851,17 +3849,22 @@ static __poll_t mptcp_poll(struct file *file, struct socket *sock,
- 		return inet_csk_listen_poll(ssock->sk);
+ 	r = amdgpu_device_ip_init(adev);
+ 	if (r) {
+-		/* failed in exclusive mode due to timeout */
+-		if (amdgpu_sriov_vf(adev) &&
+-		    !amdgpu_sriov_runtime(adev) &&
+-		    amdgpu_virt_mmio_blocked(adev) &&
+-		    !amdgpu_virt_wait_reset(adev)) {
+-			dev_err(adev->dev, "VF exclusive mode timeout\n");
+-			/* Don't send request since VF is inactive. */
+-			adev->virt.caps &= ~AMDGPU_SRIOV_CAPS_RUNTIME;
+-			adev->virt.ops = NULL;
+-			r = -EAGAIN;
+-			goto release_ras_con;
+-		}
+ 		dev_err(adev->dev, "amdgpu_device_ip_init failed\n");
+ 		amdgpu_vf_error_put(adev, AMDGIM_ERROR_VF_AMDGPU_INIT_FAIL, 0, 0);
+ 		goto release_ras_con;
+@@ -3921,8 +3907,10 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 				   msecs_to_jiffies(AMDGPU_RESUME_MS));
  	}
  
-+	shutdown = READ_ONCE(sk->sk_shutdown);
-+	if (shutdown == SHUTDOWN_MASK || state == TCP_CLOSE)
-+		mask |= EPOLLHUP;
-+	if (shutdown & RCV_SHUTDOWN)
-+		mask |= EPOLLIN | EPOLLRDNORM | EPOLLRDHUP;
+-	if (amdgpu_sriov_vf(adev))
++	if (amdgpu_sriov_vf(adev)) {
++		amdgpu_virt_release_full_gpu(adev, true);
+ 		flush_delayed_work(&adev->delayed_init_work);
++	}
+ 
+ 	r = sysfs_create_files(&adev->dev->kobj, amdgpu_dev_attributes);
+ 	if (r)
+@@ -3962,6 +3950,20 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 	return 0;
+ 
+ release_ras_con:
++	if (amdgpu_sriov_vf(adev))
++		amdgpu_virt_release_full_gpu(adev, true);
 +
- 	if (state != TCP_SYN_SENT && state != TCP_SYN_RECV) {
- 		mask |= mptcp_check_readable(msk);
--		mask |= mptcp_check_writeable(msk);
-+		if (shutdown & SEND_SHUTDOWN)
-+			mask |= EPOLLOUT | EPOLLWRNORM;
-+		else
-+			mask |= mptcp_check_writeable(msk);
- 	} else if (state == TCP_SYN_SENT && inet_sk(sk)->defer_connect) {
- 		/* cf tcp_poll() note about TFO */
- 		mask |= EPOLLOUT | EPOLLWRNORM;
- 	}
--	if (sk->sk_shutdown == SHUTDOWN_MASK || state == TCP_CLOSE)
--		mask |= EPOLLHUP;
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
--		mask |= EPOLLIN | EPOLLRDNORM | EPOLLRDHUP;
++	/* failed in exclusive mode due to timeout */
++	if (amdgpu_sriov_vf(adev) &&
++		!amdgpu_sriov_runtime(adev) &&
++		amdgpu_virt_mmio_blocked(adev) &&
++		!amdgpu_virt_wait_reset(adev)) {
++		dev_err(adev->dev, "VF exclusive mode timeout\n");
++		/* Don't send request since VF is inactive. */
++		adev->virt.caps &= ~AMDGPU_SRIOV_CAPS_RUNTIME;
++		adev->virt.ops = NULL;
++		r = -EAGAIN;
++	}
+ 	amdgpu_release_ras_context(adev);
  
- 	/* This barrier is coupled with smp_wmb() in __mptcp_error_report() */
- 	smp_rmb();
+ failed:
 -- 
 2.39.2
 
