@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2C910FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9351EC4339B;
-	Wed,  7 Jun 2023 20:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DD010FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABD6C433D2;
+	Wed,  7 Jun 2023 20:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169566;
-	bh=kc8dK8eSTr3oTZLfhzc/3knnXlYIiv3+5tNUAtKPIFg=;
+	s=korg; t=1686169569;
+	bh=wUUPDJ7oxjmYaBSkq+fnMwUktitXjVLulGSnwpjis3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1w6DhK0WO0uOdv3JUy7kCiT8fdYzalOXi+6SfZVpUipXfFoQdgc70vMrhQvaA3zgm
-	 k4v28l+Y57SVJbpckU1LXSWzyJb6/h3D1BbP0xj5HEhx12wh0tl1FOMAlxy7sgQg15
-	 IVhonI/X0KK7b6tNVsdbGpe8f95FmnFWCTsE1xsU=
+	b=ACCFK2bsSi7IYP+AIaTlQ5yXv0wJa7N1uoeKIlI5GdDreCxOrVuux7boVXxhtnlnR
+	 xhGCkXHvYNCD4UZ36Ie+87vjlU/MUspvE9UnIFeJm9dv/aOcYhs/Fb6aUSsV2umQBj
+	 l+GNpfuCiRMf31DbmEaWAqE7Z85ZZGbQguk3nYA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 128/286] media: dvb-usb-v2: ce6230: fix null-ptr-deref in ce6230_i2c_master_xfer()
-Date: Wed,  7 Jun 2023 22:13:47 +0200
-Message-ID: <20230607200927.269984183@linuxfoundation.org>
+Subject: [PATCH 6.3 101/286] media: rcar-vin: Select correct interrupt mode for V4L2_FIELD_ALTERNATE
+Date: Wed,  7 Jun 2023 22:13:20 +0200
+Message-ID: <20230607200926.367387769@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,53 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit dff919090155fb22679869e8469168f270dcd97f ]
+[ Upstream commit e10707d5865c90d3dfe4ef589ce02ff4287fef85 ]
 
-In ce6230_i2c_master_xfer, msg is controlled by user. When msg[i].buf
-is null and msg[i].len is zero, former checks on msg[i].buf would be
-passed. Malicious data finally reach ce6230_i2c_master_xfer. If accessing
-msg[i].buf[0] without sanity check, null ptr deref would happen. We add
-check on msg[i].len to prevent crash.
+When adding proper support for V4L2_FIELD_ALTERNATE it was missed that
+this field format should trigger an interrupt for each field, not just
+for the whole frame. Fix this by marking it as progressive in the
+capture setup, which will then select the correct interrupt mode.
 
-Similar commit:
-commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+Tested on both Gen2 and Gen3 with the result of a doubling of the frame
+rate for V4L2_FIELD_ALTERNATE. From a PAL video source the frame rate is
+now 50, which is expected for alternate field capture.
 
-Link: https://lore.kernel.org/linux-media/20230313092751.209496-1-harperchen1110@gmail.com
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/ce6230.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/platform/renesas/rcar-vin/rcar-dma.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/ce6230.c b/drivers/media/usb/dvb-usb-v2/ce6230.c
-index 44540de1a2066..d3b5cb4a24daf 100644
---- a/drivers/media/usb/dvb-usb-v2/ce6230.c
-+++ b/drivers/media/usb/dvb-usb-v2/ce6230.c
-@@ -101,6 +101,10 @@ static int ce6230_i2c_master_xfer(struct i2c_adapter *adap,
- 		if (num > i + 1 && (msg[i+1].flags & I2C_M_RD)) {
- 			if (msg[i].addr ==
- 				ce6230_zl10353_config.demod_address) {
-+				if (msg[i].len < 1) {
-+					i = -EOPNOTSUPP;
-+					break;
-+				}
- 				req.cmd = DEMOD_READ;
- 				req.value = msg[i].addr >> 1;
- 				req.index = msg[i].buf[0];
-@@ -117,6 +121,10 @@ static int ce6230_i2c_master_xfer(struct i2c_adapter *adap,
- 		} else {
- 			if (msg[i].addr ==
- 				ce6230_zl10353_config.demod_address) {
-+				if (msg[i].len < 1) {
-+					i = -EOPNOTSUPP;
-+					break;
-+				}
- 				req.cmd = DEMOD_WRITE;
- 				req.value = msg[i].addr >> 1;
- 				req.index = msg[i].buf[0];
+diff --git a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
+index 23598e22adc72..2a77353f10b59 100644
+--- a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
++++ b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
+@@ -728,11 +728,9 @@ static int rvin_setup(struct rvin_dev *vin)
+ 	case V4L2_FIELD_SEQ_TB:
+ 	case V4L2_FIELD_SEQ_BT:
+ 	case V4L2_FIELD_NONE:
+-		vnmc = VNMC_IM_ODD_EVEN;
+-		progressive = true;
+-		break;
+ 	case V4L2_FIELD_ALTERNATE:
+ 		vnmc = VNMC_IM_ODD_EVEN;
++		progressive = true;
+ 		break;
+ 	default:
+ 		vnmc = VNMC_IM_ODD;
 -- 
 2.39.2
 
