@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35EB39234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EDCC433EF;
-	Wed,  7 Jun 2023 20:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E14939234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A31C433D2;
+	Wed,  7 Jun 2023 20:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169179;
-	bh=bpiNzH47AFQQYnd9kHBcxczZq2BFDNXC5xPFULCNMGM=;
+	s=korg; t=1686169182;
+	bh=HUlFv/W+x4ko/oL9ByNsH7o45ELjEMw1SXJGPdyT2Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Htq0/tNyIrscRpppmxxS1L4KAF0R4BO09V9lXIaPAqVoLZUDiibhWyJVNd2NVH6Jj
-	 I3+SRM+hjCcop61EdRCjZdv0r4l9V00On9oY2Im79DWV4uMZp61lNrgRe5VJsZvdSj
-	 r0f8aQIdbHbHSM/PrjmELuOXGGyAeEgjvtjZ8bgw=
+	b=ueOaNzj27gnjd3pmbXhzd985ropTr1AGs6Ystd8J1MvQXm1vhi9Mfp2paER5vaw98
+	 jjnriKH1bC7l+lILyKxNJHzti6/Mm+Qb8aUMuKDNOdeeEE00uaLaHAHsy2LW4sshQg
+	 m4PL4dv1wgb0zPjokwdtkkfXJE2tJ6KnZO+GaDBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Liska <mliska@suse.cz>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.14 45/61] eth: sun: cassini: remove dead code
-Date: Wed,  7 Jun 2023 22:15:59 +0200
-Message-ID: <20230607200850.713694756@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <natechancellor@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 4.14 46/61] kernel/extable.c: use address-of operator on section symbols
+Date: Wed,  7 Jun 2023 22:16:00 +0200
+Message-ID: <20230607200851.083571855@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -34,44 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Liška <mliska@suse.cz>
+From: Nathan Chancellor <natechancellor@gmail.com>
 
-commit 32329216ca1d6ee29c41215f18b3053bb6158541 upstream.
+commit 63174f61dfaef58dc0e813eaf6602636794f8942 upstream.
 
-Fixes the following GCC warning:
+Clang warns:
 
-drivers/net/ethernet/sun/cassini.c:1316:29: error: comparison between two arrays [-Werror=array-compare]
-drivers/net/ethernet/sun/cassini.c:3783:34: error: comparison between two arrays [-Werror=array-compare]
+../kernel/extable.c:37:52: warning: array comparison always evaluates to
+a constant [-Wtautological-compare]
+        if (main_extable_sort_needed && __stop___ex_table > __start___ex_table) {
+                                                          ^
+1 warning generated.
 
-Note that 2 arrays should be compared by comparing of their addresses:
-note: use ‘&cas_prog_workaroundtab[0] == &cas_prog_null[0]’ to compare the addresses
+These are not true arrays, they are linker defined symbols, which are just
+addresses.  Using the address of operator silences the warning and does
+not change the resulting assembly with either clang/ld.lld or gcc/ld
+(tested with diff + objdump -Dr).
 
-Signed-off-by: Martin Liska <mliska@suse.cz>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://github.com/ClangBuiltLinux/linux/issues/892
+Link: http://lkml.kernel.org/r/20200219202036.45702-1-natechancellor@gmail.com
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/sun/cassini.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/extable.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/sun/cassini.c
-+++ b/drivers/net/ethernet/sun/cassini.c
-@@ -1349,7 +1349,7 @@ static void cas_init_rx_dma(struct cas *
- 	writel(val, cp->regs + REG_RX_PAGE_SIZE);
- 
- 	/* enable the header parser if desired */
--	if (CAS_HP_FIRMWARE == cas_prog_null)
-+	if (&CAS_HP_FIRMWARE[0] == &cas_prog_null[0])
- 		return;
- 
- 	val = CAS_BASE(HP_CFG_NUM_CPU, CAS_NCPUS > 63 ? 0 : CAS_NCPUS);
-@@ -3819,7 +3819,7 @@ static void cas_reset(struct cas *cp, in
- 
- 	/* program header parser */
- 	if ((cp->cas_flags & CAS_FLAG_TARGET_ABORT) ||
--	    (CAS_HP_ALT_FIRMWARE == cas_prog_null)) {
-+	    (&CAS_HP_ALT_FIRMWARE[0] == &cas_prog_null[0])) {
- 		cas_load_firmware(cp, CAS_HP_FIRMWARE);
- 	} else {
- 		cas_load_firmware(cp, CAS_HP_ALT_FIRMWARE);
+--- a/kernel/extable.c
++++ b/kernel/extable.c
+@@ -44,7 +44,8 @@ u32 __initdata __visible main_extable_so
+ /* Sort the kernel's built-in exception table */
+ void __init sort_main_extable(void)
+ {
+-	if (main_extable_sort_needed && __stop___ex_table > __start___ex_table) {
++	if (main_extable_sort_needed &&
++	    &__stop___ex_table > &__start___ex_table) {
+ 		pr_notice("Sorting __ex_table...\n");
+ 		sort_extable(__start___ex_table, __stop___ex_table);
+ 	}
 
 
