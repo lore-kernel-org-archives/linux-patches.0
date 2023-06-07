@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EF93AE41
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B38C4339E;
-	Wed,  7 Jun 2023 20:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98963AE70
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B14CC433D2;
+	Wed,  7 Jun 2023 20:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169911;
-	bh=LVDIOCGk25WOl94S4a518Q4prx8wwmV4NspVmMTbKGY=;
+	s=korg; t=1686169913;
+	bh=7L8cY1/FfTpIww6poA0DK9pAvBkFIbJCwCOQD29Wgns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmPD2oOS3TElY0oQUEg4P6da+ecYpMZttBCB+d8pgZwSa6MeLsUpuWAP8mzG1uofd
-	 ZcOg6jDpkZCVHG1tFNB6fDmZOzoXWOn6avMtl3/ifjkcBCQZDHNTL9/ml66LgRnOTW
-	 +zAekcuhpvW6qtyDctQFb1vCThwVdB6h8aToWBtE=
+	b=vBQYPSIGVmbNpSaeasqwO0nCiPgP3UdRmZalT2a3WNzqn1/ZjRm6DFzMYouB3cQE6
+	 tfsEnzFrNUpOn+chu3jr42BNFLp5zitjMc14TtaMnVB64KwK5EF4oTDIw8V3eMd4Xk
+	 IuVTQT4rKPft7gPCgyQ3hD2hel4QwhP1f5eFsz1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.3 231/286] block: fix revalidate performance regression
-Date: Wed,  7 Jun 2023 22:15:30 +0200
-Message-ID: <20230607200930.841361270@linuxfoundation.org>
+	Gaurav Batra <gbatra@linux.vnet.ibm.com>,
+	Brian King <brking@linux.vnet.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.3 232/286] powerpc/iommu: Limit number of TCEs to 512 for H_STUFF_TCE hcall
+Date: Wed,  7 Jun 2023 22:15:31 +0200
+Message-ID: <20230607200930.873239193@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,58 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Gaurav Batra <gbatra@linux.vnet.ibm.com>
 
-commit 47fe1c3064c6bc1bfa3c032ff78e603e5dd6e5bc upstream.
+commit 9d2ccf00bddc268045e3d65a8108d61ada0e4b4e upstream.
 
-The scsi driver function sd_read_block_characteristics() always calls
-disk_set_zoned() to a disk zoned model correctly, in case the device
-model changed. This is done even for regular disks to set the zoned
-model to BLK_ZONED_NONE and free any zone related resources if the drive
-previously was zoned.
+Currently in tce_freemulti_pSeriesLP() there is no limit on how many
+TCEs are passed to the H_STUFF_TCE hcall. This has not caused an issue
+until now, but newer firmware releases have started enforcing a limit of
+512 TCEs per call.
 
-This behavior significantly impact the time it takes to revalidate disks
-on a large system as the call to disk_clear_zone_settings() done from
-disk_set_zoned() for the BLK_ZONED_NONE case results in the device
-request queued to be frozen, even if there are no zone resources to
-free.
+The limit is correct per the specification (PAPR v2.12 § 14.5.4.2.3).
 
-Avoid this overhead for non-zoned devices by not calling
-disk_clear_zone_settings() in disk_set_zoned() if the device model
-was already set to BLK_ZONED_NONE, which is always the case for regular
-devices.
+The code has been in it's current form since it was initially merged.
 
-Reported by: Brian Bunker <brian@purestorage.com>
-
-Fixes: 508aebb80527 ("block: introduce blk_queue_clear_zone_settings()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230529073237.1339862-1-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Gaurav Batra <gbatra@linux.vnet.ibm.com>
+Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
+[mpe: Tweak change log wording & add PAPR reference]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230525143454.56878-1-gbatra@linux.vnet.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-settings.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/iommu.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -915,6 +915,7 @@ static bool disk_has_partitions(struct g
- void disk_set_zoned(struct gendisk *disk, enum blk_zoned_model model)
+--- a/arch/powerpc/platforms/pseries/iommu.c
++++ b/arch/powerpc/platforms/pseries/iommu.c
+@@ -311,13 +311,22 @@ static void tce_free_pSeriesLP(unsigned
+ static void tce_freemulti_pSeriesLP(struct iommu_table *tbl, long tcenum, long npages)
  {
- 	struct request_queue *q = disk->queue;
-+	unsigned int old_model = q->limits.zoned;
+ 	u64 rc;
++	long rpages = npages;
++	unsigned long limit;
  
- 	switch (model) {
- 	case BLK_ZONED_HM:
-@@ -952,7 +953,7 @@ void disk_set_zoned(struct gendisk *disk
- 		 */
- 		blk_queue_zone_write_granularity(q,
- 						queue_logical_block_size(q));
--	} else {
-+	} else if (old_model != BLK_ZONED_NONE) {
- 		disk_clear_zone_settings(disk);
- 	}
- }
+ 	if (!firmware_has_feature(FW_FEATURE_STUFF_TCE))
+ 		return tce_free_pSeriesLP(tbl->it_index, tcenum,
+ 					  tbl->it_page_shift, npages);
+ 
+-	rc = plpar_tce_stuff((u64)tbl->it_index,
+-			     (u64)tcenum << tbl->it_page_shift, 0, npages);
++	do {
++		limit = min_t(unsigned long, rpages, 512);
++
++		rc = plpar_tce_stuff((u64)tbl->it_index,
++				     (u64)tcenum << tbl->it_page_shift, 0, limit);
++
++		rpages -= limit;
++		tcenum += limit;
++	} while (rpages > 0 && !rc);
+ 
+ 	if (rc && printk_ratelimit()) {
+ 		printk("tce_freemulti_pSeriesLP: plpar_tce_stuff failed\n");
 
 
