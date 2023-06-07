@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF9C34CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A91C433D2;
-	Wed,  7 Jun 2023 20:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0EF34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F421FC433EF;
+	Wed,  7 Jun 2023 20:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170705;
-	bh=bjs6i7/SpeNe+Tah1sMFbTv70T9Akks00VJ3zX/hwPg=;
+	s=korg; t=1686170708;
+	bh=ccY9kNcRCwAvdcz5NUVxfEw3Gr/8eP2fXagni27mMW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YypNdV9pO4HD7dQ1Lknwa9O20ZPZdZYS1MxpDP+Pexh5wht0cK1Y3O8y5DzVO9eaa
-	 dvW0O91iAD5ahhxPb94Kwsej5DtYophZy5oeKbFnk6y5wR8NX4YLPV2hqTmGGvR0Rz
-	 GgZeZV2qt0zlCj65liMYzXBdvaYQ4Ba/QwGMIyP0=
+	b=ypb7jlA0Y/Qh9+78ixWC2DqdfoVfd57uC0EJLYEUDb+zTq/XI2Rp7fwKe+Yh5QzVG
+	 v0bq3/Ctpc7Oj7UB0L2xRM+PVhfhnbulYmqSzMeeMnygwcl8rBfyQxmqYpWP/mFgfN
+	 v1lpVLmoD+ILbjjQoBgJHKneUll/NF8AF9SIKDww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Subject: [PATCH 6.1 158/225] usb: gadget: f_fs: Add unbind event before functionfs_unbind
-Date: Wed,  7 Jun 2023 22:15:51 +0200
-Message-ID: <20230607200919.571318459@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.1 159/225] md/raid5: fix miscalculation of end_sector in raid5_read_one_chunk()
+Date: Wed,  7 Jun 2023 22:15:52 +0200
+Message-ID: <20230607200919.603401471@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,65 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit efb6b535207395a5c7317993602e2503ca8cb4b3 upstream.
+commit 8557dc27126949c702bd3aafe8a7e0b7e4fcb44c upstream.
 
-While exercising the unbind path, with the current implementation
-the functionfs_unbind would be calling which waits for the ffs->mutex
-to be available, however within the same time ffs_ep0_read is invoked
-& if no setup packets are pending, it will invoke function
-wait_event_interruptible_exclusive_locked_irq which by definition waits
-for the ev.count to be increased inside the same mutex for which
-functionfs_unbind is waiting.
-This creates deadlock situation because the functionfs_unbind won't
-get the lock until ev.count is increased which can only happen if
-the caller ffs_func_unbind can proceed further.
+'end_sector' is compared to 'rdev->recovery_offset', which is offset to
+rdev, however, commit e82ed3a4fbb5 ("md/raid6: refactor
+raid5_read_one_chunk") changes the calculation of 'end_sector' to offset
+to the array. Fix this miscalculation.
 
-Following is the illustration:
-
-	CPU1				CPU2
-
-ffs_func_unbind()		ffs_ep0_read()
-				mutex_lock(ffs->mutex)
-				wait_event(ffs->ev.count)
-functionfs_unbind()
-  mutex_lock(ffs->mutex)
-  mutex_unlock(ffs->mutex)
-
-ffs_event_add()
-
-<deadlock>
-
-Fix this by moving the event unbind before functionfs_unbind
-to ensure the ev.count is incrased properly.
-
-Fixes: 6a19da111057 ("usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Link: https://lore.kernel.org/r/20230525092854.7992-1-quic_uaggarwa@quicinc.com
+Fixes: e82ed3a4fbb5 ("md/raid6: refactor raid5_read_one_chunk")
+Cc: stable@vger.kernel.org # v5.12+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230524014118.3172781-1-yukuai1@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    2 +-
+ drivers/md/raid5.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -3620,6 +3620,7 @@ static void ffs_func_unbind(struct usb_c
- 	/* Drain any pending AIO completions */
- 	drain_workqueue(ffs->io_completion_wq);
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5516,7 +5516,7 @@ static int raid5_read_one_chunk(struct m
  
-+	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
- 	if (!--opts->refcnt)
- 		functionfs_unbind(ffs);
+ 	sector = raid5_compute_sector(conf, raid_bio->bi_iter.bi_sector, 0,
+ 				      &dd_idx, NULL);
+-	end_sector = bio_end_sector(raid_bio);
++	end_sector = sector + bio_sectors(raid_bio);
  
-@@ -3644,7 +3645,6 @@ static void ffs_func_unbind(struct usb_c
- 	func->function.ssp_descriptors = NULL;
- 	func->interfaces_nums = NULL;
- 
--	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
- }
- 
- static struct usb_function *ffs_alloc(struct usb_function_instance *fi)
+ 	rcu_read_lock();
+ 	if (r5c_big_stripe_cached(conf, sector))
 
 
