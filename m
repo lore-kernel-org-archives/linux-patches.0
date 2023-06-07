@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A190F3AE59
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DF1C433D2;
-	Wed,  7 Jun 2023 20:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C503AE70
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B613AC433D2;
+	Wed,  7 Jun 2023 20:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169921;
-	bh=B3HOxQ6SeThlfptbPHq7i7PovKLToKNVPFQGrFGC9rA=;
+	s=korg; t=1686169924;
+	bh=xMojdUi0r+s2wIaMmMZjaNBC84KPk/9zPMWyrmM6/Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2/WFKvE1cmmZ+KiDcT5403VE6oOyX3MUtM4KTynOsti1oB+vW8UQvXDBTsImd/6q
-	 g+Kw+VSvrUUKmHaN8hmEcfKKYQMJY8Tuw26J9QWn/wTZmpYL1dFTn419MjEM/Va/hZ
-	 pZOYcLVnRJFgjw1KdVgzsJsN3oLY+zfPlUuRHu/Y=
+	b=W+XliW/v8h7HbLC8w8C91EWS+roVbeZQSbYsk8+WHhp7+ov7oDTiK6CSEr3Legpxo
+	 qC5SoiV+mHZwgJTB7O9Nma2rM+60pb5i94SnKFbTyKXiqVD7VFnWw+8YcVsOzi5mao
+	 JWpmHa9JhILLN4ps7beFVhoUOK+l7gDPjmDRxvtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deren Wu <deren.wu@mediatek.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.3 225/286] mmc: vub300: fix invalid response handling
-Date: Wed,  7 Jun 2023 22:15:24 +0200
-Message-ID: <20230607200930.630285718@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.3 258/286] mptcp: fix active subflow finalization
+Date: Wed,  7 Jun 2023 22:15:57 +0200
+Message-ID: <20230607200931.742381907@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -34,64 +35,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deren Wu <deren.wu@mediatek.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit a99d21cefd351c8aaa20b83a3c942340e5789d45 upstream.
+commit 55b47ca7d80814ceb63d64e032e96cd6777811e5 upstream.
 
-We may get an empty response with zero length at the beginning of
-the driver start and get following UBSAN error. Since there is no
-content(SDRT_NONE) for the response, just return and skip the response
-handling to avoid this problem.
+Active subflow are inserted into the connection list at creation time.
+When the MPJ handshake completes successfully, a new subflow creation
+netlink event is generated correctly, but the current code wrongly
+avoid initializing a couple of subflow data.
 
-Test pass : SDIO wifi throughput test with this patch
+The above will cause misbehavior on a few exceptional events: unneeded
+mptcp-level retransmission on msk-level sequence wrap-around and infinite
+mapping fallback even when a MPJ socket is present.
 
-[  126.980684] UBSAN: array-index-out-of-bounds in drivers/mmc/host/vub300.c:1719:12
-[  126.980709] index -1 is out of range for type 'u32 [4]'
-[  126.980729] CPU: 4 PID: 9 Comm: kworker/u16:0 Tainted: G            E      6.3.0-rc4-mtk-local-202304272142 #1
-[  126.980754] Hardware name: Intel(R) Client Systems NUC8i7BEH/NUC8BEB, BIOS BECFL357.86A.0081.2020.0504.1834 05/04/2020
-[  126.980770] Workqueue: kvub300c vub300_cmndwork_thread [vub300]
-[  126.980833] Call Trace:
-[  126.980845]  <TASK>
-[  126.980860]  dump_stack_lvl+0x48/0x70
-[  126.980895]  dump_stack+0x10/0x20
-[  126.980916]  ubsan_epilogue+0x9/0x40
-[  126.980944]  __ubsan_handle_out_of_bounds+0x70/0x90
-[  126.980979]  vub300_cmndwork_thread+0x58e7/0x5e10 [vub300]
-[  126.981018]  ? _raw_spin_unlock+0x18/0x40
-[  126.981042]  ? finish_task_switch+0x175/0x6f0
-[  126.981070]  ? __switch_to+0x42e/0xda0
-[  126.981089]  ? __switch_to_asm+0x3a/0x80
-[  126.981129]  ? __pfx_vub300_cmndwork_thread+0x10/0x10 [vub300]
-[  126.981174]  ? __kasan_check_read+0x11/0x20
-[  126.981204]  process_one_work+0x7ee/0x13d0
-[  126.981246]  worker_thread+0x53c/0x1240
-[  126.981291]  kthread+0x2b8/0x370
-[  126.981312]  ? __pfx_worker_thread+0x10/0x10
-[  126.981336]  ? __pfx_kthread+0x10/0x10
-[  126.981359]  ret_from_fork+0x29/0x50
-[  126.981400]  </TASK>
+Address the issue factoring out the needed initialization in a new helper
+and invoking the latter from __mptcp_finish_join() time for passive
+subflow and from mptcp_finish_join() for active ones.
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Fixes: 0530020a7c8f ("mptcp: track and update contiguous data status")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/048cd6972c50c33c2e8f81d5228fed928519918b.1683987673.git.deren.wu@mediatek.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mptcp/protocol.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -1715,6 +1715,9 @@ static void construct_request_response(s
- 	int bytes = 3 & less_cmd;
- 	int words = less_cmd >> 2;
- 	u8 *r = vub300->resp.response.command_response;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -812,6 +812,13 @@ void mptcp_data_ready(struct sock *sk, s
+ 	mptcp_data_unlock(sk);
+ }
+ 
++static void mptcp_subflow_joined(struct mptcp_sock *msk, struct sock *ssk)
++{
++	mptcp_subflow_ctx(ssk)->map_seq = READ_ONCE(msk->ack_seq);
++	WRITE_ONCE(msk->allow_infinite_fallback, false);
++	mptcp_event(MPTCP_EVENT_SUB_ESTABLISHED, msk, ssk, GFP_ATOMIC);
++}
 +
-+	if (!resp_len)
-+		return;
- 	if (bytes == 3) {
- 		cmd->resp[words] = (r[1 + (words << 2)] << 24)
- 			| (r[2 + (words << 2)] << 16)
+ static bool __mptcp_finish_join(struct mptcp_sock *msk, struct sock *ssk)
+ {
+ 	struct sock *sk = (struct sock *)msk;
+@@ -826,6 +833,7 @@ static bool __mptcp_finish_join(struct m
+ 		mptcp_sock_graft(ssk, sk->sk_socket);
+ 
+ 	mptcp_sockopt_sync_locked(msk, ssk);
++	mptcp_subflow_joined(msk, ssk);
+ 	return true;
+ }
+ 
+@@ -3457,14 +3465,16 @@ bool mptcp_finish_join(struct sock *ssk)
+ 		return false;
+ 	}
+ 
+-	if (!list_empty(&subflow->node))
+-		goto out;
++	/* active subflow, already present inside the conn_list */
++	if (!list_empty(&subflow->node)) {
++		mptcp_subflow_joined(msk, ssk);
++		return true;
++	}
+ 
+ 	if (!mptcp_pm_allow_new_subflow(msk))
+ 		goto err_prohibited;
+ 
+-	/* active connections are already on conn_list.
+-	 * If we can't acquire msk socket lock here, let the release callback
++	/* If we can't acquire msk socket lock here, let the release callback
+ 	 * handle it
+ 	 */
+ 	mptcp_data_lock(parent);
+@@ -3487,11 +3497,6 @@ err_prohibited:
+ 		return false;
+ 	}
+ 
+-	subflow->map_seq = READ_ONCE(msk->ack_seq);
+-	WRITE_ONCE(msk->allow_infinite_fallback, false);
+-
+-out:
+-	mptcp_event(MPTCP_EVENT_SUB_ESTABLISHED, msk, ssk, GFP_ATOMIC);
+ 	return true;
+ }
+ 
 
 
