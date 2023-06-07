@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA023AE69
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B1CC433D2;
-	Wed,  7 Jun 2023 20:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123D63AE5C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8477EC433D2;
+	Wed,  7 Jun 2023 20:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169847;
-	bh=IrzoZRcJ1pQ3a+wCRzrBYdXoNkbPya36QSZTwlbQHiI=;
+	s=korg; t=1686169849;
+	bh=l9k4Ba504JrgNcKDbap2cFVJnlwBTOvIBPAi0WF8Q9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nzXit2dReQJkDHlsVoCuLsuTnnp55WFB3kuPKoRkbRPT7Y6X2oPPecBSZFyFyb+g0
-	 aer/FFbxVWgt8jONz8EamzPJvY9Cv1ElssZ8YyR/5q4Fw9Al+P/2HJXFiNqhbYbKYr
-	 rwgjxtZeFCnQ+iNCEhHXJR5R0UsC8/1kjZalvkWU=
+	b=b+MNaF+wBjtiRw6PbiiVu+nJ+kqCl61U7/fuMMO6Aq4jbyZ+tBinzmkfIsqlbRC6R
+	 WLoHeWhhKb4HU7KRh7YAXBExwTl9kNF7PKb/5SC3DvfOxFZKkrv15AVOWUodXT8dhv
+	 55VOpnr6b233kyoj1R9kctXZOZsGds73jmixcvG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 237/286] misc: fastrpc: Pass proper scm arguments for secure map request
-Date: Wed,  7 Jun 2023 22:15:36 +0200
-Message-ID: <20230607200931.038603732@linuxfoundation.org>
+Subject: [PATCH 6.3 238/286] btrfs: call btrfs_orig_bbio_end_io in btrfs_end_bio_work
+Date: Wed,  7 Jun 2023 22:15:37 +0200
+Message-ID: <20230607200931.070368575@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,88 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+[ Upstream commit 45c2f36871955b51b4ce083c447388d8c72d6b91 ]
 
-[ Upstream commit a6e766dea0a22918735176e4af862d535962f11e ]
+When I implemented the storage layer bio splitting, I was under the
+assumption that we'll never split metadata bios.  But Qu reminded me that
+this can actually happen with very old file systems with unaligned
+metadata chunks and RAID0.
 
-If a map request is made with securemap attribute, the memory
-ownership needs to be reassigned to new VMID to allow access
-from protection domain. Currently only DSP VMID is passed to
-the reassign call which is incorrect as only a combination of
-HLOS and DSP VMID is allowed for memory ownership reassignment
-and passing only DSP VMID will cause assign call failure.
+I still haven't seen such a case in practice, but we better handled this
+case, especially as it is fairly easily to do not calling the ->end_іo
+method directly in btrfs_end_io_work, and using the proper
+btrfs_orig_bbio_end_io helper instead.
 
-Also pass proper restoring permissions to HLOS as the source
-permission will now carry both HLOS and DSP VMID permission.
+In addition to the old file system with unaligned metadata chunks case
+documented in the commit log, the combination of the new scrub code
+with Johannes pending raid-stripe-tree also triggers this case.  We
+spent some time debugging it and found that this patch solves
+the problem.
 
-Change is also made to get valid physical address from
-scatter/gather for this allocation request.
-
-Fixes: e90d91190619 ("misc: fastrpc: Add support to secure memory map")
-Cc: stable <stable@kernel.org>
-Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230523152550.438363-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 103c19723c80 ("btrfs: split the bio submission path into a separate file")
+CC: stable@vger.kernel.org # 6.3+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Tested-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ fs/btrfs/bio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index f3f2671d7ac7c..30d4d0476248f 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -316,12 +316,14 @@ static void fastrpc_free_map(struct kref *ref)
- 	if (map->table) {
- 		if (map->attr & FASTRPC_ATTR_SECUREMAP) {
- 			struct qcom_scm_vmperm perm;
-+			int vmid = map->fl->cctx->vmperms[0].vmid;
-+			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS) | BIT(vmid);
- 			int err = 0;
+diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+index 726592868e9c5..ada899613486a 100644
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -307,7 +307,7 @@ static void btrfs_end_bio_work(struct work_struct *work)
  
- 			perm.vmid = QCOM_SCM_VMID_HLOS;
- 			perm.perm = QCOM_SCM_PERM_RWX;
- 			err = qcom_scm_assign_mem(map->phys, map->size,
--				&map->fl->cctx->perms, &perm, 1);
-+				&src_perms, &perm, 1);
- 			if (err) {
- 				dev_err(map->fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
- 						map->phys, map->size, err);
-@@ -787,8 +789,12 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 		goto map_err;
- 	}
- 
--	map->phys = sg_dma_address(map->table->sgl);
--	map->phys += ((u64)fl->sctx->sid << 32);
-+	if (attr & FASTRPC_ATTR_SECUREMAP) {
-+		map->phys = sg_phys(map->table->sgl);
-+	} else {
-+		map->phys = sg_dma_address(map->table->sgl);
-+		map->phys += ((u64)fl->sctx->sid << 32);
-+	}
- 	map->size = len;
- 	map->va = sg_virt(map->table->sgl);
- 	map->len = len;
-@@ -798,9 +804,15 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 		 * If subsystem VMIDs are defined in DTSI, then do
- 		 * hyp_assign from HLOS to those VM(s)
- 		 */
-+		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
-+		struct qcom_scm_vmperm dst_perms[2] = {0};
-+
-+		dst_perms[0].vmid = QCOM_SCM_VMID_HLOS;
-+		dst_perms[0].perm = QCOM_SCM_PERM_RW;
-+		dst_perms[1].vmid = fl->cctx->vmperms[0].vmid;
-+		dst_perms[1].perm = QCOM_SCM_PERM_RWX;
- 		map->attr = attr;
--		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &fl->cctx->perms,
--				fl->cctx->vmperms, fl->cctx->vmcount);
-+		err = qcom_scm_assign_mem(map->phys, (u64)map->size, &src_perms, dst_perms, 2);
- 		if (err) {
- 			dev_err(sess->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
- 					map->phys, map->size, err);
+ 	/* Metadata reads are checked and repaired by the submitter. */
+ 	if (bbio->bio.bi_opf & REQ_META)
+-		bbio->end_io(bbio);
++		btrfs_orig_bbio_end_io(bbio);
+ 	else
+ 		btrfs_check_read_bio(bbio, bbio->bio.bi_private);
+ }
 -- 
 2.39.2
 
