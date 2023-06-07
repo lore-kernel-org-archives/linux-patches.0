@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826BD3AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B92C4339B;
-	Wed,  7 Jun 2023 20:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4983AE5C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FE0C433EF;
+	Wed,  7 Jun 2023 20:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169776;
-	bh=HFAGcyiANbnYvYGR1FPwgmgi6OT3xsle0vWG9+fNWsk=;
+	s=korg; t=1686169778;
+	bh=bjs6i7/SpeNe+Tah1sMFbTv70T9Akks00VJ3zX/hwPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzjLnV1BtL9MeW3nD9E8B3nm2kiBL6yGyGAOQ/MHtOJG7MnW8cD2pC5Y3gve9O0ak
-	 +dohhOhEePiYesW5RAZsHqoRH6uPSIgIv/95TUS+X4eAZu137B8OG9hdiwDvWjRd8G
-	 aWoipfX9S7njKRIQBwnUe+0fa0nH0mDbqmxHPatU=
+	b=F9w4yFzr8Xyhn7Eq62sJLnYNxMoVsgR6ycH7McltglQi5c1Oo3N9Sj5ssjeHHQwKi
+	 NJz4KcaF/iSItxFmshiNAemugPOZG1gR4oVJ3CzsKC7ELriELkfvNkI4p4nCYyfKxy
+	 zFuaZRXpsGqRGV0IZUAHe//1fz1qLRI/Imp1V19A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.3 210/286] usb: cdns3: fix NCM gadget RX speed 20x slow than expection at iMX8QM
-Date: Wed,  7 Jun 2023 22:15:09 +0200
-Message-ID: <20230607200930.112617795@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Subject: [PATCH 6.3 211/286] usb: gadget: f_fs: Add unbind event before functionfs_unbind
+Date: Wed,  7 Jun 2023 22:15:10 +0200
+Message-ID: <20230607200930.145453500@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -33,57 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
 
-commit dbe678f6192f27879ac9ff6bc7a1036aad85aae9 upstream.
+commit efb6b535207395a5c7317993602e2503ca8cb4b3 upstream.
 
-At iMX8QM platform, enable NCM gadget and run 'iperf3 -s'.
-At host, run 'iperf3 -V -c fe80::6863:98ff:feef:3e0%enxc6e147509498'
+While exercising the unbind path, with the current implementation
+the functionfs_unbind would be calling which waits for the ffs->mutex
+to be available, however within the same time ffs_ep0_read is invoked
+& if no setup packets are pending, it will invoke function
+wait_event_interruptible_exclusive_locked_irq which by definition waits
+for the ev.count to be increased inside the same mutex for which
+functionfs_unbind is waiting.
+This creates deadlock situation because the functionfs_unbind won't
+get the lock until ev.count is increased which can only happen if
+the caller ffs_func_unbind can proceed further.
 
-[  5]   0.00-1.00   sec  1.55 MBytes  13.0 Mbits/sec   90   4.18 KBytes
-[  5]   1.00-2.00   sec  1.44 MBytes  12.0 Mbits/sec   75   4.18 KBytes
-[  5]   2.00-3.00   sec  1.48 MBytes  12.4 Mbits/sec   75   4.18 KBytes
+Following is the illustration:
 
-Expected speed should be bigger than 300Mbits/sec.
+	CPU1				CPU2
 
-The root cause of this performance drop was found to be data corruption
-happening at 4K borders in some Ethernet packets, leading to TCP
-checksum errors. This corruption occurs from the position
-(4K - (address & 0x7F)) to 4K. The u_ether function's allocation of
-skb_buff reserves 64B, meaning all RX addresses resemble 0xXXXX0040.
+ffs_func_unbind()		ffs_ep0_read()
+				mutex_lock(ffs->mutex)
+				wait_event(ffs->ev.count)
+functionfs_unbind()
+  mutex_lock(ffs->mutex)
+  mutex_unlock(ffs->mutex)
 
-Force trb_burst_size to 16 can fix this problem.
+ffs_event_add()
 
-Cc: stable@vger.kernel.org
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20230518154946.3666662-1-Frank.Li@nxp.com
+<deadlock>
+
+Fix this by moving the event unbind before functionfs_unbind
+to ensure the ev.count is incrased properly.
+
+Fixes: 6a19da111057 ("usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Link: https://lore.kernel.org/r/20230525092854.7992-1-quic_uaggarwa@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/usb/gadget/function/f_fs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -2097,6 +2097,19 @@ int cdns3_ep_config(struct cdns3_endpoin
- 	else
- 		priv_ep->trb_burst_size = 16;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -3620,6 +3620,7 @@ static void ffs_func_unbind(struct usb_c
+ 	/* Drain any pending AIO completions */
+ 	drain_workqueue(ffs->io_completion_wq);
  
-+	/*
-+	 * In versions preceding DEV_VER_V2, for example, iMX8QM, there exit the bugs
-+	 * in the DMA. These bugs occur when the trb_burst_size exceeds 16 and the
-+	 * address is not aligned to 128 Bytes (which is a product of the 64-bit AXI
-+	 * and AXI maximum burst length of 16 or 0xF+1, dma_axi_ctrl0[3:0]). This
-+	 * results in data corruption when it crosses the 4K border. The corruption
-+	 * specifically occurs from the position (4K - (address & 0x7F)) to 4K.
-+	 *
-+	 * So force trb_burst_size to 16 at such platform.
-+	 */
-+	if (priv_dev->dev_ver < DEV_VER_V2)
-+		priv_ep->trb_burst_size = 16;
-+
- 	mult = min_t(u8, mult, EP_CFG_MULT_MAX);
- 	buffering = min_t(u8, buffering, EP_CFG_BUFFERING_MAX);
- 	maxburst = min_t(u8, maxburst, EP_CFG_MAXBURST_MAX);
++	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
+ 	if (!--opts->refcnt)
+ 		functionfs_unbind(ffs);
+ 
+@@ -3644,7 +3645,6 @@ static void ffs_func_unbind(struct usb_c
+ 	func->function.ssp_descriptors = NULL;
+ 	func->interfaces_nums = NULL;
+ 
+-	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
+ }
+ 
+ static struct usb_function *ffs_alloc(struct usb_function_instance *fi)
 
 
