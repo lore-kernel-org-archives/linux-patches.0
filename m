@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CC134CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38384C433EF;
-	Wed,  7 Jun 2023 20:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796B239255
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB78CC4339C;
+	Wed,  7 Jun 2023 20:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170713;
-	bh=IDowwYMG4utyLSWdFHM4/mzJo1mH8B/Z44JIle9Izv0=;
+	s=korg; t=1686170716;
+	bh=BD/sIIgLNRoU6FSswjlOTFcsf9UTzMRNmplltXrz54k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkbWV8kbIOc/sLAs5zyOqT03duD6ZOQPlSaWNdaOQ92mgJ9L8sHItUPxLJsrxDhMs
-	 l4gMyLUpALJX/zgOZKJrK3xxcNyyq0vUck7qJg/h1A0uziha370Jv2tvQNI1de4mtE
-	 E92Hv+psk+LWZZZqX495NyOUHFdwrjwU2r/AUJYM=
+	b=yifIbk2hqn8QBcEXSUEw/FwlcULktKlls7Qw+LUR6wUowQBbaK44hRxfzMqYdJsq2
+	 L4vlH0nH1WqZuPGowToa8hzd6YbCXBR1g0US1iFF4iHxsFQHGhvzZdwPrVNihSX1Pf
+	 FXm+I1GpYx3NZD+nOl37zJpo13jjtIG/YdeSHfno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ism Hong <ism.hong@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 182/225] riscv: perf: Fix callchain parse error with kernel tracepoint events
-Date: Wed,  7 Jun 2023 22:16:15 +0200
-Message-ID: <20230607200920.343016050@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>
+Subject: [PATCH 6.1 191/225] selftests: mptcp: join: skip if MPTCP is not supported
+Date: Wed,  7 Jun 2023 22:16:24 +0200
+Message-ID: <20230607200920.625799229@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,76 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ism Hong <ism.hong@gmail.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 9a7e8ec0d4cc64870ea449b4fce5779b77496cbb upstream.
+commit 715c78a82e00f848f99ef76e6f6b89216ccba268 upstream.
 
-For RISC-V, when tracing with tracepoint events, the IP and status are
-set to 0, preventing the perf code parsing the callchain and resolving
-the symbols correctly.
+Selftests are supposed to run on any kernels, including the old ones not
+supporting MPTCP.
 
- ./ply 'tracepoint:kmem/kmem_cache_alloc { @[stack]=count(); }'
- @:
- { <STACKID4294967282> }: 1
+A new check is then added to make sure MPTCP is supported. If not, the
+test stops and is marked as "skipped".
 
-The fix is to implement perf_arch_fetch_caller_regs for riscv, which
-fills several necessary registers used for callchain unwinding,
-including epc, sp, s0 and status. It's similar to commit b3eac0265bf6
-("arm: perf: Fix callchain parse error with kernel tracepoint events")
-and commit 5b09a094f2fb ("arm64: perf: Fix callchain parse error with
-kernel tracepoint events").
-
-With this patch, callchain can be parsed correctly as:
-
- ./ply 'tracepoint:kmem/kmem_cache_alloc { @[stack]=count(); }'
- @:
- {
-         __traceiter_kmem_cache_alloc+68
-         __traceiter_kmem_cache_alloc+68
-         kmem_cache_alloc+354
-         __sigqueue_alloc+94
-         __send_signal_locked+646
-         send_signal_locked+154
-         do_send_sig_info+84
-         __kill_pgrp_info+130
-         kill_pgrp+60
-         isig+150
-         n_tty_receive_signal_char+36
-         n_tty_receive_buf_standard+2214
-         n_tty_receive_buf_common+280
-         n_tty_receive_buf2+26
-         tty_ldisc_receive_buf+34
-         tty_port_default_receive_buf+62
-         flush_to_ldisc+158
-         process_one_work+458
-         worker_thread+138
-         kthread+178
-         riscv_cpufeature_patch_func+832
-  }: 1
-
-Signed-off-by: Ism Hong <ism.hong@gmail.com>
-Link: https://lore.kernel.org/r/20230601095355.1168910-1-ism.hong@gmail.com
-Fixes: 178e9fc47aae ("perf: riscv: preliminary RISC-V support")
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
+Fixes: b08fbf241064 ("selftests: add test-cases for MPTCP MP_JOIN")
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/perf_event.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/riscv/include/asm/perf_event.h
-+++ b/arch/riscv/include/asm/perf_event.h
-@@ -10,4 +10,11 @@
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -6,6 +6,8 @@
+ # address all other issues detected by shellcheck.
+ #shellcheck disable=SC2086
  
- #include <linux/perf_event.h>
- #define perf_arch_bpf_user_pt_regs(regs) (struct user_regs_struct *)regs
++. "$(dirname "${0}")/mptcp_lib.sh"
 +
-+#define perf_arch_fetch_caller_regs(regs, __ip) { \
-+	(regs)->epc = (__ip); \
-+	(regs)->s0 = (unsigned long) __builtin_frame_address(0); \
-+	(regs)->sp = current_stack_pointer; \
-+	(regs)->status = SR_PP; \
-+}
- #endif /* _ASM_RISCV_PERF_EVENT_H */
+ ret=0
+ sin=""
+ sinfail=""
+@@ -127,6 +129,8 @@ cleanup_partial()
+ 
+ check_tools()
+ {
++	mptcp_lib_check_mptcp
++
+ 	if ! ip -Version &> /dev/null; then
+ 		echo "SKIP: Could not run test without ip tool"
+ 		exit $ksft_skip
 
 
