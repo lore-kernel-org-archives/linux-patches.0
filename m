@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C2234CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C18C433EF;
-	Wed,  7 Jun 2023 20:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED5634CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B136C433D2;
+	Wed,  7 Jun 2023 20:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170695;
-	bh=D+fisbQ+ue9yAD0G5uKUaWIOwX31AyO0LjSAjb5DpZI=;
+	s=korg; t=1686170697;
+	bh=mztivEPOQeLmOj6B3dXfjhhzjSa0YErj1r36X1VdstI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UTzHzYMIo52bCScu011xhqawdKPOs7M0pdmN9hN5chPWuuRukmDzb0E+ot2SOEpqE
-	 kZ8j8twTqxqvpSKIzKRecNECGTJbcomhFL0oOq74++RdD2ZYHmsutgbBmousvpKsIQ
-	 KdtR3IkT9Svv8TE/rXyNlme9DgEPX8aYIrNT/rxI=
+	b=Xo54QuAnUnQPeRrxeohrpG5L+30+Kifk44NGTVGRM7v9cYyD7vF084opLTzAipOuv
+	 1mu7WdW08UvyVxt3A2AQA8KXwcc5jzs2sTjgBtutR+9Gy19LYa4PejJGLwoKxE4Epi
+	 /kw5nQX1PDyeyDlbGMCE6m7awIr1DMGk6Ihaq2iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 154/225] iio: dac: build ad5758 driver when AD5758 is selected
-Date: Wed,  7 Jun 2023 22:15:47 +0200
-Message-ID: <20230607200919.445671237@linuxfoundation.org>
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 155/225] net: usb: qmi_wwan: Set DTR quirk for BroadMobi BM818
+Date: Wed,  7 Jun 2023 22:15:48 +0200
+Message-ID: <20230607200919.478084316@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,39 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-commit a146eccb68be161ae9eab5f3f68bb0ed7c0fbaa8 upstream.
+commit 36936a56e1814f6c526fe71fbf980beab4f5577a upstream.
 
-Commit 28d1a7ac2a0d ("iio: dac: Add AD5758 support") adds the config AD5758
-and the corresponding driver ad5758.c. In the Makefile, the ad5758 driver
-is however included when AD5755 is selected, not when AD5758 is selected.
+BM818 is based on Qualcomm MDM9607 chipset.
 
-Probably, this was simply a mistake that happened by copy-and-paste and
-forgetting to adjust the actual line. Surprisingly, no one has ever noticed
-that this driver is actually only included when AD5755 is selected and that
-the config AD5758 has actually no effect on the build.
-
-Fixes: 28d1a7ac2a0d ("iio: dac: Add AD5758 support")
-Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Link: https://lore.kernel.org/r/20230508040208.12033-1-lukas.bulwahn@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 9a07406b00cd ("net: usb: qmi_wwan: Add the BroadMobi BM818 card")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Acked-by: Bjørn Mork <bjorn@mork.no>
+Link: https://lore.kernel.org/r/20230526-bm818-dtr-v1-1-64bbfa6ba8af@puri.sm
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/Makefile |    2 +-
+ drivers/net/usb/qmi_wwan.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/dac/Makefile
-+++ b/drivers/iio/dac/Makefile
-@@ -17,7 +17,7 @@ obj-$(CONFIG_AD5592R_BASE) += ad5592r-ba
- obj-$(CONFIG_AD5592R) += ad5592r.o
- obj-$(CONFIG_AD5593R) += ad5593r.o
- obj-$(CONFIG_AD5755) += ad5755.o
--obj-$(CONFIG_AD5755) += ad5758.o
-+obj-$(CONFIG_AD5758) += ad5758.o
- obj-$(CONFIG_AD5761) += ad5761.o
- obj-$(CONFIG_AD5764) += ad5764.o
- obj-$(CONFIG_AD5766) += ad5766.o
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1324,7 +1324,7 @@ static const struct usb_device_id produc
+ 	{QMI_FIXED_INTF(0x2001, 0x7e3d, 4)},	/* D-Link DWM-222 A2 */
+ 	{QMI_FIXED_INTF(0x2020, 0x2031, 4)},	/* Olicard 600 */
+ 	{QMI_FIXED_INTF(0x2020, 0x2033, 4)},	/* BroadMobi BM806U */
+-	{QMI_FIXED_INTF(0x2020, 0x2060, 4)},	/* BroadMobi BM818 */
++	{QMI_QUIRK_SET_DTR(0x2020, 0x2060, 4)},	/* BroadMobi BM818 */
+ 	{QMI_FIXED_INTF(0x0f3d, 0x68a2, 8)},    /* Sierra Wireless MC7700 */
+ 	{QMI_FIXED_INTF(0x114f, 0x68a2, 8)},    /* Sierra Wireless MC7750 */
+ 	{QMI_FIXED_INTF(0x1199, 0x68a2, 8)},	/* Sierra Wireless MC7710 in QMI mode */
 
 
