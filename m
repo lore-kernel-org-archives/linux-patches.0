@@ -1,37 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E421D2A5
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E387BC4339B;
-	Wed,  7 Jun 2023 20:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9AC34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A940AC433D2;
+	Wed,  7 Jun 2023 20:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170755;
-	bh=b4oGrHUU4PlZn58yeBa1vTwhXg4J0f1XcSHjsV6FHiY=;
+	s=korg; t=1686170758;
+	bh=egqMW5JWLZ9ExfwvPYLIZNZRm+NkVGcYZXJ0MT2kE64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OanPyMD4jNvQqWbXRJsI/VPVTsUKqz/Db4UmpAZjNWIy7grP8EuiN1Btoz77lwYQ5
-	 Q0NRcHP2vNYoiREuNIY38Pp+v8kzXnZyF/C3u3sEzLXxPuZ1KRjKzERgIhmSQB1zSh
-	 Wq/eXElGlNhGXTHfMYpcnafvAgRUezitrXHu+OKo=
+	b=Tut38w3vDqSjr7zU5yZIER2N2dTSdZrm75PtJLZgphpbT3HST3d2f1wo0Qf0zrlx+
+	 mZhDc4fKcxMYrhj+TXgrFHk93vNiT/oqEpDIHXTiHPS3GeofiUSI7XaAkznaf9T8D6
+	 Ir96MU5awzeAoMxTUArfcYUGkFz22pi49Ue5Cogc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Dan Carpenter <error27@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Russ Weight <russell.h.weight@intel.com>,
-	Tianfei zhang <tianfei.zhang@intel.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	linux-kernel@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	Scott Branden <sbranden@broadcom.com>,
-	linux-kselftest@vger.kernel.org
-Subject: [PATCH 6.1 205/225] test_firmware: fix the memory leak of the allocated firmware buffer
-Date: Wed,  7 Jun 2023 22:16:38 +0200
-Message-ID: <20230607200921.070241596@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PATCH 6.1 206/225] KVM: arm64: Populate fault info for watchpoint
+Date: Wed,  7 Jun 2023 22:16:39 +0200
+Message-ID: <20230607200921.103383989@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -45,181 +34,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-commit 48e156023059e57a8fc68b498439832f7600ffff upstream.
+commit 811154e234db72f0a11557a84ba9640f8b3bc823 upstream.
 
-The following kernel memory leak was noticed after running
-tools/testing/selftests/firmware/fw_run_tests.sh:
+When handling ESR_ELx_EC_WATCHPT_LOW, far_el2 member of struct
+kvm_vcpu_fault_info will be copied to far member of struct
+kvm_debug_exit_arch and exposed to the userspace. The userspace will
+see stale values from older faults if the fault info does not get
+populated.
 
-[root@pc-mtodorov firmware]# cat /sys/kernel/debug/kmemleak
-.
-.
-.
-unreferenced object 0xffff955389bc3400 (size 1024):
-  comm "test_firmware-0", pid 5451, jiffies 4294944822 (age 65.652s)
-  hex dump (first 32 bytes):
-    47 48 34 35 36 37 0a 00 00 00 00 00 00 00 00 00  GH4567..........
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff962f5dec>] slab_post_alloc_hook+0x8c/0x3c0
-    [<ffffffff962fcca4>] __kmem_cache_alloc_node+0x184/0x240
-    [<ffffffff962704de>] kmalloc_trace+0x2e/0xc0
-    [<ffffffff9665b42d>] test_fw_run_batch_request+0x9d/0x180
-    [<ffffffff95fd813b>] kthread+0x10b/0x140
-    [<ffffffff95e033e9>] ret_from_fork+0x29/0x50
-unreferenced object 0xffff9553c334b400 (size 1024):
-  comm "test_firmware-1", pid 5452, jiffies 4294944822 (age 65.652s)
-  hex dump (first 32 bytes):
-    47 48 34 35 36 37 0a 00 00 00 00 00 00 00 00 00  GH4567..........
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff962f5dec>] slab_post_alloc_hook+0x8c/0x3c0
-    [<ffffffff962fcca4>] __kmem_cache_alloc_node+0x184/0x240
-    [<ffffffff962704de>] kmalloc_trace+0x2e/0xc0
-    [<ffffffff9665b42d>] test_fw_run_batch_request+0x9d/0x180
-    [<ffffffff95fd813b>] kthread+0x10b/0x140
-    [<ffffffff95e033e9>] ret_from_fork+0x29/0x50
-unreferenced object 0xffff9553c334f000 (size 1024):
-  comm "test_firmware-2", pid 5453, jiffies 4294944822 (age 65.652s)
-  hex dump (first 32 bytes):
-    47 48 34 35 36 37 0a 00 00 00 00 00 00 00 00 00  GH4567..........
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff962f5dec>] slab_post_alloc_hook+0x8c/0x3c0
-    [<ffffffff962fcca4>] __kmem_cache_alloc_node+0x184/0x240
-    [<ffffffff962704de>] kmalloc_trace+0x2e/0xc0
-    [<ffffffff9665b42d>] test_fw_run_batch_request+0x9d/0x180
-    [<ffffffff95fd813b>] kthread+0x10b/0x140
-    [<ffffffff95e033e9>] ret_from_fork+0x29/0x50
-unreferenced object 0xffff9553c3348400 (size 1024):
-  comm "test_firmware-3", pid 5454, jiffies 4294944822 (age 65.652s)
-  hex dump (first 32 bytes):
-    47 48 34 35 36 37 0a 00 00 00 00 00 00 00 00 00  GH4567..........
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff962f5dec>] slab_post_alloc_hook+0x8c/0x3c0
-    [<ffffffff962fcca4>] __kmem_cache_alloc_node+0x184/0x240
-    [<ffffffff962704de>] kmalloc_trace+0x2e/0xc0
-    [<ffffffff9665b42d>] test_fw_run_batch_request+0x9d/0x180
-    [<ffffffff95fd813b>] kthread+0x10b/0x140
-    [<ffffffff95e033e9>] ret_from_fork+0x29/0x50
-[root@pc-mtodorov firmware]#
-
-Note that the size 1024 corresponds to the size of the test firmware
-buffer. The actual number of the buffers leaked is around 70-110,
-depending on the test run.
-
-The cause of the leak is the following:
-
-request_partial_firmware_into_buf() and request_firmware_into_buf()
-provided firmware buffer isn't released on release_firmware(), we
-have allocated it and we are responsible for deallocating it manually.
-This is introduced in a number of context where previously only
-release_firmware() was called, which was insufficient.
-
-Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Dan Carpenter <error27@gmail.com>
-Cc: Takashi Iwai <tiwai@suse.de>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Russ Weight <russell.h.weight@intel.com>
-Cc: Tianfei zhang <tianfei.zhang@intel.com>
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Zhengchao Shao <shaozhengchao@huawei.com>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: linux-kernel@vger.kernel.org
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Scott Branden <sbranden@broadcom.com>
-Cc: Luis R. Rodriguez <mcgrof@kernel.org>
-Cc: linux-kselftest@vger.kernel.org
-Cc: stable@vger.kernel.org # v5.4
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Link: https://lore.kernel.org/r/20230509084746.48259-3-mirsad.todorovac@alu.unizg.hr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8fb2046180a0 ("KVM: arm64: Move early handlers to per-EC handlers")
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230530024651.10014-1-akihiko.odaki@daynix.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_firmware.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/hyp/include/hyp/switch.h |    8 ++++++--
+ arch/arm64/kvm/hyp/nvhe/switch.c        |    2 ++
+ arch/arm64/kvm/hyp/vhe/switch.c         |    1 +
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -44,6 +44,7 @@ struct test_batched_req {
- 	bool sent;
- 	const struct firmware *fw;
- 	const char *name;
-+	const char *fw_buf;
- 	struct completion completion;
- 	struct task_struct *task;
- 	struct device *dev;
-@@ -174,8 +175,14 @@ static void __test_release_all_firmware(
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -351,17 +351,21 @@ static bool kvm_hyp_handle_cp15_32(struc
+ 	return false;
+ }
  
- 	for (i = 0; i < test_fw_config->num_requests; i++) {
- 		req = &test_fw_config->reqs[i];
--		if (req->fw)
-+		if (req->fw) {
-+			if (req->fw_buf) {
-+				kfree_const(req->fw_buf);
-+				req->fw_buf = NULL;
-+			}
- 			release_firmware(req->fw);
-+			req->fw = NULL;
-+		}
- 	}
+-static bool kvm_hyp_handle_iabt_low(struct kvm_vcpu *vcpu, u64 *exit_code)
++static bool kvm_hyp_handle_memory_fault(struct kvm_vcpu *vcpu, u64 *exit_code)
+ {
+ 	if (!__populate_fault_info(vcpu))
+ 		return true;
  
- 	vfree(test_fw_config->reqs);
-@@ -651,6 +658,8 @@ static ssize_t trigger_request_store(str
+ 	return false;
+ }
++static bool kvm_hyp_handle_iabt_low(struct kvm_vcpu *vcpu, u64 *exit_code)
++	__alias(kvm_hyp_handle_memory_fault);
++static bool kvm_hyp_handle_watchpt_low(struct kvm_vcpu *vcpu, u64 *exit_code)
++	__alias(kvm_hyp_handle_memory_fault);
  
- 	mutex_lock(&test_fw_mutex);
- 	release_firmware(test_firmware);
-+	if (test_fw_config->reqs)
-+		__test_release_all_firmware();
- 	test_firmware = NULL;
- 	rc = request_firmware(&test_firmware, name, dev);
- 	if (rc) {
-@@ -751,6 +760,8 @@ static ssize_t trigger_async_request_sto
- 	mutex_lock(&test_fw_mutex);
- 	release_firmware(test_firmware);
- 	test_firmware = NULL;
-+	if (test_fw_config->reqs)
-+		__test_release_all_firmware();
- 	rc = request_firmware_nowait(THIS_MODULE, 1, name, dev, GFP_KERNEL,
- 				     NULL, trigger_async_request_cb);
- 	if (rc) {
-@@ -793,6 +804,8 @@ static ssize_t trigger_custom_fallback_s
+ static bool kvm_hyp_handle_dabt_low(struct kvm_vcpu *vcpu, u64 *exit_code)
+ {
+-	if (!__populate_fault_info(vcpu))
++	if (kvm_hyp_handle_memory_fault(vcpu, exit_code))
+ 		return true;
  
- 	mutex_lock(&test_fw_mutex);
- 	release_firmware(test_firmware);
-+	if (test_fw_config->reqs)
-+		__test_release_all_firmware();
- 	test_firmware = NULL;
- 	rc = request_firmware_nowait(THIS_MODULE, FW_ACTION_NOUEVENT, name,
- 				     dev, GFP_KERNEL, NULL,
-@@ -855,6 +868,8 @@ static int test_fw_run_batch_request(voi
- 						 test_fw_config->buf_size);
- 		if (!req->fw)
- 			kfree(test_buf);
-+		else
-+			req->fw_buf = test_buf;
- 	} else {
- 		req->rc = test_fw_config->req_firmware(&req->fw,
- 						       req->name,
-@@ -915,6 +930,7 @@ static ssize_t trigger_batched_requests_
- 		req->fw = NULL;
- 		req->idx = i;
- 		req->name = test_fw_config->name;
-+		req->fw_buf = NULL;
- 		req->dev = dev;
- 		init_completion(&req->completion);
- 		req->task = kthread_run(test_fw_run_batch_request, req,
-@@ -1019,6 +1035,7 @@ ssize_t trigger_batched_requests_async_s
- 	for (i = 0; i < test_fw_config->num_requests; i++) {
- 		req = &test_fw_config->reqs[i];
- 		req->name = test_fw_config->name;
-+		req->fw_buf = NULL;
- 		req->fw = NULL;
- 		req->idx = i;
- 		init_completion(&req->completion);
+ 	if (static_branch_unlikely(&vgic_v2_cpuif_trap)) {
+--- a/arch/arm64/kvm/hyp/nvhe/switch.c
++++ b/arch/arm64/kvm/hyp/nvhe/switch.c
+@@ -186,6 +186,7 @@ static const exit_handler_fn hyp_exit_ha
+ 	[ESR_ELx_EC_FP_ASIMD]		= kvm_hyp_handle_fpsimd,
+ 	[ESR_ELx_EC_IABT_LOW]		= kvm_hyp_handle_iabt_low,
+ 	[ESR_ELx_EC_DABT_LOW]		= kvm_hyp_handle_dabt_low,
++	[ESR_ELx_EC_WATCHPT_LOW]	= kvm_hyp_handle_watchpt_low,
+ 	[ESR_ELx_EC_PAC]		= kvm_hyp_handle_ptrauth,
+ };
+ 
+@@ -196,6 +197,7 @@ static const exit_handler_fn pvm_exit_ha
+ 	[ESR_ELx_EC_FP_ASIMD]		= kvm_hyp_handle_fpsimd,
+ 	[ESR_ELx_EC_IABT_LOW]		= kvm_hyp_handle_iabt_low,
+ 	[ESR_ELx_EC_DABT_LOW]		= kvm_hyp_handle_dabt_low,
++	[ESR_ELx_EC_WATCHPT_LOW]	= kvm_hyp_handle_watchpt_low,
+ 	[ESR_ELx_EC_PAC]		= kvm_hyp_handle_ptrauth,
+ };
+ 
+--- a/arch/arm64/kvm/hyp/vhe/switch.c
++++ b/arch/arm64/kvm/hyp/vhe/switch.c
+@@ -110,6 +110,7 @@ static const exit_handler_fn hyp_exit_ha
+ 	[ESR_ELx_EC_FP_ASIMD]		= kvm_hyp_handle_fpsimd,
+ 	[ESR_ELx_EC_IABT_LOW]		= kvm_hyp_handle_iabt_low,
+ 	[ESR_ELx_EC_DABT_LOW]		= kvm_hyp_handle_dabt_low,
++	[ESR_ELx_EC_WATCHPT_LOW]	= kvm_hyp_handle_watchpt_low,
+ 	[ESR_ELx_EC_PAC]		= kvm_hyp_handle_ptrauth,
+ };
+ 
 
 
