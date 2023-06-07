@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916B63922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:55:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B68C433D2;
-	Wed,  7 Jun 2023 20:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A10E39231
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:55:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4043AC4339B;
+	Wed,  7 Jun 2023 20:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171309;
-	bh=7PYEGqQvXfk/9ec1wncQRDNpOUckwe2LPbAlY0evURg=;
+	s=korg; t=1686171311;
+	bh=5wbveXvrsviF3prICDjKtOHyeusaM2sgDi0S9LXyNo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FgbdF9zWVdcFgdH7tbHI7BCt6lp2aeBKKPeqDLWgUSiJnBvhw7TBB2Gqs6geSkUzn
-	 QaE4eY3C6ADtOeoWecQ7SEL5q1VrVOiNOEhI9gfuMkvGPOG2wwgYuKD+VskIdvcoIu
-	 Q6g1Q7n/aCOFaGy2rG5ZfjqloDiy8g9TKKzQa/Yg=
+	b=Z80SHVznz/b9XdWrONt7bUvmZGnInIJ5NMr1our7R+rSiJs1VH84SdbHDCu3PFR7C
+	 mdQe3NLHbu2xgBCF5Qa5yZ8hH9+ktgTjlfaFW5XFhe6WXhqnCbuMz+jHMB2nfH5Jf/
+	 rZcXoGB9skXojCkkdMv8PTjgplZQYlKaHFoEwgN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Subject: [PATCH 5.4 68/99] usb: gadget: f_fs: Add unbind event before functionfs_unbind
-Date: Wed,  7 Jun 2023 22:17:00 +0200
-Message-ID: <20230607200902.365746987@linuxfoundation.org>
+	Richard Acayan <mailingradian@gmail.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 5.4 69/99] misc: fastrpc: return -EPIPE to invocations on device removal
+Date: Wed,  7 Jun 2023 22:17:01 +0200
+Message-ID: <20230607200902.395356136@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -34,65 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+From: Richard Acayan <mailingradian@gmail.com>
 
-commit efb6b535207395a5c7317993602e2503ca8cb4b3 upstream.
+commit b6a062853ddf6b4f653af2d8b75ba45bb9a036ad upstream.
 
-While exercising the unbind path, with the current implementation
-the functionfs_unbind would be calling which waits for the ffs->mutex
-to be available, however within the same time ffs_ep0_read is invoked
-& if no setup packets are pending, it will invoke function
-wait_event_interruptible_exclusive_locked_irq which by definition waits
-for the ev.count to be increased inside the same mutex for which
-functionfs_unbind is waiting.
-This creates deadlock situation because the functionfs_unbind won't
-get the lock until ev.count is increased which can only happen if
-the caller ffs_func_unbind can proceed further.
+The return value is initialized as -1, or -EPERM. The completion of an
+invocation implies that the return value is set appropriately, but
+"Permission denied" does not accurately describe the outcome of the
+invocation. Set the invocation's return value to a more appropriate
+"Broken pipe", as the cleanup breaks the driver's connection with rpmsg.
 
-Following is the illustration:
-
-	CPU1				CPU2
-
-ffs_func_unbind()		ffs_ep0_read()
-				mutex_lock(ffs->mutex)
-				wait_event(ffs->ev.count)
-functionfs_unbind()
-  mutex_lock(ffs->mutex)
-  mutex_unlock(ffs->mutex)
-
-ffs_event_add()
-
-<deadlock>
-
-Fix this by moving the event unbind before functionfs_unbind
-to ensure the ev.count is incrased properly.
-
-Fixes: 6a19da111057 ("usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait")
+Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Link: https://lore.kernel.org/r/20230525092854.7992-1-quic_uaggarwa@quicinc.com
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230523152550.438363-4-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/fastrpc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -3628,6 +3628,7 @@ static void ffs_func_unbind(struct usb_c
- 	/* Drain any pending AIO completions */
- 	drain_workqueue(ffs->io_completion_wq);
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1484,8 +1484,10 @@ static void fastrpc_notify_users(struct
+ 	struct fastrpc_invoke_ctx *ctx;
  
-+	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
- 	if (!--opts->refcnt)
- 		functionfs_unbind(ffs);
- 
-@@ -3652,7 +3653,6 @@ static void ffs_func_unbind(struct usb_c
- 	func->function.ssp_descriptors = NULL;
- 	func->interfaces_nums = NULL;
- 
--	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
+ 	spin_lock(&user->lock);
+-	list_for_each_entry(ctx, &user->pending, node)
++	list_for_each_entry(ctx, &user->pending, node) {
++		ctx->retval = -EPIPE;
+ 		complete(&ctx->work);
++	}
+ 	spin_unlock(&user->lock);
  }
  
- static struct usb_function *ffs_alloc(struct usb_function_instance *fi)
 
 
