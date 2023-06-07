@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B173922B
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:52:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6BAC433D2;
-	Wed,  7 Jun 2023 20:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DB23922B
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:52:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78498C4339B;
+	Wed,  7 Jun 2023 20:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171161;
-	bh=Z3kg5meoaB1mRCtpryU2e1kd7aU7iytMrSZC4B6svjU=;
+	s=korg; t=1686171164;
+	bh=Bze8mbogLY+vRP2l7mdJ/X1gUaexsQgMF1BZRLya2w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8P+N4xd6uy1p3amqBN4P/L6aHjNvNA5Psc2hx08CbDDY78zU3ww+7JNa2KNUh6g2
-	 Ttm0D0b6IZrxkITQm7BcVzjXE8E1S/RYUTMTg4DFj+vB7DR3OhYnhemugR3wglgklD
-	 23rPX+5XpZMDK1pGJ+aVSRqh5SQ1erUPn9Fo+6S4=
+	b=tXdBM7/xR9d/mj5gFY2kbKyIvftwJg0y7H9fVb4fdmVmv1BtlBfadyz/l8l3pTRmx
+	 Ps0rjNWBSD4k7GPVz37x4G+9d1Y/d0xxIm8yhV6Q8EWdEUBvGmUvWdZP1LGf1IlXZ2
+	 YpMIxyVz4tMabIOLKy0QdObE1ELdVtxBIENNQR7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Wang <D202280639@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 05/99] iommu/rockchip: Fix unwind goto issue
-Date: Wed,  7 Jun 2023 22:15:57 +0200
-Message-ID: <20230607200900.393748299@linuxfoundation.org>
+Subject: [PATCH 5.4 06/99] iommu/amd: Dont block updates to GATag if guest mode is on
+Date: Wed,  7 Jun 2023 22:15:58 +0200
+Message-ID: <20230607200900.425512512@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -37,63 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Wang <D202280639@hust.edu.cn>
+From: Joao Martins <joao.m.martins@oracle.com>
 
-[ Upstream commit ec014683c564fb74fc68e8f5e84691d3b3839d24 ]
+[ Upstream commit ed8a2f4ddef2eaaf864ab1efbbca9788187036ab ]
 
-Smatch complains that
-drivers/iommu/rockchip-iommu.c:1306 rk_iommu_probe() warn: missing unwind goto?
+On KVM GSI routing table updates, specially those where they have vIOMMUs
+with interrupt remapping enabled (to boot >255vcpus setups without relying
+on KVM_FEATURE_MSI_EXT_DEST_ID), a VMM may update the backing VF MSIs
+with a new VCPU affinity.
 
-The rk_iommu_probe function, after obtaining the irq value through
-platform_get_irq, directly returns an error if the returned value
-is negative, without releasing any resources.
+On AMD with AVIC enabled, the new vcpu affinity info is updated via:
+	avic_pi_update_irte()
+		irq_set_vcpu_affinity()
+			amd_ir_set_vcpu_affinity()
+				amd_iommu_{de}activate_guest_mode()
 
-Fix this by adding a new error handling label "err_pm_disable" and
-use a goto statement to redirect to the error handling process. In
-order to preserve the original semantics, set err to the value of irq.
+Where the IRTE[GATag] is updated with the new vcpu affinity. The GATag
+contains VM ID and VCPU ID, and is used by IOMMU hardware to signal KVM
+(via GALog) when interrupt cannot be delivered due to vCPU is in
+blocking state.
 
-Fixes: 1aa55ca9b14a ("iommu/rockchip: Move irq request past pm_runtime_enable")
-Signed-off-by: Chao Wang <D202280639@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20230417030421.2777-1-D202280639@hust.edu.cn
+The issue is that amd_iommu_activate_guest_mode() will essentially
+only change IRTE fields on transitions from non-guest-mode to guest-mode
+and otherwise returns *with no changes to IRTE* on already configured
+guest-mode interrupts. To the guest this means that the VF interrupts
+remain affined to the first vCPU they were first configured, and guest
+will be unable to issue VF interrupts and receive messages like this
+from spurious interrupts (e.g. from waking the wrong vCPU in GALog):
+
+[  167.759472] __common_interrupt: 3.34 No irq handler for vector
+[  230.680927] mlx5_core 0000:00:02.0: mlx5_cmd_eq_recover:247:(pid
+3122): Recovered 1 EQEs on cmd_eq
+[  230.681799] mlx5_core 0000:00:02.0:
+wait_func_handle_exec_timeout:1113:(pid 3122): cmd[0]: CREATE_CQ(0x400)
+recovered after timeout
+[  230.683266] __common_interrupt: 3.34 No irq handler for vector
+
+Given the fact that amd_ir_set_vcpu_affinity() uses
+amd_iommu_activate_guest_mode() underneath it essentially means that VCPU
+affinity changes of IRTEs are nops. Fix it by dropping the check for
+guest-mode at amd_iommu_activate_guest_mode(). Same thing is applicable to
+amd_iommu_deactivate_guest_mode() although, even if the IRTE doesn't change
+underlying DestID on the host, the VFIO IRQ handler will still be able to
+poke at the right guest-vCPU.
+
+Fixes: b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC (de-)activation code")
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Link: https://lore.kernel.org/r/20230419201154.83880-2-joao.m.martins@oracle.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/rockchip-iommu.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/iommu/amd_iommu.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index 96f37d9d4d93c..67a8c08d82105 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -1230,18 +1230,20 @@ static int rk_iommu_probe(struct platform_device *pdev)
- 	for (i = 0; i < iommu->num_irq; i++) {
- 		int irq = platform_get_irq(pdev, i);
+diff --git a/drivers/iommu/amd_iommu.c b/drivers/iommu/amd_iommu.c
+index b79309928d786..a30aac41af426 100644
+--- a/drivers/iommu/amd_iommu.c
++++ b/drivers/iommu/amd_iommu.c
+@@ -4420,8 +4420,7 @@ int amd_iommu_activate_guest_mode(void *data)
+ 	struct amd_ir_data *ir_data = (struct amd_ir_data *)data;
+ 	struct irte_ga *entry = (struct irte_ga *) ir_data->entry;
  
--		if (irq < 0)
--			return irq;
-+		if (irq < 0) {
-+			err = irq;
-+			goto err_pm_disable;
-+		}
+-	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir) ||
+-	    !entry || entry->lo.fields_vapic.guest_mode)
++	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir) || !entry)
+ 		return 0;
  
- 		err = devm_request_irq(iommu->dev, irq, rk_iommu_irq,
- 				       IRQF_SHARED, dev_name(dev), iommu);
--		if (err) {
--			pm_runtime_disable(dev);
--			goto err_remove_sysfs;
--		}
-+		if (err)
-+			goto err_pm_disable;
- 	}
- 
- 	return 0;
-+err_pm_disable:
-+	pm_runtime_disable(dev);
- err_remove_sysfs:
- 	iommu_device_sysfs_remove(&iommu->iommu);
- err_put_group:
+ 	entry->lo.val = 0;
 -- 
 2.39.2
 
