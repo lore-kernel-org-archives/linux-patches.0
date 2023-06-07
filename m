@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130FF34CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:57:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC07C433D2;
-	Wed,  7 Jun 2023 20:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60D734CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:57:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2996AC433EF;
+	Wed,  7 Jun 2023 20:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171426;
-	bh=KOeXA22bMnHuqoAcnMaDevC121E48LyJ6l8G9Qs8GUU=;
+	s=korg; t=1686171429;
+	bh=f2Uputf+FnFQ/Q8agspjn6KMjn17wabD7YxYpmq2q/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/mwh4TFu9Zx4Mf7WDuLTJ+1RD5luj3XGrphlQI1+OQFKDimAcK3idQzHX5CnVwMY
-	 /RKwEWgLImbjxX764WGchpzMQbCn1ekJWBLi/2M6EBY5oTU0fZM8KEi/GCblAaTguS
-	 SBQCPF9z91LNe2LnwPXp2e0s8P/oKb7usTaT2Ky0=
+	b=Q4SfRaf7udLi0KUXyZldLgqZoQ1JFcuwTSGnCwOIluPOlV84P7FqlRumNZQdS9E9b
+	 nTXP5HoW/eiEQHDl7HufMU1Exng2iVVZDoWt5jOPXkTzNWB43hD9aEG+GSsp0NuR2s
+	 ZtYrb84qqzUtIwtJjcTbuhc071uAuG9CZTGBnBl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
+	Yangyang Li <liyangyang20@huawei.com>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/159] RDMA/hns: Fix base address table allocation
-Date: Wed,  7 Jun 2023 22:15:06 +0200
-Message-ID: <20230607200903.783226615@linuxfoundation.org>
+Subject: [PATCH 5.15 004/159] RDMA/hns: Modify the value of long message loopback slice
+Date: Wed,  7 Jun 2023 22:15:07 +0200
+Message-ID: <20230607200903.816466487@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,101 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Yangyang Li <liyangyang20@huawei.com>
 
-[ Upstream commit 7f3969b14f356dd65fa95b3528eb05c32e68bc06 ]
+[ Upstream commit 56518a603fd2bf74762d176ac980572db84a3e14 ]
 
-For hns, the specification of an entry like resource (E.g. WQE/CQE/EQE)
-depends on BT page size, buf page size and hopnum. For user mode, the buf
-page size depends on UMEM. Therefore, the actual specification is
-controlled by BT page size and hopnum.
+Long message loopback slice is used for achieving traffic balance between
+QPs. It prevents the problem that QPs with large traffic occupying the
+hardware pipeline for a long time and QPs with small traffic cannot be
+scheduled.
 
-The current BT page size and hopnum are obtained from firmware. This makes
-the driver inflexible and introduces unnecessary constraints.  Resource
-allocation failures occur in many scenarios.
+Currently, its maximum value is set to 16K, which means only after a QP
+sends 16K will the second QP be scheduled. This value is too large, which
+will lead to unbalanced traffic scheduling, and thus it needs to be
+modified.
 
-This patch will calculate whether the BT page size set by firmware is
-sufficient before allocating BT, and increase the BT page size if it is
-insufficient.
+The setting range of the long message loopback slice is modified to be
+from 1024 (the lower limit supported by hardware) to mtu. Actual testing
+shows that this value can significantly reduce error in hardware traffic
+scheduling.
 
-Fixes: 1133401412a9 ("RDMA/hns: Optimize base address table config flow for qp buffer")
-Link: https://lore.kernel.org/r/20230512092245.344442-3-huangjunxian6@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+This solution is compatible with both HIP08 and HIP09. The modified
+lp_pktn_ini has a maximum value of 2 (when mtu is 256), so the range
+checking code for lp_pktn_ini is no longer necessary and needs to be
+deleted.
+
+Fixes: 0e60778efb07 ("RDMA/hns: Modify the value of MAX_LP_MSG_LEN to meet hardware compatibility")
+Link: https://lore.kernel.org/r/20230512092245.344442-4-huangjunxian6@hisilicon.com
+Signed-off-by: Yangyang Li <liyangyang20@huawei.com>
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_mr.c | 43 +++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
-index a593c142cd6ba..12c482f4a1c48 100644
---- a/drivers/infiniband/hw/hns/hns_roce_mr.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
-@@ -34,6 +34,7 @@
- #include <linux/platform_device.h>
- #include <linux/vmalloc.h>
- #include <rdma/ib_umem.h>
-+#include <linux/math.h>
- #include "hns_roce_device.h"
- #include "hns_roce_cmd.h"
- #include "hns_roce_hem.h"
-@@ -938,6 +939,44 @@ static int mtr_init_buf_cfg(struct hns_roce_dev *hr_dev,
- 	return page_cnt;
- }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 79d92b7899849..8c02b51c8bffc 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -4393,11 +4393,9 @@ static int modify_qp_init_to_rtr(struct ib_qp *ibqp,
+ 	mtu = ib_mtu_enum_to_int(ib_mtu);
+ 	if (WARN_ON(mtu <= 0))
+ 		return -EINVAL;
+-#define MAX_LP_MSG_LEN 16384
+-	/* MTU * (2 ^ LP_PKTN_INI) shouldn't be bigger than 16KB */
+-	lp_pktn_ini = ilog2(MAX_LP_MSG_LEN / mtu);
+-	if (WARN_ON(lp_pktn_ini >= 0xF))
+-		return -EINVAL;
++#define MIN_LP_MSG_LEN 1024
++	/* mtu * (2 ^ lp_pktn_ini) should be in the range of 1024 to mtu */
++	lp_pktn_ini = ilog2(max(mtu, MIN_LP_MSG_LEN) / mtu);
  
-+static u64 cal_pages_per_l1ba(unsigned int ba_per_bt, unsigned int hopnum)
-+{
-+	return int_pow(ba_per_bt, hopnum - 1);
-+}
-+
-+static unsigned int cal_best_bt_pg_sz(struct hns_roce_dev *hr_dev,
-+				      struct hns_roce_mtr *mtr,
-+				      unsigned int pg_shift)
-+{
-+	unsigned long cap = hr_dev->caps.page_size_cap;
-+	struct hns_roce_buf_region *re;
-+	unsigned int pgs_per_l1ba;
-+	unsigned int ba_per_bt;
-+	unsigned int ba_num;
-+	int i;
-+
-+	for_each_set_bit_from(pg_shift, &cap, sizeof(cap) * BITS_PER_BYTE) {
-+		if (!(BIT(pg_shift) & cap))
-+			continue;
-+
-+		ba_per_bt = BIT(pg_shift) / BA_BYTE_LEN;
-+		ba_num = 0;
-+		for (i = 0; i < mtr->hem_cfg.region_count; i++) {
-+			re = &mtr->hem_cfg.region[i];
-+			if (re->hopnum == 0)
-+				continue;
-+
-+			pgs_per_l1ba = cal_pages_per_l1ba(ba_per_bt, re->hopnum);
-+			ba_num += DIV_ROUND_UP(re->count, pgs_per_l1ba);
-+		}
-+
-+		if (ba_num <= ba_per_bt)
-+			return pg_shift;
-+	}
-+
-+	return 0;
-+}
-+
- static int mtr_alloc_mtt(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
- 			 unsigned int ba_page_shift)
- {
-@@ -946,6 +985,10 @@ static int mtr_alloc_mtt(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
- 
- 	hns_roce_hem_list_init(&mtr->hem_list);
- 	if (!cfg->is_direct) {
-+		ba_page_shift = cal_best_bt_pg_sz(hr_dev, mtr, ba_page_shift);
-+		if (!ba_page_shift)
-+			return -ERANGE;
-+
- 		ret = hns_roce_hem_list_request(hr_dev, &mtr->hem_list,
- 						cfg->region, cfg->region_count,
- 						ba_page_shift);
+ 	if (attr_mask & IB_QP_PATH_MTU) {
+ 		hr_reg_write(context, QPC_MTU, ib_mtu);
 -- 
 2.39.2
 
