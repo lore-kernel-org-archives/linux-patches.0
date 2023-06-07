@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177133AE45
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C42EC433D2;
-	Wed,  7 Jun 2023 20:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7143AE45
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD08C433D2;
+	Wed,  7 Jun 2023 20:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169671;
-	bh=34AFP84eVLDkaMxF9Z7xvIZ4RPxJiWPdsI3myJ2MqGM=;
+	s=korg; t=1686169674;
+	bh=6JCHwVKxkQsQPrUJDGy2mxc74mHzyJx+YWHEXdPHPCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbKfFaJHP5iM+HaGeRy7emeN/9werlkACiB+ziDFIaO9JT3Cp/V+pD81axHcgt7iA
-	 DtuN6DmIDBAS9K/hTFb8vi4Mj1n0ElO+p9q7K0VuslZ8fZtakYnpolKv6pmEMyVxSE
-	 0a18yZbzrsFh0yD8wXlnv03Iv1Tmu03b3csxI4Ew=
+	b=aOYyIHe3Z3S4Da6qXOGfjGGqW8PpABpBld05StxsXT7wiSHy+9B2/upr2UQEciMCg
+	 YRdBYmofxZFmWqB3kI+SbMziRh8oyunWH/joM2Arpa9dpS293slNNsZgU5Q3xz2lgC
+	 ml5YxGjHT/Pofe2UQXRq9BQ9Mt7lufJJLVZMhvDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Ziyang Zhang <ZiyangZhang@linux.alibaba.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 162/286] net: wwan: t7xx: Ensure init is completed before system sleep
-Date: Wed,  7 Jun 2023 22:14:21 +0200
-Message-ID: <20230607200928.413894756@linuxfoundation.org>
+Subject: [PATCH 6.3 171/286] ublk: fix AB-BA lockdep warning
+Date: Wed,  7 Jun 2023 22:14:30 +0200
+Message-ID: <20230607200928.711055203@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,98 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit ab87603b251134441a67385ecc9d3371be17b7a7 ]
+[ Upstream commit ac5902f84bb546c64aea02c439c2579cbf40318f ]
 
-When the system attempts to sleep while mtk_t7xx is not ready, the driver
-cannot put the device to sleep:
-[   12.472918] mtk_t7xx 0000:57:00.0: [PM] Exiting suspend, modem in invalid state
-[   12.472936] mtk_t7xx 0000:57:00.0: PM: pci_pm_suspend(): t7xx_pci_pm_suspend+0x0/0x20 [mtk_t7xx] returns -14
-[   12.473678] mtk_t7xx 0000:57:00.0: PM: dpm_run_callback(): pci_pm_suspend+0x0/0x1b0 returns -14
-[   12.473711] mtk_t7xx 0000:57:00.0: PM: failed to suspend async: error -14
-[   12.764776] PM: Some devices failed to suspend, or early wake event detected
+When handling UBLK_IO_FETCH_REQ, ctx->uring_lock is grabbed first, then
+ub->mutex is acquired.
 
-Mediatek confirmed the device can take a rather long time to complete
-its initialization, so wait for up to 20 seconds until init is done.
+When handling UBLK_CMD_STOP_DEV or UBLK_CMD_DEL_DEV, ub->mutex is
+grabbed first, then calling io_uring_cmd_done() for canceling uring
+command, in which ctx->uring_lock may be required.
 
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Real deadlock only happens when all the above commands are issued from
+same uring context, and in reality different uring contexts are often used
+for handing control command and IO command.
+
+Fix the issue by using io_uring_cmd_complete_in_task() to cancel command
+in ublk_cancel_dev(ublk_cancel_queue).
+
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Closes: https://lore.kernel.org/linux-block/becol2g7sawl4rsjq2dztsbc7mqypfqko6wzsyoyazqydoasml@rcxarzwidrhk
+Cc: Ziyang Zhang <ZiyangZhang@linux.alibaba.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Tested-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Link: https://lore.kernel.org/r/20230517133408.210944-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/t7xx/t7xx_pci.c | 18 ++++++++++++++++++
- drivers/net/wwan/t7xx/t7xx_pci.h |  1 +
- 2 files changed, 19 insertions(+)
+ drivers/block/ublk_drv.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wwan/t7xx/t7xx_pci.c b/drivers/net/wwan/t7xx/t7xx_pci.c
-index 226fc1703e90f..91256e005b846 100644
---- a/drivers/net/wwan/t7xx/t7xx_pci.c
-+++ b/drivers/net/wwan/t7xx/t7xx_pci.c
-@@ -45,6 +45,7 @@
- #define T7XX_PCI_IREG_BASE		0
- #define T7XX_PCI_EREG_BASE		2
- 
-+#define T7XX_INIT_TIMEOUT		20
- #define PM_SLEEP_DIS_TIMEOUT_MS		20
- #define PM_ACK_TIMEOUT_MS		1500
- #define PM_AUTOSUSPEND_MS		20000
-@@ -96,6 +97,7 @@ static int t7xx_pci_pm_init(struct t7xx_pci_dev *t7xx_dev)
- 	spin_lock_init(&t7xx_dev->md_pm_lock);
- 	init_completion(&t7xx_dev->sleep_lock_acquire);
- 	init_completion(&t7xx_dev->pm_sr_ack);
-+	init_completion(&t7xx_dev->init_done);
- 	atomic_set(&t7xx_dev->md_pm_state, MTK_PM_INIT);
- 
- 	device_init_wakeup(&pdev->dev, true);
-@@ -124,6 +126,7 @@ void t7xx_pci_pm_init_late(struct t7xx_pci_dev *t7xx_dev)
- 	pm_runtime_mark_last_busy(&t7xx_dev->pdev->dev);
- 	pm_runtime_allow(&t7xx_dev->pdev->dev);
- 	pm_runtime_put_noidle(&t7xx_dev->pdev->dev);
-+	complete_all(&t7xx_dev->init_done);
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 41c35ab2c25a1..4db5f1bcac44a 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1122,6 +1122,11 @@ static inline bool ublk_queue_ready(struct ublk_queue *ubq)
+ 	return ubq->nr_io_ready == ubq->q_depth;
  }
  
- static int t7xx_pci_pm_reinit(struct t7xx_pci_dev *t7xx_dev)
-@@ -529,6 +532,20 @@ static void t7xx_pci_shutdown(struct pci_dev *pdev)
- 	__t7xx_pci_pm_suspend(pdev);
- }
- 
-+static int t7xx_pci_pm_prepare(struct device *dev)
++static void ublk_cmd_cancel_cb(struct io_uring_cmd *cmd, unsigned issue_flags)
 +{
-+	struct pci_dev *pdev = to_pci_dev(dev);
-+	struct t7xx_pci_dev *t7xx_dev;
-+
-+	t7xx_dev = pci_get_drvdata(pdev);
-+	if (!wait_for_completion_timeout(&t7xx_dev->init_done, T7XX_INIT_TIMEOUT * HZ)) {
-+		dev_warn(dev, "Not ready for system sleep.\n");
-+		return -ETIMEDOUT;
-+	}
-+
-+	return 0;
++	io_uring_cmd_done(cmd, UBLK_IO_RES_ABORT, 0, issue_flags);
 +}
 +
- static int t7xx_pci_pm_suspend(struct device *dev)
+ static void ublk_cancel_queue(struct ublk_queue *ubq)
  {
- 	return __t7xx_pci_pm_suspend(to_pci_dev(dev));
-@@ -555,6 +572,7 @@ static int t7xx_pci_pm_runtime_resume(struct device *dev)
- }
+ 	int i;
+@@ -1133,8 +1138,8 @@ static void ublk_cancel_queue(struct ublk_queue *ubq)
+ 		struct ublk_io *io = &ubq->ios[i];
  
- static const struct dev_pm_ops t7xx_pci_pm_ops = {
-+	.prepare = t7xx_pci_pm_prepare,
- 	.suspend = t7xx_pci_pm_suspend,
- 	.resume = t7xx_pci_pm_resume,
- 	.resume_noirq = t7xx_pci_pm_resume_noirq,
-diff --git a/drivers/net/wwan/t7xx/t7xx_pci.h b/drivers/net/wwan/t7xx/t7xx_pci.h
-index 112efa534eace..f08f1ab744691 100644
---- a/drivers/net/wwan/t7xx/t7xx_pci.h
-+++ b/drivers/net/wwan/t7xx/t7xx_pci.h
-@@ -69,6 +69,7 @@ struct t7xx_pci_dev {
- 	struct t7xx_modem	*md;
- 	struct t7xx_ccmni_ctrl	*ccmni_ctlb;
- 	bool			rgu_pci_irq_en;
-+	struct completion	init_done;
+ 		if (io->flags & UBLK_IO_FLAG_ACTIVE)
+-			io_uring_cmd_done(io->cmd, UBLK_IO_RES_ABORT, 0,
+-						IO_URING_F_UNLOCKED);
++			io_uring_cmd_complete_in_task(io->cmd,
++						      ublk_cmd_cancel_cb);
+ 	}
  
- 	/* Low Power Items */
- 	struct list_head	md_pm_entities;
+ 	/* all io commands are canceled */
 -- 
 2.39.2
 
