@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F343AE45
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:25:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48BAC4339C;
-	Wed,  7 Jun 2023 20:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018953AE45
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:25:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74425C433EF;
+	Wed,  7 Jun 2023 20:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169501;
-	bh=NQKC4SN9UM8KchLda/8RBvpPfihMAde48nkwj0DacwU=;
+	s=korg; t=1686169503;
+	bh=LEXUqYnFYNBp/lSZwiBu4F7bB23102+sZXyYbD4ZC0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SOSYHVQ+QtrSiufc/JC6CvU9lQASIPc38AsHpppXyJizijVT9ftypWAZVXtwrXqV1
-	 iNgvroKBsNFoU+FU6N7oqDLgbhNHxTU9AYW09SKebtylA/q0lIrsX9yJD/acX546yO
-	 Lg6esKTwb7W/cmxs9fY7SNYwYNE8vaTl5cN2eQDo=
+	b=NsmlCN2pGSoJUHdbBH6Pk/CB/yXq6/OzSTZBle8MCfwdOX1fTl0RdYappbabixQpU
+	 FkQUXkO41huW0pNQhVP8A1SvpqGD82mmFZMHvWwC4kuFenJa2RNVIv5VKdn0dHPC5E
+	 dV0JFA5Dd7/QNC6+h80TY0BWdh5k9YUDjmWRrFY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Yong Wu <yong.wu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 065/286] iommu/mediatek: Flush IOTLB completely only if domain has been attached
-Date: Wed,  7 Jun 2023 22:12:44 +0200
-Message-ID: <20230607200925.190540763@linuxfoundation.org>
+Subject: [PATCH 6.3 098/286] hwmon: (k10temp) Add PCI ID for family 19, model 78h
+Date: Wed,  7 Jun 2023 22:13:17 +0200
+Message-ID: <20230607200926.261175307@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,55 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit b3fc95709c54ffbe80f16801e0a792a4d2b3d55e ]
+[ Upstream commit 7d8accfaa0ab65e4282c8e58950f7d688342cd86 ]
 
-If an IOMMU domain was never attached, it lacks any linkage to the
-actual IOMMU hardware. Attempting to do flush_iotlb_all() on it will
-result in a NULL pointer dereference. This seems to happen after the
-recent IOMMU core rework in v6.4-rc1.
+Enable k10temp on this system.
 
-    Unable to handle kernel read from unreadable memory at virtual address 0000000000000018
-    Call trace:
-     mtk_iommu_flush_iotlb_all+0x20/0x80
-     iommu_create_device_direct_mappings.part.0+0x13c/0x230
-     iommu_setup_default_domain+0x29c/0x4d0
-     iommu_probe_device+0x12c/0x190
-     of_iommu_configure+0x140/0x208
-     of_dma_configure_id+0x19c/0x3c0
-     platform_dma_configure+0x38/0x88
-     really_probe+0x78/0x2c0
+  [ bp: Massage. ]
 
-Check if the "bank" field has been filled in before actually attempting
-the IOTLB flush to avoid it. The IOTLB is also flushed when the device
-comes out of runtime suspend, so it should have a clean initial state.
-
-Fixes: 08500c43d4f7 ("iommu/mediatek: Adjust the structure")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Yong Wu <yong.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230526085402.394239-1-wenst@chromium.org
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230427053338.16653-3-mario.limonciello@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/k10temp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index 6a00ce208dc2b..248b8c2bc4071 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -738,7 +738,8 @@ static void mtk_iommu_flush_iotlb_all(struct iommu_domain *domain)
- {
- 	struct mtk_iommu_domain *dom = to_mtk_domain(domain);
- 
--	mtk_iommu_tlb_flush_all(dom->bank->parent_data);
-+	if (dom->bank)
-+		mtk_iommu_tlb_flush_all(dom->bank->parent_data);
- }
- 
- static void mtk_iommu_iotlb_sync(struct iommu_domain *domain,
+diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
+index be8bbb1c3a02d..823d0ca1d6059 100644
+--- a/drivers/hwmon/k10temp.c
++++ b/drivers/hwmon/k10temp.c
+@@ -507,6 +507,7 @@ static const struct pci_device_id k10temp_id_table[] = {
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M50H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M60H_DF_F3) },
+ 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M70H_DF_F3) },
++	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
+ 	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_AMD_17H_DF_F3) },
+ 	{}
+ };
 -- 
 2.39.2
 
