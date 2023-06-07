@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24D619535
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722FCC433D2;
-	Wed,  7 Jun 2023 20:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932B619535
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128C1C433D2;
+	Wed,  7 Jun 2023 20:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170106;
-	bh=ZkvU5hdkKNo/JRI0K7PSraH3Ns56rSaCQAKgMTRCbEY=;
+	s=korg; t=1686170109;
+	bh=NbX/+bpQFDnpPT67aMJd80TM1GVTx3BsKIpo5GTwgt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXZZfuGugN6/4IBM1qAjAk6BR27U9Yf3nz1EYDFRFqNO/bJtNTDr0isqaq7VWLRU3
-	 x1vGTngUD0HuuBAVyNDv0ymG4hIeCr2d6T6Rwj8izGTpUbrEys52i7W54xxdmbSd8r
-	 Dz8AQ8WgLzj9uVpRS1kmVR11I5aKjZoHzCAREOOM=
+	b=UvhXxpu8VXpqpbJLzSIEGvt86h/Uz7Ym3e9aIQNVeCv4oyE84DSjgi2GyKLv/204I
+	 WHlsiYowlxCIOZu/q0rbG3rS8Bc9BezmXQeGb+iADfy+nHNR+Lm9gRhoQ2t8PMDtyD
+	 4EIgeKN8t6q5ENyqFEXEOTLBgyBBaNG/jzQc0Qko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 47/88] media: ttusb-dec: fix memory leak in ttusb_dec_exit_dvb()
-Date: Wed,  7 Jun 2023 22:16:04 +0200
-Message-ID: <20230607200900.711624979@linuxfoundation.org>
+Subject: [PATCH 4.19 48/88] media: mn88443x: fix !CONFIG_OF error by drop of_match_ptr from ID table
+Date: Wed,  7 Jun 2023 22:16:05 +0200
+Message-ID: <20230607200900.744127107@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -35,41 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 517a281338322ff8293f988771c98aaa7205e457 ]
+[ Upstream commit ae11c0efaec32fb45130ee9886689f467232eebc ]
 
-Since dvb_frontend_detach() is not called in ttusb_dec_exit_dvb(),
-which is called when the device is disconnected, dvb_frontend_free()
-is not finally called.
+The driver will match mostly by DT table (even thought there is regular
+ID table) so there is little benefit in of_match_ptr (this also allows
+ACPI matching via PRP0001, even though it might not be relevant here).
+This also fixes !CONFIG_OF error:
 
-This causes a memory leak just by repeatedly plugging and
-unplugging the device.
+  drivers/media/dvb-frontends/mn88443x.c:782:34: error: ‘mn88443x_of_match’ defined but not used [-Werror=unused-const-variable=]
 
-Fix this issue by adding dvb_frontend_detach() to ttusb_dec_exit_dvb().
-
-Link: https://lore.kernel.org/linux-media/20221117045925.14297-5-imv4bel@gmail.com
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://lore.kernel.org/linux-media/20230312131318.351173-28-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/ttusb-dec/ttusb_dec.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/dvb-frontends/mn88443x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/ttusb-dec/ttusb_dec.c b/drivers/media/usb/ttusb-dec/ttusb_dec.c
-index f34efa7c61b40..c915e555897ba 100644
---- a/drivers/media/usb/ttusb-dec/ttusb_dec.c
-+++ b/drivers/media/usb/ttusb-dec/ttusb_dec.c
-@@ -1561,8 +1561,7 @@ static void ttusb_dec_exit_dvb(struct ttusb_dec *dec)
- 	dvb_dmx_release(&dec->demux);
- 	if (dec->fe) {
- 		dvb_unregister_frontend(dec->fe);
--		if (dec->fe->ops.release)
--			dec->fe->ops.release(dec->fe);
-+		dvb_frontend_detach(dec->fe);
- 	}
- 	dvb_unregister_adapter(&dec->adapter);
- }
+diff --git a/drivers/media/dvb-frontends/mn88443x.c b/drivers/media/dvb-frontends/mn88443x.c
+index 53981ff9422e0..2b6732d40b917 100644
+--- a/drivers/media/dvb-frontends/mn88443x.c
++++ b/drivers/media/dvb-frontends/mn88443x.c
+@@ -800,7 +800,7 @@ MODULE_DEVICE_TABLE(i2c, mn88443x_i2c_id);
+ static struct i2c_driver mn88443x_driver = {
+ 	.driver = {
+ 		.name = "mn88443x",
+-		.of_match_table = of_match_ptr(mn88443x_of_match),
++		.of_match_table = mn88443x_of_match,
+ 	},
+ 	.probe    = mn88443x_probe,
+ 	.remove   = mn88443x_remove,
 -- 
 2.39.2
 
