@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F1F19E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:41:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51B9C4339B;
-	Wed,  7 Jun 2023 20:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A9F19E58
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:41:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0EDC433EF;
+	Wed,  7 Jun 2023 20:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170503;
-	bh=JX+nrVURjyP+KRfBbp1VkQbPd7NZtc4TQcwVsolORiM=;
+	s=korg; t=1686170505;
+	bh=FLZX+UK/82eRVORB7fraCDojcz+FqC8P5JdFgT7Lx34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WblOwqNtuyobmYuhNMYw9kaomcTTgb07PSMS98CfZtjgEwwORT7D4zY+JVwkyDFnV
-	 xfh+vA3wQgF82fZsnqjgCR6E4gm4NJWo3ygvJBaPyUaAFGnhP4G/SepY8wcur4Om8/
-	 DcZzykl86iXAcKGJpDamnuBAh2dbTKBHePzcZsvY=
+	b=ny41H07HHb/eEbB/b6YoxGSrvIhiXevCDYYOUm/z6ba2MHhOst4pSFh8o1DVYewsI
+	 jFMqBQs50P9tWTz+wnYU5Mo+JAc6oYY8C2w8kp0zreiqQfAimfDEZyk+AMtiGFsoyu
+	 dmanAtESdQllUCtFKRzLQqRuNbMCMR5DfsiYwn7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/225] s390/pkey: zeroize key blobs
-Date: Wed,  7 Jun 2023 22:15:02 +0200
-Message-ID: <20230607200917.946469333@linuxfoundation.org>
+Subject: [PATCH 6.1 110/225] s390/topology: honour nr_cpu_ids when adding CPUs
+Date: Wed,  7 Jun 2023 22:15:03 +0200
+Message-ID: <20230607200917.978460544@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,50 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-[ Upstream commit 844cf829e5f33e00b279230470c8c93b58b8c16f ]
+[ Upstream commit a33239be2d38ff5a44427db1707c08787508d34a ]
 
-Key blobs for the IOCTLs PKEY_KBLOB2PROTK[23] may contain clear key
-material. Zeroize the copies of these keys in kernel memory after
-creating the protected key.
+When SMT thread CPUs are added to CPU masks the nr_cpu_ids
+limit is not checked and could be exceeded. This leads to
+a warning for example if CONFIG_DEBUG_PER_CPU_MAPS is set
+and the command line parameter nr_cpus is set to 1.
 
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/pkey_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/s390/kernel/topology.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index 5a05d1cdfec20..a8def50c149bd 100644
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -1293,6 +1293,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 			return PTR_ERR(kkey);
- 		rc = pkey_keyblob2pkey(kkey, ktp.keylen, &ktp.protkey);
- 		DEBUG_DBG("%s pkey_keyblob2pkey()=%d\n", __func__, rc);
-+		memzero_explicit(kkey, ktp.keylen);
- 		kfree(kkey);
- 		if (rc)
- 			break;
-@@ -1426,6 +1427,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 					kkey, ktp.keylen, &ktp.protkey);
- 		DEBUG_DBG("%s pkey_keyblob2pkey2()=%d\n", __func__, rc);
- 		kfree(apqns);
-+		memzero_explicit(kkey, ktp.keylen);
- 		kfree(kkey);
- 		if (rc)
- 			break;
-@@ -1552,6 +1554,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 					protkey, &protkeylen);
- 		DEBUG_DBG("%s pkey_keyblob2pkey3()=%d\n", __func__, rc);
- 		kfree(apqns);
-+		memzero_explicit(kkey, ktp.keylen);
- 		kfree(kkey);
- 		if (rc) {
- 			kfree(protkey);
+diff --git a/arch/s390/kernel/topology.c b/arch/s390/kernel/topology.c
+index c6eecd4a5302d..10b20aeb27d3b 100644
+--- a/arch/s390/kernel/topology.c
++++ b/arch/s390/kernel/topology.c
+@@ -95,7 +95,7 @@ static void cpu_group_map(cpumask_t *dst, struct mask_info *info, unsigned int c
+ static void cpu_thread_map(cpumask_t *dst, unsigned int cpu)
+ {
+ 	static cpumask_t mask;
+-	int i;
++	unsigned int max_cpu;
+ 
+ 	cpumask_clear(&mask);
+ 	if (!cpumask_test_cpu(cpu, &cpu_setup_mask))
+@@ -104,9 +104,10 @@ static void cpu_thread_map(cpumask_t *dst, unsigned int cpu)
+ 	if (topology_mode != TOPOLOGY_MODE_HW)
+ 		goto out;
+ 	cpu -= cpu % (smp_cpu_mtid + 1);
+-	for (i = 0; i <= smp_cpu_mtid; i++) {
+-		if (cpumask_test_cpu(cpu + i, &cpu_setup_mask))
+-			cpumask_set_cpu(cpu + i, &mask);
++	max_cpu = min(cpu + smp_cpu_mtid, nr_cpu_ids - 1);
++	for (; cpu <= max_cpu; cpu++) {
++		if (cpumask_test_cpu(cpu, &cpu_setup_mask))
++			cpumask_set_cpu(cpu, &mask);
+ 	}
+ out:
+ 	cpumask_copy(dst, &mask);
+@@ -123,25 +124,26 @@ static void add_cpus_to_mask(struct topology_core *tl_core,
+ 	unsigned int core;
+ 
+ 	for_each_set_bit(core, &tl_core->mask, TOPOLOGY_CORE_BITS) {
+-		unsigned int rcore;
+-		int lcpu, i;
++		unsigned int max_cpu, rcore;
++		int cpu;
+ 
+ 		rcore = TOPOLOGY_CORE_BITS - 1 - core + tl_core->origin;
+-		lcpu = smp_find_processor_id(rcore << smp_cpu_mt_shift);
+-		if (lcpu < 0)
++		cpu = smp_find_processor_id(rcore << smp_cpu_mt_shift);
++		if (cpu < 0)
+ 			continue;
+-		for (i = 0; i <= smp_cpu_mtid; i++) {
+-			topo = &cpu_topology[lcpu + i];
++		max_cpu = min(cpu + smp_cpu_mtid, nr_cpu_ids - 1);
++		for (; cpu <= max_cpu; cpu++) {
++			topo = &cpu_topology[cpu];
+ 			topo->drawer_id = drawer->id;
+ 			topo->book_id = book->id;
+ 			topo->socket_id = socket->id;
+ 			topo->core_id = rcore;
+-			topo->thread_id = lcpu + i;
++			topo->thread_id = cpu;
+ 			topo->dedicated = tl_core->d;
+-			cpumask_set_cpu(lcpu + i, &drawer->mask);
+-			cpumask_set_cpu(lcpu + i, &book->mask);
+-			cpumask_set_cpu(lcpu + i, &socket->mask);
+-			smp_cpu_set_polarization(lcpu + i, tl_core->pp);
++			cpumask_set_cpu(cpu, &drawer->mask);
++			cpumask_set_cpu(cpu, &book->mask);
++			cpumask_set_cpu(cpu, &socket->mask);
++			smp_cpu_set_polarization(cpu, tl_core->pp);
+ 		}
+ 	}
+ }
 -- 
 2.39.2
 
