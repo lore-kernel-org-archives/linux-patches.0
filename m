@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323EE3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAAAC433EF;
-	Wed,  7 Jun 2023 20:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B773922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A724C433EF;
+	Wed,  7 Jun 2023 20:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171532;
-	bh=y5Y1ZMu0vUNhf8febkEcDIU+Jf9TgpuNUDcfQOpSZC0=;
+	s=korg; t=1686171534;
+	bh=ANgRJ7ub0peL9/r3P+lPVfLhYchmVfojVvwGuHpSkhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CQZPatgrBWGC7jMdqF7P3BNx+WUYfghYdudImhhni9TyLFbQrF9F7KvT6BHSnsXsr
-	 iVDGpoGTxiTxbJCBvddO3GK6XxYSQmSExAb7E+IeM46ZX7WthPhFsOL7it1jPU9s/y
-	 U1M8kap4tjOd7nUAIc/WoAewvv46oz4VOAKOvjUI=
+	b=MNTsCIG/kOa1428hAMIxz2nkS6NgWvqBBeqVBbHYkwJUvDTYP9sGMpcxYL1FxpbmM
+	 3qwtzZjQ3Pf8dRvXK63FF0DEr0c1dVqM1y5fLh7PH3BFnqNJ8aJwyVZF7zi5ajp2Mp
+	 xMWuFGS1Eg6HvLukQ7pvqIMHSkmkWO2uhet0czZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/159] btrfs: abort transaction when sibling keys check fails for leaves
-Date: Wed,  7 Jun 2023 22:15:49 +0200
-Message-ID: <20230607200905.193952380@linuxfoundation.org>
+Subject: [PATCH 5.15 055/159] block/rnbd: replace REQ_OP_FLUSH with REQ_OP_WRITE
+Date: Wed,  7 Jun 2023 22:15:58 +0200
+Message-ID: <20230607200905.488729185@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,54 +37,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit 9ae5afd02a03d4e22a17a9609b19400b77c36273 ]
+[ Upstream commit 5e6e08087a4acb4ee3574cea32dbff0f63c7f608 ]
 
-If the sibling keys check fails before we move keys from one sibling
-leaf to another, we are not aborting the transaction - we leave that to
-some higher level caller of btrfs_search_slot() (or anything else that
-uses it to insert items into a b+tree).
+Since flush bios are implemented as writes with no data and
+the preflush flag per Christoph's comment [1].
 
-This means that the transaction abort will provide a stack trace that
-omits the b+tree modification call chain. So change this to immediately
-abort the transaction and therefore get a more useful stack trace that
-shows us the call chain in the bt+tree modification code.
+And we need to change it in rnbd accordingly. Otherwise, I
+got splatting when create fs from rnbd client.
 
-It's also important to immediately abort the transaction just in case
-some higher level caller is not doing it, as this indicates a very
-serious corruption and we should stop the possibility of doing further
-damage.
+[  464.028545] ------------[ cut here ]------------
+[  464.028553] WARNING: CPU: 0 PID: 65 at block/blk-core.c:751 submit_bio_noacct+0x32c/0x5d0
+[ ... ]
+[  464.028668] CPU: 0 PID: 65 Comm: kworker/0:1H Tainted: G           OE      6.4.0-rc1 #9
+[  464.028671] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.15.0-0-g2dd4b9b-rebuilt.opensuse.org 04/01/2014
+[  464.028673] Workqueue: ib-comp-wq ib_cq_poll_work [ib_core]
+[  464.028717] RIP: 0010:submit_bio_noacct+0x32c/0x5d0
+[  464.028720] Code: 03 0f 85 51 fe ff ff 48 8b 43 18 8b 88 04 03 00 00 85 c9 0f 85 3f fe ff ff e9 be fd ff ff 0f b6 d0 3c 0d 74 26 83 fa 01 74 21 <0f> 0b b8 0a 00 00 00 e9 56 fd ff ff 4c 89 e7 e8 70 a1 03 00 84 c0
+[  464.028722] RSP: 0018:ffffaf3680b57c68 EFLAGS: 00010202
+[  464.028724] RAX: 0000000000060802 RBX: ffffa09dcc18bf00 RCX: 0000000000000000
+[  464.028726] RDX: 0000000000000002 RSI: 0000000000000000 RDI: ffffa09dde081d00
+[  464.028727] RBP: ffffaf3680b57c98 R08: ffffa09dde081d00 R09: ffffa09e38327200
+[  464.028729] R10: 0000000000000000 R11: 0000000000000000 R12: ffffa09dde081d00
+[  464.028730] R13: ffffa09dcb06e1e8 R14: 0000000000000000 R15: 0000000000200000
+[  464.028733] FS:  0000000000000000(0000) GS:ffffa09e3bc00000(0000) knlGS:0000000000000000
+[  464.028735] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  464.028736] CR2: 000055a4e8206c40 CR3: 0000000119f06000 CR4: 00000000003506f0
+[  464.028738] Call Trace:
+[  464.028740]  <TASK>
+[  464.028746]  submit_bio+0x1b/0x80
+[  464.028748]  rnbd_srv_rdma_ev+0x50d/0x10c0 [rnbd_server]
+[  464.028754]  ? percpu_ref_get_many.constprop.0+0x55/0x140 [rtrs_server]
+[  464.028760]  ? __this_cpu_preempt_check+0x13/0x20
+[  464.028769]  process_io_req+0x1dc/0x450 [rtrs_server]
+[  464.028775]  rtrs_srv_inv_rkey_done+0x67/0xb0 [rtrs_server]
+[  464.028780]  __ib_process_cq+0xbc/0x1f0 [ib_core]
+[  464.028793]  ib_cq_poll_work+0x2b/0xa0 [ib_core]
+[  464.028804]  process_one_work+0x2a9/0x580
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+[1]. https://lore.kernel.org/all/ZFHgefWofVt24tRl@infradead.org/
+
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20230512034631.28686-1-guoqing.jiang@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/rnbd/rnbd-proto.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index a31986ca9224e..1a19354382b2b 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -2907,6 +2907,7 @@ static int push_leaf_right(struct btrfs_trans_handle *trans, struct btrfs_root
- 
- 	if (check_sibling_keys(left, right)) {
- 		ret = -EUCLEAN;
-+		btrfs_abort_transaction(trans, ret);
- 		btrfs_tree_unlock(right);
- 		free_extent_buffer(right);
- 		return ret;
-@@ -3150,6 +3151,7 @@ static int push_leaf_left(struct btrfs_trans_handle *trans, struct btrfs_root
- 
- 	if (check_sibling_keys(left, right)) {
- 		ret = -EUCLEAN;
-+		btrfs_abort_transaction(trans, ret);
- 		goto out;
- 	}
- 	return __push_leaf_left(path, min_data_size,
+diff --git a/drivers/block/rnbd/rnbd-proto.h b/drivers/block/rnbd/rnbd-proto.h
+index c1bc5c0fef71d..e0fe0a9aa3708 100644
+--- a/drivers/block/rnbd/rnbd-proto.h
++++ b/drivers/block/rnbd/rnbd-proto.h
+@@ -241,7 +241,7 @@ static inline u32 rnbd_to_bio_flags(u32 rnbd_opf)
+ 		bio_opf = REQ_OP_WRITE;
+ 		break;
+ 	case RNBD_OP_FLUSH:
+-		bio_opf = REQ_OP_FLUSH | REQ_PREFLUSH;
++		bio_opf = REQ_OP_WRITE | REQ_PREFLUSH;
+ 		break;
+ 	case RNBD_OP_DISCARD:
+ 		bio_opf = REQ_OP_DISCARD;
 -- 
 2.39.2
 
