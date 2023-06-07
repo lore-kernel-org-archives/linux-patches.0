@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6680B370DE
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6925C433EF;
-	Wed,  7 Jun 2023 20:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A9A370DE
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724DDC433EF;
+	Wed,  7 Jun 2023 20:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170885;
-	bh=cnZqmU6XKQ1LnKjYxGZbF5tNLBpeh4utC7RkstxFJBA=;
+	s=korg; t=1686170887;
+	bh=u7cy8HaOMQAPe80l3o85eA8aEHWRS6IKOM4djiaGeRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07CtFiBYIxPvgnJbHT1YRvGcmURJVudmzPSZiwjdsSezoThyvPs5bNZk+OSgfLtMA
-	 f4JkK7fy2sTiodngR+6OhTz/iO6klVzIVyqq3gN1mp5BaD1h++wxLCC19jjNv7gQUt
-	 Mx3KQZeVk4+gqZTO6UmkbgltyYWfZssGU2l8a+N8=
+	b=y0G6IBCbEAVWoOefdcRiCNu0vbdfHK5aGU186WWDlWsvS/aEouMIeMOFQDA/Tm86B
+	 6IgSVjTj5oo86L0Bnv6160lYb1jrASt1r6JRB43MMRkJrZtGvI5LaapYzoDovQK8/i
+	 /cITiWEJui74TPkXOrDFo9x8zFDVvegabWuGRQTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Shay Drory <shayd@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Firas Jahjah <firasj@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/120] net/mlx5: Read embedded cpu after init bit cleared
-Date: Wed,  7 Jun 2023 22:15:44 +0200
-Message-ID: <20230607200901.799748549@linuxfoundation.org>
+Subject: [PATCH 5.10 003/120] RDMA/efa: Fix unsupported page sizes in device
+Date: Wed,  7 Jun 2023 22:15:19 +0200
+Message-ID: <20230607200901.027229705@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -36,46 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Yonatan Nachum <ynachum@amazon.com>
 
-[ Upstream commit bbfa4b58997e3d38ba629c9f6fc0bd1c163aaf43 ]
+[ Upstream commit 866422cdddcdf59d8c68e9472d49ba1be29b5fcf ]
 
-During driver load it reads embedded_cpu bit from initialization
-segment, but the initialization segment is readable only after
-initialization bit is cleared.
+Device uses 4KB size blocks for user pages indirect list while the
+driver creates those blocks with the size of PAGE_SIZE of the kernel. On
+kernels with PAGE_SIZE different than 4KB (ARM RHEL), this leads to a
+failure on register MR with indirect list because of the miss
+communication between driver and device.
 
-Move the call to mlx5_read_embedded_cpu() right after initialization bit
-cleared.
-
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Fixes: 591905ba9679 ("net/mlx5: Introduce Mellanox SmartNIC and modify page management logic")
-Reviewed-by: Shay Drory <shayd@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
+Link: https://lore.kernel.org/r/20230511115103.13876-1-ynachum@amazon.com
+Reviewed-by: Firas Jahjah <firasj@amazon.com>
+Reviewed-by: Michael Margolin <mrgolin@amazon.com>
+Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 2 +-
+ drivers/infiniband/hw/efa/efa_verbs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index da4ca0f67e9ce..22907f6364f54 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -783,7 +783,6 @@ static int mlx5_pci_init(struct mlx5_core_dev *dev, struct pci_dev *pdev,
- 	}
+diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+index 2ece682c7835b..9cf051818725c 100644
+--- a/drivers/infiniband/hw/efa/efa_verbs.c
++++ b/drivers/infiniband/hw/efa/efa_verbs.c
+@@ -1328,7 +1328,7 @@ static int pbl_continuous_initialize(struct efa_dev *dev,
+  */
+ static int pbl_indirect_initialize(struct efa_dev *dev, struct pbl_context *pbl)
+ {
+-	u32 size_in_pages = DIV_ROUND_UP(pbl->pbl_buf_size_in_bytes, PAGE_SIZE);
++	u32 size_in_pages = DIV_ROUND_UP(pbl->pbl_buf_size_in_bytes, EFA_CHUNK_PAYLOAD_SIZE);
+ 	struct scatterlist *sgl;
+ 	int sg_dma_cnt, err;
  
- 	mlx5_pci_vsc_init(dev);
--	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
- 	return 0;
- 
- err_clr_master:
-@@ -978,6 +977,7 @@ static int mlx5_function_setup(struct mlx5_core_dev *dev, bool boot)
- 		goto err_cmd_cleanup;
- 	}
- 
-+	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
- 	mlx5_cmd_set_state(dev, MLX5_CMDIF_STATE_UP);
- 
- 	err = mlx5_core_enable_hca(dev, 0);
 -- 
 2.39.2
 
