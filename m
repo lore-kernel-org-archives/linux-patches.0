@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5130919E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54B1C433D2;
-	Wed,  7 Jun 2023 20:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3481319E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE7EC433EF;
+	Wed,  7 Jun 2023 20:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170266;
-	bh=5EyFGGi44qqO3kvQGy5LGPsVuZDLYemBmcYj8NIYIAI=;
+	s=korg; t=1686170268;
+	bh=QJ1v6E+J2n4TiuZWj8TF8X3xrvx/vpaVZthwk8v0VEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eFKi2dc5O80+AYq1cGU+blhB6gEuFUs6qXDwvnr9STQidpLUszb3xtlr0Oi2/5sd7
-	 +i3Mf+BlXiiMxHnbj//uXdL2p2+bpKSIqUOz1RlnuVSL92M12+cS2N/9UW/7FJuVo6
-	 Jg5ubvo/I5KQuDDDSh18F9cRLz4eqpWhYsKComR0=
+	b=VwneQpMB4rYqXgnqJ9gBMaE4x6koxDxKlfK7fqW0qjSzhopqP+GjIh4RlDYnhfUrZ
+	 ww71nHSf7cuplf0nOkmqhgZ5D3XX6PhmF92RHReLJVXnYpYP7/KiMkiSJw+X/kl2Jr
+	 0ABYIoYEdxst0dmyuJp2zfZ5GzN8Ve4HxGIjDoOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Dmytro Linkin <dlinkin@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/225] phy: amlogic: phy-meson-g12a-mipi-dphy-analog: fix CNTL2_DIF_TX_CTL0 value
-Date: Wed,  7 Jun 2023 22:13:15 +0200
-Message-ID: <20230607200913.418618177@linuxfoundation.org>
+Subject: [PATCH 6.1 020/225] net/mlx5e: Dont attach netdev profile while handling internal error
+Date: Wed,  7 Jun 2023 22:13:33 +0200
+Message-ID: <20230607200914.969019076@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,35 +35,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Dmytro Linkin <dlinkin@nvidia.com>
 
-[ Upstream commit b949193011540bb17cf1da7795ec42af1b875203 ]
+[ Upstream commit bdf274750fca17b289404ef03453c4070725302c ]
 
-Use the same CNTL2_DIF_TX_CTL0 value used by the vendor, it was reported
-fixing timings issues.
+As part of switchdev mode disablement, driver changes port netdevice
+profile from uplink to nic. If this process is triggered by health
+recovery flow (PCI reset, for ex.) profile attach would fail because all
+fw commands aborted when internal error flag is set. As a result, nic
+netdevice profile is not attached and driver fails to rollback to uplink
+profile, which leave driver in broken state and cause crash later.
 
-Fixes: 2a56dc650e54 ("phy: amlogic: Add G12A Analog MIPI D-PHY driver")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230512-amlogic-v6-4-upstream-dsi-ccf-vim3-v4-10-2592c29ea263@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+To handle broken state do netdevice profile initialization only instead
+of full attachment and release mdev resources on driver suspend as
+expected. Actual netdevice attachment is done during driver load.
+
+Fixes: c4d7eb57687f ("net/mxl5e: Add change profile method")
+Signed-off-by: Dmytro Linkin <dlinkin@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/amlogic/phy-meson-g12a-mipi-dphy-analog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlx5/core/en_main.c | 35 ++++++++++++++++---
+ 1 file changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/phy/amlogic/phy-meson-g12a-mipi-dphy-analog.c b/drivers/phy/amlogic/phy-meson-g12a-mipi-dphy-analog.c
-index c14089fa7db49..cabdddbbabfd7 100644
---- a/drivers/phy/amlogic/phy-meson-g12a-mipi-dphy-analog.c
-+++ b/drivers/phy/amlogic/phy-meson-g12a-mipi-dphy-analog.c
-@@ -70,7 +70,7 @@ static int phy_g12a_mipi_dphy_analog_power_on(struct phy *phy)
- 		     HHI_MIPI_CNTL1_BANDGAP);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 94d010e2d5efd..4e7daa382bc05 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5745,8 +5745,8 @@ void mlx5e_detach_netdev(struct mlx5e_priv *priv)
+ }
  
- 	regmap_write(priv->regmap, HHI_MIPI_CNTL2,
--		     FIELD_PREP(HHI_MIPI_CNTL2_DIF_TX_CTL0, 0x459) |
-+		     FIELD_PREP(HHI_MIPI_CNTL2_DIF_TX_CTL0, 0x45a) |
- 		     FIELD_PREP(HHI_MIPI_CNTL2_DIF_TX_CTL1, 0x2680));
+ static int
+-mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
+-			    const struct mlx5e_profile *new_profile, void *new_ppriv)
++mlx5e_netdev_init_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
++			  const struct mlx5e_profile *new_profile, void *new_ppriv)
+ {
+ 	struct mlx5e_priv *priv = netdev_priv(netdev);
+ 	int err;
+@@ -5762,6 +5762,25 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
+ 	err = new_profile->init(priv->mdev, priv->netdev);
+ 	if (err)
+ 		goto priv_cleanup;
++
++	return 0;
++
++priv_cleanup:
++	mlx5e_priv_cleanup(priv);
++	return err;
++}
++
++static int
++mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
++			    const struct mlx5e_profile *new_profile, void *new_ppriv)
++{
++	struct mlx5e_priv *priv = netdev_priv(netdev);
++	int err;
++
++	err = mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
++	if (err)
++		return err;
++
+ 	err = mlx5e_attach_netdev(priv);
+ 	if (err)
+ 		goto profile_cleanup;
+@@ -5769,7 +5788,6 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
  
- 	reg = DSI_LANE_CLK;
+ profile_cleanup:
+ 	new_profile->cleanup(priv);
+-priv_cleanup:
+ 	mlx5e_priv_cleanup(priv);
+ 	return err;
+ }
+@@ -5788,6 +5806,12 @@ int mlx5e_netdev_change_profile(struct mlx5e_priv *priv,
+ 	priv->profile->cleanup(priv);
+ 	mlx5e_priv_cleanup(priv);
+ 
++	if (mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR) {
++		mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
++		set_bit(MLX5E_STATE_DESTROYING, &priv->state);
++		return -EIO;
++	}
++
+ 	err = mlx5e_netdev_attach_profile(netdev, mdev, new_profile, new_ppriv);
+ 	if (err) { /* roll back to original profile */
+ 		netdev_warn(netdev, "%s: new profile init failed, %d\n", __func__, err);
+@@ -5847,8 +5871,11 @@ static int mlx5e_suspend(struct auxiliary_device *adev, pm_message_t state)
+ 	struct net_device *netdev = priv->netdev;
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 
+-	if (!netif_device_present(netdev))
++	if (!netif_device_present(netdev)) {
++		if (test_bit(MLX5E_STATE_DESTROYING, &priv->state))
++			mlx5e_destroy_mdev_resources(mdev);
+ 		return -ENODEV;
++	}
+ 
+ 	mlx5e_detach_netdev(priv);
+ 	mlx5e_destroy_mdev_resources(mdev);
 -- 
 2.39.2
 
