@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7163922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31E5C433D2;
-	Wed,  7 Jun 2023 20:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F7C3922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E03C433EF;
+	Wed,  7 Jun 2023 20:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171508;
-	bh=ufHUNAaXI8Zwpwwg7rS9zsB35IXduj/JQksFGgChIVY=;
+	s=korg; t=1686171511;
+	bh=pqzdTNgUwHqgceYCq0XJCIoUPvNv3LVkJxE36qND4w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCFn6Q4ZrleUNdQoRbRO7dQmSVufZ/Jd+ns75ruVxBzOMgf8MXrJJF3SCpkP1dCZx
-	 7Pd1BMWZ5GlkNM/2td/Q76IciOlVG4S+mV0lNM6uYwpPzpqoJLMgjnC0Wx3G6k+5pl
-	 7OrBargVWktZIbOO7fnEr6pUXKGYFg7EacDV4DN8=
+	b=fEuMimvKTfkVv9rpqYc8sEhl/p5EHhUBv8kuxiMwoi2493y5sM1ojFPHB3GwQ2NLF
+	 37MJlOPUXeqnZPtN/dVpcUbibrpmfNAqt8f3WgoOnIiLZOI/LrMsgypFeVjvUDhC2t
+	 sEC9pBZfUC4kq9+cUaRUevII0HEmUHgkdhvlkXIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lyndonli <Lyndon.Li@amd.com>,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Feifei Xu <Feifei.Xu@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Lee Jones <lee@kernel.org>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/159] drm/amdgpu: Use the default reset when loading or reloading the driver
-Date: Wed,  7 Jun 2023 22:15:46 +0200
-Message-ID: <20230607200905.094667469@linuxfoundation.org>
+Subject: [PATCH 5.15 044/159] mailbox: mailbox-test: Fix potential double-free in mbox_test_message_write()
+Date: Wed,  7 Jun 2023 22:15:47 +0200
+Message-ID: <20230607200905.128076620@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -38,74 +35,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: lyndonli <Lyndon.Li@amd.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 4eea7fb980dc44545a32eec92e2662053b34cd9d ]
+[ Upstream commit 2d1e952a2b8e5e92d8d55ac88a7cf7ca5ea591ad ]
 
-Below call trace and errors are observed when reloading
-amdgpu driver with the module parameter reset_method=3.
+If a user can make copy_from_user() fail, there is a potential for
+UAF/DF due to a lack of locking around the allocation, use and freeing
+of the data buffers.
 
-It should do a default reset when loading or reloading the
-driver, regardless of the module parameter reset_method.
+This issue is not theoretical.  I managed to author a POC for it:
 
-v2: add comments inside and modify commit messages.
+    BUG: KASAN: double-free in kfree+0x5c/0xac
+    Free of addr ffff29280be5de00 by task poc/356
+    CPU: 1 PID: 356 Comm: poc Not tainted 6.1.0-00001-g961aa6552c04-dirty #20
+    Hardware name: linux,dummy-virt (DT)
+    Call trace:
+     dump_backtrace.part.0+0xe0/0xf0
+     show_stack+0x18/0x40
+     dump_stack_lvl+0x64/0x80
+     print_report+0x188/0x48c
+     kasan_report_invalid_free+0xa0/0xc0
+     ____kasan_slab_free+0x174/0x1b0
+     __kasan_slab_free+0x18/0x24
+     __kmem_cache_free+0x130/0x2e0
+     kfree+0x5c/0xac
+     mbox_test_message_write+0x208/0x29c
+     full_proxy_write+0x90/0xf0
+     vfs_write+0x154/0x440
+     ksys_write+0xcc/0x180
+     __arm64_sys_write+0x44/0x60
+     invoke_syscall+0x60/0x190
+     el0_svc_common.constprop.0+0x7c/0x160
+     do_el0_svc+0x40/0xf0
+     el0_svc+0x2c/0x6c
+     el0t_64_sync_handler+0xf4/0x120
+     el0t_64_sync+0x18c/0x190
 
-[  +2.180243] [drm] psp gfx command ID_LOAD_TOC(0x20) failed
-and response status is (0x0)
-[  +0.000011] [drm:psp_hw_start [amdgpu]] *ERROR* Failed to load toc
-[  +0.000890] [drm:psp_hw_start [amdgpu]] *ERROR* PSP tmr init failed!
-[  +0.020683] [drm:amdgpu_fill_buffer [amdgpu]] *ERROR* Trying to
-clear memory with ring turned off.
-[  +0.000003] RIP: 0010:amdgpu_bo_release_notify+0x1ef/0x210 [amdgpu]
-[  +0.000004] Call Trace:
-[  +0.000003]  <TASK>
-[  +0.000008]  ttm_bo_release+0x2c4/0x330 [amdttm]
-[  +0.000026]  amdttm_bo_put+0x3c/0x70 [amdttm]
-[  +0.000020]  amdgpu_bo_free_kernel+0xe6/0x140 [amdgpu]
-[  +0.000728]  psp_v11_0_ring_destroy+0x34/0x60 [amdgpu]
-[  +0.000826]  psp_hw_init+0xe7/0x2f0 [amdgpu]
-[  +0.000813]  amdgpu_device_fw_loading+0x1ad/0x2d0 [amdgpu]
-[  +0.000731]  amdgpu_device_init.cold+0x108e/0x2002 [amdgpu]
-[  +0.001071]  ? do_pci_enable_device+0xe1/0x110
-[  +0.000011]  amdgpu_driver_load_kms+0x1a/0x160 [amdgpu]
-[  +0.000729]  amdgpu_pci_probe+0x179/0x3a0 [amdgpu]
+    Allocated by task 356:
+     kasan_save_stack+0x3c/0x70
+     kasan_set_track+0x2c/0x40
+     kasan_save_alloc_info+0x24/0x34
+     __kasan_kmalloc+0xb8/0xc0
+     kmalloc_trace+0x58/0x70
+     mbox_test_message_write+0x6c/0x29c
+     full_proxy_write+0x90/0xf0
+     vfs_write+0x154/0x440
+     ksys_write+0xcc/0x180
+     __arm64_sys_write+0x44/0x60
+     invoke_syscall+0x60/0x190
+     el0_svc_common.constprop.0+0x7c/0x160
+     do_el0_svc+0x40/0xf0
+     el0_svc+0x2c/0x6c
+     el0t_64_sync_handler+0xf4/0x120
+     el0t_64_sync+0x18c/0x190
 
-Signed-off-by: lyndonli <Lyndon.Li@amd.com>
-Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+    Freed by task 357:
+     kasan_save_stack+0x3c/0x70
+     kasan_set_track+0x2c/0x40
+     kasan_save_free_info+0x38/0x5c
+     ____kasan_slab_free+0x13c/0x1b0
+     __kasan_slab_free+0x18/0x24
+     __kmem_cache_free+0x130/0x2e0
+     kfree+0x5c/0xac
+     mbox_test_message_write+0x208/0x29c
+     full_proxy_write+0x90/0xf0
+     vfs_write+0x154/0x440
+     ksys_write+0xcc/0x180
+     __arm64_sys_write+0x44/0x60
+     invoke_syscall+0x60/0x190
+     el0_svc_common.constprop.0+0x7c/0x160
+     do_el0_svc+0x40/0xf0
+     el0_svc+0x2c/0x6c
+     el0t_64_sync_handler+0xf4/0x120
+     el0t_64_sync+0x18c/0x190
+
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 7 +++++++
+ drivers/mailbox/mailbox-test.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 9da85ef711e88..642acfc9f0b1f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3494,6 +3494,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	int r, i;
- 	bool px = false;
- 	u32 max_MBps;
-+	int tmp;
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index 4555d678fadda..6dd5b9614452b 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -12,6 +12,7 @@
+ #include <linux/kernel.h>
+ #include <linux/mailbox_client.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/poll.h>
+@@ -38,6 +39,7 @@ struct mbox_test_device {
+ 	char			*signal;
+ 	char			*message;
+ 	spinlock_t		lock;
++	struct mutex		mutex;
+ 	wait_queue_head_t	waitq;
+ 	struct fasync_struct	*async_queue;
+ 	struct dentry		*root_debugfs_dir;
+@@ -110,6 +112,8 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 		return -EINVAL;
+ 	}
  
- 	adev->shutdown = false;
- 	adev->flags = flags;
-@@ -3693,7 +3694,13 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 				}
- 			}
- 		} else {
-+			tmp = amdgpu_reset_method;
-+			/* It should do a default reset when loading or reloading the driver,
-+			 * regardless of the module parameter reset_method.
-+			 */
-+			amdgpu_reset_method = AMD_RESET_METHOD_NONE;
- 			r = amdgpu_asic_reset(adev);
-+			amdgpu_reset_method = tmp;
- 			if (r) {
- 				dev_err(adev->dev, "asic reset on init failed\n");
- 				goto failed;
++	mutex_lock(&tdev->mutex);
++
+ 	tdev->message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
+ 	if (!tdev->message)
+ 		return -ENOMEM;
+@@ -144,6 +148,8 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 	kfree(tdev->message);
+ 	tdev->signal = NULL;
+ 
++	mutex_unlock(&tdev->mutex);
++
+ 	return ret < 0 ? ret : count;
+ }
+ 
+@@ -392,6 +398,7 @@ static int mbox_test_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, tdev);
+ 
+ 	spin_lock_init(&tdev->lock);
++	mutex_init(&tdev->mutex);
+ 
+ 	if (tdev->rx_channel) {
+ 		tdev->rx_buffer = devm_kzalloc(&pdev->dev,
 -- 
 2.39.2
 
