@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FFD34CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6ADC4339B;
-	Wed,  7 Jun 2023 20:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31BC34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CD9C4339B;
+	Wed,  7 Jun 2023 20:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170658;
-	bh=qJYWbFs031S9YRto7y5Vk//A1evh4fxskVfSmDMNcpA=;
+	s=korg; t=1686170661;
+	bh=/f62AiZafCxzs0GM7Jz39TrKx5zO6boPsFlgNHPfD3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mce1aOQn/8W65h/fGFde3vHic7xbY9B7HzG+fKTQ/2NgNaa9lpr/XRp1W7xeQ0Ka3
-	 fUKaYMu+BcF3B5FWetdG4xti970fzKfxKjTwFcPCAm1LVR6RsA7pik5F40aKLnpuEX
-	 0BpRy0T9ilN+67VvRJvjjWKc8SKdNJ5EbF9AN/AQ=
+	b=zxzxDyBpIceIG2M4D2ykdk+f28BSQEw6ia193Oxo3Y0l76IXF6wjBxgtV5WK5VHCc
+	 iImfB7UPn4fgSOflSIcGe7M8QnGUoVk5HYd3xqMHeg7ucL8vCBuPK2MSkgX2V2JUSj
+	 uECcTqWpQLEK9JJZH7z7vyXZ61W8QQ3uiDGmtLCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 169/225] drm/amd/pm: reverse mclk and fclk clocks levels for yellow carp
-Date: Wed,  7 Jun 2023 22:16:02 +0200
-Message-ID: <20230607200919.922245833@linuxfoundation.org>
+	Paul Cercueil <paul@crapouillou.net>,
+	Alisa Roman <alisa.roman@analog.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 152/225] iio: adc: ad7192: Change "shorted" channels to differential
+Date: Wed,  7 Jun 2023 22:15:45 +0200
+Message-ID: <20230607200919.383004164@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,54 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Paul Cercueil <paul@crapouillou.net>
 
-commit f1373a97a41f429e0095d4be388092ffa3c1a157 upstream.
+commit e55245d115bb9054cb72cdd5dda5660f4484873a upstream.
 
-This patch reverses the DPM clocks levels output of pp_dpm_mclk
-and pp_dpm_fclk.
+The AD7192 provides a specific channel configuration where both negative
+and positive inputs are connected to AIN2. This was represented in the
+ad7192 driver as a IIO channel with .channel = 2 and .extended_name set
+to "shorted".
 
-On dGPUs and older APUs we expose the levels from lowest clocks
-to highest clocks. But for some APUs, the clocks levels that from
-the DFPstateTable are given the reversed orders by PMFW. Like the
-memory DPM clocks that are exposed by pp_dpm_mclk.
+The problem with this approach, is that the driver provided two IIO
+channels with the identifier .channel = 2; one "shorted" and the other
+not. This goes against the IIO ABI, as a channel identifier should be
+unique.
 
-It's not intuitive that they are reversed on these APUs. All tools
-and software that talks to the driver then has to know different ways
-to interpret the data depending on the asic.
+Address this issue by changing "shorted" channels to being differential
+instead, with channel 2 vs. itself, as we're actually measuring AIN2 vs.
+itself.
 
-So we need to reverse them to expose the clocks levels from the
-driver consistently.
+Note that the fix tag is for the commit that moved the driver out of
+staging. The bug existed before that, but backporting would become very
+complex further down and unlikely to happen.
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: b581f748cce0 ("staging: iio: adc: ad7192: move out of staging")
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Co-developed-by: Alisa Roman <alisa.roman@analog.com>
+Signed-off-by: Alisa Roman <alisa.roman@analog.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20230330102100.17590-1-paul@crapouillou.net
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/yellow_carp_ppt.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ad7192.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/yellow_carp_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/yellow_carp_ppt.c
-@@ -1000,7 +1000,7 @@ out:
- static int yellow_carp_print_clk_levels(struct smu_context *smu,
- 				enum smu_clk_type clk_type, char *buf)
- {
--	int i, size = 0, ret = 0;
-+	int i, idx, size = 0, ret = 0;
- 	uint32_t cur_value = 0, value = 0, count = 0;
- 	uint32_t min, max;
+--- a/drivers/iio/adc/ad7192.c
++++ b/drivers/iio/adc/ad7192.c
+@@ -898,10 +898,6 @@ static const struct iio_info ad7195_info
+ 	__AD719x_CHANNEL(_si, _channel1, -1, _address, NULL, IIO_VOLTAGE, \
+ 		BIT(IIO_CHAN_INFO_SCALE), ad7192_calibsys_ext_info)
  
-@@ -1033,7 +1033,8 @@ static int yellow_carp_print_clk_levels(
- 			goto print_clk_out;
+-#define AD719x_SHORTED_CHANNEL(_si, _channel1, _address) \
+-	__AD719x_CHANNEL(_si, _channel1, -1, _address, "shorted", IIO_VOLTAGE, \
+-		BIT(IIO_CHAN_INFO_SCALE), ad7192_calibsys_ext_info)
+-
+ #define AD719x_TEMP_CHANNEL(_si, _address) \
+ 	__AD719x_CHANNEL(_si, 0, -1, _address, NULL, IIO_TEMP, 0, NULL)
  
- 		for (i = 0; i < count; i++) {
--			ret = yellow_carp_get_dpm_freq_by_index(smu, clk_type, i, &value);
-+			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
-+			ret = yellow_carp_get_dpm_freq_by_index(smu, clk_type, idx, &value);
- 			if (ret)
- 				goto print_clk_out;
- 
+@@ -909,7 +905,7 @@ static const struct iio_chan_spec ad7192
+ 	AD719x_DIFF_CHANNEL(0, 1, 2, AD7192_CH_AIN1P_AIN2M),
+ 	AD719x_DIFF_CHANNEL(1, 3, 4, AD7192_CH_AIN3P_AIN4M),
+ 	AD719x_TEMP_CHANNEL(2, AD7192_CH_TEMP),
+-	AD719x_SHORTED_CHANNEL(3, 2, AD7192_CH_AIN2P_AIN2M),
++	AD719x_DIFF_CHANNEL(3, 2, 2, AD7192_CH_AIN2P_AIN2M),
+ 	AD719x_CHANNEL(4, 1, AD7192_CH_AIN1),
+ 	AD719x_CHANNEL(5, 2, AD7192_CH_AIN2),
+ 	AD719x_CHANNEL(6, 3, AD7192_CH_AIN3),
+@@ -923,7 +919,7 @@ static const struct iio_chan_spec ad7193
+ 	AD719x_DIFF_CHANNEL(2, 5, 6, AD7193_CH_AIN5P_AIN6M),
+ 	AD719x_DIFF_CHANNEL(3, 7, 8, AD7193_CH_AIN7P_AIN8M),
+ 	AD719x_TEMP_CHANNEL(4, AD7193_CH_TEMP),
+-	AD719x_SHORTED_CHANNEL(5, 2, AD7193_CH_AIN2P_AIN2M),
++	AD719x_DIFF_CHANNEL(5, 2, 2, AD7193_CH_AIN2P_AIN2M),
+ 	AD719x_CHANNEL(6, 1, AD7193_CH_AIN1),
+ 	AD719x_CHANNEL(7, 2, AD7193_CH_AIN2),
+ 	AD719x_CHANNEL(8, 3, AD7193_CH_AIN3),
 
 
