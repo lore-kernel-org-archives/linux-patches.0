@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0772534CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775BFC433D2;
-	Wed,  7 Jun 2023 21:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8750834CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDFDC433EF;
+	Wed,  7 Jun 2023 21:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171626;
-	bh=IkGBsXi3C4HEnccIyBaIOzBJS5i014sdapMrMLHbqrQ=;
+	s=korg; t=1686171629;
+	bh=W7cDmmMskAmQKOeAEBTMMtSUHQeSM063tf6xjoDLGpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oY8C3h/ywYr49NKZgAZ6yR3FR9P2nj5MN1NwqWFsJ8744tblHIC5v7nFpLvA3CN51
-	 Rvq0hn5NgrQZT9YH+SyrYZSFE31bXGiO0W9YKCW/L2uS8V8JhHA0G/wrSVz71No2Ln
-	 rt/9foJGpF8ZYJ17aehWboXuvZ/y6yqJV9h7Lq0E=
+	b=SSutqo7GI0ITxH8Vfso1z294Y+z+Fkl63VroElgrIrOYUtkFDRdTqIdLbY3Yg2C2g
+	 /V8XcIxMam0NbdmOHF94MVhv2acqeDWD1UQkfZWYiWCFIaKsfvPgITAGGIsrbV2/B1
+	 8mHa146SqieJS0Q8saA5yQ0ae6ja9y9ulme6oH9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	Rob Clark <robdclark@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/159] ALSA: oss: avoid missing-prototype warnings
-Date: Wed,  7 Jun 2023 22:16:33 +0200
-Message-ID: <20230607200906.643872156@linuxfoundation.org>
+Subject: [PATCH 5.15 091/159] drm/msm: Be more shouty if per-process pgtables arent working
+Date: Wed,  7 Jun 2023 22:16:34 +0200
+Message-ID: <20230607200906.674981193@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,62 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 040b5a046a9e18098580d3ccd029e2318fca7859 ]
+[ Upstream commit 5c054db54c43a5fcb5cc81012361f5e3fac37637 ]
 
-Two functions are defined and used in pcm_oss.c but also optionally
-used from io.c, with an optional prototype. If CONFIG_SND_PCM_OSS_PLUGINS
-is disabled, this causes a warning as the functions are not static
-and have no prototype:
+Otherwise it is not always obvious if a dt or iommu change is causing us
+to fall back to global pgtable.
 
-sound/core/oss/pcm_oss.c:1235:19: error: no previous prototype for 'snd_pcm_oss_write3' [-Werror=missing-prototypes]
-sound/core/oss/pcm_oss.c:1266:19: error: no previous prototype for 'snd_pcm_oss_read3' [-Werror=missing-prototypes]
-
-Avoid this by making the prototypes unconditional.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230516195046.550584-2-arnd@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/537359/
+Link: https://lore.kernel.org/r/20230516222039.907690-2-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/oss/pcm_plugin.h | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/msm_iommu.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/oss/pcm_plugin.h b/sound/core/oss/pcm_plugin.h
-index 46e273bd4a786..50a6b50f5db4c 100644
---- a/sound/core/oss/pcm_plugin.h
-+++ b/sound/core/oss/pcm_plugin.h
-@@ -141,6 +141,14 @@ int snd_pcm_area_copy(const struct snd_pcm_channel_area *src_channel,
+diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+index a54ed354578b5..ef4da3f0cd22d 100644
+--- a/drivers/gpu/drm/msm/msm_iommu.c
++++ b/drivers/gpu/drm/msm/msm_iommu.c
+@@ -157,7 +157,12 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
+ 	/* Get the pagetable configuration from the domain */
+ 	if (adreno_smmu->cookie)
+ 		ttbr1_cfg = adreno_smmu->get_ttbr1_cfg(adreno_smmu->cookie);
+-	if (!ttbr1_cfg)
++
++	/*
++	 * If you hit this WARN_ONCE() you are probably missing an entry in
++	 * qcom_smmu_impl_of_match[] in arm-smmu-qcom.c
++	 */
++	if (WARN_ONCE(!ttbr1_cfg, "No per-process page tables"))
+ 		return ERR_PTR(-ENODEV);
  
- void *snd_pcm_plug_buf_alloc(struct snd_pcm_substream *plug, snd_pcm_uframes_t size);
- void snd_pcm_plug_buf_unlock(struct snd_pcm_substream *plug, void *ptr);
-+#else
-+
-+static inline snd_pcm_sframes_t snd_pcm_plug_client_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t drv_size) { return drv_size; }
-+static inline snd_pcm_sframes_t snd_pcm_plug_slave_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t clt_size) { return clt_size; }
-+static inline int snd_pcm_plug_slave_format(int format, const struct snd_mask *format_mask) { return format; }
-+
-+#endif
-+
- snd_pcm_sframes_t snd_pcm_oss_write3(struct snd_pcm_substream *substream,
- 				     const char *ptr, snd_pcm_uframes_t size,
- 				     int in_kernel);
-@@ -151,14 +159,6 @@ snd_pcm_sframes_t snd_pcm_oss_writev3(struct snd_pcm_substream *substream,
- snd_pcm_sframes_t snd_pcm_oss_readv3(struct snd_pcm_substream *substream,
- 				     void **bufs, snd_pcm_uframes_t frames);
- 
--#else
--
--static inline snd_pcm_sframes_t snd_pcm_plug_client_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t drv_size) { return drv_size; }
--static inline snd_pcm_sframes_t snd_pcm_plug_slave_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t clt_size) { return clt_size; }
--static inline int snd_pcm_plug_slave_format(int format, const struct snd_mask *format_mask) { return format; }
--
--#endif
--
- #ifdef PLUGIN_DEBUG
- #define pdprintf(fmt, args...) printk(KERN_DEBUG "plugin: " fmt, ##args)
- #else
+ 	/*
 -- 
 2.39.2
 
