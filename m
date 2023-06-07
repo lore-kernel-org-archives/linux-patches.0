@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E99B3AE6E
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84086C433D2;
-	Wed,  7 Jun 2023 20:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29D43AE6B
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BA9C433EF;
+	Wed,  7 Jun 2023 20:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169873;
-	bh=idbYBb7zBKSjJP8nvtJsCJqiIzRtKUunuEwsZECJIPI=;
+	s=korg; t=1686169876;
+	bh=rv2GjjLz0EFiXPtcHR/czhXpGMXhLdLRwa9sx8TXDhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKkeAkMSCW/SiZG/NspfUhrXWpwUc0n5HvCPyBk2D3l5he4wZfqosc97EzG5reiBY
-	 OVSljphW6gQ5AzWfAL7m1VAvI8ldhgU7gvPNsgDychlxGY3k8pt1LIGYUdH/9P63+H
-	 /GlaruPmSsGh1VbcEc+gpgMNgcQJz4NGQE4heMJY=
+	b=hjLS1kyF3y/BaL5Tngjy05cD0EuzXCXG6PwpBxQaCVLhdjg15p/edJPaR/6eRaXfE
+	 GD7gTNZHafVZxxwpZgwG130my/LWrb1by4smzXk8bBQqiIl0fA1uiAwFUeb69dNppZ
+	 cbMFlpuik4d4Zmts+P7Y2zyN0sCrZg4QErJaRtbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Tom Zanussi <zanussi@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.3 246/286] tracing/timerlat: Always wakeup the timerlat thread
-Date: Wed,  7 Jun 2023 22:15:45 +0200
-Message-ID: <20230607200931.338456010@linuxfoundation.org>
+Subject: [PATCH 6.3 247/286] tracing/histograms: Allow variables to have some modifiers
+Date: Wed,  7 Jun 2023 22:15:46 +0200
+Message-ID: <20230607200931.369289701@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,68 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Bristot de Oliveira <bristot@kernel.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 632478a05821bc1c9b55c3a1dd0fb1be7bfa1acc upstream.
+commit e30fbc618e97b38dbb49f1d44dcd0778d3f23b8c upstream.
 
-While testing rtla timerlat auto analysis, I reach a condition where
-the interface was not receiving tracing data. I was able to manually
-reproduce the problem with these steps:
+Modifiers are used to change the behavior of keys. For instance, they
+can grouped into buckets, converted to syscall names (from the syscall
+identifier), show task->comm of the current pid, be an array of longs
+that represent a stacktrace, and more.
 
-  # echo 0 > tracing_on                 # disable trace
-  # echo 1 > osnoise/stop_tracing_us    # stop trace if timerlat irq > 1 us
-  # echo timerlat > current_tracer      # enable timerlat tracer
-  # sleep 1                             # wait... that is the time when rtla
-                                        # apply configs like prio or cgroup
-  # echo 1 > tracing_on                 # start tracing
-  # cat trace
-  # tracer: timerlat
-  #
-  #                                _-----=> irqs-off
-  #                               / _----=> need-resched
-  #                              | / _---=> hardirq/softirq
-  #                              || / _--=> preempt-depth
-  #                              ||| / _-=> migrate-disable
-  #                              |||| /     delay
-  #                              |||||            ACTIVATION
-  #           TASK-PID      CPU# |||||   TIMESTAMP   ID            CONTEXT                 LATENCY
-  #              | |         |   |||||      |         |                  |                       |
-        NOTHING!
+It was found that nothing stopped a value from taking a modifier. As
+values are simple counters. If this happened, it would call code that
+was not expecting a modifier and crash the kernel. This was fixed by
+having the ___create_val_field() function test if a modifier was present
+and fail if one was. This fixed the crash.
 
-Then, trying to enable tracing again with echo 1 > tracing_on resulted
-in no change: the trace was still not tracing.
+Now there's a problem with variables. Variables are used to pass fields
+from one event to another. Variables are allowed to have some modifiers,
+as the processing may need to happen at the time of the event (like
+stacktraces and comm names of the current pid). The issue is that it too
+uses __create_val_field(). Now that fails on modifiers, variables can no
+longer use them (this is a regression).
 
-This problem happens because the timerlat IRQ hits the stop tracing
-condition while tracing is off, and do not wake up the timerlat thread,
-so the timerlat threads are kept sleeping forever, resulting in no
-trace, even after re-enabling the tracer.
+As not all modifiers are for variables, have them use a separate check.
 
-Avoid this condition by always waking up the threads, even after stopping
-tracing, allowing the tracer to return to its normal operating after
-a new tracing on.
+Link: https://lore.kernel.org/linux-trace-kernel/20230523221108.064a5d82@rorschach.local.home
 
-Link: https://lore.kernel.org/linux-trace-kernel/1ed8f830638b20a39d535d27d908e319a9a3c4e2.1683822622.git.bristot@kernel.org
-
-Cc: Juri Lelli <juri.lelli@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: a955d7eac177 ("trace: Add timerlat tracer")
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Fixes: e0213434fe3e4 ("tracing: Do not let histogram values have some modifiers")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace_events_hist.c |   23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -1652,6 +1652,8 @@ static enum hrtimer_restart timerlat_irq
- 			osnoise_stop_tracing();
- 			notify_new_max_latency(diff);
- 
-+			wake_up_process(tlat->kthread);
-+
- 			return HRTIMER_NORESTART;
- 		}
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -4238,13 +4238,19 @@ static int __create_val_field(struct his
+ 		goto out;
  	}
+ 
+-	/* Some types cannot be a value */
+-	if (hist_field->flags & (HIST_FIELD_FL_GRAPH | HIST_FIELD_FL_PERCENT |
+-				 HIST_FIELD_FL_BUCKET | HIST_FIELD_FL_LOG2 |
+-				 HIST_FIELD_FL_SYM | HIST_FIELD_FL_SYM_OFFSET |
+-				 HIST_FIELD_FL_SYSCALL | HIST_FIELD_FL_STACKTRACE)) {
+-		hist_err(file->tr, HIST_ERR_BAD_FIELD_MODIFIER, errpos(field_str));
+-		ret = -EINVAL;
++	/* values and variables should not have some modifiers */
++	if (hist_field->flags & HIST_FIELD_FL_VAR) {
++		/* Variable */
++		if (hist_field->flags & (HIST_FIELD_FL_GRAPH | HIST_FIELD_FL_PERCENT |
++					 HIST_FIELD_FL_BUCKET | HIST_FIELD_FL_LOG2))
++			goto err;
++	} else {
++		/* Value */
++		if (hist_field->flags & (HIST_FIELD_FL_GRAPH | HIST_FIELD_FL_PERCENT |
++					 HIST_FIELD_FL_BUCKET | HIST_FIELD_FL_LOG2 |
++					 HIST_FIELD_FL_SYM | HIST_FIELD_FL_SYM_OFFSET |
++					 HIST_FIELD_FL_SYSCALL | HIST_FIELD_FL_STACKTRACE))
++			goto err;
+ 	}
+ 
+ 	hist_data->fields[val_idx] = hist_field;
+@@ -4256,6 +4262,9 @@ static int __create_val_field(struct his
+ 		ret = -EINVAL;
+  out:
+ 	return ret;
++ err:
++	hist_err(file->tr, HIST_ERR_BAD_FIELD_MODIFIER, errpos(field_str));
++	return -EINVAL;
+ }
+ 
+ static int create_val_field(struct hist_trigger_data *hist_data,
 
 
