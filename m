@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19FD3925B
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:23:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB92C4339C;
-	Wed,  7 Jun 2023 20:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E8D3925B
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:23:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24EFC4339B;
+	Wed,  7 Jun 2023 20:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169418;
-	bh=ZYe1YuH1dVx3NeJldd75zenf6DP3Rs4h0uIg3zs37t0=;
+	s=korg; t=1686169421;
+	bh=s1gTX63/2eY2Hs3kTNTNsK+hdMBfjy05I6UyI/oaRUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N45pk4EPTw3CeltbkumwXy90vXdJFnvnx6Yrpfv+0uHEGgAnwgeaaZeGU9fL6X2xq
-	 ZQb8f8uv8/KPrpbS6yqV1MnFdQwKmkypSmNeLs3C3acVRIpLWyoQq/KE7BZiwn7FFB
-	 8GLw/ECG+rapawp5M+W4CbaHf8GnzBpgHAcu8OuM=
+	b=lc0d8/AYLsZPMz/ZnXH0zEc14rfTrV4/MCusydj16XtEKgF72xmlJ2S3EdpO6N6Ht
+	 vsa+wtZGhT+eThd6YkhEBoaiqmPhzje3AlAhWld3iWCn5juMS8UFFaFlDvWFRhhBrl
+	 nBWAjN7hxpiuQuM7ZMD7RirVCGtFB/UY6Q9X6ALs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 066/286] net/sched: flower: fix possible OOB write in fl_set_geneve_opt()
-Date: Wed,  7 Jun 2023 22:12:45 +0200
-Message-ID: <20230607200925.230979114@linuxfoundation.org>
+Subject: [PATCH 6.3 075/286] rtnetlink: call validate_linkmsg in rtnl_create_link
+Date: Wed,  7 Jun 2023 22:12:54 +0200
+Message-ID: <20230607200925.530464136@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,41 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 4d56304e5827c8cc8cc18c75343d283af7c4825c ]
+[ Upstream commit b0ad3c179059089d809b477a1d445c1183a7b8fe ]
 
-If we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE packets and their total
-size is 252 bytes(key->enc_opts.len = 252) then
-key->enc_opts.len = opt->length = data_len / 4 = 0 when the third
-TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
-bypasses the next bounds check and results in an out-of-bounds.
+validate_linkmsg() was introduced by commit 1840bb13c22f5b ("[RTNL]:
+Validate hardware and broadcast address attribute for RTM_NEWLINK")
+to validate tb[IFLA_ADDRESS/BROADCAST] for existing links. The same
+check should also be done for newly created links.
 
-Fixes: 0a6e77784f49 ("net/sched: allow flower to match tunnel options")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+This patch adds validate_linkmsg() call in rtnl_create_link(), to
+avoid the invalid address set when creating some devices like:
+
+  # ip link add dummy0 type dummy
+  # ip link add link dummy0 name mac0 address 01:02 type macsec
+
+Fixes: 0e06877c6fdb ("[RTNETLINK]: rtnl_link: allow specifying initial device address")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Link: https://lore.kernel.org/r/20230531102805.27090-1-hbh25y@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flower.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/rtnetlink.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index a1c4ee2e0be22..fd5dc47cb2134 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -1153,6 +1153,9 @@ static int fl_set_geneve_opt(const struct nlattr *nla, struct fl_flow_key *key,
- 	if (option_len > sizeof(struct geneve_opt))
- 		data_len = option_len - sizeof(struct geneve_opt);
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 6e44e92ebdf5d..f37deb18dd02e 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -3282,6 +3282,7 @@ struct net_device *rtnl_create_link(struct net *net, const char *ifname,
+ 	struct net_device *dev;
+ 	unsigned int num_tx_queues = 1;
+ 	unsigned int num_rx_queues = 1;
++	int err;
  
-+	if (key->enc_opts.len > FLOW_DIS_TUN_OPTS_MAX - 4)
-+		return -ERANGE;
+ 	if (tb[IFLA_NUM_TX_QUEUES])
+ 		num_tx_queues = nla_get_u32(tb[IFLA_NUM_TX_QUEUES]);
+@@ -3317,13 +3318,18 @@ struct net_device *rtnl_create_link(struct net *net, const char *ifname,
+ 	if (!dev)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	err = validate_linkmsg(dev, tb, extack);
++	if (err < 0) {
++		free_netdev(dev);
++		return ERR_PTR(err);
++	}
 +
- 	opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len];
- 	memset(opt, 0xff, option_len);
- 	opt->length = data_len / 4;
+ 	dev_net_set(dev, net);
+ 	dev->rtnl_link_ops = ops;
+ 	dev->rtnl_link_state = RTNL_LINK_INITIALIZING;
+ 
+ 	if (tb[IFLA_MTU]) {
+ 		u32 mtu = nla_get_u32(tb[IFLA_MTU]);
+-		int err;
+ 
+ 		err = dev_validate_mtu(dev, mtu, extack);
+ 		if (err) {
 -- 
 2.39.2
 
