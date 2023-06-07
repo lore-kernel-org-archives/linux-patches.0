@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9157A370E4
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBDCC433EF;
-	Wed,  7 Jun 2023 20:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F51B370E4
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D5CC433EF;
+	Wed,  7 Jun 2023 20:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171190;
-	bh=hvtka51qQqWYzKpNmIVu97ChXQ9dW5VYkV80zS1Tc+I=;
+	s=korg; t=1686171193;
+	bh=XxabwGHJZIgy2CiecXYg53uWKSTWxZu/sbRrH29N62c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MgxrNiD5vYmVctCM2H1mVI0pSNJd3XUWsWTuzvaARvjiRmRkzPY+tamHsVxcwV+Cx
-	 f+Ygv8YEBRQHZOPodk/w0t9AFS78hpIamcO2uYFRR6LxYO80Kc8SSL/e2J5t5ioztM
-	 b1E+hiP6tpxm8q7VJ6hcd85jfpoxWh9Jjl7gc97o=
+	b=Ofqhw+RwSJur54j6Ip0TXwpKlMxwqmk3rOjXbQaJmtYHbZdxYkWZb3pSF1dwn1Rxz
+	 PfrV8TQPLV0VYDubZ/ZZCZnpJyyIJKzYLZLFqY1DFJKXu8DisYykTnLRg4w3h5VysL
+	 d5MA3pZiBY273p9zm7d/6v6rtX7XuT3yKl5wgrRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Andreas Svensson <andreas.svensson@axis.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 24/99] net/sched: flower: fix possible OOB write in fl_set_geneve_opt()
-Date: Wed,  7 Jun 2023 22:16:16 +0200
-Message-ID: <20230607200901.015336010@linuxfoundation.org>
+Subject: [PATCH 5.4 25/99] net: dsa: mv88e6xxx: Increase wait after reset deactivation
+Date: Wed,  7 Jun 2023 22:16:17 +0200
+Message-ID: <20230607200901.046770935@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -37,41 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Andreas Svensson <andreas.svensson@axis.com>
 
-[ Upstream commit 4d56304e5827c8cc8cc18c75343d283af7c4825c ]
+[ Upstream commit 3c27f3d53d588618d81d30d6712459a3cc9489b8 ]
 
-If we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE packets and their total
-size is 252 bytes(key->enc_opts.len = 252) then
-key->enc_opts.len = opt->length = data_len / 4 = 0 when the third
-TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
-bypasses the next bounds check and results in an out-of-bounds.
+A switch held in reset by default needs to wait longer until we can
+reliably detect it.
 
-Fixes: 0a6e77784f49 ("net/sched: allow flower to match tunnel options")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Link: https://lore.kernel.org/r/20230531102805.27090-1-hbh25y@gmail.com
+An issue was observed when testing on the Marvell 88E6393X (Link Street).
+The driver failed to detect the switch on some upstarts. Increasing the
+wait time after reset deactivation solves this issue.
+
+The updated wait time is now also the same as the wait time in the
+mv88e6xxx_hardware_reset function.
+
+Fixes: 7b75e49de424 ("net: dsa: mv88e6xxx: wait after reset deactivation")
+Signed-off-by: Andreas Svensson <andreas.svensson@axis.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230530145223.1223993-1-andreas.svensson@axis.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flower.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index 007fbc1993522..63f53aa8460a2 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -870,6 +870,9 @@ static int fl_set_geneve_opt(const struct nlattr *nla, struct fl_flow_key *key,
- 	if (option_len > sizeof(struct geneve_opt))
- 		data_len = option_len - sizeof(struct geneve_opt);
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 3a8a49b7ec3d9..393ee145ae066 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -5096,7 +5096,7 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
+ 		goto out;
+ 	}
+ 	if (chip->reset)
+-		usleep_range(1000, 2000);
++		usleep_range(10000, 20000);
  
-+	if (key->enc_opts.len > FLOW_DIS_TUN_OPTS_MAX - 4)
-+		return -ERANGE;
-+
- 	opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len];
- 	memset(opt, 0xff, option_len);
- 	opt->length = data_len / 4;
+ 	err = mv88e6xxx_detect(chip);
+ 	if (err)
 -- 
 2.39.2
 
