@@ -1,25 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA813370DE
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BACFC433EF;
-	Wed,  7 Jun 2023 20:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DA3370DE
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAE3C4339B;
+	Wed,  7 Jun 2023 20:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170805;
-	bh=QApk/VwEIbliCQ9MVsAlFv86NncCUVR+bpsIv9j5IT0=;
+	s=korg; t=1686170808;
+	bh=gy1YcfXCZCoVpWN94lsgygDGYJlbUs/FpJWOvXGJEVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1y1PuwAvzWkwmYcDiZRsspcqgrKi2mupJC+nPOruEOApVz88jwc1si8l4mQ6VYGws
-	 zX2/ktPk+MD5LgA4+FmYC56deqwnNaG1O0Bvm1+BoGGLuqpiH91DzUrHrGNPNsVEru
-	 hStQIZK4hon2krzpRpp5aR/yocTZvm7n7CMZXsxk=
+	b=ZiqZ532FSlk5N21cODPSq5DsueUMS80a2/Zq3385LHxI4/pDZVtM5BKZpLthgQlCW
+	 RRL44Sn8to3gvpU6P5ZHVeieG1JDAr0ktnSbhb7hf0UJE3wWI/y+TIMmPUCEnaY2QC
+	 aHhljqLbzFl3dHGAaU0WY5MO8oV+KzrDc8dKlhbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 225/225] ext4: enable the lazy init thread when remounting read/write
-Date: Wed,  7 Jun 2023 22:16:58 +0200
-Message-ID: <20230607200921.743978335@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH 6.1 215/225] regmap: Account for register length when chunking
+Date: Wed,  7 Jun 2023 22:16:48 +0200
+Message-ID: <20230607200921.402708312@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -33,71 +32,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Jim Wylder <jwylder@google.com>
 
-commit eb1f822c76beeaa76ab8b6737ab9dc9f9798408c upstream.
+commit 3981514180c987a79ea98f0ae06a7cbf58a9ac0f upstream.
 
-In commit a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting
-r/w until quota is re-enabled") we defer clearing tyhe SB_RDONLY flag
-in struct super.  However, we didn't defer when we checked sb_rdonly()
-to determine the lazy itable init thread should be enabled, with the
-next result that the lazy inode table initialization would not be
-properly started.  This can cause generic/231 to fail in ext4's
-nojournal mode.
+Currently, when regmap_raw_write() splits the data, it uses the
+max_raw_write value defined for the bus.  For any bus that includes
+the target register address in the max_raw_write value, the chunked
+transmission will always exceed the maximum transmission length.
+To avoid this problem, subtract the length of the register and the
+padding from the maximum transmission.
 
-Fix this by moving when we decide to start or stop the lazy itable
-init thread to after we clear the SB_RDONLY flag when we are
-remounting the file system read/write.
-
-Fixes a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting r/w until...")
-
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230527035729.1001605-1-tytso@mit.edu
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Jim Wylder <jwylder@google.com
+Link: https://lore.kernel.org/r/20230517152444.3690870-2-jwylder@google.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/base/regmap/regmap.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6542,18 +6542,6 @@ static int __ext4_remount(struct fs_cont
- 	}
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -2064,6 +2064,8 @@ int _regmap_raw_write(struct regmap *map
+ 	size_t val_count = val_len / val_bytes;
+ 	size_t chunk_count, chunk_bytes;
+ 	size_t chunk_regs = val_count;
++	size_t max_data = map->max_raw_write - map->format.reg_bytes -
++			map->format.pad_bytes;
+ 	int ret, i;
  
- 	/*
--	 * Reinitialize lazy itable initialization thread based on
--	 * current settings
--	 */
--	if (sb_rdonly(sb) || !test_opt(sb, INIT_INODE_TABLE))
--		ext4_unregister_li_request(sb);
--	else {
--		ext4_group_t first_not_zeroed;
--		first_not_zeroed = ext4_has_uninit_itable(sb);
--		ext4_register_li_request(sb, first_not_zeroed);
--	}
--
--	/*
- 	 * Handle creation of system zone data early because it can fail.
- 	 * Releasing of existing data is done when we are sure remount will
- 	 * succeed.
-@@ -6590,6 +6578,18 @@ static int __ext4_remount(struct fs_cont
- 	if (enable_rw)
- 		sb->s_flags &= ~SB_RDONLY;
+ 	if (!val_count)
+@@ -2071,8 +2073,8 @@ int _regmap_raw_write(struct regmap *map
  
-+	/*
-+	 * Reinitialize lazy itable initialization thread based on
-+	 * current settings
-+	 */
-+	if (sb_rdonly(sb) || !test_opt(sb, INIT_INODE_TABLE))
-+		ext4_unregister_li_request(sb);
-+	else {
-+		ext4_group_t first_not_zeroed;
-+		first_not_zeroed = ext4_has_uninit_itable(sb);
-+		ext4_register_li_request(sb, first_not_zeroed);
-+	}
-+
- 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
- 		ext4_stop_mmpd(sbi);
+ 	if (map->use_single_write)
+ 		chunk_regs = 1;
+-	else if (map->max_raw_write && val_len > map->max_raw_write)
+-		chunk_regs = map->max_raw_write / val_bytes;
++	else if (map->max_raw_write && val_len > max_data)
++		chunk_regs = max_data / val_bytes;
  
+ 	chunk_count = val_count / chunk_regs;
+ 	chunk_bytes = chunk_regs * val_bytes;
 
 
