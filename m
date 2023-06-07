@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405F119535
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429B2C433EF;
-	Wed,  7 Jun 2023 20:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A20219E58
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50C7C433D2;
+	Wed,  7 Jun 2023 20:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170364;
-	bh=lQba0g0GOwP76HL9SmwXCE8zweSnZUAXBFtML6Vl5wM=;
+	s=korg; t=1686170367;
+	bh=3qj6rJ3uvCLuNrY1Hd+24d/bu7yQq7OqvEZSE4B87lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBk0dwQKaQ8snuJ7lSKfWTU0kYzhFVzPukonXyrFj4QNBNqwnVfmY9G185pJMRNJq
-	 HeJ7l62v6dC72BBkQUisXOJ7IRFiSrVjpKfkKSjpBCgFqkaiQS8DSvDN45/4WKDEQ8
-	 kgdl0i9JtXMeNAW2F6KoddGHp7CkPO8W9WHoJAeg=
+	b=bh5JyC9Cg/SrTjXreAyGlJeBtDDMwuN3qdOx8+X5iMUCmGZX5MmQVoyeAHLWWPcW9
+	 4OlO8HrfWYA1eLfumcNvo4iTdHACunfROv2CAc3BG2f0I7ZOBMeqEyfnjzJv4tRwIG
+	 knTbPCHrKwn+t/7QM5GfSLc+6uCiB+B6vgBDQFTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mustafa Ismail <mustafa.ismail@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/225] mtd: rawnand: ingenic: fix empty stub helper definitions
-Date: Wed,  7 Jun 2023 22:13:40 +0200
-Message-ID: <20230607200915.210114153@linuxfoundation.org>
+Subject: [PATCH 6.1 028/225] RDMA/irdma: Prevent QP use after free
+Date: Wed,  7 Jun 2023 22:13:41 +0200
+Message-ID: <20230607200915.241753518@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,65 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-[ Upstream commit 650a8884a364ff2568b51cde9009cfd43cdae6ad ]
+[ Upstream commit c8f304d75f6c6cc679a73f89591f9a915da38f09 ]
 
-A few functions provide an empty interface definition when
-CONFIG_MTD_NAND_INGENIC_ECC is disabled, but they are accidentally
-defined as global functions in the header:
+There is a window where the poll cq may use a QP that has been freed.
+This can happen if a CQE is polled before irdma_clean_cqes() can clear the
+CQE's related to the QP and the destroy QP races to free the QP memory.
+then the QP structures are used in irdma_poll_cq.  Fix this by moving the
+clearing of CQE's before the reference is removed and the QP is destroyed.
 
-drivers/mtd/nand/raw/ingenic/ingenic_ecc.h:39:5: error: no previous prototype for 'ingenic_ecc_calculate'
-drivers/mtd/nand/raw/ingenic/ingenic_ecc.h:46:5: error: no previous prototype for 'ingenic_ecc_correct'
-drivers/mtd/nand/raw/ingenic/ingenic_ecc.h:53:6: error: no previous prototype for 'ingenic_ecc_release'
-drivers/mtd/nand/raw/ingenic/ingenic_ecc.h:57:21: error: no previous prototype for 'of_ingenic_ecc_get'
-
-Turn them into 'static inline' definitions instead.
-
-Fixes: 15de8c6efd0e ("mtd: rawnand: ingenic: Separate top-level and SoC specific code")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230516202133.559488-1-arnd@kernel.org
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Link: https://lore.kernel.org/r/20230522155654.1309-3-shiraz.saleem@intel.com
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/ingenic/ingenic_ecc.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h b/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h
-index 2cda439b5e11b..017868f59f222 100644
---- a/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h
-+++ b/drivers/mtd/nand/raw/ingenic/ingenic_ecc.h
-@@ -36,25 +36,25 @@ int ingenic_ecc_correct(struct ingenic_ecc *ecc,
- void ingenic_ecc_release(struct ingenic_ecc *ecc);
- struct ingenic_ecc *of_ingenic_ecc_get(struct device_node *np);
- #else /* CONFIG_MTD_NAND_INGENIC_ECC */
--int ingenic_ecc_calculate(struct ingenic_ecc *ecc,
-+static inline int ingenic_ecc_calculate(struct ingenic_ecc *ecc,
- 			  struct ingenic_ecc_params *params,
- 			  const u8 *buf, u8 *ecc_code)
- {
- 	return -ENODEV;
- }
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index f6973ea55eda7..1c5a61f51a67a 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -522,11 +522,6 @@ static int irdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 	if (!iwqp->user_mode)
+ 		cancel_delayed_work_sync(&iwqp->dwork_flush);
  
--int ingenic_ecc_correct(struct ingenic_ecc *ecc,
-+static inline int ingenic_ecc_correct(struct ingenic_ecc *ecc,
- 			struct ingenic_ecc_params *params, u8 *buf,
- 			u8 *ecc_code)
- {
- 	return -ENODEV;
- }
+-	irdma_qp_rem_ref(&iwqp->ibqp);
+-	wait_for_completion(&iwqp->free_qp);
+-	irdma_free_lsmm_rsrc(iwqp);
+-	irdma_cqp_qp_destroy_cmd(&iwdev->rf->sc_dev, &iwqp->sc_qp);
+-
+ 	if (!iwqp->user_mode) {
+ 		if (iwqp->iwscq) {
+ 			irdma_clean_cqes(iwqp, iwqp->iwscq);
+@@ -534,6 +529,12 @@ static int irdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 				irdma_clean_cqes(iwqp, iwqp->iwrcq);
+ 		}
+ 	}
++
++	irdma_qp_rem_ref(&iwqp->ibqp);
++	wait_for_completion(&iwqp->free_qp);
++	irdma_free_lsmm_rsrc(iwqp);
++	irdma_cqp_qp_destroy_cmd(&iwdev->rf->sc_dev, &iwqp->sc_qp);
++
+ 	irdma_remove_push_mmap_entries(iwqp);
+ 	irdma_free_qp_rsrc(iwqp);
  
--void ingenic_ecc_release(struct ingenic_ecc *ecc)
-+static inline void ingenic_ecc_release(struct ingenic_ecc *ecc)
- {
- }
- 
--struct ingenic_ecc *of_ingenic_ecc_get(struct device_node *np)
-+static inline struct ingenic_ecc *of_ingenic_ecc_get(struct device_node *np)
- {
- 	return ERR_PTR(-ENODEV);
- }
 -- 
 2.39.2
 
