@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE073922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65478C433EF;
-	Wed,  7 Jun 2023 20:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0B63922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5ACC433EF;
+	Wed,  7 Jun 2023 20:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171526;
-	bh=859yAD7btMtFMPipLhBxZrv//dJynJj5sbElCQtWntg=;
+	s=korg; t=1686171529;
+	bh=a+iuMf7Qc3j5zbqP/tv878e3Ya2DhuDQCXSjBQ+GoQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQooncLIZXRd1X6dx15rzrF6Bz+YdIUyHz7L9sunhCy7WFrZeiEH36OxlkeLrG/9R
-	 wzZgOyw4cGAT7S0/EDEEJP7rNPrjxpgId9yKetB0FOnZZs8T82OW7nytJebWKZU1az
-	 9nbpbE+mqSnEaKOevnghwig3oCEHY1qWtwinlvdE=
+	b=O2QLRt/2eSZ8BTy1m0HFtdcsf49d9HEcyVAyORfuZg+VDUxwmzL0uta0JkvVbcnF7
+	 kviivQpfZdSWQVIcfsZacWseSZZqoqcrJhAgAGiWGV1S0qABqN2mP1FaZTOvBoht7F
+	 Onb0GEUvhsAUssTQyaFCAv41yIHj7bELSTKGZOKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mustafa Ismail <mustafa.ismail@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/159] RDMA/irdma: Fix Local Invalidate fencing
-Date: Wed,  7 Jun 2023 22:15:25 +0200
-Message-ID: <20230607200904.398797358@linuxfoundation.org>
+Subject: [PATCH 5.15 013/159] net/mlx5: fw_tracer, Fix event handling
+Date: Wed,  7 Jun 2023 22:15:16 +0200
+Message-ID: <20230607200904.106536025@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,36 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mustafa Ismail <mustafa.ismail@intel.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 5842d1d9c1b0d17e0c29eae65ae1f245f83682dd ]
+[ Upstream commit 341a80de2468f481b1f771683709b5649cbfe513 ]
 
-If the local invalidate fence is indicated in the WR, only the read fence
-is currently being set in WQE. Fix this to set both the read and local
-fence in the WQE.
+mlx5 driver needs to parse traces with event_id inside the range of
+first_string_trace and num_string_trace. However, mlx5 is parsing all
+events with event_id >= first_string_trace.
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Link: https://lore.kernel.org/r/20230522155654.1309-4-shiraz.saleem@intel.com
-Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fix it by checking for the correct range.
+
+Fixes: c71ad41ccb0c ("net/mlx5: FW tracer, events handling")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 7745740e737a3..60cf83c4119e7 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -3196,6 +3196,7 @@ static int irdma_post_send(struct ib_qp *ibqp,
- 			break;
- 		case IB_WR_LOCAL_INV:
- 			info.op_type = IRDMA_OP_TYPE_INV_STAG;
-+			info.local_fence = info.read_fence;
- 			info.op.inv_local_stag.target_stag = ib_wr->ex.invalidate_rkey;
- 			ret = irdma_uk_stag_local_invalidate(ukqp, &info, true);
- 			if (ret)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index 05c7c2140909f..958cdb9755598 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -483,7 +483,7 @@ static void poll_trace(struct mlx5_fw_tracer *tracer,
+ 				(u64)timestamp_low;
+ 		break;
+ 	default:
+-		if (tracer_event->event_id >= tracer->str_db.first_string_trace ||
++		if (tracer_event->event_id >= tracer->str_db.first_string_trace &&
+ 		    tracer_event->event_id <= tracer->str_db.first_string_trace +
+ 					      tracer->str_db.num_string_trace) {
+ 			tracer_event->type = TRACER_EVENT_TYPE_STRING;
 -- 
 2.39.2
 
