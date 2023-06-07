@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0253434CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109E9C433D2;
-	Wed,  7 Jun 2023 20:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0D534CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8621C433EF;
+	Wed,  7 Jun 2023 20:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170619;
-	bh=/mO6Hn59mS273f7t6/8dc1sr01Ix1LhLUzDABsyfDHk=;
+	s=korg; t=1686170622;
+	bh=lbFJs7EsMCgMNxM7oZIy+eZ6GTedCsCMm64MSxVff7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiMUIpqIpGuNVjiHNZvGKNvK86ZllV/pPNt56ZmFHaf0zNQvvrpgA/kce0A563t3b
-	 rbIVNWkktIKjyP75qGQk/NYb/XdaJz9nvy6HfLf+4rhKG1lu67FMhCgnGXp9t/lPqV
-	 9ppAP26/sI5lKEQPDgBdvLwZfM/brtaUV9LwfTrI=
+	b=jHoBArKBrBKFjppW+bVC9asbDK69I3CywLRG0JlnTGclcD/DybapagcdAHNMazzXQ
+	 FRcO1cKO5kVaISdP98tiqcdHDtwr+0G/Gy5br2mSaggwhhM/5XbvaKJkOlFAkj9jdn
+	 0HEsxXfO9afuuuYe4g1Jh8+asSug2QFNYUoD+vAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Florian Westphal <fw@strlen.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 123/225] netfilter: conntrack: define variables exp_nat_nla_policy and any_addr with CONFIG_NF_NAT
-Date: Wed,  7 Jun 2023 22:15:16 +0200
-Message-ID: <20230607200918.404963949@linuxfoundation.org>
+Subject: [PATCH 6.1 124/225] nvme-multipath: dont call blk_mark_disk_dead in nvme_mpath_remove_disk
+Date: Wed,  7 Jun 2023 22:15:17 +0200
+Message-ID: <20230607200918.437363117@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,57 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Rix <trix@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 224a876e37543eee111bf9b6aa4935080e619335 ]
+[ Upstream commit 1743e5f6000901a11f4e1cd741bfa9136f3ec9b1 ]
 
-gcc with W=1 and ! CONFIG_NF_NAT
-net/netfilter/nf_conntrack_netlink.c:3463:32: error:
-  ‘exp_nat_nla_policy’ defined but not used [-Werror=unused-const-variable=]
- 3463 | static const struct nla_policy exp_nat_nla_policy[CTA_EXPECT_NAT_MAX+1] = {
-      |                                ^~~~~~~~~~~~~~~~~~
-net/netfilter/nf_conntrack_netlink.c:2979:33: error:
-  ‘any_addr’ defined but not used [-Werror=unused-const-variable=]
- 2979 | static const union nf_inet_addr any_addr;
-      |                                 ^~~~~~~~
+nvme_mpath_remove_disk is called after del_gendisk, at which point a
+blk_mark_disk_dead call doesn't make any sense.
 
-These variables use is controlled by CONFIG_NF_NAT, so should their definitions.
-
-Signed-off-by: Tom Rix <trix@redhat.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/host/multipath.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 857cddd9d82e5..9ee8abd3e4b10 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -2976,7 +2976,9 @@ static int ctnetlink_exp_dump_mask(struct sk_buff *skb,
- 	return -1;
- }
- 
-+#if IS_ENABLED(CONFIG_NF_NAT)
- static const union nf_inet_addr any_addr;
-+#endif
- 
- static __be32 nf_expect_get_id(const struct nf_conntrack_expect *exp)
+diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
+index d09ed00701743..f96d330d39641 100644
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -858,7 +858,6 @@ void nvme_mpath_remove_disk(struct nvme_ns_head *head)
  {
-@@ -3460,10 +3462,12 @@ ctnetlink_change_expect(struct nf_conntrack_expect *x,
- 	return 0;
- }
- 
-+#if IS_ENABLED(CONFIG_NF_NAT)
- static const struct nla_policy exp_nat_nla_policy[CTA_EXPECT_NAT_MAX+1] = {
- 	[CTA_EXPECT_NAT_DIR]	= { .type = NLA_U32 },
- 	[CTA_EXPECT_NAT_TUPLE]	= { .type = NLA_NESTED },
- };
-+#endif
- 
- static int
- ctnetlink_parse_expect_nat(const struct nlattr *attr,
+ 	if (!head->disk)
+ 		return;
+-	blk_mark_disk_dead(head->disk);
+ 	/* make sure all pending bios are cleaned up */
+ 	kblockd_schedule_work(&head->requeue_work);
+ 	flush_work(&head->requeue_work);
 -- 
 2.39.2
 
