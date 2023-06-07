@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6BE19BC9
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9EFC433D2;
-	Wed,  7 Jun 2023 20:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C3619BC9
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681A9C433D2;
+	Wed,  7 Jun 2023 20:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170601;
-	bh=F1IG6M+ByKOpBxEAtlUr2+CtScqMVcGuygu6gm48aT4=;
+	s=korg; t=1686170603;
+	bh=P/peyh5WpAYMJe0ntuLy22A+iOI/4fbFq/pWTMDopZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ialAXcTk/gV7X55X+mQK6zjEUUapYDqyUMifHIH2eybA6QI9arpKX6u+KapUhJt7f
-	 uLejtBC1GiTVi0BiILU6EAkPFN6u6zMUKQJgXhysET5xcsJ3JfP5iHWHPp0Hbm9Mjf
-	 HniqkLiXl04DD/DlyLDvfqesCpI9MK18zfvQwVs4=
+	b=eETfsqX3tB/Ac1NO9XhPU2UHJfRQ/Lrw44LNf32/5nF0fAYeSHOYdoEXxfBHQXfN3
+	 7CadqSFEQpGAO5FUhyohWv2/+rBJmuzwhaw8ZL5qgF39Q1+dkS9ejl6AvWRCn9iwtd
+	 N82+c+T6a5bgyZq8/Bocz/l1QzLwm2P4kTM6sKdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 146/225] dt-bindings: iio: adc: renesas,rcar-gyroadc: Fix adi,ad7476 compatible value
-Date: Wed,  7 Jun 2023 22:15:39 +0200
-Message-ID: <20230607200919.191561402@linuxfoundation.org>
+	Wenchao Hao <haowenchao2@huawei.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 120/225] scsi: core: Decrease scsi_devices iorequest_cnt if dispatch failed
+Date: Wed,  7 Jun 2023 22:15:13 +0200
+Message-ID: <20230607200918.301490898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -38,36 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Wenchao Hao <haowenchao2@huawei.com>
 
-commit 55720d242052e860b9fde445e302e0425722e7f1 upstream.
+[ Upstream commit 09e797c8641f6ad435c33ae24c223351197ea29a ]
 
-The conversion to json-schema accidentally dropped the "ad" part prefix
-from the compatible value.
+If scsi_dispatch_cmd() failed, the SCSI command was not sent to the target,
+scsi_queue_rq() would return BLK_STS_RESOURCE and the related request would
+be requeued. The timeout of this request would not fire, no one would
+increase iodone_cnt.
 
-Fixes: 8c41245872e2 ("dt-bindings:iio:adc:renesas,rcar-gyroadc: txt to yaml conversion.")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/6b328a3f52657c20759f3a5bb2fe033d47644ba8.1683635404.git.geert+renesas@glider.be
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The above flow would result the iodone_cnt smaller than iorequest_cnt.  So
+decrease the iorequest_cnt if dispatch failed to workaround the issue.
+
+Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
+Reported-by: Ming Lei <ming.lei@redhat.com>
+Closes: https://lore.kernel.org/r/ZF+zB+bB7iqe0wGd@ovpn-8-17.pek2.redhat.com
+Link: https://lore.kernel.org/r/20230515070156.1790181-3-haowenchao2@huawei.com
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/iio/adc/renesas,rcar-gyroadc.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_lib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/Documentation/devicetree/bindings/iio/adc/renesas,rcar-gyroadc.yaml
-+++ b/Documentation/devicetree/bindings/iio/adc/renesas,rcar-gyroadc.yaml
-@@ -86,7 +86,7 @@ patternProperties:
-             of the MAX chips to the GyroADC, while MISO line of each Maxim
-             ADC connects to a shared input pin of the GyroADC.
-         enum:
--          - adi,7476
-+          - adi,ad7476
-           - fujitsu,mb88101a
-           - maxim,max1162
-           - maxim,max11100
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index 8b89fab7c4206..fb6e9a7a7f58b 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1491,6 +1491,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 		 */
+ 		SCSI_LOG_MLQUEUE(3, scmd_printk(KERN_INFO, cmd,
+ 			"queuecommand : device blocked\n"));
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		return SCSI_MLQUEUE_DEVICE_BUSY;
+ 	}
+ 
+@@ -1523,6 +1524,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 	trace_scsi_dispatch_cmd_start(cmd);
+ 	rtn = host->hostt->queuecommand(host, cmd);
+ 	if (rtn) {
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		trace_scsi_dispatch_cmd_error(cmd, rtn);
+ 		if (rtn != SCSI_MLQUEUE_DEVICE_BUSY &&
+ 		    rtn != SCSI_MLQUEUE_TARGET_BUSY)
+-- 
+2.39.2
+
 
 
