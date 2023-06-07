@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D863AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9EAC433EF;
-	Wed,  7 Jun 2023 20:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C8F261E2
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DFBC4339B;
+	Wed,  7 Jun 2023 20:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169799;
-	bh=bYPKqGOexa4zdEV/V5Y5C6t6OzRwdDLELThUrPFcnr0=;
+	s=korg; t=1686169802;
+	bh=tQF2vihDfUX/fcmqUogrJfpDJE7SjmSv4rr15J6HTPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iorvsdvQyCgJpl4e9qYQgESDyBuDIlHvhl+TGnEVgLEmndSJefudndPYCewuyiB6M
-	 lPs4KIc1wJVfg6cNWoKTxPTZQ+bPsXhw10aWYZvPqDU19V/u1lOeY8iWNGGs5z0dSB
-	 Z2670f/jlP0FAO9X/Fh/82zI6EqguwauD+VQFL14=
+	b=SgCjeVvPlKfDaYzUBzlodd/XIV8xfLs6H6sSsiq0wIaNxtwQfFSt+BOLLxo9tM+yh
+	 yuTBPH0H+//Nts2yiYry0ZrjTOfNhOqTD/aS9GHufiihsFRIEkGFB1xNfJ0GloXATo
+	 BPyqQrtJ9twrOe4IS/p/s+KwpzpEMG5LvdappjRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ikshwaku Chauhan <ikshwaku.chauhan@amd.com>,
+	Tim Huang <Tim.Huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 218/286] drm/amdgpu: enable tmz by default for GC 11.0.1
-Date: Wed,  7 Jun 2023 22:15:17 +0200
-Message-ID: <20230607200930.400902246@linuxfoundation.org>
+Subject: [PATCH 6.3 219/286] drm/amd/pm: reverse mclk and fclk clocks levels for SMU v13.0.4
+Date: Wed,  7 Jun 2023 22:15:18 +0200
+Message-ID: <20230607200930.432005623@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -34,40 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ikshwaku Chauhan <ikshwaku.chauhan@amd.com>
+From: Tim Huang <Tim.Huang@amd.com>
 
-commit 663b930e24842f3d3bb79418bb5cd8d01b40c559 upstream.
+commit 6a07826f2057b5fa1c479ba56460195882464270 upstream.
 
-Add IP GC 11.0.1 in the list of target to have
-tmz enabled by default.
+This patch reverses the DPM clocks levels output of pp_dpm_mclk
+and pp_dpm_fclk.
 
-Signed-off-by: Ikshwaku Chauhan <ikshwaku.chauhan@amd.com>
+On dGPUs and older APUs we expose the levels from lowest clocks
+to highest clocks. But for some APUs, the clocks levels that from
+the DFPstateTable are given the reversed orders by PMFW. Like the
+memory DPM clocks that are exposed by pp_dpm_mclk.
+
+It's not intuitive that they are reversed on these APUs. All tools
+and software that talks to the driver then has to know different ways
+to interpret the data depending on the asic.
+
+So we need to reverse them to expose the clocks levels from the
+driver consistently.
+
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -534,6 +534,8 @@ void amdgpu_gmc_tmz_set(struct amdgpu_de
- 	case IP_VERSION(9, 3, 0):
- 	/* GC 10.3.7 */
- 	case IP_VERSION(10, 3, 7):
-+	/* GC 11.0.1 */
-+	case IP_VERSION(11, 0, 1):
- 		if (amdgpu_tmz == 0) {
- 			adev->gmc.tmz_enabled = false;
- 			dev_info(adev->dev,
-@@ -557,7 +559,6 @@ void amdgpu_gmc_tmz_set(struct amdgpu_de
- 	case IP_VERSION(10, 3, 1):
- 	/* YELLOW_CARP*/
- 	case IP_VERSION(10, 3, 3):
--	case IP_VERSION(11, 0, 1):
- 	case IP_VERSION(11, 0, 4):
- 		/* Don't enable it by default yet.
- 		 */
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
+@@ -478,7 +478,7 @@ static int smu_v13_0_4_get_dpm_level_cou
+ static int smu_v13_0_4_print_clk_levels(struct smu_context *smu,
+ 					enum smu_clk_type clk_type, char *buf)
+ {
+-	int i, size = 0, ret = 0;
++	int i, idx, size = 0, ret = 0;
+ 	uint32_t cur_value = 0, value = 0, count = 0;
+ 	uint32_t min, max;
+ 
+@@ -512,7 +512,8 @@ static int smu_v13_0_4_print_clk_levels(
+ 			break;
+ 
+ 		for (i = 0; i < count; i++) {
+-			ret = smu_v13_0_4_get_dpm_freq_by_index(smu, clk_type, i, &value);
++			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
++			ret = smu_v13_0_4_get_dpm_freq_by_index(smu, clk_type, idx, &value);
+ 			if (ret)
+ 				break;
+ 
 
 
