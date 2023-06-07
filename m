@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE02F19BC5
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8DBC4339B;
-	Wed,  7 Jun 2023 20:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4B019BAB
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCF5C433D2;
+	Wed,  7 Jun 2023 20:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170064;
-	bh=BlFXP6Y74txutFxdgw9/CuM0Oc1b1LPiP2VuEmnZcPw=;
+	s=korg; t=1686170069;
+	bh=GBeSLJIX8UIkYb9sZu6S8yqG1JK98fV0232YBA07j4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1odY/5C4oy313tQtZlKwfat2gJkPAaG5oXiCcMlrNAe6LUh4TY3oGKMiBwP/mBBdt
-	 e+FKv4r3MDpegmmdq2qTRKZXZG1KC9l2djplii88drHQ7HQr/Xp0IXNMNPiv0SXdua
-	 T6UZmoDIp6PTmYvgo2loZoTUXBFTnFFq69eGfh30=
+	b=eBTa4gR9mEyoJm4hlO46WKKDVDjnYdqnvTI6THMynhtGpZtpMQ2zpc9jrLiDl19ll
+	 1ozhuxB5XLQlU1yfVU+dMO1H5dnbZEat7+WvG2mVR8f4R+HSv0UIQHMeZHag77/aHK
+	 Y9Vl9ld4xWb7CK7l552yRDouit6O0dJtIa2kJPQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ivan Orlov <ivan.orlov0322@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 24/88] net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report
-Date: Wed,  7 Jun 2023 22:15:41 +0200
-Message-ID: <20230607200859.796089377@linuxfoundation.org>
+Subject: [PATCH 4.19 34/88] nbd: Fix debugfs_create_dir error checking
+Date: Wed,  7 Jun 2023 22:15:51 +0200
+Message-ID: <20230607200900.263302780@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -36,38 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Ivan Orlov <ivan.orlov0322@gmail.com>
 
-[ Upstream commit f4e4534850a9d18c250a93f8d7fbb51310828110 ]
+[ Upstream commit 4913cfcf014c95f0437db2df1734472fd3e15098 ]
 
-The current code for the length calculation wrongly truncates the reported
-length of the groups array, causing an under report of the subscribed
-groups. To fix this, use 'BITS_TO_BYTES()' which rounds up the
-division by 8.
+The debugfs_create_dir function returns ERR_PTR in case of error, and the
+only correct way to check if an error occurred is 'IS_ERR' inline function.
+This patch will replace the null-comparison with IS_ERR.
 
-Fixes: b42be38b2778 ("netlink: add API to retrieve all group memberships")
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230529153335.389815-1-pctammela@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
+Link: https://lore.kernel.org/r/20230512130533.98709-1-ivan.orlov0322@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/nbd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index c73784b7b67dc..57fd9b7cfc75f 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1775,7 +1775,7 @@ static int netlink_getsockopt(struct socket *sock, int level, int optname,
- 				break;
- 			}
- 		}
--		if (put_user(ALIGN(nlk->ngroups / 8, sizeof(u32)), optlen))
-+		if (put_user(ALIGN(BITS_TO_BYTES(nlk->ngroups), sizeof(u32)), optlen))
- 			err = -EFAULT;
- 		netlink_unlock_table();
- 		return err;
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index cc66983e8b6ab..28024248a7b53 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -1547,7 +1547,7 @@ static int nbd_dev_dbg_init(struct nbd_device *nbd)
+ 		return -EIO;
+ 
+ 	dir = debugfs_create_dir(nbd_name(nbd), nbd_dbg_dir);
+-	if (!dir) {
++	if (IS_ERR(dir)) {
+ 		dev_err(nbd_to_dev(nbd), "Failed to create debugfs dir for '%s'\n",
+ 			nbd_name(nbd));
+ 		return -EIO;
+@@ -1573,7 +1573,7 @@ static int nbd_dbg_init(void)
+ 	struct dentry *dbg_dir;
+ 
+ 	dbg_dir = debugfs_create_dir("nbd", NULL);
+-	if (!dbg_dir)
++	if (IS_ERR(dbg_dir))
+ 		return -EIO;
+ 
+ 	nbd_dbg_dir = dbg_dir;
 -- 
 2.39.2
 
