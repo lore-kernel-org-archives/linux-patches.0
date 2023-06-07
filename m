@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D684A39234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:18:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54CEAC433EF;
-	Wed,  7 Jun 2023 20:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E6839234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EA8C433D2;
+	Wed,  7 Jun 2023 20:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169137;
-	bh=K0DHSQSZVAT8N8ouP5wZ7sV+pKaXBbvB5JzNzqtza14=;
+	s=korg; t=1686169140;
+	bh=QxGLJOfnIEHOSVBX5PCJlrsDOZWprjJjHLM92PrDf6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJ668zohJQaw/aA5j0iZhzi0SFUolRgWmNFUUgJmXL6LRU+xJUYKcRecd78Hr6m67
-	 HOtoh+5kB7draoINv0rUMO34bRvM9bVbghXaWxBGzoS5wPtGDVPdiSIbE7aDfXSVK+
-	 8IKnmEEX5XUdF1Uo0TFlQLd/YKuo/aR1/1b+ZW3Q=
+	b=G3b8nAewM6d0cf50oto2CXZapEyGWxdCXZyzpya9rYaGV+hgv5ZOrtVO2XkqRKU9G
+	 GufmRTNeMgcWjZFJoRW69nWx3O8pDhB3UhwtMLNa6UAurmnOQTTGugOAp2ABoGsNH2
+	 VYQbrnOmzOn5i5CMvdOEc7f2+SBwQOcnUoyME9Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Lu <luyun@kylinos.cn>,
-	Kalle Valo <kvalo@kernel.org>,
+	Wenchao Hao <haowenchao2@huawei.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 28/61] wifi: rtl8xxxu: fix authentication timeout due to incorrect RCR value
-Date: Wed,  7 Jun 2023 22:15:42 +0200
-Message-ID: <20230607200845.071129201@linuxfoundation.org>
+Subject: [PATCH 4.14 29/61] scsi: core: Decrease scsi_devices iorequest_cnt if dispatch failed
+Date: Wed,  7 Jun 2023 22:15:43 +0200
+Message-ID: <20230607200845.410507209@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -35,71 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Wenchao Hao <haowenchao2@huawei.com>
 
-[ Upstream commit 20429444e653ee8242dfbf815c0c37866beb371b ]
+[ Upstream commit 09e797c8641f6ad435c33ae24c223351197ea29a ]
 
-When using rtl8192cu with rtl8xxxu driver to connect wifi, there is a
-probability of failure, which shows "authentication with ... timed out".
-Through debugging, it was found that the RCR register has been inexplicably
-modified to an incorrect value, resulting in the nic not being able to
-receive authenticated frames.
+If scsi_dispatch_cmd() failed, the SCSI command was not sent to the target,
+scsi_queue_rq() would return BLK_STS_RESOURCE and the related request would
+be requeued. The timeout of this request would not fire, no one would
+increase iodone_cnt.
 
-To fix this problem, add regrcr in rtl8xxxu_priv struct, and store
-the RCR value every time the register is written, and use it the next
-time the register need to be modified.
+The above flow would result the iodone_cnt smaller than iorequest_cnt.  So
+decrease the iorequest_cnt if dispatch failed to workaround the issue.
 
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Link: https://lore.kernel.org/all/20230427020512.1221062-1-luyun_611@163.com
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230512012055.2990472-1-luyun_611@163.com
+Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
+Reported-by: Ming Lei <ming.lei@redhat.com>
+Closes: https://lore.kernel.org/r/ZF+zB+bB7iqe0wGd@ovpn-8-17.pek2.redhat.com
+Link: https://lore.kernel.org/r/20230515070156.1790181-3-haowenchao2@huawei.com
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h      | 1 +
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/scsi_lib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-index c1163f2a09251..1913b51c1e809 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-@@ -1268,6 +1268,7 @@ struct rtl8xxxu_priv {
- 	u32 rege9c;
- 	u32 regeb4;
- 	u32 regebc;
-+	u32 regrcr;
- 	int next_mbox;
- 	int nr_out_eps;
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index fccda61e768c2..a2c13e437114e 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1717,6 +1717,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 		 */
+ 		SCSI_LOG_MLQUEUE(3, scmd_printk(KERN_INFO, cmd,
+ 			"queuecommand : device blocked\n"));
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		return SCSI_MLQUEUE_DEVICE_BUSY;
+ 	}
  
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index 1c9f7e1f63cfd..bfd704b17a447 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -4051,6 +4051,7 @@ static int rtl8xxxu_init_device(struct ieee80211_hw *hw)
- 		RCR_ACCEPT_MGMT_FRAME | RCR_HTC_LOC_CTRL |
- 		RCR_APPEND_PHYSTAT | RCR_APPEND_ICV | RCR_APPEND_MIC;
- 	rtl8xxxu_write32(priv, REG_RCR, val32);
-+	priv->regrcr = val32;
- 
- 	/*
- 	 * Accept all multicast
-@@ -5591,7 +5592,7 @@ static void rtl8xxxu_configure_filter(struct ieee80211_hw *hw,
- 				      unsigned int *total_flags, u64 multicast)
- {
- 	struct rtl8xxxu_priv *priv = hw->priv;
--	u32 rcr = rtl8xxxu_read32(priv, REG_RCR);
-+	u32 rcr = priv->regrcr;
- 
- 	dev_dbg(&priv->udev->dev, "%s: changed_flags %08x, total_flags %08x\n",
- 		__func__, changed_flags, *total_flags);
-@@ -5637,6 +5638,7 @@ static void rtl8xxxu_configure_filter(struct ieee80211_hw *hw,
- 	 */
- 
- 	rtl8xxxu_write32(priv, REG_RCR, rcr);
-+	priv->regrcr = rcr;
- 
- 	*total_flags &= (FIF_ALLMULTI | FIF_FCSFAIL | FIF_BCN_PRBRESP_PROMISC |
- 			 FIF_CONTROL | FIF_OTHER_BSS | FIF_PSPOLL |
+@@ -1749,6 +1750,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 	trace_scsi_dispatch_cmd_start(cmd);
+ 	rtn = host->hostt->queuecommand(host, cmd);
+ 	if (rtn) {
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		trace_scsi_dispatch_cmd_error(cmd, rtn);
+ 		if (rtn != SCSI_MLQUEUE_DEVICE_BUSY &&
+ 		    rtn != SCSI_MLQUEUE_TARGET_BUSY)
 -- 
 2.39.2
 
