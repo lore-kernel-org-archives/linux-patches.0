@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807063AE43
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005ECC4339E;
-	Wed,  7 Jun 2023 20:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166823AE43
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4D8C4339B;
+	Wed,  7 Jun 2023 20:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169316;
-	bh=kcfzZsM5n+TmCIR2BvESjOVnORqZOjlP1FqDOujtkHI=;
+	s=korg; t=1686169318;
+	bh=Jrf+GEyQ1Tyv50RydLT48oUtDbtGSFN8KoFbbN8d1uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LHRGkXrpcy/kPdb3KxUvn+eKHBPrSeP27XpqC7mhQlpTWH/q/FJNt2mJm+gyBIn77
-	 TAmwnDTWYefmEfZvkeN3CH5LeBVleoN9fNLvUhdxkQH0wYSQYaEsq2X0Nh7Q93udkX
-	 6X8oC7PB6SANN9nfujBHx+9+hyAEB/Seai5gd2+Q=
+	b=SBvYDJ1/BU6S8URe0+hJzl3qkas+JlaeteCiZFdMr1Cw/9F5saI4JjS8XbYAamuX8
+	 6IGNi1gyn22gVhf+OlSAoPVlL32Jn+5rQqs+Jx+6Hxbilzqf8V8fmunIM8bOHSLTeq
+	 A1BAHaXzAw1WyN2HPbdpIILwM9wcIs3JdS5s6T1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangyang Li <liyangyang20@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 006/286] RDMA/hns: Modify the value of long message loopback slice
-Date: Wed,  7 Jun 2023 22:11:45 +0200
-Message-ID: <20230607200923.205888725@linuxfoundation.org>
+Subject: [PATCH 6.3 007/286] dmaengine: at_xdmac: fix potential Oops in at_xdmac_prep_interleaved()
+Date: Wed,  7 Jun 2023 22:11:46 +0200
+Message-ID: <20230607200923.237432720@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,59 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangyang Li <liyangyang20@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 56518a603fd2bf74762d176ac980572db84a3e14 ]
+[ Upstream commit 4d43acb145c363626d76f49febb4240c488cd1cf ]
 
-Long message loopback slice is used for achieving traffic balance between
-QPs. It prevents the problem that QPs with large traffic occupying the
-hardware pipeline for a long time and QPs with small traffic cannot be
-scheduled.
+There are two place if the at_xdmac_interleaved_queue_desc() fails which
+could lead to a NULL dereference where "first" is NULL and we call
+list_add_tail(&first->desc_node, ...).  In the first caller, the return
+is not checked so add a check for that.  In the next caller, the return
+is checked but if it fails on the first iteration through the loop then
+it will lead to a NULL pointer dereference.
 
-Currently, its maximum value is set to 16K, which means only after a QP
-sends 16K will the second QP be scheduled. This value is too large, which
-will lead to unbalanced traffic scheduling, and thus it needs to be
-modified.
-
-The setting range of the long message loopback slice is modified to be
-from 1024 (the lower limit supported by hardware) to mtu. Actual testing
-shows that this value can significantly reduce error in hardware traffic
-scheduling.
-
-This solution is compatible with both HIP08 and HIP09. The modified
-lp_pktn_ini has a maximum value of 2 (when mtu is 256), so the range
-checking code for lp_pktn_ini is no longer necessary and needs to be
-deleted.
-
-Fixes: 0e60778efb07 ("RDMA/hns: Modify the value of MAX_LP_MSG_LEN to meet hardware compatibility")
-Link: https://lore.kernel.org/r/20230512092245.344442-4-huangjunxian6@hisilicon.com
-Signed-off-by: Yangyang Li <liyangyang20@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 4e5385784e69 ("dmaengine: at_xdmac: handle numf > 1")
+Fixes: 62b5cb757f1d ("dmaengine: at_xdmac: fix memory leak in interleaved mode")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/21282b66-9860-410a-83df-39c17fcf2f1b@kili.mountain
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/dma/at_xdmac.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 79954d99dc7a3..9369f93afaedd 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -4664,11 +4664,9 @@ static int modify_qp_init_to_rtr(struct ib_qp *ibqp,
- 	mtu = ib_mtu_enum_to_int(ib_mtu);
- 	if (WARN_ON(mtu <= 0))
- 		return -EINVAL;
--#define MAX_LP_MSG_LEN 16384
--	/* MTU * (2 ^ LP_PKTN_INI) shouldn't be bigger than 16KB */
--	lp_pktn_ini = ilog2(MAX_LP_MSG_LEN / mtu);
--	if (WARN_ON(lp_pktn_ini >= 0xF))
--		return -EINVAL;
-+#define MIN_LP_MSG_LEN 1024
-+	/* mtu * (2 ^ lp_pktn_ini) should be in the range of 1024 to mtu */
-+	lp_pktn_ini = ilog2(max(mtu, MIN_LP_MSG_LEN) / mtu);
+diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+index 96f1b69f8a75e..ab13704f27f11 100644
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -1102,6 +1102,8 @@ at_xdmac_prep_interleaved(struct dma_chan *chan,
+ 							NULL,
+ 							src_addr, dst_addr,
+ 							xt, xt->sgl);
++		if (!first)
++			return NULL;
  
- 	if (attr_mask & IB_QP_PATH_MTU) {
- 		hr_reg_write(context, QPC_MTU, ib_mtu);
+ 		/* Length of the block is (BLEN+1) microblocks. */
+ 		for (i = 0; i < xt->numf - 1; i++)
+@@ -1132,8 +1134,9 @@ at_xdmac_prep_interleaved(struct dma_chan *chan,
+ 							       src_addr, dst_addr,
+ 							       xt, chunk);
+ 			if (!desc) {
+-				list_splice_tail_init(&first->descs_list,
+-						      &atchan->free_descs_list);
++				if (first)
++					list_splice_tail_init(&first->descs_list,
++							      &atchan->free_descs_list);
+ 				return NULL;
+ 			}
+ 
 -- 
 2.39.2
 
