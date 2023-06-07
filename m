@@ -1,98 +1,333 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F6139234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA26C433D2;
-	Wed,  7 Jun 2023 20:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0F939234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB70CC433D2;
+	Wed,  7 Jun 2023 20:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169158;
-	bh=F+37OWn/aF06unqjJdiGyCrnhZaT+gr/cP0zbl+gsrI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Q1j8kuWeNP2a24bYkRuQkmOi4EhDfR+FiIvrXpmigXDiLlbqIBkVEMfQ6k3ti+5j
-	 /JM3GZ+5wkhwkrEoYE23wxoUaa0dAjOZ+rog6GyRyzkDYFQSpy/26D+V1f9YTrruJ6
-	 Y4cEQUUQuSmS7xnEe9uYRrifXs+cjes7ZkuwG/bs=
+	s=korg; t=1686169161;
+	bh=OAGFqUd4/rBVMwGN9fnvbbjnNyAmRXQ2WgMWS3nnCjk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=2aT4C8Qa6N4jpAFyUhdDXvN5aH7zW4qzE/rR/bNXO9SC7RJfHj4hQf7ROCZc8guy0
+	 l1hcT+HIu9UdoCUKGaQ4pijw4GWecnClqN2JEPsKuKlSDTbl9oIKrU4fsH5Zny47NY
+	 vjOkTkWTVE5L/DMZL9KbsC/j0IIgwdiwMllUj+hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladislav Efanov <VEfanov@ispras.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 09/61] udp6: Fix race condition in udp6_sendmsg & connect
-Date: Wed,  7 Jun 2023 22:15:23 +0200
-Message-ID: <20230607200838.436922289@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 4.14 00/61] 4.14.317-rc1 review
+Date: Wed,  7 Jun 2023 22:15:14 +0200
+Message-ID: <20230607200835.310274198@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
-References: <20230607200835.310274198@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.317-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.14.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.14.317-rc1
+X-KernelTest-Deadline: 2023-06-09T20:08+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+This is the start of the stable review cycle for the 4.14.317 release.
+There are 61 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 448a5ce1120c5bdbce1f1ccdabcd31c7d029f328 ]
+Responses should be made by Fri, 09 Jun 2023 20:07:31 +0000.
+Anything received after that time might be too late.
 
-Syzkaller got the following report:
-BUG: KASAN: use-after-free in sk_setup_caps+0x621/0x690 net/core/sock.c:2018
-Read of size 8 at addr ffff888027f82780 by task syz-executor276/3255
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.317-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+and the diffstat can be found below.
 
-The function sk_setup_caps (called by ip6_sk_dst_store_flow->
-ip6_dst_store) referenced already freed memory as this memory was
-freed by parallel task in udpv6_sendmsg->ip6_sk_dst_lookup_flow->
-sk_dst_check.
+thanks,
 
-          task1 (connect)              task2 (udp6_sendmsg)
-        sk_setup_caps->sk_dst_set |
-                                  |  sk_dst_check->
-                                  |      sk_dst_set
-                                  |      dst_release
-        sk_setup_caps references  |
-        to already freed dst_entry|
+greg k-h
 
-The reason for this race condition is: sk_setup_caps() keeps using
-the dst after transferring the ownership to the dst cache.
+-------------
+Pseudo-Shortlog of commits:
 
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.14.317-rc1
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/core/sock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ping-Ke Shih <pkshih@realtek.com>
+    wifi: rtlwifi: 8192de: correct checking of IQK reload
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 002c91dd7191f..b05296d79f621 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1788,7 +1788,6 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
- {
- 	u32 max_segs = 1;
- 
--	sk_dst_set(sk, dst);
- 	sk->sk_route_caps = dst->dev->features;
- 	if (sk->sk_route_caps & NETIF_F_GSO)
- 		sk->sk_route_caps |= NETIF_F_GSO_SOFTWARE;
-@@ -1803,6 +1802,7 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
- 		}
- 	}
- 	sk->sk_gso_max_segs = max_segs;
-+	sk_dst_set(sk, dst);
- }
- EXPORT_SYMBOL_GPL(sk_setup_caps);
- 
--- 
-2.39.2
+Al Viro <viro@zeniv.linux.org.uk>
+    Fix double fget() in vhost_net_set_backend()
 
+Tudor Ambarus <tudor.ambarus@linaro.org>
+    net: cdc_ncm: Deal with too low values of dwNtbOutMaxSize
+
+Alexander Bersenev <bay@hackerdom.ru>
+    cdc_ncm: Fix the build warning
+
+Alexander Bersenev <bay@hackerdom.ru>
+    cdc_ncm: Implement the 32-bit version of NCM Transfer Block
+
+Ben Hutchings <benh@debian.org>
+    scsi: dpt_i2o: Do not process completions with invalid addresses
+
+Ben Hutchings <benh@debian.org>
+    scsi: dpt_i2o: Remove broken pass-through ioctl (I2OUSERCMD)
+
+Helge Deller <deller@gmx.de>
+    fbcon: Fix null-ptr-deref in soft_cursor
+
+Theodore Ts'o <tytso@mit.edu>
+    ext4: add lockdep annotations for i_data_sem for ea_inode's
+
+Paul Moore <paul@paul-moore.com>
+    selinux: don't use make's grouped targets feature yet
+
+Sherry Sun <sherry.sun@nxp.com>
+    tty: serial: fsl_lpuart: use UARTCTRL_TXINV to send break instead of UARTCTRL_SBK
+
+Deren Wu <deren.wu@mediatek.com>
+    mmc: vub300: fix invalid response handling
+
+Nathan Chancellor <natechancellor@gmail.com>
+    regulator: da905{2,5}: Remove unnecessary array check
+
+Jakub Kicinski <kuba@kernel.org>
+    wifi: rtlwifi: remove always-true condition pointed out by GCC 12
+
+Nathan Chancellor <natechancellor@gmail.com>
+    lib/dynamic_debug.c: use address-of operator on section symbols
+
+Nathan Chancellor <natechancellor@gmail.com>
+    kernel/extable.c: use address-of operator on section symbols
+
+Martin Liška <mliska@suse.cz>
+    eth: sun: cassini: remove dead code
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    gcc-12: disable '-Wdangling-pointer' warning for now
+
+Adam Borowski <kilobyte@angband.pl>
+    ACPI: thermal: drop an always true check
+
+Kees Cook <keescook@chromium.org>
+    x86/boot: Wrap literal addresses in absolute_pointer()
+
+Damien Le Moal <dlemoal@kernel.org>
+    ata: libata-scsi: Use correct device no in ata_find_dev()
+
+Bart Van Assche <bvanassche@acm.org>
+    scsi: stex: Fix gcc 13 warnings
+
+Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+    usb: gadget: f_fs: Add unbind event before functionfs_unbind
+
+Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+    net: usb: qmi_wwan: Set DTR quirk for BroadMobi BM818
+
+Marek Vasut <marex@denx.de>
+    iio: dac: mcp4725: Fix i2c_master_send() return value handling
+
+Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+    HID: wacom: avoid integer overflow in wacom_intuos_inout()
+
+Jiakai Luo <jkluo@hust.edu.cn>
+    iio: adc: mxs-lradc: fix the order of two cleanup operations
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    mailbox: mailbox-test: fix a locking issue in mbox_test_message_write()
+
+Arnd Bergmann <arnd@arndb.de>
+    atm: hide unused procfs functions
+
+Arnd Bergmann <arnd@arndb.de>
+    ALSA: oss: avoid missing-prototype warnings
+
+Tom Rix <trix@redhat.com>
+    netfilter: conntrack: define variables exp_nat_nla_policy and any_addr with CONFIG_NF_NAT
+
+Arnd Bergmann <arnd@arndb.de>
+    wifi: b43: fix incorrect __packed annotation
+
+Wenchao Hao <haowenchao2@huawei.com>
+    scsi: core: Decrease scsi_device's iorequest_cnt if dispatch failed
+
+Yun Lu <luyun@kylinos.cn>
+    wifi: rtl8xxxu: fix authentication timeout due to incorrect RCR value
+
+Hyunwoo Kim <v4bel@theori.io>
+    media: dvb-core: Fix use-after-free due to race condition at dvb_ca_en50221
+
+Takashi Iwai <tiwai@suse.de>
+    media: dvb-core: Fix kernel WARNING for blocking operation in wait_event*()
+
+Hyunwoo Kim <imv4bel@gmail.com>
+    media: ttusb-dec: fix memory leak in ttusb_dec_exit_dvb()
+
+Wei Chen <harperchen1110@gmail.com>
+    media: netup_unidvb: fix irq init by register it at the end of probe
+
+Wei Chen <harperchen1110@gmail.com>
+    media: dvb-usb: dw2102: fix uninit-value in su3000_read_mac_address
+
+Wei Chen <harperchen1110@gmail.com>
+    media: dvb-usb: digitv: fix null-ptr-deref in digitv_i2c_xfer()
+
+Zhang Shurong <zhang_shurong@foxmail.com>
+    media: dvb-usb-v2: rtl28xxu: fix null-ptr-deref in rtl28xxu_i2c_xfer
+
+Wei Chen <harperchen1110@gmail.com>
+    media: dvb-usb-v2: ce6230: fix null-ptr-deref in ce6230_i2c_master_xfer()
+
+Wei Chen <harperchen1110@gmail.com>
+    media: dvb-usb-v2: ec168: fix null-ptr-deref in ec168_i2c_xfer()
+
+Wei Chen <harperchen1110@gmail.com>
+    media: dvb-usb: az6027: fix three null-ptr-deref in az6027_i2c_xfer()
+
+Paweł Anikiel <pan@semihalf.com>
+    ASoC: ssm2602: Add workaround for playback distortions
+
+Maxim Kochetkov <fido_max@inbox.ru>
+    ASoC: dwc: limit the number of overrun messages
+
+Ivan Orlov <ivan.orlov0322@gmail.com>
+    nbd: Fix debugfs_create_dir error checking
+
+Helge Deller <deller@gmx.de>
+    fbdev: stifb: Fix info entry in sti_struct on error path
+
+Helge Deller <deller@gmx.de>
+    fbdev: modedb: Add 1920x1080 at 60 Hz video mode
+
+Haibo Li <haibo.li@mediatek.com>
+    ARM: 9295/1: unwind:fix unwind abort for uleb128 case
+
+Lee Jones <lee@kernel.org>
+    mailbox: mailbox-test: Fix potential double-free in mbox_test_message_write()
+
+Andreas Svensson <andreas.svensson@axis.com>
+    net: dsa: mv88e6xxx: Increase wait after reset deactivation
+
+Vladislav Efanov <VEfanov@ispras.ru>
+    udp6: Fix race condition in udp6_sendmsg & connect
+
+Cambda Zhu <cambda@linux.alibaba.com>
+    tcp: Return user_mss for TCP_MAXSEG in CLOSE/LISTEN state if user_mss set
+
+Eric Dumazet <edumazet@google.com>
+    af_packet: do not use READ_ONCE() in packet_bind()
+
+Kuniyuki Iwashima <kuniyu@amazon.com>
+    af_packet: Fix data-races of pkt_sk(sk)->num.
+
+Eric Dumazet <edumazet@google.com>
+    netrom: fix info-leak in nr_write_internal()
+
+Randy Dunlap <rdunlap@infradead.org>
+    dmaengine: pl330: rename _start to prevent build error
+
+Ruihan Li <lrh2000@pku.edu.cn>
+    bluetooth: Add cmd validity checks at the start of hci_sock_ioctl()
+
+Cezary Rojewski <cezary.rojewski@intel.com>
+    ASoC: Intel: Skylake: Fix declaration of enum skl_ch_cfg
+
+Hans de Goede <hdegoede@redhat.com>
+    power: supply: bq27xxx: After charger plug in/out wait 0.5s for things to stabilize
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   8 +-
+ arch/arm/kernel/unwind.c                           |  25 +-
+ arch/x86/boot/boot.h                               |  36 +-
+ arch/x86/boot/main.c                               |   2 +-
+ drivers/acpi/thermal.c                             |   2 -
+ drivers/ata/libata-scsi.c                          |  34 +-
+ drivers/block/nbd.c                                |   4 +-
+ drivers/dma/pl330.c                                |   8 +-
+ drivers/hid/wacom_wac.c                            |   2 +-
+ drivers/iio/adc/mxs-lradc-adc.c                    |  10 +-
+ drivers/iio/dac/mcp4725.c                          |  16 +-
+ drivers/mailbox/mailbox-test.c                     |  13 +-
+ drivers/media/dvb-core/dvb_ca_en50221.c            |  37 +-
+ drivers/media/dvb-core/dvb_frontend.c              |  16 +-
+ drivers/media/pci/netup_unidvb/netup_unidvb_core.c |  17 +-
+ drivers/media/usb/dvb-usb-v2/ce6230.c              |   8 +
+ drivers/media/usb/dvb-usb-v2/ec168.c               |  12 +
+ drivers/media/usb/dvb-usb-v2/rtl28xxu.c            |  20 +
+ drivers/media/usb/dvb-usb/az6027.c                 |  12 +
+ drivers/media/usb/dvb-usb/digitv.c                 |   4 +
+ drivers/media/usb/dvb-usb/dw2102.c                 |   2 +-
+ drivers/media/usb/ttusb-dec/ttusb_dec.c            |   3 +-
+ drivers/mmc/host/vub300.c                          |   3 +
+ drivers/net/dsa/mv88e6xxx/chip.c                   |   2 +-
+ drivers/net/ethernet/sun/cassini.c                 |   4 +-
+ drivers/net/usb/cdc_ncm.c                          | 435 ++++++++++++++++-----
+ drivers/net/usb/huawei_cdc_ncm.c                   |   8 +-
+ drivers/net/usb/qmi_wwan.c                         |   2 +-
+ drivers/net/wireless/broadcom/b43/b43.h            |   2 +-
+ .../net/wireless/broadcom/b43legacy/b43legacy.h    |   2 +-
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h   |   1 +
+ .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |   4 +-
+ .../net/wireless/realtek/rtlwifi/rtl8192de/phy.c   |  10 +-
+ drivers/power/supply/bq27xxx_battery.c             |   4 +-
+ drivers/regulator/da9052-regulator.c               |   2 +-
+ drivers/regulator/da9055-regulator.c               |   2 +-
+ drivers/scsi/Kconfig                               |   2 +-
+ drivers/scsi/dpt_i2o.c                             | 262 +------------
+ drivers/scsi/dpti.h                                |   1 -
+ drivers/scsi/scsi_lib.c                            |   2 +
+ drivers/scsi/stex.c                                |   4 +
+ drivers/tty/serial/fsl_lpuart.c                    |  44 ++-
+ drivers/usb/gadget/function/f_fs.c                 |   2 +-
+ drivers/vhost/net.c                                |  15 +-
+ drivers/video/fbdev/core/bitblit.c                 |   3 +
+ drivers/video/fbdev/core/modedb.c                  |   5 +
+ drivers/video/fbdev/stifb.c                        |   1 +
+ fs/ext4/ext4.h                                     |   2 +
+ fs/ext4/xattr.c                                    |   4 +
+ include/linux/usb/cdc_ncm.h                        |  15 +-
+ kernel/extable.c                                   |   3 +-
+ lib/dynamic_debug.c                                |   2 +-
+ net/atm/resources.c                                |   2 +
+ net/bluetooth/hci_sock.c                           |  28 ++
+ net/core/sock.c                                    |   2 +-
+ net/ipv4/tcp.c                                     |   3 +-
+ net/netfilter/nf_conntrack_netlink.c               |   4 +
+ net/netrom/nr_subr.c                               |   7 +-
+ net/packet/af_packet.c                             |   8 +-
+ net/packet/diag.c                                  |   2 +-
+ security/selinux/Makefile                          |   6 +-
+ sound/core/oss/pcm_plugin.h                        |  16 +-
+ sound/soc/codecs/ssm2602.c                         |  15 +
+ sound/soc/dwc/dwc-i2s.c                            |   4 +-
+ sound/soc/intel/skylake/skl-tplg-interface.h       |   3 +-
+ 65 files changed, 748 insertions(+), 491 deletions(-)
 
 
