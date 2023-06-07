@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C8F261E2
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DFBC4339B;
-	Wed,  7 Jun 2023 20:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFC43AE70
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1C2C4339B;
+	Wed,  7 Jun 2023 20:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169802;
-	bh=tQF2vihDfUX/fcmqUogrJfpDJE7SjmSv4rr15J6HTPU=;
+	s=korg; t=1686169805;
+	bh=SJP1j1mqezHUwWoWnS+Bz2wz1y41OZ+EeoLAPXJhf1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgCjeVvPlKfDaYzUBzlodd/XIV8xfLs6H6sSsiq0wIaNxtwQfFSt+BOLLxo9tM+yh
-	 yuTBPH0H+//Nts2yiYry0ZrjTOfNhOqTD/aS9GHufiihsFRIEkGFB1xNfJ0GloXATo
-	 BPyqQrtJ9twrOe4IS/p/s+KwpzpEMG5LvdappjRg=
+	b=yxG/lVpT1XqjpbZZpjGrVLVbhbRVk++AxtmB9IAfRgyDrYJjtkOA5ZNGX6+dQuf9e
+	 fjw0LKnADvczVupr3N1CZ5bJ6loMH5ohmtDs17JyYpUZ8u3eb574mBeAKf9AxZAX0d
+	 7Mx/69w772bQH4JkQTybrJZZa9vDQP2AtvRn3V64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tim Huang <Tim.Huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 219/286] drm/amd/pm: reverse mclk and fclk clocks levels for SMU v13.0.4
-Date: Wed,  7 Jun 2023 22:15:18 +0200
-Message-ID: <20230607200930.432005623@linuxfoundation.org>
+Subject: [PATCH 6.3 220/286] drm/amd/pm: reverse mclk and fclk clocks levels for vangogh
+Date: Wed,  7 Jun 2023 22:15:19 +0200
+Message-ID: <20230607200930.465347676@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,7 +36,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Tim Huang <Tim.Huang@amd.com>
 
-commit 6a07826f2057b5fa1c479ba56460195882464270 upstream.
+commit bfc03568d9d81332382c73a1985a90c4506bd36c upstream.
 
 This patch reverses the DPM clocks levels output of pp_dpm_mclk
 and pp_dpm_fclk.
@@ -59,29 +59,48 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-@@ -478,7 +478,7 @@ static int smu_v13_0_4_get_dpm_level_cou
- static int smu_v13_0_4_print_clk_levels(struct smu_context *smu,
- 					enum smu_clk_type clk_type, char *buf)
- {
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
+@@ -580,7 +580,7 @@ static int vangogh_print_legacy_clk_leve
+ 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
+ 	SmuMetrics_legacy_t metrics;
+ 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
 -	int i, size = 0, ret = 0;
 +	int i, idx, size = 0, ret = 0;
  	uint32_t cur_value = 0, value = 0, count = 0;
- 	uint32_t min, max;
+ 	bool cur_value_match_level = false;
  
-@@ -512,7 +512,8 @@ static int smu_v13_0_4_print_clk_levels(
- 			break;
- 
+@@ -654,7 +654,8 @@ static int vangogh_print_legacy_clk_leve
+ 	case SMU_MCLK:
+ 	case SMU_FCLK:
  		for (i = 0; i < count; i++) {
--			ret = smu_v13_0_4_get_dpm_freq_by_index(smu, clk_type, i, &value);
+-			ret = vangogh_get_dpm_clk_limited(smu, clk_type, i, &value);
 +			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
-+			ret = smu_v13_0_4_get_dpm_freq_by_index(smu, clk_type, idx, &value);
++			ret = vangogh_get_dpm_clk_limited(smu, clk_type, idx, &value);
  			if (ret)
- 				break;
- 
+ 				return ret;
+ 			if (!value)
+@@ -681,7 +682,7 @@ static int vangogh_print_clk_levels(stru
+ 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
+ 	SmuMetrics_t metrics;
+ 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
+-	int i, size = 0, ret = 0;
++	int i, idx, size = 0, ret = 0;
+ 	uint32_t cur_value = 0, value = 0, count = 0;
+ 	bool cur_value_match_level = false;
+ 	uint32_t min, max;
+@@ -763,7 +764,8 @@ static int vangogh_print_clk_levels(stru
+ 	case SMU_MCLK:
+ 	case SMU_FCLK:
+ 		for (i = 0; i < count; i++) {
+-			ret = vangogh_get_dpm_clk_limited(smu, clk_type, i, &value);
++			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
++			ret = vangogh_get_dpm_clk_limited(smu, clk_type, idx, &value);
+ 			if (ret)
+ 				return ret;
+ 			if (!value)
 
 
