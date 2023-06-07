@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46BE19535
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232B5C433D2;
-	Wed,  7 Jun 2023 20:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A21419535
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7E5C433D2;
+	Wed,  7 Jun 2023 20:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170101;
-	bh=CDZB/t6pi6xUTvEoKeHpll+2pMHXBDDwzB+QhamVD0o=;
+	s=korg; t=1686170104;
+	bh=gtVAtcsloKGLxWTwu09fR9w1OdO8Jv8IF8FgZQaUUf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SutGpHDHycwRX6brfnitj5TBWq4Yh3VAPN0buoPgATuaefvj200bFTJtOkT3BQMNI
-	 98xH5J7jqZdZ/ctRsCORTWa7wwlpuzP+FzI7Yd2BVkBc6HJFQMuyYeKh21jECJRINd
-	 enUIvu0HZa718w0Oazzr0YsVpFZ8s3c7toIl2OVg=
+	b=RPw0raeKMr4HUlfloUVhHIJ/ypTGbCpKuXsKFk7U3Eik52F+JZda3Jvx4/wYEa8mD
+	 MyPT8YOwAsC1bjWzcYafFxqUcVPGwnCCtcV4X/p2Uo2xCMABe/RmfWmfsHS8iH2pFc
+	 SZHb3KdyRJ9HxzX6kKmNMGxWCBKGSn/rX2znIbLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
+	YongSu Yoo <yongsuyoo0215@gmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 45/88] media: netup_unidvb: fix irq init by register it at the end of probe
-Date: Wed,  7 Jun 2023 22:16:02 +0200
-Message-ID: <20230607200900.641586919@linuxfoundation.org>
+Subject: [PATCH 4.19 46/88] media: dvb_ca_en50221: fix a size write bug
+Date: Wed,  7 Jun 2023 22:16:03 +0200
+Message-ID: <20230607200900.676616158@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -35,68 +35,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: YongSu Yoo <yongsuyoo0215@gmail.com>
 
-[ Upstream commit e6ad6233592593079db5c8fa592c298e51bc1356 ]
+[ Upstream commit a4315e5be7020aac9b24a8151caf4bb85224cd0e ]
 
-IRQ handler netup_spi_interrupt() takes spinlock spi->lock. The lock
-is initialized in netup_spi_init(). However, irq handler is registered
-before initializing the lock.
+The function of "dvb_ca_en50221_write_data" at source/drivers/media
+/dvb-core/dvb_ca_en50221.c is used for two cases.
+The first case is for writing APDU data in the function of
+"dvb_ca_en50221_io_write" at source/drivers/media/dvb-core/
+dvb_ca_en50221.c.
+The second case is for writing the host link buf size on the
+Command Register in the function of "dvb_ca_en50221_link_init"
+at source/drivers/media/dvb-core/dvb_ca_en50221.c.
+In the second case, there exists a bug like following.
+In the function of the "dvb_ca_en50221_link_init",
+after a TV host calculates the host link buf_size,
+the TV host writes the calculated host link buf_size on the
+Size Register.
+Accroding to the en50221 Spec (the page 60 of
+https://dvb.org/wp-content/uploads/2020/02/En50221.V1.pdf),
+before this writing operation, the "SW(CMDREG_SW)" flag in the
+Command Register should be set. We can see this setting operation
+in the function of the "dvb_ca_en50221_link_init" like below.
+...
+	if ((ret = ca->pub->write_cam_control(ca->pub, slot,
+CTRLIF_COMMAND, IRQEN | CMDREG_SW)) != 0)
+		return ret;
+...
+But, after that, the real writing operation is implemented using
+the function of the "dvb_ca_en50221_write_data" in the function of
+"dvb_ca_en50221_link_init", and the "dvb_ca_en50221_write_data"
+includes the function of "ca->pub->write_cam_control",
+and the function of the "ca->pub->write_cam_control" in the
+function of the "dvb_ca_en50221_wrte_data" does not include
+"CMDREG_SW" flag like below.
+...
+	if ((status = ca->pub->write_cam_control(ca->pub, slot,
+CTRLIF_COMMAND, IRQEN | CMDREG_HC)) != 0)
+...
+In the above source code, we can see only the "IRQEN | CMDREG_HC",
+but we cannot see the "CMDREG_SW".
+The "CMDREG_SW" flag which was set in the function of the
+"dvb_ca_en50221_link_init" was rollbacked by the follwoing function
+of the "dvb_ca_en50221_write_data".
+This is a bug. and this bug causes that the calculated host link buf_size
+is not properly written in the CI module.
+Through this patch, we fix this bug.
 
-Spinlock dma->lock and i2c->lock suffer from the same problem.
-
-Fix this by registering the irq at the end of probe.
-
-Link: https://lore.kernel.org/linux-media/20230315134518.1074497-1-harperchen1110@gmail.com
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Link: https://lore.kernel.org/linux-media/20220818125027.1131-1-yongsuyoo0215@gmail.com
+Signed-off-by: YongSu Yoo <yongsuyoo0215@gmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/pci/netup_unidvb/netup_unidvb_core.c  | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/media/dvb-core/dvb_ca_en50221.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
-index 0ead74c40a7b7..28381698f2e16 100644
---- a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
-+++ b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
-@@ -896,12 +896,7 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
- 		ndev->lmmio0, (u32)pci_resource_len(pci_dev, 0),
- 		ndev->lmmio1, (u32)pci_resource_len(pci_dev, 1),
- 		pci_dev->irq);
--	if (request_irq(pci_dev->irq, netup_unidvb_isr, IRQF_SHARED,
--			"netup_unidvb", pci_dev) < 0) {
--		dev_err(&pci_dev->dev,
--			"%s(): can't get IRQ %d\n", __func__, pci_dev->irq);
--		goto irq_request_err;
--	}
-+
- 	ndev->dma_size = 2 * 188 *
- 		NETUP_DMA_BLOCKS_COUNT * NETUP_DMA_PACKETS_COUNT;
- 	ndev->dma_virt = dma_alloc_coherent(&pci_dev->dev,
-@@ -942,6 +937,14 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
- 		dev_err(&pci_dev->dev, "netup_unidvb: DMA setup failed\n");
- 		goto dma_setup_err;
- 	}
-+
-+	if (request_irq(pci_dev->irq, netup_unidvb_isr, IRQF_SHARED,
-+			"netup_unidvb", pci_dev) < 0) {
-+		dev_err(&pci_dev->dev,
-+			"%s(): can't get IRQ %d\n", __func__, pci_dev->irq);
-+		goto dma_setup_err;
-+	}
-+
- 	dev_info(&pci_dev->dev,
- 		"netup_unidvb: device has been initialized\n");
- 	return 0;
-@@ -960,8 +963,6 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
- 	dma_free_coherent(&pci_dev->dev, ndev->dma_size,
- 			ndev->dma_virt, ndev->dma_phys);
- dma_alloc_err:
--	free_irq(pci_dev->irq, pci_dev);
--irq_request_err:
- 	iounmap(ndev->lmmio1);
- pci_bar1_error:
- 	iounmap(ndev->lmmio0);
+diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
+index 36afcea709a75..1e08466ba0c6c 100644
+--- a/drivers/media/dvb-core/dvb_ca_en50221.c
++++ b/drivers/media/dvb-core/dvb_ca_en50221.c
+@@ -198,7 +198,7 @@ static void dvb_ca_en50221_thread_wakeup(struct dvb_ca_private *ca);
+ static int dvb_ca_en50221_read_data(struct dvb_ca_private *ca, int slot,
+ 				    u8 *ebuf, int ecount);
+ static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot,
+-				     u8 *ebuf, int ecount);
++				     u8 *ebuf, int ecount, int size_write_flag);
+ 
+ /**
+  * Safely find needle in haystack.
+@@ -381,7 +381,7 @@ static int dvb_ca_en50221_link_init(struct dvb_ca_private *ca, int slot)
+ 	ret = dvb_ca_en50221_wait_if_status(ca, slot, STATUSREG_FR, HZ / 10);
+ 	if (ret)
+ 		return ret;
+-	ret = dvb_ca_en50221_write_data(ca, slot, buf, 2);
++	ret = dvb_ca_en50221_write_data(ca, slot, buf, 2, CMDREG_SW);
+ 	if (ret != 2)
+ 		return -EIO;
+ 	ret = ca->pub->write_cam_control(ca->pub, slot, CTRLIF_COMMAND, IRQEN);
+@@ -789,11 +789,13 @@ static int dvb_ca_en50221_read_data(struct dvb_ca_private *ca, int slot,
+  * @buf: The data in this buffer is treated as a complete link-level packet to
+  *	 be written.
+  * @bytes_write: Size of ebuf.
++ * @size_write_flag: A flag on Command Register which says whether the link size
++ * information will be writen or not.
+  *
+  * return: Number of bytes written, or < 0 on error.
+  */
+ static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot,
+-				     u8 *buf, int bytes_write)
++				     u8 *buf, int bytes_write, int size_write_flag)
+ {
+ 	struct dvb_ca_slot *sl = &ca->slot_info[slot];
+ 	int status;
+@@ -828,7 +830,7 @@ static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot,
+ 
+ 	/* OK, set HC bit */
+ 	status = ca->pub->write_cam_control(ca->pub, slot, CTRLIF_COMMAND,
+-					    IRQEN | CMDREG_HC);
++					    IRQEN | CMDREG_HC | size_write_flag);
+ 	if (status)
+ 		goto exit;
+ 
+@@ -1516,7 +1518,7 @@ static ssize_t dvb_ca_en50221_io_write(struct file *file,
+ 
+ 			mutex_lock(&sl->slot_lock);
+ 			status = dvb_ca_en50221_write_data(ca, slot, fragbuf,
+-							   fraglen + 2);
++							   fraglen + 2, 0);
+ 			mutex_unlock(&sl->slot_lock);
+ 			if (status == (fraglen + 2)) {
+ 				written = 1;
 -- 
 2.39.2
 
