@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A21419535
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7E5C433D2;
-	Wed,  7 Jun 2023 20:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24D619535
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722FCC433D2;
+	Wed,  7 Jun 2023 20:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170104;
-	bh=gtVAtcsloKGLxWTwu09fR9w1OdO8Jv8IF8FgZQaUUf8=;
+	s=korg; t=1686170106;
+	bh=ZkvU5hdkKNo/JRI0K7PSraH3Ns56rSaCQAKgMTRCbEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RPw0raeKMr4HUlfloUVhHIJ/ypTGbCpKuXsKFk7U3Eik52F+JZda3Jvx4/wYEa8mD
-	 MyPT8YOwAsC1bjWzcYafFxqUcVPGwnCCtcV4X/p2Uo2xCMABe/RmfWmfsHS8iH2pFc
-	 SZHb3KdyRJ9HxzX6kKmNMGxWCBKGSn/rX2znIbLM=
+	b=qXZZfuGugN6/4IBM1qAjAk6BR27U9Yf3nz1EYDFRFqNO/bJtNTDr0isqaq7VWLRU3
+	 x1vGTngUD0HuuBAVyNDv0ymG4hIeCr2d6T6Rwj8izGTpUbrEys52i7W54xxdmbSd8r
+	 Dz8AQ8WgLzj9uVpRS1kmVR11I5aKjZoHzCAREOOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YongSu Yoo <yongsuyoo0215@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 46/88] media: dvb_ca_en50221: fix a size write bug
-Date: Wed,  7 Jun 2023 22:16:03 +0200
-Message-ID: <20230607200900.676616158@linuxfoundation.org>
+Subject: [PATCH 4.19 47/88] media: ttusb-dec: fix memory leak in ttusb_dec_exit_dvb()
+Date: Wed,  7 Jun 2023 22:16:04 +0200
+Message-ID: <20230607200900.711624979@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -35,116 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YongSu Yoo <yongsuyoo0215@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit a4315e5be7020aac9b24a8151caf4bb85224cd0e ]
+[ Upstream commit 517a281338322ff8293f988771c98aaa7205e457 ]
 
-The function of "dvb_ca_en50221_write_data" at source/drivers/media
-/dvb-core/dvb_ca_en50221.c is used for two cases.
-The first case is for writing APDU data in the function of
-"dvb_ca_en50221_io_write" at source/drivers/media/dvb-core/
-dvb_ca_en50221.c.
-The second case is for writing the host link buf size on the
-Command Register in the function of "dvb_ca_en50221_link_init"
-at source/drivers/media/dvb-core/dvb_ca_en50221.c.
-In the second case, there exists a bug like following.
-In the function of the "dvb_ca_en50221_link_init",
-after a TV host calculates the host link buf_size,
-the TV host writes the calculated host link buf_size on the
-Size Register.
-Accroding to the en50221 Spec (the page 60 of
-https://dvb.org/wp-content/uploads/2020/02/En50221.V1.pdf),
-before this writing operation, the "SW(CMDREG_SW)" flag in the
-Command Register should be set. We can see this setting operation
-in the function of the "dvb_ca_en50221_link_init" like below.
-...
-	if ((ret = ca->pub->write_cam_control(ca->pub, slot,
-CTRLIF_COMMAND, IRQEN | CMDREG_SW)) != 0)
-		return ret;
-...
-But, after that, the real writing operation is implemented using
-the function of the "dvb_ca_en50221_write_data" in the function of
-"dvb_ca_en50221_link_init", and the "dvb_ca_en50221_write_data"
-includes the function of "ca->pub->write_cam_control",
-and the function of the "ca->pub->write_cam_control" in the
-function of the "dvb_ca_en50221_wrte_data" does not include
-"CMDREG_SW" flag like below.
-...
-	if ((status = ca->pub->write_cam_control(ca->pub, slot,
-CTRLIF_COMMAND, IRQEN | CMDREG_HC)) != 0)
-...
-In the above source code, we can see only the "IRQEN | CMDREG_HC",
-but we cannot see the "CMDREG_SW".
-The "CMDREG_SW" flag which was set in the function of the
-"dvb_ca_en50221_link_init" was rollbacked by the follwoing function
-of the "dvb_ca_en50221_write_data".
-This is a bug. and this bug causes that the calculated host link buf_size
-is not properly written in the CI module.
-Through this patch, we fix this bug.
+Since dvb_frontend_detach() is not called in ttusb_dec_exit_dvb(),
+which is called when the device is disconnected, dvb_frontend_free()
+is not finally called.
 
-Link: https://lore.kernel.org/linux-media/20220818125027.1131-1-yongsuyoo0215@gmail.com
-Signed-off-by: YongSu Yoo <yongsuyoo0215@gmail.com>
+This causes a memory leak just by repeatedly plugging and
+unplugging the device.
+
+Fix this issue by adding dvb_frontend_detach() to ttusb_dec_exit_dvb().
+
+Link: https://lore.kernel.org/linux-media/20221117045925.14297-5-imv4bel@gmail.com
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_ca_en50221.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/media/usb/ttusb-dec/ttusb_dec.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
-index 36afcea709a75..1e08466ba0c6c 100644
---- a/drivers/media/dvb-core/dvb_ca_en50221.c
-+++ b/drivers/media/dvb-core/dvb_ca_en50221.c
-@@ -198,7 +198,7 @@ static void dvb_ca_en50221_thread_wakeup(struct dvb_ca_private *ca);
- static int dvb_ca_en50221_read_data(struct dvb_ca_private *ca, int slot,
- 				    u8 *ebuf, int ecount);
- static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot,
--				     u8 *ebuf, int ecount);
-+				     u8 *ebuf, int ecount, int size_write_flag);
- 
- /**
-  * Safely find needle in haystack.
-@@ -381,7 +381,7 @@ static int dvb_ca_en50221_link_init(struct dvb_ca_private *ca, int slot)
- 	ret = dvb_ca_en50221_wait_if_status(ca, slot, STATUSREG_FR, HZ / 10);
- 	if (ret)
- 		return ret;
--	ret = dvb_ca_en50221_write_data(ca, slot, buf, 2);
-+	ret = dvb_ca_en50221_write_data(ca, slot, buf, 2, CMDREG_SW);
- 	if (ret != 2)
- 		return -EIO;
- 	ret = ca->pub->write_cam_control(ca->pub, slot, CTRLIF_COMMAND, IRQEN);
-@@ -789,11 +789,13 @@ static int dvb_ca_en50221_read_data(struct dvb_ca_private *ca, int slot,
-  * @buf: The data in this buffer is treated as a complete link-level packet to
-  *	 be written.
-  * @bytes_write: Size of ebuf.
-+ * @size_write_flag: A flag on Command Register which says whether the link size
-+ * information will be writen or not.
-  *
-  * return: Number of bytes written, or < 0 on error.
-  */
- static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot,
--				     u8 *buf, int bytes_write)
-+				     u8 *buf, int bytes_write, int size_write_flag)
- {
- 	struct dvb_ca_slot *sl = &ca->slot_info[slot];
- 	int status;
-@@ -828,7 +830,7 @@ static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot,
- 
- 	/* OK, set HC bit */
- 	status = ca->pub->write_cam_control(ca->pub, slot, CTRLIF_COMMAND,
--					    IRQEN | CMDREG_HC);
-+					    IRQEN | CMDREG_HC | size_write_flag);
- 	if (status)
- 		goto exit;
- 
-@@ -1516,7 +1518,7 @@ static ssize_t dvb_ca_en50221_io_write(struct file *file,
- 
- 			mutex_lock(&sl->slot_lock);
- 			status = dvb_ca_en50221_write_data(ca, slot, fragbuf,
--							   fraglen + 2);
-+							   fraglen + 2, 0);
- 			mutex_unlock(&sl->slot_lock);
- 			if (status == (fraglen + 2)) {
- 				written = 1;
+diff --git a/drivers/media/usb/ttusb-dec/ttusb_dec.c b/drivers/media/usb/ttusb-dec/ttusb_dec.c
+index f34efa7c61b40..c915e555897ba 100644
+--- a/drivers/media/usb/ttusb-dec/ttusb_dec.c
++++ b/drivers/media/usb/ttusb-dec/ttusb_dec.c
+@@ -1561,8 +1561,7 @@ static void ttusb_dec_exit_dvb(struct ttusb_dec *dec)
+ 	dvb_dmx_release(&dec->demux);
+ 	if (dec->fe) {
+ 		dvb_unregister_frontend(dec->fe);
+-		if (dec->fe->ops.release)
+-			dec->fe->ops.release(dec->fe);
++		dvb_frontend_detach(dec->fe);
+ 	}
+ 	dvb_unregister_adapter(&dec->adapter);
+ }
 -- 
 2.39.2
 
