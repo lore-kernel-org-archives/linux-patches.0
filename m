@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4B019BAB
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCF5C433D2;
-	Wed,  7 Jun 2023 20:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B357A19BAB
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BBEC433EF;
+	Wed,  7 Jun 2023 20:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170069;
-	bh=GBeSLJIX8UIkYb9sZu6S8yqG1JK98fV0232YBA07j4c=;
+	s=korg; t=1686170072;
+	bh=mQZOCKaKu/hy1ed/IVeQUFZPlBqiN0A0UWtyYRHjdh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBTa4gR9mEyoJm4hlO46WKKDVDjnYdqnvTI6THMynhtGpZtpMQ2zpc9jrLiDl19ll
-	 1ozhuxB5XLQlU1yfVU+dMO1H5dnbZEat7+WvG2mVR8f4R+HSv0UIQHMeZHag77/aHK
-	 Y9Vl9ld4xWb7CK7l552yRDouit6O0dJtIa2kJPQ8=
+	b=hiibjfWgD7mno+1x5OBR5/HK6D/i3UFNbAoMmCWXDu6TqCX/ZN8ROlKFQjBJ9P/Cv
+	 IBllhOzppyWVntmJRLRRMV9ussCEQBVS/Giafqtl4VEeh79jRmIT70MCtzKuy1r8BL
+	 hsopN6MfZQ01bi0lwK9Kdya2ggJE+KWRo8mJGTEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Orlov <ivan.orlov0322@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 34/88] nbd: Fix debugfs_create_dir error checking
-Date: Wed,  7 Jun 2023 22:15:51 +0200
-Message-ID: <20230607200900.263302780@linuxfoundation.org>
+Subject: [PATCH 4.19 35/88] ASoC: dwc: limit the number of overrun messages
+Date: Wed,  7 Jun 2023 22:15:52 +0200
+Message-ID: <20230607200900.296590653@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -35,44 +33,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Orlov <ivan.orlov0322@gmail.com>
+From: Maxim Kochetkov <fido_max@inbox.ru>
 
-[ Upstream commit 4913cfcf014c95f0437db2df1734472fd3e15098 ]
+[ Upstream commit ab6ecfbf40fccf74b6ec2ba7ed6dd2fc024c3af2 ]
 
-The debugfs_create_dir function returns ERR_PTR in case of error, and the
-only correct way to check if an error occurred is 'IS_ERR' inline function.
-This patch will replace the null-comparison with IS_ERR.
+On slow CPU (FPGA/QEMU emulated) printing overrun messages from
+interrupt handler to uart console may leads to more overrun errors.
+So use dev_err_ratelimited to limit the number of error messages.
 
-Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
-Link: https://lore.kernel.org/r/20230512130533.98709-1-ivan.orlov0322@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru
+Link: https://lore.kernel.org/r/20230505062820.21840-1-fido_max@inbox.ru
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 4 ++--
+ sound/soc/dwc/dwc-i2s.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index cc66983e8b6ab..28024248a7b53 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -1547,7 +1547,7 @@ static int nbd_dev_dbg_init(struct nbd_device *nbd)
- 		return -EIO;
+diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
+index 65112b9d8588a..90b8814d7506a 100644
+--- a/sound/soc/dwc/dwc-i2s.c
++++ b/sound/soc/dwc/dwc-i2s.c
+@@ -132,13 +132,13 @@ static irqreturn_t i2s_irq_handler(int irq, void *dev_id)
  
- 	dir = debugfs_create_dir(nbd_name(nbd), nbd_dbg_dir);
--	if (!dir) {
-+	if (IS_ERR(dir)) {
- 		dev_err(nbd_to_dev(nbd), "Failed to create debugfs dir for '%s'\n",
- 			nbd_name(nbd));
- 		return -EIO;
-@@ -1573,7 +1573,7 @@ static int nbd_dbg_init(void)
- 	struct dentry *dbg_dir;
+ 		/* Error Handling: TX */
+ 		if (isr[i] & ISR_TXFO) {
+-			dev_err(dev->dev, "TX overrun (ch_id=%d)\n", i);
++			dev_err_ratelimited(dev->dev, "TX overrun (ch_id=%d)\n", i);
+ 			irq_valid = true;
+ 		}
  
- 	dbg_dir = debugfs_create_dir("nbd", NULL);
--	if (!dbg_dir)
-+	if (IS_ERR(dbg_dir))
- 		return -EIO;
- 
- 	nbd_dbg_dir = dbg_dir;
+ 		/* Error Handling: TX */
+ 		if (isr[i] & ISR_RXFO) {
+-			dev_err(dev->dev, "RX overrun (ch_id=%d)\n", i);
++			dev_err_ratelimited(dev->dev, "RX overrun (ch_id=%d)\n", i);
+ 			irq_valid = true;
+ 		}
+ 	}
 -- 
 2.39.2
 
