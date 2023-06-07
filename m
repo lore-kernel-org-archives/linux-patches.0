@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636513AE59
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D1CC433D2;
-	Wed,  7 Jun 2023 20:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FBE3AE6E
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70205C433EF;
+	Wed,  7 Jun 2023 20:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169945;
-	bh=jCO4H3cR9wEWkB9Jbpu3LZA+lydgZ+2UOCFygH9YRNo=;
+	s=korg; t=1686169947;
+	bh=NoXGJDsHf96ZtB8bjoZdgOBpCuSqudCgUPLR+s4g7bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kexoFA1ZRbHYhYpB75FsfCFxJTffz7o4gsNhD8srXXZGURzqbEa8jBaZt2hc7YBE6
-	 iXtAOIdEyF3wQKSpreXHcEgiIv6EYFnPz7CkDMw/UQW+oQKwy2g07p97rWHLtTeiDT
-	 gAIb4+K5+gNnCjBRZ8Kqr14PYPT3P7R9ApZt7HRk=
+	b=atbTDOM234ust/8fFqGz7B5BhltVf9HwfNjJstCpEMtOF+2lmVECsgt0GIILKfo5k
+	 +BKqxcNQsfvdclpQcSDrKvUq27GAtbzNCpBtR+aDculb8EoBPG/imgw9HTCKR/fjeM
+	 +o59H8Nm8YVAYX6FWYu5aq2t2dlVVB0I8pm14Ghc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.3 274/286] KVM: x86: Bail from kvm_recalculate_phys_map() if x2APIC ID is out-of-bounds
-Date: Wed,  7 Jun 2023 22:16:13 +0200
-Message-ID: <20230607200932.246044719@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.3 275/286] ksmbd: fix credit count leakage
+Date: Wed,  7 Jun 2023 22:16:14 +0200
+Message-ID: <20230607200932.276450463@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -34,78 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 4364b287982bd05bfafa461c80650c732001974b upstream.
+commit 84c5aa47925a1f40d698b6a6a2bf67e99617433d upstream.
 
-Bail from kvm_recalculate_phys_map() and disable the optimized map if the
-target vCPU's x2APIC ID is out-of-bounds, i.e. if the vCPU was added
-and/or enabled its local APIC after the map was allocated.  This fixes an
-out-of-bounds access bug in the !x2apic_format path where KVM would write
-beyond the end of phys_map.
+This patch fix the failure from smb2.credits.single_req_credits_granted
+test. When client send 8192 credit request, ksmbd return 8191 credit
+granted. ksmbd should give maximum possible credits that must be granted
+within the range of not exceeding the max credit to client.
 
-Check the x2APIC ID regardless of whether or not x2APIC is enabled,
-as KVM's hardcodes x2APIC ID to be the vCPU ID, i.e. it can't change, and
-the map allocation in kvm_recalculate_apic_map() doesn't check for x2APIC
-being enabled, i.e. the check won't get false postivies.
-
-Note, this also affects the x2apic_format path, which previously just
-ignored the "x2apic_id > new->max_apic_id" case.  That too is arguably a
-bug fix, as ignoring the vCPU meant that KVM would not send interrupts to
-the vCPU until the next map recalculation.  In practice, that "bug" is
-likely benign as a newly present vCPU/APIC would immediately trigger a
-recalc.  But, there's no functional downside to disabling the map, and
-a future patch will gracefully handle the -E2BIG case by retrying instead
-of simply disabling the optimized map.
-
-Opportunistically add a sanity check on the xAPIC ID size, along with a
-comment explaining why the xAPIC ID is guaranteed to be "good".
-
-Reported-by: Michal Luczaj <mhal@rbox.co>
-Fixes: 5b84b0291702 ("KVM: x86: Honor architectural behavior for aliased 8-bit APIC IDs")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230602233250.1014316-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2pdu.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -229,6 +229,23 @@ static int kvm_recalculate_phys_map(stru
- 	u32 physical_id;
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -326,13 +326,9 @@ int smb2_set_rsp_credits(struct ksmbd_wo
+ 	if (hdr->Command == SMB2_NEGOTIATE)
+ 		aux_max = 1;
+ 	else
+-		aux_max = conn->vals->max_credits - credit_charge;
++		aux_max = conn->vals->max_credits - conn->total_credits;
+ 	credits_granted = min_t(unsigned short, credits_requested, aux_max);
  
- 	/*
-+	 * For simplicity, KVM always allocates enough space for all possible
-+	 * xAPIC IDs.  Yell, but don't kill the VM, as KVM can continue on
-+	 * without the optimized map.
-+	 */
-+	if (WARN_ON_ONCE(xapic_id > new->max_apic_id))
-+		return -EINVAL;
-+
-+	/*
-+	 * Bail if a vCPU was added and/or enabled its APIC between allocating
-+	 * the map and doing the actual calculations for the map.  Note, KVM
-+	 * hardcodes the x2APIC ID to vcpu_id, i.e. there's no TOCTOU bug if
-+	 * the compiler decides to reload x2apic_id after this check.
-+	 */
-+	if (x2apic_id > new->max_apic_id)
-+		return -E2BIG;
-+
-+	/*
- 	 * Deliberately truncate the vCPU ID when detecting a mismatched APIC
- 	 * ID to avoid false positives if the vCPU ID, i.e. x2APIC ID, is a
- 	 * 32-bit value.  Any unwanted aliasing due to truncation results will
-@@ -253,8 +270,7 @@ static int kvm_recalculate_phys_map(stru
- 	 */
- 	if (vcpu->kvm->arch.x2apic_format) {
- 		/* See also kvm_apic_match_physical_addr(). */
--		if ((apic_x2apic_mode(apic) || x2apic_id > 0xff) &&
--			x2apic_id <= new->max_apic_id)
-+		if (apic_x2apic_mode(apic) || x2apic_id > 0xff)
- 			new->phys_map[x2apic_id] = apic;
+-	if (conn->vals->max_credits - conn->total_credits < credits_granted)
+-		credits_granted = conn->vals->max_credits -
+-			conn->total_credits;
+-
+ 	conn->total_credits += credits_granted;
+ 	work->credits_granted += credits_granted;
  
- 		if (!apic_x2apic_mode(apic) && !new->phys_map[xapic_id])
 
 
