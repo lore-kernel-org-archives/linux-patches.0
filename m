@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1292F39231
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87AEFC433D2;
-	Wed,  7 Jun 2023 20:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEBF3922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDDCC433EF;
+	Wed,  7 Jun 2023 20:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171489;
-	bh=qoYXB0WWUWOXzC0J4B6JDi69xCcw48i6OeYjX9B32Lk=;
+	s=korg; t=1686171492;
+	bh=9ad7ZqI0JW+a0d0z29ZE8gLVc6qUfEiBBEvkrZOGYaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JE7PyFFoI8PkovW0MeJXRjOwt6AJPlNed/Pe9TJNenwjV3Q0VW0SD2ojxHXaEJHgS
-	 XaKM0O+2ZsqBJx0T62zo+BWTb1I1VbQodVzSpUUqBGdaWtoEM27DA8hZdQ8kxHLt/4
-	 cyczsCP3RzWK7BPlXA5fnKm0/dQHScC5K9bFkyD8=
+	b=WKsXdXHZNuKyEpxSVQzo3/Umrub+iAsx8m5gsCW73wekgMA/tRcOk3/F8x35qgO73
+	 mmVLyeaUSK4ryQLnqimnSSx5UW6T24VUSJT6m/uF1/fI5yaumvpQcUnh+WrdCVGCe0
+	 mIvczFXb/OMzYc4u0nry+lpr1VGqEGXwcWtCHuNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Chris Packham <chris.packham@alliedtelesis.co.nz>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/159] mtd: rawnand: marvell: ensure timing values are written
-Date: Wed,  7 Jun 2023 22:15:40 +0200
-Message-ID: <20230607200904.885509543@linuxfoundation.org>
+Subject: [PATCH 5.15 038/159] mtd: rawnand: marvell: dont set the NAND frequency select
+Date: Wed,  7 Jun 2023 22:15:41 +0200
+Message-ID: <20230607200904.915907775@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -37,39 +37,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Packham <chris.packham@alliedtelesis.co.nz>
 
-[ Upstream commit 8a6f4d346f3bad9c68b4a87701eb3f7978542d57 ]
+[ Upstream commit c4d28e30a8d0b979e4029465ab8f312ab6ce2644 ]
 
-When new timing values are calculated in marvell_nfc_setup_interface()
-ensure that they will be applied in marvell_nfc_select_target() by
-clearing the selected_chip pointer.
+marvell_nfc_setup_interface() uses the frequency retrieved from the
+clock associated with the nand interface to determine the timings that
+will be used. By changing the NAND frequency select without reflecting
+this in the clock configuration this means that the timings calculated
+don't correctly meet the requirements of the NAND chip. This hasn't been
+an issue up to now because of a different bug that was stopping the
+timings being updated after they were initially set.
 
 Fixes: b25251414f6e ("mtd: rawnand: marvell: Stop implementing ->select_chip()")
-Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230525003154.2303012-1-chris.packham@alliedtelesis.co.nz
+Link: https://lore.kernel.org/linux-mtd/20230525003154.2303012-2-chris.packham@alliedtelesis.co.nz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/marvell_nand.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mtd/nand/raw/marvell_nand.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/drivers/mtd/nand/raw/marvell_nand.c b/drivers/mtd/nand/raw/marvell_nand.c
-index b248c5f657d56..95dee54fe079c 100644
+index 95dee54fe079c..9f662d5cf7fac 100644
 --- a/drivers/mtd/nand/raw/marvell_nand.c
 +++ b/drivers/mtd/nand/raw/marvell_nand.c
-@@ -2443,6 +2443,12 @@ static int marvell_nfc_setup_interface(struct nand_chip *chip, int chipnr,
- 			NDTR1_WAIT_MODE;
+@@ -2885,10 +2885,6 @@ static int marvell_nfc_init(struct marvell_nfc *nfc)
+ 		regmap_update_bits(sysctrl_base, GENCONF_CLK_GATING_CTRL,
+ 				   GENCONF_CLK_GATING_CTRL_ND_GATE,
+ 				   GENCONF_CLK_GATING_CTRL_ND_GATE);
+-
+-		regmap_update_bits(sysctrl_base, GENCONF_ND_CLK_CTRL,
+-				   GENCONF_ND_CLK_CTRL_EN,
+-				   GENCONF_ND_CLK_CTRL_EN);
  	}
  
-+	/*
-+	 * Reset nfc->selected_chip so the next command will cause the timing
-+	 * registers to be updated in marvell_nfc_select_target().
-+	 */
-+	nfc->selected_chip = NULL;
-+
- 	return 0;
- }
- 
+ 	/* Configure the DMA if appropriate */
 -- 
 2.39.2
 
