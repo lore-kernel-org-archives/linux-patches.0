@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E39E10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BEAAC433D2;
-	Wed,  7 Jun 2023 20:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4BA10FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D841C433D2;
+	Wed,  7 Jun 2023 20:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169614;
-	bh=yCycSPHSw5nWKhjjZfEVu6ifWKOZhPfIznzIcS3wp84=;
+	s=korg; t=1686169616;
+	bh=NTj2dnuzZlrai10DandPf5T/CG0CTRvG2Jxpu7+VtRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMHJwBDmr8IL3A833EBFt0+2qKCL8DowHoqHvBLs1/KfZWWpKI8UiJHiNO0dDVlTk
-	 eiYflUoSq7FdTWlRnN9W0zWQMDY5bgJTt1jmoujYaF5X+mlZx4BgGkgkpan5dh7paQ
-	 5lh1H793jpzrcluGEVQ1bz0U67bgcYCadFdgWnGs=
+	b=GkgPOA6y560sQdavqXNsTRtZpwwNRJK/Ovn6XzjQw98CNots8Gvj06LcEWoqNFssG
+	 CjSyLEZvpX5biUFHxOeSYyWiQB4eO+buusrkXzD0iXbVOWyVLZtHh0NyEr/2GQyCUL
+	 8wUXo4jqkJllPkS02ffn6xQOFKvtIvL3PmKLfTKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rub=C3=A9n=20G=C3=B3mez=20Agudo?= <mrgommer@proton.me>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 148/286] ACPI: resource: Add IRQ override quirk for LG UltraPC 17U70P
-Date: Wed,  7 Jun 2023 22:14:07 +0200
-Message-ID: <20230607200927.931668358@linuxfoundation.org>
+Subject: [PATCH 6.3 131/286] media: dvb-usb: dw2102: fix uninit-value in su3000_read_mac_address
+Date: Wed,  7 Jun 2023 22:13:50 +0200
+Message-ID: <20230607200927.374262489@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,53 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rubén Gómez <mrgommer@proton.me>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 71a485624c4cbb144169852d7bb8ca8c0667d7a3 ]
+[ Upstream commit a3fd1ef27aa686d871cefe207bd6168c4b0cd29e ]
 
-Add an ACPI IRQ override quirk for LG UltraPC 17U70P to address the
-internal keyboard problem on it.
+In su3000_read_mac_address, if i2c_transfer fails to execute two
+messages, array mac address will not be initialized. Without handling
+such error, later in function dvb_usb_adapter_dvb_init, proposed_mac
+is accessed before initialization.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=213031
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216983
-Signed-off-by: Rubén Gómez Agudo <mrgommer@proton.me>
-[ rjw: Subject, changelog, white space damage fixes ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix this error by returning a negative value if message execution fails.
+
+Link: https://lore.kernel.org/linux-media/20230328124416.560889-1-harperchen1110@gmail.com
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/media/usb/dvb-usb/dw2102.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index e8492b3a393ab..0800a9d775580 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -516,6 +516,17 @@ static const struct dmi_system_id maingear_laptop[] = {
- 	{ }
- };
- 
-+static const struct dmi_system_id lg_laptop[] = {
-+	{
-+		.ident = "LG Electronics 17U70P",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LG Electronics"),
-+			DMI_MATCH(DMI_BOARD_NAME, "17U70P"),
-+		},
-+	},
-+	{ }
-+};
-+
- struct irq_override_cmp {
- 	const struct dmi_system_id *system;
- 	unsigned char irq;
-@@ -532,6 +543,7 @@ static const struct irq_override_cmp override_table[] = {
- 	{ lenovo_laptop, 10, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
- 	{ tongfang_gm_rg, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
- 	{ maingear_laptop, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
-+	{ lg_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
- };
- 
- static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
+diff --git a/drivers/media/usb/dvb-usb/dw2102.c b/drivers/media/usb/dvb-usb/dw2102.c
+index 0ca764282c767..8747960e61461 100644
+--- a/drivers/media/usb/dvb-usb/dw2102.c
++++ b/drivers/media/usb/dvb-usb/dw2102.c
+@@ -946,7 +946,7 @@ static int su3000_read_mac_address(struct dvb_usb_device *d, u8 mac[6])
+ 	for (i = 0; i < 6; i++) {
+ 		obuf[1] = 0xf0 + i;
+ 		if (i2c_transfer(&d->i2c_adap, msg, 2) != 2)
+-			break;
++			return -1;
+ 		else
+ 			mac[i] = ibuf[0];
+ 	}
 -- 
 2.39.2
 
