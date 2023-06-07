@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE163AE65
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC52EC4339B;
-	Wed,  7 Jun 2023 20:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A32A2578
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459FEC4339B;
+	Wed,  7 Jun 2023 20:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169977;
-	bh=5ATivHTZCPFlrJw9nus5w68adzQee6zZmftqZTtFVqw=;
+	s=korg; t=1686169979;
+	bh=0PXeqC3u0+kVE7f0CJA2KJp0JnDrHVG3L/MzfSXx7/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ivs87vyf1ZiTXmF1eF54C3svw5nncyGMUr6VgB+jP/7wvcJ/9mpn/UOeGKtPfrMb3
-	 cy7ZoBD99XqDCS0IKxXdJKVjkeJa2aK1H6MmrfLDE1k3BBt6ntNvSUKY9QGFxOxeOz
-	 TubSrPIhfiR92BTLFtgZzIjUAKpUEmOkrY953DmQ=
+	b=TocM6r+F4IhSdRDznxQNK95R2KxhSbXuD3p4CmZemCUO/SroisZ6Nhv3NJMMcB/BZ
+	 sXkcYWNznOtYOJP0P9WffVT0kAKX4zaDq9KrGI2TL8yzkjfP7GKxSVdlHqC3OBSFGz
+	 m7jyy3ltyMSsTs1HmzuUq9Qic4coiWTBJV/6F/Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"paul.walmsley@sifive.com, aou@eecs.berkeley.edu, ndesaulniers@google.com, trix@redhat.com, stable@vger.kernel.org, linux-riscv@lists.infradead.org, llvm@lists.linux.dev, patches@lists.linux.dev, Nathan Chancellor" <nathan@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.3 285/286] riscv: vmlinux.lds.S: Explicitly handle .got section
-Date: Wed,  7 Jun 2023 22:16:24 +0200
-Message-ID: <20230607200932.590767678@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.3 286/286] ext4: enable the lazy init thread when remounting read/write
+Date: Wed,  7 Jun 2023 22:16:25 +0200
+Message-ID: <20230607200932.622964889@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,49 +33,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Theodore Ts'o <tytso@mit.edu>
 
-This patch is for linux-6.3.y only, it has no direct mainline
-equivalent.
+commit eb1f822c76beeaa76ab8b6737ab9dc9f9798408c upstream.
 
-LLVM 17 will now use the GOT for extern weak symbols when using the
-medany model, which causes a linker orphan section warning on
-linux-6.3.y:
+In commit a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting
+r/w until quota is re-enabled") we defer clearing tyhe SB_RDONLY flag
+in struct super.  However, we didn't defer when we checked sb_rdonly()
+to determine the lazy itable init thread should be enabled, with the
+next result that the lazy inode table initialization would not be
+properly started.  This can cause generic/231 to fail in ext4's
+nojournal mode.
 
-  ld.lld: warning: <internal>:(.got) is being placed in '.got'
+Fix this by moving when we decide to start or stop the lazy itable
+init thread to after we clear the SB_RDONLY flag when we are
+remounting the file system read/write.
 
-This is not an issue in mainline because handling of the .got section
-was added by commit 39b33072941f ("riscv: Introduce CONFIG_RELOCATABLE")
-and further extended by commit 26e7aacb83df ("riscv: Allow to downgrade
-paging mode from the command line") in 6.4-rc1. Neither of these changes
-are suitable for stable, so add explicit handling of the .got section in
-a standalone change to align 6.3 and mainline, which addresses the
-warning.
+Fixes a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting r/w until...")
 
-This is only an issue for 6.3 because commit f4b71bff8d85 ("riscv:
-select ARCH_WANT_LD_ORPHAN_WARN for !XIP_KERNEL") landed in 6.3-rc1, so
-earlier releases will not see this warning because it will not be
-enabled.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1865
-Link: https://github.com/llvm/llvm-project/commit/a178ba9fbd0a27057dc2fa4cb53c76caa013caac
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20230527035729.1001605-1-tytso@mit.edu
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/vmlinux.lds.S |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/super.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/arch/riscv/kernel/vmlinux.lds.S
-+++ b/arch/riscv/kernel/vmlinux.lds.S
-@@ -129,6 +129,8 @@ SECTIONS
- 		*(.sdata*)
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6555,18 +6555,6 @@ static int __ext4_remount(struct fs_cont
  	}
  
-+	.got : { *(.got*) }
+ 	/*
+-	 * Reinitialize lazy itable initialization thread based on
+-	 * current settings
+-	 */
+-	if (sb_rdonly(sb) || !test_opt(sb, INIT_INODE_TABLE))
+-		ext4_unregister_li_request(sb);
+-	else {
+-		ext4_group_t first_not_zeroed;
+-		first_not_zeroed = ext4_has_uninit_itable(sb);
+-		ext4_register_li_request(sb, first_not_zeroed);
+-	}
+-
+-	/*
+ 	 * Handle creation of system zone data early because it can fail.
+ 	 * Releasing of existing data is done when we are sure remount will
+ 	 * succeed.
+@@ -6603,6 +6591,18 @@ static int __ext4_remount(struct fs_cont
+ 	if (enable_rw)
+ 		sb->s_flags &= ~SB_RDONLY;
+ 
++	/*
++	 * Reinitialize lazy itable initialization thread based on
++	 * current settings
++	 */
++	if (sb_rdonly(sb) || !test_opt(sb, INIT_INODE_TABLE))
++		ext4_unregister_li_request(sb);
++	else {
++		ext4_group_t first_not_zeroed;
++		first_not_zeroed = ext4_has_uninit_itable(sb);
++		ext4_register_li_request(sb, first_not_zeroed);
++	}
 +
- #ifdef CONFIG_EFI
- 	.pecoff_edata_padding : { BYTE(0); . = ALIGN(PECOFF_FILE_ALIGNMENT); }
- 	__pecoff_data_raw_size = ABSOLUTE(. - __pecoff_text_end);
+ 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
+ 		ext4_stop_mmpd(sbi);
+ 
 
 
