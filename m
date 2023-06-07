@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F673922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A36C4339B;
-	Wed,  7 Jun 2023 20:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE653922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C6BC433EF;
+	Wed,  7 Jun 2023 20:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171269;
-	bh=lRszj8c8nrCfK5xuDq5S/n49YLwti7gEva5S+XlmNAE=;
+	s=korg; t=1686171272;
+	bh=oyPpsdiiYGCTTprqxp91T5VCcifNXHdYZElVvTsCJvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DiyiRD8nGGXSx0VzkPX/bNtFXamvQr2J7UKhaIyIw+7UjAc3vYd3qcru0GDC48zcj
-	 xuXsTIjxAOOg7BCQgeWLxL/KcA3SKnGFpENOophz0+jHKSz3Fgq57blpQ93o0xXF8A
-	 sF49kNSOceixcNwEmju+7a4MYSi+fse2IakyEkgg=
+	b=OSg1e+Do/UMSvNHFB4P9euZN7pFVY2pxbZpazmMTy55zkxCmc2ODe9F9Hk4q8xJ02
+	 vUDb/LhoD/QIM4+ZthL1MPIpdTHHDas1cAVB0ppghJmmLYO4ZO1e1VSNwhQHaynwzr
+	 6oIH/N07tJUwOnTCVohhaFOCmBaMGyWaHCPBYX7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Min-Hua Chen <minhuadotchen@gmail.com>,
-	Will Deacon <will@kernel.org>,
+	Wenchao Hao <haowenchao2@huawei.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 54/99] arm64/mm: mark private VM_FAULT_X defines as vm_fault_t
-Date: Wed,  7 Jun 2023 22:16:46 +0200
-Message-ID: <20230607200901.939956857@linuxfoundation.org>
+Subject: [PATCH 5.4 55/99] scsi: core: Decrease scsi_devices iorequest_cnt if dispatch failed
+Date: Wed,  7 Jun 2023 22:16:47 +0200
+Message-ID: <20230607200901.971953619@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -36,52 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min-Hua Chen <minhuadotchen@gmail.com>
+From: Wenchao Hao <haowenchao2@huawei.com>
 
-[ Upstream commit d91d580878064b880f3574ac35b98d8b70ee8620 ]
+[ Upstream commit 09e797c8641f6ad435c33ae24c223351197ea29a ]
 
-This patch fixes several sparse warnings for fault.c:
+If scsi_dispatch_cmd() failed, the SCSI command was not sent to the target,
+scsi_queue_rq() would return BLK_STS_RESOURCE and the related request would
+be requeued. The timeout of this request would not fire, no one would
+increase iodone_cnt.
 
-arch/arm64/mm/fault.c:493:24: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:493:24: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:493:24: sparse:    got int
-arch/arm64/mm/fault.c:501:32: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:501:32: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:501:32: sparse:    got int
-arch/arm64/mm/fault.c:503:32: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:503:32: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:503:32: sparse:    got int
-arch/arm64/mm/fault.c:511:24: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:511:24: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:511:24: sparse:    got int
-arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
-arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
-arch/arm64/mm/fault.c:713:39: sparse: warning: restricted vm_fault_t degrades to integer
+The above flow would result the iodone_cnt smaller than iorequest_cnt.  So
+decrease the iorequest_cnt if dispatch failed to workaround the issue.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
-Link: https://lore.kernel.org/r/20230502151909.128810-1-minhuadotchen@gmail.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
+Reported-by: Ming Lei <ming.lei@redhat.com>
+Closes: https://lore.kernel.org/r/ZF+zB+bB7iqe0wGd@ovpn-8-17.pek2.redhat.com
+Link: https://lore.kernel.org/r/20230515070156.1790181-3-haowenchao2@huawei.com
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/fault.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_lib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index a8e9c98147a19..af9a6e1fa0d3d 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -403,8 +403,8 @@ static void do_bad_area(unsigned long addr, unsigned int esr, struct pt_regs *re
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index 490d6c72d8bd6..8d05faf95ac3b 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1534,6 +1534,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 		 */
+ 		SCSI_LOG_MLQUEUE(3, scmd_printk(KERN_INFO, cmd,
+ 			"queuecommand : device blocked\n"));
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		return SCSI_MLQUEUE_DEVICE_BUSY;
  	}
- }
  
--#define VM_FAULT_BADMAP		0x010000
--#define VM_FAULT_BADACCESS	0x020000
-+#define VM_FAULT_BADMAP		((__force vm_fault_t)0x010000)
-+#define VM_FAULT_BADACCESS	((__force vm_fault_t)0x020000)
- 
- static vm_fault_t __do_page_fault(struct mm_struct *mm, unsigned long addr,
- 			   unsigned int mm_flags, unsigned long vm_flags)
+@@ -1566,6 +1567,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 	trace_scsi_dispatch_cmd_start(cmd);
+ 	rtn = host->hostt->queuecommand(host, cmd);
+ 	if (rtn) {
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		trace_scsi_dispatch_cmd_error(cmd, rtn);
+ 		if (rtn != SCSI_MLQUEUE_DEVICE_BUSY &&
+ 		    rtn != SCSI_MLQUEUE_TARGET_BUSY)
 -- 
 2.39.2
 
