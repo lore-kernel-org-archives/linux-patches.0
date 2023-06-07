@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E7D39231
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86BCC433D2;
-	Wed,  7 Jun 2023 21:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C121534CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:03:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D7BC433EF;
+	Wed,  7 Jun 2023 21:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171786;
-	bh=k87Tmf5cJh/XYC2LnSDfEVGEMXUyn4fGbV50Ai0gCqI=;
+	s=korg; t=1686171788;
+	bh=bjs6i7/SpeNe+Tah1sMFbTv70T9Akks00VJ3zX/hwPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zXcd+6u87lIz2t3xSb9J4kFVjHFPcgHyfxP0vaWNaJpOJPFsttlU0amjYDmnDGpgb
-	 9iq9bIfcBxmcYOY3gqz87SFWNoKF73fg53SERXBSequkIwW0k7tPLAGK0uQiT+8LTY
-	 gWoVqqSTRiwcixYL3GUovoTjW2XGBj3nX2ZIqOPA=
+	b=gYMkiORCUdHVC6daA+/29/icTtneYE1YVhLU5N4UiQISgWZdH2udBS2Jl0Jxyx3fx
+	 CAtOfXU2sKRsfgdv9dHJBemSyo5fDbJuBveKcAHxjWwrpqUgT0rG8F4vtd10xO9VcK
+	 wHRSoHajMZn1GDVBtumF56jAdVSzzlVuEXrvEg+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Borislav Petkov <bp@suse.de>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.15 119/159] x86/boot: Wrap literal addresses in absolute_pointer()
-Date: Wed,  7 Jun 2023 22:17:02 +0200
-Message-ID: <20230607200907.570708548@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Subject: [PATCH 5.15 110/159] usb: gadget: f_fs: Add unbind event before functionfs_unbind
+Date: Wed,  7 Jun 2023 22:16:53 +0200
+Message-ID: <20230607200907.277048604@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,141 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
 
-commit aeb84412037b89e06f45e382f044da6f200e12f8 upstream.
+commit efb6b535207395a5c7317993602e2503ca8cb4b3 upstream.
 
-GCC 11 (incorrectly[1]) assumes that literal values cast to (void *)
-should be treated like a NULL pointer with an offset, and raises
-diagnostics when doing bounds checking under -Warray-bounds. GCC 12
-got "smarter" about finding these:
+While exercising the unbind path, with the current implementation
+the functionfs_unbind would be calling which waits for the ffs->mutex
+to be available, however within the same time ffs_ep0_read is invoked
+& if no setup packets are pending, it will invoke function
+wait_event_interruptible_exclusive_locked_irq which by definition waits
+for the ev.count to be increased inside the same mutex for which
+functionfs_unbind is waiting.
+This creates deadlock situation because the functionfs_unbind won't
+get the lock until ev.count is increased which can only happen if
+the caller ffs_func_unbind can proceed further.
 
-  In function 'rdfs8',
-      inlined from 'vga_recalc_vertical' at /srv/code/arch/x86/boot/video-mode.c:124:29,
-      inlined from 'set_mode' at /srv/code/arch/x86/boot/video-mode.c:163:3:
-  /srv/code/arch/x86/boot/boot.h:114:9: warning: array subscript 0 is outside array bounds of 'u8[0]' {aka 'unsigned char[]'} [-Warray-bounds]
-    114 |         asm volatile("movb %%fs:%1,%0" : "=q" (v) : "m" (*(u8 *)addr));
-        |         ^~~
+Following is the illustration:
 
-This has been solved in other places[2] already by using the recently
-added absolute_pointer() macro. Do the same here.
+	CPU1				CPU2
 
-  [1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99578
-  [2] https://lore.kernel.org/all/20210912160149.2227137-1-linux@roeck-us.net/
+ffs_func_unbind()		ffs_ep0_read()
+				mutex_lock(ffs->mutex)
+				wait_event(ffs->ev.count)
+functionfs_unbind()
+  mutex_lock(ffs->mutex)
+  mutex_unlock(ffs->mutex)
 
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20220227195918.705219-1-keescook@chromium.org
+ffs_event_add()
+
+<deadlock>
+
+Fix this by moving the event unbind before functionfs_unbind
+to ensure the ev.count is incrased properly.
+
+Fixes: 6a19da111057 ("usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Link: https://lore.kernel.org/r/20230525092854.7992-1-quic_uaggarwa@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/boot.h |   36 ++++++++++++++++++++++++------------
- arch/x86/boot/main.c |    2 +-
- 2 files changed, 25 insertions(+), 13 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/boot/boot.h
-+++ b/arch/x86/boot/boot.h
-@@ -110,66 +110,78 @@ typedef unsigned int addr_t;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -3620,6 +3620,7 @@ static void ffs_func_unbind(struct usb_c
+ 	/* Drain any pending AIO completions */
+ 	drain_workqueue(ffs->io_completion_wq);
  
- static inline u8 rdfs8(addr_t addr)
- {
-+	u8 *ptr = (u8 *)absolute_pointer(addr);
- 	u8 v;
--	asm volatile("movb %%fs:%1,%0" : "=q" (v) : "m" (*(u8 *)addr));
-+	asm volatile("movb %%fs:%1,%0" : "=q" (v) : "m" (*ptr));
- 	return v;
- }
- static inline u16 rdfs16(addr_t addr)
- {
-+	u16 *ptr = (u16 *)absolute_pointer(addr);
- 	u16 v;
--	asm volatile("movw %%fs:%1,%0" : "=r" (v) : "m" (*(u16 *)addr));
-+	asm volatile("movw %%fs:%1,%0" : "=r" (v) : "m" (*ptr));
- 	return v;
- }
- static inline u32 rdfs32(addr_t addr)
- {
-+	u32 *ptr = (u32 *)absolute_pointer(addr);
- 	u32 v;
--	asm volatile("movl %%fs:%1,%0" : "=r" (v) : "m" (*(u32 *)addr));
-+	asm volatile("movl %%fs:%1,%0" : "=r" (v) : "m" (*ptr));
- 	return v;
++	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
+ 	if (!--opts->refcnt)
+ 		functionfs_unbind(ffs);
+ 
+@@ -3644,7 +3645,6 @@ static void ffs_func_unbind(struct usb_c
+ 	func->function.ssp_descriptors = NULL;
+ 	func->interfaces_nums = NULL;
+ 
+-	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
  }
  
- static inline void wrfs8(u8 v, addr_t addr)
- {
--	asm volatile("movb %1,%%fs:%0" : "+m" (*(u8 *)addr) : "qi" (v));
-+	u8 *ptr = (u8 *)absolute_pointer(addr);
-+	asm volatile("movb %1,%%fs:%0" : "+m" (*ptr) : "qi" (v));
- }
- static inline void wrfs16(u16 v, addr_t addr)
- {
--	asm volatile("movw %1,%%fs:%0" : "+m" (*(u16 *)addr) : "ri" (v));
-+	u16 *ptr = (u16 *)absolute_pointer(addr);
-+	asm volatile("movw %1,%%fs:%0" : "+m" (*ptr) : "ri" (v));
- }
- static inline void wrfs32(u32 v, addr_t addr)
- {
--	asm volatile("movl %1,%%fs:%0" : "+m" (*(u32 *)addr) : "ri" (v));
-+	u32 *ptr = (u32 *)absolute_pointer(addr);
-+	asm volatile("movl %1,%%fs:%0" : "+m" (*ptr) : "ri" (v));
- }
- 
- static inline u8 rdgs8(addr_t addr)
- {
-+	u8 *ptr = (u8 *)absolute_pointer(addr);
- 	u8 v;
--	asm volatile("movb %%gs:%1,%0" : "=q" (v) : "m" (*(u8 *)addr));
-+	asm volatile("movb %%gs:%1,%0" : "=q" (v) : "m" (*ptr));
- 	return v;
- }
- static inline u16 rdgs16(addr_t addr)
- {
-+	u16 *ptr = (u16 *)absolute_pointer(addr);
- 	u16 v;
--	asm volatile("movw %%gs:%1,%0" : "=r" (v) : "m" (*(u16 *)addr));
-+	asm volatile("movw %%gs:%1,%0" : "=r" (v) : "m" (*ptr));
- 	return v;
- }
- static inline u32 rdgs32(addr_t addr)
- {
-+	u32 *ptr = (u32 *)absolute_pointer(addr);
- 	u32 v;
--	asm volatile("movl %%gs:%1,%0" : "=r" (v) : "m" (*(u32 *)addr));
-+	asm volatile("movl %%gs:%1,%0" : "=r" (v) : "m" (*ptr));
- 	return v;
- }
- 
- static inline void wrgs8(u8 v, addr_t addr)
- {
--	asm volatile("movb %1,%%gs:%0" : "+m" (*(u8 *)addr) : "qi" (v));
-+	u8 *ptr = (u8 *)absolute_pointer(addr);
-+	asm volatile("movb %1,%%gs:%0" : "+m" (*ptr) : "qi" (v));
- }
- static inline void wrgs16(u16 v, addr_t addr)
- {
--	asm volatile("movw %1,%%gs:%0" : "+m" (*(u16 *)addr) : "ri" (v));
-+	u16 *ptr = (u16 *)absolute_pointer(addr);
-+	asm volatile("movw %1,%%gs:%0" : "+m" (*ptr) : "ri" (v));
- }
- static inline void wrgs32(u32 v, addr_t addr)
- {
--	asm volatile("movl %1,%%gs:%0" : "+m" (*(u32 *)addr) : "ri" (v));
-+	u32 *ptr = (u32 *)absolute_pointer(addr);
-+	asm volatile("movl %1,%%gs:%0" : "+m" (*ptr) : "ri" (v));
- }
- 
- /* Note: these only return true/false, not a signed return value! */
---- a/arch/x86/boot/main.c
-+++ b/arch/x86/boot/main.c
-@@ -33,7 +33,7 @@ static void copy_boot_params(void)
- 		u16 cl_offset;
- 	};
- 	const struct old_cmdline * const oldcmd =
--		(const struct old_cmdline *)OLD_CL_ADDRESS;
-+		absolute_pointer(OLD_CL_ADDRESS);
- 
- 	BUILD_BUG_ON(sizeof(boot_params) != 4096);
- 	memcpy(&boot_params.hdr, &hdr, sizeof(hdr));
+ static struct usb_function *ffs_alloc(struct usb_function_instance *fi)
 
 
