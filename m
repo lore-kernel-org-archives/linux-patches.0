@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210E93AE43
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:23:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD2AC433D2;
-	Wed,  7 Jun 2023 20:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05153AE43
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F302C433D2;
+	Wed,  7 Jun 2023 20:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169402;
-	bh=sxGsx+LLLvO38eLEOLnZoCurYd7hgROwcq06d6K0R6M=;
+	s=korg; t=1686169405;
+	bh=wXSSdQyJmNc1+zAqIpCgTXO4z+1cRBkB4VzOjiIEOew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O40ZVmDqqnITldAF0Y+cKGwQJlhnFNNY93EWL41eBwsTCTEpZ+ThNi37/UV37KS+X
-	 8jQyX+sFEvwgm1LAy6v0X3mI+I5leB54erXhzUvyqsh2UZQflSLfrT+5YmGY4AWxf6
-	 yjv1tdxsQcGfCFKHyeJHRmOGjYr6EtEDfKsg2PtA=
+	b=oCLdhh1OaZgcfDTmbcEvBhHZ4lSPrAexHywuHmqvbnvz1/wIz0lG2dUPavjGRRoZH
+	 3uX6415axYX84fXTENBg5CaNsgU2irAAgSvZxvZwBmrlXzaNFCtTzcoZ5GYn+RjsUM
+	 DFSw6Oke5gG8wMlBU9rq6ybLt0H6PevIVBF8Kp08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
+	Simon Kapadia <szymon@kapadia.pl>,
+	Eric Dumazet <edumazet@google.com>,
 	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 036/286] net: stmmac: fix call trace when stmmac_xdp_xmit() is invoked
-Date: Wed,  7 Jun 2023 22:12:15 +0200
-Message-ID: <20230607200924.210471512@linuxfoundation.org>
+Subject: [PATCH 6.3 037/286] netrom: fix info-leak in nr_write_internal()
+Date: Wed,  7 Jun 2023 22:12:16 +0200
+Message-ID: <20230607200924.242185396@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,115 +37,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ffb3322181d9e8db880202e4f00991764a35d812 ]
+[ Upstream commit 31642e7089df8fd3f54ca7843f7ee2952978cad1 ]
 
-We encountered a kernel call trace issue which was related to
-ndo_xdp_xmit callback on our i.MX8MP platform. The reproduce
-steps show as follows.
-1. The FEC port (eth0) connects to a PC port, and the PC uses
-pktgen_sample03_burst_single_flow.sh to generate packets and
-send these packets to the FEC port. Notice that the script must
-be executed before step 2.
-2. Run the "./xdp_redirect eth0 eth1" command on i.MX8MP, the
-eth1 interface is the dwmac. Then there will be a call trace
-issue soon. Please see the log for more details.
-The root cause is that the NETDEV_XDP_ACT_NDO_XMIT feature is
-enabled by default, so when the step 2 command is exexcuted
-and packets have already been sent to eth0, the stmmac_xdp_xmit()
-starts running before the stmmac_xdp_set_prog() finishes. To
-resolve this issue, we disable the NETDEV_XDP_ACT_NDO_XMIT
-feature by default and turn on/off this feature when the bpf
-program is installed/uninstalled which just like the other
-ethernet drivers.
+Simon Kapadia reported the following issue:
 
-Call Trace log:
-[  306.311271] ------------[ cut here ]------------
-[  306.315910] WARNING: CPU: 0 PID: 15 at lib/timerqueue.c:55 timerqueue_del+0x68/0x70
-[  306.323590] Modules linked in:
-[  306.326654] CPU: 0 PID: 15 Comm: ksoftirqd/0 Not tainted 6.4.0-rc1+ #37
-[  306.333277] Hardware name: NXP i.MX8MPlus EVK board (DT)
-[  306.338591] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  306.345561] pc : timerqueue_del+0x68/0x70
-[  306.349577] lr : __remove_hrtimer+0x5c/0xa0
-[  306.353777] sp : ffff80000b7c3920
-[  306.357094] x29: ffff80000b7c3920 x28: 0000000000000000 x27: 0000000000000001
-[  306.364244] x26: ffff80000a763a40 x25: ffff0000d0285a00 x24: 0000000000000001
-[  306.371390] x23: 0000000000000001 x22: ffff000179389a40 x21: 0000000000000000
-[  306.378537] x20: ffff000179389aa0 x19: ffff0000d2951308 x18: 0000000000001000
-[  306.385686] x17: f1d3000000000000 x16: 00000000c39c1000 x15: 55e99bbe00001a00
-[  306.392835] x14: 09000900120aa8c0 x13: e49af1d300000000 x12: 000000000000c39c
-[  306.399987] x11: 100055e99bbe0000 x10: ffff8000090b1048 x9 : ffff8000081603fc
-[  306.407133] x8 : 000000000000003c x7 : 000000000000003c x6 : 0000000000000001
-[  306.414284] x5 : ffff0000d2950980 x4 : 0000000000000000 x3 : 0000000000000000
-[  306.421432] x2 : 0000000000000001 x1 : ffff0000d2951308 x0 : ffff0000d2951308
-[  306.428585] Call trace:
-[  306.431035]  timerqueue_del+0x68/0x70
-[  306.434706]  __remove_hrtimer+0x5c/0xa0
-[  306.438549]  hrtimer_start_range_ns+0x2bc/0x370
-[  306.443089]  stmmac_xdp_xmit+0x174/0x1b0
-[  306.447021]  bq_xmit_all+0x194/0x4b0
-[  306.450612]  __dev_flush+0x4c/0x98
-[  306.454024]  xdp_do_flush+0x18/0x38
-[  306.457522]  fec_enet_rx_napi+0x6c8/0xc68
-[  306.461539]  __napi_poll+0x40/0x220
-[  306.465038]  net_rx_action+0xf8/0x240
-[  306.468707]  __do_softirq+0x128/0x3a8
-[  306.472378]  run_ksoftirqd+0x40/0x58
-[  306.475961]  smpboot_thread_fn+0x1c4/0x288
-[  306.480068]  kthread+0x124/0x138
-[  306.483305]  ret_from_fork+0x10/0x20
-[  306.486889] ---[ end trace 0000000000000000 ]---
+<quote>
 
-Fixes: 66c0e13ad236 ("drivers: net: turn on XDP features")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
+The Online Amateur Radio Community (OARC) has recently been experimenting
+with building a nationwide packet network in the UK.
+As part of our experimentation, we have been testing out packet on 300bps HF,
+and playing with net/rom.  For HF packet at this baud rate you really need
+to make sure that your MTU is relatively low; AX.25 suggests a PACLEN of 60,
+and a net/rom PACLEN of 40 to go with that.
+However the Linux net/rom support didn't work with a low PACLEN;
+the mkiss module would truncate packets if you set the PACLEN below about 200 or so, e.g.:
+
+Apr 19 14:00:51 radio kernel: [12985.747310] mkiss: ax1: truncating oversized transmit packet!
+
+This didn't make any sense to me (if the packets are smaller why would they
+be truncated?) so I started investigating.
+I looked at the packets using ethereal, and found that many were just huge
+compared to what I would expect.
+A simple net/rom connection request packet had the request and then a bunch
+of what appeared to be random data following it:
+
+</quote>
+
+Simon provided a patch that I slightly revised:
+Not only we must not use skb_tailroom(), we also do
+not want to count NR_NETWORK_LEN twice.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-Developed-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Simon Kapadia <szymon@kapadia.pl>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230524125714.357337-1-wei.fang@nxp.com
+Link: https://lore.kernel.org/r/20230524141456.1045467-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 +--
- drivers/net/ethernet/stmicro/stmmac/stmmac_xdp.c  | 6 ++++++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ net/netrom/nr_subr.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index f9cd063f1fe30..71f8f78ce0090 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7176,8 +7176,7 @@ int stmmac_dvr_probe(struct device *device,
- 	ndev->hw_features = NETIF_F_SG | NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM |
- 			    NETIF_F_RXCSUM;
- 	ndev->xdp_features = NETDEV_XDP_ACT_BASIC | NETDEV_XDP_ACT_REDIRECT |
--			     NETDEV_XDP_ACT_XSK_ZEROCOPY |
--			     NETDEV_XDP_ACT_NDO_XMIT;
-+			     NETDEV_XDP_ACT_XSK_ZEROCOPY;
+diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
+index 3f99b432ea707..e2d2af924cff4 100644
+--- a/net/netrom/nr_subr.c
++++ b/net/netrom/nr_subr.c
+@@ -123,7 +123,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	unsigned char  *dptr;
+ 	int len, timeout;
  
- 	ret = stmmac_tc_init(priv, priv);
- 	if (!ret) {
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_xdp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_xdp.c
-index 9d4d8c3dad0a3..aa6f16d3df649 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_xdp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_xdp.c
-@@ -117,6 +117,9 @@ int stmmac_xdp_set_prog(struct stmmac_priv *priv, struct bpf_prog *prog,
- 		return -EOPNOTSUPP;
+-	len = NR_NETWORK_LEN + NR_TRANSPORT_LEN;
++	len = NR_TRANSPORT_LEN;
+ 
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
+@@ -141,7 +141,8 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 		return;
  	}
  
-+	if (!prog)
-+		xdp_features_clear_redirect_target(dev);
-+
- 	need_update = !!priv->xdp_prog != !!prog;
- 	if (if_running && need_update)
- 		stmmac_xdp_release(dev);
-@@ -131,5 +134,8 @@ int stmmac_xdp_set_prog(struct stmmac_priv *priv, struct bpf_prog *prog,
- 	if (if_running && need_update)
- 		stmmac_xdp_open(dev);
+-	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
++	skb = alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
++	if (!skb)
+ 		return;
  
-+	if (prog)
-+		xdp_features_set_redirect_target(dev, false);
-+
- 	return 0;
- }
+ 	/*
+@@ -149,7 +150,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	 */
+ 	skb_reserve(skb, NR_NETWORK_LEN);
+ 
+-	dptr = skb_put(skb, skb_tailroom(skb));
++	dptr = skb_put(skb, len);
+ 
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
 -- 
 2.39.2
 
