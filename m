@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFC439259
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:18:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2578EC433EF;
-	Wed,  7 Jun 2023 20:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA66539234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:18:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C67C433D2;
+	Wed,  7 Jun 2023 20:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169113;
-	bh=4xPzOmRkhGmtPa9ZWXEut/C5fMiZ2ltKJVVjuvwo7BE=;
+	s=korg; t=1686169116;
+	bh=mZDtEH9Zmy+aDkPrJKTdtSRKrMzyB2JQlpEDhjhEops=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lrb7XwCYeVBpGaocJjXEB5D6o65oQek2Ciyd6SJTNMmtk6T7gY9T721m2KzftsbIt
-	 HqNR77LzJgrSyl0p36avFgXeI+EoJnOMoIL0n0zs2YQapfqX35JLVSxuaH4/EJYPgD
-	 i9PJVXn53pQxLwTGVu6Hl0St+Wb3cpLpkKJq0vOM=
+	b=dQUCcSlGVMj5bGvmNpZsC1GTP9m/X1inevLTtNOh3XbAwNhtz1isTbWnIZxYAwbjK
+	 2Yxm9S4LZJYpWV5NDAPFfUDb/AS8Aq2MLeUCzotqkkgh6tJt6iiBNR5aif4lmoish0
+	 Q2l47pAy0LRtO5Ji63xTUbtxYQgZD5M/F7B3963w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 02/61] ASoC: Intel: Skylake: Fix declaration of enum skl_ch_cfg
-Date: Wed,  7 Jun 2023 22:15:16 +0200
-Message-ID: <20230607200836.062248528@linuxfoundation.org>
+Subject: [PATCH 4.14 20/61] media: dvb-usb-v2: ce6230: fix null-ptr-deref in ce6230_i2c_master_xfer()
+Date: Wed,  7 Jun 2023 22:15:34 +0200
+Message-ID: <20230607200842.180229237@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -36,37 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 95109657471311601b98e71f03d0244f48dc61bb ]
+[ Upstream commit dff919090155fb22679869e8469168f270dcd97f ]
 
-Constant 'C4_CHANNEL' does not exist on the firmware side. Value 0xC is
-reserved for 'C7_1' instead.
+In ce6230_i2c_master_xfer, msg is controlled by user. When msg[i].buf
+is null and msg[i].len is zero, former checks on msg[i].buf would be
+passed. Malicious data finally reach ce6230_i2c_master_xfer. If accessing
+msg[i].buf[0] without sanity check, null ptr deref would happen. We add
+check on msg[i].len to prevent crash.
 
-Fixes: 04afbbbb1cba ("ASoC: Intel: Skylake: Update the topology interface structure")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20230519201711.4073845-4-amadeuszx.slawinski@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Similar commit:
+commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+
+Link: https://lore.kernel.org/linux-media/20230313092751.209496-1-harperchen1110@gmail.com
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/skylake/skl-tplg-interface.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb-v2/ce6230.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/soc/intel/skylake/skl-tplg-interface.h b/sound/soc/intel/skylake/skl-tplg-interface.h
-index f8d1749a2e0c8..2fab55e6537c4 100644
---- a/sound/soc/intel/skylake/skl-tplg-interface.h
-+++ b/sound/soc/intel/skylake/skl-tplg-interface.h
-@@ -71,7 +71,8 @@ enum skl_ch_cfg {
- 	SKL_CH_CFG_DUAL_MONO = 9,
- 	SKL_CH_CFG_I2S_DUAL_STEREO_0 = 10,
- 	SKL_CH_CFG_I2S_DUAL_STEREO_1 = 11,
--	SKL_CH_CFG_4_CHANNEL = 12,
-+	SKL_CH_CFG_7_1 = 12,
-+	SKL_CH_CFG_4_CHANNEL = SKL_CH_CFG_7_1,
- 	SKL_CH_CFG_INVALID
- };
- 
+diff --git a/drivers/media/usb/dvb-usb-v2/ce6230.c b/drivers/media/usb/dvb-usb-v2/ce6230.c
+index e596031a708d0..80a07aab3b4b0 100644
+--- a/drivers/media/usb/dvb-usb-v2/ce6230.c
++++ b/drivers/media/usb/dvb-usb-v2/ce6230.c
+@@ -111,6 +111,10 @@ static int ce6230_i2c_master_xfer(struct i2c_adapter *adap,
+ 		if (num > i + 1 && (msg[i+1].flags & I2C_M_RD)) {
+ 			if (msg[i].addr ==
+ 				ce6230_zl10353_config.demod_address) {
++				if (msg[i].len < 1) {
++					i = -EOPNOTSUPP;
++					break;
++				}
+ 				req.cmd = DEMOD_READ;
+ 				req.value = msg[i].addr >> 1;
+ 				req.index = msg[i].buf[0];
+@@ -127,6 +131,10 @@ static int ce6230_i2c_master_xfer(struct i2c_adapter *adap,
+ 		} else {
+ 			if (msg[i].addr ==
+ 				ce6230_zl10353_config.demod_address) {
++				if (msg[i].len < 1) {
++					i = -EOPNOTSUPP;
++					break;
++				}
+ 				req.cmd = DEMOD_WRITE;
+ 				req.value = msg[i].addr >> 1;
+ 				req.index = msg[i].buf[0];
 -- 
 2.39.2
 
