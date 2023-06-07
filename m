@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDDC3AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A163AC433EF;
-	Wed,  7 Jun 2023 20:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D513AE5C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3577EC433EF;
+	Wed,  7 Jun 2023 20:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169766;
-	bh=AZq4MDsCUNJXEwJuJ2oU66mAols5OMZO6OjPKV5+gx4=;
+	s=korg; t=1686169768;
+	bh=D+fisbQ+ue9yAD0G5uKUaWIOwX31AyO0LjSAjb5DpZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPXNVXZOWRHyckcsWqio+HbrKdIiNO+f0M6AYDFf5oxgFjEVFojgOusATZpijBrL5
-	 hzGIuT19+2r2mpKJ/fz4MHZRYQujrwFIcmPaL77MekRE76vBUZtT/ghLAvxwbWGMqB
-	 E85wfIbPpluWRL7gTd4JqACRtULhuo0FmXwA5bao=
+	b=A+GcpAaTfR5nsRmF/X1Gfr0uUsRgDmBt7vPVPtnJutGBvlpCz2KbiYcK5VnUmRUhj
+	 Jd61XvazMBTvy7mM0jyB4JQuDAdl+ik7RO/vF4NZqCSIDzUTOxgSy74N3FhWbpmOkU
+	 10Q6aeYT2kKJuBq8XA/i2cflflpaXr26LxN/yM0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Nyekjaer <sean@geanix.com>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.3 206/286] iio: adc: stm32-adc: skip adc-diff-channels setup if none is present
-Date: Wed,  7 Jun 2023 22:15:05 +0200
-Message-ID: <20230607200929.985091386@linuxfoundation.org>
+Subject: [PATCH 6.3 207/286] iio: dac: build ad5758 driver when AD5758 is selected
+Date: Wed,  7 Jun 2023 22:15:06 +0200
+Message-ID: <20230607200930.017178516@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,54 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-commit 9c0d6ccd7d6bbd275e390b55a3390b4274291d95 upstream.
+commit a146eccb68be161ae9eab5f3f68bb0ed7c0fbaa8 upstream.
 
-If no adc differential channels are defined driver will fail with EINVAL:
-stm32-adc: probe of 48003000.adc:adc@0 failed with error -22
+Commit 28d1a7ac2a0d ("iio: dac: Add AD5758 support") adds the config AD5758
+and the corresponding driver ad5758.c. In the Makefile, the ad5758 driver
+is however included when AD5755 is selected, not when AD5758 is selected.
 
-Fix this by skipping the initialization if no channels are defined.
+Probably, this was simply a mistake that happened by copy-and-paste and
+forgetting to adjust the actual line. Surprisingly, no one has ever noticed
+that this driver is actually only included when AD5755 is selected and that
+the config AD5758 has actually no effect on the build.
 
-This applies only to the legacy way of initializing adc channels.
-
-Fixes: d7705f35448a ("iio: adc: stm32-adc: convert to device properties")
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Link: https://lore.kernel.org/r/20230503162029.3654093-1-sean@geanix.com
+Fixes: 28d1a7ac2a0d ("iio: dac: Add AD5758 support")
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Link: https://lore.kernel.org/r/20230508040208.12033-1-lukas.bulwahn@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/stm32-adc.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/iio/dac/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/stm32-adc.c
-+++ b/drivers/iio/adc/stm32-adc.c
-@@ -2006,16 +2006,15 @@ static int stm32_adc_get_legacy_chan_cou
- 	 * to get the *real* number of channels.
- 	 */
- 	ret = device_property_count_u32(dev, "st,adc-diff-channels");
--	if (ret < 0)
--		return ret;
--
--	ret /= (int)(sizeof(struct stm32_adc_diff_channel) / sizeof(u32));
--	if (ret > adc_info->max_channels) {
--		dev_err(&indio_dev->dev, "Bad st,adc-diff-channels?\n");
--		return -EINVAL;
--	} else if (ret > 0) {
--		adc->num_diff = ret;
--		num_channels += ret;
-+	if (ret > 0) {
-+		ret /= (int)(sizeof(struct stm32_adc_diff_channel) / sizeof(u32));
-+		if (ret > adc_info->max_channels) {
-+			dev_err(&indio_dev->dev, "Bad st,adc-diff-channels?\n");
-+			return -EINVAL;
-+		} else if (ret > 0) {
-+			adc->num_diff = ret;
-+			num_channels += ret;
-+		}
- 	}
- 
- 	/* Optional sample time is provided either for each, or all channels */
+--- a/drivers/iio/dac/Makefile
++++ b/drivers/iio/dac/Makefile
+@@ -17,7 +17,7 @@ obj-$(CONFIG_AD5592R_BASE) += ad5592r-ba
+ obj-$(CONFIG_AD5592R) += ad5592r.o
+ obj-$(CONFIG_AD5593R) += ad5593r.o
+ obj-$(CONFIG_AD5755) += ad5755.o
+-obj-$(CONFIG_AD5755) += ad5758.o
++obj-$(CONFIG_AD5758) += ad5758.o
+ obj-$(CONFIG_AD5761) += ad5761.o
+ obj-$(CONFIG_AD5764) += ad5764.o
+ obj-$(CONFIG_AD5766) += ad5766.o
 
 
