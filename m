@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908593AE6C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14111C433EF;
-	Wed,  7 Jun 2023 20:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B33A3AE6E
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A747CC433D2;
+	Wed,  7 Jun 2023 20:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169950;
-	bh=auZR0VLZgU55HB/TB056KRVHfWp+WNnYe83xIggsiIs=;
+	s=korg; t=1686169953;
+	bh=9XwT3biLx+FdTJK6IwXqvyqFMoCgxWtQbf+nxlC6HWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFUiOIP9h6R3fZgHJoTJGtUnnG4K5z6eAVrBSNjAqoGSCiut2tnLLjmaygd5xp7JG
-	 POboyY3PfQ7uV3ajcTQF1cZc9gWtvWvXaiQLDhyUBI0vVlu8UqzNYx6Z75d3VfaU3W
-	 85XzN/fejOwC2H4lsbxpOr+inc3Ig8/Y+z0UKTnM=
+	b=jjGdMz+2O9g8Pfolkyqm/QrHvGnZ0BcpkJOJdrve0FxyIY/yMdqOJHcSoCikclle1
+	 +kVznvPp3HVWPCDk7zdGUJ/boyq1V2pb4tsZHZocDrL/6b7jMHmcvZGdY26Y6QiV+O
+	 UvF3Kx6fZ12E+eTaqQ+1+7ZXWYvOYIXr8I7ai1J8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Per Forlin <per.forlin@axis.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 276/286] ksmbd: fix UAF issue from opinfo->conn
-Date: Wed,  7 Jun 2023 22:16:15 +0200
-Message-ID: <20230607200932.306842395@linuxfoundation.org>
+	syzbot+cbb68193bdb95af4340a@syzkaller.appspotmail.com,
+	syzbot+62120febbd1ee3c3c860@syzkaller.appspotmail.com,
+	syzbot+edce54daffee36421b4c@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.3 259/286] ext4: add EA_INODE checking to ext4_iget()
+Date: Wed,  7 Jun 2023 22:15:58 +0200
+Message-ID: <20230607200931.773863931@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,193 +37,180 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 36322523dddb11107e9f7f528675a0dec2536103 upstream.
+commit b3e6bcb94590dea45396b9481e47b809b1be4afa upstream.
 
-If opinfo->conn is another connection and while ksmbd send oplock break
-request to cient on current connection, The connection for opinfo->conn
-can be disconnect and conn could be freed. When sending oplock break
-request, this ksmbd_conn can be used and cause user-after-free issue.
-When getting opinfo from the list, ksmbd check connection is being
-released. If it is not released, Increase ->r_count to wait that connection
-is freed.
+Add a new flag, EXT4_IGET_EA_INODE which indicates whether the inode
+is expected to have the EA_INODE flag or not.  If the flag is not
+set/clear as expected, then fail the iget() operation and mark the
+file system as corrupted.
 
-Cc: stable@vger.kernel.org
-Reported-by: Per Forlin <per.forlin@axis.com>
-Tested-by: Per Forlin <per.forlin@axis.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This commit also makes the ext4_iget() always perform the
+is_bad_inode() check even when the inode is already inode cache.  This
+allows us to remove the is_bad_inode() check from the callers of
+ext4_iget() in the ea_inode code.
+
+Reported-by: syzbot+cbb68193bdb95af4340a@syzkaller.appspotmail.com
+Reported-by: syzbot+62120febbd1ee3c3c860@syzkaller.appspotmail.com
+Reported-by: syzbot+edce54daffee36421b4c@syzkaller.appspotmail.com
+Cc: stable@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20230524034951.779531-2-tytso@mit.edu
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/oplock.c |   72 +++++++++++++++++++++++++++++++++++-------------------
- 1 file changed, 47 insertions(+), 25 deletions(-)
+ fs/ext4/ext4.h  |    3 ++-
+ fs/ext4/inode.c |   31 ++++++++++++++++++++++++++-----
+ fs/ext4/xattr.c |   36 +++++++-----------------------------
+ 3 files changed, 35 insertions(+), 35 deletions(-)
 
---- a/fs/ksmbd/oplock.c
-+++ b/fs/ksmbd/oplock.c
-@@ -157,13 +157,42 @@ static struct oplock_info *opinfo_get_li
- 	rcu_read_lock();
- 	opinfo = list_first_or_null_rcu(&ci->m_op_list, struct oplock_info,
- 					op_entry);
--	if (opinfo && !atomic_inc_not_zero(&opinfo->refcount))
--		opinfo = NULL;
-+	if (opinfo) {
-+		if (!atomic_inc_not_zero(&opinfo->refcount))
-+			opinfo = NULL;
-+		else {
-+			atomic_inc(&opinfo->conn->r_count);
-+			if (ksmbd_conn_releasing(opinfo->conn)) {
-+				atomic_dec(&opinfo->conn->r_count);
-+				atomic_dec(&opinfo->refcount);
-+				opinfo = NULL;
-+			}
-+		}
-+	}
-+
- 	rcu_read_unlock();
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -2992,7 +2992,8 @@ typedef enum {
+ 	EXT4_IGET_NORMAL =	0,
+ 	EXT4_IGET_SPECIAL =	0x0001, /* OK to iget a system inode */
+ 	EXT4_IGET_HANDLE = 	0x0002,	/* Inode # is from a handle */
+-	EXT4_IGET_BAD =		0x0004  /* Allow to iget a bad inode */
++	EXT4_IGET_BAD =		0x0004, /* Allow to iget a bad inode */
++	EXT4_IGET_EA_INODE =	0x0008	/* Inode should contain an EA value */
+ } ext4_iget_flags;
  
- 	return opinfo;
+ extern struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4835,6 +4835,21 @@ static inline void ext4_inode_set_iversi
+ 		inode_set_iversion_queried(inode, val);
  }
  
-+static void opinfo_conn_put(struct oplock_info *opinfo)
++static const char *check_igot_inode(struct inode *inode, ext4_iget_flags flags)
++
 +{
-+	struct ksmbd_conn *conn;
-+
-+	if (!opinfo)
-+		return;
-+
-+	conn = opinfo->conn;
-+	/*
-+	 * Checking waitqueue to dropping pending requests on
-+	 * disconnection. waitqueue_active is safe because it
-+	 * uses atomic operation for condition.
-+	 */
-+	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
-+		wake_up(&conn->r_count_q);
-+	opinfo_put(opinfo);
++	if (flags & EXT4_IGET_EA_INODE) {
++		if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
++			return "missing EA_INODE flag";
++	} else {
++		if ((EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
++			return "unexpected EA_INODE flag";
++	}
++	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD))
++		return "unexpected bad inode w/o EXT4_IGET_BAD";
++	return NULL;
 +}
 +
- void opinfo_put(struct oplock_info *opinfo)
- {
- 	if (!atomic_dec_and_test(&opinfo->refcount))
-@@ -666,13 +695,6 @@ static void __smb2_oplock_break_noti(str
- 
- out:
- 	ksmbd_free_work_struct(work);
--	/*
--	 * Checking waitqueue to dropping pending requests on
--	 * disconnection. waitqueue_active is safe because it
--	 * uses atomic operation for condition.
--	 */
--	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
--		wake_up(&conn->r_count_q);
- }
- 
- /**
-@@ -706,7 +728,6 @@ static int smb2_oplock_break_noti(struct
- 	work->conn = conn;
- 	work->sess = opinfo->sess;
- 
--	atomic_inc(&conn->r_count);
- 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
- 		INIT_WORK(&work->work, __smb2_oplock_break_noti);
- 		ksmbd_queue_work(work);
-@@ -776,13 +797,6 @@ static void __smb2_lease_break_noti(stru
- 
- out:
- 	ksmbd_free_work_struct(work);
--	/*
--	 * Checking waitqueue to dropping pending requests on
--	 * disconnection. waitqueue_active is safe because it
--	 * uses atomic operation for condition.
--	 */
--	if (!atomic_dec_return(&conn->r_count) && waitqueue_active(&conn->r_count_q))
--		wake_up(&conn->r_count_q);
- }
- 
- /**
-@@ -822,7 +836,6 @@ static int smb2_lease_break_noti(struct
- 	work->conn = conn;
- 	work->sess = opinfo->sess;
- 
--	atomic_inc(&conn->r_count);
- 	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
- 		list_for_each_safe(tmp, t, &opinfo->interim_list) {
- 			struct ksmbd_work *in_work;
-@@ -1144,8 +1157,10 @@ int smb_grant_oplock(struct ksmbd_work *
- 	}
- 	prev_opinfo = opinfo_get_list(ci);
- 	if (!prev_opinfo ||
--	    (prev_opinfo->level == SMB2_OPLOCK_LEVEL_NONE && lctx))
-+	    (prev_opinfo->level == SMB2_OPLOCK_LEVEL_NONE && lctx)) {
-+		opinfo_conn_put(prev_opinfo);
- 		goto set_lev;
-+	}
- 	prev_op_has_lease = prev_opinfo->is_lease;
- 	if (prev_op_has_lease)
- 		prev_op_state = prev_opinfo->o_lease->state;
-@@ -1153,19 +1168,19 @@ int smb_grant_oplock(struct ksmbd_work *
- 	if (share_ret < 0 &&
- 	    prev_opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE) {
- 		err = share_ret;
--		opinfo_put(prev_opinfo);
-+		opinfo_conn_put(prev_opinfo);
- 		goto err_out;
- 	}
- 
- 	if (prev_opinfo->level != SMB2_OPLOCK_LEVEL_BATCH &&
- 	    prev_opinfo->level != SMB2_OPLOCK_LEVEL_EXCLUSIVE) {
--		opinfo_put(prev_opinfo);
-+		opinfo_conn_put(prev_opinfo);
- 		goto op_break_not_needed;
- 	}
- 
- 	list_add(&work->interim_entry, &prev_opinfo->interim_list);
- 	err = oplock_break(prev_opinfo, SMB2_OPLOCK_LEVEL_II);
--	opinfo_put(prev_opinfo);
-+	opinfo_conn_put(prev_opinfo);
- 	if (err == -ENOENT)
- 		goto set_lev;
- 	/* Check all oplock was freed by close */
-@@ -1228,14 +1243,14 @@ static void smb_break_all_write_oplock(s
- 		return;
- 	if (brk_opinfo->level != SMB2_OPLOCK_LEVEL_BATCH &&
- 	    brk_opinfo->level != SMB2_OPLOCK_LEVEL_EXCLUSIVE) {
--		opinfo_put(brk_opinfo);
-+		opinfo_conn_put(brk_opinfo);
- 		return;
- 	}
- 
- 	brk_opinfo->open_trunc = is_trunc;
- 	list_add(&work->interim_entry, &brk_opinfo->interim_list);
- 	oplock_break(brk_opinfo, SMB2_OPLOCK_LEVEL_II);
--	opinfo_put(brk_opinfo);
-+	opinfo_conn_put(brk_opinfo);
- }
- 
- /**
-@@ -1263,6 +1278,13 @@ void smb_break_all_levII_oplock(struct k
- 	list_for_each_entry_rcu(brk_op, &ci->m_op_list, op_entry) {
- 		if (!atomic_inc_not_zero(&brk_op->refcount))
- 			continue;
-+
-+		atomic_inc(&brk_op->conn->r_count);
-+		if (ksmbd_conn_releasing(brk_op->conn)) {
-+			atomic_dec(&brk_op->conn->r_count);
-+			continue;
+ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 			  ext4_iget_flags flags, const char *function,
+ 			  unsigned int line)
+@@ -4844,6 +4859,7 @@ struct inode *__ext4_iget(struct super_b
+ 	struct ext4_inode_info *ei;
+ 	struct ext4_super_block *es = EXT4_SB(sb)->s_es;
+ 	struct inode *inode;
++	const char *err_str;
+ 	journal_t *journal = EXT4_SB(sb)->s_journal;
+ 	long ret;
+ 	loff_t size;
+@@ -4871,8 +4887,14 @@ struct inode *__ext4_iget(struct super_b
+ 	inode = iget_locked(sb, ino);
+ 	if (!inode)
+ 		return ERR_PTR(-ENOMEM);
+-	if (!(inode->i_state & I_NEW))
++	if (!(inode->i_state & I_NEW)) {
++		if ((err_str = check_igot_inode(inode, flags)) != NULL) {
++			ext4_error_inode(inode, function, line, 0, err_str);
++			iput(inode);
++			return ERR_PTR(-EFSCORRUPTED);
 +		}
-+
- 		rcu_read_unlock();
- 		if (brk_op->is_lease && (brk_op->o_lease->state &
- 		    (~(SMB2_LEASE_READ_CACHING_LE |
-@@ -1292,7 +1314,7 @@ void smb_break_all_levII_oplock(struct k
- 		brk_op->open_trunc = is_trunc;
- 		oplock_break(brk_op, SMB2_OPLOCK_LEVEL_NONE);
- next:
--		opinfo_put(brk_op);
-+		opinfo_conn_put(brk_op);
- 		rcu_read_lock();
+ 		return inode;
++	}
+ 
+ 	ei = EXT4_I(inode);
+ 	iloc.bh = NULL;
+@@ -5138,10 +5160,9 @@ struct inode *__ext4_iget(struct super_b
+ 	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb))
+ 		ext4_error_inode(inode, function, line, 0,
+ 				 "casefold flag without casefold feature");
+-	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
+-		ext4_error_inode(inode, function, line, 0,
+-				 "bad inode without EXT4_IGET_BAD flag");
+-		ret = -EUCLEAN;
++	if ((err_str = check_igot_inode(inode, flags)) != NULL) {
++		ext4_error_inode(inode, function, line, 0, err_str);
++		ret = -EFSCORRUPTED;
+ 		goto bad_inode;
  	}
- 	rcu_read_unlock();
+ 
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -433,7 +433,7 @@ static int ext4_xattr_inode_iget(struct
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+-	inode = ext4_iget(parent->i_sb, ea_ino, EXT4_IGET_NORMAL);
++	inode = ext4_iget(parent->i_sb, ea_ino, EXT4_IGET_EA_INODE);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+ 		ext4_error(parent->i_sb,
+@@ -441,23 +441,6 @@ static int ext4_xattr_inode_iget(struct
+ 			   err);
+ 		return err;
+ 	}
+-
+-	if (is_bad_inode(inode)) {
+-		ext4_error(parent->i_sb,
+-			   "error while reading EA inode %lu is_bad_inode",
+-			   ea_ino);
+-		err = -EIO;
+-		goto error;
+-	}
+-
+-	if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
+-		ext4_error(parent->i_sb,
+-			   "EA inode %lu does not have EXT4_EA_INODE_FL flag",
+-			    ea_ino);
+-		err = -EINVAL;
+-		goto error;
+-	}
+-
+ 	ext4_xattr_inode_set_class(inode);
+ 
+ 	/*
+@@ -478,9 +461,6 @@ static int ext4_xattr_inode_iget(struct
+ 
+ 	*ea_inode = inode;
+ 	return 0;
+-error:
+-	iput(inode);
+-	return err;
+ }
+ 
+ /* Remove entry from mbcache when EA inode is getting evicted */
+@@ -1557,11 +1537,10 @@ ext4_xattr_inode_cache_find(struct inode
+ 
+ 	while (ce) {
+ 		ea_inode = ext4_iget(inode->i_sb, ce->e_value,
+-				     EXT4_IGET_NORMAL);
+-		if (!IS_ERR(ea_inode) &&
+-		    !is_bad_inode(ea_inode) &&
+-		    (EXT4_I(ea_inode)->i_flags & EXT4_EA_INODE_FL) &&
+-		    i_size_read(ea_inode) == value_len &&
++				     EXT4_IGET_EA_INODE);
++		if (IS_ERR(ea_inode))
++			goto next_entry;
++		if (i_size_read(ea_inode) == value_len &&
+ 		    !ext4_xattr_inode_read(ea_inode, ea_data, value_len) &&
+ 		    !ext4_xattr_inode_verify_hashes(ea_inode, NULL, ea_data,
+ 						    value_len) &&
+@@ -1571,9 +1550,8 @@ ext4_xattr_inode_cache_find(struct inode
+ 			kvfree(ea_data);
+ 			return ea_inode;
+ 		}
+-
+-		if (!IS_ERR(ea_inode))
+-			iput(ea_inode);
++		iput(ea_inode);
++	next_entry:
+ 		ce = mb_cache_entry_find_next(ea_inode_cache, ce);
+ 	}
+ 	kvfree(ea_data);
 
 
