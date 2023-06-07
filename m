@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031F434CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:57:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B329C433D2;
-	Wed,  7 Jun 2023 20:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B7D34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:57:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22363C433D2;
+	Wed,  7 Jun 2023 20:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171434;
-	bh=gNNLB4dAckZ0T8ch/tc42JRLKvMLYEaDNU3+1LPr+Mk=;
+	s=korg; t=1686171437;
+	bh=i0rd4nVJDokctFOFg+ktg8f7fSJOs+UZYoR3Sm6RhFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcX1Lbv+K58QGbS6v0WDjx07srnEpNhcYLpzkS58F7mfAFhaFlufPh9kjEhhvmxZ3
-	 iGLxnG3ax2SPvpayEfXDobLq01bMu3pVuufMdwYxvVvaGLzkDNnaMu6J6rSrxoVoC/
-	 cJInwmYPrx6SClYSKJXyIEz5NRPePjgG2STsUvRQ=
+	b=IUJFe43qcwKVhTNMmc9UF96/sJoeiu3pzeghw9Nl/xHNAXciQDTzeD4rnsRLQvbuE
+	 Vh/JCXRBlaxtO+eY92/Sb1b0vXLnZTw6Kfb2Dn4JnCiYIOGgucGFyn/3fn7/RZ36yb
+	 7ySHsOn3x5v/hjB1jRO+eiWoFki5BsU1N0SD+jHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/159] dmaengine: at_xdmac: fix potential Oops in at_xdmac_prep_interleaved()
-Date: Wed,  7 Jun 2023 22:15:09 +0200
-Message-ID: <20230607200903.882585644@linuxfoundation.org>
+Subject: [PATCH 5.15 007/159] RDMA/bnxt_re: Fix a possible memory leak
+Date: Wed,  7 Jun 2023 22:15:10 +0200
+Message-ID: <20230607200903.915018113@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,53 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 4d43acb145c363626d76f49febb4240c488cd1cf ]
+[ Upstream commit 349e3c0cf239cc01d58a1e6c749e171de014cd6a ]
 
-There are two place if the at_xdmac_interleaved_queue_desc() fails which
-could lead to a NULL dereference where "first" is NULL and we call
-list_add_tail(&first->desc_node, ...).  In the first caller, the return
-is not checked so add a check for that.  In the next caller, the return
-is checked but if it fails on the first iteration through the loop then
-it will lead to a NULL pointer dereference.
+Inside bnxt_qplib_create_cq(), when the check for NULL DPI fails, driver
+returns directly without freeing the memory allocated inside
+bnxt_qplib_alloc_init_hwq() routine.
 
-Fixes: 4e5385784e69 ("dmaengine: at_xdmac: handle numf > 1")
-Fixes: 62b5cb757f1d ("dmaengine: at_xdmac: fix memory leak in interleaved mode")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/r/21282b66-9860-410a-83df-39c17fcf2f1b@kili.mountain
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixed this by moving the check for NULL DPI before invoking
+bnxt_qplib_alloc_init_hwq().
+
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Link: https://lore.kernel.org/r/1684397461-23082-2-git-send-email-selvin.xavier@broadcom.com
+Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/at_xdmac.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index b45437aab1434..dd34626df1abc 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -1026,6 +1026,8 @@ at_xdmac_prep_interleaved(struct dma_chan *chan,
- 							NULL,
- 							src_addr, dst_addr,
- 							xt, xt->sgl);
-+		if (!first)
-+			return NULL;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index bd153aa7e9ab3..b26a89187a192 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -2041,6 +2041,12 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
+ 	u32 pg_sz_lvl;
+ 	int rc;
  
- 		/* Length of the block is (BLEN+1) microblocks. */
- 		for (i = 0; i < xt->numf - 1; i++)
-@@ -1056,8 +1058,9 @@ at_xdmac_prep_interleaved(struct dma_chan *chan,
- 							       src_addr, dst_addr,
- 							       xt, chunk);
- 			if (!desc) {
--				list_splice_tail_init(&first->descs_list,
--						      &atchan->free_descs_list);
-+				if (first)
-+					list_splice_tail_init(&first->descs_list,
-+							      &atchan->free_descs_list);
- 				return NULL;
- 			}
++	if (!cq->dpi) {
++		dev_err(&rcfw->pdev->dev,
++			"FP: CREATE_CQ failed due to NULL DPI\n");
++		return -EINVAL;
++	}
++
+ 	hwq_attr.res = res;
+ 	hwq_attr.depth = cq->max_wqe;
+ 	hwq_attr.stride = sizeof(struct cq_base);
+@@ -2052,11 +2058,6 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
  
+ 	RCFW_CMD_PREP(req, CREATE_CQ, cmd_flags);
+ 
+-	if (!cq->dpi) {
+-		dev_err(&rcfw->pdev->dev,
+-			"FP: CREATE_CQ failed due to NULL DPI\n");
+-		return -EINVAL;
+-	}
+ 	req.dpi = cpu_to_le32(cq->dpi->dpi);
+ 	req.cq_handle = cpu_to_le64(cq->cq_handle);
+ 	req.cq_size = cpu_to_le32(cq->hwq.max_elements);
 -- 
 2.39.2
 
