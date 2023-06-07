@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C982F24EA0
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7EDC4339B;
-	Wed,  7 Jun 2023 20:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A09037349
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3841C433D2;
+	Wed,  7 Jun 2023 20:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171070;
-	bh=Rlguiom1fsQHk4SprS7Q0pK4w+pi8wgjcShHehkWxlk=;
+	s=korg; t=1686171073;
+	bh=KBnscMsejoRYf6J9D5eLrZtkWwh27ql5DYTQZ+a1Hbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EziHpZn8gxfMI4RYu7GNidvWYrUXpUgtSs22tAEL7wFp0f2ZutU6q/iATxzeHRX5m
-	 Phy8W8MRduTZVzroIOGR4/5dnoG/0PfdTwGY8GKIoT0b1PaDFRFG2Hxss3AfcXi2Bk
-	 +fSDSsr3eClD+CLq0OSLW00UQW0Wy6ZtiJ+GBJRc=
+	b=Sbt65BcPAez83lyBdb98nXbKcZY0R2UeoqtS5TE8c65MrF3zm0EauIpVDYtipGadG
+	 UJMbLar/8FGf6gtyUFzEZGVTwq76ECv5nKDU/1ndmjzbr5oNMkA5X0DtE4G3472T61
+	 6+cJj3bYERF8/kiqtOSrLYP0t76w0daWH8ARIA+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Hyunwoo Kim <v4bel@theori.io>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/120] drm/msm: Be more shouty if per-process pgtables arent working
-Date: Wed,  7 Jun 2023 22:16:26 +0200
-Message-ID: <20230607200903.089062551@linuxfoundation.org>
+Subject: [PATCH 5.10 061/120] media: dvb-core: Fix use-after-free due to race condition at dvb_ca_en50221
+Date: Wed,  7 Jun 2023 22:16:17 +0200
+Message-ID: <20230607200902.807428462@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -35,40 +35,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Hyunwoo Kim <v4bel@theori.io>
 
-[ Upstream commit 5c054db54c43a5fcb5cc81012361f5e3fac37637 ]
+[ Upstream commit 280a8ab81733da8bc442253c700a52c4c0886ffd ]
 
-Otherwise it is not always obvious if a dt or iommu change is causing us
-to fall back to global pgtable.
+If the device node of dvb_ca_en50221 is open() and the
+device is disconnected, a UAF may occur when calling
+close() on the device node.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/537359/
-Link: https://lore.kernel.org/r/20230516222039.907690-2-robdclark@gmail.com
+The root cause is that wake_up() and wait_event() for
+dvbdev->wait_queue are not implemented.
+
+So implement wait_event() function in dvb_ca_en50221_release()
+and add 'remove_mutex' which prevents race condition
+for 'ca->exit'.
+
+[mchehab: fix a checkpatch warning]
+
+Link: https://lore.kernel.org/linux-media/20221121063308.GA33821@ubuntu
+Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_iommu.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/dvb-core/dvb_ca_en50221.c | 37 ++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index ecab6287c1c39..b81390d6ebd38 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -155,7 +155,12 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
- 	/* Get the pagetable configuration from the domain */
- 	if (adreno_smmu->cookie)
- 		ttbr1_cfg = adreno_smmu->get_ttbr1_cfg(adreno_smmu->cookie);
--	if (!ttbr1_cfg)
-+
-+	/*
-+	 * If you hit this WARN_ONCE() you are probably missing an entry in
-+	 * qcom_smmu_impl_of_match[] in arm-smmu-qcom.c
-+	 */
-+	if (WARN_ONCE(!ttbr1_cfg, "No per-process page tables"))
- 		return ERR_PTR(-ENODEV);
+diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
+index b1a7b5f8b9aa4..dec036e0336cb 100644
+--- a/drivers/media/dvb-core/dvb_ca_en50221.c
++++ b/drivers/media/dvb-core/dvb_ca_en50221.c
+@@ -151,6 +151,12 @@ struct dvb_ca_private {
  
- 	pagetable = kzalloc(sizeof(*pagetable), GFP_KERNEL);
+ 	/* mutex serializing ioctls */
+ 	struct mutex ioctl_mutex;
++
++	/* A mutex used when a device is disconnected */
++	struct mutex remove_mutex;
++
++	/* Whether the device is disconnected */
++	int exit;
+ };
+ 
+ static void dvb_ca_private_free(struct dvb_ca_private *ca)
+@@ -1708,12 +1714,22 @@ static int dvb_ca_en50221_io_open(struct inode *inode, struct file *file)
+ 
+ 	dprintk("%s\n", __func__);
+ 
+-	if (!try_module_get(ca->pub->owner))
++	mutex_lock(&ca->remove_mutex);
++
++	if (ca->exit) {
++		mutex_unlock(&ca->remove_mutex);
++		return -ENODEV;
++	}
++
++	if (!try_module_get(ca->pub->owner)) {
++		mutex_unlock(&ca->remove_mutex);
+ 		return -EIO;
++	}
+ 
+ 	err = dvb_generic_open(inode, file);
+ 	if (err < 0) {
+ 		module_put(ca->pub->owner);
++		mutex_unlock(&ca->remove_mutex);
+ 		return err;
+ 	}
+ 
+@@ -1738,6 +1754,7 @@ static int dvb_ca_en50221_io_open(struct inode *inode, struct file *file)
+ 
+ 	dvb_ca_private_get(ca);
+ 
++	mutex_unlock(&ca->remove_mutex);
+ 	return 0;
+ }
+ 
+@@ -1757,6 +1774,8 @@ static int dvb_ca_en50221_io_release(struct inode *inode, struct file *file)
+ 
+ 	dprintk("%s\n", __func__);
+ 
++	mutex_lock(&ca->remove_mutex);
++
+ 	/* mark the CA device as closed */
+ 	ca->open = 0;
+ 	dvb_ca_en50221_thread_update_delay(ca);
+@@ -1767,6 +1786,13 @@ static int dvb_ca_en50221_io_release(struct inode *inode, struct file *file)
+ 
+ 	dvb_ca_private_put(ca);
+ 
++	if (dvbdev->users == 1 && ca->exit == 1) {
++		mutex_unlock(&ca->remove_mutex);
++		wake_up(&dvbdev->wait_queue);
++	} else {
++		mutex_unlock(&ca->remove_mutex);
++	}
++
+ 	return err;
+ }
+ 
+@@ -1890,6 +1916,7 @@ int dvb_ca_en50221_init(struct dvb_adapter *dvb_adapter,
+ 	}
+ 
+ 	mutex_init(&ca->ioctl_mutex);
++	mutex_init(&ca->remove_mutex);
+ 
+ 	if (signal_pending(current)) {
+ 		ret = -EINTR;
+@@ -1932,6 +1959,14 @@ void dvb_ca_en50221_release(struct dvb_ca_en50221 *pubca)
+ 
+ 	dprintk("%s\n", __func__);
+ 
++	mutex_lock(&ca->remove_mutex);
++	ca->exit = 1;
++	mutex_unlock(&ca->remove_mutex);
++
++	if (ca->dvbdev->users < 1)
++		wait_event(ca->dvbdev->wait_queue,
++				ca->dvbdev->users == 1);
++
+ 	/* shutdown the thread if there was one */
+ 	kthread_stop(ca->thread);
+ 
 -- 
 2.39.2
 
