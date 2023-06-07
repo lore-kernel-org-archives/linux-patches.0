@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BFD370E4
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:03:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1870C433EF;
-	Wed,  7 Jun 2023 21:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8ECA370E4
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:03:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1B5C433D2;
+	Wed,  7 Jun 2023 21:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171828;
-	bh=bmu1QLg/DywlH+5TBXa+qmwSNdE+kBJRTPG8kqOqZ+k=;
+	s=korg; t=1686171830;
+	bh=xeuvBDMxI7pTqMgvT6gMsaHepX3Jf0kMwxfDe84FKEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yJEFPWlbV29i8EiLgCAuZrmzOE/sxDtUlwRs4H0M3w3TVKtBn3VkMeJhggWzF5RO2
-	 X08rinEaEsVMyLX11KEGVzinW1rlJQi17yMt9hk9R+cf1tJpqHBhv5HzfTHoGI5Yb7
-	 eFhs8M5ZlBqdjiRmV+e5WspTvgGF/zghl9U7Ahnc=
+	b=PA+YnG2PEucVfitDNJuYz+wwE8iw+CSxopCH8f/4H5zjt4Idk5YDm18C2jIQQIcgz
+	 nXLcgIiOoqVF9EY0Fh7MAkcQAtS8QrtH6dNRvNWNMMfpVixWPgg2ZhXaKDIZwnAlfY
+	 DP1vElua+yL+3GN8xLleTlT4RG9BlY31O1MtKx1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 5.15 149/159] drm/rcar: stop using imply for dependencies
-Date: Wed,  7 Jun 2023 22:17:32 +0200
-Message-ID: <20230607200908.539916767@linuxfoundation.org>
+	Ben Hutchings <benh@debian.org>
+Subject: [PATCH 5.15 150/159] scsi: dpt_i2o: Remove broken pass-through ioctl (I2OUSERCMD)
+Date: Wed,  7 Jun 2023 22:17:33 +0200
+Message-ID: <20230607200908.570303029@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -37,98 +33,360 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Ben Hutchings <benh@debian.org>
 
-commit 42d95d1b3a9c649bf5ee881fee5938e00126479a upstream.
+adpt_i2o_passthru() takes a user-provided message and passes it
+through to the hardware with appropriate translation of addresses
+and message IDs.  It has a number of bugs:
 
-The meaning of the 'imply' keyword has changed recently, and neither the
-old meaning (select the symbol if its dependencies are met) nor the new
-meaning (enable it by default, but let the user set any other setting)
-is what we want here.
+- When a message requires scatter/gather, it doesn't verify that the
+  offset to the scatter/gather list is less than the message size.
+- When a message requires scatter/gather, it overwrites the DMA
+  addresses with the user-space virtual addresses before unmapping the
+  DMA buffers.
+- It reads the message from user memory multiple times.  This allows
+  user-space to change the message and bypass validation.
+- It assumes that the message is at least 4 words long, but doesn't
+  check that.
 
-Work around this by adding two more Kconfig options that lead to
-the correct behavior: if DRM_RCAR_USE_CMM and DRM_RCAR_USE_LVDS
-are enabled, that portion of the driver becomes usable, and no
-configuration results in a link error.
+I tried fixing these, but even the maintainer of the corresponding
+user-space in Debian doesn't have the hardware any more.
 
-This avoids a link failure:
+Instead, remove the pass-through ioctl (I2OUSRCMD) and supporting
+code.
 
-arm-linux-gnueabi-ld: drivers/gpu/drm/rcar-du/rcar_du_crtc.o: in function `rcar_du_crtc_atomic_begin':
-rcar_du_crtc.c:(.text+0x1444): undefined reference to `rcar_cmm_setup'
-arm-linux-gnueabi-ld: drivers/gpu/drm/rcar-du/rcar_du_crtc.o: in function `rcar_du_crtc_atomic_enable':
-rcar_du_crtc.c:(.text+0x14d4): undefined reference to `rcar_cmm_enable'
-arm-linux-gnueabi-ld: rcar_du_crtc.c:(.text+0x1548): undefined reference to `rcar_cmm_setup'
-arm-linux-gnueabi-ld: drivers/gpu/drm/rcar-du/rcar_du_crtc.o: in function `rcar_du_crtc_atomic_disable':
-rcar_du_crtc.c:(.text+0x18b8): undefined reference to `rcar_cmm_disable'
-arm-linux-gnueabi-ld: drivers/gpu/drm/rcar-du/rcar_du_kms.o: in function `rcar_du_modeset_init':
+There is no corresponding upstream commit, because this driver was
+removed upstream.
 
-Link: https://lore.kernel.org/all/20200417155553.675905-5-arnd@arndb.de/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 67af2b060e02 ("[SCSI] dpt_i2o: move from virt_to_bus/bus_to_virt ...")
+Signed-off-by: Ben Hutchings <benh@debian.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rcar-du/Kconfig |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/scsi/dpt_i2o.c |  274 +------------------------------------------------
+ drivers/scsi/dpti.h    |    1 
+ 2 files changed, 8 insertions(+), 267 deletions(-)
 
---- a/drivers/gpu/drm/rcar-du/Kconfig
-+++ b/drivers/gpu/drm/rcar-du/Kconfig
-@@ -4,8 +4,6 @@ config DRM_RCAR_DU
- 	depends on DRM && OF
- 	depends on ARM || ARM64
- 	depends on ARCH_RENESAS || COMPILE_TEST
--	imply DRM_RCAR_CMM
--	imply DRM_RCAR_LVDS
- 	select DRM_KMS_HELPER
- 	select DRM_KMS_CMA_HELPER
- 	select DRM_GEM_CMA_HELPER
-@@ -14,13 +12,17 @@ config DRM_RCAR_DU
- 	  Choose this option if you have an R-Car chipset.
- 	  If M is selected the module will be called rcar-du-drm.
+--- a/drivers/scsi/dpt_i2o.c
++++ b/drivers/scsi/dpt_i2o.c
+@@ -582,51 +582,6 @@ static int adpt_show_info(struct seq_fil
+ 	return 0;
+ }
  
--config DRM_RCAR_CMM
--	tristate "R-Car DU Color Management Module (CMM) Support"
--	depends on DRM && OF
-+config DRM_RCAR_USE_CMM
-+	bool "R-Car DU Color Management Module (CMM) Support"
- 	depends on DRM_RCAR_DU
-+	default DRM_RCAR_DU
- 	help
- 	  Enable support for R-Car Color Management Module (CMM).
+-/*
+- *	Turn a pointer to ioctl reply data into an u32 'context'
+- */
+-static u32 adpt_ioctl_to_context(adpt_hba * pHba, void *reply)
+-{
+-#if BITS_PER_LONG == 32
+-	return (u32)(unsigned long)reply;
+-#else
+-	ulong flags = 0;
+-	u32 nr, i;
+-
+-	spin_lock_irqsave(pHba->host->host_lock, flags);
+-	nr = ARRAY_SIZE(pHba->ioctl_reply_context);
+-	for (i = 0; i < nr; i++) {
+-		if (pHba->ioctl_reply_context[i] == NULL) {
+-			pHba->ioctl_reply_context[i] = reply;
+-			break;
+-		}
+-	}
+-	spin_unlock_irqrestore(pHba->host->host_lock, flags);
+-	if (i >= nr) {
+-		printk(KERN_WARNING"%s: Too many outstanding "
+-				"ioctl commands\n", pHba->name);
+-		return (u32)-1;
+-	}
+-
+-	return i;
+-#endif
+-}
+-
+-/*
+- *	Go from an u32 'context' to a pointer to ioctl reply data.
+- */
+-static void *adpt_ioctl_from_context(adpt_hba *pHba, u32 context)
+-{
+-#if BITS_PER_LONG == 32
+-	return (void *)(unsigned long)context;
+-#else
+-	void *p = pHba->ioctl_reply_context[context];
+-	pHba->ioctl_reply_context[context] = NULL;
+-
+-	return p;
+-#endif
+-}
+-
+ /*===========================================================================
+  * Error Handling routines
+  *===========================================================================
+@@ -1648,208 +1603,6 @@ static int adpt_close(struct inode *inod
+ 	return 0;
+ }
  
-+config DRM_RCAR_CMM
-+	def_tristate DRM_RCAR_DU
-+	depends on DRM_RCAR_USE_CMM
-+
- config DRM_RCAR_DW_HDMI
- 	tristate "R-Car Gen3 and RZ/G2 DU HDMI Encoder Support"
- 	depends on DRM && OF
-@@ -28,15 +30,20 @@ config DRM_RCAR_DW_HDMI
- 	help
- 	  Enable support for R-Car Gen3 or RZ/G2 internal HDMI encoder.
+-
+-static int adpt_i2o_passthru(adpt_hba* pHba, u32 __user *arg)
+-{
+-	u32 msg[MAX_MESSAGE_SIZE];
+-	u32* reply = NULL;
+-	u32 size = 0;
+-	u32 reply_size = 0;
+-	u32 __user *user_msg = arg;
+-	u32 __user * user_reply = NULL;
+-	void **sg_list = NULL;
+-	u32 sg_offset = 0;
+-	u32 sg_count = 0;
+-	int sg_index = 0;
+-	u32 i = 0;
+-	u32 rcode = 0;
+-	void *p = NULL;
+-	dma_addr_t addr;
+-	ulong flags = 0;
+-
+-	memset(&msg, 0, MAX_MESSAGE_SIZE*4);
+-	// get user msg size in u32s 
+-	if(get_user(size, &user_msg[0])){
+-		return -EFAULT;
+-	}
+-	size = size>>16;
+-
+-	user_reply = &user_msg[size];
+-	if(size > MAX_MESSAGE_SIZE){
+-		return -EFAULT;
+-	}
+-	size *= 4; // Convert to bytes
+-
+-	/* Copy in the user's I2O command */
+-	if(copy_from_user(msg, user_msg, size)) {
+-		return -EFAULT;
+-	}
+-	get_user(reply_size, &user_reply[0]);
+-	reply_size = reply_size>>16;
+-	if(reply_size > REPLY_FRAME_SIZE){
+-		reply_size = REPLY_FRAME_SIZE;
+-	}
+-	reply_size *= 4;
+-	reply = kzalloc(REPLY_FRAME_SIZE*4, GFP_KERNEL);
+-	if(reply == NULL) {
+-		printk(KERN_WARNING"%s: Could not allocate reply buffer\n",pHba->name);
+-		return -ENOMEM;
+-	}
+-	sg_offset = (msg[0]>>4)&0xf;
+-	msg[2] = 0x40000000; // IOCTL context
+-	msg[3] = adpt_ioctl_to_context(pHba, reply);
+-	if (msg[3] == (u32)-1) {
+-		rcode = -EBUSY;
+-		goto free;
+-	}
+-
+-	sg_list = kcalloc(pHba->sg_tablesize, sizeof(*sg_list), GFP_KERNEL);
+-	if (!sg_list) {
+-		rcode = -ENOMEM;
+-		goto free;
+-	}
+-	if(sg_offset) {
+-		// TODO add 64 bit API
+-		struct sg_simple_element *sg =  (struct sg_simple_element*) (msg+sg_offset);
+-		sg_count = (size - sg_offset*4) / sizeof(struct sg_simple_element);
+-		if (sg_count > pHba->sg_tablesize){
+-			printk(KERN_DEBUG"%s:IOCTL SG List too large (%u)\n", pHba->name,sg_count);
+-			rcode = -EINVAL;
+-			goto free;
+-		}
+-
+-		for(i = 0; i < sg_count; i++) {
+-			int sg_size;
+-
+-			if (!(sg[i].flag_count & 0x10000000 /*I2O_SGL_FLAGS_SIMPLE_ADDRESS_ELEMENT*/)) {
+-				printk(KERN_DEBUG"%s:Bad SG element %d - not simple (%x)\n",pHba->name,i,  sg[i].flag_count);
+-				rcode = -EINVAL;
+-				goto cleanup;
+-			}
+-			sg_size = sg[i].flag_count & 0xffffff;      
+-			/* Allocate memory for the transfer */
+-			p = dma_alloc_coherent(&pHba->pDev->dev, sg_size, &addr, GFP_KERNEL);
+-			if(!p) {
+-				printk(KERN_DEBUG"%s: Could not allocate SG buffer - size = %d buffer number %d of %d\n",
+-						pHba->name,sg_size,i,sg_count);
+-				rcode = -ENOMEM;
+-				goto cleanup;
+-			}
+-			sg_list[sg_index++] = p; // sglist indexed with input frame, not our internal frame.
+-			/* Copy in the user's SG buffer if necessary */
+-			if(sg[i].flag_count & 0x04000000 /*I2O_SGL_FLAGS_DIR*/) {
+-				// sg_simple_element API is 32 bit
+-				if (copy_from_user(p,(void __user *)(ulong)sg[i].addr_bus, sg_size)) {
+-					printk(KERN_DEBUG"%s: Could not copy SG buf %d FROM user\n",pHba->name,i);
+-					rcode = -EFAULT;
+-					goto cleanup;
+-				}
+-			}
+-			/* sg_simple_element API is 32 bit, but addr < 4GB */
+-			sg[i].addr_bus = addr;
+-		}
+-	}
+-
+-	do {
+-		/*
+-		 * Stop any new commands from enterring the
+-		 * controller while processing the ioctl
+-		 */
+-		if (pHba->host) {
+-			scsi_block_requests(pHba->host);
+-			spin_lock_irqsave(pHba->host->host_lock, flags);
+-		}
+-		rcode = adpt_i2o_post_wait(pHba, msg, size, FOREVER);
+-		if (rcode != 0)
+-			printk("adpt_i2o_passthru: post wait failed %d %p\n",
+-					rcode, reply);
+-		if (pHba->host) {
+-			spin_unlock_irqrestore(pHba->host->host_lock, flags);
+-			scsi_unblock_requests(pHba->host);
+-		}
+-	} while (rcode == -ETIMEDOUT);
+-
+-	if(rcode){
+-		goto cleanup;
+-	}
+-
+-	if(sg_offset) {
+-	/* Copy back the Scatter Gather buffers back to user space */
+-		u32 j;
+-		// TODO add 64 bit API
+-		struct sg_simple_element* sg;
+-		int sg_size;
+-
+-		// re-acquire the original message to handle correctly the sg copy operation
+-		memset(&msg, 0, MAX_MESSAGE_SIZE*4); 
+-		// get user msg size in u32s 
+-		if(get_user(size, &user_msg[0])){
+-			rcode = -EFAULT; 
+-			goto cleanup; 
+-		}
+-		size = size>>16;
+-		size *= 4;
+-		if (size > MAX_MESSAGE_SIZE) {
+-			rcode = -EINVAL;
+-			goto cleanup;
+-		}
+-		/* Copy in the user's I2O command */
+-		if (copy_from_user (msg, user_msg, size)) {
+-			rcode = -EFAULT;
+-			goto cleanup;
+-		}
+-		sg_count = (size - sg_offset*4) / sizeof(struct sg_simple_element);
+-
+-		// TODO add 64 bit API
+-		sg 	 = (struct sg_simple_element*)(msg + sg_offset);
+-		for (j = 0; j < sg_count; j++) {
+-			/* Copy out the SG list to user's buffer if necessary */
+-			if(! (sg[j].flag_count & 0x4000000 /*I2O_SGL_FLAGS_DIR*/)) {
+-				sg_size = sg[j].flag_count & 0xffffff; 
+-				// sg_simple_element API is 32 bit
+-				if (copy_to_user((void __user *)(ulong)sg[j].addr_bus,sg_list[j], sg_size)) {
+-					printk(KERN_WARNING"%s: Could not copy %p TO user %x\n",pHba->name, sg_list[j], sg[j].addr_bus);
+-					rcode = -EFAULT;
+-					goto cleanup;
+-				}
+-			}
+-		}
+-	} 
+-
+-	/* Copy back the reply to user space */
+-	if (reply_size) {
+-		// we wrote our own values for context - now restore the user supplied ones
+-		if(copy_from_user(reply+2, user_msg+2, sizeof(u32)*2)) {
+-			printk(KERN_WARNING"%s: Could not copy message context FROM user\n",pHba->name);
+-			rcode = -EFAULT;
+-		}
+-		if(copy_to_user(user_reply, reply, reply_size)) {
+-			printk(KERN_WARNING"%s: Could not copy reply TO user\n",pHba->name);
+-			rcode = -EFAULT;
+-		}
+-	}
+-
+-
+-cleanup:
+-	if (rcode != -ETIME && rcode != -EINTR) {
+-		struct sg_simple_element *sg =
+-				(struct sg_simple_element*) (msg +sg_offset);
+-		while(sg_index) {
+-			if(sg_list[--sg_index]) {
+-				dma_free_coherent(&pHba->pDev->dev,
+-					sg[sg_index].flag_count & 0xffffff,
+-					sg_list[sg_index],
+-					sg[sg_index].addr_bus);
+-			}
+-		}
+-	}
+-
+-free:
+-	kfree(sg_list);
+-	kfree(reply);
+-	return rcode;
+-}
+-
+ #if defined __ia64__ 
+ static void adpt_ia64_info(sysInfo_S* si)
+ {
+@@ -1976,8 +1729,6 @@ static int adpt_ioctl(struct inode *inod
+ 			return -EFAULT;
+ 		}
+ 		break;
+-	case I2OUSRCMD:
+-		return adpt_i2o_passthru(pHba, argp);
  
-+config DRM_RCAR_USE_LVDS
-+	bool "R-Car DU LVDS Encoder Support"
-+	depends on DRM_BRIDGE && OF
-+	default DRM_RCAR_DU
-+	help
-+	  Enable support for the R-Car Display Unit embedded LVDS encoders.
-+
- config DRM_RCAR_LVDS
--	tristate "R-Car DU LVDS Encoder Support"
--	depends on DRM && DRM_BRIDGE && OF
-+	def_tristate DRM_RCAR_DU
-+	depends on DRM_RCAR_USE_LVDS
- 	select DRM_KMS_HELPER
- 	select DRM_PANEL
- 	select OF_FLATTREE
- 	select OF_OVERLAY
--	help
--	  Enable support for the R-Car Display Unit embedded LVDS encoders.
+ 	case DPT_CTRLINFO:{
+ 		drvrHBAinfo_S HbaInfo;
+@@ -2134,13 +1885,6 @@ static irqreturn_t adpt_isr(int irq, voi
+ 			adpt_send_nop(pHba, old_m);
+ 		} 
+ 		context = readl(reply+8);
+-		if(context & 0x40000000){ // IOCTL
+-			void *p = adpt_ioctl_from_context(pHba, readl(reply+12));
+-			if( p != NULL) {
+-				memcpy_fromio(p, reply, REPLY_FRAME_SIZE * 4);
+-			}
+-			// All IOCTLs will also be post wait
+-		}
+ 		if(context & 0x80000000){ // Post wait message
+ 			status = readl(reply+16);
+ 			if(status  >> 24){
+@@ -2148,16 +1892,14 @@ static irqreturn_t adpt_isr(int irq, voi
+ 			} else {
+ 				status = I2O_POST_WAIT_OK;
+ 			}
+-			if(!(context & 0x40000000)) {
+-				/*
+-				 * The request tag is one less than the command tag
+-				 * as the firmware might treat a 0 tag as invalid
+-				 */
+-				cmd = scsi_host_find_tag(pHba->host,
+-							 readl(reply + 12) - 1);
+-				if(cmd != NULL) {
+-					printk(KERN_WARNING"%s: Apparent SCSI cmd in Post Wait Context - cmd=%p context=%x\n", pHba->name, cmd, context);
+-				}
++			/*
++			 * The request tag is one less than the command tag
++			 * as the firmware might treat a 0 tag as invalid
++			 */
++			cmd = scsi_host_find_tag(pHba->host,
++						 readl(reply + 12) - 1);
++			if(cmd != NULL) {
++				printk(KERN_WARNING"%s: Apparent SCSI cmd in Post Wait Context - cmd=%p context=%x\n", pHba->name, cmd, context);
+ 			}
+ 			adpt_i2o_post_wait_complete(context, status);
+ 		} else { // SCSI message
+--- a/drivers/scsi/dpti.h
++++ b/drivers/scsi/dpti.h
+@@ -248,7 +248,6 @@ typedef struct _adpt_hba {
+ 	void __iomem *FwDebugBLEDflag_P;// Virtual Addr Of FW Debug BLED
+ 	void __iomem *FwDebugBLEDvalue_P;// Virtual Addr Of FW Debug BLED
+ 	u32 FwDebugFlags;
+-	u32 *ioctl_reply_context[4];
+ } adpt_hba;
  
- config DRM_RCAR_VSP
- 	bool "R-Car DU VSP Compositor Support" if ARM
+ struct sg_simple_element {
 
 
