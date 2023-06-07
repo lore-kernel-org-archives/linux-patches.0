@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520F63922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63ABC4339E;
-	Wed,  7 Jun 2023 20:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D568C3922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFD7C433D2;
+	Wed,  7 Jun 2023 20:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171482;
-	bh=pwW/HxR4ngBKfLurQoSwrY0D1jxwjTlKEpdfKev7gc8=;
+	s=korg; t=1686171484;
+	bh=uTDfP2NAteUwj5XTmZ+L2svnA+EmKpohPM5QzUNaSWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqAU60Ihf4XQ4mZhInP8PlQz8drMUh90rrFbqNej1hpXejdeD3BbH4Q/nbM2zN4Ll
-	 ZgdmpTgNG6HF0l5nJfN6p41kPeIpNQNAHfB4drAVq60KDc8bZNH/Pi7DPr/mgY3DeZ
-	 7j51qICX1GYpq0OIrZO5riM5DEAtseyI/qxoMbgw=
+	b=juHfWhx3kjaXd4r/OKDKFCMeNxlQH9dHWPTgq7Lm46BTpDmJFIyQZIuR8z/SyGSXo
+	 Qj8Xf12EH/7F9e//7D0PhmYdlj+GBvXbPDiyiI2zJeqLKwJ2nb8RlQ6jY4a0LBACvC
+	 vkRqeT7+w0ZkyIrFsE4/a9fdMWRk4LGfM8oT7Las=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Shay Drory <shayd@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/159] net/mlx5: Read embedded cpu after init bit cleared
-Date: Wed,  7 Jun 2023 22:15:37 +0200
-Message-ID: <20230607200904.784790892@linuxfoundation.org>
+Subject: [PATCH 5.15 035/159] net/sched: flower: fix possible OOB write in fl_set_geneve_opt()
+Date: Wed,  7 Jun 2023 22:15:38 +0200
+Message-ID: <20230607200904.821803188@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,46 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit bbfa4b58997e3d38ba629c9f6fc0bd1c163aaf43 ]
+[ Upstream commit 4d56304e5827c8cc8cc18c75343d283af7c4825c ]
 
-During driver load it reads embedded_cpu bit from initialization
-segment, but the initialization segment is readable only after
-initialization bit is cleared.
+If we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE packets and their total
+size is 252 bytes(key->enc_opts.len = 252) then
+key->enc_opts.len = opt->length = data_len / 4 = 0 when the third
+TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
+bypasses the next bounds check and results in an out-of-bounds.
 
-Move the call to mlx5_read_embedded_cpu() right after initialization bit
-cleared.
-
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Fixes: 591905ba9679 ("net/mlx5: Introduce Mellanox SmartNIC and modify page management logic")
-Reviewed-by: Shay Drory <shayd@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 0a6e77784f49 ("net/sched: allow flower to match tunnel options")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+Link: https://lore.kernel.org/r/20230531102805.27090-1-hbh25y@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_flower.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index d75facc5c5031..13eceb6016344 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -781,7 +781,6 @@ static int mlx5_pci_init(struct mlx5_core_dev *dev, struct pci_dev *pdev,
- 	}
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index 32b03a13f9b25..ee137d5c20a4f 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -1092,6 +1092,9 @@ static int fl_set_geneve_opt(const struct nlattr *nla, struct fl_flow_key *key,
+ 	if (option_len > sizeof(struct geneve_opt))
+ 		data_len = option_len - sizeof(struct geneve_opt);
  
- 	mlx5_pci_vsc_init(dev);
--	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
- 	return 0;
- 
- err_clr_master:
-@@ -1003,6 +1002,7 @@ static int mlx5_function_setup(struct mlx5_core_dev *dev, bool boot)
- 		goto err_cmd_cleanup;
- 	}
- 
-+	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
- 	mlx5_cmd_set_state(dev, MLX5_CMDIF_STATE_UP);
- 
- 	err = mlx5_core_enable_hca(dev, 0);
++	if (key->enc_opts.len > FLOW_DIS_TUN_OPTS_MAX - 4)
++		return -ERANGE;
++
+ 	opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len];
+ 	memset(opt, 0xff, option_len);
+ 	opt->length = data_len / 4;
 -- 
 2.39.2
 
