@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DE934CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383C3C433D2;
-	Wed,  7 Jun 2023 20:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF2C34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5815C433EF;
+	Wed,  7 Jun 2023 20:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170624;
-	bh=wNda3bZlc2vfyvi7DQgqvTCZhG0Vfg3T2a4I9OeFoXc=;
+	s=korg; t=1686170627;
+	bh=IkGBsXi3C4HEnccIyBaIOzBJS5i014sdapMrMLHbqrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWdSouo6eVlDWjxZXB0+2cAHKC619v4cUHyE/B1+vR5WBMLrRYuNd1JuSTJ/DbnpB
-	 DcSzGOVafxXSVYUCOTiWEeHdrhOpBQ1l5y9NeJN5qyVNEquNtxJe1xfdBar/Xj6S7I
-	 dNgYIpTIOGygRGS4BtSushuKoBKBWp4k22H0c6vA=
+	b=UVLUxexwzW2BmrtN2BZK5rKt5o6WVSwOPfeMN47VC0hfGfvaIBvEaFLwv+JhDc0NA
+	 zwftHy8+T5v/x5mK57AMud52AUXo+2DecYkD4kyuvHslfvmJ1t0G34wfgmSQTWfoah
+	 bvzQa0u1D3rHMDPx/CowGMqt5ePvaxYzQAx5rSfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/225] nvme: do not let the user delete a ctrl before a complete initialization
-Date: Wed,  7 Jun 2023 22:15:18 +0200
-Message-ID: <20230607200918.469938415@linuxfoundation.org>
+Subject: [PATCH 6.1 126/225] ALSA: oss: avoid missing-prototype warnings
+Date: Wed,  7 Jun 2023 22:15:19 +0200
+Message-ID: <20230607200918.501229991@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -37,73 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 2eb94dd56a4a4e3fe286def3e2ba207804a37345 ]
+[ Upstream commit 040b5a046a9e18098580d3ccd029e2318fca7859 ]
 
-If a userspace application performes a "delete_controller" command
-early during the ctrl initialization, the delete operation
-may race against the init code and the kernel will crash.
+Two functions are defined and used in pcm_oss.c but also optionally
+used from io.c, with an optional prototype. If CONFIG_SND_PCM_OSS_PLUGINS
+is disabled, this causes a warning as the functions are not static
+and have no prototype:
 
-nvme nvme5: Connect command failed: host path error
-nvme nvme5: failed to connect queue: 0 ret=880
-PF: supervisor write access in kernel mode
-PF: error_code(0x0002) - not-present page
- blk_mq_quiesce_queue+0x18/0x90
- nvme_tcp_delete_ctrl+0x24/0x40 [nvme_tcp]
- nvme_do_delete_ctrl+0x7f/0x8b [nvme_core]
- nvme_sysfs_delete.cold+0x8/0xd [nvme_core]
- kernfs_fop_write_iter+0x124/0x1b0
- new_sync_write+0xff/0x190
- vfs_write+0x1ef/0x280
+sound/core/oss/pcm_oss.c:1235:19: error: no previous prototype for 'snd_pcm_oss_write3' [-Werror=missing-prototypes]
+sound/core/oss/pcm_oss.c:1266:19: error: no previous prototype for 'snd_pcm_oss_read3' [-Werror=missing-prototypes]
 
-Fix the crash by checking the NVME_CTRL_STARTED_ONCE bit;
-if it's not set it means that the nvme controller is still
-in the process of getting initialized and the kernel
-will return an -EBUSY error to userspace.
-Set the NVME_CTRL_STARTED_ONCE later in the nvme_start_ctrl()
-function, after the controller start operation is completed.
+Avoid this by making the prototypes unconditional.
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230516195046.550584-2-arnd@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/core/oss/pcm_plugin.h | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index f502e032e7e46..2e22c78991ccf 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3540,6 +3540,9 @@ static ssize_t nvme_sysfs_delete(struct device *dev,
- {
- 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+diff --git a/sound/core/oss/pcm_plugin.h b/sound/core/oss/pcm_plugin.h
+index 46e273bd4a786..50a6b50f5db4c 100644
+--- a/sound/core/oss/pcm_plugin.h
++++ b/sound/core/oss/pcm_plugin.h
+@@ -141,6 +141,14 @@ int snd_pcm_area_copy(const struct snd_pcm_channel_area *src_channel,
  
-+	if (!test_bit(NVME_CTRL_STARTED_ONCE, &ctrl->flags))
-+		return -EBUSY;
+ void *snd_pcm_plug_buf_alloc(struct snd_pcm_substream *plug, snd_pcm_uframes_t size);
+ void snd_pcm_plug_buf_unlock(struct snd_pcm_substream *plug, void *ptr);
++#else
 +
- 	if (device_remove_file_self(dev, attr))
- 		nvme_delete_ctrl_sync(ctrl);
- 	return count;
-@@ -4980,7 +4983,7 @@ void nvme_start_ctrl(struct nvme_ctrl *ctrl)
- 	 * that were missed. We identify persistent discovery controllers by
- 	 * checking that they started once before, hence are reconnecting back.
- 	 */
--	if (test_and_set_bit(NVME_CTRL_STARTED_ONCE, &ctrl->flags) &&
-+	if (test_bit(NVME_CTRL_STARTED_ONCE, &ctrl->flags) &&
- 	    nvme_discovery_ctrl(ctrl))
- 		nvme_change_uevent(ctrl, "NVME_EVENT=rediscover");
++static inline snd_pcm_sframes_t snd_pcm_plug_client_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t drv_size) { return drv_size; }
++static inline snd_pcm_sframes_t snd_pcm_plug_slave_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t clt_size) { return clt_size; }
++static inline int snd_pcm_plug_slave_format(int format, const struct snd_mask *format_mask) { return format; }
++
++#endif
++
+ snd_pcm_sframes_t snd_pcm_oss_write3(struct snd_pcm_substream *substream,
+ 				     const char *ptr, snd_pcm_uframes_t size,
+ 				     int in_kernel);
+@@ -151,14 +159,6 @@ snd_pcm_sframes_t snd_pcm_oss_writev3(struct snd_pcm_substream *substream,
+ snd_pcm_sframes_t snd_pcm_oss_readv3(struct snd_pcm_substream *substream,
+ 				     void **bufs, snd_pcm_uframes_t frames);
  
-@@ -4991,6 +4994,7 @@ void nvme_start_ctrl(struct nvme_ctrl *ctrl)
- 	}
- 
- 	nvme_change_uevent(ctrl, "NVME_EVENT=connected");
-+	set_bit(NVME_CTRL_STARTED_ONCE, &ctrl->flags);
- }
- EXPORT_SYMBOL_GPL(nvme_start_ctrl);
- 
+-#else
+-
+-static inline snd_pcm_sframes_t snd_pcm_plug_client_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t drv_size) { return drv_size; }
+-static inline snd_pcm_sframes_t snd_pcm_plug_slave_size(struct snd_pcm_substream *handle, snd_pcm_uframes_t clt_size) { return clt_size; }
+-static inline int snd_pcm_plug_slave_format(int format, const struct snd_mask *format_mask) { return format; }
+-
+-#endif
+-
+ #ifdef PLUGIN_DEBUG
+ #define pdprintf(fmt, args...) printk(KERN_DEBUG "plugin: " fmt, ##args)
+ #else
 -- 
 2.39.2
 
