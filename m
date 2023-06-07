@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2987534CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A060BC433D2;
-	Wed,  7 Jun 2023 21:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B3634CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52176C433EF;
+	Wed,  7 Jun 2023 21:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171632;
-	bh=awLwyRpuLvxzkYp1+BuQee70cH6x2ekPPiLJGmfacb0=;
+	s=korg; t=1686171634;
+	bh=UalBq8EHTRQO0sfdCOeYR0aOw8rCB9WfOBfiTN0/Nw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7jb08VKlhyFMmj41J2NSoOVszd/HQ8/uxcD3Ra8W3hcO2N4IwmtSPvcWlpisOhya
-	 HcuDfmBBdk+HCybFPB/ZIzSviQaMHOMDxTl8FFpx3bdDjofV2KHfjvgZby+mBKiy2E
-	 sR+LLpOlYOQ+HFmSj4Rh5YiTBLMPTMDPuu/l8tmA=
+	b=HOcg++BfWwscFBoVYKX31amrxBFmn8YGq0l1Yoa4mE+k5tg97gVmPX7TOas+UyyhO
+	 yVHn9hdQXFBVuSU0LaxsIJT5LmWHNAJLi5bApP7GbJMrYPgpOw4WayCha8krDa2XM2
+	 MZ7spu4hyLNN/56hsCzgJLqNU0csgTHLFgnK75lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/159] atm: hide unused procfs functions
-Date: Wed,  7 Jun 2023 22:16:35 +0200
-Message-ID: <20230607200906.706408939@linuxfoundation.org>
+Subject: [PATCH 5.15 093/159] drm/amdgpu: skip disabling fence driver src_irqs when device is unplugged
+Date: Wed,  7 Jun 2023 22:16:36 +0200
+Message-ID: <20230607200906.737998183@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,45 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Guchun Chen <guchun.chen@amd.com>
 
-[ Upstream commit fb1b7be9b16c1f4626969ba4e95a97da2a452b41 ]
+[ Upstream commit c1a322a7a4a96cd0a3dde32ce37af437a78bf8cd ]
 
-When CONFIG_PROC_FS is disabled, the function declarations for some
-procfs functions are hidden, but the definitions are still build,
-as shown by this compiler warning:
+When performing device unbind or halt, we have disabled all irqs at the
+very begining like amdgpu_pci_remove or amdgpu_device_halt. So
+amdgpu_irq_put for irqs stored in fence driver should not be called
+any more, otherwise, below calltrace will arrive.
 
-net/atm/resources.c:403:7: error: no previous prototype for 'atm_dev_seq_start' [-Werror=missing-prototypes]
-net/atm/resources.c:409:6: error: no previous prototype for 'atm_dev_seq_stop' [-Werror=missing-prototypes]
-net/atm/resources.c:414:7: error: no previous prototype for 'atm_dev_seq_next' [-Werror=missing-prototypes]
+[  139.114088] WARNING: CPU: 2 PID: 1550 at drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c:616 amdgpu_irq_put+0xf6/0x110 [amdgpu]
+[  139.114655] Call Trace:
+[  139.114655]  <TASK>
+[  139.114657]  amdgpu_fence_driver_hw_fini+0x93/0x130 [amdgpu]
+[  139.114836]  amdgpu_device_fini_hw+0xb6/0x350 [amdgpu]
+[  139.114955]  amdgpu_driver_unload_kms+0x51/0x70 [amdgpu]
+[  139.115075]  amdgpu_pci_remove+0x63/0x160 [amdgpu]
+[  139.115193]  ? __pm_runtime_resume+0x64/0x90
+[  139.115195]  pci_device_remove+0x3a/0xb0
+[  139.115197]  device_remove+0x43/0x70
+[  139.115198]  device_release_driver_internal+0xbd/0x140
 
-Add another #ifdef to leave these out of the build.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230516194625.549249-2-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/resources.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/atm/resources.c b/net/atm/resources.c
-index 2b2d33eeaf200..995d29e7fb138 100644
---- a/net/atm/resources.c
-+++ b/net/atm/resources.c
-@@ -400,6 +400,7 @@ int atm_dev_ioctl(unsigned int cmd, void __user *buf, int __user *sioc_len,
- 	return error;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
+index bbd6f7a123033..8599e0ffa8292 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
+@@ -561,7 +561,8 @@ void amdgpu_fence_driver_hw_fini(struct amdgpu_device *adev)
+ 		if (r)
+ 			amdgpu_fence_driver_force_completion(ring);
  
-+#ifdef CONFIG_PROC_FS
- void *atm_dev_seq_start(struct seq_file *seq, loff_t *pos)
- {
- 	mutex_lock(&atm_dev_mutex);
-@@ -415,3 +416,4 @@ void *atm_dev_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- {
- 	return seq_list_next(v, &atm_devs, pos);
- }
-+#endif
+-		if (ring->fence_drv.irq_src)
++		if (!drm_dev_is_unplugged(adev_to_drm(adev)) &&
++		    ring->fence_drv.irq_src)
+ 			amdgpu_irq_put(adev, ring->fence_drv.irq_src,
+ 				       ring->fence_drv.irq_type);
+ 
 -- 
 2.39.2
 
