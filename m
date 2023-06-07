@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CB419BAB
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:33:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3980AC433A4;
-	Wed,  7 Jun 2023 20:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500ED19BAB
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:33:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C464CC433EF;
+	Wed,  7 Jun 2023 20:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170027;
-	bh=MtLFGGdfVD8voEQjUVBWPh5UYCcmvwrNGZHzw9DVQnk=;
+	s=korg; t=1686170030;
+	bh=E8KvTKtKnI50K9zD2MLzCbN1a9PznU0LeMFIlizlKfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2RZcgVpyA4neygvsbDR8jNtMotzNV5CdRjcF++IAn0WD4htOH9pXg2aaZS4aD7pz
-	 nWHW+plj0DGTPKn9HSyJhclxUrqBIFPCQypWoL9Vv3pkEmJNzet+zkXr0bblBxH7uq
-	 QV7qcUgyWtE2uarE/XtqLMsGfSop1fAZnN4FWZdk=
+	b=kv71LPGaoWZhibMkhhWlRyvTs/IGWrKxPiDKWMzLQ6hwL6cZH1r9UQDTw+KuQ445l
+	 bKdlaC+pe4XeGjm/47r28aB2Ur8mi3Go87TwtcibIBmbbENcqMmpybgIPozDu0KiPH
+	 3v0k5gYJLS6LojMljW80yKus2qT4zATMUe8kD7PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b53a9c0d1ea4ad62da8b@syzkaller.appspotmail.com,
 	Pedro Tammela <pctammela@mojatatu.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Vlad Buslov <vladbu@nvidia.com>,
 	Peilin Ye <peilin.ye@bytedance.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 18/88] net/sched: sch_ingress: Only create under TC_H_INGRESS
-Date: Wed,  7 Jun 2023 22:15:35 +0200
-Message-ID: <20230607200859.335342878@linuxfoundation.org>
+Subject: [PATCH 4.19 19/88] net/sched: sch_clsact: Only create under TC_H_CLSACT
+Date: Wed,  7 Jun 2023 22:15:36 +0200
+Message-ID: <20230607200859.485584334@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -41,15 +40,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Peilin Ye <peilin.ye@bytedance.com>
 
-[ Upstream commit c7cfbd115001f94de9e4053657946a383147e803 ]
+[ Upstream commit 5eeebfe6c493192b10d516abfd72742900f2a162 ]
 
-ingress Qdiscs are only supposed to be created under TC_H_INGRESS.
-Return -EOPNOTSUPP if 'parent' is not TC_H_INGRESS, similar to
-mq_init().
+clsact Qdiscs are only supposed to be created under TC_H_CLSACT (which
+equals TC_H_INGRESS).  Return -EOPNOTSUPP if 'parent' is not
+TC_H_CLSACT.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+b53a9c0d1ea4ad62da8b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/0000000000006cf87705f79acf1a@google.com/
+Fixes: 1f211a1b929c ("net, sched: add clsact qdisc")
 Tested-by: Pedro Tammela <pctammela@mojatatu.com>
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
@@ -62,29 +59,29 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 6 insertions(+)
 
 diff --git a/net/sched/sch_ingress.c b/net/sched/sch_ingress.c
-index ce3f55259d0d1..2abc87a74ce40 100644
+index 2abc87a74ce40..e120dadc259a9 100644
 --- a/net/sched/sch_ingress.c
 +++ b/net/sched/sch_ingress.c
-@@ -83,6 +83,9 @@ static int ingress_init(struct Qdisc *sch, struct nlattr *opt,
- 	struct ingress_sched_data *q = qdisc_priv(sch);
+@@ -221,6 +221,9 @@ static int clsact_init(struct Qdisc *sch, struct nlattr *opt,
  	struct net_device *dev = qdisc_dev(sch);
+ 	int err;
  
-+	if (sch->parent != TC_H_INGRESS)
++	if (sch->parent != TC_H_CLSACT)
 +		return -EOPNOTSUPP;
 +
  	net_inc_ingress_queue();
+ 	net_inc_egress_queue();
  
- 	mini_qdisc_pair_init(&q->miniqp, sch, &dev->miniq_ingress);
-@@ -98,6 +101,9 @@ static void ingress_destroy(struct Qdisc *sch)
+@@ -248,6 +251,9 @@ static void clsact_destroy(struct Qdisc *sch)
  {
- 	struct ingress_sched_data *q = qdisc_priv(sch);
+ 	struct clsact_sched_data *q = qdisc_priv(sch);
  
-+	if (sch->parent != TC_H_INGRESS)
++	if (sch->parent != TC_H_CLSACT)
 +		return;
 +
- 	tcf_block_put_ext(q->block, sch, &q->block_info);
- 	net_dec_ingress_queue();
- }
+ 	tcf_block_put_ext(q->egress_block, sch, &q->egress_block_info);
+ 	tcf_block_put_ext(q->ingress_block, sch, &q->ingress_block_info);
+ 
 -- 
 2.39.2
 
