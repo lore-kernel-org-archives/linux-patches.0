@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D83E10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15EAC4339B;
-	Wed,  7 Jun 2023 20:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEA710FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E65C433D2;
+	Wed,  7 Jun 2023 20:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169651;
-	bh=YTQNMzu6xtBpjnBNiSqKehjsTvKGspXh7Ovuy4IeBbM=;
+	s=korg; t=1686169653;
+	bh=NLbtYEUPqZoLxLnhDP21dMK82i6yMcn38kWWqw7IRY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RRFFl/zCYp+Ngc9qc3ZTYRslIPrtp0iTbPwXe/4189ERm3kjhIlhdgjcy0cJ0yqWC
-	 jhnSME1VIGwJeyV8npHrHWK6mHfK0iuCNKCHnSc+xh4NOHFfihUqnCS9b1Xcm2ftGa
-	 BcHVdzBhnqshEVE9RdVcrMDxhq31/6cjoDg6jVo0=
+	b=O/yGRaBtacooqatoF/0U6m1gOtgaNbKo2WmLsG8Bbf+8dTQ2XNR06LhL50eeJoVuA
+	 BI2zQPbqiytnyVs1VUNTAW2k/p6m/Z2QiWIWPaHkk7UofIEAM70YXR0twmQk/10DQh
+	 jJRVGM/SM989jXnnn9t28C9AiYF2SxtWyfSURVP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao2@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	YongSu Yoo <yongsuyoo0215@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 160/286] scsi: core: Decrease scsi_devices iorequest_cnt if dispatch failed
-Date: Wed,  7 Jun 2023 22:14:19 +0200
-Message-ID: <20230607200928.350680216@linuxfoundation.org>
+Subject: [PATCH 6.3 133/286] media: dvb_ca_en50221: fix a size write bug
+Date: Wed,  7 Jun 2023 22:13:52 +0200
+Message-ID: <20230607200927.436844202@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,49 +35,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Hao <haowenchao2@huawei.com>
+From: YongSu Yoo <yongsuyoo0215@gmail.com>
 
-[ Upstream commit 09e797c8641f6ad435c33ae24c223351197ea29a ]
+[ Upstream commit a4315e5be7020aac9b24a8151caf4bb85224cd0e ]
 
-If scsi_dispatch_cmd() failed, the SCSI command was not sent to the target,
-scsi_queue_rq() would return BLK_STS_RESOURCE and the related request would
-be requeued. The timeout of this request would not fire, no one would
-increase iodone_cnt.
+The function of "dvb_ca_en50221_write_data" at source/drivers/media
+/dvb-core/dvb_ca_en50221.c is used for two cases.
+The first case is for writing APDU data in the function of
+"dvb_ca_en50221_io_write" at source/drivers/media/dvb-core/
+dvb_ca_en50221.c.
+The second case is for writing the host link buf size on the
+Command Register in the function of "dvb_ca_en50221_link_init"
+at source/drivers/media/dvb-core/dvb_ca_en50221.c.
+In the second case, there exists a bug like following.
+In the function of the "dvb_ca_en50221_link_init",
+after a TV host calculates the host link buf_size,
+the TV host writes the calculated host link buf_size on the
+Size Register.
+Accroding to the en50221 Spec (the page 60 of
+https://dvb.org/wp-content/uploads/2020/02/En50221.V1.pdf),
+before this writing operation, the "SW(CMDREG_SW)" flag in the
+Command Register should be set. We can see this setting operation
+in the function of the "dvb_ca_en50221_link_init" like below.
+...
+	if ((ret = ca->pub->write_cam_control(ca->pub, slot,
+CTRLIF_COMMAND, IRQEN | CMDREG_SW)) != 0)
+		return ret;
+...
+But, after that, the real writing operation is implemented using
+the function of the "dvb_ca_en50221_write_data" in the function of
+"dvb_ca_en50221_link_init", and the "dvb_ca_en50221_write_data"
+includes the function of "ca->pub->write_cam_control",
+and the function of the "ca->pub->write_cam_control" in the
+function of the "dvb_ca_en50221_wrte_data" does not include
+"CMDREG_SW" flag like below.
+...
+	if ((status = ca->pub->write_cam_control(ca->pub, slot,
+CTRLIF_COMMAND, IRQEN | CMDREG_HC)) != 0)
+...
+In the above source code, we can see only the "IRQEN | CMDREG_HC",
+but we cannot see the "CMDREG_SW".
+The "CMDREG_SW" flag which was set in the function of the
+"dvb_ca_en50221_link_init" was rollbacked by the follwoing function
+of the "dvb_ca_en50221_write_data".
+This is a bug. and this bug causes that the calculated host link buf_size
+is not properly written in the CI module.
+Through this patch, we fix this bug.
 
-The above flow would result the iodone_cnt smaller than iorequest_cnt.  So
-decrease the iorequest_cnt if dispatch failed to workaround the issue.
-
-Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
-Reported-by: Ming Lei <ming.lei@redhat.com>
-Closes: https://lore.kernel.org/r/ZF+zB+bB7iqe0wGd@ovpn-8-17.pek2.redhat.com
-Link: https://lore.kernel.org/r/20230515070156.1790181-3-haowenchao2@huawei.com
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/linux-media/20220818125027.1131-1-yongsuyoo0215@gmail.com
+Signed-off-by: YongSu Yoo <yongsuyoo0215@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/dvb-core/dvb_ca_en50221.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 03964b26f3f27..0226c9279cef6 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -1485,6 +1485,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
- 		 */
- 		SCSI_LOG_MLQUEUE(3, scmd_printk(KERN_INFO, cmd,
- 			"queuecommand : device blocked\n"));
-+		atomic_dec(&cmd->device->iorequest_cnt);
- 		return SCSI_MLQUEUE_DEVICE_BUSY;
- 	}
+diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
+index c2d2792227f86..b6ca29dfb184a 100644
+--- a/drivers/media/dvb-core/dvb_ca_en50221.c
++++ b/drivers/media/dvb-core/dvb_ca_en50221.c
+@@ -187,7 +187,7 @@ static void dvb_ca_en50221_thread_wakeup(struct dvb_ca_private *ca);
+ static int dvb_ca_en50221_read_data(struct dvb_ca_private *ca, int slot,
+ 				    u8 *ebuf, int ecount);
+ static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot,
+-				     u8 *ebuf, int ecount);
++				     u8 *ebuf, int ecount, int size_write_flag);
  
-@@ -1517,6 +1518,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
- 	trace_scsi_dispatch_cmd_start(cmd);
- 	rtn = host->hostt->queuecommand(host, cmd);
- 	if (rtn) {
-+		atomic_dec(&cmd->device->iorequest_cnt);
- 		trace_scsi_dispatch_cmd_error(cmd, rtn);
- 		if (rtn != SCSI_MLQUEUE_DEVICE_BUSY &&
- 		    rtn != SCSI_MLQUEUE_TARGET_BUSY)
+ /**
+  * findstr - Safely find needle in haystack.
+@@ -370,7 +370,7 @@ static int dvb_ca_en50221_link_init(struct dvb_ca_private *ca, int slot)
+ 	ret = dvb_ca_en50221_wait_if_status(ca, slot, STATUSREG_FR, HZ / 10);
+ 	if (ret)
+ 		return ret;
+-	ret = dvb_ca_en50221_write_data(ca, slot, buf, 2);
++	ret = dvb_ca_en50221_write_data(ca, slot, buf, 2, CMDREG_SW);
+ 	if (ret != 2)
+ 		return -EIO;
+ 	ret = ca->pub->write_cam_control(ca->pub, slot, CTRLIF_COMMAND, IRQEN);
+@@ -778,11 +778,13 @@ static int dvb_ca_en50221_read_data(struct dvb_ca_private *ca, int slot,
+  * @buf: The data in this buffer is treated as a complete link-level packet to
+  *	 be written.
+  * @bytes_write: Size of ebuf.
++ * @size_write_flag: A flag on Command Register which says whether the link size
++ * information will be writen or not.
+  *
+  * return: Number of bytes written, or < 0 on error.
+  */
+ static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot,
+-				     u8 *buf, int bytes_write)
++				     u8 *buf, int bytes_write, int size_write_flag)
+ {
+ 	struct dvb_ca_slot *sl = &ca->slot_info[slot];
+ 	int status;
+@@ -817,7 +819,7 @@ static int dvb_ca_en50221_write_data(struct dvb_ca_private *ca, int slot,
+ 
+ 	/* OK, set HC bit */
+ 	status = ca->pub->write_cam_control(ca->pub, slot, CTRLIF_COMMAND,
+-					    IRQEN | CMDREG_HC);
++					    IRQEN | CMDREG_HC | size_write_flag);
+ 	if (status)
+ 		goto exit;
+ 
+@@ -1508,7 +1510,7 @@ static ssize_t dvb_ca_en50221_io_write(struct file *file,
+ 
+ 			mutex_lock(&sl->slot_lock);
+ 			status = dvb_ca_en50221_write_data(ca, slot, fragbuf,
+-							   fraglen + 2);
++							   fraglen + 2, 0);
+ 			mutex_unlock(&sl->slot_lock);
+ 			if (status == (fraglen + 2)) {
+ 				written = 1;
 -- 
 2.39.2
 
