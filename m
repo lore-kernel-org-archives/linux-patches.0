@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B526619BCD
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396C3C433EF;
-	Wed,  7 Jun 2023 20:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6DE19BCD
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0370C433EF;
+	Wed,  7 Jun 2023 20:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170130;
-	bh=jcjw9X/PZAUUpEcQPBtXgdIvqeW79OcBte1ovhiRAR8=;
+	s=korg; t=1686170133;
+	bh=yKGcdrssA11YUCE5AUIKpueGETZlG7QwlPbKBiFbRT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vt1iUlW0uduD59icGgacOhpp4mcDYc2ukGp4SACY/rB20u6mdRmtWH/y73M4UebSa
-	 CmHII9fn4nFOhk6KU2vBaLwb3baEc7lCP0gMbpjHwcz1pAK4wAKS7D7QuAH79F/44q
-	 umHN1+vLHJWs54OlkemV8Poc3ZKsyje4qIjfOSQk=
+	b=i1N6yjAClU299VE+id5UrG2WGzLTE1dTgK8auRJ6mVvho89/dM2vABlnRTsclu3Sa
+	 StNU5jRUqlwNIqY1q0pb9sLWb2oe37TMkdVxdZ0v8FiAS32I4R9HmaXn+uCPE952AN
+	 /sUYJ6BRddN9WHb/Ct6/hcv0MjDpWnoRExhG0jzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Svensson <andreas.svensson@axis.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Johannes Thumshirn <jth@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 27/88] net: dsa: mv88e6xxx: Increase wait after reset deactivation
-Date: Wed,  7 Jun 2023 22:15:44 +0200
-Message-ID: <20230607200859.969554688@linuxfoundation.org>
+Subject: [PATCH 4.19 28/88] watchdog: menz069_wdt: fix watchdog initialisation
+Date: Wed,  7 Jun 2023 22:15:45 +0200
+Message-ID: <20230607200900.013517314@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -36,43 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Svensson <andreas.svensson@axis.com>
+From: Johannes Thumshirn <jth@kernel.org>
 
-[ Upstream commit 3c27f3d53d588618d81d30d6712459a3cc9489b8 ]
+[ Upstream commit 87b22656ca6a896d0378e9e60ffccb0c82f48b08 ]
 
-A switch held in reset by default needs to wait longer until we can
-reliably detect it.
+Doing a 'cat /dev/watchdog0' with menz069_wdt as watchdog0 will result in
+a NULL pointer dereference.
 
-An issue was observed when testing on the Marvell 88E6393X (Link Street).
-The driver failed to detect the switch on some upstarts. Increasing the
-wait time after reset deactivation solves this issue.
+This happens because we're passing the wrong pointer to
+watchdog_register_device(). Fix this by getting rid of the static
+watchdog_device structure and use the one embedded into the driver's
+per-instance private data.
 
-The updated wait time is now also the same as the wait time in the
-mv88e6xxx_hardware_reset function.
-
-Fixes: 7b75e49de424 ("net: dsa: mv88e6xxx: wait after reset deactivation")
-Signed-off-by: Andreas Svensson <andreas.svensson@axis.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230530145223.1223993-1-andreas.svensson@axis.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230418172531.177349-2-jth@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/menz69_wdt.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index b593e4d85e9c0..792073a768ac0 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -4840,7 +4840,7 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
- 		goto out;
- 	}
- 	if (chip->reset)
--		usleep_range(1000, 2000);
-+		usleep_range(10000, 20000);
+diff --git a/drivers/watchdog/menz69_wdt.c b/drivers/watchdog/menz69_wdt.c
+index ed18238c54074..96a25d18ab643 100644
+--- a/drivers/watchdog/menz69_wdt.c
++++ b/drivers/watchdog/menz69_wdt.c
+@@ -98,14 +98,6 @@ static const struct watchdog_ops men_z069_ops = {
+ 	.set_timeout = men_z069_wdt_set_timeout,
+ };
  
- 	err = mv88e6xxx_detect(chip);
- 	if (err)
+-static struct watchdog_device men_z069_wdt = {
+-	.info = &men_z069_info,
+-	.ops = &men_z069_ops,
+-	.timeout = MEN_Z069_DEFAULT_TIMEOUT,
+-	.min_timeout = 1,
+-	.max_timeout = MEN_Z069_WDT_COUNTER_MAX / MEN_Z069_TIMER_FREQ,
+-};
+-
+ static int men_z069_probe(struct mcb_device *dev,
+ 			  const struct mcb_device_id *id)
+ {
+@@ -125,15 +117,19 @@ static int men_z069_probe(struct mcb_device *dev,
+ 		goto release_mem;
+ 
+ 	drv->mem = mem;
++	drv->wdt.info = &men_z069_info;
++	drv->wdt.ops = &men_z069_ops;
++	drv->wdt.timeout = MEN_Z069_DEFAULT_TIMEOUT;
++	drv->wdt.min_timeout = 1;
++	drv->wdt.max_timeout = MEN_Z069_WDT_COUNTER_MAX / MEN_Z069_TIMER_FREQ;
+ 
+-	drv->wdt = men_z069_wdt;
+ 	watchdog_init_timeout(&drv->wdt, 0, &dev->dev);
+ 	watchdog_set_nowayout(&drv->wdt, nowayout);
+ 	watchdog_set_drvdata(&drv->wdt, drv);
+ 	drv->wdt.parent = &dev->dev;
+ 	mcb_set_drvdata(dev, drv);
+ 
+-	return watchdog_register_device(&men_z069_wdt);
++	return watchdog_register_device(&drv->wdt);
+ 
+ release_mem:
+ 	mcb_release_mem(mem);
 -- 
 2.39.2
 
