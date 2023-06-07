@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691FC3925A
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4AAC4339B;
-	Wed,  7 Jun 2023 20:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AFA34CF6
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4B9C433EF;
+	Wed,  7 Jun 2023 20:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169266;
-	bh=D5VTqr5ulOBjssvO6c+3ZgE5wL9xut81xojr8puHmiA=;
+	s=korg; t=1686169263;
+	bh=VWMbQlVBTydQfOAgcWyJNsnZoDMc+LJxmrmPknC6Bpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ppEYybcHj+FN4+EepR6/fm0/qVvtkVoeymsLP/KU4hfAWWjjSyJNHnsf5Tj55ry/K
-	 jtAqVNNPb1x0+msbbU8MNPfeAuNmJNH+YndMDkSNQU1J1LGcG4smk6oPzX91KDTJ9D
-	 fRF+AyS054gr4I+cLRnjhND9jmWHTXJBmffITZ7c=
+	b=OW9hSJy6+OYkq9BRDKBuXyEOZwayaE/qKBpX5+F5pDgOpv/tWPelF/OS8qXdT3JGb
+	 inKEiDxJwV740b+HaDlfP7FHdKsdej3tSM6QF7Y0ieaTlT9LWKoHFM2N1jHdqTPEIC
+	 lBnqQnS7yS5+nvbxZfVJTmWWZQ+koK6Bw/rHjFic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <yieli@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 016/286] nfsd: make a copy of struct iattr before calling notify_change
-Date: Wed,  7 Jun 2023 22:11:55 +0200
-Message-ID: <20230607200923.538751938@linuxfoundation.org>
+Subject: [PATCH 6.3 015/286] iommu/amd: Add missing domain type checks
+Date: Wed,  7 Jun 2023 22:11:54 +0200
+Message-ID: <20230607200923.507514222@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,48 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit d53d70084d27f56bcdf5074328f2c9ec861be596 ]
+[ Upstream commit 29f54745f24547a84b18582e054df9bea1a7bf3e ]
 
-notify_change can modify the iattr structure. In particular it can
-end up setting ATTR_MODE when ATTR_KILL_SUID is already set, causing
-a BUG() if the same iattr is passed to notify_change more than once.
+Drivers are supposed to list the domain types they support in their
+domain_alloc() ops so when we add new domain types, like BLOCKING or SVA,
+they don't start breaking.
 
-Make a copy of the struct iattr before calling notify_change.
+This ended up providing an empty UNMANAGED domain when the core code asked
+for a BLOCKING domain, which happens to be the fallback for drivers that
+don't support it, but this is completely wrong for SVA.
 
-Reported-by: Zhi Li <yieli@redhat.com>
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2207969
-Tested-by: Zhi Li <yieli@redhat.com>
-Fixes: 34b91dda7124 ("NFSD: Make nfsd4_setattr() wait before returning NFS4ERR_DELAY")
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Check for the DMA types AMD supports and reject every other kind.
+
+Fixes: 136467962e49 ("iommu: Add IOMMU SVA domain support")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/0-v1-2ac37b893728+da-amd_check_types_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/vfs.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/iommu/amd/iommu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 5783209f17fc5..e4884dde048ce 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -536,7 +536,15 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 478da9b4a1b14..8bd5390808784 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2065,7 +2065,7 @@ static struct protection_domain *protection_domain_alloc(unsigned int type)
+ {
+ 	struct io_pgtable_ops *pgtbl_ops;
+ 	struct protection_domain *domain;
+-	int pgtable = amd_iommu_pgtable;
++	int pgtable;
+ 	int mode = DEFAULT_PGTABLE_LEVEL;
+ 	int ret;
  
- 	inode_lock(inode);
- 	for (retries = 1;;) {
--		host_err = __nfsd_setattr(dentry, iap);
-+		struct iattr attrs;
-+
-+		/*
-+		 * notify_change() can alter its iattr argument, making
-+		 * @iap unsuitable for submission multiple times. Make a
-+		 * copy for every loop iteration.
-+		 */
-+		attrs = *iap;
-+		host_err = __nfsd_setattr(dentry, &attrs);
- 		if (host_err != -EAGAIN || !retries--)
- 			break;
- 		if (!nfsd_wait_for_delegreturn(rqstp, inode))
+@@ -2082,6 +2082,10 @@ static struct protection_domain *protection_domain_alloc(unsigned int type)
+ 		mode = PAGE_MODE_NONE;
+ 	} else if (type == IOMMU_DOMAIN_UNMANAGED) {
+ 		pgtable = AMD_IOMMU_V1;
++	} else if (type == IOMMU_DOMAIN_DMA || type == IOMMU_DOMAIN_DMA_FQ) {
++		pgtable = amd_iommu_pgtable;
++	} else {
++		return NULL;
+ 	}
+ 
+ 	switch (pgtable) {
 -- 
 2.39.2
 
