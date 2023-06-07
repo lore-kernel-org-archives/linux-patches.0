@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B468519E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:41:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9C4C4339C;
-	Wed,  7 Jun 2023 20:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7B819E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:41:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81AFC433EF;
+	Wed,  7 Jun 2023 20:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170508;
-	bh=1dT7wFJkBWARaM4TgchDygUGMMDM7LjG4SIsDJ+dEPY=;
+	s=korg; t=1686170511;
+	bh=SXQRpUtWaCZ8tdochUCOdSyqtIgxYhXwTpkO7BzSWW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/RxvD8aBLEZ3Un8EOpz8SZwBVTIdeSR5vt+ImhS45D6xav3eh3kPsEE/GD1ypLcD
-	 D6SaIZjyWlPcRCZ1lOqvGwaW27PsRib50FXR9p6OEai1ssN9CONuw81L3TaSnKv7av
-	 mzpY5K0obZ4W9BgnHuKOBQ5Dg6jd07NNDyupSKvI=
+	b=LMIzFvwJ6gwbz2HWsVDlTDqFzkgPayqxKnKZvI4uV1s+jtHp0MrEoTROqpm4IOScG
+	 d1S2QfAAe86Hir+56XfnCWX7PILOtPBGCK7RZCqMKvJ2G3oYQXs4n8qCFWXvWKNZ9s
+	 ChXkHYfl2szHLQa5OMf3fswAFCeChITZ0yJGm5ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rub=C3=A9n=20G=C3=B3mez=20Agudo?= <mrgommer@proton.me>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yun Lu <luyun@kylinos.cn>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/225] ACPI: resource: Add IRQ override quirk for LG UltraPC 17U70P
-Date: Wed,  7 Jun 2023 22:15:04 +0200
-Message-ID: <20230607200918.008117183@linuxfoundation.org>
+Subject: [PATCH 6.1 112/225] wifi: rtl8xxxu: fix authentication timeout due to incorrect RCR value
+Date: Wed,  7 Jun 2023 22:15:05 +0200
+Message-ID: <20230607200918.039234620@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,53 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rubén Gómez <mrgommer@proton.me>
+From: Yun Lu <luyun@kylinos.cn>
 
-[ Upstream commit 71a485624c4cbb144169852d7bb8ca8c0667d7a3 ]
+[ Upstream commit 20429444e653ee8242dfbf815c0c37866beb371b ]
 
-Add an ACPI IRQ override quirk for LG UltraPC 17U70P to address the
-internal keyboard problem on it.
+When using rtl8192cu with rtl8xxxu driver to connect wifi, there is a
+probability of failure, which shows "authentication with ... timed out".
+Through debugging, it was found that the RCR register has been inexplicably
+modified to an incorrect value, resulting in the nic not being able to
+receive authenticated frames.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=213031
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216983
-Signed-off-by: Rubén Gómez Agudo <mrgommer@proton.me>
-[ rjw: Subject, changelog, white space damage fixes ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+To fix this problem, add regrcr in rtl8xxxu_priv struct, and store
+the RCR value every time the register is written, and use it the next
+time the register need to be modified.
+
+Signed-off-by: Yun Lu <luyun@kylinos.cn>
+Link: https://lore.kernel.org/all/20230427020512.1221062-1-luyun_611@163.com
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230512012055.2990472-1-luyun_611@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h      | 1 +
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index d08818baea88f..a7f12bdbc5e25 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -502,6 +502,17 @@ static const struct dmi_system_id maingear_laptop[] = {
- 	{ }
- };
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
+index 1ba66b8f70c95..cda3b802e89dd 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
+@@ -1346,6 +1346,7 @@ struct rtl8xxxu_priv {
+ 	u32 rege9c;
+ 	u32 regeb4;
+ 	u32 regebc;
++	u32 regrcr;
+ 	int next_mbox;
+ 	int nr_out_eps;
  
-+static const struct dmi_system_id lg_laptop[] = {
-+	{
-+		.ident = "LG Electronics 17U70P",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LG Electronics"),
-+			DMI_MATCH(DMI_BOARD_NAME, "17U70P"),
-+		},
-+	},
-+	{ }
-+};
-+
- struct irq_override_cmp {
- 	const struct dmi_system_id *system;
- 	unsigned char irq;
-@@ -518,6 +529,7 @@ static const struct irq_override_cmp override_table[] = {
- 	{ lenovo_laptop, 10, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
- 	{ tongfang_gm_rg, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
- 	{ maingear_laptop, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
-+	{ lg_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
- };
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 95c0150f23569..3a9fa3ff37acc 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -4049,6 +4049,7 @@ static int rtl8xxxu_init_device(struct ieee80211_hw *hw)
+ 		RCR_ACCEPT_MGMT_FRAME | RCR_HTC_LOC_CTRL |
+ 		RCR_APPEND_PHYSTAT | RCR_APPEND_ICV | RCR_APPEND_MIC;
+ 	rtl8xxxu_write32(priv, REG_RCR, val32);
++	priv->regrcr = val32;
  
- static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
+ 	/*
+ 	 * Accept all multicast
+@@ -6058,7 +6059,7 @@ static void rtl8xxxu_configure_filter(struct ieee80211_hw *hw,
+ 				      unsigned int *total_flags, u64 multicast)
+ {
+ 	struct rtl8xxxu_priv *priv = hw->priv;
+-	u32 rcr = rtl8xxxu_read32(priv, REG_RCR);
++	u32 rcr = priv->regrcr;
+ 
+ 	dev_dbg(&priv->udev->dev, "%s: changed_flags %08x, total_flags %08x\n",
+ 		__func__, changed_flags, *total_flags);
+@@ -6104,6 +6105,7 @@ static void rtl8xxxu_configure_filter(struct ieee80211_hw *hw,
+ 	 */
+ 
+ 	rtl8xxxu_write32(priv, REG_RCR, rcr);
++	priv->regrcr = rcr;
+ 
+ 	*total_flags &= (FIF_ALLMULTI | FIF_FCSFAIL | FIF_BCN_PRBRESP_PROMISC |
+ 			 FIF_CONTROL | FIF_OTHER_BSS | FIF_PSPOLL |
 -- 
 2.39.2
 
