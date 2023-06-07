@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F4523D6A
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:55:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992E4C433D2;
-	Wed,  7 Jun 2023 20:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E0F23D6A
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:55:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABFCC433D2;
+	Wed,  7 Jun 2023 20:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171322;
-	bh=jQ2SRfdaLHEDz9/dvzphaiak2Xs0Yu6lZfQaTT2Vups=;
+	s=korg; t=1686171324;
+	bh=J92I1Rpa/XIIuWb20FswoRSwV78PGXMHdssyvYx2n6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYrICApSMNgbetNKfzwPzBcdbNvFkWJPaN3MdnmTTKj+Gay4nctUa0XsX26+lqfQB
-	 mucCWn4w9ByvDXP0LePbHG8RxKSj+na+NRSVEWjW0snpbklxZc13MTdmDCZH7bOBg7
-	 QWXXFnKAoG7EY/FaeNqaFzB/SwDF5JsJ9Si+2q/g=
+	b=G1HNPAtm/E1f14PTlsYwcWD51xiVdvgZZTpyrPPIjuLFaIdh9jXW7pvIamxbF2PyM
+	 s+Zw5qGMQxw/zN8ChlfQ4SxMVh41301G15pHGyHlbTBeP6ffN7tnryy6R+MLbrpJvU
+	 EkYZ4NoCiAcfWtx0LaVvb8z8Haw+owH9iCpGbov4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jason Yan <yanaijie@huawei.com>
-Subject: [PATCH 5.4 72/99] ata: libata-scsi: Use correct device no in ata_find_dev()
-Date: Wed,  7 Jun 2023 22:17:04 +0200
-Message-ID: <20230607200902.487002571@linuxfoundation.org>
+	Wei Chen <harperchen1110@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 45/99] media: netup_unidvb: fix irq init by register it at the end of probe
+Date: Wed,  7 Jun 2023 22:16:37 +0200
+Message-ID: <20230607200901.662714077@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -35,96 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Wei Chen <harperchen1110@gmail.com>
 
-commit 7f875850f20a42f488840c9df7af91ef7db2d576 upstream.
+[ Upstream commit e6ad6233592593079db5c8fa592c298e51bc1356 ]
 
-For devices not attached to a port multiplier and managed directly by
-libata, the device number passed to ata_find_dev() must always be lower
-than the maximum number of devices returned by ata_link_max_devices().
-That is 1 for SATA devices or 2 for an IDE link with master+slave
-devices. This device number is the SCSI device ID which matches these
-constraints as the IDs are generated per port and so never exceed the
-maximum number of devices for the link being used.
+IRQ handler netup_spi_interrupt() takes spinlock spi->lock. The lock
+is initialized in netup_spi_init(). However, irq handler is registered
+before initializing the lock.
 
-However, for libsas managed devices, SCSI device IDs are assigned per
-struct scsi_host, leading to device IDs for SATA devices that can be
-well in excess of libata per-link maximum number of devices. This
-results in ata_find_dev() to always return NULL for libsas managed
-devices except for the first device of the target scsi_host with ID
-(device number) equal to 0. This issue is visible by executing the
-hdparm utility, which fails. E.g.:
+Spinlock dma->lock and i2c->lock suffer from the same problem.
 
-hdparm -i /dev/sdX
-/dev/sdX:
-  HDIO_GET_IDENTITY failed: No message of desired type
+Fix this by registering the irq at the end of probe.
 
-Fix this by rewriting ata_find_dev() to ignore the device number for
-non-PMP attached devices with a link with at most 1 device, that is SATA
-devices. For these, the device number 0 is always used to
-return the correct pointer to the struct ata_device of the port link.
-This change excludes IDE master/slave setups (maximum number of devices
-per link is 2) and port-multiplier attached devices. Also, to be
-consistant with the fact that SCSI device IDs and channel numbers used
-as device numbers are both unsigned int, change the devno argument of
-ata_find_dev() to unsigned int.
-
-Reported-by: Xingui Yang <yangxingui@huawei.com>
-Fixes: 41bda9c98035 ("libata-link: update hotplug to handle PMP links")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-media/20230315134518.1074497-1-harperchen1110@gmail.com
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c |   34 ++++++++++++++++++++++++++--------
- 1 file changed, 26 insertions(+), 8 deletions(-)
+ .../media/pci/netup_unidvb/netup_unidvb_core.c  | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -3036,18 +3036,36 @@ static unsigned int atapi_xlat(struct at
- 	return 0;
- }
- 
--static struct ata_device *ata_find_dev(struct ata_port *ap, int devno)
-+static struct ata_device *ata_find_dev(struct ata_port *ap, unsigned int devno)
- {
--	if (!sata_pmp_attached(ap)) {
--		if (likely(devno >= 0 &&
--			   devno < ata_link_max_devices(&ap->link)))
-+	/*
-+	 * For the non-PMP case, ata_link_max_devices() returns 1 (SATA case),
-+	 * or 2 (IDE master + slave case). However, the former case includes
-+	 * libsas hosted devices which are numbered per scsi host, leading
-+	 * to devno potentially being larger than 0 but with each struct
-+	 * ata_device having its own struct ata_port and struct ata_link.
-+	 * To accommodate these, ignore devno and always use device number 0.
-+	 */
-+	if (likely(!sata_pmp_attached(ap))) {
-+		int link_max_devices = ata_link_max_devices(&ap->link);
+diff --git a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+index 129acf595410d..478247e13637e 100644
+--- a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
++++ b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+@@ -887,12 +887,7 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
+ 		ndev->lmmio0, (u32)pci_resource_len(pci_dev, 0),
+ 		ndev->lmmio1, (u32)pci_resource_len(pci_dev, 1),
+ 		pci_dev->irq);
+-	if (request_irq(pci_dev->irq, netup_unidvb_isr, IRQF_SHARED,
+-			"netup_unidvb", pci_dev) < 0) {
+-		dev_err(&pci_dev->dev,
+-			"%s(): can't get IRQ %d\n", __func__, pci_dev->irq);
+-		goto irq_request_err;
+-	}
 +
-+		if (link_max_devices == 1)
-+			return &ap->link.device[0];
-+
-+		if (devno < link_max_devices)
- 			return &ap->link.device[devno];
--	} else {
--		if (likely(devno >= 0 &&
--			   devno < ap->nr_pmp_links))
--			return &ap->pmp_link[devno].device[0];
-+
-+		return NULL;
+ 	ndev->dma_size = 2 * 188 *
+ 		NETUP_DMA_BLOCKS_COUNT * NETUP_DMA_PACKETS_COUNT;
+ 	ndev->dma_virt = dma_alloc_coherent(&pci_dev->dev,
+@@ -933,6 +928,14 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
+ 		dev_err(&pci_dev->dev, "netup_unidvb: DMA setup failed\n");
+ 		goto dma_setup_err;
  	}
- 
-+	/*
-+	 * For PMP-attached devices, the device number corresponds to C
-+	 * (channel) of SCSI [H:C:I:L], indicating the port pmp link
-+	 * for the device.
-+	 */
-+	if (devno < ap->nr_pmp_links)
-+		return &ap->pmp_link[devno].device[0];
 +
- 	return NULL;
- }
- 
++	if (request_irq(pci_dev->irq, netup_unidvb_isr, IRQF_SHARED,
++			"netup_unidvb", pci_dev) < 0) {
++		dev_err(&pci_dev->dev,
++			"%s(): can't get IRQ %d\n", __func__, pci_dev->irq);
++		goto dma_setup_err;
++	}
++
+ 	dev_info(&pci_dev->dev,
+ 		"netup_unidvb: device has been initialized\n");
+ 	return 0;
+@@ -951,8 +954,6 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
+ 	dma_free_coherent(&pci_dev->dev, ndev->dma_size,
+ 			ndev->dma_virt, ndev->dma_phys);
+ dma_alloc_err:
+-	free_irq(pci_dev->irq, pci_dev);
+-irq_request_err:
+ 	iounmap(ndev->lmmio1);
+ pci_bar1_error:
+ 	iounmap(ndev->lmmio0);
+-- 
+2.39.2
+
 
 
