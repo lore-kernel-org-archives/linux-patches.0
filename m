@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D79F19E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:36:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DD9C433EF;
-	Wed,  7 Jun 2023 20:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B447419E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:36:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38276C433EF;
+	Wed,  7 Jun 2023 20:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170183;
-	bh=6gnuX+36rESmbE76q5z0b3ZbXeU+lnG8X+gszrsdztw=;
+	s=korg; t=1686170185;
+	bh=gaIF6HVHoZMppC3ESfbj9bGDzS5MIjuoCPWqnkgNDtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qcJxjYtk8+3tbIlAZkfZkvVdTWvhYaAKFOAYQYP8Cta0JgYCSTrIB6EkQKmb2qJER
-	 l3xEK5WUA+OchcscMBb2fe1dOoilcPFRpJg9LwOcPQpXK3CwPHJ+ErYoI4poP9wZjb
-	 WcFNqA62hHJnkQceAIx3+ns1Jx5qhAA1nyse2DZw=
+	b=n7FOJb9YiOjPcEKqxMAShO8fE2updqIW79+FqSIJaglN64huxZNiSI9Nkv5bT/fAs
+	 lIHb0pzOZagZX1Hs0zvsZOkhU/oPy1KG9U1JU+EqsJzcLFih7+t98HKnkK3j4BBQIS
+	 HlqE0WED2d6Pyl/6HH9f11nd11N/gI54LanEMwKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalle Valo <kvalo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 76/88] wifi: rtlwifi: remove always-true condition pointed out by GCC 12
-Date: Wed,  7 Jun 2023 22:16:33 +0200
-Message-ID: <20230607200901.608133037@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <natechancellor@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 4.19 77/88] hwmon: (scmi) Remove redundant pointer check
+Date: Wed,  7 Jun 2023 22:16:34 +0200
+Message-ID: <20230607200901.638070403@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -34,37 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Nathan Chancellor <natechancellor@gmail.com>
 
-commit ee3db469dd317e82f57b13aa3bc61be5cb60c2b4 upstream.
+commit a31796c30e423f58d266df30a9bbf321fc071b30 upstream.
 
-The .value is a two-dim array, not a pointer.
+Clang warns when the address of a pointer is used in a boolean context
+as it will always return true.
 
-struct iqk_matrix_regs {
-	bool iqk_done;
-        long value[1][IQK_MATRIX_REG_NUM];
-};
+drivers/hwmon/scmi-hwmon.c:59:24: warning: address of array
+'sensor->name' will always evaluate to 'true'
+[-Wpointer-bool-conversion]
+        if (sensor && sensor->name)
+                   ~~ ~~~~~~~~^~~~
+1 warning generated.
 
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Remove the check as it isn't doing anything currently; if validation
+of the contents of the data structure was intended by the original
+author (since this line has been present from the first version of
+this driver), it can be added in a follow-up patch.
+
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/hwmon/scmi-hwmon.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-@@ -2414,10 +2414,7 @@ void rtl92d_phy_reload_iqk_setting(struc
- 			RT_TRACE(rtlpriv, COMP_SCAN, DBG_LOUD,
- 				 "Just Read IQK Matrix reg for channel:%d....\n",
- 				 channel);
--			if ((rtlphy->iqk_matrix[indexforchannel].
--			     value[0] != NULL)
--				/*&&(regea4 != 0) */)
--				_rtl92d_phy_patha_fill_iqk_matrix(hw, true,
-+			_rtl92d_phy_patha_fill_iqk_matrix(hw, true,
- 					rtlphy->iqk_matrix[
- 					indexforchannel].value,	0,
- 					(rtlphy->iqk_matrix[
+--- a/drivers/hwmon/scmi-hwmon.c
++++ b/drivers/hwmon/scmi-hwmon.c
+@@ -56,7 +56,7 @@ scmi_hwmon_is_visible(const void *drvdat
+ 	const struct scmi_sensors *scmi_sensors = drvdata;
+ 
+ 	sensor = *(scmi_sensors->info[type] + channel);
+-	if (sensor && sensor->name)
++	if (sensor)
+ 		return S_IRUGO;
+ 
+ 	return 0;
 
 
