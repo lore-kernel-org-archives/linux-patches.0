@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025AD3925D
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:25:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764DBC433EF;
-	Wed,  7 Jun 2023 20:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF9D3AE43
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:25:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BF4C433D2;
+	Wed,  7 Jun 2023 20:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169540;
-	bh=wQH+bHDKIaIv8BJZfoN3z8fGy9rKt8U+rcC4iVrJx0Q=;
+	s=korg; t=1686169543;
+	bh=ps677ttjb7Czy2fVFQJOKMEN3a3IKVMPOKNX6OlBfQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H1jAq3BXsbAJd4HtNXVYGa8hhVcTL2oYldyIiFIIoK8skxwuof7tuqdIRxslz4HwF
-	 lqdy8D/il/pqH6WhDbTOtXTXcDsywpuWrl3tyIkvzpBSxo10tsMySneB4DO//GPI4B
-	 UQ0Fu/Nn0CltdBnTtpP3XVbP65QTEdBBJ8T+7Ds0=
+	b=riMDau56htAxiHvtouZAYdbfh/LDxglQ7N31sk1ZREqwSq1n7a3PimL9yp/qXjoWD
+	 zsGed2pkD9pCw0Micn9Lzy3lgnyUtZgDnMM1wdx2pKNDBFfNj76Vj6bze0hYDF3n3c
+	 hVH8ViR6FcqgLfW3soi/ZrH11yWu4YA94yF/l+YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Richard Weinberger <richard@nod.at>,
+	Benedict Wong <benedictwong@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 119/286] um: harddog: fix modular build
-Date: Wed,  7 Jun 2023 22:13:38 +0200
-Message-ID: <20230607200926.970560862@linuxfoundation.org>
+Subject: [PATCH 6.3 120/286] xfrm: Check if_id in inbound policy/secpath match
+Date: Wed,  7 Jun 2023 22:13:39 +0200
+Message-ID: <20230607200927.002511993@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,132 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Benedict Wong <benedictwong@google.com>
 
-[ Upstream commit 73a23d7710331a530e972903318528b75e5a5f58 ]
+[ Upstream commit 8680407b6f8f5fba59e8f1d63c869abc280f04df ]
 
-Since we no longer (want to) export any libc symbols the
-_user portions of any drivers need to be built into image
-rather than the module. I missed this for the watchdog.
-Fix the watchdog accordingly.
+This change ensures that if configured in the policy, the if_id set in
+the policy and secpath states match during the inbound policy check.
+Without this, there is potential for ambiguity where entries in the
+secpath differing by only the if_id could be mismatched.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Notably, this is checked in the outbound direction when resolving
+templates to SAs, but not on the inbound path when matching SAs and
+policies.
+
+Test: Tested against Android kernel unit tests & CTS
+Signed-off-by: Benedict Wong <benedictwong@google.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/Makefile           | 4 +++-
- arch/um/drivers/harddog.h          | 9 +++++++++
- arch/um/drivers/harddog_kern.c     | 7 +------
- arch/um/drivers/harddog_user.c     | 1 +
- arch/um/drivers/harddog_user_exp.c | 9 +++++++++
- 5 files changed, 23 insertions(+), 7 deletions(-)
- create mode 100644 arch/um/drivers/harddog.h
- create mode 100644 arch/um/drivers/harddog_user_exp.c
+ net/xfrm/xfrm_policy.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/arch/um/drivers/Makefile b/arch/um/drivers/Makefile
-index dee6f66353b33..a461a950f0518 100644
---- a/arch/um/drivers/Makefile
-+++ b/arch/um/drivers/Makefile
-@@ -16,7 +16,8 @@ mconsole-objs := mconsole_kern.o mconsole_user.o
- hostaudio-objs := hostaudio_kern.o
- ubd-objs := ubd_kern.o ubd_user.o
- port-objs := port_kern.o port_user.o
--harddog-objs := harddog_kern.o harddog_user.o
-+harddog-objs := harddog_kern.o
-+harddog-builtin-$(CONFIG_UML_WATCHDOG) := harddog_user.o harddog_user_exp.o
- rtc-objs := rtc_kern.o rtc_user.o
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 21a3a1cd3d6de..6d15788b51231 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -3312,7 +3312,7 @@ xfrm_secpath_reject(int idx, struct sk_buff *skb, const struct flowi *fl)
  
- LDFLAGS_pcap.o = $(shell $(CC) $(KBUILD_CFLAGS) -print-file-name=libpcap.a)
-@@ -60,6 +61,7 @@ obj-$(CONFIG_PTY_CHAN) += pty.o
- obj-$(CONFIG_TTY_CHAN) += tty.o 
- obj-$(CONFIG_XTERM_CHAN) += xterm.o xterm_kern.o
- obj-$(CONFIG_UML_WATCHDOG) += harddog.o
-+obj-y += $(harddog-builtin-y) $(harddog-builtin-m)
- obj-$(CONFIG_BLK_DEV_COW_COMMON) += cow_user.o
- obj-$(CONFIG_UML_RANDOM) += random.o
- obj-$(CONFIG_VIRTIO_UML) += virtio_uml.o
-diff --git a/arch/um/drivers/harddog.h b/arch/um/drivers/harddog.h
-new file mode 100644
-index 0000000000000..6d9ea60e7133e
---- /dev/null
-+++ b/arch/um/drivers/harddog.h
-@@ -0,0 +1,9 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef UM_WATCHDOG_H
-+#define UM_WATCHDOG_H
-+
-+int start_watchdog(int *in_fd_ret, int *out_fd_ret, char *sock);
-+void stop_watchdog(int in_fd, int out_fd);
-+int ping_watchdog(int fd);
-+
-+#endif /* UM_WATCHDOG_H */
-diff --git a/arch/um/drivers/harddog_kern.c b/arch/um/drivers/harddog_kern.c
-index e6d4f43deba82..60d1c6cab8a95 100644
---- a/arch/um/drivers/harddog_kern.c
-+++ b/arch/um/drivers/harddog_kern.c
-@@ -47,6 +47,7 @@
- #include <linux/spinlock.h>
- #include <linux/uaccess.h>
- #include "mconsole.h"
-+#include "harddog.h"
+ static inline int
+ xfrm_state_ok(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x,
+-	      unsigned short family)
++	      unsigned short family, u32 if_id)
+ {
+ 	if (xfrm_state_kern(x))
+ 		return tmpl->optional && !xfrm_state_addr_cmp(tmpl, x, tmpl->encap_family);
+@@ -3323,7 +3323,8 @@ xfrm_state_ok(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x,
+ 		(tmpl->allalgs || (tmpl->aalgos & (1<<x->props.aalgo)) ||
+ 		 !(xfrm_id_proto_match(tmpl->id.proto, IPSEC_PROTO_ANY))) &&
+ 		!(x->props.mode != XFRM_MODE_TRANSPORT &&
+-		  xfrm_state_addr_cmp(tmpl, x, family));
++		  xfrm_state_addr_cmp(tmpl, x, family)) &&
++		(if_id == 0 || if_id == x->if_id);
+ }
  
- MODULE_LICENSE("GPL");
- 
-@@ -60,8 +61,6 @@ static int harddog_out_fd = -1;
-  *	Allow only one person to hold it open
+ /*
+@@ -3335,7 +3336,7 @@ xfrm_state_ok(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x,
   */
- 
--extern int start_watchdog(int *in_fd_ret, int *out_fd_ret, char *sock);
--
- static int harddog_open(struct inode *inode, struct file *file)
+ static inline int
+ xfrm_policy_ok(const struct xfrm_tmpl *tmpl, const struct sec_path *sp, int start,
+-	       unsigned short family)
++	       unsigned short family, u32 if_id)
  {
- 	int err = -EBUSY;
-@@ -92,8 +91,6 @@ static int harddog_open(struct inode *inode, struct file *file)
- 	return err;
- }
+ 	int idx = start;
  
--extern void stop_watchdog(int in_fd, int out_fd);
--
- static int harddog_release(struct inode *inode, struct file *file)
- {
- 	/*
-@@ -112,8 +109,6 @@ static int harddog_release(struct inode *inode, struct file *file)
- 	return 0;
- }
- 
--extern int ping_watchdog(int fd);
--
- static ssize_t harddog_write(struct file *file, const char __user *data, size_t len,
- 			     loff_t *ppos)
- {
-diff --git a/arch/um/drivers/harddog_user.c b/arch/um/drivers/harddog_user.c
-index 070468d22e394..9ed89304975ed 100644
---- a/arch/um/drivers/harddog_user.c
-+++ b/arch/um/drivers/harddog_user.c
-@@ -7,6 +7,7 @@
- #include <unistd.h>
- #include <errno.h>
- #include <os.h>
-+#include "harddog.h"
- 
- struct dog_data {
- 	int stdin_fd;
-diff --git a/arch/um/drivers/harddog_user_exp.c b/arch/um/drivers/harddog_user_exp.c
-new file mode 100644
-index 0000000000000..c74d4b815d143
---- /dev/null
-+++ b/arch/um/drivers/harddog_user_exp.c
-@@ -0,0 +1,9 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include <linux/export.h>
-+#include "harddog.h"
-+
-+#if IS_MODULE(CONFIG_UML_WATCHDOG)
-+EXPORT_SYMBOL(start_watchdog);
-+EXPORT_SYMBOL(stop_watchdog);
-+EXPORT_SYMBOL(ping_watchdog);
-+#endif
+@@ -3345,7 +3346,7 @@ xfrm_policy_ok(const struct xfrm_tmpl *tmpl, const struct sec_path *sp, int star
+ 	} else
+ 		start = -1;
+ 	for (; idx < sp->len; idx++) {
+-		if (xfrm_state_ok(tmpl, sp->xvec[idx], family))
++		if (xfrm_state_ok(tmpl, sp->xvec[idx], family, if_id))
+ 			return ++idx;
+ 		if (sp->xvec[idx]->props.mode != XFRM_MODE_TRANSPORT) {
+ 			if (start == -1)
+@@ -3724,7 +3725,7 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 		 * are implied between each two transformations.
+ 		 */
+ 		for (i = xfrm_nr-1, k = 0; i >= 0; i--) {
+-			k = xfrm_policy_ok(tpp[i], sp, k, family);
++			k = xfrm_policy_ok(tpp[i], sp, k, family, if_id);
+ 			if (k < 0) {
+ 				if (k < -1)
+ 					/* "-2 - errored_index" returned */
 -- 
 2.39.2
 
