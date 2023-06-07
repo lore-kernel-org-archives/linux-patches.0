@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D4619BCD
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:42:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4C6C4339B;
-	Wed,  7 Jun 2023 20:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221E319BCD
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:42:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9922BC433EF;
+	Wed,  7 Jun 2023 20:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170532;
-	bh=r/6fecBU06f8kGCswx/Qa+Cl/y1woDWpYc+7gapLdcs=;
+	s=korg; t=1686170535;
+	bh=grmV5ECNjfhpFqaQa+XnCtRocR2jGhVqdQsXK4lL7gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ll4STsB4n9fcYL4hqyDSqcFBhyMR4bCoivFCGbI70cbVsMBuggYjfJAtXz1LpGc3e
-	 05mQ1HdQ0DiTe98kjBzoS1WlAD6xgOTte3Ck/Lf0VZsp/6RofejeF9Y5Ku7cVug2Cx
-	 rq1szb1jzOy3yXA7/onuyDsZ2d+4ObmuD8zcbxww=
+	b=RnrKWcDfYIUNoug505EpxPIPDQWSVKU5pR3y3h6UsoaRyTIfedurCGLf+sK+5Cp4Z
+	 3xvwmoaeeHVUCfjHF+0prhMbMpInD8UAXI6Ty3IpXhZ71DUhZGOuD4Av91ei4Vtz7K
+	 Qo8z9gWIYrWeaa6PUVr6Kw+dxSEn0p7atPSUkaVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wei Chen <harperchen1110@gmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/225] media: dvb-usb: az6027: fix three null-ptr-deref in az6027_i2c_xfer()
-Date: Wed,  7 Jun 2023 22:14:44 +0200
-Message-ID: <20230607200917.359727293@linuxfoundation.org>
+Subject: [PATCH 6.1 092/225] media: dvb-usb-v2: ec168: fix null-ptr-deref in ec168_i2c_xfer()
+Date: Wed,  7 Jun 2023 22:14:45 +0200
+Message-ID: <20230607200917.401492794@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -37,59 +37,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 858e97d7956d17a2cb56a9413468704a4d5abfe1 ]
+[ Upstream commit a6dcefcc08eca1bf4e3d213c97c3cfb75f377935 ]
 
-In az6027_i2c_xfer, msg is controlled by user. When msg[i].buf is null,
-commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in
-az6027_i2c_xfer()") fix the null-ptr-deref bug when msg[i].addr is 0x99.
-However, null-ptr-deref also happens when msg[i].addr is 0xd0 and 0xc0.
-We add check on msg[i].len to prevent null-ptr-deref.
+In ec168_i2c_xfer, msg is controlled by user. When msg[i].buf is null
+and msg[i].len is zero, former checks on msg[i].buf would be passed.
+If accessing msg[i].buf[0] without sanity check, null pointer deref
+would happen. We add check on msg[i].len to prevent crash.
 
-Link: https://lore.kernel.org/linux-media/20230310165604.3093483-1-harperchen1110@gmail.com
+Similar commit:
+commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+
+Link: https://lore.kernel.org/linux-media/20230313085853.3252349-1-harperchen1110@gmail.com
 Signed-off-by: Wei Chen <harperchen1110@gmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/az6027.c | 12 ++++++++++++
+ drivers/media/usb/dvb-usb-v2/ec168.c | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
-diff --git a/drivers/media/usb/dvb-usb/az6027.c b/drivers/media/usb/dvb-usb/az6027.c
-index 7d78ee09be5e1..a31c6f82f4e90 100644
---- a/drivers/media/usb/dvb-usb/az6027.c
-+++ b/drivers/media/usb/dvb-usb/az6027.c
-@@ -988,6 +988,10 @@ static int az6027_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int n
- 			/* write/read request */
- 			if (i + 1 < num && (msg[i + 1].flags & I2C_M_RD)) {
- 				req = 0xB9;
+diff --git a/drivers/media/usb/dvb-usb-v2/ec168.c b/drivers/media/usb/dvb-usb-v2/ec168.c
+index 7ed0ab9e429b1..0e4773fc025c9 100644
+--- a/drivers/media/usb/dvb-usb-v2/ec168.c
++++ b/drivers/media/usb/dvb-usb-v2/ec168.c
+@@ -115,6 +115,10 @@ static int ec168_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 	while (i < num) {
+ 		if (num > i + 1 && (msg[i+1].flags & I2C_M_RD)) {
+ 			if (msg[i].addr == ec168_ec100_config.demod_address) {
 +				if (msg[i].len < 1) {
 +					i = -EOPNOTSUPP;
 +					break;
 +				}
- 				index = (((msg[i].buf[0] << 8) & 0xff00) | (msg[i].buf[1] & 0x00ff));
- 				value = msg[i].addr + (msg[i].len << 8);
- 				length = msg[i + 1].len + 6;
-@@ -1001,6 +1005,10 @@ static int az6027_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int n
- 
- 				/* demod 16bit addr */
- 				req = 0xBD;
+ 				req.cmd = READ_DEMOD;
+ 				req.value = 0;
+ 				req.index = 0xff00 + msg[i].buf[0]; /* reg */
+@@ -131,6 +135,10 @@ static int ec168_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			}
+ 		} else {
+ 			if (msg[i].addr == ec168_ec100_config.demod_address) {
 +				if (msg[i].len < 1) {
 +					i = -EOPNOTSUPP;
 +					break;
 +				}
- 				index = (((msg[i].buf[0] << 8) & 0xff00) | (msg[i].buf[1] & 0x00ff));
- 				value = msg[i].addr + (2 << 8);
- 				length = msg[i].len - 2;
-@@ -1026,6 +1034,10 @@ static int az6027_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int n
+ 				req.cmd = WRITE_DEMOD;
+ 				req.value = msg[i].buf[1]; /* val */
+ 				req.index = 0xff00 + msg[i].buf[0]; /* reg */
+@@ -139,6 +147,10 @@ static int ec168_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 				ret = ec168_ctrl_msg(d, &req);
+ 				i += 1;
  			} else {
- 
- 				req = 0xBD;
 +				if (msg[i].len < 1) {
 +					i = -EOPNOTSUPP;
 +					break;
 +				}
- 				index = msg[i].buf[0] & 0x00FF;
- 				value = msg[i].addr + (1 << 8);
- 				length = msg[i].len - 1;
+ 				req.cmd = WRITE_I2C;
+ 				req.value = msg[i].buf[0]; /* val */
+ 				req.index = 0x0100 + msg[i].addr; /* I2C addr */
 -- 
 2.39.2
 
