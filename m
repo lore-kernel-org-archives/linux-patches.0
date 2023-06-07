@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3481319E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE7EC433EF;
-	Wed,  7 Jun 2023 20:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844D919E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005FBC433D2;
+	Wed,  7 Jun 2023 20:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170268;
-	bh=QJ1v6E+J2n4TiuZWj8TF8X3xrvx/vpaVZthwk8v0VEo=;
+	s=korg; t=1686170271;
+	bh=GYqQAJOFnLzXwOUzChV2JbNtYmuiS+DJp8V8hjctYnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VwneQpMB4rYqXgnqJ9gBMaE4x6koxDxKlfK7fqW0qjSzhopqP+GjIh4RlDYnhfUrZ
-	 ww71nHSf7cuplf0nOkmqhgZ5D3XX6PhmF92RHReLJVXnYpYP7/KiMkiSJw+X/kl2Jr
-	 0ABYIoYEdxst0dmyuJp2zfZ5GzN8Ve4HxGIjDoOY=
+	b=pTL/wuyeKqZq88aiKZBz0FDiv0hLp6b/Hs7ddUYr1XPHH+RvZseTZi8piVHvPJt2g
+	 mKd1/C3qcVy8uOCp5Ch2Q1oGd1klXu6z/S131YIFIhCahqC4uGI8h5qDw0IcOYmPcN
+	 SdalkxHmwMYwZ3q8oQ39QnLG6/ni8tmBp2FOFEjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Linkin <dlinkin@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Firas Jahjah <firasj@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/225] net/mlx5e: Dont attach netdev profile while handling internal error
-Date: Wed,  7 Jun 2023 22:13:33 +0200
-Message-ID: <20230607200914.969019076@linuxfoundation.org>
+Subject: [PATCH 6.1 003/225] RDMA/efa: Fix unsupported page sizes in device
+Date: Wed,  7 Jun 2023 22:13:16 +0200
+Message-ID: <20230607200913.455731891@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,104 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmytro Linkin <dlinkin@nvidia.com>
+From: Yonatan Nachum <ynachum@amazon.com>
 
-[ Upstream commit bdf274750fca17b289404ef03453c4070725302c ]
+[ Upstream commit 866422cdddcdf59d8c68e9472d49ba1be29b5fcf ]
 
-As part of switchdev mode disablement, driver changes port netdevice
-profile from uplink to nic. If this process is triggered by health
-recovery flow (PCI reset, for ex.) profile attach would fail because all
-fw commands aborted when internal error flag is set. As a result, nic
-netdevice profile is not attached and driver fails to rollback to uplink
-profile, which leave driver in broken state and cause crash later.
+Device uses 4KB size blocks for user pages indirect list while the
+driver creates those blocks with the size of PAGE_SIZE of the kernel. On
+kernels with PAGE_SIZE different than 4KB (ARM RHEL), this leads to a
+failure on register MR with indirect list because of the miss
+communication between driver and device.
 
-To handle broken state do netdevice profile initialization only instead
-of full attachment and release mdev resources on driver suspend as
-expected. Actual netdevice attachment is done during driver load.
-
-Fixes: c4d7eb57687f ("net/mxl5e: Add change profile method")
-Signed-off-by: Dmytro Linkin <dlinkin@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
+Link: https://lore.kernel.org/r/20230511115103.13876-1-ynachum@amazon.com
+Reviewed-by: Firas Jahjah <firasj@amazon.com>
+Reviewed-by: Michael Margolin <mrgolin@amazon.com>
+Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_main.c | 35 ++++++++++++++++---
- 1 file changed, 31 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/efa/efa_verbs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 94d010e2d5efd..4e7daa382bc05 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5745,8 +5745,8 @@ void mlx5e_detach_netdev(struct mlx5e_priv *priv)
- }
- 
- static int
--mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
--			    const struct mlx5e_profile *new_profile, void *new_ppriv)
-+mlx5e_netdev_init_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
-+			  const struct mlx5e_profile *new_profile, void *new_ppriv)
+diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+index 31454643f8c54..f9526a4c75b26 100644
+--- a/drivers/infiniband/hw/efa/efa_verbs.c
++++ b/drivers/infiniband/hw/efa/efa_verbs.c
+@@ -1397,7 +1397,7 @@ static int pbl_continuous_initialize(struct efa_dev *dev,
+  */
+ static int pbl_indirect_initialize(struct efa_dev *dev, struct pbl_context *pbl)
  {
- 	struct mlx5e_priv *priv = netdev_priv(netdev);
- 	int err;
-@@ -5762,6 +5762,25 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
- 	err = new_profile->init(priv->mdev, priv->netdev);
- 	if (err)
- 		goto priv_cleanup;
-+
-+	return 0;
-+
-+priv_cleanup:
-+	mlx5e_priv_cleanup(priv);
-+	return err;
-+}
-+
-+static int
-+mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
-+			    const struct mlx5e_profile *new_profile, void *new_ppriv)
-+{
-+	struct mlx5e_priv *priv = netdev_priv(netdev);
-+	int err;
-+
-+	err = mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
-+	if (err)
-+		return err;
-+
- 	err = mlx5e_attach_netdev(priv);
- 	if (err)
- 		goto profile_cleanup;
-@@ -5769,7 +5788,6 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
+-	u32 size_in_pages = DIV_ROUND_UP(pbl->pbl_buf_size_in_bytes, PAGE_SIZE);
++	u32 size_in_pages = DIV_ROUND_UP(pbl->pbl_buf_size_in_bytes, EFA_CHUNK_PAYLOAD_SIZE);
+ 	struct scatterlist *sgl;
+ 	int sg_dma_cnt, err;
  
- profile_cleanup:
- 	new_profile->cleanup(priv);
--priv_cleanup:
- 	mlx5e_priv_cleanup(priv);
- 	return err;
- }
-@@ -5788,6 +5806,12 @@ int mlx5e_netdev_change_profile(struct mlx5e_priv *priv,
- 	priv->profile->cleanup(priv);
- 	mlx5e_priv_cleanup(priv);
- 
-+	if (mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR) {
-+		mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
-+		set_bit(MLX5E_STATE_DESTROYING, &priv->state);
-+		return -EIO;
-+	}
-+
- 	err = mlx5e_netdev_attach_profile(netdev, mdev, new_profile, new_ppriv);
- 	if (err) { /* roll back to original profile */
- 		netdev_warn(netdev, "%s: new profile init failed, %d\n", __func__, err);
-@@ -5847,8 +5871,11 @@ static int mlx5e_suspend(struct auxiliary_device *adev, pm_message_t state)
- 	struct net_device *netdev = priv->netdev;
- 	struct mlx5_core_dev *mdev = priv->mdev;
- 
--	if (!netif_device_present(netdev))
-+	if (!netif_device_present(netdev)) {
-+		if (test_bit(MLX5E_STATE_DESTROYING, &priv->state))
-+			mlx5e_destroy_mdev_resources(mdev);
- 		return -ENODEV;
-+	}
- 
- 	mlx5e_detach_netdev(priv);
- 	mlx5e_destroy_mdev_resources(mdev);
 -- 
 2.39.2
 
