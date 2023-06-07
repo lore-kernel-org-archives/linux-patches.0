@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222BF39234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91406C433EF;
-	Wed,  7 Jun 2023 20:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD5C39234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7D2C433EF;
+	Wed,  7 Jun 2023 20:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169150;
-	bh=sOINqL/SuA3HCGBVDuzc/Sug6GomzrLTGZwcsG3xUtw=;
+	s=korg; t=1686169156;
+	bh=bGn5lIpiL2tV/1jMaY+XQI2cvLI5K19IMBoB4IHg+vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aFLQ0M5l0cN9mvfLXj2MerZ01p8QXuaLzXYCxL+ZCHK8BeCNtwK6+jcsgexvEtksj
-	 M2YzPKQJBLj16Wg8d6n4gdv6t/dtJvdiiY4wqiRxa2PxLQWeD0JQ6wALIIDD4nPNah
-	 ZagrGXbfgzXdam0Tof0f1nIrHczl/EIIHR6rziqY=
+	b=c1Lk9VMC7Ivi8JTvtEW0qQ2qyAI9wh81A9qZpoUtlEBVRSchTaTJKymDT5rk9ZLyx
+	 ntUuEYg50dMb8lQUk4uTCz6KE2INY6vAAW5lNW23juFV2k/RzVpwesOIbfToNRpnwp
+	 n0scoSfy2bW4mdlEyAqh432DRFuBLDibmCCCm02w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Jack Yang <mingliang@linux.alibaba.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Cambda Zhu <cambda@linux.alibaba.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 06/61] af_packet: Fix data-races of pkt_sk(sk)->num.
-Date: Wed,  7 Jun 2023 22:15:20 +0200
-Message-ID: <20230607200837.377327256@linuxfoundation.org>
+Subject: [PATCH 4.14 08/61] tcp: Return user_mss for TCP_MAXSEG in CLOSE/LISTEN state if user_mss set
+Date: Wed,  7 Jun 2023 22:15:22 +0200
+Message-ID: <20230607200838.043556299@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -37,96 +38,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Cambda Zhu <cambda@linux.alibaba.com>
 
-[ Upstream commit 822b5a1c17df7e338b9f05d1cfe5764e37c7f74f ]
+[ Upstream commit 34dfde4ad87b84d21278a7e19d92b5b2c68e6c4d ]
 
-syzkaller found a data race of pkt_sk(sk)->num.
+This patch replaces the tp->mss_cache check in getting TCP_MAXSEG
+with tp->rx_opt.user_mss check for CLOSE/LISTEN sock. Since
+tp->mss_cache is initialized with TCP_MSS_DEFAULT, checking if
+it's zero is probably a bug.
 
-The value is changed under lock_sock() and po->bind_lock, so we
-need READ_ONCE() to access pkt_sk(sk)->num without these locks in
-packet_bind_spkt(), packet_bind(), and sk_diag_fill().
+With this change, getting TCP_MAXSEG before connecting will return
+default MSS normally, and return user_mss if user_mss is set.
 
-Note that WRITE_ONCE() is already added by commit c7d2ef5dd4b0
-("net/packet: annotate accesses to po->bind").
-
-BUG: KCSAN: data-race in packet_bind / packet_do_bind
-
-write (marked) to 0xffff88802ffd1cee of 2 bytes by task 7322 on cpu 0:
- packet_do_bind+0x446/0x640 net/packet/af_packet.c:3236
- packet_bind+0x99/0xe0 net/packet/af_packet.c:3321
- __sys_bind+0x19b/0x1e0 net/socket.c:1803
- __do_sys_bind net/socket.c:1814 [inline]
- __se_sys_bind net/socket.c:1812 [inline]
- __x64_sys_bind+0x40/0x50 net/socket.c:1812
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-read to 0xffff88802ffd1cee of 2 bytes by task 7318 on cpu 1:
- packet_bind+0xbf/0xe0 net/packet/af_packet.c:3322
- __sys_bind+0x19b/0x1e0 net/socket.c:1803
- __do_sys_bind net/socket.c:1814 [inline]
- __se_sys_bind net/socket.c:1812 [inline]
- __x64_sys_bind+0x40/0x50 net/socket.c:1812
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0x0300 -> 0x0000
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 7318 Comm: syz-executor.4 Not tainted 6.3.0-13380-g7fddb5b5300c #4
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 96ec6327144e ("packet: Diag core and basic socket info dumping")
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20230524232934.50950-1-kuniyu@amazon.com
+Reported-by: Jack Yang <mingliang@linux.alibaba.com>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/netdev/CANn89i+3kL9pYtkxkwxwNMzvC_w3LNUum_2=3u+UyLBmGmifHA@mail.gmail.com/#t
+Signed-off-by: Cambda Zhu <cambda@linux.alibaba.com>
+Link: https://lore.kernel.org/netdev/14D45862-36EA-4076-974C-EA67513C92F6@linux.alibaba.com/
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230527040317.68247-1-cambda@linux.alibaba.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 4 ++--
- net/packet/diag.c      | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ net/ipv4/tcp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 2089da69da103..131c347bba56b 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3255,7 +3255,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
- 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
- 	name[sizeof(uaddr->sa_data)] = 0;
- 
--	return packet_do_bind(sk, name, 0, pkt_sk(sk)->num);
-+	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
- }
- 
- static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
-@@ -3273,7 +3273,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
- 		return -EINVAL;
- 
- 	return packet_do_bind(sk, NULL, sll->sll_ifindex,
--			      sll->sll_protocol ? : pkt_sk(sk)->num);
-+			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
- }
- 
- static struct proto packet_proto = {
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index d9f912ad23dfa..ecabf78d29b8e 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -142,7 +142,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb,
- 	rp = nlmsg_data(nlh);
- 	rp->pdiag_family = AF_PACKET;
- 	rp->pdiag_type = sk->sk_type;
--	rp->pdiag_num = ntohs(po->num);
-+	rp->pdiag_num = ntohs(READ_ONCE(po->num));
- 	rp->pdiag_ino = sk_ino;
- 	sock_diag_save_cookie(sk, rp->pdiag_cookie);
- 
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 160ed3e7c24d6..c93aa6542d43b 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3037,7 +3037,8 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
+ 	switch (optname) {
+ 	case TCP_MAXSEG:
+ 		val = tp->mss_cache;
+-		if (!val && ((1 << sk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)))
++		if (tp->rx_opt.user_mss &&
++		    ((1 << sk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)))
+ 			val = tp->rx_opt.user_mss;
+ 		if (tp->repair)
+ 			val = tp->rx_opt.mss_clamp;
 -- 
 2.39.2
 
