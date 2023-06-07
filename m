@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E0334CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9947BC433D2;
-	Wed,  7 Jun 2023 20:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA50E34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5A1C433EF;
+	Wed,  7 Jun 2023 20:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170732;
-	bh=E/dEAXxrfbv8BVxEW/QkPa1yO6paHAzqy4MKjBPtG9c=;
+	s=korg; t=1686170734;
+	bh=KyW23SPaxxxZQ9QR+kv3kXJAouIFXb+u53XAnDBB9LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQYOEbKdbhrXFKZPsEb0iE9H7dmJqgXyp0asP3D0m2cpfZTNiW15yPyJisNm1WURk
-	 0Q4QBPnt2ttTfRLROT+w7+LmNNida9tAXbKHya/WX03PgmrtjOADMEuDiXy5rvJmsQ
-	 lGSDA0gUhpU68fzjNjW7L0e2YL6eaUSLbhGn0lwI=
+	b=yRyPGz0PKk2sX3o/5SXzntkh8c9tDL01kfjkbvzRR0CtAjluhdSfY0TyIvTCJITND
+	 Vk5LalmuagEIeclmzjg05TCHW+RdG9FJgwBIU78ItSO/ZPVIAgTjXGonbPLbN1d4cs
+	 mF/EMyqToTGA1DoROFSxKc+0zWOS6DbSSN+Mt5mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+d4b971e744b1f5439336@syzkaller.appspotmail.com,
+	syzbot+e44749b6ba4d0434cd47@syzkaller.appspotmail.com,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 197/225] ext4: set lockdep subclass for the ea_inode in ext4_xattr_inode_cache_find()
-Date: Wed,  7 Jun 2023 22:16:30 +0200
-Message-ID: <20230607200920.815903523@linuxfoundation.org>
+Subject: [PATCH 6.1 198/225] ext4: disallow ea_inodes with extended attributes
+Date: Wed,  7 Jun 2023 22:16:31 +0200
+Message-ID: <20230607200920.847390207@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -37,32 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Theodore Ts'o <tytso@mit.edu>
 
-commit b928dfdcb27d8fa59917b794cfba53052a2f050f upstream.
+commit 2bc7e7c1a3bc9bd0cbf0f71006f6fe7ef24a00c2 upstream.
 
-If the ea_inode has been pushed out of the inode cache while there is
-still a reference in the mb_cache, the lockdep subclass will not be
-set on the inode, which can lead to some lockdep false positives.
+An ea_inode stores the value of an extended attribute; it can not have
+extended attributes itself, or this will cause recursive nightmares.
+Add a check in ext4_iget() to make sure this is the case.
 
-Fixes: 33d201e0277b ("ext4: fix lockdep warning about recursive inode locking")
 Cc: stable@kernel.org
-Reported-by: syzbot+d4b971e744b1f5439336@syzkaller.appspotmail.com
+Reported-by: syzbot+e44749b6ba4d0434cd47@syzkaller.appspotmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230524034951.779531-3-tytso@mit.edu
+Link: https://lore.kernel.org/r/20230524034951.779531-4-tytso@mit.edu
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1490,6 +1490,7 @@ ext4_xattr_inode_cache_find(struct inode
- 				     EXT4_IGET_EA_INODE);
- 		if (IS_ERR(ea_inode))
- 			goto next_entry;
-+		ext4_xattr_inode_set_class(ea_inode);
- 		if (i_size_read(ea_inode) == value_len &&
- 		    !ext4_xattr_inode_read(ea_inode, ea_data, value_len) &&
- 		    !ext4_xattr_inode_verify_hashes(ea_inode, NULL, ea_data,
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4769,6 +4769,9 @@ static const char *check_igot_inode(stru
+ 	if (flags & EXT4_IGET_EA_INODE) {
+ 		if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
+ 			return "missing EA_INODE flag";
++		if (ext4_test_inode_state(inode, EXT4_STATE_XATTR) ||
++		    EXT4_I(inode)->i_file_acl)
++			return "ea_inode with extended attributes";
+ 	} else {
+ 		if ((EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
+ 			return "unexpected EA_INODE flag";
 
 
