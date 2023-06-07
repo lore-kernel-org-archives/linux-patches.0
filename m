@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED5534CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505C3C433EF;
-	Wed,  7 Jun 2023 20:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A97C34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E265AC433EF;
+	Wed,  7 Jun 2023 20:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170666;
-	bh=5DwqsY8jX3cH76DHY0a72VrqD2LzZ4K6+l06hTIRTzs=;
+	s=korg; t=1686170669;
+	bh=B3HOxQ6SeThlfptbPHq7i7PovKLToKNVPFQGrFGC9rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=av6N8iPZcFdDNWZ2HaG/Ai/I9uRps9xElKfvhI9/1NOWobaxcmhBQM92DaSmi5Pmn
-	 RUdiD9XPICbKrz2N9SJnN0WjZo3sAZkM5yxIO5e6lCkokxgW4esWHnk6K+iikSDTJ9
-	 W8MVEfUMCwO02ucQmtJfzCuXfncZAuzFmsthUk6A=
+	b=y2jKT0IFcAvmWi7NEuiTPNM4EdpNZDTBH9i7TMbj0I2TgV7GJfa2uFgGE0KyipC9p
+	 z512zPT+Et/JxRxGaAYTxc9eHbialLEn5WxW+F9Px8qEXfxw5Hj8pFD+TJE5d4nTzz
+	 lKsv9FWoY+qIoo9FWrpmbiwkxFL9pDMirQbcACEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Kujau <lists@nerdbynature.de>,
-	Juergen Gross <jgross@suse.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Jason Andryuk <jandryuk@gmail.com>
-Subject: [PATCH 6.1 171/225] x86/mtrr: Revert 90b926e68f50 ("x86/pat: Fix pat_x_mtrr_type() for MTRR disabled case")
-Date: Wed,  7 Jun 2023 22:16:04 +0200
-Message-ID: <20230607200919.984425789@linuxfoundation.org>
+	Deren Wu <deren.wu@mediatek.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 172/225] mmc: vub300: fix invalid response handling
+Date: Wed,  7 Jun 2023 22:16:05 +0200
+Message-ID: <20230607200920.016619920@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,48 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Deren Wu <deren.wu@mediatek.com>
 
-commit f9f57da2c2d119dbf109e3f6e1ceab7659294046 upstream.
+commit a99d21cefd351c8aaa20b83a3c942340e5789d45 upstream.
 
-Commit
+We may get an empty response with zero length at the beginning of
+the driver start and get following UBSAN error. Since there is no
+content(SDRT_NONE) for the response, just return and skip the response
+handling to avoid this problem.
 
-  90b926e68f50 ("x86/pat: Fix pat_x_mtrr_type() for MTRR disabled case")
+Test pass : SDIO wifi throughput test with this patch
 
-broke the use case of running Xen dom0 kernels on machines with an
-external disk enclosure attached via USB, see Link tag.
+[  126.980684] UBSAN: array-index-out-of-bounds in drivers/mmc/host/vub300.c:1719:12
+[  126.980709] index -1 is out of range for type 'u32 [4]'
+[  126.980729] CPU: 4 PID: 9 Comm: kworker/u16:0 Tainted: G            E      6.3.0-rc4-mtk-local-202304272142 #1
+[  126.980754] Hardware name: Intel(R) Client Systems NUC8i7BEH/NUC8BEB, BIOS BECFL357.86A.0081.2020.0504.1834 05/04/2020
+[  126.980770] Workqueue: kvub300c vub300_cmndwork_thread [vub300]
+[  126.980833] Call Trace:
+[  126.980845]  <TASK>
+[  126.980860]  dump_stack_lvl+0x48/0x70
+[  126.980895]  dump_stack+0x10/0x20
+[  126.980916]  ubsan_epilogue+0x9/0x40
+[  126.980944]  __ubsan_handle_out_of_bounds+0x70/0x90
+[  126.980979]  vub300_cmndwork_thread+0x58e7/0x5e10 [vub300]
+[  126.981018]  ? _raw_spin_unlock+0x18/0x40
+[  126.981042]  ? finish_task_switch+0x175/0x6f0
+[  126.981070]  ? __switch_to+0x42e/0xda0
+[  126.981089]  ? __switch_to_asm+0x3a/0x80
+[  126.981129]  ? __pfx_vub300_cmndwork_thread+0x10/0x10 [vub300]
+[  126.981174]  ? __kasan_check_read+0x11/0x20
+[  126.981204]  process_one_work+0x7ee/0x13d0
+[  126.981246]  worker_thread+0x53c/0x1240
+[  126.981291]  kthread+0x2b8/0x370
+[  126.981312]  ? __pfx_worker_thread+0x10/0x10
+[  126.981336]  ? __pfx_kthread+0x10/0x10
+[  126.981359]  ret_from_fork+0x29/0x50
+[  126.981400]  </TASK>
 
-What this commit was originally fixing - SEV-SNP guests on Hyper-V - is
-a more specialized situation which has other issues at the moment anyway
-so reverting this now and addressing the issue properly later is the
-prudent thing to do.
-
-So revert it in time for the 6.2 proper release.
-
-  [ bp: Rewrite commit message. ]
-
-Reported-by: Christian Kujau <lists@nerdbynature.de>
-Tested-by: Christian Kujau <lists@nerdbynature.de>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/4fe9541e-4d4c-2b2a-f8c8-2d34a7284930@nerdbynature.de
-Cc: Jason Andryuk <jandryuk@gmail.com>
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/048cd6972c50c33c2e8f81d5228fed928519918b.1683987673.git.deren.wu@mediatek.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pat/memtype.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/mmc/host/vub300.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/mm/pat/memtype.c
-+++ b/arch/x86/mm/pat/memtype.c
-@@ -434,8 +434,7 @@ static unsigned long pat_x_mtrr_type(u64
- 		u8 mtrr_type, uniform;
- 
- 		mtrr_type = mtrr_type_lookup(start, end, &uniform);
--		if (mtrr_type != MTRR_TYPE_WRBACK &&
--		    mtrr_type != MTRR_TYPE_INVALID)
-+		if (mtrr_type != MTRR_TYPE_WRBACK)
- 			return _PAGE_CACHE_MODE_UC_MINUS;
- 
- 		return _PAGE_CACHE_MODE_WB;
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -1715,6 +1715,9 @@ static void construct_request_response(s
+ 	int bytes = 3 & less_cmd;
+ 	int words = less_cmd >> 2;
+ 	u8 *r = vub300->resp.response.command_response;
++
++	if (!resp_len)
++		return;
+ 	if (bytes == 3) {
+ 		cmd->resp[words] = (r[1 + (words << 2)] << 24)
+ 			| (r[2 + (words << 2)] << 16)
 
 
