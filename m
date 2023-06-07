@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C524610FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C91C433EF;
-	Wed,  7 Jun 2023 20:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F84710FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D0CC4339B;
+	Wed,  7 Jun 2023 20:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169734;
-	bh=gSbcBNbOwZfJxOexHtXFEOBQ4Ysueu2dROvycjVgz5s=;
+	s=korg; t=1686169737;
+	bh=ioLBaUkSFaDEfzK+WS5lXFN2Mc3psAgVLYHDH6tAdZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t09u2iIQ4lVEzO9afu/ywSmRqfo+3cxMV40oiyvRsSqRNrrMvEikAARaLB0O1sobq
-	 7YpxUCYtiSq5PG743cKLn9nwsjjcGVADzG6J5P3dApt+fDKKaFKicv3JFeZC+bkzPy
-	 BeiMtKdgq4vL9Rl6dNKs9mgDBz+73jpVahHMZTv8=
+	b=cYhFFuwcZ1B8IJwBy4rzsJ1Q3JjKP6NFD2VYFVwmbzg+SyLsmueR1r0lU9rIdKZLG
+	 ALVhs4ywypCV0kdEvnoDsgerkOmSeN0ZJJ0i7K9bjD8qrPtShq7RPktAgbvhjgh2Kj
+	 x3CPD+YS71ehG1mDmgZnS+RL7w372M1nvmXATIA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Gerald Loacker <gerald.loacker@wolfvision.net>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.3 192/286] iio: tmag5273: Fix runtime PM leak on measurement error
-Date: Wed,  7 Jun 2023 22:14:51 +0200
-Message-ID: <20230607200929.537809289@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 165/286] nvme: do not let the user delete a ctrl before a complete initialization
+Date: Wed,  7 Jun 2023 22:14:24 +0200
+Message-ID: <20230607200928.509777780@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,45 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit 265c82ea8b172129cb6d4eff41af856c3aff6168 upstream.
+[ Upstream commit 2eb94dd56a4a4e3fe286def3e2ba207804a37345 ]
 
-The tmag5273 gets a runtime PM reference before reading a measurement and
-releases it when done. But if the measurement fails the tmag5273_read_raw()
-function exits before releasing the reference.
+If a userspace application performes a "delete_controller" command
+early during the ctrl initialization, the delete operation
+may race against the init code and the kernel will crash.
 
-Make sure that this error path also releases the runtime PM reference.
+nvme nvme5: Connect command failed: host path error
+nvme nvme5: failed to connect queue: 0 ret=880
+PF: supervisor write access in kernel mode
+PF: error_code(0x0002) - not-present page
+ blk_mq_quiesce_queue+0x18/0x90
+ nvme_tcp_delete_ctrl+0x24/0x40 [nvme_tcp]
+ nvme_do_delete_ctrl+0x7f/0x8b [nvme_core]
+ nvme_sysfs_delete.cold+0x8/0xd [nvme_core]
+ kernfs_fop_write_iter+0x124/0x1b0
+ new_sync_write+0xff/0x190
+ vfs_write+0x1ef/0x280
 
-Fixes: 866a1389174b ("iio: magnetometer: add ti tmag5273 driver")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Acked-by: Gerald Loacker <gerald.loacker@wolfvision.net>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20230414013752.498767-1-lars@metafoo.de
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix the crash by checking the NVME_CTRL_STARTED_ONCE bit;
+if it's not set it means that the nvme controller is still
+in the process of getting initialized and the kernel
+will return an -EBUSY error to userspace.
+Set the NVME_CTRL_STARTED_ONCE later in the nvme_start_ctrl()
+function, after the controller start operation is completed.
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/magnetometer/tmag5273.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/magnetometer/tmag5273.c
-+++ b/drivers/iio/magnetometer/tmag5273.c
-@@ -296,12 +296,13 @@ static int tmag5273_read_raw(struct iio_
- 			return ret;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index bdf1601219fc4..c015393beeee8 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3585,6 +3585,9 @@ static ssize_t nvme_sysfs_delete(struct device *dev,
+ {
+ 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
  
- 		ret = tmag5273_get_measure(data, &t, &x, &y, &z, &angle, &magnitude);
--		if (ret)
--			return ret;
- 
- 		pm_runtime_mark_last_busy(data->dev);
- 		pm_runtime_put_autosuspend(data->dev);
- 
-+		if (ret)
-+			return ret;
++	if (!test_bit(NVME_CTRL_STARTED_ONCE, &ctrl->flags))
++		return -EBUSY;
 +
- 		switch (chan->address) {
- 		case TEMPERATURE:
- 			*val = t;
+ 	if (device_remove_file_self(dev, attr))
+ 		nvme_delete_ctrl_sync(ctrl);
+ 	return count;
+@@ -5045,7 +5048,7 @@ void nvme_start_ctrl(struct nvme_ctrl *ctrl)
+ 	 * that were missed. We identify persistent discovery controllers by
+ 	 * checking that they started once before, hence are reconnecting back.
+ 	 */
+-	if (test_and_set_bit(NVME_CTRL_STARTED_ONCE, &ctrl->flags) &&
++	if (test_bit(NVME_CTRL_STARTED_ONCE, &ctrl->flags) &&
+ 	    nvme_discovery_ctrl(ctrl))
+ 		nvme_change_uevent(ctrl, "NVME_EVENT=rediscover");
+ 
+@@ -5056,6 +5059,7 @@ void nvme_start_ctrl(struct nvme_ctrl *ctrl)
+ 	}
+ 
+ 	nvme_change_uevent(ctrl, "NVME_EVENT=connected");
++	set_bit(NVME_CTRL_STARTED_ONCE, &ctrl->flags);
+ }
+ EXPORT_SYMBOL_GPL(nvme_start_ctrl);
+ 
+-- 
+2.39.2
+
 
 
