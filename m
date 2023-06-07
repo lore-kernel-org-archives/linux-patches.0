@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DE910FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:25:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1253EC433EF;
-	Wed,  7 Jun 2023 20:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463EE10FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:25:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFE7C433EF;
+	Wed,  7 Jun 2023 20:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169535;
-	bh=HoD8pfnSJ9bfKM/4PbrabivCPKLDimTR4j8uvKoaaYg=;
+	s=korg; t=1686169538;
+	bh=TgTl3mDlQ6yoJSSu128ki5gVsp6gBpM9OvTuxcF6Iv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glLOybQESyiCjgo9FKoLyUNcnD000SA8ffIACSKEx6eIZIRsU6UGB2B9n/Agzxa7o
-	 ybvcLu9WOsp/mgJ944Ce7qvHltc0/Db3aiBTkhFIsyMQ+RqEVT276xEWPVJLkFbfzM
-	 1nbxL1kC28jyrqsEFvTJJ580QszqA23mIrQNTxIo=
+	b=CMO9R1OCB+VCq10/9BJV6Nu44wAnOgpkvC0620DVNdHtwvLn+wFQ0oIHH41G8G8Z+
+	 O9Xr5hRJkhYyRYwvDYOMuc90jzMdzBZZB+9+Pj2+RQMcIMeyw15V7aPio1IC5adhJD
+	 pVBCUwQmwYk7kyL93A901wMjVD/9dpn3TapIf2IE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Zeng <zenghao@kylinos.cn>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 117/286] cpupower:Fix resource leaks in sysfs_get_enabled()
-Date: Wed,  7 Jun 2023 22:13:36 +0200
-Message-ID: <20230607200926.906855767@linuxfoundation.org>
+Subject: [PATCH 6.3 118/286] ASoC: SOF: amd: Fix NULL pointer crash in acp_sof_ipc_msg_data function
+Date: Wed,  7 Jun 2023 22:13:37 +0200
+Message-ID: <20230607200926.938000734@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,71 +33,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Zeng <zenghao@kylinos.cn>
+From: V sujith kumar Reddy <Vsujithkumar.Reddy@amd.com>
 
-[ Upstream commit e652be0f59d4ba4d5c636b1f7f4dcb73aae049fa ]
+[ Upstream commit 051d71e073614a72ad423d6dacba37a7eeff274d ]
 
-The sysfs_get_enabled() opened file processor not closed,
-may cause a file handle leak.
-Putting error handling and resource cleanup code together
-makes the code easy to maintain and read.
-Removed the unnecessary else if branch from the original
-function, as it should return an error in cases other than '0'.
+Check substream and runtime variables before assigning.
 
-Signed-off-by: Hao Zeng <zenghao@kylinos.cn>
-Suggested-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: V sujith kumar Reddy <Vsujithkumar.Reddy@amd.com
+Link: https://lore.kernel.org/r/20230508070510.6100-1-Vsujithkumar.Reddy@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/lib/powercap.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ sound/soc/sof/amd/acp-ipc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/power/cpupower/lib/powercap.c b/tools/power/cpupower/lib/powercap.c
-index 0ce29ee4c2e46..a7a59c6bacda8 100644
---- a/tools/power/cpupower/lib/powercap.c
-+++ b/tools/power/cpupower/lib/powercap.c
-@@ -40,25 +40,34 @@ static int sysfs_get_enabled(char *path, int *mode)
- {
- 	int fd;
- 	char yes_no;
-+	int ret = 0;
+diff --git a/sound/soc/sof/amd/acp-ipc.c b/sound/soc/sof/amd/acp-ipc.c
+index 4e0c48a361599..749e856dc6011 100644
+--- a/sound/soc/sof/amd/acp-ipc.c
++++ b/sound/soc/sof/amd/acp-ipc.c
+@@ -209,7 +209,12 @@ int acp_sof_ipc_msg_data(struct snd_sof_dev *sdev, struct snd_sof_pcm_stream *sp
+ 		acp_mailbox_read(sdev, offset, p, sz);
+ 	} else {
+ 		struct snd_pcm_substream *substream = sps->substream;
+-		struct acp_dsp_stream *stream = substream->runtime->private_data;
++		struct acp_dsp_stream *stream;
++
++		if (!substream || !substream->runtime)
++			return -ESTRPIPE;
++
++		stream = substream->runtime->private_data;
  
- 	*mode = 0;
- 
- 	fd = open(path, O_RDONLY);
--	if (fd == -1)
--		return -1;
-+	if (fd == -1) {
-+		ret = -1;
-+		goto out;
-+	}
- 
- 	if (read(fd, &yes_no, 1) != 1) {
--		close(fd);
--		return -1;
-+		ret = -1;
-+		goto out_close;
- 	}
- 
- 	if (yes_no == '1') {
- 		*mode = 1;
--		return 0;
-+		goto out_close;
- 	} else if (yes_no == '0') {
--		return 0;
-+		goto out_close;
-+	} else {
-+		ret = -1;
-+		goto out_close;
- 	}
--	return -1;
-+out_close:
-+	close(fd);
-+out:
-+	return ret;
- }
- 
- int powercap_get_enabled(int *mode)
+ 		if (!stream)
+ 			return -ESTRPIPE;
 -- 
 2.39.2
 
