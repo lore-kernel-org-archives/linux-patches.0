@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B33A3AE6E
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A747CC433D2;
-	Wed,  7 Jun 2023 20:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A6F3AE6F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86468C433EF;
+	Wed,  7 Jun 2023 20:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169953;
-	bh=9XwT3biLx+FdTJK6IwXqvyqFMoCgxWtQbf+nxlC6HWo=;
+	s=korg; t=1686169955;
+	bh=LO6yQfyBMAR+ONrUy3F5CovU26WDzNzI0Q4gnRdP3WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjGdMz+2O9g8Pfolkyqm/QrHvGnZ0BcpkJOJdrve0FxyIY/yMdqOJHcSoCikclle1
-	 +kVznvPp3HVWPCDk7zdGUJ/boyq1V2pb4tsZHZocDrL/6b7jMHmcvZGdY26Y6QiV+O
-	 UvF3Kx6fZ12E+eTaqQ+1+7ZXWYvOYIXr8I7ai1J8=
+	b=lwwtpVfB2i3WiJ4MdDOVjZvYMYcewg/0ztaQd22dEksei0yRie9gWRsYkKGFi1meV
+	 3ZrMyNrwxyEIc+0yAqwUg50gUWziVcYAeuy/2TI4s9anaJmBuuYy9Qh03tRxnTMjzq
+	 Ts8cnkZDWeUU3eP5Q1uL1ZIH6S6/P4jPdOmPgI9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cbb68193bdb95af4340a@syzkaller.appspotmail.com,
-	syzbot+62120febbd1ee3c3c860@syzkaller.appspotmail.com,
-	syzbot+edce54daffee36421b4c@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.3 259/286] ext4: add EA_INODE checking to ext4_iget()
-Date: Wed,  7 Jun 2023 22:15:58 +0200
-Message-ID: <20230607200931.773863931@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.3 277/286] ksmbd: fix incorrect AllocationSize set in smb2_get_info
+Date: Wed,  7 Jun 2023 22:16:16 +0200
+Message-ID: <20230607200932.337908324@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,180 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit b3e6bcb94590dea45396b9481e47b809b1be4afa upstream.
+commit 6cc2268f5647cbfde3d4fc2e4ee005070ea3a8d2 upstream.
 
-Add a new flag, EXT4_IGET_EA_INODE which indicates whether the inode
-is expected to have the EA_INODE flag or not.  If the flag is not
-set/clear as expected, then fail the iget() operation and mark the
-file system as corrupted.
+If filesystem support sparse file, ksmbd should return allocated size
+using ->i_blocks instead of stat->size. This fix generic/694 xfstests.
 
-This commit also makes the ext4_iget() always perform the
-is_bad_inode() check even when the inode is already inode cache.  This
-allows us to remove the is_bad_inode() check from the callers of
-ext4_iget() in the ea_inode code.
-
-Reported-by: syzbot+cbb68193bdb95af4340a@syzkaller.appspotmail.com
-Reported-by: syzbot+62120febbd1ee3c3c860@syzkaller.appspotmail.com
-Reported-by: syzbot+edce54daffee36421b4c@syzkaller.appspotmail.com
-Cc: stable@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230524034951.779531-2-tytso@mit.edu
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h  |    3 ++-
- fs/ext4/inode.c |   31 ++++++++++++++++++++++++++-----
- fs/ext4/xattr.c |   36 +++++++-----------------------------
- 3 files changed, 35 insertions(+), 35 deletions(-)
+ fs/ksmbd/smb2pdu.c |   21 +++------------------
+ 1 file changed, 3 insertions(+), 18 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -2992,7 +2992,8 @@ typedef enum {
- 	EXT4_IGET_NORMAL =	0,
- 	EXT4_IGET_SPECIAL =	0x0001, /* OK to iget a system inode */
- 	EXT4_IGET_HANDLE = 	0x0002,	/* Inode # is from a handle */
--	EXT4_IGET_BAD =		0x0004  /* Allow to iget a bad inode */
-+	EXT4_IGET_BAD =		0x0004, /* Allow to iget a bad inode */
-+	EXT4_IGET_EA_INODE =	0x0008	/* Inode should contain an EA value */
- } ext4_iget_flags;
- 
- extern struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4835,6 +4835,21 @@ static inline void ext4_inode_set_iversi
- 		inode_set_iversion_queried(inode, val);
- }
- 
-+static const char *check_igot_inode(struct inode *inode, ext4_iget_flags flags)
-+
-+{
-+	if (flags & EXT4_IGET_EA_INODE) {
-+		if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
-+			return "missing EA_INODE flag";
-+	} else {
-+		if ((EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
-+			return "unexpected EA_INODE flag";
-+	}
-+	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD))
-+		return "unexpected bad inode w/o EXT4_IGET_BAD";
-+	return NULL;
-+}
-+
- struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
- 			  ext4_iget_flags flags, const char *function,
- 			  unsigned int line)
-@@ -4844,6 +4859,7 @@ struct inode *__ext4_iget(struct super_b
- 	struct ext4_inode_info *ei;
- 	struct ext4_super_block *es = EXT4_SB(sb)->s_es;
- 	struct inode *inode;
-+	const char *err_str;
- 	journal_t *journal = EXT4_SB(sb)->s_journal;
- 	long ret;
- 	loff_t size;
-@@ -4871,8 +4887,14 @@ struct inode *__ext4_iget(struct super_b
- 	inode = iget_locked(sb, ino);
- 	if (!inode)
- 		return ERR_PTR(-ENOMEM);
--	if (!(inode->i_state & I_NEW))
-+	if (!(inode->i_state & I_NEW)) {
-+		if ((err_str = check_igot_inode(inode, flags)) != NULL) {
-+			ext4_error_inode(inode, function, line, 0, err_str);
-+			iput(inode);
-+			return ERR_PTR(-EFSCORRUPTED);
-+		}
- 		return inode;
-+	}
- 
- 	ei = EXT4_I(inode);
- 	iloc.bh = NULL;
-@@ -5138,10 +5160,9 @@ struct inode *__ext4_iget(struct super_b
- 	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb))
- 		ext4_error_inode(inode, function, line, 0,
- 				 "casefold flag without casefold feature");
--	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
--		ext4_error_inode(inode, function, line, 0,
--				 "bad inode without EXT4_IGET_BAD flag");
--		ret = -EUCLEAN;
-+	if ((err_str = check_igot_inode(inode, flags)) != NULL) {
-+		ext4_error_inode(inode, function, line, 0, err_str);
-+		ret = -EFSCORRUPTED;
- 		goto bad_inode;
- 	}
- 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -433,7 +433,7 @@ static int ext4_xattr_inode_iget(struct
- 		return -EFSCORRUPTED;
- 	}
- 
--	inode = ext4_iget(parent->i_sb, ea_ino, EXT4_IGET_NORMAL);
-+	inode = ext4_iget(parent->i_sb, ea_ino, EXT4_IGET_EA_INODE);
- 	if (IS_ERR(inode)) {
- 		err = PTR_ERR(inode);
- 		ext4_error(parent->i_sb,
-@@ -441,23 +441,6 @@ static int ext4_xattr_inode_iget(struct
- 			   err);
- 		return err;
- 	}
--
--	if (is_bad_inode(inode)) {
--		ext4_error(parent->i_sb,
--			   "error while reading EA inode %lu is_bad_inode",
--			   ea_ino);
--		err = -EIO;
--		goto error;
--	}
--
--	if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
--		ext4_error(parent->i_sb,
--			   "EA inode %lu does not have EXT4_EA_INODE_FL flag",
--			    ea_ino);
--		err = -EINVAL;
--		goto error;
--	}
--
- 	ext4_xattr_inode_set_class(inode);
- 
- 	/*
-@@ -478,9 +461,6 @@ static int ext4_xattr_inode_iget(struct
- 
- 	*ea_inode = inode;
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -4380,21 +4380,6 @@ static int get_file_basic_info(struct sm
  	return 0;
--error:
--	iput(inode);
--	return err;
  }
  
- /* Remove entry from mbcache when EA inode is getting evicted */
-@@ -1557,11 +1537,10 @@ ext4_xattr_inode_cache_find(struct inode
- 
- 	while (ce) {
- 		ea_inode = ext4_iget(inode->i_sb, ce->e_value,
--				     EXT4_IGET_NORMAL);
--		if (!IS_ERR(ea_inode) &&
--		    !is_bad_inode(ea_inode) &&
--		    (EXT4_I(ea_inode)->i_flags & EXT4_EA_INODE_FL) &&
--		    i_size_read(ea_inode) == value_len &&
-+				     EXT4_IGET_EA_INODE);
-+		if (IS_ERR(ea_inode))
-+			goto next_entry;
-+		if (i_size_read(ea_inode) == value_len &&
- 		    !ext4_xattr_inode_read(ea_inode, ea_data, value_len) &&
- 		    !ext4_xattr_inode_verify_hashes(ea_inode, NULL, ea_data,
- 						    value_len) &&
-@@ -1571,9 +1550,8 @@ ext4_xattr_inode_cache_find(struct inode
- 			kvfree(ea_data);
- 			return ea_inode;
- 		}
+-static unsigned long long get_allocation_size(struct inode *inode,
+-					      struct kstat *stat)
+-{
+-	unsigned long long alloc_size = 0;
 -
--		if (!IS_ERR(ea_inode))
--			iput(ea_inode);
-+		iput(ea_inode);
-+	next_entry:
- 		ce = mb_cache_entry_find_next(ea_inode_cache, ce);
- 	}
- 	kvfree(ea_data);
+-	if (!S_ISDIR(stat->mode)) {
+-		if ((inode->i_blocks << 9) <= stat->size)
+-			alloc_size = stat->size;
+-		else
+-			alloc_size = inode->i_blocks << 9;
+-	}
+-
+-	return alloc_size;
+-}
+-
+ static void get_file_standard_info(struct smb2_query_info_rsp *rsp,
+ 				   struct ksmbd_file *fp, void *rsp_org)
+ {
+@@ -4409,7 +4394,7 @@ static void get_file_standard_info(struc
+ 	sinfo = (struct smb2_file_standard_info *)rsp->Buffer;
+ 	delete_pending = ksmbd_inode_pending_delete(fp);
+ 
+-	sinfo->AllocationSize = cpu_to_le64(get_allocation_size(inode, &stat));
++	sinfo->AllocationSize = cpu_to_le64(inode->i_blocks << 9);
+ 	sinfo->EndOfFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
+ 	sinfo->NumberOfLinks = cpu_to_le32(get_nlink(&stat) - delete_pending);
+ 	sinfo->DeletePending = delete_pending;
+@@ -4474,7 +4459,7 @@ static int get_file_all_info(struct ksmb
+ 	file_info->Attributes = fp->f_ci->m_fattr;
+ 	file_info->Pad1 = 0;
+ 	file_info->AllocationSize =
+-		cpu_to_le64(get_allocation_size(inode, &stat));
++		cpu_to_le64(inode->i_blocks << 9);
+ 	file_info->EndOfFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
+ 	file_info->NumberOfLinks =
+ 			cpu_to_le32(get_nlink(&stat) - delete_pending);
+@@ -4663,7 +4648,7 @@ static int get_file_network_open_info(st
+ 	file_info->ChangeTime = cpu_to_le64(time);
+ 	file_info->Attributes = fp->f_ci->m_fattr;
+ 	file_info->AllocationSize =
+-		cpu_to_le64(get_allocation_size(inode, &stat));
++		cpu_to_le64(inode->i_blocks << 9);
+ 	file_info->EndOfFile = S_ISDIR(stat.mode) ? 0 : cpu_to_le64(stat.size);
+ 	file_info->Reserved = cpu_to_le32(0);
+ 	rsp->OutputBufferLength =
 
 
