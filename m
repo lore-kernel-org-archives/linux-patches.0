@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3AD10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF000C433D2;
-	Wed,  7 Jun 2023 20:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F5D10FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CDEC433EF;
+	Wed,  7 Jun 2023 20:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169593;
-	bh=Ob3qJWVV0UzBiL0Q4d/OmDcvpBKUL55xRXXAWm7zHZg=;
+	s=korg; t=1686169595;
+	bh=mfi9pA8TtpQSlQKzzbalZaPXkKkmtsGD+l1SjdXJ0yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8HIh0YKkqn30DPPW6Sqkgr0Z59+REVGHPN3YZ/gs3Y9NIAvvcsvWmhh/HeTMHGE9
-	 xl4dNSixg4VJndZ5JT2uge/1NruAuYtfEOcHL8g6b5RzMtkR4lqRhIF9OteJjiyT+Q
-	 JJO6AQ6OgF3lzTj91DSALVfMsxFZWmB0UlnGrU7w=
+	b=xDLDxJDZCY7iEhs1J7VeDAXNNM7I0cNmU0mfpsptBDNlCBXTxXa5qspH5DN9viIbm
+	 wUih1rZ6aJblt3PbzXiBJ2wzdukRmQXy+zIE8SoP0PeV7eqHODaO1MwZd9UA0L0qET
+	 n22rWRbESYVnXd5iiHIKBOXy3cN1KLqemtEuWWrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 140/286] media: dvb-core: Fix use-after-free due to race condition at dvb_ca_en50221
-Date: Wed,  7 Jun 2023 22:13:59 +0200
-Message-ID: <20230607200927.658080102@linuxfoundation.org>
+Subject: [PATCH 6.3 141/286] ASoC: SOF: debug: conditionally bump runtime_pm counter on exceptions
+Date: Wed,  7 Jun 2023 22:14:00 +0200
+Message-ID: <20230607200927.689065050@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,126 +33,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 280a8ab81733da8bc442253c700a52c4c0886ffd ]
+[ Upstream commit 3de975862f985f1c9e225a0d13aa3d501373f7c3 ]
 
-If the device node of dvb_ca_en50221 is open() and the
-device is disconnected, a UAF may occur when calling
-close() on the device node.
+When a firmware IPC error happens during a pm_runtime suspend, we
+ignore the error and suspend anyways. However, the code
+unconditionally increases the runtime_pm counter. This results in a
+confusing configuration where the code will suspend, resume but never
+suspend again due to the use of pm_runtime_get_noresume().
 
-The root cause is that wake_up() and wait_event() for
-dvbdev->wait_queue are not implemented.
+The intent of the counter increase was to prevent entry in D3, but if
+that transition to D3 is already started it cannot be stopped. In
+addition, there's no point in that case in trying to prevent anything,
+the firmware error is handled and the next resume will re-initialize
+the firmware completely.
 
-So implement wait_event() function in dvb_ca_en50221_release()
-and add 'remove_mutex' which prevents race condition
-for 'ca->exit'.
+This patch changes the logic to prevent suspend when the device is
+pm_runtime active and has a use_count > 0.
 
-[mchehab: fix a checkpatch warning]
-
-Link: https://lore.kernel.org/linux-media/20221121063308.GA33821@ubuntu
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com
+Link: https://lore.kernel.org/r/20230512103315.8921-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_ca_en50221.c | 37 ++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+ sound/soc/sof/debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
-index b6ca29dfb184a..baf64540dc00a 100644
---- a/drivers/media/dvb-core/dvb_ca_en50221.c
-+++ b/drivers/media/dvb-core/dvb_ca_en50221.c
-@@ -151,6 +151,12 @@ struct dvb_ca_private {
- 
- 	/* mutex serializing ioctls */
- 	struct mutex ioctl_mutex;
-+
-+	/* A mutex used when a device is disconnected */
-+	struct mutex remove_mutex;
-+
-+	/* Whether the device is disconnected */
-+	int exit;
- };
- 
- static void dvb_ca_private_free(struct dvb_ca_private *ca)
-@@ -1711,12 +1717,22 @@ static int dvb_ca_en50221_io_open(struct inode *inode, struct file *file)
- 
- 	dprintk("%s\n", __func__);
- 
--	if (!try_module_get(ca->pub->owner))
-+	mutex_lock(&ca->remove_mutex);
-+
-+	if (ca->exit) {
-+		mutex_unlock(&ca->remove_mutex);
-+		return -ENODEV;
-+	}
-+
-+	if (!try_module_get(ca->pub->owner)) {
-+		mutex_unlock(&ca->remove_mutex);
- 		return -EIO;
-+	}
- 
- 	err = dvb_generic_open(inode, file);
- 	if (err < 0) {
- 		module_put(ca->pub->owner);
-+		mutex_unlock(&ca->remove_mutex);
- 		return err;
+diff --git a/sound/soc/sof/debug.c b/sound/soc/sof/debug.c
+index ade0507328af4..5042312b1b98d 100644
+--- a/sound/soc/sof/debug.c
++++ b/sound/soc/sof/debug.c
+@@ -437,8 +437,8 @@ void snd_sof_handle_fw_exception(struct snd_sof_dev *sdev, const char *msg)
+ 		/* should we prevent DSP entering D3 ? */
+ 		if (!sdev->ipc_dump_printed)
+ 			dev_info(sdev->dev,
+-				 "preventing DSP entering D3 state to preserve context\n");
+-		pm_runtime_get_noresume(sdev->dev);
++				 "Attempting to prevent DSP from entering D3 state to preserve context\n");
++		pm_runtime_get_if_in_use(sdev->dev);
  	}
  
-@@ -1741,6 +1757,7 @@ static int dvb_ca_en50221_io_open(struct inode *inode, struct file *file)
- 
- 	dvb_ca_private_get(ca);
- 
-+	mutex_unlock(&ca->remove_mutex);
- 	return 0;
- }
- 
-@@ -1760,6 +1777,8 @@ static int dvb_ca_en50221_io_release(struct inode *inode, struct file *file)
- 
- 	dprintk("%s\n", __func__);
- 
-+	mutex_lock(&ca->remove_mutex);
-+
- 	/* mark the CA device as closed */
- 	ca->open = 0;
- 	dvb_ca_en50221_thread_update_delay(ca);
-@@ -1770,6 +1789,13 @@ static int dvb_ca_en50221_io_release(struct inode *inode, struct file *file)
- 
- 	dvb_ca_private_put(ca);
- 
-+	if (dvbdev->users == 1 && ca->exit == 1) {
-+		mutex_unlock(&ca->remove_mutex);
-+		wake_up(&dvbdev->wait_queue);
-+	} else {
-+		mutex_unlock(&ca->remove_mutex);
-+	}
-+
- 	return err;
- }
- 
-@@ -1893,6 +1919,7 @@ int dvb_ca_en50221_init(struct dvb_adapter *dvb_adapter,
- 	}
- 
- 	mutex_init(&ca->ioctl_mutex);
-+	mutex_init(&ca->remove_mutex);
- 
- 	if (signal_pending(current)) {
- 		ret = -EINTR;
-@@ -1935,6 +1962,14 @@ void dvb_ca_en50221_release(struct dvb_ca_en50221 *pubca)
- 
- 	dprintk("%s\n", __func__);
- 
-+	mutex_lock(&ca->remove_mutex);
-+	ca->exit = 1;
-+	mutex_unlock(&ca->remove_mutex);
-+
-+	if (ca->dvbdev->users < 1)
-+		wait_event(ca->dvbdev->wait_queue,
-+				ca->dvbdev->users == 1);
-+
- 	/* shutdown the thread if there was one */
- 	kthread_stop(ca->thread);
- 
+ 	/* dump vital information to the logs */
 -- 
 2.39.2
 
