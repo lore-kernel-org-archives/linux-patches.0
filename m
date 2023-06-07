@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532AC19BAB
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5671C4339B;
-	Wed,  7 Jun 2023 20:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63D219BAB
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67765C433EF;
+	Wed,  7 Jun 2023 20:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170075;
-	bh=HVX1TG+Qa3cHR0WeqERurokfZJdHcyOndIbduqxdvnE=;
+	s=korg; t=1686170077;
+	bh=4bhTm7PBxHSblzpN5rEwaZBvDvGv0Z2niSBZkR66B+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zgugTd1Jbr04a7TfV3//Xv4rQhzvzmipfU86wml05EvxZXEPNxk/pRnL3Mt8/HUIe
-	 7DD9uH7UxysHHIrquOvm6x1AeWQrpr/FMc3LGVo1dOEuRDnfM6eN/cfy8YV08yYjok
-	 PC4u0/qQnsLy3JSg7r3TeEL/HqnjIVjCtSWqiYQ4=
+	b=N1EXYyWTp61EF7w4Z8Z1+jffXeVUBYHECzb5/Sst+D2/CS2/NznL72pBrfMTnLW1+
+	 t/VbkEEjk9S1QSf/HzU6ZAt3X31Dlv1paT3Vra2YqLUkRQFLt+yr2cxgwS1OED843G
+	 kSWGTySc12mf7ZoNMTS3qTJumZ2aOGWFFVoZifuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benedict Wong <benedictwong@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 36/88] xfrm: Check if_id in inbound policy/secpath match
-Date: Wed,  7 Jun 2023 22:15:53 +0200
-Message-ID: <20230607200900.331007747@linuxfoundation.org>
+Subject: [PATCH 4.19 37/88] ASoC: ssm2602: Add workaround for playback distortions
+Date: Wed,  7 Jun 2023 22:15:54 +0200
+Message-ID: <20230607200900.365146313@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -35,77 +33,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benedict Wong <benedictwong@google.com>
+From: Paweł Anikiel <pan@semihalf.com>
 
-[ Upstream commit 8680407b6f8f5fba59e8f1d63c869abc280f04df ]
+[ Upstream commit f63550e2b165208a2f382afcaf5551df9569e1d4 ]
 
-This change ensures that if configured in the policy, the if_id set in
-the policy and secpath states match during the inbound policy check.
-Without this, there is potential for ambiguity where entries in the
-secpath differing by only the if_id could be mismatched.
+Apply a workaround for what appears to be a hardware quirk.
 
-Notably, this is checked in the outbound direction when resolving
-templates to SAs, but not on the inbound path when matching SAs and
-policies.
+The problem seems to happen when enabling "whole chip power" (bit D7
+register R6) for the very first time after the chip receives power. If
+either "output" (D4) or "DAC" (D3) aren't powered on at that time,
+playback becomes very distorted later on.
 
-Test: Tested against Android kernel unit tests & CTS
-Signed-off-by: Benedict Wong <benedictwong@google.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+This happens on the Google Chameleon v3, as well as on a ZYBO Z7-10:
+https://ez.analog.com/audio/f/q-a/543726/solved-ssm2603-right-output-offset-issue/480229
+I suspect this happens only when using an external MCLK signal (which
+is the case for both of these boards).
+
+Here are some experiments run on a Google Chameleon v3. These were run
+in userspace using a wrapper around the i2cset utility:
+ssmset() {
+        i2cset -y 0 0x1a $(($1*2)) $2
+}
+
+For each of the following sequences, we apply power to the ssm2603
+chip, set the configuration registers R0-R5 and R7-R8, run the selected
+sequence, and check for distortions on playback.
+
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x07 # chip, out, dac
+  OK
+
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x87 # out, dac
+  ssmset 0x06 0x07 # chip
+  OK
+
+  (disable MCLK)
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x1f # chip
+  ssmset 0x06 0x07 # out, dac
+  (enable MCLK)
+  OK
+
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x1f # chip
+  ssmset 0x06 0x07 # out, dac
+  NOT OK
+
+  ssmset 0x06 0x1f # chip
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x07 # out, dac
+  NOT OK
+
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x0f # chip, out
+  ssmset 0x06 0x07 # dac
+  NOT OK
+
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x17 # chip, dac
+  ssmset 0x06 0x07 # out
+  NOT OK
+
+For each of the following sequences, we apply power to the ssm2603
+chip, run the selected sequence, issue a reset with R15, configure
+R0-R5 and R7-R8, run one of the NOT OK sequences from above, and check
+for distortions.
+
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x07 # chip, out, dac
+  OK
+
+  (disable MCLK)
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x07 # chip, out, dac
+  (enable MCLK after reset)
+  NOT OK
+
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x17 # chip, dac
+  NOT OK
+
+  ssmset 0x09 0x01 # core
+  ssmset 0x06 0x0f # chip, out
+  NOT OK
+
+  ssmset 0x06 0x07 # chip, out, dac
+  NOT OK
+
+Signed-off-by: Paweł Anikiel <pan@semihalf.com
+Link: https://lore.kernel.org/r/20230508113037.137627-8-pan@semihalf.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ sound/soc/codecs/ssm2602.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 1cd21a8c4deac..6fe578773a51d 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -2240,7 +2240,7 @@ xfrm_secpath_reject(int idx, struct sk_buff *skb, const struct flowi *fl)
+diff --git a/sound/soc/codecs/ssm2602.c b/sound/soc/codecs/ssm2602.c
+index 501a4e73b185b..06f382c794b26 100644
+--- a/sound/soc/codecs/ssm2602.c
++++ b/sound/soc/codecs/ssm2602.c
+@@ -67,6 +67,18 @@ static const struct reg_default ssm2602_reg[SSM2602_CACHEREGNUM] = {
+ 	{ .reg = 0x09, .def = 0x0000 }
+ };
  
- static inline int
- xfrm_state_ok(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x,
--	      unsigned short family)
-+	      unsigned short family, u32 if_id)
- {
- 	if (xfrm_state_kern(x))
- 		return tmpl->optional && !xfrm_state_addr_cmp(tmpl, x, tmpl->encap_family);
-@@ -2251,7 +2251,8 @@ xfrm_state_ok(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x,
- 		(tmpl->allalgs || (tmpl->aalgos & (1<<x->props.aalgo)) ||
- 		 !(xfrm_id_proto_match(tmpl->id.proto, IPSEC_PROTO_ANY))) &&
- 		!(x->props.mode != XFRM_MODE_TRANSPORT &&
--		  xfrm_state_addr_cmp(tmpl, x, family));
-+		  xfrm_state_addr_cmp(tmpl, x, family)) &&
-+		(if_id == 0 || if_id == x->if_id);
- }
++/*
++ * ssm2602 register patch
++ * Workaround for playback distortions after power up: activates digital
++ * core, and then powers on output, DAC, and whole chip at the same time
++ */
++
++static const struct reg_sequence ssm2602_patch[] = {
++	{ SSM2602_ACTIVE, 0x01 },
++	{ SSM2602_PWR,    0x07 },
++	{ SSM2602_RESET,  0x00 },
++};
++
  
- /*
-@@ -2263,7 +2264,7 @@ xfrm_state_ok(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x,
-  */
- static inline int
- xfrm_policy_ok(const struct xfrm_tmpl *tmpl, const struct sec_path *sp, int start,
--	       unsigned short family)
-+	       unsigned short family, u32 if_id)
- {
- 	int idx = start;
+ /*Appending several "None"s just for OSS mixer use*/
+ static const char *ssm2602_input_select[] = {
+@@ -577,6 +589,9 @@ static int ssm260x_component_probe(struct snd_soc_component *component)
+ 		return ret;
+ 	}
  
-@@ -2273,7 +2274,7 @@ xfrm_policy_ok(const struct xfrm_tmpl *tmpl, const struct sec_path *sp, int star
- 	} else
- 		start = -1;
- 	for (; idx < sp->len; idx++) {
--		if (xfrm_state_ok(tmpl, sp->xvec[idx], family))
-+		if (xfrm_state_ok(tmpl, sp->xvec[idx], family, if_id))
- 			return ++idx;
- 		if (sp->xvec[idx]->props.mode != XFRM_MODE_TRANSPORT) {
- 			if (start == -1)
-@@ -2450,7 +2451,7 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
- 		 * are implied between each two transformations.
- 		 */
- 		for (i = xfrm_nr-1, k = 0; i >= 0; i--) {
--			k = xfrm_policy_ok(tpp[i], sp, k, family);
-+			k = xfrm_policy_ok(tpp[i], sp, k, family, if_id);
- 			if (k < 0) {
- 				if (k < -1)
- 					/* "-2 - errored_index" returned */
++	regmap_register_patch(ssm2602->regmap, ssm2602_patch,
++			      ARRAY_SIZE(ssm2602_patch));
++
+ 	/* set the update bits */
+ 	regmap_update_bits(ssm2602->regmap, SSM2602_LINVOL,
+ 			    LINVOL_LRIN_BOTH, LINVOL_LRIN_BOTH);
 -- 
 2.39.2
 
