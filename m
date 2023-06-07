@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AE534CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:01:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60783C433EF;
-	Wed,  7 Jun 2023 21:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9374C34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:01:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16792C433D2;
+	Wed,  7 Jun 2023 21:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171686;
-	bh=SYPmn1DTDIGCLNn72op6cfrwgM0TCLAmTeHg70poU5U=;
+	s=korg; t=1686171689;
+	bh=gXwRhtRsYouFNBMlk7S8phDmvO3mR2uoyaYBy8rdqV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DM2aGMNYHfBAXRT7VecMe5S5zvir5ET3KB3Lb4K2AenGPZs6qXSFnkHBwwIXz+d6b
-	 IYsxSpK27q6uY5jaFu5KsX+mSY8pvOtStxxSm/n9cXi6kpQrEAzBze79KOdWiAL/WM
-	 E/R6YJE6te2Map6M0jthfHq5Dm551XwlC7jethFw=
+	b=1I8B2LV6AIotWCT6UN1z/LxSEnbue2ykY9iHX4iI037w1kvPvlO1nADlUvbtz5mhs
+	 xGldWX2LkdYi06fkusiidNZUN/8O4PuIawySrYIkQ6obyVhKxKK9yThFp2i1aCgxoS
+	 xh+Xd78NfChLMnS5KuVnKCXZ9vYot73X+jrMSaGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Min-Hua Chen <minhuadotchen@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/159] arm64/mm: mark private VM_FAULT_X defines as vm_fault_t
-Date: Wed,  7 Jun 2023 22:16:26 +0200
-Message-ID: <20230607200906.413112464@linuxfoundation.org>
+Subject: [PATCH 5.15 084/159] arm64: vdso: Pass (void *) to virt_to_page()
+Date: Wed,  7 Jun 2023 22:16:27 +0200
+Message-ID: <20230607200906.445623951@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,52 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min-Hua Chen <minhuadotchen@gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit d91d580878064b880f3574ac35b98d8b70ee8620 ]
+[ Upstream commit b0abde80620f42d1ceb3de5e4c1a49cdd5628229 ]
 
-This patch fixes several sparse warnings for fault.c:
+Like the other calls in this function virt_to_page() expects
+a pointer, not an integer.
 
-arch/arm64/mm/fault.c:493:24: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:493:24: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:493:24: sparse:    got int
-arch/arm64/mm/fault.c:501:32: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:501:32: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:501:32: sparse:    got int
-arch/arm64/mm/fault.c:503:32: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:503:32: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:503:32: sparse:    got int
-arch/arm64/mm/fault.c:511:24: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:511:24: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:511:24: sparse:    got int
-arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
-arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
-arch/arm64/mm/fault.c:713:39: sparse: warning: restricted vm_fault_t degrades to integer
+However since many architectures implement virt_to_pfn() as
+a macro, this function becomes polymorphic and accepts both a
+(unsigned long) and a (void *).
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
-Link: https://lore.kernel.org/r/20230502151909.128810-1-minhuadotchen@gmail.com
+Fix this up with an explicit cast.
+
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: http://lists.infradead.org/pipermail/linux-arm-kernel/2023-May/832583.html
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/fault.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/vdso.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index 97a93ee756a2e..6327620397142 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -473,8 +473,8 @@ static void do_bad_area(unsigned long far, unsigned long esr,
- 	}
+diff --git a/arch/arm64/kernel/vdso.c b/arch/arm64/kernel/vdso.c
+index a61fc4f989b37..55dd15c9745da 100644
+--- a/arch/arm64/kernel/vdso.c
++++ b/arch/arm64/kernel/vdso.c
+@@ -314,7 +314,7 @@ static int aarch32_alloc_kuser_vdso_page(void)
+ 
+ 	memcpy((void *)(vdso_page + 0x1000 - kuser_sz), __kuser_helper_start,
+ 	       kuser_sz);
+-	aarch32_vectors_page = virt_to_page(vdso_page);
++	aarch32_vectors_page = virt_to_page((void *)vdso_page);
+ 	return 0;
  }
  
--#define VM_FAULT_BADMAP		0x010000
--#define VM_FAULT_BADACCESS	0x020000
-+#define VM_FAULT_BADMAP		((__force vm_fault_t)0x010000)
-+#define VM_FAULT_BADACCESS	((__force vm_fault_t)0x020000)
- 
- static vm_fault_t __do_page_fault(struct mm_struct *mm, unsigned long addr,
- 				  unsigned int mm_flags, unsigned long vm_flags,
 -- 
 2.39.2
 
