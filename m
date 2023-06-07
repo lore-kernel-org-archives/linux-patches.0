@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CB53AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EFBC433EF;
-	Wed,  7 Jun 2023 20:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5536D3AE5C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3F2C433D2;
+	Wed,  7 Jun 2023 20:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169781;
-	bh=ccY9kNcRCwAvdcz5NUVxfEw3Gr/8eP2fXagni27mMW4=;
+	s=korg; t=1686169784;
+	bh=KV/i11XG/lWp64QQWcJy6Zm5eBpF2PRGxJS2tKrP694=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMJv/ZFX9Zklf/r/k50LM6dvZ3DNNPMXhw0qfNMIccq7DZPtliqttJEhe8BAF7qhM
-	 6g2zX4xYhcUE18zhzgKd0wJlHM9SFnWNV60kZUNmn4sBH3mziwc2rR9gbf4TPshov4
-	 9h5gzLtyraj6OVWOs2h4/8ExqDDVGTf+ooJZWi90=
+	b=ZvAaJC3AroI0lKmq0GXeBCEs5CQ+l4jL3Ha6SPNLubc0vBYgrfJJp7mBnjsVvHThS
+	 BTpcyhbh8i+Xao4ynciOLZMropYaPNmZaEQYz2yjJ6OOkDSqFMlJRi7cv0k3egAhN+
+	 qajiDuqUFO0JHE0RqkKY6Uq4yEiFu8I1zng5eZxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.3 212/286] md/raid5: fix miscalculation of end_sector in raid5_read_one_chunk()
-Date: Wed,  7 Jun 2023 22:15:11 +0200
-Message-ID: <20230607200930.177576450@linuxfoundation.org>
+	Sung-Chi Li <lschyi@chromium.org>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 6.3 195/286] HID: google: add jewel USB id
+Date: Wed,  7 Jun 2023 22:14:54 +0200
+Message-ID: <20230607200929.629883542@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,36 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Sung-Chi Li <lschyi@chromium.org>
 
-commit 8557dc27126949c702bd3aafe8a7e0b7e4fcb44c upstream.
+commit ed84c4517a5bc536e8572a01dfa11bc22a280d06 upstream.
 
-'end_sector' is compared to 'rdev->recovery_offset', which is offset to
-rdev, however, commit e82ed3a4fbb5 ("md/raid6: refactor
-raid5_read_one_chunk") changes the calculation of 'end_sector' to offset
-to the array. Fix this miscalculation.
+Add 1 additional hammer-like device.
 
-Fixes: e82ed3a4fbb5 ("md/raid6: refactor raid5_read_one_chunk")
-Cc: stable@vger.kernel.org # v5.12+
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230524014118.3172781-1-yukuai1@huaweicloud.com
+Signed-off-by: Sung-Chi Li <lschyi@chromium.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-google-hammer.c |    2 ++
+ drivers/hid/hid-ids.h           |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -5516,7 +5516,7 @@ static int raid5_read_one_chunk(struct m
+--- a/drivers/hid/hid-google-hammer.c
++++ b/drivers/hid/hid-google-hammer.c
+@@ -587,6 +587,8 @@ static const struct hid_device_id hammer
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_HAMMER) },
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
++		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_JEWEL) },
++	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_MAGNEMITE) },
+ 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
+ 		     USB_VENDOR_ID_GOOGLE, USB_DEVICE_ID_GOOGLE_MASTERBALL) },
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -529,6 +529,7 @@
+ #define USB_DEVICE_ID_GOOGLE_MOONBALL	0x5044
+ #define USB_DEVICE_ID_GOOGLE_DON	0x5050
+ #define USB_DEVICE_ID_GOOGLE_EEL	0x5057
++#define USB_DEVICE_ID_GOOGLE_JEWEL	0x5061
  
- 	sector = raid5_compute_sector(conf, raid_bio->bi_iter.bi_sector, 0,
- 				      &dd_idx, NULL);
--	end_sector = bio_end_sector(raid_bio);
-+	end_sector = sector + bio_sectors(raid_bio);
- 
- 	rcu_read_lock();
- 	if (r5c_big_stripe_cached(conf, sector))
+ #define USB_VENDOR_ID_GOTOP		0x08f2
+ #define USB_DEVICE_ID_SUPER_Q2		0x007f
 
 
