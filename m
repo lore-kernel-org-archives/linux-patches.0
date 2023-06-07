@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C12739234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAB1C433D2;
-	Wed,  7 Jun 2023 20:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DEE39234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6FAC433EF;
+	Wed,  7 Jun 2023 20:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169143;
-	bh=mc8Zlc9EP15Ikx362dsZb+0aZxN6aTM8mVVCBoGIUrU=;
+	s=korg; t=1686169145;
+	bh=kT3jh64tJMjQU7tzukJRwEmX2q6UV7BbOXCt0kxTlVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHR60gOfyh8WbE9cNSuP+ODPDHWgVnJsS/P6KBNoEMoFugl7BnaNSyuSbB1Tbw9wT
-	 aPiAYMV9M57UBkwc8Fmc2gVwggmtBtL6Oz/OjgFpe8SgEaq5XDoutx9edETAXTuW1Z
-	 LiuCRB1g8+AQ27YtuhgfZ9HGHghJob76EfHSk1F4=
+	b=nUXX0nU7+WR5RdD6Vt42fokrffbpEcxiMRRDrHUmeyF12dNkF43N9E08ks6eeaQQU
+	 vWBE3DFtsjvQlLVLk/JFgdzGUa+CB724x4ZuAfpjk5f4in2IqeV4yrOEozVrgmWeMz
+	 oqfRnHi8hExQUIJMvwFsyBg4Yg2AQFrnwhqDuEWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruihan Li <lrh2000@pku.edu.cn>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Dragos-Marian Panait <dragos.panait@windriver.com>
-Subject: [PATCH 4.14 03/61] bluetooth: Add cmd validity checks at the start of hci_sock_ioctl()
-Date: Wed,  7 Jun 2023 22:15:17 +0200
-Message-ID: <20230607200836.310790133@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jaswinder Singh <jassisinghbrar@gmail.com>,
+	Boojin Kim <boojin.kim@samsung.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Russell King <rmk+kernel@arm.linux.org.uk>,
+	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 04/61] dmaengine: pl330: rename _start to prevent build error
+Date: Wed,  7 Jun 2023 22:15:18 +0200
+Message-ID: <20230607200836.680552722@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -36,67 +41,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruihan Li <lrh2000@pku.edu.cn>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 000c2fa2c144c499c881a101819cf1936a1f7cf2 upstream.
+[ Upstream commit a1a5f2c887252dec161c1e12e04303ca9ba56fa9 ]
 
-Previously, channel open messages were always sent to monitors on the first
-ioctl() call for unbound HCI sockets, even if the command and arguments
-were completely invalid. This can leave an exploitable hole with the abuse
-of invalid ioctl calls.
+"_start" is used in several arches and proably should be reserved
+for ARCH usage. Using it in a driver for a private symbol can cause
+a build error when it conflicts with ARCH usage of the same symbol.
 
-This commit hardens the ioctl processing logic by first checking if the
-command is valid, and immediately returning with an ENOIOCTLCMD error code
-if it is not. This ensures that ioctl calls with invalid commands are free
-of side effects, and increases the difficulty of further exploitation by
-forcing exploitation to find a way to pass a valid command first.
+Therefore rename pl330's "_start" to "pl330_start_thread" so that there
+is no conflict and no build error.
 
-Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-Co-developed-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Dragos-Marian Panait <dragos.panait@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/dma/pl330.c:1053:13: error: '_start' redeclared as different kind of symbol
+ 1053 | static bool _start(struct pl330_thread *thrd)
+      |             ^~~~~~
+In file included from ../include/linux/interrupt.h:21,
+                 from ../drivers/dma/pl330.c:18:
+arch/riscv/include/asm/sections.h:11:13: note: previous declaration of '_start' with type 'char[]'
+   11 | extern char _start[];
+      |             ^~~~~~
+
+Fixes: b7d861d93945 ("DMA: PL330: Merge PL330 driver into drivers/dma/")
+Fixes: ae43b3289186 ("ARM: 8202/1: dmaengine: pl330: Add runtime Power Management support v12")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jaswinder Singh <jassisinghbrar@gmail.com>
+Cc: Boojin Kim <boojin.kim@samsung.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Link: https://lore.kernel.org/r/20230524045310.27923-1-rdunlap@infradead.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sock.c |   28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/dma/pl330.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -968,6 +968,34 @@ static int hci_sock_ioctl(struct socket
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index a8cea236099a1..982b69d017cda 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -1041,7 +1041,7 @@ static bool _trigger(struct pl330_thread *thrd)
+ 	return true;
+ }
  
- 	BT_DBG("cmd %x arg %lx", cmd, arg);
+-static bool _start(struct pl330_thread *thrd)
++static bool pl330_start_thread(struct pl330_thread *thrd)
+ {
+ 	switch (_state(thrd)) {
+ 	case PL330_STATE_FAULT_COMPLETING:
+@@ -1584,7 +1584,7 @@ static int pl330_update(struct pl330_dmac *pl330)
+ 			thrd->req_running = -1;
  
-+	/* Make sure the cmd is valid before doing anything */
-+	switch (cmd) {
-+	case HCIGETDEVLIST:
-+	case HCIGETDEVINFO:
-+	case HCIGETCONNLIST:
-+	case HCIDEVUP:
-+	case HCIDEVDOWN:
-+	case HCIDEVRESET:
-+	case HCIDEVRESTAT:
-+	case HCISETSCAN:
-+	case HCISETAUTH:
-+	case HCISETENCRYPT:
-+	case HCISETPTYPE:
-+	case HCISETLINKPOL:
-+	case HCISETLINKMODE:
-+	case HCISETACLMTU:
-+	case HCISETSCOMTU:
-+	case HCIINQUIRY:
-+	case HCISETRAW:
-+	case HCIGETCONNINFO:
-+	case HCIGETAUTHINFO:
-+	case HCIBLOCKADDR:
-+	case HCIUNBLOCKADDR:
-+		break;
-+	default:
-+		return -ENOIOCTLCMD;
-+	}
-+
- 	lock_sock(sk);
+ 			/* Get going again ASAP */
+-			_start(thrd);
++			pl330_start_thread(thrd);
  
- 	if (hci_pi(sk)->channel != HCI_CHANNEL_RAW) {
+ 			/* For now, just make a list of callbacks to be done */
+ 			list_add_tail(&descdone->rqd, &pl330->req_done);
+@@ -1974,7 +1974,7 @@ static void pl330_tasklet(unsigned long data)
+ 	} else {
+ 		/* Make sure the PL330 Channel thread is active */
+ 		spin_lock(&pch->thread->dmac->lock);
+-		_start(pch->thread);
++		pl330_start_thread(pch->thread);
+ 		spin_unlock(&pch->thread->dmac->lock);
+ 	}
+ 
+@@ -1992,7 +1992,7 @@ static void pl330_tasklet(unsigned long data)
+ 			if (power_down) {
+ 				pch->active = true;
+ 				spin_lock(&pch->thread->dmac->lock);
+-				_start(pch->thread);
++				pl330_start_thread(pch->thread);
+ 				spin_unlock(&pch->thread->dmac->lock);
+ 				power_down = false;
+ 			}
+-- 
+2.39.2
+
 
 
