@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE143AE43
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:23:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDDBC433EF;
-	Wed,  7 Jun 2023 20:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D493AE43
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:23:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79EB0C433D2;
+	Wed,  7 Jun 2023 20:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169387;
-	bh=k3w+srZzQc1gdR1Sp+wwZjhUQeZbbITUk4EOOSzJLI8=;
+	s=korg; t=1686169389;
+	bh=2aEicVv3yUYyZGsFLW1Q5++h/pgesg8SltE6pl86kxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENMQvt2Y/+yaVxCWg44VGfUwVe8hBu5YPwfiG5e4KvSWKBeWYjH2PAPrVxI1y+lF7
-	 v/H+U4p9ZS5bTkmStjkAr4KTf7p3+QAhGOl4a0q/muKDC9UBfvcQU28ptXcEUJ8NgP
-	 xKV0fQbaX1tzYREIwAVYmSQUWuyM8ttYY6JaWb+s=
+	b=TZJJgtSr/NKsrs9hOm0QwyPmJOuAA1VsWo1s1SWPwOQH4ZBdaXYv+hlvyN4pMVXee
+	 zUtU3ZCiw/7Lq8dq2pHnhf6/Otf9lilahYHAtqcy2CQDIO0Yc254Bh8MS4UftmJkSI
+	 xKcKx+mE+3yya4d7zHlgxKyA07SNPA6AwsMp2we0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Alan Adamson <alan.adamson@oracle.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 034/286] net/mlx5e: Move Ethernet driver debugfs to profile init callback
-Date: Wed,  7 Jun 2023 22:12:13 +0200
-Message-ID: <20230607200924.144394864@linuxfoundation.org>
+Subject: [PATCH 6.3 061/286] nvme: fix the name of Zone Append for verbose logging
+Date: Wed,  7 Jun 2023 22:12:40 +0200
+Message-ID: <20230607200925.062842094@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,115 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit c4c24fc30cc417ace332ceceaba4f70f81dcd521 ]
+[ Upstream commit 856303797724d28f1d65b702f0eadcee1ea7abf5 ]
 
-As priv->dfs_root is cleared, and therefore missed, when change
-eswitch mode, move the creation of the root debugfs to the init
-callback of mlx5e_nic_profile and mlx5e_uplink_rep_profile, and
-the destruction to the cleanup callback for symmeter.
+No Management involved in Zone Appened.
 
-Fixes: 288eca60cc31 ("net/mlx5e: Add Ethernet driver debugfs")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: bd83fe6f2cd2 ("nvme: add verbose error logging")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Alan Adamson <alan.adamson@oracle.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 10 +++++-----
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c  |  6 ++++++
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/nvme/host/constants.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index a60610c7a7bb7..7c72bed7f81aa 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5226,12 +5226,16 @@ static int mlx5e_nic_init(struct mlx5_core_dev *mdev,
+diff --git a/drivers/nvme/host/constants.c b/drivers/nvme/host/constants.c
+index bc523ca022548..5e4f8848dce08 100644
+--- a/drivers/nvme/host/constants.c
++++ b/drivers/nvme/host/constants.c
+@@ -21,7 +21,7 @@ static const char * const nvme_ops[] = {
+ 	[nvme_cmd_resv_release] = "Reservation Release",
+ 	[nvme_cmd_zone_mgmt_send] = "Zone Management Send",
+ 	[nvme_cmd_zone_mgmt_recv] = "Zone Management Receive",
+-	[nvme_cmd_zone_append] = "Zone Management Append",
++	[nvme_cmd_zone_append] = "Zone Append",
+ };
  
- 	mlx5e_timestamp_init(priv);
- 
-+	priv->dfs_root = debugfs_create_dir("nic",
-+					    mlx5_debugfs_get_dev_root(mdev));
-+
- 	fs = mlx5e_fs_init(priv->profile, mdev,
- 			   !test_bit(MLX5E_STATE_DESTROYING, &priv->state),
- 			   priv->dfs_root);
- 	if (!fs) {
- 		err = -ENOMEM;
- 		mlx5_core_err(mdev, "FS initialization failed, %d\n", err);
-+		debugfs_remove_recursive(priv->dfs_root);
- 		return err;
- 	}
- 	priv->fs = fs;
-@@ -5252,6 +5256,7 @@ static void mlx5e_nic_cleanup(struct mlx5e_priv *priv)
- 	mlx5e_health_destroy_reporters(priv);
- 	mlx5e_ktls_cleanup(priv);
- 	mlx5e_fs_cleanup(priv->fs);
-+	debugfs_remove_recursive(priv->dfs_root);
- 	priv->fs = NULL;
- }
- 
-@@ -5976,9 +5981,6 @@ static int mlx5e_probe(struct auxiliary_device *adev,
- 	priv->profile = profile;
- 	priv->ppriv = NULL;
- 
--	priv->dfs_root = debugfs_create_dir("nic",
--					    mlx5_debugfs_get_dev_root(priv->mdev));
--
- 	err = profile->init(mdev, netdev);
- 	if (err) {
- 		mlx5_core_err(mdev, "mlx5e_nic_profile init failed, %d\n", err);
-@@ -6007,7 +6009,6 @@ static int mlx5e_probe(struct auxiliary_device *adev,
- err_profile_cleanup:
- 	profile->cleanup(priv);
- err_destroy_netdev:
--	debugfs_remove_recursive(priv->dfs_root);
- 	mlx5e_destroy_netdev(priv);
- err_devlink_port_unregister:
- 	mlx5e_devlink_port_unregister(mlx5e_dev);
-@@ -6027,7 +6028,6 @@ static void mlx5e_remove(struct auxiliary_device *adev)
- 	unregister_netdev(priv->netdev);
- 	mlx5e_suspend(adev, state);
- 	priv->profile->cleanup(priv);
--	debugfs_remove_recursive(priv->dfs_root);
- 	mlx5e_destroy_netdev(priv);
- 	mlx5e_devlink_port_unregister(mlx5e_dev);
- 	mlx5e_destroy_devlink(mlx5e_dev);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 6e18d91c3d766..992f3f9c11925 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -30,6 +30,7 @@
-  * SOFTWARE.
-  */
- 
-+#include <linux/debugfs.h>
- #include <linux/mlx5/fs.h>
- #include <net/switchdev.h>
- #include <net/pkt_cls.h>
-@@ -811,11 +812,15 @@ static int mlx5e_init_ul_rep(struct mlx5_core_dev *mdev,
- {
- 	struct mlx5e_priv *priv = netdev_priv(netdev);
- 
-+	priv->dfs_root = debugfs_create_dir("nic",
-+					    mlx5_debugfs_get_dev_root(mdev));
-+
- 	priv->fs = mlx5e_fs_init(priv->profile, mdev,
- 				 !test_bit(MLX5E_STATE_DESTROYING, &priv->state),
- 				 priv->dfs_root);
- 	if (!priv->fs) {
- 		netdev_err(priv->netdev, "FS allocation failed\n");
-+		debugfs_remove_recursive(priv->dfs_root);
- 		return -ENOMEM;
- 	}
- 
-@@ -828,6 +833,7 @@ static int mlx5e_init_ul_rep(struct mlx5_core_dev *mdev,
- static void mlx5e_cleanup_rep(struct mlx5e_priv *priv)
- {
- 	mlx5e_fs_cleanup(priv->fs);
-+	debugfs_remove_recursive(priv->dfs_root);
- 	priv->fs = NULL;
- }
- 
+ static const char * const nvme_admin_ops[] = {
 -- 
 2.39.2
 
