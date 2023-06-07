@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E846410FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A5DC433EF;
-	Wed,  7 Jun 2023 20:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ECB10FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C42C4339B;
+	Wed,  7 Jun 2023 20:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169574;
-	bh=OXkMsN4v3FFJULQWV4/kyARqFXtJzpyCewzKLaeiJl8=;
+	s=korg; t=1686169577;
+	bh=I2aKf92ofZGQYb/AYxQ9lo3Bh+uB9VlLXMhpvn1d/tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryub4uwxfyWi9Rf4BhQBGK7OWapQ+xsNWwn8UwGnMpaOqByIzZpUwaZvEo8RW18Xb
-	 F0hg0kOC6zld0JIMGUoPrj/TrlsxtW2/bmZLjj2PiBNHoWgquWIDjzrUjj7SIH4sA+
-	 4AjyMZ089LiKK+alhfxfEOW2VeJDDgkjma1zo6I4=
+	b=wsNPxaW7ADpa49qD8JgITeSOgt4GVTwSA1M/qKp52cusQ0dl43HcbEDRVAJLB9hqo
+	 rpegtlQrJ8LE1cgJMPjm38bL7FT8hwUmtFM9r6AdksG5Qr6Y+l12SxojZTrFbmiZSo
+	 4L5C6MhqZeozn9Iy241nFvdW8EB5D7aeVQ/s+1hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liming Sun <limings@nvidia.com>,
-	Vadim Pasternak <vadimp@nvidia.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Yang Lan <lanyang0908@gmail.com>,
+	Bob Peterson <rpeterso@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 103/286] platform/mellanox: fix potential race in mlxbf-tmfifo driver
-Date: Wed,  7 Jun 2023 22:13:22 +0200
-Message-ID: <20230607200926.432451885@linuxfoundation.org>
+Subject: [PATCH 6.3 104/286] gfs2: Dont deref jdesc in evict
+Date: Wed,  7 Jun 2023 22:13:23 +0200
+Message-ID: <20230607200926.464794423@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,63 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liming Sun <limings@nvidia.com>
+From: Bob Peterson <rpeterso@redhat.com>
 
-[ Upstream commit 3d43f9f639542fadfb28f40b509bf147a6624d48 ]
+[ Upstream commit 504a10d9e46bc37b23d0a1ae2f28973c8516e636 ]
 
-This commit adds memory barrier for the 'vq' update in function
-mlxbf_tmfifo_virtio_find_vqs() to avoid potential race due to
-out-of-order memory write. It also adds barrier for the 'is_ready'
-flag to make sure the initializations are visible before this flag
-is checked.
+On corrupt gfs2 file systems the evict code can try to reference the
+journal descriptor structure, jdesc, after it has been freed and set to
+NULL. The sequence of events is:
 
-Signed-off-by: Liming Sun <limings@nvidia.com>
-Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
-Link: https://lore.kernel.org/r/b98c0ab61d644ba38fa9b3fd1607b138b0dd820b.1682518748.git.limings@nvidia.com
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+init_journal()
+...
+fail_jindex:
+   gfs2_jindex_free(sdp); <------frees journals, sets jdesc = NULL
+      if (gfs2_holder_initialized(&ji_gh))
+         gfs2_glock_dq_uninit(&ji_gh);
+fail:
+   iput(sdp->sd_jindex); <--references jdesc in evict_linked_inode
+      evict()
+         gfs2_evict_inode()
+            evict_linked_inode()
+               ret = gfs2_trans_begin(sdp, 0, sdp->sd_jdesc->jd_blocks);
+<------references the now freed/zeroed sd_jdesc pointer.
+
+The call to gfs2_trans_begin is done because the truncate_inode_pages
+call can cause gfs2 events that require a transaction, such as removing
+journaled data (jdata) blocks from the journal.
+
+This patch fixes the problem by adding a check for sdp->sd_jdesc to
+function gfs2_evict_inode. In theory, this should only happen to corrupt
+gfs2 file systems, when gfs2 detects the problem, reports it, then tries
+to evict all the system inodes it has read in up to that point.
+
+Reported-by: Yang Lan <lanyang0908@gmail.com>
+Signed-off-by: Bob Peterson <rpeterso@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-tmfifo.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/gfs2/super.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/platform/mellanox/mlxbf-tmfifo.c b/drivers/platform/mellanox/mlxbf-tmfifo.c
-index 91a077c35b8b8..a79318e90a139 100644
---- a/drivers/platform/mellanox/mlxbf-tmfifo.c
-+++ b/drivers/platform/mellanox/mlxbf-tmfifo.c
-@@ -784,7 +784,7 @@ static void mlxbf_tmfifo_rxtx(struct mlxbf_tmfifo_vring *vring, bool is_rx)
- 	fifo = vring->fifo;
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index a83fa62106f0e..7891f331082aa 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1410,6 +1410,14 @@ static void gfs2_evict_inode(struct inode *inode)
+ 	if (inode->i_nlink || sb_rdonly(sb) || !ip->i_no_addr)
+ 		goto out;
  
- 	/* Return if vdev is not ready. */
--	if (!fifo->vdev[devid])
-+	if (!fifo || !fifo->vdev[devid])
- 		return;
- 
- 	/* Return if another vring is running. */
-@@ -980,9 +980,13 @@ static int mlxbf_tmfifo_virtio_find_vqs(struct virtio_device *vdev,
- 
- 		vq->num_max = vring->num;
- 
-+		vq->priv = vring;
++	/*
++	 * In case of an incomplete mount, gfs2_evict_inode() may be called for
++	 * system files without having an active journal to write to.  In that
++	 * case, skip the filesystem evict.
++	 */
++	if (!sdp->sd_jdesc)
++		goto out;
 +
-+		/* Make vq update visible before using it. */
-+		virtio_mb(false);
-+
- 		vqs[i] = vq;
- 		vring->vq = vq;
--		vq->priv = vring;
- 	}
- 
- 	return 0;
-@@ -1302,6 +1306,9 @@ static int mlxbf_tmfifo_probe(struct platform_device *pdev)
- 
- 	mod_timer(&fifo->timer, jiffies + MLXBF_TMFIFO_TIMER_INTERVAL);
- 
-+	/* Make all updates visible before setting the 'is_ready' flag. */
-+	virtio_mb(false);
-+
- 	fifo->is_ready = true;
- 	return 0;
- 
+ 	gfs2_holder_mark_uninitialized(&gh);
+ 	ret = evict_should_delete(inode, &gh);
+ 	if (ret == SHOULD_DEFER_EVICTION)
 -- 
 2.39.2
 
