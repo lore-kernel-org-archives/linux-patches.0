@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37A33AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEE5C4339B;
-	Wed,  7 Jun 2023 20:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE673AE5C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D670C4339B;
+	Wed,  7 Jun 2023 20:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169752;
-	bh=ODzEe5MTMPERDf+zXbuLdOTQOBegDNhuK6ZJ0a/0Ze4=;
+	s=korg; t=1686169755;
+	bh=0A+gz7eri0iPRc8PB2lSeNJdaQntwITcX0C9NIu6yLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tA6L8ECHvQ1vqkiTSDwpimEIjKlQtefb89QXNT2PzFa6nFJODxclzFjmw0krMYisO
-	 BnwIZXDoVDxvB3SAhV4HtjlxIGYDsBIauuYYtgyPBew9/pZWUBzHQ07HBrLayEb+K6
-	 glhN9KlDS8XQ+uXcZNx49mowjCCCTtmF8DENtUzw=
+	b=geQFiVGcMVHK98MKXFlYH8kOpYEj+vo5PSb5hJQED+xjdPX5HPu3Uzqq7Uch+gtll
+	 rEllVmwbB+D0j6A0vbr4f+qkv1N0ZULGDvoztIfCy026wC4oMkhRxUOHqllj6Mu4iO
+	 w/sKeQjOJiZPlsrPbj5x1FYUnf7KSx1OIqKhvajY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
-	kernel test robot <lkp@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Larry Finger <Larry.Finger@lwfinger.net>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 161/286] wifi: b43: fix incorrect __packed annotation
-Date: Wed,  7 Jun 2023 22:14:20 +0200
-Message-ID: <20230607200928.381581896@linuxfoundation.org>
+	ChiaEn Wu <chiaen_wu@richtek.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.3 194/286] iio: adc: mt6370: Fix ibus and ibat scaling value of some specific vendor ID chips
+Date: Wed,  7 Jun 2023 22:14:53 +0200
+Message-ID: <20230607200929.599052622@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -39,66 +36,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: ChiaEn Wu <chiaen_wu@richtek.com>
 
-[ Upstream commit 212457ccbd60dba34f965e4ffbe62f0e4f970538 ]
+commit 00ffdd6fa90298522d45ca0c348b23485584dcdc upstream.
 
-clang warns about an unpacked structure inside of a packed one:
+The scale value of ibus and ibat on the datasheet is incorrect due to the
+customer report after the experimentation with some specific vendor ID
+chips.
 
-drivers/net/wireless/broadcom/b43/b43.h:654:4: error: field data within 'struct b43_iv' is less aligned than 'union (unnamed union at /home/arnd/arm-soc/drivers/net/wireless/broadcom/b43/b43.h:651:2)' and is usually due to 'struct b43_iv' being packed, which can lead to unaligned accesses [-Werror,-Wunaligned-access]
-
-The problem here is that the anonymous union has the default alignment
-from its members, apparently because the original author mixed up the
-placement of the __packed attribute by placing it next to the struct
-member rather than the union definition. As the struct itself is
-also marked as __packed, there is no need to mark its members, so just
-move the annotation to the inner type instead.
-
-As Michael noted, the same problem is present in b43legacy, so
-change both at the same time.
-
-Acked-by: Michael Büsch <m@bues.ch>
-Reported-by: kernel test robot <lkp@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
-Link: https://lore.kernel.org/oe-kbuild-all/202305160749.ay1HAoyP-lkp@intel.com/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230516183442.536589-1-arnd@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c1404d1b659f ("iio: adc: mt6370: Add MediaTek MT6370 support")
+Signed-off-by: ChiaEn Wu <chiaen_wu@richtek.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Link: https://lore.kernel.org/r/1681122862-1994-1-git-send-email-chiaen_wu@richtek.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/b43/b43.h             | 2 +-
- drivers/net/wireless/broadcom/b43legacy/b43legacy.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/mt6370-adc.c |   53 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 51 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/b43/b43.h b/drivers/net/wireless/broadcom/b43/b43.h
-index 9fc7c088a539e..67b4bac048e58 100644
---- a/drivers/net/wireless/broadcom/b43/b43.h
-+++ b/drivers/net/wireless/broadcom/b43/b43.h
-@@ -651,7 +651,7 @@ struct b43_iv {
- 	union {
- 		__be16 d16;
- 		__be32 d32;
--	} data __packed;
-+	} __packed data;
- } __packed;
+--- a/drivers/iio/adc/mt6370-adc.c
++++ b/drivers/iio/adc/mt6370-adc.c
+@@ -19,6 +19,7 @@
  
+ #include <dt-bindings/iio/adc/mediatek,mt6370_adc.h>
  
-diff --git a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
-index 6b0cec467938f..f49365d14619f 100644
---- a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
-+++ b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
-@@ -379,7 +379,7 @@ struct b43legacy_iv {
- 	union {
- 		__be16 d16;
- 		__be32 d32;
--	} data __packed;
-+	} __packed data;
- } __packed;
++#define MT6370_REG_DEV_INFO		0x100
+ #define MT6370_REG_CHG_CTRL3		0x113
+ #define MT6370_REG_CHG_CTRL7		0x117
+ #define MT6370_REG_CHG_ADC		0x121
+@@ -27,6 +28,7 @@
+ #define MT6370_ADC_START_MASK		BIT(0)
+ #define MT6370_ADC_IN_SEL_MASK		GENMASK(7, 4)
+ #define MT6370_AICR_ICHG_MASK		GENMASK(7, 2)
++#define MT6370_VENID_MASK		GENMASK(7, 4)
  
- #define B43legacy_PHYMODE(phytype)	(1 << (phytype))
--- 
-2.39.2
-
+ #define MT6370_AICR_100_mA		0x0
+ #define MT6370_AICR_150_mA		0x1
+@@ -47,6 +49,10 @@
+ #define ADC_CONV_TIME_MS		35
+ #define ADC_CONV_POLLING_TIME_US	1000
+ 
++#define MT6370_VID_RT5081		0x8
++#define MT6370_VID_RT5081A		0xA
++#define MT6370_VID_MT6370		0xE
++
+ struct mt6370_adc_data {
+ 	struct device *dev;
+ 	struct regmap *regmap;
+@@ -55,6 +61,7 @@ struct mt6370_adc_data {
+ 	 * from being read at the same time.
+ 	 */
+ 	struct mutex adc_lock;
++	unsigned int vid;
+ };
+ 
+ static int mt6370_adc_read_channel(struct mt6370_adc_data *priv, int chan,
+@@ -98,6 +105,30 @@ adc_unlock:
+ 	return ret;
+ }
+ 
++static int mt6370_adc_get_ibus_scale(struct mt6370_adc_data *priv)
++{
++	switch (priv->vid) {
++	case MT6370_VID_RT5081:
++	case MT6370_VID_RT5081A:
++	case MT6370_VID_MT6370:
++		return 3350;
++	default:
++		return 3875;
++	}
++}
++
++static int mt6370_adc_get_ibat_scale(struct mt6370_adc_data *priv)
++{
++	switch (priv->vid) {
++	case MT6370_VID_RT5081:
++	case MT6370_VID_RT5081A:
++	case MT6370_VID_MT6370:
++		return 2680;
++	default:
++		return 3870;
++	}
++}
++
+ static int mt6370_adc_read_scale(struct mt6370_adc_data *priv,
+ 				 int chan, int *val1, int *val2)
+ {
+@@ -123,7 +154,7 @@ static int mt6370_adc_read_scale(struct
+ 		case MT6370_AICR_250_mA:
+ 		case MT6370_AICR_300_mA:
+ 		case MT6370_AICR_350_mA:
+-			*val1 = 3350;
++			*val1 = mt6370_adc_get_ibus_scale(priv);
+ 			break;
+ 		default:
+ 			*val1 = 5000;
+@@ -150,7 +181,7 @@ static int mt6370_adc_read_scale(struct
+ 		case MT6370_ICHG_600_mA:
+ 		case MT6370_ICHG_700_mA:
+ 		case MT6370_ICHG_800_mA:
+-			*val1 = 2680;
++			*val1 = mt6370_adc_get_ibat_scale(priv);
+ 			break;
+ 		default:
+ 			*val1 = 5000;
+@@ -251,6 +282,20 @@ static const struct iio_chan_spec mt6370
+ 	MT6370_ADC_CHAN(TEMP_JC, IIO_TEMP, 12, BIT(IIO_CHAN_INFO_OFFSET)),
+ };
+ 
++static int mt6370_get_vendor_info(struct mt6370_adc_data *priv)
++{
++	unsigned int dev_info;
++	int ret;
++
++	ret = regmap_read(priv->regmap, MT6370_REG_DEV_INFO, &dev_info);
++	if (ret)
++		return ret;
++
++	priv->vid = FIELD_GET(MT6370_VENID_MASK, dev_info);
++
++	return 0;
++}
++
+ static int mt6370_adc_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -272,6 +317,10 @@ static int mt6370_adc_probe(struct platf
+ 	priv->regmap = regmap;
+ 	mutex_init(&priv->adc_lock);
+ 
++	ret = mt6370_get_vendor_info(priv);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to get vid\n");
++
+ 	ret = regmap_write(priv->regmap, MT6370_REG_CHG_ADC, 0);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to reset ADC\n");
 
 
