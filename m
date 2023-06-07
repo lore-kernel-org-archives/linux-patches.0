@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA59010FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B301C4339B;
-	Wed,  7 Jun 2023 20:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D06D10FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D113FC433D2;
+	Wed,  7 Jun 2023 20:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169713;
-	bh=ovzPYdzv2Xe23sZa7j8VZLK5I64txN8XhI6S3Wp1Nf8=;
+	s=korg; t=1686169716;
+	bh=6WZj0BXWB1MLar3oj/LZv3PvS5t2OOJL+zBNwsbacYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gAOSS0NIsI7kW24ggHe75CX8r9Z9VFvP3KdEiOwQp19703w9saNOwUi53aGHnTqwC
-	 H9oN1+1CGoWEkG46zAHEhtg9jkoAPxkpKJkgosJZzjjsxOeEQ3rlkbmjsACha6DdAd
-	 gJyNO1L3Tm5nB8/48JMb6ZDDo0prmv+8/Yos7DUI=
+	b=07eMmch4ZHVumYOZ4dF5yu563RNLZkSG8lo+NIIPGi/YZ7Kk7CS05rZHH1WEBU9d9
+	 cCOGXUaN70XepSb0vrQFECpfuh/iZSjExrshFqC0Pv9seox4wTUdwMh1eIgY5wp0cv
+	 YukExBsAzWDHdrJU0lz6+4XeRXw22hi64eIqi85I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 185/286] drivers: base: cacheinfo: Update cpu_map_populated during CPU Hotplug
-Date: Wed,  7 Jun 2023 22:14:44 +0200
-Message-ID: <20230607200929.317634621@linuxfoundation.org>
+Subject: [PATCH 6.3 186/286] dt-bindings: serial: 8250_omap: add rs485-rts-active-high
+Date: Wed,  7 Jun 2023 22:14:45 +0200
+Message-ID: <20230607200929.349995680@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,115 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit c26fabe73330d983c7ce822c6b6ec0879b4da61f ]
+[ Upstream commit 403e97d6ab2cb6fd0ac1ff968cd7b691771f1613 ]
 
-Until commit 5c2712387d48 ("cacheinfo: Fix LLC is not exported through
-sysfs"), cacheinfo called populate_cache_leaves() for CPU coming online
-which let the arch specific functions handle (at least on x86)
-populating the shared_cpu_map. However, with the changes in the
-aforementioned commit, populate_cache_leaves() is not called when a CPU
-comes online as a result of hotplug since last_level_cache_is_valid()
-returns true as the cacheinfo data is not discarded. The CPU coming
-online is not present in shared_cpu_map, however, it will not be added
-since the cpu_cacheinfo->cpu_map_populated flag is set (it is set in
-populate_cache_leaves() when cacheinfo is first populated for x86)
+Add rs485-rts-active-high property, this was removed by mistake.
+In general we just use rs485-rts-active-low property, however the OMAP
+UART for legacy reason uses the -high one.
 
-This can lead to inconsistencies in the shared_cpu_map when an offlined
-CPU comes online again. Example below depicts the inconsistency in the
-shared_cpu_list in cacheinfo when CPU8 is offlined and onlined again on
-a 3rd Generation EPYC processor:
-
-  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
-    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8-15,136-143
-
-  # echo 0 > /sys/devices/system/cpu/cpu8/online
-  # echo 1 > /sys/devices/system/cpu/cpu8/online
-
-  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
-    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8
-    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8
-    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8
-    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8
-
-  # cat /sys/devices/system/cpu/cpu136/cache/index0/shared_cpu_list
-    136
-
-  # cat /sys/devices/system/cpu/cpu136/cache/index3/shared_cpu_list
-    9-15,136-143
-
-Clear the flag when the CPU is removed from shared_cpu_map when
-cache_shared_cpu_map_remove() is called during CPU hotplug. This will
-allow cache_shared_cpu_map_setup() to add the CPU coming back online in
-the shared_cpu_map. Set the flag again when the shared_cpu_map is setup.
-Following are results of performing the same test as described above with
-the changes:
-
-  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
-    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8-15,136-143
-
-  # echo 0 > /sys/devices/system/cpu/cpu8/online
-  # echo 1 > /sys/devices/system/cpu/cpu8/online
-
-  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
-    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8-15,136-143
-
-  # cat /sys/devices/system/cpu/cpu136/cache/index0/shared_cpu_list
-    8,136
-
-  # cat /sys/devices/system/cpu/cpu136/cache/index3/shared_cpu_list
-    8-15,136-143
-
-Fixes: 5c2712387d48 ("cacheinfo: Fix LLC is not exported through sysfs")
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/20230508084115.1157-3-kprateek.nayak@amd.com
+Fixes: 767d3467eb60 ("dt-bindings: serial: 8250_omap: drop rs485 properties")
+Closes: https://lore.kernel.org/all/ZGefR4mTHHo1iQ7H@francesco-nb.int.toradex.com/
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230531111038.6302-1-francesco@dolcini.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/cacheinfo.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Documentation/devicetree/bindings/serial/8250_omap.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
-index 6351db6ecb57f..0fc8fbe7b361d 100644
---- a/drivers/base/cacheinfo.c
-+++ b/drivers/base/cacheinfo.c
-@@ -402,11 +402,14 @@ static int cache_shared_cpu_map_setup(unsigned int cpu)
- 			coherency_max_size = this_leaf->coherency_line_size;
- 	}
- 
-+	/* shared_cpu_map is now populated for the cpu */
-+	this_cpu_ci->cpu_map_populated = true;
- 	return 0;
- }
- 
- static void cache_shared_cpu_map_remove(unsigned int cpu)
- {
-+	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
- 	struct cacheinfo *this_leaf, *sib_leaf;
- 	unsigned int sibling, index, sib_index;
- 
-@@ -439,6 +442,9 @@ static void cache_shared_cpu_map_remove(unsigned int cpu)
- 			}
- 		}
- 	}
-+
-+	/* cpu is no longer populated in the shared map */
-+	this_cpu_ci->cpu_map_populated = false;
- }
- 
- static void free_cache_attributes(unsigned int cpu)
+diff --git a/Documentation/devicetree/bindings/serial/8250_omap.yaml b/Documentation/devicetree/bindings/serial/8250_omap.yaml
+index eb3488d8f9ee6..6a7be42da523c 100644
+--- a/Documentation/devicetree/bindings/serial/8250_omap.yaml
++++ b/Documentation/devicetree/bindings/serial/8250_omap.yaml
+@@ -70,6 +70,7 @@ properties:
+   dsr-gpios: true
+   rng-gpios: true
+   dcd-gpios: true
++  rs485-rts-active-high: true
+   rts-gpio: true
+   power-domains: true
+   clock-frequency: true
 -- 
 2.39.2
 
