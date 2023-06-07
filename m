@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3220034CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:57:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB521C433EF;
-	Wed,  7 Jun 2023 20:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0569934CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:57:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676FEC4339B;
+	Wed,  7 Jun 2023 20:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171440;
-	bh=g/k3/xa50eUB7cKbnq15wWfLD+z3aw64q5I0jj27InQ=;
+	s=korg; t=1686171442;
+	bh=sCjMVP/jKO30nzqrv9afR4l7prpaMObGxiTjG/xSd2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kk9XRPGsP1k8Bg5xMzrJSIrSXJC723UdOqUN1xcQi/Yt07va48940BoqTt5kutLnB
-	 ET7qHejDLFC2Imb7P0OVkWl7SAVMBMIA6ZxcAsU4sKp/yIls+5wu+tMb5ZrL4Jj0/g
-	 +SIaIbexQHBUS9D1kwbiwqhRRMtDfe69j2bDi9KQ=
+	b=VzUkr4T9hfdnYm15KrNFmeIo2bVsl7dGL7RKZpeiQXdlexysXrrMafC0wf4ZufN+x
+	 2yQnxy9ZcOHASUOlpRhDfIC8VWAZ00REE5rEaBONGuRiACLEDXPx7yjIvJPWw9bFwV
+	 nzBadfjeQC9IOLUeBYN/IUh58xbuQzygZAOtYEA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongguang Gao <hongguang.gao@broadcom.com>,
-	Ajit Khaparde <ajit.khaparde@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Chao Wang <D202280639@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/159] RDMA/bnxt_re: Fix return value of bnxt_re_process_raw_qp_pkt_rx
-Date: Wed,  7 Jun 2023 22:15:11 +0200
-Message-ID: <20230607200903.946784306@linuxfoundation.org>
+Subject: [PATCH 5.15 009/159] iommu/rockchip: Fix unwind goto issue
+Date: Wed,  7 Jun 2023 22:15:12 +0200
+Message-ID: <20230607200903.977937144@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -38,40 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Chao Wang <D202280639@hust.edu.cn>
 
-[ Upstream commit 0fa0d520e2a878cb4c94c4dc84395905d3f14f54 ]
+[ Upstream commit ec014683c564fb74fc68e8f5e84691d3b3839d24 ]
 
-bnxt_re_process_raw_qp_pkt_rx() always return 0 and ignores the return
-value of bnxt_re_post_send_shadow_qp().
+Smatch complains that
+drivers/iommu/rockchip-iommu.c:1306 rk_iommu_probe() warn: missing unwind goto?
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Link: https://lore.kernel.org/r/1684397461-23082-3-git-send-email-selvin.xavier@broadcom.com
-Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
-Reviewed-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+The rk_iommu_probe function, after obtaining the irq value through
+platform_get_irq, directly returns an error if the returned value
+is negative, without releasing any resources.
+
+Fix this by adding a new error handling label "err_pm_disable" and
+use a goto statement to redirect to the error handling process. In
+order to preserve the original semantics, set err to the value of irq.
+
+Fixes: 1aa55ca9b14a ("iommu/rockchip: Move irq request past pm_runtime_enable")
+Signed-off-by: Chao Wang <D202280639@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20230417030421.2777-1-D202280639@hust.edu.cn
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/iommu/rockchip-iommu.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index b7ec3a3926785..843d0b5d99acd 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -3235,9 +3235,7 @@ static int bnxt_re_process_raw_qp_pkt_rx(struct bnxt_re_qp *gsi_qp,
- 	udwr.remote_qkey = gsi_sqp->qplib_qp.qkey;
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index 823f1a7d8c6e2..e3557f8dc44ea 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -1303,20 +1303,22 @@ static int rk_iommu_probe(struct platform_device *pdev)
+ 	for (i = 0; i < iommu->num_irq; i++) {
+ 		int irq = platform_get_irq(pdev, i);
  
- 	/* post data received  in the send queue */
--	rc = bnxt_re_post_send_shadow_qp(rdev, gsi_sqp, swr);
--
--	return 0;
-+	return bnxt_re_post_send_shadow_qp(rdev, gsi_sqp, swr);
- }
+-		if (irq < 0)
+-			return irq;
++		if (irq < 0) {
++			err = irq;
++			goto err_pm_disable;
++		}
  
- static void bnxt_re_process_res_rawqp1_wc(struct ib_wc *wc,
+ 		err = devm_request_irq(iommu->dev, irq, rk_iommu_irq,
+ 				       IRQF_SHARED, dev_name(dev), iommu);
+-		if (err) {
+-			pm_runtime_disable(dev);
+-			goto err_remove_sysfs;
+-		}
++		if (err)
++			goto err_pm_disable;
+ 	}
+ 
+ 	dma_set_mask_and_coherent(dev, rk_ops->dma_bit_mask);
+ 
+ 	return 0;
++err_pm_disable:
++	pm_runtime_disable(dev);
+ err_remove_sysfs:
+ 	iommu_device_sysfs_remove(&iommu->iommu);
+ err_put_group:
 -- 
 2.39.2
 
