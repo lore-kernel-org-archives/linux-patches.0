@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368771ACB2
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB00C433EF;
-	Wed,  7 Jun 2023 20:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEFD1F190
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF7AC433D2;
+	Wed,  7 Jun 2023 20:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170370;
-	bh=tCXL7zAIGi097rPkbp7jZa8lojezmzatik4LM6vXLFo=;
+	s=korg; t=1686170372;
+	bh=CEoHN0oSSD8jV13FkhlfrqnJI16zjMMG2qJrwA1uIGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rA69qi4E6El77JiluVQ1p5ZWSmnek6kmgl8qu/9V9ueNTqDrSfENCQ6J35uyCPkaY
-	 oDuJI1JF9fjm46NBGpJfZo5N+3YtksfHwIloVlpHGAvAoYSGDKavGXvW81dJqpDzJl
-	 igDMMqWH9KdTTgW9ZPnZ+LSziOeej8HRhX2bSUl0=
+	b=L1bHJ+DEfiGj2/pfeS8o3QtDJvu803ILWzQP11BFABKViOd/oZpKyzwyH7e9S+1xh
+	 00p4MtihUinOvI+5e0L36h4tUXLexS5yagMvndqimX/kLvehMxgB31IIJ5zJog9IxK
+	 0Wy6/XkpqAxVEq5K7KjAJ0bkd2EX8s8POOPegVd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mustafa Ismail <mustafa.ismail@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/225] RDMA/irdma: Fix Local Invalidate fencing
-Date: Wed,  7 Jun 2023 22:13:42 +0200
-Message-ID: <20230607200915.273326122@linuxfoundation.org>
+Subject: [PATCH 6.1 030/225] af_packet: do not use READ_ONCE() in packet_bind()
+Date: Wed,  7 Jun 2023 22:13:43 +0200
+Message-ID: <20230607200915.304640559@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,36 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mustafa Ismail <mustafa.ismail@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5842d1d9c1b0d17e0c29eae65ae1f245f83682dd ]
+[ Upstream commit 6ffc57ea004234d9373c57b204fd10370a69f392 ]
 
-If the local invalidate fence is indicated in the WR, only the read fence
-is currently being set in WQE. Fix this to set both the read and local
-fence in the WQE.
+A recent patch added READ_ONCE() in packet_bind() and packet_bind_spkt()
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Link: https://lore.kernel.org/r/20230522155654.1309-4-shiraz.saleem@intel.com
-Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+This is better handled by reading pkt_sk(sk)->num later
+in packet_do_bind() while appropriate lock is held.
+
+READ_ONCE() in writers are often an evidence of something being wrong.
+
+Fixes: 822b5a1c17df ("af_packet: Fix data-races of pkt_sk(sk)->num.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230526154342.2533026-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/packet/af_packet.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 1c5a61f51a67a..6a8bb6ed4bf43 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -3191,6 +3191,7 @@ static int irdma_post_send(struct ib_qp *ibqp,
- 			break;
- 		case IB_WR_LOCAL_INV:
- 			info.op_type = IRDMA_OP_TYPE_INV_STAG;
-+			info.local_fence = info.read_fence;
- 			info.op.inv_local_stag.target_stag = ib_wr->ex.invalidate_rkey;
- 			err = irdma_uk_stag_local_invalidate(ukqp, &info, true);
- 			break;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index c75191b0c82ba..6ab9d5b543387 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3193,6 +3193,9 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
+ 
+ 	lock_sock(sk);
+ 	spin_lock(&po->bind_lock);
++	if (!proto)
++		proto = po->num;
++
+ 	rcu_read_lock();
+ 
+ 	if (po->fanout) {
+@@ -3291,7 +3294,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
+ 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
+ 	name[sizeof(uaddr->sa_data)] = 0;
+ 
+-	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, name, 0, 0);
+ }
+ 
+ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+@@ -3308,8 +3311,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
+ 	if (sll->sll_family != AF_PACKET)
+ 		return -EINVAL;
+ 
+-	return packet_do_bind(sk, NULL, sll->sll_ifindex,
+-			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, NULL, sll->sll_ifindex, sll->sll_protocol);
+ }
+ 
+ static struct proto packet_proto = {
 -- 
 2.39.2
 
