@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4183334459
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:52:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7071C433EF;
-	Wed,  7 Jun 2023 20:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CD634459
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:52:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B298C433EF;
+	Wed,  7 Jun 2023 20:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171129;
-	bh=VDODRfJ9Tz9G/JlqyeLW8BF0D02b60lmvvbdi0D+e8c=;
+	s=korg; t=1686171131;
+	bh=6ri9iwB3uEjGVFBrRzRDvSASBlTpUCRn+vV4iMquzfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcJ0Pbu8jjiDW+XnsnVsiaB5AT50IEndaNRqcAsrSOG8b7DAUNAXltuUXgOmvGk2l
-	 Qs3y663HdDTJaC/CygXXjuJ2+KcARiv16Fk3N9u5kJ405FkzJzIOOI5R/jb1KHG8eL
-	 VadjzLZTM7zV5XYK6xiXYZS/oT7J2Xf3VebWzTK4=
+	b=MdWLvc/qCiGRJ4q3yWEk/mPu8sg5ET2BRXM12tE6RvwesWyHx9l8Zl+XMqN9RYtot
+	 aBib3TbkM6RzqU82sIVi63SQbHEodArWJ8tvQvMbERUgT2p1OZpHeDqsnoX/88QoZw
+	 /cGauMcBmY54WFrU3Ix1O2NEfML1mtL0ks+T9hu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: [PATCH 5.10 096/120] tracing/probe: trace_probe_primary_from_call(): checked list_first_entry
-Date: Wed,  7 Jun 2023 22:16:52 +0200
-Message-ID: <20230607200903.932701987@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>
+Subject: [PATCH 5.10 097/120] selftests: mptcp: connect: skip if MPTCP is not supported
+Date: Wed,  7 Jun 2023 22:16:53 +0200
+Message-ID: <20230607200903.966639074@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -36,41 +34,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 81d0fa4cb4fc0e1a49c2b22f92c43d9fe972ebcf upstream.
+commit d83013bdf90a7994a474b0e650a7fc94b0d4ded6 upstream.
 
-All callers of trace_probe_primary_from_call() check the return
-value to be non NULL. However, the function returns
-list_first_entry(&tpe->probes, ...) which can never be NULL.
-Additionally, it does not check for the list being possibly empty,
-possibly causing a type confusion on empty lists.
-Use list_first_entry_or_null() which solves both problems.
+Selftests are supposed to run on any kernels, including the old ones not
+supporting MPTCP.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230128-list-entry-null-check-v1-1-8bde6a3da2ef@diag.uniroma1.it/
+A new check is then added to make sure MPTCP is supported. If not, the
+test stops and is marked as "skipped". Note that this check can also
+mark the test as failed if 'SELFTESTS_MPTCP_LIB_EXPECT_ALL_FEATURES' env
+var is set to 1: by doing that, we can make sure a test is not being
+skipped by mistake.
 
-Fixes: 60d53e2c3b75 ("tracing/probe: Split trace_event related data from trace_probe")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
+A new shared file is added here to be able to re-used the same check in
+the different selftests we have.
+
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
+Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/Makefile         |    2 -
+ tools/testing/selftests/net/mptcp/mptcp_connect.sh |    4 ++
+ tools/testing/selftests/net/mptcp/mptcp_lib.sh     |   40 +++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 1 deletion(-)
+ create mode 100644 tools/testing/selftests/net/mptcp/mptcp_lib.sh
 
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -301,7 +301,7 @@ trace_probe_primary_from_call(struct tra
- {
- 	struct trace_probe_event *tpe = trace_probe_event_from_call(call);
+--- a/tools/testing/selftests/net/mptcp/Makefile
++++ b/tools/testing/selftests/net/mptcp/Makefile
+@@ -10,7 +10,7 @@ TEST_PROGS := mptcp_connect.sh pm_netlin
  
--	return list_first_entry(&tpe->probes, struct trace_probe, list);
-+	return list_first_entry_or_null(&tpe->probes, struct trace_probe, list);
+ TEST_GEN_FILES = mptcp_connect pm_nl_ctl
+ 
+-TEST_FILES := settings
++TEST_FILES := mptcp_lib.sh settings
+ 
+ EXTRA_CLEAN := *.pcap
+ 
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
+@@ -1,6 +1,8 @@
+ #!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ 
++. "$(dirname "${0}")/mptcp_lib.sh"
++
+ time_start=$(date +%s)
+ 
+ optstring="S:R:d:e:l:r:h4cm:f:t"
+@@ -131,6 +133,8 @@ cleanup()
+ 	done
  }
  
- static inline struct list_head *trace_probe_probe_list(struct trace_probe *tp)
++mptcp_lib_check_mptcp
++
+ ip -Version > /dev/null 2>&1
+ if [ $? -ne 0 ];then
+ 	echo "SKIP: Could not run test without ip tool"
+--- /dev/null
++++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
+@@ -0,0 +1,40 @@
++#! /bin/bash
++# SPDX-License-Identifier: GPL-2.0
++
++readonly KSFT_FAIL=1
++readonly KSFT_SKIP=4
++
++# SELFTESTS_MPTCP_LIB_EXPECT_ALL_FEATURES env var can be set when validating all
++# features using the last version of the kernel and the selftests to make sure
++# a test is not being skipped by mistake.
++mptcp_lib_expect_all_features() {
++	[ "${SELFTESTS_MPTCP_LIB_EXPECT_ALL_FEATURES:-}" = "1" ]
++}
++
++# $1: msg
++mptcp_lib_fail_if_expected_feature() {
++	if mptcp_lib_expect_all_features; then
++		echo "ERROR: missing feature: ${*}"
++		exit ${KSFT_FAIL}
++	fi
++
++	return 1
++}
++
++# $1: file
++mptcp_lib_has_file() {
++	local f="${1}"
++
++	if [ -f "${f}" ]; then
++		return 0
++	fi
++
++	mptcp_lib_fail_if_expected_feature "${f} file not found"
++}
++
++mptcp_lib_check_mptcp() {
++	if ! mptcp_lib_has_file "/proc/sys/net/mptcp/enabled"; then
++		echo "SKIP: MPTCP support is not available"
++		exit ${KSFT_SKIP}
++	fi
++}
 
 
