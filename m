@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0261F190
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE87C433D2;
-	Wed,  7 Jun 2023 20:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2927F19BC9
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AF4C433EF;
+	Wed,  7 Jun 2023 20:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170606;
-	bh=FYJR6qWSJWlnYbwYLYW3Kfbp2BqXiYtyYtr+SGGnWy4=;
+	s=korg; t=1686170609;
+	bh=EOZ+3mKw9Dbp9ofImuacVyl7gE4qGUEQZCC1dXn+a3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yy77si+eZ7UyqJ6BS3NevoISDgntr22EaJTdQSl5RJFxWSACZt9xwPn4pUcq2s/Nq
-	 H6Wnn9PqfP681lhybL3v/nfibQIFBSw0b4Kjco+ZYqWq1Gcs8ROnb8wLONC0C+T7OS
-	 fyn65QMdGozbBETIC6DfbOwib1Qb7Z8sRCJUds+c=
+	b=2RaY4FIT1cWTWy2t/w4+tAeQaAx4jSzWTJ6qVrupbC4od+TGrkaDNfn3o7b/HrtRv
+	 DBFzOQ1Fq6oNoY2sNO7UDUMlo4Hy5dChjsxK5gQcqwnwZgCNg2+CSNt8B14qJqe40k
+	 X9IkR1ion+RprY09hnFbSR5SjlNlPotlsRLYa7uQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Sean Nyekjaer <sean@geanix.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 147/225] iio: light: vcnl4035: fixed chip ID check
-Date: Wed,  7 Jun 2023 22:15:40 +0200
-Message-ID: <20230607200919.228558758@linuxfoundation.org>
+Subject: [PATCH 6.1 148/225] iio: adc: stm32-adc: skip adc-channels setup if none is present
+Date: Wed,  7 Jun 2023 22:15:41 +0200
+Message-ID: <20230607200919.259617955@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,57 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Sean Nyekjaer <sean@geanix.com>
 
-commit a551c26e8e568fad42120843521529241b9bceec upstream.
+commit 3e27ef0ced49f8ae7883c25fadf76a2086e99025 upstream.
 
-VCNL4035 register(0xE) ID_L and ID_M define as:
+If only adc differential channels are defined driver will fail with
+stm32-adc: probe of 48003000.adc:adc@0 failed with error -22
 
- ID_L: 0x80
- ID_H: 7:6 (0:0)
-       5:4 (0:0) slave address = 0x60 (7-bit)
-           (0:1) slave address = 0x51 (7-bit)
-           (1:0) slave address = 0x40 (7-bit)
-           (1:0) slave address = 0x41 (7-bit)
-       3:0 Version code default	(0:0:0:0)
+Fix this by skipping the initialization if no channels are defined.
 
-So just check ID_L.
+This applies only to the legacy way of initializing adc channels.
 
-Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20230501143605.1615549-1-Frank.Li@nxp.com
+Fixes: d7705f35448a ("iio: adc: stm32-adc: convert to device properties")
+Signed-off-by: Sean Nyekjaer <sean@geanix.com>
+Reviewed-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://lore.kernel.org/r/20230503162029.3654093-2-sean@geanix.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/vcnl4035.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/adc/stm32-adc.c |   42 +++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
 
---- a/drivers/iio/light/vcnl4035.c
-+++ b/drivers/iio/light/vcnl4035.c
-@@ -8,6 +8,7 @@
-  * TODO: Proximity
-  */
- #include <linux/bitops.h>
-+#include <linux/bitfield.h>
- #include <linux/i2c.h>
- #include <linux/module.h>
- #include <linux/pm_runtime.h>
-@@ -42,6 +43,7 @@
- #define VCNL4035_ALS_PERS_MASK		GENMASK(3, 2)
- #define VCNL4035_INT_ALS_IF_H_MASK	BIT(12)
- #define VCNL4035_INT_ALS_IF_L_MASK	BIT(13)
-+#define VCNL4035_DEV_ID_MASK		GENMASK(7, 0)
+--- a/drivers/iio/adc/stm32-adc.c
++++ b/drivers/iio/adc/stm32-adc.c
+@@ -1913,6 +1913,7 @@ static int stm32_adc_legacy_chan_init(st
+ 	struct stm32_adc_diff_channel diff[STM32_ADC_CH_MAX];
+ 	struct device *dev = &indio_dev->dev;
+ 	u32 num_diff = adc->num_diff;
++	int num_se = nchans - num_diff;
+ 	int size = num_diff * sizeof(*diff) / sizeof(u32);
+ 	int scan_index = 0, ret, i, c;
+ 	u32 smp = 0, smps[STM32_ADC_CH_MAX], chans[STM32_ADC_CH_MAX];
+@@ -1939,29 +1940,32 @@ static int stm32_adc_legacy_chan_init(st
+ 			scan_index++;
+ 		}
+ 	}
+-
+-	ret = device_property_read_u32_array(dev, "st,adc-channels", chans,
+-					     nchans);
+-	if (ret)
+-		return ret;
+-
+-	for (c = 0; c < nchans; c++) {
+-		if (chans[c] >= adc_info->max_channels) {
+-			dev_err(&indio_dev->dev, "Invalid channel %d\n",
+-				chans[c]);
+-			return -EINVAL;
++	if (num_se > 0) {
++		ret = device_property_read_u32_array(dev, "st,adc-channels", chans, num_se);
++		if (ret) {
++			dev_err(&indio_dev->dev, "Failed to get st,adc-channels %d\n", ret);
++			return ret;
+ 		}
  
- /* Default values */
- #define VCNL4035_MODE_ALS_ENABLE	BIT(0)
-@@ -413,6 +415,7 @@ static int vcnl4035_init(struct vcnl4035
- 		return ret;
+-		/* Channel can't be configured both as single-ended & diff */
+-		for (i = 0; i < num_diff; i++) {
+-			if (chans[c] == diff[i].vinp) {
+-				dev_err(&indio_dev->dev, "channel %d misconfigured\n",	chans[c]);
++		for (c = 0; c < num_se; c++) {
++			if (chans[c] >= adc_info->max_channels) {
++				dev_err(&indio_dev->dev, "Invalid channel %d\n",
++					chans[c]);
+ 				return -EINVAL;
+ 			}
++
++			/* Channel can't be configured both as single-ended & diff */
++			for (i = 0; i < num_diff; i++) {
++				if (chans[c] == diff[i].vinp) {
++					dev_err(&indio_dev->dev, "channel %d misconfigured\n",
++						chans[c]);
++					return -EINVAL;
++				}
++			}
++			stm32_adc_chan_init_one(indio_dev, &channels[scan_index],
++						chans[c], 0, scan_index, false);
++			scan_index++;
+ 		}
+-		stm32_adc_chan_init_one(indio_dev, &channels[scan_index],
+-					chans[c], 0, scan_index, false);
+-		scan_index++;
  	}
  
-+	id = FIELD_GET(VCNL4035_DEV_ID_MASK, id);
- 	if (id != VCNL4035_DEV_ID_VAL) {
- 		dev_err(&data->client->dev, "Wrong id, got %x, expected %x\n",
- 			id, VCNL4035_DEV_ID_VAL);
+ 	if (adc->nsmps > 0) {
+@@ -2153,7 +2157,7 @@ static int stm32_adc_chan_fw_init(struct
+ 
+ 	if (legacy)
+ 		ret = stm32_adc_legacy_chan_init(indio_dev, adc, channels,
+-						 num_channels);
++						 timestamping ? num_channels - 1 : num_channels);
+ 	else
+ 		ret = stm32_adc_generic_chan_init(indio_dev, adc, channels);
+ 	if (ret < 0)
 
 
