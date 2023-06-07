@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F7737325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED622C433D2;
-	Wed,  7 Jun 2023 20:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D1E37349
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F80C433D2;
+	Wed,  7 Jun 2023 20:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170813;
-	bh=clTYUuMytkN+dr85e+//wymuxnRRhUaIozyPwxmHaNs=;
+	s=korg; t=1686170816;
+	bh=PgA9svzD/UrG4idImGi3Os7gx2AieyhyjEqIVRnU4P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ad9+EQFhfey5E2XlKk1TgC+hs8/7Zp6FTXlOdsVh0aXuaZ6mllzvO/5koDrzzwKJ7
-	 9tpDQdlxNZgbvWDyXizfNk7tffDqb8EkPPPMQyQLCs/75Gc1dEvPofLNw6dhCCwuBg
-	 CsDX4CGUbwWuvFQFhvg1sM25QoKUw/H1cjeAWRkg=
+	b=Yth1T82XguNG39tSJSNBF6w4xwBAQ/6SFklcWWFsEKy9LdNJGNu5/eHlkPNPyuXcp
+	 rlSfMPRsFwxBnv+NmCjRcuqGBmDMmw+SYxFR3JJKxTw8Fs5sqPFUr4w2pDhtT+2MIv
+	 B9kyH0xrs8e7DdJMMpcydMHeoUmi9r6kdxxnO3FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Stable@vger.kernel.org
-Subject: [PATCH 6.1 217/225] iommu/amd/pgtbl_v2: Fix domain max address
-Date: Wed,  7 Jun 2023 22:16:50 +0200
-Message-ID: <20230607200921.466349327@linuxfoundation.org>
+	Wayne Lin <wayne.lin@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 218/225] drm/amd/display: Have Payload Properly Created After Resume
+Date: Wed,  7 Jun 2023 22:16:51 +0200
+Message-ID: <20230607200921.499556831@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -37,59 +38,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Fangzhi Zuo <jerry.zuo@amd.com>
 
-commit 11c439a19466e7feaccdbce148a75372fddaf4e9 upstream.
+commit 482e6ad9adde69d9da08864b4ccf4dfd53edb2f0 upstream.
 
-IOMMU v2 page table supports 4 level (47 bit) or 5 level (56 bit) virtual
-address space. Current code assumes it can support 64bit IOVA address
-space. If IOVA allocator allocates virtual address > 47/56 bit (depending
-on page table level) then it will do wrong mapping and cause invalid
-translation.
+At drm suspend sequence, MST dc_sink is removed. When commit cached
+MST stream back in drm resume sequence, the MST stream payload is not
+properly created and added into the payload table. After resume, topology
+change is reprobed by removing existing streams first. That leads to
+no payload is found in the existing payload table as below error
+"[drm] ERROR No payload for [MST PORT:] found in mst state"
 
-Hence adjust aperture size to use max address supported by the page table.
+1. In encoder .atomic_check routine, remove check existance of dc_sink
+2. Bypass MST by checking existence of MST root port. dc_link_type cannot
+differentiate MST port before topology is rediscovered.
 
-Reported-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Fixes: aaac38f61487 ("iommu/amd: Initial support for AMD IOMMU v2 page table")
-Cc: <Stable@vger.kernel.org>  # v6.0+
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Link: https://lore.kernel.org/r/20230518054351.9626-1-vasant.hegde@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-[ Modified to work with "V2 with 4 level page table" only - Vasant ]
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+[Adjusted for variables that were renamed between 6.1 and 6.3.]
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/iommu.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -2101,6 +2101,15 @@ out_err:
- 	return NULL;
- }
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2763,7 +2763,7 @@ static int dm_resume(void *handle)
+ 		 * this is the case when traversing through already created
+ 		 * MST connectors, should be skipped
+ 		 */
+-		if (aconnector->dc_link->type == dc_connection_mst_branch)
++		if (aconnector && aconnector->mst_port)
+ 			continue;
  
-+static inline u64 dma_max_address(void)
-+{
-+	if (amd_iommu_pgtable == AMD_IOMMU_V1)
-+		return ~0ULL;
-+
-+	/* V2 with 4 level page table */
-+	return ((1ULL << PM_LEVEL_SHIFT(PAGE_MODE_4_LEVEL)) - 1);
-+}
-+
- static struct iommu_domain *amd_iommu_domain_alloc(unsigned type)
- {
- 	struct protection_domain *domain;
-@@ -2117,7 +2126,7 @@ static struct iommu_domain *amd_iommu_do
- 		return NULL;
+ 		mutex_lock(&aconnector->hpd_lock);
+@@ -6492,7 +6492,7 @@ static int dm_encoder_helper_atomic_chec
+ 	int clock, bpp = 0;
+ 	bool is_y420 = false;
  
- 	domain->domain.geometry.aperture_start = 0;
--	domain->domain.geometry.aperture_end   = ~0ULL;
-+	domain->domain.geometry.aperture_end   = dma_max_address();
- 	domain->domain.geometry.force_aperture = true;
+-	if (!aconnector->port || !aconnector->dc_sink)
++	if (!aconnector->port)
+ 		return 0;
  
- 	return &domain->domain;
+ 	mst_port = aconnector->port;
 
 
