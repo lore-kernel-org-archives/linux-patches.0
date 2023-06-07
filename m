@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D85534CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:01:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B412BC433D2;
-	Wed,  7 Jun 2023 21:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2DB34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:01:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A04C433EF;
+	Wed,  7 Jun 2023 21:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171697;
-	bh=XafiMvi6pniguY3dOE4WmTLMg0zaHdHzxP2bGOjoW+c=;
+	s=korg; t=1686171699;
+	bh=P9Aoq5Ja1OS9F7yWNtSuaurV9h9sWdmec6R6/fv86m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RvxLSOXZ2zl4uqxjFe8ZtuEuJZVVfWWy6YcoemDu0lwmrz6fuLyKX1oTJRWMusSEB
-	 BYWqkfQyJAePHN9xCYefh7/1L0lr6/AGazEwA5IaBeMzA2nnZ9Qyld+9afUeEkPC5R
-	 CprDFzlVvMR5ZaZEB6UnRS35BJzNoe32qIsTK0AM=
+	b=dNe8FUs15mdHoJng3M8jZnX4hXbfOTm3rPjDhcvlTBTDw2SKv0HchKGBDpTZ2tP9f
+	 gz63PMr/tA4ppDmDsPVFjsm8qfWOekdD2lqmOQEjDKoVhP6m9CAEYzIXVsd91XiwRj
+	 iNcbIsvRU6GEmSOiUanWqlX2yQPlaCpOfZxQzFDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Wenchao Hao <haowenchao2@huawei.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/159] wifi: mac80211: simplify chanctx allocation
-Date: Wed,  7 Jun 2023 22:16:28 +0200
-Message-ID: <20230607200906.478670086@linuxfoundation.org>
+Subject: [PATCH 5.15 086/159] scsi: core: Decrease scsi_devices iorequest_cnt if dispatch failed
+Date: Wed,  7 Jun 2023 22:16:29 +0200
+Message-ID: <20230607200906.512013478@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,36 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Wenchao Hao <haowenchao2@huawei.com>
 
-[ Upstream commit 860e1b43da94551cd1e73adc36b3c64cc3e5dc01 ]
+[ Upstream commit 09e797c8641f6ad435c33ae24c223351197ea29a ]
 
-There's no need to call ieee80211_recalc_chanctx_min_def()
-since it cannot and won't call the driver anyway; just use
-_ieee80211_recalc_chanctx_min_def() instead.
+If scsi_dispatch_cmd() failed, the SCSI command was not sent to the target,
+scsi_queue_rq() would return BLK_STS_RESOURCE and the related request would
+be requeued. The timeout of this request would not fire, no one would
+increase iodone_cnt.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230504134511.828474-3-gregory.greenman@intel.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The above flow would result the iodone_cnt smaller than iorequest_cnt.  So
+decrease the iorequest_cnt if dispatch failed to workaround the issue.
+
+Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
+Reported-by: Ming Lei <ming.lei@redhat.com>
+Closes: https://lore.kernel.org/r/ZF+zB+bB7iqe0wGd@ovpn-8-17.pek2.redhat.com
+Link: https://lore.kernel.org/r/20230515070156.1790181-3-haowenchao2@huawei.com
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/chan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_lib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
-index 63e15f583e0a6..f32d8d07d6a30 100644
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -563,7 +563,7 @@ ieee80211_alloc_chanctx(struct ieee80211_local *local,
- 	ctx->conf.rx_chains_dynamic = 1;
- 	ctx->mode = mode;
- 	ctx->conf.radar_enabled = false;
--	ieee80211_recalc_chanctx_min_def(local, ctx);
-+	_ieee80211_recalc_chanctx_min_def(local, ctx);
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index ef4361b2d1423..5525e6ffee537 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1476,6 +1476,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 		 */
+ 		SCSI_LOG_MLQUEUE(3, scmd_printk(KERN_INFO, cmd,
+ 			"queuecommand : device blocked\n"));
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		return SCSI_MLQUEUE_DEVICE_BUSY;
+ 	}
  
- 	return ctx;
- }
+@@ -1508,6 +1509,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
+ 	trace_scsi_dispatch_cmd_start(cmd);
+ 	rtn = host->hostt->queuecommand(host, cmd);
+ 	if (rtn) {
++		atomic_dec(&cmd->device->iorequest_cnt);
+ 		trace_scsi_dispatch_cmd_error(cmd, rtn);
+ 		if (rtn != SCSI_MLQUEUE_DEVICE_BUSY &&
+ 		    rtn != SCSI_MLQUEUE_TARGET_BUSY)
 -- 
 2.39.2
 
