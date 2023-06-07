@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA73823D6A
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:02:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BFA8C433EF;
-	Wed,  7 Jun 2023 21:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B19023D6A
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:02:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B52EC4339B;
+	Wed,  7 Jun 2023 21:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171759;
-	bh=nimzWmEZFrQvdetXqNVc1L3824RtmvJAgokIqJRobA8=;
+	s=korg; t=1686171762;
+	bh=ep++cgc0e//koz08NCc2N+nZbUjgQgT3DvwybrGChZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jm/a1003dhzeWz2QpJWTZ0gX6wBloiyC4RE4LNrvrlfJ97MmFtH2uYWJHMFxxK03X
-	 4S4HvqKxNxAD+EDNbLZQx4VZoYPOSdu+PEKv1Qs1i3N7HcmD/Yvt6KOvIdOdLOFh/E
-	 QvQ0SoGIeCCKGMAX5PlhAn7hAbX+VQpVocpmrY3A=
+	b=oAIA33hSnUhmHyH6JQxSAEdXXk4NbAT0OkNGJWL29zryLWYocdSZDTlHDFqPwmzpA
+	 MiWSgShabwZD0Np1s6eABq8s1GQDqYoBkJm8huGxL8T6RLXFIYmfgoXZ2NgqGdG1hj
+	 ZO3ONerXiSdNPd/Lp73+Hgp2EH1dFrnAnMGyewwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+e44749b6ba4d0434cd47@syzkaller.appspotmail.com,
+	syzbot+298c5d8fb4a128bc27b0@syzkaller.appspotmail.com,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 138/159] ext4: disallow ea_inodes with extended attributes
-Date: Wed,  7 Jun 2023 22:17:21 +0200
-Message-ID: <20230607200908.184727212@linuxfoundation.org>
+Subject: [PATCH 5.15 139/159] ext4: add lockdep annotations for i_data_sem for ea_inodes
+Date: Wed,  7 Jun 2023 22:17:22 +0200
+Message-ID: <20230607200908.216727394@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -37,33 +37,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Theodore Ts'o <tytso@mit.edu>
 
-commit 2bc7e7c1a3bc9bd0cbf0f71006f6fe7ef24a00c2 upstream.
+commit aff3bea95388299eec63440389b4545c8041b357 upstream.
 
-An ea_inode stores the value of an extended attribute; it can not have
-extended attributes itself, or this will cause recursive nightmares.
-Add a check in ext4_iget() to make sure this is the case.
+Treat i_data_sem for ea_inodes as being in their own lockdep class to
+avoid lockdep complaints about ext4_setattr's use of inode_lock() on
+normal inodes potentially causing lock ordering with i_data_sem on
+ea_inodes in ext4_xattr_inode_write().  However, ea_inodes will be
+operated on by ext4_setattr(), so this isn't a problem.
 
 Cc: stable@kernel.org
-Reported-by: syzbot+e44749b6ba4d0434cd47@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=298c5d8fb4a128bc27b0
+Reported-by: syzbot+298c5d8fb4a128bc27b0@syzkaller.appspotmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230524034951.779531-4-tytso@mit.edu
+Link: https://lore.kernel.org/r/20230524034951.779531-5-tytso@mit.edu
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/ext4.h  |    2 ++
+ fs/ext4/xattr.c |    4 ++++
+ 2 files changed, 6 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4598,6 +4598,9 @@ static const char *check_igot_inode(stru
- 	if (flags & EXT4_IGET_EA_INODE) {
- 		if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
- 			return "missing EA_INODE flag";
-+		if (ext4_test_inode_state(inode, EXT4_STATE_XATTR) ||
-+		    EXT4_I(inode)->i_file_acl)
-+			return "ea_inode with extended attributes";
- 	} else {
- 		if ((EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
- 			return "unexpected EA_INODE flag";
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -995,11 +995,13 @@ do {									       \
+  *			  where the second inode has larger inode number
+  *			  than the first
+  *  I_DATA_SEM_QUOTA  - Used for quota inodes only
++ *  I_DATA_SEM_EA     - Used for ea_inodes only
+  */
+ enum {
+ 	I_DATA_SEM_NORMAL = 0,
+ 	I_DATA_SEM_OTHER,
+ 	I_DATA_SEM_QUOTA,
++	I_DATA_SEM_EA
+ };
+ 
+ 
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -123,7 +123,11 @@ ext4_expand_inode_array(struct ext4_xatt
+ #ifdef CONFIG_LOCKDEP
+ void ext4_xattr_inode_set_class(struct inode *ea_inode)
+ {
++	struct ext4_inode_info *ei = EXT4_I(ea_inode);
++
+ 	lockdep_set_subclass(&ea_inode->i_rwsem, 1);
++	(void) ei;	/* shut up clang warning if !CONFIG_LOCKDEP */
++	lockdep_set_subclass(&ei->i_data_sem, I_DATA_SEM_EA);
+ }
+ #endif
+ 
 
 
