@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C057B34CD3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:57:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF90CC433EF;
-	Wed,  7 Jun 2023 20:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067B13922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:57:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F368C433EF;
+	Wed,  7 Jun 2023 20:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171448;
-	bh=ucclNngBbka4lq/3zBwzxqDWONRCbthRVruEaIFZ1h0=;
+	s=korg; t=1686171450;
+	bh=szlVYix1N6/BxvW8L6ngB0ilvdQCBlX1BXl+fRtmKSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjMti6x1E2eZy3cGvELVuh+th0Pa4KiwmKXv7Xmxf+udxm62uGwxGy9vGEb/rLY73
-	 TUxwUjqdt7qccRk+Rpy/Gqrm2aQC3FWnDufprOWirfLuGF4fTUJTbw3ocKIt/7U/9S
-	 IwudUZ9yuko5AJ7ARoGgNIMGTVX4RuRmHwcoV6So=
+	b=L+AaAAV5Dr4CvAtjSIiK5V/j/h1pB58mCoXjH46IZV4tjRvawbyexqTJkgzGYx2jL
+	 XBetfWujE/V0Vd+eInVtrEKam+BOp5mzAyIJCIPCmCtyLwhWn8g3hKo9q2yY1UflLI
+	 1EzNdAW2YvOVRAup9zOvsAMwzXhCtIqI71W5XGto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Linkin <dlinkin@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 014/159] net/mlx5e: Dont attach netdev profile while handling internal error
-Date: Wed,  7 Jun 2023 22:15:17 +0200
-Message-ID: <20230607200904.138216630@linuxfoundation.org>
+Subject: [PATCH 5.15 023/159] af_packet: do not use READ_ONCE() in packet_bind()
+Date: Wed,  7 Jun 2023 22:15:26 +0200
+Message-ID: <20230607200904.430320593@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,104 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmytro Linkin <dlinkin@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit bdf274750fca17b289404ef03453c4070725302c ]
+[ Upstream commit 6ffc57ea004234d9373c57b204fd10370a69f392 ]
 
-As part of switchdev mode disablement, driver changes port netdevice
-profile from uplink to nic. If this process is triggered by health
-recovery flow (PCI reset, for ex.) profile attach would fail because all
-fw commands aborted when internal error flag is set. As a result, nic
-netdevice profile is not attached and driver fails to rollback to uplink
-profile, which leave driver in broken state and cause crash later.
+A recent patch added READ_ONCE() in packet_bind() and packet_bind_spkt()
 
-To handle broken state do netdevice profile initialization only instead
-of full attachment and release mdev resources on driver suspend as
-expected. Actual netdevice attachment is done during driver load.
+This is better handled by reading pkt_sk(sk)->num later
+in packet_do_bind() while appropriate lock is held.
 
-Fixes: c4d7eb57687f ("net/mxl5e: Add change profile method")
-Signed-off-by: Dmytro Linkin <dlinkin@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+READ_ONCE() in writers are often an evidence of something being wrong.
+
+Fixes: 822b5a1c17df ("af_packet: Fix data-races of pkt_sk(sk)->num.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230526154342.2533026-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_main.c | 35 ++++++++++++++++---
- 1 file changed, 31 insertions(+), 4 deletions(-)
+ net/packet/af_packet.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index ec1c667bd145a..82849bed27f4c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5008,8 +5008,8 @@ void mlx5e_detach_netdev(struct mlx5e_priv *priv)
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 05a0b1d8c3721..ccf84ce41fd71 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3159,6 +3159,9 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
+ 
+ 	lock_sock(sk);
+ 	spin_lock(&po->bind_lock);
++	if (!proto)
++		proto = po->num;
++
+ 	rcu_read_lock();
+ 
+ 	if (po->fanout) {
+@@ -3259,7 +3262,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
+ 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
+ 	name[sizeof(uaddr->sa_data)] = 0;
+ 
+-	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, name, 0, 0);
  }
  
- static int
--mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
--			    const struct mlx5e_profile *new_profile, void *new_ppriv)
-+mlx5e_netdev_init_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
-+			  const struct mlx5e_profile *new_profile, void *new_ppriv)
- {
- 	struct mlx5e_priv *priv = netdev_priv(netdev);
- 	int err;
-@@ -5025,6 +5025,25 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
- 	err = new_profile->init(priv->mdev, priv->netdev);
- 	if (err)
- 		goto priv_cleanup;
-+
-+	return 0;
-+
-+priv_cleanup:
-+	mlx5e_priv_cleanup(priv);
-+	return err;
-+}
-+
-+static int
-+mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
-+			    const struct mlx5e_profile *new_profile, void *new_ppriv)
-+{
-+	struct mlx5e_priv *priv = netdev_priv(netdev);
-+	int err;
-+
-+	err = mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
-+	if (err)
-+		return err;
-+
- 	err = mlx5e_attach_netdev(priv);
- 	if (err)
- 		goto profile_cleanup;
-@@ -5032,7 +5051,6 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
+ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+@@ -3276,8 +3279,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
+ 	if (sll->sll_family != AF_PACKET)
+ 		return -EINVAL;
  
- profile_cleanup:
- 	new_profile->cleanup(priv);
--priv_cleanup:
- 	mlx5e_priv_cleanup(priv);
- 	return err;
+-	return packet_do_bind(sk, NULL, sll->sll_ifindex,
+-			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, NULL, sll->sll_ifindex, sll->sll_protocol);
  }
-@@ -5051,6 +5069,12 @@ int mlx5e_netdev_change_profile(struct mlx5e_priv *priv,
- 	priv->profile->cleanup(priv);
- 	mlx5e_priv_cleanup(priv);
  
-+	if (mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR) {
-+		mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
-+		set_bit(MLX5E_STATE_DESTROYING, &priv->state);
-+		return -EIO;
-+	}
-+
- 	err = mlx5e_netdev_attach_profile(netdev, mdev, new_profile, new_ppriv);
- 	if (err) { /* roll back to original profile */
- 		netdev_warn(netdev, "%s: new profile init failed, %d\n", __func__, err);
-@@ -5110,8 +5134,11 @@ static int mlx5e_suspend(struct auxiliary_device *adev, pm_message_t state)
- 	struct net_device *netdev = priv->netdev;
- 	struct mlx5_core_dev *mdev = priv->mdev;
- 
--	if (!netif_device_present(netdev))
-+	if (!netif_device_present(netdev)) {
-+		if (test_bit(MLX5E_STATE_DESTROYING, &priv->state))
-+			mlx5e_destroy_mdev_resources(mdev);
- 		return -ENODEV;
-+	}
- 
- 	mlx5e_detach_netdev(priv);
- 	mlx5e_destroy_mdev_resources(mdev);
+ static struct proto packet_proto = {
 -- 
 2.39.2
 
