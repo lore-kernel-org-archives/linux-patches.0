@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83ECB10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C42C4339B;
-	Wed,  7 Jun 2023 20:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CE710FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FB7C433EF;
+	Wed,  7 Jun 2023 20:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169577;
-	bh=I2aKf92ofZGQYb/AYxQ9lo3Bh+uB9VlLXMhpvn1d/tQ=;
+	s=korg; t=1686169580;
+	bh=9XuyVdHschitaFjv1IRmhakUiZ7udiWU8DqDINx/jd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsNPxaW7ADpa49qD8JgITeSOgt4GVTwSA1M/qKp52cusQ0dl43HcbEDRVAJLB9hqo
-	 rpegtlQrJ8LE1cgJMPjm38bL7FT8hwUmtFM9r6AdksG5Qr6Y+l12SxojZTrFbmiZSo
-	 4L5C6MhqZeozn9Iy241nFvdW8EB5D7aeVQ/s+1hw=
+	b=uU7Y/1VZNOwO6XvikFjSeTYKpmKwdWLRxd4kl7CQaysrlo9ApJAOHx9I+QKvWSDKV
+	 bq5EyTrkJrbba/ESyhqGD7L5R4KFUppsCFykEYvPs1uvGaluDNDTFZjVB9PxfpFjnX
+	 xLlYksL/KxO+W/ljS/2XjUc5iPc/mESig7Q2I/kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Lan <lanyang0908@gmail.com>,
-	Bob Peterson <rpeterso@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Thong Thai <thong.thai@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 104/286] gfs2: Dont deref jdesc in evict
-Date: Wed,  7 Jun 2023 22:13:23 +0200
-Message-ID: <20230607200926.464794423@linuxfoundation.org>
+Subject: [PATCH 6.3 105/286] drm/amdgpu/nv: update VCN 3 max HEVC encoding resolution
+Date: Wed,  7 Jun 2023 22:13:24 +0200
+Message-ID: <20230607200926.497971357@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,64 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Peterson <rpeterso@redhat.com>
+From: Thong Thai <thong.thai@amd.com>
 
-[ Upstream commit 504a10d9e46bc37b23d0a1ae2f28973c8516e636 ]
+[ Upstream commit 476ac50fc30540e29191615a26aaf5f9dee91c49 ]
 
-On corrupt gfs2 file systems the evict code can try to reference the
-journal descriptor structure, jdesc, after it has been freed and set to
-NULL. The sequence of events is:
+Update the maximum resolution reported for HEVC encoding on VCN 3
+devices to reflect its 8K encoding capability.
 
-init_journal()
-...
-fail_jindex:
-   gfs2_jindex_free(sdp); <------frees journals, sets jdesc = NULL
-      if (gfs2_holder_initialized(&ji_gh))
-         gfs2_glock_dq_uninit(&ji_gh);
-fail:
-   iput(sdp->sd_jindex); <--references jdesc in evict_linked_inode
-      evict()
-         gfs2_evict_inode()
-            evict_linked_inode()
-               ret = gfs2_trans_begin(sdp, 0, sdp->sd_jdesc->jd_blocks);
-<------references the now freed/zeroed sd_jdesc pointer.
+v2: Also update the max height for H.264 encoding to match spec.
+(Ruijing)
 
-The call to gfs2_trans_begin is done because the truncate_inode_pages
-call can cause gfs2 events that require a transaction, such as removing
-journaled data (jdata) blocks from the journal.
-
-This patch fixes the problem by adding a check for sdp->sd_jdesc to
-function gfs2_evict_inode. In theory, this should only happen to corrupt
-gfs2 file systems, when gfs2 detects the problem, reports it, then tries
-to evict all the system inodes it has read in up to that point.
-
-Reported-by: Yang Lan <lanyang0908@gmail.com>
-Signed-off-by: Bob Peterson <rpeterso@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Thong Thai <thong.thai@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/super.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/nv.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index a83fa62106f0e..7891f331082aa 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1410,6 +1410,14 @@ static void gfs2_evict_inode(struct inode *inode)
- 	if (inode->i_nlink || sb_rdonly(sb) || !ip->i_no_addr)
- 		goto out;
+diff --git a/drivers/gpu/drm/amd/amdgpu/nv.c b/drivers/gpu/drm/amd/amdgpu/nv.c
+index ebe0e2d7dbd1b..aa7f82b3fd6a9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/nv.c
++++ b/drivers/gpu/drm/amd/amdgpu/nv.c
+@@ -98,6 +98,16 @@ static const struct amdgpu_video_codecs nv_video_codecs_decode =
+ };
  
-+	/*
-+	 * In case of an incomplete mount, gfs2_evict_inode() may be called for
-+	 * system files without having an active journal to write to.  In that
-+	 * case, skip the filesystem evict.
-+	 */
-+	if (!sdp->sd_jdesc)
-+		goto out;
+ /* Sienna Cichlid */
++static const struct amdgpu_video_codec_info sc_video_codecs_encode_array[] = {
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2160, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 7680, 4352, 0)},
++};
 +
- 	gfs2_holder_mark_uninitialized(&gh);
- 	ret = evict_should_delete(inode, &gh);
- 	if (ret == SHOULD_DEFER_EVICTION)
++static const struct amdgpu_video_codecs sc_video_codecs_encode = {
++	.codec_count = ARRAY_SIZE(sc_video_codecs_encode_array),
++	.codec_array = sc_video_codecs_encode_array,
++};
++
+ static const struct amdgpu_video_codec_info sc_video_codecs_decode_array_vcn0[] =
+ {
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG2, 4096, 4096, 3)},
+@@ -136,8 +146,8 @@ static const struct amdgpu_video_codecs sc_video_codecs_decode_vcn1 =
+ /* SRIOV Sienna Cichlid, not const since data is controlled by host */
+ static struct amdgpu_video_codec_info sriov_sc_video_codecs_encode_array[] =
+ {
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2160, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 7680, 4352, 0)},
+ };
+ 
+ static struct amdgpu_video_codec_info sriov_sc_video_codecs_decode_array_vcn0[] =
+@@ -237,12 +247,12 @@ static int nv_query_video_codecs(struct amdgpu_device *adev, bool encode,
+ 		} else {
+ 			if (adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0) {
+ 				if (encode)
+-					*codecs = &nv_video_codecs_encode;
++					*codecs = &sc_video_codecs_encode;
+ 				else
+ 					*codecs = &sc_video_codecs_decode_vcn1;
+ 			} else {
+ 				if (encode)
+-					*codecs = &nv_video_codecs_encode;
++					*codecs = &sc_video_codecs_encode;
+ 				else
+ 					*codecs = &sc_video_codecs_decode_vcn0;
+ 			}
+@@ -251,14 +261,14 @@ static int nv_query_video_codecs(struct amdgpu_device *adev, bool encode,
+ 	case IP_VERSION(3, 0, 16):
+ 	case IP_VERSION(3, 0, 2):
+ 		if (encode)
+-			*codecs = &nv_video_codecs_encode;
++			*codecs = &sc_video_codecs_encode;
+ 		else
+ 			*codecs = &sc_video_codecs_decode_vcn0;
+ 		return 0;
+ 	case IP_VERSION(3, 1, 1):
+ 	case IP_VERSION(3, 1, 2):
+ 		if (encode)
+-			*codecs = &nv_video_codecs_encode;
++			*codecs = &sc_video_codecs_encode;
+ 		else
+ 			*codecs = &yc_video_codecs_decode;
+ 		return 0;
 -- 
 2.39.2
 
