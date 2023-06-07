@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10ED639251
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:20:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82975C433D2;
-	Wed,  7 Jun 2023 20:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21D339251
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:20:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245ABC4339B;
+	Wed,  7 Jun 2023 20:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169221;
-	bh=R2szygw8FMPBznQfFFea6pkYnXE8rPymtXIxPAxltKY=;
+	s=korg; t=1686169224;
+	bh=rOGwzp4wdvUK32NTUppxLuccKbf/zm39VBLfEOvqHA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUjAr6nIyC0ND+DWYi+TNswperv3hlVPeO2qQTd4BVki5jqz5gBrkx6JkA7yYywES
-	 6tu3inVyYp8rbi8tZULKIeGOverti4fPFwMGvnvQf3ZDXYC5kApk8EkLScG9sOhNO1
-	 G/cyS9Eafv2WQ2MPJHCQ3bvl+pCbf3Hr8WCD3Tu8=
+	b=UTduEo803bW1HgiW+jJHkCqTyyoCvru9nlyr56v6KGk9g50Wqh3fT1PpeHuhCpFgX
+	 Bv5U79XR5nwzdqkAWwyVSy4979RD+g8o64m96xiyBJrtTNVEf4IljHjiLY2n4FXisT
+	 8o+T50u9UaxkQTCA/I30a52JW7n3pKMI5gigRG20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 33/61] atm: hide unused procfs functions
-Date: Wed,  7 Jun 2023 22:15:47 +0200
-Message-ID: <20230607200846.860506114@linuxfoundation.org>
+	stable@kernel.org,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Samuel Mendoza-Jonas <samjonas@amazon.com>
+Subject: [PATCH 4.14 60/61] Fix double fget() in vhost_net_set_backend()
+Date: Wed,  7 Jun 2023 22:16:14 +0200
+Message-ID: <20230607200855.836993540@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -35,47 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit fb1b7be9b16c1f4626969ba4e95a97da2a452b41 ]
+commit fb4554c2232e44d595920f4d5c66cf8f7d13f9bc upstream.
 
-When CONFIG_PROC_FS is disabled, the function declarations for some
-procfs functions are hidden, but the definitions are still build,
-as shown by this compiler warning:
+Descriptor table is a shared resource; two fget() on the same descriptor
+may return different struct file references.  get_tap_ptr_ring() is
+called after we'd found (and pinned) the socket we'll be using and it
+tries to find the private tun/tap data structures associated with it.
+Redoing the lookup by the same file descriptor we'd used to get the
+socket is racy - we need to same struct file.
 
-net/atm/resources.c:403:7: error: no previous prototype for 'atm_dev_seq_start' [-Werror=missing-prototypes]
-net/atm/resources.c:409:6: error: no previous prototype for 'atm_dev_seq_stop' [-Werror=missing-prototypes]
-net/atm/resources.c:414:7: error: no previous prototype for 'atm_dev_seq_next' [-Werror=missing-prototypes]
+Thanks to Jason for spotting a braino in the original variant of patch -
+I'd missed the use of fd == -1 for disabling backend, and in that case
+we can end up with sock == NULL and sock != oldsock.
 
-Add another #ifdef to leave these out of the build.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230516194625.549249-2-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+[4.14: Account for get_tap_skb_array() instead of get_tap_ptr_ring()]
+Signed-off-by: Samuel Mendoza-Jonas <samjonas@amazon.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/atm/resources.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/vhost/net.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/net/atm/resources.c b/net/atm/resources.c
-index bada395ecdb18..9389080224f87 100644
---- a/net/atm/resources.c
-+++ b/net/atm/resources.c
-@@ -447,6 +447,7 @@ int atm_dev_ioctl(unsigned int cmd, void __user *arg, int compat)
- 	return error;
+--- a/drivers/vhost/net.c
++++ b/drivers/vhost/net.c
+@@ -1047,13 +1047,9 @@ err:
+ 	return ERR_PTR(r);
  }
  
-+#ifdef CONFIG_PROC_FS
- void *atm_dev_seq_start(struct seq_file *seq, loff_t *pos)
+-static struct skb_array *get_tap_skb_array(int fd)
++static struct skb_array *get_tap_skb_array(struct file *file)
  {
- 	mutex_lock(&atm_dev_mutex);
-@@ -462,3 +463,4 @@ void *atm_dev_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- {
- 	return seq_list_next(v, &atm_devs, pos);
+ 	struct skb_array *array;
+-	struct file *file = fget(fd);
+-
+-	if (!file)
+-		return NULL;
+ 	array = tun_get_skb_array(file);
+ 	if (!IS_ERR(array))
+ 		goto out;
+@@ -1062,7 +1058,6 @@ static struct skb_array *get_tap_skb_arr
+ 		goto out;
+ 	array = NULL;
+ out:
+-	fput(file);
+ 	return array;
  }
-+#endif
--- 
-2.39.2
-
+ 
+@@ -1143,8 +1138,12 @@ static long vhost_net_set_backend(struct
+ 		vhost_net_disable_vq(n, vq);
+ 		vq->private_data = sock;
+ 		vhost_net_buf_unproduce(nvq);
+-		if (index == VHOST_NET_VQ_RX)
+-			nvq->rx_array = get_tap_skb_array(fd);
++		if (index == VHOST_NET_VQ_RX) {
++			if (sock)
++				nvq->rx_array = get_tap_skb_array(sock->file);
++			else
++				nvq->rx_array = NULL;
++		}
+ 		r = vhost_vq_init_access(vq);
+ 		if (r)
+ 			goto err_used;
 
 
