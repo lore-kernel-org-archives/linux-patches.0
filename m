@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD9E3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:59:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D454C433EF;
-	Wed,  7 Jun 2023 20:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9038E3922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0ABC433D2;
+	Wed,  7 Jun 2023 20:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171597;
-	bh=Ob3qJWVV0UzBiL0Q4d/OmDcvpBKUL55xRXXAWm7zHZg=;
+	s=korg; t=1686171600;
+	bh=cWB1dZy+1AbY9jcNQa0xPC8wJXDRMfc8M7uaWfwUlok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1Q22CW+4mgyjh/ySow3ZHgL1WY7lwdAa97lPJCTaIn6CvjFWzkjwOnSS/u8u0Z9M
-	 8Pi/2T4q6wEJCBEDUr6ZUBerM5CAqayymVhsTpJNKMXKyeLy7P08azhW2Nhny4J0MP
-	 F34haiBsU6e6znMKe3NhS67XHuNEZyswGOxyDqKE=
+	b=AfXVC9vIhEvl0uh3DjycicfJ97nQqORo9ocX2YcpT4qWZJ+OU2qlvWq6qkRwYiew7
+	 Xht90jUvUvPEEfn6zgi3Rh40FhotPhpcLexfNB27SXV4eB9mtpx/tPnlbxfZ94ver9
+	 PG7NecldDzPhpUqGNwv1C+7Msxpgr6idfRJBtNDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Julian Winkler <julian.winkler1@web.de>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 077/159] media: dvb-core: Fix use-after-free due to race condition at dvb_ca_en50221
-Date: Wed,  7 Jun 2023 22:16:20 +0200
-Message-ID: <20230607200906.200266793@linuxfoundation.org>
+Subject: [PATCH 5.15 049/159] platform/x86: intel_scu_pcidrv: Add back PCI ID for Medfield
+Date: Wed,  7 Jun 2023 22:15:52 +0200
+Message-ID: <20230607200905.291444034@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,126 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Julian Winkler <julian.winkler1@web.de>
 
-[ Upstream commit 280a8ab81733da8bc442253c700a52c4c0886ffd ]
+[ Upstream commit 4a9b6850c794e4394cad99e2b863d75f5bc8e92f ]
 
-If the device node of dvb_ca_en50221 is open() and the
-device is disconnected, a UAF may occur when calling
-close() on the device node.
+This id was removed in commit b47018a778c1 ("platform/x86: intel_scu_ipc:
+Remove Lincroft support"), saying it is only used on Moorestown,
+but apparently the same id is also used on Medfield.
 
-The root cause is that wake_up() and wait_event() for
-dvbdev->wait_queue are not implemented.
+Tested on the Medfield based Motorola RAZR i smartphone.
 
-So implement wait_event() function in dvb_ca_en50221_release()
-and add 'remove_mutex' which prevents race condition
-for 'ca->exit'.
-
-[mchehab: fix a checkpatch warning]
-
-Link: https://lore.kernel.org/linux-media/20221121063308.GA33821@ubuntu
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Julian Winkler <julian.winkler1@web.de>
+Link: https://lore.kernel.org/r/20230416154932.6579-1-julian.winkler1@web.de
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_ca_en50221.c | 37 ++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+ drivers/platform/x86/intel_scu_pcidrv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
-index b6ca29dfb184a..baf64540dc00a 100644
---- a/drivers/media/dvb-core/dvb_ca_en50221.c
-+++ b/drivers/media/dvb-core/dvb_ca_en50221.c
-@@ -151,6 +151,12 @@ struct dvb_ca_private {
+diff --git a/drivers/platform/x86/intel_scu_pcidrv.c b/drivers/platform/x86/intel_scu_pcidrv.c
+index 80abc708e4f2f..d904fad499aa5 100644
+--- a/drivers/platform/x86/intel_scu_pcidrv.c
++++ b/drivers/platform/x86/intel_scu_pcidrv.c
+@@ -34,6 +34,7 @@ static int intel_scu_pci_probe(struct pci_dev *pdev,
  
- 	/* mutex serializing ioctls */
- 	struct mutex ioctl_mutex;
-+
-+	/* A mutex used when a device is disconnected */
-+	struct mutex remove_mutex;
-+
-+	/* Whether the device is disconnected */
-+	int exit;
- };
- 
- static void dvb_ca_private_free(struct dvb_ca_private *ca)
-@@ -1711,12 +1717,22 @@ static int dvb_ca_en50221_io_open(struct inode *inode, struct file *file)
- 
- 	dprintk("%s\n", __func__);
- 
--	if (!try_module_get(ca->pub->owner))
-+	mutex_lock(&ca->remove_mutex);
-+
-+	if (ca->exit) {
-+		mutex_unlock(&ca->remove_mutex);
-+		return -ENODEV;
-+	}
-+
-+	if (!try_module_get(ca->pub->owner)) {
-+		mutex_unlock(&ca->remove_mutex);
- 		return -EIO;
-+	}
- 
- 	err = dvb_generic_open(inode, file);
- 	if (err < 0) {
- 		module_put(ca->pub->owner);
-+		mutex_unlock(&ca->remove_mutex);
- 		return err;
- 	}
- 
-@@ -1741,6 +1757,7 @@ static int dvb_ca_en50221_io_open(struct inode *inode, struct file *file)
- 
- 	dvb_ca_private_get(ca);
- 
-+	mutex_unlock(&ca->remove_mutex);
- 	return 0;
- }
- 
-@@ -1760,6 +1777,8 @@ static int dvb_ca_en50221_io_release(struct inode *inode, struct file *file)
- 
- 	dprintk("%s\n", __func__);
- 
-+	mutex_lock(&ca->remove_mutex);
-+
- 	/* mark the CA device as closed */
- 	ca->open = 0;
- 	dvb_ca_en50221_thread_update_delay(ca);
-@@ -1770,6 +1789,13 @@ static int dvb_ca_en50221_io_release(struct inode *inode, struct file *file)
- 
- 	dvb_ca_private_put(ca);
- 
-+	if (dvbdev->users == 1 && ca->exit == 1) {
-+		mutex_unlock(&ca->remove_mutex);
-+		wake_up(&dvbdev->wait_queue);
-+	} else {
-+		mutex_unlock(&ca->remove_mutex);
-+	}
-+
- 	return err;
- }
- 
-@@ -1893,6 +1919,7 @@ int dvb_ca_en50221_init(struct dvb_adapter *dvb_adapter,
- 	}
- 
- 	mutex_init(&ca->ioctl_mutex);
-+	mutex_init(&ca->remove_mutex);
- 
- 	if (signal_pending(current)) {
- 		ret = -EINTR;
-@@ -1935,6 +1962,14 @@ void dvb_ca_en50221_release(struct dvb_ca_en50221 *pubca)
- 
- 	dprintk("%s\n", __func__);
- 
-+	mutex_lock(&ca->remove_mutex);
-+	ca->exit = 1;
-+	mutex_unlock(&ca->remove_mutex);
-+
-+	if (ca->dvbdev->users < 1)
-+		wait_event(ca->dvbdev->wait_queue,
-+				ca->dvbdev->users == 1);
-+
- 	/* shutdown the thread if there was one */
- 	kthread_stop(ca->thread);
- 
+ static const struct pci_device_id pci_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x080e) },
++	{ PCI_VDEVICE(INTEL, 0x082a) },
+ 	{ PCI_VDEVICE(INTEL, 0x08ea) },
+ 	{ PCI_VDEVICE(INTEL, 0x0a94) },
+ 	{ PCI_VDEVICE(INTEL, 0x11a0) },
 -- 
 2.39.2
 
