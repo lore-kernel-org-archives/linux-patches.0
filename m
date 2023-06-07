@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B82A19BBC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:18:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A56C433EF;
-	Wed,  7 Jun 2023 20:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E2919BBC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:18:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBD1C433EF;
+	Wed,  7 Jun 2023 20:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169084;
-	bh=SftzRtwTEFPiZgJQTcW27XiDG/Ojd+U3IFwd4o4KdNY=;
+	s=korg; t=1686169087;
+	bh=/jbd+Bvi3Lg/hA/WGEyuYI45qosR7JT69/dr7+nFZPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpvJAZYrzt/UoWkFryYvC4XbfJVoH1deQy+2G0rA/4sitd8JtXBbxGaQIjuaRfNiC
-	 0WXFkbCMUPRwl5JIRbyRGddOQqHLSbMiPZfiLCFyVdZcYXNfvlsEoFt/IZut3v2z70
-	 SNFS2v1Cd3WStCzQPrKnNQTjhXFYc3bK3o8DBRpA=
+	b=BTWZyppdYYGXVI2rYSZJsjkbG5uTq49qofM/yav9M0oJuo8CAleecqgcUAQH1hy2u
+	 WevgXtXLmuQYsr+AnuxCeBZgIULrF/ZZKLkcN+BloDmkXGRnb8+YzIG2eU60YmN6S/
+	 r42Nng1rSGXWW8JAs5PBxppVLHT1XaR+Smn2IIwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Andreas Svensson <andreas.svensson@axis.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 01/61] power: supply: bq27xxx: After charger plug in/out wait 0.5s for things to stabilize
-Date: Wed,  7 Jun 2023 22:15:15 +0200
-Message-ID: <20230607200835.697886180@linuxfoundation.org>
+Subject: [PATCH 4.14 10/61] net: dsa: mv88e6xxx: Increase wait after reset deactivation
+Date: Wed,  7 Jun 2023 22:15:24 +0200
+Message-ID: <20230607200838.740776359@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,38 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Andreas Svensson <andreas.svensson@axis.com>
 
-[ Upstream commit 59a99cd462fbdf71f4e845e09f37783035088b4f ]
+[ Upstream commit 3c27f3d53d588618d81d30d6712459a3cc9489b8 ]
 
-bq27xxx_external_power_changed() gets called when the charger is plugged
-in or out. Rather then immediately scheduling an update wait 0.5 seconds
-for things to stabilize, so that e.g. the (dis)charge current is stable
-when bq27xxx_battery_update() runs.
+A switch held in reset by default needs to wait longer until we can
+reliably detect it.
 
-Fixes: 740b755a3b34 ("bq27x00: Poll battery state")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+An issue was observed when testing on the Marvell 88E6393X (Link Street).
+The driver failed to detect the switch on some upstarts. Increasing the
+wait time after reset deactivation solves this issue.
+
+The updated wait time is now also the same as the wait time in the
+mv88e6xxx_hardware_reset function.
+
+Fixes: 7b75e49de424 ("net: dsa: mv88e6xxx: wait after reset deactivation")
+Signed-off-by: Andreas Svensson <andreas.svensson@axis.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230530145223.1223993-1-andreas.svensson@axis.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 37b5743ce35e4..49d351027d0e8 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1817,8 +1817,8 @@ static void bq27xxx_external_power_changed(struct power_supply *psy)
- {
- 	struct bq27xxx_device_info *di = power_supply_get_drvdata(psy);
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index ef016c9f7c744..e8f6d70c1ec64 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -4060,7 +4060,7 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
+ 		}
+ 	}
+ 	if (chip->reset)
+-		usleep_range(1000, 2000);
++		usleep_range(10000, 20000);
  
--	cancel_delayed_work_sync(&di->work);
--	schedule_delayed_work(&di->work, 0);
-+	/* After charger plug in/out wait 0.5s for things to stabilize */
-+	mod_delayed_work(system_wq, &di->work, HZ / 2);
- }
- 
- int bq27xxx_battery_setup(struct bq27xxx_device_info *di)
+ 	err = mv88e6xxx_mdios_register(chip, np);
+ 	if (err)
 -- 
 2.39.2
 
