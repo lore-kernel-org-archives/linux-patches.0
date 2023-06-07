@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DE839255
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2A1C433EF;
-	Wed,  7 Jun 2023 20:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1C434CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A12C433EF;
+	Wed,  7 Jun 2023 20:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170718;
-	bh=lzRhfW718AcV1SxGiAPmV+7V9oA9+axeK4DcEw9vdv4=;
+	s=korg; t=1686170724;
+	bh=8mWfFaGTd2HQt0MumFExFLYYTmF+whtC2DCs74LzCSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hui92m/utnd+0+ZvzQvciSqarntRr5Gsmlu5EvfwI18UWxMe1aPkHblkX27LdqDjo
-	 /ZFxgVwNRH8/IgrUIVSoBuSXWwZcDicF9/1YI0Wwejg7qY8GWasy3M84C0gGHwkwYG
-	 kgwjUD74+gpnMaECeW1U8hvjVZS8t18Q0cCYJ81o=
+	b=zU4dzAmN0ooCrUPWLV1eRL51kTQYcwlQZByUfSr5rpmDBEEbCjjBz23JSLW2H+rUv
+	 yETr51wVFXUZ+BkQvSpz31cKPpiLGr+0jHghjgUKdjxfgQsHm+vdgMBIHBmtOyjQ0S
+	 QxmG7bkssnFQ7rMSW7pnZv4ldjeRt+OMjwiNEoP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH 6.1 192/225] selftests: mptcp: sockopt: skip if MPTCP is not supported
-Date: Wed,  7 Jun 2023 22:16:25 +0200
-Message-ID: <20230607200920.657805061@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 194/225] mptcp: fix connect timeout handling
+Date: Wed,  7 Jun 2023 22:16:27 +0200
+Message-ID: <20230607200920.720650202@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,46 +36,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit cf6f0fda7af7e8e016070bfee6b189e671a0c776 upstream.
+commit 786fc12457268cc9b555dde6c22ae7300d4b40e1 upstream.
 
-Selftests are supposed to run on any kernels, including the old ones not
-supporting MPTCP.
+Ondrej reported a functional issue WRT timeout handling on connect
+with a nice reproducer.
 
-A new check is then added to make sure MPTCP is supported. If not, the
-test stops and is marked as "skipped".
+The problem is that the current mptcp connect waits for both the
+MPTCP socket level timeout, and the first subflow socket timeout.
+The latter is not influenced/touched by the exposed setsockopt().
 
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: dc65fe82fb07 ("selftests: mptcp: add packet mark test case")
+Overall the above makes the SO_SNDTIMEO a no-op on connect.
+
+Since mptcp_connect is invoked via inet_stream_connect and the
+latter properly handle the MPTCP level timeout, we can address the
+issue making the nested subflow level connect always unblocking.
+
+This also allow simplifying a bit the code, dropping an ugly hack
+to handle the fastopen and custom proto_ops connect.
+
+The issues predates the blamed commit below, but the current resolution
+requires the infrastructure introduced there.
+
+Fixes: 54f1944ed6d2 ("mptcp: factor out mptcp_connect()")
+Reported-by: Ondrej Mosnacek <omosnace@redhat.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/399
 Cc: stable@vger.kernel.org
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_sockopt.sh |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/mptcp/protocol.c |   29 +++++++----------------------
+ net/mptcp/protocol.h |    1 -
+ 2 files changed, 7 insertions(+), 23 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
-@@ -1,6 +1,8 @@
- #!/bin/bash
- # SPDX-License-Identifier: GPL-2.0
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1683,7 +1683,6 @@ static int mptcp_sendmsg_fastopen(struct
  
-+. "$(dirname "${0}")/mptcp_lib.sh"
-+
- ret=0
- sin=""
- sout=""
-@@ -81,6 +83,8 @@ cleanup()
- 	rm -f "$sin" "$sout"
+ 	lock_sock(ssk);
+ 	msg->msg_flags |= MSG_DONTWAIT;
+-	msk->connect_flags = O_NONBLOCK;
+ 	msk->fastopening = 1;
+ 	ret = tcp_sendmsg_fastopen(ssk, msg, copied_syn, len, NULL);
+ 	msk->fastopening = 0;
+@@ -3638,9 +3637,9 @@ static int mptcp_connect(struct sock *sk
+ 	 * acquired the subflow socket lock, too.
+ 	 */
+ 	if (msk->fastopening)
+-		err = __inet_stream_connect(ssock, uaddr, addr_len, msk->connect_flags, 1);
++		err = __inet_stream_connect(ssock, uaddr, addr_len, O_NONBLOCK, 1);
+ 	else
+-		err = inet_stream_connect(ssock, uaddr, addr_len, msk->connect_flags);
++		err = inet_stream_connect(ssock, uaddr, addr_len, O_NONBLOCK);
+ 	inet_sk(sk)->defer_connect = inet_sk(ssock->sk)->defer_connect;
+ 
+ 	/* on successful connect, the msk state will be moved to established by
+@@ -3653,12 +3652,10 @@ static int mptcp_connect(struct sock *sk
+ 
+ 	mptcp_copy_inaddrs(sk, ssock->sk);
+ 
+-	/* unblocking connect, mptcp-level inet_stream_connect will error out
+-	 * without changing the socket state, update it here.
++	/* silence EINPROGRESS and let the caller inet_stream_connect
++	 * handle the connection in progress
+ 	 */
+-	if (err == -EINPROGRESS)
+-		sk->sk_socket->state = ssock->state;
+-	return err;
++	return 0;
  }
  
-+mptcp_lib_check_mptcp
-+
- ip -Version > /dev/null 2>&1
- if [ $? -ne 0 ];then
- 	echo "SKIP: Could not run test without ip tool"
+ static struct proto mptcp_prot = {
+@@ -3717,18 +3714,6 @@ unlock:
+ 	return err;
+ }
+ 
+-static int mptcp_stream_connect(struct socket *sock, struct sockaddr *uaddr,
+-				int addr_len, int flags)
+-{
+-	int ret;
+-
+-	lock_sock(sock->sk);
+-	mptcp_sk(sock->sk)->connect_flags = flags;
+-	ret = __inet_stream_connect(sock, uaddr, addr_len, flags, 0);
+-	release_sock(sock->sk);
+-	return ret;
+-}
+-
+ static int mptcp_listen(struct socket *sock, int backlog)
+ {
+ 	struct mptcp_sock *msk = mptcp_sk(sock->sk);
+@@ -3879,7 +3864,7 @@ static const struct proto_ops mptcp_stre
+ 	.owner		   = THIS_MODULE,
+ 	.release	   = inet_release,
+ 	.bind		   = mptcp_bind,
+-	.connect	   = mptcp_stream_connect,
++	.connect	   = inet_stream_connect,
+ 	.socketpair	   = sock_no_socketpair,
+ 	.accept		   = mptcp_stream_accept,
+ 	.getname	   = inet_getname,
+@@ -3974,7 +3959,7 @@ static const struct proto_ops mptcp_v6_s
+ 	.owner		   = THIS_MODULE,
+ 	.release	   = inet6_release,
+ 	.bind		   = mptcp_bind,
+-	.connect	   = mptcp_stream_connect,
++	.connect	   = inet_stream_connect,
+ 	.socketpair	   = sock_no_socketpair,
+ 	.accept		   = mptcp_stream_accept,
+ 	.getname	   = inet6_getname,
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -288,7 +288,6 @@ struct mptcp_sock {
+ 			nodelay:1,
+ 			fastopening:1,
+ 			in_accept_queue:1;
+-	int		connect_flags;
+ 	struct work_struct work;
+ 	struct sk_buff  *ooo_last_skb;
+ 	struct rb_root  out_of_order_queue;
 
 
