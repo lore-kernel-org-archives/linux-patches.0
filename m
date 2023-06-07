@@ -1,35 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342C13922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:56:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E83C433EF;
-	Wed,  7 Jun 2023 20:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01123922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:56:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43970C433EF;
+	Wed,  7 Jun 2023 20:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171414;
-	bh=Uv8bA0kQy+2cnX7Ytg4uQ9Hv5Sl8d17ax+D6XsFribo=;
+	s=korg; t=1686171416;
+	bh=+EPnEaBEo4eT+i/kxebO7oRLxhTOl1+3MKQTixGZGH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/AWsFAHDuN4UwK0n2UdGocPhr80y2XcM3kwBSUQxrexTQAS6ChvhVUHlm7St+ACa
-	 he7FaMkOSPqsi4xLhWGWYNXwHL20MA/6Qr3vUSF5GB0J3TlxI4QCVJY1dL69609vYE
-	 83ad/29csENJe8yV8rYeBC1TeRemBXsqBZEyICcw=
+	b=LdkFYSGL0uTydZuO7m1z8xcrrGnbsGl6oxguioUQdjJASo8mLADyrNaJ8iJ/ecG7i
+	 y+q/pccTEWuspv/A8M25aKoxnoOWWeO+fUwomeAQ6U2hDqUOFIaQy42Mh2ZGAeJek0
+	 dP77zAYy582Mhszli7DZYMC2hyxae8+W9PcmDXlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/159] RDMA/bnxt_re: Fix the page_size used during the MR creation
-Date: Wed,  7 Jun 2023 22:15:04 +0200
-Message-ID: <20230607200903.706359803@linuxfoundation.org>
+Subject: [PATCH 5.15 010/159] iommu/amd: Dont block updates to GATag if guest mode is on
+Date: Wed,  7 Jun 2023 22:15:13 +0200
+Message-ID: <20230607200904.009171611@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,81 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Joao Martins <joao.m.martins@oracle.com>
 
-[ Upstream commit 08c7f09356e45d093d1867c7a3c6ac6526e2f98b ]
+[ Upstream commit ed8a2f4ddef2eaaf864ab1efbbca9788187036ab ]
 
-Driver populates the list of pages used for Memory region wrongly when
-page size is more than system page size. This is causing a failure when
-some of the applications that creates MR with page size as 2M.  Since HW
-can support multiple page sizes, pass the correct page size while creating
-the MR.
+On KVM GSI routing table updates, specially those where they have vIOMMUs
+with interrupt remapping enabled (to boot >255vcpus setups without relying
+on KVM_FEATURE_MSI_EXT_DEST_ID), a VMM may update the backing VF MSIs
+with a new VCPU affinity.
 
-Also, driver need not adjust the number of pages when HW Queues are
-created with user memory. It should work with the number of dma blocks
-returned by ib_umem_num_dma_blocks. Fix this calculation also.
+On AMD with AVIC enabled, the new vcpu affinity info is updated via:
+	avic_pi_update_irte()
+		irq_set_vcpu_affinity()
+			amd_ir_set_vcpu_affinity()
+				amd_iommu_{de}activate_guest_mode()
 
-Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
-Fixes: f6919d56388c ("RDMA/bnxt_re: Code refactor while populating user MRs")
-Link: https://lore.kernel.org/r/1683484169-9539-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Where the IRTE[GATag] is updated with the new vcpu affinity. The GATag
+contains VM ID and VCPU ID, and is used by IOMMU hardware to signal KVM
+(via GALog) when interrupt cannot be delivered due to vCPU is in
+blocking state.
+
+The issue is that amd_iommu_activate_guest_mode() will essentially
+only change IRTE fields on transitions from non-guest-mode to guest-mode
+and otherwise returns *with no changes to IRTE* on already configured
+guest-mode interrupts. To the guest this means that the VF interrupts
+remain affined to the first vCPU they were first configured, and guest
+will be unable to issue VF interrupts and receive messages like this
+from spurious interrupts (e.g. from waking the wrong vCPU in GALog):
+
+[  167.759472] __common_interrupt: 3.34 No irq handler for vector
+[  230.680927] mlx5_core 0000:00:02.0: mlx5_cmd_eq_recover:247:(pid
+3122): Recovered 1 EQEs on cmd_eq
+[  230.681799] mlx5_core 0000:00:02.0:
+wait_func_handle_exec_timeout:1113:(pid 3122): cmd[0]: CREATE_CQ(0x400)
+recovered after timeout
+[  230.683266] __common_interrupt: 3.34 No irq handler for vector
+
+Given the fact that amd_ir_set_vcpu_affinity() uses
+amd_iommu_activate_guest_mode() underneath it essentially means that VCPU
+affinity changes of IRTEs are nops. Fix it by dropping the check for
+guest-mode at amd_iommu_activate_guest_mode(). Same thing is applicable to
+amd_iommu_deactivate_guest_mode() although, even if the IRTE doesn't change
+underlying DestID on the host, the VFIO IRQ handler will still be able to
+poke at the right guest-vCPU.
+
+Fixes: b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC (de-)activation code")
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Link: https://lore.kernel.org/r/20230419201154.83880-2-joao.m.martins@oracle.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 12 ++----------
- drivers/infiniband/hw/bnxt_re/qplib_sp.c  |  7 +++----
- 2 files changed, 5 insertions(+), 14 deletions(-)
+ drivers/iommu/amd/iommu.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 44282a8cdd4f2..384d41072c63c 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -215,17 +215,9 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
- 			return -EINVAL;
- 		hwq_attr->sginfo->npages = npages;
- 	} else {
--		unsigned long sginfo_num_pages = ib_umem_num_dma_blocks(
--			hwq_attr->sginfo->umem, hwq_attr->sginfo->pgsize);
--
-+		npages = ib_umem_num_dma_blocks(hwq_attr->sginfo->umem,
-+						hwq_attr->sginfo->pgsize);
- 		hwq->is_user = true;
--		npages = sginfo_num_pages;
--		npages = (npages * PAGE_SIZE) /
--			  BIT_ULL(hwq_attr->sginfo->pgshft);
--		if ((sginfo_num_pages * PAGE_SIZE) %
--		     BIT_ULL(hwq_attr->sginfo->pgshft))
--			if (!npages)
--				npages++;
- 	}
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 5ceaaabb4f9da..a91545b9a1cba 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -3316,8 +3316,7 @@ int amd_iommu_activate_guest_mode(void *data)
+ 	struct irte_ga *entry = (struct irte_ga *) ir_data->entry;
+ 	u64 valid;
  
- 	if (npages == MAX_PBL_LVL_0_PGS) {
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index 3d9259632eb3d..a161e0d3cb444 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -680,16 +680,15 @@ int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
- 		/* Free the hwq if it already exist, must be a rereg */
- 		if (mr->hwq.max_elements)
- 			bnxt_qplib_free_hwq(res, &mr->hwq);
--		/* Use system PAGE_SIZE */
- 		hwq_attr.res = res;
- 		hwq_attr.depth = pages;
--		hwq_attr.stride = buf_pg_size;
-+		hwq_attr.stride = sizeof(dma_addr_t);
- 		hwq_attr.type = HWQ_TYPE_MR;
- 		hwq_attr.sginfo = &sginfo;
- 		hwq_attr.sginfo->umem = umem;
- 		hwq_attr.sginfo->npages = pages;
--		hwq_attr.sginfo->pgsize = PAGE_SIZE;
--		hwq_attr.sginfo->pgshft = PAGE_SHIFT;
-+		hwq_attr.sginfo->pgsize = buf_pg_size;
-+		hwq_attr.sginfo->pgshft = ilog2(buf_pg_size);
- 		rc = bnxt_qplib_alloc_init_hwq(&mr->hwq, &hwq_attr);
- 		if (rc) {
- 			dev_err(&res->pdev->dev,
+-	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir) ||
+-	    !entry || entry->lo.fields_vapic.guest_mode)
++	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir) || !entry)
+ 		return 0;
+ 
+ 	valid = entry->lo.fields_vapic.valid;
 -- 
 2.39.2
 
