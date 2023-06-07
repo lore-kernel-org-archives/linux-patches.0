@@ -1,32 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7F33922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:56:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21166C433D2;
-	Wed,  7 Jun 2023 20:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342C13922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:56:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E83C433EF;
+	Wed,  7 Jun 2023 20:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171411;
-	bh=kCfysWGPr0GW7224XhZOKoTWBEDNsdA5cXnN6vUQLJc=;
+	s=korg; t=1686171414;
+	bh=Uv8bA0kQy+2cnX7Ytg4uQ9Hv5Sl8d17ax+D6XsFribo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4/oqpnLJ+pn2fQUfIvlVu3mF502ZHDFrMtYHn9J2yQ/1MF83/3wD9UGhCujeLJZP
-	 7Td2x1MBEIybkc7Yyq0EXdFuvOJ6WW3Ekwh0evffbdmf9OJzrUyVtdp4frPlBq7qmH
-	 Iyec6HjgG+975v9PkAoXEdVSHLP3kB0LmsyFEzGw=
+	b=f/AWsFAHDuN4UwK0n2UdGocPhr80y2XcM3kwBSUQxrexTQAS6ChvhVUHlm7St+ACa
+	 he7FaMkOSPqsi4xLhWGWYNXwHL20MA/6Qr3vUSF5GB0J3TlxI4QCVJY1dL69609vYE
+	 83ad/29csENJe8yV8rYeBC1TeRemBXsqBZEyICcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.4 73/99] flow_dissector: work around stack frame size warning
-Date: Wed,  7 Jun 2023 22:17:05 +0200
-Message-ID: <20230607200902.517691022@linuxfoundation.org>
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/159] RDMA/bnxt_re: Fix the page_size used during the MR creation
+Date: Wed,  7 Jun 2023 22:15:04 +0200
+Message-ID: <20230607200903.706359803@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
-References: <20230607200900.195572674@linuxfoundation.org>
+In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
+References: <20230607200903.652580797@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,81 +39,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-commit 0af413bd3e2de73bcf0742ed556be4af83c71964 upstream.
+[ Upstream commit 08c7f09356e45d093d1867c7a3c6ac6526e2f98b ]
 
-The fl_flow_key structure is around 500 bytes, so having two of them
-on the stack in one function now exceeds the warning limit after an
-otherwise correct change:
+Driver populates the list of pages used for Memory region wrongly when
+page size is more than system page size. This is causing a failure when
+some of the applications that creates MR with page size as 2M.  Since HW
+can support multiple page sizes, pass the correct page size while creating
+the MR.
 
-net/sched/cls_flower.c:298:12: error: stack frame size of 1056 bytes in function 'fl_classify' [-Werror,-Wframe-larger-than=]
+Also, driver need not adjust the number of pages when HW Queues are
+created with user memory. It should work with the number of dma blocks
+returned by ib_umem_num_dma_blocks. Fix this calculation also.
 
-I suspect the fl_classify function could be reworked to only have one
-of them on the stack and modify it in place, but I could not work out
-how to do that.
-
-As a somewhat hacky workaround, move one of them into an out-of-line
-function to reduce its scope. This does not necessarily reduce the stack
-usage of the outer function, but at least the second copy is removed
-from the stack during most of it and does not add up to whatever is
-called from there.
-
-I now see 552 bytes of stack usage for fl_classify(), plus 528 bytes
-for fl_mask_lookup().
-
-Fixes: 58cff782cc55 ("flow_dissector: Parse multiple MPLS Label Stack Entries")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
-Acked-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Fixes: f6919d56388c ("RDMA/bnxt_re: Code refactor while populating user MRs")
+Link: https://lore.kernel.org/r/1683484169-9539-1-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flower.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 12 ++----------
+ drivers/infiniband/hw/bnxt_re/qplib_sp.c  |  7 +++----
+ 2 files changed, 5 insertions(+), 14 deletions(-)
 
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -270,14 +270,16 @@ static struct cls_fl_filter *fl_lookup_r
- 	return NULL;
- }
- 
--static struct cls_fl_filter *fl_lookup(struct fl_flow_mask *mask,
--				       struct fl_flow_key *mkey,
--				       struct fl_flow_key *key)
-+static noinline_for_stack
-+struct cls_fl_filter *fl_mask_lookup(struct fl_flow_mask *mask, struct fl_flow_key *key)
- {
-+	struct fl_flow_key mkey;
-+
-+	fl_set_masked_key(&mkey, key, mask);
- 	if ((mask->flags & TCA_FLOWER_MASK_FLAGS_RANGE))
--		return fl_lookup_range(mask, mkey, key);
-+		return fl_lookup_range(mask, &mkey, key);
- 
--	return __fl_lookup(mask, mkey);
-+	return __fl_lookup(mask, &mkey);
- }
- 
- static u16 fl_ct_info_to_flower_map[] = {
-@@ -297,7 +299,6 @@ static int fl_classify(struct sk_buff *s
- 		       struct tcf_result *res)
- {
- 	struct cls_fl_head *head = rcu_dereference_bh(tp->root);
--	struct fl_flow_key skb_mkey;
- 	struct fl_flow_key skb_key;
- 	struct fl_flow_mask *mask;
- 	struct cls_fl_filter *f;
-@@ -317,9 +318,7 @@ static int fl_classify(struct sk_buff *s
- 				    ARRAY_SIZE(fl_ct_info_to_flower_map));
- 		skb_flow_dissect(skb, &mask->dissector, &skb_key, 0);
- 
--		fl_set_masked_key(&skb_mkey, &skb_key, mask);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index 44282a8cdd4f2..384d41072c63c 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -215,17 +215,9 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
+ 			return -EINVAL;
+ 		hwq_attr->sginfo->npages = npages;
+ 	} else {
+-		unsigned long sginfo_num_pages = ib_umem_num_dma_blocks(
+-			hwq_attr->sginfo->umem, hwq_attr->sginfo->pgsize);
 -
--		f = fl_lookup(mask, &skb_mkey, &skb_key);
-+		f = fl_mask_lookup(mask, &skb_key);
- 		if (f && !tc_skip_sw(f->flags)) {
- 			*res = f->res;
- 			return tcf_exts_exec(skb, &f->exts, res);
++		npages = ib_umem_num_dma_blocks(hwq_attr->sginfo->umem,
++						hwq_attr->sginfo->pgsize);
+ 		hwq->is_user = true;
+-		npages = sginfo_num_pages;
+-		npages = (npages * PAGE_SIZE) /
+-			  BIT_ULL(hwq_attr->sginfo->pgshft);
+-		if ((sginfo_num_pages * PAGE_SIZE) %
+-		     BIT_ULL(hwq_attr->sginfo->pgshft))
+-			if (!npages)
+-				npages++;
+ 	}
+ 
+ 	if (npages == MAX_PBL_LVL_0_PGS) {
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+index 3d9259632eb3d..a161e0d3cb444 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+@@ -680,16 +680,15 @@ int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
+ 		/* Free the hwq if it already exist, must be a rereg */
+ 		if (mr->hwq.max_elements)
+ 			bnxt_qplib_free_hwq(res, &mr->hwq);
+-		/* Use system PAGE_SIZE */
+ 		hwq_attr.res = res;
+ 		hwq_attr.depth = pages;
+-		hwq_attr.stride = buf_pg_size;
++		hwq_attr.stride = sizeof(dma_addr_t);
+ 		hwq_attr.type = HWQ_TYPE_MR;
+ 		hwq_attr.sginfo = &sginfo;
+ 		hwq_attr.sginfo->umem = umem;
+ 		hwq_attr.sginfo->npages = pages;
+-		hwq_attr.sginfo->pgsize = PAGE_SIZE;
+-		hwq_attr.sginfo->pgshft = PAGE_SHIFT;
++		hwq_attr.sginfo->pgsize = buf_pg_size;
++		hwq_attr.sginfo->pgshft = ilog2(buf_pg_size);
+ 		rc = bnxt_qplib_alloc_init_hwq(&mr->hwq, &hwq_attr);
+ 		if (rc) {
+ 			dev_err(&res->pdev->dev,
+-- 
+2.39.2
+
 
 
