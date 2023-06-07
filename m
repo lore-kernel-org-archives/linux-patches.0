@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF313922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E7BC4339C;
-	Wed,  7 Jun 2023 20:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D03B3922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82456C433D2;
+	Wed,  7 Jun 2023 20:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171246;
-	bh=/eoaW3P9E+ErBYCcLMXMWB0xr1a7FzmUtzq0etIXhCI=;
+	s=korg; t=1686171248;
+	bh=6GeBUh+EyBMC+hyHRk8azuwZpKDUvQF7QezntYceO9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=itd2MLE6ZxstEpYi9xMURaSHCtCQHwTiQtdXwLHMBv2Pa/0faLge3SOuB0m2+CHnV
-	 cZPaIWch1nu02Ew3TB/QbC39P8sHdPdTKMa3R49MYd8psQ3Tg84VilbjKlSKcPxORQ
-	 pL6DXXkRxrhYR4Hb8hZVZrF9IpyfDC4ivbAB5/EA=
+	b=jZfojP+qhuJhC4N5pBIHVqws+36n5zp04XKiKG808zEu3b1EB58KGQXXbu27GghL2
+	 KrHyv89PJUMqpIo3TkUGj9hggTI19sZw/C0sApSZl4o1OR4XhbcOzlbrZ3Rqg7BBKU
+	 M3lBxVaeytW1Yqe//hsPQXeZAROshbrR46gE7OlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Yang <mingliang@linux.alibaba.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Cambda Zhu <cambda@linux.alibaba.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
+	syzbot+b53a9c0d1ea4ad62da8b@syzkaller.appspotmail.com,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Peilin Ye <peilin.ye@bytedance.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 15/99] tcp: Return user_mss for TCP_MAXSEG in CLOSE/LISTEN state if user_mss set
-Date: Wed,  7 Jun 2023 22:16:07 +0200
-Message-ID: <20230607200900.731642486@linuxfoundation.org>
+Subject: [PATCH 5.4 16/99] net/sched: sch_ingress: Only create under TC_H_INGRESS
+Date: Wed,  7 Jun 2023 22:16:08 +0200
+Message-ID: <20230607200900.763311150@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -38,47 +39,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cambda Zhu <cambda@linux.alibaba.com>
+From: Peilin Ye <peilin.ye@bytedance.com>
 
-[ Upstream commit 34dfde4ad87b84d21278a7e19d92b5b2c68e6c4d ]
+[ Upstream commit c7cfbd115001f94de9e4053657946a383147e803 ]
 
-This patch replaces the tp->mss_cache check in getting TCP_MAXSEG
-with tp->rx_opt.user_mss check for CLOSE/LISTEN sock. Since
-tp->mss_cache is initialized with TCP_MSS_DEFAULT, checking if
-it's zero is probably a bug.
-
-With this change, getting TCP_MAXSEG before connecting will return
-default MSS normally, and return user_mss if user_mss is set.
+ingress Qdiscs are only supposed to be created under TC_H_INGRESS.
+Return -EOPNOTSUPP if 'parent' is not TC_H_INGRESS, similar to
+mq_init().
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Jack Yang <mingliang@linux.alibaba.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/netdev/CANn89i+3kL9pYtkxkwxwNMzvC_w3LNUum_2=3u+UyLBmGmifHA@mail.gmail.com/#t
-Signed-off-by: Cambda Zhu <cambda@linux.alibaba.com>
-Link: https://lore.kernel.org/netdev/14D45862-36EA-4076-974C-EA67513C92F6@linux.alibaba.com/
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230527040317.68247-1-cambda@linux.alibaba.com
+Reported-by: syzbot+b53a9c0d1ea4ad62da8b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/0000000000006cf87705f79acf1a@google.com/
+Tested-by: Pedro Tammela <pctammela@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
+Signed-off-by: Peilin Ye <peilin.ye@bytedance.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_ingress.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index e427eabc7f278..fdf2ddc4864df 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -3451,7 +3451,8 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
- 	switch (optname) {
- 	case TCP_MAXSEG:
- 		val = tp->mss_cache;
--		if (!val && ((1 << sk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)))
-+		if (tp->rx_opt.user_mss &&
-+		    ((1 << sk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)))
- 			val = tp->rx_opt.user_mss;
- 		if (tp->repair)
- 			val = tp->rx_opt.mss_clamp;
+diff --git a/net/sched/sch_ingress.c b/net/sched/sch_ingress.c
+index bf56aa5197974..d5358c033d247 100644
+--- a/net/sched/sch_ingress.c
++++ b/net/sched/sch_ingress.c
+@@ -79,6 +79,9 @@ static int ingress_init(struct Qdisc *sch, struct nlattr *opt,
+ 	struct ingress_sched_data *q = qdisc_priv(sch);
+ 	struct net_device *dev = qdisc_dev(sch);
+ 
++	if (sch->parent != TC_H_INGRESS)
++		return -EOPNOTSUPP;
++
+ 	net_inc_ingress_queue();
+ 
+ 	mini_qdisc_pair_init(&q->miniqp, sch, &dev->miniq_ingress);
+@@ -94,6 +97,9 @@ static void ingress_destroy(struct Qdisc *sch)
+ {
+ 	struct ingress_sched_data *q = qdisc_priv(sch);
+ 
++	if (sch->parent != TC_H_INGRESS)
++		return;
++
+ 	tcf_block_put_ext(q->block, sch, &q->block_info);
+ 	net_dec_ingress_queue();
+ }
 -- 
 2.39.2
 
