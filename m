@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF0C3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:56:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D9DC433D2;
-	Wed,  7 Jun 2023 20:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010A13922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:56:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3A2C433EF;
+	Wed,  7 Jun 2023 20:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171385;
-	bh=Mcz5EktUwHLg0suZU3REpBB0SpTgb+SwjpLQnI/u118=;
+	s=korg; t=1686171387;
+	bh=JV23PZ/gtcMCbhCQGxTQkdUxehKQ8XbLKvqQ4OT+cdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D3cbwqw07BpgdjCtwXaSd/uUp8hvXo+FJCRtjE3Z+STKwgDmO3kwOHxjJH1UKZBV1
-	 xHEx8hqbLolBinncrVvQePq8jf8i9R47sBg9qFQphGCsAES+7JOT53Hd0fZTb7GYzF
-	 hRDNxfxEErr5ShIVqVoV5KWjl2tAzIzsAIXhqzxg=
+	b=vz8ehFgMXHGxLswdFG1s7oVQMaxybIGfyiBuK35eaJoB2FHAnN5yNb1whIBt6j4iW
+	 3Tv6BRvELmlHcZq/v3X60+znpZ/uonyzBN72pMey/jycL65nJOP0HBFjF8YZCNOtUq
+	 GoMAkDfxxC4AILDgrKlPlDznv5iPeX7Hv8PVWr2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Ilia Mirkin <imirkin@alum.mit.edu>
-Subject: [PATCH 5.4 97/99] drm/edid: Fix uninitialized variable in drm_cvt_modes()
-Date: Wed,  7 Jun 2023 22:17:29 +0200
-Message-ID: <20230607200903.289571140@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 5.4 98/99] wifi: rtlwifi: 8192de: correct checking of IQK reload
+Date: Wed,  7 Jun 2023 22:17:30 +0200
+Message-ID: <20230607200903.318245895@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -34,39 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lyude Paul <lyude@redhat.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit 991fcb77f490390bcad89fa67d95763c58cdc04c upstream.
+commit 93fbc1ebd978cf408ef5765e9c1630fce9a8621b upstream.
 
-Noticed this when trying to compile with -Wall on a kernel fork. We
-potentially don't set width here, which causes the compiler to complain
-about width potentially being uninitialized in drm_cvt_modes(). So, let's
-fix that.
+Since IQK could spend time, we make a cache of IQK result matrix that looks
+like iqk_matrix[channel_idx].val[x][y], and we can reload the matrix if we
+have made a cache. To determine a cache is made, we check
+iqk_matrix[channel_idx].val[0][0].
 
-Changes since v1:
-* Don't emit an error as this code isn't reachable, just mark it as such
-Changes since v2:
-* Remove now unused variable
+The initial commit 7274a8c22980 ("rtlwifi: rtl8192de: Merge phy routines")
+make a mistake that checks incorrect iqk_matrix[channel_idx].val[0] that
+is always true, and this mistake is found by commit ee3db469dd31
+("wifi: rtlwifi: remove always-true condition pointed out by GCC 12"), so
+I recall the vendor driver to find fix and apply the correctness.
 
-Fixes: 3f649ab728cd ("treewide: Remove uninitialized_var() usage")
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Reviewed-by: Ilia Mirkin <imirkin@alum.mit.edu>
-Link: https://patchwork.freedesktop.org/patch/msgid/20201105235703.1328115-1-lyude@redhat.com
+Fixes: 7274a8c22980 ("rtlwifi: rtl8192de: Merge phy routines")
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20220801113345.42016-1-pkshih@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_edid.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/drm_edid.c
-+++ b/drivers/gpu/drm/drm_edid.c
-@@ -2791,6 +2791,8 @@ static int drm_cvt_modes(struct drm_conn
- 		case 0x0c:
- 			width = height * 15 / 9;
- 			break;
-+		default:
-+			unreachable();
- 		}
- 
- 		for (j = 1; j < 5; j++) {
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
+@@ -2392,11 +2392,10 @@ void rtl92d_phy_reload_iqk_setting(struc
+ 			RT_TRACE(rtlpriv, COMP_SCAN, DBG_LOUD,
+ 				 "Just Read IQK Matrix reg for channel:%d....\n",
+ 				 channel);
+-			_rtl92d_phy_patha_fill_iqk_matrix(hw, true,
+-					rtlphy->iqk_matrix[
+-					indexforchannel].value,	0,
+-					(rtlphy->iqk_matrix[
+-					indexforchannel].value[0][2] == 0));
++			if (rtlphy->iqk_matrix[indexforchannel].value[0][0] != 0)
++				_rtl92d_phy_patha_fill_iqk_matrix(hw, true,
++					rtlphy->iqk_matrix[indexforchannel].value, 0,
++					rtlphy->iqk_matrix[indexforchannel].value[0][2] == 0);
+ 			if (IS_92D_SINGLEPHY(rtlhal->version)) {
+ 				if ((rtlphy->iqk_matrix[
+ 					indexforchannel].value[0][4] != 0)
 
 
