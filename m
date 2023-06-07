@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E0C1ACB2
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A54C433EF;
-	Wed,  7 Jun 2023 20:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD391ACB2
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB36C433EF;
+	Wed,  7 Jun 2023 20:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170412;
-	bh=cUruHpp5csKVaRsO8925IjftPTB8zY3Vv0Hmu8lUWVE=;
+	s=korg; t=1686170414;
+	bh=jsYfAxDx4ObD1vfF5x3d3a/uIX78yh7ya8cB0KMvays=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zygC3MqVqHZj5bT7lGIeR4/C9q3XHn6Iehz0Mz+JJjo/v0MzZos+OxDv0+n71xz0B
-	 HMzX5Fo6oXjC65aHIipmXhjd7R2gc8N6ucJFRiwXgkfBIvvcTFbCrl85VEP6rvF8VW
-	 /Z2aFt8eB3kgYEqonSOIo6Rt7oLWs2KY/s33hpu8=
+	b=AWGgtJ7SW/VYeKzDvjFat6U9xWZimRhwI+oVIFpIFFRvMWYc0MdJ1qFJO49RVFv5N
+	 gbX/2CHEVJBDZa3Gebc3Lo/v7XGj+H32M+DieJhF9I11/n5qnqf+VbZotuiDFzDsdU
+	 9gDwZctLBwfIfRO9LRJqlX60VkAPwEyxicRy3dxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Lan <lanyang0908@gmail.com>,
-	Bob Peterson <rpeterso@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Lang Yu <lang.yu@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/225] gfs2: Dont deref jdesc in evict
-Date: Wed,  7 Jun 2023 22:14:27 +0200
-Message-ID: <20230607200916.797421488@linuxfoundation.org>
+Subject: [PATCH 6.1 075/225] drm/amdgpu: set gfx9 onwards APU atomics support to be true
+Date: Wed,  7 Jun 2023 22:14:28 +0200
+Message-ID: <20230607200916.828105739@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,64 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Peterson <rpeterso@redhat.com>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-[ Upstream commit 504a10d9e46bc37b23d0a1ae2f28973c8516e636 ]
+[ Upstream commit af7828fbceed4f9e503034111066a0adef3db383 ]
 
-On corrupt gfs2 file systems the evict code can try to reference the
-journal descriptor structure, jdesc, after it has been freed and set to
-NULL. The sequence of events is:
+APUs w/ gfx9 onwards doesn't reply on PCIe atomics, rather
+it is internal path w/ native atomic support. Set have_atomics_support
+to true.
 
-init_journal()
-...
-fail_jindex:
-   gfs2_jindex_free(sdp); <------frees journals, sets jdesc = NULL
-      if (gfs2_holder_initialized(&ji_gh))
-         gfs2_glock_dq_uninit(&ji_gh);
-fail:
-   iput(sdp->sd_jindex); <--references jdesc in evict_linked_inode
-      evict()
-         gfs2_evict_inode()
-            evict_linked_inode()
-               ret = gfs2_trans_begin(sdp, 0, sdp->sd_jdesc->jd_blocks);
-<------references the now freed/zeroed sd_jdesc pointer.
-
-The call to gfs2_trans_begin is done because the truncate_inode_pages
-call can cause gfs2 events that require a transaction, such as removing
-journaled data (jdata) blocks from the journal.
-
-This patch fixes the problem by adding a check for sdp->sd_jdesc to
-function gfs2_evict_inode. In theory, this should only happen to corrupt
-gfs2 file systems, when gfs2 detects the problem, reports it, then tries
-to evict all the system inodes it has read in up to that point.
-
-Reported-by: Yang Lan <lanyang0908@gmail.com>
-Signed-off-by: Bob Peterson <rpeterso@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Lang Yu <lang.yu@amd.com>
+Acked-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/super.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 2015bd05cba10..9d27aa8bd2bc6 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1380,6 +1380,14 @@ static void gfs2_evict_inode(struct inode *inode)
- 	if (inode->i_nlink || sb_rdonly(sb))
- 		goto out;
- 
-+	/*
-+	 * In case of an incomplete mount, gfs2_evict_inode() may be called for
-+	 * system files without having an active journal to write to.  In that
-+	 * case, skip the filesystem evict.
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 9556df0dfefad..ef0a94c70859b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3734,6 +3734,12 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 		adev->have_atomics_support = ((struct amd_sriov_msg_pf2vf_info *)
+ 			adev->virt.fw_reserve.p_pf2vf)->pcie_atomic_ops_support_flags ==
+ 			(PCI_EXP_DEVCAP2_ATOMIC_COMP32 | PCI_EXP_DEVCAP2_ATOMIC_COMP64);
++	/* APUs w/ gfx9 onwards doesn't reply on PCIe atomics, rather it is a
++	 * internal path natively support atomics, set have_atomics_support to true.
 +	 */
-+	if (!sdp->sd_jdesc)
-+		goto out;
-+
- 	gfs2_holder_mark_uninitialized(&gh);
- 	ret = evict_should_delete(inode, &gh);
- 	if (ret == SHOULD_DEFER_EVICTION)
++	else if ((adev->flags & AMD_IS_APU) &&
++		(adev->ip_versions[GC_HWIP][0] > IP_VERSION(9, 0, 0)))
++		adev->have_atomics_support = true;
+ 	else
+ 		adev->have_atomics_support =
+ 			!pci_enable_atomic_ops_to_root(adev->pdev,
 -- 
 2.39.2
 
