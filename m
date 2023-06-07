@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEBB37325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:49:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE900C4339B;
-	Wed,  7 Jun 2023 20:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77CA37325
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:49:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503BBC433D2;
+	Wed,  7 Jun 2023 20:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170987;
-	bh=nBR+ZTXbOkda34DbC4KgZEMyrRRAzRbO4Aeh7LI5JeI=;
+	s=korg; t=1686170989;
+	bh=cYw5xiQhdAyhby74aswruUYEMHUUQJALesOIoKysMTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mc5JyQAFLwJ44FY79Xtj1qr3FRXyCXN5IG+hzlkBPUXYE1Xi6i436ISavGLDuAQoX
-	 T/GEAdUIwKdX1sBVtcnExbSym08/T9hy5Oi6UjxYRCZMVna73Dk26YSH/sjLSe0pyg
-	 hZzb06LVxP8TbppQYI0tDs7Dt0qzPvAN5pjIeXfo=
+	b=mhEyRAqBzGJOE0i3pGEyKQy2/L+nSjnbcHu3BVW0E/L7HQlrtwiyxOQE13Pb2HDvq
+	 /agVO/05rkJXVWZAJuQc29pVirhY4Cr5VbNBQI5AXdoq8sx3msAvl0BBYBdVgmpXiK
+	 1w+zxGM+xHUS35iHIPjYPN+miP1bWjwyCpCRFSnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/120] media: rcar-vin: Select correct interrupt mode for V4L2_FIELD_ALTERNATE
-Date: Wed,  7 Jun 2023 22:15:54 +0200
-Message-ID: <20230607200902.105622785@linuxfoundation.org>
+Subject: [PATCH 5.10 029/120] net/sched: flower: fix possible OOB write in fl_set_geneve_opt()
+Date: Wed,  7 Jun 2023 22:15:45 +0200
+Message-ID: <20230607200901.830517098@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -35,43 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit e10707d5865c90d3dfe4ef589ce02ff4287fef85 ]
+[ Upstream commit 4d56304e5827c8cc8cc18c75343d283af7c4825c ]
 
-When adding proper support for V4L2_FIELD_ALTERNATE it was missed that
-this field format should trigger an interrupt for each field, not just
-for the whole frame. Fix this by marking it as progressive in the
-capture setup, which will then select the correct interrupt mode.
+If we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE packets and their total
+size is 252 bytes(key->enc_opts.len = 252) then
+key->enc_opts.len = opt->length = data_len / 4 = 0 when the third
+TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
+bypasses the next bounds check and results in an out-of-bounds.
 
-Tested on both Gen2 and Gen3 with the result of a doubling of the frame
-rate for V4L2_FIELD_ALTERNATE. From a PAL video source the frame rate is
-now 50, which is expected for alternate field capture.
-
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 0a6e77784f49 ("net/sched: allow flower to match tunnel options")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+Link: https://lore.kernel.org/r/20230531102805.27090-1-hbh25y@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rcar-vin/rcar-dma.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/sched/cls_flower.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/platform/rcar-vin/rcar-dma.c b/drivers/media/platform/rcar-vin/rcar-dma.c
-index 692dea300b0de..63c61c704446b 100644
---- a/drivers/media/platform/rcar-vin/rcar-dma.c
-+++ b/drivers/media/platform/rcar-vin/rcar-dma.c
-@@ -645,11 +645,9 @@ static int rvin_setup(struct rvin_dev *vin)
- 	case V4L2_FIELD_SEQ_TB:
- 	case V4L2_FIELD_SEQ_BT:
- 	case V4L2_FIELD_NONE:
--		vnmc = VNMC_IM_ODD_EVEN;
--		progressive = true;
--		break;
- 	case V4L2_FIELD_ALTERNATE:
- 		vnmc = VNMC_IM_ODD_EVEN;
-+		progressive = true;
- 		break;
- 	default:
- 		vnmc = VNMC_IM_ODD;
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index 35ee6d8226e61..caf1a05bfbde4 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -1086,6 +1086,9 @@ static int fl_set_geneve_opt(const struct nlattr *nla, struct fl_flow_key *key,
+ 	if (option_len > sizeof(struct geneve_opt))
+ 		data_len = option_len - sizeof(struct geneve_opt);
+ 
++	if (key->enc_opts.len > FLOW_DIS_TUN_OPTS_MAX - 4)
++		return -ERANGE;
++
+ 	opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len];
+ 	memset(opt, 0xff, option_len);
+ 	opt->length = data_len / 4;
 -- 
 2.39.2
 
