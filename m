@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B7E3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479C3C433D2;
-	Wed,  7 Jun 2023 20:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7163922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31E5C433D2;
+	Wed,  7 Jun 2023 20:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171505;
-	bh=wXSSdQyJmNc1+zAqIpCgTXO4z+1cRBkB4VzOjiIEOew=;
+	s=korg; t=1686171508;
+	bh=ufHUNAaXI8Zwpwwg7rS9zsB35IXduj/JQksFGgChIVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zEPR03uBRfg4alXcJfy1iGyz/b3If4SHvo+rog2BjCgkU39MWSGSurkkUMzAUDP3a
-	 zyPt12KNc7Ikx0vmwb5ATnqS6PDO2fWp1TZCnkCUS47uyR+YSZcWvYMwa5LmAI4s9A
-	 jVTy61a99LPf1M6NdKPBekdU0QGy3EzVJcgekz5s=
+	b=cCFn6Q4ZrleUNdQoRbRO7dQmSVufZ/Jd+ns75ruVxBzOMgf8MXrJJF3SCpkP1dCZx
+	 7Pd1BMWZ5GlkNM/2td/Q76IciOlVG4S+mV0lNM6uYwpPzpqoJLMgjnC0Wx3G6k+5pl
+	 7OrBargVWktZIbOO7fnEr6pUXKGYFg7EacDV4DN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Kapadia <szymon@kapadia.pl>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	lyndonli <Lyndon.Li@amd.com>,
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	Feifei Xu <Feifei.Xu@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/159] netrom: fix info-leak in nr_write_internal()
-Date: Wed,  7 Jun 2023 22:15:19 +0200
-Message-ID: <20230607200904.204604215@linuxfoundation.org>
+Subject: [PATCH 5.15 043/159] drm/amdgpu: Use the default reset when loading or reloading the driver
+Date: Wed,  7 Jun 2023 22:15:46 +0200
+Message-ID: <20230607200905.094667469@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -37,83 +38,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: lyndonli <Lyndon.Li@amd.com>
 
-[ Upstream commit 31642e7089df8fd3f54ca7843f7ee2952978cad1 ]
+[ Upstream commit 4eea7fb980dc44545a32eec92e2662053b34cd9d ]
 
-Simon Kapadia reported the following issue:
+Below call trace and errors are observed when reloading
+amdgpu driver with the module parameter reset_method=3.
 
-<quote>
+It should do a default reset when loading or reloading the
+driver, regardless of the module parameter reset_method.
 
-The Online Amateur Radio Community (OARC) has recently been experimenting
-with building a nationwide packet network in the UK.
-As part of our experimentation, we have been testing out packet on 300bps HF,
-and playing with net/rom.  For HF packet at this baud rate you really need
-to make sure that your MTU is relatively low; AX.25 suggests a PACLEN of 60,
-and a net/rom PACLEN of 40 to go with that.
-However the Linux net/rom support didn't work with a low PACLEN;
-the mkiss module would truncate packets if you set the PACLEN below about 200 or so, e.g.:
+v2: add comments inside and modify commit messages.
 
-Apr 19 14:00:51 radio kernel: [12985.747310] mkiss: ax1: truncating oversized transmit packet!
+[  +2.180243] [drm] psp gfx command ID_LOAD_TOC(0x20) failed
+and response status is (0x0)
+[  +0.000011] [drm:psp_hw_start [amdgpu]] *ERROR* Failed to load toc
+[  +0.000890] [drm:psp_hw_start [amdgpu]] *ERROR* PSP tmr init failed!
+[  +0.020683] [drm:amdgpu_fill_buffer [amdgpu]] *ERROR* Trying to
+clear memory with ring turned off.
+[  +0.000003] RIP: 0010:amdgpu_bo_release_notify+0x1ef/0x210 [amdgpu]
+[  +0.000004] Call Trace:
+[  +0.000003]  <TASK>
+[  +0.000008]  ttm_bo_release+0x2c4/0x330 [amdttm]
+[  +0.000026]  amdttm_bo_put+0x3c/0x70 [amdttm]
+[  +0.000020]  amdgpu_bo_free_kernel+0xe6/0x140 [amdgpu]
+[  +0.000728]  psp_v11_0_ring_destroy+0x34/0x60 [amdgpu]
+[  +0.000826]  psp_hw_init+0xe7/0x2f0 [amdgpu]
+[  +0.000813]  amdgpu_device_fw_loading+0x1ad/0x2d0 [amdgpu]
+[  +0.000731]  amdgpu_device_init.cold+0x108e/0x2002 [amdgpu]
+[  +0.001071]  ? do_pci_enable_device+0xe1/0x110
+[  +0.000011]  amdgpu_driver_load_kms+0x1a/0x160 [amdgpu]
+[  +0.000729]  amdgpu_pci_probe+0x179/0x3a0 [amdgpu]
 
-This didn't make any sense to me (if the packets are smaller why would they
-be truncated?) so I started investigating.
-I looked at the packets using ethereal, and found that many were just huge
-compared to what I would expect.
-A simple net/rom connection request packet had the request and then a bunch
-of what appeared to be random data following it:
-
-</quote>
-
-Simon provided a patch that I slightly revised:
-Not only we must not use skb_tailroom(), we also do
-not want to count NR_NETWORK_LEN twice.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-Developed-by: Simon Kapadia <szymon@kapadia.pl>
-Signed-off-by: Simon Kapadia <szymon@kapadia.pl>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Tested-by: Simon Kapadia <szymon@kapadia.pl>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230524141456.1045467-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: lyndonli <Lyndon.Li@amd.com>
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_subr.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
-index 3f99b432ea707..e2d2af924cff4 100644
---- a/net/netrom/nr_subr.c
-+++ b/net/netrom/nr_subr.c
-@@ -123,7 +123,7 @@ void nr_write_internal(struct sock *sk, int frametype)
- 	unsigned char  *dptr;
- 	int len, timeout;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 9da85ef711e88..642acfc9f0b1f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3494,6 +3494,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 	int r, i;
+ 	bool px = false;
+ 	u32 max_MBps;
++	int tmp;
  
--	len = NR_NETWORK_LEN + NR_TRANSPORT_LEN;
-+	len = NR_TRANSPORT_LEN;
- 
- 	switch (frametype & 0x0F) {
- 	case NR_CONNREQ:
-@@ -141,7 +141,8 @@ void nr_write_internal(struct sock *sk, int frametype)
- 		return;
- 	}
- 
--	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
-+	skb = alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
-+	if (!skb)
- 		return;
- 
- 	/*
-@@ -149,7 +150,7 @@ void nr_write_internal(struct sock *sk, int frametype)
- 	 */
- 	skb_reserve(skb, NR_NETWORK_LEN);
- 
--	dptr = skb_put(skb, skb_tailroom(skb));
-+	dptr = skb_put(skb, len);
- 
- 	switch (frametype & 0x0F) {
- 	case NR_CONNREQ:
+ 	adev->shutdown = false;
+ 	adev->flags = flags;
+@@ -3693,7 +3694,13 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 				}
+ 			}
+ 		} else {
++			tmp = amdgpu_reset_method;
++			/* It should do a default reset when loading or reloading the driver,
++			 * regardless of the module parameter reset_method.
++			 */
++			amdgpu_reset_method = AMD_RESET_METHOD_NONE;
+ 			r = amdgpu_asic_reset(adev);
++			amdgpu_reset_method = tmp;
+ 			if (r) {
+ 				dev_err(adev->dev, "asic reset on init failed\n");
+ 				goto failed;
 -- 
 2.39.2
 
