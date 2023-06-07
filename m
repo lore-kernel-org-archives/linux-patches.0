@@ -1,36 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5334C19E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E783C433D2;
-	Wed,  7 Jun 2023 20:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB8619E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9EDC433D2;
+	Wed,  7 Jun 2023 20:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170146;
-	bh=6yNLgaHGrC4Bh6fqI0BGDe6gfAnBGlTDOn8++TzoK90=;
+	s=korg; t=1686170148;
+	bh=aql5NXzheAYQGdrzLD5fzib1YS8adfuPpeMQmFo/SR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LtJ52zoNYWYPfRHC2FP4Lfo4xKS2hWB7Jjj/OuJn2/JE42ak8wvQOVPV0RImS3Fza
-	 HVWUJBATsllE47NLE1Oyk8SYJbvnnXKz4j2iI35BmcT8CHcGe0HZepp7XcfUItdxF4
-	 HrUJCgiPzq98LlGPBkaz/ki3FkMRy6IOoLCvDfJs=
+	b=lZtXnyLY+B4tbToqNKPnKpdC9eSLk8gfR+tPM8zmV56LPtVT60u6Ngckv76sBaDZH
+	 MlJWRaFTu0g56FapnGQkf+4Aki5cAz3dvEmBaJd0ysKLIHiJD8RsQFfnGMWDpHITci
+	 fsN5JwBElmTkPo4NQj0hm3KFdFtCnDGFIyAcMRTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Sudarsana Reddy Kalluru <skalluru@marvell.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
+	kernel test robot <lkp@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 23/88] ocfs2/dlm: move BITS_TO_BYTES() to bitops.h for wider use
-Date: Wed,  7 Jun 2023 22:15:40 +0200
-Message-ID: <20230607200859.740762082@linuxfoundation.org>
+Subject: [PATCH 4.19 56/88] wifi: b43: fix incorrect __packed annotation
+Date: Wed,  7 Jun 2023 22:16:13 +0200
+Message-ID: <20230607200900.993218808@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -44,88 +39,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit dd3e7cba16274831f5a69f071ed3cf13ffb352ea ]
+[ Upstream commit 212457ccbd60dba34f965e4ffbe62f0e4f970538 ]
 
-There are users already and will be more of BITS_TO_BYTES() macro.  Move
-it to bitops.h for wider use.
+clang warns about an unpacked structure inside of a packed one:
 
-In the case of ocfs2 the replacement is identical.
+drivers/net/wireless/broadcom/b43/b43.h:654:4: error: field data within 'struct b43_iv' is less aligned than 'union (unnamed union at /home/arnd/arm-soc/drivers/net/wireless/broadcom/b43/b43.h:651:2)' and is usually due to 'struct b43_iv' being packed, which can lead to unaligned accesses [-Werror,-Wunaligned-access]
 
-As for bnx2x, there are two places where floor version is used.  In the
-first case to calculate the amount of structures that can fit one memory
-page.  In this case obviously the ceiling variant is correct and
-original code might have a potential bug, if amount of bits % 8 is not
-0.  In the second case the macro is used to calculate bytes transmitted
-in one microsecond.  This will work for all speeds which is multiply of
-1Gbps without any change, for the rest new code will give ceiling value,
-for instance 100Mbps will give 13 bytes, while old code gives 12 bytes
-and the arithmetically correct one is 12.5 bytes.  Further the value is
-used to setup timer threshold which in any case has its own margins due
-to certain resolution.  I don't see here an issue with slightly shifting
-thresholds for low speed connections, the card is supposed to utilize
-highest available rate, which is usually 10Gbps.
+The problem here is that the anonymous union has the default alignment
+from its members, apparently because the original author mixed up the
+placement of the __packed attribute by placing it next to the struct
+member rather than the union definition. As the struct itself is
+also marked as __packed, there is no need to mark its members, so just
+move the annotation to the inner type instead.
 
-Link: http://lkml.kernel.org/r/20200108121316.22411-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Acked-by: Sudarsana Reddy Kalluru <skalluru@marvell.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: f4e4534850a9 ("net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report")
+As Michael noted, the same problem is present in b43legacy, so
+change both at the same time.
+
+Acked-by: Michael Büsch <m@bues.ch>
+Reported-by: kernel test robot <lkp@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
+Link: https://lore.kernel.org/oe-kbuild-all/202305160749.ay1HAoyP-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230516183442.536589-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_init.h | 1 -
- fs/ocfs2/dlm/dlmcommon.h                         | 4 ----
- include/linux/bitops.h                           | 1 +
- 3 files changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/wireless/broadcom/b43/b43.h             | 2 +-
+ drivers/net/wireless/broadcom/b43legacy/b43legacy.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_init.h b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_init.h
-index 46ee2c01f4c51..d16b1eddbecf2 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_init.h
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_init.h
-@@ -296,7 +296,6 @@ static inline void bnx2x_dcb_config_qm(struct bnx2x *bp, enum cos_mode mode,
-  *    possible, the driver should only write the valid vnics into the internal
-  *    ram according to the appropriate port mode.
-  */
--#define BITS_TO_BYTES(x) ((x)/8)
+diff --git a/drivers/net/wireless/broadcom/b43/b43.h b/drivers/net/wireless/broadcom/b43/b43.h
+index b77d1a904f7e6..a449561fccf28 100644
+--- a/drivers/net/wireless/broadcom/b43/b43.h
++++ b/drivers/net/wireless/broadcom/b43/b43.h
+@@ -651,7 +651,7 @@ struct b43_iv {
+ 	union {
+ 		__be16 d16;
+ 		__be32 d32;
+-	} data __packed;
++	} __packed data;
+ } __packed;
  
- /* CMNG constants, as derived from system spec calculations */
  
-diff --git a/fs/ocfs2/dlm/dlmcommon.h b/fs/ocfs2/dlm/dlmcommon.h
-index d06e27ec4be47..fb181f6d6c064 100644
---- a/fs/ocfs2/dlm/dlmcommon.h
-+++ b/fs/ocfs2/dlm/dlmcommon.h
-@@ -704,10 +704,6 @@ struct dlm_begin_reco
- 	__be32 pad2;
- };
+diff --git a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
+index 6b0cec467938f..f49365d14619f 100644
+--- a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
++++ b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
+@@ -379,7 +379,7 @@ struct b43legacy_iv {
+ 	union {
+ 		__be16 d16;
+ 		__be32 d32;
+-	} data __packed;
++	} __packed data;
+ } __packed;
  
--
--#define BITS_PER_BYTE 8
--#define BITS_TO_BYTES(bits) (((bits)+BITS_PER_BYTE-1)/BITS_PER_BYTE)
--
- struct dlm_query_join_request
- {
- 	u8 node_idx;
-diff --git a/include/linux/bitops.h b/include/linux/bitops.h
-index 5c1522ed2d7c7..29ce32a2b6c3c 100644
---- a/include/linux/bitops.h
-+++ b/include/linux/bitops.h
-@@ -6,6 +6,7 @@
- 
- #define BITS_PER_TYPE(type) (sizeof(type) * BITS_PER_BYTE)
- #define BITS_TO_LONGS(nr)	DIV_ROUND_UP(nr, BITS_PER_TYPE(long))
-+#define BITS_TO_BYTES(nr)	DIV_ROUND_UP(nr, BITS_PER_TYPE(char))
- 
- extern unsigned int __sw_hweight8(unsigned int w);
- extern unsigned int __sw_hweight16(unsigned int w);
+ #define B43legacy_PHYMODE(phytype)	(1 << (phytype))
 -- 
 2.39.2
 
