@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC7034CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6841C433EF;
-	Wed,  7 Jun 2023 21:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A62534CD3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83621C433D2;
+	Wed,  7 Jun 2023 21:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171637;
-	bh=ghF2GthllgTMSiopveFp2DYgReYP68XguoNsg36BQQ8=;
+	s=korg; t=1686171639;
+	bh=jXyeWu7J1vpGdlWJwZfkHZ8ILypI0JONqg8icPURwSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GzEQHJt55TlqaumL8zKXd1gRYsO4mWk9nPBHDxTT7OVyDWA7I5pmELJIdPtnJgKOM
-	 Uu4B/S5qXyzUz88nQM9bsXNbHICV9t8v+LZk/WacWpsnl6yRyejzHT2E2JEgioukTq
-	 9toe3+hBrw+D254qdt/aMNyjTjBCfj3pyCi1oa88=
+	b=v/Tw0p8S2lMyrSQTmrCgaIRtmv9paLnJLBVNAAqIIjpcqoLJMII2ZD8OR3t/DvnY+
+	 CTrrxlKMp0js9jjnPyf47BMzHHLmcwmkBgdqTrVPsfCPXd3szkF2ArX2iSMMwVgigx
+	 Tk/42t4798muf7BJftiz/hIsQmZuVH1q1w4cmORI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Smith <dansmith@ds.gy>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Lee Jones <lee@kernel.org>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/159] nvme-pci: Add quirk for Teamgroup MP33 SSD
-Date: Wed,  7 Jun 2023 22:16:37 +0200
-Message-ID: <20230607200906.770368253@linuxfoundation.org>
+Subject: [PATCH 5.15 095/159] mailbox: mailbox-test: fix a locking issue in mbox_test_message_write()
+Date: Wed,  7 Jun 2023 22:16:38 +0200
+Message-ID: <20230607200906.802549093@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,35 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Smith <dansmith@ds.gy>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0649728123cf6a5518e154b4e1735fc85ea4f55c ]
+[ Upstream commit 8fe72b76db79d694858e872370df49676bc3be8c ]
 
-Add a quirk for Teamgroup MP33 that reports duplicate ids for disk.
+There was a bug where this code forgot to unlock the tdev->mutex if the
+kzalloc() failed.  Fix this issue, by moving the allocation outside the
+lock.
 
-Signed-off-by: Daniel Smith <dansmith@ds.gy>
-[kch: patch formatting]
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Tested-by: Daniel Smith <dansmith@ds.gy>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 2d1e952a2b8e ("mailbox: mailbox-test: Fix potential double-free in mbox_test_message_write()")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mailbox/mailbox-test.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index e284511ca6670..d04c06e07fbb2 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3407,6 +3407,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1e4b, 0x1602), /* HS-SSD-FUTURE 2048G  */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
-+	{ PCI_DEVICE(0x10ec, 0x5765), /* TEAMGROUP MP33 2TB SSD */
-+		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0x0061),
- 		.driver_data = NVME_QUIRK_DMA_ADDRESS_BITS_48, },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0x0065),
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index 6dd5b9614452b..abcee58e851c2 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -97,6 +97,7 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 				       size_t count, loff_t *ppos)
+ {
+ 	struct mbox_test_device *tdev = filp->private_data;
++	char *message;
+ 	void *data;
+ 	int ret;
+ 
+@@ -112,12 +113,13 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&tdev->mutex);
+-
+-	tdev->message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
+-	if (!tdev->message)
++	message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
++	if (!message)
+ 		return -ENOMEM;
+ 
++	mutex_lock(&tdev->mutex);
++
++	tdev->message = message;
+ 	ret = copy_from_user(tdev->message, userbuf, count);
+ 	if (ret) {
+ 		ret = -EFAULT;
 -- 
 2.39.2
 
