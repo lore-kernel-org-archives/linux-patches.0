@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6266A3AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EF7C433EF;
-	Wed,  7 Jun 2023 20:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37A33AE5C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEE5C4339B;
+	Wed,  7 Jun 2023 20:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169750;
-	bh=/ZQtRsJbOg2XX00OHxi8ngZFPwAIM6l/UIvEwv3Ew/A=;
+	s=korg; t=1686169752;
+	bh=ODzEe5MTMPERDf+zXbuLdOTQOBegDNhuK6ZJ0a/0Ze4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qO4bIZpCVnySueD2e0TxqJdrveH/DexQktFeZvghoPgWW2uG2p2sVhAHVQCY3f71X
-	 S2Pecv9m2b7Dp9ZI0FOGM0uAP+b9JDSOilufXPKmCnksXQZCcPBJuRaCpB6L6UhbIK
-	 g/bH082Qaz1J6Cyyrex4ljnDeEOaFJdJm22zVKgw=
+	b=tA6L8ECHvQ1vqkiTSDwpimEIjKlQtefb89QXNT2PzFa6nFJODxclzFjmw0krMYisO
+	 BnwIZXDoVDxvB3SAhV4HtjlxIGYDsBIauuYYtgyPBew9/pZWUBzHQ07HBrLayEb+K6
+	 glhN9KlDS8XQ+uXcZNx49mowjCCCTtmF8DENtUzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guchun Chen <guchun.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
+	kernel test robot <lkp@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 170/286] drm/amdgpu: skip disabling fence driver src_irqs when device is unplugged
-Date: Wed,  7 Jun 2023 22:14:29 +0200
-Message-ID: <20230607200928.668722455@linuxfoundation.org>
+Subject: [PATCH 6.3 161/286] wifi: b43: fix incorrect __packed annotation
+Date: Wed,  7 Jun 2023 22:14:20 +0200
+Message-ID: <20230607200928.381581896@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,49 +39,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit c1a322a7a4a96cd0a3dde32ce37af437a78bf8cd ]
+[ Upstream commit 212457ccbd60dba34f965e4ffbe62f0e4f970538 ]
 
-When performing device unbind or halt, we have disabled all irqs at the
-very begining like amdgpu_pci_remove or amdgpu_device_halt. So
-amdgpu_irq_put for irqs stored in fence driver should not be called
-any more, otherwise, below calltrace will arrive.
+clang warns about an unpacked structure inside of a packed one:
 
-[  139.114088] WARNING: CPU: 2 PID: 1550 at drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c:616 amdgpu_irq_put+0xf6/0x110 [amdgpu]
-[  139.114655] Call Trace:
-[  139.114655]  <TASK>
-[  139.114657]  amdgpu_fence_driver_hw_fini+0x93/0x130 [amdgpu]
-[  139.114836]  amdgpu_device_fini_hw+0xb6/0x350 [amdgpu]
-[  139.114955]  amdgpu_driver_unload_kms+0x51/0x70 [amdgpu]
-[  139.115075]  amdgpu_pci_remove+0x63/0x160 [amdgpu]
-[  139.115193]  ? __pm_runtime_resume+0x64/0x90
-[  139.115195]  pci_device_remove+0x3a/0xb0
-[  139.115197]  device_remove+0x43/0x70
-[  139.115198]  device_release_driver_internal+0xbd/0x140
+drivers/net/wireless/broadcom/b43/b43.h:654:4: error: field data within 'struct b43_iv' is less aligned than 'union (unnamed union at /home/arnd/arm-soc/drivers/net/wireless/broadcom/b43/b43.h:651:2)' and is usually due to 'struct b43_iv' being packed, which can lead to unaligned accesses [-Werror,-Wunaligned-access]
 
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The problem here is that the anonymous union has the default alignment
+from its members, apparently because the original author mixed up the
+placement of the __packed attribute by placing it next to the struct
+member rather than the union definition. As the struct itself is
+also marked as __packed, there is no need to mark its members, so just
+move the annotation to the inner type instead.
+
+As Michael noted, the same problem is present in b43legacy, so
+change both at the same time.
+
+Acked-by: Michael Büsch <m@bues.ch>
+Reported-by: kernel test robot <lkp@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
+Link: https://lore.kernel.org/oe-kbuild-all/202305160749.ay1HAoyP-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230516183442.536589-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/b43/b43.h             | 2 +-
+ drivers/net/wireless/broadcom/b43legacy/b43legacy.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
-index f52d0ba91a770..a7d250809da99 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
-@@ -582,7 +582,8 @@ void amdgpu_fence_driver_hw_fini(struct amdgpu_device *adev)
- 		if (r)
- 			amdgpu_fence_driver_force_completion(ring);
+diff --git a/drivers/net/wireless/broadcom/b43/b43.h b/drivers/net/wireless/broadcom/b43/b43.h
+index 9fc7c088a539e..67b4bac048e58 100644
+--- a/drivers/net/wireless/broadcom/b43/b43.h
++++ b/drivers/net/wireless/broadcom/b43/b43.h
+@@ -651,7 +651,7 @@ struct b43_iv {
+ 	union {
+ 		__be16 d16;
+ 		__be32 d32;
+-	} data __packed;
++	} __packed data;
+ } __packed;
  
--		if (ring->fence_drv.irq_src)
-+		if (!drm_dev_is_unplugged(adev_to_drm(adev)) &&
-+		    ring->fence_drv.irq_src)
- 			amdgpu_irq_put(adev, ring->fence_drv.irq_src,
- 				       ring->fence_drv.irq_type);
  
+diff --git a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
+index 6b0cec467938f..f49365d14619f 100644
+--- a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
++++ b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
+@@ -379,7 +379,7 @@ struct b43legacy_iv {
+ 	union {
+ 		__be16 d16;
+ 		__be32 d32;
+-	} data __packed;
++	} __packed data;
+ } __packed;
+ 
+ #define B43legacy_PHYMODE(phytype)	(1 << (phytype))
 -- 
 2.39.2
 
