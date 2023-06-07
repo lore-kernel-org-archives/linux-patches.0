@@ -1,73 +1,87 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3261ACC0
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 15:15:22 +0000 (UTC)
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-ba8c3186735so10857459276.3
-        for <patches@lists.linux.dev>; Wed, 07 Jun 2023 08:15:22 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651D01ACB5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 15:18:41 +0000 (UTC)
+Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-514b05895f7so1053322a12.0
+        for <patches@lists.linux.dev>; Wed, 07 Jun 2023 08:18:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686150921; x=1688742921;
+        d=google.com; s=20221208; t=1686151119; x=1688743119;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=06HbTUXXP7qSeCUQ65JCVHpgC5ctYDDwQ2ntWKZsrTg=;
-        b=kJJuPstV/fd36hGGYqYYMfU6SQ6eMQvBPGcCDCMF+3B6XODR3LYU3yrIc7I+D/zsft
-         6zsexaV1k8KZe/Dt90YYquozfp1J7tHh3/wNhp+qeyEDPl0mmZpblATGSxPZhOlApQ0J
-         nWw+IiChAXdQZlbw05aYZfAf6p+CnxvcX4Rg0PcgCvj/JAKd03rBxFYqFII+6HhbMWUt
-         MJQoZjGU5egLSdtfqOZo+gccpnGFlP1/zD4CHa/tfvvLV0hDeaTL4LDVHQqwwF73RlbW
-         HwlA/fmcm34oLZjuYUMNBy5GYgzk2i92X9R2abUaebW1TU9zHIQUm01kaKNz/rrBFgAf
-         icdA==
+        bh=deVQh+qbleFKFMBXvnJT6n7IHyrSJm7waz9PF08hDFU=;
+        b=DNXQlO+kgvXwz6qTJX0etAVSfGVzhFmEBenY1HHqPAA3uAG+PnXCUE7jvbEGWQvs2j
+         CHWEuYhIOyskMTlKZZBQbahX0jfdn2xYBiYf3V5MfSVfB8XWxVFHENd1V7ARhwY4OvFd
+         pReca3JGKzbul6Xb48vcaWW8e/HczwXy5I8sXDtBOiCG+UgFFu72hBmjn+4FAq3ed4Kx
+         7QVrQn+ie8L4PDdPcypfIoPQlUVl5Q4qvvpnTG8ifuRtJHgCFVYWU7eUuPMPvv8VAnVU
+         l+lXs7A6C23rOGvrP0ssUOs6FaauJbJr61DcGg7m/hHRTx5Z7XluO9VPZ1GjbQOBt1+u
+         7zgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686150921; x=1688742921;
+        d=1e100.net; s=20221208; t=1686151119; x=1688743119;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=06HbTUXXP7qSeCUQ65JCVHpgC5ctYDDwQ2ntWKZsrTg=;
-        b=EBVTHxAsuHSWWKQhjMQPj3fdBc8ostfZ9ZKPGUbK/ptOP3qKloxP3M/wMAaDL6X7VI
-         wAmpIU2MF7b5sNn1kGq/UtwaL4VRpKKpch1N9ptxJoe1eA4xTEGaNb0NXncr+vUxWhvw
-         gWA34B9jCSPipjMSLIkwOZZZLAEthKLSKf/39vZX6I9wD5Nc4LLSh2U977Iq0Y27lsSS
-         4FrgZHKW7+Wa3Miw/RrvZVpz53O2h6AwDS4ePQAqZVsSwBS2E+8sKZQ30+2C6Yvu9gF3
-         liCIBiELoYHaUsRojmOt+j6vdLvrRr3Li+CcJabx+qLGjYUQUSgjE2/lsr86Ua1Vh9Ti
-         0gmw==
-X-Gm-Message-State: AC+VfDyiXNbJIkqDOVzoL//4vrwye2mPnegQteIvGvkIxJd83irb/4qr
-	kN40zj4pjbTip0elnfx37cZ+pFc+bC8b34I=
-X-Google-Smtp-Source: ACHHUZ5hfgcmjYBr+gjEpgOSocio7Fae1zcX14/mchK1aXcyQDsxI556aUghMJFfiHNwTqEZrwd4bVwBBywPoxs=
+        bh=deVQh+qbleFKFMBXvnJT6n7IHyrSJm7waz9PF08hDFU=;
+        b=G9eR1EEkZWnCwEexZSvhN/xTZ/k0nBo9G36dAxOg38D79GLV16mDoyqhkVyhJpYhwf
+         xc/Eja8XXCNOjc0DOKXuSvqQe2BfEarGpH0v+NXbmSJcGW3xMHhjlwFxacHRJRgliHyy
+         Vehx3buRBhGtBwwYzcrJFPdk1ENnj3ynDUlwU0DluUY0aGXkBhrYEg3y8/SWOEroJGtx
+         xcxBEU7WZQVBkrUf0H1Kz2J1EMhMsJf0YmbHrkEh7HRvlftl4+YAVpxr/3AmMWl0iKjV
+         GNmvNWR3hkrvYgoD+Ej10a513jyvOsI+rZzN/+aJv+5MgkhX8/DIWZVM1Jw7wc+I+JQO
+         Fd3Q==
+X-Gm-Message-State: AC+VfDxgI2quxLwhP3Jd8zwahxMArviGa7dM1MXAvenuD1WOJRvJ/G0y
+	0gDv4cjj3D3TQ3Jrvq6XEX1J/r+84YlBo7w=
+X-Google-Smtp-Source: ACHHUZ5+zXTXF5D3mZ/9fHkAjNG/eNG0QStWdbxlxoduzPgPX6YpKC8RCoeMj1HG0n0ESy8+IfPs3bCbvb/mmtU=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a05:6902:722:b0:ba8:8ec4:db50 with SMTP
- id l2-20020a056902072200b00ba88ec4db50mr2207946ybt.1.1686150921659; Wed, 07
- Jun 2023 08:15:21 -0700 (PDT)
-Date: Wed,  7 Jun 2023 15:15:18 +0000
-In-Reply-To: <875y862lr7.fsf@metaspace.dk>
+ (user=aliceryhl job=sendgmr) by 2002:a50:99cd:0:b0:50b:c4b5:bb77 with SMTP id
+ n13-20020a5099cd000000b0050bc4b5bb77mr2220409edb.1.1686151119485; Wed, 07 Jun
+ 2023 08:18:39 -0700 (PDT)
+Date: Wed,  7 Jun 2023 15:18:37 +0000
+In-Reply-To: <ZH/C/lKeYxM7tbYA@boqun-archlinux>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <875y862lr7.fsf@metaspace.dk>
+References: <ZH/C/lKeYxM7tbYA@boqun-archlinux>
 X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
-Message-ID: <20230607151518.1191562-1-aliceryhl@google.com>
-Subject: Re: [PATCH v2 2/8] rust: add offset_of! macro
+Message-ID: <20230607151837.1193399-1-aliceryhl@google.com>
+Subject: Re: [PATCH v2 1/8] rust: workqueue: add low-level workqueue bindings
 From: Alice Ryhl <aliceryhl@google.com>
-To: nmi@metaspace.dk
+To: boqun.feng@gmail.com
 Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
-	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net, 
-	jiangshanlai@gmail.com, linux-kernel@vger.kernel.org, ojeda@kernel.org, 
-	patches@lists.linux.dev, rust-for-linux@vger.kernel.org, tj@kernel.org, 
-	walmeida@microsoft.com, wedsonaf@gmail.com, yakoyoku@gmail.com
+	bjorn3_gh@protonmail.com, gary@garyguo.net, jiangshanlai@gmail.com, 
+	linux-kernel@vger.kernel.org, ojeda@kernel.org, patches@lists.linux.dev, 
+	rust-for-linux@vger.kernel.org, tj@kernel.org, wedsonaf@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 
-Andreas Hindborg (Samsung) <nmi@metaspace.dk> writes:
-> Alice Ryhl <aliceryhl@google.com> writes:
->> +#[macro_export]
->> +macro_rules! offset_of {
->> +    ($type:path, $field:ident) => {{
+Boqun Feng <boqun.feng@gmail.com> writes:
+> On Thu, Jun 01, 2023 at 01:49:39PM +0000, Alice Ryhl wrote:
+> [...]
+>> +/// A raw work item.
+>> +///
+>> +/// This is the low-level trait that is designed for being as general as possible.
+>> +///
+>> +/// The `ID` parameter to this trait exists so that a single type can provide multiple
+>> +/// implementations of this trait. For example, if a struct has multiple `work_struct` fields, then
+>> +/// you will implement this trait once for each field, using a different id for each field. The
+>> +/// actual value of the id is not important as long as you use different ids for different fields
+>> +/// of the same struct. (Fields of different structs need not use different ids.)
+>> +///
+>> +/// Note that the id is used only to select the right method to call during compilation. It wont be
+>> +/// part of the final executable.
+>> +///
+>> +/// # Safety
+>> +///
+>> +/// Implementers must ensure that any pointers passed to a `queue_work_on` closure by `__enqueue`
+>> +/// remain valid for the duration specified in the documentation for `__enqueue`.
 > 
-> Could we add a descriptive comment?
+> ^ better to say "the #Guarantees section in the documentation for
+> `__enqueue`"?
 > 
->            // Prevent deref coersion to `$field` by requiring `$type`
->            // has a field named `$field`
-> 
-> BR Andreas
+> Regards,
+> Boqun
 
-Sure. It will be in the next version of the patchset.
+Sure, I will clarify that this refers to the guarantees section in the
+next version of the patchset.
 
 Alice
