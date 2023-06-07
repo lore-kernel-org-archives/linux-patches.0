@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660B434CD3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8B2C433D2;
-	Wed,  7 Jun 2023 20:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B1034CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782D4C433D2;
+	Wed,  7 Jun 2023 20:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170391;
-	bh=jFBvxYzGV+XhmFiGqLfid3XokMvdcSX4ovZZYyfbazk=;
+	s=korg; t=1686170393;
+	bh=WOWpvSGVcqwyTfThoCVxq6bLDLLJMriEoKmSw2N5Opk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLUDDso57J/pc9RlFheqmLABCuhhPXNLBvUs9oExXO3wJpXxwJY1UjcfosQ/qMKuo
-	 LBJ61xyHGm4X4XSW9uE0MBpMNXG/IlTC2BwR2ZS/uTm011SUdWhZP7EkHz4xiY6US6
-	 R88rAH3PtVHr5LmQTwp/6+2C+KDdv51aU13j12+s=
+	b=Bv9p0UcpLoKUfycG3m6qF1VvCHa3xJGOfOlV8m4pFfZRfTVpO+/G4HR+lPJt8JlHJ
+	 nqEwrb04EVBWFSDjPDpSZGOpyMVy3SFUKIcu0/36CPnc2gxuK6AEIOSOmv+eIOL5gN
+	 uPhp1Lt4tZyHy9C1EoN2AmO7zTT5nwqhJpzlx79g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jammy Huang <jammy_huang@aspeedtech.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/225] drm/ast: Fix ARM compatibility
-Date: Wed,  7 Jun 2023 22:14:20 +0200
-Message-ID: <20230607200916.552336728@linuxfoundation.org>
+Subject: [PATCH 6.1 068/225] btrfs: abort transaction when sibling keys check fails for leaves
+Date: Wed,  7 Jun 2023 22:14:21 +0200
+Message-ID: <20230607200916.584532329@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,43 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jammy Huang <jammy_huang@aspeedtech.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 4327a6137ed43a091d900b1ac833345d60f32228 ]
+[ Upstream commit 9ae5afd02a03d4e22a17a9609b19400b77c36273 ]
 
-ARM architecture only has 'memory', so all devices are accessed by
-MMIO if possible.
+If the sibling keys check fails before we move keys from one sibling
+leaf to another, we are not aborting the transaction - we leave that to
+some higher level caller of btrfs_search_slot() (or anything else that
+uses it to insert items into a b+tree).
 
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230421003354.27767-1-jammy_huang@aspeedtech.com
+This means that the transaction abort will provide a stack trace that
+omits the b+tree modification call chain. So change this to immediately
+abort the transaction and therefore get a more useful stack trace that
+shows us the call chain in the bt+tree modification code.
+
+It's also important to immediately abort the transaction just in case
+some higher level caller is not doing it, as this indicates a very
+serious corruption and we should stop the possibility of doing further
+damage.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ast/ast_main.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/btrfs/ctree.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/ast/ast_main.c b/drivers/gpu/drm/ast/ast_main.c
-index 067453266897f..5df527051177a 100644
---- a/drivers/gpu/drm/ast/ast_main.c
-+++ b/drivers/gpu/drm/ast/ast_main.c
-@@ -427,11 +427,12 @@ struct ast_private *ast_device_create(const struct drm_driver *drv,
- 		return ERR_PTR(-EIO);
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index dbbae92ac23d8..ab9f8d6c4f1b9 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -3118,6 +3118,7 @@ static int push_leaf_right(struct btrfs_trans_handle *trans, struct btrfs_root
  
- 	/*
--	 * If we don't have IO space at all, use MMIO now and
--	 * assume the chip has MMIO enabled by default (rev 0x20
--	 * and higher).
-+	 * After AST2500, MMIO is enabled by default, and it should be adopted
-+	 * to be compatible with Arm.
- 	 */
--	if (!(pci_resource_flags(pdev, 2) & IORESOURCE_IO)) {
-+	if (pdev->revision >= 0x40) {
-+		ast->ioregs = ast->regs + AST_IO_MM_OFFSET;
-+	} else if (!(pci_resource_flags(pdev, 2) & IORESOURCE_IO)) {
- 		drm_info(dev, "platform has no IO space, trying MMIO\n");
- 		ast->ioregs = ast->regs + AST_IO_MM_OFFSET;
+ 	if (check_sibling_keys(left, right)) {
+ 		ret = -EUCLEAN;
++		btrfs_abort_transaction(trans, ret);
+ 		btrfs_tree_unlock(right);
+ 		free_extent_buffer(right);
+ 		return ret;
+@@ -3348,6 +3349,7 @@ static int push_leaf_left(struct btrfs_trans_handle *trans, struct btrfs_root
+ 
+ 	if (check_sibling_keys(left, right)) {
+ 		ret = -EUCLEAN;
++		btrfs_abort_transaction(trans, ret);
+ 		goto out;
  	}
+ 	return __push_leaf_left(path, min_data_size,
 -- 
 2.39.2
 
