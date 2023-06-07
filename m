@@ -1,126 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F8B139F;
-	Wed,  7 Jun 2023 13:40:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8684FC433D2;
-	Wed,  7 Jun 2023 13:40:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686145215;
-	bh=SNCVxE2wrdQKzyySHbHvUG+bSoAJiX15ywJ8wsEKhGU=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=UpOYu5F+ysiBloC09ECUTMARBl5FodyCioP6hcWfuE9CXFfrRXpViAKZiD3LlNexq
-	 eWuzSRPPMqM3Y1t/5534mE8X8DRIyO+D4VggTBXmjrUzF78trhZRVwLdj6Mek9Bd+1
-	 1STbY6pp0G9YFjrb5BfWqv2HTEzPcMcpZlTyJC5An3xW/NxcYVJLjno5flwzlmLEXb
-	 uAQ3qcm9mKr8GhNN/wkfxrSz7d0wm58XDSyZj2YWYV9NieXrF1jTCILtEyRFqOC7F1
-	 b/pk374IKozc7CVugv3jn2jbXnFgZNq6QqNg9rVrF0gkNbKm8WxLucmTuL3nUgha0w
-	 lxkgw1sNlBC+A==
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-39aa825c299so406142b6e.0;
-        Wed, 07 Jun 2023 06:40:15 -0700 (PDT)
-X-Gm-Message-State: AC+VfDz7Qtq5vFZNGwCSgtTLbaCm9RwI2l6jwlphemtt8YAhXj3Rkh10
-	ExcnAomsHJVp+ecKHRKC1RkyvLOF2SIR8DTnW4Y=
-X-Google-Smtp-Source: ACHHUZ4/GXwyywl7SpLOvRacOyzGB77x6C4lOebtqwbMKWUbtBOpqojrapAP9u2lQMYGmCAAGxRYELO0iegYuJ6INhI=
-X-Received: by 2002:aca:efd5:0:b0:39a:4170:6840 with SMTP id
- n204-20020acaefd5000000b0039a41706840mr6804736oih.21.1686145214823; Wed, 07
- Jun 2023 06:40:14 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3261ACC0
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 15:15:22 +0000 (UTC)
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-ba8c3186735so10857459276.3
+        for <patches@lists.linux.dev>; Wed, 07 Jun 2023 08:15:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1686150921; x=1688742921;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=06HbTUXXP7qSeCUQ65JCVHpgC5ctYDDwQ2ntWKZsrTg=;
+        b=kJJuPstV/fd36hGGYqYYMfU6SQ6eMQvBPGcCDCMF+3B6XODR3LYU3yrIc7I+D/zsft
+         6zsexaV1k8KZe/Dt90YYquozfp1J7tHh3/wNhp+qeyEDPl0mmZpblATGSxPZhOlApQ0J
+         nWw+IiChAXdQZlbw05aYZfAf6p+CnxvcX4Rg0PcgCvj/JAKd03rBxFYqFII+6HhbMWUt
+         MJQoZjGU5egLSdtfqOZo+gccpnGFlP1/zD4CHa/tfvvLV0hDeaTL4LDVHQqwwF73RlbW
+         HwlA/fmcm34oLZjuYUMNBy5GYgzk2i92X9R2abUaebW1TU9zHIQUm01kaKNz/rrBFgAf
+         icdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686150921; x=1688742921;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=06HbTUXXP7qSeCUQ65JCVHpgC5ctYDDwQ2ntWKZsrTg=;
+        b=EBVTHxAsuHSWWKQhjMQPj3fdBc8ostfZ9ZKPGUbK/ptOP3qKloxP3M/wMAaDL6X7VI
+         wAmpIU2MF7b5sNn1kGq/UtwaL4VRpKKpch1N9ptxJoe1eA4xTEGaNb0NXncr+vUxWhvw
+         gWA34B9jCSPipjMSLIkwOZZZLAEthKLSKf/39vZX6I9wD5Nc4LLSh2U977Iq0Y27lsSS
+         4FrgZHKW7+Wa3Miw/RrvZVpz53O2h6AwDS4ePQAqZVsSwBS2E+8sKZQ30+2C6Yvu9gF3
+         liCIBiELoYHaUsRojmOt+j6vdLvrRr3Li+CcJabx+qLGjYUQUSgjE2/lsr86Ua1Vh9Ti
+         0gmw==
+X-Gm-Message-State: AC+VfDyiXNbJIkqDOVzoL//4vrwye2mPnegQteIvGvkIxJd83irb/4qr
+	kN40zj4pjbTip0elnfx37cZ+pFc+bC8b34I=
+X-Google-Smtp-Source: ACHHUZ5hfgcmjYBr+gjEpgOSocio7Fae1zcX14/mchK1aXcyQDsxI556aUghMJFfiHNwTqEZrwd4bVwBBywPoxs=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a05:6902:722:b0:ba8:8ec4:db50 with SMTP
+ id l2-20020a056902072200b00ba88ec4db50mr2207946ybt.1.1686150921659; Wed, 07
+ Jun 2023 08:15:21 -0700 (PDT)
+Date: Wed,  7 Jun 2023 15:15:18 +0000
+In-Reply-To: <875y862lr7.fsf@metaspace.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20230606-fix-as-option-after-clang_flags-move-v1-1-a7f7b23a35e3@kernel.org>
-In-Reply-To: <20230606-fix-as-option-after-clang_flags-move-v1-1-a7f7b23a35e3@kernel.org>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Wed, 7 Jun 2023 22:39:38 +0900
-X-Gmail-Original-Message-ID: <CAK7LNARAnyYo-Xdx9c528=Pw7cVbt1peWTTCu6LQkLmeMsp+hA@mail.gmail.com>
-Message-ID: <CAK7LNARAnyYo-Xdx9c528=Pw7cVbt1peWTTCu6LQkLmeMsp+hA@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: naresh.kamboju@linaro.org, ndesaulniers@google.com, nicolas@fjasle.eu, 
-	trix@redhat.com, linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, 
-	Linux Kernel Functional Testing <lkft@linaro.org>
+Mime-Version: 1.0
+References: <875y862lr7.fsf@metaspace.dk>
+X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
+Message-ID: <20230607151518.1191562-1-aliceryhl@google.com>
+Subject: Re: [PATCH v2 2/8] rust: add offset_of! macro
+From: Alice Ryhl <aliceryhl@google.com>
+To: nmi@metaspace.dk
+Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
+	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net, 
+	jiangshanlai@gmail.com, linux-kernel@vger.kernel.org, ojeda@kernel.org, 
+	patches@lists.linux.dev, rust-for-linux@vger.kernel.org, tj@kernel.org, 
+	walmeida@microsoft.com, wedsonaf@gmail.com, yakoyoku@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 7, 2023 at 7:40=E2=80=AFAM Nathan Chancellor <nathan@kernel.org=
-> wrote:
->
-> After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
-> KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
-> assembly files with clang:
->
->   arch/powerpc/lib/copypage_power7.S: Assembler messages:
->   arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b0=
-1000'
->   arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b0=
-1010'
->   arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b0=
-1000'
->   arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b0=
-1010'
->   arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b0=
-1010'
->   clang: error: assembler command failed with exit code 1 (use -v to see =
-invocation)
->
-> as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
-> KBUILD_AFLAGS, there is no more '--target=3D' or '--prefix=3D' flags. As =
-a
-> result of those missing flags, the host target
-> will be tested during as-option calls and likely fail, meaning necessary
-> flags may not get added when building assembly files, resulting in
-> errors like seen above.
->
-> Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
-> This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
-> assembler calls to use proper flags and language target"), which
-> switched from using the assembler target to the assembler-with-cpp
-> target, so flags that affect preprocessing are passed along in all
-> relevant tests. as-option now mirrors cc-option.
->
-> Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> Closes: https://lore.kernel.org/CA+G9fYs=3DkoW9WardsTtora+nMgLR3raHz-LSLr=
-58tgX4T5Mxag@mail.gmail.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
+Andreas Hindborg (Samsung) <nmi@metaspace.dk> writes:
+> Alice Ryhl <aliceryhl@google.com> writes:
+>> +#[macro_export]
+>> +macro_rules! offset_of {
+>> +    ($type:path, $field:ident) => {{
+> 
+> Could we add a descriptive comment?
+> 
+>            // Prevent deref coersion to `$field` by requiring `$type`
+>            // has a field named `$field`
+> 
+> BR Andreas
 
-Applied to linux-kbuild.
-Thanks.
+Sure. It will be in the next version of the patchset.
 
-
-
->  scripts/Makefile.compiler | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
-> index 437013f8def3..e31f18625fcf 100644
-> --- a/scripts/Makefile.compiler
-> +++ b/scripts/Makefile.compiler
-> @@ -32,7 +32,7 @@ try-run =3D $(shell set -e;             \
->  # Usage: aflags-y +=3D $(call as-option,-Wa$(comma)-isa=3Dfoo,)
->
->  as-option =3D $(call try-run,\
-> -       $(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev=
-/null -o "$$TMP",$(1),$(2))
-> +       $(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x asse=
-mbler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
->
->  # as-instr
->  # Usage: aflags-y +=3D $(call as-instr,instr,option1,option2)
->
-> ---
-> base-commit: feb843a469fb0ab00d2d23cfb9bcc379791011bb
-> change-id: 20230606-fix-as-option-after-clang_flags-move-be88e993cbaa
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
-
-
---=20
-Best Regards
-Masahiro Yamada
+Alice
