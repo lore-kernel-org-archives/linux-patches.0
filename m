@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD56F10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E119C433D2;
-	Wed,  7 Jun 2023 20:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B36E10FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0459C433D2;
+	Wed,  7 Jun 2023 20:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169721;
-	bh=I5dI2m6v8X3HSe8O6A1jV4bxzjVtOYxcB4Ltr92prbc=;
+	s=korg; t=1686169724;
+	bh=JGCPjgjaisu6qWwe83OrdvqDtScNdKupDNcXuM3Y+Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxitamd8VKVVvywh4/qZb5mvdAh0lnvgcoMP56SpFFxXq8OJz0G9HFb6J4DdXZTCs
-	 Ubzz9aHIgdFPrqiL4udcCRA1unXa6CPrpRV0IKrTJUVwzZlBg6D3bp+9XznNyGnl8q
-	 fLFs0SAW6w5I8Bj+u6OjU/a5zxc7niQrngAAYbgQ=
+	b=ZK0wzzY4daR+H/jO6PY/gXY5jyW8kT/yHOF8feBkGSDE60rL1N+3BDrtp+Se1O7UV
+	 beV3RH/JBpJYa7xJsqarH1vyqdgR2YHzuM0OH0ySHxGC+x5c27R/kJuWdjBRW5yKVo
+	 WdJ5QZgxaQ/VqYsIE7nbB8ZU1wJToOVjGrVFZOoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 188/286] selftests/ftrace: Choose target function for filter test from samples
-Date: Wed,  7 Jun 2023 22:14:47 +0200
-Message-ID: <20230607200929.413807905@linuxfoundation.org>
+Subject: [PATCH 6.3 189/286] drm/amd/display: Only wait for blank completion if OTG active
+Date: Wed,  7 Jun 2023 22:14:48 +0200
+Message-ID: <20230607200929.444279527@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,100 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Aric Cyr <aric.cyr@amd.com>
 
-[ Upstream commit eb50d0f250e96ede9192d936d220cd97adc93b89 ]
+[ Upstream commit 82a10aff9428f1d190de55ef7971fdb84303cc7a ]
 
-Since the event-filter-function.tc expects the 'exit_mmap()' directly
-calls 'kmem_cache_free()', this is vulnerable to code modifications.
+[why]
+If OTG is not active, waiting for blank completion will always fail and
+timeout resulting in unnecessary driver delays.
 
-Choose the target function for the filter test from the sample
-event data so that it can keep test running correctly even if the caller
-function name will be changed.
+[how]
+Check that OTG is enabled before waiting for blank.
 
-Link: https://lore.kernel.org/linux-trace-kernel/167919441260.1922645.18355804179347364057.stgit@mhiramat.roam.corp.google.com/
-
-Link: https://lore.kernel.org/all/CA+G9fYtF-XEKi9YNGgR=Kf==7iRb2FrmEC7qtwAeQbfyah-UhA@mail.gmail.com/
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Fixes: 7f09d639b8c4 ("tracing/selftests: Add test for event filtering on function name")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Aric Cyr <aric.cyr@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../test.d/filter/event-filter-function.tc    | 45 +++++++++++--------
- 1 file changed, 27 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
-index e2ff3bf4df80f..2de7c61d1ae30 100644
---- a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
-+++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
-@@ -9,18 +9,33 @@ fail() { #msg
-     exit_fail
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index d4a1670a54506..f07cba121d010 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -1093,7 +1093,8 @@ static void phantom_pipe_blank(
+ 			otg_active_height,
+ 			0);
+ 
+-	hws->funcs.wait_for_blank_complete(opp);
++	if (tg->funcs->is_tg_enabled(tg))
++		hws->funcs.wait_for_blank_complete(opp);
  }
  
--echo "Test event filter function name"
-+sample_events() {
-+    echo > trace
-+    echo 1 > events/kmem/kmem_cache_free/enable
-+    echo 1 > tracing_on
-+    ls > /dev/null
-+    echo 0 > tracing_on
-+    echo 0 > events/kmem/kmem_cache_free/enable
-+}
+ static void disable_dangling_plane(struct dc *dc, struct dc_state *context)
+@@ -1156,6 +1157,7 @@ static void disable_dangling_plane(struct dc *dc, struct dc_state *context)
+ 			if (old_stream->mall_stream_config.type == SUBVP_PHANTOM) {
+ 				if (tg->funcs->enable_crtc) {
+ 					int main_pipe_width, main_pipe_height;
 +
- echo 0 > tracing_on
- echo 0 > events/enable
-+
-+echo "Get the most frequently calling function"
-+sample_events
-+
-+target_func=`cut -d: -f3 trace | sed 's/call_site=\([^+]*\)+0x.*/\1/' | sort | uniq -c | sort | tail -n 1 | sed 's/^[ 0-9]*//'`
-+if [ -z "$target_func" ]; then
-+    exit_fail
-+fi
- echo > trace
--echo 'call_site.function == exit_mmap' > events/kmem/kmem_cache_free/filter
--echo 1 > events/kmem/kmem_cache_free/enable
--echo 1 > tracing_on
--ls > /dev/null
--echo 0 > events/kmem/kmem_cache_free/enable
- 
--hitcnt=`grep kmem_cache_free trace| grep exit_mmap | wc -l`
--misscnt=`grep kmem_cache_free trace| grep -v exit_mmap | wc -l`
-+echo "Test event filter function name"
-+echo "call_site.function == $target_func" > events/kmem/kmem_cache_free/filter
-+sample_events
-+
-+hitcnt=`grep kmem_cache_free trace| grep $target_func | wc -l`
-+misscnt=`grep kmem_cache_free trace| grep -v $target_func | wc -l`
- 
- if [ $hitcnt -eq 0 ]; then
- 	exit_fail
-@@ -30,20 +45,14 @@ if [ $misscnt -gt 0 ]; then
- 	exit_fail
- fi
- 
--address=`grep ' exit_mmap$' /proc/kallsyms | cut -d' ' -f1`
-+address=`grep " ${target_func}\$" /proc/kallsyms | cut -d' ' -f1`
- 
- echo "Test event filter function address"
--echo 0 > tracing_on
--echo 0 > events/enable
--echo > trace
- echo "call_site.function == 0x$address" > events/kmem/kmem_cache_free/filter
--echo 1 > events/kmem/kmem_cache_free/enable
--echo 1 > tracing_on
--sleep 1
--echo 0 > events/kmem/kmem_cache_free/enable
-+sample_events
- 
--hitcnt=`grep kmem_cache_free trace| grep exit_mmap | wc -l`
--misscnt=`grep kmem_cache_free trace| grep -v exit_mmap | wc -l`
-+hitcnt=`grep kmem_cache_free trace| grep $target_func | wc -l`
-+misscnt=`grep kmem_cache_free trace| grep -v $target_func | wc -l`
- 
- if [ $hitcnt -eq 0 ]; then
- 	exit_fail
+ 					main_pipe_width = old_stream->mall_stream_config.paired_stream->dst.width;
+ 					main_pipe_height = old_stream->mall_stream_config.paired_stream->dst.height;
+ 					phantom_pipe_blank(dc, tg, main_pipe_width, main_pipe_height);
 -- 
 2.39.2
 
