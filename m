@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C20139255
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29597C433D2;
-	Wed,  7 Jun 2023 20:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5F134CD3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C1CC4339B;
+	Wed,  7 Jun 2023 20:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170721;
-	bh=R8ekxwRF6Gzl+hPQUuXBlb6lVhKemx0J0o+fpXRtopo=;
+	s=korg; t=1686170726;
+	bh=g9LGI75BIM5SX5ze7eo+NTRTv7UipykGKXBL4tNzLgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ti6M75OnWPM90lzLcFxgqTtzOgivvbK5Pjalo8gxU5QtlFMhLj32nb/EI9C3BjaXl
-	 iiRqx7yS5PNW8d2it9SyV63M9WSmNbEq3Q+Y1yuqU0Bw4UtOCKDfkM9FEpVD9qwR5m
-	 37kIaT0uGIHDfWaLTberdCiG3jnEcW/87p0t9iNU=
+	b=sYBoOQsth0R08juIS+ZEPPsKXwEEIK0wPDUhGW3btODRhdt6bw6ifoiky0iuagOEM
+	 P11+70Wdx3ildFJbbpnfE8ORDJQFicTop4bYrGi5sQAMfeq9tRN+BnugR13LsQe9mX
+	 fmFRjObXr0DHsFOqXTbtCJnuWac6ldLTJuKxHX80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mat Martineau <martineau@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH 6.1 193/225] selftests: mptcp: userspace pm: skip if MPTCP is not supported
-Date: Wed,  7 Jun 2023 22:16:26 +0200
-Message-ID: <20230607200920.688461372@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 195/225] mptcp: fix active subflow finalization
+Date: Wed,  7 Jun 2023 22:16:28 +0200
+Message-ID: <20230607200920.752005378@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,39 +35,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 63212608a92a1ff10ae56dbb14e9fb685f7e4ffa upstream.
+commit 55b47ca7d80814ceb63d64e032e96cd6777811e5 upstream.
 
-Selftests are supposed to run on any kernels, including the old ones not
-supporting MPTCP.
+Active subflow are inserted into the connection list at creation time.
+When the MPJ handshake completes successfully, a new subflow creation
+netlink event is generated correctly, but the current code wrongly
+avoid initializing a couple of subflow data.
 
-A new check is then added to make sure MPTCP is supported. If not, the
-test stops and is marked as "skipped".
+The above will cause misbehavior on a few exceptional events: unneeded
+mptcp-level retransmission on msk-level sequence wrap-around and infinite
+mapping fallback even when a MPJ socket is present.
 
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: 259a834fadda ("selftests: mptcp: functional tests for the userspace PM type")
+Address the issue factoring out the needed initialization in a new helper
+and invoking the latter from __mptcp_finish_join() time for passive
+subflow and from mptcp_finish_join() for active ones.
+
+Fixes: 0530020a7c8f ("mptcp: track and update contiguous data status")
 Cc: stable@vger.kernel.org
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/userspace_pm.sh |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/mptcp/protocol.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
-+++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-@@ -1,6 +1,10 @@
- #!/bin/bash
- # SPDX-License-Identifier: GPL-2.0
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -821,6 +821,13 @@ void mptcp_data_ready(struct sock *sk, s
+ 	mptcp_data_unlock(sk);
+ }
  
-+. "$(dirname "${0}")/mptcp_lib.sh"
++static void mptcp_subflow_joined(struct mptcp_sock *msk, struct sock *ssk)
++{
++	mptcp_subflow_ctx(ssk)->map_seq = READ_ONCE(msk->ack_seq);
++	WRITE_ONCE(msk->allow_infinite_fallback, false);
++	mptcp_event(MPTCP_EVENT_SUB_ESTABLISHED, msk, ssk, GFP_ATOMIC);
++}
 +
-+mptcp_lib_check_mptcp
-+
- ip -Version > /dev/null 2>&1
- if [ $? -ne 0 ];then
- 	echo "SKIP: Cannot not run test without ip tool"
+ static bool __mptcp_finish_join(struct mptcp_sock *msk, struct sock *ssk)
+ {
+ 	struct sock *sk = (struct sock *)msk;
+@@ -835,6 +842,7 @@ static bool __mptcp_finish_join(struct m
+ 		mptcp_sock_graft(ssk, sk->sk_socket);
+ 
+ 	mptcp_sockopt_sync_locked(msk, ssk);
++	mptcp_subflow_joined(msk, ssk);
+ 	return true;
+ }
+ 
+@@ -3485,14 +3493,16 @@ bool mptcp_finish_join(struct sock *ssk)
+ 		return false;
+ 	}
+ 
+-	if (!list_empty(&subflow->node))
+-		goto out;
++	/* active subflow, already present inside the conn_list */
++	if (!list_empty(&subflow->node)) {
++		mptcp_subflow_joined(msk, ssk);
++		return true;
++	}
+ 
+ 	if (!mptcp_pm_allow_new_subflow(msk))
+ 		goto err_prohibited;
+ 
+-	/* active connections are already on conn_list.
+-	 * If we can't acquire msk socket lock here, let the release callback
++	/* If we can't acquire msk socket lock here, let the release callback
+ 	 * handle it
+ 	 */
+ 	mptcp_data_lock(parent);
+@@ -3515,11 +3525,6 @@ err_prohibited:
+ 		return false;
+ 	}
+ 
+-	subflow->map_seq = READ_ONCE(msk->ack_seq);
+-	WRITE_ONCE(msk->allow_infinite_fallback, false);
+-
+-out:
+-	mptcp_event(MPTCP_EVENT_SUB_ESTABLISHED, msk, ssk, GFP_ATOMIC);
+ 	return true;
+ }
+ 
 
 
