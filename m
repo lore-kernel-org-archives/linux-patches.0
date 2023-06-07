@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6DE19BCD
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0370C433EF;
-	Wed,  7 Jun 2023 20:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70C519BCD
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B1BC4339B;
+	Wed,  7 Jun 2023 20:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170133;
-	bh=yKGcdrssA11YUCE5AUIKpueGETZlG7QwlPbKBiFbRT4=;
+	s=korg; t=1686170135;
+	bh=DazjSu0p439CX/aFG0CP+vx6931tX9hLexv94jEHTmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1N6yjAClU299VE+id5UrG2WGzLTE1dTgK8auRJ6mVvho89/dM2vABlnRTsclu3Sa
-	 StNU5jRUqlwNIqY1q0pb9sLWb2oe37TMkdVxdZ0v8FiAS32I4R9HmaXn+uCPE952AN
-	 /sUYJ6BRddN9WHb/Ct6/hcv0MjDpWnoRExhG0jzI=
+	b=QnTczdv8D8LYgr3VXyK7dcApWjni++twWorxkV3j55tzvDDKpGmE8YpV38rd1DXIE
+	 PYu/uAVuSkFCEgoFiqeEEy19G+HYnI5rGpECfJHP0vUx7JQEnaL56uJp5QRX3A7JrK
+	 yq1lAQW+2H07G7kx7wSjK6WHBvTvdOXn8a0p6G3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <jth@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Lee Jones <lee@kernel.org>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 28/88] watchdog: menz069_wdt: fix watchdog initialisation
-Date: Wed,  7 Jun 2023 22:15:45 +0200
-Message-ID: <20230607200900.013517314@linuxfoundation.org>
+Subject: [PATCH 4.19 29/88] mailbox: mailbox-test: Fix potential double-free in mbox_test_message_write()
+Date: Wed,  7 Jun 2023 22:15:46 +0200
+Message-ID: <20230607200900.058364825@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -36,69 +35,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Thumshirn <jth@kernel.org>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 87b22656ca6a896d0378e9e60ffccb0c82f48b08 ]
+[ Upstream commit 2d1e952a2b8e5e92d8d55ac88a7cf7ca5ea591ad ]
 
-Doing a 'cat /dev/watchdog0' with menz069_wdt as watchdog0 will result in
-a NULL pointer dereference.
+If a user can make copy_from_user() fail, there is a potential for
+UAF/DF due to a lack of locking around the allocation, use and freeing
+of the data buffers.
 
-This happens because we're passing the wrong pointer to
-watchdog_register_device(). Fix this by getting rid of the static
-watchdog_device structure and use the one embedded into the driver's
-per-instance private data.
+This issue is not theoretical.  I managed to author a POC for it:
 
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230418172531.177349-2-jth@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+    BUG: KASAN: double-free in kfree+0x5c/0xac
+    Free of addr ffff29280be5de00 by task poc/356
+    CPU: 1 PID: 356 Comm: poc Not tainted 6.1.0-00001-g961aa6552c04-dirty #20
+    Hardware name: linux,dummy-virt (DT)
+    Call trace:
+     dump_backtrace.part.0+0xe0/0xf0
+     show_stack+0x18/0x40
+     dump_stack_lvl+0x64/0x80
+     print_report+0x188/0x48c
+     kasan_report_invalid_free+0xa0/0xc0
+     ____kasan_slab_free+0x174/0x1b0
+     __kasan_slab_free+0x18/0x24
+     __kmem_cache_free+0x130/0x2e0
+     kfree+0x5c/0xac
+     mbox_test_message_write+0x208/0x29c
+     full_proxy_write+0x90/0xf0
+     vfs_write+0x154/0x440
+     ksys_write+0xcc/0x180
+     __arm64_sys_write+0x44/0x60
+     invoke_syscall+0x60/0x190
+     el0_svc_common.constprop.0+0x7c/0x160
+     do_el0_svc+0x40/0xf0
+     el0_svc+0x2c/0x6c
+     el0t_64_sync_handler+0xf4/0x120
+     el0t_64_sync+0x18c/0x190
+
+    Allocated by task 356:
+     kasan_save_stack+0x3c/0x70
+     kasan_set_track+0x2c/0x40
+     kasan_save_alloc_info+0x24/0x34
+     __kasan_kmalloc+0xb8/0xc0
+     kmalloc_trace+0x58/0x70
+     mbox_test_message_write+0x6c/0x29c
+     full_proxy_write+0x90/0xf0
+     vfs_write+0x154/0x440
+     ksys_write+0xcc/0x180
+     __arm64_sys_write+0x44/0x60
+     invoke_syscall+0x60/0x190
+     el0_svc_common.constprop.0+0x7c/0x160
+     do_el0_svc+0x40/0xf0
+     el0_svc+0x2c/0x6c
+     el0t_64_sync_handler+0xf4/0x120
+     el0t_64_sync+0x18c/0x190
+
+    Freed by task 357:
+     kasan_save_stack+0x3c/0x70
+     kasan_set_track+0x2c/0x40
+     kasan_save_free_info+0x38/0x5c
+     ____kasan_slab_free+0x13c/0x1b0
+     __kasan_slab_free+0x18/0x24
+     __kmem_cache_free+0x130/0x2e0
+     kfree+0x5c/0xac
+     mbox_test_message_write+0x208/0x29c
+     full_proxy_write+0x90/0xf0
+     vfs_write+0x154/0x440
+     ksys_write+0xcc/0x180
+     __arm64_sys_write+0x44/0x60
+     invoke_syscall+0x60/0x190
+     el0_svc_common.constprop.0+0x7c/0x160
+     do_el0_svc+0x40/0xf0
+     el0_svc+0x2c/0x6c
+     el0t_64_sync_handler+0xf4/0x120
+     el0t_64_sync+0x18c/0x190
+
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/menz69_wdt.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/mailbox/mailbox-test.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/watchdog/menz69_wdt.c b/drivers/watchdog/menz69_wdt.c
-index ed18238c54074..96a25d18ab643 100644
---- a/drivers/watchdog/menz69_wdt.c
-+++ b/drivers/watchdog/menz69_wdt.c
-@@ -98,14 +98,6 @@ static const struct watchdog_ops men_z069_ops = {
- 	.set_timeout = men_z069_wdt_set_timeout,
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index 129b3656c453a..c7ff9653223bf 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -16,6 +16,7 @@
+ #include <linux/kernel.h>
+ #include <linux/mailbox_client.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/poll.h>
+@@ -43,6 +44,7 @@ struct mbox_test_device {
+ 	char			*signal;
+ 	char			*message;
+ 	spinlock_t		lock;
++	struct mutex		mutex;
+ 	wait_queue_head_t	waitq;
+ 	struct fasync_struct	*async_queue;
  };
+@@ -114,6 +116,8 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 		return -EINVAL;
+ 	}
  
--static struct watchdog_device men_z069_wdt = {
--	.info = &men_z069_info,
--	.ops = &men_z069_ops,
--	.timeout = MEN_Z069_DEFAULT_TIMEOUT,
--	.min_timeout = 1,
--	.max_timeout = MEN_Z069_WDT_COUNTER_MAX / MEN_Z069_TIMER_FREQ,
--};
--
- static int men_z069_probe(struct mcb_device *dev,
- 			  const struct mcb_device_id *id)
- {
-@@ -125,15 +117,19 @@ static int men_z069_probe(struct mcb_device *dev,
- 		goto release_mem;
++	mutex_lock(&tdev->mutex);
++
+ 	tdev->message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
+ 	if (!tdev->message)
+ 		return -ENOMEM;
+@@ -148,6 +152,8 @@ static ssize_t mbox_test_message_write(struct file *filp,
+ 	kfree(tdev->message);
+ 	tdev->signal = NULL;
  
- 	drv->mem = mem;
-+	drv->wdt.info = &men_z069_info;
-+	drv->wdt.ops = &men_z069_ops;
-+	drv->wdt.timeout = MEN_Z069_DEFAULT_TIMEOUT;
-+	drv->wdt.min_timeout = 1;
-+	drv->wdt.max_timeout = MEN_Z069_WDT_COUNTER_MAX / MEN_Z069_TIMER_FREQ;
++	mutex_unlock(&tdev->mutex);
++
+ 	return ret < 0 ? ret : count;
+ }
  
--	drv->wdt = men_z069_wdt;
- 	watchdog_init_timeout(&drv->wdt, 0, &dev->dev);
- 	watchdog_set_nowayout(&drv->wdt, nowayout);
- 	watchdog_set_drvdata(&drv->wdt, drv);
- 	drv->wdt.parent = &dev->dev;
- 	mcb_set_drvdata(dev, drv);
+@@ -396,6 +402,7 @@ static int mbox_test_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, tdev);
  
--	return watchdog_register_device(&men_z069_wdt);
-+	return watchdog_register_device(&drv->wdt);
+ 	spin_lock_init(&tdev->lock);
++	mutex_init(&tdev->mutex);
  
- release_mem:
- 	mcb_release_mem(mem);
+ 	if (tdev->rx_channel) {
+ 		tdev->rx_buffer = devm_kzalloc(&pdev->dev,
 -- 
 2.39.2
 
