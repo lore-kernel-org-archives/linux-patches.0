@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEFD1F190
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF7AC433D2;
-	Wed,  7 Jun 2023 20:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EF41EA8C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89FFC4339C;
+	Wed,  7 Jun 2023 20:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170372;
-	bh=CEoHN0oSSD8jV13FkhlfrqnJI16zjMMG2qJrwA1uIGw=;
+	s=korg; t=1686170375;
+	bh=AQZkEWPJZCOmrKCeBaK/NgPxSZBRArXcG/4wa1Lksfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1bHJ+DEfiGj2/pfeS8o3QtDJvu803ILWzQP11BFABKViOd/oZpKyzwyH7e9S+1xh
-	 00p4MtihUinOvI+5e0L36h4tUXLexS5yagMvndqimX/kLvehMxgB31IIJ5zJog9IxK
-	 0Wy6/XkpqAxVEq5K7KjAJ0bkd2EX8s8POOPegVd0=
+	b=HMN/5NSrj2YWmzkCYHEtEngWtPOLTohNNA+ARMRCSyOt8QrGZlG7ih2rcwA/k8tJO
+	 GQmFNPkCzE771j9Z87YGeDY6WStl6OG2vKXEnBXuezpnP29AJ/Shcnfi85e7D2JAwn
+	 /Mbgha+XZVzk4lnHBYbqfCm4OKOvSvukqe25niww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/225] af_packet: do not use READ_ONCE() in packet_bind()
-Date: Wed,  7 Jun 2023 22:13:43 +0200
-Message-ID: <20230607200915.304640559@linuxfoundation.org>
+Subject: [PATCH 6.1 021/225] net: mellanox: mlxbf_gige: Fix skb_panic splat under memory pressure
+Date: Wed,  7 Jun 2023 22:13:34 +0200
+Message-ID: <20230607200915.009400166@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -38,62 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
 
-[ Upstream commit 6ffc57ea004234d9373c57b204fd10370a69f392 ]
+[ Upstream commit d68cb7cf1fd0ef4287bc0ecd1ed0b6ae8e05fc70 ]
 
-A recent patch added READ_ONCE() in packet_bind() and packet_bind_spkt()
+Do skb_put() after a new skb has been successfully allocated otherwise
+the reused skb leads to skb_panics or incorrect packet sizes.
 
-This is better handled by reading pkt_sk(sk)->num later
-in packet_do_bind() while appropriate lock is held.
-
-READ_ONCE() in writers are often an evidence of something being wrong.
-
-Fixes: 822b5a1c17df ("af_packet: Fix data-races of pkt_sk(sk)->num.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230526154342.2533026-1-edumazet@google.com
+Fixes: f92e1869d74e ("Add Mellanox BlueField Gigabit Ethernet driver")
+Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230524194908.147145-1-tbogendoerfer@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ .../ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c    | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index c75191b0c82ba..6ab9d5b543387 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3193,6 +3193,9 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
+diff --git a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
+index afa3b92a6905f..0d5a41a2ae010 100644
+--- a/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
++++ b/drivers/net/ethernet/mellanox/mlxbf_gige/mlxbf_gige_rx.c
+@@ -245,12 +245,6 @@ static bool mlxbf_gige_rx_packet(struct mlxbf_gige *priv, int *rx_pkts)
  
- 	lock_sock(sk);
- 	spin_lock(&po->bind_lock);
-+	if (!proto)
-+		proto = po->num;
+ 		skb = priv->rx_skb[rx_pi_rem];
+ 
+-		skb_put(skb, datalen);
+-
+-		skb->ip_summed = CHECKSUM_NONE; /* device did not checksum packet */
+-
+-		skb->protocol = eth_type_trans(skb, netdev);
+-
+ 		/* Alloc another RX SKB for this same index */
+ 		rx_skb = mlxbf_gige_alloc_skb(priv, MLXBF_GIGE_DEFAULT_BUF_SZ,
+ 					      &rx_buf_dma, DMA_FROM_DEVICE);
+@@ -259,6 +253,13 @@ static bool mlxbf_gige_rx_packet(struct mlxbf_gige *priv, int *rx_pkts)
+ 		priv->rx_skb[rx_pi_rem] = rx_skb;
+ 		dma_unmap_single(priv->dev, *rx_wqe_addr,
+ 				 MLXBF_GIGE_DEFAULT_BUF_SZ, DMA_FROM_DEVICE);
 +
- 	rcu_read_lock();
- 
- 	if (po->fanout) {
-@@ -3291,7 +3294,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
- 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
- 	name[sizeof(uaddr->sa_data)] = 0;
- 
--	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
-+	return packet_do_bind(sk, name, 0, 0);
- }
- 
- static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
-@@ -3308,8 +3311,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
- 	if (sll->sll_family != AF_PACKET)
- 		return -EINVAL;
- 
--	return packet_do_bind(sk, NULL, sll->sll_ifindex,
--			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
-+	return packet_do_bind(sk, NULL, sll->sll_ifindex, sll->sll_protocol);
- }
- 
- static struct proto packet_proto = {
++		skb_put(skb, datalen);
++
++		skb->ip_summed = CHECKSUM_NONE; /* device did not checksum packet */
++
++		skb->protocol = eth_type_trans(skb, netdev);
++
+ 		*rx_wqe_addr = rx_buf_dma;
+ 	} else if (rx_cqe & MLXBF_GIGE_RX_CQE_PKT_STATUS_MAC_ERR) {
+ 		priv->stats.rx_mac_errors++;
 -- 
 2.39.2
 
