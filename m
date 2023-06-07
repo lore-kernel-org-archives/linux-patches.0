@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B36E10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0459C433D2;
-	Wed,  7 Jun 2023 20:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BB210FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A4DC4339B;
+	Wed,  7 Jun 2023 20:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169724;
-	bh=JGCPjgjaisu6qWwe83OrdvqDtScNdKupDNcXuM3Y+Ms=;
+	s=korg; t=1686169726;
+	bh=SsD+8MWkXX+FemRO8ZfLQHI4DzyQWYT0DLCAckXl4jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZK0wzzY4daR+H/jO6PY/gXY5jyW8kT/yHOF8feBkGSDE60rL1N+3BDrtp+Se1O7UV
-	 beV3RH/JBpJYa7xJsqarH1vyqdgR2YHzuM0OH0ySHxGC+x5c27R/kJuWdjBRW5yKVo
-	 WdJ5QZgxaQ/VqYsIE7nbB8ZU1wJToOVjGrVFZOoE=
+	b=I8LWy91O+BeJrU2QvYExY9sxlCz+pgSoSRNqiXETOrUnTJ8kCBu1qenR7P0RKy8qt
+	 y/W457NziM+Z+5gRwZ3XB8HD48UNWY3F6cKaGR6MLc9E3cTNUqb4nB70tdF8+czmYr
+	 edSDi55+k9qLw4+jVkXcJTZrOHW7yUYuctOXrOXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Aric Cyr <aric.cyr@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 189/286] drm/amd/display: Only wait for blank completion if OTG active
-Date: Wed,  7 Jun 2023 22:14:48 +0200
-Message-ID: <20230607200929.444279527@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Marius Hoch <mail@mariushoch.de>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.3 190/286] iio: accel: st_accel: Fix invalid mount_matrix on devices without ACPI _ONT method
+Date: Wed,  7 Jun 2023 22:14:49 +0200
+Message-ID: <20230607200929.475654733@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -38,51 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aric Cyr <aric.cyr@amd.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 82a10aff9428f1d190de55ef7971fdb84303cc7a ]
+commit 79b8ded9d9c595db9bd5b2f62f5f738b36de1e22 upstream.
 
-[why]
-If OTG is not active, waiting for blank completion will always fail and
-timeout resulting in unnecessary driver delays.
+When apply_acpi_orientation() fails, st_accel_common_probe() will fall back
+to iio_read_mount_matrix(), which checks for a mount-matrix device property
+and if that is not set falls back to the identity matrix.
 
-[how]
-Check that OTG is enabled before waiting for blank.
+But when a sensor has no ACPI companion fwnode, or when the ACPI fwnode
+does not have a "_ONT" method apply_acpi_orientation() was returning 0,
+causing iio_read_mount_matrix() to never get called resulting in an
+invalid mount_matrix:
 
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Aric Cyr <aric.cyr@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[root@fedora ~]# cat /sys/bus/iio/devices/iio\:device0/mount_matrix
+(null), (null), (null); (null), (null), (null); (null), (null), (null)
+
+Fix this by making apply_acpi_orientation() always return an error when
+it did not set the mount_matrix.
+
+Fixes: 3d8ad94bb175 ("iio: accel: st_sensors: Support generic mounting matrix")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Tested-by: Marius Hoch <mail@mariushoch.de>
+Link: https://lore.kernel.org/r/20230416212409.310936-1-hdegoede@redhat.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/accel/st_accel_core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index d4a1670a54506..f07cba121d010 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1093,7 +1093,8 @@ static void phantom_pipe_blank(
- 			otg_active_height,
- 			0);
+--- a/drivers/iio/accel/st_accel_core.c
++++ b/drivers/iio/accel/st_accel_core.c
+@@ -1290,12 +1290,12 @@ static int apply_acpi_orientation(struct
  
--	hws->funcs.wait_for_blank_complete(opp);
-+	if (tg->funcs->is_tg_enabled(tg))
-+		hws->funcs.wait_for_blank_complete(opp);
- }
+ 	adev = ACPI_COMPANION(indio_dev->dev.parent);
+ 	if (!adev)
+-		return 0;
++		return -ENXIO;
  
- static void disable_dangling_plane(struct dc *dc, struct dc_state *context)
-@@ -1156,6 +1157,7 @@ static void disable_dangling_plane(struct dc *dc, struct dc_state *context)
- 			if (old_stream->mall_stream_config.type == SUBVP_PHANTOM) {
- 				if (tg->funcs->enable_crtc) {
- 					int main_pipe_width, main_pipe_height;
-+
- 					main_pipe_width = old_stream->mall_stream_config.paired_stream->dst.width;
- 					main_pipe_height = old_stream->mall_stream_config.paired_stream->dst.height;
- 					phantom_pipe_blank(dc, tg, main_pipe_width, main_pipe_height);
--- 
-2.39.2
-
+ 	/* Read _ONT data, which should be a package of 6 integers. */
+ 	status = acpi_evaluate_object(adev->handle, "_ONT", NULL, &buffer);
+ 	if (status == AE_NOT_FOUND) {
+-		return 0;
++		return -ENXIO;
+ 	} else if (ACPI_FAILURE(status)) {
+ 		dev_warn(&indio_dev->dev, "failed to execute _ONT: %d\n",
+ 			 status);
 
 
