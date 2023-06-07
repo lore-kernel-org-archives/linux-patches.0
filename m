@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCF919E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:41:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B507DC433EF;
-	Wed,  7 Jun 2023 20:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD13819E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:41:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E34BC433EF;
+	Wed,  7 Jun 2023 20:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170490;
-	bh=Ki4cMz1lLwGiIiiCwi2lRMtlNdqGc8g9KIvY00HYzDU=;
+	s=korg; t=1686170492;
+	bh=mfi9pA8TtpQSlQKzzbalZaPXkKkmtsGD+l1SjdXJ0yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2ybxl7sc6M7cjp/mb+J3zcvzyKZd3EhqIca6Wi/SVlocPPMiJzQIZtRYahRcaIUZ
-	 lJb2s3sUUYtGQmYInp8CvQbymusEt1m3G+gn420oaG8PIzyaPSur+HF0dhyLkB/wxN
-	 XtkH8iPWWn7UHxQaVzygzTArf7QV1nsKtnMxEHjQ=
+	b=cyEQJ6aRHnjZVVkdxmUG5VH2EFxg0RhqQ+n/xXua8OAUqTRkphce3+2g0yE7WnEom
+	 P8MEn9dZpJu7FTCQRGm258Mfpi69g1st6MBJZQMEaQlyYDafn+zp2ca3v+26NYL4fy
+	 0gtsaYqg/d+XsX/RuRNG73RUl8rtYQpKZte0X3pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/225] ASoC: dt-bindings: Adjust #sound-dai-cells on TIs single-DAI codecs
-Date: Wed,  7 Jun 2023 22:14:40 +0200
-Message-ID: <20230607200917.220454047@linuxfoundation.org>
+Subject: [PATCH 6.1 105/225] ASoC: SOF: debug: conditionally bump runtime_pm counter on exceptions
+Date: Wed,  7 Jun 2023 22:14:58 +0200
+Message-ID: <20230607200917.810775102@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -33,96 +33,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Povišer <povik+lin@cutebit.org>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit efb2bfd7b3d210c479b9361c176d7426e5eb8663 ]
+[ Upstream commit 3de975862f985f1c9e225a0d13aa3d501373f7c3 ]
 
-A bunch of TI's codecs have binding schemas which force #sound-dai-cells
-to one despite those codecs only having a single DAI. Allow for bindings
-with zero DAI cells and deprecate the former non-zero value.
+When a firmware IPC error happens during a pm_runtime suspend, we
+ignore the error and suspend anyways. However, the code
+unconditionally increases the runtime_pm counter. This results in a
+confusing configuration where the code will suspend, resume but never
+suspend again due to the use of pm_runtime_get_noresume().
 
-Signed-off-by: Martin Povišer <povik+lin@cutebit.org
-Link: https://lore.kernel.org/r/20230509153412.62847-1-povik+lin@cutebit.org
+The intent of the counter increase was to prevent entry in D3, but if
+that transition to D3 is already started it cannot be stopped. In
+addition, there's no point in that case in trying to prevent anything,
+the firmware error is handled and the next resume will re-initialize
+the firmware completely.
+
+This patch changes the logic to prevent suspend when the device is
+pm_runtime active and has a use_count > 0.
+
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com
+Link: https://lore.kernel.org/r/20230512103315.8921-2-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/sound/tas2562.yaml | 6 ++++--
- Documentation/devicetree/bindings/sound/tas2770.yaml | 6 ++++--
- Documentation/devicetree/bindings/sound/tas27xx.yaml | 6 ++++--
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ sound/soc/sof/debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/tas2562.yaml b/Documentation/devicetree/bindings/sound/tas2562.yaml
-index 30f6b029ac085..cb519a4b6e710 100644
---- a/Documentation/devicetree/bindings/sound/tas2562.yaml
-+++ b/Documentation/devicetree/bindings/sound/tas2562.yaml
-@@ -52,7 +52,9 @@ properties:
-     description: TDM TX current sense time slot.
+diff --git a/sound/soc/sof/debug.c b/sound/soc/sof/debug.c
+index ade0507328af4..5042312b1b98d 100644
+--- a/sound/soc/sof/debug.c
++++ b/sound/soc/sof/debug.c
+@@ -437,8 +437,8 @@ void snd_sof_handle_fw_exception(struct snd_sof_dev *sdev, const char *msg)
+ 		/* should we prevent DSP entering D3 ? */
+ 		if (!sdev->ipc_dump_printed)
+ 			dev_info(sdev->dev,
+-				 "preventing DSP entering D3 state to preserve context\n");
+-		pm_runtime_get_noresume(sdev->dev);
++				 "Attempting to prevent DSP from entering D3 state to preserve context\n");
++		pm_runtime_get_if_in_use(sdev->dev);
+ 	}
  
-   '#sound-dai-cells':
--    const: 1
-+    # The codec has a single DAI, the #sound-dai-cells=<1>; case is left in for backward
-+    # compatibility but is deprecated.
-+    enum: [0, 1]
- 
- required:
-   - compatible
-@@ -69,7 +71,7 @@ examples:
-      codec: codec@4c {
-        compatible = "ti,tas2562";
-        reg = <0x4c>;
--       #sound-dai-cells = <1>;
-+       #sound-dai-cells = <0>;
-        interrupt-parent = <&gpio1>;
-        interrupts = <14>;
-        shutdown-gpios = <&gpio1 15 0>;
-diff --git a/Documentation/devicetree/bindings/sound/tas2770.yaml b/Documentation/devicetree/bindings/sound/tas2770.yaml
-index bc90e72bf7cf9..1859fbe1cdf17 100644
---- a/Documentation/devicetree/bindings/sound/tas2770.yaml
-+++ b/Documentation/devicetree/bindings/sound/tas2770.yaml
-@@ -54,7 +54,9 @@ properties:
-       - 1 # Falling edge
- 
-   '#sound-dai-cells':
--    const: 1
-+    # The codec has a single DAI, the #sound-dai-cells=<1>; case is left in for backward
-+    # compatibility but is deprecated.
-+    enum: [0, 1]
- 
- required:
-   - compatible
-@@ -71,7 +73,7 @@ examples:
-      codec: codec@41 {
-        compatible = "ti,tas2770";
-        reg = <0x41>;
--       #sound-dai-cells = <1>;
-+       #sound-dai-cells = <0>;
-        interrupt-parent = <&gpio1>;
-        interrupts = <14>;
-        reset-gpio = <&gpio1 15 0>;
-diff --git a/Documentation/devicetree/bindings/sound/tas27xx.yaml b/Documentation/devicetree/bindings/sound/tas27xx.yaml
-index 66a0df8850ea6..079cb6f8d4474 100644
---- a/Documentation/devicetree/bindings/sound/tas27xx.yaml
-+++ b/Documentation/devicetree/bindings/sound/tas27xx.yaml
-@@ -47,7 +47,9 @@ properties:
-     description: TDM TX voltage sense time slot.
- 
-   '#sound-dai-cells':
--    const: 1
-+    # The codec has a single DAI, the #sound-dai-cells=<1>; case is left in for backward
-+    # compatibility but is deprecated.
-+    enum: [0, 1]
- 
- required:
-   - compatible
-@@ -64,7 +66,7 @@ examples:
-      codec: codec@38 {
-        compatible = "ti,tas2764";
-        reg = <0x38>;
--       #sound-dai-cells = <1>;
-+       #sound-dai-cells = <0>;
-        interrupt-parent = <&gpio1>;
-        interrupts = <14>;
-        reset-gpios = <&gpio1 15 0>;
+ 	/* dump vital information to the logs */
 -- 
 2.39.2
 
