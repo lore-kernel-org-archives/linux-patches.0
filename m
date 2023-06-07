@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00FB10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B20C433D2;
-	Wed,  7 Jun 2023 20:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CD010FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136F7C433D2;
+	Wed,  7 Jun 2023 20:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169658;
-	bh=bnFLljnx2cW5hQwv4RQxX8dckHTft4UKaFCHMTLoLe0=;
+	s=korg; t=1686169661;
+	bh=ZgdiypEPt9M4XPZg8uoKvG0ycjYi70CExDzRN4CGuDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gugHn4/kOMYOm456CZ8wip3yJ3vmTXFHMCNdxaTP8p1VtbrlE+8zo9kv/eQRD3SqX
-	 LNIuxJz4MB4Mn9LE6O/QoteIQwgVI41fqN3Toit2xil7qqRVC5lZUyWjIUpJyD3SnV
-	 +FI90X+oiUoNU9T6IYLpAwQbc60rmtjvLYPhs/s8=
+	b=N8uu23sBSFfnQDF/qtm/F9VbAgXgoZBUzkp0CpL4G5SuiaQ5Uz0TyL4g/XcIE/4uc
+	 a60u7VCByfLGhQr/sAvTNl8bBCVFqZaGNLwt/xj30q7iNzO1pr818LdYvA50FQhtOC
+	 6w7ZE0+9dMUD1Nw0nkQRCVXcvuI7NZQx6ietoOfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 135/286] media: mn88443x: fix !CONFIG_OF error by drop of_match_ptr from ID table
-Date: Wed,  7 Jun 2023 22:13:54 +0200
-Message-ID: <20230607200927.499917691@linuxfoundation.org>
+Subject: [PATCH 6.3 136/286] media: dvb-core: Fix use-after-free on race condition at dvb_frontend
+Date: Wed,  7 Jun 2023 22:13:55 +0200
+Message-ID: <20230607200927.531074599@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,38 +35,194 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit ae11c0efaec32fb45130ee9886689f467232eebc ]
+[ Upstream commit 6769a0b7ee0c3b31e1b22c3fadff2bfb642de23f ]
 
-The driver will match mostly by DT table (even thought there is regular
-ID table) so there is little benefit in of_match_ptr (this also allows
-ACPI matching via PRP0001, even though it might not be relevant here).
-This also fixes !CONFIG_OF error:
+If the device node of dvb_frontend is open() and the device is
+disconnected, many kinds of UAFs may occur when calling close()
+on the device node.
 
-  drivers/media/dvb-frontends/mn88443x.c:782:34: error: ‘mn88443x_of_match’ defined but not used [-Werror=unused-const-variable=]
+The root cause of this is that wake_up() for dvbdev->wait_queue
+is implemented in the dvb_frontend_release() function, but
+wait_event() is not implemented in the dvb_frontend_stop() function.
 
-Link: https://lore.kernel.org/linux-media/20230312131318.351173-28-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+So, implement wait_event() function in dvb_frontend_stop() and
+add 'remove_mutex' which prevents race condition for 'fe->exit'.
+
+[mchehab: fix a couple of checkpatch warnings and some mistakes at the error handling logic]
+
+Link: https://lore.kernel.org/linux-media/20221117045925.14297-2-imv4bel@gmail.com
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/mn88443x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-core/dvb_frontend.c | 53 ++++++++++++++++++++++-----
+ include/media/dvb_frontend.h          |  6 ++-
+ 2 files changed, 49 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/mn88443x.c b/drivers/media/dvb-frontends/mn88443x.c
-index 1f1753f2ab1a3..0782f8377eb2f 100644
---- a/drivers/media/dvb-frontends/mn88443x.c
-+++ b/drivers/media/dvb-frontends/mn88443x.c
-@@ -798,7 +798,7 @@ MODULE_DEVICE_TABLE(i2c, mn88443x_i2c_id);
- static struct i2c_driver mn88443x_driver = {
- 	.driver = {
- 		.name = "mn88443x",
--		.of_match_table = of_match_ptr(mn88443x_of_match),
-+		.of_match_table = mn88443x_of_match,
- 	},
- 	.probe_new = mn88443x_probe,
- 	.remove   = mn88443x_remove,
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index cc0a789f09ae5..947b61959b2b8 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -809,15 +809,26 @@ static void dvb_frontend_stop(struct dvb_frontend *fe)
+ 
+ 	dev_dbg(fe->dvb->device, "%s:\n", __func__);
+ 
++	mutex_lock(&fe->remove_mutex);
++
+ 	if (fe->exit != DVB_FE_DEVICE_REMOVED)
+ 		fe->exit = DVB_FE_NORMAL_EXIT;
+ 	mb();
+ 
+-	if (!fepriv->thread)
++	if (!fepriv->thread) {
++		mutex_unlock(&fe->remove_mutex);
+ 		return;
++	}
+ 
+ 	kthread_stop(fepriv->thread);
+ 
++	mutex_unlock(&fe->remove_mutex);
++
++	if (fepriv->dvbdev->users < -1) {
++		wait_event(fepriv->dvbdev->wait_queue,
++			   fepriv->dvbdev->users == -1);
++	}
++
+ 	sema_init(&fepriv->sem, 1);
+ 	fepriv->state = FESTATE_IDLE;
+ 
+@@ -2761,9 +2772,13 @@ static int dvb_frontend_open(struct inode *inode, struct file *file)
+ 	struct dvb_adapter *adapter = fe->dvb;
+ 	int ret;
+ 
++	mutex_lock(&fe->remove_mutex);
++
+ 	dev_dbg(fe->dvb->device, "%s:\n", __func__);
+-	if (fe->exit == DVB_FE_DEVICE_REMOVED)
+-		return -ENODEV;
++	if (fe->exit == DVB_FE_DEVICE_REMOVED) {
++		ret = -ENODEV;
++		goto err_remove_mutex;
++	}
+ 
+ 	if (adapter->mfe_shared == 2) {
+ 		mutex_lock(&adapter->mfe_lock);
+@@ -2771,7 +2786,8 @@ static int dvb_frontend_open(struct inode *inode, struct file *file)
+ 			if (adapter->mfe_dvbdev &&
+ 			    !adapter->mfe_dvbdev->writers) {
+ 				mutex_unlock(&adapter->mfe_lock);
+-				return -EBUSY;
++				ret = -EBUSY;
++				goto err_remove_mutex;
+ 			}
+ 			adapter->mfe_dvbdev = dvbdev;
+ 		}
+@@ -2794,8 +2810,10 @@ static int dvb_frontend_open(struct inode *inode, struct file *file)
+ 			while (mferetry-- && (mfedev->users != -1 ||
+ 					      mfepriv->thread)) {
+ 				if (msleep_interruptible(500)) {
+-					if (signal_pending(current))
+-						return -EINTR;
++					if (signal_pending(current)) {
++						ret = -EINTR;
++						goto err_remove_mutex;
++					}
+ 				}
+ 			}
+ 
+@@ -2807,7 +2825,8 @@ static int dvb_frontend_open(struct inode *inode, struct file *file)
+ 				if (mfedev->users != -1 ||
+ 				    mfepriv->thread) {
+ 					mutex_unlock(&adapter->mfe_lock);
+-					return -EBUSY;
++					ret = -EBUSY;
++					goto err_remove_mutex;
+ 				}
+ 				adapter->mfe_dvbdev = dvbdev;
+ 			}
+@@ -2866,6 +2885,8 @@ static int dvb_frontend_open(struct inode *inode, struct file *file)
+ 
+ 	if (adapter->mfe_shared)
+ 		mutex_unlock(&adapter->mfe_lock);
++
++	mutex_unlock(&fe->remove_mutex);
+ 	return ret;
+ 
+ err3:
+@@ -2887,6 +2908,9 @@ static int dvb_frontend_open(struct inode *inode, struct file *file)
+ err0:
+ 	if (adapter->mfe_shared)
+ 		mutex_unlock(&adapter->mfe_lock);
++
++err_remove_mutex:
++	mutex_unlock(&fe->remove_mutex);
+ 	return ret;
+ }
+ 
+@@ -2897,6 +2921,8 @@ static int dvb_frontend_release(struct inode *inode, struct file *file)
+ 	struct dvb_frontend_private *fepriv = fe->frontend_priv;
+ 	int ret;
+ 
++	mutex_lock(&fe->remove_mutex);
++
+ 	dev_dbg(fe->dvb->device, "%s:\n", __func__);
+ 
+ 	if ((file->f_flags & O_ACCMODE) != O_RDONLY) {
+@@ -2918,10 +2944,18 @@ static int dvb_frontend_release(struct inode *inode, struct file *file)
+ 		}
+ 		mutex_unlock(&fe->dvb->mdev_lock);
+ #endif
+-		if (fe->exit != DVB_FE_NO_EXIT)
+-			wake_up(&dvbdev->wait_queue);
+ 		if (fe->ops.ts_bus_ctrl)
+ 			fe->ops.ts_bus_ctrl(fe, 0);
++
++		if (fe->exit != DVB_FE_NO_EXIT) {
++			mutex_unlock(&fe->remove_mutex);
++			wake_up(&dvbdev->wait_queue);
++		} else {
++			mutex_unlock(&fe->remove_mutex);
++		}
++
++	} else {
++		mutex_unlock(&fe->remove_mutex);
+ 	}
+ 
+ 	dvb_frontend_put(fe);
+@@ -3022,6 +3056,7 @@ int dvb_register_frontend(struct dvb_adapter *dvb,
+ 	fepriv = fe->frontend_priv;
+ 
+ 	kref_init(&fe->refcount);
++	mutex_init(&fe->remove_mutex);
+ 
+ 	/*
+ 	 * After initialization, there need to be two references: one
+diff --git a/include/media/dvb_frontend.h b/include/media/dvb_frontend.h
+index e7c44870f20de..367d5381217b5 100644
+--- a/include/media/dvb_frontend.h
++++ b/include/media/dvb_frontend.h
+@@ -686,7 +686,10 @@ struct dtv_frontend_properties {
+  * @id:			Frontend ID
+  * @exit:		Used to inform the DVB core that the frontend
+  *			thread should exit (usually, means that the hardware
+- *			got disconnected.
++ *			got disconnected).
++ * @remove_mutex:	mutex that avoids a race condition between a callback
++ *			called when the hardware is disconnected and the
++ *			file_operations of dvb_frontend.
+  */
+ 
+ struct dvb_frontend {
+@@ -704,6 +707,7 @@ struct dvb_frontend {
+ 	int (*callback)(void *adapter_priv, int component, int cmd, int arg);
+ 	int id;
+ 	unsigned int exit;
++	struct mutex remove_mutex;
+ };
+ 
+ /**
 -- 
 2.39.2
 
