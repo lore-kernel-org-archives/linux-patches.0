@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7257F39234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E679EC4339B;
-	Wed,  7 Jun 2023 20:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B677B39259
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BE2C4339E;
+	Wed,  7 Jun 2023 20:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169148;
-	bh=iZ1Iuai7yOiMu0ROljRsnMO9s4UfD+onOErjGiXt9ac=;
+	s=korg; t=1686169153;
+	bh=tEsTukFHQLFd8DSby2chfJvEXFterkO2HBI8YMxWcmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pD7l57j4X8m++Vr8hP5X1VO/K0NNE+Fis9vVSMbV6Mie5tCVjFIupWcNZOIjjWh9v
-	 cm9sxGREwO5II+J75sLfBOcNYlxVS9H2PkQ3+9MxvvKjAGKPgafUx3LEqCBPbkDXVC
-	 ItiPHiskLLn9n4Pb1D7qwVNbXEPqRjrEC5cOBjmI=
+	b=rlm6vG9OlWpVoiiJQM8nVnRTwAMd2tCLFtga9jai4M7d5asmZ9UttjLzR5Mrm6cOG
+	 3kTV6QnFlLpl/8wQMb4qgU1J34jNkxQviN+7Cr7KX+B9UJyk/6yUero9isDJ8C6etK
+	 vz0t7wZLXMLwLYW8D7j4wqmLjCujLLY71IpM7A4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Kapadia <szymon@kapadia.pl>,
 	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 05/61] netrom: fix info-leak in nr_write_internal()
-Date: Wed,  7 Jun 2023 22:15:19 +0200
-Message-ID: <20230607200837.023057166@linuxfoundation.org>
+Subject: [PATCH 4.14 07/61] af_packet: do not use READ_ONCE() in packet_bind()
+Date: Wed,  7 Jun 2023 22:15:21 +0200
+Message-ID: <20230607200837.740802140@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -39,81 +40,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 31642e7089df8fd3f54ca7843f7ee2952978cad1 ]
+[ Upstream commit 6ffc57ea004234d9373c57b204fd10370a69f392 ]
 
-Simon Kapadia reported the following issue:
+A recent patch added READ_ONCE() in packet_bind() and packet_bind_spkt()
 
-<quote>
+This is better handled by reading pkt_sk(sk)->num later
+in packet_do_bind() while appropriate lock is held.
 
-The Online Amateur Radio Community (OARC) has recently been experimenting
-with building a nationwide packet network in the UK.
-As part of our experimentation, we have been testing out packet on 300bps HF,
-and playing with net/rom.  For HF packet at this baud rate you really need
-to make sure that your MTU is relatively low; AX.25 suggests a PACLEN of 60,
-and a net/rom PACLEN of 40 to go with that.
-However the Linux net/rom support didn't work with a low PACLEN;
-the mkiss module would truncate packets if you set the PACLEN below about 200 or so, e.g.:
+READ_ONCE() in writers are often an evidence of something being wrong.
 
-Apr 19 14:00:51 radio kernel: [12985.747310] mkiss: ax1: truncating oversized transmit packet!
-
-This didn't make any sense to me (if the packets are smaller why would they
-be truncated?) so I started investigating.
-I looked at the packets using ethereal, and found that many were just huge
-compared to what I would expect.
-A simple net/rom connection request packet had the request and then a bunch
-of what appeared to be random data following it:
-
-</quote>
-
-Simon provided a patch that I slightly revised:
-Not only we must not use skb_tailroom(), we also do
-not want to count NR_NETWORK_LEN twice.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-Developed-by: Simon Kapadia <szymon@kapadia.pl>
-Signed-off-by: Simon Kapadia <szymon@kapadia.pl>
+Fixes: 822b5a1c17df ("af_packet: Fix data-races of pkt_sk(sk)->num.")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Tested-by: Simon Kapadia <szymon@kapadia.pl>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230524141456.1045467-1-edumazet@google.com
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230526154342.2533026-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_subr.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/packet/af_packet.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
-index 029c8bb90f4c3..a7d3a265befb9 100644
---- a/net/netrom/nr_subr.c
-+++ b/net/netrom/nr_subr.c
-@@ -126,7 +126,7 @@ void nr_write_internal(struct sock *sk, int frametype)
- 	unsigned char  *dptr;
- 	int len, timeout;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 131c347bba56b..228a409eb92da 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3153,6 +3153,9 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
  
--	len = NR_NETWORK_LEN + NR_TRANSPORT_LEN;
-+	len = NR_TRANSPORT_LEN;
+ 	lock_sock(sk);
+ 	spin_lock(&po->bind_lock);
++	if (!proto)
++		proto = po->num;
++
+ 	rcu_read_lock();
  
- 	switch (frametype & 0x0F) {
- 	case NR_CONNREQ:
-@@ -144,7 +144,8 @@ void nr_write_internal(struct sock *sk, int frametype)
- 		return;
- 	}
+ 	if (po->fanout) {
+@@ -3255,7 +3258,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
+ 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
+ 	name[sizeof(uaddr->sa_data)] = 0;
  
--	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
-+	skb = alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
-+	if (!skb)
- 		return;
+-	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, name, 0, 0);
+ }
  
- 	/*
-@@ -152,7 +153,7 @@ void nr_write_internal(struct sock *sk, int frametype)
- 	 */
- 	skb_reserve(skb, NR_NETWORK_LEN);
+ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+@@ -3272,8 +3275,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
+ 	if (sll->sll_family != AF_PACKET)
+ 		return -EINVAL;
  
--	dptr = skb_put(skb, skb_tailroom(skb));
-+	dptr = skb_put(skb, len);
+-	return packet_do_bind(sk, NULL, sll->sll_ifindex,
+-			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, NULL, sll->sll_ifindex, sll->sll_protocol);
+ }
  
- 	switch (frametype & 0x0F) {
- 	case NR_CONNREQ:
+ static struct proto packet_proto = {
 -- 
 2.39.2
 
