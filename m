@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDCD3AE6E
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC7AC433EF;
-	Wed,  7 Jun 2023 20:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE313AE6F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFABCC433D2;
+	Wed,  7 Jun 2023 20:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169889;
-	bh=cJNZW3y4KQrgGYOH1nA2m7rIEm9fA38ASKJxmzPFkFQ=;
+	s=korg; t=1686169892;
+	bh=nWqr5TWz5JpUsaCsCSSpZgS2+HkE4DbKk2xbE2P+Tas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYj/4P2pPBp8b8M32TApSIlv/iqm7OA0P3wYxhmQqcGTVeW+ut/1qE9Y044EbVAts
-	 +3a3UB1jKbm/jT5fh+bmfdtyM9dar/Sb6/kK13s5hxPFFXJTL+JkfIBB69Fcr7E4hR
-	 oZG2n+OGoYmbzFTFIoaYsGR8Sv0Bei/6emXhMJLE=
+	b=xW0Htk2SUomWdIZ18ERrk57cOJ9uHIwQnDgmtba10CmqQlPSESOPtbnhbA8DmajF1
+	 UllBuvToWozBqk8l9IGhSbW4LmwNRYURDUzzFk8Xqfkn9Je7i9JpwAYOOJnA/HCgt0
+	 29RMkHDu6ykliBVFE47KCkMw2vjrfgn3A5iKjgOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>
-Subject: [PATCH 6.3 252/286] selftests: mptcp: join: avoid using cmp --bytes
-Date: Wed,  7 Jun 2023 22:15:51 +0200
-Message-ID: <20230607200931.539973442@linuxfoundation.org>
+Subject: [PATCH 6.3 253/286] selftests: mptcp: diag: skip if MPTCP is not supported
+Date: Wed,  7 Jun 2023 22:15:52 +0200
+Message-ID: <20230607200931.573156245@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,73 +36,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit d328fe87067480cf2bd0b58dab428a98d31dbb7e upstream.
+commit 46565acdd29facbf418a11e4a3791b3c8967308d upstream.
 
-BusyBox's 'cmp' command doesn't support the '--bytes' parameter.
+Selftests are supposed to run on any kernels, including the old ones not
+supporting MPTCP.
 
-Some CIs -- i.e. LKFT -- use BusyBox and have the mptcp_join.sh test
-failing [1] because their 'cmp' command doesn't support this '--bytes'
-option:
+A new check is then added to make sure MPTCP is supported. If not, the
+test stops and is marked as "skipped".
 
-    cmp: unrecognized option '--bytes=1024'
-    BusyBox v1.35.0 () multi-call binary.
-
-    Usage: cmp [-ls] [-n NUM] FILE1 [FILE2]
-
-Instead, 'head --bytes' can be used as this option is supported by
-BusyBox. A temporary file is needed for this operation.
-
-Because it is apparently quite common to use BusyBox, it is certainly
-better to backport this fix to impacted kernels.
-
-Fixes: 6bf41020b72b ("selftests: mptcp: update and extend fastclose test-cases")
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
+Fixes: df62f2ec3df6 ("selftests/mptcp: add diag interface tests")
 Cc: stable@vger.kernel.org
-Link: https://qa-reports.linaro.org/lkft/linux-mainline-master/build/v6.3-rc5-5-g148341f0a2f5/testrun/16088933/suite/kselftest-net-mptcp/test/net_mptcp_userspace_pm_sh/log [1]
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/diag.sh |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -15,6 +15,7 @@ sout=""
- cin=""
- cinfail=""
- cinsent=""
-+tmpfile=""
- cout=""
- capout=""
- ns1=""
-@@ -175,6 +176,7 @@ cleanup()
- {
- 	rm -f "$cin" "$cout" "$sinfail"
- 	rm -f "$sin" "$sout" "$cinsent" "$cinfail"
-+	rm -f "$tmpfile"
- 	rm -rf $evts_ns1 $evts_ns2
- 	cleanup_partial
- }
-@@ -382,9 +384,16 @@ check_transfer()
- 			fail_test
- 			return 1
- 		fi
--		bytes="--bytes=${bytes}"
+--- a/tools/testing/selftests/net/mptcp/diag.sh
++++ b/tools/testing/selftests/net/mptcp/diag.sh
+@@ -1,6 +1,8 @@
+ #!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ 
++. "$(dirname "${0}")/mptcp_lib.sh"
 +
-+		# note: BusyBox's "cmp" command doesn't support --bytes
-+		tmpfile=$(mktemp)
-+		head --bytes="$bytes" "$in" > "$tmpfile"
-+		mv "$tmpfile" "$in"
-+		head --bytes="$bytes" "$out" > "$tmpfile"
-+		mv "$tmpfile" "$out"
-+		tmpfile=""
- 	fi
--	cmp -l "$in" "$out" ${bytes} | while read -r i a b; do
-+	cmp -l "$in" "$out" | while read -r i a b; do
- 		local sum=$((0${a} + 0${b}))
- 		if [ $check_invert -eq 0 ] || [ $sum -ne $((0xff)) ]; then
- 			echo "[ FAIL ] $what does not match (in, out):"
+ sec=$(date +%s)
+ rndh=$(printf %x $sec)-$(mktemp -u XXXXXX)
+ ns="ns1-$rndh"
+@@ -31,6 +33,8 @@ cleanup()
+ 	ip netns del $ns
+ }
+ 
++mptcp_lib_check_mptcp
++
+ ip -Version > /dev/null 2>&1
+ if [ $? -ne 0 ];then
+ 	echo "SKIP: Could not run test without ip tool"
 
 
