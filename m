@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B773922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A724C433EF;
-	Wed,  7 Jun 2023 20:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6385B3922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB927C433EF;
+	Wed,  7 Jun 2023 20:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171534;
-	bh=ANgRJ7ub0peL9/r3P+lPVfLhYchmVfojVvwGuHpSkhw=;
+	s=korg; t=1686171537;
+	bh=kZTG3ob6lvK4ed6LIxJODwypGdMd3TUKZh3hvud4Soc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MNTsCIG/kOa1428hAMIxz2nkS6NgWvqBBeqVBbHYkwJUvDTYP9sGMpcxYL1FxpbmM
-	 3qwtzZjQ3Pf8dRvXK63FF0DEr0c1dVqM1y5fLh7PH3BFnqNJ8aJwyVZF7zi5ajp2Mp
-	 xMWuFGS1Eg6HvLukQ7pvqIMHSkmkWO2uhet0czZQ=
+	b=e+QZLpePN2czolF/KAAQBud6RU4ofMUAJCqZlPEIVYi8z782JS28mLSpPcDZgap8U
+	 Fi/j2HWzuSt7RWcFhO+qm/wlfaRZAUKMoueaMCjvgG0ncZDos8JToyfTvwprIdV2l+
+	 z26TKc9h72/OdKZqTjcKQb8sB3+y9KzSWTu1iFU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Andrey God <andreygod83@protonmail.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/159] block/rnbd: replace REQ_OP_FLUSH with REQ_OP_WRITE
-Date: Wed,  7 Jun 2023 22:15:58 +0200
-Message-ID: <20230607200905.488729185@linuxfoundation.org>
+Subject: [PATCH 5.15 056/159] nvme-pci: add NVME_QUIRK_BOGUS_NID for HS-SSD-FUTURE 2048G
+Date: Wed,  7 Jun 2023 22:15:59 +0200
+Message-ID: <20230607200905.520875546@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -37,70 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guoqing Jiang <guoqing.jiang@linux.dev>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit 5e6e08087a4acb4ee3574cea32dbff0f63c7f608 ]
+[ Upstream commit 1616d6c3717bae9041a4240d381ec56ccdaafedc ]
 
-Since flush bios are implemented as writes with no data and
-the preflush flag per Christoph's comment [1].
+Add a quirk to fix HS-SSD-FUTURE 2048G SSD drives reporting duplicate
+nsids.
 
-And we need to change it in rnbd accordingly. Otherwise, I
-got splatting when create fs from rnbd client.
-
-[  464.028545] ------------[ cut here ]------------
-[  464.028553] WARNING: CPU: 0 PID: 65 at block/blk-core.c:751 submit_bio_noacct+0x32c/0x5d0
-[ ... ]
-[  464.028668] CPU: 0 PID: 65 Comm: kworker/0:1H Tainted: G           OE      6.4.0-rc1 #9
-[  464.028671] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.15.0-0-g2dd4b9b-rebuilt.opensuse.org 04/01/2014
-[  464.028673] Workqueue: ib-comp-wq ib_cq_poll_work [ib_core]
-[  464.028717] RIP: 0010:submit_bio_noacct+0x32c/0x5d0
-[  464.028720] Code: 03 0f 85 51 fe ff ff 48 8b 43 18 8b 88 04 03 00 00 85 c9 0f 85 3f fe ff ff e9 be fd ff ff 0f b6 d0 3c 0d 74 26 83 fa 01 74 21 <0f> 0b b8 0a 00 00 00 e9 56 fd ff ff 4c 89 e7 e8 70 a1 03 00 84 c0
-[  464.028722] RSP: 0018:ffffaf3680b57c68 EFLAGS: 00010202
-[  464.028724] RAX: 0000000000060802 RBX: ffffa09dcc18bf00 RCX: 0000000000000000
-[  464.028726] RDX: 0000000000000002 RSI: 0000000000000000 RDI: ffffa09dde081d00
-[  464.028727] RBP: ffffaf3680b57c98 R08: ffffa09dde081d00 R09: ffffa09e38327200
-[  464.028729] R10: 0000000000000000 R11: 0000000000000000 R12: ffffa09dde081d00
-[  464.028730] R13: ffffa09dcb06e1e8 R14: 0000000000000000 R15: 0000000000200000
-[  464.028733] FS:  0000000000000000(0000) GS:ffffa09e3bc00000(0000) knlGS:0000000000000000
-[  464.028735] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  464.028736] CR2: 000055a4e8206c40 CR3: 0000000119f06000 CR4: 00000000003506f0
-[  464.028738] Call Trace:
-[  464.028740]  <TASK>
-[  464.028746]  submit_bio+0x1b/0x80
-[  464.028748]  rnbd_srv_rdma_ev+0x50d/0x10c0 [rnbd_server]
-[  464.028754]  ? percpu_ref_get_many.constprop.0+0x55/0x140 [rtrs_server]
-[  464.028760]  ? __this_cpu_preempt_check+0x13/0x20
-[  464.028769]  process_io_req+0x1dc/0x450 [rtrs_server]
-[  464.028775]  rtrs_srv_inv_rkey_done+0x67/0xb0 [rtrs_server]
-[  464.028780]  __ib_process_cq+0xbc/0x1f0 [ib_core]
-[  464.028793]  ib_cq_poll_work+0x2b/0xa0 [ib_core]
-[  464.028804]  process_one_work+0x2a9/0x580
-
-[1]. https://lore.kernel.org/all/ZFHgefWofVt24tRl@infradead.org/
-
-Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20230512034631.28686-1-guoqing.jiang@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217384
+Reported-by: Andrey God <andreygod83@protonmail.com>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-proto.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/block/rnbd/rnbd-proto.h b/drivers/block/rnbd/rnbd-proto.h
-index c1bc5c0fef71d..e0fe0a9aa3708 100644
---- a/drivers/block/rnbd/rnbd-proto.h
-+++ b/drivers/block/rnbd/rnbd-proto.h
-@@ -241,7 +241,7 @@ static inline u32 rnbd_to_bio_flags(u32 rnbd_opf)
- 		bio_opf = REQ_OP_WRITE;
- 		break;
- 	case RNBD_OP_FLUSH:
--		bio_opf = REQ_OP_FLUSH | REQ_PREFLUSH;
-+		bio_opf = REQ_OP_WRITE | REQ_PREFLUSH;
- 		break;
- 	case RNBD_OP_DISCARD:
- 		bio_opf = REQ_OP_DISCARD;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index c3acef6c32917..bfb9ddec9f887 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3403,6 +3403,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
+ 	{ PCI_DEVICE(0x10ec, 0x5763), /* TEAMGROUP T-FORCE CARDEA ZERO Z330 SSD */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
++	{ PCI_DEVICE(0x1e4b, 0x1602), /* HS-SSD-FUTURE 2048G  */
++		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0x0061),
+ 		.driver_data = NVME_QUIRK_DMA_ADDRESS_BITS_48, },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMAZON, 0x0065),
 -- 
 2.39.2
 
