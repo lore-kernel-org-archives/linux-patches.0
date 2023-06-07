@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1FC37325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:49:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CC4C433D2;
-	Wed,  7 Jun 2023 20:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044E537325
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:49:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCB8C433EF;
+	Wed,  7 Jun 2023 20:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170992;
-	bh=vR3gdLk2lwQFpq5DKF6oeHeq/xHoQob/o2RETl2k0ow=;
+	s=korg; t=1686170994;
+	bh=KANjrqYJmSTGBbeoFYsxCQuIsKve9gSzXDt17UfzbK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zWkCCDncG6qxVVv2gjfj0b6Os4LovxMlX0vaGnAlt9mGQDFoYSSG9vTQTse9R/qWk
-	 9sJG4R+IeXMLthUdh2TjgG8dLbGoI7V+a9ZgWVdMWvX8Dqu2Z0AgAm/FUXYSVpLhs2
-	 cdoLnqEvaCBoPHt+b/EIrCI5b1oekTAZ/nOozvz4=
+	b=Kvls4OnDqyqX9QvtKu77QU65DsIhFKmcE0OXOCdHP/+hKn/SPvVJX45E42pEmNQQj
+	 C+vk9AbnuiDFp/z21bwpf30SyJPvpic+7HQKKAdB8VoAVG1sDXMsDKshJQGRQzzqvM
+	 dtSooIkjM43iyMDBbzKcVhnHRh77HYLPhdyJDuzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/120] s390/pkey: zeroize key blobs
-Date: Wed,  7 Jun 2023 22:16:18 +0200
-Message-ID: <20230607200902.837657997@linuxfoundation.org>
+Subject: [PATCH 5.10 071/120] atm: hide unused procfs functions
+Date: Wed,  7 Jun 2023 22:16:27 +0200
+Message-ID: <20230607200903.119234207@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -36,50 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 844cf829e5f33e00b279230470c8c93b58b8c16f ]
+[ Upstream commit fb1b7be9b16c1f4626969ba4e95a97da2a452b41 ]
 
-Key blobs for the IOCTLs PKEY_KBLOB2PROTK[23] may contain clear key
-material. Zeroize the copies of these keys in kernel memory after
-creating the protected key.
+When CONFIG_PROC_FS is disabled, the function declarations for some
+procfs functions are hidden, but the definitions are still build,
+as shown by this compiler warning:
 
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+net/atm/resources.c:403:7: error: no previous prototype for 'atm_dev_seq_start' [-Werror=missing-prototypes]
+net/atm/resources.c:409:6: error: no previous prototype for 'atm_dev_seq_stop' [-Werror=missing-prototypes]
+net/atm/resources.c:414:7: error: no previous prototype for 'atm_dev_seq_next' [-Werror=missing-prototypes]
+
+Add another #ifdef to leave these out of the build.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230516194625.549249-2-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/pkey_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/atm/resources.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index dd84995049b91..870e00effe439 100644
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -1271,6 +1271,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 			return PTR_ERR(kkey);
- 		rc = pkey_keyblob2pkey(kkey, ktp.keylen, &ktp.protkey);
- 		DEBUG_DBG("%s pkey_keyblob2pkey()=%d\n", __func__, rc);
-+		memzero_explicit(kkey, ktp.keylen);
- 		kfree(kkey);
- 		if (rc)
- 			break;
-@@ -1404,6 +1405,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 					kkey, ktp.keylen, &ktp.protkey);
- 		DEBUG_DBG("%s pkey_keyblob2pkey2()=%d\n", __func__, rc);
- 		kfree(apqns);
-+		memzero_explicit(kkey, ktp.keylen);
- 		kfree(kkey);
- 		if (rc)
- 			break;
-@@ -1530,6 +1532,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 					protkey, &protkeylen);
- 		DEBUG_DBG("%s pkey_keyblob2pkey3()=%d\n", __func__, rc);
- 		kfree(apqns);
-+		memzero_explicit(kkey, ktp.keylen);
- 		kfree(kkey);
- 		if (rc) {
- 			kfree(protkey);
+diff --git a/net/atm/resources.c b/net/atm/resources.c
+index 53236986dfe09..3ad39ae971323 100644
+--- a/net/atm/resources.c
++++ b/net/atm/resources.c
+@@ -403,6 +403,7 @@ int atm_dev_ioctl(unsigned int cmd, void __user *buf, int __user *sioc_len,
+ 	return error;
+ }
+ 
++#ifdef CONFIG_PROC_FS
+ void *atm_dev_seq_start(struct seq_file *seq, loff_t *pos)
+ {
+ 	mutex_lock(&atm_dev_mutex);
+@@ -418,3 +419,4 @@ void *atm_dev_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ {
+ 	return seq_list_next(v, &atm_devs, pos);
+ }
++#endif
 -- 
 2.39.2
 
