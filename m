@@ -1,28 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A433AE6C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957AAC433D2;
-	Wed,  7 Jun 2023 20:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2673AE41
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ECF8C433D2;
+	Wed,  7 Jun 2023 20:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169963;
-	bh=nvxxCqzQSJniYD7SMvM7DQAEKt9nmhMautvZMiswPdM=;
+	s=korg; t=1686169966;
+	bh=gy1YcfXCZCoVpWN94lsgygDGYJlbUs/FpJWOvXGJEVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdfVz3ebI+EefLY93JkEJ2O1cFVbreuZx00YBdDFdbyuE9B6ymdGpgOk9wB+eD0zS
-	 K6a5qhhwrTe91D/PGqFwxU3gnTwMmvpBxigxAGp6o3u9+w6RJcIWtsRMhFH/BBBBO9
-	 ZGwKipxFOSvp0SGC1wcLU/c989E71XiLzHY5xPHs=
+	b=FHKK15BAnBDi+Ezc23B84DQS83QxgItITI3kJkOhnD4Qx5zN6UGx/1uM7m1cOr4Wh
+	 7IXO1Fr4cE/RmCypbRfpCP/z39fufIWEzszO8+Xm40F+l0o7xwkKV4fxFfDf5p/Ygf
+	 WUA0IuDXhp9b0VdNZJL6kkGJoSkSFbx3oddcz5Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH 6.3 280/286] KEYS: asymmetric: Copy sig and digest in public_key_verify_signature()
-Date: Wed,  7 Jun 2023 22:16:19 +0200
-Message-ID: <20230607200932.428568936@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH 6.3 281/286] regmap: Account for register length when chunking
+Date: Wed,  7 Jun 2023 22:16:20 +0200
+Message-ID: <20230607200932.462477215@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,112 +32,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Jim Wylder <jwylder@google.com>
 
-commit c3d03e8e35e005e1a614e51bb59053eeb5857f76 upstream.
+commit 3981514180c987a79ea98f0ae06a7cbf58a9ac0f upstream.
 
-Commit ac4e97abce9b8 ("scatterlist: sg_set_buf() argument must be in linear
-mapping") checks that both the signature and the digest reside in the
-linear mapping area.
+Currently, when regmap_raw_write() splits the data, it uses the
+max_raw_write value defined for the bus.  For any bus that includes
+the target register address in the max_raw_write value, the chunked
+transmission will always exceed the maximum transmission length.
+To avoid this problem, subtract the length of the register and the
+padding from the maximum transmission.
 
-However, more recently commit ba14a194a434c ("fork: Add generic vmalloced
-stack support") made it possible to move the stack in the vmalloc area,
-which is not contiguous, and thus not suitable for sg_set_buf() which needs
-adjacent pages.
-
-Always make a copy of the signature and digest in the same buffer used to
-store the key and its parameters, and pass them to sg_init_one(). Prefer it
-to conditionally doing the copy if necessary, to keep the code simple. The
-buffer allocated with kmalloc() is in the linear mapping area.
-
-Cc: stable@vger.kernel.org # 4.9.x
-Fixes: ba14a194a434 ("fork: Add generic vmalloced stack support")
-Link: https://lore.kernel.org/linux-integrity/Y4pIpxbjBdajymBJ@sol.localdomain/
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Tested-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Jim Wylder <jwylder@google.com
+Link: https://lore.kernel.org/r/20230517152444.3690870-2-jwylder@google.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/asymmetric_keys/public_key.c |   38 +++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ drivers/base/regmap/regmap.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/crypto/asymmetric_keys/public_key.c
-+++ b/crypto/asymmetric_keys/public_key.c
-@@ -380,9 +380,10 @@ int public_key_verify_signature(const st
- 	struct crypto_wait cwait;
- 	struct crypto_akcipher *tfm;
- 	struct akcipher_request *req;
--	struct scatterlist src_sg[2];
-+	struct scatterlist src_sg;
- 	char alg_name[CRYPTO_MAX_ALG_NAME];
--	char *key, *ptr;
-+	char *buf, *ptr;
-+	size_t buf_len;
- 	int ret;
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -2064,6 +2064,8 @@ int _regmap_raw_write(struct regmap *map
+ 	size_t val_count = val_len / val_bytes;
+ 	size_t chunk_count, chunk_bytes;
+ 	size_t chunk_regs = val_count;
++	size_t max_data = map->max_raw_write - map->format.reg_bytes -
++			map->format.pad_bytes;
+ 	int ret, i;
  
- 	pr_devel("==>%s()\n", __func__);
-@@ -420,34 +421,37 @@ int public_key_verify_signature(const st
- 	if (!req)
- 		goto error_free_tfm;
+ 	if (!val_count)
+@@ -2071,8 +2073,8 @@ int _regmap_raw_write(struct regmap *map
  
--	key = kmalloc(pkey->keylen + sizeof(u32) * 2 + pkey->paramlen,
--		      GFP_KERNEL);
--	if (!key)
-+	buf_len = max_t(size_t, pkey->keylen + sizeof(u32) * 2 + pkey->paramlen,
-+			sig->s_size + sig->digest_size);
-+
-+	buf = kmalloc(buf_len, GFP_KERNEL);
-+	if (!buf)
- 		goto error_free_req;
+ 	if (map->use_single_write)
+ 		chunk_regs = 1;
+-	else if (map->max_raw_write && val_len > map->max_raw_write)
+-		chunk_regs = map->max_raw_write / val_bytes;
++	else if (map->max_raw_write && val_len > max_data)
++		chunk_regs = max_data / val_bytes;
  
--	memcpy(key, pkey->key, pkey->keylen);
--	ptr = key + pkey->keylen;
-+	memcpy(buf, pkey->key, pkey->keylen);
-+	ptr = buf + pkey->keylen;
- 	ptr = pkey_pack_u32(ptr, pkey->algo);
- 	ptr = pkey_pack_u32(ptr, pkey->paramlen);
- 	memcpy(ptr, pkey->params, pkey->paramlen);
- 
- 	if (pkey->key_is_private)
--		ret = crypto_akcipher_set_priv_key(tfm, key, pkey->keylen);
-+		ret = crypto_akcipher_set_priv_key(tfm, buf, pkey->keylen);
- 	else
--		ret = crypto_akcipher_set_pub_key(tfm, key, pkey->keylen);
-+		ret = crypto_akcipher_set_pub_key(tfm, buf, pkey->keylen);
- 	if (ret)
--		goto error_free_key;
-+		goto error_free_buf;
- 
- 	if (strcmp(pkey->pkey_algo, "sm2") == 0 && sig->data_size) {
- 		ret = cert_sig_digest_update(sig, tfm);
- 		if (ret)
--			goto error_free_key;
-+			goto error_free_buf;
- 	}
- 
--	sg_init_table(src_sg, 2);
--	sg_set_buf(&src_sg[0], sig->s, sig->s_size);
--	sg_set_buf(&src_sg[1], sig->digest, sig->digest_size);
--	akcipher_request_set_crypt(req, src_sg, NULL, sig->s_size,
-+	memcpy(buf, sig->s, sig->s_size);
-+	memcpy(buf + sig->s_size, sig->digest, sig->digest_size);
-+
-+	sg_init_one(&src_sg, buf, sig->s_size + sig->digest_size);
-+	akcipher_request_set_crypt(req, &src_sg, NULL, sig->s_size,
- 				   sig->digest_size);
- 	crypto_init_wait(&cwait);
- 	akcipher_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG |
-@@ -455,8 +459,8 @@ int public_key_verify_signature(const st
- 				      crypto_req_done, &cwait);
- 	ret = crypto_wait_req(crypto_akcipher_verify(req), &cwait);
- 
--error_free_key:
--	kfree(key);
-+error_free_buf:
-+	kfree(buf);
- error_free_req:
- 	akcipher_request_free(req);
- error_free_tfm:
+ 	chunk_count = val_count / chunk_regs;
+ 	chunk_bytes = chunk_regs * val_bytes;
 
 
