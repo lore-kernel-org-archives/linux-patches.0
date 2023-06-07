@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799FE370DE
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E55C4339B;
-	Wed,  7 Jun 2023 20:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC578370DE
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F903C4339B;
+	Wed,  7 Jun 2023 20:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170893;
-	bh=u0qXUGL0qPRkJQ4JWahp3TpyY/2idPVSjs3Gceo+KPY=;
+	s=korg; t=1686170895;
+	bh=nM5ePi1h+JRSvaC293yImKZ2ZI0prd4ezlOA/cVnu+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQfLIIj/pEnEnN/EpOmU2akOTp/NHZRSFfXiEwBnPKntaJV/cmtqah+Uk5m8dnZIs
-	 Cxs4+gp1sBu72GBGGOth/VktdQtglLWat8oA3Y/OOMv5TFrjeIpex8CaxMIZXqZVMl
-	 T90BibC/cSCG9TBw6eoPdsZixUS8hNFbbE2wtA68=
+	b=XgHK10gThecVfn3JMHD4JUxxf3yyJ3+rAXGoof9swvMa1MQk6RSRmWn7gnYNOZBNZ
+	 l0X+3Jm1mxIX9hpV4Vrc9wt0ZcvlENAySNLHQQpaEM6OvwgHAU1nh2V76pfdrrudVO
+	 OljZZk8vWGXPgER/BpirJt8M0Pnw8D2SYbsjnE80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tudor Ambarus <tudor.ambarus@microchip.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/120] dmaengine: at_xdmac: Fix race for the tx desc callback
-Date: Wed,  7 Jun 2023 22:15:21 +0200
-Message-ID: <20230607200901.089145892@linuxfoundation.org>
+Subject: [PATCH 5.10 006/120] dmaengine: at_xdmac: Move the free desc to the tail of the desc list
+Date: Wed,  7 Jun 2023 22:15:22 +0200
+Message-ID: <20230607200901.120378020@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -37,82 +37,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-[ Upstream commit b63e5cb94ad6947ab5fe38b5a9417dcfd0bc6122 ]
+[ Upstream commit 801db90bf294f647b967e8d99b9ae121bea63d0d ]
 
-The transfer descriptors were wrongly moved to the free descriptors list
-before calling the tx desc callback. As the DMA engine drivers drop any
-locks before calling the callback function, txd could be taken again,
-resulting in its callback called prematurely. Fix the race for the tx desc
-callback by moving the xfer desc into the free desc list after the
-callback is invoked.
+Move the free desc to the tail of the list, so that the sequence of
+descriptors is more track-able in case of debug. One would know which
+descriptor should come next and could easier catch concurrency over
+descriptors for example. virt-dma uses list_splice_tail_init() as well,
+follow the core driver.
 
-Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Link: https://lore.kernel.org/r/20211215110115.191749-6-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20211215110115.191749-7-tudor.ambarus@microchip.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: 4d43acb145c3 ("dmaengine: at_xdmac: fix potential Oops in at_xdmac_prep_interleaved()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/at_xdmac.c | 25 ++++++++-----------------
- 1 file changed, 8 insertions(+), 17 deletions(-)
+ drivers/dma/at_xdmac.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index 501196d8c4881..8af1c0fd3a736 100644
+index 8af1c0fd3a736..96559c5df944d 100644
 --- a/drivers/dma/at_xdmac.c
 +++ b/drivers/dma/at_xdmac.c
-@@ -1527,20 +1527,6 @@ at_xdmac_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
- 	return ret;
- }
+@@ -678,7 +678,8 @@ at_xdmac_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 		if (!desc) {
+ 			dev_err(chan2dev(chan), "can't get descriptor\n");
+ 			if (first)
+-				list_splice_init(&first->descs_list, &atchan->free_descs_list);
++				list_splice_tail_init(&first->descs_list,
++						      &atchan->free_descs_list);
+ 			goto spin_unlock;
+ 		}
  
--/* Call must be protected by lock. */
--static void at_xdmac_remove_xfer(struct at_xdmac_chan *atchan,
--				    struct at_xdmac_desc *desc)
--{
--	dev_dbg(chan2dev(&atchan->chan), "%s: desc 0x%p\n", __func__, desc);
--
--	/*
--	 * Remove the transfer from the transfer list then move the transfer
--	 * descriptors into the free descriptors list.
--	 */
--	list_del(&desc->xfer_node);
--	list_splice_init(&desc->descs_list, &atchan->free_descs_list);
--}
--
- static void at_xdmac_advance_work(struct at_xdmac_chan *atchan)
- {
- 	struct at_xdmac_desc	*desc;
-@@ -1652,7 +1638,8 @@ static void at_xdmac_tasklet(struct tasklet_struct *t)
+@@ -766,7 +767,8 @@ at_xdmac_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t buf_addr,
+ 		if (!desc) {
+ 			dev_err(chan2dev(chan), "can't get descriptor\n");
+ 			if (first)
+-				list_splice_init(&first->descs_list, &atchan->free_descs_list);
++				list_splice_tail_init(&first->descs_list,
++						      &atchan->free_descs_list);
+ 			spin_unlock_irqrestore(&atchan->lock, irqflags);
+ 			return NULL;
+ 		}
+@@ -998,8 +1000,8 @@ at_xdmac_prep_interleaved(struct dma_chan *chan,
+ 							       src_addr, dst_addr,
+ 							       xt, chunk);
+ 			if (!desc) {
+-				list_splice_init(&first->descs_list,
+-						 &atchan->free_descs_list);
++				list_splice_tail_init(&first->descs_list,
++						      &atchan->free_descs_list);
+ 				return NULL;
+ 			}
  
- 		txd = &desc->tx_dma_desc;
- 		dma_cookie_complete(txd);
--		at_xdmac_remove_xfer(atchan, desc);
-+		/* Remove the transfer from the transfer list. */
-+		list_del(&desc->xfer_node);
- 		spin_unlock_irq(&atchan->lock);
+@@ -1077,7 +1079,8 @@ at_xdmac_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dest, dma_addr_t src,
+ 		if (!desc) {
+ 			dev_err(chan2dev(chan), "can't get descriptor\n");
+ 			if (first)
+-				list_splice_init(&first->descs_list, &atchan->free_descs_list);
++				list_splice_tail_init(&first->descs_list,
++						      &atchan->free_descs_list);
+ 			return NULL;
+ 		}
  
- 		if (txd->flags & DMA_PREP_INTERRUPT)
-@@ -1661,6 +1648,8 @@ static void at_xdmac_tasklet(struct tasklet_struct *t)
- 		dma_run_dependencies(txd);
+@@ -1251,8 +1254,8 @@ at_xdmac_prep_dma_memset_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 						   sg_dma_len(sg),
+ 						   value);
+ 		if (!desc && first)
+-			list_splice_init(&first->descs_list,
+-					 &atchan->free_descs_list);
++			list_splice_tail_init(&first->descs_list,
++					      &atchan->free_descs_list);
+ 
+ 		if (!first)
+ 			first = desc;
+@@ -1649,7 +1652,8 @@ static void at_xdmac_tasklet(struct tasklet_struct *t)
  
  		spin_lock_irq(&atchan->lock);
-+		/* Move the xfer descriptors into the free descriptors list. */
-+		list_splice_init(&desc->descs_list, &atchan->free_descs_list);
+ 		/* Move the xfer descriptors into the free descriptors list. */
+-		list_splice_init(&desc->descs_list, &atchan->free_descs_list);
++		list_splice_tail_init(&desc->descs_list,
++				      &atchan->free_descs_list);
  		at_xdmac_advance_work(atchan);
  		spin_unlock_irq(&atchan->lock);
  	}
-@@ -1807,8 +1796,10 @@ static int at_xdmac_device_terminate_all(struct dma_chan *chan)
- 		cpu_relax();
- 
+@@ -1798,7 +1802,8 @@ static int at_xdmac_device_terminate_all(struct dma_chan *chan)
  	/* Cancel all pending transfers. */
--	list_for_each_entry_safe(desc, _desc, &atchan->xfers_list, xfer_node)
--		at_xdmac_remove_xfer(atchan, desc);
-+	list_for_each_entry_safe(desc, _desc, &atchan->xfers_list, xfer_node) {
-+		list_del(&desc->xfer_node);
-+		list_splice_init(&desc->descs_list, &atchan->free_descs_list);
-+	}
+ 	list_for_each_entry_safe(desc, _desc, &atchan->xfers_list, xfer_node) {
+ 		list_del(&desc->xfer_node);
+-		list_splice_init(&desc->descs_list, &atchan->free_descs_list);
++		list_splice_tail_init(&desc->descs_list,
++				      &atchan->free_descs_list);
+ 	}
  
  	clear_bit(AT_XDMAC_CHAN_IS_PAUSED, &atchan->status);
- 	clear_bit(AT_XDMAC_CHAN_IS_CYCLIC, &atchan->status);
 -- 
 2.39.2
 
