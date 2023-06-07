@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0234210FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CC9C433EF;
-	Wed,  7 Jun 2023 20:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9649810FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15043C433EF;
+	Wed,  7 Jun 2023 20:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169637;
-	bh=H2VwrVzS+U9B6jNfgMZ8PZWDi0r+a9pquf7BqrvT6iU=;
+	s=korg; t=1686169640;
+	bh=x4vYym9XleYrWZ+rU1tI4zgGL2tm62rFrZqtGJF7b30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fpGmhxv03jOsqUMGJmry06jJcad6f/Q63AGnKEx1duzCv0r0gzzijdhoOc28l93ar
-	 AZi/pMy35uOCuNoWgvr3Is8lpr2nXmKufdFl7lFUM8M2IHoPF8cshENVTVRVQV3WmG
-	 IV0gxLj4cxcI8yhw+ZIi34MWbqbe0MXEwVDy8aEA=
+	b=ux+gDxicog0VReWTujtEfasB7Fh9T1PDzoqRjtqWUczpQKjQOBlrH2EeCYXes6wez
+	 W57LdLdMwKE1eEeHbQoQhsDD7Y2hcm8p0zK2hQnDbrWbK/UeNd0lfTyIwJ1g5tSX1D
+	 7l6Qi9/mqyX6IlNphubPOPQl7au50RYxa2ZH9pL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ariel Malamud <ariel.malamud@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Po-Wen Kao <powen.kao@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Stanley Chu <stanley.chu@mediatek.com>,
+	Ziqi Chen <quic_ziqichen@quicinc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 156/286] wifi: iwlwifi: mvm: Add locking to the rate read flow
-Date: Wed,  7 Jun 2023 22:14:15 +0200
-Message-ID: <20230607200928.220170048@linuxfoundation.org>
+Subject: [PATCH 6.3 157/286] scsi: ufs: core: Fix MCQ tag calculation
+Date: Wed,  7 Jun 2023 22:14:16 +0200
+Message-ID: <20230607200928.251618164@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,48 +39,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ariel Malamud <ariel.malamud@intel.com>
+From: Po-Wen Kao <powen.kao@mediatek.com>
 
-[ Upstream commit a8938bc881d2a03f9b77f19fae924fe798a01285 ]
+[ Upstream commit 5149452ca66289ef33d13897ee845a2f6f5b680f ]
 
-The rs_drv_get_rate flow reads the lq_sta to return the optimal rate
-for tx frames. This read flow is not protected thereby leaving
-a small window, a few instructions wide, open to contention by an
-asynchronous rate update. Indeed this race condition was hit and the
-update occurred in the middle of the read.
+The transfer command descriptor is allocated in ufshcd_memory_alloc() and
+referenced by the transfer request descriptor with stride size
+sizeof_utp_transfer_cmd_desc() instead of sizeof(struct
+utp_transfer_cmd_desc).
 
-Fix this by locking the lq_sta struct during read.
+Consequently, computing tag by address offset should also refer to the
+same stride.
 
-Signed-off-by: Ariel Malamud <ariel.malamud@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230514120631.b52c9ed5c379.I15290b78e0d966c1b68278263776ca9de841d5fe@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Po-Wen Kao <powen.kao@mediatek.com>
+Link: https://lore.kernel.org/r/20230504154454.26654-2-powen.kao@mediatek.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
+Reviewed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/ufs/core/ufs-mcq.c | 2 +-
+ drivers/ufs/core/ufshcd.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs.c b/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-index 0b50b816684a0..2be6801d48aca 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-@@ -2692,6 +2692,8 @@ static void rs_drv_get_rate(void *mvm_r, struct ieee80211_sta *sta,
- 		return;
+diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+index 202ff71e1b582..b7c5f39b50e6d 100644
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -265,7 +265,7 @@ static int ufshcd_mcq_get_tag(struct ufs_hba *hba,
+ 	addr = (le64_to_cpu(cqe->command_desc_base_addr) & CQE_UCD_BA) -
+ 		hba->ucdl_dma_addr;
  
- 	lq_sta = mvm_sta;
-+
-+	spin_lock(&lq_sta->pers.lock);
- 	iwl_mvm_hwrate_to_tx_rate_v1(lq_sta->last_rate_n_flags,
- 				     info->band, &info->control.rates[0]);
- 	info->control.rates[0].count = 1;
-@@ -2706,6 +2708,7 @@ static void rs_drv_get_rate(void *mvm_r, struct ieee80211_sta *sta,
- 		iwl_mvm_hwrate_to_tx_rate_v1(last_ucode_rate, info->band,
- 					     &txrc->reported_rate);
- 	}
-+	spin_unlock(&lq_sta->pers.lock);
+-	return div_u64(addr, sizeof(struct utp_transfer_cmd_desc));
++	return div_u64(addr, sizeof_utp_transfer_cmd_desc(hba));
  }
  
- static void *rs_drv_alloc_sta(void *mvm_rate, struct ieee80211_sta *sta,
+ static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 8ac2945e849f4..a80eacbb8ef85 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -8422,7 +8422,7 @@ static void ufshcd_release_sdb_queue(struct ufs_hba *hba, int nutrs)
+ {
+ 	size_t ucdl_size, utrdl_size;
+ 
+-	ucdl_size = sizeof(struct utp_transfer_cmd_desc) * nutrs;
++	ucdl_size = sizeof_utp_transfer_cmd_desc(hba) * nutrs;
+ 	dmam_free_coherent(hba->dev, ucdl_size, hba->ucdl_base_addr,
+ 			   hba->ucdl_dma_addr);
+ 
 -- 
 2.39.2
 
