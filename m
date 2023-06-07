@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DEE39234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6FAC433EF;
-	Wed,  7 Jun 2023 20:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7257F39234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E679EC4339B;
+	Wed,  7 Jun 2023 20:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169145;
-	bh=kT3jh64tJMjQU7tzukJRwEmX2q6UV7BbOXCt0kxTlVk=;
+	s=korg; t=1686169148;
+	bh=iZ1Iuai7yOiMu0ROljRsnMO9s4UfD+onOErjGiXt9ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUXX0nU7+WR5RdD6Vt42fokrffbpEcxiMRRDrHUmeyF12dNkF43N9E08ks6eeaQQU
-	 vWBE3DFtsjvQlLVLk/JFgdzGUa+CB724x4ZuAfpjk5f4in2IqeV4yrOEozVrgmWeMz
-	 oqfRnHi8hExQUIJMvwFsyBg4Yg2AQFrnwhqDuEWs=
+	b=pD7l57j4X8m++Vr8hP5X1VO/K0NNE+Fis9vVSMbV6Mie5tCVjFIupWcNZOIjjWh9v
+	 cm9sxGREwO5II+J75sLfBOcNYlxVS9H2PkQ3+9MxvvKjAGKPgafUx3LEqCBPbkDXVC
+	 ItiPHiskLLn9n4Pb1D7qwVNbXEPqRjrEC5cOBjmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jaswinder Singh <jassisinghbrar@gmail.com>,
-	Boojin Kim <boojin.kim@samsung.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Russell King <rmk+kernel@arm.linux.org.uk>,
-	Vinod Koul <vkoul@kernel.org>,
-	dmaengine@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+	Simon Kapadia <szymon@kapadia.pl>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 04/61] dmaengine: pl330: rename _start to prevent build error
-Date: Wed,  7 Jun 2023 22:15:18 +0200
-Message-ID: <20230607200836.680552722@linuxfoundation.org>
+Subject: [PATCH 4.14 05/61] netrom: fix info-leak in nr_write_internal()
+Date: Wed,  7 Jun 2023 22:15:19 +0200
+Message-ID: <20230607200837.023057166@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -41,83 +37,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a1a5f2c887252dec161c1e12e04303ca9ba56fa9 ]
+[ Upstream commit 31642e7089df8fd3f54ca7843f7ee2952978cad1 ]
 
-"_start" is used in several arches and proably should be reserved
-for ARCH usage. Using it in a driver for a private symbol can cause
-a build error when it conflicts with ARCH usage of the same symbol.
+Simon Kapadia reported the following issue:
 
-Therefore rename pl330's "_start" to "pl330_start_thread" so that there
-is no conflict and no build error.
+<quote>
 
-drivers/dma/pl330.c:1053:13: error: '_start' redeclared as different kind of symbol
- 1053 | static bool _start(struct pl330_thread *thrd)
-      |             ^~~~~~
-In file included from ../include/linux/interrupt.h:21,
-                 from ../drivers/dma/pl330.c:18:
-arch/riscv/include/asm/sections.h:11:13: note: previous declaration of '_start' with type 'char[]'
-   11 | extern char _start[];
-      |             ^~~~~~
+The Online Amateur Radio Community (OARC) has recently been experimenting
+with building a nationwide packet network in the UK.
+As part of our experimentation, we have been testing out packet on 300bps HF,
+and playing with net/rom.  For HF packet at this baud rate you really need
+to make sure that your MTU is relatively low; AX.25 suggests a PACLEN of 60,
+and a net/rom PACLEN of 40 to go with that.
+However the Linux net/rom support didn't work with a low PACLEN;
+the mkiss module would truncate packets if you set the PACLEN below about 200 or so, e.g.:
 
-Fixes: b7d861d93945 ("DMA: PL330: Merge PL330 driver into drivers/dma/")
-Fixes: ae43b3289186 ("ARM: 8202/1: dmaengine: pl330: Add runtime Power Management support v12")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Jaswinder Singh <jassisinghbrar@gmail.com>
-Cc: Boojin Kim <boojin.kim@samsung.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: dmaengine@vger.kernel.org
-Cc: linux-riscv@lists.infradead.org
-Link: https://lore.kernel.org/r/20230524045310.27923-1-rdunlap@infradead.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Apr 19 14:00:51 radio kernel: [12985.747310] mkiss: ax1: truncating oversized transmit packet!
+
+This didn't make any sense to me (if the packets are smaller why would they
+be truncated?) so I started investigating.
+I looked at the packets using ethereal, and found that many were just huge
+compared to what I would expect.
+A simple net/rom connection request packet had the request and then a bunch
+of what appeared to be random data following it:
+
+</quote>
+
+Simon provided a patch that I slightly revised:
+Not only we must not use skb_tailroom(), we also do
+not want to count NR_NETWORK_LEN twice.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-Developed-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Simon Kapadia <szymon@kapadia.pl>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230524141456.1045467-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/pl330.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netrom/nr_subr.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index a8cea236099a1..982b69d017cda 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -1041,7 +1041,7 @@ static bool _trigger(struct pl330_thread *thrd)
- 	return true;
- }
+diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
+index 029c8bb90f4c3..a7d3a265befb9 100644
+--- a/net/netrom/nr_subr.c
++++ b/net/netrom/nr_subr.c
+@@ -126,7 +126,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	unsigned char  *dptr;
+ 	int len, timeout;
  
--static bool _start(struct pl330_thread *thrd)
-+static bool pl330_start_thread(struct pl330_thread *thrd)
- {
- 	switch (_state(thrd)) {
- 	case PL330_STATE_FAULT_COMPLETING:
-@@ -1584,7 +1584,7 @@ static int pl330_update(struct pl330_dmac *pl330)
- 			thrd->req_running = -1;
+-	len = NR_NETWORK_LEN + NR_TRANSPORT_LEN;
++	len = NR_TRANSPORT_LEN;
  
- 			/* Get going again ASAP */
--			_start(thrd);
-+			pl330_start_thread(thrd);
- 
- 			/* For now, just make a list of callbacks to be done */
- 			list_add_tail(&descdone->rqd, &pl330->req_done);
-@@ -1974,7 +1974,7 @@ static void pl330_tasklet(unsigned long data)
- 	} else {
- 		/* Make sure the PL330 Channel thread is active */
- 		spin_lock(&pch->thread->dmac->lock);
--		_start(pch->thread);
-+		pl330_start_thread(pch->thread);
- 		spin_unlock(&pch->thread->dmac->lock);
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
+@@ -144,7 +144,8 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 		return;
  	}
  
-@@ -1992,7 +1992,7 @@ static void pl330_tasklet(unsigned long data)
- 			if (power_down) {
- 				pch->active = true;
- 				spin_lock(&pch->thread->dmac->lock);
--				_start(pch->thread);
-+				pl330_start_thread(pch->thread);
- 				spin_unlock(&pch->thread->dmac->lock);
- 				power_down = false;
- 			}
+-	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
++	skb = alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
++	if (!skb)
+ 		return;
+ 
+ 	/*
+@@ -152,7 +153,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	 */
+ 	skb_reserve(skb, NR_NETWORK_LEN);
+ 
+-	dptr = skb_put(skb, skb_tailroom(skb));
++	dptr = skb_put(skb, len);
+ 
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
 -- 
 2.39.2
 
