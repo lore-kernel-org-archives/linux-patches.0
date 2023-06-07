@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F4810FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC283C433D2;
-	Wed,  7 Jun 2023 20:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0234210FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CC9C433EF;
+	Wed,  7 Jun 2023 20:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169635;
-	bh=EVL78Ns4lTPHqkzujyH14kgCSqILNOTIj3vn96MbkNU=;
+	s=korg; t=1686169637;
+	bh=H2VwrVzS+U9B6jNfgMZ8PZWDi0r+a9pquf7BqrvT6iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IeWgUsXoeDkTt4ea0ct3KhNEDjMw/hIMvAYfj/l605zyOb3yHG9rMagdu271Hxj+x
-	 g8ZKvxj+cnQoos/VZt92+WVWjJ0WsucTYn6S/5LwNeN2zE6rVxsH/dVRboLb0Gm/xY
-	 XPHlJKCeKVPT/FYc1dyN3ltgJ9WxsM/iyDHCpqyI=
+	b=fpGmhxv03jOsqUMGJmry06jJcad6f/Q63AGnKEx1duzCv0r0gzzijdhoOc28l93ar
+	 AZi/pMy35uOCuNoWgvr3Is8lpr2nXmKufdFl7lFUM8M2IHoPF8cshENVTVRVQV3WmG
+	 IV0gxLj4cxcI8yhw+ZIi34MWbqbe0MXEwVDy8aEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ariel Malamud <ariel.malamud@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 155/286] wifi: mac80211: recalc chanctx mindef before assigning
-Date: Wed,  7 Jun 2023 22:14:14 +0200
-Message-ID: <20230607200928.189149300@linuxfoundation.org>
+Subject: [PATCH 6.3 156/286] wifi: iwlwifi: mvm: Add locking to the rate read flow
+Date: Wed,  7 Jun 2023 22:14:15 +0200
+Message-ID: <20230607200928.220170048@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,50 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Ariel Malamud <ariel.malamud@intel.com>
 
-[ Upstream commit 04312de4ced4b152749614e8179f3978a20a992f ]
+[ Upstream commit a8938bc881d2a03f9b77f19fae924fe798a01285 ]
 
-When we allocate a new channel context, or find an existing one
-that is compatible, we currently assign it to a link before its
-mindef is updated. This leads to strange situations, especially
-in link switching where you switch to an 80 MHz link and expect
-it to be active immediately, but the mindef is still configured
-to 20 MHz while assigning.  Also, it's strange that the chandef
-passed to the assign method's argument is wider than the one in
-the context.
+The rs_drv_get_rate flow reads the lq_sta to return the optimal rate
+for tx frames. This read flow is not protected thereby leaving
+a small window, a few instructions wide, open to contention by an
+asynchronous rate update. Indeed this race condition was hit and the
+update occurred in the middle of the read.
 
-Fix this by calculating the mindef with the new link considered
-before calling the driver.
+Fix this by locking the lq_sta struct during read.
 
-In particular, this fixes an iwlwifi problem during link switch
-where the firmware would assert because the (link) station that
-was added for the AP is configured to transmit at a bandwidth
-that's wider than the channel context that it's configured on.
-
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Ariel Malamud <ariel.malamud@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230504134511.828474-5-gregory.greenman@intel.com
+Link: https://lore.kernel.org/r/20230514120631.b52c9ed5c379.I15290b78e0d966c1b68278263776ca9de841d5fe@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/chan.c | 3 +++
+ drivers/net/wireless/intel/iwlwifi/mvm/rs.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
-index 1b182cf9d6610..77c90ed8f5d7d 100644
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -871,6 +871,9 @@ static int ieee80211_assign_link_chanctx(struct ieee80211_link_data *link,
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs.c b/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
+index 0b50b816684a0..2be6801d48aca 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
+@@ -2692,6 +2692,8 @@ static void rs_drv_get_rate(void *mvm_r, struct ieee80211_sta *sta,
+ 		return;
  
- 	if (new_ctx) {
-+		/* recalc considering the link we'll use it for now */
-+		ieee80211_recalc_chanctx_min_def(local, new_ctx, link);
+ 	lq_sta = mvm_sta;
 +
- 		ret = drv_assign_vif_chanctx(local, sdata, link->conf, new_ctx);
- 		if (ret)
- 			goto out;
++	spin_lock(&lq_sta->pers.lock);
+ 	iwl_mvm_hwrate_to_tx_rate_v1(lq_sta->last_rate_n_flags,
+ 				     info->band, &info->control.rates[0]);
+ 	info->control.rates[0].count = 1;
+@@ -2706,6 +2708,7 @@ static void rs_drv_get_rate(void *mvm_r, struct ieee80211_sta *sta,
+ 		iwl_mvm_hwrate_to_tx_rate_v1(last_ucode_rate, info->band,
+ 					     &txrc->reported_rate);
+ 	}
++	spin_unlock(&lq_sta->pers.lock);
+ }
+ 
+ static void *rs_drv_alloc_sta(void *mvm_rate, struct ieee80211_sta *sta,
 -- 
 2.39.2
 
