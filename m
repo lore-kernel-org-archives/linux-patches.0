@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348BA37325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8869C433EF;
-	Wed,  7 Jun 2023 20:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C0037325
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630DEC4339C;
+	Wed,  7 Jun 2023 20:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171076;
-	bh=p42ugG0UDv7iJGC1P06JukrmbTVMV9Fewjur9T8/c3A=;
+	s=korg; t=1686171078;
+	bh=7P1ovuxvTzFYSu+1MIAyr3QGwChR4p2MrkuhM2fNbD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/SIMzPEI+axxc/W39dshNwPgq6IPv/h6wTCnA6KkkPb7Qcu5vAGrX7s8GJarIqQ9
-	 hNZWws1Uaxf8SuaLd5/zxgcnqNTPrrEgru255kuv32CSqQQu1IUgqkp570Td/ScH7W
-	 lcSeUcYaBxxaJ67GiXwF/AEb0/OOXoeG+vFU0xhY=
+	b=j5Qz9DpYN62/ACOEDfBoU//W6dYGttiuWPFxbUF4pPzydnwghD/nlMiKm+cRbFBnu
+	 NrVCXEl3bUeblHjkuwORmGPqgIo7JQyi0Kir6irCfjOG0v3Fa+dUJjor/cltt4mBEG
+	 UOdCa72q89392TL77VX4r722ESM06Jb44T9B1RVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	pengfuyuan <pengfuyuan@kylinos.cn>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 094/120] btrfs: fix csum_tree_block page iteration to avoid tripping on -Werror=array-bounds
-Date: Wed,  7 Jun 2023 22:16:50 +0200
-Message-ID: <20230607200903.866908067@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	syzbot+d910bd780e6efac35869@syzkaller.appspotmail.com,
+	Sam Ravnborg <sam@ravnborg.org>,
+	stable@kernel.org
+Subject: [PATCH 5.10 103/120] fbcon: Fix null-ptr-deref in soft_cursor
+Date: Wed,  7 Jun 2023 22:16:59 +0200
+Message-ID: <20230607200904.161870940@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -34,57 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: pengfuyuan <pengfuyuan@kylinos.cn>
+From: Helge Deller <deller@gmx.de>
 
-commit 5ad9b4719fc9bc4715c7e19875a962095b0577e7 upstream.
+commit d78bd6cc68276bd57f766f7cb98bfe32c23ab327 upstream.
 
-When compiling on a MIPS 64-bit machine we get these warnings:
+syzbot repored this bug in the softcursor code:
 
-    In file included from ./arch/mips/include/asm/cacheflush.h:13,
-	             from ./include/linux/cacheflush.h:5,
-	             from ./include/linux/highmem.h:8,
-		     from ./include/linux/bvec.h:10,
-		     from ./include/linux/blk_types.h:10,
-                     from ./include/linux/blkdev.h:9,
-	             from fs/btrfs/disk-io.c:7:
-    fs/btrfs/disk-io.c: In function ‘csum_tree_block’:
-    fs/btrfs/disk-io.c:100:34: error: array subscript 1 is above array bounds of ‘struct page *[1]’ [-Werror=array-bounds]
-      100 |   kaddr = page_address(buf->pages[i]);
-          |                        ~~~~~~~~~~^~~
-    ./include/linux/mm.h:2135:48: note: in definition of macro ‘page_address’
-     2135 | #define page_address(page) lowmem_page_address(page)
-          |                                                ^~~~
-    cc1: all warnings being treated as errors
+BUG: KASAN: null-ptr-deref in soft_cursor+0x384/0x6b4 drivers/video/fbdev/core/softcursor.c:70
+Read of size 16 at addr 0000000000000200 by task kworker/u4:1/12
 
-We can check if i overflows to solve the problem. However, this doesn't make
-much sense, since i == 1 and num_pages == 1 doesn't execute the body of the loop.
-In addition, i < num_pages can also ensure that buf->pages[i] will not cross
-the boundary. Unfortunately, this doesn't help with the problem observed here:
-gcc still complains.
+CPU: 0 PID: 12 Comm: kworker/u4:1 Not tainted 6.4.0-rc3-syzkaller-geb0f1697d729 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/28/2023
+Workqueue: events_power_efficient fb_flashcursor
+Call trace:
+ dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:233
+ show_stack+0x2c/0x44 arch/arm64/kernel/stacktrace.c:240
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xd0/0x124 lib/dump_stack.c:106
+ print_report+0xe4/0x514 mm/kasan/report.c:465
+ kasan_report+0xd4/0x130 mm/kasan/report.c:572
+ kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:187
+ __asan_memcpy+0x3c/0x84 mm/kasan/shadow.c:105
+ soft_cursor+0x384/0x6b4 drivers/video/fbdev/core/softcursor.c:70
+ bit_cursor+0x113c/0x1a64 drivers/video/fbdev/core/bitblit.c:377
+ fb_flashcursor+0x35c/0x54c drivers/video/fbdev/core/fbcon.c:380
+ process_one_work+0x788/0x12d4 kernel/workqueue.c:2405
+ worker_thread+0x8e0/0xfe8 kernel/workqueue.c:2552
+ kthread+0x288/0x310 kernel/kthread.c:379
+ ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:853
 
-To fix this add a compile-time condition for the extent buffer page
-array size limit, which would eventually lead to eliminating the whole
-for loop.
+This fix let bit_cursor() bail out early when a font bitmap
+isn't available yet.
 
-CC: stable@vger.kernel.org # 5.10+
-Signed-off-by: pengfuyuan <pengfuyuan@kylinos.cn>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-by: syzbot+d910bd780e6efac35869@syzkaller.appspotmail.com
+Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/core/bitblit.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -220,7 +220,7 @@ static void csum_tree_block(struct exten
- 	crypto_shash_update(shash, kaddr + BTRFS_CSUM_SIZE,
- 			    PAGE_SIZE - BTRFS_CSUM_SIZE);
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -247,6 +247,9 @@ static void bit_cursor(struct vc_data *v
  
--	for (i = 1; i < num_pages; i++) {
-+	for (i = 1; i < num_pages && INLINE_EXTENT_BUFFER_PAGES > 1; i++) {
- 		kaddr = page_address(buf->pages[i]);
- 		crypto_shash_update(shash, kaddr, PAGE_SIZE);
- 	}
+ 	cursor.set = 0;
+ 
++	if (!vc->vc_font.data)
++		return;
++
+  	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+ 	src = vc->vc_font.data + ((c & charmask) * (w * vc->vc_font.height));
 
 
