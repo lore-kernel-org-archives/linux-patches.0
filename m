@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D9035B30
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0D8C433D2;
-	Wed,  7 Jun 2023 20:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09DE24EA0
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B23C433D2;
+	Wed,  7 Jun 2023 20:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171049;
-	bh=gBgeHmLk0aCW/ckKhBoiy1vVQq1kmbPVOY94ZtX/UwU=;
+	s=korg; t=1686171052;
+	bh=TIq9YGrtud/LH42s3MTsLHlOF/1JnoTqBkCpglHUdes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWcjFbbU7hhUO/kdCtK2N6h+ona6PHlJw7ylzy71FoBLXgCZm/7m3eTTQzRwgze8M
-	 XNss2VfSidOd+5rwJhigiWDxbej/He186++rOTXCGGv0TI/0guU2G9dS84/aAmHQ2+
-	 DH0JHVa3oulDYhkgpB0YCdmasD6u5FXK/edqclio=
+	b=LWPQWcrFZsI/4U97qjwV3kCaci6jPi2s5AUrPdOedvThvD/OKTYWrW+PIpkYURls/
+	 H25Schk4T8IkABQX5sea/kQcHPpYSYWCpUQUSxvFqU7YXroJU22xWjHdkni0TKJjUc
+	 JTqV76MWM5v4AbkIJFtOMzD4gBZ//KNhyfugti9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/120] ARM: dts: stm32: add pin map for CAN controller on stm32f7
-Date: Wed,  7 Jun 2023 22:16:20 +0200
-Message-ID: <20230607200902.898409313@linuxfoundation.org>
+	Martin Liska <mliska@suse.cz>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 091/120] eth: sun: cassini: remove dead code
+Date: Wed,  7 Jun 2023 22:16:47 +0200
+Message-ID: <20230607200903.771349899@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -35,115 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Martin Liška <mliska@suse.cz>
 
-[ Upstream commit 011644249686f2675e142519cd59e81e04cfc231 ]
+commit 32329216ca1d6ee29c41215f18b3053bb6158541 upstream.
 
-Add pin configurations for using CAN controller on stm32f7.
+Fixes the following GCC warning:
 
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Link: https://lore.kernel.org/all/20230427204540.3126234-4-dario.binacchi@amarulasolutions.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+drivers/net/ethernet/sun/cassini.c:1316:29: error: comparison between two arrays [-Werror=array-compare]
+drivers/net/ethernet/sun/cassini.c:3783:34: error: comparison between two arrays [-Werror=array-compare]
+
+Note that 2 arrays should be compared by comparing of their addresses:
+note: use ‘&cas_prog_workaroundtab[0] == &cas_prog_null[0]’ to compare the addresses
+
+Signed-off-by: Martin Liska <mliska@suse.cz>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/stm32f7-pinctrl.dtsi | 82 ++++++++++++++++++++++++++
- 1 file changed, 82 insertions(+)
+ drivers/net/ethernet/sun/cassini.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/stm32f7-pinctrl.dtsi b/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
-index fe4cfda72a476..4e1b8b3359e21 100644
---- a/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
-+++ b/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
-@@ -284,6 +284,88 @@
- 					slew-rate = <2>;
- 				};
- 			};
-+
-+			can1_pins_a: can1-0 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('A', 12, AF9)>; /* CAN1_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('A', 11, AF9)>; /* CAN1_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can1_pins_b: can1-1 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('B', 9, AF9)>; /* CAN1_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('B', 8, AF9)>; /* CAN1_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can1_pins_c: can1-2 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('D', 1, AF9)>; /* CAN1_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('D', 0, AF9)>; /* CAN1_RX */
-+					bias-pull-up;
-+
-+				};
-+			};
-+
-+			can1_pins_d: can1-3 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('H', 13, AF9)>; /* CAN1_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('H', 14, AF9)>; /* CAN1_RX */
-+					bias-pull-up;
-+
-+				};
-+			};
-+
-+			can2_pins_a: can2-0 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('B', 6, AF9)>; /* CAN2_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('B', 5, AF9)>; /* CAN2_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can2_pins_b: can2-1 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('B', 13, AF9)>; /* CAN2_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('B', 12, AF9)>; /* CAN2_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can3_pins_a: can3-0 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('A', 15, AF11)>; /* CAN3_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('A', 8, AF11)>; /* CAN3_RX */
-+					bias-pull-up;
-+				};
-+			};
-+
-+			can3_pins_b: can3-1 {
-+				pins1 {
-+					pinmux = <STM32_PINMUX('B', 4, AF11)>;  /* CAN3_TX */
-+				};
-+				pins2 {
-+					pinmux = <STM32_PINMUX('B', 3, AF11)>; /* CAN3_RX */
-+					bias-pull-up;
-+				};
-+			};
- 		};
- 	};
- };
--- 
-2.39.2
-
+--- a/drivers/net/ethernet/sun/cassini.c
++++ b/drivers/net/ethernet/sun/cassini.c
+@@ -1325,7 +1325,7 @@ static void cas_init_rx_dma(struct cas *
+ 	writel(val, cp->regs + REG_RX_PAGE_SIZE);
+ 
+ 	/* enable the header parser if desired */
+-	if (CAS_HP_FIRMWARE == cas_prog_null)
++	if (&CAS_HP_FIRMWARE[0] == &cas_prog_null[0])
+ 		return;
+ 
+ 	val = CAS_BASE(HP_CFG_NUM_CPU, CAS_NCPUS > 63 ? 0 : CAS_NCPUS);
+@@ -3793,7 +3793,7 @@ static void cas_reset(struct cas *cp, in
+ 
+ 	/* program header parser */
+ 	if ((cp->cas_flags & CAS_FLAG_TARGET_ABORT) ||
+-	    (CAS_HP_ALT_FIRMWARE == cas_prog_null)) {
++	    (&CAS_HP_ALT_FIRMWARE[0] == &cas_prog_null[0])) {
+ 		cas_load_firmware(cp, CAS_HP_FIRMWARE);
+ 	} else {
+ 		cas_load_firmware(cp, CAS_HP_ALT_FIRMWARE);
 
 
