@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C121534CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:03:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D7BC433EF;
-	Wed,  7 Jun 2023 21:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D8A34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:03:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39F8C433EF;
+	Wed,  7 Jun 2023 21:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171788;
-	bh=bjs6i7/SpeNe+Tah1sMFbTv70T9Akks00VJ3zX/hwPg=;
+	s=korg; t=1686171791;
+	bh=o6xNcwoEMn+tF9nBOopia1yYhqZTuKIwQgxKFy34k6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYMkiORCUdHVC6daA+/29/icTtneYE1YVhLU5N4UiQISgWZdH2udBS2Jl0Jxyx3fx
-	 CAtOfXU2sKRsfgdv9dHJBemSyo5fDbJuBveKcAHxjWwrpqUgT0rG8F4vtd10xO9VcK
-	 wHRSoHajMZn1GDVBtumF56jAdVSzzlVuEXrvEg+E=
+	b=Qw8hJwPm4y77ZPMKeuXBTDHj/yfT7c4Nw9w+I59UPX/2qMgYW9S/aXov7UDmDAiBG
+	 55r8zQawhHDBz9bLn53arCfRbR14p83G44pPYH1vPeMlkv8uSwYhrpCNKjKpqqH5SQ
+	 2a8FdRE/wO8DMevkwlvwoVQ1AEuwie67C5/VewdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Subject: [PATCH 5.15 110/159] usb: gadget: f_fs: Add unbind event before functionfs_unbind
-Date: Wed,  7 Jun 2023 22:16:53 +0200
-Message-ID: <20230607200907.277048604@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.15 143/159] KVM: x86: Account fastpath-only VM-Exits in vCPU stats
+Date: Wed,  7 Jun 2023 22:17:26 +0200
+Message-ID: <20230607200908.348782800@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -34,65 +33,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit efb6b535207395a5c7317993602e2503ca8cb4b3 upstream.
+commit 8b703a49c9df5e74870381ad7ba9c85d8a74ed2c upstream.
 
-While exercising the unbind path, with the current implementation
-the functionfs_unbind would be calling which waits for the ffs->mutex
-to be available, however within the same time ffs_ep0_read is invoked
-& if no setup packets are pending, it will invoke function
-wait_event_interruptible_exclusive_locked_irq which by definition waits
-for the ev.count to be increased inside the same mutex for which
-functionfs_unbind is waiting.
-This creates deadlock situation because the functionfs_unbind won't
-get the lock until ev.count is increased which can only happen if
-the caller ffs_func_unbind can proceed further.
+Increment vcpu->stat.exits when handling a fastpath VM-Exit without
+going through any part of the "slow" path.  Not bumping the exits stat
+can result in wildly misleading exit counts, e.g. if the primary reason
+the guest is exiting is to program the TSC deadline timer.
 
-Following is the illustration:
-
-	CPU1				CPU2
-
-ffs_func_unbind()		ffs_ep0_read()
-				mutex_lock(ffs->mutex)
-				wait_event(ffs->ev.count)
-functionfs_unbind()
-  mutex_lock(ffs->mutex)
-  mutex_unlock(ffs->mutex)
-
-ffs_event_add()
-
-<deadlock>
-
-Fix this by moving the event unbind before functionfs_unbind
-to ensure the ev.count is incrased properly.
-
-Fixes: 6a19da111057 ("usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Link: https://lore.kernel.org/r/20230525092854.7992-1-quic_uaggarwa@quicinc.com
+Fixes: 404d5d7bff0d ("KVM: X86: Introduce more exit_fastpath_completion enum values")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230602011920.787844-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/x86.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -3620,6 +3620,7 @@ static void ffs_func_unbind(struct usb_c
- 	/* Drain any pending AIO completions */
- 	drain_workqueue(ffs->io_completion_wq);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9946,6 +9946,9 @@ static int vcpu_enter_guest(struct kvm_v
+ 			exit_fastpath = EXIT_FASTPATH_EXIT_HANDLED;
+ 			break;
+ 		}
++
++		/* Note, VM-Exits that go down the "slow" path are accounted below. */
++		++vcpu->stat.exits;
+ 	}
  
-+	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
- 	if (!--opts->refcnt)
- 		functionfs_unbind(ffs);
- 
-@@ -3644,7 +3645,6 @@ static void ffs_func_unbind(struct usb_c
- 	func->function.ssp_descriptors = NULL;
- 	func->interfaces_nums = NULL;
- 
--	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
- }
- 
- static struct usb_function *ffs_alloc(struct usb_function_instance *fi)
+ 	/*
 
 
