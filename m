@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76D83AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FFAC433D2;
-	Wed,  7 Jun 2023 20:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826BD3AE5C
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:29:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B92C4339B;
+	Wed,  7 Jun 2023 20:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169773;
-	bh=CBrdSp2n2kHs/ug4HkD2TUoKIySAJZQWTvqqglXS1rU=;
+	s=korg; t=1686169776;
+	bh=HFAGcyiANbnYvYGR1FPwgmgi6OT3xsle0vWG9+fNWsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhmwsn+j3ILh6mv3KGxk4DBFhTst8taKkxd4Nw7KMmFBpoduDT/lR6FcX9A7GSs5+
-	 a9TiVzhk+Go3fdsKnWKtZU6/HU42RFQaBxe9URssps42wnm78wNM1QMI1PvkeIdvYn
-	 Hddj584Jd6H6oyD0e7KiX66stFznzZ27YRqRU8hg=
+	b=mzjLnV1BtL9MeW3nD9E8B3nm2kiBL6yGyGAOQ/MHtOJG7MnW8cD2pC5Y3gve9O0ak
+	 +dohhOhEePiYesW5RAZsHqoRH6uPSIgIv/95TUS+X4eAZu137B8OG9hdiwDvWjRd8G
+	 aWoipfX9S7njKRIQBwnUe+0fa0nH0mDbqmxHPatU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Marek Vasut <marex@denx.de>
-Subject: [PATCH 6.3 209/286] dt-bindings: usb: snps,dwc3: Fix "snps,hsphy_interface" type
-Date: Wed,  7 Jun 2023 22:15:08 +0200
-Message-ID: <20230607200930.079298652@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.3 210/286] usb: cdns3: fix NCM gadget RX speed 20x slow than expection at iMX8QM
+Date: Wed,  7 Jun 2023 22:15:09 +0200
+Message-ID: <20230607200930.112617795@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,32 +33,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 7b32040f6d7f885ffc09a6df7c17992d56d2eab8 upstream.
+commit dbe678f6192f27879ac9ff6bc7a1036aad85aae9 upstream.
 
-The "snps,hsphy_interface" is string, not u8. Fix the type.
+At iMX8QM platform, enable NCM gadget and run 'iperf3 -s'.
+At host, run 'iperf3 -V -c fe80::6863:98ff:feef:3e0%enxc6e147509498'
 
-Fixes: 389d77658801 ("dt-bindings: usb: Convert DWC USB3 bindings to DT schema")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://lore.kernel.org/r/20230515172456.179049-1-marex@denx.de
+[  5]   0.00-1.00   sec  1.55 MBytes  13.0 Mbits/sec   90   4.18 KBytes
+[  5]   1.00-2.00   sec  1.44 MBytes  12.0 Mbits/sec   75   4.18 KBytes
+[  5]   2.00-3.00   sec  1.48 MBytes  12.4 Mbits/sec   75   4.18 KBytes
+
+Expected speed should be bigger than 300Mbits/sec.
+
+The root cause of this performance drop was found to be data corruption
+happening at 4K borders in some Ethernet packets, leading to TCP
+checksum errors. This corruption occurs from the position
+(4K - (address & 0x7F)) to 4K. The u_ether function's allocation of
+skb_buff reserves 64B, meaning all RX addresses resemble 0xXXXX0040.
+
+Force trb_burst_size to 16 can fix this problem.
+
+Cc: stable@vger.kernel.org
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20230518154946.3666662-1-Frank.Li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/usb/snps,dwc3.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/cdns3/cdns3-gadget.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
-@@ -270,7 +270,7 @@ properties:
-     description:
-       High-Speed PHY interface selection between UTMI+ and ULPI when the
-       DWC_USB3_HSPHY_INTERFACE has value 3.
--    $ref: /schemas/types.yaml#/definitions/uint8
-+    $ref: /schemas/types.yaml#/definitions/string
-     enum: [utmi, ulpi]
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -2097,6 +2097,19 @@ int cdns3_ep_config(struct cdns3_endpoin
+ 	else
+ 		priv_ep->trb_burst_size = 16;
  
-   snps,quirk-frame-length-adjustment:
++	/*
++	 * In versions preceding DEV_VER_V2, for example, iMX8QM, there exit the bugs
++	 * in the DMA. These bugs occur when the trb_burst_size exceeds 16 and the
++	 * address is not aligned to 128 Bytes (which is a product of the 64-bit AXI
++	 * and AXI maximum burst length of 16 or 0xF+1, dma_axi_ctrl0[3:0]). This
++	 * results in data corruption when it crosses the 4K border. The corruption
++	 * specifically occurs from the position (4K - (address & 0x7F)) to 4K.
++	 *
++	 * So force trb_burst_size to 16 at such platform.
++	 */
++	if (priv_dev->dev_ver < DEV_VER_V2)
++		priv_ep->trb_burst_size = 16;
++
+ 	mult = min_t(u8, mult, EP_CFG_MULT_MAX);
+ 	buffering = min_t(u8, buffering, EP_CFG_BUFFERING_MAX);
+ 	maxburst = min_t(u8, maxburst, EP_CFG_MAXBURST_MAX);
 
 
