@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2406C23D6A
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4459EC433EF;
-	Wed,  7 Jun 2023 20:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E19B23D6A
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD76C433EF;
+	Wed,  7 Jun 2023 20:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171222;
-	bh=mQZOCKaKu/hy1ed/IVeQUFZPlBqiN0A0UWtyYRHjdh8=;
+	s=korg; t=1686171225;
+	bh=UW0bjrj+djKa8PiNccOOz0mhX2Prxc3KJ8yUZrQeR3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U9E2dduoM7uy2/wWl6OJrOcnr2JVU+GNyKYkQBKRAB81ECDaZ3OgRRADvXhOWKYYe
-	 KN0bSynSc+XK89AIuMknpgXZ/6nBh2y+y3w3JyGdCSGtc4RN2rHUiL/KIhfqGylWnw
-	 H/dl1WQKFvBsKLeIDFpaokkPzYAv4AWbvbqE2zTc=
+	b=NeGfpsxLU6MTS9CNjmJznao3yC+S1wzK3vK0etQjD39uG1ot1KHRA8834gDWSoal9
+	 QKYpj010R8oSfU9YUfFSmu1hoPaYprykat6tp+P1tVObru8mNuNWQhwUDydTa9u3WO
+	 4BcSUdpHgnxL0HYgo8bYUWdT2z/f8lfh6mpKTrWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Benedict Wong <benedictwong@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 35/99] ASoC: dwc: limit the number of overrun messages
-Date: Wed,  7 Jun 2023 22:16:27 +0200
-Message-ID: <20230607200901.354061431@linuxfoundation.org>
+Subject: [PATCH 5.4 36/99] xfrm: Check if_id in inbound policy/secpath match
+Date: Wed,  7 Jun 2023 22:16:28 +0200
+Message-ID: <20230607200901.384605684@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -33,42 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Kochetkov <fido_max@inbox.ru>
+From: Benedict Wong <benedictwong@google.com>
 
-[ Upstream commit ab6ecfbf40fccf74b6ec2ba7ed6dd2fc024c3af2 ]
+[ Upstream commit 8680407b6f8f5fba59e8f1d63c869abc280f04df ]
 
-On slow CPU (FPGA/QEMU emulated) printing overrun messages from
-interrupt handler to uart console may leads to more overrun errors.
-So use dev_err_ratelimited to limit the number of error messages.
+This change ensures that if configured in the policy, the if_id set in
+the policy and secpath states match during the inbound policy check.
+Without this, there is potential for ambiguity where entries in the
+secpath differing by only the if_id could be mismatched.
 
-Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru
-Link: https://lore.kernel.org/r/20230505062820.21840-1-fido_max@inbox.ru
-Signed-off-by: Mark Brown <broonie@kernel.org
+Notably, this is checked in the outbound direction when resolving
+templates to SAs, but not on the inbound path when matching SAs and
+policies.
+
+Test: Tested against Android kernel unit tests & CTS
+Signed-off-by: Benedict Wong <benedictwong@google.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/dwc/dwc-i2s.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_policy.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
-index 65112b9d8588a..90b8814d7506a 100644
---- a/sound/soc/dwc/dwc-i2s.c
-+++ b/sound/soc/dwc/dwc-i2s.c
-@@ -132,13 +132,13 @@ static irqreturn_t i2s_irq_handler(int irq, void *dev_id)
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 6f58be5a17711..9d4b405659058 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -3223,7 +3223,7 @@ xfrm_secpath_reject(int idx, struct sk_buff *skb, const struct flowi *fl)
  
- 		/* Error Handling: TX */
- 		if (isr[i] & ISR_TXFO) {
--			dev_err(dev->dev, "TX overrun (ch_id=%d)\n", i);
-+			dev_err_ratelimited(dev->dev, "TX overrun (ch_id=%d)\n", i);
- 			irq_valid = true;
- 		}
+ static inline int
+ xfrm_state_ok(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x,
+-	      unsigned short family)
++	      unsigned short family, u32 if_id)
+ {
+ 	if (xfrm_state_kern(x))
+ 		return tmpl->optional && !xfrm_state_addr_cmp(tmpl, x, tmpl->encap_family);
+@@ -3234,7 +3234,8 @@ xfrm_state_ok(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x,
+ 		(tmpl->allalgs || (tmpl->aalgos & (1<<x->props.aalgo)) ||
+ 		 !(xfrm_id_proto_match(tmpl->id.proto, IPSEC_PROTO_ANY))) &&
+ 		!(x->props.mode != XFRM_MODE_TRANSPORT &&
+-		  xfrm_state_addr_cmp(tmpl, x, family));
++		  xfrm_state_addr_cmp(tmpl, x, family)) &&
++		(if_id == 0 || if_id == x->if_id);
+ }
  
- 		/* Error Handling: TX */
- 		if (isr[i] & ISR_RXFO) {
--			dev_err(dev->dev, "RX overrun (ch_id=%d)\n", i);
-+			dev_err_ratelimited(dev->dev, "RX overrun (ch_id=%d)\n", i);
- 			irq_valid = true;
- 		}
- 	}
+ /*
+@@ -3246,7 +3247,7 @@ xfrm_state_ok(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x,
+  */
+ static inline int
+ xfrm_policy_ok(const struct xfrm_tmpl *tmpl, const struct sec_path *sp, int start,
+-	       unsigned short family)
++	       unsigned short family, u32 if_id)
+ {
+ 	int idx = start;
+ 
+@@ -3256,7 +3257,7 @@ xfrm_policy_ok(const struct xfrm_tmpl *tmpl, const struct sec_path *sp, int star
+ 	} else
+ 		start = -1;
+ 	for (; idx < sp->len; idx++) {
+-		if (xfrm_state_ok(tmpl, sp->xvec[idx], family))
++		if (xfrm_state_ok(tmpl, sp->xvec[idx], family, if_id))
+ 			return ++idx;
+ 		if (sp->xvec[idx]->props.mode != XFRM_MODE_TRANSPORT) {
+ 			if (start == -1)
+@@ -3666,7 +3667,7 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 		 * are implied between each two transformations.
+ 		 */
+ 		for (i = xfrm_nr-1, k = 0; i >= 0; i--) {
+-			k = xfrm_policy_ok(tpp[i], sp, k, family);
++			k = xfrm_policy_ok(tpp[i], sp, k, family, if_id);
+ 			if (k < 0) {
+ 				if (k < -1)
+ 					/* "-2 - errored_index" returned */
 -- 
 2.39.2
 
