@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393783AE43
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:22:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA18AC433EF;
-	Wed,  7 Jun 2023 20:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E093AE43
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:22:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49015C4339C;
+	Wed,  7 Jun 2023 20:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169356;
-	bh=skiiqiBrch32MYNPPGXiAhUAfZ8nmDkt3MWyA6yvheA=;
+	s=korg; t=1686169358;
+	bh=gxw/xSAmx9GK4S1Mjr9nP7jeClCMz+L8LF8l2z8HzxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2gV8y/iIGtdd6a0B3E7g8Rk1PENngKUke6JyDglfQ8sHt9mY/j/LCxnWm60x+NcC
-	 27XIzdNKtpDY7OjIqzKfkNuDnOZ0bZ8T2vyfA6rthgEqw5fG3X4YKeON0ReoDF9aeZ
-	 AhHks80IZKgv/xeHioTmtFDbRn/cOxKs/AAABsBc=
+	b=2fXdQdhlDEZwMtx1o3qV7aUVE+8vosVWjVl4+e33Dpf98XspsBiKD3yJk+/F4ONG8
+	 8gBJ6e4Dpx3FthX8sVJ00BVZrF9WdPT9lPiOqgiLC6+CrWnmOS3e1dK6Pd7DE3teyK
+	 q1thQTpkno6nNBEAPpO/SYpTV179cVg7hagnl+ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dmytro Linkin <dlinkin@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 050/286] net/smc: Scan from current RMB list when no position specified
-Date: Wed,  7 Jun 2023 22:12:29 +0200
-Message-ID: <20230607200924.680737134@linuxfoundation.org>
+Subject: [PATCH 6.3 033/286] net/mlx5e: Dont attach netdev profile while handling internal error
+Date: Wed,  7 Jun 2023 22:12:12 +0200
+Message-ID: <20230607200924.111222460@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,37 +35,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wen Gu <guwen@linux.alibaba.com>
+From: Dmytro Linkin <dlinkin@nvidia.com>
 
-[ Upstream commit b24aa141c2ff26c919237aee61ea1818fc6780d9 ]
+[ Upstream commit bdf274750fca17b289404ef03453c4070725302c ]
 
-When finding the first RMB of link group, it should start from the
-current RMB list whose index is 0. So fix it.
+As part of switchdev mode disablement, driver changes port netdevice
+profile from uplink to nic. If this process is triggered by health
+recovery flow (PCI reset, for ex.) profile attach would fail because all
+fw commands aborted when internal error flag is set. As a result, nic
+netdevice profile is not attached and driver fails to rollback to uplink
+profile, which leave driver in broken state and cause crash later.
 
-Fixes: b4ba4652b3f8 ("net/smc: extend LLC layer for SMC-Rv2")
-Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+To handle broken state do netdevice profile initialization only instead
+of full attachment and release mdev resources on driver suspend as
+expected. Actual netdevice attachment is done during driver load.
+
+Fixes: c4d7eb57687f ("net/mxl5e: Add change profile method")
+Signed-off-by: Dmytro Linkin <dlinkin@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_llc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlx5/core/en_main.c | 35 ++++++++++++++++---
+ 1 file changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index a0840b8c935b8..8423e8e0063f4 100644
---- a/net/smc/smc_llc.c
-+++ b/net/smc/smc_llc.c
-@@ -578,7 +578,10 @@ static struct smc_buf_desc *smc_llc_get_next_rmb(struct smc_link_group *lgr,
- {
- 	struct smc_buf_desc *buf_next;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index ff579d7d8432c..a60610c7a7bb7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5798,8 +5798,8 @@ void mlx5e_detach_netdev(struct mlx5e_priv *priv)
+ }
  
--	if (!buf_pos || list_is_last(&buf_pos->list, &lgr->rmbs[*buf_lst])) {
-+	if (!buf_pos)
-+		return _smc_llc_get_next_rmb(lgr, buf_lst);
+ static int
+-mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
+-			    const struct mlx5e_profile *new_profile, void *new_ppriv)
++mlx5e_netdev_init_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
++			  const struct mlx5e_profile *new_profile, void *new_ppriv)
+ {
+ 	struct mlx5e_priv *priv = netdev_priv(netdev);
+ 	int err;
+@@ -5815,6 +5815,25 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
+ 	err = new_profile->init(priv->mdev, priv->netdev);
+ 	if (err)
+ 		goto priv_cleanup;
 +
-+	if (list_is_last(&buf_pos->list, &lgr->rmbs[*buf_lst])) {
- 		(*buf_lst)++;
- 		return _smc_llc_get_next_rmb(lgr, buf_lst);
- 	}
++	return 0;
++
++priv_cleanup:
++	mlx5e_priv_cleanup(priv);
++	return err;
++}
++
++static int
++mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
++			    const struct mlx5e_profile *new_profile, void *new_ppriv)
++{
++	struct mlx5e_priv *priv = netdev_priv(netdev);
++	int err;
++
++	err = mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
++	if (err)
++		return err;
++
+ 	err = mlx5e_attach_netdev(priv);
+ 	if (err)
+ 		goto profile_cleanup;
+@@ -5822,7 +5841,6 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
+ 
+ profile_cleanup:
+ 	new_profile->cleanup(priv);
+-priv_cleanup:
+ 	mlx5e_priv_cleanup(priv);
+ 	return err;
+ }
+@@ -5841,6 +5859,12 @@ int mlx5e_netdev_change_profile(struct mlx5e_priv *priv,
+ 	priv->profile->cleanup(priv);
+ 	mlx5e_priv_cleanup(priv);
+ 
++	if (mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR) {
++		mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
++		set_bit(MLX5E_STATE_DESTROYING, &priv->state);
++		return -EIO;
++	}
++
+ 	err = mlx5e_netdev_attach_profile(netdev, mdev, new_profile, new_ppriv);
+ 	if (err) { /* roll back to original profile */
+ 		netdev_warn(netdev, "%s: new profile init failed, %d\n", __func__, err);
+@@ -5902,8 +5926,11 @@ static int mlx5e_suspend(struct auxiliary_device *adev, pm_message_t state)
+ 	struct net_device *netdev = priv->netdev;
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 
+-	if (!netif_device_present(netdev))
++	if (!netif_device_present(netdev)) {
++		if (test_bit(MLX5E_STATE_DESTROYING, &priv->state))
++			mlx5e_destroy_mdev_resources(mdev);
+ 		return -ENODEV;
++	}
+ 
+ 	mlx5e_detach_netdev(priv);
+ 	mlx5e_destroy_mdev_resources(mdev);
 -- 
 2.39.2
 
