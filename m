@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A18139251
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:20:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC41FC433D2;
-	Wed,  7 Jun 2023 20:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DE739251
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:20:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A116C4339B;
+	Wed,  7 Jun 2023 20:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169232;
-	bh=B5tfGH3pE0AokN9x4svmjG/6FHSczeIBQfxnOM7cwbk=;
+	s=korg; t=1686169234;
+	bh=HnQGrdRjql7J4QBGcjbWQmE5xVcSlR9wZlEilrKwR4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxat5AwpJeiyF07LwvqZ3DiaHQqifOgDyOTS0R+NMpm9RV/ccrLEVd9gGrmGl38qC
-	 xaihvcKJiQjdFZ8ZKp19NGB8b2kDtu4+tZr7mrfFeHVsWD/oLqBtF+VbEgLzWLj8yc
-	 N5ptATvW1SR5LSlIJLTjqetSNm3opIvOrWFUtdag=
+	b=tacrJMefnxeIk9Tq+cNWypCyuoMw5uH47IsoXXseIY9knq8njhuXXDVKRd4K6vkCY
+	 pTbG9kNbE2ZdI75T2xu4p0FCqQA+q3Vvn1AAJRBtoDYYkn8kKSbxVrCtck4+SdzoDY
+	 xAq+LkDNiu9onq/xM8vxI/bxGqv0jPhtDtMLZsRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiakai Luo <jkluo@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.14 35/61] iio: adc: mxs-lradc: fix the order of two cleanup operations
-Date: Wed,  7 Jun 2023 22:15:49 +0200
-Message-ID: <20230607200847.437481043@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 4.14 36/61] HID: wacom: avoid integer overflow in wacom_intuos_inout()
+Date: Wed,  7 Jun 2023 22:15:50 +0200
+Message-ID: <20230607200847.805138127@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -36,83 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiakai Luo <jkluo@hust.edu.cn>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 27b2ed5b6d53cd62fc61c3f259ae52f5cac23b66 upstream.
+commit bd249b91977b768ea02bf84d04625d2690ad2b98 upstream.
 
-Smatch reports:
-drivers/iio/adc/mxs-lradc-adc.c:766 mxs_lradc_adc_probe() warn:
-missing unwind goto?
+If high bit is set to 1 in ((data[3] & 0x0f << 28), after all arithmetic
+operations and integer promotions are done, high bits in
+wacom->serial[idx] will be filled with 1s as well.
+Avoid this, albeit unlikely, issue by specifying left operand's __u64
+type for the right operand.
 
-the order of three init operation:
-1.mxs_lradc_adc_trigger_init
-2.iio_triggered_buffer_setup
-3.mxs_lradc_adc_hw_init
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-thus, the order of three cleanup operation should be:
-1.mxs_lradc_adc_hw_stop
-2.iio_triggered_buffer_cleanup
-3.mxs_lradc_adc_trigger_remove
-
-we exchange the order of two cleanup operations,
-introducing the following differences:
-1.if mxs_lradc_adc_trigger_init fails, returns directly;
-2.if trigger_init succeeds but iio_triggered_buffer_setup fails,
-goto err_trig and remove the trigger.
-
-In addition, we also reorder the unwind that goes on in the
-remove() callback to match the new ordering.
-
-Fixes: 6dd112b9f85e ("iio: adc: mxs-lradc: Add support for ADC driver")
-Signed-off-by: Jiakai Luo <jkluo@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230422133407.72908-1-jkluo@hust.edu.cn
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 3bea733ab212 ("USB: wacom tablet driver reorganization")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/mxs-lradc-adc.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/hid/wacom_wac.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/mxs-lradc-adc.c
-+++ b/drivers/iio/adc/mxs-lradc-adc.c
-@@ -769,13 +769,13 @@ static int mxs_lradc_adc_probe(struct pl
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -743,7 +743,7 @@ static int wacom_intuos_inout(struct wac
+ 	/* Enter report */
+ 	if ((data[1] & 0xfc) == 0xc0) {
+ 		/* serial number of the tool */
+-		wacom->serial[idx] = ((data[3] & 0x0f) << 28) +
++		wacom->serial[idx] = ((__u64)(data[3] & 0x0f) << 28) +
+ 			(data[4] << 20) + (data[5] << 12) +
+ 			(data[6] << 4) + (data[7] >> 4);
  
- 	ret = mxs_lradc_adc_trigger_init(iio);
- 	if (ret)
--		goto err_trig;
-+		return ret;
- 
- 	ret = iio_triggered_buffer_setup(iio, &iio_pollfunc_store_time,
- 					 &mxs_lradc_adc_trigger_handler,
- 					 &mxs_lradc_adc_buffer_ops);
- 	if (ret)
--		return ret;
-+		goto err_trig;
- 
- 	adc->vref_mv = mxs_lradc_adc_vref_mv[lradc->soc];
- 
-@@ -813,9 +813,9 @@ static int mxs_lradc_adc_probe(struct pl
- 
- err_dev:
- 	mxs_lradc_adc_hw_stop(adc);
--	mxs_lradc_adc_trigger_remove(iio);
--err_trig:
- 	iio_triggered_buffer_cleanup(iio);
-+err_trig:
-+	mxs_lradc_adc_trigger_remove(iio);
- 	return ret;
- }
- 
-@@ -826,8 +826,8 @@ static int mxs_lradc_adc_remove(struct p
- 
- 	iio_device_unregister(iio);
- 	mxs_lradc_adc_hw_stop(adc);
--	mxs_lradc_adc_trigger_remove(iio);
- 	iio_triggered_buffer_cleanup(iio);
-+	mxs_lradc_adc_trigger_remove(iio);
- 
- 	return 0;
- }
 
 
