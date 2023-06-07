@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DAD19BCD
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ED0C433D2;
-	Wed,  7 Jun 2023 20:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B526619BCD
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:35:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396C3C433EF;
+	Wed,  7 Jun 2023 20:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170128;
-	bh=hD6JmmcmGt9F6GGzY+6zbtcZ7G84QuEkFFvP7ojVP8w=;
+	s=korg; t=1686170130;
+	bh=jcjw9X/PZAUUpEcQPBtXgdIvqeW79OcBte1ovhiRAR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j42ZGUOHrJjZp0AHs7CGEpgah0bjdFAvryLhA6mKQnqs0XRZ9H1QsuISo3gtGSYb/
-	 fvsaUL+/TSjcHWJ6q9g9VeTPxlxmmADkd1oj3bvx1zlZ5BjfoAtgGyoG1uAKKa3lu8
-	 mEtRtLIeHGYxdxM27TBtU0lLNmRKePhc18TrGJAM=
+	b=Vt1iUlW0uduD59icGgacOhpp4mcDYc2ukGp4SACY/rB20u6mdRmtWH/y73M4UebSa
+	 CmHII9fn4nFOhk6KU2vBaLwb3baEc7lCP0gMbpjHwcz1pAK4wAKS7D7QuAH79F/44q
+	 umHN1+vLHJWs54OlkemV8Poc3ZKsyje4qIjfOSQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Min-Hua Chen <minhuadotchen@gmail.com>,
-	Will Deacon <will@kernel.org>,
+	Andreas Svensson <andreas.svensson@axis.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 54/88] arm64/mm: mark private VM_FAULT_X defines as vm_fault_t
-Date: Wed,  7 Jun 2023 22:16:11 +0200
-Message-ID: <20230607200900.930340957@linuxfoundation.org>
+Subject: [PATCH 4.19 27/88] net: dsa: mv88e6xxx: Increase wait after reset deactivation
+Date: Wed,  7 Jun 2023 22:15:44 +0200
+Message-ID: <20230607200859.969554688@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -36,52 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min-Hua Chen <minhuadotchen@gmail.com>
+From: Andreas Svensson <andreas.svensson@axis.com>
 
-[ Upstream commit d91d580878064b880f3574ac35b98d8b70ee8620 ]
+[ Upstream commit 3c27f3d53d588618d81d30d6712459a3cc9489b8 ]
 
-This patch fixes several sparse warnings for fault.c:
+A switch held in reset by default needs to wait longer until we can
+reliably detect it.
 
-arch/arm64/mm/fault.c:493:24: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:493:24: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:493:24: sparse:    got int
-arch/arm64/mm/fault.c:501:32: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:501:32: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:501:32: sparse:    got int
-arch/arm64/mm/fault.c:503:32: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:503:32: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:503:32: sparse:    got int
-arch/arm64/mm/fault.c:511:24: sparse: warning: incorrect type in return expression (different base types)
-arch/arm64/mm/fault.c:511:24: sparse:    expected restricted vm_fault_t
-arch/arm64/mm/fault.c:511:24: sparse:    got int
-arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
-arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
-arch/arm64/mm/fault.c:713:39: sparse: warning: restricted vm_fault_t degrades to integer
+An issue was observed when testing on the Marvell 88E6393X (Link Street).
+The driver failed to detect the switch on some upstarts. Increasing the
+wait time after reset deactivation solves this issue.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
-Link: https://lore.kernel.org/r/20230502151909.128810-1-minhuadotchen@gmail.com
-Signed-off-by: Will Deacon <will@kernel.org>
+The updated wait time is now also the same as the wait time in the
+mv88e6xxx_hardware_reset function.
+
+Fixes: 7b75e49de424 ("net: dsa: mv88e6xxx: wait after reset deactivation")
+Signed-off-by: Andreas Svensson <andreas.svensson@axis.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230530145223.1223993-1-andreas.svensson@axis.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/fault.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index 0d2be8eb87ec8..c9faa5570d245 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -376,8 +376,8 @@ static void do_bad_area(unsigned long addr, unsigned int esr, struct pt_regs *re
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index b593e4d85e9c0..792073a768ac0 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -4840,7 +4840,7 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
+ 		goto out;
  	}
- }
+ 	if (chip->reset)
+-		usleep_range(1000, 2000);
++		usleep_range(10000, 20000);
  
--#define VM_FAULT_BADMAP		0x010000
--#define VM_FAULT_BADACCESS	0x020000
-+#define VM_FAULT_BADMAP		((__force vm_fault_t)0x010000)
-+#define VM_FAULT_BADACCESS	((__force vm_fault_t)0x020000)
- 
- static vm_fault_t __do_page_fault(struct mm_struct *mm, unsigned long addr,
- 			   unsigned int mm_flags, unsigned long vm_flags,
+ 	err = mv88e6xxx_detect(chip);
+ 	if (err)
 -- 
 2.39.2
 
