@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C3619BC9
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681A9C433D2;
-	Wed,  7 Jun 2023 20:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0261F190
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE87C433D2;
+	Wed,  7 Jun 2023 20:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170603;
-	bh=P/peyh5WpAYMJe0ntuLy22A+iOI/4fbFq/pWTMDopZQ=;
+	s=korg; t=1686170606;
+	bh=FYJR6qWSJWlnYbwYLYW3Kfbp2BqXiYtyYtr+SGGnWy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eETfsqX3tB/Ac1NO9XhPU2UHJfRQ/Lrw44LNf32/5nF0fAYeSHOYdoEXxfBHQXfN3
-	 7CadqSFEQpGAO5FUhyohWv2/+rBJmuzwhaw8ZL5qgF39Q1+dkS9ejl6AvWRCn9iwtd
-	 N82+c+T6a5bgyZq8/Bocz/l1QzLwm2P4kTM6sKdw=
+	b=yy77si+eZ7UyqJ6BS3NevoISDgntr22EaJTdQSl5RJFxWSACZt9xwPn4pUcq2s/Nq
+	 H6Wnn9PqfP681lhybL3v/nfibQIFBSw0b4Kjco+ZYqWq1Gcs8ROnb8wLONC0C+T7OS
+	 fyn65QMdGozbBETIC6DfbOwib1Qb7Z8sRCJUds+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao2@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/225] scsi: core: Decrease scsi_devices iorequest_cnt if dispatch failed
-Date: Wed,  7 Jun 2023 22:15:13 +0200
-Message-ID: <20230607200918.301490898@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 147/225] iio: light: vcnl4035: fixed chip ID check
+Date: Wed,  7 Jun 2023 22:15:40 +0200
+Message-ID: <20230607200919.228558758@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,51 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Hao <haowenchao2@huawei.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 09e797c8641f6ad435c33ae24c223351197ea29a ]
+commit a551c26e8e568fad42120843521529241b9bceec upstream.
 
-If scsi_dispatch_cmd() failed, the SCSI command was not sent to the target,
-scsi_queue_rq() would return BLK_STS_RESOURCE and the related request would
-be requeued. The timeout of this request would not fire, no one would
-increase iodone_cnt.
+VCNL4035 register(0xE) ID_L and ID_M define as:
 
-The above flow would result the iodone_cnt smaller than iorequest_cnt.  So
-decrease the iorequest_cnt if dispatch failed to workaround the issue.
+ ID_L: 0x80
+ ID_H: 7:6 (0:0)
+       5:4 (0:0) slave address = 0x60 (7-bit)
+           (0:1) slave address = 0x51 (7-bit)
+           (1:0) slave address = 0x40 (7-bit)
+           (1:0) slave address = 0x41 (7-bit)
+       3:0 Version code default	(0:0:0:0)
 
-Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
-Reported-by: Ming Lei <ming.lei@redhat.com>
-Closes: https://lore.kernel.org/r/ZF+zB+bB7iqe0wGd@ovpn-8-17.pek2.redhat.com
-Link: https://lore.kernel.org/r/20230515070156.1790181-3-haowenchao2@huawei.com
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So just check ID_L.
+
+Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20230501143605.1615549-1-Frank.Li@nxp.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_lib.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/light/vcnl4035.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 8b89fab7c4206..fb6e9a7a7f58b 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -1491,6 +1491,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
- 		 */
- 		SCSI_LOG_MLQUEUE(3, scmd_printk(KERN_INFO, cmd,
- 			"queuecommand : device blocked\n"));
-+		atomic_dec(&cmd->device->iorequest_cnt);
- 		return SCSI_MLQUEUE_DEVICE_BUSY;
+--- a/drivers/iio/light/vcnl4035.c
++++ b/drivers/iio/light/vcnl4035.c
+@@ -8,6 +8,7 @@
+  * TODO: Proximity
+  */
+ #include <linux/bitops.h>
++#include <linux/bitfield.h>
+ #include <linux/i2c.h>
+ #include <linux/module.h>
+ #include <linux/pm_runtime.h>
+@@ -42,6 +43,7 @@
+ #define VCNL4035_ALS_PERS_MASK		GENMASK(3, 2)
+ #define VCNL4035_INT_ALS_IF_H_MASK	BIT(12)
+ #define VCNL4035_INT_ALS_IF_L_MASK	BIT(13)
++#define VCNL4035_DEV_ID_MASK		GENMASK(7, 0)
+ 
+ /* Default values */
+ #define VCNL4035_MODE_ALS_ENABLE	BIT(0)
+@@ -413,6 +415,7 @@ static int vcnl4035_init(struct vcnl4035
+ 		return ret;
  	}
  
-@@ -1523,6 +1524,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
- 	trace_scsi_dispatch_cmd_start(cmd);
- 	rtn = host->hostt->queuecommand(host, cmd);
- 	if (rtn) {
-+		atomic_dec(&cmd->device->iorequest_cnt);
- 		trace_scsi_dispatch_cmd_error(cmd, rtn);
- 		if (rtn != SCSI_MLQUEUE_DEVICE_BUSY &&
- 		    rtn != SCSI_MLQUEUE_TARGET_BUSY)
--- 
-2.39.2
-
++	id = FIELD_GET(VCNL4035_DEV_ID_MASK, id);
+ 	if (id != VCNL4035_DEV_ID_VAL) {
+ 		dev_err(&data->client->dev, "Wrong id, got %x, expected %x\n",
+ 			id, VCNL4035_DEV_ID_VAL);
 
 
