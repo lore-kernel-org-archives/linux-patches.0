@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6143AE6E
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2BAC433D2;
-	Wed,  7 Jun 2023 20:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3871A3AE6F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7D5C433EF;
+	Wed,  7 Jun 2023 20:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169818;
-	bh=Jie0xV3jJ4nif6u99ulOYa+bH3Us8mV21cmJQw4yb+g=;
+	s=korg; t=1686169821;
+	bh=/0qqzz2fl+uzc9k5w7xO/pOxZzmLbxq8Uj5Pdx0I/Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0aRmxW8zbTYKboTqWjFkqnq/QfeLMHb3JU9SDCQrnpCBn1bqkc1bzyrcigLiQKGzB
-	 YzNMbM8FncxcAuYimcV1WLDNswi7GB2KyW8L2WdGixZxuNl30nkfpd9QXpPQWkmpLQ
-	 M4yq9b2JRD1Qy9Va8sVLiCvF4EU6dPY+cPxnvIjU=
+	b=NJI7Me0Y4ywsBS6OMMlu5zbyc+xnad5iPYjXS0v6RKGsDsN3sS0/2wxNEpPka/Ww8
+	 GewSmBJL/fAiKpbtnQWadUCjjO8QAMLD4tmYYzDFSF6XOvGvAWLhXPQvdsKNO7LdhM
+	 IFQVWX/13gzM5A8iRtzXlQonrGqUAV7Vha5rSqMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 224/286] drm/amd/pm: reverse mclk and fclk clocks levels for renoir
-Date: Wed,  7 Jun 2023 22:15:23 +0200
-Message-ID: <20230607200930.595452526@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.3 197/286] iio: imu: inv_icm42600: fix timestamp reset
+Date: Wed,  7 Jun 2023 22:14:56 +0200
+Message-ID: <20230607200929.692878052@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -34,54 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit 55e02c14f9b5fd973ba32a16a715baa42617f9c6 upstream.
+commit bbaae0c79ebd49f61ad942a8bf9e12bfc7f821bb upstream.
 
-This patch reverses the DPM clocks levels output of pp_dpm_mclk
-and pp_dpm_fclk for renoir.
+Timestamp reset is not done in the correct place. It must be done
+before enabling buffer. The reason is that interrupt timestamping
+is always happening when the chip is on, even if the
+corresponding sensor is off. When the sensor restarts, timestamp
+is wrong if you don't do a reset first.
 
-On dGPUs and older APUs we expose the levels from lowest clocks
-to highest clocks. But for some APUs, the clocks levels are
-given the reversed orders by PMFW. Like the memory DPM clocks
-that are exposed by pp_dpm_mclk.
-
-It's not intuitive that they are reversed on these APUs. All tools
-and software that talks to the driver then has to know different ways
-to interpret the data depending on the asic.
-
-So we need to reverse them to expose the clocks levels from the
-driver consistently.
-
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230509152202.245444-1-inv.git-commit@tdk.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c
-@@ -494,7 +494,7 @@ static int renoir_set_fine_grain_gfx_fre
- static int renoir_print_clk_levels(struct smu_context *smu,
- 			enum smu_clk_type clk_type, char *buf)
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
+@@ -275,9 +275,14 @@ static int inv_icm42600_buffer_preenable
  {
--	int i, size = 0, ret = 0;
-+	int i, idx, size = 0, ret = 0;
- 	uint32_t cur_value = 0, value = 0, count = 0, min = 0, max = 0;
- 	SmuMetrics_t metrics;
- 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
-@@ -594,7 +594,8 @@ static int renoir_print_clk_levels(struc
- 	case SMU_VCLK:
- 	case SMU_DCLK:
- 		for (i = 0; i < count; i++) {
--			ret = renoir_get_dpm_clk_limited(smu, clk_type, i, &value);
-+			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
-+			ret = renoir_get_dpm_clk_limited(smu, clk_type, idx, &value);
- 			if (ret)
- 				return ret;
- 			if (!value)
+ 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
+ 	struct device *dev = regmap_get_device(st->map);
++	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
+ 
+ 	pm_runtime_get_sync(dev);
+ 
++	mutex_lock(&st->lock);
++	inv_icm42600_timestamp_reset(ts);
++	mutex_unlock(&st->lock);
++
+ 	return 0;
+ }
+ 
+@@ -375,7 +380,6 @@ static int inv_icm42600_buffer_postdisab
+ 	struct device *dev = regmap_get_device(st->map);
+ 	unsigned int sensor;
+ 	unsigned int *watermark;
+-	struct inv_icm42600_timestamp *ts;
+ 	struct inv_icm42600_sensor_conf conf = INV_ICM42600_SENSOR_CONF_INIT;
+ 	unsigned int sleep_temp = 0;
+ 	unsigned int sleep_sensor = 0;
+@@ -385,11 +389,9 @@ static int inv_icm42600_buffer_postdisab
+ 	if (indio_dev == st->indio_gyro) {
+ 		sensor = INV_ICM42600_SENSOR_GYRO;
+ 		watermark = &st->fifo.watermark.gyro;
+-		ts = iio_priv(st->indio_gyro);
+ 	} else if (indio_dev == st->indio_accel) {
+ 		sensor = INV_ICM42600_SENSOR_ACCEL;
+ 		watermark = &st->fifo.watermark.accel;
+-		ts = iio_priv(st->indio_accel);
+ 	} else {
+ 		return -EINVAL;
+ 	}
+@@ -417,8 +419,6 @@ static int inv_icm42600_buffer_postdisab
+ 	if (!st->fifo.on)
+ 		ret = inv_icm42600_set_temp_conf(st, false, &sleep_temp);
+ 
+-	inv_icm42600_timestamp_reset(ts);
+-
+ out_unlock:
+ 	mutex_unlock(&st->lock);
+ 
 
 
