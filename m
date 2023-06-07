@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E093AE43
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:22:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49015C4339C;
-	Wed,  7 Jun 2023 20:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613F73AE43
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:22:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59F8C433EF;
+	Wed,  7 Jun 2023 20:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169358;
-	bh=gxw/xSAmx9GK4S1Mjr9nP7jeClCMz+L8LF8l2z8HzxU=;
+	s=korg; t=1686169361;
+	bh=DBg4dF8Dr1xM7cDQc2plJHzvAUgdd9D9KA/bs1zI+Q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2fXdQdhlDEZwMtx1o3qV7aUVE+8vosVWjVl4+e33Dpf98XspsBiKD3yJk+/F4ONG8
-	 8gBJ6e4Dpx3FthX8sVJ00BVZrF9WdPT9lPiOqgiLC6+CrWnmOS3e1dK6Pd7DE3teyK
-	 q1thQTpkno6nNBEAPpO/SYpTV179cVg7hagnl+ZA=
+	b=r+kwFgZgSDLWBZ/cKRDb4IQrtFg1An8NtdfVaoaI/2CATL7MXm2/Yb0c7Z40JXkqL
+	 SMpbCzfBHxTJOpuVxj+SAaTyjsfXeodgj28MHacqRNibCg5VM5GVz7NFkuZeKrpOWx
+	 cgjQQcOopk3cJM12qWBZFxmnRyH7KDURfIw9RlNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Linkin <dlinkin@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 033/286] net/mlx5e: Dont attach netdev profile while handling internal error
-Date: Wed,  7 Jun 2023 22:12:12 +0200
-Message-ID: <20230607200924.111222460@linuxfoundation.org>
+Subject: [PATCH 6.3 051/286] net/smc: Dont use RMBs not mapped to new link in SMCRv2 ADD LINK
+Date: Wed,  7 Jun 2023 22:12:30 +0200
+Message-ID: <20230607200924.712375347@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,104 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmytro Linkin <dlinkin@nvidia.com>
+From: Wen Gu <guwen@linux.alibaba.com>
 
-[ Upstream commit bdf274750fca17b289404ef03453c4070725302c ]
+[ Upstream commit 71c6aa0305e3d2365d3bfd0134b4025d9e7ba388 ]
 
-As part of switchdev mode disablement, driver changes port netdevice
-profile from uplink to nic. If this process is triggered by health
-recovery flow (PCI reset, for ex.) profile attach would fail because all
-fw commands aborted when internal error flag is set. As a result, nic
-netdevice profile is not attached and driver fails to rollback to uplink
-profile, which leave driver in broken state and cause crash later.
+We encountered a crash when using SMCRv2. It is caused by a logical
+error in smc_llc_fill_ext_v2().
 
-To handle broken state do netdevice profile initialization only instead
-of full attachment and release mdev resources on driver suspend as
-expected. Actual netdevice attachment is done during driver load.
+ BUG: kernel NULL pointer dereference, address: 0000000000000014
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: 0000 [#1] PREEMPT SMP PTI
+ CPU: 7 PID: 453 Comm: kworker/7:4 Kdump: loaded Tainted: G        W   E      6.4.0-rc3+ #44
+ Workqueue: events smc_llc_add_link_work [smc]
+ RIP: 0010:smc_llc_fill_ext_v2+0x117/0x280 [smc]
+ RSP: 0018:ffffacb5c064bd88 EFLAGS: 00010282
+ RAX: ffff9a6bc1c3c02c RBX: ffff9a6be3558000 RCX: 0000000000000000
+ RDX: 0000000000000002 RSI: 0000000000000002 RDI: 000000000000000a
+ RBP: ffffacb5c064bdb8 R08: 0000000000000040 R09: 000000000000000c
+ R10: ffff9a6bc0910300 R11: 0000000000000002 R12: 0000000000000000
+ R13: 0000000000000002 R14: ffff9a6bc1c3c02c R15: ffff9a6be3558250
+ FS:  0000000000000000(0000) GS:ffff9a6eefdc0000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000014 CR3: 000000010b078003 CR4: 00000000003706e0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ Call Trace:
+  <TASK>
+  smc_llc_send_add_link+0x1ae/0x2f0 [smc]
+  smc_llc_srv_add_link+0x2c9/0x5a0 [smc]
+  ? cc_mkenc+0x40/0x60
+  smc_llc_add_link_work+0xb8/0x140 [smc]
+  process_one_work+0x1e5/0x3f0
+  worker_thread+0x4d/0x2f0
+  ? __pfx_worker_thread+0x10/0x10
+  kthread+0xe5/0x120
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x2c/0x50
+  </TASK>
 
-Fixes: c4d7eb57687f ("net/mxl5e: Add change profile method")
-Signed-off-by: Dmytro Linkin <dlinkin@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+When an alernate RNIC is available in system, SMC will try to add a new
+link based on the RNIC for resilience. All the RMBs in use will be mapped
+to the new link. Then the RMBs' MRs corresponding to the new link will be
+filled into SMCRv2 LLC ADD LINK messages.
+
+However, smc_llc_fill_ext_v2() mistakenly accesses to unused RMBs which
+haven't been mapped to the new link and have no valid MRs, thus causing
+a crash. So this patch fixes the logic.
+
+Fixes: b4ba4652b3f8 ("net/smc: extend LLC layer for SMC-Rv2")
+Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_main.c | 35 ++++++++++++++++---
- 1 file changed, 31 insertions(+), 4 deletions(-)
+ net/smc/smc_llc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index ff579d7d8432c..a60610c7a7bb7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5798,8 +5798,8 @@ void mlx5e_detach_netdev(struct mlx5e_priv *priv)
- }
- 
- static int
--mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
--			    const struct mlx5e_profile *new_profile, void *new_ppriv)
-+mlx5e_netdev_init_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
-+			  const struct mlx5e_profile *new_profile, void *new_ppriv)
- {
- 	struct mlx5e_priv *priv = netdev_priv(netdev);
- 	int err;
-@@ -5815,6 +5815,25 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
- 	err = new_profile->init(priv->mdev, priv->netdev);
- 	if (err)
- 		goto priv_cleanup;
-+
-+	return 0;
-+
-+priv_cleanup:
-+	mlx5e_priv_cleanup(priv);
-+	return err;
-+}
-+
-+static int
-+mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mdev,
-+			    const struct mlx5e_profile *new_profile, void *new_ppriv)
-+{
-+	struct mlx5e_priv *priv = netdev_priv(netdev);
-+	int err;
-+
-+	err = mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
-+	if (err)
-+		return err;
-+
- 	err = mlx5e_attach_netdev(priv);
- 	if (err)
- 		goto profile_cleanup;
-@@ -5822,7 +5841,6 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
- 
- profile_cleanup:
- 	new_profile->cleanup(priv);
--priv_cleanup:
- 	mlx5e_priv_cleanup(priv);
- 	return err;
- }
-@@ -5841,6 +5859,12 @@ int mlx5e_netdev_change_profile(struct mlx5e_priv *priv,
- 	priv->profile->cleanup(priv);
- 	mlx5e_priv_cleanup(priv);
- 
-+	if (mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR) {
-+		mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
-+		set_bit(MLX5E_STATE_DESTROYING, &priv->state);
-+		return -EIO;
-+	}
-+
- 	err = mlx5e_netdev_attach_profile(netdev, mdev, new_profile, new_ppriv);
- 	if (err) { /* roll back to original profile */
- 		netdev_warn(netdev, "%s: new profile init failed, %d\n", __func__, err);
-@@ -5902,8 +5926,11 @@ static int mlx5e_suspend(struct auxiliary_device *adev, pm_message_t state)
- 	struct net_device *netdev = priv->netdev;
- 	struct mlx5_core_dev *mdev = priv->mdev;
- 
--	if (!netif_device_present(netdev))
-+	if (!netif_device_present(netdev)) {
-+		if (test_bit(MLX5E_STATE_DESTROYING, &priv->state))
-+			mlx5e_destroy_mdev_resources(mdev);
- 		return -ENODEV;
-+	}
- 
- 	mlx5e_detach_netdev(priv);
- 	mlx5e_destroy_mdev_resources(mdev);
+diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
+index 8423e8e0063f4..7a8d9163d186e 100644
+--- a/net/smc/smc_llc.c
++++ b/net/smc/smc_llc.c
+@@ -617,6 +617,8 @@ static int smc_llc_fill_ext_v2(struct smc_llc_msg_add_link_v2_ext *ext,
+ 		goto out;
+ 	buf_pos = smc_llc_get_first_rmb(lgr, &buf_lst);
+ 	for (i = 0; i < ext->num_rkeys; i++) {
++		while (buf_pos && !(buf_pos)->used)
++			buf_pos = smc_llc_get_next_rmb(lgr, &buf_lst, buf_pos);
+ 		if (!buf_pos)
+ 			break;
+ 		rmb = buf_pos;
+@@ -626,8 +628,6 @@ static int smc_llc_fill_ext_v2(struct smc_llc_msg_add_link_v2_ext *ext,
+ 			cpu_to_be64((uintptr_t)rmb->cpu_addr) :
+ 			cpu_to_be64((u64)sg_dma_address(rmb->sgt[lnk_idx].sgl));
+ 		buf_pos = smc_llc_get_next_rmb(lgr, &buf_lst, buf_pos);
+-		while (buf_pos && !(buf_pos)->used)
+-			buf_pos = smc_llc_get_next_rmb(lgr, &buf_lst, buf_pos);
+ 	}
+ 	len += i * sizeof(ext->rt[0]);
+ out:
 -- 
 2.39.2
 
