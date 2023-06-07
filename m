@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62563922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F7BC433EF;
-	Wed,  7 Jun 2023 20:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453CA3922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD36AC4339B;
+	Wed,  7 Jun 2023 20:54:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171264;
-	bh=vGusgwOX6Umpfa6plaVkDQjKp9M4Jvnt/hMZudB1+rY=;
+	s=korg; t=1686171267;
+	bh=3SbaqRbH2oSNUkTcwM2/rB6CqOh2rl8SqM/zl4acoxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQ0DkarLzFmm9g9I0ohUylInysFU767RzOO5BvGqb+oIIeuKhGoJDKiVekusy5D0e
-	 oNkRcaFSZoSf/lnlHYWFbeVLuCok7o1VmF5dGzkT080vI1uPpfs7t4H9n+b2KcTYoB
-	 py2SaXDEh5OPzivFjEEKXsSxuRd2is8T8e0zlgWM=
+	b=Lt9kqIG5gw58M3ttZVe8C7JdYjiajsPM0sq4cgLJB8XNDfNzJCc3T68E3Dcx7NrA4
+	 qiQs2J1z6hctJl573ZW41daaMQd/UPImL+4tslS+afCxNCWMVqOQ+CSW77kn3Yk093
+	 cDKKNyXGJDiuNf1fETwXl+DiMssRnY3zTHlGi4Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Lu <luyun@kylinos.cn>,
-	Kalle Valo <kvalo@kernel.org>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 52/99] wifi: rtl8xxxu: fix authentication timeout due to incorrect RCR value
-Date: Wed,  7 Jun 2023 22:16:44 +0200
-Message-ID: <20230607200901.876893187@linuxfoundation.org>
+Subject: [PATCH 5.4 53/99] ARM: dts: stm32: add pin map for CAN controller on stm32f7
+Date: Wed,  7 Jun 2023 22:16:45 +0200
+Message-ID: <20230607200901.908961609@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -35,71 +35,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 20429444e653ee8242dfbf815c0c37866beb371b ]
+[ Upstream commit 011644249686f2675e142519cd59e81e04cfc231 ]
 
-When using rtl8192cu with rtl8xxxu driver to connect wifi, there is a
-probability of failure, which shows "authentication with ... timed out".
-Through debugging, it was found that the RCR register has been inexplicably
-modified to an incorrect value, resulting in the nic not being able to
-receive authenticated frames.
+Add pin configurations for using CAN controller on stm32f7.
 
-To fix this problem, add regrcr in rtl8xxxu_priv struct, and store
-the RCR value every time the register is written, and use it the next
-time the register need to be modified.
-
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Link: https://lore.kernel.org/all/20230427020512.1221062-1-luyun_611@163.com
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230512012055.2990472-1-luyun_611@163.com
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Link: https://lore.kernel.org/all/20230427204540.3126234-4-dario.binacchi@amarulasolutions.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h      | 1 +
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/stm32f7-pinctrl.dtsi | 82 ++++++++++++++++++++++++++
+ 1 file changed, 82 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-index 2a02d4d72dec9..b7da89ba1e7d5 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-@@ -1255,6 +1255,7 @@ struct rtl8xxxu_priv {
- 	u32 rege9c;
- 	u32 regeb4;
- 	u32 regebc;
-+	u32 regrcr;
- 	int next_mbox;
- 	int nr_out_eps;
- 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index bdccc84278d85..2648b30aab76a 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -4048,6 +4048,7 @@ static int rtl8xxxu_init_device(struct ieee80211_hw *hw)
- 		RCR_ACCEPT_MGMT_FRAME | RCR_HTC_LOC_CTRL |
- 		RCR_APPEND_PHYSTAT | RCR_APPEND_ICV | RCR_APPEND_MIC;
- 	rtl8xxxu_write32(priv, REG_RCR, val32);
-+	priv->regrcr = val32;
- 
- 	/*
- 	 * Accept all multicast
-@@ -5585,7 +5586,7 @@ static void rtl8xxxu_configure_filter(struct ieee80211_hw *hw,
- 				      unsigned int *total_flags, u64 multicast)
- {
- 	struct rtl8xxxu_priv *priv = hw->priv;
--	u32 rcr = rtl8xxxu_read32(priv, REG_RCR);
-+	u32 rcr = priv->regrcr;
- 
- 	dev_dbg(&priv->udev->dev, "%s: changed_flags %08x, total_flags %08x\n",
- 		__func__, changed_flags, *total_flags);
-@@ -5631,6 +5632,7 @@ static void rtl8xxxu_configure_filter(struct ieee80211_hw *hw,
- 	 */
- 
- 	rtl8xxxu_write32(priv, REG_RCR, rcr);
-+	priv->regrcr = rcr;
- 
- 	*total_flags &= (FIF_ALLMULTI | FIF_FCSFAIL | FIF_BCN_PRBRESP_PROMISC |
- 			 FIF_CONTROL | FIF_OTHER_BSS | FIF_PSPOLL |
+diff --git a/arch/arm/boot/dts/stm32f7-pinctrl.dtsi b/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
+index 9314128df1859..639a6b65749f2 100644
+--- a/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
++++ b/arch/arm/boot/dts/stm32f7-pinctrl.dtsi
+@@ -284,6 +284,88 @@
+ 					slew-rate = <2>;
+ 				};
+ 			};
++
++			can1_pins_a: can1-0 {
++				pins1 {
++					pinmux = <STM32_PINMUX('A', 12, AF9)>; /* CAN1_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('A', 11, AF9)>; /* CAN1_RX */
++					bias-pull-up;
++				};
++			};
++
++			can1_pins_b: can1-1 {
++				pins1 {
++					pinmux = <STM32_PINMUX('B', 9, AF9)>; /* CAN1_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('B', 8, AF9)>; /* CAN1_RX */
++					bias-pull-up;
++				};
++			};
++
++			can1_pins_c: can1-2 {
++				pins1 {
++					pinmux = <STM32_PINMUX('D', 1, AF9)>; /* CAN1_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('D', 0, AF9)>; /* CAN1_RX */
++					bias-pull-up;
++
++				};
++			};
++
++			can1_pins_d: can1-3 {
++				pins1 {
++					pinmux = <STM32_PINMUX('H', 13, AF9)>; /* CAN1_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('H', 14, AF9)>; /* CAN1_RX */
++					bias-pull-up;
++
++				};
++			};
++
++			can2_pins_a: can2-0 {
++				pins1 {
++					pinmux = <STM32_PINMUX('B', 6, AF9)>; /* CAN2_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('B', 5, AF9)>; /* CAN2_RX */
++					bias-pull-up;
++				};
++			};
++
++			can2_pins_b: can2-1 {
++				pins1 {
++					pinmux = <STM32_PINMUX('B', 13, AF9)>; /* CAN2_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('B', 12, AF9)>; /* CAN2_RX */
++					bias-pull-up;
++				};
++			};
++
++			can3_pins_a: can3-0 {
++				pins1 {
++					pinmux = <STM32_PINMUX('A', 15, AF11)>; /* CAN3_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('A', 8, AF11)>; /* CAN3_RX */
++					bias-pull-up;
++				};
++			};
++
++			can3_pins_b: can3-1 {
++				pins1 {
++					pinmux = <STM32_PINMUX('B', 4, AF11)>;  /* CAN3_TX */
++				};
++				pins2 {
++					pinmux = <STM32_PINMUX('B', 3, AF11)>; /* CAN3_RX */
++					bias-pull-up;
++				};
++			};
+ 		};
+ 	};
+ };
 -- 
 2.39.2
 
