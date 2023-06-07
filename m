@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75EB39234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:18:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DF7C433EF;
-	Wed,  7 Jun 2023 20:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7440039234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:18:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA93C433EF;
+	Wed,  7 Jun 2023 20:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169121;
-	bh=9n0Rm0CdUXYPz3XVJ4+U1z4/EFHPAc62x10WzMiWaSY=;
+	s=korg; t=1686169124;
+	bh=IxDhtpyDUegf/FfkyjsBsGiprobcaU9JFRQbV95QVNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AG3oEMvZfW0Yu1QqRy3nW0m2WnzrfQyc2VpCTpa5pm34AtcYNmgQAfsznooiueiIE
-	 NE97y+LWJ96+HickuXPoCtWivrnZRxsicUajN/qrdCFaZ8TkDdyT7FY7k157DqI5MJ
-	 pYGFjT3XdRNcOWTZJ3FgchFE5vvmf1AOPk1L1GZ8=
+	b=J6MXvff4+7cOSjxVUbirGimsXcFYVCIlijVJyz/e01GKmn6ruHmhwrICvmQnN529U
+	 Rafn6fJ6wgo0YWm0Lu/UpaPgeGB3iGqf+XVAXWWvCm4qcw0DlwpvpNyc9/LpkcMU15
+	 3Xx0GhCAzEDiq9gcFRdpghgPd7rUtVfoleT/mBG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wei Chen <harperchen1110@gmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 22/61] media: dvb-usb: digitv: fix null-ptr-deref in digitv_i2c_xfer()
-Date: Wed,  7 Jun 2023 22:15:36 +0200
-Message-ID: <20230607200842.804419179@linuxfoundation.org>
+Subject: [PATCH 4.14 23/61] media: dvb-usb: dw2102: fix uninit-value in su3000_read_mac_address
+Date: Wed,  7 Jun 2023 22:15:37 +0200
+Message-ID: <20230607200843.147463249@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -37,40 +37,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 9ded5bd2a49ce3015b7c936743eec0a0e6e11f0c ]
+[ Upstream commit a3fd1ef27aa686d871cefe207bd6168c4b0cd29e ]
 
-In digitv_i2c_xfer, msg is controlled by user. When msg[i].buf
-is null and msg[i].len is zero, former checks on msg[i].buf would be
-passed. Malicious data finally reach digitv_i2c_xfer. If accessing
-msg[i].buf[0] without sanity check, null ptr deref would happen. We add
-check on msg[i].len to prevent crash.
+In su3000_read_mac_address, if i2c_transfer fails to execute two
+messages, array mac address will not be initialized. Without handling
+such error, later in function dvb_usb_adapter_dvb_init, proposed_mac
+is accessed before initialization.
 
-Similar commit:
-commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+Fix this error by returning a negative value if message execution fails.
 
-Link: https://lore.kernel.org/linux-media/20230313095008.1039689-1-harperchen1110@gmail.com
+Link: https://lore.kernel.org/linux-media/20230328124416.560889-1-harperchen1110@gmail.com
 Signed-off-by: Wei Chen <harperchen1110@gmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/digitv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/usb/dvb-usb/dw2102.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb/digitv.c b/drivers/media/usb/dvb-usb/digitv.c
-index 20d33f0544ed2..0e2cffa946f69 100644
---- a/drivers/media/usb/dvb-usb/digitv.c
-+++ b/drivers/media/usb/dvb-usb/digitv.c
-@@ -66,6 +66,10 @@ static int digitv_i2c_xfer(struct i2c_adapter *adap,struct i2c_msg msg[],int num
- 		warn("more than 2 i2c messages at a time is not handled yet. TODO.");
- 
- 	for (i = 0; i < num; i++) {
-+		if (msg[i].len < 1) {
-+			i = -EOPNOTSUPP;
-+			break;
-+		}
- 		/* write/read request */
- 		if (i+1 < num && (msg[i+1].flags & I2C_M_RD)) {
- 			if (digitv_ctrl_msg(d, USB_READ_COFDM, msg[i].buf[0], NULL, 0,
+diff --git a/drivers/media/usb/dvb-usb/dw2102.c b/drivers/media/usb/dvb-usb/dw2102.c
+index 98770a95721b9..2c9c4432a0e65 100644
+--- a/drivers/media/usb/dvb-usb/dw2102.c
++++ b/drivers/media/usb/dvb-usb/dw2102.c
+@@ -951,7 +951,7 @@ static int su3000_read_mac_address(struct dvb_usb_device *d, u8 mac[6])
+ 	for (i = 0; i < 6; i++) {
+ 		obuf[1] = 0xf0 + i;
+ 		if (i2c_transfer(&d->i2c_adap, msg, 2) != 2)
+-			break;
++			return -1;
+ 		else
+ 			mac[i] = ibuf[0];
+ 	}
 -- 
 2.39.2
 
