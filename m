@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE901D2A5
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802DCC4339B;
-	Wed,  7 Jun 2023 20:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89BE1D2A5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28742C4339B;
+	Wed,  7 Jun 2023 20:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171028;
-	bh=ZYc1c9eEk8S+QtrDqr2MVXBUsL2xRMC5d0OuIYuWOIA=;
+	s=korg; t=1686171031;
+	bh=+wMV/2QnJjGPeJV5uuxqr/Hp5qbBlMgraKerOYvZyq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WP1wbe7b4xm614JWzvVx1420/rGPkKjWE0neHa8OyRveb5hHJC0akuaV2Ts0KNxqC
-	 Q9uBAFlLvzoyCw469m+7ceUr0CG+BxZ9EOVsI15X7rlsGQw2wbNfAXJLXi/Hd0ArKn
-	 4ZCeqXj+jwGzGYz/BPbu7xT2u8349hqG23ac59Vo=
+	b=BZgQYyAguNY6xkjMqK7w4QhVj02OTlI/ecior2DtUfYe1b31ERcQVK1RyWpfXq8wD
+	 11xLFsQGS75f1H6zWZ0VXHRzK56BHQ2+p99RvQBXbNLTyZA18VN47Rjw6O6s6VFmcN
+	 7hc9Vi4YjA641tKW9kywYXJlOulnexzGvgzVlaYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Richard Acayan <mailingradian@gmail.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 5.10 083/120] misc: fastrpc: return -EPIPE to invocations on device removal
-Date: Wed,  7 Jun 2023 22:16:39 +0200
-Message-ID: <20230607200903.510609141@linuxfoundation.org>
+Subject: [PATCH 5.10 084/120] misc: fastrpc: reject new invocations during device removal
+Date: Wed,  7 Jun 2023 22:16:40 +0200
+Message-ID: <20230607200903.541118643@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -37,38 +37,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Acayan <mailingradian@gmail.com>
 
-commit b6a062853ddf6b4f653af2d8b75ba45bb9a036ad upstream.
+commit 46248400d81e2aa0b65cd659d6f40188192a58b6 upstream.
 
-The return value is initialized as -1, or -EPERM. The completion of an
-invocation implies that the return value is set appropriately, but
-"Permission denied" does not accurately describe the outcome of the
-invocation. Set the invocation's return value to a more appropriate
-"Broken pipe", as the cleanup breaks the driver's connection with rpmsg.
+The channel's rpmsg object allows new invocations to be made. After old
+invocations are already interrupted, the driver shouldn't try to invoke
+anymore. Invalidating the rpmsg at the end of the driver removal
+function makes it easy to cause a race condition in userspace. Even
+closing a file descriptor before the driver finishes its cleanup can
+cause an invocation via fastrpc_release_current_dsp_process() and
+subsequent timeout.
+
+Invalidate the channel before the invocations are interrupted to make
+sure that no invocations can be created to hang after the device closes.
 
 Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230523152550.438363-4-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230523152550.438363-5-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/misc/fastrpc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1675,8 +1675,10 @@ static void fastrpc_notify_users(struct
- 	struct fastrpc_invoke_ctx *ctx;
+@@ -1688,7 +1688,9 @@ static void fastrpc_rpmsg_remove(struct
+ 	struct fastrpc_user *user;
+ 	unsigned long flags;
  
- 	spin_lock(&user->lock);
--	list_for_each_entry(ctx, &user->pending, node)
-+	list_for_each_entry(ctx, &user->pending, node) {
-+		ctx->retval = -EPIPE;
- 		complete(&ctx->work);
-+	}
- 	spin_unlock(&user->lock);
++	/* No invocations past this point */
+ 	spin_lock_irqsave(&cctx->lock, flags);
++	cctx->rpdev = NULL;
+ 	list_for_each_entry(user, &cctx->users, user)
+ 		fastrpc_notify_users(user);
+ 	spin_unlock_irqrestore(&cctx->lock, flags);
+@@ -1696,7 +1698,6 @@ static void fastrpc_rpmsg_remove(struct
+ 	misc_deregister(&cctx->miscdev);
+ 	of_platform_depopulate(&rpdev->dev);
+ 
+-	cctx->rpdev = NULL;
+ 	fastrpc_channel_ctx_put(cctx);
  }
  
 
