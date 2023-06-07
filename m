@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5401934CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE95C4339B;
-	Wed,  7 Jun 2023 20:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D1A1D2A5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5E3C433EF;
+	Wed,  7 Jun 2023 20:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170771;
-	bh=1XKROggtTqe3Z6mZV1Jv46BZhKMWmGIQZaHlvZ2FYe0=;
+	s=korg; t=1686170773;
+	bh=dCmjU8a/pA3kz0P+cb32Va/IOaqV9yVU+2AyM1JKAkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NF2OQ9VHj7ysqFAKQTJ7RapaTiVhiOHpJR3XP8xKdHGwOKl+Pwl1B/ByVP2YpwPMk
-	 QBsK+oIu9Zt/HyMHn99ncam4NHLp+3wixTzmPCOkKX2XWwiGq48D4wpqYVJpa2shoE
-	 6Rsv4At/HFdTQpACsUOxrSzjBaCK+5sNwsgsIVzU=
+	b=DITBmcw1m9g+4aQjZSfHw9eAkeRgjT7S8aX1r8ruYD2k8JCFJ9iGJj/pd06CzHyQX
+	 NUrSjRTfsr8tLTJ7lZCcIZOm6OklPE6G9X4f2Jxym82kivFyAlYH4skR1rvo/sfMxb
+	 7SZROCiGVEfqimouMmQfgKOIS/CsdlDFxsFZP7OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erwan Velu <e.velu@criteo.com>,
-	Luiz Capitulino <luizcap@amazon.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 184/225] selinux: dont use makes grouped targets feature yet
-Date: Wed,  7 Jun 2023 22:16:17 +0200
-Message-ID: <20230607200920.406620705@linuxfoundation.org>
+	Kuan-Ting Chen <h3xrabbit@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 211/225] ksmbd: fix slab-out-of-bounds read in smb2_handle_negotiate
+Date: Wed,  7 Jun 2023 22:16:44 +0200
+Message-ID: <20230607200921.270154809@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,42 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Moore <paul@paul-moore.com>
+From: Kuan-Ting Chen <h3xrabbit@gmail.com>
 
-commit 42c4e97e06a839b07d834f640a10911ad84ec8b3 upstream.
+commit d738950f112c8f40f0515fe967db998e8235a175 upstream.
 
-The Linux Kernel currently only requires make v3.82 while the grouped
-target functionality requires make v4.3.  Removed the grouped target
-introduced in 4ce1f694eb5d ("selinux: ensure av_permissions.h is
-built when needed") as well as the multiple header file targets in
-the make rule.  This effectively reverts the problem commit.
+Check request_buf length first to avoid out-of-bounds read by
+req->DialectCount.
 
-We will revisit this change when make >= 4.3 is required by the rest
-of the kernel.
+[ 3350.990282] BUG: KASAN: slab-out-of-bounds in smb2_handle_negotiate+0x35d7/0x3e60
+[ 3350.990282] Read of size 2 at addr ffff88810ad61346 by task kworker/5:0/276
+[ 3351.000406] Workqueue: ksmbd-io handle_ksmbd_work
+[ 3351.003499] Call Trace:
+[ 3351.006473]  <TASK>
+[ 3351.006473]  dump_stack_lvl+0x8d/0xe0
+[ 3351.006473]  print_report+0xcc/0x620
+[ 3351.006473]  kasan_report+0x92/0xc0
+[ 3351.006473]  smb2_handle_negotiate+0x35d7/0x3e60
+[ 3351.014760]  ksmbd_smb_negotiate_common+0x7a7/0xf00
+[ 3351.014760]  handle_ksmbd_work+0x3f7/0x12d0
+[ 3351.014760]  process_one_work+0xa85/0x1780
 
 Cc: stable@vger.kernel.org
-Fixes: 4ce1f694eb5d ("selinux: ensure av_permissions.h is built when needed")
-Reported-by: Erwan Velu <e.velu@criteo.com>
-Reported-by: Luiz Capitulino <luizcap@amazon.com>
-Tested-by: Luiz Capitulino <luizcap@amazon.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Kuan-Ting Chen <h3xrabbit@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/Makefile |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/security/selinux/Makefile
-+++ b/security/selinux/Makefile
-@@ -26,5 +26,9 @@ quiet_cmd_flask = GEN     $(obj)/flask.h
-       cmd_flask = $< $(obj)/flask.h $(obj)/av_permissions.h
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -1069,16 +1069,16 @@ int smb2_handle_negotiate(struct ksmbd_w
+ 		return rc;
+ 	}
  
- targets += flask.h av_permissions.h
--$(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/genheaders/genheaders FORCE
-+# once make >= 4.3 is required, we can use grouped targets in the rule below,
-+# which basically involves adding both headers and a '&' before the colon, see
-+# the example below:
-+#   $(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/...
-+$(obj)/flask.h: scripts/selinux/genheaders/genheaders FORCE
- 	$(call if_changed,flask)
+-	if (req->DialectCount == 0) {
+-		pr_err("malformed packet\n");
++	smb2_buf_len = get_rfc1002_len(work->request_buf);
++	smb2_neg_size = offsetof(struct smb2_negotiate_req, Dialects);
++	if (smb2_neg_size > smb2_buf_len) {
+ 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
+ 		rc = -EINVAL;
+ 		goto err_out;
+ 	}
+ 
+-	smb2_buf_len = get_rfc1002_len(work->request_buf);
+-	smb2_neg_size = offsetof(struct smb2_negotiate_req, Dialects);
+-	if (smb2_neg_size > smb2_buf_len) {
++	if (req->DialectCount == 0) {
++		pr_err("malformed packet\n");
+ 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
+ 		rc = -EINVAL;
+ 		goto err_out;
 
 
