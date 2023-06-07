@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA5E10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDEAC433D2;
-	Wed,  7 Jun 2023 20:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F8310FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABB3C433D2;
+	Wed,  7 Jun 2023 20:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169603;
-	bh=hJg46VfbTWxIwGTGG7h6AktdrZprwQtapsxWqyAjKFw=;
+	s=korg; t=1686169606;
+	bh=JX+nrVURjyP+KRfBbp1VkQbPd7NZtc4TQcwVsolORiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TD4rndrqwbTLrt5OW4KEFO+uWGJvQWcTNQ90vA3VD5r1E0FcDpX7/eaUsbDjG+tVq
-	 Pn2gyO8zxij6qt9VORFAicEUntgtDC1Ln+L/GzKIBm9h+mVL2KWEVPTdnxd6NVDiX6
-	 f7Tze8mFpHssNRZ+VhPxw3e84iY0Zfe35huO/5d8=
+	b=O0/Dy0JLssXmjkzOo+aKXEfou7oBs2H9DzaoNWlBCHkfY2ZeAPBhzSqoUBg5QFk9R
+	 xvdUfn313McC7A1oltBMrSSQMV9rrxlFJxBPp53mzusmeA5R8OakzGkYJtSd5rr8Q0
+	 0cnKOy75cgejlB8ZMUpBawTyXzSmbhRdaWEYojlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 144/286] ASoC: SOF: pm: save io region state in case of errors in resume
-Date: Wed,  7 Jun 2023 22:14:03 +0200
-Message-ID: <20230607200927.800276077@linuxfoundation.org>
+Subject: [PATCH 6.3 145/286] s390/pkey: zeroize key blobs
+Date: Wed,  7 Jun 2023 22:14:04 +0200
+Message-ID: <20230607200927.833046162@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -33,69 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-[ Upstream commit 171b53be635ac15d4feafeb33946035649b1ca14 ]
+[ Upstream commit 844cf829e5f33e00b279230470c8c93b58b8c16f ]
 
-If there are failures in DSP runtime resume, the device state will not
-reach active and this makes it impossible e.g. to retrieve a possible
-DSP panic dump via "exception" debugfs node. If
-CONFIG_SND_SOC_SOF_DEBUG_ENABLE_DEBUGFS_CACHE=y is set, the data in
-cache is stale. If debugfs cache is not used, the region simply cannot
-be read.
+Key blobs for the IOCTLs PKEY_KBLOB2PROTK[23] may contain clear key
+material. Zeroize the copies of these keys in kernel memory after
+creating the protected key.
 
-To allow debugging these scenarios, update the debugfs cache contents in
-resume error handler. User-space can then later retrieve DSP panic and
-other state via debugfs (requires SOF debugfs cache to be enabled in
-build).
-
-Reported-by: Curtis Malainey <cujomalainey@chromium.org
-Link: https://github.com/thesofproject/linux/issues/4274
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com
-Reviewed-by: Curtis Malainey <cujomalainey@chromium.org
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com
-Link: https://lore.kernel.org/r/20230512104638.21376-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/pm.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/s390/crypto/pkey_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/sof/pm.c b/sound/soc/sof/pm.c
-index 85412aeb1ca16..40f392efd8246 100644
---- a/sound/soc/sof/pm.c
-+++ b/sound/soc/sof/pm.c
-@@ -159,7 +159,7 @@ static int sof_resume(struct device *dev, bool runtime_resume)
- 		ret = tplg_ops->set_up_all_pipelines(sdev, false);
- 		if (ret < 0) {
- 			dev_err(sdev->dev, "Failed to restore pipeline after resume %d\n", ret);
--			return ret;
-+			goto setup_fail;
- 		}
- 	}
- 
-@@ -173,6 +173,18 @@ static int sof_resume(struct device *dev, bool runtime_resume)
- 			dev_err(sdev->dev, "ctx_restore IPC error during resume: %d\n", ret);
- 	}
- 
-+setup_fail:
-+#if IS_ENABLED(CONFIG_SND_SOC_SOF_DEBUG_ENABLE_DEBUGFS_CACHE)
-+	if (ret < 0) {
-+		/*
-+		 * Debugfs cannot be read in runtime suspend, so cache
-+		 * the contents upon failure. This allows to capture
-+		 * possible DSP coredump information.
-+		 */
-+		sof_cache_debugfs(sdev);
-+	}
-+#endif
-+
- 	return ret;
- }
- 
+diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
+index 5a05d1cdfec20..a8def50c149bd 100644
+--- a/drivers/s390/crypto/pkey_api.c
++++ b/drivers/s390/crypto/pkey_api.c
+@@ -1293,6 +1293,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 			return PTR_ERR(kkey);
+ 		rc = pkey_keyblob2pkey(kkey, ktp.keylen, &ktp.protkey);
+ 		DEBUG_DBG("%s pkey_keyblob2pkey()=%d\n", __func__, rc);
++		memzero_explicit(kkey, ktp.keylen);
+ 		kfree(kkey);
+ 		if (rc)
+ 			break;
+@@ -1426,6 +1427,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 					kkey, ktp.keylen, &ktp.protkey);
+ 		DEBUG_DBG("%s pkey_keyblob2pkey2()=%d\n", __func__, rc);
+ 		kfree(apqns);
++		memzero_explicit(kkey, ktp.keylen);
+ 		kfree(kkey);
+ 		if (rc)
+ 			break;
+@@ -1552,6 +1554,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
+ 					protkey, &protkeylen);
+ 		DEBUG_DBG("%s pkey_keyblob2pkey3()=%d\n", __func__, rc);
+ 		kfree(apqns);
++		memzero_explicit(kkey, ktp.keylen);
+ 		kfree(kkey);
+ 		if (rc) {
+ 			kfree(protkey);
 -- 
 2.39.2
 
