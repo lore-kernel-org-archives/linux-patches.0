@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C503AE70
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B613AC433D2;
-	Wed,  7 Jun 2023 20:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67383AE73
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:32:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D3AC433EF;
+	Wed,  7 Jun 2023 20:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169924;
-	bh=xMojdUi0r+s2wIaMmMZjaNBC84KPk/9zPMWyrmM6/Qg=;
+	s=korg; t=1686169926;
+	bh=2gpUMZW0Hcy+qb0D0SD9iPzf9QF6DEYpOQumMwRCwcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+XliW/v8h7HbLC8w8C91EWS+roVbeZQSbYsk8+WHhp7+ov7oDTiK6CSEr3Legpxo
-	 qC5SoiV+mHZwgJTB7O9Nma2rM+60pb5i94SnKFbTyKXiqVD7VFnWw+8YcVsOzi5mao
-	 JWpmHa9JhILLN4ps7beFVhoUOK+l7gDPjmDRxvtk=
+	b=wAx6FpgeJjJaNPLx7Y2UZN/92NncJoIidRKDPziBg7m5A6ALDZMKi5PZSoJnYY1eW
+	 Gexi72VgCvTmt9lv8+kFTt9vGYENhCrord1Avk8lna+SHRXyic8hSgkQH50LsoTQ68
+	 tuKUHWjNFBENJhb7sWMDG+sG8715u8d+80B5eNM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 258/286] mptcp: fix active subflow finalization
-Date: Wed,  7 Jun 2023 22:15:57 +0200
-Message-ID: <20230607200931.742381907@linuxfoundation.org>
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Russ Weight <russell.h.weight@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Tianfei Zhang <tianfei.zhang@intel.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kselftest@vger.kernel.org,
+	Dan Carpenter <error27@gmail.com>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Subject: [PATCH 6.3 267/286] test_firmware: prevent race conditions by a correct implementation of locking
+Date: Wed,  7 Jun 2023 22:16:06 +0200
+Message-ID: <20230607200932.027085154@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,90 +42,252 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-commit 55b47ca7d80814ceb63d64e032e96cd6777811e5 upstream.
+commit 4acfe3dfde685a5a9eaec5555351918e2d7266a1 upstream.
 
-Active subflow are inserted into the connection list at creation time.
-When the MPJ handshake completes successfully, a new subflow creation
-netlink event is generated correctly, but the current code wrongly
-avoid initializing a couple of subflow data.
+Dan Carpenter spotted a race condition in a couple of situations like
+these in the test_firmware driver:
 
-The above will cause misbehavior on a few exceptional events: unneeded
-mptcp-level retransmission on msk-level sequence wrap-around and infinite
-mapping fallback even when a MPJ socket is present.
+static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+{
+        u8 val;
+        int ret;
 
-Address the issue factoring out the needed initialization in a new helper
-and invoking the latter from __mptcp_finish_join() time for passive
-subflow and from mptcp_finish_join() for active ones.
+        ret = kstrtou8(buf, 10, &val);
+        if (ret)
+                return ret;
 
-Fixes: 0530020a7c8f ("mptcp: track and update contiguous data status")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+        mutex_lock(&test_fw_mutex);
+        *(u8 *)cfg = val;
+        mutex_unlock(&test_fw_mutex);
+
+        /* Always return full write size even if we didn't consume all */
+        return size;
+}
+
+static ssize_t config_num_requests_store(struct device *dev,
+                                         struct device_attribute *attr,
+                                         const char *buf, size_t count)
+{
+        int rc;
+
+        mutex_lock(&test_fw_mutex);
+        if (test_fw_config->reqs) {
+                pr_err("Must call release_all_firmware prior to changing config\n");
+                rc = -EINVAL;
+                mutex_unlock(&test_fw_mutex);
+                goto out;
+        }
+        mutex_unlock(&test_fw_mutex);
+
+        rc = test_dev_config_update_u8(buf, count,
+                                       &test_fw_config->num_requests);
+
+out:
+        return rc;
+}
+
+static ssize_t config_read_fw_idx_store(struct device *dev,
+                                        struct device_attribute *attr,
+                                        const char *buf, size_t count)
+{
+        return test_dev_config_update_u8(buf, count,
+                                         &test_fw_config->read_fw_idx);
+}
+
+The function test_dev_config_update_u8() is called from both the locked
+and the unlocked context, function config_num_requests_store() and
+config_read_fw_idx_store() which can both be called asynchronously as
+they are driver's methods, while test_dev_config_update_u8() and siblings
+change their argument pointed to by u8 *cfg or similar pointer.
+
+To avoid deadlock on test_fw_mutex, the lock is dropped before calling
+test_dev_config_update_u8() and re-acquired within test_dev_config_update_u8()
+itself, but alas this creates a race condition.
+
+Having two locks wouldn't assure a race-proof mutual exclusion.
+
+This situation is best avoided by the introduction of a new, unlocked
+function __test_dev_config_update_u8() which can be called from the locked
+context and reducing test_dev_config_update_u8() to:
+
+static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+{
+        int ret;
+
+        mutex_lock(&test_fw_mutex);
+        ret = __test_dev_config_update_u8(buf, size, cfg);
+        mutex_unlock(&test_fw_mutex);
+
+        return ret;
+}
+
+doing the locking and calling the unlocked primitive, which enables both
+locked and unlocked versions without duplication of code.
+
+The similar approach was applied to all functions called from the locked
+and the unlocked context, which safely mitigates both deadlocks and race
+conditions in the driver.
+
+__test_dev_config_update_bool(), __test_dev_config_update_u8() and
+__test_dev_config_update_size_t() unlocked versions of the functions
+were introduced to be called from the locked contexts as a workaround
+without releasing the main driver's lock and thereof causing a race
+condition.
+
+The test_dev_config_update_bool(), test_dev_config_update_u8() and
+test_dev_config_update_size_t() locked versions of the functions
+are being called from driver methods without the unnecessary multiplying
+of the locking and unlocking code for each method, and complicating
+the code with saving of the return value across lock.
+
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Russ Weight <russell.h.weight@intel.com>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Tianfei Zhang <tianfei.zhang@intel.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Colin Ian King <colin.i.king@gmail.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-kselftest@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.4
+Suggested-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/r/20230509084746.48259-1-mirsad.todorovac@alu.unizg.hr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ lib/test_firmware.c |   52 +++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 35 insertions(+), 17 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -812,6 +812,13 @@ void mptcp_data_ready(struct sock *sk, s
- 	mptcp_data_unlock(sk);
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -353,16 +353,26 @@ static ssize_t config_test_show_str(char
+ 	return len;
  }
  
-+static void mptcp_subflow_joined(struct mptcp_sock *msk, struct sock *ssk)
-+{
-+	mptcp_subflow_ctx(ssk)->map_seq = READ_ONCE(msk->ack_seq);
-+	WRITE_ONCE(msk->allow_infinite_fallback, false);
-+	mptcp_event(MPTCP_EVENT_SUB_ESTABLISHED, msk, ssk, GFP_ATOMIC);
+-static int test_dev_config_update_bool(const char *buf, size_t size,
++static inline int __test_dev_config_update_bool(const char *buf, size_t size,
+ 				       bool *cfg)
+ {
+ 	int ret;
+ 
+-	mutex_lock(&test_fw_mutex);
+ 	if (kstrtobool(buf, cfg) < 0)
+ 		ret = -EINVAL;
+ 	else
+ 		ret = size;
++
++	return ret;
 +}
 +
- static bool __mptcp_finish_join(struct mptcp_sock *msk, struct sock *ssk)
++static int test_dev_config_update_bool(const char *buf, size_t size,
++				       bool *cfg)
++{
++	int ret;
++
++	mutex_lock(&test_fw_mutex);
++	ret = __test_dev_config_update_bool(buf, size, cfg);
+ 	mutex_unlock(&test_fw_mutex);
+ 
+ 	return ret;
+@@ -373,7 +383,8 @@ static ssize_t test_dev_config_show_bool
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
+ }
+ 
+-static int test_dev_config_update_size_t(const char *buf,
++static int __test_dev_config_update_size_t(
++					 const char *buf,
+ 					 size_t size,
+ 					 size_t *cfg)
  {
- 	struct sock *sk = (struct sock *)msk;
-@@ -826,6 +833,7 @@ static bool __mptcp_finish_join(struct m
- 		mptcp_sock_graft(ssk, sk->sk_socket);
+@@ -384,9 +395,7 @@ static int test_dev_config_update_size_t
+ 	if (ret)
+ 		return ret;
  
- 	mptcp_sockopt_sync_locked(msk, ssk);
-+	mptcp_subflow_joined(msk, ssk);
- 	return true;
+-	mutex_lock(&test_fw_mutex);
+ 	*(size_t *)cfg = new;
+-	mutex_unlock(&test_fw_mutex);
+ 
+ 	/* Always return full write size even if we didn't consume all */
+ 	return size;
+@@ -402,7 +411,7 @@ static ssize_t test_dev_config_show_int(
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
  }
  
-@@ -3457,14 +3465,16 @@ bool mptcp_finish_join(struct sock *ssk)
- 		return false;
- 	}
+-static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
++static int __test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+ {
+ 	u8 val;
+ 	int ret;
+@@ -411,14 +420,23 @@ static int test_dev_config_update_u8(con
+ 	if (ret)
+ 		return ret;
  
--	if (!list_empty(&subflow->node))
--		goto out;
-+	/* active subflow, already present inside the conn_list */
-+	if (!list_empty(&subflow->node)) {
-+		mptcp_subflow_joined(msk, ssk);
-+		return true;
-+	}
+-	mutex_lock(&test_fw_mutex);
+ 	*(u8 *)cfg = val;
+-	mutex_unlock(&test_fw_mutex);
  
- 	if (!mptcp_pm_allow_new_subflow(msk))
- 		goto err_prohibited;
- 
--	/* active connections are already on conn_list.
--	 * If we can't acquire msk socket lock here, let the release callback
-+	/* If we can't acquire msk socket lock here, let the release callback
- 	 * handle it
- 	 */
- 	mptcp_data_lock(parent);
-@@ -3487,11 +3497,6 @@ err_prohibited:
- 		return false;
- 	}
- 
--	subflow->map_seq = READ_ONCE(msk->ack_seq);
--	WRITE_ONCE(msk->allow_infinite_fallback, false);
--
--out:
--	mptcp_event(MPTCP_EVENT_SUB_ESTABLISHED, msk, ssk, GFP_ATOMIC);
- 	return true;
+ 	/* Always return full write size even if we didn't consume all */
+ 	return size;
  }
  
++static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
++{
++	int ret;
++
++	mutex_lock(&test_fw_mutex);
++	ret = __test_dev_config_update_u8(buf, size, cfg);
++	mutex_unlock(&test_fw_mutex);
++
++	return ret;
++}
++
+ static ssize_t test_dev_config_show_u8(char *buf, u8 val)
+ {
+ 	return snprintf(buf, PAGE_SIZE, "%u\n", val);
+@@ -471,10 +489,10 @@ static ssize_t config_num_requests_store
+ 		mutex_unlock(&test_fw_mutex);
+ 		goto out;
+ 	}
+-	mutex_unlock(&test_fw_mutex);
+ 
+-	rc = test_dev_config_update_u8(buf, count,
+-				       &test_fw_config->num_requests);
++	rc = __test_dev_config_update_u8(buf, count,
++					 &test_fw_config->num_requests);
++	mutex_unlock(&test_fw_mutex);
+ 
+ out:
+ 	return rc;
+@@ -518,10 +536,10 @@ static ssize_t config_buf_size_store(str
+ 		mutex_unlock(&test_fw_mutex);
+ 		goto out;
+ 	}
+-	mutex_unlock(&test_fw_mutex);
+ 
+-	rc = test_dev_config_update_size_t(buf, count,
+-					   &test_fw_config->buf_size);
++	rc = __test_dev_config_update_size_t(buf, count,
++					     &test_fw_config->buf_size);
++	mutex_unlock(&test_fw_mutex);
+ 
+ out:
+ 	return rc;
+@@ -548,10 +566,10 @@ static ssize_t config_file_offset_store(
+ 		mutex_unlock(&test_fw_mutex);
+ 		goto out;
+ 	}
+-	mutex_unlock(&test_fw_mutex);
+ 
+-	rc = test_dev_config_update_size_t(buf, count,
+-					   &test_fw_config->file_offset);
++	rc = __test_dev_config_update_size_t(buf, count,
++					     &test_fw_config->file_offset);
++	mutex_unlock(&test_fw_mutex);
+ 
+ out:
+ 	return rc;
 
 
