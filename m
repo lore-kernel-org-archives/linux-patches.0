@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF4634CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:01:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857A0C433D2;
-	Wed,  7 Jun 2023 21:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE02D34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:01:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE7FC4339B;
+	Wed,  7 Jun 2023 21:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171704;
-	bh=UIgfD+CJU2peIF3JGv8Dm1hCT7GtVyCODo4EZkcaUMo=;
+	s=korg; t=1686171707;
+	bh=aOkh6sXo9KxJdUHHRku2gdt6k2inTNYaLx32oUjpH1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QS++mj39ivYFeeVy9kN7Obm7ljPtaROPc48wh0yHmfM3DDgnrBiEXtPrkflzwn90J
-	 UkVgTaPXfn9Y37cjs1NCW/mMG4Um8jd26WppJVrGTm6yNlvnP6rmxnV78PZoz3NzB4
-	 v23q/89RZtLpZQsPuVVTHp98ErTTt/Z4l898ZClY=
+	b=Ukz8quaVK/u9MAP/reYsxlXtMdMZ3yTAimJuV/qNaLeMDwpNJlabU91D9Bv8eJmJD
+	 v5sUOHcZgK4XvxIafTwocg7pCBBks0TMixsldPn3ypAwkEq6v1H/ud2PZYSvrwSamN
+	 2n4pcU2tq73UcpvtTEyRoEVWACy84+8O/tOpF5I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/159] s390/pkey: zeroize key blobs
-Date: Wed,  7 Jun 2023 22:16:21 +0200
-Message-ID: <20230607200906.231362712@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 5.15 111/159] md/raid5: fix miscalculation of end_sector in raid5_read_one_chunk()
+Date: Wed,  7 Jun 2023 22:16:54 +0200
+Message-ID: <20230607200907.308786588@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,52 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 844cf829e5f33e00b279230470c8c93b58b8c16f ]
+commit 8557dc27126949c702bd3aafe8a7e0b7e4fcb44c upstream.
 
-Key blobs for the IOCTLs PKEY_KBLOB2PROTK[23] may contain clear key
-material. Zeroize the copies of these keys in kernel memory after
-creating the protected key.
+'end_sector' is compared to 'rdev->recovery_offset', which is offset to
+rdev, however, commit e82ed3a4fbb5 ("md/raid6: refactor
+raid5_read_one_chunk") changes the calculation of 'end_sector' to offset
+to the array. Fix this miscalculation.
 
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e82ed3a4fbb5 ("md/raid6: refactor raid5_read_one_chunk")
+Cc: stable@vger.kernel.org # v5.12+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230524014118.3172781-1-yukuai1@huaweicloud.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/pkey_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/raid5.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/crypto/pkey_api.c b/drivers/s390/crypto/pkey_api.c
-index cf23ce1b11465..83b335f962c89 100644
---- a/drivers/s390/crypto/pkey_api.c
-+++ b/drivers/s390/crypto/pkey_api.c
-@@ -1286,6 +1286,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 			return PTR_ERR(kkey);
- 		rc = pkey_keyblob2pkey(kkey, ktp.keylen, &ktp.protkey);
- 		DEBUG_DBG("%s pkey_keyblob2pkey()=%d\n", __func__, rc);
-+		memzero_explicit(kkey, ktp.keylen);
- 		kfree(kkey);
- 		if (rc)
- 			break;
-@@ -1419,6 +1420,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 					kkey, ktp.keylen, &ktp.protkey);
- 		DEBUG_DBG("%s pkey_keyblob2pkey2()=%d\n", __func__, rc);
- 		kfree(apqns);
-+		memzero_explicit(kkey, ktp.keylen);
- 		kfree(kkey);
- 		if (rc)
- 			break;
-@@ -1545,6 +1547,7 @@ static long pkey_unlocked_ioctl(struct file *filp, unsigned int cmd,
- 					protkey, &protkeylen);
- 		DEBUG_DBG("%s pkey_keyblob2pkey3()=%d\n", __func__, rc);
- 		kfree(apqns);
-+		memzero_explicit(kkey, ktp.keylen);
- 		kfree(kkey);
- 		if (rc) {
- 			kfree(protkey);
--- 
-2.39.2
-
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5408,7 +5408,7 @@ static int raid5_read_one_chunk(struct m
+ 
+ 	sector = raid5_compute_sector(conf, raid_bio->bi_iter.bi_sector, 0,
+ 				      &dd_idx, NULL);
+-	end_sector = bio_end_sector(raid_bio);
++	end_sector = sector + bio_sectors(raid_bio);
+ 
+ 	rcu_read_lock();
+ 	if (r5c_big_stripe_cached(conf, sector))
 
 
