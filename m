@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435CF19BC9
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD40AC433EF;
-	Wed,  7 Jun 2023 20:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C0A19BC9
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5983EC433D2;
+	Wed,  7 Jun 2023 20:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170336;
-	bh=CybE0iE6rgEoeRVhthStPKm5oBpVm2M9EK7ca0vsVug=;
+	s=korg; t=1686170338;
+	bh=rZU+on8aldc8VbKT6pL78ljWSRUlDbqcOfDXckrCiIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TB8Cot4gn2u2u1siuTgR9P0I2D6ic5iBIvvk7aELWe97h1HeqWuNAPEfWSoAq2+K
-	 68Us/STgkjkzT9SBALGvCKQe1BcgjYsYXqbpRabyZUIu+B51pteLt3nVnM4+L5RmjR
-	 pUMA+T14NyLVZ4MMQmKbekW4ksVdC3o9Y5WDiCaI=
+	b=2d5kQjgP0vjqU9S06d23mBD1wA0t1vhWHSlHr7Ls1mGow3Zf42V1bA9PHbOCXLeUv
+	 QU7qUsjMeKT9AAJuF+5KjKhe1A4iQ1QKnfYyQ9viiNvrW55nUUMy5FD9vveK2HJYnN
+	 zDX0lQN10S3zKP4fswh2HB7AGTHdlkOU2TQDt98o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Shay Drory <shayd@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/225] net/mlx5: Read embedded cpu after init bit cleared
-Date: Wed,  7 Jun 2023 22:13:58 +0200
-Message-ID: <20230607200915.829801958@linuxfoundation.org>
+Subject: [PATCH 6.1 046/225] iommu/mediatek: Flush IOTLB completely only if domain has been attached
+Date: Wed,  7 Jun 2023 22:13:59 +0200
+Message-ID: <20230607200915.859213729@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,46 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit bbfa4b58997e3d38ba629c9f6fc0bd1c163aaf43 ]
+[ Upstream commit b3fc95709c54ffbe80f16801e0a792a4d2b3d55e ]
 
-During driver load it reads embedded_cpu bit from initialization
-segment, but the initialization segment is readable only after
-initialization bit is cleared.
+If an IOMMU domain was never attached, it lacks any linkage to the
+actual IOMMU hardware. Attempting to do flush_iotlb_all() on it will
+result in a NULL pointer dereference. This seems to happen after the
+recent IOMMU core rework in v6.4-rc1.
 
-Move the call to mlx5_read_embedded_cpu() right after initialization bit
-cleared.
+    Unable to handle kernel read from unreadable memory at virtual address 0000000000000018
+    Call trace:
+     mtk_iommu_flush_iotlb_all+0x20/0x80
+     iommu_create_device_direct_mappings.part.0+0x13c/0x230
+     iommu_setup_default_domain+0x29c/0x4d0
+     iommu_probe_device+0x12c/0x190
+     of_iommu_configure+0x140/0x208
+     of_dma_configure_id+0x19c/0x3c0
+     platform_dma_configure+0x38/0x88
+     really_probe+0x78/0x2c0
 
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Fixes: 591905ba9679 ("net/mlx5: Introduce Mellanox SmartNIC and modify page management logic")
-Reviewed-by: Shay Drory <shayd@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Check if the "bank" field has been filled in before actually attempting
+the IOTLB flush to avoid it. The IOTLB is also flushed when the device
+comes out of runtime suspend, so it should have a clean initial state.
+
+Fixes: 08500c43d4f7 ("iommu/mediatek: Adjust the structure")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Yong Wu <yong.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230526085402.394239-1-wenst@chromium.org
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/mtk_iommu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 1a06493da4121..077204929fe4a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -896,7 +896,6 @@ static int mlx5_pci_init(struct mlx5_core_dev *dev, struct pci_dev *pdev,
- 	}
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index e93ca9dc37c8e..2ae5a6058a34a 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -737,7 +737,8 @@ static void mtk_iommu_flush_iotlb_all(struct iommu_domain *domain)
+ {
+ 	struct mtk_iommu_domain *dom = to_mtk_domain(domain);
  
- 	mlx5_pci_vsc_init(dev);
--	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
- 	return 0;
+-	mtk_iommu_tlb_flush_all(dom->bank->parent_data);
++	if (dom->bank)
++		mtk_iommu_tlb_flush_all(dom->bank->parent_data);
+ }
  
- err_clr_master:
-@@ -1130,6 +1129,7 @@ static int mlx5_function_setup(struct mlx5_core_dev *dev, bool boot, u64 timeout
- 		goto err_cmd_cleanup;
- 	}
- 
-+	dev->caps.embedded_cpu = mlx5_read_embedded_cpu(dev);
- 	mlx5_cmd_set_state(dev, MLX5_CMDIF_STATE_UP);
- 
- 	mlx5_start_health_poll(dev);
+ static void mtk_iommu_iotlb_sync(struct iommu_domain *domain,
 -- 
 2.39.2
 
