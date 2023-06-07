@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE56A10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D75BC433D2;
-	Wed,  7 Jun 2023 20:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938E710FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F5AC433D2;
+	Wed,  7 Jun 2023 20:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169645;
-	bh=rzrtfBVWQ59Rixl20Y/EdbmL+NuVPpxEIjl4pKv+dt8=;
+	s=korg; t=1686169648;
+	bh=PRWCD+xhEF1UZpcAgOovW3slI80wQJy3hmteQFBF7Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Onh7mYUtBi9NVZ8A4W4BMRVO0+a6H9cRTeYtHbPK7OFN1IeRCmvqg5TUYw998kZ/2
-	 iODZ6qYbTI67jDizfPyY17eJboCfYPyp6wYFMShXHB70BiMFTY0SD4SYa/yunLdRHC
-	 hNH5LD51x5HCo5Z+a8eiG3nZFi8xJ3VXhQ/2t7bs=
+	b=awid6ucdWqaioZDBZ7IMiJn0ZT70hfmGEEr8UEeNyt6RwIVorNmnj3yvA9AJ/qj5D
+	 3ut3lNtEKj9h8IrnEGG6GOXxBuSiXJAGcNErgZw7zhdr1VQpiRkPhEpPtbMsO3bS1W
+	 QpkgaRoZPBdrcyx4/vLY11QN04cm/TcG1TmVT6FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Po-Wen Kao <powen.kao@mediatek.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Stanley Chu <stanley.chu@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 132/286] media: netup_unidvb: fix irq init by register it at the end of probe
-Date: Wed,  7 Jun 2023 22:13:51 +0200
-Message-ID: <20230607200927.405508516@linuxfoundation.org>
+Subject: [PATCH 6.3 159/286] scsi: ufs: core: Fix MCQ nr_hw_queues
+Date: Wed,  7 Jun 2023 22:14:18 +0200
+Message-ID: <20230607200928.315498988@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,68 +39,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Po-Wen Kao <powen.kao@mediatek.com>
 
-[ Upstream commit e6ad6233592593079db5c8fa592c298e51bc1356 ]
+[ Upstream commit 72a81bb0b6fc9b759ac0fdaca3ec5884a8b2f304 ]
 
-IRQ handler netup_spi_interrupt() takes spinlock spi->lock. The lock
-is initialized in netup_spi_init(). However, irq handler is registered
-before initializing the lock.
+Since MAXQ is 0-based value, add one to obtain number of hardware queues.
 
-Spinlock dma->lock and i2c->lock suffer from the same problem.
-
-Fix this by registering the irq at the end of probe.
-
-Link: https://lore.kernel.org/linux-media/20230315134518.1074497-1-harperchen1110@gmail.com
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Po-Wen Kao <powen.kao@mediatek.com>
+Link: https://lore.kernel.org/r/20230504154454.26654-4-powen.kao@mediatek.com
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/pci/netup_unidvb/netup_unidvb_core.c  | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/ufs/core/ufs-mcq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
-index aaa1d2dedebdd..d85bfbb77a250 100644
---- a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
-+++ b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
-@@ -887,12 +887,7 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
- 		ndev->lmmio0, (u32)pci_resource_len(pci_dev, 0),
- 		ndev->lmmio1, (u32)pci_resource_len(pci_dev, 1),
- 		pci_dev->irq);
--	if (request_irq(pci_dev->irq, netup_unidvb_isr, IRQF_SHARED,
--			"netup_unidvb", pci_dev) < 0) {
--		dev_err(&pci_dev->dev,
--			"%s(): can't get IRQ %d\n", __func__, pci_dev->irq);
--		goto irq_request_err;
--	}
-+
- 	ndev->dma_size = 2 * 188 *
- 		NETUP_DMA_BLOCKS_COUNT * NETUP_DMA_PACKETS_COUNT;
- 	ndev->dma_virt = dma_alloc_coherent(&pci_dev->dev,
-@@ -933,6 +928,14 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
- 		dev_err(&pci_dev->dev, "netup_unidvb: DMA setup failed\n");
- 		goto dma_setup_err;
- 	}
-+
-+	if (request_irq(pci_dev->irq, netup_unidvb_isr, IRQF_SHARED,
-+			"netup_unidvb", pci_dev) < 0) {
-+		dev_err(&pci_dev->dev,
-+			"%s(): can't get IRQ %d\n", __func__, pci_dev->irq);
-+		goto dma_setup_err;
-+	}
-+
- 	dev_info(&pci_dev->dev,
- 		"netup_unidvb: device has been initialized\n");
- 	return 0;
-@@ -951,8 +954,6 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
- 	dma_free_coherent(&pci_dev->dev, ndev->dma_size,
- 			ndev->dma_virt, ndev->dma_phys);
- dma_alloc_err:
--	free_irq(pci_dev->irq, pci_dev);
--irq_request_err:
- 	iounmap(ndev->lmmio1);
- pci_bar1_error:
- 	iounmap(ndev->lmmio0);
+diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+index 937933d3f77c2..51b3c6ae781df 100644
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -150,7 +150,8 @@ static int ufshcd_mcq_config_nr_queues(struct ufs_hba *hba)
+ 	u32 hba_maxq, rem, tot_queues;
+ 	struct Scsi_Host *host = hba->host;
+ 
+-	hba_maxq = FIELD_GET(MAX_QUEUE_SUP, hba->mcq_capabilities);
++	/* maxq is 0 based value */
++	hba_maxq = FIELD_GET(MAX_QUEUE_SUP, hba->mcq_capabilities) + 1;
+ 
+ 	tot_queues = UFS_MCQ_NUM_DEV_CMD_QUEUES + read_queues + poll_queues +
+ 			rw_queues;
 -- 
 2.39.2
 
