@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CBE19BC9
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF0BC433D2;
-	Wed,  7 Jun 2023 20:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE6524EAB
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1DDC433D2;
+	Wed,  7 Jun 2023 20:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170085;
-	bh=I2fEuViLv0iCPYHPncitlmI2TWtLE4P2wiIBqFAKqNA=;
+	s=korg; t=1686170088;
+	bh=mZDtEH9Zmy+aDkPrJKTdtSRKrMzyB2JQlpEDhjhEops=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWk/rE3CSKmTzF0UfHHa3hsFqV7d6SIWAVJYZMCPGpjsTVtMFM7dvxva62ePn4Qme
-	 srL8KmtbKDkxJlOy+mMB2nJ1Mcib9YXF3WCZ9uN48y8uCVId60ZNU6HwVeUsm5xQ3f
-	 rPwvWhvzBh6EweYY+dS2E7/IT6S4Z1yROk2GnQMA=
+	b=PUfKGfbKqqHKbmN83Ysy81Jy5X9ZlApF3KQBFX1YSYH9qhWaNRRrXdxy8KXAJVND6
+	 xu6gT2KeRX72YPPsi0NrTBS4MaboM+dU+xwXXCqBu8AG0IQWvMh0/CD7GXKQxYKGXh
+	 gkcfjA3/kcY2J0ZIN8PQFhfoUeO/9cLEW2aFV8CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wei Chen <harperchen1110@gmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 40/88] media: dvb-usb-v2: ec168: fix null-ptr-deref in ec168_i2c_xfer()
-Date: Wed,  7 Jun 2023 22:15:57 +0200
-Message-ID: <20230607200900.474627692@linuxfoundation.org>
+Subject: [PATCH 4.19 41/88] media: dvb-usb-v2: ce6230: fix null-ptr-deref in ce6230_i2c_master_xfer()
+Date: Wed,  7 Jun 2023 22:15:58 +0200
+Message-ID: <20230607200900.509227964@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -37,61 +37,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit a6dcefcc08eca1bf4e3d213c97c3cfb75f377935 ]
+[ Upstream commit dff919090155fb22679869e8469168f270dcd97f ]
 
-In ec168_i2c_xfer, msg is controlled by user. When msg[i].buf is null
-and msg[i].len is zero, former checks on msg[i].buf would be passed.
-If accessing msg[i].buf[0] without sanity check, null pointer deref
-would happen. We add check on msg[i].len to prevent crash.
+In ce6230_i2c_master_xfer, msg is controlled by user. When msg[i].buf
+is null and msg[i].len is zero, former checks on msg[i].buf would be
+passed. Malicious data finally reach ce6230_i2c_master_xfer. If accessing
+msg[i].buf[0] without sanity check, null ptr deref would happen. We add
+check on msg[i].len to prevent crash.
 
 Similar commit:
 commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
 
-Link: https://lore.kernel.org/linux-media/20230313085853.3252349-1-harperchen1110@gmail.com
+Link: https://lore.kernel.org/linux-media/20230313092751.209496-1-harperchen1110@gmail.com
 Signed-off-by: Wei Chen <harperchen1110@gmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/ec168.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/media/usb/dvb-usb-v2/ce6230.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/ec168.c b/drivers/media/usb/dvb-usb-v2/ec168.c
-index 1db8aeef36553..19605958501e1 100644
---- a/drivers/media/usb/dvb-usb-v2/ec168.c
-+++ b/drivers/media/usb/dvb-usb-v2/ec168.c
-@@ -125,6 +125,10 @@ static int ec168_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 	while (i < num) {
+diff --git a/drivers/media/usb/dvb-usb-v2/ce6230.c b/drivers/media/usb/dvb-usb-v2/ce6230.c
+index e596031a708d0..80a07aab3b4b0 100644
+--- a/drivers/media/usb/dvb-usb-v2/ce6230.c
++++ b/drivers/media/usb/dvb-usb-v2/ce6230.c
+@@ -111,6 +111,10 @@ static int ce6230_i2c_master_xfer(struct i2c_adapter *adap,
  		if (num > i + 1 && (msg[i+1].flags & I2C_M_RD)) {
- 			if (msg[i].addr == ec168_ec100_config.demod_address) {
+ 			if (msg[i].addr ==
+ 				ce6230_zl10353_config.demod_address) {
 +				if (msg[i].len < 1) {
 +					i = -EOPNOTSUPP;
 +					break;
 +				}
- 				req.cmd = READ_DEMOD;
- 				req.value = 0;
- 				req.index = 0xff00 + msg[i].buf[0]; /* reg */
-@@ -141,6 +145,10 @@ static int ec168_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 			}
+ 				req.cmd = DEMOD_READ;
+ 				req.value = msg[i].addr >> 1;
+ 				req.index = msg[i].buf[0];
+@@ -127,6 +131,10 @@ static int ce6230_i2c_master_xfer(struct i2c_adapter *adap,
  		} else {
- 			if (msg[i].addr == ec168_ec100_config.demod_address) {
+ 			if (msg[i].addr ==
+ 				ce6230_zl10353_config.demod_address) {
 +				if (msg[i].len < 1) {
 +					i = -EOPNOTSUPP;
 +					break;
 +				}
- 				req.cmd = WRITE_DEMOD;
- 				req.value = msg[i].buf[1]; /* val */
- 				req.index = 0xff00 + msg[i].buf[0]; /* reg */
-@@ -149,6 +157,10 @@ static int ec168_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
- 				ret = ec168_ctrl_msg(d, &req);
- 				i += 1;
- 			} else {
-+				if (msg[i].len < 1) {
-+					i = -EOPNOTSUPP;
-+					break;
-+				}
- 				req.cmd = WRITE_I2C;
- 				req.value = msg[i].buf[0]; /* val */
- 				req.index = 0x0100 + msg[i].addr; /* I2C addr */
+ 				req.cmd = DEMOD_WRITE;
+ 				req.value = msg[i].addr >> 1;
+ 				req.index = msg[i].buf[0];
 -- 
 2.39.2
 
