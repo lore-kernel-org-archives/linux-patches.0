@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B553AE45
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848D6C433D2;
-	Wed,  7 Jun 2023 20:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26D83AE45
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CC7C433D2;
+	Wed,  7 Jun 2023 20:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169692;
-	bh=aPcXVjWq8mZxtSfdsthnBIg8pSYFUVdu8S9E/OiWq8A=;
+	s=korg; t=1686169695;
+	bh=ATjML6lJGwZ9+QGvbyh2iZqPUSl5J3oc8zpo4JAorLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvPR+OU12YeyA98uZ6FIXQsO/bQG928hUkemovEcALwwn1jqn6z8xzCMOVwmGYpLj
-	 NDJ7NGmsC7OjJIXUz7bWdgmJpTRWujK02k4MBVYoaSebMRXxhNwx9jW8FFyHXwRyFe
-	 D4TEoiRec4p7CPA+FzIxnNHSgeC+EhnwBZWdow7M=
+	b=Og3IDMY5rpMT3r+IQcpvz/0lwfS277C/M2rAO+eK7NXEZXQxLunLPAK3MHKK5sxc2
+	 4NdQw9EO/mxLIKFuqA9+KsBfV9kxx4qHcPThd4Z6tkPSmh+6pBPyf//6+cQBRVudTv
+	 RSh6bkVpXD+tZwJQb1azlIVbvNEo1JKvVRuWncEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Perret <qperret@google.com>,
-	Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Gleb Chesnokov <gleb.chesnokov@scst.dev>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 178/286] KVM: arm64: Prevent unconditional donation of unmapped regions from the host
-Date: Wed,  7 Jun 2023 22:14:37 +0200
-Message-ID: <20230607200929.076394365@linuxfoundation.org>
+Subject: [PATCH 6.3 179/286] scsi: qla2xxx: Fix NULL pointer dereference in target mode
+Date: Wed,  7 Jun 2023 22:14:38 +0200
+Message-ID: <20230607200929.119492837@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,76 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Will Deacon <will@kernel.org>
+From: Gleb Chesnokov <gleb.chesnokov@scst.dev>
 
-[ Upstream commit 09cce60bddd6461a93a5bf434265a47827d1bc6f ]
+[ Upstream commit d54820b22e404b06b2b65877ff802cc7b31688bc ]
 
-Since host stage-2 mappings are created lazily, we cannot rely solely on
-the pte in order to recover the target physical address when checking a
-host-initiated memory transition as this permits donation of unmapped
-regions corresponding to MMIO or "no-map" memory.
+When target mode is enabled, the pci_irq_get_affinity() function may return
+a NULL value in qla_mapq_init_qp_cpu_map() due to the qla24xx_enable_msix()
+code that handles IRQ settings for target mode. This leads to a crash due
+to a NULL pointer dereference.
 
-Instead of inspecting the pte, move the addr_is_allowed_memory() check
-into the host callback function where it is passed the physical address
-directly from the walker.
+This patch fixes the issue by adding a check for the NULL value returned by
+pci_irq_get_affinity() and introducing a 'cpu_mapped' boolean flag to the
+qla_qpair structure, ensuring that the qpair's CPU affinity is updated when
+it has not been mapped to a CPU.
 
-Cc: Quentin Perret <qperret@google.com>
-Fixes: e82edcc75c4e ("KVM: arm64: Implement do_share() helper for sharing memory")
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230518095844.1178-1-will@kernel.org
+Fixes: 1d201c81d4cc ("scsi: qla2xxx: Select qpair depending on which CPU post_cmd() gets called")
+Signed-off-by: Gleb Chesnokov <gleb.chesnokov@scst.dev>
+Link: https://lore.kernel.org/r/56b416f2-4e0f-b6cf-d6d5-b7c372e3c6a2@scst.dev
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/mem_protect.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h    | 1 +
+ drivers/scsi/qla2xxx/qla_init.c   | 3 +++
+ drivers/scsi/qla2xxx/qla_inline.h | 3 +++
+ drivers/scsi/qla2xxx/qla_isr.c    | 3 +++
+ 4 files changed, 10 insertions(+)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/mem_protect.c b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-index 552653fa18be3..dab14d3ca7bb6 100644
---- a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-+++ b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-@@ -568,7 +568,7 @@ struct pkvm_mem_donation {
+diff --git a/drivers/scsi/qla2xxx/qla_def.h b/drivers/scsi/qla2xxx/qla_def.h
+index ec0e987b71fa5..807ae5ede44c6 100644
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -3797,6 +3797,7 @@ struct qla_qpair {
+ 	uint64_t retry_term_jiff;
+ 	struct qla_tgt_counters tgt_counters;
+ 	uint16_t cpuid;
++	bool cpu_mapped;
+ 	struct qla_fw_resources fwres ____cacheline_aligned;
+ 	struct  qla_buf_pool buf_pool;
+ 	u32	cmd_cnt;
+diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
+index ec0423ec66817..1a955c3ff3d6c 100644
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -9426,6 +9426,9 @@ struct qla_qpair *qla2xxx_create_qpair(struct scsi_qla_host *vha, int qos,
+ 		qpair->rsp->req = qpair->req;
+ 		qpair->rsp->qpair = qpair;
  
- struct check_walk_data {
- 	enum pkvm_page_state	desired;
--	enum pkvm_page_state	(*get_page_state)(kvm_pte_t pte);
-+	enum pkvm_page_state	(*get_page_state)(kvm_pte_t pte, u64 addr);
- };
- 
- static int __check_page_state_visitor(const struct kvm_pgtable_visit_ctx *ctx,
-@@ -576,10 +576,7 @@ static int __check_page_state_visitor(const struct kvm_pgtable_visit_ctx *ctx,
- {
- 	struct check_walk_data *d = ctx->arg;
- 
--	if (kvm_pte_valid(ctx->old) && !addr_is_allowed_memory(kvm_pte_to_phys(ctx->old)))
--		return -EINVAL;
--
--	return d->get_page_state(ctx->old) == d->desired ? 0 : -EPERM;
-+	return d->get_page_state(ctx->old, ctx->addr) == d->desired ? 0 : -EPERM;
- }
- 
- static int check_page_state_range(struct kvm_pgtable *pgt, u64 addr, u64 size,
-@@ -594,8 +591,11 @@ static int check_page_state_range(struct kvm_pgtable *pgt, u64 addr, u64 size,
- 	return kvm_pgtable_walk(pgt, addr, size, &walker);
- }
- 
--static enum pkvm_page_state host_get_page_state(kvm_pte_t pte)
-+static enum pkvm_page_state host_get_page_state(kvm_pte_t pte, u64 addr)
- {
-+	if (!addr_is_allowed_memory(addr))
-+		return PKVM_NOPAGE;
++		if (!qpair->cpu_mapped)
++			qla_cpu_update(qpair, raw_smp_processor_id());
 +
- 	if (!kvm_pte_valid(pte) && pte)
- 		return PKVM_NOPAGE;
- 
-@@ -702,7 +702,7 @@ static int host_complete_donation(u64 addr, const struct pkvm_mem_transition *tx
- 	return host_stage2_set_owner_locked(addr, size, host_id);
+ 		if (IS_T10_PI_CAPABLE(ha) && ql2xenabledif) {
+ 			if (ha->fw_attributes & BIT_4)
+ 				qpair->difdix_supported = 1;
+diff --git a/drivers/scsi/qla2xxx/qla_inline.h b/drivers/scsi/qla2xxx/qla_inline.h
+index cce6e425c1214..7b42558a8839a 100644
+--- a/drivers/scsi/qla2xxx/qla_inline.h
++++ b/drivers/scsi/qla2xxx/qla_inline.h
+@@ -539,11 +539,14 @@ qla_mapq_init_qp_cpu_map(struct qla_hw_data *ha,
+ 	if (!ha->qp_cpu_map)
+ 		return;
+ 	mask = pci_irq_get_affinity(ha->pdev, msix->vector_base0);
++	if (!mask)
++		return;
+ 	qpair->cpuid = cpumask_first(mask);
+ 	for_each_cpu(cpu, mask) {
+ 		ha->qp_cpu_map[cpu] = qpair;
+ 	}
+ 	msix->cpuid = qpair->cpuid;
++	qpair->cpu_mapped = true;
  }
  
--static enum pkvm_page_state hyp_get_page_state(kvm_pte_t pte)
-+static enum pkvm_page_state hyp_get_page_state(kvm_pte_t pte, u64 addr)
- {
- 	if (!kvm_pte_valid(pte))
- 		return PKVM_NOPAGE;
+ static inline void
+diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
+index 71feda2cdb630..245e3a5d81fd3 100644
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -3770,6 +3770,9 @@ void qla24xx_process_response_queue(struct scsi_qla_host *vha,
+ 
+ 	if (rsp->qpair->cpuid != smp_processor_id() || !rsp->qpair->rcv_intr) {
+ 		rsp->qpair->rcv_intr = 1;
++
++		if (!rsp->qpair->cpu_mapped)
++			qla_cpu_update(rsp->qpair, raw_smp_processor_id());
+ 	}
+ 
+ #define __update_rsp_in(_is_shadow_hba, _rsp, _rsp_in)			\
 -- 
 2.39.2
 
