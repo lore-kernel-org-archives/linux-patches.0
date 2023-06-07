@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5F134CD3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C1CC4339B;
-	Wed,  7 Jun 2023 20:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8782934CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A2EC433D2;
+	Wed,  7 Jun 2023 20:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170726;
-	bh=g9LGI75BIM5SX5ze7eo+NTRTv7UipykGKXBL4tNzLgg=;
+	s=korg; t=1686170729;
+	bh=Eph5TImebbgjvtODVyj0Rbm4znM/CAAD2vPIht+JxTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sYBoOQsth0R08juIS+ZEPPsKXwEEIK0wPDUhGW3btODRhdt6bw6ifoiky0iuagOEM
-	 P11+70Wdx3ildFJbbpnfE8ORDJQFicTop4bYrGi5sQAMfeq9tRN+BnugR13LsQe9mX
-	 fmFRjObXr0DHsFOqXTbtCJnuWac6ldLTJuKxHX80=
+	b=oOK6RxYxf2E0bPpN/KOzhP9bjJ/h/GPISU9zfbql3HOi9yT0JCQGAoCh7ArADrMve
+	 3Anwglm6ejH49lydL/SIyKk1fCli9N3oQYcpq+1P0Vk/HXtPzk2xLru+EHP1GFY5KD
+	 EShGPBOfK3+vlevptI+rYAG4fGT4x1TpP0wsqRF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 195/225] mptcp: fix active subflow finalization
-Date: Wed,  7 Jun 2023 22:16:28 +0200
-Message-ID: <20230607200920.752005378@linuxfoundation.org>
+	syzbot+cbb68193bdb95af4340a@syzkaller.appspotmail.com,
+	syzbot+62120febbd1ee3c3c860@syzkaller.appspotmail.com,
+	syzbot+edce54daffee36421b4c@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 196/225] ext4: add EA_INODE checking to ext4_iget()
+Date: Wed,  7 Jun 2023 22:16:29 +0200
+Message-ID: <20230607200920.784114439@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,90 +37,180 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 55b47ca7d80814ceb63d64e032e96cd6777811e5 upstream.
+commit b3e6bcb94590dea45396b9481e47b809b1be4afa upstream.
 
-Active subflow are inserted into the connection list at creation time.
-When the MPJ handshake completes successfully, a new subflow creation
-netlink event is generated correctly, but the current code wrongly
-avoid initializing a couple of subflow data.
+Add a new flag, EXT4_IGET_EA_INODE which indicates whether the inode
+is expected to have the EA_INODE flag or not.  If the flag is not
+set/clear as expected, then fail the iget() operation and mark the
+file system as corrupted.
 
-The above will cause misbehavior on a few exceptional events: unneeded
-mptcp-level retransmission on msk-level sequence wrap-around and infinite
-mapping fallback even when a MPJ socket is present.
+This commit also makes the ext4_iget() always perform the
+is_bad_inode() check even when the inode is already inode cache.  This
+allows us to remove the is_bad_inode() check from the callers of
+ext4_iget() in the ea_inode code.
 
-Address the issue factoring out the needed initialization in a new helper
-and invoking the latter from __mptcp_finish_join() time for passive
-subflow and from mptcp_finish_join() for active ones.
-
-Fixes: 0530020a7c8f ("mptcp: track and update contiguous data status")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+cbb68193bdb95af4340a@syzkaller.appspotmail.com
+Reported-by: syzbot+62120febbd1ee3c3c860@syzkaller.appspotmail.com
+Reported-by: syzbot+edce54daffee36421b4c@syzkaller.appspotmail.com
+Cc: stable@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20230524034951.779531-2-tytso@mit.edu
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ fs/ext4/ext4.h  |    3 ++-
+ fs/ext4/inode.c |   31 ++++++++++++++++++++++++++-----
+ fs/ext4/xattr.c |   36 +++++++-----------------------------
+ 3 files changed, 35 insertions(+), 35 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -821,6 +821,13 @@ void mptcp_data_ready(struct sock *sk, s
- 	mptcp_data_unlock(sk);
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -2968,7 +2968,8 @@ typedef enum {
+ 	EXT4_IGET_NORMAL =	0,
+ 	EXT4_IGET_SPECIAL =	0x0001, /* OK to iget a system inode */
+ 	EXT4_IGET_HANDLE = 	0x0002,	/* Inode # is from a handle */
+-	EXT4_IGET_BAD =		0x0004  /* Allow to iget a bad inode */
++	EXT4_IGET_BAD =		0x0004, /* Allow to iget a bad inode */
++	EXT4_IGET_EA_INODE =	0x0008	/* Inode should contain an EA value */
+ } ext4_iget_flags;
+ 
+ extern struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4763,6 +4763,21 @@ static inline void ext4_inode_set_iversi
+ 		inode_set_iversion_queried(inode, val);
  }
  
-+static void mptcp_subflow_joined(struct mptcp_sock *msk, struct sock *ssk)
++static const char *check_igot_inode(struct inode *inode, ext4_iget_flags flags)
++
 +{
-+	mptcp_subflow_ctx(ssk)->map_seq = READ_ONCE(msk->ack_seq);
-+	WRITE_ONCE(msk->allow_infinite_fallback, false);
-+	mptcp_event(MPTCP_EVENT_SUB_ESTABLISHED, msk, ssk, GFP_ATOMIC);
++	if (flags & EXT4_IGET_EA_INODE) {
++		if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
++			return "missing EA_INODE flag";
++	} else {
++		if ((EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL))
++			return "unexpected EA_INODE flag";
++	}
++	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD))
++		return "unexpected bad inode w/o EXT4_IGET_BAD";
++	return NULL;
 +}
 +
- static bool __mptcp_finish_join(struct mptcp_sock *msk, struct sock *ssk)
- {
- 	struct sock *sk = (struct sock *)msk;
-@@ -835,6 +842,7 @@ static bool __mptcp_finish_join(struct m
- 		mptcp_sock_graft(ssk, sk->sk_socket);
- 
- 	mptcp_sockopt_sync_locked(msk, ssk);
-+	mptcp_subflow_joined(msk, ssk);
- 	return true;
- }
- 
-@@ -3485,14 +3493,16 @@ bool mptcp_finish_join(struct sock *ssk)
- 		return false;
- 	}
- 
--	if (!list_empty(&subflow->node))
--		goto out;
-+	/* active subflow, already present inside the conn_list */
-+	if (!list_empty(&subflow->node)) {
-+		mptcp_subflow_joined(msk, ssk);
-+		return true;
+ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 			  ext4_iget_flags flags, const char *function,
+ 			  unsigned int line)
+@@ -4772,6 +4787,7 @@ struct inode *__ext4_iget(struct super_b
+ 	struct ext4_inode_info *ei;
+ 	struct ext4_super_block *es = EXT4_SB(sb)->s_es;
+ 	struct inode *inode;
++	const char *err_str;
+ 	journal_t *journal = EXT4_SB(sb)->s_journal;
+ 	long ret;
+ 	loff_t size;
+@@ -4799,8 +4815,14 @@ struct inode *__ext4_iget(struct super_b
+ 	inode = iget_locked(sb, ino);
+ 	if (!inode)
+ 		return ERR_PTR(-ENOMEM);
+-	if (!(inode->i_state & I_NEW))
++	if (!(inode->i_state & I_NEW)) {
++		if ((err_str = check_igot_inode(inode, flags)) != NULL) {
++			ext4_error_inode(inode, function, line, 0, err_str);
++			iput(inode);
++			return ERR_PTR(-EFSCORRUPTED);
++		}
+ 		return inode;
 +	}
  
- 	if (!mptcp_pm_allow_new_subflow(msk))
- 		goto err_prohibited;
- 
--	/* active connections are already on conn_list.
--	 * If we can't acquire msk socket lock here, let the release callback
-+	/* If we can't acquire msk socket lock here, let the release callback
- 	 * handle it
- 	 */
- 	mptcp_data_lock(parent);
-@@ -3515,11 +3525,6 @@ err_prohibited:
- 		return false;
+ 	ei = EXT4_I(inode);
+ 	iloc.bh = NULL;
+@@ -5066,10 +5088,9 @@ struct inode *__ext4_iget(struct super_b
+ 	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb))
+ 		ext4_error_inode(inode, function, line, 0,
+ 				 "casefold flag without casefold feature");
+-	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
+-		ext4_error_inode(inode, function, line, 0,
+-				 "bad inode without EXT4_IGET_BAD flag");
+-		ret = -EUCLEAN;
++	if ((err_str = check_igot_inode(inode, flags)) != NULL) {
++		ext4_error_inode(inode, function, line, 0, err_str);
++		ret = -EFSCORRUPTED;
+ 		goto bad_inode;
  	}
  
--	subflow->map_seq = READ_ONCE(msk->ack_seq);
--	WRITE_ONCE(msk->allow_infinite_fallback, false);
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -397,7 +397,7 @@ static int ext4_xattr_inode_iget(struct
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+-	inode = ext4_iget(parent->i_sb, ea_ino, EXT4_IGET_NORMAL);
++	inode = ext4_iget(parent->i_sb, ea_ino, EXT4_IGET_EA_INODE);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+ 		ext4_error(parent->i_sb,
+@@ -405,23 +405,6 @@ static int ext4_xattr_inode_iget(struct
+ 			   err);
+ 		return err;
+ 	}
 -
--out:
--	mptcp_event(MPTCP_EVENT_SUB_ESTABLISHED, msk, ssk, GFP_ATOMIC);
- 	return true;
+-	if (is_bad_inode(inode)) {
+-		ext4_error(parent->i_sb,
+-			   "error while reading EA inode %lu is_bad_inode",
+-			   ea_ino);
+-		err = -EIO;
+-		goto error;
+-	}
+-
+-	if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
+-		ext4_error(parent->i_sb,
+-			   "EA inode %lu does not have EXT4_EA_INODE_FL flag",
+-			    ea_ino);
+-		err = -EINVAL;
+-		goto error;
+-	}
+-
+ 	ext4_xattr_inode_set_class(inode);
+ 
+ 	/*
+@@ -442,9 +425,6 @@ static int ext4_xattr_inode_iget(struct
+ 
+ 	*ea_inode = inode;
+ 	return 0;
+-error:
+-	iput(inode);
+-	return err;
  }
  
+ /* Remove entry from mbcache when EA inode is getting evicted */
+@@ -1507,11 +1487,10 @@ ext4_xattr_inode_cache_find(struct inode
+ 
+ 	while (ce) {
+ 		ea_inode = ext4_iget(inode->i_sb, ce->e_value,
+-				     EXT4_IGET_NORMAL);
+-		if (!IS_ERR(ea_inode) &&
+-		    !is_bad_inode(ea_inode) &&
+-		    (EXT4_I(ea_inode)->i_flags & EXT4_EA_INODE_FL) &&
+-		    i_size_read(ea_inode) == value_len &&
++				     EXT4_IGET_EA_INODE);
++		if (IS_ERR(ea_inode))
++			goto next_entry;
++		if (i_size_read(ea_inode) == value_len &&
+ 		    !ext4_xattr_inode_read(ea_inode, ea_data, value_len) &&
+ 		    !ext4_xattr_inode_verify_hashes(ea_inode, NULL, ea_data,
+ 						    value_len) &&
+@@ -1521,9 +1500,8 @@ ext4_xattr_inode_cache_find(struct inode
+ 			kvfree(ea_data);
+ 			return ea_inode;
+ 		}
+-
+-		if (!IS_ERR(ea_inode))
+-			iput(ea_inode);
++		iput(ea_inode);
++	next_entry:
+ 		ce = mb_cache_entry_find_next(ea_inode_cache, ce);
+ 	}
+ 	kvfree(ea_data);
 
 
