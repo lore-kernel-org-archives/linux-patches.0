@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018953AE45
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:25:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74425C433EF;
-	Wed,  7 Jun 2023 20:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEF33AE45
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:25:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196A5C433D2;
+	Wed,  7 Jun 2023 20:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169503;
-	bh=LEXUqYnFYNBp/lSZwiBu4F7bB23102+sZXyYbD4ZC0Y=;
+	s=korg; t=1686169506;
+	bh=t0DvZ7heiAOR2gaainKo1OXYll/0QkH8RC6nJ4z0lZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsmlCN2pGSoJUHdbBH6Pk/CB/yXq6/OzSTZBle8MCfwdOX1fTl0RdYappbabixQpU
-	 FkQUXkO41huW0pNQhVP8A1SvpqGD82mmFZMHvWwC4kuFenJa2RNVIv5VKdn0dHPC5E
-	 dV0JFA5Dd7/QNC6+h80TY0BWdh5k9YUDjmWRrFY0=
+	b=wQ5Ry37Hj/rsmJNLT6x4bVnVnETQZVhDHTRme72sJ0pA67Gvo9nXAC/NaOoDWlgJb
+	 EGdKx5mLcBauMtISWXukW/Z0Ernpq0Jop5gsu2q2WiLnNjQBJKl/Jy9Dl+YJGKUhu+
+	 s9FVyRvxTrFvisrjR+T5M2SXcaLqyXSAcXhXgqmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 098/286] hwmon: (k10temp) Add PCI ID for family 19, model 78h
-Date: Wed,  7 Jun 2023 22:13:17 +0200
-Message-ID: <20230607200926.261175307@linuxfoundation.org>
+Subject: [PATCH 6.3 107/286] fbdev: imsttfb: Fix use after free bug in imsttfb_probe
+Date: Wed,  7 Jun 2023 22:13:26 +0200
+Message-ID: <20230607200926.584630898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,35 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 7d8accfaa0ab65e4282c8e58950f7d688342cd86 ]
+[ Upstream commit c75f5a55061091030a13fef71b9995b89bc86213 ]
 
-Enable k10temp on this system.
+A use-after-free bug may occur if init_imstt invokes framebuffer_release
+and free the info ptr. The caller, imsttfb_probe didn't notice that and
+still keep the ptr as private data in pdev.
 
-  [ bp: Massage. ]
+If we remove the driver which will call imsttfb_remove to make cleanup,
+UAF happens.
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230427053338.16653-3-mario.limonciello@amd.com
+Fix it by return error code if bad case happens in init_imstt.
+
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/k10temp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/imsttfb.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hwmon/k10temp.c b/drivers/hwmon/k10temp.c
-index be8bbb1c3a02d..823d0ca1d6059 100644
---- a/drivers/hwmon/k10temp.c
-+++ b/drivers/hwmon/k10temp.c
-@@ -507,6 +507,7 @@ static const struct pci_device_id k10temp_id_table[] = {
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M50H_DF_F3) },
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M60H_DF_F3) },
- 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M70H_DF_F3) },
-+	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
- 	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_AMD_17H_DF_F3) },
- 	{}
+diff --git a/drivers/video/fbdev/imsttfb.c b/drivers/video/fbdev/imsttfb.c
+index bea45647184e1..975dd682fae4b 100644
+--- a/drivers/video/fbdev/imsttfb.c
++++ b/drivers/video/fbdev/imsttfb.c
+@@ -1347,7 +1347,7 @@ static const struct fb_ops imsttfb_ops = {
+ 	.fb_ioctl 	= imsttfb_ioctl,
  };
+ 
+-static void init_imstt(struct fb_info *info)
++static int init_imstt(struct fb_info *info)
+ {
+ 	struct imstt_par *par = info->par;
+ 	__u32 i, tmp, *ip, *end;
+@@ -1420,7 +1420,7 @@ static void init_imstt(struct fb_info *info)
+ 	    || !(compute_imstt_regvals(par, info->var.xres, info->var.yres))) {
+ 		printk("imsttfb: %ux%ux%u not supported\n", info->var.xres, info->var.yres, info->var.bits_per_pixel);
+ 		framebuffer_release(info);
+-		return;
++		return -ENODEV;
+ 	}
+ 
+ 	sprintf(info->fix.id, "IMS TT (%s)", par->ramdac == IBM ? "IBM" : "TVP");
+@@ -1456,12 +1456,13 @@ static void init_imstt(struct fb_info *info)
+ 
+ 	if (register_framebuffer(info) < 0) {
+ 		framebuffer_release(info);
+-		return;
++		return -ENODEV;
+ 	}
+ 
+ 	tmp = (read_reg_le32(par->dc_regs, SSTATUS) & 0x0f00) >> 8;
+ 	fb_info(info, "%s frame buffer; %uMB vram; chip version %u\n",
+ 		info->fix.id, info->fix.smem_len >> 20, tmp);
++	return 0;
+ }
+ 
+ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+@@ -1529,10 +1530,10 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (!par->cmap_regs)
+ 		goto error;
+ 	info->pseudo_palette = par->palette;
+-	init_imstt(info);
+-
+-	pci_set_drvdata(pdev, info);
+-	return 0;
++	ret = init_imstt(info);
++	if (!ret)
++		pci_set_drvdata(pdev, info);
++	return ret;
+ 
+ error:
+ 	if (par->dc_regs)
 -- 
 2.39.2
 
