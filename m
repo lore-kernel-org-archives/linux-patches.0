@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89BE1D2A5
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28742C4339B;
-	Wed,  7 Jun 2023 20:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484641D2A5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6241C433EF;
+	Wed,  7 Jun 2023 20:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171031;
-	bh=+wMV/2QnJjGPeJV5uuxqr/Hp5qbBlMgraKerOYvZyq4=;
+	s=korg; t=1686171034;
+	bh=i+z53TWJk40cu7KVEGwfln1kPQX+XtUYvQiEwjPukBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZgQYyAguNY6xkjMqK7w4QhVj02OTlI/ecior2DtUfYe1b31ERcQVK1RyWpfXq8wD
-	 11xLFsQGS75f1H6zWZ0VXHRzK56BHQ2+p99RvQBXbNLTyZA18VN47Rjw6O6s6VFmcN
-	 7hc9Vi4YjA641tKW9kywYXJlOulnexzGvgzVlaYc=
+	b=nbXL0fJld4V+UzohUT7ff2pTNmPRxX7GqtDkCtY+MSurLfecNgLjKV98h8az7Jr7L
+	 PZC/HC3SEYxr4ONTxFemrSAD8Qxp+ciS8z3pmVQL/TCRViSrxQEq/pYcQnDcmPAW6R
+	 XlACaFwZEhpvQfFZ1PzyUh1D0Col/zHUTchjPIw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Richard Acayan <mailingradian@gmail.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 5.10 084/120] misc: fastrpc: reject new invocations during device removal
-Date: Wed,  7 Jun 2023 22:16:40 +0200
-Message-ID: <20230607200903.541118643@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 085/120] scsi: stex: Fix gcc 13 warnings
+Date: Wed,  7 Jun 2023 22:16:41 +0200
+Message-ID: <20230607200903.571360177@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -35,50 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Richard Acayan <mailingradian@gmail.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 46248400d81e2aa0b65cd659d6f40188192a58b6 upstream.
+commit 6d074ce231772c66e648a61f6bd2245e7129d1f5 upstream.
 
-The channel's rpmsg object allows new invocations to be made. After old
-invocations are already interrupted, the driver shouldn't try to invoke
-anymore. Invalidating the rpmsg at the end of the driver removal
-function makes it easy to cause a race condition in userspace. Even
-closing a file descriptor before the driver finishes its cleanup can
-cause an invocation via fastrpc_release_current_dsp_process() and
-subsequent timeout.
+gcc 13 may assign another type to enumeration constants than gcc 12. Split
+the large enum at the top of source file stex.c such that the type of the
+constants used in time expressions is changed back to the same type chosen
+by gcc 12. This patch suppresses compiler warnings like this one:
 
-Invalidate the channel before the invocations are interrupted to make
-sure that no invocations can be created to hang after the device closes.
+In file included from ./include/linux/bitops.h:7,
+                 from ./include/linux/kernel.h:22,
+                 from drivers/scsi/stex.c:13:
+drivers/scsi/stex.c: In function ‘stex_common_handshake’:
+./include/linux/typecheck.h:12:25: error: comparison of distinct pointer types lacks a cast [-Werror]
+   12 |         (void)(&__dummy == &__dummy2); \
+      |                         ^~
+./include/linux/jiffies.h:106:10: note: in expansion of macro ‘typecheck’
+  106 |          typecheck(unsigned long, b) && \
+      |          ^~~~~~~~~
+drivers/scsi/stex.c:1035:29: note: in expansion of macro ‘time_after’
+ 1035 |                         if (time_after(jiffies, before + MU_MAX_DELAY * HZ)) {
+      |                             ^~~~~~~~~~
 
-Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230523152550.438363-5-srinivas.kandagatla@linaro.org
+See also https://gcc.gnu.org/bugzilla/show_bug.cgi?id=107405.
+
+Cc: stable@vger.kernel.org
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230529195034.3077-1-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/stex.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1688,7 +1688,9 @@ static void fastrpc_rpmsg_remove(struct
- 	struct fastrpc_user *user;
- 	unsigned long flags;
+--- a/drivers/scsi/stex.c
++++ b/drivers/scsi/stex.c
+@@ -109,7 +109,9 @@ enum {
+ 	TASK_ATTRIBUTE_HEADOFQUEUE		= 0x1,
+ 	TASK_ATTRIBUTE_ORDERED			= 0x2,
+ 	TASK_ATTRIBUTE_ACA			= 0x4,
++};
  
-+	/* No invocations past this point */
- 	spin_lock_irqsave(&cctx->lock, flags);
-+	cctx->rpdev = NULL;
- 	list_for_each_entry(user, &cctx->users, user)
- 		fastrpc_notify_users(user);
- 	spin_unlock_irqrestore(&cctx->lock, flags);
-@@ -1696,7 +1698,6 @@ static void fastrpc_rpmsg_remove(struct
- 	misc_deregister(&cctx->miscdev);
- 	of_platform_depopulate(&rpdev->dev);
++enum {
+ 	SS_STS_NORMAL				= 0x80000000,
+ 	SS_STS_DONE				= 0x40000000,
+ 	SS_STS_HANDSHAKE			= 0x20000000,
+@@ -121,7 +123,9 @@ enum {
+ 	SS_I2H_REQUEST_RESET			= 0x2000,
  
--	cctx->rpdev = NULL;
- 	fastrpc_channel_ctx_put(cctx);
- }
+ 	SS_MU_OPERATIONAL			= 0x80000000,
++};
+ 
++enum {
+ 	STEX_CDB_LENGTH				= 16,
+ 	STATUS_VAR_LEN				= 128,
  
 
 
