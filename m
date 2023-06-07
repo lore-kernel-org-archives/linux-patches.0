@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4523922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF13C4339B;
-	Wed,  7 Jun 2023 20:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4773922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:54:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF208C433EF;
+	Wed,  7 Jun 2023 20:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171256;
-	bh=wXSSdQyJmNc1+zAqIpCgTXO4z+1cRBkB4VzOjiIEOew=;
+	s=korg; t=1686171259;
+	bh=7cAly7DcdgfqYX85ezVGq42ONFyTzMCckcBCyWirnak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpLPV19t8iUvJXOIgr0adMCknbhvNigB1tGrqg4boeShMEsg4KmqY58w3VAIjKX2U
-	 /OXkak9PkY0gm+y179spGua6dBsWrjHzTxwqNbqFIoM5IFcGheurBpHBUiKrTvMDed
-	 XcKIzNLIk8p7MhENzIq8aenfW6+/9lJzfV7TKYVg=
+	b=hFT8RIT+Xm+sPQ8lyjSv2Vg8SWDRjqOtDPp9UvlUDvhViTLKMg73PgXbhfwzvQr2N
+	 R58B865Y+k4o0cl1zBqPncZyN2AWayX4lqaAkBhe8LjPjjcAQQpdXrFgA8IiHBSWW8
+	 DGKz48wtsijWIvE1V/d1lSRL6LLs8X/t2VPwuxrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Kapadia <szymon@kapadia.pl>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 09/99] netrom: fix info-leak in nr_write_internal()
-Date: Wed,  7 Jun 2023 22:16:01 +0200
-Message-ID: <20230607200900.529524529@linuxfoundation.org>
+Subject: [PATCH 5.4 42/99] media: dvb-usb-v2: rtl28xxu: fix null-ptr-deref in rtl28xxu_i2c_xfer
+Date: Wed,  7 Jun 2023 22:16:34 +0200
+Message-ID: <20230607200901.570484836@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -37,83 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 31642e7089df8fd3f54ca7843f7ee2952978cad1 ]
+[ Upstream commit aa4a447b81b84f69c1a89ad899df157f386d7636 ]
 
-Simon Kapadia reported the following issue:
+In rtl28xxu_i2c_xfer, msg is controlled by user. When msg[i].buf
+is null and msg[i].len is zero, former checks on msg[i].buf would be
+passed. Malicious data finally reach rtl28xxu_i2c_xfer. If accessing
+msg[i].buf[0] without sanity check, null ptr deref would happen.
+We add check on msg[i].len to prevent crash.
 
-<quote>
+Similar commit:
+commit 0ed554fd769a
+("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
 
-The Online Amateur Radio Community (OARC) has recently been experimenting
-with building a nationwide packet network in the UK.
-As part of our experimentation, we have been testing out packet on 300bps HF,
-and playing with net/rom.  For HF packet at this baud rate you really need
-to make sure that your MTU is relatively low; AX.25 suggests a PACLEN of 60,
-and a net/rom PACLEN of 40 to go with that.
-However the Linux net/rom support didn't work with a low PACLEN;
-the mkiss module would truncate packets if you set the PACLEN below about 200 or so, e.g.:
-
-Apr 19 14:00:51 radio kernel: [12985.747310] mkiss: ax1: truncating oversized transmit packet!
-
-This didn't make any sense to me (if the packets are smaller why would they
-be truncated?) so I started investigating.
-I looked at the packets using ethereal, and found that many were just huge
-compared to what I would expect.
-A simple net/rom connection request packet had the request and then a bunch
-of what appeared to be random data following it:
-
-</quote>
-
-Simon provided a patch that I slightly revised:
-Not only we must not use skb_tailroom(), we also do
-not want to count NR_NETWORK_LEN twice.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-Developed-by: Simon Kapadia <szymon@kapadia.pl>
-Signed-off-by: Simon Kapadia <szymon@kapadia.pl>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Tested-by: Simon Kapadia <szymon@kapadia.pl>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230524141456.1045467-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/linux-media/tencent_3623572106754AC2F266B316798B0F6CCA05@qq.com
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_subr.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/usb/dvb-usb-v2/rtl28xxu.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
-index 3f99b432ea707..e2d2af924cff4 100644
---- a/net/netrom/nr_subr.c
-+++ b/net/netrom/nr_subr.c
-@@ -123,7 +123,7 @@ void nr_write_internal(struct sock *sk, int frametype)
- 	unsigned char  *dptr;
- 	int len, timeout;
- 
--	len = NR_NETWORK_LEN + NR_TRANSPORT_LEN;
-+	len = NR_TRANSPORT_LEN;
- 
- 	switch (frametype & 0x0F) {
- 	case NR_CONNREQ:
-@@ -141,7 +141,8 @@ void nr_write_internal(struct sock *sk, int frametype)
- 		return;
- 	}
- 
--	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
-+	skb = alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
-+	if (!skb)
- 		return;
- 
- 	/*
-@@ -149,7 +150,7 @@ void nr_write_internal(struct sock *sk, int frametype)
- 	 */
- 	skb_reserve(skb, NR_NETWORK_LEN);
- 
--	dptr = skb_put(skb, skb_tailroom(skb));
-+	dptr = skb_put(skb, len);
- 
- 	switch (frametype & 0x0F) {
- 	case NR_CONNREQ:
+diff --git a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+index 0fe71437601e7..ec9bbd8c89ad3 100644
+--- a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
++++ b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+@@ -176,6 +176,10 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			ret = -EOPNOTSUPP;
+ 			goto err_mutex_unlock;
+ 		} else if (msg[0].addr == 0x10) {
++			if (msg[0].len < 1 || msg[1].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 1 - integrated demod */
+ 			if (msg[0].buf[0] == 0x00) {
+ 				/* return demod page from driver cache */
+@@ -189,6 +193,10 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 				ret = rtl28xxu_ctrl_msg(d, &req);
+ 			}
+ 		} else if (msg[0].len < 2) {
++			if (msg[0].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 2 - old I2C */
+ 			req.value = (msg[0].buf[0] << 8) | (msg[0].addr << 1);
+ 			req.index = CMD_I2C_RD;
+@@ -217,8 +225,16 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			ret = -EOPNOTSUPP;
+ 			goto err_mutex_unlock;
+ 		} else if (msg[0].addr == 0x10) {
++			if (msg[0].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 1 - integrated demod */
+ 			if (msg[0].buf[0] == 0x00) {
++				if (msg[0].len < 2) {
++					ret = -EOPNOTSUPP;
++					goto err_mutex_unlock;
++				}
+ 				/* save demod page for later demod access */
+ 				dev->page = msg[0].buf[1];
+ 				ret = 0;
+@@ -231,6 +247,10 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 				ret = rtl28xxu_ctrl_msg(d, &req);
+ 			}
+ 		} else if ((msg[0].len < 23) && (!dev->new_i2c_write)) {
++			if (msg[0].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 2 - old I2C */
+ 			req.value = (msg[0].buf[0] << 8) | (msg[0].addr << 1);
+ 			req.index = CMD_I2C_WR;
 -- 
 2.39.2
 
