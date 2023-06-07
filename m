@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C048A3AE45
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:24:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4D6C4339C;
-	Wed,  7 Jun 2023 20:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F343AE45
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:25:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48BAC4339C;
+	Wed,  7 Jun 2023 20:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169498;
-	bh=F2tSUni0cZQG0SwdTd0BlKZ6XVj+54AZYtoBRN6InGQ=;
+	s=korg; t=1686169501;
+	bh=NQKC4SN9UM8KchLda/8RBvpPfihMAde48nkwj0DacwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=daZ8vF8lB8wtGRjZECkKkc3rRD5PjFl6SECMCTQVfzrxiFoOO7kri8kUYAW5no8F5
-	 wEeodqX1nhFLC7Fy2pQb6nqAi8nfKiVVMZLTxFrnEbEjKWbHldpQ72cjFx+axxEhh1
-	 WqjGJHXhcaQr/XGTVOVq9uXSc0Gp3stVxGC/qMJU=
+	b=SOSYHVQ+QtrSiufc/JC6CvU9lQASIPc38AsHpppXyJizijVT9ftypWAZVXtwrXqV1
+	 iNgvroKBsNFoU+FU6N7oqDLgbhNHxTU9AYW09SKebtylA/q0lIrsX9yJD/acX546yO
+	 Lg6esKTwb7W/cmxs9fY7SNYwYNE8vaTl5cN2eQDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 6.3 074/286] ice: recycle/free all of the fragments from multi-buffer frame
-Date: Wed,  7 Jun 2023 22:12:53 +0200
-Message-ID: <20230607200925.499291968@linuxfoundation.org>
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 065/286] iommu/mediatek: Flush IOTLB completely only if domain has been attached
+Date: Wed,  7 Jun 2023 22:12:44 +0200
+Message-ID: <20230607200925.190540763@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -38,90 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit abaf8d51b0cedb16af51fb6b2189370d7515977c ]
+[ Upstream commit b3fc95709c54ffbe80f16801e0a792a4d2b3d55e ]
 
-The ice driver caches next_to_clean value at the beginning of
-ice_clean_rx_irq() in order to remember the first buffer that has to be
-freed/recycled after main Rx processing loop. The end boundary is
-indicated by first descriptor of frame that Rx processing loop has ended
-its duties. Note that if mentioned loop ended in the middle of gathering
-multi-buffer frame, next_to_clean would be pointing to the descriptor in
-the middle of the frame BUT freeing/recycling stage will stop at the
-first descriptor. This means that next iteration of ice_clean_rx_irq()
-will miss the (first_desc, next_to_clean - 1) entries.
+If an IOMMU domain was never attached, it lacks any linkage to the
+actual IOMMU hardware. Attempting to do flush_iotlb_all() on it will
+result in a NULL pointer dereference. This seems to happen after the
+recent IOMMU core rework in v6.4-rc1.
 
- When running various 9K MTU workloads, such splats were observed:
+    Unable to handle kernel read from unreadable memory at virtual address 0000000000000018
+    Call trace:
+     mtk_iommu_flush_iotlb_all+0x20/0x80
+     iommu_create_device_direct_mappings.part.0+0x13c/0x230
+     iommu_setup_default_domain+0x29c/0x4d0
+     iommu_probe_device+0x12c/0x190
+     of_iommu_configure+0x140/0x208
+     of_dma_configure_id+0x19c/0x3c0
+     platform_dma_configure+0x38/0x88
+     really_probe+0x78/0x2c0
 
-[  540.780716] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[  540.787787] #PF: supervisor read access in kernel mode
-[  540.793002] #PF: error_code(0x0000) - not-present page
-[  540.798218] PGD 0 P4D 0
-[  540.800801] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[  540.805231] CPU: 18 PID: 3984 Comm: xskxceiver Tainted: G        W          6.3.0-rc7+ #96
-[  540.813619] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0008.031920191559 03/19/2019
-[  540.824209] RIP: 0010:ice_clean_rx_irq+0x2b6/0xf00 [ice]
-[  540.829678] Code: 74 24 10 e9 aa 00 00 00 8b 55 78 41 31 57 10 41 09 c4 4d 85 ff 0f 84 83 00 00 00 49 8b 57 08 41 8b 4f 1c 65 8b 35 1a fa 4b 3f <48> 8b 02 48 c1 e8 3a 39 c6 0f 85 a2 00 00 00 f6 42 08 02 0f 85 98
-[  540.848717] RSP: 0018:ffffc9000f42fc50 EFLAGS: 00010282
-[  540.854029] RAX: 0000000000000004 RBX: 0000000000000002 RCX: 000000000000fffe
-[  540.861272] RDX: 0000000000000000 RSI: 0000000000000001 RDI: 00000000ffffffff
-[  540.868519] RBP: ffff88984a05ac00 R08: 0000000000000000 R09: dead000000000100
-[  540.875760] R10: ffff88983fffcd00 R11: 000000000010f2b8 R12: 0000000000000004
-[  540.883008] R13: 0000000000000003 R14: 0000000000000800 R15: ffff889847a10040
-[  540.890253] FS:  00007f6ddf7fe640(0000) GS:ffff88afdf800000(0000) knlGS:0000000000000000
-[  540.898465] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  540.904299] CR2: 0000000000000000 CR3: 000000010d3da001 CR4: 00000000007706e0
-[  540.911542] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  540.918789] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[  540.926032] PKRU: 55555554
-[  540.928790] Call Trace:
-[  540.931276]  <TASK>
-[  540.933418]  ice_napi_poll+0x4ca/0x6d0 [ice]
-[  540.937804]  ? __pfx_ice_napi_poll+0x10/0x10 [ice]
-[  540.942716]  napi_busy_loop+0xd7/0x320
-[  540.946537]  xsk_recvmsg+0x143/0x170
-[  540.950178]  sock_recvmsg+0x99/0xa0
-[  540.953729]  __sys_recvfrom+0xa8/0x120
-[  540.957543]  ? do_futex+0xbd/0x1d0
-[  540.961008]  ? __x64_sys_futex+0x73/0x1d0
-[  540.965083]  __x64_sys_recvfrom+0x20/0x30
-[  540.969155]  do_syscall_64+0x38/0x90
-[  540.972796]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[  540.977934] RIP: 0033:0x7f6de5f27934
+Check if the "bank" field has been filled in before actually attempting
+the IOTLB flush to avoid it. The IOTLB is also flushed when the device
+comes out of runtime suspend, so it should have a clean initial state.
 
-To fix this, set cached_ntc to first_desc so that at the end, when
-freeing/recycling buffers, descriptors from first to ntc are not missed.
-
-Fixes: 2fba7dc5157b ("ice: Add support for XDP multi-buffer on Rx side")
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20230531154457.3216621-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 08500c43d4f7 ("iommu/mediatek: Adjust the structure")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Yong Wu <yong.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230526085402.394239-1-wenst@chromium.org
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/mtk_iommu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 059bd911c51d8..52d0a126eb616 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -1152,11 +1152,11 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
- 	unsigned int total_rx_bytes = 0, total_rx_pkts = 0;
- 	unsigned int offset = rx_ring->rx_offset;
- 	struct xdp_buff *xdp = &rx_ring->xdp;
-+	u32 cached_ntc = rx_ring->first_desc;
- 	struct ice_tx_ring *xdp_ring = NULL;
- 	struct bpf_prog *xdp_prog = NULL;
- 	u32 ntc = rx_ring->next_to_clean;
- 	u32 cnt = rx_ring->count;
--	u32 cached_ntc = ntc;
- 	u32 xdp_xmit = 0;
- 	u32 cached_ntu;
- 	bool failure;
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index 6a00ce208dc2b..248b8c2bc4071 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -738,7 +738,8 @@ static void mtk_iommu_flush_iotlb_all(struct iommu_domain *domain)
+ {
+ 	struct mtk_iommu_domain *dom = to_mtk_domain(domain);
+ 
+-	mtk_iommu_tlb_flush_all(dom->bank->parent_data);
++	if (dom->bank)
++		mtk_iommu_tlb_flush_all(dom->bank->parent_data);
+ }
+ 
+ static void mtk_iommu_iotlb_sync(struct iommu_domain *domain,
 -- 
 2.39.2
 
