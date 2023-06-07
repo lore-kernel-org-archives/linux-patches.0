@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8750834CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDFDC433EF;
-	Wed,  7 Jun 2023 21:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2987534CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A060BC433D2;
+	Wed,  7 Jun 2023 21:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171629;
-	bh=W7cDmmMskAmQKOeAEBTMMtSUHQeSM063tf6xjoDLGpQ=;
+	s=korg; t=1686171632;
+	bh=awLwyRpuLvxzkYp1+BuQee70cH6x2ekPPiLJGmfacb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SSutqo7GI0ITxH8Vfso1z294Y+z+Fkl63VroElgrIrOYUtkFDRdTqIdLbY3Yg2C2g
-	 /V8XcIxMam0NbdmOHF94MVhv2acqeDWD1UQkfZWYiWCFIaKsfvPgITAGGIsrbV2/B1
-	 8mHa146SqieJS0Q8saA5yQ0ae6ja9y9ulme6oH9Y=
+	b=N7jb08VKlhyFMmj41J2NSoOVszd/HQ8/uxcD3Ra8W3hcO2N4IwmtSPvcWlpisOhya
+	 HcuDfmBBdk+HCybFPB/ZIzSviQaMHOMDxTl8FFpx3bdDjofV2KHfjvgZby+mBKiy2E
+	 sR+LLpOlYOQ+HFmSj4Rh5YiTBLMPTMDPuu/l8tmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/159] drm/msm: Be more shouty if per-process pgtables arent working
-Date: Wed,  7 Jun 2023 22:16:34 +0200
-Message-ID: <20230607200906.674981193@linuxfoundation.org>
+Subject: [PATCH 5.15 092/159] atm: hide unused procfs functions
+Date: Wed,  7 Jun 2023 22:16:35 +0200
+Message-ID: <20230607200906.706408939@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,40 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5c054db54c43a5fcb5cc81012361f5e3fac37637 ]
+[ Upstream commit fb1b7be9b16c1f4626969ba4e95a97da2a452b41 ]
 
-Otherwise it is not always obvious if a dt or iommu change is causing us
-to fall back to global pgtable.
+When CONFIG_PROC_FS is disabled, the function declarations for some
+procfs functions are hidden, but the definitions are still build,
+as shown by this compiler warning:
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/537359/
-Link: https://lore.kernel.org/r/20230516222039.907690-2-robdclark@gmail.com
+net/atm/resources.c:403:7: error: no previous prototype for 'atm_dev_seq_start' [-Werror=missing-prototypes]
+net/atm/resources.c:409:6: error: no previous prototype for 'atm_dev_seq_stop' [-Werror=missing-prototypes]
+net/atm/resources.c:414:7: error: no previous prototype for 'atm_dev_seq_next' [-Werror=missing-prototypes]
+
+Add another #ifdef to leave these out of the build.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230516194625.549249-2-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_iommu.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/atm/resources.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index a54ed354578b5..ef4da3f0cd22d 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -157,7 +157,12 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
- 	/* Get the pagetable configuration from the domain */
- 	if (adreno_smmu->cookie)
- 		ttbr1_cfg = adreno_smmu->get_ttbr1_cfg(adreno_smmu->cookie);
--	if (!ttbr1_cfg)
-+
-+	/*
-+	 * If you hit this WARN_ONCE() you are probably missing an entry in
-+	 * qcom_smmu_impl_of_match[] in arm-smmu-qcom.c
-+	 */
-+	if (WARN_ONCE(!ttbr1_cfg, "No per-process page tables"))
- 		return ERR_PTR(-ENODEV);
+diff --git a/net/atm/resources.c b/net/atm/resources.c
+index 2b2d33eeaf200..995d29e7fb138 100644
+--- a/net/atm/resources.c
++++ b/net/atm/resources.c
+@@ -400,6 +400,7 @@ int atm_dev_ioctl(unsigned int cmd, void __user *buf, int __user *sioc_len,
+ 	return error;
+ }
  
- 	/*
++#ifdef CONFIG_PROC_FS
+ void *atm_dev_seq_start(struct seq_file *seq, loff_t *pos)
+ {
+ 	mutex_lock(&atm_dev_mutex);
+@@ -415,3 +416,4 @@ void *atm_dev_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ {
+ 	return seq_list_next(v, &atm_devs, pos);
+ }
++#endif
 -- 
 2.39.2
 
