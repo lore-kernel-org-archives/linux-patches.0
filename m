@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AFA34CF6
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4B9C433EF;
-	Wed,  7 Jun 2023 20:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117123925A
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:21:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFE9C433EF;
+	Wed,  7 Jun 2023 20:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169263;
-	bh=VWMbQlVBTydQfOAgcWyJNsnZoDMc+LJxmrmPknC6Bpo=;
+	s=korg; t=1686169268;
+	bh=c5ZuE0yaAWFLmKZiWkPwIe9FoGlS6223SAYh/GBDZus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OW9hSJy6+OYkq9BRDKBuXyEOZwayaE/qKBpX5+F5pDgOpv/tWPelF/OS8qXdT3JGb
-	 inKEiDxJwV740b+HaDlfP7FHdKsdej3tSM6QF7Y0ieaTlT9LWKoHFM2N1jHdqTPEIC
-	 lBnqQnS7yS5+nvbxZfVJTmWWZQ+koK6Bw/rHjFic=
+	b=truU1XtbvpoVdhpfk/RzPSwl2iT7x67Agl6xr0bf04upQzXhXID844IOehXO23oRb
+	 8oDWMcCN4HnaOple3Y3wbpOvooYRu9IOSpHsLP12o4lHM8+FCAA3n0R3C4DRXyBjU1
+	 6SV1GuogK5YsANoibo7P9WmYIoq9kuY1+SyZ6Y5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jaswinder Singh <jassisinghbrar@gmail.com>,
+	Boojin Kim <boojin.kim@samsung.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Russell King <rmk+kernel@arm.linux.org.uk>,
+	Vinod Koul <vkoul@kernel.org>,
+	dmaengine@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 015/286] iommu/amd: Add missing domain type checks
-Date: Wed,  7 Jun 2023 22:11:54 +0200
-Message-ID: <20230607200923.507514222@linuxfoundation.org>
+Subject: [PATCH 6.3 017/286] dmaengine: pl330: rename _start to prevent build error
+Date: Wed,  7 Jun 2023 22:11:56 +0200
+Message-ID: <20230607200923.569395420@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,55 +41,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 29f54745f24547a84b18582e054df9bea1a7bf3e ]
+[ Upstream commit a1a5f2c887252dec161c1e12e04303ca9ba56fa9 ]
 
-Drivers are supposed to list the domain types they support in their
-domain_alloc() ops so when we add new domain types, like BLOCKING or SVA,
-they don't start breaking.
+"_start" is used in several arches and proably should be reserved
+for ARCH usage. Using it in a driver for a private symbol can cause
+a build error when it conflicts with ARCH usage of the same symbol.
 
-This ended up providing an empty UNMANAGED domain when the core code asked
-for a BLOCKING domain, which happens to be the fallback for drivers that
-don't support it, but this is completely wrong for SVA.
+Therefore rename pl330's "_start" to "pl330_start_thread" so that there
+is no conflict and no build error.
 
-Check for the DMA types AMD supports and reject every other kind.
+drivers/dma/pl330.c:1053:13: error: '_start' redeclared as different kind of symbol
+ 1053 | static bool _start(struct pl330_thread *thrd)
+      |             ^~~~~~
+In file included from ../include/linux/interrupt.h:21,
+                 from ../drivers/dma/pl330.c:18:
+arch/riscv/include/asm/sections.h:11:13: note: previous declaration of '_start' with type 'char[]'
+   11 | extern char _start[];
+      |             ^~~~~~
 
-Fixes: 136467962e49 ("iommu: Add IOMMU SVA domain support")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/0-v1-2ac37b893728+da-amd_check_types_jgg@nvidia.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: b7d861d93945 ("DMA: PL330: Merge PL330 driver into drivers/dma/")
+Fixes: ae43b3289186 ("ARM: 8202/1: dmaengine: pl330: Add runtime Power Management support v12")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jaswinder Singh <jassisinghbrar@gmail.com>
+Cc: Boojin Kim <boojin.kim@samsung.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Link: https://lore.kernel.org/r/20230524045310.27923-1-rdunlap@infradead.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/dma/pl330.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 478da9b4a1b14..8bd5390808784 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -2065,7 +2065,7 @@ static struct protection_domain *protection_domain_alloc(unsigned int type)
- {
- 	struct io_pgtable_ops *pgtbl_ops;
- 	struct protection_domain *domain;
--	int pgtable = amd_iommu_pgtable;
-+	int pgtable;
- 	int mode = DEFAULT_PGTABLE_LEVEL;
- 	int ret;
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index 0d9257fbdfb0d..b4731fe6bbc14 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -1050,7 +1050,7 @@ static bool _trigger(struct pl330_thread *thrd)
+ 	return true;
+ }
  
-@@ -2082,6 +2082,10 @@ static struct protection_domain *protection_domain_alloc(unsigned int type)
- 		mode = PAGE_MODE_NONE;
- 	} else if (type == IOMMU_DOMAIN_UNMANAGED) {
- 		pgtable = AMD_IOMMU_V1;
-+	} else if (type == IOMMU_DOMAIN_DMA || type == IOMMU_DOMAIN_DMA_FQ) {
-+		pgtable = amd_iommu_pgtable;
-+	} else {
-+		return NULL;
+-static bool _start(struct pl330_thread *thrd)
++static bool pl330_start_thread(struct pl330_thread *thrd)
+ {
+ 	switch (_state(thrd)) {
+ 	case PL330_STATE_FAULT_COMPLETING:
+@@ -1702,7 +1702,7 @@ static int pl330_update(struct pl330_dmac *pl330)
+ 			thrd->req_running = -1;
+ 
+ 			/* Get going again ASAP */
+-			_start(thrd);
++			pl330_start_thread(thrd);
+ 
+ 			/* For now, just make a list of callbacks to be done */
+ 			list_add_tail(&descdone->rqd, &pl330->req_done);
+@@ -2089,7 +2089,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
+ 	} else {
+ 		/* Make sure the PL330 Channel thread is active */
+ 		spin_lock(&pch->thread->dmac->lock);
+-		_start(pch->thread);
++		pl330_start_thread(pch->thread);
+ 		spin_unlock(&pch->thread->dmac->lock);
  	}
  
- 	switch (pgtable) {
+@@ -2107,7 +2107,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
+ 			if (power_down) {
+ 				pch->active = true;
+ 				spin_lock(&pch->thread->dmac->lock);
+-				_start(pch->thread);
++				pl330_start_thread(pch->thread);
+ 				spin_unlock(&pch->thread->dmac->lock);
+ 				power_down = false;
+ 			}
 -- 
 2.39.2
 
