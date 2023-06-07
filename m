@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB611D2A5
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0F0C4339B;
-	Wed,  7 Jun 2023 20:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744C01D2A5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6FEC433EF;
+	Wed,  7 Jun 2023 20:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171036;
-	bh=qI9z7O4OXyTVEdlNDLS5DmjGl2m9vv13NQWr4sdsfyw=;
+	s=korg; t=1686171039;
+	bh=k87Tmf5cJh/XYC2LnSDfEVGEMXUyn4fGbV50Ai0gCqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sKIdCIS1ubgE6FfRRCGGjSv33qA2OTARUFxc5beY6shm0A0DmR5Q7Zb5puRiRFqqf
-	 ChrKvlctX56C9RIYXIevUFglzzSpMdSBWCS5UvCuIILFXmG/F+c4aHdabshD4JEpra
-	 6oTPkJrMZ3nIGkWB8jl0AV2zD4/q1ceRMbBjeD1M=
+	b=x1Sf7kNGZTiYeZMNzEtdwUEo3vSBklVdEgwghIBKJJ6f2I1iwvsbNT97XUraAhA/6
+	 x5dcfsnHUCiqCx/kQXbU0XYySjL+qgx9IRVD3O8TECH6cnfugXzGcY9FTag6JSIx52
+	 4IGkcYS3rZmWKAmjCRwp7ufAi8jGdEt/r4++cW0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jason Yan <yanaijie@huawei.com>
-Subject: [PATCH 5.10 086/120] ata: libata-scsi: Use correct device no in ata_find_dev()
-Date: Wed,  7 Jun 2023 22:16:42 +0200
-Message-ID: <20230607200903.606004260@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>,
+	Borislav Petkov <bp@suse.de>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.10 087/120] x86/boot: Wrap literal addresses in absolute_pointer()
+Date: Wed,  7 Jun 2023 22:16:43 +0200
+Message-ID: <20230607200903.636612591@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -35,96 +35,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Kees Cook <keescook@chromium.org>
 
-commit 7f875850f20a42f488840c9df7af91ef7db2d576 upstream.
+commit aeb84412037b89e06f45e382f044da6f200e12f8 upstream.
 
-For devices not attached to a port multiplier and managed directly by
-libata, the device number passed to ata_find_dev() must always be lower
-than the maximum number of devices returned by ata_link_max_devices().
-That is 1 for SATA devices or 2 for an IDE link with master+slave
-devices. This device number is the SCSI device ID which matches these
-constraints as the IDs are generated per port and so never exceed the
-maximum number of devices for the link being used.
+GCC 11 (incorrectly[1]) assumes that literal values cast to (void *)
+should be treated like a NULL pointer with an offset, and raises
+diagnostics when doing bounds checking under -Warray-bounds. GCC 12
+got "smarter" about finding these:
 
-However, for libsas managed devices, SCSI device IDs are assigned per
-struct scsi_host, leading to device IDs for SATA devices that can be
-well in excess of libata per-link maximum number of devices. This
-results in ata_find_dev() to always return NULL for libsas managed
-devices except for the first device of the target scsi_host with ID
-(device number) equal to 0. This issue is visible by executing the
-hdparm utility, which fails. E.g.:
+  In function 'rdfs8',
+      inlined from 'vga_recalc_vertical' at /srv/code/arch/x86/boot/video-mode.c:124:29,
+      inlined from 'set_mode' at /srv/code/arch/x86/boot/video-mode.c:163:3:
+  /srv/code/arch/x86/boot/boot.h:114:9: warning: array subscript 0 is outside array bounds of 'u8[0]' {aka 'unsigned char[]'} [-Warray-bounds]
+    114 |         asm volatile("movb %%fs:%1,%0" : "=q" (v) : "m" (*(u8 *)addr));
+        |         ^~~
 
-hdparm -i /dev/sdX
-/dev/sdX:
-  HDIO_GET_IDENTITY failed: No message of desired type
+This has been solved in other places[2] already by using the recently
+added absolute_pointer() macro. Do the same here.
 
-Fix this by rewriting ata_find_dev() to ignore the device number for
-non-PMP attached devices with a link with at most 1 device, that is SATA
-devices. For these, the device number 0 is always used to
-return the correct pointer to the struct ata_device of the port link.
-This change excludes IDE master/slave setups (maximum number of devices
-per link is 2) and port-multiplier attached devices. Also, to be
-consistant with the fact that SCSI device IDs and channel numbers used
-as device numbers are both unsigned int, change the devno argument of
-ata_find_dev() to unsigned int.
+  [1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99578
+  [2] https://lore.kernel.org/all/20210912160149.2227137-1-linux@roeck-us.net/
 
-Reported-by: Xingui Yang <yangxingui@huawei.com>
-Fixes: 41bda9c98035 ("libata-link: update hotplug to handle PMP links")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20220227195918.705219-1-keescook@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |   34 ++++++++++++++++++++++++++--------
- 1 file changed, 26 insertions(+), 8 deletions(-)
+ arch/x86/boot/boot.h |   36 ++++++++++++++++++++++++------------
+ arch/x86/boot/main.c |    2 +-
+ 2 files changed, 25 insertions(+), 13 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -2742,18 +2742,36 @@ static unsigned int atapi_xlat(struct at
- 	return 0;
- }
+--- a/arch/x86/boot/boot.h
++++ b/arch/x86/boot/boot.h
+@@ -110,66 +110,78 @@ typedef unsigned int addr_t;
  
--static struct ata_device *ata_find_dev(struct ata_port *ap, int devno)
-+static struct ata_device *ata_find_dev(struct ata_port *ap, unsigned int devno)
+ static inline u8 rdfs8(addr_t addr)
  {
--	if (!sata_pmp_attached(ap)) {
--		if (likely(devno >= 0 &&
--			   devno < ata_link_max_devices(&ap->link)))
-+	/*
-+	 * For the non-PMP case, ata_link_max_devices() returns 1 (SATA case),
-+	 * or 2 (IDE master + slave case). However, the former case includes
-+	 * libsas hosted devices which are numbered per scsi host, leading
-+	 * to devno potentially being larger than 0 but with each struct
-+	 * ata_device having its own struct ata_port and struct ata_link.
-+	 * To accommodate these, ignore devno and always use device number 0.
-+	 */
-+	if (likely(!sata_pmp_attached(ap))) {
-+		int link_max_devices = ata_link_max_devices(&ap->link);
-+
-+		if (link_max_devices == 1)
-+			return &ap->link.device[0];
-+
-+		if (devno < link_max_devices)
- 			return &ap->link.device[devno];
--	} else {
--		if (likely(devno >= 0 &&
--			   devno < ap->nr_pmp_links))
--			return &ap->pmp_link[devno].device[0];
-+
-+		return NULL;
- 	}
- 
-+	/*
-+	 * For PMP-attached devices, the device number corresponds to C
-+	 * (channel) of SCSI [H:C:I:L], indicating the port pmp link
-+	 * for the device.
-+	 */
-+	if (devno < ap->nr_pmp_links)
-+		return &ap->pmp_link[devno].device[0];
-+
- 	return NULL;
++	u8 *ptr = (u8 *)absolute_pointer(addr);
+ 	u8 v;
+-	asm volatile("movb %%fs:%1,%0" : "=q" (v) : "m" (*(u8 *)addr));
++	asm volatile("movb %%fs:%1,%0" : "=q" (v) : "m" (*ptr));
+ 	return v;
+ }
+ static inline u16 rdfs16(addr_t addr)
+ {
++	u16 *ptr = (u16 *)absolute_pointer(addr);
+ 	u16 v;
+-	asm volatile("movw %%fs:%1,%0" : "=r" (v) : "m" (*(u16 *)addr));
++	asm volatile("movw %%fs:%1,%0" : "=r" (v) : "m" (*ptr));
+ 	return v;
+ }
+ static inline u32 rdfs32(addr_t addr)
+ {
++	u32 *ptr = (u32 *)absolute_pointer(addr);
+ 	u32 v;
+-	asm volatile("movl %%fs:%1,%0" : "=r" (v) : "m" (*(u32 *)addr));
++	asm volatile("movl %%fs:%1,%0" : "=r" (v) : "m" (*ptr));
+ 	return v;
  }
  
+ static inline void wrfs8(u8 v, addr_t addr)
+ {
+-	asm volatile("movb %1,%%fs:%0" : "+m" (*(u8 *)addr) : "qi" (v));
++	u8 *ptr = (u8 *)absolute_pointer(addr);
++	asm volatile("movb %1,%%fs:%0" : "+m" (*ptr) : "qi" (v));
+ }
+ static inline void wrfs16(u16 v, addr_t addr)
+ {
+-	asm volatile("movw %1,%%fs:%0" : "+m" (*(u16 *)addr) : "ri" (v));
++	u16 *ptr = (u16 *)absolute_pointer(addr);
++	asm volatile("movw %1,%%fs:%0" : "+m" (*ptr) : "ri" (v));
+ }
+ static inline void wrfs32(u32 v, addr_t addr)
+ {
+-	asm volatile("movl %1,%%fs:%0" : "+m" (*(u32 *)addr) : "ri" (v));
++	u32 *ptr = (u32 *)absolute_pointer(addr);
++	asm volatile("movl %1,%%fs:%0" : "+m" (*ptr) : "ri" (v));
+ }
+ 
+ static inline u8 rdgs8(addr_t addr)
+ {
++	u8 *ptr = (u8 *)absolute_pointer(addr);
+ 	u8 v;
+-	asm volatile("movb %%gs:%1,%0" : "=q" (v) : "m" (*(u8 *)addr));
++	asm volatile("movb %%gs:%1,%0" : "=q" (v) : "m" (*ptr));
+ 	return v;
+ }
+ static inline u16 rdgs16(addr_t addr)
+ {
++	u16 *ptr = (u16 *)absolute_pointer(addr);
+ 	u16 v;
+-	asm volatile("movw %%gs:%1,%0" : "=r" (v) : "m" (*(u16 *)addr));
++	asm volatile("movw %%gs:%1,%0" : "=r" (v) : "m" (*ptr));
+ 	return v;
+ }
+ static inline u32 rdgs32(addr_t addr)
+ {
++	u32 *ptr = (u32 *)absolute_pointer(addr);
+ 	u32 v;
+-	asm volatile("movl %%gs:%1,%0" : "=r" (v) : "m" (*(u32 *)addr));
++	asm volatile("movl %%gs:%1,%0" : "=r" (v) : "m" (*ptr));
+ 	return v;
+ }
+ 
+ static inline void wrgs8(u8 v, addr_t addr)
+ {
+-	asm volatile("movb %1,%%gs:%0" : "+m" (*(u8 *)addr) : "qi" (v));
++	u8 *ptr = (u8 *)absolute_pointer(addr);
++	asm volatile("movb %1,%%gs:%0" : "+m" (*ptr) : "qi" (v));
+ }
+ static inline void wrgs16(u16 v, addr_t addr)
+ {
+-	asm volatile("movw %1,%%gs:%0" : "+m" (*(u16 *)addr) : "ri" (v));
++	u16 *ptr = (u16 *)absolute_pointer(addr);
++	asm volatile("movw %1,%%gs:%0" : "+m" (*ptr) : "ri" (v));
+ }
+ static inline void wrgs32(u32 v, addr_t addr)
+ {
+-	asm volatile("movl %1,%%gs:%0" : "+m" (*(u32 *)addr) : "ri" (v));
++	u32 *ptr = (u32 *)absolute_pointer(addr);
++	asm volatile("movl %1,%%gs:%0" : "+m" (*ptr) : "ri" (v));
+ }
+ 
+ /* Note: these only return true/false, not a signed return value! */
+--- a/arch/x86/boot/main.c
++++ b/arch/x86/boot/main.c
+@@ -33,7 +33,7 @@ static void copy_boot_params(void)
+ 		u16 cl_offset;
+ 	};
+ 	const struct old_cmdline * const oldcmd =
+-		(const struct old_cmdline *)OLD_CL_ADDRESS;
++		absolute_pointer(OLD_CL_ADDRESS);
+ 
+ 	BUILD_BUG_ON(sizeof(boot_params) != 4096);
+ 	memcpy(&boot_params.hdr, &hdr, sizeof(hdr));
 
 
