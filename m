@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B847C28C1D
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B727C433EF;
-	Wed,  7 Jun 2023 20:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBBA34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:43:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC9EC4339B;
+	Wed,  7 Jun 2023 20:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170611;
-	bh=+/uUPiNKP6XTa6nO7f2KMIkLt3h0LH2qbjEpl6gAL2s=;
+	s=korg; t=1686170614;
+	bh=ODzEe5MTMPERDf+zXbuLdOTQOBegDNhuK6ZJ0a/0Ze4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXeROg1dKjZN81/eMt4dURRK519P9WqVZnoy9Gm/memwl6NdF4lXpiJskUjJxHIjp
-	 /y3v4NAQmVP0f0aiGAfwomc+LrDJ9kfIWTwRfCr6MWtXBavDWlm5IeOxnw/kHJ4bom
-	 a74jhrqsJC1Aa8ZBqfga2atQ2kEhKhdwIiJdSnTE=
+	b=g33pwPbyogHkFkNhknuKXkgp3w/gT4500RtZREqojB0Lt1k4lR4jPfhNgzNwH6pSl
+	 cW6wlc9/WE/IQIaIt5muC69fikVYpmccCnxPSrGgEr+Nci/jveTYcqb9Qs/eXqSut+
+	 2+6cVqXgLVliAnsHmTLakTpSQao9oxcvs4P5X5GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Honda <honda@mechatrax.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 149/225] iio: adc: ad_sigma_delta: Fix IRQ issue by setting IRQ_DISABLE_UNLAZY flag
-Date: Wed,  7 Jun 2023 22:15:42 +0200
-Message-ID: <20230607200919.290037359@linuxfoundation.org>
+	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
+	kernel test robot <lkp@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 121/225] wifi: b43: fix incorrect __packed annotation
+Date: Wed,  7 Jun 2023 22:15:14 +0200
+Message-ID: <20230607200918.332122848@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,49 +39,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Honda <honda@mechatrax.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 626d312028bec44209d0ecd5beaa9b1aa8945f7d upstream.
+[ Upstream commit 212457ccbd60dba34f965e4ffbe62f0e4f970538 ]
 
-The Sigma-Delta ADCs supported by this driver can use SDO as an interrupt
-line to indicate the completion of a conversion. However, some devices
-cannot properly detect the completion of a conversion by an interrupt.
-This is for the reason mentioned in the following commit.
+clang warns about an unpacked structure inside of a packed one:
 
-commit e9849777d0e2 ("genirq: Add flag to force mask in
-                      disable_irq[_nosync]()")
+drivers/net/wireless/broadcom/b43/b43.h:654:4: error: field data within 'struct b43_iv' is less aligned than 'union (unnamed union at /home/arnd/arm-soc/drivers/net/wireless/broadcom/b43/b43.h:651:2)' and is usually due to 'struct b43_iv' being packed, which can lead to unaligned accesses [-Werror,-Wunaligned-access]
 
-A read operation is performed by an extra interrupt before the completion
-of a conversion. At this time, the value read from the ADC data register
-is the same as the previous conversion result. This patch fixes the issue
-by setting IRQ_DISABLE_UNLAZY flag.
+The problem here is that the anonymous union has the default alignment
+from its members, apparently because the original author mixed up the
+placement of the __packed attribute by placing it next to the struct
+member rather than the union definition. As the struct itself is
+also marked as __packed, there is no need to mark its members, so just
+move the annotation to the inner type instead.
 
-Fixes: 0c6ef985a1fd ("iio: adc: ad7791: fix IRQ flags")
-Fixes: 1a913270e57a ("iio: adc: ad7793: Fix IRQ flag")
-Fixes: e081102f3077 ("iio: adc: ad7780: Fix IRQ flag")
-Fixes: 89a86da5cb8e ("iio: adc: ad7192: Add IRQ flag")
-Fixes: 79ef91493f54 ("iio: adc: ad7124: Set IRQ type to falling")
-Signed-off-by: Masahiro Honda <honda@mechatrax.com>
-Link: https://lore.kernel.org/r/20230518110816.248-1-honda@mechatrax.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As Michael noted, the same problem is present in b43legacy, so
+change both at the same time.
+
+Acked-by: Michael Büsch <m@bues.ch>
+Reported-by: kernel test robot <lkp@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
+Link: https://lore.kernel.org/oe-kbuild-all/202305160749.ay1HAoyP-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230516183442.536589-1-arnd@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/broadcom/b43/b43.h             | 2 +-
+ drivers/net/wireless/broadcom/b43legacy/b43legacy.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -584,6 +584,10 @@ static int devm_ad_sd_probe_trigger(stru
- 	init_completion(&sigma_delta->completion);
+diff --git a/drivers/net/wireless/broadcom/b43/b43.h b/drivers/net/wireless/broadcom/b43/b43.h
+index 9fc7c088a539e..67b4bac048e58 100644
+--- a/drivers/net/wireless/broadcom/b43/b43.h
++++ b/drivers/net/wireless/broadcom/b43/b43.h
+@@ -651,7 +651,7 @@ struct b43_iv {
+ 	union {
+ 		__be16 d16;
+ 		__be32 d32;
+-	} data __packed;
++	} __packed data;
+ } __packed;
  
- 	sigma_delta->irq_dis = true;
-+
-+	/* the IRQ core clears IRQ_DISABLE_UNLAZY flag when freeing an IRQ */
-+	irq_set_status_flags(sigma_delta->spi->irq, IRQ_DISABLE_UNLAZY);
-+
- 	ret = devm_request_irq(dev, sigma_delta->spi->irq,
- 			       ad_sd_data_rdy_trig_poll,
- 			       sigma_delta->info->irq_flags | IRQF_NO_AUTOEN,
+ 
+diff --git a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
+index 6b0cec467938f..f49365d14619f 100644
+--- a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
++++ b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
+@@ -379,7 +379,7 @@ struct b43legacy_iv {
+ 	union {
+ 		__be16 d16;
+ 		__be32 d32;
+-	} data __packed;
++	} __packed data;
+ } __packed;
+ 
+ #define B43legacy_PHYMODE(phytype)	(1 << (phytype))
+-- 
+2.39.2
+
 
 
