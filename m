@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A9F19E58
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:41:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0EDC433EF;
-	Wed,  7 Jun 2023 20:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B468519E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:41:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9C4C4339C;
+	Wed,  7 Jun 2023 20:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170505;
-	bh=FLZX+UK/82eRVORB7fraCDojcz+FqC8P5JdFgT7Lx34=;
+	s=korg; t=1686170508;
+	bh=1dT7wFJkBWARaM4TgchDygUGMMDM7LjG4SIsDJ+dEPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ny41H07HHb/eEbB/b6YoxGSrvIhiXevCDYYOUm/z6ba2MHhOst4pSFh8o1DVYewsI
-	 jFMqBQs50P9tWTz+wnYU5Mo+JAc6oYY8C2w8kp0zreiqQfAimfDEZyk+AMtiGFsoyu
-	 dmanAtESdQllUCtFKRzLQqRuNbMCMR5DfsiYwn7g=
+	b=S/RxvD8aBLEZ3Un8EOpz8SZwBVTIdeSR5vt+ImhS45D6xav3eh3kPsEE/GD1ypLcD
+	 D6SaIZjyWlPcRCZ1lOqvGwaW27PsRib50FXR9p6OEai1ssN9CONuw81L3TaSnKv7av
+	 mzpY5K0obZ4W9BgnHuKOBQ5Dg6jd07NNDyupSKvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	=?UTF-8?q?Rub=C3=A9n=20G=C3=B3mez=20Agudo?= <mrgommer@proton.me>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/225] s390/topology: honour nr_cpu_ids when adding CPUs
-Date: Wed,  7 Jun 2023 22:15:03 +0200
-Message-ID: <20230607200917.978460544@linuxfoundation.org>
+Subject: [PATCH 6.1 111/225] ACPI: resource: Add IRQ override quirk for LG UltraPC 17U70P
+Date: Wed,  7 Jun 2023 22:15:04 +0200
+Message-ID: <20230607200918.008117183@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,87 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Rubén Gómez <mrgommer@proton.me>
 
-[ Upstream commit a33239be2d38ff5a44427db1707c08787508d34a ]
+[ Upstream commit 71a485624c4cbb144169852d7bb8ca8c0667d7a3 ]
 
-When SMT thread CPUs are added to CPU masks the nr_cpu_ids
-limit is not checked and could be exceeded. This leads to
-a warning for example if CONFIG_DEBUG_PER_CPU_MAPS is set
-and the command line parameter nr_cpus is set to 1.
+Add an ACPI IRQ override quirk for LG UltraPC 17U70P to address the
+internal keyboard problem on it.
 
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=213031
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216983
+Signed-off-by: Rubén Gómez Agudo <mrgommer@proton.me>
+[ rjw: Subject, changelog, white space damage fixes ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/topology.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ drivers/acpi/resource.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/arch/s390/kernel/topology.c b/arch/s390/kernel/topology.c
-index c6eecd4a5302d..10b20aeb27d3b 100644
---- a/arch/s390/kernel/topology.c
-+++ b/arch/s390/kernel/topology.c
-@@ -95,7 +95,7 @@ static void cpu_group_map(cpumask_t *dst, struct mask_info *info, unsigned int c
- static void cpu_thread_map(cpumask_t *dst, unsigned int cpu)
- {
- 	static cpumask_t mask;
--	int i;
-+	unsigned int max_cpu;
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index d08818baea88f..a7f12bdbc5e25 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -502,6 +502,17 @@ static const struct dmi_system_id maingear_laptop[] = {
+ 	{ }
+ };
  
- 	cpumask_clear(&mask);
- 	if (!cpumask_test_cpu(cpu, &cpu_setup_mask))
-@@ -104,9 +104,10 @@ static void cpu_thread_map(cpumask_t *dst, unsigned int cpu)
- 	if (topology_mode != TOPOLOGY_MODE_HW)
- 		goto out;
- 	cpu -= cpu % (smp_cpu_mtid + 1);
--	for (i = 0; i <= smp_cpu_mtid; i++) {
--		if (cpumask_test_cpu(cpu + i, &cpu_setup_mask))
--			cpumask_set_cpu(cpu + i, &mask);
-+	max_cpu = min(cpu + smp_cpu_mtid, nr_cpu_ids - 1);
-+	for (; cpu <= max_cpu; cpu++) {
-+		if (cpumask_test_cpu(cpu, &cpu_setup_mask))
-+			cpumask_set_cpu(cpu, &mask);
- 	}
- out:
- 	cpumask_copy(dst, &mask);
-@@ -123,25 +124,26 @@ static void add_cpus_to_mask(struct topology_core *tl_core,
- 	unsigned int core;
++static const struct dmi_system_id lg_laptop[] = {
++	{
++		.ident = "LG Electronics 17U70P",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LG Electronics"),
++			DMI_MATCH(DMI_BOARD_NAME, "17U70P"),
++		},
++	},
++	{ }
++};
++
+ struct irq_override_cmp {
+ 	const struct dmi_system_id *system;
+ 	unsigned char irq;
+@@ -518,6 +529,7 @@ static const struct irq_override_cmp override_table[] = {
+ 	{ lenovo_laptop, 10, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
+ 	{ tongfang_gm_rg, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
+ 	{ maingear_laptop, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
++	{ lg_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
+ };
  
- 	for_each_set_bit(core, &tl_core->mask, TOPOLOGY_CORE_BITS) {
--		unsigned int rcore;
--		int lcpu, i;
-+		unsigned int max_cpu, rcore;
-+		int cpu;
- 
- 		rcore = TOPOLOGY_CORE_BITS - 1 - core + tl_core->origin;
--		lcpu = smp_find_processor_id(rcore << smp_cpu_mt_shift);
--		if (lcpu < 0)
-+		cpu = smp_find_processor_id(rcore << smp_cpu_mt_shift);
-+		if (cpu < 0)
- 			continue;
--		for (i = 0; i <= smp_cpu_mtid; i++) {
--			topo = &cpu_topology[lcpu + i];
-+		max_cpu = min(cpu + smp_cpu_mtid, nr_cpu_ids - 1);
-+		for (; cpu <= max_cpu; cpu++) {
-+			topo = &cpu_topology[cpu];
- 			topo->drawer_id = drawer->id;
- 			topo->book_id = book->id;
- 			topo->socket_id = socket->id;
- 			topo->core_id = rcore;
--			topo->thread_id = lcpu + i;
-+			topo->thread_id = cpu;
- 			topo->dedicated = tl_core->d;
--			cpumask_set_cpu(lcpu + i, &drawer->mask);
--			cpumask_set_cpu(lcpu + i, &book->mask);
--			cpumask_set_cpu(lcpu + i, &socket->mask);
--			smp_cpu_set_polarization(lcpu + i, tl_core->pp);
-+			cpumask_set_cpu(cpu, &drawer->mask);
-+			cpumask_set_cpu(cpu, &book->mask);
-+			cpumask_set_cpu(cpu, &socket->mask);
-+			smp_cpu_set_polarization(cpu, tl_core->pp);
- 		}
- 	}
- }
+ static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
 -- 
 2.39.2
 
