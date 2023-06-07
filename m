@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57FC119E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD49C433D2;
-	Wed,  7 Jun 2023 20:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40CB19E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640AEC433D2;
+	Wed,  7 Jun 2023 20:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170227;
-	bh=K6XDrCjId0MI42df+y4zJ6d3LFizzgee48/3855eNvo=;
+	s=korg; t=1686170229;
+	bh=9/IyJn0IgiwHspJi4zQ0p07NCFhdpu98U1555qRM39s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LelpHotOOOAw9wgbACW72unhTpMS6of/FaGgk63cgiKXIp6OP+b6hNaKAq2mir5dQ
-	 nycv2IGDjzvQP14aGEk2pfHgKshcdqZ6FEd/3nqI25c7wVFWRE2pcvWIrroQywOdb9
-	 ct+K7P4FUoDE1YmAYH2dElBNFw/yWuCBr6PWqeAY=
+	b=MpvwVr9S+/dVOw+VGRsfqXbhV1+tsLZkFISX+siXVJ2FEO1SNryO6rPRdoYKCVXxd
+	 k8X/yo8YP4pRvDRfXXpclY+OBXx2Z9uuqNTgPBfaTN9pa9FIt+Jrbx0ujCcxaHd7aS
+	 YwRznAMCQY7fqd+sy+CwNReBmbbflrAX5gTJSKGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 4.19 63/88] HID: wacom: avoid integer overflow in wacom_intuos_inout()
-Date: Wed,  7 Jun 2023 22:16:20 +0200
-Message-ID: <20230607200901.206895482@linuxfoundation.org>
+	Marek Vasut <marex@denx.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 4.19 64/88] iio: dac: mcp4725: Fix i2c_master_send() return value handling
+Date: Wed,  7 Jun 2023 22:16:21 +0200
+Message-ID: <20230607200901.237570134@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -35,39 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Marek Vasut <marex@denx.de>
 
-commit bd249b91977b768ea02bf84d04625d2690ad2b98 upstream.
+commit 09d3bec7009186bdba77039df01e5834788b3f95 upstream.
 
-If high bit is set to 1 in ((data[3] & 0x0f << 28), after all arithmetic
-operations and integer promotions are done, high bits in
-wacom->serial[idx] will be filled with 1s as well.
-Avoid this, albeit unlikely, issue by specifying left operand's __u64
-type for the right operand.
+The i2c_master_send() returns number of sent bytes on success,
+or negative on error. The suspend/resume callbacks expect zero
+on success and non-zero on error. Adapt the return value of the
+i2c_master_send() to the expectation of the suspend and resume
+callbacks, including proper validation of the return value.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 3bea733ab212 ("USB: wacom tablet driver reorganization")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: cf35ad61aca2 ("iio: add mcp4725 I2C DAC driver")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230511004330.206942-1-marex@denx.de
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/dac/mcp4725.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -781,7 +781,7 @@ static int wacom_intuos_inout(struct wac
- 	/* Enter report */
- 	if ((data[1] & 0xfc) == 0xc0) {
- 		/* serial number of the tool */
--		wacom->serial[idx] = ((data[3] & 0x0f) << 28) +
-+		wacom->serial[idx] = ((__u64)(data[3] & 0x0f) << 28) +
- 			(data[4] << 20) + (data[5] << 12) +
- 			(data[6] << 4) + (data[7] >> 4);
+--- a/drivers/iio/dac/mcp4725.c
++++ b/drivers/iio/dac/mcp4725.c
+@@ -50,12 +50,18 @@ static int mcp4725_suspend(struct device
+ 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
+ 		to_i2c_client(dev)));
+ 	u8 outbuf[2];
++	int ret;
  
+ 	outbuf[0] = (data->powerdown_mode + 1) << 4;
+ 	outbuf[1] = 0;
+ 	data->powerdown = true;
+ 
+-	return i2c_master_send(data->client, outbuf, 2);
++	ret = i2c_master_send(data->client, outbuf, 2);
++	if (ret < 0)
++		return ret;
++	else if (ret != 2)
++		return -EIO;
++	return 0;
+ }
+ 
+ static int mcp4725_resume(struct device *dev)
+@@ -63,13 +69,19 @@ static int mcp4725_resume(struct device
+ 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
+ 		to_i2c_client(dev)));
+ 	u8 outbuf[2];
++	int ret;
+ 
+ 	/* restore previous DAC value */
+ 	outbuf[0] = (data->dac_value >> 8) & 0xf;
+ 	outbuf[1] = data->dac_value & 0xff;
+ 	data->powerdown = false;
+ 
+-	return i2c_master_send(data->client, outbuf, 2);
++	ret = i2c_master_send(data->client, outbuf, 2);
++	if (ret < 0)
++		return ret;
++	else if (ret != 2)
++		return -EIO;
++	return 0;
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
 
 
