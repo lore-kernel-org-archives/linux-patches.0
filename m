@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7522319BAB
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2794C433D2;
-	Wed,  7 Jun 2023 20:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE02F19BC5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8DBC4339B;
+	Wed,  7 Jun 2023 20:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170067;
-	bh=aSN0lbtzXMXs/1vWBSvYzOfemNma3YUjOg7pNQEdPKg=;
+	s=korg; t=1686170064;
+	bh=BlFXP6Y74txutFxdgw9/CuM0Oc1b1LPiP2VuEmnZcPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oWDw6Leb7snus1YnkwY+8TWZD3IYs8vQJ0CK3lMz3uaw8IGJSYo8IMIAV+0KuhZ5p
-	 W4lkTingUC+vYlTCNRJjkNOR7t8mz8EAK5pOrEZ5zIQTg57++0OSWCMN99aenO4fRL
-	 nsKuMj3m3wPgU7CDT3EiNxyKnOGbC45zwUk/gcmw=
+	b=1odY/5C4oy313tQtZlKwfat2gJkPAaG5oXiCcMlrNAe6LUh4TY3oGKMiBwP/mBBdt
+	 e+FKv4r3MDpegmmdq2qTRKZXZG1KC9l2djplii88drHQ7HQr/Xp0IXNMNPiv0SXdua
+	 T6UZmoDIp6PTmYvgo2loZoTUXBFTnFFq69eGfh30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 33/88] fbdev: stifb: Fix info entry in sti_struct on error path
-Date: Wed,  7 Jun 2023 22:15:50 +0200
-Message-ID: <20230607200900.225793579@linuxfoundation.org>
+Subject: [PATCH 4.19 24/88] net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report
+Date: Wed,  7 Jun 2023 22:15:41 +0200
+Message-ID: <20230607200859.796089377@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -34,30 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 0bdf1ad8d10bd4e50a8b1a2c53d15984165f7fea ]
+[ Upstream commit f4e4534850a9d18c250a93f8d7fbb51310828110 ]
 
-Minor fix to reset the info field to NULL in case of error.
+The current code for the length calculation wrongly truncates the reported
+length of the groups array, causing an under report of the subscribed
+groups. To fix this, use 'BITS_TO_BYTES()' which rounds up the
+division by 8.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: b42be38b2778 ("netlink: add API to retrieve all group memberships")
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230529153335.389815-1-pctammela@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/stifb.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netlink/af_netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/stifb.c b/drivers/video/fbdev/stifb.c
-index e606fc7287947..9c2be08026514 100644
---- a/drivers/video/fbdev/stifb.c
-+++ b/drivers/video/fbdev/stifb.c
-@@ -1371,6 +1371,7 @@ static int __init stifb_init_fb(struct sti_struct *sti, int bpp_pref)
- 	iounmap(info->screen_base);
- out_err0:
- 	kfree(fb);
-+	sti->info = NULL;
- 	return -ENXIO;
- }
- 
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index c73784b7b67dc..57fd9b7cfc75f 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1775,7 +1775,7 @@ static int netlink_getsockopt(struct socket *sock, int level, int optname,
+ 				break;
+ 			}
+ 		}
+-		if (put_user(ALIGN(nlk->ngroups / 8, sizeof(u32)), optlen))
++		if (put_user(ALIGN(BITS_TO_BYTES(nlk->ngroups), sizeof(u32)), optlen))
+ 			err = -EFAULT;
+ 		netlink_unlock_table();
+ 		return err;
 -- 
 2.39.2
 
