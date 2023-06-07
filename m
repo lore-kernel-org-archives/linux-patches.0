@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629793734F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE8AC433EF;
-	Wed,  7 Jun 2023 20:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676A638CD4
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765D1C433D2;
+	Wed,  7 Jun 2023 20:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171198;
-	bh=3SqNKzyEp2QucNdDjNdH82DWKVBdJdGbQ4RmXzo/yRU=;
+	s=korg; t=1686171200;
+	bh=yKGcdrssA11YUCE5AUIKpueGETZlG7QwlPbKBiFbRT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVsvG6Es8xBlB58+4CmYaqOKVbU7PBR1ATWvkUTH89GDqDjbKw0K8LZPfsZYvxQl2
-	 7LnQFqkn1F+Z9KFG24ZJHTx5/Uj7Fn+gP0MIf3DrANPvZatSHTLYiLKYOpyNKDXSIZ
-	 Yz0TCi0hKhgvDQVS4QxAe+JcMMdndXqKHTHjvOy4=
+	b=p2yAoL7XHEa7X6ySuReQfSz+xPTqVYPiPgPSSmNxkB3XS6+mlsi1KeMH7TstNMKMr
+	 T9C6MbPfYQvKEmiy5rEDi3zhwrHQE6Jc9jfD13ukKo6UAl2GHgnry0+eQJ2JalRIzT
+	 ixBsIKcUx93RgHXRScSynzexk8cM9kLhEed/o/wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Johannes Thumshirn <jth@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 27/99] mtd: rawnand: marvell: dont set the NAND frequency select
-Date: Wed,  7 Jun 2023 22:16:19 +0200
-Message-ID: <20230607200901.109916864@linuxfoundation.org>
+Subject: [PATCH 5.4 28/99] watchdog: menz069_wdt: fix watchdog initialisation
+Date: Wed,  7 Jun 2023 22:16:20 +0200
+Message-ID: <20230607200901.141275341@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -35,42 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Packham <chris.packham@alliedtelesis.co.nz>
+From: Johannes Thumshirn <jth@kernel.org>
 
-[ Upstream commit c4d28e30a8d0b979e4029465ab8f312ab6ce2644 ]
+[ Upstream commit 87b22656ca6a896d0378e9e60ffccb0c82f48b08 ]
 
-marvell_nfc_setup_interface() uses the frequency retrieved from the
-clock associated with the nand interface to determine the timings that
-will be used. By changing the NAND frequency select without reflecting
-this in the clock configuration this means that the timings calculated
-don't correctly meet the requirements of the NAND chip. This hasn't been
-an issue up to now because of a different bug that was stopping the
-timings being updated after they were initially set.
+Doing a 'cat /dev/watchdog0' with menz069_wdt as watchdog0 will result in
+a NULL pointer dereference.
 
-Fixes: b25251414f6e ("mtd: rawnand: marvell: Stop implementing ->select_chip()")
-Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230525003154.2303012-2-chris.packham@alliedtelesis.co.nz
+This happens because we're passing the wrong pointer to
+watchdog_register_device(). Fix this by getting rid of the static
+watchdog_device structure and use the one embedded into the driver's
+per-instance private data.
+
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230418172531.177349-2-jth@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/marvell_nand.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/watchdog/menz69_wdt.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/marvell_nand.c b/drivers/mtd/nand/raw/marvell_nand.c
-index 7ab9e9920c06e..c49a3e105b427 100644
---- a/drivers/mtd/nand/raw/marvell_nand.c
-+++ b/drivers/mtd/nand/raw/marvell_nand.c
-@@ -2834,10 +2834,6 @@ static int marvell_nfc_init(struct marvell_nfc *nfc)
- 		regmap_update_bits(sysctrl_base, GENCONF_CLK_GATING_CTRL,
- 				   GENCONF_CLK_GATING_CTRL_ND_GATE,
- 				   GENCONF_CLK_GATING_CTRL_ND_GATE);
--
--		regmap_update_bits(sysctrl_base, GENCONF_ND_CLK_CTRL,
--				   GENCONF_ND_CLK_CTRL_EN,
--				   GENCONF_ND_CLK_CTRL_EN);
- 	}
+diff --git a/drivers/watchdog/menz69_wdt.c b/drivers/watchdog/menz69_wdt.c
+index ed18238c54074..96a25d18ab643 100644
+--- a/drivers/watchdog/menz69_wdt.c
++++ b/drivers/watchdog/menz69_wdt.c
+@@ -98,14 +98,6 @@ static const struct watchdog_ops men_z069_ops = {
+ 	.set_timeout = men_z069_wdt_set_timeout,
+ };
  
- 	/* Configure the DMA if appropriate */
+-static struct watchdog_device men_z069_wdt = {
+-	.info = &men_z069_info,
+-	.ops = &men_z069_ops,
+-	.timeout = MEN_Z069_DEFAULT_TIMEOUT,
+-	.min_timeout = 1,
+-	.max_timeout = MEN_Z069_WDT_COUNTER_MAX / MEN_Z069_TIMER_FREQ,
+-};
+-
+ static int men_z069_probe(struct mcb_device *dev,
+ 			  const struct mcb_device_id *id)
+ {
+@@ -125,15 +117,19 @@ static int men_z069_probe(struct mcb_device *dev,
+ 		goto release_mem;
+ 
+ 	drv->mem = mem;
++	drv->wdt.info = &men_z069_info;
++	drv->wdt.ops = &men_z069_ops;
++	drv->wdt.timeout = MEN_Z069_DEFAULT_TIMEOUT;
++	drv->wdt.min_timeout = 1;
++	drv->wdt.max_timeout = MEN_Z069_WDT_COUNTER_MAX / MEN_Z069_TIMER_FREQ;
+ 
+-	drv->wdt = men_z069_wdt;
+ 	watchdog_init_timeout(&drv->wdt, 0, &dev->dev);
+ 	watchdog_set_nowayout(&drv->wdt, nowayout);
+ 	watchdog_set_drvdata(&drv->wdt, drv);
+ 	drv->wdt.parent = &dev->dev;
+ 	mcb_set_drvdata(dev, drv);
+ 
+-	return watchdog_register_device(&men_z069_wdt);
++	return watchdog_register_device(&drv->wdt);
+ 
+ release_mem:
+ 	mcb_release_mem(mem);
 -- 
 2.39.2
 
