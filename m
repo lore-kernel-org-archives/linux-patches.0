@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123D63AE5C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8477EC433D2;
-	Wed,  7 Jun 2023 20:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A157E3AE70
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F25C433D2;
+	Wed,  7 Jun 2023 20:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169849;
-	bh=l9k4Ba504JrgNcKDbap2cFVJnlwBTOvIBPAi0WF8Q9o=;
+	s=korg; t=1686169852;
+	bh=MKy8W4TcMGirM56Harss8Og5lfgLTlOGam4pi4oZM5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+MNaF+wBjtiRw6PbiiVu+nJ+kqCl61U7/fuMMO6Aq4jbyZ+tBinzmkfIsqlbRC6R
-	 WLoHeWhhKb4HU7KRh7YAXBExwTl9kNF7PKb/5SC3DvfOxFZKkrv15AVOWUodXT8dhv
-	 55VOpnr6b233kyoj1R9kctXZOZsGds73jmixcvG8=
+	b=yBbq5ud6NWdhKkYD38k9H4DWGmy+ge37I29XDwbJ7t/d87HOCa3wQk8Bdkn3GoBoJ
+	 fW2TOx00byZUCQf5gCvuYArrms+mDH0RzHzWvb7SeRN153bhsal8dgJFyl4ijLlJVr
+	 yLEjIpjHiscbyItKPFAKBayNXUk+x04Z8V64cPjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 238/286] btrfs: call btrfs_orig_bbio_end_io in btrfs_end_bio_work
-Date: Wed,  7 Jun 2023 22:15:37 +0200
-Message-ID: <20230607200931.070368575@linuxfoundation.org>
+	Mark Lord <mlord@pobox.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Jiri Kosina <jkosina@suse.cz>
+Subject: [PATCH 6.3 239/286] HID: hidpp: terminate retry loop on success
+Date: Wed,  7 Jun 2023 22:15:38 +0200
+Message-ID: <20230607200931.101345364@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,50 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit 45c2f36871955b51b4ce083c447388d8c72d6b91 ]
+From: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 
-When I implemented the storage layer bio splitting, I was under the
-assumption that we'll never split metadata bios.  But Qu reminded me that
-this can actually happen with very old file systems with unaligned
-metadata chunks and RAID0.
+commit 7c28afd5512e371773dbb2bf95a31ed5625651d9 upstream.
 
-I still haven't seen such a case in practice, but we better handled this
-case, especially as it is fairly easily to do not calling the ->end_іo
-method directly in btrfs_end_io_work, and using the proper
-btrfs_orig_bbio_end_io helper instead.
+It seems we forgot the normal case to terminate the retry loop,
+making us asking 3 times each command, which is probably a little bit
+too much.
 
-In addition to the old file system with unaligned metadata chunks case
-documented in the commit log, the combination of the new scrub code
-with Johannes pending raid-stripe-tree also triggers this case.  We
-spent some time debugging it and found that this patch solves
-the problem.
+And remove the ugly "goto exit" that can be replaced by a simpler "break"
 
-Fixes: 103c19723c80 ("btrfs: split the bio submission path into a separate file")
-CC: stable@vger.kernel.org # 6.3+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Tested-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 586e8fede795 ("HID: logitech-hidpp: Retry commands when device is busy")
+Suggested-by: Mark Lord <mlord@pobox.com>
+Tested-by: Mark Lord <mlord@pobox.com>
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/bio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-logitech-hidpp.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
-index 726592868e9c5..ada899613486a 100644
---- a/fs/btrfs/bio.c
-+++ b/fs/btrfs/bio.c
-@@ -307,7 +307,7 @@ static void btrfs_end_bio_work(struct work_struct *work)
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -283,7 +283,7 @@ static int hidpp_send_message_sync(struc
+ 	struct hidpp_report *message,
+ 	struct hidpp_report *response)
+ {
+-	int ret;
++	int ret = -1;
+ 	int max_retries = 3;
  
- 	/* Metadata reads are checked and repaired by the submitter. */
- 	if (bbio->bio.bi_opf & REQ_META)
--		bbio->end_io(bbio);
-+		btrfs_orig_bbio_end_io(bbio);
- 	else
- 		btrfs_check_read_bio(bbio, bbio->bio.bi_private);
- }
--- 
-2.39.2
-
+ 	mutex_lock(&hidpp->send_mutex);
+@@ -297,13 +297,13 @@ static int hidpp_send_message_sync(struc
+ 	 */
+ 	*response = *message;
+ 
+-	for (; max_retries != 0; max_retries--) {
++	for (; max_retries != 0 && ret; max_retries--) {
+ 		ret = __hidpp_send_report(hidpp->hid_dev, message);
+ 
+ 		if (ret) {
+ 			dbg_hid("__hidpp_send_report returned err: %d\n", ret);
+ 			memset(response, 0, sizeof(struct hidpp_report));
+-			goto exit;
++			break;
+ 		}
+ 
+ 		if (!wait_event_timeout(hidpp->wait, hidpp->answer_available,
+@@ -311,14 +311,14 @@ static int hidpp_send_message_sync(struc
+ 			dbg_hid("%s:timeout waiting for response\n", __func__);
+ 			memset(response, 0, sizeof(struct hidpp_report));
+ 			ret = -ETIMEDOUT;
+-			goto exit;
++			break;
+ 		}
+ 
+ 		if (response->report_id == REPORT_ID_HIDPP_SHORT &&
+ 		    response->rap.sub_id == HIDPP_ERROR) {
+ 			ret = response->rap.params[1];
+ 			dbg_hid("%s:got hidpp error %02X\n", __func__, ret);
+-			goto exit;
++			break;
+ 		}
+ 
+ 		if ((response->report_id == REPORT_ID_HIDPP_LONG ||
+@@ -327,13 +327,12 @@ static int hidpp_send_message_sync(struc
+ 			ret = response->fap.params[1];
+ 			if (ret != HIDPP20_ERROR_BUSY) {
+ 				dbg_hid("%s:got hidpp 2.0 error %02X\n", __func__, ret);
+-				goto exit;
++				break;
+ 			}
+ 			dbg_hid("%s:got busy hidpp 2.0 error %02X, retrying\n", __func__, ret);
+ 		}
+ 	}
+ 
+-exit:
+ 	mutex_unlock(&hidpp->send_mutex);
+ 	return ret;
+ 
 
 
