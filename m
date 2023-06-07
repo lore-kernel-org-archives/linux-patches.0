@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E775B19BBC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:18:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E538C433EF;
-	Wed,  7 Jun 2023 20:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0471519BBC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:18:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1657C433D2;
+	Wed,  7 Jun 2023 20:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169089;
-	bh=TwVB5CNSXyBVdSL/6LkxFooRKToo+KuulE1fK+6TWiU=;
+	s=korg; t=1686169092;
+	bh=PsdLhYUW2/2yOHPd/tsa7m1zstJtfVAA7v3QvF6juMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vF81oW/+kL/OOUG9tqjGknfCp488+Z6c4B9Guk/2WZsQ0GW/bQr376lGfILPEyHuA
-	 rINlYivYL48CSmUk857cYO4hCO3F0NqNKjyIg2f8KyZUgTmt+YaH0owdCeLpwJwMiq
-	 eCeUSgzInADSvH9Tz4MAFluy2NLqHD6UR1EcBaBo=
+	b=RufZpLL/+mktY8GyFXEZAtrq+uPz4tnizSWOpe/I/y4UptWIf35HpmmXcwPbEB5Yh
+	 W4bczyfAtenL4p3nAj8SeLlc/dv6CyHZi4s36PSNnrusgxC8qrJNlgPVqhIwF/BiSj
+	 vK+rJnt3KXM4dCnNUKu/ZxOvAEDHCfh7wB1kGrtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
+	Haibo Li <haibo.li@mediatek.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 11/61] mailbox: mailbox-test: Fix potential double-free in mbox_test_message_write()
-Date: Wed,  7 Jun 2023 22:15:25 +0200
-Message-ID: <20230607200838.987256629@linuxfoundation.org>
+Subject: [PATCH 4.14 12/61] ARM: 9295/1: unwind:fix unwind abort for uleb128 case
+Date: Wed,  7 Jun 2023 22:15:26 +0200
+Message-ID: <20230607200839.367241955@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -35,133 +38,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Haibo Li <haibo.li@mediatek.com>
 
-[ Upstream commit 2d1e952a2b8e5e92d8d55ac88a7cf7ca5ea591ad ]
+[ Upstream commit fa3eeb638de0c1a9d2d860e5b48259facdd65176 ]
 
-If a user can make copy_from_user() fail, there is a potential for
-UAF/DF due to a lack of locking around the allocation, use and freeing
-of the data buffers.
+When unwind instruction is 0xb2,the subsequent instructions
+are uleb128 bytes.
+For now,it uses only the first uleb128 byte in code.
 
-This issue is not theoretical.  I managed to author a POC for it:
+For vsp increments of 0x204~0x400,use one uleb128 byte like below:
+0xc06a00e4 <unwind_test_work>: 0x80b27fac
+  Compact model index: 0
+  0xb2 0x7f vsp = vsp + 1024
+  0xac      pop {r4, r5, r6, r7, r8, r14}
 
-    BUG: KASAN: double-free in kfree+0x5c/0xac
-    Free of addr ffff29280be5de00 by task poc/356
-    CPU: 1 PID: 356 Comm: poc Not tainted 6.1.0-00001-g961aa6552c04-dirty #20
-    Hardware name: linux,dummy-virt (DT)
-    Call trace:
-     dump_backtrace.part.0+0xe0/0xf0
-     show_stack+0x18/0x40
-     dump_stack_lvl+0x64/0x80
-     print_report+0x188/0x48c
-     kasan_report_invalid_free+0xa0/0xc0
-     ____kasan_slab_free+0x174/0x1b0
-     __kasan_slab_free+0x18/0x24
-     __kmem_cache_free+0x130/0x2e0
-     kfree+0x5c/0xac
-     mbox_test_message_write+0x208/0x29c
-     full_proxy_write+0x90/0xf0
-     vfs_write+0x154/0x440
-     ksys_write+0xcc/0x180
-     __arm64_sys_write+0x44/0x60
-     invoke_syscall+0x60/0x190
-     el0_svc_common.constprop.0+0x7c/0x160
-     do_el0_svc+0x40/0xf0
-     el0_svc+0x2c/0x6c
-     el0t_64_sync_handler+0xf4/0x120
-     el0t_64_sync+0x18c/0x190
+For vsp increments larger than 0x400,use two uleb128 bytes like below:
+0xc06a00e4 <unwind_test_work>: @0xc0cc9e0c
+  Compact model index: 1
+  0xb2 0x81 0x01 vsp = vsp + 1032
+  0xac      pop {r4, r5, r6, r7, r8, r14}
+The unwind works well since the decoded uleb128 byte is also 0x81.
 
-    Allocated by task 356:
-     kasan_save_stack+0x3c/0x70
-     kasan_set_track+0x2c/0x40
-     kasan_save_alloc_info+0x24/0x34
-     __kasan_kmalloc+0xb8/0xc0
-     kmalloc_trace+0x58/0x70
-     mbox_test_message_write+0x6c/0x29c
-     full_proxy_write+0x90/0xf0
-     vfs_write+0x154/0x440
-     ksys_write+0xcc/0x180
-     __arm64_sys_write+0x44/0x60
-     invoke_syscall+0x60/0x190
-     el0_svc_common.constprop.0+0x7c/0x160
-     do_el0_svc+0x40/0xf0
-     el0_svc+0x2c/0x6c
-     el0t_64_sync_handler+0xf4/0x120
-     el0t_64_sync+0x18c/0x190
+For vsp increments larger than 0x600,use two uleb128 bytes like below:
+0xc06a00e4 <unwind_test_work>: @0xc0cc9e0c
+  Compact model index: 1
+  0xb2 0x81 0x02 vsp = vsp + 1544
+  0xac      pop {r4, r5, r6, r7, r8, r14}
+In this case,the decoded uleb128 result is 0x101(vsp=0x204+(0x101<<2)).
+While the uleb128 used in code is 0x81(vsp=0x204+(0x81<<2)).
+The unwind aborts at this frame since it gets incorrect vsp.
 
-    Freed by task 357:
-     kasan_save_stack+0x3c/0x70
-     kasan_set_track+0x2c/0x40
-     kasan_save_free_info+0x38/0x5c
-     ____kasan_slab_free+0x13c/0x1b0
-     __kasan_slab_free+0x18/0x24
-     __kmem_cache_free+0x130/0x2e0
-     kfree+0x5c/0xac
-     mbox_test_message_write+0x208/0x29c
-     full_proxy_write+0x90/0xf0
-     vfs_write+0x154/0x440
-     ksys_write+0xcc/0x180
-     __arm64_sys_write+0x44/0x60
-     invoke_syscall+0x60/0x190
-     el0_svc_common.constprop.0+0x7c/0x160
-     do_el0_svc+0x40/0xf0
-     el0_svc+0x2c/0x6c
-     el0t_64_sync_handler+0xf4/0x120
-     el0t_64_sync+0x18c/0x190
+To fix this,add uleb128 decode to cover all the above case.
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Signed-off-by: Haibo Li <haibo.li@mediatek.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm/kernel/unwind.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index 546ba140f83d2..c23acd994d783 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -16,6 +16,7 @@
- #include <linux/kernel.h>
- #include <linux/mailbox_client.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/poll.h>
-@@ -43,6 +44,7 @@ struct mbox_test_device {
- 	char			*signal;
- 	char			*message;
- 	spinlock_t		lock;
-+	struct mutex		mutex;
- 	wait_queue_head_t	waitq;
- 	struct fasync_struct	*async_queue;
- };
-@@ -114,6 +116,8 @@ static ssize_t mbox_test_message_write(struct file *filp,
- 		return -EINVAL;
- 	}
- 
-+	mutex_lock(&tdev->mutex);
-+
- 	tdev->message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
- 	if (!tdev->message)
- 		return -ENOMEM;
-@@ -148,6 +152,8 @@ static ssize_t mbox_test_message_write(struct file *filp,
- 	kfree(tdev->message);
- 	tdev->signal = NULL;
- 
-+	mutex_unlock(&tdev->mutex);
-+
- 	return ret < 0 ? ret : count;
+diff --git a/arch/arm/kernel/unwind.c b/arch/arm/kernel/unwind.c
+index 314cfb232a635..f2bb090373c67 100644
+--- a/arch/arm/kernel/unwind.c
++++ b/arch/arm/kernel/unwind.c
+@@ -313,6 +313,29 @@ static int unwind_exec_pop_subset_r0_to_r3(struct unwind_ctrl_block *ctrl,
+ 	return URC_OK;
  }
  
-@@ -396,6 +402,7 @@ static int mbox_test_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, tdev);
++static unsigned long unwind_decode_uleb128(struct unwind_ctrl_block *ctrl)
++{
++	unsigned long bytes = 0;
++	unsigned long insn;
++	unsigned long result = 0;
++
++	/*
++	 * unwind_get_byte() will advance `ctrl` one instruction at a time, so
++	 * loop until we get an instruction byte where bit 7 is not set.
++	 *
++	 * Note: This decodes a maximum of 4 bytes to output 28 bits data where
++	 * max is 0xfffffff: that will cover a vsp increment of 1073742336, hence
++	 * it is sufficient for unwinding the stack.
++	 */
++	do {
++		insn = unwind_get_byte(ctrl);
++		result |= (insn & 0x7f) << (bytes * 7);
++		bytes++;
++	} while (!!(insn & 0x80) && (bytes != sizeof(result)));
++
++	return result;
++}
++
+ /*
+  * Execute the current unwind instruction.
+  */
+@@ -366,7 +389,7 @@ static int unwind_exec_insn(struct unwind_ctrl_block *ctrl)
+ 		if (ret)
+ 			goto error;
+ 	} else if (insn == 0xb2) {
+-		unsigned long uleb128 = unwind_get_byte(ctrl);
++		unsigned long uleb128 = unwind_decode_uleb128(ctrl);
  
- 	spin_lock_init(&tdev->lock);
-+	mutex_init(&tdev->mutex);
- 
- 	if (tdev->rx_channel) {
- 		tdev->rx_buffer = devm_kzalloc(&pdev->dev,
+ 		ctrl->vrs[SP] += 0x204 + (uleb128 << 2);
+ 	} else {
 -- 
 2.39.2
 
