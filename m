@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F51B370E4
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D5CC433EF;
-	Wed,  7 Jun 2023 20:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D81370E4
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4905FC433D2;
+	Wed,  7 Jun 2023 20:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171193;
-	bh=XxabwGHJZIgy2CiecXYg53uWKSTWxZu/sbRrH29N62c=;
+	s=korg; t=1686171195;
+	bh=JmY8i5tmEGselaARSB0P4+af/A5ZKmZzV3iI9qFN5nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ofqhw+RwSJur54j6Ip0TXwpKlMxwqmk3rOjXbQaJmtYHbZdxYkWZb3pSF1dwn1Rxz
-	 PfrV8TQPLV0VYDubZ/ZZCZnpJyyIJKzYLZLFqY1DFJKXu8DisYykTnLRg4w3h5VysL
-	 d5MA3pZiBY273p9zm7d/6v6rtX7XuT3yKl5wgrRw=
+	b=w46OEja2xTTlDeVFcIKUtEDoxX72lgMRuKWIKC+6a1UEoNRwVuaJg8VUakOGpp9jp
+	 4nm5Yb37WflKF9GgfLyyqfT4JAeNEwDJyQ4kabPutHoDI4rawo65sJQ2QiY5PPi67Q
+	 hWDv69+7rf8bCVTqajbLIRHn769gbi+Rr30+PTz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Svensson <andreas.svensson@axis.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 25/99] net: dsa: mv88e6xxx: Increase wait after reset deactivation
-Date: Wed,  7 Jun 2023 22:16:17 +0200
-Message-ID: <20230607200901.046770935@linuxfoundation.org>
+Subject: [PATCH 5.4 26/99] mtd: rawnand: marvell: ensure timing values are written
+Date: Wed,  7 Jun 2023 22:16:18 +0200
+Message-ID: <20230607200901.079414363@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -36,43 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Svensson <andreas.svensson@axis.com>
+From: Chris Packham <chris.packham@alliedtelesis.co.nz>
 
-[ Upstream commit 3c27f3d53d588618d81d30d6712459a3cc9489b8 ]
+[ Upstream commit 8a6f4d346f3bad9c68b4a87701eb3f7978542d57 ]
 
-A switch held in reset by default needs to wait longer until we can
-reliably detect it.
+When new timing values are calculated in marvell_nfc_setup_interface()
+ensure that they will be applied in marvell_nfc_select_target() by
+clearing the selected_chip pointer.
 
-An issue was observed when testing on the Marvell 88E6393X (Link Street).
-The driver failed to detect the switch on some upstarts. Increasing the
-wait time after reset deactivation solves this issue.
-
-The updated wait time is now also the same as the wait time in the
-mv88e6xxx_hardware_reset function.
-
-Fixes: 7b75e49de424 ("net: dsa: mv88e6xxx: wait after reset deactivation")
-Signed-off-by: Andreas Svensson <andreas.svensson@axis.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230530145223.1223993-1-andreas.svensson@axis.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b25251414f6e ("mtd: rawnand: marvell: Stop implementing ->select_chip()")
+Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230525003154.2303012-1-chris.packham@alliedtelesis.co.nz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/marvell_nand.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 3a8a49b7ec3d9..393ee145ae066 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5096,7 +5096,7 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
- 		goto out;
+diff --git a/drivers/mtd/nand/raw/marvell_nand.c b/drivers/mtd/nand/raw/marvell_nand.c
+index 36cb0db02bbb0..7ab9e9920c06e 100644
+--- a/drivers/mtd/nand/raw/marvell_nand.c
++++ b/drivers/mtd/nand/raw/marvell_nand.c
+@@ -2401,6 +2401,12 @@ static int marvell_nfc_setup_data_interface(struct nand_chip *chip, int chipnr,
+ 			NDTR1_WAIT_MODE;
  	}
- 	if (chip->reset)
--		usleep_range(1000, 2000);
-+		usleep_range(10000, 20000);
  
- 	err = mv88e6xxx_detect(chip);
- 	if (err)
++	/*
++	 * Reset nfc->selected_chip so the next command will cause the timing
++	 * registers to be updated in marvell_nfc_select_target().
++	 */
++	nfc->selected_chip = NULL;
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.2
 
