@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2F71D2A5
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACF5C433EF;
-	Wed,  7 Jun 2023 20:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08301D2A5
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:46:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CE8C4339B;
+	Wed,  7 Jun 2023 20:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170779;
-	bh=GwBaXoNiSoSFSpiNL3cErcNCcIVhHLLYcgqU77N4EW0=;
+	s=korg; t=1686170781;
+	bh=WlGcQUkMQ2rw2bhjcx5uHJfjX1xiadUpukzyPz9/Hwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0dpOrwyrpCW9SrlDewglSeHs0XlucQ7V5L9mtGORbKgZvEljM2zrd47sQ+6+xMwz
-	 fXHOEAgODupn3sM6wenrn7C455KyMB58MpCAbJYAH3IKw7XeOMYKsF6vpmsu8GRrnL
-	 fzYlcDFrvruJOPer7eoRbhoLGSS5ULMqFYo+7X6Y=
+	b=eo8DLCTgxk0nG8ThaBdIcWjxUhWqbkyFVOLUqUGJUX8L02vzRP9G/JG9wGaT6US6p
+	 brt9CRLTD7L/VlZpT1lNPbYbVoZQaEOvhdHYHy/DaDQAcdXxPszLG70vz0E1sWjydk
+	 Xqu5fllJbRFd/2Jc8J4vy7ICztF3RskvDLwS0CN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Richard Weinberger <richard@nod.at>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 185/225] mtdchar: mark bits of ioctl handler noinline
-Date: Wed,  7 Jun 2023 22:16:18 +0200
-Message-ID: <20230607200920.437442344@linuxfoundation.org>
+	Juri Lelli <juri.lelli@redhat.com>,
+	Daniel Bristot de Oliveira <bristot@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 186/225] tracing/timerlat: Always wakeup the timerlat thread
+Date: Wed,  7 Jun 2023 22:16:19 +0200
+Message-ID: <20230607200920.469739614@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,56 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-commit 0ea923f443350c8c5cca6eef5b748d52b903f46c upstream.
+commit 632478a05821bc1c9b55c3a1dd0fb1be7bfa1acc upstream.
 
-The addition of the mtdchar_read_ioctl() function caused the stack usage
-of mtdchar_ioctl() to grow beyond the warning limit on 32-bit architectures
-with gcc-13:
+While testing rtla timerlat auto analysis, I reach a condition where
+the interface was not receiving tracing data. I was able to manually
+reproduce the problem with these steps:
 
-drivers/mtd/mtdchar.c: In function 'mtdchar_ioctl':
-drivers/mtd/mtdchar.c:1229:1: error: the frame size of 1488 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
+  # echo 0 > tracing_on                 # disable trace
+  # echo 1 > osnoise/stop_tracing_us    # stop trace if timerlat irq > 1 us
+  # echo timerlat > current_tracer      # enable timerlat tracer
+  # sleep 1                             # wait... that is the time when rtla
+                                        # apply configs like prio or cgroup
+  # echo 1 > tracing_on                 # start tracing
+  # cat trace
+  # tracer: timerlat
+  #
+  #                                _-----=> irqs-off
+  #                               / _----=> need-resched
+  #                              | / _---=> hardirq/softirq
+  #                              || / _--=> preempt-depth
+  #                              ||| / _-=> migrate-disable
+  #                              |||| /     delay
+  #                              |||||            ACTIVATION
+  #           TASK-PID      CPU# |||||   TIMESTAMP   ID            CONTEXT                 LATENCY
+  #              | |         |   |||||      |         |                  |                       |
+        NOTHING!
 
-Mark both the read and write portions as noinline_for_stack to ensure
-they don't get inlined and use separate stack slots to reduce the
-maximum usage, both in the mtdchar_ioctl() and combined with any
-of its callees.
+Then, trying to enable tracing again with echo 1 > tracing_on resulted
+in no change: the trace was still not tracing.
 
-Fixes: 095bb6e44eb1 ("mtdchar: add MEMREAD ioctl")
+This problem happens because the timerlat IRQ hits the stop tracing
+condition while tracing is off, and do not wake up the timerlat thread,
+so the timerlat threads are kept sleeping forever, resulting in no
+trace, even after re-enabling the tracer.
+
+Avoid this condition by always waking up the threads, even after stopping
+tracing, allowing the tracer to return to its normal operating after
+a new tracing on.
+
+Link: https://lore.kernel.org/linux-trace-kernel/1ed8f830638b20a39d535d27d908e319a9a3c4e2.1683822622.git.bristot@kernel.org
+
+Cc: Juri Lelli <juri.lelli@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230417205654.1982368-1-arnd@kernel.org
+Fixes: a955d7eac177 ("trace: Add timerlat tracer")
+Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdchar.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/trace_osnoise.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mtd/mtdchar.c
-+++ b/drivers/mtd/mtdchar.c
-@@ -590,8 +590,8 @@ static void adjust_oob_length(struct mtd
- 			    (end_page - start_page + 1) * oob_per_page);
- }
+--- a/kernel/trace/trace_osnoise.c
++++ b/kernel/trace/trace_osnoise.c
+@@ -1595,6 +1595,8 @@ static enum hrtimer_restart timerlat_irq
+ 			osnoise_stop_tracing();
+ 			notify_new_max_latency(diff);
  
--static int mtdchar_write_ioctl(struct mtd_info *mtd,
--		struct mtd_write_req __user *argp)
-+static noinline_for_stack int
-+mtdchar_write_ioctl(struct mtd_info *mtd, struct mtd_write_req __user *argp)
- {
- 	struct mtd_info *master = mtd_get_master(mtd);
- 	struct mtd_write_req req;
-@@ -688,8 +688,8 @@ static int mtdchar_write_ioctl(struct mt
- 	return ret;
- }
- 
--static int mtdchar_read_ioctl(struct mtd_info *mtd,
--		struct mtd_read_req __user *argp)
-+static noinline_for_stack int
-+mtdchar_read_ioctl(struct mtd_info *mtd, struct mtd_read_req __user *argp)
- {
- 	struct mtd_info *master = mtd_get_master(mtd);
- 	struct mtd_read_req req;
++			wake_up_process(tlat->kthread);
++
+ 			return HRTIMER_NORESTART;
+ 		}
+ 	}
 
 
