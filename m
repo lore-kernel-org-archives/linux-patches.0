@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F3D37325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F42C433EF;
-	Wed,  7 Jun 2023 20:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8390937325
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06019C433D2;
+	Wed,  7 Jun 2023 20:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170921;
-	bh=xh7iFClTNrBmUWKlMC42PsRuhE+xIlxos9/fPlQff7Q=;
+	s=korg; t=1686170924;
+	bh=RJQ0IbZ0oPaulOxZ9aeqSeG2KcvtBy2zygzzhIewGf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QrFrpbg4vthiWkH8GLYjIayGA1c61MvDjq2jLStyPDFBmPB963dyoXoHF22ZjQ2+q
-	 2OEfoXnhsktymU9mqybka0n5ry0vRn2mheeba1+8YDLpoK8YkA4Qcagep8j37Jqc8M
-	 3hqcHcBxEEcpKfm4TDYoy2RDiIgD4DzXc256VH6Q=
+	b=ozcKS8j9ND70/a+PUadQK5MSgA+RO4gF6oyVE6yUnUWOhVWOkWjE6SWNG0Q3OsH0l
+	 SdXBqAMhG4e1B7bnmcTWXhSVRtRn/wN+4XI7zmu3PfrhFK1MvMyiyXowNWm9I7lPen
+	 rubInOMzC+bYriQC83dhyMOgPCdC8tIdzChv5X4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/120] block/rnbd: replace REQ_OP_FLUSH with REQ_OP_WRITE
-Date: Wed,  7 Jun 2023 22:15:59 +0200
-Message-ID: <20230607200902.257705508@linuxfoundation.org>
+Subject: [PATCH 5.10 044/120] ASoC: dwc: limit the number of overrun messages
+Date: Wed,  7 Jun 2023 22:16:00 +0200
+Message-ID: <20230607200902.287682534@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -37,70 +33,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guoqing Jiang <guoqing.jiang@linux.dev>
+From: Maxim Kochetkov <fido_max@inbox.ru>
 
-[ Upstream commit 5e6e08087a4acb4ee3574cea32dbff0f63c7f608 ]
+[ Upstream commit ab6ecfbf40fccf74b6ec2ba7ed6dd2fc024c3af2 ]
 
-Since flush bios are implemented as writes with no data and
-the preflush flag per Christoph's comment [1].
+On slow CPU (FPGA/QEMU emulated) printing overrun messages from
+interrupt handler to uart console may leads to more overrun errors.
+So use dev_err_ratelimited to limit the number of error messages.
 
-And we need to change it in rnbd accordingly. Otherwise, I
-got splatting when create fs from rnbd client.
-
-[  464.028545] ------------[ cut here ]------------
-[  464.028553] WARNING: CPU: 0 PID: 65 at block/blk-core.c:751 submit_bio_noacct+0x32c/0x5d0
-[ ... ]
-[  464.028668] CPU: 0 PID: 65 Comm: kworker/0:1H Tainted: G           OE      6.4.0-rc1 #9
-[  464.028671] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.15.0-0-g2dd4b9b-rebuilt.opensuse.org 04/01/2014
-[  464.028673] Workqueue: ib-comp-wq ib_cq_poll_work [ib_core]
-[  464.028717] RIP: 0010:submit_bio_noacct+0x32c/0x5d0
-[  464.028720] Code: 03 0f 85 51 fe ff ff 48 8b 43 18 8b 88 04 03 00 00 85 c9 0f 85 3f fe ff ff e9 be fd ff ff 0f b6 d0 3c 0d 74 26 83 fa 01 74 21 <0f> 0b b8 0a 00 00 00 e9 56 fd ff ff 4c 89 e7 e8 70 a1 03 00 84 c0
-[  464.028722] RSP: 0018:ffffaf3680b57c68 EFLAGS: 00010202
-[  464.028724] RAX: 0000000000060802 RBX: ffffa09dcc18bf00 RCX: 0000000000000000
-[  464.028726] RDX: 0000000000000002 RSI: 0000000000000000 RDI: ffffa09dde081d00
-[  464.028727] RBP: ffffaf3680b57c98 R08: ffffa09dde081d00 R09: ffffa09e38327200
-[  464.028729] R10: 0000000000000000 R11: 0000000000000000 R12: ffffa09dde081d00
-[  464.028730] R13: ffffa09dcb06e1e8 R14: 0000000000000000 R15: 0000000000200000
-[  464.028733] FS:  0000000000000000(0000) GS:ffffa09e3bc00000(0000) knlGS:0000000000000000
-[  464.028735] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  464.028736] CR2: 000055a4e8206c40 CR3: 0000000119f06000 CR4: 00000000003506f0
-[  464.028738] Call Trace:
-[  464.028740]  <TASK>
-[  464.028746]  submit_bio+0x1b/0x80
-[  464.028748]  rnbd_srv_rdma_ev+0x50d/0x10c0 [rnbd_server]
-[  464.028754]  ? percpu_ref_get_many.constprop.0+0x55/0x140 [rtrs_server]
-[  464.028760]  ? __this_cpu_preempt_check+0x13/0x20
-[  464.028769]  process_io_req+0x1dc/0x450 [rtrs_server]
-[  464.028775]  rtrs_srv_inv_rkey_done+0x67/0xb0 [rtrs_server]
-[  464.028780]  __ib_process_cq+0xbc/0x1f0 [ib_core]
-[  464.028793]  ib_cq_poll_work+0x2b/0xa0 [ib_core]
-[  464.028804]  process_one_work+0x2a9/0x580
-
-[1]. https://lore.kernel.org/all/ZFHgefWofVt24tRl@infradead.org/
-
-Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20230512034631.28686-1-guoqing.jiang@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru
+Link: https://lore.kernel.org/r/20230505062820.21840-1-fido_max@inbox.ru
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-proto.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/dwc/dwc-i2s.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/rnbd/rnbd-proto.h b/drivers/block/rnbd/rnbd-proto.h
-index ca166241452c2..cb11855455dde 100644
---- a/drivers/block/rnbd/rnbd-proto.h
-+++ b/drivers/block/rnbd/rnbd-proto.h
-@@ -234,7 +234,7 @@ static inline u32 rnbd_to_bio_flags(u32 rnbd_opf)
- 		bio_opf = REQ_OP_WRITE;
- 		break;
- 	case RNBD_OP_FLUSH:
--		bio_opf = REQ_OP_FLUSH | REQ_PREFLUSH;
-+		bio_opf = REQ_OP_WRITE | REQ_PREFLUSH;
- 		break;
- 	case RNBD_OP_DISCARD:
- 		bio_opf = REQ_OP_DISCARD;
+diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
+index 36da0f01571a1..5469399abcb44 100644
+--- a/sound/soc/dwc/dwc-i2s.c
++++ b/sound/soc/dwc/dwc-i2s.c
+@@ -132,13 +132,13 @@ static irqreturn_t i2s_irq_handler(int irq, void *dev_id)
+ 
+ 		/* Error Handling: TX */
+ 		if (isr[i] & ISR_TXFO) {
+-			dev_err(dev->dev, "TX overrun (ch_id=%d)\n", i);
++			dev_err_ratelimited(dev->dev, "TX overrun (ch_id=%d)\n", i);
+ 			irq_valid = true;
+ 		}
+ 
+ 		/* Error Handling: TX */
+ 		if (isr[i] & ISR_RXFO) {
+-			dev_err(dev->dev, "RX overrun (ch_id=%d)\n", i);
++			dev_err_ratelimited(dev->dev, "RX overrun (ch_id=%d)\n", i);
+ 			irq_valid = true;
+ 		}
+ 	}
 -- 
 2.39.2
 
