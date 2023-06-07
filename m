@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D9210FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611F3C433D2;
-	Wed,  7 Jun 2023 20:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B2110FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06709C4339B;
+	Wed,  7 Jun 2023 20:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169587;
-	bh=+rJDVAF0qjyQHon6lKunfXjuigwSuH4DDTuVuCC0ipw=;
+	s=korg; t=1686169590;
+	bh=A+Hynh3CdV7lpD2fMx+QXee0P7pmxcEzRTRBTvCz7/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wCkeJLWmkQtgjQS01nRTy3yP1DltlO5fP03T5tgUVonjvBez0z2RpxH/2NdT+hi4L
-	 85+EROltgzdIPgx841S2ywIhw0AQcXTTnvCKmrrS4olnT1mz7fdLtmkJHG9At+NUpj
-	 oN6vHeNgmA0Yn0SnOaIaDSjkJQkorWdvu3thFBUE=
+	b=XO2PAROnF0OjFsxt7JR/9oENniTT+BCupGWkoYDqNyP2mHu6q7eC7iCiWv5ZTH7Uv
+	 quMdOt5z15WbRZVq77rj/XCGS0U04Z2f0Sewze7VR3eyQ/WoYtuZVB5RnveuH1zFbY
+	 Z3gxoDV957bm/g0/FpbYx0yw/vOo96080TI4skcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
+	Yu Hao <yhao016@ucr.edu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 130/286] media: dvb-usb: digitv: fix null-ptr-deref in digitv_i2c_xfer()
-Date: Wed,  7 Jun 2023 22:13:49 +0200
-Message-ID: <20230607200927.343616478@linuxfoundation.org>
+Subject: [PATCH 6.3 139/286] media: dvb-core: Fix kernel WARNING for blocking operation in wait_event*()
+Date: Wed,  7 Jun 2023 22:13:58 +0200
+Message-ID: <20230607200927.626031270@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,42 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 9ded5bd2a49ce3015b7c936743eec0a0e6e11f0c ]
+[ Upstream commit b8c75e4a1b325ea0a9433fa8834be97b5836b946 ]
 
-In digitv_i2c_xfer, msg is controlled by user. When msg[i].buf
-is null and msg[i].len is zero, former checks on msg[i].buf would be
-passed. Malicious data finally reach digitv_i2c_xfer. If accessing
-msg[i].buf[0] without sanity check, null ptr deref would happen. We add
-check on msg[i].len to prevent crash.
+Using a semaphore in the wait_event*() condition is no good idea.
+It hits a kernel WARN_ON() at prepare_to_wait_event() like:
+  do not call blocking ops when !TASK_RUNNING; state=1 set at
+  prepare_to_wait_event+0x6d/0x690
 
-Similar commit:
-commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+For avoiding the potential deadlock, rewrite to an open-coded loop
+instead.  Unlike the loop in wait_event*(), this uses wait_woken()
+after the condition check, hence the task state stays consistent.
 
-Link: https://lore.kernel.org/linux-media/20230313095008.1039689-1-harperchen1110@gmail.com
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+CVE-2023-31084 was assigned to this bug.
+
+Link: https://lore.kernel.org/r/CA+UBctCu7fXn4q41O_3=id1+OdyQ85tZY1x+TkT-6OVBL6KAUw@mail.gmail.com/
+
+Link: https://lore.kernel.org/linux-media/20230512151800.1874-1-tiwai@suse.de
+Reported-by: Yu Hao <yhao016@ucr.edu>
+Closes: https://nvd.nist.gov/vuln/detail/CVE-2023-31084
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/digitv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/dvb-core/dvb_frontend.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb/digitv.c b/drivers/media/usb/dvb-usb/digitv.c
-index 2756815a780bc..32134be169148 100644
---- a/drivers/media/usb/dvb-usb/digitv.c
-+++ b/drivers/media/usb/dvb-usb/digitv.c
-@@ -63,6 +63,10 @@ static int digitv_i2c_xfer(struct i2c_adapter *adap,struct i2c_msg msg[],int num
- 		warn("more than 2 i2c messages at a time is not handled yet. TODO.");
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index 947b61959b2b8..bc6950a5740f6 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -293,14 +293,22 @@ static int dvb_frontend_get_event(struct dvb_frontend *fe,
+ 	}
  
- 	for (i = 0; i < num; i++) {
-+		if (msg[i].len < 1) {
-+			i = -EOPNOTSUPP;
-+			break;
+ 	if (events->eventw == events->eventr) {
+-		int ret;
++		struct wait_queue_entry wait;
++		int ret = 0;
+ 
+ 		if (flags & O_NONBLOCK)
+ 			return -EWOULDBLOCK;
+ 
+-		ret = wait_event_interruptible(events->wait_queue,
+-					       dvb_frontend_test_event(fepriv, events));
+-
++		init_waitqueue_entry(&wait, current);
++		add_wait_queue(&events->wait_queue, &wait);
++		while (!dvb_frontend_test_event(fepriv, events)) {
++			wait_woken(&wait, TASK_INTERRUPTIBLE, 0);
++			if (signal_pending(current)) {
++				ret = -ERESTARTSYS;
++				break;
++			}
 +		}
- 		/* write/read request */
- 		if (i+1 < num && (msg[i+1].flags & I2C_M_RD)) {
- 			if (digitv_ctrl_msg(d, USB_READ_COFDM, msg[i].buf[0], NULL, 0,
++		remove_wait_queue(&events->wait_queue, &wait);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
 -- 
 2.39.2
 
