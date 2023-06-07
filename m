@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2CB37325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C235C4339B;
-	Wed,  7 Jun 2023 20:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8689537325
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E02C433D2;
+	Wed,  7 Jun 2023 20:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170908;
-	bh=7Cz8Dnpu06YjU9uSRurtKxpOQHGwnWz9u2VS9twgqzc=;
+	s=korg; t=1686170911;
+	bh=aks827XbioErvve/dkNRJXRajnnTOO0WCKzcP5cIXm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jHr0G9W9zeXAFgCVmAhMVWlS1ev8vyXtXObGiRRt295DuS0LD1GoenWGt200XOMyE
-	 77nD8T4lqAQt5q33BnNTx5m+Iu43pQKf0TXlQk6lZrlut9kqpvg5UQWFgKn8/0oaUL
-	 adJW127bxD1YQ6K7IFchgLczmh6DgDmXvT6lbxtU=
+	b=cnuBpC8kH83a6mvomR8IXYTbXZWCi2ZbcEtglv2W+iXdl6C/O4p8EbUrTHAVJ0KIw
+	 tCJJHa6QZfuPDB1NqPLCsokiIak4vYC6mrBpAHv4CLHB415RIibTJpXH4YMGJWMhvu
+	 44DOKtkjUG4LnHAaUcb+JPEG59W5DY7t0ajduQOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Svensson <andreas.svensson@axis.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yang Lan <lanyang0908@gmail.com>,
+	Bob Peterson <rpeterso@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/120] net: dsa: mv88e6xxx: Increase wait after reset deactivation
-Date: Wed,  7 Jun 2023 22:15:46 +0200
-Message-ID: <20230607200901.861390609@linuxfoundation.org>
+Subject: [PATCH 5.10 039/120] gfs2: Dont deref jdesc in evict
+Date: Wed,  7 Jun 2023 22:15:55 +0200
+Message-ID: <20230607200902.135989147@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -36,43 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Svensson <andreas.svensson@axis.com>
+From: Bob Peterson <rpeterso@redhat.com>
 
-[ Upstream commit 3c27f3d53d588618d81d30d6712459a3cc9489b8 ]
+[ Upstream commit 504a10d9e46bc37b23d0a1ae2f28973c8516e636 ]
 
-A switch held in reset by default needs to wait longer until we can
-reliably detect it.
+On corrupt gfs2 file systems the evict code can try to reference the
+journal descriptor structure, jdesc, after it has been freed and set to
+NULL. The sequence of events is:
 
-An issue was observed when testing on the Marvell 88E6393X (Link Street).
-The driver failed to detect the switch on some upstarts. Increasing the
-wait time after reset deactivation solves this issue.
+init_journal()
+...
+fail_jindex:
+   gfs2_jindex_free(sdp); <------frees journals, sets jdesc = NULL
+      if (gfs2_holder_initialized(&ji_gh))
+         gfs2_glock_dq_uninit(&ji_gh);
+fail:
+   iput(sdp->sd_jindex); <--references jdesc in evict_linked_inode
+      evict()
+         gfs2_evict_inode()
+            evict_linked_inode()
+               ret = gfs2_trans_begin(sdp, 0, sdp->sd_jdesc->jd_blocks);
+<------references the now freed/zeroed sd_jdesc pointer.
 
-The updated wait time is now also the same as the wait time in the
-mv88e6xxx_hardware_reset function.
+The call to gfs2_trans_begin is done because the truncate_inode_pages
+call can cause gfs2 events that require a transaction, such as removing
+journaled data (jdata) blocks from the journal.
 
-Fixes: 7b75e49de424 ("net: dsa: mv88e6xxx: wait after reset deactivation")
-Signed-off-by: Andreas Svensson <andreas.svensson@axis.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230530145223.1223993-1-andreas.svensson@axis.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This patch fixes the problem by adding a check for sdp->sd_jdesc to
+function gfs2_evict_inode. In theory, this should only happen to corrupt
+gfs2 file systems, when gfs2 detects the problem, reports it, then tries
+to evict all the system inodes it has read in up to that point.
+
+Reported-by: Yang Lan <lanyang0908@gmail.com>
+Signed-off-by: Bob Peterson <rpeterso@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/gfs2/super.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 321c821876f65..8b2c8546f4c99 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5547,7 +5547,7 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 5cb7e771b57ab..e01b6a2d12d30 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1416,6 +1416,14 @@ static void gfs2_evict_inode(struct inode *inode)
+ 	if (inode->i_nlink || sb_rdonly(sb))
  		goto out;
- 	}
- 	if (chip->reset)
--		usleep_range(1000, 2000);
-+		usleep_range(10000, 20000);
  
- 	err = mv88e6xxx_detect(chip);
- 	if (err)
++	/*
++	 * In case of an incomplete mount, gfs2_evict_inode() may be called for
++	 * system files without having an active journal to write to.  In that
++	 * case, skip the filesystem evict.
++	 */
++	if (!sdp->sd_jdesc)
++		goto out;
++
+ 	gfs2_holder_mark_uninitialized(&gh);
+ 	ret = evict_should_delete(inode, &gh);
+ 	if (ret == SHOULD_DEFER_EVICTION)
 -- 
 2.39.2
 
