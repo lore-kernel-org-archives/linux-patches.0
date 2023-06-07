@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63D219BAB
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67765C433EF;
-	Wed,  7 Jun 2023 20:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93FB19BAB
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:34:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3603C433D2;
+	Wed,  7 Jun 2023 20:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170077;
-	bh=4bhTm7PBxHSblzpN5rEwaZBvDvGv0Z2niSBZkR66B+M=;
+	s=korg; t=1686170080;
+	bh=TSrvxkW0g7+kGk+o09yxOWdyShj/7aqCd5YMFvMX98Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1EXYyWTp61EF7w4Z8Z1+jffXeVUBYHECzb5/Sst+D2/CS2/NznL72pBrfMTnLW1+
-	 t/VbkEEjk9S1QSf/HzU6ZAt3X31Dlv1paT3Vra2YqLUkRQFLt+yr2cxgwS1OED843G
-	 kSWGTySc12mf7ZoNMTS3qTJumZ2aOGWFFVoZifuI=
+	b=K/tKC2yojB3iXY6H/4LNbRqQWRtSRGjoar77I+MArOW5n4D8jPiB3/urMlSIpjx6v
+	 paLWEWGHjqVOFM5RFqIBLHHv7aGMjGw4/m2VZQRx9RUtA34GmOlDhML6QUW4qjceMU
+	 yh6hkX5DhG8D/lXk3nZxlu8IfIAZ9whX0/LLUL0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	YongSu Yoo <yongsuyoo0215@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 37/88] ASoC: ssm2602: Add workaround for playback distortions
-Date: Wed,  7 Jun 2023 22:15:54 +0200
-Message-ID: <20230607200900.365146313@linuxfoundation.org>
+Subject: [PATCH 4.19 38/88] media: dvb_demux: fix a bug for the continuity counter
+Date: Wed,  7 Jun 2023 22:15:55 +0200
+Message-ID: <20230607200900.404031575@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -33,135 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paweł Anikiel <pan@semihalf.com>
+From: YongSu Yoo <yongsuyoo0215@gmail.com>
 
-[ Upstream commit f63550e2b165208a2f382afcaf5551df9569e1d4 ]
+[ Upstream commit 7efb10d8dc70ea3000cc70dca53407c52488acd1 ]
 
-Apply a workaround for what appears to be a hardware quirk.
+In dvb_demux.c, some logics exist which compare the expected
+continuity counter and the real continuity counter. If they
+are not matched each other, both of the expected continuity
+counter and the real continuity counter should be printed.
+But there exists a bug that the expected continuity counter
+is not correctly printed. The expected continuity counter is
+replaced with the real countinuity counter + 1 so that
+the epected continuity counter is not correclty printed.
+This is wrong. This bug is fixed.
 
-The problem seems to happen when enabling "whole chip power" (bit D7
-register R6) for the very first time after the chip receives power. If
-either "output" (D4) or "DAC" (D3) aren't powered on at that time,
-playback becomes very distorted later on.
+Link: https://lore.kernel.org/linux-media/20230305212519.499-1-yongsuyoo0215@gmail.com
 
-This happens on the Google Chameleon v3, as well as on a ZYBO Z7-10:
-https://ez.analog.com/audio/f/q-a/543726/solved-ssm2603-right-output-offset-issue/480229
-I suspect this happens only when using an external MCLK signal (which
-is the case for both of these boards).
-
-Here are some experiments run on a Google Chameleon v3. These were run
-in userspace using a wrapper around the i2cset utility:
-ssmset() {
-        i2cset -y 0 0x1a $(($1*2)) $2
-}
-
-For each of the following sequences, we apply power to the ssm2603
-chip, set the configuration registers R0-R5 and R7-R8, run the selected
-sequence, and check for distortions on playback.
-
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x07 # chip, out, dac
-  OK
-
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x87 # out, dac
-  ssmset 0x06 0x07 # chip
-  OK
-
-  (disable MCLK)
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x1f # chip
-  ssmset 0x06 0x07 # out, dac
-  (enable MCLK)
-  OK
-
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x1f # chip
-  ssmset 0x06 0x07 # out, dac
-  NOT OK
-
-  ssmset 0x06 0x1f # chip
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x07 # out, dac
-  NOT OK
-
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x0f # chip, out
-  ssmset 0x06 0x07 # dac
-  NOT OK
-
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x17 # chip, dac
-  ssmset 0x06 0x07 # out
-  NOT OK
-
-For each of the following sequences, we apply power to the ssm2603
-chip, run the selected sequence, issue a reset with R15, configure
-R0-R5 and R7-R8, run one of the NOT OK sequences from above, and check
-for distortions.
-
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x07 # chip, out, dac
-  OK
-
-  (disable MCLK)
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x07 # chip, out, dac
-  (enable MCLK after reset)
-  NOT OK
-
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x17 # chip, dac
-  NOT OK
-
-  ssmset 0x09 0x01 # core
-  ssmset 0x06 0x0f # chip, out
-  NOT OK
-
-  ssmset 0x06 0x07 # chip, out, dac
-  NOT OK
-
-Signed-off-by: Paweł Anikiel <pan@semihalf.com
-Link: https://lore.kernel.org/r/20230508113037.137627-8-pan@semihalf.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+Signed-off-by: YongSu Yoo <yongsuyoo0215@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ssm2602.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/media/dvb-core/dvb_demux.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/ssm2602.c b/sound/soc/codecs/ssm2602.c
-index 501a4e73b185b..06f382c794b26 100644
---- a/sound/soc/codecs/ssm2602.c
-+++ b/sound/soc/codecs/ssm2602.c
-@@ -67,6 +67,18 @@ static const struct reg_default ssm2602_reg[SSM2602_CACHEREGNUM] = {
- 	{ .reg = 0x09, .def = 0x0000 }
- };
+diff --git a/drivers/media/dvb-core/dvb_demux.c b/drivers/media/dvb-core/dvb_demux.c
+index 39a2c6ccf31d7..9904a170faeff 100644
+--- a/drivers/media/dvb-core/dvb_demux.c
++++ b/drivers/media/dvb-core/dvb_demux.c
+@@ -125,12 +125,12 @@ static inline int dvb_dmx_swfilter_payload(struct dvb_demux_feed *feed,
  
-+/*
-+ * ssm2602 register patch
-+ * Workaround for playback distortions after power up: activates digital
-+ * core, and then powers on output, DAC, and whole chip at the same time
-+ */
-+
-+static const struct reg_sequence ssm2602_patch[] = {
-+	{ SSM2602_ACTIVE, 0x01 },
-+	{ SSM2602_PWR,    0x07 },
-+	{ SSM2602_RESET,  0x00 },
-+};
-+
- 
- /*Appending several "None"s just for OSS mixer use*/
- static const char *ssm2602_input_select[] = {
-@@ -577,6 +589,9 @@ static int ssm260x_component_probe(struct snd_soc_component *component)
- 		return ret;
+ 	cc = buf[3] & 0x0f;
+ 	ccok = ((feed->cc + 1) & 0x0f) == cc;
+-	feed->cc = cc;
+ 	if (!ccok) {
+ 		set_buf_flags(feed, DMX_BUFFER_FLAG_DISCONTINUITY_DETECTED);
+ 		dprintk_sect_loss("missed packet: %d instead of %d!\n",
+ 				  cc, (feed->cc + 1) & 0x0f);
  	}
++	feed->cc = cc;
  
-+	regmap_register_patch(ssm2602->regmap, ssm2602_patch,
-+			      ARRAY_SIZE(ssm2602_patch));
-+
- 	/* set the update bits */
- 	regmap_update_bits(ssm2602->regmap, SSM2602_LINVOL,
- 			    LINVOL_LRIN_BOTH, LINVOL_LRIN_BOTH);
+ 	if (buf[1] & 0x40)	// PUSI ?
+ 		feed->peslen = 0xfffa;
+@@ -310,7 +310,6 @@ static int dvb_dmx_swfilter_section_packet(struct dvb_demux_feed *feed,
+ 
+ 	cc = buf[3] & 0x0f;
+ 	ccok = ((feed->cc + 1) & 0x0f) == cc;
+-	feed->cc = cc;
+ 
+ 	if (buf[3] & 0x20) {
+ 		/* adaption field present, check for discontinuity_indicator */
+@@ -346,6 +345,7 @@ static int dvb_dmx_swfilter_section_packet(struct dvb_demux_feed *feed,
+ 		feed->pusi_seen = false;
+ 		dvb_dmx_swfilter_section_new(feed);
+ 	}
++	feed->cc = cc;
+ 
+ 	if (buf[1] & 0x40) {
+ 		/* PUSI=1 (is set), section boundary is here */
 -- 
 2.39.2
 
