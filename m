@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C0037325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630DEC4339C;
-	Wed,  7 Jun 2023 20:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1826635B30
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:51:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26386C433D2;
+	Wed,  7 Jun 2023 20:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171078;
-	bh=7P1ovuxvTzFYSu+1MIAyr3QGwChR4p2MrkuhM2fNbD0=;
+	s=korg; t=1686171081;
+	bh=ASzFjCfIe5jPs1j7C4ZpA3edszPlyHMww/guUVtdfaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5Qz9DpYN62/ACOEDfBoU//W6dYGttiuWPFxbUF4pPzydnwghD/nlMiKm+cRbFBnu
-	 NrVCXEl3bUeblHjkuwORmGPqgIo7JQyi0Kir6irCfjOG0v3Fa+dUJjor/cltt4mBEG
-	 UOdCa72q89392TL77VX4r722ESM06Jb44T9B1RVY=
+	b=y/zXQWLrAEi/7ISK+WgojASDLLqCv/9b8i02fgYwf2VHLRivxRRvcLTTVngTdAubu
+	 BR0hapKp4YmU0q+Qzi/5W1nHqDBQT4RByISboGs+MhW490SlcOuCxrgc9FrWFAByjd
+	 N0Iwi3xpM9nBx3qYiEgJcHx/vC+g57zJdzwLegkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	syzbot+d910bd780e6efac35869@syzkaller.appspotmail.com,
-	Sam Ravnborg <sam@ravnborg.org>,
-	stable@kernel.org
-Subject: [PATCH 5.10 103/120] fbcon: Fix null-ptr-deref in soft_cursor
-Date: Wed,  7 Jun 2023 22:16:59 +0200
-Message-ID: <20230607200904.161870940@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: [PATCH 5.10 104/120] serial: 8250_tegra: Fix an error handling path in tegra_uart_probe()
+Date: Wed,  7 Jun 2023 22:17:00 +0200
+Message-ID: <20230607200904.195480971@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -36,58 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit d78bd6cc68276bd57f766f7cb98bfe32c23ab327 upstream.
+commit 134f49dec0b6aca3259cd8259de4c572048bd207 upstream.
 
-syzbot repored this bug in the softcursor code:
+If an error occurs after reset_control_deassert(), it must be re-asserted,
+as already done in the .remove() function.
 
-BUG: KASAN: null-ptr-deref in soft_cursor+0x384/0x6b4 drivers/video/fbdev/core/softcursor.c:70
-Read of size 16 at addr 0000000000000200 by task kworker/u4:1/12
-
-CPU: 0 PID: 12 Comm: kworker/u4:1 Not tainted 6.4.0-rc3-syzkaller-geb0f1697d729 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/28/2023
-Workqueue: events_power_efficient fb_flashcursor
-Call trace:
- dump_backtrace+0x1b8/0x1e4 arch/arm64/kernel/stacktrace.c:233
- show_stack+0x2c/0x44 arch/arm64/kernel/stacktrace.c:240
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd0/0x124 lib/dump_stack.c:106
- print_report+0xe4/0x514 mm/kasan/report.c:465
- kasan_report+0xd4/0x130 mm/kasan/report.c:572
- kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:187
- __asan_memcpy+0x3c/0x84 mm/kasan/shadow.c:105
- soft_cursor+0x384/0x6b4 drivers/video/fbdev/core/softcursor.c:70
- bit_cursor+0x113c/0x1a64 drivers/video/fbdev/core/bitblit.c:377
- fb_flashcursor+0x35c/0x54c drivers/video/fbdev/core/fbcon.c:380
- process_one_work+0x788/0x12d4 kernel/workqueue.c:2405
- worker_thread+0x8e0/0xfe8 kernel/workqueue.c:2552
- kthread+0x288/0x310 kernel/kthread.c:379
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:853
-
-This fix let bit_cursor() bail out early when a font bitmap
-isn't available yet.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: syzbot+d910bd780e6efac35869@syzkaller.appspotmail.com
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
-Cc: stable@kernel.org
+Fixes: c6825c6395b7 ("serial: 8250_tegra: Create Tegra specific 8250 driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/f8130f35339cc80edc6b9aac4bb2a60b60a226bf.1684063511.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/bitblit.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/8250/8250_tegra.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -247,6 +247,9 @@ static void bit_cursor(struct vc_data *v
+--- a/drivers/tty/serial/8250/8250_tegra.c
++++ b/drivers/tty/serial/8250/8250_tegra.c
+@@ -111,13 +111,15 @@ static int tegra_uart_probe(struct platf
  
- 	cursor.set = 0;
+ 	ret = serial8250_register_8250_port(&port8250);
+ 	if (ret < 0)
+-		goto err_clkdisable;
++		goto err_ctrl_assert;
  
-+	if (!vc->vc_font.data)
-+		return;
-+
-  	c = scr_readw((u16 *) vc->vc_pos);
- 	attribute = get_attribute(info, c);
- 	src = vc->vc_font.data + ((c & charmask) * (w * vc->vc_font.height));
+ 	platform_set_drvdata(pdev, uart);
+ 	uart->line = ret;
+ 
+ 	return 0;
+ 
++err_ctrl_assert:
++	reset_control_assert(uart->rst);
+ err_clkdisable:
+ 	clk_disable_unprepare(uart->clk);
+ 
 
 
