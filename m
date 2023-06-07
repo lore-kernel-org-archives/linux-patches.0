@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361DD34CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB056C433EF;
-	Wed,  7 Jun 2023 20:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED5534CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505C3C433EF;
+	Wed,  7 Jun 2023 20:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170664;
-	bh=Jie0xV3jJ4nif6u99ulOYa+bH3Us8mV21cmJQw4yb+g=;
+	s=korg; t=1686170666;
+	bh=5DwqsY8jX3cH76DHY0a72VrqD2LzZ4K6+l06hTIRTzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dE9CWI7515468hclhgX9t/da6zQh/xXCMsnwBPSNGgkN4e78CXHalrKaJWPqKg/d1
-	 zK+eDXRHgexkoz0u5JA0759pk+Hey3AMKjg4+VhLvmBRNb/87m82hvi5GPr+mg3J8f
-	 HIGI4zPuoYeNJnn2NCKnxyAzNTyatNUgaNn0Cecw=
+	b=av6N8iPZcFdDNWZ2HaG/Ai/I9uRps9xElKfvhI9/1NOWobaxcmhBQM92DaSmi5Pmn
+	 RUdiD9XPICbKrz2N9SJnN0WjZo3sAZkM5yxIO5e6lCkokxgW4esWHnk6K+iikSDTJ9
+	 W8MVEfUMCwO02ucQmtJfzCuXfncZAuzFmsthUk6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 170/225] drm/amd/pm: reverse mclk and fclk clocks levels for renoir
-Date: Wed,  7 Jun 2023 22:16:03 +0200
-Message-ID: <20230607200919.953709809@linuxfoundation.org>
+	Christian Kujau <lists@nerdbynature.de>,
+	Juergen Gross <jgross@suse.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Jason Andryuk <jandryuk@gmail.com>
+Subject: [PATCH 6.1 171/225] x86/mtrr: Revert 90b926e68f50 ("x86/pat: Fix pat_x_mtrr_type() for MTRR disabled case")
+Date: Wed,  7 Jun 2023 22:16:04 +0200
+Message-ID: <20230607200919.984425789@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,54 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Juergen Gross <jgross@suse.com>
 
-commit 55e02c14f9b5fd973ba32a16a715baa42617f9c6 upstream.
+commit f9f57da2c2d119dbf109e3f6e1ceab7659294046 upstream.
 
-This patch reverses the DPM clocks levels output of pp_dpm_mclk
-and pp_dpm_fclk for renoir.
+Commit
 
-On dGPUs and older APUs we expose the levels from lowest clocks
-to highest clocks. But for some APUs, the clocks levels are
-given the reversed orders by PMFW. Like the memory DPM clocks
-that are exposed by pp_dpm_mclk.
+  90b926e68f50 ("x86/pat: Fix pat_x_mtrr_type() for MTRR disabled case")
 
-It's not intuitive that they are reversed on these APUs. All tools
-and software that talks to the driver then has to know different ways
-to interpret the data depending on the asic.
+broke the use case of running Xen dom0 kernels on machines with an
+external disk enclosure attached via USB, see Link tag.
 
-So we need to reverse them to expose the clocks levels from the
-driver consistently.
+What this commit was originally fixing - SEV-SNP guests on Hyper-V - is
+a more specialized situation which has other issues at the moment anyway
+so reverting this now and addressing the issue properly later is the
+prudent thing to do.
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+So revert it in time for the 6.2 proper release.
+
+  [ bp: Rewrite commit message. ]
+
+Reported-by: Christian Kujau <lists@nerdbynature.de>
+Tested-by: Christian Kujau <lists@nerdbynature.de>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/4fe9541e-4d4c-2b2a-f8c8-2d34a7284930@nerdbynature.de
+Cc: Jason Andryuk <jandryuk@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/mm/pat/memtype.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c
-@@ -494,7 +494,7 @@ static int renoir_set_fine_grain_gfx_fre
- static int renoir_print_clk_levels(struct smu_context *smu,
- 			enum smu_clk_type clk_type, char *buf)
- {
--	int i, size = 0, ret = 0;
-+	int i, idx, size = 0, ret = 0;
- 	uint32_t cur_value = 0, value = 0, count = 0, min = 0, max = 0;
- 	SmuMetrics_t metrics;
- 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
-@@ -594,7 +594,8 @@ static int renoir_print_clk_levels(struc
- 	case SMU_VCLK:
- 	case SMU_DCLK:
- 		for (i = 0; i < count; i++) {
--			ret = renoir_get_dpm_clk_limited(smu, clk_type, i, &value);
-+			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
-+			ret = renoir_get_dpm_clk_limited(smu, clk_type, idx, &value);
- 			if (ret)
- 				return ret;
- 			if (!value)
+--- a/arch/x86/mm/pat/memtype.c
++++ b/arch/x86/mm/pat/memtype.c
+@@ -434,8 +434,7 @@ static unsigned long pat_x_mtrr_type(u64
+ 		u8 mtrr_type, uniform;
+ 
+ 		mtrr_type = mtrr_type_lookup(start, end, &uniform);
+-		if (mtrr_type != MTRR_TYPE_WRBACK &&
+-		    mtrr_type != MTRR_TYPE_INVALID)
++		if (mtrr_type != MTRR_TYPE_WRBACK)
+ 			return _PAGE_CACHE_MODE_UC_MINUS;
+ 
+ 		return _PAGE_CACHE_MODE_WB;
 
 
