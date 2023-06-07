@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9046E34CF6
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:20:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB66C433D2;
-	Wed,  7 Jun 2023 20:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA1B34CF6
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:20:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FF4C433EF;
+	Wed,  7 Jun 2023 20:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169245;
-	bh=aql5NXzheAYQGdrzLD5fzib1YS8adfuPpeMQmFo/SR4=;
+	s=korg; t=1686169248;
+	bh=YcToNtZhEDHQuwln3PcZjkZEFxrJjtiVhXurDLkXs4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J0wB8GdG/mPjJby7j5m4ykhZj8M/ubLXQODh06POfyOBz21TR2XXxWmpvvsLzgojY
-	 wGVc+Qo/uSkvc7nhMUnYUdohKNWlzOBtO6VCdAILfYQK4GKX8i3ad42Rs7j5xr25Nw
-	 0PCTDz3yv1mPdhwGpE4yFM1pJlgXaq+97bWuV/kQ=
+	b=MEy1/PG7QqNWTWPOaPgvorYUxevziUR/Ih16H18GkgELX/pdNzK8YVVo9w88FWGFv
+	 k9NnIKlhT2HZp68W9RMiVD4+RZr6mJgLgtl1vyMFbuMhvWr1tstN88b6bkoHQlBexU
+	 01kvi8jazAqpO0Tyr/XqpAVt/sGQGfRQ4bwF0hvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
-	kernel test robot <lkp@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Larry Finger <Larry.Finger@lwfinger.net>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kalle Valo <kvalo@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 30/61] wifi: b43: fix incorrect __packed annotation
-Date: Wed,  7 Jun 2023 22:15:44 +0200
-Message-ID: <20230607200845.757362161@linuxfoundation.org>
+Subject: [PATCH 6.3 001/286] RDMA/bnxt_re: Fix the page_size used during the MR creation
+Date: Wed,  7 Jun 2023 22:11:40 +0200
+Message-ID: <20230607200923.030119341@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
-References: <20230607200835.310274198@linuxfoundation.org>
+In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
+References: <20230607200922.978677727@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,64 +39,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 212457ccbd60dba34f965e4ffbe62f0e4f970538 ]
+[ Upstream commit 08c7f09356e45d093d1867c7a3c6ac6526e2f98b ]
 
-clang warns about an unpacked structure inside of a packed one:
+Driver populates the list of pages used for Memory region wrongly when
+page size is more than system page size. This is causing a failure when
+some of the applications that creates MR with page size as 2M.  Since HW
+can support multiple page sizes, pass the correct page size while creating
+the MR.
 
-drivers/net/wireless/broadcom/b43/b43.h:654:4: error: field data within 'struct b43_iv' is less aligned than 'union (unnamed union at /home/arnd/arm-soc/drivers/net/wireless/broadcom/b43/b43.h:651:2)' and is usually due to 'struct b43_iv' being packed, which can lead to unaligned accesses [-Werror,-Wunaligned-access]
+Also, driver need not adjust the number of pages when HW Queues are
+created with user memory. It should work with the number of dma blocks
+returned by ib_umem_num_dma_blocks. Fix this calculation also.
 
-The problem here is that the anonymous union has the default alignment
-from its members, apparently because the original author mixed up the
-placement of the __packed attribute by placing it next to the struct
-member rather than the union definition. As the struct itself is
-also marked as __packed, there is no need to mark its members, so just
-move the annotation to the inner type instead.
-
-As Michael noted, the same problem is present in b43legacy, so
-change both at the same time.
-
-Acked-by: Michael Büsch <m@bues.ch>
-Reported-by: kernel test robot <lkp@intel.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
-Link: https://lore.kernel.org/oe-kbuild-all/202305160749.ay1HAoyP-lkp@intel.com/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230516183442.536589-1-arnd@kernel.org
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Fixes: f6919d56388c ("RDMA/bnxt_re: Code refactor while populating user MRs")
+Link: https://lore.kernel.org/r/1683484169-9539-1-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/b43/b43.h             | 2 +-
- drivers/net/wireless/broadcom/b43legacy/b43legacy.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 12 ++----------
+ drivers/infiniband/hw/bnxt_re/qplib_sp.c  |  7 +++----
+ 2 files changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/b43/b43.h b/drivers/net/wireless/broadcom/b43/b43.h
-index b77d1a904f7e6..a449561fccf28 100644
---- a/drivers/net/wireless/broadcom/b43/b43.h
-+++ b/drivers/net/wireless/broadcom/b43/b43.h
-@@ -651,7 +651,7 @@ struct b43_iv {
- 	union {
- 		__be16 d16;
- 		__be32 d32;
--	} data __packed;
-+	} __packed data;
- } __packed;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index 126d4f26f75ad..81b0c5e879f9e 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -215,17 +215,9 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
+ 			return -EINVAL;
+ 		hwq_attr->sginfo->npages = npages;
+ 	} else {
+-		unsigned long sginfo_num_pages = ib_umem_num_dma_blocks(
+-			hwq_attr->sginfo->umem, hwq_attr->sginfo->pgsize);
+-
++		npages = ib_umem_num_dma_blocks(hwq_attr->sginfo->umem,
++						hwq_attr->sginfo->pgsize);
+ 		hwq->is_user = true;
+-		npages = sginfo_num_pages;
+-		npages = (npages * PAGE_SIZE) /
+-			  BIT_ULL(hwq_attr->sginfo->pgshft);
+-		if ((sginfo_num_pages * PAGE_SIZE) %
+-		     BIT_ULL(hwq_attr->sginfo->pgshft))
+-			if (!npages)
+-				npages++;
+ 	}
  
- 
-diff --git a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
-index 6b0cec467938f..f49365d14619f 100644
---- a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
-+++ b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
-@@ -379,7 +379,7 @@ struct b43legacy_iv {
- 	union {
- 		__be16 d16;
- 		__be32 d32;
--	} data __packed;
-+	} __packed data;
- } __packed;
- 
- #define B43legacy_PHYMODE(phytype)	(1 << (phytype))
+ 	if (npages == MAX_PBL_LVL_0_PGS && !hwq_attr->sginfo->nopte) {
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+index b802981b71716..bae7d89261439 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+@@ -584,16 +584,15 @@ int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
+ 		/* Free the hwq if it already exist, must be a rereg */
+ 		if (mr->hwq.max_elements)
+ 			bnxt_qplib_free_hwq(res, &mr->hwq);
+-		/* Use system PAGE_SIZE */
+ 		hwq_attr.res = res;
+ 		hwq_attr.depth = pages;
+-		hwq_attr.stride = buf_pg_size;
++		hwq_attr.stride = sizeof(dma_addr_t);
+ 		hwq_attr.type = HWQ_TYPE_MR;
+ 		hwq_attr.sginfo = &sginfo;
+ 		hwq_attr.sginfo->umem = umem;
+ 		hwq_attr.sginfo->npages = pages;
+-		hwq_attr.sginfo->pgsize = PAGE_SIZE;
+-		hwq_attr.sginfo->pgshft = PAGE_SHIFT;
++		hwq_attr.sginfo->pgsize = buf_pg_size;
++		hwq_attr.sginfo->pgshft = ilog2(buf_pg_size);
+ 		rc = bnxt_qplib_alloc_init_hwq(&mr->hwq, &hwq_attr);
+ 		if (rc) {
+ 			dev_err(&res->pdev->dev,
 -- 
 2.39.2
 
