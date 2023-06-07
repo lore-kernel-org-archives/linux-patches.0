@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5463C34CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FB9C433D2;
-	Wed,  7 Jun 2023 20:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F9319E58
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66483C433EF;
+	Wed,  7 Jun 2023 20:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170323;
-	bh=1jkDi2AzjNeB9u1T7c+zCX9ULjAbAx1mVXD8bujN55M=;
+	s=korg; t=1686170325;
+	bh=zlS7jTFaits1XcQkhlJmSDn45yZbN/98Lx2XUZc82hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rZRw2aA/bpvlo7kBlZFsAdpU7Tm3c39epHI8nrw1vJ96OOVB3YtmT4gsiXpFCjVe5
-	 83pcWnzKTdvqran5GrU12Givfc0iXGLh4nC7JpalbaIAI4jvptyV1kW+T2+EfQDGrU
-	 uYQ0ZEqU64fu3BrCMRBux13DqsyAfi9bmsTQd5tA=
+	b=ifXDJUS8wVcLj74s0L0aUmFs8e8J+zYoE9+yNuYdTDh37wzKW9dd3VtgMU80w8Cy0
+	 mDmexKb3HvPRpQJ7OnKjYvL3olDP5Rj5TXACc1wLJD5XmCtc2tCmzkXCG/gVaLAiXp
+	 /pzN80JFt83gKkRpL4kcQzFaoHd9S2+uf5l13yfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladislav Efanov <VEfanov@ispras.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/225] af_packet: Fix data-races of pkt_sk(sk)->num.
-Date: Wed,  7 Jun 2023 22:13:36 +0200
-Message-ID: <20230607200915.079591936@linuxfoundation.org>
+Subject: [PATCH 6.1 041/225] udp6: Fix race condition in udp6_sendmsg & connect
+Date: Wed,  7 Jun 2023 22:13:54 +0200
+Message-ID: <20230607200915.690959860@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -37,95 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Vladislav Efanov <VEfanov@ispras.ru>
 
-[ Upstream commit 822b5a1c17df7e338b9f05d1cfe5764e37c7f74f ]
+[ Upstream commit 448a5ce1120c5bdbce1f1ccdabcd31c7d029f328 ]
 
-syzkaller found a data race of pkt_sk(sk)->num.
+Syzkaller got the following report:
+BUG: KASAN: use-after-free in sk_setup_caps+0x621/0x690 net/core/sock.c:2018
+Read of size 8 at addr ffff888027f82780 by task syz-executor276/3255
 
-The value is changed under lock_sock() and po->bind_lock, so we
-need READ_ONCE() to access pkt_sk(sk)->num without these locks in
-packet_bind_spkt(), packet_bind(), and sk_diag_fill().
+The function sk_setup_caps (called by ip6_sk_dst_store_flow->
+ip6_dst_store) referenced already freed memory as this memory was
+freed by parallel task in udpv6_sendmsg->ip6_sk_dst_lookup_flow->
+sk_dst_check.
 
-Note that WRITE_ONCE() is already added by commit c7d2ef5dd4b0
-("net/packet: annotate accesses to po->bind").
+          task1 (connect)              task2 (udp6_sendmsg)
+        sk_setup_caps->sk_dst_set |
+                                  |  sk_dst_check->
+                                  |      sk_dst_set
+                                  |      dst_release
+        sk_setup_caps references  |
+        to already freed dst_entry|
 
-BUG: KCSAN: data-race in packet_bind / packet_do_bind
+The reason for this race condition is: sk_setup_caps() keeps using
+the dst after transferring the ownership to the dst cache.
 
-write (marked) to 0xffff88802ffd1cee of 2 bytes by task 7322 on cpu 0:
- packet_do_bind+0x446/0x640 net/packet/af_packet.c:3236
- packet_bind+0x99/0xe0 net/packet/af_packet.c:3321
- __sys_bind+0x19b/0x1e0 net/socket.c:1803
- __do_sys_bind net/socket.c:1814 [inline]
- __se_sys_bind net/socket.c:1812 [inline]
- __x64_sys_bind+0x40/0x50 net/socket.c:1812
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
 
-read to 0xffff88802ffd1cee of 2 bytes by task 7318 on cpu 1:
- packet_bind+0xbf/0xe0 net/packet/af_packet.c:3322
- __sys_bind+0x19b/0x1e0 net/socket.c:1803
- __do_sys_bind net/socket.c:1814 [inline]
- __se_sys_bind net/socket.c:1812 [inline]
- __x64_sys_bind+0x40/0x50 net/socket.c:1812
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0x0300 -> 0x0000
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 7318 Comm: syz-executor.4 Not tainted 6.3.0-13380-g7fddb5b5300c #4
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 96ec6327144e ("packet: Diag core and basic socket info dumping")
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20230524232934.50950-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 4 ++--
- net/packet/diag.c      | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ net/core/sock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 67771b0f57719..c75191b0c82ba 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3291,7 +3291,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
- 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
- 	name[sizeof(uaddr->sa_data)] = 0;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index eb0b76acd9df1..83f590d8d0850 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2370,7 +2370,6 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
+ {
+ 	u32 max_segs = 1;
  
--	return packet_do_bind(sk, name, 0, pkt_sk(sk)->num);
-+	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
+-	sk_dst_set(sk, dst);
+ 	sk->sk_route_caps = dst->dev->features;
+ 	if (sk_is_tcp(sk))
+ 		sk->sk_route_caps |= NETIF_F_GSO;
+@@ -2392,6 +2391,7 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
+ 		}
+ 	}
+ 	sk->sk_gso_max_segs = max_segs;
++	sk_dst_set(sk, dst);
  }
- 
- static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
-@@ -3309,7 +3309,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
- 		return -EINVAL;
- 
- 	return packet_do_bind(sk, NULL, sll->sll_ifindex,
--			      sll->sll_protocol ? : pkt_sk(sk)->num);
-+			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
- }
- 
- static struct proto packet_proto = {
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index d704c7bf51b20..a68a84574c739 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -143,7 +143,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb,
- 	rp = nlmsg_data(nlh);
- 	rp->pdiag_family = AF_PACKET;
- 	rp->pdiag_type = sk->sk_type;
--	rp->pdiag_num = ntohs(po->num);
-+	rp->pdiag_num = ntohs(READ_ONCE(po->num));
- 	rp->pdiag_ino = sk_ino;
- 	sock_diag_save_cookie(sk, rp->pdiag_cookie);
+ EXPORT_SYMBOL_GPL(sk_setup_caps);
  
 -- 
 2.39.2
