@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B158419E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34569C433D2;
-	Wed,  7 Jun 2023 20:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DE919E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EE4C433D2;
+	Wed,  7 Jun 2023 20:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170245;
-	bh=AcawwOb/0VbtbG8CcLEXU/eITg9SS2Y5A5z5pZK6Wy0=;
+	s=korg; t=1686170248;
+	bh=R/3dDBsTQVMSJNSLM49EAIqVkmO7MrgKF61TN9pBRrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQ+/Iyc3SepNKpd47VAHyBYM25qvpNYmYsGaEKACF8MSfeJASm2ZAZ7UMWG6JR5k7
-	 QWZ16ZbWA699y1ysKgVzUcH8IeYgaAwTyNCu7jeAp2f/vFd2S5WXiVx0aempXkWkdb
-	 +MSEvd+LVpJ5Xl4YoN3xVzanX9D7DlT+a+C8He8c=
+	b=UVL3hl+RP3fbQYuHXpXAHigdcyInYSDpMqGweY1Q/aqr2KIJK2AO3JtVIKqrfAdVm
+	 ISfA1qbUwIInFpPMDh3SA+08XF9K2CQBb8OrEZCHg2YyiBhcBoTWqF1Qty1fiAnWRw
+	 lbBrbQ9xwuUjEP8hq7EC3FT3pscruDkm2lolZLws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
 	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
 	Vasant Hegde <vasant.hegde@amd.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/225] iommu/amd: Handle GALog overflows
-Date: Wed,  7 Jun 2023 22:13:25 +0200
-Message-ID: <20230607200913.743016830@linuxfoundation.org>
+Subject: [PATCH 6.1 013/225] iommu/amd: Fix up merge conflict resolution
+Date: Wed,  7 Jun 2023 22:13:26 +0200
+Message-ID: <20230607200913.772728388@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -37,137 +40,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joao Martins <joao.m.martins@oracle.com>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-[ Upstream commit af47b0a24058e56e983881993752f88288ca6511 ]
+[ Upstream commit 8ec4e2befef10c7679cd59251956a428e783c0b5 ]
 
-GALog exists to propagate interrupts into all vCPUs in the system when
-interrupts are marked as non running (e.g. when vCPUs aren't running). A
-GALog overflow happens when there's in no space in the log to record the
-GATag of the interrupt. So when the GALOverflow condition happens, the
-GALog queue is processed and the GALog is restarted, as the IOMMU
-manual indicates in section "2.7.4 Guest Virtual APIC Log Restart
-Procedure":
+Merge commit e17c6debd4b2 ("Merge branches 'arm/mediatek', 'arm/msm', 'arm/renesas', 'arm/rockchip', 'arm/smmu', 'x86/vt-d' and 'x86/amd' into next")
+added amd_iommu_init_devices, amd_iommu_uninit_devices,
+and amd_iommu_init_notifier back to drivers/iommu/amd/amd_iommu.h.
+The only references to them are here, so clean them up.
 
-| * Wait until MMIO Offset 2020h[GALogRun]=0b so that all request
-|   entries are completed as circumstances allow. GALogRun must be 0b to
-|   modify the guest virtual APIC log registers safely.
-| * Write MMIO Offset 0018h[GALogEn]=0b.
-| * As necessary, change the following values (e.g., to relocate or
-| resize the guest virtual APIC event log):
-|   - the Guest Virtual APIC Log Base Address Register
-|      [MMIO Offset 00E0h],
-|   - the Guest Virtual APIC Log Head Pointer Register
-|      [MMIO Offset 2040h][GALogHead], and
-|   - the Guest Virtual APIC Log Tail Pointer Register
-|      [MMIO Offset 2048h][GALogTail].
-| * Write MMIO Offset 2020h[GALOverflow] = 1b to clear the bit (W1C).
-| * Write MMIO Offset 0018h[GALogEn] = 1b, and either set
-|   MMIO Offset 0018h[GAIntEn] to enable the GA log interrupt or clear
-|   the bit to disable it.
-
-Failing to handle the GALog overflow means that none of the VFs (in any
-guest) will work with IOMMU AVIC forcing the user to power cycle the
-host. When handling the event it resumes the GALog without resizing
-much like how it is done in the event handler overflow. The
-[MMIO Offset 2020h][GALOverflow] bit might be set in status register
-without the [MMIO Offset 2020h][GAInt] bit, so when deciding to poll
-for GA events (to clear space in the galog), also check the overflow
-bit.
-
-[suravee: Check for GAOverflow without GAInt, toggle CONTROL_GAINT_EN]
-
-Co-developed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Fixes: e17c6debd4b2 ("Merge branches 'arm/mediatek', 'arm/msm', 'arm/renesas', 'arm/rockchip', 'arm/smmu', 'x86/vt-d' and 'x86/amd' into next")
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
 Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20230419201154.83880-3-joao.m.martins@oracle.com
+Link: https://lore.kernel.org/r/20230420192013.733331-1-jsnitsel@redhat.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Stable-dep-of: 8ec4e2befef1 ("iommu/amd: Fix up merge conflict resolution")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu.h |  1 +
- drivers/iommu/amd/init.c      | 24 ++++++++++++++++++++++++
- drivers/iommu/amd/iommu.c     |  9 ++++++++-
- 3 files changed, 33 insertions(+), 1 deletion(-)
+ drivers/iommu/amd/amd_iommu.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-index c160a332ce339..24c7e6c6c0de9 100644
+index 24c7e6c6c0de9..471f40351f4c8 100644
 --- a/drivers/iommu/amd/amd_iommu.h
 +++ b/drivers/iommu/amd/amd_iommu.h
-@@ -15,6 +15,7 @@ extern irqreturn_t amd_iommu_int_thread(int irq, void *data);
- extern irqreturn_t amd_iommu_int_handler(int irq, void *data);
+@@ -16,9 +16,6 @@ extern irqreturn_t amd_iommu_int_handler(int irq, void *data);
  extern void amd_iommu_apply_erratum_63(struct amd_iommu *iommu, u16 devid);
  extern void amd_iommu_restart_event_logging(struct amd_iommu *iommu);
-+extern void amd_iommu_restart_ga_log(struct amd_iommu *iommu);
- extern int amd_iommu_init_devices(void);
- extern void amd_iommu_uninit_devices(void);
- extern void amd_iommu_init_notifier(void);
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 7c14b1d32c8db..b0af8b5967e0d 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -751,6 +751,30 @@ void amd_iommu_restart_event_logging(struct amd_iommu *iommu)
- 	iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
- }
+ extern void amd_iommu_restart_ga_log(struct amd_iommu *iommu);
+-extern int amd_iommu_init_devices(void);
+-extern void amd_iommu_uninit_devices(void);
+-extern void amd_iommu_init_notifier(void);
+ extern void amd_iommu_set_rlookup_table(struct amd_iommu *iommu, u16 devid);
  
-+/*
-+ * This function restarts event logging in case the IOMMU experienced
-+ * an GA log overflow.
-+ */
-+void amd_iommu_restart_ga_log(struct amd_iommu *iommu)
-+{
-+	u32 status;
-+
-+	status = readl(iommu->mmio_base + MMIO_STATUS_OFFSET);
-+	if (status & MMIO_STATUS_GALOG_RUN_MASK)
-+		return;
-+
-+	pr_info_ratelimited("IOMMU GA Log restarting\n");
-+
-+	iommu_feature_disable(iommu, CONTROL_GALOG_EN);
-+	iommu_feature_disable(iommu, CONTROL_GAINT_EN);
-+
-+	writel(MMIO_STATUS_GALOG_OVERFLOW_MASK,
-+	       iommu->mmio_base + MMIO_STATUS_OFFSET);
-+
-+	iommu_feature_enable(iommu, CONTROL_GAINT_EN);
-+	iommu_feature_enable(iommu, CONTROL_GALOG_EN);
-+}
-+
- /*
-  * This function resets the command buffer if the IOMMU stopped fetching
-  * commands from it.
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 0ccc6b8319fba..16c5d1b97b564 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -836,6 +836,7 @@ amd_iommu_set_pci_msi_domain(struct device *dev, struct amd_iommu *iommu) { }
- 	(MMIO_STATUS_EVT_OVERFLOW_INT_MASK | \
- 	 MMIO_STATUS_EVT_INT_MASK | \
- 	 MMIO_STATUS_PPR_INT_MASK | \
-+	 MMIO_STATUS_GALOG_OVERFLOW_MASK | \
- 	 MMIO_STATUS_GALOG_INT_MASK)
- 
- irqreturn_t amd_iommu_int_thread(int irq, void *data)
-@@ -859,10 +860,16 @@ irqreturn_t amd_iommu_int_thread(int irq, void *data)
- 		}
- 
- #ifdef CONFIG_IRQ_REMAP
--		if (status & MMIO_STATUS_GALOG_INT_MASK) {
-+		if (status & (MMIO_STATUS_GALOG_INT_MASK |
-+			      MMIO_STATUS_GALOG_OVERFLOW_MASK)) {
- 			pr_devel("Processing IOMMU GA Log\n");
- 			iommu_poll_ga_log(iommu);
- 		}
-+
-+		if (status & MMIO_STATUS_GALOG_OVERFLOW_MASK) {
-+			pr_info_ratelimited("IOMMU GA Log overflow\n");
-+			amd_iommu_restart_ga_log(iommu);
-+		}
- #endif
- 
- 		if (status & MMIO_STATUS_EVT_OVERFLOW_INT_MASK) {
+ #ifdef CONFIG_AMD_IOMMU_DEBUGFS
 -- 
 2.39.2
 
