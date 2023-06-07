@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA33A10FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B275C433EF;
-	Wed,  7 Jun 2023 20:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8376510FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:26:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035C6C433EF;
+	Wed,  7 Jun 2023 20:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169561;
-	bh=kV3lnCQLNsX1P+lNMdGzqoGUQ+2ziiemz20pKJDmjMA=;
+	s=korg; t=1686169564;
+	bh=grmV5ECNjfhpFqaQa+XnCtRocR2jGhVqdQsXK4lL7gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YszjpWuiS5c4JSRcKUmVZadTw8odojrvdYgbemi1s92deK+n88muoo8jE7wQDHjLN
-	 bzRq+XVUhtqkOKXaKkUCe1BYmeU2S/ZfNiPmHr9uq/ofEC4T978N25YDv3ww1kCIrG
-	 XkDg845Tkq3OC+s+lnyicXs6usryuP4ckBDogRwo=
+	b=UcE0w5kXZ5ZVgljA7TGQwC3Lobu7qhHBYR9iicQAJM6NO6kJs/XE+EQWHPpCZHAKj
+	 hNAn0MludbGHJxwzy3yzMx1jIIWAz81g4HEqTJpiOiGkn2jdqzD4wq4FwN+MwEqF3g
+	 FGbhIM1XfQjLUwIeHjBJsLgZPXudLFGnCr9KnXNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 100/286] media: rcar-vin: Fix NV12 size alignment
-Date: Wed,  7 Jun 2023 22:13:19 +0200
-Message-ID: <20230607200926.326937598@linuxfoundation.org>
+Subject: [PATCH 6.3 127/286] media: dvb-usb-v2: ec168: fix null-ptr-deref in ec168_i2c_xfer()
+Date: Wed,  7 Jun 2023 22:13:46 +0200
+Message-ID: <20230607200927.239765640@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,43 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit cb88d8289fc222bd21b7a7f99b055e7e73e316f4 ]
+[ Upstream commit a6dcefcc08eca1bf4e3d213c97c3cfb75f377935 ]
 
-When doing format validation for NV12 the width and height should be
-aligned to 32 pixels.
+In ec168_i2c_xfer, msg is controlled by user. When msg[i].buf is null
+and msg[i].len is zero, former checks on msg[i].buf would be passed.
+If accessing msg[i].buf[0] without sanity check, null pointer deref
+would happen. We add check on msg[i].len to prevent crash.
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Similar commit:
+commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+
+Link: https://lore.kernel.org/linux-media/20230313085853.3252349-1-harperchen1110@gmail.com
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/renesas/rcar-vin/rcar-dma.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/media/usb/dvb-usb-v2/ec168.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
-index cc6b59e5621ae..23598e22adc72 100644
---- a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
-+++ b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
-@@ -1320,9 +1320,15 @@ static int rvin_mc_validate_format(struct rvin_dev *vin, struct v4l2_subdev *sd,
- 		if (!vin->scaler)
- 			return -EPIPE;
- 	} else {
--		if (fmt.format.width != vin->format.width ||
--		    fmt.format.height != vin->format.height)
--			return -EPIPE;
-+		if (vin->format.pixelformat == V4L2_PIX_FMT_NV12) {
-+			if (ALIGN(fmt.format.width, 32) != vin->format.width ||
-+			    ALIGN(fmt.format.height, 32) != vin->format.height)
-+				return -EPIPE;
-+		} else {
-+			if (fmt.format.width != vin->format.width ||
-+			    fmt.format.height != vin->format.height)
-+				return -EPIPE;
-+		}
- 	}
- 
- 	if (fmt.format.code != vin->mbus_code)
+diff --git a/drivers/media/usb/dvb-usb-v2/ec168.c b/drivers/media/usb/dvb-usb-v2/ec168.c
+index 7ed0ab9e429b1..0e4773fc025c9 100644
+--- a/drivers/media/usb/dvb-usb-v2/ec168.c
++++ b/drivers/media/usb/dvb-usb-v2/ec168.c
+@@ -115,6 +115,10 @@ static int ec168_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 	while (i < num) {
+ 		if (num > i + 1 && (msg[i+1].flags & I2C_M_RD)) {
+ 			if (msg[i].addr == ec168_ec100_config.demod_address) {
++				if (msg[i].len < 1) {
++					i = -EOPNOTSUPP;
++					break;
++				}
+ 				req.cmd = READ_DEMOD;
+ 				req.value = 0;
+ 				req.index = 0xff00 + msg[i].buf[0]; /* reg */
+@@ -131,6 +135,10 @@ static int ec168_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			}
+ 		} else {
+ 			if (msg[i].addr == ec168_ec100_config.demod_address) {
++				if (msg[i].len < 1) {
++					i = -EOPNOTSUPP;
++					break;
++				}
+ 				req.cmd = WRITE_DEMOD;
+ 				req.value = msg[i].buf[1]; /* val */
+ 				req.index = 0xff00 + msg[i].buf[0]; /* reg */
+@@ -139,6 +147,10 @@ static int ec168_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 				ret = ec168_ctrl_msg(d, &req);
+ 				i += 1;
+ 			} else {
++				if (msg[i].len < 1) {
++					i = -EOPNOTSUPP;
++					break;
++				}
+ 				req.cmd = WRITE_I2C;
+ 				req.value = msg[i].buf[0]; /* val */
+ 				req.index = 0x0100 + msg[i].addr; /* I2C addr */
 -- 
 2.39.2
 
