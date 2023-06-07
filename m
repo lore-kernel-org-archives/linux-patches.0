@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BF928C1D
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45000C433D2;
-	Wed,  7 Jun 2023 20:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F8D2A9D7
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06474C43442;
+	Wed,  7 Jun 2023 20:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170312;
-	bh=vdFxz29FGfNgWMxA7pXiiA5JCmRlL/kbgsjaGJJ1G0g=;
+	s=korg; t=1686170315;
+	bh=qXLTi8t9N8z4sfoDy8v96whJYWPpaeyLRtF7KZO5xDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDgMetowJFP3yyG7ts1qXx9KTTVr5iLmI/Loj7LReIIIVa7oze+BvPvZD89qAtVK+
-	 08CNYqX8gW5GBVJhH0w+IbC84cBELvuy4ClXWcGpApEKFmgkTxa/7BMXCRwB3deeEM
-	 XoriJQakwQd4wfhiA/jgZHYIeH4iYe38Q+pZUcJI=
+	b=EAmWyykLs1nZ3b7SGioGahKLweB4b1QTUifVatxqpYywyQ+rVIyO4CF+VM74tCGKq
+	 hCozuE4qKA4QaFXNyZZnkZqm1TGaBXwOEKMVMN9xB4mGlhDWH6oEGW0nZ1jeKyt4vu
+	 o0dZrW5/6Vkhs1892f33q4YfNQ//fIHDC+AYVH7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peilin Ye <peilin.ye@bytedance.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/225] net/sched: Reserve TC_H_INGRESS (TC_H_CLSACT) for ingress (clsact) Qdiscs
-Date: Wed,  7 Jun 2023 22:13:50 +0200
-Message-ID: <20230607200915.553148804@linuxfoundation.org>
+Subject: [PATCH 6.1 038/225] net/sched: Prohibit regrafting ingress or clsact Qdiscs
+Date: Wed,  7 Jun 2023 22:13:51 +0200
+Message-ID: <20230607200915.595303143@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -40,27 +40,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Peilin Ye <peilin.ye@bytedance.com>
 
-[ Upstream commit f85fa45d4a9408d98c46c8fa45ba2e3b2f4bf219 ]
+[ Upstream commit 9de95df5d15baa956c2b70b9e794842e790a8a13 ]
 
-Currently it is possible to add e.g. an HTB Qdisc under ffff:fff1
-(TC_H_INGRESS, TC_H_CLSACT):
+Currently, after creating an ingress (or clsact) Qdisc and grafting it
+under TC_H_INGRESS (TC_H_CLSACT), it is possible to graft it again under
+e.g. a TBF Qdisc:
 
-  $ ip link add name ifb0 type ifb
-  $ tc qdisc add dev ifb0 parent ffff:fff1 htb
+  $ ip link add ifb0 type ifb
+  $ tc qdisc add dev ifb0 handle 1: root tbf rate 20kbit buffer 1600 limit 3000
   $ tc qdisc add dev ifb0 clsact
-  Error: Exclusivity flag on, cannot modify.
-  $ drgn
-  ...
-  >>> ifb0 = netdev_get_by_name(prog, "ifb0")
-  >>> qdisc = ifb0.ingress_queue.qdisc_sleeping
-  >>> print(qdisc.ops.id.string_().decode())
-  htb
-  >>> qdisc.flags.value_() # TCQ_F_INGRESS
-  2
+  $ tc qdisc link dev ifb0 handle ffff: parent 1:1
+  $ tc qdisc show dev ifb0
+  qdisc tbf 1: root refcnt 2 rate 20Kbit burst 1600b lat 560.0ms
+  qdisc clsact ffff: parent ffff:fff1 refcnt 2
+                                      ^^^^^^^^
 
-Only allow ingress and clsact Qdiscs under ffff:fff1.  Return -EINVAL
-for everything else.  Make TCQ_F_INGRESS a static flag of ingress and
-clsact Qdiscs.
+clsact's refcount has increased: it is now grafted under both
+TC_H_CLSACT and 1:1.
+
+ingress and clsact Qdiscs should only be used under TC_H_INGRESS
+(TC_H_CLSACT).  Prohibit regrafting them.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Fixes: 1f211a1b929c ("net, sched: add clsact qdisc")
@@ -72,50 +71,25 @@ Signed-off-by: Peilin Ye <peilin.ye@bytedance.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c     | 7 ++++++-
- net/sched/sch_ingress.c | 4 ++--
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ net/sched/sch_api.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index c82532e206992..2244e00ea9a10 100644
+index 2244e00ea9a10..95f38595b0f7f 100644
 --- a/net/sched/sch_api.c
 +++ b/net/sched/sch_api.c
-@@ -1241,7 +1241,12 @@ static struct Qdisc *qdisc_create(struct net_device *dev,
- 	sch->parent = parent;
- 
- 	if (handle == TC_H_INGRESS) {
--		sch->flags |= TCQ_F_INGRESS;
-+		if (!(sch->flags & TCQ_F_INGRESS)) {
-+			NL_SET_ERR_MSG(extack,
-+				       "Specified parent ID is reserved for ingress and clsact Qdiscs");
-+			err = -EINVAL;
-+			goto err_out3;
-+		}
- 		handle = TC_H_MAKE(TC_H_INGRESS, 0);
- 	} else {
- 		if (handle == 0) {
-diff --git a/net/sched/sch_ingress.c b/net/sched/sch_ingress.c
-index 35963929e1178..e43a454993723 100644
---- a/net/sched/sch_ingress.c
-+++ b/net/sched/sch_ingress.c
-@@ -140,7 +140,7 @@ static struct Qdisc_ops ingress_qdisc_ops __read_mostly = {
- 	.cl_ops			=	&ingress_class_ops,
- 	.id			=	"ingress",
- 	.priv_size		=	sizeof(struct ingress_sched_data),
--	.static_flags		=	TCQ_F_CPUSTATS,
-+	.static_flags		=	TCQ_F_INGRESS | TCQ_F_CPUSTATS,
- 	.init			=	ingress_init,
- 	.destroy		=	ingress_destroy,
- 	.dump			=	ingress_dump,
-@@ -281,7 +281,7 @@ static struct Qdisc_ops clsact_qdisc_ops __read_mostly = {
- 	.cl_ops			=	&clsact_class_ops,
- 	.id			=	"clsact",
- 	.priv_size		=	sizeof(struct clsact_sched_data),
--	.static_flags		=	TCQ_F_CPUSTATS,
-+	.static_flags		=	TCQ_F_INGRESS | TCQ_F_CPUSTATS,
- 	.init			=	clsact_init,
- 	.destroy		=	clsact_destroy,
- 	.dump			=	ingress_dump,
+@@ -1591,6 +1591,11 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
+ 					NL_SET_ERR_MSG(extack, "Invalid qdisc name");
+ 					return -EINVAL;
+ 				}
++				if (q->flags & TCQ_F_INGRESS) {
++					NL_SET_ERR_MSG(extack,
++						       "Cannot regraft ingress or clsact Qdiscs");
++					return -EINVAL;
++				}
+ 				if (q == p ||
+ 				    (p && check_loop(q, p, 0))) {
+ 					NL_SET_ERR_MSG(extack, "Qdisc parent/child loop detected");
 -- 
 2.39.2
 
