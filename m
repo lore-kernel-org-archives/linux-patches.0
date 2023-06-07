@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E5C3AE56
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83D4C433D2;
-	Wed,  7 Jun 2023 20:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE56A10FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:27:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D75BC433D2;
+	Wed,  7 Jun 2023 20:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169643;
-	bh=gUgWz8c1YnU07dNTEmQ5wrb7oTHkHXGklSru5lFQ7kQ=;
+	s=korg; t=1686169645;
+	bh=rzrtfBVWQ59Rixl20Y/EdbmL+NuVPpxEIjl4pKv+dt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7EkBhD5HxVm9Tny5W3SoZfPU+FdDYBg8l9yUl098w4xCvLsqqkupJ8WcuuXpvyW9
-	 dpm3TQsW6nL0b75YTFsUkkcdt0ZfgxV5Xiob1OIt2PNh1GszN53yF+UrE9WLNqivyF
-	 tCbGyMv7wx+gZSmblzJDotCPyrd14DJZFTHHLBLI=
+	b=Onh7mYUtBi9NVZ8A4W4BMRVO0+a6H9cRTeYtHbPK7OFN1IeRCmvqg5TUYw998kZ/2
+	 iODZ6qYbTI67jDizfPyY17eJboCfYPyp6wYFMShXHB70BiMFTY0SD4SYa/yunLdRHC
+	 hNH5LD51x5HCo5Z+a8eiG3nZFi8xJ3VXhQ/2t7bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Po-Wen Kao <powen.kao@mediatek.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Stanley Chu <stanley.chu@mediatek.com>,
-	Ziqi Chen <quic_ziqichen@quicinc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 158/286] scsi: ufs: core: Rename symbol sizeof_utp_transfer_cmd_desc()
-Date: Wed,  7 Jun 2023 22:14:17 +0200
-Message-ID: <20230607200928.283203168@linuxfoundation.org>
+Subject: [PATCH 6.3 132/286] media: netup_unidvb: fix irq init by register it at the end of probe
+Date: Wed,  7 Jun 2023 22:13:51 +0200
+Message-ID: <20230607200927.405508516@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -39,97 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Po-Wen Kao <powen.kao@mediatek.com>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 06caeb536b2b21668efd2d6fa97c09461957b3a7 ]
+[ Upstream commit e6ad6233592593079db5c8fa592c298e51bc1356 ]
 
-Naming the functions after standard operators like sizeof() may cause
-confusion. Rename it to ufshcd_get_ucd_size().
+IRQ handler netup_spi_interrupt() takes spinlock spi->lock. The lock
+is initialized in netup_spi_init(). However, irq handler is registered
+before initializing the lock.
 
-Signed-off-by: Po-Wen Kao <powen.kao@mediatek.com>
-Link: https://lore.kernel.org/r/20230504154454.26654-3-powen.kao@mediatek.com
-Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
-Reviewed-by: Ziqi Chen <quic_ziqichen@quicinc.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Spinlock dma->lock and i2c->lock suffer from the same problem.
+
+Fix this by registering the irq at the end of probe.
+
+Link: https://lore.kernel.org/linux-media/20230315134518.1074497-1-harperchen1110@gmail.com
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-mcq.c |  2 +-
- drivers/ufs/core/ufshcd.c  | 10 +++++-----
- include/ufs/ufshcd.h       |  2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ .../media/pci/netup_unidvb/netup_unidvb_core.c  | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index b7c5f39b50e6d..937933d3f77c2 100644
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -265,7 +265,7 @@ static int ufshcd_mcq_get_tag(struct ufs_hba *hba,
- 	addr = (le64_to_cpu(cqe->command_desc_base_addr) & CQE_UCD_BA) -
- 		hba->ucdl_dma_addr;
- 
--	return div_u64(addr, sizeof_utp_transfer_cmd_desc(hba));
-+	return div_u64(addr, ufshcd_get_ucd_size(hba));
- }
- 
- static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index a80eacbb8ef85..aec74987cb4e0 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -2821,10 +2821,10 @@ static void ufshcd_map_queues(struct Scsi_Host *shost)
- static void ufshcd_init_lrb(struct ufs_hba *hba, struct ufshcd_lrb *lrb, int i)
- {
- 	struct utp_transfer_cmd_desc *cmd_descp = (void *)hba->ucdl_base_addr +
--		i * sizeof_utp_transfer_cmd_desc(hba);
-+		i * ufshcd_get_ucd_size(hba);
- 	struct utp_transfer_req_desc *utrdlp = hba->utrdl_base_addr;
- 	dma_addr_t cmd_desc_element_addr = hba->ucdl_dma_addr +
--		i * sizeof_utp_transfer_cmd_desc(hba);
-+		i * ufshcd_get_ucd_size(hba);
- 	u16 response_offset = offsetof(struct utp_transfer_cmd_desc,
- 				       response_upiu);
- 	u16 prdt_offset = offsetof(struct utp_transfer_cmd_desc, prd_table);
-@@ -3733,7 +3733,7 @@ static int ufshcd_memory_alloc(struct ufs_hba *hba)
- 	size_t utmrdl_size, utrdl_size, ucdl_size;
- 
- 	/* Allocate memory for UTP command descriptors */
--	ucdl_size = sizeof_utp_transfer_cmd_desc(hba) * hba->nutrs;
-+	ucdl_size = ufshcd_get_ucd_size(hba) * hba->nutrs;
- 	hba->ucdl_base_addr = dmam_alloc_coherent(hba->dev,
- 						  ucdl_size,
- 						  &hba->ucdl_dma_addr,
-@@ -3833,7 +3833,7 @@ static void ufshcd_host_memory_configure(struct ufs_hba *hba)
- 	prdt_offset =
- 		offsetof(struct utp_transfer_cmd_desc, prd_table);
- 
--	cmd_desc_size = sizeof_utp_transfer_cmd_desc(hba);
-+	cmd_desc_size = ufshcd_get_ucd_size(hba);
- 	cmd_desc_dma_addr = hba->ucdl_dma_addr;
- 
- 	for (i = 0; i < hba->nutrs; i++) {
-@@ -8422,7 +8422,7 @@ static void ufshcd_release_sdb_queue(struct ufs_hba *hba, int nutrs)
- {
- 	size_t ucdl_size, utrdl_size;
- 
--	ucdl_size = sizeof_utp_transfer_cmd_desc(hba) * nutrs;
-+	ucdl_size = ufshcd_get_ucd_size(hba) * nutrs;
- 	dmam_free_coherent(hba->dev, ucdl_size, hba->ucdl_base_addr,
- 			   hba->ucdl_dma_addr);
- 
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index 431c3afb2ce0f..db70944c681aa 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1138,7 +1138,7 @@ static inline size_t ufshcd_sg_entry_size(const struct ufs_hba *hba)
- 	({ (void)(hba); BUILD_BUG_ON(sg_entry_size != sizeof(struct ufshcd_sg_entry)); })
- #endif
- 
--static inline size_t sizeof_utp_transfer_cmd_desc(const struct ufs_hba *hba)
-+static inline size_t ufshcd_get_ucd_size(const struct ufs_hba *hba)
- {
- 	return sizeof(struct utp_transfer_cmd_desc) + SG_ALL * ufshcd_sg_entry_size(hba);
- }
+diff --git a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+index aaa1d2dedebdd..d85bfbb77a250 100644
+--- a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
++++ b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+@@ -887,12 +887,7 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
+ 		ndev->lmmio0, (u32)pci_resource_len(pci_dev, 0),
+ 		ndev->lmmio1, (u32)pci_resource_len(pci_dev, 1),
+ 		pci_dev->irq);
+-	if (request_irq(pci_dev->irq, netup_unidvb_isr, IRQF_SHARED,
+-			"netup_unidvb", pci_dev) < 0) {
+-		dev_err(&pci_dev->dev,
+-			"%s(): can't get IRQ %d\n", __func__, pci_dev->irq);
+-		goto irq_request_err;
+-	}
++
+ 	ndev->dma_size = 2 * 188 *
+ 		NETUP_DMA_BLOCKS_COUNT * NETUP_DMA_PACKETS_COUNT;
+ 	ndev->dma_virt = dma_alloc_coherent(&pci_dev->dev,
+@@ -933,6 +928,14 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
+ 		dev_err(&pci_dev->dev, "netup_unidvb: DMA setup failed\n");
+ 		goto dma_setup_err;
+ 	}
++
++	if (request_irq(pci_dev->irq, netup_unidvb_isr, IRQF_SHARED,
++			"netup_unidvb", pci_dev) < 0) {
++		dev_err(&pci_dev->dev,
++			"%s(): can't get IRQ %d\n", __func__, pci_dev->irq);
++		goto dma_setup_err;
++	}
++
+ 	dev_info(&pci_dev->dev,
+ 		"netup_unidvb: device has been initialized\n");
+ 	return 0;
+@@ -951,8 +954,6 @@ static int netup_unidvb_initdev(struct pci_dev *pci_dev,
+ 	dma_free_coherent(&pci_dev->dev, ndev->dma_size,
+ 			ndev->dma_virt, ndev->dma_phys);
+ dma_alloc_err:
+-	free_irq(pci_dev->irq, pci_dev);
+-irq_request_err:
+ 	iounmap(ndev->lmmio1);
+ pci_bar1_error:
+ 	iounmap(ndev->lmmio0);
 -- 
 2.39.2
 
