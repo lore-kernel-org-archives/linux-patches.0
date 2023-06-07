@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E024E19E58
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFC2C433D2;
-	Wed,  7 Jun 2023 20:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8159619535
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E77C433D2;
+	Wed,  7 Jun 2023 20:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170351;
-	bh=yWGy8ZGyrzMYLtP2DLZn6PidiKx2wqyt54dSSwUJnhg=;
+	s=korg; t=1686170354;
+	bh=me8iuoyE+47HxjMGBnmJBeTDeafKAHglTnZkuVShbxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrYKhnvv9A1JcR1POwdeuu3SeaDZX0Sf2A2mGaE+s3gUiIkFSomYjzR1zr9AQvg3k
-	 eyc8GheGxwCIj5aFm4LT1aTUmHDdMzLPsKbWOorqrzhrDmVVVO3A55sF20BPFqc3HF
-	 +M8B38Z+785VPo2x1k58a9Ezqsr+Dl63RlE85mqE=
+	b=Gw7ok9dJhcZynxvUuYUuxKW7f8VSXLbFFFS85B9g39wFocnTsv8KyZT2PykBZjuni
+	 0DXuLUnrk6Gymt9PMwQPKTfOTBI+4voXCkixfuqPKMT34wEsAa2goyzFslHONI/8Oc
+	 +sGilrY1gVjYwlyZVa+/lOqAFAuCmod303Rui2Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/225] tls: improve lockless access safety of tls_err_abort()
-Date: Wed,  7 Jun 2023 22:13:37 +0200
-Message-ID: <20230607200915.111773595@linuxfoundation.org>
+Subject: [PATCH 6.1 051/225] mtd: rawnand: marvell: dont set the NAND frequency select
+Date: Wed,  7 Jun 2023 22:14:04 +0200
+Message-ID: <20230607200916.031951475@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,57 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Chris Packham <chris.packham@alliedtelesis.co.nz>
 
-[ Upstream commit 8a0d57df8938e9fd2e99d47a85b7f37d86f91097 ]
+[ Upstream commit c4d28e30a8d0b979e4029465ab8f312ab6ce2644 ]
 
-Most protos' poll() methods insert a memory barrier between
-writes to sk_err and sk_error_report(). This dates back to
-commit a4d258036ed9 ("tcp: Fix race in tcp_poll").
+marvell_nfc_setup_interface() uses the frequency retrieved from the
+clock associated with the nand interface to determine the timings that
+will be used. By changing the NAND frequency select without reflecting
+this in the clock configuration this means that the timings calculated
+don't correctly meet the requirements of the NAND chip. This hasn't been
+an issue up to now because of a different bug that was stopping the
+timings being updated after they were initially set.
 
-I guess we should do the same thing in TLS, tcp_poll() does
-not hold the socket lock.
-
-Fixes: 3c4d7559159b ("tls: kernel TLS support")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b25251414f6e ("mtd: rawnand: marvell: Stop implementing ->select_chip()")
+Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230525003154.2303012-2-chris.packham@alliedtelesis.co.nz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_strp.c | 4 +++-
- net/tls/tls_sw.c   | 4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/marvell_nand.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
-index da95abbb7ea32..f37f4a0fcd3c2 100644
---- a/net/tls/tls_strp.c
-+++ b/net/tls/tls_strp.c
-@@ -20,7 +20,9 @@ static void tls_strp_abort_strp(struct tls_strparser *strp, int err)
- 	strp->stopped = 1;
+diff --git a/drivers/mtd/nand/raw/marvell_nand.c b/drivers/mtd/nand/raw/marvell_nand.c
+index 72069a8643563..a57a1501449aa 100644
+--- a/drivers/mtd/nand/raw/marvell_nand.c
++++ b/drivers/mtd/nand/raw/marvell_nand.c
+@@ -2891,10 +2891,6 @@ static int marvell_nfc_init(struct marvell_nfc *nfc)
+ 		regmap_update_bits(sysctrl_base, GENCONF_CLK_GATING_CTRL,
+ 				   GENCONF_CLK_GATING_CTRL_ND_GATE,
+ 				   GENCONF_CLK_GATING_CTRL_ND_GATE);
+-
+-		regmap_update_bits(sysctrl_base, GENCONF_ND_CLK_CTRL,
+-				   GENCONF_ND_CLK_CTRL_EN,
+-				   GENCONF_ND_CLK_CTRL_EN);
+ 	}
  
- 	/* Report an error on the lower socket */
--	strp->sk->sk_err = -err;
-+	WRITE_ONCE(strp->sk->sk_err, -err);
-+	/* Paired with smp_rmb() in tcp_poll() */
-+	smp_wmb();
- 	sk_error_report(strp->sk);
- }
- 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 992092aeebad9..2e5e7853a6101 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -67,7 +67,9 @@ noinline void tls_err_abort(struct sock *sk, int err)
- {
- 	WARN_ON_ONCE(err >= 0);
- 	/* sk->sk_err should contain a positive error code. */
--	sk->sk_err = -err;
-+	WRITE_ONCE(sk->sk_err, -err);
-+	/* Paired with smp_rmb() in tcp_poll() */
-+	smp_wmb();
- 	sk_error_report(sk);
- }
- 
+ 	/* Configure the DMA if appropriate */
 -- 
 2.39.2
 
