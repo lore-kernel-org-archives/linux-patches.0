@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DE919E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EE4C433D2;
-	Wed,  7 Jun 2023 20:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2A919E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6148DC433EF;
+	Wed,  7 Jun 2023 20:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170248;
-	bh=R/3dDBsTQVMSJNSLM49EAIqVkmO7MrgKF61TN9pBRrc=;
+	s=korg; t=1686170250;
+	bh=9O52STw91Qes7fHXzPstmLWa9SeUhbccnBvK9mqA6TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UVL3hl+RP3fbQYuHXpXAHigdcyInYSDpMqGweY1Q/aqr2KIJK2AO3JtVIKqrfAdVm
-	 ISfA1qbUwIInFpPMDh3SA+08XF9K2CQBb8OrEZCHg2YyiBhcBoTWqF1Qty1fiAnWRw
-	 lbBrbQ9xwuUjEP8hq7EC3FT3pscruDkm2lolZLws=
+	b=NDdFKiSEdhpxbqw+ojbJ6L/TY1ZnsSWMXEsMMKy7BQbJzVHk9uXpsgqGiB25qhU23
+	 Y+7h/skHQi7ahMieRlK7xBKyhc/v3uKp3iAj7AK0esYTLQL/OEjsbkJ73zNV5Bptab
+	 7l2T8bXVZJxxpcqNlMGxQPDqY9fNKdt9O12xrXKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Zhi Li <yieli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/225] iommu/amd: Fix up merge conflict resolution
-Date: Wed,  7 Jun 2023 22:13:26 +0200
-Message-ID: <20230607200913.772728388@linuxfoundation.org>
+Subject: [PATCH 6.1 014/225] nfsd: make a copy of struct iattr before calling notify_change
+Date: Wed,  7 Jun 2023 22:13:27 +0200
+Message-ID: <20230607200913.809096138@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -40,43 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Snitselaar <jsnitsel@redhat.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 8ec4e2befef10c7679cd59251956a428e783c0b5 ]
+[ Upstream commit d53d70084d27f56bcdf5074328f2c9ec861be596 ]
 
-Merge commit e17c6debd4b2 ("Merge branches 'arm/mediatek', 'arm/msm', 'arm/renesas', 'arm/rockchip', 'arm/smmu', 'x86/vt-d' and 'x86/amd' into next")
-added amd_iommu_init_devices, amd_iommu_uninit_devices,
-and amd_iommu_init_notifier back to drivers/iommu/amd/amd_iommu.h.
-The only references to them are here, so clean them up.
+notify_change can modify the iattr structure. In particular it can
+end up setting ATTR_MODE when ATTR_KILL_SUID is already set, causing
+a BUG() if the same iattr is passed to notify_change more than once.
 
-Fixes: e17c6debd4b2 ("Merge branches 'arm/mediatek', 'arm/msm', 'arm/renesas', 'arm/rockchip', 'arm/smmu', 'x86/vt-d' and 'x86/amd' into next")
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20230420192013.733331-1-jsnitsel@redhat.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Make a copy of the struct iattr before calling notify_change.
+
+Reported-by: Zhi Li <yieli@redhat.com>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2207969
+Tested-by: Zhi Li <yieli@redhat.com>
+Fixes: 34b91dda7124 ("NFSD: Make nfsd4_setattr() wait before returning NFS4ERR_DELAY")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu.h | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/nfsd/vfs.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-index 24c7e6c6c0de9..471f40351f4c8 100644
---- a/drivers/iommu/amd/amd_iommu.h
-+++ b/drivers/iommu/amd/amd_iommu.h
-@@ -16,9 +16,6 @@ extern irqreturn_t amd_iommu_int_handler(int irq, void *data);
- extern void amd_iommu_apply_erratum_63(struct amd_iommu *iommu, u16 devid);
- extern void amd_iommu_restart_event_logging(struct amd_iommu *iommu);
- extern void amd_iommu_restart_ga_log(struct amd_iommu *iommu);
--extern int amd_iommu_init_devices(void);
--extern void amd_iommu_uninit_devices(void);
--extern void amd_iommu_init_notifier(void);
- extern void amd_iommu_set_rlookup_table(struct amd_iommu *iommu, u16 devid);
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index dc3ba13546dd6..155b34c4683c2 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -469,7 +469,15 @@ nfsd_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
  
- #ifdef CONFIG_AMD_IOMMU_DEBUGFS
+ 	inode_lock(inode);
+ 	for (retries = 1;;) {
+-		host_err = __nfsd_setattr(dentry, iap);
++		struct iattr attrs;
++
++		/*
++		 * notify_change() can alter its iattr argument, making
++		 * @iap unsuitable for submission multiple times. Make a
++		 * copy for every loop iteration.
++		 */
++		attrs = *iap;
++		host_err = __nfsd_setattr(dentry, &attrs);
+ 		if (host_err != -EAGAIN || !retries--)
+ 			break;
+ 		if (!nfsd_wait_for_delegreturn(rqstp, inode))
 -- 
 2.39.2
 
