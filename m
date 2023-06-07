@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B12C3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:02:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2BEC433D2;
-	Wed,  7 Jun 2023 21:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4C53922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:02:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A09C433D2;
+	Wed,  7 Jun 2023 21:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171775;
-	bh=9dyrd/PCxB4jm43qlFYduQ4AQyx4j0qheM9ocMIiI/0=;
+	s=korg; t=1686171778;
+	bh=z7jTpoztO6BFKeYug3p3gwgalGyxc0pp995fyRpTSp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tqod9UemBoDGOVHF0oG2f2PVfJ5SuYU06RaAsdIFYn/FbcnIe4Cqs/7mwCPMF//NA
-	 UM/Pes5AnTEOgpZwp5ZMAJMC9jOe47g4VDAHp0GYDC2GOHx7+Kj+g5WVstsPqI70qd
-	 1Za9uTHb7weJn+V6jFAug9JdvUjSzeDTF/iJ0mdw=
+	b=oj16BLNpmZujnEBAvlo2k+2yxAUjxobav+k7JF6zOw2yD9LOvrhQeBFVyNXSdXJao
+	 EMC4mlwhzgYbN8hgfZse5B6rDTwq7eL8sUw+iB/XSag1B2tPEDDfrESYOsdhuxzq96
+	 XAW9wa9SZFsdw899ge3K1UuhUrE9O+ugMG5rWCLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jason Yan <yanaijie@huawei.com>
-Subject: [PATCH 5.15 115/159] ata: libata-scsi: Use correct device no in ata_find_dev()
-Date: Wed,  7 Jun 2023 22:16:58 +0200
-Message-ID: <20230607200907.439113327@linuxfoundation.org>
+	Tim Huang <Tim.Huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 116/159] drm/amd/pm: reverse mclk and fclk clocks levels for vangogh
+Date: Wed,  7 Jun 2023 22:16:59 +0200
+Message-ID: <20230607200907.469497810@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,96 +34,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Tim Huang <Tim.Huang@amd.com>
 
-commit 7f875850f20a42f488840c9df7af91ef7db2d576 upstream.
+commit bfc03568d9d81332382c73a1985a90c4506bd36c upstream.
 
-For devices not attached to a port multiplier and managed directly by
-libata, the device number passed to ata_find_dev() must always be lower
-than the maximum number of devices returned by ata_link_max_devices().
-That is 1 for SATA devices or 2 for an IDE link with master+slave
-devices. This device number is the SCSI device ID which matches these
-constraints as the IDs are generated per port and so never exceed the
-maximum number of devices for the link being used.
+This patch reverses the DPM clocks levels output of pp_dpm_mclk
+and pp_dpm_fclk.
 
-However, for libsas managed devices, SCSI device IDs are assigned per
-struct scsi_host, leading to device IDs for SATA devices that can be
-well in excess of libata per-link maximum number of devices. This
-results in ata_find_dev() to always return NULL for libsas managed
-devices except for the first device of the target scsi_host with ID
-(device number) equal to 0. This issue is visible by executing the
-hdparm utility, which fails. E.g.:
+On dGPUs and older APUs we expose the levels from lowest clocks
+to highest clocks. But for some APUs, the clocks levels that from
+the DFPstateTable are given the reversed orders by PMFW. Like the
+memory DPM clocks that are exposed by pp_dpm_mclk.
 
-hdparm -i /dev/sdX
-/dev/sdX:
-  HDIO_GET_IDENTITY failed: No message of desired type
+It's not intuitive that they are reversed on these APUs. All tools
+and software that talks to the driver then has to know different ways
+to interpret the data depending on the asic.
 
-Fix this by rewriting ata_find_dev() to ignore the device number for
-non-PMP attached devices with a link with at most 1 device, that is SATA
-devices. For these, the device number 0 is always used to
-return the correct pointer to the struct ata_device of the port link.
-This change excludes IDE master/slave setups (maximum number of devices
-per link is 2) and port-multiplier attached devices. Also, to be
-consistant with the fact that SCSI device IDs and channel numbers used
-as device numbers are both unsigned int, change the devno argument of
-ata_find_dev() to unsigned int.
+So we need to reverse them to expose the clocks levels from the
+driver consistently.
 
-Reported-by: Xingui Yang <yangxingui@huawei.com>
-Fixes: 41bda9c98035 ("libata-link: update hotplug to handle PMP links")
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |   34 ++++++++++++++++++++++++++--------
- 1 file changed, 26 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -2698,18 +2698,36 @@ static unsigned int atapi_xlat(struct at
- 	return 0;
- }
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
+@@ -579,7 +579,7 @@ static int vangogh_print_legacy_clk_leve
+ 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
+ 	SmuMetrics_legacy_t metrics;
+ 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
+-	int i, size = 0, ret = 0;
++	int i, idx, size = 0, ret = 0;
+ 	uint32_t cur_value = 0, value = 0, count = 0;
+ 	bool cur_value_match_level = false;
  
--static struct ata_device *ata_find_dev(struct ata_port *ap, int devno)
-+static struct ata_device *ata_find_dev(struct ata_port *ap, unsigned int devno)
- {
--	if (!sata_pmp_attached(ap)) {
--		if (likely(devno >= 0 &&
--			   devno < ata_link_max_devices(&ap->link)))
-+	/*
-+	 * For the non-PMP case, ata_link_max_devices() returns 1 (SATA case),
-+	 * or 2 (IDE master + slave case). However, the former case includes
-+	 * libsas hosted devices which are numbered per scsi host, leading
-+	 * to devno potentially being larger than 0 but with each struct
-+	 * ata_device having its own struct ata_port and struct ata_link.
-+	 * To accommodate these, ignore devno and always use device number 0.
-+	 */
-+	if (likely(!sata_pmp_attached(ap))) {
-+		int link_max_devices = ata_link_max_devices(&ap->link);
-+
-+		if (link_max_devices == 1)
-+			return &ap->link.device[0];
-+
-+		if (devno < link_max_devices)
- 			return &ap->link.device[devno];
--	} else {
--		if (likely(devno >= 0 &&
--			   devno < ap->nr_pmp_links))
--			return &ap->pmp_link[devno].device[0];
-+
-+		return NULL;
- 	}
+@@ -653,7 +653,8 @@ static int vangogh_print_legacy_clk_leve
+ 	case SMU_MCLK:
+ 	case SMU_FCLK:
+ 		for (i = 0; i < count; i++) {
+-			ret = vangogh_get_dpm_clk_limited(smu, clk_type, i, &value);
++			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
++			ret = vangogh_get_dpm_clk_limited(smu, clk_type, idx, &value);
+ 			if (ret)
+ 				return ret;
+ 			if (!value)
+@@ -680,7 +681,7 @@ static int vangogh_print_clk_levels(stru
+ 	DpmClocks_t *clk_table = smu->smu_table.clocks_table;
+ 	SmuMetrics_t metrics;
+ 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
+-	int i, size = 0, ret = 0;
++	int i, idx, size = 0, ret = 0;
+ 	uint32_t cur_value = 0, value = 0, count = 0;
+ 	bool cur_value_match_level = false;
  
-+	/*
-+	 * For PMP-attached devices, the device number corresponds to C
-+	 * (channel) of SCSI [H:C:I:L], indicating the port pmp link
-+	 * for the device.
-+	 */
-+	if (devno < ap->nr_pmp_links)
-+		return &ap->pmp_link[devno].device[0];
-+
- 	return NULL;
- }
- 
+@@ -754,7 +755,8 @@ static int vangogh_print_clk_levels(stru
+ 	case SMU_MCLK:
+ 	case SMU_FCLK:
+ 		for (i = 0; i < count; i++) {
+-			ret = vangogh_get_dpm_clk_limited(smu, clk_type, i, &value);
++			idx = (clk_type == SMU_FCLK || clk_type == SMU_MCLK) ? (count - i - 1) : i;
++			ret = vangogh_get_dpm_clk_limited(smu, clk_type, idx, &value);
+ 			if (ret)
+ 				return ret;
+ 			if (!value)
 
 
