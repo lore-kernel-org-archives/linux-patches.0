@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA9D3AE74
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8569C433EF;
-	Wed,  7 Jun 2023 20:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E263AE70
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5708EC433EF;
+	Wed,  7 Jun 2023 20:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169866;
-	bh=1XKROggtTqe3Z6mZV1Jv46BZhKMWmGIQZaHlvZ2FYe0=;
+	s=korg; t=1686169868;
+	bh=rW0YwDgq3ZgQP0BS4c50aWuZLQv3qUkX4OPbOU6JKH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HvBV1N6dUh2Z8ibMrDUVmrzemlTzQR5V3u0s7C368mc6KjN8Xoilh0/YjQmDkFK5u
-	 kuVdCr61dtIpJPR61SS9crCQ+YF+UgO6j4UsPxRtBlxMo8cjcblqV/jEEgrRxa/uPk
-	 0k27Xfi8Uc7d3TyVV+32R6AfLOvphAgxksKW6Pw8=
+	b=qlY0j5yaPiNPocIYmAHx03puBAzsRYDVtFNvIZYvE7Wmcy5HLG7Z8YJ8QnfZ6eoV3
+	 VsR97g7AZx/YLR91U9DrnzbqA3pAkUuIeLtIMEsoFYORLS8BvdOzOKcmvaayWzvXLh
+	 Q1F9LBFsHjYqEn3yn1JYL/9Emv+KYtmb2JImw9Rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erwan Velu <e.velu@criteo.com>,
-	Luiz Capitulino <luizcap@amazon.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.3 244/286] selinux: dont use makes grouped targets feature yet
-Date: Wed,  7 Jun 2023 22:15:43 +0200
-Message-ID: <20230607200931.265791360@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>
+Subject: [PATCH 6.3 227/286] tty: serial: fsl_lpuart: use UARTCTRL_TXINV to send break instead of UARTCTRL_SBK
+Date: Wed,  7 Jun 2023 22:15:26 +0200
+Message-ID: <20230607200930.703861473@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,42 +34,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Moore <paul@paul-moore.com>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-commit 42c4e97e06a839b07d834f640a10911ad84ec8b3 upstream.
+commit 2474e05467c00f7d51af3039b664de6886325257 upstream.
 
-The Linux Kernel currently only requires make v3.82 while the grouped
-target functionality requires make v4.3.  Removed the grouped target
-introduced in 4ce1f694eb5d ("selinux: ensure av_permissions.h is
-built when needed") as well as the multiple header file targets in
-the make rule.  This effectively reverts the problem commit.
+LPUART IP now has two known bugs, one is that CTS has higher priority
+than the break signal, which causes the break signal sending through
+UARTCTRL_SBK may impacted by the CTS input if the HW flow control is
+enabled. It exists on all platforms we support in this driver.
+So we add a workaround patch for this issue: commit c4c81db5cf8b
+("tty: serial: fsl_lpuart: disable the CTS when send break signal").
 
-We will revisit this change when make >= 4.3 is required by the rest
-of the kernel.
+Another IP bug is i.MX8QM LPUART may have an additional break character
+being sent after SBK was cleared. It may need to add some delay between
+clearing SBK and re-enabling CTS to ensure that the SBK latch are
+completely cleared.
 
-Cc: stable@vger.kernel.org
-Fixes: 4ce1f694eb5d ("selinux: ensure av_permissions.h is built when needed")
-Reported-by: Erwan Velu <e.velu@criteo.com>
-Reported-by: Luiz Capitulino <luizcap@amazon.com>
-Tested-by: Luiz Capitulino <luizcap@amazon.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+But we found that during the delay period before CTS is enabled, there
+is still a risk that Bluetooth data in TX FIFO may be sent out during
+this period because of break off and CTS disabled(even if BT sets CTS
+line deasserted, data is still sent to BT).
+
+Due to this risk, we have to drop the CTS-disabling workaround for SBK
+bugs, use TXINV seems to be a better way to replace SBK feature and
+avoid above risk. Also need to disable the transmitter to prevent any
+data from being sent out during break, then invert the TX line to send
+break. Then disable the TXINV when turn off break and re-enable
+transmitter.
+
+Fixes: c4c81db5cf8b ("tty: serial: fsl_lpuart: disable the CTS when send break signal")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Link: https://lore.kernel.org/r/20230519094751.28948-1-sherry.sun@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/Makefile |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/tty/serial/fsl_lpuart.c | 44 +++++++++++++++++----------------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
 
---- a/security/selinux/Makefile
-+++ b/security/selinux/Makefile
-@@ -26,5 +26,9 @@ quiet_cmd_flask = GEN     $(obj)/flask.h
-       cmd_flask = $< $(obj)/flask.h $(obj)/av_permissions.h
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index c91916e13648..7486a2b8556c 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1495,34 +1495,36 @@ static void lpuart_break_ctl(struct uart_port *port, int break_state)
  
- targets += flask.h av_permissions.h
--$(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/genheaders/genheaders FORCE
-+# once make >= 4.3 is required, we can use grouped targets in the rule below,
-+# which basically involves adding both headers and a '&' before the colon, see
-+# the example below:
-+#   $(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/...
-+$(obj)/flask.h: scripts/selinux/genheaders/genheaders FORCE
- 	$(call if_changed,flask)
+ static void lpuart32_break_ctl(struct uart_port *port, int break_state)
+ {
+-	unsigned long temp, modem;
+-	struct tty_struct *tty;
+-	unsigned int cflag = 0;
++	unsigned long temp;
+ 
+-	tty = tty_port_tty_get(&port->state->port);
+-	if (tty) {
+-		cflag = tty->termios.c_cflag;
+-		tty_kref_put(tty);
+-	}
+-
+-	temp = lpuart32_read(port, UARTCTRL) & ~UARTCTRL_SBK;
+-	modem = lpuart32_read(port, UARTMODIR);
++	temp = lpuart32_read(port, UARTCTRL);
+ 
++	/*
++	 * LPUART IP now has two known bugs, one is CTS has higher priority than the
++	 * break signal, which causes the break signal sending through UARTCTRL_SBK
++	 * may impacted by the CTS input if the HW flow control is enabled. It
++	 * exists on all platforms we support in this driver.
++	 * Another bug is i.MX8QM LPUART may have an additional break character
++	 * being sent after SBK was cleared.
++	 * To avoid above two bugs, we use Transmit Data Inversion function to send
++	 * the break signal instead of UARTCTRL_SBK.
++	 */
+ 	if (break_state != 0) {
+-		temp |= UARTCTRL_SBK;
+ 		/*
+-		 * LPUART CTS has higher priority than SBK, need to disable CTS before
+-		 * asserting SBK to avoid any interference if flow control is enabled.
++		 * Disable the transmitter to prevent any data from being sent out
++		 * during break, then invert the TX line to send break.
+ 		 */
+-		if (cflag & CRTSCTS && modem & UARTMODIR_TXCTSE)
+-			lpuart32_write(port, modem & ~UARTMODIR_TXCTSE, UARTMODIR);
++		temp &= ~UARTCTRL_TE;
++		lpuart32_write(port, temp, UARTCTRL);
++		temp |= UARTCTRL_TXINV;
++		lpuart32_write(port, temp, UARTCTRL);
+ 	} else {
+-		/* Re-enable the CTS when break off. */
+-		if (cflag & CRTSCTS && !(modem & UARTMODIR_TXCTSE))
+-			lpuart32_write(port, modem | UARTMODIR_TXCTSE, UARTMODIR);
++		/* Disable the TXINV to turn off break and re-enable transmitter. */
++		temp &= ~UARTCTRL_TXINV;
++		lpuart32_write(port, temp, UARTCTRL);
++		temp |= UARTCTRL_TE;
++		lpuart32_write(port, temp, UARTCTRL);
+ 	}
+-
+-	lpuart32_write(port, temp, UARTCTRL);
+ }
+ 
+ static void lpuart_setup_watermark(struct lpuart_port *sport)
+-- 
+2.41.0
+
 
 
