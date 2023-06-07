@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE15837325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54434C433D2;
-	Wed,  7 Jun 2023 20:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C71537325
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C1EC433EF;
+	Wed,  7 Jun 2023 20:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170842;
-	bh=mcJEw9fcl9w/izgtieClEJKqcxa+M9Q8IKsuXAwl4c0=;
+	s=korg; t=1686170845;
+	bh=wXSSdQyJmNc1+zAqIpCgTXO4z+1cRBkB4VzOjiIEOew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xvk4jmTKg7epUf0O0HiKrcsBdQILogMl3FPbP6XKDXA9txranQ830RvZfsZ7SFPL+
-	 VDD8i+r8LA/Dnd0IAmL+ymObZ3mY+VH1AsDjw18ZAYxeuOe25aSjfvy05Wi1rmNwsd
-	 KYPCNYuclKZfeUbnHl7jBLSne61ncI7+YATNwhxQ=
+	b=wdGGnZ5YpwI8JpYEQ8kJYtPLkOPLeG5KfMGt771ZGMDtxf6ZC9umiiNN6Dm/o0E5I
+	 /TCymVfzDkD8gvaGkP/7Mn6nRWxuYUL8v1e2QYUnkrrgcfJYZmCrz9AGN1vy6eMskb
+	 xmpiNWCrxqFR86IzHQptvJXxnmNYoCuPj3rFctfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Simon Kapadia <szymon@kapadia.pl>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/120] net/mlx5: fw_tracer, Fix event handling
-Date: Wed,  7 Jun 2023 22:15:29 +0200
-Message-ID: <20230607200901.333630807@linuxfoundation.org>
+Subject: [PATCH 5.10 014/120] netrom: fix info-leak in nr_write_internal()
+Date: Wed,  7 Jun 2023 22:15:30 +0200
+Message-ID: <20230607200901.365256272@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -36,38 +37,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 341a80de2468f481b1f771683709b5649cbfe513 ]
+[ Upstream commit 31642e7089df8fd3f54ca7843f7ee2952978cad1 ]
 
-mlx5 driver needs to parse traces with event_id inside the range of
-first_string_trace and num_string_trace. However, mlx5 is parsing all
-events with event_id >= first_string_trace.
+Simon Kapadia reported the following issue:
 
-Fix it by checking for the correct range.
+<quote>
 
-Fixes: c71ad41ccb0c ("net/mlx5: FW tracer, events handling")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+The Online Amateur Radio Community (OARC) has recently been experimenting
+with building a nationwide packet network in the UK.
+As part of our experimentation, we have been testing out packet on 300bps HF,
+and playing with net/rom.  For HF packet at this baud rate you really need
+to make sure that your MTU is relatively low; AX.25 suggests a PACLEN of 60,
+and a net/rom PACLEN of 40 to go with that.
+However the Linux net/rom support didn't work with a low PACLEN;
+the mkiss module would truncate packets if you set the PACLEN below about 200 or so, e.g.:
+
+Apr 19 14:00:51 radio kernel: [12985.747310] mkiss: ax1: truncating oversized transmit packet!
+
+This didn't make any sense to me (if the packets are smaller why would they
+be truncated?) so I started investigating.
+I looked at the packets using ethereal, and found that many were just huge
+compared to what I would expect.
+A simple net/rom connection request packet had the request and then a bunch
+of what appeared to be random data following it:
+
+</quote>
+
+Simon provided a patch that I slightly revised:
+Not only we must not use skb_tailroom(), we also do
+not want to count NR_NETWORK_LEN twice.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-Developed-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Simon Kapadia <szymon@kapadia.pl>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230524141456.1045467-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netrom/nr_subr.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index 0a011a41c039e..5273644fb2bf9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -483,7 +483,7 @@ static void poll_trace(struct mlx5_fw_tracer *tracer,
- 				(u64)timestamp_low;
- 		break;
- 	default:
--		if (tracer_event->event_id >= tracer->str_db.first_string_trace ||
-+		if (tracer_event->event_id >= tracer->str_db.first_string_trace &&
- 		    tracer_event->event_id <= tracer->str_db.first_string_trace +
- 					      tracer->str_db.num_string_trace) {
- 			tracer_event->type = TRACER_EVENT_TYPE_STRING;
+diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
+index 3f99b432ea707..e2d2af924cff4 100644
+--- a/net/netrom/nr_subr.c
++++ b/net/netrom/nr_subr.c
+@@ -123,7 +123,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	unsigned char  *dptr;
+ 	int len, timeout;
+ 
+-	len = NR_NETWORK_LEN + NR_TRANSPORT_LEN;
++	len = NR_TRANSPORT_LEN;
+ 
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
+@@ -141,7 +141,8 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 		return;
+ 	}
+ 
+-	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
++	skb = alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
++	if (!skb)
+ 		return;
+ 
+ 	/*
+@@ -149,7 +150,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	 */
+ 	skb_reserve(skb, NR_NETWORK_LEN);
+ 
+-	dptr = skb_put(skb, skb_tailroom(skb));
++	dptr = skb_put(skb, len);
+ 
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
 -- 
 2.39.2
 
