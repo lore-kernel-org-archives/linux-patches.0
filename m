@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F7834CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BD8C433D2;
-	Wed,  7 Jun 2023 20:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C5634CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:45:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DAD0C433EF;
+	Wed,  7 Jun 2023 20:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170742;
-	bh=bx1fSDwKup6zzm0PIgqOfVIQpFp7kiXiD60zkhg5pUo=;
+	s=korg; t=1686170745;
+	bh=FI1Lpe94fo7zZkRPXnZdOWPTbsAibS/sijKrQKiTKEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSGb7qwqdA4oZj6T5XBfyYuPhk1j3GyenGiFjxvvq/r/L4VNsi+Ez4DOHj8YfaEI7
-	 vjlaD6UgbHatVdkB6yqlY1CAkv3Ki5XzSHXfMKHlhY1F7iSODGyjYS4d9ykWpUciqq
-	 aCeUaVVZH0lSt0TKO5EOh4f/YXNSsH0Yzt9DASVM=
+	b=xMBi86vIrzT1SWN+y5WE9FRWJNOuWPFvaf4J2YG/Xl8FTi95wFu4k0VOZkgNVLSNJ
+	 VUd52vNHaxuki5Um0OWpTr7Fx9FRGjobVHlig7fUdhXZiu/pDYn0o4gkztfmjWOfZo
+	 mQfHmIxIb6Zdg/DFyqKfPay8FVYiImwkf3/Pfr3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Noordhuis <info@bnoordhuis.nl>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 183/225] io_uring: undeprecate epoll_ctl support
-Date: Wed,  7 Jun 2023 22:16:16 +0200
-Message-ID: <20230607200920.374677703@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: [PATCH 6.1 201/225] serial: 8250_tegra: Fix an error handling path in tegra_uart_probe()
+Date: Wed,  7 Jun 2023 22:16:34 +0200
+Message-ID: <20230607200920.942972185@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,40 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Noordhuis <info@bnoordhuis.nl>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 4ea0bf4b98d66a7a790abb285539f395596bae92 upstream.
+commit 134f49dec0b6aca3259cd8259de4c572048bd207 upstream.
 
-Libuv recently started using it so there is at least one consumer now.
+If an error occurs after reset_control_deassert(), it must be re-asserted,
+as already done in the .remove() function.
 
-Cc: stable@vger.kernel.org
-Fixes: 61a2732af4b0 ("io_uring: deprecate epoll_ctl support")
-Link: https://github.com/libuv/libuv/pull/3979
-Signed-off-by: Ben Noordhuis <info@bnoordhuis.nl>
-Link: https://lore.kernel.org/r/20230506095502.13401-1-info@bnoordhuis.nl
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: c6825c6395b7 ("serial: 8250_tegra: Create Tegra specific 8250 driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/f8130f35339cc80edc6b9aac4bb2a60b60a226bf.1684063511.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/epoll.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/tty/serial/8250/8250_tegra.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/epoll.c b/io_uring/epoll.c
-index 9aa74d2c80bc..89bff2068a19 100644
---- a/io_uring/epoll.c
-+++ b/io_uring/epoll.c
-@@ -25,10 +25,6 @@ int io_epoll_ctl_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- {
- 	struct io_epoll *epoll = io_kiocb_to_cmd(req, struct io_epoll);
+--- a/drivers/tty/serial/8250/8250_tegra.c
++++ b/drivers/tty/serial/8250/8250_tegra.c
+@@ -112,13 +112,15 @@ static int tegra_uart_probe(struct platf
  
--	pr_warn_once("%s: epoll_ctl support in io_uring is deprecated and will "
--		     "be removed in a future Linux kernel version.\n",
--		     current->comm);
--
- 	if (sqe->buf_index || sqe->splice_fd_in)
- 		return -EINVAL;
+ 	ret = serial8250_register_8250_port(&port8250);
+ 	if (ret < 0)
+-		goto err_clkdisable;
++		goto err_ctrl_assert;
  
--- 
-2.41.0
-
+ 	platform_set_drvdata(pdev, uart);
+ 	uart->line = ret;
+ 
+ 	return 0;
+ 
++err_ctrl_assert:
++	reset_control_assert(uart->rst);
+ err_clkdisable:
+ 	clk_disable_unprepare(uart->clk);
+ 
 
 
