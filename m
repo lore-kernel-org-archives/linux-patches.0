@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F7C3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E03C433EF;
-	Wed,  7 Jun 2023 20:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36F73922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EE9C433EF;
+	Wed,  7 Jun 2023 20:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171511;
-	bh=pqzdTNgUwHqgceYCq0XJCIoUPvNv3LVkJxE36qND4w4=;
+	s=korg; t=1686171513;
+	bh=da/VMOT6pjZCU031IC5tNYnfdbV3xSFtVNUuAEcG9o0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fEuMimvKTfkVv9rpqYc8sEhl/p5EHhUBv8kuxiMwoi2493y5sM1ojFPHB3GwQ2NLF
-	 37MJlOPUXeqnZPtN/dVpcUbibrpmfNAqt8f3WgoOnIiLZOI/LrMsgypFeVjvUDhC2t
-	 sEC9pBZfUC4kq9+cUaRUevII0HEmUHgkdhvlkXIs=
+	b=PhLePQXPlm9EXj9PO7osIVOWeyqDTmKTrl8d8SkbiTaLJF22cm0uPq2zqT8J2YWW7
+	 Cib7y9mKjH8Dts05Sv4c2bTZrCk5IOc0RsrpVcgzCk6/L0nKIvNZ5T0E64Uv63ulXJ
+	 JjVYZv/TVEkazBKhYud1P0LyN25QfkhvcU3ICEn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/159] mailbox: mailbox-test: Fix potential double-free in mbox_test_message_write()
-Date: Wed,  7 Jun 2023 22:15:47 +0200
-Message-ID: <20230607200905.128076620@linuxfoundation.org>
+Subject: [PATCH 5.15 017/159] af_packet: Fix data-races of pkt_sk(sk)->num.
+Date: Wed,  7 Jun 2023 22:15:20 +0200
+Message-ID: <20230607200904.237272002@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,133 +37,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 2d1e952a2b8e5e92d8d55ac88a7cf7ca5ea591ad ]
+[ Upstream commit 822b5a1c17df7e338b9f05d1cfe5764e37c7f74f ]
 
-If a user can make copy_from_user() fail, there is a potential for
-UAF/DF due to a lack of locking around the allocation, use and freeing
-of the data buffers.
+syzkaller found a data race of pkt_sk(sk)->num.
 
-This issue is not theoretical.  I managed to author a POC for it:
+The value is changed under lock_sock() and po->bind_lock, so we
+need READ_ONCE() to access pkt_sk(sk)->num without these locks in
+packet_bind_spkt(), packet_bind(), and sk_diag_fill().
 
-    BUG: KASAN: double-free in kfree+0x5c/0xac
-    Free of addr ffff29280be5de00 by task poc/356
-    CPU: 1 PID: 356 Comm: poc Not tainted 6.1.0-00001-g961aa6552c04-dirty #20
-    Hardware name: linux,dummy-virt (DT)
-    Call trace:
-     dump_backtrace.part.0+0xe0/0xf0
-     show_stack+0x18/0x40
-     dump_stack_lvl+0x64/0x80
-     print_report+0x188/0x48c
-     kasan_report_invalid_free+0xa0/0xc0
-     ____kasan_slab_free+0x174/0x1b0
-     __kasan_slab_free+0x18/0x24
-     __kmem_cache_free+0x130/0x2e0
-     kfree+0x5c/0xac
-     mbox_test_message_write+0x208/0x29c
-     full_proxy_write+0x90/0xf0
-     vfs_write+0x154/0x440
-     ksys_write+0xcc/0x180
-     __arm64_sys_write+0x44/0x60
-     invoke_syscall+0x60/0x190
-     el0_svc_common.constprop.0+0x7c/0x160
-     do_el0_svc+0x40/0xf0
-     el0_svc+0x2c/0x6c
-     el0t_64_sync_handler+0xf4/0x120
-     el0t_64_sync+0x18c/0x190
+Note that WRITE_ONCE() is already added by commit c7d2ef5dd4b0
+("net/packet: annotate accesses to po->bind").
 
-    Allocated by task 356:
-     kasan_save_stack+0x3c/0x70
-     kasan_set_track+0x2c/0x40
-     kasan_save_alloc_info+0x24/0x34
-     __kasan_kmalloc+0xb8/0xc0
-     kmalloc_trace+0x58/0x70
-     mbox_test_message_write+0x6c/0x29c
-     full_proxy_write+0x90/0xf0
-     vfs_write+0x154/0x440
-     ksys_write+0xcc/0x180
-     __arm64_sys_write+0x44/0x60
-     invoke_syscall+0x60/0x190
-     el0_svc_common.constprop.0+0x7c/0x160
-     do_el0_svc+0x40/0xf0
-     el0_svc+0x2c/0x6c
-     el0t_64_sync_handler+0xf4/0x120
-     el0t_64_sync+0x18c/0x190
+BUG: KCSAN: data-race in packet_bind / packet_do_bind
 
-    Freed by task 357:
-     kasan_save_stack+0x3c/0x70
-     kasan_set_track+0x2c/0x40
-     kasan_save_free_info+0x38/0x5c
-     ____kasan_slab_free+0x13c/0x1b0
-     __kasan_slab_free+0x18/0x24
-     __kmem_cache_free+0x130/0x2e0
-     kfree+0x5c/0xac
-     mbox_test_message_write+0x208/0x29c
-     full_proxy_write+0x90/0xf0
-     vfs_write+0x154/0x440
-     ksys_write+0xcc/0x180
-     __arm64_sys_write+0x44/0x60
-     invoke_syscall+0x60/0x190
-     el0_svc_common.constprop.0+0x7c/0x160
-     do_el0_svc+0x40/0xf0
-     el0_svc+0x2c/0x6c
-     el0t_64_sync_handler+0xf4/0x120
-     el0t_64_sync+0x18c/0x190
+write (marked) to 0xffff88802ffd1cee of 2 bytes by task 7322 on cpu 0:
+ packet_do_bind+0x446/0x640 net/packet/af_packet.c:3236
+ packet_bind+0x99/0xe0 net/packet/af_packet.c:3321
+ __sys_bind+0x19b/0x1e0 net/socket.c:1803
+ __do_sys_bind net/socket.c:1814 [inline]
+ __se_sys_bind net/socket.c:1812 [inline]
+ __x64_sys_bind+0x40/0x50 net/socket.c:1812
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+read to 0xffff88802ffd1cee of 2 bytes by task 7318 on cpu 1:
+ packet_bind+0xbf/0xe0 net/packet/af_packet.c:3322
+ __sys_bind+0x19b/0x1e0 net/socket.c:1803
+ __do_sys_bind net/socket.c:1814 [inline]
+ __se_sys_bind net/socket.c:1812 [inline]
+ __x64_sys_bind+0x40/0x50 net/socket.c:1812
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+value changed: 0x0300 -> 0x0000
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 7318 Comm: syz-executor.4 Not tainted 6.3.0-13380-g7fddb5b5300c #4
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 96ec6327144e ("packet: Diag core and basic socket info dumping")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20230524232934.50950-1-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/packet/af_packet.c | 4 ++--
+ net/packet/diag.c      | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index 4555d678fadda..6dd5b9614452b 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -12,6 +12,7 @@
- #include <linux/kernel.h>
- #include <linux/mailbox_client.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/poll.h>
-@@ -38,6 +39,7 @@ struct mbox_test_device {
- 	char			*signal;
- 	char			*message;
- 	spinlock_t		lock;
-+	struct mutex		mutex;
- 	wait_queue_head_t	waitq;
- 	struct fasync_struct	*async_queue;
- 	struct dentry		*root_debugfs_dir;
-@@ -110,6 +112,8 @@ static ssize_t mbox_test_message_write(struct file *filp,
- 		return -EINVAL;
- 	}
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index ce484305be881..05a0b1d8c3721 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3259,7 +3259,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
+ 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
+ 	name[sizeof(uaddr->sa_data)] = 0;
  
-+	mutex_lock(&tdev->mutex);
-+
- 	tdev->message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
- 	if (!tdev->message)
- 		return -ENOMEM;
-@@ -144,6 +148,8 @@ static ssize_t mbox_test_message_write(struct file *filp,
- 	kfree(tdev->message);
- 	tdev->signal = NULL;
- 
-+	mutex_unlock(&tdev->mutex);
-+
- 	return ret < 0 ? ret : count;
+-	return packet_do_bind(sk, name, 0, pkt_sk(sk)->num);
++	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
  }
  
-@@ -392,6 +398,7 @@ static int mbox_test_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, tdev);
+ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+@@ -3277,7 +3277,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
+ 		return -EINVAL;
  
- 	spin_lock_init(&tdev->lock);
-+	mutex_init(&tdev->mutex);
+ 	return packet_do_bind(sk, NULL, sll->sll_ifindex,
+-			      sll->sll_protocol ? : pkt_sk(sk)->num);
++			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
+ }
  
- 	if (tdev->rx_channel) {
- 		tdev->rx_buffer = devm_kzalloc(&pdev->dev,
+ static struct proto packet_proto = {
+diff --git a/net/packet/diag.c b/net/packet/diag.c
+index d704c7bf51b20..a68a84574c739 100644
+--- a/net/packet/diag.c
++++ b/net/packet/diag.c
+@@ -143,7 +143,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb,
+ 	rp = nlmsg_data(nlh);
+ 	rp->pdiag_family = AF_PACKET;
+ 	rp->pdiag_type = sk->sk_type;
+-	rp->pdiag_num = ntohs(po->num);
++	rp->pdiag_num = ntohs(READ_ONCE(po->num));
+ 	rp->pdiag_ino = sk_ino;
+ 	sock_diag_save_cookie(sk, rp->pdiag_cookie);
+ 
 -- 
 2.39.2
 
