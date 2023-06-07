@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2DB34CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:01:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A04C433EF;
-	Wed,  7 Jun 2023 21:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763E534CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:01:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF885C433D2;
+	Wed,  7 Jun 2023 21:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171699;
-	bh=P9Aoq5Ja1OS9F7yWNtSuaurV9h9sWdmec6R6/fv86m4=;
+	s=korg; t=1686171702;
+	bh=ODzEe5MTMPERDf+zXbuLdOTQOBegDNhuK6ZJ0a/0Ze4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNe8FUs15mdHoJng3M8jZnX4hXbfOTm3rPjDhcvlTBTDw2SKv0HchKGBDpTZ2tP9f
-	 gz63PMr/tA4ppDmDsPVFjsm8qfWOekdD2lqmOQEjDKoVhP6m9CAEYzIXVsd91XiwRj
-	 iNcbIsvRU6GEmSOiUanWqlX2yQPlaCpOfZxQzFDA=
+	b=pZz8Pe8I7LcKri/JTb5d5RnEGOwm1mWaaJoLJGNJUkir5DL4mOwCo4tNNLuc1cE+f
+	 pRCyA85upucvAW3a3gXGJZ6AFLo1mRn9oQEqqojKqJiceiVmjnAU0GzilsUxvX84kh
+	 mqlkwjwYUIl3ga/UaX+Ab4Y9m0r7KRh6t48RFexw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao2@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
+	kernel test robot <lkp@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/159] scsi: core: Decrease scsi_devices iorequest_cnt if dispatch failed
-Date: Wed,  7 Jun 2023 22:16:29 +0200
-Message-ID: <20230607200906.512013478@linuxfoundation.org>
+Subject: [PATCH 5.15 087/159] wifi: b43: fix incorrect __packed annotation
+Date: Wed,  7 Jun 2023 22:16:30 +0200
+Message-ID: <20230607200906.544466266@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,49 +39,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Hao <haowenchao2@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 09e797c8641f6ad435c33ae24c223351197ea29a ]
+[ Upstream commit 212457ccbd60dba34f965e4ffbe62f0e4f970538 ]
 
-If scsi_dispatch_cmd() failed, the SCSI command was not sent to the target,
-scsi_queue_rq() would return BLK_STS_RESOURCE and the related request would
-be requeued. The timeout of this request would not fire, no one would
-increase iodone_cnt.
+clang warns about an unpacked structure inside of a packed one:
 
-The above flow would result the iodone_cnt smaller than iorequest_cnt.  So
-decrease the iorequest_cnt if dispatch failed to workaround the issue.
+drivers/net/wireless/broadcom/b43/b43.h:654:4: error: field data within 'struct b43_iv' is less aligned than 'union (unnamed union at /home/arnd/arm-soc/drivers/net/wireless/broadcom/b43/b43.h:651:2)' and is usually due to 'struct b43_iv' being packed, which can lead to unaligned accesses [-Werror,-Wunaligned-access]
 
-Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
-Reported-by: Ming Lei <ming.lei@redhat.com>
-Closes: https://lore.kernel.org/r/ZF+zB+bB7iqe0wGd@ovpn-8-17.pek2.redhat.com
-Link: https://lore.kernel.org/r/20230515070156.1790181-3-haowenchao2@huawei.com
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The problem here is that the anonymous union has the default alignment
+from its members, apparently because the original author mixed up the
+placement of the __packed attribute by placing it next to the struct
+member rather than the union definition. As the struct itself is
+also marked as __packed, there is no need to mark its members, so just
+move the annotation to the inner type instead.
+
+As Michael noted, the same problem is present in b43legacy, so
+change both at the same time.
+
+Acked-by: Michael Büsch <m@bues.ch>
+Reported-by: kernel test robot <lkp@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
+Link: https://lore.kernel.org/oe-kbuild-all/202305160749.ay1HAoyP-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230516183442.536589-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/broadcom/b43/b43.h             | 2 +-
+ drivers/net/wireless/broadcom/b43legacy/b43legacy.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index ef4361b2d1423..5525e6ffee537 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -1476,6 +1476,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
- 		 */
- 		SCSI_LOG_MLQUEUE(3, scmd_printk(KERN_INFO, cmd,
- 			"queuecommand : device blocked\n"));
-+		atomic_dec(&cmd->device->iorequest_cnt);
- 		return SCSI_MLQUEUE_DEVICE_BUSY;
- 	}
+diff --git a/drivers/net/wireless/broadcom/b43/b43.h b/drivers/net/wireless/broadcom/b43/b43.h
+index 9fc7c088a539e..67b4bac048e58 100644
+--- a/drivers/net/wireless/broadcom/b43/b43.h
++++ b/drivers/net/wireless/broadcom/b43/b43.h
+@@ -651,7 +651,7 @@ struct b43_iv {
+ 	union {
+ 		__be16 d16;
+ 		__be32 d32;
+-	} data __packed;
++	} __packed data;
+ } __packed;
  
-@@ -1508,6 +1509,7 @@ static int scsi_dispatch_cmd(struct scsi_cmnd *cmd)
- 	trace_scsi_dispatch_cmd_start(cmd);
- 	rtn = host->hostt->queuecommand(host, cmd);
- 	if (rtn) {
-+		atomic_dec(&cmd->device->iorequest_cnt);
- 		trace_scsi_dispatch_cmd_error(cmd, rtn);
- 		if (rtn != SCSI_MLQUEUE_DEVICE_BUSY &&
- 		    rtn != SCSI_MLQUEUE_TARGET_BUSY)
+ 
+diff --git a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
+index 6b0cec467938f..f49365d14619f 100644
+--- a/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
++++ b/drivers/net/wireless/broadcom/b43legacy/b43legacy.h
+@@ -379,7 +379,7 @@ struct b43legacy_iv {
+ 	union {
+ 		__be16 d16;
+ 		__be32 d32;
+-	} data __packed;
++	} __packed data;
+ } __packed;
+ 
+ #define B43legacy_PHYMODE(phytype)	(1 << (phytype))
 -- 
 2.39.2
 
