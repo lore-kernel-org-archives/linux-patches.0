@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6027A3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:59:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6369C4339B;
-	Wed,  7 Jun 2023 20:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9F83922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:59:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C00C433EF;
+	Wed,  7 Jun 2023 20:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171566;
-	bh=kc8dK8eSTr3oTZLfhzc/3knnXlYIiv3+5tNUAtKPIFg=;
+	s=korg; t=1686171568;
+	bh=jKrNuBwFBASeoYEA5DGc1XNcj2STVtp2XXCpYrs7yV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oIiDpu6ytDu86+PtS6f3pGF0cP6nwbVHTxQXOUQPV6wUwhj3WAN59p007mHAfn857
-	 hnmh+Ck7ehRR55Qs20BmsGCjYLvepGJsC0Q4K65gWT/HH5INFT/VNEgxTuQwZxG4Al
-	 u573nY8dMmbMx34Cif1gsbwDApdrZ//FwNyaO0Q8=
+	b=19/kN4wKfBrorbpYlt0lTV6wsiF7rPUPuaNCThP967y4xXIQ/qDhTzKe1TWORn6e3
+	 jtbMaDIi+cpc7mae07e9wSGWolYZiWGTGlluAQ9pRWYwkokmsGmAOClSDaM8qznapI
+	 CcRKTLcz4PAAo7w99d3hscYSl8aFHcwsE7bkWkCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/159] media: dvb-usb-v2: ce6230: fix null-ptr-deref in ce6230_i2c_master_xfer()
-Date: Wed,  7 Jun 2023 22:16:09 +0200
-Message-ID: <20230607200905.846699998@linuxfoundation.org>
+Subject: [PATCH 5.15 067/159] media: dvb-usb-v2: rtl28xxu: fix null-ptr-deref in rtl28xxu_i2c_xfer
+Date: Wed,  7 Jun 2023 22:16:10 +0200
+Message-ID: <20230607200905.878918059@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,53 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit dff919090155fb22679869e8469168f270dcd97f ]
+[ Upstream commit aa4a447b81b84f69c1a89ad899df157f386d7636 ]
 
-In ce6230_i2c_master_xfer, msg is controlled by user. When msg[i].buf
+In rtl28xxu_i2c_xfer, msg is controlled by user. When msg[i].buf
 is null and msg[i].len is zero, former checks on msg[i].buf would be
-passed. Malicious data finally reach ce6230_i2c_master_xfer. If accessing
-msg[i].buf[0] without sanity check, null ptr deref would happen. We add
-check on msg[i].len to prevent crash.
+passed. Malicious data finally reach rtl28xxu_i2c_xfer. If accessing
+msg[i].buf[0] without sanity check, null ptr deref would happen.
+We add check on msg[i].len to prevent crash.
 
 Similar commit:
-commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+commit 0ed554fd769a
+("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
 
-Link: https://lore.kernel.org/linux-media/20230313092751.209496-1-harperchen1110@gmail.com
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Link: https://lore.kernel.org/linux-media/tencent_3623572106754AC2F266B316798B0F6CCA05@qq.com
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/ce6230.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/usb/dvb-usb-v2/rtl28xxu.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/ce6230.c b/drivers/media/usb/dvb-usb-v2/ce6230.c
-index 44540de1a2066..d3b5cb4a24daf 100644
---- a/drivers/media/usb/dvb-usb-v2/ce6230.c
-+++ b/drivers/media/usb/dvb-usb-v2/ce6230.c
-@@ -101,6 +101,10 @@ static int ce6230_i2c_master_xfer(struct i2c_adapter *adap,
- 		if (num > i + 1 && (msg[i+1].flags & I2C_M_RD)) {
- 			if (msg[i].addr ==
- 				ce6230_zl10353_config.demod_address) {
-+				if (msg[i].len < 1) {
-+					i = -EOPNOTSUPP;
-+					break;
+diff --git a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+index 795a012d40200..f7884bb56fccf 100644
+--- a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
++++ b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+@@ -176,6 +176,10 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			ret = -EOPNOTSUPP;
+ 			goto err_mutex_unlock;
+ 		} else if (msg[0].addr == 0x10) {
++			if (msg[0].len < 1 || msg[1].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 1 - integrated demod */
+ 			if (msg[0].buf[0] == 0x00) {
+ 				/* return demod page from driver cache */
+@@ -189,6 +193,10 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 				ret = rtl28xxu_ctrl_msg(d, &req);
+ 			}
+ 		} else if (msg[0].len < 2) {
++			if (msg[0].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 2 - old I2C */
+ 			req.value = (msg[0].buf[0] << 8) | (msg[0].addr << 1);
+ 			req.index = CMD_I2C_RD;
+@@ -217,8 +225,16 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 			ret = -EOPNOTSUPP;
+ 			goto err_mutex_unlock;
+ 		} else if (msg[0].addr == 0x10) {
++			if (msg[0].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 1 - integrated demod */
+ 			if (msg[0].buf[0] == 0x00) {
++				if (msg[0].len < 2) {
++					ret = -EOPNOTSUPP;
++					goto err_mutex_unlock;
 +				}
- 				req.cmd = DEMOD_READ;
- 				req.value = msg[i].addr >> 1;
- 				req.index = msg[i].buf[0];
-@@ -117,6 +121,10 @@ static int ce6230_i2c_master_xfer(struct i2c_adapter *adap,
- 		} else {
- 			if (msg[i].addr ==
- 				ce6230_zl10353_config.demod_address) {
-+				if (msg[i].len < 1) {
-+					i = -EOPNOTSUPP;
-+					break;
-+				}
- 				req.cmd = DEMOD_WRITE;
- 				req.value = msg[i].addr >> 1;
- 				req.index = msg[i].buf[0];
+ 				/* save demod page for later demod access */
+ 				dev->page = msg[0].buf[1];
+ 				ret = 0;
+@@ -231,6 +247,10 @@ static int rtl28xxu_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[],
+ 				ret = rtl28xxu_ctrl_msg(d, &req);
+ 			}
+ 		} else if ((msg[0].len < 23) && (!dev->new_i2c_write)) {
++			if (msg[0].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto err_mutex_unlock;
++			}
+ 			/* method 2 - old I2C */
+ 			req.value = (msg[0].buf[0] << 8) | (msg[0].addr << 1);
+ 			req.index = CMD_I2C_WR;
 -- 
 2.39.2
 
