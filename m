@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E14939234
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A31C433D2;
-	Wed,  7 Jun 2023 20:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B2039234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A363C433EF;
+	Wed,  7 Jun 2023 20:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169182;
-	bh=HUlFv/W+x4ko/oL9ByNsH7o45ELjEMw1SXJGPdyT2Xk=;
+	s=korg; t=1686169184;
+	bh=utlSGCexOjlkJDFodjWgF90EXrLmh/PXDMpExk9oJbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ueOaNzj27gnjd3pmbXhzd985ropTr1AGs6Ystd8J1MvQXm1vhi9Mfp2paER5vaw98
-	 jjnriKH1bC7l+lILyKxNJHzti6/Mm+Qb8aUMuKDNOdeeEE00uaLaHAHsy2LW4sshQg
-	 m4PL4dv1wgb0zPjokwdtkkfXJE2tJ6KnZO+GaDBY=
+	b=YUDOkagtPh7H8L7t2uIY6tBzAe8hLq3BiRjkhCgfYvlnoSR015y/f+0q0hUjUh4Yj
+	 RPbOJHzlzQHbkbNJ7OvHGy5QrF6Z+bJiXlQCwS7GprzYdUsYVZJYtQn9W5hRhReIxT
+	 TSUtNoJBP53Nti45bdAzd9ysnzxVAi2V2kJ3ICzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,10 +19,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nick Desaulniers <ndesaulniers@google.com>,
 	Nathan Chancellor <natechancellor@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Jason Baron <jbaron@akamai.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.14 46/61] kernel/extable.c: use address-of operator on section symbols
-Date: Wed,  7 Jun 2023 22:16:00 +0200
-Message-ID: <20230607200851.083571855@linuxfoundation.org>
+Subject: [PATCH 4.14 47/61] lib/dynamic_debug.c: use address-of operator on section symbols
+Date: Wed,  7 Jun 2023 22:16:01 +0200
+Message-ID: <20230607200851.460367804@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -38,14 +39,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Chancellor <natechancellor@gmail.com>
 
-commit 63174f61dfaef58dc0e813eaf6602636794f8942 upstream.
+commit 8306b057a85ec07482da5d4b99d5c0b47af69be1 upstream.
 
 Clang warns:
 
-../kernel/extable.c:37:52: warning: array comparison always evaluates to
-a constant [-Wtautological-compare]
-        if (main_extable_sort_needed && __stop___ex_table > __start___ex_table) {
-                                                          ^
+../lib/dynamic_debug.c:1034:24: warning: array comparison always
+evaluates to false [-Wtautological-compare]
+        if (__start___verbose == __stop___verbose) {
+                              ^
 1 warning generated.
 
 These are not true arrays, they are linker defined symbols, which are just
@@ -56,26 +57,25 @@ not change the resulting assembly with either clang/ld.lld or gcc/ld
 Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Link: https://github.com/ClangBuiltLinux/linux/issues/892
-Link: http://lkml.kernel.org/r/20200219202036.45702-1-natechancellor@gmail.com
+Acked-by: Jason Baron <jbaron@akamai.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/894
+Link: http://lkml.kernel.org/r/20200220051320.10739-1-natechancellor@gmail.com
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/extable.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/dynamic_debug.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/extable.c
-+++ b/kernel/extable.c
-@@ -44,7 +44,8 @@ u32 __initdata __visible main_extable_so
- /* Sort the kernel's built-in exception table */
- void __init sort_main_extable(void)
- {
--	if (main_extable_sort_needed && __stop___ex_table > __start___ex_table) {
-+	if (main_extable_sort_needed &&
-+	    &__stop___ex_table > &__start___ex_table) {
- 		pr_notice("Sorting __ex_table...\n");
- 		sort_extable(__start___ex_table, __stop___ex_table);
+--- a/lib/dynamic_debug.c
++++ b/lib/dynamic_debug.c
+@@ -984,7 +984,7 @@ static int __init dynamic_debug_init(voi
+ 	int n = 0, entries = 0, modct = 0;
+ 	int verbose_bytes = 0;
+ 
+-	if (__start___verbose == __stop___verbose) {
++	if (&__start___verbose == &__stop___verbose) {
+ 		pr_warn("_ddebug table is empty in a CONFIG_DYNAMIC_DEBUG build\n");
+ 		return 1;
  	}
 
 
