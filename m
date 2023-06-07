@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF53B39259
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269AAC433D2;
-	Wed,  7 Jun 2023 20:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638F439234
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:19:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D985EC433D2;
+	Wed,  7 Jun 2023 20:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169187;
-	bh=6gnuX+36rESmbE76q5z0b3ZbXeU+lnG8X+gszrsdztw=;
+	s=korg; t=1686169190;
+	bh=6pgBzRyY6zxM5N/5wd8n8ptxAtgtPYjCtkr+Lx3NBPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T1HILB/+g8BGowOQnYFZD605pVkcJ3LtuvN8d7g/lmkLEFmhqJU0EwpW/hrqQNIgI
-	 o8LNgdqxEwgexd90E9NIHQRuhFd7Y5SRaCgKRiIWmRUR3DZJrirVkPe6IgrIIsUPtt
-	 slmQrK9qAZJuklOixlDy4k1tzrBQesF8JVbU/Cjk=
+	b=xUQltHeQCya5JR3NHvmcsnvUpCvGPEpnmYf/7bN9hLO+TTooATja39+i+YvGhUYlU
+	 KcGpYzNAc+Fp3TS0DTegTCeEXZ5gAGuir1/Q6kpvl/tPMPLZEc2MYaf6nKF0A+uaAZ
+	 fa2oPZXsnIvvbbpFBvlClJsY6QGuZ3z7GtZhJAO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalle Valo <kvalo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 48/61] wifi: rtlwifi: remove always-true condition pointed out by GCC 12
-Date: Wed,  7 Jun 2023 22:16:02 +0200
-Message-ID: <20230607200851.714838987@linuxfoundation.org>
+	Nathan Chancellor <natechancellor@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.14 49/61] regulator: da905{2,5}: Remove unnecessary array check
+Date: Wed,  7 Jun 2023 22:16:03 +0200
+Message-ID: <20230607200852.083543445@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200835.310274198@linuxfoundation.org>
 References: <20230607200835.310274198@linuxfoundation.org>
@@ -34,37 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Nathan Chancellor <natechancellor@gmail.com>
 
-commit ee3db469dd317e82f57b13aa3bc61be5cb60c2b4 upstream.
+commit 5a7d7d0f9f791b1e13f26dbbb07c86482912ad62 upstream.
 
-The .value is a two-dim array, not a pointer.
+Clang warns that the address of a pointer will always evaluated as true
+in a boolean context:
 
-struct iqk_matrix_regs {
-	bool iqk_done;
-        long value[1][IQK_MATRIX_REG_NUM];
-};
+drivers/regulator/da9052-regulator.c:423:22: warning: address of array
+'pdata->regulators' will always evaluate to 'true'
+[-Wpointer-bool-conversion]
+        if (pdata && pdata->regulators) {
+                  ~~ ~~~~~~~^~~~~~~~~~
+drivers/regulator/da9055-regulator.c:615:22: warning: address of array
+'pdata->regulators' will always evaluate to 'true'
+[-Wpointer-bool-conversion]
+        if (pdata && pdata->regulators) {
+                  ~~ ~~~~~~~^~~~~~~~~~
 
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/ClangBuiltLinux/linux/issues/142
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/regulator/da9052-regulator.c |    2 +-
+ drivers/regulator/da9055-regulator.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192de/phy.c
-@@ -2414,10 +2414,7 @@ void rtl92d_phy_reload_iqk_setting(struc
- 			RT_TRACE(rtlpriv, COMP_SCAN, DBG_LOUD,
- 				 "Just Read IQK Matrix reg for channel:%d....\n",
- 				 channel);
--			if ((rtlphy->iqk_matrix[indexforchannel].
--			     value[0] != NULL)
--				/*&&(regea4 != 0) */)
--				_rtl92d_phy_patha_fill_iqk_matrix(hw, true,
-+			_rtl92d_phy_patha_fill_iqk_matrix(hw, true,
- 					rtlphy->iqk_matrix[
- 					indexforchannel].value,	0,
- 					(rtlphy->iqk_matrix[
+--- a/drivers/regulator/da9052-regulator.c
++++ b/drivers/regulator/da9052-regulator.c
+@@ -421,7 +421,7 @@ static int da9052_regulator_probe(struct
+ 	config.dev = &pdev->dev;
+ 	config.driver_data = regulator;
+ 	config.regmap = da9052->regmap;
+-	if (pdata && pdata->regulators) {
++	if (pdata) {
+ 		config.init_data = pdata->regulators[cell->id];
+ 	} else {
+ #ifdef CONFIG_OF
+--- a/drivers/regulator/da9055-regulator.c
++++ b/drivers/regulator/da9055-regulator.c
+@@ -612,7 +612,7 @@ static int da9055_regulator_probe(struct
+ 	config.driver_data = regulator;
+ 	config.regmap = da9055->regmap;
+ 
+-	if (pdata && pdata->regulators) {
++	if (pdata) {
+ 		config.init_data = pdata->regulators[pdev->id];
+ 	} else {
+ 		ret = da9055_regulator_dt_init(pdev, regulator, &config,
 
 
