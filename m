@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8018A1EA8C
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00468C433EF;
-	Wed,  7 Jun 2023 20:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F3819E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D5EC433D2;
+	Wed,  7 Jun 2023 20:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170456;
-	bh=zLXOxhFOJDF2bS/P+boYQstjBGOgd6wjqGHGMrp7RGw=;
+	s=korg; t=1686170458;
+	bh=lnMvFK+IgG7kW/4N7QTOPdVCRZ0LMdjguCkn2RcxIpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wH73tNGZzwl0HikArGestLkLClCMvPwNmcroYIeNLHMeR7cZ2Z2k5DySOwNZbmQPM
-	 bd+myYfNo1jRJ0FzZuod71LIY3s8zJmKueCnWq8se9yqSfTC/e7p5gsbpTcsCZJ5h/
-	 tbYhsrbqMt15WU6ngsg6o5LeTkbC77EPvYCUTdcc=
+	b=1281o+SXNPMi3xK1+UNZx7hdUU0IkQCQ1sY8ZhfHWKQlsGlQgRTw0+VW00mwGDpj6
+	 Upfy1F2w0dEuXzdPHZ2wYoVArO9gm3A4e6LIU6OLhiV7aRHShWXIQ8mRyNPUWTRlNH
+	 0EjBBIDWdLr9amvMqMjLTPtWmb4qU/82SsHxk0Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jasontao <jasontao@glenfly.com>,
-	Reaper Li <reaperlioc@glenfly.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/225] ALSA: hda: Glenfly: add HD Audio PCI IDs and HDMI Codec Vendor IDs.
-Date: Wed,  7 Jun 2023 22:14:15 +0200
-Message-ID: <20230607200916.383345685@linuxfoundation.org>
+Subject: [PATCH 6.1 053/225] mptcp: avoid unneeded __mptcp_nmpc_socket() usage
+Date: Wed,  7 Jun 2023 22:14:06 +0200
+Message-ID: <20230607200916.092815780@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,143 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: jasontao <jasontao@glenfly.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit c51e431052e2eacfb23fbf6b39bc6c8770d9827a ]
+[ Upstream commit 617612316953093bc859890e405e1b550c27d840 ]
 
-Add a set of HD Audio PCI IDS, and the HDMI codec vendor IDs for
-Glenfly Gpus.
+In a few spots, the mptcp code invokes the __mptcp_nmpc_socket() helper
+multiple times under the same socket lock scope. Additionally, in such
+places, the socket status ensures that there is no MP capable handshake
+running.
 
-- In default_bdl_pos_adj, set bdl to 128 as Glenfly Gpus have hardware
-limitation, need to increase hdac interrupt interval.
-- In azx_first_init, enable polling mode for Glenfly Gpu. When the codec
-complete the command, it sends interrupt and writes response entries to
-memory, howerver, the write requests sometimes are not actually
-synchronized to memory when driver handle hdac interrupt on Glenfly Gpus.
-If the RIRB status is not updated in the interrupt handler,
-azx_rirb_get_response keeps trying to recevie a response from rirb until
-1s timeout. Enabling polling mode for Glenfly Gpu can fix the issue.
-- In patch_gf_hdmi, set Glenlfy Gpu Codec's no_sticky_stream as it need
-driver to do actual clean-ups for the linked codec when switch from one
-codec to another.
+Under the above condition we can replace the later __mptcp_nmpc_socket()
+helper invocation with direct access to the msk->subflow pointer and
+better document such access is not supposed to fail with WARN().
 
-Signed-off-by: jasontao <jasontao@glenfly.com>
-Signed-off-by: Reaper Li <reaperlioc@glenfly.com>
-Link: https://lore.kernel.org/r/20230426013059.4329-1-reaperlioc@glenfly.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 5b825727d087 ("mptcp: add annotations around msk->subflow accesses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c  | 21 +++++++++++++++++++++
- sound/pci/hda/patch_hdmi.c | 22 ++++++++++++++++++++++
- 2 files changed, 43 insertions(+)
+ net/mptcp/protocol.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 881b2f3a1551f..3226691ac923c 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -227,6 +227,7 @@ enum {
- 	AZX_DRIVER_ATI,
- 	AZX_DRIVER_ATIHDMI,
- 	AZX_DRIVER_ATIHDMI_NS,
-+	AZX_DRIVER_GFHDMI,
- 	AZX_DRIVER_VIA,
- 	AZX_DRIVER_SIS,
- 	AZX_DRIVER_ULI,
-@@ -349,6 +350,7 @@ static const char * const driver_short_names[] = {
- 	[AZX_DRIVER_ATI] = "HDA ATI SB",
- 	[AZX_DRIVER_ATIHDMI] = "HDA ATI HDMI",
- 	[AZX_DRIVER_ATIHDMI_NS] = "HDA ATI HDMI",
-+	[AZX_DRIVER_GFHDMI] = "HDA GF HDMI",
- 	[AZX_DRIVER_VIA] = "HDA VIA VT82xx",
- 	[AZX_DRIVER_SIS] = "HDA SIS966",
- 	[AZX_DRIVER_ULI] = "HDA ULI M5461",
-@@ -1743,6 +1745,12 @@ static int default_bdl_pos_adj(struct azx *chip)
- 	}
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index ea46a5cb1c30f..fecee0a850d65 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3172,7 +3172,7 @@ static struct sock *mptcp_accept(struct sock *sk, int flags, int *err,
+ 	struct socket *listener;
+ 	struct sock *newsk;
  
- 	switch (chip->driver_type) {
-+	/*
-+	 * increase the bdl size for Glenfly Gpus for hardware
-+	 * limitation on hdac interrupt interval
-+	 */
-+	case AZX_DRIVER_GFHDMI:
-+		return 128;
- 	case AZX_DRIVER_ICH:
- 	case AZX_DRIVER_PCH:
- 		return 1;
-@@ -1858,6 +1866,12 @@ static int azx_first_init(struct azx *chip)
- 		pci_write_config_dword(pci, PCI_BASE_ADDRESS_1, 0);
- 	}
- #endif
-+	/*
-+	 * Fix response write request not synced to memory when handle
-+	 * hdac interrupt on Glenfly Gpus
-+	 */
-+	if (chip->driver_type == AZX_DRIVER_GFHDMI)
-+		bus->polling_mode = 1;
+-	listener = __mptcp_nmpc_socket(msk);
++	listener = msk->subflow;
+ 	if (WARN_ON_ONCE(!listener)) {
+ 		*err = -EINVAL;
+ 		return NULL;
+@@ -3398,7 +3398,7 @@ static int mptcp_get_port(struct sock *sk, unsigned short snum)
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	struct socket *ssock;
  
- 	err = pcim_iomap_regions(pci, 1 << 0, "ICH HD audio");
- 	if (err < 0)
-@@ -1959,6 +1973,7 @@ static int azx_first_init(struct azx *chip)
- 			chip->playback_streams = ATIHDMI_NUM_PLAYBACK;
- 			chip->capture_streams = ATIHDMI_NUM_CAPTURE;
- 			break;
-+		case AZX_DRIVER_GFHDMI:
- 		case AZX_DRIVER_GENERIC:
- 		default:
- 			chip->playback_streams = ICH6_NUM_PLAYBACK;
-@@ -2727,6 +2742,12 @@ static const struct pci_device_id azx_ids[] = {
- 	{ PCI_DEVICE(0x1002, 0xab38),
- 	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
- 	  AZX_DCAPS_PM_RUNTIME },
-+	/* GLENFLY */
-+	{ PCI_DEVICE(0x6766, PCI_ANY_ID),
-+	  .class = PCI_CLASS_MULTIMEDIA_HD_AUDIO << 8,
-+	  .class_mask = 0xffffff,
-+	  .driver_data = AZX_DRIVER_GFHDMI | AZX_DCAPS_POSFIX_LPIB |
-+	  AZX_DCAPS_NO_MSI | AZX_DCAPS_NO_64BIT },
- 	/* VIA VT8251/VT8237A */
- 	{ PCI_DEVICE(0x1106, 0x3288), .driver_data = AZX_DRIVER_VIA },
- 	/* VIA GFX VT7122/VX900 */
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index be2c6cff77011..7b5e09070ab9b 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -4489,6 +4489,22 @@ static int patch_via_hdmi(struct hda_codec *codec)
- 	return patch_simple_hdmi(codec, VIAHDMI_CVT_NID, VIAHDMI_PIN_NID);
- }
+-	ssock = __mptcp_nmpc_socket(msk);
++	ssock = msk->subflow;
+ 	pr_debug("msk=%p, subflow=%p", msk, ssock);
+ 	if (WARN_ON_ONCE(!ssock))
+ 		return -EINVAL;
+@@ -3746,7 +3746,10 @@ static int mptcp_stream_accept(struct socket *sock, struct socket *newsock,
  
-+static int patch_gf_hdmi(struct hda_codec *codec)
-+{
-+	int err;
-+
-+	err = patch_generic_hdmi(codec);
-+	if (err)
-+		return err;
-+
-+	/*
-+	 * Glenfly GPUs have two codecs, stream switches from one codec to
-+	 * another, need to do actual clean-ups in codec_cleanup_stream
+ 	pr_debug("msk=%p", msk);
+ 
+-	ssock = __mptcp_nmpc_socket(msk);
++	/* buggy applications can call accept on socket states other then LISTEN
++	 * but no need to allocate the first subflow just to error out.
 +	 */
-+	codec->no_sticky_stream = 1;
-+	return 0;
-+}
-+
- /*
-  * patch entries
-  */
-@@ -4584,6 +4600,12 @@ HDA_CODEC_ENTRY(0x10de00a6, "GPU a6 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a7, "GPU a7 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de8001, "MCP73 HDMI",	patch_nvhdmi_2ch),
- HDA_CODEC_ENTRY(0x10de8067, "MCP67/68 HDMI",	patch_nvhdmi_2ch),
-+HDA_CODEC_ENTRY(0x67663d82, "Arise 82 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d83, "Arise 83 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d84, "Arise 84 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d85, "Arise 85 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d86, "Arise 86 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d87, "Arise 87 HDMI/DP",	patch_gf_hdmi),
- HDA_CODEC_ENTRY(0x11069f80, "VX900 HDMI/DP",	patch_via_hdmi),
- HDA_CODEC_ENTRY(0x11069f81, "VX900 HDMI/DP",	patch_via_hdmi),
- HDA_CODEC_ENTRY(0x11069f84, "VX11 HDMI/DP",	patch_generic_hdmi),
++	ssock = msk->subflow;
+ 	if (!ssock)
+ 		return -EINVAL;
+ 
 -- 
 2.39.2
 
