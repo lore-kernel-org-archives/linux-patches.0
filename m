@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56CA19BC9
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:42:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CDDC4339B;
-	Wed,  7 Jun 2023 20:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F2519BC9
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:42:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6135C433EF;
+	Wed,  7 Jun 2023 20:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170550;
-	bh=awLwyRpuLvxzkYp1+BuQee70cH6x2ekPPiLJGmfacb0=;
+	s=korg; t=1686170553;
+	bh=jLmy0YIwg00FZkrO7Sqc6l+FN8D/FAERohoER1j45xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vqk02clzkKElsqKjSyI4eXqAGFVADQu+gB06Phmo5LYmJlCaMOa+cOdlCHBCS9GRc
-	 ruqaFoebBU84+8P/X1ycmxfU2bqs7NkF/FAqE2G2ggiwb9KG4JR8e2DErOBO+2zGHk
-	 x8X6LF2j0lyD2bvnz9iGUN4jKi6KDaSw9FJpIkdQ=
+	b=gCm0iugIOuQqWFtcndG5CK8E8zqPXZSXxt1AJvfzKQzmoIDoTCE89YoqKybbFxHzc
+	 eSoygmEoYee2PHwuCsCeO1lP8u5rIljzxvXR22qOs7Vo59t7mGN/rzfgvrNLuJveos
+	 5FQf6FX/P78L6eItiV1bkEtbvCi4ZmWGukBxS5w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Xiubo Li <xiubli@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/225] atm: hide unused procfs functions
-Date: Wed,  7 Jun 2023 22:15:21 +0200
-Message-ID: <20230607200918.564746918@linuxfoundation.org>
+Subject: [PATCH 6.1 129/225] ceph: silence smatch warning in reconnect_caps_cb()
+Date: Wed,  7 Jun 2023 22:15:22 +0200
+Message-ID: <20230607200918.596206763@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,45 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit fb1b7be9b16c1f4626969ba4e95a97da2a452b41 ]
+[ Upstream commit 9aaa7eb018661b2da221362d9bacb096bd596f52 ]
 
-When CONFIG_PROC_FS is disabled, the function declarations for some
-procfs functions are hidden, but the definitions are still build,
-as shown by this compiler warning:
+Smatch static checker warning:
 
-net/atm/resources.c:403:7: error: no previous prototype for 'atm_dev_seq_start' [-Werror=missing-prototypes]
-net/atm/resources.c:409:6: error: no previous prototype for 'atm_dev_seq_stop' [-Werror=missing-prototypes]
-net/atm/resources.c:414:7: error: no previous prototype for 'atm_dev_seq_next' [-Werror=missing-prototypes]
+  fs/ceph/mds_client.c:3968 reconnect_caps_cb()
+  warn: missing error code here? '__get_cap_for_mds()' failed. 'err' = '0'
 
-Add another #ifdef to leave these out of the build.
+[ idryomov: Dan says that Smatch considers it intentional only if the
+  "ret = 0;" assignment is within 4 or 5 lines of the goto. ]
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230516194625.549249-2-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/resources.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ceph/mds_client.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/atm/resources.c b/net/atm/resources.c
-index 2b2d33eeaf200..995d29e7fb138 100644
---- a/net/atm/resources.c
-+++ b/net/atm/resources.c
-@@ -400,6 +400,7 @@ int atm_dev_ioctl(unsigned int cmd, void __user *buf, int __user *sioc_len,
- 	return error;
- }
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index 54e3c2ab21d22..1989c8deea55a 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -3938,7 +3938,7 @@ static int reconnect_caps_cb(struct inode *inode, int mds, void *arg)
+ 	struct dentry *dentry;
+ 	struct ceph_cap *cap;
+ 	char *path;
+-	int pathlen = 0, err = 0;
++	int pathlen = 0, err;
+ 	u64 pathbase;
+ 	u64 snap_follows;
  
-+#ifdef CONFIG_PROC_FS
- void *atm_dev_seq_start(struct seq_file *seq, loff_t *pos)
- {
- 	mutex_lock(&atm_dev_mutex);
-@@ -415,3 +416,4 @@ void *atm_dev_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- {
- 	return seq_list_next(v, &atm_devs, pos);
- }
-+#endif
+@@ -3961,6 +3961,7 @@ static int reconnect_caps_cb(struct inode *inode, int mds, void *arg)
+ 	cap = __get_cap_for_mds(ci, mds);
+ 	if (!cap) {
+ 		spin_unlock(&ci->i_ceph_lock);
++		err = 0;
+ 		goto out_err;
+ 	}
+ 	dout(" adding %p ino %llx.%llx cap %p %lld %s\n",
 -- 
 2.39.2
 
