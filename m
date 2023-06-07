@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5058934CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47C9C433D2;
-	Wed,  7 Jun 2023 20:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D8734CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6634DC433D2;
+	Wed,  7 Jun 2023 20:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170640;
-	bh=i+z53TWJk40cu7KVEGwfln1kPQX+XtUYvQiEwjPukBg=;
+	s=korg; t=1686170642;
+	bh=zzZSSmB0wH02HYcv+hmS5GyQAgmheHLUAxCU+Ie+iuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Je9LFfHcdLzfr/1cs8dqHHnQY/68MypyJWGB9Q38M92CR7HPj6KG+RinPaoZ3Ws+3
-	 nshaT+i2gchKpd61uazsg0G1P3NBpzOtcFC3cr1JiSW4M0Jy2gKqX5DkrHI7modRok
-	 3b5qgAUdi6cLEyFfUhS322iGCje6sFC2pWtNhVGY=
+	b=sNobdfjqiSELF9+yb4GR/qJJO4yPslmuCgTqZNT/k1/AYHtpZpnKk4TAFho45METk
+	 uUdh4k8z9xyEtBMT8BoVxVkwlz/PYg7NdPtAMjXcx/8sAvIfhrGFWir409FqV32BQD
+	 7OajzQ006JphEHxeQ2r3m8lDONpisfpTGibDt+Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 162/225] scsi: stex: Fix gcc 13 warnings
-Date: Wed,  7 Jun 2023 22:15:55 +0200
-Message-ID: <20230607200919.698931398@linuxfoundation.org>
+	Xingui Yang <yangxingui@huawei.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jason Yan <yanaijie@huawei.com>
+Subject: [PATCH 6.1 163/225] ata: libata-scsi: Use correct device no in ata_find_dev()
+Date: Wed,  7 Jun 2023 22:15:56 +0200
+Message-ID: <20230607200919.731407747@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,63 +35,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 6d074ce231772c66e648a61f6bd2245e7129d1f5 upstream.
+commit 7f875850f20a42f488840c9df7af91ef7db2d576 upstream.
 
-gcc 13 may assign another type to enumeration constants than gcc 12. Split
-the large enum at the top of source file stex.c such that the type of the
-constants used in time expressions is changed back to the same type chosen
-by gcc 12. This patch suppresses compiler warnings like this one:
+For devices not attached to a port multiplier and managed directly by
+libata, the device number passed to ata_find_dev() must always be lower
+than the maximum number of devices returned by ata_link_max_devices().
+That is 1 for SATA devices or 2 for an IDE link with master+slave
+devices. This device number is the SCSI device ID which matches these
+constraints as the IDs are generated per port and so never exceed the
+maximum number of devices for the link being used.
 
-In file included from ./include/linux/bitops.h:7,
-                 from ./include/linux/kernel.h:22,
-                 from drivers/scsi/stex.c:13:
-drivers/scsi/stex.c: In function ‘stex_common_handshake’:
-./include/linux/typecheck.h:12:25: error: comparison of distinct pointer types lacks a cast [-Werror]
-   12 |         (void)(&__dummy == &__dummy2); \
-      |                         ^~
-./include/linux/jiffies.h:106:10: note: in expansion of macro ‘typecheck’
-  106 |          typecheck(unsigned long, b) && \
-      |          ^~~~~~~~~
-drivers/scsi/stex.c:1035:29: note: in expansion of macro ‘time_after’
- 1035 |                         if (time_after(jiffies, before + MU_MAX_DELAY * HZ)) {
-      |                             ^~~~~~~~~~
+However, for libsas managed devices, SCSI device IDs are assigned per
+struct scsi_host, leading to device IDs for SATA devices that can be
+well in excess of libata per-link maximum number of devices. This
+results in ata_find_dev() to always return NULL for libsas managed
+devices except for the first device of the target scsi_host with ID
+(device number) equal to 0. This issue is visible by executing the
+hdparm utility, which fails. E.g.:
 
-See also https://gcc.gnu.org/bugzilla/show_bug.cgi?id=107405.
+hdparm -i /dev/sdX
+/dev/sdX:
+  HDIO_GET_IDENTITY failed: No message of desired type
 
+Fix this by rewriting ata_find_dev() to ignore the device number for
+non-PMP attached devices with a link with at most 1 device, that is SATA
+devices. For these, the device number 0 is always used to
+return the correct pointer to the struct ata_device of the port link.
+This change excludes IDE master/slave setups (maximum number of devices
+per link is 2) and port-multiplier attached devices. Also, to be
+consistant with the fact that SCSI device IDs and channel numbers used
+as device numbers are both unsigned int, change the devno argument of
+ata_find_dev() to unsigned int.
+
+Reported-by: Xingui Yang <yangxingui@huawei.com>
+Fixes: 41bda9c98035 ("libata-link: update hotplug to handle PMP links")
 Cc: stable@vger.kernel.org
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230529195034.3077-1-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/stex.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ata/libata-scsi.c |   34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
---- a/drivers/scsi/stex.c
-+++ b/drivers/scsi/stex.c
-@@ -109,7 +109,9 @@ enum {
- 	TASK_ATTRIBUTE_HEADOFQUEUE		= 0x1,
- 	TASK_ATTRIBUTE_ORDERED			= 0x2,
- 	TASK_ATTRIBUTE_ACA			= 0x4,
-+};
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -2699,18 +2699,36 @@ static unsigned int atapi_xlat(struct at
+ 	return 0;
+ }
  
-+enum {
- 	SS_STS_NORMAL				= 0x80000000,
- 	SS_STS_DONE				= 0x40000000,
- 	SS_STS_HANDSHAKE			= 0x20000000,
-@@ -121,7 +123,9 @@ enum {
- 	SS_I2H_REQUEST_RESET			= 0x2000,
+-static struct ata_device *ata_find_dev(struct ata_port *ap, int devno)
++static struct ata_device *ata_find_dev(struct ata_port *ap, unsigned int devno)
+ {
+-	if (!sata_pmp_attached(ap)) {
+-		if (likely(devno >= 0 &&
+-			   devno < ata_link_max_devices(&ap->link)))
++	/*
++	 * For the non-PMP case, ata_link_max_devices() returns 1 (SATA case),
++	 * or 2 (IDE master + slave case). However, the former case includes
++	 * libsas hosted devices which are numbered per scsi host, leading
++	 * to devno potentially being larger than 0 but with each struct
++	 * ata_device having its own struct ata_port and struct ata_link.
++	 * To accommodate these, ignore devno and always use device number 0.
++	 */
++	if (likely(!sata_pmp_attached(ap))) {
++		int link_max_devices = ata_link_max_devices(&ap->link);
++
++		if (link_max_devices == 1)
++			return &ap->link.device[0];
++
++		if (devno < link_max_devices)
+ 			return &ap->link.device[devno];
+-	} else {
+-		if (likely(devno >= 0 &&
+-			   devno < ap->nr_pmp_links))
+-			return &ap->pmp_link[devno].device[0];
++
++		return NULL;
+ 	}
  
- 	SS_MU_OPERATIONAL			= 0x80000000,
-+};
- 
-+enum {
- 	STEX_CDB_LENGTH				= 16,
- 	STATUS_VAR_LEN				= 128,
++	/*
++	 * For PMP-attached devices, the device number corresponds to C
++	 * (channel) of SCSI [H:C:I:L], indicating the port pmp link
++	 * for the device.
++	 */
++	if (devno < ap->nr_pmp_links)
++		return &ap->pmp_link[devno].device[0];
++
+ 	return NULL;
+ }
  
 
 
