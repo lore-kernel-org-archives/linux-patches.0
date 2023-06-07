@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C71537325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C1EC433EF;
-	Wed,  7 Jun 2023 20:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E2F24EA0
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:47:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843BFC433D2;
+	Wed,  7 Jun 2023 20:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170845;
-	bh=wXSSdQyJmNc1+zAqIpCgTXO4z+1cRBkB4VzOjiIEOew=;
+	s=korg; t=1686170848;
+	bh=FK8NB+Og3rstWFWVcYKXJr/qfFHK6sCpyVxivwCvzZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdGGnZ5YpwI8JpYEQ8kJYtPLkOPLeG5KfMGt771ZGMDtxf6ZC9umiiNN6Dm/o0E5I
-	 /TCymVfzDkD8gvaGkP/7Mn6nRWxuYUL8v1e2QYUnkrrgcfJYZmCrz9AGN1vy6eMskb
-	 xmpiNWCrxqFR86IzHQptvJXxnmNYoCuPj3rFctfw=
+	b=azGa0+zV5PWkaCkZ7YOaJzeM93IERk3rs+79CLd0/weO19NjrR4H79NwrcwlsSeCH
+	 ia3cPzh3Eh6m9hdFKsDKFJobeM/cc04i8k5D4tr/g3ibfXEMbqK0cTfE58YMLXeqwA
+	 JY4YqY3lp34pvkmrQV+z2CpRB7xLh898uI8CoWqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Kapadia <szymon@kapadia.pl>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/120] netrom: fix info-leak in nr_write_internal()
-Date: Wed,  7 Jun 2023 22:15:30 +0200
-Message-ID: <20230607200901.365256272@linuxfoundation.org>
+Subject: [PATCH 5.10 015/120] af_packet: Fix data-races of pkt_sk(sk)->num.
+Date: Wed,  7 Jun 2023 22:15:31 +0200
+Message-ID: <20230607200901.396415828@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -37,83 +37,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 31642e7089df8fd3f54ca7843f7ee2952978cad1 ]
+[ Upstream commit 822b5a1c17df7e338b9f05d1cfe5764e37c7f74f ]
 
-Simon Kapadia reported the following issue:
+syzkaller found a data race of pkt_sk(sk)->num.
 
-<quote>
+The value is changed under lock_sock() and po->bind_lock, so we
+need READ_ONCE() to access pkt_sk(sk)->num without these locks in
+packet_bind_spkt(), packet_bind(), and sk_diag_fill().
 
-The Online Amateur Radio Community (OARC) has recently been experimenting
-with building a nationwide packet network in the UK.
-As part of our experimentation, we have been testing out packet on 300bps HF,
-and playing with net/rom.  For HF packet at this baud rate you really need
-to make sure that your MTU is relatively low; AX.25 suggests a PACLEN of 60,
-and a net/rom PACLEN of 40 to go with that.
-However the Linux net/rom support didn't work with a low PACLEN;
-the mkiss module would truncate packets if you set the PACLEN below about 200 or so, e.g.:
+Note that WRITE_ONCE() is already added by commit c7d2ef5dd4b0
+("net/packet: annotate accesses to po->bind").
 
-Apr 19 14:00:51 radio kernel: [12985.747310] mkiss: ax1: truncating oversized transmit packet!
+BUG: KCSAN: data-race in packet_bind / packet_do_bind
 
-This didn't make any sense to me (if the packets are smaller why would they
-be truncated?) so I started investigating.
-I looked at the packets using ethereal, and found that many were just huge
-compared to what I would expect.
-A simple net/rom connection request packet had the request and then a bunch
-of what appeared to be random data following it:
+write (marked) to 0xffff88802ffd1cee of 2 bytes by task 7322 on cpu 0:
+ packet_do_bind+0x446/0x640 net/packet/af_packet.c:3236
+ packet_bind+0x99/0xe0 net/packet/af_packet.c:3321
+ __sys_bind+0x19b/0x1e0 net/socket.c:1803
+ __do_sys_bind net/socket.c:1814 [inline]
+ __se_sys_bind net/socket.c:1812 [inline]
+ __x64_sys_bind+0x40/0x50 net/socket.c:1812
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-</quote>
+read to 0xffff88802ffd1cee of 2 bytes by task 7318 on cpu 1:
+ packet_bind+0xbf/0xe0 net/packet/af_packet.c:3322
+ __sys_bind+0x19b/0x1e0 net/socket.c:1803
+ __do_sys_bind net/socket.c:1814 [inline]
+ __se_sys_bind net/socket.c:1812 [inline]
+ __x64_sys_bind+0x40/0x50 net/socket.c:1812
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Simon provided a patch that I slightly revised:
-Not only we must not use skb_tailroom(), we also do
-not want to count NR_NETWORK_LEN twice.
+value changed: 0x0300 -> 0x0000
 
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 7318 Comm: syz-executor.4 Not tainted 6.3.0-13380-g7fddb5b5300c #4
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 96ec6327144e ("packet: Diag core and basic socket info dumping")
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-Developed-by: Simon Kapadia <szymon@kapadia.pl>
-Signed-off-by: Simon Kapadia <szymon@kapadia.pl>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Tested-by: Simon Kapadia <szymon@kapadia.pl>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230524141456.1045467-1-edumazet@google.com
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20230524232934.50950-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_subr.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/packet/af_packet.c | 4 ++--
+ net/packet/diag.c      | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
-index 3f99b432ea707..e2d2af924cff4 100644
---- a/net/netrom/nr_subr.c
-+++ b/net/netrom/nr_subr.c
-@@ -123,7 +123,7 @@ void nr_write_internal(struct sock *sk, int frametype)
- 	unsigned char  *dptr;
- 	int len, timeout;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 3c05414cd3f83..542d5285e99e9 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3259,7 +3259,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
+ 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
+ 	name[sizeof(uaddr->sa_data)] = 0;
  
--	len = NR_NETWORK_LEN + NR_TRANSPORT_LEN;
-+	len = NR_TRANSPORT_LEN;
+-	return packet_do_bind(sk, name, 0, pkt_sk(sk)->num);
++	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
+ }
  
- 	switch (frametype & 0x0F) {
- 	case NR_CONNREQ:
-@@ -141,7 +141,8 @@ void nr_write_internal(struct sock *sk, int frametype)
- 		return;
- 	}
+ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+@@ -3277,7 +3277,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
+ 		return -EINVAL;
  
--	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
-+	skb = alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
-+	if (!skb)
- 		return;
+ 	return packet_do_bind(sk, NULL, sll->sll_ifindex,
+-			      sll->sll_protocol ? : pkt_sk(sk)->num);
++			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
+ }
  
- 	/*
-@@ -149,7 +150,7 @@ void nr_write_internal(struct sock *sk, int frametype)
- 	 */
- 	skb_reserve(skb, NR_NETWORK_LEN);
+ static struct proto packet_proto = {
+diff --git a/net/packet/diag.c b/net/packet/diag.c
+index d704c7bf51b20..a68a84574c739 100644
+--- a/net/packet/diag.c
++++ b/net/packet/diag.c
+@@ -143,7 +143,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb,
+ 	rp = nlmsg_data(nlh);
+ 	rp->pdiag_family = AF_PACKET;
+ 	rp->pdiag_type = sk->sk_type;
+-	rp->pdiag_num = ntohs(po->num);
++	rp->pdiag_num = ntohs(READ_ONCE(po->num));
+ 	rp->pdiag_ino = sk_ino;
+ 	sock_diag_save_cookie(sk, rp->pdiag_cookie);
  
--	dptr = skb_put(skb, skb_tailroom(skb));
-+	dptr = skb_put(skb, len);
- 
- 	switch (frametype & 0x0F) {
- 	case NR_CONNREQ:
 -- 
 2.39.2
 
