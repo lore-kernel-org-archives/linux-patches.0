@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E58D3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:55:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0053FC433D2;
-	Wed,  7 Jun 2023 20:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449613922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:55:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E0EC433D2;
+	Wed,  7 Jun 2023 20:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171348;
-	bh=R0DELvf/YMrD0zJkos1kwz8fEahoXM96yNAJdbs+Qls=;
+	s=korg; t=1686171351;
+	bh=oZnFZvVyq37kjsJAdZ3SjFKDGN4gfpEdfcVyXBHNGbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLPPNxpgR85lZQFW3jr9fEJF0acY3i1Kd7A9RNEZx06JlLEKKVz+Hm+N2UMW7CkuS
-	 w1jaeSyYMJg7Z+N1fKtRHE/yl3FikG/W0M7C2VfCnpfHbzZcBDPWVof66sjxwwsi78
-	 Yp4whGJfe+ubpBVpS72abQJQVZtvMOerEqq1PxS4=
+	b=x6U8WmvNuU5d3VUmFlz9OVfi0qO1Et47ldc1Ddx9+adsWPRXIJTT56z1yQo9WX1jX
+	 rB0hbugR6ND8xN25g2kmoe+3/CgFuanSVJBw4Zmm8RKy8Ls5kwrOK4xtXkdX33AIEh
+	 sfm0ZpJoeLCrJF+F/nFuSZdZr7d+LrlGEuIAOjcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erwan Velu <e.velu@criteo.com>,
-	Luiz Capitulino <luizcap@amazon.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 5.4 84/99] selinux: dont use makes grouped targets feature yet
-Date: Wed,  7 Jun 2023 22:17:16 +0200
-Message-ID: <20230607200902.860127726@linuxfoundation.org>
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH 5.4 85/99] tracing/probe: trace_probe_primary_from_call(): checked list_first_entry
+Date: Wed,  7 Jun 2023 22:17:17 +0200
+Message-ID: <20230607200902.889791474@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -35,42 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Moore <paul@paul-moore.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-commit 42c4e97e06a839b07d834f640a10911ad84ec8b3 upstream.
+commit 81d0fa4cb4fc0e1a49c2b22f92c43d9fe972ebcf upstream.
 
-The Linux Kernel currently only requires make v3.82 while the grouped
-target functionality requires make v4.3.  Removed the grouped target
-introduced in 4ce1f694eb5d ("selinux: ensure av_permissions.h is
-built when needed") as well as the multiple header file targets in
-the make rule.  This effectively reverts the problem commit.
+All callers of trace_probe_primary_from_call() check the return
+value to be non NULL. However, the function returns
+list_first_entry(&tpe->probes, ...) which can never be NULL.
+Additionally, it does not check for the list being possibly empty,
+possibly causing a type confusion on empty lists.
+Use list_first_entry_or_null() which solves both problems.
 
-We will revisit this change when make >= 4.3 is required by the rest
-of the kernel.
+Link: https://lore.kernel.org/linux-trace-kernel/20230128-list-entry-null-check-v1-1-8bde6a3da2ef@diag.uniroma1.it/
 
+Fixes: 60d53e2c3b75 ("tracing/probe: Split trace_event related data from trace_probe")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
 Cc: stable@vger.kernel.org
-Fixes: 4ce1f694eb5d ("selinux: ensure av_permissions.h is built when needed")
-Reported-by: Erwan Velu <e.velu@criteo.com>
-Reported-by: Luiz Capitulino <luizcap@amazon.com>
-Tested-by: Luiz Capitulino <luizcap@amazon.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/Makefile |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/trace/trace_probe.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/selinux/Makefile
-+++ b/security/selinux/Makefile
-@@ -22,5 +22,9 @@ quiet_cmd_flask = GEN     $(obj)/flask.h
-       cmd_flask = $< $(obj)/flask.h $(obj)/av_permissions.h
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -302,7 +302,7 @@ trace_probe_primary_from_call(struct tra
+ {
+ 	struct trace_probe_event *tpe = trace_probe_event_from_call(call);
  
- targets += flask.h av_permissions.h
--$(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/genheaders/genheaders FORCE
-+# once make >= 4.3 is required, we can use grouped targets in the rule below,
-+# which basically involves adding both headers and a '&' before the colon, see
-+# the example below:
-+#   $(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/...
-+$(obj)/flask.h: scripts/selinux/genheaders/genheaders FORCE
- 	$(call if_changed,flask)
+-	return list_first_entry(&tpe->probes, struct trace_probe, list);
++	return list_first_entry_or_null(&tpe->probes, struct trace_probe, list);
+ }
+ 
+ static inline struct list_head *trace_probe_probe_list(struct trace_probe *tp)
 
 
