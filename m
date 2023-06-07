@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFDF19E48
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AEFC433D2;
-	Wed,  7 Jun 2023 20:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B158419E48
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:37:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34569C433D2;
+	Wed,  7 Jun 2023 20:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170243;
-	bh=qV1oI5nf6sJWEUTCqa/PdGoMsWIu4f3wWwKKGqFH4Dk=;
+	s=korg; t=1686170245;
+	bh=AcawwOb/0VbtbG8CcLEXU/eITg9SS2Y5A5z5pZK6Wy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z093sHsYoT+6DMBOQPq+w7LX6TGc7m7MvZZbgY3hEqVimkgHPNFTWWsbe0nL9OzV7
-	 mKcZh8rjQLNqGV6bEUnqvWxWwSlsxOdZ8FCbVCj9FRkiMVGpmJDrD35kSaXXcQUu21
-	 J6z7RJyXRaYx4GpXnTsiULus2QTS5NBGY8dauTqY=
+	b=YQ+/Iyc3SepNKpd47VAHyBYM25qvpNYmYsGaEKACF8MSfeJASm2ZAZ7UMWG6JR5k7
+	 QWZ16ZbWA699y1ysKgVzUcH8IeYgaAwTyNCu7jeAp2f/vFd2S5WXiVx0aempXkWkdb
+	 +MSEvd+LVpJ5Xl4YoN3xVzanX9D7DlT+a+C8He8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joao Martins <joao.m.martins@oracle.com>,
 	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/225] iommu/amd: Dont block updates to GATag if guest mode is on
-Date: Wed,  7 Jun 2023 22:13:24 +0200
-Message-ID: <20230607200913.712094641@linuxfoundation.org>
+Subject: [PATCH 6.1 012/225] iommu/amd: Handle GALog overflows
+Date: Wed,  7 Jun 2023 22:13:25 +0200
+Message-ID: <20230607200913.743016830@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -38,72 +39,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Joao Martins <joao.m.martins@oracle.com>
 
-[ Upstream commit ed8a2f4ddef2eaaf864ab1efbbca9788187036ab ]
+[ Upstream commit af47b0a24058e56e983881993752f88288ca6511 ]
 
-On KVM GSI routing table updates, specially those where they have vIOMMUs
-with interrupt remapping enabled (to boot >255vcpus setups without relying
-on KVM_FEATURE_MSI_EXT_DEST_ID), a VMM may update the backing VF MSIs
-with a new VCPU affinity.
+GALog exists to propagate interrupts into all vCPUs in the system when
+interrupts are marked as non running (e.g. when vCPUs aren't running). A
+GALog overflow happens when there's in no space in the log to record the
+GATag of the interrupt. So when the GALOverflow condition happens, the
+GALog queue is processed and the GALog is restarted, as the IOMMU
+manual indicates in section "2.7.4 Guest Virtual APIC Log Restart
+Procedure":
 
-On AMD with AVIC enabled, the new vcpu affinity info is updated via:
-	avic_pi_update_irte()
-		irq_set_vcpu_affinity()
-			amd_ir_set_vcpu_affinity()
-				amd_iommu_{de}activate_guest_mode()
+| * Wait until MMIO Offset 2020h[GALogRun]=0b so that all request
+|   entries are completed as circumstances allow. GALogRun must be 0b to
+|   modify the guest virtual APIC log registers safely.
+| * Write MMIO Offset 0018h[GALogEn]=0b.
+| * As necessary, change the following values (e.g., to relocate or
+| resize the guest virtual APIC event log):
+|   - the Guest Virtual APIC Log Base Address Register
+|      [MMIO Offset 00E0h],
+|   - the Guest Virtual APIC Log Head Pointer Register
+|      [MMIO Offset 2040h][GALogHead], and
+|   - the Guest Virtual APIC Log Tail Pointer Register
+|      [MMIO Offset 2048h][GALogTail].
+| * Write MMIO Offset 2020h[GALOverflow] = 1b to clear the bit (W1C).
+| * Write MMIO Offset 0018h[GALogEn] = 1b, and either set
+|   MMIO Offset 0018h[GAIntEn] to enable the GA log interrupt or clear
+|   the bit to disable it.
 
-Where the IRTE[GATag] is updated with the new vcpu affinity. The GATag
-contains VM ID and VCPU ID, and is used by IOMMU hardware to signal KVM
-(via GALog) when interrupt cannot be delivered due to vCPU is in
-blocking state.
+Failing to handle the GALog overflow means that none of the VFs (in any
+guest) will work with IOMMU AVIC forcing the user to power cycle the
+host. When handling the event it resumes the GALog without resizing
+much like how it is done in the event handler overflow. The
+[MMIO Offset 2020h][GALOverflow] bit might be set in status register
+without the [MMIO Offset 2020h][GAInt] bit, so when deciding to poll
+for GA events (to clear space in the galog), also check the overflow
+bit.
 
-The issue is that amd_iommu_activate_guest_mode() will essentially
-only change IRTE fields on transitions from non-guest-mode to guest-mode
-and otherwise returns *with no changes to IRTE* on already configured
-guest-mode interrupts. To the guest this means that the VF interrupts
-remain affined to the first vCPU they were first configured, and guest
-will be unable to issue VF interrupts and receive messages like this
-from spurious interrupts (e.g. from waking the wrong vCPU in GALog):
+[suravee: Check for GAOverflow without GAInt, toggle CONTROL_GAINT_EN]
 
-[  167.759472] __common_interrupt: 3.34 No irq handler for vector
-[  230.680927] mlx5_core 0000:00:02.0: mlx5_cmd_eq_recover:247:(pid
-3122): Recovered 1 EQEs on cmd_eq
-[  230.681799] mlx5_core 0000:00:02.0:
-wait_func_handle_exec_timeout:1113:(pid 3122): cmd[0]: CREATE_CQ(0x400)
-recovered after timeout
-[  230.683266] __common_interrupt: 3.34 No irq handler for vector
-
-Given the fact that amd_ir_set_vcpu_affinity() uses
-amd_iommu_activate_guest_mode() underneath it essentially means that VCPU
-affinity changes of IRTEs are nops. Fix it by dropping the check for
-guest-mode at amd_iommu_activate_guest_mode(). Same thing is applicable to
-amd_iommu_deactivate_guest_mode() although, even if the IRTE doesn't change
-underlying DestID on the host, the VFIO IRQ handler will still be able to
-poke at the right guest-vCPU.
-
-Fixes: b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC (de-)activation code")
+Co-developed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Link: https://lore.kernel.org/r/20230419201154.83880-2-joao.m.martins@oracle.com
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Link: https://lore.kernel.org/r/20230419201154.83880-3-joao.m.martins@oracle.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 8ec4e2befef1 ("iommu/amd: Fix up merge conflict resolution")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iommu/amd/amd_iommu.h |  1 +
+ drivers/iommu/amd/init.c      | 24 ++++++++++++++++++++++++
+ drivers/iommu/amd/iommu.c     |  9 ++++++++-
+ 3 files changed, 33 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
+index c160a332ce339..24c7e6c6c0de9 100644
+--- a/drivers/iommu/amd/amd_iommu.h
++++ b/drivers/iommu/amd/amd_iommu.h
+@@ -15,6 +15,7 @@ extern irqreturn_t amd_iommu_int_thread(int irq, void *data);
+ extern irqreturn_t amd_iommu_int_handler(int irq, void *data);
+ extern void amd_iommu_apply_erratum_63(struct amd_iommu *iommu, u16 devid);
+ extern void amd_iommu_restart_event_logging(struct amd_iommu *iommu);
++extern void amd_iommu_restart_ga_log(struct amd_iommu *iommu);
+ extern int amd_iommu_init_devices(void);
+ extern void amd_iommu_uninit_devices(void);
+ extern void amd_iommu_init_notifier(void);
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 7c14b1d32c8db..b0af8b5967e0d 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -751,6 +751,30 @@ void amd_iommu_restart_event_logging(struct amd_iommu *iommu)
+ 	iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
+ }
+ 
++/*
++ * This function restarts event logging in case the IOMMU experienced
++ * an GA log overflow.
++ */
++void amd_iommu_restart_ga_log(struct amd_iommu *iommu)
++{
++	u32 status;
++
++	status = readl(iommu->mmio_base + MMIO_STATUS_OFFSET);
++	if (status & MMIO_STATUS_GALOG_RUN_MASK)
++		return;
++
++	pr_info_ratelimited("IOMMU GA Log restarting\n");
++
++	iommu_feature_disable(iommu, CONTROL_GALOG_EN);
++	iommu_feature_disable(iommu, CONTROL_GAINT_EN);
++
++	writel(MMIO_STATUS_GALOG_OVERFLOW_MASK,
++	       iommu->mmio_base + MMIO_STATUS_OFFSET);
++
++	iommu_feature_enable(iommu, CONTROL_GAINT_EN);
++	iommu_feature_enable(iommu, CONTROL_GALOG_EN);
++}
++
+ /*
+  * This function resets the command buffer if the IOMMU stopped fetching
+  * commands from it.
 diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 26fb78003889f..0ccc6b8319fba 100644
+index 0ccc6b8319fba..16c5d1b97b564 100644
 --- a/drivers/iommu/amd/iommu.c
 +++ b/drivers/iommu/amd/iommu.c
-@@ -3504,8 +3504,7 @@ int amd_iommu_activate_guest_mode(void *data)
- 	struct irte_ga *entry = (struct irte_ga *) ir_data->entry;
- 	u64 valid;
+@@ -836,6 +836,7 @@ amd_iommu_set_pci_msi_domain(struct device *dev, struct amd_iommu *iommu) { }
+ 	(MMIO_STATUS_EVT_OVERFLOW_INT_MASK | \
+ 	 MMIO_STATUS_EVT_INT_MASK | \
+ 	 MMIO_STATUS_PPR_INT_MASK | \
++	 MMIO_STATUS_GALOG_OVERFLOW_MASK | \
+ 	 MMIO_STATUS_GALOG_INT_MASK)
  
--	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir) ||
--	    !entry || entry->lo.fields_vapic.guest_mode)
-+	if (!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir) || !entry)
- 		return 0;
+ irqreturn_t amd_iommu_int_thread(int irq, void *data)
+@@ -859,10 +860,16 @@ irqreturn_t amd_iommu_int_thread(int irq, void *data)
+ 		}
  
- 	valid = entry->lo.fields_vapic.valid;
+ #ifdef CONFIG_IRQ_REMAP
+-		if (status & MMIO_STATUS_GALOG_INT_MASK) {
++		if (status & (MMIO_STATUS_GALOG_INT_MASK |
++			      MMIO_STATUS_GALOG_OVERFLOW_MASK)) {
+ 			pr_devel("Processing IOMMU GA Log\n");
+ 			iommu_poll_ga_log(iommu);
+ 		}
++
++		if (status & MMIO_STATUS_GALOG_OVERFLOW_MASK) {
++			pr_info_ratelimited("IOMMU GA Log overflow\n");
++			amd_iommu_restart_ga_log(iommu);
++		}
+ #endif
+ 
+ 		if (status & MMIO_STATUS_EVT_OVERFLOW_INT_MASK) {
 -- 
 2.39.2
 
