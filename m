@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A62534CD3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83621C433D2;
-	Wed,  7 Jun 2023 21:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6FC34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEF5C433EF;
+	Wed,  7 Jun 2023 21:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171639;
-	bh=jXyeWu7J1vpGdlWJwZfkHZ8ILypI0JONqg8icPURwSA=;
+	s=korg; t=1686171642;
+	bh=JLm+5J+efrb1heGzEK9s88H9Xk3QhW3U3jVl5mqYkbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/Tw0p8S2lMyrSQTmrCgaIRtmv9paLnJLBVNAAqIIjpcqoLJMII2ZD8OR3t/DvnY+
-	 CTrrxlKMp0js9jjnPyf47BMzHHLmcwmkBgdqTrVPsfCPXd3szkF2ArX2iSMMwVgigx
-	 Tk/42t4798muf7BJftiz/hIsQmZuVH1q1w4cmORI=
+	b=bxlstmdXptt1Zg0HkkdVzsQ9vJTI1V2Dec5PgWGX0R2Lg2jE+O9BKA4B6FBApPkPc
+	 eeBgZaXRobVgW77K6QZMSvBvmaKAUXALdv4PBNdag6kSloyfTtXVrs06sp+hwrtOn8
+	 7ow+Xv4JiULgsG2DppofRsnBxknxgBrVWywDGL/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Lee Jones <lee@kernel.org>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/159] mailbox: mailbox-test: fix a locking issue in mbox_test_message_write()
-Date: Wed,  7 Jun 2023 22:16:38 +0200
-Message-ID: <20230607200906.802549093@linuxfoundation.org>
+Subject: [PATCH 5.15 096/159] media: uvcvideo: Dont expose unsupported formats to userspace
+Date: Wed,  7 Jun 2023 22:16:39 +0200
+Message-ID: <20230607200906.834474585@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,53 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 8fe72b76db79d694858e872370df49676bc3be8c ]
+[ Upstream commit 81f3affa19d6ab0c32aef46b053838219eef7e71 ]
 
-There was a bug where this code forgot to unlock the tdev->mutex if the
-kzalloc() failed.  Fix this issue, by moving the allocation outside the
-lock.
+When the uvcvideo driver encounters a format descriptor with an unknown
+format GUID, it creates a corresponding struct uvc_format instance with
+the fcc field set to 0. Since commit 50459f103edf ("media: uvcvideo:
+Remove format descriptions"), the driver relies on the V4L2 core to
+provide the format description string, which the V4L2 core can't do
+without a valid 4CC. This triggers a WARN_ON.
 
-Fixes: 2d1e952a2b8e ("mailbox: mailbox-test: Fix potential double-free in mbox_test_message_write()")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+As a format with a zero 4CC can't be selected, it is unusable for
+applications. Ignore the format completely without creating a uvc_format
+instance, which fixes the warning.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217252
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2180107
+
+Fixes: 50459f103edf ("media: uvcvideo: Remove format descriptions")
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index 6dd5b9614452b..abcee58e851c2 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -97,6 +97,7 @@ static ssize_t mbox_test_message_write(struct file *filp,
- 				       size_t count, loff_t *ppos)
- {
- 	struct mbox_test_device *tdev = filp->private_data;
-+	char *message;
- 	void *data;
- 	int ret;
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index 2e7df1de0af9a..b19c75a6f5952 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -530,14 +530,17 @@ static int uvc_parse_format(struct uvc_device *dev,
+ 		/* Find the format descriptor from its GUID. */
+ 		fmtdesc = uvc_format_by_guid(&buffer[5]);
  
-@@ -112,12 +113,13 @@ static ssize_t mbox_test_message_write(struct file *filp,
- 		return -EINVAL;
- 	}
+-		if (fmtdesc != NULL) {
+-			format->fcc = fmtdesc->fcc;
+-		} else {
++		if (!fmtdesc) {
++			/*
++			 * Unknown video formats are not fatal errors, the
++			 * caller will skip this descriptor.
++			 */
+ 			dev_info(&streaming->intf->dev,
+ 				 "Unknown video format %pUl\n", &buffer[5]);
+-			format->fcc = 0;
++			return 0;
+ 		}
  
--	mutex_lock(&tdev->mutex);
--
--	tdev->message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
--	if (!tdev->message)
-+	message = kzalloc(MBOX_MAX_MSG_LEN, GFP_KERNEL);
-+	if (!message)
- 		return -ENOMEM;
++		format->fcc = fmtdesc->fcc;
+ 		format->bpp = buffer[21];
  
-+	mutex_lock(&tdev->mutex);
-+
-+	tdev->message = message;
- 	ret = copy_from_user(tdev->message, userbuf, count);
- 	if (ret) {
- 		ret = -EFAULT;
+ 		/* Some devices report a format that doesn't match what they
+@@ -945,7 +948,7 @@ static int uvc_parse_streaming(struct uvc_device *dev,
+ 	interval = (u32 *)&frame[nframes];
+ 
+ 	streaming->format = format;
+-	streaming->nformats = nformats;
++	streaming->nformats = 0;
+ 
+ 	/* Parse the format descriptors. */
+ 	while (buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE) {
+@@ -959,7 +962,10 @@ static int uvc_parse_streaming(struct uvc_device *dev,
+ 				&interval, buffer, buflen);
+ 			if (ret < 0)
+ 				goto error;
++			if (!ret)
++				break;
+ 
++			streaming->nformats++;
+ 			frame += format->nframes;
+ 			format++;
+ 
 -- 
 2.39.2
 
