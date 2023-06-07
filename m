@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419B924EA0
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97DAC433EF;
-	Wed,  7 Jun 2023 20:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF39224EA0
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:50:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8D4C433D2;
+	Wed,  7 Jun 2023 20:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171055;
-	bh=B3HOxQ6SeThlfptbPHq7i7PovKLToKNVPFQGrFGC9rA=;
+	s=korg; t=1686171057;
+	bh=z8swA6wW5Oo1wnkuZhe0uKr1ZhFWOED7/UaCBJAtm+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Onl+rrSEIM1kwwl1PpIPt85zpOnb9pVecxdCReohHT3b7vigcYn9mLeLwDULqorUK
-	 jtVbaHLZnZLQ0a+wqeXLz6yfEO+DpmNL3R5AiZ8OFfDMu31ao8tbWmO+FTcGbGvQ3I
-	 YK8xGgiJLnlEIH003oCXw+Tg006QdfMmYhWkEjnk=
+	b=F8lbeemgdsD8wm1kUPAx+aOrd0Jx+COJ9mjTRvBrcoDI2V+6MTQlgeagQHa50ukwL
+	 9deXYNaS/08CbOstvv47npQgimvRGy8TdE86JZG+kjbxJ9EgzvLYIeDcS1vuhd+3mq
+	 P6o74nAwwvm4W1C1SCMiSqoqdpA6OkHM4vovPI/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deren Wu <deren.wu@mediatek.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 092/120] mmc: vub300: fix invalid response handling
-Date: Wed,  7 Jun 2023 22:16:48 +0200
-Message-ID: <20230607200903.804172565@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Min-Hua Chen <minhuadotchen@gmail.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 065/120] arm64/mm: mark private VM_FAULT_X defines as vm_fault_t
+Date: Wed,  7 Jun 2023 22:16:21 +0200
+Message-ID: <20230607200902.929067403@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -34,64 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deren Wu <deren.wu@mediatek.com>
+From: Min-Hua Chen <minhuadotchen@gmail.com>
 
-commit a99d21cefd351c8aaa20b83a3c942340e5789d45 upstream.
+[ Upstream commit d91d580878064b880f3574ac35b98d8b70ee8620 ]
 
-We may get an empty response with zero length at the beginning of
-the driver start and get following UBSAN error. Since there is no
-content(SDRT_NONE) for the response, just return and skip the response
-handling to avoid this problem.
+This patch fixes several sparse warnings for fault.c:
 
-Test pass : SDIO wifi throughput test with this patch
+arch/arm64/mm/fault.c:493:24: sparse: warning: incorrect type in return expression (different base types)
+arch/arm64/mm/fault.c:493:24: sparse:    expected restricted vm_fault_t
+arch/arm64/mm/fault.c:493:24: sparse:    got int
+arch/arm64/mm/fault.c:501:32: sparse: warning: incorrect type in return expression (different base types)
+arch/arm64/mm/fault.c:501:32: sparse:    expected restricted vm_fault_t
+arch/arm64/mm/fault.c:501:32: sparse:    got int
+arch/arm64/mm/fault.c:503:32: sparse: warning: incorrect type in return expression (different base types)
+arch/arm64/mm/fault.c:503:32: sparse:    expected restricted vm_fault_t
+arch/arm64/mm/fault.c:503:32: sparse:    got int
+arch/arm64/mm/fault.c:511:24: sparse: warning: incorrect type in return expression (different base types)
+arch/arm64/mm/fault.c:511:24: sparse:    expected restricted vm_fault_t
+arch/arm64/mm/fault.c:511:24: sparse:    got int
+arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
+arch/arm64/mm/fault.c:670:13: sparse: warning: restricted vm_fault_t degrades to integer
+arch/arm64/mm/fault.c:713:39: sparse: warning: restricted vm_fault_t degrades to integer
 
-[  126.980684] UBSAN: array-index-out-of-bounds in drivers/mmc/host/vub300.c:1719:12
-[  126.980709] index -1 is out of range for type 'u32 [4]'
-[  126.980729] CPU: 4 PID: 9 Comm: kworker/u16:0 Tainted: G            E      6.3.0-rc4-mtk-local-202304272142 #1
-[  126.980754] Hardware name: Intel(R) Client Systems NUC8i7BEH/NUC8BEB, BIOS BECFL357.86A.0081.2020.0504.1834 05/04/2020
-[  126.980770] Workqueue: kvub300c vub300_cmndwork_thread [vub300]
-[  126.980833] Call Trace:
-[  126.980845]  <TASK>
-[  126.980860]  dump_stack_lvl+0x48/0x70
-[  126.980895]  dump_stack+0x10/0x20
-[  126.980916]  ubsan_epilogue+0x9/0x40
-[  126.980944]  __ubsan_handle_out_of_bounds+0x70/0x90
-[  126.980979]  vub300_cmndwork_thread+0x58e7/0x5e10 [vub300]
-[  126.981018]  ? _raw_spin_unlock+0x18/0x40
-[  126.981042]  ? finish_task_switch+0x175/0x6f0
-[  126.981070]  ? __switch_to+0x42e/0xda0
-[  126.981089]  ? __switch_to_asm+0x3a/0x80
-[  126.981129]  ? __pfx_vub300_cmndwork_thread+0x10/0x10 [vub300]
-[  126.981174]  ? __kasan_check_read+0x11/0x20
-[  126.981204]  process_one_work+0x7ee/0x13d0
-[  126.981246]  worker_thread+0x53c/0x1240
-[  126.981291]  kthread+0x2b8/0x370
-[  126.981312]  ? __pfx_worker_thread+0x10/0x10
-[  126.981336]  ? __pfx_kthread+0x10/0x10
-[  126.981359]  ret_from_fork+0x29/0x50
-[  126.981400]  </TASK>
-
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/048cd6972c50c33c2e8f81d5228fed928519918b.1683987673.git.deren.wu@mediatek.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
+Link: https://lore.kernel.org/r/20230502151909.128810-1-minhuadotchen@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/vub300.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/mm/fault.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -1715,6 +1715,9 @@ static void construct_request_response(s
- 	int bytes = 3 & less_cmd;
- 	int words = less_cmd >> 2;
- 	u8 *r = vub300->resp.response.command_response;
-+
-+	if (!resp_len)
-+		return;
- 	if (bytes == 3) {
- 		cmd->resp[words] = (r[1 + (words << 2)] << 24)
- 			| (r[2 + (words << 2)] << 16)
+diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
+index 2be856731e817..d8baedd160de0 100644
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -402,8 +402,8 @@ static void do_bad_area(unsigned long addr, unsigned int esr, struct pt_regs *re
+ 	}
+ }
+ 
+-#define VM_FAULT_BADMAP		0x010000
+-#define VM_FAULT_BADACCESS	0x020000
++#define VM_FAULT_BADMAP		((__force vm_fault_t)0x010000)
++#define VM_FAULT_BADACCESS	((__force vm_fault_t)0x020000)
+ 
+ static vm_fault_t __do_page_fault(struct mm_struct *mm, unsigned long addr,
+ 				  unsigned int mm_flags, unsigned long vm_flags,
+-- 
+2.39.2
+
 
 
