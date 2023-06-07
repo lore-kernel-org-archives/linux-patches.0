@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A97C34CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E265AC433EF;
-	Wed,  7 Jun 2023 20:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F382B34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:44:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C19C433D2;
+	Wed,  7 Jun 2023 20:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170669;
-	bh=B3HOxQ6SeThlfptbPHq7i7PovKLToKNVPFQGrFGC9rA=;
+	s=korg; t=1686170671;
+	bh=cWQsk801mYWJ/p1NlRo+kI+kx33HxlJKhA8YIWmDMwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2jKT0IFcAvmWi7NEuiTPNM4EdpNZDTBH9i7TMbj0I2TgV7GJfa2uFgGE0KyipC9p
-	 z512zPT+Et/JxRxGaAYTxc9eHbialLEn5WxW+F9Px8qEXfxw5Hj8pFD+TJE5d4nTzz
-	 lKsv9FWoY+qIoo9FWrpmbiwkxFL9pDMirQbcACEM=
+	b=vMNJpzntIMAhZn8f+32YZAPx+pGryJVicyBpjxufft9Q2QHoDJDC9xxjyPGrSegVb
+	 yv2HhvBdxSBXMWnwANcLyFXQsu6KSPWEvxWWv1I+Ya2VV6B3cIUy6krUZUsbkphUqY
+	 wPlknugQ0rsEMU/8qOAz5rPcycbwgJrJsvuFRboo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deren Wu <deren.wu@mediatek.com>,
+	Marek Vasut <marex@denx.de>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 172/225] mmc: vub300: fix invalid response handling
-Date: Wed,  7 Jun 2023 22:16:05 +0200
-Message-ID: <20230607200920.016619920@linuxfoundation.org>
+Subject: [PATCH 6.1 173/225] mmc: pwrseq: sd8787: Fix WILC CHIP_EN and RESETN toggling order
+Date: Wed,  7 Jun 2023 22:16:06 +0200
+Message-ID: <20230607200920.048891669@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -34,64 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deren Wu <deren.wu@mediatek.com>
+From: Marek Vasut <marex@denx.de>
 
-commit a99d21cefd351c8aaa20b83a3c942340e5789d45 upstream.
+commit 0b5d5c436a5c572a45f976cfd34a6741e143e5d9 upstream.
 
-We may get an empty response with zero length at the beginning of
-the driver start and get following UBSAN error. Since there is no
-content(SDRT_NONE) for the response, just return and skip the response
-handling to avoid this problem.
+Chapter "5.3 Power-Up/Down Sequence" of WILC1000 [1] and WILC3000 [2]
+states that CHIP_EN must be pulled HIGH first, RESETN second. Fix the
+order of these signals in the driver.
 
-Test pass : SDIO wifi throughput test with this patch
+Use the mmc_pwrseq_ops as driver data as the delay between signals is
+specific to SDIO card type anyway.
 
-[  126.980684] UBSAN: array-index-out-of-bounds in drivers/mmc/host/vub300.c:1719:12
-[  126.980709] index -1 is out of range for type 'u32 [4]'
-[  126.980729] CPU: 4 PID: 9 Comm: kworker/u16:0 Tainted: G            E      6.3.0-rc4-mtk-local-202304272142 #1
-[  126.980754] Hardware name: Intel(R) Client Systems NUC8i7BEH/NUC8BEB, BIOS BECFL357.86A.0081.2020.0504.1834 05/04/2020
-[  126.980770] Workqueue: kvub300c vub300_cmndwork_thread [vub300]
-[  126.980833] Call Trace:
-[  126.980845]  <TASK>
-[  126.980860]  dump_stack_lvl+0x48/0x70
-[  126.980895]  dump_stack+0x10/0x20
-[  126.980916]  ubsan_epilogue+0x9/0x40
-[  126.980944]  __ubsan_handle_out_of_bounds+0x70/0x90
-[  126.980979]  vub300_cmndwork_thread+0x58e7/0x5e10 [vub300]
-[  126.981018]  ? _raw_spin_unlock+0x18/0x40
-[  126.981042]  ? finish_task_switch+0x175/0x6f0
-[  126.981070]  ? __switch_to+0x42e/0xda0
-[  126.981089]  ? __switch_to_asm+0x3a/0x80
-[  126.981129]  ? __pfx_vub300_cmndwork_thread+0x10/0x10 [vub300]
-[  126.981174]  ? __kasan_check_read+0x11/0x20
-[  126.981204]  process_one_work+0x7ee/0x13d0
-[  126.981246]  worker_thread+0x53c/0x1240
-[  126.981291]  kthread+0x2b8/0x370
-[  126.981312]  ? __pfx_worker_thread+0x10/0x10
-[  126.981336]  ? __pfx_kthread+0x10/0x10
-[  126.981359]  ret_from_fork+0x29/0x50
-[  126.981400]  </TASK>
+[1] https://ww1.microchip.com/downloads/aemDocuments/documents/WSG/ProductDocuments/DataSheets/ATWILC1000-MR110XB-IEEE-802.11-b-g-n-Link-Controller-Module-DS70005326E.pdf
+[2] https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/IEEE-802.11-b-g-n-Link-Controller-Module-with-Integrated-Bluetooth-5.0-DS70005327B.pdf
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Fixes: b2832b96fcf5 ("mmc: pwrseq: sd8787: add support for wilc1000")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/048cd6972c50c33c2e8f81d5228fed928519918b.1683987673.git.deren.wu@mediatek.com
+Link: https://lore.kernel.org/r/20230513192352.479627-1-marex@denx.de
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/core/pwrseq_sd8787.c |   34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -1715,6 +1715,9 @@ static void construct_request_response(s
- 	int bytes = 3 & less_cmd;
- 	int words = less_cmd >> 2;
- 	u8 *r = vub300->resp.response.command_response;
+--- a/drivers/mmc/core/pwrseq_sd8787.c
++++ b/drivers/mmc/core/pwrseq_sd8787.c
+@@ -28,7 +28,6 @@ struct mmc_pwrseq_sd8787 {
+ 	struct mmc_pwrseq pwrseq;
+ 	struct gpio_desc *reset_gpio;
+ 	struct gpio_desc *pwrdn_gpio;
+-	u32 reset_pwrdwn_delay_ms;
+ };
+ 
+ #define to_pwrseq_sd8787(p) container_of(p, struct mmc_pwrseq_sd8787, pwrseq)
+@@ -39,7 +38,7 @@ static void mmc_pwrseq_sd8787_pre_power_
+ 
+ 	gpiod_set_value_cansleep(pwrseq->reset_gpio, 1);
+ 
+-	msleep(pwrseq->reset_pwrdwn_delay_ms);
++	msleep(300);
+ 	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 1);
+ }
+ 
+@@ -51,17 +50,37 @@ static void mmc_pwrseq_sd8787_power_off(
+ 	gpiod_set_value_cansleep(pwrseq->reset_gpio, 0);
+ }
+ 
++static void mmc_pwrseq_wilc1000_pre_power_on(struct mmc_host *host)
++{
++	struct mmc_pwrseq_sd8787 *pwrseq = to_pwrseq_sd8787(host->pwrseq);
 +
-+	if (!resp_len)
-+		return;
- 	if (bytes == 3) {
- 		cmd->resp[words] = (r[1 + (words << 2)] << 24)
- 			| (r[2 + (words << 2)] << 16)
++	/* The pwrdn_gpio is really CHIP_EN, reset_gpio is RESETN */
++	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 1);
++	msleep(5);
++	gpiod_set_value_cansleep(pwrseq->reset_gpio, 1);
++}
++
++static void mmc_pwrseq_wilc1000_power_off(struct mmc_host *host)
++{
++	struct mmc_pwrseq_sd8787 *pwrseq = to_pwrseq_sd8787(host->pwrseq);
++
++	gpiod_set_value_cansleep(pwrseq->reset_gpio, 0);
++	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 0);
++}
++
+ static const struct mmc_pwrseq_ops mmc_pwrseq_sd8787_ops = {
+ 	.pre_power_on = mmc_pwrseq_sd8787_pre_power_on,
+ 	.power_off = mmc_pwrseq_sd8787_power_off,
+ };
+ 
+-static const u32 sd8787_delay_ms = 300;
+-static const u32 wilc1000_delay_ms = 5;
++static const struct mmc_pwrseq_ops mmc_pwrseq_wilc1000_ops = {
++	.pre_power_on = mmc_pwrseq_wilc1000_pre_power_on,
++	.power_off = mmc_pwrseq_wilc1000_power_off,
++};
+ 
+ static const struct of_device_id mmc_pwrseq_sd8787_of_match[] = {
+-	{ .compatible = "mmc-pwrseq-sd8787", .data = &sd8787_delay_ms },
+-	{ .compatible = "mmc-pwrseq-wilc1000", .data = &wilc1000_delay_ms },
++	{ .compatible = "mmc-pwrseq-sd8787", .data = &mmc_pwrseq_sd8787_ops },
++	{ .compatible = "mmc-pwrseq-wilc1000", .data = &mmc_pwrseq_wilc1000_ops },
+ 	{/* sentinel */},
+ };
+ MODULE_DEVICE_TABLE(of, mmc_pwrseq_sd8787_of_match);
+@@ -77,7 +96,6 @@ static int mmc_pwrseq_sd8787_probe(struc
+ 		return -ENOMEM;
+ 
+ 	match = of_match_node(mmc_pwrseq_sd8787_of_match, pdev->dev.of_node);
+-	pwrseq->reset_pwrdwn_delay_ms = *(u32 *)match->data;
+ 
+ 	pwrseq->pwrdn_gpio = devm_gpiod_get(dev, "powerdown", GPIOD_OUT_LOW);
+ 	if (IS_ERR(pwrseq->pwrdn_gpio))
+@@ -88,7 +106,7 @@ static int mmc_pwrseq_sd8787_probe(struc
+ 		return PTR_ERR(pwrseq->reset_gpio);
+ 
+ 	pwrseq->pwrseq.dev = dev;
+-	pwrseq->pwrseq.ops = &mmc_pwrseq_sd8787_ops;
++	pwrseq->pwrseq.ops = match->data;
+ 	pwrseq->pwrseq.owner = THIS_MODULE;
+ 	platform_set_drvdata(pdev, pwrseq);
+ 
 
 
