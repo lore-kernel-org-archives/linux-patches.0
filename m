@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E103AE73
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F712C433EF;
-	Wed,  7 Jun 2023 20:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C763AE6E
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:31:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AFDC433D2;
+	Wed,  7 Jun 2023 20:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169860;
-	bh=IDowwYMG4utyLSWdFHM4/mzJo1mH8B/Z44JIle9Izv0=;
+	s=korg; t=1686169863;
+	bh=Xv/CykolLP4zraQW4RmEZ8TaFwChsfvq9WNkj5Ye4G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RaCGEYkQrBJDlZDG6NWWu7EqxASodo10BHgZ6z6ZN+qJJTROwXsX73hXAP4H5U509
-	 IE8EqYp01idu28TwqhI+GezLrmT5bKy63K0tYLMp0XS/EcXaLo4mWPGxat6LZfsHnT
-	 z0ZZfAmmmtsvEhWp8JqGtmumU41y7RccPK1zvx+o=
+	b=LZYcb1MHvOKh4MXByudNFyzZu1FFj/modjPlwPVQGwoILl3ppiDuSxDQMfrkjWiBD
+	 cd8xkE+L2e/KMfverP2CWNXIkrRznRAb5ALY26IyZ7ASlmc2pCHzlY3R6WkzCbqMQZ
+	 tLaXfHt/Y7Ck5fnA9B8P0uDzYOOAx5ne7GIkbIO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ism Hong <ism.hong@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.3 242/286] riscv: perf: Fix callchain parse error with kernel tracepoint events
-Date: Wed,  7 Jun 2023 22:15:41 +0200
-Message-ID: <20230607200931.190590306@linuxfoundation.org>
+	Ben Noordhuis <info@bnoordhuis.nl>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.3 243/286] io_uring: undeprecate epoll_ctl support
+Date: Wed,  7 Jun 2023 22:15:42 +0200
+Message-ID: <20230607200931.223409783@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -34,76 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ism Hong <ism.hong@gmail.com>
+From: Ben Noordhuis <info@bnoordhuis.nl>
 
-commit 9a7e8ec0d4cc64870ea449b4fce5779b77496cbb upstream.
+commit 4ea0bf4b98d66a7a790abb285539f395596bae92 upstream.
 
-For RISC-V, when tracing with tracepoint events, the IP and status are
-set to 0, preventing the perf code parsing the callchain and resolving
-the symbols correctly.
+Libuv recently started using it so there is at least one consumer now.
 
- ./ply 'tracepoint:kmem/kmem_cache_alloc { @[stack]=count(); }'
- @:
- { <STACKID4294967282> }: 1
-
-The fix is to implement perf_arch_fetch_caller_regs for riscv, which
-fills several necessary registers used for callchain unwinding,
-including epc, sp, s0 and status. It's similar to commit b3eac0265bf6
-("arm: perf: Fix callchain parse error with kernel tracepoint events")
-and commit 5b09a094f2fb ("arm64: perf: Fix callchain parse error with
-kernel tracepoint events").
-
-With this patch, callchain can be parsed correctly as:
-
- ./ply 'tracepoint:kmem/kmem_cache_alloc { @[stack]=count(); }'
- @:
- {
-         __traceiter_kmem_cache_alloc+68
-         __traceiter_kmem_cache_alloc+68
-         kmem_cache_alloc+354
-         __sigqueue_alloc+94
-         __send_signal_locked+646
-         send_signal_locked+154
-         do_send_sig_info+84
-         __kill_pgrp_info+130
-         kill_pgrp+60
-         isig+150
-         n_tty_receive_signal_char+36
-         n_tty_receive_buf_standard+2214
-         n_tty_receive_buf_common+280
-         n_tty_receive_buf2+26
-         tty_ldisc_receive_buf+34
-         tty_port_default_receive_buf+62
-         flush_to_ldisc+158
-         process_one_work+458
-         worker_thread+138
-         kthread+178
-         riscv_cpufeature_patch_func+832
-  }: 1
-
-Signed-off-by: Ism Hong <ism.hong@gmail.com>
-Link: https://lore.kernel.org/r/20230601095355.1168910-1-ism.hong@gmail.com
-Fixes: 178e9fc47aae ("perf: riscv: preliminary RISC-V support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 61a2732af4b0 ("io_uring: deprecate epoll_ctl support")
+Link: https://github.com/libuv/libuv/pull/3979
+Signed-off-by: Ben Noordhuis <info@bnoordhuis.nl>
+Link: https://lore.kernel.org/r/20230506095502.13401-1-info@bnoordhuis.nl
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/perf_event.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ io_uring/epoll.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/arch/riscv/include/asm/perf_event.h
-+++ b/arch/riscv/include/asm/perf_event.h
-@@ -10,4 +10,11 @@
+--- a/io_uring/epoll.c
++++ b/io_uring/epoll.c
+@@ -25,10 +25,6 @@ int io_epoll_ctl_prep(struct io_kiocb *r
+ {
+ 	struct io_epoll *epoll = io_kiocb_to_cmd(req, struct io_epoll);
  
- #include <linux/perf_event.h>
- #define perf_arch_bpf_user_pt_regs(regs) (struct user_regs_struct *)regs
-+
-+#define perf_arch_fetch_caller_regs(regs, __ip) { \
-+	(regs)->epc = (__ip); \
-+	(regs)->s0 = (unsigned long) __builtin_frame_address(0); \
-+	(regs)->sp = current_stack_pointer; \
-+	(regs)->status = SR_PP; \
-+}
- #endif /* _ASM_RISCV_PERF_EVENT_H */
+-	pr_warn_once("%s: epoll_ctl support in io_uring is deprecated and will "
+-		     "be removed in a future Linux kernel version.\n",
+-		     current->comm);
+-
+ 	if (sqe->buf_index || sqe->splice_fd_in)
+ 		return -EINVAL;
+ 
 
 
