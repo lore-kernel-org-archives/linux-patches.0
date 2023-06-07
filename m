@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAE43922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CCCC4339E;
-	Wed,  7 Jun 2023 21:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3C53922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 21:00:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9F7C433D2;
+	Wed,  7 Jun 2023 21:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171613;
-	bh=sVvy/qMN3sE5jGGp/n3dZN+H8CzViEY1brtoS9E53QA=;
+	s=korg; t=1686171616;
+	bh=QXOmpFfrX6WqPjEMMraE5Lk9ZwBNgRHBGUmGtOqvR3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fIriwCGEzNmvFNg6KF8TQ5hgY3D/CC+CuLguM5Izf27DJ6nfvOXgIcU+DKTpPuagc
-	 1UbzUDI/QuJfqJapZoE+at3QAt9OvoIoEzSsxJ9XUNz13yblGjifG/IKua4nWIkVIU
-	 8xOkBLw32zSD2ErwR10bwDNiijcIZgCHcqPNBd3Q=
+	b=F8ZI2YuHN61kPKrkyAg89lUxbNRyMTikjpfnifC/mMQl0A1+yJLzi26hYeHGfQY0M
+	 Az5YMkZkViBMEyzyYr8h37bOTpDRIDgDbrHHvoPepscGbYEJlfTUUJNpNj710TfFPS
+	 V9ba8l4bELDYmMr+bdke+0V2FXQNw8SByzBUKHqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Orlov <ivan.orlov0322@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jammy Huang <jammy_huang@aspeedtech.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/159] nbd: Fix debugfs_create_dir error checking
-Date: Wed,  7 Jun 2023 22:15:57 +0200
-Message-ID: <20230607200905.456607854@linuxfoundation.org>
+Subject: [PATCH 5.15 045/159] drm/ast: Fix ARM compatibility
+Date: Wed,  7 Jun 2023 22:15:48 +0200
+Message-ID: <20230607200905.162455675@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -35,44 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Orlov <ivan.orlov0322@gmail.com>
+From: Jammy Huang <jammy_huang@aspeedtech.com>
 
-[ Upstream commit 4913cfcf014c95f0437db2df1734472fd3e15098 ]
+[ Upstream commit 4327a6137ed43a091d900b1ac833345d60f32228 ]
 
-The debugfs_create_dir function returns ERR_PTR in case of error, and the
-only correct way to check if an error occurred is 'IS_ERR' inline function.
-This patch will replace the null-comparison with IS_ERR.
+ARM architecture only has 'memory', so all devices are accessed by
+MMIO if possible.
 
-Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
-Link: https://lore.kernel.org/r/20230512130533.98709-1-ivan.orlov0322@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230421003354.27767-1-jammy_huang@aspeedtech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/ast/ast_main.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 394355f12d4e0..e563aa407e888 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -1605,7 +1605,7 @@ static int nbd_dev_dbg_init(struct nbd_device *nbd)
- 		return -EIO;
+diff --git a/drivers/gpu/drm/ast/ast_main.c b/drivers/gpu/drm/ast/ast_main.c
+index 79a3618679554..754a08c92d3d1 100644
+--- a/drivers/gpu/drm/ast/ast_main.c
++++ b/drivers/gpu/drm/ast/ast_main.c
+@@ -423,11 +423,12 @@ struct ast_private *ast_device_create(const struct drm_driver *drv,
+ 		return ERR_PTR(-EIO);
  
- 	dir = debugfs_create_dir(nbd_name(nbd), nbd_dbg_dir);
--	if (!dir) {
-+	if (IS_ERR(dir)) {
- 		dev_err(nbd_to_dev(nbd), "Failed to create debugfs dir for '%s'\n",
- 			nbd_name(nbd));
- 		return -EIO;
-@@ -1631,7 +1631,7 @@ static int nbd_dbg_init(void)
- 	struct dentry *dbg_dir;
- 
- 	dbg_dir = debugfs_create_dir("nbd", NULL);
--	if (!dbg_dir)
-+	if (IS_ERR(dbg_dir))
- 		return -EIO;
- 
- 	nbd_dbg_dir = dbg_dir;
+ 	/*
+-	 * If we don't have IO space at all, use MMIO now and
+-	 * assume the chip has MMIO enabled by default (rev 0x20
+-	 * and higher).
++	 * After AST2500, MMIO is enabled by default, and it should be adopted
++	 * to be compatible with Arm.
+ 	 */
+-	if (!(pci_resource_flags(pdev, 2) & IORESOURCE_IO)) {
++	if (pdev->revision >= 0x40) {
++		ast->ioregs = ast->regs + AST_IO_MM_OFFSET;
++	} else if (!(pci_resource_flags(pdev, 2) & IORESOURCE_IO)) {
+ 		drm_info(dev, "platform has no IO space, trying MMIO\n");
+ 		ast->ioregs = ast->regs + AST_IO_MM_OFFSET;
+ 	}
 -- 
 2.39.2
 
