@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5783AE6B
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9F7C4339C;
-	Wed,  7 Jun 2023 20:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1753F3AE76
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C826C433D2;
+	Wed,  7 Jun 2023 20:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169839;
-	bh=cWQsk801mYWJ/p1NlRo+kI+kx33HxlJKhA8YIWmDMwU=;
+	s=korg; t=1686169841;
+	bh=bGHS3tOR1qiz/0FkRLD/dcSGoDztp6yKtm9PHrVJ4SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ScvmXeHHq5Ok2FYLmhUjaQE4pHVjY0AYuUITHBEEx4rI0mcRjCve4oEFn7QX3muWu
-	 TtrtxYrI2B5HcxocfvaeOwDqa8f4db3Y7NpyYNQdrlexjnOtsG72Rna0s1qob5hwvf
-	 kPte+lQ5ndw3TwtYMANTo7R1HuKOkyzN9z9Lz3Xw=
+	b=y7Rle1iEHlXr0gnQapGUV8VUkxKiSz3N0b1EsxpQgvJ/erBonvCZljPklacJ95exp
+	 j/TIEzJfKk8cM/FRqWXbd1CywuB1GvPK74McZcdyzM3phzPUsHocQmHZVuF/cb5n9c
+	 HQZjNz080pTg+2ddfDff7jpRXp/zZuTKsIMn50fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.3 226/286] mmc: pwrseq: sd8787: Fix WILC CHIP_EN and RESETN toggling order
-Date: Wed,  7 Jun 2023 22:15:25 +0200
-Message-ID: <20230607200930.662135431@linuxfoundation.org>
+	stable@kernel.org,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.3 235/286] module/decompress: Fix error checking on zstd decompression
+Date: Wed,  7 Jun 2023 22:15:34 +0200
+Message-ID: <20230607200930.974276492@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,108 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-commit 0b5d5c436a5c572a45f976cfd34a6741e143e5d9 upstream.
+commit fadb74f9f2f609238070c7ca1b04933dc9400e4a upstream.
 
-Chapter "5.3 Power-Up/Down Sequence" of WILC1000 [1] and WILC3000 [2]
-states that CHIP_EN must be pulled HIGH first, RESETN second. Fix the
-order of these signals in the driver.
+While implementing support for in-kernel decompression in kmod,
+finit_module() was returning a very suspicious value:
 
-Use the mmc_pwrseq_ops as driver data as the delay between signals is
-specific to SDIO card type anyway.
+	finit_module(3, "", MODULE_INIT_COMPRESSED_FILE) = 18446744072717407296
 
-[1] https://ww1.microchip.com/downloads/aemDocuments/documents/WSG/ProductDocuments/DataSheets/ATWILC1000-MR110XB-IEEE-802.11-b-g-n-Link-Controller-Module-DS70005326E.pdf
-[2] https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/IEEE-802.11-b-g-n-Link-Controller-Module-with-Integrated-Bluetooth-5.0-DS70005327B.pdf
+It turns out the check for module_get_next_page() failing is wrong,
+and hence the decompression was not really taking place. Invert
+the condition to fix it.
 
-Fixes: b2832b96fcf5 ("mmc: pwrseq: sd8787: add support for wilc1000")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230513192352.479627-1-marex@denx.de
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 169a58ad824d ("module/decompress: Support zstd in-kernel decompression")
+Cc: stable@kernel.org
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/pwrseq_sd8787.c |   34 ++++++++++++++++++++++++++--------
- 1 file changed, 26 insertions(+), 8 deletions(-)
+ kernel/module/decompress.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/core/pwrseq_sd8787.c
-+++ b/drivers/mmc/core/pwrseq_sd8787.c
-@@ -28,7 +28,6 @@ struct mmc_pwrseq_sd8787 {
- 	struct mmc_pwrseq pwrseq;
- 	struct gpio_desc *reset_gpio;
- 	struct gpio_desc *pwrdn_gpio;
--	u32 reset_pwrdwn_delay_ms;
- };
+diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
+index e97232b125eb..8a5d6d63b06c 100644
+--- a/kernel/module/decompress.c
++++ b/kernel/module/decompress.c
+@@ -257,7 +257,7 @@ static ssize_t module_zstd_decompress(struct load_info *info,
+ 	do {
+ 		struct page *page = module_get_next_page(info);
  
- #define to_pwrseq_sd8787(p) container_of(p, struct mmc_pwrseq_sd8787, pwrseq)
-@@ -39,7 +38,7 @@ static void mmc_pwrseq_sd8787_pre_power_
- 
- 	gpiod_set_value_cansleep(pwrseq->reset_gpio, 1);
- 
--	msleep(pwrseq->reset_pwrdwn_delay_ms);
-+	msleep(300);
- 	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 1);
- }
- 
-@@ -51,17 +50,37 @@ static void mmc_pwrseq_sd8787_power_off(
- 	gpiod_set_value_cansleep(pwrseq->reset_gpio, 0);
- }
- 
-+static void mmc_pwrseq_wilc1000_pre_power_on(struct mmc_host *host)
-+{
-+	struct mmc_pwrseq_sd8787 *pwrseq = to_pwrseq_sd8787(host->pwrseq);
-+
-+	/* The pwrdn_gpio is really CHIP_EN, reset_gpio is RESETN */
-+	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 1);
-+	msleep(5);
-+	gpiod_set_value_cansleep(pwrseq->reset_gpio, 1);
-+}
-+
-+static void mmc_pwrseq_wilc1000_power_off(struct mmc_host *host)
-+{
-+	struct mmc_pwrseq_sd8787 *pwrseq = to_pwrseq_sd8787(host->pwrseq);
-+
-+	gpiod_set_value_cansleep(pwrseq->reset_gpio, 0);
-+	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 0);
-+}
-+
- static const struct mmc_pwrseq_ops mmc_pwrseq_sd8787_ops = {
- 	.pre_power_on = mmc_pwrseq_sd8787_pre_power_on,
- 	.power_off = mmc_pwrseq_sd8787_power_off,
- };
- 
--static const u32 sd8787_delay_ms = 300;
--static const u32 wilc1000_delay_ms = 5;
-+static const struct mmc_pwrseq_ops mmc_pwrseq_wilc1000_ops = {
-+	.pre_power_on = mmc_pwrseq_wilc1000_pre_power_on,
-+	.power_off = mmc_pwrseq_wilc1000_power_off,
-+};
- 
- static const struct of_device_id mmc_pwrseq_sd8787_of_match[] = {
--	{ .compatible = "mmc-pwrseq-sd8787", .data = &sd8787_delay_ms },
--	{ .compatible = "mmc-pwrseq-wilc1000", .data = &wilc1000_delay_ms },
-+	{ .compatible = "mmc-pwrseq-sd8787", .data = &mmc_pwrseq_sd8787_ops },
-+	{ .compatible = "mmc-pwrseq-wilc1000", .data = &mmc_pwrseq_wilc1000_ops },
- 	{/* sentinel */},
- };
- MODULE_DEVICE_TABLE(of, mmc_pwrseq_sd8787_of_match);
-@@ -77,7 +96,6 @@ static int mmc_pwrseq_sd8787_probe(struc
- 		return -ENOMEM;
- 
- 	match = of_match_node(mmc_pwrseq_sd8787_of_match, pdev->dev.of_node);
--	pwrseq->reset_pwrdwn_delay_ms = *(u32 *)match->data;
- 
- 	pwrseq->pwrdn_gpio = devm_gpiod_get(dev, "powerdown", GPIOD_OUT_LOW);
- 	if (IS_ERR(pwrseq->pwrdn_gpio))
-@@ -88,7 +106,7 @@ static int mmc_pwrseq_sd8787_probe(struc
- 		return PTR_ERR(pwrseq->reset_gpio);
- 
- 	pwrseq->pwrseq.dev = dev;
--	pwrseq->pwrseq.ops = &mmc_pwrseq_sd8787_ops;
-+	pwrseq->pwrseq.ops = match->data;
- 	pwrseq->pwrseq.owner = THIS_MODULE;
- 	platform_set_drvdata(pdev, pwrseq);
- 
+-		if (!IS_ERR(page)) {
++		if (IS_ERR(page)) {
+ 			retval = PTR_ERR(page);
+ 			goto out;
+ 		}
+-- 
+2.41.0
+
 
 
