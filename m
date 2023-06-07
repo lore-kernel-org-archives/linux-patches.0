@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C1B3AE43
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:24:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0EEC433D2;
-	Wed,  7 Jun 2023 20:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B0B3AE67
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:24:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB20C433AC;
+	Wed,  7 Jun 2023 20:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169447;
-	bh=GIXREgkfziR8JlkUqeCsQGjKmsfgsGUdSeZ4bs8COCU=;
+	s=korg; t=1686169449;
+	bh=SU/IelELF/tq2UxeJxBeDyutgGZsjKf//gwkzUY0geM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gl/p9/Jk2MwVaXeLcJsKZxstOjJTh5WkS+/84HkmEGnLh+PDtUq1LFhtu0/3aj2U1
-	 Mr910ggjZJs2EiAq9RuIe+gLXd8zh4aYsMI+H8259sFQWkh1pEruFabmXrAsVK2iop
-	 ttgdySNiQmBi00W/oFCJOURmfB1bpCy3CSGYpCsE=
+	b=J65+zTNrj9AUJyHz+1VrmiPWesSeA2Cn+yAvoubhlyDSWvDmqIfRgOhurLWdBHgRW
+	 KaTsCmcqx6/YiFFH+fCyaKhsEvxLhVSAArwFO9YY5liF+jJd91m9EP+4F/UC+s405N
+	 YTDzVJYphHbQ1Yb+H46ZLYFU4TXrZH043qswNqaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	fuyuanli <fuyuanli@didiglobal.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chong Li <chongli2@amd.com>,
+	JingWen.Chen2@amd.com,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 067/286] tcp: fix mishandling when the sack compression is deferred.
-Date: Wed,  7 Jun 2023 22:12:46 +0200
-Message-ID: <20230607200925.263146294@linuxfoundation.org>
+Subject: [PATCH 6.3 085/286] drm/amdgpu: release gpu full access after "amdgpu_device_ip_late_init"
+Date: Wed,  7 Jun 2023 22:13:04 +0200
+Message-ID: <20230607200925.847059944@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -37,97 +36,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: fuyuanli <fuyuanli@didiglobal.com>
+From: Chong Li <chongli2@amd.com>
 
-[ Upstream commit 30c6f0bf9579debce27e45fac34fdc97e46acacc ]
+[ Upstream commit 38eecbe086a4e52f54b2bbda8feba65d44addbef ]
 
-In this patch, we mainly try to handle sending a compressed ack
-correctly if it's deferred.
+[WHY]
+ Function "amdgpu_irq_update()" called by "amdgpu_device_ip_late_init()" is an atomic context.
+ We shouldn't access registers through KIQ since "msleep()" may be called in "amdgpu_kiq_rreg()".
 
-Here are more details in the old logic:
-When sack compression is triggered in the tcp_compressed_ack_kick(),
-if the sock is owned by user, it will set TCP_DELACK_TIMER_DEFERRED
-and then defer to the release cb phrase. Later once user releases
-the sock, tcp_delack_timer_handler() should send a ack as expected,
-which, however, cannot happen due to lack of ICSK_ACK_TIMER flag.
-Therefore, the receiver would not sent an ack until the sender's
-retransmission timeout. It definitely increases unnecessary latency.
+[HOW]
+ Move function "amdgpu_virt_release_full_gpu()" after function "amdgpu_device_ip_late_init()",
+ to ensure that registers be accessed through RLCG instead of KIQ.
 
-Fixes: 5d9f4262b7ea ("tcp: add SACK compression")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: fuyuanli <fuyuanli@didiglobal.com>
-Signed-off-by: Jason Xing <kerneljasonxing@gmail.com>
-Link: https://lore.kernel.org/netdev/20230529113804.GA20300@didi-ThinkCentre-M920t-N000/
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230531080150.GA20424@didi-ThinkCentre-M920t-N000
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Call Trace:
+  <TASK>
+  show_stack+0x52/0x69
+  dump_stack_lvl+0x49/0x6d
+  dump_stack+0x10/0x18
+  __schedule_bug.cold+0x4f/0x6b
+  __schedule+0x473/0x5d0
+  ? __wake_up_klogd.part.0+0x40/0x70
+  ? vprintk_emit+0xbe/0x1f0
+  schedule+0x68/0x110
+  schedule_timeout+0x87/0x160
+  ? timer_migration_handler+0xa0/0xa0
+  msleep+0x2d/0x50
+  amdgpu_kiq_rreg+0x18d/0x1f0 [amdgpu]
+  amdgpu_device_rreg.part.0+0x59/0xd0 [amdgpu]
+  amdgpu_device_rreg+0x3a/0x50 [amdgpu]
+  amdgpu_sriov_rreg+0x3c/0xb0 [amdgpu]
+  gfx_v10_0_set_gfx_eop_interrupt_state.constprop.0+0x16c/0x190 [amdgpu]
+  gfx_v10_0_set_eop_interrupt_state+0xa5/0xb0 [amdgpu]
+  amdgpu_irq_update+0x53/0x80 [amdgpu]
+  amdgpu_irq_get+0x7c/0xb0 [amdgpu]
+  amdgpu_fence_driver_hw_init+0x58/0x90 [amdgpu]
+  amdgpu_device_init.cold+0x16b7/0x2022 [amdgpu]
+
+Signed-off-by: Chong Li <chongli2@amd.com>
+Reviewed-by: JingWen.Chen2@amd.com
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h    |  1 +
- net/ipv4/tcp_input.c |  2 +-
- net/ipv4/tcp_timer.c | 16 +++++++++++++---
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 32 ++++++++++++----------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 76bf0a11bdc77..99c74fc300839 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -632,6 +632,7 @@ void tcp_reset(struct sock *sk, struct sk_buff *skb);
- void tcp_skb_mark_lost_uncond_verify(struct tcp_sock *tp, struct sk_buff *skb);
- void tcp_fin(struct sock *sk);
- void tcp_check_space(struct sock *sk);
-+void tcp_sack_compress_send_ack(struct sock *sk);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index aa46726dfdb01..464f0abc855e6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -2523,8 +2523,6 @@ static int amdgpu_device_ip_init(struct amdgpu_device *adev)
+ 	amdgpu_fru_get_product_info(adev);
  
- /* tcp_timer.c */
- void tcp_init_xmit_timers(struct sock *);
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 10776c54ff784..dee174c40e874 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4530,7 +4530,7 @@ static void tcp_sack_maybe_coalesce(struct tcp_sock *tp)
- 	}
+ init_failed:
+-	if (amdgpu_sriov_vf(adev))
+-		amdgpu_virt_release_full_gpu(adev, true);
+ 
+ 	return r;
  }
+@@ -3841,18 +3839,6 @@ int amdgpu_device_init(struct amdgpu_device *adev,
  
--static void tcp_sack_compress_send_ack(struct sock *sk)
-+void tcp_sack_compress_send_ack(struct sock *sk)
- {
- 	struct tcp_sock *tp = tcp_sk(sk);
- 
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index cb79127f45c34..0b5d0a2867a8c 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -290,9 +290,19 @@ static int tcp_write_timeout(struct sock *sk)
- void tcp_delack_timer_handler(struct sock *sk)
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
-+	struct tcp_sock *tp = tcp_sk(sk);
- 
--	if (((1 << sk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)) ||
--	    !(icsk->icsk_ack.pending & ICSK_ACK_TIMER))
-+	if ((1 << sk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN))
-+		return;
-+
-+	/* Handling the sack compression case */
-+	if (tp->compressed_ack) {
-+		tcp_mstamp_refresh(tp);
-+		tcp_sack_compress_send_ack(sk);
-+		return;
-+	}
-+
-+	if (!(icsk->icsk_ack.pending & ICSK_ACK_TIMER))
- 		return;
- 
- 	if (time_after(icsk->icsk_ack.timeout, jiffies)) {
-@@ -312,7 +322,7 @@ void tcp_delack_timer_handler(struct sock *sk)
- 			inet_csk_exit_pingpong_mode(sk);
- 			icsk->icsk_ack.ato      = TCP_ATO_MIN;
- 		}
--		tcp_mstamp_refresh(tcp_sk(sk));
-+		tcp_mstamp_refresh(tp);
- 		tcp_send_ack(sk);
- 		__NET_INC_STATS(sock_net(sk), LINUX_MIB_DELAYEDACKS);
+ 	r = amdgpu_device_ip_init(adev);
+ 	if (r) {
+-		/* failed in exclusive mode due to timeout */
+-		if (amdgpu_sriov_vf(adev) &&
+-		    !amdgpu_sriov_runtime(adev) &&
+-		    amdgpu_virt_mmio_blocked(adev) &&
+-		    !amdgpu_virt_wait_reset(adev)) {
+-			dev_err(adev->dev, "VF exclusive mode timeout\n");
+-			/* Don't send request since VF is inactive. */
+-			adev->virt.caps &= ~AMDGPU_SRIOV_CAPS_RUNTIME;
+-			adev->virt.ops = NULL;
+-			r = -EAGAIN;
+-			goto release_ras_con;
+-		}
+ 		dev_err(adev->dev, "amdgpu_device_ip_init failed\n");
+ 		amdgpu_vf_error_put(adev, AMDGIM_ERROR_VF_AMDGPU_INIT_FAIL, 0, 0);
+ 		goto release_ras_con;
+@@ -3924,8 +3910,10 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 				   msecs_to_jiffies(AMDGPU_RESUME_MS));
  	}
+ 
+-	if (amdgpu_sriov_vf(adev))
++	if (amdgpu_sriov_vf(adev)) {
++		amdgpu_virt_release_full_gpu(adev, true);
+ 		flush_delayed_work(&adev->delayed_init_work);
++	}
+ 
+ 	r = sysfs_create_files(&adev->dev->kobj, amdgpu_dev_attributes);
+ 	if (r)
+@@ -3965,6 +3953,20 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 	return 0;
+ 
+ release_ras_con:
++	if (amdgpu_sriov_vf(adev))
++		amdgpu_virt_release_full_gpu(adev, true);
++
++	/* failed in exclusive mode due to timeout */
++	if (amdgpu_sriov_vf(adev) &&
++		!amdgpu_sriov_runtime(adev) &&
++		amdgpu_virt_mmio_blocked(adev) &&
++		!amdgpu_virt_wait_reset(adev)) {
++		dev_err(adev->dev, "VF exclusive mode timeout\n");
++		/* Don't send request since VF is inactive. */
++		adev->virt.caps &= ~AMDGPU_SRIOV_CAPS_RUNTIME;
++		adev->virt.ops = NULL;
++		r = -EAGAIN;
++	}
+ 	amdgpu_release_ras_context(adev);
+ 
+ failed:
 -- 
 2.39.2
 
