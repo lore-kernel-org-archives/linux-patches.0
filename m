@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BBE3922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:55:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED3BC433D2;
-	Wed,  7 Jun 2023 20:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089943922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:55:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9FDC433D2;
+	Wed,  7 Jun 2023 20:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171301;
-	bh=TioVpWTIMZ3lovXqix+AuORzxm9tsqxRhU0kzNkH7KY=;
+	s=korg; t=1686171303;
+	bh=mn6yOpLnmVB/8eVl4VbTg1sHCzJnF0mm0n/P58yMxF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPIrGckLHw5WDak8JYJWZT/4tPwiDNNhPagzSe93BbEc2lHWImVtrDTb4Jt8cyIW5
-	 3GV+9wQkZscR6VRcd9ohvDU+tLKncUZxFK3iy6xLMNLXGQELSxd2KD0jUI4sXV4qUe
-	 qbZsRMYqPrOqIJz7OmcjPNAUzsl0QANCDBoib/D4=
+	b=G3phDXkR8voeZd6wMY30Q2k7bOPG94E3k3kbuIMezDkUfs3RyzNT0zEMigMLdsVkR
+	 ADJIqRFZYUqOv2T8oib1Zd9mmUfJknDpQaRwgDyQzuyozLWldpjHS1GNFs6gdrCDs+
+	 JQLHmTA68FMbLB45qJKgI2oeP8oaezzkcqothids=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 65/99] iio: dac: mcp4725: Fix i2c_master_send() return value handling
-Date: Wed,  7 Jun 2023 22:16:57 +0200
-Message-ID: <20230607200902.275293833@linuxfoundation.org>
+Subject: [PATCH 5.4 66/99] iio: dac: build ad5758 driver when AD5758 is selected
+Date: Wed,  7 Jun 2023 22:16:58 +0200
+Message-ID: <20230607200902.305919284@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -36,69 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-commit 09d3bec7009186bdba77039df01e5834788b3f95 upstream.
+commit a146eccb68be161ae9eab5f3f68bb0ed7c0fbaa8 upstream.
 
-The i2c_master_send() returns number of sent bytes on success,
-or negative on error. The suspend/resume callbacks expect zero
-on success and non-zero on error. Adapt the return value of the
-i2c_master_send() to the expectation of the suspend and resume
-callbacks, including proper validation of the return value.
+Commit 28d1a7ac2a0d ("iio: dac: Add AD5758 support") adds the config AD5758
+and the corresponding driver ad5758.c. In the Makefile, the ad5758 driver
+is however included when AD5755 is selected, not when AD5758 is selected.
 
-Fixes: cf35ad61aca2 ("iio: add mcp4725 I2C DAC driver")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230511004330.206942-1-marex@denx.de
+Probably, this was simply a mistake that happened by copy-and-paste and
+forgetting to adjust the actual line. Surprisingly, no one has ever noticed
+that this driver is actually only included when AD5755 is selected and that
+the config AD5758 has actually no effect on the build.
+
+Fixes: 28d1a7ac2a0d ("iio: dac: Add AD5758 support")
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Link: https://lore.kernel.org/r/20230508040208.12033-1-lukas.bulwahn@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/mcp4725.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/iio/dac/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/dac/mcp4725.c
-+++ b/drivers/iio/dac/mcp4725.c
-@@ -47,12 +47,18 @@ static int __maybe_unused mcp4725_suspen
- 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
- 		to_i2c_client(dev)));
- 	u8 outbuf[2];
-+	int ret;
- 
- 	outbuf[0] = (data->powerdown_mode + 1) << 4;
- 	outbuf[1] = 0;
- 	data->powerdown = true;
- 
--	return i2c_master_send(data->client, outbuf, 2);
-+	ret = i2c_master_send(data->client, outbuf, 2);
-+	if (ret < 0)
-+		return ret;
-+	else if (ret != 2)
-+		return -EIO;
-+	return 0;
- }
- 
- static int __maybe_unused mcp4725_resume(struct device *dev)
-@@ -60,13 +66,19 @@ static int __maybe_unused mcp4725_resume
- 	struct mcp4725_data *data = iio_priv(i2c_get_clientdata(
- 		to_i2c_client(dev)));
- 	u8 outbuf[2];
-+	int ret;
- 
- 	/* restore previous DAC value */
- 	outbuf[0] = (data->dac_value >> 8) & 0xf;
- 	outbuf[1] = data->dac_value & 0xff;
- 	data->powerdown = false;
- 
--	return i2c_master_send(data->client, outbuf, 2);
-+	ret = i2c_master_send(data->client, outbuf, 2);
-+	if (ret < 0)
-+		return ret;
-+	else if (ret != 2)
-+		return -EIO;
-+	return 0;
- }
- static SIMPLE_DEV_PM_OPS(mcp4725_pm_ops, mcp4725_suspend, mcp4725_resume);
- 
+--- a/drivers/iio/dac/Makefile
++++ b/drivers/iio/dac/Makefile
+@@ -16,7 +16,7 @@ obj-$(CONFIG_AD5592R_BASE) += ad5592r-ba
+ obj-$(CONFIG_AD5592R) += ad5592r.o
+ obj-$(CONFIG_AD5593R) += ad5593r.o
+ obj-$(CONFIG_AD5755) += ad5755.o
+-obj-$(CONFIG_AD5755) += ad5758.o
++obj-$(CONFIG_AD5758) += ad5758.o
+ obj-$(CONFIG_AD5761) += ad5761.o
+ obj-$(CONFIG_AD5764) += ad5764.o
+ obj-$(CONFIG_AD5791) += ad5791.o
 
 
