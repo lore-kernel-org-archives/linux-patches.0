@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676A638CD4
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765D1C433D2;
-	Wed,  7 Jun 2023 20:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0D03922B
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:53:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1274CC433D2;
+	Wed,  7 Jun 2023 20:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171200;
-	bh=yKGcdrssA11YUCE5AUIKpueGETZlG7QwlPbKBiFbRT4=;
+	s=korg; t=1686171203;
+	bh=ujIK6V72KN1rQCcV57pQH8yqh4iKj6O7zao9BFn6Ig0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2yAoL7XHEa7X6ySuReQfSz+xPTqVYPiPgPSSmNxkB3XS6+mlsi1KeMH7TstNMKMr
-	 T9C6MbPfYQvKEmiy5rEDi3zhwrHQE6Jc9jfD13ukKo6UAl2GHgnry0+eQJ2JalRIzT
-	 ixBsIKcUx93RgHXRScSynzexk8cM9kLhEed/o/wc=
+	b=Zd6Mi39G3XDgSNV4TjDDCVCfGjdeO35nlHw/AjHGD7Sy+mFq7nnOps2EE5rpwXPLw
+	 e7hWg98Od341yvDcqWqqL+iISslQOGIHQiOTPPPDsdyyLSt83jwOm1PD2YGSIARpbX
+	 i3KN/k/XiOxrB63bAb4/kV/BqTeMs+UX7kwtIXXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <jth@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sudheesh Mavila <sudheesh.mavila@amd.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 28/99] watchdog: menz069_wdt: fix watchdog initialisation
-Date: Wed,  7 Jun 2023 22:16:20 +0200
-Message-ID: <20230607200901.141275341@linuxfoundation.org>
+Subject: [PATCH 5.4 11/99] amd-xgbe: fix the false linkup in xgbe_phy_status
+Date: Wed,  7 Jun 2023 22:16:03 +0200
+Message-ID: <20230607200900.596089075@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.195572674@linuxfoundation.org>
 References: <20230607200900.195572674@linuxfoundation.org>
@@ -36,69 +38,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Thumshirn <jth@kernel.org>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 87b22656ca6a896d0378e9e60ffccb0c82f48b08 ]
+[ Upstream commit dc362e20cd6ab7a93d1b09669730c406f0910c35 ]
 
-Doing a 'cat /dev/watchdog0' with menz069_wdt as watchdog0 will result in
-a NULL pointer dereference.
+In the event of a change in XGBE mode, the current auto-negotiation
+needs to be reset and the AN cycle needs to be re-triggerred. However,
+the current code ignores the return value of xgbe_set_mode(), leading to
+false information as the link is declared without checking the status
+register.
 
-This happens because we're passing the wrong pointer to
-watchdog_register_device(). Fix this by getting rid of the static
-watchdog_device structure and use the one embedded into the driver's
-per-instance private data.
+Fix this by propagating the mode switch status information to
+xgbe_phy_status().
 
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230418172531.177349-2-jth@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: e57f7a3feaef ("amd-xgbe: Prepare for working with more than one type of phy")
+Co-developed-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
+Signed-off-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/menz69_wdt.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/menz69_wdt.c b/drivers/watchdog/menz69_wdt.c
-index ed18238c54074..96a25d18ab643 100644
---- a/drivers/watchdog/menz69_wdt.c
-+++ b/drivers/watchdog/menz69_wdt.c
-@@ -98,14 +98,6 @@ static const struct watchdog_ops men_z069_ops = {
- 	.set_timeout = men_z069_wdt_set_timeout,
- };
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index 7840eb4cdb8da..d291976d8b761 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -1312,7 +1312,7 @@ static enum xgbe_mode xgbe_phy_status_aneg(struct xgbe_prv_data *pdata)
+ 	return pdata->phy_if.phy_impl.an_outcome(pdata);
+ }
  
--static struct watchdog_device men_z069_wdt = {
--	.info = &men_z069_info,
--	.ops = &men_z069_ops,
--	.timeout = MEN_Z069_DEFAULT_TIMEOUT,
--	.min_timeout = 1,
--	.max_timeout = MEN_Z069_WDT_COUNTER_MAX / MEN_Z069_TIMER_FREQ,
--};
--
- static int men_z069_probe(struct mcb_device *dev,
- 			  const struct mcb_device_id *id)
+-static void xgbe_phy_status_result(struct xgbe_prv_data *pdata)
++static bool xgbe_phy_status_result(struct xgbe_prv_data *pdata)
  {
-@@ -125,15 +117,19 @@ static int men_z069_probe(struct mcb_device *dev,
- 		goto release_mem;
+ 	struct ethtool_link_ksettings *lks = &pdata->phy.lks;
+ 	enum xgbe_mode mode;
+@@ -1347,8 +1347,13 @@ static void xgbe_phy_status_result(struct xgbe_prv_data *pdata)
  
- 	drv->mem = mem;
-+	drv->wdt.info = &men_z069_info;
-+	drv->wdt.ops = &men_z069_ops;
-+	drv->wdt.timeout = MEN_Z069_DEFAULT_TIMEOUT;
-+	drv->wdt.min_timeout = 1;
-+	drv->wdt.max_timeout = MEN_Z069_WDT_COUNTER_MAX / MEN_Z069_TIMER_FREQ;
+ 	pdata->phy.duplex = DUPLEX_FULL;
  
--	drv->wdt = men_z069_wdt;
- 	watchdog_init_timeout(&drv->wdt, 0, &dev->dev);
- 	watchdog_set_nowayout(&drv->wdt, nowayout);
- 	watchdog_set_drvdata(&drv->wdt, drv);
- 	drv->wdt.parent = &dev->dev;
- 	mcb_set_drvdata(dev, drv);
+-	if (xgbe_set_mode(pdata, mode) && pdata->an_again)
++	if (!xgbe_set_mode(pdata, mode))
++		return false;
++
++	if (pdata->an_again)
+ 		xgbe_phy_reconfig_aneg(pdata);
++
++	return true;
+ }
  
--	return watchdog_register_device(&men_z069_wdt);
-+	return watchdog_register_device(&drv->wdt);
+ static void xgbe_phy_status(struct xgbe_prv_data *pdata)
+@@ -1378,7 +1383,8 @@ static void xgbe_phy_status(struct xgbe_prv_data *pdata)
+ 			return;
+ 		}
  
- release_mem:
- 	mcb_release_mem(mem);
+-		xgbe_phy_status_result(pdata);
++		if (xgbe_phy_status_result(pdata))
++			return;
+ 
+ 		if (test_bit(XGBE_LINK_INIT, &pdata->dev_state))
+ 			clear_bit(XGBE_LINK_INIT, &pdata->dev_state);
 -- 
 2.39.2
 
