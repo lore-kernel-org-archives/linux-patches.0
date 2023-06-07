@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB893922F
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B921C4339B;
-	Wed,  7 Jun 2023 20:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B7E3922F
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:58:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479C3C433D2;
+	Wed,  7 Jun 2023 20:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686171503;
-	bh=lpl61S+v3ZPoqhG86DBxo7gPGeIdGqeATuWVOyQwG64=;
+	s=korg; t=1686171505;
+	bh=wXSSdQyJmNc1+zAqIpCgTXO4z+1cRBkB4VzOjiIEOew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BlSlDX0YyKb6YianEWOvnwvgnFd43gIhI4U6TGq89mhSdLu55SO0fvN3DloothM6a
-	 /1JbQUMy49tCXKLmvdxOkMqGkcSG9S1zU2C9NnvcRg3rj3kc3p58WxVOLJV2mZlyQ9
-	 ouJet6O3uim9fp6JGq6+v9l/Xjh3MrRbo34RjQbo=
+	b=zEPR03uBRfg4alXcJfy1iGyz/b3If4SHvo+rog2BjCgkU39MWSGSurkkUMzAUDP3a
+	 zyPt12KNc7Ikx0vmwb5ATnqS6PDO2fWp1TZCnkCUS47uyR+YSZcWvYMwa5LmAI4s9A
+	 jVTy61a99LPf1M6NdKPBekdU0QGy3EzVJcgekz5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jasontao <jasontao@glenfly.com>,
-	Reaper Li <reaperlioc@glenfly.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Simon Kapadia <szymon@kapadia.pl>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/159] ALSA: hda: Glenfly: add HD Audio PCI IDs and HDMI Codec Vendor IDs.
-Date: Wed,  7 Jun 2023 22:15:45 +0200
-Message-ID: <20230607200905.051578367@linuxfoundation.org>
+Subject: [PATCH 5.15 016/159] netrom: fix info-leak in nr_write_internal()
+Date: Wed,  7 Jun 2023 22:15:19 +0200
+Message-ID: <20230607200904.204604215@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
 References: <20230607200903.652580797@linuxfoundation.org>
@@ -36,143 +37,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: jasontao <jasontao@glenfly.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c51e431052e2eacfb23fbf6b39bc6c8770d9827a ]
+[ Upstream commit 31642e7089df8fd3f54ca7843f7ee2952978cad1 ]
 
-Add a set of HD Audio PCI IDS, and the HDMI codec vendor IDs for
-Glenfly Gpus.
+Simon Kapadia reported the following issue:
 
-- In default_bdl_pos_adj, set bdl to 128 as Glenfly Gpus have hardware
-limitation, need to increase hdac interrupt interval.
-- In azx_first_init, enable polling mode for Glenfly Gpu. When the codec
-complete the command, it sends interrupt and writes response entries to
-memory, howerver, the write requests sometimes are not actually
-synchronized to memory when driver handle hdac interrupt on Glenfly Gpus.
-If the RIRB status is not updated in the interrupt handler,
-azx_rirb_get_response keeps trying to recevie a response from rirb until
-1s timeout. Enabling polling mode for Glenfly Gpu can fix the issue.
-- In patch_gf_hdmi, set Glenlfy Gpu Codec's no_sticky_stream as it need
-driver to do actual clean-ups for the linked codec when switch from one
-codec to another.
+<quote>
 
-Signed-off-by: jasontao <jasontao@glenfly.com>
-Signed-off-by: Reaper Li <reaperlioc@glenfly.com>
-Link: https://lore.kernel.org/r/20230426013059.4329-1-reaperlioc@glenfly.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The Online Amateur Radio Community (OARC) has recently been experimenting
+with building a nationwide packet network in the UK.
+As part of our experimentation, we have been testing out packet on 300bps HF,
+and playing with net/rom.  For HF packet at this baud rate you really need
+to make sure that your MTU is relatively low; AX.25 suggests a PACLEN of 60,
+and a net/rom PACLEN of 40 to go with that.
+However the Linux net/rom support didn't work with a low PACLEN;
+the mkiss module would truncate packets if you set the PACLEN below about 200 or so, e.g.:
+
+Apr 19 14:00:51 radio kernel: [12985.747310] mkiss: ax1: truncating oversized transmit packet!
+
+This didn't make any sense to me (if the packets are smaller why would they
+be truncated?) so I started investigating.
+I looked at the packets using ethereal, and found that many were just huge
+compared to what I would expect.
+A simple net/rom connection request packet had the request and then a bunch
+of what appeared to be random data following it:
+
+</quote>
+
+Simon provided a patch that I slightly revised:
+Not only we must not use skb_tailroom(), we also do
+not want to count NR_NETWORK_LEN twice.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-Developed-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Simon Kapadia <szymon@kapadia.pl>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Simon Kapadia <szymon@kapadia.pl>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230524141456.1045467-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c  | 21 +++++++++++++++++++++
- sound/pci/hda/patch_hdmi.c | 22 ++++++++++++++++++++++
- 2 files changed, 43 insertions(+)
+ net/netrom/nr_subr.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 5fce1ca8a393a..1379ac07df350 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -230,6 +230,7 @@ enum {
- 	AZX_DRIVER_ATI,
- 	AZX_DRIVER_ATIHDMI,
- 	AZX_DRIVER_ATIHDMI_NS,
-+	AZX_DRIVER_GFHDMI,
- 	AZX_DRIVER_VIA,
- 	AZX_DRIVER_SIS,
- 	AZX_DRIVER_ULI,
-@@ -352,6 +353,7 @@ static const char * const driver_short_names[] = {
- 	[AZX_DRIVER_ATI] = "HDA ATI SB",
- 	[AZX_DRIVER_ATIHDMI] = "HDA ATI HDMI",
- 	[AZX_DRIVER_ATIHDMI_NS] = "HDA ATI HDMI",
-+	[AZX_DRIVER_GFHDMI] = "HDA GF HDMI",
- 	[AZX_DRIVER_VIA] = "HDA VIA VT82xx",
- 	[AZX_DRIVER_SIS] = "HDA SIS966",
- 	[AZX_DRIVER_ULI] = "HDA ULI M5461",
-@@ -1742,6 +1744,12 @@ static int default_bdl_pos_adj(struct azx *chip)
+diff --git a/net/netrom/nr_subr.c b/net/netrom/nr_subr.c
+index 3f99b432ea707..e2d2af924cff4 100644
+--- a/net/netrom/nr_subr.c
++++ b/net/netrom/nr_subr.c
+@@ -123,7 +123,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	unsigned char  *dptr;
+ 	int len, timeout;
+ 
+-	len = NR_NETWORK_LEN + NR_TRANSPORT_LEN;
++	len = NR_TRANSPORT_LEN;
+ 
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
+@@ -141,7 +141,8 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 		return;
  	}
  
- 	switch (chip->driver_type) {
-+	/*
-+	 * increase the bdl size for Glenfly Gpus for hardware
-+	 * limitation on hdac interrupt interval
-+	 */
-+	case AZX_DRIVER_GFHDMI:
-+		return 128;
- 	case AZX_DRIVER_ICH:
- 	case AZX_DRIVER_PCH:
- 		return 1;
-@@ -1857,6 +1865,12 @@ static int azx_first_init(struct azx *chip)
- 		pci_write_config_dword(pci, PCI_BASE_ADDRESS_1, 0);
- 	}
- #endif
-+	/*
-+	 * Fix response write request not synced to memory when handle
-+	 * hdac interrupt on Glenfly Gpus
-+	 */
-+	if (chip->driver_type == AZX_DRIVER_GFHDMI)
-+		bus->polling_mode = 1;
+-	if ((skb = alloc_skb(len, GFP_ATOMIC)) == NULL)
++	skb = alloc_skb(NR_NETWORK_LEN + len, GFP_ATOMIC);
++	if (!skb)
+ 		return;
  
- 	err = pcim_iomap_regions(pci, 1 << 0, "ICH HD audio");
- 	if (err < 0)
-@@ -1957,6 +1971,7 @@ static int azx_first_init(struct azx *chip)
- 			chip->playback_streams = ATIHDMI_NUM_PLAYBACK;
- 			chip->capture_streams = ATIHDMI_NUM_CAPTURE;
- 			break;
-+		case AZX_DRIVER_GFHDMI:
- 		case AZX_DRIVER_GENERIC:
- 		default:
- 			chip->playback_streams = ICH6_NUM_PLAYBACK;
-@@ -2694,6 +2709,12 @@ static const struct pci_device_id azx_ids[] = {
- 	{ PCI_DEVICE(0x1002, 0xab38),
- 	  .driver_data = AZX_DRIVER_ATIHDMI_NS | AZX_DCAPS_PRESET_ATI_HDMI_NS |
- 	  AZX_DCAPS_PM_RUNTIME },
-+	/* GLENFLY */
-+	{ PCI_DEVICE(0x6766, PCI_ANY_ID),
-+	  .class = PCI_CLASS_MULTIMEDIA_HD_AUDIO << 8,
-+	  .class_mask = 0xffffff,
-+	  .driver_data = AZX_DRIVER_GFHDMI | AZX_DCAPS_POSFIX_LPIB |
-+	  AZX_DCAPS_NO_MSI | AZX_DCAPS_NO_64BIT },
- 	/* VIA VT8251/VT8237A */
- 	{ PCI_DEVICE(0x1106, 0x3288), .driver_data = AZX_DRIVER_VIA },
- 	/* VIA GFX VT7122/VX900 */
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index 8ed5a499af4bb..3cd3b5c49e45e 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -4298,6 +4298,22 @@ static int patch_via_hdmi(struct hda_codec *codec)
- 	return patch_simple_hdmi(codec, VIAHDMI_CVT_NID, VIAHDMI_PIN_NID);
- }
+ 	/*
+@@ -149,7 +150,7 @@ void nr_write_internal(struct sock *sk, int frametype)
+ 	 */
+ 	skb_reserve(skb, NR_NETWORK_LEN);
  
-+static int patch_gf_hdmi(struct hda_codec *codec)
-+{
-+	int err;
-+
-+	err = patch_generic_hdmi(codec);
-+	if (err)
-+		return err;
-+
-+	/*
-+	 * Glenfly GPUs have two codecs, stream switches from one codec to
-+	 * another, need to do actual clean-ups in codec_cleanup_stream
-+	 */
-+	codec->no_sticky_stream = 1;
-+	return 0;
-+}
-+
- /*
-  * patch entries
-  */
-@@ -4392,6 +4408,12 @@ HDA_CODEC_ENTRY(0x10de00a6, "GPU a6 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a7, "GPU a7 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de8001, "MCP73 HDMI",	patch_nvhdmi_2ch),
- HDA_CODEC_ENTRY(0x10de8067, "MCP67/68 HDMI",	patch_nvhdmi_2ch),
-+HDA_CODEC_ENTRY(0x67663d82, "Arise 82 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d83, "Arise 83 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d84, "Arise 84 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d85, "Arise 85 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d86, "Arise 86 HDMI/DP",	patch_gf_hdmi),
-+HDA_CODEC_ENTRY(0x67663d87, "Arise 87 HDMI/DP",	patch_gf_hdmi),
- HDA_CODEC_ENTRY(0x11069f80, "VX900 HDMI/DP",	patch_via_hdmi),
- HDA_CODEC_ENTRY(0x11069f81, "VX900 HDMI/DP",	patch_via_hdmi),
- HDA_CODEC_ENTRY(0x11069f84, "VX11 HDMI/DP",	patch_generic_hdmi),
+-	dptr = skb_put(skb, skb_tailroom(skb));
++	dptr = skb_put(skb, len);
+ 
+ 	switch (frametype & 0x0F) {
+ 	case NR_CONNREQ:
 -- 
 2.39.2
 
