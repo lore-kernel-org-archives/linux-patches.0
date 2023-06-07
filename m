@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8703434CC3
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B53C433EF;
-	Wed,  7 Jun 2023 20:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8121ACB2
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:40:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931C2C433D2;
+	Wed,  7 Jun 2023 20:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170404;
-	bh=cWB1dZy+1AbY9jcNQa0xPC8wJXDRMfc8M7uaWfwUlok=;
+	s=korg; t=1686170406;
+	bh=ZbJ7gCDK7c0EFsBKPIYtuF/eh5x1Ur5KVOkMgzp5ZNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldwgBmJOIeApoZ+zWH0PJ4pmmoi0TgzBexJ60in51kkjOClKK1/R4h8Ild8efuHFW
-	 38wpfZg/b+rC/z5Cfj9M198rgBsNi190F3NmOptkTph1dtk9rHnuFbjpuYzGfDOJnx
-	 zNTTH8hhUwfag4ZurUOiECwE+HkKsmay7y4Oq7wg=
+	b=awsgUVPzialZeW+nS64c6vO8dr+U0EkDoeaj5Sqjwr2sXWu14owr9/moQDbOnLAA4
+	 /O6vt/eF3Bok+KDCGBN5MoxciFGzMiy9crQwRnphARPDXBMG8OR7QloCZYktDn2TfJ
+	 /7uOiZuI7aLLk6c5UhrKwg5SsB5Z7zns1XXxzVd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Winkler <julian.winkler1@web.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/225] platform/x86: intel_scu_pcidrv: Add back PCI ID for Medfield
-Date: Wed,  7 Jun 2023 22:14:25 +0200
-Message-ID: <20230607200916.735659969@linuxfoundation.org>
+Subject: [PATCH 6.1 055/225] mptcp: avoid unneeded address copy
+Date: Wed,  7 Jun 2023 22:14:08 +0200
+Message-ID: <20230607200916.155816230@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,37 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Julian Winkler <julian.winkler1@web.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 4a9b6850c794e4394cad99e2b863d75f5bc8e92f ]
+[ Upstream commit 2bb9a37f0e194ed95c70603b0efc7898a5a0d9b4 ]
 
-This id was removed in commit b47018a778c1 ("platform/x86: intel_scu_ipc:
-Remove Lincroft support"), saying it is only used on Moorestown,
-but apparently the same id is also used on Medfield.
+In the syn_recv fallback path, the msk is unused. We can skip
+setting the socket address.
 
-Tested on the Medfield based Motorola RAZR i smartphone.
-
-Signed-off-by: Julian Winkler <julian.winkler1@web.de>
-Link: https://lore.kernel.org/r/20230416154932.6579-1-julian.winkler1@web.de
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 7e8b88ec35ee ("mptcp: consolidate passive msk socket initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel_scu_pcidrv.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/subflow.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel_scu_pcidrv.c b/drivers/platform/x86/intel_scu_pcidrv.c
-index 80abc708e4f2f..d904fad499aa5 100644
---- a/drivers/platform/x86/intel_scu_pcidrv.c
-+++ b/drivers/platform/x86/intel_scu_pcidrv.c
-@@ -34,6 +34,7 @@ static int intel_scu_pci_probe(struct pci_dev *pdev,
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index 67ddbf6f2e4ee..4995a6281ea16 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -759,8 +759,6 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 				goto dispose_child;
+ 			}
  
- static const struct pci_device_id pci_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0x080e) },
-+	{ PCI_VDEVICE(INTEL, 0x082a) },
- 	{ PCI_VDEVICE(INTEL, 0x08ea) },
- 	{ PCI_VDEVICE(INTEL, 0x0a94) },
- 	{ PCI_VDEVICE(INTEL, 0x11a0) },
+-			if (new_msk)
+-				mptcp_copy_inaddrs(new_msk, child);
+ 			mptcp_subflow_drop_ctx(child);
+ 			goto out;
+ 		}
 -- 
 2.39.2
 
