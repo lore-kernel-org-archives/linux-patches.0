@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323A910FC
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E589C433D2;
-	Wed,  7 Jun 2023 20:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD56F10FC
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:28:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E119C433D2;
+	Wed,  7 Jun 2023 20:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169719;
-	bh=CvlLElXcjYvRll3uPwyHPnhAE3elD3zjxI3Cf/MS8Aw=;
+	s=korg; t=1686169721;
+	bh=I5dI2m6v8X3HSe8O6A1jV4bxzjVtOYxcB4Ltr92prbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hsrz7dl5Ids9QNy1jnqWJCKJPbSldJK0tUVwD4ubnB4We89091Y7xpQqOoRcg7CyZ
-	 iL11mFoJYq9E6Xp+U1LTfbXdvtUAcNmRkW53Mcb4bHmJ1+QW/9GQtzlucmF1edJ+7i
-	 iDdl69QIucIiajL0dEZV8SQowAhiKYW7Bx20c3JU=
+	b=uxitamd8VKVVvywh4/qZb5mvdAh0lnvgcoMP56SpFFxXq8OJz0G9HFb6J4DdXZTCs
+	 Ubzz9aHIgdFPrqiL4udcCRA1unXa6CPrpRV0IKrTJUVwzZlBg6D3bp+9XznNyGnl8q
+	 fLFs0SAW6w5I8Bj+u6OjU/a5zxc7niQrngAAYbgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 187/286] media: uvcvideo: Dont expose unsupported formats to userspace
-Date: Wed,  7 Jun 2023 22:14:46 +0200
-Message-ID: <20230607200929.381197988@linuxfoundation.org>
+Subject: [PATCH 6.3 188/286] selftests/ftrace: Choose target function for filter test from samples
+Date: Wed,  7 Jun 2023 22:14:47 +0200
+Message-ID: <20230607200929.413807905@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -36,79 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 81f3affa19d6ab0c32aef46b053838219eef7e71 ]
+[ Upstream commit eb50d0f250e96ede9192d936d220cd97adc93b89 ]
 
-When the uvcvideo driver encounters a format descriptor with an unknown
-format GUID, it creates a corresponding struct uvc_format instance with
-the fcc field set to 0. Since commit 50459f103edf ("media: uvcvideo:
-Remove format descriptions"), the driver relies on the V4L2 core to
-provide the format description string, which the V4L2 core can't do
-without a valid 4CC. This triggers a WARN_ON.
+Since the event-filter-function.tc expects the 'exit_mmap()' directly
+calls 'kmem_cache_free()', this is vulnerable to code modifications.
 
-As a format with a zero 4CC can't be selected, it is unusable for
-applications. Ignore the format completely without creating a uvc_format
-instance, which fixes the warning.
+Choose the target function for the filter test from the sample
+event data so that it can keep test running correctly even if the caller
+function name will be changed.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217252
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2180107
+Link: https://lore.kernel.org/linux-trace-kernel/167919441260.1922645.18355804179347364057.stgit@mhiramat.roam.corp.google.com/
 
-Fixes: 50459f103edf ("media: uvcvideo: Remove format descriptions")
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Link: https://lore.kernel.org/all/CA+G9fYtF-XEKi9YNGgR=Kf==7iRb2FrmEC7qtwAeQbfyah-UhA@mail.gmail.com/
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Fixes: 7f09d639b8c4 ("tracing/selftests: Add test for event filtering on function name")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ .../test.d/filter/event-filter-function.tc    | 45 +++++++++++--------
+ 1 file changed, 27 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 7aefa76a42b31..d631ce4f9f7bb 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -251,14 +251,17 @@ static int uvc_parse_format(struct uvc_device *dev,
- 		/* Find the format descriptor from its GUID. */
- 		fmtdesc = uvc_format_by_guid(&buffer[5]);
+diff --git a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
+index e2ff3bf4df80f..2de7c61d1ae30 100644
+--- a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
++++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
+@@ -9,18 +9,33 @@ fail() { #msg
+     exit_fail
+ }
  
--		if (fmtdesc != NULL) {
--			format->fcc = fmtdesc->fcc;
--		} else {
-+		if (!fmtdesc) {
-+			/*
-+			 * Unknown video formats are not fatal errors, the
-+			 * caller will skip this descriptor.
-+			 */
- 			dev_info(&streaming->intf->dev,
- 				 "Unknown video format %pUl\n", &buffer[5]);
--			format->fcc = 0;
-+			return 0;
- 		}
+-echo "Test event filter function name"
++sample_events() {
++    echo > trace
++    echo 1 > events/kmem/kmem_cache_free/enable
++    echo 1 > tracing_on
++    ls > /dev/null
++    echo 0 > tracing_on
++    echo 0 > events/kmem/kmem_cache_free/enable
++}
++
+ echo 0 > tracing_on
+ echo 0 > events/enable
++
++echo "Get the most frequently calling function"
++sample_events
++
++target_func=`cut -d: -f3 trace | sed 's/call_site=\([^+]*\)+0x.*/\1/' | sort | uniq -c | sort | tail -n 1 | sed 's/^[ 0-9]*//'`
++if [ -z "$target_func" ]; then
++    exit_fail
++fi
+ echo > trace
+-echo 'call_site.function == exit_mmap' > events/kmem/kmem_cache_free/filter
+-echo 1 > events/kmem/kmem_cache_free/enable
+-echo 1 > tracing_on
+-ls > /dev/null
+-echo 0 > events/kmem/kmem_cache_free/enable
  
-+		format->fcc = fmtdesc->fcc;
- 		format->bpp = buffer[21];
+-hitcnt=`grep kmem_cache_free trace| grep exit_mmap | wc -l`
+-misscnt=`grep kmem_cache_free trace| grep -v exit_mmap | wc -l`
++echo "Test event filter function name"
++echo "call_site.function == $target_func" > events/kmem/kmem_cache_free/filter
++sample_events
++
++hitcnt=`grep kmem_cache_free trace| grep $target_func | wc -l`
++misscnt=`grep kmem_cache_free trace| grep -v $target_func | wc -l`
  
- 		/*
-@@ -675,7 +678,7 @@ static int uvc_parse_streaming(struct uvc_device *dev,
- 	interval = (u32 *)&frame[nframes];
+ if [ $hitcnt -eq 0 ]; then
+ 	exit_fail
+@@ -30,20 +45,14 @@ if [ $misscnt -gt 0 ]; then
+ 	exit_fail
+ fi
  
- 	streaming->format = format;
--	streaming->nformats = nformats;
-+	streaming->nformats = 0;
+-address=`grep ' exit_mmap$' /proc/kallsyms | cut -d' ' -f1`
++address=`grep " ${target_func}\$" /proc/kallsyms | cut -d' ' -f1`
  
- 	/* Parse the format descriptors. */
- 	while (buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE) {
-@@ -689,7 +692,10 @@ static int uvc_parse_streaming(struct uvc_device *dev,
- 				&interval, buffer, buflen);
- 			if (ret < 0)
- 				goto error;
-+			if (!ret)
-+				break;
+ echo "Test event filter function address"
+-echo 0 > tracing_on
+-echo 0 > events/enable
+-echo > trace
+ echo "call_site.function == 0x$address" > events/kmem/kmem_cache_free/filter
+-echo 1 > events/kmem/kmem_cache_free/enable
+-echo 1 > tracing_on
+-sleep 1
+-echo 0 > events/kmem/kmem_cache_free/enable
++sample_events
  
-+			streaming->nformats++;
- 			frame += format->nframes;
- 			format++;
+-hitcnt=`grep kmem_cache_free trace| grep exit_mmap | wc -l`
+-misscnt=`grep kmem_cache_free trace| grep -v exit_mmap | wc -l`
++hitcnt=`grep kmem_cache_free trace| grep $target_func | wc -l`
++misscnt=`grep kmem_cache_free trace| grep -v $target_func | wc -l`
  
+ if [ $hitcnt -eq 0 ]; then
+ 	exit_fail
 -- 
 2.39.2
 
