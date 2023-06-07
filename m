@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159B919535
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B47AC433D2;
-	Wed,  7 Jun 2023 20:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A180719535
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:39:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B06C433EF;
+	Wed,  7 Jun 2023 20:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170356;
-	bh=fus6kvoYf66Mlu0H8F9u+qdP27PGHhe707CwuCQQRYY=;
+	s=korg; t=1686170359;
+	bh=AkVgsui+DWeBxHipwYBGwMD3ggh3LnnlcYTMXt1bwLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/U7Gmz/6Zbu5RwBpyL5w7uICfweQp6cW8c8qsCxZejnhStTNzSPZtEMu7meJzDaO
-	 IHHdNC/bmbs6yyqSzCU0jMHAf54KTX552hzwmXSBXtsfgw1Ax0k5+SNJPaVcEhkdOE
-	 P8dbLVGDhiBCg9y/wWdLuSKtkwlL6kHhPqSkqE/Y=
+	b=pwPQOCX0cbvqSkaEwtjeiXHAbUIxzRl+aILoorsI+uHAxABT+SqcmDHiiP6miYS48
+	 7wQnfoxv5nKJM05+yJMPGnfBVnRWfXJS2WvxjRxvJpxFfuMHNDs8Xllu6atszzY4fd
+	 uo0hZ23tD3qRP2uw4qZ7tKGAm2ncCtJRn0mThpZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
+	Sudheesh Mavila <sudheesh.mavila@amd.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 052/225] rtnetlink: call validate_linkmsg in rtnl_create_link
-Date: Wed,  7 Jun 2023 22:14:05 +0200
-Message-ID: <20230607200916.062923753@linuxfoundation.org>
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 025/225] amd-xgbe: fix the false linkup in xgbe_phy_status
+Date: Wed,  7 Jun 2023 22:13:38 +0200
+Message-ID: <20230607200915.144531092@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -35,59 +38,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-commit b0ad3c179059089d809b477a1d445c1183a7b8fe upstream.
+[ Upstream commit dc362e20cd6ab7a93d1b09669730c406f0910c35 ]
 
-validate_linkmsg() was introduced by commit 1840bb13c22f5b ("[RTNL]:
-Validate hardware and broadcast address attribute for RTM_NEWLINK")
-to validate tb[IFLA_ADDRESS/BROADCAST] for existing links. The same
-check should also be done for newly created links.
+In the event of a change in XGBE mode, the current auto-negotiation
+needs to be reset and the AN cycle needs to be re-triggerred. However,
+the current code ignores the return value of xgbe_set_mode(), leading to
+false information as the link is declared without checking the status
+register.
 
-This patch adds validate_linkmsg() call in rtnl_create_link(), to
-avoid the invalid address set when creating some devices like:
+Fix this by propagating the mode switch status information to
+xgbe_phy_status().
 
-  # ip link add dummy0 type dummy
-  # ip link add link dummy0 name mac0 address 01:02 type macsec
-
-Fixes: 0e06877c6fdb ("[RTNETLINK]: rtnl_link: allow specifying initial device address")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Fixes: e57f7a3feaef ("amd-xgbe: Prepare for working with more than one type of phy")
+Co-developed-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
+Signed-off-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3212,6 +3212,7 @@ struct net_device *rtnl_create_link(stru
- 	struct net_device *dev;
- 	unsigned int num_tx_queues = 1;
- 	unsigned int num_rx_queues = 1;
-+	int err;
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index 43fdd111235a6..ca7372369b3e6 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -1312,7 +1312,7 @@ static enum xgbe_mode xgbe_phy_status_aneg(struct xgbe_prv_data *pdata)
+ 	return pdata->phy_if.phy_impl.an_outcome(pdata);
+ }
  
- 	if (tb[IFLA_NUM_TX_QUEUES])
- 		num_tx_queues = nla_get_u32(tb[IFLA_NUM_TX_QUEUES]);
-@@ -3247,13 +3248,18 @@ struct net_device *rtnl_create_link(stru
- 	if (!dev)
- 		return ERR_PTR(-ENOMEM);
+-static void xgbe_phy_status_result(struct xgbe_prv_data *pdata)
++static bool xgbe_phy_status_result(struct xgbe_prv_data *pdata)
+ {
+ 	struct ethtool_link_ksettings *lks = &pdata->phy.lks;
+ 	enum xgbe_mode mode;
+@@ -1347,8 +1347,13 @@ static void xgbe_phy_status_result(struct xgbe_prv_data *pdata)
  
-+	err = validate_linkmsg(dev, tb, extack);
-+	if (err < 0) {
-+		free_netdev(dev);
-+		return ERR_PTR(err);
-+	}
+ 	pdata->phy.duplex = DUPLEX_FULL;
+ 
+-	if (xgbe_set_mode(pdata, mode) && pdata->an_again)
++	if (!xgbe_set_mode(pdata, mode))
++		return false;
 +
- 	dev_net_set(dev, net);
- 	dev->rtnl_link_ops = ops;
- 	dev->rtnl_link_state = RTNL_LINK_INITIALIZING;
++	if (pdata->an_again)
+ 		xgbe_phy_reconfig_aneg(pdata);
++
++	return true;
+ }
  
- 	if (tb[IFLA_MTU]) {
- 		u32 mtu = nla_get_u32(tb[IFLA_MTU]);
--		int err;
+ static void xgbe_phy_status(struct xgbe_prv_data *pdata)
+@@ -1378,7 +1383,8 @@ static void xgbe_phy_status(struct xgbe_prv_data *pdata)
+ 			return;
+ 		}
  
- 		err = dev_validate_mtu(dev, mtu, extack);
- 		if (err) {
+-		xgbe_phy_status_result(pdata);
++		if (xgbe_phy_status_result(pdata))
++			return;
+ 
+ 		if (test_bit(XGBE_LINK_INIT, &pdata->dev_state))
+ 			clear_bit(XGBE_LINK_INIT, &pdata->dev_state);
+-- 
+2.39.2
+
 
 
