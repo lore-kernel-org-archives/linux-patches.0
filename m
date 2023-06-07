@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7D83AE6D
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0816C433D2;
-	Wed,  7 Jun 2023 20:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6659C3AE70
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:30:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91842C433EF;
+	Wed,  7 Jun 2023 20:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169826;
-	bh=FYJR6qWSJWlnYbwYLYW3Kfbp2BqXiYtyYtr+SGGnWy4=;
+	s=korg; t=1686169828;
+	bh=6VU2zzIwr+RE9Mo8aCwBp2NGZ4D6lf2FlnQQ66bN+3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2BWUBTgkdZMqi1zqZgCCGT/GAO4uUsyiFJlAHawH3SbXBf2Ya0jHZaR5DrUhQIJ6M
-	 0iGE1/yI8eg8vT8xr5XYYt8Va9/zG7MdOWJFaEMzCpAedSRq0FZ5OyeZwzVFfwTcYK
-	 f/YsPcTGq5DfZJyljKwpEaxNhFGxcWbhBpJVrCCA=
+	b=MbK7EpQdkRHzLcsZM3p2kBbb9uSu4mdGFW0wrpBJ3RdSrxHSJ2+cTwxHFtsOJO50c
+	 ZgIiGu2ul7eIReywhaYHNDivovOQaBW6fetbhoZFl9Wr7fM7XG7BrsAOFD3T5ePVJ4
+	 GKQYg5jP3/s4eZ6c3J/XmbIFuDpOeuVZUccFc9so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.3 199/286] iio: light: vcnl4035: fixed chip ID check
-Date: Wed,  7 Jun 2023 22:14:58 +0200
-Message-ID: <20230607200929.757649660@linuxfoundation.org>
+Subject: [PATCH 6.3 200/286] iio: accel: kx022a fix irq getting
+Date: Wed,  7 Jun 2023 22:14:59 +0200
+Message-ID: <20230607200929.788653588@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -35,57 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-commit a551c26e8e568fad42120843521529241b9bceec upstream.
+commit 56cd3d1c5c5b073a1a444eafdcf97d4d866d351a upstream.
 
-VCNL4035 register(0xE) ID_L and ID_M define as:
+The fwnode_irq_get_byname() was returning 0 at device-tree mapping
+error. If this occurred, the KX022A driver did abort the probe but
+errorneously directly returned the return value from
+fwnode_irq_get_byname() from probe. In case of a device-tree mapping
+error this indicated success.
 
- ID_L: 0x80
- ID_H: 7:6 (0:0)
-       5:4 (0:0) slave address = 0x60 (7-bit)
-           (0:1) slave address = 0x51 (7-bit)
-           (1:0) slave address = 0x40 (7-bit)
-           (1:0) slave address = 0x41 (7-bit)
-       3:0 Version code default	(0:0:0:0)
+The fwnode_irq_get_byname() has since been fixed to not return zero on
+error so the check for fwnode_irq_get_byname() can be relaxed to only
+treat negative values as errors. This will also do decent fix even when
+backported to branches where fwnode_irq_get_byname() can still return
+zero on error because KX022A probe should later fail at IRQ requesting
+and a prober error handling should follow.
 
-So just check ID_L.
+Relax the return value check for fwnode_irq_get_byname() to only treat
+negative values as errors.
 
-Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20230501143605.1615549-1-Frank.Li@nxp.com
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202305110245.MFxC9bUj-lkp@intel.com/
+Link: https://lore.kernel.org/r/202305110245.MFxC9bUj-lkp@intel.com/
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 7c1d1677b322 ("iio: accel: Support Kionix/ROHM KX022A accelerometer")
+Link: https://lore.kernel.org/r/b45b4b638db109c6078d243252df3a7b0485f7d5.1683875389.git.mazziesaccount@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/vcnl4035.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/accel/kionix-kx022a.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/light/vcnl4035.c
-+++ b/drivers/iio/light/vcnl4035.c
-@@ -8,6 +8,7 @@
-  * TODO: Proximity
-  */
- #include <linux/bitops.h>
-+#include <linux/bitfield.h>
- #include <linux/i2c.h>
- #include <linux/module.h>
- #include <linux/pm_runtime.h>
-@@ -42,6 +43,7 @@
- #define VCNL4035_ALS_PERS_MASK		GENMASK(3, 2)
- #define VCNL4035_INT_ALS_IF_H_MASK	BIT(12)
- #define VCNL4035_INT_ALS_IF_L_MASK	BIT(13)
-+#define VCNL4035_DEV_ID_MASK		GENMASK(7, 0)
+--- a/drivers/iio/accel/kionix-kx022a.c
++++ b/drivers/iio/accel/kionix-kx022a.c
+@@ -1049,7 +1049,7 @@ int kx022a_probe_internal(struct device
+ 		data->ien_reg = KX022A_REG_INC4;
+ 	} else {
+ 		irq = fwnode_irq_get_byname(fwnode, "INT2");
+-		if (irq <= 0)
++		if (irq < 0)
+ 			return dev_err_probe(dev, irq, "No suitable IRQ\n");
  
- /* Default values */
- #define VCNL4035_MODE_ALS_ENABLE	BIT(0)
-@@ -413,6 +415,7 @@ static int vcnl4035_init(struct vcnl4035
- 		return ret;
- 	}
- 
-+	id = FIELD_GET(VCNL4035_DEV_ID_MASK, id);
- 	if (id != VCNL4035_DEV_ID_VAL) {
- 		dev_err(&data->client->dev, "Wrong id, got %x, expected %x\n",
- 			id, VCNL4035_DEV_ID_VAL);
+ 		data->inc_reg = KX022A_REG_INC5;
 
 
