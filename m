@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16843171B9
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:33:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F475C433D2;
-	Wed,  7 Jun 2023 20:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CB4171B9
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:33:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22385C433D2;
+	Wed,  7 Jun 2023 20:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170016;
-	bh=ujIK6V72KN1rQCcV57pQH8yqh4iKj6O7zao9BFn6Ig0=;
+	s=korg; t=1686170019;
+	bh=lj56uvEBkTdpz0a3dm4Q+xGTpevbiGhy8ydLsw84qa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBHevmHkFzcyJ6bQppBF3rXqZJBDm/upCAQ6uDlvimrTPvFD+wApI+6Wi0WWWSi9H
-	 UuP86iBcXH4jS0aDz9UpmxbXcIce/TuZgO7NUaEDC3v5l9c1kS8MgWeF56BZU7PNe6
-	 yIcrdGpVSMv8b+ZefcbS4Ll4fxJktoIEgg/nZXkQ=
+	b=I3BU8+iLqnqRNei45O6KiWTQtjfggVIAyXBjWnXNQJSlW4WsGbQ2q3cyRgnY2Cs22
+	 aJEXtZJFEhE+hd+Js/f75DleAdq5FM/drrlM5eXcK3u2qbqG8jdupNycBUOZegno6m
+	 oPIpEilBfFqfwHn5tBrSUhy8wK1Sf9bYPVmLRpKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheesh Mavila <sudheesh.mavila@amd.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 14/88] amd-xgbe: fix the false linkup in xgbe_phy_status
-Date: Wed,  7 Jun 2023 22:15:31 +0200
-Message-ID: <20230607200858.250820552@linuxfoundation.org>
+Subject: [PATCH 4.19 15/88] af_packet: do not use READ_ONCE() in packet_bind()
+Date: Wed,  7 Jun 2023 22:15:32 +0200
+Message-ID: <20230607200858.585499872@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200854.030202132@linuxfoundation.org>
 References: <20230607200854.030202132@linuxfoundation.org>
@@ -38,69 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit dc362e20cd6ab7a93d1b09669730c406f0910c35 ]
+[ Upstream commit 6ffc57ea004234d9373c57b204fd10370a69f392 ]
 
-In the event of a change in XGBE mode, the current auto-negotiation
-needs to be reset and the AN cycle needs to be re-triggerred. However,
-the current code ignores the return value of xgbe_set_mode(), leading to
-false information as the link is declared without checking the status
-register.
+A recent patch added READ_ONCE() in packet_bind() and packet_bind_spkt()
 
-Fix this by propagating the mode switch status information to
-xgbe_phy_status().
+This is better handled by reading pkt_sk(sk)->num later
+in packet_do_bind() while appropriate lock is held.
 
-Fixes: e57f7a3feaef ("amd-xgbe: Prepare for working with more than one type of phy")
-Co-developed-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
-Signed-off-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+READ_ONCE() in writers are often an evidence of something being wrong.
+
+Fixes: 822b5a1c17df ("af_packet: Fix data-races of pkt_sk(sk)->num.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230526154342.2533026-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/packet/af_packet.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index 7840eb4cdb8da..d291976d8b761 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -1312,7 +1312,7 @@ static enum xgbe_mode xgbe_phy_status_aneg(struct xgbe_prv_data *pdata)
- 	return pdata->phy_if.phy_impl.an_outcome(pdata);
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 7409e042305d4..fb165286e76dc 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3117,6 +3117,9 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
+ 
+ 	lock_sock(sk);
+ 	spin_lock(&po->bind_lock);
++	if (!proto)
++		proto = po->num;
++
+ 	rcu_read_lock();
+ 
+ 	if (po->fanout) {
+@@ -3219,7 +3222,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
+ 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
+ 	name[sizeof(uaddr->sa_data)] = 0;
+ 
+-	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, name, 0, 0);
  }
  
--static void xgbe_phy_status_result(struct xgbe_prv_data *pdata)
-+static bool xgbe_phy_status_result(struct xgbe_prv_data *pdata)
- {
- 	struct ethtool_link_ksettings *lks = &pdata->phy.lks;
- 	enum xgbe_mode mode;
-@@ -1347,8 +1347,13 @@ static void xgbe_phy_status_result(struct xgbe_prv_data *pdata)
+ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+@@ -3236,8 +3239,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
+ 	if (sll->sll_family != AF_PACKET)
+ 		return -EINVAL;
  
- 	pdata->phy.duplex = DUPLEX_FULL;
- 
--	if (xgbe_set_mode(pdata, mode) && pdata->an_again)
-+	if (!xgbe_set_mode(pdata, mode))
-+		return false;
-+
-+	if (pdata->an_again)
- 		xgbe_phy_reconfig_aneg(pdata);
-+
-+	return true;
+-	return packet_do_bind(sk, NULL, sll->sll_ifindex,
+-			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
++	return packet_do_bind(sk, NULL, sll->sll_ifindex, sll->sll_protocol);
  }
  
- static void xgbe_phy_status(struct xgbe_prv_data *pdata)
-@@ -1378,7 +1383,8 @@ static void xgbe_phy_status(struct xgbe_prv_data *pdata)
- 			return;
- 		}
- 
--		xgbe_phy_status_result(pdata);
-+		if (xgbe_phy_status_result(pdata))
-+			return;
- 
- 		if (test_bit(XGBE_LINK_INIT, &pdata->dev_state))
- 			clear_bit(XGBE_LINK_INIT, &pdata->dev_state);
+ static struct proto packet_proto = {
 -- 
 2.39.2
 
