@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCD334459
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD2EC433EF;
-	Wed,  7 Jun 2023 20:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5463C34CC3
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:38:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FB9C433D2;
+	Wed,  7 Jun 2023 20:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170320;
-	bh=vNo4OWyYJoTDOTHwzUM/B7G0kzbFgw7i2hamJgM8wNQ=;
+	s=korg; t=1686170323;
+	bh=1jkDi2AzjNeB9u1T7c+zCX9ULjAbAx1mVXD8bujN55M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQ8wLjltapsUJza988U0lLDevxhNNcEBQBR23QXANZfMsdXHvgj606bNOAxKmtNBo
-	 qrGtO/7vgMIkzDr7bjY/ilSmR77zXSetxa7NmMV4SnncIoVz0ocKrDZOEXEJZ9c/MM
-	 tulbC0hW3iUCkbk03Es2vi0Of/OdrbOttLFOItH4=
+	b=rZRw2aA/bpvlo7kBlZFsAdpU7Tm3c39epHI8nrw1vJ96OOVB3YtmT4gsiXpFCjVe5
+	 83pcWnzKTdvqran5GrU12Givfc0iXGLh4nC7JpalbaIAI4jvptyV1kW+T2+EfQDGrU
+	 uYQ0ZEqU64fu3BrCMRBux13DqsyAfi9bmsTQd5tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/225] net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report
-Date: Wed,  7 Jun 2023 22:13:53 +0200
-Message-ID: <20230607200915.659464305@linuxfoundation.org>
+Subject: [PATCH 6.1 023/225] af_packet: Fix data-races of pkt_sk(sk)->num.
+Date: Wed,  7 Jun 2023 22:13:36 +0200
+Message-ID: <20230607200915.079591936@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
 References: <20230607200913.334991024@linuxfoundation.org>
@@ -36,38 +37,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit f4e4534850a9d18c250a93f8d7fbb51310828110 ]
+[ Upstream commit 822b5a1c17df7e338b9f05d1cfe5764e37c7f74f ]
 
-The current code for the length calculation wrongly truncates the reported
-length of the groups array, causing an under report of the subscribed
-groups. To fix this, use 'BITS_TO_BYTES()' which rounds up the
-division by 8.
+syzkaller found a data race of pkt_sk(sk)->num.
 
-Fixes: b42be38b2778 ("netlink: add API to retrieve all group memberships")
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230529153335.389815-1-pctammela@mojatatu.com
+The value is changed under lock_sock() and po->bind_lock, so we
+need READ_ONCE() to access pkt_sk(sk)->num without these locks in
+packet_bind_spkt(), packet_bind(), and sk_diag_fill().
+
+Note that WRITE_ONCE() is already added by commit c7d2ef5dd4b0
+("net/packet: annotate accesses to po->bind").
+
+BUG: KCSAN: data-race in packet_bind / packet_do_bind
+
+write (marked) to 0xffff88802ffd1cee of 2 bytes by task 7322 on cpu 0:
+ packet_do_bind+0x446/0x640 net/packet/af_packet.c:3236
+ packet_bind+0x99/0xe0 net/packet/af_packet.c:3321
+ __sys_bind+0x19b/0x1e0 net/socket.c:1803
+ __do_sys_bind net/socket.c:1814 [inline]
+ __se_sys_bind net/socket.c:1812 [inline]
+ __x64_sys_bind+0x40/0x50 net/socket.c:1812
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+read to 0xffff88802ffd1cee of 2 bytes by task 7318 on cpu 1:
+ packet_bind+0xbf/0xe0 net/packet/af_packet.c:3322
+ __sys_bind+0x19b/0x1e0 net/socket.c:1803
+ __do_sys_bind net/socket.c:1814 [inline]
+ __se_sys_bind net/socket.c:1812 [inline]
+ __x64_sys_bind+0x40/0x50 net/socket.c:1812
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+value changed: 0x0300 -> 0x0000
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 7318 Comm: syz-executor.4 Not tainted 6.3.0-13380-g7fddb5b5300c #4
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 96ec6327144e ("packet: Diag core and basic socket info dumping")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20230524232934.50950-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/packet/af_packet.c | 4 ++--
+ net/packet/diag.c      | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index d1b19618890b7..6d493a0ccf399 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1768,7 +1768,7 @@ static int netlink_getsockopt(struct socket *sock, int level, int optname,
- 				break;
- 			}
- 		}
--		if (put_user(ALIGN(nlk->ngroups / 8, sizeof(u32)), optlen))
-+		if (put_user(ALIGN(BITS_TO_BYTES(nlk->ngroups), sizeof(u32)), optlen))
- 			err = -EFAULT;
- 		netlink_unlock_table();
- 		return err;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 67771b0f57719..c75191b0c82ba 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3291,7 +3291,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
+ 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
+ 	name[sizeof(uaddr->sa_data)] = 0;
+ 
+-	return packet_do_bind(sk, name, 0, pkt_sk(sk)->num);
++	return packet_do_bind(sk, name, 0, READ_ONCE(pkt_sk(sk)->num));
+ }
+ 
+ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+@@ -3309,7 +3309,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
+ 		return -EINVAL;
+ 
+ 	return packet_do_bind(sk, NULL, sll->sll_ifindex,
+-			      sll->sll_protocol ? : pkt_sk(sk)->num);
++			      sll->sll_protocol ? : READ_ONCE(pkt_sk(sk)->num));
+ }
+ 
+ static struct proto packet_proto = {
+diff --git a/net/packet/diag.c b/net/packet/diag.c
+index d704c7bf51b20..a68a84574c739 100644
+--- a/net/packet/diag.c
++++ b/net/packet/diag.c
+@@ -143,7 +143,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb,
+ 	rp = nlmsg_data(nlh);
+ 	rp->pdiag_family = AF_PACKET;
+ 	rp->pdiag_type = sk->sk_type;
+-	rp->pdiag_num = ntohs(po->num);
++	rp->pdiag_num = ntohs(READ_ONCE(po->num));
+ 	rp->pdiag_ino = sk_ino;
+ 	sock_diag_save_cookie(sk, rp->pdiag_cookie);
+ 
 -- 
 2.39.2
 
