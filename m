@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D493925D
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:24:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DABC433D2;
-	Wed,  7 Jun 2023 20:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16373925D
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:24:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340C1C433EF;
+	Wed,  7 Jun 2023 20:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686169482;
-	bh=GQOn1z5B2tWVGm7hd2wOZFOGt9QxuRpOpQ7jPqXPV94=;
+	s=korg; t=1686169485;
+	bh=pb2E0mcWHeT6+rWksRwYIle51Zi3R9mhBfjPWab+jLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qb8gYJaCABO1eXCmSpT/yud4L2ZrMKlukR4LCm70mqOuyT2qcLx+NYf6waqx9r6PF
-	 6LWoyVDri7UyN/Jj5Fqo0c8c6Gt6NC3SpKnRWMXIEoRrJz6T7waxeoxAad6W+iwUX1
-	 ZLRmP6tDelWqISqD8mBaNGXsbpTtD096YPYHM4qI=
+	b=bpplXc439f26oicQv6ji9mN6bmz0Y+pCX8xI/fVjgWRaHCWrgv+53l0kxdZDGtJfz
+	 2sAwQya1UPnp7j0bYRHh5QeS8o1F+0RLEqNzQdSpd4Iizhdvu6LCJSN20TGIdXVMli
+	 quab6vXAkpc00udIMJ6f/CDA9vh8gInXiB6UlXnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Li <haibo.li@mediatek.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Andreas Svensson <andreas.svensson@axis.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 096/286] ARM: 9295/1: unwind:fix unwind abort for uleb128 case
-Date: Wed,  7 Jun 2023 22:13:15 +0200
-Message-ID: <20230607200926.196582799@linuxfoundation.org>
+Subject: [PATCH 6.3 069/286] net: dsa: mv88e6xxx: Increase wait after reset deactivation
+Date: Wed,  7 Jun 2023 22:12:48 +0200
+Message-ID: <20230607200925.334226906@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
 References: <20230607200922.978677727@linuxfoundation.org>
@@ -38,91 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haibo Li <haibo.li@mediatek.com>
+From: Andreas Svensson <andreas.svensson@axis.com>
 
-[ Upstream commit fa3eeb638de0c1a9d2d860e5b48259facdd65176 ]
+[ Upstream commit 3c27f3d53d588618d81d30d6712459a3cc9489b8 ]
 
-When unwind instruction is 0xb2,the subsequent instructions
-are uleb128 bytes.
-For now,it uses only the first uleb128 byte in code.
+A switch held in reset by default needs to wait longer until we can
+reliably detect it.
 
-For vsp increments of 0x204~0x400,use one uleb128 byte like below:
-0xc06a00e4 <unwind_test_work>: 0x80b27fac
-  Compact model index: 0
-  0xb2 0x7f vsp = vsp + 1024
-  0xac      pop {r4, r5, r6, r7, r8, r14}
+An issue was observed when testing on the Marvell 88E6393X (Link Street).
+The driver failed to detect the switch on some upstarts. Increasing the
+wait time after reset deactivation solves this issue.
 
-For vsp increments larger than 0x400,use two uleb128 bytes like below:
-0xc06a00e4 <unwind_test_work>: @0xc0cc9e0c
-  Compact model index: 1
-  0xb2 0x81 0x01 vsp = vsp + 1032
-  0xac      pop {r4, r5, r6, r7, r8, r14}
-The unwind works well since the decoded uleb128 byte is also 0x81.
+The updated wait time is now also the same as the wait time in the
+mv88e6xxx_hardware_reset function.
 
-For vsp increments larger than 0x600,use two uleb128 bytes like below:
-0xc06a00e4 <unwind_test_work>: @0xc0cc9e0c
-  Compact model index: 1
-  0xb2 0x81 0x02 vsp = vsp + 1544
-  0xac      pop {r4, r5, r6, r7, r8, r14}
-In this case,the decoded uleb128 result is 0x101(vsp=0x204+(0x101<<2)).
-While the uleb128 used in code is 0x81(vsp=0x204+(0x81<<2)).
-The unwind aborts at this frame since it gets incorrect vsp.
-
-To fix this,add uleb128 decode to cover all the above case.
-
-Signed-off-by: Haibo Li <haibo.li@mediatek.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 7b75e49de424 ("net: dsa: mv88e6xxx: wait after reset deactivation")
+Signed-off-by: Andreas Svensson <andreas.svensson@axis.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230530145223.1223993-1-andreas.svensson@axis.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/unwind.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/kernel/unwind.c b/arch/arm/kernel/unwind.c
-index 53be7ea6181b3..9d2192156087b 100644
---- a/arch/arm/kernel/unwind.c
-+++ b/arch/arm/kernel/unwind.c
-@@ -308,6 +308,29 @@ static int unwind_exec_pop_subset_r0_to_r3(struct unwind_ctrl_block *ctrl,
- 	return URC_OK;
- }
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 902f407213404..39770a5b74e2e 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -7158,7 +7158,7 @@ static int mv88e6xxx_probe(struct mdio_device *mdiodev)
+ 		goto out;
+ 	}
+ 	if (chip->reset)
+-		usleep_range(1000, 2000);
++		usleep_range(10000, 20000);
  
-+static unsigned long unwind_decode_uleb128(struct unwind_ctrl_block *ctrl)
-+{
-+	unsigned long bytes = 0;
-+	unsigned long insn;
-+	unsigned long result = 0;
-+
-+	/*
-+	 * unwind_get_byte() will advance `ctrl` one instruction at a time, so
-+	 * loop until we get an instruction byte where bit 7 is not set.
-+	 *
-+	 * Note: This decodes a maximum of 4 bytes to output 28 bits data where
-+	 * max is 0xfffffff: that will cover a vsp increment of 1073742336, hence
-+	 * it is sufficient for unwinding the stack.
-+	 */
-+	do {
-+		insn = unwind_get_byte(ctrl);
-+		result |= (insn & 0x7f) << (bytes * 7);
-+		bytes++;
-+	} while (!!(insn & 0x80) && (bytes != sizeof(result)));
-+
-+	return result;
-+}
-+
- /*
-  * Execute the current unwind instruction.
-  */
-@@ -361,7 +384,7 @@ static int unwind_exec_insn(struct unwind_ctrl_block *ctrl)
- 		if (ret)
- 			goto error;
- 	} else if (insn == 0xb2) {
--		unsigned long uleb128 = unwind_get_byte(ctrl);
-+		unsigned long uleb128 = unwind_decode_uleb128(ctrl);
- 
- 		ctrl->vrs[SP] += 0x204 + (uleb128 << 2);
- 	} else {
+ 	/* Detect if the device is configured in single chip addressing mode,
+ 	 * otherwise continue with address specific smi init/detection.
 -- 
 2.39.2
 
