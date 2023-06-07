@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FF637325
-	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F04C433D2;
-	Wed,  7 Jun 2023 20:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFAE37325
+	for <patches@lists.linux.dev>; Wed,  7 Jun 2023 20:48:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F0BC433D2;
+	Wed,  7 Jun 2023 20:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686170934;
-	bh=/aQHJrkPZV+ML/j/omdPFfLwhiWitT9bbB2gtn71rlc=;
+	s=korg; t=1686170937;
+	bh=jtwyEquz+vRZlXWsvGK61uOfEpuctsKJWHmbm/a0TXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3a48lLSpHyPWQcW7byH/gf3gQy5cU8EFy6TskzeICVF6BvUmBq2KCuDnwIOkH156
-	 yulDcgzZBUfmf/8F1PT/kJexilfOEeuUoWO18xqhaG1lhcK4iV9W+DRI1nAlKHkq4b
-	 6hcjw7sf2YgnPLV6TVZS/DNOeA7g7yLqQ3eqYVjc=
+	b=o9ndYafyntg7sMepDsi9OUTXRxVGsOS/KMtR2nwOM8zRM5PvO1t1eI0JsgOLsezOg
+	 2OlbO9K5um8lV9EkCZY2aneFTwNGEJ7FRo+A/cuti+Tj7+AcwiCkdjd6QicXH1Au0b
+	 oogS1xQV/b5eftN0oaCSt++HEBSkClqCN+/TwJBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YongSu Yoo <yongsuyoo0215@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 048/120] media: dvb_demux: fix a bug for the continuity counter
-Date: Wed,  7 Jun 2023 22:16:04 +0200
-Message-ID: <20230607200902.418421581@linuxfoundation.org>
+Subject: [PATCH 5.10 031/120] mtd: rawnand: marvell: ensure timing values are written
+Date: Wed,  7 Jun 2023 22:15:47 +0200
+Message-ID: <20230607200901.891320844@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
 References: <20230607200900.915613242@linuxfoundation.org>
@@ -35,63 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YongSu Yoo <yongsuyoo0215@gmail.com>
+From: Chris Packham <chris.packham@alliedtelesis.co.nz>
 
-[ Upstream commit 7efb10d8dc70ea3000cc70dca53407c52488acd1 ]
+[ Upstream commit 8a6f4d346f3bad9c68b4a87701eb3f7978542d57 ]
 
-In dvb_demux.c, some logics exist which compare the expected
-continuity counter and the real continuity counter. If they
-are not matched each other, both of the expected continuity
-counter and the real continuity counter should be printed.
-But there exists a bug that the expected continuity counter
-is not correctly printed. The expected continuity counter is
-replaced with the real countinuity counter + 1 so that
-the epected continuity counter is not correclty printed.
-This is wrong. This bug is fixed.
+When new timing values are calculated in marvell_nfc_setup_interface()
+ensure that they will be applied in marvell_nfc_select_target() by
+clearing the selected_chip pointer.
 
-Link: https://lore.kernel.org/linux-media/20230305212519.499-1-yongsuyoo0215@gmail.com
-
-Signed-off-by: YongSu Yoo <yongsuyoo0215@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: b25251414f6e ("mtd: rawnand: marvell: Stop implementing ->select_chip()")
+Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230525003154.2303012-1-chris.packham@alliedtelesis.co.nz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_demux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/marvell_nand.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/dvb-core/dvb_demux.c b/drivers/media/dvb-core/dvb_demux.c
-index 5fde1d38b3e34..80b495982f63c 100644
---- a/drivers/media/dvb-core/dvb_demux.c
-+++ b/drivers/media/dvb-core/dvb_demux.c
-@@ -125,12 +125,12 @@ static inline int dvb_dmx_swfilter_payload(struct dvb_demux_feed *feed,
- 
- 	cc = buf[3] & 0x0f;
- 	ccok = ((feed->cc + 1) & 0x0f) == cc;
--	feed->cc = cc;
- 	if (!ccok) {
- 		set_buf_flags(feed, DMX_BUFFER_FLAG_DISCONTINUITY_DETECTED);
- 		dprintk_sect_loss("missed packet: %d instead of %d!\n",
- 				  cc, (feed->cc + 1) & 0x0f);
+diff --git a/drivers/mtd/nand/raw/marvell_nand.c b/drivers/mtd/nand/raw/marvell_nand.c
+index dce35f81e0a55..9d437f1566ed5 100644
+--- a/drivers/mtd/nand/raw/marvell_nand.c
++++ b/drivers/mtd/nand/raw/marvell_nand.c
+@@ -2443,6 +2443,12 @@ static int marvell_nfc_setup_interface(struct nand_chip *chip, int chipnr,
+ 			NDTR1_WAIT_MODE;
  	}
-+	feed->cc = cc;
  
- 	if (buf[1] & 0x40)	// PUSI ?
- 		feed->peslen = 0xfffa;
-@@ -310,7 +310,6 @@ static int dvb_dmx_swfilter_section_packet(struct dvb_demux_feed *feed,
++	/*
++	 * Reset nfc->selected_chip so the next command will cause the timing
++	 * registers to be updated in marvell_nfc_select_target().
++	 */
++	nfc->selected_chip = NULL;
++
+ 	return 0;
+ }
  
- 	cc = buf[3] & 0x0f;
- 	ccok = ((feed->cc + 1) & 0x0f) == cc;
--	feed->cc = cc;
- 
- 	if (buf[3] & 0x20) {
- 		/* adaption field present, check for discontinuity_indicator */
-@@ -346,6 +345,7 @@ static int dvb_dmx_swfilter_section_packet(struct dvb_demux_feed *feed,
- 		feed->pusi_seen = false;
- 		dvb_dmx_swfilter_section_new(feed);
- 	}
-+	feed->cc = cc;
- 
- 	if (buf[1] & 0x40) {
- 		/* PUSI=1 (is set), section boundary is here */
 -- 
 2.39.2
 
