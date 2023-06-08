@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B654D110D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF111116
 	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 03:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=7c5o1TgTZx/+yF45xsch3Sa+lM5OGTIusUitJBnsivE=; b=dS6kbTArhANERobE2WbrG1u86d
-	G4kysNRDCruOqSaKtFn5zAcevAzNcDqJ0XIDpt0InqV1E229h2v4AB1t1AX54XIrldldfRokKfP7E
-	NL4ogmpWWCw2xOQewRDYNDOuZC9aP36wgbF9JBIzjszCm5UrIatcNwKIG1bvBjPBZSBfQI9aVAxZ0
-	C7cA89Uq+npbfJYk11W8mSb4z5E/YKz+dwLcyoUDyzdlOAR1xNFTe1aMoN1mggp6ZlIlAhHc2YSBQ
-	7hx8CNFT/U6kJM0LK1ek6TW2XflCX+fvMT9Eln3BO/FJSBFHHddr59Ud16t1OOdL5eKmmqcUerXRp
-	xu1YHExw==;
+	bh=tJx3dGm90GKdxMftw9L/RXCahr9FMlcRqFZ3WAycOtw=; b=SnPxpRakWKO3T03Wum+j1Oo4PP
+	fZ2ekS0+63BhppE75A69n7zuvV//6fONSqDm81rg0z7wY6DlQ4KGoA+gPLQFCueJ8d56DmjAgmzrr
+	AcMxGOHBNBectqVEhqMFViUocqzXzYcErEiNEIXjxPZ7EynytZhRa4MokPMcQPnY2iMbLosajzoAV
+	8f/YE11Zoj5fqgm4O+AwvpN2V4LHoJBcuyQHLMS4EWq/9kV1wsQhbtdn3X4P77AO8U3rzK2mS19O2
+	1sKqZZduZ13Na74voRxmvQhwbpCsiSE+auOoa8AvrZMSeKsbyYFthFY/c2yabOQPUUz+VpZJgOHVB
+	isHny2qw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q76Fr-007uum-2y;
+	id 1q76Fr-007uuk-2p;
 	Thu, 08 Jun 2023 03:24:07 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hch@infradead.org,
@@ -37,9 +37,9 @@ Cc: hare@suse.de,
 	mcgrof@kernel.org,
 	corbet@lwn.net,
 	jake@lwn.net
-Subject: [RFC 3/4] bdev: rename iomap aops
-Date: Wed,  7 Jun 2023 20:24:03 -0700
-Message-Id: <20230608032404.1887046-4-mcgrof@kernel.org>
+Subject: [RFC 2/4] bdev: abstract inode lookup on blkdev_get_no_open()
+Date: Wed,  7 Jun 2023 20:24:02 -0700
+Message-Id: <20230608032404.1887046-3-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230608032404.1887046-1-mcgrof@kernel.org>
 References: <20230608032404.1887046-1-mcgrof@kernel.org>
@@ -52,94 +52,54 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Allow buffer-head and iomap aops to co-exist on a build. Right
-now the iomap aops is can only be used if you disable buffer-heads.
-In the near future we should be able to dynamically select at runtime
-the intended aops based on the nature of the filesystem and device
-requirements.
+Provide an abstraction for how we lookup an inode
+on blkdev_get_no_open() so we can later expand upon
+the implementation on just relying on one super block.
 
-So rename the iomap aops, and select use the new name if buffer-heads
-is disabled. This introduces no functional changes.
+This will make subsequent changes easier to review.
+
+This introduces no functional changes.
+
+Although we all probably want to just remove BLOCK_LEGACY_AUTOLOAD
+removing it before has proven issues with both loopback [0] and
+is expected to break mdraid [1], so this takes the more careful
+approach to just keeping it.
+
+[0] https://lore.kernel.org/all/20220222085354.GA6423@lst.de/T/#u
+[1] https://lore.kernel.org/all/20220503212848.5853-1-dmoulding@me.com/
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- block/bdev.c |  4 ++++
- block/blk.h  |  1 +
- block/fops.c | 14 +++++++-------
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ block/bdev.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/block/bdev.c b/block/bdev.c
-index 61d8d2722cda..2b16afc2bd2a 100644
+index 91477c3849d2..61d8d2722cda 100644
 --- a/block/bdev.c
 +++ b/block/bdev.c
-@@ -408,7 +408,11 @@ struct block_device *bdev_alloc(struct gendisk *disk, u8 partno)
- 		return NULL;
- 	inode->i_mode = S_IFBLK;
- 	inode->i_rdev = 0;
-+#ifdef CONFIG_BUFFER_HEAD
- 	inode->i_data.a_ops = &def_blk_aops;
-+#else
-+	inode->i_data.a_ops = &def_blk_aops_iomap;
-+#endif
- 	mapping_set_gfp_mask(&inode->i_data, GFP_USER);
+@@ -666,15 +666,20 @@ static void blkdev_put_part(struct block_device *part, fmode_t mode)
+ 	blkdev_put_whole(whole, mode);
+ }
  
- 	bdev = I_BDEV(inode);
-diff --git a/block/blk.h b/block/blk.h
-index 7ad7cb6ffa01..67bf2fa99fe9 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -453,6 +453,7 @@ long blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg);
- long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg);
- 
- extern const struct address_space_operations def_blk_aops;
-+extern const struct address_space_operations def_blk_aops_iomap;
- 
- int disk_register_independent_access_ranges(struct gendisk *disk);
- void disk_unregister_independent_access_ranges(struct gendisk *disk);
-diff --git a/block/fops.c b/block/fops.c
-index 24037b493f5f..51f7241ab389 100644
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -455,13 +455,14 @@ const struct address_space_operations def_blk_aops = {
- 	.migrate_folio	= buffer_migrate_folio_norefs,
- 	.is_dirty_writeback = buffer_check_dirty_writeback,
- };
--#else /* CONFIG_BUFFER_HEAD */
--static int blkdev_read_folio(struct file *file, struct folio *folio)
++static struct inode *blkdev_inode_lookup(dev_t dev)
++{
++	return ilookup(blockdev_superblock, dev);
++}
 +
-+#endif /* CONFIG_BUFFER_HEAD */
-+static int blkdev_read_folio_iomap(struct file *file, struct folio *folio)
+ struct block_device *blkdev_get_no_open(dev_t dev)
  {
- 	return iomap_read_folio(folio, &blkdev_iomap_ops);
- }
+ 	struct block_device *bdev;
+ 	struct inode *inode;
  
--static void blkdev_readahead(struct readahead_control *rac)
-+static void blkdev_readahead_iomap(struct readahead_control *rac)
- {
- 	iomap_readahead(rac, &blkdev_iomap_ops);
- }
-@@ -492,18 +493,17 @@ static int blkdev_writepages(struct address_space *mapping,
- 	return iomap_writepages(mapping, wbc, &wpc, &blkdev_writeback_ops);
- }
- 
--const struct address_space_operations def_blk_aops = {
-+const struct address_space_operations def_blk_aops_iomap = {
- 	.dirty_folio	= filemap_dirty_folio,
- 	.release_folio		= iomap_release_folio,
- 	.invalidate_folio	= iomap_invalidate_folio,
--	.read_folio		= blkdev_read_folio,
--	.readahead		= blkdev_readahead,
-+	.read_folio		= blkdev_read_folio_iomap,
-+	.readahead		= blkdev_readahead_iomap,
- 	.writepages		= blkdev_writepages,
- 	.is_partially_uptodate  = iomap_is_partially_uptodate,
- 	.error_remove_page	= generic_error_remove_page,
- 	.migrate_folio		= filemap_migrate_folio,
- };
--#endif /* CONFIG_BUFFER_HEAD */
- 
- /*
-  * for a block special file file_inode(file)->i_size is zero
+-	inode = ilookup(blockdev_superblock, dev);
++	inode = blkdev_inode_lookup(dev);
+ 	if (!inode && IS_ENABLED(CONFIG_BLOCK_LEGACY_AUTOLOAD)) {
+ 		blk_request_module(dev);
+-		inode = ilookup(blockdev_superblock, dev);
++		inode = blkdev_inode_lookup(dev);
+ 		if (inode)
+ 			pr_warn_ratelimited(
+ "block device autoloading is deprecated and will be removed.\n");
 -- 
 2.39.2
 
