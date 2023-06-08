@@ -1,141 +1,83 @@
-Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2127.outbound.protection.outlook.com [40.107.114.127])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F89E746C
-	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 07:24:51 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aQqEcstw/LfJtr89PNdook4/QjT46Bhxedw2NIZaEO63BKOahi4obMbTKM2Sgb6W9YWS/RWUBnPGdyXhWzY0oBMv3LFuR7/TxBOn/CHS3w0yWOHjadbRGOLs7b0LKZKZEy5Byo2kCoT1k1axMKheXdysOB89Z38dQbKZvJ2UG6rQaz8TH+g1ManTd9hGHteEp2yAOudkk8kai/PSdYQeHIqe+Dpbw22nsEEkBD5ZCr7oSxLt8B/w1RvJQMAgEIjJahZIgTZCH5EfjAYO+LGKy/N3mytdwidI8lnyEldHFJBcrBHtRttSKMnc8q+z4okO8pde1YK98jZoz4nGgOsDnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MvBl7vszmkdxtB/G/BwrRPAkZLe3yjtIMMX4yL1e2ok=;
- b=h+rRjtDbEfA+7YKbEvOWkn46I6vvUSjo4J8B6OjPILhTUlkYKkW1fBJJtJ/dyr80SnJR97c6igIMWhOHzdfNr3VURRCai0aA4ttAMRjOvyn/rE/9ReyMiHHHE8mcNUOuKUNOCdfPql6yauuKv2VTBoO0adfMGA+9Q5KTM01614Kzk+LBMKRsksR9L2CIrMkM2MOHV4Fw6sMkdJlgG2HyQAzTTQe0DAYnWax6QS7YQuLKVw9riSap4et8n18tiVavQWULIsfdtrUPAIk1wIAR1i9cmZhGH8HKhdmqfBiWOPAYV1i7V4FSftIZzEZOxi+BnhQ2PQNUxLwvflUO9fQPhA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MvBl7vszmkdxtB/G/BwrRPAkZLe3yjtIMMX4yL1e2ok=;
- b=bgiCSKT7hIRvSWsJK4DhBeqqv0iGQUB2mdNFO7YtHwiYmMI+/ppPok4dVkibGxU5bWDYubSR+J3SfqbSbYMYm3sdcxfa2oUHfOhVK1NVH9i3ejGj/ew7F+u/y7iE/k+FRu0hBezNfpsO6e9n4mBCQIParNgU8UM1j3hrE2LlckM=
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
- by OS0PR01MB5907.jpnprd01.prod.outlook.com (2603:1096:604:bd::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.33; Thu, 8 Jun
- 2023 07:24:49 +0000
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a4f8:4204:cbe6:6cb3]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a4f8:4204:cbe6:6cb3%3]) with mapi id 15.20.6455.030; Thu, 8 Jun 2023
- 07:24:48 +0000
-From: Chris Paterson <Chris.Paterson2@renesas.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>
-CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
-	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
-	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
-	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
-	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
-	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
-	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
-	"rwarsow@gmx.de" <rwarsow@gmx.de>
-Subject: RE: [PATCH 6.1 000/225] 6.1.33-rc1 review
-Thread-Topic: [PATCH 6.1 000/225] 6.1.33-rc1 review
-Thread-Index: AQHZmYAVASJDhYSmwE+fmLSrT6MUMK+Aae4Q
-Date: Thu, 8 Jun 2023 07:24:48 +0000
-Message-ID:
- <TY2PR01MB3788FA9EB3D8EAC669C3F623B750A@TY2PR01MB3788.jpnprd01.prod.outlook.com>
-References: <20230607200913.334991024@linuxfoundation.org>
-In-Reply-To: <20230607200913.334991024@linuxfoundation.org>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|OS0PR01MB5907:EE_
-x-ms-office365-filtering-correlation-id: 2cf49975-0eee-494b-c965-08db67f1712e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- daD0ojWTpf5f2xCLnVLOnfWv3U0gcR175iND7GQ9Ffw1oY4lb5XqdCiBFOx28IEVTjBchGZj+eWQ0bxcyeSWmKbYjZ6dv5ZFLTcCc9QFmvgcvdV9bYCrb/8hmiPB1WGbsqkpfpS/RzaNr9J73IgfrIqoLXPEL9041gYfgel1vJdRNwMkIy316UezQbMUSAvWk9/gcYAMJwZBDYA+Y02PkiY0bTHVTQ8ATDmqYbGNyb+dTbIVPeWYs6ybba/AaakKd62cVMIG2y3uz3ZSzhwLI3MXC+uAVVUvDLEwfVDMj3eto0MR67bJBqjqlGQaVYWWS2uXYVhCR6Qje4LBUE7WqYi6dIED/BrXLLpZzK0StKP8OqH9YtJ+ZJY3aKiMWV+cEcwG4yYNyT7fd7YC8wIYXiykqKjbdkLbLBjxfC6ZdgUE7VWukS7smKZaLB+ZCI8HyTDRNFSJ3Vf8RSHrtglV1E7PSAp2kf94QGdl//awTzweeXF0lgBTdbmj734x0X2QkdzbLMFcZ6i8qyadiNFDWWaKiTHsPb+Kuhazq54iQpMzAOBjLQ4CBeuX78QiZFgBCzrFzNMV+Lmp8YCnCF8KEXbBID2XE46LAgpHFEsMrEktUJHukaQqDisgeOsCcGzg7vyK09Xhb1wZ/GHI82LFIg==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(346002)(136003)(396003)(366004)(376002)(451199021)(186003)(9686003)(6506007)(26005)(966005)(86362001)(7416002)(7696005)(4744005)(2906002)(71200400001)(8676002)(8936002)(478600001)(110136005)(55016003)(33656002)(316002)(38100700002)(5660300002)(66446008)(76116006)(122000001)(4326008)(64756008)(66476007)(41300700001)(38070700005)(66946007)(54906003)(52536014)(66556008);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-2?Q?ig3Hn+2v36GwgzMHQgx5oD2ryJMtiJr6yVv3ysdQNbycCEKX+h/TqHNN8B?=
- =?iso-8859-2?Q?oxj8Jhrit50f5nZhtfkTp7PddvsYAzYS68j8y0age/RVdiuv2N4sd488Sq?=
- =?iso-8859-2?Q?8ujFDmUCAn80zYOXkFwkUMdMhClMCnUjm6+7rNIqbFC2/PTxe6k3fIrZVv?=
- =?iso-8859-2?Q?TTJjX9SoRz0kkEuq/6HE/xsba2DxtaXOfc+28IxacYQw2f15cXmohH7oh7?=
- =?iso-8859-2?Q?i3JVOiWhk+TUPlzt6tl1d13V3xMImCO98Yrpp7Q70SFkpM/ehSC0Cw3nBv?=
- =?iso-8859-2?Q?3XzDzDAVDTpPh2JIweUUA+/ThTq6vEkjKBpPy0kblX/JJ0+5EDXHw/ys2b?=
- =?iso-8859-2?Q?puwQGiHJ2MA0K4/jFSCMpIu8WGMiYx1BhhEizs8svy+IkzVgvxlFFxxKag?=
- =?iso-8859-2?Q?xvnVxEga9MRRT5YFVs/8UnGzOF3oCIcDSJSjnJ+Ds3Xw2VOtjXcVM/TBEK?=
- =?iso-8859-2?Q?3LTcTZiNgM4KwVPwePZmjiku1kKpmnAMjw4d+Z/ESxvLEcQzlxyM3f9itP?=
- =?iso-8859-2?Q?73G30PLL/Z5T4x4MgIxKleH0JlXcGisZ2U3ooxz+pnxzziQhMy76ePpnbo?=
- =?iso-8859-2?Q?RJ9LIxyqCQ9rnmpi5iIfTiZTnxaErcYnaVjsr7D90HZCWwkwZW0CyfaMbx?=
- =?iso-8859-2?Q?Tdw0/AN7xH7ONprfbctT8U0FIYJ0OrPrhKcKFSldclRVSPWqNiiJBdzeon?=
- =?iso-8859-2?Q?X1PKSPqChvooARB3zEuErUbR2KVSqFmXP/mnNLrtKSlT30HYzS7oym98KF?=
- =?iso-8859-2?Q?qqaDVkNMjPEq2C6SE5l1qDRLlXeCkUbVFA5vmnojWRtVjjpTJ5/vnLlo++?=
- =?iso-8859-2?Q?1zPsrn6cmxBJ7hpBw7akyVHRGw8zJGhki0JHgvIAt+DzmIFbT4LzBO+zNA?=
- =?iso-8859-2?Q?N4kDuRHFJEP848OlI7VmqufjARxBV16VXTnJkE1FrNhMSGaCy5wnBVVssX?=
- =?iso-8859-2?Q?FWfLSdExXZztjd1gSGbPMA00QaJDCfBBMsg/F0v0CIc2EnWOqnuvKn1DCG?=
- =?iso-8859-2?Q?RrT/5Z8GwkwiJBXY/fbvxiXHv9Qqx2AKQZ6vIsKRyMcdS4wUOZx66Am84d?=
- =?iso-8859-2?Q?c07R5BUREcDDp/GYbCei/S3DuQkjXqFekRH+3k5Wgv9szvarx+pEP0hdTq?=
- =?iso-8859-2?Q?4kJS38Xc7sdUtuLUS3ctx/6EZgh7K96JOaLbtbORemtVZP8Mm7tijMs3W4?=
- =?iso-8859-2?Q?/CaNgj9nkg2ZZiCvqE4VK+8hvrhkKr0WeBZVcdd2al5f2K0NV+RQfIDpTd?=
- =?iso-8859-2?Q?ipYBrRPQHeT75dhHISBT89d6nMTcINNvFiV1QyFkfkx0M2cHyc6WFQxhYv?=
- =?iso-8859-2?Q?812UaZxWHJZXGVDQ/TWjotR9nAcy/jbYopV2w/w2d5uYal/hf70It+zhT+?=
- =?iso-8859-2?Q?GARnFkjcsZPgEbCFXojPnH4pLp9+KcNSCfe500XZ7VxMI3OZu2wmAoadrt?=
- =?iso-8859-2?Q?7mkPbuhr4wAZMBPRnOwTGdJsZFR4EzsAy4wmFdsJcFQoKcVoC4UREX0SWr?=
- =?iso-8859-2?Q?MaxQ4b8URnag0PXJo9fnPqWy9uMrWZerM5XuXRXmGqOU/w4i8G0JjBNn/m?=
- =?iso-8859-2?Q?+5XISC155KsKDPqJ7bK/PavuXWErkMpobRoF2rCFSTB7dlO4g7wCdlRT6/?=
- =?iso-8859-2?Q?BET4L9zw5cNp4/BHLGNRCojWPhDugBT1fGYPoCMmlEbrjMwLfpZBhkmw?=
- =?iso-8859-2?Q?=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-2"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41DA8F5C;
+	Thu,  8 Jun 2023 08:29:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=dtEYRmo7Mb4HUPwmNIi7aG7beCq9+eQ8V/5sHbI/Q38=; b=hBBKScrUI1BSKFTaY5cRW0O5DK
+	6A8/XsHkCD6vbgeQUP8jxDFsg1DqqsIsyjeTU7dvMGCeHlAkHJmca43pwPV0RMQMSv9QIji7wOGV4
+	iSYfxwy36sAG16PNED0NJ+yagL2152BVszOq5AHtjtlxY3OE2k3kTqc5lzsH3zW64jqe6DQBt5tsp
+	f77I0iL7TCIQir8d9+/YkvIM6BGOcb70scybid46M5a2MBAUbbxj8U9pIycSDMkn56DKXWic/nGH8
+	srrTdzOOkiSfjyKEl9fkKut8jAPFv4gdzuuVJ2guD0ptKWXIXzrgHD2Hz3Ti89DXajthrOewvBa22
+	blwutyZw==;
+Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
+	id 1q7B1a-0069YO-18;
+	Thu, 08 Jun 2023 08:29:43 +0000
+Received: from hirez.programming.kicks-ass.net (hirez.programming.kicks-ass.net [192.168.1.225])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
+	(Client did not present a certificate)
+	by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 28BE9300222;
+	Thu,  8 Jun 2023 10:29:41 +0200 (CEST)
+Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 02C7120D72191; Thu,  8 Jun 2023 10:29:40 +0200 (CEST)
+Date: Thu, 8 Jun 2023 10:29:40 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: mark.rutland@arm.com, arnd@arndb.de, ndesaulniers@google.com,
+	trix@redhat.com, linux-arch@vger.kernel.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] percpu: Fix self-assignment of __old in
+ raw_cpu_generic_try_cmpxchg()
+Message-ID: <20230608082940.GF998233@hirez.programming.kicks-ass.net>
+References: <20230607-fix-shadowing-in-raw_cpu_generic_try_cmpxchg-v1-1-8f0a3d930d43@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2cf49975-0eee-494b-c965-08db67f1712e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2023 07:24:48.6220
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: hTT/32Supd8wfk/aB41VJN7V5e/q05ZEGaHv+nebZYKDiUFXtnmK4aIoRoxLtcRAi5+6J1Z+vxG2Ip97/Yz0gnZreYr1Zlm2S7pESbALkhw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS0PR01MB5907
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230607-fix-shadowing-in-raw_cpu_generic_try_cmpxchg-v1-1-8f0a3d930d43@kernel.org>
 
-Hello Greg,
+On Wed, Jun 07, 2023 at 02:20:59PM -0700, Nathan Chancellor wrote:
+> After commit c5c0ba953b8c ("percpu: Add {raw,this}_cpu_try_cmpxchg()"),
+> clang built ARCH=arm and ARCH=arm64 kernels with CONFIG_INIT_STACK_NONE
+> started panicking on boot in alloc_vmap_area():
+> 
+>   [    0.000000] kernel BUG at mm/vmalloc.c:1638!
+>   [    0.000000] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+>   [    0.000000] Modules linked in:
+>   [    0.000000] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-rc2-ARCH+ #1
+>   [    0.000000] Hardware name: linux,dummy-virt (DT)
+>   [    0.000000] pstate: 200000c9 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>   [    0.000000] pc : alloc_vmap_area+0x7ec/0x7f8
+>   [    0.000000] lr : alloc_vmap_area+0x7e8/0x7f8
+> 
+> Compiling mm/vmalloc.c with W=2 reveals an instance of -Wshadow, which
+> helps uncover that through macro expansion, '__old = *(ovalp)' in
+> raw_cpu_generic_try_cmpxchg() can become '__old = *(&__old)' through
+> raw_cpu_generic_cmpxchg(), which results in garbage being assigned to
+> the inner __old and the cmpxchg not working properly.
+> 
+> Add an extra underscore to __old in raw_cpu_generic_try_cmpxchg() so
+> that there is no more self-assignment, which resolves the panics.
+> 
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/1868
 
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Sent: Wednesday, June 7, 2023 9:13 PM
->=20
-> This is the start of the stable review cycle for the 6.1.33 release.
-> There are 225 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Fri, 09 Jun 2023 20:07:31 +0000.
-> Anything received after that time might be too late.
+First time I see Closes; is this an 'official' tag?
 
-CIP configurations built and booted okay with Linux 6.1.33-rc1 (8f4f686e321=
-c):
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/8=
-93074084
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
-ux-6.1.y
+> Debugged-by: Nick Desaulniers <ndesaulniers@google.com>
+> Fixes: c5c0ba953b8c ("percpu: Add {raw,this}_cpu_try_cmpxchg()")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
+Durr, C is such a lovely language :-)
 
-Kind regards, Chris
+I'll go stick it in locking/core to go with the bunch that wrecked it.
+Thanks!
