@@ -1,37 +1,30 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD85010973
-	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 17:45:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=uOw9nsuIMZAQbvG+gbUFnhoqu4Ev0+E/KCh6w/lkQ7I=; b=etOQcvEQDEvuze42GukPA1J9A9
-	rwsj/PLos8V+QhVz5PjC0nnthLA7akuroDg3cj1QqCOZ6Z8M+KSieTjpIXe6i803tFqFQnuVseyDp
-	0+5ezAsmAh+nbDffqzyioYt7UStuRuvPI385zwJZcoAQY/VGQjV1nMfGmAJAAWNyl2mGJQRiQ+i5Y
-	FehkG3GqhYRb4FsRFByG7rNLTX4E0/kZHUmriAMDSW3rKpTT+3DfZxEt9IrjdPQmsTmuwUoUtDLnB
-	F2NH+o/jLEb69nL7vzKne7WKcWpf45TeDjmurxCl59osSLZDht3OksMCelGH7dwRwdJzUSLd6YZhI
-	meFi0kUw==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q7Jh8-00A4le-2l;
-	Thu, 08 Jun 2023 17:45:10 +0000
-Date: Thu, 8 Jun 2023 10:45:10 -0700
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Christoph Hellwig <hch@infradead.org>
-Cc: Matthew Wilcox <willy@infradead.org>, djwong@kernel.org,
-	dchinner@redhat.com, kbusch@kernel.org, hare@suse.de,
-	ritesh.list@gmail.com, rgoldwyn@suse.com, jack@suse.cz,
-	patches@lists.linux.dev, linux-xfs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
-	p.raghav@samsung.com, da.gomez@samsung.com, rohan.puri@samsung.com,
-	rpuri.linux@gmail.com, corbet@lwn.net, jake@lwn.net
-Subject: Re: [RFC 4/4] bdev: extend bdev inode with it's own super_block
-Message-ID: <ZIITpjDXyupKom+N@bombadil.infradead.org>
-References: <20230608032404.1887046-1-mcgrof@kernel.org>
- <20230608032404.1887046-5-mcgrof@kernel.org>
- <ZIHZngefNAtYtg7L@casper.infradead.org>
- <ZIHcl8epO0h3z1TO@infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FFB19930
+	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 17:57:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9478C433D2;
+	Thu,  8 Jun 2023 17:57:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1686247025;
+	bh=FpLokzzvgb8Su1TVOxrVGWWZ4a4F1CNAPWwV5MPS5J8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SG7zVSHd37Cz6pGm5ywhW4tw0tNbaARPlUU962UwZGHDdQ5KaYDk6JfllvULHPKam
+	 tZ7rwh1uRazx3jVET3lv7jzi8zrJMlMwHGQSz4uNmM1qpaueaVW1eRTtJQ9jl1Kkum
+	 SkyX+RTGxFqIsSjA2I6W+kVkXnaO10urilaM8YFo=
+Date: Thu, 8 Jun 2023 19:57:02 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/225] 6.1.33-rc1 review
+Message-ID: <2023060848-vice-dismay-a6f2@gregkh>
+References: <20230607200913.334991024@linuxfoundation.org>
+ <cf6f959e-2885-1e7b-826d-61bff351ff14@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,44 +33,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZIHcl8epO0h3z1TO@infradead.org>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+In-Reply-To: <cf6f959e-2885-1e7b-826d-61bff351ff14@roeck-us.net>
 
-On Thu, Jun 08, 2023 at 06:50:15AM -0700, Christoph Hellwig wrote:
-> On Thu, Jun 08, 2023 at 02:37:34PM +0100, Matthew Wilcox wrote:
-> > On Wed, Jun 07, 2023 at 08:24:04PM -0700, Luis Chamberlain wrote:
-> > > We currently share a single super_block for the block device cache,
-> > > each block device corresponds to one inode on that super_block. This
-> > > implicates sharing one aops operation though, and in the near future
-> > > we want to be able to instead support using iomap on the super_block
-> > > for different block devices.
+On Thu, Jun 08, 2023 at 08:08:50AM -0700, Guenter Roeck wrote:
+> On 6/7/23 13:13, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.33 release.
+> > There are 225 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > > -struct super_block *blockdev_superblock __read_mostly;
+> > Responses should be made by Fri, 09 Jun 2023 20:07:31 +0000.
+> > Anything received after that time might be too late.
 > > 
-> > Did we consider adding
-> > 
-> > +struct super_block *blockdev_sb_iomap __read_mostly;
-> > 
-> > and then considering only two superblocks instead of having a list of
-> > all bdevs?
 > 
-> Or why the heck we would even do this to start with?
-
-That's what I gathered you suggested at LSFMM on hallway talk.
-
-> iomap has absolutely nothing to do with superblocks.
+> Failed builds:
+> 	loongarch:defconfig
+> 	loongarch:allnoconfig
+> 	loongarch:tinyconfig
+> 	loongarch:allmodconfig
 > 
-> Now maybe it might make sense to have a superblock per gendisk just
-> to remove all the weird special casing for the bdev inode in the
-> writeback code.  But that's something entirely different than this
-> patch.
+> arch/loongarch/kernel/traps.c: In function 'trap_init':
+> arch/loongarch/kernel/traps.c:815:21: error: 'EXCCODE_BCE' undeclared
+> 
+> EXCCODE_BCE is indeed undeclared in v6.1.y.
+> 
+> Commit 'LoongArch: Relay BCE exceptions to userland as SIGSEGV with si_code=SEGV_BNDERR'
+> is not marked Fixes: or stable: and should arguably not have been backported.
+> 
+> The same problem affects 6.3.
 
-The goal behind this is to allow block devices to have its bdev cache
-use iomap, right now now we show-horn in the buffer-head aops if we
-have to build buffer-heads.
+Thanks, I'll go drop this from both trees and push out -rc2 releases.
 
-If this sort of approach is not desirable, let me know what alternative
-you would prefer to see, because clearly, I must not have understood
-your suggestion.
-
-  Luis
+greg k-h
