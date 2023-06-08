@@ -1,58 +1,231 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C0B12B82
-	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 13:53:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=xOPYSXMA8FBLUr/kv5jx92kSAsnGM8wPCIzb12nVRAE=; b=trZXP2L/CRzLAzLlukIAZK+ZVo
-	b0WD+QldBAq8BmccB4sqpjbEjxXsNpL9t9YcWRrTY0EiBUkyjQTfirKUJlDBtgGYUnpSmXzG4iKYQ
-	DVu/M6LbvR2MFk4X5XTYDh0pXKj6Iyvr77AjrpfvsdD6YlA3KGc69HQrCXRaSaEQpxTcVak/5gzRm
-	y0EOCoExHbY8F0HWZZXZxUOGaXrsOIdbIRkaeapUzeyZ5YuHKn8/IQ5BIZ96ZSX+eLX/zaYzcWt96
-	EWPec8d8F8byohHzbJRz/9BgDu1SyYxfN+0p3+aL8WuUuPhZkkvGeK64G1GcCDsE5ubTfTjt+FoXW
-	FbJQjilg==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q7G5C-009X2C-2I;
-	Thu, 08 Jun 2023 13:53:46 +0000
-Date: Thu, 8 Jun 2023 06:53:46 -0700
-From: Christoph Hellwig <hch@infradead.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: hch@infradead.org, djwong@kernel.org, dchinner@redhat.com,
-	kbusch@kernel.org, willy@infradead.org, hare@suse.de,
-	ritesh.list@gmail.com, rgoldwyn@suse.com, jack@suse.cz,
-	patches@lists.linux.dev, linux-xfs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
-	p.raghav@samsung.com, da.gomez@samsung.com, rohan.puri@samsung.com,
-	rpuri.linux@gmail.com, corbet@lwn.net, jake@lwn.net
-Subject: Re: [RFC 1/4] bdev: replace export of blockdev_superblock with
- BDEVFS_MAGIC
-Message-ID: <ZIHdavOjpLpUC4cy@infradead.org>
-References: <20230608032404.1887046-1-mcgrof@kernel.org>
- <20230608032404.1887046-2-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02438F4E
+	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 14:05:40 +0000 (UTC)
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-6b29f53137cso437121a34.0
+        for <patches@lists.linux.dev>; Thu, 08 Jun 2023 07:05:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686233140; x=1688825140;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=safYf9mtP/TqCKpDii2aud/ldnVoerr/RL86C5Y3JdA=;
+        b=yeoSvKknohEapCfJtL5b/uPDo3O36xSSP2UiE2gr6fJmVfRaHgAh09q9GaP3Gt9i9O
+         8l8Y6DRFuvkUi7j+dD3r5qVSIbc2q0/C2DEKzM810+BSkueV+RQ656VTwjBTN3yLABcN
+         uMIMjTLU63yF1wON1fhy3ZzAI1kjnrSEAqMoYZ7Z71sB7sbQ3rY+uN9mu3C+uVzzgxT+
+         suwNL53FZUCT4F5k8zLyU0NosM3HeMkkj/CBtgoe63biDtDJ1m1MZbLOndgp9c1FAOds
+         aUDCIvLS7NAPtwy1VOorPTy0hDImZk3+IGtHRJqsaM3JEu1IC590xC1Fi/lh36NB66Jq
+         RXIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686233140; x=1688825140;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=safYf9mtP/TqCKpDii2aud/ldnVoerr/RL86C5Y3JdA=;
+        b=Z7kpdjnD1BzEiukLECQp2uwxYdvMCh0S1DCxMLrqUAD6nMsZXEe5n6EOWlUfEVv8Bn
+         pLanloeLOJrc+9hsMLTQpKIPnSyjaZgD2tSXz6oWJhxTGRI54rFnyH7k70OeWMbmts2L
+         mRXy87g1jYlyCXHMK4p8OkzcWRBVN/ibIJ9sMRd9JdVE3rDOa6EE0SeHXqjuyDAxtgWp
+         4Pztxiaq9jgAYff7G9TpVjMixfXurlRIg4AHjT9V0aiGRGZaX1utog/rAw15goV3ZImX
+         nHbPQvH5HtL2/pNSaYEwWyXkxu/+3JgiEmv+eaGDp7vllnZM9vWI76lYrmS/V/Ob+4LG
+         FUVA==
+X-Gm-Message-State: AC+VfDxgFSp10u6tl9DcHr4wHnaFbpu6TOX2/E0JhgB+kaxrtKYbButm
+	Yymg/3KzlkHpUTOkOOEByJo0sMNg9ZIdXc9m7VwapQ==
+X-Google-Smtp-Source: ACHHUZ7KqxK0en144Hhhsj8yZ0vGveaeyuTpvLD0jU/cAdPLf+priNbDb4qTL52S86AU3Rt7dkR58oNUP0V5p14gzIY=
+X-Received: by 2002:a05:6830:1e6d:b0:68d:6a1e:46b9 with SMTP id
+ m13-20020a0568301e6d00b0068d6a1e46b9mr6119381otr.26.1686233139634; Thu, 08
+ Jun 2023 07:05:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230608032404.1887046-2-mcgrof@kernel.org>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+References: <20230607200903.652580797@linuxfoundation.org>
+In-Reply-To: <20230607200903.652580797@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 8 Jun 2023 19:35:28 +0530
+Message-ID: <CA+G9fYtqtXhZ2CM56xP3C8iDz6CjvcsdP8SvJhtD=hkAt7VoBQ@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/159] 5.15.116-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 07, 2023 at 08:24:01PM -0700, Luis Chamberlain wrote:
-> -extern struct super_block *blockdev_superblock;
->  static inline bool sb_is_blkdev_sb(struct super_block *sb)
->  {
-> -	return IS_ENABLED(CONFIG_BLOCK) && sb == blockdev_superblock;
-> +	return IS_ENABLED(CONFIG_BLOCK) && sb->s_magic == BDEVFS_MAGIC;
->  }
+On Thu, 8 Jun 2023 at 02:27, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.116 release.
+> There are 159 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 09 Jun 2023 20:07:31 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.116-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-So while I'd love to be able to make blockdev_superblock, I think
-the existing code is the better idea here.  BDEVFS_MAGIC can easily
-end up in any other s_magic as it's a free-form field.
-blockdev_superblock can't accidentally have the same address as a
-random non-bdev sb.
 
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
+
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 5.15.116-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git branch: linux-5.15.y
+* git commit: 00621f2608ac31643168c86e902c21a017ffe3b1
+* git describe: v5.15.114-196-g00621f2608ac
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
+.114-196-g00621f2608ac
+
+## Test Regressions (compared to v5.15.114)
+
+## Metric Regressions (compared to v5.15.114)
+
+## Test Fixes (compared to v5.15.114)
+
+## Metric Fixes (compared to v5.15.114)
+
+## Test result summary
+total: 108256, pass: 91348, fail: 3032, skip: 13715, xfail: 161
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 117 total, 116 passed, 1 failed
+* arm64: 45 total, 43 passed, 2 failed
+* i386: 35 total, 32 passed, 3 failed
+* mips: 27 total, 26 passed, 1 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 27 total, 26 passed, 1 failed
+* riscv: 11 total, 11 passed, 0 failed
+* s390: 12 total, 11 passed, 1 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 38 total, 36 passed, 2 failed
+
+## Test suites summary
+* boot
+* fwts
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
