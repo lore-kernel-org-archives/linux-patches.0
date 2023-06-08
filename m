@@ -1,108 +1,90 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BA11107
-	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 03:24:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=sMjmb+Wm54NnkkgYgz+La9q4lHjnPp58T0sIUFLYLug=; b=PYnv5Nlik3D3xkttqofPCLeerz
-	6toPkObfXRJV+vaqW+1uGWp5TU5vbR7LxWr1TeadroX29KvxG31CxZq2RiOSmGmBW3Hmdd3KgCEEP
-	KCU+6sPf8Z+IMDADGYBL7cI07DaTFCrvQFsF6o42U8wlZeDWOSixdpoTM3gYsTyOK7/6fGQQDxpSY
-	Vu/mdZNpxoS0qV8gGbotX8ZTuxij7qvgC562L3iAsGqqamU2bvRgRV0C4iCdx/PBxWOszFWhrbEdW
-	NkIudd5ueFlTXBAHHfL+NalrmDvnmD65A8GuAQkbOdi0COUy2RLofqPjiY/NY7fLa/u0n+sI8J4gc
-	xuBCCOFg==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q76Fr-007uui-2h;
-	Thu, 08 Jun 2023 03:24:07 +0000
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: hch@infradead.org,
-	djwong@kernel.org,
-	dchinner@redhat.com,
-	kbusch@kernel.org,
-	willy@infradead.org
-Cc: hare@suse.de,
-	ritesh.list@gmail.com,
-	rgoldwyn@suse.com,
-	jack@suse.cz,
-	patches@lists.linux.dev,
-	linux-xfs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-block@vger.kernel.org,
-	p.raghav@samsung.com,
-	da.gomez@samsung.com,
-	rohan.puri@samsung.com,
-	rpuri.linux@gmail.com,
-	mcgrof@kernel.org,
-	corbet@lwn.net,
-	jake@lwn.net
-Subject: [RFC 1/4] bdev: replace export of blockdev_superblock with BDEVFS_MAGIC
-Date: Wed,  7 Jun 2023 20:24:01 -0700
-Message-Id: <20230608032404.1887046-2-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230608032404.1887046-1-mcgrof@kernel.org>
-References: <20230608032404.1887046-1-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B80F10EF
+	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 03:35:25 +0000 (UTC)
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-655fce0f354so41040b3a.0
+        for <patches@lists.linux.dev>; Wed, 07 Jun 2023 20:35:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686195325; x=1688787325;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8xiW69CoMUIjxHIQzyXjlAxYnBQMHQabgtc/B1ukDjI=;
+        b=RzXUburYEfhlUWJ2Ms4IzfzP4qqvqjX3RT6PhqNQBzEyP+1bevOAD+Dt3uecywLo0u
+         9orIw/sAbMLT+ofSVDOGwBar3Xq1tIxxWa74PkzG+UaL+f3L/t5d14prtIF6ED0f84IO
+         rGCA9oEBt3dvR0ln/uuAb3aPhcrE9bcEcXPjCTfl6DagNF0WrX7MSRBygldeotxtN3hU
+         yrcBCei8ebdLXe1J8Uwa09Y2sJELkTh8JLk1ImnOulAci02YQ1QAjcbrcDUN+ivlcxlU
+         JZzkKIHDLrAxQkPFqEld1ow4j/mL6DqkLwmm6c4On7lVDckAPzjsdhBht/lY2ir4/H1A
+         5ahA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686195325; x=1688787325;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8xiW69CoMUIjxHIQzyXjlAxYnBQMHQabgtc/B1ukDjI=;
+        b=WB/wTrfkK2SuSqIMtjgD+aBCYHozgZjRg0J4nw7O1WTcivvNF6owKPBxK5v8C2OYFk
+         1Jht//rznHLUsR8w1LoAilpCo+Uk882wON0OCGifsosL2lyj9r/ZWsDeiyZ5ABoEX0UZ
+         G8tPvgBpAKDiNgxsPPkWo9qspWmb4zbWi0tohwFoDgsP43xLX1+/3hFn7okH6mlXbExD
+         CHee5Lp2sFu4q7HzwUfGldENFJBSC4FEEKiYZIBqmaEXzTL1ekaNP7Bq1nEz1u47WVhm
+         L2rsNuoPGTwsIuKzSJMUbBhz3VHnAZrpjN26Y8E+JkpZ+sgISm8IEYpE7kePMA8g+zDf
+         FHpA==
+X-Gm-Message-State: AC+VfDzAk0MrP2yur5tS9n6dEj4dEXXJdio1mUbjBYD7TuM/Ql7T0BQy
+	tdbMAfb6sPiuQdjFr3sDaTQ=
+X-Google-Smtp-Source: ACHHUZ4mTyt2JXsKjlbOs+T0Dfrve/D9stmzk9TWs1QPPGYxbMJIYEWifxp5CT3kmUtimd4LFX0YFA==
+X-Received: by 2002:a05:6a20:158d:b0:117:71bf:a58a with SMTP id h13-20020a056a20158d00b0011771bfa58amr3040316pzj.17.1686195325115;
+        Wed, 07 Jun 2023 20:35:25 -0700 (PDT)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id d7-20020a170902854700b001b00e0ab7b3sm256431plo.50.2023.06.07.20.35.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jun 2023 20:35:24 -0700 (PDT)
+Message-ID: <b1f1054a-5b15-ab43-e1f3-fa539b6a0b88@gmail.com>
+Date: Wed, 7 Jun 2023 20:35:22 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+From: Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH 6.3 000/286] 6.3.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230607200922.978677727@linuxfoundation.org>
+Content-Language: en-US
+In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-There is no need to export blockdev_superblock because we can just
-use the magic value of the block device cache super block, which is
-already in place, BDEVFS_MAGIC. So just check for that.
+On 6/7/23 13:11, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.3.7 release.
+> There are 286 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 09 Jun 2023 20:07:31 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-This let's us remove the export of blockdev_superblock and also
-let's this block dev cache scale as it wishes internally. For
-instance in the future we may have different super block for each
-block device. Right now it is all shared on one super block.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tseted on 
+BMIPS_GENERIC:
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- block/bdev.c       | 1 -
- include/linux/fs.h | 4 ++--
- 2 files changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/block/bdev.c b/block/bdev.c
-index 21c63bfef323..91477c3849d2 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -379,7 +379,6 @@ static struct file_system_type bd_type = {
- };
- 
- struct super_block *blockdev_superblock __read_mostly;
--EXPORT_SYMBOL_GPL(blockdev_superblock);
- 
- void __init bdev_cache_init(void)
- {
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 0b54ac1d331b..948a384af8a3 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -43,6 +43,7 @@
- #include <linux/cred.h>
- #include <linux/mnt_idmapping.h>
- #include <linux/slab.h>
-+#include <uapi/linux/magic.h>
- 
- #include <asm/byteorder.h>
- #include <uapi/linux/fs.h>
-@@ -2388,10 +2389,9 @@ extern struct kmem_cache *names_cachep;
- #define __getname()		kmem_cache_alloc(names_cachep, GFP_KERNEL)
- #define __putname(name)		kmem_cache_free(names_cachep, (void *)(name))
- 
--extern struct super_block *blockdev_superblock;
- static inline bool sb_is_blkdev_sb(struct super_block *sb)
- {
--	return IS_ENABLED(CONFIG_BLOCK) && sb == blockdev_superblock;
-+	return IS_ENABLED(CONFIG_BLOCK) && sb->s_magic == BDEVFS_MAGIC;
- }
- 
- void emergency_thaw_all(void);
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-2.39.2
+Florian
 
