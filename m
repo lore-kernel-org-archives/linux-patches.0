@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47901107
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B654D110D
 	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 03:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=i8udE4lZ9zFqOy/CU8rsbiperqptCexBzEc3SlSva0A=; b=FqszdcQsYtn+7QaEoWq67nnDPF
-	5Eg7Zs3vYghbDl9L/ZdzusDwSf7l2rNkyQmNh7Z53nlKNwoVBTRJsa6kodwBwycgq4dXbWyFASKdm
-	M82I9wh0LfRFzH792mSlPkUC187ToVFJVlM+Jw65mgJuRDVAI6fFFTuS28HZo33fhGVOgWDGHgpWW
-	Ybf/GOJ8BSBsBXY6FvO3Ue13e4nOlMiKX7/7KznLwPcYEhIOr/HGyqRYaqonj1CK0AGSA+qL80nWK
-	0Vu1+8vslH34F+tJJEFbeoACTr6y36JHZ9ldkj1KopEuA57cYV7tCJR79s+FTt6+oiY2zYm6MFT/6
-	hrzrNh9Q==;
+	bh=7c5o1TgTZx/+yF45xsch3Sa+lM5OGTIusUitJBnsivE=; b=dS6kbTArhANERobE2WbrG1u86d
+	G4kysNRDCruOqSaKtFn5zAcevAzNcDqJ0XIDpt0InqV1E229h2v4AB1t1AX54XIrldldfRokKfP7E
+	NL4ogmpWWCw2xOQewRDYNDOuZC9aP36wgbF9JBIzjszCm5UrIatcNwKIG1bvBjPBZSBfQI9aVAxZ0
+	C7cA89Uq+npbfJYk11W8mSb4z5E/YKz+dwLcyoUDyzdlOAR1xNFTe1aMoN1mggp6ZlIlAhHc2YSBQ
+	7hx8CNFT/U6kJM0LK1ek6TW2XflCX+fvMT9Eln3BO/FJSBFHHddr59Ud16t1OOdL5eKmmqcUerXRp
+	xu1YHExw==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q76Fr-007uuo-37;
+	id 1q76Fr-007uum-2y;
 	Thu, 08 Jun 2023 03:24:07 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hch@infradead.org,
@@ -37,9 +37,9 @@ Cc: hare@suse.de,
 	mcgrof@kernel.org,
 	corbet@lwn.net,
 	jake@lwn.net
-Subject: [RFC 4/4] bdev: extend bdev inode with it's own super_block
-Date: Wed,  7 Jun 2023 20:24:04 -0700
-Message-Id: <20230608032404.1887046-5-mcgrof@kernel.org>
+Subject: [RFC 3/4] bdev: rename iomap aops
+Date: Wed,  7 Jun 2023 20:24:03 -0700
+Message-Id: <20230608032404.1887046-4-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230608032404.1887046-1-mcgrof@kernel.org>
 References: <20230608032404.1887046-1-mcgrof@kernel.org>
@@ -52,215 +52,94 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-We currently share a single super_block for the block device cache,
-each block device corresponds to one inode on that super_block. This
-implicates sharing one aops operation though, and in the near future
-we want to be able to instead support using iomap on the super_block
-for different block devices.
+Allow buffer-head and iomap aops to co-exist on a build. Right
+now the iomap aops is can only be used if you disable buffer-heads.
+In the near future we should be able to dynamically select at runtime
+the intended aops based on the nature of the filesystem and device
+requirements.
 
-To allow more flexibility use a super_block per block device, so
-that we can eventually allow co-existence with pure-iomap requirements
-and block devices which require buffer-heads.
+So rename the iomap aops, and select use the new name if buffer-heads
+is disabled. This introduces no functional changes.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- block/bdev.c | 94 +++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 78 insertions(+), 16 deletions(-)
+ block/bdev.c |  4 ++++
+ block/blk.h  |  1 +
+ block/fops.c | 14 +++++++-------
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/block/bdev.c b/block/bdev.c
-index 2b16afc2bd2a..3ab952a77a11 100644
+index 61d8d2722cda..2b16afc2bd2a 100644
 --- a/block/bdev.c
 +++ b/block/bdev.c
-@@ -30,9 +30,14 @@
- #include "../fs/internal.h"
- #include "blk.h"
- 
-+static LIST_HEAD(bdev_inode_list);
-+static DEFINE_MUTEX(bdev_inode_mutex);
-+
- struct bdev_inode {
- 	struct block_device bdev;
- 	struct inode vfs_inode;
-+	struct vfsmount *bd_mnt;
-+	struct list_head list;
- };
- 
- static inline struct bdev_inode *BDEV_I(struct inode *inode)
-@@ -321,10 +326,28 @@ static struct inode *bdev_alloc_inode(struct super_block *sb)
- 	return &ei->vfs_inode;
- }
- 
-+static void bdev_remove_inode(struct bdev_inode *binode)
-+{
-+	struct bdev_inode *bdev_inode, *tmp;
-+
-+	kern_unmount(binode->bd_mnt);
-+
-+	mutex_lock(&bdev_inode_mutex);
-+	list_for_each_entry_safe(bdev_inode, tmp, &bdev_inode_list, list) {
-+		if (bdev_inode == binode) {
-+			list_del_init(&bdev_inode->list);
-+			break;
-+		}
-+	}
-+	mutex_unlock(&bdev_inode_mutex);
-+}
-+
- static void bdev_free_inode(struct inode *inode)
- {
- 	struct block_device *bdev = I_BDEV(inode);
- 
-+	bdev_remove_inode(BDEV_I(inode));
-+
- 	free_percpu(bdev->bd_stats);
- 	kfree(bdev->bd_meta_info);
- 
-@@ -378,12 +401,9 @@ static struct file_system_type bd_type = {
- 	.kill_sb	= kill_anon_super,
- };
- 
--struct super_block *blockdev_superblock __read_mostly;
--
- void __init bdev_cache_init(void)
- {
- 	int err;
--	static struct vfsmount *bd_mnt;
- 
- 	bdev_cachep = kmem_cache_create("bdev_cache", sizeof(struct bdev_inode),
- 			0, (SLAB_HWCACHE_ALIGN|SLAB_RECLAIM_ACCOUNT|
-@@ -392,20 +412,23 @@ void __init bdev_cache_init(void)
- 	err = register_filesystem(&bd_type);
- 	if (err)
- 		panic("Cannot register bdev pseudo-fs");
--	bd_mnt = kern_mount(&bd_type);
--	if (IS_ERR(bd_mnt))
--		panic("Cannot create bdev pseudo-fs");
--	blockdev_superblock = bd_mnt->mnt_sb;   /* For writeback */
- }
- 
- struct block_device *bdev_alloc(struct gendisk *disk, u8 partno)
- {
-+	struct vfsmount *bd_mnt;
- 	struct block_device *bdev;
- 	struct inode *inode;
- 
--	inode = new_inode(blockdev_superblock);
--	if (!inode)
-+	bd_mnt = vfs_kern_mount(&bd_type, SB_KERNMOUNT, bd_type.name, NULL);
-+	if (IS_ERR(bd_mnt))
+@@ -408,7 +408,11 @@ struct block_device *bdev_alloc(struct gendisk *disk, u8 partno)
  		return NULL;
-+
-+	inode = new_inode(bd_mnt->mnt_sb);
-+	if (!inode) {
-+		kern_unmount(bd_mnt);
-+		goto err_out;
-+	}
  	inode->i_mode = S_IFBLK;
  	inode->i_rdev = 0;
- #ifdef CONFIG_BUFFER_HEAD
-@@ -426,12 +449,14 @@ struct block_device *bdev_alloc(struct gendisk *disk, u8 partno)
- 	else
- 		bdev->bd_has_submit_bio = false;
- 	bdev->bd_stats = alloc_percpu(struct disk_stats);
--	if (!bdev->bd_stats) {
--		iput(inode);
--		return NULL;
--	}
-+	if (!bdev->bd_stats)
-+		goto err_out;
- 	bdev->bd_disk = disk;
-+	BDEV_I(inode)->bd_mnt = bd_mnt; /* For writeback */
- 	return bdev;
-+err_out:
-+	iput(inode);
-+	return NULL;
- }
++#ifdef CONFIG_BUFFER_HEAD
+ 	inode->i_data.a_ops = &def_blk_aops;
++#else
++	inode->i_data.a_ops = &def_blk_aops_iomap;
++#endif
+ 	mapping_set_gfp_mask(&inode->i_data, GFP_USER);
  
- void bdev_set_nr_sectors(struct block_device *bdev, sector_t sectors)
-@@ -444,13 +469,16 @@ void bdev_set_nr_sectors(struct block_device *bdev, sector_t sectors)
+ 	bdev = I_BDEV(inode);
+diff --git a/block/blk.h b/block/blk.h
+index 7ad7cb6ffa01..67bf2fa99fe9 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -453,6 +453,7 @@ long blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg);
+ long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg);
  
- void bdev_add(struct block_device *bdev, dev_t dev)
+ extern const struct address_space_operations def_blk_aops;
++extern const struct address_space_operations def_blk_aops_iomap;
+ 
+ int disk_register_independent_access_ranges(struct gendisk *disk);
+ void disk_unregister_independent_access_ranges(struct gendisk *disk);
+diff --git a/block/fops.c b/block/fops.c
+index 24037b493f5f..51f7241ab389 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -455,13 +455,14 @@ const struct address_space_operations def_blk_aops = {
+ 	.migrate_folio	= buffer_migrate_folio_norefs,
+ 	.is_dirty_writeback = buffer_check_dirty_writeback,
+ };
+-#else /* CONFIG_BUFFER_HEAD */
+-static int blkdev_read_folio(struct file *file, struct folio *folio)
++
++#endif /* CONFIG_BUFFER_HEAD */
++static int blkdev_read_folio_iomap(struct file *file, struct folio *folio)
  {
-+	struct inode *inode = bdev->bd_inode;
-+
- 	bdev->bd_dev = dev;
- 	bdev->bd_inode->i_rdev = dev;
- 	bdev->bd_inode->i_ino = dev;
- 	insert_inode_hash(bdev->bd_inode);
-+	list_add_tail(&BDEV_I(inode)->list, &bdev_inode_list);
+ 	return iomap_read_folio(folio, &blkdev_iomap_ops);
  }
  
--long nr_blockdev_pages(void)
-+static long nr_blockdev_pages_sb(struct super_block *blockdev_superblock)
+-static void blkdev_readahead(struct readahead_control *rac)
++static void blkdev_readahead_iomap(struct readahead_control *rac)
  {
- 	struct inode *inode;
- 	long ret = 0;
-@@ -463,6 +491,19 @@ long nr_blockdev_pages(void)
- 	return ret;
+ 	iomap_readahead(rac, &blkdev_iomap_ops);
+ }
+@@ -492,18 +493,17 @@ static int blkdev_writepages(struct address_space *mapping,
+ 	return iomap_writepages(mapping, wbc, &wpc, &blkdev_writeback_ops);
  }
  
-+long nr_blockdev_pages(void)
-+{
-+	struct bdev_inode *bdev_inode;
-+	long ret = 0;
-+
-+	mutex_lock(&bdev_inode_mutex);
-+	list_for_each_entry(bdev_inode, &bdev_inode_list, list)
-+		ret += nr_blockdev_pages_sb(bdev_inode->bd_mnt->mnt_sb);
-+	mutex_unlock(&bdev_inode_mutex);
-+
-+	return ret;
-+}
-+
- /**
-  * bd_may_claim - test whether a block device can be claimed
-  * @bdev: block device of interest
-@@ -672,7 +713,18 @@ static void blkdev_put_part(struct block_device *part, fmode_t mode)
+-const struct address_space_operations def_blk_aops = {
++const struct address_space_operations def_blk_aops_iomap = {
+ 	.dirty_folio	= filemap_dirty_folio,
+ 	.release_folio		= iomap_release_folio,
+ 	.invalidate_folio	= iomap_invalidate_folio,
+-	.read_folio		= blkdev_read_folio,
+-	.readahead		= blkdev_readahead,
++	.read_folio		= blkdev_read_folio_iomap,
++	.readahead		= blkdev_readahead_iomap,
+ 	.writepages		= blkdev_writepages,
+ 	.is_partially_uptodate  = iomap_is_partially_uptodate,
+ 	.error_remove_page	= generic_error_remove_page,
+ 	.migrate_folio		= filemap_migrate_folio,
+ };
+-#endif /* CONFIG_BUFFER_HEAD */
  
- static struct inode *blkdev_inode_lookup(dev_t dev)
- {
--	return ilookup(blockdev_superblock, dev);
-+	struct bdev_inode *bdev_inode;
-+	struct inode *inode = NULL;
-+
-+	mutex_lock(&bdev_inode_mutex);
-+	list_for_each_entry(bdev_inode, &bdev_inode_list, list) {
-+		inode = ilookup(bdev_inode->bd_mnt->mnt_sb, dev);
-+		if (inode)
-+			break;
-+	}
-+	mutex_unlock(&bdev_inode_mutex);
-+
-+	return inode;
- }
- 
- struct block_device *blkdev_get_no_open(dev_t dev)
-@@ -961,7 +1013,7 @@ int __invalidate_device(struct block_device *bdev, bool kill_dirty)
- }
- EXPORT_SYMBOL(__invalidate_device);
- 
--void sync_bdevs(bool wait)
-+static void sync_bdev_sb(struct super_block *blockdev_superblock, bool wait)
- {
- 	struct inode *inode, *old_inode = NULL;
- 
-@@ -1013,6 +1065,16 @@ void sync_bdevs(bool wait)
- 	iput(old_inode);
- }
- 
-+void sync_bdevs(bool wait)
-+{
-+	struct bdev_inode *bdev_inode;
-+
-+	mutex_lock(&bdev_inode_mutex);
-+	list_for_each_entry(bdev_inode, &bdev_inode_list, list)
-+		sync_bdev_sb(bdev_inode->bd_mnt->mnt_sb, wait);
-+	mutex_unlock(&bdev_inode_mutex);
-+}
-+
  /*
-  * Handle STATX_DIOALIGN for block devices.
-  *
+  * for a block special file file_inode(file)->i_size is zero
 -- 
 2.39.2
 
