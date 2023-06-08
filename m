@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF111116
-	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 03:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BA11107
+	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 03:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=tJx3dGm90GKdxMftw9L/RXCahr9FMlcRqFZ3WAycOtw=; b=SnPxpRakWKO3T03Wum+j1Oo4PP
-	fZ2ekS0+63BhppE75A69n7zuvV//6fONSqDm81rg0z7wY6DlQ4KGoA+gPLQFCueJ8d56DmjAgmzrr
-	AcMxGOHBNBectqVEhqMFViUocqzXzYcErEiNEIXjxPZ7EynytZhRa4MokPMcQPnY2iMbLosajzoAV
-	8f/YE11Zoj5fqgm4O+AwvpN2V4LHoJBcuyQHLMS4EWq/9kV1wsQhbtdn3X4P77AO8U3rzK2mS19O2
-	1sKqZZduZ13Na74voRxmvQhwbpCsiSE+auOoa8AvrZMSeKsbyYFthFY/c2yabOQPUUz+VpZJgOHVB
-	isHny2qw==;
+	bh=sMjmb+Wm54NnkkgYgz+La9q4lHjnPp58T0sIUFLYLug=; b=PYnv5Nlik3D3xkttqofPCLeerz
+	6toPkObfXRJV+vaqW+1uGWp5TU5vbR7LxWr1TeadroX29KvxG31CxZq2RiOSmGmBW3Hmdd3KgCEEP
+	KCU+6sPf8Z+IMDADGYBL7cI07DaTFCrvQFsF6o42U8wlZeDWOSixdpoTM3gYsTyOK7/6fGQQDxpSY
+	Vu/mdZNpxoS0qV8gGbotX8ZTuxij7qvgC562L3iAsGqqamU2bvRgRV0C4iCdx/PBxWOszFWhrbEdW
+	NkIudd5ueFlTXBAHHfL+NalrmDvnmD65A8GuAQkbOdi0COUy2RLofqPjiY/NY7fLa/u0n+sI8J4gc
+	xuBCCOFg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q76Fr-007uuk-2p;
+	id 1q76Fr-007uui-2h;
 	Thu, 08 Jun 2023 03:24:07 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hch@infradead.org,
@@ -37,9 +37,9 @@ Cc: hare@suse.de,
 	mcgrof@kernel.org,
 	corbet@lwn.net,
 	jake@lwn.net
-Subject: [RFC 2/4] bdev: abstract inode lookup on blkdev_get_no_open()
-Date: Wed,  7 Jun 2023 20:24:02 -0700
-Message-Id: <20230608032404.1887046-3-mcgrof@kernel.org>
+Subject: [RFC 1/4] bdev: replace export of blockdev_superblock with BDEVFS_MAGIC
+Date: Wed,  7 Jun 2023 20:24:01 -0700
+Message-Id: <20230608032404.1887046-2-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230608032404.1887046-1-mcgrof@kernel.org>
 References: <20230608032404.1887046-1-mcgrof@kernel.org>
@@ -52,54 +52,57 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Provide an abstraction for how we lookup an inode
-on blkdev_get_no_open() so we can later expand upon
-the implementation on just relying on one super block.
+There is no need to export blockdev_superblock because we can just
+use the magic value of the block device cache super block, which is
+already in place, BDEVFS_MAGIC. So just check for that.
 
-This will make subsequent changes easier to review.
-
-This introduces no functional changes.
-
-Although we all probably want to just remove BLOCK_LEGACY_AUTOLOAD
-removing it before has proven issues with both loopback [0] and
-is expected to break mdraid [1], so this takes the more careful
-approach to just keeping it.
-
-[0] https://lore.kernel.org/all/20220222085354.GA6423@lst.de/T/#u
-[1] https://lore.kernel.org/all/20220503212848.5853-1-dmoulding@me.com/
+This let's us remove the export of blockdev_superblock and also
+let's this block dev cache scale as it wishes internally. For
+instance in the future we may have different super block for each
+block device. Right now it is all shared on one super block.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- block/bdev.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ block/bdev.c       | 1 -
+ include/linux/fs.h | 4 ++--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/block/bdev.c b/block/bdev.c
-index 91477c3849d2..61d8d2722cda 100644
+index 21c63bfef323..91477c3849d2 100644
 --- a/block/bdev.c
 +++ b/block/bdev.c
-@@ -666,15 +666,20 @@ static void blkdev_put_part(struct block_device *part, fmode_t mode)
- 	blkdev_put_whole(whole, mode);
+@@ -379,7 +379,6 @@ static struct file_system_type bd_type = {
+ };
+ 
+ struct super_block *blockdev_superblock __read_mostly;
+-EXPORT_SYMBOL_GPL(blockdev_superblock);
+ 
+ void __init bdev_cache_init(void)
+ {
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 0b54ac1d331b..948a384af8a3 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -43,6 +43,7 @@
+ #include <linux/cred.h>
+ #include <linux/mnt_idmapping.h>
+ #include <linux/slab.h>
++#include <uapi/linux/magic.h>
+ 
+ #include <asm/byteorder.h>
+ #include <uapi/linux/fs.h>
+@@ -2388,10 +2389,9 @@ extern struct kmem_cache *names_cachep;
+ #define __getname()		kmem_cache_alloc(names_cachep, GFP_KERNEL)
+ #define __putname(name)		kmem_cache_free(names_cachep, (void *)(name))
+ 
+-extern struct super_block *blockdev_superblock;
+ static inline bool sb_is_blkdev_sb(struct super_block *sb)
+ {
+-	return IS_ENABLED(CONFIG_BLOCK) && sb == blockdev_superblock;
++	return IS_ENABLED(CONFIG_BLOCK) && sb->s_magic == BDEVFS_MAGIC;
  }
  
-+static struct inode *blkdev_inode_lookup(dev_t dev)
-+{
-+	return ilookup(blockdev_superblock, dev);
-+}
-+
- struct block_device *blkdev_get_no_open(dev_t dev)
- {
- 	struct block_device *bdev;
- 	struct inode *inode;
- 
--	inode = ilookup(blockdev_superblock, dev);
-+	inode = blkdev_inode_lookup(dev);
- 	if (!inode && IS_ENABLED(CONFIG_BLOCK_LEGACY_AUTOLOAD)) {
- 		blk_request_module(dev);
--		inode = ilookup(blockdev_superblock, dev);
-+		inode = blkdev_inode_lookup(dev);
- 		if (inode)
- 			pr_warn_ratelimited(
- "block device autoloading is deprecated and will be removed.\n");
+ void emergency_thaw_all(void);
 -- 
 2.39.2
 
