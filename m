@@ -1,105 +1,97 @@
-Received: from qproxy5-pub.mail.unifiedlayer.com (qproxy5-pub.mail.unifiedlayer.com [69.89.21.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8973B3FA
-	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 10:16:20 +0000 (UTC)
-Received: from progateway7-pub.mail.pro1.eigbox.com (gproxy5-pub.mail.unifiedlayer.com [67.222.38.55])
-	by qproxy5.mail.unifiedlayer.com (Postfix) with ESMTP id 094258032E3D
-	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 09:53:48 +0000 (UTC)
-Received: from cmgw15.mail.unifiedlayer.com (unknown [10.0.90.130])
-	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id C1989100448F6
-	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 09:53:40 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id 7CKqqHNH8FBsX7CKqqlDUi; Thu, 08 Jun 2023 09:53:40 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=f/KNuM+M c=1 sm=1 tr=0 ts=6481a524
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=of4jigFt-DYA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=0Vbst/TxzeAWSBYXwoL0oY52SY4mMfMBONbQLAZCISo=; b=yF3zBh/SqfKR9AcIIjAzGVBWfK
-	obpU/POfGtywR2ji0LsMfFWPS7RVZ2QJ+HJKtZqBO2Vf//9PLyVCik9mj4iCXBnVoPCp1rjVI1TJy
-	vnkTv4FNcnHP/kuTlIvikyWObUMnGlMTsjIxzeuULhm1W1KWJuvabXGng6V4kpJyGIRJRZqZGCGbq
-	kcM1N/uGtRQRA3l/dhtLexCjyei38gwCQIEKUEdCAMunBoEBAGI3+h5DISi36YjEdf7Tvt3y+hkHE
-	nGaOpMjUuhg8cUdJ4GpKJkEsOW3VZJayiAwqiP6ej5YETWoVw79Y+ByKxWsxSvbTPfdROIJa7UEIo
-	AbQ9C1CQ==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:43200 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1q7CKp-000MBa-Q7;
-	Thu, 08 Jun 2023 03:53:39 -0600
-Subject: Re: [PATCH 6.3 000/286] 6.3.7-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230607200922.978677727@linuxfoundation.org>
-In-Reply-To: <20230607200922.978677727@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <33c8385f-3564-58db-df54-a57f92b38abe@w6rz.net>
-Date: Thu, 8 Jun 2023 02:53:37 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A67BA2E
+	for <patches@lists.linux.dev>; Thu,  8 Jun 2023 10:22:14 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 79F181FDE9;
+	Thu,  8 Jun 2023 10:22:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1686219732; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ayRJTvrnmOfJwDrSeWFMGSYC6CQeMiIa/RwpAE213X8=;
+	b=CZ/kBlQRdUsNuLKR6xrT3ogbLODNzef0icCizic2BE71TjRGqwyw3I/uep2qNnyotF3Z2N
+	ZG83jZWcct1Drm+nzZ86GBoFRcKSODX3hzwdFUIEWjr3JeqPhbI0NCVgPUhLKrsVM7+YzZ
+	7U0BYK5OqY/2ElizoD8LTGOJ1O4vdbY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1686219732;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ayRJTvrnmOfJwDrSeWFMGSYC6CQeMiIa/RwpAE213X8=;
+	b=HjC/Se3o9kNNB/CGAXgmZz1CIvIRtF9/JP6ONlLZeHtr+ACKHaUEEEqT3Suz9ADNaMsOD2
+	3w00FxTLpGBBRyCQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+	(No client certificate requested)
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 65E7F138E6;
+	Thu,  8 Jun 2023 10:22:12 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+	by imap2.suse-dmz.suse.de with ESMTPSA
+	id jPDTGNSrgWQOCAAAMHmgww
+	(envelope-from <jack@suse.cz>); Thu, 08 Jun 2023 10:22:12 +0000
+Received: by quack3.suse.cz (Postfix, from userid 1000)
+	id F0D82A0749; Thu,  8 Jun 2023 12:22:11 +0200 (CEST)
+Date: Thu, 8 Jun 2023 12:22:11 +0200
+From: Jan Kara <jack@suse.cz>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: hch@infradead.org, djwong@kernel.org, dchinner@redhat.com,
+	kbusch@kernel.org, willy@infradead.org, hare@suse.de,
+	ritesh.list@gmail.com, rgoldwyn@suse.com, jack@suse.cz,
+	patches@lists.linux.dev, linux-xfs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
+	p.raghav@samsung.com, da.gomez@samsung.com, rohan.puri@samsung.com,
+	rpuri.linux@gmail.com, corbet@lwn.net, jake@lwn.net
+Subject: Re: [RFC 1/4] bdev: replace export of blockdev_superblock with
+ BDEVFS_MAGIC
+Message-ID: <20230608102211.wg5kptxmt4ixygfd@quack3>
+References: <20230608032404.1887046-1-mcgrof@kernel.org>
+ <20230608032404.1887046-2-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1q7CKp-000MBa-Q7
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:43200
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230608032404.1887046-2-mcgrof@kernel.org>
 
-On 6/7/23 1:11 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.7 release.
-> There are 286 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 09 Jun 2023 20:07:31 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.7-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Wed 07-06-23 20:24:01, Luis Chamberlain wrote:
+> There is no need to export blockdev_superblock because we can just
+> use the magic value of the block device cache super block, which is
+> already in place, BDEVFS_MAGIC. So just check for that.
+> 
+> This let's us remove the export of blockdev_superblock and also
+> let's this block dev cache scale as it wishes internally. For
+> instance in the future we may have different super block for each
+> block device. Right now it is all shared on one super block.
+> 
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>  block/bdev.c       | 1 -
+>  include/linux/fs.h | 4 ++--
+>  2 files changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/block/bdev.c b/block/bdev.c
+> index 21c63bfef323..91477c3849d2 100644
+> --- a/block/bdev.c
+> +++ b/block/bdev.c
+> @@ -379,7 +379,6 @@ static struct file_system_type bd_type = {
+>  };
+>  
+>  struct super_block *blockdev_superblock __read_mostly;
+> -EXPORT_SYMBOL_GPL(blockdev_superblock);
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+You can even make blockdev_superblock static. I like this! Otherwise the
+patch looks good.
 
-Tested-by: Ron Economos <re@w6rz.net>
-
+								Honza
+-- 
+Jan Kara <jack@suse.com>
+SUSE Labs, CR
