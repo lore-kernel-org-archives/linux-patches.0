@@ -1,89 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CE928F3;
-	Thu,  8 Jun 2023 15:54:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD303C433D2;
-	Thu,  8 Jun 2023 15:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF2E171CB;
+	Thu,  8 Jun 2023 17:02:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64855C433D2;
+	Thu,  8 Jun 2023 17:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686239668;
-	bh=KC7pc+HuJtxytfEHmhScpNkrZ2PvzCFEU9GQjwsjh4w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lzlpPucPWYseRIzEorhY5F+Z/bOM2tAu0VrZDhuaaEN844jSZzBC0WfXOaOL0vcnc
-	 ZLTqPPVB1W8FV3jkuR+N1aFdpO2CSSdm5npKThdGnWd5OgMoeTxbSj48B4j5AN7P+f
-	 Bww0hEZvrPMNKh0OTg+wXrMN5V/cfaH9nHs9Ya6jN2DHO6FlhvIur8pPeGU2L0/JqB
-	 YM1iKbTkMnIUk0Mk/u3GTWyYSoTNd6tWKKhWT1787NSAloPpqD2h6uskEeAJk12L8H
-	 r8BxVLHL//cOrQgx9OG2IBcTcVFw3aag1jznJM6WivgqhnNyJxcl7NOYacXkTxFZPV
-	 AJjt9g7e5A6wQ==
-Date: Thu, 8 Jun 2023 08:54:26 -0700
+	s=k20201202; t=1686243730;
+	bh=9FEDzsYIDwHxxh598m4E7BJ7qf89BOb1Zpn6HGMQj80=;
+	h=From:Date:Subject:To:Cc:From;
+	b=R+kZXTb8gy/Bh8WYcChU0kwjdd0rl+u8uPULWcdlyvgn6cAdl6rMJsmJuGKvBhnZg
+	 COlLQz9zYTnxHm0OYGWGObXenwfQGeoI5RQt55mMLd5ApFPeOLpc6c0avGXvswyS8L
+	 elYz9p5b5T408DOasKPyf3vVKlFHt3Wbz0N2m6h+lKEGtBpoaJD+d0bpqstWjGg+Qe
+	 xOjMvYEoPpgz0ONT7ZROeQ8nSbVXbrVCmC5I/4aIRodpa1tSpD7Q/bBWVGqSW9cMTq
+	 /JccQQZBOHBJR0cYxttqHJy/QZaqbc3sfEZpmEFj0umlinSRTMgITtxVgZOV3L4p7k
+	 UJBHpyuIZ8Kig==
 From: Nathan Chancellor <nathan@kernel.org>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: mark.rutland@arm.com, arnd@arndb.de, ndesaulniers@google.com,
-	trix@redhat.com, linux-arch@vger.kernel.org,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] percpu: Fix self-assignment of __old in
- raw_cpu_generic_try_cmpxchg()
-Message-ID: <20230608155426.GA188192@dev-arch.thelio-3990X>
-References: <20230607-fix-shadowing-in-raw_cpu_generic_try_cmpxchg-v1-1-8f0a3d930d43@kernel.org>
- <20230608082940.GF998233@hirez.programming.kicks-ass.net>
+Date: Thu, 08 Jun 2023 10:01:57 -0700
+Subject: [PATCH] drm/amdgpu: Wrap -Wunused-but-set-variable in cc-option
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230608082940.GF998233@hirez.programming.kicks-ass.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230608-amdgpu-wrap-wunused-but-set-variable-in-cc-option-v1-1-48ca005f2247@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAIQJgmQC/x2OQQrDIBBFrxJcd8AaUmyvUroYdZoIjZEZTQohd
+ 6/p8vH4j78rIY4k6tHtimmNEpfU4HrplJ8wjQQxNFZGm17ftAWcw5grbIwZtpqqUABXCwgVWJE
+ juk/bJPAellxaDbSj+2As+sFb1boOhcAxJj+d5RmlEJ8iM73j93/m+TqOHz1XAlacAAAA
+To: alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com
+Cc: ndesaulniers@google.com, trix@redhat.com, hamza.mahfooz@amd.com, 
+ Kenny.Ho@amd.com, amd-gfx@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1626; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=9FEDzsYIDwHxxh598m4E7BJ7qf89BOb1Zpn6HGMQj80=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDClNnBODSgTuzrSIzb451SfT0JRjDevszKBrl/7wufQc7
+ gmz8VLtKGVhEONgkBVTZKl+rHrc0HDOWcYbpybBzGFlAhnCwMUpABPhTmH4X7DlpoX8uq47GbfP
+ cBeybVq/Maz9wwm3ldt2PGDUTLe6vJThf8jORH9pvx9//BTN70yTVbG8khGxSCWfr9fM+aVHueh
+ XBgA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Thu, Jun 08, 2023 at 10:29:40AM +0200, Peter Zijlstra wrote:
-> On Wed, Jun 07, 2023 at 02:20:59PM -0700, Nathan Chancellor wrote:
-> > After commit c5c0ba953b8c ("percpu: Add {raw,this}_cpu_try_cmpxchg()"),
-> > clang built ARCH=arm and ARCH=arm64 kernels with CONFIG_INIT_STACK_NONE
-> > started panicking on boot in alloc_vmap_area():
-> > 
-> >   [    0.000000] kernel BUG at mm/vmalloc.c:1638!
-> >   [    0.000000] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-> >   [    0.000000] Modules linked in:
-> >   [    0.000000] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-rc2-ARCH+ #1
-> >   [    0.000000] Hardware name: linux,dummy-virt (DT)
-> >   [    0.000000] pstate: 200000c9 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> >   [    0.000000] pc : alloc_vmap_area+0x7ec/0x7f8
-> >   [    0.000000] lr : alloc_vmap_area+0x7e8/0x7f8
-> > 
-> > Compiling mm/vmalloc.c with W=2 reveals an instance of -Wshadow, which
-> > helps uncover that through macro expansion, '__old = *(ovalp)' in
-> > raw_cpu_generic_try_cmpxchg() can become '__old = *(&__old)' through
-> > raw_cpu_generic_cmpxchg(), which results in garbage being assigned to
-> > the inner __old and the cmpxchg not working properly.
-> > 
-> > Add an extra underscore to __old in raw_cpu_generic_try_cmpxchg() so
-> > that there is no more self-assignment, which resolves the panics.
-> > 
-> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1868
-> 
-> First time I see Closes; is this an 'official' tag?
+-Wunused-but-set-variable was only supported in clang starting with
+13.0.0, so earlier versions will emit a warning, which is turned into a
+hard error for the kernel to mirror GCC:
 
-It is, but only recently:
+  error: unknown warning option '-Wunused-but-set-variable'; did you mean '-Wunused-const-variable'? [-Werror,-Wunknown-warning-option]
 
-https://git.kernel.org/linus/0d828200ad56505a827610af876ca0b138b943a6
+The minimum supported version of clang for building the kernel is
+11.0.0, so match the rest of the kernel and wrap
+-Wunused-but-set-variable in a cc-option call, so that it is only used
+when supported by the compiler.
 
-checkpatch.pl wants Closes: after Reported-by: so I have just started
-getting into the habit of using it even when I am the reporter :)
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1869
+Fixes: a0fd5a5f676c ("drm/amd/amdgpu: introduce DRM_AMDGPU_WERROR")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/amd/amdgpu/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> > Debugged-by: Nick Desaulniers <ndesaulniers@google.com>
-> > Fixes: c5c0ba953b8c ("percpu: Add {raw,this}_cpu_try_cmpxchg()")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> 
-> Durr, C is such a lovely language :-)
+diff --git a/drivers/gpu/drm/amd/amdgpu/Makefile b/drivers/gpu/drm/amd/amdgpu/Makefile
+index 7ee68b1bbfed..86b833085f19 100644
+--- a/drivers/gpu/drm/amd/amdgpu/Makefile
++++ b/drivers/gpu/drm/amd/amdgpu/Makefile
+@@ -40,7 +40,7 @@ ccflags-y := -I$(FULL_AMD_PATH)/include/asic_reg \
+ 	-I$(FULL_AMD_PATH)/amdkfd
+ 
+ subdir-ccflags-y := -Wextra
+-subdir-ccflags-y += -Wunused-but-set-variable
++subdir-ccflags-y += $(call cc-option, -Wunused-but-set-variable)
+ subdir-ccflags-y += -Wno-unused-parameter
+ subdir-ccflags-y += -Wno-type-limits
+ subdir-ccflags-y += -Wno-sign-compare
 
-:)
+---
+base-commit: 6bd4b01e8938779b0d959bdf33949a9aa258a363
+change-id: 20230608-amdgpu-wrap-wunused-but-set-variable-in-cc-option-0be9528ac5c8
 
-> I'll go stick it in locking/core to go with the bunch that wrecked it.
-> Thanks!
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-Thanks for the quick response!
-
-Cheers,
-Nathan
