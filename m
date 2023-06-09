@@ -1,77 +1,230 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44E71C10
-	for <patches@lists.linux.dev>; Fri,  9 Jun 2023 04:20:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=Bf0Imcmrff8IiflvMMZwKHn+EPzovpKROa1e5HANUoM=; b=nue2TtmTamk9kJkszgPEGMpwte
-	lhHnwHuuxogMyeD0BQGtvyzl9mYliO0ISA7i4oG4Eg26b4hQtdcmoQUUCz1Am7UpYm5S66D9LPRcN
-	5/Uy48E/9SEM/MtyvLfTqnHleWvImTBEULArcgIPOro0eI0uH/g8x7xGkNc5T8q6fWD0qd8OLdc97
-	ElapA2f8xr6rBQxc1qCGSsaN+zI29pxUboyrxPIpW2N4x9lZz6fqH1w//lOov0U+KiyyY8W/8QHLC
-	OQ3XqldDQHaU2nU4fWrkx05LA8/dDA0VYONM/hMe7D6Vat+V5OW3FTF5aiXDBdyIfisWlNbvL2C/X
-	YUBAuQVw==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q7Tbj-00Ba1H-02;
-	Fri, 09 Jun 2023 04:20:15 +0000
-Date: Thu, 8 Jun 2023 21:20:14 -0700
-From: Christoph Hellwig <hch@infradead.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Christoph Hellwig <hch@infradead.org>,
-	Matthew Wilcox <willy@infradead.org>, djwong@kernel.org,
-	dchinner@redhat.com, kbusch@kernel.org, hare@suse.de,
-	ritesh.list@gmail.com, rgoldwyn@suse.com, jack@suse.cz,
-	patches@lists.linux.dev, linux-xfs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
-	p.raghav@samsung.com, da.gomez@samsung.com, rohan.puri@samsung.com,
-	rpuri.linux@gmail.com, corbet@lwn.net, jake@lwn.net
-Subject: Re: [RFC 4/4] bdev: extend bdev inode with it's own super_block
-Message-ID: <ZIKofhpTXREOR3ec@infradead.org>
-References: <20230608032404.1887046-1-mcgrof@kernel.org>
- <20230608032404.1887046-5-mcgrof@kernel.org>
- <ZIHZngefNAtYtg7L@casper.infradead.org>
- <ZIHcl8epO0h3z1TO@infradead.org>
- <ZIITpjDXyupKom+N@bombadil.infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5751615C6
+	for <patches@lists.linux.dev>; Fri,  9 Jun 2023 06:30:57 +0000 (UTC)
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-43b5882f945so466342137.0
+        for <patches@lists.linux.dev>; Thu, 08 Jun 2023 23:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686292256; x=1688884256;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cF5eChhUeOObLndhM05v4v9hcSfyNWa1h0zv+44AyzE=;
+        b=NqO8yW//9bm3FInTZ4EaJayDZMF1jaU8XN0Dg/k3Mit4vferLk48BjWFz52etDpluE
+         5K2iov5PMH6gk7q4tpLVQlhICTOqub5nPu02N2D+oZFSUA/2j/EoAUyg7blcpLUd7YBv
+         NXq0QBL8KJ4QCprVVdC4DbuIL8boEXuAFpyZm68lBpvts82gP6BsaJG7Vo1n7UCx/7Ce
+         0gIPYmaHELX9EL7F0oXByIvNp+ZbsgggBmSznrF4/rz4Pn3bIqXS7/k1BfgmwF292Dk1
+         CMBWwjyGZmWxH8hxo3HVxj95Gqp7/oLtyfJDoIXs6Wveptu4LbY0vmr5QbG0oARAvRJf
+         s5rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686292256; x=1688884256;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cF5eChhUeOObLndhM05v4v9hcSfyNWa1h0zv+44AyzE=;
+        b=X5T13F0o2BR35/iohof9m2LxZwDut0Kmx5Lcd1tCi89uje2SfEGkDExdmdt2aduVoI
+         4UGALcrclLGT7llqhy2dm1wdjfAApTx7WMkXUquriBGGoIAhlXH2AEmzyIlsExmt865U
+         zKgHQGUc5P3W33pV4KeWyDFRjctDyx6sXYXxh8fWkkRpy+G+xilZp1OQIkF/PNdA2pWf
+         erpPk0J5XeDRAOhOdo6zvjYIWySn96ehAxH5vMEjp+3z2FWw7WQCd1c2qzuDTMQH2P8f
+         j8rf5VCKw8m6aqVtbnHq2/UciRSN34c50dQbwhiuA+tcFDrBL/6A6IE2+c9upmTmtWXt
+         BQeg==
+X-Gm-Message-State: AC+VfDxKs5tipp2usQGlEOHRYbf+kfld1BBXEgyP/dfi/asuKanqfpkt
+	klceRbp4j1eRkx7J8Mwgd7DO8VmO7WBepOJnrrgdCg==
+X-Google-Smtp-Source: ACHHUZ6rYHYr8oALJGUoadjA1z2iLJS5c0TCHVYB3YHFW/89t2JI2/4P9ILn1V+l2c+koFp+ZsmuayT6JCJ8ZbdSS8Y=
+X-Received: by 2002:a67:ff88:0:b0:439:3128:587d with SMTP id
+ v8-20020a67ff88000000b004393128587dmr290674vsq.28.1686292255923; Thu, 08 Jun
+ 2023 23:30:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZIITpjDXyupKom+N@bombadil.infradead.org>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+References: <20230608175722.489602717@linuxfoundation.org>
+In-Reply-To: <20230608175722.489602717@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 9 Jun 2023 12:00:44 +0530
+Message-ID: <CA+G9fYujcU7wYUF3FMPZ-kzrOi=D0_yNj48D+mvN055P=74LQQ@mail.gmail.com>
+Subject: Re: [PATCH 6.3 000/285] 6.3.7-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 08, 2023 at 10:45:10AM -0700, Luis Chamberlain wrote:
-> > > and then considering only two superblocks instead of having a list of
-> > > all bdevs?
-> > 
-> > Or why the heck we would even do this to start with?
-> 
-> That's what I gathered you suggested at LSFMM on hallway talk.
+On Thu, 8 Jun 2023 at 23:31, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.3.7 release.
+> There are 285 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 10 Jun 2023 17:56:29 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.3.7-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.3.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-No.  I explained you that sharing the superblock or has absolutely no
-effct on the aops after you wanted to it.  I said it might be nice for
-other reasons to have a sb per gendisk.
 
-> > iomap has absolutely nothing to do with superblocks.
-> > 
-> > Now maybe it might make sense to have a superblock per gendisk just
-> > to remove all the weird special casing for the bdev inode in the
-> > writeback code.  But that's something entirely different than this
-> > patch.
-> 
-> The goal behind this is to allow block devices to have its bdev cache
-> use iomap, right now now we show-horn in the buffer-head aops if we
-> have to build buffer-heads.
-> 
-> If this sort of approach is not desirable, let me know what alternative
-> you would prefer to see, because clearly, I must not have understood
-> your suggestion.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Again, every non-trivial file system right now has more than one set
-of aops per superblock.  I'm not sure what problem you are trying to
-solve here.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 6.3.7-rc2
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git branch: linux-6.3.y
+* git commit: 6f9b6a83bd08fb6abac41d5a521adec785ea0e68
+* git describe: v6.3.5-332-g6f9b6a83bd08
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.3.y/build/v6.3.5=
+-332-g6f9b6a83bd08
+
+## Test Regressions (compared to v6.3.5)
+
+## Metric Regressions (compared to v6.3.5)
+
+## Test Fixes (compared to v6.3.5)
+
+## Metric Fixes (compared to v6.3.5)
+
+## Test result summary
+total: 172899, pass: 150726, fail: 3525, skip: 18397, xfail: 251
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 141 total, 140 passed, 1 failed
+* arm64: 50 total, 50 passed, 0 failed
+* i386: 37 total, 36 passed, 1 failed
+* mips: 26 total, 26 passed, 0 failed
+* parisc: 3 total, 3 passed, 0 failed
+* powerpc: 34 total, 34 passed, 0 failed
+* riscv: 22 total, 22 passed, 0 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 12 total, 12 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 42 total, 42 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
