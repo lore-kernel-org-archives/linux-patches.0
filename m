@@ -1,56 +1,39 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD6C7E2
-	for <patches@lists.linux.dev>; Fri,  9 Jun 2023 00:27:45 +0000 (UTC)
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-33e585a0ca6so5468245ab.3
-        for <patches@lists.linux.dev>; Thu, 08 Jun 2023 17:27:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686270464; x=1688862464;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Po9Dy9wSvVitTC0WGqOFPWrqIn2b/C1fHPDDyFi+lIY=;
-        b=DDzm2sWUh49bSRGtl7BBbKtxFMd/l7wAzJoSBmrRe0cmiXpgDMlr/fcOC0pZnjDAJB
-         QW8CJu3jW6VBhCK8hJ4DBb4isx+sO4R1E1ow7nyCH5YdO/9VxPr/6fqPgJ/WoprMVG0n
-         Z+ZcuogQM0U94iNa6Q3mbQx6CZpoQuZg4ECUCEn9ZSlOVNTvn03J6t8hr1eyFh4iAFrn
-         /94+j4sSFDqtKnK+Nz+Z/h6Pbll7TlgUHpK0DVIRfbiFe//Ev31v9bIXdVrrTPu2H74q
-         GJlsMfQYdiYFbqheMVzhsBXWqG6lykOZ7upY/mCTKM3Rwlw7/8E6hv+AllbMWG934lAe
-         SVZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686270464; x=1688862464;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Po9Dy9wSvVitTC0WGqOFPWrqIn2b/C1fHPDDyFi+lIY=;
-        b=K0ZjzY/4zGR+sWXFlReq1wA3VY5wzQlJfXzxKPUg97oH0uiG3wzkFEQX9lWmDWfBA0
-         mneGvkZWJRL/MF+k4Ux5TAdZIaOqcx7QLgqlIBWu4GAZtxF8avMiu7QKkT7SUkOSXT0/
-         YJGI0AvjofsdBmF54D6bu/ZqcXfDG0X+Q6lDbN6kD11eIcr+r3pIfxUsZAnu2Q/hNbeD
-         4e6qABxP43ik7jykLABnAdYFsLnNU6yowHoL5YtJe3wLJsr+dKKPmniyNFAy8W3UtOd1
-         J6m2aCtA5WCTDafkRcJFstVYUKmdfYW3IVKrCSn3IuLpoyM2Z4eGBqM4/6915u1E/J6l
-         001A==
-X-Gm-Message-State: AC+VfDy55+GtOGL6AMzTwSmwQib/FDG6Nt5qWZdi89QihXDDtLJ04lan
-	OgLCRdthzYxCZnBs+Q3iVz4=
-X-Google-Smtp-Source: ACHHUZ4SVvYC6WrqxmkcahYuGNedbdY5nBQEAVvsZlnRy3l6EP8YXQFYn06X+EJKTvy4L1IqRreFbA==
-X-Received: by 2002:a92:cad1:0:b0:33c:b395:a89d with SMTP id m17-20020a92cad1000000b0033cb395a89dmr169905ilq.14.1686270464113;
-        Thu, 08 Jun 2023 17:27:44 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id x42-20020a056a000bea00b0063d47bfcdd5sm1600578pfu.111.2023.06.08.17.27.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 17:27:43 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Thu, 8 Jun 2023 17:27:42 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 000/120] 5.10.183-rc1 review
-Message-ID: <c6a21be5-1991-4975-aec9-f4e84f5266be@roeck-us.net>
-References: <20230607200900.915613242@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44E71C10
+	for <patches@lists.linux.dev>; Fri,  9 Jun 2023 04:20:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
+	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=Bf0Imcmrff8IiflvMMZwKHn+EPzovpKROa1e5HANUoM=; b=nue2TtmTamk9kJkszgPEGMpwte
+	lhHnwHuuxogMyeD0BQGtvyzl9mYliO0ISA7i4oG4Eg26b4hQtdcmoQUUCz1Am7UpYm5S66D9LPRcN
+	5/Uy48E/9SEM/MtyvLfTqnHleWvImTBEULArcgIPOro0eI0uH/g8x7xGkNc5T8q6fWD0qd8OLdc97
+	ElapA2f8xr6rBQxc1qCGSsaN+zI29pxUboyrxPIpW2N4x9lZz6fqH1w//lOov0U+KiyyY8W/8QHLC
+	OQ3XqldDQHaU2nU4fWrkx05LA8/dDA0VYONM/hMe7D6Vat+V5OW3FTF5aiXDBdyIfisWlNbvL2C/X
+	YUBAuQVw==;
+Received: from hch by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1q7Tbj-00Ba1H-02;
+	Fri, 09 Jun 2023 04:20:15 +0000
+Date: Thu, 8 Jun 2023 21:20:14 -0700
+From: Christoph Hellwig <hch@infradead.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Christoph Hellwig <hch@infradead.org>,
+	Matthew Wilcox <willy@infradead.org>, djwong@kernel.org,
+	dchinner@redhat.com, kbusch@kernel.org, hare@suse.de,
+	ritesh.list@gmail.com, rgoldwyn@suse.com, jack@suse.cz,
+	patches@lists.linux.dev, linux-xfs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org,
+	p.raghav@samsung.com, da.gomez@samsung.com, rohan.puri@samsung.com,
+	rpuri.linux@gmail.com, corbet@lwn.net, jake@lwn.net
+Subject: Re: [RFC 4/4] bdev: extend bdev inode with it's own super_block
+Message-ID: <ZIKofhpTXREOR3ec@infradead.org>
+References: <20230608032404.1887046-1-mcgrof@kernel.org>
+ <20230608032404.1887046-5-mcgrof@kernel.org>
+ <ZIHZngefNAtYtg7L@casper.infradead.org>
+ <ZIHcl8epO0h3z1TO@infradead.org>
+ <ZIITpjDXyupKom+N@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,23 +42,36 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230607200900.915613242@linuxfoundation.org>
+In-Reply-To: <ZIITpjDXyupKom+N@bombadil.infradead.org>
+X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
 
-On Wed, Jun 07, 2023 at 10:15:16PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.183 release.
-> There are 120 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Thu, Jun 08, 2023 at 10:45:10AM -0700, Luis Chamberlain wrote:
+> > > and then considering only two superblocks instead of having a list of
+> > > all bdevs?
+> > 
+> > Or why the heck we would even do this to start with?
 > 
-> Responses should be made by Fri, 09 Jun 2023 20:07:31 +0000.
-> Anything received after that time might be too late.
+> That's what I gathered you suggested at LSFMM on hallway talk.
+
+No.  I explained you that sharing the superblock or has absolutely no
+effct on the aops after you wanted to it.  I said it might be nice for
+other reasons to have a sb per gendisk.
+
+> > iomap has absolutely nothing to do with superblocks.
+> > 
+> > Now maybe it might make sense to have a superblock per gendisk just
+> > to remove all the weird special casing for the bdev inode in the
+> > writeback code.  But that's something entirely different than this
+> > patch.
 > 
+> The goal behind this is to allow block devices to have its bdev cache
+> use iomap, right now now we show-horn in the buffer-head aops if we
+> have to build buffer-heads.
+> 
+> If this sort of approach is not desirable, let me know what alternative
+> you would prefer to see, because clearly, I must not have understood
+> your suggestion.
 
-Build results:
-	total: 162 pass: 162 fail: 0
-Qemu test results:
-	total: 485 pass: 485 fail: 0
-
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-
-Guenter
+Again, every non-trivial file system right now has more than one set
+of aops per superblock.  I'm not sure what problem you are trying to
+solve here.
