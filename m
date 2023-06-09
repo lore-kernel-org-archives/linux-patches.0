@@ -1,60 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992FCC8FA
-	for <patches@lists.linux.dev>; Fri,  9 Jun 2023 09:17:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237B0C433A0
-	for <patches@lists.linux.dev>; Fri,  9 Jun 2023 09:17:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686302273;
-	bh=RQisGjj9KL7kg1igwwGHNm1IZaL2rbAG8kSrlm0JzKg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=AYraXdMUTfAMqpeTaUeCqi+yUkaXnP8qNG0uUj3/dT/XFGJuKr4o+c5xAf+JLd9OT
-	 o/jhll2InOsaLOaIApJVfzoypOS9floki0PYvS8xve4kgU+nkmLV/22ax/2NQOGGY5
-	 stsHcklrZI2UIzZAznhNDRG2nYuiQleNWOixh1Un8C6MJ5cDXuW8Pwoh08f/jT0khW
-	 x7CSsVUFSaZT3KMig1u6PEezo+U3P1kUZ175xUp7GxwEc6WQisXeBJpxJ+9q1PF3SC
-	 4Trwib6QuE59m3YADNR97K01Cw27sz39k7OX9Yk7WSL11jxH8ig3Wrb04syqBYcuLT
-	 09LTndIC9BMMg==
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-3f738f579ceso11218815e9.3
-        for <patches@lists.linux.dev>; Fri, 09 Jun 2023 02:17:53 -0700 (PDT)
-X-Gm-Message-State: AC+VfDwoBilJOPjqZj8uQ8DzsJVw/UtPtEjAPuO4TEogfNlOV0BM+fkh
-	mCnm/UrNPeDFGB2fnYrlWAihPPXJmsxG6xr1ff0=
-X-Google-Smtp-Source: ACHHUZ70M63/s5OAb5SuDf8GVqAjthMUYLs718VlOe6y2HvimEHtOeklfwr9dXNjNX4PdOTUT/IHiblpHj8LQ8LvlE4=
-X-Received: by 2002:a7b:c8d7:0:b0:3f4:2cb2:a6cf with SMTP id
- f23-20020a7bc8d7000000b003f42cb2a6cfmr423308wml.10.1686302271124; Fri, 09 Jun
- 2023 02:17:51 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46551113
+	for <patches@lists.linux.dev>; Fri,  9 Jun 2023 10:36:20 +0000 (UTC)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-977e7d6945aso300133966b.2
+        for <patches@lists.linux.dev>; Fri, 09 Jun 2023 03:36:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1686306978; x=1688898978;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LYsNQRTKdujJx2uaKy6pB5AMEs2kGLaS/0Oqa5TB6fk=;
+        b=pyipid6tIaqGfyMEv8vLUpcXRSslEE0efeDr4g0WPHZpsNn3WuIV0B021YfT0MOWz0
+         XDyxFN42z3Sii7FI7CLMI8oUHi9zkqUMLGKeKuPNWQQjhQCiD2zdzJ9f7x67y+3Sbikp
+         Exbfw/GIchK0ExSn89XQjQ4LJhqzm1nP5crjZQo2Z1ccQwGOCuTCM4ucHzM3hUHmvsxO
+         7iJEp+ei5EobD8tPbsvNJOqLJRECO900/S2Csw2hok/2iYYXOfPQXvHI5q1/mYIoJkt2
+         e4j0/fs1InEjtDVkPW6OqS2udLPiSW8IROgc6nS0r6H3hLscRDVzjNCs3Q0yyBaREnRM
+         xFPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686306978; x=1688898978;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LYsNQRTKdujJx2uaKy6pB5AMEs2kGLaS/0Oqa5TB6fk=;
+        b=PV9GXmluyIHyi6A1g5mBRoOqOhh86v5nfQTISa183RfkJN9LE2uMnm++/jI9/TG/l4
+         2MpfePaqtOg/lBLZ8w+1wcE6qhay4PoYrr255IGXsH+Dr/I18ITMYSRs+xM5VmZrwjey
+         lx8ENqjeeSwG/I6i3TDlHYojZ0H4taX1pWwwHeig/lu2pLNGoyI1XjfDRr/PtX8JdlnH
+         KuoI3UDWrE68RhYNQIanuyxj+KhUxhkXys2RmmbKzbwA+DCvhDvYy24EDxYIcFBy6pN/
+         fg+BSLpRv1OksoKjOkWb3iqQY2FpkDnEalt8RraaOmYRi/TXzvoJu3FFZW/YcSo7dyLk
+         STDA==
+X-Gm-Message-State: AC+VfDxZwzMTSKP4uorrpLwSsCz74/177DRAL4QtzoVKudj6vaI5eZCQ
+	8xMYQ2ARglXZ0+lZ+8dqCoVJu2AH4Z2+fLnKa7OyTQ==
+X-Google-Smtp-Source: ACHHUZ5+jPqCDQMhOX/CgsZBGYIrgMvqz2bph7TIpaL4dzCNGHPGzqjekpisjQiaEJan20arvC3F8yFVGwsbATqRsO0=
+X-Received: by 2002:a17:907:970a:b0:961:69a2:c8d6 with SMTP id
+ jg10-20020a170907970a00b0096169a2c8d6mr1706812ejc.69.1686306978577; Fri, 09
+ Jun 2023 03:36:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230608032404.1887046-1-mcgrof@kernel.org> <20230608032404.1887046-5-mcgrof@kernel.org>
- <ZIHZngefNAtYtg7L@casper.infradead.org> <ZIHcl8epO0h3z1TO@infradead.org>
- <ZIITpjDXyupKom+N@bombadil.infradead.org> <ZIKofhpTXREOR3ec@infradead.org>
-In-Reply-To: <ZIKofhpTXREOR3ec@infradead.org>
-From: Luis Chamberlain <mcgrof@kernel.org>
-Date: Fri, 9 Jun 2023 02:17:39 -0700
-X-Gmail-Original-Message-ID: <CAB=NE6V-w+NWTZ0tZaUNhOH2uW7T3EEYKt-+YhkDX6tZZ8BccA@mail.gmail.com>
-Message-ID: <CAB=NE6V-w+NWTZ0tZaUNhOH2uW7T3EEYKt-+YhkDX6tZZ8BccA@mail.gmail.com>
-Subject: Re: [RFC 4/4] bdev: extend bdev inode with it's own super_block
-To: Christoph Hellwig <hch@infradead.org>
-Cc: Matthew Wilcox <willy@infradead.org>, djwong@kernel.org, dchinner@redhat.com, 
-	kbusch@kernel.org, hare@suse.de, ritesh.list@gmail.com, rgoldwyn@suse.com, 
-	jack@suse.cz, patches@lists.linux.dev, linux-xfs@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, linux-block@vger.kernel.org, 
-	p.raghav@samsung.com, da.gomez@samsung.com, rohan.puri@samsung.com, 
-	rpuri.linux@gmail.com, corbet@lwn.net, jake@lwn.net
+References: <20230608175726.909746266@linuxfoundation.org>
+In-Reply-To: <20230608175726.909746266@linuxfoundation.org>
+From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
+Date: Fri, 9 Jun 2023 19:36:07 +0900
+Message-ID: <CAKL4bV5VJ_K7wRzFvWah92zchvwJOPHTAP5akKcurn6+iV4mwg@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/224] 6.1.33-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 8, 2023 at 9:20=E2=80=AFPM Christoph Hellwig <hch@infradead.org=
-> wrote:
-> Again, every non-trivial file system right now has more than one set
-> of aops per superblock.  I'm not sure what problem you are trying to
-> solve here.
+Hi Greg
 
-Alright, a 2 liner does indeed let it co-exist and replace this mess, thank=
-s.
+On Fri, Jun 9, 2023 at 3:00=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.33 release.
+> There are 224 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 10 Jun 2023 17:56:43 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.33-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-  Luis
+6.1.33-rc2 tested.
+
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64), arch linux)
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
