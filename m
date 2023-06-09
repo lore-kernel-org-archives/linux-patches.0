@@ -1,135 +1,131 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2054.outbound.protection.outlook.com [40.107.93.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71DA1F955
-	for <patches@lists.linux.dev>; Fri,  9 Jun 2023 16:19:20 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RkkyTq+o1re///MYPRR9LyR5O9MfCth84UU0TsSvef+SyBFNHAJmenMRvcsd47QgEIOZ2RA0fV/3movuXYQydYMMiC9fiiUPQ996kVpmjmc+NUAwvac51AKdXB0juTmgSo2T5ILlT1S/Sy9JMDSuOQMY65p+zbJGdtA9XGdDxCAmdDgz+h558nc13O6oAG/KLI5fbuDRX6znCmKYqGDpxbMG503hogt0EydTHpaSucJwx+Wgj+C9bPYtelVGvaZnPMT5QniucB8PaMOyq07fQkbLK4NTPaK1klvtotFxyvveHyzV7ZrLVDuAyrNGzcM77O9+UlAyycIIyHD7KleSVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=J3GMzWxMBc278OD9+dRqvtuJ33agKiMFVw4P/cV5Gms=;
- b=cGXxulrS6TiGLgBHwpl0ek61SEtu5DV/41DtzQwRZ896/gtua4JPZwlYQLyPKdbSmnXenqFRx3Jt7B8mfwcAvTRzaVz4/4Umn90Xrk5UrOhJY+v+uXTrZgsYnYbCDjGGHBhiU2pQTaoJOcE2LG5eUHotRI0MVCHVYHPAFLrCqtwy0rSECYTaeHR4Vfg09zIJWHoiyLy2Lj6XYZ/b3ivs9fSDr+lQuV5pmSEEqkkRcJ7+qVqWcLJDayCDe9dhF1hpt8oxri9TKE+yvM6ToMu4lMM9NPWLjAxTQYbkVfAlq+Pt7E7cEgobq5BNeZk76SRzQoWfcFyGbP/LWOdEBS5FVw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J3GMzWxMBc278OD9+dRqvtuJ33agKiMFVw4P/cV5Gms=;
- b=FGSHNJwb/wrZWyclpdnVnY6U+yyj8otLuhG35rSH8dAqUQry9+cjInKsA4eo4shqxUvZc0otX7B9qiBe72PGRzUTyJkbqdkaXBg/LYOsRT+kLgyyXOx8ttsudJLrhGN1wOkvVXHMHUVLovCLO2eyD6pFOQhj1/ZP3HFVR7pcQ9Vlyfr+eUL1sZL6Yh0NhkeZ1IKc26R8fRuboXPvD8KbYehCZ3jYQ+U7QMNyvpM5NjPXonnQ1aeOZQ1NiOO0Y5FTaKPUPedXdqSapI4bbSb+roOnet2dcDjbJdbW8JjdihX3xznNH6uQLXcap98JGZmPxLvbfyrPyzB0RY8VKb5R0w==
-Received: from SN6PR08CA0005.namprd08.prod.outlook.com (2603:10b6:805:66::18)
- by SJ0PR12MB5486.namprd12.prod.outlook.com (2603:10b6:a03:3bb::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.32; Fri, 9 Jun
- 2023 16:19:18 +0000
-Received: from SN1PEPF0002636A.namprd02.prod.outlook.com
- (2603:10b6:805:66:cafe::e3) by SN6PR08CA0005.outlook.office365.com
- (2603:10b6:805:66::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6477.27 via Frontend
- Transport; Fri, 9 Jun 2023 16:19:18 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- SN1PEPF0002636A.mail.protection.outlook.com (10.167.241.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6477.24 via Frontend Transport; Fri, 9 Jun 2023 16:19:17 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Fri, 9 Jun 2023
- 09:19:08 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37; Fri, 9 Jun 2023
- 09:19:08 -0700
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
- Transport; Fri, 9 Jun 2023 09:19:07 -0700
-From: Jon Hunter <jonathanh@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F81408C0
+	for <patches@lists.linux.dev>; Fri,  9 Jun 2023 18:42:37 +0000 (UTC)
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-652d1d3e040so1703768b3a.1
+        for <patches@lists.linux.dev>; Fri, 09 Jun 2023 11:42:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686336157; x=1688928157;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pEF17blG1HpNLnd1VQwJnQONyB72caC9miz5H/8JZIs=;
+        b=Pjh9KSMIMB74rYByeSQemLQ4hA6z+9/fP5Z3uGHIOI6xHmw3GUT2NUtpkVzaNED7tT
+         SAoiPDl1u8QzvEJKBAez9VQU2nWyqxViCNDUuqPO4Zkl5C7ceURkq7Mvegp6Num1PUMx
+         S2gmaj7x/mmOXVotYfH5KZ0Ko6bDOO9txTPiOhEGh1sY65cZmbGF2S00nhNSOgWk4L6Z
+         GFfRRU6VrkkyUba3S3lF6xMMuqV+I232U5kN9SM7AyxsqnF2du1QH0ynv+UdL+pOU21I
+         +eXA4dPPPqrgXqcCMmPmHp2WiTlP1roQlG9K/pMQvh1bfaupfudfrTRnkjh4ibU4Yhvx
+         qtdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686336157; x=1688928157;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pEF17blG1HpNLnd1VQwJnQONyB72caC9miz5H/8JZIs=;
+        b=HXE7MIsv3pdv5UrpoH2GAD42isBT0da91lCSCit5v347JLQ6eonobCBQJWv1V1YaRS
+         /+J1OzV+FzTw+zcTmJ3TKS/P+KPKebgt1mHMybjg8lOzbOmq81EMn9PpTlhxqMZT4/ki
+         q7CObFlNi5pp4GceLT1l18l4EaEkv55r/RZkfTq7XFAtjZBebaTdire53a9exxpnIvUJ
+         rDMEc6afoSrftQuLqyyjdbfwNhoen1UmKxuKLC7jk33t+mZdtwcobQ+j5td4WALWdRtG
+         TyLNjllNTB7JJEe9AFmNAd4PEWX/fn8UlTxGHH18+hVh7aqGpQCXJX9A0HWzlVF//KpG
+         MofA==
+X-Gm-Message-State: AC+VfDz7DxRTsRSYvWVT4OtfNw//vOdYk3wFAgcr4qK74Tg0RI3c2X/u
+	CXgrvJsJbIaAW2PYfmwqW6I=
+X-Google-Smtp-Source: ACHHUZ6iEgipL33n3ih3zruF3rlNZa5ojmGPQ4pzKRTEoboB2T+j4WNqhl3Bg9qVqBph8lmlIg/Vkw==
+X-Received: by 2002:a05:6a20:4303:b0:105:63b0:5bf8 with SMTP id h3-20020a056a20430300b0010563b05bf8mr1993249pzk.18.1686336157243;
+        Fri, 09 Jun 2023 11:42:37 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id 13-20020aa7924d000000b0064d74808738sm2936320pfp.214.2023.06.09.11.42.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jun 2023 11:42:36 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Fri, 9 Jun 2023 11:42:35 -0700
+From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH 6.3 000/285] 6.3.7-rc2 review
-In-Reply-To: <20230608175722.489602717@linuxfoundation.org>
-References: <20230608175722.489602717@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ido Schimmel <idosch@nvidia.com>
+Subject: Re: [PATCH 5.15 000/159] 5.15.116-rc1 review
+Message-ID: <d35b1ff1-e198-481c-b1be-9e22445efe06@roeck-us.net>
+References: <20230607200903.652580797@linuxfoundation.org>
+ <b979807a-a437-4d3f-98f9-989da52abb30@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <bcd00fbe-995f-401b-86c6-b490c4c483ca@rnnvmail204.nvidia.com>
-Date: Fri, 9 Jun 2023 09:19:07 -0700
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002636A:EE_|SJ0PR12MB5486:EE_
-X-MS-Office365-Filtering-Correlation-Id: c08f11f8-a6a7-4c1b-4096-08db69054661
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	JBBHCA0d29V9r0BM+m30V64xcoU0/YZLiYrasAjXZF80lshcIzA+Qp/b6k3m9WQUA4ZYsSJ/wbyRzm4EQGY1059GqRl7n6oJNfCbUZSfT0E2wJ9R20HK9QCvuyOwh3N+hj/GQDMyvHbDEbVFqbWpx9G8KbzHN0+MrSHcwsBwTUWbNlbu6PDI9k/ZgyRyom7fregjtce6XCv6utsJmxlg0yS3j8/61r9BSuBaBobk/2S+6fB+9tlKRqi71XA9WabLRNmdX6myUsUuUuMpg2hu5RpcyNcDBmUCEJSSIZMTucXiye3YL4iXpCLkK77c8ynoOYQ96Izh1Le/BJVIGV2VTuPhCRZw+LO7jXLMsBv9Ugo8YjZz3/JP+iDH4YXLLgJ4+P4dVxt0r+ahGcdFu4C81PJsPQnbZ2DygIy5B1Ruua1CdrxXTzDvz+qbCEsA9UoNYQD6BKkGwn912ToeVsQbziVtSa/4/3FCATdss6SjbrGE2gxAEolqxMJ/ACkq8NETNksr8PR9kBHzbPXghn4X2enqmrNIasRh55KO2fb4tAtQmUOiE52b5iejkGENTIMzMf5UGeknkv/S3kSF7ZrBZcS7pc+bx7BWFVlXHL5WnxGcpmVjZJ+El8I0IXU7nITzzFNh1E0Nvkmwxzw4omR6D8woxmWIyuxhIwsJOi4JPRPnMgifkpVJtq0mPqz5A4M2zH0eP6SeIQ0XxGcNrPzSW9ICTSln5pC9z0BwFP62L0cFCrc15dv7s6hQ6YWBau3qdUVbWpa14hHMuQxpx0GvAQ8tp9HWdChrqMANoUJH0JY=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(136003)(346002)(376002)(396003)(451199021)(40470700004)(36840700001)(46966006)(40480700001)(82310400005)(40460700003)(966005)(26005)(47076005)(426003)(336012)(36860700001)(186003)(31696002)(86362001)(7636003)(356005)(7416002)(82740400003)(41300700001)(54906003)(5660300002)(316002)(8936002)(4326008)(70586007)(6916009)(31686004)(478600001)(70206006)(8676002)(2906002);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2023 16:19:17.8182
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c08f11f8-a6a7-4c1b-4096-08db69054661
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SN1PEPF0002636A.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB5486
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b979807a-a437-4d3f-98f9-989da52abb30@roeck-us.net>
 
-On Thu, 08 Jun 2023 20:00:53 +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.7 release.
-> There are 285 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi,
+
+On Fri, Jun 09, 2023 at 04:07:00AM -0700, Guenter Roeck wrote:
+> On Wed, Jun 07, 2023 at 10:15:03PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.116 release.
+> > There are 159 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Fri, 09 Jun 2023 20:07:31 +0000.
+> > Anything received after that time might be too late.
+> > 
 > 
-> Responses should be made by Sat, 10 Jun 2023 17:56:29 +0000.
-> Anything received after that time might be too late.
+> Build results:
+> 	total: 155 pass: 155 fail: 0
+> Qemu test results:
+> 	total: 499 pass: 498 fail: 1
+> Failed tests:
+> 	arm:kudo-bmc:multi_v7_defconfig:npcm:usb0.1:nuvoton-npcm730-kudo:rootfs
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.7-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
-> and the diffstat can be found below.
+> The test failure is spurious and not new. I observe it randomly on
+> multi_v7_defconfig builds, primarily on npcm platforms. There is no error
+> message, just a stalled boot. I have been trying to bisect for a while,
+> but I have not been successful so far. No immediate concern; I just wanted
+> to mention it in case someone else hits the same or a similar problem.
 > 
-> thanks,
-> 
-> greg k-h
 
-All tests passing for Tegra ...
+I managed to revise my bisect script sufficiently enough to get reliable
+results. It looks like the culprit is commit 503e554782c9 (" debugobject:
+Ensure pool refill (again)"); see bisect log below. Bisect on four
+different systems all have the same result. After reverting this patch,
+I do not see the problem anymore (again, confirmed on four different
+systems). If anyone has an idea how to debug this, please let me know.
+I'll be happy to give it a try.
 
-Test results for stable-v6.3:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    130 tests:	130 pass, 0 fail
+Thanks,
+Guenter
 
-Linux version:	6.3.7-rc2-g6f9b6a83bd08
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
-
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-
-Jon
+---
+# bad: [7349e40704a0209a2af8b37fa876322209de9684] Linux 5.15.116
+# good: [d214f240b0f61480f9dbc4384cef03f6a55e5d03] Linux 5.15.100
+git bisect start 'HEAD' 'v5.15.100'
+# good: [11c58a0c1937c157dbdf82d5ab634d68c99f3098] x86/MCE/AMD: Use an u64 for bank_map
+git bisect good 11c58a0c1937c157dbdf82d5ab634d68c99f3098
+# bad: [e9c5fc4f3f35e769932158a7347ec245be5cefb9] drm/amd/display: Use DC_LOG_DC in the trasform pixel function
+git bisect bad e9c5fc4f3f35e769932158a7347ec245be5cefb9
+# good: [3dc3a86b88bda88b4ac859b18559385f02932e78] SMB3: Close deferred file handles in case of handle lease break
+git bisect good 3dc3a86b88bda88b4ac859b18559385f02932e78
+# bad: [b13e20cc58e438b2d3473147329fe3fe80e3bc09] perf stat: Separate bperf from bpf_profiler
+git bisect bad b13e20cc58e438b2d3473147329fe3fe80e3bc09
+# bad: [43b2f7d690697182beed6f71aa57b7249d3cfc9c] ubifs: Fix memory leak in do_rename
+git bisect bad 43b2f7d690697182beed6f71aa57b7249d3cfc9c
+# good: [8444b46e163aa9559a0af0381a1d230ec4146eb2] mtd: core: fix nvmem error reporting
+git bisect good 8444b46e163aa9559a0af0381a1d230ec4146eb2
+# good: [f76fcb9d43ec014ac4a1bb983768696d5b032df9] dm flakey: fix a crash with invalid table line
+git bisect good f76fcb9d43ec014ac4a1bb983768696d5b032df9
+# bad: [aa6ff950f875ebc9a01dc53666a1af17004924ad] arm64: dts: qcom: sdm845: correct dynamic power coefficients - again
+git bisect bad aa6ff950f875ebc9a01dc53666a1af17004924ad
+# good: [06106efa20f74a14674ae53def7abaddd851f7e2] perf auxtrace: Fix address filter entire kernel size
+git bisect good 06106efa20f74a14674ae53def7abaddd851f7e2
+# bad: [503e554782c916aec553f790298564a530cf1778] debugobject: Ensure pool refill (again)
+git bisect bad 503e554782c916aec553f790298564a530cf1778
+# good: [6b84832966a094a1b8305b1a42a4f157a3121258] perf intel-pt: Fix CYC timestamps after standalone CBR
+git bisect good 6b84832966a094a1b8305b1a42a4f157a3121258
+# first bad commit: [503e554782c916aec553f790298564a530cf1778] debugobject: Ensure pool refill (again)
