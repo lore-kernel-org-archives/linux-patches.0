@@ -1,124 +1,234 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0825B33F1
-	for <patches@lists.linux.dev>; Sun, 11 Jun 2023 15:14:23 +0000 (UTC)
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-652dd220d67so3648198b3a.3
-        for <patches@lists.linux.dev>; Sun, 11 Jun 2023 08:14:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686496463; x=1689088463;
-        h=content-transfer-encoding:in-reply-to:subject:references:cc:to:from
-         :content-language:user-agent:mime-version:date:message-id:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7WY33NERKlb17TukmGOgkhDaG5sdGDG/5hEoznoyZyc=;
-        b=KwDvtnK+ZKfFuIcSDBnGZGcuyVdYfWVKiDGusWxDKK7vtT4+rOpxM6PZSVLv8DxmQW
-         vAbTmuE8KHbyXmldyGPGn7On0esT7A1R7FX2K+uU/4twbBbhxhPv9ICSBb6hnVnFOpTn
-         8S3Lot2Yi4PD6Nttp+N/Fu2Cv4Pe2uxpST2/uebP3QxHUyiou5Q+HjaZ1n4hBEPZjwkk
-         iSEbv7JJoOHyyo/cVIxAUz8AgntHlytq3qj4iTD85j+wGkBTjMnCNm5XJc+HcfHTcWFm
-         BPoGr9jY74VX3XBiE4X/QaPCHDsGWC5x0DpQhDWKcCEpkRkGGH37KX99qxBY/81jbnnm
-         GuDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686496463; x=1689088463;
-        h=content-transfer-encoding:in-reply-to:subject:references:cc:to:from
-         :content-language:user-agent:mime-version:date:message-id:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7WY33NERKlb17TukmGOgkhDaG5sdGDG/5hEoznoyZyc=;
-        b=e/8ycX6CiITxRgGEuVne3U/wAvtH//7OF42b3m7gj6KBKVrVih3hWCajr5FlcMFpuz
-         m7ewBn8hG/R+qu7jdvV6mIDFbF8aJoJNdhbLQLEHU+Xwki0Vn/ttPk6L3ITbsbjpr6kB
-         tqyPSOcIOm/3oum2gvJAByUWHihABjiHFgctZLRHSFQaX+S30iLt+UZDsVqEANd92lNR
-         rYz+vgLPgFFeckutmyZkdZj5MnIRyu8LkVVNOrjL3rJyQr14nJaxAS6+agt44fSF3Te/
-         IMzodiTvA0gvryDII4SSxbFLJeF7ZOx0h8KNApNMr6GS6hCcP5Wktk7ksOl5AqkVn85+
-         Qc8A==
-X-Gm-Message-State: AC+VfDzVCYTuousp5o+PSL5pAamPR82TGQH5QBE9Kl+ldPHtKS4xBbLa
-	Z2h7rRNN/EQUR0K4quf+yW0=
-X-Google-Smtp-Source: ACHHUZ43Ffz5wTnifjxwVl6GRz5Oa44su8A+B7LKcbE7NlYZIHGl1+2DlCG4ylI1qXLoHYRmpVaLdQ==
-X-Received: by 2002:a05:6a00:1aca:b0:658:8eae:a8de with SMTP id f10-20020a056a001aca00b006588eaea8demr8076103pfv.4.1686496463153;
-        Sun, 11 Jun 2023 08:14:23 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id k67-20020a632446000000b005439aaf0301sm5910871pgk.64.2023.06.11.08.14.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Jun 2023 08:14:22 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <1e9e0ce4-dc47-81d6-e3a5-681d4a9ba9b0@roeck-us.net>
-Date: Sun, 11 Jun 2023 08:14:19 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D29AC126
+	for <patches@lists.linux.dev>; Sun, 11 Jun 2023 15:46:22 +0000 (UTC)
+Date: Sun, 11 Jun 2023 15:45:51 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1686498364; x=1686757564;
+	bh=/Rp7EG+uVgU6PeRrnnk9oL6t/Q+tJr5OMcOjEBtUThw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=UXaWJIyB1x9Nf7hBR9dboMnfSSiBOgBvdJ5TfhJ8rq8F0HelRtn3ISMMQp/W0PM2z
+	 CQJ5OVJFuqTq3O1Fei1mSN8LPjmbE+Hmk+prKeauNpucNjwOetvNkVUg+HrvP8GJ/S
+	 5fxwtjxfpWcuP1opvmFS9cYsPseMZbu4uPZ48i97XQghMZPuonxvkFOTeFPxX6tTbt
+	 SN+kpov4AoL4/GhhLNHU3DCMkC7vpNvHZbpmRzWG/nuKSss19fSn7UQMQofcNbO8ya
+	 uHxQ9FwAvyrBNhPcjBHqJ+nnyxi4rY9r2EPhheBTiJ6FplqgQNJZqSoC+Ij1bbYV65
+	 ie9UQQ1wGtIKw==
+To: Alice Ryhl <aliceryhl@google.com>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2 1/8] rust: workqueue: add low-level workqueue bindings
+Message-ID: <_VAFv3y5UIDHOZg8C_XcFaxauEVzV2-nrA0aN2apuhr0NGtu4YRv_5mzl4JTs_Dg24sFD1lQG8gtb0AmXZBcTD_gJyEsFmcGJyF20ZUcIgk=@proton.me>
+In-Reply-To: <20230601134946.3887870-2-aliceryhl@google.com>
+References: <20230601134946.3887870-1-aliceryhl@google.com> <20230601134946.3887870-2-aliceryhl@google.com>
+Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-To: Pavel Machek <pavel@denx.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Thomas Gleixner <tglx@linutronix.de>,
- Ido Schimmel <idosch@nvidia.com>
-References: <20230607200903.652580797@linuxfoundation.org>
- <b979807a-a437-4d3f-98f9-989da52abb30@roeck-us.net>
- <d35b1ff1-e198-481c-b1be-9e22445efe06@roeck-us.net>
- <ZITNw9cv/WoZcSaO@duo.ucw.cz>
- <39b34446-88a7-eeb5-cf95-e4f1843100b3@roeck-us.net>
-Subject: Re: [PATCH 5.15 000/159] 5.15.116-rc1 review
-In-Reply-To: <39b34446-88a7-eeb5-cf95-e4f1843100b3@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 6/10/23 14:14, Guenter Roeck wrote:
-> Hi,
-> 
-> On 6/10/23 12:23, Pavel Machek wrote:
->> Hi!
->>
->>>> Build results:
->>>>     total: 155 pass: 155 fail: 0
->>>> Qemu test results:
->>>>     total: 499 pass: 498 fail: 1
->>>> Failed tests:
->>>>     arm:kudo-bmc:multi_v7_defconfig:npcm:usb0.1:nuvoton-npcm730-kudo:rootfs
->>>>
->>>> The test failure is spurious and not new. I observe it randomly on
->>>> multi_v7_defconfig builds, primarily on npcm platforms. There is no error
->>>> message, just a stalled boot. I have been trying to bisect for a while,
->>>> but I have not been successful so far. No immediate concern; I just wanted
->>>> to mention it in case someone else hits the same or a similar problem.
->>>>
->>>
->>> I managed to revise my bisect script sufficiently enough to get reliable
->>> results. It looks like the culprit is commit 503e554782c9 (" debugobject:
->>> Ensure pool refill (again)"); see bisect log below. Bisect on four
->>> different systems all have the same result. After reverting this patch,
->>> I do not see the problem anymore (again, confirmed on four different
->>> systems). If anyone has an idea how to debug this, please let me know.
->>> I'll be happy to give it a try.
->>
->> You may want to comment out debug_objects_fill_pool() in
->> debug_object_activate or debug_object_assert_init to see which one is
->> causing the failure...
->>
->> CONFIG_PREEMPT_RT is disabled for you, right? (Should 5.15 even have
->> that option?)
->>
-> 
-> CONFIG_PREEMPT_RT is disabled (it depends on ARCH_SUPPORTS_RT which is not
-> enabled by any architecture in v5.15.y).
-> 
-> The added call in debug_object_activate() triggers the problem.
-> Any idea what to do about it or how to debug it further ?
-> 
+On 01.06.23 15:49, Alice Ryhl wrote:
+> Define basic low-level bindings to a kernel workqueue. The API defined
+> here can only be used unsafely. Later commits will provide safe
+> wrappers.
+>=20
+> Co-developed-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 
-I did some more debugging. The call to debug_object_activate()
-from debug_hrtimer_activate() causes the immediate problem, and the
-call from debug_timer_activate() causes a second (less likely) problem,
-where the stall is seen during reboot.
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 
-In other words, the problem is (only) seen if DEBUG_OBJECTS_TIMERS
-is enabled.
+--=20
+Cheers,
+Benno
 
-Guenter
+> ---
+>   rust/bindings/bindings_helper.h |   1 +
+>   rust/kernel/lib.rs              |   1 +
+>   rust/kernel/workqueue.rs        | 107 ++++++++++++++++++++++++++++++++
+>   3 files changed, 109 insertions(+)
+>   create mode 100644 rust/kernel/workqueue.rs
+>=20
+> diff --git a/rust/bindings/bindings_helper.h b/rust/bindings/bindings_hel=
+per.h
+> index 50e7a76d5455..ae2e8f018268 100644
+> --- a/rust/bindings/bindings_helper.h
+> +++ b/rust/bindings/bindings_helper.h
+> @@ -10,6 +10,7 @@
+>   #include <linux/refcount.h>
+>   #include <linux/wait.h>
+>   #include <linux/sched.h>
+> +#include <linux/workqueue.h>
+>=20
+>   /* `bindgen` gets confused at certain things. */
+>   const gfp_t BINDINGS_GFP_KERNEL =3D GFP_KERNEL;
+> diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
+> index 85b261209977..eaded02ffb01 100644
+> --- a/rust/kernel/lib.rs
+> +++ b/rust/kernel/lib.rs
+> @@ -43,6 +43,7 @@
+>   pub mod sync;
+>   pub mod task;
+>   pub mod types;
+> +pub mod workqueue;
+>=20
+>   #[doc(hidden)]
+>   pub use bindings;
+> diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
+> new file mode 100644
+> index 000000000000..9c630840039b
+> --- /dev/null
+> +++ b/rust/kernel/workqueue.rs
+> @@ -0,0 +1,107 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +//! Work queues.
+> +//!
+> +//! C header: [`include/linux/workqueue.h`](../../../../include/linux/wo=
+rkqueue.h)
+> +
+> +use crate::{bindings, types::Opaque};
+> +
+> +/// A kernel work queue.
+> +///
+> +/// Wraps the kernel's C `struct workqueue_struct`.
+> +///
+> +/// It allows work items to be queued to run on thread pools managed by =
+the kernel. Several are
+> +/// always available, for example, `system`, `system_highpri`, `system_l=
+ong`, etc.
+> +#[repr(transparent)]
+> +pub struct Queue(Opaque<bindings::workqueue_struct>);
+> +
+> +// SAFETY: Kernel workqueues are usable from any thread.
+> +unsafe impl Send for Queue {}
+> +unsafe impl Sync for Queue {}
+> +
+> +impl Queue {
+> +    /// Use the provided `struct workqueue_struct` with Rust.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The caller must ensure that the provided raw pointer is not dang=
+ling, that it points at a
+> +    /// valid workqueue, and that it remains valid until the end of 'a.
+> +    pub unsafe fn from_raw<'a>(ptr: *const bindings::workqueue_struct) -=
+> &'a Queue {
+> +        // SAFETY: The `Queue` type is `#[repr(transparent)]`, so the po=
+inter cast is valid. The
+> +        // caller promises that the pointer is not dangling.
+> +        unsafe { &*(ptr as *const Queue) }
+> +    }
+> +
+> +    /// Enqueues a work item.
+> +    ///
+> +    /// This may fail if the work item is already enqueued in a workqueu=
+e.
+> +    ///
+> +    /// The work item will be submitted using `WORK_CPU_UNBOUND`.
+> +    pub fn enqueue<W, const ID: u64>(&self, w: W) -> W::EnqueueOutput
+> +    where
+> +        W: RawWorkItem<ID> + Send + 'static,
+> +    {
+> +        let queue_ptr =3D self.0.get();
+> +
+> +        // SAFETY: We only return `false` if the `work_struct` is alread=
+y in a workqueue. The other
+> +        // `__enqueue` requirements are not relevant since `W` is `Send`=
+ and static.
+> +        //
+> +        // The call to `bindings::queue_work_on` will dereference the pr=
+ovided raw pointer, which
+> +        // is ok because `__enqueue` guarantees that the pointer is vali=
+d for the duration of this
+> +        // closure.
+> +        //
+> +        // Furthermore, if the C workqueue code accesses the pointer aft=
+er this call to
+> +        // `__enqueue`, then the work item was successfully enqueued, an=
+d `bindings::queue_work_on`
+> +        // will have returned true. In this case, `__enqueue` promises t=
+hat the raw pointer will
+> +        // stay valid until we call the function pointer in the `work_st=
+ruct`, so the access is ok.
+> +        unsafe {
+> +            w.__enqueue(move |work_ptr| {
+> +                bindings::queue_work_on(bindings::WORK_CPU_UNBOUND as _,=
+ queue_ptr, work_ptr)
+> +            })
+> +        }
+> +    }
+> +}
+> +
+> +/// A raw work item.
+> +///
+> +/// This is the low-level trait that is designed for being as general as=
+ possible.
+> +///
+> +/// The `ID` parameter to this trait exists so that a single type can pr=
+ovide multiple
+> +/// implementations of this trait. For example, if a struct has multiple=
+ `work_struct` fields, then
+> +/// you will implement this trait once for each field, using a different=
+ id for each field. The
+> +/// actual value of the id is not important as long as you use different=
+ ids for different fields
+> +/// of the same struct. (Fields of different structs need not use differ=
+ent ids.)
+> +///
+> +/// Note that the id is used only to select the right method to call dur=
+ing compilation. It wont be
+> +/// part of the final executable.
+> +///
+> +/// # Safety
+> +///
+> +/// Implementers must ensure that any pointers passed to a `queue_work_o=
+n` closure by `__enqueue`
+> +/// remain valid for the duration specified in the documentation for `__=
+enqueue`.
+> +pub unsafe trait RawWorkItem<const ID: u64> {
+> +    /// The return type of [`Queue::enqueue`].
+> +    type EnqueueOutput;
+> +
+> +    /// Enqueues this work item on a queue using the provided `queue_wor=
+k_on` method.
+> +    ///
+> +    /// # Guarantees
+> +    ///
+> +    /// If this method calls the provided closure, then the raw pointer =
+is guaranteed to point at a
+> +    /// valid `work_struct` for the duration of the call to the closure.=
+ If the closure returns
+> +    /// true, then it is further guaranteed that the pointer remains val=
+id until someone calls the
+> +    /// function pointer stored in the `work_struct`.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The provided closure may only return `false` if the `work_struct=
+` is already in a workqueue.
+> +    ///
+> +    /// If the work item type is annotated with any lifetimes, then you =
+must not call the function
+> +    /// pointer after any such lifetime expires. (Never calling the func=
+tion pointer is okay.)
+> +    ///
+> +    /// If the work item type is not [`Send`], then the function pointer=
+ must be called on the same
+> +    /// thread as the call to `__enqueue`.
+> +    unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutpu=
+t
+> +    where
+> +        F: FnOnce(*mut bindings::work_struct) -> bool;
+> +}
+> --
+> 2.41.0.rc0.172.g3f132b7071-goog
+>=20
+
 
