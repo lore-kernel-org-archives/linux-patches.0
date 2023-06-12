@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40467134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB57C433EF;
-	Mon, 12 Jun 2023 10:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3EB134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AA6C433EF;
+	Mon, 12 Jun 2023 10:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566621;
-	bh=w/eDSo4yjdp+bz1ucfE9I8Lp7Y7KeJEgSWjKkl15tmk=;
+	s=korg; t=1686566623;
+	bh=4VKdvJeQ4izTZl1blo3mkVCpCYtokCTrzCYAO0Bhff0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FuScsNZq4FtqJ+4HqntY1MIMo2tDU95W3piBa0ns5lKC6ukcu7OVVju3HCNDpXih3
-	 zTCUIX/Zq9euEH30/MpzthOIdf8iY2xP+aJEmHbVhRjpyxnyLbh0dxOVqWsNsc8vtm
-	 GxaU6J0eA3ZEKLPZ0WeBxKiPRs1oghenNZrNdtR0=
+	b=tknyGT+rK0to7RS5cPKBJ76JoAMsy5yLRiVP5Xiua9fRNH65euI/YAQZGALidPMPu
+	 sN09I0PB5EhSU8C0t1CR5EBSbcVWYPOTxKpN03lSLA1ob5ZTV5YAfonZl1QF83eeU1
+	 XDQgACRfCybQig3cHOzeTgzSwQ1trvhaoCRsY+9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Allen Hubbe <allen.hubbe@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 094/132] virtio_net: use control_buf for coalesce params
-Date: Mon, 12 Jun 2023 12:27:08 +0200
-Message-ID: <20230612101714.509307698@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 095/132] soc: qcom: icc-bwmon: fix incorrect error code passed to dev_err_probe()
+Date: Mon, 12 Jun 2023 12:27:09 +0200
+Message-ID: <20230612101714.554195434@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -39,72 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit accc1bf23068c1cdc4c2b015320ba856e210dd98 upstream.
+commit 3530167c6fe8001de6c026a3058eaca4c8a5329f upstream.
 
-Commit 699b045a8e43 ("net: virtio_net: notifications coalescing
-support") added coalescing command support for virtio_net. However,
-the coalesce commands are using buffers on the stack, which is causing
-the device to see DMA errors. There should also be a complaint from
-check_for_stack() in debug_dma_map_xyz(). Fix this by adding and using
-coalesce params from the control_buf struct, which aligns with other
-commands.
+Pass to dev_err_probe() PTR_ERR from actual dev_pm_opp_find_bw_floor()
+call which failed, instead of previous ret which at this point is 0.
+Failure of dev_pm_opp_find_bw_floor() would result in prematurely ending
+the probe with success.
 
-Cc: stable@vger.kernel.org
-Fixes: 699b045a8e43 ("net: virtio_net: notifications coalescing support")
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Signed-off-by: Allen Hubbe <allen.hubbe@amd.com>
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://lore.kernel.org/r/20230605195925.51625-1-brett.creeley@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes smatch warnings:
+
+  drivers/soc/qcom/icc-bwmon.c:776 bwmon_probe() warn: passing zero to 'dev_err_probe'
+  drivers/soc/qcom/icc-bwmon.c:781 bwmon_probe() warn: passing zero to 'dev_err_probe'
+
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/202305131657.76XeHDjF-lkp@intel.com/
+Cc: <stable@vger.kernel.org>
+Fixes: b9c2ae6cac40 ("soc: qcom: icc-bwmon: Add bandwidth monitoring driver")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230513111747.132532-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/soc/qcom/icc-bwmon.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -200,6 +200,8 @@ struct control_buf {
- 	__virtio16 vid;
- 	__virtio64 offloads;
- 	struct virtio_net_ctrl_rss rss;
-+	struct virtio_net_ctrl_coal_tx coal_tx;
-+	struct virtio_net_ctrl_coal_rx coal_rx;
- };
+--- a/drivers/soc/qcom/icc-bwmon.c
++++ b/drivers/soc/qcom/icc-bwmon.c
+@@ -603,12 +603,12 @@ static int bwmon_probe(struct platform_d
+ 	bwmon->max_bw_kbps = UINT_MAX;
+ 	opp = dev_pm_opp_find_bw_floor(dev, &bwmon->max_bw_kbps, 0);
+ 	if (IS_ERR(opp))
+-		return dev_err_probe(dev, ret, "failed to find max peak bandwidth\n");
++		return dev_err_probe(dev, PTR_ERR(opp), "failed to find max peak bandwidth\n");
  
- struct virtnet_info {
-@@ -2786,12 +2788,10 @@ static int virtnet_send_notf_coal_cmds(s
- 				       struct ethtool_coalesce *ec)
- {
- 	struct scatterlist sgs_tx, sgs_rx;
--	struct virtio_net_ctrl_coal_tx coal_tx;
--	struct virtio_net_ctrl_coal_rx coal_rx;
+ 	bwmon->min_bw_kbps = 0;
+ 	opp = dev_pm_opp_find_bw_ceil(dev, &bwmon->min_bw_kbps, 0);
+ 	if (IS_ERR(opp))
+-		return dev_err_probe(dev, ret, "failed to find min peak bandwidth\n");
++		return dev_err_probe(dev, PTR_ERR(opp), "failed to find min peak bandwidth\n");
  
--	coal_tx.tx_usecs = cpu_to_le32(ec->tx_coalesce_usecs);
--	coal_tx.tx_max_packets = cpu_to_le32(ec->tx_max_coalesced_frames);
--	sg_init_one(&sgs_tx, &coal_tx, sizeof(coal_tx));
-+	vi->ctrl->coal_tx.tx_usecs = cpu_to_le32(ec->tx_coalesce_usecs);
-+	vi->ctrl->coal_tx.tx_max_packets = cpu_to_le32(ec->tx_max_coalesced_frames);
-+	sg_init_one(&sgs_tx, &vi->ctrl->coal_tx, sizeof(vi->ctrl->coal_tx));
+ 	bwmon->dev = dev;
  
- 	if (!virtnet_send_command(vi, VIRTIO_NET_CTRL_NOTF_COAL,
- 				  VIRTIO_NET_CTRL_NOTF_COAL_TX_SET,
-@@ -2802,9 +2802,9 @@ static int virtnet_send_notf_coal_cmds(s
- 	vi->tx_usecs = ec->tx_coalesce_usecs;
- 	vi->tx_max_packets = ec->tx_max_coalesced_frames;
- 
--	coal_rx.rx_usecs = cpu_to_le32(ec->rx_coalesce_usecs);
--	coal_rx.rx_max_packets = cpu_to_le32(ec->rx_max_coalesced_frames);
--	sg_init_one(&sgs_rx, &coal_rx, sizeof(coal_rx));
-+	vi->ctrl->coal_rx.rx_usecs = cpu_to_le32(ec->rx_coalesce_usecs);
-+	vi->ctrl->coal_rx.rx_max_packets = cpu_to_le32(ec->rx_max_coalesced_frames);
-+	sg_init_one(&sgs_rx, &vi->ctrl->coal_rx, sizeof(vi->ctrl->coal_rx));
- 
- 	if (!virtnet_send_command(vi, VIRTIO_NET_CTRL_NOTF_COAL,
- 				  VIRTIO_NET_CTRL_NOTF_COAL_RX_SET,
 
 
