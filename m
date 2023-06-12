@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39C219511
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:32:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B86DC433D2;
-	Mon, 12 Jun 2023 10:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C2A1951F
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:32:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFAF5C433EF;
+	Mon, 12 Jun 2023 10:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565967;
-	bh=4JEuqK24RTZHbmzS7TylCNb/mAwUm4REqmtTWQI/w5Y=;
+	s=korg; t=1686565970;
+	bh=c7IlnrlA2Yxrp30Q52gHwzxuRfWVGZqbiKzCiQOiR2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nbo9HcGghtnSIcjew/TWxzbR/gT49bNVstENig0a6BvqAj5l3SgsYJUgLZ0moR9s9
-	 4qPODriNfNzP0slMG0ITzX77YZ/TVug5vKtPGDj1aFSIQc6eBCrt1QoTNEWGvf1AfS
-	 MPemIVjvLlhOhaE/f7z6k+hdP6hdSclKMCzSssOE=
+	b=Sf7HRTUs5GwdIZs8AAc8eLnpCJ9paRc9cjAxONEWnWWkFhuWXq3Ww4IN1aljGWEWb
+	 5dYri3HX7LPzSGhG54xyCzadPqQ7Ws1J9I1xqBrJyQrWClfJ+NKCq83gIItoxkzWba
+	 wuGBnZ7haYYmwZPoaA+DW83qxXLAzNxM0DnXIZ/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	linux-fsdevel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 14/68] afs: Fix setting of mtime when creating a file/dir/symlink
-Date: Mon, 12 Jun 2023 12:26:06 +0200
-Message-ID: <20230612101659.057271793@linuxfoundation.org>
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	linux-hardening@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Paul Barker <paul.barker@sancloud.com>
+Subject: [PATCH 5.10 02/68] gcc-plugins: Reorganize gimple includes for GCC 13
+Date: Mon, 12 Jun 2023 12:25:54 +0200
+Message-ID: <20230612101658.540867935@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -39,61 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit a27648c742104a833a01c54becc24429898d85bf ]
+mainline commit: e6a71160cc145e18ab45195abf89884112e02dfb
 
-kafs incorrectly passes a zero mtime (ie. 1st Jan 1970) to the server when
-creating a file, dir or symlink because the mtime recorded in the
-afs_operation struct gets passed to the server by the marshalling routines,
-but the afs_mkdir(), afs_create() and afs_symlink() functions don't set it.
+The gimple-iterator.h header must be included before gimple-fold.h
+starting with GCC 13. Reorganize gimple headers to work for all GCC
+versions.
 
-This gets masked if a file or directory is subsequently modified.
-
-Fix this by filling in op->mtime before calling the create op.
-
-Fixes: e49c7b2f6de7 ("afs: Build an abstraction around an "operation" concept")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/all/20230113173033.4380-1-palmer@rivosinc.com/
+Cc: linux-hardening@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+[ Modified to handle differences in other includes and conditional compilation in the 5.10.y tree. ]
+Signed-off-by: Paul Barker <paul.barker@sancloud.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/dir.c | 3 +++
- 1 file changed, 3 insertions(+)
+ scripts/gcc-plugins/gcc-common.h |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index 159795059547f..a59d6293a32b2 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -1313,6 +1313,7 @@ static int afs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode)
- 	op->dentry	= dentry;
- 	op->create.mode	= S_IFDIR | mode;
- 	op->create.reason = afs_edit_dir_for_mkdir;
-+	op->mtime	= current_time(dir);
- 	op->ops		= &afs_mkdir_operation;
- 	return afs_do_sync_operation(op);
- }
-@@ -1616,6 +1617,7 @@ static int afs_create(struct inode *dir, struct dentry *dentry, umode_t mode,
- 	op->dentry	= dentry;
- 	op->create.mode	= S_IFREG | mode;
- 	op->create.reason = afs_edit_dir_for_create;
-+	op->mtime	= current_time(dir);
- 	op->ops		= &afs_create_operation;
- 	return afs_do_sync_operation(op);
+--- a/scripts/gcc-plugins/gcc-common.h
++++ b/scripts/gcc-plugins/gcc-common.h
+@@ -108,7 +108,13 @@
+ #include "varasm.h"
+ #include "stor-layout.h"
+ #include "internal-fn.h"
++#endif
++
++#include "gimple.h"
++
++#if BUILDING_GCC_VERSION >= 4009
+ #include "gimple-expr.h"
++#include "gimple-iterator.h"
+ #include "gimple-fold.h"
+ #include "context.h"
+ #include "tree-ssa-alias.h"
+@@ -124,13 +130,10 @@
+ #include "gimplify.h"
+ #endif
  
-@@ -1745,6 +1747,7 @@ static int afs_symlink(struct inode *dir, struct dentry *dentry,
- 	op->ops			= &afs_symlink_operation;
- 	op->create.reason	= afs_edit_dir_for_symlink;
- 	op->create.symlink	= content;
-+	op->mtime		= current_time(dir);
- 	return afs_do_sync_operation(op);
- 
- error:
--- 
-2.39.2
-
+-#include "gimple.h"
+-
+ #if BUILDING_GCC_VERSION >= 4009
+ #include "tree-ssa-operands.h"
+ #include "tree-phinodes.h"
+ #include "tree-cfg.h"
+-#include "gimple-iterator.h"
+ #include "gimple-ssa.h"
+ #include "ssa-iterators.h"
+ #endif
 
 
