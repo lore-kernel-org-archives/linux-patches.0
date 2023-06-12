@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B0B18C35
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:28:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0892BC433D2;
-	Mon, 12 Jun 2023 10:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3166118C35
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:28:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2FEC433D2;
+	Mon, 12 Jun 2023 10:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565736;
-	bh=lR4CLoo5OoBvBxrrLCT340/L35CbBPLJKJcm1d5o/14=;
+	s=korg; t=1686565739;
+	bh=w+D+Dx4XTvtE7F77ioijKi4opah12yNrSNI+UfL2xMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7yJpWkgUfoHaSVh1NSV1fQxDU9RMomTUhgixaYlSDnCaN7Eoay1F3rbq4Prd2iFr
-	 k9hZHeAhBxiHfd5qlb0Vfp6UZpj25j1T9FBwwa0HX56hJAqMGymPcOosdRvbpsJxnp
-	 Gz1Ff/KNHV3liWTH8IibVE+I/7uOX8tJD3rh8FKc=
+	b=hy/aVDROGe3N0MfQ80zZssWTIctoUP10wSkR9moM1dYbRZIjKSaBjuXa5dEgnaRtV
+	 alwLcSeWF0qi39WvIrmKaSpDXSMQN3jVr9GH1Xn6iE8MSdpBBj04FKZTDptNnDzSXW
+	 URtTZ4F4vY+FLpgCysoQcyZNqbbwhRD2BQRP24yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 08/21] net: sched: move rtm_tca_policy declaration to include file
-Date: Mon, 12 Jun 2023 12:26:03 +0200
-Message-ID: <20230612101651.352385750@linuxfoundation.org>
+Subject: [PATCH 4.14 09/21] lib: cpu_rmap: Fix potential use-after-free in irq_cpu_rmap_release()
+Date: Mon, 12 Jun 2023 12:26:04 +0200
+Message-ID: <20230612101651.383334264@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.048240731@linuxfoundation.org>
 References: <20230612101651.048240731@linuxfoundation.org>
@@ -36,51 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ben Hutchings <ben@decadent.org.uk>
 
-[ Upstream commit 886bc7d6ed3357975c5f1d3c784da96000d4bbb4 ]
+[ Upstream commit 7c5d4801ecf0564c860033d89726b99723c55146 ]
 
-rtm_tca_policy is used from net/sched/sch_api.c and net/sched/cls_api.c,
-thus should be declared in an include file.
+irq_cpu_rmap_release() calls cpu_rmap_put(), which may free the rmap.
+So we need to clear the pointer to our glue structure in rmap before
+doing that, not after.
 
-This fixes the following sparse warning:
-net/sched/sch_api.c:1434:25: warning: symbol 'rtm_tca_policy' was not declared. Should it be static?
-
-Fixes: e331473fee3d ("net/sched: cls_api: add missing validation of netlink attributes")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4e0473f1060a ("lib: cpu_rmap: Avoid use after free on rmap->obj array entries")
+Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/ZHo0vwquhOy3FaXc@decadent.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pkt_sched.h | 2 ++
- net/sched/cls_api.c     | 2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ lib/cpu_rmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
-index b3869f97d37d7..85e059d3bc233 100644
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -126,6 +126,8 @@ static inline __be16 tc_skb_protocol(const struct sk_buff *skb)
- 	return skb->protocol;
+diff --git a/lib/cpu_rmap.c b/lib/cpu_rmap.c
+index f52389054a24f..a0de1b2579f71 100644
+--- a/lib/cpu_rmap.c
++++ b/lib/cpu_rmap.c
+@@ -271,8 +271,8 @@ static void irq_cpu_rmap_release(struct kref *ref)
+ 	struct irq_glue *glue =
+ 		container_of(ref, struct irq_glue, notify.kref);
+ 
+-	cpu_rmap_put(glue->rmap);
+ 	glue->rmap->obj[glue->index] = NULL;
++	cpu_rmap_put(glue->rmap);
+ 	kfree(glue);
  }
- 
-+extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
-+
- /* Calculate maximal size of packet seen by hard_start_xmit
-    routine of this device.
-  */
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 32819d1e20754..8808133e78a37 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -31,8 +31,6 @@
- #include <net/pkt_sched.h>
- #include <net/pkt_cls.h>
- 
--extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
--
- /* The list of all installed classifier types */
- static LIST_HEAD(tcf_proto_base);
  
 -- 
 2.39.2
