@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D289D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1808C433EF;
-	Mon, 12 Jun 2023 10:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB16AD512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6058BC4339B;
+	Mon, 12 Jun 2023 10:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566964;
-	bh=e6h7ezBfQxf3SpLekI03YTp+/3sYIf3ZR1MfP2Q9c9U=;
+	s=korg; t=1686566966;
+	bh=7kT2sgLdjA+wTuSfGs9wKKBftoOJ03FMkOYsUNB+5nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Elbn+nMDfKvj5vKu0tExuJWADgi9Jc0y+TKM8DhRxZy0LlAb/Y5oiwTuU5PTO2o4e
-	 XDfY4lpBLt4eLQ+jEOb9VWhsi8O2Hl3/SS5iIT+rJoNFK7mYcgX4ei5CgIWhL6Af3S
-	 fM/Z3lH4I3NLTain+jT7kNd+ASn39qdmbnxZ0M+U=
+	b=WwI1Kjidm0fEFWItgMy1NU/O/yEH3PCB1PmyF11dMn2kMmTVhYgIku3+gnPlYX8sG
+	 0NIus6FpSu9tY14BcoMB6Yv6O3E7fi+sAG4i9gjj6Xsu47rjQIuGJMg66ULzICgyu4
+	 Tj83AqFE8/fPDDe4d0EF7ak5ul9XaF3a4IGRD/yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.3 081/160] ALSA: hda/realtek: Add a quirk for HP Slim Desktop S01
-Date: Mon, 12 Jun 2023 12:26:53 +0200
-Message-ID: <20230612101718.712524917@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Geliang Tang <geliang.tang@suse.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.3 099/160] selftests: mptcp: update userspace pm addr tests
+Date: Mon, 12 Jun 2023 12:27:11 +0200
+Message-ID: <20230612101719.547202239@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -34,30 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ai Chao <aichao@kylinos.cn>
+From: Geliang Tang <geliang.tang@suse.com>
 
-commit 527c356b51f3ddee02c9ed5277538f85e30a2cdc upstream.
+commit 48d73f609dcceeb563b0d960e59bf0362581e39c upstream.
 
-Add a quirk for HP Slim Desktop S01 to fixup headset MIC no presence.
+This patch is linked to the previous commit ("mptcp: only send RM_ADDR in
+nl_cmd_remove").
 
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230526094704.14597-1-aichao@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+To align with what is done by the in-kernel PM, update userspace pm addr
+selftests, by sending a remove_subflows command together after the
+remove_addrs command.
+
+Fixes: d9a4594edabf ("mptcp: netlink: Add MPTCP_PM_CMD_REMOVE")
+Fixes: 97040cf9806e ("selftests: mptcp: userspace pm address tests")
+Cc: stable@vger.kernel.org
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Geliang Tang <geliang.tang@suse.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11695,6 +11695,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x103c, 0x8719, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x872b, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x873e, "HP", ALC671_FIXUP_HP_HEADSET_MIC2),
-+	SND_PCI_QUIRK(0x103c, 0x8768, "HP Slim Desktop S01", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x103c, 0x877e, "HP 288 Pro G6", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x103c, 0x885f, "HP 288 Pro G8", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x1043, 0x1080, "Asus UX501VW", ALC668_FIXUP_HEADSET_MODE),
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -856,7 +856,15 @@ do_transfer()
+ 				     sed -n 's/.*\(token:\)\([[:digit:]]*\).*$/\2/p;q')
+ 				ip netns exec ${listener_ns} ./pm_nl_ctl ann $addr token $tk id $id
+ 				sleep 1
++				sp=$(grep "type:10" "$evts_ns1" |
++				     sed -n 's/.*\(sport:\)\([[:digit:]]*\).*$/\2/p;q')
++				da=$(grep "type:10" "$evts_ns1" |
++				     sed -n 's/.*\(daddr6:\)\([0-9a-f:.]*\).*$/\2/p;q')
++				dp=$(grep "type:10" "$evts_ns1" |
++				     sed -n 's/.*\(dport:\)\([[:digit:]]*\).*$/\2/p;q')
+ 				ip netns exec ${listener_ns} ./pm_nl_ctl rem token $tk id $id
++				ip netns exec ${listener_ns} ./pm_nl_ctl dsf lip "::ffff:$addr" \
++							lport $sp rip $da rport $dp token $tk
+ 			fi
+ 
+ 			counter=$((counter + 1))
 
 
