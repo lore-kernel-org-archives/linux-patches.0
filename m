@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EAA19526
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F5AC433EF;
-	Mon, 12 Jun 2023 10:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20853168A6
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D422C433EF;
+	Mon, 12 Jun 2023 10:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565836;
-	bh=HCZ96EUcsEpO1qmo7iXH+LMxPmqQS/gErolqnh6hiUE=;
+	s=korg; t=1686565839;
+	bh=nLrUB/ipY9U+VtnRqHyd7BJmuuE8q4WPua2Cow98l7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yD7jSvH/eEuBodCUvbdmzbLwuiGo0ddPLB+pmJixtx3XiinwHhsZ9+fH/Ip7ykSyF
-	 YkaMdjw398du9hl9VSthaGGQUM8YUbGjAHZsHYscLCU8x3EYQuBWGpr4DIqXM/Ah96
-	 NQT2HCXa5+vk/j0jPDna9ZMeo25ZS7Nrg9BaKLWw=
+	b=ybbONk1j5uaTTWUnQ03/+g6sgbJgSVjbyceSGxL0HVwxiTOpzycbJ7KiRanpUaN6y
+	 /LWStt1ONoP8bBKPmgNBdfLYb+1UP/I6cC8CkpbxTV4Rk86mqSGJZt5LjPLeSuj+re
+	 L7r+AWWVkjAExH6DcOhUr08al5Kozq/gYJPgvGQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 10/45] Bluetooth: L2CAP: Add missing checks for invalid DCID
-Date: Mon, 12 Jun 2023 12:26:04 +0200
-Message-ID: <20230612101655.040545161@linuxfoundation.org>
+Subject: [PATCH 5.4 11/45] netfilter: conntrack: fix NULL pointer dereference in nf_confirm_cthelper
+Date: Mon, 12 Jun 2023 12:26:05 +0200
+Message-ID: <20230612101655.083150941@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -35,51 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>
 
-[ Upstream commit 75767213f3d9b97f63694d02260b6a49a2271876 ]
+[ Upstream commit e1f543dc660b44618a1bd72ddb4ca0828a95f7ad ]
 
-When receiving a connect response we should make sure that the DCID is
-within the valid range and that we don't already have another channel
-allocated for the same DCID.
-Missing checks may violate the specification (BLUETOOTH CORE SPECIFICATION
-Version 5.4 | Vol 3, Part A, Page 1046).
+An nf_conntrack_helper from nf_conn_help may become NULL after DNAT.
 
-Fixes: 40624183c202 ("Bluetooth: L2CAP: Add missing checks for invalid LE DCID")
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Observed when TCP port 1720 (Q931_PORT), associated with h323 conntrack
+helper, is DNAT'ed to another destination port (e.g. 1730), while
+nfqueue is being used for final acceptance (e.g. snort).
+
+This happenned after transition from kernel 4.14 to 5.10.161.
+
+Workarounds:
+ * keep the same port (1720) in DNAT
+ * disable nfqueue
+ * disable/unload h323 NAT helper
+
+$ linux-5.10/scripts/decode_stacktrace.sh vmlinux < /tmp/kernel.log
+BUG: kernel NULL pointer dereference, address: 0000000000000084
+[..]
+RIP: 0010:nf_conntrack_update (net/netfilter/nf_conntrack_core.c:2080 net/netfilter/nf_conntrack_core.c:2134) nf_conntrack
+[..]
+nfqnl_reinject (net/netfilter/nfnetlink_queue.c:237) nfnetlink_queue
+nfqnl_recv_verdict (net/netfilter/nfnetlink_queue.c:1230) nfnetlink_queue
+nfnetlink_rcv_msg (net/netfilter/nfnetlink.c:241) nfnetlink
+[..]
+
+Fixes: ee04805ff54a ("netfilter: conntrack: make conntrack userspace helpers work again")
+Signed-off-by: Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/netfilter/nf_conntrack_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 6bbe0fd79d154..e56863587ea2e 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4024,6 +4024,10 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
- 	result = __le16_to_cpu(rsp->result);
- 	status = __le16_to_cpu(rsp->status);
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index d9b6f2001d006..fb1f12bb0ff2c 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -1943,6 +1943,9 @@ static int nf_confirm_cthelper(struct sk_buff *skb, struct nf_conn *ct,
+ 		return 0;
  
-+	if (result == L2CAP_CR_SUCCESS && (dcid < L2CAP_CID_DYN_START ||
-+					   dcid > L2CAP_CID_DYN_END))
-+		return -EPROTO;
+ 	helper = rcu_dereference(help->helper);
++	if (!helper)
++		return 0;
 +
- 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x result 0x%2.2x status 0x%2.2x",
- 	       dcid, scid, result, status);
+ 	if (!(helper->flags & NF_CT_HELPER_F_USERSPACE))
+ 		return 0;
  
-@@ -4055,6 +4059,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
- 
- 	switch (result) {
- 	case L2CAP_CR_SUCCESS:
-+		if (__l2cap_get_chan_by_dcid(conn, dcid)) {
-+			err = -EBADSLT;
-+			break;
-+		}
-+
- 		l2cap_state_change(chan, BT_CONFIG);
- 		chan->ident = 0;
- 		chan->dcid = dcid;
 -- 
 2.39.2
 
