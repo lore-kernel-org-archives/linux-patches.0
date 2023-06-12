@@ -1,29 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468D9D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:39:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA8DC433D2;
-	Mon, 12 Jun 2023 10:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC15D518
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:39:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA44BC4339B;
+	Mon, 12 Jun 2023 10:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566374;
-	bh=EUedLAMBCK6dikspoF1hktktg5XFi88D1Ww/3pSbXcE=;
+	s=korg; t=1686566377;
+	bh=ePm379yY4XF2I6pU3RaBrQaVCGybMBc2EXUpeiAv+4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dx4FYHzll+WGyPGfwWX0PVT2t+x22ErP1H13ef+L1/DzzjCxlAtqWCzIc4DXOp9kD
-	 cmvm66mI6oeKuSMXzUVwey8mOS/v4pRy73h15fmZwnohIUfNNnqE+0OtyKDqdNZjR4
-	 E1D6a5HPCyzd3ncHBtZAsGXeE2PjvJ3fK67V5GH0=
+	b=ub2eTSCgAMlvA5ggYJWNEnS1csnNMbfsyQGbWFl/PETUMU1239EcjIJixl83jSDX1
+	 5tCXmnu9DfFWUur5ETdaavjatanX/hSCQXCg57jVBAlCYk2AhiLyan3NSb+cijwSS7
+	 F02cxniIFsyoXqhS1Tld01KC9itc3Qy+oiPRfs50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruihan Li <lrh2000@pku.edu.cn>
-Subject: [PATCH 5.15 70/91] usb: usbfs: Use consistent mmap functions
-Date: Mon, 12 Jun 2023 12:26:59 +0200
-Message-ID: <20230612101704.993907119@linuxfoundation.org>
+	Holger Kiehl <Holger.Kiehl@dwd.de>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	megaraidlinux.pdl@broadcom.com,
+	linux-scsi@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 001/132] scsi: megaraid_sas: Add flexible array member for SGLs
+Date: Mon, 12 Jun 2023 12:25:35 +0200
+Message-ID: <20230612101710.358894732@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
-References: <20230612101702.085813286@linuxfoundation.org>
+In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
+References: <20230612101710.279705932@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,60 +43,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruihan Li <lrh2000@pku.edu.cn>
+From: Kees Cook <keescook@chromium.org>
 
-commit d0b861653f8c16839c3035875b556afc4472f941 upstream.
+commit a9a3629592ab7442a2e9d40281420b51c453ea9b upstream.
 
-When hcd->localmem_pool is non-null, localmem_pool is used to allocate
-DMA memory. In this case, the dma address will be properly returned (in
-dma_handle), and dma_mmap_coherent should be used to map this memory
-into the user space. However, the current implementation uses
-pfn_remap_range, which is supposed to map normal pages.
+struct MPI2_RAID_SCSI_IO_REQUEST ends with a single SGL, but expects to
+copy multiple. Add a flexible array member so the compiler can reason about
+the size of the memcpy(). This will avoid the run-time false positive
+warning:
 
-Instead of repeating the logic in the memory allocation function, this
-patch introduces a more robust solution. Here, the type of allocated
-memory is checked by testing whether dma_handle is properly set. If
-dma_handle is properly returned, it means some DMA pages are allocated
-and dma_mmap_coherent should be used to map them. Otherwise, normal
-pages are allocated and pfn_remap_range should be called. This ensures
-that the correct mmap functions are used consistently, independently
-with logic details that determine which type of memory gets allocated.
+  memcpy: detected field-spanning write (size 128) of single field "&r1_cmd->io_request->SGL" at drivers/scsi/megaraid/megaraid_sas_fusion.c:3326 (size 16)
 
-Fixes: a0e710a7def4 ("USB: usbfs: fix mmap dma mismatch")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-Link: https://lore.kernel.org/r/20230515130958.32471-3-lrh2000@pku.edu.cn
+This change results in no binary output differences.
+
+Reported-by: Holger Kiehl <Holger.Kiehl@dwd.de>
+Link: https://lore.kernel.org/all/88de8faa-56c4-693d-2d3-67152ee72057@diagnostix.dwd.de/
+Cc: Kashyap Desai <kashyap.desai@broadcom.com>
+Cc: Sumit Saxena <sumit.saxena@broadcom.com>
+Cc: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
+Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: megaraidlinux.pdl@broadcom.com
+Cc: linux-scsi@vger.kernel.org
+Link: https://lore.kernel.org/r/20230106053153.never.999-kees@kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Tested-by: Holger Kiehl <Holger.Kiehl@dwd.de>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/devio.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/scsi/megaraid/megaraid_sas_fusion.c |    2 +-
+ drivers/scsi/megaraid/megaraid_sas_fusion.h |    5 ++++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/devio.c
-+++ b/drivers/usb/core/devio.c
-@@ -223,7 +223,7 @@ static int usbdev_mmap(struct file *file
- 	size_t size = vma->vm_end - vma->vm_start;
- 	void *mem;
- 	unsigned long flags;
--	dma_addr_t dma_handle;
-+	dma_addr_t dma_handle = DMA_MAPPING_ERROR;
- 	int ret;
+--- a/drivers/scsi/megaraid/megaraid_sas_fusion.c
++++ b/drivers/scsi/megaraid/megaraid_sas_fusion.c
+@@ -3323,7 +3323,7 @@ static void megasas_prepare_secondRaid1_
+ 	/* copy the io request frame as well as 8 SGEs data for r1 command*/
+ 	memcpy(r1_cmd->io_request, cmd->io_request,
+ 	       (sizeof(struct MPI2_RAID_SCSI_IO_REQUEST)));
+-	memcpy(&r1_cmd->io_request->SGL, &cmd->io_request->SGL,
++	memcpy(r1_cmd->io_request->SGLs, cmd->io_request->SGLs,
+ 	       (fusion->max_sge_in_main_msg * sizeof(union MPI2_SGE_IO_UNION)));
+ 	/*sense buffer is different for r1 command*/
+ 	r1_cmd->io_request->SenseBufferLowAddress =
+--- a/drivers/scsi/megaraid/megaraid_sas_fusion.h
++++ b/drivers/scsi/megaraid/megaraid_sas_fusion.h
+@@ -526,7 +526,10 @@ struct MPI2_RAID_SCSI_IO_REQUEST {
+ 	__le32			Control;                        /* 0x3C */
+ 	union MPI2_SCSI_IO_CDB_UNION  CDB;			/* 0x40 */
+ 	union RAID_CONTEXT_UNION RaidContext;  /* 0x60 */
+-	union MPI2_SGE_IO_UNION       SGL;			/* 0x80 */
++	union {
++		union MPI2_SGE_IO_UNION       SGL;		/* 0x80 */
++		DECLARE_FLEX_ARRAY(union MPI2_SGE_IO_UNION, SGLs);
++	};
+ };
  
- 	ret = usbfs_increase_memory_usage(size + sizeof(struct usb_memory));
-@@ -253,7 +253,14 @@ static int usbdev_mmap(struct file *file
- 	usbm->vma_use_count = 1;
- 	INIT_LIST_HEAD(&usbm->memlist);
- 
--	if (hcd->localmem_pool || !hcd_uses_dma(hcd)) {
-+	/*
-+	 * In DMA-unavailable cases, hcd_buffer_alloc_pages allocates
-+	 * normal pages and assigns DMA_MAPPING_ERROR to dma_handle. Check
-+	 * whether we are in such cases, and then use remap_pfn_range (or
-+	 * dma_mmap_coherent) to map normal (or DMA) pages into the user
-+	 * space, respectively.
-+	 */
-+	if (dma_handle == DMA_MAPPING_ERROR) {
- 		if (remap_pfn_range(vma, vma->vm_start,
- 				    virt_to_phys(usbm->mem) >> PAGE_SHIFT,
- 				    size, vma->vm_page_prot) < 0) {
+ /*
 
 
