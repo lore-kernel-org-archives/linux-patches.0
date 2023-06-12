@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7164D1950B
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C427FC433EF;
-	Mon, 12 Jun 2023 10:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7194F19531
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52DCC433D2;
+	Mon, 12 Jun 2023 10:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565907;
-	bh=XsKyawLmBz3Db+v60Vq7hakm0USK2aN7e1Qm5x0KWEg=;
+	s=korg; t=1686565910;
+	bh=OZbe/Cq7omvPd1un4y5/vDe2jgq1Pve2H9PXDZsWSk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+9ZIaMAuhKFWpMQb//p1wHHhq59a9Eu84ItehzBm3DDVqoS65CBtvTme1UUsLScx
-	 Gr3RBKdiFP969A4QOm5M8u8Qf3QbwII73iDB6byzC+xPZtXBDqJmynQmPBf8Q0heTZ
-	 KYoa6zJvrNrDcXR9zFZoueDkeyHvMLdeqz+34qKc=
+	b=NUHHXfAdVtV0ky2XeOJQFGn2DyPbXnGMGOad+8pEvdrYSM3OFz4kh+Nr7Mopq4aaM
+	 9lqrkuCpdVRbycUUNToIQ2CmMWYGsmDzbqnUK7k07xg2TKbczzcGjXsSy5ct7NNm9v
+	 cUdgNQc/QdF3CcdGMRfFImI7g0/WCsX3a1IM3dds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 36/45] eeprom: at24: also select REGMAP
-Date: Mon, 12 Jun 2023 12:26:30 +0200
-Message-ID: <20230612101656.136303428@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 37/45] ext4: only check dquot_initialize_needed() when debugging
+Date: Mon, 12 Jun 2023 12:26:31 +0200
+Message-ID: <20230612101656.174786844@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -35,49 +33,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit 7f3c782b3914e510b646a77aedc3adeac2e4a63b ]
+commit dea9d8f7643fab07bf89a1155f1f94f37d096a5e upstream.
 
-Selecting only REGMAP_I2C can leave REGMAP unset, causing build errors,
-so also select REGMAP to prevent the build errors.
+ext4_xattr_block_set() relies on its caller to call dquot_initialize()
+on the inode.  To assure that this has happened there are WARN_ON
+checks.  Unfortunately, this is subject to false positives if there is
+an antagonist thread which is flipping the file system at high rates
+between r/o and rw.  So only do the check if EXT4_XATTR_DEBUG is
+enabled.
 
-../drivers/misc/eeprom/at24.c:540:42: warning: 'struct regmap_config' declared inside parameter list will not be visible outside of this definition or declaration
-  540 |                                   struct regmap_config *regmap_config)
-../drivers/misc/eeprom/at24.c: In function 'at24_make_dummy_client':
-../drivers/misc/eeprom/at24.c:552:18: error: implicit declaration of function 'devm_regmap_init_i2c' [-Werror=implicit-function-declaration]
-  552 |         regmap = devm_regmap_init_i2c(dummy_client, regmap_config);
-../drivers/misc/eeprom/at24.c:552:16: warning: assignment to 'struct regmap *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-  552 |         regmap = devm_regmap_init_i2c(dummy_client, regmap_config);
-../drivers/misc/eeprom/at24.c: In function 'at24_probe':
-../drivers/misc/eeprom/at24.c:586:16: error: variable 'regmap_config' has initializer but incomplete type
-  586 |         struct regmap_config regmap_config = { };
-../drivers/misc/eeprom/at24.c:586:30: error: storage size of 'regmap_config' isn't known
-  586 |         struct regmap_config regmap_config = { };
-../drivers/misc/eeprom/at24.c:586:30: warning: unused variable 'regmap_config' [-Wunused-variable]
-
-Fixes: 5c015258478e ("eeprom: at24: add basic regmap_i2c support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20230608044056.GA1418535@mit.edu
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/eeprom/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/xattr.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/eeprom/Kconfig b/drivers/misc/eeprom/Kconfig
-index 0f791bfdc1f58..c92f2cdf40263 100644
---- a/drivers/misc/eeprom/Kconfig
-+++ b/drivers/misc/eeprom/Kconfig
-@@ -6,6 +6,7 @@ config EEPROM_AT24
- 	depends on I2C && SYSFS
- 	select NVMEM
- 	select NVMEM_SYSFS
-+	select REGMAP
- 	select REGMAP_I2C
- 	help
- 	  Enable this driver to get read/write support to most I2C EEPROMs
--- 
-2.39.2
-
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2016,8 +2016,9 @@ inserted:
+ 			else {
+ 				u32 ref;
+ 
++#ifdef EXT4_XATTR_DEBUG
+ 				WARN_ON_ONCE(dquot_initialize_needed(inode));
+-
++#endif
+ 				/* The old block is released after updating
+ 				   the inode. */
+ 				error = dquot_alloc_block(inode,
+@@ -2079,8 +2080,9 @@ inserted:
+ 			/* We need to allocate a new block */
+ 			ext4_fsblk_t goal, block;
+ 
++#ifdef EXT4_XATTR_DEBUG
+ 			WARN_ON_ONCE(dquot_initialize_needed(inode));
+-
++#endif
+ 			goal = ext4_group_first_block_no(sb,
+ 						EXT4_I(inode)->i_block_group);
+ 			block = ext4_new_meta_blocks(handle, inode, goal, 0,
 
 
