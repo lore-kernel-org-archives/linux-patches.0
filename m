@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D14F125DE
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BADAC433D2;
-	Mon, 12 Jun 2023 10:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C2E19528
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39461C433D2;
+	Mon, 12 Jun 2023 10:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565997;
-	bh=BbWRQBd5jOamWtia5Z+k+NeZQE0G/ZPgEcDCq2EpIIg=;
+	s=korg; t=1686565999;
+	bh=af8uFrWTOi3GEG0AEEc2Q+3qZyFkqdVeb6Y8CFQ5Fss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I4SiB7p3bWAmBvZPY8gUqqoLB7x5cywQC2LuHlsI23+RdvUpg/6K49InHzzNxprCP
-	 YH0oJ12ujgdX+aXojTH8YlLFyq3RoV1gLL/1iVCDtIpsnXXvtv4YUXl3sqCUTcyzKc
-	 b21Xw6nDIynCim05XXnYvBewIhsTcZ1bW1nYzggw=
+	b=uQG6Mb2INDIfO2xqVHz55WkLqYvN4iZN2p7tBBhKemsY+4hydOdBjalg10m2YGLqr
+	 UCC0Z5yvhZALeShzzP5qRYttL7zTu6j7j/2GbJDdEZBNueYfQxkG4nNAz48BggPpQQ
+	 ZQdf4/kwiBMLeVkK030dQA7s02mrtJYpVdkJ6lMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 25/68] ipv6: rpl: Fix Route of Death.
-Date: Mon, 12 Jun 2023 12:26:17 +0200
-Message-ID: <20230612101659.473266874@linuxfoundation.org>
+Subject: [PATCH 5.10 26/68] rfs: annotate lockless accesses to sk->sk_rxhash
+Date: Mon, 12 Jun 2023 12:26:18 +0200
+Message-ID: <20230612101659.507635367@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -36,193 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a2f4c143d76b1a47c91ef9bc46907116b111da0b ]
+[ Upstream commit 1e5c647c3f6d4f8497dedcd226204e1880e0ffb3 ]
 
-A remote DoS vulnerability of RPL Source Routing is assigned CVE-2023-2156.
+Add READ_ONCE()/WRITE_ONCE() on accesses to sk->sk_rxhash.
 
-The Source Routing Header (SRH) has the following format:
+This also prevents a (smart ?) compiler to remove the condition in:
 
-  0                   1                   2                   3
-  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |  Next Header  |  Hdr Ext Len  | Routing Type  | Segments Left |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  | CmprI | CmprE |  Pad  |               Reserved                |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |                                                               |
-  .                                                               .
-  .                        Addresses[1..n]                        .
-  .                                                               .
-  |                                                               |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+if (sk->sk_rxhash != newval)
+	sk->sk_rxhash = newval;
 
-The originator of an SRH places the first hop's IPv6 address in the IPv6
-header's IPv6 Destination Address and the second hop's IPv6 address as
-the first address in Addresses[1..n].
+We need the condition to avoid dirtying a shared cache line.
 
-The CmprI and CmprE fields indicate the number of prefix octets that are
-shared with the IPv6 Destination Address.  When CmprI or CmprE is not 0,
-Addresses[1..n] are compressed as follows:
-
-  1..n-1 : (16 - CmprI) bytes
-       n : (16 - CmprE) bytes
-
-Segments Left indicates the number of route segments remaining.  When the
-value is not zero, the SRH is forwarded to the next hop.  Its address
-is extracted from Addresses[n - Segment Left + 1] and swapped with IPv6
-Destination Address.
-
-When Segment Left is greater than or equal to 2, the size of SRH is not
-changed because Addresses[1..n-1] are decompressed and recompressed with
-CmprI.
-
-OTOH, when Segment Left changes from 1 to 0, the new SRH could have a
-different size because Addresses[1..n-1] are decompressed with CmprI and
-recompressed with CmprE.
-
-Let's say CmprI is 15 and CmprE is 0.  When we receive SRH with Segment
-Left >= 2, Addresses[1..n-1] have 1 byte for each, and Addresses[n] has
-16 bytes.  When Segment Left is 1, Addresses[1..n-1] is decompressed to
-16 bytes and not recompressed.  Finally, the new SRH will need more room
-in the header, and the size is (16 - 1) * (n - 1) bytes.
-
-Here the max value of n is 255 as Segment Left is u8, so in the worst case,
-we have to allocate 3825 bytes in the skb headroom.  However, now we only
-allocate a small fixed buffer that is IPV6_RPL_SRH_WORST_SWAP_SIZE (16 + 7
-bytes).  If the decompressed size overflows the room, skb_push() hits BUG()
-below [0].
-
-Instead of allocating the fixed buffer for every packet, let's allocate
-enough headroom only when we receive SRH with Segment Left 1.
-
-[0]:
-skbuff: skb_under_panic: text:ffffffff81c9f6e2 len:576 put:576 head:ffff8880070b5180 data:ffff8880070b4fb0 tail:0x70 end:0x140 dev:lo
-kernel BUG at net/core/skbuff.c:200!
-invalid opcode: 0000 [#1] PREEMPT SMP PTI
-CPU: 0 PID: 154 Comm: python3 Not tainted 6.4.0-rc4-00190-gc308e9ec0047 #7
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:skb_panic (net/core/skbuff.c:200)
-Code: 4f 70 50 8b 87 bc 00 00 00 50 8b 87 b8 00 00 00 50 ff b7 c8 00 00 00 4c 8b 8f c0 00 00 00 48 c7 c7 80 6e 77 82 e8 ad 8b 60 ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90
-RSP: 0018:ffffc90000003da0 EFLAGS: 00000246
-RAX: 0000000000000085 RBX: ffff8880058a6600 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: ffff88807dc1c540 RDI: ffff88807dc1c540
-RBP: ffffc90000003e48 R08: ffffffff82b392c8 R09: 00000000ffffdfff
-R10: ffffffff82a592e0 R11: ffffffff82b092e0 R12: ffff888005b1c800
-R13: ffff8880070b51b8 R14: ffff888005b1ca18 R15: ffff8880070b5190
-FS:  00007f4539f0b740(0000) GS:ffff88807dc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055670baf3000 CR3: 0000000005b0e000 CR4: 00000000007506f0
-PKRU: 55555554
-Call Trace:
- <IRQ>
- skb_push (net/core/skbuff.c:210)
- ipv6_rthdr_rcv (./include/linux/skbuff.h:2880 net/ipv6/exthdrs.c:634 net/ipv6/exthdrs.c:718)
- ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:437 (discriminator 5))
- ip6_input_finish (./include/linux/rcupdate.h:805 net/ipv6/ip6_input.c:483)
- __netif_receive_skb_one_core (net/core/dev.c:5494)
- process_backlog (./include/linux/rcupdate.h:805 net/core/dev.c:5934)
- __napi_poll (net/core/dev.c:6496)
- net_rx_action (net/core/dev.c:6565 net/core/dev.c:6696)
- __do_softirq (./arch/x86/include/asm/jump_label.h:27 ./include/linux/jump_label.h:207 ./include/trace/events/irq.h:142 kernel/softirq.c:572)
- do_softirq (kernel/softirq.c:472 kernel/softirq.c:459)
- </IRQ>
- <TASK>
- __local_bh_enable_ip (kernel/softirq.c:396)
- __dev_queue_xmit (net/core/dev.c:4272)
- ip6_finish_output2 (./include/net/neighbour.h:544 net/ipv6/ip6_output.c:134)
- rawv6_sendmsg (./include/net/dst.h:458 ./include/linux/netfilter.h:303 net/ipv6/raw.c:656 net/ipv6/raw.c:914)
- sock_sendmsg (net/socket.c:724 net/socket.c:747)
- __sys_sendto (net/socket.c:2144)
- __x64_sys_sendto (net/socket.c:2156 net/socket.c:2152 net/socket.c:2152)
- do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-RIP: 0033:0x7f453a138aea
-Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
-RSP: 002b:00007ffcc212a1c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007ffcc212a288 RCX: 00007f453a138aea
-RDX: 0000000000000060 RSI: 00007f4539084c20 RDI: 0000000000000003
-RBP: 00007f4538308e80 R08: 00007ffcc212a300 R09: 000000000000001c
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: ffffffffc4653600 R14: 0000000000000001 R15: 00007f4539712d1b
- </TASK>
-Modules linked in:
-
-Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
-Reported-by: Max VA
-Closes: https://www.interruptlabs.co.uk/articles/linux-ipv6-route-of-death
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230605180617.67284-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fec5e652e58f ("rfs: Receive Flow Steering")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/rpl.h  |  3 ---
- net/ipv6/exthdrs.c | 29 +++++++++++------------------
- 2 files changed, 11 insertions(+), 21 deletions(-)
+ include/net/sock.h | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/rpl.h b/include/net/rpl.h
-index 308ef0a05caef..30fe780d1e7c8 100644
---- a/include/net/rpl.h
-+++ b/include/net/rpl.h
-@@ -23,9 +23,6 @@ static inline int rpl_init(void)
- static inline void rpl_exit(void) {}
- #endif
- 
--/* Worst decompression memory usage ipv6 address (16) + pad 7 */
--#define IPV6_RPL_SRH_WORST_SWAP_SIZE (sizeof(struct in6_addr) + 7)
--
- size_t ipv6_rpl_srh_size(unsigned char n, unsigned char cmpri,
- 			 unsigned char cmpre);
- 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index 4932dea9820ba..cdad9019c77c4 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -552,24 +552,6 @@ static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
- 		return -1;
- 	}
- 
--	if (skb_cloned(skb)) {
--		if (pskb_expand_head(skb, IPV6_RPL_SRH_WORST_SWAP_SIZE, 0,
--				     GFP_ATOMIC)) {
--			__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)),
--					IPSTATS_MIB_OUTDISCARDS);
--			kfree_skb(skb);
--			return -1;
--		}
--	} else {
--		err = skb_cow_head(skb, IPV6_RPL_SRH_WORST_SWAP_SIZE);
--		if (unlikely(err)) {
--			kfree_skb(skb);
--			return -1;
--		}
--	}
--
--	hdr = (struct ipv6_rpl_sr_hdr *)skb_transport_header(skb);
--
- 	if (!pskb_may_pull(skb, ipv6_rpl_srh_size(n, hdr->cmpri,
- 						  hdr->cmpre))) {
- 		kfree_skb(skb);
-@@ -615,6 +597,17 @@ static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
- 	skb_pull(skb, ((hdr->hdrlen + 1) << 3));
- 	skb_postpull_rcsum(skb, oldhdr,
- 			   sizeof(struct ipv6hdr) + ((hdr->hdrlen + 1) << 3));
-+	if (unlikely(!hdr->segments_left)) {
-+		if (pskb_expand_head(skb, sizeof(struct ipv6hdr) + ((chdr->hdrlen + 1) << 3), 0,
-+				     GFP_ATOMIC)) {
-+			__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)), IPSTATS_MIB_OUTDISCARDS);
-+			kfree_skb(skb);
-+			kfree(buf);
-+			return -1;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 3da0601b573ed..51b499d745499 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1073,8 +1073,12 @@ static inline void sock_rps_record_flow(const struct sock *sk)
+ 		 * OR	an additional socket flag
+ 		 * [1] : sk_state and sk_prot are in the same cache line.
+ 		 */
+-		if (sk->sk_state == TCP_ESTABLISHED)
+-			sock_rps_record_flow_hash(sk->sk_rxhash);
++		if (sk->sk_state == TCP_ESTABLISHED) {
++			/* This READ_ONCE() is paired with the WRITE_ONCE()
++			 * from sock_rps_save_rxhash() and sock_rps_reset_rxhash().
++			 */
++			sock_rps_record_flow_hash(READ_ONCE(sk->sk_rxhash));
 +		}
-+
-+		oldhdr = ipv6_hdr(skb);
-+	}
- 	skb_push(skb, ((chdr->hdrlen + 1) << 3) + sizeof(struct ipv6hdr));
- 	skb_reset_network_header(skb);
- 	skb_mac_header_rebuild(skb);
+ 	}
+ #endif
+ }
+@@ -1083,15 +1087,19 @@ static inline void sock_rps_save_rxhash(struct sock *sk,
+ 					const struct sk_buff *skb)
+ {
+ #ifdef CONFIG_RPS
+-	if (unlikely(sk->sk_rxhash != skb->hash))
+-		sk->sk_rxhash = skb->hash;
++	/* The following WRITE_ONCE() is paired with the READ_ONCE()
++	 * here, and another one in sock_rps_record_flow().
++	 */
++	if (unlikely(READ_ONCE(sk->sk_rxhash) != skb->hash))
++		WRITE_ONCE(sk->sk_rxhash, skb->hash);
+ #endif
+ }
+ 
+ static inline void sock_rps_reset_rxhash(struct sock *sk)
+ {
+ #ifdef CONFIG_RPS
+-	sk->sk_rxhash = 0;
++	/* Paired with READ_ONCE() in sock_rps_record_flow() */
++	WRITE_ONCE(sk->sk_rxhash, 0);
+ #endif
+ }
+ 
 -- 
 2.39.2
 
