@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDDD134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CECC433D2;
-	Mon, 12 Jun 2023 10:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AAF134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F123C4339B;
+	Mon, 12 Jun 2023 10:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566724;
-	bh=ibt+xPjHXkzCPoRIhuuj2GUWRMZk+hsKwYw3AjyAOYo=;
+	s=korg; t=1686566727;
+	bh=yE6ZNkwiUyFipHu7AolJCJtUyVtwGLYZAofLAYPkzHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GNiOHfC/kixJHJkm4de5f6LT9yZM8uS04p6KK0OIJCSjyy1uZ0tAEgrZRkzjVdRwL
-	 CcO5yhkpd7JBtr9qxKnD20FkqdPm8N2JUd3g1nur9fzknzmrSyo8NQkW1vAw3wjtlr
-	 OSQMmT/XHy0W8313NJStlkwCtcZWV5U9Tzg4HgIY=
+	b=uvnuxRRvRxoCyAh/ZqiqUBnq0T0XA03BcS4WPwo8wX7ZGm3LwAVExgaFbJRyVNVga
+	 gueTJtaWnyoDpsnSJhWl0LNMPsrqttBxwG27EcP8iemsTdBYknVXYFUN1N5XFsiWmR
+	 5Gz/b+I/dh6Y9RFlL48eGnudOo0FFDABC6ScYj6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Yen Chang <cc85nod@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 127/132] ksmbd: check the validation of pdu_size in ksmbd_conn_handler_loop
-Date: Mon, 12 Jun 2023 12:27:41 +0200
-Message-ID: <20230612101715.982275996@linuxfoundation.org>
+	Daniel Golle <daniel@makrotopia.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 001/160] spi: mt65xx: make sure operations completed before unloading
+Date: Mon, 12 Jun 2023 12:25:33 +0200
+Message-ID: <20230612101715.190812770@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
-References: <20230612101710.279705932@linuxfoundation.org>
+In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
+References: <20230612101715.129581706@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,73 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Daniel Golle <daniel@makrotopia.org>
 
-commit 368ba06881c395f1c9a7ba22203cf8d78b4addc0 upstream.
+[ Upstream commit 4be47a5d59cbc9396a6ffd327913eb4c8d67a32f ]
 
-The length field of netbios header must be greater than the SMB header
-sizes(smb1 or smb2 header), otherwise the packet is an invalid SMB packet.
+When unloading the spi-mt65xx kernel module during an ongoing spi-mem
+operation the kernel will Oops shortly after unloading the module.
+This is because wait_for_completion_timeout was still running and
+returning into the no longer loaded module:
 
-If `pdu_size` is 0, ksmbd allocates a 4 bytes chunk to `conn->request_buf`.
-In the function `get_smb2_cmd_val` ksmbd will read cmd from
-`rcv_hdr->Command`, which is `conn->request_buf + 12`, causing the KASAN
-detector to print the following error message:
+Internal error: Oops: 0000000096000005 [#1] SMP
+Modules linked in: [many, but spi-mt65xx is no longer there]
+CPU: 0 PID: 2578 Comm: block Tainted: G        W  O       6.3.0-next-20230428+ #0
+Hardware name: Bananapi BPI-R3 (DT)
+pstate: 804000c5 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __lock_acquire+0x18c/0x20e8
+lr : __lock_acquire+0x9b8/0x20e8
+sp : ffffffc009ec3400
+x29: ffffffc009ec3400 x28: 0000000000000001 x27: 0000000000000004
+x26: ffffff80082888c8 x25: 0000000000000000 x24: 0000000000000000
+x23: ffffffc009609da8 x22: ffffff8008288000 x21: ffffff8008288968
+x20: 00000000000003c2 x19: ffffff8008be7990 x18: 00000000000002af
+x17: 0000000000000000 x16: 0000000000000000 x15: ffffffc008d78970
+x14: 000000000000080d x13: 00000000000002af x12: 00000000ffffffea
+x11: 00000000ffffefff x10: ffffffc008dd0970 x9 : ffffffc008d78918
+x8 : 0000000000017fe8 x7 : 0000000000000001 x6 : 0000000000000000
+x5 : ffffff807fb53910 x4 : 0000000000000000 x3 : 0000000000000027
+x2 : 0000000000000027 x1 : 0000000000000000 x0 : 00000000000c03c2
+Call trace:
+ __lock_acquire+0x18c/0x20e8
+ lock_acquire+0x100/0x2a4
+ _raw_spin_lock_irq+0x58/0x74
+ __wait_for_common+0xe0/0x1b4
+ wait_for_completion_timeout+0x1c/0x24
+ 0xffffffc000acc8a4 <--- used to be mtk_spi_transfer_wait
+ spi_mem_exec_op+0x390/0x3ec
+ spi_mem_no_dirmap_read+0x6c/0x88
+ spi_mem_dirmap_read+0xcc/0x12c
+ spinand_read_page+0xf8/0x1dc
+ spinand_mtd_read+0x1b4/0x2fc
+ mtd_read_oob_std+0x58/0x7c
+ mtd_read_oob+0x8c/0x148
+ mtd_read+0x50/0x6c
+ ...
 
-[    7.205018] BUG: KASAN: slab-out-of-bounds in get_smb2_cmd_val+0x45/0x60
-[    7.205423] Read of size 2 at addr ffff8880062d8b50 by task ksmbd:42632/248
-...
-[    7.207125]  <TASK>
-[    7.209191]  get_smb2_cmd_val+0x45/0x60
-[    7.209426]  ksmbd_conn_enqueue_request+0x3a/0x100
-[    7.209712]  ksmbd_server_process_request+0x72/0x160
-[    7.210295]  ksmbd_conn_handler_loop+0x30c/0x550
-[    7.212280]  kthread+0x160/0x190
-[    7.212762]  ret_from_fork+0x1f/0x30
-[    7.212981]  </TASK>
+Prevent this by completing in mtk_spi_remove if needed.
 
-Cc: stable@vger.kernel.org
-Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9f763fd20da7 ("spi: mediatek: add spi memory support for ipm design")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/ZFAF6pJxMu1z6k4w@makrotopia.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/connection.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/spi/spi-mt65xx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -296,6 +296,9 @@ bool ksmbd_conn_alive(struct ksmbd_conn
- 	return true;
- }
+diff --git a/drivers/spi/spi-mt65xx.c b/drivers/spi/spi-mt65xx.c
+index 9eab6c20dbc56..6e95efb50acbc 100644
+--- a/drivers/spi/spi-mt65xx.c
++++ b/drivers/spi/spi-mt65xx.c
+@@ -1275,6 +1275,9 @@ static int mtk_spi_remove(struct platform_device *pdev)
+ 	struct mtk_spi *mdata = spi_master_get_devdata(master);
+ 	int ret;
  
-+#define SMB1_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb_hdr))
-+#define SMB2_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb2_hdr) + 4)
++	if (mdata->use_spimem && !completion_done(&mdata->spimem_done))
++		complete(&mdata->spimem_done);
 +
- /**
-  * ksmbd_conn_handler_loop() - session thread to listen on new smb requests
-  * @p:		connection instance
-@@ -352,6 +355,9 @@ int ksmbd_conn_handler_loop(void *p)
- 		if (pdu_size > MAX_STREAM_PROT_LEN)
- 			break;
- 
-+		if (pdu_size < SMB1_MIN_SUPPORTED_HEADER_SIZE)
-+			break;
-+
- 		/* 4 for rfc1002 length field */
- 		/* 1 for implied bcc[0] */
- 		size = pdu_size + 4 + 1;
-@@ -379,6 +385,12 @@ int ksmbd_conn_handler_loop(void *p)
- 			continue;
- 		}
- 
-+		if (((struct smb2_hdr *)smb2_get_msg(conn->request_buf))->ProtocolId ==
-+		    SMB2_PROTO_NUMBER) {
-+			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
-+				break;
-+		}
-+
- 		if (!default_conn_ops.process_fn) {
- 			pr_err("No connection request callback\n");
- 			break;
+ 	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0)
+ 		return ret;
+-- 
+2.39.2
+
 
 
