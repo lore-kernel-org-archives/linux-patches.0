@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8C0134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C4BC4339C;
-	Mon, 12 Jun 2023 10:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1632134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA11C433EF;
+	Mon, 12 Jun 2023 10:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566801;
-	bh=WqUrUtcP2fE168HiGqovFdjgfrPXFZ4Umq06F3U53X0=;
+	s=korg; t=1686566803;
+	bh=9xHM3ixLZZBJtNM/kIArIDVog9YyMwqEuEs6QnsdVaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUIKJ6xIwXAfbPTNrnJfblVjHtFfBixPjwMZOMxxDX2r5BYWGjtitYQV9yu+x1eQc
-	 lXw+jsexPWlycGuqQK0pFo5F89uA8swYeae2TL3dyOFR38Skx33WINl1hVa+ByLf4N
-	 f8bMPoQR0VcagixDinO65j1avKeutFe363apP5wE=
+	b=RgobJVpfdjUi/qKMhDgig74XahLTb9aqXCxFjq+fagGQQxZ+p2Ue9KB1VRRWyy0dc
+	 dV8PzrkN/UY/BTcBjTjNpql+iYl5VPx3rxxoIocBoU6GMi5jHc2+zfRYqOThh0t6nm
+	 8GO0I8cBfffLvOTeYtiS3aslW0WUE4FH7+EhvJp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 036/160] accel/ivpu: Reserve all non-command bos using DMA_RESV_USAGE_BOOKKEEP
-Date: Mon, 12 Jun 2023 12:26:08 +0200
-Message-ID: <20230612101716.698581298@linuxfoundation.org>
+Subject: [PATCH 6.3 037/160] wifi: cfg80211: fix locking in sched scan stop work
+Date: Mon, 12 Jun 2023 12:26:09 +0200
+Message-ID: <20230612101716.752056851@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,71 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 411360257c1f4fccaa20143098b6d3fcc9d4e4dc ]
+[ Upstream commit 3e54ed8247c94c8bdf370bd872bd9dfe72b1b12b ]
 
-Use DMA_RESV_USAGE_BOOKKEEP reservation for buffer objects, except for
-command buffers for which we use DMA_RESV_USAGE_WRITE (since VPU can
-write to command buffer context save area).
+This should use wiphy_lock() now instead of acquiring the
+RTNL, since cfg80211_stop_sched_scan_req() now needs that.
 
-Fixes: 0ec8671837a6 ("accel/ivpu: Fix S3 system suspend when not idle")
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230413063810.3167511-1-stanislaw.gruszka@linux.intel.com
+Fixes: a05829a7222e ("cfg80211: avoid holding the RTNL when calling the driver")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_job.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ net/wireless/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_job.c b/drivers/accel/ivpu/ivpu_job.c
-index 3c6f1e16cf2ff..d45be0615b476 100644
---- a/drivers/accel/ivpu/ivpu_job.c
-+++ b/drivers/accel/ivpu/ivpu_job.c
-@@ -431,6 +431,7 @@ ivpu_job_prepare_bos_for_submit(struct drm_file *file, struct ivpu_job *job, u32
- 	struct ivpu_file_priv *file_priv = file->driver_priv;
- 	struct ivpu_device *vdev = file_priv->vdev;
- 	struct ww_acquire_ctx acquire_ctx;
-+	enum dma_resv_usage usage;
- 	struct ivpu_bo *bo;
- 	int ret;
- 	u32 i;
-@@ -461,22 +462,28 @@ ivpu_job_prepare_bos_for_submit(struct drm_file *file, struct ivpu_job *job, u32
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 5b0c4d5b80cf5..b3ec9eaec36b3 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -368,12 +368,12 @@ static void cfg80211_sched_scan_stop_wk(struct work_struct *work)
+ 	rdev = container_of(work, struct cfg80211_registered_device,
+ 			   sched_scan_stop_wk);
  
- 	job->cmd_buf_vpu_addr = bo->vpu_addr + commands_offset;
- 
--	ret = drm_gem_lock_reservations((struct drm_gem_object **)job->bos, 1, &acquire_ctx);
-+	ret = drm_gem_lock_reservations((struct drm_gem_object **)job->bos, buf_count,
-+					&acquire_ctx);
- 	if (ret) {
- 		ivpu_warn(vdev, "Failed to lock reservations: %d\n", ret);
- 		return ret;
+-	rtnl_lock();
++	wiphy_lock(&rdev->wiphy);
+ 	list_for_each_entry_safe(req, tmp, &rdev->sched_scan_req_list, list) {
+ 		if (req->nl_owner_dead)
+ 			cfg80211_stop_sched_scan_req(rdev, req, false);
  	}
+-	rtnl_unlock();
++	wiphy_unlock(&rdev->wiphy);
+ }
  
--	ret = dma_resv_reserve_fences(bo->base.resv, 1);
--	if (ret) {
--		ivpu_warn(vdev, "Failed to reserve fences: %d\n", ret);
--		goto unlock_reservations;
-+	for (i = 0; i < buf_count; i++) {
-+		ret = dma_resv_reserve_fences(job->bos[i]->base.resv, 1);
-+		if (ret) {
-+			ivpu_warn(vdev, "Failed to reserve fences: %d\n", ret);
-+			goto unlock_reservations;
-+		}
- 	}
- 
--	dma_resv_add_fence(bo->base.resv, job->done_fence, DMA_RESV_USAGE_WRITE);
-+	for (i = 0; i < buf_count; i++) {
-+		usage = (i == CMD_BUF_IDX) ? DMA_RESV_USAGE_WRITE : DMA_RESV_USAGE_BOOKKEEP;
-+		dma_resv_add_fence(job->bos[i]->base.resv, job->done_fence, usage);
-+	}
- 
- unlock_reservations:
--	drm_gem_unlock_reservations((struct drm_gem_object **)job->bos, 1, &acquire_ctx);
-+	drm_gem_unlock_reservations((struct drm_gem_object **)job->bos, buf_count, &acquire_ctx);
- 
- 	wmb(); /* Flush write combining buffers */
- 
+ static void cfg80211_propagate_radar_detect_wk(struct work_struct *work)
 -- 
 2.39.2
 
