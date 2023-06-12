@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C362134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B40C433EF;
-	Mon, 12 Jun 2023 10:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C235E134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A884C433EF;
+	Mon, 12 Jun 2023 10:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566788;
-	bh=Jqfx+dwmV/hv/n80f0o6xuLu2+OY0nqMqyi3bw8lCtw=;
+	s=korg; t=1686566790;
+	bh=/lidx5yxEFkLG8jrqGhcbc3PwFij7Hsr130aIJ4NcyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zoOgb091ghcMwf/nCJm1RPuL5u0U3UaANQL5iKsP8AyS+fYLMOfW1GLeILFt06Uwc
-	 OEsAPQWeD1mE66QWvUcf8u1jb+CAlXoaV7sYjQOAnmLj7T8P91ckLwlDrOdK41qz/q
-	 FzxHCyfeOnLotb9Q3ArrK5kZCzNFyKOm20KEIOyc=
+	b=kWhWYV3+dhUmt0hm7tKNzrSgjZos1mjuWL72h9cuMgzt8FvNFN7WknPQVxaSyeD/F
+	 jAg/6P7Ly9+JcUXDaY6/lZUZ2Ew2ZpPeoGBtiubouwCJAp1rSmjzABRC8XkHAil+n+
+	 L+rab7KqC0Ko1G7FUiu1Tdh9UICTL+JnhCYUCQjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 032/160] wifi: mac80211: mlme: fix non-inheritence element
-Date: Mon, 12 Jun 2023 12:26:04 +0200
-Message-ID: <20230612101716.519361281@linuxfoundation.org>
+Subject: [PATCH 6.3 033/160] wifi: mac80211: dont translate beacon/presp addrs
+Date: Mon, 12 Jun 2023 12:26:05 +0200
+Message-ID: <20230612101716.560011405@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -37,68 +37,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 68c228557d52616cf040651abefda9839de7086a ]
+[ Upstream commit 47c171a426e305f2225b92ed7b5e0a990c95f6d4 ]
 
-There were two bugs when creating the non-inheritence
-element:
- 1) 'at_extension' needs to be declared outside the loop,
-    otherwise the value resets every iteration and we
-    can never really switch properly
- 2) 'added' never got set to true, so we always cut off
-    the extension element again at the end of the function
+Don't do link address translation for beacons and probe responses,
+this leads to reporting multiple scan list entries for the same AP
+(one with the MLD address) which just breaks things.
 
-This shows another issue that we might add a list but no
-extension list, but we need to make the extension list a
-zero-length one in that case.
+We might need to extend this in the future for some other (action)
+frames that aren't MLD addressed.
 
-Fix all these issues. While at it, add a comment explaining
-the trim.
-
-Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
+Fixes: 42fb9148c078 ("wifi: mac80211: do link->MLD address translation on RX")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230604120651.3addaa5c4782.If3a78f9305997ad7ef4ba7ffc17a8234c956f613@changeid
+Link: https://lore.kernel.org/r/20230604120651.62adead1b43a.Ifc25eed26ebf3b269f60b1ec10060156d0e7ec0d@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/mac80211/rx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 60792dfabc9d6..7a970b6dda640 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -1217,6 +1217,7 @@ static void ieee80211_add_non_inheritance_elem(struct sk_buff *skb,
- 					       const u16 *inner)
- {
- 	unsigned int skb_len = skb->len;
-+	bool at_extension = false;
- 	bool added = false;
- 	int i, j;
- 	u8 *len, *list_len = NULL;
-@@ -1228,7 +1229,6 @@ static void ieee80211_add_non_inheritance_elem(struct sk_buff *skb,
- 	for (i = 0; i < PRESENT_ELEMS_MAX && outer[i]; i++) {
- 		u16 elem = outer[i];
- 		bool have_inner = false;
--		bool at_extension = false;
- 
- 		/* should at least be sorted in the sense of normal -> ext */
- 		WARN_ON(at_extension && elem < PRESENT_ELEM_EXT_OFFS);
-@@ -1257,8 +1257,14 @@ static void ieee80211_add_non_inheritance_elem(struct sk_buff *skb,
- 		}
- 		*list_len += 1;
- 		skb_put_u8(skb, (u8)elem);
-+		added = true;
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index af57616d2f1d9..0e66ece35f8e2 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -4884,7 +4884,9 @@ static bool ieee80211_prepare_and_rx_handle(struct ieee80211_rx_data *rx,
  	}
  
-+	/* if we added a list but no extension list, make a zero-len one */
-+	if (added && (!at_extension || !list_len))
-+		skb_put_u8(skb, 0);
-+
-+	/* if nothing added remove extension element completely */
- 	if (!added)
- 		skb_trim(skb, skb_len);
- 	else
+ 	if (unlikely(rx->sta && rx->sta->sta.mlo) &&
+-	    is_unicast_ether_addr(hdr->addr1)) {
++	    is_unicast_ether_addr(hdr->addr1) &&
++	    !ieee80211_is_probe_resp(hdr->frame_control) &&
++	    !ieee80211_is_beacon(hdr->frame_control)) {
+ 		/* translate to MLD addresses */
+ 		if (ether_addr_equal(link->conf->addr, hdr->addr1))
+ 			ether_addr_copy(hdr->addr1, rx->sdata->vif.addr);
 -- 
 2.39.2
 
