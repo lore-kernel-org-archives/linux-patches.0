@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAA8134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEA8C433D2;
-	Mon, 12 Jun 2023 10:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B51134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FACC433EF;
+	Mon, 12 Jun 2023 10:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566705;
-	bh=T5IHk6a4GPIfuBTxRyUwaBni4MjUoAnVUSFmZIWYxmw=;
+	s=korg; t=1686566708;
+	bh=gAVA0X3ZxOMh/8sz7qPRsLRdJGgufkUvZDsAAn6A2YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fO38HkAdgSWH/KdkPeuRr3MDD+n8HWvL3vwlpYGrgE4a4FZ87G19l0Tc8gn52mFIm
-	 xVRkp2Rmvi7LEzOGjLiygc4K5HsqAie4fFzltxsMf8/Mw9AzXKvvBBCQUWpIB+jJB0
-	 rk85LEiBdduZIMdlc0iDI0wRBraBV3ikJHRcIjTU=
+	b=1pZIQzr7RDGYCNMwZaVD8xw2PtIJBSJ7d4+ETXWt8tsLEu/X9HvXnWkDfQZ/y7ZHD
+	 bJEsReJFjcdmCLiTXb8kjcm9YlPt5ewBWXHHvhqa5qAuh02PIqChoyLP6OmumuN8t+
+	 yp63+Qfp5B1DEXjve4BtHLRaGrTJcA9Nl+SgyVAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Yen Chang <cc85nod@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 126/132] ksmbd: fix out-of-bound read in parse_lease_state()
-Date: Mon, 12 Jun 2023 12:27:40 +0200
-Message-ID: <20230612101715.942142800@linuxfoundation.org>
+	Ruan Jinjie <ruanjinjie@huawei.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 121/132] riscv: fix kprobe __user string arg print fault issue
+Date: Mon, 12 Jun 2023 12:27:35 +0200
+Message-ID: <20230612101715.740190947@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,125 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Ruan Jinjie <ruanjinjie@huawei.com>
 
-commit fc6c6a3c324c1b3e93a03d0cfa3749c781f23de0 upstream.
+[ Upstream commit 99a670b2069c725a7b50318aa681d9cae8f89325 ]
 
-This bug is in parse_lease_state, and it is caused by the missing check
-of `struct create_context`. When the ksmbd traverses the create_contexts,
-it doesn't check if the field of `NameOffset` and `Next` is valid,
-The KASAN message is following:
+On riscv qemu platform, when add kprobe event on do_sys_open() to show
+filename string arg, it just print fault as follow:
 
-[    6.664323] BUG: KASAN: slab-out-of-bounds in parse_lease_state+0x7d/0x280
-[    6.664738] Read of size 2 at addr ffff888005c08988 by task kworker/0:3/103
-...
-[    6.666644] Call Trace:
-[    6.666796]  <TASK>
-[    6.666933]  dump_stack_lvl+0x33/0x50
-[    6.667167]  print_report+0xcc/0x620
-[    6.667903]  kasan_report+0xae/0xe0
-[    6.668374]  kasan_check_range+0x35/0x1b0
-[    6.668621]  parse_lease_state+0x7d/0x280
-[    6.668868]  smb2_open+0xbe8/0x4420
-[    6.675137]  handle_ksmbd_work+0x282/0x820
+echo 'p:myprobe do_sys_open dfd=$arg1 filename=+0($arg2):string flags=$arg3
+mode=$arg4' > kprobe_events
 
-Use smb2_find_context_vals() to find smb2 create request lease context.
-smb2_find_context_vals validate create context fields.
+bash-166     [000] ...1.   360.195367: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename=(fault) flags=0x8241 mode=0x1b6
 
-Cc: stable@vger.kernel.org
-Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
-Tested-by: Chih-Yen Chang <cc85nod@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+bash-166     [000] ...1.   360.219369: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename=(fault) flags=0x8241 mode=0x1b6
+
+bash-191     [000] ...1.   360.378827: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename=(fault) flags=0x98800 mode=0x0
+
+As riscv do not select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE,
+the +0($arg2) addr is processed as a kernel address though it is a
+userspace address, cause the above filename=(fault) print. So select
+ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE to avoid the issue, after that the
+kprobe trace is ok as below:
+
+bash-166     [000] ...1.    96.767641: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename="/dev/null" flags=0x8241 mode=0x1b6
+
+bash-166     [000] ...1.    96.793751: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename="/dev/null" flags=0x8241 mode=0x1b6
+
+bash-177     [000] ...1.    96.962354: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename="/sys/kernel/debug/tracing/events/kprobes/"
+flags=0x98800 mode=0x0
+
+Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+Acked-by: Björn Töpel <bjorn@rivosinc.com>
+Fixes: 0ebeea8ca8a4 ("bpf: Restrict bpf_probe_read{, str}() only to archs where they work")
+Link: https://lore.kernel.org/r/20230504072910.3742842-1-ruanjinjie@huawei.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/oplock.c |   70 ++++++++++++++++++++----------------------------------
- 1 file changed, 26 insertions(+), 44 deletions(-)
+ arch/riscv/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ksmbd/oplock.c
-+++ b/fs/ksmbd/oplock.c
-@@ -1415,56 +1415,38 @@ void create_lease_buf(u8 *rbuf, struct l
-  */
- struct lease_ctx_info *parse_lease_state(void *open_req)
- {
--	char *data_offset;
- 	struct create_context *cc;
--	unsigned int next = 0;
--	char *name;
--	bool found = false;
- 	struct smb2_create_req *req = (struct smb2_create_req *)open_req;
--	struct lease_ctx_info *lreq = kzalloc(sizeof(struct lease_ctx_info),
--		GFP_KERNEL);
-+	struct lease_ctx_info *lreq;
-+
-+	cc = smb2_find_context_vals(req, SMB2_CREATE_REQUEST_LEASE, 4);
-+	if (IS_ERR_OR_NULL(cc))
-+		return NULL;
-+
-+	lreq = kzalloc(sizeof(struct lease_ctx_info), GFP_KERNEL);
- 	if (!lreq)
- 		return NULL;
- 
--	data_offset = (char *)req + le32_to_cpu(req->CreateContextsOffset);
--	cc = (struct create_context *)data_offset;
--	do {
--		cc = (struct create_context *)((char *)cc + next);
--		name = le16_to_cpu(cc->NameOffset) + (char *)cc;
--		if (le16_to_cpu(cc->NameLength) != 4 ||
--		    strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
--			next = le32_to_cpu(cc->Next);
--			continue;
--		}
--		found = true;
--		break;
--	} while (next != 0);
--
--	if (found) {
--		if (sizeof(struct lease_context_v2) == le32_to_cpu(cc->DataLength)) {
--			struct create_lease_v2 *lc = (struct create_lease_v2 *)cc;
--
--			memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
--			lreq->req_state = lc->lcontext.LeaseState;
--			lreq->flags = lc->lcontext.LeaseFlags;
--			lreq->duration = lc->lcontext.LeaseDuration;
--			memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
--			       SMB2_LEASE_KEY_SIZE);
--			lreq->version = 2;
--		} else {
--			struct create_lease *lc = (struct create_lease *)cc;
--
--			memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
--			lreq->req_state = lc->lcontext.LeaseState;
--			lreq->flags = lc->lcontext.LeaseFlags;
--			lreq->duration = lc->lcontext.LeaseDuration;
--			lreq->version = 1;
--		}
--		return lreq;
--	}
-+	if (sizeof(struct lease_context_v2) == le32_to_cpu(cc->DataLength)) {
-+		struct create_lease_v2 *lc = (struct create_lease_v2 *)cc;
- 
--	kfree(lreq);
--	return NULL;
-+		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
-+		lreq->req_state = lc->lcontext.LeaseState;
-+		lreq->flags = lc->lcontext.LeaseFlags;
-+		lreq->duration = lc->lcontext.LeaseDuration;
-+		memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
-+				SMB2_LEASE_KEY_SIZE);
-+		lreq->version = 2;
-+	} else {
-+		struct create_lease *lc = (struct create_lease *)cc;
-+
-+		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
-+		lreq->req_state = lc->lcontext.LeaseState;
-+		lreq->flags = lc->lcontext.LeaseFlags;
-+		lreq->duration = lc->lcontext.LeaseDuration;
-+		lreq->version = 1;
-+	}
-+	return lreq;
- }
- 
- /**
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index 06b9b2f60b9fb..a85bbe28dcf46 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -25,6 +25,7 @@ config RISCV
+ 	select ARCH_HAS_GIGANTIC_PAGE
+ 	select ARCH_HAS_KCOV
+ 	select ARCH_HAS_MMIOWB
++	select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE
+ 	select ARCH_HAS_PTE_SPECIAL
+ 	select ARCH_HAS_SET_DIRECT_MAP if MMU
+ 	select ARCH_HAS_SET_MEMORY if MMU
+-- 
+2.39.2
+
 
 
