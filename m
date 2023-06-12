@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25949196
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E29C433D2;
-	Mon, 12 Jun 2023 10:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96E11106
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471C0C433D2;
+	Mon, 12 Jun 2023 10:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566127;
-	bh=cviko2KcqNoi5gQ+jv2556p7hXeDOWEezwpNXoGHsgw=;
+	s=korg; t=1686566129;
+	bh=+itoulZhzRZZvvd5XathDN1MInvOa+/cAW6g8Xg3bko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fj73zzzMF7Wf//C+qlLa654icqh1v+II+81Z/LMQXfji9WOSUVsntSwu6ywaA0KMm
-	 ALx7oTFrZgQSZ+RAFGMfmqzkGnnL+xqQSx31q7ju7zUqRiZe+6tyqYhMpjSEWXYREC
-	 MbdJgtyk7k6LCaSlECo7J98nbFhh5cbFG1R3665I=
+	b=tHnfFO8Izf5uJDBb1/XFP/ayUio0QzoLZST89ePgPXfjOn++pekVKF9UiAV4jNH83
+	 tEAsFAu6f7drJYZuHSvIpKqF9I2Il3fTJoIpRMIXRG3n3OjSXbY20aTIx5rv458qaE
+	 XT7OLgClYNVCt3hxnGXlsO3QYF7gUbmfdBmeD2d4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 55/68] ASoC: codecs: wsa881x: do not set can_multi_write flag
-Date: Mon, 12 Jun 2023 12:26:47 +0200
-Message-ID: <20230612101700.722000105@linuxfoundation.org>
+Subject: [PATCH 5.10 56/68] i2c: sprd: Delete i2c adapter in .removes error path
+Date: Mon, 12 Jun 2023 12:26:48 +0200
+Message-ID: <20230612101700.765848017@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -35,37 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 6e7a6d4797ef521c0762914610ed682e102b9d36 ]
+[ Upstream commit ca0aa17f2db3468fd017038d23a78e17388e2f67 ]
 
-regmap-sdw does not support multi register writes, so there is
-no point in setting this flag. This also leads to incorrect
-programming of WSA codecs with regmap_multi_reg_write() call.
+If pm runtime resume fails the .remove callback used to exit early. This
+resulted in an error message by the driver core but the device gets
+removed anyhow. This lets the registered i2c adapter stay around with an
+unbound parent device.
 
-This invalid configuration should have been rejected by regmap-sdw.
+So only skip clk disabling if resume failed, but do delete the adapter.
 
-Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230523154605.4284-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8b9ec0719834 ("i2c: Add Spreadtrum I2C controller driver")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa881x.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/i2c/busses/i2c-sprd.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
-index 15b3f47fbfa35..9f66f6dc2c67f 100644
---- a/sound/soc/codecs/wsa881x.c
-+++ b/sound/soc/codecs/wsa881x.c
-@@ -646,7 +646,6 @@ static struct regmap_config wsa881x_regmap_config = {
- 	.readable_reg = wsa881x_readable_register,
- 	.reg_format_endian = REGMAP_ENDIAN_NATIVE,
- 	.val_format_endian = REGMAP_ENDIAN_NATIVE,
--	.can_multi_write = true,
- };
+diff --git a/drivers/i2c/busses/i2c-sprd.c b/drivers/i2c/busses/i2c-sprd.c
+index 8ead7e021008c..a520aa06d2cb5 100644
+--- a/drivers/i2c/busses/i2c-sprd.c
++++ b/drivers/i2c/busses/i2c-sprd.c
+@@ -576,12 +576,14 @@ static int sprd_i2c_remove(struct platform_device *pdev)
+ 	struct sprd_i2c *i2c_dev = platform_get_drvdata(pdev);
+ 	int ret;
  
- enum {
+-	ret = pm_runtime_resume_and_get(i2c_dev->dev);
++	ret = pm_runtime_get_sync(i2c_dev->dev);
+ 	if (ret < 0)
+-		return ret;
++		dev_err(&pdev->dev, "Failed to resume device (%pe)\n", ERR_PTR(ret));
+ 
+ 	i2c_del_adapter(&i2c_dev->adap);
+-	clk_disable_unprepare(i2c_dev->clk);
++
++	if (ret >= 0)
++		clk_disable_unprepare(i2c_dev->clk);
+ 
+ 	pm_runtime_put_noidle(i2c_dev->dev);
+ 	pm_runtime_disable(i2c_dev->dev);
 -- 
 2.39.2
 
