@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEFAD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:48:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D3FC433EF;
-	Mon, 12 Jun 2023 10:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51429D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:48:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE58C433EF;
+	Mon, 12 Jun 2023 10:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566890;
-	bh=9OsA4wiFDR0vEoePViywymDkJFGn8FMf+817mTunXBc=;
+	s=korg; t=1686566893;
+	bh=q7AZgL1Q2wUJlbLmBb90imZYwU03OA8U9REGe/qT1fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HnmJO/DiTT2V/eSVxWcLEkr68KE5RP1VlnbCKLFQeCLnUBv90pLIXBkyIw0BZAufy
-	 pw1TxasPZZR6RbFOB7btzdkd1kuAPZKREpiKh8Z+ueJDaNv0shvh5PnykClMYo1vYM
-	 zIK8SUInR69PhJjb6lZ58zGklciHfTn++u88skgo=
+	b=Jqm39DAW29v0J//0cVSeSthpUHGIT8NGWnT3tm1uAwaSyTfr2MZkxpX4706ituo0U
+	 RKICWCAtkw4eevUcpk9g+MLznNyHZjdlS/nAO19cgc/JrX3hEdK6/f/r7E6yoJF1ih
+	 S1ztn+ywtemJthfwVCIP3r5AvX3LOwVdlUvTsd+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Vladislav Efanov <VEfanov@ispras.ru>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.3 070/160] batman-adv: Broken sync while rescheduling delayed work
-Date: Mon, 12 Jun 2023 12:26:42 +0200
-Message-ID: <20230612101718.221292012@linuxfoundation.org>
+	Ismael Ferreras Morezuelas <swyterzone@gmail.com>,
+	Cameron Gutman <aicommander@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.3 071/160] Input: xpad - delete a Razer DeathAdder mouse VID/PID entry
+Date: Mon, 12 Jun 2023 12:26:43 +0200
+Message-ID: <20230612101718.259864658@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,58 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+From: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
 
-commit abac3ac97fe8734b620e7322a116450d7f90aa43 upstream.
+commit feee70f4568650cf44c573488798ffc0a2faeea3 upstream.
 
-Syzkaller got a lot of crashes like:
-KASAN: use-after-free Write in *_timers*
+While doing my research to improve the xpad device names I noticed
+that the 1532:0037 VID/PID seems to be used by the DeathAdder 2013,
+so that Razer Sabertooth instance looked wrong and very suspect to
+me. I didn't see any mention in the official drivers, either.
 
-All of these crashes point to the same memory area:
+After doing more research, it turns out that the xpad list
+is used by many other projects (like Steam) as-is [1], this
+issue was reported [2] and Valve/Sam Lantinga fixed it [3]:
 
-The buggy address belongs to the object at ffff88801f870000
- which belongs to the cache kmalloc-8k of size 8192
-The buggy address is located 5320 bytes inside of
- 8192-byte region [ffff88801f870000, ffff88801f872000)
+[1]: https://github.com/libsdl-org/SDL/blob/dcc5eef0e2395854b254ea2873a4899edab347c6/src/joystick/controller_type.h#L251
+[2]: https://steamcommunity.com/app/353380/discussions/0/1743392486228754770/
+[3]: https://hg.libsdl.org/SDL/rev/29809f6f0271
 
-This area belongs to :
-        batadv_priv->batadv_priv_dat->delayed_work->timer_list
+(With multiple Internet users reporting similar issues, not linked here)
 
-The reason for these issues is the lack of synchronization. Delayed
-work (batadv_dat_purge) schedules new timer/work while the device
-is being deleted. As the result new timer/delayed work is set after
-cancel_delayed_work_sync() was called. So after the device is freed
-the timer list contains pointer to already freed memory.
+After not being able to find the correct VID/PID combination anywhere
+on the Internet and not receiving any reply from Razer support I did
+some additional detective work, it seems like it presents itself as
+"Razer Sabertooth Gaming Controller (XBOX360)", code 1689:FE00.
 
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+Leaving us with this:
+ * Razer Sabertooth (1689:fe00)
+ * Razer Sabertooth Elite (24c6:5d04)
+ * Razer DeathAdder 2013 (1532:0037) [note: not a gamepad]
 
-Cc: stable@kernel.org
-Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
-Acked-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+So, to sum things up; remove this conflicting/duplicate entry:
+
+{ 0x1532, 0x0037, "Razer Sabertooth", 0, XTYPE_XBOX360 },
+
+As the real/correct one is already present there, even if
+the Internet as a whole insists on presenting it as the
+Razer Sabertooth Elite, which (by all accounts) is not:
+
+{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
+
+Actual change in SDL2 referencing this kernel issue:
+https://github.com/libsdl-org/SDL/commit/e5e54169754ca5d3e86339d968b20126d9da0a15
+
+For more information of the device, take a look here:
+https://github.com/xboxdrv/xboxdrv/pull/59
+
+You can see a lsusb dump here: https://github.com/xboxdrv/xboxdrv/files/76581/Qa6dBcrv.txt
+
+Fixes: f554f619b70 ("Input: xpad - sync device IDs with xboxdrv")
+Signed-off-by: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
+Reviewed-by: Cameron Gutman <aicommander@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/5c12dbdb-5774-fc68-5c58-ca596383663e@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/distributed-arp-table.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -101,7 +101,6 @@ static void batadv_dat_purge(struct work
-  */
- static void batadv_dat_start_timer(struct batadv_priv *bat_priv)
- {
--	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
- 	queue_delayed_work(batadv_event_workqueue, &bat_priv->dat.work,
- 			   msecs_to_jiffies(10000));
- }
-@@ -819,6 +818,7 @@ int batadv_dat_init(struct batadv_priv *
- 	if (!bat_priv->dat.hash)
- 		return -ENOMEM;
- 
-+	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
- 	batadv_dat_start_timer(bat_priv);
- 
- 	batadv_tvlv_handler_register(bat_priv, batadv_dat_tvlv_ogm_handler_v1,
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -282,7 +282,6 @@ static const struct xpad_device {
+ 	{ 0x1430, 0xf801, "RedOctane Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x146b, 0x0601, "BigBen Interactive XBOX 360 Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x146b, 0x0604, "Bigben Interactive DAIJA Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
+-	{ 0x1532, 0x0037, "Razer Sabertooth", 0, XTYPE_XBOX360 },
+ 	{ 0x1532, 0x0a00, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
+ 	{ 0x1532, 0x0a03, "Razer Wildcat", 0, XTYPE_XBOXONE },
+ 	{ 0x15e4, 0x3f00, "Power A Mini Pro Elite", 0, XTYPE_XBOX360 },
 
 
