@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67E9D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B27DC433D2;
-	Mon, 12 Jun 2023 10:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A788D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9E8C4339B;
+	Mon, 12 Jun 2023 10:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566322;
-	bh=uq0SVz5UqtJkl8ieMNLcZhzMswHJEEXgcxp9PenjSck=;
+	s=korg; t=1686566325;
+	bh=90l3CperUsWVQyKDeDHF31RbxyYLwd43JfJcKMQzqEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uzzmLdDT7rsUgRGvIsJHjM4F/ZXC2Hgig0/Ok7dqGCvKhXYw+CzRthQ8MUA2svS/2
-	 7yLCtANNPKkc30m+SHAV7VjLcmUhBSJkYqHTCSAFOQE4Weqa27Utz3ol2frKtFr80J
-	 BXgURqm8NaFaJeFB6RuWnGs+xE3qwMGXplfy4Hww=
+	b=LYQMpbHTbdwmyNU9U/WJsou5Ao4iyqdaOtZJ4PMyHwgcXjPfuFAhrKuheacqId5Zd
+	 u33WIgEt2CYdjruySSRcyNp4XYcHvZmlSVCPZaEzUzWf4Gk7EhT8EL6pDTQagQVikm
+	 W/D9UPbEgw7IVyaY70lk3pYPQPELUVBm92d4f1OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kis <imre.kis@arm.com>,
-	Balint Dobszay <balint.dobszay@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 80/91] firmware: arm_ffa: Set handle field to zero in memory descriptor
-Date: Mon, 12 Jun 2023 12:27:09 +0200
-Message-ID: <20230612101705.428434163@linuxfoundation.org>
+Subject: [PATCH 5.15 81/91] i2c: sprd: Delete i2c adapter in .removes error path
+Date: Mon, 12 Jun 2023 12:27:10 +0200
+Message-ID: <20230612101705.480395475@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -36,37 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Balint Dobszay <balint.dobszay@arm.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 3aa0519a4780f1b8e11966bd879d4a2934ba455f ]
+[ Upstream commit ca0aa17f2db3468fd017038d23a78e17388e2f67 ]
 
-As described in the commit 111a833dc5cb ("firmware: arm_ffa: Set
-reserved/MBZ fields to zero in the memory descriptors") some fields in
-the memory descriptor have to be zeroed explicitly. The handle field is
-one of these, but it was left out from that change, fix this now.
+If pm runtime resume fails the .remove callback used to exit early. This
+resulted in an error message by the driver core but the device gets
+removed anyhow. This lets the registered i2c adapter stay around with an
+unbound parent device.
 
-Fixes: 111a833dc5cb ("firmware: arm_ffa: Set reserved/MBZ fields to zero in the memory descriptors")
-Reported-by: Imre Kis <imre.kis@arm.com>
-Signed-off-by: Balint Dobszay <balint.dobszay@arm.com>
-Link: https://lore.kernel.org/r/20230601140749.93812-1-balint.dobszay@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+So only skip clk disabling if resume failed, but do delete the adapter.
+
+Fixes: 8b9ec0719834 ("i2c: Add Spreadtrum I2C controller driver")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-sprd.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index f53d11eff65e0..e4fb0c1ae4869 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -454,6 +454,7 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
- 		ep_mem_access->flag = 0;
- 		ep_mem_access->reserved = 0;
- 	}
-+	mem_region->handle = 0;
- 	mem_region->reserved_0 = 0;
- 	mem_region->reserved_1 = 0;
- 	mem_region->ep_count = args->nattrs;
+diff --git a/drivers/i2c/busses/i2c-sprd.c b/drivers/i2c/busses/i2c-sprd.c
+index 4fe15cd78907e..ffc54fbf814dd 100644
+--- a/drivers/i2c/busses/i2c-sprd.c
++++ b/drivers/i2c/busses/i2c-sprd.c
+@@ -576,12 +576,14 @@ static int sprd_i2c_remove(struct platform_device *pdev)
+ 	struct sprd_i2c *i2c_dev = platform_get_drvdata(pdev);
+ 	int ret;
+ 
+-	ret = pm_runtime_resume_and_get(i2c_dev->dev);
++	ret = pm_runtime_get_sync(i2c_dev->dev);
+ 	if (ret < 0)
+-		return ret;
++		dev_err(&pdev->dev, "Failed to resume device (%pe)\n", ERR_PTR(ret));
+ 
+ 	i2c_del_adapter(&i2c_dev->adap);
+-	clk_disable_unprepare(i2c_dev->clk);
++
++	if (ret >= 0)
++		clk_disable_unprepare(i2c_dev->clk);
+ 
+ 	pm_runtime_put_noidle(i2c_dev->dev);
+ 	pm_runtime_disable(i2c_dev->dev);
 -- 
 2.39.2
 
