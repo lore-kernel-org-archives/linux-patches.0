@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1613FBF2
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C220C433EF;
-	Mon, 12 Jun 2023 10:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9E911C88
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2079C433EF;
+	Mon, 12 Jun 2023 10:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566769;
-	bh=Jmd9PddxIGhsDHBKw2fP/fDV+0yKxbPgZT39R8BvbWA=;
+	s=korg; t=1686566772;
+	bh=1pxhJkMjW9ahcgPc3YXxjiXIK01kzuAp0AbQcINL5jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8kJnfRegLvrJNvBCXb2NisKI/thY5oYrFZXy54k8cD0B8v1q9wlq9o7BubCsAS+i
-	 GiR56UXkHAWgjCaXT8IP01VBreMEG01QaIHw9KFrsNzBNsryFi8SciYkca6oJFWD8H
-	 2d3JtxHLPxAecUgin83C3eLdXZmPXiiSSQ0RIXyk=
+	b=SlDFHka82b6VtURQPpaynYM46XcG5W0aF6hMbUPReP9yYbkL8qALFU+7zmc6cfxwK
+	 fA/Tpf4PeJ4/BzDCFcT5ThrzFMH0+ZDW0hZdngupmJGBmWth0DVPoCrqhEJjw4E/Bl
+	 aHhtkGY5TPWgwW89N7RV0kpLjrMVfkITkiTdwzDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 017/160] net/sched: fq_pie: ensure reasonable TCA_FQ_PIE_QUANTUM values
-Date: Mon, 12 Jun 2023 12:25:49 +0200
-Message-ID: <20230612101715.859961570@linuxfoundation.org>
+Subject: [PATCH 6.3 026/160] Bluetooth: hci_conn: Add support for linking multiple hcon
+Date: Mon, 12 Jun 2023 12:25:58 +0200
+Message-ID: <20230612101716.233920086@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -37,127 +34,567 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit cd2b8113c2e8b9f5a88a942e1eaca61eba401b85 ]
+[ Upstream commit 06149746e7203d5ffe2d6faf9799ee36203aa8b8 ]
 
-We got multiple syzbot reports, all duplicates of the following [1]
+Since it is required for some configurations to have multiple CIS with
+the same peer which is now covered by iso-tester in the following test
+cases:
 
-syzbot managed to install fq_pie with a zero TCA_FQ_PIE_QUANTUM,
-thus triggering infinite loops.
+    ISO AC 6(i) - Success
+    ISO AC 7(i) - Success
+    ISO AC 8(i) - Success
+    ISO AC 9(i) - Success
+    ISO AC 11(i) - Success
 
-Use limits similar to sch_fq, with commits
-3725a269815b ("pkt_sched: fq: avoid hang when quantum 0") and
-d9e15a273306 ("pkt_sched: fq: do not accept silly TCA_FQ_QUANTUM")
-
-[1]
-watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [swapper/0:0]
-Modules linked in:
-irq event stamp: 172817
-hardirqs last enabled at (172816): [<ffff80001242fde4>] __el1_irq arch/arm64/kernel/entry-common.c:476 [inline]
-hardirqs last enabled at (172816): [<ffff80001242fde4>] el1_interrupt+0x58/0x68 arch/arm64/kernel/entry-common.c:486
-hardirqs last disabled at (172817): [<ffff80001242fdb0>] __el1_irq arch/arm64/kernel/entry-common.c:468 [inline]
-hardirqs last disabled at (172817): [<ffff80001242fdb0>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:486
-softirqs last enabled at (167634): [<ffff800008020c1c>] softirq_handle_end kernel/softirq.c:414 [inline]
-softirqs last enabled at (167634): [<ffff800008020c1c>] __do_softirq+0xac0/0xd54 kernel/softirq.c:600
-softirqs last disabled at (167701): [<ffff80000802a660>] ____do_softirq+0x14/0x20 arch/arm64/kernel/irq.c:80
-CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-rc3-syzkaller-geb0f1697d729 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/28/2023
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : fq_pie_qdisc_dequeue+0x10c/0x8ac net/sched/sch_fq_pie.c:246
-lr : fq_pie_qdisc_dequeue+0xe4/0x8ac net/sched/sch_fq_pie.c:240
-sp : ffff800008007210
-x29: ffff800008007280 x28: ffff0000c86f7890 x27: ffff0000cb20c2e8
-x26: ffff0000cb20c2f0 x25: dfff800000000000 x24: ffff0000cb20c2e0
-x23: ffff0000c86f7880 x22: 0000000000000040 x21: 1fffe000190def10
-x20: ffff0000cb20c2e0 x19: ffff0000cb20c2e0 x18: ffff800008006e60
-x17: 0000000000000000 x16: ffff80000850af6c x15: 0000000000000302
-x14: 0000000000000100 x13: 0000000000000000 x12: 0000000000000001
-x11: 0000000000000302 x10: 0000000000000100 x9 : 0000000000000000
-x8 : 0000000000000000 x7 : ffff80000841c468 x6 : 0000000000000000
-x5 : 0000000000000001 x4 : 0000000000000001 x3 : 0000000000000000
-x2 : ffff0000cb20c2e0 x1 : ffff0000cb20c2e0 x0 : 0000000000000001
-Call trace:
-fq_pie_qdisc_dequeue+0x10c/0x8ac net/sched/sch_fq_pie.c:246
-dequeue_skb net/sched/sch_generic.c:292 [inline]
-qdisc_restart net/sched/sch_generic.c:397 [inline]
-__qdisc_run+0x1fc/0x231c net/sched/sch_generic.c:415
-__dev_xmit_skb net/core/dev.c:3868 [inline]
-__dev_queue_xmit+0xc80/0x3318 net/core/dev.c:4210
-dev_queue_xmit include/linux/netdevice.h:3085 [inline]
-neigh_connected_output+0x2f8/0x38c net/core/neighbour.c:1581
-neigh_output include/net/neighbour.h:544 [inline]
-ip6_finish_output2+0xd60/0x1a1c net/ipv6/ip6_output.c:134
-__ip6_finish_output net/ipv6/ip6_output.c:195 [inline]
-ip6_finish_output+0x538/0x8c8 net/ipv6/ip6_output.c:206
-NF_HOOK_COND include/linux/netfilter.h:292 [inline]
-ip6_output+0x270/0x594 net/ipv6/ip6_output.c:227
-dst_output include/net/dst.h:458 [inline]
-NF_HOOK include/linux/netfilter.h:303 [inline]
-ndisc_send_skb+0xc30/0x1790 net/ipv6/ndisc.c:508
-ndisc_send_rs+0x47c/0x5d4 net/ipv6/ndisc.c:718
-addrconf_rs_timer+0x300/0x58c net/ipv6/addrconf.c:3936
-call_timer_fn+0x19c/0x8cc kernel/time/timer.c:1700
-expire_timers kernel/time/timer.c:1751 [inline]
-__run_timers+0x55c/0x734 kernel/time/timer.c:2022
-run_timer_softirq+0x7c/0x114 kernel/time/timer.c:2035
-__do_softirq+0x2d0/0xd54 kernel/softirq.c:571
-____do_softirq+0x14/0x20 arch/arm64/kernel/irq.c:80
-call_on_irq_stack+0x24/0x4c arch/arm64/kernel/entry.S:882
-do_softirq_own_stack+0x20/0x2c arch/arm64/kernel/irq.c:85
-invoke_softirq kernel/softirq.c:452 [inline]
-__irq_exit_rcu+0x28c/0x534 kernel/softirq.c:650
-irq_exit_rcu+0x14/0x84 kernel/softirq.c:662
-__el1_irq arch/arm64/kernel/entry-common.c:472 [inline]
-el1_interrupt+0x38/0x68 arch/arm64/kernel/entry-common.c:486
-el1h_64_irq_handler+0x18/0x24 arch/arm64/kernel/entry-common.c:491
-el1h_64_irq+0x64/0x68 arch/arm64/kernel/entry.S:587
-__daif_local_irq_enable arch/arm64/include/asm/irqflags.h:33 [inline]
-arch_local_irq_enable+0x8/0xc arch/arm64/include/asm/irqflags.h:55
-cpuidle_idle_call kernel/sched/idle.c:170 [inline]
-do_idle+0x1f0/0x4e8 kernel/sched/idle.c:282
-cpu_startup_entry+0x24/0x28 kernel/sched/idle.c:379
-rest_init+0x2dc/0x2f4 init/main.c:735
-start_kernel+0x0/0x55c init/main.c:834
-start_kernel+0x3f0/0x55c init/main.c:1088
-__primary_switched+0xb8/0xc0 arch/arm64/kernel/head.S:523
-
-Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 71e9588435c3 ("Bluetooth: ISO: use correct CIS order in Set CIG Parameters event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/net/bluetooth/hci_core.h |  14 ++-
+ net/bluetooth/hci_conn.c         | 155 ++++++++++++++++++++++---------
+ net/bluetooth/hci_event.c        |  92 ++++++++----------
+ net/bluetooth/iso.c              |   8 +-
+ 4 files changed, 172 insertions(+), 97 deletions(-)
 
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index 6980796d435d9..c699e5095607d 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -201,6 +201,11 @@ static int fq_pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	return NET_XMIT_CN;
- }
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index b973ecb222f65..9361e75b9299b 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -766,7 +766,10 @@ struct hci_conn {
+ 	void		*iso_data;
+ 	struct amp_mgr	*amp_mgr;
  
-+static struct netlink_range_validation fq_pie_q_range = {
-+	.min = 1,
-+	.max = 1 << 20,
+-	struct hci_conn	*link;
++	struct list_head link_list;
++	struct hci_conn	*parent;
++	struct hci_link *link;
++
+ 	struct bt_codec codec;
+ 
+ 	void (*connect_cfm_cb)	(struct hci_conn *conn, u8 status);
+@@ -776,6 +779,11 @@ struct hci_conn {
+ 	void (*cleanup)(struct hci_conn *conn);
+ };
+ 
++struct hci_link {
++	struct list_head list;
++	struct hci_conn *conn;
 +};
 +
- static const struct nla_policy fq_pie_policy[TCA_FQ_PIE_MAX + 1] = {
- 	[TCA_FQ_PIE_LIMIT]		= {.type = NLA_U32},
- 	[TCA_FQ_PIE_FLOWS]		= {.type = NLA_U32},
-@@ -208,7 +213,8 @@ static const struct nla_policy fq_pie_policy[TCA_FQ_PIE_MAX + 1] = {
- 	[TCA_FQ_PIE_TUPDATE]		= {.type = NLA_U32},
- 	[TCA_FQ_PIE_ALPHA]		= {.type = NLA_U32},
- 	[TCA_FQ_PIE_BETA]		= {.type = NLA_U32},
--	[TCA_FQ_PIE_QUANTUM]		= {.type = NLA_U32},
-+	[TCA_FQ_PIE_QUANTUM]		=
-+			NLA_POLICY_FULL_RANGE(NLA_U32, &fq_pie_q_range),
- 	[TCA_FQ_PIE_MEMORY_LIMIT]	= {.type = NLA_U32},
- 	[TCA_FQ_PIE_ECN_PROB]		= {.type = NLA_U32},
- 	[TCA_FQ_PIE_ECN]		= {.type = NLA_U32},
+ struct hci_chan {
+ 	struct list_head list;
+ 	__u16 handle;
+@@ -1379,12 +1387,14 @@ static inline void hci_conn_put(struct hci_conn *conn)
+ 	put_device(&conn->dev);
+ }
+ 
+-static inline void hci_conn_hold(struct hci_conn *conn)
++static inline struct hci_conn *hci_conn_hold(struct hci_conn *conn)
+ {
+ 	BT_DBG("hcon %p orig refcnt %d", conn, atomic_read(&conn->refcnt));
+ 
+ 	atomic_inc(&conn->refcnt);
+ 	cancel_delayed_work(&conn->disc_work);
++
++	return conn;
+ }
+ 
+ static inline void hci_conn_drop(struct hci_conn *conn)
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index e02afdc557e7b..81aebbbe0b1eb 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -330,8 +330,11 @@ static void hci_add_sco(struct hci_conn *conn, __u16 handle)
+ static bool find_next_esco_param(struct hci_conn *conn,
+ 				 const struct sco_param *esco_param, int size)
+ {
++	if (!conn->parent)
++		return false;
++
+ 	for (; conn->attempt <= size; conn->attempt++) {
+-		if (lmp_esco_2m_capable(conn->link) ||
++		if (lmp_esco_2m_capable(conn->parent) ||
+ 		    (esco_param[conn->attempt - 1].pkt_type & ESCO_2EV3))
+ 			break;
+ 		BT_DBG("hcon %p skipped attempt %d, eSCO 2M not supported",
+@@ -461,7 +464,7 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
+ 		break;
+ 
+ 	case BT_CODEC_CVSD:
+-		if (lmp_esco_capable(conn->link)) {
++		if (conn->parent && lmp_esco_capable(conn->parent)) {
+ 			if (!find_next_esco_param(conn, esco_param_cvsd,
+ 						  ARRAY_SIZE(esco_param_cvsd)))
+ 				return -EINVAL;
+@@ -531,7 +534,7 @@ static bool hci_setup_sync_conn(struct hci_conn *conn, __u16 handle)
+ 		param = &esco_param_msbc[conn->attempt - 1];
+ 		break;
+ 	case SCO_AIRMODE_CVSD:
+-		if (lmp_esco_capable(conn->link)) {
++		if (conn->parent && lmp_esco_capable(conn->parent)) {
+ 			if (!find_next_esco_param(conn, esco_param_cvsd,
+ 						  ARRAY_SIZE(esco_param_cvsd)))
+ 				return false;
+@@ -637,21 +640,22 @@ void hci_le_start_enc(struct hci_conn *conn, __le16 ediv, __le64 rand,
+ /* Device _must_ be locked */
+ void hci_sco_setup(struct hci_conn *conn, __u8 status)
+ {
+-	struct hci_conn *sco = conn->link;
++	struct hci_link *link;
+ 
+-	if (!sco)
++	link = list_first_entry_or_null(&conn->link_list, struct hci_link, list);
++	if (!link || !link->conn)
+ 		return;
+ 
+ 	BT_DBG("hcon %p", conn);
+ 
+ 	if (!status) {
+ 		if (lmp_esco_capable(conn->hdev))
+-			hci_setup_sync(sco, conn->handle);
++			hci_setup_sync(link->conn, conn->handle);
+ 		else
+-			hci_add_sco(sco, conn->handle);
++			hci_add_sco(link->conn, conn->handle);
+ 	} else {
+-		hci_connect_cfm(sco, status);
+-		hci_conn_del(sco);
++		hci_connect_cfm(link->conn, status);
++		hci_conn_del(link->conn);
+ 	}
+ }
+ 
+@@ -1047,6 +1051,7 @@ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	skb_queue_head_init(&conn->data_q);
+ 
+ 	INIT_LIST_HEAD(&conn->chan_list);
++	INIT_LIST_HEAD(&conn->link_list);
+ 
+ 	INIT_DELAYED_WORK(&conn->disc_work, hci_conn_timeout);
+ 	INIT_DELAYED_WORK(&conn->auto_accept_work, hci_conn_auto_accept);
+@@ -1074,15 +1079,39 @@ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 	return conn;
+ }
+ 
+-static bool hci_conn_unlink(struct hci_conn *conn)
++static void hci_conn_unlink(struct hci_conn *conn)
+ {
++	struct hci_dev *hdev = conn->hdev;
++
++	bt_dev_dbg(hdev, "hcon %p", conn);
++
++	if (!conn->parent) {
++		struct hci_link *link, *t;
++
++		list_for_each_entry_safe(link, t, &conn->link_list, list)
++			hci_conn_unlink(link->conn);
++
++		return;
++	}
++
+ 	if (!conn->link)
+-		return false;
++		return;
++
++	hci_conn_put(conn->parent);
++	conn->parent = NULL;
+ 
+-	conn->link->link = NULL;
++	list_del_rcu(&conn->link->list);
++	synchronize_rcu();
++
++	kfree(conn->link);
+ 	conn->link = NULL;
+ 
+-	return true;
++	/* Due to race, SCO connection might be not established
++	 * yet at this point. Delete it now, otherwise it is
++	 * possible for it to be stuck and can't be deleted.
++	 */
++	if (conn->handle == HCI_CONN_HANDLE_UNSET)
++		hci_conn_del(conn);
+ }
+ 
+ int hci_conn_del(struct hci_conn *conn)
+@@ -1096,18 +1125,7 @@ int hci_conn_del(struct hci_conn *conn)
+ 	cancel_delayed_work_sync(&conn->idle_work);
+ 
+ 	if (conn->type == ACL_LINK) {
+-		struct hci_conn *link = conn->link;
+-
+-		if (link) {
+-			hci_conn_unlink(conn);
+-			/* Due to race, SCO connection might be not established
+-			 * yet at this point. Delete it now, otherwise it is
+-			 * possible for it to be stuck and can't be deleted.
+-			 */
+-			if (link->handle == HCI_CONN_HANDLE_UNSET)
+-				hci_conn_del(link);
+-		}
+-
++		hci_conn_unlink(conn);
+ 		/* Unacked frames */
+ 		hdev->acl_cnt += conn->sent;
+ 	} else if (conn->type == LE_LINK) {
+@@ -1118,7 +1136,7 @@ int hci_conn_del(struct hci_conn *conn)
+ 		else
+ 			hdev->acl_cnt += conn->sent;
+ 	} else {
+-		struct hci_conn *acl = conn->link;
++		struct hci_conn *acl = conn->parent;
+ 
+ 		if (acl) {
+ 			hci_conn_unlink(conn);
+@@ -1605,11 +1623,40 @@ struct hci_conn *hci_connect_acl(struct hci_dev *hdev, bdaddr_t *dst,
+ 	return acl;
+ }
+ 
++static struct hci_link *hci_conn_link(struct hci_conn *parent,
++				      struct hci_conn *conn)
++{
++	struct hci_dev *hdev = parent->hdev;
++	struct hci_link *link;
++
++	bt_dev_dbg(hdev, "parent %p hcon %p", parent, conn);
++
++	if (conn->link)
++		return conn->link;
++
++	if (conn->parent)
++		return NULL;
++
++	link = kzalloc(sizeof(*link), GFP_KERNEL);
++	if (!link)
++		return NULL;
++
++	link->conn = hci_conn_hold(conn);
++	conn->link = link;
++	conn->parent = hci_conn_get(parent);
++
++	/* Use list_add_tail_rcu append to the list */
++	list_add_tail_rcu(&link->list, &parent->link_list);
++
++	return link;
++}
++
+ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 				 __u16 setting, struct bt_codec *codec)
+ {
+ 	struct hci_conn *acl;
+ 	struct hci_conn *sco;
++	struct hci_link *link;
+ 
+ 	acl = hci_connect_acl(hdev, dst, BT_SECURITY_LOW, HCI_AT_NO_BONDING,
+ 			      CONN_REASON_SCO_CONNECT);
+@@ -1625,10 +1672,12 @@ struct hci_conn *hci_connect_sco(struct hci_dev *hdev, int type, bdaddr_t *dst,
+ 		}
+ 	}
+ 
+-	acl->link = sco;
+-	sco->link = acl;
+-
+-	hci_conn_hold(sco);
++	link = hci_conn_link(acl, sco);
++	if (!link) {
++		hci_conn_drop(acl);
++		hci_conn_drop(sco);
++		return NULL;
++	}
+ 
+ 	sco->setting = setting;
+ 	sco->codec = *codec;
+@@ -1895,7 +1944,7 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ 	u8 cig;
+ 
+ 	memset(&cmd, 0, sizeof(cmd));
+-	cmd.cis[0].acl_handle = cpu_to_le16(conn->link->handle);
++	cmd.cis[0].acl_handle = cpu_to_le16(conn->parent->handle);
+ 	cmd.cis[0].cis_handle = cpu_to_le16(conn->handle);
+ 	cmd.cp.num_cis++;
+ 	cig = conn->iso_qos.ucast.cig;
+@@ -1908,11 +1957,12 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ 		struct hci_cis *cis = &cmd.cis[cmd.cp.num_cis];
+ 
+ 		if (conn == data || conn->type != ISO_LINK ||
+-		    conn->state == BT_CONNECTED || conn->iso_qos.ucast.cig != cig)
++		    conn->state == BT_CONNECTED ||
++		    conn->iso_qos.ucast.cig != cig)
+ 			continue;
+ 
+ 		/* Check if all CIS(s) belonging to a CIG are ready */
+-		if (!conn->link || conn->link->state != BT_CONNECTED ||
++		if (!conn->parent || conn->parent->state != BT_CONNECTED ||
+ 		    conn->state != BT_CONNECT) {
+ 			cmd.cp.num_cis = 0;
+ 			break;
+@@ -1929,7 +1979,7 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ 		 * command have been generated, the Controller shall return the
+ 		 * error code Command Disallowed (0x0C).
+ 		 */
+-		cis->acl_handle = cpu_to_le16(conn->link->handle);
++		cis->acl_handle = cpu_to_le16(conn->parent->handle);
+ 		cis->cis_handle = cpu_to_le16(conn->handle);
+ 		cmd.cp.num_cis++;
+ 	}
+@@ -1948,15 +1998,33 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ int hci_le_create_cis(struct hci_conn *conn)
+ {
+ 	struct hci_conn *cis;
++	struct hci_link *link, *t;
+ 	struct hci_dev *hdev = conn->hdev;
+ 	int err;
+ 
++	bt_dev_dbg(hdev, "hcon %p", conn);
++
+ 	switch (conn->type) {
+ 	case LE_LINK:
+-		if (!conn->link || conn->state != BT_CONNECTED)
++		if (conn->state != BT_CONNECTED || list_empty(&conn->link_list))
+ 			return -EINVAL;
+-		cis = conn->link;
+-		break;
++
++		cis = NULL;
++
++		/* hci_conn_link uses list_add_tail_rcu so the list is in
++		 * the same order as the connections are requested.
++		 */
++		list_for_each_entry_safe(link, t, &conn->link_list, list) {
++			if (link->conn->state == BT_BOUND) {
++				err = hci_le_create_cis(link->conn);
++				if (err)
++					return err;
++
++				cis = link->conn;
++			}
++		}
++
++		return cis ? 0 : -EINVAL;
+ 	case ISO_LINK:
+ 		cis = conn;
+ 		break;
+@@ -2177,6 +2245,7 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ {
+ 	struct hci_conn *le;
+ 	struct hci_conn *cis;
++	struct hci_link *link;
+ 
+ 	if (hci_dev_test_flag(hdev, HCI_ADVERTISING))
+ 		le = hci_connect_le(hdev, dst, dst_type, false,
+@@ -2202,16 +2271,18 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 		return cis;
+ 	}
+ 
+-	le->link = cis;
+-	cis->link = le;
+-
+-	hci_conn_hold(cis);
++	link = hci_conn_link(le, cis);
++	if (!link) {
++		hci_conn_drop(le);
++		hci_conn_drop(cis);
++		return NULL;
++	}
+ 
+ 	/* If LE is already connected and CIS handle is already set proceed to
+ 	 * Create CIS immediately.
+ 	 */
+ 	if (le->state == BT_CONNECTED && cis->handle != HCI_CONN_HANDLE_UNSET)
+-		hci_le_create_cis(le);
++		hci_le_create_cis(cis);
+ 
+ 	return cis;
+ }
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 0e0a93cc12186..d00ef6e3fc451 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2345,7 +2345,8 @@ static void hci_cs_create_conn(struct hci_dev *hdev, __u8 status)
+ static void hci_cs_add_sco(struct hci_dev *hdev, __u8 status)
+ {
+ 	struct hci_cp_add_sco *cp;
+-	struct hci_conn *acl, *sco;
++	struct hci_conn *acl;
++	struct hci_link *link;
+ 	__u16 handle;
+ 
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+@@ -2365,12 +2366,13 @@ static void hci_cs_add_sco(struct hci_dev *hdev, __u8 status)
+ 
+ 	acl = hci_conn_hash_lookup_handle(hdev, handle);
+ 	if (acl) {
+-		sco = acl->link;
+-		if (sco) {
+-			sco->state = BT_CLOSED;
++		link = list_first_entry_or_null(&acl->link_list,
++						struct hci_link, list);
++		if (link && link->conn) {
++			link->conn->state = BT_CLOSED;
+ 
+-			hci_connect_cfm(sco, status);
+-			hci_conn_del(sco);
++			hci_connect_cfm(link->conn, status);
++			hci_conn_del(link->conn);
+ 		}
+ 	}
+ 
+@@ -2637,74 +2639,61 @@ static void hci_cs_read_remote_ext_features(struct hci_dev *hdev, __u8 status)
+ 	hci_dev_unlock(hdev);
+ }
+ 
+-static void hci_cs_setup_sync_conn(struct hci_dev *hdev, __u8 status)
++static void hci_setup_sync_conn_status(struct hci_dev *hdev, __u16 handle,
++				       __u8 status)
+ {
+-	struct hci_cp_setup_sync_conn *cp;
+-	struct hci_conn *acl, *sco;
+-	__u16 handle;
+-
+-	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+-
+-	if (!status)
+-		return;
+-
+-	cp = hci_sent_cmd_data(hdev, HCI_OP_SETUP_SYNC_CONN);
+-	if (!cp)
+-		return;
++	struct hci_conn *acl;
++	struct hci_link *link;
+ 
+-	handle = __le16_to_cpu(cp->handle);
+-
+-	bt_dev_dbg(hdev, "handle 0x%4.4x", handle);
++	bt_dev_dbg(hdev, "handle 0x%4.4x status 0x%2.2x", handle, status);
+ 
+ 	hci_dev_lock(hdev);
+ 
+ 	acl = hci_conn_hash_lookup_handle(hdev, handle);
+ 	if (acl) {
+-		sco = acl->link;
+-		if (sco) {
+-			sco->state = BT_CLOSED;
++		link = list_first_entry_or_null(&acl->link_list,
++						struct hci_link, list);
++		if (link && link->conn) {
++			link->conn->state = BT_CLOSED;
+ 
+-			hci_connect_cfm(sco, status);
+-			hci_conn_del(sco);
++			hci_connect_cfm(link->conn, status);
++			hci_conn_del(link->conn);
+ 		}
+ 	}
+ 
+ 	hci_dev_unlock(hdev);
+ }
+ 
+-static void hci_cs_enhanced_setup_sync_conn(struct hci_dev *hdev, __u8 status)
++static void hci_cs_setup_sync_conn(struct hci_dev *hdev, __u8 status)
+ {
+-	struct hci_cp_enhanced_setup_sync_conn *cp;
+-	struct hci_conn *acl, *sco;
+-	__u16 handle;
++	struct hci_cp_setup_sync_conn *cp;
+ 
+ 	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+ 
+ 	if (!status)
+ 		return;
+ 
+-	cp = hci_sent_cmd_data(hdev, HCI_OP_ENHANCED_SETUP_SYNC_CONN);
++	cp = hci_sent_cmd_data(hdev, HCI_OP_SETUP_SYNC_CONN);
+ 	if (!cp)
+ 		return;
+ 
+-	handle = __le16_to_cpu(cp->handle);
++	hci_setup_sync_conn_status(hdev, __le16_to_cpu(cp->handle), status);
++}
+ 
+-	bt_dev_dbg(hdev, "handle 0x%4.4x", handle);
++static void hci_cs_enhanced_setup_sync_conn(struct hci_dev *hdev, __u8 status)
++{
++	struct hci_cp_enhanced_setup_sync_conn *cp;
+ 
+-	hci_dev_lock(hdev);
++	bt_dev_dbg(hdev, "status 0x%2.2x", status);
+ 
+-	acl = hci_conn_hash_lookup_handle(hdev, handle);
+-	if (acl) {
+-		sco = acl->link;
+-		if (sco) {
+-			sco->state = BT_CLOSED;
++	if (!status)
++		return;
+ 
+-			hci_connect_cfm(sco, status);
+-			hci_conn_del(sco);
+-		}
+-	}
++	cp = hci_sent_cmd_data(hdev, HCI_OP_ENHANCED_SETUP_SYNC_CONN);
++	if (!cp)
++		return;
+ 
+-	hci_dev_unlock(hdev);
++	hci_setup_sync_conn_status(hdev, __le16_to_cpu(cp->handle), status);
+ }
+ 
+ static void hci_cs_sniff_mode(struct hci_dev *hdev, __u8 status)
+@@ -3834,19 +3823,20 @@ static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(conn, &hdev->conn_hash.list, list) {
+-		if (conn->type != ISO_LINK || conn->iso_qos.ucast.cig != rp->cig_id ||
++		if (conn->type != ISO_LINK ||
++		    conn->iso_qos.ucast.cig != rp->cig_id ||
+ 		    conn->state == BT_CONNECTED)
+ 			continue;
+ 
+ 		conn->handle = __le16_to_cpu(rp->handle[i++]);
+ 
+-		bt_dev_dbg(hdev, "%p handle 0x%4.4x link %p", conn,
+-			   conn->handle, conn->link);
++		bt_dev_dbg(hdev, "%p handle 0x%4.4x parent %p", conn,
++			   conn->handle, conn->parent);
+ 
+ 		/* Create CIS if LE is already connected */
+-		if (conn->link && conn->link->state == BT_CONNECTED) {
++		if (conn->parent && conn->parent->state == BT_CONNECTED) {
+ 			rcu_read_unlock();
+-			hci_le_create_cis(conn->link);
++			hci_le_create_cis(conn);
+ 			rcu_read_lock();
+ 		}
+ 
+@@ -5031,7 +5021,7 @@ static void hci_sync_conn_complete_evt(struct hci_dev *hdev, void *data,
+ 		if (conn->out) {
+ 			conn->pkt_type = (hdev->esco_type & SCO_ESCO_MASK) |
+ 					(hdev->esco_type & EDR_ESCO_MASK);
+-			if (hci_setup_sync(conn, conn->link->handle))
++			if (hci_setup_sync(conn, conn->parent->handle))
+ 				goto unlock;
+ 		}
+ 		fallthrough;
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 74117df03a3fa..34d55a85d8f6f 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1657,8 +1657,12 @@ static void iso_connect_cfm(struct hci_conn *hcon, __u8 status)
+ 
+ 		/* Check if LE link has failed */
+ 		if (status) {
+-			if (hcon->link)
+-				iso_conn_del(hcon->link, bt_to_errno(status));
++			struct hci_link *link, *t;
++
++			list_for_each_entry_safe(link, t, &hcon->link_list,
++						 list)
++				iso_conn_del(link->conn, bt_to_errno(status));
++
+ 			return;
+ 		}
+ 
 -- 
 2.39.2
 
