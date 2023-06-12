@@ -1,94 +1,65 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sipsolutions.net (s3.sipsolutions.net [144.76.43.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0182411CAD
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:52:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBC9C433D2;
-	Mon, 12 Jun 2023 10:52:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567148;
-	bh=mKEP1o6hoyQ7jtE6ZIM7YmZi0AbJPhv9YlwFtFzjkxE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GTmZmYjy8OLff/gRCoXv1G1wftAq12wpo0btnBiHjvAUgxFO2dbHluCc92tDxK79w
-	 bn+VBDw2pkZOUt5DSEw9Sh7ZgGErJj38kFWFsalGcyIaTqKTpHHPwCxO9xBOjzys7B
-	 P4vAJ6BzRwpHB9N0BUFSP32mS1eH/w6mx9iXsN0Y=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Hsieh-Tseng Shen <woodrow.shen@sifive.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 141/160] riscv: mm: Ensure prot of VM_WRITE and VM_EXEC must be readable
-Date: Mon, 12 Jun 2023 12:27:53 +0200
-Message-ID: <20230612101721.523370385@linuxfoundation.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77EF134DD
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 11:43:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=yvCB3v5gxtnLTEpQPY5JHQKObtHsN7WRN1uVn8i+7tA=;
+	t=1686570219; x=1687779819; b=mGGIS/z1irq/w5L5DlanD9LaXZp0ZlWUU67hoxEt8XePWWj
+	c/Im7swD1DtA6bR/zO5Z2X7twzFdZlOgm5bGqhAGGE2+Hd8ykAPZIyCQ2UU9BkEFzm3ORUXKSOQmi
+	yGFZcyr7f1dHflhlqo814/mRuhONeUIoMKvbpu1Tenonh25EbjfXpswi5hKHpQLiJCnHd+Flabsh6
+	kc8j7Sh0oTNEQx3jsatxuQcx5eyXy0BtNU6cQE8n1dH2UbCaiehZ0e/VLFhLv0zgnsxJAQsfRaDKC
+	Y3chZ9dxqBDvxp6Tc+YfDz3UeHyoB/yMLFNV0E/hlUyLtSUs8keF8MGQtSjamEkQ==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1q8fxE-003tT5-0k;
+	Mon, 12 Jun 2023 13:43:25 +0200
+Message-ID: <23db24e1efd0ce7904d0e57289009852cd58e29b.camel@sipsolutions.net>
+Subject: Re: [PATCH 6.3 038/160] wifi: cfg80211: fix locking in regulatory
+ disconnect
+From: Johannes Berg <johannes@sipsolutions.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "stable@vger.kernel.org" <stable@vger.kernel.org>
+Cc: "patches@lists.linux.dev" <patches@lists.linux.dev>, Sasha Levin
+	 <sashal@kernel.org>
+Date: Mon, 12 Jun 2023 13:43:23 +0200
+In-Reply-To: <20230612101716.793331479@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
-User-Agent: quilt/0.67
+	 <20230612101716.793331479@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.3 (3.48.3-1.fc38) 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-malware-bazaar: not-scanned
 
-From: Hsieh-Tseng Shen <woodrow.shen@sifive.com>
+On Mon, 2023-06-12 at 10:26 +0000, Greg Kroah-Hartman wrote:
+> From: Johannes Berg <johannes.berg@intel.com>
+>=20
+> [ Upstream commit f7e60032c6618dfd643c7210d5cba2789e2de2e2 ]
+>=20
+> This should use wiphy_lock() now instead of requiring the
+> RTNL, since __cfg80211_leave() via cfg80211_leave() is now
+> requiring that lock to be held.
 
-[ Upstream commit 6569fc12e442ea973d96db39e542aa19a7bc3a79 ]
+You should perhaps hold off on this. While all this is correct, I missed
+something that Dan found later:
 
-Commit 8aeb7b17f04e ("RISC-V: Make mmap() with PROT_WRITE imply PROT_READ")
-allows riscv to use mmap with PROT_WRITE only, and meanwhile mmap with w+x
-is also permitted. However, when userspace tries to access this page with
-PROT_WRITE|PROT_EXEC, which causes infinite loop at load page fault as
-well as it triggers soft lockup. According to riscv privileged spec,
-"Writable pages must also be marked readable". The fix to drop the
-`PAGE_COPY_READ_EXEC` and then `PAGE_COPY_EXEC` would be just used instead.
-This aligns the other arches (i.e arm64) for protection_map.
+https://git.kernel.org/pub/scm/linux/kernel/git/wireless/wireless.git/commi=
+t/?id=3D996c3117dae4c02b38a3cb68e5c2aec9d907ec15
 
-Fixes: 8aeb7b17f04e ("RISC-V: Make mmap() with PROT_WRITE imply PROT_READ")
-Signed-off-by: Hsieh-Tseng Shen <woodrow.shen@sifive.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20230425102828.1616812-1-woodrow.shen@sifive.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/riscv/include/asm/pgtable.h | 3 +--
- arch/riscv/mm/init.c             | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+I'll have this in the next pull request.
 
-diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
-index f641837ccf31d..05eda3281ba90 100644
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -165,8 +165,7 @@ extern struct pt_alloc_ops pt_ops __initdata;
- 					 _PAGE_EXEC | _PAGE_WRITE)
- 
- #define PAGE_COPY		PAGE_READ
--#define PAGE_COPY_EXEC		PAGE_EXEC
--#define PAGE_COPY_READ_EXEC	PAGE_READ_EXEC
-+#define PAGE_COPY_EXEC		PAGE_READ_EXEC
- #define PAGE_SHARED		PAGE_WRITE
- #define PAGE_SHARED_EXEC	PAGE_WRITE_EXEC
- 
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index dc1793bf01796..309d685d70267 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -286,7 +286,7 @@ static const pgprot_t protection_map[16] = {
- 	[VM_EXEC]					= PAGE_EXEC,
- 	[VM_EXEC | VM_READ]				= PAGE_READ_EXEC,
- 	[VM_EXEC | VM_WRITE]				= PAGE_COPY_EXEC,
--	[VM_EXEC | VM_WRITE | VM_READ]			= PAGE_COPY_READ_EXEC,
-+	[VM_EXEC | VM_WRITE | VM_READ]			= PAGE_COPY_EXEC,
- 	[VM_SHARED]					= PAGE_NONE,
- 	[VM_SHARED | VM_READ]				= PAGE_READ,
- 	[VM_SHARED | VM_WRITE]				= PAGE_SHARED,
--- 
-2.39.2
+I suppose _both_ should go to stable, and nobody ever seems to run into
+this patch (at least lockdep would loudly complain), but stills seems
+better in the short term to have missing locking than a deadlock.
 
-
-
+johannes
