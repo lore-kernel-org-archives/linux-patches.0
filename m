@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3293DD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB45C433EF;
-	Mon, 12 Jun 2023 10:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67E9D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B27DC433D2;
+	Mon, 12 Jun 2023 10:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566320;
-	bh=wPajnjI2ZaldRsSTBBex9VJWKQOYdR+EMv8mPP5pRtE=;
+	s=korg; t=1686566322;
+	bh=uq0SVz5UqtJkl8ieMNLcZhzMswHJEEXgcxp9PenjSck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZPWjFFBahzPGiqhFqxsiE8TKG5Lw94h7voqz6//KkZTvVUSMvTs9uH7cSa4vgg/y
-	 EHf4rU099O9qC/iPjZphyOzbUupTNedv4vpd8X4t1aXDYaAlQEXFQTJKmU7wPYXPdU
-	 M1pqlzfpHwjI2ffjvETTIbNOPCKqSE39glaXLsb0=
+	b=uzzmLdDT7rsUgRGvIsJHjM4F/ZXC2Hgig0/Ok7dqGCvKhXYw+CzRthQ8MUA2svS/2
+	 7yLCtANNPKkc30m+SHAV7VjLcmUhBSJkYqHTCSAFOQE4Weqa27Utz3ol2frKtFr80J
+	 BXgURqm8NaFaJeFB6RuWnGs+xE3qwMGXplfy4Hww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Imre Kis <imre.kis@arm.com>,
+	Balint Dobszay <balint.dobszay@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 71/91] ARM: dts: at91: sama7g5ek: fix debounce delay property for shdwc
-Date: Mon, 12 Jun 2023 12:27:00 +0200
-Message-ID: <20230612101705.036145253@linuxfoundation.org>
+Subject: [PATCH 5.15 80/91] firmware: arm_ffa: Set handle field to zero in memory descriptor
+Date: Mon, 12 Jun 2023 12:27:09 +0200
+Message-ID: <20230612101705.428434163@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -35,35 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Balint Dobszay <balint.dobszay@arm.com>
 
-[ Upstream commit 6b0db163ff9200a55dc77a652dad1d4b0a853f63 ]
+[ Upstream commit 3aa0519a4780f1b8e11966bd879d4a2934ba455f ]
 
-There is no atmel,shdwc-debouncer property for SHDWC. The right DT property
-is debounce-delay-us. Use it.
+As described in the commit 111a833dc5cb ("firmware: arm_ffa: Set
+reserved/MBZ fields to zero in the memory descriptors") some fields in
+the memory descriptor have to be zeroed explicitly. The handle field is
+one of these, but it was left out from that change, fix this now.
 
-Fixes: 16b161bcf5d4 ("ARM: dts: at91: sama7g5: add shdwc node")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20230523052750.184223-1-claudiu.beznea@microchip.com
+Fixes: 111a833dc5cb ("firmware: arm_ffa: Set reserved/MBZ fields to zero in the memory descriptors")
+Reported-by: Imre Kis <imre.kis@arm.com>
+Signed-off-by: Balint Dobszay <balint.dobszay@arm.com>
+Link: https://lore.kernel.org/r/20230601140749.93812-1-balint.dobszay@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/at91-sama7g5ek.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/at91-sama7g5ek.dts b/arch/arm/boot/dts/at91-sama7g5ek.dts
-index 2038e387be288..0ba856066ffb2 100644
---- a/arch/arm/boot/dts/at91-sama7g5ek.dts
-+++ b/arch/arm/boot/dts/at91-sama7g5ek.dts
-@@ -659,7 +659,7 @@ &sdmmc2 {
- };
- 
- &shdwc {
--	atmel,shdwc-debouncer = <976>;
-+	debounce-delay-us = <976>;
- 	status = "okay";
- 
- 	input@0 {
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index f53d11eff65e0..e4fb0c1ae4869 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -454,6 +454,7 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
+ 		ep_mem_access->flag = 0;
+ 		ep_mem_access->reserved = 0;
+ 	}
++	mem_region->handle = 0;
+ 	mem_region->reserved_0 = 0;
+ 	mem_region->reserved_1 = 0;
+ 	mem_region->ep_count = args->nattrs;
 -- 
 2.39.2
 
