@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA24DD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1369C433D2;
-	Mon, 12 Jun 2023 10:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2FAD512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF5FC433EF;
+	Mon, 12 Jun 2023 10:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566262;
-	bh=7DyfyYD9kkegC1UEkWKFhenbDDHxsBkUNZNbIe+huQA=;
+	s=korg; t=1686566264;
+	bh=cZfWCa99St9eb01zjbzxJth1IR50E8rE0F8769taugE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPs6iGyqcc4wOVdV3jUxd/jROpOjPMCTTpNZrpk3+NfRdlA6iCEbdCncnLv2ZA2wB
-	 RA4icAtufNSi6t+DF3ro30Esw8pyh7Pme5S/yCgVXaBtdiFgen70Nf/76odFXOo6Db
-	 rmzo+CmteCV6loa4qgicTkFY0vf/ZIjo6tLQAHIo=
+	b=k79D18nhiGpam5WMrx7mYhCb/eZCRxrCbJvTh+1I63xDewJkeEQSYHj2wsWMLwJsD
+	 +CPWLtZn7qLogQisBIF20OdEVIpHdJy+dPhJBvUAZD5qTLgd1sj93i+HC2ZbFBaQOc
+	 Pr5ez9chnMDN3YDBBAKgKkh/2K/8H+DgfQeczM+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 57/91] drm/amd/pm: Fix power context allocation in SMU13
-Date: Mon, 12 Jun 2023 12:26:46 +0200
-Message-ID: <20230612101704.439662541@linuxfoundation.org>
+	David Jander <david@protonic.nl>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 58/91] can: j1939: j1939_sk_send_loop_abort(): improved error queue handling in J1939 Socket
+Date: Mon, 12 Jun 2023 12:26:47 +0200
+Message-ID: <20230612101704.481820446@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -35,36 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 1d13c49cf4e246b218d71873f1bb1bbd376aa10e upstream.
+commit 2a84aea80e925ecba6349090559754f8e8eb68ef upstream.
 
-Use the right data structure for allocation.
+This patch addresses an issue within the j1939_sk_send_loop_abort()
+function in the j1939/socket.c file, specifically in the context of
+Transport Protocol (TP) sessions.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Without this patch, when a TP session is initiated and a Clear To Send
+(CTS) frame is received from the remote side requesting one data packet,
+the kernel dispatches the first Data Transport (DT) frame and then waits
+for the next CTS. If the remote side doesn't respond with another CTS,
+the kernel aborts due to a timeout. This leads to the user-space
+receiving an EPOLLERR on the socket, and the socket becomes active.
+
+However, when trying to read the error queue from the socket with
+sock.recvmsg(, , socket.MSG_ERRQUEUE), it returns -EAGAIN,
+given that the socket is non-blocking. This situation results in an
+infinite loop: the user-space repeatedly calls epoll(), epoll() returns
+the socket file descriptor with EPOLLERR, but the socket then blocks on
+the recv() of ERRQUEUE.
+
+This patch introduces an additional check for the J1939_SOCK_ERRQUEUE
+flag within the j1939_sk_send_loop_abort() function. If the flag is set,
+it indicates that the application has subscribed to receive error queue
+messages. In such cases, the kernel can communicate the current transfer
+state via the error queue. This allows for the function to return early,
+preventing the unnecessary setting of the socket into an error state,
+and breaking the infinite loop. It is crucial to note that a socket
+error is only needed if the application isn't using the error queue, as,
+without it, the application wouldn't be aware of transfer issues.
+
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-by: David Jander <david@protonic.nl>
+Tested-by: David Jander <david@protonic.nl>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20230526081946.715190-1-o.rempel@pengutronix.de
 Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/can/j1939/socket.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-@@ -456,11 +456,11 @@ int smu_v13_0_init_power(struct smu_cont
- 	if (smu_power->power_context || smu_power->power_context_size != 0)
- 		return -EINVAL;
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -1088,6 +1088,11 @@ void j1939_sk_errqueue(struct j1939_sess
  
--	smu_power->power_context = kzalloc(sizeof(struct smu_13_0_dpm_context),
-+	smu_power->power_context = kzalloc(sizeof(struct smu_13_0_power_context),
- 					   GFP_KERNEL);
- 	if (!smu_power->power_context)
- 		return -ENOMEM;
--	smu_power->power_context_size = sizeof(struct smu_13_0_dpm_context);
-+	smu_power->power_context_size = sizeof(struct smu_13_0_power_context);
+ void j1939_sk_send_loop_abort(struct sock *sk, int err)
+ {
++	struct j1939_sock *jsk = j1939_sk(sk);
++
++	if (jsk->state & J1939_SOCK_ERRQUEUE)
++		return;
++
+ 	sk->sk_err = err;
  
- 	return 0;
- }
+ 	sk_error_report(sk);
 
 
