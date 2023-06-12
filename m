@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8553134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A03DC433D2;
-	Mon, 12 Jun 2023 10:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B45A134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D915CC433EF;
+	Mon, 12 Jun 2023 10:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566811;
-	bh=XfOhGVN0v3hG1viVczaSizwo/DtWCgAmZJl6dL9mBfo=;
+	s=korg; t=1686566814;
+	bh=s6013grOLBFlPEB2a7QwgUNo+2/b3mguGf7o4l+PHwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCzBqg/P3ws94iQF2k9bG2tQGiXfbgTn95jLKWTH8l79o1GE92OgACIktyJQRr9Pa
-	 J80KNcEzGRWnygpjzfZLT8rMJeEwP3SS5NRzVxkMR9TON6I1UNl/NtUIJknlAAOkWV
-	 GaV9ThPKyowX7GUAJsj6kJ7fKmD91A8apcGE2qt4=
+	b=TkYpSmcSNHe5TiFuAJCNPmw7QrOSu4NYVrY86rUKQWH60AA6oMHd9ED95BpZzxG3/
+	 HhlcQDVpRdCdywg5rQo9NFBbcHHF5M3+X7mO50RCN+C1pDfSN2+qwp4fZuaVh8+KCU
+	 mmWkD384H1nFhk3m+qF0cgwAkcvZ8wY9Y7kWoKFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yhs@fb.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 040/160] selftests/bpf: Fix sockopt_sk selftest
-Date: Mon, 12 Jun 2023 12:26:12 +0200
-Message-ID: <20230612101716.877934734@linuxfoundation.org>
+Subject: [PATCH 6.3 041/160] netfilter: nf_tables: Add null check for nla_nest_start_noflag() in nft_dump_basechain_hook()
+Date: Mon, 12 Jun 2023 12:26:13 +0200
+Message-ID: <20230612101716.918834827@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,52 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonghong Song <yhs@fb.com>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 69844e335d8c22454746c7903776533d8b4ab8fa ]
+[ Upstream commit bd058763a624a1fb5c20f3c46e632d623c043676 ]
 
-Commit f4e4534850a9 ("net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report")
-fixed NETLINK_LIST_MEMBERSHIPS length report which caused
-selftest sockopt_sk failure. The failure log looks like
+The nla_nest_start_noflag() function may fail and return NULL;
+the return value needs to be checked.
 
-  test_sockopt_sk:PASS:join_cgroup /sockopt_sk 0 nsec
-  run_test:PASS:skel_load 0 nsec
-  run_test:PASS:setsockopt_link 0 nsec
-  run_test:PASS:getsockopt_link 0 nsec
-  getsetsockopt:FAIL:Unexpected NETLINK_LIST_MEMBERSHIPS value unexpected Unexpected NETLINK_LIST_MEMBERSHIPS value: actual 8 != expected 4
-  run_test:PASS:getsetsockopt 0 nsec
-  #201     sockopt_sk:FAIL
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
 
-In net/netlink/af_netlink.c, function netlink_getsockopt(), for NETLINK_LIST_MEMBERSHIPS,
-nlk->ngroups equals to 36. Before Commit f4e4534850a9, the optlen is calculated as
-  ALIGN(nlk->ngroups / 8, sizeof(u32)) = 4
-After that commit, the optlen is
-  ALIGN(BITS_TO_BYTES(nlk->ngroups), sizeof(u32)) = 8
-
-Fix the test by setting the expected optlen to be 8.
-
-Fixes: f4e4534850a9 ("net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report")
-Signed-off-by: Yonghong Song <yhs@fb.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230606172202.1606249-1-yhs@fb.com
+Fixes: d54725cd11a5 ("netfilter: nf_tables: support for multiple devices per netdev hook")
+Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/sockopt_sk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c b/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-index 4512dd808c335..05d0e07da3942 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-@@ -209,7 +209,7 @@ static int getsetsockopt(void)
- 			err, errno);
- 		goto err;
- 	}
--	ASSERT_EQ(optlen, 4, "Unexpected NETLINK_LIST_MEMBERSHIPS value");
-+	ASSERT_EQ(optlen, 8, "Unexpected NETLINK_LIST_MEMBERSHIPS value");
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index ef80504c3ccd2..8c74bb1ca78a0 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1593,6 +1593,8 @@ static int nft_dump_basechain_hook(struct sk_buff *skb, int family,
  
- 	free(big_buf);
- 	close(fd);
+ 	if (nft_base_chain_netdev(family, ops->hooknum)) {
+ 		nest_devs = nla_nest_start_noflag(skb, NFTA_HOOK_DEVS);
++		if (!nest_devs)
++			goto nla_put_failure;
+ 
+ 		if (!hook_list)
+ 			hook_list = &basechain->hook_list;
 -- 
 2.39.2
 
