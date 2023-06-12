@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0082C11C88
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE46C433EF;
-	Mon, 12 Jun 2023 10:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC7E11C88
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B42C433D2;
+	Mon, 12 Jun 2023 10:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566550;
-	bh=na9N3aXF/9uTUa++8QxH3vtHXE4sIUNb1Q8uxiW2zHY=;
+	s=korg; t=1686566553;
+	bh=RLtmN0TIInZlWRLz3BGhJs9W3NpO0P0pRirDUhZb/cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDFc6IS2b78avZPQO1BLankEmC8CEzAFNOZbkf6KKTU4wPLSp5sa9BlM06qF52gyx
-	 RjyvwjoAto7OushNvVSuhooq6I/7HCODrZOIqaowQn7Dq3cPwSnFjZ9q5tt+eGL6HH
-	 KaH8G/I1VfnL9wJRgs9lKFALaUFuD4toPrFG0oig=
+	b=PovkKP297TLBEo7QLJjMDuWwiXyH6lctGaRGL/DgyYunPPlENZA7FFhX1sY2mPCIq
+	 1PycO/C0JQt6iUUCn9tCV3q3NVXY9h3ZyUE0Xu8bg108lEFjcyvzp9B3DoQFOyxOnR
+	 7GP/Eo0cMJOsB4qQ4tTq0kXmZK/vI4Pc+2GTEfpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 075/132] drm/amd/pm: Fix power context allocation in SMU13
-Date: Mon, 12 Jun 2023 12:26:49 +0200
-Message-ID: <20230612101713.681850019@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Stylon Wang <stylon.wang@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Nevenko Stupar <Nevenko.Stupar@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.1 076/132] drm/amd/display: Reduce sdp bw after urgent to 90%
+Date: Mon, 12 Jun 2023 12:26:50 +0200
+Message-ID: <20230612101713.723300786@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,36 +38,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Alvin Lee <alvin.lee2@amd.com>
 
-commit 1d13c49cf4e246b218d71873f1bb1bbd376aa10e upstream.
+commit e1a600208286c197c2696e51fc313e49889315bd upstream.
 
-Use the right data structure for allocation.
+[Description]
+Reduce expected SDP bandwidth due to poor QoS and
+arbitration issues on high bandwidth configs
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
+Acked-by: Stylon Wang <stylon.wang@amd.com>
+Signed-off-by: Alvin Lee <alvin.lee2@amd.com>
+Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-@@ -582,11 +582,11 @@ int smu_v13_0_init_power(struct smu_cont
- 	if (smu_power->power_context || smu_power->power_context_size != 0)
- 		return -EINVAL;
- 
--	smu_power->power_context = kzalloc(sizeof(struct smu_13_0_dpm_context),
-+	smu_power->power_context = kzalloc(sizeof(struct smu_13_0_power_context),
- 					   GFP_KERNEL);
- 	if (!smu_power->power_context)
- 		return -ENOMEM;
--	smu_power->power_context_size = sizeof(struct smu_13_0_dpm_context);
-+	smu_power->power_context_size = sizeof(struct smu_13_0_power_context);
- 
- 	return 0;
- }
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -137,7 +137,7 @@ struct _vcs_dpi_soc_bounding_box_st dcn3
+ 	.urgent_out_of_order_return_per_channel_pixel_only_bytes = 4096,
+ 	.urgent_out_of_order_return_per_channel_pixel_and_vm_bytes = 4096,
+ 	.urgent_out_of_order_return_per_channel_vm_only_bytes = 4096,
+-	.pct_ideal_sdp_bw_after_urgent = 100.0,
++	.pct_ideal_sdp_bw_after_urgent = 90.0,
+ 	.pct_ideal_fabric_bw_after_urgent = 67.0,
+ 	.pct_ideal_dram_sdp_bw_after_urgent_pixel_only = 20.0,
+ 	.pct_ideal_dram_sdp_bw_after_urgent_pixel_and_vm = 60.0, // N/A, for now keep as is until DML implemented
 
 
