@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EB91952C
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E4BC433B4;
-	Mon, 12 Jun 2023 10:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C901952E
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43583C433EF;
+	Mon, 12 Jun 2023 10:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565810;
-	bh=TgQq0faDLmnnZWwMjnJtw+W6Lul6DKuyzev9gDI/2wQ=;
+	s=korg; t=1686565812;
+	bh=pg4Ua/GqQJpaYWdcnz09aPWpo+axTNYbee0RYC9+wGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoagyYuNecYgyhpGb5NBP4RqkW1SpGcwqk3Z0rzqBAgq+aKVYx53bwKXycThZvTee
-	 Ojv7rV/VUMFEXie33MjmI8meu+/x10TEmrvH5J8A1oVdntDweUA02KTRmyZhrBoxha
-	 BThAx4OWHdvxTfI3jPiAXeviavIX6GQQpQ+l6fPs=
+	b=I8wLF6JQdagOyom7h6lS6J0tfvjp5Xqgg4CUgLt26LLJssmmls6SUy/7hSrn4iJer
+	 akJ6IcjMvKcxtSYEesG62YfmIZoZ6KFxE2yLnj0cCIElC3isMJZcDynpX6XUrt18jb
+	 M2BlBVNctEKG6CTAsfq3n6PnSkEEZ26s3hWDxgcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Philipp Hortmann <philipp.g.hortmann@gmail.com>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 23/23] Revert "staging: rtl8192e: Replace macro RTL_PCI_DEVICE with PCI_DEVICE"
-Date: Mon, 12 Jun 2023 12:26:24 +0200
-Message-ID: <20230612101651.911193510@linuxfoundation.org>
+Subject: [PATCH 4.19 03/23] spi: qup: Request DMA before enabling clocks
+Date: Mon, 12 Jun 2023 12:26:04 +0200
+Message-ID: <20230612101651.268579109@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.138592130@linuxfoundation.org>
 References: <20230612101651.138592130@linuxfoundation.org>
@@ -35,53 +35,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-This reverts commit ec310591cf839653a5b2c1fcf6b8a110c3f2485c which is
-commit a80f4c7dc4dbd2925cf3da86004137965cb16086 upstream.
+[ Upstream commit 0c331fd1dccfba657129380ee084b95c1cedfbef ]
 
-Ben reports that this should not have been backported to the older
-kernels as the rest of the macro is not empty.  It was a clean-up patch
-in 6.4-rc1 only, it did not add new device ids.
+It is usually better to request all necessary resources (clocks,
+regulators, ...) before starting to make use of them. That way they do
+not change state in case one of the resources is not available yet and
+probe deferral (-EPROBE_DEFER) is necessary. This is particularly
+important for DMA channels and IOMMUs which are not enforced by
+fw_devlink yet (unless you use fw_devlink.strict=1).
 
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Cc: Philipp Hortmann <philipp.g.hortmann@gmail.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Link: https://lore.kernel.org/r/aa0d401a7f63448cd4c2fe4a2d7e8495d9aa123e.camel@decadent.org.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+spi-qup does this in the wrong order, the clocks are enabled and
+disabled again when the DMA channels are not available yet.
+
+This causes issues in some cases: On most SoCs one of the SPI QUP
+clocks is shared with the UART controller. When using earlycon UART is
+actively used during boot but might not have probed yet, usually for
+the same reason (waiting for the DMA controller). In this case, the
+brief enable/disable cycle ends up gating the clock and further UART
+console output will halt the system completely.
+
+Avoid this by requesting the DMA channels before changing the clock
+state.
+
+Fixes: 612762e82ae6 ("spi: qup: Add DMA capabilities")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Link: https://lore.kernel.org/r/20230518-spi-qup-clk-defer-v1-1-f49fc9ca4e02@gerhold.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.c |    6 +++---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.h |    5 +++++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/spi/spi-qup.c | 37 ++++++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-@@ -61,9 +61,9 @@ static const struct rtl819x_ops rtl819xp
- };
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index defe959884dae..1518a8bf49be1 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1003,23 +1003,8 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 		return -ENXIO;
+ 	}
  
- static struct pci_device_id rtl8192_pci_id_tbl[] = {
--	{PCI_DEVICE(0x10ec, 0x8192)},
--	{PCI_DEVICE(0x07aa, 0x0044)},
--	{PCI_DEVICE(0x07aa, 0x0047)},
-+	{RTL_PCI_DEVICE(0x10ec, 0x8192, rtl819xp_ops)},
-+	{RTL_PCI_DEVICE(0x07aa, 0x0044, rtl819xp_ops)},
-+	{RTL_PCI_DEVICE(0x07aa, 0x0047, rtl819xp_ops)},
- 	{}
- };
+-	ret = clk_prepare_enable(cclk);
+-	if (ret) {
+-		dev_err(dev, "cannot enable core clock\n");
+-		return ret;
+-	}
+-
+-	ret = clk_prepare_enable(iclk);
+-	if (ret) {
+-		clk_disable_unprepare(cclk);
+-		dev_err(dev, "cannot enable iface clock\n");
+-		return ret;
+-	}
+-
+ 	master = spi_alloc_master(dev, sizeof(struct spi_qup));
+ 	if (!master) {
+-		clk_disable_unprepare(cclk);
+-		clk_disable_unprepare(iclk);
+ 		dev_err(dev, "cannot allocate master\n");
+ 		return -ENOMEM;
+ 	}
+@@ -1065,6 +1050,19 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 	spin_lock_init(&controller->lock);
+ 	init_completion(&controller->done);
  
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-@@ -67,6 +67,11 @@
- #define IS_HARDWARE_TYPE_8192SE(_priv)		\
- 	(((struct r8192_priv *)rtllib_priv(dev))->card_8192 == NIC_8192SE)
- 
-+#define RTL_PCI_DEVICE(vend, dev, cfg) \
-+	.vendor = (vend), .device = (dev), \
-+	.subvendor = PCI_ANY_ID, .subdevice = PCI_ANY_ID, \
-+	.driver_data = (kernel_ulong_t)&(cfg)
++	ret = clk_prepare_enable(cclk);
++	if (ret) {
++		dev_err(dev, "cannot enable core clock\n");
++		goto error_dma;
++	}
 +
- #define TOTAL_CAM_ENTRY		32
- #define CAM_CONTENT_COUNT	8
++	ret = clk_prepare_enable(iclk);
++	if (ret) {
++		clk_disable_unprepare(cclk);
++		dev_err(dev, "cannot enable iface clock\n");
++		goto error_dma;
++	}
++
+ 	iomode = readl_relaxed(base + QUP_IO_M_MODES);
  
+ 	size = QUP_IO_M_OUTPUT_BLOCK_SIZE(iomode);
+@@ -1094,7 +1092,7 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 	ret = spi_qup_set_state(controller, QUP_STATE_RESET);
+ 	if (ret) {
+ 		dev_err(dev, "cannot set RESET state\n");
+-		goto error_dma;
++		goto error_clk;
+ 	}
+ 
+ 	writel_relaxed(0, base + QUP_OPERATIONAL);
+@@ -1118,7 +1116,7 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 	ret = devm_request_irq(dev, irq, spi_qup_qup_irq,
+ 			       IRQF_TRIGGER_HIGH, pdev->name, controller);
+ 	if (ret)
+-		goto error_dma;
++		goto error_clk;
+ 
+ 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
+ 	pm_runtime_use_autosuspend(dev);
+@@ -1133,11 +1131,12 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 
+ disable_pm:
+ 	pm_runtime_disable(&pdev->dev);
++error_clk:
++	clk_disable_unprepare(cclk);
++	clk_disable_unprepare(iclk);
+ error_dma:
+ 	spi_qup_release_dma(master);
+ error:
+-	clk_disable_unprepare(cclk);
+-	clk_disable_unprepare(iclk);
+ 	spi_master_put(master);
+ 	return ret;
+ }
+-- 
+2.39.2
+
 
 
