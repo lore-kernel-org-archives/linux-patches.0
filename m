@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7194F19531
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52DCC433D2;
-	Mon, 12 Jun 2023 10:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0951519523
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8449AC433EF;
+	Mon, 12 Jun 2023 10:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565910;
-	bh=OZbe/Cq7omvPd1un4y5/vDe2jgq1Pve2H9PXDZsWSk0=;
+	s=korg; t=1686565912;
+	bh=DYFhqVohNDLi4aW1HLIDStGyfnABCNRW6+o2Z1Q3Lxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NUHHXfAdVtV0ky2XeOJQFGn2DyPbXnGMGOad+8pEvdrYSM3OFz4kh+Nr7Mopq4aaM
-	 9lqrkuCpdVRbycUUNToIQ2CmMWYGsmDzbqnUK7k07xg2TKbczzcGjXsSy5ct7NNm9v
-	 cUdgNQc/QdF3CcdGMRfFImI7g0/WCsX3a1IM3dds=
+	b=SCq6TwuGnJ201VNgGqq9LQHbAz9Iiw8TRfYH/srfcVgZ1W2sOPj7r6xpo5KF9PYZk
+	 ziruvSyu/EVuaUIBmXdJGTTwasNCLlwkNsMEkHGEBCHbz71DvcanCEu2c3PwMrxFy3
+	 GRM/MtqO8ADOUzmtR2nf8og+9BATImAyueK4QAI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 37/45] ext4: only check dquot_initialize_needed() when debugging
-Date: Mon, 12 Jun 2023 12:26:31 +0200
-Message-ID: <20230612101656.174786844@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Aurelien Aptel <aaptel@suse.com>,
+	Steve French <stfrench@microsoft.com>,
+	Rishabh Bhatnagar <risbhat@amazon.com>
+Subject: [PATCH 5.4 38/45] cifs: get rid of unused parameter in reconn_setup_dfs_targets()
+Date: Mon, 12 Jun 2023 12:26:32 +0200
+Message-ID: <20230612101656.210793408@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -33,47 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Paulo Alcantara <pc@cjr.nz>
 
-commit dea9d8f7643fab07bf89a1155f1f94f37d096a5e upstream.
+commit baf3f08ef4083b76ca67b143e135213a7f941879 upstream.
 
-ext4_xattr_block_set() relies on its caller to call dquot_initialize()
-on the inode.  To assure that this has happened there are WARN_ON
-checks.  Unfortunately, this is subject to false positives if there is
-an antagonist thread which is flipping the file system at high rates
-between r/o and rw.  So only do the check if EXT4_XATTR_DEBUG is
-enabled.
+The target iterator parameter "it" is not used in
+reconn_setup_dfs_targets(), so just remove it.
 
-Link: https://lore.kernel.org/r/20230608044056.GA1418535@mit.edu
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Reviewed-by: Aurelien Aptel <aaptel@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Rishabh Bhatnagar <risbhat@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/cifs/connect.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -2016,8 +2016,9 @@ inserted:
- 			else {
- 				u32 ref;
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -469,8 +469,7 @@ static void reconn_inval_dfs_target(stru
+ }
  
-+#ifdef EXT4_XATTR_DEBUG
- 				WARN_ON_ONCE(dquot_initialize_needed(inode));
--
-+#endif
- 				/* The old block is released after updating
- 				   the inode. */
- 				error = dquot_alloc_block(inode,
-@@ -2079,8 +2080,9 @@ inserted:
- 			/* We need to allocate a new block */
- 			ext4_fsblk_t goal, block;
+ static inline int reconn_setup_dfs_targets(struct cifs_sb_info *cifs_sb,
+-					   struct dfs_cache_tgt_list *tl,
+-					   struct dfs_cache_tgt_iterator **it)
++					   struct dfs_cache_tgt_list *tl)
+ {
+ 	if (!cifs_sb->origin_fullpath)
+ 		return -EOPNOTSUPP;
+@@ -515,7 +514,7 @@ cifs_reconnect(struct TCP_Server_Info *s
+ 	} else {
+ 		cifs_sb = CIFS_SB(sb);
  
-+#ifdef EXT4_XATTR_DEBUG
- 			WARN_ON_ONCE(dquot_initialize_needed(inode));
--
-+#endif
- 			goal = ext4_group_first_block_no(sb,
- 						EXT4_I(inode)->i_block_group);
- 			block = ext4_new_meta_blocks(handle, inode, goal, 0,
+-		rc = reconn_setup_dfs_targets(cifs_sb, &tgt_list, &tgt_it);
++		rc = reconn_setup_dfs_targets(cifs_sb, &tgt_list);
+ 		if (rc && (rc != -EOPNOTSUPP)) {
+ 			cifs_server_dbg(VFS, "%s: no target servers for DFS failover\n",
+ 				 __func__);
 
 
