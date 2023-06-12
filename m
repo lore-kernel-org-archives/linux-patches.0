@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB67513AEB
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CC5C433D2;
-	Mon, 12 Jun 2023 10:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC2813AEB
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72A3C4339B;
+	Mon, 12 Jun 2023 10:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567103;
-	bh=MMy9Buj9E2uz57uhjwsO0fEk35IQe12oumUjy85CqYw=;
+	s=korg; t=1686567106;
+	bh=HE7QFaWORdYoc1/quui3z8A7eoIjjg4kGhVF8MzgB3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JX8mhR9cAWLKahShGc8IJF53LhtCaRPSxH7V8esXV5z9xQtZxA9LhVCs8a9Dsl7rP
-	 M5EcEJNW4HWwbrDs0uniwykIRKxfYGvkHrJA6/VfRLAHFkT0gyZz/KpIXaJ7u40uxR
-	 CNcEVbhxhPxKi7SotTyD8dPDnpNe2v3vLGKQ46HQ=
+	b=M3whmZL/cLNp1qqldYqsqX6GrSyA1fm5/U4kuLiQzILhereWem9TaE87AhODPes9f
+	 hWTz2cJS5LjBY0wEu/ayOmEqOfuPrxbA6VQQHXww+Ah1PqI0/182MnWsPDLa3CMWiq
+	 PMs58kaTR30oGK//1S2jrNFbnwr+OhCfdWHh4EvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Yen Chang <cc85nod@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 152/160] ksmbd: check the validation of pdu_size in ksmbd_conn_handler_loop
-Date: Mon, 12 Jun 2023 12:28:04 +0200
-Message-ID: <20230612101722.027209670@linuxfoundation.org>
+	syzbot+690b90b14f14f43f4688@syzkaller.appspotmail.com,
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	syzbot+8bb72f86fc823817bc5d@syzkaller.appspotmail.com
+Subject: [PATCH 6.3 153/160] Bluetooth: Fix potential double free caused by hci_conn_unlink
+Date: Mon, 12 Jun 2023 12:28:05 +0200
+Message-ID: <20230612101722.073285238@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,73 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-commit 368ba06881c395f1c9a7ba22203cf8d78b4addc0 upstream.
+commit ca1fd42e7dbfcb34890ffbf1f2f4b356776dab6f upstream.
 
-The length field of netbios header must be greater than the SMB header
-sizes(smb1 or smb2 header), otherwise the packet is an invalid SMB packet.
+The hci_conn_unlink function is being called by hci_conn_del, which
+means it should not call hci_conn_del with the input parameter conn
+again. If it does, conn may have already been released when
+hci_conn_unlink returns, leading to potential UAF and double-free
+issues.
 
-If `pdu_size` is 0, ksmbd allocates a 4 bytes chunk to `conn->request_buf`.
-In the function `get_smb2_cmd_val` ksmbd will read cmd from
-`rcv_hdr->Command`, which is `conn->request_buf + 12`, causing the KASAN
-detector to print the following error message:
+This patch resolves the problem by modifying hci_conn_unlink to release
+only conn's child links when necessary, but never release conn itself.
 
-[    7.205018] BUG: KASAN: slab-out-of-bounds in get_smb2_cmd_val+0x45/0x60
-[    7.205423] Read of size 2 at addr ffff8880062d8b50 by task ksmbd:42632/248
-...
-[    7.207125]  <TASK>
-[    7.209191]  get_smb2_cmd_val+0x45/0x60
-[    7.209426]  ksmbd_conn_enqueue_request+0x3a/0x100
-[    7.209712]  ksmbd_server_process_request+0x72/0x160
-[    7.210295]  ksmbd_conn_handler_loop+0x30c/0x550
-[    7.212280]  kthread+0x160/0x190
-[    7.212762]  ret_from_fork+0x1f/0x30
-[    7.212981]  </TASK>
-
-Cc: stable@vger.kernel.org
-Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: syzbot+690b90b14f14f43f4688@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-bluetooth/000000000000484a8205faafe216@google.com/
+Fixes: 06149746e720 ("Bluetooth: hci_conn: Add support for linking multiple hcon")
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: syzbot+690b90b14f14f43f4688@syzkaller.appspotmail.com
+Reported-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Reported-by: syzbot+8bb72f86fc823817bc5d@syzkaller.appspotmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/bluetooth/hci_conn.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -294,6 +294,9 @@ bool ksmbd_conn_alive(struct ksmbd_conn
- 	return true;
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1088,8 +1088,18 @@ static void hci_conn_unlink(struct hci_c
+ 	if (!conn->parent) {
+ 		struct hci_link *link, *t;
+ 
+-		list_for_each_entry_safe(link, t, &conn->link_list, list)
+-			hci_conn_unlink(link->conn);
++		list_for_each_entry_safe(link, t, &conn->link_list, list) {
++			struct hci_conn *child = link->conn;
++
++			hci_conn_unlink(child);
++
++			/* Due to race, SCO connection might be not established
++			 * yet at this point. Delete it now, otherwise it is
++			 * possible for it to be stuck and can't be deleted.
++			 */
++			if (child->handle == HCI_CONN_HANDLE_UNSET)
++				hci_conn_del(child);
++		}
+ 
+ 		return;
+ 	}
+@@ -1105,13 +1115,6 @@ static void hci_conn_unlink(struct hci_c
+ 
+ 	kfree(conn->link);
+ 	conn->link = NULL;
+-
+-	/* Due to race, SCO connection might be not established
+-	 * yet at this point. Delete it now, otherwise it is
+-	 * possible for it to be stuck and can't be deleted.
+-	 */
+-	if (conn->handle == HCI_CONN_HANDLE_UNSET)
+-		hci_conn_del(conn);
  }
  
-+#define SMB1_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb_hdr))
-+#define SMB2_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb2_hdr) + 4)
-+
- /**
-  * ksmbd_conn_handler_loop() - session thread to listen on new smb requests
-  * @p:		connection instance
-@@ -350,6 +353,9 @@ int ksmbd_conn_handler_loop(void *p)
- 		if (pdu_size > MAX_STREAM_PROT_LEN)
- 			break;
- 
-+		if (pdu_size < SMB1_MIN_SUPPORTED_HEADER_SIZE)
-+			break;
-+
- 		/* 4 for rfc1002 length field */
- 		/* 1 for implied bcc[0] */
- 		size = pdu_size + 4 + 1;
-@@ -377,6 +383,12 @@ int ksmbd_conn_handler_loop(void *p)
- 			continue;
- 		}
- 
-+		if (((struct smb2_hdr *)smb2_get_msg(conn->request_buf))->ProtocolId ==
-+		    SMB2_PROTO_NUMBER) {
-+			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
-+				break;
-+		}
-+
- 		if (!default_conn_ops.process_fn) {
- 			pr_err("No connection request callback\n");
- 			break;
+ int hci_conn_del(struct hci_conn *conn)
 
 
