@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1444134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BF0C433EF;
-	Mon, 12 Jun 2023 10:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDDD134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CECC433D2;
+	Mon, 12 Jun 2023 10:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566721;
-	bh=KHfzcW6FburDT/3HJCcpJL2xDBaZELlfdehWNW3jG+w=;
+	s=korg; t=1686566724;
+	bh=ibt+xPjHXkzCPoRIhuuj2GUWRMZk+hsKwYw3AjyAOYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMJq5u5qyFhQB2bp9FnvKUcuz0AYa8jz6Wm4wrczHsl4PCoH30sSjl85CvCO3+3Mf
-	 71+j8D7R1HJdOGck4jj6AXv3y8q5/Wg5L8BIZtqJ2iJz+FT0F3oSCwIO0EkUsNzMnM
-	 YT2JjpbVm4iyaee2C9lAuyQ/w8EZL2Fhzq3xP6uw=
+	b=GNiOHfC/kixJHJkm4de5f6LT9yZM8uS04p6KK0OIJCSjyy1uZ0tAEgrZRkzjVdRwL
+	 CcO5yhkpd7JBtr9qxKnD20FkqdPm8N2JUd3g1nur9fzknzmrSyo8NQkW1vAw3wjtlr
+	 OSQMmT/XHy0W8313NJStlkwCtcZWV5U9Tzg4HgIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Philipp Hortmann <philipp.g.hortmann@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 132/132] Revert "staging: rtl8192e: Replace macro RTL_PCI_DEVICE with PCI_DEVICE"
-Date: Mon, 12 Jun 2023 12:27:46 +0200
-Message-ID: <20230612101716.189475546@linuxfoundation.org>
+	Chih-Yen Chang <cc85nod@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 127/132] ksmbd: check the validation of pdu_size in ksmbd_conn_handler_loop
+Date: Mon, 12 Jun 2023 12:27:41 +0200
+Message-ID: <20230612101715.982275996@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,53 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-This reverts commit ec310591cf839653a5b2c1fcf6b8a110c3f2485c which is
-commit fda2093860df4812d69052a8cf4997e53853a340 upstream.
+commit 368ba06881c395f1c9a7ba22203cf8d78b4addc0 upstream.
 
-Ben reports that this should not have been backported to the older
-kernels as the rest of the macro is not empty.  It was a clean-up patch
-in 6.4-rc1 only, it did not add new device ids.
+The length field of netbios header must be greater than the SMB header
+sizes(smb1 or smb2 header), otherwise the packet is an invalid SMB packet.
 
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Cc: Philipp Hortmann <philipp.g.hortmann@gmail.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Link: https://lore.kernel.org/r/aa0d401a7f63448cd4c2fe4a2d7e8495d9aa123e.camel@decadent.org.uk
+If `pdu_size` is 0, ksmbd allocates a 4 bytes chunk to `conn->request_buf`.
+In the function `get_smb2_cmd_val` ksmbd will read cmd from
+`rcv_hdr->Command`, which is `conn->request_buf + 12`, causing the KASAN
+detector to print the following error message:
+
+[    7.205018] BUG: KASAN: slab-out-of-bounds in get_smb2_cmd_val+0x45/0x60
+[    7.205423] Read of size 2 at addr ffff8880062d8b50 by task ksmbd:42632/248
+...
+[    7.207125]  <TASK>
+[    7.209191]  get_smb2_cmd_val+0x45/0x60
+[    7.209426]  ksmbd_conn_enqueue_request+0x3a/0x100
+[    7.209712]  ksmbd_server_process_request+0x72/0x160
+[    7.210295]  ksmbd_conn_handler_loop+0x30c/0x550
+[    7.212280]  kthread+0x160/0x190
+[    7.212762]  ret_from_fork+0x1f/0x30
+[    7.212981]  </TASK>
+
+Cc: stable@vger.kernel.org
+Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.c |    6 +++---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.h |    5 +++++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ fs/ksmbd/connection.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-@@ -48,9 +48,9 @@ static const struct rtl819x_ops rtl819xp
- };
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -296,6 +296,9 @@ bool ksmbd_conn_alive(struct ksmbd_conn
+ 	return true;
+ }
  
- static struct pci_device_id rtl8192_pci_id_tbl[] = {
--	{PCI_DEVICE(0x10ec, 0x8192)},
--	{PCI_DEVICE(0x07aa, 0x0044)},
--	{PCI_DEVICE(0x07aa, 0x0047)},
-+	{RTL_PCI_DEVICE(0x10ec, 0x8192, rtl819xp_ops)},
-+	{RTL_PCI_DEVICE(0x07aa, 0x0044, rtl819xp_ops)},
-+	{RTL_PCI_DEVICE(0x07aa, 0x0047, rtl819xp_ops)},
- 	{}
- };
- 
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-@@ -55,6 +55,11 @@
- #define IS_HARDWARE_TYPE_8192SE(_priv)		\
- 	(((struct r8192_priv *)rtllib_priv(dev))->card_8192 == NIC_8192SE)
- 
-+#define RTL_PCI_DEVICE(vend, dev, cfg) \
-+	.vendor = (vend), .device = (dev), \
-+	.subvendor = PCI_ANY_ID, .subdevice = PCI_ANY_ID, \
-+	.driver_data = (kernel_ulong_t)&(cfg)
++#define SMB1_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb_hdr))
++#define SMB2_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb2_hdr) + 4)
 +
- #define TOTAL_CAM_ENTRY		32
- #define CAM_CONTENT_COUNT	8
+ /**
+  * ksmbd_conn_handler_loop() - session thread to listen on new smb requests
+  * @p:		connection instance
+@@ -352,6 +355,9 @@ int ksmbd_conn_handler_loop(void *p)
+ 		if (pdu_size > MAX_STREAM_PROT_LEN)
+ 			break;
  
++		if (pdu_size < SMB1_MIN_SUPPORTED_HEADER_SIZE)
++			break;
++
+ 		/* 4 for rfc1002 length field */
+ 		/* 1 for implied bcc[0] */
+ 		size = pdu_size + 4 + 1;
+@@ -379,6 +385,12 @@ int ksmbd_conn_handler_loop(void *p)
+ 			continue;
+ 		}
+ 
++		if (((struct smb2_hdr *)smb2_get_msg(conn->request_buf))->ProtocolId ==
++		    SMB2_PROTO_NUMBER) {
++			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
++				break;
++		}
++
+ 		if (!default_conn_ops.process_fn) {
+ 			pr_err("No connection request callback\n");
+ 			break;
 
 
