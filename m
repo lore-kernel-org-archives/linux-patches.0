@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200AD1990E
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9961BC433D2;
-	Mon, 12 Jun 2023 10:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7904156CD
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C62C433D2;
+	Mon, 12 Jun 2023 10:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565894;
-	bh=kusRSPmqog5xyUNDr/Mj7t/OckoBIn9jHL5y5Qyq+Sc=;
+	s=korg; t=1686565896;
+	bh=RhGpgNGMy5hionLSoLSxdarQOgYaH6g0SIX4sHDx55E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGu9p3LDAEsIhQcTbnTe+ju+RrJoB/kmyVc5DmRCzuE5C0wlf/CyUsPQexlPwWRre
-	 t5l5+JdeQy9rnBKRoOaXs8zK2PB/evzHTS7UfXEclLhZdCpojKT98d76dToKoi87CW
-	 9p3MnxcLgvEvSSeE96ZOrnb1PaP4yUrO7K3WlHz8=
+	b=W6HfdmJAgC4xjdiOgyej0L9LLJ/961jvUf13g5+VAdbZo6eNoCsBAwATqaWnmg5cA
+	 mNKtY7I9ebP4lkwMZPdQ7I7fz/5ISb/wBi2a5tnyF41+lV+fxdxsUxqkaTs8N6cycg
+	 n5dS9cIE29pfcpy8nDugBgVL7ov/QfoD6MH3HUas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 14/45] rfs: annotate lockless accesses to RFS sock flow table
-Date: Mon, 12 Jun 2023 12:26:08 +0200
-Message-ID: <20230612101655.231641443@linuxfoundation.org>
+	syzbot+fcf1a817ceb50935ce99@syzkaller.appspotmail.comm,
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.4 32/45] usb: usbfs: Enforce page requirements for mmap
+Date: Mon, 12 Jun 2023 12:26:26 +0200
+Message-ID: <20230612101655.957855054@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -37,67 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-[ Upstream commit 5c3b74a92aa285a3df722bf6329ba7ccf70346d6 ]
+commit 0143d148d1e882fb1538dc9974c94d63961719b9 upstream.
 
-Add READ_ONCE()/WRITE_ONCE() on accesses to the sock flow table.
+The current implementation of usbdev_mmap uses usb_alloc_coherent to
+allocate memory pages that will later be mapped into the user space.
+Meanwhile, usb_alloc_coherent employs three different methods to
+allocate memory, as outlined below:
+ * If hcd->localmem_pool is non-null, it uses gen_pool_dma_alloc to
+   allocate memory;
+ * If DMA is not available, it uses kmalloc to allocate memory;
+ * Otherwise, it uses dma_alloc_coherent.
 
-This also prevents a (smart ?) compiler to remove the condition in:
+However, it should be noted that gen_pool_dma_alloc does not guarantee
+that the resulting memory will be page-aligned. Furthermore, trying to
+map slab pages (i.e., memory allocated by kmalloc) into the user space
+is not resonable and can lead to problems, such as a type confusion bug
+when PAGE_TABLE_CHECK=y [1].
 
-if (table->ents[index] != newval)
-        table->ents[index] = newval;
+To address these issues, this patch introduces hcd_alloc_coherent_pages,
+which addresses the above two problems. Specifically,
+hcd_alloc_coherent_pages uses gen_pool_dma_alloc_align instead of
+gen_pool_dma_alloc to ensure that the memory is page-aligned. To replace
+kmalloc, hcd_alloc_coherent_pages directly allocates pages by calling
+__get_free_pages.
 
-We need the condition to avoid dirtying a shared cache line.
-
-Fixes: fec5e652e58f ("rfs: Receive Flow Steering")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+fcf1a817ceb50935ce99@syzkaller.appspotmail.comm
+Closes: https://lore.kernel.org/lkml/000000000000258e5e05fae79fc1@google.com/ [1]
+Fixes: f7d34b445abc ("USB: Add support for usbfs zerocopy.")
+Fixes: ff2437befd8f ("usb: host: Fix excessive alignment restriction for local memory allocations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20230515130958.32471-2-lrh2000@pku.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/netdevice.h | 7 +++++--
- net/core/dev.c            | 6 ++++--
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/usb/core/buffer.c |   41 +++++++++++++++++++++++++++++++++++++++++
+ drivers/usb/core/devio.c  |    9 +++++----
+ include/linux/usb/hcd.h   |    5 +++++
+ 3 files changed, 51 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 125542f305fad..f6a5a866ea70b 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -732,8 +732,11 @@ static inline void rps_record_sock_flow(struct rps_sock_flow_table *table,
- 		/* We only give a hint, preemption can change CPU under us */
- 		val |= raw_smp_processor_id();
- 
--		if (table->ents[index] != val)
--			table->ents[index] = val;
-+		/* The following WRITE_ONCE() is paired with the READ_ONCE()
-+		 * here, and another one in get_rps_cpu().
-+		 */
-+		if (READ_ONCE(table->ents[index]) != val)
-+			WRITE_ONCE(table->ents[index], val);
+--- a/drivers/usb/core/buffer.c
++++ b/drivers/usb/core/buffer.c
+@@ -170,3 +170,44 @@ void hcd_buffer_free(
  	}
+ 	dma_free_coherent(hcd->self.sysdev, size, addr, dma);
  }
++
++void *hcd_buffer_alloc_pages(struct usb_hcd *hcd,
++		size_t size, gfp_t mem_flags, dma_addr_t *dma)
++{
++	if (size == 0)
++		return NULL;
++
++	if (hcd->localmem_pool)
++		return gen_pool_dma_alloc_align(hcd->localmem_pool,
++				size, dma, PAGE_SIZE);
++
++	/* some USB hosts just use PIO */
++	if (!hcd_uses_dma(hcd)) {
++		*dma = DMA_MAPPING_ERROR;
++		return (void *)__get_free_pages(mem_flags,
++				get_order(size));
++	}
++
++	return dma_alloc_coherent(hcd->self.sysdev,
++			size, dma, mem_flags);
++}
++
++void hcd_buffer_free_pages(struct usb_hcd *hcd,
++		size_t size, void *addr, dma_addr_t dma)
++{
++	if (!addr)
++		return;
++
++	if (hcd->localmem_pool) {
++		gen_pool_free(hcd->localmem_pool,
++				(unsigned long)addr, size);
++		return;
++	}
++
++	if (!hcd_uses_dma(hcd)) {
++		free_pages((unsigned long)addr, get_order(size));
++		return;
++	}
++
++	dma_free_coherent(hcd->self.sysdev, size, addr, dma);
++}
+--- a/drivers/usb/core/devio.c
++++ b/drivers/usb/core/devio.c
+@@ -173,6 +173,7 @@ static int connected(struct usb_dev_stat
+ static void dec_usb_memory_use_count(struct usb_memory *usbm, int *count)
+ {
+ 	struct usb_dev_state *ps = usbm->ps;
++	struct usb_hcd *hcd = bus_to_hcd(ps->dev->bus);
+ 	unsigned long flags;
  
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 0cc0809628b08..92ae373475c9a 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -4002,8 +4002,10 @@ static int get_rps_cpu(struct net_device *dev, struct sk_buff *skb,
- 		u32 next_cpu;
- 		u32 ident;
+ 	spin_lock_irqsave(&ps->lock, flags);
+@@ -181,8 +182,8 @@ static void dec_usb_memory_use_count(str
+ 		list_del(&usbm->memlist);
+ 		spin_unlock_irqrestore(&ps->lock, flags);
  
--		/* First check into global flow table if there is a match */
--		ident = sock_flow_table->ents[hash & sock_flow_table->mask];
-+		/* First check into global flow table if there is a match.
-+		 * This READ_ONCE() pairs with WRITE_ONCE() from rps_record_sock_flow().
-+		 */
-+		ident = READ_ONCE(sock_flow_table->ents[hash & sock_flow_table->mask]);
- 		if ((ident ^ hash) & ~rps_cpu_mask)
- 			goto try_rps;
+-		usb_free_coherent(ps->dev, usbm->size, usbm->mem,
+-				usbm->dma_handle);
++		hcd_buffer_free_pages(hcd, usbm->size,
++				usbm->mem, usbm->dma_handle);
+ 		usbfs_decrease_memory_usage(
+ 			usbm->size + sizeof(struct usb_memory));
+ 		kfree(usbm);
+@@ -234,8 +235,8 @@ static int usbdev_mmap(struct file *file
+ 		goto error_decrease_mem;
+ 	}
  
--- 
-2.39.2
-
+-	mem = usb_alloc_coherent(ps->dev, size, GFP_USER | __GFP_NOWARN,
+-			&dma_handle);
++	mem = hcd_buffer_alloc_pages(hcd,
++			size, GFP_USER | __GFP_NOWARN, &dma_handle);
+ 	if (!mem) {
+ 		ret = -ENOMEM;
+ 		goto error_free_usbm;
+--- a/include/linux/usb/hcd.h
++++ b/include/linux/usb/hcd.h
+@@ -503,6 +503,11 @@ void *hcd_buffer_alloc(struct usb_bus *b
+ void hcd_buffer_free(struct usb_bus *bus, size_t size,
+ 	void *addr, dma_addr_t dma);
+ 
++void *hcd_buffer_alloc_pages(struct usb_hcd *hcd,
++		size_t size, gfp_t mem_flags, dma_addr_t *dma);
++void hcd_buffer_free_pages(struct usb_hcd *hcd,
++		size_t size, void *addr, dma_addr_t dma);
++
+ /* generic bus glue, needed for host controllers that don't use PCI */
+ extern irqreturn_t usb_hcd_irq(int irq, void *__hcd);
+ 
 
 
