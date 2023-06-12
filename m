@@ -1,52 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DFA19BB1
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 18:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8623CC433D2;
-	Mon, 12 Jun 2023 18:13:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686593622;
-	bh=0vMAS5XT6J0YOY/P6/h4ZZSt7CogaFpg8bXoq4Ri2nQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hiPfxUYP14W7ult6tJFHOYve3cAaGvoH4MbQ6X7FimDYlIAE6iKbOBu1nMmw2KZMf
-	 FTf479bDppoh1uIYm52UDLE+SSI+khzGEAHK7art2f8oni/DvMdZimpoTCVjyyvBqs
-	 UuM9kv4uUbF9MQ8yUjR0f+DjRkHB+smcRzkpsGgo=
-Date: Mon, 12 Jun 2023 20:13:39 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pavel Machek <pavel@denx.de>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/132] 6.1.34-rc1 review
-Message-ID: <2023061224-bubble-violator-ef08@gregkh>
-References: <20230612101710.279705932@linuxfoundation.org>
- <ZIde9VarEXi/BkzI@duo.ucw.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A89B21CE1
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 18:23:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B7CC433D2;
+	Mon, 12 Jun 2023 18:23:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1686594214;
+	bh=0ia4DOXRQlpxbsvixuJZP92w3Mu5z3zc9q4s1AOUnDc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=iQqK/iw2pw+Igfn7d9j8xQ8+HbK07/0/uCJLT6erT9jqHOqpdOn9NLk+g8CuYNCIp
+	 zRILIyb9jt7Um7NA0jf1/018qJ4cHKP1K1XrZ0Bkgo/LsXFh9e0Uvq+r19R+DXvCup
+	 Dlcnn1YvVWcA2gELwVl+8UOR4Ha3nbFT1G5z2KMXTcqYdypN1w06bu4jkz/HXT+8bh
+	 UbUnn6HR8NBceZEsdxxBIOr06jf6DxbTAUE8ggsN3wHzYYBRY8mvHuHSLYB1DjqtDf
+	 9qxjQrPiAmiq+t55MDSRr7UVJm2Yew0Zu7NhzEaNSwwz5YDeWt5UcMFZZNcKZCMIIH
+	 5lpIh0hQ4acuA==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	Jian Hu <jian.hu@amlogic.com>,
+	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>
+Subject: [PATCH] clk: meson: a1: Staticize rtc clk
+Date: Mon, 12 Jun 2023 11:23:32 -0700
+Message-ID: <20230612182332.371003-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZIde9VarEXi/BkzI@duo.ucw.cz>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jun 12, 2023 at 08:07:49PM +0200, Pavel Machek wrote:
-> Hi!
-> 
-> > This is the start of the stable review cycle for the 6.1.34 release.
-> > There are 132 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> 
-> I notice that origin/queue/6.1 was not updated. Is that an oversight?
-> It was quite useful to see what is coming.
+Sparse rightly complains that this symbol is supposed to be static.
 
-I have no idea what creates that branch, sorry, it's nothing that I do
-on my end.
+Cc: Jian Hu <jian.hu@amlogic.com>
+Cc: Dmitry Rokosov <ddrokosov@sberdevices.ru>
+Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Cc: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: 84af914404db ("clk: meson: a1: add Amlogic A1 Peripherals clock controller driver")
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/clk/meson/a1-peripherals.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-greg k-h
+diff --git a/drivers/clk/meson/a1-peripherals.c b/drivers/clk/meson/a1-peripherals.c
+index b320134fefeb..75dfae210fe5 100644
+--- a/drivers/clk/meson/a1-peripherals.c
++++ b/drivers/clk/meson/a1-peripherals.c
+@@ -218,7 +218,7 @@ static struct clk_regmap rtc_32k_sel = {
+ 	},
+ };
+ 
+-struct clk_regmap rtc = {
++static struct clk_regmap rtc = {
+ 	.data = &(struct clk_regmap_gate_data){
+ 		.offset = RTC_BY_OSCIN_CTRL0,
+ 		.bit_idx = 30,
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
