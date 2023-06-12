@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BEA19503
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:34:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20679C433D2;
-	Mon, 12 Jun 2023 10:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E35B171BB
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:34:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A799BC433D2;
+	Mon, 12 Jun 2023 10:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566080;
-	bh=XsKyawLmBz3Db+v60Vq7hakm0USK2aN7e1Qm5x0KWEg=;
+	s=korg; t=1686566083;
+	bh=RPXAC4Lelcc4Sea6c6i2iBwEgOdEE2D29P4NRByblag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VlbWuVfxZYcllPvCou+ZI2P/jPaPdJZih00X3kHFtitPxRkwq/W+thuEm3BhhJkRU
-	 HsEG6xMqkrFr9jZbNzXWPkI/f0qyfMbePrfnu3RPF2eUizU+eF1g6oPn+4L7bI3ep3
-	 jKe1miYpD4sjpUJ5X54HZOZ0lYEumZNhMmH+YYRM=
+	b=dPsSEeDsvVomtrQv08y+7faI4t5sRXpzZNxexxKKfFCU3Btrhj0DR2OANsja1vHQ1
+	 LiiKv+y4GUcPcaNIpLBocOhrrwzbrwncv+jb4+JD31099XICdWQNV9BmviZZsaDU9g
+	 NVMpZ5X7r831I5DWlU4O8sQFlQrocYIgAja+X9Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Ruan Jinjie <ruanjinjie@huawei.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 57/68] eeprom: at24: also select REGMAP
-Date: Mon, 12 Jun 2023 12:26:49 +0200
-Message-ID: <20230612101700.806374560@linuxfoundation.org>
+Subject: [PATCH 5.10 58/68] riscv: fix kprobe __user string arg print fault issue
+Date: Mon, 12 Jun 2023 12:26:50 +0200
+Message-ID: <20230612101700.851442257@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -35,47 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Ruan Jinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 7f3c782b3914e510b646a77aedc3adeac2e4a63b ]
+[ Upstream commit 99a670b2069c725a7b50318aa681d9cae8f89325 ]
 
-Selecting only REGMAP_I2C can leave REGMAP unset, causing build errors,
-so also select REGMAP to prevent the build errors.
+On riscv qemu platform, when add kprobe event on do_sys_open() to show
+filename string arg, it just print fault as follow:
 
-../drivers/misc/eeprom/at24.c:540:42: warning: 'struct regmap_config' declared inside parameter list will not be visible outside of this definition or declaration
-  540 |                                   struct regmap_config *regmap_config)
-../drivers/misc/eeprom/at24.c: In function 'at24_make_dummy_client':
-../drivers/misc/eeprom/at24.c:552:18: error: implicit declaration of function 'devm_regmap_init_i2c' [-Werror=implicit-function-declaration]
-  552 |         regmap = devm_regmap_init_i2c(dummy_client, regmap_config);
-../drivers/misc/eeprom/at24.c:552:16: warning: assignment to 'struct regmap *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-  552 |         regmap = devm_regmap_init_i2c(dummy_client, regmap_config);
-../drivers/misc/eeprom/at24.c: In function 'at24_probe':
-../drivers/misc/eeprom/at24.c:586:16: error: variable 'regmap_config' has initializer but incomplete type
-  586 |         struct regmap_config regmap_config = { };
-../drivers/misc/eeprom/at24.c:586:30: error: storage size of 'regmap_config' isn't known
-  586 |         struct regmap_config regmap_config = { };
-../drivers/misc/eeprom/at24.c:586:30: warning: unused variable 'regmap_config' [-Wunused-variable]
+echo 'p:myprobe do_sys_open dfd=$arg1 filename=+0($arg2):string flags=$arg3
+mode=$arg4' > kprobe_events
 
-Fixes: 5c015258478e ("eeprom: at24: add basic regmap_i2c support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+bash-166     [000] ...1.   360.195367: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename=(fault) flags=0x8241 mode=0x1b6
+
+bash-166     [000] ...1.   360.219369: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename=(fault) flags=0x8241 mode=0x1b6
+
+bash-191     [000] ...1.   360.378827: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename=(fault) flags=0x98800 mode=0x0
+
+As riscv do not select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE,
+the +0($arg2) addr is processed as a kernel address though it is a
+userspace address, cause the above filename=(fault) print. So select
+ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE to avoid the issue, after that the
+kprobe trace is ok as below:
+
+bash-166     [000] ...1.    96.767641: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename="/dev/null" flags=0x8241 mode=0x1b6
+
+bash-166     [000] ...1.    96.793751: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename="/dev/null" flags=0x8241 mode=0x1b6
+
+bash-177     [000] ...1.    96.962354: myprobe: (do_sys_open+0x0/0x84)
+dfd=0xffffffffffffff9c filename="/sys/kernel/debug/tracing/events/kprobes/"
+flags=0x98800 mode=0x0
+
+Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
+Acked-by: Björn Töpel <bjorn@rivosinc.com>
+Fixes: 0ebeea8ca8a4 ("bpf: Restrict bpf_probe_read{, str}() only to archs where they work")
+Link: https://lore.kernel.org/r/20230504072910.3742842-1-ruanjinjie@huawei.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/eeprom/Kconfig | 1 +
+ arch/riscv/Kconfig | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/misc/eeprom/Kconfig b/drivers/misc/eeprom/Kconfig
-index 0f791bfdc1f58..c92f2cdf40263 100644
---- a/drivers/misc/eeprom/Kconfig
-+++ b/drivers/misc/eeprom/Kconfig
-@@ -6,6 +6,7 @@ config EEPROM_AT24
- 	depends on I2C && SYSFS
- 	select NVMEM
- 	select NVMEM_SYSFS
-+	select REGMAP
- 	select REGMAP_I2C
- 	help
- 	  Enable this driver to get read/write support to most I2C EEPROMs
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index c192bd7305dc6..b28fabfc91bf7 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -22,6 +22,7 @@ config RISCV
+ 	select ARCH_HAS_GIGANTIC_PAGE
+ 	select ARCH_HAS_KCOV
+ 	select ARCH_HAS_MMIOWB
++	select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE
+ 	select ARCH_HAS_PTE_SPECIAL
+ 	select ARCH_HAS_SET_DIRECT_MAP
+ 	select ARCH_HAS_SET_MEMORY
 -- 
 2.39.2
 
