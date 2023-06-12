@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08704D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:50:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC06C433EF;
-	Mon, 12 Jun 2023 10:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42489D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:50:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF99CC433D2;
+	Mon, 12 Jun 2023 10:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567008;
-	bh=oc32ZB1JTcluBLHraCvjWDj7/bruu9izjuB1A/JOl5Y=;
+	s=korg; t=1686567011;
+	bh=AvOYZyKuKyVMk19DnAkmmyrG01E4xSeb1CM1NCyElRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGySyadBfwqohH0tO5MAI+k7QEm5Yn+Nr8n4WCVpqVytg1flWefVKEYs2XnAz1wCL
-	 2cPjdPgBuDOfnOjlSHGb3/Z+o082gzv6jIs/9xbw+4xwdajW5uuqdDjtlxkMXQkbyk
-	 dFwCYygzBjp/eaVilAk0qg/WFX+Edddwn96zlLGw=
+	b=y+zm1LcO3Z9YEIEpulRVdIlQx9dZR3P6CgAKI1UZKuxxEHX9KkZ6q79yKLB//nE9l
+	 JSFX6BsFjh2ZWQVbmMEcqGByHbmSTQBV42kG0K6rsXED3LONGhbKafBVMKqD4RnqWa
+	 oLUZ4iW4WYNyfg9qM6RzwlkHTJA/NslZX8gRN+do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YiPeng Chai <YiPeng.Chai@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 087/160] drm/amdgpu: change reserved vram info print
-Date: Mon, 12 Jun 2023 12:26:59 +0200
-Message-ID: <20230612101718.994714342@linuxfoundation.org>
+	=?UTF-8?q?Rafael=20=C3=81vila=20de=20Esp=C3=ADndola?= <rafael@espindo.la>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.3 088/160] drm/amd: Disallow s0ix without BIOS support again
+Date: Mon, 12 Jun 2023 12:27:00 +0200
+Message-ID: <20230612101719.043775452@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,46 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YiPeng Chai <YiPeng.Chai@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit dac652220ba0e5a2ef2da2a47a60b60aea333fdb upstream.
+commit 30c3d3b70aba2464ee8c91025e91428f92464077 upstream.
 
-The link object of mgr->reserved_pages is the blocks
-variable in struct amdgpu_vram_reservation, not the
-link variable in struct drm_buddy_block.
+commit cf488dcd0ab7 ("drm/amd: Allow s0ix without BIOS support") showed
+improvements to power consumption over suspend when s0ix wasn't enabled in
+BIOS and the system didn't support S3.
 
-Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
-Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+This patch however was misguided because the reason the system didn't
+support S3 was because SMT was disabled in OEM BIOS setup.
+This prevented the BIOS from allowing S3.
+
+Also allowing GPUs to use the s2idle path actually causes problems if
+they're invoked on systems that may not support s2idle in the platform
+firmware. `systemd` has a tendency to try to use `s2idle` if `deep` fails
+for any reason, which could lead to unexpected flows.
+
+The original commit also fixed a problem during resume from suspend to idle
+without hardware support, but this is no longer necessary with commit
+ca4751866397 ("drm/amd: Don't allow s0ix on APUs older than Raven")
+
+Revert commit cf488dcd0ab7 ("drm/amd: Allow s0ix without BIOS support")
+to make it match the expected behavior again.
+
+Cc: Rafael Ávila de Espíndola <rafael@espindo.la>
+Link: https://github.com/torvalds/linux/blob/v6.1/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c#L1060
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2599
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-@@ -800,7 +800,7 @@ static void amdgpu_vram_mgr_debug(struct
- {
- 	struct amdgpu_vram_mgr *mgr = to_vram_mgr(man);
- 	struct drm_buddy *mm = &mgr->mm;
--	struct drm_buddy_block *block;
-+	struct amdgpu_vram_reservation *rsv;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -1092,16 +1092,20 @@ bool amdgpu_acpi_is_s0ix_active(struct a
+ 	 * S0ix even though the system is suspending to idle, so return false
+ 	 * in that case.
+ 	 */
+-	if (!(acpi_gbl_FADT.flags & ACPI_FADT_LOW_POWER_S0))
++	if (!(acpi_gbl_FADT.flags & ACPI_FADT_LOW_POWER_S0)) {
+ 		dev_warn_once(adev->dev,
+ 			      "Power consumption will be higher as BIOS has not been configured for suspend-to-idle.\n"
+ 			      "To use suspend-to-idle change the sleep mode in BIOS setup.\n");
++		return false;
++	}
  
- 	drm_printf(printer, "  vis usage:%llu\n",
- 		   amdgpu_vram_mgr_vis_usage(mgr));
-@@ -812,8 +812,9 @@ static void amdgpu_vram_mgr_debug(struct
- 	drm_buddy_print(mm, printer);
- 
- 	drm_printf(printer, "reserved:\n");
--	list_for_each_entry(block, &mgr->reserved_pages, link)
--		drm_buddy_block_print(mm, block, printer);
-+	list_for_each_entry(rsv, &mgr->reserved_pages, blocks)
-+		drm_printf(printer, "%#018llx-%#018llx: %llu\n",
-+			rsv->start, rsv->start + rsv->size, rsv->size);
- 	mutex_unlock(&mgr->lock);
+ #if !IS_ENABLED(CONFIG_AMD_PMC)
+ 	dev_warn_once(adev->dev,
+ 		      "Power consumption will be higher as the kernel has not been compiled with CONFIG_AMD_PMC.\n");
+-#endif /* CONFIG_AMD_PMC */
++	return false;
++#else
+ 	return true;
++#endif /* CONFIG_AMD_PMC */
  }
  
+ #endif /* CONFIG_SUSPEND */
 
 
