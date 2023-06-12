@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6317D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D86FC433EF;
-	Mon, 12 Jun 2023 10:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8667CD512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A4EC433EF;
+	Mon, 12 Jun 2023 10:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566971;
-	bh=ZWnLCg783LgU6iQ68YeUrBpMXCgjJBflXJoFsNQkXJk=;
+	s=korg; t=1686566974;
+	bh=bqUEYH8Qf7N77afHcl2OBGW1+16P+8bXBi1v0vkTLkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WapSxwkxU8ZTXA3aFUBcOIu8JEGQ0Hfs02t0PL0KAcXcpQJyBUVGdqs3KwZaGvZy6
-	 w0an4/3m8c7K74czgDS6Y+j5GYTX2VfSTB9Gb4XrEgsPYQPcJu8w+bWaOyAQScPjAI
-	 Ixa5SlT/RUVtio0YzC9ludQi/pvSB5UIeCbxfbuk=
+	b=i6wgvPzARyeUpaeUl6SdXiaT8LzPMMFyFIRq7WwciCCSxrA4jAjnWzZn7s1CIK5fm
+	 uhP1d6TFoFyg5uT+YZS4m8xcULMkSnSpjRdH2XfWL/nOZSdFxWIfkhSy2bhog9MTc7
+	 80vHutkFSKCeo5k/p5W/O6lBDs5xkCNMqX3kD4lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.3 101/160] ceph: fix use-after-free bug for inodes when flushing capsnaps
-Date: Mon, 12 Jun 2023 12:27:13 +0200
-Message-ID: <20230612101719.641658253@linuxfoundation.org>
+	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH 6.3 102/160] accel/ivpu: Do not trigger extra VPU reset if the VPU is idle
+Date: Mon, 12 Jun 2023 12:27:14 +0200
+Message-ID: <20230612101719.693367776@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,90 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
 
-commit 409e873ea3c1fd3079909718bbeb06ac1ec7f38b upstream.
+commit 9f7e3611f6c828fcb6001c39d8e7a523a4f31525 upstream.
 
-There is a race between capsnaps flush and removing the inode from
-'mdsc->snap_flush_list' list:
+Turning off the PLL and entering D0i3 will reset the VPU so
+an explicit IP reset is redundant.
+But if the VPU is active, it may interfere with PLL disabling
+and to avoid that, we have to issue an additional IP reset
+to silence the VPU before turning off the PLL.
 
-   == Thread A ==                     == Thread B ==
-ceph_queue_cap_snap()
- -> allocate 'capsnapA'
- ->ihold('&ci->vfs_inode')
- ->add 'capsnapA' to 'ci->i_cap_snaps'
- ->add 'ci' to 'mdsc->snap_flush_list'
-    ...
-   == Thread C ==
-ceph_flush_snaps()
- ->__ceph_flush_snaps()
-  ->__send_flush_snap()
-                                handle_cap_flushsnap_ack()
-                                 ->iput('&ci->vfs_inode')
-                                   this also will release 'ci'
-                                    ...
-				      == Thread D ==
-                                ceph_handle_snap()
-                                 ->flush_snaps()
-                                  ->iterate 'mdsc->snap_flush_list'
-                                   ->get the stale 'ci'
- ->remove 'ci' from                ->ihold(&ci->vfs_inode) this
-   'mdsc->snap_flush_list'           will WARNING
-
-To fix this we will increase the inode's i_count ref when adding 'ci'
-to the 'mdsc->snap_flush_list' list.
-
-[ idryomov: need_put int -> bool ]
-
-Cc: stable@vger.kernel.org
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2209299
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: a8fed6d1e0b9 ("accel/ivpu: Fix power down sequence")
+Cc: stable@vger.kernel.org # 6.3.x
+Signed-off-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230525103818.877590-1-stanislaw.gruszka@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |    6 ++++++
- fs/ceph/snap.c |    4 +++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/accel/ivpu/ivpu_hw_mtl.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1627,6 +1627,7 @@ void ceph_flush_snaps(struct ceph_inode_
- 	struct inode *inode = &ci->netfs.inode;
- 	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
- 	struct ceph_mds_session *session = NULL;
-+	bool need_put = false;
- 	int mds;
+diff --git a/drivers/accel/ivpu/ivpu_hw_mtl.c b/drivers/accel/ivpu/ivpu_hw_mtl.c
+index 382ec127be8e..156dae676967 100644
+--- a/drivers/accel/ivpu/ivpu_hw_mtl.c
++++ b/drivers/accel/ivpu/ivpu_hw_mtl.c
+@@ -754,9 +754,8 @@ static int ivpu_hw_mtl_power_down(struct ivpu_device *vdev)
+ {
+ 	int ret = 0;
  
- 	dout("ceph_flush_snaps %p\n", inode);
-@@ -1671,8 +1672,13 @@ out:
- 		ceph_put_mds_session(session);
- 	/* we flushed them all; remove this inode from the queue */
- 	spin_lock(&mdsc->snap_flush_lock);
-+	if (!list_empty(&ci->i_snap_flush_item))
-+		need_put = true;
- 	list_del_init(&ci->i_snap_flush_item);
- 	spin_unlock(&mdsc->snap_flush_lock);
-+
-+	if (need_put)
-+		iput(inode);
- }
+-	if (ivpu_hw_mtl_reset(vdev)) {
++	if (!ivpu_hw_mtl_is_idle(vdev) && ivpu_hw_mtl_reset(vdev)) {
+ 		ivpu_err(vdev, "Failed to reset the VPU\n");
+-		ret = -EIO;
+ 	}
  
- /*
---- a/fs/ceph/snap.c
-+++ b/fs/ceph/snap.c
-@@ -693,8 +693,10 @@ int __ceph_finish_cap_snap(struct ceph_i
- 	     capsnap->size);
+ 	if (ivpu_pll_disable(vdev)) {
+@@ -764,8 +763,10 @@ static int ivpu_hw_mtl_power_down(struct ivpu_device *vdev)
+ 		ret = -EIO;
+ 	}
  
- 	spin_lock(&mdsc->snap_flush_lock);
--	if (list_empty(&ci->i_snap_flush_item))
-+	if (list_empty(&ci->i_snap_flush_item)) {
-+		ihold(inode);
- 		list_add_tail(&ci->i_snap_flush_item, &mdsc->snap_flush_list);
+-	if (ivpu_hw_mtl_d0i3_enable(vdev))
+-		ivpu_warn(vdev, "Failed to enable D0I3\n");
++	if (ivpu_hw_mtl_d0i3_enable(vdev)) {
++		ivpu_err(vdev, "Failed to enter D0I3\n");
++		ret = -EIO;
 +	}
- 	spin_unlock(&mdsc->snap_flush_lock);
- 	return 1;  /* caller may want to ceph_flush_snaps */
+ 
+ 	return ret;
  }
+-- 
+2.41.0
+
 
 
