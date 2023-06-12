@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3998CD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62A5C433EF;
-	Mon, 12 Jun 2023 10:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68B8D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E518C433EF;
+	Mon, 12 Jun 2023 10:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566239;
-	bh=sUZbPLLTwnj6LZtp17YCUD22vsFIHCI+LNG3QDn+RIg=;
+	s=korg; t=1686566241;
+	bh=r2j0QI6DcKNrNxdrfEVrvBO5Hud/hbJ5kSKdzSok+OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/L2EtLbccn5bn6E6AKc0KBCQBv9iFcJC7T23vpsiRgkKb3WfLqeh/GmoicwjPxNq
-	 51NqHy66YfPAYklpOyCIBXTdb7pqu3XkAjtfqx/YMGRdWNsVxSNiOs2zkvkMS/jp+2
-	 432z8uRk+4ugd3W6tOY3cwaolbotsGD8jWk/sREE=
+	b=RAZfOiWL8mdwsJtDWZic8g5Xg8DYT+jWa5cQrKwW3dCCMrRCBDhaBC94VpMdTQPat
+	 pHVstmcYp8TnJfkQQ2+qXsQFMAa9wLg1riE4SJr6PzXHuQLkrEzeHong5pjXOoYqQG
+	 ASp55CwIdfn9uZxccpRpqkpdArP4FaVfq9w3Zaw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 40/91] net: sched: act_police: fix sparse errors in tcf_police_dump()
-Date: Mon, 12 Jun 2023 12:26:29 +0200
-Message-ID: <20230612101703.744080627@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.15 49/91] Input: psmouse - fix OOB access in Elantech protocol
+Date: Mon, 12 Jun 2023 12:26:38 +0200
+Message-ID: <20230612101704.119723574@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -37,66 +33,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 682881ee45c81daa883dcd4fe613b0b0d988bb22 ]
+commit 7b63a88bb62ba2ddf5fcd956be85fe46624628b9 upstream.
 
-Fixes following sparse errors:
+The kernel only allocate 5 MT slots; check that transmitted slot ID
+falls within the acceptable range.
 
-net/sched/act_police.c:360:28: warning: dereference of noderef expression
-net/sched/act_police.c:362:45: warning: dereference of noderef expression
-net/sched/act_police.c:362:45: warning: dereference of noderef expression
-net/sched/act_police.c:368:28: warning: dereference of noderef expression
-net/sched/act_police.c:370:45: warning: dereference of noderef expression
-net/sched/act_police.c:370:45: warning: dereference of noderef expression
-net/sched/act_police.c:376:45: warning: dereference of noderef expression
-net/sched/act_police.c:376:45: warning: dereference of noderef expression
-
-Fixes: d1967e495a8d ("net_sched: act_police: add 2 new attributes to support police 64bit rate and peakrate")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/ZFnEL91nrT789dbG@google.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_police.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/input/mouse/elantech.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/act_police.c b/net/sched/act_police.c
-index d44b933b821d7..db1d021c16be8 100644
---- a/net/sched/act_police.c
-+++ b/net/sched/act_police.c
-@@ -366,23 +366,23 @@ static int tcf_police_dump(struct sk_buff *skb, struct tc_action *a,
- 	opt.burst = PSCHED_NS2TICKS(p->tcfp_burst);
- 	if (p->rate_present) {
- 		psched_ratecfg_getrate(&opt.rate, &p->rate);
--		if ((police->params->rate.rate_bytes_ps >= (1ULL << 32)) &&
-+		if ((p->rate.rate_bytes_ps >= (1ULL << 32)) &&
- 		    nla_put_u64_64bit(skb, TCA_POLICE_RATE64,
--				      police->params->rate.rate_bytes_ps,
-+				      p->rate.rate_bytes_ps,
- 				      TCA_POLICE_PAD))
- 			goto nla_put_failure;
- 	}
- 	if (p->peak_present) {
- 		psched_ratecfg_getrate(&opt.peakrate, &p->peak);
--		if ((police->params->peak.rate_bytes_ps >= (1ULL << 32)) &&
-+		if ((p->peak.rate_bytes_ps >= (1ULL << 32)) &&
- 		    nla_put_u64_64bit(skb, TCA_POLICE_PEAKRATE64,
--				      police->params->peak.rate_bytes_ps,
-+				      p->peak.rate_bytes_ps,
- 				      TCA_POLICE_PAD))
- 			goto nla_put_failure;
- 	}
- 	if (p->pps_present) {
- 		if (nla_put_u64_64bit(skb, TCA_POLICE_PKTRATE64,
--				      police->params->ppsrate.rate_pkts_ps,
-+				      p->ppsrate.rate_pkts_ps,
- 				      TCA_POLICE_PAD))
- 			goto nla_put_failure;
- 		if (nla_put_u64_64bit(skb, TCA_POLICE_PKTBURST64,
--- 
-2.39.2
-
+--- a/drivers/input/mouse/elantech.c
++++ b/drivers/input/mouse/elantech.c
+@@ -674,10 +674,11 @@ static void process_packet_head_v4(struc
+ 	struct input_dev *dev = psmouse->dev;
+ 	struct elantech_data *etd = psmouse->private;
+ 	unsigned char *packet = psmouse->packet;
+-	int id = ((packet[3] & 0xe0) >> 5) - 1;
++	int id;
+ 	int pres, traces;
+ 
+-	if (id < 0)
++	id = ((packet[3] & 0xe0) >> 5) - 1;
++	if (id < 0 || id >= ETP_MAX_FINGERS)
+ 		return;
+ 
+ 	etd->mt[id].x = ((packet[1] & 0x0f) << 8) | packet[2];
+@@ -707,7 +708,7 @@ static void process_packet_motion_v4(str
+ 	int id, sid;
+ 
+ 	id = ((packet[0] & 0xe0) >> 5) - 1;
+-	if (id < 0)
++	if (id < 0 || id >= ETP_MAX_FINGERS)
+ 		return;
+ 
+ 	sid = ((packet[3] & 0xe0) >> 5) - 1;
+@@ -728,7 +729,7 @@ static void process_packet_motion_v4(str
+ 	input_report_abs(dev, ABS_MT_POSITION_X, etd->mt[id].x);
+ 	input_report_abs(dev, ABS_MT_POSITION_Y, etd->mt[id].y);
+ 
+-	if (sid >= 0) {
++	if (sid >= 0 && sid < ETP_MAX_FINGERS) {
+ 		etd->mt[sid].x += delta_x2 * weight;
+ 		etd->mt[sid].y -= delta_y2 * weight;
+ 		input_mt_slot(dev, sid);
 
 
