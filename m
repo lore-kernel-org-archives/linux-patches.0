@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17B7D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FBAC433EF;
-	Mon, 12 Jun 2023 10:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E566D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8ABC433EF;
+	Mon, 12 Jun 2023 10:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566309;
-	bh=YylcBKYCBwzUDhByyMAfeFWts4fBvtOpS5b90cL417U=;
+	s=korg; t=1686566312;
+	bh=9OsA4wiFDR0vEoePViywymDkJFGn8FMf+817mTunXBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrTMyGgKmA5qvVrfzzofhRFqFbM8Jp4+b5GrR6fjnJWkNapt+xuHMQvpjkUm+/9rF
-	 LiLbvR3j0T6p2r+F62yMi4ogVVzOifHBX/wUdYesfidbrxrq49S/HdvJhmcD+Uv4dr
-	 bNrcFiVAl7DI0VGSz0lktG4YD4l4fXMi0wgHkpJ8=
+	b=aqL9bbEMaWRmWuDK+X09bVDHdARFl2VbekU4Y3JDUzvCVBNM7f5NaIXnWWjpetWDj
+	 iPVXcZQbPI3ceAwH5AruSiWKcArnrs2MKo3U931AI/KSmryOLcsPp9u/YJ1Ko2Z59Y
+	 CvNsle7I3xOkeNsbcj7AmilNiuiVggjN1dPDdV4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh Anakkur Purayil <kalesh-anakkur.purayil@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 46/91] bnxt_en: Implement .set_port / .unset_port UDP tunnel callbacks
-Date: Mon, 12 Jun 2023 12:26:35 +0200
-Message-ID: <20230612101703.980322634@linuxfoundation.org>
+	stable@kernel.org,
+	Vladislav Efanov <VEfanov@ispras.ru>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.15 47/91] batman-adv: Broken sync while rescheduling delayed work
+Date: Mon, 12 Jun 2023 12:26:36 +0200
+Message-ID: <20230612101704.030177429@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -37,81 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Somnath Kotur <somnath.kotur@broadcom.com>
+From: Vladislav Efanov <VEfanov@ispras.ru>
 
-[ Upstream commit 1eb4ef12591348c440ac9d6efcf7521e73cf2b10 ]
+commit abac3ac97fe8734b620e7322a116450d7f90aa43 upstream.
 
-As per the new udp tunnel framework, drivers which need to know the
-details of a port entry (i.e. port type) when it gets deleted should
-use the .set_port / .unset_port callbacks.
+Syzkaller got a lot of crashes like:
+KASAN: use-after-free Write in *_timers*
 
-Implementing the current .udp_tunnel_sync callback would mean that the
-deleted tunnel port entry would be all zeros.  This used to work on
-older firmware because it would not check the input when deleting a
-tunnel port.  With newer firmware, the delete will now fail and
-subsequent tunnel port allocation will fail as a result.
+All of these crashes point to the same memory area:
 
-Fixes: 442a35a5a7aa ("bnxt: convert to new udp_tunnel_nic infra")
-Reviewed-by: Kalesh Anakkur Purayil <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The buggy address belongs to the object at ffff88801f870000
+ which belongs to the cache kmalloc-8k of size 8192
+The buggy address is located 5320 bytes inside of
+ 8192-byte region [ffff88801f870000, ffff88801f872000)
+
+This area belongs to :
+        batadv_priv->batadv_priv_dat->delayed_work->timer_list
+
+The reason for these issues is the lack of synchronization. Delayed
+work (batadv_dat_purge) schedules new timer/work while the device
+is being deleted. As the result new timer/delayed work is set after
+cancel_delayed_work_sync() was called. So after the device is freed
+the timer list contains pointer to already freed memory.
+
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+
+Cc: stable@kernel.org
+Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
+Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
+Acked-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 25 ++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ net/batman-adv/distributed-arp-table.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 2629e8805651e..931bb40ac05b5 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -12701,26 +12701,37 @@ static void bnxt_cfg_ntp_filters(struct bnxt *bp)
- 
- #endif /* CONFIG_RFS_ACCEL */
- 
--static int bnxt_udp_tunnel_sync(struct net_device *netdev, unsigned int table)
-+static int bnxt_udp_tunnel_set_port(struct net_device *netdev, unsigned int table,
-+				    unsigned int entry, struct udp_tunnel_info *ti)
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -101,7 +101,6 @@ static void batadv_dat_purge(struct work
+  */
+ static void batadv_dat_start_timer(struct batadv_priv *bat_priv)
  {
- 	struct bnxt *bp = netdev_priv(netdev);
--	struct udp_tunnel_info ti;
- 	unsigned int cmd;
- 
--	udp_tunnel_nic_get_port(netdev, table, 0, &ti);
--	if (ti.type == UDP_TUNNEL_TYPE_VXLAN)
-+	if (ti->type == UDP_TUNNEL_TYPE_VXLAN)
- 		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_VXLAN;
- 	else
- 		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_GENEVE;
- 
--	if (ti.port)
--		return bnxt_hwrm_tunnel_dst_port_alloc(bp, ti.port, cmd);
-+	return bnxt_hwrm_tunnel_dst_port_alloc(bp, ti->port, cmd);
-+}
-+
-+static int bnxt_udp_tunnel_unset_port(struct net_device *netdev, unsigned int table,
-+				      unsigned int entry, struct udp_tunnel_info *ti)
-+{
-+	struct bnxt *bp = netdev_priv(netdev);
-+	unsigned int cmd;
-+
-+	if (ti->type == UDP_TUNNEL_TYPE_VXLAN)
-+		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_VXLAN;
-+	else
-+		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_GENEVE;
- 
- 	return bnxt_hwrm_tunnel_dst_port_free(bp, cmd);
+-	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	queue_delayed_work(batadv_event_workqueue, &bat_priv->dat.work,
+ 			   msecs_to_jiffies(10000));
  }
+@@ -819,6 +818,7 @@ int batadv_dat_init(struct batadv_priv *
+ 	if (!bat_priv->dat.hash)
+ 		return -ENOMEM;
  
- static const struct udp_tunnel_nic_info bnxt_udp_tunnels = {
--	.sync_table	= bnxt_udp_tunnel_sync,
-+	.set_port	= bnxt_udp_tunnel_set_port,
-+	.unset_port	= bnxt_udp_tunnel_unset_port,
- 	.flags		= UDP_TUNNEL_NIC_INFO_MAY_SLEEP |
- 			  UDP_TUNNEL_NIC_INFO_OPEN_ONLY,
- 	.tables		= {
--- 
-2.39.2
-
++	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	batadv_dat_start_timer(bat_priv);
+ 
+ 	batadv_tvlv_handler_register(bat_priv, batadv_dat_tvlv_ogm_handler_v1,
 
 
