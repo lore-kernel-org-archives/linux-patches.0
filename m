@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE94134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF676C433D2;
-	Mon, 12 Jun 2023 10:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D64134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9412BC433D2;
+	Mon, 12 Jun 2023 10:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566674;
-	bh=ZG5XaFw0OdrhywYJYu1KG5HIMTP9aOTXR3y5qEcgeXQ=;
+	s=korg; t=1686566676;
+	bh=Y2ZpP9gyREpAJy8KArjRl6Iyc5bNPzpcdAuBFmdroHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ur6l5/bLi/4taOjY0YBHlWDoU9iSFVI32ZXB7bica2MxdH5nA47BG1TxSuIUm4J0u
-	 vMCRQ/tvaQ1lIZ5H/E3SxbVxmOuOdZJhELlUCcT+xHaX4ey5DiQpd7FZ1QphwHwyqn
-	 bSrr5lKHAxDHBpXgKOT3LJGGLr+nWQLbVxb/a6xY=
+	b=jjjpQe0c/b0SUPIAt+8RNX7m5y54osbXGq18Np82/2f7eTBgHdOHsSHzpzG4kIBBo
+	 MXqGOYJkzgXOB20HjPYAIX6+2Hphdhv2AZVmr4bjfuHTjISCxqrJBMcsMxi5rUIJ2Z
+	 MxNaRtuM6q9bNLdcXIAnkLS885Xow+8bn6YquA6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Imre Kis <imre.kis@arm.com>,
+	Balint Dobszay <balint.dobszay@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/132] i2c: mv64xxx: Fix reading invalid status value in atomic mode
-Date: Mon, 12 Jun 2023 12:27:28 +0200
-Message-ID: <20230612101715.484382293@linuxfoundation.org>
+Subject: [PATCH 6.1 115/132] firmware: arm_ffa: Set handle field to zero in memory descriptor
+Date: Mon, 12 Jun 2023 12:27:29 +0200
+Message-ID: <20230612101715.526674577@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,63 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Behún <kabel@kernel.org>
+From: Balint Dobszay <balint.dobszay@arm.com>
 
-[ Upstream commit 5578d0a79b6430fa1543640dd6f2d397d0886ce7 ]
+[ Upstream commit 3aa0519a4780f1b8e11966bd879d4a2934ba455f ]
 
-There seems to be a bug within the mv64xxx I2C controller, wherein the
-status register may not necessarily contain valid value immediately
-after the IFLG flag is set in the control register.
+As described in the commit 111a833dc5cb ("firmware: arm_ffa: Set
+reserved/MBZ fields to zero in the memory descriptors") some fields in
+the memory descriptor have to be zeroed explicitly. The handle field is
+one of these, but it was left out from that change, fix this now.
 
-My theory is that the controller:
-- first sets the IFLG in control register
-- then updates the status register
-- then raises an interrupt
-
-This may sometime cause weird bugs when in atomic mode, since in this
-mode we do not wait for an interrupt, but instead we poll the control
-register for IFLG and read status register immediately after.
-
-I encountered -ENXIO from mv64xxx_i2c_fsm() due to this issue when using
-this driver in atomic mode.
-
-Note that I've only seen this issue on Armada 385, I don't know whether
-other SOCs with this controller are also affected. Also note that this
-fix has been in U-Boot for over 4 years [1] without anybody complaining,
-so it should not cause regressions.
-
-[1] https://source.denx.de/u-boot/u-boot/-/commit/d50e29662f78
-
-Fixes: 544a8d75f3d6 ("i2c: mv64xxx: Add atomic_xfer method to driver")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 111a833dc5cb ("firmware: arm_ffa: Set reserved/MBZ fields to zero in the memory descriptors")
+Reported-by: Imre Kis <imre.kis@arm.com>
+Signed-off-by: Balint Dobszay <balint.dobszay@arm.com>
+Link: https://lore.kernel.org/r/20230601140749.93812-1-balint.dobszay@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-mv64xxx.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/firmware/arm_ffa/driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i2c/busses/i2c-mv64xxx.c b/drivers/i2c/busses/i2c-mv64xxx.c
-index 047dfef7a6577..878c076ebdc6b 100644
---- a/drivers/i2c/busses/i2c-mv64xxx.c
-+++ b/drivers/i2c/busses/i2c-mv64xxx.c
-@@ -520,6 +520,17 @@ mv64xxx_i2c_intr(int irq, void *dev_id)
- 
- 	while (readl(drv_data->reg_base + drv_data->reg_offsets.control) &
- 						MV64XXX_I2C_REG_CONTROL_IFLG) {
-+		/*
-+		 * It seems that sometime the controller updates the status
-+		 * register only after it asserts IFLG in control register.
-+		 * This may result in weird bugs when in atomic mode. A delay
-+		 * of 100 ns before reading the status register solves this
-+		 * issue. This bug does not seem to appear when using
-+		 * interrupts.
-+		 */
-+		if (drv_data->atomic)
-+			ndelay(100);
-+
- 		status = readl(drv_data->reg_base + drv_data->reg_offsets.status);
- 		mv64xxx_i2c_fsm(drv_data, status);
- 		mv64xxx_i2c_do_action(drv_data);
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 5904a679d3512..c37e823590055 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -505,6 +505,7 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
+ 		ep_mem_access->flag = 0;
+ 		ep_mem_access->reserved = 0;
+ 	}
++	mem_region->handle = 0;
+ 	mem_region->reserved_0 = 0;
+ 	mem_region->reserved_1 = 0;
+ 	mem_region->ep_count = args->nattrs;
 -- 
 2.39.2
 
