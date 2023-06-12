@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B2C18C35
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E992C433D2;
-	Mon, 12 Jun 2023 10:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EAB18C35
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D14CC433D2;
+	Mon, 12 Jun 2023 10:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565788;
-	bh=fHC/aX5sIVXjXens2dcafaGz08ZMgq7sPeCsgo/gWyM=;
+	s=korg; t=1686565791;
+	bh=vfjv2kynwe9F8iphwJjPyAH/i4yW5V1N13gFEty/Zbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ljYssAEqepL9U4BBn/EM1rtgV+iaF4SBUphOsSeuuB1m2XHasrh4jSBOsjcqPRAwT
-	 XUYndsiYVMU8UuWifQdiCWjUyotDZ6WDQFXv11nSdNqfr0pIajk+vylibwxjS7VAEX
-	 RB4Nfq1gUddfyEqCeAUKumdXD40Ho2BNIxeuQM6w=
+	b=LMz2h/UOXr1ib+shDiqP5S1mqiVAkMH3WsFcgATQ85tTnQIJFZx4SL8zQaMJb5l58
+	 xgyzeWZmIuVXSI4rQbd5rDPFGPQkzjxny6q1vzHCsyp+dDsGYc7CNQs+iuUxvnYUGd
+	 kmh2uaSikxkoncpoHDoXiQ91cVRdCibHG2pMpBQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 4.19 16/23] ceph: fix use-after-free bug for inodes when flushing capsnaps
-Date: Mon, 12 Jun 2023 12:26:17 +0200
-Message-ID: <20230612101651.698285765@linuxfoundation.org>
+	Min Li <lm0963hack@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 4.19 17/23] Bluetooth: Fix use-after-free in hci_remove_ltk/hci_remove_irk
+Date: Mon, 12 Jun 2023 12:26:18 +0200
+Message-ID: <20230612101651.727346851@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.138592130@linuxfoundation.org>
 References: <20230612101651.138592130@linuxfoundation.org>
@@ -35,90 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 409e873ea3c1fd3079909718bbeb06ac1ec7f38b upstream.
+commit c5d2b6fa26b5b8386a9cc902cdece3a46bef2bd2 upstream.
 
-There is a race between capsnaps flush and removing the inode from
-'mdsc->snap_flush_list' list:
-
-   == Thread A ==                     == Thread B ==
-ceph_queue_cap_snap()
- -> allocate 'capsnapA'
- ->ihold('&ci->vfs_inode')
- ->add 'capsnapA' to 'ci->i_cap_snaps'
- ->add 'ci' to 'mdsc->snap_flush_list'
-    ...
-   == Thread C ==
-ceph_flush_snaps()
- ->__ceph_flush_snaps()
-  ->__send_flush_snap()
-                                handle_cap_flushsnap_ack()
-                                 ->iput('&ci->vfs_inode')
-                                   this also will release 'ci'
-                                    ...
-				      == Thread D ==
-                                ceph_handle_snap()
-                                 ->flush_snaps()
-                                  ->iterate 'mdsc->snap_flush_list'
-                                   ->get the stale 'ci'
- ->remove 'ci' from                ->ihold(&ci->vfs_inode) this
-   'mdsc->snap_flush_list'           will WARNING
-
-To fix this we will increase the inode's i_count ref when adding 'ci'
-to the 'mdsc->snap_flush_list' list.
-
-[ idryomov: need_put int -> bool ]
+Similar to commit 0f7d9b31ce7a ("netfilter: nf_tables: fix use-after-free
+in nft_set_catchall_destroy()"). We can not access k after kfree_rcu()
+call.
 
 Cc: stable@vger.kernel.org
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2209299
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Min Li <lm0963hack@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |    6 ++++++
- fs/ceph/snap.c |    4 +++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_core.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1554,6 +1554,7 @@ void ceph_flush_snaps(struct ceph_inode_
- 	struct inode *inode = &ci->vfs_inode;
- 	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
- 	struct ceph_mds_session *session = NULL;
-+	bool need_put = false;
- 	int mds;
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2517,10 +2517,10 @@ int hci_remove_link_key(struct hci_dev *
  
- 	dout("ceph_flush_snaps %p\n", inode);
-@@ -1607,8 +1608,13 @@ out:
- 	}
- 	/* we flushed them all; remove this inode from the queue */
- 	spin_lock(&mdsc->snap_flush_lock);
-+	if (!list_empty(&ci->i_snap_flush_item))
-+		need_put = true;
- 	list_del_init(&ci->i_snap_flush_item);
- 	spin_unlock(&mdsc->snap_flush_lock);
-+
-+	if (need_put)
-+		iput(inode);
- }
+ int hci_remove_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 bdaddr_type)
+ {
+-	struct smp_ltk *k;
++	struct smp_ltk *k, *tmp;
+ 	int removed = 0;
  
- /*
---- a/fs/ceph/snap.c
-+++ b/fs/ceph/snap.c
-@@ -623,8 +623,10 @@ int __ceph_finish_cap_snap(struct ceph_i
- 	     capsnap->size);
+-	list_for_each_entry_rcu(k, &hdev->long_term_keys, list) {
++	list_for_each_entry_safe(k, tmp, &hdev->long_term_keys, list) {
+ 		if (bacmp(bdaddr, &k->bdaddr) || k->bdaddr_type != bdaddr_type)
+ 			continue;
  
- 	spin_lock(&mdsc->snap_flush_lock);
--	if (list_empty(&ci->i_snap_flush_item))
-+	if (list_empty(&ci->i_snap_flush_item)) {
-+		ihold(inode);
- 		list_add_tail(&ci->i_snap_flush_item, &mdsc->snap_flush_list);
-+	}
- 	spin_unlock(&mdsc->snap_flush_lock);
- 	return 1;  /* caller may want to ceph_flush_snaps */
- }
+@@ -2536,9 +2536,9 @@ int hci_remove_ltk(struct hci_dev *hdev,
+ 
+ void hci_remove_irk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 addr_type)
+ {
+-	struct smp_irk *k;
++	struct smp_irk *k, *tmp;
+ 
+-	list_for_each_entry_rcu(k, &hdev->identity_resolving_keys, list) {
++	list_for_each_entry_safe(k, tmp, &hdev->identity_resolving_keys, list) {
+ 		if (bacmp(bdaddr, &k->bdaddr) || k->addr_type != addr_type)
+ 			continue;
+ 
 
 
