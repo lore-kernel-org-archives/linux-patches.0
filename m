@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA506AD3C
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595FEC433D2;
-	Mon, 12 Jun 2023 10:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E837134D6
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B84C433D2;
+	Mon, 12 Jun 2023 10:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566103;
-	bh=RKK6AuOb3zNBcvBx6MLkarRTDF5FMuZBNkCAXgiXSqA=;
+	s=korg; t=1686566106;
+	bh=fMOeg43+peMf2OkoeqdjwuBlqjZShJgyxKC4KEu++Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qhAsk3B0cCytFtUFbV7c6V3y+W0U2vlOgyt3m3A2IMw1xqS+I7ny9BVxVp5dqVZeQ
-	 1nKETypGk6ANN54RHgarifEKrp6Bjq2J+MOg4fE8MBN9AaCsvue4vCJo5jGMx1poIm
-	 Mfl6+j09GnGmvp7hDIRFv+K390zDNChaVrwIozxo=
+	b=NX9tQskD5QxH/H60OIvyIYsdIV8l50WNmLS+iYyw83BxbVaYyvg5rCNLj1s+z/yXy
+	 MVRLm/j2PgVYtv3xyn/ntfLpwJHbwIOt/IvW0gcpZ/6okS0YsWRDP5PZxoOabsuG6P
+	 KHnMqyUxj10ySyetGoFjcWaGL1YSYKcElUcEBFeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
-	Stefan Ghinea <stefan.ghinea@windriver.com>
-Subject: [PATCH 5.10 66/68] btrfs: check return value of btrfs_commit_transaction in relocation
-Date: Mon, 12 Jun 2023 12:26:58 +0200
-Message-ID: <20230612101701.177628475@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 5.10 49/68] rbd: move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting
+Date: Mon, 12 Jun 2023 12:26:41 +0200
+Message-ID: <20230612101700.463422078@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -36,56 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit fb686c6824dd6294ca772b92424b8fba666e7d00 upstream.
+commit 09fe05c57b5aaf23e2c35036c98ea9f282b19a77 upstream.
 
-There are a few places where we don't check the return value of
-btrfs_commit_transaction in relocation.c.  Thankfully all these places
-have straightforward error handling, so simply change all of the sites
-at once.
+Move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting into the object request
+state machine to allow for the snapshot context to be captured in the
+image request state machine rather than in rbd_queue_workfn().
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/block/rbd.c |   32 +++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -1895,7 +1895,7 @@ again:
- 	list_splice(&reloc_roots, &rc->reloc_roots);
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -1397,14 +1397,28 @@ static bool rbd_obj_is_tail(struct rbd_o
+ /*
+  * Must be called after rbd_obj_calc_img_extents().
+  */
+-static bool rbd_obj_copyup_enabled(struct rbd_obj_request *obj_req)
++static void rbd_obj_set_copyup_enabled(struct rbd_obj_request *obj_req)
+ {
+-	if (!obj_req->num_img_extents ||
+-	    (rbd_obj_is_entire(obj_req) &&
+-	     !obj_req->img_request->snapc->num_snaps))
+-		return false;
++	if (obj_req->img_request->op_type == OBJ_OP_DISCARD) {
++		dout("%s %p objno %llu discard\n", __func__, obj_req,
++		     obj_req->ex.oe_objno);
++		return;
++	}
  
- 	if (!err)
--		btrfs_commit_transaction(trans);
-+		err = btrfs_commit_transaction(trans);
- 	else
- 		btrfs_end_transaction(trans);
- 	return err;
-@@ -3270,8 +3270,7 @@ int prepare_to_relocate(struct reloc_con
- 		 */
- 		return PTR_ERR(trans);
- 	}
--	btrfs_commit_transaction(trans);
--	return 0;
-+	return btrfs_commit_transaction(trans);
+-	return true;
++	if (!obj_req->num_img_extents) {
++		dout("%s %p objno %llu not overlapping\n", __func__, obj_req,
++		     obj_req->ex.oe_objno);
++		return;
++	}
++
++	if (rbd_obj_is_entire(obj_req) &&
++	    !obj_req->img_request->snapc->num_snaps) {
++		dout("%s %p objno %llu entire\n", __func__, obj_req,
++		     obj_req->ex.oe_objno);
++		return;
++	}
++
++	obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
  }
  
- static noinline_for_stack int relocate_block_group(struct reloc_control *rc)
-@@ -3443,7 +3442,9 @@ restart:
- 		err = PTR_ERR(trans);
- 		goto out_free;
- 	}
--	btrfs_commit_transaction(trans);
-+	ret = btrfs_commit_transaction(trans);
-+	if (ret && !err)
-+		err = ret;
- out_free:
- 	ret = clean_dirty_subvols(rc);
- 	if (ret < 0 && !err)
+ static u64 rbd_obj_img_extents_bytes(struct rbd_obj_request *obj_req)
+@@ -2296,9 +2310,6 @@ static int rbd_obj_init_write(struct rbd
+ 	if (ret)
+ 		return ret;
+ 
+-	if (rbd_obj_copyup_enabled(obj_req))
+-		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
+-
+ 	obj_req->write_state = RBD_OBJ_WRITE_START;
+ 	return 0;
+ }
+@@ -2404,8 +2415,6 @@ static int rbd_obj_init_zeroout(struct r
+ 	if (ret)
+ 		return ret;
+ 
+-	if (rbd_obj_copyup_enabled(obj_req))
+-		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
+ 	if (!obj_req->num_img_extents) {
+ 		obj_req->flags |= RBD_OBJ_FLAG_NOOP_FOR_NONEXISTENT;
+ 		if (rbd_obj_is_entire(obj_req))
+@@ -3351,6 +3360,7 @@ again:
+ 	case RBD_OBJ_WRITE_START:
+ 		rbd_assert(!*result);
+ 
++		rbd_obj_set_copyup_enabled(obj_req);
+ 		if (rbd_obj_write_is_noop(obj_req))
+ 			return true;
+ 
 
 
