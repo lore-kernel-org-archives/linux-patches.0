@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A230134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A4EC433EF;
-	Mon, 12 Jun 2023 10:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE578134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54747C433EF;
+	Mon, 12 Jun 2023 10:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566496;
-	bh=PbGqirAaJUwWCwu/U1aez5V0Bf3Qt6XkhfTSPjnrtdg=;
+	s=korg; t=1686566498;
+	bh=EPrfcgyRH+Dolm41hnT1O4r/UhrJRvhHIXD5AOPeF+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wv5rsZMCTx1s6V8pSEn/fhf0VjsteQvcCGJA/hOu4AwjfwcTzjQJ07kPsW5aHyE58
-	 whmzosQ6Eez5+3K05ZkA1ghPTMeuufyw8JslFvetm+y06YIRsh6kcF05R5Xr1XP337
-	 9DKC1NNfMfvyE/tq0S+i/vYELPraS3TjRi0AW4MM=
+	b=arcHUDT6ZsEHuspOKqFG/lqMVnX+RCusu3UdFcLbx/AgQY93E+9zfFVZwWRDlY/Uo
+	 jG7gAQukdNpqrknLWtkyJOltFYFFsGl1CXZYscQjztih6rwsPdzOEDW9FzhGMzcArX
+	 O3BWGBQUKU/tM5zhCNh1gj0ien44nLaFp+RIFPVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/132] bnxt_en: Dont issue AP reset during ethtools reset operation
-Date: Mon, 12 Jun 2023 12:26:27 +0200
-Message-ID: <20230612101712.674700775@linuxfoundation.org>
+Subject: [PATCH 6.1 054/132] bnxt_en: Query default VLAN before VNIC setup on a VF
+Date: Mon, 12 Jun 2023 12:26:28 +0200
+Message-ID: <20230612101712.720787724@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -37,41 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+From: Somnath Kotur <somnath.kotur@broadcom.com>
 
-[ Upstream commit 1d997801c7cc6a7f542e46d5a6bf16f893ad3fe9 ]
+[ Upstream commit 1a9e4f501bc6ff1b6ecb60df54fbf2b54db43bfe ]
 
-Only older NIC controller's firmware uses the PROC AP reset type.
-Firmware on 5731X/5741X and newer chips does not support this reset
-type.  When bnxt_reset() issues a series of resets, this PROC AP
-reset may actually fail on these newer chips because the firmware
-is not ready to accept this unsupported command yet.  Avoid this
-unnecessary error by skipping this reset type on chips that don't
-support it.
+We need to call bnxt_hwrm_func_qcfg() on a VF to query the default
+VLAN that may be setup by the PF.  If a default VLAN is enabled,
+the VF cannot support VLAN acceleration on the receive side and
+the VNIC must be setup to strip out the default VLAN tag.  If a
+default VLAN is not enabled, the VF can support VLAN acceleration
+on the receive side.  The VNIC should be set up to strip or not
+strip the VLAN based on the RX VLAN acceleration setting.
 
-Fixes: 7a13240e3718 ("bnxt_en: fix ethtool_reset_flags ABI violations")
+Without this call to determine the default VLAN before calling
+bnxt_setup_vnic(), the VNIC may not be set up correctly.  For
+example, bnxt_setup_vnic() may set up to strip the VLAN tag based
+on stale default VLAN information.  If RX VLAN acceleration is
+not enabled, the VLAN tag will be incorrectly stripped and the
+RX data path will not work correctly.
+
+Fixes: cf6645f8ebc6 ("bnxt_en: Add function for VF driver to query default VLAN.")
 Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index b2d531e014c57..89f046ce1373c 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -3727,7 +3727,7 @@ static int bnxt_reset(struct net_device *dev, u32 *flags)
- 		}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index e3e5a427222f6..93c3b8316c46a 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -8808,6 +8808,9 @@ static int bnxt_init_chip(struct bnxt *bp, bool irq_re_init)
+ 		goto err_out;
  	}
  
--	if (req & BNXT_FW_RESET_AP) {
-+	if (!BNXT_CHIP_P4_PLUS(bp) && (req & BNXT_FW_RESET_AP)) {
- 		/* This feature is not supported in older firmware versions */
- 		if (bp->hwrm_spec_code >= 0x10803) {
- 			if (!bnxt_firmware_reset_ap(dev)) {
++	if (BNXT_VF(bp))
++		bnxt_hwrm_func_qcfg(bp);
++
+ 	rc = bnxt_setup_vnic(bp, 0);
+ 	if (rc)
+ 		goto err_out;
 -- 
 2.39.2
 
