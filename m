@@ -1,68 +1,72 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A89B21CE1
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 18:23:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B7CC433D2;
-	Mon, 12 Jun 2023 18:23:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686594214;
-	bh=0ia4DOXRQlpxbsvixuJZP92w3Mu5z3zc9q4s1AOUnDc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=iQqK/iw2pw+Igfn7d9j8xQ8+HbK07/0/uCJLT6erT9jqHOqpdOn9NLk+g8CuYNCIp
-	 zRILIyb9jt7Um7NA0jf1/018qJ4cHKP1K1XrZ0Bkgo/LsXFh9e0Uvq+r19R+DXvCup
-	 Dlcnn1YvVWcA2gELwVl+8UOR4Ha3nbFT1G5z2KMXTcqYdypN1w06bu4jkz/HXT+8bh
-	 UbUnn6HR8NBceZEsdxxBIOr06jf6DxbTAUE8ggsN3wHzYYBRY8mvHuHSLYB1DjqtDf
-	 9qxjQrPiAmiq+t55MDSRr7UVJm2Yew0Zu7NhzEaNSwwz5YDeWt5UcMFZZNcKZCMIIH
-	 5lpIh0hQ4acuA==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	Jian Hu <jian.hu@amlogic.com>,
-	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>
-Subject: [PATCH] clk: meson: a1: Staticize rtc clk
-Date: Mon, 12 Jun 2023 11:23:32 -0700
-Message-ID: <20230612182332.371003-1-sboyd@kernel.org>
-X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6856D5229
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 19:04:45 +0000 (UTC)
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6b162127472so2718101a34.0
+        for <patches@lists.linux.dev>; Mon, 12 Jun 2023 12:04:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686596684; x=1689188684;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8OOA/ytQLN+B3gWqHcQscrH2RGfHUDPpsGBgPoTwMwU=;
+        b=mqmplgHYcbdHCEUJBJPwAOzEH/KkA5KlZpIohsz5YZEbmJGpEnMObhD9cebeOTpo+E
+         uuIT92aZjFYZivmy5hQVJHX8fJFJDPUVMx1aYMVEHgA4At2pgLE3V053Wb/t2L8Gb8GO
+         a/kwFV/O3Ef/8b2fADgHY32cyyyO/dTmTsutoQYiejCaccDScUBH60nXHRTlfjTl3LGt
+         AF/pb/yU9DYO+kjNLenmrA1nRXJMpNwQggfrSTbC+9AS0m92c9DL6Ms+A3/wOVAej0EK
+         lNybC0/qHKkH+rFA9cMlXEE4QLyS6CVZXzSTYOyHm3XMG24Mjiq5BfndBHNwMyXlQ/Mg
+         QLKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686596684; x=1689188684;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8OOA/ytQLN+B3gWqHcQscrH2RGfHUDPpsGBgPoTwMwU=;
+        b=IZAx6ZCIRHLtx1nW7U/QaQoyI10cNM4S6yZwRlrkw0J3bqfPNOIFi6as3euVcRzhPt
+         Ty2usAgKy62YEhFkmlJzXJcyzt7Fl8xaKo+7LysvrrhW4J1tHwEbbh0pvEydKycqZIyk
+         hf2ZrVVxEiVPKfppcbgUjy3xTsq1jP00l+zoWVbKWc//GaNV5Ir0S1WXfqWEn5tYEnnH
+         Eo55bR9TbnPOK/1i+SBnb6QSmdzvAh2IHACISM9USo4jgir11KDuD7PXZQrTjYrEByLC
+         pgfTCKR7X1ClH++yX86BwpVSaJkK6xysrbq55wp8ILJWvhcfARGhrQTNZ3CaK1LvaavT
+         7Flw==
+X-Gm-Message-State: AC+VfDyorgM9hafm9/ebTXGWoUBGcGBSmJMrcm1oAcrFVWZyowp7HqRY
+	6FfdKd9ZxT2zU/yK1JSEMO6Smrxni0rOvaLp6O4=
+X-Google-Smtp-Source: ACHHUZ5kJ9Ts8hH1r36b3HYZo25DalArBDj1PkqRJv6R/2FQYkSp/gjvpguhX/6PkBYsyURQiz7scSpqX4offUdreoc=
+X-Received: by 2002:a9d:7acb:0:b0:6b0:73fe:cf10 with SMTP id
+ m11-20020a9d7acb000000b006b073fecf10mr7185541otn.5.1686596684199; Mon, 12 Jun
+ 2023 12:04:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230531174450.3733220-1-aliceryhl@google.com> <CAGngYiW_3HfebWZO5S=RXFqhNnsbnix-NaA0UGYRnRLd4SK65w@mail.gmail.com>
+In-Reply-To: <CAGngYiW_3HfebWZO5S=RXFqhNnsbnix-NaA0UGYRnRLd4SK65w@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 12 Jun 2023 21:04:32 +0200
+Message-ID: <CANiq72=DJBW82L44icrrTo=_jrv=BS3cd10s6WuraXX7suW4tg@mail.gmail.com>
+Subject: Re: [PATCH v1] rust: error: integrate Rust error type with `errname`
+To: Sven Van Asbroeck <thesven73@gmail.com>
+Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Wedson Almeida Filho <walmeida@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Sparse rightly complains that this symbol is supposed to be static.
+On Wed, May 31, 2023 at 11:27=E2=80=AFPM Sven Van Asbroeck <thesven73@gmail=
+.com> wrote:
+>
+> Hello Alice, as we discussed through a separate channel,
+> you have my permission to use my name in
+> Co-Developed-by and Signed-off-by tags.
 
-Cc: Jian Hu <jian.hu@amlogic.com>
-Cc: Dmitry Rokosov <ddrokosov@sberdevices.ru>
-Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Cc: Jerome Brunet <jbrunet@baylibre.com>
-Fixes: 84af914404db ("clk: meson: a1: add Amlogic A1 Peripherals clock controller driver")
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/clk/meson/a1-peripherals.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks a lot Sven for the confirmation!
 
-diff --git a/drivers/clk/meson/a1-peripherals.c b/drivers/clk/meson/a1-peripherals.c
-index b320134fefeb..75dfae210fe5 100644
---- a/drivers/clk/meson/a1-peripherals.c
-+++ b/drivers/clk/meson/a1-peripherals.c
-@@ -218,7 +218,7 @@ static struct clk_regmap rtc_32k_sel = {
- 	},
- };
- 
--struct clk_regmap rtc = {
-+static struct clk_regmap rtc = {
- 	.data = &(struct clk_regmap_gate_data){
- 		.offset = RTC_BY_OSCIN_CTRL0,
- 		.bit_idx = 30,
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+Applied to `rust-next` -- reworded for clarity. Thanks!
 
+Cheers,
+Miguel
