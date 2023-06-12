@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D48134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD714C433EF;
-	Mon, 12 Jun 2023 10:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3A8134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D90C433D2;
+	Mon, 12 Jun 2023 10:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566642;
-	bh=eHqA/XNTgPzNyWaSNWkVQYCmkusbEx6uTjAX+yi3Nxk=;
+	s=korg; t=1686566645;
+	bh=CSN9F9CwtS/9vqspZimVD2cuF3+T8YvVHArdng57dkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HfvVFls+LYcEY7KLFLAx0zu4sm17NLszqxCawuPoPig59esamP1kqF9Wtqn4PQqxc
-	 eh7Za1Kq/V10rQMGp0a3CnI/r9CK7li2JSMyZNli7N8fjSF9z5XHZxM5hlwCDR8m9/
-	 lBsFYtQXvh2reylrYu+eqHqicZscHB/tAyLEwpYE=
+	b=Su9LWHPqB3OiQiKaCepcUtASgllzAmHhNz+GgWK2q8sQRr16urpVSmBMvfHnLNYT6
+	 nCHMKyJwqf6AEaWXVoaFkMKoiFIKbPTRJxwKHtzafFBAAlfdP8QhesDxCbzN0TS9LG
+	 NQkYlSPbEdAomsj9F9zTGMULAIF++FXdIyNdZ/7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Nicolas Ferre <nicolas.ferre@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/132] ARM: at91: pm: fix imbalanced reference counter for ethernet devices
-Date: Mon, 12 Jun 2023 12:27:16 +0200
-Message-ID: <20230612101714.946062577@linuxfoundation.org>
+Subject: [PATCH 6.1 103/132] ARM: dts: at91: sama7g5ek: fix debounce delay property for shdwc
+Date: Mon, 12 Jun 2023 12:27:17 +0200
+Message-ID: <20230612101714.999157402@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -37,83 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit ccd4923d18d5698a5910d516646ce125b9155d47 ]
+[ Upstream commit 6b0db163ff9200a55dc77a652dad1d4b0a853f63 ]
 
-The of_find_device_by_node() function is returning a struct platform_device
-object with the embedded struct device member's reference counter
-incremented. This needs to be dropped when done with the platform device
-returned by of_find_device_by_node().
+There is no atmel,shdwc-debouncer property for SHDWC. The right DT property
+is debounce-delay-us. Use it.
 
-at91_pm_eth_quirk_is_valid() calls of_find_device_by_node() on
-suspend and resume path. On suspend it calls of_find_device_by_node() and
-on resume and failure paths it drops the counter of
-struct platform_device::dev.
-
-In case ethernet device may not wakeup there is a put_device() on
-at91_pm_eth_quirk_is_valid() which is wrong as it colides with
-put_device() on resume path leading to the reference counter of struct
-device embedded in struct platform_device to be messed, stack trace to be
-displayed (after 5 consecutive suspend/resume cycles) and execution to
-hang.
-
-Along with this the error path of at91_pm_config_quirks() had been also
-adapted to decrement propertly the reference counter of struct device
-embedded in struct platform_device.
-
-Fixes: b7fc72c63399 ("ARM: at91: pm: add quirks for pm")
+Fixes: 16b161bcf5d4 ("ARM: dts: at91: sama7g5: add shdwc node")
 Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
 Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20230518062511.2988500-1-claudiu.beznea@microchip.com
+Link: https://lore.kernel.org/r/20230523052750.184223-1-claudiu.beznea@microchip.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-at91/pm.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ arch/arm/boot/dts/at91-sama7g5ek.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-at91/pm.c b/arch/arm/mach-at91/pm.c
-index 60dc56d8acfb9..437dd0352fd44 100644
---- a/arch/arm/mach-at91/pm.c
-+++ b/arch/arm/mach-at91/pm.c
-@@ -334,16 +334,14 @@ static bool at91_pm_eth_quirk_is_valid(struct at91_pm_quirk_eth *eth)
- 		pdev = of_find_device_by_node(eth->np);
- 		if (!pdev)
- 			return false;
-+		/* put_device(eth->dev) is called at the end of suspend. */
- 		eth->dev = &pdev->dev;
- 	}
+diff --git a/arch/arm/boot/dts/at91-sama7g5ek.dts b/arch/arm/boot/dts/at91-sama7g5ek.dts
+index 3b25c67795ddb..4af8a1c96ed63 100644
+--- a/arch/arm/boot/dts/at91-sama7g5ek.dts
++++ b/arch/arm/boot/dts/at91-sama7g5ek.dts
+@@ -789,7 +789,7 @@ &sdmmc2 {
+ };
  
- 	/* No quirks if device isn't a wakeup source. */
--	if (!device_may_wakeup(eth->dev)) {
--		put_device(eth->dev);
-+	if (!device_may_wakeup(eth->dev))
- 		return false;
--	}
+ &shdwc {
+-	atmel,shdwc-debouncer = <976>;
++	debounce-delay-us = <976>;
+ 	status = "okay";
  
--	/* put_device(eth->dev) is called at the end of suspend. */
- 	return true;
- }
- 
-@@ -439,14 +437,14 @@ static int at91_pm_config_quirks(bool suspend)
- 				pr_err("AT91: PM: failed to enable %s clocks\n",
- 				       j == AT91_PM_G_ETH ? "geth" : "eth");
- 			}
--		} else {
--			/*
--			 * Release the reference to eth->dev taken in
--			 * at91_pm_eth_quirk_is_valid().
--			 */
--			put_device(eth->dev);
--			eth->dev = NULL;
- 		}
-+
-+		/*
-+		 * Release the reference to eth->dev taken in
-+		 * at91_pm_eth_quirk_is_valid().
-+		 */
-+		put_device(eth->dev);
-+		eth->dev = NULL;
- 	}
- 
- 	return ret;
+ 	input@0 {
 -- 
 2.39.2
 
