@@ -1,172 +1,156 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-db5eur01on2105.outbound.protection.outlook.com [40.107.15.105])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FF11381
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 01:12:31 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1b3c5389fa2so4227695ad.0
-        for <patches@lists.linux.dev>; Sun, 11 Jun 2023 18:12:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686532350; x=1689124350;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BY92OIs05U+Ju9yHTKboj6eF9PeJ7Y3XidpiHDFa61I=;
-        b=GJbJYSQw+Nq7kd2AYVsZk3Ct0pNReyOF9nDAVdnGexD2JXIChdAKB5CAS5h+3Kb8uo
-         3Rey5y/cd5c9+AaIhbnIq0BjiXbyuk2ozHRIQMz9Fl8RfRZFa/t/2m3aiuGnsLh/wxqr
-         SKH1B5amFXhbNpw6hLT2AzMHS6aWyhdIM3sSw4fmRkjXx068vZHERsFEWYiYglo8a33j
-         1aj/TI0cuvidApTZAgY+N834AGwYM/jr0WbtPAdbZ8UPsq7kMJNVyr7+foyK3Iz3RUR4
-         GDt66Ru+UN8vJQxpoMXlTMyquTc4eEgyIOMC6nkZO423vZ5+qz42flUgj1psC43ZSvKE
-         w+Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686532350; x=1689124350;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BY92OIs05U+Ju9yHTKboj6eF9PeJ7Y3XidpiHDFa61I=;
-        b=IGG+2+SQepISdyjWES008fvv2uh6LH2qZmHJ7vw8oAujAjWcpbbwye28PEjXF5tQw0
-         +qVY4cGHsqzNna/oZxijrErFfCbcLs3GP+Pltg/uETNPz69XmRWrNXJL9mywxqSZBm4h
-         cHZ2wZAj3S31GA/KfFNS5wH5AXSuQHWYjhtYjdSH2d63zvGKA1yZlafSv6lexpAP+Nlb
-         9OUbQSNlQokKUi/W14IrNBiLRh7VCGy83PqiYUjmpkoEawnt2YltMIfjBdbaMHKiDkwR
-         afgKsWkdDIolkjLsOrIK/Jra7jBSl7VIjZ5Kd6mvNIbLiqAIzSHBH/BxB307AiwJMq5f
-         7iOQ==
-X-Gm-Message-State: AC+VfDxhW1LhARl6pChUhScDl+hwCypozzvImrcA+jLs6rYpZDVK5EOS
-	xHGNCAVnM6lMh1A7zOeQk4E=
-X-Google-Smtp-Source: ACHHUZ7COuR0otVoXR/xl/GjbJeF51G0WEIJLy8ZhNbPP4Kx+qQJK+j7Vn9dzlN7TtWb1dykg0dtEQ==
-X-Received: by 2002:a17:902:e884:b0:1b1:adb4:8fa8 with SMTP id w4-20020a170902e88400b001b1adb48fa8mr5924463plg.39.1686532350545;
-        Sun, 11 Jun 2023 18:12:30 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id a7-20020a170902ecc700b00198d7b52eefsm6850002plh.257.2023.06.11.18.12.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Jun 2023 18:12:29 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <922b48ab-f67d-9c32-893b-d6a02618d39a@roeck-us.net>
-Date: Sun, 11 Jun 2023 18:12:27 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13031FB7
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 08:50:23 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NnsR32wCKow7KuC6TopIdogAO8raZ9JL/8NPI56rnuD4XiOpUiYBV/NJO/XHB/Yqpfy4C+SGspnJXTk9bGXV4a1aPAQU7RlClyyfWSjcaZPIhK1xbFIO0jjIZeh4OvYqh8R6O8WTRkfaUMSKRQSkiIfrqH/lgOIkquSXtRTy7swECJOwZD0I458LhKpSQR6prmk7+YBnQYV1Vib5MYZOVb6lsylQqnDxAu2OxwswRqad4GEyAPSglc/U6SgZH21A4XC9LnKahOmn7nbNGClRXuaEWI4lyxUxpa2rrOTOlxbENRBqcY2AK4p0Qin2HrEhg+vZTow3fJX1EczVsjo6yw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fdaOsMQtq5VISpDceMvsfuK6e4Wzcn8BYig7T+VaESc=;
+ b=Gy042E5xUk6BJ89nBCLgBHFFUewLX8HGmb0FADkf3vB7/JpLH0eNl11OHnKOQ9vyDV+P3JnWfqdvPmPqqu4F+pfsT3zDVDYlJ3CPyiybrVq84hwD1Fjg5zxg1a7fGwZGhe3WYECtZGUcdCorjXz/I4SKsd0dz73sMgo2EtRvNwPWWv+oia1IO592jrV0w3WRxD6IedFoxfgIeIrTqfys2qW9UxO95hlJ5nM9VhuCIFlcc9cLZShRrV+OTDg7IiG2BB78WrIJnTCS2kf/6eLH06dFJTwgwCoMHto0uWSg230iIXwOyb6ZFae5NWb5y3XDZEcnwDHFFin3H2V9Blso0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=sma.de; dmarc=pass action=none header.from=sma.de; dkim=pass
+ header.d=sma.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sma.de; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fdaOsMQtq5VISpDceMvsfuK6e4Wzcn8BYig7T+VaESc=;
+ b=TV7MCNA7ZaqYIinxvbBYGkKRF84/mcFMCRjT9EeqmlwvQj/Qetvt57LV2qz6vbaro0QGJKH7ImbPmXs0/AlOdYfCg06K7/g/OfTOQYJilwJ10GULz3H3b/gctHj0JrfbBquoAaSOaI+iZX2GkLrCtScx5uazYfptOIQdyf3HQNU=
+Received: from AM7PR04MB6998.eurprd04.prod.outlook.com (2603:10a6:20b:10a::20)
+ by PR3PR04MB7484.eurprd04.prod.outlook.com (2603:10a6:102:8d::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.46; Mon, 12 Jun
+ 2023 08:50:18 +0000
+Received: from AM7PR04MB6998.eurprd04.prod.outlook.com
+ ([fe80::3371:a506:4476:3e58]) by AM7PR04MB6998.eurprd04.prod.outlook.com
+ ([fe80::3371:a506:4476:3e58%3]) with mapi id 15.20.6455.030; Mon, 12 Jun 2023
+ 08:50:18 +0000
+From: Felix Riemann <Felix.Riemann@sma.de>
+To: Lino Sanfilippo <l.sanfilippo@kunbus.com>, Greg KH
+	<gregkh@linuxfoundation.org>, Jarkko Sakkinen <jarkko@kernel.org>
+CC: "patches@lists.linux.dev" <patches@lists.linux.dev>, "sashal@kernel.org"
+	<sashal@kernel.org>, "stable@vger.kernel.org" <stable@vger.kernel.org>
+Subject: RE: [PATCH 5.15 070/371] tpm, tpm_tis: Claim locality before writing
+ interrupt registers
+Thread-Topic: [PATCH 5.15 070/371] tpm, tpm_tis: Claim locality before writing
+ interrupt registers
+Thread-Index: AQHZh0NUPlbkVZOgikWTPfSAp7SXZ69oqcCAgBmrbQCAAG5AAIAEO5fg
+Date: Mon, 12 Jun 2023 08:50:17 +0000
+Message-ID:
+ <AM7PR04MB69984F972B81A455B6EE525B8854A@AM7PR04MB6998.eurprd04.prod.outlook.com>
+References: <20230508094814.897191675@linuxfoundation.org>
+ <20230515153759.2072-1-svc.sw.rte.linux@sma.de>
+ <382309d7c0ae593d507eb816982f6a66c2cda00a.camel@kernel.org>
+ <2023060906-starter-scrounger-1bca@gregkh>
+ <3bdaa40e-16dc-6c04-b9e4-9e5951267e7e@kunbus.com>
+In-Reply-To: <3bdaa40e-16dc-6c04-b9e4-9e5951267e7e@kunbus.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=sma.de;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM7PR04MB6998:EE_|PR3PR04MB7484:EE_
+x-ms-office365-filtering-correlation-id: 0c8d9b50-c37f-4bff-2729-08db6b220c2b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ xxHuPA98Ih4I4GhIFHhh3igxgNO6ii6f18YV4hg9TeNMl34je1JC0SbUZIV5aiwyMnSXEVI8oV6j+QCO5WYEIa+5NrZhLECJr6fcVLSFzhT7QH0ug60w1LA92guemvBqnS+NdQj5jL7CQoC25r8oJ/IOS5jAjpl+bFcPxegsVhHv6n3lh3XCM5R089Uqbl6YkyE7kXmS9iShInYVSphKCI4tU/0aCG2lMsxk4OF42UeHth0fQBhUdNklqvuWY8CqZJ70XZKKZoSGvEpOF9+68Fs270zCvnjYo2tfXlsLCRr2+ErOrSsehtJB2a3MBbAsSG0yK8QStoaMvjxHhocefPJoMXTVfzOHyvZGK/ozoL0wovuqcYY8KNnBmGxlggG06qboWT5TFhLocgefWm8tkbzJWkg3EMyJW0/j3W+B7nGnVE1lXZvOXBTDaWGsnPm9TknrJdiHFviGLcFWqw2JWhh/Z4JT+lrFEgtW+pyB0ThgY+KJd7zhBQkrQuGgDACHkC50BTfxJBkj/taPoUw9rFOhI29dMEZuIlrtC8TM2OZB0NHSu58j/LU5neEljmlsZc2jOGPHWPP5CbCSOq5DOT7ZSxlydh2FHxm2AdUErRf9Ex+E23rrZ8duVCVSUHY0
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR04MB6998.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(376002)(366004)(396003)(346002)(136003)(451199021)(83380400001)(33656002)(38070700005)(86362001)(122000001)(38100700002)(55016003)(478600001)(110136005)(54906003)(7696005)(71200400001)(8936002)(8676002)(2906002)(5660300002)(52536014)(66556008)(66946007)(64756008)(66476007)(66446008)(76116006)(4326008)(41300700001)(316002)(55236004)(186003)(6506007)(9686003)(26005);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?MHRVRWZoN0s3NU8xVnAwRjl6WXhVTU1GQzNPREVmTVFvRUxLUStWR3IyUmhO?=
+ =?utf-8?B?QklBbW8yYUxLeHJ1K2NmeTh2ekFBbWV6Qk5ES0lpR0V2bURRWjQ5NmJDZ3ZD?=
+ =?utf-8?B?UGcwcWZTU01kenlFOWxoOGt3dU9GY2ErR2JQZHowUHBNZnRzQXA0c3JGcys2?=
+ =?utf-8?B?YWhzaXU3NDEvYSt5bHpyU2VpZ2cybm9uUmxGUk11ZllabjF1MFp0RDVHOE1m?=
+ =?utf-8?B?aWNsY3Z6QUREZ0tuejBLczNPNmhoN1NaSHBMQUpOa0xXQUkvK296TFI5S2o1?=
+ =?utf-8?B?bmQ4TG8rNm5KYWpaaFU2R2tjRVFKTGlUTlgzQ0g3YkkrSmNnUVpNRU03akRQ?=
+ =?utf-8?B?cE4yUTBybVlEVnJNeFhyanBDMHgzQmErL2N2T0ltdzczMUdVbUJjSE90VkZj?=
+ =?utf-8?B?Vm5YTnhPdFNrZ3pUaXBzdjZ3MUV6UmZwdWFZOGtIVnMyM002aVlPaVZCNll2?=
+ =?utf-8?B?Q25DZms5K2ZaZDBCejFha1F1dy9OZjY4Y0xKa3hqa3FaUUhpS2xBRjdSM1lY?=
+ =?utf-8?B?eTJiUXM0ZndIY2VwQWtWY2tkc24vLzlxOFltQ0FUU0plblZHQ2IyTXhqQ3BX?=
+ =?utf-8?B?TGFWY1pJTVVFaHdRckZOcEpUTzJNSEl6OUtBa1FLcFY4cURrb0RPbm5lS0lB?=
+ =?utf-8?B?Q29EQkVxUHFxR0Vyc3Z0SjFHbWhpbzlkY25GdDViQjcyUHphTVgrV3hhcnND?=
+ =?utf-8?B?bjQvZ0tsMjA1UEtJQWlPTWdYWUd2dVY1aXNXdjU5dzJtUldGQnFnV05iUU1i?=
+ =?utf-8?B?cUpYS0NXL04xYXl2T0pGcEZieG1Ea04vY3gwbjdsTHBLT1JGMngzTm5OYVhE?=
+ =?utf-8?B?SEgySUNZVXMyNjBMSnlJekdwejJkbDhQbTVtbXZMYW83dllPMlJXZVFXVyti?=
+ =?utf-8?B?MytnbEgrc1J2N2RwYWxLZ280eXhld1A5cUp2emRwd0hWWkdIMXUvWXkvWnpM?=
+ =?utf-8?B?SGRoRXdlMmNpNzBiYnhaV2k1azFNUHl5MXdrMEI2Vk01U1BKcDlLOHpvNldW?=
+ =?utf-8?B?NXFYVncwenUwNGlPL0I1SDRTNlRaM1BXa0JNajIxMy9YZlhxYlo1cG9wSE05?=
+ =?utf-8?B?RW9rRXJHQmVaRzZwbXpvbkp2SGtpdVRpN3lvZlNFdTJHbEhEU0FobVNiMU5R?=
+ =?utf-8?B?T0JXN0JnNUZPNWdjc2dCT3hMOG03ZkR0UlFGR3UwOVcyMndmZkRBaTlTRU5K?=
+ =?utf-8?B?dGp0TXN6WnA3NXREVmY3ZkJCTkV0NDZvRHJHSXhpVlRZUVhSbmIyL0U4R1E2?=
+ =?utf-8?B?NzZuNXNuTVVoNTBQWmNRdFR2aWowdCtaMFFDam04a3htbmFnR1NqNzIxUlBZ?=
+ =?utf-8?B?dThtMGltaC95U2xCaDdUVStFa0lLSkh0VzdVTjFTR1pmdWpQdGRmS08xYnZl?=
+ =?utf-8?B?NitTaVhDUVVlVktxRitXSmYvcWxyMWhaQXRWUWUrS255ZUY2cEl0Qjc2aTNZ?=
+ =?utf-8?B?akVja1JmeTgyMit4Q1VXRzFxeVdUUVVranFkdnc3eDFFd2VCbXlXWkRNTXNU?=
+ =?utf-8?B?VTNoQjE5NTZaMHF5dEhmVVJoMFRrRFRucW5OWUQ0ZW1KQnlmbXIxWEVjeXNh?=
+ =?utf-8?B?TlQrZ3hOZDhQdFJhb1hSbnhRNG1Yb0JReGdyNEk5RFB0Wnh5L3NDM2FoV1Rl?=
+ =?utf-8?B?WW9CT3NiQ3ZBa1dzbmt2N24zdWdZZGlKRGFXbnA4VlFPREtPZzc3aUEvRFRL?=
+ =?utf-8?B?c3U2dlIyUThSSks5YXRCcVRJSkZHWEdjT2dRQXpVY2NKNFNUdkpONUd2M1pZ?=
+ =?utf-8?B?d0dUeHdtM3JQNS9yakhoT0F1WVluNmJMZ0lsYWJkKzIwRnZNWU1TcTRGaWRX?=
+ =?utf-8?B?YmRENXdwMTRVeEM2bVFJVFJrbGpXcFVYblZzZ0FqdHgrNlFYeDIwVWF4am5y?=
+ =?utf-8?B?R3g1cWtSYVhDcEU0YlZiVVZhdzRrS0FlbGdEeVFOL2NiUG01L2dFKzU2a29O?=
+ =?utf-8?B?ZDlPeDVmOHVQa1RmNEhDSXFsbjc3T1BRUERpWmtsQ29VRGp0cEI4RU0vRnFI?=
+ =?utf-8?B?anRKYjdrbXdqYkxQNWF3WWluSU9ZcnVzVmZLeU9XMGJUWmMycnFad1dHaC9V?=
+ =?utf-8?B?NVNuMjNIMXRIdEIrQklaNmc0YTlEOXhkeWNxNHlQMGJIay82d3J3dDh4OVV2?=
+ =?utf-8?Q?Q8IQ=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 5.15 000/159] 5.15.116-rc1 review
-From: Guenter Roeck <linux@roeck-us.net>
-To: Pavel Machek <pavel@denx.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Thomas Gleixner <tglx@linutronix.de>,
- Ido Schimmel <idosch@nvidia.com>
-References: <20230607200903.652580797@linuxfoundation.org>
- <b979807a-a437-4d3f-98f9-989da52abb30@roeck-us.net>
- <d35b1ff1-e198-481c-b1be-9e22445efe06@roeck-us.net>
- <ZITNw9cv/WoZcSaO@duo.ucw.cz>
- <39b34446-88a7-eeb5-cf95-e4f1843100b3@roeck-us.net>
- <1e9e0ce4-dc47-81d6-e3a5-681d4a9ba9b0@roeck-us.net>
-Content-Language: en-US
-In-Reply-To: <1e9e0ce4-dc47-81d6-e3a5-681d4a9ba9b0@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: sma.de
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM7PR04MB6998.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0c8d9b50-c37f-4bff-2729-08db6b220c2b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jun 2023 08:50:17.9877
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a059b96c-2829-4d11-8837-4cc1ff84735d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: MMf4j68XpSXrzr7v+JJNVhB3FmoT3v1vCci71sHcREwx1/Dw9TDhELAZPW0sa18O
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR04MB7484
 
-On 6/11/23 08:14, Guenter Roeck wrote:
-> On 6/10/23 14:14, Guenter Roeck wrote:
->> Hi,
->>
->> On 6/10/23 12:23, Pavel Machek wrote:
->>> Hi!
->>>
->>>>> Build results:
->>>>>     total: 155 pass: 155 fail: 0
->>>>> Qemu test results:
->>>>>     total: 499 pass: 498 fail: 1
->>>>> Failed tests:
->>>>>     arm:kudo-bmc:multi_v7_defconfig:npcm:usb0.1:nuvoton-npcm730-kudo:rootfs
->>>>>
->>>>> The test failure is spurious and not new. I observe it randomly on
->>>>> multi_v7_defconfig builds, primarily on npcm platforms. There is no error
->>>>> message, just a stalled boot. I have been trying to bisect for a while,
->>>>> but I have not been successful so far. No immediate concern; I just wanted
->>>>> to mention it in case someone else hits the same or a similar problem.
->>>>>
->>>>
->>>> I managed to revise my bisect script sufficiently enough to get reliable
->>>> results. It looks like the culprit is commit 503e554782c9 (" debugobject:
->>>> Ensure pool refill (again)"); see bisect log below. Bisect on four
->>>> different systems all have the same result. After reverting this patch,
->>>> I do not see the problem anymore (again, confirmed on four different
->>>> systems). If anyone has an idea how to debug this, please let me know.
->>>> I'll be happy to give it a try.
->>>
->>> You may want to comment out debug_objects_fill_pool() in
->>> debug_object_activate or debug_object_assert_init to see which one is
->>> causing the failure...
->>>
->>> CONFIG_PREEMPT_RT is disabled for you, right? (Should 5.15 even have
->>> that option?)
->>>
->>
->> CONFIG_PREEMPT_RT is disabled (it depends on ARCH_SUPPORTS_RT which is not
->> enabled by any architecture in v5.15.y).
->>
->> The added call in debug_object_activate() triggers the problem.
->> Any idea what to do about it or how to debug it further ?
->>
-> 
-> I did some more debugging. The call to debug_object_activate()
-> from debug_hrtimer_activate() causes the immediate problem, and the
-> call from debug_timer_activate() causes a second (less likely) problem,
-> where the stall is seen during reboot.
-> 
-> In other words, the problem is (only) seen if DEBUG_OBJECTS_TIMERS
-> is enabled.
-> 
-
-Bisect log between v5.15 and v6.1 below. The fix is all but impossible to backport,
-and I still have no idea what is actually going on. I think I'll just disable
-DEBUG_OBJECTS_TIMERS in affected tests of v5.15.y.
-
-Guenter
-
----
-# fixed: [830b3c68c1fb1e9176028d02ef86f3cf76aa2476] Linux 6.1
-# broken: [8bb7eca972ad531c9b149c0a51ab43a417385813] Linux 5.15
-git bisect start 'v6.1' 'v5.15'
-# broken: [7fa2e481ff2fee20e0338d98489eb9f513ada45f] Merge branch 'big-tcp'
-git bisect broken 7fa2e481ff2fee20e0338d98489eb9f513ada45f
-# fixed: [9e2e5ea3b28f81512c792f30729edb1db0c21f6a] Merge tag 'usb-6.0-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb
-git bisect fixed 9e2e5ea3b28f81512c792f30729edb1db0c21f6a
-# fixed: [4ad680f083ec360e0991c453e18a38ed9ae500d7] Merge tag 'staging-5.19-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging
-git bisect fixed 4ad680f083ec360e0991c453e18a38ed9ae500d7
-# fixed: [2518f226c60d8e04d18ba4295500a5b0b8ac7659] Merge tag 'drm-next-2022-05-25' of git://anongit.freedesktop.org/drm/drm
-git bisect fixed 2518f226c60d8e04d18ba4295500a5b0b8ac7659
-# broken: [fea3043314f30a87ca04fd1219661810600e256f] Merge tag 'ext4_for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/tytso/ext4
-git bisect broken fea3043314f30a87ca04fd1219661810600e256f
-# broken: [f8122500a039abeabfff41b0ad8b6a2c94c1107d] Merge branch 'etnaviv/next' of https://git.pengutronix.de/git/lst/linux into drm-next
-git bisect broken f8122500a039abeabfff41b0ad8b6a2c94c1107d
-# fixed: [7e062cda7d90543ac8c7700fc7c5527d0c0f22ad] Merge tag 'net-next-5.19' of git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next
-git bisect fixed 7e062cda7d90543ac8c7700fc7c5527d0c0f22ad
-# broken: [9fa87dd23251574a29cf948fd16cf39075762f3e] Merge tag 'linux-can-next-for-5.19-20220523' of git://git.kernel.org/pub/scm/linux/kernel/git/mkl/linux-can-next
-git bisect broken 9fa87dd23251574a29cf948fd16cf39075762f3e
-# fixed: [88a618920e9baabc1780479e2fbb68e5551d0563] Merge tag 'docs-5.19' of git://git.lwn.net/linux
-git bisect fixed 88a618920e9baabc1780479e2fbb68e5551d0563
-# broken: [fdaf9a5840acaab18694a19e0eb0aa51162eeeed] Merge tag 'folio-5.19' of git://git.infradead.org/users/willy/pagecache
-git bisect broken fdaf9a5840acaab18694a19e0eb0aa51162eeeed
-# broken: [164f9fcb21cc9a144ca9ebcf85b00c49537f6be2] docs/ja_JP/SubmittingPatches: Suggest the use of scripts/get_maintainer.pl
-git bisect broken 164f9fcb21cc9a144ca9ebcf85b00c49537f6be2
-# broken: [2e17ce1106e04a7f3a83796ec623881487f75dd3] Merge tag 'slab-for-5.19' of git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab
-git bisect broken 2e17ce1106e04a7f3a83796ec623881487f75dd3
-# fixed: [701850dc0c31bfadf75a0a74af7d2c97859945ec] printk, tracing: fix console tracepoint
-git bisect fixed 701850dc0c31bfadf75a0a74af7d2c97859945ec
-# broken: [1fc0ca9e0db61882208650b3603071e9f4b5cfee] printk: add con_printk() macro for console details
-git bisect broken 1fc0ca9e0db61882208650b3603071e9f4b5cfee
-# broken: [2bb2b7b57f81255c13f4395ea911d6bdc70c9fe2] printk: add functions to prefer direct printing
-git bisect broken 2bb2b7b57f81255c13f4395ea911d6bdc70c9fe2
-# fixed: [8e274732115f63c1d09136284431b3555bd5cc56] printk: extend console_lock for per-console locking
-git bisect fixed 8e274732115f63c1d09136284431b3555bd5cc56
-# fixed: [09c5ba0aa2fcfdadb17d045c3ee6f86d69270df7] printk: add kthread console printers
-git bisect fixed 09c5ba0aa2fcfdadb17d045c3ee6f86d69270df7
-# first fixed commit: [09c5ba0aa2fcfdadb17d045c3ee6f86d69270df7] printk: add kthread console printers
-
-
+SGksDQoNCj4gPiBPaywgSSB0aGluayB0aGlzIGlzbid0IG5lZWRlZCBhbnltb3JlIHdpdGggdGhl
+IGxhdGVzdCA1LjE1LjExNg0KPiA+IHJlbGVhc2UsIHJpZ2h0PyAgSWYgbm90LCBwbGVhc2UgbGV0
+IG1lIGtub3cuDQo+ID4NCj4NCj4NCj4gV2l0aCAwYzdlNjZlNWZkICgidHBtLCB0cG1fdGlzOiBS
+ZXF1ZXN0IHRocmVhZGVkIGludGVycnVwdCBoYW5kbGVyIikgYXBwbGllZA0KPiB0aGUgYWJvdmUg
+YnVnIGlzIGZpeGVkIGluIDUuMTUueS4gVGhlcmUgaXMgaG93ZXZlciBzdGlsbCB0aGUgaXNzdWUg
+dGhhdCB0aGUgaW50ZXJydXB0cw0KPiBtYXkgbm90IGJlIGFja25vd2xlZGdlZCBwcm9wZXJseSBp
+biB0aGUgaW50ZXJydXB0IGhhbmRsZXIsIHNpbmNlIHRoZSBjb25jZXJuaW5nDQo+IHJlZ2lzdGVy
+IGlzIHdyaXR0ZW4gd2l0aG91dCB0aGUgcmVxdWlyZWQgbG9jYWxpdHkgaGVsZCAoRmVsaXggbWVu
+dGlvbnMgdGhpcyBhYm92ZSkuDQo+IFRoaXMgY2FuIGJlIGZpeGVkIHdpdGggMGUwNjkyNjViY2U1
+ICgidHBtLCB0cG1fdGlzOiBDbGFpbSBsb2NhbGl0eSBpbiBpbnRlcnJ1cHQNCj4gaGFuZGxlciIp
+Lg0KPg0KPiBTbyBpbnN0ZWFkIG9mIHJldmVydGluZyB0aGUgaW5pdGlhbCBwYXRjaGVzLCBJIHN1
+Z2dlc3QgdG8NCj4NCj4gMS4gYWxzbyBhcHBseSAwZTA2OTI2NWJjZTUgKCJ0cG0sIHRwbV90aXM6
+IENsYWltIGxvY2FsaXR5IGluIGludGVycnVwdCBoYW5kbGVyIikNCj4NCg0KWWVzLCB0aGF0IG9u
+ZSdzIG5lZWRlZCB0byBhdm9pZCB0aGUgSVJRIGJlaW5nIHBlcm1hbmVudGx5IHRyaWdnZXJlZC4N
+Cg0KSWYgSSByZW1lbWJlciBjb3JyZWN0bHkgKCBJIGRpc2FibGVkIHRoZSBJUlEgZm9yIG5vdykg
+ZTY0NGIyZjQ5OCAoInRwbSwNCnRwbV90aXM6IEVuYWJsZSBpbnRlcnJ1cHQgdGVzdCIpIHdhcyBh
+bHNvIG5lY2Vzc2FyeSB0byBmaXggdGhlIGludGVycnVwdA0KdGVzdGluZyBsb2dpYy4NCg0KV2l0
+aG91dCBpdCB0aGUgaW50ZXJydXB0IHdvdWxkbid0IGJlIHRlc3RlZCBhbmQgdGhlIGRyaXZlciB3
+b3VsZCBwb2xsIHRoZSBUUE0NCmFnYWluLiBCdXQgc2luY2UgdGhlIHRlc3QgZGlkbid0IGV4ZWN1
+dGUsIHRoZSBJUlEgd291bGQgYWxzbyBzdGF5IGVuYWJsZWQgaW4NCmJvdGggdGhlIFRQTSBhbmQg
+dGhlIGhvc3QuIFNvLCBsb29raW5nIGF0IC9wcm9jL2ludGVycnVwdHMgb25lIGNvdWxkIHNlZSB0
+aGUNClRQTSdzIElSUSBjb3VudGVyIGJlaW5nIHJlZ2lzdGVyZWQgYW5kIGNvdW50aW5nIHVwIGR1
+cmluZyB1c2UuDQoNClRoYXQncyB3aGVyZSBJIHN0b3BwZWQgdHJ5aW5nIGJlY2F1c2UgSSB3YXMg
+dW5zdXJlIGlmIHRoZSByZW1haW5pbmcgcGF0Y2hlcw0KZnJvbSBMaW5vJ3MgcGF0Y2hzZXQgd2Vy
+ZSBhbHNvIG5lY2Vzc2FyeS4gSXQgZGlkbid0IGRvIGFueXRoaW5nIG9idmlvdXNseSBiYWQNCndo
+ZW4gSSBwb2tlZCB0aGUgVFBNIGZvciByYW5kb20gbnVtYmVycyBvciBoYXNoZXMgZm9yIGEgcXVp
+Y2sgdGVzdC4gQnV0IEkNCmRpZG4ndCB0ZXN0IG90aGVyIChtb3JlIGNvbXBsZXgpIFRQTSBvcGVy
+YXRpb25zIHRoZW4uDQoNClJlZ2FyZHMsDQoNCkZlbGl4DQoNCl9fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KDQpTTUEgU29sYXIgVGVjaG5vbG9neSBB
+Rw0KVm9yc2l0emVuZGVyIGRlcyBBdWZzaWNodHNyYXRzOiBVd2UgS2xlaW5rYXVmDQpWb3JzdGFu
+ZDogRHIuLUluZy4gSnVlcmdlbiBSZWluZXJ0IChWb3JzdGFuZHNzcHJlY2hlciksIEJhcmJhcmEg
+R3JlZ29yDQpIYW5kZWxzcmVnaXN0ZXI6IEFtdHNnZXJpY2h0IEthc3NlbCBIUkIgMzk3Mg0KU2l0
+eiBkZXIgR2VzZWxsc2NoYWZ0OiAzNDI2NiBOaWVzdGV0YWwNClVTdC1JRC1Oci4gREUgMTEzIDA4
+IDU5IDU0DQpXRUVFLVJlZy4tTnIuIERFIDk1ODgxMTUwDQpfX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCg==
