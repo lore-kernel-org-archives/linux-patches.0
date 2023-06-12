@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA9C19523
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94CECC433EF;
-	Mon, 12 Jun 2023 10:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012AA19BA2
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32083C4339B;
+	Mon, 12 Jun 2023 10:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565983;
-	bh=uklwMjG0BMcz3K3iGKfopYhLHaU1LzbYkwgMG+y+vBE=;
+	s=korg; t=1686565986;
+	bh=3g1ezkSeNovKyNA/mYRnkKvsFp4NaVHgDIm4yL0ohA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TiRflv1ETsB/MpFHcjl3xDJ0j/MAqLYeNeCbHxt5wS/qXquPpk79cW2jknUnqldSs
-	 eBJ+gJDN8TovtzzwPYZC2rMdHFMQFQcTQ9jpBH7zXZFCzKdptAPR8Q9VNznarzyhlm
-	 1utLNUcrSgWqvLotZIIzi33S0Xie9sjaNDnosEPI=
+	b=QtmF08sghYmBDd9UBshT23jBK1ILZr+o1F+BzTsat6Kh+D+hwS07zeGzWc+edA010
+	 03/fwA7fAbgXeqHHvJSp2BcVCUL9dNVuvYiJs9URhXmRK2LBv8BJfHvzwngUe6T8sf
+	 pyEhx0P9U7ChM2QNKh45nGdF6zke6xHWOqgQeMh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	Martin Liska <mliska@suse.cz>,
 	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 07/68] blk-iocost: avoid 64-bit division in ioc_timer_fn
-Date: Mon, 12 Jun 2023 12:25:59 +0200
-Message-ID: <20230612101658.771721966@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	cgroups@vger.kernel.org,
+	linux-block@vger.kernel.org,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Subject: [PATCH 5.10 08/68] block/blk-iocost (gcc13): keep large values in a new enum
+Date: Mon, 12 Jun 2023 12:26:00 +0200
+Message-ID: <20230612101658.811733055@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -35,57 +39,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit 5f2779dfa7b8cc7dfd4a1b6586d86e0d193266f3 upstream.
+commit ff1cc97b1f4c10db224f276d9615b22835b8c424 upstream.
 
-The behavior of 'enum' types has changed in gcc-13, so now the
-UNBUSY_THR_PCT constant is interpreted as a 64-bit number because
-it is defined as part of the same enum definition as some other
-constants that do not fit within a 32-bit integer. This in turn
-leads to some inefficient code on 32-bit architectures as well
-as a link error:
+Since gcc13, each member of an enum has the same type as the enum [1]. And
+that is inherited from its members. Provided:
+  VTIME_PER_SEC_SHIFT     = 37,
+  VTIME_PER_SEC           = 1LLU << VTIME_PER_SEC_SHIFT,
+  ...
+  AUTOP_CYCLE_NSEC        = 10LLU * NSEC_PER_SEC,
+the named type is unsigned long.
 
-arm-linux-gnueabi/bin/arm-linux-gnueabi-ld: block/blk-iocost.o: in function `ioc_timer_fn':
-blk-iocost.c:(.text+0x68e8): undefined reference to `__aeabi_uldivmod'
-arm-linux-gnueabi-ld: blk-iocost.c:(.text+0x6908): undefined reference to `__aeabi_uldivmod'
+This generates warnings with gcc-13:
+  block/blk-iocost.c: In function 'ioc_weight_prfill':
+  block/blk-iocost.c:3037:37: error: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'long unsigned int'
 
-Split the enum definition to keep the 64-bit timing constants in
-a separate enum type from those constants that can clearly fit
-within a smaller type.
+  block/blk-iocost.c: In function 'ioc_weight_show':
+  block/blk-iocost.c:3047:34: error: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'long unsigned int'
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230118080706.3303186-1-arnd@kernel.org
+So split the anonymous enum with large values to a separate enum, so
+that they don't affect other members.
+
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
+
+Cc: Martin Liska <mliska@suse.cz>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: cgroups@vger.kernel.org
+Cc: linux-block@vger.kernel.org
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20221213120826.17446-1-jirislaby@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-iocost.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ block/blk-iocost.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/block/blk-iocost.c
 +++ b/block/blk-iocost.c
-@@ -256,6 +256,11 @@ enum {
- 	VRATE_MIN		= VTIME_PER_USEC * VRATE_MIN_PPM / MILLION,
- 	VRATE_CLAMP_ADJ_PCT	= 4,
+@@ -232,7 +232,9 @@ enum {
  
-+	/* switch iff the conditions are met for longer than this */
-+	AUTOP_CYCLE_NSEC	= 10LLU * NSEC_PER_SEC,
+ 	/* 1/64k is granular enough and can easily be handled w/ u32 */
+ 	WEIGHT_ONE		= 1 << 16,
 +};
-+
+ 
 +enum {
- 	/* if IOs end up waiting for requests, issue less */
- 	RQ_WAIT_BUSY_PCT	= 5,
- 
-@@ -294,9 +299,6 @@ enum {
- 	/* don't let cmds which take a very long time pin lagging for too long */
- 	MAX_LAGGING_PERIODS	= 10,
- 
--	/* switch iff the conditions are met for longer than this */
--	AUTOP_CYCLE_NSEC	= 10LLU * NSEC_PER_SEC,
--
  	/*
- 	 * Count IO size in 4k pages.  The 12bit shift helps keeping
- 	 * size-proportional components of cost calculation in closer
+ 	 * As vtime is used to calculate the cost of each IO, it needs to
+ 	 * be fairly high precision.  For example, it should be able to
 
 
