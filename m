@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E35B171BB
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:34:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A799BC433D2;
-	Mon, 12 Jun 2023 10:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6041DF4F
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:34:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA40C433EF;
+	Mon, 12 Jun 2023 10:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566083;
-	bh=RPXAC4Lelcc4Sea6c6i2iBwEgOdEE2D29P4NRByblag=;
+	s=korg; t=1686566085;
+	bh=roT0qrx+uOvZ47/Z71n4JqKsMnpZLy3cT7TS09lx6tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPsSEeDsvVomtrQv08y+7faI4t5sRXpzZNxexxKKfFCU3Btrhj0DR2OANsja1vHQ1
-	 LiiKv+y4GUcPcaNIpLBocOhrrwzbrwncv+jb4+JD31099XICdWQNV9BmviZZsaDU9g
-	 NVMpZ5X7r831I5DWlU4O8sQFlQrocYIgAja+X9Ss=
+	b=vX19FuAAvdciRcK/M/xWLYTotCA+r2WyCQVcRDl66CiHJFN32QFeMqbqZNI+oMNMM
+	 h0SkeYa73pA3ZzcGdTpUtT9e3O2d2HUcJqzJVHCh4lfXE3sh2KJukiGOqZ9W0V8gLJ
+	 sXqyspkGIb5Z3fEJiJsa06TArQn8KdxEALLFZDaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruan Jinjie <ruanjinjie@huawei.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 58/68] riscv: fix kprobe __user string arg print fault issue
-Date: Mon, 12 Jun 2023 12:26:50 +0200
-Message-ID: <20230612101700.851442257@linuxfoundation.org>
+Subject: [PATCH 5.10 59/68] vhost: support PACKED when setting-getting vring_base
+Date: Mon, 12 Jun 2023 12:26:51 +0200
+Message-ID: <20230612101700.892866144@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -36,63 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruan Jinjie <ruanjinjie@huawei.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 99a670b2069c725a7b50318aa681d9cae8f89325 ]
+[ Upstream commit 55d8122f5cd62d5aaa225d7167dcd14a44c850b9 ]
 
-On riscv qemu platform, when add kprobe event on do_sys_open() to show
-filename string arg, it just print fault as follow:
+Use the right structs for PACKED or split vqs when setting and
+getting the vring base.
 
-echo 'p:myprobe do_sys_open dfd=$arg1 filename=+0($arg2):string flags=$arg3
-mode=$arg4' > kprobe_events
-
-bash-166     [000] ...1.   360.195367: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename=(fault) flags=0x8241 mode=0x1b6
-
-bash-166     [000] ...1.   360.219369: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename=(fault) flags=0x8241 mode=0x1b6
-
-bash-191     [000] ...1.   360.378827: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename=(fault) flags=0x98800 mode=0x0
-
-As riscv do not select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE,
-the +0($arg2) addr is processed as a kernel address though it is a
-userspace address, cause the above filename=(fault) print. So select
-ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE to avoid the issue, after that the
-kprobe trace is ok as below:
-
-bash-166     [000] ...1.    96.767641: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename="/dev/null" flags=0x8241 mode=0x1b6
-
-bash-166     [000] ...1.    96.793751: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename="/dev/null" flags=0x8241 mode=0x1b6
-
-bash-177     [000] ...1.    96.962354: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename="/sys/kernel/debug/tracing/events/kprobes/"
-flags=0x98800 mode=0x0
-
-Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
-Acked-by: Björn Töpel <bjorn@rivosinc.com>
-Fixes: 0ebeea8ca8a4 ("bpf: Restrict bpf_probe_read{, str}() only to archs where they work")
-Link: https://lore.kernel.org/r/20230504072910.3742842-1-ruanjinjie@huawei.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Message-Id: <20230424225031.18947-3-shannon.nelson@amd.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vhost/vhost.c | 18 +++++++++++++-----
+ drivers/vhost/vhost.h |  8 ++++++--
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index c192bd7305dc6..b28fabfc91bf7 100644
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -22,6 +22,7 @@ config RISCV
- 	select ARCH_HAS_GIGANTIC_PAGE
- 	select ARCH_HAS_KCOV
- 	select ARCH_HAS_MMIOWB
-+	select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE
- 	select ARCH_HAS_PTE_SPECIAL
- 	select ARCH_HAS_SET_DIRECT_MAP
- 	select ARCH_HAS_SET_MEMORY
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 1f9a1554ce5f4..de110363af521 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1621,17 +1621,25 @@ long vhost_vring_ioctl(struct vhost_dev *d, unsigned int ioctl, void __user *arg
+ 			r = -EFAULT;
+ 			break;
+ 		}
+-		if (s.num > 0xffff) {
+-			r = -EINVAL;
+-			break;
++		if (vhost_has_feature(vq, VIRTIO_F_RING_PACKED)) {
++			vq->last_avail_idx = s.num & 0xffff;
++			vq->last_used_idx = (s.num >> 16) & 0xffff;
++		} else {
++			if (s.num > 0xffff) {
++				r = -EINVAL;
++				break;
++			}
++			vq->last_avail_idx = s.num;
+ 		}
+-		vq->last_avail_idx = s.num;
+ 		/* Forget the cached index value. */
+ 		vq->avail_idx = vq->last_avail_idx;
+ 		break;
+ 	case VHOST_GET_VRING_BASE:
+ 		s.index = idx;
+-		s.num = vq->last_avail_idx;
++		if (vhost_has_feature(vq, VIRTIO_F_RING_PACKED))
++			s.num = (u32)vq->last_avail_idx | ((u32)vq->last_used_idx << 16);
++		else
++			s.num = vq->last_avail_idx;
+ 		if (copy_to_user(argp, &s, sizeof s))
+ 			r = -EFAULT;
+ 		break;
+diff --git a/drivers/vhost/vhost.h b/drivers/vhost/vhost.h
+index 8f80d6b0d843e..e00347f2b4d30 100644
+--- a/drivers/vhost/vhost.h
++++ b/drivers/vhost/vhost.h
+@@ -87,13 +87,17 @@ struct vhost_virtqueue {
+ 	/* The routine to call when the Guest pings us, or timeout. */
+ 	vhost_work_fn_t handle_kick;
+ 
+-	/* Last available index we saw. */
++	/* Last available index we saw.
++	 * Values are limited to 0x7fff, and the high bit is used as
++	 * a wrap counter when using VIRTIO_F_RING_PACKED. */
+ 	u16 last_avail_idx;
+ 
+ 	/* Caches available index value from user. */
+ 	u16 avail_idx;
+ 
+-	/* Last index we used. */
++	/* Last index we used.
++	 * Values are limited to 0x7fff, and the high bit is used as
++	 * a wrap counter when using VIRTIO_F_RING_PACKED. */
+ 	u16 last_used_idx;
+ 
+ 	/* Used flags */
 -- 
 2.39.2
 
