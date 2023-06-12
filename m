@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96E11106
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471C0C433D2;
-	Mon, 12 Jun 2023 10:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5AD196
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1109EC433EF;
+	Mon, 12 Jun 2023 10:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566129;
-	bh=+itoulZhzRZZvvd5XathDN1MInvOa+/cAW6g8Xg3bko=;
+	s=korg; t=1686566132;
+	bh=joQZeV5ipw6eWGHCmzQA13SZ80alg8b5kPBnt9FuKV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHnfFO8Izf5uJDBb1/XFP/ayUio0QzoLZST89ePgPXfjOn++pekVKF9UiAV4jNH83
-	 tEAsFAu6f7drJYZuHSvIpKqF9I2Il3fTJoIpRMIXRG3n3OjSXbY20aTIx5rv458qaE
-	 XT7OLgClYNVCt3hxnGXlsO3QYF7gUbmfdBmeD2d4=
+	b=zx0D11a2hMIPt2A0/YWcsnik4R26tthDV0uibfplGyeq/LabjnoizECAOvAFU6DvO
+	 PVzRYm2fn0/OQ3Q/tPgKyfr26+wHHRGik26OqVlGHETYzWSkml7GT52kOlxqzrXCVl
+	 Nm2GK60h4AnavJvNGXDxhyB2WsYMrNSycikUo0tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 56/68] i2c: sprd: Delete i2c adapter in .removes error path
-Date: Mon, 12 Jun 2023 12:26:48 +0200
-Message-ID: <20230612101700.765848017@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 47/68] Bluetooth: hci_qca: fix debugfs registration
+Date: Mon, 12 Jun 2023 12:26:39 +0200
+Message-ID: <20230612101700.371144611@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -36,50 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit ca0aa17f2db3468fd017038d23a78e17388e2f67 ]
+commit 47c5d829a3e326b7395352a10fc8a6effe7afa15 upstream.
 
-If pm runtime resume fails the .remove callback used to exit early. This
-resulted in an error message by the driver core but the device gets
-removed anyhow. This lets the registered i2c adapter stay around with an
-unbound parent device.
+Since commit 3e4be65eb82c ("Bluetooth: hci_qca: Add poweroff support
+during hci down for wcn3990"), the setup callback which registers the
+debugfs interface can be called multiple times.
 
-So only skip clk disabling if resume failed, but do delete the adapter.
+This specifically leads to the following error when powering on the
+controller:
 
-Fixes: 8b9ec0719834 ("i2c: Add Spreadtrum I2C controller driver")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	debugfs: Directory 'ibs' with parent 'hci0' already present!
+
+Add a driver flag to avoid trying to register the debugfs interface more
+than once.
+
+Fixes: 3e4be65eb82c ("Bluetooth: hci_qca: Add poweroff support during hci down for wcn3990")
+Cc: stable@vger.kernel.org	# 4.20
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-sprd.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_qca.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-sprd.c b/drivers/i2c/busses/i2c-sprd.c
-index 8ead7e021008c..a520aa06d2cb5 100644
---- a/drivers/i2c/busses/i2c-sprd.c
-+++ b/drivers/i2c/busses/i2c-sprd.c
-@@ -576,12 +576,14 @@ static int sprd_i2c_remove(struct platform_device *pdev)
- 	struct sprd_i2c *i2c_dev = platform_get_drvdata(pdev);
- 	int ret;
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -78,7 +78,8 @@ enum qca_flags {
+ 	QCA_HW_ERROR_EVENT,
+ 	QCA_SSR_TRIGGERED,
+ 	QCA_BT_OFF,
+-	QCA_ROM_FW
++	QCA_ROM_FW,
++	QCA_DEBUGFS_CREATED,
+ };
  
--	ret = pm_runtime_resume_and_get(i2c_dev->dev);
-+	ret = pm_runtime_get_sync(i2c_dev->dev);
- 	if (ret < 0)
--		return ret;
-+		dev_err(&pdev->dev, "Failed to resume device (%pe)\n", ERR_PTR(ret));
+ enum qca_capabilities {
+@@ -633,6 +634,9 @@ static void qca_debugfs_init(struct hci_
+ 	if (!hdev->debugfs)
+ 		return;
  
- 	i2c_del_adapter(&i2c_dev->adap);
--	clk_disable_unprepare(i2c_dev->clk);
++	if (test_and_set_bit(QCA_DEBUGFS_CREATED, &qca->flags))
++		return;
 +
-+	if (ret >= 0)
-+		clk_disable_unprepare(i2c_dev->clk);
+ 	ibs_dir = debugfs_create_dir("ibs", hdev->debugfs);
  
- 	pm_runtime_put_noidle(i2c_dev->dev);
- 	pm_runtime_disable(i2c_dev->dev);
--- 
-2.39.2
-
+ 	/* read only */
 
 
