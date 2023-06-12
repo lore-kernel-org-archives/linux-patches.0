@@ -1,28 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4202218C35
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:28:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E018C433D2;
-	Mon, 12 Jun 2023 10:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBF318AE1
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:28:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064F6C4339B;
+	Mon, 12 Jun 2023 10:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565717;
-	bh=ECaE4BOPKFRrvC3YXWHLf3QqNn1LUGoQ8FNaC1hSaS4=;
+	s=korg; t=1686565720;
+	bh=vKN0Ci9+WGjDnu/t3A75vI+hx/BXSg1Kpu4xyEQ7Izs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tp1IQ1VPvnY1ID0Ps2JL8sfJQ0qr0YdtxO1gL2Fm/A943MXe7U4yv9P+iE1RddN5C
-	 ORVV84LU/JM7YApRrGFfHCrHlGevrPN+Irs5qJMY9GuMqmILdF6FtdTAFCFbvbUpY1
-	 16BlYskUX4oQtzs/iJFvovcNPw7XZDFQ0BMYUl/4=
+	b=0d/6wsRa9Z+kGTLCrEy8ESQpo6wJTUifsDEaFHeLnEaPvyOhqp7eVHdG0TlXHk1Kh
+	 b/gRNpS55A0ebExaAL1Alt9o/YF+ci22zko8TrCDKvHyQxVZp/yCe1LLWZxrjVC5cQ
+	 1G4dGqtBTWk7HYN6VzlbcpQFYB6Z9Tpn1DMI0buc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	stable@kernel.org,
-	Vladislav Efanov <VEfanov@ispras.ru>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 4.14 11/21] batman-adv: Broken sync while rescheduling delayed work
-Date: Mon, 12 Jun 2023 12:26:06 +0200
-Message-ID: <20230612101651.446159558@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH 4.14 02/21] i40e: fix build warnings in i40e_alloc.h
+Date: Mon, 12 Jun 2023 12:25:57 +0200
+Message-ID: <20230612101651.160594831@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.048240731@linuxfoundation.org>
 References: <20230612101651.048240731@linuxfoundation.org>
@@ -36,58 +32,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+Not upstream as it was fixed in a much larger api change in newer
+kernels.
 
-commit abac3ac97fe8734b620e7322a116450d7f90aa43 upstream.
+gcc-13 rightfully complains that enum is not the same as an int, so fix
+up the function prototypes in i40e_alloc.h to be correct, solving a
+bunch of build warnings.
 
-Syzkaller got a lot of crashes like:
-KASAN: use-after-free Write in *_timers*
-
-All of these crashes point to the same memory area:
-
-The buggy address belongs to the object at ffff88801f870000
- which belongs to the cache kmalloc-8k of size 8192
-The buggy address is located 5320 bytes inside of
- 8192-byte region [ffff88801f870000, ffff88801f872000)
-
-This area belongs to :
-        batadv_priv->batadv_priv_dat->delayed_work->timer_list
-
-The reason for these issues is the lack of synchronization. Delayed
-work (batadv_dat_purge) schedules new timer/work while the device
-is being deleted. As the result new timer/delayed work is set after
-cancel_delayed_work_sync() was called. So after the device is freed
-the timer list contains pointer to already freed memory.
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Cc: stable@kernel.org
-Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
-Acked-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/distributed-arp-table.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_alloc.h |   17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -60,7 +60,6 @@ static void batadv_dat_purge(struct work
-  */
- static void batadv_dat_start_timer(struct batadv_priv *bat_priv)
- {
--	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
- 	queue_delayed_work(batadv_event_workqueue, &bat_priv->dat.work,
- 			   msecs_to_jiffies(10000));
- }
-@@ -774,6 +773,7 @@ int batadv_dat_init(struct batadv_priv *
- 	if (!bat_priv->dat.hash)
- 		return -ENOMEM;
+--- a/drivers/net/ethernet/intel/i40e/i40e_alloc.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_alloc.h
+@@ -43,16 +43,11 @@ enum i40e_memory_type {
+ };
  
-+	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
- 	batadv_dat_start_timer(bat_priv);
+ /* prototype for functions used for dynamic memory allocation */
+-i40e_status i40e_allocate_dma_mem(struct i40e_hw *hw,
+-					    struct i40e_dma_mem *mem,
+-					    enum i40e_memory_type type,
+-					    u64 size, u32 alignment);
+-i40e_status i40e_free_dma_mem(struct i40e_hw *hw,
+-					struct i40e_dma_mem *mem);
+-i40e_status i40e_allocate_virt_mem(struct i40e_hw *hw,
+-					     struct i40e_virt_mem *mem,
+-					     u32 size);
+-i40e_status i40e_free_virt_mem(struct i40e_hw *hw,
+-					 struct i40e_virt_mem *mem);
++int i40e_allocate_dma_mem(struct i40e_hw *hw, struct i40e_dma_mem *mem,
++			  enum i40e_memory_type type, u64 size, u32 alignment);
++int i40e_free_dma_mem(struct i40e_hw *hw, struct i40e_dma_mem *mem);
++int i40e_allocate_virt_mem(struct i40e_hw *hw, struct i40e_virt_mem *mem,
++			   u32 size);
++int i40e_free_virt_mem(struct i40e_hw *hw, struct i40e_virt_mem *mem);
  
- 	batadv_tvlv_handler_register(bat_priv, batadv_dat_tvlv_ogm_handler_v1,
+ #endif /* _I40E_ALLOC_H_ */
 
 
