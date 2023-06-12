@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024BD134AE
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117EBC4339B;
-	Mon, 12 Jun 2023 10:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F775134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC9DC433D2;
+	Mon, 12 Jun 2023 10:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566472;
-	bh=B+BH5zlbMYjdvT+q1uCXJ/zua4sytV2WLsDB9xKTw0k=;
+	s=korg; t=1686566475;
+	bh=I9tw31ccXAiapgDco5eiqTsmhE7JKVcE+ti8f88OeGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I8xJB8iovWYETWvMAxlWk8dxXvCxuS3lixuZ9r4q8LejqY1+ppO8I7UldMhzfItxF
-	 ckSt79ETycudONw8Trq+TWmMmX2CWGSTmyoK+YHGOs8yuQQFgHzcgYdbn1VRIftmP/
-	 Gg5Y5ULBfQb4ydc0jTcfpEyPYPJRuk5YGZ/+r/2c=
+	b=ukhSxIOnBBVPkbcPYJ+uK19TzsSkShTE0R0QH5HUuqw0ntqmkqrZ+29Vb4hvNKp1B
+	 6iwKvuLmWMNWMvzpAFTeGKtpDYyZ/7K2e5zOg4r74XYmjx8YhKiUYXf4O9HnyWY3O9
+	 hPdF+/DaXHyeCkxsD5JbN/fnOHFEHCfZbt5icrwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/132] drm/i915/selftests: Add some missing error propagation
-Date: Mon, 12 Jun 2023 12:26:19 +0200
-Message-ID: <20230612101712.318950123@linuxfoundation.org>
+Subject: [PATCH 6.1 028/132] wifi: mac80211: mlme: fix non-inheritence element
+Date: Mon, 12 Jun 2023 12:26:02 +0200
+Message-ID: <20230612101711.515390402@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -37,71 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 79d0150d2d983a4f6efee676cea06027f586fcd0 ]
+[ Upstream commit 68c228557d52616cf040651abefda9839de7086a ]
 
-Add some missing error propagation in live_parallel_switch.
+There were two bugs when creating the non-inheritence
+element:
+ 1) 'at_extension' needs to be declared outside the loop,
+    otherwise the value resets every iteration and we
+    can never really switch properly
+ 2) 'added' never got set to true, so we always cut off
+    the extension element again at the end of the function
 
-To avoid needlessly burdening the various backport processes, note I am
-not marking it as a fix against any patches and not copying stable since
-it is debug/selftests only code.
+This shows another issue that we might add a list but no
+extension list, but we need to make the extension list a
+zero-length one in that case.
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Fixes: 50d16d44cce4 ("drm/i915/selftests: Exercise context switching in parallel")
-Fixes: 6407cf533217 ("drm/i915/selftests: Stop using kthread_stop()")
-Link: https://patchwork.freedesktop.org/patch/msgid/20230605131135.396854-1-tvrtko.ursulin@linux.intel.com
-(cherry picked from commit 412fa1f097f48c8c1321806dd25e46618e0da147)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fix all these issues. While at it, add a comment explaining
+the trim.
+
+Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230604120651.3addaa5c4782.If3a78f9305997ad7ef4ba7ffc17a8234c956f613@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/i915/gem/selftests/i915_gem_context.c  | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/mac80211/mlme.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c
-index d8864444432b7..a4858be12ee76 100644
---- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c
-+++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c
-@@ -346,8 +346,10 @@ static int live_parallel_switch(void *arg)
- 				continue;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 0125b3e6175b7..dc9e7eb7dd857 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -1143,6 +1143,7 @@ static void ieee80211_add_non_inheritance_elem(struct sk_buff *skb,
+ 					       const u16 *inner)
+ {
+ 	unsigned int skb_len = skb->len;
++	bool at_extension = false;
+ 	bool added = false;
+ 	int i, j;
+ 	u8 *len, *list_len = NULL;
+@@ -1154,7 +1155,6 @@ static void ieee80211_add_non_inheritance_elem(struct sk_buff *skb,
+ 	for (i = 0; i < PRESENT_ELEMS_MAX && outer[i]; i++) {
+ 		u16 elem = outer[i];
+ 		bool have_inner = false;
+-		bool at_extension = false;
  
- 			ce = intel_context_create(data[m].ce[0]->engine);
--			if (IS_ERR(ce))
-+			if (IS_ERR(ce)) {
-+				err = PTR_ERR(ce);
- 				goto out;
-+			}
- 
- 			err = intel_context_pin(ce);
- 			if (err) {
-@@ -367,8 +369,10 @@ static int live_parallel_switch(void *arg)
- 
- 		worker = kthread_create_worker(0, "igt/parallel:%s",
- 					       data[n].ce[0]->engine->name);
--		if (IS_ERR(worker))
-+		if (IS_ERR(worker)) {
-+			err = PTR_ERR(worker);
- 			goto out;
-+		}
- 
- 		data[n].worker = worker;
- 	}
-@@ -397,8 +401,10 @@ static int live_parallel_switch(void *arg)
- 			}
+ 		/* should at least be sorted in the sense of normal -> ext */
+ 		WARN_ON(at_extension && elem < PRESENT_ELEM_EXT_OFFS);
+@@ -1183,8 +1183,14 @@ static void ieee80211_add_non_inheritance_elem(struct sk_buff *skb,
  		}
- 
--		if (igt_live_test_end(&t))
--			err = -EIO;
-+		if (igt_live_test_end(&t)) {
-+			err = err ?: -EIO;
-+			break;
-+		}
+ 		*list_len += 1;
+ 		skb_put_u8(skb, (u8)elem);
++		added = true;
  	}
  
- out:
++	/* if we added a list but no extension list, make a zero-len one */
++	if (added && (!at_extension || !list_len))
++		skb_put_u8(skb, 0);
++
++	/* if nothing added remove extension element completely */
+ 	if (!added)
+ 		skb_trim(skb, skb_len);
+ 	else
 -- 
 2.39.2
 
