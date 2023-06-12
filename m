@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C32D18C35
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D46C433D2;
-	Mon, 12 Jun 2023 10:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376BB18C35
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD28C433EF;
+	Mon, 12 Jun 2023 10:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565770;
-	bh=YW6QTg2KfihgPJyA0r8A1bdBDrJYlu2pK0pBJD0r5F0=;
+	s=korg; t=1686565773;
+	bh=JBBUq4gbrULBo0HzY6iuBgY8Jszzi4xcY3pGvuepYDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VsHSIxz5PKb/NV+3KWiQ94XQMB29toi8oNrjxwo9T9Lr+SjDgl7uCJkngjtDOgFul
-	 Z0f+ev0zfVT2TvTQIGpvSziX1hkUN25vpyiCpQi6lrPfVfS4FVhhEvcRde9UxFJBxi
-	 HDBCblQveXpHlmSGPci5e9SreizbDU9hIliRM8Tk=
+	b=ZcjhFrVGRz5mpgXH59Sbpk8XSq5beBrc42C5BUZzy2uVad3SlieHM8Bl/UoT6yffZ
+	 6EC4zBqZokaMzMd15FBp5A77pn6mRv4BnFBfCH37PSO4g7fxxwM9IvFmTnBH3oQnCF
+	 ADSqheF9G3akUOa4QeSm1I3XgAnwN91ny7bGE2dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev
-Subject: [PATCH 4.19 01/23] i40iw: fix build warning in i40iw_manage_apbvt()
-Date: Mon, 12 Jun 2023 12:26:02 +0200
-Message-ID: <20230612101651.206533082@linuxfoundation.org>
+	patches@lists.linux.dev,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 10/23] net: sched: fix possible refcount leak in tc_chain_tmplt_add()
+Date: Mon, 12 Jun 2023 12:26:11 +0200
+Message-ID: <20230612101651.506041329@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.138592130@linuxfoundation.org>
 References: <20230612101651.138592130@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,30 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Not upstream as this function is no longer around anymore.
+From: Hangyu Hua <hbh25y@gmail.com>
 
-The function i40iw_manage_apbvt() has the wrong prototype match from the
-.h file to the .c declaration, so fix it up, otherwise gcc-13 complains
-(rightfully) that the type is incorrect.
+[ Upstream commit 44f8baaf230c655c249467ca415b570deca8df77 ]
 
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+try_module_get will be called in tcf_proto_lookup_ops. So module_put needs
+to be called to drop the refcount if ops don't implement the required
+function.
+
+Fixes: 9f407f1768d3 ("net: sched: introduce chain templates")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/i40iw/i40iw.h |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/sched/cls_api.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/infiniband/hw/i40iw/i40iw.h
-+++ b/drivers/infiniband/hw/i40iw/i40iw.h
-@@ -411,9 +411,8 @@ void i40iw_manage_arp_cache(struct i40iw
- 			    bool ipv4,
- 			    u32 action);
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index fdd4af137c9fe..6166bbad97536 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -1838,6 +1838,7 @@ static int tc_chain_tmplt_add(struct tcf_chain *chain, struct net *net,
+ 		return PTR_ERR(ops);
+ 	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump) {
+ 		NL_SET_ERR_MSG(extack, "Chain templates are not supported with specified classifier");
++		module_put(ops->owner);
+ 		return -EOPNOTSUPP;
+ 	}
  
--int i40iw_manage_apbvt(struct i40iw_device *iwdev,
--		       u16 accel_local_port,
--		       bool add_port);
-+enum i40iw_status_code i40iw_manage_apbvt(struct i40iw_device *iwdev,
-+					  u16 accel_local_port, bool add_port);
- 
- struct i40iw_cqp_request *i40iw_get_cqp_request(struct i40iw_cqp *cqp, bool wait);
- void i40iw_free_cqp_request(struct i40iw_cqp *cqp, struct i40iw_cqp_request *cqp_request);
+-- 
+2.39.2
+
 
 
