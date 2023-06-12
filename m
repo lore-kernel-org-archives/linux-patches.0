@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EAB18C35
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D14CC433D2;
-	Mon, 12 Jun 2023 10:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8981C18C35
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F68C433D2;
+	Mon, 12 Jun 2023 10:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565791;
-	bh=vfjv2kynwe9F8iphwJjPyAH/i4yW5V1N13gFEty/Zbs=;
+	s=korg; t=1686565794;
+	bh=Tbu2ok51QPVVY5W7T+bALWIj77KRewtAb9WN5gCVu5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LMz2h/UOXr1ib+shDiqP5S1mqiVAkMH3WsFcgATQ85tTnQIJFZx4SL8zQaMJb5l58
-	 xgyzeWZmIuVXSI4rQbd5rDPFGPQkzjxny6q1vzHCsyp+dDsGYc7CNQs+iuUxvnYUGd
-	 kmh2uaSikxkoncpoHDoXiQ91cVRdCibHG2pMpBQ8=
+	b=qTUPiOEMtVjLI+eDhvxISkaZYY/KlB45YQ1mR5ol46Ca25ucDLm3O58gLOOszBV/G
+	 R5dyeyRTQmghDt86fpp+AxZHmbRaW0IDD0zVBlpCiIUHzejbdUalKCNyvqA2GCDk3S
+	 g4e9Nmx7M6Gg+WZd+qJtEiwflHcXjZMIrnZ/Xk04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 4.19 17/23] Bluetooth: Fix use-after-free in hci_remove_ltk/hci_remove_irk
-Date: Mon, 12 Jun 2023 12:26:18 +0200
-Message-ID: <20230612101651.727346851@linuxfoundation.org>
+	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 4.19 18/23] pinctrl: meson-axg: add missing GPIOA_18 gpio group
+Date: Mon, 12 Jun 2023 12:26:19 +0200
+Message-ID: <20230612101651.756341747@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.138592130@linuxfoundation.org>
 References: <20230612101651.138592130@linuxfoundation.org>
@@ -34,48 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Martin Hundebøll <martin@geanix.com>
 
-commit c5d2b6fa26b5b8386a9cc902cdece3a46bef2bd2 upstream.
+commit 5b10ff013e8a57f8845615ac2cc37edf7f6eef05 upstream.
 
-Similar to commit 0f7d9b31ce7a ("netfilter: nf_tables: fix use-after-free
-in nft_set_catchall_destroy()"). We can not access k after kfree_rcu()
-call.
+Without this, the gpio cannot be explicitly mux'ed to its gpio function.
 
+Fixes: 83c566806a68a ("pinctrl: meson-axg: Add new pinctrl driver for Meson AXG SoC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Martin Hundebøll <martin@geanix.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Rokosov <ddrokosov@sberdevices.ru>
+Link: https://lore.kernel.org/r/20230512064925.133516-1-martin@geanix.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pinctrl/meson/pinctrl-meson-axg.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2517,10 +2517,10 @@ int hci_remove_link_key(struct hci_dev *
- 
- int hci_remove_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 bdaddr_type)
- {
--	struct smp_ltk *k;
-+	struct smp_ltk *k, *tmp;
- 	int removed = 0;
- 
--	list_for_each_entry_rcu(k, &hdev->long_term_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->long_term_keys, list) {
- 		if (bacmp(bdaddr, &k->bdaddr) || k->bdaddr_type != bdaddr_type)
- 			continue;
- 
-@@ -2536,9 +2536,9 @@ int hci_remove_ltk(struct hci_dev *hdev,
- 
- void hci_remove_irk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 addr_type)
- {
--	struct smp_irk *k;
-+	struct smp_irk *k, *tmp;
- 
--	list_for_each_entry_rcu(k, &hdev->identity_resolving_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->identity_resolving_keys, list) {
- 		if (bacmp(bdaddr, &k->bdaddr) || k->addr_type != addr_type)
- 			continue;
+--- a/drivers/pinctrl/meson/pinctrl-meson-axg.c
++++ b/drivers/pinctrl/meson/pinctrl-meson-axg.c
+@@ -400,6 +400,7 @@ static struct meson_pmx_group meson_axg_
+ 	GPIO_GROUP(GPIOA_15),
+ 	GPIO_GROUP(GPIOA_16),
+ 	GPIO_GROUP(GPIOA_17),
++	GPIO_GROUP(GPIOA_18),
+ 	GPIO_GROUP(GPIOA_19),
+ 	GPIO_GROUP(GPIOA_20),
  
 
 
