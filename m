@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE33011C99
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66781C4339B;
-	Mon, 12 Jun 2023 10:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87583DF4F
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6BAC433EF;
+	Mon, 12 Jun 2023 10:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567082;
-	bh=8VrfnGZ1rfHOZ/yFldYrKcKJSmi/In6gdkVhTRolang=;
+	s=korg; t=1686567085;
+	bh=/4jC9wN7Ti7pVJlnkhXEhbVX9W7/1Y3g8dKtZDXVJM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L3w8UVBKUM5LI3L3E4DTbZwaF4VnNEp5GOoE7hkd/bevTaGcfrKZcJkOTfmNBqwed
-	 efZ2hCwCxAhgHxip6BIG/QYwCySl+Vl0rRPjnmSMkVnh+kNAnz3v8bIhaw+VbbsSkG
-	 xy8To9X4sTFJ5mpGnl5qFQS2bi4mYO4JtzNKjCHY=
+	b=m4r0jtnrVR1tYO+oQGcKQyvWC80ii/ob5zbKnd6PhiUIU6Mt3hQWx+1Z8fgZaFuhu
+	 SxNtBWo7gW+6hTW02nhOFASi14U/UyORt/NO2RwlTbR5AMyOJuBKHHmEuQwxFaaJwU
+	 Y3k8ChPUQsiig2QWhU9wAt5bl6Ys6KbiJdza25R4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruihan Li <lrh2000@pku.edu.cn>
-Subject: [PATCH 6.3 115/160] usb: usbfs: Use consistent mmap functions
-Date: Mon, 12 Jun 2023 12:27:27 +0200
-Message-ID: <20230612101720.326479662@linuxfoundation.org>
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	David Hildenbrand <david@redhat.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>
+Subject: [PATCH 6.3 116/160] mm: page_table_check: Make it dependent on EXCLUSIVE_SYSTEM_RAM
+Date: Mon, 12 Jun 2023 12:27:28 +0200
+Message-ID: <20230612101720.370502304@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,58 +37,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Ruihan Li <lrh2000@pku.edu.cn>
 
-commit d0b861653f8c16839c3035875b556afc4472f941 upstream.
+commit 81a31a860bb61d54eb688af2568d9332ed9b8942 upstream.
 
-When hcd->localmem_pool is non-null, localmem_pool is used to allocate
-DMA memory. In this case, the dma address will be properly returned (in
-dma_handle), and dma_mmap_coherent should be used to map this memory
-into the user space. However, the current implementation uses
-pfn_remap_range, which is supposed to map normal pages.
+Without EXCLUSIVE_SYSTEM_RAM, users are allowed to map arbitrary
+physical memory regions into the userspace via /dev/mem. At the same
+time, pages may change their properties (e.g., from anonymous pages to
+named pages) while they are still being mapped in the userspace, leading
+to "corruption" detected by the page table check.
 
-Instead of repeating the logic in the memory allocation function, this
-patch introduces a more robust solution. Here, the type of allocated
-memory is checked by testing whether dma_handle is properly set. If
-dma_handle is properly returned, it means some DMA pages are allocated
-and dma_mmap_coherent should be used to map them. Otherwise, normal
-pages are allocated and pfn_remap_range should be called. This ensures
-that the correct mmap functions are used consistently, independently
-with logic details that determine which type of memory gets allocated.
+To avoid these false positives, this patch makes PAGE_TABLE_CHECK
+depends on EXCLUSIVE_SYSTEM_RAM. This dependency is understandable
+because PAGE_TABLE_CHECK is a hardening technique but /dev/mem without
+STRICT_DEVMEM (i.e., !EXCLUSIVE_SYSTEM_RAM) is itself a security
+problem.
 
-Fixes: a0e710a7def4 ("USB: usbfs: fix mmap dma mismatch")
-Cc: stable@vger.kernel.org
+Even with EXCLUSIVE_SYSTEM_RAM, I/O pages may be still allowed to be
+mapped via /dev/mem. However, these pages are always considered as named
+pages, so they won't break the logic used in the page table check.
+
+Cc: <stable@vger.kernel.org> # 5.17
 Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-Link: https://lore.kernel.org/r/20230515130958.32471-3-lrh2000@pku.edu.cn
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Link: https://lore.kernel.org/r/20230515130958.32471-4-lrh2000@pku.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/devio.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ Documentation/mm/page_table_check.rst |   19 +++++++++++++++++++
+ mm/Kconfig.debug                      |    1 +
+ 2 files changed, 20 insertions(+)
 
---- a/drivers/usb/core/devio.c
-+++ b/drivers/usb/core/devio.c
-@@ -235,7 +235,7 @@ static int usbdev_mmap(struct file *file
- 	size_t size = vma->vm_end - vma->vm_start;
- 	void *mem;
- 	unsigned long flags;
--	dma_addr_t dma_handle;
-+	dma_addr_t dma_handle = DMA_MAPPING_ERROR;
- 	int ret;
+--- a/Documentation/mm/page_table_check.rst
++++ b/Documentation/mm/page_table_check.rst
+@@ -52,3 +52,22 @@ Build kernel with:
  
- 	ret = usbfs_increase_memory_usage(size + sizeof(struct usb_memory));
-@@ -265,7 +265,14 @@ static int usbdev_mmap(struct file *file
- 	usbm->vma_use_count = 1;
- 	INIT_LIST_HEAD(&usbm->memlist);
- 
--	if (hcd->localmem_pool || !hcd_uses_dma(hcd)) {
-+	/*
-+	 * In DMA-unavailable cases, hcd_buffer_alloc_pages allocates
-+	 * normal pages and assigns DMA_MAPPING_ERROR to dma_handle. Check
-+	 * whether we are in such cases, and then use remap_pfn_range (or
-+	 * dma_mmap_coherent) to map normal (or DMA) pages into the user
-+	 * space, respectively.
-+	 */
-+	if (dma_handle == DMA_MAPPING_ERROR) {
- 		if (remap_pfn_range(vma, vma->vm_start,
- 				    virt_to_phys(usbm->mem) >> PAGE_SHIFT,
- 				    size, vma->vm_page_prot) < 0) {
+ Optionally, build kernel with PAGE_TABLE_CHECK_ENFORCED in order to have page
+ table support without extra kernel parameter.
++
++Implementation notes
++====================
++
++We specifically decided not to use VMA information in order to avoid relying on
++MM states (except for limited "struct page" info). The page table check is a
++separate from Linux-MM state machine that verifies that the user accessible
++pages are not falsely shared.
++
++PAGE_TABLE_CHECK depends on EXCLUSIVE_SYSTEM_RAM. The reason is that without
++EXCLUSIVE_SYSTEM_RAM, users are allowed to map arbitrary physical memory
++regions into the userspace via /dev/mem. At the same time, pages may change
++their properties (e.g., from anonymous pages to named pages) while they are
++still being mapped in the userspace, leading to "corruption" detected by the
++page table check.
++
++Even with EXCLUSIVE_SYSTEM_RAM, I/O pages may be still allowed to be mapped via
++/dev/mem. However, these pages are always considered as named pages, so they
++won't break the logic used in the page table check.
+--- a/mm/Kconfig.debug
++++ b/mm/Kconfig.debug
+@@ -98,6 +98,7 @@ config PAGE_OWNER
+ config PAGE_TABLE_CHECK
+ 	bool "Check for invalid mappings in user page tables"
+ 	depends on ARCH_SUPPORTS_PAGE_TABLE_CHECK
++	depends on EXCLUSIVE_SYSTEM_RAM
+ 	select PAGE_EXTENSION
+ 	help
+ 	  Check that anonymous page is not being mapped twice with read write
 
 
