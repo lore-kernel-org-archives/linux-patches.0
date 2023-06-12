@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE3D134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC58CC4339B;
-	Mon, 12 Jun 2023 10:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3FD11C99
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AADC433EF;
+	Mon, 12 Jun 2023 10:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567077;
-	bh=90l3CperUsWVQyKDeDHF31RbxyYLwd43JfJcKMQzqEA=;
+	s=korg; t=1686567080;
+	bh=5eYBm2bcki/A1vvT+UmJV2teb44iFs0AW5Vl0ny7UIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUNb2caE4EeGZ1j5uCSJ7UfGbpmq5N5POmGqtkSPBHmIKcQytjzGNnS0ux+Ddgujz
-	 bnQz1N3NQIAApKYd/2iMvsm0K3wqjcX+8ewm+WilF86QUr3rxZGcSwsNBAY8bXzEfs
-	 MfgugI/smZnD6WK3LU/NEILWROOUHiDvUXVJjRx0=
+	b=FGzuyJWkTt0Ex3w4W616pj7uqy/i5kD/g0CcQ9+LhNthJWrMUbpysiVX7U7wJ4zBz
+	 IHdqUG+F04jm+lp5AP5pUfo6qani1KGj5Sg25fbVN0looNuMnurkGAjw/WEek8oa3x
+	 uOUscy1+spXHNwJZk9I/FndSWNCLFEB6jEHSk2xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 140/160] i2c: sprd: Delete i2c adapter in .removes error path
-Date: Mon, 12 Jun 2023 12:27:52 +0200
-Message-ID: <20230612101721.477297766@linuxfoundation.org>
+	syzbot+fcf1a817ceb50935ce99@syzkaller.appspotmail.comm,
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.3 114/160] usb: usbfs: Enforce page requirements for mmap
+Date: Mon, 12 Jun 2023 12:27:26 +0200
+Message-ID: <20230612101720.276160501@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,50 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-[ Upstream commit ca0aa17f2db3468fd017038d23a78e17388e2f67 ]
+commit 0143d148d1e882fb1538dc9974c94d63961719b9 upstream.
 
-If pm runtime resume fails the .remove callback used to exit early. This
-resulted in an error message by the driver core but the device gets
-removed anyhow. This lets the registered i2c adapter stay around with an
-unbound parent device.
+The current implementation of usbdev_mmap uses usb_alloc_coherent to
+allocate memory pages that will later be mapped into the user space.
+Meanwhile, usb_alloc_coherent employs three different methods to
+allocate memory, as outlined below:
+ * If hcd->localmem_pool is non-null, it uses gen_pool_dma_alloc to
+   allocate memory;
+ * If DMA is not available, it uses kmalloc to allocate memory;
+ * Otherwise, it uses dma_alloc_coherent.
 
-So only skip clk disabling if resume failed, but do delete the adapter.
+However, it should be noted that gen_pool_dma_alloc does not guarantee
+that the resulting memory will be page-aligned. Furthermore, trying to
+map slab pages (i.e., memory allocated by kmalloc) into the user space
+is not resonable and can lead to problems, such as a type confusion bug
+when PAGE_TABLE_CHECK=y [1].
 
-Fixes: 8b9ec0719834 ("i2c: Add Spreadtrum I2C controller driver")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To address these issues, this patch introduces hcd_alloc_coherent_pages,
+which addresses the above two problems. Specifically,
+hcd_alloc_coherent_pages uses gen_pool_dma_alloc_align instead of
+gen_pool_dma_alloc to ensure that the memory is page-aligned. To replace
+kmalloc, hcd_alloc_coherent_pages directly allocates pages by calling
+__get_free_pages.
+
+Reported-by: syzbot+fcf1a817ceb50935ce99@syzkaller.appspotmail.comm
+Closes: https://lore.kernel.org/lkml/000000000000258e5e05fae79fc1@google.com/ [1]
+Fixes: f7d34b445abc ("USB: Add support for usbfs zerocopy.")
+Fixes: ff2437befd8f ("usb: host: Fix excessive alignment restriction for local memory allocations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20230515130958.32471-2-lrh2000@pku.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-sprd.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/usb/core/buffer.c |   41 +++++++++++++++++++++++++++++++++++++++++
+ drivers/usb/core/devio.c  |    9 +++++----
+ include/linux/usb/hcd.h   |    5 +++++
+ 3 files changed, 51 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-sprd.c b/drivers/i2c/busses/i2c-sprd.c
-index 4fe15cd78907e..ffc54fbf814dd 100644
---- a/drivers/i2c/busses/i2c-sprd.c
-+++ b/drivers/i2c/busses/i2c-sprd.c
-@@ -576,12 +576,14 @@ static int sprd_i2c_remove(struct platform_device *pdev)
- 	struct sprd_i2c *i2c_dev = platform_get_drvdata(pdev);
- 	int ret;
- 
--	ret = pm_runtime_resume_and_get(i2c_dev->dev);
-+	ret = pm_runtime_get_sync(i2c_dev->dev);
- 	if (ret < 0)
--		return ret;
-+		dev_err(&pdev->dev, "Failed to resume device (%pe)\n", ERR_PTR(ret));
- 
- 	i2c_del_adapter(&i2c_dev->adap);
--	clk_disable_unprepare(i2c_dev->clk);
+--- a/drivers/usb/core/buffer.c
++++ b/drivers/usb/core/buffer.c
+@@ -172,3 +172,44 @@ void hcd_buffer_free(
+ 	}
+ 	dma_free_coherent(hcd->self.sysdev, size, addr, dma);
+ }
 +
-+	if (ret >= 0)
-+		clk_disable_unprepare(i2c_dev->clk);
++void *hcd_buffer_alloc_pages(struct usb_hcd *hcd,
++		size_t size, gfp_t mem_flags, dma_addr_t *dma)
++{
++	if (size == 0)
++		return NULL;
++
++	if (hcd->localmem_pool)
++		return gen_pool_dma_alloc_align(hcd->localmem_pool,
++				size, dma, PAGE_SIZE);
++
++	/* some USB hosts just use PIO */
++	if (!hcd_uses_dma(hcd)) {
++		*dma = DMA_MAPPING_ERROR;
++		return (void *)__get_free_pages(mem_flags,
++				get_order(size));
++	}
++
++	return dma_alloc_coherent(hcd->self.sysdev,
++			size, dma, mem_flags);
++}
++
++void hcd_buffer_free_pages(struct usb_hcd *hcd,
++		size_t size, void *addr, dma_addr_t dma)
++{
++	if (!addr)
++		return;
++
++	if (hcd->localmem_pool) {
++		gen_pool_free(hcd->localmem_pool,
++				(unsigned long)addr, size);
++		return;
++	}
++
++	if (!hcd_uses_dma(hcd)) {
++		free_pages((unsigned long)addr, get_order(size));
++		return;
++	}
++
++	dma_free_coherent(hcd->self.sysdev, size, addr, dma);
++}
+--- a/drivers/usb/core/devio.c
++++ b/drivers/usb/core/devio.c
+@@ -186,6 +186,7 @@ static int connected(struct usb_dev_stat
+ static void dec_usb_memory_use_count(struct usb_memory *usbm, int *count)
+ {
+ 	struct usb_dev_state *ps = usbm->ps;
++	struct usb_hcd *hcd = bus_to_hcd(ps->dev->bus);
+ 	unsigned long flags;
  
- 	pm_runtime_put_noidle(i2c_dev->dev);
- 	pm_runtime_disable(i2c_dev->dev);
--- 
-2.39.2
-
+ 	spin_lock_irqsave(&ps->lock, flags);
+@@ -194,8 +195,8 @@ static void dec_usb_memory_use_count(str
+ 		list_del(&usbm->memlist);
+ 		spin_unlock_irqrestore(&ps->lock, flags);
+ 
+-		usb_free_coherent(ps->dev, usbm->size, usbm->mem,
+-				usbm->dma_handle);
++		hcd_buffer_free_pages(hcd, usbm->size,
++				usbm->mem, usbm->dma_handle);
+ 		usbfs_decrease_memory_usage(
+ 			usbm->size + sizeof(struct usb_memory));
+ 		kfree(usbm);
+@@ -247,8 +248,8 @@ static int usbdev_mmap(struct file *file
+ 		goto error_decrease_mem;
+ 	}
+ 
+-	mem = usb_alloc_coherent(ps->dev, size, GFP_USER | __GFP_NOWARN,
+-			&dma_handle);
++	mem = hcd_buffer_alloc_pages(hcd,
++			size, GFP_USER | __GFP_NOWARN, &dma_handle);
+ 	if (!mem) {
+ 		ret = -ENOMEM;
+ 		goto error_free_usbm;
+--- a/include/linux/usb/hcd.h
++++ b/include/linux/usb/hcd.h
+@@ -503,6 +503,11 @@ void *hcd_buffer_alloc(struct usb_bus *b
+ void hcd_buffer_free(struct usb_bus *bus, size_t size,
+ 	void *addr, dma_addr_t dma);
+ 
++void *hcd_buffer_alloc_pages(struct usb_hcd *hcd,
++		size_t size, gfp_t mem_flags, dma_addr_t *dma);
++void hcd_buffer_free_pages(struct usb_hcd *hcd,
++		size_t size, void *addr, dma_addr_t dma);
++
+ /* generic bus glue, needed for host controllers that don't use PCI */
+ extern irqreturn_t usb_hcd_irq(int irq, void *__hcd);
+ 
 
 
