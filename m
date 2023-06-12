@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E837134D6
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B84C433D2;
-	Mon, 12 Jun 2023 10:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049C9DF4F
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C213C433EF;
+	Mon, 12 Jun 2023 10:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566106;
-	bh=fMOeg43+peMf2OkoeqdjwuBlqjZShJgyxKC4KEu++Uk=;
+	s=korg; t=1686566108;
+	bh=RKc2Ax2aw2T6akL//meS+IlE70ynIvv6A6Fk9zi4JCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NX9tQskD5QxH/H60OIvyIYsdIV8l50WNmLS+iYyw83BxbVaYyvg5rCNLj1s+z/yXy
-	 MVRLm/j2PgVYtv3xyn/ntfLpwJHbwIOt/IvW0gcpZ/6okS0YsWRDP5PZxoOabsuG6P
-	 KHnMqyUxj10ySyetGoFjcWaGL1YSYKcElUcEBFeE=
+	b=VxCj7XHZMgsQzgMQuTpjiXW2YzFAydCL/zn/sA4XxnNoSxYx7eqEiGfaae8O71nCF
+	 jj4mIjzYpE99hYu7Oh8C6oWCn8fq3aTFmc5LHe4xR26UtnKIH1M+S+tF43OT5fpZ4W
+	 HbVmzn48enyRnWeti+fr4JJFLvvatua32VMoKoYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 5.10 49/68] rbd: move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting
-Date: Mon, 12 Jun 2023 12:26:41 +0200
-Message-ID: <20230612101700.463422078@linuxfoundation.org>
+	TOTE Robot <oslab@tsinghua.edu.cn>,
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Nikolay Borisov <nborisov@suse.com>,
+	Zixuan Fu <r33s3n6@gmail.com>,
+	David Sterba <dsterba@suse.com>,
+	Stefan Ghinea <stefan.ghinea@windriver.com>
+Subject: [PATCH 5.10 67/68] btrfs: unset reloc control if transaction commit fails in prepare_to_relocate()
+Date: Mon, 12 Jun 2023 12:26:59 +0200
+Message-ID: <20230612101701.223241246@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -34,85 +38,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Zixuan Fu <r33s3n6@gmail.com>
 
-commit 09fe05c57b5aaf23e2c35036c98ea9f282b19a77 upstream.
+commit 85f02d6c856b9f3a0acf5219de6e32f58b9778eb upstream.
 
-Move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting into the object request
-state machine to allow for the snapshot context to be captured in the
-image request state machine rather than in rbd_queue_workfn().
+In btrfs_relocate_block_group(), the rc is allocated.  Then
+btrfs_relocate_block_group() calls
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+relocate_block_group()
+  prepare_to_relocate()
+    set_reloc_control()
+
+that assigns rc to the variable fs_info->reloc_ctl. When
+prepare_to_relocate() returns, it calls
+
+btrfs_commit_transaction()
+  btrfs_start_dirty_block_groups()
+    btrfs_alloc_path()
+      kmem_cache_zalloc()
+
+which may fail for example (or other errors could happen). When the
+failure occurs, btrfs_relocate_block_group() detects the error and frees
+rc and doesn't set fs_info->reloc_ctl to NULL. After that, in
+btrfs_init_reloc_root(), rc is retrieved from fs_info->reloc_ctl and
+then used, which may cause a use-after-free bug.
+
+This possible bug can be triggered by calling btrfs_ioctl_balance()
+before calling btrfs_ioctl_defrag().
+
+To fix this possible bug, in prepare_to_relocate(), check if
+btrfs_commit_transaction() fails. If the failure occurs,
+unset_reloc_control() is called to set fs_info->reloc_ctl to NULL.
+
+The error log in our fault-injection testing is shown as follows:
+
+  [   58.751070] BUG: KASAN: use-after-free in btrfs_init_reloc_root+0x7ca/0x920 [btrfs]
+  ...
+  [   58.753577] Call Trace:
+  ...
+  [   58.755800]  kasan_report+0x45/0x60
+  [   58.756066]  btrfs_init_reloc_root+0x7ca/0x920 [btrfs]
+  [   58.757304]  record_root_in_trans+0x792/0xa10 [btrfs]
+  [   58.757748]  btrfs_record_root_in_trans+0x463/0x4f0 [btrfs]
+  [   58.758231]  start_transaction+0x896/0x2950 [btrfs]
+  [   58.758661]  btrfs_defrag_root+0x250/0xc00 [btrfs]
+  [   58.759083]  btrfs_ioctl_defrag+0x467/0xa00 [btrfs]
+  [   58.759513]  btrfs_ioctl+0x3c95/0x114e0 [btrfs]
+  ...
+  [   58.768510] Allocated by task 23683:
+  [   58.768777]  ____kasan_kmalloc+0xb5/0xf0
+  [   58.769069]  __kmalloc+0x227/0x3d0
+  [   58.769325]  alloc_reloc_control+0x10a/0x3d0 [btrfs]
+  [   58.769755]  btrfs_relocate_block_group+0x7aa/0x1e20 [btrfs]
+  [   58.770228]  btrfs_relocate_chunk+0xf1/0x760 [btrfs]
+  [   58.770655]  __btrfs_balance+0x1326/0x1f10 [btrfs]
+  [   58.771071]  btrfs_balance+0x3150/0x3d30 [btrfs]
+  [   58.771472]  btrfs_ioctl_balance+0xd84/0x1410 [btrfs]
+  [   58.771902]  btrfs_ioctl+0x4caa/0x114e0 [btrfs]
+  ...
+  [   58.773337] Freed by task 23683:
+  ...
+  [   58.774815]  kfree+0xda/0x2b0
+  [   58.775038]  free_reloc_control+0x1d6/0x220 [btrfs]
+  [   58.775465]  btrfs_relocate_block_group+0x115c/0x1e20 [btrfs]
+  [   58.775944]  btrfs_relocate_chunk+0xf1/0x760 [btrfs]
+  [   58.776369]  __btrfs_balance+0x1326/0x1f10 [btrfs]
+  [   58.776784]  btrfs_balance+0x3150/0x3d30 [btrfs]
+  [   58.777185]  btrfs_ioctl_balance+0xd84/0x1410 [btrfs]
+  [   58.777621]  btrfs_ioctl+0x4caa/0x114e0 [btrfs]
+  ...
+
+Reported-by: TOTE Robot <oslab@tsinghua.edu.cn>
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Nikolay Borisov <nborisov@suse.com>
+Signed-off-by: Zixuan Fu <r33s3n6@gmail.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ fs/btrfs/relocation.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -1397,14 +1397,28 @@ static bool rbd_obj_is_tail(struct rbd_o
- /*
-  * Must be called after rbd_obj_calc_img_extents().
-  */
--static bool rbd_obj_copyup_enabled(struct rbd_obj_request *obj_req)
-+static void rbd_obj_set_copyup_enabled(struct rbd_obj_request *obj_req)
- {
--	if (!obj_req->num_img_extents ||
--	    (rbd_obj_is_entire(obj_req) &&
--	     !obj_req->img_request->snapc->num_snaps))
--		return false;
-+	if (obj_req->img_request->op_type == OBJ_OP_DISCARD) {
-+		dout("%s %p objno %llu discard\n", __func__, obj_req,
-+		     obj_req->ex.oe_objno);
-+		return;
-+	}
- 
--	return true;
-+	if (!obj_req->num_img_extents) {
-+		dout("%s %p objno %llu not overlapping\n", __func__, obj_req,
-+		     obj_req->ex.oe_objno);
-+		return;
-+	}
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -3270,7 +3270,12 @@ int prepare_to_relocate(struct reloc_con
+ 		 */
+ 		return PTR_ERR(trans);
+ 	}
+-	return btrfs_commit_transaction(trans);
 +
-+	if (rbd_obj_is_entire(obj_req) &&
-+	    !obj_req->img_request->snapc->num_snaps) {
-+		dout("%s %p objno %llu entire\n", __func__, obj_req,
-+		     obj_req->ex.oe_objno);
-+		return;
-+	}
++	ret = btrfs_commit_transaction(trans);
++	if (ret)
++		unset_reloc_control(rc);
 +
-+	obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
++	return ret;
  }
  
- static u64 rbd_obj_img_extents_bytes(struct rbd_obj_request *obj_req)
-@@ -2296,9 +2310,6 @@ static int rbd_obj_init_write(struct rbd
- 	if (ret)
- 		return ret;
- 
--	if (rbd_obj_copyup_enabled(obj_req))
--		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
--
- 	obj_req->write_state = RBD_OBJ_WRITE_START;
- 	return 0;
- }
-@@ -2404,8 +2415,6 @@ static int rbd_obj_init_zeroout(struct r
- 	if (ret)
- 		return ret;
- 
--	if (rbd_obj_copyup_enabled(obj_req))
--		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
- 	if (!obj_req->num_img_extents) {
- 		obj_req->flags |= RBD_OBJ_FLAG_NOOP_FOR_NONEXISTENT;
- 		if (rbd_obj_is_entire(obj_req))
-@@ -3351,6 +3360,7 @@ again:
- 	case RBD_OBJ_WRITE_START:
- 		rbd_assert(!*result);
- 
-+		rbd_obj_set_copyup_enabled(obj_req);
- 		if (rbd_obj_write_is_noop(obj_req))
- 			return true;
- 
+ static noinline_for_stack int relocate_block_group(struct reloc_control *rc)
 
 
