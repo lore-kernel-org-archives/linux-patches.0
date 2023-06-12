@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CADA156EC
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96ADC433EF;
-	Mon, 12 Jun 2023 10:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCF31950B
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649A1C433EF;
+	Mon, 12 Jun 2023 10:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565886;
-	bh=GoJxO6tMGh48SW/OOfUHRH4Ge9ewHErFeA88MZO4AVE=;
+	s=korg; t=1686565888;
+	bh=dCW03YcQ7Sp8gb5yhGj9XFZ6AhfxdonTI6+xK0RH5Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pQ7lyCxkt868X+xYuRthrgAT5NnJ6Xwb+zTGLEZAQSWi56EManUYwzpGtJ18cO9QI
-	 3eVwdXfZF6ptaJqEzipKziG1qRCFwdKao/gzLJ8JNhTRepG+rw9fs5Jb7c3CzGkxIc
-	 PvVW55177Ko41o/dM/y37jnLvDYQc1Iee+94EQNI=
+	b=jz+V/wIOX0EEOb8TfJWJkYFvzOK5T/1YYxXI0tsyRS1HUoofGE9SdXr8DzE7fiyPi
+	 w3VtgKQ7X1AwF1fJUXjXXrPF+9Y3KsrW+hvigafNqdmarfFubtS2TTO2sA3v3Updjg
+	 Q+2APg43Q+OmSaS+DHupjgvSoN/WExgOxmska0xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Min Li <lm0963hack@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.4 29/45] Bluetooth: Fix use-after-free in hci_remove_ltk/hci_remove_irk
-Date: Mon, 12 Jun 2023 12:26:23 +0200
-Message-ID: <20230612101655.842514833@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 5.4 30/45] rbd: move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting
+Date: Mon, 12 Jun 2023 12:26:24 +0200
+Message-ID: <20230612101655.882266373@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -34,48 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit c5d2b6fa26b5b8386a9cc902cdece3a46bef2bd2 upstream.
+commit 09fe05c57b5aaf23e2c35036c98ea9f282b19a77 upstream.
 
-Similar to commit 0f7d9b31ce7a ("netfilter: nf_tables: fix use-after-free
-in nft_set_catchall_destroy()"). We can not access k after kfree_rcu()
-call.
+Move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting into the object request
+state machine to allow for the snapshot context to be captured in the
+image request state machine rather than in rbd_queue_workfn().
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_core.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/block/rbd.c |   32 +++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2572,10 +2572,10 @@ int hci_remove_link_key(struct hci_dev *
- 
- int hci_remove_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 bdaddr_type)
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -1493,14 +1493,28 @@ static bool rbd_obj_is_tail(struct rbd_o
+ /*
+  * Must be called after rbd_obj_calc_img_extents().
+  */
+-static bool rbd_obj_copyup_enabled(struct rbd_obj_request *obj_req)
++static void rbd_obj_set_copyup_enabled(struct rbd_obj_request *obj_req)
  {
--	struct smp_ltk *k;
-+	struct smp_ltk *k, *tmp;
- 	int removed = 0;
+-	if (!obj_req->num_img_extents ||
+-	    (rbd_obj_is_entire(obj_req) &&
+-	     !obj_req->img_request->snapc->num_snaps))
+-		return false;
++	if (obj_req->img_request->op_type == OBJ_OP_DISCARD) {
++		dout("%s %p objno %llu discard\n", __func__, obj_req,
++		     obj_req->ex.oe_objno);
++		return;
++	}
  
--	list_for_each_entry_rcu(k, &hdev->long_term_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->long_term_keys, list) {
- 		if (bacmp(bdaddr, &k->bdaddr) || k->bdaddr_type != bdaddr_type)
- 			continue;
+-	return true;
++	if (!obj_req->num_img_extents) {
++		dout("%s %p objno %llu not overlapping\n", __func__, obj_req,
++		     obj_req->ex.oe_objno);
++		return;
++	}
++
++	if (rbd_obj_is_entire(obj_req) &&
++	    !obj_req->img_request->snapc->num_snaps) {
++		dout("%s %p objno %llu entire\n", __func__, obj_req,
++		     obj_req->ex.oe_objno);
++		return;
++	}
++
++	obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
+ }
  
-@@ -2591,9 +2591,9 @@ int hci_remove_ltk(struct hci_dev *hdev,
+ static u64 rbd_obj_img_extents_bytes(struct rbd_obj_request *obj_req)
+@@ -2389,9 +2403,6 @@ static int rbd_obj_init_write(struct rbd
+ 	if (ret)
+ 		return ret;
  
- void hci_remove_irk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 addr_type)
- {
--	struct smp_irk *k;
-+	struct smp_irk *k, *tmp;
+-	if (rbd_obj_copyup_enabled(obj_req))
+-		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
+-
+ 	obj_req->write_state = RBD_OBJ_WRITE_START;
+ 	return 0;
+ }
+@@ -2497,8 +2508,6 @@ static int rbd_obj_init_zeroout(struct r
+ 	if (ret)
+ 		return ret;
  
--	list_for_each_entry_rcu(k, &hdev->identity_resolving_keys, list) {
-+	list_for_each_entry_safe(k, tmp, &hdev->identity_resolving_keys, list) {
- 		if (bacmp(bdaddr, &k->bdaddr) || k->addr_type != addr_type)
- 			continue;
+-	if (rbd_obj_copyup_enabled(obj_req))
+-		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
+ 	if (!obj_req->num_img_extents) {
+ 		obj_req->flags |= RBD_OBJ_FLAG_NOOP_FOR_NONEXISTENT;
+ 		if (rbd_obj_is_entire(obj_req))
+@@ -3439,6 +3448,7 @@ again:
+ 	case RBD_OBJ_WRITE_START:
+ 		rbd_assert(!*result);
+ 
++		rbd_obj_set_copyup_enabled(obj_req);
+ 		if (rbd_obj_write_is_noop(obj_req))
+ 			return true;
  
 
 
