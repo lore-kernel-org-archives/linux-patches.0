@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BB71952E
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AC1C433EF;
-	Mon, 12 Jun 2023 10:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200AD1990E
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9961BC433D2;
+	Mon, 12 Jun 2023 10:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565891;
-	bh=Tbu2ok51QPVVY5W7T+bALWIj77KRewtAb9WN5gCVu5w=;
+	s=korg; t=1686565894;
+	bh=kusRSPmqog5xyUNDr/Mj7t/OckoBIn9jHL5y5Qyq+Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JFovGpxqEqshT6NaxATrMpmhR8YKAlIHtwzZfKcbO3knUsvg9bjoSmuaVdhCPwRnc
-	 AklZadPWWjCgESxLbcfKItXgyVXvEKdAIZZSlegnhRyDjtTHVPmp3qKzTyg84oQZ6u
-	 YbdKAxTmpq8ibVnfsVaXIYGh2sSA2F9nVWkGGO8E=
+	b=TGu9p3LDAEsIhQcTbnTe+ju+RrJoB/kmyVc5DmRCzuE5C0wlf/CyUsPQexlPwWRre
+	 t5l5+JdeQy9rnBKRoOaXs8zK2PB/evzHTS7UfXEclLhZdCpojKT98d76dToKoi87CW
+	 9p3MnxcLgvEvSSeE96ZOrnb1PaP4yUrO7K3WlHz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.4 31/45] pinctrl: meson-axg: add missing GPIOA_18 gpio group
-Date: Mon, 12 Jun 2023 12:26:25 +0200
-Message-ID: <20230612101655.913256087@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 14/45] rfs: annotate lockless accesses to RFS sock flow table
+Date: Mon, 12 Jun 2023 12:26:08 +0200
+Message-ID: <20230612101655.231641443@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -36,33 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Hundebøll <martin@geanix.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 5b10ff013e8a57f8845615ac2cc37edf7f6eef05 upstream.
+[ Upstream commit 5c3b74a92aa285a3df722bf6329ba7ccf70346d6 ]
 
-Without this, the gpio cannot be explicitly mux'ed to its gpio function.
+Add READ_ONCE()/WRITE_ONCE() on accesses to the sock flow table.
 
-Fixes: 83c566806a68a ("pinctrl: meson-axg: Add new pinctrl driver for Meson AXG SoC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Martin Hundebøll <martin@geanix.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Dmitry Rokosov <ddrokosov@sberdevices.ru>
-Link: https://lore.kernel.org/r/20230512064925.133516-1-martin@geanix.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This also prevents a (smart ?) compiler to remove the condition in:
+
+if (table->ents[index] != newval)
+        table->ents[index] = newval;
+
+We need the condition to avoid dirtying a shared cache line.
+
+Fixes: fec5e652e58f ("rfs: Receive Flow Steering")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/meson/pinctrl-meson-axg.c |    1 +
- 1 file changed, 1 insertion(+)
+ include/linux/netdevice.h | 7 +++++--
+ net/core/dev.c            | 6 ++++--
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/pinctrl/meson/pinctrl-meson-axg.c
-+++ b/drivers/pinctrl/meson/pinctrl-meson-axg.c
-@@ -400,6 +400,7 @@ static struct meson_pmx_group meson_axg_
- 	GPIO_GROUP(GPIOA_15),
- 	GPIO_GROUP(GPIOA_16),
- 	GPIO_GROUP(GPIOA_17),
-+	GPIO_GROUP(GPIOA_18),
- 	GPIO_GROUP(GPIOA_19),
- 	GPIO_GROUP(GPIOA_20),
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 125542f305fad..f6a5a866ea70b 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -732,8 +732,11 @@ static inline void rps_record_sock_flow(struct rps_sock_flow_table *table,
+ 		/* We only give a hint, preemption can change CPU under us */
+ 		val |= raw_smp_processor_id();
  
+-		if (table->ents[index] != val)
+-			table->ents[index] = val;
++		/* The following WRITE_ONCE() is paired with the READ_ONCE()
++		 * here, and another one in get_rps_cpu().
++		 */
++		if (READ_ONCE(table->ents[index]) != val)
++			WRITE_ONCE(table->ents[index], val);
+ 	}
+ }
+ 
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 0cc0809628b08..92ae373475c9a 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -4002,8 +4002,10 @@ static int get_rps_cpu(struct net_device *dev, struct sk_buff *skb,
+ 		u32 next_cpu;
+ 		u32 ident;
+ 
+-		/* First check into global flow table if there is a match */
+-		ident = sock_flow_table->ents[hash & sock_flow_table->mask];
++		/* First check into global flow table if there is a match.
++		 * This READ_ONCE() pairs with WRITE_ONCE() from rps_record_sock_flow().
++		 */
++		ident = READ_ONCE(sock_flow_table->ents[hash & sock_flow_table->mask]);
+ 		if ((ident ^ hash) & ~rps_cpu_mask)
+ 			goto try_rps;
+ 
+-- 
+2.39.2
+
 
 
