@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451F61950B
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E10C4339B;
-	Mon, 12 Jun 2023 10:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0ED1952C
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:34:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B793C433EF;
+	Mon, 12 Jun 2023 10:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566039;
-	bh=1UOIqz1iTqv2375eoaSSz28/ueW4S4fzHEmXuq+nGyY=;
+	s=korg; t=1686566041;
+	bh=QVbw6dLxTYjcevPwM0si9brrphk8f05DStcX4s9hUMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OfIyQWG71goHnXrhbc36zGHBJ97TKq2DTSosdWEpq0Nz5OQ/84qEzvLY4Nn9GzdNB
-	 9Dbo+uoMfGjwMG0MA9Q3I2Rhffi9kyMduns/C2DONJm880kJGijSf7LtmJsRVxIUgE
-	 GVbYSQPNXNaS7mWjq4rb7+ubFz3ncdMupT9V8oCA=
+	b=mC/nSzpu+OLYEqfmWs2VbNQq2IQZrfZq1csAV55mQNRuZVigmKb2L+WcQ+Jvh1vwj
+	 TldPsR9h7FJypvMCBEXz7KljEHI/oYp8Vs71kYtCIlkUfibTM+fQ6yi5+8yxXh42dc
+	 62Hfcog5cGHfRQh5xGXvDRLcrvdP1cOAzDahRpus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chia-I Wu <olvaffe@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 40/68] drm/amdgpu: fix xclk freq on CHIP_STONEY
-Date: Mon, 12 Jun 2023 12:26:32 +0200
-Message-ID: <20230612101700.071403085@linuxfoundation.org>
+	David Jander <david@protonic.nl>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.10 41/68] can: j1939: j1939_sk_send_loop_abort(): improved error queue handling in J1939 Socket
+Date: Mon, 12 Jun 2023 12:26:33 +0200
+Message-ID: <20230612101700.110243190@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -34,41 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chia-I Wu <olvaffe@gmail.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit b447b079cf3a9971ea4d31301e673f49612ccc18 upstream.
+commit 2a84aea80e925ecba6349090559754f8e8eb68ef upstream.
 
-According to Alex, most APUs from that time seem to have the same issue
-(vbios says 48Mhz, actual is 100Mhz).  I only have a CHIP_STONEY so I
-limit the fixup to CHIP_STONEY
+This patch addresses an issue within the j1939_sk_send_loop_abort()
+function in the j1939/socket.c file, specifically in the context of
+Transport Protocol (TP) sessions.
 
-Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Without this patch, when a TP session is initiated and a Clear To Send
+(CTS) frame is received from the remote side requesting one data packet,
+the kernel dispatches the first Data Transport (DT) frame and then waits
+for the next CTS. If the remote side doesn't respond with another CTS,
+the kernel aborts due to a timeout. This leads to the user-space
+receiving an EPOLLERR on the socket, and the socket becomes active.
+
+However, when trying to read the error queue from the socket with
+sock.recvmsg(, , socket.MSG_ERRQUEUE), it returns -EAGAIN,
+given that the socket is non-blocking. This situation results in an
+infinite loop: the user-space repeatedly calls epoll(), epoll() returns
+the socket file descriptor with EPOLLERR, but the socket then blocks on
+the recv() of ERRQUEUE.
+
+This patch introduces an additional check for the J1939_SOCK_ERRQUEUE
+flag within the j1939_sk_send_loop_abort() function. If the flag is set,
+it indicates that the application has subscribed to receive error queue
+messages. In such cases, the kernel can communicate the current transfer
+state via the error queue. This allows for the function to return early,
+preventing the unnecessary setting of the socket into an error state,
+and breaking the infinite loop. It is crucial to note that a socket
+error is only needed if the application isn't using the error queue, as,
+without it, the application wouldn't be aware of transfer issues.
+
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-by: David Jander <david@protonic.nl>
+Tested-by: David Jander <david@protonic.nl>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20230526081946.715190-1-o.rempel@pengutronix.de
 Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vi.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/can/j1939/socket.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/vi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vi.c
-@@ -329,8 +329,15 @@ static u32 vi_get_xclk(struct amdgpu_dev
- 	u32 reference_clock = adev->clock.spll.reference_freq;
- 	u32 tmp;
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -1013,6 +1013,11 @@ void j1939_sk_errqueue(struct j1939_sess
  
--	if (adev->flags & AMD_IS_APU)
--		return reference_clock;
-+	if (adev->flags & AMD_IS_APU) {
-+		switch (adev->asic_type) {
-+		case CHIP_STONEY:
-+			/* vbios says 48Mhz, but the actual freq is 100Mhz */
-+			return 10000;
-+		default:
-+			return reference_clock;
-+		}
-+	}
+ void j1939_sk_send_loop_abort(struct sock *sk, int err)
+ {
++	struct j1939_sock *jsk = j1939_sk(sk);
++
++	if (jsk->state & J1939_SOCK_ERRQUEUE)
++		return;
++
+ 	sk->sk_err = err;
  
- 	tmp = RREG32_SMC(ixCG_CLKPIN_CNTL_2);
- 	if (REG_GET_FIELD(tmp, CG_CLKPIN_CNTL_2, MUX_TCLK_TO_XCLK))
+ 	sk->sk_error_report(sk);
 
 
