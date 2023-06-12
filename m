@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D053913AFE
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:34:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502FDC433D2;
-	Mon, 12 Jun 2023 10:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B0A1951B
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:34:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E295DC433D2;
+	Mon, 12 Jun 2023 10:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566072;
-	bh=Hi1gcnckmzJJ3mBYt6M/GKNWQUtbnGO2vnlJgpn9Ly8=;
+	s=korg; t=1686566075;
+	bh=n4P/5nHtE7OZ9/XgWHrrE9/7RLF+jad3qBExUjBccSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=142x9QQf3xpzt0XPWXExdlM1Gtoo49w8cbJZtMu4STytM2ohGOhq/V3x4kV49Ua12
-	 B1XeVyDdbxsMJwmzKaj9HY83Hm62Fo0W7BB2HFGxdK95svijwXDc7yt4PtX9U45mR0
-	 qFSTAvZCweqTZ61MR5vxLaVPe/toGtwd7sqJwiHs=
+	b=xSATzdg9Az/iEBuZGCk5XAzJzvQSrj29rwJrHOtngqMzGJafJmCVMSn9dOovJ/r0L
+	 OgB41q8+nH7uzLYiYcXh4/ZQhvBaOm8x1/WiUfjye+U910x1URV2BKfJomOgK3uxwR
+	 ENNRPGa2l2rF4Dn+ORuZyjeh6jE9lY+hkQ7ypvGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 24/68] netfilter: ipset: Add schedule point in call_ad().
-Date: Mon, 12 Jun 2023 12:26:16 +0200
-Message-ID: <20230612101659.433546076@linuxfoundation.org>
+Subject: [PATCH 5.10 15/68] wifi: mt76: mt7615: fix possible race in mt7615_mac_sta_poll
+Date: Mon, 12 Jun 2023 12:26:07 +0200
+Message-ID: <20230612101659.090299634@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -37,98 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 24e227896bbf003165e006732dccb3516f87f88e ]
+[ Upstream commit 30bc32c7c1f975cc3c14e1c7dc437266311282cf ]
 
-syzkaller found a repro that causes Hung Task [0] with ipset.  The repro
-first creates an ipset and then tries to delete a large number of IPs
-from the ipset concurrently:
+Grab sta_poll_lock spinlock in mt7615_mac_sta_poll routine in order to
+avoid possible races with mt7615_mac_add_txs() or mt7615_mac_fill_rx()
+removing msta pointer from sta_poll_list.
 
-  IPSET_ATTR_IPADDR_IPV4 : 172.20.20.187
-  IPSET_ATTR_CIDR        : 2
-
-The first deleting thread hogs a CPU with nfnl_lock(NFNL_SUBSYS_IPSET)
-held, and other threads wait for it to be released.
-
-Previously, the same issue existed in set->variant->uadt() that could run
-so long under ip_set_lock(set).  Commit 5e29dc36bd5e ("netfilter: ipset:
-Rework long task execution when adding/deleting entries") tried to fix it,
-but the issue still exists in the caller with another mutex.
-
-While adding/deleting many IPs, we should release the CPU periodically to
-prevent someone from abusing ipset to hang the system.
-
-Note we need to increment the ipset's refcnt to prevent the ipset from
-being destroyed while rescheduling.
-
-[0]:
-INFO: task syz-executor174:268 blocked for more than 143 seconds.
-      Not tainted 6.4.0-rc1-00145-gba79e9a73284 #1
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:syz-executor174 state:D stack:0     pid:268   ppid:260    flags:0x0000000d
-Call trace:
- __switch_to+0x308/0x714 arch/arm64/kernel/process.c:556
- context_switch kernel/sched/core.c:5343 [inline]
- __schedule+0xd84/0x1648 kernel/sched/core.c:6669
- schedule+0xf0/0x214 kernel/sched/core.c:6745
- schedule_preempt_disabled+0x58/0xf0 kernel/sched/core.c:6804
- __mutex_lock_common kernel/locking/mutex.c:679 [inline]
- __mutex_lock+0x6fc/0xdb0 kernel/locking/mutex.c:747
- __mutex_lock_slowpath+0x14/0x20 kernel/locking/mutex.c:1035
- mutex_lock+0x98/0xf0 kernel/locking/mutex.c:286
- nfnl_lock net/netfilter/nfnetlink.c:98 [inline]
- nfnetlink_rcv_msg+0x480/0x70c net/netfilter/nfnetlink.c:295
- netlink_rcv_skb+0x1c0/0x350 net/netlink/af_netlink.c:2546
- nfnetlink_rcv+0x18c/0x199c net/netfilter/nfnetlink.c:658
- netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
- netlink_unicast+0x664/0x8cc net/netlink/af_netlink.c:1365
- netlink_sendmsg+0x6d0/0xa4c net/netlink/af_netlink.c:1913
- sock_sendmsg_nosec net/socket.c:724 [inline]
- sock_sendmsg net/socket.c:747 [inline]
- ____sys_sendmsg+0x4b8/0x810 net/socket.c:2503
- ___sys_sendmsg net/socket.c:2557 [inline]
- __sys_sendmsg+0x1f8/0x2a4 net/socket.c:2586
- __do_sys_sendmsg net/socket.c:2595 [inline]
- __se_sys_sendmsg net/socket.c:2593 [inline]
- __arm64_sys_sendmsg+0x80/0x94 net/socket.c:2593
- __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
- invoke_syscall+0x84/0x270 arch/arm64/kernel/syscall.c:52
- el0_svc_common+0x134/0x24c arch/arm64/kernel/syscall.c:142
- do_el0_svc+0x64/0x198 arch/arm64/kernel/syscall.c:193
- el0_svc+0x2c/0x7c arch/arm64/kernel/entry-common.c:637
- el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:655
- el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
-
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Fixes: a7b4f989a629 ("netfilter: ipset: IP set core support")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: a621372a04ac ("mt76: mt7615: rework mt7615_mac_sta_poll for usb code")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/48b23404b759de4f1db2ef85975c72a4aeb1097c.1684938695.git.lorenzo@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7615/mac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 1bf6ab83644b3..55ac0cc12657c 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -1704,6 +1704,14 @@ call_ad(struct sock *ctnl, struct sk_buff *skb, struct ip_set *set,
- 	bool eexist = flags & IPSET_FLAG_EXIST, retried = false;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+index b26617026e831..4364f73b501da 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -779,7 +779,10 @@ void mt7615_mac_sta_poll(struct mt7615_dev *dev)
  
- 	do {
-+		if (retried) {
-+			__ip_set_get(set);
-+			nfnl_unlock(NFNL_SUBSYS_IPSET);
-+			cond_resched();
-+			nfnl_lock(NFNL_SUBSYS_IPSET);
-+			__ip_set_put(set);
-+		}
+ 		msta = list_first_entry(&sta_poll_list, struct mt7615_sta,
+ 					poll_list);
 +
- 		ip_set_lock(set);
- 		ret = set->variant->uadt(set, tb, adt, &lineno, flags, retried);
- 		ip_set_unlock(set);
++		spin_lock_bh(&dev->sta_poll_lock);
+ 		list_del_init(&msta->poll_list);
++		spin_unlock_bh(&dev->sta_poll_lock);
+ 
+ 		addr = mt7615_mac_wtbl_addr(dev, msta->wcid.idx) + 19 * 4;
+ 
 -- 
 2.39.2
 
