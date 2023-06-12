@@ -1,89 +1,179 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C403919536
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2176BC433D2;
-	Mon, 12 Jun 2023 10:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC2F156FA
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF7FC4339B;
+	Mon, 12 Jun 2023 10:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565828;
-	bh=arxZZynGdZtSjlrkY5dZb15DFXerYNj9uCu9kQ5//s0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+bNDHlmvpKdxyj2RAHm2OR5/u8JpFlWwc5bTZVB0JO4PUo4uCkoy5phc7Y5p0ZhZ
-	 82/P30TTHnay9c1l2czvpOXouqfEXW2SookPclKyVaWs2vvOsSAjw3H4y9LqSYT4Mp
-	 hI5og0jFPG+70ovx8LRUPkJDX/oyeac7RzZ3asTo=
+	s=korg; t=1686565831;
+	bh=9nSCSTE5NIfNzjYPmIfyOiQi8ozTX+gnpJ6Raw0QLi0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=S4GrFvMA9y3QpZhHHq76RuYiv2W7SltlHFdTECg5q6100m1sWQSaEg/R8gIclABY5
+	 c8RAiHGVkDX6GdPPqZ8bmCErBd5nHVsC8ngLfZU/oRTn10P8R//jN546FYcJS8nvYx
+	 H4ofbYTUjSo+4ex1S9UR4aTusLxCX/L26zJW6CCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 09/23] net: sched: move rtm_tca_policy declaration to include file
-Date: Mon, 12 Jun 2023 12:26:10 +0200
-Message-ID: <20230612101651.476483186@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 4.19 00/23] 4.19.286-rc1 review
+Date: Mon, 12 Jun 2023 12:26:01 +0200
+Message-ID: <20230612101651.138592130@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230612101651.138592130@linuxfoundation.org>
-References: <20230612101651.138592130@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.286-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.286-rc1
+X-KernelTest-Deadline: 2023-06-14T10:16+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+This is the start of the stable review cycle for the 4.19.286 release.
+There are 23 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 886bc7d6ed3357975c5f1d3c784da96000d4bbb4 ]
+Responses should be made by Wed, 14 Jun 2023 10:16:41 +0000.
+Anything received after that time might be too late.
 
-rtm_tca_policy is used from net/sched/sch_api.c and net/sched/cls_api.c,
-thus should be declared in an include file.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.286-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
 
-This fixes the following sparse warning:
-net/sched/sch_api.c:1434:25: warning: symbol 'rtm_tca_policy' was not declared. Should it be static?
+thanks,
 
-Fixes: e331473fee3d ("net/sched: cls_api: add missing validation of netlink attributes")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- include/net/pkt_sched.h | 2 ++
- net/sched/cls_api.c     | 2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+greg k-h
 
-diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
-index 1a6ac924266db..e09ea6917c061 100644
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -124,6 +124,8 @@ static inline void qdisc_run(struct Qdisc *q)
- 	}
- }
- 
-+extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
-+
- /* Calculate maximal size of packet seen by hard_start_xmit
-    routine of this device.
-  */
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 435911dc9f16a..fdd4af137c9fe 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -31,8 +31,6 @@
- #include <net/pkt_sched.h>
- #include <net/pkt_cls.h>
- 
--extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
--
- /* The list of all installed classifier types */
- static LIST_HEAD(tcf_proto_base);
- 
--- 
-2.39.2
+-------------
+Pseudo-Shortlog of commits:
 
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.286-rc1
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "staging: rtl8192e: Replace macro RTL_PCI_DEVICE with PCI_DEVICE"
+
+Zixuan Fu <r33s3n6@gmail.com>
+    btrfs: unset reloc control if transaction commit fails in prepare_to_relocate()
+
+Josef Bacik <josef@toxicpanda.com>
+    btrfs: check return value of btrfs_commit_transaction in relocation
+
+Theodore Ts'o <tytso@mit.edu>
+    ext4: only check dquot_initialize_needed() when debugging
+
+Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+    i2c: sprd: Delete i2c adapter in .remove's error path
+
+Martin Hundebøll <martin@geanix.com>
+    pinctrl: meson-axg: add missing GPIOA_18 gpio group
+
+Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    Bluetooth: Fix use-after-free in hci_remove_ltk/hci_remove_irk
+
+Xiubo Li <xiubli@redhat.com>
+    ceph: fix use-after-free bug for inodes when flushing capsnaps
+
+Chia-I Wu <olvaffe@gmail.com>
+    drm/amdgpu: fix xclk freq on CHIP_STONEY
+
+Dmitry Torokhov <dmitry.torokhov@gmail.com>
+    Input: psmouse - fix OOB access in Elantech protocol
+
+Ismael Ferreras Morezuelas <swyterzone@gmail.com>
+    Input: xpad - delete a Razer DeathAdder mouse VID/PID entry
+
+Vladislav Efanov <VEfanov@ispras.ru>
+    batman-adv: Broken sync while rescheduling delayed work
+
+Ben Hutchings <ben@decadent.org.uk>
+    lib: cpu_rmap: Fix potential use-after-free in irq_cpu_rmap_release()
+
+Hangyu Hua <hbh25y@gmail.com>
+    net: sched: fix possible refcount leak in tc_chain_tmplt_add()
+
+Eric Dumazet <edumazet@google.com>
+    net: sched: move rtm_tca_policy declaration to include file
+
+Eric Dumazet <edumazet@google.com>
+    rfs: annotate lockless accesses to RFS sock flow table
+
+Eric Dumazet <edumazet@google.com>
+    rfs: annotate lockless accesses to sk->sk_rxhash
+
+Sungwoo Kim <iam@sung-woo.kim>
+    Bluetooth: L2CAP: Add missing checks for invalid DCID
+
+Ying Hsu <yinghsu@chromium.org>
+    Bluetooth: Fix l2cap_disconnect_req deadlock
+
+Alexander Sverdlin <alexander.sverdlin@siemens.com>
+    net: dsa: lan9303: allow vid != 0 in port_fdb_{add|del} methods
+
+Stephan Gerhold <stephan@gerhold.net>
+    spi: qup: Request DMA before enabling clocks
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    i40e: fix build warnings in i40e_alloc.h
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    i40iw: fix build warning in i40iw_manage_apbvt()
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                     |  4 +--
+ drivers/gpu/drm/amd/amdgpu/vi.c              | 11 +++++++--
+ drivers/i2c/busses/i2c-sprd.c                |  6 +++--
+ drivers/infiniband/hw/i40iw/i40iw.h          |  5 ++--
+ drivers/input/joystick/xpad.c                |  1 -
+ drivers/input/mouse/elantech.c               |  9 ++++---
+ drivers/net/dsa/lan9303-core.c               |  4 ---
+ drivers/net/ethernet/intel/i40e/i40e_alloc.h | 17 +++++--------
+ drivers/pinctrl/meson/pinctrl-meson-axg.c    |  1 +
+ drivers/spi/spi-qup.c                        | 37 ++++++++++++++--------------
+ drivers/staging/rtl8192e/rtl8192e/rtl_core.c |  6 ++---
+ drivers/staging/rtl8192e/rtl8192e/rtl_core.h |  5 ++++
+ fs/btrfs/relocation.c                        | 14 ++++++++---
+ fs/ceph/caps.c                               |  6 +++++
+ fs/ceph/snap.c                               |  4 ++-
+ fs/ext4/xattr.c                              |  6 +++--
+ include/linux/netdevice.h                    |  7 ++++--
+ include/net/pkt_sched.h                      |  2 ++
+ include/net/sock.h                           | 18 ++++++++++----
+ lib/cpu_rmap.c                               |  2 +-
+ net/batman-adv/distributed-arp-table.c       |  2 +-
+ net/bluetooth/hci_core.c                     |  8 +++---
+ net/bluetooth/l2cap_core.c                   | 13 ++++++++++
+ net/core/dev.c                               |  6 +++--
+ net/sched/cls_api.c                          |  3 +--
+ 25 files changed, 122 insertions(+), 75 deletions(-)
 
 
