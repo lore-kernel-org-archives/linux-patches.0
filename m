@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A6AD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9BDC433D2;
-	Mon, 12 Jun 2023 10:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2E7D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3305DC433EF;
+	Mon, 12 Jun 2023 10:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566945;
-	bh=zZwNJA1cWHiwJ8+WmY0D0tpx2UxwYKlywa6iFeeYRu8=;
+	s=korg; t=1686566948;
+	bh=cZfWCa99St9eb01zjbzxJth1IR50E8rE0F8769taugE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pXI5Dhkx3DQmOwjEeKr5feC2+i/lbmYh6rWd25BXAr1JwksUOdYBiY+XNFz4a+Y69
-	 mS3hOA72IcnxoAMOMk5ecdbmAAVg0NLjfAagWcCpf5qLmgTMYlwnJ2a1lw4xz17L9s
-	 vZ87AdeMQ04GLqQ1zkz8HLymHAk5R+Cc3lm+9Nr0=
+	b=FWB7B9BEpV0FBspdUpJpb60hXVwMwJuLOox9WQWUYk3uOTLrQodwPUYDrWIcHPEHP
+	 8kxvf2HypTmOI2KbSZ4qOXBAyA8QSyGNPpEkdWR0Kqmn+DinnW+1HXnuw9WUWC67Ll
+	 bO9mDW7wpgGvH2fQ5GPopUmEG5dWKN6+aKXDpvEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.3 092/160] wifi: iwlwifi: mvm: Fix -Warray-bounds bug in iwl_mvm_wait_d3_notif()
-Date: Mon, 12 Jun 2023 12:27:04 +0200
-Message-ID: <20230612101719.230793849@linuxfoundation.org>
+	David Jander <david@protonic.nl>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.3 093/160] can: j1939: j1939_sk_send_loop_abort(): improved error queue handling in J1939 Socket
+Date: Mon, 12 Jun 2023 12:27:05 +0200
+Message-ID: <20230612101719.278069942@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,111 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 7a4615b9a9da5225b22b36a20508555dd133ac24 upstream.
+commit 2a84aea80e925ecba6349090559754f8e8eb68ef upstream.
 
-kmemdup() at line 2735 is not duplicating enough memory for
-notif->tid_tear_down and notif->station_id. As it only duplicates
-612 bytes: up to offsetofend(struct iwl_wowlan_info_notif,
-received_beacons), this is the range of [0, 612) bytes.
+This patch addresses an issue within the j1939_sk_send_loop_abort()
+function in the j1939/socket.c file, specifically in the context of
+Transport Protocol (TP) sessions.
 
-2735	notif = kmemdup(notif_v1,
-2736			offsetofend(struct iwl_wowlan_info_notif,
-2737				    received_beacons),
-2738			GFP_ATOMIC);
+Without this patch, when a TP session is initiated and a Clear To Send
+(CTS) frame is received from the remote side requesting one data packet,
+the kernel dispatches the first Data Transport (DT) frame and then waits
+for the next CTS. If the remote side doesn't respond with another CTS,
+the kernel aborts due to a timeout. This leads to the user-space
+receiving an EPOLLERR on the socket, and the socket becomes active.
 
-which evidently does not cover bytes 612 and 613 for members
-tid_tear_down and station_id in struct iwl_wowlan_info_notif.
-See below:
+However, when trying to read the error queue from the socket with
+sock.recvmsg(, , socket.MSG_ERRQUEUE), it returns -EAGAIN,
+given that the socket is non-blocking. This situation results in an
+infinite loop: the user-space repeatedly calls epoll(), epoll() returns
+the socket file descriptor with EPOLLERR, but the socket then blocks on
+the recv() of ERRQUEUE.
 
-$ pahole -C iwl_wowlan_info_notif drivers/net/wireless/intel/iwlwifi/mvm/d3.o
-struct iwl_wowlan_info_notif {
-	struct iwl_wowlan_gtk_status_v3 gtk[2];          /*     0   488 */
-	/* --- cacheline 7 boundary (448 bytes) was 40 bytes ago --- */
-	struct iwl_wowlan_igtk_status igtk[2];           /*   488    80 */
-	/* --- cacheline 8 boundary (512 bytes) was 56 bytes ago --- */
-	__le64                     replay_ctr;           /*   568     8 */
-	/* --- cacheline 9 boundary (576 bytes) --- */
-	__le16                     pattern_number;       /*   576     2 */
-	__le16                     reserved1;            /*   578     2 */
-	__le16                     qos_seq_ctr[8];       /*   580    16 */
-	__le32                     wakeup_reasons;       /*   596     4 */
-	__le32                     num_of_gtk_rekeys;    /*   600     4 */
-	__le32                     transmitted_ndps;     /*   604     4 */
-	__le32                     received_beacons;     /*   608     4 */
-	u8                         tid_tear_down;        /*   612     1 */
-	u8                         station_id;           /*   613     1 */
-	u8                         reserved2[2];         /*   614     2 */
+This patch introduces an additional check for the J1939_SOCK_ERRQUEUE
+flag within the j1939_sk_send_loop_abort() function. If the flag is set,
+it indicates that the application has subscribed to receive error queue
+messages. In such cases, the kernel can communicate the current transfer
+state via the error queue. This allows for the function to return early,
+preventing the unnecessary setting of the socket into an error state,
+and breaking the infinite loop. It is crucial to note that a socket
+error is only needed if the application isn't using the error queue, as,
+without it, the application wouldn't be aware of transfer issues.
 
-	/* size: 616, cachelines: 10, members: 13 */
-	/* last cacheline: 40 bytes */
-};
-
-Therefore, when the following assignments take place, actually no memory
-has been allocated for those objects:
-
-2743	notif->tid_tear_down = notif_v1->tid_tear_down;
-2744	notif->station_id = notif_v1->station_id;
-
-Fix this by allocating space for the whole notif object and zero out the
-remaining space in memory after member station_id.
-
-This also fixes the following -Warray-bounds issues:
- CC      drivers/net/wireless/intel/iwlwifi/mvm/d3.o
-drivers/net/wireless/intel/iwlwifi/mvm/d3.c: In function ‘iwl_mvm_wait_d3_notif’:
-drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2743:30: warning: array subscript ‘struct iwl_wowlan_info_notif[0]’ is partly outside array bounds of ‘unsigned char[612]’ [-Warray-bounds=]
- 2743 |                         notif->tid_tear_down = notif_v1->tid_tear_down;
-      |
-                 from drivers/net/wireless/intel/iwlwifi/mvm/d3.c:7:
-In function ‘kmemdup’,
-    inlined from ‘iwl_mvm_wait_d3_notif’ at drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2735:12:
-include/linux/fortify-string.h:765:16: note: object of size 612 allocated by ‘__real_kmemdup’
-  765 |         return __real_kmemdup(p, size, gfp);
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/net/wireless/intel/iwlwifi/mvm/d3.c: In function ‘iwl_mvm_wait_d3_notif’:
-drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2744:30: warning: array subscript ‘struct iwl_wowlan_info_notif[0]’ is partly outside array bounds of ‘unsigned char[612]’ [-Warray-bounds=]
- 2744 |                         notif->station_id = notif_v1->station_id;
-      |                              ^~
-In function ‘kmemdup’,
-    inlined from ‘iwl_mvm_wait_d3_notif’ at drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2735:12:
-include/linux/fortify-string.h:765:16: note: object of size 612 allocated by ‘__real_kmemdup’
-  765 |         return __real_kmemdup(p, size, gfp);
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Link: https://github.com/KSPP/linux/issues/306
-Fixes: 905d50ddbc83 ("wifi: iwlwifi: mvm: support wowlan info notification version 2")
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-by: David Jander <david@protonic.nl>
+Tested-by: David Jander <david@protonic.nl>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20230526081946.715190-1-o.rempel@pengutronix.de
 Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Acked-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/ZHpGN555FwAKGduH@work
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ net/can/j1939/socket.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -2729,17 +2729,13 @@ static bool iwl_mvm_wait_d3_notif(struct
- 		if (wowlan_info_ver < 2) {
- 			struct iwl_wowlan_info_notif_v1 *notif_v1 = (void *)pkt->data;
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -1088,6 +1088,11 @@ void j1939_sk_errqueue(struct j1939_sess
  
--			notif = kmemdup(notif_v1,
--					offsetofend(struct iwl_wowlan_info_notif,
--						    received_beacons),
--					GFP_ATOMIC);
--
-+			notif = kmemdup(notif_v1, sizeof(*notif), GFP_ATOMIC);
- 			if (!notif)
- 				return false;
+ void j1939_sk_send_loop_abort(struct sock *sk, int err)
+ {
++	struct j1939_sock *jsk = j1939_sk(sk);
++
++	if (jsk->state & J1939_SOCK_ERRQUEUE)
++		return;
++
+ 	sk->sk_err = err;
  
- 			notif->tid_tear_down = notif_v1->tid_tear_down;
- 			notif->station_id = notif_v1->station_id;
--
-+			memset_after(notif, 0, station_id);
- 		} else {
- 			notif = (void *)pkt->data;
- 		}
+ 	sk_error_report(sk);
 
 
