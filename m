@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60224134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B756AC433EF;
-	Mon, 12 Jun 2023 10:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00799134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78917C433D2;
+	Mon, 12 Jun 2023 10:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566480;
-	bh=o8IqCLYSgjNPUQy/BhnbP76Sq2baRD1EPN6RCgtZADI=;
+	s=korg; t=1686566482;
+	bh=nelDD/aYcP3XX6JVhlFC0HLNUY5XNg6xuDsrWKkQxP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SmLctPCRJzWlfYS5AYNkXLWQEkVXd/fhciOElxpE7vkjZTsDC0rXQPXitnePCIh5X
-	 wEL7v8ay6Ruw/c6iKCy24SZDwD8uwKXcTLPs6zDsXZZ6VFmpqMsPCa7EfXK8UKDEoB
-	 0IIxYtS7EJwBj+xtE3N59iGzCPfVsH9FW3ZXiObc=
+	b=QPkbkjFTxKqUgXyBWPqFUkXbtywz8nO32UH5M0mi4nojIDjwjnuQpXf/TAosVMB3U
+	 bAAUPrEOxE/RsCFXkB344fNZsPBbZjkKCo0hXSufA0QwOnAFS4C5jAx0+8/MY9V2G5
+	 8DtQJK7Q4K0YGIVt69SHIUzBF+iZsUtgRcMLWY7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Hangyu Hua <hbh25y@gmail.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/132] net: sched: act_police: fix sparse errors in tcf_police_dump()
-Date: Mon, 12 Jun 2023 12:26:21 +0200
-Message-ID: <20230612101712.406804728@linuxfoundation.org>
+Subject: [PATCH 6.1 048/132] net: sched: fix possible refcount leak in tc_chain_tmplt_add()
+Date: Mon, 12 Jun 2023 12:26:22 +0200
+Message-ID: <20230612101712.441435979@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -37,64 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-[ Upstream commit 682881ee45c81daa883dcd4fe613b0b0d988bb22 ]
+[ Upstream commit 44f8baaf230c655c249467ca415b570deca8df77 ]
 
-Fixes following sparse errors:
+try_module_get will be called in tcf_proto_lookup_ops. So module_put needs
+to be called to drop the refcount if ops don't implement the required
+function.
 
-net/sched/act_police.c:360:28: warning: dereference of noderef expression
-net/sched/act_police.c:362:45: warning: dereference of noderef expression
-net/sched/act_police.c:362:45: warning: dereference of noderef expression
-net/sched/act_police.c:368:28: warning: dereference of noderef expression
-net/sched/act_police.c:370:45: warning: dereference of noderef expression
-net/sched/act_police.c:370:45: warning: dereference of noderef expression
-net/sched/act_police.c:376:45: warning: dereference of noderef expression
-net/sched/act_police.c:376:45: warning: dereference of noderef expression
-
-Fixes: d1967e495a8d ("net_sched: act_police: add 2 new attributes to support police 64bit rate and peakrate")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Fixes: 9f407f1768d3 ("net: sched: introduce chain templates")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_police.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/sched/cls_api.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/act_police.c b/net/sched/act_police.c
-index 0adb26e366a7b..94be21378e7ca 100644
---- a/net/sched/act_police.c
-+++ b/net/sched/act_police.c
-@@ -355,23 +355,23 @@ static int tcf_police_dump(struct sk_buff *skb, struct tc_action *a,
- 	opt.burst = PSCHED_NS2TICKS(p->tcfp_burst);
- 	if (p->rate_present) {
- 		psched_ratecfg_getrate(&opt.rate, &p->rate);
--		if ((police->params->rate.rate_bytes_ps >= (1ULL << 32)) &&
-+		if ((p->rate.rate_bytes_ps >= (1ULL << 32)) &&
- 		    nla_put_u64_64bit(skb, TCA_POLICE_RATE64,
--				      police->params->rate.rate_bytes_ps,
-+				      p->rate.rate_bytes_ps,
- 				      TCA_POLICE_PAD))
- 			goto nla_put_failure;
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index b51d80a2fece3..abaf75300497d 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -2780,6 +2780,7 @@ static int tc_chain_tmplt_add(struct tcf_chain *chain, struct net *net,
+ 		return PTR_ERR(ops);
+ 	if (!ops->tmplt_create || !ops->tmplt_destroy || !ops->tmplt_dump) {
+ 		NL_SET_ERR_MSG(extack, "Chain templates are not supported with specified classifier");
++		module_put(ops->owner);
+ 		return -EOPNOTSUPP;
  	}
- 	if (p->peak_present) {
- 		psched_ratecfg_getrate(&opt.peakrate, &p->peak);
--		if ((police->params->peak.rate_bytes_ps >= (1ULL << 32)) &&
-+		if ((p->peak.rate_bytes_ps >= (1ULL << 32)) &&
- 		    nla_put_u64_64bit(skb, TCA_POLICE_PEAKRATE64,
--				      police->params->peak.rate_bytes_ps,
-+				      p->peak.rate_bytes_ps,
- 				      TCA_POLICE_PAD))
- 			goto nla_put_failure;
- 	}
- 	if (p->pps_present) {
- 		if (nla_put_u64_64bit(skb, TCA_POLICE_PKTRATE64,
--				      police->params->ppsrate.rate_pkts_ps,
-+				      p->ppsrate.rate_pkts_ps,
- 				      TCA_POLICE_PAD))
- 			goto nla_put_failure;
- 		if (nla_put_u64_64bit(skb, TCA_POLICE_PKTBURST64,
+ 
 -- 
 2.39.2
 
