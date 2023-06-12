@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F7E18C35
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C0AC433D2;
-	Mon, 12 Jun 2023 10:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9712A18C35
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20188C433EF;
+	Mon, 12 Jun 2023 10:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565775;
-	bh=w+D+Dx4XTvtE7F77ioijKi4opah12yNrSNI+UfL2xMI=;
+	s=korg; t=1686565778;
+	bh=G8I90bYBPqy7qKURWkcYrPSx7e3niQHhFqSI4K4qxzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W5IdPOLs4daibN4hsqbJSRLe6kMy560lqckpoGTL172CbanFN7H65yveWWBH8OLOn
-	 TUrfgQXiND9Gs7A7URANYo/rjyUYg56rSU1i/mS3TrPJStEl7xysclZll0JPgFk7jt
-	 K7jdO3LB7dDaLP7EXjgzEz55pz2Fk0FtSa4fiC90=
+	b=jvw6G8kNLLRWkxHV9N059kTWqO8JXGupTq88IGzUYMWi3KBEc7aRjSguiYw2KKhhm
+	 KBJNEIho44AbMcc4Mts3fwLDGLUvXAkIhcWCotVmHb2u3uwJw9LdYbOatAJZxKwY/o
+	 myqSKdWbMTuzfzSURnWCD8JQATQXwxAoJJ5aPqwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 11/23] lib: cpu_rmap: Fix potential use-after-free in irq_cpu_rmap_release()
-Date: Mon, 12 Jun 2023 12:26:12 +0200
-Message-ID: <20230612101651.535716201@linuxfoundation.org>
+	stable@kernel.org,
+	Vladislav Efanov <VEfanov@ispras.ru>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 4.19 12/23] batman-adv: Broken sync while rescheduling delayed work
+Date: Mon, 12 Jun 2023 12:26:13 +0200
+Message-ID: <20230612101651.574852545@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.138592130@linuxfoundation.org>
 References: <20230612101651.138592130@linuxfoundation.org>
@@ -36,40 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Hutchings <ben@decadent.org.uk>
+From: Vladislav Efanov <VEfanov@ispras.ru>
 
-[ Upstream commit 7c5d4801ecf0564c860033d89726b99723c55146 ]
+commit abac3ac97fe8734b620e7322a116450d7f90aa43 upstream.
 
-irq_cpu_rmap_release() calls cpu_rmap_put(), which may free the rmap.
-So we need to clear the pointer to our glue structure in rmap before
-doing that, not after.
+Syzkaller got a lot of crashes like:
+KASAN: use-after-free Write in *_timers*
 
-Fixes: 4e0473f1060a ("lib: cpu_rmap: Avoid use after free on rmap->obj array entries")
-Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/ZHo0vwquhOy3FaXc@decadent.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+All of these crashes point to the same memory area:
+
+The buggy address belongs to the object at ffff88801f870000
+ which belongs to the cache kmalloc-8k of size 8192
+The buggy address is located 5320 bytes inside of
+ 8192-byte region [ffff88801f870000, ffff88801f872000)
+
+This area belongs to :
+        batadv_priv->batadv_priv_dat->delayed_work->timer_list
+
+The reason for these issues is the lack of synchronization. Delayed
+work (batadv_dat_purge) schedules new timer/work while the device
+is being deleted. As the result new timer/delayed work is set after
+cancel_delayed_work_sync() was called. So after the device is freed
+the timer list contains pointer to already freed memory.
+
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+
+Cc: stable@kernel.org
+Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
+Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
+Acked-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/cpu_rmap.c | 2 +-
+ net/batman-adv/distributed-arp-table.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/cpu_rmap.c b/lib/cpu_rmap.c
-index f52389054a24f..a0de1b2579f71 100644
---- a/lib/cpu_rmap.c
-+++ b/lib/cpu_rmap.c
-@@ -271,8 +271,8 @@ static void irq_cpu_rmap_release(struct kref *ref)
- 	struct irq_glue *glue =
- 		container_of(ref, struct irq_glue, notify.kref);
- 
--	cpu_rmap_put(glue->rmap);
- 	glue->rmap->obj[glue->index] = NULL;
-+	cpu_rmap_put(glue->rmap);
- 	kfree(glue);
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -68,7 +68,6 @@ static void batadv_dat_purge(struct work
+  */
+ static void batadv_dat_start_timer(struct batadv_priv *bat_priv)
+ {
+-	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	queue_delayed_work(batadv_event_workqueue, &bat_priv->dat.work,
+ 			   msecs_to_jiffies(10000));
  }
+@@ -783,6 +782,7 @@ int batadv_dat_init(struct batadv_priv *
+ 	if (!bat_priv->dat.hash)
+ 		return -ENOMEM;
  
--- 
-2.39.2
-
++	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	batadv_dat_start_timer(bat_priv);
+ 
+ 	batadv_tvlv_handler_register(bat_priv, batadv_dat_tvlv_ogm_handler_v1,
 
 
