@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3B7134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F088C433EF;
-	Mon, 12 Jun 2023 10:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E10533EE
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25090C4339B;
+	Mon, 12 Jun 2023 10:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566524;
-	bh=vvBGIaZlavLhvfYqTbyWNYocFpX5DI2W7bfn2c6SiFE=;
+	s=korg; t=1686566527;
+	bh=xYrM4k9eoB/5zJdDGE4BW4bvp64RREfjbXVQjbm7NVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yc1uyWHfaziYVq41C49fqe/eyUKRWHGODloLK72QZ7TBrmu9sN6EA4Ceuee99z//z
-	 5ePSpqlyBPNzgx544mM6d395RwM6+JNYvQQ1QK3RCDFpkILtz+Q/A6k92z6yFm6Jxr
-	 +z/Y+MfiJO9PcyksLI5BjlxnKYRIvgY2+rmVadYg=
+	b=GTQtUCIgbkt8MjTmCjlUsakrGxCx8k8fzNJdBoPyJN9+iTgtNqErGhodcBbXkfgy4
+	 uCIbkMJyy+kdUDzNUpFKvq9qncGqoBzMuU+4FXIxfJCFRyF/nRu03nXp8XSR81VORr
+	 O1Lz1f4FDsmsDpG+JUe9esbFiR4dsnj0/pGJIBOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/132] netfilter: nft_bitwise: fix register tracking
-Date: Mon, 12 Jun 2023 12:26:09 +0200
-Message-ID: <20230612101711.824026151@linuxfoundation.org>
+Subject: [PATCH 6.1 026/132] wifi: mac80211: use correct iftype HE cap
+Date: Mon, 12 Jun 2023 12:26:00 +0200
+Message-ID: <20230612101711.419212931@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,37 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 14e8b293903785590a0ef168745ac84250cb1f4c ]
+[ Upstream commit c37ab22bb1a43cdca8bf69cc0a22f1ccfc449e68 ]
 
-At the end of `nft_bitwise_reduce`, there is a loop which is intended to
-update the bitwise expression associated with each tracked destination
-register.  However, currently, it just updates the first register
-repeatedly.  Fix it.
+We already check that the right iftype capa exists,
+but then don't use it. Assign it to a variable so we
+can actually use it, and then do that.
 
-Fixes: 34cc9e52884a ("netfilter: nf_tables: cancel tracking for clobbered destination registers")
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: bac2fd3d7534 ("mac80211: remove use of ieee80211_get_he_sta_cap()")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230604120651.0e908e5c5fdd.Iac142549a6144ac949ebd116b921a59ae5282735@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_bitwise.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/he.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nft_bitwise.c b/net/netfilter/nft_bitwise.c
-index e6e402b247d09..b84312df9aa1e 100644
---- a/net/netfilter/nft_bitwise.c
-+++ b/net/netfilter/nft_bitwise.c
-@@ -322,7 +322,7 @@ static bool nft_bitwise_reduce(struct nft_regs_track *track,
- 	dreg = priv->dreg;
- 	regcount = DIV_ROUND_UP(priv->len, NFT_REG32_SIZE);
- 	for (i = 0; i < regcount; i++, dreg++)
--		track->regs[priv->dreg].bitwise = expr;
-+		track->regs[dreg].bitwise = expr;
+diff --git a/net/mac80211/he.c b/net/mac80211/he.c
+index 729f261520c77..0322abae08250 100644
+--- a/net/mac80211/he.c
++++ b/net/mac80211/he.c
+@@ -3,7 +3,7 @@
+  * HE handling
+  *
+  * Copyright(c) 2017 Intel Deutschland GmbH
+- * Copyright(c) 2019 - 2022 Intel Corporation
++ * Copyright(c) 2019 - 2023 Intel Corporation
+  */
  
- 	return false;
- }
+ #include "ieee80211_i.h"
+@@ -114,6 +114,7 @@ ieee80211_he_cap_ie_to_sta_he_cap(struct ieee80211_sub_if_data *sdata,
+ 				  struct link_sta_info *link_sta)
+ {
+ 	struct ieee80211_sta_he_cap *he_cap = &link_sta->pub->he_cap;
++	const struct ieee80211_sta_he_cap *own_he_cap_ptr;
+ 	struct ieee80211_sta_he_cap own_he_cap;
+ 	struct ieee80211_he_cap_elem *he_cap_ie_elem = (void *)he_cap_ie;
+ 	u8 he_ppe_size;
+@@ -123,12 +124,16 @@ ieee80211_he_cap_ie_to_sta_he_cap(struct ieee80211_sub_if_data *sdata,
+ 
+ 	memset(he_cap, 0, sizeof(*he_cap));
+ 
+-	if (!he_cap_ie ||
+-	    !ieee80211_get_he_iftype_cap(sband,
+-					 ieee80211_vif_type_p2p(&sdata->vif)))
++	if (!he_cap_ie)
+ 		return;
+ 
+-	own_he_cap = sband->iftype_data->he_cap;
++	own_he_cap_ptr =
++		ieee80211_get_he_iftype_cap(sband,
++					    ieee80211_vif_type_p2p(&sdata->vif));
++	if (!own_he_cap_ptr)
++		return;
++
++	own_he_cap = *own_he_cap_ptr;
+ 
+ 	/* Make sure size is OK */
+ 	mcs_nss_size = ieee80211_he_mcs_nss_size(he_cap_ie_elem);
 -- 
 2.39.2
 
