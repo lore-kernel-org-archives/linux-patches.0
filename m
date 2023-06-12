@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DFB2134B1
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:47:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0435AC433D2;
-	Mon, 12 Jun 2023 10:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20750D518
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:47:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC2EC433D2;
+	Mon, 12 Jun 2023 10:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566864;
-	bh=UXGrxzgsIHFsHto/NfP9id2faFhfJY5QTLHqbHtiFxk=;
+	s=korg; t=1686566867;
+	bh=eP7D0Ja1R9WBcVi31o8KcCPt6SpBY5UAIB20QHyZuy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQvg7mqlNE4nFcMqflpVrrmdefVghd9seqRfsFltYObX7MXr9cv6qFJ6IwcsZMUY5
-	 ggbPdf0X3thSB1aecnyM0WTZV9yvEb4YQz2Mc14JSnQ0eedQ+qo7L7abvcq/vBkrda
-	 PAoRvjjHyb0DkTZ3xI4ukUpLaruXY4HMhj+o/rVk=
+	b=G6FBi5EYOs0e7GoKmCOunSVZYTo0oSWwFNEX37oMWpkRix904gbbw8HYMBel2y2zB
+	 ynH0jFI1g2c6xqhyawO1vF2pywOXtNJgZAwwSdLXUD6+oSPlNO2yKRzT60fBXknLeV
+	 RLg3Bou6kLAzJJ43QW5nJmv5eB2YhHvr3xHmVZ3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krystian Pradzynski <krystian.pradzynski@linux.intel.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 061/160] net: bcmgenet: Fix EEE implementation
-Date: Mon, 12 Jun 2023 12:26:33 +0200
-Message-ID: <20230612101717.801276328@linuxfoundation.org>
+Subject: [PATCH 6.3 062/160] accel/ivpu: Do not use mutex_lock_interruptible
+Date: Mon, 12 Jun 2023 12:26:34 +0200
+Message-ID: <20230612101717.843699029@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,139 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
 
-[ Upstream commit a9f31047baca57d47440c879cf259b86f900260c ]
+[ Upstream commit b563e47957af4ff71736c5cc4120a59b055ab583 ]
 
-We had a number of short comings:
+If we get signal when waiting for the mmu->lock we do not invalidate
+current MMU configuration that might result in undefined behavior.
 
-- EEE must be re-evaluated whenever the state machine detects a link
-  change as wight be switching from a link partner with EEE
-  enabled/disabled
+Additionally there is little or no benefit on break waiting for
+ipc->lock. In current code base, we keep this lock for short periods.
 
-- tx_lpi_enabled controls whether EEE should be enabled/disabled for the
-  transmit path, which applies to the TBUF block
-
-- We do not need to forcibly enable EEE upon system resume, as the PHY
-  state machine will trigger a link event that will do that, too
-
-Fixes: 6ef398ea60d9 ("net: bcmgenet: add EEE support")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/r/20230606214348.2408018-1-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 263b2ba5fc93 ("accel/ivpu: Add Intel VPU MMU support")
+Reviewed-by: Krystian Pradzynski <krystian.pradzynski@linux.intel.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230525103818.877590-2-stanislaw.gruszka@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 22 +++++++------------
- .../net/ethernet/broadcom/genet/bcmgenet.h    |  3 +++
- drivers/net/ethernet/broadcom/genet/bcmmii.c  |  5 +++++
- 3 files changed, 16 insertions(+), 14 deletions(-)
+ drivers/accel/ivpu/ivpu_ipc.c |  4 +---
+ drivers/accel/ivpu/ivpu_mmu.c | 22 ++++++----------------
+ 2 files changed, 7 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index eca0c92c0c84d..2b5761ad2f92f 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -1272,7 +1272,8 @@ static void bcmgenet_get_ethtool_stats(struct net_device *dev,
- 	}
- }
+diff --git a/drivers/accel/ivpu/ivpu_ipc.c b/drivers/accel/ivpu/ivpu_ipc.c
+index 3adcfa80fc0e5..fa0af59e39ab6 100644
+--- a/drivers/accel/ivpu/ivpu_ipc.c
++++ b/drivers/accel/ivpu/ivpu_ipc.c
+@@ -183,9 +183,7 @@ ivpu_ipc_send(struct ivpu_device *vdev, struct ivpu_ipc_consumer *cons, struct v
+ 	struct ivpu_ipc_info *ipc = vdev->ipc;
+ 	int ret;
  
--static void bcmgenet_eee_enable_set(struct net_device *dev, bool enable)
-+void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
-+			     bool tx_lpi_enabled)
+-	ret = mutex_lock_interruptible(&ipc->lock);
+-	if (ret)
+-		return ret;
++	mutex_lock(&ipc->lock);
+ 
+ 	if (!ipc->on) {
+ 		ret = -EAGAIN;
+diff --git a/drivers/accel/ivpu/ivpu_mmu.c b/drivers/accel/ivpu/ivpu_mmu.c
+index 694e978aba663..b8b259b3aa635 100644
+--- a/drivers/accel/ivpu/ivpu_mmu.c
++++ b/drivers/accel/ivpu/ivpu_mmu.c
+@@ -587,16 +587,11 @@ static int ivpu_mmu_strtab_init(struct ivpu_device *vdev)
+ int ivpu_mmu_invalidate_tlb(struct ivpu_device *vdev, u16 ssid)
  {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 	u32 off = priv->hw_params->tbuf_offset + TBUF_ENERGY_CTRL;
-@@ -1292,7 +1293,7 @@ static void bcmgenet_eee_enable_set(struct net_device *dev, bool enable)
- 
- 	/* Enable EEE and switch to a 27Mhz clock automatically */
- 	reg = bcmgenet_readl(priv->base + off);
--	if (enable)
-+	if (tx_lpi_enabled)
- 		reg |= TBUF_EEE_EN | TBUF_PM_EN;
- 	else
- 		reg &= ~(TBUF_EEE_EN | TBUF_PM_EN);
-@@ -1313,6 +1314,7 @@ static void bcmgenet_eee_enable_set(struct net_device *dev, bool enable)
- 
- 	priv->eee.eee_enabled = enable;
- 	priv->eee.eee_active = enable;
-+	priv->eee.tx_lpi_enabled = tx_lpi_enabled;
- }
- 
- static int bcmgenet_get_eee(struct net_device *dev, struct ethtool_eee *e)
-@@ -1328,6 +1330,7 @@ static int bcmgenet_get_eee(struct net_device *dev, struct ethtool_eee *e)
- 
- 	e->eee_enabled = p->eee_enabled;
- 	e->eee_active = p->eee_active;
-+	e->tx_lpi_enabled = p->tx_lpi_enabled;
- 	e->tx_lpi_timer = bcmgenet_umac_readl(priv, UMAC_EEE_LPI_TIMER);
- 
- 	return phy_ethtool_get_eee(dev->phydev, e);
-@@ -1337,7 +1340,6 @@ static int bcmgenet_set_eee(struct net_device *dev, struct ethtool_eee *e)
- {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 	struct ethtool_eee *p = &priv->eee;
--	int ret = 0;
- 
- 	if (GENET_IS_V1(priv))
- 		return -EOPNOTSUPP;
-@@ -1348,16 +1350,11 @@ static int bcmgenet_set_eee(struct net_device *dev, struct ethtool_eee *e)
- 	p->eee_enabled = e->eee_enabled;
- 
- 	if (!p->eee_enabled) {
--		bcmgenet_eee_enable_set(dev, false);
-+		bcmgenet_eee_enable_set(dev, false, false);
- 	} else {
--		ret = phy_init_eee(dev->phydev, false);
--		if (ret) {
--			netif_err(priv, hw, dev, "EEE initialization failed\n");
--			return ret;
--		}
+ 	struct ivpu_mmu_info *mmu = vdev->mmu;
+-	int ret;
 -
-+		p->eee_active = phy_init_eee(dev->phydev, false) >= 0;
- 		bcmgenet_umac_writel(priv, e->tx_lpi_timer, UMAC_EEE_LPI_TIMER);
--		bcmgenet_eee_enable_set(dev, true);
-+		bcmgenet_eee_enable_set(dev, p->eee_active, e->tx_lpi_enabled);
- 	}
+-	ret = mutex_lock_interruptible(&mmu->lock);
+-	if (ret)
+-		return ret;
++	int ret = 0;
  
- 	return phy_ethtool_set_eee(dev->phydev, e);
-@@ -4279,9 +4276,6 @@ static int bcmgenet_resume(struct device *d)
- 	if (!device_may_wakeup(d))
- 		phy_resume(dev->phydev);
+-	if (!mmu->on) {
+-		ret = 0;
++	mutex_lock(&mmu->lock);
++	if (!mmu->on)
+ 		goto unlock;
+-	}
  
--	if (priv->eee.eee_enabled)
--		bcmgenet_eee_enable_set(dev, true);
+ 	ret = ivpu_mmu_cmdq_write_tlbi_nh_asid(vdev, ssid);
+ 	if (ret)
+@@ -614,7 +609,7 @@ static int ivpu_mmu_cd_add(struct ivpu_device *vdev, u32 ssid, u64 cd_dma)
+ 	struct ivpu_mmu_cdtab *cdtab = &mmu->cdtab;
+ 	u64 *entry;
+ 	u64 cd[4];
+-	int ret;
++	int ret = 0;
+ 
+ 	if (ssid > IVPU_MMU_CDTAB_ENT_COUNT)
+ 		return -EINVAL;
+@@ -655,14 +650,9 @@ static int ivpu_mmu_cd_add(struct ivpu_device *vdev, u32 ssid, u64 cd_dma)
+ 	ivpu_dbg(vdev, MMU, "CDTAB %s entry (SSID=%u, dma=%pad): 0x%llx, 0x%llx, 0x%llx, 0x%llx\n",
+ 		 cd_dma ? "write" : "clear", ssid, &cd_dma, cd[0], cd[1], cd[2], cd[3]);
+ 
+-	ret = mutex_lock_interruptible(&mmu->lock);
+-	if (ret)
+-		return ret;
 -
- 	bcmgenet_netif_start(dev);
+-	if (!mmu->on) {
+-		ret = 0;
++	mutex_lock(&mmu->lock);
++	if (!mmu->on)
+ 		goto unlock;
+-	}
  
- 	netif_device_attach(dev);
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.h b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-index 946f6e283c4e6..1985c0ec4da2a 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-@@ -703,4 +703,7 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
- void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
- 			       enum bcmgenet_power_mode mode);
- 
-+void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
-+			     bool tx_lpi_enabled);
-+
- #endif /* __BCMGENET_H__ */
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmmii.c b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-index be042905ada2a..c15ed0acdb777 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-@@ -87,6 +87,11 @@ static void bcmgenet_mac_config(struct net_device *dev)
- 		reg |= CMD_TX_EN | CMD_RX_EN;
- 	}
- 	bcmgenet_umac_writel(priv, reg, UMAC_CMD);
-+
-+	priv->eee.eee_active = phy_init_eee(phydev, 0) >= 0;
-+	bcmgenet_eee_enable_set(dev,
-+				priv->eee.eee_enabled && priv->eee.eee_active,
-+				priv->eee.tx_lpi_enabled);
- }
- 
- /* setup netdev link state when PHY link status change and
+ 	ret = ivpu_mmu_cmdq_write_cfgi_all(vdev);
+ 	if (ret)
 -- 
 2.39.2
 
