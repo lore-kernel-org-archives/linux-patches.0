@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705EF8828
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC61EC4339B;
-	Mon, 12 Jun 2023 10:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6388828
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E76C433EF;
+	Mon, 12 Jun 2023 10:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566587;
-	bh=mVKv0RpQCiBwmFSYYHfHi1Q7cNJJj3WTXC75D3Whf+k=;
+	s=korg; t=1686566590;
+	bh=5PFxjeJveLfVvr6mqd9x2YkeqXFH63mh76MbchnERyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mWmP2zOAMoikBu1hcIw659PWX6f/ILYKTKYmU8NL3E/4n73C4wOm0WdFHB16G1jDQ
-	 HI0jxYm8FZY5W+FwJs+C1rLT8nb2ui2TNRLF/qWAmDo1FIVSW+ub26p/G3NuZletXB
-	 S5ALYX7Uy/zAV4YPZJeIYupj3fsCox9BCicqe9sE=
+	b=VmY3/uDEoCMVp6J7st+frtERddVIS7hFyfb8zg3OibMtFU7GLfQDBZ5/KBaMc7szg
+	 b11utGYBX5la/E2BAnOWHtDrcVgFnvv9ZToPk85M9b+CsjNuSjFcGlbV0gFh0/MX9v
+	 Y1CUNvIZFR2Yl8bfPW0673iGaxL3UsEsoGR51ijg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Hutterer <peter.hutterer@who-t.net>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 061/132] Input: fix open count when closing inhibited device
-Date: Mon, 12 Jun 2023 12:26:35 +0200
-Message-ID: <20230612101713.040655252@linuxfoundation.org>
+	Min Li <lm0963hack@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 088/132] Bluetooth: Fix use-after-free in hci_remove_ltk/hci_remove_irk
+Date: Mon, 12 Jun 2023 12:27:02 +0200
+Message-ID: <20230612101714.266765261@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -34,34 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 978134c4b192ed04ecf699be3e1b4d23b5d20457 upstream.
+commit c5d2b6fa26b5b8386a9cc902cdece3a46bef2bd2 upstream.
 
-Because the kernel increments device's open count in input_open_device()
-even if device is inhibited, the counter should always be decremented in
-input_close_device() to keep it balanced.
+Similar to commit 0f7d9b31ce7a ("netfilter: nf_tables: fix use-after-free
+in nft_set_catchall_destroy()"). We can not access k after kfree_rcu()
+call.
 
-Fixes: a181616487db ("Input: Add "inhibited" property")
-Reviewed-by: Peter Hutterer <peter.hutterer@who-t.net>
-Link: https://lore.kernel.org/r/ZFFz0xAdPNSL3PT7@google.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Min Li <lm0963hack@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/input.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_core.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/input/input.c
-+++ b/drivers/input/input.c
-@@ -701,7 +701,7 @@ void input_close_device(struct input_han
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1416,10 +1416,10 @@ int hci_remove_link_key(struct hci_dev *
  
- 	__input_release_device(handle);
+ int hci_remove_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 bdaddr_type)
+ {
+-	struct smp_ltk *k;
++	struct smp_ltk *k, *tmp;
+ 	int removed = 0;
  
--	if (!dev->inhibited && !--dev->users) {
-+	if (!--dev->users && !dev->inhibited) {
- 		if (dev->poller)
- 			input_dev_poller_stop(dev->poller);
- 		if (dev->close)
+-	list_for_each_entry_rcu(k, &hdev->long_term_keys, list) {
++	list_for_each_entry_safe(k, tmp, &hdev->long_term_keys, list) {
+ 		if (bacmp(bdaddr, &k->bdaddr) || k->bdaddr_type != bdaddr_type)
+ 			continue;
+ 
+@@ -1435,9 +1435,9 @@ int hci_remove_ltk(struct hci_dev *hdev,
+ 
+ void hci_remove_irk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 addr_type)
+ {
+-	struct smp_irk *k;
++	struct smp_irk *k, *tmp;
+ 
+-	list_for_each_entry_rcu(k, &hdev->identity_resolving_keys, list) {
++	list_for_each_entry_safe(k, tmp, &hdev->identity_resolving_keys, list) {
+ 		if (bacmp(bdaddr, &k->bdaddr) || k->addr_type != addr_type)
+ 			continue;
+ 
 
 
