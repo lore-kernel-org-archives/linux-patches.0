@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969C61106
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:36:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232BBC433D2;
-	Mon, 12 Jun 2023 10:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF242107
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:36:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8759C433EF;
+	Mon, 12 Jun 2023 10:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566176;
-	bh=4E3Ra0lC6sYe0Zfy5Ewgo1M+oxhBfPl2HN85bjawNYU=;
+	s=korg; t=1686566179;
+	bh=VrBKt1qXhArtleT7TleQxpeacc8Rj14AV6jrXC4YY/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTdkjV5N5QwmEysQbhV07nKea85iam4NXMnT4+jvn4UUH0/RMfyaVz0cDjaw27oSb
-	 2Y20cmqg5lq/3yOI3v9wKkQt4dkRlL3addivKNJgcSQV0R9vJDjxIYXRZGRDyPbZ2h
-	 h4/QYcDeVKvf756b1rGQ10Wg/8D524LU3yKRyVWM=
+	b=gJCUNgHnQIxFi5jlRwL5827i8AQumPN5FNzy2GptAmRxbNr5DIKRuUZbZ96oVtEh/
+	 i6n9pB0yCLxoT7gSJz5tMreiR7S8k5W/aMYASLrRNoJOK4w0F6HWRdShAowpFksdyN
+	 d2qfRaT6Y8nh0aI6/VX6l9slTLzzNy/mG56I64v4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ying Hsu <yinghsu@chromium.org>,
+	Sungwoo Kim <iam@sung-woo.kim>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/91] Bluetooth: Fix l2cap_disconnect_req deadlock
-Date: Mon, 12 Jun 2023 12:26:13 +0200
-Message-ID: <20230612101703.101219410@linuxfoundation.org>
+Subject: [PATCH 5.15 25/91] Bluetooth: L2CAP: Add missing checks for invalid DCID
+Date: Mon, 12 Jun 2023 12:26:14 +0200
+Message-ID: <20230612101703.151182324@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -35,59 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Sungwoo Kim <iam@sung-woo.kim>
 
-[ Upstream commit 02c5ea5246a44d6ffde0fddebfc1d56188052976 ]
+[ Upstream commit 75767213f3d9b97f63694d02260b6a49a2271876 ]
 
-L2CAP assumes that the locks conn->chan_lock and chan->lock are
-acquired in the order conn->chan_lock, chan->lock to avoid
-potential deadlock.
-For example, l2sock_shutdown acquires these locks in the order:
-  mutex_lock(&conn->chan_lock)
-  l2cap_chan_lock(chan)
+When receiving a connect response we should make sure that the DCID is
+within the valid range and that we don't already have another channel
+allocated for the same DCID.
+Missing checks may violate the specification (BLUETOOTH CORE SPECIFICATION
+Version 5.4 | Vol 3, Part A, Page 1046).
 
-However, l2cap_disconnect_req acquires chan->lock in
-l2cap_get_chan_by_scid first and then acquires conn->chan_lock
-before calling l2cap_chan_del. This means that these locks are
-acquired in unexpected order, which leads to potential deadlock:
-  l2cap_chan_lock(c)
-  mutex_lock(&conn->chan_lock)
-
-This patch releases chan->lock before acquiring the conn_chan_lock
-to avoid the potential deadlock.
-
-Fixes: a2a9339e1c9d ("Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}")
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Fixes: 40624183c202 ("Bluetooth: L2CAP: Add missing checks for invalid LE DCID")
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/l2cap_core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index f01b77b037878..101a15256efe5 100644
+index 101a15256efe5..9dd54247029a8 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -4664,7 +4664,9 @@ static inline int l2cap_disconnect_req(struct l2cap_conn *conn,
+@@ -4307,6 +4307,10 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 	result = __le16_to_cpu(rsp->result);
+ 	status = __le16_to_cpu(rsp->status);
  
- 	chan->ops->set_shutdown(chan);
++	if (result == L2CAP_CR_SUCCESS && (dcid < L2CAP_CID_DYN_START ||
++					   dcid > L2CAP_CID_DYN_END))
++		return -EPROTO;
++
+ 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x result 0x%2.2x status 0x%2.2x",
+ 	       dcid, scid, result, status);
  
-+	l2cap_chan_unlock(chan);
- 	mutex_lock(&conn->chan_lock);
-+	l2cap_chan_lock(chan);
- 	l2cap_chan_del(chan, ECONNRESET);
- 	mutex_unlock(&conn->chan_lock);
+@@ -4338,6 +4342,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
  
-@@ -4703,7 +4705,9 @@ static inline int l2cap_disconnect_rsp(struct l2cap_conn *conn,
- 		return 0;
- 	}
- 
-+	l2cap_chan_unlock(chan);
- 	mutex_lock(&conn->chan_lock);
-+	l2cap_chan_lock(chan);
- 	l2cap_chan_del(chan, 0);
- 	mutex_unlock(&conn->chan_lock);
- 
+ 	switch (result) {
+ 	case L2CAP_CR_SUCCESS:
++		if (__l2cap_get_chan_by_dcid(conn, dcid)) {
++			err = -EBADSLT;
++			break;
++		}
++
+ 		l2cap_state_change(chan, BT_CONFIG);
+ 		chan->ident = 0;
+ 		chan->dcid = dcid;
 -- 
 2.39.2
 
