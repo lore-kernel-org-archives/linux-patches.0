@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30EA1950B
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0216FC433D2;
-	Mon, 12 Jun 2023 10:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD5819523
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB033C433D2;
+	Mon, 12 Jun 2023 10:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566023;
-	bh=NzSwiq4+QxBSUUV5MX6MnfpYJIV9bz57QAwdhXRs9yc=;
+	s=korg; t=1686566026;
+	bh=X+qWM1QttKJso7M4Q6qezChzj7eqR4TWCS/eVgAg/jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EfLHLP2NeUvGART3GWol2ix90+ShCxjean5huwb722VIImBunqVciisH4o04HliQh
-	 7XZ9c+ppnUaJBEpeFBNTo6WrvsEumJcUEYqbA4ULcLbdAIEdcd/LDDUwsXVPZzCp0B
-	 45dQkKoBOlkrB2kyw5j2aPneG/bc0yBm+QumfLeo=
+	b=ziU+puwoUyU35TxboW6g87yYjuHnQ6dPNWcri70K9I1pghsx4BKbd+PgNJQu5ehCB
+	 t6Ma6obbuqndjdH1Pu2GaR+9mMBTcmTJegU5qFGT3aFOD8JLcowrrjeN2upqLJ7ySP
+	 XnKzwbZpXKwLSGAQofQt5MGTn1xFWMnD5QO+5V9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 17/68] net: dsa: lan9303: allow vid != 0 in port_fdb_{add|del} methods
-Date: Mon, 12 Jun 2023 12:26:09 +0200
-Message-ID: <20230612101659.171326531@linuxfoundation.org>
+	stable@kernel.org,
+	Vladislav Efanov <VEfanov@ispras.ru>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.10 35/68] batman-adv: Broken sync while rescheduling delayed work
+Date: Mon, 12 Jun 2023 12:26:27 +0200
+Message-ID: <20230612101659.869138163@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -36,56 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Vladislav Efanov <VEfanov@ispras.ru>
 
-[ Upstream commit 5a59a58ec25d44f853c26bdbfda47d73b3067435 ]
+commit abac3ac97fe8734b620e7322a116450d7f90aa43 upstream.
 
-LAN9303 doesn't associate FDB (ALR) entries with VLANs, it has just one
-global Address Logic Resolution table [1].
+Syzkaller got a lot of crashes like:
+KASAN: use-after-free Write in *_timers*
 
-Ignore VID in port_fdb_{add|del} methods, go on with the global table. This
-is the same semantics as hellcreek or RZ/N1 implement.
+All of these crashes point to the same memory area:
 
-Visible symptoms:
-LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to delete 00:xx:xx:xx:xx:cf vid 1 from fdb: -2
-LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to add 00:xx:xx:xx:xx:cf vid 1 to fdb: -95
+The buggy address belongs to the object at ffff88801f870000
+ which belongs to the cache kmalloc-8k of size 8192
+The buggy address is located 5320 bytes inside of
+ 8192-byte region [ffff88801f870000, ffff88801f872000)
 
-[1] https://ww1.microchip.com/downloads/en/DeviceDoc/00002308A.pdf
+This area belongs to :
+        batadv_priv->batadv_priv_dat->delayed_work->timer_list
 
-Fixes: 0620427ea0d6 ("net: dsa: lan9303: Add fdb/mdb manipulation")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20230531143826.477267-1-alexander.sverdlin@siemens.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The reason for these issues is the lack of synchronization. Delayed
+work (batadv_dat_purge) schedules new timer/work while the device
+is being deleted. As the result new timer/delayed work is set after
+cancel_delayed_work_sync() was called. So after the device is freed
+the timer list contains pointer to already freed memory.
+
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+
+Cc: stable@kernel.org
+Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
+Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
+Acked-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/lan9303-core.c | 4 ----
- 1 file changed, 4 deletions(-)
+ net/batman-adv/distributed-arp-table.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/lan9303-core.c b/drivers/net/dsa/lan9303-core.c
-index deeed50a42c05..f5ab0bff4ac29 100644
---- a/drivers/net/dsa/lan9303-core.c
-+++ b/drivers/net/dsa/lan9303-core.c
-@@ -1187,8 +1187,6 @@ static int lan9303_port_fdb_add(struct dsa_switch *ds, int port,
- 	struct lan9303 *chip = ds->priv;
- 
- 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
--	if (vid)
--		return -EOPNOTSUPP;
- 
- 	return lan9303_alr_add_port(chip, addr, port, false);
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -102,7 +102,6 @@ static void batadv_dat_purge(struct work
+  */
+ static void batadv_dat_start_timer(struct batadv_priv *bat_priv)
+ {
+-	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	queue_delayed_work(batadv_event_workqueue, &bat_priv->dat.work,
+ 			   msecs_to_jiffies(10000));
  }
-@@ -1200,8 +1198,6 @@ static int lan9303_port_fdb_del(struct dsa_switch *ds, int port,
- 	struct lan9303 *chip = ds->priv;
+@@ -822,6 +821,7 @@ int batadv_dat_init(struct batadv_priv *
+ 	if (!bat_priv->dat.hash)
+ 		return -ENOMEM;
  
- 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
--	if (vid)
--		return -EOPNOTSUPP;
- 	lan9303_alr_del_port(chip, addr, port);
++	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	batadv_dat_start_timer(bat_priv);
  
- 	return 0;
--- 
-2.39.2
-
+ 	batadv_tvlv_handler_register(bat_priv, batadv_dat_tvlv_ogm_handler_v1,
 
 
