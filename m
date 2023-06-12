@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA6C11CAD
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:52:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7866CC433EF;
-	Mon, 12 Jun 2023 10:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0182411CAD
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:52:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBC9C433D2;
+	Mon, 12 Jun 2023 10:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567145;
-	bh=T5IHk6a4GPIfuBTxRyUwaBni4MjUoAnVUSFmZIWYxmw=;
+	s=korg; t=1686567148;
+	bh=mKEP1o6hoyQ7jtE6ZIM7YmZi0AbJPhv9YlwFtFzjkxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhigX+KNDjXVpZB9QUkQKvLNsenNSLqe19l1pJcNC5WO876qgnlQRrb0dhBXR4VTr
-	 rvknxzsVBX6EHkgeLcillhS/x0tJXgPbjqjnBy81MWTEDwsFPZcXTc5vaGxx073naU
-	 yUgqsI0nHnlzzqmf/oRvtZtSMnJpHpbMTVRtNwX4=
+	b=GTmZmYjy8OLff/gRCoXv1G1wftAq12wpo0btnBiHjvAUgxFO2dbHluCc92tDxK79w
+	 bn+VBDw2pkZOUt5DSEw9Sh7ZgGErJj38kFWFsalGcyIaTqKTpHHPwCxO9xBOjzys7B
+	 P4vAJ6BzRwpHB9N0BUFSP32mS1eH/w6mx9iXsN0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Yen Chang <cc85nod@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 150/160] ksmbd: fix out-of-bound read in parse_lease_state()
-Date: Mon, 12 Jun 2023 12:28:02 +0200
-Message-ID: <20230612101721.942516956@linuxfoundation.org>
+	Hsieh-Tseng Shen <woodrow.shen@sifive.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 141/160] riscv: mm: Ensure prot of VM_WRITE and VM_EXEC must be readable
+Date: Mon, 12 Jun 2023 12:27:53 +0200
+Message-ID: <20230612101721.523370385@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,125 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Hsieh-Tseng Shen <woodrow.shen@sifive.com>
 
-commit fc6c6a3c324c1b3e93a03d0cfa3749c781f23de0 upstream.
+[ Upstream commit 6569fc12e442ea973d96db39e542aa19a7bc3a79 ]
 
-This bug is in parse_lease_state, and it is caused by the missing check
-of `struct create_context`. When the ksmbd traverses the create_contexts,
-it doesn't check if the field of `NameOffset` and `Next` is valid,
-The KASAN message is following:
+Commit 8aeb7b17f04e ("RISC-V: Make mmap() with PROT_WRITE imply PROT_READ")
+allows riscv to use mmap with PROT_WRITE only, and meanwhile mmap with w+x
+is also permitted. However, when userspace tries to access this page with
+PROT_WRITE|PROT_EXEC, which causes infinite loop at load page fault as
+well as it triggers soft lockup. According to riscv privileged spec,
+"Writable pages must also be marked readable". The fix to drop the
+`PAGE_COPY_READ_EXEC` and then `PAGE_COPY_EXEC` would be just used instead.
+This aligns the other arches (i.e arm64) for protection_map.
 
-[    6.664323] BUG: KASAN: slab-out-of-bounds in parse_lease_state+0x7d/0x280
-[    6.664738] Read of size 2 at addr ffff888005c08988 by task kworker/0:3/103
-...
-[    6.666644] Call Trace:
-[    6.666796]  <TASK>
-[    6.666933]  dump_stack_lvl+0x33/0x50
-[    6.667167]  print_report+0xcc/0x620
-[    6.667903]  kasan_report+0xae/0xe0
-[    6.668374]  kasan_check_range+0x35/0x1b0
-[    6.668621]  parse_lease_state+0x7d/0x280
-[    6.668868]  smb2_open+0xbe8/0x4420
-[    6.675137]  handle_ksmbd_work+0x282/0x820
-
-Use smb2_find_context_vals() to find smb2 create request lease context.
-smb2_find_context_vals validate create context fields.
-
-Cc: stable@vger.kernel.org
-Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
-Tested-by: Chih-Yen Chang <cc85nod@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8aeb7b17f04e ("RISC-V: Make mmap() with PROT_WRITE imply PROT_READ")
+Signed-off-by: Hsieh-Tseng Shen <woodrow.shen@sifive.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20230425102828.1616812-1-woodrow.shen@sifive.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/oplock.c |   70 ++++++++++++++++++++----------------------------------
- 1 file changed, 26 insertions(+), 44 deletions(-)
+ arch/riscv/include/asm/pgtable.h | 3 +--
+ arch/riscv/mm/init.c             | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/ksmbd/oplock.c
-+++ b/fs/ksmbd/oplock.c
-@@ -1415,56 +1415,38 @@ void create_lease_buf(u8 *rbuf, struct l
-  */
- struct lease_ctx_info *parse_lease_state(void *open_req)
- {
--	char *data_offset;
- 	struct create_context *cc;
--	unsigned int next = 0;
--	char *name;
--	bool found = false;
- 	struct smb2_create_req *req = (struct smb2_create_req *)open_req;
--	struct lease_ctx_info *lreq = kzalloc(sizeof(struct lease_ctx_info),
--		GFP_KERNEL);
-+	struct lease_ctx_info *lreq;
-+
-+	cc = smb2_find_context_vals(req, SMB2_CREATE_REQUEST_LEASE, 4);
-+	if (IS_ERR_OR_NULL(cc))
-+		return NULL;
-+
-+	lreq = kzalloc(sizeof(struct lease_ctx_info), GFP_KERNEL);
- 	if (!lreq)
- 		return NULL;
+diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
+index f641837ccf31d..05eda3281ba90 100644
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -165,8 +165,7 @@ extern struct pt_alloc_ops pt_ops __initdata;
+ 					 _PAGE_EXEC | _PAGE_WRITE)
  
--	data_offset = (char *)req + le32_to_cpu(req->CreateContextsOffset);
--	cc = (struct create_context *)data_offset;
--	do {
--		cc = (struct create_context *)((char *)cc + next);
--		name = le16_to_cpu(cc->NameOffset) + (char *)cc;
--		if (le16_to_cpu(cc->NameLength) != 4 ||
--		    strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
--			next = le32_to_cpu(cc->Next);
--			continue;
--		}
--		found = true;
--		break;
--	} while (next != 0);
--
--	if (found) {
--		if (sizeof(struct lease_context_v2) == le32_to_cpu(cc->DataLength)) {
--			struct create_lease_v2 *lc = (struct create_lease_v2 *)cc;
--
--			memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
--			lreq->req_state = lc->lcontext.LeaseState;
--			lreq->flags = lc->lcontext.LeaseFlags;
--			lreq->duration = lc->lcontext.LeaseDuration;
--			memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
--			       SMB2_LEASE_KEY_SIZE);
--			lreq->version = 2;
--		} else {
--			struct create_lease *lc = (struct create_lease *)cc;
--
--			memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
--			lreq->req_state = lc->lcontext.LeaseState;
--			lreq->flags = lc->lcontext.LeaseFlags;
--			lreq->duration = lc->lcontext.LeaseDuration;
--			lreq->version = 1;
--		}
--		return lreq;
--	}
-+	if (sizeof(struct lease_context_v2) == le32_to_cpu(cc->DataLength)) {
-+		struct create_lease_v2 *lc = (struct create_lease_v2 *)cc;
+ #define PAGE_COPY		PAGE_READ
+-#define PAGE_COPY_EXEC		PAGE_EXEC
+-#define PAGE_COPY_READ_EXEC	PAGE_READ_EXEC
++#define PAGE_COPY_EXEC		PAGE_READ_EXEC
+ #define PAGE_SHARED		PAGE_WRITE
+ #define PAGE_SHARED_EXEC	PAGE_WRITE_EXEC
  
--	kfree(lreq);
--	return NULL;
-+		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
-+		lreq->req_state = lc->lcontext.LeaseState;
-+		lreq->flags = lc->lcontext.LeaseFlags;
-+		lreq->duration = lc->lcontext.LeaseDuration;
-+		memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
-+				SMB2_LEASE_KEY_SIZE);
-+		lreq->version = 2;
-+	} else {
-+		struct create_lease *lc = (struct create_lease *)cc;
-+
-+		memcpy(lreq->lease_key, lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
-+		lreq->req_state = lc->lcontext.LeaseState;
-+		lreq->flags = lc->lcontext.LeaseFlags;
-+		lreq->duration = lc->lcontext.LeaseDuration;
-+		lreq->version = 1;
-+	}
-+	return lreq;
- }
- 
- /**
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index dc1793bf01796..309d685d70267 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -286,7 +286,7 @@ static const pgprot_t protection_map[16] = {
+ 	[VM_EXEC]					= PAGE_EXEC,
+ 	[VM_EXEC | VM_READ]				= PAGE_READ_EXEC,
+ 	[VM_EXEC | VM_WRITE]				= PAGE_COPY_EXEC,
+-	[VM_EXEC | VM_WRITE | VM_READ]			= PAGE_COPY_READ_EXEC,
++	[VM_EXEC | VM_WRITE | VM_READ]			= PAGE_COPY_EXEC,
+ 	[VM_SHARED]					= PAGE_NONE,
+ 	[VM_SHARED | VM_READ]				= PAGE_READ,
+ 	[VM_SHARED | VM_WRITE]				= PAGE_SHARED,
+-- 
+2.39.2
+
 
 
