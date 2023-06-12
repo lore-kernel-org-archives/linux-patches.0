@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCF31950B
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649A1C433EF;
-	Mon, 12 Jun 2023 10:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BB71952E
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AC1C433EF;
+	Mon, 12 Jun 2023 10:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565888;
-	bh=dCW03YcQ7Sp8gb5yhGj9XFZ6AhfxdonTI6+xK0RH5Xw=;
+	s=korg; t=1686565891;
+	bh=Tbu2ok51QPVVY5W7T+bALWIj77KRewtAb9WN5gCVu5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jz+V/wIOX0EEOb8TfJWJkYFvzOK5T/1YYxXI0tsyRS1HUoofGE9SdXr8DzE7fiyPi
-	 w3VtgKQ7X1AwF1fJUXjXXrPF+9Y3KsrW+hvigafNqdmarfFubtS2TTO2sA3v3Updjg
-	 Q+2APg43Q+OmSaS+DHupjgvSoN/WExgOxmska0xI=
+	b=JFovGpxqEqshT6NaxATrMpmhR8YKAlIHtwzZfKcbO3knUsvg9bjoSmuaVdhCPwRnc
+	 AklZadPWWjCgESxLbcfKItXgyVXvEKdAIZZSlegnhRyDjtTHVPmp3qKzTyg84oQZ6u
+	 YbdKAxTmpq8ibVnfsVaXIYGh2sSA2F9nVWkGGO8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 5.4 30/45] rbd: move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting
-Date: Mon, 12 Jun 2023 12:26:24 +0200
-Message-ID: <20230612101655.882266373@linuxfoundation.org>
+	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.4 31/45] pinctrl: meson-axg: add missing GPIOA_18 gpio group
+Date: Mon, 12 Jun 2023 12:26:25 +0200
+Message-ID: <20230612101655.913256087@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -34,85 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Martin Hundebøll <martin@geanix.com>
 
-commit 09fe05c57b5aaf23e2c35036c98ea9f282b19a77 upstream.
+commit 5b10ff013e8a57f8845615ac2cc37edf7f6eef05 upstream.
 
-Move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting into the object request
-state machine to allow for the snapshot context to be captured in the
-image request state machine rather than in rbd_queue_workfn().
+Without this, the gpio cannot be explicitly mux'ed to its gpio function.
 
+Fixes: 83c566806a68a ("pinctrl: meson-axg: Add new pinctrl driver for Meson AXG SoC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Signed-off-by: Martin Hundebøll <martin@geanix.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Rokosov <ddrokosov@sberdevices.ru>
+Link: https://lore.kernel.org/r/20230512064925.133516-1-martin@geanix.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ drivers/pinctrl/meson/pinctrl-meson-axg.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -1493,14 +1493,28 @@ static bool rbd_obj_is_tail(struct rbd_o
- /*
-  * Must be called after rbd_obj_calc_img_extents().
-  */
--static bool rbd_obj_copyup_enabled(struct rbd_obj_request *obj_req)
-+static void rbd_obj_set_copyup_enabled(struct rbd_obj_request *obj_req)
- {
--	if (!obj_req->num_img_extents ||
--	    (rbd_obj_is_entire(obj_req) &&
--	     !obj_req->img_request->snapc->num_snaps))
--		return false;
-+	if (obj_req->img_request->op_type == OBJ_OP_DISCARD) {
-+		dout("%s %p objno %llu discard\n", __func__, obj_req,
-+		     obj_req->ex.oe_objno);
-+		return;
-+	}
- 
--	return true;
-+	if (!obj_req->num_img_extents) {
-+		dout("%s %p objno %llu not overlapping\n", __func__, obj_req,
-+		     obj_req->ex.oe_objno);
-+		return;
-+	}
-+
-+	if (rbd_obj_is_entire(obj_req) &&
-+	    !obj_req->img_request->snapc->num_snaps) {
-+		dout("%s %p objno %llu entire\n", __func__, obj_req,
-+		     obj_req->ex.oe_objno);
-+		return;
-+	}
-+
-+	obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
- }
- 
- static u64 rbd_obj_img_extents_bytes(struct rbd_obj_request *obj_req)
-@@ -2389,9 +2403,6 @@ static int rbd_obj_init_write(struct rbd
- 	if (ret)
- 		return ret;
- 
--	if (rbd_obj_copyup_enabled(obj_req))
--		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
--
- 	obj_req->write_state = RBD_OBJ_WRITE_START;
- 	return 0;
- }
-@@ -2497,8 +2508,6 @@ static int rbd_obj_init_zeroout(struct r
- 	if (ret)
- 		return ret;
- 
--	if (rbd_obj_copyup_enabled(obj_req))
--		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
- 	if (!obj_req->num_img_extents) {
- 		obj_req->flags |= RBD_OBJ_FLAG_NOOP_FOR_NONEXISTENT;
- 		if (rbd_obj_is_entire(obj_req))
-@@ -3439,6 +3448,7 @@ again:
- 	case RBD_OBJ_WRITE_START:
- 		rbd_assert(!*result);
- 
-+		rbd_obj_set_copyup_enabled(obj_req);
- 		if (rbd_obj_write_is_noop(obj_req))
- 			return true;
+--- a/drivers/pinctrl/meson/pinctrl-meson-axg.c
++++ b/drivers/pinctrl/meson/pinctrl-meson-axg.c
+@@ -400,6 +400,7 @@ static struct meson_pmx_group meson_axg_
+ 	GPIO_GROUP(GPIOA_15),
+ 	GPIO_GROUP(GPIOA_16),
+ 	GPIO_GROUP(GPIOA_17),
++	GPIO_GROUP(GPIOA_18),
+ 	GPIO_GROUP(GPIOA_19),
+ 	GPIO_GROUP(GPIOA_20),
  
 
 
