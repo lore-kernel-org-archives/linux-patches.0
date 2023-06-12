@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199E2134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 942C0C433D2;
-	Mon, 12 Jun 2023 10:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54E5134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A580C433EF;
+	Mon, 12 Jun 2023 10:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566503;
-	bh=gUz7u2rjJu321GiDK3r3TFK+SzdqOfYtLcmuy/8ZDgE=;
+	s=korg; t=1686566506;
+	bh=vRjL/QT0vsgK0+hsmCeJTYF44KAZj4JfXpGiTYMJFD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDK+Sbl52UOxCyG8xbSy1Cmstb1hgFjkix/H6VirqvDhBzyb8c4ozUG4Kn+BQ0dYf
-	 ijwdpgjZ/9a22+oaMWZcNNW7j46C5ixYBG+ByNyhwZwmlDUNpEO/99bFXEwyyMT3Xl
-	 6DwBGA+rBC8IpRzd9G0lSJjIzefQMiNc2luSZjTY=
+	b=KtxS4VgwUBkfFAdHprqjQBo9vjVqwTpb0BSrwmR8cY+sMaT6Tgq5IttOlOEU2RDjH
+	 zqnzx0M4L/Rb5oVt3fBigMZSjaJJGhwkMZMhwZq17y6pDTjxTBaMiyZxiZ+wMwdoGA
+	 fD5fhbkSqJcJfiQ3qy7xYZmP5QNPCEklpWGfWndE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/132] wifi: mac80211: dont translate beacon/presp addrs
-Date: Mon, 12 Jun 2023 12:26:03 +0200
-Message-ID: <20230612101711.562832923@linuxfoundation.org>
+Subject: [PATCH 6.1 056/132] bnxt_en: Prevent kernel panic when receiving unexpected PHC_UPDATE event
+Date: Mon, 12 Jun 2023 12:26:30 +0200
+Message-ID: <20230612101712.809721751@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,42 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit 47c171a426e305f2225b92ed7b5e0a990c95f6d4 ]
+[ Upstream commit 319a7827df9784048abe072afe6b4fb4501d8de4 ]
 
-Don't do link address translation for beacons and probe responses,
-this leads to reporting multiple scan list entries for the same AP
-(one with the MLD address) which just breaks things.
+The firmware can send PHC_RTC_UPDATE async event on a PF that may not
+have PTP registered. In such a case, there will be a null pointer
+deference for bp->ptp_cfg when we try to handle the event.
 
-We might need to extend this in the future for some other (action)
-frames that aren't MLD addressed.
+Fix it by not registering for this event with the firmware if !bp->ptp_cfg.
+Also, check that bp->ptp_cfg is valid before proceeding when we receive
+the event.
 
-Fixes: 42fb9148c078 ("wifi: mac80211: do link->MLD address translation on RX")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230604120651.62adead1b43a.Ifc25eed26ebf3b269f60b1ec10060156d0e7ec0d@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 8bcf6f04d4a5 ("bnxt_en: Handle async event when the PHC is updated in RTC mode")
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 6 ++++++
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 44e407e1a14c7..0f81492da0b46 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -4857,7 +4857,9 @@ static bool ieee80211_prepare_and_rx_handle(struct ieee80211_rx_data *rx,
- 	}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index f7b2c4e94e898..37a31f684938a 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -2389,6 +2389,9 @@ static int bnxt_async_event_process(struct bnxt *bp,
+ 				struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
+ 				u64 ns;
  
- 	if (unlikely(rx->sta && rx->sta->sta.mlo) &&
--	    is_unicast_ether_addr(hdr->addr1)) {
-+	    is_unicast_ether_addr(hdr->addr1) &&
-+	    !ieee80211_is_probe_resp(hdr->frame_control) &&
-+	    !ieee80211_is_beacon(hdr->frame_control)) {
- 		/* translate to MLD addresses */
- 		if (ether_addr_equal(link->conf->addr, hdr->addr1))
- 			ether_addr_copy(hdr->addr1, rx->sdata->vif.addr);
++				if (!ptp)
++					goto async_event_process_exit;
++
+ 				spin_lock_bh(&ptp->ptp_lock);
+ 				bnxt_ptp_update_current_time(bp);
+ 				ns = (((u64)BNXT_EVENT_PHC_RTC_UPDATE(data1) <<
+@@ -4787,6 +4790,9 @@ int bnxt_hwrm_func_drv_rgtr(struct bnxt *bp, unsigned long *bmap, int bmap_size,
+ 		if (event_id == ASYNC_EVENT_CMPL_EVENT_ID_ERROR_RECOVERY &&
+ 		    !(bp->fw_cap & BNXT_FW_CAP_ERROR_RECOVERY))
+ 			continue;
++		if (event_id == ASYNC_EVENT_CMPL_EVENT_ID_PHC_UPDATE &&
++		    !bp->ptp_cfg)
++			continue;
+ 		__set_bit(bnxt_async_events_arr[i], async_events_bmap);
+ 	}
+ 	if (bmap && bmap_size) {
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+index 2132ce63193ce..4faaa9a50f4bc 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+@@ -929,6 +929,7 @@ int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
+ 	} else {
+ 		bnxt_ptp_timecounter_init(bp, true);
+ 	}
++	bnxt_hwrm_func_drv_rgtr(bp, NULL, 0, true);
+ 
+ 	ptp->ptp_info = bnxt_ptp_caps;
+ 	if ((bp->fw_cap & BNXT_FW_CAP_PTP_PPS)) {
 -- 
 2.39.2
 
