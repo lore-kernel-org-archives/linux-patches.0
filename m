@@ -1,24 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4149319533
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF5DDC433EF;
-	Mon, 12 Jun 2023 10:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E117E1952C
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66291C433EF;
+	Mon, 12 Jun 2023 10:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565844;
-	bh=YW6QTg2KfihgPJyA0r8A1bdBDrJYlu2pK0pBJD0r5F0=;
+	s=korg; t=1686565846;
+	bh=uJAPNVl99DOIMx5QOSlOZnqy0kNtLNA+eKwZc4ilzxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EV+IJ2FWnZ+bfLYo+jbHxZoCPDYW8ndDV25RlWZLINTO/Aytb97fBjDdSrf6z19ei
-	 Wuv/9tGl7lcGY9PpfKRw1JrrT+ebiIII9bx/U1V8qK4pGprjqj7a8Ex6sY2BumjsKt
-	 4a0Pu79ZA0FxDNVRq8CTxG/ap5S2pAFr7/YQK/zY=
+	b=OHM7M2vBGp/nLznpDCVYNATQEDqcxBg/i87mjYYFMuqkzCxZnA/CkR+bN8jjNviil
+	 9kMGrFbeNfvi4Xuu5fdl6wQE3N//jOLgrSkXWlGGF4SlSHCQLy8/q/h1V24MCZMs6q
+	 UN/UZSCI6SCZOC37Ypq6ORmOvQ5e65ZrxxszuYxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev
-Subject: [PATCH 5.4 03/45] i40iw: fix build warning in i40iw_manage_apbvt()
-Date: Mon, 12 Jun 2023 12:25:57 +0200
-Message-ID: <20230612101654.776792037@linuxfoundation.org>
+Subject: [PATCH 5.4 04/45] i40e: fix build warnings in i40e_alloc.h
+Date: Mon, 12 Jun 2023 12:25:58 +0200
+Message-ID: <20230612101654.812139714@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -32,30 +32,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Not upstream as this function is no longer around anymore.
+Not upstream as it was fixed in a much larger api change in newer
+kernels.
 
-The function i40iw_manage_apbvt() has the wrong prototype match from the
-.h file to the .c declaration, so fix it up, otherwise gcc-13 complains
-(rightfully) that the type is incorrect.
+gcc-13 rightfully complains that enum is not the same as an int, so fix
+up the function prototypes in i40e_alloc.h to be correct, solving a
+bunch of build warnings.
 
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/i40iw/i40iw.h |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_alloc.h |   17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
---- a/drivers/infiniband/hw/i40iw/i40iw.h
-+++ b/drivers/infiniband/hw/i40iw/i40iw.h
-@@ -411,9 +411,8 @@ void i40iw_manage_arp_cache(struct i40iw
- 			    bool ipv4,
- 			    u32 action);
+--- a/drivers/net/ethernet/intel/i40e/i40e_alloc.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_alloc.h
+@@ -20,16 +20,11 @@ enum i40e_memory_type {
+ };
  
--int i40iw_manage_apbvt(struct i40iw_device *iwdev,
--		       u16 accel_local_port,
--		       bool add_port);
-+enum i40iw_status_code i40iw_manage_apbvt(struct i40iw_device *iwdev,
-+					  u16 accel_local_port, bool add_port);
+ /* prototype for functions used for dynamic memory allocation */
+-i40e_status i40e_allocate_dma_mem(struct i40e_hw *hw,
+-					    struct i40e_dma_mem *mem,
+-					    enum i40e_memory_type type,
+-					    u64 size, u32 alignment);
+-i40e_status i40e_free_dma_mem(struct i40e_hw *hw,
+-					struct i40e_dma_mem *mem);
+-i40e_status i40e_allocate_virt_mem(struct i40e_hw *hw,
+-					     struct i40e_virt_mem *mem,
+-					     u32 size);
+-i40e_status i40e_free_virt_mem(struct i40e_hw *hw,
+-					 struct i40e_virt_mem *mem);
++int i40e_allocate_dma_mem(struct i40e_hw *hw, struct i40e_dma_mem *mem,
++			  enum i40e_memory_type type, u64 size, u32 alignment);
++int i40e_free_dma_mem(struct i40e_hw *hw, struct i40e_dma_mem *mem);
++int i40e_allocate_virt_mem(struct i40e_hw *hw, struct i40e_virt_mem *mem,
++			   u32 size);
++int i40e_free_virt_mem(struct i40e_hw *hw, struct i40e_virt_mem *mem);
  
- struct i40iw_cqp_request *i40iw_get_cqp_request(struct i40iw_cqp *cqp, bool wait);
- void i40iw_free_cqp_request(struct i40iw_cqp *cqp, struct i40iw_cqp_request *cqp_request);
+ #endif /* _I40E_ALLOC_H_ */
 
 
