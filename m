@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7C419531
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B2BC433D2;
-	Mon, 12 Jun 2023 10:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30EA1950B
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0216FC433D2;
+	Mon, 12 Jun 2023 10:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566020;
-	bh=fBZqHSpT53nuDhBN4fFMuA0ZrenNODG0H+/JkigtgBA=;
+	s=korg; t=1686566023;
+	bh=NzSwiq4+QxBSUUV5MX6MnfpYJIV9bz57QAwdhXRs9yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fw/vR6gPwezlyHPp+j1fbP70KzLXQGVAgFWnjRh0ZAEQ+Q2+qjrxFANEMeh/qeiPi
-	 dAluICLRP7xXnEWcoKrmLloF1gDN/Tj59VfR21RkvwdsSeQCcQ0N0VjqCds1kSHgL2
-	 a3tLAT7rp0CpXvi7MhyZPPl73U2Gr1O8JXPo9K2k=
+	b=EfLHLP2NeUvGART3GWol2ix90+ShCxjean5huwb722VIImBunqVciisH4o04HliQh
+	 7XZ9c+ppnUaJBEpeFBNTo6WrvsEumJcUEYqbA4ULcLbdAIEdcd/LDDUwsXVPZzCp0B
+	 45dQkKoBOlkrB2kyw5j2aPneG/bc0yBm+QumfLeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh Anakkur Purayil <kalesh-anakkur.purayil@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 34/68] bnxt_en: Implement .set_port / .unset_port UDP tunnel callbacks
-Date: Mon, 12 Jun 2023 12:26:26 +0200
-Message-ID: <20230612101659.833875366@linuxfoundation.org>
+Subject: [PATCH 5.10 17/68] net: dsa: lan9303: allow vid != 0 in port_fdb_{add|del} methods
+Date: Mon, 12 Jun 2023 12:26:09 +0200
+Message-ID: <20230612101659.171326531@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -37,79 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Somnath Kotur <somnath.kotur@broadcom.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 1eb4ef12591348c440ac9d6efcf7521e73cf2b10 ]
+[ Upstream commit 5a59a58ec25d44f853c26bdbfda47d73b3067435 ]
 
-As per the new udp tunnel framework, drivers which need to know the
-details of a port entry (i.e. port type) when it gets deleted should
-use the .set_port / .unset_port callbacks.
+LAN9303 doesn't associate FDB (ALR) entries with VLANs, it has just one
+global Address Logic Resolution table [1].
 
-Implementing the current .udp_tunnel_sync callback would mean that the
-deleted tunnel port entry would be all zeros.  This used to work on
-older firmware because it would not check the input when deleting a
-tunnel port.  With newer firmware, the delete will now fail and
-subsequent tunnel port allocation will fail as a result.
+Ignore VID in port_fdb_{add|del} methods, go on with the global table. This
+is the same semantics as hellcreek or RZ/N1 implement.
 
-Fixes: 442a35a5a7aa ("bnxt: convert to new udp_tunnel_nic infra")
-Reviewed-by: Kalesh Anakkur Purayil <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Visible symptoms:
+LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to delete 00:xx:xx:xx:xx:cf vid 1 from fdb: -2
+LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to add 00:xx:xx:xx:xx:cf vid 1 to fdb: -95
+
+[1] https://ww1.microchip.com/downloads/en/DeviceDoc/00002308A.pdf
+
+Fixes: 0620427ea0d6 ("net: dsa: lan9303: Add fdb/mdb manipulation")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://lore.kernel.org/r/20230531143826.477267-1-alexander.sverdlin@siemens.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 25 ++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ drivers/net/dsa/lan9303-core.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 127ed119b5f71..d8366351cf14a 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -12104,26 +12104,37 @@ static void bnxt_cfg_ntp_filters(struct bnxt *bp)
+diff --git a/drivers/net/dsa/lan9303-core.c b/drivers/net/dsa/lan9303-core.c
+index deeed50a42c05..f5ab0bff4ac29 100644
+--- a/drivers/net/dsa/lan9303-core.c
++++ b/drivers/net/dsa/lan9303-core.c
+@@ -1187,8 +1187,6 @@ static int lan9303_port_fdb_add(struct dsa_switch *ds, int port,
+ 	struct lan9303 *chip = ds->priv;
  
- #endif /* CONFIG_RFS_ACCEL */
+ 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
+-	if (vid)
+-		return -EOPNOTSUPP;
  
--static int bnxt_udp_tunnel_sync(struct net_device *netdev, unsigned int table)
-+static int bnxt_udp_tunnel_set_port(struct net_device *netdev, unsigned int table,
-+				    unsigned int entry, struct udp_tunnel_info *ti)
- {
- 	struct bnxt *bp = netdev_priv(netdev);
--	struct udp_tunnel_info ti;
- 	unsigned int cmd;
- 
--	udp_tunnel_nic_get_port(netdev, table, 0, &ti);
--	if (ti.type == UDP_TUNNEL_TYPE_VXLAN)
-+	if (ti->type == UDP_TUNNEL_TYPE_VXLAN)
- 		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_VXLAN;
- 	else
- 		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_GENEVE;
- 
--	if (ti.port)
--		return bnxt_hwrm_tunnel_dst_port_alloc(bp, ti.port, cmd);
-+	return bnxt_hwrm_tunnel_dst_port_alloc(bp, ti->port, cmd);
-+}
-+
-+static int bnxt_udp_tunnel_unset_port(struct net_device *netdev, unsigned int table,
-+				      unsigned int entry, struct udp_tunnel_info *ti)
-+{
-+	struct bnxt *bp = netdev_priv(netdev);
-+	unsigned int cmd;
-+
-+	if (ti->type == UDP_TUNNEL_TYPE_VXLAN)
-+		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_VXLAN;
-+	else
-+		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_GENEVE;
- 
- 	return bnxt_hwrm_tunnel_dst_port_free(bp, cmd);
+ 	return lan9303_alr_add_port(chip, addr, port, false);
  }
+@@ -1200,8 +1198,6 @@ static int lan9303_port_fdb_del(struct dsa_switch *ds, int port,
+ 	struct lan9303 *chip = ds->priv;
  
- static const struct udp_tunnel_nic_info bnxt_udp_tunnels = {
--	.sync_table	= bnxt_udp_tunnel_sync,
-+	.set_port	= bnxt_udp_tunnel_set_port,
-+	.unset_port	= bnxt_udp_tunnel_unset_port,
- 	.flags		= UDP_TUNNEL_NIC_INFO_MAY_SLEEP |
- 			  UDP_TUNNEL_NIC_INFO_OPEN_ONLY,
- 	.tables		= {
+ 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
+-	if (vid)
+-		return -EOPNOTSUPP;
+ 	lan9303_alr_del_port(chip, addr, port);
+ 
+ 	return 0;
 -- 
 2.39.2
 
