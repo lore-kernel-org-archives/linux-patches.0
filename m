@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085271549A
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:52:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84981C433EF;
-	Mon, 12 Jun 2023 10:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB371549A
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:52:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273AFC433D2;
+	Mon, 12 Jun 2023 10:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567124;
-	bh=W/5KIH4sx170J1u60I6s6h82sVveuqJ4Tw3ePyRRhtc=;
+	s=korg; t=1686567127;
+	bh=IN9O4ELQUBVA4DysH3zQo0U+CMMMW8V1go+V+/lcfds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sUOEktDXjlVSsZgqxY2dkwVUep8IMXyUlBvhJVZM5hnNachNYANk9ur2Id9O1pnyr
-	 j914haPw2IW1fO27XRQILUfa8iZ/V7eYzwUG8E61LfVYYu6JFI3F/LajbzGiXDlPKB
-	 p0jOBkBvpc2F2htuWLDR7VU3CNw4zgqWQAy6MWWA=
+	b=AaA8wXdU5bYDoYVhz6zqDPSme1XHgJG1MoEVWTz+Lv/UQFBnZmOIfshnKdwJ4DVtl
+	 JMPspBGRlCjjjqoqOhOi0xMBke9L/93+H2aH1rxgMnXOZJYUIBTDOzVR0B+bn7JIV3
+	 VfBqHY4v2v3abi/7VzNnc4AWbNiOMePPdvTfsDdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Philipp Hortmann <philipp.g.hortmann@gmail.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 160/160] Revert "staging: rtl8192e: Replace macro RTL_PCI_DEVICE with PCI_DEVICE"
-Date: Mon, 12 Jun 2023 12:28:12 +0200
-Message-ID: <20230612101722.413368628@linuxfoundation.org>
+Subject: [PATCH 6.3 143/160] soundwire: stream: Add missing clear of alloc_slave_rt
+Date: Mon, 12 Jun 2023 12:27:55 +0200
+Message-ID: <20230612101721.620299173@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,53 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-This reverts commit 21d58e5ac3062e931d9f5a9eb58a6caacb910856 which is
-commit fda2093860df4812d69052a8cf4997e53853a340 upstream.
+[ Upstream commit 58d95889f3c2064c6139ee94bb0e4d86e1ad4eab ]
 
-Ben reports that this should not have been backported to the older
-kernels as the rest of the macro is not empty.  It was a clean-up patch
-in 6.4-rc1 only, it did not add new device ids.
+The current path that skips allocating the slave runtime does not clear
+the alloc_slave_rt flag, this is clearly incorrect. Add the missing
+clear, so the runtime won't be erroneously cleaned up.
 
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Cc: Philipp Hortmann <philipp.g.hortmann@gmail.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Link: https://lore.kernel.org/r/aa0d401a7f63448cd4c2fe4a2d7e8495d9aa123e.camel@decadent.org.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f3016b891c8c ("soundwire: stream: sdw_stream_add_ functions can be called multiple times")
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230602101140.2040141-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.c |    6 +++---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.h |    5 +++++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/soundwire/stream.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-@@ -48,9 +48,9 @@ static const struct rtl819x_ops rtl819xp
- };
+diff --git a/drivers/soundwire/stream.c b/drivers/soundwire/stream.c
+index 8c6da1739e3d1..3c909853aaf89 100644
+--- a/drivers/soundwire/stream.c
++++ b/drivers/soundwire/stream.c
+@@ -2019,8 +2019,10 @@ int sdw_stream_add_slave(struct sdw_slave *slave,
  
- static struct pci_device_id rtl8192_pci_id_tbl[] = {
--	{PCI_DEVICE(0x10ec, 0x8192)},
--	{PCI_DEVICE(0x07aa, 0x0044)},
--	{PCI_DEVICE(0x07aa, 0x0047)},
-+	{RTL_PCI_DEVICE(0x10ec, 0x8192, rtl819xp_ops)},
-+	{RTL_PCI_DEVICE(0x07aa, 0x0044, rtl819xp_ops)},
-+	{RTL_PCI_DEVICE(0x07aa, 0x0047, rtl819xp_ops)},
- 	{}
- };
+ skip_alloc_master_rt:
+ 	s_rt = sdw_slave_rt_find(slave, stream);
+-	if (s_rt)
++	if (s_rt) {
++		alloc_slave_rt = false;
+ 		goto skip_alloc_slave_rt;
++	}
  
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-@@ -55,6 +55,11 @@
- #define IS_HARDWARE_TYPE_8192SE(_priv)		\
- 	(((struct r8192_priv *)rtllib_priv(dev))->card_8192 == NIC_8192SE)
- 
-+#define RTL_PCI_DEVICE(vend, dev, cfg) \
-+	.vendor = (vend), .device = (dev), \
-+	.subvendor = PCI_ANY_ID, .subdevice = PCI_ANY_ID, \
-+	.driver_data = (kernel_ulong_t)&(cfg)
-+
- #define TOTAL_CAM_ENTRY		32
- #define CAM_CONTENT_COUNT	8
- 
+ 	s_rt = sdw_slave_rt_alloc(slave, m_rt);
+ 	if (!s_rt) {
+-- 
+2.39.2
+
 
 
