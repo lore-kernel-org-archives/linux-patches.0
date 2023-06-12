@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28CBDF4F
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D505C433D2;
-	Mon, 12 Jun 2023 10:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603DE11C99
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6F6C433EF;
+	Mon, 12 Jun 2023 10:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567090;
-	bh=gISjHfdXsuSWMW/xs7lUJ24htPx4lap4xXE5Djk52cM=;
+	s=korg; t=1686567093;
+	bh=EWyspB1JGUmjrgu7004VJuEXSEWIXaQvAZ7BMQQMo/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXC4Kt6c3Yj2j6AIJuPOvvgEpMt4EVrvz0LrVbcuu4fQDDpCWK8cMvXE0uNjSW6HW
-	 Jq1MMYU557X5wNgr9j9zM0vnuEwP5xGScCneNAhZZ7B1ZuaGn0uwf6Q0lFSP33H1Rb
-	 bTVy9eVhP+QWJQMRba5IBwfF8+D+DOUKxi3cDQ6M=
+	b=bJB5RbA8EnDO8plS3GE7H/JldLPsClVmej8kqBY470qFv41MhLno65iprMZ6ys1xE
+	 dovwM3u9HRtNqY4lw9Hra6Xv0pdKUtut5sICFKzHXkGhhUDfWLv0FjMdYJYXXcrvQL
+	 IdeLpYjYNaWKlOjopDEMWrspeFY9kTqpS95URqLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 118/160] soc: qcom: rpmh-rsc: drop redundant unsigned >=0 comparision
-Date: Mon, 12 Jun 2023 12:27:30 +0200
-Message-ID: <20230612101720.460771644@linuxfoundation.org>
+Subject: [PATCH 6.3 119/160] arm64: dts: qcom: sc8280xp: Flush RSC sleep & wake votes
+Date: Mon, 12 Jun 2023 12:27:31 +0200
+Message-ID: <20230612101720.508218873@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,36 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 3395d36e6805786c26d13188735bc796b9d7a7c9 ]
+[ Upstream commit ce7c014937c442be677963848c7db62eccd94eac ]
 
-Unsigned int "minor" is always >= 0 as reported by Smatch:
+The rpmh driver will cache sleep and wake votes until the cluster
+power-domain is about to enter idle, to avoid unnecessary writes. So
+associate the apps_rsc with the cluster pd, so that it can be notified
+about this event.
 
-  drivers/soc/qcom/rpmh-rsc.c:1076 rpmh_rsc_probe() warn: always true condition '(drv->ver.minor >= 0) => (0-u32max >= 0)'
+Without this, only AMC votes are being commited.
 
-Fixes: 88704a0cd719 ("soc: qcom: rpmh-rsc: Support RSC v3 minor versions")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230513112913.176009-1-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230512150425.3171122-1-quic_bjorande@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index f93544f6d7961..0dd4363ebac8f 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -1073,7 +1073,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
- 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
- 	drv->ver.minor >>= MINOR_VER_SHIFT;
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 03b679b75201d..f081ca449699a 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -3957,6 +3957,7 @@ apps_rsc: rsc@18200000 {
+ 			qcom,tcs-config = <ACTIVE_TCS  2>, <SLEEP_TCS   3>,
+ 					  <WAKE_TCS    3>, <CONTROL_TCS 1>;
+ 			label = "apps_rsc";
++			power-domains = <&CLUSTER_PD>;
  
--	if (drv->ver.major == 3 && drv->ver.minor >= 0)
-+	if (drv->ver.major == 3)
- 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
- 	else
- 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
+ 			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
 -- 
 2.39.2
 
