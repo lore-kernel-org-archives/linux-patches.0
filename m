@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FC7134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC0EC433A1;
-	Mon, 12 Jun 2023 10:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727A5134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7469C433EF;
+	Mon, 12 Jun 2023 10:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566729;
-	bh=uMnoRBtoxbQgSUtB8o7vgVKK3vZs7tkD0fGv1JOaEIk=;
+	s=korg; t=1686566732;
+	bh=2Z6lqVLqxLd5rn72PBXuatDaxxURLKkOUIHC8ktUh2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hGFu2hKChPlWHxAx82Ync6f35WJmuks4ONAUyQ3DLf47wuym6dPWA2OaZMQcvaLdt
-	 cyCtzq7/5dIJm7ObWLjJTp6brI4/RIey2atf3ku+Ojn6lJQ4ZnCTr5+m4O6fTKwDNL
-	 z24O3EXEFhJCQk6HxR9217vd5BNp7g4KVVJLJuho=
+	b=Wj0eUk9wtjWCHlrAKODNBClL4ulckJyu0emYyWNaUlAB81JTm3XlSuZO0h1UL9zI1
+	 YD7UfvpYiFZAYJ4snjaK+1FvhP3gY2Yci5x0FLwr0GUry+k0mqJk6vC6yTBEFMufF+
+	 pNtGl42CIXjcLfLoWAtcxPZC6xPRebpVFnuCcKhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Akihiro Suda <akihiro.suda.cz@hco.ntt.co.jp>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kuba Piecuch <jpiecuch@google.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 010/160] net/ipv4: ping_group_range: allow GID from 2147483648 to 4294967294
-Date: Mon, 12 Jun 2023 12:25:42 +0200
-Message-ID: <20230612101715.585489335@linuxfoundation.org>
+Subject: [PATCH 6.3 011/160] bpf: Fix UAF in task local storage
+Date: Mon, 12 Jun 2023 12:25:43 +0200
+Message-ID: <20230612101715.617219704@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,98 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akihiro Suda <suda.gitsendemail@gmail.com>
+From: KP Singh <kpsingh@kernel.org>
 
-[ Upstream commit e209fee4118fe9a449d4d805361eb2de6796be39 ]
+[ Upstream commit b0fd1852bcc21accca6260ef245356d5c141ff66 ]
 
-With this commit, all the GIDs ("0 4294967294") can be written to the
-"net.ipv4.ping_group_range" sysctl.
+When task local storage was generalized for tracing programs, the
+bpf_task_local_storage callback was moved from a BPF LSM hook
+callback for security_task_free LSM hook to it's own callback. But a
+failure case in bad_fork_cleanup_security was missed which, when
+triggered, led to a dangling task owner pointer and a subsequent
+use-after-free. Move the bpf_task_storage_free to the very end of
+free_task to handle all failure cases.
 
-Note that 4294967295 (0xffffffff) is an invalid GID (see gid_valid() in
-include/linux/uidgid.h), and an attempt to register this number will cause
--EINVAL.
+This issue was noticed when a BPF LSM program was attached to the
+task_alloc hook on a kernel with KASAN enabled. The program used
+bpf_task_storage_get to copy the task local storage from the current
+task to the new task being created.
 
-Prior to this commit, only up to GID 2147483647 could be covered.
-Documentation/networking/ip-sysctl.rst had "0 4294967295" as an example
-value, but this example was wrong and causing -EINVAL.
-
-Fixes: c319b4d76b9e ("net: ipv4: add IPPROTO_ICMP socket kind")
-Co-developed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Akihiro Suda <akihiro.suda.cz@hco.ntt.co.jp>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: a10787e6d58c ("bpf: Enable task local storage for tracing programs")
+Reported-by: Kuba Piecuch <jpiecuch@google.com>
+Signed-off-by: KP Singh <kpsingh@kernel.org>
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230602002612.1117381-1-kpsingh@kernel.org
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/ip-sysctl.rst | 4 ++--
- include/net/ping.h                     | 6 +-----
- net/ipv4/sysctl_net_ipv4.c             | 8 ++++----
- 3 files changed, 7 insertions(+), 11 deletions(-)
+ kernel/fork.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
-index 58a78a3166978..97ae2b5a6101c 100644
---- a/Documentation/networking/ip-sysctl.rst
-+++ b/Documentation/networking/ip-sysctl.rst
-@@ -1352,8 +1352,8 @@ ping_group_range - 2 INTEGERS
- 	Restrict ICMP_PROTO datagram sockets to users in the group range.
- 	The default is "1 0", meaning, that nobody (not even root) may
- 	create ping sockets.  Setting it to "100 100" would grant permissions
--	to the single group. "0 4294967295" would enable it for the world, "100
--	4294967295" would enable it for the users, but not daemons.
-+	to the single group. "0 4294967294" would enable it for the world, "100
-+	4294967294" would enable it for the users, but not daemons.
- 
- tcp_early_demux - BOOLEAN
- 	Enable early demux for established TCP sockets.
-diff --git a/include/net/ping.h b/include/net/ping.h
-index 9233ad3de0ade..bc7779262e603 100644
---- a/include/net/ping.h
-+++ b/include/net/ping.h
-@@ -16,11 +16,7 @@
- #define PING_HTABLE_SIZE 	64
- #define PING_HTABLE_MASK 	(PING_HTABLE_SIZE-1)
- 
--/*
-- * gid_t is either uint or ushort.  We want to pass it to
-- * proc_dointvec_minmax(), so it must not be larger than MAX_INT
-- */
--#define GID_T_MAX (((gid_t)~0U) >> 1)
-+#define GID_T_MAX (((gid_t)~0U) - 1)
- 
- /* Compatibility glue so we can support IPv6 when it's compiled as a module */
- struct pingv6_ops {
-diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
-index 40fe70fc2015d..88dfe51e68f3c 100644
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -34,8 +34,8 @@ static int ip_ttl_min = 1;
- static int ip_ttl_max = 255;
- static int tcp_syn_retries_min = 1;
- static int tcp_syn_retries_max = MAX_TCP_SYNCNT;
--static int ip_ping_group_range_min[] = { 0, 0 };
--static int ip_ping_group_range_max[] = { GID_T_MAX, GID_T_MAX };
-+static unsigned long ip_ping_group_range_min[] = { 0, 0 };
-+static unsigned long ip_ping_group_range_max[] = { GID_T_MAX, GID_T_MAX };
- static u32 u32_max_div_HZ = UINT_MAX / HZ;
- static int one_day_secs = 24 * 3600;
- static u32 fib_multipath_hash_fields_all_mask __maybe_unused =
-@@ -165,7 +165,7 @@ static int ipv4_ping_group_range(struct ctl_table *table, int write,
- {
- 	struct user_namespace *user_ns = current_user_ns();
- 	int ret;
--	gid_t urange[2];
-+	unsigned long urange[2];
- 	kgid_t low, high;
- 	struct ctl_table tmp = {
- 		.data = &urange,
-@@ -178,7 +178,7 @@ static int ipv4_ping_group_range(struct ctl_table *table, int write,
- 	inet_get_ping_group_range_table(table, &low, &high);
- 	urange[0] = from_kgid_munged(user_ns, low);
- 	urange[1] = from_kgid_munged(user_ns, high);
--	ret = proc_dointvec_minmax(&tmp, write, buffer, lenp, ppos);
-+	ret = proc_doulongvec_minmax(&tmp, write, buffer, lenp, ppos);
- 
- 	if (write && ret == 0) {
- 		low = make_kgid(user_ns, urange[0]);
+diff --git a/kernel/fork.c b/kernel/fork.c
+index ea332319dffea..1ec1e9ea4bf83 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -559,6 +559,7 @@ void free_task(struct task_struct *tsk)
+ 	arch_release_task_struct(tsk);
+ 	if (tsk->flags & PF_KTHREAD)
+ 		free_kthread_struct(tsk);
++	bpf_task_storage_free(tsk);
+ 	free_task_struct(tsk);
+ }
+ EXPORT_SYMBOL(free_task);
+@@ -845,7 +846,6 @@ void __put_task_struct(struct task_struct *tsk)
+ 	cgroup_free(tsk);
+ 	task_numa_free(tsk, true);
+ 	security_task_free(tsk);
+-	bpf_task_storage_free(tsk);
+ 	exit_creds(tsk);
+ 	delayacct_tsk_free(tsk);
+ 	put_signal_struct(tsk->signal);
 -- 
 2.39.2
 
