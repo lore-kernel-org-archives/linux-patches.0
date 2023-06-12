@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5593011CAD
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E91C433EF;
-	Mon, 12 Jun 2023 10:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E143E134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D818C433D2;
+	Mon, 12 Jun 2023 10:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566782;
-	bh=xYrM4k9eoB/5zJdDGE4BW4bvp64RREfjbXVQjbm7NVw=;
+	s=korg; t=1686566785;
+	bh=n4mUpVu/UfJ4WB4OEWIhTa0M6oY7bCWxe0/WSIusqkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AsVc/kCKrLUxFzZvSGZYLUquuAb40zPHAVCwX8rnRhv4JpDt1ng+o9IcEXui/eQNf
-	 HxZDIOqAhBko+6rRnlqNmfBnRVIu/lSYG9VYmIGsAJRwa3654Ksqqt8JY+t5565ATE
-	 Hy681k46ADvPZEPE9Ds56fVQVnD1mgykkwZ8Qq/A=
+	b=nZMJYiFkNZK4ZvpC79xFTX3f9CWemmj6JrwRKngMswP40IrR8wkFl/5par23fxHRa
+	 skNvXHcNH6UC3Vp3u5gq7KAeRkx4AvwXqXFxxnoAYEozEbptB8nMy269FqA1qJ4uCq
+	 xeMBFOWSJ9HCM7JlURcpwPTbhMD0MWylqNQP2DvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 030/160] wifi: mac80211: use correct iftype HE cap
-Date: Mon, 12 Jun 2023 12:26:02 +0200
-Message-ID: <20230612101716.420558646@linuxfoundation.org>
+Subject: [PATCH 6.3 031/160] wifi: cfg80211: reject bad AP MLD address
+Date: Mon, 12 Jun 2023 12:26:03 +0200
+Message-ID: <20230612101716.468019096@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -37,64 +37,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit c37ab22bb1a43cdca8bf69cc0a22f1ccfc449e68 ]
+[ Upstream commit 727073ca5e55ab6a07df316250be8a12606e8677 ]
 
-We already check that the right iftype capa exists,
-but then don't use it. Assign it to a variable so we
-can actually use it, and then do that.
+When trying to authenticate, if the AP MLD address isn't
+a valid address, mac80211 can throw a warning. Avoid that
+by rejecting such addresses.
 
-Fixes: bac2fd3d7534 ("mac80211: remove use of ieee80211_get_he_sta_cap()")
+Fixes: d648c23024bd ("wifi: nl80211: support MLO in auth/assoc")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230604120651.0e908e5c5fdd.Iac142549a6144ac949ebd116b921a59ae5282735@changeid
+Link: https://lore.kernel.org/r/20230604120651.89188912bd1d.I8dbc6c8ee0cb766138803eec59508ef4ce477709@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/he.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ net/wireless/nl80211.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/he.c b/net/mac80211/he.c
-index 729f261520c77..0322abae08250 100644
---- a/net/mac80211/he.c
-+++ b/net/mac80211/he.c
-@@ -3,7 +3,7 @@
-  * HE handling
-  *
-  * Copyright(c) 2017 Intel Deutschland GmbH
-- * Copyright(c) 2019 - 2022 Intel Corporation
-+ * Copyright(c) 2019 - 2023 Intel Corporation
-  */
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 4f63059efd813..1922fccb96ace 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -10642,6 +10642,8 @@ static int nl80211_authenticate(struct sk_buff *skb, struct genl_info *info)
+ 		if (!info->attrs[NL80211_ATTR_MLD_ADDR])
+ 			return -EINVAL;
+ 		req.ap_mld_addr = nla_data(info->attrs[NL80211_ATTR_MLD_ADDR]);
++		if (!is_valid_ether_addr(req.ap_mld_addr))
++			return -EINVAL;
+ 	}
  
- #include "ieee80211_i.h"
-@@ -114,6 +114,7 @@ ieee80211_he_cap_ie_to_sta_he_cap(struct ieee80211_sub_if_data *sdata,
- 				  struct link_sta_info *link_sta)
- {
- 	struct ieee80211_sta_he_cap *he_cap = &link_sta->pub->he_cap;
-+	const struct ieee80211_sta_he_cap *own_he_cap_ptr;
- 	struct ieee80211_sta_he_cap own_he_cap;
- 	struct ieee80211_he_cap_elem *he_cap_ie_elem = (void *)he_cap_ie;
- 	u8 he_ppe_size;
-@@ -123,12 +124,16 @@ ieee80211_he_cap_ie_to_sta_he_cap(struct ieee80211_sub_if_data *sdata,
- 
- 	memset(he_cap, 0, sizeof(*he_cap));
- 
--	if (!he_cap_ie ||
--	    !ieee80211_get_he_iftype_cap(sband,
--					 ieee80211_vif_type_p2p(&sdata->vif)))
-+	if (!he_cap_ie)
- 		return;
- 
--	own_he_cap = sband->iftype_data->he_cap;
-+	own_he_cap_ptr =
-+		ieee80211_get_he_iftype_cap(sband,
-+					    ieee80211_vif_type_p2p(&sdata->vif));
-+	if (!own_he_cap_ptr)
-+		return;
-+
-+	own_he_cap = *own_he_cap_ptr;
- 
- 	/* Make sure size is OK */
- 	mcs_nss_size = ieee80211_he_mcs_nss_size(he_cap_ie_elem);
+ 	req.bss = cfg80211_get_bss(&rdev->wiphy, chan, bssid, ssid, ssid_len,
 -- 
 2.39.2
 
