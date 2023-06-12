@@ -1,39 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC15D518
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:39:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA44BC4339B;
-	Mon, 12 Jun 2023 10:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F50DDF4F
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:39:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3FBC4339B;
+	Mon, 12 Jun 2023 10:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566377;
-	bh=ePm379yY4XF2I6pU3RaBrQaVCGybMBc2EXUpeiAv+4k=;
+	s=korg; t=1686566379;
+	bh=vOAd/QHu52Ax9iUKx4WF+I1PJY3jSYueVJ33G+g5WEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ub2eTSCgAMlvA5ggYJWNEnS1csnNMbfsyQGbWFl/PETUMU1239EcjIJixl83jSDX1
-	 5tCXmnu9DfFWUur5ETdaavjatanX/hSCQXCg57jVBAlCYk2AhiLyan3NSb+cijwSS7
-	 F02cxniIFsyoXqhS1Tld01KC9itc3Qy+oiPRfs50=
+	b=bIeuS+otFs2UYSUNP+9xcxJV/m+TZPDkq5rMOJ44sIsHQyDnSNzceEpm43p0dcUSS
+	 zJr7DqmwQDQKyIM+1uCnT2M4vldFDhcbH5/rxdHAOieSvRLSLXYmisC7j6aTRG83gU
+	 P/658GJeWc/H48qbffQBSemoyJNJn6he8OS4+/+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Kiehl <Holger.Kiehl@dwd.de>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
-	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	megaraidlinux.pdl@broadcom.com,
-	linux-scsi@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.1 001/132] scsi: megaraid_sas: Add flexible array member for SGLs
-Date: Mon, 12 Jun 2023 12:25:35 +0200
-Message-ID: <20230612101710.358894732@linuxfoundation.org>
+	Qingfang DENG <qingfang.deng@siflower.com.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 010/132] neighbour: fix unaligned access to pneigh_entry
+Date: Mon, 12 Jun 2023 12:25:44 +0200
+Message-ID: <20230612101710.747795474@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,62 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Qingfang DENG <qingfang.deng@siflower.com.cn>
 
-commit a9a3629592ab7442a2e9d40281420b51c453ea9b upstream.
+[ Upstream commit ed779fe4c9b5a20b4ab4fd6f3e19807445bb78c7 ]
 
-struct MPI2_RAID_SCSI_IO_REQUEST ends with a single SGL, but expects to
-copy multiple. Add a flexible array member so the compiler can reason about
-the size of the memcpy(). This will avoid the run-time false positive
-warning:
+After the blamed commit, the member key is longer 4-byte aligned. On
+platforms that do not support unaligned access, e.g., MIPS32R2 with
+unaligned_action set to 1, this will trigger a crash when accessing
+an IPv6 pneigh_entry, as the key is cast to an in6_addr pointer.
 
-  memcpy: detected field-spanning write (size 128) of single field "&r1_cmd->io_request->SGL" at drivers/scsi/megaraid/megaraid_sas_fusion.c:3326 (size 16)
+Change the type of the key to u32 to make it aligned.
 
-This change results in no binary output differences.
-
-Reported-by: Holger Kiehl <Holger.Kiehl@dwd.de>
-Link: https://lore.kernel.org/all/88de8faa-56c4-693d-2d3-67152ee72057@diagnostix.dwd.de/
-Cc: Kashyap Desai <kashyap.desai@broadcom.com>
-Cc: Sumit Saxena <sumit.saxena@broadcom.com>
-Cc: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
-Cc: "James E.J. Bottomley" <jejb@linux.ibm.com>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: megaraidlinux.pdl@broadcom.com
-Cc: linux-scsi@vger.kernel.org
-Link: https://lore.kernel.org/r/20230106053153.never.999-kees@kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Tested-by: Holger Kiehl <Holger.Kiehl@dwd.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 62dd93181aaa ("[IPV6] NDISC: Set per-entry is_router flag in Proxy NA.")
+Signed-off-by: Qingfang DENG <qingfang.deng@siflower.com.cn>
+Link: https://lore.kernel.org/r/20230601015432.159066-1-dqfext@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_fusion.c |    2 +-
- drivers/scsi/megaraid/megaraid_sas_fusion.h |    5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ include/net/neighbour.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/megaraid/megaraid_sas_fusion.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_fusion.c
-@@ -3323,7 +3323,7 @@ static void megasas_prepare_secondRaid1_
- 	/* copy the io request frame as well as 8 SGEs data for r1 command*/
- 	memcpy(r1_cmd->io_request, cmd->io_request,
- 	       (sizeof(struct MPI2_RAID_SCSI_IO_REQUEST)));
--	memcpy(&r1_cmd->io_request->SGL, &cmd->io_request->SGL,
-+	memcpy(r1_cmd->io_request->SGLs, cmd->io_request->SGLs,
- 	       (fusion->max_sge_in_main_msg * sizeof(union MPI2_SGE_IO_UNION)));
- 	/*sense buffer is different for r1 command*/
- 	r1_cmd->io_request->SenseBufferLowAddress =
---- a/drivers/scsi/megaraid/megaraid_sas_fusion.h
-+++ b/drivers/scsi/megaraid/megaraid_sas_fusion.h
-@@ -526,7 +526,10 @@ struct MPI2_RAID_SCSI_IO_REQUEST {
- 	__le32			Control;                        /* 0x3C */
- 	union MPI2_SCSI_IO_CDB_UNION  CDB;			/* 0x40 */
- 	union RAID_CONTEXT_UNION RaidContext;  /* 0x60 */
--	union MPI2_SGE_IO_UNION       SGL;			/* 0x80 */
-+	union {
-+		union MPI2_SGE_IO_UNION       SGL;		/* 0x80 */
-+		DECLARE_FLEX_ARRAY(union MPI2_SGE_IO_UNION, SGLs);
-+	};
+diff --git a/include/net/neighbour.h b/include/net/neighbour.h
+index 2f2a6023fb0e5..94a1599824d8f 100644
+--- a/include/net/neighbour.h
++++ b/include/net/neighbour.h
+@@ -180,7 +180,7 @@ struct pneigh_entry {
+ 	netdevice_tracker	dev_tracker;
+ 	u32			flags;
+ 	u8			protocol;
+-	u8			key[];
++	u32			key[];
  };
  
  /*
+-- 
+2.39.2
+
 
 
