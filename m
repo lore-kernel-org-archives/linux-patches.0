@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70FDD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:36:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDF8C433EF;
-	Mon, 12 Jun 2023 10:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E281106
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:36:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4E5C433EF;
+	Mon, 12 Jun 2023 10:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566215;
-	bh=BTt9CYCRnTGSNG4jXQ6cjiL6QI/d1/JbsRUR0gWrOrM=;
+	s=korg; t=1686566218;
+	bh=u19Tw3qaKiXjVdRagpgs3Yg+9rUpbinfTDlLDrJAmOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u0l5GuWNeOs8NiZeNVmCajcfcB2l01vYx2UalA3N1X77x230Sh558eZ+i+ei8rzdq
-	 1v6uTe6V39t0p5PfM7I6ZfDlB8kwGA7icot/G2kyYc6r0v/zqg3QalHHxn+x6rW0w6
-	 p7lh22fS2jchtuhb0BAdv/8yhIcCUmBj6Xj6VRRM=
+	b=KWTQPVDmKKxXh+jvgPcpIh6rmLAhk38bWWefyxLlnQrn6OKum/jp6iGez2yS5QCgn
+	 3Vh5PZugCvdnAkdVsjPlO0zFpeG5O2+tioeLthqEOy+JYuiILR7D1xEabMumNZ9GPk
+	 FxgCgUnW+EX11ikYG287CVn58HLkAwluKM1Quo9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 11/91] platform/surface: aggregator: Allow completion work-items to be executed in parallel
-Date: Mon, 12 Jun 2023 12:26:00 +0200
-Message-ID: <20230612101702.555611397@linuxfoundation.org>
+Subject: [PATCH 5.15 38/91] drm/i915/selftests: Add some missing error propagation
+Date: Mon, 12 Jun 2023 12:26:27 +0200
+Message-ID: <20230612101703.673283705@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -35,64 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 
-[ Upstream commit 539e0a7f9105d19c00629c3f4da00330488e8c60 ]
+[ Upstream commit 79d0150d2d983a4f6efee676cea06027f586fcd0 ]
 
-Currently, event completion work-items are restricted to be run strictly
-in non-parallel fashion by the respective workqueue. However, this has
-lead to some problems:
+Add some missing error propagation in live_parallel_switch.
 
-In some instances, the event notifier function called inside this
-completion workqueue takes a non-negligible amount of time to execute.
-One such example is the battery event handling code (surface_battery.c),
-which can result in a full battery information refresh, involving
-further synchronous communication with the EC inside the event handler.
-This is made worse if the communication fails spuriously, generally
-incurring a multi-second timeout.
+To avoid needlessly burdening the various backport processes, note I am
+not marking it as a fix against any patches and not copying stable since
+it is debug/selftests only code.
 
-Since the event completions are run strictly non-parallel, this blocks
-other events from being propagated to the respective subsystems. This
-becomes especially noticeable for keyboard and touchpad input, which
-also funnel their events through this system. Here, users have reported
-occasional multi-second "freezes".
-
-Note, however, that the event handling system was never intended to run
-purely sequentially. Instead, we have one work struct per EC/SAM
-subsystem, processing the event queue for that subsystem. These work
-structs were intended to run in parallel, allowing sequential processing
-of work items for each subsystem but parallel processing of work items
-across subsystems.
-
-The only restriction to this is the way the workqueue is created.
-Therefore, replace create_workqueue() with alloc_workqueue() and do not
-restrict the maximum number of parallel work items to be executed on
-that queue, resolving any cross-subsystem blockage.
-
-Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
-Link: https://github.com/linux-surface/linux-surface/issues/1026
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Link: https://lore.kernel.org/r/20230525210110.2785470-1-luzmaximilian@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Fixes: 50d16d44cce4 ("drm/i915/selftests: Exercise context switching in parallel")
+Fixes: 6407cf533217 ("drm/i915/selftests: Stop using kthread_stop()")
+Link: https://patchwork.freedesktop.org/patch/msgid/20230605131135.396854-1-tvrtko.ursulin@linux.intel.com
+(cherry picked from commit 412fa1f097f48c8c1321806dd25e46618e0da147)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/aggregator/controller.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../gpu/drm/i915/gem/selftests/i915_gem_context.c  | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/surface/aggregator/controller.c b/drivers/platform/surface/aggregator/controller.c
-index f23f7128cf2b4..5542b768890c9 100644
---- a/drivers/platform/surface/aggregator/controller.c
-+++ b/drivers/platform/surface/aggregator/controller.c
-@@ -825,7 +825,7 @@ static int ssam_cplt_init(struct ssam_cplt *cplt, struct device *dev)
+diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c
+index 9369893ca1048..907e02d4085cc 100644
+--- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c
++++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c
+@@ -349,8 +349,10 @@ static int live_parallel_switch(void *arg)
+ 				continue;
  
- 	cplt->dev = dev;
+ 			ce = intel_context_create(data[m].ce[0]->engine);
+-			if (IS_ERR(ce))
++			if (IS_ERR(ce)) {
++				err = PTR_ERR(ce);
+ 				goto out;
++			}
  
--	cplt->wq = create_workqueue(SSAM_CPLT_WQ_NAME);
-+	cplt->wq = alloc_workqueue(SSAM_CPLT_WQ_NAME, WQ_UNBOUND | WQ_MEM_RECLAIM, 0);
- 	if (!cplt->wq)
- 		return -ENOMEM;
+ 			err = intel_context_pin(ce);
+ 			if (err) {
+@@ -370,8 +372,10 @@ static int live_parallel_switch(void *arg)
  
+ 		worker = kthread_create_worker(0, "igt/parallel:%s",
+ 					       data[n].ce[0]->engine->name);
+-		if (IS_ERR(worker))
++		if (IS_ERR(worker)) {
++			err = PTR_ERR(worker);
+ 			goto out;
++		}
+ 
+ 		data[n].worker = worker;
+ 	}
+@@ -400,8 +404,10 @@ static int live_parallel_switch(void *arg)
+ 			}
+ 		}
+ 
+-		if (igt_live_test_end(&t))
+-			err = -EIO;
++		if (igt_live_test_end(&t)) {
++			err = err ?: -EIO;
++			break;
++		}
+ 	}
+ 
+ out:
 -- 
 2.39.2
 
