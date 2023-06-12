@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CA411C88
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9643C433EF;
-	Mon, 12 Jun 2023 10:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D2333DC
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC5DC433A4;
+	Mon, 12 Jun 2023 10:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566419;
-	bh=KMI9ei2Dfb6cE4OolLTe5QXrIfxcguDlWCN7q/2DRvg=;
+	s=korg; t=1686566422;
+	bh=wb5iofFQ72d4xiwndmC1Nx5kWEoVvmu4b6ZVEnGiDE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRGBWf/dBPOh9obIwtXnjN1bjMnjjaidBXTuVIyVwJqje5OLVKCrXgVmyTM2RQn93
-	 D7NDwRUgHokxu6I8zB6KJVASiUT/h4ZcY7o8ut6pwFAptceQKk1XnYTtOxfAN+zOyj
-	 rzvY7WbVpxDUWOV0X6tNoyZqQorbzW5/x60Ev3es=
+	b=Ez6zk5+xcIUKXiRycIafmf6sxiRPnYNSXSvKady5NBqwR+At4OHeRtXSXvYz8NplH
+	 DoeeLerz6GGhPDyKdQLWeR72dHTrRQbZPBIua6Df13x9ap9le9wP8GXEDkybBUU1iN
+	 3kBV67FXgFD3waZ9aUJezJeXljQqJvgW+po+M5hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Sungwoo Kim <iam@sung-woo.kim>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/132] Bluetooth: ISO: dont try to remove CIG if there are bound CIS left
-Date: Mon, 12 Jun 2023 12:25:58 +0200
-Message-ID: <20230612101711.329168669@linuxfoundation.org>
+Subject: [PATCH 6.1 025/132] Bluetooth: L2CAP: Add missing checks for invalid DCID
+Date: Mon, 12 Jun 2023 12:25:59 +0200
+Message-ID: <20230612101711.380524084@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,35 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Sungwoo Kim <iam@sung-woo.kim>
 
-[ Upstream commit 6c242c64a09e78349fb0a5f0a6f8076a3d7c0bb4 ]
+[ Upstream commit 75767213f3d9b97f63694d02260b6a49a2271876 ]
 
-Consider existing BOUND & CONNECT state CIS to block CIG removal.
-Otherwise, under suitable timing conditions we may attempt to remove CIG
-while Create CIS is pending, which fails.
+When receiving a connect response we should make sure that the DCID is
+within the valid range and that we don't already have another channel
+allocated for the same DCID.
+Missing checks may violate the specification (BLUETOOTH CORE SPECIFICATION
+Version 5.4 | Vol 3, Part A, Page 1046).
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: 40624183c202 ("Bluetooth: L2CAP: Add missing checks for invalid LE DCID")
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/l2cap_core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index c2c6dea01cc91..ab9f00252dc2a 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -966,6 +966,8 @@ static void cis_cleanup(struct hci_conn *conn)
- 	/* Check if ISO connection is a CIS and remove CIG if there are
- 	 * no other connections using it.
- 	 */
-+	hci_conn_hash_list_state(hdev, find_cis, ISO_LINK, BT_BOUND, &d);
-+	hci_conn_hash_list_state(hdev, find_cis, ISO_LINK, BT_CONNECT, &d);
- 	hci_conn_hash_list_state(hdev, find_cis, ISO_LINK, BT_CONNECTED, &d);
- 	if (d.count)
- 		return;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 1287de387bc53..02fc9961464cf 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4307,6 +4307,10 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 	result = __le16_to_cpu(rsp->result);
+ 	status = __le16_to_cpu(rsp->status);
+ 
++	if (result == L2CAP_CR_SUCCESS && (dcid < L2CAP_CID_DYN_START ||
++					   dcid > L2CAP_CID_DYN_END))
++		return -EPROTO;
++
+ 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x result 0x%2.2x status 0x%2.2x",
+ 	       dcid, scid, result, status);
+ 
+@@ -4338,6 +4342,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 
+ 	switch (result) {
+ 	case L2CAP_CR_SUCCESS:
++		if (__l2cap_get_chan_by_dcid(conn, dcid)) {
++			err = -EBADSLT;
++			break;
++		}
++
+ 		l2cap_state_change(chan, BT_CONFIG);
+ 		chan->ident = 0;
+ 		chan->dcid = dcid;
 -- 
 2.39.2
 
