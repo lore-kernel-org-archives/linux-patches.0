@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5533134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39683C433EF;
-	Mon, 12 Jun 2023 10:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6434F134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD986C433EF;
+	Mon, 12 Jun 2023 10:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566663;
-	bh=1Us6t0mZJjvXS/EbuXxdTmsImvs2t+IciZTQs69kd20=;
+	s=korg; t=1686566666;
+	bh=/S2lHOpUQxVqCj3h1NuNbFrdl5UTx6eM1nOF6OASFe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K8g2H+8lNWHrBV0hh5naQjxD0vCyyG7utYvQtdS5xAi8sD+lpwYExEOaqUlqDXaon
-	 0o+vood/9dCiH3oqpaeU11/LsWTqkkJvWYdd/qM8Mye1sE3clHS9nppgrV3UtEEUaV
-	 bBRKhnymnVgr5jx+wroFnq6VBxajiL0qb8kTTH0Y=
+	b=TK7a2kXj/fAIzBm5wV1nneZ8WkQWnXipKnf5O0E3F6uAA6et98s/CculRqZMmEstQ
+	 WekO4MAISsReSh3HYh74jdit++sUZbAw1wCjCBUia3xlZh+6BAxhuJa8ahWDyTjK4E
+	 E6EHr4xQZ/Tso1jobo4kGJW4MLySZ5H8YtB41hus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Robert Hancock <robert.hancock@calian.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/132] ASoC: codecs: wsa881x: do not set can_multi_write flag
-Date: Mon, 12 Jun 2023 12:27:19 +0200
-Message-ID: <20230612101715.091169210@linuxfoundation.org>
+Subject: [PATCH 6.1 111/132] ASoC: simple-card-utils: fix PCM constraint error check
+Date: Mon, 12 Jun 2023 12:27:25 +0200
+Message-ID: <20230612101715.360675747@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,37 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Robert Hancock <robert.hancock@calian.com>
 
-[ Upstream commit 6e7a6d4797ef521c0762914610ed682e102b9d36 ]
+[ Upstream commit 635071f5fee31550e921644b2becc42b3ff1036c ]
 
-regmap-sdw does not support multi register writes, so there is
-no point in setting this flag. This also leads to incorrect
-programming of WSA codecs with regmap_multi_reg_write() call.
+The code in asoc_simple_startup was treating any non-zero return from
+snd_pcm_hw_constraint_minmax as an error, when this can return 1 in some
+normal cases and only negative values indicate an error.
 
-This invalid configuration should have been rejected by regmap-sdw.
+When this happened, it caused asoc_simple_startup to disable the clocks
+it just enabled and return 1, which was not treated as an error by the
+calling code which only checks for negative return values. Then when the
+PCM is eventually shut down, it causes the clock framework to complain
+about disabling clocks that were not enabled.
 
-Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230523154605.4284-2-srinivas.kandagatla@linaro.org
+Fix the check for snd_pcm_hw_constraint_minmax return value to only
+treat negative values as an error.
+
+Fixes: 5ca2ab459817 ("ASoC: simple-card-utils: Add new system-clock-fixed flag")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Link: https://lore.kernel.org/r/20230602011936.231931-1-robert.hancock@calian.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa881x.c | 1 -
- 1 file changed, 1 deletion(-)
+ sound/soc/generic/simple-card-utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
-index 046843b57b038..264ec05a3c675 100644
---- a/sound/soc/codecs/wsa881x.c
-+++ b/sound/soc/codecs/wsa881x.c
-@@ -648,7 +648,6 @@ static struct regmap_config wsa881x_regmap_config = {
- 	.readable_reg = wsa881x_readable_register,
- 	.reg_format_endian = REGMAP_ENDIAN_NATIVE,
- 	.val_format_endian = REGMAP_ENDIAN_NATIVE,
--	.can_multi_write = true,
- };
+diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
+index be69bbc47f813..8811321717fbb 100644
+--- a/sound/soc/generic/simple-card-utils.c
++++ b/sound/soc/generic/simple-card-utils.c
+@@ -335,7 +335,7 @@ int asoc_simple_startup(struct snd_pcm_substream *substream)
+ 		}
+ 		ret = snd_pcm_hw_constraint_minmax(substream->runtime, SNDRV_PCM_HW_PARAM_RATE,
+ 			fixed_rate, fixed_rate);
+-		if (ret)
++		if (ret < 0)
+ 			goto codec_err;
+ 	}
  
- enum {
 -- 
 2.39.2
 
