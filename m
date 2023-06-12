@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91960D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1883BC433EF;
-	Mon, 12 Jun 2023 10:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C556D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EBCC433EF;
+	Mon, 12 Jun 2023 10:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566330;
-	bh=9sXzeLltWVl57ngHS56++RTl7JECoK7Ibgz4yUWQQ9Q=;
+	s=korg; t=1686566333;
+	bh=zkcYIc5sPGXzuj58X5j25whufhu7Btaiwh7++5t5GBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TV+1A0Xk1a/Ccx39GXKdHjnpYVcE+OgpTPBmIP5IpK/cdKj7uD2IRG2PYXh9fVgfk
-	 U+xLo2MaQasQQ5PEHLtaTWlsZ6LophWCyLUslsTogQn9E4zhJ8dBmCGWdrSPbU7V2o
-	 +48wv9oXkkx/E5QxiNGJBQxkx2G4a4lD7OX0cCsM=
+	b=CXDLPOSEI/Gp2LE16JuL8WhtF0rlEw1fmxmyiqeDeDmz5NDqQ8DOrvH4z4ifvNCrY
+	 1XBqUKXXrie4dbS+Zj2GogXBZcCEnGcEgUuQJidL0LSI9dQOERkgs5hrWGKP9Cvpdz
+	 tcroU3PIPFgsKTgYm7q3evvNnqyIT4jjXBk0k6Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruan Jinjie <ruanjinjie@huawei.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	"Xie Yongji" <xieyongji@bytedance.com>,
+	Xianjun Zeng <zengxianjun@bytedance.com>,
+	Sheng Zhao <sheng.zhao@bytedance.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 83/91] riscv: fix kprobe __user string arg print fault issue
-Date: Mon, 12 Jun 2023 12:27:12 +0200
-Message-ID: <20230612101705.584303627@linuxfoundation.org>
+Subject: [PATCH 5.15 84/91] vduse: avoid empty string for dev name
+Date: Mon, 12 Jun 2023 12:27:13 +0200
+Message-ID: <20230612101705.626294763@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -36,63 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruan Jinjie <ruanjinjie@huawei.com>
+From: Sheng Zhao <sheng.zhao@bytedance.com>
 
-[ Upstream commit 99a670b2069c725a7b50318aa681d9cae8f89325 ]
+[ Upstream commit a90e8608eb0ed93d31ac0feb055f77ce59512542 ]
 
-On riscv qemu platform, when add kprobe event on do_sys_open() to show
-filename string arg, it just print fault as follow:
+Syzkaller hits a kernel WARN when the first character of the dev name
+provided is NULL. Solution is to add a NULL check before calling
+cdev_device_add() in vduse_create_dev().
 
-echo 'p:myprobe do_sys_open dfd=$arg1 filename=+0($arg2):string flags=$arg3
-mode=$arg4' > kprobe_events
+kobject: (0000000072042169): attempted to be registered with empty name!
+WARNING: CPU: 0 PID: 112695 at lib/kobject.c:236
+Call Trace:
+ kobject_add_varg linux/src/lib/kobject.c:390 [inline]
+ kobject_add+0xf6/0x150 linux/src/lib/kobject.c:442
+ device_add+0x28f/0xc20 linux/src/drivers/base/core.c:2167
+ cdev_device_add+0x83/0xc0 linux/src/fs/char_dev.c:546
+ vduse_create_dev linux/src/drivers/vdpa/vdpa_user/vduse_dev.c:2254 [inline]
+ vduse_ioctl+0x7b5/0xf30 linux/src/drivers/vdpa/vdpa_user/vduse_dev.c:2316
+ vfs_ioctl linux/src/fs/ioctl.c:47 [inline]
+ file_ioctl linux/src/fs/ioctl.c:510 [inline]
+ do_vfs_ioctl+0x14b/0xa80 linux/src/fs/ioctl.c:697
+ ksys_ioctl+0x7c/0xa0 linux/src/fs/ioctl.c:714
+ __do_sys_ioctl linux/src/fs/ioctl.c:721 [inline]
+ __se_sys_ioctl linux/src/fs/ioctl.c:719 [inline]
+ __x64_sys_ioctl+0x42/0x50 linux/src/fs/ioctl.c:719
+ do_syscall_64+0x94/0x330 linux/src/arch/x86/entry/common.c:291
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
 
-bash-166     [000] ...1.   360.195367: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename=(fault) flags=0x8241 mode=0x1b6
-
-bash-166     [000] ...1.   360.219369: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename=(fault) flags=0x8241 mode=0x1b6
-
-bash-191     [000] ...1.   360.378827: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename=(fault) flags=0x98800 mode=0x0
-
-As riscv do not select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE,
-the +0($arg2) addr is processed as a kernel address though it is a
-userspace address, cause the above filename=(fault) print. So select
-ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE to avoid the issue, after that the
-kprobe trace is ok as below:
-
-bash-166     [000] ...1.    96.767641: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename="/dev/null" flags=0x8241 mode=0x1b6
-
-bash-166     [000] ...1.    96.793751: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename="/dev/null" flags=0x8241 mode=0x1b6
-
-bash-177     [000] ...1.    96.962354: myprobe: (do_sys_open+0x0/0x84)
-dfd=0xffffffffffffff9c filename="/sys/kernel/debug/tracing/events/kprobes/"
-flags=0x98800 mode=0x0
-
-Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
-Acked-by: Björn Töpel <bjorn@rivosinc.com>
-Fixes: 0ebeea8ca8a4 ("bpf: Restrict bpf_probe_read{, str}() only to archs where they work")
-Link: https://lore.kernel.org/r/20230504072910.3742842-1-ruanjinjie@huawei.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
+Cc: "Xie Yongji" <xieyongji@bytedance.com>
+Reported-by: Xianjun Zeng <zengxianjun@bytedance.com>
+Signed-off-by: Sheng Zhao <sheng.zhao@bytedance.com>
+Message-Id: <20230530033626.1266794-1-sheng.zhao@bytedance.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Cc: "Michael S. Tsirkin"<mst@redhat.com>, "Jason Wang"<jasowang@redhat.com>,
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-index bf602e38962fa..8dd7f01ee031d 100644
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -23,6 +23,7 @@ config RISCV
- 	select ARCH_HAS_GIGANTIC_PAGE
- 	select ARCH_HAS_KCOV
- 	select ARCH_HAS_MMIOWB
-+	select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE
- 	select ARCH_HAS_PTE_SPECIAL
- 	select ARCH_HAS_SET_DIRECT_MAP if MMU
- 	select ARCH_HAS_SET_MEMORY if MMU
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index 3467c75f310a5..30ae4237f3dd4 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -1254,6 +1254,9 @@ static bool vduse_validate_config(struct vduse_dev_config *config)
+ 	if (config->vq_num > 0xffff)
+ 		return false;
+ 
++	if (!config->name[0])
++		return false;
++
+ 	if (!device_is_allowed(config->device_id))
+ 		return false;
+ 
 -- 
 2.39.2
 
