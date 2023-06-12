@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A273134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEB0C433D2;
-	Mon, 12 Jun 2023 10:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3B7134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F088C433EF;
+	Mon, 12 Jun 2023 10:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566522;
-	bh=XfOhGVN0v3hG1viVczaSizwo/DtWCgAmZJl6dL9mBfo=;
+	s=korg; t=1686566524;
+	bh=vvBGIaZlavLhvfYqTbyWNYocFpX5DI2W7bfn2c6SiFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V16UoqO42tt0Ern3BGAcrJ2a3oIBhULWxHfa6yJTt/YhCdqCW77SjSU9ciRZMtxr/
-	 g2rm8HpntZT2rUekINzdBMsJ5jxi22mGixbQVOFOdUm+VUdQOo4CyylGYByAduoZ1u
-	 N/oK+ueY1xEp3sWlii7vpMK+s8RIaZnOpe1EzGDk=
+	b=Yc1uyWHfaziYVq41C49fqe/eyUKRWHGODloLK72QZ7TBrmu9sN6EA4Ceuee99z//z
+	 5ePSpqlyBPNzgx544mM6d395RwM6+JNYvQQ1QK3RCDFpkILtz+Q/A6k92z6yFm6Jxr
+	 +z/Y+MfiJO9PcyksLI5BjlxnKYRIvgY2+rmVadYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yhs@fb.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/132] selftests/bpf: Fix sockopt_sk selftest
-Date: Mon, 12 Jun 2023 12:26:08 +0200
-Message-ID: <20230612101711.774822183@linuxfoundation.org>
+Subject: [PATCH 6.1 035/132] netfilter: nft_bitwise: fix register tracking
+Date: Mon, 12 Jun 2023 12:26:09 +0200
+Message-ID: <20230612101711.824026151@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,52 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonghong Song <yhs@fb.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit 69844e335d8c22454746c7903776533d8b4ab8fa ]
+[ Upstream commit 14e8b293903785590a0ef168745ac84250cb1f4c ]
 
-Commit f4e4534850a9 ("net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report")
-fixed NETLINK_LIST_MEMBERSHIPS length report which caused
-selftest sockopt_sk failure. The failure log looks like
+At the end of `nft_bitwise_reduce`, there is a loop which is intended to
+update the bitwise expression associated with each tracked destination
+register.  However, currently, it just updates the first register
+repeatedly.  Fix it.
 
-  test_sockopt_sk:PASS:join_cgroup /sockopt_sk 0 nsec
-  run_test:PASS:skel_load 0 nsec
-  run_test:PASS:setsockopt_link 0 nsec
-  run_test:PASS:getsockopt_link 0 nsec
-  getsetsockopt:FAIL:Unexpected NETLINK_LIST_MEMBERSHIPS value unexpected Unexpected NETLINK_LIST_MEMBERSHIPS value: actual 8 != expected 4
-  run_test:PASS:getsetsockopt 0 nsec
-  #201     sockopt_sk:FAIL
-
-In net/netlink/af_netlink.c, function netlink_getsockopt(), for NETLINK_LIST_MEMBERSHIPS,
-nlk->ngroups equals to 36. Before Commit f4e4534850a9, the optlen is calculated as
-  ALIGN(nlk->ngroups / 8, sizeof(u32)) = 4
-After that commit, the optlen is
-  ALIGN(BITS_TO_BYTES(nlk->ngroups), sizeof(u32)) = 8
-
-Fix the test by setting the expected optlen to be 8.
-
-Fixes: f4e4534850a9 ("net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report")
-Signed-off-by: Yonghong Song <yhs@fb.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230606172202.1606249-1-yhs@fb.com
+Fixes: 34cc9e52884a ("netfilter: nf_tables: cancel tracking for clobbered destination registers")
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/sockopt_sk.c | 2 +-
+ net/netfilter/nft_bitwise.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c b/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-index 4512dd808c335..05d0e07da3942 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-@@ -209,7 +209,7 @@ static int getsetsockopt(void)
- 			err, errno);
- 		goto err;
- 	}
--	ASSERT_EQ(optlen, 4, "Unexpected NETLINK_LIST_MEMBERSHIPS value");
-+	ASSERT_EQ(optlen, 8, "Unexpected NETLINK_LIST_MEMBERSHIPS value");
+diff --git a/net/netfilter/nft_bitwise.c b/net/netfilter/nft_bitwise.c
+index e6e402b247d09..b84312df9aa1e 100644
+--- a/net/netfilter/nft_bitwise.c
++++ b/net/netfilter/nft_bitwise.c
+@@ -322,7 +322,7 @@ static bool nft_bitwise_reduce(struct nft_regs_track *track,
+ 	dreg = priv->dreg;
+ 	regcount = DIV_ROUND_UP(priv->len, NFT_REG32_SIZE);
+ 	for (i = 0; i < regcount; i++, dreg++)
+-		track->regs[priv->dreg].bitwise = expr;
++		track->regs[dreg].bitwise = expr;
  
- 	free(big_buf);
- 	close(fd);
+ 	return false;
+ }
 -- 
 2.39.2
 
