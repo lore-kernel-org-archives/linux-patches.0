@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34E0D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1DCC433EF;
-	Mon, 12 Jun 2023 10:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625EED512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0026C433EF;
+	Mon, 12 Jun 2023 10:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566979;
-	bh=Tj5pIUHrwKbgZKMQUQA49EpM6LyQZLQbHXh/SbjZEW4=;
+	s=korg; t=1686566982;
+	bh=5PFxjeJveLfVvr6mqd9x2YkeqXFH63mh76MbchnERyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C1BPy5xKrHLlHbeaHscn69TNIXvECwKJdyDG7nTmdvUHWBb8ODqzX3WBbGNhjzQqb
-	 qcmqTTreIVSALhSEFgA7EYjXQdErzwpxU4IhxcKoC8+t3SYhPVuJ1YIQ+nxoq16LYR
-	 v7UOR1UkH8r+TnIoyXa+W+qQOthbcCRkvVZzRzqM=
+	b=G88JYah3nWaB7+6KakLIUKLaDAF/0KiEByfwjBI/PWeOueUMAThiAOQlit9BusFuk
+	 gfjquFGLtX0+q7bsOzuAd+CFfvNuYWGtP2uJRPC8ypmfCPrahIC3G5Qn1T1Ei72GAV
+	 F4ICE6lyqPpR2EjTbcMWSMpi2qFMBVG9te78BvzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.3 104/160] s390/dasd: Use correct lock while counting channel queue length
-Date: Mon, 12 Jun 2023 12:27:16 +0200
-Message-ID: <20230612101719.778066489@linuxfoundation.org>
+	Min Li <lm0963hack@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.3 105/160] Bluetooth: Fix use-after-free in hci_remove_ltk/hci_remove_irk
+Date: Mon, 12 Jun 2023 12:27:17 +0200
+Message-ID: <20230612101719.829331236@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,48 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Höppner <hoeppner@linux.ibm.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit ccc45cb4e7271c74dbb27776ae8f73d84557f5c6 upstream.
+commit c5d2b6fa26b5b8386a9cc902cdece3a46bef2bd2 upstream.
 
-The lock around counting the channel queue length in the BIODASDINFO
-ioctl was incorrectly changed to the dasd_block->queue_lock with commit
-583d6535cb9d ("dasd: remove dead code"). This can lead to endless list
-iterations and a subsequent crash.
+Similar to commit 0f7d9b31ce7a ("netfilter: nf_tables: fix use-after-free
+in nft_set_catchall_destroy()"). We can not access k after kfree_rcu()
+call.
 
-The queue_lock is supposed to be used only for queue lists belonging to
-dasd_block. For dasd_device related queue lists the ccwdev lock must be
-used.
-
-Fix the mentioned issues by correctly using the ccwdev lock instead of
-the queue lock.
-
-Fixes: 583d6535cb9d ("dasd: remove dead code")
-Cc: stable@vger.kernel.org # v5.0+
-Signed-off-by: Jan Höppner <hoeppner@linux.ibm.com>
-Reviewed-by: Stefan Haberland <sth@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230609153750.1258763-2-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Signed-off-by: Min Li <lm0963hack@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_ioctl.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_core.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/s390/block/dasd_ioctl.c
-+++ b/drivers/s390/block/dasd_ioctl.c
-@@ -552,10 +552,10 @@ static int __dasd_ioctl_information(stru
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1416,10 +1416,10 @@ int hci_remove_link_key(struct hci_dev *
  
- 	memcpy(dasd_info->type, base->discipline->name, 4);
+ int hci_remove_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 bdaddr_type)
+ {
+-	struct smp_ltk *k;
++	struct smp_ltk *k, *tmp;
+ 	int removed = 0;
  
--	spin_lock_irqsave(&block->queue_lock, flags);
-+	spin_lock_irqsave(get_ccwdev_lock(base->cdev), flags);
- 	list_for_each(l, &base->ccw_queue)
- 		dasd_info->chanq_len++;
--	spin_unlock_irqrestore(&block->queue_lock, flags);
-+	spin_unlock_irqrestore(get_ccwdev_lock(base->cdev), flags);
- 	return 0;
- }
+-	list_for_each_entry_rcu(k, &hdev->long_term_keys, list) {
++	list_for_each_entry_safe(k, tmp, &hdev->long_term_keys, list) {
+ 		if (bacmp(bdaddr, &k->bdaddr) || k->bdaddr_type != bdaddr_type)
+ 			continue;
+ 
+@@ -1435,9 +1435,9 @@ int hci_remove_ltk(struct hci_dev *hdev,
+ 
+ void hci_remove_irk(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 addr_type)
+ {
+-	struct smp_irk *k;
++	struct smp_irk *k, *tmp;
+ 
+-	list_for_each_entry_rcu(k, &hdev->identity_resolving_keys, list) {
++	list_for_each_entry_safe(k, tmp, &hdev->identity_resolving_keys, list) {
+ 		if (bacmp(bdaddr, &k->bdaddr) || k->addr_type != addr_type)
+ 			continue;
  
 
 
