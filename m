@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCE0134B1
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:47:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0302FC4339E;
-	Mon, 12 Jun 2023 10:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2042D134B1
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:47:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E113C433EF;
+	Mon, 12 Jun 2023 10:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566856;
-	bh=SQRgxqwdRxPTZ/X4WsCTGtV9w07LTi8dQHkn5VkWKjs=;
+	s=korg; t=1686566859;
+	bh=b9bgpRk7yIxbYBg5dV281JcMVnjD+6UY46mCiABjceY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvF2TtTqrWeC0x7M7oZTcjZ72S/j0yQEiwIGgQ2StKLqeK8IhDKkk8M7J5ZCEJpl/
-	 6qGw0JKLVsDeqr2atFJa6EQXvwoizORJh8VdDhmkof4GMDtBfrGLENliT1aTaSwnPM
-	 cSfC1dfh2TXL7J8UiMCxSYyNZcMj7m+xZQGESM7s=
+	b=ME53j6/AeYKXXm5UKz5FGFM+yXknK/My4cWwegdRls+xFo0E4O5T8KvyvJBNKLpBg
+	 NOdVKDtcrY6/GGqOOUzKbty7RXHwJL8M6IFK0JmTBXAknSdNhHlKSivUs0LwAHRmXF
+	 e7eFVAAAppjrgNYmDDDiOkWUIKCQ55XCDfKa9cB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasios Papagiannis <tasos.papagiannnis@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Stanislav Fomichev <sdf@google.com>,
-	Yonghong Song <yhs@fb.com>,
+	xinhui pan <xinhui.pan@amd.com>,
+	Horatio Zhang <Hongkun.Zhang@amd.com>,
+	Feifei Xu <Feifei.Xu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 058/160] bpf: Add extra path pointer check to d_path helper
-Date: Mon, 12 Jun 2023 12:26:30 +0200
-Message-ID: <20230612101717.671091981@linuxfoundation.org>
+Subject: [PATCH 6.3 059/160] drm/amdgpu: fix Null pointer dereference error in amdgpu_device_recover_vram
+Date: Mon, 12 Jun 2023 12:26:31 +0200
+Message-ID: <20230612101717.709642547@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -39,96 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Horatio Zhang <Hongkun.Zhang@amd.com>
 
-[ Upstream commit f46fab0e36e611a2389d3843f34658c849b6bd60 ]
+[ Upstream commit 2a1eb1a343208ce7d6839b73d62aece343e693ff ]
 
-Anastasios reported crash on stable 5.15 kernel with following
-BPF attached to lsm hook:
+Use the function of amdgpu_bo_vm_destroy to handle the resource release
+of shadow bo. During the amdgpu_mes_self_test, shadow bo released, but
+vmbo->shadow_list was not, which caused a null pointer reference error
+in amdgpu_device_recover_vram when GPU reset.
 
-  SEC("lsm.s/bprm_creds_for_exec")
-  int BPF_PROG(bprm_creds_for_exec, struct linux_binprm *bprm)
-  {
-          struct path *path = &bprm->executable->f_path;
-          char p[128] = { 0 };
-
-          bpf_d_path(path, p, 128);
-          return 0;
-  }
-
-But bprm->executable can be NULL, so bpf_d_path call will crash:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000018
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC NOPTI
-  ...
-  RIP: 0010:d_path+0x22/0x280
-  ...
-  Call Trace:
-   <TASK>
-   bpf_d_path+0x21/0x60
-   bpf_prog_db9cf176e84498d9_bprm_creds_for_exec+0x94/0x99
-   bpf_trampoline_6442506293_0+0x55/0x1000
-   bpf_lsm_bprm_creds_for_exec+0x5/0x10
-   security_bprm_creds_for_exec+0x29/0x40
-   bprm_execve+0x1c1/0x900
-   do_execveat_common.isra.0+0x1af/0x260
-   __x64_sys_execve+0x32/0x40
-
-It's problem for all stable trees with bpf_d_path helper, which was
-added in 5.9.
-
-This issue is fixed in current bpf code, where we identify and mark
-trusted pointers, so the above code would fail even to load.
-
-For the sake of the stable trees and to workaround potentially broken
-verifier in the future, adding the code that reads the path object from
-the passed pointer and verifies it's valid in kernel space.
-
-Fixes: 6e22ab9da793 ("bpf: Add d_path helper")
-Reported-by: Anastasios Papagiannis <tasos.papagiannnis@gmail.com>
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20230606181714.532998-1-jolsa@kernel.org
+Fixes: 6c032c37ac3e ("drm/amdgpu: Fix vram recover doesn't work after whole GPU reset (v2)")
+Signed-off-by: xinhui pan <xinhui.pan@amd.com>
+Signed-off-by: Horatio Zhang <Hongkun.Zhang@amd.com>
+Acked-by: Feifei Xu <Feifei.Xu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 10 ++++------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c  |  1 -
+ 2 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index e8da032bb6fc8..165441044bc55 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -900,13 +900,23 @@ static const struct bpf_func_proto bpf_send_signal_thread_proto = {
- 
- BPF_CALL_3(bpf_d_path, struct path *, path, char *, buf, u32, sz)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+index 6c7d672412b21..5e9a0c1bb3079 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -79,9 +79,10 @@ static void amdgpu_bo_user_destroy(struct ttm_buffer_object *tbo)
+ static void amdgpu_bo_vm_destroy(struct ttm_buffer_object *tbo)
  {
-+	struct path copy;
- 	long len;
- 	char *p;
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(tbo->bdev);
+-	struct amdgpu_bo *bo = ttm_to_amdgpu_bo(tbo);
++	struct amdgpu_bo *shadow_bo = ttm_to_amdgpu_bo(tbo), *bo;
+ 	struct amdgpu_bo_vm *vmbo;
  
- 	if (!sz)
- 		return 0;
++	bo = shadow_bo->parent;
+ 	vmbo = to_amdgpu_bo_vm(bo);
+ 	/* in case amdgpu_device_recover_vram got NULL of bo->parent */
+ 	if (!list_empty(&vmbo->shadow_list)) {
+@@ -694,11 +695,6 @@ int amdgpu_bo_create_vm(struct amdgpu_device *adev,
+ 		return r;
  
--	p = d_path(path, buf, sz);
-+	/*
-+	 * The path pointer is verified as trusted and safe to use,
-+	 * but let's double check it's valid anyway to workaround
-+	 * potentially broken verifier.
-+	 */
-+	len = copy_from_kernel_nofault(&copy, path, sizeof(*path));
-+	if (len < 0)
-+		return len;
-+
-+	p = d_path(&copy, buf, sz);
- 	if (IS_ERR(p)) {
- 		len = PTR_ERR(p);
- 	} else {
+ 	*vmbo_ptr = to_amdgpu_bo_vm(bo_ptr);
+-	INIT_LIST_HEAD(&(*vmbo_ptr)->shadow_list);
+-	/* Set destroy callback to amdgpu_bo_vm_destroy after vmbo->shadow_list
+-	 * is initialized.
+-	 */
+-	bo_ptr->tbo.destroy = &amdgpu_bo_vm_destroy;
+ 	return r;
+ }
+ 
+@@ -715,6 +711,8 @@ void amdgpu_bo_add_to_shadow_list(struct amdgpu_bo_vm *vmbo)
+ 
+ 	mutex_lock(&adev->shadow_list_lock);
+ 	list_add_tail(&vmbo->shadow_list, &adev->shadow_list);
++	vmbo->shadow->parent = amdgpu_bo_ref(&vmbo->bo);
++	vmbo->shadow->tbo.destroy = &amdgpu_bo_vm_destroy;
+ 	mutex_unlock(&adev->shadow_list_lock);
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+index 01e42bdd8e4e8..4642cff0e1a4f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -564,7 +564,6 @@ int amdgpu_vm_pt_create(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+ 		return r;
+ 	}
+ 
+-	(*vmbo)->shadow->parent = amdgpu_bo_ref(bo);
+ 	amdgpu_bo_add_to_shadow_list(*vmbo);
+ 
+ 	return 0;
 -- 
 2.39.2
 
