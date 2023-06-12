@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEEB1106
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:39:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9506C433D2;
-	Mon, 12 Jun 2023 10:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3DC3FF4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:39:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E1AC433EF;
+	Mon, 12 Jun 2023 10:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566346;
-	bh=m0slSw/uErCfHzzh4ttbelI1hqwhLuCw/wfCw4tUQCQ=;
+	s=korg; t=1686566348;
+	bh=V4YIowO+xAY+C1UGEmPPOeTJ0NLkD/poue9I9goNAQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wo8iA3cNcFX1+iZflYkwh7y5V7woCHpGc233ALKH7hBeI9lxN3z+7gNXSFS1KECSA
-	 jXO/BbhZBo6ZYvNpXi4tjZPCn+TZ+4gHEaTaoh2LYZ1TIZGT4/4y9bmGgAjeTvqObQ
-	 LGrfSNxL/TdbF2WDMAPU8GjTBTZF7odO+L9cw920=
+	b=iHs+trHC9o08Tbhr0kTYhNzjnd09yO0SIDEEtLVT1g3cpvWguKDB4UfdJPZgCHsiW
+	 F5ogzAES8mjKOFaOPScQMylw41QWulH28TQ2GYW08ssZD9i2bCWu3GCYe7U3Fazgv9
+	 0wmGnYB9UEB3IMg+xoYfoAWq1fGUYkltbopFEzOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 89/91] Revert "debugobject: Ensure pool refill (again)"
-Date: Mon, 12 Jun 2023 12:27:18 +0200
-Message-ID: <20230612101705.832396370@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 72/91] ASoC: codecs: wsa881x: do not set can_multi_write flag
+Date: Mon, 12 Jun 2023 12:27:01 +0200
+Message-ID: <20230612101705.068950275@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -36,74 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-This reverts commit 503e554782c916aec553f790298564a530cf1778 which is
-commit 0af462f19e635ad522f28981238334620881badc upstream.
+[ Upstream commit 6e7a6d4797ef521c0762914610ed682e102b9d36 ]
 
-Guenter reports problems with it, and it's not quite obvious why, so
-revert it for now.
+regmap-sdw does not support multi register writes, so there is
+no point in setting this flag. This also leads to incorrect
+programming of WSA codecs with regmap_multi_reg_write() call.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/d35b1ff1-e198-481c-b1be-9e22445efe06@roeck-us.net
-Cc: Ido Schimmel <idosch@nvidia.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This invalid configuration should have been rejected by regmap-sdw.
+
+Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230523154605.4284-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c |   21 ++++++---------------
- 1 file changed, 6 insertions(+), 15 deletions(-)
+ sound/soc/codecs/wsa881x.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -590,16 +590,6 @@ static struct debug_obj *lookup_object_o
- 	return NULL;
- }
+diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
+index 0222370ff95de..8559047694873 100644
+--- a/sound/soc/codecs/wsa881x.c
++++ b/sound/soc/codecs/wsa881x.c
+@@ -646,7 +646,6 @@ static struct regmap_config wsa881x_regmap_config = {
+ 	.readable_reg = wsa881x_readable_register,
+ 	.reg_format_endian = REGMAP_ENDIAN_NATIVE,
+ 	.val_format_endian = REGMAP_ENDIAN_NATIVE,
+-	.can_multi_write = true,
+ };
  
--static void debug_objects_fill_pool(void)
--{
--	/*
--	 * On RT enabled kernels the pool refill must happen in preemptible
--	 * context:
--	 */
--	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible())
--		fill_pool();
--}
--
- static void
- __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack)
- {
-@@ -608,7 +598,12 @@ __debug_object_init(void *addr, const st
- 	struct debug_obj *obj;
- 	unsigned long flags;
- 
--	debug_objects_fill_pool();
-+	/*
-+	 * On RT enabled kernels the pool refill must happen in preemptible
-+	 * context:
-+	 */
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible())
-+		fill_pool();
- 
- 	db = get_bucket((unsigned long) addr);
- 
-@@ -693,8 +688,6 @@ int debug_object_activate(void *addr, co
- 	if (!debug_objects_enabled)
- 		return 0;
- 
--	debug_objects_fill_pool();
--
- 	db = get_bucket((unsigned long) addr);
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
-@@ -904,8 +897,6 @@ void debug_object_assert_init(void *addr
- 	if (!debug_objects_enabled)
- 		return;
- 
--	debug_objects_fill_pool();
--
- 	db = get_bucket((unsigned long) addr);
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
+ enum {
+-- 
+2.39.2
+
 
 
