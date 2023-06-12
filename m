@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1350134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798E5C433EF;
-	Mon, 12 Jun 2023 10:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8F8134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24ABDC433EF;
+	Mon, 12 Jun 2023 10:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566628;
-	bh=+p7OFqI3OclUteVNOvqoYhrmX4R6YW/CiC53DI6SKn8=;
+	s=korg; t=1686566631;
+	bh=8VrfnGZ1rfHOZ/yFldYrKcKJSmi/In6gdkVhTRolang=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYBVEGa5q9811LFmlu+XYf2BoExS1d15VnNIcLElwOm66pGbTxipqhbNKScmiDJpz
-	 0pwnacgKW5KUqym9V6PNQASDl507/+8Jw5DPnQVfMR+CmwCm1ZU6r3z+UVhgytoIZ1
-	 tPRh3L0YCnvKRx1aQE/URdS0PcILADQiUwDFC6EU=
+	b=om6G0yua1agwOnxxxJcchLUdXJ6bY6eYLufc6ZItM29sOzxlRstO0gix4rKiULEyy
+	 Y+liuJaF/4F+e4gEHV/+GDrw1hyaOKgdVqY4KTPaOiiMJThdtIdLmwjh14wX6+lwVJ
+	 h9UkHrXV0AVzYD9/+smA99BcOur3A23X+e76VRmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fcf1a817ceb50935ce99@syzkaller.appspotmail.comm,
-	Ruihan Li <lrh2000@pku.edu.cn>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 097/132] usb: usbfs: Enforce page requirements for mmap
-Date: Mon, 12 Jun 2023 12:27:11 +0200
-Message-ID: <20230612101714.728810690@linuxfoundation.org>
+	Ruihan Li <lrh2000@pku.edu.cn>
+Subject: [PATCH 6.1 098/132] usb: usbfs: Use consistent mmap functions
+Date: Mon, 12 Jun 2023 12:27:12 +0200
+Message-ID: <20230612101714.776821366@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -37,138 +35,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Ruihan Li <lrh2000@pku.edu.cn>
 
-commit 0143d148d1e882fb1538dc9974c94d63961719b9 upstream.
+commit d0b861653f8c16839c3035875b556afc4472f941 upstream.
 
-The current implementation of usbdev_mmap uses usb_alloc_coherent to
-allocate memory pages that will later be mapped into the user space.
-Meanwhile, usb_alloc_coherent employs three different methods to
-allocate memory, as outlined below:
- * If hcd->localmem_pool is non-null, it uses gen_pool_dma_alloc to
-   allocate memory;
- * If DMA is not available, it uses kmalloc to allocate memory;
- * Otherwise, it uses dma_alloc_coherent.
+When hcd->localmem_pool is non-null, localmem_pool is used to allocate
+DMA memory. In this case, the dma address will be properly returned (in
+dma_handle), and dma_mmap_coherent should be used to map this memory
+into the user space. However, the current implementation uses
+pfn_remap_range, which is supposed to map normal pages.
 
-However, it should be noted that gen_pool_dma_alloc does not guarantee
-that the resulting memory will be page-aligned. Furthermore, trying to
-map slab pages (i.e., memory allocated by kmalloc) into the user space
-is not resonable and can lead to problems, such as a type confusion bug
-when PAGE_TABLE_CHECK=y [1].
+Instead of repeating the logic in the memory allocation function, this
+patch introduces a more robust solution. Here, the type of allocated
+memory is checked by testing whether dma_handle is properly set. If
+dma_handle is properly returned, it means some DMA pages are allocated
+and dma_mmap_coherent should be used to map them. Otherwise, normal
+pages are allocated and pfn_remap_range should be called. This ensures
+that the correct mmap functions are used consistently, independently
+with logic details that determine which type of memory gets allocated.
 
-To address these issues, this patch introduces hcd_alloc_coherent_pages,
-which addresses the above two problems. Specifically,
-hcd_alloc_coherent_pages uses gen_pool_dma_alloc_align instead of
-gen_pool_dma_alloc to ensure that the memory is page-aligned. To replace
-kmalloc, hcd_alloc_coherent_pages directly allocates pages by calling
-__get_free_pages.
-
-Reported-by: syzbot+fcf1a817ceb50935ce99@syzkaller.appspotmail.comm
-Closes: https://lore.kernel.org/lkml/000000000000258e5e05fae79fc1@google.com/ [1]
-Fixes: f7d34b445abc ("USB: Add support for usbfs zerocopy.")
-Fixes: ff2437befd8f ("usb: host: Fix excessive alignment restriction for local memory allocations")
+Fixes: a0e710a7def4 ("USB: usbfs: fix mmap dma mismatch")
 Cc: stable@vger.kernel.org
 Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20230515130958.32471-2-lrh2000@pku.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230515130958.32471-3-lrh2000@pku.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/buffer.c |   41 +++++++++++++++++++++++++++++++++++++++++
- drivers/usb/core/devio.c  |    9 +++++----
- include/linux/usb/hcd.h   |    5 +++++
- 3 files changed, 51 insertions(+), 4 deletions(-)
+ drivers/usb/core/devio.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/buffer.c
-+++ b/drivers/usb/core/buffer.c
-@@ -172,3 +172,44 @@ void hcd_buffer_free(
- 	}
- 	dma_free_coherent(hcd->self.sysdev, size, addr, dma);
- }
-+
-+void *hcd_buffer_alloc_pages(struct usb_hcd *hcd,
-+		size_t size, gfp_t mem_flags, dma_addr_t *dma)
-+{
-+	if (size == 0)
-+		return NULL;
-+
-+	if (hcd->localmem_pool)
-+		return gen_pool_dma_alloc_align(hcd->localmem_pool,
-+				size, dma, PAGE_SIZE);
-+
-+	/* some USB hosts just use PIO */
-+	if (!hcd_uses_dma(hcd)) {
-+		*dma = DMA_MAPPING_ERROR;
-+		return (void *)__get_free_pages(mem_flags,
-+				get_order(size));
-+	}
-+
-+	return dma_alloc_coherent(hcd->self.sysdev,
-+			size, dma, mem_flags);
-+}
-+
-+void hcd_buffer_free_pages(struct usb_hcd *hcd,
-+		size_t size, void *addr, dma_addr_t dma)
-+{
-+	if (!addr)
-+		return;
-+
-+	if (hcd->localmem_pool) {
-+		gen_pool_free(hcd->localmem_pool,
-+				(unsigned long)addr, size);
-+		return;
-+	}
-+
-+	if (!hcd_uses_dma(hcd)) {
-+		free_pages((unsigned long)addr, get_order(size));
-+		return;
-+	}
-+
-+	dma_free_coherent(hcd->self.sysdev, size, addr, dma);
-+}
 --- a/drivers/usb/core/devio.c
 +++ b/drivers/usb/core/devio.c
-@@ -186,6 +186,7 @@ static int connected(struct usb_dev_stat
- static void dec_usb_memory_use_count(struct usb_memory *usbm, int *count)
- {
- 	struct usb_dev_state *ps = usbm->ps;
-+	struct usb_hcd *hcd = bus_to_hcd(ps->dev->bus);
+@@ -235,7 +235,7 @@ static int usbdev_mmap(struct file *file
+ 	size_t size = vma->vm_end - vma->vm_start;
+ 	void *mem;
  	unsigned long flags;
+-	dma_addr_t dma_handle;
++	dma_addr_t dma_handle = DMA_MAPPING_ERROR;
+ 	int ret;
  
- 	spin_lock_irqsave(&ps->lock, flags);
-@@ -194,8 +195,8 @@ static void dec_usb_memory_use_count(str
- 		list_del(&usbm->memlist);
- 		spin_unlock_irqrestore(&ps->lock, flags);
+ 	ret = usbfs_increase_memory_usage(size + sizeof(struct usb_memory));
+@@ -265,7 +265,14 @@ static int usbdev_mmap(struct file *file
+ 	usbm->vma_use_count = 1;
+ 	INIT_LIST_HEAD(&usbm->memlist);
  
--		usb_free_coherent(ps->dev, usbm->size, usbm->mem,
--				usbm->dma_handle);
-+		hcd_buffer_free_pages(hcd, usbm->size,
-+				usbm->mem, usbm->dma_handle);
- 		usbfs_decrease_memory_usage(
- 			usbm->size + sizeof(struct usb_memory));
- 		kfree(usbm);
-@@ -247,8 +248,8 @@ static int usbdev_mmap(struct file *file
- 		goto error_decrease_mem;
- 	}
- 
--	mem = usb_alloc_coherent(ps->dev, size, GFP_USER | __GFP_NOWARN,
--			&dma_handle);
-+	mem = hcd_buffer_alloc_pages(hcd,
-+			size, GFP_USER | __GFP_NOWARN, &dma_handle);
- 	if (!mem) {
- 		ret = -ENOMEM;
- 		goto error_free_usbm;
---- a/include/linux/usb/hcd.h
-+++ b/include/linux/usb/hcd.h
-@@ -500,6 +500,11 @@ void *hcd_buffer_alloc(struct usb_bus *b
- void hcd_buffer_free(struct usb_bus *bus, size_t size,
- 	void *addr, dma_addr_t dma);
- 
-+void *hcd_buffer_alloc_pages(struct usb_hcd *hcd,
-+		size_t size, gfp_t mem_flags, dma_addr_t *dma);
-+void hcd_buffer_free_pages(struct usb_hcd *hcd,
-+		size_t size, void *addr, dma_addr_t dma);
-+
- /* generic bus glue, needed for host controllers that don't use PCI */
- extern irqreturn_t usb_hcd_irq(int irq, void *__hcd);
- 
+-	if (hcd->localmem_pool || !hcd_uses_dma(hcd)) {
++	/*
++	 * In DMA-unavailable cases, hcd_buffer_alloc_pages allocates
++	 * normal pages and assigns DMA_MAPPING_ERROR to dma_handle. Check
++	 * whether we are in such cases, and then use remap_pfn_range (or
++	 * dma_mmap_coherent) to map normal (or DMA) pages into the user
++	 * space, respectively.
++	 */
++	if (dma_handle == DMA_MAPPING_ERROR) {
+ 		if (remap_pfn_range(vma, vma->vm_start,
+ 				    virt_to_phys(usbm->mem) >> PAGE_SHIFT,
+ 				    size, vma->vm_page_prot) < 0) {
 
 
