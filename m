@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22122134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955B7C433EF;
-	Mon, 12 Jun 2023 10:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5533134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39683C433EF;
+	Mon, 12 Jun 2023 10:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566660;
-	bh=PH6bLGUgGP3iZu6mCo/5iH37mW+D/cyo6Ac9a4Muzm0=;
+	s=korg; t=1686566663;
+	bh=1Us6t0mZJjvXS/EbuXxdTmsImvs2t+IciZTQs69kd20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RvVjMSGRQIe18BP/8D9c+YG82m7qwtcWypkOiOBUI4x9buQtASfxq7A/7iExRonPd
-	 3DHmamqvd0wacC1nWuZZa0S92POgvv0Y5uU1FuXve7rhOTX8jdj6lZDf/fRH+UJlJA
-	 n40RuP7NKn8KATefLS9eqcZ0BUsneDzivltBNOL4=
+	b=K8g2H+8lNWHrBV0hh5naQjxD0vCyyG7utYvQtdS5xAi8sD+lpwYExEOaqUlqDXaon
+	 0o+vood/9dCiH3oqpaeU11/LsWTqkkJvWYdd/qM8Mye1sE3clHS9nppgrV3UtEEUaV
+	 bBRKhnymnVgr5jx+wroFnq6VBxajiL0qb8kTTH0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/132] ASoC: mediatek: mt8195-afe-pcm: Convert to platform remove callback returning void
-Date: Mon, 12 Jun 2023 12:27:23 +0200
-Message-ID: <20230612101715.263131032@linuxfoundation.org>
+Subject: [PATCH 6.1 105/132] ASoC: codecs: wsa881x: do not set can_multi_write flag
+Date: Mon, 12 Jun 2023 12:27:19 +0200
+Message-ID: <20230612101715.091169210@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -38,63 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 6461fee68064ba970e3ba90241fe5f5e038aa9d4 ]
+[ Upstream commit 6e7a6d4797ef521c0762914610ed682e102b9d36 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+regmap-sdw does not support multi register writes, so there is
+no point in setting this flag. This also leads to incorrect
+programming of WSA codecs with regmap_multi_reg_write() call.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+This invalid configuration should have been rejected by regmap-sdw.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Acked-by: Takashi Iwai <tiwai@suse.de>
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20230315150745.67084-114-u.kleine-koenig@pengutronix.de
+Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230523154605.4284-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: dc93f0dcb436 ("ASoC: mediatek: mt8195: fix use-after-free in driver remove path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/soc/codecs/wsa881x.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-index 72b2c6d629b93..9e45efeada55c 100644
---- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-@@ -3253,7 +3253,7 @@ static int mt8195_afe_pcm_dev_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int mt8195_afe_pcm_dev_remove(struct platform_device *pdev)
-+static void mt8195_afe_pcm_dev_remove(struct platform_device *pdev)
- {
- 	struct mtk_base_afe *afe = platform_get_drvdata(pdev);
- 
-@@ -3264,7 +3264,6 @@ static int mt8195_afe_pcm_dev_remove(struct platform_device *pdev)
- 		mt8195_afe_runtime_suspend(&pdev->dev);
- 
- 	mt8195_afe_deinit_clock(afe);
--	return 0;
- }
- 
- static const struct of_device_id mt8195_afe_pcm_dt_match[] = {
-@@ -3285,7 +3284,7 @@ static struct platform_driver mt8195_afe_pcm_driver = {
- 		   .pm = &mt8195_afe_pm_ops,
- 	},
- 	.probe = mt8195_afe_pcm_dev_probe,
--	.remove = mt8195_afe_pcm_dev_remove,
-+	.remove_new = mt8195_afe_pcm_dev_remove,
+diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
+index 046843b57b038..264ec05a3c675 100644
+--- a/sound/soc/codecs/wsa881x.c
++++ b/sound/soc/codecs/wsa881x.c
+@@ -648,7 +648,6 @@ static struct regmap_config wsa881x_regmap_config = {
+ 	.readable_reg = wsa881x_readable_register,
+ 	.reg_format_endian = REGMAP_ENDIAN_NATIVE,
+ 	.val_format_endian = REGMAP_ENDIAN_NATIVE,
+-	.can_multi_write = true,
  };
  
- module_platform_driver(mt8195_afe_pcm_driver);
+ enum {
 -- 
 2.39.2
 
