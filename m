@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D662ED512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37050C433D2;
-	Mon, 12 Jun 2023 10:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77027D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E51C433EF;
+	Mon, 12 Jun 2023 10:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566301;
-	bh=zCtngt7i5ghcETzlIiSo7jb5PTvYxVu4FDBKqSlNkEo=;
+	s=korg; t=1686566304;
+	bh=dMw0/BdmBaL99ptPAFti7Vev/Bf7NWZ6Rho9etQVR2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+LonDylHj2FWJPm22GL4W3ttZrDT1SukNVDldaxbNuMqhnPzqN1SK6la8PDJm6qH
-	 HB1ThE3fZG34PKZ3o4PmiXsULWJpJDjk3Ij3jWe+UA+Ys+9z5J58RCtsIxR4B9CWXu
-	 j+rrsTOkP4m1ubSRcml9xV/9bc5XhBpzwuWKN1ks=
+	b=L2B7JQ5I1ZSwfioa0wF+KX3zxhnDqWn5TQwoaTRp1r7Fn2V8cLN1cqdl5LcFB9pKA
+	 UIqEXcREzQZpJlwhOag25GTDqXOHRUjhV9DhN5P1Xgl7Jqts0aqKHdWx9nxGyVZtS7
+	 BE0O2vxqb2c9Ie9LW1Wz2jztMCfL9DMMXmNCCsqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 43/91] lib: cpu_rmap: Fix potential use-after-free in irq_cpu_rmap_release()
-Date: Mon, 12 Jun 2023 12:26:32 +0200
-Message-ID: <20230612101703.869136567@linuxfoundation.org>
+Subject: [PATCH 5.15 44/91] bnxt_en: Dont issue AP reset during ethtools reset operation
+Date: Mon, 12 Jun 2023 12:26:33 +0200
+Message-ID: <20230612101703.900503768@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -36,38 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Hutchings <ben@decadent.org.uk>
+From: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
 
-[ Upstream commit 7c5d4801ecf0564c860033d89726b99723c55146 ]
+[ Upstream commit 1d997801c7cc6a7f542e46d5a6bf16f893ad3fe9 ]
 
-irq_cpu_rmap_release() calls cpu_rmap_put(), which may free the rmap.
-So we need to clear the pointer to our glue structure in rmap before
-doing that, not after.
+Only older NIC controller's firmware uses the PROC AP reset type.
+Firmware on 5731X/5741X and newer chips does not support this reset
+type.  When bnxt_reset() issues a series of resets, this PROC AP
+reset may actually fail on these newer chips because the firmware
+is not ready to accept this unsupported command yet.  Avoid this
+unnecessary error by skipping this reset type on chips that don't
+support it.
 
-Fixes: 4e0473f1060a ("lib: cpu_rmap: Avoid use after free on rmap->obj array entries")
-Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/ZHo0vwquhOy3FaXc@decadent.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7a13240e3718 ("bnxt_en: fix ethtool_reset_flags ABI violations")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/cpu_rmap.c | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/cpu_rmap.c b/lib/cpu_rmap.c
-index e77f12bb3c774..1833ad73de6fc 100644
---- a/lib/cpu_rmap.c
-+++ b/lib/cpu_rmap.c
-@@ -268,8 +268,8 @@ static void irq_cpu_rmap_release(struct kref *ref)
- 	struct irq_glue *glue =
- 		container_of(ref, struct irq_glue, notify.kref);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 3c9ba116d5aff..8ebc1c522a05b 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -3597,7 +3597,7 @@ static int bnxt_reset(struct net_device *dev, u32 *flags)
+ 		}
+ 	}
  
--	cpu_rmap_put(glue->rmap);
- 	glue->rmap->obj[glue->index] = NULL;
-+	cpu_rmap_put(glue->rmap);
- 	kfree(glue);
- }
- 
+-	if (req & BNXT_FW_RESET_AP) {
++	if (!BNXT_CHIP_P4_PLUS(bp) && (req & BNXT_FW_RESET_AP)) {
+ 		/* This feature is not supported in older firmware versions */
+ 		if (bp->hwrm_spec_code >= 0x10803) {
+ 			if (!bnxt_firmware_reset_ap(dev)) {
 -- 
 2.39.2
 
