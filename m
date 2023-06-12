@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAC5D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF93C433D2;
-	Mon, 12 Jun 2023 10:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C09D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A7EC433EF;
+	Mon, 12 Jun 2023 10:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566231;
-	bh=nomEvDJ7bXqxcceUuB626g+UQ9At5z+4FFSHw6ef1oU=;
+	s=korg; t=1686566233;
+	bh=1B7tvkcDPo+91AHPKVJbDGotWMMr4uShNCIEJobUye4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=idCSu9vvXtTStpj9AIQHRXGt1BKJykk6FKdWXnoBZd1EA0H4v2RCFbSoREdAjCnVY
-	 BxhT3NDlrC9jw+RdxixDygKiQx9vHGnKEmC31Tdw0ygJ+cZWjA711Rbf/3UnBC7e2I
-	 B6k6R1L3vyx/GI1GaagHcIisZSbBvx1ao09FUOrM=
+	b=sG3CphDl38LuocjwyMygAysDIRM29WCVtIRspJGNjVMS3gJqNiK7aEq9FdkWx7Ljx
+	 Fm1e7QTn1PMi65EuwHVv6yZe2hUYAO89Sbi1Y+kqsz+hyBu1UUKdgDxObCiBeLGRws
+	 M3WaSox0r+KoY8kFNxfR5jY7Jun/GKXgNbibSW7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuba Piecuch <jpiecuch@google.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 16/91] net: dsa: lan9303: allow vid != 0 in port_fdb_{add|del} methods
-Date: Mon, 12 Jun 2023 12:26:05 +0200
-Message-ID: <20230612101702.768000075@linuxfoundation.org>
+Subject: [PATCH 5.15 17/91] bpf: Fix UAF in task local storage
+Date: Mon, 12 Jun 2023 12:26:06 +0200
+Message-ID: <20230612101702.802344898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -36,54 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: KP Singh <kpsingh@kernel.org>
 
-[ Upstream commit 5a59a58ec25d44f853c26bdbfda47d73b3067435 ]
+[ Upstream commit b0fd1852bcc21accca6260ef245356d5c141ff66 ]
 
-LAN9303 doesn't associate FDB (ALR) entries with VLANs, it has just one
-global Address Logic Resolution table [1].
+When task local storage was generalized for tracing programs, the
+bpf_task_local_storage callback was moved from a BPF LSM hook
+callback for security_task_free LSM hook to it's own callback. But a
+failure case in bad_fork_cleanup_security was missed which, when
+triggered, led to a dangling task owner pointer and a subsequent
+use-after-free. Move the bpf_task_storage_free to the very end of
+free_task to handle all failure cases.
 
-Ignore VID in port_fdb_{add|del} methods, go on with the global table. This
-is the same semantics as hellcreek or RZ/N1 implement.
+This issue was noticed when a BPF LSM program was attached to the
+task_alloc hook on a kernel with KASAN enabled. The program used
+bpf_task_storage_get to copy the task local storage from the current
+task to the new task being created.
 
-Visible symptoms:
-LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to delete 00:xx:xx:xx:xx:cf vid 1 from fdb: -2
-LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to add 00:xx:xx:xx:xx:cf vid 1 to fdb: -95
-
-[1] https://ww1.microchip.com/downloads/en/DeviceDoc/00002308A.pdf
-
-Fixes: 0620427ea0d6 ("net: dsa: lan9303: Add fdb/mdb manipulation")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20230531143826.477267-1-alexander.sverdlin@siemens.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a10787e6d58c ("bpf: Enable task local storage for tracing programs")
+Reported-by: Kuba Piecuch <jpiecuch@google.com>
+Signed-off-by: KP Singh <kpsingh@kernel.org>
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230602002612.1117381-1-kpsingh@kernel.org
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/lan9303-core.c | 4 ----
- 1 file changed, 4 deletions(-)
+ kernel/fork.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/lan9303-core.c b/drivers/net/dsa/lan9303-core.c
-index 22547b10dfe50..63826553719bf 100644
---- a/drivers/net/dsa/lan9303-core.c
-+++ b/drivers/net/dsa/lan9303-core.c
-@@ -1194,8 +1194,6 @@ static int lan9303_port_fdb_add(struct dsa_switch *ds, int port,
- 	struct lan9303 *chip = ds->priv;
- 
- 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
--	if (vid)
--		return -EOPNOTSUPP;
- 
- 	return lan9303_alr_add_port(chip, addr, port, false);
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 68eab6ce30859..1906230a000e3 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -470,6 +470,7 @@ void free_task(struct task_struct *tsk)
+ 	arch_release_task_struct(tsk);
+ 	if (tsk->flags & PF_KTHREAD)
+ 		free_kthread_struct(tsk);
++	bpf_task_storage_free(tsk);
+ 	free_task_struct(tsk);
  }
-@@ -1207,8 +1205,6 @@ static int lan9303_port_fdb_del(struct dsa_switch *ds, int port,
- 	struct lan9303 *chip = ds->priv;
- 
- 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
--	if (vid)
--		return -EOPNOTSUPP;
- 	lan9303_alr_del_port(chip, addr, port);
- 
- 	return 0;
+ EXPORT_SYMBOL(free_task);
+@@ -753,7 +754,6 @@ void __put_task_struct(struct task_struct *tsk)
+ 	cgroup_free(tsk);
+ 	task_numa_free(tsk, true);
+ 	security_task_free(tsk);
+-	bpf_task_storage_free(tsk);
+ 	exit_creds(tsk);
+ 	delayacct_tsk_free(tsk);
+ 	put_signal_struct(tsk->signal);
 -- 
 2.39.2
 
