@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAE6D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:48:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E59C4339C;
-	Mon, 12 Jun 2023 10:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28D2D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:48:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F2AC433D2;
+	Mon, 12 Jun 2023 10:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566906;
-	bh=B7A7U+QIML6q9L9p26ZV99TiZEb0yefHpnnkpVH9zac=;
+	s=korg; t=1686566908;
+	bh=Nnmq1FdupaK3oCUEruE6Z/tC53tzjwhYvvXkCVc0Br4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u66YQ/v+sXzSCvdGN4Nv/0XAizCo7gL1cPKGOtQk2U6M4KUwH3SuAu/UWtfdYb2AH
-	 6F20Z1jRcRC+8NFUs/z6+1fGFTWwHwh6Owtge/t60rEifeA0an5si07qlCzeaW7Dde
-	 tzOIrHI6ngbLawsuYzlEHpbBIdDS956vUyKtW0lg=
+	b=Mi8BJX6XY3VtMFCM30bDE87O5RdTdJb84059fLCb264eytTz5WdDXGHPV8lNCSABO
+	 BPZydGwrCe+NFpSK3aAuU78v8Xo6U5qvwxA+4S2L0mpNVGWRCrYOPg2SRm9P6LWGfP
+	 pRAo75gtZpXfHBAG+a+e8mKhFFyZu5FWa0+oRqTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jaroslav Kysela <perex@perex.cz>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.3 076/160] ALSA: ymfpci: Fix kctl->id initialization
-Date: Mon, 12 Jun 2023 12:26:48 +0200
-Message-ID: <20230612101718.500742215@linuxfoundation.org>
+Subject: [PATCH 6.3 077/160] ALSA: gus: Fix kctl->id initialization
+Date: Mon, 12 Jun 2023 12:26:49 +0200
+Message-ID: <20230612101718.545469613@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,47 +36,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-commit c9b83ae4a1609b1914ba7fc70826a3f3a8b234db upstream.
+commit c5ae57b1bb99bd6f50b90428fabde397c2aeba0f upstream.
 
-ymfpci driver replaces the kctl->id.device after assigning the kctl
-via snd_ctl_add().  This doesn't work any longer with the new Xarray
+GUS driver replaces the kctl->id.index after assigning the kctl via
+snd_ctl_add().  This doesn't work any longer with the new Xarray
 lookup change.  It has to be set before snd_ctl_add() call instead.
 
 Fixes: c27e1efb61c5 ("ALSA: control: Use xarray for faster lookups")
 Cc: <stable@vger.kernel.org>
 Reviewed-by: Jaroslav Kysela <perex@perex.cz>
-Link: https://lore.kernel.org/r/20230606093855.14685-2-tiwai@suse.de
+Link: https://lore.kernel.org/r/20230606093855.14685-4-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ymfpci/ymfpci_main.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/isa/gus/gus_pcm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/ymfpci/ymfpci_main.c
-+++ b/sound/pci/ymfpci/ymfpci_main.c
-@@ -1827,20 +1827,20 @@ int snd_ymfpci_mixer(struct snd_ymfpci *
- 	if (snd_BUG_ON(!chip->pcm_spdif))
- 		return -ENXIO;
- 	kctl = snd_ctl_new1(&snd_ymfpci_spdif_default, chip);
-+	kctl->id.device = chip->pcm_spdif->device;
- 	err = snd_ctl_add(chip->card, kctl);
+--- a/sound/isa/gus/gus_pcm.c
++++ b/sound/isa/gus/gus_pcm.c
+@@ -892,10 +892,10 @@ int snd_gf1_pcm_new(struct snd_gus_card
+ 		kctl = snd_ctl_new1(&snd_gf1_pcm_volume_control1, gus);
+ 	else
+ 		kctl = snd_ctl_new1(&snd_gf1_pcm_volume_control, gus);
++	kctl->id.index = control_index;
+ 	err = snd_ctl_add(card, kctl);
  	if (err < 0)
  		return err;
--	kctl->id.device = chip->pcm_spdif->device;
- 	kctl = snd_ctl_new1(&snd_ymfpci_spdif_mask, chip);
-+	kctl->id.device = chip->pcm_spdif->device;
- 	err = snd_ctl_add(chip->card, kctl);
- 	if (err < 0)
- 		return err;
--	kctl->id.device = chip->pcm_spdif->device;
- 	kctl = snd_ctl_new1(&snd_ymfpci_spdif_stream, chip);
-+	kctl->id.device = chip->pcm_spdif->device;
- 	err = snd_ctl_add(chip->card, kctl);
- 	if (err < 0)
- 		return err;
--	kctl->id.device = chip->pcm_spdif->device;
- 	chip->spdif_pcm_ctl = kctl;
+-	kctl->id.index = control_index;
  
- 	/* direct recording source */
+ 	return 0;
+ }
 
 
