@@ -1,31 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012AA19BA2
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32083C4339B;
-	Mon, 12 Jun 2023 10:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589E3171BB
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41F9C433D2;
+	Mon, 12 Jun 2023 10:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565986;
-	bh=3g1ezkSeNovKyNA/mYRnkKvsFp4NaVHgDIm4yL0ohA8=;
+	s=korg; t=1686565989;
+	bh=M2JNQO6GQXoICVxasJ24bal03qE385kkBDhU/Vog4jY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtmF08sghYmBDd9UBshT23jBK1ILZr+o1F+BzTsat6Kh+D+hwS07zeGzWc+edA010
-	 03/fwA7fAbgXeqHHvJSp2BcVCUL9dNVuvYiJs9URhXmRK2LBv8BJfHvzwngUe6T8sf
-	 pyEhx0P9U7ChM2QNKh45nGdF6zke6xHWOqgQeMh8=
+	b=jjjaetICY/P8xNTVYJDmdmT9rXaBhrUBsaBrDHlkQmGNJ0CbhpSmC39cH0EcY6unl
+	 ZkxYwaMeXeq0wfYEBVsf8odvLAWM//gnrv1VNSe4VRWa+1TGn41z6586/2ZwiJ5tDC
+	 Fqo2VwNcqjkiT2fYzGf72+HwF3Pu/UGj06OxCbHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Martin Liska <mliska@suse.cz>,
-	Tejun Heo <tj@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	cgroups@vger.kernel.org,
-	linux-block@vger.kernel.org,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Subject: [PATCH 5.10 08/68] block/blk-iocost (gcc13): keep large values in a new enum
-Date: Mon, 12 Jun 2023 12:26:00 +0200
-Message-ID: <20230612101658.811733055@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH 5.10 09/68] i40iw: fix build warning in i40iw_manage_apbvt()
+Date: Mon, 12 Jun 2023 12:26:01 +0200
+Message-ID: <20230612101658.851760361@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -39,55 +32,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Not upstream as this function is no longer around anymore.
 
-commit ff1cc97b1f4c10db224f276d9615b22835b8c424 upstream.
+The function i40iw_manage_apbvt() has the wrong prototype match from the
+.h file to the .c declaration, so fix it up, otherwise gcc-13 complains
+(rightfully) that the type is incorrect.
 
-Since gcc13, each member of an enum has the same type as the enum [1]. And
-that is inherited from its members. Provided:
-  VTIME_PER_SEC_SHIFT     = 37,
-  VTIME_PER_SEC           = 1LLU << VTIME_PER_SEC_SHIFT,
-  ...
-  AUTOP_CYCLE_NSEC        = 10LLU * NSEC_PER_SEC,
-the named type is unsigned long.
-
-This generates warnings with gcc-13:
-  block/blk-iocost.c: In function 'ioc_weight_prfill':
-  block/blk-iocost.c:3037:37: error: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'long unsigned int'
-
-  block/blk-iocost.c: In function 'ioc_weight_show':
-  block/blk-iocost.c:3047:34: error: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'long unsigned int'
-
-So split the anonymous enum with large values to a separate enum, so
-that they don't affect other members.
-
-[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
-
-Cc: Martin Liska <mliska@suse.cz>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: cgroups@vger.kernel.org
-Cc: linux-block@vger.kernel.org
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20221213120826.17446-1-jirislaby@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-iocost.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/i40iw/i40iw.h |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -232,7 +232,9 @@ enum {
+--- a/drivers/infiniband/hw/i40iw/i40iw.h
++++ b/drivers/infiniband/hw/i40iw/i40iw.h
+@@ -422,9 +422,8 @@ void i40iw_manage_arp_cache(struct i40iw
+ 			    bool ipv4,
+ 			    u32 action);
  
- 	/* 1/64k is granular enough and can easily be handled w/ u32 */
- 	WEIGHT_ONE		= 1 << 16,
-+};
+-int i40iw_manage_apbvt(struct i40iw_device *iwdev,
+-		       u16 accel_local_port,
+-		       bool add_port);
++enum i40iw_status_code i40iw_manage_apbvt(struct i40iw_device *iwdev,
++					  u16 accel_local_port, bool add_port);
  
-+enum {
- 	/*
- 	 * As vtime is used to calculate the cost of each IO, it needs to
- 	 * be fairly high precision.  For example, it should be able to
+ struct i40iw_cqp_request *i40iw_get_cqp_request(struct i40iw_cqp *cqp, bool wait);
+ void i40iw_free_cqp_request(struct i40iw_cqp *cqp, struct i40iw_cqp_request *cqp_request);
 
 
