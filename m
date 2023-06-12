@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BC519526
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0755DC4339B;
-	Mon, 12 Jun 2023 10:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B671952C
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91734C4339E;
+	Mon, 12 Jun 2023 10:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566031;
-	bh=r2j0QI6DcKNrNxdrfEVrvBO5Hud/hbJ5kSKdzSok+OQ=;
+	s=korg; t=1686566033;
+	bh=AcM5l9VSuN3Evni/WepS9pVffE4Dx8ME2ASCLrlYkD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VoJAzqmA1urAplK7SGZJv+POzXjvjiFV2mKeVl5L6guPAd5yxqo5t5UTHvnlibo+t
-	 KPhbyYobMLXMvyi/AAck8StlmUWQjrNTZmUJsoopb8S9wZ7ymDJrXC7XoEEeeu1Crw
-	 7Tnt9RfAajYNyYOhyyBGUCCPh3QYF0qx7+8EDtEA=
+	b=ngt/W6YeW1gtYI9KtBnodivJ0M732BipCMUZsoMw4Lcd60GFii0Jp+2OCHUQ8sWis
+	 HF7GN75KUzn8E5Pqra2qMjYeHL6KYn94v4Vy3HyA04lLBRcJW2QCO8YhxpsVLXvZ2c
+	 OYx/ckZ44sMIVLxGqCNIc+BKxu3P3CXS+3uaViuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 37/68] Input: psmouse - fix OOB access in Elantech protocol
-Date: Mon, 12 Jun 2023 12:26:29 +0200
-Message-ID: <20230612101659.947789827@linuxfoundation.org>
+	Ai Chao <aichao@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 38/68] ALSA: hda/realtek: Add a quirk for HP Slim Desktop S01
+Date: Mon, 12 Jun 2023 12:26:30 +0200
+Message-ID: <20230612101659.982672526@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -33,54 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Ai Chao <aichao@kylinos.cn>
 
-commit 7b63a88bb62ba2ddf5fcd956be85fe46624628b9 upstream.
+commit 527c356b51f3ddee02c9ed5277538f85e30a2cdc upstream.
 
-The kernel only allocate 5 MT slots; check that transmitted slot ID
-falls within the acceptable range.
+Add a quirk for HP Slim Desktop S01 to fixup headset MIC no presence.
 
-Link: https://lore.kernel.org/r/ZFnEL91nrT789dbG@google.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Ai Chao <aichao@kylinos.cn>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230526094704.14597-1-aichao@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/elantech.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/mouse/elantech.c
-+++ b/drivers/input/mouse/elantech.c
-@@ -674,10 +674,11 @@ static void process_packet_head_v4(struc
- 	struct input_dev *dev = psmouse->dev;
- 	struct elantech_data *etd = psmouse->private;
- 	unsigned char *packet = psmouse->packet;
--	int id = ((packet[3] & 0xe0) >> 5) - 1;
-+	int id;
- 	int pres, traces;
- 
--	if (id < 0)
-+	id = ((packet[3] & 0xe0) >> 5) - 1;
-+	if (id < 0 || id >= ETP_MAX_FINGERS)
- 		return;
- 
- 	etd->mt[id].x = ((packet[1] & 0x0f) << 8) | packet[2];
-@@ -707,7 +708,7 @@ static void process_packet_motion_v4(str
- 	int id, sid;
- 
- 	id = ((packet[0] & 0xe0) >> 5) - 1;
--	if (id < 0)
-+	if (id < 0 || id >= ETP_MAX_FINGERS)
- 		return;
- 
- 	sid = ((packet[3] & 0xe0) >> 5) - 1;
-@@ -728,7 +729,7 @@ static void process_packet_motion_v4(str
- 	input_report_abs(dev, ABS_MT_POSITION_X, etd->mt[id].x);
- 	input_report_abs(dev, ABS_MT_POSITION_Y, etd->mt[id].y);
- 
--	if (sid >= 0) {
-+	if (sid >= 0 && sid < ETP_MAX_FINGERS) {
- 		etd->mt[sid].x += delta_x2 * weight;
- 		etd->mt[sid].y -= delta_y2 * weight;
- 		input_mt_slot(dev, sid);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11162,6 +11162,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x103c, 0x8719, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
+ 	SND_PCI_QUIRK(0x103c, 0x872b, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
+ 	SND_PCI_QUIRK(0x103c, 0x873e, "HP", ALC671_FIXUP_HP_HEADSET_MIC2),
++	SND_PCI_QUIRK(0x103c, 0x8768, "HP Slim Desktop S01", ALC671_FIXUP_HP_HEADSET_MIC2),
+ 	SND_PCI_QUIRK(0x103c, 0x877e, "HP 288 Pro G6", ALC671_FIXUP_HP_HEADSET_MIC2),
+ 	SND_PCI_QUIRK(0x103c, 0x885f, "HP 288 Pro G8", ALC671_FIXUP_HP_HEADSET_MIC2),
+ 	SND_PCI_QUIRK(0x1043, 0x1080, "Asus UX501VW", ALC668_FIXUP_HEADSET_MODE),
 
 
