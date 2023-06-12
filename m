@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8F318C35
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47942C433D2;
-	Mon, 12 Jun 2023 10:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628FA18C35
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:29:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF05AC433D2;
+	Mon, 12 Jun 2023 10:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565783;
-	bh=ne+H5kK/RBzk0gVJvJzy+rp6tw/szX9ZCoqP+MC+HeI=;
+	s=korg; t=1686565786;
+	bh=P1rZL7+R9F4GoW4rd4VNV2tdOT+Y3TE5aF+Uebr1HFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RnaunzWz2HaVLm2HDASAG46pNmpzwRowfaJ3T1teLjl9m4L+gIKD15fO9ZlmDedmc
-	 IV6Vr+90a2ZWbp3IDzCqFnjGNavrYEbc7iMsf/CbTmgCnr6QMICZjOp2hImatnl57m
-	 AwjAMoS3VgtuOu025kzC5QGokl75SAIHc9UJlrvI=
+	b=WcFn8JLL9eEXHnWkJQTYHdzvWjVLm9+IMAqrTWzPhxp9Oop5JmtmqVRLoCbFoa7ee
+	 Um5+o8/6dfoVco1AajPyHKIDuDB2IVzEXkfHBkfYv1IAQn2cxh87lP/ShbQy94Ytbj
+	 tc9LFJ/1HMbIZ0rIjNEtzYpmolOvyAX34rf2qJ4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 4.19 14/23] Input: psmouse - fix OOB access in Elantech protocol
-Date: Mon, 12 Jun 2023 12:26:15 +0200
-Message-ID: <20230612101651.635322452@linuxfoundation.org>
+	Chia-I Wu <olvaffe@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 4.19 15/23] drm/amdgpu: fix xclk freq on CHIP_STONEY
+Date: Mon, 12 Jun 2023 12:26:16 +0200
+Message-ID: <20230612101651.669229479@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.138592130@linuxfoundation.org>
 References: <20230612101651.138592130@linuxfoundation.org>
@@ -33,54 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-commit 7b63a88bb62ba2ddf5fcd956be85fe46624628b9 upstream.
+commit b447b079cf3a9971ea4d31301e673f49612ccc18 upstream.
 
-The kernel only allocate 5 MT slots; check that transmitted slot ID
-falls within the acceptable range.
+According to Alex, most APUs from that time seem to have the same issue
+(vbios says 48Mhz, actual is 100Mhz).  I only have a CHIP_STONEY so I
+limit the fixup to CHIP_STONEY
 
-Link: https://lore.kernel.org/r/ZFnEL91nrT789dbG@google.com
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/elantech.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vi.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/input/mouse/elantech.c
-+++ b/drivers/input/mouse/elantech.c
-@@ -590,10 +590,11 @@ static void process_packet_head_v4(struc
- 	struct input_dev *dev = psmouse->dev;
- 	struct elantech_data *etd = psmouse->private;
- 	unsigned char *packet = psmouse->packet;
--	int id = ((packet[3] & 0xe0) >> 5) - 1;
-+	int id;
- 	int pres, traces;
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -328,8 +328,15 @@ static u32 vi_get_xclk(struct amdgpu_dev
+ 	u32 reference_clock = adev->clock.spll.reference_freq;
+ 	u32 tmp;
  
--	if (id < 0)
-+	id = ((packet[3] & 0xe0) >> 5) - 1;
-+	if (id < 0 || id >= ETP_MAX_FINGERS)
- 		return;
+-	if (adev->flags & AMD_IS_APU)
+-		return reference_clock;
++	if (adev->flags & AMD_IS_APU) {
++		switch (adev->asic_type) {
++		case CHIP_STONEY:
++			/* vbios says 48Mhz, but the actual freq is 100Mhz */
++			return 10000;
++		default:
++			return reference_clock;
++		}
++	}
  
- 	etd->mt[id].x = ((packet[1] & 0x0f) << 8) | packet[2];
-@@ -623,7 +624,7 @@ static void process_packet_motion_v4(str
- 	int id, sid;
- 
- 	id = ((packet[0] & 0xe0) >> 5) - 1;
--	if (id < 0)
-+	if (id < 0 || id >= ETP_MAX_FINGERS)
- 		return;
- 
- 	sid = ((packet[3] & 0xe0) >> 5) - 1;
-@@ -644,7 +645,7 @@ static void process_packet_motion_v4(str
- 	input_report_abs(dev, ABS_MT_POSITION_X, etd->mt[id].x);
- 	input_report_abs(dev, ABS_MT_POSITION_Y, etd->mt[id].y);
- 
--	if (sid >= 0) {
-+	if (sid >= 0 && sid < ETP_MAX_FINGERS) {
- 		etd->mt[sid].x += delta_x2 * weight;
- 		etd->mt[sid].y -= delta_y2 * weight;
- 		input_mt_slot(dev, sid);
+ 	tmp = RREG32_SMC(ixCG_CLKPIN_CNTL_2);
+ 	if (REG_GET_FIELD(tmp, CG_CLKPIN_CNTL_2, MUX_TCLK_TO_XCLK))
 
 
