@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8696D134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE19C433A1;
-	Mon, 12 Jun 2023 10:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E463134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EA7C4339E;
+	Mon, 12 Jun 2023 10:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566745;
-	bh=vnhpbjfFfYigKPr5qHqKo8Y1CgVSHDtl0jhnZwUjIE0=;
+	s=korg; t=1686566748;
+	bh=PSdixpSoLxZr3MErKo1fFILJcOYY6UhEHggkjqKoJjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxLidKcCDZRVKlWjqJdC+5U8KABP2WQSIrY7V8n36DBPEO/rnA81YWvnck+zL+nB4
-	 HaDhhM/pwENhPKBSGSF2YV0nfWUkOqE7cR9M5l6RtZQVuVxw5/gXTVSSdQn5OI6cLx
-	 rASiaKQYvsCVhFhhjsfQ2XEuXrNYRJf5FiJt81WE=
+	b=uD3ZTyelm2lwJmXfRutBTlSqYjnTsCZH5GhR6MLJaliVpGsJikYyaDsOoLHVDUazo
+	 iePJaLqPuIwoAJ4gBsorcxC0BJRHyNyoLJI07zD+nFdYgamEi4UFslzbjb4lXPl/iM
+	 3gtM3pFweX+F3F0TBFT2lokV9yJ1BDzcONwsSSGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maximilian Luz <luzmaximilian@gmail.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 002/160] platform/surface: aggregator: Allow completion work-items to be executed in parallel
-Date: Mon, 12 Jun 2023 12:25:34 +0200
-Message-ID: <20230612101715.234494664@linuxfoundation.org>
+Subject: [PATCH 6.3 003/160] platform/surface: aggregator_tabletsw: Add support for book mode in KIP subsystem
+Date: Mon, 12 Jun 2023 12:25:35 +0200
+Message-ID: <20230612101715.285470391@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -37,62 +37,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Maximilian Luz <luzmaximilian@gmail.com>
 
-[ Upstream commit 539e0a7f9105d19c00629c3f4da00330488e8c60 ]
+[ Upstream commit 9bed667033e66083d363a11e9414ad401ecc242c ]
 
-Currently, event completion work-items are restricted to be run strictly
-in non-parallel fashion by the respective workqueue. However, this has
-lead to some problems:
+Devices with a type-cover have an additional "book" mode, deactivating
+type-cover input and turning off its backlight. This is currently
+unsupported, leading to the warning
 
-In some instances, the event notifier function called inside this
-completion workqueue takes a non-negligible amount of time to execute.
-One such example is the battery event handling code (surface_battery.c),
-which can result in a full battery information refresh, involving
-further synchronous communication with the EC inside the event handler.
-This is made worse if the communication fails spuriously, generally
-incurring a multi-second timeout.
+  surface_aggregator_tablet_mode_switch 01:0e:01:00:01: unknown KIP cover state: 6
 
-Since the event completions are run strictly non-parallel, this blocks
-other events from being propagated to the respective subsystems. This
-becomes especially noticeable for keyboard and touchpad input, which
-also funnel their events through this system. Here, users have reported
-occasional multi-second "freezes".
+Therefore, add support for this state and map it to enable tablet-mode.
 
-Note, however, that the event handling system was never intended to run
-purely sequentially. Instead, we have one work struct per EC/SAM
-subsystem, processing the event queue for that subsystem. These work
-structs were intended to run in parallel, allowing sequential processing
-of work items for each subsystem but parallel processing of work items
-across subsystems.
-
-The only restriction to this is the way the workqueue is created.
-Therefore, replace create_workqueue() with alloc_workqueue() and do not
-restrict the maximum number of parallel work items to be executed on
-that queue, resolving any cross-subsystem blockage.
-
-Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
-Link: https://github.com/linux-surface/linux-surface/issues/1026
+Fixes: 9f794056db5b ("platform/surface: Add KIP/POS tablet-mode switch driver")
 Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Link: https://lore.kernel.org/r/20230525210110.2785470-1-luzmaximilian@gmail.com
+Link: https://lore.kernel.org/r/20230525213218.2797480-2-luzmaximilian@gmail.com
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/aggregator/controller.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/surface/surface_aggregator_tabletsw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/platform/surface/aggregator/controller.c b/drivers/platform/surface/aggregator/controller.c
-index 535581c0471c5..7fc602e01487d 100644
---- a/drivers/platform/surface/aggregator/controller.c
-+++ b/drivers/platform/surface/aggregator/controller.c
-@@ -825,7 +825,7 @@ static int ssam_cplt_init(struct ssam_cplt *cplt, struct device *dev)
+diff --git a/drivers/platform/surface/surface_aggregator_tabletsw.c b/drivers/platform/surface/surface_aggregator_tabletsw.c
+index 9fed800c7cc09..a18e9fc7896b3 100644
+--- a/drivers/platform/surface/surface_aggregator_tabletsw.c
++++ b/drivers/platform/surface/surface_aggregator_tabletsw.c
+@@ -201,6 +201,7 @@ enum ssam_kip_cover_state {
+ 	SSAM_KIP_COVER_STATE_LAPTOP        = 0x03,
+ 	SSAM_KIP_COVER_STATE_FOLDED_CANVAS = 0x04,
+ 	SSAM_KIP_COVER_STATE_FOLDED_BACK   = 0x05,
++	SSAM_KIP_COVER_STATE_BOOK          = 0x06,
+ };
  
- 	cplt->dev = dev;
+ static const char *ssam_kip_cover_state_name(struct ssam_tablet_sw *sw, u32 state)
+@@ -221,6 +222,9 @@ static const char *ssam_kip_cover_state_name(struct ssam_tablet_sw *sw, u32 stat
+ 	case SSAM_KIP_COVER_STATE_FOLDED_BACK:
+ 		return "folded-back";
  
--	cplt->wq = create_workqueue(SSAM_CPLT_WQ_NAME);
-+	cplt->wq = alloc_workqueue(SSAM_CPLT_WQ_NAME, WQ_UNBOUND | WQ_MEM_RECLAIM, 0);
- 	if (!cplt->wq)
- 		return -ENOMEM;
++	case SSAM_KIP_COVER_STATE_BOOK:
++		return "book";
++
+ 	default:
+ 		dev_warn(&sw->sdev->dev, "unknown KIP cover state: %u\n", state);
+ 		return "<unknown>";
+@@ -233,6 +237,7 @@ static bool ssam_kip_cover_state_is_tablet_mode(struct ssam_tablet_sw *sw, u32 s
+ 	case SSAM_KIP_COVER_STATE_DISCONNECTED:
+ 	case SSAM_KIP_COVER_STATE_FOLDED_CANVAS:
+ 	case SSAM_KIP_COVER_STATE_FOLDED_BACK:
++	case SSAM_KIP_COVER_STATE_BOOK:
+ 		return true;
  
+ 	case SSAM_KIP_COVER_STATE_CLOSED:
 -- 
 2.39.2
 
