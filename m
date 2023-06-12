@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1379DDF4F
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE68C433EF;
-	Mon, 12 Jun 2023 10:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7C419531
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:33:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B2BC433D2;
+	Mon, 12 Jun 2023 10:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566017;
-	bh=mfo6LRszHmCnQABfe+CSPh5ZvnbFPnXxx/WrSSWDGpw=;
+	s=korg; t=1686566020;
+	bh=fBZqHSpT53nuDhBN4fFMuA0ZrenNODG0H+/JkigtgBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ipdG5BN4swk4lK/KMkq0TNgLaI6gn4D4IgVh2vEVOHXV70Py90xq0fMCk23g8kgDr
-	 NlPD8gPOqmAS7+zk8qLBUyKkoJI+/bp1p/79WU4e2zWx6P34KjEeAqeEB0qgKr0BaS
-	 LizXS6QpROu9KrbrcIeQpRZ0FdBaA80Gl2RS/ogc=
+	b=fw/vR6gPwezlyHPp+j1fbP70KzLXQGVAgFWnjRh0ZAEQ+Q2+qjrxFANEMeh/qeiPi
+	 dAluICLRP7xXnEWcoKrmLloF1gDN/Tj59VfR21RkvwdsSeQCcQ0N0VjqCds1kSHgL2
+	 a3tLAT7rp0CpXvi7MhyZPPl73U2Gr1O8JXPo9K2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Kalesh Anakkur Purayil <kalesh-anakkur.purayil@broadcom.com>,
 	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 33/68] bnxt_en: Query default VLAN before VNIC setup on a VF
-Date: Mon, 12 Jun 2023 12:26:25 +0200
-Message-ID: <20230612101659.794388055@linuxfoundation.org>
+Subject: [PATCH 5.10 34/68] bnxt_en: Implement .set_port / .unset_port UDP tunnel callbacks
+Date: Mon, 12 Jun 2023 12:26:26 +0200
+Message-ID: <20230612101659.833875366@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -39,47 +39,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Somnath Kotur <somnath.kotur@broadcom.com>
 
-[ Upstream commit 1a9e4f501bc6ff1b6ecb60df54fbf2b54db43bfe ]
+[ Upstream commit 1eb4ef12591348c440ac9d6efcf7521e73cf2b10 ]
 
-We need to call bnxt_hwrm_func_qcfg() on a VF to query the default
-VLAN that may be setup by the PF.  If a default VLAN is enabled,
-the VF cannot support VLAN acceleration on the receive side and
-the VNIC must be setup to strip out the default VLAN tag.  If a
-default VLAN is not enabled, the VF can support VLAN acceleration
-on the receive side.  The VNIC should be set up to strip or not
-strip the VLAN based on the RX VLAN acceleration setting.
+As per the new udp tunnel framework, drivers which need to know the
+details of a port entry (i.e. port type) when it gets deleted should
+use the .set_port / .unset_port callbacks.
 
-Without this call to determine the default VLAN before calling
-bnxt_setup_vnic(), the VNIC may not be set up correctly.  For
-example, bnxt_setup_vnic() may set up to strip the VLAN tag based
-on stale default VLAN information.  If RX VLAN acceleration is
-not enabled, the VLAN tag will be incorrectly stripped and the
-RX data path will not work correctly.
+Implementing the current .udp_tunnel_sync callback would mean that the
+deleted tunnel port entry would be all zeros.  This used to work on
+older firmware because it would not check the input when deleting a
+tunnel port.  With newer firmware, the delete will now fail and
+subsequent tunnel port allocation will fail as a result.
 
-Fixes: cf6645f8ebc6 ("bnxt_en: Add function for VF driver to query default VLAN.")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Fixes: 442a35a5a7aa ("bnxt: convert to new udp_tunnel_nic infra")
+Reviewed-by: Kalesh Anakkur Purayil <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 25 ++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 3a9fcf942a6de..127ed119b5f71 100644
+index 127ed119b5f71..d8366351cf14a 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -8337,6 +8337,9 @@ static int bnxt_init_chip(struct bnxt *bp, bool irq_re_init)
- 		goto err_out;
- 	}
+@@ -12104,26 +12104,37 @@ static void bnxt_cfg_ntp_filters(struct bnxt *bp)
  
-+	if (BNXT_VF(bp))
-+		bnxt_hwrm_func_qcfg(bp);
+ #endif /* CONFIG_RFS_ACCEL */
+ 
+-static int bnxt_udp_tunnel_sync(struct net_device *netdev, unsigned int table)
++static int bnxt_udp_tunnel_set_port(struct net_device *netdev, unsigned int table,
++				    unsigned int entry, struct udp_tunnel_info *ti)
+ {
+ 	struct bnxt *bp = netdev_priv(netdev);
+-	struct udp_tunnel_info ti;
+ 	unsigned int cmd;
+ 
+-	udp_tunnel_nic_get_port(netdev, table, 0, &ti);
+-	if (ti.type == UDP_TUNNEL_TYPE_VXLAN)
++	if (ti->type == UDP_TUNNEL_TYPE_VXLAN)
+ 		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_VXLAN;
+ 	else
+ 		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_GENEVE;
+ 
+-	if (ti.port)
+-		return bnxt_hwrm_tunnel_dst_port_alloc(bp, ti.port, cmd);
++	return bnxt_hwrm_tunnel_dst_port_alloc(bp, ti->port, cmd);
++}
 +
- 	rc = bnxt_setup_vnic(bp, 0);
- 	if (rc)
- 		goto err_out;
++static int bnxt_udp_tunnel_unset_port(struct net_device *netdev, unsigned int table,
++				      unsigned int entry, struct udp_tunnel_info *ti)
++{
++	struct bnxt *bp = netdev_priv(netdev);
++	unsigned int cmd;
++
++	if (ti->type == UDP_TUNNEL_TYPE_VXLAN)
++		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_VXLAN;
++	else
++		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_GENEVE;
+ 
+ 	return bnxt_hwrm_tunnel_dst_port_free(bp, cmd);
+ }
+ 
+ static const struct udp_tunnel_nic_info bnxt_udp_tunnels = {
+-	.sync_table	= bnxt_udp_tunnel_sync,
++	.set_port	= bnxt_udp_tunnel_set_port,
++	.unset_port	= bnxt_udp_tunnel_unset_port,
+ 	.flags		= UDP_TUNNEL_NIC_INFO_MAY_SLEEP |
+ 			  UDP_TUNNEL_NIC_INFO_OPEN_ONLY,
+ 	.tables		= {
 -- 
 2.39.2
 
