@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B1BD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:32:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50249C433D2;
-	Mon, 12 Jun 2023 10:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648A4156EF
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:32:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10A3C433EF;
+	Mon, 12 Jun 2023 10:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565933;
-	bh=+keJ35w1Mwm1XG1akpgtGBh5lPJ0KeXMXauTf+X1jsw=;
+	s=korg; t=1686565936;
+	bh=l7vSjQ6yVyLbbzpSZxaXcYEEBskK+HUj9K2JwQfps/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIULG4t/JOGXZj8+KF2yu775Bat6CwCRrwCQneo8zSOE9M4tJvOJeQB7WS6tUMYNx
-	 iiyylU5Yz87OEM4SjoPA81/RMGAzk1Jx7KZUK22mW0mqB1FSmKi7emYg0T149McyjZ
-	 s0ku2LGF+hM7IDUkrjsymMACmB85YGG5VwSAO3Jg=
+	b=IwjVSNdo0XwQi2IY0zICgS9xBOqiciHOF88BDnXsIsNSEBTaQVcdhQVfDfLf9ld8c
+	 bt2VeJ/AXXYLOfJWSb5mPL0CYzW2i7FXPqU3Z3bf5+6yH+ymTtWiyof0Ecd6ZDTUlN
+	 bjEpiYk75ybOoLRvWBAZO620dJ31+t73GWElb4MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 17/45] lib: cpu_rmap: Fix potential use-after-free in irq_cpu_rmap_release()
-Date: Mon, 12 Jun 2023 12:26:11 +0200
-Message-ID: <20230612101655.337916771@linuxfoundation.org>
+Subject: [PATCH 5.4 18/45] bnxt_en: Query default VLAN before VNIC setup on a VF
+Date: Mon, 12 Jun 2023 12:26:12 +0200
+Message-ID: <20230612101655.388193455@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -36,38 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Hutchings <ben@decadent.org.uk>
+From: Somnath Kotur <somnath.kotur@broadcom.com>
 
-[ Upstream commit 7c5d4801ecf0564c860033d89726b99723c55146 ]
+[ Upstream commit 1a9e4f501bc6ff1b6ecb60df54fbf2b54db43bfe ]
 
-irq_cpu_rmap_release() calls cpu_rmap_put(), which may free the rmap.
-So we need to clear the pointer to our glue structure in rmap before
-doing that, not after.
+We need to call bnxt_hwrm_func_qcfg() on a VF to query the default
+VLAN that may be setup by the PF.  If a default VLAN is enabled,
+the VF cannot support VLAN acceleration on the receive side and
+the VNIC must be setup to strip out the default VLAN tag.  If a
+default VLAN is not enabled, the VF can support VLAN acceleration
+on the receive side.  The VNIC should be set up to strip or not
+strip the VLAN based on the RX VLAN acceleration setting.
 
-Fixes: 4e0473f1060a ("lib: cpu_rmap: Avoid use after free on rmap->obj array entries")
-Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/ZHo0vwquhOy3FaXc@decadent.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Without this call to determine the default VLAN before calling
+bnxt_setup_vnic(), the VNIC may not be set up correctly.  For
+example, bnxt_setup_vnic() may set up to strip the VLAN tag based
+on stale default VLAN information.  If RX VLAN acceleration is
+not enabled, the VLAN tag will be incorrectly stripped and the
+RX data path will not work correctly.
+
+Fixes: cf6645f8ebc6 ("bnxt_en: Add function for VF driver to query default VLAN.")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/cpu_rmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/lib/cpu_rmap.c b/lib/cpu_rmap.c
-index 920403fa5b0de..51621fde0b488 100644
---- a/lib/cpu_rmap.c
-+++ b/lib/cpu_rmap.c
-@@ -268,8 +268,8 @@ static void irq_cpu_rmap_release(struct kref *ref)
- 	struct irq_glue *glue =
- 		container_of(ref, struct irq_glue, notify.kref);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 2c71e838fa3d8..7f85315744009 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -7781,6 +7781,9 @@ static int bnxt_init_chip(struct bnxt *bp, bool irq_re_init)
+ 		goto err_out;
+ 	}
  
--	cpu_rmap_put(glue->rmap);
- 	glue->rmap->obj[glue->index] = NULL;
-+	cpu_rmap_put(glue->rmap);
- 	kfree(glue);
- }
- 
++	if (BNXT_VF(bp))
++		bnxt_hwrm_func_qcfg(bp);
++
+ 	rc = bnxt_setup_vnic(bp, 0);
+ 	if (rc)
+ 		goto err_out;
 -- 
 2.39.2
 
