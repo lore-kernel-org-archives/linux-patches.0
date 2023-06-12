@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5E2ECC
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:47:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DEFC4339E;
-	Mon, 12 Jun 2023 10:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F383ECC
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:47:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD88EC433EF;
+	Mon, 12 Jun 2023 10:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566832;
-	bh=RME3VQMWXEjxIOn+jgGDQmeIj12kyu7HjfH3eLBCCa8=;
+	s=korg; t=1686566835;
+	bh=m5uVrG323bW9lRHtBSsqUns5GfoIr18nlgNeeP9HYa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aT5tc6Eis8KUG3RYIWvCWajgSfOBX5Ri/eaKhRbYTLNNCHzMgQJ3ObooxN/csi7e2
-	 s5r3+hHuYHqT7E692JNB1q8kUQ8mTo4u6oF+sX1zc0c1bLZQZ/PrRsXNbXEv31w6tG
-	 Q/fTVxs6M95eUQNw4IN5etlD1vhakiK30M6ssFEE=
+	b=mvH/9Gk+kCVi33+zDWdm9BZ3zwr3ojCC6ibfTAJPyUZOXWkFdSduy0FWdI+UVUqZL
+	 xnWAuwYqN++ZvYz81+QKR8V8QloPr7P6kiUqTR5GEYSYAGt8jehDPVvuT3iYUElbuN
+	 LO/KopXhIJU4wPPbuh4dlVBXxDH4VfeiVFHLST1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 047/160] ipv6: rpl: Fix Route of Death.
-Date: Mon, 12 Jun 2023 12:26:19 +0200
-Message-ID: <20230612101717.192597255@linuxfoundation.org>
+Subject: [PATCH 6.3 020/160] Bluetooth: Split bt_iso_qos into dedicated structures
+Date: Mon, 12 Jun 2023 12:25:52 +0200
+Message-ID: <20230612101715.989933658@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,193 +35,870 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 
-[ Upstream commit a2f4c143d76b1a47c91ef9bc46907116b111da0b ]
+[ Upstream commit 0fe8c8d071343fa9278980ce4b6f8e6ea24a2ed1 ]
 
-A remote DoS vulnerability of RPL Source Routing is assigned CVE-2023-2156.
+Split bt_iso_qos into dedicated unicast and broadcast
+structures and add additional broadcast parameters.
 
-The Source Routing Header (SRH) has the following format:
-
-  0                   1                   2                   3
-  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |  Next Header  |  Hdr Ext Len  | Routing Type  | Segments Left |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  | CmprI | CmprE |  Pad  |               Reserved                |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |                                                               |
-  .                                                               .
-  .                        Addresses[1..n]                        .
-  .                                                               .
-  |                                                               |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-The originator of an SRH places the first hop's IPv6 address in the IPv6
-header's IPv6 Destination Address and the second hop's IPv6 address as
-the first address in Addresses[1..n].
-
-The CmprI and CmprE fields indicate the number of prefix octets that are
-shared with the IPv6 Destination Address.  When CmprI or CmprE is not 0,
-Addresses[1..n] are compressed as follows:
-
-  1..n-1 : (16 - CmprI) bytes
-       n : (16 - CmprE) bytes
-
-Segments Left indicates the number of route segments remaining.  When the
-value is not zero, the SRH is forwarded to the next hop.  Its address
-is extracted from Addresses[n - Segment Left + 1] and swapped with IPv6
-Destination Address.
-
-When Segment Left is greater than or equal to 2, the size of SRH is not
-changed because Addresses[1..n-1] are decompressed and recompressed with
-CmprI.
-
-OTOH, when Segment Left changes from 1 to 0, the new SRH could have a
-different size because Addresses[1..n-1] are decompressed with CmprI and
-recompressed with CmprE.
-
-Let's say CmprI is 15 and CmprE is 0.  When we receive SRH with Segment
-Left >= 2, Addresses[1..n-1] have 1 byte for each, and Addresses[n] has
-16 bytes.  When Segment Left is 1, Addresses[1..n-1] is decompressed to
-16 bytes and not recompressed.  Finally, the new SRH will need more room
-in the header, and the size is (16 - 1) * (n - 1) bytes.
-
-Here the max value of n is 255 as Segment Left is u8, so in the worst case,
-we have to allocate 3825 bytes in the skb headroom.  However, now we only
-allocate a small fixed buffer that is IPV6_RPL_SRH_WORST_SWAP_SIZE (16 + 7
-bytes).  If the decompressed size overflows the room, skb_push() hits BUG()
-below [0].
-
-Instead of allocating the fixed buffer for every packet, let's allocate
-enough headroom only when we receive SRH with Segment Left 1.
-
-[0]:
-skbuff: skb_under_panic: text:ffffffff81c9f6e2 len:576 put:576 head:ffff8880070b5180 data:ffff8880070b4fb0 tail:0x70 end:0x140 dev:lo
-kernel BUG at net/core/skbuff.c:200!
-invalid opcode: 0000 [#1] PREEMPT SMP PTI
-CPU: 0 PID: 154 Comm: python3 Not tainted 6.4.0-rc4-00190-gc308e9ec0047 #7
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:skb_panic (net/core/skbuff.c:200)
-Code: 4f 70 50 8b 87 bc 00 00 00 50 8b 87 b8 00 00 00 50 ff b7 c8 00 00 00 4c 8b 8f c0 00 00 00 48 c7 c7 80 6e 77 82 e8 ad 8b 60 ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90
-RSP: 0018:ffffc90000003da0 EFLAGS: 00000246
-RAX: 0000000000000085 RBX: ffff8880058a6600 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: ffff88807dc1c540 RDI: ffff88807dc1c540
-RBP: ffffc90000003e48 R08: ffffffff82b392c8 R09: 00000000ffffdfff
-R10: ffffffff82a592e0 R11: ffffffff82b092e0 R12: ffff888005b1c800
-R13: ffff8880070b51b8 R14: ffff888005b1ca18 R15: ffff8880070b5190
-FS:  00007f4539f0b740(0000) GS:ffff88807dc00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055670baf3000 CR3: 0000000005b0e000 CR4: 00000000007506f0
-PKRU: 55555554
-Call Trace:
- <IRQ>
- skb_push (net/core/skbuff.c:210)
- ipv6_rthdr_rcv (./include/linux/skbuff.h:2880 net/ipv6/exthdrs.c:634 net/ipv6/exthdrs.c:718)
- ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:437 (discriminator 5))
- ip6_input_finish (./include/linux/rcupdate.h:805 net/ipv6/ip6_input.c:483)
- __netif_receive_skb_one_core (net/core/dev.c:5494)
- process_backlog (./include/linux/rcupdate.h:805 net/core/dev.c:5934)
- __napi_poll (net/core/dev.c:6496)
- net_rx_action (net/core/dev.c:6565 net/core/dev.c:6696)
- __do_softirq (./arch/x86/include/asm/jump_label.h:27 ./include/linux/jump_label.h:207 ./include/trace/events/irq.h:142 kernel/softirq.c:572)
- do_softirq (kernel/softirq.c:472 kernel/softirq.c:459)
- </IRQ>
- <TASK>
- __local_bh_enable_ip (kernel/softirq.c:396)
- __dev_queue_xmit (net/core/dev.c:4272)
- ip6_finish_output2 (./include/net/neighbour.h:544 net/ipv6/ip6_output.c:134)
- rawv6_sendmsg (./include/net/dst.h:458 ./include/linux/netfilter.h:303 net/ipv6/raw.c:656 net/ipv6/raw.c:914)
- sock_sendmsg (net/socket.c:724 net/socket.c:747)
- __sys_sendto (net/socket.c:2144)
- __x64_sys_sendto (net/socket.c:2156 net/socket.c:2152 net/socket.c:2152)
- do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-RIP: 0033:0x7f453a138aea
-Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
-RSP: 002b:00007ffcc212a1c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007ffcc212a288 RCX: 00007f453a138aea
-RDX: 0000000000000060 RSI: 00007f4539084c20 RDI: 0000000000000003
-RBP: 00007f4538308e80 R08: 00007ffcc212a300 R09: 000000000000001c
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: ffffffffc4653600 R14: 0000000000000001 R15: 00007f4539712d1b
- </TASK>
-Modules linked in:
-
-Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
-Reported-by: Max VA
-Closes: https://www.interruptlabs.co.uk/articles/linux-ipv6-route-of-death
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230605180617.67284-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
+Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 31c5f9164949 ("Bluetooth: ISO: consider right CIS when removing CIG at cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/rpl.h  |  3 ---
- net/ipv6/exthdrs.c | 29 +++++++++++------------------
- 2 files changed, 11 insertions(+), 21 deletions(-)
+ include/net/bluetooth/bluetooth.h |  43 +++++---
+ include/net/bluetooth/hci_core.h  |   9 +-
+ net/bluetooth/hci_conn.c          | 162 ++++++++++++++++--------------
+ net/bluetooth/hci_event.c         |  33 +++---
+ net/bluetooth/iso.c               | 125 ++++++++++++++++++-----
+ 5 files changed, 237 insertions(+), 135 deletions(-)
 
-diff --git a/include/net/rpl.h b/include/net/rpl.h
-index 308ef0a05caef..30fe780d1e7c8 100644
---- a/include/net/rpl.h
-+++ b/include/net/rpl.h
-@@ -23,9 +23,6 @@ static inline int rpl_init(void)
- static inline void rpl_exit(void) {}
- #endif
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index bcc5a4cd2c17b..1b4230cd42a37 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -1,6 +1,7 @@
+ /*
+    BlueZ - Bluetooth protocol stack for Linux
+    Copyright (C) 2000-2001 Qualcomm Incorporated
++   Copyright 2023 NXP
  
--/* Worst decompression memory usage ipv6 address (16) + pad 7 */
--#define IPV6_RPL_SRH_WORST_SWAP_SIZE (sizeof(struct in6_addr) + 7)
--
- size_t ipv6_rpl_srh_size(unsigned char n, unsigned char cmpri,
- 			 unsigned char cmpre);
+    Written 2000,2001 by Maxim Krasnyansky <maxk@qualcomm.com>
  
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index a8d961d3a477f..5fa0e37305d9d 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -569,24 +569,6 @@ static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
- 		return -1;
+@@ -171,23 +172,39 @@ struct bt_iso_io_qos {
+ 	__u8  rtn;
+ };
+ 
+-struct bt_iso_qos {
+-	union {
+-		__u8  cig;
+-		__u8  big;
+-	};
+-	union {
+-		__u8  cis;
+-		__u8  bis;
+-	};
+-	union {
+-		__u8  sca;
+-		__u8  sync_interval;
+-	};
++struct bt_iso_ucast_qos {
++	__u8  cig;
++	__u8  cis;
++	__u8  sca;
++	__u8  packing;
++	__u8  framing;
++	struct bt_iso_io_qos in;
++	struct bt_iso_io_qos out;
++};
++
++struct bt_iso_bcast_qos {
++	__u8  big;
++	__u8  bis;
++	__u8  sync_interval;
+ 	__u8  packing;
+ 	__u8  framing;
+ 	struct bt_iso_io_qos in;
+ 	struct bt_iso_io_qos out;
++	__u8  encryption;
++	__u8  bcode[16];
++	__u8  options;
++	__u16 skip;
++	__u16 sync_timeout;
++	__u8  sync_cte_type;
++	__u8  mse;
++	__u16 timeout;
++};
++
++struct bt_iso_qos {
++	union {
++		struct bt_iso_ucast_qos ucast;
++		struct bt_iso_bcast_qos bcast;
++	};
+ };
+ 
+ #define BT_ISO_PHY_1M		0x01
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index d5311ceb21c62..86db7f3a31ce5 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1,6 +1,7 @@
+ /*
+    BlueZ - Bluetooth protocol stack for Linux
+    Copyright (c) 2000-2001, 2010, Code Aurora Forum. All rights reserved.
++   Copyright 2023 NXP
+ 
+    Written 2000,2001 by Maxim Krasnyansky <maxk@qualcomm.com>
+ 
+@@ -1091,7 +1092,7 @@ static inline struct hci_conn *hci_conn_hash_lookup_bis(struct hci_dev *hdev,
+ 		if (bacmp(&c->dst, ba) || c->type != ISO_LINK)
+ 			continue;
+ 
+-		if (c->iso_qos.big == big && c->iso_qos.bis == bis) {
++		if (c->iso_qos.bcast.big == big && c->iso_qos.bcast.bis == bis) {
+ 			rcu_read_unlock();
+ 			return c;
+ 		}
+@@ -1200,7 +1201,7 @@ static inline struct hci_conn *hci_conn_hash_lookup_cig(struct hci_dev *hdev,
+ 		if (c->type != ISO_LINK)
+ 			continue;
+ 
+-		if (handle == c->iso_qos.cig) {
++		if (handle == c->iso_qos.ucast.cig) {
+ 			rcu_read_unlock();
+ 			return c;
+ 		}
+@@ -1223,7 +1224,7 @@ static inline struct hci_conn *hci_conn_hash_lookup_big(struct hci_dev *hdev,
+ 		if (bacmp(&c->dst, BDADDR_ANY) || c->type != ISO_LINK)
+ 			continue;
+ 
+-		if (handle == c->iso_qos.big) {
++		if (handle == c->iso_qos.bcast.big) {
+ 			rcu_read_unlock();
+ 			return c;
+ 		}
+@@ -1332,7 +1333,7 @@ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ 				 __u8 dst_type, struct bt_iso_qos *qos,
+ 				 __u8 data_len, __u8 *data);
+ int hci_pa_create_sync(struct hci_dev *hdev, bdaddr_t *dst, __u8 dst_type,
+-		       __u8 sid);
++		       __u8 sid, struct bt_iso_qos *qos);
+ int hci_le_big_create_sync(struct hci_dev *hdev, struct bt_iso_qos *qos,
+ 			   __u16 sync_handle, __u8 num_bis, __u8 bis[]);
+ int hci_conn_check_link_mode(struct hci_conn *conn);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 8455ba141ee61..5672b49245721 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1,6 +1,7 @@
+ /*
+    BlueZ - Bluetooth protocol stack for Linux
+    Copyright (c) 2000-2001, 2010, Code Aurora Forum. All rights reserved.
++   Copyright 2023 NXP
+ 
+    Written 2000,2001 by Maxim Krasnyansky <maxk@qualcomm.com>
+ 
+@@ -795,8 +796,8 @@ static void bis_list(struct hci_conn *conn, void *data)
+ 	if (bacmp(&conn->dst, BDADDR_ANY))
+ 		return;
+ 
+-	if (d->big != conn->iso_qos.big || d->bis == BT_ISO_QOS_BIS_UNSET ||
+-	    d->bis != conn->iso_qos.bis)
++	if (d->big != conn->iso_qos.bcast.big || d->bis == BT_ISO_QOS_BIS_UNSET ||
++	    d->bis != conn->iso_qos.bcast.bis)
+ 		return;
+ 
+ 	d->count++;
+@@ -916,10 +917,10 @@ static void bis_cleanup(struct hci_conn *conn)
+ 		if (!test_and_clear_bit(HCI_CONN_PER_ADV, &conn->flags))
+ 			return;
+ 
+-		hci_le_terminate_big(hdev, conn->iso_qos.big,
+-				     conn->iso_qos.bis);
++		hci_le_terminate_big(hdev, conn->iso_qos.bcast.big,
++				     conn->iso_qos.bcast.bis);
+ 	} else {
+-		hci_le_big_terminate(hdev, conn->iso_qos.big,
++		hci_le_big_terminate(hdev, conn->iso_qos.bcast.big,
+ 				     conn->sync_handle);
+ 	}
+ }
+@@ -959,7 +960,7 @@ static void cis_cleanup(struct hci_conn *conn)
+ 	struct iso_list_data d;
+ 
+ 	memset(&d, 0, sizeof(d));
+-	d.cig = conn->iso_qos.cig;
++	d.cig = conn->iso_qos.ucast.cig;
+ 
+ 	/* Check if ISO connection is a CIS and remove CIG if there are
+ 	 * no other connections using it.
+@@ -968,7 +969,7 @@ static void cis_cleanup(struct hci_conn *conn)
+ 	if (d.count)
+ 		return;
+ 
+-	hci_le_remove_cig(hdev, conn->iso_qos.cig);
++	hci_le_remove_cig(hdev, conn->iso_qos.ucast.cig);
+ }
+ 
+ struct hci_conn *hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t *dst,
+@@ -1411,7 +1412,7 @@ static int qos_set_big(struct hci_dev *hdev, struct bt_iso_qos *qos)
+ 	struct iso_list_data data;
+ 
+ 	/* Allocate a BIG if not set */
+-	if (qos->big == BT_ISO_QOS_BIG_UNSET) {
++	if (qos->bcast.big == BT_ISO_QOS_BIG_UNSET) {
+ 		for (data.big = 0x00; data.big < 0xef; data.big++) {
+ 			data.count = 0;
+ 			data.bis = 0xff;
+@@ -1426,7 +1427,7 @@ static int qos_set_big(struct hci_dev *hdev, struct bt_iso_qos *qos)
+ 			return -EADDRNOTAVAIL;
+ 
+ 		/* Update BIG */
+-		qos->big = data.big;
++		qos->bcast.big = data.big;
  	}
  
--	if (skb_cloned(skb)) {
--		if (pskb_expand_head(skb, IPV6_RPL_SRH_WORST_SWAP_SIZE, 0,
--				     GFP_ATOMIC)) {
--			__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)),
--					IPSTATS_MIB_OUTDISCARDS);
--			kfree_skb(skb);
--			return -1;
--		}
--	} else {
--		err = skb_cow_head(skb, IPV6_RPL_SRH_WORST_SWAP_SIZE);
--		if (unlikely(err)) {
--			kfree_skb(skb);
--			return -1;
--		}
--	}
--
--	hdr = (struct ipv6_rpl_sr_hdr *)skb_transport_header(skb);
--
- 	if (!pskb_may_pull(skb, ipv6_rpl_srh_size(n, hdr->cmpri,
- 						  hdr->cmpre))) {
- 		kfree_skb(skb);
-@@ -630,6 +612,17 @@ static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
- 	skb_pull(skb, ((hdr->hdrlen + 1) << 3));
- 	skb_postpull_rcsum(skb, oldhdr,
- 			   sizeof(struct ipv6hdr) + ((hdr->hdrlen + 1) << 3));
-+	if (unlikely(!hdr->segments_left)) {
-+		if (pskb_expand_head(skb, sizeof(struct ipv6hdr) + ((chdr->hdrlen + 1) << 3), 0,
-+				     GFP_ATOMIC)) {
-+			__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)), IPSTATS_MIB_OUTDISCARDS);
-+			kfree_skb(skb);
-+			kfree(buf);
-+			return -1;
-+		}
+ 	return 0;
+@@ -1437,7 +1438,7 @@ static int qos_set_bis(struct hci_dev *hdev, struct bt_iso_qos *qos)
+ 	struct iso_list_data data;
+ 
+ 	/* Allocate BIS if not set */
+-	if (qos->bis == BT_ISO_QOS_BIS_UNSET) {
++	if (qos->bcast.bis == BT_ISO_QOS_BIS_UNSET) {
+ 		/* Find an unused adv set to advertise BIS, skip instance 0x00
+ 		 * since it is reserved as general purpose set.
+ 		 */
+@@ -1455,7 +1456,7 @@ static int qos_set_bis(struct hci_dev *hdev, struct bt_iso_qos *qos)
+ 			return -EADDRNOTAVAIL;
+ 
+ 		/* Update BIS */
+-		qos->bis = data.bis;
++		qos->bcast.bis = data.bis;
+ 	}
+ 
+ 	return 0;
+@@ -1484,8 +1485,8 @@ static struct hci_conn *hci_add_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ 	if (err)
+ 		return ERR_PTR(err);
+ 
+-	data.big = qos->big;
+-	data.bis = qos->bis;
++	data.big = qos->bcast.big;
++	data.bis = qos->bcast.bis;
+ 	data.count = 0;
+ 
+ 	/* Check if there is already a matching BIG/BIS */
+@@ -1493,7 +1494,7 @@ static struct hci_conn *hci_add_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ 	if (data.count)
+ 		return ERR_PTR(-EADDRINUSE);
+ 
+-	conn = hci_conn_hash_lookup_bis(hdev, dst, qos->big, qos->bis);
++	conn = hci_conn_hash_lookup_bis(hdev, dst, qos->bcast.big, qos->bcast.bis);
+ 	if (conn)
+ 		return ERR_PTR(-EADDRINUSE);
+ 
+@@ -1648,13 +1649,13 @@ static void cis_add(struct iso_list_data *d, struct bt_iso_qos *qos)
+ {
+ 	struct hci_cis_params *cis = &d->pdu.cis[d->pdu.cp.num_cis];
+ 
+-	cis->cis_id = qos->cis;
+-	cis->c_sdu  = cpu_to_le16(qos->out.sdu);
+-	cis->p_sdu  = cpu_to_le16(qos->in.sdu);
+-	cis->c_phy  = qos->out.phy ? qos->out.phy : qos->in.phy;
+-	cis->p_phy  = qos->in.phy ? qos->in.phy : qos->out.phy;
+-	cis->c_rtn  = qos->out.rtn;
+-	cis->p_rtn  = qos->in.rtn;
++	cis->cis_id = qos->ucast.cis;
++	cis->c_sdu  = cpu_to_le16(qos->ucast.out.sdu);
++	cis->p_sdu  = cpu_to_le16(qos->ucast.in.sdu);
++	cis->c_phy  = qos->ucast.out.phy ? qos->ucast.out.phy : qos->ucast.in.phy;
++	cis->p_phy  = qos->ucast.in.phy ? qos->ucast.in.phy : qos->ucast.out.phy;
++	cis->c_rtn  = qos->ucast.out.rtn;
++	cis->p_rtn  = qos->ucast.in.rtn;
+ 
+ 	d->pdu.cp.num_cis++;
+ }
+@@ -1667,8 +1668,8 @@ static void cis_list(struct hci_conn *conn, void *data)
+ 	if (!bacmp(&conn->dst, BDADDR_ANY))
+ 		return;
+ 
+-	if (d->cig != conn->iso_qos.cig || d->cis == BT_ISO_QOS_CIS_UNSET ||
+-	    d->cis != conn->iso_qos.cis)
++	if (d->cig != conn->iso_qos.ucast.cig || d->cis == BT_ISO_QOS_CIS_UNSET ||
++	    d->cis != conn->iso_qos.ucast.cis)
+ 		return;
+ 
+ 	d->count++;
+@@ -1687,17 +1688,18 @@ static int hci_le_create_big(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 
+ 	memset(&cp, 0, sizeof(cp));
+ 
+-	cp.handle = qos->big;
+-	cp.adv_handle = qos->bis;
++	cp.handle = qos->bcast.big;
++	cp.adv_handle = qos->bcast.bis;
+ 	cp.num_bis  = 0x01;
+-	hci_cpu_to_le24(qos->out.interval, cp.bis.sdu_interval);
+-	cp.bis.sdu = cpu_to_le16(qos->out.sdu);
+-	cp.bis.latency =  cpu_to_le16(qos->out.latency);
+-	cp.bis.rtn  = qos->out.rtn;
+-	cp.bis.phy  = qos->out.phy;
+-	cp.bis.packing = qos->packing;
+-	cp.bis.framing = qos->framing;
+-	cp.bis.encryption = 0x00;
++	hci_cpu_to_le24(qos->bcast.out.interval, cp.bis.sdu_interval);
++	cp.bis.sdu = cpu_to_le16(qos->bcast.out.sdu);
++	cp.bis.latency =  cpu_to_le16(qos->bcast.out.latency);
++	cp.bis.rtn  = qos->bcast.out.rtn;
++	cp.bis.phy  = qos->bcast.out.phy;
++	cp.bis.packing = qos->bcast.packing;
++	cp.bis.framing = qos->bcast.framing;
++	cp.bis.encryption = qos->bcast.encryption;
++	memcpy(cp.bis.bcode, qos->bcast.bcode, sizeof(cp.bis.bcode));
+ 	memset(&cp.bis.bcode, 0, sizeof(cp.bis.bcode));
+ 
+ 	return hci_send_cmd(hdev, HCI_OP_LE_CREATE_BIG, sizeof(cp), &cp);
+@@ -1711,7 +1713,7 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 	memset(&data, 0, sizeof(data));
+ 
+ 	/* Allocate a CIG if not set */
+-	if (qos->cig == BT_ISO_QOS_CIG_UNSET) {
++	if (qos->ucast.cig == BT_ISO_QOS_CIG_UNSET) {
+ 		for (data.cig = 0x00; data.cig < 0xff; data.cig++) {
+ 			data.count = 0;
+ 			data.cis = 0xff;
+@@ -1731,22 +1733,22 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 			return false;
+ 
+ 		/* Update CIG */
+-		qos->cig = data.cig;
++		qos->ucast.cig = data.cig;
+ 	}
+ 
+-	data.pdu.cp.cig_id = qos->cig;
+-	hci_cpu_to_le24(qos->out.interval, data.pdu.cp.c_interval);
+-	hci_cpu_to_le24(qos->in.interval, data.pdu.cp.p_interval);
+-	data.pdu.cp.sca = qos->sca;
+-	data.pdu.cp.packing = qos->packing;
+-	data.pdu.cp.framing = qos->framing;
+-	data.pdu.cp.c_latency = cpu_to_le16(qos->out.latency);
+-	data.pdu.cp.p_latency = cpu_to_le16(qos->in.latency);
++	data.pdu.cp.cig_id = qos->ucast.cig;
++	hci_cpu_to_le24(qos->ucast.out.interval, data.pdu.cp.c_interval);
++	hci_cpu_to_le24(qos->ucast.in.interval, data.pdu.cp.p_interval);
++	data.pdu.cp.sca = qos->ucast.sca;
++	data.pdu.cp.packing = qos->ucast.packing;
++	data.pdu.cp.framing = qos->ucast.framing;
++	data.pdu.cp.c_latency = cpu_to_le16(qos->ucast.out.latency);
++	data.pdu.cp.p_latency = cpu_to_le16(qos->ucast.in.latency);
+ 
+-	if (qos->cis != BT_ISO_QOS_CIS_UNSET) {
++	if (qos->ucast.cis != BT_ISO_QOS_CIS_UNSET) {
+ 		data.count = 0;
+-		data.cig = qos->cig;
+-		data.cis = qos->cis;
++		data.cig = qos->ucast.cig;
++		data.cis = qos->ucast.cis;
+ 
+ 		hci_conn_hash_list_state(hdev, cis_list, ISO_LINK, BT_BOUND,
+ 					 &data);
+@@ -1757,7 +1759,7 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 	}
+ 
+ 	/* Reprogram all CIS(s) with the same CIG */
+-	for (data.cig = qos->cig, data.cis = 0x00; data.cis < 0x11;
++	for (data.cig = qos->ucast.cig, data.cis = 0x00; data.cis < 0x11;
+ 	     data.cis++) {
+ 		data.count = 0;
+ 
+@@ -1767,14 +1769,14 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 			continue;
+ 
+ 		/* Allocate a CIS if not set */
+-		if (qos->cis == BT_ISO_QOS_CIS_UNSET) {
++		if (qos->ucast.cis == BT_ISO_QOS_CIS_UNSET) {
+ 			/* Update CIS */
+-			qos->cis = data.cis;
++			qos->ucast.cis = data.cis;
+ 			cis_add(&data, qos);
+ 		}
+ 	}
+ 
+-	if (qos->cis == BT_ISO_QOS_CIS_UNSET || !data.pdu.cp.num_cis)
++	if (qos->ucast.cis == BT_ISO_QOS_CIS_UNSET || !data.pdu.cp.num_cis)
+ 		return false;
+ 
+ 	if (hci_send_cmd(hdev, HCI_OP_LE_SET_CIG_PARAMS,
+@@ -1809,32 +1811,32 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 		return cis;
+ 
+ 	/* Update LINK PHYs according to QoS preference */
+-	cis->le_tx_phy = qos->out.phy;
+-	cis->le_rx_phy = qos->in.phy;
++	cis->le_tx_phy = qos->ucast.out.phy;
++	cis->le_rx_phy = qos->ucast.in.phy;
+ 
+ 	/* If output interval is not set use the input interval as it cannot be
+ 	 * 0x000000.
+ 	 */
+-	if (!qos->out.interval)
+-		qos->out.interval = qos->in.interval;
++	if (!qos->ucast.out.interval)
++		qos->ucast.out.interval = qos->ucast.in.interval;
+ 
+ 	/* If input interval is not set use the output interval as it cannot be
+ 	 * 0x000000.
+ 	 */
+-	if (!qos->in.interval)
+-		qos->in.interval = qos->out.interval;
++	if (!qos->ucast.in.interval)
++		qos->ucast.in.interval = qos->ucast.out.interval;
+ 
+ 	/* If output latency is not set use the input latency as it cannot be
+ 	 * 0x0000.
+ 	 */
+-	if (!qos->out.latency)
+-		qos->out.latency = qos->in.latency;
++	if (!qos->ucast.out.latency)
++		qos->ucast.out.latency = qos->ucast.in.latency;
+ 
+ 	/* If input latency is not set use the output latency as it cannot be
+ 	 * 0x0000.
+ 	 */
+-	if (!qos->in.latency)
+-		qos->in.latency = qos->out.latency;
++	if (!qos->ucast.in.latency)
++		qos->ucast.in.latency = qos->ucast.out.latency;
+ 
+ 	if (!hci_le_set_cig_params(cis, qos)) {
+ 		hci_conn_drop(cis);
+@@ -1854,7 +1856,7 @@ bool hci_iso_setup_path(struct hci_conn *conn)
+ 
+ 	memset(&cmd, 0, sizeof(cmd));
+ 
+-	if (conn->iso_qos.out.sdu) {
++	if (conn->iso_qos.ucast.out.sdu) {
+ 		cmd.handle = cpu_to_le16(conn->handle);
+ 		cmd.direction = 0x00; /* Input (Host to Controller) */
+ 		cmd.path = 0x00; /* HCI path if enabled */
+@@ -1865,7 +1867,7 @@ bool hci_iso_setup_path(struct hci_conn *conn)
+ 			return false;
+ 	}
+ 
+-	if (conn->iso_qos.in.sdu) {
++	if (conn->iso_qos.ucast.in.sdu) {
+ 		cmd.handle = cpu_to_le16(conn->handle);
+ 		cmd.direction = 0x01; /* Output (Controller to Host) */
+ 		cmd.path = 0x00; /* HCI path if enabled */
+@@ -1892,7 +1894,7 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ 	cmd.cis[0].acl_handle = cpu_to_le16(conn->link->handle);
+ 	cmd.cis[0].cis_handle = cpu_to_le16(conn->handle);
+ 	cmd.cp.num_cis++;
+-	cig = conn->iso_qos.cig;
++	cig = conn->iso_qos.ucast.cig;
+ 
+ 	hci_dev_lock(hdev);
+ 
+@@ -1902,7 +1904,7 @@ static int hci_create_cis_sync(struct hci_dev *hdev, void *data)
+ 		struct hci_cis *cis = &cmd.cis[cmd.cp.num_cis];
+ 
+ 		if (conn == data || conn->type != ISO_LINK ||
+-		    conn->state == BT_CONNECTED || conn->iso_qos.cig != cig)
++		    conn->state == BT_CONNECTED || conn->iso_qos.ucast.cig != cig)
+ 			continue;
+ 
+ 		/* Check if all CIS(s) belonging to a CIG are ready */
+@@ -2002,8 +2004,8 @@ static void hci_bind_bis(struct hci_conn *conn,
+ 			 struct bt_iso_qos *qos)
+ {
+ 	/* Update LINK PHYs according to QoS preference */
+-	conn->le_tx_phy = qos->out.phy;
+-	conn->le_tx_phy = qos->out.phy;
++	conn->le_tx_phy = qos->bcast.out.phy;
++	conn->le_tx_phy = qos->bcast.out.phy;
+ 	conn->iso_qos = *qos;
+ 	conn->state = BT_BOUND;
+ }
+@@ -2016,16 +2018,16 @@ static int create_big_sync(struct hci_dev *hdev, void *data)
+ 	u32 flags = 0;
+ 	int err;
+ 
+-	if (qos->out.phy == 0x02)
++	if (qos->bcast.out.phy == 0x02)
+ 		flags |= MGMT_ADV_FLAG_SEC_2M;
+ 
+ 	/* Align intervals */
+-	interval = qos->out.interval / 1250;
++	interval = qos->bcast.out.interval / 1250;
+ 
+-	if (qos->bis)
+-		sync_interval = qos->sync_interval * 1600;
++	if (qos->bcast.bis)
++		sync_interval = qos->bcast.sync_interval * 1600;
+ 
+-	err = hci_start_per_adv_sync(hdev, qos->bis, conn->le_per_adv_data_len,
++	err = hci_start_per_adv_sync(hdev, qos->bcast.bis, conn->le_per_adv_data_len,
+ 				     conn->le_per_adv_data, flags, interval,
+ 				     interval, sync_interval);
+ 	if (err)
+@@ -2062,7 +2064,7 @@ static int create_pa_sync(struct hci_dev *hdev, void *data)
+ }
+ 
+ int hci_pa_create_sync(struct hci_dev *hdev, bdaddr_t *dst, __u8 dst_type,
+-		       __u8 sid)
++		       __u8 sid, struct bt_iso_qos *qos)
+ {
+ 	struct hci_cp_le_pa_create_sync *cp;
+ 
+@@ -2075,9 +2077,13 @@ int hci_pa_create_sync(struct hci_dev *hdev, bdaddr_t *dst, __u8 dst_type,
+ 		return -ENOMEM;
+ 	}
+ 
++	cp->options = qos->bcast.options;
+ 	cp->sid = sid;
+ 	cp->addr_type = dst_type;
+ 	bacpy(&cp->addr, dst);
++	cp->skip = cpu_to_le16(qos->bcast.skip);
++	cp->sync_timeout = cpu_to_le16(qos->bcast.sync_timeout);
++	cp->sync_cte_type = qos->bcast.sync_cte_type;
+ 
+ 	/* Queue start pa_create_sync and scan */
+ 	return hci_cmd_sync_queue(hdev, create_pa_sync, cp, create_pa_complete);
+@@ -2100,8 +2106,12 @@ int hci_le_big_create_sync(struct hci_dev *hdev, struct bt_iso_qos *qos,
+ 		return err;
+ 
+ 	memset(&pdu, 0, sizeof(pdu));
+-	pdu.cp.handle = qos->big;
++	pdu.cp.handle = qos->bcast.big;
+ 	pdu.cp.sync_handle = cpu_to_le16(sync_handle);
++	pdu.cp.encryption = qos->bcast.encryption;
++	memcpy(pdu.cp.bcode, qos->bcast.bcode, sizeof(pdu.cp.bcode));
++	pdu.cp.mse = qos->bcast.mse;
++	pdu.cp.timeout = cpu_to_le16(qos->bcast.timeout);
+ 	pdu.cp.num_bis = num_bis;
+ 	memcpy(pdu.bis, bis, num_bis);
+ 
+@@ -2151,7 +2161,7 @@ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
+ 		return ERR_PTR(err);
+ 	}
+ 
+-	hci_iso_qos_setup(hdev, conn, &qos->out,
++	hci_iso_qos_setup(hdev, conn, &qos->bcast.out,
+ 			  conn->le_tx_phy ? conn->le_tx_phy :
+ 			  hdev->le_tx_def_phys);
+ 
+@@ -2177,9 +2187,9 @@ struct hci_conn *hci_connect_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 	if (IS_ERR(le))
+ 		return le;
+ 
+-	hci_iso_qos_setup(hdev, le, &qos->out,
++	hci_iso_qos_setup(hdev, le, &qos->ucast.out,
+ 			  le->le_tx_phy ? le->le_tx_phy : hdev->le_tx_def_phys);
+-	hci_iso_qos_setup(hdev, le, &qos->in,
++	hci_iso_qos_setup(hdev, le, &qos->ucast.in,
+ 			  le->le_rx_phy ? le->le_rx_phy : hdev->le_rx_def_phys);
+ 
+ 	cis = hci_bind_cis(hdev, dst, dst_type, qos);
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 51f13518dba9b..0e0a93cc12186 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -1,6 +1,7 @@
+ /*
+    BlueZ - Bluetooth protocol stack for Linux
+    Copyright (c) 2000-2001, 2010, Code Aurora Forum. All rights reserved.
++   Copyright 2023 NXP
+ 
+    Written 2000,2001 by Maxim Krasnyansky <maxk@qualcomm.com>
+ 
+@@ -3833,7 +3834,7 @@ static u8 hci_cc_le_set_cig_params(struct hci_dev *hdev, void *data,
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(conn, &hdev->conn_hash.list, list) {
+-		if (conn->type != ISO_LINK || conn->iso_qos.cig != rp->cig_id ||
++		if (conn->type != ISO_LINK || conn->iso_qos.ucast.cig != rp->cig_id ||
+ 		    conn->state == BT_CONNECTED)
+ 			continue;
+ 
+@@ -3890,7 +3891,7 @@ static u8 hci_cc_le_setup_iso_path(struct hci_dev *hdev, void *data,
+ 	/* Input (Host to Controller) */
+ 	case 0x00:
+ 		/* Only confirm connection if output only */
+-		if (conn->iso_qos.out.sdu && !conn->iso_qos.in.sdu)
++		if (conn->iso_qos.ucast.out.sdu && !conn->iso_qos.ucast.in.sdu)
+ 			hci_connect_cfm(conn, rp->status);
+ 		break;
+ 	/* Output (Controller to Host) */
+@@ -6818,15 +6819,15 @@ static void hci_le_cis_estabilished_evt(struct hci_dev *hdev, void *data,
+ 		memset(&interval, 0, sizeof(interval));
+ 
+ 		memcpy(&interval, ev->c_latency, sizeof(ev->c_latency));
+-		conn->iso_qos.in.interval = le32_to_cpu(interval);
++		conn->iso_qos.ucast.in.interval = le32_to_cpu(interval);
+ 		memcpy(&interval, ev->p_latency, sizeof(ev->p_latency));
+-		conn->iso_qos.out.interval = le32_to_cpu(interval);
+-		conn->iso_qos.in.latency = le16_to_cpu(ev->interval);
+-		conn->iso_qos.out.latency = le16_to_cpu(ev->interval);
+-		conn->iso_qos.in.sdu = le16_to_cpu(ev->c_mtu);
+-		conn->iso_qos.out.sdu = le16_to_cpu(ev->p_mtu);
+-		conn->iso_qos.in.phy = ev->c_phy;
+-		conn->iso_qos.out.phy = ev->p_phy;
++		conn->iso_qos.ucast.out.interval = le32_to_cpu(interval);
++		conn->iso_qos.ucast.in.latency = le16_to_cpu(ev->interval);
++		conn->iso_qos.ucast.out.latency = le16_to_cpu(ev->interval);
++		conn->iso_qos.ucast.in.sdu = le16_to_cpu(ev->c_mtu);
++		conn->iso_qos.ucast.out.sdu = le16_to_cpu(ev->p_mtu);
++		conn->iso_qos.ucast.in.phy = ev->c_phy;
++		conn->iso_qos.ucast.out.phy = ev->p_phy;
+ 	}
+ 
+ 	if (!ev->status) {
+@@ -6900,8 +6901,8 @@ static void hci_le_cis_req_evt(struct hci_dev *hdev, void *data,
+ 		cis->handle = cis_handle;
+ 	}
+ 
+-	cis->iso_qos.cig = ev->cig_id;
+-	cis->iso_qos.cis = ev->cis_id;
++	cis->iso_qos.ucast.cig = ev->cig_id;
++	cis->iso_qos.ucast.cis = ev->cis_id;
+ 
+ 	if (!(flags & HCI_PROTO_DEFER)) {
+ 		hci_le_accept_cis(hdev, ev->cis_handle);
+@@ -6988,13 +6989,13 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
+ 			bis->handle = handle;
+ 		}
+ 
+-		bis->iso_qos.big = ev->handle;
++		bis->iso_qos.bcast.big = ev->handle;
+ 		memset(&interval, 0, sizeof(interval));
+ 		memcpy(&interval, ev->latency, sizeof(ev->latency));
+-		bis->iso_qos.in.interval = le32_to_cpu(interval);
++		bis->iso_qos.bcast.in.interval = le32_to_cpu(interval);
+ 		/* Convert ISO Interval (1.25 ms slots) to latency (ms) */
+-		bis->iso_qos.in.latency = le16_to_cpu(ev->interval) * 125 / 100;
+-		bis->iso_qos.in.sdu = le16_to_cpu(ev->max_pdu);
++		bis->iso_qos.bcast.in.latency = le16_to_cpu(ev->interval) * 125 / 100;
++		bis->iso_qos.bcast.in.sdu = le16_to_cpu(ev->max_pdu);
+ 
+ 		hci_iso_setup_path(bis);
+ 	}
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 8d136a7301630..74117df03a3fa 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -3,6 +3,7 @@
+  * BlueZ - Bluetooth protocol stack for Linux
+  *
+  * Copyright (C) 2022 Intel Corporation
++ * Copyright 2023 NXP
+  */
+ 
+ #include <linux/module.h>
+@@ -59,11 +60,17 @@ struct iso_pinfo {
+ 	__u16			sync_handle;
+ 	__u32			flags;
+ 	struct bt_iso_qos	qos;
++	bool			qos_user_set;
+ 	__u8			base_len;
+ 	__u8			base[BASE_MAX_LENGTH];
+ 	struct iso_conn		*conn;
+ };
+ 
++static struct bt_iso_qos default_qos;
 +
-+		oldhdr = ipv6_hdr(skb);
++static bool check_ucast_qos(struct bt_iso_qos *qos);
++static bool check_bcast_qos(struct bt_iso_qos *qos);
++
+ /* ---- ISO timers ---- */
+ #define ISO_CONN_TIMEOUT	(HZ * 40)
+ #define ISO_DISCONN_TIMEOUT	(HZ * 2)
+@@ -264,8 +271,15 @@ static int iso_connect_bis(struct sock *sk)
+ 		goto unlock;
+ 	}
+ 
++	/* Fail if user set invalid QoS */
++	if (iso_pi(sk)->qos_user_set && !check_bcast_qos(&iso_pi(sk)->qos)) {
++		iso_pi(sk)->qos = default_qos;
++		err = -EINVAL;
++		goto unlock;
 +	}
- 	skb_push(skb, ((chdr->hdrlen + 1) << 3) + sizeof(struct ipv6hdr));
- 	skb_reset_network_header(skb);
- 	skb_mac_header_rebuild(skb);
++
+ 	/* Fail if out PHYs are marked as disabled */
+-	if (!iso_pi(sk)->qos.out.phy) {
++	if (!iso_pi(sk)->qos.bcast.out.phy) {
+ 		err = -EINVAL;
+ 		goto unlock;
+ 	}
+@@ -336,8 +350,15 @@ static int iso_connect_cis(struct sock *sk)
+ 		goto unlock;
+ 	}
+ 
++	/* Fail if user set invalid QoS */
++	if (iso_pi(sk)->qos_user_set && !check_ucast_qos(&iso_pi(sk)->qos)) {
++		iso_pi(sk)->qos = default_qos;
++		err = -EINVAL;
++		goto unlock;
++	}
++
+ 	/* Fail if either PHYs are marked as disabled */
+-	if (!iso_pi(sk)->qos.in.phy && !iso_pi(sk)->qos.out.phy) {
++	if (!iso_pi(sk)->qos.ucast.in.phy && !iso_pi(sk)->qos.ucast.out.phy) {
+ 		err = -EINVAL;
+ 		goto unlock;
+ 	}
+@@ -417,7 +438,7 @@ static int iso_send_frame(struct sock *sk, struct sk_buff *skb)
+ 
+ 	BT_DBG("sk %p len %d", sk, skb->len);
+ 
+-	if (skb->len > qos->out.sdu)
++	if (skb->len > qos->ucast.out.sdu)
+ 		return -EMSGSIZE;
+ 
+ 	len = skb->len;
+@@ -680,13 +701,23 @@ static struct proto iso_proto = {
+ }
+ 
+ static struct bt_iso_qos default_qos = {
+-	.cig		= BT_ISO_QOS_CIG_UNSET,
+-	.cis		= BT_ISO_QOS_CIS_UNSET,
+-	.sca		= 0x00,
+-	.packing	= 0x00,
+-	.framing	= 0x00,
+-	.in		= DEFAULT_IO_QOS,
+-	.out		= DEFAULT_IO_QOS,
++	.bcast = {
++		.big			= BT_ISO_QOS_BIG_UNSET,
++		.bis			= BT_ISO_QOS_BIS_UNSET,
++		.sync_interval		= 0x00,
++		.packing		= 0x00,
++		.framing		= 0x00,
++		.in			= DEFAULT_IO_QOS,
++		.out			= DEFAULT_IO_QOS,
++		.encryption		= 0x00,
++		.bcode			= {0x00},
++		.options		= 0x00,
++		.skip			= 0x0000,
++		.sync_timeout		= 0x4000,
++		.sync_cte_type		= 0x00,
++		.mse			= 0x00,
++		.timeout		= 0x4000,
++	},
+ };
+ 
+ static struct sock *iso_sock_alloc(struct net *net, struct socket *sock,
+@@ -893,9 +924,15 @@ static int iso_listen_bis(struct sock *sk)
+ 	if (!hdev)
+ 		return -EHOSTUNREACH;
+ 
++	/* Fail if user set invalid QoS */
++	if (iso_pi(sk)->qos_user_set && !check_bcast_qos(&iso_pi(sk)->qos)) {
++		iso_pi(sk)->qos = default_qos;
++		return -EINVAL;
++	}
++
+ 	err = hci_pa_create_sync(hdev, &iso_pi(sk)->dst,
+ 				 le_addr_type(iso_pi(sk)->dst_type),
+-				 iso_pi(sk)->bc_sid);
++				 iso_pi(sk)->bc_sid, &iso_pi(sk)->qos);
+ 
+ 	hci_dev_put(hdev);
+ 
+@@ -1154,21 +1191,62 @@ static bool check_io_qos(struct bt_iso_io_qos *qos)
+ 	return true;
+ }
+ 
+-static bool check_qos(struct bt_iso_qos *qos)
++static bool check_ucast_qos(struct bt_iso_qos *qos)
+ {
+-	if (qos->sca > 0x07)
++	if (qos->ucast.sca > 0x07)
+ 		return false;
+ 
+-	if (qos->packing > 0x01)
++	if (qos->ucast.packing > 0x01)
+ 		return false;
+ 
+-	if (qos->framing > 0x01)
++	if (qos->ucast.framing > 0x01)
+ 		return false;
+ 
+-	if (!check_io_qos(&qos->in))
++	if (!check_io_qos(&qos->ucast.in))
+ 		return false;
+ 
+-	if (!check_io_qos(&qos->out))
++	if (!check_io_qos(&qos->ucast.out))
++		return false;
++
++	return true;
++}
++
++static bool check_bcast_qos(struct bt_iso_qos *qos)
++{
++	if (qos->bcast.sync_interval > 0x07)
++		return false;
++
++	if (qos->bcast.packing > 0x01)
++		return false;
++
++	if (qos->bcast.framing > 0x01)
++		return false;
++
++	if (!check_io_qos(&qos->bcast.in))
++		return false;
++
++	if (!check_io_qos(&qos->bcast.out))
++		return false;
++
++	if (qos->bcast.encryption > 0x01)
++		return false;
++
++	if (qos->bcast.options > 0x07)
++		return false;
++
++	if (qos->bcast.skip > 0x01f3)
++		return false;
++
++	if (qos->bcast.sync_timeout < 0x000a || qos->bcast.sync_timeout > 0x4000)
++		return false;
++
++	if (qos->bcast.sync_cte_type > 0x1f)
++		return false;
++
++	if (qos->bcast.mse > 0x1f)
++		return false;
++
++	if (qos->bcast.timeout < 0x000a || qos->bcast.timeout > 0x4000)
+ 		return false;
+ 
+ 	return true;
+@@ -1179,7 +1257,7 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ {
+ 	struct sock *sk = sock->sk;
+ 	int len, err = 0;
+-	struct bt_iso_qos qos;
++	struct bt_iso_qos qos = default_qos;
+ 	u32 opt;
+ 
+ 	BT_DBG("sk %p", sk);
+@@ -1212,24 +1290,19 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		}
+ 
+ 		len = min_t(unsigned int, sizeof(qos), optlen);
+-		if (len != sizeof(qos)) {
+-			err = -EINVAL;
+-			break;
+-		}
+-
+-		memset(&qos, 0, sizeof(qos));
+ 
+ 		if (copy_from_sockptr(&qos, optval, len)) {
+ 			err = -EFAULT;
+ 			break;
+ 		}
+ 
+-		if (!check_qos(&qos)) {
++		if (len == sizeof(qos.ucast) && !check_ucast_qos(&qos)) {
+ 			err = -EINVAL;
+ 			break;
+ 		}
+ 
+ 		iso_pi(sk)->qos = qos;
++		iso_pi(sk)->qos_user_set = true;
+ 
+ 		break;
+ 
+@@ -1419,7 +1492,7 @@ static bool iso_match_big(struct sock *sk, void *data)
+ {
+ 	struct hci_evt_le_big_sync_estabilished *ev = data;
+ 
+-	return ev->handle == iso_pi(sk)->qos.big;
++	return ev->handle == iso_pi(sk)->qos.bcast.big;
+ }
+ 
+ static void iso_conn_ready(struct iso_conn *conn)
 -- 
 2.39.2
 
