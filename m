@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A670E134AE
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E66BC433EF;
-	Mon, 12 Jun 2023 10:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1F9134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E8AC433A4;
+	Mon, 12 Jun 2023 10:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566427;
-	bh=Urjq6zc/211XLTwBGCa5Tx2Eye0M02siMgnHzeCpZjE=;
+	s=korg; t=1686566425;
+	bh=yE6ZNkwiUyFipHu7AolJCJtUyVtwGLYZAofLAYPkzHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2VE0Xoa3tByucZ+vBU1EFGRYPVc8Vg4qTlBR9hbPgRh4KQilZHwg4mxMdx166qy1j
-	 id5mNANXX236o3NVl3cLh7lTGYvbqvF5qjqfA3eEW3FVjF8TyvlQKDqUQjsYqDmwOT
-	 4REa6Z6BMV0Wo30b5NOc+sQtjfHcJfjnHW59z6Jo=
+	b=uGYnXM9XKGCQVfwP4dtEHMw78vCW0J49HBP26LRKimxWqSagJWg2FrX92nQT4tQgg
+	 TAkfAx46MSMxF1jFVhcg5A6VkLiRzzCWCGr1Zqhrxvlr8jzatE5W5u1ySCpfORaB5v
+	 e9DB8RA9GyGn12T2HVdePTb1ScdD6H7/nBlLrHNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/132] platform/surface: aggregator: Allow completion work-items to be executed in parallel
-Date: Mon, 12 Jun 2023 12:25:38 +0200
-Message-ID: <20230612101710.496387334@linuxfoundation.org>
+Subject: [PATCH 6.1 003/132] spi: mt65xx: make sure operations completed before unloading
+Date: Mon, 12 Jun 2023 12:25:37 +0200
+Message-ID: <20230612101710.455632870@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,64 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 539e0a7f9105d19c00629c3f4da00330488e8c60 ]
+[ Upstream commit 4be47a5d59cbc9396a6ffd327913eb4c8d67a32f ]
 
-Currently, event completion work-items are restricted to be run strictly
-in non-parallel fashion by the respective workqueue. However, this has
-lead to some problems:
+When unloading the spi-mt65xx kernel module during an ongoing spi-mem
+operation the kernel will Oops shortly after unloading the module.
+This is because wait_for_completion_timeout was still running and
+returning into the no longer loaded module:
 
-In some instances, the event notifier function called inside this
-completion workqueue takes a non-negligible amount of time to execute.
-One such example is the battery event handling code (surface_battery.c),
-which can result in a full battery information refresh, involving
-further synchronous communication with the EC inside the event handler.
-This is made worse if the communication fails spuriously, generally
-incurring a multi-second timeout.
+Internal error: Oops: 0000000096000005 [#1] SMP
+Modules linked in: [many, but spi-mt65xx is no longer there]
+CPU: 0 PID: 2578 Comm: block Tainted: G        W  O       6.3.0-next-20230428+ #0
+Hardware name: Bananapi BPI-R3 (DT)
+pstate: 804000c5 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __lock_acquire+0x18c/0x20e8
+lr : __lock_acquire+0x9b8/0x20e8
+sp : ffffffc009ec3400
+x29: ffffffc009ec3400 x28: 0000000000000001 x27: 0000000000000004
+x26: ffffff80082888c8 x25: 0000000000000000 x24: 0000000000000000
+x23: ffffffc009609da8 x22: ffffff8008288000 x21: ffffff8008288968
+x20: 00000000000003c2 x19: ffffff8008be7990 x18: 00000000000002af
+x17: 0000000000000000 x16: 0000000000000000 x15: ffffffc008d78970
+x14: 000000000000080d x13: 00000000000002af x12: 00000000ffffffea
+x11: 00000000ffffefff x10: ffffffc008dd0970 x9 : ffffffc008d78918
+x8 : 0000000000017fe8 x7 : 0000000000000001 x6 : 0000000000000000
+x5 : ffffff807fb53910 x4 : 0000000000000000 x3 : 0000000000000027
+x2 : 0000000000000027 x1 : 0000000000000000 x0 : 00000000000c03c2
+Call trace:
+ __lock_acquire+0x18c/0x20e8
+ lock_acquire+0x100/0x2a4
+ _raw_spin_lock_irq+0x58/0x74
+ __wait_for_common+0xe0/0x1b4
+ wait_for_completion_timeout+0x1c/0x24
+ 0xffffffc000acc8a4 <--- used to be mtk_spi_transfer_wait
+ spi_mem_exec_op+0x390/0x3ec
+ spi_mem_no_dirmap_read+0x6c/0x88
+ spi_mem_dirmap_read+0xcc/0x12c
+ spinand_read_page+0xf8/0x1dc
+ spinand_mtd_read+0x1b4/0x2fc
+ mtd_read_oob_std+0x58/0x7c
+ mtd_read_oob+0x8c/0x148
+ mtd_read+0x50/0x6c
+ ...
 
-Since the event completions are run strictly non-parallel, this blocks
-other events from being propagated to the respective subsystems. This
-becomes especially noticeable for keyboard and touchpad input, which
-also funnel their events through this system. Here, users have reported
-occasional multi-second "freezes".
+Prevent this by completing in mtk_spi_remove if needed.
 
-Note, however, that the event handling system was never intended to run
-purely sequentially. Instead, we have one work struct per EC/SAM
-subsystem, processing the event queue for that subsystem. These work
-structs were intended to run in parallel, allowing sequential processing
-of work items for each subsystem but parallel processing of work items
-across subsystems.
-
-The only restriction to this is the way the workqueue is created.
-Therefore, replace create_workqueue() with alloc_workqueue() and do not
-restrict the maximum number of parallel work items to be executed on
-that queue, resolving any cross-subsystem blockage.
-
-Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
-Link: https://github.com/linux-surface/linux-surface/issues/1026
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Link: https://lore.kernel.org/r/20230525210110.2785470-1-luzmaximilian@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 9f763fd20da7 ("spi: mediatek: add spi memory support for ipm design")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/ZFAF6pJxMu1z6k4w@makrotopia.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/aggregator/controller.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-mt65xx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/surface/aggregator/controller.c b/drivers/platform/surface/aggregator/controller.c
-index c6537a1b3a2ec..30cea324ff95f 100644
---- a/drivers/platform/surface/aggregator/controller.c
-+++ b/drivers/platform/surface/aggregator/controller.c
-@@ -825,7 +825,7 @@ static int ssam_cplt_init(struct ssam_cplt *cplt, struct device *dev)
+diff --git a/drivers/spi/spi-mt65xx.c b/drivers/spi/spi-mt65xx.c
+index 9eab6c20dbc56..6e95efb50acbc 100644
+--- a/drivers/spi/spi-mt65xx.c
++++ b/drivers/spi/spi-mt65xx.c
+@@ -1275,6 +1275,9 @@ static int mtk_spi_remove(struct platform_device *pdev)
+ 	struct mtk_spi *mdata = spi_master_get_devdata(master);
+ 	int ret;
  
- 	cplt->dev = dev;
- 
--	cplt->wq = create_workqueue(SSAM_CPLT_WQ_NAME);
-+	cplt->wq = alloc_workqueue(SSAM_CPLT_WQ_NAME, WQ_UNBOUND | WQ_MEM_RECLAIM, 0);
- 	if (!cplt->wq)
- 		return -ENOMEM;
- 
++	if (mdata->use_spimem && !completion_done(&mdata->spimem_done))
++		complete(&mdata->spimem_done);
++
+ 	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.39.2
 
