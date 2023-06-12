@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3288F1952C
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD02AC433D2;
-	Mon, 12 Jun 2023 10:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4534168AC
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:32:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D16EC433EF;
+	Mon, 12 Jun 2023 10:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565918;
-	bh=gu+woyY600EgFNCOX5M7aN+WcWbBcb/QrxPZoXv4bwo=;
+	s=korg; t=1686565920;
+	bh=Y3JJV7iZ6bxeIZWOce+3p8siBpLwWjccP3XuzHRjDrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9xzQK4ysB+ErIFZNai2xjmqWLX8wflfJr3XEIghqAz6UT7J1aj0NDgV92yw1ma8D
-	 4QlNPOh8WtaKbuWVFatLYOeN03wlUGfqE/nW87n0uH+FzTwiQGQz9ouLtkaZmSpuOc
-	 lH5T0mvv0jGcQmPXmMsP60DiNQ3iSHfVJbMVJ8DE=
+	b=qcSxplBFsaVG1OGTwVJJK8Wr/62PgilpukETkU1ZIo5voqiw2kJmhhPW6/hZt4k57
+	 oil28FNG28YnrQWylzkfVrZb52HZO50M0QK7VwpMwzV327OEQboVZb/C0WmLKWmtoa
+	 UiiGSN66stIK1Ij/Puczzsl3h9aeCPYCs9qVAlaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	fuyufan <fuyufan@huawei.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 5.4 40/45] drm/atomic: Dont pollute crtc_state->mode_blob with error pointers
-Date: Mon, 12 Jun 2023 12:26:34 +0200
-Message-ID: <20230612101656.280451877@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 5.4 41/45] rbd: get snapshot context after exclusive lock is ensured to be held
+Date: Mon, 12 Jun 2023 12:26:35 +0200
+Message-ID: <20230612101656.310461607@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -36,50 +34,176 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 439cf34c8e0a8a33d8c15a31be1b7423426bc765 upstream.
+commit 870611e4877eff1e8413c3fb92a585e45d5291f6 upstream.
 
-Make sure we don't assign an error pointer to crtc_state->mode_blob
-as that will break all kinds of places that assume either NULL or a
-valid pointer (eg. drm_property_blob_put()).
+Move capturing the snapshot context into the image request state
+machine, after exclusive lock is ensured to be held for the duration of
+dealing with the image request.  This is needed to ensure correctness
+of fast-diff states (OBJECT_EXISTS vs OBJECT_EXISTS_CLEAN) and object
+deltas computed based off of them.  Otherwise the object map that is
+forked for the snapshot isn't guaranteed to accurately reflect the
+contents of the snapshot when the snapshot is taken under I/O.  This
+breaks differential backup and snapshot-based mirroring use cases with
+fast-diff enabled: since some object deltas may be incomplete, the
+destination image may get corrupted.
 
 Cc: stable@vger.kernel.org
-Reported-by: fuyufan <fuyufan@huawei.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220209091928.14766-1-ville.syrjala@linux.intel.com
-Acked-by: Maxime Ripard <maxime@cerno.tech>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://tracker.ceph.com/issues/61472
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+[idryomov@gmail.com: backport to 5.4: no rbd_img_capture_header(),
+ img_request not embedded in blk-mq pdu]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/block/rbd.c |   41 ++++++++++++++++++++++++-----------------
+ 1 file changed, 24 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -75,15 +75,17 @@ int drm_atomic_set_mode_for_crtc(struct
- 	state->mode_blob = NULL;
- 
- 	if (mode) {
-+		struct drm_property_blob *blob;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -1495,6 +1495,8 @@ static bool rbd_obj_is_tail(struct rbd_o
+  */
+ static void rbd_obj_set_copyup_enabled(struct rbd_obj_request *obj_req)
+ {
++	rbd_assert(obj_req->img_request->snapc);
 +
- 		drm_mode_convert_to_umode(&umode, mode);
--		state->mode_blob =
--			drm_property_create_blob(state->crtc->dev,
--		                                 sizeof(umode),
--		                                 &umode);
--		if (IS_ERR(state->mode_blob))
--			return PTR_ERR(state->mode_blob);
-+		blob = drm_property_create_blob(crtc->dev,
-+						sizeof(umode), &umode);
-+		if (IS_ERR(blob))
-+			return PTR_ERR(blob);
+ 	if (obj_req->img_request->op_type == OBJ_OP_DISCARD) {
+ 		dout("%s %p objno %llu discard\n", __func__, obj_req,
+ 		     obj_req->ex.oe_objno);
+@@ -1613,6 +1615,7 @@ __rbd_obj_add_osd_request(struct rbd_obj
+ static struct ceph_osd_request *
+ rbd_obj_add_osd_request(struct rbd_obj_request *obj_req, int num_ops)
+ {
++	rbd_assert(obj_req->img_request->snapc);
+ 	return __rbd_obj_add_osd_request(obj_req, obj_req->img_request->snapc,
+ 					 num_ops);
+ }
+@@ -1741,11 +1744,14 @@ static bool rbd_dev_parent_get(struct rb
+  * Caller is responsible for filling in the list of object requests
+  * that comprises the image request, and the Linux request pointer
+  * (if there is one).
++ *
++ * Only snap_id is captured here, for reads.  For writes, snapshot
++ * context is captured in rbd_img_object_requests() after exclusive
++ * lock is ensured to be held.
+  */
+ static struct rbd_img_request *rbd_img_request_create(
+ 					struct rbd_device *rbd_dev,
+-					enum obj_operation_type op_type,
+-					struct ceph_snap_context *snapc)
++					enum obj_operation_type op_type)
+ {
+ 	struct rbd_img_request *img_request;
  
- 		drm_mode_copy(&state->mode, mode);
+@@ -1757,8 +1763,6 @@ static struct rbd_img_request *rbd_img_r
+ 	img_request->op_type = op_type;
+ 	if (!rbd_img_is_write(img_request))
+ 		img_request->snap_id = rbd_dev->spec->snap_id;
+-	else
+-		img_request->snapc = snapc;
+ 
+ 	if (rbd_dev_parent_get(rbd_dev))
+ 		img_request_layered_set(img_request);
+@@ -2944,7 +2948,7 @@ static int rbd_obj_read_from_parent(stru
+ 	int ret;
+ 
+ 	child_img_req = rbd_img_request_create(img_req->rbd_dev->parent,
+-					       OBJ_OP_READ, NULL);
++					       OBJ_OP_READ);
+ 	if (!child_img_req)
+ 		return -ENOMEM;
+ 
+@@ -3635,9 +3639,19 @@ static int rbd_img_exclusive_lock(struct
+ 
+ static void rbd_img_object_requests(struct rbd_img_request *img_req)
+ {
++	struct rbd_device *rbd_dev = img_req->rbd_dev;
+ 	struct rbd_obj_request *obj_req;
+ 
+ 	rbd_assert(!img_req->pending.result && !img_req->pending.num_pending);
++	rbd_assert(!need_exclusive_lock(img_req) ||
++		   __rbd_is_lock_owner(rbd_dev));
 +
-+		state->mode_blob = blob;
- 		state->enable = true;
- 		DRM_DEBUG_ATOMIC("Set [MODE:%s] for [CRTC:%d:%s] state %p\n",
- 				 mode->name, crtc->base.id, crtc->name, state);
++	if (rbd_img_is_write(img_req)) {
++		rbd_assert(!img_req->snapc);
++		down_read(&rbd_dev->header_rwsem);
++		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
++		up_read(&rbd_dev->header_rwsem);
++	}
+ 
+ 	for_each_obj_request(img_req, obj_req) {
+ 		int result = 0;
+@@ -3655,7 +3669,6 @@ static void rbd_img_object_requests(stru
+ 
+ static bool rbd_img_advance(struct rbd_img_request *img_req, int *result)
+ {
+-	struct rbd_device *rbd_dev = img_req->rbd_dev;
+ 	int ret;
+ 
+ again:
+@@ -3676,9 +3689,6 @@ again:
+ 		if (*result)
+ 			return true;
+ 
+-		rbd_assert(!need_exclusive_lock(img_req) ||
+-			   __rbd_is_lock_owner(rbd_dev));
+-
+ 		rbd_img_object_requests(img_req);
+ 		if (!img_req->pending.num_pending) {
+ 			*result = img_req->pending.result;
+@@ -4140,6 +4150,10 @@ static int rbd_post_acquire_action(struc
+ {
+ 	int ret;
+ 
++	ret = rbd_dev_refresh(rbd_dev);
++	if (ret)
++		return ret;
++
+ 	if (rbd_dev->header.features & RBD_FEATURE_OBJECT_MAP) {
+ 		ret = rbd_object_map_open(rbd_dev);
+ 		if (ret)
+@@ -4798,7 +4812,6 @@ static void rbd_queue_workfn(struct work
+ 	struct request *rq = blk_mq_rq_from_pdu(work);
+ 	struct rbd_device *rbd_dev = rq->q->queuedata;
+ 	struct rbd_img_request *img_request;
+-	struct ceph_snap_context *snapc = NULL;
+ 	u64 offset = (u64)blk_rq_pos(rq) << SECTOR_SHIFT;
+ 	u64 length = blk_rq_bytes(rq);
+ 	enum obj_operation_type op_type;
+@@ -4863,10 +4876,6 @@ static void rbd_queue_workfn(struct work
+ 
+ 	down_read(&rbd_dev->header_rwsem);
+ 	mapping_size = rbd_dev->mapping.size;
+-	if (op_type != OBJ_OP_READ) {
+-		snapc = rbd_dev->header.snapc;
+-		ceph_get_snap_context(snapc);
+-	}
+ 	up_read(&rbd_dev->header_rwsem);
+ 
+ 	if (offset + length > mapping_size) {
+@@ -4876,13 +4885,12 @@ static void rbd_queue_workfn(struct work
+ 		goto err_rq;
+ 	}
+ 
+-	img_request = rbd_img_request_create(rbd_dev, op_type, snapc);
++	img_request = rbd_img_request_create(rbd_dev, op_type);
+ 	if (!img_request) {
+ 		result = -ENOMEM;
+ 		goto err_rq;
+ 	}
+ 	img_request->rq = rq;
+-	snapc = NULL; /* img_request consumes a ref */
+ 
+ 	dout("%s rbd_dev %p img_req %p %s %llu~%llu\n", __func__, rbd_dev,
+ 	     img_request, obj_op_name(op_type), offset, length);
+@@ -4904,7 +4912,6 @@ err_rq:
+ 	if (result)
+ 		rbd_warn(rbd_dev, "%s %llx at %llx result %d",
+ 			 obj_op_name(op_type), length, offset, result);
+-	ceph_put_snap_context(snapc);
+ err:
+ 	blk_mq_end_request(rq, errno_to_blk_status(result));
+ }
 
 
