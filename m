@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20853168A6
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D422C433EF;
-	Mon, 12 Jun 2023 10:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96448107A2
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B533C433D2;
+	Mon, 12 Jun 2023 10:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565839;
-	bh=nLrUB/ipY9U+VtnRqHyd7BJmuuE8q4WPua2Cow98l7U=;
+	s=korg; t=1686565841;
+	bh=gQGaPDgWsb+Epxj7TQ++nTbbJhV5jGXReNdHkDhpiUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ybbONk1j5uaTTWUnQ03/+g6sgbJgSVjbyceSGxL0HVwxiTOpzycbJ7KiRanpUaN6y
-	 /LWStt1ONoP8bBKPmgNBdfLYb+1UP/I6cC8CkpbxTV4Rk86mqSGJZt5LjPLeSuj+re
-	 L7r+AWWVkjAExH6DcOhUr08al5Kozq/gYJPgvGQ8=
+	b=tG3uw76KEoTEUdYQgemVGT0JXEi85fBDPYis5cwS7lysXcYcXB9YWO8gUCN10Wcgm
+	 J4FQw8inzEXMnuvca9tY0ivQ8rZ4TjrsYaoxgFRd8cJDEoTcv80JuvIGf/gfA0RqOq
+	 PRuzbdlQnPR6hMFnW9v6qaJz7mgJ7rO9u28i431Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 11/45] netfilter: conntrack: fix NULL pointer dereference in nf_confirm_cthelper
-Date: Mon, 12 Jun 2023 12:26:05 +0200
-Message-ID: <20230612101655.083150941@linuxfoundation.org>
+	Martin Liska <mliska@suse.cz>,
+	Tejun Heo <tj@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	cgroups@vger.kernel.org,
+	linux-block@vger.kernel.org,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Subject: [PATCH 5.4 02/45] block/blk-iocost (gcc13): keep large values in a new enum
+Date: Mon, 12 Jun 2023 12:25:56 +0200
+Message-ID: <20230612101654.735115280@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -36,58 +39,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit e1f543dc660b44618a1bd72ddb4ca0828a95f7ad ]
+commit ff1cc97b1f4c10db224f276d9615b22835b8c424 upstream.
 
-An nf_conntrack_helper from nf_conn_help may become NULL after DNAT.
+Since gcc13, each member of an enum has the same type as the enum [1]. And
+that is inherited from its members. Provided:
+  VTIME_PER_SEC_SHIFT     = 37,
+  VTIME_PER_SEC           = 1LLU << VTIME_PER_SEC_SHIFT,
+  ...
+  AUTOP_CYCLE_NSEC        = 10LLU * NSEC_PER_SEC,
+the named type is unsigned long.
 
-Observed when TCP port 1720 (Q931_PORT), associated with h323 conntrack
-helper, is DNAT'ed to another destination port (e.g. 1730), while
-nfqueue is being used for final acceptance (e.g. snort).
+This generates warnings with gcc-13:
+  block/blk-iocost.c: In function 'ioc_weight_prfill':
+  block/blk-iocost.c:3037:37: error: format '%u' expects argument of type 'unsigned int', but argument 4 has type 'long unsigned int'
 
-This happenned after transition from kernel 4.14 to 5.10.161.
+  block/blk-iocost.c: In function 'ioc_weight_show':
+  block/blk-iocost.c:3047:34: error: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'long unsigned int'
 
-Workarounds:
- * keep the same port (1720) in DNAT
- * disable nfqueue
- * disable/unload h323 NAT helper
+So split the anonymous enum with large values to a separate enum, so
+that they don't affect other members.
 
-$ linux-5.10/scripts/decode_stacktrace.sh vmlinux < /tmp/kernel.log
-BUG: kernel NULL pointer dereference, address: 0000000000000084
-[..]
-RIP: 0010:nf_conntrack_update (net/netfilter/nf_conntrack_core.c:2080 net/netfilter/nf_conntrack_core.c:2134) nf_conntrack
-[..]
-nfqnl_reinject (net/netfilter/nfnetlink_queue.c:237) nfnetlink_queue
-nfqnl_recv_verdict (net/netfilter/nfnetlink_queue.c:1230) nfnetlink_queue
-nfnetlink_rcv_msg (net/netfilter/nfnetlink.c:241) nfnetlink
-[..]
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
 
-Fixes: ee04805ff54a ("netfilter: conntrack: make conntrack userspace helpers work again")
-Signed-off-by: Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Martin Liska <mliska@suse.cz>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: cgroups@vger.kernel.org
+Cc: linux-block@vger.kernel.org
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20221213120826.17446-1-jirislaby@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ block/blk-iocost.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index d9b6f2001d006..fb1f12bb0ff2c 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -1943,6 +1943,9 @@ static int nf_confirm_cthelper(struct sk_buff *skb, struct nf_conn *ct,
- 		return 0;
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -248,7 +248,9 @@ enum {
  
- 	helper = rcu_dereference(help->helper);
-+	if (!helper)
-+		return 0;
-+
- 	if (!(helper->flags & NF_CT_HELPER_F_USERSPACE))
- 		return 0;
+ 	/* 1/64k is granular enough and can easily be handled w/ u32 */
+ 	HWEIGHT_WHOLE		= 1 << 16,
++};
  
--- 
-2.39.2
-
++enum {
+ 	/*
+ 	 * As vtime is used to calculate the cost of each IO, it needs to
+ 	 * be fairly high precision.  For example, it should be able to
 
 
