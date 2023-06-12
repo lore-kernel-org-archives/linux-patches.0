@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D2333DC
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC5DC433A4;
-	Mon, 12 Jun 2023 10:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A670E134AE
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E66BC433EF;
+	Mon, 12 Jun 2023 10:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566422;
-	bh=wb5iofFQ72d4xiwndmC1Nx5kWEoVvmu4b6ZVEnGiDE8=;
+	s=korg; t=1686566427;
+	bh=Urjq6zc/211XLTwBGCa5Tx2Eye0M02siMgnHzeCpZjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ez6zk5+xcIUKXiRycIafmf6sxiRPnYNSXSvKady5NBqwR+At4OHeRtXSXvYz8NplH
-	 DoeeLerz6GGhPDyKdQLWeR72dHTrRQbZPBIua6Df13x9ap9le9wP8GXEDkybBUU1iN
-	 3kBV67FXgFD3waZ9aUJezJeXljQqJvgW+po+M5hw=
+	b=2VE0Xoa3tByucZ+vBU1EFGRYPVc8Vg4qTlBR9hbPgRh4KQilZHwg4mxMdx166qy1j
+	 id5mNANXX236o3NVl3cLh7lTGYvbqvF5qjqfA3eEW3FVjF8TyvlQKDqUQjsYqDmwOT
+	 4REa6Z6BMV0Wo30b5NOc+sQtjfHcJfjnHW59z6Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/132] Bluetooth: L2CAP: Add missing checks for invalid DCID
-Date: Mon, 12 Jun 2023 12:25:59 +0200
-Message-ID: <20230612101711.380524084@linuxfoundation.org>
+Subject: [PATCH 6.1 004/132] platform/surface: aggregator: Allow completion work-items to be executed in parallel
+Date: Mon, 12 Jun 2023 12:25:38 +0200
+Message-ID: <20230612101710.496387334@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,51 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Maximilian Luz <luzmaximilian@gmail.com>
 
-[ Upstream commit 75767213f3d9b97f63694d02260b6a49a2271876 ]
+[ Upstream commit 539e0a7f9105d19c00629c3f4da00330488e8c60 ]
 
-When receiving a connect response we should make sure that the DCID is
-within the valid range and that we don't already have another channel
-allocated for the same DCID.
-Missing checks may violate the specification (BLUETOOTH CORE SPECIFICATION
-Version 5.4 | Vol 3, Part A, Page 1046).
+Currently, event completion work-items are restricted to be run strictly
+in non-parallel fashion by the respective workqueue. However, this has
+lead to some problems:
 
-Fixes: 40624183c202 ("Bluetooth: L2CAP: Add missing checks for invalid LE DCID")
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+In some instances, the event notifier function called inside this
+completion workqueue takes a non-negligible amount of time to execute.
+One such example is the battery event handling code (surface_battery.c),
+which can result in a full battery information refresh, involving
+further synchronous communication with the EC inside the event handler.
+This is made worse if the communication fails spuriously, generally
+incurring a multi-second timeout.
+
+Since the event completions are run strictly non-parallel, this blocks
+other events from being propagated to the respective subsystems. This
+becomes especially noticeable for keyboard and touchpad input, which
+also funnel their events through this system. Here, users have reported
+occasional multi-second "freezes".
+
+Note, however, that the event handling system was never intended to run
+purely sequentially. Instead, we have one work struct per EC/SAM
+subsystem, processing the event queue for that subsystem. These work
+structs were intended to run in parallel, allowing sequential processing
+of work items for each subsystem but parallel processing of work items
+across subsystems.
+
+The only restriction to this is the way the workqueue is created.
+Therefore, replace create_workqueue() with alloc_workqueue() and do not
+restrict the maximum number of parallel work items to be executed on
+that queue, resolving any cross-subsystem blockage.
+
+Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
+Link: https://github.com/linux-surface/linux-surface/issues/1026
+Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+Link: https://lore.kernel.org/r/20230525210110.2785470-1-luzmaximilian@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/platform/surface/aggregator/controller.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 1287de387bc53..02fc9961464cf 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4307,6 +4307,10 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
- 	result = __le16_to_cpu(rsp->result);
- 	status = __le16_to_cpu(rsp->status);
+diff --git a/drivers/platform/surface/aggregator/controller.c b/drivers/platform/surface/aggregator/controller.c
+index c6537a1b3a2ec..30cea324ff95f 100644
+--- a/drivers/platform/surface/aggregator/controller.c
++++ b/drivers/platform/surface/aggregator/controller.c
+@@ -825,7 +825,7 @@ static int ssam_cplt_init(struct ssam_cplt *cplt, struct device *dev)
  
-+	if (result == L2CAP_CR_SUCCESS && (dcid < L2CAP_CID_DYN_START ||
-+					   dcid > L2CAP_CID_DYN_END))
-+		return -EPROTO;
-+
- 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x result 0x%2.2x status 0x%2.2x",
- 	       dcid, scid, result, status);
+ 	cplt->dev = dev;
  
-@@ -4338,6 +4342,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+-	cplt->wq = create_workqueue(SSAM_CPLT_WQ_NAME);
++	cplt->wq = alloc_workqueue(SSAM_CPLT_WQ_NAME, WQ_UNBOUND | WQ_MEM_RECLAIM, 0);
+ 	if (!cplt->wq)
+ 		return -ENOMEM;
  
- 	switch (result) {
- 	case L2CAP_CR_SUCCESS:
-+		if (__l2cap_get_chan_by_dcid(conn, dcid)) {
-+			err = -EBADSLT;
-+			break;
-+		}
-+
- 		l2cap_state_change(chan, BT_CONFIG);
- 		chan->ident = 0;
- 		chan->dcid = dcid;
 -- 
 2.39.2
 
