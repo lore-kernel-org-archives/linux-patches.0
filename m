@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9671D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BDDC433D2;
-	Mon, 12 Jun 2023 10:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89614D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:38:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12657C433EF;
+	Mon, 12 Jun 2023 10:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566314;
-	bh=O0iJfPh8FUx+a/but74Mck08WPSAiBiCEV2360S+HBA=;
+	s=korg; t=1686566317;
+	bh=v8B+kOzEEpG+dXC5lHSww7Vti07BD26sIQmkWiiarl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJa2AGM3bCy3DebJncPERUEE+Zts9+dzR2xnIXMNB2Tla2a5ncYxuJSzHN/7nwwEo
-	 4geCkZfynSQ480ajkaXQ7+PW6O5BNrDnvttQljzdoJBhKTmJmWVgWC/gRDYFtlSFtt
-	 PsQdO0TVNQEBzlpJ6yApi/M8mm40PYdrmd16XK24=
+	b=XxWVWY8/OAy0OFRtypHipob+qaq8RFLB8U9bTqU7DzwvGAZ+2O00WxA3Wv8y2kFgL
+	 pNXKU6ZOLkp532JAQl6kZV/rDd69p45Qg6u6cWqtzTiAVZoSAjvTWE+tgZU8U6YKie
+	 12mvqptKV0c6hgLSLqSRN/ky8fthbh/VJzZyS/Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ismael Ferreras Morezuelas <swyterzone@gmail.com>,
-	Cameron Gutman <aicommander@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 48/91] Input: xpad - delete a Razer DeathAdder mouse VID/PID entry
-Date: Mon, 12 Jun 2023 12:26:37 +0200
-Message-ID: <20230612101704.080100794@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 39/91] net: sched: move rtm_tca_policy declaration to include file
+Date: Mon, 12 Jun 2023 12:26:28 +0200
+Message-ID: <20230612101703.715016521@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -35,73 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit feee70f4568650cf44c573488798ffc0a2faeea3 upstream.
+[ Upstream commit 886bc7d6ed3357975c5f1d3c784da96000d4bbb4 ]
 
-While doing my research to improve the xpad device names I noticed
-that the 1532:0037 VID/PID seems to be used by the DeathAdder 2013,
-so that Razer Sabertooth instance looked wrong and very suspect to
-me. I didn't see any mention in the official drivers, either.
+rtm_tca_policy is used from net/sched/sch_api.c and net/sched/cls_api.c,
+thus should be declared in an include file.
 
-After doing more research, it turns out that the xpad list
-is used by many other projects (like Steam) as-is [1], this
-issue was reported [2] and Valve/Sam Lantinga fixed it [3]:
+This fixes the following sparse warning:
+net/sched/sch_api.c:1434:25: warning: symbol 'rtm_tca_policy' was not declared. Should it be static?
 
-[1]: https://github.com/libsdl-org/SDL/blob/dcc5eef0e2395854b254ea2873a4899edab347c6/src/joystick/controller_type.h#L251
-[2]: https://steamcommunity.com/app/353380/discussions/0/1743392486228754770/
-[3]: https://hg.libsdl.org/SDL/rev/29809f6f0271
-
-(With multiple Internet users reporting similar issues, not linked here)
-
-After not being able to find the correct VID/PID combination anywhere
-on the Internet and not receiving any reply from Razer support I did
-some additional detective work, it seems like it presents itself as
-"Razer Sabertooth Gaming Controller (XBOX360)", code 1689:FE00.
-
-Leaving us with this:
- * Razer Sabertooth (1689:fe00)
- * Razer Sabertooth Elite (24c6:5d04)
- * Razer DeathAdder 2013 (1532:0037) [note: not a gamepad]
-
-So, to sum things up; remove this conflicting/duplicate entry:
-
-{ 0x1532, 0x0037, "Razer Sabertooth", 0, XTYPE_XBOX360 },
-
-As the real/correct one is already present there, even if
-the Internet as a whole insists on presenting it as the
-Razer Sabertooth Elite, which (by all accounts) is not:
-
-{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
-
-Actual change in SDL2 referencing this kernel issue:
-https://github.com/libsdl-org/SDL/commit/e5e54169754ca5d3e86339d968b20126d9da0a15
-
-For more information of the device, take a look here:
-https://github.com/xboxdrv/xboxdrv/pull/59
-
-You can see a lsusb dump here: https://github.com/xboxdrv/xboxdrv/files/76581/Qa6dBcrv.txt
-
-Fixes: f554f619b70 ("Input: xpad - sync device IDs with xboxdrv")
-Signed-off-by: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
-Reviewed-by: Cameron Gutman <aicommander@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/5c12dbdb-5774-fc68-5c58-ca596383663e@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e331473fee3d ("net/sched: cls_api: add missing validation of netlink attributes")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c |    1 -
- 1 file changed, 1 deletion(-)
+ include/net/pkt_sched.h | 2 ++
+ net/sched/cls_api.c     | 2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -264,7 +264,6 @@ static const struct xpad_device {
- 	{ 0x1430, 0xf801, "RedOctane Controller", 0, XTYPE_XBOX360 },
- 	{ 0x146b, 0x0601, "BigBen Interactive XBOX 360 Controller", 0, XTYPE_XBOX360 },
- 	{ 0x146b, 0x0604, "Bigben Interactive DAIJA Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
--	{ 0x1532, 0x0037, "Razer Sabertooth", 0, XTYPE_XBOX360 },
- 	{ 0x1532, 0x0a00, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x1532, 0x0a03, "Razer Wildcat", 0, XTYPE_XBOXONE },
- 	{ 0x15e4, 0x3f00, "Power A Mini Pro Elite", 0, XTYPE_XBOX360 },
+diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
+index 9e7b21c0b3a6d..9cd2d4e84913f 100644
+--- a/include/net/pkt_sched.h
++++ b/include/net/pkt_sched.h
+@@ -134,6 +134,8 @@ static inline void qdisc_run(struct Qdisc *q)
+ 	}
+ }
+ 
++extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
++
+ /* Calculate maximal size of packet seen by hard_start_xmit
+    routine of this device.
+  */
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 501e05943f02b..0aca0ecb029bd 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -41,8 +41,6 @@
+ #include <net/tc_act/tc_gate.h>
+ #include <net/flow_offload.h>
+ 
+-extern const struct nla_policy rtm_tca_policy[TCA_MAX + 1];
+-
+ /* The list of all installed classifier types */
+ static LIST_HEAD(tcf_proto_base);
+ 
+-- 
+2.39.2
+
 
 
