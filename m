@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D2EAD3C
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1791CC433D2;
-	Mon, 12 Jun 2023 10:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617C1D518
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6E9C433D2;
+	Mon, 12 Jun 2023 10:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566761;
-	bh=vOAd/QHu52Ax9iUKx4WF+I1PJY3jSYueVJ33G+g5WEw=;
+	s=korg; t=1686566764;
+	bh=kh7AOYlkUj94ERppD3tbGHeiLz8VsoujljwRlafGuRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eqro0vQN7W8B6TdgJ2RXJP5cC3tZ7KXYePybNcGtzh90EfOjEU1FEVWTk41w5zlqG
-	 5wMFMM80d2I5yRlH9FkEZ73/e5ZVZSr6XEUwZoNWuc1bLw7TLH2yMeOfy4T4qmSoJN
-	 F9whLN6NglVGGX5+0z/vVKwY0o8nHDRqMQD3LATM=
+	b=rtNe7V7WohcFLTKK1n+KVT1wc6/2RqMrTwcnP/BNX17QyX+9mclAUEZ0ipKz9Nc+z
+	 3gJSAo2U6FrnKsFuymtxbac02iuFr9WChngRJ1ZPzHBqgcnAFuSIoYMqQWp4q9JqXz
+	 8TiGCWl6huzFgwvKzjl/bvv9/Rp1+0F4E1GpW9dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang DENG <qingfang.deng@siflower.com.cn>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 008/160] neighbour: fix unaligned access to pneigh_entry
-Date: Mon, 12 Jun 2023 12:25:40 +0200
-Message-ID: <20230612101715.511076386@linuxfoundation.org>
+Subject: [PATCH 6.3 009/160] net: dsa: lan9303: allow vid != 0 in port_fdb_{add|del} methods
+Date: Mon, 12 Jun 2023 12:25:41 +0200
+Message-ID: <20230612101715.554855549@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,39 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qingfang DENG <qingfang.deng@siflower.com.cn>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit ed779fe4c9b5a20b4ab4fd6f3e19807445bb78c7 ]
+[ Upstream commit 5a59a58ec25d44f853c26bdbfda47d73b3067435 ]
 
-After the blamed commit, the member key is longer 4-byte aligned. On
-platforms that do not support unaligned access, e.g., MIPS32R2 with
-unaligned_action set to 1, this will trigger a crash when accessing
-an IPv6 pneigh_entry, as the key is cast to an in6_addr pointer.
+LAN9303 doesn't associate FDB (ALR) entries with VLANs, it has just one
+global Address Logic Resolution table [1].
 
-Change the type of the key to u32 to make it aligned.
+Ignore VID in port_fdb_{add|del} methods, go on with the global table. This
+is the same semantics as hellcreek or RZ/N1 implement.
 
-Fixes: 62dd93181aaa ("[IPV6] NDISC: Set per-entry is_router flag in Proxy NA.")
-Signed-off-by: Qingfang DENG <qingfang.deng@siflower.com.cn>
-Link: https://lore.kernel.org/r/20230601015432.159066-1-dqfext@gmail.com
+Visible symptoms:
+LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to delete 00:xx:xx:xx:xx:cf vid 1 from fdb: -2
+LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to add 00:xx:xx:xx:xx:cf vid 1 to fdb: -95
+
+[1] https://ww1.microchip.com/downloads/en/DeviceDoc/00002308A.pdf
+
+Fixes: 0620427ea0d6 ("net: dsa: lan9303: Add fdb/mdb manipulation")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://lore.kernel.org/r/20230531143826.477267-1-alexander.sverdlin@siemens.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/neighbour.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/lan9303-core.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/include/net/neighbour.h b/include/net/neighbour.h
-index 2f2a6023fb0e5..94a1599824d8f 100644
---- a/include/net/neighbour.h
-+++ b/include/net/neighbour.h
-@@ -180,7 +180,7 @@ struct pneigh_entry {
- 	netdevice_tracker	dev_tracker;
- 	u32			flags;
- 	u8			protocol;
--	u8			key[];
-+	u32			key[];
- };
+diff --git a/drivers/net/dsa/lan9303-core.c b/drivers/net/dsa/lan9303-core.c
+index cbe8318753471..c0215a8770f49 100644
+--- a/drivers/net/dsa/lan9303-core.c
++++ b/drivers/net/dsa/lan9303-core.c
+@@ -1188,8 +1188,6 @@ static int lan9303_port_fdb_add(struct dsa_switch *ds, int port,
+ 	struct lan9303 *chip = ds->priv;
  
- /*
+ 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
+-	if (vid)
+-		return -EOPNOTSUPP;
+ 
+ 	return lan9303_alr_add_port(chip, addr, port, false);
+ }
+@@ -1201,8 +1199,6 @@ static int lan9303_port_fdb_del(struct dsa_switch *ds, int port,
+ 	struct lan9303 *chip = ds->priv;
+ 
+ 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
+-	if (vid)
+-		return -EOPNOTSUPP;
+ 	lan9303_alr_del_port(chip, addr, port);
+ 
+ 	return 0;
 -- 
 2.39.2
 
