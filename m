@@ -1,25 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4856F1950B
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4AF8C433D2;
-	Mon, 12 Jun 2023 10:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0811319523
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:31:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D497C433D2;
+	Mon, 12 Jun 2023 10:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565899;
-	bh=8JabWZxOXSUH243D5l+cu+YgoAMIH32dVw5ZiUKxUS0=;
+	s=korg; t=1686565901;
+	bh=YK/odd9bvZAOlLY+HKc93Kjg978I/OM0V4/guLyocHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZsnFHg1Q+kIPZNc8tHBXYyPTC7ARevh7PNQT5D0xtKJHzU42nHFrhOBPD3DNV6rRK
-	 +zOSGbBfNvzUpYZcb336/+87ArPveZf/iIUd327AcK8A7CkCKat3cz6jywke1b+tvR
-	 2aSoiV+nuLcCXlI0ZbKqVxuxVlsPNhSnMND4KRvI=
+	b=KZCVK+wWt47AApNjW0x/2jIAIAE9RmcflFCN1i/7x+TTNJ2J3/Qz3syg79j1E4yT6
+	 +8J5vW8X+r5taR0CBPmo12qKpc3V09ESJtDQ07TgcCUxujh2YY81GwzxAKxAGVOCeo
+	 H1B7w/ZRpaJQacTqCAGnExSo4c8zMsuJTzmcTQgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruihan Li <lrh2000@pku.edu.cn>
-Subject: [PATCH 5.4 33/45] usb: usbfs: Use consistent mmap functions
-Date: Mon, 12 Jun 2023 12:26:27 +0200
-Message-ID: <20230612101655.998676658@linuxfoundation.org>
+	Martin Liska <mliska@suse.cz>,
+	Jay Vosburgh <j.vosburgh@gmail.com>,
+	Veaceslav Falico <vfalico@gmail.com>,
+	Andy Gospodarek <andy@greyhouse.net>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 34/45] bonding (gcc13): synchronize bond_{a,t}lb_xmit() types
+Date: Mon, 12 Jun 2023 12:26:28 +0200
+Message-ID: <20230612101656.040317214@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
@@ -33,60 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruihan Li <lrh2000@pku.edu.cn>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit d0b861653f8c16839c3035875b556afc4472f941 upstream.
+commit 777fa87c7682228e155cf0892ba61cb2ab1fe3ae upstream.
 
-When hcd->localmem_pool is non-null, localmem_pool is used to allocate
-DMA memory. In this case, the dma address will be properly returned (in
-dma_handle), and dma_mmap_coherent should be used to map this memory
-into the user space. However, the current implementation uses
-pfn_remap_range, which is supposed to map normal pages.
+Both bond_alb_xmit() and bond_tlb_xmit() produce a valid warning with
+gcc-13:
+  drivers/net/bonding/bond_alb.c:1409:13: error: conflicting types for 'bond_tlb_xmit' due to enum/integer mismatch; have 'netdev_tx_t(struct sk_buff *, struct net_device *)' ...
+  include/net/bond_alb.h:160:5: note: previous declaration of 'bond_tlb_xmit' with type 'int(struct sk_buff *, struct net_device *)'
 
-Instead of repeating the logic in the memory allocation function, this
-patch introduces a more robust solution. Here, the type of allocated
-memory is checked by testing whether dma_handle is properly set. If
-dma_handle is properly returned, it means some DMA pages are allocated
-and dma_mmap_coherent should be used to map them. Otherwise, normal
-pages are allocated and pfn_remap_range should be called. This ensures
-that the correct mmap functions are used consistently, independently
-with logic details that determine which type of memory gets allocated.
+  drivers/net/bonding/bond_alb.c:1523:13: error: conflicting types for 'bond_alb_xmit' due to enum/integer mismatch; have 'netdev_tx_t(struct sk_buff *, struct net_device *)' ...
+  include/net/bond_alb.h:159:5: note: previous declaration of 'bond_alb_xmit' with type 'int(struct sk_buff *, struct net_device *)'
 
-Fixes: a0e710a7def4 ("USB: usbfs: fix mmap dma mismatch")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-Link: https://lore.kernel.org/r/20230515130958.32471-3-lrh2000@pku.edu.cn
+I.e. the return type of the declaration is int, while the definitions
+spell netdev_tx_t. Synchronize both of them to the latter.
+
+Cc: Martin Liska <mliska@suse.cz>
+Cc: Jay Vosburgh <j.vosburgh@gmail.com>
+Cc: Veaceslav Falico <vfalico@gmail.com>
+Cc: Andy Gospodarek <andy@greyhouse.net>
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20221031114409.10417-1-jirislaby@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/devio.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/net/bond_alb.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/devio.c
-+++ b/drivers/usb/core/devio.c
-@@ -222,7 +222,7 @@ static int usbdev_mmap(struct file *file
- 	size_t size = vma->vm_end - vma->vm_start;
- 	void *mem;
- 	unsigned long flags;
--	dma_addr_t dma_handle;
-+	dma_addr_t dma_handle = DMA_MAPPING_ERROR;
- 	int ret;
- 
- 	ret = usbfs_increase_memory_usage(size + sizeof(struct usb_memory));
-@@ -252,7 +252,14 @@ static int usbdev_mmap(struct file *file
- 	usbm->vma_use_count = 1;
- 	INIT_LIST_HEAD(&usbm->memlist);
- 
--	if (hcd->localmem_pool || !hcd_uses_dma(hcd)) {
-+	/*
-+	 * In DMA-unavailable cases, hcd_buffer_alloc_pages allocates
-+	 * normal pages and assigns DMA_MAPPING_ERROR to dma_handle. Check
-+	 * whether we are in such cases, and then use remap_pfn_range (or
-+	 * dma_mmap_coherent) to map normal (or DMA) pages into the user
-+	 * space, respectively.
-+	 */
-+	if (dma_handle == DMA_MAPPING_ERROR) {
- 		if (remap_pfn_range(vma, vma->vm_start,
- 				    virt_to_phys(usbm->mem) >> PAGE_SHIFT,
- 				    size, vma->vm_page_prot) < 0) {
+--- a/include/net/bond_alb.h
++++ b/include/net/bond_alb.h
+@@ -156,8 +156,8 @@ int bond_alb_init_slave(struct bonding *
+ void bond_alb_deinit_slave(struct bonding *bond, struct slave *slave);
+ void bond_alb_handle_link_change(struct bonding *bond, struct slave *slave, char link);
+ void bond_alb_handle_active_change(struct bonding *bond, struct slave *new_slave);
+-int bond_alb_xmit(struct sk_buff *skb, struct net_device *bond_dev);
+-int bond_tlb_xmit(struct sk_buff *skb, struct net_device *bond_dev);
++netdev_tx_t bond_alb_xmit(struct sk_buff *skb, struct net_device *bond_dev);
++netdev_tx_t bond_tlb_xmit(struct sk_buff *skb, struct net_device *bond_dev);
+ void bond_alb_monitor(struct work_struct *);
+ int bond_alb_set_mac_address(struct net_device *bond_dev, void *addr);
+ void bond_alb_clear_vlan(struct bonding *bond, unsigned short vlan_id);
 
 
