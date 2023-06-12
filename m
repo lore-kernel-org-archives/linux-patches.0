@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45304ECC
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA8EC4339B;
-	Mon, 12 Jun 2023 10:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058F8804
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:36:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5039FC433D2;
+	Mon, 12 Jun 2023 10:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566157;
-	bh=ydreA1rPmJuAPDbIB631KtY+U4yg59AGmeNR+zn6zCo=;
+	s=korg; t=1686566160;
+	bh=eciLBRU5NBmlrnVccYFmJdD3KpdOhdOVw8GQ4LBDrsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y69VNuOu5UMCw0VBVJQqKH6Ievzxz8ai5iR7EEFgCrDqqSvYU9AuYxfk3LhRxul/I
-	 JSp2J+kqDTH70XlVXyjIyYpcDLviCQEkpiXrM8cOVWBiWbAv1Kvjs4H3KgpbXjXFmg
-	 m6vjIW210Mr/V6ltRk0ZLcyrnhjtPe7L+2g5Bh14=
+	b=eB7o0axYF2SILU+c69v6iar2+40/gdNy60YN2b1sShVh7lfSWwvjJ3gURV3YhGeFZ
+	 atTqbhk/vWxbm0GxgCuXnv+H9HCqMUthe1EFRRbq3v5pmrGjOKCL1dwaF7yEDemcMp
+	 MQ8BxRknCnFgYPFNX6nk4jAxmErBD2mzE2c2paqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qilin Tan <qilin.tan@mediatek.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Daniel Rosenberg <drosen@google.com>
-Subject: [PATCH 5.15 09/91] f2fs: fix iostat lock protection
-Date: Mon, 12 Jun 2023 12:25:58 +0200
-Message-ID: <20230612101702.474354291@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 18/91] net/ipv6: fix bool/int mismatch for skip_notify_on_dev_down
+Date: Mon, 12 Jun 2023 12:26:07 +0200
+Message-ID: <20230612101702.851518398@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -36,48 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qilin Tan <qilin.tan@mediatek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 144f1cd40bf91fb3ac1d41806470756ce774f389 upstream.
+[ Upstream commit edf2e1d2019b2730d6076dbe4c040d37d7c10bbe ]
 
-Made iostat lock irq safe to avoid potentinal deadlock.
+skip_notify_on_dev_down ctl table expects this field
+to be an int (4 bytes), not a bool (1 byte).
 
-Deadlock scenario:
-f2fs_attr_store
-  -> f2fs_sbi_store
-  -> _sbi_store
-  -> spin_lock(sbi->iostat_lock)
-    <interrupt request>
-    -> scsi_end_request
-    -> bio_endio
-    -> f2fs_dio_read_end_io
-    -> f2fs_update_iostat
-    -> spin_lock_irqsave(sbi->iostat_lock)  ===> Dead lock here
+Because proc_dou8vec_minmax() was added in 5.13,
+this patch converts skip_notify_on_dev_down to an int.
 
-Fixes: 61803e984307 ("f2fs: fix iostat related lock protection")
-Fixes: a1e09b03e6f5 ("f2fs: use iomap for direct I/O")
-Signed-off-by: Qilin Tan <qilin.tan@mediatek.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Cc: Daniel Rosenberg <drosen@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Following patch then converts the field to u8 and use proc_dou8vec_minmax().
+
+Fixes: 7c6bb7d2faaf ("net/ipv6: Add knob to skip DELROUTE message on device down")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Acked-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/sysfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/netns/ipv6.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -491,9 +491,9 @@ out:
- 	if (!strcmp(a->attr.name, "iostat_period_ms")) {
- 		if (t < MIN_IOSTAT_PERIOD_MS || t > MAX_IOSTAT_PERIOD_MS)
- 			return -EINVAL;
--		spin_lock(&sbi->iostat_lock);
-+		spin_lock_irq(&sbi->iostat_lock);
- 		sbi->iostat_period_ms = (unsigned int)t;
--		spin_unlock(&sbi->iostat_lock);
-+		spin_unlock_irq(&sbi->iostat_lock);
- 		return count;
- 	}
- #endif
+diff --git a/include/net/netns/ipv6.h b/include/net/netns/ipv6.h
+index ff82983b7ab41..181b44f6fb686 100644
+--- a/include/net/netns/ipv6.h
++++ b/include/net/netns/ipv6.h
+@@ -53,7 +53,7 @@ struct netns_sysctl_ipv6 {
+ 	int seg6_flowlabel;
+ 	u32 ioam6_id;
+ 	u64 ioam6_id_wide;
+-	bool skip_notify_on_dev_down;
++	int skip_notify_on_dev_down;
+ 	u8 fib_notify_on_flag_change;
+ };
+ 
+-- 
+2.39.2
+
 
 
