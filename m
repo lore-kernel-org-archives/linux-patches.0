@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E46D107A2
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC141C433D2;
-	Mon, 12 Jun 2023 10:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0082C11C88
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE46C433EF;
+	Mon, 12 Jun 2023 10:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566548;
-	bh=NmHJv/SBeLeBzYTSHDHLUuGlHowF4P4QraHZbW5vAoo=;
+	s=korg; t=1686566550;
+	bh=na9N3aXF/9uTUa++8QxH3vtHXE4sIUNb1Q8uxiW2zHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLvysGBhDFfF8oJ0Gb9M9PkzLSJJf2+VBa1BUI/JIKWgLMimfngMdYy/iGK/B/EFN
-	 40o7HuLD89AC1m/SLw2EjwZkSn3CJHV3zKWrFgwMhKgytkMa8qt/u2YBmpBHEeeCSp
-	 e/cr5Kd+9o8ESGO6loHuxFco6EEyG2ifGJLa2nJU=
+	b=zDFc6IS2b78avZPQO1BLankEmC8CEzAFNOZbkf6KKTU4wPLSp5sa9BlM06qF52gyx
+	 RjyvwjoAto7OushNvVSuhooq6I/7HCODrZOIqaowQn7Dq3cPwSnFjZ9q5tt+eGL6HH
+	 KaH8G/I1VfnL9wJRgs9lKFALaUFuD4toPrFG0oig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YiPeng Chai <YiPeng.Chai@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 074/132] drm/amdgpu: change reserved vram info print
-Date: Mon, 12 Jun 2023 12:26:48 +0200
-Message-ID: <20230612101713.642424577@linuxfoundation.org>
+Subject: [PATCH 6.1 075/132] drm/amd/pm: Fix power context allocation in SMU13
+Date: Mon, 12 Jun 2023 12:26:49 +0200
+Message-ID: <20230612101713.681850019@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,46 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YiPeng Chai <YiPeng.Chai@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit dac652220ba0e5a2ef2da2a47a60b60aea333fdb upstream.
+commit 1d13c49cf4e246b218d71873f1bb1bbd376aa10e upstream.
 
-The link object of mgr->reserved_pages is the blocks
-variable in struct amdgpu_vram_reservation, not the
-link variable in struct drm_buddy_block.
+Use the right data structure for allocation.
 
-Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
-Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-@@ -799,7 +799,7 @@ static void amdgpu_vram_mgr_debug(struct
- {
- 	struct amdgpu_vram_mgr *mgr = to_vram_mgr(man);
- 	struct drm_buddy *mm = &mgr->mm;
--	struct drm_buddy_block *block;
-+	struct amdgpu_vram_reservation *rsv;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -582,11 +582,11 @@ int smu_v13_0_init_power(struct smu_cont
+ 	if (smu_power->power_context || smu_power->power_context_size != 0)
+ 		return -EINVAL;
  
- 	drm_printf(printer, "  vis usage:%llu\n",
- 		   amdgpu_vram_mgr_vis_usage(mgr));
-@@ -811,8 +811,9 @@ static void amdgpu_vram_mgr_debug(struct
- 	drm_buddy_print(mm, printer);
+-	smu_power->power_context = kzalloc(sizeof(struct smu_13_0_dpm_context),
++	smu_power->power_context = kzalloc(sizeof(struct smu_13_0_power_context),
+ 					   GFP_KERNEL);
+ 	if (!smu_power->power_context)
+ 		return -ENOMEM;
+-	smu_power->power_context_size = sizeof(struct smu_13_0_dpm_context);
++	smu_power->power_context_size = sizeof(struct smu_13_0_power_context);
  
- 	drm_printf(printer, "reserved:\n");
--	list_for_each_entry(block, &mgr->reserved_pages, link)
--		drm_buddy_block_print(mm, block, printer);
-+	list_for_each_entry(rsv, &mgr->reserved_pages, blocks)
-+		drm_printf(printer, "%#018llx-%#018llx: %llu\n",
-+			rsv->start, rsv->start + rsv->size, rsv->size);
- 	mutex_unlock(&mgr->lock);
+ 	return 0;
  }
- 
 
 
