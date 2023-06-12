@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4DB804
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082AEC433EF;
-	Mon, 12 Jun 2023 10:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1637A3FF4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D9EC4339B;
+	Mon, 12 Jun 2023 10:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566249;
-	bh=Y4pCV9ByOBCUoh7OKcx/JJXTKq27E2LXmdqfCCB/1Qc=;
+	s=korg; t=1686566251;
+	bh=tens/i7WnDv4Mc3InJyjy/72Av/CaSo78za1NmpODF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ing/EuP/6RBcADhCQ2miMf92NXWCqp/FezOE4kja/zXynVHhxN4d1W/wUL8VLcM7U
-	 NQXbWVX0FjAkKVcgV+TSkUb8ObSTffP+rpFhCtCFAkV0LDfjHv48/VUQu1e5zc8UJV
-	 alc678z+CzkEwZJdMhsxzy5SCJhbk2WT3k8CZh3g=
+	b=gxTihCdX5t4/8/cMOBI9SxcMintSNVEW3VkdJLflWX5Xj4a8TgVQkBM9j+tlz19eU
+	 w4HV2Z5YZk/H3i7rXXYu0WUdSEGpMNqsUQmNsZ47I2pbYO4krrh5D+c9hIUF454Rkn
+	 K9B7rN5gpki3zfyzzMk4WVUc2ZKsOOeqYOEljnTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
+	RenHai <kean0048@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 52/91] ALSA: hda/realtek: Add a quirk for HP Slim Desktop S01
-Date: Mon, 12 Jun 2023 12:26:41 +0200
-Message-ID: <20230612101704.237869557@linuxfoundation.org>
+Subject: [PATCH 5.15 53/91] ALSA: hda/realtek: Add Lenovo P3 Tower platform
+Date: Mon, 12 Jun 2023 12:26:42 +0200
+Message-ID: <20230612101704.274461286@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -34,15 +34,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ai Chao <aichao@kylinos.cn>
+From: RenHai <kean0048@gmail.com>
 
-commit 527c356b51f3ddee02c9ed5277538f85e30a2cdc upstream.
+commit 7ca4c8d4d3f41c2cd9b4cf22bb829bf03dac0956 upstream.
 
-Add a quirk for HP Slim Desktop S01 to fixup headset MIC no presence.
+Headset microphone on this platform does not work without
+ALC897_FIXUP_HEADSET_MIC_PIN fixup.
 
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
+Signed-off-by: RenHai <kean0048@gmail.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230526094704.14597-1-aichao@kylinos.cn
+Link: https://lore.kernel.org/r/20230602003604.975892-1-kean0048@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -51,13 +52,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -11250,6 +11250,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x103c, 0x8719, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x872b, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x873e, "HP", ALC671_FIXUP_HP_HEADSET_MIC2),
-+	SND_PCI_QUIRK(0x103c, 0x8768, "HP Slim Desktop S01", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x103c, 0x877e, "HP 288 Pro G6", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x103c, 0x885f, "HP 288 Pro G8", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x1043, 0x1080, "Asus UX501VW", ALC668_FIXUP_HEADSET_MODE),
+@@ -11272,6 +11272,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x14cd, 0x5003, "USI", ALC662_FIXUP_USI_HEADSET_MODE),
+ 	SND_PCI_QUIRK(0x17aa, 0x1036, "Lenovo P520", ALC662_FIXUP_LENOVO_MULTI_CODECS),
+ 	SND_PCI_QUIRK(0x17aa, 0x1057, "Lenovo P360", ALC897_FIXUP_HEADSET_MIC_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x1064, "Lenovo P3 Tower", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32ca, "Lenovo ThinkCentre M80", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32cb, "Lenovo ThinkCentre M70", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32cf, "Lenovo ThinkCentre M950", ALC897_FIXUP_HEADSET_MIC_PIN),
 
 
