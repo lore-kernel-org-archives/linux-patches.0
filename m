@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E143E134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D818C433D2;
-	Mon, 12 Jun 2023 10:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C362134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:46:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B40C433EF;
+	Mon, 12 Jun 2023 10:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566785;
-	bh=n4mUpVu/UfJ4WB4OEWIhTa0M6oY7bCWxe0/WSIusqkU=;
+	s=korg; t=1686566788;
+	bh=Jqfx+dwmV/hv/n80f0o6xuLu2+OY0nqMqyi3bw8lCtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZMJYiFkNZK4ZvpC79xFTX3f9CWemmj6JrwRKngMswP40IrR8wkFl/5par23fxHRa
-	 skNvXHcNH6UC3Vp3u5gq7KAeRkx4AvwXqXFxxnoAYEozEbptB8nMy269FqA1qJ4uCq
-	 xeMBFOWSJ9HCM7JlURcpwPTbhMD0MWylqNQP2DvU=
+	b=zoOgb091ghcMwf/nCJm1RPuL5u0U3UaANQL5iKsP8AyS+fYLMOfW1GLeILFt06Uwc
+	 OEsAPQWeD1mE66QWvUcf8u1jb+CAlXoaV7sYjQOAnmLj7T8P91ckLwlDrOdK41qz/q
+	 FzxHCyfeOnLotb9Q3ArrK5kZCzNFyKOm20KEIOyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 031/160] wifi: cfg80211: reject bad AP MLD address
-Date: Mon, 12 Jun 2023 12:26:03 +0200
-Message-ID: <20230612101716.468019096@linuxfoundation.org>
+Subject: [PATCH 6.3 032/160] wifi: mac80211: mlme: fix non-inheritence element
+Date: Mon, 12 Jun 2023 12:26:04 +0200
+Message-ID: <20230612101716.519361281@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -37,35 +37,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 727073ca5e55ab6a07df316250be8a12606e8677 ]
+[ Upstream commit 68c228557d52616cf040651abefda9839de7086a ]
 
-When trying to authenticate, if the AP MLD address isn't
-a valid address, mac80211 can throw a warning. Avoid that
-by rejecting such addresses.
+There were two bugs when creating the non-inheritence
+element:
+ 1) 'at_extension' needs to be declared outside the loop,
+    otherwise the value resets every iteration and we
+    can never really switch properly
+ 2) 'added' never got set to true, so we always cut off
+    the extension element again at the end of the function
 
-Fixes: d648c23024bd ("wifi: nl80211: support MLO in auth/assoc")
+This shows another issue that we might add a list but no
+extension list, but we need to make the extension list a
+zero-length one in that case.
+
+Fix all these issues. While at it, add a comment explaining
+the trim.
+
+Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230604120651.89188912bd1d.I8dbc6c8ee0cb766138803eec59508ef4ce477709@changeid
+Link: https://lore.kernel.org/r/20230604120651.3addaa5c4782.If3a78f9305997ad7ef4ba7ffc17a8234c956f613@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/mlme.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 4f63059efd813..1922fccb96ace 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -10642,6 +10642,8 @@ static int nl80211_authenticate(struct sk_buff *skb, struct genl_info *info)
- 		if (!info->attrs[NL80211_ATTR_MLD_ADDR])
- 			return -EINVAL;
- 		req.ap_mld_addr = nla_data(info->attrs[NL80211_ATTR_MLD_ADDR]);
-+		if (!is_valid_ether_addr(req.ap_mld_addr))
-+			return -EINVAL;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 60792dfabc9d6..7a970b6dda640 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -1217,6 +1217,7 @@ static void ieee80211_add_non_inheritance_elem(struct sk_buff *skb,
+ 					       const u16 *inner)
+ {
+ 	unsigned int skb_len = skb->len;
++	bool at_extension = false;
+ 	bool added = false;
+ 	int i, j;
+ 	u8 *len, *list_len = NULL;
+@@ -1228,7 +1229,6 @@ static void ieee80211_add_non_inheritance_elem(struct sk_buff *skb,
+ 	for (i = 0; i < PRESENT_ELEMS_MAX && outer[i]; i++) {
+ 		u16 elem = outer[i];
+ 		bool have_inner = false;
+-		bool at_extension = false;
+ 
+ 		/* should at least be sorted in the sense of normal -> ext */
+ 		WARN_ON(at_extension && elem < PRESENT_ELEM_EXT_OFFS);
+@@ -1257,8 +1257,14 @@ static void ieee80211_add_non_inheritance_elem(struct sk_buff *skb,
+ 		}
+ 		*list_len += 1;
+ 		skb_put_u8(skb, (u8)elem);
++		added = true;
  	}
  
- 	req.bss = cfg80211_get_bss(&rdev->wiphy, chan, bssid, ssid, ssid_len,
++	/* if we added a list but no extension list, make a zero-len one */
++	if (added && (!at_extension || !list_len))
++		skb_put_u8(skb, 0);
++
++	/* if nothing added remove extension element completely */
+ 	if (!added)
+ 		skb_trim(skb, skb_len);
+ 	else
 -- 
 2.39.2
 
