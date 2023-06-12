@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA3B804
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBD7C433D2;
-	Mon, 12 Jun 2023 10:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4DB804
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:37:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082AEC433EF;
+	Mon, 12 Jun 2023 10:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566246;
-	bh=v+8V7IHgjudlXBSY5/7wBPN1jlBhuKfo4IMnQFJmWtg=;
+	s=korg; t=1686566249;
+	bh=Y4pCV9ByOBCUoh7OKcx/JJXTKq27E2LXmdqfCCB/1Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQZn3gPqE9VFL0sjVH5RHGKJ8SKJchUzdUcKes+Gc7LwKpFDxFXbcf49Z/jJi8+7I
-	 9OYNzH2/roh9JWrr+v1kQN4kr5aP6KGzRY0VoY6opyyq2YRSnv6dm0ZaIW3qqc2iKZ
-	 s8ag15Pw2WScehBJmsjfeyD3aeWRzsFHoSwHwDf4=
+	b=ing/EuP/6RBcADhCQ2miMf92NXWCqp/FezOE4kja/zXynVHhxN4d1W/wUL8VLcM7U
+	 NQXbWVX0FjAkKVcgV+TSkUb8ObSTffP+rpFhCtCFAkV0LDfjHv48/VUQu1e5zc8UJV
+	 alc678z+CzkEwZJdMhsxzy5SCJhbk2WT3k8CZh3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Crawford <tcrawford@system76.com>,
+	Ai Chao <aichao@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 51/91] ALSA: hda/realtek: Add quirk for Clevo NS50AU
-Date: Mon, 12 Jun 2023 12:26:40 +0200
-Message-ID: <20230612101704.199882968@linuxfoundation.org>
+Subject: [PATCH 5.15 52/91] ALSA: hda/realtek: Add a quirk for HP Slim Desktop S01
+Date: Mon, 12 Jun 2023 12:26:41 +0200
+Message-ID: <20230612101704.237869557@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -34,15 +34,15 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Crawford <tcrawford@system76.com>
+From: Ai Chao <aichao@kylinos.cn>
 
-commit da209f7a80dd633a32cbcbafe9e9f778933119c1 upstream.
+commit 527c356b51f3ddee02c9ed5277538f85e30a2cdc upstream.
 
-Fixes headset detection on Clevo NS50AU.
+Add a quirk for HP Slim Desktop S01 to fixup headset MIC no presence.
 
-Signed-off-by: Tim Crawford <tcrawford@system76.com>
+Signed-off-by: Ai Chao <aichao@kylinos.cn>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230605163834.24653-1-tcrawford@system76.com
+Link: https://lore.kernel.org/r/20230526094704.14597-1-aichao@kylinos.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -51,13 +51,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -9205,6 +9205,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1558, 0x5101, "Clevo S510WU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x5157, "Clevo W517GU1", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x51a1, "Clevo NS50MU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1558, 0x51b1, "Clevo NS50AU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x5630, "Clevo NP50RNJS", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x70a1, "Clevo NB70T[HJK]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x70b3, "Clevo NK70SB", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+@@ -11250,6 +11250,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x103c, 0x8719, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
+ 	SND_PCI_QUIRK(0x103c, 0x872b, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
+ 	SND_PCI_QUIRK(0x103c, 0x873e, "HP", ALC671_FIXUP_HP_HEADSET_MIC2),
++	SND_PCI_QUIRK(0x103c, 0x8768, "HP Slim Desktop S01", ALC671_FIXUP_HP_HEADSET_MIC2),
+ 	SND_PCI_QUIRK(0x103c, 0x877e, "HP 288 Pro G6", ALC671_FIXUP_HP_HEADSET_MIC2),
+ 	SND_PCI_QUIRK(0x103c, 0x885f, "HP 288 Pro G8", ALC671_FIXUP_HP_HEADSET_MIC2),
+ 	SND_PCI_QUIRK(0x1043, 0x1080, "Asus UX501VW", ALC668_FIXUP_HEADSET_MODE),
 
 
