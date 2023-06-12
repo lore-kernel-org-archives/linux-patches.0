@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1496711C88
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC55C433EF;
-	Mon, 12 Jun 2023 10:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D9411C88
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2334AC433D2;
+	Mon, 12 Jun 2023 10:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566563;
-	bh=GcDl7Zim06hob0Dr5v3+WjE0uTBWIlCP44U25nqI24s=;
+	s=korg; t=1686566566;
+	bh=SK1UtH+fAoYs24UflwJV+VlZf3phrS9pEZehhX6neMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4RMrtT72lcRQLuIMV0ryiF2FrwyGhK5Ct77PuKjhb/9Yl+K3EhgIAPMI6O45l9Ir
-	 3f2txkDheThLvbGbxgmt54NWAN+zHO0Kf8KJYyX6odbrrwGO4mxMIg735xLo4gJn19
-	 nERjVgKc+K1/En+HEvuGgCas5dkegMDHRc4PUxEs=
+	b=R9Le6xU+q+RyFgDNwl/qFRW/S9eUPbtKAMzfG3zdjWJVQq4QfFe7HtZaYy9XXygYe
+	 bHe4YL3cKIWo7WZnce96n6OFCb140DPVU1m25fbzLsBtNajN9lVJjHBOik1N54hhvv
+	 eWFFIyRy48zRi9WNDZULJakwYdblkLCOPvwubYMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
 	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 079/132] can: j1939: change j1939_netdev_lock type to mutex
-Date: Mon, 12 Jun 2023 12:26:53 +0200
-Message-ID: <20230612101713.859356657@linuxfoundation.org>
+Subject: [PATCH 6.1 080/132] can: j1939: avoid possible use-after-free when j1939_can_rx_register fails
+Date: Mon, 12 Jun 2023 12:26:54 +0200
+Message-ID: <20230612101713.899691151@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -38,117 +37,142 @@ Content-Transfer-Encoding: 8bit
 
 From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit cd9c790de2088b0d797dc4d244b4f174f9962554 upstream.
+commit 9f16eb106aa5fce15904625661312623ec783ed3 upstream.
 
-It turns out access to j1939_can_rx_register() needs to be serialized,
-otherwise j1939_priv can be corrupted when parallel threads call
-j1939_netdev_start() and j1939_can_rx_register() fails. This issue is
-thoroughly covered in other commit which serializes access to
-j1939_can_rx_register().
+Syzkaller reports the following failure:
 
-Change j1939_netdev_lock type to mutex so that we do not need to remove
-GFP_KERNEL from can_rx_register().
+BUG: KASAN: use-after-free in kref_put include/linux/kref.h:64 [inline]
+BUG: KASAN: use-after-free in j1939_priv_put+0x25/0xa0 net/can/j1939/main.c:172
+Write of size 4 at addr ffff888141c15058 by task swapper/3/0
 
-j1939_netdev_lock seems to be used in normal contexts where mutex usage
-is not prohibited.
+CPU: 3 PID: 0 Comm: swapper/3 Not tainted 5.10.144-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x107/0x167 lib/dump_stack.c:118
+ print_address_description.constprop.0+0x1c/0x220 mm/kasan/report.c:385
+ __kasan_report mm/kasan/report.c:545 [inline]
+ kasan_report.cold+0x1f/0x37 mm/kasan/report.c:562
+ check_memory_region_inline mm/kasan/generic.c:186 [inline]
+ check_memory_region+0x145/0x190 mm/kasan/generic.c:192
+ instrument_atomic_read_write include/linux/instrumented.h:101 [inline]
+ atomic_fetch_sub_release include/asm-generic/atomic-instrumented.h:220 [inline]
+ __refcount_sub_and_test include/linux/refcount.h:272 [inline]
+ __refcount_dec_and_test include/linux/refcount.h:315 [inline]
+ refcount_dec_and_test include/linux/refcount.h:333 [inline]
+ kref_put include/linux/kref.h:64 [inline]
+ j1939_priv_put+0x25/0xa0 net/can/j1939/main.c:172
+ j1939_sk_sock_destruct+0x44/0x90 net/can/j1939/socket.c:374
+ __sk_destruct+0x4e/0x820 net/core/sock.c:1784
+ rcu_do_batch kernel/rcu/tree.c:2485 [inline]
+ rcu_core+0xb35/0x1a30 kernel/rcu/tree.c:2726
+ __do_softirq+0x289/0x9a3 kernel/softirq.c:298
+ asm_call_irq_on_stack+0x12/0x20
+ </IRQ>
+ __run_on_irqstack arch/x86/include/asm/irq_stack.h:26 [inline]
+ run_on_irqstack_cond arch/x86/include/asm/irq_stack.h:77 [inline]
+ do_softirq_own_stack+0xaa/0xe0 arch/x86/kernel/irq_64.c:77
+ invoke_softirq kernel/softirq.c:393 [inline]
+ __irq_exit_rcu kernel/softirq.c:423 [inline]
+ irq_exit_rcu+0x136/0x200 kernel/softirq.c:435
+ sysvec_apic_timer_interrupt+0x4d/0x100 arch/x86/kernel/apic/apic.c:1095
+ asm_sysvec_apic_timer_interrupt+0x12/0x20 arch/x86/include/asm/idtentry.h:635
+
+Allocated by task 1141:
+ kasan_save_stack+0x1b/0x40 mm/kasan/common.c:48
+ kasan_set_track mm/kasan/common.c:56 [inline]
+ __kasan_kmalloc.constprop.0+0xc9/0xd0 mm/kasan/common.c:461
+ kmalloc include/linux/slab.h:552 [inline]
+ kzalloc include/linux/slab.h:664 [inline]
+ j1939_priv_create net/can/j1939/main.c:131 [inline]
+ j1939_netdev_start+0x111/0x860 net/can/j1939/main.c:268
+ j1939_sk_bind+0x8ea/0xd30 net/can/j1939/socket.c:485
+ __sys_bind+0x1f2/0x260 net/socket.c:1645
+ __do_sys_bind net/socket.c:1656 [inline]
+ __se_sys_bind net/socket.c:1654 [inline]
+ __x64_sys_bind+0x6f/0xb0 net/socket.c:1654
+ do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x61/0xc6
+
+Freed by task 1141:
+ kasan_save_stack+0x1b/0x40 mm/kasan/common.c:48
+ kasan_set_track+0x1c/0x30 mm/kasan/common.c:56
+ kasan_set_free_info+0x1b/0x30 mm/kasan/generic.c:355
+ __kasan_slab_free+0x112/0x170 mm/kasan/common.c:422
+ slab_free_hook mm/slub.c:1542 [inline]
+ slab_free_freelist_hook+0xad/0x190 mm/slub.c:1576
+ slab_free mm/slub.c:3149 [inline]
+ kfree+0xd9/0x3b0 mm/slub.c:4125
+ j1939_netdev_start+0x5ee/0x860 net/can/j1939/main.c:300
+ j1939_sk_bind+0x8ea/0xd30 net/can/j1939/socket.c:485
+ __sys_bind+0x1f2/0x260 net/socket.c:1645
+ __do_sys_bind net/socket.c:1656 [inline]
+ __se_sys_bind net/socket.c:1654 [inline]
+ __x64_sys_bind+0x6f/0xb0 net/socket.c:1654
+ do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x61/0xc6
+
+It can be caused by this scenario:
+
+CPU0					CPU1
+j1939_sk_bind(socket0, ndev0, ...)
+  j1939_netdev_start()
+					j1939_sk_bind(socket1, ndev0, ...)
+                                          j1939_netdev_start()
+  mutex_lock(&j1939_netdev_lock)
+  j1939_priv_set(ndev0, priv)
+  mutex_unlock(&j1939_netdev_lock)
+					  if (priv_new)
+					    kref_get(&priv_new->rx_kref)
+					    return priv_new;
+					  /* inside j1939_sk_bind() */
+					  jsk->priv = priv
+  j1939_can_rx_register(priv) // fails
+  j1939_priv_set(ndev, NULL)
+  kfree(priv)
+					j1939_sk_sock_destruct()
+					j1939_priv_put() // <- uaf
+
+To avoid this, call j1939_can_rx_register() under j1939_netdev_lock so
+that a concurrent thread cannot process j1939_priv before
+j1939_can_rx_register() returns.
 
 Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
 Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Suggested-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
 Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20230526171910.227615-2-pchelkin@ispras.ru
+Link: https://lore.kernel.org/r/20230526171910.227615-3-pchelkin@ispras.ru
 Cc: stable@vger.kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/main.c |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ net/can/j1939/main.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/net/can/j1939/main.c
 +++ b/net/can/j1939/main.c
-@@ -126,7 +126,7 @@ static void j1939_can_recv(struct sk_buf
- #define J1939_CAN_ID CAN_EFF_FLAG
- #define J1939_CAN_MASK (CAN_EFF_FLAG | CAN_RTR_FLAG)
- 
--static DEFINE_SPINLOCK(j1939_netdev_lock);
-+static DEFINE_MUTEX(j1939_netdev_lock);
- 
- static struct j1939_priv *j1939_priv_create(struct net_device *ndev)
- {
-@@ -220,7 +220,7 @@ static void __j1939_rx_release(struct kr
- 	j1939_can_rx_unregister(priv);
- 	j1939_ecu_unmap_all(priv);
- 	j1939_priv_set(priv->ndev, NULL);
--	spin_unlock(&j1939_netdev_lock);
-+	mutex_unlock(&j1939_netdev_lock);
- }
- 
- /* get pointer to priv without increasing ref counter */
-@@ -248,9 +248,9 @@ static struct j1939_priv *j1939_priv_get
- {
- 	struct j1939_priv *priv;
- 
--	spin_lock(&j1939_netdev_lock);
-+	mutex_lock(&j1939_netdev_lock);
- 	priv = j1939_priv_get_by_ndev_locked(ndev);
--	spin_unlock(&j1939_netdev_lock);
-+	mutex_unlock(&j1939_netdev_lock);
- 
- 	return priv;
- }
-@@ -260,14 +260,14 @@ struct j1939_priv *j1939_netdev_start(st
- 	struct j1939_priv *priv, *priv_new;
- 	int ret;
- 
--	spin_lock(&j1939_netdev_lock);
-+	mutex_lock(&j1939_netdev_lock);
- 	priv = j1939_priv_get_by_ndev_locked(ndev);
- 	if (priv) {
- 		kref_get(&priv->rx_kref);
--		spin_unlock(&j1939_netdev_lock);
-+		mutex_unlock(&j1939_netdev_lock);
- 		return priv;
- 	}
--	spin_unlock(&j1939_netdev_lock);
-+	mutex_unlock(&j1939_netdev_lock);
- 
- 	priv = j1939_priv_create(ndev);
- 	if (!priv)
-@@ -277,20 +277,20 @@ struct j1939_priv *j1939_netdev_start(st
- 	spin_lock_init(&priv->j1939_socks_lock);
- 	INIT_LIST_HEAD(&priv->j1939_socks);
- 
--	spin_lock(&j1939_netdev_lock);
-+	mutex_lock(&j1939_netdev_lock);
- 	priv_new = j1939_priv_get_by_ndev_locked(ndev);
- 	if (priv_new) {
- 		/* Someone was faster than us, use their priv and roll
- 		 * back our's.
- 		 */
- 		kref_get(&priv_new->rx_kref);
--		spin_unlock(&j1939_netdev_lock);
-+		mutex_unlock(&j1939_netdev_lock);
- 		dev_put(ndev);
- 		kfree(priv);
+@@ -290,16 +290,18 @@ struct j1939_priv *j1939_netdev_start(st
  		return priv_new;
  	}
  	j1939_priv_set(ndev, priv);
--	spin_unlock(&j1939_netdev_lock);
-+	mutex_unlock(&j1939_netdev_lock);
+-	mutex_unlock(&j1939_netdev_lock);
  
  	ret = j1939_can_rx_register(priv);
  	if (ret < 0)
-@@ -308,7 +308,7 @@ struct j1939_priv *j1939_netdev_start(st
+ 		goto out_priv_put;
  
- void j1939_netdev_stop(struct j1939_priv *priv)
- {
--	kref_put_lock(&priv->rx_kref, __j1939_rx_release, &j1939_netdev_lock);
-+	kref_put_mutex(&priv->rx_kref, __j1939_rx_release, &j1939_netdev_lock);
- 	j1939_priv_put(priv);
- }
++	mutex_unlock(&j1939_netdev_lock);
+ 	return priv;
+ 
+  out_priv_put:
+ 	j1939_priv_set(ndev, NULL);
++	mutex_unlock(&j1939_netdev_lock);
++
+ 	dev_put(ndev);
+ 	kfree(priv);
  
 
 
