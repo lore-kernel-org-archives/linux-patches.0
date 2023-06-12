@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242F0134AE
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59955C433D2;
-	Mon, 12 Jun 2023 10:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B79134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC3DC433D2;
+	Mon, 12 Jun 2023 10:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566610;
-	bh=9OsA4wiFDR0vEoePViywymDkJFGn8FMf+817mTunXBc=;
+	s=korg; t=1686566613;
+	bh=dQ2FT+5UmXPz7aW+luSJFq+Z7G6ZvtC49l14U58xbQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbXysqMzcpF1dxkM27R+zPA0b1/tSj+G65Sg8mlfLU32Ngimbfz4FLRItL81IMIR3
-	 FrJr49dzcn7zCL6R6CyUw03KBmqu48x/hx9R+iKjnICtZYRvnonUqPOF5K41W9OOeC
-	 UuIvzVWOHvL1+vcYqx7Q9RodauSR7EqXq3ynbsow=
+	b=BkOCCxFBBLBT2wGUg4D1eTwsiDUChKWu5BzrB6TO9OPfeIolgiVW6lQHqA8an4Xnu
+	 dRyqU/2St6w9UYq6JQkxOhJwAnOQFXbLWYzSBRcVEfm9gMJrTCoCzFAqsJ6sBlwjxr
+	 Z4f9qNGKdFKHduP905P06CTBF7yoxkBGb9NdF5KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Vladislav Efanov <VEfanov@ispras.ru>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.1 058/132] batman-adv: Broken sync while rescheduling delayed work
-Date: Mon, 12 Jun 2023 12:26:32 +0200
-Message-ID: <20230612101712.909608210@linuxfoundation.org>
+	Sourabh Das <sourabh.das@amd.com>,
+	Rijo Thomas <Rijo-john.Thomas@amd.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 6.1 091/132] tee: amdtee: Add return_origin to struct tee_cmd_load_ta
+Date: Mon, 12 Jun 2023 12:27:05 +0200
+Message-ID: <20230612101714.393402141@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,58 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladislav Efanov <VEfanov@ispras.ru>
+From: Rijo Thomas <Rijo-john.Thomas@amd.com>
 
-commit abac3ac97fe8734b620e7322a116450d7f90aa43 upstream.
+commit 436eeae0411acdfc54521ddea80ee76d4ae8a7ea upstream.
 
-Syzkaller got a lot of crashes like:
-KASAN: use-after-free Write in *_timers*
+After TEE has completed processing of TEE_CMD_ID_LOAD_TA, set proper
+value in 'return_origin' argument passed by open_session() call. To do
+so, add 'return_origin' field to the structure tee_cmd_load_ta. The
+Trusted OS shall update return_origin as part of TEE processing.
 
-All of these crashes point to the same memory area:
+This change to 'struct tee_cmd_load_ta' interface requires a similar update
+in AMD-TEE Trusted OS's TEE_CMD_ID_LOAD_TA interface.
 
-The buggy address belongs to the object at ffff88801f870000
- which belongs to the cache kmalloc-8k of size 8192
-The buggy address is located 5320 bytes inside of
- 8192-byte region [ffff88801f870000, ffff88801f872000)
+This patch has been verified on Phoenix Birman setup. On older APUs,
+return_origin value will be 0.
 
-This area belongs to :
-        batadv_priv->batadv_priv_dat->delayed_work->timer_list
-
-The reason for these issues is the lack of synchronization. Delayed
-work (batadv_dat_purge) schedules new timer/work while the device
-is being deleted. As the result new timer/delayed work is set after
-cancel_delayed_work_sync() was called. So after the device is freed
-the timer list contains pointer to already freed memory.
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Cc: stable@kernel.org
-Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
-Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
-Acked-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Cc: stable@vger.kernel.org
+Fixes: 757cc3e9ff1d ("tee: add AMD-TEE driver")
+Tested-by: Sourabh Das <sourabh.das@amd.com>
+Signed-off-by: Rijo Thomas <Rijo-john.Thomas@amd.com>
+Acked-by: Sumit Garg <sumit.garg@linaro.org>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/distributed-arp-table.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tee/amdtee/amdtee_if.h |   10 ++++++----
+ drivers/tee/amdtee/call.c      |   28 ++++++++++++++++------------
+ 2 files changed, 22 insertions(+), 16 deletions(-)
 
---- a/net/batman-adv/distributed-arp-table.c
-+++ b/net/batman-adv/distributed-arp-table.c
-@@ -101,7 +101,6 @@ static void batadv_dat_purge(struct work
+--- a/drivers/tee/amdtee/amdtee_if.h
++++ b/drivers/tee/amdtee/amdtee_if.h
+@@ -118,16 +118,18 @@ struct tee_cmd_unmap_shared_mem {
+ 
+ /**
+  * struct tee_cmd_load_ta - load Trusted Application (TA) binary into TEE
+- * @low_addr:    [in] bits [31:0] of the physical address of the TA binary
+- * @hi_addr:     [in] bits [63:32] of the physical address of the TA binary
+- * @size:        [in] size of TA binary in bytes
+- * @ta_handle:   [out] return handle of the loaded TA
++ * @low_addr:       [in] bits [31:0] of the physical address of the TA binary
++ * @hi_addr:        [in] bits [63:32] of the physical address of the TA binary
++ * @size:           [in] size of TA binary in bytes
++ * @ta_handle:      [out] return handle of the loaded TA
++ * @return_origin:  [out] origin of return code after TEE processing
   */
- static void batadv_dat_start_timer(struct batadv_priv *bat_priv)
- {
--	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
- 	queue_delayed_work(batadv_event_workqueue, &bat_priv->dat.work,
- 			   msecs_to_jiffies(10000));
- }
-@@ -819,6 +818,7 @@ int batadv_dat_init(struct batadv_priv *
- 	if (!bat_priv->dat.hash)
- 		return -ENOMEM;
+ struct tee_cmd_load_ta {
+ 	u32 low_addr;
+ 	u32 hi_addr;
+ 	u32 size;
+ 	u32 ta_handle;
++	u32 return_origin;
+ };
  
-+	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
- 	batadv_dat_start_timer(bat_priv);
+ /**
+--- a/drivers/tee/amdtee/call.c
++++ b/drivers/tee/amdtee/call.c
+@@ -423,19 +423,23 @@ int handle_load_ta(void *data, u32 size,
+ 	if (ret) {
+ 		arg->ret_origin = TEEC_ORIGIN_COMMS;
+ 		arg->ret = TEEC_ERROR_COMMUNICATION;
+-	} else if (arg->ret == TEEC_SUCCESS) {
+-		ret = get_ta_refcount(load_cmd.ta_handle);
+-		if (!ret) {
+-			arg->ret_origin = TEEC_ORIGIN_COMMS;
+-			arg->ret = TEEC_ERROR_OUT_OF_MEMORY;
++	} else {
++		arg->ret_origin = load_cmd.return_origin;
  
- 	batadv_tvlv_handler_register(bat_priv, batadv_dat_tvlv_ogm_handler_v1,
+-			/* Unload the TA on error */
+-			unload_cmd.ta_handle = load_cmd.ta_handle;
+-			psp_tee_process_cmd(TEE_CMD_ID_UNLOAD_TA,
+-					    (void *)&unload_cmd,
+-					    sizeof(unload_cmd), &ret);
+-		} else {
+-			set_session_id(load_cmd.ta_handle, 0, &arg->session);
++		if (arg->ret == TEEC_SUCCESS) {
++			ret = get_ta_refcount(load_cmd.ta_handle);
++			if (!ret) {
++				arg->ret_origin = TEEC_ORIGIN_COMMS;
++				arg->ret = TEEC_ERROR_OUT_OF_MEMORY;
++
++				/* Unload the TA on error */
++				unload_cmd.ta_handle = load_cmd.ta_handle;
++				psp_tee_process_cmd(TEE_CMD_ID_UNLOAD_TA,
++						    (void *)&unload_cmd,
++						    sizeof(unload_cmd), &ret);
++			} else {
++				set_session_id(load_cmd.ta_handle, 0, &arg->session);
++			}
+ 		}
+ 	}
+ 	mutex_unlock(&ta_refcount_mutex);
 
 
