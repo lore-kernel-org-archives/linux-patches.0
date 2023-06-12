@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B1C134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FB7C4339B;
-	Mon, 12 Jun 2023 10:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19F2134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:45:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CDEC433D2;
+	Mon, 12 Jun 2023 10:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566734;
-	bh=0vnKo8/Us13qeB/i1FmFgZDX+T0GRXfgNVsjlW/3LDo=;
+	s=korg; t=1686566737;
+	bh=3fihQvfIL2NrW3LAFSMEx7iWe+QApY58uqspL47Txgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GCGERo1mkXUiY88qgf4edM0dKFTSbwqt+ZDpzAC0HHbJDAMoc2SpWNo343iHl1icO
-	 BKZbtz+bnOKoAvMMZQR09EL35xFmjVGpD+SClrQvNUEr1pYFUPRY+e1Edg2DD90JR5
-	 CRycizADUMid0uDFjqtoNaVDVBGfE940amJR22t0=
+	b=SyTkXHESLZpnQTvL6oYaENjLW4fcBbAncRF1HdwSa6EvGyHZpNmvpVMS4NQ5wXRX7
+	 9tDeBGykuq5QcL/3eF0sD61d+tvLWox9cPJCivbB2kMveMyuo2/obC8ZBScahbnBok
+	 nZVGpeAVxJ9Sihzepxqg0+P5xO/vbxYxWv+ZqIgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rhys Rustad-Elliott <me@rhysre.net>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 012/160] bpf: Fix elem_size not being set for inner maps
-Date: Mon, 12 Jun 2023 12:25:44 +0200
-Message-ID: <20230612101715.666281263@linuxfoundation.org>
+Subject: [PATCH 6.3 013/160] net/ipv6: fix bool/int mismatch for skip_notify_on_dev_down
+Date: Mon, 12 Jun 2023 12:25:45 +0200
+Message-ID: <20230612101715.710962162@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,54 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rhys Rustad-Elliott <me@rhysre.net>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cba41bb78d70aad98d8e61e019fd48c561f7f396 ]
+[ Upstream commit edf2e1d2019b2730d6076dbe4c040d37d7c10bbe ]
 
-Commit d937bc3449fa ("bpf: make uniform use of array->elem_size
-everywhere in arraymap.c") changed array_map_gen_lookup to use
-array->elem_size instead of round_up(map->value_size, 8) as the element
-size when generating code to access a value in an array map.
+skip_notify_on_dev_down ctl table expects this field
+to be an int (4 bytes), not a bool (1 byte).
 
-array->elem_size, however, is not set by bpf_map_meta_alloc when
-initializing an BPF_MAP_TYPE_ARRAY_OF_MAPS or BPF_MAP_TYPE_HASH_OF_MAPS.
-This results in array_map_gen_lookup incorrectly outputting code that
-always accesses index 0 in the array (as the index will be calculated
-via a multiplication with the element size, which is incorrectly set to
-0).
+Because proc_dou8vec_minmax() was added in 5.13,
+this patch converts skip_notify_on_dev_down to an int.
 
-Set elem_size on the bpf_array object when allocating an array or hash
-of maps to fix this.
+Following patch then converts the field to u8 and use proc_dou8vec_minmax().
 
-Fixes: d937bc3449fa ("bpf: make uniform use of array->elem_size everywhere in arraymap.c")
-Signed-off-by: Rhys Rustad-Elliott <me@rhysre.net>
-Link: https://lore.kernel.org/r/20230602190110.47068-2-me@rhysre.net
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 7c6bb7d2faaf ("net/ipv6: Add knob to skip DELROUTE message on device down")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Acked-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/map_in_map.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/net/netns/ipv6.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
-index 38136ec4e095a..fbc3e944dc747 100644
---- a/kernel/bpf/map_in_map.c
-+++ b/kernel/bpf/map_in_map.c
-@@ -81,9 +81,13 @@ struct bpf_map *bpf_map_meta_alloc(int inner_map_ufd)
- 	/* Misc members not needed in bpf_map_meta_equal() check. */
- 	inner_map_meta->ops = inner_map->ops;
- 	if (inner_map->ops == &array_map_ops) {
-+		struct bpf_array *inner_array_meta =
-+			container_of(inner_map_meta, struct bpf_array, map);
-+		struct bpf_array *inner_array = container_of(inner_map, struct bpf_array, map);
-+
-+		inner_array_meta->index_mask = inner_array->index_mask;
-+		inner_array_meta->elem_size = inner_array->elem_size;
- 		inner_map_meta->bypass_spec_v1 = inner_map->bypass_spec_v1;
--		container_of(inner_map_meta, struct bpf_array, map)->index_mask =
--		     container_of(inner_map, struct bpf_array, map)->index_mask;
- 	}
+diff --git a/include/net/netns/ipv6.h b/include/net/netns/ipv6.h
+index b4af4837d80b4..f6e6a3ab91489 100644
+--- a/include/net/netns/ipv6.h
++++ b/include/net/netns/ipv6.h
+@@ -53,7 +53,7 @@ struct netns_sysctl_ipv6 {
+ 	int seg6_flowlabel;
+ 	u32 ioam6_id;
+ 	u64 ioam6_id_wide;
+-	bool skip_notify_on_dev_down;
++	int skip_notify_on_dev_down;
+ 	u8 fib_notify_on_flag_change;
+ };
  
- 	fdput(f);
 -- 
 2.39.2
 
