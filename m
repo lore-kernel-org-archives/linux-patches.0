@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C9E1C741
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:34:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5BCC433D2;
-	Mon, 12 Jun 2023 10:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10325AD3C
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:34:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22156C433D2;
+	Mon, 12 Jun 2023 10:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566064;
-	bh=ppyLvgQ3YNGJ1zpoIYkl8PL8gl9grVZeWV8ex6W8qaA=;
+	s=korg; t=1686566067;
+	bh=nBKdIo7xIwYNzXy2PL/WtAnyFZhSmsjrsVUnmcf0XCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWKVo4kJt4epJP2Ma+XTdOpePpInZXyojmuXOZIItnVn1HZuoRJbHuexRSPADvtQs
-	 qKjOAAeDgKfKudGzz4YRUE4/b/5XkYhKMRWmXJzdNA9+hFT2rSrMbk+VpG9bqOOub0
-	 J6hr3NrVvC+X0vaPYWHppbKUGLnzUhfr6Z6dZzZ4=
+	b=F7YQOjHwrJO4Jr4a20N1VPlUdwP0vmeme7/rxFn06DmbQhgJ2jjLjdql4boFJXWJk
+	 R/vvSUAhkygih5o1vz8pfTN4tWIdyUpVTXFDqsL95B/2q7XdZdA4LWKzwgpyG4ZT2Z
+	 vNh2ErIdmtz9b04OqkggGOeNlnLUr9JbDYS4nOq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sudarsana Kalluru <skalluru@marvell.com>,
+	David Miller <davem@davemloft.net>,
+	Manish Chopra <manishc@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/68] Bluetooth: L2CAP: Add missing checks for invalid DCID
-Date: Mon, 12 Jun 2023 12:26:13 +0200
-Message-ID: <20230612101659.314273799@linuxfoundation.org>
+Subject: [PATCH 5.10 22/68] qed/qede: Fix scheduling while atomic
+Date: Mon, 12 Jun 2023 12:26:14 +0200
+Message-ID: <20230612101659.354062337@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -35,51 +37,273 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Manish Chopra <manishc@marvell.com>
 
-[ Upstream commit 75767213f3d9b97f63694d02260b6a49a2271876 ]
+[ Upstream commit 42510dffd0e2c27046905f742172ed6662af5557 ]
 
-When receiving a connect response we should make sure that the DCID is
-within the valid range and that we don't already have another channel
-allocated for the same DCID.
-Missing checks may violate the specification (BLUETOOTH CORE SPECIFICATION
-Version 5.4 | Vol 3, Part A, Page 1046).
+Statistics read through bond interface via sysfs causes
+below bug and traces as it triggers the bonding module to
+collect the slave device statistics while holding the spinlock,
+beneath that qede->qed driver statistics flow gets scheduled out
+due to usleep_range() used in PTT acquire logic
 
-Fixes: 40624183c202 ("Bluetooth: L2CAP: Add missing checks for invalid LE DCID")
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ 3673.988874] Hardware name: HPE ProLiant DL365 Gen10 Plus/ProLiant DL365 Gen10 Plus, BIOS A42 10/29/2021
+[ 3673.988878] Call Trace:
+[ 3673.988891]  dump_stack_lvl+0x34/0x44
+[ 3673.988908]  __schedule_bug.cold+0x47/0x53
+[ 3673.988918]  __schedule+0x3fb/0x560
+[ 3673.988929]  schedule+0x43/0xb0
+[ 3673.988932]  schedule_hrtimeout_range_clock+0xbf/0x1b0
+[ 3673.988937]  ? __hrtimer_init+0xc0/0xc0
+[ 3673.988950]  usleep_range+0x5e/0x80
+[ 3673.988955]  qed_ptt_acquire+0x2b/0xd0 [qed]
+[ 3673.988981]  _qed_get_vport_stats+0x141/0x240 [qed]
+[ 3673.989001]  qed_get_vport_stats+0x18/0x80 [qed]
+[ 3673.989016]  qede_fill_by_demand_stats+0x37/0x400 [qede]
+[ 3673.989028]  qede_get_stats64+0x19/0xe0 [qede]
+[ 3673.989034]  dev_get_stats+0x5c/0xc0
+[ 3673.989045]  netstat_show.constprop.0+0x52/0xb0
+[ 3673.989055]  dev_attr_show+0x19/0x40
+[ 3673.989065]  sysfs_kf_seq_show+0x9b/0xf0
+[ 3673.989076]  seq_read_iter+0x120/0x4b0
+[ 3673.989087]  new_sync_read+0x118/0x1a0
+[ 3673.989095]  vfs_read+0xf3/0x180
+[ 3673.989099]  ksys_read+0x5f/0xe0
+[ 3673.989102]  do_syscall_64+0x3b/0x90
+[ 3673.989109]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[ 3673.989115] RIP: 0033:0x7f8467d0b082
+[ 3673.989119] Code: c0 e9 b2 fe ff ff 50 48 8d 3d ca 05 08 00 e8 35 e7 01 00 0f 1f 44 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 ec 28 48 89 54 24
+[ 3673.989121] RSP: 002b:00007ffffb21fd08 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[ 3673.989127] RAX: ffffffffffffffda RBX: 000000000100eca0 RCX: 00007f8467d0b082
+[ 3673.989128] RDX: 00000000000003ff RSI: 00007ffffb21fdc0 RDI: 0000000000000003
+[ 3673.989130] RBP: 00007f8467b96028 R08: 0000000000000010 R09: 00007ffffb21ec00
+[ 3673.989132] R10: 00007ffffb27b170 R11: 0000000000000246 R12: 00000000000000f0
+[ 3673.989134] R13: 0000000000000003 R14: 00007f8467b92000 R15: 0000000000045a05
+[ 3673.989139] CPU: 30 PID: 285188 Comm: read_all Kdump: loaded Tainted: G        W  OE
+
+Fix this by collecting the statistics asynchronously from a periodic
+delayed work scheduled at default stats coalescing interval and return
+the recent copy of statisitcs from .ndo_get_stats64(), also add ability
+to configure/retrieve stats coalescing interval using below commands -
+
+ethtool -C ethx stats-block-usecs <val>
+ethtool -c ethx
+
+Fixes: 133fac0eedc3 ("qede: Add basic ethtool support")
+Cc: Sudarsana Kalluru <skalluru@marvell.com>
+Cc: David Miller <davem@davemloft.net>
+Signed-off-by: Manish Chopra <manishc@marvell.com>
+Link: https://lore.kernel.org/r/20230605112600.48238-1-manishc@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/qlogic/qed/qed_l2.c      |  2 +-
+ drivers/net/ethernet/qlogic/qede/qede.h       |  4 +++
+ .../net/ethernet/qlogic/qede/qede_ethtool.c   | 24 +++++++++++--
+ drivers/net/ethernet/qlogic/qede/qede_main.c  | 34 ++++++++++++++++++-
+ 4 files changed, 60 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 2f05507bb36ef..568f0f072b3df 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4303,6 +4303,10 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
- 	result = __le16_to_cpu(rsp->result);
- 	status = __le16_to_cpu(rsp->status);
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_l2.c b/drivers/net/ethernet/qlogic/qed/qed_l2.c
+index 07824bf9d68d9..0157bcd2efffa 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_l2.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_l2.c
+@@ -1902,7 +1902,7 @@ void qed_get_vport_stats(struct qed_dev *cdev, struct qed_eth_stats *stats)
+ {
+ 	u32 i;
  
-+	if (result == L2CAP_CR_SUCCESS && (dcid < L2CAP_CID_DYN_START ||
-+					   dcid > L2CAP_CID_DYN_END))
-+		return -EPROTO;
+-	if (!cdev) {
++	if (!cdev || cdev->recov_in_prog) {
+ 		memset(stats, 0, sizeof(*stats));
+ 		return;
+ 	}
+diff --git a/drivers/net/ethernet/qlogic/qede/qede.h b/drivers/net/ethernet/qlogic/qede/qede.h
+index f313fd7303316..3251d58a263fa 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede.h
++++ b/drivers/net/ethernet/qlogic/qede/qede.h
+@@ -273,6 +273,10 @@ struct qede_dev {
+ #define QEDE_ERR_WARN			3
+ 
+ 	struct qede_dump_info		dump_info;
++	struct delayed_work		periodic_task;
++	unsigned long			stats_coal_ticks;
++	u32				stats_coal_usecs;
++	spinlock_t			stats_lock; /* lock for vport stats access */
+ };
+ 
+ enum QEDE_STATE {
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_ethtool.c b/drivers/net/ethernet/qlogic/qede/qede_ethtool.c
+index bedbb85a179ae..db104e035ba18 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_ethtool.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_ethtool.c
+@@ -426,6 +426,8 @@ static void qede_get_ethtool_stats(struct net_device *dev,
+ 		}
+ 	}
+ 
++	spin_lock(&edev->stats_lock);
 +
- 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x result 0x%2.2x status 0x%2.2x",
- 	       dcid, scid, result, status);
+ 	for (i = 0; i < QEDE_NUM_STATS; i++) {
+ 		if (qede_is_irrelevant_stat(edev, i))
+ 			continue;
+@@ -435,6 +437,8 @@ static void qede_get_ethtool_stats(struct net_device *dev,
+ 		buf++;
+ 	}
  
-@@ -4334,6 +4338,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
++	spin_unlock(&edev->stats_lock);
++
+ 	__qede_unlock(edev);
+ }
  
- 	switch (result) {
- 	case L2CAP_CR_SUCCESS:
-+		if (__l2cap_get_chan_by_dcid(conn, dcid)) {
-+			err = -EBADSLT;
-+			break;
+@@ -815,6 +819,7 @@ static int qede_get_coalesce(struct net_device *dev,
+ 
+ 	coal->rx_coalesce_usecs = rx_coal;
+ 	coal->tx_coalesce_usecs = tx_coal;
++	coal->stats_block_coalesce_usecs = edev->stats_coal_usecs;
+ 
+ 	return rc;
+ }
+@@ -827,6 +832,19 @@ static int qede_set_coalesce(struct net_device *dev,
+ 	int i, rc = 0;
+ 	u16 rxc, txc;
+ 
++	if (edev->stats_coal_usecs != coal->stats_block_coalesce_usecs) {
++		edev->stats_coal_usecs = coal->stats_block_coalesce_usecs;
++		if (edev->stats_coal_usecs) {
++			edev->stats_coal_ticks = usecs_to_jiffies(edev->stats_coal_usecs);
++			schedule_delayed_work(&edev->periodic_task, 0);
++
++			DP_INFO(edev, "Configured stats coal ticks=%lu jiffies\n",
++				edev->stats_coal_ticks);
++		} else {
++			cancel_delayed_work_sync(&edev->periodic_task);
 +		}
++	}
 +
- 		l2cap_state_change(chan, BT_CONFIG);
- 		chan->ident = 0;
- 		chan->dcid = dcid;
+ 	if (!netif_running(dev)) {
+ 		DP_INFO(edev, "Interface is down\n");
+ 		return -EINVAL;
+@@ -2106,7 +2124,8 @@ static int qede_get_dump_data(struct net_device *dev,
+ }
+ 
+ static const struct ethtool_ops qede_ethtool_ops = {
+-	.supported_coalesce_params	= ETHTOOL_COALESCE_USECS,
++	.supported_coalesce_params	= ETHTOOL_COALESCE_USECS |
++					  ETHTOOL_COALESCE_STATS_BLOCK_USECS,
+ 	.get_link_ksettings		= qede_get_link_ksettings,
+ 	.set_link_ksettings		= qede_set_link_ksettings,
+ 	.get_drvinfo			= qede_get_drvinfo,
+@@ -2155,7 +2174,8 @@ static const struct ethtool_ops qede_ethtool_ops = {
+ };
+ 
+ static const struct ethtool_ops qede_vf_ethtool_ops = {
+-	.supported_coalesce_params	= ETHTOOL_COALESCE_USECS,
++	.supported_coalesce_params	= ETHTOOL_COALESCE_USECS |
++					  ETHTOOL_COALESCE_STATS_BLOCK_USECS,
+ 	.get_link_ksettings		= qede_get_link_ksettings,
+ 	.get_drvinfo			= qede_get_drvinfo,
+ 	.get_msglevel			= qede_get_msglevel,
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_main.c b/drivers/net/ethernet/qlogic/qede/qede_main.c
+index e93f06e4a1729..681ec142c23de 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_main.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
+@@ -313,6 +313,8 @@ void qede_fill_by_demand_stats(struct qede_dev *edev)
+ 
+ 	edev->ops->get_vport_stats(edev->cdev, &stats);
+ 
++	spin_lock(&edev->stats_lock);
++
+ 	p_common->no_buff_discards = stats.common.no_buff_discards;
+ 	p_common->packet_too_big_discard = stats.common.packet_too_big_discard;
+ 	p_common->ttl0_discard = stats.common.ttl0_discard;
+@@ -410,6 +412,8 @@ void qede_fill_by_demand_stats(struct qede_dev *edev)
+ 		p_ah->tx_1519_to_max_byte_packets =
+ 		    stats.ah.tx_1519_to_max_byte_packets;
+ 	}
++
++	spin_unlock(&edev->stats_lock);
+ }
+ 
+ static void qede_get_stats64(struct net_device *dev,
+@@ -418,9 +422,10 @@ static void qede_get_stats64(struct net_device *dev,
+ 	struct qede_dev *edev = netdev_priv(dev);
+ 	struct qede_stats_common *p_common;
+ 
+-	qede_fill_by_demand_stats(edev);
+ 	p_common = &edev->stats.common;
+ 
++	spin_lock(&edev->stats_lock);
++
+ 	stats->rx_packets = p_common->rx_ucast_pkts + p_common->rx_mcast_pkts +
+ 			    p_common->rx_bcast_pkts;
+ 	stats->tx_packets = p_common->tx_ucast_pkts + p_common->tx_mcast_pkts +
+@@ -440,6 +445,8 @@ static void qede_get_stats64(struct net_device *dev,
+ 		stats->collisions = edev->stats.bb.tx_total_collisions;
+ 	stats->rx_crc_errors = p_common->rx_crc_errors;
+ 	stats->rx_frame_errors = p_common->rx_align_errors;
++
++	spin_unlock(&edev->stats_lock);
+ }
+ 
+ #ifdef CONFIG_QED_SRIOV
+@@ -1001,6 +1008,23 @@ static void qede_unlock(struct qede_dev *edev)
+ 	rtnl_unlock();
+ }
+ 
++static void qede_periodic_task(struct work_struct *work)
++{
++	struct qede_dev *edev = container_of(work, struct qede_dev,
++					     periodic_task.work);
++
++	qede_fill_by_demand_stats(edev);
++	schedule_delayed_work(&edev->periodic_task, edev->stats_coal_ticks);
++}
++
++static void qede_init_periodic_task(struct qede_dev *edev)
++{
++	INIT_DELAYED_WORK(&edev->periodic_task, qede_periodic_task);
++	spin_lock_init(&edev->stats_lock);
++	edev->stats_coal_usecs = USEC_PER_SEC;
++	edev->stats_coal_ticks = usecs_to_jiffies(USEC_PER_SEC);
++}
++
+ static void qede_sp_task(struct work_struct *work)
+ {
+ 	struct qede_dev *edev = container_of(work, struct qede_dev,
+@@ -1020,6 +1044,7 @@ static void qede_sp_task(struct work_struct *work)
+ 	 */
+ 
+ 	if (test_and_clear_bit(QEDE_SP_RECOVERY, &edev->sp_flags)) {
++		cancel_delayed_work_sync(&edev->periodic_task);
+ #ifdef CONFIG_QED_SRIOV
+ 		/* SRIOV must be disabled outside the lock to avoid a deadlock.
+ 		 * The recovery of the active VFs is currently not supported.
+@@ -1216,6 +1241,7 @@ static int __qede_probe(struct pci_dev *pdev, u32 dp_module, u8 dp_level,
+ 		 */
+ 		INIT_DELAYED_WORK(&edev->sp_task, qede_sp_task);
+ 		mutex_init(&edev->qede_lock);
++		qede_init_periodic_task(edev);
+ 
+ 		rc = register_netdev(edev->ndev);
+ 		if (rc) {
+@@ -1240,6 +1266,11 @@ static int __qede_probe(struct pci_dev *pdev, u32 dp_module, u8 dp_level,
+ 	edev->rx_copybreak = QEDE_RX_HDR_SIZE;
+ 
+ 	qede_log_probe(edev);
++
++	/* retain user config (for example - after recovery) */
++	if (edev->stats_coal_usecs)
++		schedule_delayed_work(&edev->periodic_task, 0);
++
+ 	return 0;
+ 
+ err4:
+@@ -1308,6 +1339,7 @@ static void __qede_remove(struct pci_dev *pdev, enum qede_remove_mode mode)
+ 		unregister_netdev(ndev);
+ 
+ 		cancel_delayed_work_sync(&edev->sp_task);
++		cancel_delayed_work_sync(&edev->periodic_task);
+ 
+ 		edev->ops->common->set_power_state(cdev, PCI_D0);
+ 
 -- 
 2.39.2
 
