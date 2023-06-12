@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCE8154A3
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F32C433EF;
-	Mon, 12 Jun 2023 10:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA506AD3C
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595FEC433D2;
+	Mon, 12 Jun 2023 10:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566101;
-	bh=gu+woyY600EgFNCOX5M7aN+WcWbBcb/QrxPZoXv4bwo=;
+	s=korg; t=1686566103;
+	bh=RKK6AuOb3zNBcvBx6MLkarRTDF5FMuZBNkCAXgiXSqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZOk2aoBELqJ0NGgxp0bEkWhuySd56FIFKYgJ9JxhlPdOPjuonC5mOPlxSS+S41lR
-	 DORQ0sGqk9xP245vIdKk22Dn12sp0LjB26bJTZ99Ms+Slgdzsle+IvMdAaoIEOH26W
-	 515SveZ5hJP7AQz9WcffeTnqNurx6mwdBVilW2g8=
+	b=qhAsk3B0cCytFtUFbV7c6V3y+W0U2vlOgyt3m3A2IMw1xqS+I7ny9BVxVp5dqVZeQ
+	 1nKETypGk6ANN54RHgarifEKrp6Bjq2J+MOg4fE8MBN9AaCsvue4vCJo5jGMx1poIm
+	 Mfl6+j09GnGmvp7hDIRFv+K390zDNChaVrwIozxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	fuyufan <fuyufan@huawei.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 5.10 65/68] drm/atomic: Dont pollute crtc_state->mode_blob with error pointers
-Date: Mon, 12 Jun 2023 12:26:57 +0200
-Message-ID: <20230612101701.146235464@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
+	Stefan Ghinea <stefan.ghinea@windriver.com>
+Subject: [PATCH 5.10 66/68] btrfs: check return value of btrfs_commit_transaction in relocation
+Date: Mon, 12 Jun 2023 12:26:58 +0200
+Message-ID: <20230612101701.177628475@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -36,50 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 439cf34c8e0a8a33d8c15a31be1b7423426bc765 upstream.
+commit fb686c6824dd6294ca772b92424b8fba666e7d00 upstream.
 
-Make sure we don't assign an error pointer to crtc_state->mode_blob
-as that will break all kinds of places that assume either NULL or a
-valid pointer (eg. drm_property_blob_put()).
+There are a few places where we don't check the return value of
+btrfs_commit_transaction in relocation.c.  Thankfully all these places
+have straightforward error handling, so simply change all of the sites
+at once.
 
-Cc: stable@vger.kernel.org
-Reported-by: fuyufan <fuyufan@huawei.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220209091928.14766-1-ville.syrjala@linux.intel.com
-Acked-by: Maxime Ripard <maxime@cerno.tech>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/btrfs/relocation.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -75,15 +75,17 @@ int drm_atomic_set_mode_for_crtc(struct
- 	state->mode_blob = NULL;
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -1895,7 +1895,7 @@ again:
+ 	list_splice(&reloc_roots, &rc->reloc_roots);
  
- 	if (mode) {
-+		struct drm_property_blob *blob;
-+
- 		drm_mode_convert_to_umode(&umode, mode);
--		state->mode_blob =
--			drm_property_create_blob(state->crtc->dev,
--		                                 sizeof(umode),
--		                                 &umode);
--		if (IS_ERR(state->mode_blob))
--			return PTR_ERR(state->mode_blob);
-+		blob = drm_property_create_blob(crtc->dev,
-+						sizeof(umode), &umode);
-+		if (IS_ERR(blob))
-+			return PTR_ERR(blob);
+ 	if (!err)
+-		btrfs_commit_transaction(trans);
++		err = btrfs_commit_transaction(trans);
+ 	else
+ 		btrfs_end_transaction(trans);
+ 	return err;
+@@ -3270,8 +3270,7 @@ int prepare_to_relocate(struct reloc_con
+ 		 */
+ 		return PTR_ERR(trans);
+ 	}
+-	btrfs_commit_transaction(trans);
+-	return 0;
++	return btrfs_commit_transaction(trans);
+ }
  
- 		drm_mode_copy(&state->mode, mode);
-+
-+		state->mode_blob = blob;
- 		state->enable = true;
- 		DRM_DEBUG_ATOMIC("Set [MODE:%s] for [CRTC:%d:%s] state %p\n",
- 				 mode->name, crtc->base.id, crtc->name, state);
+ static noinline_for_stack int relocate_block_group(struct reloc_control *rc)
+@@ -3443,7 +3442,9 @@ restart:
+ 		err = PTR_ERR(trans);
+ 		goto out_free;
+ 	}
+-	btrfs_commit_transaction(trans);
++	ret = btrfs_commit_transaction(trans);
++	if (ret && !err)
++		err = ret;
+ out_free:
+ 	ret = clean_dirty_subvols(rc);
+ 	if (ret < 0 && !err)
 
 
