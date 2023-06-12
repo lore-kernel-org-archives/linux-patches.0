@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54E5134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A580C433EF;
-	Mon, 12 Jun 2023 10:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E093134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D1EC433EF;
+	Mon, 12 Jun 2023 10:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566506;
-	bh=vRjL/QT0vsgK0+hsmCeJTYF44KAZj4JfXpGiTYMJFD4=;
+	s=korg; t=1686566509;
+	bh=DoRrtTpBtyBfaCkAlomBxMbz+NvsN0ZmHGzv/6lHAws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KtxS4VgwUBkfFAdHprqjQBo9vjVqwTpb0BSrwmR8cY+sMaT6Tgq5IttOlOEU2RDjH
-	 zqnzx0M4L/Rb5oVt3fBigMZSjaJJGhwkMZMhwZq17y6pDTjxTBaMiyZxiZ+wMwdoGA
-	 fD5fhbkSqJcJfiQ3qy7xYZmP5QNPCEklpWGfWndE=
+	b=1vJ7RAeKpQtBj+tB2qmJ6W8z0nSbYAO9Nyh2LZn4STdsAaUgC5KloEzpSboutkNHC
+	 IT4LuFURZL4mk1BLAFfYOZe8mCVP7YE8aloMSiFCioPKcfiZwyvyGK1gdnINi6n8bW
+	 T7BKaWK3ZZA8RtKBWIiMbDWLKQkNlE6hJAQ1oCVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Kalesh Anakkur Purayil <kalesh-anakkur.purayil@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/132] bnxt_en: Prevent kernel panic when receiving unexpected PHC_UPDATE event
-Date: Mon, 12 Jun 2023 12:26:30 +0200
-Message-ID: <20230612101712.809721751@linuxfoundation.org>
+Subject: [PATCH 6.1 057/132] bnxt_en: Implement .set_port / .unset_port UDP tunnel callbacks
+Date: Mon, 12 Jun 2023 12:26:31 +0200
+Message-ID: <20230612101712.859950714@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,64 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavan Chebbi <pavan.chebbi@broadcom.com>
+From: Somnath Kotur <somnath.kotur@broadcom.com>
 
-[ Upstream commit 319a7827df9784048abe072afe6b4fb4501d8de4 ]
+[ Upstream commit 1eb4ef12591348c440ac9d6efcf7521e73cf2b10 ]
 
-The firmware can send PHC_RTC_UPDATE async event on a PF that may not
-have PTP registered. In such a case, there will be a null pointer
-deference for bp->ptp_cfg when we try to handle the event.
+As per the new udp tunnel framework, drivers which need to know the
+details of a port entry (i.e. port type) when it gets deleted should
+use the .set_port / .unset_port callbacks.
 
-Fix it by not registering for this event with the firmware if !bp->ptp_cfg.
-Also, check that bp->ptp_cfg is valid before proceeding when we receive
-the event.
+Implementing the current .udp_tunnel_sync callback would mean that the
+deleted tunnel port entry would be all zeros.  This used to work on
+older firmware because it would not check the input when deleting a
+tunnel port.  With newer firmware, the delete will now fail and
+subsequent tunnel port allocation will fail as a result.
 
-Fixes: 8bcf6f04d4a5 ("bnxt_en: Handle async event when the PHC is updated in RTC mode")
-Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Fixes: 442a35a5a7aa ("bnxt: convert to new udp_tunnel_nic infra")
+Reviewed-by: Kalesh Anakkur Purayil <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 6 ++++++
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 1 +
- 2 files changed, 7 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 25 ++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index f7b2c4e94e898..37a31f684938a 100644
+index 37a31f684938a..6469fb8a42a89 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -2389,6 +2389,9 @@ static int bnxt_async_event_process(struct bnxt *bp,
- 				struct bnxt_ptp_cfg *ptp = bp->ptp_cfg;
- 				u64 ns;
+@@ -13008,26 +13008,37 @@ static void bnxt_cfg_ntp_filters(struct bnxt *bp)
  
-+				if (!ptp)
-+					goto async_event_process_exit;
+ #endif /* CONFIG_RFS_ACCEL */
+ 
+-static int bnxt_udp_tunnel_sync(struct net_device *netdev, unsigned int table)
++static int bnxt_udp_tunnel_set_port(struct net_device *netdev, unsigned int table,
++				    unsigned int entry, struct udp_tunnel_info *ti)
+ {
+ 	struct bnxt *bp = netdev_priv(netdev);
+-	struct udp_tunnel_info ti;
+ 	unsigned int cmd;
+ 
+-	udp_tunnel_nic_get_port(netdev, table, 0, &ti);
+-	if (ti.type == UDP_TUNNEL_TYPE_VXLAN)
++	if (ti->type == UDP_TUNNEL_TYPE_VXLAN)
+ 		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_VXLAN;
+ 	else
+ 		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_GENEVE;
+ 
+-	if (ti.port)
+-		return bnxt_hwrm_tunnel_dst_port_alloc(bp, ti.port, cmd);
++	return bnxt_hwrm_tunnel_dst_port_alloc(bp, ti->port, cmd);
++}
 +
- 				spin_lock_bh(&ptp->ptp_lock);
- 				bnxt_ptp_update_current_time(bp);
- 				ns = (((u64)BNXT_EVENT_PHC_RTC_UPDATE(data1) <<
-@@ -4787,6 +4790,9 @@ int bnxt_hwrm_func_drv_rgtr(struct bnxt *bp, unsigned long *bmap, int bmap_size,
- 		if (event_id == ASYNC_EVENT_CMPL_EVENT_ID_ERROR_RECOVERY &&
- 		    !(bp->fw_cap & BNXT_FW_CAP_ERROR_RECOVERY))
- 			continue;
-+		if (event_id == ASYNC_EVENT_CMPL_EVENT_ID_PHC_UPDATE &&
-+		    !bp->ptp_cfg)
-+			continue;
- 		__set_bit(bnxt_async_events_arr[i], async_events_bmap);
- 	}
- 	if (bmap && bmap_size) {
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-index 2132ce63193ce..4faaa9a50f4bc 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-@@ -929,6 +929,7 @@ int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
- 	} else {
- 		bnxt_ptp_timecounter_init(bp, true);
- 	}
-+	bnxt_hwrm_func_drv_rgtr(bp, NULL, 0, true);
++static int bnxt_udp_tunnel_unset_port(struct net_device *netdev, unsigned int table,
++				      unsigned int entry, struct udp_tunnel_info *ti)
++{
++	struct bnxt *bp = netdev_priv(netdev);
++	unsigned int cmd;
++
++	if (ti->type == UDP_TUNNEL_TYPE_VXLAN)
++		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_VXLAN;
++	else
++		cmd = TUNNEL_DST_PORT_FREE_REQ_TUNNEL_TYPE_GENEVE;
  
- 	ptp->ptp_info = bnxt_ptp_caps;
- 	if ((bp->fw_cap & BNXT_FW_CAP_PTP_PPS)) {
+ 	return bnxt_hwrm_tunnel_dst_port_free(bp, cmd);
+ }
+ 
+ static const struct udp_tunnel_nic_info bnxt_udp_tunnels = {
+-	.sync_table	= bnxt_udp_tunnel_sync,
++	.set_port	= bnxt_udp_tunnel_set_port,
++	.unset_port	= bnxt_udp_tunnel_unset_port,
+ 	.flags		= UDP_TUNNEL_NIC_INFO_MAY_SLEEP |
+ 			  UDP_TUNNEL_NIC_INFO_OPEN_ONLY,
+ 	.tables		= {
 -- 
 2.39.2
 
