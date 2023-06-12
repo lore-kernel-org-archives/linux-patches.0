@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E10533EE
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25090C4339B;
-	Mon, 12 Jun 2023 10:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3338C33EE
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17A9C4339B;
+	Mon, 12 Jun 2023 10:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566527;
-	bh=xYrM4k9eoB/5zJdDGE4BW4bvp64RREfjbXVQjbm7NVw=;
+	s=korg; t=1686566530;
+	bh=q7AZgL1Q2wUJlbLmBb90imZYwU03OA8U9REGe/qT1fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GTQtUCIgbkt8MjTmCjlUsakrGxCx8k8fzNJdBoPyJN9+iTgtNqErGhodcBbXkfgy4
-	 uCIbkMJyy+kdUDzNUpFKvq9qncGqoBzMuU+4FXIxfJCFRyF/nRu03nXp8XSR81VORr
-	 O1Lz1f4FDsmsDpG+JUe9esbFiR4dsnj0/pGJIBOo=
+	b=OB0cK+QbotsFngymagSBf+qXFJEgSamuy7ERrUe+BFXPQI6njaSjhCTYtWGBvViq9
+	 WeaC/2fGy29tZ3w5m13E6DnCdeXrO0Gksdk5JvE73Dq9QJ+7KZeCyj25flXqYu1BTj
+	 Urx3NQJEaqQBP6n6ngr/ClZm7ckUazb6709CyqyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/132] wifi: mac80211: use correct iftype HE cap
-Date: Mon, 12 Jun 2023 12:26:00 +0200
-Message-ID: <20230612101711.419212931@linuxfoundation.org>
+	Ismael Ferreras Morezuelas <swyterzone@gmail.com>,
+	Cameron Gutman <aicommander@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 059/132] Input: xpad - delete a Razer DeathAdder mouse VID/PID entry
+Date: Mon, 12 Jun 2023 12:26:33 +0200
+Message-ID: <20230612101712.958067423@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,68 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
 
-[ Upstream commit c37ab22bb1a43cdca8bf69cc0a22f1ccfc449e68 ]
+commit feee70f4568650cf44c573488798ffc0a2faeea3 upstream.
 
-We already check that the right iftype capa exists,
-but then don't use it. Assign it to a variable so we
-can actually use it, and then do that.
+While doing my research to improve the xpad device names I noticed
+that the 1532:0037 VID/PID seems to be used by the DeathAdder 2013,
+so that Razer Sabertooth instance looked wrong and very suspect to
+me. I didn't see any mention in the official drivers, either.
 
-Fixes: bac2fd3d7534 ("mac80211: remove use of ieee80211_get_he_sta_cap()")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230604120651.0e908e5c5fdd.Iac142549a6144ac949ebd116b921a59ae5282735@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+After doing more research, it turns out that the xpad list
+is used by many other projects (like Steam) as-is [1], this
+issue was reported [2] and Valve/Sam Lantinga fixed it [3]:
+
+[1]: https://github.com/libsdl-org/SDL/blob/dcc5eef0e2395854b254ea2873a4899edab347c6/src/joystick/controller_type.h#L251
+[2]: https://steamcommunity.com/app/353380/discussions/0/1743392486228754770/
+[3]: https://hg.libsdl.org/SDL/rev/29809f6f0271
+
+(With multiple Internet users reporting similar issues, not linked here)
+
+After not being able to find the correct VID/PID combination anywhere
+on the Internet and not receiving any reply from Razer support I did
+some additional detective work, it seems like it presents itself as
+"Razer Sabertooth Gaming Controller (XBOX360)", code 1689:FE00.
+
+Leaving us with this:
+ * Razer Sabertooth (1689:fe00)
+ * Razer Sabertooth Elite (24c6:5d04)
+ * Razer DeathAdder 2013 (1532:0037) [note: not a gamepad]
+
+So, to sum things up; remove this conflicting/duplicate entry:
+
+{ 0x1532, 0x0037, "Razer Sabertooth", 0, XTYPE_XBOX360 },
+
+As the real/correct one is already present there, even if
+the Internet as a whole insists on presenting it as the
+Razer Sabertooth Elite, which (by all accounts) is not:
+
+{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
+
+Actual change in SDL2 referencing this kernel issue:
+https://github.com/libsdl-org/SDL/commit/e5e54169754ca5d3e86339d968b20126d9da0a15
+
+For more information of the device, take a look here:
+https://github.com/xboxdrv/xboxdrv/pull/59
+
+You can see a lsusb dump here: https://github.com/xboxdrv/xboxdrv/files/76581/Qa6dBcrv.txt
+
+Fixes: f554f619b70 ("Input: xpad - sync device IDs with xboxdrv")
+Signed-off-by: Ismael Ferreras Morezuelas <swyterzone@gmail.com>
+Reviewed-by: Cameron Gutman <aicommander@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/5c12dbdb-5774-fc68-5c58-ca596383663e@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/he.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/input/joystick/xpad.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/mac80211/he.c b/net/mac80211/he.c
-index 729f261520c77..0322abae08250 100644
---- a/net/mac80211/he.c
-+++ b/net/mac80211/he.c
-@@ -3,7 +3,7 @@
-  * HE handling
-  *
-  * Copyright(c) 2017 Intel Deutschland GmbH
-- * Copyright(c) 2019 - 2022 Intel Corporation
-+ * Copyright(c) 2019 - 2023 Intel Corporation
-  */
- 
- #include "ieee80211_i.h"
-@@ -114,6 +114,7 @@ ieee80211_he_cap_ie_to_sta_he_cap(struct ieee80211_sub_if_data *sdata,
- 				  struct link_sta_info *link_sta)
- {
- 	struct ieee80211_sta_he_cap *he_cap = &link_sta->pub->he_cap;
-+	const struct ieee80211_sta_he_cap *own_he_cap_ptr;
- 	struct ieee80211_sta_he_cap own_he_cap;
- 	struct ieee80211_he_cap_elem *he_cap_ie_elem = (void *)he_cap_ie;
- 	u8 he_ppe_size;
-@@ -123,12 +124,16 @@ ieee80211_he_cap_ie_to_sta_he_cap(struct ieee80211_sub_if_data *sdata,
- 
- 	memset(he_cap, 0, sizeof(*he_cap));
- 
--	if (!he_cap_ie ||
--	    !ieee80211_get_he_iftype_cap(sband,
--					 ieee80211_vif_type_p2p(&sdata->vif)))
-+	if (!he_cap_ie)
- 		return;
- 
--	own_he_cap = sband->iftype_data->he_cap;
-+	own_he_cap_ptr =
-+		ieee80211_get_he_iftype_cap(sband,
-+					    ieee80211_vif_type_p2p(&sdata->vif));
-+	if (!own_he_cap_ptr)
-+		return;
-+
-+	own_he_cap = *own_he_cap_ptr;
- 
- 	/* Make sure size is OK */
- 	mcs_nss_size = ieee80211_he_mcs_nss_size(he_cap_ie_elem);
--- 
-2.39.2
-
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -282,7 +282,6 @@ static const struct xpad_device {
+ 	{ 0x1430, 0xf801, "RedOctane Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x146b, 0x0601, "BigBen Interactive XBOX 360 Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x146b, 0x0604, "Bigben Interactive DAIJA Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
+-	{ 0x1532, 0x0037, "Razer Sabertooth", 0, XTYPE_XBOX360 },
+ 	{ 0x1532, 0x0a00, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
+ 	{ 0x1532, 0x0a03, "Razer Wildcat", 0, XTYPE_XBOXONE },
+ 	{ 0x15e4, 0x3f00, "Power A Mini Pro Elite", 0, XTYPE_XBOX360 },
 
 
