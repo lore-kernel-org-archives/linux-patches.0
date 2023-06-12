@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BAC18AE1
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:28:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CDFC433D2;
-	Mon, 12 Jun 2023 10:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539BB18AE1
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:28:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BB7C433D2;
+	Mon, 12 Jun 2023 10:28:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565712;
-	bh=sRuvSVjdUbLYSNb7nubet0wDbUGFIx/qOAgwbh2ZTwY=;
+	s=korg; t=1686565715;
+	bh=Lyp3YVggMv9Onw4Bxy0I9K5NFFkW7fChYsptXNPaxDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lfOH5AywOptUcDYPDijgccKNOUKz5rMUDOwudyh1bufBbbGu9576u7xA9nJ9mJ+M0
-	 0y858CMm3zNd5rJbcjxtfv/jvwdlZWwZqwvSWbs6UltgiuX0W2WaizZ/IDHIH85pMM
-	 EEu4WzA4+UDIB25gBx8geUzT0/Ti7Hgcm6rSswg8=
+	b=VntHozg5ufFROc3qrD82dN0CHgDJpGbuTP/xzb3DpAN1aJN/rHCk+ODrdqmzeEvWf
+	 tZ72pedwxeuZOk15OAjhDcOjrM23df6M69laDJjU2U4B1Vpunw9G7rqlO68tfZAI5D
+	 n2GQNkZKAqGU1WVEr3jjJvgDW0R0IMBjZdSNPFRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev
-Subject: [PATCH 4.14 01/21] i40iw: fix build warning in i40iw_manage_apbvt()
-Date: Mon, 12 Jun 2023 12:25:56 +0200
-Message-ID: <20230612101651.113244891@linuxfoundation.org>
+	patches@lists.linux.dev,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 10/21] bnxt_en: Query default VLAN before VNIC setup on a VF
+Date: Mon, 12 Jun 2023 12:26:05 +0200
+Message-ID: <20230612101651.416961281@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.048240731@linuxfoundation.org>
 References: <20230612101651.048240731@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,30 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Not upstream as this function is no longer around anymore.
+From: Somnath Kotur <somnath.kotur@broadcom.com>
 
-The function i40iw_manage_apbvt() has the wrong prototype match from the
-.h file to the .c declaration, so fix it up, otherwise gcc-13 complains
-(rightfully) that the type is incorrect.
+[ Upstream commit 1a9e4f501bc6ff1b6ecb60df54fbf2b54db43bfe ]
 
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+We need to call bnxt_hwrm_func_qcfg() on a VF to query the default
+VLAN that may be setup by the PF.  If a default VLAN is enabled,
+the VF cannot support VLAN acceleration on the receive side and
+the VNIC must be setup to strip out the default VLAN tag.  If a
+default VLAN is not enabled, the VF can support VLAN acceleration
+on the receive side.  The VNIC should be set up to strip or not
+strip the VLAN based on the RX VLAN acceleration setting.
+
+Without this call to determine the default VLAN before calling
+bnxt_setup_vnic(), the VNIC may not be set up correctly.  For
+example, bnxt_setup_vnic() may set up to strip the VLAN tag based
+on stale default VLAN information.  If RX VLAN acceleration is
+not enabled, the VLAN tag will be incorrectly stripped and the
+RX data path will not work correctly.
+
+Fixes: cf6645f8ebc6 ("bnxt_en: Add function for VF driver to query default VLAN.")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/i40iw/i40iw.h |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/infiniband/hw/i40iw/i40iw.h
-+++ b/drivers/infiniband/hw/i40iw/i40iw.h
-@@ -414,9 +414,8 @@ void i40iw_manage_arp_cache(struct i40iw
- 			    bool ipv4,
- 			    u32 action);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 89782e8e0b913..ee438674d6cc4 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -5239,6 +5239,9 @@ static int bnxt_init_chip(struct bnxt *bp, bool irq_re_init)
+ 		goto err_out;
+ 	}
  
--int i40iw_manage_apbvt(struct i40iw_device *iwdev,
--		       u16 accel_local_port,
--		       bool add_port);
-+enum i40iw_status_code i40iw_manage_apbvt(struct i40iw_device *iwdev,
-+					  u16 accel_local_port, bool add_port);
- 
- struct i40iw_cqp_request *i40iw_get_cqp_request(struct i40iw_cqp *cqp, bool wait);
- void i40iw_free_cqp_request(struct i40iw_cqp *cqp, struct i40iw_cqp_request *cqp_request);
++	if (BNXT_VF(bp))
++		bnxt_hwrm_func_qcfg(bp);
++
+ 	rc = bnxt_setup_vnic(bp, 0);
+ 	if (rc)
+ 		goto err_out;
+-- 
+2.39.2
+
 
 
