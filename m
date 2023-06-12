@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB83134AE
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B622C433EF;
-	Mon, 12 Jun 2023 10:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D48134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD714C433EF;
+	Mon, 12 Jun 2023 10:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566639;
-	bh=87/2ABLTJfH0R946A73ilL4HQfbigVKWtTZD+m6xuxI=;
+	s=korg; t=1686566642;
+	bh=eHqA/XNTgPzNyWaSNWkVQYCmkusbEx6uTjAX+yi3Nxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jF4mCX4PZnAfCnhU/75/ztBJPL2aNLjSC2O3Z/bOwVOcVOoN3gWQ9YAl1quhcfy+Z
-	 jp+rrUNbaoOntpSrQPqV2acRxaemp+iTzqE8NrbsF8HItVFBelpoCTrt2gXon1B1ac
-	 I5tD/yTsc5wdhpbWIFGLjm9agCXrymZwH93248hU=
+	b=HfvVFls+LYcEY7KLFLAx0zu4sm17NLszqxCawuPoPig59esamP1kqF9Wtqn4PQqxc
+	 eh7Za1Kq/V10rQMGp0a3CnI/r9CK7li2JSMyZNli7N8fjSF9z5XHZxM5hlwCDR8m9/
+	 lBsFYtQXvh2reylrYu+eqHqicZscHB/tAyLEwpYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/132] arm64: dts: qcom: sc8280xp: Flush RSC sleep & wake votes
-Date: Mon, 12 Jun 2023 12:27:15 +0200
-Message-ID: <20230612101714.906005950@linuxfoundation.org>
+Subject: [PATCH 6.1 102/132] ARM: at91: pm: fix imbalanced reference counter for ethernet devices
+Date: Mon, 12 Jun 2023 12:27:16 +0200
+Message-ID: <20230612101714.946062577@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,39 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit ce7c014937c442be677963848c7db62eccd94eac ]
+[ Upstream commit ccd4923d18d5698a5910d516646ce125b9155d47 ]
 
-The rpmh driver will cache sleep and wake votes until the cluster
-power-domain is about to enter idle, to avoid unnecessary writes. So
-associate the apps_rsc with the cluster pd, so that it can be notified
-about this event.
+The of_find_device_by_node() function is returning a struct platform_device
+object with the embedded struct device member's reference counter
+incremented. This needs to be dropped when done with the platform device
+returned by of_find_device_by_node().
 
-Without this, only AMC votes are being commited.
+at91_pm_eth_quirk_is_valid() calls of_find_device_by_node() on
+suspend and resume path. On suspend it calls of_find_device_by_node() and
+on resume and failure paths it drops the counter of
+struct platform_device::dev.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230512150425.3171122-1-quic_bjorande@quicinc.com
+In case ethernet device may not wakeup there is a put_device() on
+at91_pm_eth_quirk_is_valid() which is wrong as it colides with
+put_device() on resume path leading to the reference counter of struct
+device embedded in struct platform_device to be messed, stack trace to be
+displayed (after 5 consecutive suspend/resume cycles) and execution to
+hang.
+
+Along with this the error path of at91_pm_config_quirks() had been also
+adapted to decrement propertly the reference counter of struct device
+embedded in struct platform_device.
+
+Fixes: b7fc72c63399 ("ARM: at91: pm: add quirks for pm")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20230518062511.2988500-1-claudiu.beznea@microchip.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/mach-at91/pm.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index ba684d980cf26..1afc960bab5c9 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -1727,6 +1727,7 @@ apps_rsc: rsc@18200000 {
- 			qcom,tcs-config = <ACTIVE_TCS  2>, <SLEEP_TCS   3>,
- 					  <WAKE_TCS    3>, <CONTROL_TCS 1>;
- 			label = "apps_rsc";
-+			power-domains = <&CLUSTER_PD>;
+diff --git a/arch/arm/mach-at91/pm.c b/arch/arm/mach-at91/pm.c
+index 60dc56d8acfb9..437dd0352fd44 100644
+--- a/arch/arm/mach-at91/pm.c
++++ b/arch/arm/mach-at91/pm.c
+@@ -334,16 +334,14 @@ static bool at91_pm_eth_quirk_is_valid(struct at91_pm_quirk_eth *eth)
+ 		pdev = of_find_device_by_node(eth->np);
+ 		if (!pdev)
+ 			return false;
++		/* put_device(eth->dev) is called at the end of suspend. */
+ 		eth->dev = &pdev->dev;
+ 	}
  
- 			apps_bcm_voter: bcm-voter {
- 				compatible = "qcom,bcm-voter";
+ 	/* No quirks if device isn't a wakeup source. */
+-	if (!device_may_wakeup(eth->dev)) {
+-		put_device(eth->dev);
++	if (!device_may_wakeup(eth->dev))
+ 		return false;
+-	}
+ 
+-	/* put_device(eth->dev) is called at the end of suspend. */
+ 	return true;
+ }
+ 
+@@ -439,14 +437,14 @@ static int at91_pm_config_quirks(bool suspend)
+ 				pr_err("AT91: PM: failed to enable %s clocks\n",
+ 				       j == AT91_PM_G_ETH ? "geth" : "eth");
+ 			}
+-		} else {
+-			/*
+-			 * Release the reference to eth->dev taken in
+-			 * at91_pm_eth_quirk_is_valid().
+-			 */
+-			put_device(eth->dev);
+-			eth->dev = NULL;
+ 		}
++
++		/*
++		 * Release the reference to eth->dev taken in
++		 * at91_pm_eth_quirk_is_valid().
++		 */
++		put_device(eth->dev);
++		eth->dev = NULL;
+ 	}
+ 
+ 	return ret;
 -- 
 2.39.2
 
