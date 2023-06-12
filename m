@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64404134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84C5C433EF;
-	Mon, 12 Jun 2023 10:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E6C134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C111C433D2;
+	Mon, 12 Jun 2023 10:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566690;
-	bh=mVdiv4DOGsBo5Il4XsRzh1KgwunS4LrbSxU3SHXgMwA=;
+	s=korg; t=1686566692;
+	bh=h7wDYnHETVKvVKihkDO65vT57WRsgkdC7ZhWEeKrWFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mhnETqT7a7mGa44mhOjsHXmoH8W/dncWTxhL1Y9lQYRfABdQOjoZUc8d12PyKd3qX
-	 S4dLP2NDSDloey8rKn/WBW5kxR3iS96fN5YHUZLuxMike/MGBmacATraoZhkkCicqA
-	 1ES9cdeh0VpoQVjs+613UhA9i9uS+aPtvr6/O9IA=
+	b=sEoq6aE9P9lhrttRUSiiY2GFMjy4hK8/v7j0vNUnNg61dME56/d6FD1h7+JngGl8G
+	 EVIr5MtaClN+mWcriRfEHnS/Ddu5nuEfujHiozcdhUuA/xICLOKag5iXFkcnmiJ1lS
+	 oT95GzZ/Vh0IDyz/arUU/x2lx2GY9SbiluEbUjDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/132] soundwire: stream: Add missing clear of alloc_slave_rt
-Date: Mon, 12 Jun 2023 12:27:34 +0200
-Message-ID: <20230612101715.710124097@linuxfoundation.org>
+Subject: [PATCH 6.1 116/132] gpio: sim: fix memory corruption when adding named lines and unnamed hogs
+Date: Mon, 12 Jun 2023 12:27:30 +0200
+Message-ID: <20230612101715.567539889@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,40 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Kent Gibson <warthog618@gmail.com>
 
-[ Upstream commit 58d95889f3c2064c6139ee94bb0e4d86e1ad4eab ]
+[ Upstream commit 95ae9979bfe3174c2ee8d64409c44532f2881907 ]
 
-The current path that skips allocating the slave runtime does not clear
-the alloc_slave_rt flag, this is clearly incorrect. Add the missing
-clear, so the runtime won't be erroneously cleaned up.
+When constructing the sim, gpio-sim constructs an array of named lines,
+sized based on the largest offset of any named line, and then initializes
+that array with the names of all lines, including unnamed hogs with higher
+offsets.  In doing so it writes NULLs beyond the extent of the array.
 
-Fixes: f3016b891c8c ("soundwire: stream: sdw_stream_add_ functions can be called multiple times")
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230602101140.2040141-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Add a check that only named lines are used to initialize the array.
+
+Fixes: cb8c474e79be ("gpio: sim: new testing module")
+Signed-off-by: Kent Gibson<warthog618@gmail.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/stream.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-sim.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/stream.c b/drivers/soundwire/stream.c
-index bd502368339e5..b10ea69a638e1 100644
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -2019,8 +2019,10 @@ int sdw_stream_add_slave(struct sdw_slave *slave,
+diff --git a/drivers/gpio/gpio-sim.c b/drivers/gpio/gpio-sim.c
+index cff68f31a09fd..803676e307d73 100644
+--- a/drivers/gpio/gpio-sim.c
++++ b/drivers/gpio/gpio-sim.c
+@@ -717,8 +717,10 @@ static char **gpio_sim_make_line_names(struct gpio_sim_bank *bank,
+ 	if (!line_names)
+ 		return ERR_PTR(-ENOMEM);
  
- skip_alloc_master_rt:
- 	s_rt = sdw_slave_rt_find(slave, stream);
--	if (s_rt)
-+	if (s_rt) {
-+		alloc_slave_rt = false;
- 		goto skip_alloc_slave_rt;
+-	list_for_each_entry(line, &bank->line_list, siblings)
+-		line_names[line->offset] = line->name;
++	list_for_each_entry(line, &bank->line_list, siblings) {
++		if (line->name && (line->offset <= max_offset))
++			line_names[line->offset] = line->name;
 +	}
  
- 	s_rt = sdw_slave_rt_alloc(slave, m_rt);
- 	if (!s_rt) {
+ 	return line_names;
+ }
 -- 
 2.39.2
 
