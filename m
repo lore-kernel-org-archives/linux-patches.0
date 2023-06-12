@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC7E11C88
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B42C433D2;
-	Mon, 12 Jun 2023 10:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B9A11C88
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B386CC433D2;
+	Mon, 12 Jun 2023 10:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566553;
-	bh=RLtmN0TIInZlWRLz3BGhJs9W3NpO0P0pRirDUhZb/cQ=;
+	s=korg; t=1686566556;
+	bh=2iRA7uErQSuNAYYXEatdxBxgAKRRT5anmmqn2uOSuOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PovkKP297TLBEo7QLJjMDuWwiXyH6lctGaRGL/DgyYunPPlENZA7FFhX1sY2mPCIq
-	 1PycO/C0JQt6iUUCn9tCV3q3NVXY9h3ZyUE0Xu8bg108lEFjcyvzp9B3DoQFOyxOnR
-	 7GP/Eo0cMJOsB4qQ4tTq0kXmZK/vI4Pc+2GTEfpE=
+	b=P9mpIme/CWSo3kRhf6cODFn5Z84SZEGnujiqeGWFXEiPbvrYGR1kSFtriAowAFs1h
+	 733clMF7F7eEwUDZpcXa49jhc/d5bltLR02Bhhl2EgrIJttj/DfdW2CAIxYqPo/Ixd
+	 glRAIfLaqNNf51iquLvlMeKaGU0dqcJcMDpWBeZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Stylon Wang <stylon.wang@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Nevenko Stupar <Nevenko.Stupar@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.1 076/132] drm/amd/display: Reduce sdp bw after urgent to 90%
-Date: Mon, 12 Jun 2023 12:26:50 +0200
-Message-ID: <20230612101713.723300786@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 077/132] wifi: iwlwifi: mvm: Fix -Warray-bounds bug in iwl_mvm_wait_d3_notif()
+Date: Mon, 12 Jun 2023 12:26:51 +0200
+Message-ID: <20230612101713.764827364@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -38,37 +35,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvin Lee <alvin.lee2@amd.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit e1a600208286c197c2696e51fc313e49889315bd upstream.
+commit 7a4615b9a9da5225b22b36a20508555dd133ac24 upstream.
 
-[Description]
-Reduce expected SDP bandwidth due to poor QoS and
-arbitration issues on high bandwidth configs
+kmemdup() at line 2735 is not duplicating enough memory for
+notif->tid_tear_down and notif->station_id. As it only duplicates
+612 bytes: up to offsetofend(struct iwl_wowlan_info_notif,
+received_beacons), this is the range of [0, 612) bytes.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+2735	notif = kmemdup(notif_v1,
+2736			offsetofend(struct iwl_wowlan_info_notif,
+2737				    received_beacons),
+2738			GFP_ATOMIC);
+
+which evidently does not cover bytes 612 and 613 for members
+tid_tear_down and station_id in struct iwl_wowlan_info_notif.
+See below:
+
+$ pahole -C iwl_wowlan_info_notif drivers/net/wireless/intel/iwlwifi/mvm/d3.o
+struct iwl_wowlan_info_notif {
+	struct iwl_wowlan_gtk_status_v3 gtk[2];          /*     0   488 */
+	/* --- cacheline 7 boundary (448 bytes) was 40 bytes ago --- */
+	struct iwl_wowlan_igtk_status igtk[2];           /*   488    80 */
+	/* --- cacheline 8 boundary (512 bytes) was 56 bytes ago --- */
+	__le64                     replay_ctr;           /*   568     8 */
+	/* --- cacheline 9 boundary (576 bytes) --- */
+	__le16                     pattern_number;       /*   576     2 */
+	__le16                     reserved1;            /*   578     2 */
+	__le16                     qos_seq_ctr[8];       /*   580    16 */
+	__le32                     wakeup_reasons;       /*   596     4 */
+	__le32                     num_of_gtk_rekeys;    /*   600     4 */
+	__le32                     transmitted_ndps;     /*   604     4 */
+	__le32                     received_beacons;     /*   608     4 */
+	u8                         tid_tear_down;        /*   612     1 */
+	u8                         station_id;           /*   613     1 */
+	u8                         reserved2[2];         /*   614     2 */
+
+	/* size: 616, cachelines: 10, members: 13 */
+	/* last cacheline: 40 bytes */
+};
+
+Therefore, when the following assignments take place, actually no memory
+has been allocated for those objects:
+
+2743	notif->tid_tear_down = notif_v1->tid_tear_down;
+2744	notif->station_id = notif_v1->station_id;
+
+Fix this by allocating space for the whole notif object and zero out the
+remaining space in memory after member station_id.
+
+This also fixes the following -Warray-bounds issues:
+ CC      drivers/net/wireless/intel/iwlwifi/mvm/d3.o
+drivers/net/wireless/intel/iwlwifi/mvm/d3.c: In function ‘iwl_mvm_wait_d3_notif’:
+drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2743:30: warning: array subscript ‘struct iwl_wowlan_info_notif[0]’ is partly outside array bounds of ‘unsigned char[612]’ [-Warray-bounds=]
+ 2743 |                         notif->tid_tear_down = notif_v1->tid_tear_down;
+      |
+                 from drivers/net/wireless/intel/iwlwifi/mvm/d3.c:7:
+In function ‘kmemdup’,
+    inlined from ‘iwl_mvm_wait_d3_notif’ at drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2735:12:
+include/linux/fortify-string.h:765:16: note: object of size 612 allocated by ‘__real_kmemdup’
+  765 |         return __real_kmemdup(p, size, gfp);
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/net/wireless/intel/iwlwifi/mvm/d3.c: In function ‘iwl_mvm_wait_d3_notif’:
+drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2744:30: warning: array subscript ‘struct iwl_wowlan_info_notif[0]’ is partly outside array bounds of ‘unsigned char[612]’ [-Warray-bounds=]
+ 2744 |                         notif->station_id = notif_v1->station_id;
+      |                              ^~
+In function ‘kmemdup’,
+    inlined from ‘iwl_mvm_wait_d3_notif’ at drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2735:12:
+include/linux/fortify-string.h:765:16: note: object of size 612 allocated by ‘__real_kmemdup’
+  765 |         return __real_kmemdup(p, size, gfp);
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Link: https://github.com/KSPP/linux/issues/306
+Fixes: 905d50ddbc83 ("wifi: iwlwifi: mvm: support wowlan info notification version 2")
 Cc: stable@vger.kernel.org
-Acked-by: Stylon Wang <stylon.wang@amd.com>
-Signed-off-by: Alvin Lee <alvin.lee2@amd.com>
-Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Acked-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/ZHpGN555FwAKGduH@work
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -137,7 +137,7 @@ struct _vcs_dpi_soc_bounding_box_st dcn3
- 	.urgent_out_of_order_return_per_channel_pixel_only_bytes = 4096,
- 	.urgent_out_of_order_return_per_channel_pixel_and_vm_bytes = 4096,
- 	.urgent_out_of_order_return_per_channel_vm_only_bytes = 4096,
--	.pct_ideal_sdp_bw_after_urgent = 100.0,
-+	.pct_ideal_sdp_bw_after_urgent = 90.0,
- 	.pct_ideal_fabric_bw_after_urgent = 67.0,
- 	.pct_ideal_dram_sdp_bw_after_urgent_pixel_only = 20.0,
- 	.pct_ideal_dram_sdp_bw_after_urgent_pixel_and_vm = 60.0, // N/A, for now keep as is until DML implemented
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -2724,17 +2724,13 @@ static bool iwl_mvm_wait_d3_notif(struct
+ 		if (wowlan_info_ver < 2) {
+ 			struct iwl_wowlan_info_notif_v1 *notif_v1 = (void *)pkt->data;
+ 
+-			notif = kmemdup(notif_v1,
+-					offsetofend(struct iwl_wowlan_info_notif,
+-						    received_beacons),
+-					GFP_ATOMIC);
+-
++			notif = kmemdup(notif_v1, sizeof(*notif), GFP_ATOMIC);
+ 			if (!notif)
+ 				return false;
+ 
+ 			notif->tid_tear_down = notif_v1->tid_tear_down;
+ 			notif->station_id = notif_v1->station_id;
+-
++			memset_after(notif, 0, station_id);
+ 		} else {
+ 			notif = (void *)pkt->data;
+ 		}
 
 
