@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E64B11C88
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2073C433EF;
-	Mon, 12 Jun 2023 10:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA5211C88
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91374C433EF;
+	Mon, 12 Jun 2023 10:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566411;
-	bh=UIL9kGctTVZxMNENUcR9bwnPuMtzQUieCXkdJlN15Mg=;
+	s=korg; t=1686566414;
+	bh=C/z0oKGd8LLWwPGcj3ovzvRbzgW/Ra3919UCaKcy0QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aaaSO/zcwFk0WRowJT/cOYXHED1IHbWejg0DECjK8Iz+1ZQcr1q14HiUIfTDmBw+s
-	 nFc6+DqErpIPBhA5COLcvuEGv1HD8ZZGYcm9ZrPNzjciJwZ9FRrmcdNZfynKW98UxD
-	 q260pypgA3P2RBqkLwgv7KvHySOdMUL0jrEXdUmo=
+	b=XSZdj32G2gRWkEHTKsrllZNXDnRW6Zk735BKA7cGmCnkBgvBpMGn3KZmQZ8gYpl31
+	 r+3XkUhIe879bXtpXPcLu5FosxRKJ1+7gXNv822zWcZbHST330t6549HBHuYVGOIJz
+	 O4OyoVMRVzG6KGsxikY5bJdV0kM22T7ySLgk4pVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Luca Coelho <luciano.coelho@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Zhengping Jiang <jiangzp@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/132] drm/i915: Use 18 fast wake AUX sync len
-Date: Mon, 12 Jun 2023 12:25:55 +0200
-Message-ID: <20230612101711.212182968@linuxfoundation.org>
+Subject: [PATCH 6.1 022/132] Bluetooth: hci_sync: add lock to protect HCI_UNREGISTER
+Date: Mon, 12 Jun 2023 12:25:56 +0200
+Message-ID: <20230612101711.251216733@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,42 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Zhengping Jiang <jiangzp@google.com>
 
-[ Upstream commit 2d6f2f79e06571d41eb1223abebe9097511c9544 ]
+[ Upstream commit 1857c19941c87eb36ad47f22a406be5dfe5eff9f ]
 
-HW default for wake sync pulses is 18. 10 precharge and 8 preamble. There
-is no reason to change this especially as it is causing problems with
-certain eDP panels.
+When the HCI_UNREGISTER flag is set, no jobs should be scheduled. Fix
+potential race when HCI_UNREGISTER is set after the flag is tested in
+hci_cmd_sync_queue.
 
-v3: Change "Fixes:" commit
-v2: Remove "fast wake" repeat from subject
-
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Fixes: e1c71f8f9180 ("drm/i915: Fix fast wake AUX sync len")
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8475
-Reviewed-by: Luca Coelho <luciano.coelho@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230530101649.2549949-1-jouni.hogander@intel.com
-(cherry picked from commit b29a20f7c4995a059ed764ce42389857426397c7)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 0b94f2651f56 ("Bluetooth: hci_sync: Fix queuing commands when HCI_UNREGISTER is set")
+Signed-off-by: Zhengping Jiang <jiangzp@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp_aux.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/bluetooth/hci_core.h |  1 +
+ net/bluetooth/hci_core.c         |  2 ++
+ net/bluetooth/hci_sync.c         | 20 ++++++++++++++------
+ 3 files changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp_aux.c b/drivers/gpu/drm/i915/display/intel_dp_aux.c
-index 8325868770994..ab357161ccc3a 100644
---- a/drivers/gpu/drm/i915/display/intel_dp_aux.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_aux.c
-@@ -129,7 +129,7 @@ static int intel_dp_aux_sync_len(void)
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 061fec6fd0152..84c5ce57eab69 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -513,6 +513,7 @@ struct hci_dev {
+ 	struct work_struct	cmd_sync_work;
+ 	struct list_head	cmd_sync_work_list;
+ 	struct mutex		cmd_sync_work_lock;
++	struct mutex		unregister_lock;
+ 	struct work_struct	cmd_sync_cancel_work;
+ 	struct work_struct	reenable_adv_work;
  
- static int intel_dp_aux_fw_sync_len(void)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 334e308451f53..ac36e7ae70b21 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2685,7 +2685,9 @@ void hci_unregister_dev(struct hci_dev *hdev)
  {
--	int precharge = 16; /* 10-16 */
-+	int precharge = 10; /* 10-16 */
- 	int preamble = 8;
+ 	BT_DBG("%p name %s bus %d", hdev, hdev->name, hdev->bus);
  
- 	return precharge + preamble;
++	mutex_lock(&hdev->unregister_lock);
+ 	hci_dev_set_flag(hdev, HCI_UNREGISTER);
++	mutex_unlock(&hdev->unregister_lock);
+ 
+ 	write_lock(&hci_dev_list_lock);
+ 	list_del(&hdev->list);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index e8b78104a4071..40a6cfa2f9a07 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -629,6 +629,7 @@ void hci_cmd_sync_init(struct hci_dev *hdev)
+ 	INIT_WORK(&hdev->cmd_sync_work, hci_cmd_sync_work);
+ 	INIT_LIST_HEAD(&hdev->cmd_sync_work_list);
+ 	mutex_init(&hdev->cmd_sync_work_lock);
++	mutex_init(&hdev->unregister_lock);
+ 
+ 	INIT_WORK(&hdev->cmd_sync_cancel_work, hci_cmd_sync_cancel_work);
+ 	INIT_WORK(&hdev->reenable_adv_work, reenable_adv);
+@@ -688,14 +689,19 @@ int hci_cmd_sync_queue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ 		       void *data, hci_cmd_sync_work_destroy_t destroy)
+ {
+ 	struct hci_cmd_sync_work_entry *entry;
++	int err = 0;
+ 
+-	if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
+-		return -ENODEV;
++	mutex_lock(&hdev->unregister_lock);
++	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
++		err = -ENODEV;
++		goto unlock;
++	}
+ 
+ 	entry = kmalloc(sizeof(*entry), GFP_KERNEL);
+-	if (!entry)
+-		return -ENOMEM;
+-
++	if (!entry) {
++		err = -ENOMEM;
++		goto unlock;
++	}
+ 	entry->func = func;
+ 	entry->data = data;
+ 	entry->destroy = destroy;
+@@ -706,7 +712,9 @@ int hci_cmd_sync_queue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ 
+ 	queue_work(hdev->req_workqueue, &hdev->cmd_sync_work);
+ 
+-	return 0;
++unlock:
++	mutex_unlock(&hdev->unregister_lock);
++	return err;
+ }
+ EXPORT_SYMBOL(hci_cmd_sync_queue);
+ 
 -- 
 2.39.2
 
