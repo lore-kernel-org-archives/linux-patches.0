@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCFDD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:48:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168AAC433EF;
-	Mon, 12 Jun 2023 10:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48080D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:48:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE94C433EF;
+	Mon, 12 Jun 2023 10:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566935;
-	bh=tYhmpjOVNoC/7aLqc3NJnYUbWt4jUAzkIBgDYzqMbqs=;
+	s=korg; t=1686566938;
+	bh=EYuEkeCPEWWbbCX01P83N+1oqQy7cklZH5Ysb8vs/64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKEcSs6NDywwzJKJNRG4Cvvk5LLns/5vp8FfYWMjK/vkmchY4zQE/C1mSUmTkr4Pn
-	 40bOh7NuUm93HTEh5LQ4D61rI+Es2QZ9YvqcsoUAe64r3NBUYno7Aqh0x/mmbgDI9t
-	 g5fJzZ+PHPpOlRcE1KGrzS9phlHtwUPSLRsz2x24=
+	b=Jydb82TkSlYJ8KawmgeyfIHI8b+Ry9ZQlOCz+WDygAZM9XmCROfZOP8I1eYgIX46Q
+	 Yd83FX4cbbl7kE9AyO51tIEoBx3urQTKbmA/nG6NbNs/n2UJsC5GkMaAYmC/jFr33i
+	 nu+GbmUaGg8gT7sNAkpvknDLmBH5z869YOOsS7y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Zidek <zidek@master.cz>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>,
-	stable@kernel.org
-Subject: [PATCH 6.3 080/160] ALSA: ice1712,ice1724: fix the kcontrol->id initialization
-Date: Mon, 12 Jun 2023 12:26:52 +0200
-Message-ID: <20230612101718.679285666@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.3 089/160] drm/amd/pm: Fix power context allocation in SMU13
+Date: Mon, 12 Jun 2023 12:27:01 +0200
+Message-ID: <20230612101719.093189010@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,112 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaroslav Kysela <perex@perex.cz>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit b9a4efd61b6b9f62f83752959e75a5dae20624fa upstream.
+commit 1d13c49cf4e246b218d71873f1bb1bbd376aa10e upstream.
 
-The new xarray lookup code requires to know complete kcontrol->id before
-snd_ctl_add() call. Reorder the code to make the initialization properly.
+Use the right data structure for allocation.
 
-Cc: stable@kernel.org # v5.19+
-Reported-by: Martin Zidek <zidek@master.cz>
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
-Link: https://lore.kernel.org/r/20230606073122.597491-1-perex@perex.cz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ice1712/aureon.c  |    7 ++++---
- sound/pci/ice1712/ice1712.c |   14 +++++++++-----
- sound/pci/ice1712/ice1724.c |   16 ++++++++++------
- 3 files changed, 23 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/pci/ice1712/aureon.c
-+++ b/sound/pci/ice1712/aureon.c
-@@ -1899,11 +1899,12 @@ static int aureon_add_controls(struct sn
- 		else {
- 			for (i = 0; i < ARRAY_SIZE(cs8415_controls); i++) {
- 				struct snd_kcontrol *kctl;
--				err = snd_ctl_add(ice->card, (kctl = snd_ctl_new1(&cs8415_controls[i], ice)));
--				if (err < 0)
--					return err;
-+				kctl = snd_ctl_new1(&cs8415_controls[i], ice);
- 				if (i > 1)
- 					kctl->id.device = ice->pcm->device;
-+				err = snd_ctl_add(ice->card, kctl);
-+				if (err < 0)
-+					return err;
- 			}
- 		}
- 	}
---- a/sound/pci/ice1712/ice1712.c
-+++ b/sound/pci/ice1712/ice1712.c
-@@ -2371,22 +2371,26 @@ int snd_ice1712_spdif_build_controls(str
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -566,11 +566,11 @@ int smu_v13_0_init_power(struct smu_cont
+ 	if (smu_power->power_context || smu_power->power_context_size != 0)
+ 		return -EINVAL;
  
- 	if (snd_BUG_ON(!ice->pcm_pro))
- 		return -EIO;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_ice1712_spdif_default, ice));
-+	kctl = snd_ctl_new1(&snd_ice1712_spdif_default, ice);
-+	kctl->id.device = ice->pcm_pro->device;
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_ice1712_spdif_maskc, ice);
- 	kctl->id.device = ice->pcm_pro->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_ice1712_spdif_maskc, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_ice1712_spdif_maskp, ice);
- 	kctl->id.device = ice->pcm_pro->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_ice1712_spdif_maskp, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_ice1712_spdif_stream, ice);
- 	kctl->id.device = ice->pcm_pro->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_ice1712_spdif_stream, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
--	kctl->id.device = ice->pcm_pro->device;
- 	ice->spdif.stream_ctl = kctl;
+-	smu_power->power_context = kzalloc(sizeof(struct smu_13_0_dpm_context),
++	smu_power->power_context = kzalloc(sizeof(struct smu_13_0_power_context),
+ 					   GFP_KERNEL);
+ 	if (!smu_power->power_context)
+ 		return -ENOMEM;
+-	smu_power->power_context_size = sizeof(struct smu_13_0_dpm_context);
++	smu_power->power_context_size = sizeof(struct smu_13_0_power_context);
+ 
  	return 0;
  }
---- a/sound/pci/ice1712/ice1724.c
-+++ b/sound/pci/ice1712/ice1724.c
-@@ -2392,23 +2392,27 @@ static int snd_vt1724_spdif_build_contro
- 	if (err < 0)
- 		return err;
- 
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_vt1724_spdif_default, ice));
-+	kctl = snd_ctl_new1(&snd_vt1724_spdif_default, ice);
-+	kctl->id.device = ice->pcm->device;
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_vt1724_spdif_maskc, ice);
- 	kctl->id.device = ice->pcm->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_vt1724_spdif_maskc, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_vt1724_spdif_maskp, ice);
- 	kctl->id.device = ice->pcm->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_vt1724_spdif_maskp, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
--	kctl->id.device = ice->pcm->device;
- #if 0 /* use default only */
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_vt1724_spdif_stream, ice));
-+	kctl = snd_ctl_new1(&snd_vt1724_spdif_stream, ice);
-+	kctl->id.device = ice->pcm->device;
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
--	kctl->id.device = ice->pcm->device;
- 	ice->spdif.stream_ctl = kctl;
- #endif
- 	return 0;
 
 
