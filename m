@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C2A1951F
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:32:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFAF5C433EF;
-	Mon, 12 Jun 2023 10:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5E319531
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:32:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92224C4339B;
+	Mon, 12 Jun 2023 10:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565970;
-	bh=c7IlnrlA2Yxrp30Q52gHwzxuRfWVGZqbiKzCiQOiR2Q=;
+	s=korg; t=1686565973;
+	bh=+/WoZ4SinCuwwv4QgeKRaZBwViT40csYoj4zG0zEIxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sf7HRTUs5GwdIZs8AAc8eLnpCJ9paRc9cjAxONEWnWWkFhuWXq3Ww4IN1aljGWEWb
-	 5dYri3HX7LPzSGhG54xyCzadPqQ7Ws1J9I1xqBrJyQrWClfJ+NKCq83gIItoxkzWba
-	 wuGBnZ7haYYmwZPoaA+DW83qxXLAzNxM0DnXIZ/U=
+	b=XXnL9rJOkx1J9ZH9hnh/2PtNrN6ZoPRMHaiUthOZObnbu/mN2SxU20BN81Ssbu0rl
+	 sv4DfwnkAbXgJ392huw8mTXJT4Zg+VjW99WFjQ67pYTsmaqgr3oq0wuGrwBg/QZ2vc
+	 RQv5+d7AdaUqVvkESeBCJeQ51KkGRsTYYmmXepdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	linux-hardening@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	Paul Barker <paul.barker@sancloud.com>
-Subject: [PATCH 5.10 02/68] gcc-plugins: Reorganize gimple includes for GCC 13
-Date: Mon, 12 Jun 2023 12:25:54 +0200
-Message-ID: <20230612101658.540867935@linuxfoundation.org>
+	Martin Liska <mliska@suse.cz>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Martin Habets <habetsm.xilinx@gmail.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 03/68] sfc (gcc13): synchronize ef100_enqueue_skb()s return type
+Date: Mon, 12 Jun 2023 12:25:55 +0200
+Message-ID: <20230612101658.582584612@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -36,55 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-mainline commit: e6a71160cc145e18ab45195abf89884112e02dfb
+commit 3319dbb3e755398f254c3daa04b9030197137efe upstream.
 
-The gimple-iterator.h header must be included before gimple-fold.h
-starting with GCC 13. Reorganize gimple headers to work for all GCC
-versions.
+ef100_enqueue_skb() generates a valid warning with gcc-13:
+  drivers/net/ethernet/sfc/ef100_tx.c:370:5: error: conflicting types for 'ef100_enqueue_skb' due to enum/integer mismatch; have 'int(struct efx_tx_queue *, struct sk_buff *)'
+  drivers/net/ethernet/sfc/ef100_tx.h:25:13: note: previous declaration of 'ef100_enqueue_skb' with type 'netdev_tx_t(struct efx_tx_queue *, struct sk_buff *)'
 
-Reported-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/all/20230113173033.4380-1-palmer@rivosinc.com/
-Cc: linux-hardening@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-[ Modified to handle differences in other includes and conditional compilation in the 5.10.y tree. ]
-Signed-off-by: Paul Barker <paul.barker@sancloud.com>
+I.e. the type of the ef100_enqueue_skb()'s return value in the declaration is
+int, while the definition spells enum netdev_tx_t. Synchronize them to the
+latter.
+
+Cc: Martin Liska <mliska@suse.cz>
+Cc: Edward Cree <ecree.xilinx@gmail.com>
+Cc: Martin Habets <habetsm.xilinx@gmail.com>
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20221031114440.10461-1-jirislaby@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gcc-plugins/gcc-common.h |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/sfc/ef100_tx.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/scripts/gcc-plugins/gcc-common.h
-+++ b/scripts/gcc-plugins/gcc-common.h
-@@ -108,7 +108,13 @@
- #include "varasm.h"
- #include "stor-layout.h"
- #include "internal-fn.h"
-+#endif
-+
-+#include "gimple.h"
-+
-+#if BUILDING_GCC_VERSION >= 4009
- #include "gimple-expr.h"
-+#include "gimple-iterator.h"
- #include "gimple-fold.h"
- #include "context.h"
- #include "tree-ssa-alias.h"
-@@ -124,13 +130,10 @@
- #include "gimplify.h"
- #endif
- 
--#include "gimple.h"
--
- #if BUILDING_GCC_VERSION >= 4009
- #include "tree-ssa-operands.h"
- #include "tree-phinodes.h"
- #include "tree-cfg.h"
--#include "gimple-iterator.h"
- #include "gimple-ssa.h"
- #include "ssa-iterators.h"
- #endif
+--- a/drivers/net/ethernet/sfc/ef100_tx.c
++++ b/drivers/net/ethernet/sfc/ef100_tx.c
+@@ -333,7 +333,8 @@ void ef100_ev_tx(struct efx_channel *cha
+  * Returns 0 on success, error code otherwise. In case of an error this
+  * function will free the SKB.
+  */
+-int ef100_enqueue_skb(struct efx_tx_queue *tx_queue, struct sk_buff *skb)
++netdev_tx_t ef100_enqueue_skb(struct efx_tx_queue *tx_queue,
++			      struct sk_buff *skb)
+ {
+ 	unsigned int old_insert_count = tx_queue->insert_count;
+ 	struct efx_nic *efx = tx_queue->efx;
 
 
