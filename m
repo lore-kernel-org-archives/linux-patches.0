@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938E4134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14049C433D2;
-	Mon, 12 Jun 2023 10:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A273134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEB0C433D2;
+	Mon, 12 Jun 2023 10:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566519;
-	bh=tM68sGVqE0tz5h7mYBc1/1KjITyctaa/18xD0/vfC8Y=;
+	s=korg; t=1686566522;
+	bh=XfOhGVN0v3hG1viVczaSizwo/DtWCgAmZJl6dL9mBfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MV4RGlOEsQvV/M1HjtcIBp1c0M5AQD2aSEVhQWih7UG9T0H8tYZMIZ49JGHAFiiD1
-	 FW0VdaDIU2qFwHfrqezQMonVLiAle5TWZYyUwNA0mqHLmjVvmxGv8LfR5os6UASA26
-	 273db1nVD1gf5yg/FkLGI9SAlNeANtarKbtTFObo=
+	b=V16UoqO42tt0Ern3BGAcrJ2a3oIBhULWxHfa6yJTt/YhCdqCW77SjSU9ciRZMtxr/
+	 g2rm8HpntZT2rUekINzdBMsJ5jxi22mGixbQVOFOdUm+VUdQOo4CyylGYByAduoZ1u
+	 N/oK+ueY1xEp3sWlii7vpMK+s8RIaZnOpe1EzGDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yhs@fb.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/132] selftests/bpf: Verify optval=NULL case
-Date: Mon, 12 Jun 2023 12:26:07 +0200
-Message-ID: <20230612101711.741227665@linuxfoundation.org>
+Subject: [PATCH 6.1 034/132] selftests/bpf: Fix sockopt_sk selftest
+Date: Mon, 12 Jun 2023 12:26:08 +0200
+Message-ID: <20230612101711.774822183@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,98 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Yonghong Song <yhs@fb.com>
 
-[ Upstream commit 833d67ecdc5f35f1ebf59d0fccc1ce771434be9c ]
+[ Upstream commit 69844e335d8c22454746c7903776533d8b4ab8fa ]
 
-Make sure we get optlen exported instead of getting EFAULT.
+Commit f4e4534850a9 ("net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report")
+fixed NETLINK_LIST_MEMBERSHIPS length report which caused
+selftest sockopt_sk failure. The failure log looks like
 
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230418225343.553806-3-sdf@google.com
-Stable-dep-of: 69844e335d8c ("selftests/bpf: Fix sockopt_sk selftest")
+  test_sockopt_sk:PASS:join_cgroup /sockopt_sk 0 nsec
+  run_test:PASS:skel_load 0 nsec
+  run_test:PASS:setsockopt_link 0 nsec
+  run_test:PASS:getsockopt_link 0 nsec
+  getsetsockopt:FAIL:Unexpected NETLINK_LIST_MEMBERSHIPS value unexpected Unexpected NETLINK_LIST_MEMBERSHIPS value: actual 8 != expected 4
+  run_test:PASS:getsetsockopt 0 nsec
+  #201     sockopt_sk:FAIL
+
+In net/netlink/af_netlink.c, function netlink_getsockopt(), for NETLINK_LIST_MEMBERSHIPS,
+nlk->ngroups equals to 36. Before Commit f4e4534850a9, the optlen is calculated as
+  ALIGN(nlk->ngroups / 8, sizeof(u32)) = 4
+After that commit, the optlen is
+  ALIGN(BITS_TO_BYTES(nlk->ngroups), sizeof(u32)) = 8
+
+Fix the test by setting the expected optlen to be 8.
+
+Fixes: f4e4534850a9 ("net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report")
+Signed-off-by: Yonghong Song <yhs@fb.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230606172202.1606249-1-yhs@fb.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/sockopt_sk.c     | 28 +++++++++++++++++++
- .../testing/selftests/bpf/progs/sockopt_sk.c  | 12 ++++++++
- 2 files changed, 40 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/sockopt_sk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c b/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-index 60d952719d275..4512dd808c335 100644
+index 4512dd808c335..05d0e07da3942 100644
 --- a/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
 +++ b/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-@@ -3,6 +3,7 @@
- #include "cgroup_helpers.h"
- 
- #include <linux/tcp.h>
-+#include <linux/netlink.h>
- #include "sockopt_sk.skel.h"
- 
- #ifndef SOL_TCP
-@@ -183,6 +184,33 @@ static int getsetsockopt(void)
+@@ -209,7 +209,7 @@ static int getsetsockopt(void)
+ 			err, errno);
  		goto err;
  	}
+-	ASSERT_EQ(optlen, 4, "Unexpected NETLINK_LIST_MEMBERSHIPS value");
++	ASSERT_EQ(optlen, 8, "Unexpected NETLINK_LIST_MEMBERSHIPS value");
  
-+	/* optval=NULL case is handled correctly */
-+
-+	close(fd);
-+	fd = socket(AF_NETLINK, SOCK_RAW, 0);
-+	if (fd < 0) {
-+		log_err("Failed to create AF_NETLINK socket");
-+		return -1;
-+	}
-+
-+	buf.u32 = 1;
-+	optlen = sizeof(__u32);
-+	err = setsockopt(fd, SOL_NETLINK, NETLINK_ADD_MEMBERSHIP, &buf, optlen);
-+	if (err) {
-+		log_err("Unexpected getsockopt(NETLINK_ADD_MEMBERSHIP) err=%d errno=%d",
-+			err, errno);
-+		goto err;
-+	}
-+
-+	optlen = 0;
-+	err = getsockopt(fd, SOL_NETLINK, NETLINK_LIST_MEMBERSHIPS, NULL, &optlen);
-+	if (err) {
-+		log_err("Unexpected getsockopt(NETLINK_LIST_MEMBERSHIPS) err=%d errno=%d",
-+			err, errno);
-+		goto err;
-+	}
-+	ASSERT_EQ(optlen, 4, "Unexpected NETLINK_LIST_MEMBERSHIPS value");
-+
  	free(big_buf);
  	close(fd);
- 	return 0;
-diff --git a/tools/testing/selftests/bpf/progs/sockopt_sk.c b/tools/testing/selftests/bpf/progs/sockopt_sk.c
-index c8d810010a946..fe1df4cd206eb 100644
---- a/tools/testing/selftests/bpf/progs/sockopt_sk.c
-+++ b/tools/testing/selftests/bpf/progs/sockopt_sk.c
-@@ -32,6 +32,12 @@ int _getsockopt(struct bpf_sockopt *ctx)
- 	__u8 *optval_end = ctx->optval_end;
- 	__u8 *optval = ctx->optval;
- 	struct sockopt_sk *storage;
-+	struct bpf_sock *sk;
-+
-+	/* Bypass AF_NETLINK. */
-+	sk = ctx->sk;
-+	if (sk && sk->family == AF_NETLINK)
-+		return 1;
- 
- 	/* Make sure bpf_get_netns_cookie is callable.
- 	 */
-@@ -131,6 +137,12 @@ int _setsockopt(struct bpf_sockopt *ctx)
- 	__u8 *optval_end = ctx->optval_end;
- 	__u8 *optval = ctx->optval;
- 	struct sockopt_sk *storage;
-+	struct bpf_sock *sk;
-+
-+	/* Bypass AF_NETLINK. */
-+	sk = ctx->sk;
-+	if (sk && sk->family == AF_NETLINK)
-+		return 1;
- 
- 	/* Make sure bpf_get_netns_cookie is callable.
- 	 */
 -- 
 2.39.2
 
