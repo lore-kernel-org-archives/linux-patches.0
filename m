@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873AB134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF96C433EF;
-	Mon, 12 Jun 2023 10:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2679D134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CD9C433D2;
+	Mon, 12 Jun 2023 10:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566695;
-	bh=k+8h8SGvjs4mVpgQP+Iz9GTT9FbZaJrXgF70gd/xD7w=;
+	s=korg; t=1686566698;
+	bh=QtxbLaHuYZBLlE4+m/2/DCFIz9tADeiJRqASlFLJenk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bp+OrDFTC5AQgJJN8h0fWMSi45IqxFOUSlSXCntFioKNlaILWNCI7dmgTECFqHbjV
-	 yHBqUB5zU/d/Gi6cfaQ60EwHeXfR8q8WnTVVOaHt/ZkE/npyZxPn5dPm9vE5lBJI8f
-	 8HQOzDZmeDiaATsTn2CJfOoM43oTI4qtXQkgMkL0=
+	b=C7ma5FOAsJLcIEjH9va2MT1R8kS9lEQX9z2RyvFq8lNAyWAtoAbPnqIG+JRmnZebS
+	 RkCJNz0qi28x8vpIzBPB2Mjm0ecRPgAVnSc6PAd67e+KDMitqwyKby9cfc2mMrZwC6
+	 lnVB/iyRAFY7SIqQmhGTOpEtVVL1Py/rLgBMOXeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xie Yongji" <xieyongji@bytedance.com>,
-	Xianjun Zeng <zengxianjun@bytedance.com>,
-	Sheng Zhao <sheng.zhao@bytedance.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/132] vduse: avoid empty string for dev name
-Date: Mon, 12 Jun 2023 12:27:36 +0200
-Message-ID: <20230612101715.780565122@linuxfoundation.org>
+Subject: [PATCH 6.1 123/132] vhost: support PACKED when setting-getting vring_base
+Date: Mon, 12 Jun 2023 12:27:37 +0200
+Message-ID: <20230612101715.819093298@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -38,62 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sheng Zhao <sheng.zhao@bytedance.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit a90e8608eb0ed93d31ac0feb055f77ce59512542 ]
+[ Upstream commit 55d8122f5cd62d5aaa225d7167dcd14a44c850b9 ]
 
-Syzkaller hits a kernel WARN when the first character of the dev name
-provided is NULL. Solution is to add a NULL check before calling
-cdev_device_add() in vduse_create_dev().
+Use the right structs for PACKED or split vqs when setting and
+getting the vring base.
 
-kobject: (0000000072042169): attempted to be registered with empty name!
-WARNING: CPU: 0 PID: 112695 at lib/kobject.c:236
-Call Trace:
- kobject_add_varg linux/src/lib/kobject.c:390 [inline]
- kobject_add+0xf6/0x150 linux/src/lib/kobject.c:442
- device_add+0x28f/0xc20 linux/src/drivers/base/core.c:2167
- cdev_device_add+0x83/0xc0 linux/src/fs/char_dev.c:546
- vduse_create_dev linux/src/drivers/vdpa/vdpa_user/vduse_dev.c:2254 [inline]
- vduse_ioctl+0x7b5/0xf30 linux/src/drivers/vdpa/vdpa_user/vduse_dev.c:2316
- vfs_ioctl linux/src/fs/ioctl.c:47 [inline]
- file_ioctl linux/src/fs/ioctl.c:510 [inline]
- do_vfs_ioctl+0x14b/0xa80 linux/src/fs/ioctl.c:697
- ksys_ioctl+0x7c/0xa0 linux/src/fs/ioctl.c:714
- __do_sys_ioctl linux/src/fs/ioctl.c:721 [inline]
- __se_sys_ioctl linux/src/fs/ioctl.c:719 [inline]
- __x64_sys_ioctl+0x42/0x50 linux/src/fs/ioctl.c:719
- do_syscall_64+0x94/0x330 linux/src/arch/x86/entry/common.c:291
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-
-Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
-Cc: "Xie Yongji" <xieyongji@bytedance.com>
-Reported-by: Xianjun Zeng <zengxianjun@bytedance.com>
-Signed-off-by: Sheng Zhao <sheng.zhao@bytedance.com>
-Message-Id: <20230530033626.1266794-1-sheng.zhao@bytedance.com>
+Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Message-Id: <20230424225031.18947-3-shannon.nelson@amd.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
-Cc: "Michael S. Tsirkin"<mst@redhat.com>, "Jason Wang"<jasowang@redhat.com>,
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/vhost/vhost.c | 18 +++++++++++++-----
+ drivers/vhost/vhost.h |  8 ++++++--
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index 31017ebc4d7c7..72f924ec4658d 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -1443,6 +1443,9 @@ static bool vduse_validate_config(struct vduse_dev_config *config)
- 	if (config->vq_num > 0xffff)
- 		return false;
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 43c9770b86e5a..1a059b028c501 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1633,17 +1633,25 @@ long vhost_vring_ioctl(struct vhost_dev *d, unsigned int ioctl, void __user *arg
+ 			r = -EFAULT;
+ 			break;
+ 		}
+-		if (s.num > 0xffff) {
+-			r = -EINVAL;
+-			break;
++		if (vhost_has_feature(vq, VIRTIO_F_RING_PACKED)) {
++			vq->last_avail_idx = s.num & 0xffff;
++			vq->last_used_idx = (s.num >> 16) & 0xffff;
++		} else {
++			if (s.num > 0xffff) {
++				r = -EINVAL;
++				break;
++			}
++			vq->last_avail_idx = s.num;
+ 		}
+-		vq->last_avail_idx = s.num;
+ 		/* Forget the cached index value. */
+ 		vq->avail_idx = vq->last_avail_idx;
+ 		break;
+ 	case VHOST_GET_VRING_BASE:
+ 		s.index = idx;
+-		s.num = vq->last_avail_idx;
++		if (vhost_has_feature(vq, VIRTIO_F_RING_PACKED))
++			s.num = (u32)vq->last_avail_idx | ((u32)vq->last_used_idx << 16);
++		else
++			s.num = vq->last_avail_idx;
+ 		if (copy_to_user(argp, &s, sizeof s))
+ 			r = -EFAULT;
+ 		break;
+diff --git a/drivers/vhost/vhost.h b/drivers/vhost/vhost.h
+index 790b296271f1e..5e17c4aa73745 100644
+--- a/drivers/vhost/vhost.h
++++ b/drivers/vhost/vhost.h
+@@ -85,13 +85,17 @@ struct vhost_virtqueue {
+ 	/* The routine to call when the Guest pings us, or timeout. */
+ 	vhost_work_fn_t handle_kick;
  
-+	if (!config->name[0])
-+		return false;
-+
- 	if (!device_is_allowed(config->device_id))
- 		return false;
+-	/* Last available index we saw. */
++	/* Last available index we saw.
++	 * Values are limited to 0x7fff, and the high bit is used as
++	 * a wrap counter when using VIRTIO_F_RING_PACKED. */
+ 	u16 last_avail_idx;
  
+ 	/* Caches available index value from user. */
+ 	u16 avail_idx;
+ 
+-	/* Last index we used. */
++	/* Last index we used.
++	 * Values are limited to 0x7fff, and the high bit is used as
++	 * a wrap counter when using VIRTIO_F_RING_PACKED. */
+ 	u16 last_used_idx;
+ 
+ 	/* Used flags */
 -- 
 2.39.2
 
