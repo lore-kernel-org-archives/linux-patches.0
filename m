@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6FB19503
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E60EC433D2;
-	Mon, 12 Jun 2023 10:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220BD19533
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B444C433EF;
+	Mon, 12 Jun 2023 10:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565815;
-	bh=WG8YRsDnKF5Jsf6Vv3V61WWIhFLUiIsvpfcrCShqzzY=;
+	s=korg; t=1686565818;
+	bh=g4qIqz9blOasiYw95k8Z6xDH363Pk7o6mlepxM1oMto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJXhyMmQDilTTjPFJmNty4UC/GCV7+SzDmsIW/VEAhHEgZdT9Hmxkz7IRtbUQCA7t
-	 zgHoalA1C/btpijipVBUWjsVzCYpLkS8jqNx+GQiYUqkoz+H8AWgqap/hr0QU6L+hb
-	 tUIdnvjFDWnfxLkrh6oMpAePJlq1OOGTXRmamkkI=
+	b=srZ0SPvBj6HBsTvC13Tc7YbnDivJiTRAx44iHY0SnfOdmGNCm16cTm9+j3SVMOT82
+	 CB4d8ON9Ymn5NgfvMIvxPNmvUhMpoCDBzDMFMeoYkDRfZ3gDj0+oeOzrf3QWxHHjHh
+	 XuCa/UXcmc2MvLlF2hN/vryTM6ES2bBr4DhE2/T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ying Hsu <yinghsu@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 04/23] net: dsa: lan9303: allow vid != 0 in port_fdb_{add|del} methods
-Date: Mon, 12 Jun 2023 12:26:05 +0200
-Message-ID: <20230612101651.299809161@linuxfoundation.org>
+Subject: [PATCH 4.19 05/23] Bluetooth: Fix l2cap_disconnect_req deadlock
+Date: Mon, 12 Jun 2023 12:26:06 +0200
+Message-ID: <20230612101651.340957212@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101651.138592130@linuxfoundation.org>
 References: <20230612101651.138592130@linuxfoundation.org>
@@ -36,54 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit 5a59a58ec25d44f853c26bdbfda47d73b3067435 ]
+[ Upstream commit 02c5ea5246a44d6ffde0fddebfc1d56188052976 ]
 
-LAN9303 doesn't associate FDB (ALR) entries with VLANs, it has just one
-global Address Logic Resolution table [1].
+L2CAP assumes that the locks conn->chan_lock and chan->lock are
+acquired in the order conn->chan_lock, chan->lock to avoid
+potential deadlock.
+For example, l2sock_shutdown acquires these locks in the order:
+  mutex_lock(&conn->chan_lock)
+  l2cap_chan_lock(chan)
 
-Ignore VID in port_fdb_{add|del} methods, go on with the global table. This
-is the same semantics as hellcreek or RZ/N1 implement.
+However, l2cap_disconnect_req acquires chan->lock in
+l2cap_get_chan_by_scid first and then acquires conn->chan_lock
+before calling l2cap_chan_del. This means that these locks are
+acquired in unexpected order, which leads to potential deadlock:
+  l2cap_chan_lock(c)
+  mutex_lock(&conn->chan_lock)
 
-Visible symptoms:
-LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to delete 00:xx:xx:xx:xx:cf vid 1 from fdb: -2
-LAN9303_MDIO 5b050000.ethernet-1:00: port 2 failed to add 00:xx:xx:xx:xx:cf vid 1 to fdb: -95
+This patch releases chan->lock before acquiring the conn_chan_lock
+to avoid the potential deadlock.
 
-[1] https://ww1.microchip.com/downloads/en/DeviceDoc/00002308A.pdf
-
-Fixes: 0620427ea0d6 ("net: dsa: lan9303: Add fdb/mdb manipulation")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20230531143826.477267-1-alexander.sverdlin@siemens.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a2a9339e1c9d ("Bluetooth: L2CAP: Fix use-after-free in l2cap_disconnect_{req,rsp}")
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/lan9303-core.c | 4 ----
- 1 file changed, 4 deletions(-)
+ net/bluetooth/l2cap_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/dsa/lan9303-core.c b/drivers/net/dsa/lan9303-core.c
-index f976b3d64593a..80ac5efb0a7a9 100644
---- a/drivers/net/dsa/lan9303-core.c
-+++ b/drivers/net/dsa/lan9303-core.c
-@@ -1191,8 +1191,6 @@ static int lan9303_port_fdb_add(struct dsa_switch *ds, int port,
- 	struct lan9303 *chip = ds->priv;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 94d40a20ab958..d91ddcd54e278 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4362,7 +4362,9 @@ static inline int l2cap_disconnect_req(struct l2cap_conn *conn,
  
- 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
--	if (vid)
--		return -EOPNOTSUPP;
+ 	chan->ops->set_shutdown(chan);
  
- 	return lan9303_alr_add_port(chip, addr, port, false);
- }
-@@ -1204,8 +1202,6 @@ static int lan9303_port_fdb_del(struct dsa_switch *ds, int port,
- 	struct lan9303 *chip = ds->priv;
++	l2cap_chan_unlock(chan);
+ 	mutex_lock(&conn->chan_lock);
++	l2cap_chan_lock(chan);
+ 	l2cap_chan_del(chan, ECONNRESET);
+ 	mutex_unlock(&conn->chan_lock);
  
- 	dev_dbg(chip->dev, "%s(%d, %pM, %d)\n", __func__, port, addr, vid);
--	if (vid)
--		return -EOPNOTSUPP;
- 	lan9303_alr_del_port(chip, addr, port);
+@@ -4401,7 +4403,9 @@ static inline int l2cap_disconnect_rsp(struct l2cap_conn *conn,
+ 		return 0;
+ 	}
  
- 	return 0;
++	l2cap_chan_unlock(chan);
+ 	mutex_lock(&conn->chan_lock);
++	l2cap_chan_lock(chan);
+ 	l2cap_chan_del(chan, 0);
+ 	mutex_unlock(&conn->chan_lock);
+ 
 -- 
 2.39.2
 
