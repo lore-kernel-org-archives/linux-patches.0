@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56391D512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:50:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C537AC433EF;
-	Mon, 12 Jun 2023 10:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80BDD512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:50:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FD8C433EF;
+	Mon, 12 Jun 2023 10:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567056;
-	bh=AHGiYkjRQhfzyrQ2Me3LxjISK/CcpqlaFKZIJM9ekl8=;
+	s=korg; t=1686567058;
+	bh=FziwGmdtAE1CFjguqzvd7nHuHzA04oK5v5d2YF1oH1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wA7HMiDTxKqa9SQRz/JUwaTzDnJwq1lPFpOBIYjaRHn48vCbkeHgfipYvkdMFF1o+
-	 8QRp3rOegAY+z6O18PDzvnR1qDZbe0s0ACTjcLYqTsJLKQ2/uzd4BLaJ/c4cwDut5+
-	 eBGQIj0qmWVm2QQ/9y9CX5L2sKI1pLue7LJQ8qBc=
+	b=gXxJQiOG5omusnhkoTSjjGKIA92L5JxuT6zO2blkqlAL4ajO8obrTQ8dZc89O8eE6
+	 Q2dxETUGswYIxDHz5BhKgcYngQlypRooaBg2AfWllZfFsk6AsZdqrcshs9gVpg8fMY
+	 V/Kzq/4l0gtm/vc+jI9IbEheoTF5cEAclZfg8U7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trevor Wu <trevor.wu@mediatek.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Robert Hancock <robert.hancock@calian.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 133/160] ASoC: mediatek: mt8195: fix use-after-free in driver remove path
-Date: Mon, 12 Jun 2023 12:27:45 +0200
-Message-ID: <20230612101721.159149649@linuxfoundation.org>
+Subject: [PATCH 6.3 134/160] ASoC: simple-card-utils: fix PCM constraint error check
+Date: Mon, 12 Jun 2023 12:27:46 +0200
+Message-ID: <20230612101721.192901205@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -37,171 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trevor Wu <trevor.wu@mediatek.com>
+From: Robert Hancock <robert.hancock@calian.com>
 
-[ Upstream commit dc93f0dcb436dfd24a06c5b3c0f4c5cd9296e8e5 ]
+[ Upstream commit 635071f5fee31550e921644b2becc42b3ff1036c ]
 
-During mt8195_afe_init_clock(), mt8195_audsys_clk_register() was called
-followed by several other devm functions. At mt8195_afe_deinit_clock()
-located at mt8195_afe_pcm_dev_remove(), mt8195_audsys_clk_unregister()
-was called.
+The code in asoc_simple_startup was treating any non-zero return from
+snd_pcm_hw_constraint_minmax as an error, when this can return 1 in some
+normal cases and only negative values indicate an error.
 
-However, there was an issue with the order in which these functions were
-called. Specifically, the remove callback of platform_driver was called
-before devres released the resource, resulting in a use-after-free issue
-during remove time.
+When this happened, it caused asoc_simple_startup to disable the clocks
+it just enabled and return 1, which was not treated as an error by the
+calling code which only checks for negative return values. Then when the
+PCM is eventually shut down, it causes the clock framework to complain
+about disabling clocks that were not enabled.
 
-At probe time, the order of calls was:
-1. mt8195_audsys_clk_register
-2. afe_priv->clk = devm_kcalloc
-3. afe_priv->clk[i] = devm_clk_get
+Fix the check for snd_pcm_hw_constraint_minmax return value to only
+treat negative values as an error.
 
-At remove time, the order of calls was:
-1. mt8195_audsys_clk_unregister
-3. free afe_priv->clk[i]
-2. free afe_priv->clk
-
-To resolve the problem, we can utilize devm_add_action_or_reset() in
-mt8195_audsys_clk_register() so that the remove order can be changed to
-3->2->1.
-
-Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
-Signed-off-by: Trevor Wu <trevor.wu@mediatek.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230601033318.10408-3-trevor.wu@mediatek.com
+Fixes: 5ca2ab459817 ("ASoC: simple-card-utils: Add new system-clock-fixed flag")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Link: https://lore.kernel.org/r/20230602011936.231931-1-robert.hancock@calian.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-afe-clk.c    |  5 --
- sound/soc/mediatek/mt8195/mt8195-afe-clk.h    |  1 -
- sound/soc/mediatek/mt8195/mt8195-afe-pcm.c    |  4 --
- sound/soc/mediatek/mt8195/mt8195-audsys-clk.c | 47 ++++++++++---------
- sound/soc/mediatek/mt8195/mt8195-audsys-clk.h |  1 -
- 5 files changed, 24 insertions(+), 34 deletions(-)
+ sound/soc/generic/simple-card-utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
-index 9ca2cb8c8a9c2..f35318ae07392 100644
---- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
-@@ -410,11 +410,6 @@ int mt8195_afe_init_clock(struct mtk_base_afe *afe)
- 	return 0;
- }
- 
--void mt8195_afe_deinit_clock(struct mtk_base_afe *afe)
--{
--	mt8195_audsys_clk_unregister(afe);
--}
--
- int mt8195_afe_enable_clk(struct mtk_base_afe *afe, struct clk *clk)
- {
- 	int ret;
-diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.h b/sound/soc/mediatek/mt8195/mt8195-afe-clk.h
-index 40663e31becd1..a08c0ee6c8602 100644
---- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.h
-+++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.h
-@@ -101,7 +101,6 @@ int mt8195_afe_get_mclk_source_clk_id(int sel);
- int mt8195_afe_get_mclk_source_rate(struct mtk_base_afe *afe, int apll);
- int mt8195_afe_get_default_mclk_source_by_rate(int rate);
- int mt8195_afe_init_clock(struct mtk_base_afe *afe);
--void mt8195_afe_deinit_clock(struct mtk_base_afe *afe);
- int mt8195_afe_enable_clk(struct mtk_base_afe *afe, struct clk *clk);
- void mt8195_afe_disable_clk(struct mtk_base_afe *afe, struct clk *clk);
- int mt8195_afe_prepare_clk(struct mtk_base_afe *afe, struct clk *clk);
-diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-index 9e45efeada55c..03dabc056b916 100644
---- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-@@ -3255,15 +3255,11 @@ static int mt8195_afe_pcm_dev_probe(struct platform_device *pdev)
- 
- static void mt8195_afe_pcm_dev_remove(struct platform_device *pdev)
- {
--	struct mtk_base_afe *afe = platform_get_drvdata(pdev);
--
- 	snd_soc_unregister_component(&pdev->dev);
- 
- 	pm_runtime_disable(&pdev->dev);
- 	if (!pm_runtime_status_suspended(&pdev->dev))
- 		mt8195_afe_runtime_suspend(&pdev->dev);
--
--	mt8195_afe_deinit_clock(afe);
- }
- 
- static const struct of_device_id mt8195_afe_pcm_dt_match[] = {
-diff --git a/sound/soc/mediatek/mt8195/mt8195-audsys-clk.c b/sound/soc/mediatek/mt8195/mt8195-audsys-clk.c
-index e0670e0dbd5b0..38594bc3f2f77 100644
---- a/sound/soc/mediatek/mt8195/mt8195-audsys-clk.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-audsys-clk.c
-@@ -148,6 +148,29 @@ static const struct afe_gate aud_clks[CLK_AUD_NR_CLK] = {
- 	GATE_AUD6(CLK_AUD_GASRC19, "aud_gasrc19", "top_asm_h", 19),
- };
- 
-+static void mt8195_audsys_clk_unregister(void *data)
-+{
-+	struct mtk_base_afe *afe = data;
-+	struct mt8195_afe_private *afe_priv = afe->platform_priv;
-+	struct clk *clk;
-+	struct clk_lookup *cl;
-+	int i;
-+
-+	if (!afe_priv)
-+		return;
-+
-+	for (i = 0; i < CLK_AUD_NR_CLK; i++) {
-+		cl = afe_priv->lookup[i];
-+		if (!cl)
-+			continue;
-+
-+		clk = cl->clk;
-+		clk_unregister_gate(clk);
-+
-+		clkdev_drop(cl);
-+	}
-+}
-+
- int mt8195_audsys_clk_register(struct mtk_base_afe *afe)
- {
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
-@@ -188,27 +211,5 @@ int mt8195_audsys_clk_register(struct mtk_base_afe *afe)
- 		afe_priv->lookup[i] = cl;
+diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
+index 56552a616f21f..1f24344846ae9 100644
+--- a/sound/soc/generic/simple-card-utils.c
++++ b/sound/soc/generic/simple-card-utils.c
+@@ -314,7 +314,7 @@ int asoc_simple_startup(struct snd_pcm_substream *substream)
+ 		}
+ 		ret = snd_pcm_hw_constraint_minmax(substream->runtime, SNDRV_PCM_HW_PARAM_RATE,
+ 			fixed_rate, fixed_rate);
+-		if (ret)
++		if (ret < 0)
+ 			goto codec_err;
  	}
  
--	return 0;
--}
--
--void mt8195_audsys_clk_unregister(struct mtk_base_afe *afe)
--{
--	struct mt8195_afe_private *afe_priv = afe->platform_priv;
--	struct clk *clk;
--	struct clk_lookup *cl;
--	int i;
--
--	if (!afe_priv)
--		return;
--
--	for (i = 0; i < CLK_AUD_NR_CLK; i++) {
--		cl = afe_priv->lookup[i];
--		if (!cl)
--			continue;
--
--		clk = cl->clk;
--		clk_unregister_gate(clk);
--
--		clkdev_drop(cl);
--	}
-+	return devm_add_action_or_reset(afe->dev, mt8195_audsys_clk_unregister, afe);
- }
-diff --git a/sound/soc/mediatek/mt8195/mt8195-audsys-clk.h b/sound/soc/mediatek/mt8195/mt8195-audsys-clk.h
-index 239d31016ba76..69db2dd1c9e02 100644
---- a/sound/soc/mediatek/mt8195/mt8195-audsys-clk.h
-+++ b/sound/soc/mediatek/mt8195/mt8195-audsys-clk.h
-@@ -10,6 +10,5 @@
- #define _MT8195_AUDSYS_CLK_H_
- 
- int mt8195_audsys_clk_register(struct mtk_base_afe *afe);
--void mt8195_audsys_clk_unregister(struct mtk_base_afe *afe);
- 
- #endif
 -- 
 2.39.2
 
