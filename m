@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32349DF4F
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBAAC433D2;
-	Mon, 12 Jun 2023 10:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB10FBF2
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D4FC433EF;
+	Mon, 12 Jun 2023 10:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566543;
-	bh=ie+q36mO8uVMU+qIZqq4sYOQ7dSxd6RxKybRidk33v0=;
+	s=korg; t=1686566545;
+	bh=D407yoHy8k15nn4A+GJw2lD3h6C6R2U50/wzyNSiIwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+nrUiUGx7K9eUdd6eWJQlKurMi+D/lJzvykWMEreZZ1nGEf4QMSGou8GoJir52j1
-	 jbHGZMPIYESCaxpeujNSnx/fEKfb3O8ZErrpoOtlOkCrUZE3HPPaM1WZKvkVmEMnqL
-	 NWbxBZAByyJednwfvGszartI4msfQM90auLDRk9I=
+	b=G8XqOLDjGLRStYCkwqsjy+HZqjQh+eSa1u0k6attaW4f4HcQrLzQhueeGcGK1WPib
+	 IHDXpH9QAEY+dbKgcd9GsWvu3gNQ1QUrizXabpQi18TuUaDfOljLSldinzos8T2hWt
+	 PJp9GfanrApeeiaBa0KN7YLHB7oD5mxT7JRkivcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 072/132] drm/amd/pm: conditionally disable pcie lane switching for some sienna_cichlid SKUs
-Date: Mon, 12 Jun 2023 12:26:46 +0200
-Message-ID: <20230612101713.560717984@linuxfoundation.org>
+Subject: [PATCH 6.1 073/132] drm/amdgpu: fix xclk freq on CHIP_STONEY
+Date: Mon, 12 Jun 2023 12:26:47 +0200
+Message-ID: <20230612101713.607945315@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -34,143 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-commit 38e4ced804796c5725e2a52ec3601951552c4a97 upstream.
+commit b447b079cf3a9971ea4d31301e673f49612ccc18 upstream.
 
-Disable the pcie lane switching for some sienna_cichlid SKUs since it
-might not work well on some platforms.
+According to Alex, most APUs from that time seem to have the same issue
+(vbios says 48Mhz, actual is 100Mhz).  I only have a CHIP_STONEY so I
+limit the fixup to CHIP_STONEY
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c |   92 ++++++++++++----
- 1 file changed, 74 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vi.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-@@ -2067,33 +2067,94 @@ static int sienna_cichlid_display_disabl
- 	return ret;
- }
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -542,8 +542,15 @@ static u32 vi_get_xclk(struct amdgpu_dev
+ 	u32 reference_clock = adev->clock.spll.reference_freq;
+ 	u32 tmp;
  
-+static void sienna_cichlid_get_override_pcie_settings(struct smu_context *smu,
-+						      uint32_t *gen_speed_override,
-+						      uint32_t *lane_width_override)
-+{
-+	struct amdgpu_device *adev = smu->adev;
-+
-+	*gen_speed_override = 0xff;
-+	*lane_width_override = 0xff;
-+
-+	switch (adev->pdev->device) {
-+	case 0x73A0:
-+	case 0x73A1:
-+	case 0x73A2:
-+	case 0x73A3:
-+	case 0x73AB:
-+	case 0x73AE:
-+		/* Bit 7:0: PCIE lane width, 1 to 7 corresponds is x1 to x32 */
-+		*lane_width_override = 6;
-+		break;
-+	case 0x73E0:
-+	case 0x73E1:
-+	case 0x73E3:
-+		*lane_width_override = 4;
-+		break;
-+	case 0x7420:
-+	case 0x7421:
-+	case 0x7422:
-+	case 0x7423:
-+	case 0x7424:
-+		*lane_width_override = 3;
-+		break;
-+	default:
-+		break;
+-	if (adev->flags & AMD_IS_APU)
+-		return reference_clock;
++	if (adev->flags & AMD_IS_APU) {
++		switch (adev->asic_type) {
++		case CHIP_STONEY:
++			/* vbios says 48Mhz, but the actual freq is 100Mhz */
++			return 10000;
++		default:
++			return reference_clock;
++		}
 +	}
-+}
-+
-+#define MAX(a, b)	((a) > (b) ? (a) : (b))
-+
- static int sienna_cichlid_update_pcie_parameters(struct smu_context *smu,
- 					 uint32_t pcie_gen_cap,
- 					 uint32_t pcie_width_cap)
- {
- 	struct smu_11_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
--
--	uint32_t smu_pcie_arg;
-+	struct smu_11_0_pcie_table *pcie_table = &dpm_context->dpm_tables.pcie_table;
-+	uint32_t gen_speed_override, lane_width_override;
- 	uint8_t *table_member1, *table_member2;
-+	uint32_t min_gen_speed, max_gen_speed;
-+	uint32_t min_lane_width, max_lane_width;
-+	uint32_t smu_pcie_arg;
- 	int ret, i;
  
- 	GET_PPTABLE_MEMBER(PcieGenSpeed, &table_member1);
- 	GET_PPTABLE_MEMBER(PcieLaneCount, &table_member2);
- 
--	/* lclk dpm table setup */
--	for (i = 0; i < MAX_PCIE_CONF; i++) {
--		dpm_context->dpm_tables.pcie_table.pcie_gen[i] = table_member1[i];
--		dpm_context->dpm_tables.pcie_table.pcie_lane[i] = table_member2[i];
-+	sienna_cichlid_get_override_pcie_settings(smu,
-+						  &gen_speed_override,
-+						  &lane_width_override);
-+
-+	/* PCIE gen speed override */
-+	if (gen_speed_override != 0xff) {
-+		min_gen_speed = MIN(pcie_gen_cap, gen_speed_override);
-+		max_gen_speed = MIN(pcie_gen_cap, gen_speed_override);
-+	} else {
-+		min_gen_speed = MAX(0, table_member1[0]);
-+		max_gen_speed = MIN(pcie_gen_cap, table_member1[1]);
-+		min_gen_speed = min_gen_speed > max_gen_speed ?
-+				max_gen_speed : min_gen_speed;
- 	}
-+	pcie_table->pcie_gen[0] = min_gen_speed;
-+	pcie_table->pcie_gen[1] = max_gen_speed;
-+
-+	/* PCIE lane width override */
-+	if (lane_width_override != 0xff) {
-+		min_lane_width = MIN(pcie_width_cap, lane_width_override);
-+		max_lane_width = MIN(pcie_width_cap, lane_width_override);
-+	} else {
-+		min_lane_width = MAX(1, table_member2[0]);
-+		max_lane_width = MIN(pcie_width_cap, table_member2[1]);
-+		min_lane_width = min_lane_width > max_lane_width ?
-+				 max_lane_width : min_lane_width;
-+	}
-+	pcie_table->pcie_lane[0] = min_lane_width;
-+	pcie_table->pcie_lane[1] = max_lane_width;
- 
- 	for (i = 0; i < NUM_LINK_LEVELS; i++) {
--		smu_pcie_arg = (i << 16) |
--			((table_member1[i] <= pcie_gen_cap) ?
--			 (table_member1[i] << 8) :
--			 (pcie_gen_cap << 8)) |
--			((table_member2[i] <= pcie_width_cap) ?
--			 table_member2[i] :
--			 pcie_width_cap);
-+		smu_pcie_arg = (i << 16 |
-+				pcie_table->pcie_gen[i] << 8 |
-+				pcie_table->pcie_lane[i]);
- 
- 		ret = smu_cmn_send_smc_msg_with_param(smu,
- 				SMU_MSG_OverridePcieParameters,
-@@ -2101,11 +2162,6 @@ static int sienna_cichlid_update_pcie_pa
- 				NULL);
- 		if (ret)
- 			return ret;
--
--		if (table_member1[i] > pcie_gen_cap)
--			dpm_context->dpm_tables.pcie_table.pcie_gen[i] = pcie_gen_cap;
--		if (table_member2[i] > pcie_width_cap)
--			dpm_context->dpm_tables.pcie_table.pcie_lane[i] = pcie_width_cap;
- 	}
- 
- 	return 0;
+ 	tmp = RREG32_SMC(ixCG_CLKPIN_CNTL_2);
+ 	if (REG_GET_FIELD(tmp, CG_CLKPIN_CNTL_2, MUX_TCLK_TO_XCLK))
 
 
