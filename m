@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81744134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08605C433D2;
-	Mon, 12 Jun 2023 10:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42975134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A85C433D2;
+	Mon, 12 Jun 2023 10:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566435;
-	bh=uoI8i4vfw8cdfeNOmJzsdgmfSxLTaS/cT8pMzKhzaJk=;
+	s=korg; t=1686566438;
+	bh=50vKucQogDqFWHR+PB9LxLIF6jvWs5J2ahDYOLmJ8GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAjf0RLFtpaNv2XIUkxbQZe/nsWtgs7VUX9uLZNQjWieCzXLVipTPbnjhj5gCnduc
-	 U89X0BEAdpXURz2SXJraHfk5TW/BmwkAC7ZZmBLy8oeIhhUkMGYzjqQ1AHUVBdtCBm
-	 8yaXm1+445JPZBQBZWMjiK7ZkH9mS7P2bvowuDiM=
+	b=nwt9PlM5eW3xuRV2fKKzJenURTpU/KaIp2kANXN34NYAytnaafUF0/9co4UlAQf2W
+	 Uox2RM5sA4LN9zy8sUV64P+Vv/ibWzOZOMVJgmAntEpk0kML8Jx8nqfU3qkOPXt42M
+	 ZSP5fETEW1ZBbpKLBFknHSbXMFO62VBqfS7HgmKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	linux-fsdevel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/132] afs: Fix setting of mtime when creating a file/dir/symlink
-Date: Mon, 12 Jun 2023 12:25:41 +0200
-Message-ID: <20230612101710.635514514@linuxfoundation.org>
+Subject: [PATCH 6.1 008/132] wifi: mt76: mt7615: fix possible race in mt7615_mac_sta_poll
+Date: Mon, 12 Jun 2023 12:25:42 +0200
+Message-ID: <20230612101710.665743963@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -39,59 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit a27648c742104a833a01c54becc24429898d85bf ]
+[ Upstream commit 30bc32c7c1f975cc3c14e1c7dc437266311282cf ]
 
-kafs incorrectly passes a zero mtime (ie. 1st Jan 1970) to the server when
-creating a file, dir or symlink because the mtime recorded in the
-afs_operation struct gets passed to the server by the marshalling routines,
-but the afs_mkdir(), afs_create() and afs_symlink() functions don't set it.
+Grab sta_poll_lock spinlock in mt7615_mac_sta_poll routine in order to
+avoid possible races with mt7615_mac_add_txs() or mt7615_mac_fill_rx()
+removing msta pointer from sta_poll_list.
 
-This gets masked if a file or directory is subsequently modified.
-
-Fix this by filling in op->mtime before calling the create op.
-
-Fixes: e49c7b2f6de7 ("afs: Build an abstraction around an "operation" concept")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: a621372a04ac ("mt76: mt7615: rework mt7615_mac_sta_poll for usb code")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/48b23404b759de4f1db2ef85975c72a4aeb1097c.1684938695.git.lorenzo@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/dir.c | 3 +++
+ drivers/net/wireless/mediatek/mt76/mt7615/mac.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index f73b2f62afaae..07dc4ec73520c 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -1357,6 +1357,7 @@ static int afs_mkdir(struct user_namespace *mnt_userns, struct inode *dir,
- 	op->dentry	= dentry;
- 	op->create.mode	= S_IFDIR | mode;
- 	op->create.reason = afs_edit_dir_for_mkdir;
-+	op->mtime	= current_time(dir);
- 	op->ops		= &afs_mkdir_operation;
- 	return afs_do_sync_operation(op);
- }
-@@ -1660,6 +1661,7 @@ static int afs_create(struct user_namespace *mnt_userns, struct inode *dir,
- 	op->dentry	= dentry;
- 	op->create.mode	= S_IFREG | mode;
- 	op->create.reason = afs_edit_dir_for_create;
-+	op->mtime	= current_time(dir);
- 	op->ops		= &afs_create_operation;
- 	return afs_do_sync_operation(op);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+index faed43b11ec93..40c80d09d108a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -921,7 +921,10 @@ void mt7615_mac_sta_poll(struct mt7615_dev *dev)
  
-@@ -1795,6 +1797,7 @@ static int afs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
- 	op->ops			= &afs_symlink_operation;
- 	op->create.reason	= afs_edit_dir_for_symlink;
- 	op->create.symlink	= content;
-+	op->mtime		= current_time(dir);
- 	return afs_do_sync_operation(op);
+ 		msta = list_first_entry(&sta_poll_list, struct mt7615_sta,
+ 					poll_list);
++
++		spin_lock_bh(&dev->sta_poll_lock);
+ 		list_del_init(&msta->poll_list);
++		spin_unlock_bh(&dev->sta_poll_lock);
  
- error:
+ 		addr = mt7615_mac_wtbl_addr(dev, msta->wcid.idx) + 19 * 4;
+ 
 -- 
 2.39.2
 
