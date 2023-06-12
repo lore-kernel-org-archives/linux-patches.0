@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEE68828
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F62C433EF;
-	Mon, 12 Jun 2023 10:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56DEAD3C
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:40:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF40C433D2;
+	Mon, 12 Jun 2023 10:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566446;
-	bh=4M0+dbfsOnb9keDdUw9UKuAZJ5LO9Aj/VXio5sziWjQ=;
+	s=korg; t=1686566448;
+	bh=fAmeumtw5JjRDjIAjOQvqxpN8Ft6ueedEjD4NuYupV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I7xyjtY8tZ7Yca//Lgn/J7iDHl+X+fE+S1sLmqrNSprEAxpzR9cTu2aTWXI/vhrkl
-	 4T0eWwQpesqks74Yd2SIhovVeHGH1DXdEPE9D1M/tCZHmfe49tNNtxhK+IIGbvfogV
-	 i8VBsNOIvT+JGIeMmMNFBuvFICbTJWN0Lkb4SIaY=
+	b=V3rpv49q6amyG1iC5ajamxuFuFmrS9E1Wo7UFBZyfqKuH0T69JB1n8ww5lQEyToV/
+	 5djiwDSUSC5CXRYDWjLW5naDNHYb9g3YvJQnpbhDXH7d2WCo+W3sP2btx5eV1CVb9g
+	 5VRXCvA2dWOsmk/gBioYeJtXWVznsN2JYGBjL8zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/132] wifi: cfg80211: reject bad AP MLD address
-Date: Mon, 12 Jun 2023 12:26:01 +0200
-Message-ID: <20230612101711.469582282@linuxfoundation.org>
+Subject: [PATCH 6.1 036/132] netfilter: conntrack: fix NULL pointer dereference in nf_confirm_cthelper
+Date: Mon, 12 Jun 2023 12:26:10 +0200
+Message-ID: <20230612101711.872171897@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,37 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>
 
-[ Upstream commit 727073ca5e55ab6a07df316250be8a12606e8677 ]
+[ Upstream commit e1f543dc660b44618a1bd72ddb4ca0828a95f7ad ]
 
-When trying to authenticate, if the AP MLD address isn't
-a valid address, mac80211 can throw a warning. Avoid that
-by rejecting such addresses.
+An nf_conntrack_helper from nf_conn_help may become NULL after DNAT.
 
-Fixes: d648c23024bd ("wifi: nl80211: support MLO in auth/assoc")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230604120651.89188912bd1d.I8dbc6c8ee0cb766138803eec59508ef4ce477709@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Observed when TCP port 1720 (Q931_PORT), associated with h323 conntrack
+helper, is DNAT'ed to another destination port (e.g. 1730), while
+nfqueue is being used for final acceptance (e.g. snort).
+
+This happenned after transition from kernel 4.14 to 5.10.161.
+
+Workarounds:
+ * keep the same port (1720) in DNAT
+ * disable nfqueue
+ * disable/unload h323 NAT helper
+
+$ linux-5.10/scripts/decode_stacktrace.sh vmlinux < /tmp/kernel.log
+BUG: kernel NULL pointer dereference, address: 0000000000000084
+[..]
+RIP: 0010:nf_conntrack_update (net/netfilter/nf_conntrack_core.c:2080 net/netfilter/nf_conntrack_core.c:2134) nf_conntrack
+[..]
+nfqnl_reinject (net/netfilter/nfnetlink_queue.c:237) nfnetlink_queue
+nfqnl_recv_verdict (net/netfilter/nfnetlink_queue.c:1230) nfnetlink_queue
+nfnetlink_rcv_msg (net/netfilter/nfnetlink.c:241) nfnetlink
+[..]
+
+Fixes: ee04805ff54a ("netfilter: conntrack: make conntrack userspace helpers work again")
+Signed-off-by: Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_conntrack_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 7320d676ce3a5..087c0c442e231 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -10542,6 +10542,8 @@ static int nl80211_authenticate(struct sk_buff *skb, struct genl_info *info)
- 		if (!info->attrs[NL80211_ATTR_MLD_ADDR])
- 			return -EINVAL;
- 		req.ap_mld_addr = nla_data(info->attrs[NL80211_ATTR_MLD_ADDR]);
-+		if (!is_valid_ether_addr(req.ap_mld_addr))
-+			return -EINVAL;
- 	}
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index a0e9c7af08467..7960262966094 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -2277,6 +2277,9 @@ static int nf_confirm_cthelper(struct sk_buff *skb, struct nf_conn *ct,
+ 		return 0;
  
- 	req.bss = cfg80211_get_bss(&rdev->wiphy, chan, bssid, ssid, ssid_len,
+ 	helper = rcu_dereference(help->helper);
++	if (!helper)
++		return 0;
++
+ 	if (!(helper->flags & NF_CT_HELPER_F_USERSPACE))
+ 		return 0;
+ 
 -- 
 2.39.2
 
