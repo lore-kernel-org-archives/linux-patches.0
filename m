@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4E911C88
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:36:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784EAC433D2;
-	Mon, 12 Jun 2023 10:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA07ECC
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:36:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07579C4339C;
+	Mon, 12 Jun 2023 10:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566194;
-	bh=UGXocY9wVPSHlcz+/oexm0XugP5Gdwa4c/MYdI4JeBY=;
+	s=korg; t=1686566197;
+	bh=2jvjnTmQczMGMsQcvYQg4v20MwWRSEREyf5mPo5juGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=clcJEmOIZOqFFcetWo3SqH3sDXMcoQcKOpUyrLq1deSRCZiJW0tjZCZv+RW821w22
-	 C+FsQk1H/gAc+9CvZNga/sUruALBy7xwSY5BJ+uNqnW2vs7EowD+mXSrTx0/vaOJkx
-	 M3nqHSBuetKltbpeGoJZIJEKBzsk0TLZMXG59Zqg=
+	b=L7Bmq25jTOZ/jN98IJg2CT+rF56HgrOEzHvDb2UCpmOitz4nB2uRNNl/FcZcvzye5
+	 eEm+SMQ8RR65rg8Dzfkwjr5mcFbfqDWdl+Zb1gIw01lapkbqVDgNr5woAH4LnNCIU5
+	 n0BhKQPOguhG3w7iWcKomFNGeq+fnW3DlJJnFaVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yhs@fb.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 30/91] selftests/bpf: Fix sockopt_sk selftest
-Date: Mon, 12 Jun 2023 12:26:19 +0200
-Message-ID: <20230612101703.363188034@linuxfoundation.org>
+Subject: [PATCH 5.15 31/91] netfilter: conntrack: fix NULL pointer dereference in nf_confirm_cthelper
+Date: Mon, 12 Jun 2023 12:26:20 +0200
+Message-ID: <20230612101703.398593461@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
 References: <20230612101702.085813286@linuxfoundation.org>
@@ -35,52 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonghong Song <yhs@fb.com>
+From: Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>
 
-[ Upstream commit 69844e335d8c22454746c7903776533d8b4ab8fa ]
+[ Upstream commit e1f543dc660b44618a1bd72ddb4ca0828a95f7ad ]
 
-Commit f4e4534850a9 ("net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report")
-fixed NETLINK_LIST_MEMBERSHIPS length report which caused
-selftest sockopt_sk failure. The failure log looks like
+An nf_conntrack_helper from nf_conn_help may become NULL after DNAT.
 
-  test_sockopt_sk:PASS:join_cgroup /sockopt_sk 0 nsec
-  run_test:PASS:skel_load 0 nsec
-  run_test:PASS:setsockopt_link 0 nsec
-  run_test:PASS:getsockopt_link 0 nsec
-  getsetsockopt:FAIL:Unexpected NETLINK_LIST_MEMBERSHIPS value unexpected Unexpected NETLINK_LIST_MEMBERSHIPS value: actual 8 != expected 4
-  run_test:PASS:getsetsockopt 0 nsec
-  #201     sockopt_sk:FAIL
+Observed when TCP port 1720 (Q931_PORT), associated with h323 conntrack
+helper, is DNAT'ed to another destination port (e.g. 1730), while
+nfqueue is being used for final acceptance (e.g. snort).
 
-In net/netlink/af_netlink.c, function netlink_getsockopt(), for NETLINK_LIST_MEMBERSHIPS,
-nlk->ngroups equals to 36. Before Commit f4e4534850a9, the optlen is calculated as
-  ALIGN(nlk->ngroups / 8, sizeof(u32)) = 4
-After that commit, the optlen is
-  ALIGN(BITS_TO_BYTES(nlk->ngroups), sizeof(u32)) = 8
+This happenned after transition from kernel 4.14 to 5.10.161.
 
-Fix the test by setting the expected optlen to be 8.
+Workarounds:
+ * keep the same port (1720) in DNAT
+ * disable nfqueue
+ * disable/unload h323 NAT helper
 
-Fixes: f4e4534850a9 ("net/netlink: fix NETLINK_LIST_MEMBERSHIPS length report")
-Signed-off-by: Yonghong Song <yhs@fb.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230606172202.1606249-1-yhs@fb.com
+$ linux-5.10/scripts/decode_stacktrace.sh vmlinux < /tmp/kernel.log
+BUG: kernel NULL pointer dereference, address: 0000000000000084
+[..]
+RIP: 0010:nf_conntrack_update (net/netfilter/nf_conntrack_core.c:2080 net/netfilter/nf_conntrack_core.c:2134) nf_conntrack
+[..]
+nfqnl_reinject (net/netfilter/nfnetlink_queue.c:237) nfnetlink_queue
+nfqnl_recv_verdict (net/netfilter/nfnetlink_queue.c:1230) nfnetlink_queue
+nfnetlink_rcv_msg (net/netfilter/nfnetlink.c:241) nfnetlink
+[..]
+
+Fixes: ee04805ff54a ("netfilter: conntrack: make conntrack userspace helpers work again")
+Signed-off-by: Tijs Van Buggenhout <tijs.van.buggenhout@axsguard.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/sockopt_sk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c b/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-index ced75783bacfa..f3cd8db26bf7e 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-@@ -209,7 +209,7 @@ static int getsetsockopt(void)
- 			err, errno);
- 		goto err;
- 	}
--	ASSERT_EQ(optlen, 4, "Unexpected NETLINK_LIST_MEMBERSHIPS value");
-+	ASSERT_EQ(optlen, 8, "Unexpected NETLINK_LIST_MEMBERSHIPS value");
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index 7ff0da5f998a0..10622760f894a 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -2224,6 +2224,9 @@ static int nf_confirm_cthelper(struct sk_buff *skb, struct nf_conn *ct,
+ 		return 0;
  
- 	free(big_buf);
- 	close(fd);
+ 	helper = rcu_dereference(help->helper);
++	if (!helper)
++		return 0;
++
+ 	if (!(helper->flags & NF_CT_HELPER_F_USERSPACE))
+ 		return 0;
+ 
 -- 
 2.39.2
 
