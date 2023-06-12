@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C322134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EE3C433D2;
-	Mon, 12 Jun 2023 10:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40467134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB57C433EF;
+	Mon, 12 Jun 2023 10:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566618;
-	bh=YGT5O8LWmbRI8kOfxccvDKASF56ZcRywHubGzlAHvOo=;
+	s=korg; t=1686566621;
+	bh=w/eDSo4yjdp+bz1ucfE9I8Lp7Y7KeJEgSWjKkl15tmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5lAlywPqLlRP91JkARuriNPHiztYfMWmly4uau3D0+cY6KhgQsEkbehLXy85vH9B
-	 0SlEXSQFDRtiy6DJWM9nZaiqB9xsaimO5wHKtdootV8JI0+mWynW68GTm2YaARtTau
-	 hS8NaxwuAiWvzz93NTBvZWEcLTwYldk5O2Dahs7E=
+	b=FuScsNZq4FtqJ+4HqntY1MIMo2tDU95W3piBa0ns5lKC6ukcu7OVVju3HCNDpXih3
+	 zTCUIX/Zq9euEH30/MpzthOIdf8iY2xP+aJEmHbVhRjpyxnyLbh0dxOVqWsNsc8vtm
+	 GxaU6J0eA3ZEKLPZ0WeBxKiPRs1oghenNZrNdtR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 6.1 093/132] rbd: get snapshot context after exclusive lock is ensured to be held
-Date: Mon, 12 Jun 2023 12:27:07 +0200
-Message-ID: <20230612101714.470934970@linuxfoundation.org>
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Allen Hubbe <allen.hubbe@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 094/132] virtio_net: use control_buf for coalesce params
+Date: Mon, 12 Jun 2023 12:27:08 +0200
+Message-ID: <20230612101714.509307698@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -34,119 +39,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Brett Creeley <brett.creeley@amd.com>
 
-commit 870611e4877eff1e8413c3fb92a585e45d5291f6 upstream.
+commit accc1bf23068c1cdc4c2b015320ba856e210dd98 upstream.
 
-Move capturing the snapshot context into the image request state
-machine, after exclusive lock is ensured to be held for the duration of
-dealing with the image request.  This is needed to ensure correctness
-of fast-diff states (OBJECT_EXISTS vs OBJECT_EXISTS_CLEAN) and object
-deltas computed based off of them.  Otherwise the object map that is
-forked for the snapshot isn't guaranteed to accurately reflect the
-contents of the snapshot when the snapshot is taken under I/O.  This
-breaks differential backup and snapshot-based mirroring use cases with
-fast-diff enabled: since some object deltas may be incomplete, the
-destination image may get corrupted.
+Commit 699b045a8e43 ("net: virtio_net: notifications coalescing
+support") added coalescing command support for virtio_net. However,
+the coalesce commands are using buffers on the stack, which is causing
+the device to see DMA errors. There should also be a complaint from
+check_for_stack() in debug_dma_map_xyz(). Fix this by adding and using
+coalesce params from the control_buf struct, which aligns with other
+commands.
 
 Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/61472
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Fixes: 699b045a8e43 ("net: virtio_net: notifications coalescing support")
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Signed-off-by: Allen Hubbe <allen.hubbe@amd.com>
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://lore.kernel.org/r/20230605195925.51625-1-brett.creeley@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+ drivers/net/virtio_net.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -1336,6 +1336,8 @@ static bool rbd_obj_is_tail(struct rbd_o
-  */
- static void rbd_obj_set_copyup_enabled(struct rbd_obj_request *obj_req)
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -200,6 +200,8 @@ struct control_buf {
+ 	__virtio16 vid;
+ 	__virtio64 offloads;
+ 	struct virtio_net_ctrl_rss rss;
++	struct virtio_net_ctrl_coal_tx coal_tx;
++	struct virtio_net_ctrl_coal_rx coal_rx;
+ };
+ 
+ struct virtnet_info {
+@@ -2786,12 +2788,10 @@ static int virtnet_send_notf_coal_cmds(s
+ 				       struct ethtool_coalesce *ec)
  {
-+	rbd_assert(obj_req->img_request->snapc);
-+
- 	if (obj_req->img_request->op_type == OBJ_OP_DISCARD) {
- 		dout("%s %p objno %llu discard\n", __func__, obj_req,
- 		     obj_req->ex.oe_objno);
-@@ -1456,6 +1458,7 @@ __rbd_obj_add_osd_request(struct rbd_obj
- static struct ceph_osd_request *
- rbd_obj_add_osd_request(struct rbd_obj_request *obj_req, int num_ops)
- {
-+	rbd_assert(obj_req->img_request->snapc);
- 	return __rbd_obj_add_osd_request(obj_req, obj_req->img_request->snapc,
- 					 num_ops);
- }
-@@ -1592,15 +1595,18 @@ static void rbd_img_request_init(struct
- 	mutex_init(&img_request->state_mutex);
- }
+ 	struct scatterlist sgs_tx, sgs_rx;
+-	struct virtio_net_ctrl_coal_tx coal_tx;
+-	struct virtio_net_ctrl_coal_rx coal_rx;
  
-+/*
-+ * Only snap_id is captured here, for reads.  For writes, snapshot
-+ * context is captured in rbd_img_object_requests() after exclusive
-+ * lock is ensured to be held.
-+ */
- static void rbd_img_capture_header(struct rbd_img_request *img_req)
- {
- 	struct rbd_device *rbd_dev = img_req->rbd_dev;
+-	coal_tx.tx_usecs = cpu_to_le32(ec->tx_coalesce_usecs);
+-	coal_tx.tx_max_packets = cpu_to_le32(ec->tx_max_coalesced_frames);
+-	sg_init_one(&sgs_tx, &coal_tx, sizeof(coal_tx));
++	vi->ctrl->coal_tx.tx_usecs = cpu_to_le32(ec->tx_coalesce_usecs);
++	vi->ctrl->coal_tx.tx_max_packets = cpu_to_le32(ec->tx_max_coalesced_frames);
++	sg_init_one(&sgs_tx, &vi->ctrl->coal_tx, sizeof(vi->ctrl->coal_tx));
  
- 	lockdep_assert_held(&rbd_dev->header_rwsem);
+ 	if (!virtnet_send_command(vi, VIRTIO_NET_CTRL_NOTF_COAL,
+ 				  VIRTIO_NET_CTRL_NOTF_COAL_TX_SET,
+@@ -2802,9 +2802,9 @@ static int virtnet_send_notf_coal_cmds(s
+ 	vi->tx_usecs = ec->tx_coalesce_usecs;
+ 	vi->tx_max_packets = ec->tx_max_coalesced_frames;
  
--	if (rbd_img_is_write(img_req))
--		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
--	else
-+	if (!rbd_img_is_write(img_req))
- 		img_req->snap_id = rbd_dev->spec->snap_id;
+-	coal_rx.rx_usecs = cpu_to_le32(ec->rx_coalesce_usecs);
+-	coal_rx.rx_max_packets = cpu_to_le32(ec->rx_max_coalesced_frames);
+-	sg_init_one(&sgs_rx, &coal_rx, sizeof(coal_rx));
++	vi->ctrl->coal_rx.rx_usecs = cpu_to_le32(ec->rx_coalesce_usecs);
++	vi->ctrl->coal_rx.rx_max_packets = cpu_to_le32(ec->rx_max_coalesced_frames);
++	sg_init_one(&sgs_rx, &vi->ctrl->coal_rx, sizeof(vi->ctrl->coal_rx));
  
- 	if (rbd_dev_parent_get(rbd_dev))
-@@ -3483,9 +3489,19 @@ static int rbd_img_exclusive_lock(struct
- 
- static void rbd_img_object_requests(struct rbd_img_request *img_req)
- {
-+	struct rbd_device *rbd_dev = img_req->rbd_dev;
- 	struct rbd_obj_request *obj_req;
- 
- 	rbd_assert(!img_req->pending.result && !img_req->pending.num_pending);
-+	rbd_assert(!need_exclusive_lock(img_req) ||
-+		   __rbd_is_lock_owner(rbd_dev));
-+
-+	if (rbd_img_is_write(img_req)) {
-+		rbd_assert(!img_req->snapc);
-+		down_read(&rbd_dev->header_rwsem);
-+		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
-+		up_read(&rbd_dev->header_rwsem);
-+	}
- 
- 	for_each_obj_request(img_req, obj_req) {
- 		int result = 0;
-@@ -3503,7 +3519,6 @@ static void rbd_img_object_requests(stru
- 
- static bool rbd_img_advance(struct rbd_img_request *img_req, int *result)
- {
--	struct rbd_device *rbd_dev = img_req->rbd_dev;
- 	int ret;
- 
- again:
-@@ -3524,9 +3539,6 @@ again:
- 		if (*result)
- 			return true;
- 
--		rbd_assert(!need_exclusive_lock(img_req) ||
--			   __rbd_is_lock_owner(rbd_dev));
--
- 		rbd_img_object_requests(img_req);
- 		if (!img_req->pending.num_pending) {
- 			*result = img_req->pending.result;
-@@ -3988,6 +4000,10 @@ static int rbd_post_acquire_action(struc
- {
- 	int ret;
- 
-+	ret = rbd_dev_refresh(rbd_dev);
-+	if (ret)
-+		return ret;
-+
- 	if (rbd_dev->header.features & RBD_FEATURE_OBJECT_MAP) {
- 		ret = rbd_object_map_open(rbd_dev);
- 		if (ret)
+ 	if (!virtnet_send_command(vi, VIRTIO_NET_CTRL_NOTF_COAL,
+ 				  VIRTIO_NET_CTRL_NOTF_COAL_RX_SET,
 
 
