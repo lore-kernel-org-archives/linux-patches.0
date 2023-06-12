@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B9A11C88
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B386CC433D2;
-	Mon, 12 Jun 2023 10:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D457D11C88
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:42:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7FCC433EF;
+	Mon, 12 Jun 2023 10:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566556;
-	bh=2iRA7uErQSuNAYYXEatdxBxgAKRRT5anmmqn2uOSuOg=;
+	s=korg; t=1686566558;
+	bh=r2j0QI6DcKNrNxdrfEVrvBO5Hud/hbJ5kSKdzSok+OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9mpIme/CWSo3kRhf6cODFn5Z84SZEGnujiqeGWFXEiPbvrYGR1kSFtriAowAFs1h
-	 733clMF7F7eEwUDZpcXa49jhc/d5bltLR02Bhhl2EgrIJttj/DfdW2CAIxYqPo/Ixd
-	 glRAIfLaqNNf51iquLvlMeKaGU0dqcJcMDpWBeZ0=
+	b=lpTqbgzqPOngfOBXsNnAiDJLzUtTSwc7RXWksJ/W3L1dlrEx7145Kv6cTjE5/lF59
+	 erpBvSwg2kgvcvmmmV52xKuamPmcKTQI2I+4n9oHdLZYmCM0y5D9xYuuOHRur2gwOp
+	 RUnneeq4lHJJtO3GoFjuZqx4ziwO5Dl8Be2eRDO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 077/132] wifi: iwlwifi: mvm: Fix -Warray-bounds bug in iwl_mvm_wait_d3_notif()
-Date: Mon, 12 Jun 2023 12:26:51 +0200
-Message-ID: <20230612101713.764827364@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 060/132] Input: psmouse - fix OOB access in Elantech protocol
+Date: Mon, 12 Jun 2023 12:26:34 +0200
+Message-ID: <20230612101713.003682356@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -35,111 +33,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 7a4615b9a9da5225b22b36a20508555dd133ac24 upstream.
+commit 7b63a88bb62ba2ddf5fcd956be85fe46624628b9 upstream.
 
-kmemdup() at line 2735 is not duplicating enough memory for
-notif->tid_tear_down and notif->station_id. As it only duplicates
-612 bytes: up to offsetofend(struct iwl_wowlan_info_notif,
-received_beacons), this is the range of [0, 612) bytes.
+The kernel only allocate 5 MT slots; check that transmitted slot ID
+falls within the acceptable range.
 
-2735	notif = kmemdup(notif_v1,
-2736			offsetofend(struct iwl_wowlan_info_notif,
-2737				    received_beacons),
-2738			GFP_ATOMIC);
-
-which evidently does not cover bytes 612 and 613 for members
-tid_tear_down and station_id in struct iwl_wowlan_info_notif.
-See below:
-
-$ pahole -C iwl_wowlan_info_notif drivers/net/wireless/intel/iwlwifi/mvm/d3.o
-struct iwl_wowlan_info_notif {
-	struct iwl_wowlan_gtk_status_v3 gtk[2];          /*     0   488 */
-	/* --- cacheline 7 boundary (448 bytes) was 40 bytes ago --- */
-	struct iwl_wowlan_igtk_status igtk[2];           /*   488    80 */
-	/* --- cacheline 8 boundary (512 bytes) was 56 bytes ago --- */
-	__le64                     replay_ctr;           /*   568     8 */
-	/* --- cacheline 9 boundary (576 bytes) --- */
-	__le16                     pattern_number;       /*   576     2 */
-	__le16                     reserved1;            /*   578     2 */
-	__le16                     qos_seq_ctr[8];       /*   580    16 */
-	__le32                     wakeup_reasons;       /*   596     4 */
-	__le32                     num_of_gtk_rekeys;    /*   600     4 */
-	__le32                     transmitted_ndps;     /*   604     4 */
-	__le32                     received_beacons;     /*   608     4 */
-	u8                         tid_tear_down;        /*   612     1 */
-	u8                         station_id;           /*   613     1 */
-	u8                         reserved2[2];         /*   614     2 */
-
-	/* size: 616, cachelines: 10, members: 13 */
-	/* last cacheline: 40 bytes */
-};
-
-Therefore, when the following assignments take place, actually no memory
-has been allocated for those objects:
-
-2743	notif->tid_tear_down = notif_v1->tid_tear_down;
-2744	notif->station_id = notif_v1->station_id;
-
-Fix this by allocating space for the whole notif object and zero out the
-remaining space in memory after member station_id.
-
-This also fixes the following -Warray-bounds issues:
- CC      drivers/net/wireless/intel/iwlwifi/mvm/d3.o
-drivers/net/wireless/intel/iwlwifi/mvm/d3.c: In function ‘iwl_mvm_wait_d3_notif’:
-drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2743:30: warning: array subscript ‘struct iwl_wowlan_info_notif[0]’ is partly outside array bounds of ‘unsigned char[612]’ [-Warray-bounds=]
- 2743 |                         notif->tid_tear_down = notif_v1->tid_tear_down;
-      |
-                 from drivers/net/wireless/intel/iwlwifi/mvm/d3.c:7:
-In function ‘kmemdup’,
-    inlined from ‘iwl_mvm_wait_d3_notif’ at drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2735:12:
-include/linux/fortify-string.h:765:16: note: object of size 612 allocated by ‘__real_kmemdup’
-  765 |         return __real_kmemdup(p, size, gfp);
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/net/wireless/intel/iwlwifi/mvm/d3.c: In function ‘iwl_mvm_wait_d3_notif’:
-drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2744:30: warning: array subscript ‘struct iwl_wowlan_info_notif[0]’ is partly outside array bounds of ‘unsigned char[612]’ [-Warray-bounds=]
- 2744 |                         notif->station_id = notif_v1->station_id;
-      |                              ^~
-In function ‘kmemdup’,
-    inlined from ‘iwl_mvm_wait_d3_notif’ at drivers/net/wireless/intel/iwlwifi/mvm/d3.c:2735:12:
-include/linux/fortify-string.h:765:16: note: object of size 612 allocated by ‘__real_kmemdup’
-  765 |         return __real_kmemdup(p, size, gfp);
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Link: https://github.com/KSPP/linux/issues/306
-Fixes: 905d50ddbc83 ("wifi: iwlwifi: mvm: support wowlan info notification version 2")
+Link: https://lore.kernel.org/r/ZFnEL91nrT789dbG@google.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Acked-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/ZHpGN555FwAKGduH@work
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/input/mouse/elantech.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -2724,17 +2724,13 @@ static bool iwl_mvm_wait_d3_notif(struct
- 		if (wowlan_info_ver < 2) {
- 			struct iwl_wowlan_info_notif_v1 *notif_v1 = (void *)pkt->data;
+--- a/drivers/input/mouse/elantech.c
++++ b/drivers/input/mouse/elantech.c
+@@ -674,10 +674,11 @@ static void process_packet_head_v4(struc
+ 	struct input_dev *dev = psmouse->dev;
+ 	struct elantech_data *etd = psmouse->private;
+ 	unsigned char *packet = psmouse->packet;
+-	int id = ((packet[3] & 0xe0) >> 5) - 1;
++	int id;
+ 	int pres, traces;
  
--			notif = kmemdup(notif_v1,
--					offsetofend(struct iwl_wowlan_info_notif,
--						    received_beacons),
--					GFP_ATOMIC);
--
-+			notif = kmemdup(notif_v1, sizeof(*notif), GFP_ATOMIC);
- 			if (!notif)
- 				return false;
+-	if (id < 0)
++	id = ((packet[3] & 0xe0) >> 5) - 1;
++	if (id < 0 || id >= ETP_MAX_FINGERS)
+ 		return;
  
- 			notif->tid_tear_down = notif_v1->tid_tear_down;
- 			notif->station_id = notif_v1->station_id;
--
-+			memset_after(notif, 0, station_id);
- 		} else {
- 			notif = (void *)pkt->data;
- 		}
+ 	etd->mt[id].x = ((packet[1] & 0x0f) << 8) | packet[2];
+@@ -707,7 +708,7 @@ static void process_packet_motion_v4(str
+ 	int id, sid;
+ 
+ 	id = ((packet[0] & 0xe0) >> 5) - 1;
+-	if (id < 0)
++	if (id < 0 || id >= ETP_MAX_FINGERS)
+ 		return;
+ 
+ 	sid = ((packet[3] & 0xe0) >> 5) - 1;
+@@ -728,7 +729,7 @@ static void process_packet_motion_v4(str
+ 	input_report_abs(dev, ABS_MT_POSITION_X, etd->mt[id].x);
+ 	input_report_abs(dev, ABS_MT_POSITION_Y, etd->mt[id].y);
+ 
+-	if (sid >= 0) {
++	if (sid >= 0 && sid < ETP_MAX_FINGERS) {
+ 		etd->mt[sid].x += delta_x2 * weight;
+ 		etd->mt[sid].y -= delta_y2 * weight;
+ 		input_mt_slot(dev, sid);
 
 
