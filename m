@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CB5196
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE60C433EF;
-	Mon, 12 Jun 2023 10:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2940B196
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:35:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8314C433D2;
+	Mon, 12 Jun 2023 10:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566111;
-	bh=60wyRMJ+nilEq38UMThhNutwVAFqGSHUFqkNidcbndU=;
+	s=korg; t=1686566114;
+	bh=0vM9I1vIsTy0P+ehdVQTnoU/oeCu8tj7xcsUuMQXmiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ojv5noisSNUHH9ZCQ+IC65b0I3NgojezFGYCbSsWmE02kcJ+zKg7HRi4OK12Wioqp
-	 WDQ5kcBJc5Jb0nwMHufWyet5FR6vFRspGYTHaHNjDpqFAJPIIydKpOZupbSN7P861u
-	 hB0TKZWoqa4I21adepea37cLPS2Kfk2UGrfhaXDs=
+	b=1qJl8V35gVJlV8qhctueDFpN95FXdt2b0Iox8bFfPQaf3W+3cK4eHpMangtF26aJV
+	 XtOF/JcqBY1KkNxNU2s7DEN3+QGFysodo926Uu7kGVcIgvlU0vgrpVEpdb4V/5uxAx
+	 7M8eFq9Hdfuokszyo/HZqNtpttvBhEwqXvwwzImM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Philipp Hortmann <philipp.g.hortmann@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 68/68] Revert "staging: rtl8192e: Replace macro RTL_PCI_DEVICE with PCI_DEVICE"
-Date: Mon, 12 Jun 2023 12:27:00 +0200
-Message-ID: <20230612101701.261073168@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 5.10 50/68] rbd: get snapshot context after exclusive lock is ensured to be held
+Date: Mon, 12 Jun 2023 12:26:42 +0200
+Message-ID: <20230612101700.505601591@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101658.437327280@linuxfoundation.org>
 References: <20230612101658.437327280@linuxfoundation.org>
@@ -35,53 +34,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-This reverts commit bb1313f37e7b267fcf0fe475b974be8de5f39945 which is
-commit fda2093860df4812d69052a8cf4997e53853a340 upstream.
+commit 870611e4877eff1e8413c3fb92a585e45d5291f6 upstream.
 
-Ben reports that this should not have been backported to the older
-kernels as the rest of the macro is not empty.  It was a clean-up patch
-in 6.4-rc1 only, it did not add new device ids.
+Move capturing the snapshot context into the image request state
+machine, after exclusive lock is ensured to be held for the duration of
+dealing with the image request.  This is needed to ensure correctness
+of fast-diff states (OBJECT_EXISTS vs OBJECT_EXISTS_CLEAN) and object
+deltas computed based off of them.  Otherwise the object map that is
+forked for the snapshot isn't guaranteed to accurately reflect the
+contents of the snapshot when the snapshot is taken under I/O.  This
+breaks differential backup and snapshot-based mirroring use cases with
+fast-diff enabled: since some object deltas may be incomplete, the
+destination image may get corrupted.
 
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Cc: Philipp Hortmann <philipp.g.hortmann@gmail.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Link: https://lore.kernel.org/r/aa0d401a7f63448cd4c2fe4a2d7e8495d9aa123e.camel@decadent.org.uk
+Cc: stable@vger.kernel.org
+Link: https://tracker.ceph.com/issues/61472
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.c |    6 +++---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.h |    5 +++++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/block/rbd.c |   30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-@@ -50,9 +50,9 @@ static const struct rtl819x_ops rtl819xp
- };
- 
- static struct pci_device_id rtl8192_pci_id_tbl[] = {
--	{PCI_DEVICE(0x10ec, 0x8192)},
--	{PCI_DEVICE(0x07aa, 0x0044)},
--	{PCI_DEVICE(0x07aa, 0x0047)},
-+	{RTL_PCI_DEVICE(0x10ec, 0x8192, rtl819xp_ops)},
-+	{RTL_PCI_DEVICE(0x07aa, 0x0044, rtl819xp_ops)},
-+	{RTL_PCI_DEVICE(0x07aa, 0x0047, rtl819xp_ops)},
- 	{}
- };
- 
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-@@ -55,6 +55,11 @@
- #define IS_HARDWARE_TYPE_8192SE(_priv)		\
- 	(((struct r8192_priv *)rtllib_priv(dev))->card_8192 == NIC_8192SE)
- 
-+#define RTL_PCI_DEVICE(vend, dev, cfg) \
-+	.vendor = (vend), .device = (dev), \
-+	.subvendor = PCI_ANY_ID, .subdevice = PCI_ANY_ID, \
-+	.driver_data = (kernel_ulong_t)&(cfg)
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -1399,6 +1399,8 @@ static bool rbd_obj_is_tail(struct rbd_o
+  */
+ static void rbd_obj_set_copyup_enabled(struct rbd_obj_request *obj_req)
+ {
++	rbd_assert(obj_req->img_request->snapc);
 +
- #define TOTAL_CAM_ENTRY		32
- #define CAM_CONTENT_COUNT	8
+ 	if (obj_req->img_request->op_type == OBJ_OP_DISCARD) {
+ 		dout("%s %p objno %llu discard\n", __func__, obj_req,
+ 		     obj_req->ex.oe_objno);
+@@ -1519,6 +1521,7 @@ __rbd_obj_add_osd_request(struct rbd_obj
+ static struct ceph_osd_request *
+ rbd_obj_add_osd_request(struct rbd_obj_request *obj_req, int num_ops)
+ {
++	rbd_assert(obj_req->img_request->snapc);
+ 	return __rbd_obj_add_osd_request(obj_req, obj_req->img_request->snapc,
+ 					 num_ops);
+ }
+@@ -1655,15 +1658,18 @@ static void rbd_img_request_init(struct
+ 	mutex_init(&img_request->state_mutex);
+ }
  
++/*
++ * Only snap_id is captured here, for reads.  For writes, snapshot
++ * context is captured in rbd_img_object_requests() after exclusive
++ * lock is ensured to be held.
++ */
+ static void rbd_img_capture_header(struct rbd_img_request *img_req)
+ {
+ 	struct rbd_device *rbd_dev = img_req->rbd_dev;
+ 
+ 	lockdep_assert_held(&rbd_dev->header_rwsem);
+ 
+-	if (rbd_img_is_write(img_req))
+-		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
+-	else
++	if (!rbd_img_is_write(img_req))
+ 		img_req->snap_id = rbd_dev->spec->snap_id;
+ 
+ 	if (rbd_dev_parent_get(rbd_dev))
+@@ -3547,9 +3553,19 @@ static int rbd_img_exclusive_lock(struct
+ 
+ static void rbd_img_object_requests(struct rbd_img_request *img_req)
+ {
++	struct rbd_device *rbd_dev = img_req->rbd_dev;
+ 	struct rbd_obj_request *obj_req;
+ 
+ 	rbd_assert(!img_req->pending.result && !img_req->pending.num_pending);
++	rbd_assert(!need_exclusive_lock(img_req) ||
++		   __rbd_is_lock_owner(rbd_dev));
++
++	if (rbd_img_is_write(img_req)) {
++		rbd_assert(!img_req->snapc);
++		down_read(&rbd_dev->header_rwsem);
++		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
++		up_read(&rbd_dev->header_rwsem);
++	}
+ 
+ 	for_each_obj_request(img_req, obj_req) {
+ 		int result = 0;
+@@ -3567,7 +3583,6 @@ static void rbd_img_object_requests(stru
+ 
+ static bool rbd_img_advance(struct rbd_img_request *img_req, int *result)
+ {
+-	struct rbd_device *rbd_dev = img_req->rbd_dev;
+ 	int ret;
+ 
+ again:
+@@ -3588,9 +3603,6 @@ again:
+ 		if (*result)
+ 			return true;
+ 
+-		rbd_assert(!need_exclusive_lock(img_req) ||
+-			   __rbd_is_lock_owner(rbd_dev));
+-
+ 		rbd_img_object_requests(img_req);
+ 		if (!img_req->pending.num_pending) {
+ 			*result = img_req->pending.result;
+@@ -4048,6 +4060,10 @@ static int rbd_post_acquire_action(struc
+ {
+ 	int ret;
+ 
++	ret = rbd_dev_refresh(rbd_dev);
++	if (ret)
++		return ret;
++
+ 	if (rbd_dev->header.features & RBD_FEATURE_OBJECT_MAP) {
+ 		ret = rbd_object_map_open(rbd_dev);
+ 		if (ret)
 
 
