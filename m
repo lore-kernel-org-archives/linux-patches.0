@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557FF134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FF4C433D2;
-	Mon, 12 Jun 2023 10:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35EB134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766ABC4339B;
+	Mon, 12 Jun 2023 10:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566990;
-	bh=dQ2FT+5UmXPz7aW+luSJFq+Z7G6ZvtC49l14U58xbQ4=;
+	s=korg; t=1686566992;
+	bh=ZxhYD46jxs/6H5aSRgy17QSu/iyspEVxgEOUai0CnW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l85UNikBXaHo61a2oOq8714b7h8Y3KVdVpGOnaK75XNakKarfHCnWeeEWzoc4ax9M
-	 n1XVbl8IMMPfh1fuPcLhCYF0wCUk0uxZtkAt8QFlRN7fxbrtYdBIX+Ria9mWhnkzZM
-	 WbSAOxAT7d5oW2LKWkvIdnhC1qdFeilSkVqFmuDY=
+	b=j7tHF0Riwp97mScskO1vBl6E1aBaFh0f3kqOVdAd4LaMPezoencnSSRa7bBpSq4hq
+	 x27SG9FX93Z3TJXpdRYnjuxK+MYKLNFXx9z3S7kaz5xbt20tsOKLEmCAB7Abj6laQu
+	 THO8eNDgRRxOuyFKeiwOJP2hu+zMGYHXj33HAIWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sourabh Das <sourabh.das@amd.com>,
-	Rijo Thomas <Rijo-john.Thomas@amd.com>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Jens Wiklander <jens.wiklander@linaro.org>
-Subject: [PATCH 6.3 108/160] tee: amdtee: Add return_origin to struct tee_cmd_load_ta
-Date: Mon, 12 Jun 2023 12:27:20 +0200
-Message-ID: <20230612101719.977144271@linuxfoundation.org>
+	RenHai <kean0048@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.3 082/160] ALSA: hda/realtek: Add Lenovo P3 Tower platform
+Date: Mon, 12 Jun 2023 12:26:54 +0200
+Message-ID: <20230612101718.754106384@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,95 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rijo Thomas <Rijo-john.Thomas@amd.com>
+From: RenHai <kean0048@gmail.com>
 
-commit 436eeae0411acdfc54521ddea80ee76d4ae8a7ea upstream.
+commit 7ca4c8d4d3f41c2cd9b4cf22bb829bf03dac0956 upstream.
 
-After TEE has completed processing of TEE_CMD_ID_LOAD_TA, set proper
-value in 'return_origin' argument passed by open_session() call. To do
-so, add 'return_origin' field to the structure tee_cmd_load_ta. The
-Trusted OS shall update return_origin as part of TEE processing.
+Headset microphone on this platform does not work without
+ALC897_FIXUP_HEADSET_MIC_PIN fixup.
 
-This change to 'struct tee_cmd_load_ta' interface requires a similar update
-in AMD-TEE Trusted OS's TEE_CMD_ID_LOAD_TA interface.
-
-This patch has been verified on Phoenix Birman setup. On older APUs,
-return_origin value will be 0.
-
-Cc: stable@vger.kernel.org
-Fixes: 757cc3e9ff1d ("tee: add AMD-TEE driver")
-Tested-by: Sourabh Das <sourabh.das@amd.com>
-Signed-off-by: Rijo Thomas <Rijo-john.Thomas@amd.com>
-Acked-by: Sumit Garg <sumit.garg@linaro.org>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: RenHai <kean0048@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230602003604.975892-1-kean0048@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/amdtee/amdtee_if.h |   10 ++++++----
- drivers/tee/amdtee/call.c      |   28 ++++++++++++++++------------
- 2 files changed, 22 insertions(+), 16 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tee/amdtee/amdtee_if.h
-+++ b/drivers/tee/amdtee/amdtee_if.h
-@@ -118,16 +118,18 @@ struct tee_cmd_unmap_shared_mem {
- 
- /**
-  * struct tee_cmd_load_ta - load Trusted Application (TA) binary into TEE
-- * @low_addr:    [in] bits [31:0] of the physical address of the TA binary
-- * @hi_addr:     [in] bits [63:32] of the physical address of the TA binary
-- * @size:        [in] size of TA binary in bytes
-- * @ta_handle:   [out] return handle of the loaded TA
-+ * @low_addr:       [in] bits [31:0] of the physical address of the TA binary
-+ * @hi_addr:        [in] bits [63:32] of the physical address of the TA binary
-+ * @size:           [in] size of TA binary in bytes
-+ * @ta_handle:      [out] return handle of the loaded TA
-+ * @return_origin:  [out] origin of return code after TEE processing
-  */
- struct tee_cmd_load_ta {
- 	u32 low_addr;
- 	u32 hi_addr;
- 	u32 size;
- 	u32 ta_handle;
-+	u32 return_origin;
- };
- 
- /**
---- a/drivers/tee/amdtee/call.c
-+++ b/drivers/tee/amdtee/call.c
-@@ -423,19 +423,23 @@ int handle_load_ta(void *data, u32 size,
- 	if (ret) {
- 		arg->ret_origin = TEEC_ORIGIN_COMMS;
- 		arg->ret = TEEC_ERROR_COMMUNICATION;
--	} else if (arg->ret == TEEC_SUCCESS) {
--		ret = get_ta_refcount(load_cmd.ta_handle);
--		if (!ret) {
--			arg->ret_origin = TEEC_ORIGIN_COMMS;
--			arg->ret = TEEC_ERROR_OUT_OF_MEMORY;
-+	} else {
-+		arg->ret_origin = load_cmd.return_origin;
- 
--			/* Unload the TA on error */
--			unload_cmd.ta_handle = load_cmd.ta_handle;
--			psp_tee_process_cmd(TEE_CMD_ID_UNLOAD_TA,
--					    (void *)&unload_cmd,
--					    sizeof(unload_cmd), &ret);
--		} else {
--			set_session_id(load_cmd.ta_handle, 0, &arg->session);
-+		if (arg->ret == TEEC_SUCCESS) {
-+			ret = get_ta_refcount(load_cmd.ta_handle);
-+			if (!ret) {
-+				arg->ret_origin = TEEC_ORIGIN_COMMS;
-+				arg->ret = TEEC_ERROR_OUT_OF_MEMORY;
-+
-+				/* Unload the TA on error */
-+				unload_cmd.ta_handle = load_cmd.ta_handle;
-+				psp_tee_process_cmd(TEE_CMD_ID_UNLOAD_TA,
-+						    (void *)&unload_cmd,
-+						    sizeof(unload_cmd), &ret);
-+			} else {
-+				set_session_id(load_cmd.ta_handle, 0, &arg->session);
-+			}
- 		}
- 	}
- 	mutex_unlock(&ta_refcount_mutex);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11717,6 +11717,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x14cd, 0x5003, "USI", ALC662_FIXUP_USI_HEADSET_MODE),
+ 	SND_PCI_QUIRK(0x17aa, 0x1036, "Lenovo P520", ALC662_FIXUP_LENOVO_MULTI_CODECS),
+ 	SND_PCI_QUIRK(0x17aa, 0x1057, "Lenovo P360", ALC897_FIXUP_HEADSET_MIC_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x1064, "Lenovo P3 Tower", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32ca, "Lenovo ThinkCentre M80", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32cb, "Lenovo ThinkCentre M70", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32cf, "Lenovo ThinkCentre M950", ALC897_FIXUP_HEADSET_MIC_PIN),
 
 
