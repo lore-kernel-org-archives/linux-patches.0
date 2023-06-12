@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603DE11C99
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6F6C433EF;
-	Mon, 12 Jun 2023 10:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03838134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8185EC433D2;
+	Mon, 12 Jun 2023 10:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567093;
-	bh=EWyspB1JGUmjrgu7004VJuEXSEWIXaQvAZ7BMQQMo/k=;
+	s=korg; t=1686567095;
+	bh=95iwpAtoNZeCOMLqbAt18AhREwNbfyDMmpnQeG9WliA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJB5RbA8EnDO8plS3GE7H/JldLPsClVmej8kqBY470qFv41MhLno65iprMZ6ys1xE
-	 dovwM3u9HRtNqY4lw9Hra6Xv0pdKUtut5sICFKzHXkGhhUDfWLv0FjMdYJYXXcrvQL
-	 IdeLpYjYNaWKlOjopDEMWrspeFY9kTqpS95URqLY=
+	b=crnA55Bs3M4LiJzIK5mEQr1gZGZRuJsyGAtlQDkPsyTYeax7oSqCWjMW8QPzG6f1x
+	 IPnFpma+CHwIXNNt91aBNr7fXiqtZyzjqUe82Bpa7TtEdRGVHp6uv2hqb3WrdVX/gM
+	 soFKqKhufqElTCwOd0JVbwo3oNXKy4yhmFOn8w+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 119/160] arm64: dts: qcom: sc8280xp: Flush RSC sleep & wake votes
-Date: Mon, 12 Jun 2023 12:27:31 +0200
-Message-ID: <20230612101720.508218873@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 6.3 110/160] rbd: get snapshot context after exclusive lock is ensured to be held
+Date: Mon, 12 Jun 2023 12:27:22 +0200
+Message-ID: <20230612101720.079525574@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,41 +34,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit ce7c014937c442be677963848c7db62eccd94eac ]
+commit 870611e4877eff1e8413c3fb92a585e45d5291f6 upstream.
 
-The rpmh driver will cache sleep and wake votes until the cluster
-power-domain is about to enter idle, to avoid unnecessary writes. So
-associate the apps_rsc with the cluster pd, so that it can be notified
-about this event.
+Move capturing the snapshot context into the image request state
+machine, after exclusive lock is ensured to be held for the duration of
+dealing with the image request.  This is needed to ensure correctness
+of fast-diff states (OBJECT_EXISTS vs OBJECT_EXISTS_CLEAN) and object
+deltas computed based off of them.  Otherwise the object map that is
+forked for the snapshot isn't guaranteed to accurately reflect the
+contents of the snapshot when the snapshot is taken under I/O.  This
+breaks differential backup and snapshot-based mirroring use cases with
+fast-diff enabled: since some object deltas may be incomplete, the
+destination image may get corrupted.
 
-Without this, only AMC votes are being commited.
-
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230512150425.3171122-1-quic_bjorande@quicinc.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://tracker.ceph.com/issues/61472
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/rbd.c |   30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 03b679b75201d..f081ca449699a 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -3957,6 +3957,7 @@ apps_rsc: rsc@18200000 {
- 			qcom,tcs-config = <ACTIVE_TCS  2>, <SLEEP_TCS   3>,
- 					  <WAKE_TCS    3>, <CONTROL_TCS 1>;
- 			label = "apps_rsc";
-+			power-domains = <&CLUSTER_PD>;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -1336,6 +1336,8 @@ static bool rbd_obj_is_tail(struct rbd_o
+  */
+ static void rbd_obj_set_copyup_enabled(struct rbd_obj_request *obj_req)
+ {
++	rbd_assert(obj_req->img_request->snapc);
++
+ 	if (obj_req->img_request->op_type == OBJ_OP_DISCARD) {
+ 		dout("%s %p objno %llu discard\n", __func__, obj_req,
+ 		     obj_req->ex.oe_objno);
+@@ -1456,6 +1458,7 @@ __rbd_obj_add_osd_request(struct rbd_obj
+ static struct ceph_osd_request *
+ rbd_obj_add_osd_request(struct rbd_obj_request *obj_req, int num_ops)
+ {
++	rbd_assert(obj_req->img_request->snapc);
+ 	return __rbd_obj_add_osd_request(obj_req, obj_req->img_request->snapc,
+ 					 num_ops);
+ }
+@@ -1592,15 +1595,18 @@ static void rbd_img_request_init(struct
+ 	mutex_init(&img_request->state_mutex);
+ }
  
- 			apps_bcm_voter: bcm-voter {
- 				compatible = "qcom,bcm-voter";
--- 
-2.39.2
-
++/*
++ * Only snap_id is captured here, for reads.  For writes, snapshot
++ * context is captured in rbd_img_object_requests() after exclusive
++ * lock is ensured to be held.
++ */
+ static void rbd_img_capture_header(struct rbd_img_request *img_req)
+ {
+ 	struct rbd_device *rbd_dev = img_req->rbd_dev;
+ 
+ 	lockdep_assert_held(&rbd_dev->header_rwsem);
+ 
+-	if (rbd_img_is_write(img_req))
+-		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
+-	else
++	if (!rbd_img_is_write(img_req))
+ 		img_req->snap_id = rbd_dev->spec->snap_id;
+ 
+ 	if (rbd_dev_parent_get(rbd_dev))
+@@ -3482,9 +3488,19 @@ static int rbd_img_exclusive_lock(struct
+ 
+ static void rbd_img_object_requests(struct rbd_img_request *img_req)
+ {
++	struct rbd_device *rbd_dev = img_req->rbd_dev;
+ 	struct rbd_obj_request *obj_req;
+ 
+ 	rbd_assert(!img_req->pending.result && !img_req->pending.num_pending);
++	rbd_assert(!need_exclusive_lock(img_req) ||
++		   __rbd_is_lock_owner(rbd_dev));
++
++	if (rbd_img_is_write(img_req)) {
++		rbd_assert(!img_req->snapc);
++		down_read(&rbd_dev->header_rwsem);
++		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
++		up_read(&rbd_dev->header_rwsem);
++	}
+ 
+ 	for_each_obj_request(img_req, obj_req) {
+ 		int result = 0;
+@@ -3502,7 +3518,6 @@ static void rbd_img_object_requests(stru
+ 
+ static bool rbd_img_advance(struct rbd_img_request *img_req, int *result)
+ {
+-	struct rbd_device *rbd_dev = img_req->rbd_dev;
+ 	int ret;
+ 
+ again:
+@@ -3523,9 +3538,6 @@ again:
+ 		if (*result)
+ 			return true;
+ 
+-		rbd_assert(!need_exclusive_lock(img_req) ||
+-			   __rbd_is_lock_owner(rbd_dev));
+-
+ 		rbd_img_object_requests(img_req);
+ 		if (!img_req->pending.num_pending) {
+ 			*result = img_req->pending.result;
+@@ -3987,6 +3999,10 @@ static int rbd_post_acquire_action(struc
+ {
+ 	int ret;
+ 
++	ret = rbd_dev_refresh(rbd_dev);
++	if (ret)
++		return ret;
++
+ 	if (rbd_dev->header.features & RBD_FEATURE_OBJECT_MAP) {
+ 		ret = rbd_object_map_open(rbd_dev);
+ 		if (ret)
 
 
