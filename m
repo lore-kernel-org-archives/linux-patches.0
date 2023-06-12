@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F115C1952C
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778ADC433EF;
-	Mon, 12 Jun 2023 10:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EAA19526
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:30:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F5AC433EF;
+	Mon, 12 Jun 2023 10:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686565833;
-	bh=C49SbGpVchA5Hkvx+di3yiMBpW/YijTF1a1arvI7jUg=;
+	s=korg; t=1686565836;
+	bh=HCZ96EUcsEpO1qmo7iXH+LMxPmqQS/gErolqnh6hiUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FwRcgOZzZiN72b4NoQbyEoJuA15PKXUDXAQe5nNRucPKYSoDIANPuLp1aTyUunDc3
-	 626Yj38a9L5OpQWIUktFV/OfwDInK4PEWClafdCSdd1zuPA1ppMkvW5Yu4Cbv9EbKb
-	 5xRMBg1HUi5EHx3w/rWWvZEzwMkHCPmxEzbCF0k8=
+	b=yD7jSvH/eEuBodCUvbdmzbLwuiGo0ddPLB+pmJixtx3XiinwHhsZ9+fH/Ip7ykSyF
+	 YkaMdjw398du9hl9VSthaGGQUM8YUbGjAHZsHYscLCU8x3EYQuBWGpr4DIqXM/Ah96
+	 NQT2HCXa5+vk/j0jPDna9ZMeo25ZS7Nrg9BaKLWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.4 01/45] blk-iocost: avoid 64-bit division in ioc_timer_fn
-Date: Mon, 12 Jun 2023 12:25:55 +0200
-Message-ID: <20230612101654.704483114@linuxfoundation.org>
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 10/45] Bluetooth: L2CAP: Add missing checks for invalid DCID
+Date: Mon, 12 Jun 2023 12:26:04 +0200
+Message-ID: <20230612101655.040545161@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101654.644983109@linuxfoundation.org>
 References: <20230612101654.644983109@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,57 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Sungwoo Kim <iam@sung-woo.kim>
 
-commit 5f2779dfa7b8cc7dfd4a1b6586d86e0d193266f3 upstream.
+[ Upstream commit 75767213f3d9b97f63694d02260b6a49a2271876 ]
 
-The behavior of 'enum' types has changed in gcc-13, so now the
-UNBUSY_THR_PCT constant is interpreted as a 64-bit number because
-it is defined as part of the same enum definition as some other
-constants that do not fit within a 32-bit integer. This in turn
-leads to some inefficient code on 32-bit architectures as well
-as a link error:
+When receiving a connect response we should make sure that the DCID is
+within the valid range and that we don't already have another channel
+allocated for the same DCID.
+Missing checks may violate the specification (BLUETOOTH CORE SPECIFICATION
+Version 5.4 | Vol 3, Part A, Page 1046).
 
-arm-linux-gnueabi/bin/arm-linux-gnueabi-ld: block/blk-iocost.o: in function `ioc_timer_fn':
-blk-iocost.c:(.text+0x68e8): undefined reference to `__aeabi_uldivmod'
-arm-linux-gnueabi-ld: blk-iocost.c:(.text+0x6908): undefined reference to `__aeabi_uldivmod'
-
-Split the enum definition to keep the 64-bit timing constants in
-a separate enum type from those constants that can clearly fit
-within a smaller type.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230118080706.3303186-1-arnd@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 40624183c202 ("Bluetooth: L2CAP: Add missing checks for invalid LE DCID")
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -271,6 +271,11 @@ enum {
- 	VRATE_MIN		= VTIME_PER_USEC * VRATE_MIN_PPM / MILLION,
- 	VRATE_CLAMP_ADJ_PCT	= 4,
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 6bbe0fd79d154..e56863587ea2e 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4024,6 +4024,10 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 	result = __le16_to_cpu(rsp->result);
+ 	status = __le16_to_cpu(rsp->status);
  
-+	/* switch iff the conditions are met for longer than this */
-+	AUTOP_CYCLE_NSEC	= 10LLU * NSEC_PER_SEC,
-+};
++	if (result == L2CAP_CR_SUCCESS && (dcid < L2CAP_CID_DYN_START ||
++					   dcid > L2CAP_CID_DYN_END))
++		return -EPROTO;
 +
-+enum {
- 	/* if IOs end up waiting for requests, issue less */
- 	RQ_WAIT_BUSY_PCT	= 5,
+ 	BT_DBG("dcid 0x%4.4x scid 0x%4.4x result 0x%2.2x status 0x%2.2x",
+ 	       dcid, scid, result, status);
  
-@@ -288,9 +293,6 @@ enum {
- 	SURPLUS_SCALE_ABS	= HWEIGHT_WHOLE / 50,	/* + 2% */
- 	SURPLUS_MIN_ADJ_DELTA	= HWEIGHT_WHOLE / 33,	/* 3% */
+@@ -4055,6 +4059,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
  
--	/* switch iff the conditions are met for longer than this */
--	AUTOP_CYCLE_NSEC	= 10LLU * NSEC_PER_SEC,
--
- 	/*
- 	 * Count IO size in 4k pages.  The 12bit shift helps keeping
- 	 * size-proportional components of cost calculation in closer
+ 	switch (result) {
+ 	case L2CAP_CR_SUCCESS:
++		if (__l2cap_get_chan_by_dcid(conn, dcid)) {
++			err = -EBADSLT;
++			break;
++		}
++
+ 		l2cap_state_change(chan, BT_CONFIG);
+ 		chan->ident = 0;
+ 		chan->dcid = dcid;
+-- 
+2.39.2
+
 
 
