@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB778828
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4799EC433EF;
-	Mon, 12 Jun 2023 10:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590ADAD3C
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6565C433D2;
+	Mon, 12 Jun 2023 10:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566592;
-	bh=5HsKXk44TErqfeDBbRpzj/cxzcexFNH+IqdzlMw7Mwk=;
+	s=korg; t=1686566595;
+	bh=Wrc/gc4ieIaMlL4SFsml1S7e/R+BzOjUV4gqdKlCF0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVWrCInA1oB7bApq9xddquPG2AVsRVTIVUAxIc4WGKpyT0R8P2kyXoujInAvxSIi4
-	 n4rkbzsDJ6zRhrF8mPLi3ebK6COtc98A2qUWJWV/W8KqGzDbFWMCwdgP/yaNTYDGvi
-	 kPpNN8C3rBWEEwWfGoFyDCKXK7dF6VZDwgMt8Kjg=
+	b=Qd+5Cf3y/HpM0Lvx8+wJCHHzuMKg9M5HrjlGoC5AJr070QDU61+do4lf7e2lfgkKo
+	 9B0MKVRUaImlTGpn9r31FRWb+A2dhw8tGBblyQNZwPegptw5k+OVxN3GaYCg5X8J+r
+	 gJ7Pee97KTRj9kmxwEACuX02SVgqwVSmUPos8oBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 089/132] Bluetooth: fix debugfs registration
-Date: Mon, 12 Jun 2023 12:27:03 +0200
-Message-ID: <20230612101714.308057659@linuxfoundation.org>
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 062/132] ALSA: hda: Fix kctl->id initialization
+Date: Mon, 12 Jun 2023 12:26:36 +0200
+Message-ID: <20230612101713.092652503@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -34,59 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit fe2ccc6c29d53e14d3c8b3ddf8ad965a92e074ee upstream.
+commit 5c219a340850233aecbb444af964653ecd3d1370 upstream.
 
-Since commit ec6cef9cd98d ("Bluetooth: Fix SMP channel registration for
-unconfigured controllers") the debugfs interface for unconfigured
-controllers will be created when the controller is configured.
+HD-audio core code replaces the kctl->id.index of SPDIF-related
+controls after assigning via snd_ctl_add().  This doesn't work any
+longer with the new Xarray lookup change.  The change of the kctl->id
+content has to be done via snd_ctl_rename_id() helper, instead.
 
-There is however currently nothing preventing a controller from being
-configured multiple time (e.g. setting the device address using btmgmt)
-which results in failed attempts to register the already registered
-debugfs entries:
-
-	debugfs: File 'features' in directory 'hci0' already present!
-	debugfs: File 'manufacturer' in directory 'hci0' already present!
-	debugfs: File 'hci_version' in directory 'hci0' already present!
-	...
-	debugfs: File 'quirk_simultaneous_discovery' in directory 'hci0' already present!
-
-Add a controller flag to avoid trying to register the debugfs interface
-more than once.
-
-Fixes: ec6cef9cd98d ("Bluetooth: Fix SMP channel registration for unconfigured controllers")
-Cc: stable@vger.kernel.org      # 4.0
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: c27e1efb61c5 ("ALSA: control: Use xarray for faster lookups")
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://lore.kernel.org/r/20230606093855.14685-5-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci.h |    1 +
- net/bluetooth/hci_sync.c    |    3 +++
- 2 files changed, 4 insertions(+)
+ sound/pci/hda/hda_codec.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -350,6 +350,7 @@ enum {
- enum {
- 	HCI_SETUP,
- 	HCI_CONFIG,
-+	HCI_DEBUGFS_CREATED,
- 	HCI_AUTO_OFF,
- 	HCI_RFKILLED,
- 	HCI_MGMT,
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -4492,6 +4492,9 @@ static int hci_init_sync(struct hci_dev
- 	    !hci_dev_test_flag(hdev, HCI_CONFIG))
- 		return 0;
- 
-+	if (hci_dev_test_and_set_flag(hdev, HCI_DEBUGFS_CREATED))
-+		return 0;
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index 9f79c0ac2bda..bd19f92aeeec 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -2458,10 +2458,14 @@ int snd_hda_create_dig_out_ctls(struct hda_codec *codec,
+ 		   type == HDA_PCM_TYPE_HDMI) {
+ 		/* suppose a single SPDIF device */
+ 		for (dig_mix = dig_mixes; dig_mix->name; dig_mix++) {
++			struct snd_ctl_elem_id id;
 +
- 	hci_debugfs_create_common(hdev);
- 
- 	if (lmp_bredr_capable(hdev))
+ 			kctl = find_mixer_ctl(codec, dig_mix->name, 0, 0);
+ 			if (!kctl)
+ 				break;
+-			kctl->id.index = spdif_index;
++			id = kctl->id;
++			id.index = spdif_index;
++			snd_ctl_rename_id(codec->card, &kctl->id, &id);
+ 		}
+ 		bus->primary_dig_out_type = HDA_PCM_TYPE_HDMI;
+ 	}
+-- 
+2.41.0
+
 
 
