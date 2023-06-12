@@ -1,72 +1,94 @@
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6856D5229
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 19:04:45 +0000 (UTC)
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6b162127472so2718101a34.0
-        for <patches@lists.linux.dev>; Mon, 12 Jun 2023 12:04:45 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77E1881F
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 20:04:40 +0000 (UTC)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-30fb4b3e62fso1508805f8f.2
+        for <patches@lists.linux.dev>; Mon, 12 Jun 2023 13:04:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686596684; x=1689188684;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8OOA/ytQLN+B3gWqHcQscrH2RGfHUDPpsGBgPoTwMwU=;
-        b=mqmplgHYcbdHCEUJBJPwAOzEH/KkA5KlZpIohsz5YZEbmJGpEnMObhD9cebeOTpo+E
-         uuIT92aZjFYZivmy5hQVJHX8fJFJDPUVMx1aYMVEHgA4At2pgLE3V053Wb/t2L8Gb8GO
-         a/kwFV/O3Ef/8b2fADgHY32cyyyO/dTmTsutoQYiejCaccDScUBH60nXHRTlfjTl3LGt
-         AF/pb/yU9DYO+kjNLenmrA1nRXJMpNwQggfrSTbC+9AS0m92c9DL6Ms+A3/wOVAej0EK
-         lNybC0/qHKkH+rFA9cMlXEE4QLyS6CVZXzSTYOyHm3XMG24Mjiq5BfndBHNwMyXlQ/Mg
-         QLKg==
+        d=baylibre-com.20221208.gappssmtp.com; s=20221208; t=1686600279; x=1689192279;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
+        bh=YzNsZC6f0ahxcqJoEVkr3mmh3LhtJkgOMa+jSW4jW4w=;
+        b=Bf7pNtCF/I7e3eWMOv6SyG52CdpbOvoHwSlm74rGPTi0sdpPC5Xm2EU1eb2u2exmi5
+         VQYrRpwns3q4FMFWvCysI1lQC78YYuPi41xQ5jbvO78hzMN/IC6uoBDK/9RHY5chnSPP
+         v4Y76tVi+eYetxsQmh8lVUkyls4uhh3oH7n2FCjYv3DVqHjz6HmByWfLgI1xSma3GsvV
+         n6CEGg/H2X4y5vHSMKug5EY8rkNH/8EajTI/1t6BhbAUucSiY54Ce3wnRGXHe9N0/1vy
+         kVGvZX2QYB2KPKR7cOLweqyKOg61L9MJrPm1cfK5iiUBZteYlHJEkM0wkQ8sHVFlepS1
+         Jo4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686596684; x=1689188684;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8OOA/ytQLN+B3gWqHcQscrH2RGfHUDPpsGBgPoTwMwU=;
-        b=IZAx6ZCIRHLtx1nW7U/QaQoyI10cNM4S6yZwRlrkw0J3bqfPNOIFi6as3euVcRzhPt
-         Ty2usAgKy62YEhFkmlJzXJcyzt7Fl8xaKo+7LysvrrhW4J1tHwEbbh0pvEydKycqZIyk
-         hf2ZrVVxEiVPKfppcbgUjy3xTsq1jP00l+zoWVbKWc//GaNV5Ir0S1WXfqWEn5tYEnnH
-         Eo55bR9TbnPOK/1i+SBnb6QSmdzvAh2IHACISM9USo4jgir11KDuD7PXZQrTjYrEByLC
-         pgfTCKR7X1ClH++yX86BwpVSaJkK6xysrbq55wp8ILJWvhcfARGhrQTNZ3CaK1LvaavT
-         7Flw==
-X-Gm-Message-State: AC+VfDyorgM9hafm9/ebTXGWoUBGcGBSmJMrcm1oAcrFVWZyowp7HqRY
-	6FfdKd9ZxT2zU/yK1JSEMO6Smrxni0rOvaLp6O4=
-X-Google-Smtp-Source: ACHHUZ5kJ9Ts8hH1r36b3HYZo25DalArBDj1PkqRJv6R/2FQYkSp/gjvpguhX/6PkBYsyURQiz7scSpqX4offUdreoc=
-X-Received: by 2002:a9d:7acb:0:b0:6b0:73fe:cf10 with SMTP id
- m11-20020a9d7acb000000b006b073fecf10mr7185541otn.5.1686596684199; Mon, 12 Jun
- 2023 12:04:44 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686600279; x=1689192279;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YzNsZC6f0ahxcqJoEVkr3mmh3LhtJkgOMa+jSW4jW4w=;
+        b=ACEpmAe9P1f/+dfc1GhCeFHQRRt0lGoufDZ+GA/SHm8IKfM+Shzxp2f1YkKXkwISDc
+         LgXc9whO5kIlzz+teuyyK/+TQG3di+1ejodtWrPuOMvAwAk02du3ajO3goC/IWBHv8cp
+         6aoCfJMu6rhQMKfQHVhCE+oMt1d5tuKidCzbXoOyixU6HLBoKPaqhWbX6GJEr0xXs5wO
+         6gqIewPw32XnfrDT4nRICfSEeyPwH2A15EgWJRq5u6PDLEIhpOMRfpm9kr9WVTak7qDT
+         meNbt5l6VluB1N9cu/8wV7wOxStiF4Nu6H4G2Xwpjh5YXVSFj/i/xZv1ba7q8nJgg4OA
+         D9QA==
+X-Gm-Message-State: AC+VfDzeb8OxEhNHLUOxflegKo7x0+ycX+mzxGSg+aBCHh8M3MmIBUB4
+	i9OgTL3/xyalFTTrGenhtA5v7A==
+X-Google-Smtp-Source: ACHHUZ4u9yNXmp6fhE5G8NnIfX3V5/d6Zvn8rSRouBJFVjUSo4oN1ZFCeTUbWQfFUxGOVTVzl54GQg==
+X-Received: by 2002:adf:f410:0:b0:30f:bc8f:6d49 with SMTP id g16-20020adff410000000b0030fbc8f6d49mr4131648wro.13.1686600278783;
+        Mon, 12 Jun 2023 13:04:38 -0700 (PDT)
+Received: from localhost (82-65-169-74.subs.proxad.net. [82.65.169.74])
+        by smtp.gmail.com with ESMTPSA id i17-20020a5d6311000000b0030fae360f14sm8035712wru.68.2023.06.12.13.04.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 13:04:37 -0700 (PDT)
+References: <20230612182332.371003-1-sboyd@kernel.org>
+User-agent: mu4e 1.8.13; emacs 28.2
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ patches@lists.linux.dev, Jian Hu <jian.hu@amlogic.com>, Dmitry Rokosov
+ <ddrokosov@sberdevices.ru>, Martin Blumenstingl
+ <martin.blumenstingl@googlemail.com>
+Subject: Re: [PATCH] clk: meson: a1: Staticize rtc clk
+Date: Mon, 12 Jun 2023 22:03:11 +0200
+In-reply-to: <20230612182332.371003-1-sboyd@kernel.org>
+Message-ID: <1jzg54fnvw.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230531174450.3733220-1-aliceryhl@google.com> <CAGngYiW_3HfebWZO5S=RXFqhNnsbnix-NaA0UGYRnRLd4SK65w@mail.gmail.com>
-In-Reply-To: <CAGngYiW_3HfebWZO5S=RXFqhNnsbnix-NaA0UGYRnRLd4SK65w@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 12 Jun 2023 21:04:32 +0200
-Message-ID: <CANiq72=DJBW82L44icrrTo=_jrv=BS3cd10s6WuraXX7suW4tg@mail.gmail.com>
-Subject: Re: [PATCH v1] rust: error: integrate Rust error type with `errname`
-To: Sven Van Asbroeck <thesven73@gmail.com>
-Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Wedson Almeida Filho <walmeida@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, May 31, 2023 at 11:27=E2=80=AFPM Sven Van Asbroeck <thesven73@gmail=
-.com> wrote:
+
+On Mon 12 Jun 2023 at 11:23, Stephen Boyd <sboyd@kernel.org> wrote:
+
+> Sparse rightly complains that this symbol is supposed to be static.
 >
-> Hello Alice, as we discussed through a separate channel,
-> you have my permission to use my name in
-> Co-Developed-by and Signed-off-by tags.
+> Cc: Jian Hu <jian.hu@amlogic.com>
+> Cc: Dmitry Rokosov <ddrokosov@sberdevices.ru>
+> Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+> Cc: Jerome Brunet <jbrunet@baylibre.com>
+> Fixes: 84af914404db ("clk: meson: a1: add Amlogic A1 Peripherals clock controller driver")
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 
-Thanks a lot Sven for the confirmation!
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
 
-Applied to `rust-next` -- reworded for clarity. Thanks!
+Sorry this got through.
 
-Cheers,
-Miguel
+> ---
+>  drivers/clk/meson/a1-peripherals.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/clk/meson/a1-peripherals.c b/drivers/clk/meson/a1-peripherals.c
+> index b320134fefeb..75dfae210fe5 100644
+> --- a/drivers/clk/meson/a1-peripherals.c
+> +++ b/drivers/clk/meson/a1-peripherals.c
+> @@ -218,7 +218,7 @@ static struct clk_regmap rtc_32k_sel = {
+>  	},
+>  };
+>  
+> -struct clk_regmap rtc = {
+> +static struct clk_regmap rtc = {
+>  	.data = &(struct clk_regmap_gate_data){
+>  		.offset = RTC_BY_OSCIN_CTRL0,
+>  		.bit_idx = 30,
+
