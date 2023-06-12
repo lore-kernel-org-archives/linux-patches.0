@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45649134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F69C433D2;
-	Mon, 12 Jun 2023 10:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84B1134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:51:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E181C433D2;
+	Mon, 12 Jun 2023 10:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567072;
-	bh=ogko3ICwlsBQskfHN4CzWsk/V5Hg42/emqb+vSKNaSk=;
+	s=korg; t=1686567074;
+	bh=Tbu2ok51QPVVY5W7T+bALWIj77KRewtAb9WN5gCVu5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VghiD4JrY1vkXCgg7y5guE220gUpE6wc+CPNUY6s6p7pSK8d++2fiQQAQwliHT7hY
-	 5dOjGFC69dAOC+WdSyd+tEwXVMltc5d7p7U31ng1rsCOKmKrRZrV+WIu8sIJjpK9cd
-	 sMHfd9Xnl57ciOqsr7rYTa/fiXwQk/+ILzbDHgPA=
+	b=WJ4QLhmVi5uAkPdAAOK4XPKgstJuhK44qko0t060VlP0TrlH2mo7/GluOgYjLKrAs
+	 CLq3Bz4b/AM4KNjk3I2dvQuylF/gLUer3kqnQ1LkeWb7rrjX2nc1bawBnX/q7215Ot
+	 kqX6B+OkkbtksWbru1lBTVgehKD+ANn3yrpv9R1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 139/160] gpio: sim: fix memory corruption when adding named lines and unnamed hogs
-Date: Mon, 12 Jun 2023 12:27:51 +0200
-Message-ID: <20230612101721.426579718@linuxfoundation.org>
+	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.3 113/160] pinctrl: meson-axg: add missing GPIOA_18 gpio group
+Date: Mon, 12 Jun 2023 12:27:25 +0200
+Message-ID: <20230612101720.226303157@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -35,44 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kent Gibson <warthog618@gmail.com>
+From: Martin Hundebøll <martin@geanix.com>
 
-[ Upstream commit 95ae9979bfe3174c2ee8d64409c44532f2881907 ]
+commit 5b10ff013e8a57f8845615ac2cc37edf7f6eef05 upstream.
 
-When constructing the sim, gpio-sim constructs an array of named lines,
-sized based on the largest offset of any named line, and then initializes
-that array with the names of all lines, including unnamed hogs with higher
-offsets.  In doing so it writes NULLs beyond the extent of the array.
+Without this, the gpio cannot be explicitly mux'ed to its gpio function.
 
-Add a check that only named lines are used to initialize the array.
-
-Fixes: cb8c474e79be ("gpio: sim: new testing module")
-Signed-off-by: Kent Gibson<warthog618@gmail.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 83c566806a68a ("pinctrl: meson-axg: Add new pinctrl driver for Meson AXG SoC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Martin Hundebøll <martin@geanix.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Rokosov <ddrokosov@sberdevices.ru>
+Link: https://lore.kernel.org/r/20230512064925.133516-1-martin@geanix.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-sim.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pinctrl/meson/pinctrl-meson-axg.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-sim.c b/drivers/gpio/gpio-sim.c
-index e5dfd636c63c1..09aa0b64859b4 100644
---- a/drivers/gpio/gpio-sim.c
-+++ b/drivers/gpio/gpio-sim.c
-@@ -721,8 +721,10 @@ static char **gpio_sim_make_line_names(struct gpio_sim_bank *bank,
- 	if (!line_names)
- 		return ERR_PTR(-ENOMEM);
+--- a/drivers/pinctrl/meson/pinctrl-meson-axg.c
++++ b/drivers/pinctrl/meson/pinctrl-meson-axg.c
+@@ -400,6 +400,7 @@ static struct meson_pmx_group meson_axg_
+ 	GPIO_GROUP(GPIOA_15),
+ 	GPIO_GROUP(GPIOA_16),
+ 	GPIO_GROUP(GPIOA_17),
++	GPIO_GROUP(GPIOA_18),
+ 	GPIO_GROUP(GPIOA_19),
+ 	GPIO_GROUP(GPIOA_20),
  
--	list_for_each_entry(line, &bank->line_list, siblings)
--		line_names[line->offset] = line->name;
-+	list_for_each_entry(line, &bank->line_list, siblings) {
-+		if (line->name && (line->offset <= max_offset))
-+			line_names[line->offset] = line->name;
-+	}
- 
- 	return line_names;
- }
--- 
-2.39.2
-
 
 
