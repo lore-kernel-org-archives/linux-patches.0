@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF16134B1
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:47:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE87BC4339C;
-	Mon, 12 Jun 2023 10:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC47E134B1
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:47:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A34C4339E;
+	Mon, 12 Jun 2023 10:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566851;
-	bh=dQ8kHY01IsBZ+NL69o6CokUYu8fBV5DXd10gW+5eH5k=;
+	s=korg; t=1686566853;
+	bh=1nrQ5F6ekR10V8j/UcRgcOG4Erc+vhsRua3F4EN64Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zfncRhE8g2GYkQQFMlH737WzAn6g1a8fcqSnUKPJLrnPdTbm7Pad5Pp46zvfE6b9d
-	 fR0b8uHreg1OXQwyBbvp1gxntkd6Bgpb1HV8QBqkD9BLd71WrcGQWTPDYkLuXmB3uf
-	 plPWuBxV3dh40Zowtc+/EoEU+BonNEgyE2AEciKY=
+	b=s/LYMunbujD2AKpYPeo7leOHeuZ3os0O3zBlIj7Bbv7Ww82To0BIJ0GPie868I2qd
+	 daO+6+Hn8bbd8x7Er282b6YeqUZHoGC7M8xdz/EO/pTb6SpNYGzYNlgKgDXown4/7O
+	 46cJCNzAu1w0mJGRiDqOWDp5CSx0C07YUBaahPKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 016/160] net: enetc: correct rx_bytes statistics of XDP
-Date: Mon, 12 Jun 2023 12:25:48 +0200
-Message-ID: <20230612101715.819698574@linuxfoundation.org>
+Subject: [PATCH 6.3 049/160] rfs: annotate lockless accesses to sk->sk_rxhash
+Date: Mon, 12 Jun 2023 12:26:21 +0200
+Message-ID: <20230612101717.279538736@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,41 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fdebd850cc065495abf1d64756496050bb22db67 ]
+[ Upstream commit 1e5c647c3f6d4f8497dedcd226204e1880e0ffb3 ]
 
-The rx_bytes statistics of XDP are always zero, because rx_byte_cnt
-is not updated after it is initialized to 0. So fix it.
+Add READ_ONCE()/WRITE_ONCE() on accesses to sk->sk_rxhash.
 
-Fixes: d1b15102dd16 ("net: enetc: add support for XDP_DROP and XDP_PASS")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+This also prevents a (smart ?) compiler to remove the condition in:
+
+if (sk->sk_rxhash != newval)
+	sk->sk_rxhash = newval;
+
+We need the condition to avoid dirtying a shared cache line.
+
+Fixes: fec5e652e58f ("rfs: Receive Flow Steering")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/net/sock.h | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index f7248aed93d98..24024745ecef6 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -1564,6 +1564,14 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 		enetc_build_xdp_buff(rx_ring, bd_status, &rxbd, &i,
- 				     &cleaned_cnt, &xdp_buff);
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 45e46a1c4afc6..f0654c44acf5f 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1152,8 +1152,12 @@ static inline void sock_rps_record_flow(const struct sock *sk)
+ 		 * OR	an additional socket flag
+ 		 * [1] : sk_state and sk_prot are in the same cache line.
+ 		 */
+-		if (sk->sk_state == TCP_ESTABLISHED)
+-			sock_rps_record_flow_hash(sk->sk_rxhash);
++		if (sk->sk_state == TCP_ESTABLISHED) {
++			/* This READ_ONCE() is paired with the WRITE_ONCE()
++			 * from sock_rps_save_rxhash() and sock_rps_reset_rxhash().
++			 */
++			sock_rps_record_flow_hash(READ_ONCE(sk->sk_rxhash));
++		}
+ 	}
+ #endif
+ }
+@@ -1162,15 +1166,19 @@ static inline void sock_rps_save_rxhash(struct sock *sk,
+ 					const struct sk_buff *skb)
+ {
+ #ifdef CONFIG_RPS
+-	if (unlikely(sk->sk_rxhash != skb->hash))
+-		sk->sk_rxhash = skb->hash;
++	/* The following WRITE_ONCE() is paired with the READ_ONCE()
++	 * here, and another one in sock_rps_record_flow().
++	 */
++	if (unlikely(READ_ONCE(sk->sk_rxhash) != skb->hash))
++		WRITE_ONCE(sk->sk_rxhash, skb->hash);
+ #endif
+ }
  
-+		/* When set, the outer VLAN header is extracted and reported
-+		 * in the receive buffer descriptor. So rx_byte_cnt should
-+		 * add the length of the extracted VLAN header.
-+		 */
-+		if (bd_status & ENETC_RXBD_FLAG_VLAN)
-+			rx_byte_cnt += VLAN_HLEN;
-+		rx_byte_cnt += xdp_get_buff_len(&xdp_buff);
-+
- 		xdp_act = bpf_prog_run_xdp(prog, &xdp_buff);
+ static inline void sock_rps_reset_rxhash(struct sock *sk)
+ {
+ #ifdef CONFIG_RPS
+-	sk->sk_rxhash = 0;
++	/* Paired with READ_ONCE() in sock_rps_record_flow() */
++	WRITE_ONCE(sk->sk_rxhash, 0);
+ #endif
+ }
  
- 		switch (xdp_act) {
 -- 
 2.39.2
 
