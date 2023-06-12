@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3EB134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AA6C433EF;
-	Mon, 12 Jun 2023 10:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654F7134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0223C433A0;
+	Mon, 12 Jun 2023 10:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566623;
-	bh=4VKdvJeQ4izTZl1blo3mkVCpCYtokCTrzCYAO0Bhff0=;
+	s=korg; t=1686566626;
+	bh=Tbu2ok51QPVVY5W7T+bALWIj77KRewtAb9WN5gCVu5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tknyGT+rK0to7RS5cPKBJ76JoAMsy5yLRiVP5Xiua9fRNH65euI/YAQZGALidPMPu
-	 sN09I0PB5EhSU8C0t1CR5EBSbcVWYPOTxKpN03lSLA1ob5ZTV5YAfonZl1QF83eeU1
-	 XDQgACRfCybQig3cHOzeTgzSwQ1trvhaoCRsY+9w=
+	b=2iSq+RhVQNHss1XSUUVvaCbnaH+taiQvPa8j1lGXSQUbKxf4zpfU8APdBIU75wd1C
+	 rGSTyJYEgJfqHYQQHwOdEkROw4sXPE0CMH3/dX6JAPJ1oKurv/09MewkVJGOdKEEZg
+	 ibaSUA2DU5d0VOfVQ1c682b7R//otCfkH1vZDPcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 095/132] soc: qcom: icc-bwmon: fix incorrect error code passed to dev_err_probe()
-Date: Mon, 12 Jun 2023 12:27:09 +0200
-Message-ID: <20230612101714.554195434@linuxfoundation.org>
+	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.1 096/132] pinctrl: meson-axg: add missing GPIOA_18 gpio group
+Date: Mon, 12 Jun 2023 12:27:10 +0200
+Message-ID: <20230612101714.688084398@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,49 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Martin Hundebøll <martin@geanix.com>
 
-commit 3530167c6fe8001de6c026a3058eaca4c8a5329f upstream.
+commit 5b10ff013e8a57f8845615ac2cc37edf7f6eef05 upstream.
 
-Pass to dev_err_probe() PTR_ERR from actual dev_pm_opp_find_bw_floor()
-call which failed, instead of previous ret which at this point is 0.
-Failure of dev_pm_opp_find_bw_floor() would result in prematurely ending
-the probe with success.
+Without this, the gpio cannot be explicitly mux'ed to its gpio function.
 
-Fixes smatch warnings:
-
-  drivers/soc/qcom/icc-bwmon.c:776 bwmon_probe() warn: passing zero to 'dev_err_probe'
-  drivers/soc/qcom/icc-bwmon.c:781 bwmon_probe() warn: passing zero to 'dev_err_probe'
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/202305131657.76XeHDjF-lkp@intel.com/
-Cc: <stable@vger.kernel.org>
-Fixes: b9c2ae6cac40 ("soc: qcom: icc-bwmon: Add bandwidth monitoring driver")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230513111747.132532-1-krzysztof.kozlowski@linaro.org
+Fixes: 83c566806a68a ("pinctrl: meson-axg: Add new pinctrl driver for Meson AXG SoC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Martin Hundebøll <martin@geanix.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Rokosov <ddrokosov@sberdevices.ru>
+Link: https://lore.kernel.org/r/20230512064925.133516-1-martin@geanix.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/icc-bwmon.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/meson/pinctrl-meson-axg.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/soc/qcom/icc-bwmon.c
-+++ b/drivers/soc/qcom/icc-bwmon.c
-@@ -603,12 +603,12 @@ static int bwmon_probe(struct platform_d
- 	bwmon->max_bw_kbps = UINT_MAX;
- 	opp = dev_pm_opp_find_bw_floor(dev, &bwmon->max_bw_kbps, 0);
- 	if (IS_ERR(opp))
--		return dev_err_probe(dev, ret, "failed to find max peak bandwidth\n");
-+		return dev_err_probe(dev, PTR_ERR(opp), "failed to find max peak bandwidth\n");
- 
- 	bwmon->min_bw_kbps = 0;
- 	opp = dev_pm_opp_find_bw_ceil(dev, &bwmon->min_bw_kbps, 0);
- 	if (IS_ERR(opp))
--		return dev_err_probe(dev, ret, "failed to find min peak bandwidth\n");
-+		return dev_err_probe(dev, PTR_ERR(opp), "failed to find min peak bandwidth\n");
- 
- 	bwmon->dev = dev;
+--- a/drivers/pinctrl/meson/pinctrl-meson-axg.c
++++ b/drivers/pinctrl/meson/pinctrl-meson-axg.c
+@@ -400,6 +400,7 @@ static struct meson_pmx_group meson_axg_
+ 	GPIO_GROUP(GPIOA_15),
+ 	GPIO_GROUP(GPIOA_16),
+ 	GPIO_GROUP(GPIOA_17),
++	GPIO_GROUP(GPIOA_18),
+ 	GPIO_GROUP(GPIOA_19),
+ 	GPIO_GROUP(GPIOA_20),
  
 
 
