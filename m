@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D4CD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:50:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08909C433D2;
-	Mon, 12 Jun 2023 10:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3485111C88
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:50:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EE7C433EF;
+	Mon, 12 Jun 2023 10:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686567016;
-	bh=WO05a4864ACH2xxDKXti9pGn8ez6zPNtPk00LzpFDDs=;
+	s=korg; t=1686567019;
+	bh=YMsX/jbft63DgDRxBm9uxcfYUlL7VMyidwIcURGMCDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCsOfevEvDi2ue4QisWwr9yXZT7TVgWwc7BHdTkm42/38/G2o9soY6fCHpR+OjFgP
-	 7jPdQm3eOtgfU2Mv/0L8UukYM/bWZwD94XB/WFC57u9lp6LqeBAZ1wsWrx4+r54WAW
-	 Bw3te+Nhbup2FAfitpp1wBlXU/6q8nskqSEZc5IQ=
+	b=2J5ddVJ3ufrr7Nt9vcZ7H7vWS7zeZF9lDhO4l+1JNnFpUiCLOwhrxZ4kfa7zS1NuN
+	 9213VL8cXFTBQ7XKsvkqRlOj6PbZYRa4285STQaNFiFtYBQ5CV6V1hA1TIh0Q05dFM
+	 ozwOu1k+oKBv0lNU6Z8BHi6lcX2vfN8KHCPrOYWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Allen Hubbe <allen.hubbe@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 111/160] virtio_net: use control_buf for coalesce params
-Date: Mon, 12 Jun 2023 12:27:23 +0200
-Message-ID: <20230612101720.129481688@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 120/160] arm64: dts: qcom: sm6375-pdx225: Fix remoteproc firmware paths
+Date: Mon, 12 Jun 2023 12:27:32 +0200
+Message-ID: <20230612101720.547799093@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -39,72 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit accc1bf23068c1cdc4c2b015320ba856e210dd98 upstream.
+[ Upstream commit a14da6144d16ef27e3022835fa282a3740b8ad7b ]
 
-Commit 699b045a8e43 ("net: virtio_net: notifications coalescing
-support") added coalescing command support for virtio_net. However,
-the coalesce commands are using buffers on the stack, which is causing
-the device to see DMA errors. There should also be a complaint from
-check_for_stack() in debug_dma_map_xyz(). Fix this by adding and using
-coalesce params from the control_buf struct, which aligns with other
-commands.
+They were previously missing the SoC name. Fix it.
 
-Cc: stable@vger.kernel.org
-Fixes: 699b045a8e43 ("net: virtio_net: notifications coalescing support")
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Signed-off-by: Allen Hubbe <allen.hubbe@amd.com>
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://lore.kernel.org/r/20230605195925.51625-1-brett.creeley@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a2ad207c412b ("arm64: dts: qcom: sm6375-pdx225: Enable ADSP & CDSP")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230517-topic-murray-fwname-v1-1-923e87312249@linaro.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -204,6 +204,8 @@ struct control_buf {
- 	__virtio16 vid;
- 	__virtio64 offloads;
- 	struct virtio_net_ctrl_rss rss;
-+	struct virtio_net_ctrl_coal_tx coal_tx;
-+	struct virtio_net_ctrl_coal_rx coal_rx;
+diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
+index b691c3834b6b6..71970dd3fc1ad 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
++++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
+@@ -151,12 +151,12 @@ &qupv3_id_1 {
  };
  
- struct virtnet_info {
-@@ -2933,12 +2935,10 @@ static int virtnet_send_notf_coal_cmds(s
- 				       struct ethtool_coalesce *ec)
- {
- 	struct scatterlist sgs_tx, sgs_rx;
--	struct virtio_net_ctrl_coal_tx coal_tx;
--	struct virtio_net_ctrl_coal_rx coal_rx;
+ &remoteproc_adsp {
+-	firmware-name = "qcom/Sony/murray/adsp.mbn";
++	firmware-name = "qcom/sm6375/Sony/murray/adsp.mbn";
+ 	status = "okay";
+ };
  
--	coal_tx.tx_usecs = cpu_to_le32(ec->tx_coalesce_usecs);
--	coal_tx.tx_max_packets = cpu_to_le32(ec->tx_max_coalesced_frames);
--	sg_init_one(&sgs_tx, &coal_tx, sizeof(coal_tx));
-+	vi->ctrl->coal_tx.tx_usecs = cpu_to_le32(ec->tx_coalesce_usecs);
-+	vi->ctrl->coal_tx.tx_max_packets = cpu_to_le32(ec->tx_max_coalesced_frames);
-+	sg_init_one(&sgs_tx, &vi->ctrl->coal_tx, sizeof(vi->ctrl->coal_tx));
+ &remoteproc_cdsp {
+-	firmware-name = "qcom/Sony/murray/cdsp.mbn";
++	firmware-name = "qcom/sm6375/Sony/murray/cdsp.mbn";
+ 	status = "okay";
+ };
  
- 	if (!virtnet_send_command(vi, VIRTIO_NET_CTRL_NOTF_COAL,
- 				  VIRTIO_NET_CTRL_NOTF_COAL_TX_SET,
-@@ -2949,9 +2949,9 @@ static int virtnet_send_notf_coal_cmds(s
- 	vi->tx_usecs = ec->tx_coalesce_usecs;
- 	vi->tx_max_packets = ec->tx_max_coalesced_frames;
- 
--	coal_rx.rx_usecs = cpu_to_le32(ec->rx_coalesce_usecs);
--	coal_rx.rx_max_packets = cpu_to_le32(ec->rx_max_coalesced_frames);
--	sg_init_one(&sgs_rx, &coal_rx, sizeof(coal_rx));
-+	vi->ctrl->coal_rx.rx_usecs = cpu_to_le32(ec->rx_coalesce_usecs);
-+	vi->ctrl->coal_rx.rx_max_packets = cpu_to_le32(ec->rx_max_coalesced_frames);
-+	sg_init_one(&sgs_rx, &vi->ctrl->coal_rx, sizeof(vi->ctrl->coal_rx));
- 
- 	if (!virtnet_send_command(vi, VIRTIO_NET_CTRL_NOTF_COAL,
- 				  VIRTIO_NET_CTRL_NOTF_COAL_RX_SET,
+-- 
+2.39.2
+
 
 
