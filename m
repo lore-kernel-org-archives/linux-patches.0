@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35EB134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766ABC4339B;
-	Mon, 12 Jun 2023 10:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E911D512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:49:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A43C433D2;
+	Mon, 12 Jun 2023 10:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566992;
-	bh=ZxhYD46jxs/6H5aSRgy17QSu/iyspEVxgEOUai0CnW8=;
+	s=korg; t=1686566995;
+	bh=UnCg2/nh8mWojPFEQoxRdb3Uh5OG2WEKxNzI0JzS/J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7tHF0Riwp97mScskO1vBl6E1aBaFh0f3kqOVdAd4LaMPezoencnSSRa7bBpSq4hq
-	 x27SG9FX93Z3TJXpdRYnjuxK+MYKLNFXx9z3S7kaz5xbt20tsOKLEmCAB7Abj6laQu
-	 THO8eNDgRRxOuyFKeiwOJP2hu+zMGYHXj33HAIWw=
+	b=ndrOnfXYqPMAZNFh7tjcjAmZEr8cbnupgsuF0HgjbwGs2quWnx3qQpt9zYYkxldrA
+	 V+uqmfXd/SifMn74Zxotjxsizq6kSrJ6Q/HFOa7/RNBl+GFiFfk9z0un5dzuLnEKSh
+	 B3eKo8Lnp7svEt2h7z1FFCRb/y44z14tjfV2NMow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RenHai <kean0048@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.3 082/160] ALSA: hda/realtek: Add Lenovo P3 Tower platform
-Date: Mon, 12 Jun 2023 12:26:54 +0200
-Message-ID: <20230612101718.754106384@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 6.3 109/160] rbd: move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting
+Date: Mon, 12 Jun 2023 12:27:21 +0200
+Message-ID: <20230612101720.027663122@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -34,31 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: RenHai <kean0048@gmail.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 7ca4c8d4d3f41c2cd9b4cf22bb829bf03dac0956 upstream.
+commit 09fe05c57b5aaf23e2c35036c98ea9f282b19a77 upstream.
 
-Headset microphone on this platform does not work without
-ALC897_FIXUP_HEADSET_MIC_PIN fixup.
+Move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting into the object request
+state machine to allow for the snapshot context to be captured in the
+image request state machine rather than in rbd_queue_workfn().
 
-Signed-off-by: RenHai <kean0048@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230602003604.975892-1-kean0048@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/rbd.c |   32 +++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11717,6 +11717,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x14cd, 0x5003, "USI", ALC662_FIXUP_USI_HEADSET_MODE),
- 	SND_PCI_QUIRK(0x17aa, 0x1036, "Lenovo P520", ALC662_FIXUP_LENOVO_MULTI_CODECS),
- 	SND_PCI_QUIRK(0x17aa, 0x1057, "Lenovo P360", ALC897_FIXUP_HEADSET_MIC_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x1064, "Lenovo P3 Tower", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x32ca, "Lenovo ThinkCentre M80", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x32cb, "Lenovo ThinkCentre M70", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x32cf, "Lenovo ThinkCentre M950", ALC897_FIXUP_HEADSET_MIC_PIN),
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -1334,14 +1334,28 @@ static bool rbd_obj_is_tail(struct rbd_o
+ /*
+  * Must be called after rbd_obj_calc_img_extents().
+  */
+-static bool rbd_obj_copyup_enabled(struct rbd_obj_request *obj_req)
++static void rbd_obj_set_copyup_enabled(struct rbd_obj_request *obj_req)
+ {
+-	if (!obj_req->num_img_extents ||
+-	    (rbd_obj_is_entire(obj_req) &&
+-	     !obj_req->img_request->snapc->num_snaps))
+-		return false;
++	if (obj_req->img_request->op_type == OBJ_OP_DISCARD) {
++		dout("%s %p objno %llu discard\n", __func__, obj_req,
++		     obj_req->ex.oe_objno);
++		return;
++	}
+ 
+-	return true;
++	if (!obj_req->num_img_extents) {
++		dout("%s %p objno %llu not overlapping\n", __func__, obj_req,
++		     obj_req->ex.oe_objno);
++		return;
++	}
++
++	if (rbd_obj_is_entire(obj_req) &&
++	    !obj_req->img_request->snapc->num_snaps) {
++		dout("%s %p objno %llu entire\n", __func__, obj_req,
++		     obj_req->ex.oe_objno);
++		return;
++	}
++
++	obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
+ }
+ 
+ static u64 rbd_obj_img_extents_bytes(struct rbd_obj_request *obj_req)
+@@ -2233,9 +2247,6 @@ static int rbd_obj_init_write(struct rbd
+ 	if (ret)
+ 		return ret;
+ 
+-	if (rbd_obj_copyup_enabled(obj_req))
+-		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
+-
+ 	obj_req->write_state = RBD_OBJ_WRITE_START;
+ 	return 0;
+ }
+@@ -2341,8 +2352,6 @@ static int rbd_obj_init_zeroout(struct r
+ 	if (ret)
+ 		return ret;
+ 
+-	if (rbd_obj_copyup_enabled(obj_req))
+-		obj_req->flags |= RBD_OBJ_FLAG_COPYUP_ENABLED;
+ 	if (!obj_req->num_img_extents) {
+ 		obj_req->flags |= RBD_OBJ_FLAG_NOOP_FOR_NONEXISTENT;
+ 		if (rbd_obj_is_entire(obj_req))
+@@ -3286,6 +3295,7 @@ again:
+ 	case RBD_OBJ_WRITE_START:
+ 		rbd_assert(!*result);
+ 
++		rbd_obj_set_copyup_enabled(obj_req);
+ 		if (rbd_obj_write_is_noop(obj_req))
+ 			return true;
+ 
 
 
