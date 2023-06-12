@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2FB11C88
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB972C433D2;
-	Mon, 12 Jun 2023 10:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042BB11C88
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:41:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44745C433D2;
+	Mon, 12 Jun 2023 10:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566467;
-	bh=fd1KsW0MBP64/lvGeFIS2thFzQJ9M4DPwki4h35rhTs=;
+	s=korg; t=1686566469;
+	bh=w+T9KGMVOaXK2oHQafMKu62bzBMatENwlHQtnkFtd9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wW6lC7icrDTz/XYMOI30gz715MHeuxEbMtS1MH65RPsjzVxjSqzHuhStl4js/goI2
-	 4CP0c0zsTDd42YoGqqakq7SJvh8jpIG7g2a6KL4uGKQn/wrwCMLOgQvd6HAdXyDmRa
-	 LXZHTi1JZaf8GiNSXm+yNorlQrzAKjmX73dBftdA=
+	b=FJEBpTXqlVsmvhdZop/nvGt3DxTa8pW3vIhdZkRzL1AD/ggVrOXbGxKdlQ0aNG218
+	 GOaKVBq+liLSFkqsdj+g16sK892pOcWCR3vp6plXwIe+AR4qYSsmtRappkYbYuxhZm
+	 0a8SxxV3qiA4nBrhEkppQ6zWgm15c4MBbkt/ZKr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/132] net: sched: add rcu annotations around qdisc->qdisc_sleeping
-Date: Mon, 12 Jun 2023 12:26:17 +0200
-Message-ID: <20230612101712.217291706@linuxfoundation.org>
+Subject: [PATCH 6.1 044/132] drm/i915/selftests: Stop using kthread_stop()
+Date: Mon, 12 Jun 2023 12:26:18 +0200
+Message-ID: <20230612101712.268734421@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -38,569 +35,1070 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
 
-[ Upstream commit d636fc5dd692c8f4e00ae6e0359c0eceeb5d9bdb ]
+[ Upstream commit 6407cf533217e09dfd895e64984c3f1ee3802373 ]
 
-syzbot reported a race around qdisc->qdisc_sleeping [1]
+Since a7c01fa93aeb ("signal: break out of wait loops on kthread_stop()")
+kthread_stop() started asserting a pending signal which wreaks havoc with
+a few of our selftests. Mainly because they are not fully expecting to
+handle signals, but also cutting the intended test runtimes short due
+signal_pending() now returning true (via __igt_timeout), which therefore
+breaks both the patterns of:
 
-It is time we add proper annotations to reads and writes to/from
-qdisc->qdisc_sleeping.
+  kthread_run()
+  ..sleep for igt_timeout_ms to allow test to exercise stuff..
+  kthread_stop()
 
-[1]
-BUG: KCSAN: data-race in dev_graft_qdisc / qdisc_lookup_rcu
+And check for errors recorded in the thread.
 
-read to 0xffff8881286fc618 of 8 bytes by task 6928 on cpu 1:
-qdisc_lookup_rcu+0x192/0x2c0 net/sched/sch_api.c:331
-__tcf_qdisc_find+0x74/0x3c0 net/sched/cls_api.c:1174
-tc_get_tfilter+0x18f/0x990 net/sched/cls_api.c:2547
-rtnetlink_rcv_msg+0x7af/0x8c0 net/core/rtnetlink.c:6386
-netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2546
-rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6413
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0x56f/0x640 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x665/0x770 net/netlink/af_netlink.c:1913
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0x375/0x4c0 net/socket.c:2503
-___sys_sendmsg net/socket.c:2557 [inline]
-__sys_sendmsg+0x1e3/0x270 net/socket.c:2586
-__do_sys_sendmsg net/socket.c:2595 [inline]
-__se_sys_sendmsg net/socket.c:2593 [inline]
-__x64_sys_sendmsg+0x46/0x50 net/socket.c:2593
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+And also:
 
-write to 0xffff8881286fc618 of 8 bytes by task 6912 on cpu 0:
-dev_graft_qdisc+0x4f/0x80 net/sched/sch_generic.c:1115
-qdisc_graft+0x7d0/0xb60 net/sched/sch_api.c:1103
-tc_modify_qdisc+0x712/0xf10 net/sched/sch_api.c:1693
-rtnetlink_rcv_msg+0x807/0x8c0 net/core/rtnetlink.c:6395
-netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2546
-rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6413
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0x56f/0x640 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x665/0x770 net/netlink/af_netlink.c:1913
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0x375/0x4c0 net/socket.c:2503
-___sys_sendmsg net/socket.c:2557 [inline]
-__sys_sendmsg+0x1e3/0x270 net/socket.c:2586
-__do_sys_sendmsg net/socket.c:2595 [inline]
-__se_sys_sendmsg net/socket.c:2593 [inline]
-__x64_sys_sendmsg+0x46/0x50 net/socket.c:2593
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+    Main thread  |   Test thread
+  ---------------+------------------------------
+  kthread_run()  |
+  kthread_stop() |  do stuff until __igt_timeout
+		 |  -- exits early due signal --
 
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 6912 Comm: syz-executor.5 Not tainted 6.4.0-rc3-syzkaller-00190-g0d85b27b0cc6 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/16/2023
+Where this kthread_stop() was assume would have a "join" semantics, which
+it would have had if not the new signal assertion issue.
 
-Fixes: 3a7d0d07a386 ("net: sched: extend Qdisc with rcu")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Vlad Buslov <vladbu@nvidia.com>
-Acked-by: Jamal Hadi Salim<jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+To recap, threads are now likely to catch a previously impossible
+ERESTARTSYS or EINTR, marking the test as failed, or have a pointlessly
+short run time.
+
+To work around this start using kthread_work(er) API which provides
+an explicit way of waiting for threads to exit. And for cases where
+parent controls the test duration we add explicit signaling which threads
+will now use instead of relying on kthread_should_stop().
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221020130841.3845791-1-tvrtko.ursulin@linux.intel.com
+Stable-dep-of: 79d0150d2d98 ("drm/i915/selftests: Add some missing error propagation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  2 +-
- include/net/sch_generic.h |  6 ++++--
- net/core/dev.c            |  2 +-
- net/sched/sch_api.c       | 26 ++++++++++++++++----------
- net/sched/sch_fq_pie.c    |  2 ++
- net/sched/sch_generic.c   | 30 +++++++++++++++---------------
- net/sched/sch_mq.c        |  8 ++++----
- net/sched/sch_mqprio.c    |  8 ++++----
- net/sched/sch_pie.c       |  5 ++++-
- net/sched/sch_red.c       |  5 ++++-
- net/sched/sch_sfq.c       |  5 ++++-
- net/sched/sch_taprio.c    |  6 +++---
- net/sched/sch_teql.c      |  2 +-
- 13 files changed, 63 insertions(+), 44 deletions(-)
+ .../drm/i915/gem/selftests/i915_gem_context.c | 118 ++++----
+ drivers/gpu/drm/i915/gt/selftest_execlists.c  |  48 ++--
+ drivers/gpu/drm/i915/gt/selftest_hangcheck.c  |  51 ++--
+ drivers/gpu/drm/i915/selftests/i915_request.c | 252 +++++++++++-------
+ 4 files changed, 281 insertions(+), 188 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 74e05b82f1bf7..d5eb3ab8e38f2 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -609,7 +609,7 @@ struct netdev_queue {
- 	netdevice_tracker	dev_tracker;
- 
- 	struct Qdisc __rcu	*qdisc;
--	struct Qdisc		*qdisc_sleeping;
-+	struct Qdisc __rcu	*qdisc_sleeping;
- #ifdef CONFIG_SYSFS
- 	struct kobject		kobj;
- #endif
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index af4aa66aaa4eb..989eb972fcaec 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -543,7 +543,7 @@ static inline struct Qdisc *qdisc_root_bh(const struct Qdisc *qdisc)
- 
- static inline struct Qdisc *qdisc_root_sleeping(const struct Qdisc *qdisc)
- {
--	return qdisc->dev_queue->qdisc_sleeping;
-+	return rcu_dereference_rtnl(qdisc->dev_queue->qdisc_sleeping);
+diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c
+index c6ad67b90e8af..d8864444432b7 100644
+--- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c
++++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_context.c
+@@ -179,97 +179,108 @@ static int live_nop_switch(void *arg)
  }
  
- static inline spinlock_t *qdisc_root_sleeping_lock(const struct Qdisc *qdisc)
-@@ -752,7 +752,9 @@ static inline bool qdisc_tx_changing(const struct net_device *dev)
- 
- 	for (i = 0; i < dev->num_tx_queues; i++) {
- 		struct netdev_queue *txq = netdev_get_tx_queue(dev, i);
--		if (rcu_access_pointer(txq->qdisc) != txq->qdisc_sleeping)
-+
-+		if (rcu_access_pointer(txq->qdisc) !=
-+		    rcu_access_pointer(txq->qdisc_sleeping))
- 			return true;
- 	}
- 	return false;
-diff --git a/net/core/dev.c b/net/core/dev.c
-index ee00d3cfcb564..a2e3c6470ab3f 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10518,7 +10518,7 @@ struct netdev_queue *dev_ingress_queue_create(struct net_device *dev)
- 		return NULL;
- 	netdev_init_one_queue(dev, queue, NULL);
- 	RCU_INIT_POINTER(queue->qdisc, &noop_qdisc);
--	queue->qdisc_sleeping = &noop_qdisc;
-+	RCU_INIT_POINTER(queue->qdisc_sleeping, &noop_qdisc);
- 	rcu_assign_pointer(dev->ingress_queue, queue);
- #endif
- 	return queue;
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index f6a7b876d5954..6fb345ec22641 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -308,7 +308,7 @@ struct Qdisc *qdisc_lookup(struct net_device *dev, u32 handle)
- 
- 	if (dev_ingress_queue(dev))
- 		q = qdisc_match_from_root(
--			dev_ingress_queue(dev)->qdisc_sleeping,
-+			rtnl_dereference(dev_ingress_queue(dev)->qdisc_sleeping),
- 			handle);
- out:
- 	return q;
-@@ -327,7 +327,8 @@ struct Qdisc *qdisc_lookup_rcu(struct net_device *dev, u32 handle)
- 
- 	nq = dev_ingress_queue_rcu(dev);
- 	if (nq)
--		q = qdisc_match_from_root(nq->qdisc_sleeping, handle);
-+		q = qdisc_match_from_root(rcu_dereference(nq->qdisc_sleeping),
-+					  handle);
- out:
- 	return q;
- }
-@@ -633,8 +634,13 @@ EXPORT_SYMBOL(qdisc_watchdog_init);
- void qdisc_watchdog_schedule_range_ns(struct qdisc_watchdog *wd, u64 expires,
- 				      u64 delta_ns)
- {
--	if (test_bit(__QDISC_STATE_DEACTIVATED,
--		     &qdisc_root_sleeping(wd->qdisc)->state))
-+	bool deactivated;
-+
-+	rcu_read_lock();
-+	deactivated = test_bit(__QDISC_STATE_DEACTIVATED,
-+			       &qdisc_root_sleeping(wd->qdisc)->state);
-+	rcu_read_unlock();
-+	if (deactivated)
- 		return;
- 
- 	if (hrtimer_is_queued(&wd->timer)) {
-@@ -1473,7 +1479,7 @@ static int tc_get_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 				}
- 				q = qdisc_leaf(p, clid);
- 			} else if (dev_ingress_queue(dev)) {
--				q = dev_ingress_queue(dev)->qdisc_sleeping;
-+				q = rtnl_dereference(dev_ingress_queue(dev)->qdisc_sleeping);
- 			}
- 		} else {
- 			q = rtnl_dereference(dev->qdisc);
-@@ -1559,7 +1565,7 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 				}
- 				q = qdisc_leaf(p, clid);
- 			} else if (dev_ingress_queue_create(dev)) {
--				q = dev_ingress_queue(dev)->qdisc_sleeping;
-+				q = rtnl_dereference(dev_ingress_queue(dev)->qdisc_sleeping);
- 			}
- 		} else {
- 			q = rtnl_dereference(dev->qdisc);
-@@ -1800,8 +1806,8 @@ static int tc_dump_qdisc(struct sk_buff *skb, struct netlink_callback *cb)
- 
- 		dev_queue = dev_ingress_queue(dev);
- 		if (dev_queue &&
--		    tc_dump_qdisc_root(dev_queue->qdisc_sleeping, skb, cb,
--				       &q_idx, s_q_idx, false,
-+		    tc_dump_qdisc_root(rtnl_dereference(dev_queue->qdisc_sleeping),
-+				       skb, cb, &q_idx, s_q_idx, false,
- 				       tca[TCA_DUMP_INVISIBLE]) < 0)
- 			goto done;
- 
-@@ -2239,8 +2245,8 @@ static int tc_dump_tclass(struct sk_buff *skb, struct netlink_callback *cb)
- 
- 	dev_queue = dev_ingress_queue(dev);
- 	if (dev_queue &&
--	    tc_dump_tclass_root(dev_queue->qdisc_sleeping, skb, tcm, cb,
--				&t, s_t, false) < 0)
-+	    tc_dump_tclass_root(rtnl_dereference(dev_queue->qdisc_sleeping),
-+				skb, tcm, cb, &t, s_t, false) < 0)
- 		goto done;
- 
- done:
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index c699e5095607d..591d87d5e5c0f 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -379,6 +379,7 @@ static void fq_pie_timer(struct timer_list *t)
- 	spinlock_t *root_lock; /* to lock qdisc for probability calculations */
- 	u32 idx;
- 
-+	rcu_read_lock();
- 	root_lock = qdisc_lock(qdisc_root_sleeping(sch));
- 	spin_lock(root_lock);
- 
-@@ -391,6 +392,7 @@ static void fq_pie_timer(struct timer_list *t)
- 		mod_timer(&q->adapt_timer, jiffies + q->p_params.tupdate);
- 
- 	spin_unlock(root_lock);
-+	rcu_read_unlock();
- }
- 
- static int fq_pie_init(struct Qdisc *sch, struct nlattr *opt,
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index a9aadc4e68581..ee43e8ac039ed 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -648,7 +648,7 @@ struct Qdisc_ops noop_qdisc_ops __read_mostly = {
- 
- static struct netdev_queue noop_netdev_queue = {
- 	RCU_POINTER_INITIALIZER(qdisc, &noop_qdisc),
--	.qdisc_sleeping	=	&noop_qdisc,
-+	RCU_POINTER_INITIALIZER(qdisc_sleeping, &noop_qdisc),
+ struct parallel_switch {
+-	struct task_struct *tsk;
++	struct kthread_worker *worker;
++	struct kthread_work work;
+ 	struct intel_context *ce[2];
++	int result;
  };
  
- struct Qdisc noop_qdisc = {
-@@ -1103,7 +1103,7 @@ EXPORT_SYMBOL(qdisc_put_unlocked);
- struct Qdisc *dev_graft_qdisc(struct netdev_queue *dev_queue,
- 			      struct Qdisc *qdisc)
+-static int __live_parallel_switch1(void *data)
++static void __live_parallel_switch1(struct kthread_work *work)
  {
--	struct Qdisc *oqdisc = dev_queue->qdisc_sleeping;
-+	struct Qdisc *oqdisc = rtnl_dereference(dev_queue->qdisc_sleeping);
- 	spinlock_t *root_lock;
+-	struct parallel_switch *arg = data;
++	struct parallel_switch *arg =
++		container_of(work, typeof(*arg), work);
+ 	IGT_TIMEOUT(end_time);
+ 	unsigned long count;
  
- 	root_lock = qdisc_lock(oqdisc);
-@@ -1112,7 +1112,7 @@ struct Qdisc *dev_graft_qdisc(struct netdev_queue *dev_queue,
- 	/* ... and graft new one */
- 	if (qdisc == NULL)
- 		qdisc = &noop_qdisc;
--	dev_queue->qdisc_sleeping = qdisc;
-+	rcu_assign_pointer(dev_queue->qdisc_sleeping, qdisc);
- 	rcu_assign_pointer(dev_queue->qdisc, &noop_qdisc);
+ 	count = 0;
++	arg->result = 0;
+ 	do {
+ 		struct i915_request *rq = NULL;
+-		int err, n;
++		int n;
  
- 	spin_unlock_bh(root_lock);
-@@ -1125,12 +1125,12 @@ static void shutdown_scheduler_queue(struct net_device *dev,
- 				     struct netdev_queue *dev_queue,
- 				     void *_qdisc_default)
+-		err = 0;
+-		for (n = 0; !err && n < ARRAY_SIZE(arg->ce); n++) {
++		for (n = 0; !arg->result && n < ARRAY_SIZE(arg->ce); n++) {
+ 			struct i915_request *prev = rq;
+ 
+ 			rq = i915_request_create(arg->ce[n]);
+ 			if (IS_ERR(rq)) {
+ 				i915_request_put(prev);
+-				return PTR_ERR(rq);
++				arg->result = PTR_ERR(rq);
++				break;
+ 			}
+ 
+ 			i915_request_get(rq);
+ 			if (prev) {
+-				err = i915_request_await_dma_fence(rq, &prev->fence);
++				arg->result =
++					i915_request_await_dma_fence(rq,
++								     &prev->fence);
+ 				i915_request_put(prev);
+ 			}
+ 
+ 			i915_request_add(rq);
+ 		}
++
++		if (IS_ERR_OR_NULL(rq))
++			break;
++
+ 		if (i915_request_wait(rq, 0, HZ) < 0)
+-			err = -ETIME;
++			arg->result = -ETIME;
++
+ 		i915_request_put(rq);
+-		if (err)
+-			return err;
+ 
+ 		count++;
+-	} while (!__igt_timeout(end_time, NULL));
++	} while (!arg->result && !__igt_timeout(end_time, NULL));
+ 
+-	pr_info("%s: %lu switches (sync)\n", arg->ce[0]->engine->name, count);
+-	return 0;
++	pr_info("%s: %lu switches (sync) <%d>\n",
++		arg->ce[0]->engine->name, count, arg->result);
+ }
+ 
+-static int __live_parallel_switchN(void *data)
++static void __live_parallel_switchN(struct kthread_work *work)
  {
--	struct Qdisc *qdisc = dev_queue->qdisc_sleeping;
-+	struct Qdisc *qdisc = rtnl_dereference(dev_queue->qdisc_sleeping);
- 	struct Qdisc *qdisc_default = _qdisc_default;
+-	struct parallel_switch *arg = data;
++	struct parallel_switch *arg =
++		container_of(work, typeof(*arg), work);
+ 	struct i915_request *rq = NULL;
+ 	IGT_TIMEOUT(end_time);
+ 	unsigned long count;
+ 	int n;
  
- 	if (qdisc) {
- 		rcu_assign_pointer(dev_queue->qdisc, qdisc_default);
--		dev_queue->qdisc_sleeping = qdisc_default;
-+		rcu_assign_pointer(dev_queue->qdisc_sleeping, qdisc_default);
+ 	count = 0;
++	arg->result = 0;
+ 	do {
+-		for (n = 0; n < ARRAY_SIZE(arg->ce); n++) {
++		for (n = 0; !arg->result && n < ARRAY_SIZE(arg->ce); n++) {
+ 			struct i915_request *prev = rq;
+-			int err = 0;
  
- 		qdisc_put(qdisc);
+ 			rq = i915_request_create(arg->ce[n]);
+ 			if (IS_ERR(rq)) {
+ 				i915_request_put(prev);
+-				return PTR_ERR(rq);
++				arg->result = PTR_ERR(rq);
++				break;
+ 			}
+ 
+ 			i915_request_get(rq);
+ 			if (prev) {
+-				err = i915_request_await_dma_fence(rq, &prev->fence);
++				arg->result =
++					i915_request_await_dma_fence(rq,
++								     &prev->fence);
+ 				i915_request_put(prev);
+ 			}
+ 
+ 			i915_request_add(rq);
+-			if (err) {
+-				i915_request_put(rq);
+-				return err;
+-			}
+ 		}
+ 
+ 		count++;
+-	} while (!__igt_timeout(end_time, NULL));
+-	i915_request_put(rq);
++	} while (!arg->result && !__igt_timeout(end_time, NULL));
+ 
+-	pr_info("%s: %lu switches (many)\n", arg->ce[0]->engine->name, count);
+-	return 0;
++	if (!IS_ERR_OR_NULL(rq))
++		i915_request_put(rq);
++
++	pr_info("%s: %lu switches (many) <%d>\n",
++		arg->ce[0]->engine->name, count, arg->result);
+ }
+ 
+ static int live_parallel_switch(void *arg)
+ {
+ 	struct drm_i915_private *i915 = arg;
+-	static int (* const func[])(void *arg) = {
++	static void (* const func[])(struct kthread_work *) = {
+ 		__live_parallel_switch1,
+ 		__live_parallel_switchN,
+ 		NULL,
+@@ -277,7 +288,7 @@ static int live_parallel_switch(void *arg)
+ 	struct parallel_switch *data = NULL;
+ 	struct i915_gem_engines *engines;
+ 	struct i915_gem_engines_iter it;
+-	int (* const *fn)(void *arg);
++	void (* const *fn)(struct kthread_work *);
+ 	struct i915_gem_context *ctx;
+ 	struct intel_context *ce;
+ 	struct file *file;
+@@ -348,9 +359,22 @@ static int live_parallel_switch(void *arg)
+ 		}
  	}
-@@ -1154,7 +1154,7 @@ static void attach_one_default_qdisc(struct net_device *dev,
  
- 	if (!netif_is_multiqueue(dev))
- 		qdisc->flags |= TCQ_F_ONETXQUEUE | TCQ_F_NOPARENT;
--	dev_queue->qdisc_sleeping = qdisc;
-+	rcu_assign_pointer(dev_queue->qdisc_sleeping, qdisc);
- }
++	for (n = 0; n < count; n++) {
++		struct kthread_worker *worker;
++
++		if (!data[n].ce[0])
++			continue;
++
++		worker = kthread_create_worker(0, "igt/parallel:%s",
++					       data[n].ce[0]->engine->name);
++		if (IS_ERR(worker))
++			goto out;
++
++		data[n].worker = worker;
++	}
++
+ 	for (fn = func; !err && *fn; fn++) {
+ 		struct igt_live_test t;
+-		int n;
  
- static void attach_default_qdiscs(struct net_device *dev)
-@@ -1167,7 +1167,7 @@ static void attach_default_qdiscs(struct net_device *dev)
- 	if (!netif_is_multiqueue(dev) ||
- 	    dev->priv_flags & IFF_NO_QUEUE) {
- 		netdev_for_each_tx_queue(dev, attach_one_default_qdisc, NULL);
--		qdisc = txq->qdisc_sleeping;
-+		qdisc = rtnl_dereference(txq->qdisc_sleeping);
- 		rcu_assign_pointer(dev->qdisc, qdisc);
- 		qdisc_refcount_inc(qdisc);
- 	} else {
-@@ -1186,7 +1186,7 @@ static void attach_default_qdiscs(struct net_device *dev)
- 		netdev_for_each_tx_queue(dev, shutdown_scheduler_queue, &noop_qdisc);
- 		dev->priv_flags |= IFF_NO_QUEUE;
- 		netdev_for_each_tx_queue(dev, attach_one_default_qdisc, NULL);
--		qdisc = txq->qdisc_sleeping;
-+		qdisc = rtnl_dereference(txq->qdisc_sleeping);
- 		rcu_assign_pointer(dev->qdisc, qdisc);
- 		qdisc_refcount_inc(qdisc);
- 		dev->priv_flags ^= IFF_NO_QUEUE;
-@@ -1202,7 +1202,7 @@ static void transition_one_qdisc(struct net_device *dev,
- 				 struct netdev_queue *dev_queue,
- 				 void *_need_watchdog)
- {
--	struct Qdisc *new_qdisc = dev_queue->qdisc_sleeping;
-+	struct Qdisc *new_qdisc = rtnl_dereference(dev_queue->qdisc_sleeping);
- 	int *need_watchdog_p = _need_watchdog;
+ 		err = igt_live_test_begin(&t, i915, __func__, "");
+ 		if (err)
+@@ -360,30 +384,17 @@ static int live_parallel_switch(void *arg)
+ 			if (!data[n].ce[0])
+ 				continue;
  
- 	if (!(new_qdisc->flags & TCQ_F_BUILTIN))
-@@ -1272,7 +1272,7 @@ static void dev_reset_queue(struct net_device *dev,
- 	struct Qdisc *qdisc;
- 	bool nolock;
+-			data[n].tsk = kthread_run(*fn, &data[n],
+-						  "igt/parallel:%s",
+-						  data[n].ce[0]->engine->name);
+-			if (IS_ERR(data[n].tsk)) {
+-				err = PTR_ERR(data[n].tsk);
+-				break;
+-			}
+-			get_task_struct(data[n].tsk);
++			data[n].result = 0;
++			kthread_init_work(&data[n].work, *fn);
++			kthread_queue_work(data[n].worker, &data[n].work);
+ 		}
  
--	qdisc = dev_queue->qdisc_sleeping;
-+	qdisc = rtnl_dereference(dev_queue->qdisc_sleeping);
- 	if (!qdisc)
- 		return;
+-		yield(); /* start all threads before we kthread_stop() */
+-
+ 		for (n = 0; n < count; n++) {
+-			int status;
+-
+-			if (IS_ERR_OR_NULL(data[n].tsk))
+-				continue;
+-
+-			status = kthread_stop(data[n].tsk);
+-			if (status && !err)
+-				err = status;
+-
+-			put_task_struct(data[n].tsk);
+-			data[n].tsk = NULL;
++			if (data[n].ce[0]) {
++				kthread_flush_work(&data[n].work);
++				if (data[n].result && !err)
++					err = data[n].result;
++			}
+ 		}
  
-@@ -1303,7 +1303,7 @@ static bool some_qdisc_is_busy(struct net_device *dev)
- 		int val;
- 
- 		dev_queue = netdev_get_tx_queue(dev, i);
--		q = dev_queue->qdisc_sleeping;
-+		q = rtnl_dereference(dev_queue->qdisc_sleeping);
- 
- 		root_lock = qdisc_lock(q);
- 		spin_lock_bh(root_lock);
-@@ -1379,7 +1379,7 @@ EXPORT_SYMBOL(dev_deactivate);
- static int qdisc_change_tx_queue_len(struct net_device *dev,
- 				     struct netdev_queue *dev_queue)
- {
--	struct Qdisc *qdisc = dev_queue->qdisc_sleeping;
-+	struct Qdisc *qdisc = rtnl_dereference(dev_queue->qdisc_sleeping);
- 	const struct Qdisc_ops *ops = qdisc->ops;
- 
- 	if (ops->change_tx_queue_len)
-@@ -1404,7 +1404,7 @@ void mq_change_real_num_tx(struct Qdisc *sch, unsigned int new_real_tx)
- 	unsigned int i;
- 
- 	for (i = new_real_tx; i < dev->real_num_tx_queues; i++) {
--		qdisc = netdev_get_tx_queue(dev, i)->qdisc_sleeping;
-+		qdisc = rtnl_dereference(netdev_get_tx_queue(dev, i)->qdisc_sleeping);
- 		/* Only update the default qdiscs we created,
- 		 * qdiscs with handles are always hashed.
- 		 */
-@@ -1412,7 +1412,7 @@ void mq_change_real_num_tx(struct Qdisc *sch, unsigned int new_real_tx)
- 			qdisc_hash_del(qdisc);
+ 		if (igt_live_test_end(&t))
+@@ -399,6 +410,9 @@ static int live_parallel_switch(void *arg)
+ 			intel_context_unpin(data[n].ce[m]);
+ 			intel_context_put(data[n].ce[m]);
+ 		}
++
++		if (data[n].worker)
++			kthread_destroy_worker(data[n].worker);
  	}
- 	for (i = dev->real_num_tx_queues; i < new_real_tx; i++) {
--		qdisc = netdev_get_tx_queue(dev, i)->qdisc_sleeping;
-+		qdisc = rtnl_dereference(netdev_get_tx_queue(dev, i)->qdisc_sleeping);
- 		if (qdisc != &noop_qdisc && !qdisc->handle)
- 			qdisc_hash_add(qdisc, false);
- 	}
-@@ -1449,7 +1449,7 @@ static void dev_init_scheduler_queue(struct net_device *dev,
- 	struct Qdisc *qdisc = _qdisc;
+ 	kfree(data);
+ out_file:
+diff --git a/drivers/gpu/drm/i915/gt/selftest_execlists.c b/drivers/gpu/drm/i915/gt/selftest_execlists.c
+index 1e08b2473b993..6312f42daef48 100644
+--- a/drivers/gpu/drm/i915/gt/selftest_execlists.c
++++ b/drivers/gpu/drm/i915/gt/selftest_execlists.c
+@@ -3475,12 +3475,14 @@ static int random_priority(struct rnd_state *rnd)
  
- 	rcu_assign_pointer(dev_queue->qdisc, qdisc);
--	dev_queue->qdisc_sleeping = qdisc;
-+	rcu_assign_pointer(dev_queue->qdisc_sleeping, qdisc);
+ struct preempt_smoke {
+ 	struct intel_gt *gt;
++	struct kthread_work work;
+ 	struct i915_gem_context **contexts;
+ 	struct intel_engine_cs *engine;
+ 	struct drm_i915_gem_object *batch;
+ 	unsigned int ncontext;
+ 	struct rnd_state prng;
+ 	unsigned long count;
++	int result;
+ };
+ 
+ static struct i915_gem_context *smoke_context(struct preempt_smoke *smoke)
+@@ -3540,34 +3542,31 @@ static int smoke_submit(struct preempt_smoke *smoke,
+ 	return err;
  }
  
- void dev_init_scheduler(struct net_device *dev)
-diff --git a/net/sched/sch_mq.c b/net/sched/sch_mq.c
-index d0bc660d7401f..c860119a8f091 100644
---- a/net/sched/sch_mq.c
-+++ b/net/sched/sch_mq.c
-@@ -141,7 +141,7 @@ static int mq_dump(struct Qdisc *sch, struct sk_buff *skb)
- 	 * qdisc totals are added at end.
- 	 */
- 	for (ntx = 0; ntx < dev->num_tx_queues; ntx++) {
--		qdisc = netdev_get_tx_queue(dev, ntx)->qdisc_sleeping;
-+		qdisc = rtnl_dereference(netdev_get_tx_queue(dev, ntx)->qdisc_sleeping);
- 		spin_lock_bh(qdisc_lock(qdisc));
- 
- 		gnet_stats_add_basic(&sch->bstats, qdisc->cpu_bstats,
-@@ -202,7 +202,7 @@ static struct Qdisc *mq_leaf(struct Qdisc *sch, unsigned long cl)
+-static int smoke_crescendo_thread(void *arg)
++static void smoke_crescendo_work(struct kthread_work *work)
  {
- 	struct netdev_queue *dev_queue = mq_queue_get(sch, cl);
+-	struct preempt_smoke *smoke = arg;
++	struct preempt_smoke *smoke = container_of(work, typeof(*smoke), work);
+ 	IGT_TIMEOUT(end_time);
+ 	unsigned long count;
  
--	return dev_queue->qdisc_sleeping;
-+	return rtnl_dereference(dev_queue->qdisc_sleeping);
+ 	count = 0;
+ 	do {
+ 		struct i915_gem_context *ctx = smoke_context(smoke);
+-		int err;
+ 
+-		err = smoke_submit(smoke,
+-				   ctx, count % I915_PRIORITY_MAX,
+-				   smoke->batch);
+-		if (err)
+-			return err;
++		smoke->result = smoke_submit(smoke, ctx,
++					     count % I915_PRIORITY_MAX,
++					     smoke->batch);
+ 
+ 		count++;
+-	} while (count < smoke->ncontext && !__igt_timeout(end_time, NULL));
++	} while (!smoke->result && count < smoke->ncontext &&
++		 !__igt_timeout(end_time, NULL));
+ 
+ 	smoke->count = count;
+-	return 0;
  }
  
- static unsigned long mq_find(struct Qdisc *sch, u32 classid)
-@@ -221,7 +221,7 @@ static int mq_dump_class(struct Qdisc *sch, unsigned long cl,
- 
- 	tcm->tcm_parent = TC_H_ROOT;
- 	tcm->tcm_handle |= TC_H_MIN(cl);
--	tcm->tcm_info = dev_queue->qdisc_sleeping->handle;
-+	tcm->tcm_info = rtnl_dereference(dev_queue->qdisc_sleeping)->handle;
- 	return 0;
- }
- 
-@@ -230,7 +230,7 @@ static int mq_dump_class_stats(struct Qdisc *sch, unsigned long cl,
+ static int smoke_crescendo(struct preempt_smoke *smoke, unsigned int flags)
+ #define BATCH BIT(0)
  {
- 	struct netdev_queue *dev_queue = mq_queue_get(sch, cl);
+-	struct task_struct *tsk[I915_NUM_ENGINES] = {};
++	struct kthread_worker *worker[I915_NUM_ENGINES] = {};
+ 	struct preempt_smoke *arg;
+ 	struct intel_engine_cs *engine;
+ 	enum intel_engine_id id;
+@@ -3578,6 +3577,8 @@ static int smoke_crescendo(struct preempt_smoke *smoke, unsigned int flags)
+ 	if (!arg)
+ 		return -ENOMEM;
  
--	sch = dev_queue->qdisc_sleeping;
-+	sch = rtnl_dereference(dev_queue->qdisc_sleeping);
- 	if (gnet_stats_copy_basic(d, sch->cpu_bstats, &sch->bstats, true) < 0 ||
- 	    qdisc_qstats_copy(d, sch) < 0)
- 		return -1;
-diff --git a/net/sched/sch_mqprio.c b/net/sched/sch_mqprio.c
-index 4c68abaa289bd..9f26fb7d5823c 100644
---- a/net/sched/sch_mqprio.c
-+++ b/net/sched/sch_mqprio.c
-@@ -399,7 +399,7 @@ static int mqprio_dump(struct Qdisc *sch, struct sk_buff *skb)
- 	 * qdisc totals are added at end.
- 	 */
- 	for (ntx = 0; ntx < dev->num_tx_queues; ntx++) {
--		qdisc = netdev_get_tx_queue(dev, ntx)->qdisc_sleeping;
-+		qdisc = rtnl_dereference(netdev_get_tx_queue(dev, ntx)->qdisc_sleeping);
- 		spin_lock_bh(qdisc_lock(qdisc));
++	memset(arg, 0, I915_NUM_ENGINES * sizeof(*arg));
++
+ 	for_each_engine(engine, smoke->gt, id) {
+ 		arg[id] = *smoke;
+ 		arg[id].engine = engine;
+@@ -3585,31 +3586,28 @@ static int smoke_crescendo(struct preempt_smoke *smoke, unsigned int flags)
+ 			arg[id].batch = NULL;
+ 		arg[id].count = 0;
  
- 		gnet_stats_add_basic(&sch->bstats, qdisc->cpu_bstats,
-@@ -449,7 +449,7 @@ static struct Qdisc *mqprio_leaf(struct Qdisc *sch, unsigned long cl)
- 	if (!dev_queue)
- 		return NULL;
+-		tsk[id] = kthread_run(smoke_crescendo_thread, arg,
+-				      "igt/smoke:%d", id);
+-		if (IS_ERR(tsk[id])) {
+-			err = PTR_ERR(tsk[id]);
++		worker[id] = kthread_create_worker(0, "igt/smoke:%d", id);
++		if (IS_ERR(worker[id])) {
++			err = PTR_ERR(worker[id]);
+ 			break;
+ 		}
+-		get_task_struct(tsk[id]);
+-	}
  
--	return dev_queue->qdisc_sleeping;
-+	return rtnl_dereference(dev_queue->qdisc_sleeping);
- }
+-	yield(); /* start all threads before we kthread_stop() */
++		kthread_init_work(&arg[id].work, smoke_crescendo_work);
++		kthread_queue_work(worker[id], &arg[id].work);
++	}
  
- static unsigned long mqprio_find(struct Qdisc *sch, u32 classid)
-@@ -482,7 +482,7 @@ static int mqprio_dump_class(struct Qdisc *sch, unsigned long cl,
- 		tcm->tcm_parent = (tc < 0) ? 0 :
- 			TC_H_MAKE(TC_H_MAJ(sch->handle),
- 				  TC_H_MIN(tc + TC_H_MIN_PRIORITY));
--		tcm->tcm_info = dev_queue->qdisc_sleeping->handle;
-+		tcm->tcm_info = rtnl_dereference(dev_queue->qdisc_sleeping)->handle;
- 	} else {
- 		tcm->tcm_parent = TC_H_ROOT;
- 		tcm->tcm_info = 0;
-@@ -538,7 +538,7 @@ static int mqprio_dump_class_stats(struct Qdisc *sch, unsigned long cl,
- 	} else {
- 		struct netdev_queue *dev_queue = mqprio_queue_get(sch, cl);
- 
--		sch = dev_queue->qdisc_sleeping;
-+		sch = rtnl_dereference(dev_queue->qdisc_sleeping);
- 		if (gnet_stats_copy_basic(d, sch->cpu_bstats,
- 					  &sch->bstats, true) < 0 ||
- 		    qdisc_qstats_copy(d, sch) < 0)
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index 265c238047a42..b60b31ef71cc5 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -421,8 +421,10 @@ static void pie_timer(struct timer_list *t)
- {
- 	struct pie_sched_data *q = from_timer(q, t, adapt_timer);
- 	struct Qdisc *sch = q->sch;
--	spinlock_t *root_lock = qdisc_lock(qdisc_root_sleeping(sch));
-+	spinlock_t *root_lock;
- 
-+	rcu_read_lock();
-+	root_lock = qdisc_lock(qdisc_root_sleeping(sch));
- 	spin_lock(root_lock);
- 	pie_calculate_probability(&q->params, &q->vars, sch->qstats.backlog);
- 
-@@ -430,6 +432,7 @@ static void pie_timer(struct timer_list *t)
- 	if (q->params.tupdate)
- 		mod_timer(&q->adapt_timer, jiffies + q->params.tupdate);
- 	spin_unlock(root_lock);
-+	rcu_read_unlock();
- }
- 
- static int pie_init(struct Qdisc *sch, struct nlattr *opt,
-diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
-index 98129324e1573..16277b6a0238d 100644
---- a/net/sched/sch_red.c
-+++ b/net/sched/sch_red.c
-@@ -321,12 +321,15 @@ static inline void red_adaptative_timer(struct timer_list *t)
- {
- 	struct red_sched_data *q = from_timer(q, t, adapt_timer);
- 	struct Qdisc *sch = q->sch;
--	spinlock_t *root_lock = qdisc_lock(qdisc_root_sleeping(sch));
-+	spinlock_t *root_lock;
- 
-+	rcu_read_lock();
-+	root_lock = qdisc_lock(qdisc_root_sleeping(sch));
- 	spin_lock(root_lock);
- 	red_adaptative_algo(&q->parms, &q->vars);
- 	mod_timer(&q->adapt_timer, jiffies + HZ/2);
- 	spin_unlock(root_lock);
-+	rcu_read_unlock();
- }
- 
- static int red_init(struct Qdisc *sch, struct nlattr *opt,
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index abd436307d6a8..66dcb18638fea 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -606,10 +606,12 @@ static void sfq_perturbation(struct timer_list *t)
- {
- 	struct sfq_sched_data *q = from_timer(q, t, perturb_timer);
- 	struct Qdisc *sch = q->sch;
--	spinlock_t *root_lock = qdisc_lock(qdisc_root_sleeping(sch));
-+	spinlock_t *root_lock;
- 	siphash_key_t nkey;
- 
- 	get_random_bytes(&nkey, sizeof(nkey));
-+	rcu_read_lock();
-+	root_lock = qdisc_lock(qdisc_root_sleeping(sch));
- 	spin_lock(root_lock);
- 	q->perturbation = nkey;
- 	if (!q->filter_list && q->tail)
-@@ -618,6 +620,7 @@ static void sfq_perturbation(struct timer_list *t)
- 
- 	if (q->perturb_period)
- 		mod_timer(&q->perturb_timer, jiffies + q->perturb_period);
-+	rcu_read_unlock();
- }
- 
- static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index c322a61eaeeac..a274a9332f333 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -2050,7 +2050,7 @@ static struct Qdisc *taprio_leaf(struct Qdisc *sch, unsigned long cl)
- 	if (!dev_queue)
- 		return NULL;
- 
--	return dev_queue->qdisc_sleeping;
-+	return rtnl_dereference(dev_queue->qdisc_sleeping);
- }
- 
- static unsigned long taprio_find(struct Qdisc *sch, u32 classid)
-@@ -2069,7 +2069,7 @@ static int taprio_dump_class(struct Qdisc *sch, unsigned long cl,
- 
- 	tcm->tcm_parent = TC_H_ROOT;
- 	tcm->tcm_handle |= TC_H_MIN(cl);
--	tcm->tcm_info = dev_queue->qdisc_sleeping->handle;
-+	tcm->tcm_info = rtnl_dereference(dev_queue->qdisc_sleeping)->handle;
- 
- 	return 0;
- }
-@@ -2081,7 +2081,7 @@ static int taprio_dump_class_stats(struct Qdisc *sch, unsigned long cl,
- {
- 	struct netdev_queue *dev_queue = taprio_queue_get(sch, cl);
- 
--	sch = dev_queue->qdisc_sleeping;
-+	sch = rtnl_dereference(dev_queue->qdisc_sleeping);
- 	if (gnet_stats_copy_basic(d, NULL, &sch->bstats, true) < 0 ||
- 	    qdisc_qstats_copy(d, sch) < 0)
- 		return -1;
-diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
-index 16f9238aa51d1..7721239c185fb 100644
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -297,7 +297,7 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
- 		struct net_device *slave = qdisc_dev(q);
- 		struct netdev_queue *slave_txq = netdev_get_tx_queue(slave, 0);
- 
--		if (slave_txq->qdisc_sleeping != q)
-+		if (rcu_access_pointer(slave_txq->qdisc_sleeping) != q)
+ 	count = 0;
+ 	for_each_engine(engine, smoke->gt, id) {
+-		int status;
+-
+-		if (IS_ERR_OR_NULL(tsk[id]))
++		if (IS_ERR_OR_NULL(worker[id]))
  			continue;
- 		if (netif_xmit_stopped(netdev_get_tx_queue(slave, subq)) ||
- 		    !netif_running(slave)) {
+ 
+-		status = kthread_stop(tsk[id]);
+-		if (status && !err)
+-			err = status;
++		kthread_flush_work(&arg[id].work);
++		if (arg[id].result && !err)
++			err = arg[id].result;
+ 
+ 		count += arg[id].count;
+ 
+-		put_task_struct(tsk[id]);
++		kthread_destroy_worker(worker[id]);
+ 	}
+ 
+ 	pr_info("Submitted %lu crescendo:%x requests across %d engines and %d contexts\n",
+diff --git a/drivers/gpu/drm/i915/gt/selftest_hangcheck.c b/drivers/gpu/drm/i915/gt/selftest_hangcheck.c
+index 7f3bb1d34dfbf..71263058a7b05 100644
+--- a/drivers/gpu/drm/i915/gt/selftest_hangcheck.c
++++ b/drivers/gpu/drm/i915/gt/selftest_hangcheck.c
+@@ -866,10 +866,13 @@ static int igt_reset_active_engine(void *arg)
+ }
+ 
+ struct active_engine {
+-	struct task_struct *task;
++	struct kthread_worker *worker;
++	struct kthread_work work;
+ 	struct intel_engine_cs *engine;
+ 	unsigned long resets;
+ 	unsigned int flags;
++	bool stop;
++	int result;
+ };
+ 
+ #define TEST_ACTIVE	BIT(0)
+@@ -900,10 +903,10 @@ static int active_request_put(struct i915_request *rq)
+ 	return err;
+ }
+ 
+-static int active_engine(void *data)
++static void active_engine(struct kthread_work *work)
+ {
+ 	I915_RND_STATE(prng);
+-	struct active_engine *arg = data;
++	struct active_engine *arg = container_of(work, typeof(*arg), work);
+ 	struct intel_engine_cs *engine = arg->engine;
+ 	struct i915_request *rq[8] = {};
+ 	struct intel_context *ce[ARRAY_SIZE(rq)];
+@@ -913,16 +916,17 @@ static int active_engine(void *data)
+ 	for (count = 0; count < ARRAY_SIZE(ce); count++) {
+ 		ce[count] = intel_context_create(engine);
+ 		if (IS_ERR(ce[count])) {
+-			err = PTR_ERR(ce[count]);
+-			pr_err("[%s] Create context #%ld failed: %d!\n", engine->name, count, err);
++			arg->result = PTR_ERR(ce[count]);
++			pr_err("[%s] Create context #%ld failed: %d!\n",
++			       engine->name, count, arg->result);
+ 			while (--count)
+ 				intel_context_put(ce[count]);
+-			return err;
++			return;
+ 		}
+ 	}
+ 
+ 	count = 0;
+-	while (!kthread_should_stop()) {
++	while (!READ_ONCE(arg->stop)) {
+ 		unsigned int idx = count++ & (ARRAY_SIZE(rq) - 1);
+ 		struct i915_request *old = rq[idx];
+ 		struct i915_request *new;
+@@ -967,7 +971,7 @@ static int active_engine(void *data)
+ 		intel_context_put(ce[count]);
+ 	}
+ 
+-	return err;
++	arg->result = err;
+ }
+ 
+ static int __igt_reset_engines(struct intel_gt *gt,
+@@ -1022,7 +1026,7 @@ static int __igt_reset_engines(struct intel_gt *gt,
+ 
+ 		memset(threads, 0, sizeof(*threads) * I915_NUM_ENGINES);
+ 		for_each_engine(other, gt, tmp) {
+-			struct task_struct *tsk;
++			struct kthread_worker *worker;
+ 
+ 			threads[tmp].resets =
+ 				i915_reset_engine_count(global, other);
+@@ -1036,19 +1040,21 @@ static int __igt_reset_engines(struct intel_gt *gt,
+ 			threads[tmp].engine = other;
+ 			threads[tmp].flags = flags;
+ 
+-			tsk = kthread_run(active_engine, &threads[tmp],
+-					  "igt/%s", other->name);
+-			if (IS_ERR(tsk)) {
+-				err = PTR_ERR(tsk);
+-				pr_err("[%s] Thread spawn failed: %d!\n", engine->name, err);
++			worker = kthread_create_worker(0, "igt/%s",
++						       other->name);
++			if (IS_ERR(worker)) {
++				err = PTR_ERR(worker);
++				pr_err("[%s] Worker create failed: %d!\n",
++				       engine->name, err);
+ 				goto unwind;
+ 			}
+ 
+-			threads[tmp].task = tsk;
+-			get_task_struct(tsk);
+-		}
++			threads[tmp].worker = worker;
+ 
+-		yield(); /* start all threads before we begin */
++			kthread_init_work(&threads[tmp].work, active_engine);
++			kthread_queue_work(threads[tmp].worker,
++					   &threads[tmp].work);
++		}
+ 
+ 		st_engine_heartbeat_disable_no_pm(engine);
+ 		GEM_BUG_ON(test_and_set_bit(I915_RESET_ENGINE + id,
+@@ -1197,17 +1203,20 @@ static int __igt_reset_engines(struct intel_gt *gt,
+ 		for_each_engine(other, gt, tmp) {
+ 			int ret;
+ 
+-			if (!threads[tmp].task)
++			if (!threads[tmp].worker)
+ 				continue;
+ 
+-			ret = kthread_stop(threads[tmp].task);
++			WRITE_ONCE(threads[tmp].stop, true);
++			kthread_flush_work(&threads[tmp].work);
++			ret = READ_ONCE(threads[tmp].result);
+ 			if (ret) {
+ 				pr_err("kthread for other engine %s failed, err=%d\n",
+ 				       other->name, ret);
+ 				if (!err)
+ 					err = ret;
+ 			}
+-			put_task_struct(threads[tmp].task);
++
++			kthread_destroy_worker(threads[tmp].worker);
+ 
+ 			/* GuC based resets are not logged per engine */
+ 			if (!using_guc) {
+diff --git a/drivers/gpu/drm/i915/selftests/i915_request.c b/drivers/gpu/drm/i915/selftests/i915_request.c
+index 818a4909c1f35..a46350c37e9d4 100644
+--- a/drivers/gpu/drm/i915/selftests/i915_request.c
++++ b/drivers/gpu/drm/i915/selftests/i915_request.c
+@@ -299,9 +299,18 @@ __live_request_alloc(struct intel_context *ce)
+ 	return intel_context_create_request(ce);
+ }
+ 
+-static int __igt_breadcrumbs_smoketest(void *arg)
++struct smoke_thread {
++	struct kthread_worker *worker;
++	struct kthread_work work;
++	struct smoketest *t;
++	bool stop;
++	int result;
++};
++
++static void __igt_breadcrumbs_smoketest(struct kthread_work *work)
+ {
+-	struct smoketest *t = arg;
++	struct smoke_thread *thread = container_of(work, typeof(*thread), work);
++	struct smoketest *t = thread->t;
+ 	const unsigned int max_batch = min(t->ncontexts, t->max_batch) - 1;
+ 	const unsigned int total = 4 * t->ncontexts + 1;
+ 	unsigned int num_waits = 0, num_fences = 0;
+@@ -320,8 +329,10 @@ static int __igt_breadcrumbs_smoketest(void *arg)
+ 	 */
+ 
+ 	requests = kcalloc(total, sizeof(*requests), GFP_KERNEL);
+-	if (!requests)
+-		return -ENOMEM;
++	if (!requests) {
++		thread->result = -ENOMEM;
++		return;
++	}
+ 
+ 	order = i915_random_order(total, &prng);
+ 	if (!order) {
+@@ -329,7 +340,7 @@ static int __igt_breadcrumbs_smoketest(void *arg)
+ 		goto out_requests;
+ 	}
+ 
+-	while (!kthread_should_stop()) {
++	while (!READ_ONCE(thread->stop)) {
+ 		struct i915_sw_fence *submit, *wait;
+ 		unsigned int n, count;
+ 
+@@ -437,7 +448,7 @@ static int __igt_breadcrumbs_smoketest(void *arg)
+ 	kfree(order);
+ out_requests:
+ 	kfree(requests);
+-	return err;
++	thread->result = err;
+ }
+ 
+ static int mock_breadcrumbs_smoketest(void *arg)
+@@ -450,7 +461,7 @@ static int mock_breadcrumbs_smoketest(void *arg)
+ 		.request_alloc = __mock_request_alloc
+ 	};
+ 	unsigned int ncpus = num_online_cpus();
+-	struct task_struct **threads;
++	struct smoke_thread *threads;
+ 	unsigned int n;
+ 	int ret = 0;
+ 
+@@ -479,28 +490,37 @@ static int mock_breadcrumbs_smoketest(void *arg)
+ 	}
+ 
+ 	for (n = 0; n < ncpus; n++) {
+-		threads[n] = kthread_run(__igt_breadcrumbs_smoketest,
+-					 &t, "igt/%d", n);
+-		if (IS_ERR(threads[n])) {
+-			ret = PTR_ERR(threads[n]);
++		struct kthread_worker *worker;
++
++		worker = kthread_create_worker(0, "igt/%d", n);
++		if (IS_ERR(worker)) {
++			ret = PTR_ERR(worker);
+ 			ncpus = n;
+ 			break;
+ 		}
+ 
+-		get_task_struct(threads[n]);
++		threads[n].worker = worker;
++		threads[n].t = &t;
++		threads[n].stop = false;
++		threads[n].result = 0;
++
++		kthread_init_work(&threads[n].work,
++				  __igt_breadcrumbs_smoketest);
++		kthread_queue_work(worker, &threads[n].work);
+ 	}
+ 
+-	yield(); /* start all threads before we begin */
+ 	msleep(jiffies_to_msecs(i915_selftest.timeout_jiffies));
+ 
+ 	for (n = 0; n < ncpus; n++) {
+ 		int err;
+ 
+-		err = kthread_stop(threads[n]);
++		WRITE_ONCE(threads[n].stop, true);
++		kthread_flush_work(&threads[n].work);
++		err = READ_ONCE(threads[n].result);
+ 		if (err < 0 && !ret)
+ 			ret = err;
+ 
+-		put_task_struct(threads[n]);
++		kthread_destroy_worker(threads[n].worker);
+ 	}
+ 	pr_info("Completed %lu waits for %lu fence across %d cpus\n",
+ 		atomic_long_read(&t.num_waits),
+@@ -1419,9 +1439,18 @@ static int live_sequential_engines(void *arg)
+ 	return err;
+ }
+ 
+-static int __live_parallel_engine1(void *arg)
++struct parallel_thread {
++	struct kthread_worker *worker;
++	struct kthread_work work;
++	struct intel_engine_cs *engine;
++	int result;
++};
++
++static void __live_parallel_engine1(struct kthread_work *work)
+ {
+-	struct intel_engine_cs *engine = arg;
++	struct parallel_thread *thread =
++		container_of(work, typeof(*thread), work);
++	struct intel_engine_cs *engine = thread->engine;
+ 	IGT_TIMEOUT(end_time);
+ 	unsigned long count;
+ 	int err = 0;
+@@ -1452,12 +1481,14 @@ static int __live_parallel_engine1(void *arg)
+ 	intel_engine_pm_put(engine);
+ 
+ 	pr_info("%s: %lu request + sync\n", engine->name, count);
+-	return err;
++	thread->result = err;
+ }
+ 
+-static int __live_parallel_engineN(void *arg)
++static void __live_parallel_engineN(struct kthread_work *work)
+ {
+-	struct intel_engine_cs *engine = arg;
++	struct parallel_thread *thread =
++		container_of(work, typeof(*thread), work);
++	struct intel_engine_cs *engine = thread->engine;
+ 	IGT_TIMEOUT(end_time);
+ 	unsigned long count;
+ 	int err = 0;
+@@ -1479,7 +1510,7 @@ static int __live_parallel_engineN(void *arg)
+ 	intel_engine_pm_put(engine);
+ 
+ 	pr_info("%s: %lu requests\n", engine->name, count);
+-	return err;
++	thread->result = err;
+ }
+ 
+ static bool wake_all(struct drm_i915_private *i915)
+@@ -1505,9 +1536,11 @@ static int wait_for_all(struct drm_i915_private *i915)
+ 	return -ETIME;
+ }
+ 
+-static int __live_parallel_spin(void *arg)
++static void __live_parallel_spin(struct kthread_work *work)
+ {
+-	struct intel_engine_cs *engine = arg;
++	struct parallel_thread *thread =
++		container_of(work, typeof(*thread), work);
++	struct intel_engine_cs *engine = thread->engine;
+ 	struct igt_spinner spin;
+ 	struct i915_request *rq;
+ 	int err = 0;
+@@ -1520,7 +1553,8 @@ static int __live_parallel_spin(void *arg)
+ 
+ 	if (igt_spinner_init(&spin, engine->gt)) {
+ 		wake_all(engine->i915);
+-		return -ENOMEM;
++		thread->result = -ENOMEM;
++		return;
+ 	}
+ 
+ 	intel_engine_pm_get(engine);
+@@ -1553,22 +1587,22 @@ static int __live_parallel_spin(void *arg)
+ 
+ out_spin:
+ 	igt_spinner_fini(&spin);
+-	return err;
++	thread->result = err;
+ }
+ 
+ static int live_parallel_engines(void *arg)
+ {
+ 	struct drm_i915_private *i915 = arg;
+-	static int (* const func[])(void *arg) = {
++	static void (* const func[])(struct kthread_work *) = {
+ 		__live_parallel_engine1,
+ 		__live_parallel_engineN,
+ 		__live_parallel_spin,
+ 		NULL,
+ 	};
+ 	const unsigned int nengines = num_uabi_engines(i915);
++	struct parallel_thread *threads;
+ 	struct intel_engine_cs *engine;
+-	int (* const *fn)(void *arg);
+-	struct task_struct **tsk;
++	void (* const *fn)(struct kthread_work *);
+ 	int err = 0;
+ 
+ 	/*
+@@ -1576,8 +1610,8 @@ static int live_parallel_engines(void *arg)
+ 	 * tests that we load up the system maximally.
+ 	 */
+ 
+-	tsk = kcalloc(nengines, sizeof(*tsk), GFP_KERNEL);
+-	if (!tsk)
++	threads = kcalloc(nengines, sizeof(*threads), GFP_KERNEL);
++	if (!threads)
+ 		return -ENOMEM;
+ 
+ 	for (fn = func; !err && *fn; fn++) {
+@@ -1594,37 +1628,44 @@ static int live_parallel_engines(void *arg)
+ 
+ 		idx = 0;
+ 		for_each_uabi_engine(engine, i915) {
+-			tsk[idx] = kthread_run(*fn, engine,
+-					       "igt/parallel:%s",
+-					       engine->name);
+-			if (IS_ERR(tsk[idx])) {
+-				err = PTR_ERR(tsk[idx]);
++			struct kthread_worker *worker;
++
++			worker = kthread_create_worker(0, "igt/parallel:%s",
++						       engine->name);
++			if (IS_ERR(worker)) {
++				err = PTR_ERR(worker);
+ 				break;
+ 			}
+-			get_task_struct(tsk[idx++]);
+-		}
+ 
+-		yield(); /* start all threads before we kthread_stop() */
++			threads[idx].worker = worker;
++			threads[idx].result = 0;
++			threads[idx].engine = engine;
++
++			kthread_init_work(&threads[idx].work, *fn);
++			kthread_queue_work(worker, &threads[idx].work);
++			idx++;
++		}
+ 
+ 		idx = 0;
+ 		for_each_uabi_engine(engine, i915) {
+ 			int status;
+ 
+-			if (IS_ERR(tsk[idx]))
++			if (!threads[idx].worker)
+ 				break;
+ 
+-			status = kthread_stop(tsk[idx]);
++			kthread_flush_work(&threads[idx].work);
++			status = READ_ONCE(threads[idx].result);
+ 			if (status && !err)
+ 				err = status;
+ 
+-			put_task_struct(tsk[idx++]);
++			kthread_destroy_worker(threads[idx++].worker);
+ 		}
+ 
+ 		if (igt_live_test_end(&t))
+ 			err = -EIO;
+ 	}
+ 
+-	kfree(tsk);
++	kfree(threads);
+ 	return err;
+ }
+ 
+@@ -1672,7 +1713,7 @@ static int live_breadcrumbs_smoketest(void *arg)
+ 	const unsigned int ncpus = num_online_cpus();
+ 	unsigned long num_waits, num_fences;
+ 	struct intel_engine_cs *engine;
+-	struct task_struct **threads;
++	struct smoke_thread *threads;
+ 	struct igt_live_test live;
+ 	intel_wakeref_t wakeref;
+ 	struct smoketest *smoke;
+@@ -1746,23 +1787,26 @@ static int live_breadcrumbs_smoketest(void *arg)
+ 			 smoke[idx].max_batch, engine->name);
+ 
+ 		for (n = 0; n < ncpus; n++) {
+-			struct task_struct *tsk;
++			unsigned int i = idx * ncpus + n;
++			struct kthread_worker *worker;
+ 
+-			tsk = kthread_run(__igt_breadcrumbs_smoketest,
+-					  &smoke[idx], "igt/%d.%d", idx, n);
+-			if (IS_ERR(tsk)) {
+-				ret = PTR_ERR(tsk);
++			worker = kthread_create_worker(0, "igt/%d.%d", idx, n);
++			if (IS_ERR(worker)) {
++				ret = PTR_ERR(worker);
+ 				goto out_flush;
+ 			}
+ 
+-			get_task_struct(tsk);
+-			threads[idx * ncpus + n] = tsk;
++			threads[i].worker = worker;
++			threads[i].t = &smoke[idx];
++
++			kthread_init_work(&threads[i].work,
++					  __igt_breadcrumbs_smoketest);
++			kthread_queue_work(worker, &threads[i].work);
+ 		}
+ 
+ 		idx++;
+ 	}
+ 
+-	yield(); /* start all threads before we begin */
+ 	msleep(jiffies_to_msecs(i915_selftest.timeout_jiffies));
+ 
+ out_flush:
+@@ -1771,17 +1815,19 @@ static int live_breadcrumbs_smoketest(void *arg)
+ 	num_fences = 0;
+ 	for_each_uabi_engine(engine, i915) {
+ 		for (n = 0; n < ncpus; n++) {
+-			struct task_struct *tsk = threads[idx * ncpus + n];
++			unsigned int i = idx * ncpus + n;
+ 			int err;
+ 
+-			if (!tsk)
++			if (!threads[i].worker)
+ 				continue;
+ 
+-			err = kthread_stop(tsk);
++			WRITE_ONCE(threads[i].stop, true);
++			kthread_flush_work(&threads[i].work);
++			err = READ_ONCE(threads[i].result);
+ 			if (err < 0 && !ret)
+ 				ret = err;
+ 
+-			put_task_struct(tsk);
++			kthread_destroy_worker(threads[i].worker);
+ 		}
+ 
+ 		num_waits += atomic_long_read(&smoke[idx].num_waits);
+@@ -2891,9 +2937,18 @@ static int perf_series_engines(void *arg)
+ 	return err;
+ }
+ 
+-static int p_sync0(void *arg)
++struct p_thread {
++	struct perf_stats p;
++	struct kthread_worker *worker;
++	struct kthread_work work;
++	struct intel_engine_cs *engine;
++	int result;
++};
++
++static void p_sync0(struct kthread_work *work)
+ {
+-	struct perf_stats *p = arg;
++	struct p_thread *thread = container_of(work, typeof(*thread), work);
++	struct perf_stats *p = &thread->p;
+ 	struct intel_engine_cs *engine = p->engine;
+ 	struct intel_context *ce;
+ 	IGT_TIMEOUT(end_time);
+@@ -2902,13 +2957,16 @@ static int p_sync0(void *arg)
+ 	int err = 0;
+ 
+ 	ce = intel_context_create(engine);
+-	if (IS_ERR(ce))
+-		return PTR_ERR(ce);
++	if (IS_ERR(ce)) {
++		thread->result = PTR_ERR(ce);
++		return;
++	}
+ 
+ 	err = intel_context_pin(ce);
+ 	if (err) {
+ 		intel_context_put(ce);
+-		return err;
++		thread->result = err;
++		return;
+ 	}
+ 
+ 	if (intel_engine_supports_stats(engine)) {
+@@ -2958,12 +3016,13 @@ static int p_sync0(void *arg)
+ 
+ 	intel_context_unpin(ce);
+ 	intel_context_put(ce);
+-	return err;
++	thread->result = err;
+ }
+ 
+-static int p_sync1(void *arg)
++static void p_sync1(struct kthread_work *work)
+ {
+-	struct perf_stats *p = arg;
++	struct p_thread *thread = container_of(work, typeof(*thread), work);
++	struct perf_stats *p = &thread->p;
+ 	struct intel_engine_cs *engine = p->engine;
+ 	struct i915_request *prev = NULL;
+ 	struct intel_context *ce;
+@@ -2973,13 +3032,16 @@ static int p_sync1(void *arg)
+ 	int err = 0;
+ 
+ 	ce = intel_context_create(engine);
+-	if (IS_ERR(ce))
+-		return PTR_ERR(ce);
++	if (IS_ERR(ce)) {
++		thread->result = PTR_ERR(ce);
++		return;
++	}
+ 
+ 	err = intel_context_pin(ce);
+ 	if (err) {
+ 		intel_context_put(ce);
+-		return err;
++		thread->result = err;
++		return;
+ 	}
+ 
+ 	if (intel_engine_supports_stats(engine)) {
+@@ -3031,12 +3093,13 @@ static int p_sync1(void *arg)
+ 
+ 	intel_context_unpin(ce);
+ 	intel_context_put(ce);
+-	return err;
++	thread->result = err;
+ }
+ 
+-static int p_many(void *arg)
++static void p_many(struct kthread_work *work)
+ {
+-	struct perf_stats *p = arg;
++	struct p_thread *thread = container_of(work, typeof(*thread), work);
++	struct perf_stats *p = &thread->p;
+ 	struct intel_engine_cs *engine = p->engine;
+ 	struct intel_context *ce;
+ 	IGT_TIMEOUT(end_time);
+@@ -3045,13 +3108,16 @@ static int p_many(void *arg)
+ 	bool busy;
+ 
+ 	ce = intel_context_create(engine);
+-	if (IS_ERR(ce))
+-		return PTR_ERR(ce);
++	if (IS_ERR(ce)) {
++		thread->result = PTR_ERR(ce);
++		return;
++	}
+ 
+ 	err = intel_context_pin(ce);
+ 	if (err) {
+ 		intel_context_put(ce);
+-		return err;
++		thread->result = err;
++		return;
+ 	}
+ 
+ 	if (intel_engine_supports_stats(engine)) {
+@@ -3092,26 +3158,23 @@ static int p_many(void *arg)
+ 
+ 	intel_context_unpin(ce);
+ 	intel_context_put(ce);
+-	return err;
++	thread->result = err;
+ }
+ 
+ static int perf_parallel_engines(void *arg)
+ {
+ 	struct drm_i915_private *i915 = arg;
+-	static int (* const func[])(void *arg) = {
++	static void (* const func[])(struct kthread_work *) = {
+ 		p_sync0,
+ 		p_sync1,
+ 		p_many,
+ 		NULL,
+ 	};
+ 	const unsigned int nengines = num_uabi_engines(i915);
++	void (* const *fn)(struct kthread_work *);
+ 	struct intel_engine_cs *engine;
+-	int (* const *fn)(void *arg);
+ 	struct pm_qos_request qos;
+-	struct {
+-		struct perf_stats p;
+-		struct task_struct *tsk;
+-	} *engines;
++	struct p_thread *engines;
+ 	int err = 0;
+ 
+ 	engines = kcalloc(nengines, sizeof(*engines), GFP_KERNEL);
+@@ -3134,36 +3197,45 @@ static int perf_parallel_engines(void *arg)
+ 
+ 		idx = 0;
+ 		for_each_uabi_engine(engine, i915) {
++			struct kthread_worker *worker;
++
+ 			intel_engine_pm_get(engine);
+ 
+ 			memset(&engines[idx].p, 0, sizeof(engines[idx].p));
+-			engines[idx].p.engine = engine;
+ 
+-			engines[idx].tsk = kthread_run(*fn, &engines[idx].p,
+-						       "igt:%s", engine->name);
+-			if (IS_ERR(engines[idx].tsk)) {
+-				err = PTR_ERR(engines[idx].tsk);
++			worker = kthread_create_worker(0, "igt:%s",
++						       engine->name);
++			if (IS_ERR(worker)) {
++				err = PTR_ERR(worker);
+ 				intel_engine_pm_put(engine);
+ 				break;
+ 			}
+-			get_task_struct(engines[idx++].tsk);
+-		}
++			engines[idx].worker = worker;
++			engines[idx].result = 0;
++			engines[idx].p.engine = engine;
++			engines[idx].engine = engine;
+ 
+-		yield(); /* start all threads before we kthread_stop() */
++			kthread_init_work(&engines[idx].work, *fn);
++			kthread_queue_work(worker, &engines[idx].work);
++			idx++;
++		}
+ 
+ 		idx = 0;
+ 		for_each_uabi_engine(engine, i915) {
+ 			int status;
+ 
+-			if (IS_ERR(engines[idx].tsk))
++			if (!engines[idx].worker)
+ 				break;
+ 
+-			status = kthread_stop(engines[idx].tsk);
++			kthread_flush_work(&engines[idx].work);
++			status = READ_ONCE(engines[idx].result);
+ 			if (status && !err)
+ 				err = status;
+ 
+ 			intel_engine_pm_put(engine);
+-			put_task_struct(engines[idx++].tsk);
++
++			kthread_destroy_worker(engines[idx].worker);
++			idx++;
+ 		}
+ 
+ 		if (igt_live_test_end(&t))
 -- 
 2.39.2
 
