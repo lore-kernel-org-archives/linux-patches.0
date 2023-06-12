@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C8DD512
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:48:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959B0C433EF;
-	Mon, 12 Jun 2023 10:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEFAD512
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:48:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D3FC433EF;
+	Mon, 12 Jun 2023 10:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566887;
-	bh=O2SMwIigMRuGd2AqCNVrq2RDZqggPIswy6Z/ONzdNvo=;
+	s=korg; t=1686566890;
+	bh=9OsA4wiFDR0vEoePViywymDkJFGn8FMf+817mTunXBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ia0NzWgQ/mw3joOxgRdGm+r0c+J5TnUWIJ7pZE85LQFNMeFckEBNOoBKt9eOlwfu
-	 TTdP6DGw5uh7RjCYm625YNyNJRoYSz9QEZbiqEKZEvGNObzpJ40MCajBdqWGgIa9Yl
-	 luaIzJ2RZGcbTwekuKjUgiyhFZecN6eE48TL/Ops=
+	b=HnmJO/DiTT2V/eSVxWcLEkr68KE5RP1VlnbCKLFQeCLnUBv90pLIXBkyIw0BZAufy
+	 pw1TxasPZZR6RbFOB7btzdkd1kuAPZKREpiKh8Z+ueJDaNv0shvh5PnykClMYo1vYM
+	 zIK8SUInR69PhJjb6lZ58zGklciHfTn++u88skgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 069/160] drm/msm/a6xx: initialize GMU mutex earlier
-Date: Mon, 12 Jun 2023 12:26:41 +0200
-Message-ID: <20230612101718.171055770@linuxfoundation.org>
+	stable@kernel.org,
+	Vladislav Efanov <VEfanov@ispras.ru>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.3 070/160] batman-adv: Broken sync while rescheduling delayed work
+Date: Mon, 12 Jun 2023 12:26:42 +0200
+Message-ID: <20230612101718.221292012@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101715.129581706@linuxfoundation.org>
 References: <20230612101715.129581706@linuxfoundation.org>
@@ -36,114 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Vladislav Efanov <VEfanov@ispras.ru>
 
-[ Upstream commit 12abd735f0300600bfc01b2a3832b966312df205 ]
+commit abac3ac97fe8734b620e7322a116450d7f90aa43 upstream.
 
-Move GMU mutex initialization earlier to make sure that it is always
-initialized. a6xx_destroy can be called from ther failure path before
-GMU initialization.
+Syzkaller got a lot of crashes like:
+KASAN: use-after-free Write in *_timers*
 
-This fixes the following backtrace:
+All of these crashes point to the same memory area:
 
-------------[ cut here ]------------
-DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-WARNING: CPU: 0 PID: 58 at kernel/locking/mutex.c:582 __mutex_lock+0x1ec/0x3d0
-Modules linked in:
-CPU: 0 PID: 58 Comm: kworker/u16:1 Not tainted 6.3.0-rc5-00155-g187c06436519 #565
-Hardware name: Qualcomm Technologies, Inc. SM8350 HDK (DT)
-Workqueue: events_unbound deferred_probe_work_func
-pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __mutex_lock+0x1ec/0x3d0
-lr : __mutex_lock+0x1ec/0x3d0
-sp : ffff800008993620
-x29: ffff800008993620 x28: 0000000000000002 x27: ffff47b253c52800
-x26: 0000000001000606 x25: ffff47b240bb2810 x24: fffffffffffffff4
-x23: 0000000000000000 x22: ffffc38bba15ac14 x21: 0000000000000002
-x20: ffff800008993690 x19: ffff47b2430cc668 x18: fffffffffffe98f0
-x17: 6f74616c75676572 x16: 20796d6d75642067 x15: 0000000000000038
-x14: 0000000000000000 x13: ffffc38bbba050b8 x12: 0000000000000666
-x11: 0000000000000222 x10: ffffc38bbba603e8 x9 : ffffc38bbba050b8
-x8 : 00000000ffffefff x7 : ffffc38bbba5d0b8 x6 : 0000000000000222
-x5 : 000000000000bff4 x4 : 40000000fffff222 x3 : 0000000000000000
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff47b240cb1880
-Call trace:
- __mutex_lock+0x1ec/0x3d0
- mutex_lock_nested+0x2c/0x38
- a6xx_destroy+0xa0/0x138
- a6xx_gpu_init+0x41c/0x618
- adreno_bind+0x188/0x290
- component_bind_all+0x118/0x248
- msm_drm_bind+0x1c0/0x670
- try_to_bring_up_aggregate_device+0x164/0x1d0
- __component_add+0xa8/0x16c
- component_add+0x14/0x20
- dsi_dev_attach+0x20/0x2c
- dsi_host_attach+0x9c/0x144
- devm_mipi_dsi_attach+0x34/0xac
- lt9611uxc_attach_dsi.isra.0+0x84/0xfc
- lt9611uxc_probe+0x5b8/0x67c
- i2c_device_probe+0x1ac/0x358
- really_probe+0x148/0x2ac
- __driver_probe_device+0x78/0xe0
- driver_probe_device+0x3c/0x160
- __device_attach_driver+0xb8/0x138
- bus_for_each_drv+0x84/0xe0
- __device_attach+0x9c/0x188
- device_initial_probe+0x14/0x20
- bus_probe_device+0xac/0xb0
- deferred_probe_work_func+0x8c/0xc8
- process_one_work+0x2bc/0x594
- worker_thread+0x228/0x438
- kthread+0x108/0x10c
- ret_from_fork+0x10/0x20
-irq event stamp: 299345
-hardirqs last  enabled at (299345): [<ffffc38bb9ba61e4>] put_cpu_partial+0x1c8/0x22c
-hardirqs last disabled at (299344): [<ffffc38bb9ba61dc>] put_cpu_partial+0x1c0/0x22c
-softirqs last  enabled at (296752): [<ffffc38bb9890434>] _stext+0x434/0x4e8
-softirqs last disabled at (296741): [<ffffc38bb989669c>] ____do_softirq+0x10/0x1c
----[ end trace 0000000000000000 ]---
+The buggy address belongs to the object at ffff88801f870000
+ which belongs to the cache kmalloc-8k of size 8192
+The buggy address is located 5320 bytes inside of
+ 8192-byte region [ffff88801f870000, ffff88801f872000)
 
-Fixes: 4cd15a3e8b36 ("drm/msm/a6xx: Make GPU destroy a bit safer")
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Patchwork: https://patchwork.freedesktop.org/patch/531540/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This area belongs to :
+        batadv_priv->batadv_priv_dat->delayed_work->timer_list
+
+The reason for these issues is the lack of synchronization. Delayed
+work (batadv_dat_purge) schedules new timer/work while the device
+is being deleted. As the result new timer/delayed work is set after
+cancel_delayed_work_sync() was called. So after the device is freed
+the timer list contains pointer to already freed memory.
+
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+
+Cc: stable@kernel.org
+Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
+Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
+Acked-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 2 --
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 ++
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/batman-adv/distributed-arp-table.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 7f5bc73b20402..611311b65b168 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1514,8 +1514,6 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 	if (!pdev)
- 		return -ENODEV;
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -101,7 +101,6 @@ static void batadv_dat_purge(struct work
+  */
+ static void batadv_dat_start_timer(struct batadv_priv *bat_priv)
+ {
+-	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	queue_delayed_work(batadv_event_workqueue, &bat_priv->dat.work,
+ 			   msecs_to_jiffies(10000));
+ }
+@@ -819,6 +818,7 @@ int batadv_dat_init(struct batadv_priv *
+ 	if (!bat_priv->dat.hash)
+ 		return -ENOMEM;
  
--	mutex_init(&gmu->lock);
--
- 	gmu->dev = &pdev->dev;
++	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	batadv_dat_start_timer(bat_priv);
  
- 	of_dma_configure(gmu->dev, node, true);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 6faea5049f765..2942d2548ce69 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1998,6 +1998,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- 	adreno_gpu = &a6xx_gpu->base;
- 	gpu = &adreno_gpu->base;
- 
-+	mutex_init(&a6xx_gpu->gmu.lock);
-+
- 	adreno_gpu->registers = NULL;
- 
- 	/*
--- 
-2.39.2
-
+ 	batadv_tvlv_handler_register(bat_priv, batadv_dat_tvlv_ogm_handler_v1,
 
 
