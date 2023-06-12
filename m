@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5FB11CAD
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3E8C433D2;
-	Mon, 12 Jun 2023 10:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242F0134AE
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:43:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59955C433D2;
+	Mon, 12 Jun 2023 10:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566608;
-	bh=9uX/cc6y8duaBTGXDeNfk2zHwNV+0pv3qgRDNLRnNmk=;
+	s=korg; t=1686566610;
+	bh=9OsA4wiFDR0vEoePViywymDkJFGn8FMf+817mTunXBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHGlDoZAE0MIGMtp1WYyGcu51+aTOnZEwn8vFmBVRvR0C4XPDa4o0oc51oB8xxbwG
-	 0FBnPPBuQKbQDZGNw6tatI7w37N68oh0a4u8ji1snm2aslxBO0P49wRE3lLW7525zj
-	 /PtDHQ8rn4gofr8uy8ioUBDVdHyhGaEcbB/SZdAg=
+	b=tbXysqMzcpF1dxkM27R+zPA0b1/tSj+G65Sg8mlfLU32Ngimbfz4FLRItL81IMIR3
+	 FrJr49dzcn7zCL6R6CyUw03KBmqu48x/hx9R+iKjnICtZYRvnonUqPOF5K41W9OOeC
+	 UuIvzVWOHvL1+vcYqx7Q9RodauSR7EqXq3ynbsow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Zidek <zidek@master.cz>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>,
-	stable@kernel.org
-Subject: [PATCH 6.1 067/132] ALSA: ice1712,ice1724: fix the kcontrol->id initialization
-Date: Mon, 12 Jun 2023 12:26:41 +0200
-Message-ID: <20230612101713.321190207@linuxfoundation.org>
+	stable@kernel.org,
+	Vladislav Efanov <VEfanov@ispras.ru>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.1 058/132] batman-adv: Broken sync while rescheduling delayed work
+Date: Mon, 12 Jun 2023 12:26:32 +0200
+Message-ID: <20230612101712.909608210@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,112 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaroslav Kysela <perex@perex.cz>
+From: Vladislav Efanov <VEfanov@ispras.ru>
 
-commit b9a4efd61b6b9f62f83752959e75a5dae20624fa upstream.
+commit abac3ac97fe8734b620e7322a116450d7f90aa43 upstream.
 
-The new xarray lookup code requires to know complete kcontrol->id before
-snd_ctl_add() call. Reorder the code to make the initialization properly.
+Syzkaller got a lot of crashes like:
+KASAN: use-after-free Write in *_timers*
 
-Cc: stable@kernel.org # v5.19+
-Reported-by: Martin Zidek <zidek@master.cz>
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
-Link: https://lore.kernel.org/r/20230606073122.597491-1-perex@perex.cz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+All of these crashes point to the same memory area:
+
+The buggy address belongs to the object at ffff88801f870000
+ which belongs to the cache kmalloc-8k of size 8192
+The buggy address is located 5320 bytes inside of
+ 8192-byte region [ffff88801f870000, ffff88801f872000)
+
+This area belongs to :
+        batadv_priv->batadv_priv_dat->delayed_work->timer_list
+
+The reason for these issues is the lack of synchronization. Delayed
+work (batadv_dat_purge) schedules new timer/work while the device
+is being deleted. As the result new timer/delayed work is set after
+cancel_delayed_work_sync() was called. So after the device is freed
+the timer list contains pointer to already freed memory.
+
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
+
+Cc: stable@kernel.org
+Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
+Signed-off-by: Vladislav Efanov <VEfanov@ispras.ru>
+Acked-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ice1712/aureon.c  |    7 ++++---
- sound/pci/ice1712/ice1712.c |   14 +++++++++-----
- sound/pci/ice1712/ice1724.c |   16 ++++++++++------
- 3 files changed, 23 insertions(+), 14 deletions(-)
+ net/batman-adv/distributed-arp-table.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/ice1712/aureon.c
-+++ b/sound/pci/ice1712/aureon.c
-@@ -1903,11 +1903,12 @@ static int aureon_add_controls(struct sn
- 		else {
- 			for (i = 0; i < ARRAY_SIZE(cs8415_controls); i++) {
- 				struct snd_kcontrol *kctl;
--				err = snd_ctl_add(ice->card, (kctl = snd_ctl_new1(&cs8415_controls[i], ice)));
--				if (err < 0)
--					return err;
-+				kctl = snd_ctl_new1(&cs8415_controls[i], ice);
- 				if (i > 1)
- 					kctl->id.device = ice->pcm->device;
-+				err = snd_ctl_add(ice->card, kctl);
-+				if (err < 0)
-+					return err;
- 			}
- 		}
- 	}
---- a/sound/pci/ice1712/ice1712.c
-+++ b/sound/pci/ice1712/ice1712.c
-@@ -2371,22 +2371,26 @@ int snd_ice1712_spdif_build_controls(str
- 
- 	if (snd_BUG_ON(!ice->pcm_pro))
- 		return -EIO;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_ice1712_spdif_default, ice));
-+	kctl = snd_ctl_new1(&snd_ice1712_spdif_default, ice);
-+	kctl->id.device = ice->pcm_pro->device;
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_ice1712_spdif_maskc, ice);
- 	kctl->id.device = ice->pcm_pro->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_ice1712_spdif_maskc, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_ice1712_spdif_maskp, ice);
- 	kctl->id.device = ice->pcm_pro->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_ice1712_spdif_maskp, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_ice1712_spdif_stream, ice);
- 	kctl->id.device = ice->pcm_pro->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_ice1712_spdif_stream, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
--	kctl->id.device = ice->pcm_pro->device;
- 	ice->spdif.stream_ctl = kctl;
- 	return 0;
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -101,7 +101,6 @@ static void batadv_dat_purge(struct work
+  */
+ static void batadv_dat_start_timer(struct batadv_priv *bat_priv)
+ {
+-	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	queue_delayed_work(batadv_event_workqueue, &bat_priv->dat.work,
+ 			   msecs_to_jiffies(10000));
  }
---- a/sound/pci/ice1712/ice1724.c
-+++ b/sound/pci/ice1712/ice1724.c
-@@ -2392,23 +2392,27 @@ static int snd_vt1724_spdif_build_contro
- 	if (err < 0)
- 		return err;
+@@ -819,6 +818,7 @@ int batadv_dat_init(struct batadv_priv *
+ 	if (!bat_priv->dat.hash)
+ 		return -ENOMEM;
  
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_vt1724_spdif_default, ice));
-+	kctl = snd_ctl_new1(&snd_vt1724_spdif_default, ice);
-+	kctl->id.device = ice->pcm->device;
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_vt1724_spdif_maskc, ice);
- 	kctl->id.device = ice->pcm->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_vt1724_spdif_maskc, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
-+	kctl = snd_ctl_new1(&snd_vt1724_spdif_maskp, ice);
- 	kctl->id.device = ice->pcm->device;
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_vt1724_spdif_maskp, ice));
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
--	kctl->id.device = ice->pcm->device;
- #if 0 /* use default only */
--	err = snd_ctl_add(ice->card, kctl = snd_ctl_new1(&snd_vt1724_spdif_stream, ice));
-+	kctl = snd_ctl_new1(&snd_vt1724_spdif_stream, ice);
-+	kctl->id.device = ice->pcm->device;
-+	err = snd_ctl_add(ice->card, kctl);
- 	if (err < 0)
- 		return err;
--	kctl->id.device = ice->pcm->device;
- 	ice->spdif.stream_ctl = kctl;
- #endif
- 	return 0;
++	INIT_DELAYED_WORK(&bat_priv->dat.work, batadv_dat_purge);
+ 	batadv_dat_start_timer(bat_priv);
+ 
+ 	batadv_tvlv_handler_register(bat_priv, batadv_dat_tvlv_ogm_handler_v1,
 
 
