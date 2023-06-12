@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D64134A4
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9412BC433D2;
-	Mon, 12 Jun 2023 10:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CB6134A4
+	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 10:44:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3621FC433EF;
+	Mon, 12 Jun 2023 10:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1686566676;
-	bh=Y2ZpP9gyREpAJy8KArjRl6Iyc5bNPzpcdAuBFmdroHQ=;
+	s=korg; t=1686566679;
+	bh=AHGiYkjRQhfzyrQ2Me3LxjISK/CcpqlaFKZIJM9ekl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjjpQe0c/b0SUPIAt+8RNX7m5y54osbXGq18Np82/2f7eTBgHdOHsSHzpzG4kIBBo
-	 MXqGOYJkzgXOB20HjPYAIX6+2Hphdhv2AZVmr4bjfuHTjISCxqrJBMcsMxi5rUIJ2Z
-	 MxNaRtuM6q9bNLdcXIAnkLS885Xow+8bn6YquA6s=
+	b=HDNEP5pUET4tSTgidwkxVdks6xgre0exAwHcKzmBt6J2Xp7HOnl5ZntOrdNbtJ+yh
+	 +7oyUXMjik4fOLTdjGWO5ve4UXsMIOk3JyXmJ0moxJh3Q+RmVcy/QB6q9M9SaXn9Me
+	 94q9dW9LKa/W7LIY8SUbkE9P7bEgQaML4Cv0ZODw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kis <imre.kis@arm.com>,
-	Balint Dobszay <balint.dobszay@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Trevor Wu <trevor.wu@mediatek.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/132] firmware: arm_ffa: Set handle field to zero in memory descriptor
-Date: Mon, 12 Jun 2023 12:27:29 +0200
-Message-ID: <20230612101715.526674577@linuxfoundation.org>
+Subject: [PATCH 6.1 110/132] ASoC: mediatek: mt8195: fix use-after-free in driver remove path
+Date: Mon, 12 Jun 2023 12:27:24 +0200
+Message-ID: <20230612101715.314004850@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
 References: <20230612101710.279705932@linuxfoundation.org>
@@ -36,37 +37,171 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Balint Dobszay <balint.dobszay@arm.com>
+From: Trevor Wu <trevor.wu@mediatek.com>
 
-[ Upstream commit 3aa0519a4780f1b8e11966bd879d4a2934ba455f ]
+[ Upstream commit dc93f0dcb436dfd24a06c5b3c0f4c5cd9296e8e5 ]
 
-As described in the commit 111a833dc5cb ("firmware: arm_ffa: Set
-reserved/MBZ fields to zero in the memory descriptors") some fields in
-the memory descriptor have to be zeroed explicitly. The handle field is
-one of these, but it was left out from that change, fix this now.
+During mt8195_afe_init_clock(), mt8195_audsys_clk_register() was called
+followed by several other devm functions. At mt8195_afe_deinit_clock()
+located at mt8195_afe_pcm_dev_remove(), mt8195_audsys_clk_unregister()
+was called.
 
-Fixes: 111a833dc5cb ("firmware: arm_ffa: Set reserved/MBZ fields to zero in the memory descriptors")
-Reported-by: Imre Kis <imre.kis@arm.com>
-Signed-off-by: Balint Dobszay <balint.dobszay@arm.com>
-Link: https://lore.kernel.org/r/20230601140749.93812-1-balint.dobszay@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+However, there was an issue with the order in which these functions were
+called. Specifically, the remove callback of platform_driver was called
+before devres released the resource, resulting in a use-after-free issue
+during remove time.
+
+At probe time, the order of calls was:
+1. mt8195_audsys_clk_register
+2. afe_priv->clk = devm_kcalloc
+3. afe_priv->clk[i] = devm_clk_get
+
+At remove time, the order of calls was:
+1. mt8195_audsys_clk_unregister
+3. free afe_priv->clk[i]
+2. free afe_priv->clk
+
+To resolve the problem, we can utilize devm_add_action_or_reset() in
+mt8195_audsys_clk_register() so that the remove order can be changed to
+3->2->1.
+
+Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
+Signed-off-by: Trevor Wu <trevor.wu@mediatek.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230601033318.10408-3-trevor.wu@mediatek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/mediatek/mt8195/mt8195-afe-clk.c    |  5 --
+ sound/soc/mediatek/mt8195/mt8195-afe-clk.h    |  1 -
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c    |  4 --
+ sound/soc/mediatek/mt8195/mt8195-audsys-clk.c | 47 ++++++++++---------
+ sound/soc/mediatek/mt8195/mt8195-audsys-clk.h |  1 -
+ 5 files changed, 24 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 5904a679d3512..c37e823590055 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -505,6 +505,7 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
- 		ep_mem_access->flag = 0;
- 		ep_mem_access->reserved = 0;
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+index 9ca2cb8c8a9c2..f35318ae07392 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+@@ -410,11 +410,6 @@ int mt8195_afe_init_clock(struct mtk_base_afe *afe)
+ 	return 0;
+ }
+ 
+-void mt8195_afe_deinit_clock(struct mtk_base_afe *afe)
+-{
+-	mt8195_audsys_clk_unregister(afe);
+-}
+-
+ int mt8195_afe_enable_clk(struct mtk_base_afe *afe, struct clk *clk)
+ {
+ 	int ret;
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.h b/sound/soc/mediatek/mt8195/mt8195-afe-clk.h
+index 40663e31becd1..a08c0ee6c8602 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.h
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.h
+@@ -101,7 +101,6 @@ int mt8195_afe_get_mclk_source_clk_id(int sel);
+ int mt8195_afe_get_mclk_source_rate(struct mtk_base_afe *afe, int apll);
+ int mt8195_afe_get_default_mclk_source_by_rate(int rate);
+ int mt8195_afe_init_clock(struct mtk_base_afe *afe);
+-void mt8195_afe_deinit_clock(struct mtk_base_afe *afe);
+ int mt8195_afe_enable_clk(struct mtk_base_afe *afe, struct clk *clk);
+ void mt8195_afe_disable_clk(struct mtk_base_afe *afe, struct clk *clk);
+ int mt8195_afe_prepare_clk(struct mtk_base_afe *afe, struct clk *clk);
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+index 9e45efeada55c..03dabc056b916 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+@@ -3255,15 +3255,11 @@ static int mt8195_afe_pcm_dev_probe(struct platform_device *pdev)
+ 
+ static void mt8195_afe_pcm_dev_remove(struct platform_device *pdev)
+ {
+-	struct mtk_base_afe *afe = platform_get_drvdata(pdev);
+-
+ 	snd_soc_unregister_component(&pdev->dev);
+ 
+ 	pm_runtime_disable(&pdev->dev);
+ 	if (!pm_runtime_status_suspended(&pdev->dev))
+ 		mt8195_afe_runtime_suspend(&pdev->dev);
+-
+-	mt8195_afe_deinit_clock(afe);
+ }
+ 
+ static const struct of_device_id mt8195_afe_pcm_dt_match[] = {
+diff --git a/sound/soc/mediatek/mt8195/mt8195-audsys-clk.c b/sound/soc/mediatek/mt8195/mt8195-audsys-clk.c
+index e0670e0dbd5b0..38594bc3f2f77 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-audsys-clk.c
++++ b/sound/soc/mediatek/mt8195/mt8195-audsys-clk.c
+@@ -148,6 +148,29 @@ static const struct afe_gate aud_clks[CLK_AUD_NR_CLK] = {
+ 	GATE_AUD6(CLK_AUD_GASRC19, "aud_gasrc19", "top_asm_h", 19),
+ };
+ 
++static void mt8195_audsys_clk_unregister(void *data)
++{
++	struct mtk_base_afe *afe = data;
++	struct mt8195_afe_private *afe_priv = afe->platform_priv;
++	struct clk *clk;
++	struct clk_lookup *cl;
++	int i;
++
++	if (!afe_priv)
++		return;
++
++	for (i = 0; i < CLK_AUD_NR_CLK; i++) {
++		cl = afe_priv->lookup[i];
++		if (!cl)
++			continue;
++
++		clk = cl->clk;
++		clk_unregister_gate(clk);
++
++		clkdev_drop(cl);
++	}
++}
++
+ int mt8195_audsys_clk_register(struct mtk_base_afe *afe)
+ {
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+@@ -188,27 +211,5 @@ int mt8195_audsys_clk_register(struct mtk_base_afe *afe)
+ 		afe_priv->lookup[i] = cl;
  	}
-+	mem_region->handle = 0;
- 	mem_region->reserved_0 = 0;
- 	mem_region->reserved_1 = 0;
- 	mem_region->ep_count = args->nattrs;
+ 
+-	return 0;
+-}
+-
+-void mt8195_audsys_clk_unregister(struct mtk_base_afe *afe)
+-{
+-	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+-	struct clk *clk;
+-	struct clk_lookup *cl;
+-	int i;
+-
+-	if (!afe_priv)
+-		return;
+-
+-	for (i = 0; i < CLK_AUD_NR_CLK; i++) {
+-		cl = afe_priv->lookup[i];
+-		if (!cl)
+-			continue;
+-
+-		clk = cl->clk;
+-		clk_unregister_gate(clk);
+-
+-		clkdev_drop(cl);
+-	}
++	return devm_add_action_or_reset(afe->dev, mt8195_audsys_clk_unregister, afe);
+ }
+diff --git a/sound/soc/mediatek/mt8195/mt8195-audsys-clk.h b/sound/soc/mediatek/mt8195/mt8195-audsys-clk.h
+index 239d31016ba76..69db2dd1c9e02 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-audsys-clk.h
++++ b/sound/soc/mediatek/mt8195/mt8195-audsys-clk.h
+@@ -10,6 +10,5 @@
+ #define _MT8195_AUDSYS_CLK_H_
+ 
+ int mt8195_audsys_clk_register(struct mtk_base_afe *afe);
+-void mt8195_audsys_clk_unregister(struct mtk_base_afe *afe);
+ 
+ #endif
 -- 
 2.39.2
 
