@@ -1,73 +1,88 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088F6BE66
-	for <patches@lists.linux.dev>; Mon, 12 Jun 2023 23:36:19 +0000 (UTC)
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-bc4114d44a8so2979552276.2
-        for <patches@lists.linux.dev>; Mon, 12 Jun 2023 16:36:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2762210F5
+	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 00:47:03 +0000 (UTC)
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-777a9ca9112so49629839f.1
+        for <patches@lists.linux.dev>; Mon, 12 Jun 2023 17:47:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686612979; x=1689204979;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8Uivj7/Q9yql/xb9uKNQvnL3YGWrQU/+WuXKXtQJByY=;
-        b=eXCH40sdXoq5OtFW5Wc7capgAZvIj6/HX5LXYosL5HGQloCoZh+N+ZyRCgWqULbQH4
-         R1glfSo0owUEDeOnlYYwNuBdGQiOhISlWhMXgQlRbw/MbXWMX3CrdNqVurd0m7EfOVdA
-         qzom7zN7kpS/iPmG3LQfkTQY6rV+SsRd8CCVPxjIawjJar0oZIVfnib/MAcqS+GZuEjf
-         wE/DhBMulPSc2ySu8SMLpF2uq0IdAJU4OiK3K+cDAytsefbELr4HFxd5SLl7PDZ6nhM8
-         JOjOylyT+BJHQdcVwqiZD0WmkqT7SBi4yWjgGhWl3PJmFZOuQrQ1uO+069gIUdkMCjVT
-         zumA==
+        d=linuxfoundation.org; s=google; t=1686617223; x=1689209223;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lmjM/dRJidQfKguFBam2mPgsQsHoFPzaRQGo375W5P8=;
+        b=gAMbBeMggeuiAjdgkrulOmgIVAY7V5E6KWDdOurzhW+Bc4BkbTjixYbFK3styWR1xT
+         U2j5UzjWlNRKQ7iigc5MCrjlMEf5zXi2KiezqakvxZMDlyhld/4dimIkOd5qPq8qYuvQ
+         6Vv6Us+h2VuC4J2KS2sW3jgKR1liw3O0lRhmg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686612979; x=1689204979;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8Uivj7/Q9yql/xb9uKNQvnL3YGWrQU/+WuXKXtQJByY=;
-        b=TOmOYBZE924ERSAlMuCF0bWXy91AQEP796w+1uMk0YwirdLzJYe90mEixLnM0Z+yP9
-         gDqKv3Akcp8Ji7jd5p1LrCuMO70mlU4D9OETveGmmYSDVqfvPzoEQ2PP7LH7kmWMiJ1X
-         74/a/DwsBM+RMkl5Mn9OOVGVjQdsEQ0UzrEkgDQoEy+8H/Hu+xYhcCbBF/EFiAigJAz0
-         e1aTB66hu6/3euTsf2BmqkABtvA7AWPDr1Q5k+hTYVAU4vbkpndVzuBuaQrEn6TtF6Rs
-         qzy5QVWedkD9KOIph4sZC6Be95wZNXjQ/uAYAQ1PoCIeyEiQsnSETLkvF1Qy7ifZhONN
-         u4mw==
-X-Gm-Message-State: AC+VfDziNiQj+ANiMr3m8hBR+DGDtYsFyqaV5BYSpGSIVFIS8O0Hf02V
-	uI+G857wEQYcyTLyGn1he3Lkb3CIkx4xeJ7ZOZU=
-X-Google-Smtp-Source: ACHHUZ7FHp11Pap/dBpkC6coJLr9NQfk/SiiHMoYewbngISWHMgFGtI9hTpiNtlAQ8aSMRh7mCvY7RpVQCY78QEHfrA=
-X-Received: by 2002:a5b:a4f:0:b0:bc5:4f79:a7c5 with SMTP id
- z15-20020a5b0a4f000000b00bc54f79a7c5mr134129ybq.26.1686612978754; Mon, 12 Jun
- 2023 16:36:18 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686617223; x=1689209223;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lmjM/dRJidQfKguFBam2mPgsQsHoFPzaRQGo375W5P8=;
+        b=ehBsRBf5vFXO/xhYSWg7uh0PYLdLmpYTMDWZ12CSmmPzVY1k0vATxFvw1TrOQ5KZVC
+         5pv7SbMUeWGKRxRTbL6jn8KNOSFDuNVTz6dffKTjFWIf7g1g/NlRwZbkHlvjQROwSsmr
+         m05ZtcF0bpR0QoNBYK/G427D5LRcPK6eQIujR47348VptDbSyTupxpMLqsteuMfZcSTr
+         wOSssLd9vta1EZ+oXq4IP+TdJ7yqPFqpzG9Zy9fnkdJv/0smAxTx5hZEvN5gyTcRQDiW
+         6PDe8+6MLpR2kLzNC0dgAyQsbjSLClCbxAYzsorQNy4hSbTbgt+yL+7xEOGSMaym2XQI
+         2jgg==
+X-Gm-Message-State: AC+VfDzXbaoNO7qFis9p5RIXccRQ6JVSxJAZpAry+Y2Z6Mf7b4NHvnzq
+	brKoYjd45sp2rTMVbBF852HUhQ==
+X-Google-Smtp-Source: ACHHUZ7Zt0PUB3W0hglufQF5/lfwOVJDETIXODth+qZK6FonW+iF851KtxvZ4jXmJx1VrNbqXjGXQg==
+X-Received: by 2002:a05:6602:2e07:b0:777:a94d:a362 with SMTP id o7-20020a0566022e0700b00777a94da362mr9730462iow.2.1686617223020;
+        Mon, 12 Jun 2023 17:47:03 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id ee24-20020a056638293800b0041658c1838asm3082379jab.81.2023.06.12.17.47.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jun 2023 17:47:02 -0700 (PDT)
+Message-ID: <559744de-1f36-4b36-2dc6-c14354fd4e2b@linuxfoundation.org>
+Date: Mon, 12 Jun 2023 18:47:01 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230531174450.3733220-1-aliceryhl@google.com>
- <CAGngYiW_3HfebWZO5S=RXFqhNnsbnix-NaA0UGYRnRLd4SK65w@mail.gmail.com> <CANiq72=DJBW82L44icrrTo=_jrv=BS3cd10s6WuraXX7suW4tg@mail.gmail.com>
-In-Reply-To: <CANiq72=DJBW82L44icrrTo=_jrv=BS3cd10s6WuraXX7suW4tg@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 13 Jun 2023 01:36:07 +0200
-Message-ID: <CANiq72nUkuQ+Bpi6+UE6hMwtngs=yiZcH826mt-wox=7Nq9wWw@mail.gmail.com>
-Subject: Re: [PATCH v1] rust: error: integrate Rust error type with `errname`
-To: Sven Van Asbroeck <thesven73@gmail.com>
-Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Wedson Almeida Filho <walmeida@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 6.1 000/132] 6.1.34-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230612101710.279705932@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 12, 2023 at 9:04=E2=80=AFPM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
->
-> Applied to `rust-next` -- reworded for clarity. Thanks!
+On 6/12/23 04:25, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.34 release.
+> There are 132 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 14 Jun 2023 10:16:41 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.34-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-When working on the KUnit changes that require this, I noticed this
-didn't include the `CONFIG_SYMBOLIC_ERRNAME=3Dn` support we originally
-had on the `rust` branch.
+Compiled and booted on my test system. No dmesg regressions.
 
-So I added the `errname` helper and force-pushed.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Cheers,
-Miguel
+thanks,
+-- Shuah
