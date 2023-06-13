@@ -1,295 +1,114 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9C233E3
-	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 17:46:13 +0000 (UTC)
-Received: from mail.alien8.de (mail.alien8.de [IPv6:2a01:4f9:3051:3f93::2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id BB05D1EC0501;
-	Tue, 13 Jun 2023 19:46:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1686678370;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=LWlHFe9nJlKqdUvnuqyzsMA1rnJcw+tnScqqI8D68Os=;
-	b=S9IYp7r/EjBmBONAYEjmfIF2DIG9kX9uDgtsCK0F+hsZCba1IW5mnxvjtrlFWqekUwiDJV
-	7pdw5ETe1hsq6km5kiD/ZQAGEzdSz+dOwZR4SXzovlPV7PBJj0FTC3rvHO3u5Q6V2JXkDM
-	JLQDH95WPYHnhtdcZUga5zQObw8jZ98=
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id a_ZbYUs7shpD; Tue, 13 Jun 2023 17:46:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1686678366; bh=LWlHFe9nJlKqdUvnuqyzsMA1rnJcw+tnScqqI8D68Os=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NijJ/2E3rBi9qsK2j2nMzs74AT2r93nvVkLzHiHxhh4SfHxTDnME2anPvOuk5mQ2n
-	 UljsDOrpjWkFbi4FRKc9WnjRtt55YfZyryCTb+DG8Dr8Ht7dB7DyGGp9lE377Cb671
-	 feKQrdGfVBpefef9DlsTluO7BSX6oC4gMOHwTcBItM0FRZPGMkOX3vVsJi1agaVWfw
-	 hu7zr+RDEyKQaDhrKCc4ESyLUUhigWr+up4ft526rbndNcVQ5hKPSrNjEQq9fqBnrs
-	 4D5VRaO1+PtAQ7riegnE8160aRwcbFqmAcS5QJq92UrunyyuXankGhr9aPrCFWHbze
-	 I9oJywEKv1xpHoWPafcCBsC0QTKAem5hQditkaGEdbtdWZreB8WGgQ3Uwwt4+LG2b/
-	 pN1wYyno+nrj6URTT2n0eYdC/CqKu6V3MFC2PMyZWll4TMwmT4Yo3w19olWBlnjIJQ
-	 C1KsnBMRuM7XLZpB1BatLgFWOhRCJg3koZeqYsdeb+NvjUbf6povYU53u22FDO4e2b
-	 IJuYMpABArOa29jx+/DPqbG8s9/d+3R57oqQ+Ax8b9rCSdBJz5q6tL2Au3jsETqovC
-	 53Yum5BaW7IWXugMuMQzHRMelA4e99p1n6BY4kvUQG0ZwPBXAqrQm8VehPS8/zDovi
-	 yM031q2vIpye1Duauay6/7Es=
-Received: from zn.tnic (p200300EA971Dc5F7329C23FFfEa6A903.dip0.t-ipconnect.de [IPv6:2003:ea:971d:c5f7:329c:23ff:fea6:a903])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 3835140E01D0;
-	Tue, 13 Jun 2023 17:45:58 +0000 (UTC)
-Date: Tue, 13 Jun 2023 19:45:53 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
-	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
-	x86@kernel.org, linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v5 2/5] x86/mce: Add per-bank CMCI storm mitigation
-Message-ID: <20230613174553.GDZIirUaTo6Kd8gq4W@fat_crate.local>
-References: <20230403210716.347773-1-tony.luck@intel.com>
- <20230411173841.70491-1-tony.luck@intel.com>
- <20230411173841.70491-3-tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598EA38CA4
+	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 18:01:23 +0000 (UTC)
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1b3c0c476d1so24224765ad.1
+        for <patches@lists.linux.dev>; Tue, 13 Jun 2023 11:01:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686679282; x=1689271282;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=T/a3r5sKbhzcbRyUYdob5Nl5dKbRVOL3UiqhaaSpST4=;
+        b=B6nGrki7dC4POqaR5IBxM33VDnBBh6hQssOvi3oTmV1FtbtGlyf/oH/GrKPfyyMN39
+         DysgEThI0bkvujQPvKr3Rk0cwrbhwQ1MgnyA8JmeLHOqK/RXVqucEmohMBUbNvKO6kOC
+         XZ3vgysp+C/iWYuS1c8FqYgeDBeHqeF2kvmcFZmAhZbDeKR92VNlB7htxTP6VM6V3GpN
+         wZIlREJxiAudVkeXHYz6hglcTFPIyT1Kgcj9sPYD9FFDgGjrsAoemGeT81K4JEBexbcT
+         YIz4I8QAmbZn7HcOYtXXTiz9Ew7co96YRYqpZqucUV9Enp0c9xvihLKkHjcIbxXDyP0N
+         k5PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686679282; x=1689271282;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T/a3r5sKbhzcbRyUYdob5Nl5dKbRVOL3UiqhaaSpST4=;
+        b=dPdeljqnhmymoLMNuuhMsPsDRuKTqF0k6fU8GnC1y3xzbJh9eWirtX3p1TY/HCZfFC
+         pQ0YZ8p4r60KMvIt1ZNejCO36s5zfGua8+5hVEVdym0aAqe1F1NDXuH3wMXrKe+HJKfu
+         U1WMlblA6n1rsVt3ZZWItHuYD7cWgh9JNPt1B0NUIQpCsgVpLBH2XCa0J8HfSWIvfpnS
+         XBxohhvsGyJaw5ove8TfieeWX2vfLrhvFY6MbOSyrGAF4s3YARYTcg7rGpXTLgVuRpFy
+         sdXTqhO+/L9XWpmTdrzQwRY4119t+cJqbY78Nsx0pJcWeNM0g2oWxqJDNqYGfsPOqTUD
+         ABaQ==
+X-Gm-Message-State: AC+VfDzU4uP4Y2So8m52GEPjJn67z7aN/zxmJGPNC5Ys78N1VKGYaTQl
+	aEV3yJungMF30fQdMKXnW2Y=
+X-Google-Smtp-Source: ACHHUZ4nDCJfmPpznJna2xSkhH384iiKUB8svBrHAmcq/f5IuT5ldnsId6M4h29uvNbu8gE2E0MgPw==
+X-Received: by 2002:a17:902:e752:b0:1b0:6038:2982 with SMTP id p18-20020a170902e75200b001b060382982mr12451026plf.41.1686679282498;
+        Tue, 13 Jun 2023 11:01:22 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id k5-20020a170902ba8500b001ae5fe602c3sm10546479pls.159.2023.06.13.11.01.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jun 2023 11:01:21 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <0a725f74-d077-8556-6e55-25f55dfc95ff@roeck-us.net>
+Date: Tue, 13 Jun 2023 11:01:18 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230411173841.70491-3-tony.luck@intel.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 5.10 00/68] 5.10.184-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230612101658.437327280@linuxfoundation.org>
+ <ab4e5232-ccc4-144a-cb72-2a0cce825f31@roeck-us.net>
+ <2023061300-cardstock-buckshot-0ccc@gregkh>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <2023061300-cardstock-buckshot-0ccc@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Apr 11, 2023 at 10:38:38AM -0700, Tony Luck wrote:
-> @@ -1587,6 +1589,7 @@ static unsigned long check_interval = INITIAL_CHECK_INTERVAL;
->  
->  static DEFINE_PER_CPU(unsigned long, mce_next_interval); /* in jiffies */
->  static DEFINE_PER_CPU(struct timer_list, mce_timer);
-> +static DEFINE_PER_CPU(bool, storm_poll_mode);
+On 6/13/23 10:36, Greg Kroah-Hartman wrote:
+> On Tue, Jun 13, 2023 at 09:35:37AM -0700, Guenter Roeck wrote:
+>> On 6/12/23 03:25, Greg Kroah-Hartman wrote:
+>>> This is the start of the stable review cycle for the 5.10.184 release.
+>>> There are 68 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>
+>>> Responses should be made by Wed, 14 Jun 2023 10:16:41 +0000.
+>>> Anything received after that time might be too late.
+>>>
+>>
+>> Am I the only one seeing this problem ?
+>>
+>> Build reference: v5.10.183-69-g32cae866b182
+>> Compiler version: x86_64-linux-gcc (GCC) 11.3.0
+>> Assembler version: GNU assembler (GNU Binutils) 2.39
+>>
+>> Building x86_64:allyesconfig ... failed
+>> --------------
+>> Error log:
+>> x86_64-linux-objcopy: vmlinux: unsupported relocation type 0x44
+>> x86_64-linux-objcopy: vmlinux[.text]: relocation count is negative: bad value
+>> make[3]: *** [arch/x86/boot/compressed/Makefile:114: arch/x86/boot/compressed/vmlinux.bin] Error 1
+>> make[3]: *** Waiting for unfinished jobs....
+>> Unsupported relocation type: unknown type rel type name (-1939958716)
+>> make[3]: *** [arch/x86/boot/compressed/Makefile:122: arch/x86/boot/compressed/vmlinux.relocs] Error 1
+>> make[3]: *** Deleting file 'arch/x86/boot/compressed/vmlinux.relocs'
+>> make[2]: *** [arch/x86/boot/Makefile:115: arch/x86/boot/compressed/vmlinux] Error 2
+>> make[1]: *** [arch/x86/Makefile:274: bzImage] Error 2
+>> make: *** [Makefile:192: __sub-make] Error 2
+>>
+>> It affects 5.4.y and 5.10.y for me.
+> 
+> Odd.  Let me go build with gcc-11, I have just moved to gcc-12 on those
+> two branches locally...
+> 
 
-See comment below about putting all those storm-related vars in a struct.
+Don't bother. This seems to be related to my build environment, not to the kernel.
+Rebuilding passed on different servers. It may have to do with my recent update
+to Ubuntu 22.04 on the server experiencing the problem. I'll try to figure out
+what is going on.  Sorry for the noise.
 
-Also, there's another bool - bank_storm - which looks like it does the
-same.
+Guenter
 
->  static void __start_timer(struct timer_list *t, unsigned long interval)
->  {
-> @@ -1622,22 +1625,29 @@ static void mce_timer_fn(struct timer_list *t)
->  	else
->  		iv = min(iv * 2, round_jiffies_relative(check_interval * HZ));
->  
-> -	__this_cpu_write(mce_next_interval, iv);
-> -	__start_timer(t, iv);
-> +	if (__this_cpu_read(storm_poll_mode)) {
-> +		__start_timer(t, HZ);
-> +	} else {
-> +		__this_cpu_write(mce_next_interval, iv);
-> +		__start_timer(t, iv);
-> +	}
->  }
->  
->  /*
-> - * Ensure that the timer is firing in @interval from now.
-> + * When a storm starts on any bank on this CPU, switch to polling
-> + * once per second. When the storm ends, revert to the default
-> + * polling interval.
->   */
-> -void mce_timer_kick(unsigned long interval)
-> +void mce_timer_kick(bool storm)
->  {
->  	struct timer_list *t = this_cpu_ptr(&mce_timer);
-> -	unsigned long iv = __this_cpu_read(mce_next_interval);
->  
-> -	__start_timer(t, interval);
-> +	__this_cpu_write(storm_poll_mode, storm);
->  
-> -	if (interval < iv)
-> -		__this_cpu_write(mce_next_interval, interval);
-> +	if (storm)
-> +		__start_timer(t, HZ);
-> +	else
-> +		__this_cpu_write(mce_next_interval, check_interval * HZ);
-
-This looks very familiar to what mce_timer_fn() above does. Add
-a helper.
-
->  /* Must not be called in IRQ context where del_timer_sync() can deadlock */
-> diff --git a/arch/x86/kernel/cpu/mce/intel.c b/arch/x86/kernel/cpu/mce/intel.c
-> index 052bf2708391..4106877de028 100644
-> --- a/arch/x86/kernel/cpu/mce/intel.c
-> +++ b/arch/x86/kernel/cpu/mce/intel.c
-> @@ -47,8 +47,40 @@ static DEFINE_PER_CPU(mce_banks_t, mce_banks_owned);
->   */
->  static DEFINE_RAW_SPINLOCK(cmci_discover_lock);
->  
-> +/*
-> + * CMCI storm tracking state
-> + *	stormy_bank_count: per-cpu count of MC banks in storm state
-> + *	bank_history: bitmask tracking of corrected errors seen in each bank
-
-	bank_storm: determines whether the bank is in storm mode
-
-> + *	bank_time_stamp: last time (in jiffies) that each bank was polled
-> + *	cmci_threshold: MCi_CTL2 threshold for each bank when there is no storm
-> + */
-> +static DEFINE_PER_CPU(int, stormy_bank_count);
-> +static DEFINE_PER_CPU(u64 [MAX_NR_BANKS], bank_history);
-> +static DEFINE_PER_CPU(bool [MAX_NR_BANKS], bank_storm);
-> +static DEFINE_PER_CPU(unsigned long [MAX_NR_BANKS], bank_time_stamp);
-
-All those are begging to be a
-
-struct mca_storm_desc {
-
-	....
-
-};
-
-or so, so that they don't "dangle" randomly all over the place and one
-doesn't know what they belong to.
-
-Every time you then do storm management, you get the percpu pointer and
-do
-
-	storm_desc->bank_history[bank] ...
-	storm_desc->bank_count
-	...
-
-and so on.
-
-> +static int cmci_threshold[MAX_NR_BANKS];
-
-Why do we have to save per-bank thresholds instead of writing a default
-non-storm value into all? Why are they each special?
-
-> +
-> +/* Linux non-storm CMCI threshold (may be overridden by BIOS */
-
-Missing ")".
-
->  #define CMCI_THRESHOLD		1
->  
-> +/*
-> + * High threshold to limit CMCI rate during storms. Max supported is
-> + * 0x7FFF. Use this slightly smaller value so it has a distinctive
-> + * signature when some asks "Why am I not seeing all corrected errors?"
-> + */
-> +#define CMCI_STORM_THRESHOLD	32749
-
-Why if you can simply clear CMCI_EN and disable CMCI for this bank while
-the storm goes on?
-
-And reenable it when it subsides?
-
-> +void track_cmci_storm(int bank, u64 status)
-
-cmci_track_storm
-
-> +{
-> +	unsigned long now = jiffies, delta;
-> +	unsigned int shift = 1;
-> +	u64 history;
-> +
-> +	/*
-> +	 * When a bank is in storm mode it is polled once per second and
-> +	 * the history mask will record about the last minute of poll results.
-> +	 * If it is not in storm mode, then the bank is only checked when
-> +	 * there is a CMCI interrupt. Check how long it has been since
-> +	 * this bank was last checked, and adjust the amount of "shift"
-> +	 * to apply to history.
-> +	 */
-> +	if (!this_cpu_read(bank_storm[bank])) {
-> +		delta = now - this_cpu_read(bank_time_stamp[bank]);
-> +		shift = (delta + HZ) / HZ;
-> +	}
-> +
-> +	/* If has been a long time since the last poll, clear history */
-> +	if (shift >= 64)
-> +		history = 0;
-> +	else
-> +		history = this_cpu_read(bank_history[bank]) << shift;
-
-<---- newline here.
-
-> +	this_cpu_write(bank_time_stamp[bank], now);
-> +
-> +	/* History keeps track of corrected errors. VAL=1 && UC=0 */
-> +	if ((status & (MCI_STATUS_VAL | MCI_STATUS_UC)) == MCI_STATUS_VAL)
-> +		history |= 1;
-
-Ditto.
-
-> +	this_cpu_write(bank_history[bank], history);
-> +
-> +	if (this_cpu_read(bank_storm[bank])) {
-
-You just read bank_storm and now you're reading it again. Just do
-a struct pls.
-
-> +		if (history & GENMASK_ULL(STORM_END_POLL_THRESHOLD - 1, 0))
-
-"- 1" because you start from 0? So define the STORM_END_POLL_THRESHOLD
-thing above as (30 - 1) and explain why.
-
-> +			return;
-
-<---- newline here.
-
-> +		pr_notice("CPU%d BANK%d CMCI storm subsided\n", smp_processor_id(), bank);
-> +		cmci_set_threshold(bank, cmci_threshold[bank]);
-> +		cmci_storm_end(bank);
-> +	} else {
-> +		if (hweight64(history) < STORM_BEGIN_THRESHOLD)
-
-How am I to understand this? Is that the "5 in this RFC code for ease of
-testing" thing from the commit message?
-
-> +			return;
-
-<---- newline here.
-
-> +		pr_notice("CPU%d BANK%d CMCI storm detected\n", smp_processor_id(), bank);
-> +		cmci_set_threshold(bank, CMCI_STORM_THRESHOLD);
-> +		cmci_storm_begin(bank);
-> +	}
-> +}
-> +
->  /*
->   * The interrupt handler. This is called on every event.
->   * Just call the poller directly to log any events.
-> @@ -147,6 +266,9 @@ static void cmci_discover(int banks)
->  			continue;
->  		}
->  
-> +		if ((val & MCI_CTL2_CMCI_THRESHOLD_MASK) == CMCI_STORM_THRESHOLD)
-
-This is silly: you have at least two per-cpu bools which record which
-banks are in storm mode. Why don't you query them?
-
-> +			goto storm;
-> +
->  		if (!mca_cfg.bios_cmci_threshold) {
->  			val &= ~MCI_CTL2_CMCI_THRESHOLD_MASK;
->  			val |= CMCI_THRESHOLD;
-> @@ -159,7 +281,7 @@ static void cmci_discover(int banks)
->  			bios_zero_thresh = 1;
->  			val |= CMCI_THRESHOLD;
->  		}
-> -
-> +storm:
-
-That piece from here on wants to be a separate helper - that function is
-becoming huge and unwieldy, doing a bunch of things.
-
-Thx.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
