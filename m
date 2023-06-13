@@ -1,97 +1,123 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0982915
-	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 09:45:47 +0000 (UTC)
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2b1a46ad09fso64499481fa.2
-        for <patches@lists.linux.dev>; Tue, 13 Jun 2023 02:45:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1686649545; x=1689241545;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8SpYglX3xZWy5x6JjxtuTN/FRZavJqUKXS8aVqhebYk=;
-        b=XZdZk9shQ71u/141zS/u087WEwIiXiVqoN5KykFsUDzUgnGRIL2wqNn2WoNL4E4t9q
-         lEr0qAN1yOObjT0sr4ONuHCjhDcE03RnnLuVTjtiHeXQ4yrRSOp5eUV5WV+DULDJ4DOd
-         zFiS7+1DQV6FeRResvIBtMnU7swr8DniimFgP01bMtuezbDe6C+QWZeJM6AsRMXd5dr3
-         JexylTYCI9Khd25mb3PJxRLkGzJS6J6LsXtGUTy81YZ4WBL1ekCFtC8JzjFFED8+Z+f2
-         UVFlX+SXon3VAqzVtIRaoWVYpfMWQP9FVKhDYR+dQusQqDuLqDJgH6bIIHAKHujjTlp3
-         j2aA==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ED8DDBC
+	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 10:24:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C639CC433D2
+	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 10:24:03 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="rvIN5wZ9"
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Tue, 13 Jun 2023 11:24:00 +0100
+Resent-Message-ID: <ZIhDwOsroHbwVyKE@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Tue, 13 Jun 2023 10:55:06 +0100
+Received: from dfw.source.kernel.org ([139.178.84.217])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=fwpY=CB=canonical.com=juerg.haefliger@kernel.org>)
+	id 1q90jw-001xNu-42
+	for broonie@sirena.co.uk; Tue, 13 Jun 2023 10:55:06 +0100
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 6078862D4C
+	for <broonie@sirena.co.uk>; Tue, 13 Jun 2023 09:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id DA431C4339B; Tue, 13 Jun 2023 09:55:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DFC65C433D2
+	for <broonie@kernel.org>; Tue, 13 Jun 2023 09:55:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org DFC65C433D2
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=canonical.com
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com [209.85.221.70])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 7D1073F268
+	for <broonie@kernel.org>; Tue, 13 Jun 2023 09:54:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1686650098;
+	bh=YXC72gBJcEvm5pdwUJv2zRUSBOXAsWJCWtUFi9onxC8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
+	b=rvIN5wZ9wGiEW1uLuFxf/iNxMcFXShQshXP8plFgQakIsA7XzrHOuPFWcKSP+OEPO
+	 366+Oongjxu8QdxclpV0bDlJjUCVYzhBTUtEzolMw5T1E/wlbGO+RwofbXzVprAGLQ
+	 2MEyU+lw508XJZlS/JCvJgCcRTdzzh4Gs+KKJVofVVvXpf6nduq6EZsLcGgj2+5yzS
+	 bhf+L3sKcBrSr1vH7zAm24+IcRk91rtN1Q7Qc7CBt+qxnUtJw8wSwDtaMJcIVSQx91
+	 Nw/M8DCCna+9m4TXRuemBK2JAM9mlUsprQHlaJizOFwhLA8SM0Bzp/GEqjIZRlbQ32
+	 fwfArngtGtNLg==
+Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-30af222c5feso3108585f8f.1
+        for <broonie@kernel.org>; Tue, 13 Jun 2023 02:54:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686649545; x=1689241545;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8SpYglX3xZWy5x6JjxtuTN/FRZavJqUKXS8aVqhebYk=;
-        b=Sz253GtmJB039KYp8w8ikaMPVf0l+Qs0pCsSoAwSh2smBcS4tklSJ61Av2/WJYWas6
-         7OgCt++mMMjfkhcXhN7oYPRKXfxvdGFPKrp4ETf4Fz4j4Dda9zfyrxCnhCvSgzQHI6GI
-         IF6+VWqImwqWJ9OT6geHqC5TFqz/0VQ1F9tV2YGegkUzXyFbBq4TdXEW5FoMgIvjMN+J
-         kPpkosHtIRYXBIGCck+Te3wcn+ZRU12uuqK0kmGSqE+AVDMam9Js+89P42rn5mdJ5adW
-         ythRgfFHFNKn2cdFRLMweSVo2Tuiew7RKruTj/UUym0LZHBZyQXXG5JaKa9sAFq8wuSZ
-         fU5A==
-X-Gm-Message-State: AC+VfDzVN2ytiTGRDWrrD14Fo3OZBix/Xn3j7rak9TgRu5Vt/lWfXuYy
-	s6Ny6ra47BQpclhGoZQ+9enzPB7NyFH2nlLK2rWaZg==
-X-Google-Smtp-Source: ACHHUZ5cFzMVREFQr4SC+vRlo8q4itfT6Lyp/yPulI7nR8OW7RQeLvlldVxv4pJyEPB8r/jXc7ZKZr9+unN9EIxlpfY=
-X-Received: by 2002:a19:4f0d:0:b0:4f4:dd5d:f3e4 with SMTP id
- d13-20020a194f0d000000b004f4dd5df3e4mr5367991lfb.26.1686649544710; Tue, 13
- Jun 2023 02:45:44 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686650098; x=1689242098;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YXC72gBJcEvm5pdwUJv2zRUSBOXAsWJCWtUFi9onxC8=;
+        b=WyKALeAjLPdp/LYSVArPZXpul3jd5Xh/0X94xgnYOMuIthrDc0hc1ygfDRHAYxKLrC
+         V277l01IYS5JoIOR9XMFjjJwGbegqftvO1NsjX2fTYFG86MRbMD/6AQhf/bxv680ALlP
+         7jrgIald6snmxUAHyrXPOkXY1qMsqUthf8ZXgxQZc6WHxpIrduGFnhpP7TD7OsLIlMY2
+         9MJfv8h7VjphFezEzDT9CjqRNKDONC1zbOGMEw7pCAiFlq19Rjy3XFu+rwLrOuUpZkg7
+         2XBY5usg+vWo0h8D8eltdTeGcZ3jWXwK5AopUE6adNE4/AVWkL4otHI9MGFjt0YpAnGw
+         7Z/g==
+X-Gm-Message-State: AC+VfDyobznsvHD9DkhKeWvHRepHPZ+RX7CEczMslIJFOCSON26+7bKR
+	KAzs4N5FoG9Uw1JT9CT20btDJtTjUUXHfTD4UKD3VskrkS0zSoSXM2VMdIkN3kH0EdGEy10nvd0
+	82uV8ef1RnNwSBRpFQzk+EJJ6drUF
+X-Received: by 2002:a5d:5946:0:b0:307:92e8:ec60 with SMTP id e6-20020a5d5946000000b0030792e8ec60mr6454679wri.39.1686650098260;
+        Tue, 13 Jun 2023 02:54:58 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ4rCBnlbE9e7jvs5YeCmTdM4fzgruz3biT42Lo2FqmAOnTYs8PAQHCBK9mkUeYVpoyRFl0cxg==
+X-Received: by 2002:a5d:5946:0:b0:307:92e8:ec60 with SMTP id e6-20020a5d5946000000b0030792e8ec60mr6454660wri.39.1686650097949;
+        Tue, 13 Jun 2023 02:54:57 -0700 (PDT)
+Received: from localhost ([194.191.244.86])
+        by smtp.gmail.com with ESMTPSA id b14-20020adfe30e000000b00307a86a4bcesm14921660wrj.35.2023.06.13.02.54.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jun 2023 02:54:57 -0700 (PDT)
+From: Juerg Haefliger <juerg.haefliger@canonical.com>
+To: lgirdwood@gmail.com,
+	broonie@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	alsa-devel@alsa-project.org
+Cc: inux-kernel@vger.kernel.org,
+	u.kleine-koenig@pengutronix.de,
+	nicolas.ferre@microchip.com,
+	juerg.haefliger@canonical.com
+Date: Tue, 13 Jun 2023 11:54:54 +0200
+Message-Id: <20230613095454.38696-1-juerg.haefliger@canonical.com>
+X-Mailer: git-send-email 2.37.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230612101710.279705932@linuxfoundation.org>
-In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
-From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 13 Jun 2023 18:45:33 +0900
-Message-ID: <CAKL4bV5Kvn7bAwChdpmiA7ONJ8bnDYCNFJTxqfs_dYfbTzt38Q@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/132] 6.1.34-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 139.178.84.217
+X-SA-Exim-Mail-From: SRS0=fwpY=CB=canonical.com=juerg.haefliger@kernel.org
+Subject: [PATCH] ASoC: siu: Add MODULE_FIRMWARE macro
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: 3kDrYrvCy11h
 
-Hi Greg
+The module loads firmware so add a MODULE_FIRMWARE macro to provide that
+information via modinfo.
 
-On Mon, Jun 12, 2023 at 7:56=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.34 release.
-> There are 132 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 14 Jun 2023 10:16:41 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.34-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Signed-off-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+---
+ sound/soc/sh/siu_dai.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-6.1.34-rc1 tested.
+diff --git a/sound/soc/sh/siu_dai.c b/sound/soc/sh/siu_dai.c
+index 84e1b14e68e4..d0b5c543fd2f 100644
+--- a/sound/soc/sh/siu_dai.c
++++ b/sound/soc/sh/siu_dai.c
+@@ -796,3 +796,5 @@ module_platform_driver(siu_driver);
+ MODULE_AUTHOR("Carlos Munoz <carlos@kenati.com>");
+ MODULE_DESCRIPTION("ALSA SoC SH7722 SIU driver");
+ MODULE_LICENSE("GPL");
++
++MODULE_FIRMWARE("siu_spb.bin");
+-- 
+2.37.2
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64), arch linux)
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
