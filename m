@@ -1,68 +1,105 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from qproxy2-pub.mail.unifiedlayer.com (qproxy2-pub.mail.unifiedlayer.com [69.89.16.161])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79471361
-	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 23:15:29 +0000 (UTC)
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1b1b51ec3e9so72665ad.0
-        for <patches@lists.linux.dev>; Tue, 13 Jun 2023 16:15:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686698129; x=1689290129;
-        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8uyQg9FJf1ujfXr9f268eDNpOT0Va/5nApJsu9c/ceI=;
-        b=ZU1TKS+Chn34vLFJwibDHRoEMvmMiSzpf0ZDVkri5ROYoqs8V2zaY2gNqlFnh3FM9W
-         DAfgIDaZfN+2aLQtYCYtmoYPiN7JOh7oTfXWyO/zsl4jhbkkwuJgb7gGO9atdO9mcjGz
-         xeycv9Kjlo2A2wW73U+OW03nshU6dNBbPmU1NS9CvyIgiPMHPEkbB3U9BtZlVx5oqvMj
-         6fLUMYeML4SdpsgO8ChyciHmoZnlyyxqL8fsGl8FExrKWpb+z83m0JOw3AxJdvkM//Yd
-         UgEAXqhcEFtsBq5fHl5j1MGD/WK2Vg/xSiB3L6ZdStIV9vrh9oia48S+bPbcnTMZg0cp
-         LA9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686698129; x=1689290129;
-        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8uyQg9FJf1ujfXr9f268eDNpOT0Va/5nApJsu9c/ceI=;
-        b=lfEUCFdFnjIAYJn/Dhiys+VeOwiu652ZgMiGLxbqQeUUXzvXBC4kMANMT3IdWIooqy
-         Tmh061TqeL0FkkjpgCj2AQDSOETDvBuljqBbR7lJ2y9swHs52fLkWzssLDkP39AO3YPX
-         j7Z4Gtdl/YXe7pIu7DX4DEWbrl9iVu4amkGvl18vtwqHYDna3BGr/k2jraEwBZYB3ZJs
-         qDb96ox2W4IuIpcGMV0fuHhttcicw21mfcYJqGAiNUD5eGpTeFccyE32a0ZuIyktIEfD
-         LF0vuLtOTkA+wtEHb3Wc4Rtj8irF+mHFJ57mtG0qT+abU+CacBDndRzcFnwyeWNf2BUk
-         Uw3w==
-X-Gm-Message-State: AC+VfDwcCsATB3H5eFCqwPqoA0kaG1/lchI/EOygDk2ZS7fvmDuSf12E
-	dVG0Gq2vadm63LAUnbvSPa0L+Q==
-X-Google-Smtp-Source: ACHHUZ48GxbxKpQWOMS+G+8jVGNcR3YlGU7DNqyZtqK/fyTpBYFnk38p2ckYqoGkswYn/FM3bj+NDA==
-X-Received: by 2002:a17:902:cf0b:b0:1b3:c97a:1e90 with SMTP id i11-20020a170902cf0b00b001b3c97a1e90mr98471plg.4.1686698129085;
-        Tue, 13 Jun 2023 16:15:29 -0700 (PDT)
-Received: from [2620:0:1008:15:18be:6c84:11a2:b54] ([2620:0:1008:15:18be:6c84:11a2:b54])
-        by smtp.gmail.com with ESMTPSA id rj6-20020a17090b3e8600b002599ef80ab9sm11613374pjb.3.2023.06.13.16.15.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jun 2023 16:15:28 -0700 (PDT)
-Date: Tue, 13 Jun 2023 16:15:27 -0700 (PDT)
-From: David Rientjes <rientjes@google.com>
-To: Vlastimil Babka <vbabka@suse.cz>
-cc: Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, 
-    Joonsoo Kim <iamjoonsoo.kim@lge.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
-    Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org, 
-    patches@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/slab_common: use SLAB_NO_MERGE instead of negative
- refcount
-In-Reply-To: <20230613102820.19153-2-vbabka@suse.cz>
-Message-ID: <11b6e080-8820-87bb-2686-1c78debad4c5@google.com>
-References: <20230613102820.19153-2-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59151361
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 00:01:23 +0000 (UTC)
+Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
+	by qproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id EFD1D802BCA0
+	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 23:41:00 +0000 (UTC)
+Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
+	by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id 433BC1004E002
+	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 23:40:21 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id 9Dcbqoj64NX2a9DcbqJtDI; Tue, 13 Jun 2023 23:40:21 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=NMAQR22g c=1 sm=1 tr=0 ts=6488fe65
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=of4jigFt-DYA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=N3MUNNXChn8k7+AFXsLdmq9FiSC3C1h1+174pIuzHoU=; b=oEix5b8woWg52zwzU1cLkg16hq
+	ExdMUGs0k9MFxXCBeRUHavmC3A/dd3oS0nyKPvRgwsGe538WZoK8KFN2hOGzftpNyGJa5G83/OT7J
+	v1niwiodytz72niw4LZwGaMhyg0pjDlm63bukeMneFcAknIVZzRbUAvlIUTAic/DVZschSLnUM2yB
+	tRUqhMSHFadJHh3jqBxmZHFTShkeolg/+akVxGGZTlYk30b8c0jiVRpqMc3MlpZICEF40ullh3R8H
+	VX3l73X+N+h89iz9KWzuty1KbBwSAHPtcksKPlMagB0T6NxTPzbZd11dVCl/4OoPlPk2Pf44p84pO
+	yg1+vMVg==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:43816 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1q9DcZ-0007ph-Bf;
+	Tue, 13 Jun 2023 17:40:19 -0600
+Subject: Re: [PATCH 6.1 000/132] 6.1.34-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230612101710.279705932@linuxfoundation.org>
+In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <7f362af6-e310-7b44-1e6f-47356ed72b69@w6rz.net>
+Date: Tue, 13 Jun 2023 16:40:16 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1q9DcZ-0007ph-Bf
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:43816
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Tue, 13 Jun 2023, Vlastimil Babka wrote:
+On 6/12/23 3:25 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.34 release.
+> There are 132 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 14 Jun 2023 10:16:41 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.34-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-> When CONFIG_MEMCG_KMEM is enabled, we disable cache merging for
-> KMALLOC_NORMAL so they don't end up merged with a cache that uses ad-hoc
-> __GFP_ACCOUNT. This was implemented by setting refcount to -1, but now
-> we have a proper SLAB_NO_MERGE flag, so use that instead.
-> 
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Acked-by: David Rientjes <rientjes@google.com>
+Tested-by: Ron Economos <re@w6rz.net>
+
