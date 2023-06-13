@@ -1,131 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E7E136A
-	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 19:54:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070A1C433F0;
-	Tue, 13 Jun 2023 19:54:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686686084;
-	bh=01Gy2b0SAp8++a2vjuQkj4/e/l8budPgWfPPBbejKNM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=l5Rn/F83C70fysAwoHA+9nJdR8eCqM0WUQWwkLnPgY5m84IO+ApRXZdcpGi7JOzsL
-	 dEkZl60e5ywxRY2ZSTbNiEplcxNVlyZAmAk623GdTTwOShmUCxhUAFFP77h4Ie3iGo
-	 1JoDZXPVhJIYNV7HoGiafU6vkZU1z8xtTnE+ZOk6BjwsyALCJCSNu2JA86mJlu9Ufa
-	 rIYa53660HdtMjHwvWGA2EHZlGDMkVmSFtt65wwxrBmwK5hqjvXSNbMDHULEiZz8RF
-	 /c7Np2W/RvaFuKeO8ULIzI48uwCrYN3Il/H8ipvp5SzTI6DlOuL+AEPZvEqtWclwKL
-	 0CXEsvPNc8mkg==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Maxime Ripard <maxime@cerno.tech>
-Subject: [PATCH] clk: sprd: composite: Simplify determine_rate implementation
-Date: Tue, 13 Jun 2023 12:54:42 -0700
-Message-ID: <20230613195443.1555132-1-sboyd@kernel.org>
-X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6B51361
+	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 23:08:32 +0000 (UTC)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1b4fef08cfdso233895ad.1
+        for <patches@lists.linux.dev>; Tue, 13 Jun 2023 16:08:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686697712; x=1689289712;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AINuLYyd7cKrlzuDExWPH4P62HSz9yrUj99uIR37smI=;
+        b=sAkxAzgHD5WhF5gjfUAj4P6ez4e9hjGXWDkDaFFQ8eIwqj2IbAsyWWyecLR5k9m/LY
+         NfZ1xXdyKcat+B+UUObmyAc0ZMuib6noEdUh3US+c2nVrQYeUA8OPr1VBSZ4vjwrXvBu
+         yUW7BS337oP50pG6cDsdnHdJnmBbKgWbCOF0R7ySs6dvSz+8qHWD1fdtPKPySqA4vmSG
+         U2V8gocMKrsUoOgiI8fxvL9v3GjBSnYMkdeK3NVPiJfnMEPOJKsE/VY16DpHevUVw1Ng
+         V7hIQusTKBqV0J7+kDurNJJt6Bwd5p539YGdmO5jIi6wswlKmf2rztvxgG16bPXiJxFQ
+         q+og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686697712; x=1689289712;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AINuLYyd7cKrlzuDExWPH4P62HSz9yrUj99uIR37smI=;
+        b=Yu6De5aTPOuSqfQssJrebBPNV4sBGvPdcucpGlXYeEPiiC+476F8DQvWm85uFI4uIs
+         kbDY73r6bj3Skudx8oS8i5sI2nJfT/pH4t1dS4XwTTmzWbb/UI/Jwy8Xbel8cCGq08tz
+         RirJa82yK5/BvsL9skKx5pad3PpxAukbKS/UzE7BLeXLaj7iZizffYxSpKMXR612Z6wV
+         TevcmRGPy8KSuWnj2Wq4GErOTON9vmKsvi1+5jvN+1KhL5T3a4H9eiy3jJDns8HHEECn
+         ab5g0Yz5tLWzjJlrxUwOlIUd3PtxUXhyY7MOz73OyO4GQf9Z2izUYqEqdzxGHqJJD3xa
+         JD1Q==
+X-Gm-Message-State: AC+VfDwsS3zMrMDGRnpoAP7iOFXZJH/Wkx6k3w15+U80vRkCUEe07DRO
+	9gq0lVE3FuZ455ygj7qIQQ0=
+X-Google-Smtp-Source: ACHHUZ6o71fxvbwXQPFnYGzICrJGfpJoazuyDv4nfphEJ+bTpdjGfIrO8KNYLSNCn9Te7WAtxehm2w==
+X-Received: by 2002:a17:903:2449:b0:1b4:9dd5:b2c6 with SMTP id l9-20020a170903244900b001b49dd5b2c6mr1257914pls.65.1686697712232;
+        Tue, 13 Jun 2023 16:08:32 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id ji1-20020a170903324100b001b016313b1dsm5426673plb.86.2023.06.13.16.08.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jun 2023 16:08:31 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Tue, 13 Jun 2023 16:08:29 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 4.14 00/21] 4.14.318-rc1 review
+Message-ID: <472fc325-18d9-4214-829c-8cb2f8b916da@roeck-us.net>
+References: <20230612101651.048240731@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230612101651.048240731@linuxfoundation.org>
 
-The sprd_div_helper_round_rate() function calls divider_round_rate()
-which calls divider_round_rate_parent() which calls
-divider_determine_rate(). This call chain converts back and forth from
-the rate request structure to make a determine_rate clk_op fit with a
-round_rate clk_op. Simplify the code here by directly calling
-divider_determine_rate() instead.
+On Mon, Jun 12, 2023 at 12:25:55PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.318 release.
+> There are 21 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 14 Jun 2023 10:16:41 +0000.
+> Anything received after that time might be too late.
+> 
 
-This fixes a smatch warning where an unsigned long is compared to less
-than zero, which is impossible. This makes sprd_div_helper_round_rate()
-unnecessary as well so simply remove it and fold it into the only caller
-left.
+Build results:
+	total: 166 pass: 166 fail: 0
+Qemu test results:
+	total: 430 pass: 430 fail: 0
 
-Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Closes: https://lore.kernel.org/r/45fdc54e-7ab6-edd6-d55a-473485608473@oracle.com
-Cc: Maxime Ripard <maxime@cerno.tech>
-Fixes: 302d2f836d78 ("clk: sprd: composite: Switch to determine_rate")
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/clk/sprd/composite.c |  9 +--------
- drivers/clk/sprd/div.c       | 14 ++------------
- drivers/clk/sprd/div.h       |  5 -----
- 3 files changed, 3 insertions(+), 25 deletions(-)
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-diff --git a/drivers/clk/sprd/composite.c b/drivers/clk/sprd/composite.c
-index d3a852720c07..ad6b6383e21f 100644
---- a/drivers/clk/sprd/composite.c
-+++ b/drivers/clk/sprd/composite.c
-@@ -13,15 +13,8 @@ static int sprd_comp_determine_rate(struct clk_hw *hw,
- 				    struct clk_rate_request *req)
- {
- 	struct sprd_comp *cc = hw_to_sprd_comp(hw);
--	unsigned long rate;
- 
--	rate = sprd_div_helper_round_rate(&cc->common, &cc->div,
--					  req->rate, &req->best_parent_rate);
--	if (rate < 0)
--		return rate;
--
--	req->rate = rate;
--	return 0;
-+	return divider_determine_rate(hw, req, NULL, cc->div.width, 0);
- }
- 
- static unsigned long sprd_comp_recalc_rate(struct clk_hw *hw,
-diff --git a/drivers/clk/sprd/div.c b/drivers/clk/sprd/div.c
-index 7621a1d1ab9c..c7261630cab4 100644
---- a/drivers/clk/sprd/div.c
-+++ b/drivers/clk/sprd/div.c
-@@ -9,23 +9,13 @@
- 
- #include "div.h"
- 
--long sprd_div_helper_round_rate(struct sprd_clk_common *common,
--				const struct sprd_div_internal *div,
--				unsigned long rate,
--				unsigned long *parent_rate)
--{
--	return divider_round_rate(&common->hw, rate, parent_rate,
--				  NULL, div->width, 0);
--}
--EXPORT_SYMBOL_GPL(sprd_div_helper_round_rate);
--
- static long sprd_div_round_rate(struct clk_hw *hw, unsigned long rate,
- 				unsigned long *parent_rate)
- {
- 	struct sprd_div *cd = hw_to_sprd_div(hw);
- 
--	return sprd_div_helper_round_rate(&cd->common, &cd->div,
--					  rate, parent_rate);
-+	return divider_round_rate(&cd->common.hw, rate, parent_rate, NULL,
-+				  cd->div.width, 0);
- }
- 
- unsigned long sprd_div_helper_recalc_rate(struct sprd_clk_common *common,
-diff --git a/drivers/clk/sprd/div.h b/drivers/clk/sprd/div.h
-index 6acfe6b179fc..f5d614b3dcf1 100644
---- a/drivers/clk/sprd/div.h
-+++ b/drivers/clk/sprd/div.h
-@@ -64,11 +64,6 @@ static inline struct sprd_div *hw_to_sprd_div(const struct clk_hw *hw)
- 	return container_of(common, struct sprd_div, common);
- }
- 
--long sprd_div_helper_round_rate(struct sprd_clk_common *common,
--				const struct sprd_div_internal *div,
--				unsigned long rate,
--				unsigned long *parent_rate);
--
- unsigned long sprd_div_helper_recalc_rate(struct sprd_clk_common *common,
- 					  const struct sprd_div_internal *div,
- 					  unsigned long parent_rate);
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
-
+Guenter
