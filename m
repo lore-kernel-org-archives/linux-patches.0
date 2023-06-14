@@ -1,117 +1,87 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD88A7F
-	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 08:20:54 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 394F032007CF;
-	Wed, 14 Jun 2023 04:20:53 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Wed, 14 Jun 2023 04:20:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm2; t=1686730852; x=1686817252; bh=1y
-	EMxu0G9MwUKPOyf/FJb7HTbU6HblEER4OOakIzOqY=; b=fAX5C12HUFFcTTPMdF
-	Ir2pCY81OG0YZpJa3p7vFQwVoSm/uKg9BTuH51Kjvoi1If/QNTgJO4VUdOLW0ChD
-	7VE3a/cy3P6f86cBBL2DUvTJBBPFTLdpDwXiKu5gMrEc6nNYLrRKBAXBqqw2ZQpl
-	w7FZ4AMEZa+0OwtA7IYMoR6EUSu+Ankts6JHthLO8oqTBeavaIe4Y9lWM/zwoQzU
-	2UjtSv/HaEmE49hWrJ2LEDY4TV9/QAALJB+VGeu8a8q68XLpga/6p8Pn6NqPsQ/u
-	SJw2q5sQ4jDsUIRCejMkDf+Fhq0hKQ6FimceoCGurs70apYLi1Ogmzyva5yPrCLB
-	VGAQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1686730852; x=1686817252; bh=1yEMxu0G9MwUK
-	POyf/FJb7HTbU6HblEER4OOakIzOqY=; b=crgIalStnsNyIrYG7VonJagMqQCiL
-	t0a/6b3QL+Zi/5Ww70gohYNMC7dC73r/rdF/ll9rXN5iweF3iXrtz8dqV/wfyc7U
-	nQvD7ogQHkIouU14/Y2pO3SjbuGFjZKjM7nbxMmjsNxaB3taRvEHqmCRkIGz38Q1
-	WkLKrCn+P03cf4g0OuDRk79WwAm+M9o5pb9xWoyFOq01PEP3y2ewFw2zyX945Yqa
-	uOlYp/HwnB7qSaDXjDHkUFZRuiRPfX6X0pJgnACCRAOjVmQU2qMo4qtFmy0Wz4Cg
-	MS21rdCmep7ggsYzW3uvrPvoMMu8qoLgmsPH/10DENQpSFoQclQh172Ig==
-X-ME-Sender: <xms:Y3iJZC5ok3huCmiIRvP33bh5p9w5nOIwU2uQgJ4xVqofo1HHxBT13g>
-    <xme:Y3iJZL7Luvwkv6G8RLGJ2U1nBksGQYt8sdyVknt7JJur7Foy-fyOOOqY0xI5_N_AQ
-    aiyutgGHHUhS3KiyaY>
-X-ME-Received: <xmr:Y3iJZBfMHf1KvQDRgxeMoKrDgzsYScZysRy-8TvIZLKEPLIyBJrAqAkf9840IsBx0QQGHZtOxEjzkExiQdtKUA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedvtddgtdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtsfertddtvdenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpedtgfdukeeigeeuhfelheeftdfhgfegfefgudeuiefhueeuleekveetvdei
-    tddvieenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgrgihimhgvsegtvghrnhhordhtvggt
-    hh
-X-ME-Proxy: <xmx:Y3iJZPL7I-d4inHlPeejZdUqBYTyHvaRikd0WpN2z1pCXmXwtv9KgA>
-    <xmx:Y3iJZGJ2CRqUemyHVmgA7Zgfc77hcwPmdO5dDv97e_gfIFP6yqfjig>
-    <xmx:Y3iJZAwQojU_GpKGQJdx1CdKrmRc0OTLi8I47afI-iOpX-zJnHPDDw>
-    <xmx:ZHiJZLEvkS2ZqezYfUHk6wBrmqe6VcAF7wFLDDN4EzAOyNkpS36_Aw>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Jun 2023 04:20:51 -0400 (EDT)
-Date: Wed, 14 Jun 2023 10:20:49 +0200
-From: Maxime Ripard <maxime@cerno.tech>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH] clk: sprd: composite: Simplify determine_rate
- implementation
-Message-ID: <tfk6kycpvlwh7sy4cbm7pip2i5qlro4tiuh7xnzkg5zrntq3aq@iswzxdlkfbkc>
-References: <20230613195443.1555132-1-sboyd@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A43B7FC
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 08:56:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A89C433C0;
+	Wed, 14 Jun 2023 08:56:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1686733017;
+	bh=Xnri1Toeh7APRF4Cq3k1ATqh5aTwOIcCK3Gpu59jp8I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QCa+2vsyOlulHkmwNYQ2orw0C8pCceDfFf8TG853d9X7Sevpd0Qft8I2CBvkYW/84
+	 s8Mhc//2mqSoY6tfN8zv/lAKO86qDPt/7FZd4lX8NgFUWput6xB9xpJz6atJmtUbuD
+	 vo1cGS8PxyjgRLK5SAMxk10LdCGSaNbb+14cl8wM=
+Date: Wed, 14 Jun 2023 10:56:55 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Ben Hutchings <ben@decadent.org.uk>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 4.19 02/23] i40e: fix build warnings in i40e_alloc.h
+Message-ID: <2023061459-scribe-doozy-40b9@gregkh>
+References: <20230612101651.138592130@linuxfoundation.org>
+ <20230612101651.237619015@linuxfoundation.org>
+ <b0662a1562dca6aa2059f908cf18e7be1bf26707.camel@decadent.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mxw7iuexgh4mfzjs"
-Content-Disposition: inline
-In-Reply-To: <20230613195443.1555132-1-sboyd@kernel.org>
-
-
---mxw7iuexgh4mfzjs
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <b0662a1562dca6aa2059f908cf18e7be1bf26707.camel@decadent.org.uk>
 
-On Tue, Jun 13, 2023 at 12:54:42PM -0700, Stephen Boyd wrote:
-> The sprd_div_helper_round_rate() function calls divider_round_rate()
-> which calls divider_round_rate_parent() which calls
-> divider_determine_rate(). This call chain converts back and forth from
-> the rate request structure to make a determine_rate clk_op fit with a
-> round_rate clk_op. Simplify the code here by directly calling
-> divider_determine_rate() instead.
->=20
-> This fixes a smatch warning where an unsigned long is compared to less
-> than zero, which is impossible. This makes sprd_div_helper_round_rate()
-> unnecessary as well so simply remove it and fold it into the only caller
-> left.
->=20
-> Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-> Closes: https://lore.kernel.org/r/45fdc54e-7ab6-edd6-d55a-473485608473@or=
-acle.com
-> Cc: Maxime Ripard <maxime@cerno.tech>
-> Fixes: 302d2f836d78 ("clk: sprd: composite: Switch to determine_rate")
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+On Wed, Jun 14, 2023 at 04:05:08AM +0200, Ben Hutchings wrote:
+> On Mon, 2023-06-12 at 12:26 +0200, Greg Kroah-Hartman wrote:
+> > Not upstream as it was fixed in a much larger api change in newer
+> > kernels.
+> > 
+> > gcc-13 rightfully complains that enum is not the same as an int, so fix
+> > up the function prototypes in i40e_alloc.h to be correct, solving a
+> > bunch of build warnings.
+> > 
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > ---
+> >  drivers/net/ethernet/intel/i40e/i40e_alloc.h |   17 ++++++-----------
+> >  1 file changed, 6 insertions(+), 11 deletions(-)
+> > 
+> > --- a/drivers/net/ethernet/intel/i40e/i40e_alloc.h
+> > +++ b/drivers/net/ethernet/intel/i40e/i40e_alloc.h
+> > @@ -20,16 +20,11 @@ enum i40e_memory_type {
+> >  };
+> >  
+> >  /* prototype for functions used for dynamic memory allocation */
+> > -i40e_status i40e_allocate_dma_mem(struct i40e_hw *hw,
+> > -					    struct i40e_dma_mem *mem,
+> > -					    enum i40e_memory_type type,
+> > -					    u64 size, u32 alignment);
+> > -i40e_status i40e_free_dma_mem(struct i40e_hw *hw,
+> > -					struct i40e_dma_mem *mem);
+> > -i40e_status i40e_allocate_virt_mem(struct i40e_hw *hw,
+> > -					     struct i40e_virt_mem *mem,
+> > -					     u32 size);
+> > -i40e_status i40e_free_virt_mem(struct i40e_hw *hw,
+> > -					 struct i40e_virt_mem *mem);
+> > +int i40e_allocate_dma_mem(struct i40e_hw *hw, struct i40e_dma_mem *mem,
+> > +			  enum i40e_memory_type type, u64 size, u32 alignment);
+> > +int i40e_free_dma_mem(struct i40e_hw *hw, struct i40e_dma_mem *mem);
+> > +int i40e_allocate_virt_mem(struct i40e_hw *hw, struct i40e_virt_mem *mem,
+> > +			   u32 size);
+> > +int i40e_free_virt_mem(struct i40e_hw *hw, struct i40e_virt_mem *mem);
+> 
+> All these function names are actually macro names, which seems a very
+> strange way to declare functions.
+> 
+> Shouldn't the declarations use the actual function names, which have
+> "_d" suffixes?
 
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Probably, yes, I was just trying to do the least-ammount-of-work-needed
+to fix up a bunch of obvious errors that were causing build warnings on
+newer versions of gcc :)
 
-Thanks!
-Maxime
+All of this is fixed differently in Linus's tree, but those changes were
+way too messy to backport.
 
---mxw7iuexgh4mfzjs
-Content-Type: application/pgp-signature; name="signature.asc"
+thanks,
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZIl4YQAKCRDj7w1vZxhR
-xb+pAP93GGWbEXfcYr7b2IfwCcZ8pQzdNfiq+YAVx8HSZ907mwD/WkB8eWJwE4Fs
-94TtOnmikPhnfB1hcx7EidWX+4mU3QM=
-=lYcZ
------END PGP SIGNATURE-----
-
---mxw7iuexgh4mfzjs--
+greg k-h
