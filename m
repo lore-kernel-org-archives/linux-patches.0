@@ -1,116 +1,91 @@
-Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B86C137
-	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 14:28:09 +0000 (UTC)
-Date: Wed, 14 Jun 2023 14:27:39 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1686752881; x=1687012081;
-	bh=TaKHoWoduEdf1ULAdjEPdONgcWDvL8WQUMVGK+EvA5E=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=dNFrt+3gbyPbkBUmkd/PWupNZXiTiwc8CpC/mJxXuxtsM5Q49KRif7rmIGlcwbcB3
-	 0U2ua19QVjj1yxzMPXN+LqqjbHN/0c89FdHjyp1Jvdl7sxw7Y+SbGQ1lk6bvn7PwlN
-	 cISM1qgJIJUgPaEGIru1Bazz+keA6jbgkpK+PZYREelA15aNRu2iRuXZWja+m+sWHU
-	 G6hiPXz1csLlW4AUPJVxTqGFxs1Z1KpftAdsXHn+CcCzl2Q5nYN0nGIZUb1NUyfJVS
-	 SWTVn5E89b5eYGVF49+OwV6QcFqJbvorAErbeGGW4hgHPS4eS7j+9T14GYSSWB053d
-	 A+C0DhIgAU7mg==
-To: Alice Ryhl <aliceryhl@google.com>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: make `UnsafeCell` the outer type in `Opaque`
-Message-ID: <zirWeKUZRqFhiN23v0pXHMmvuceI7EZyVvNUiREGf-UNbIbXLrHjbC8diUNg9v802jbX1978ezQLDCl--1M5S6K8l7CVWs8JGB-znEEMRNE=@proton.me>
-In-Reply-To: <20230614115328.2825961-1-aliceryhl@google.com>
-References: <20230614115328.2825961-1-aliceryhl@google.com>
-Feedback-ID: 71780778:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772D07F
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 14:37:01 +0000 (UTC)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 51C635C010A;
+	Wed, 14 Jun 2023 10:37:00 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Wed, 14 Jun 2023 10:37:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
+	1686753420; x=1686839820; bh=jc9ujq43JBUFnTtaQ2eqgsCeobbT+I566SB
+	q26GvICE=; b=QzVkbKjILQuShB1JLrgex/3GM/yDLdIh98NXn4pSo+gmoz10912
+	igAKEkhRS442Xe3m4BFCKq6KXD5BtD1qcTTnkZrdAM++2/yu0org6DO6SLpXsfDm
+	l8Dcy1ASkv0gXpYtLhM4dFrEEYKU+/hOrNQjyCQwJ9kutO+eFPmL53kCB5nnoAS7
+	3NSwU05VEcs/wObXN/0sRaZ9SLpMlArGT0YqNuIhY4mvle9eKPUmwImsydQ4j8sO
+	rvsp+FD2hitG+rGtYAAmD4XHJUtHQEw1md4f10oM2MikBeV/6aeL1VjTghoLZQkR
+	as9k8Xj4TXSotiGEM0cafPEmaTr8zwHcjLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1686753420; x=1686839820; bh=jc9ujq43JBUFnTtaQ2eqgsCeobbT+I566SB
+	q26GvICE=; b=qFOXJYQ0s/rWnRv08KppoLGlIiFqYXgRZAYDg+KGuvUxylX02oP
+	A7pr6kyHuG0OozAmQyre3IetLhkQh5iaFF2t0Z8JFTxV8Rqceyb0yF3ebzLeh4S6
+	GmRtAsCb42UY4F3+JTVon8a1YJ4H1qxuLQVB4/S63igz72ZgruI2tFAW6I2m0Kzc
+	Ob17ce5rkVGiC4DTmIvPAC6jwSWnWI0xmSy/7kFBVPrc4BvH+lG91tvbhKGTpUa1
+	iS0WsT4QE8lEcw+wz+QXJkCo2bXEP1vc8eNLCL3K3KyfS6WVQ2NzqkkPzOfSgxQV
+	xKC9mIlNLBMg39GpcpVq0KJR79fVWmm/htg==
+X-ME-Sender: <xms:jNCJZDnYOPCjnqjl8qTdnSITXgDmUnsb7W6ClqB9bNcuQQiplxcYOw>
+    <xme:jNCJZG1i-WSBuQ3Fpw0SDvli_TagKhg9drg0txPzka4ul-bxoZMm0NKs0lGNU6yye
+    vw2cxvVpEdunI33vg>
+X-ME-Received: <xmr:jNCJZJoueUZf9IBcxPAI-KM7kIo3K1G7SFNsg3bqxeDj-Vl5ndmHgjACfjQpsGtH4s7Li88CYIo0nX6E1okpabR7pNJRZBTB0LC7zFXHpaPm>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedvtddgjeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtfeejnecuhfhrohhmpeetlhhi
+    tggvucfthihhlhcuoegrlhhitggvsehrhihhlhdrihhoqeenucggtffrrghtthgvrhhnpe
+    ehudduvdetkedvkedtudeludfgfffhudegjeeguedvvedtteevjeehheeiffefgeenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrlhhitggvse
+    hrhihhlhdrihho
+X-ME-Proxy: <xmx:jNCJZLmfUqh503BTJoVj1qAxksyYiXC_Ve5VzlmSuFrq1SZpYZj3-A>
+    <xmx:jNCJZB38fc8TP-ueT-S6fCqUeFm4ON7166_H6m1o9qWfB30JOGE3uA>
+    <xmx:jNCJZKsCyZqWmwhQ4nBg2yv2d6gQ-a9OUSWv-5DlRxKvxfZnmm2ZpA>
+    <xmx:jNCJZKLxmOwRp0qwsql8eh26RJwiHxav6aEl1FhvSQX9yIIu9C1QXQ>
+Feedback-ID: i56684263:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 Jun 2023 10:36:58 -0400 (EDT)
+Message-ID: <77089cc6-233c-9329-a994-95ae6d3d07e3@ryhl.io>
+Date: Wed, 14 Jun 2023 16:37:42 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] rust: make `UnsafeCell` the outer type in `Opaque`
+Content-Language: en-US
+To: Benno Lossin <benno.lossin@proton.me>
+Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20230614115328.2825961-1-aliceryhl@google.com>
+ <zirWeKUZRqFhiN23v0pXHMmvuceI7EZyVvNUiREGf-UNbIbXLrHjbC8diUNg9v802jbX1978ezQLDCl--1M5S6K8l7CVWs8JGB-znEEMRNE=@proton.me>
+From: Alice Ryhl <alice@ryhl.io>
+In-Reply-To: <zirWeKUZRqFhiN23v0pXHMmvuceI7EZyVvNUiREGf-UNbIbXLrHjbC8diUNg9v802jbX1978ezQLDCl--1M5S6K8l7CVWs8JGB-znEEMRNE=@proton.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 14.06.23 13:53, Alice Ryhl wrote:
-> When combining `UnsafeCell` with `MaybeUninit`, it is idiomatic to use
-> `UnsafeCell` as the outer type. Intuitively, this is because a
-> `MaybeUninit<T>` might not contain a `T`, but we always want the effect
-> of the `UnsafeCell`, even if the inner value is uninitialized.
->=20
-> Now, strictly speaking, this doesn't really make a difference. The
-> compiler will always apply the `UnsafeCell` effect even if the inner
-> value is uninitialized. But I think we should follow the convention
-> here.
->=20
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+On 6/14/23 16:27, Benno Lossin wrote:>> @@ -258,7 +258,7 @@ pub fn 
+ffi_init(init_func: impl FnOnce(*mut T)) -> impl PinInit<Self> {
+>>
+>>        /// Returns a raw pointer to the opaque data.
+>>        pub fn get(&self) -> *mut T {
+>> -        UnsafeCell::raw_get(self.0.as_ptr())
+>> +        UnsafeCell::get(&self.0).cast::<T>()
+> 
+> Is there a reason you don't do `self.0.get().cast::<T>()`?
+> 
 
-Small comment below, but I think it is fine the way it is.
-
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-
-> ---
->   rust/kernel/types.rs | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
->=20
-> diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-> index 1e5380b16ed5..fb41635f1e1f 100644
-> --- a/rust/kernel/types.rs
-> +++ b/rust/kernel/types.rs
-> @@ -224,17 +224,17 @@ fn drop(&mut self) {
->   ///
->   /// This is meant to be used with FFI objects that are never interprete=
-d by Rust code.
->   #[repr(transparent)]
-> -pub struct Opaque<T>(MaybeUninit<UnsafeCell<T>>);
-> +pub struct Opaque<T>(UnsafeCell<MaybeUninit<T>>);
->=20
->   impl<T> Opaque<T> {
->       /// Creates a new opaque value.
->       pub const fn new(value: T) -> Self {
-> -        Self(MaybeUninit::new(UnsafeCell::new(value)))
-> +        Self(UnsafeCell::new(MaybeUninit::new(value)))
->       }
->=20
->       /// Creates an uninitialised value.
->       pub const fn uninit() -> Self {
-> -        Self(MaybeUninit::uninit())
-> +        Self(UnsafeCell::new(MaybeUninit::uninit()))
->       }
->=20
->       /// Creates a pin-initializer from the given initializer closure.
-> @@ -258,7 +258,7 @@ pub fn ffi_init(init_func: impl FnOnce(*mut T)) -> im=
-pl PinInit<Self> {
->=20
->       /// Returns a raw pointer to the opaque data.
->       pub fn get(&self) -> *mut T {
-> -        UnsafeCell::raw_get(self.0.as_ptr())
-> +        UnsafeCell::get(&self.0).cast::<T>()
-
-Is there a reason you don't do `self.0.get().cast::<T>()`?
-
---=20
-Cheers,
-Benno
-
->       }
->=20
->       /// Gets the value behind `this`.
-> @@ -266,7 +266,7 @@ pub fn get(&self) -> *mut T {
->       /// This function is useful to get access to the value without crea=
-ting intermediate
->       /// references.
->       pub const fn raw_get(this: *const Self) -> *mut T {
-> -        UnsafeCell::raw_get(this.cast::<UnsafeCell<T>>())
-> +        UnsafeCell::raw_get(this.cast::<UnsafeCell<MaybeUninit<T>>>()).c=
-ast::<T>()
->       }
->   }
->=20
->=20
-> base-commit: d2e3115d717197cb2bc020dd1f06b06538474ac3
-> --
-> 2.41.0.162.gfafddb0af9-goog
->=20
-
+Not really. I just modified what was already there.
