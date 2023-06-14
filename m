@@ -1,81 +1,94 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2482C9C
-	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 15:30:34 +0000 (UTC)
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6b2b7ca1c5eso4921803a34.0
-        for <patches@lists.linux.dev>; Wed, 14 Jun 2023 08:30:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686756633; x=1689348633;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AOA7Y2/g359kO/OUlQWs/60uYSwoJsQ+eNPsqyoLC6A=;
-        b=IHExyYknCYaNR++NT7KWQAcnorzZ/DTyWryslqKrhqzx45SLH+A8LegSKtd3EzgkVb
-         tW3J8S7+d3/pvpRchov+vmYHgtbiMVHn29z/umpYT47vj7CK/HzYW/cFAoxbL2vU3LRP
-         ZeiwVtBi6+gu8+kamPFjkjMdrHQcpnpHI5O9YBAzV6oEpwFi8a1XCtPhjzuxplxJjrNn
-         7eo7tVEd3ulkPJiC8e1ezn95zAaPHQvzylrdLKXTdcZa953ykg14xRkJihxaHXKtD2LH
-         LSu/K2jGI5Lq8rbUCyKaWSNQ/emRuguhY6Ix9f7rYeZhxp18xsZVh7d09gQYar+nt+1F
-         fOTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686756633; x=1689348633;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AOA7Y2/g359kO/OUlQWs/60uYSwoJsQ+eNPsqyoLC6A=;
-        b=HSXxHsjOdmWFUTL7pa+ipiTS7TOpQH7gvFRbBUpTVkA/nvBtrhHuEvLtMPCLBvnYae
-         VZ1K7YvzncUAI4K8iWhTksOmemeV7hj6y4gGCEVmQp7i/1NjC1rqzY/q4lEkMq2GlBPM
-         zLsSdCf4rp5oOo9vrGMQ/ZTDkHy1nheZCJs/7pWMd/3V867OXl39HSHz7bfNxXF9F09t
-         QFV/UOIbgKXHqQP9rbInzAa6NcsZHi3J30mxwDbjUlx/7kNZSCie0F4aqVmsGfaRdJRB
-         DM0pSsc7qvRV59DB/mjkbm6GkzDxopESnwendC87rOPb62Ga4yvwKOP3MGS9iz+Apqy5
-         M9jA==
-X-Gm-Message-State: AC+VfDy7qqLEC35t7wcnAkGfllTMCzz2yqBuV6hyk0NIEbWTq0Vss2la
-	59DhHQZOtwpDjPIQRXWUJRI=
-X-Google-Smtp-Source: ACHHUZ6FakHIDN4yFpz0tDtI2ydPYV4hLaDjD7mRfadlZqUYSUOmebPcmNnoYLOzD1Zw1HQ8GyAjDA==
-X-Received: by 2002:a9d:754c:0:b0:6b1:c635:b0fd with SMTP id b12-20020a9d754c000000b006b1c635b0fdmr12677424otl.32.1686756633095;
-        Wed, 14 Jun 2023 08:30:33 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id y2-20020a056830108200b006b168e0a41fsm4739886oto.11.2023.06.14.08.30.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 08:30:32 -0700 (PDT)
-Message-ID: <7283dd30-79ac-b21b-3e99-2b8b0950879d@gmail.com>
-Date: Wed, 14 Jun 2023 12:30:28 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDED7F
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 18:09:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA94C433C0;
+	Wed, 14 Jun 2023 18:09:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1686766161;
+	bh=fXHMpfERvexjC1cBZRBzlkhrqEdvS6t8XukfGExQ9rE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=T0w5Clw6D4NpCHTogWpArssUXW2986IdhYro40TmZhV+LtKFz6dSaRaikAvt5XheN
+	 gns0l1bPss9Nt4D/PIWJTOti/EYwrF5vvVwflkW8e5n1OccZ39RQNJ9l4K29zn/qQ0
+	 Yhc31ewVSDSm5RRWPdKyHSSFaFETQYbBMr2xeZh+9eYsg5ov906SSTX52WUs38mQtF
+	 AAaZlNB2T49Ix361pzTvDWu0aqP/ZDnjPAlSTdJzy3QgCUYIZaua0jK/tzd4TuS17p
+	 0DRXPAM1lXrOe1bf0wqzLqcfJXNaIrXp85SBe8sLyJIgec60v35blJICTjgZAAh/Wq
+	 veL2T6ul3pjPw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: David Gow <davidgow@google.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <nmi@metaspace.dk>,
+	Philip Li <philip.li@intel.com>,
+	kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 0/6] KUnit integration for Rust doctests
+Date: Wed, 14 Jun 2023 20:08:24 +0200
+Message-ID: <20230614180837.630180-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] rust: make `UnsafeCell` the outer type in `Opaque`
-To: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
- <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>,
- Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20230614115328.2825961-1-aliceryhl@google.com>
-Content-Language: en-US
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230614115328.2825961-1-aliceryhl@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 6/14/23 08:53, Alice Ryhl wrote:
-> When combining `UnsafeCell` with `MaybeUninit`, it is idiomatic to use
-> `UnsafeCell` as the outer type. Intuitively, this is because a
-> `MaybeUninit<T>` might not contain a `T`, but we always want the effect
-> of the `UnsafeCell`, even if the inner value is uninitialized.
-> 
-> Now, strictly speaking, this doesn't really make a difference. The
-> compiler will always apply the `UnsafeCell` effect even if the inner
-> value is uninitialized. But I think we should follow the convention
-> here.
-> 
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> ---
-> [...]
+This is the initial KUnit integration for running Rust documentation
+tests within the kernel.
 
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+Thank you to the KUnit team for all the input and feedback on this
+over the months, as well as the Intel LKP 0-Day team!
+
+This may be merged through either the KUnit or the Rust trees. If
+the KUnit team wants to merge it, then that would be great.
+
+Please see the message in the main commit for the details.
+
+
+Miguel Ojeda (6):
+  rust: init: make doctests compilable/testable
+  rust: str: make doctests compilable/testable
+  rust: sync: make doctests compilable/testable
+  rust: types: make doctests compilable/testable
+  rust: support running Rust documentation tests as KUnit ones
+  MAINTAINERS: add Rust KUnit files to the KUnit entry
+
+ MAINTAINERS                       |   2 +
+ lib/Kconfig.debug                 |  13 +++
+ rust/.gitignore                   |   2 +
+ rust/Makefile                     |  29 ++++++
+ rust/bindings/bindings_helper.h   |   1 +
+ rust/helpers.c                    |   7 ++
+ rust/kernel/init.rs               |  25 +++--
+ rust/kernel/kunit.rs              | 156 ++++++++++++++++++++++++++++
+ rust/kernel/lib.rs                |   2 +
+ rust/kernel/str.rs                |   4 +-
+ rust/kernel/sync/arc.rs           |   9 +-
+ rust/kernel/sync/lock/mutex.rs    |   1 +
+ rust/kernel/sync/lock/spinlock.rs |   1 +
+ rust/kernel/types.rs              |   6 +-
+ scripts/.gitignore                |   2 +
+ scripts/Makefile                  |   4 +
+ scripts/rustdoc_test_builder.rs   |  73 ++++++++++++++
+ scripts/rustdoc_test_gen.rs       | 162 ++++++++++++++++++++++++++++++
+ 18 files changed, 484 insertions(+), 15 deletions(-)
+ create mode 100644 rust/kernel/kunit.rs
+ create mode 100644 scripts/rustdoc_test_builder.rs
+ create mode 100644 scripts/rustdoc_test_gen.rs
+
+
+base-commit: d2e3115d717197cb2bc020dd1f06b06538474ac3
+-- 
+2.41.0
+
