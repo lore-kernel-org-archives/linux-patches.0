@@ -1,51 +1,51 @@
 Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713DB6D3F
-	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 20:32:20 +0000 (UTC)
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-bb0cb2e67c5so1263531276.0
-        for <patches@lists.linux.dev>; Wed, 14 Jun 2023 13:32:20 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB04C137
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 20:32:22 +0000 (UTC)
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-bb2202e0108so1156608276.1
+        for <patches@lists.linux.dev>; Wed, 14 Jun 2023 13:32:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686774739; x=1689366739;
+        d=google.com; s=20221208; t=1686774742; x=1689366742;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
         bh=czEjt+NjAyuH0cAt6yqFee89woVRFsyvQrYC+0eGV9Y=;
-        b=7qQ2pRRFtJkkGsek6sI8eGIYh2kDVCgIhOHYHltdTmoejySFVhUOI2O+RzdgHUO8St
-         DXjUfgph8ErCl0t8k2ZLDkvsaImXoSGboFkpiSNGgCRT6iPw62D0vVVVniU5U9wAzR9H
-         zyOpluP2dekBZc94GvHRFyYnDGrmFyTP7mG300SoiX/TsgiH0M59+v3YCw5Na20/LrGs
-         YB+9OWXe++0WDbleOpm82V21RhXRmbZYBapRl/mBeNCnlLmEuLlgtZXMp1LVw4jVcVUU
-         TqjluAZsA6qWCAlDlayrX3ufyhk1147CBOckGTXvLTg2DrpKExSDZAoeK2t/uOufYl42
-         gxQg==
+        b=G7nM3HJOnTFO/r9nAs3VZ8ncUNpyRX/dBLh4cUcJcmbenazk6RT3d0BY4kl05VgC7M
+         hNG3l1eFIHZy0gEKps3DT5vySPcxIostlF906zTm9a6QCda+Q5I9tcCdRY8YWvhUYCUW
+         lsOxSdJQJNcHDnkCz4F10A5UyoXfstoJTMP4CDGufudVQ0bYtp3EOIDQWs1ea1W8e2lO
+         QIxDHcHSEKPBkMjJd96eewXi0JWcq53nWPUQ5+57RZZSBUkQyIVjvR1yEgLxFtsud9z1
+         bS9oAGiiTJRrGkQXaK5TaTs/QZsSEcsG9PMfGSVuk52YwGs5GnAvb4usttTNRyYt2s4Y
+         0hdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686774739; x=1689366739;
+        d=1e100.net; s=20221208; t=1686774742; x=1689366742;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=czEjt+NjAyuH0cAt6yqFee89woVRFsyvQrYC+0eGV9Y=;
-        b=N8LER5OQpFqScjHhK9MtDpV/BDU9rGcDUA1XH3Q/W6w27VFsL0Xj8brR1N3+0xuc+W
-         940qtb6r2n5Uz3EGld9vfSyiaFYahiRGW2BdByIVTeUMQXd/xU76DFzSeMx7fIf6QzBF
-         g1GUtHlYkM/M9b2Z85YLZFm+k+26sh9F5En9vloN1Lsm4XDRHtcywyBJHssvOMjips3E
-         l8fk5cxg9Db1ubP8UeANOt72CyUYsyzCBeJ5saXcFXWL6HriTDOGDsaEtZZsXMLIpSqD
-         W2El6rWBuCW3nedsoItAWgA5XtcDT4ZzYoNqtSbK06QXhCCvfdJQLey9Rp/9/WSWHfXX
-         9KFA==
-X-Gm-Message-State: AC+VfDzHdj0QQlCsR8BucEopjbxwFApTxZVZwvQ0HUWaNXIbkcOf2PVA
-	z+mRJVDSRVOLg4kRsCVH+iyJa4jThtwWRzw=
-X-Google-Smtp-Source: ACHHUZ7N8NjzbORsY8P9yrlGMhvoX5EEo5wu8Kwz9gBGRafQS4YZfEO18H1Pw0V9rig7JIuYUAUF5fTWR+r6qYs=
+        b=NS80HiF95D3oP7wmLUSBPJijn6YZ1ApGXDVXsYEi3RR1ZlMaz5P5GsCOEmLyZKsixU
+         6HxTtzHP/F9Yjb5yfyH8mNsZgADedNj+ZuYnv8FjvPR22LTTNbK0PXPYexKbLEe2CSmX
+         JXg/Ou8tIGyMvfb1WhdKOBz30JhcJRLmul/h57HJaHhN87qRngmsxBV36bFYSbEd6DLQ
+         lI0XwqAUuTXzROEx6c8gVn0eNnKnYpWxF5FLJZ80PfEplWq3TsnPjiIwkh/OzInQM47V
+         A+bzwaNDfkpcjQcaTEyaw8JITjdr1lqu/aq+PM5hHEQh6o1xlNvx1cL2JdWXSed792Ul
+         kooA==
+X-Gm-Message-State: AC+VfDyFEC1SgFT9Qn5WmdRjsG3c8VXqu2/ZnDGdBqO7gpdFsZv6KGEU
+	A4yaCxGgIVKX0kpP+e+bDRspQN/Fcvj/+q4=
+X-Google-Smtp-Source: ACHHUZ7nhMzTUUAXeFrCWZk+JOE1hhfH3uptvV1wMpqo0Q8CgtIthBnY4QgsVNVwEM46C0usmP5m88ATIWqIRW0=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a25:d54:0:b0:ba8:2e79:c193 with SMTP id
- 81-20020a250d54000000b00ba82e79c193mr472122ybn.12.1686774739295; Wed, 14 Jun
- 2023 13:32:19 -0700 (PDT)
-Date: Wed, 14 Jun 2023 20:32:16 +0000
-In-Reply-To: <20230614180837.630180-2-ojeda@kernel.org>
+ (user=aliceryhl job=sendgmr) by 2002:a5b:d42:0:b0:ba1:d0:7f7c with SMTP id
+ f2-20020a5b0d42000000b00ba100d07f7cmr460247ybr.2.1686774741924; Wed, 14 Jun
+ 2023 13:32:21 -0700 (PDT)
+Date: Wed, 14 Jun 2023 20:32:19 +0000
+In-Reply-To: <20230614180837.630180-3-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20230614180837.630180-2-ojeda@kernel.org>
+References: <20230614180837.630180-3-ojeda@kernel.org>
 X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
-Message-ID: <20230614203216.2908753-1-aliceryhl@google.com>
-Subject: Re: [PATCH 1/6] rust: init: make doctests compilable/testable
+Message-ID: <20230614203219.2909087-1-aliceryhl@google.com>
+Subject: Re: [PATCH 2/6] rust: str: make doctests compilable/testable
 From: Alice Ryhl <aliceryhl@google.com>
 To: ojeda@kernel.org
 Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
