@@ -1,105 +1,133 @@
-Received: from qproxy2-pub.mail.unifiedlayer.com (qproxy2-pub.mail.unifiedlayer.com [69.89.16.161])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [95.217.213.242])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59151361
-	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 00:01:23 +0000 (UTC)
-Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
-	by qproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id EFD1D802BCA0
-	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 23:41:00 +0000 (UTC)
-Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
-	by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id 433BC1004E002
-	for <patches@lists.linux.dev>; Tue, 13 Jun 2023 23:40:21 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id 9Dcbqoj64NX2a9DcbqJtDI; Tue, 13 Jun 2023 23:40:21 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=NMAQR22g c=1 sm=1 tr=0 ts=6488fe65
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=of4jigFt-DYA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=N3MUNNXChn8k7+AFXsLdmq9FiSC3C1h1+174pIuzHoU=; b=oEix5b8woWg52zwzU1cLkg16hq
-	ExdMUGs0k9MFxXCBeRUHavmC3A/dd3oS0nyKPvRgwsGe538WZoK8KFN2hOGzftpNyGJa5G83/OT7J
-	v1niwiodytz72niw4LZwGaMhyg0pjDlm63bukeMneFcAknIVZzRbUAvlIUTAic/DVZschSLnUM2yB
-	tRUqhMSHFadJHh3jqBxmZHFTShkeolg/+akVxGGZTlYk30b8c0jiVRpqMc3MlpZICEF40ullh3R8H
-	VX3l73X+N+h89iz9KWzuty1KbBwSAHPtcksKPlMagB0T6NxTPzbZd11dVCl/4OoPlPk2Pf44p84pO
-	yg1+vMVg==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:43816 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1q9DcZ-0007ph-Bf;
-	Tue, 13 Jun 2023 17:40:19 -0600
-Subject: Re: [PATCH 6.1 000/132] 6.1.34-rc1 review
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA63117E
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 02:44:19 +0000 (UTC)
+Received: from [213.219.167.32] (helo=deadeye)
+	by maynard with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1q9GUX-00062j-Vc; Wed, 14 Jun 2023 04:44:13 +0200
+Received: from ben by deadeye with local (Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1q9GUX-000YiS-1J;
+	Wed, 14 Jun 2023 04:44:13 +0200
+Message-ID: <56e71e80cf4f20bb6d0a1be088210e2582c162f6.camel@decadent.org.uk>
+Subject: Re: [PATCH 4.19 21/23] btrfs: check return value of
+ btrfs_commit_transaction in relocation
+From: Ben Hutchings <ben@decadent.org.uk>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230612101710.279705932@linuxfoundation.org>
-In-Reply-To: <20230612101710.279705932@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <7f362af6-e310-7b44-1e6f-47356ed72b69@w6rz.net>
-Date: Tue, 13 Jun 2023 16:40:16 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+Cc: patches@lists.linux.dev, Qu Wenruo <wqu@suse.com>, Josef Bacik
+	 <josef@toxicpanda.com>, David Sterba <dsterba@suse.com>, Stefan Ghinea
+	 <stefan.ghinea@windriver.com>
+Date: Wed, 14 Jun 2023 04:44:08 +0200
+In-Reply-To: <20230612101651.846259280@linuxfoundation.org>
+References: <20230612101651.138592130@linuxfoundation.org>
+	 <20230612101651.846259280@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-HlSuPSMAaRdFA2k5XPnM"
+User-Agent: Evolution 3.48.2-1 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1q9DcZ-0007ph-Bf
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:43816
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+X-SA-Exim-Connect-IP: 213.219.167.32
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
-On 6/12/23 3:25 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.34 release.
-> There are 132 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 14 Jun 2023 10:16:41 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.34-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+--=-HlSuPSMAaRdFA2k5XPnM
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Ron Economos <re@w6rz.net>
+On Mon, 2023-06-12 at 12:26 +0200, Greg Kroah-Hartman wrote:
+> From: Josef Bacik <josef@toxicpanda.com>
+>=20
+> commit fb686c6824dd6294ca772b92424b8fba666e7d00 upstream.
+>=20
+> There are a few places where we don't check the return value of
+> btrfs_commit_transaction in relocation.c.  Thankfully all these places
+> have straightforward error handling, so simply change all of the sites
+> at once.
 
+I have no objection to this, but in case anyone wants to fix this issue
+completely there are a few other unchecked btrfs_commit_transaction()
+calls in other source files in 4.19-stable.
+
+Ben.
+
+> Reviewed-by: Qu Wenruo <wqu@suse.com>
+> Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+> Reviewed-by: David Sterba <dsterba@suse.com>
+> Signed-off-by: David Sterba <dsterba@suse.com>
+> Signed-off-by: Stefan Ghinea <stefan.ghinea@windriver.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  fs/btrfs/relocation.c |    9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+>=20
+> --- a/fs/btrfs/relocation.c
+> +++ b/fs/btrfs/relocation.c
+> @@ -2341,7 +2341,7 @@ again:
+>  	list_splice(&reloc_roots, &rc->reloc_roots);
+> =20
+>  	if (!err)
+> -		btrfs_commit_transaction(trans);
+> +		err =3D btrfs_commit_transaction(trans);
+>  	else
+>  		btrfs_end_transaction(trans);
+>  	return err;
+> @@ -3930,8 +3930,7 @@ int prepare_to_relocate(struct reloc_con
+>  		 */
+>  		return PTR_ERR(trans);
+>  	}
+> -	btrfs_commit_transaction(trans);
+> -	return 0;
+> +	return btrfs_commit_transaction(trans);
+>  }
+> =20
+>  static noinline_for_stack int relocate_block_group(struct reloc_control =
+*rc)
+> @@ -4097,7 +4096,9 @@ restart:
+>  		err =3D PTR_ERR(trans);
+>  		goto out_free;
+>  	}
+> -	btrfs_commit_transaction(trans);
+> +	ret =3D btrfs_commit_transaction(trans);
+> +	if (ret && !err)
+> +		err =3D ret;
+>  out_free:
+>  	btrfs_free_block_rsv(fs_info, rc->block_rsv);
+>  	btrfs_free_path(path);
+>=20
+>=20
+
+--=20
+Ben Hutchings
+It's easier to fight for one's principles than to live up to them.
+
+
+--=-HlSuPSMAaRdFA2k5XPnM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmSJKXgACgkQ57/I7JWG
+EQnGuxAApuCUHILiOD5NVhtuAO/5RSrM6qYkC27a90r3Y07yqZMw1edrGfk64mzd
+eH6q8FRbIr7aR2OqakP8wvp9MRrR0SGM7Nn6dOgZeZXYePZIPPf3kJli7Q7wB6cL
+fW5wNbG7X572kJ7GtMqA0H2p0v3z1Tz7cQHWTgcG2+il6khJIe0g9ryCCZQ+eluf
+0iijpWES+m1VCKyAHGST7bF1GlZmXUnCWAfsEbPipMSKoblED82DZp/feeFRnD8l
+dgn1cMaK9K18fSJkT3ITlY1yhRDZGnRqWxK0U/nPTHUJgRCtWSeNpLME63fz8y1I
+4cPs4wjWPPUYKAMJjQ7H/GpF6yb49JRZSr3W0NJPSFWW0GGZmGFXYAQea7B61dH0
+UI5yTixZ71eh+LiktpoVFFqFq/hQS7aZ5nS31aM/FZNcCu0fTqu0Mo9dyXAZD+98
+G2vUVyGIJENbzRq3DqPpFxbtFojfKW2ZV4nBSBd52115vtB8Ij4A3scRpGB9lPzU
+JAw0zDeu+cC38A2NVSjA5VV6UJnB1MXe6PYwp69gTVMNAGWLKHV1og9Z0Oq/Kzo6
+2CgnZX/qXDu1xNOQLY/hxFRkz+VE97XC7RO6TeGuLNh+pJAMdqmLTyvIkE8qbBr7
+kh9WMrVPlDeDhraUntFjv6aNHBkgKiScL9mJ8RPTYSVSV70kM18=
+=8CR1
+-----END PGP SIGNATURE-----
+
+--=-HlSuPSMAaRdFA2k5XPnM--
