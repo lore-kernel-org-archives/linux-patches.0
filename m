@@ -1,119 +1,105 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [95.217.213.242])
+Received: from qproxy6-pub.mail.unifiedlayer.com (qproxy6-pub.mail.unifiedlayer.com [69.89.23.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EDA17E
-	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 02:47:46 +0000 (UTC)
-Received: from [213.219.167.32] (helo=deadeye)
-	by maynard with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1q9Fso-0005eQ-9S; Wed, 14 Jun 2023 04:05:14 +0200
-Received: from ben by deadeye with local (Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1q9Fsn-000YMM-2O;
-	Wed, 14 Jun 2023 04:05:13 +0200
-Message-ID: <b0662a1562dca6aa2059f908cf18e7be1bf26707.camel@decadent.org.uk>
-Subject: Re: [PATCH 4.19 02/23] i40e: fix build warnings in i40e_alloc.h
-From: Ben Hutchings <ben@decadent.org.uk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CAA642
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 05:24:09 +0000 (UTC)
+Received: from alt-proxy28.mail.unifiedlayer.com (unknown [74.220.216.123])
+	by qproxy6.mail.unifiedlayer.com (Postfix) with ESMTP id 9CBF5802C997
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 05:01:53 +0000 (UTC)
+Received: from cmgw15.mail.unifiedlayer.com (unknown [10.0.90.130])
+	by progateway1.mail.pro1.eigbox.com (Postfix) with ESMTP id 1313F1003B6F5
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 05:01:45 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id 9Idcq03QeKJlb9IdcqgX6h; Wed, 14 Jun 2023 05:01:45 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=Utumi88B c=1 sm=1 tr=0 ts=648949b9
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=of4jigFt-DYA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=adZdi2LXlXHFlZp3fSHvtmu5fJHU7hbgAPOiM/jZGjs=; b=Ey2wv6MbBNtLxVCiEo3Ha1BpvZ
+	QLf5/nctMuFjdmkr9S2nLFAj14hpmDCdH7pGpXfEqKQcpFwhS4PqYpziW2wZmgmNprAxhxQaYR3Lm
+	DoLfBg9m7QYhXVNfnoeh5UIXdnTfQ2o9ZZhYUUqPLOcdOE1/UZvjq4W+wLi/wxM48aUVqlQy8Inog
+	s2psA0qH6ObL/bxUyb/08kjmXxZs9bqy8LLys/39C0thjcF2wY1DFEeImPOZiw9fSod3DUJruqn9u
+	9wiRr22ctnblhhK+eSOgtS1bu72OXQTMU6sWJGk/HOWOvHlNR2f3qQXEimcWig50M8P9D2YPREvPr
+	pfKtWSZA==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:43854 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1q9Idb-0022dG-5W;
+	Tue, 13 Jun 2023 23:01:43 -0600
+Subject: Re: [PATCH 5.15 00/91] 5.15.117-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev
-Date: Wed, 14 Jun 2023 04:05:08 +0200
-In-Reply-To: <20230612101651.237619015@linuxfoundation.org>
-References: <20230612101651.138592130@linuxfoundation.org>
-	 <20230612101651.237619015@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-tc/JFBPGpwqKIoNkC/c9"
-User-Agent: Evolution 3.48.2-1 
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230612101702.085813286@linuxfoundation.org>
+In-Reply-To: <20230612101702.085813286@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <80ae43cb-a056-1bb3-239a-4569b660c7c6@w6rz.net>
+Date: Tue, 13 Jun 2023 22:01:40 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 213.219.167.32
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1q9Idb-0022dG-5W
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:43854
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
+On 6/12/23 3:25 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.117 release.
+> There are 91 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 14 Jun 2023 10:16:41 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.117-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
---=-tc/JFBPGpwqKIoNkC/c9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-On Mon, 2023-06-12 at 12:26 +0200, Greg Kroah-Hartman wrote:
-> Not upstream as it was fixed in a much larger api change in newer
-> kernels.
->=20
-> gcc-13 rightfully complains that enum is not the same as an int, so fix
-> up the function prototypes in i40e_alloc.h to be correct, solving a
-> bunch of build warnings.
->=20
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  drivers/net/ethernet/intel/i40e/i40e_alloc.h |   17 ++++++-----------
->  1 file changed, 6 insertions(+), 11 deletions(-)
->=20
-> --- a/drivers/net/ethernet/intel/i40e/i40e_alloc.h
-> +++ b/drivers/net/ethernet/intel/i40e/i40e_alloc.h
-> @@ -20,16 +20,11 @@ enum i40e_memory_type {
->  };
-> =20
->  /* prototype for functions used for dynamic memory allocation */
-> -i40e_status i40e_allocate_dma_mem(struct i40e_hw *hw,
-> -					    struct i40e_dma_mem *mem,
-> -					    enum i40e_memory_type type,
-> -					    u64 size, u32 alignment);
-> -i40e_status i40e_free_dma_mem(struct i40e_hw *hw,
-> -					struct i40e_dma_mem *mem);
-> -i40e_status i40e_allocate_virt_mem(struct i40e_hw *hw,
-> -					     struct i40e_virt_mem *mem,
-> -					     u32 size);
-> -i40e_status i40e_free_virt_mem(struct i40e_hw *hw,
-> -					 struct i40e_virt_mem *mem);
-> +int i40e_allocate_dma_mem(struct i40e_hw *hw, struct i40e_dma_mem *mem,
-> +			  enum i40e_memory_type type, u64 size, u32 alignment);
-> +int i40e_free_dma_mem(struct i40e_hw *hw, struct i40e_dma_mem *mem);
-> +int i40e_allocate_virt_mem(struct i40e_hw *hw, struct i40e_virt_mem *mem=
-,
-> +			   u32 size);
-> +int i40e_free_virt_mem(struct i40e_hw *hw, struct i40e_virt_mem *mem);
+Tested-by: Ron Economos <re@w6rz.net>
 
-All these function names are actually macro names, which seems a very
-strange way to declare functions.
-
-Shouldn't the declarations use the actual function names, which have
-"_d" suffixes?
-
-Ben.
-
-> =20
->  #endif /* _I40E_ALLOC_H_ */
->=20
->=20
-
---=20
-Ben Hutchings
-It's easier to fight for one's principles than to live up to them.
-
-
---=-tc/JFBPGpwqKIoNkC/c9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmSJIFUACgkQ57/I7JWG
-EQl5Qw//RlkpqD3m6c+Ov129Van3dXOb26D3q/kCkj0jAepFKS6qAlrNsgjvbueI
-p0UCOOlqhSbe8sMDiNsFpNCP4QA0PwuPXyE6f0tiiQGYZffZTf4QiEPxgYQWqFYd
-4MAvknk2BBw5psiWeuhjFQvnAc4ZfnCNBIFaWonfNJW6Ou6Dv6QFzev6QAAcwhRi
-dVtJDJCsCZPq7jicwCEG9yLEYc4gh2tlhO1SNZXlAOs831n3LcWpNyi93CGbofum
-oZbo41hWGw2u6RUiYVXhq9dcEPbzqCjBuKoiVmNJd7JMUWS4EwOdCrLjYBxzICHi
-8acLiUsfoQj6TLB6jqbEBaITLpf3jlUT/1vb0ufS0qAOeDsRkb/jL6x85UHfXaUH
-dq4HI61TWX7d6JtxdWf6Nfzuh2t6m5npdDAbp3auj3CnO0IZfSm1nqUQR1JAhqOQ
-CJBxdbu8hlMxWOlgHqgEtiB17VK2z6bG2KnJ70HvKwU1FqbYWmTAOXxa0wEp7zpW
-BBJXK8YUbxCAVq5ardJrk6SrPoeliKpPiA9n+qeDMgo0iTjKd62yEv9lV/VEE015
-mEpeEPiUcf5k5kLfOVJK9Gifz11Pbg+bAv0/ojiBCNINQFEJKplnNurrDCklc9m2
-5sG3hpmbNR4c4dfFpO2lPOqCokMSeIpJ62Mo45tfxfN8FAYnoTI=
-=dvdZ
------END PGP SIGNATURE-----
-
---=-tc/JFBPGpwqKIoNkC/c9--
