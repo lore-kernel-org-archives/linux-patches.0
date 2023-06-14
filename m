@@ -1,57 +1,57 @@
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C99A2CA7
-	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 19:05:06 +0000 (UTC)
-Date: Wed, 14 Jun 2023 19:04:52 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=t3bxowmyhbatjofkruyu6tb3o4.protonmail; t=1686769497; x=1687028697;
-	bh=ZzMB/I+fAe8MxfXLN2JRLaBJJfxV8VQgZ+RlEYm3UyE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=gMcafESwqJuzACruJ4O9mlVNWzlmZ/JN/KP5+Gb7Dn25F9zWS0kUcWjDLwAjOOa4w
-	 O25K4b1HcbH/5GkWPGk8uXr6q62yaIIPgDQhZPiyHAIXwWaaTwu0llnHxBRB1Z6bu6
-	 XN7BgXUSrtB/quZbRg+M5h2B+UMoJXG3zITMzTKaI9hxFaFldJ5f8FlCH5cSbX2w0W
-	 QyAy2ljp+kJHudFJe/cZFNZKojllnQy/hvbUIsbM9vNABQyybmaOxxpPfSol6vuAX6
-	 2Q6/g88kRq0E3fBbohcuVAhI3cyajF74b94im5WsgQDrNQZ+R2Sg4UB9ocodMr4WcT
-	 qQpJ8SyTsk+QA==
-To: Gary Guo <gary@garyguo.net>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: make `UnsafeCell` the outer type in `Opaque`
-Message-ID: <-MHKDYSM29ri6c9QKvSWSeFjWwM8yj6uNgAZ-2hMzY_vEokxnrcETWGTZtcNCmgmMwH4VLswDOtRWhjfVboo360PSTXxYjhiffD5B7CkkH0=@proton.me>
-In-Reply-To: <20230614194255.1fb8f6c0.gary@garyguo.net>
-References: <20230614115328.2825961-1-aliceryhl@google.com> <20230614194255.1fb8f6c0.gary@garyguo.net>
-Feedback-ID: 71780778:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2677B11CA6
+	for <patches@lists.linux.dev>; Wed, 14 Jun 2023 19:43:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F90C433C8;
+	Wed, 14 Jun 2023 19:43:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1686771814;
+	bh=Kt6SJawEmJWtX3OTbjlzR1/a2xexuFr4PgAMHfuqpqc=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=WHhPJGi4JCpDvJJVFMj2VPcwyd1dt4StdWOi6o4PJtoNbC2BpPlPK2y3X158vC85D
+	 i23nKtAzDelBVt/aLueNY1b/3+Ay2ilRlKZD2dCW92xnFftZnatfROwuM9V+g4TQXX
+	 xJqubh6K+F6j89Y9UuAnl2CBKPsYLnMo2IOk9ly/QOw6Hfy57XfiaOekY90XvhcF1z
+	 ZJ1hNMNMn9atmTQrdC14xUDP7FxW/UO6cOq3hU9fa5TygZ9Z78GFCV+qnsXFOINW6E
+	 KhD7/BWp2Ew7u1TuqNQ5x7HKgxKuB5VIY6Fzryy9+Z3lEtJquqn4vqPEzpS2VmoUyH
+	 su/okyOh3be5w==
+Message-ID: <cca711ac7af8208949df09b811a13c81.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230613195443.1555132-1-sboyd@kernel.org>
+References: <20230613195443.1555132-1-sboyd@kernel.org>
+Subject: Re: [PATCH] clk: sprd: composite: Simplify determine_rate implementation
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>, Maxime Ripard <maxime@cerno.tech>
+To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Date: Wed, 14 Jun 2023 12:43:32 -0700
+User-Agent: alot/0.10
 
-> > /// Gets the value behind `this`.
-> > @@ -266,7 +266,7 @@ pub fn get(&self) -> *mut T {
-> > /// This function is useful to get access to the value without creating=
- intermediate
-> > /// references.
-> > pub const fn raw_get(this: *const Self) -> *mut T {
-> > - UnsafeCell::raw_get(this.cast::<UnsafeCell<T>>())
-> > + UnsafeCell::raw_get(this.cast::<UnsafeCell<MaybeUninit<T>>>()).cast::=
-<T>()
+Quoting Stephen Boyd (2023-06-13 12:54:42)
+> The sprd_div_helper_round_rate() function calls divider_round_rate()
+> which calls divider_round_rate_parent() which calls
+> divider_determine_rate(). This call chain converts back and forth from
+> the rate request structure to make a determine_rate clk_op fit with a
+> round_rate clk_op. Simplify the code here by directly calling
+> divider_determine_rate() instead.
 >=20
+> This fixes a smatch warning where an unsigned long is compared to less
+> than zero, which is impossible. This makes sprd_div_helper_round_rate()
+> unnecessary as well so simply remove it and fold it into the only caller
+> left.
 >=20
-> This can just be `this.cast_mut().cast()` since all types involved are
-> transparent.
+> Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+> Closes: https://lore.kernel.org/r/45fdc54e-7ab6-edd6-d55a-473485608473@or=
+acle.com
+> Cc: Maxime Ripard <maxime@cerno.tech>
+> Fixes: 302d2f836d78 ("clk: sprd: composite: Switch to determine_rate")
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
 
-I would advise against that, see [1]. It would be bad for people to
-assume that one is always allowed to do that. I also like it explicit here.
-
-[1]: https://github.com/rust-lang/unsafe-code-guidelines/issues/281
-
---
-Cheers,
-Benno
+Applied to clk-next
