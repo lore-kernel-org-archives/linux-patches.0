@@ -1,45 +1,45 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD87625
-	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 03:52:32 +0000 (UTC)
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-38e04d1b2b4so4519331b6e.3
-        for <patches@lists.linux.dev>; Wed, 14 Jun 2023 20:52:32 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AF8625
+	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 03:52:38 +0000 (UTC)
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-1a9a42edfc9so77178fac.0
+        for <patches@lists.linux.dev>; Wed, 14 Jun 2023 20:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686801151; x=1689393151;
+        d=gmail.com; s=20221208; t=1686801157; x=1689393157;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=spaaVbjiBdTlaLp097AQ1jobvAghV0KKc7Xk2bn+bUg=;
-        b=qgBlk7f7Lj8nZKadPLr19Hu3xpdOt2yYPRbVsDJC4gItJ+IXLtByomvtFByBxqD2bO
-         s37vlyup3Cs/V7hnLnosOsges6236vXWdBZSKHgOGofMTVlt8MwU7wFAWofWgbz6aWCz
-         XCpCOfgITbhqB7aEMwJwNa9Mhzx2rWpsvM21EH8vOWAlo7WnKEunT4VHBgVEXukzeqs3
-         HdjBN1HoAS8nsMI2LbMhs7ZJ13ZJyOaaccJCfiJWL0NruT7KCKCjWig3mdm+57MhwgU7
-         fnPfBFSTcejcOnHhO8iR+YB+T4AUNC2/xJ2ADV1M6tREPkiBXPTNyXXD1mrEzIWX1xQU
-         ojQg==
+        bh=37lHv1ZqEN3KbKhtxEWcsRVwfI/2kLKmjExzPbh8ooc=;
+        b=dy51VvehrZ1fwzi0O7yTUQ0MfM2PAXwnBuvoanAgrqOZ0n8k11P9QxQ0ulItXcs+Ze
+         wj02CoUxXohWMARbvesT7zXzdP0o0JI6OyNfYL47uxDHmEoH2lRwLu5JYgP3nht6MhTo
+         ZTZv3Qjc6N8O5fyWTqt47NvhJXm/EwV2TIxIf5l4lLqSi3FM9jOBd+q2xxR8Ws9bxfnV
+         4GHb/limbu09Bj7BpTJfxqCgjgcQU58psWjxzhZ/+0bweOi6sbJe9fCN5KgtP3wvsnOX
+         4t+/BExGUTXOEqSwRiu7QeBgrf5ruQ4joUX1eVHDY5x/VYcxgRPurr8rMLIkYEeCRn5O
+         Y8fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686801151; x=1689393151;
+        d=1e100.net; s=20221208; t=1686801157; x=1689393157;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=spaaVbjiBdTlaLp097AQ1jobvAghV0KKc7Xk2bn+bUg=;
-        b=hZCIw/YqEOTPNhkeZllBSsq2eZufcm7PUT+105zMq2WjXn+YUXwez1rpPtP7A1OF2L
-         q8M7maZMowTmlqgOBJ48DKTzXeUadSN9ZMN7Gc+ldrbJp+rfMMFOiMKK7tfDcmqErule
-         g/TJ/FX/WuElPF5RPdUXSzKtSafjM/yW1dBNqOQh+lHOPKJTHpQp+D76oRZE0NRlWv3O
-         rJtihTbSXUMyUH06ZPmIqlxb3dyZmlBXMoqR2wNwKv15tjKygW5rZEbSRSlgugtqwnvE
-         yO6G4xMxGlbRs4+j1lPkMEEUY7r30kbl07uVsztGo64Oj5SA0YdtpoZ1EWqhUkA3eyhu
-         8b2w==
-X-Gm-Message-State: AC+VfDybXGxwtdmB95HRiVuLrD08zdwO7A57TCmgl7c0F13t0/lrycc1
-	AX4HMdTPGmPjqdSsRcBn6Ac=
-X-Google-Smtp-Source: ACHHUZ5Xv8IWe1XuMU4Rd3aBfZYhp1veoFch0A4sL+zXRvWjx2J3BCBqC1VVMXW5TyNU0I7ZPGs+ig==
-X-Received: by 2002:a05:6808:208a:b0:39a:bf0:4fe0 with SMTP id s10-20020a056808208a00b0039a0bf04fe0mr14308216oiw.15.1686801151129;
-        Wed, 14 Jun 2023 20:52:31 -0700 (PDT)
+        bh=37lHv1ZqEN3KbKhtxEWcsRVwfI/2kLKmjExzPbh8ooc=;
+        b=ZXgoYVmIiYHn6FlZqsAXuvLSwuXFzaBPAVG9k8cq5KRtmY10wseNV8Ybe+AbhpAtwk
+         sXBvQ7tRzBmxakmZbRUVs0DmjXDibb6DWx8SMpA7mF3P7rk1u7OFYQgoS/x6TZOMCQpB
+         PximiqBPO1rTlC6cbigEsxu4axfyks/MlHne1OFLqP5YBgu18t2QGjzFCfdU8xfxAsYe
+         T2pjXlN+9MhPIDxXsPK+YlJfDsVDrOgyiEFmikQM4M0I0MlrC6SIsNuao4zix41aRJyz
+         cdl9SRMto0euOBzNwfujJ1Z+8kATQCceCChfD9vGox0aZlRJVPd3Fzk5tsgA+n482ut0
+         zMgQ==
+X-Gm-Message-State: AC+VfDwEpVoLyPWrjEYOc8HW0TTCk9YOX+araycJxGPWgdWHD148elDk
+	pCOY/B+H+NLnBtlSzRxkqZg=
+X-Google-Smtp-Source: ACHHUZ5PE1QRcro9YWkg0G4/ovm+qWCIn125P+6Wmq3YTj0Aum60A6KI/m55XZBYuS2chLsSXrwnng==
+X-Received: by 2002:a05:6870:e895:b0:18f:11c7:9404 with SMTP id q21-20020a056870e89500b0018f11c79404mr11255152oan.38.1686801157530;
+        Wed, 14 Jun 2023 20:52:37 -0700 (PDT)
 Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id l3-20020a544503000000b0039aab5cee6csm6495019oil.11.2023.06.14.20.52.27
+        by smtp.gmail.com with ESMTPSA id z10-20020a9d62ca000000b006ab1ea1af9esm6353844otk.68.2023.06.14.20.52.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 20:52:30 -0700 (PDT)
-Message-ID: <49dad8fe-c509-6c43-559e-13a82563d3d0@gmail.com>
-Date: Thu, 15 Jun 2023 00:49:28 -0300
+        Wed, 14 Jun 2023 20:52:37 -0700 (PDT)
+Message-ID: <5a81fbc4-ff8b-4ce8-d8a0-a87f6d76771c@gmail.com>
+Date: Thu, 15 Jun 2023 00:49:54 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,8 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.12.0
-Subject: Re: [PATCH 5/6] rust: support running Rust documentation tests as
- KUnit ones
+Subject: Re: [PATCH 6/6] MAINTAINERS: add Rust KUnit files to the KUnit entry
 Content-Language: en-US
 To: Miguel Ojeda <ojeda@kernel.org>, David Gow <davidgow@google.com>,
  Brendan Higgins <brendan.higgins@linux.dev>,
@@ -63,213 +62,22 @@ Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
  rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
  patches@lists.linux.dev
 References: <20230614180837.630180-1-ojeda@kernel.org>
- <20230614180837.630180-6-ojeda@kernel.org>
+ <20230614180837.630180-7-ojeda@kernel.org>
 From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230614180837.630180-6-ojeda@kernel.org>
+In-Reply-To: <20230614180837.630180-7-ojeda@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 6/14/23 15:08, Miguel Ojeda wrote:
-> Rust has documentation tests: these are typically examples of
-> usage of any item (e.g. function, struct, module...).
+> The KUnit maintainers would like to maintain these files on their
+> side too (thanks!), so add them to their entry.
 > 
-> They are very convenient because they are just written
-> alongside the documentation. For instance:
-> 
->      /// Sums two numbers.
->      ///
->      /// ```
->      /// assert_eq!(mymod::f(10, 20), 30);
->      /// ```
->      pub fn f(a: i32, b: i32) -> i32 {
->          a + b
->      }
-> 
-> In userspace, the tests are collected and run via `rustdoc`.
-> Using the tool as-is would be useful already, since it allows
-> to compile-test most tests (thus enforcing they are kept
-> in sync with the code they document) and run those that do not
-> depend on in-kernel APIs.
-> 
-> However, by transforming the tests into a KUnit test suite,
-> they can also be run inside the kernel. Moreover, the tests
-> get to be compiled as other Rust kernel objects instead of
-> targeting userspace.
-> 
-> On top of that, the integration with KUnit means the Rust
-> support gets to reuse the existing testing facilities. For
-> instance, the kernel log would look like:
-> 
->      KTAP version 1
->      1..1
->          KTAP version 1
->          # Subtest: rust_doctests_kernel
->          1..59
->          # Doctest from line 13
->          ok 1 rust_doctest_kernel_build_assert_rs_0
->          # Doctest from line 56
->          ok 2 rust_doctest_kernel_build_assert_rs_1
->          # Doctest from line 122
->          ok 3 rust_doctest_kernel_init_rs_0
->          ...
->          # Doctest from line 150
->          ok 59 rust_doctest_kernel_types_rs_2
->      # rust_doctests_kernel: pass:59 fail:0 skip:0 total:59
->      # Totals: pass:59 fail:0 skip:0 total:59
->      ok 1 rust_doctests_kernel
-> 
-> Therefore, add support for running Rust documentation tests
-> in KUnit. Some other notes about the current implementation
-> and support follow.
-> 
-> The transformation is performed by a couple scripts written
-> as Rust hostprogs.
-> 
-> Tests using the `?` operator are also supported as usual, e.g.:
-> 
->      /// ```
->      /// # use kernel::{spawn_work_item, workqueue};
->      /// spawn_work_item!(workqueue::system(), || pr_info!("x"))?;
->      /// # Ok::<(), Error>(())
->      /// ```
-> 
-> The tests are also compiled with Clippy under `CLIPPY=1`, just like
-> normal code, thus also benefitting from extra linting.
-> 
-> The names of the tests are currently automatically generated.
-> This allows to reduce the burden for documentation writers,
-> while keeping them fairly stable for bisection. This is an
-> improvement over the `rustdoc`-generated names, which include
-> the line number; but ideally we would like to get `rustdoc` to
-> provide the Rust item path and a number (for multiple examples
-> in a single documented Rust item).
-> 
-> In order for developers to easily see from which original line
-> a failed doctests came from, a KTAP diagnostic line is printed
-> to the log. In the future, we may be able to use a proper KUnit
-> facility to append this sort of information instead.
-> 
-> A notable difference from KUnit C tests is that the Rust tests
-> appear to assert using the usual `assert!` and `assert_eq!`
-> macros from the Rust standard library (`core`). We provide
-> a custom version that forwards the call to KUnit instead.
-> Importantly, these macros do not require passing context,
-> unlike the KUnit C ones (i.e. `struct kunit *`). This makes
-> them easier to use, and readers of the documentation do not need
-> to care about which testing framework is used. In addition, it
-> may allow us to test third-party code more easily in the future.
-> 
-> However, a current limitation is that KUnit does not support
-> assertions in other tasks. Thus we presently simply print an
-> error to the kernel log if an assertion actually failed. This
-> should be revisited to properly fail the test, perhaps saving
-> the context somewhere else, or letting KUnit handle it.
+> With this in place, `scripts/get_maintainer.pl` prints both sets
+> of maintainers/reviewers (i.e. KUnit and Rust) for those files,
+> which is the behavior we are looking for.
 > 
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
 > [...]
-> diff --git a/scripts/rustdoc_test_builder.rs b/scripts/rustdoc_test_builder.rs
-> new file mode 100644
-> index 000000000000..e3b7138fb4f9
-> --- /dev/null
-> +++ b/scripts/rustdoc_test_builder.rs
-> @@ -0,0 +1,73 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> [...]
-> +
-> +fn main() {
-> [...]
-> +
-> +    write!(BufWriter::new(File::create(path).unwrap()), "{body}").unwrap();
 
-I can't remember that if this panic it will mention the path on it.
-Though if it does, then use something more explicit than
-`.unwrap()`.
-
-> +}
-> diff --git a/scripts/rustdoc_test_gen.rs b/scripts/rustdoc_test_gen.rs
-> new file mode 100644
-> index 000000000000..793885c32c0d
-> --- /dev/null
-> +++ b/scripts/rustdoc_test_gen.rs
-> @@ -0,0 +1,162 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> [...]
-> +
-> +use std::io::{BufWriter, Read, Write};
-> +use std::{fs, fs::File};
-> +
-> +fn main() {
-> +    let mut paths = fs::read_dir("rust/test/doctests/kernel")
-> +        .unwrap()
-> +        .map(|entry| entry.unwrap().path())
-> +        .collect::<Vec<_>>();
-> +
-> +    // Sort paths for clarity.
-> +    paths.sort();
-> +
-> +    let mut rust_tests = String::new();
-> +    let mut c_test_declarations = String::new();
-> +    let mut c_test_cases = String::new();
-> +    let mut body = String::new();
-> +    let mut last_file = String::new();
-> +    let mut number = 0;
-> +    for path in paths {
-> +        // The `name` follows the `{file}_{line}_{number}` pattern (see description in
-> +        // `scripts/rustdoc_test_builder.rs`). Discard the `number`.
-> +        let name = path.file_name().unwrap().to_str().unwrap().to_string();
-> +
-> +        // Extract the `file` and the `line`, discarding the `number`.
-> +        let (file, line) = name.rsplit_once('_').unwrap().0.rsplit_once('_').unwrap();
-
-Please do not use unwrap here, one can easily create a path that
-it's not compliant under `rust/test/doctests/kernel` and get no
-clue about where this script has failed. Use `.expect()` or
-something else instead.
-
-> +
-> [...]
-> +
-> +    write!(
-> +        BufWriter::new(File::create("rust/doctests_kernel_generated.rs").unwrap()),
-> +        r#"//! `kernel` crate documentation tests.
-> +
-> +const __LOG_PREFIX: &[u8] = b"rust_doctests_kernel\0";
-> +
-> +{rust_tests}
-> +"#
-> +    )
-> +    .unwrap();
-> +
-> +    write!(
-> +        BufWriter::new(File::create("rust/doctests_kernel_generated_kunit.c").unwrap()),
-> +        r#"/*
-> + * `kernel` crate documentation tests.
-> + */
-> +
-> +#include <kunit/test.h>
-> +
-> +{c_test_declarations}
-> +
-> +static struct kunit_case test_cases[] = {{
-> +    {c_test_cases}
-> +    {{ }}
-> +}};
-> +
-> +static struct kunit_suite test_suite = {{
-> +    .name = "rust_doctests_kernel",
-> +    .test_cases = test_cases,
-> +}};
-> +
-> +kunit_test_suite(test_suite);
-> +
-> +MODULE_LICENSE("GPL");
-> +"#
-> +    )
-> +    .unwrap();
-
-Same from `scripts/rustdoc_test_builder.rs` applies here.
-
-> +}
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
