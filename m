@@ -1,23 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A331801E;
-	Thu, 15 Jun 2023 16:21:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6707CC433C8;
-	Thu, 15 Jun 2023 16:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3F9AD35
+	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 17:06:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2615C433CA;
+	Thu, 15 Jun 2023 17:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686846087;
-	bh=CMQKT8ObhlIs/9yTVJn9B5e8S9RnKJusjioFlwPJBJs=;
-	h=From:Date:Subject:To:Cc:From;
-	b=NsWAOQYgx7xp4t/t+WJ8we297HK1TaOr7G80WxyPwR6940xy4KQYIy0A4TRHVuemN
-	 P87mvubInkuwvv0q0a+Jd/NEIFFRHid+7puFtdNnpp+fuEwuIlVCFhvUAuk60NNPcD
-	 KiizxEq5TtOdV5O7h9kU3eEKTh7lEQe1BOOSr5nY2R1Rp4MuI5AqW7/LgLbfo9b7EO
-	 ktZNKIR19X4F2JaPfmYZ/yWDgjX+Wt/UMRgcH7V+4k33qhsXa8Wr0XbGJ+Jd5lS4zi
-	 azNrpEuZdpeJfGv1shMUzOWqmb4Mc2UkDXPSBVp4PXF4/MhH9xOXEF2zE7U1lfRRJG
-	 OnoYlNgPTSFIQ==
+	s=k20201202; t=1686848785;
+	bh=OMYNXDmf2G+KE4O+YFGoP1cRngLJ6R4++Xd36xT5ZOk=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=AGzxwnYFlrpfQHikLxx9cHO4xrRxWnsOY8UJcw0MOc7m4MG1hSamNgOyHff8Dbkad
+	 H30n72Y7sxEcu10lnQEi54gwNSgvRvFVM1Q3n0V+MWk5MAj52ICCtTwpw169vCkeJc
+	 PJEYl5wOKWmohP7ePjkJvr17Ba7WgIbVRAx3OrWt9Byup8GTZ39hU5dGgKmhk+iE9F
+	 gCkVtoll9LUFzUjBboeAmmibQJQkkaWHt2Gjkry7iIxBJ/XVT1+2TNUPYFooB9C6IZ
+	 SA/QjyTlti4LnEYUe04Ox4T7J+bc80uMcQ8Uds0J5HtMfBIpn5GMUGUkC375glqA+f
+	 ivWlNu9MFmmZg==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 15 Jun 2023 09:21:18 -0700
-Subject: [PATCH] MIPS: Mark core_vpe_count() as __init
+Date: Thu, 15 Jun 2023 10:06:08 -0700
+Subject: [PATCH 1/2] drm/amdgpu: Remove CONFIG_DEBUG_FS guard around body
+ of amdgpu_rap_debugfs_init()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -26,63 +27,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAH06i2QC/x2NWwqDMBAAryL57kJUGqFXKUXWZFuXkge7qRTEu
- zf2cxiY2Y2SMKm5dbsR2lg5pwb9pTN+xfQi4NDYDHYYreuvELkoRJQ3+Cw0b4Vmnz+pAipw4gr
- O2uCnkUY3BdMyCyrBIpj8eoYiaiU5RRF68vf/vj+O4weQxqugiwAAAA==
-To: tsbogend@alpha.franken.de
-Cc: ndesaulniers@google.com, trix@redhat.com, jiaxun.yang@flygoat.com, 
- linux-mips@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
+Message-Id: <20230615-amdgpu-wunused-const-variable-wo-debugfs-v1-1-06efd224aebb@kernel.org>
+References: <20230615-amdgpu-wunused-const-variable-wo-debugfs-v1-0-06efd224aebb@kernel.org>
+In-Reply-To: <20230615-amdgpu-wunused-const-variable-wo-debugfs-v1-0-06efd224aebb@kernel.org>
+To: alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1632; i=nathan@kernel.org;
- h=from:subject:message-id; bh=CMQKT8ObhlIs/9yTVJn9B5e8S9RnKJusjioFlwPJBJs=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCndVu3p3FVHExyuKgR0pDQdf2WQmXMxYpPz5bz1kWZnu
- rZ6xup3lLIwiHEwyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgIkUeDAynJHT3eesr5Ao/zTw
- urBy3/993bI7pLeyTWPX2LXv5JsEXob/sXmP9uZfNP21M9vv/ukUE+YitocdfpPWy67h+VH1PkS
- JEwA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1622; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=OMYNXDmf2G+KE4O+YFGoP1cRngLJ6R4++Xd36xT5ZOk=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCndrgLTpr27MJXd8MJGbYNzQbOPNOwV7TnUPTvd8n3k5
+ q/CM3ce6ihlYRDjYJAVU2Spfqx63NBwzlnGG6cmwcxhZQIZwsDFKQATOazEyPCl3bDjz8WbZz6q
+ zL2/QUH92dSnC2ffV347qbhi0z6N5+5mjAwn7+6unvXTuvxS6q8buyN11te4G9hbi7Ssf2QpEXe
+ FoZ8BAA==
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-After commit 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters"),
-modpost complains when building with clang:
+After commit a25a9dae2067 ("drm/amd/amdgpu: enable W=1 for amdgpu"),
+there is an instance of -Wunused-const-variable when CONFIG_DEBUG_FS is
+disabled:
 
-  WARNING: modpost: vmlinux.o: section mismatch in reference: core_vpe_count (section: .text) -> smp_max_threads (section: .init.data)
+  drivers/gpu/drm/amd/amdgpu/amdgpu_rap.c:110:37: error: unused variable 'amdgpu_rap_debugfs_ops' [-Werror,-Wunused-const-variable]
+    110 | static const struct file_operations amdgpu_rap_debugfs_ops = {
+        |                                     ^
+  1 error generated.
 
-This warning occurs when core_vpe_count() is not inlined, as it appears
-that a non-init function is referring to an init symbol. However, this
-is not a problem in practice because core_vpe_count() is only called
-from __init functions, cps_smp_setup() and cps_prepare_cpus().
+There is no reason for the body of this function to be guarded when
+CONFIG_DEBUG_FS is disabled, as debugfs_create_file() is a stub that
+just returns an error pointer in that situation. Remove the preprocessor
+guards so that the variable never appears unused, while not changing
+anything at run time.
 
-Resolve the warning by marking core_vpe_count() as __init, as it is only
-called in an init context so it can refer to init functions and symbols
-and have its memory freed on boot.
-
-Fixes: 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/mips/kernel/smp-cps.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_rap.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
-index bea6a13ea464..92575222713b 100644
---- a/arch/mips/kernel/smp-cps.c
-+++ b/arch/mips/kernel/smp-cps.c
-@@ -29,7 +29,7 @@ static DECLARE_BITMAP(core_power, NR_CPUS);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_rap.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_rap.c
+index 12010c988c8b..123bcf5c2bb1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_rap.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_rap.c
+@@ -116,7 +116,6 @@ static const struct file_operations amdgpu_rap_debugfs_ops = {
  
- struct core_boot_config *mips_cps_core_bootcfg;
- 
--static unsigned core_vpe_count(unsigned int cluster, unsigned core)
-+static unsigned __init core_vpe_count(unsigned int cluster, unsigned core)
+ void amdgpu_rap_debugfs_init(struct amdgpu_device *adev)
  {
- 	return min(smp_max_threads, mips_cps_numvps(cluster, core));
+-#if defined(CONFIG_DEBUG_FS)
+ 	struct drm_minor *minor = adev_to_drm(adev)->primary;
+ 
+ 	if (!adev->psp.rap_context.context.initialized)
+@@ -124,5 +123,4 @@ void amdgpu_rap_debugfs_init(struct amdgpu_device *adev)
+ 
+ 	debugfs_create_file("rap_test", S_IWUSR, minor->debugfs_root,
+ 				adev, &amdgpu_rap_debugfs_ops);
+-#endif
  }
 
----
-base-commit: 5cad8323040bb8d47e130c10ea4dcb7175c7602a
-change-id: 20230615-mips-mark-core_vpe_count-as-init-600dc73e367d
-
-Best regards,
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.41.0
 
