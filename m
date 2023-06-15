@@ -1,111 +1,78 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C14EEAEE
-	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 19:42:31 +0000 (UTC)
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-43f519c0888so891072137.3
-        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 12:42:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8B3657
+	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 23:46:56 +0000 (UTC)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-3f8d2bfed53so1456165e9.1
+        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 16:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686858150; x=1689450150;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1686872814; x=1689464814;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EEzNrFy4XtnBJchIRCyudJpLzlojDK3YzlAqwYMXFT0=;
-        b=lBwTUjIilesidUCNGaAvZ+xj4jRGP9ZPcdF6CpMtEeTbtwKGGC9zJYJcwMkwh5GDSj
-         6TO/HyTtOMlwBDHVt0L6hSeGPFlURYJRwbR0dz4PRCJYntqmF/3cCuuu0h/v1jxKA888
-         pcmBRHsiMmLRBAi8IYio5/cKlRMvzj4FcDxzkLhnj050yvQrc9Y1F2XzKmuYr5NBlcP1
-         EpPbrkvpKqrj1yDytJDpzeEKUPlcQGBPnhKCW4YtvBC64iiFEdkoC0QwKJLipXFkq7wc
-         jGtl3rS0rfb7Pcfqsc0daraaxrNMh7MKpbrNuhkhT76TdPMOj1SNGsX7ycRIVoJ3AQy9
-         BDIQ==
+        bh=+cok297KiEkBtIanAPvWodXIpSbY3USJpVP/auvzSoo=;
+        b=GEWzOBjU9+uklUn8K1KiJ3HxTLmkUx9v6wLg6ny+j7IskV/jkFniTlJAR6uk0Mo868
+         vwY9L0y1g5vpjAyb8r8/zSzXxy0QmvoUcmMGtvPi+2QIUpWX4xbvNneZ2FyvCIHm6sPu
+         Dnup7WCuPXYJeUH+qFJmRSZV0vZ+UMxleSRxKdWMkguwHbsEclDn8fVAR38HQErwoY3F
+         kYb2oyV43zb+19M5owAo2K5GZat+mnwtrzY5lKzMCKjajvjJuY96IOakuJfxQZyFB6ym
+         taMzqIhTty0uhkNglC+ytKNqpjZF1aHvH4hwhZo7cwqUDkaog3xC1YBLkD1c88S+KEJN
+         9NGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686858150; x=1689450150;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EEzNrFy4XtnBJchIRCyudJpLzlojDK3YzlAqwYMXFT0=;
-        b=dro58wunYTucvAxPO578YQaJJxE/BDxb1HzW5ICoxePIPdfPSVhFne0wgZRH1gsk2o
-         mvLO7OleSaCUhBpi6iZ9a+4yq795pIFMDUm92FQ7I8rkna/oX0nNaxPaRinXZQ5lZ4MN
-         pdQVqmhyJ4qnfMvj06fL3onOTVDent9vWpb+o8nLw1imPl205Ybupmv72I5BzhRYBYxe
-         yd1Vxux0EKjmCGrVnne+FXTvhkLVsemm30ctssb/Ap571oWL91jQjrCrds3LfQmFYqJc
-         Hnkk69xIIcmmxD9gxO4NQs7XFRxkHG2Av22bpgCI8DD+VHwaFxINJQz4kPMehVjrFHHq
-         xP5g==
-X-Gm-Message-State: AC+VfDxq22ff2xp3BLWisVimGvt366q+mAL5+28v2PHDZRcQY+KOR5+a
-	CGCpmat4DJVj4Ut0U3I2le9o0CNthFG8czuwwqIHhA==
-X-Google-Smtp-Source: ACHHUZ4DAcb8XJ7cK5trIjfYu8JayVxt4ZPxnD/vGCWza1Eoy4aPA1/eOXTHCyXUZSdlUS0q7KBknTMFqsdih3/7QPM=
-X-Received: by 2002:a67:f34d:0:b0:43b:38a5:f8a0 with SMTP id
- p13-20020a67f34d000000b0043b38a5f8a0mr494060vsm.14.1686858149899; Thu, 15 Jun
- 2023 12:42:29 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686872814; x=1689464814;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+cok297KiEkBtIanAPvWodXIpSbY3USJpVP/auvzSoo=;
+        b=iqjFRxRr9lmPBnLgmQdaK070V4soZc8VXZSD7jvzD91OCicWnQH+FbdP7ujSa50oVK
+         SU0lN3bIQrGaHRIIJwp1YM1CpaT/+matWF55kNqmCZGwUpynsrSULnQk/UsXWkU9FEqs
+         HK3MBHINItgJMbajbspdVdj3XBvuQBykkFYjsPrhYGu5Oh/xCbnJBxh2ZixIS9PnyOWp
+         erf5UntRsRTuBRkPlLMHwXN/RznLyz2qjoAH90jFRFUgbasqYPnJ5mOPEub2LDHEwWId
+         o9c55EBb7c2u0P4SaxU109LUzTKCRvzgfm+NMwB6BtYzQANugO1HKGoxq5P46/LwSzyh
+         ly4w==
+X-Gm-Message-State: AC+VfDwiBGuf1Y61t/AkjslAmrXW6eQOTaUW8d3eR4vsZEqjlTPN7rOS
+	LHqbSnHZYpOktopmivrWLYY=
+X-Google-Smtp-Source: ACHHUZ4McPXi8/B0MVcUFH60m4X3rhsNMsiSCE1318ihls99X0Jo2hKc8kOG6o63XEtNWhnh5HVF3g==
+X-Received: by 2002:a1c:f616:0:b0:3f6:d90:3db with SMTP id w22-20020a1cf616000000b003f60d9003dbmr194999wmc.3.1686872814417;
+        Thu, 15 Jun 2023 16:46:54 -0700 (PDT)
+Received: from localhost ([146.70.132.158])
+        by smtp.gmail.com with ESMTPSA id i10-20020a05600c354a00b003f4283f5c1bsm14034217wmq.2.2023.06.15.16.46.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Jun 2023 16:46:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
-In-Reply-To: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Thu, 15 Jun 2023 15:42:16 -0400
-Message-ID: <CAKwvOdndp=2h9se6ddGiYJ6S4o_ROFLD2CH5ZuW-SRa=DMapzw@mail.gmail.com>
-Subject: Re: [PATCH] MIPS: Mark core_vpe_count() as __init
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: tsbogend@alpha.franken.de, trix@redhat.com, jiaxun.yang@flygoat.com, 
-	linux-mips@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 16 Jun 2023 01:46:52 +0200
+Message-Id: <CTDMI7T6JJCN.3PY8NVQ79IMJM@vincent-arch>
+Cc: "Boqun Feng" <boqun.feng@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
+ <benno.lossin@proton.me>, "Alice Ryhl" <aliceryhl@google.com>, "Andreas
+ Hindborg" <nmi@metaspace.dk>, "Philip Li" <philip.li@intel.com>,
+ <kunit-dev@googlegroups.com>, <linux-kselftest@vger.kernel.org>,
+ <rust-for-linux@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <patches@lists.linux.dev>
+Subject: Re: [PATCH 6/6] MAINTAINERS: add Rust KUnit files to the KUnit
+ entry
+From: "Vincenzo Palazzo" <vincenzopalazzodev@gmail.com>
+To: "Miguel Ojeda" <ojeda@kernel.org>, "David Gow" <davidgow@google.com>,
+ "Brendan Higgins" <brendan.higgins@linux.dev>, "Wedson Almeida Filho"
+ <wedsonaf@gmail.com>, "Alex Gaynor" <alex.gaynor@gmail.com>
+References: <20230614180837.630180-1-ojeda@kernel.org>
+ <20230614180837.630180-7-ojeda@kernel.org>
+In-Reply-To: <20230614180837.630180-7-ojeda@kernel.org>
 
-On Thu, Jun 15, 2023 at 12:21=E2=80=AFPM Nathan Chancellor <nathan@kernel.o=
-rg> wrote:
+> The KUnit maintainers would like to maintain these files on their
+> side too (thanks!), so add them to their entry.
 >
-> After commit 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters"),
-> modpost complains when building with clang:
+> With this in place, `scripts/get_maintainer.pl` prints both sets
+> of maintainers/reviewers (i.e. KUnit and Rust) for those files,
+> which is the behavior we are looking for.
 >
->   WARNING: modpost: vmlinux.o: section mismatch in reference: core_vpe_co=
-unt (section: .text) -> smp_max_threads (section: .init.data)
->
-> This warning occurs when core_vpe_count() is not inlined, as it appears
-> that a non-init function is referring to an init symbol. However, this
-> is not a problem in practice because core_vpe_count() is only called
-> from __init functions, cps_smp_setup() and cps_prepare_cpus().
->
-> Resolve the warning by marking core_vpe_count() as __init, as it is only
-> called in an init context so it can refer to init functions and symbols
-> and have its memory freed on boot.
->
-> Fixes: 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-
-Thanks for the patch!
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-
-> ---
->  arch/mips/kernel/smp-cps.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
-> index bea6a13ea464..92575222713b 100644
-> --- a/arch/mips/kernel/smp-cps.c
-> +++ b/arch/mips/kernel/smp-cps.c
-> @@ -29,7 +29,7 @@ static DECLARE_BITMAP(core_power, NR_CPUS);
->
->  struct core_boot_config *mips_cps_core_bootcfg;
->
-> -static unsigned core_vpe_count(unsigned int cluster, unsigned core)
-> +static unsigned __init core_vpe_count(unsigned int cluster, unsigned cor=
-e)
->  {
->         return min(smp_max_threads, mips_cps_numvps(cluster, core));
->  }
->
-> ---
-> base-commit: 5cad8323040bb8d47e130c10ea4dcb7175c7602a
-> change-id: 20230615-mips-mark-core_vpe_count-as-init-600dc73e367d
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 
---=20
-Thanks,
-~Nick Desaulniers
+Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
