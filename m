@@ -1,109 +1,88 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DB315AE9
-	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 13:50:52 +0000 (UTC)
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-1a9b0ec6f4cso244100fac.0
-        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 06:50:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686837052; x=1689429052;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DojIv4w46I2F3FeQItbDQQuCHIMIGT7OLbgfH+JlnwQ=;
-        b=N0XpOh5s++xYT1PbPTgq5mjgxoPU2+YVe7NxEp5HUoBbHK2MA+Kv2aVJ+WPbbIUI3R
-         5TWJJ4jOL4FlRKUCZ037736XNKUUXR4SY4IoGu/D0uysuncG5HFJOt9p+hfIM24sK47n
-         cz489yggWXEL4wUMrJEiLY/hAfu1G41MQhPYw1qk8YSVvmWZLM8Wl0pEaAIGiLHAaM7P
-         5YtztyAR+QKrYxYTv8YgA9+GuynMP1f7sOuBmegdbs6sXOH/Rzl54DsybpRaVxtfLKO/
-         9foNFgIfR+N8vHZnFO087fjJ6bnq44R3m2wyXqVSOhWMIm/rDw/TFngSqkDW8N28YSTi
-         eZDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686837052; x=1689429052;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DojIv4w46I2F3FeQItbDQQuCHIMIGT7OLbgfH+JlnwQ=;
-        b=GGXS/Yd62KojHl5gw/ngrDi9f1nglvSfmbtjhIWUYJT1b23sUUNV7yM2+Z0cfZbj9K
-         FwsNOf5XxWzFIZSIStbzlrF9t1oLrHyMgG8JKcK6xGf88WQX2h9Qx/U7CBz+4I/MMlkb
-         0IddvQWR8C07SMN09C7Y+n+C/wEka9c2fKmsl4wZ8VNyncxL6XLlPX5QGBguMLNIPqL6
-         czDmEWeGXAQIphde+BJsd8+X+RWuqxfThNJ7UrQPmkFUjDxIjbNJ9OTp0/do8EQi3CUG
-         SvteHQBzMGk11746SdD28Jak0oW7j6lH3Lx92sVajQIYv+3Eaf1bOuQMWbvIU1xomGTV
-         A1ew==
-X-Gm-Message-State: AC+VfDxiECaoAg0rl0twG6a1GrYPNWBxVlFAfNIa99TjxcCNBD0DB3ti
-	jl6xtpjiZjcxt4/efYg3XpQ=
-X-Google-Smtp-Source: ACHHUZ4QA5CeMfItNvb6CUzhgyiSshhiQxO/S1j7j7mulYZ+gEs9Qgp4gDjmd0Bcx6LPRvCKV7QNaw==
-X-Received: by 2002:a05:6870:b791:b0:19e:fae6:c9ab with SMTP id ed17-20020a056870b79100b0019efae6c9abmr14852503oab.57.1686837051941;
-        Thu, 15 Jun 2023 06:50:51 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id t14-20020a4ad0ae000000b0054fd0b7af2bsm5988465oor.31.2023.06.15.06.50.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Jun 2023 06:50:51 -0700 (PDT)
-Message-ID: <0b7d1e30-52ea-c4cc-d0fd-f879cd67ef3b@gmail.com>
-Date: Thu, 15 Jun 2023 10:50:46 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A331801E;
+	Thu, 15 Jun 2023 16:21:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6707CC433C8;
+	Thu, 15 Jun 2023 16:21:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1686846087;
+	bh=CMQKT8ObhlIs/9yTVJn9B5e8S9RnKJusjioFlwPJBJs=;
+	h=From:Date:Subject:To:Cc:From;
+	b=NsWAOQYgx7xp4t/t+WJ8we297HK1TaOr7G80WxyPwR6940xy4KQYIy0A4TRHVuemN
+	 P87mvubInkuwvv0q0a+Jd/NEIFFRHid+7puFtdNnpp+fuEwuIlVCFhvUAuk60NNPcD
+	 KiizxEq5TtOdV5O7h9kU3eEKTh7lEQe1BOOSr5nY2R1Rp4MuI5AqW7/LgLbfo9b7EO
+	 ktZNKIR19X4F2JaPfmYZ/yWDgjX+Wt/UMRgcH7V+4k33qhsXa8Wr0XbGJ+Jd5lS4zi
+	 azNrpEuZdpeJfGv1shMUzOWqmb4Mc2UkDXPSBVp4PXF4/MhH9xOXEF2zE7U1lfRRJG
+	 OnoYlNgPTSFIQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 15 Jun 2023 09:21:18 -0700
+Subject: [PATCH] MIPS: Mark core_vpe_count() as __init
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 5/6] rust: support running Rust documentation tests as
- KUnit ones
-Content-Language: en-US
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, David Gow <davidgow@google.com>,
- Brendan Higgins <brendan.higgins@linux.dev>,
- Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>,
- Philip Li <philip.li@intel.com>, kunit-dev@googlegroups.com,
- linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20230614180837.630180-1-ojeda@kernel.org>
- <20230614180837.630180-6-ojeda@kernel.org>
- <49dad8fe-c509-6c43-559e-13a82563d3d0@gmail.com>
- <CANiq72mq4wYJ77qDKYWTO=FkA1AYat2rJd63Gps9aUrP82c9dQ@mail.gmail.com>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <CANiq72mq4wYJ77qDKYWTO=FkA1AYat2rJd63Gps9aUrP82c9dQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAH06i2QC/x2NWwqDMBAAryL57kJUGqFXKUXWZFuXkge7qRTEu
+ zf2cxiY2Y2SMKm5dbsR2lg5pwb9pTN+xfQi4NDYDHYYreuvELkoRJQ3+Cw0b4Vmnz+pAipw4gr
+ O2uCnkUY3BdMyCyrBIpj8eoYiaiU5RRF68vf/vj+O4weQxqugiwAAAA==
+To: tsbogend@alpha.franken.de
+Cc: ndesaulniers@google.com, trix@redhat.com, jiaxun.yang@flygoat.com, 
+ linux-mips@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1632; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=CMQKT8ObhlIs/9yTVJn9B5e8S9RnKJusjioFlwPJBJs=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCndVu3p3FVHExyuKgR0pDQdf2WQmXMxYpPz5bz1kWZnu
+ rZ6xup3lLIwiHEwyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgIkUeDAynJHT3eesr5Ao/zTw
+ urBy3/993bI7pLeyTWPX2LXv5JsEXob/sXmP9uZfNP21M9vv/ukUE+YitocdfpPWy67h+VH1PkS
+ JEwA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 6/15/23 06:23, Miguel Ojeda wrote:
-> On Thu, Jun 15, 2023 at 5:52 AM Martin Rodriguez Reboredo
-> <yakoyoku@gmail.com> wrote:
->>
->> I can't remember that if this panic it will mention the path on it.
->> Though if it does, then use something more explicit than
->> `.unwrap()`.
-> 
-> It doesn't print it, and I am happy to make things more explicit, but
-> in which case(s) do you see it failing?
-> 
->> Please do not use unwrap here, one can easily create a path that
->> it's not compliant under `rust/test/doctests/kernel` and get no
->> clue about where this script has failed. Use `.expect()` or
->> something else instead.
-> 
-> The folder is removed every time, so that should not happen I think.
-> Yes, you can still hack things and call the script manually, but I
-> wouldn't call that "easily".
+After commit 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters"),
+modpost complains when building with clang:
 
-Ah, you are right, I've forgot that the folder was deleted and
-remade, and because of that an error is more likely to occur at that
-stage and not while `scripts/rustdoc_test_{builder,gen}.rs` is
-running. Thus.
+  WARNING: modpost: vmlinux.o: section mismatch in reference: core_vpe_count (section: .text) -> smp_max_threads (section: .init.data)
 
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+This warning occurs when core_vpe_count() is not inlined, as it appears
+that a non-init function is referring to an init symbol. However, this
+is not a problem in practice because core_vpe_count() is only called
+from __init functions, cps_smp_setup() and cps_prepare_cpus().
 
-> 
-> Nevertheless, I am happy to change it if we think there is a risk,
-> e.g. `rustdoc` changing the pattern (though we pin the version so
-> far).
-> 
-> Thanks for taking a look Martin!
-> 
-> Cheers,
-> Miguel
+Resolve the warning by marking core_vpe_count() as __init, as it is only
+called in an init context so it can refer to init functions and symbols
+and have its memory freed on boot.
+
+Fixes: 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/mips/kernel/smp-cps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
+index bea6a13ea464..92575222713b 100644
+--- a/arch/mips/kernel/smp-cps.c
++++ b/arch/mips/kernel/smp-cps.c
+@@ -29,7 +29,7 @@ static DECLARE_BITMAP(core_power, NR_CPUS);
+ 
+ struct core_boot_config *mips_cps_core_bootcfg;
+ 
+-static unsigned core_vpe_count(unsigned int cluster, unsigned core)
++static unsigned __init core_vpe_count(unsigned int cluster, unsigned core)
+ {
+ 	return min(smp_max_threads, mips_cps_numvps(cluster, core));
+ }
+
+---
+base-commit: 5cad8323040bb8d47e130c10ea4dcb7175c7602a
+change-id: 20230615-mips-mark-core_vpe_count-as-init-600dc73e367d
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
