@@ -1,222 +1,111 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91CD2E0D8
-	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 17:30:28 +0000 (UTC)
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6b2e1023f30so4688222a34.1
-        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 10:30:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C14EEAEE
+	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 19:42:31 +0000 (UTC)
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-43f519c0888so891072137.3
+        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 12:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686850227; x=1689442227;
+        d=google.com; s=20221208; t=1686858150; x=1689450150;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DBFAQ+OspbXgxiU1uwcjpJ+KgjxBMeHaD8ugzzQiLeU=;
-        b=DYHm+gT66KuV9e2kX1K7tNs1xU9tgGlItzNUZ1iRBBQrwfCAkcDV9cnKKHaAGB7M9F
-         sZmsZhyTndnwepjYMLa2x+v0MEVo5U0Sfr+NPf+wLdWHanjR4HaLDjGs+e5jwh82zGJb
-         XoPrahc5N5C7FPPy/fqyg/VgQgCHoMMlZFUH/SgUoYapNzCrmFkRy/PUvqRFgGLUEf5v
-         e6EJggAmMKnti3SDZTfyA6vlK6/RfPZRbvbveMXA9fnM0l27BjwSMLJoBy8GrfYk5DM5
-         k62BhikLVPBOtMOo7uHGqfzTaDvb7zErRS0o8+AdxXLjcTHQMXSE9vqv4Jh2tAm8oVOL
-         gmuQ==
+        bh=EEzNrFy4XtnBJchIRCyudJpLzlojDK3YzlAqwYMXFT0=;
+        b=lBwTUjIilesidUCNGaAvZ+xj4jRGP9ZPcdF6CpMtEeTbtwKGGC9zJYJcwMkwh5GDSj
+         6TO/HyTtOMlwBDHVt0L6hSeGPFlURYJRwbR0dz4PRCJYntqmF/3cCuuu0h/v1jxKA888
+         pcmBRHsiMmLRBAi8IYio5/cKlRMvzj4FcDxzkLhnj050yvQrc9Y1F2XzKmuYr5NBlcP1
+         EpPbrkvpKqrj1yDytJDpzeEKUPlcQGBPnhKCW4YtvBC64iiFEdkoC0QwKJLipXFkq7wc
+         jGtl3rS0rfb7Pcfqsc0daraaxrNMh7MKpbrNuhkhT76TdPMOj1SNGsX7ycRIVoJ3AQy9
+         BDIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686850227; x=1689442227;
+        d=1e100.net; s=20221208; t=1686858150; x=1689450150;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DBFAQ+OspbXgxiU1uwcjpJ+KgjxBMeHaD8ugzzQiLeU=;
-        b=Va60+u9PcXF82K9oweIK9Cvy/2OwPGaQ6+sdXWNQIZAu/JPrbrbNHJ/Zlw43XLsScv
-         ARYloBaIEERQg0DKK4t+jrgQ8v2s/TOUuSOgxigP0eIG62Hx+U5CxjaWd84310cEY37G
-         gRBXxz2Hx0Pfjick++ZRHdxzk6NE1QrSswHynV/jUTtnuT6jhrqV79qul/UcNbweJPbK
-         CaeA1rL0YwTj2rNm/qfm1if1isj6JxKJwP5nLCyu73Zy1QoKqmLxs+GmXc5EO4w6bqBS
-         or3mkvWCawsyxucyWEMRk17ZQpexCGHIATYpnT1+Sf6OABH1EUoParXV3K3bZ4RCbq/b
-         NbVA==
-X-Gm-Message-State: AC+VfDzueladn6dUm2jD4f6xJmRCZ/m6JWszUEwbXvAAb4lGbLMe965+
-	jMEuQGS+0ms1gqOPBdgKnRGPzzP7MBL7aPeJ3qI=
-X-Google-Smtp-Source: ACHHUZ43pEX4UxqrYbGcs9QMb5obU3lfpTRVrSjmZvwNSem2mYI53z+kAnG4gGLHZnRBTB+m7jNmjoyPuJiodrPSifg=
-X-Received: by 2002:a05:6870:4515:b0:180:b716:9825 with SMTP id
- e21-20020a056870451500b00180b7169825mr14924552oao.57.1686850227681; Thu, 15
- Jun 2023 10:30:27 -0700 (PDT)
+        bh=EEzNrFy4XtnBJchIRCyudJpLzlojDK3YzlAqwYMXFT0=;
+        b=dro58wunYTucvAxPO578YQaJJxE/BDxb1HzW5ICoxePIPdfPSVhFne0wgZRH1gsk2o
+         mvLO7OleSaCUhBpi6iZ9a+4yq795pIFMDUm92FQ7I8rkna/oX0nNaxPaRinXZQ5lZ4MN
+         pdQVqmhyJ4qnfMvj06fL3onOTVDent9vWpb+o8nLw1imPl205Ybupmv72I5BzhRYBYxe
+         yd1Vxux0EKjmCGrVnne+FXTvhkLVsemm30ctssb/Ap571oWL91jQjrCrds3LfQmFYqJc
+         Hnkk69xIIcmmxD9gxO4NQs7XFRxkHG2Av22bpgCI8DD+VHwaFxINJQz4kPMehVjrFHHq
+         xP5g==
+X-Gm-Message-State: AC+VfDxq22ff2xp3BLWisVimGvt366q+mAL5+28v2PHDZRcQY+KOR5+a
+	CGCpmat4DJVj4Ut0U3I2le9o0CNthFG8czuwwqIHhA==
+X-Google-Smtp-Source: ACHHUZ4DAcb8XJ7cK5trIjfYu8JayVxt4ZPxnD/vGCWza1Eoy4aPA1/eOXTHCyXUZSdlUS0q7KBknTMFqsdih3/7QPM=
+X-Received: by 2002:a67:f34d:0:b0:43b:38a5:f8a0 with SMTP id
+ p13-20020a67f34d000000b0043b38a5f8a0mr494060vsm.14.1686858149899; Thu, 15 Jun
+ 2023 12:42:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230615-amdgpu-wunused-const-variable-wo-debugfs-v1-0-06efd224aebb@kernel.org>
- <20230615-amdgpu-wunused-const-variable-wo-debugfs-v1-2-06efd224aebb@kernel.org>
-In-Reply-To: <20230615-amdgpu-wunused-const-variable-wo-debugfs-v1-2-06efd224aebb@kernel.org>
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Thu, 15 Jun 2023 13:30:16 -0400
-Message-ID: <CADnq5_OWLXzuZvro4g7bDngcO4xjesNr1H=pwDypLKNY-_7PPg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/amdgpu: Move clocks closer to its only usage in amdgpu_parse_cg_state()
+References: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
+In-Reply-To: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Thu, 15 Jun 2023 15:42:16 -0400
+Message-ID: <CAKwvOdndp=2h9se6ddGiYJ6S4o_ROFLD2CH5ZuW-SRa=DMapzw@mail.gmail.com>
+Subject: Re: [PATCH] MIPS: Mark core_vpe_count() as __init
 To: Nathan Chancellor <nathan@kernel.org>
-Cc: alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com, 
-	dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org, 
-	patches@lists.linux.dev
+Cc: tsbogend@alpha.franken.de, trix@redhat.com, jiaxun.yang@flygoat.com, 
+	linux-mips@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Applied the series.  Thanks!
-
-Alex
-
-On Thu, Jun 15, 2023 at 1:06=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
+On Thu, Jun 15, 2023 at 12:21=E2=80=AFPM Nathan Chancellor <nathan@kernel.o=
+rg> wrote:
 >
-> After commit a25a9dae2067 ("drm/amd/amdgpu: enable W=3D1 for amdgpu"),
-> there is an instance of -Wunused-const-variable when CONFIG_DEBUG_FS is
-> disabled:
+> After commit 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters"),
+> modpost complains when building with clang:
 >
->   drivers/gpu/drm/amd/amdgpu/../pm/amdgpu_pm.c:38:34: error: unused varia=
-ble 'clocks' [-Werror,-Wunused-const-variable]
->      38 | static const struct cg_flag_name clocks[] =3D {
->         |                                  ^
->   1 error generated.
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: core_vpe_co=
+unt (section: .text) -> smp_max_threads (section: .init.data)
 >
-> clocks is only used when CONFIG_DEBUG_FS is set, so move the definition
-> into the CONFIG_DEBUG_FS block right above its only usage to clear up
-> the warning.
+> This warning occurs when core_vpe_count() is not inlined, as it appears
+> that a non-init function is referring to an init symbol. However, this
+> is not a problem in practice because core_vpe_count() is only called
+> from __init functions, cps_smp_setup() and cps_prepare_cpus().
 >
+> Resolve the warning by marking core_vpe_count() as __init, as it is only
+> called in an init context so it can refer to init functions and symbols
+> and have its memory freed on boot.
+>
+> Fixes: 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters")
 > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+
+Thanks for the patch!
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+
 > ---
->  drivers/gpu/drm/amd/pm/amdgpu_pm.c | 76 +++++++++++++++++++-------------=
-------
->  1 file changed, 38 insertions(+), 38 deletions(-)
+>  arch/mips/kernel/smp-cps.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/=
-amdgpu_pm.c
-> index a57952b93e73..386ccf11e657 100644
-> --- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-> +++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-> @@ -35,44 +35,6 @@
->  #include <linux/pm_runtime.h>
->  #include <asm/processor.h>
+> diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
+> index bea6a13ea464..92575222713b 100644
+> --- a/arch/mips/kernel/smp-cps.c
+> +++ b/arch/mips/kernel/smp-cps.c
+> @@ -29,7 +29,7 @@ static DECLARE_BITMAP(core_power, NR_CPUS);
 >
-> -static const struct cg_flag_name clocks[] =3D {
-> -       {AMD_CG_SUPPORT_GFX_FGCG, "Graphics Fine Grain Clock Gating"},
-> -       {AMD_CG_SUPPORT_GFX_MGCG, "Graphics Medium Grain Clock Gating"},
-> -       {AMD_CG_SUPPORT_GFX_MGLS, "Graphics Medium Grain memory Light Sle=
-ep"},
-> -       {AMD_CG_SUPPORT_GFX_CGCG, "Graphics Coarse Grain Clock Gating"},
-> -       {AMD_CG_SUPPORT_GFX_CGLS, "Graphics Coarse Grain memory Light Sle=
-ep"},
-> -       {AMD_CG_SUPPORT_GFX_CGTS, "Graphics Coarse Grain Tree Shader Cloc=
-k Gating"},
-> -       {AMD_CG_SUPPORT_GFX_CGTS_LS, "Graphics Coarse Grain Tree Shader L=
-ight Sleep"},
-> -       {AMD_CG_SUPPORT_GFX_CP_LS, "Graphics Command Processor Light Slee=
-p"},
-> -       {AMD_CG_SUPPORT_GFX_RLC_LS, "Graphics Run List Controller Light S=
-leep"},
-> -       {AMD_CG_SUPPORT_GFX_3D_CGCG, "Graphics 3D Coarse Grain Clock Gati=
-ng"},
-> -       {AMD_CG_SUPPORT_GFX_3D_CGLS, "Graphics 3D Coarse Grain memory Lig=
-ht Sleep"},
-> -       {AMD_CG_SUPPORT_MC_LS, "Memory Controller Light Sleep"},
-> -       {AMD_CG_SUPPORT_MC_MGCG, "Memory Controller Medium Grain Clock Ga=
-ting"},
-> -       {AMD_CG_SUPPORT_SDMA_LS, "System Direct Memory Access Light Sleep=
-"},
-> -       {AMD_CG_SUPPORT_SDMA_MGCG, "System Direct Memory Access Medium Gr=
-ain Clock Gating"},
-> -       {AMD_CG_SUPPORT_BIF_MGCG, "Bus Interface Medium Grain Clock Gatin=
-g"},
-> -       {AMD_CG_SUPPORT_BIF_LS, "Bus Interface Light Sleep"},
-> -       {AMD_CG_SUPPORT_UVD_MGCG, "Unified Video Decoder Medium Grain Clo=
-ck Gating"},
-> -       {AMD_CG_SUPPORT_VCE_MGCG, "Video Compression Engine Medium Grain =
-Clock Gating"},
-> -       {AMD_CG_SUPPORT_HDP_LS, "Host Data Path Light Sleep"},
-> -       {AMD_CG_SUPPORT_HDP_MGCG, "Host Data Path Medium Grain Clock Gati=
-ng"},
-> -       {AMD_CG_SUPPORT_DRM_MGCG, "Digital Right Management Medium Grain =
-Clock Gating"},
-> -       {AMD_CG_SUPPORT_DRM_LS, "Digital Right Management Light Sleep"},
-> -       {AMD_CG_SUPPORT_ROM_MGCG, "Rom Medium Grain Clock Gating"},
-> -       {AMD_CG_SUPPORT_DF_MGCG, "Data Fabric Medium Grain Clock Gating"}=
-,
-> -       {AMD_CG_SUPPORT_VCN_MGCG, "VCN Medium Grain Clock Gating"},
-> -       {AMD_CG_SUPPORT_HDP_DS, "Host Data Path Deep Sleep"},
-> -       {AMD_CG_SUPPORT_HDP_SD, "Host Data Path Shutdown"},
-> -       {AMD_CG_SUPPORT_IH_CG, "Interrupt Handler Clock Gating"},
-> -       {AMD_CG_SUPPORT_JPEG_MGCG, "JPEG Medium Grain Clock Gating"},
-> -       {AMD_CG_SUPPORT_REPEATER_FGCG, "Repeater Fine Grain Clock Gating"=
-},
-> -       {AMD_CG_SUPPORT_GFX_PERF_CLK, "Perfmon Clock Gating"},
-> -       {AMD_CG_SUPPORT_ATHUB_MGCG, "Address Translation Hub Medium Grain=
- Clock Gating"},
-> -       {AMD_CG_SUPPORT_ATHUB_LS, "Address Translation Hub Light Sleep"},
-> -       {0, NULL},
-> -};
-> -
->  static const struct hwmon_temp_label {
->         enum PP_HWMON_TEMP channel;
->         const char *label;
-> @@ -3684,6 +3646,44 @@ static int amdgpu_debugfs_pm_info_pp(struct seq_fi=
-le *m, struct amdgpu_device *a
->         return 0;
+>  struct core_boot_config *mips_cps_core_bootcfg;
+>
+> -static unsigned core_vpe_count(unsigned int cluster, unsigned core)
+> +static unsigned __init core_vpe_count(unsigned int cluster, unsigned cor=
+e)
+>  {
+>         return min(smp_max_threads, mips_cps_numvps(cluster, core));
 >  }
 >
-> +static const struct cg_flag_name clocks[] =3D {
-> +       {AMD_CG_SUPPORT_GFX_FGCG, "Graphics Fine Grain Clock Gating"},
-> +       {AMD_CG_SUPPORT_GFX_MGCG, "Graphics Medium Grain Clock Gating"},
-> +       {AMD_CG_SUPPORT_GFX_MGLS, "Graphics Medium Grain memory Light Sle=
-ep"},
-> +       {AMD_CG_SUPPORT_GFX_CGCG, "Graphics Coarse Grain Clock Gating"},
-> +       {AMD_CG_SUPPORT_GFX_CGLS, "Graphics Coarse Grain memory Light Sle=
-ep"},
-> +       {AMD_CG_SUPPORT_GFX_CGTS, "Graphics Coarse Grain Tree Shader Cloc=
-k Gating"},
-> +       {AMD_CG_SUPPORT_GFX_CGTS_LS, "Graphics Coarse Grain Tree Shader L=
-ight Sleep"},
-> +       {AMD_CG_SUPPORT_GFX_CP_LS, "Graphics Command Processor Light Slee=
-p"},
-> +       {AMD_CG_SUPPORT_GFX_RLC_LS, "Graphics Run List Controller Light S=
-leep"},
-> +       {AMD_CG_SUPPORT_GFX_3D_CGCG, "Graphics 3D Coarse Grain Clock Gati=
-ng"},
-> +       {AMD_CG_SUPPORT_GFX_3D_CGLS, "Graphics 3D Coarse Grain memory Lig=
-ht Sleep"},
-> +       {AMD_CG_SUPPORT_MC_LS, "Memory Controller Light Sleep"},
-> +       {AMD_CG_SUPPORT_MC_MGCG, "Memory Controller Medium Grain Clock Ga=
-ting"},
-> +       {AMD_CG_SUPPORT_SDMA_LS, "System Direct Memory Access Light Sleep=
-"},
-> +       {AMD_CG_SUPPORT_SDMA_MGCG, "System Direct Memory Access Medium Gr=
-ain Clock Gating"},
-> +       {AMD_CG_SUPPORT_BIF_MGCG, "Bus Interface Medium Grain Clock Gatin=
-g"},
-> +       {AMD_CG_SUPPORT_BIF_LS, "Bus Interface Light Sleep"},
-> +       {AMD_CG_SUPPORT_UVD_MGCG, "Unified Video Decoder Medium Grain Clo=
-ck Gating"},
-> +       {AMD_CG_SUPPORT_VCE_MGCG, "Video Compression Engine Medium Grain =
-Clock Gating"},
-> +       {AMD_CG_SUPPORT_HDP_LS, "Host Data Path Light Sleep"},
-> +       {AMD_CG_SUPPORT_HDP_MGCG, "Host Data Path Medium Grain Clock Gati=
-ng"},
-> +       {AMD_CG_SUPPORT_DRM_MGCG, "Digital Right Management Medium Grain =
-Clock Gating"},
-> +       {AMD_CG_SUPPORT_DRM_LS, "Digital Right Management Light Sleep"},
-> +       {AMD_CG_SUPPORT_ROM_MGCG, "Rom Medium Grain Clock Gating"},
-> +       {AMD_CG_SUPPORT_DF_MGCG, "Data Fabric Medium Grain Clock Gating"}=
-,
-> +       {AMD_CG_SUPPORT_VCN_MGCG, "VCN Medium Grain Clock Gating"},
-> +       {AMD_CG_SUPPORT_HDP_DS, "Host Data Path Deep Sleep"},
-> +       {AMD_CG_SUPPORT_HDP_SD, "Host Data Path Shutdown"},
-> +       {AMD_CG_SUPPORT_IH_CG, "Interrupt Handler Clock Gating"},
-> +       {AMD_CG_SUPPORT_JPEG_MGCG, "JPEG Medium Grain Clock Gating"},
-> +       {AMD_CG_SUPPORT_REPEATER_FGCG, "Repeater Fine Grain Clock Gating"=
-},
-> +       {AMD_CG_SUPPORT_GFX_PERF_CLK, "Perfmon Clock Gating"},
-> +       {AMD_CG_SUPPORT_ATHUB_MGCG, "Address Translation Hub Medium Grain=
- Clock Gating"},
-> +       {AMD_CG_SUPPORT_ATHUB_LS, "Address Translation Hub Light Sleep"},
-> +       {0, NULL},
-> +};
-> +
->  static void amdgpu_parse_cg_state(struct seq_file *m, u64 flags)
->  {
->         int i;
+> ---
+> base-commit: 5cad8323040bb8d47e130c10ea4dcb7175c7602a
+> change-id: 20230615-mips-mark-core_vpe_count-as-init-600dc73e367d
 >
+> Best regards,
 > --
-> 2.41.0
+> Nathan Chancellor <nathan@kernel.org>
 >
+
+
+--=20
+Thanks,
+~Nick Desaulniers
