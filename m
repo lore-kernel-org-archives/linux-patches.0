@@ -1,229 +1,95 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36228379
-	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 01:44:26 +0000 (UTC)
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-5ed99ebe076so23786486d6.2
-        for <patches@lists.linux.dev>; Wed, 14 Jun 2023 18:44:26 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D829A625
+	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 03:52:06 +0000 (UTC)
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-6b1fa5a04e9so269014a34.1
+        for <patches@lists.linux.dev>; Wed, 14 Jun 2023 20:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686793466; x=1689385466;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=89wdz+93fOJGDfymVTb02j/BFgyh+BUwRn3kzUFi0mA=;
-        b=qaUE7LU4qCjY5uyqrdAzpX1qPmRugFlBpI2GmkRPUr4pVjvrlLmBIDCU7nwGIWB0z0
-         pqHFpWka4MhO2OzuZvCfOZkVmA4ww4TSdX6oODkweS9MdUB2fOFlNMDovgeAeFF8/dcW
-         Vt0SDng1sMs+/lB52fQcM5ndpuMFP2dqlOYZjTNQcqsOXvxQ7R7UcoaDMaKvo0fL8FVH
-         ORuYvcMZIakjsgiG8HoUK4BSILlv9EuTVDvg2Yqd0Zx+hizVMYxo/nOmPhgf+n668FIK
-         h2P4h5ed8MHQmnApkYOprfPRCLnBhbi0N6s0eCxXF5aS+hO2O41DnUNFBx9GGqZnXQQq
-         NfcA==
+        d=gmail.com; s=20221208; t=1686801125; x=1689393125;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XvOg6IfbDqELoJ+xhmzfRwP+bYiifV5+pLJQKyD2w2k=;
+        b=mc/lDSJlyiOvuCU0/kkMoWp3+Qa3gQ1ViKUT8uc95AOn+AXSA5VSlE9WJ1HQsI7IRr
+         KsmRtH32ZHgQ4Hlv1g/oF8L2iDIIx7orxQ5HMr3hX7c/wVvv3Zb3KLCqtLi/xaYUs1Jc
+         h5iBQaoFu/IzLJ8Xyuu7R16T4cTqd4AapakxQRGDTODajej2QnBCVWmUigc+nMjqpqL5
+         nwj/W2K5CfTbZd+1mQUX42cy4tjkMzMnBj6Cc1eUPQM1hxf6QaKXCHH3b7yEUPBFf1gl
+         3kLL4Si6UgrroKc/LniXIXnP9lNLVwR4AMPQf+W2WQ9GcKfzDJzxy60Z8VNK9EctvHwd
+         6RtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686793466; x=1689385466;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=89wdz+93fOJGDfymVTb02j/BFgyh+BUwRn3kzUFi0mA=;
-        b=e4pytpl5HrZWnzjUhqIsWK4BMCO/rRYLf4I9jE6/7/ZBECHTYfUO+HydQS2YGaZFbQ
-         /i4iL5cda37LaN2ene6XegADitp1yV0KqtgqqsNsyx3uriWxbly9hjKTkvAoiMvX7IqX
-         nmx8iRqPk3itHLazQKXrn6Qg0FWExRznkqYkRglClcmn0Hj/41sUqWJR1HMAJ8B10YFI
-         h+QuwUykk4w3/GIrkVVh+QWsbJMGshauNIrw/KNXj2Asw8N/uLpjKkQgyqxDrsdllu5T
-         VhrIViuu03LejIJBa7vPnic1uY7bAZ5iWMfnOA39TOO3vDugtv4kN/iTAhDB0LMxgYXp
-         eYJg==
-X-Gm-Message-State: AC+VfDxdyYMZvSIRlx4MeCoWSDGkvwn9K419WpwPUcCl0Cd+9KorWXo5
-	s+lQHx1Ax2U30QpkuLr29t8=
-X-Google-Smtp-Source: ACHHUZ6mUyqj0y59odMzK/cplVR3BePgKBfHjKYwcbBBvPuWywGDU8vCFZCC/6crtTOLUqlFQtDlvw==
-X-Received: by 2002:a05:6214:19e2:b0:62d:e946:5188 with SMTP id q2-20020a05621419e200b0062de9465188mr13538848qvc.40.1686793465767;
-        Wed, 14 Jun 2023 18:44:25 -0700 (PDT)
-Received: from auth1-smtp.messagingengine.com (auth1-smtp.messagingengine.com. [66.111.4.227])
-        by smtp.gmail.com with ESMTPSA id n6-20020a0ce546000000b006267daad667sm5270043qvm.94.2023.06.14.18.44.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jun 2023 18:44:25 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailauth.nyi.internal (Postfix) with ESMTP id B4EB927C0054;
-	Wed, 14 Jun 2023 21:44:24 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Wed, 14 Jun 2023 21:44:24 -0400
-X-ME-Sender: <xms:92yKZJY-S4jpDP5jvDIK090rZrVDddT5MmpfL-ks-SACdb-7RDixuQ>
-    <xme:92yKZAaGgrBc3GL7bU3acW2W2bcOO-MsxYo19wB-f6J2UkBsc4sMYRH7sLyYfE_PI
-    QZwIWkV36QK0TAC5g>
-X-ME-Received: <xmr:92yKZL_M5CR2-nRl58TETt-ghJl2ZVdu5dT6uW97PU-35rEvai6EjZqFDHk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgedvuddgheduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehoqhhu
-    nhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeehudfgudffffetuedtvdehueevledvhfelleeivedtgeeuhfegueeviedu
-    ffeivdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    gsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdei
-    gedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfih
-    igmhgvrdhnrghmvg
-X-ME-Proxy: <xmx:92yKZHozVuyOU60t-cpqoSDOB7CTMQd-Nia8sC2Y-d4dTiNr-OzyxQ>
-    <xmx:92yKZEpLr4_3UaSVYme33QyFeK8b4_caL00Gl7wxPzCI6VKYzIFRrA>
-    <xmx:92yKZNQmZsDIZLNUFHcZ-VV-C80AV7YXgexJXK8cFC3rXBHzp--gOg>
-    <xmx:-GyKZAbgaDFx5_yoc2ckHBB68Cre8pwAHI7vNqyE0PEvQ2AWQ0S3DQ>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 Jun 2023 21:44:22 -0400 (EDT)
-Date: Wed, 14 Jun 2023 18:44:19 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: David Gow <davidgow@google.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <nmi@metaspace.dk>,
-	Philip Li <philip.li@intel.com>, kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 0/6] KUnit integration for Rust doctests
-Message-ID: <ZIps86MbJF/iGIzd@boqun-archlinux>
-References: <20230614180837.630180-1-ojeda@kernel.org>
+        d=1e100.net; s=20221208; t=1686801125; x=1689393125;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XvOg6IfbDqELoJ+xhmzfRwP+bYiifV5+pLJQKyD2w2k=;
+        b=Ed8eoaltcbsNJpS1secRGgq2ll1ArtIASM76bCafh8m/DYOyRj6Ga3PgxSLKZXEco7
+         IUaQvJ84EvjLf99Qd4+HSh1gSf2/lx/UqtTiWbdDBhXcqf3+C2w6m55Wq08ThzHr7YM2
+         gEPGZmLxwg1cCkPQG//vU0CsNFAt0xhlNfXO/OSpq2BhMJUGgvCjSnI29CYgFD8Am+ez
+         pvieYI9vQhjJRSUQMWh1NoKmdeTr0RjeuDuL5ld6Wd9tJB6NlAmlIJ42uqt6r6n+/FpA
+         xZ1ca90+fQ+hOJ4Y//qD9WB94/rP82mylFxZii4loz/ALEHkYx1pFLhDvlz9pQZfppuh
+         /rJQ==
+X-Gm-Message-State: AC+VfDxo9nOvJblwFT24PD3MUOduxLMytEnC8Ca3BuwH3k0szMGOkf/V
+	t3OzDqLv3wqclT4p3xNxkKU=
+X-Google-Smtp-Source: ACHHUZ65QNp1nT4Po7nJM3CDNMKAiSKyD8qHADr54qw8cYq2P0sGXMiG2Eur0+P3JLDKa0U6gGnshw==
+X-Received: by 2002:a05:6830:6112:b0:6b4:293e:b99a with SMTP id ca18-20020a056830611200b006b4293eb99amr2953804otb.9.1686801125584;
+        Wed, 14 Jun 2023 20:52:05 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id c8-20020a9d4808000000b006b296562566sm6338554otf.79.2023.06.14.20.52.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 20:52:05 -0700 (PDT)
+Message-ID: <2b4b23ce-316e-b998-7faf-e529b121a8b4@gmail.com>
+Date: Wed, 14 Jun 2023 22:03:33 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230614180837.630180-1-ojeda@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 1/6] rust: init: make doctests compilable/testable
+Content-Language: en-US
+To: Miguel Ojeda <ojeda@kernel.org>, David Gow <davidgow@google.com>,
+ Brendan Higgins <brendan.higgins@linux.dev>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>,
+ Andreas Hindborg <nmi@metaspace.dk>, Philip Li <philip.li@intel.com>,
+ kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20230614180837.630180-1-ojeda@kernel.org>
+ <20230614180837.630180-2-ojeda@kernel.org>
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <20230614180837.630180-2-ojeda@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 14, 2023 at 08:08:24PM +0200, Miguel Ojeda wrote:
-> This is the initial KUnit integration for running Rust documentation
-> tests within the kernel.
+On 6/14/23 15:08, Miguel Ojeda wrote:
+> Rust documentation tests are going to be build/run-tested
+> with the KUnit integration added in a future patch, thus
+> update them to make them compilable/testable so that we
+> may start enforcing it.
 > 
-> Thank you to the KUnit team for all the input and feedback on this
-> over the months, as well as the Intel LKP 0-Day team!
-> 
-> This may be merged through either the KUnit or the Rust trees. If
-> the KUnit team wants to merge it, then that would be great.
-> 
-> Please see the message in the main commit for the details.
-> 
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> [...]
+>   //! #     pub unsafe fn destroy_foo(_ptr: *mut foo) {}
+>   //! #     pub unsafe fn enable_foo(_ptr: *mut foo, _flags: u32) -> i32 { 0 }
+>   //! # }
+> +//! # trait FromErrno {
+> +//! #     fn from_errno(errno: core::ffi::c_int) -> Error {
+> +//! #         // Dummy error that can be constructed outside the `kernel` crate.
+> +//! #         Error::from(core::fmt::Error)
+> +//! #     }
+> +//! # }
+> +//! # impl FromErrno for Error {}
+>   //! /// # Invariants
+>   //! ///
+>   //! /// `foo` is always initialized
+> [...]
 
-Great work! I've played this for a while, and it's really useful ;-)
-
-One thing though, maybe we can provide more clues for users to locate
-the corresponding Doctests? For example, I did the following to trigger
-an assertion:
-
-	diff --git a/rust/kernel/sync/lock/spinlock.rs b/rust/kernel/sync/lock/spinlock.rs
-	index 91eb2c9e9123..9ead152e2c7e 100644
-	--- a/rust/kernel/sync/lock/spinlock.rs
-	+++ b/rust/kernel/sync/lock/spinlock.rs
-	@@ -58,7 +58,7 @@ macro_rules! new_spinlock {
-	 ///
-	 /// // Allocate a boxed `Example`.
-	 /// let e = Box::pin_init(Example::new())?;
-	-/// assert_eq!(e.c, 10);
-	+/// assert_eq!(e.c, 11);
-	 /// assert_eq!(e.d.lock().a, 20);
-	 /// assert_eq!(e.d.lock().b, 30);
-	 /// # Ok::<(), Error>(())
-
-Originally I got:
-
-	[..] # Doctest from line 35
-	[..] # rust_doctest_kernel_sync_lock_spinlock_rs_0: ASSERTION FAILED at rust/doctests_kernel_generated.rs:2437
-	[..] Expected e.c == 11 to be true, but is false
-	[..] [FAILED] rust_doctest_kernel_sync_lock_spinlock_rs_0
-
-The assertion warning only says line 35 but which file? Yes, the
-".._sync_lock_spinlock_rs" name does provide the lead, however since we
-generate the test code, so we actually know the line # for each real
-test body, so I come up a way to give us the following:
-
-	[..] # rust_doctest_kernel_sync_lock_spinlock_rs_0: ASSERTION FAILED at rust/kernel/sync/lock/spinlock.rs:61
-	[..] Expected e.c == 11 to be true, but is false
-	[..] [FAILED] rust_doctest_kernel_sync_lock_spinlock_rs_0
-
-Thoughts?
-
-Regards,
-Boqun
-
------------------>8
-diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
-index 3c94efcd7f76..807fe3633567 100644
---- a/rust/kernel/kunit.rs
-+++ b/rust/kernel/kunit.rs
-@@ -49,15 +49,15 @@ pub fn info(args: fmt::Arguments<'_>) {
- #[doc(hidden)]
- #[macro_export]
- macro_rules! kunit_assert {
--    ($name:literal, $condition:expr $(,)?) => {
-+    ($name:literal, $diff:expr, $file:expr, $condition:expr $(,)?) => {
-         'out: {
-             // Do nothing if the condition is `true`.
-             if $condition {
-                 break 'out;
-             }
- 
--            static LINE: i32 = core::line!() as i32;
--            static FILE: &'static $crate::str::CStr = $crate::c_str!(core::file!());
-+            static LINE: i32 = core::line!() as i32 - $diff;
-+            static FILE: &'static $crate::str::CStr = $crate::c_str!($file);
-             static CONDITION: &'static $crate::str::CStr = $crate::c_str!(stringify!($condition));
- 
-             // SAFETY: FFI call without safety requirements.
-@@ -148,9 +148,9 @@ unsafe impl Sync for UnaryAssert {}
- #[doc(hidden)]
- #[macro_export]
- macro_rules! kunit_assert_eq {
--    ($name:literal, $left:expr, $right:expr $(,)?) => {{
-+    ($name:literal, $diff:expr, $file:expr, $left:expr, $right:expr $(,)?) => {{
-         // For the moment, we just forward to the expression assert because, for binary asserts,
-         // KUnit supports only a few types (e.g. integers).
--        $crate::kunit_assert!($name, $left == $right);
-+        $crate::kunit_assert!($name, $diff, $file, $left == $right);
-     }};
- }
-diff --git a/scripts/rustdoc_test_gen.rs b/scripts/rustdoc_test_gen.rs
-index 793885c32c0d..4786a2ef0dc6 100644
---- a/scripts/rustdoc_test_gen.rs
-+++ b/scripts/rustdoc_test_gen.rs
-@@ -75,6 +75,11 @@ fn main() {
- 
-         let line = line.parse::<core::ffi::c_int>().unwrap();
- 
-+        let src_file = format!("rust/kernel/{}", file.replace("_rs", ".rs").replace("_", "/"));
-+
-+        // Calculate how many lines before `main` function (including the `main` function line).
-+        let body_offset = body.lines().take_while(|l| !l.contains("fn main() {")).count() + 1;
-+
-         use std::fmt::Write;
-         write!(
-             rust_tests,
-@@ -85,7 +90,7 @@ pub extern "C" fn {kunit_name}(__kunit_test: *mut kernel::bindings::kunit) {{
-     #[allow(unused)]
-     macro_rules! assert {{
-         ($cond:expr $(,)?) => {{{{
--            kernel::kunit_assert!("{kunit_name}", $cond);
-+            kernel::kunit_assert!("{kunit_name}", anchor - {line}, "{src_file}", $cond);
-         }}}}
-     }}
- 
-@@ -93,7 +98,7 @@ macro_rules! assert {{
-     #[allow(unused)]
-     macro_rules! assert_eq {{
-         ($left:expr, $right:expr $(,)?) => {{{{
--            kernel::kunit_assert_eq!("{kunit_name}", $left, $right);
-+            kernel::kunit_assert_eq!("{kunit_name}", anchor - {line}, "{src_file}", $left, $right);
-         }}}}
-     }}
- 
-@@ -101,9 +106,8 @@ macro_rules! assert_eq {{
-     #[allow(unused)]
-     use kernel::prelude::*;
- 
--    // Display line number so that developers can map the test easily to the source code.
--    kernel::kunit::info(format_args!("    # Doctest from line {line}\n"));
--
-+    // The anchor where the test code body starts.
-+    static anchor: i32 = core::line!() as i32 + {body_offset} + 1;
-     {{
-         {body}
-         main();
+Little question, what's the purpose of `FromErrno` here?
