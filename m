@@ -1,54 +1,53 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A89153BA
-	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 09:23:36 +0000 (UTC)
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-3f9dd2fabe2so27628921cf.3
-        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 02:23:36 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB70525B
+	for <patches@lists.linux.dev>; Thu, 15 Jun 2023 09:31:50 +0000 (UTC)
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-bad0c4f6f50so925272276.1
+        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 02:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686821016; x=1689413016;
+        d=gmail.com; s=20221208; t=1686821509; x=1689413509;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oGOHFXjoBS2ub7744MFzAfGB3y1RlKfr94cgOk8utvg=;
-        b=bQPiUW2V/29fzHAWymvAuQKmj6vXfz5zArXjocuKNgdfoFxWwTMHtWWS1g/dPGmOk9
-         gdnCT1uCVb+1TPiOdR0qq9Xp55gm3Kw4HgkiENLdyJ7Em6K1KJ56gxXpvgsUQyLNq9hH
-         iRHuY2mIidQd/qDJsBLM0FfcS3GxlHfjBgvZa/zwYlokG3p8IZ9nGTQi/FWiMwiarjy3
-         rjXZVu71fjJjFrKCb9n7BsQc+43Pj4ZMEH0O1Kb23mLVDUQz36LbEcCldXeIWmrYPNp4
-         rNR5x2LPD5WKSr8vCsvMUGSl3NUds51A18JWFiHz6B0U1hBuYdtMcdL11Jg3SHP+d5SN
-         hUCg==
+        bh=di66cKm4TSNTvyJIxIEt8peXod16WLfPyBmGUqyjx8A=;
+        b=e02FzfAAe7TAzqPFI1NcUDpyeWS8RO+q/51tmwLU9bP2Ro8bCXmKckt2kbm2ZjdxCy
+         fm3Pq8acrGSYhTJgQHto02XStVs4+X5cV9PGaXc5+msESCBYpbGe15S9IQI/7XBPHVwD
+         Et5+5hXyrvQPTLNccgcN3v0KHj6OJrr6m910qVknvd6M1PsQ+viNQr5lzG39v3MJhpV+
+         Jk5Is0s1GXsPATCc/FDmcNqhY6QK+J+ADjZ39RCzK4j9Fzi3I6gdP8DKLx6Hawkw6Voo
+         7D+tt1yiS0+fP1ivNHykUxMZEcYv9lcgG8NSDc/OBAluZG/NvPPUlVzz58O3TgCAw9pE
+         +BZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686821016; x=1689413016;
+        d=1e100.net; s=20221208; t=1686821509; x=1689413509;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oGOHFXjoBS2ub7744MFzAfGB3y1RlKfr94cgOk8utvg=;
-        b=XLveTnSn98UnWKwsdhppLupxC1K+MCrvGF9swv41UVK+kpCWt+gQQAeuCGSCWNmS9D
-         BFH1l9jI2tRTpPC2F7Sr6T9ZwfV5W0S3OKyZD4KnzTd7v6GzIIDuP4uSSiUcGVB1S5Sq
-         YnaT0vs7149PEaj6WJyyJYVjoWwmMIyxRadUd2oDXgJvLYww3bfnHXNOY3kPtkHA8sET
-         eZt104Dyla9hvQjVWlMTnciMwbXoIj7yZBPceJWeTg01x0q8KZdu5GVVCoCa7wT8+Vr7
-         VX6KzyhoOfGDfFzZBnUaFxl5gVDMvJdlQE0WG9RDcLjgheBi+t3q0SWRWfbYbcsquC7G
-         WD9w==
-X-Gm-Message-State: AC+VfDyFm68GaKF8CJpRILnsVTnruCZeX8UE6Hbm1vulEnOtXjE+PGY2
-	l27m6vNwwwMUAyDwNAR0zlfldKgLUzkBdDeUaxA=
-X-Google-Smtp-Source: ACHHUZ5Xi1q7Qr8BpQtJ7QY25OlQp8ICSTCgK7JFeKCy6nELV0YWKp8eHxludT1KOtcxg84RnehJIFUxL8ijvgsUqx8=
-X-Received: by 2002:a05:622a:589:b0:3f9:d70f:ff6b with SMTP id
- c9-20020a05622a058900b003f9d70fff6bmr5547763qtb.56.1686821015825; Thu, 15 Jun
- 2023 02:23:35 -0700 (PDT)
+        bh=di66cKm4TSNTvyJIxIEt8peXod16WLfPyBmGUqyjx8A=;
+        b=Mc7Z4CpTlXUNeC6FqSVoYRjt3NYI+WjNo/EsZ6GVXQqZpulcOQu+O5z8HID2guvM4H
+         sJ76TYwOWmhxDz9mDXYE4WJka1re84tFmTHLSKl7TaSmVamw5i4EDrldffpDBYyNYDkF
+         HoyzL76HUBJHpt5Tgvs5V8N9pCtVTi9aG9vKGr5PLssqc2t1REuAA4AHlU8WD/xqsful
+         /5cXckauKpHyhzLQXlhSYLoTZSWqKLdlG/1wZaroAlLN3VEKL3MiFhpglIaf3ZJGqzLM
+         GKxrKttboY7ycwdyoviPBMjoUWRODy1eRkfiIIzJlFydp943VR4AVrNSE/qhZQ2bRVHr
+         hlVg==
+X-Gm-Message-State: AC+VfDwOv2C98CykYaDietQOuZVDalkBsgDzmc5o+NgnP+J2oeCd4SWB
+	EgR2+f/cOCi9kCucXsqUTSXdRUoau7JcVpMdizE=
+X-Google-Smtp-Source: ACHHUZ6gTgwthX4La0xbY3vwt2dDYdqybB2xqWiZHioIDURaKg4OHiGOZ2lS1gUUCClyR9i4ST922OsezwVW9+gw8oU=
+X-Received: by 2002:a25:7316:0:b0:bc4:f2e5:5343 with SMTP id
+ o22-20020a257316000000b00bc4f2e55343mr4915969ybc.28.1686821509582; Thu, 15
+ Jun 2023 02:31:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230614180837.630180-1-ojeda@kernel.org> <20230614180837.630180-6-ojeda@kernel.org>
- <49dad8fe-c509-6c43-559e-13a82563d3d0@gmail.com>
-In-Reply-To: <49dad8fe-c509-6c43-559e-13a82563d3d0@gmail.com>
+References: <20230614180837.630180-1-ojeda@kernel.org> <20230614180837.630180-2-ojeda@kernel.org>
+ <2b4b23ce-316e-b998-7faf-e529b121a8b4@gmail.com>
+In-Reply-To: <2b4b23ce-316e-b998-7faf-e529b121a8b4@gmail.com>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 15 Jun 2023 11:23:24 +0200
-Message-ID: <CANiq72mq4wYJ77qDKYWTO=FkA1AYat2rJd63Gps9aUrP82c9dQ@mail.gmail.com>
-Subject: Re: [PATCH 5/6] rust: support running Rust documentation tests as
- KUnit ones
+Date: Thu, 15 Jun 2023 11:31:38 +0200
+Message-ID: <CANiq72mApAXEtoWgkaLvZJu6gn=9CkyogRXVfbYxPsR5TeFUVQ@mail.gmail.com>
+Subject: Re: [PATCH 1/6] rust: init: make doctests compilable/testable
 To: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, David Gow <davidgow@google.com>, 
 	Brendan Higgins <brendan.higgins@linux.dev>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
@@ -64,27 +63,13 @@ Content-Transfer-Encoding: quoted-printable
 On Thu, Jun 15, 2023 at 5:52=E2=80=AFAM Martin Rodriguez Reboredo
 <yakoyoku@gmail.com> wrote:
 >
-> I can't remember that if this panic it will mention the path on it.
-> Though if it does, then use something more explicit than
-> `.unwrap()`.
+> Little question, what's the purpose of `FromErrno` here?
 
-It doesn't print it, and I am happy to make things more explicit, but
-in which case(s) do you see it failing?
+It was because `Error::from_errno` is `pub(crate)` in the `kernel`
+crate. I should have added a comment -- my bad! :)
 
-> Please do not use unwrap here, one can easily create a path that
-> it's not compliant under `rust/test/doctests/kernel` and get no
-> clue about where this script has failed. Use `.expect()` or
-> something else instead.
-
-The folder is removed every time, so that should not happen I think.
-Yes, you can still hack things and call the script manually, but I
-wouldn't call that "easily".
-
-Nevertheless, I am happy to change it if we think there is a risk,
-e.g. `rustdoc` changing the pattern (though we pin the version so
-far).
-
-Thanks for taking a look Martin!
+If we decided to make it `pub` eventually, then this `FromErrno` hack
+can be removed.
 
 Cheers,
 Miguel
