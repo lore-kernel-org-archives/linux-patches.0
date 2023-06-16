@@ -1,51 +1,51 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3AC7C
-	for <patches@lists.linux.dev>; Fri, 16 Jun 2023 04:51:30 +0000 (UTC)
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-3f81b83b8d5so38995e9.1
-        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 21:51:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4691B7C
+	for <patches@lists.linux.dev>; Fri, 16 Jun 2023 04:51:48 +0000 (UTC)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-514ad92d1e3so3492a12.1
+        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 21:51:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686891089; x=1689483089;
+        d=google.com; s=20221208; t=1686891106; x=1689483106;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=WqJDOItWMbAPD3TZq/+Pkf3x7pUNOiYwNm/wmYCCKEk=;
-        b=1xdVAF2KG5z/r6fbfQ5u7Z9bIHNcHESQkLt6Lbs37k3dwW8XnNiUP26slc/O2Vfclk
-         E8oc86nCGVW4mcWoXsmP5OfyCv1Zz3++SF5+hYNGofVdC6B5b2g7Mw631MnuqWtA6J9a
-         EWOfJR0BXBOVMZwSfZN4ANDNe72Y8omvCyl/+8WxbAI28gtI4drq3kLTsTEOIHBBpb6n
-         fviVV2OuDlpnd06PqTFnWd0/MH6PhN2/zVO6g39bRTpm07VdKQWjo1Gjb7N++OsLfgvW
-         G7Q2VFBiYy2Pi0n4/8+kNOsl5yKcL4bQ9QBvEK19rliyFOJRcTqlde6OaBZN4EDNqG3u
-         C3jA==
+        bh=FODkfvLWf1KbQEKCeroMuHrLWysb6FhLD1BcvqOxx7Y=;
+        b=HhwOLpfbToZkIVkifx2UpVToZcICdLKQHYvVaa4CuffvV498kPXx4kt1eXLrmupcLM
+         Wg6f2AKDGC8GclfaBfN0eQiyMbzLl9zp74F4MizzELTLzShsFOOLxNt0fCAzJCUJlnTl
+         KYlov+CqRuE3vBzARvKfrVm9Bc5i5Trw714mswMgg9E3PUeIV/+IeW4REEYPVYcG69LH
+         aEKCWRBqTccIbDcwBUFdTIrQreQZcn2K8vsKv0w/MLZ0sgme61wFDmxpHtZYo3Ucmhqs
+         s3ZK4ZFrUZNzIFiD+OooovJ14RiAWNPrlTJD3CngZK+BtItbtpj3Bf9B8x8lgvaetHpv
+         jdXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686891089; x=1689483089;
+        d=1e100.net; s=20221208; t=1686891106; x=1689483106;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WqJDOItWMbAPD3TZq/+Pkf3x7pUNOiYwNm/wmYCCKEk=;
-        b=Z5ZWvZlACiMFENwZ/bzQAfeZSSn6IiAdMU2zRtQ5p/xs8qY0wBhVrFj2Hgcnz8JY29
-         4Vn7izXk5TP9oTlmHqqZgsTrDXGHBXQpSNmCRCNfd26H+nSdVs0PjTvSL7MYj4435ZXr
-         R7oxApMGUu6+NPHJi0bJFntAkCpCvG9vyrDRR8AN+nygitWPv4AdnLCIXi1jhU0zPuMs
-         e6KDhRiV7risgrIo0Y0use55QoY3kie5ScuNVveDNLcLwui+3nhDIFFev8JymRMXY0uW
-         lHESlSLjwyFySl/O+3U75m1EHoC86N5ZVberC61de7LK9Mz4pqn6iWdLsDbKPIne0dxp
-         ZQ0A==
-X-Gm-Message-State: AC+VfDx0R/QZ6dqq+7BueUseKEX+nLWSf6kgBAKTfkTWqQqalJuUcHg3
-	Ko0xph10UR01ONuPO7RonYrdyXzYBAFNI/k5MfoLgA==
-X-Google-Smtp-Source: ACHHUZ7FR3MPBinMMBNYI1cpnVFLVNY1HWK/H3/0/hgiIgUYEYCAqFHD2AIQ7yOQiQsq3WJSFAR3iKQKYM9g/iLtAog=
-X-Received: by 2002:a05:600c:4e52:b0:3f7:e4d8:2569 with SMTP id
- e18-20020a05600c4e5200b003f7e4d82569mr328353wmq.5.1686891089101; Thu, 15 Jun
- 2023 21:51:29 -0700 (PDT)
+        bh=FODkfvLWf1KbQEKCeroMuHrLWysb6FhLD1BcvqOxx7Y=;
+        b=iBu9bzLv2X9P58mDJZWS1nn5K0TzWjJmLFv0EXAnIozZwOAmJH6OevK67UL1vRrIgq
+         5fBtAGBLyUw9dZ2kzYV9/Lt47Q5pbTk7LvxQ8YHIXmJ+sPAt11t1pDv456YqED9f4EKR
+         i4kEF4YihwHY9Z6hzPhFF4Pn836iUh9DM752aTtgjce/XGZdj2CYWk07uYVTkF1hqRFU
+         FnxlrdcYdseiBzbdIY29LtFI1iOcaeLzDR8/s3xnrQkf32usE1OEV+EWNd3Jkgd/iHCS
+         M6XxXxfzBYIPVY8qhoP53Eyt2pEhT7cy3w9rUbwFUM/pRb7BJSzx3PdwHmIRb+pBeU8h
+         v09A==
+X-Gm-Message-State: AC+VfDydYDhRj2vunpqWCQKVwkGYztDYA0hVEJx2dEUE3owDp8E/20Ct
+	ZNYIPmEJE7L+0h37ri4c/9082YA5PJiP2/K8efRfTw==
+X-Google-Smtp-Source: ACHHUZ5B80Ex1qt23A2jQgzRzDCchhWoDdRwtGVYek2BtWVIORW0Bm2qbsm0ydaMj2EAYiov4LO8+JDTnRxAA0YJfps=
+X-Received: by 2002:a50:9e07:0:b0:50b:f6ce:2f3d with SMTP id
+ z7-20020a509e07000000b0050bf6ce2f3dmr199397ede.0.1686891106375; Thu, 15 Jun
+ 2023 21:51:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230614180837.630180-1-ojeda@kernel.org>
-In-Reply-To: <20230614180837.630180-1-ojeda@kernel.org>
+References: <20230614180837.630180-1-ojeda@kernel.org> <20230614180837.630180-2-ojeda@kernel.org>
+In-Reply-To: <20230614180837.630180-2-ojeda@kernel.org>
 From: David Gow <davidgow@google.com>
-Date: Fri, 16 Jun 2023 12:51:15 +0800
-Message-ID: <CABVgOSnprvxzi-z42KFjOZsiRUv7u7E2poVGJNmTfS2OU4x4AA@mail.gmail.com>
-Subject: Re: [PATCH 0/6] KUnit integration for Rust doctests
+Date: Fri, 16 Jun 2023 12:51:34 +0800
+Message-ID: <CABVgOS=MH-FepkejyT25DMu2vo6wbyXUmNKJQ7odnHpuSJhgAA@mail.gmail.com>
+Subject: Re: [PATCH 1/6] rust: init: make doctests compilable/testable
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
@@ -55,94 +55,27 @@ Cc: Brendan Higgins <brendan.higgins@linux.dev>, Wedson Almeida Filho <wedsonaf@
 	linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000002aa91a05fe37f09e"
+	boundary="0000000000002f62d905fe37f16c"
 
---0000000000002aa91a05fe37f09e
+--0000000000002f62d905fe37f16c
 Content-Type: text/plain; charset="UTF-8"
 
 On Thu, 15 Jun 2023 at 02:09, Miguel Ojeda <ojeda@kernel.org> wrote:
 >
-> This is the initial KUnit integration for running Rust documentation
-> tests within the kernel.
+> Rust documentation tests are going to be build/run-tested
+> with the KUnit integration added in a future patch, thus
+> update them to make them compilable/testable so that we
+> may start enforcing it.
 >
-> Thank you to the KUnit team for all the input and feedback on this
-> over the months, as well as the Intel LKP 0-Day team!
->
-> This may be merged through either the KUnit or the Rust trees. If
-> the KUnit team wants to merge it, then that would be great.
->
-> Please see the message in the main commit for the details.
->
->
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
 
-Thanks very much for putting this together! I've been looking forward
-to it, and it works well here.
-
-I've been running it on linux-next to get both the pending KUnit and
-Rust changes, and it works well apart from needing to fix a couple of
-conflicts from
-https://git.kernel.org/pub/scm/linux/kernel/git/shuah/linux-kselftest.git/commit/?h=kunit&id=260755184cbdb267a046e7ffd397c1d2ba09bb5e
-
-In particular, the tests run with:
-./tools/testing/kunit/kunit.py run --kconfig_add CONFIG_RUST=y
---make_options LLVM=1 'rust_doctests_kernel'
-
-And also under QEMU / x86_64 with:
-./tools/testing/kunit/kunit.py run --arch x86_64 --kconfig_add
-CONFIG_RUST=y --make_options LLVM=1 'rust_doctests_kernel'
-
-(And I'm looking forward to trying out the other architecture support
-patches with it, too)
-
-The doctests also run nicely as part of the default test suite when
-CONFIG_RUST=y. At some point, we might want to add a Rust-specific
-.kunitconfig to make it easier to just run Rust-related test suites,
-but it's not a big deal for just these.
-
-I assume we'll take this in via the kselftest/kunit tree for 6.6, but
-if you'd rather take them via the Rust tree, that's fine too.
+Reviewed-by: David Gow <davidgow@google.com>
 
 Cheers,
 -- David
 
-> Miguel Ojeda (6):
->   rust: init: make doctests compilable/testable
->   rust: str: make doctests compilable/testable
->   rust: sync: make doctests compilable/testable
->   rust: types: make doctests compilable/testable
->   rust: support running Rust documentation tests as KUnit ones
->   MAINTAINERS: add Rust KUnit files to the KUnit entry
->
->  MAINTAINERS                       |   2 +
->  lib/Kconfig.debug                 |  13 +++
->  rust/.gitignore                   |   2 +
->  rust/Makefile                     |  29 ++++++
->  rust/bindings/bindings_helper.h   |   1 +
->  rust/helpers.c                    |   7 ++
->  rust/kernel/init.rs               |  25 +++--
->  rust/kernel/kunit.rs              | 156 ++++++++++++++++++++++++++++
->  rust/kernel/lib.rs                |   2 +
->  rust/kernel/str.rs                |   4 +-
->  rust/kernel/sync/arc.rs           |   9 +-
->  rust/kernel/sync/lock/mutex.rs    |   1 +
->  rust/kernel/sync/lock/spinlock.rs |   1 +
->  rust/kernel/types.rs              |   6 +-
->  scripts/.gitignore                |   2 +
->  scripts/Makefile                  |   4 +
->  scripts/rustdoc_test_builder.rs   |  73 ++++++++++++++
->  scripts/rustdoc_test_gen.rs       | 162 ++++++++++++++++++++++++++++++
->  18 files changed, 484 insertions(+), 15 deletions(-)
->  create mode 100644 rust/kernel/kunit.rs
->  create mode 100644 scripts/rustdoc_test_builder.rs
->  create mode 100644 scripts/rustdoc_test_gen.rs
->
->
-> base-commit: d2e3115d717197cb2bc020dd1f06b06538474ac3
-> --
-> 2.41.0
->
-
---0000000000002aa91a05fe37f09e
+--0000000000002f62d905fe37f16c
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -209,14 +142,14 @@ jyzYFOHYQyv5IfML/3IBFKlON5OZa+V8EZYULYcNkp03DdWglafj7SXZ1/XgAbVYrC381UvrsYN8
 jndVvoa1GWwe+NVlIIK7Q3uAjV3qLEDQpaNPg1rr0oAn6YmvTccjVMqj2YNwN+RHhKNzgRGxY5ct
 FaN+8fXZhRhpv3bVbAWuPZXoMYICajCCAmYCAQEwaDBUMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQ
 R2xvYmFsU2lnbiBudi1zYTEqMCgGA1UEAxMhR2xvYmFsU2lnbiBBdGxhcyBSMyBTTUlNRSBDQSAy
-MDIwAhABAz5xDls09r2CKyYRqnNbMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBh
-brAPq8qwowPYpxbubQesKqsKSMPOB3lxN08UqPGxxDAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
-MBwGCSqGSIb3DQEJBTEPFw0yMzA2MTYwNDUxMjlaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
+MDIwAhABAz5xDls09r2CKyYRqnNbMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCDV
+s+HrfvJPm73WGg9CXP5/AtP5KX2laG3hZRJy5reREzAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
+MBwGCSqGSIb3DQEJBTEPFw0yMzA2MTYwNDUxNDZaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
 BAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsG
-CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAc9R1iFjzspMO7nbxCAhO
-3MFy0KH6RDo6pHQHqT7ZF/OK5QxG/ws+Qs0pQmWKaAJUHjsLM+mqNS8SqKZbzASP27S7f7j6KOk4
-dkuhRqoOs6i8xNT6VdBCiUXT4bzUsU8l7RWUdq1Rn2N9C8UAfdOqBBrlAlUOCmyR5656B+cayImE
-lcB5WW3JE7c+vbDOOBHUd0mrZHHtYjsNUf5Ebr04h6EICAU8XCZp/WmjOM45Gx420XEaGigoOnZg
-t8S0GWd7T4Wqn41v9YzqNI+v6DMpjTi+ezpX2zo79Vd7AT9/luC69khIkyLTOrE3JH4p980uG4kI
-mEXTmwrD15dTnw0CqA==
---0000000000002aa91a05fe37f09e--
+CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAB4rnYh4oEXyJhuaTcC5P
+EGNjAYgv1CIkFXwJw6rKQ6RUuFcW82vlfP4tLAsJll3uuAeZn+wkkfHbwnQjKyN4RjoYNEL8IFlL
+dwuT+QzB9XwU7ZCfoCHUmZz9Lg4QyguvJfGrXHCOms4YoFeWUU5E6g5YY8r1/2OQlzd0D/xkN2vO
+w6Was+J3k9FscbHd/U5ePAt3W+BB/zWhZP9kbl4H/ngAlrrIfRv3+Zn3PgLgj5tg8vyHzJp+r/Cn
+1dTFLjJpGhqcq+9KU8VDClYudniGRxrMZmElskVd1kqkYcCXwrU90FOrcdRt2gf2uAQW7GYPKhdy
+o7EeiMBZl+SaG/KHfw==
+--0000000000002f62d905fe37f16c--
