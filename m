@@ -1,97 +1,110 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5581D182A8
-	for <patches@lists.linux.dev>; Fri, 16 Jun 2023 15:02:06 +0000 (UTC)
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6b162fa87d8so662198a34.3
-        for <patches@lists.linux.dev>; Fri, 16 Jun 2023 08:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686927725; x=1689519725;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/TQ/NBF9u3IBn3xcHORueLNPUOIL2wwIG5fESfTCbFI=;
-        b=W5bZQhbvvf1ysouwrUosFRxybLDJEya2JAdz3G5mSSV8K/TGKTVSoWQzteqrGAuvck
-         sh8bAqtvFmu3uhOGCHY6V3wueOudvp1aQ9/XK/SlHyrYB7D086K7b+83VJlQG8bStXxC
-         ekf3U4rWSQPW8tFhKlno1I3zugyW9jAVCa2Gye+GinkIJIk9FLnPxKyrdRY4KdYGUbhE
-         V3jvTVfaTejNfc9Qs7OzjOdhw3rmTjSJz1glTZw+Jo2Ie8SsoNdTtUahLx7IdYXwPqXI
-         QgOZnjuyRL2+au0HdgzuXlAhgLwPGqZthrb/e+0VvHqSTH5KigwBe65//t5C32NvPIIk
-         rMOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686927725; x=1689519725;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/TQ/NBF9u3IBn3xcHORueLNPUOIL2wwIG5fESfTCbFI=;
-        b=kcqTEB39AROWtFEJGlFw5M9U2yxkkna4v+OxZnCNOkKsrmrZMGvDSvvxabgxMKzr/+
-         J/hwc93fHBEKWreKS1on5w6/+UuMTDkrx7eUsOi2JRmsWS1NNoOl0DYpv2G0Bb1XCo7G
-         uS5l3I2taPKC0P+1w55lIiGDLdfljNwHrj7W3+71l6NcZMk9cguOYtlXBetB8+vS/DTs
-         AmJ37PHYXiawhHIsqi8veefWEmGH9NyQscJeG3nMvZ8iV2zMzpIlyakLY/KEMigoEuW4
-         LJFLPShGjG9x0CyO9Cka9cxEEvl1uVlqich83kCdPa0gNjYbWRfxZqVGCA3IgVB9X7tK
-         iU5A==
-X-Gm-Message-State: AC+VfDxcb61ODG5Bcg+yx6yYsJy06oRaZ4GIgZbBOpXxxJLEoIqDuP2/
-	FOSsW+RrDRk22VLtzLPg63E=
-X-Google-Smtp-Source: ACHHUZ5Q45EQty3POoVZW3lQZ5/x8Yz3t9MLsAWheq87HRmCHM+FPkqxUwdt0Oo8jeVB6dXKPIAFuA==
-X-Received: by 2002:a05:6870:1a85:b0:1a3:100f:bf41 with SMTP id ef5-20020a0568701a8500b001a3100fbf41mr2136892oab.23.1686927725364;
-        Fri, 16 Jun 2023 08:02:05 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id le13-20020a0568700c0d00b001a8f6be7debsm3411187oab.28.2023.06.16.08.02.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Jun 2023 08:02:04 -0700 (PDT)
-Message-ID: <22d8e3b2-4759-2b82-cdd3-aca9bf9afd74@gmail.com>
-Date: Fri, 16 Jun 2023 12:00:15 -0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5CB8F59;
+	Fri, 16 Jun 2023 16:41:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED29C433C0;
+	Fri, 16 Jun 2023 16:41:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1686933699;
+	bh=wVP9KiItEr8mSN+tUTw1LX0kVRv/kPOjeQ4/eD7jAGQ=;
+	h=From:Date:Subject:To:Cc:From;
+	b=iYgsjdiZFE5XgFNrwAXDyB2HL4aWLv5j/6Sw40HMnepdzIRc92o0Gitqy66qikBeP
+	 ETCbvFXDbne2TZWh8TEh7U32pvcgY4hAALxNNlUw1vb2oh5ctGsRM2cRt/hfwg0RDP
+	 JkVMmurdcqDQLtcPT8wC8H4XOScWj9gd3SZzc/lgFk0wh0oYfIoJUdDh7ZvHlHguQO
+	 /1XE2TnV+K3tlsyDZ8BRZscbbkHVKVfv3HqHJaEaiRdZiFVvYVU6ducRGdYbzbSZCU
+	 PoRkI1G5rQA6SMzzYNIoBtP0oxeOpcD1754mEBYinoCsrNroU5lTl/ewifXAG1C4xr
+	 p9C5ahwTfMIjQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 16 Jun 2023 09:41:30 -0700
+Subject: [PATCH] coresight: dummy: Update type of mode parameter in
+ dummy_{sink,source}_enable()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v2 11/11] kbuild: rust_is_available: add test suite
-Content-Language: en-US
-To: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>,
- Wedson Almeida Filho <wedsonaf@gmail.com>,
- Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <ndesaulniers@google.com>,
- Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>,
- linux-kbuild@vger.kernel.org, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20230616001631.463536-1-ojeda@kernel.org>
- <20230616001631.463536-12-ojeda@kernel.org>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230616001631.463536-12-ojeda@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20230616-coresight-dummy-fix-kcfi-warnings-v1-1-c55c64f8f0f5@kernel.org>
+X-B4-Tracking: v=1; b=H4sIALmQjGQC/x2NSwrDMAwFrxK8rsBOwU17ldKFYiu2KHaKlP4Iu
+ XudLofhzVuNkjCpuXSrEXqx8lwbuENnQsaaCDg2Nr3tj9Y7D2EWUk55gfgs5QsTf+AeJoY3SuW
+ aFLwfTjjGIVp3Nq0zohKMgjXkvVRQF5JdPITa+n9+vW3bD+4jZmeMAAAA
+To: suzuki.poulose@arm.com
+Cc: mike.leach@linaro.org, james.clark@arm.com, leo.yan@linaro.org, 
+ quic_hazha@quicinc.com, coresight@lists.linaro.org, 
+ linux-arm-kernel@lists.infradead.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3308; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=wVP9KiItEr8mSN+tUTw1LX0kVRv/kPOjeQ4/eD7jAGQ=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCk9Ew79uibVedT37S+9vKA+PYHSCQcUI9arsrFkzlp42
+ 8tC/mldRykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZhIAjsjw6T0jcaPGTsDbs3V
+ 6PtbJ+M186UX2zWVuJfS+UdLbDy4nRn+Bzw+JiCWkxqaEqCoNeF+Za/opkuGPWxbk3OPuNy7NnM
+ SNwA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 6/15/23 21:16, Miguel Ojeda wrote:
-> The `rust_is_available.sh` script runs for everybody compiling the
-> kernel, even if not using Rust. Therefore, it is important to ensure
-> that the script is correct to avoid breaking people's compilation.
-> 
-> In addition, the script needs to be able to handle a set of subtle
-> cases, including parsing version strings of different tools.
-> 
-> Therefore, maintenance of this script can be greatly eased with
-> a set of tests.
-> 
-> Thus add a test suite to cover hopefully most of the setups that
-> the script may encounter in the wild. Extra setups can be easily
-> added later on if missing.
-> 
-> The script currently covers all the branches of the shell script,
-> including several ways in which they may be entered.
-> 
-> Python is used for this script, since the script under test
-> does not depend on Rust, thus hopefully making it easier for others
-> to use if the need arises.
-> 
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> [...]
+Clang's kernel Control Flow Integrity (kCFI) is a compiler-based
+security mitigation that ensures the target of an indirect function call
+matches the expected type of the call and trapping if they do not match
+exactly. The warning -Wincompatible-function-pointer-types-strict aims
+to catch these issues at compile time, which reveals:
 
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+  drivers/hwtracing/coresight/coresight-dummy.c:53:12: error: incompatible function pointer types initializing 'int (*)(struct coresight_device *, struct perf_event *, enum cs_mode)' with an expression of type 'int (struct coresight_device *, struct perf_event *, u32)' (aka 'int (struct coresight_device *, struct perf_event *, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+     53 |         .enable = dummy_source_enable,
+        |                   ^~~~~~~~~~~~~~~~~~~
+  drivers/hwtracing/coresight/coresight-dummy.c:62:12: error: incompatible function pointer types initializing 'int (*)(struct coresight_device *, enum cs_mode, void *)' with an expression of type 'int (struct coresight_device *, u32, void *)' (aka 'int (struct coresight_device *, unsigned int, void *)') [-Werror,-Wincompatible-function-pointer-types-strict]
+     62 |         .enable = dummy_sink_enable,
+        |                   ^~~~~~~~~~~~~~~~~
+  2 errors generated.
+
+Commit 9fa3682869d4 ("coresight: Use enum type for cs_mode wherever
+possible") updated the type of the mode parameter in the prototype but
+this driver was not introduced until commit 9d3ba0b6c056 ("Coresight:
+Add coresight dummy driver") and 'int' is ABI compatible with 'enum
+cs_mode', so there is no warning from regular
+-Wincompatible-function-pointer-types.
+
+Adjust the type of the mode parameter in the callback implementations in
+the coresight dummy driver to match the prototype, clearing up the
+warning and avoiding kCFI failures at runtime.
+
+Fixes: 9d3ba0b6c056 ("Coresight: Add coresight dummy driver")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/hwtracing/coresight/coresight-dummy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
+index 42125b7a0f39..8035120b70b3 100644
+--- a/drivers/hwtracing/coresight/coresight-dummy.c
++++ b/drivers/hwtracing/coresight/coresight-dummy.c
+@@ -21,7 +21,7 @@ DEFINE_CORESIGHT_DEVLIST(source_devs, "dummy_source");
+ DEFINE_CORESIGHT_DEVLIST(sink_devs, "dummy_sink");
+ 
+ static int dummy_source_enable(struct coresight_device *csdev,
+-			       struct perf_event *event, u32 mode)
++			       struct perf_event *event, enum cs_mode mode)
+ {
+ 	dev_dbg(csdev->dev.parent, "Dummy source enabled\n");
+ 
+@@ -34,7 +34,7 @@ static void dummy_source_disable(struct coresight_device *csdev,
+ 	dev_dbg(csdev->dev.parent, "Dummy source disabled\n");
+ }
+ 
+-static int dummy_sink_enable(struct coresight_device *csdev, u32 mode,
++static int dummy_sink_enable(struct coresight_device *csdev, enum cs_mode mode,
+ 				void *data)
+ {
+ 	dev_dbg(csdev->dev.parent, "Dummy sink enabled\n");
+
+---
+base-commit: 3b79104f80036231a40ba5d15c3e329985029a0f
+change-id: 20230616-coresight-dummy-fix-kcfi-warnings-6687abd8d019
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
