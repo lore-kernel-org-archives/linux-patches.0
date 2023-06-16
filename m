@@ -1,29 +1,29 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD6263C4
-	for <patches@lists.linux.dev>; Fri, 16 Jun 2023 07:45:35 +0000 (UTC)
-Date: Fri, 16 Jun 2023 07:45:14 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84A013AC1
+	for <patches@lists.linux.dev>; Fri, 16 Jun 2023 11:13:23 +0000 (UTC)
+Date: Fri, 16 Jun 2023 11:12:59 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1686901527; x=1687160727;
-	bh=hja84EESOQ9EaSxRMOYXkxBe5bRgfXkY/dr6HfkUDdw=;
+	s=protonmail3; t=1686913987; x=1687173187;
+	bh=hwa4RzwbOoukv59i8gRCTS8obOBodrvYgH1zylyxQNs=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=UnCtG/TNYW/c2hj1iuYW9BVFSfc3MamSO/1GgW7QqhNODpOPMihdMKcBs8DQWb1bU
-	 WCTXOl33qmyXRQCwlks+omoyqIERsvq8bx0GHcrX2XXRekrygTToo9b7nQOLl93wvi
-	 s0g1RVSfM0r1etX2g+I2G51pE3aAfp6i57KuU3EYnYoOq6IMG+TGLGteFMmYo8SqQn
-	 /hAn32YyLE79hytYP7ZMkmizIMDMNuewLYqK8mSu6a93diwnjuNMWwyx7Wnu0NcAVp
-	 mY9ZKfcaVGUdomoUm1RdipPoBDbfIUp3NVY2K/GfSaXr8LHl7j7jhwvGStJsGvhzYt
-	 I1En8JyAiEX8A==
-To: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
-From: Heghedus Razvan <heghedus.razvan@protonmail.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, linux-kbuild@vger.kernel.org, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v2 00/11] `scripts/rust_is_available.sh` improvements
-Message-ID: <CTDWNRIZBWCN.CJEV9K20D9OI@pc-server>
-In-Reply-To: <20230616001631.463536-1-ojeda@kernel.org>
-References: <20230616001631.463536-1-ojeda@kernel.org>
-Feedback-ID: 1233518:user:proton
+	b=GsZLeP+1y01B8aDMn1LZl+uObnYw0SpM/hdB2CUlYMti5FJOtg6RgHMRa1MthCMLj
+	 UxqvrIKF6YURbliOf9rS2PdoVoItvbObImpKVdSB7IyI4e8maYfprk76ARJ1vg/6H2
+	 8lVvaYyN2CXCG116DKVcra0qimAN5HKrUZJ2wDimeWn6KKkDW2PU/CQQLjvinruUX8
+	 VnL/n02i6PSDECmElLlCrqEtMdpusXrNWG3NvEaRGl6ZXwNa8LZHky0noSbZ+VbTP6
+	 gkU/tJ6APV4hEUewsRjCtTy2YXQ7CBGiMLFs/3Yznj2WnXk2LCCoq6Q8P3SHgwq17D
+	 RguEWvKM5KY9w==
+To: Miguel Ojeda <ojeda@kernel.org>
+From: =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Cc: David Gow <davidgow@google.com>, Brendan Higgins <brendan.higgins@linux.dev>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, Philip Li <philip.li@intel.com>, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 1/6] rust: init: make doctests compilable/testable
+Message-ID: <xXR-61xWAVXlzdw6FRPCd9oIO4sbjDfRC3hreooJx7zXYgA2C93c2PpTG60ewEK1arQydz_iz33115RW4baniEtrI8_fWwNrEj28La74SfI=@protonmail.com>
+In-Reply-To: <20230614180837.630180-2-ojeda@kernel.org>
+References: <20230614180837.630180-1-ojeda@kernel.org> <20230614180837.630180-2-ojeda@kernel.org>
+Feedback-ID: 27884398:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,143 +33,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Fri Jun 16, 2023 at 3:16 AM EEST, Miguel Ojeda wrote:
-> This is the patch series to improve `scripts/rust_is_available.sh`.
->
-> The major addition in v2 is the test suite in the last commit. I added
-> it because I wanted to have a proper way to test any further changes to
-> it (such as the suggested `set --` idea to avoid forking by Masahiro),
-> and so that adding new checks was easier to justify too (i.e. vs. the
-> added complexity).
->
-> In addition, there are also a few new checks in the script, to cover for
-> even some more cases, which hopefully make problematic setups easier to
-> identify and solve by users building the kernel. For instance, running
-> the script externally gives:
->
->     $ scripts/rust_is_available.sh
->     ***
->     *** Environment variable 'RUSTC' is not set.
->     ***
->     *** This script is intended to be called from Kbuild.
->     *** Please use the 'rustavailable' target to call it instead.
->     *** Otherwise, the results may not be meaningful.
->     ***
->     *** Please see Documentation/rust/quick-start.rst for details
->     *** on how to set up the Rust support.
->     ***
->
-> I also changed it to avoid setting `-e` as Masahiro suggested.
-> Similarly, I now check for `$RUSTC`, `$BINDGEN` and `$CC`, instead of
-> `$MAKEFLAGS`, as he also suggested (but I gave it their own error
-> message rather than use the `${CC?: is not set}` approach. This goes in
-> line with the reasons outlined above, i.e. trying to give users a clear
-> error of what step exactly failed).
->
-> In the test suite I included previously problematic compiler version
-> strings we got reports for. The test suite covers all current branches
-> in the script, and we should keep it that way in the future.
->
-> The patch series also include Masahiro's patch to remove the `-v`
-> option, as well as Russell's patch for supporting multiple arguments
-> in `$CC`.
->
-> All in all, this should solve all the issues we got so far (unless I
-> have missed something) and improve things further with the new checks
-> plus the test suite to hopefully have an easier time in the future.
->
-> Testers for this one are appreciated, especially if you have uncommon or
-> custom setups for building the kernel.
+------- Original Message -------
+On Wednesday, June 14th, 2023 at 20:08, Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 
-I gave this patch series a spin and is a nice improvement when trying to
-use a broken setup.
-
-When previously I had:
-./scripts/rust_is_available.sh: line 21: 100000 *  + 100 *  + : syntax erro=
-r: operand expected (error token is "+ ")
-make: *** [Makefile:1883: rustavailable] Error 1
-
-Now I have:
-
-***
-*** Running 'bindgen' to check the libclang version (used by the Rust
-*** bindings generator) failed with code 101. This may be caused by
-*** a failure to locate libclang. See output and docs below for details:
-***
-thread 'main' panicked at 'Unable to find libclang: "the `libclang` shared =
-library at /opt/sdk/sysroots/x86_64-pokysdk-linux/usr/lib/libclang.so.14.0.=
-3 could not be opened: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34=
-' not found (required by /opt/idc23/sysroots/x86_64-pokysdk-linux/usr/lib/l=
-ibclang.so.14.0.3)"', /home/heghedusrazvan/.cargo/registry/src/github.com-1=
-ecc6299db9ec823/bindgen-0.56.0/src/lib.rs:1922:31
-note: run with `RUST_BACKTRACE=3D1` environment variable to display a backt=
-race
-***
-***
-*** Please see Documentation/rust/quick-start.rst for details
-*** on how to set up the Rust support.
-***
-make: *** [Makefile:1883: rustavailable] Error 1
-
-or:
-
-***
-*** Rust compiler 'rustc' is too new. This may or may not work.
-***   Your version:     1.70.0
-***   Expected version: 1.68.2
-***
-***
-*** Running 'bindgen' to check the libclang version (used by the Rust
-*** bindings generator) failed with code 101. This may be caused by
-*** a failure to locate libclang. See output and docs below for details:
-***
-thread 'main' panicked at 'Unable to find libclang: "the `libclang` shared =
-library at /opt/sdk/sysroots/x86_64-pokysdk-linux/usr/lib/libclang.so.14.0.=
-3 could not be opened: libncurses.so.5: cannot open shared object file: No =
-such file or directory"', /root/.cargo/registry/src/index.crates.io-6f17d22=
-bba15001f/bindgen-0.56.0/src/lib.rs:1922:31
-note: run with `RUST_BACKTRACE=3D1` environment variable to display a backt=
-race
-***
-***
-*** Please see Documentation/rust/quick-start.rst for details
-*** on how to set up the Rust support.
-***
-make: *** [Makefile:1883: rustavailable] Error 1
-
--- Razvan
->
-> This could go through either the Kbuild or the Rust tree.
->
-> Masahiro Yamada (1):
->   kbuild: rust_is_available: remove -v option
->
-> Miguel Ojeda (9):
->   docs: rust: add paragraph about finding a suitable `libclang`
->   kbuild: rust_is_available: print docs reference
->   kbuild: rust_is_available: add check for `bindgen` invocation
->   kbuild: rust_is_available: check that environment variables are set
->   kbuild: rust_is_available: fix confusion when a version appears in the
->     path
->   kbuild: rust_is_available: normalize version matching
->   kbuild: rust_is_available: handle failures calling `$RUSTC`/`$BINDGEN`
->   kbuild: rust_is_available: check that output looks as expected
->   kbuild: rust_is_available: add test suite
->
-> Russell Currey (1):
->   kbuild: rust_is_available: fix version check when CC has multiple
->     arguments
->
->  Documentation/rust/quick-start.rst |  17 ++
->  Makefile                           |   4 +-
->  scripts/rust_is_available.sh       | 233 +++++++++++++------
->  scripts/rust_is_available_test.py  | 346 +++++++++++++++++++++++++++++
->  4 files changed, 532 insertions(+), 68 deletions(-)
->  create mode 100755 scripts/rust_is_available_test.py
->
->
-> base-commit: 858fd168a95c5b9669aac8db6c14a9aeab446375
-> --
+> Rust documentation tests are going to be build/run-tested
+> with the KUnit integration added in a future patch, thus
+> update them to make them compilable/testable so that we
+> may start enforcing it.
+>=20
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+>  rust/kernel/init.rs | 25 ++++++++++++++++---------
+>  1 file changed, 16 insertions(+), 9 deletions(-)
+>=20
+> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
+> index b4332a4ec1f4..1073515ed40e 100644
+> --- a/rust/kernel/init.rs
+> +++ b/rust/kernel/init.rs
+> @@ -120,14 +120,23 @@
+>  //!   `slot` gets called.
+>  //!
+>  //! ```rust
+> -//! use kernel::{prelude::*, init};
+> +//! # #![allow(unreachable_pub, clippy::disallowed_names)]
+> +//! use kernel::{prelude::*, init, types::Opaque};
+>  //! use core::{ptr::addr_of_mut, marker::PhantomPinned, pin::Pin};
+>  //! # mod bindings {
+> +//! #     #![allow(non_camel_case_types)]
+>  //! #     pub struct foo;
+>  //! #     pub unsafe fn init_foo(_ptr: *mut foo) {}
+>  //! #     pub unsafe fn destroy_foo(_ptr: *mut foo) {}
+>  //! #     pub unsafe fn enable_foo(_ptr: *mut foo, _flags: u32) -> i32 {=
+ 0 }
+>  //! # }
+> +//! # trait FromErrno {
+> +//! #     fn from_errno(errno: core::ffi::c_int) -> Error {
+> +//! #         // Dummy error that can be constructed outside the `kernel=
+` crate.
+> +//! #         Error::from(core::fmt::Error)
+> +//! #     }
+> +//! # }
+> +//! # impl FromErrno for Error {}
+>  //! /// # Invariants
+>  //! ///
+>  //! /// `foo` is always initialized
+> @@ -158,7 +167,7 @@
+>  //!                 if err !=3D 0 {
+>  //!                     // Enabling has failed, first clean up the foo a=
+nd then return the error.
+>  //!                     bindings::destroy_foo(Opaque::raw_get(foo));
+> -//!                     return Err(Error::from_kernel_errno(err));
+> +//!                     return Err(Error::from_errno(err));
+>  //!                 }
+>  //!
+>  //!                 // All fields of `RawFoo` have been initialized, sin=
+ce `_p` is a ZST.
+> @@ -226,8 +235,7 @@
+>  ///
+>  /// ```rust
+>  /// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
+> -/// # use kernel::{init, pin_init, stack_pin_init, init::*, sync::Mutex,=
+ new_mutex};
+> -/// # use macros::pin_data;
+> +/// # use kernel::{init, macros::pin_data, pin_init, stack_pin_init, ini=
+t::*, sync::Mutex, new_mutex};
+>  /// # use core::pin::Pin;
+>  /// #[pin_data]
+>  /// struct Foo {
+> @@ -277,7 +285,7 @@ macro_rules! stack_pin_init {
+>  ///
+>  /// # Examples
+>  ///
+> -/// ```rust
+> +/// ```rust,ignore
+>  /// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
+>  /// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mu=
+tex, new_mutex};
+>  /// # use macros::pin_data;
+> @@ -303,7 +311,7 @@ macro_rules! stack_pin_init {
+>  /// pr_info!("a: {}", &*foo.a.lock());
+>  /// ```
+>  ///
+> -/// ```rust
+> +/// ```rust,ignore
+>  /// # #![allow(clippy::disallowed_names, clippy::new_ret_no_self)]
+>  /// # use kernel::{init, pin_init, stack_try_pin_init, init::*, sync::Mu=
+tex, new_mutex};
+>  /// # use macros::pin_data;
+> @@ -513,8 +521,7 @@ macro_rules! stack_try_pin_init {
+>  /// For instance:
+>  ///
+>  /// ```rust
+> -/// # use kernel::pin_init;
+> -/// # use macros::pin_data;
+> +/// # use kernel::{macros::pin_data, pin_init};
+>  /// # use core::{ptr::addr_of_mut, marker::PhantomPinned};
+>  /// #[pin_data]
+>  /// struct Buf {
+> @@ -841,7 +848,7 @@ macro_rules! init {
+>  /// # Examples
+>  ///
+>  /// ```rust
+> -/// use kernel::{init::PinInit, error::Error, InPlaceInit};
+> +/// use kernel::{init::{PinInit, zeroed}, error::Error};
+>  /// struct BigBuf {
+>  ///     big: Box<[u8; 1024 * 1024 * 1024]>,
+>  ///     small: [u8; 1024 * 1024],
+> --=20
 > 2.41.0
 
-
+Reviewed-by: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
