@@ -1,51 +1,51 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B0D7C
-	for <patches@lists.linux.dev>; Fri, 16 Jun 2023 04:52:00 +0000 (UTC)
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-513ea2990b8so6012a12.0
-        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 21:51:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9277C
+	for <patches@lists.linux.dev>; Fri, 16 Jun 2023 04:52:07 +0000 (UTC)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-513ea2990b8so6020a12.0
+        for <patches@lists.linux.dev>; Thu, 15 Jun 2023 21:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1686891118; x=1689483118;
+        d=google.com; s=20221208; t=1686891126; x=1689483126;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9wYtBOAS9X3YUQalJbTS8IQmEdA3JSvlGhkR9tJyULw=;
-        b=ZYLqdZiNUBBGgtiH2sgvPKBh+iJSRHXrzC3pEBLsqBmtHJP+G0ITllh4f+gUAopERD
-         R4IWKL+us9B1SPa+uLpkp01K6vXHvZ5xV8Z7WjCHyONN/1bOs+JoLD8wHHUyOBCwjQE0
-         7k+OBwDakfceRrS1ndhmb2zVBLRKXipFqldgTq24og1L85CcypTI0JDwIGS1wogF7J/4
-         NSUZnksXStXNH2nZJ2sat4yra2bQtg5MNQm0rIKj6XQirfZ9eNaXrW9ga9l83GEVCSfp
-         t4NIeBBGcdnyOvnsbeo3N/eWueS5+RVeAm5lVYDNXv1R0UxI1opTbfcQN/mvLFbD9PKb
-         XtAw==
+        bh=s5RdotPbaDS4MY3nnK6VN5SQ/nSGlXxNOy7o9V//KRo=;
+        b=Gr5uIt89VMCm0JHXhQ7WgNGOjDtI5ohiMycfUzu2ucc9ScirpxG1LO9vJ+jIdDbur7
+         CbliEzhkBC2ECd/LFLMKkDbddgCT0huEQlI7yPSWD/MsgZZJox1hFcxCPJI5JmIegkvH
+         mrMo182LBFOsm5K/sr/UrxvIe8w4DHRqTlK6Na8WxbSyvxzes+hwKuP19knFfDPVqCs4
+         du9SUQL/EaXKt/HFRe8xo2ZIdyZ/xD/ppoxeEaFGTwdfe/HulYf+6YMP6fG5DOuEVCRI
+         Kk007D51xrxuiu6R8Hy37ERSzxCM5hGz/EMc+PSdZgn5MtSIuOhA/+YEeKTeu9GeVobT
+         lN7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686891118; x=1689483118;
+        d=1e100.net; s=20221208; t=1686891126; x=1689483126;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9wYtBOAS9X3YUQalJbTS8IQmEdA3JSvlGhkR9tJyULw=;
-        b=RfTnazzw0N7/X8Je9R9ExaQ75jsH+fJDXdySik6yCCicDJvp+WunzewLye1C6A51qj
-         V2gamGAMtfPqWcIOWmbqfc5vIPZyLRGkJnzTdu2Z1BrxVHEhQDbD7PTrHdnA+cughT82
-         3DOjqCM2F26UuGFIIMLqmhCT54biJHDQqcx1Ltom145xSInfobCG5GZ+YOy5fHUJedts
-         gryroG/diLpvJUD/uTRwKlNm4q1YymUcqgtgNXI9ptSU9wSx6cHKkd1PIhejPfE4Fu2G
-         A6Xilb+sHsIV1ho1Gq/OJxDelCfvX6XMI66dssUQFD0xo0cJiR4NPCHnZgcufRC6KhJm
-         nU5A==
-X-Gm-Message-State: AC+VfDw5tV4vCwMBUXY20llyVzK6wX8Vdqv7uV/rQ38CerKS9LeFsIXi
-	gllHSIIgv/C7InXcfbz724/UnYffFF6CuKHJ6IEQfA==
-X-Google-Smtp-Source: ACHHUZ6JWBa85IlWLJvPlnOzrt+9MRvefm4pO1BHPoZcsgHo88qjT6jD2BCZgslnMBaDLnXvo7yeGRpZnbfi7ZhmAlQ=
-X-Received: by 2002:a50:9351:0:b0:518:7076:74bc with SMTP id
- n17-20020a509351000000b00518707674bcmr198686eda.1.1686891118309; Thu, 15 Jun
- 2023 21:51:58 -0700 (PDT)
+        bh=s5RdotPbaDS4MY3nnK6VN5SQ/nSGlXxNOy7o9V//KRo=;
+        b=WkGRlk3/klEcrSHjTtJ4KIKsFBJUy1JiY78j6VpXRKZCdrGeE8R0+JjCmdm3bsQgM2
+         YYFXtSoGm/kGSiwnYqcR1mcUBB1GKn3I/IiBitu4/R69XS9wlcH8lYb5xH7UJTNk4ZEj
+         RsMnIS6IAidRS4UREwUIzr7uK0DjbIGSwFa6I9tp1MhW1Ax7Lo9hyAmPcEMTg3/XjcG4
+         3ns5WUAJIXewCHY6RupBVhTbUEvSxbBtiDJtuCPKOnHZoynhyGymq2VzrOljdl0csP2b
+         PuYy59gatqbRRrGjghBurneM/5OnLpcRErTnDbE3TnmoC05vMu8GkIKtcdc+wWmhkR4Z
+         ToQA==
+X-Gm-Message-State: AC+VfDxYmwx6ycGHt4wkabPJgwbXsmBMFU6kvdd47WV9FtRu3wjMnwUl
+	yJJy3UpYCK8TGhKERwr5H7mmlx9Plvdo5qhrTGQThw==
+X-Google-Smtp-Source: ACHHUZ7FGNkQTslA9+9FMI/TbImuoNBv0YUrUgYHRM3CAn4xmLu3xqS1im6Rrwy87UAmmue1F1931XAOszBjnihvqiE=
+X-Received: by 2002:a50:d09c:0:b0:51a:1f15:9ddc with SMTP id
+ v28-20020a50d09c000000b0051a1f159ddcmr192604edd.6.1686891126223; Thu, 15 Jun
+ 2023 21:52:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230614180837.630180-1-ojeda@kernel.org> <20230614180837.630180-3-ojeda@kernel.org>
-In-Reply-To: <20230614180837.630180-3-ojeda@kernel.org>
+References: <20230614180837.630180-1-ojeda@kernel.org> <20230614180837.630180-4-ojeda@kernel.org>
+In-Reply-To: <20230614180837.630180-4-ojeda@kernel.org>
 From: David Gow <davidgow@google.com>
-Date: Fri, 16 Jun 2023 12:51:45 +0800
-Message-ID: <CABVgOS=-1gLk1w0cyKsLU+HufbWHpQ87-tFuW5yHh8Vx9ghfDg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] rust: str: make doctests compilable/testable
+Date: Fri, 16 Jun 2023 12:51:54 +0800
+Message-ID: <CABVgOSkUhrnic7YV1853n2bo9bHBwJCPBp8Yp7AQdfH1Vv0qkw@mail.gmail.com>
+Subject: Re: [PATCH 3/6] rust: sync: make doctests compilable/testable
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Brendan Higgins <brendan.higgins@linux.dev>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
@@ -55,9 +55,9 @@ Cc: Brendan Higgins <brendan.higgins@linux.dev>, Wedson Almeida Filho <wedsonaf@
 	linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000e6057305fe37f126"
+	boundary="0000000000005e378605fe37f24b"
 
---000000000000e6057305fe37f126
+--0000000000005e378605fe37f24b
 Content-Type: text/plain; charset="UTF-8"
 
 On Thu, 15 Jun 2023 at 02:09, Miguel Ojeda <ojeda@kernel.org> wrote:
@@ -70,12 +70,14 @@ On Thu, 15 Jun 2023 at 02:09, Miguel Ojeda <ojeda@kernel.org> wrote:
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
 
+Looks good, thanks!
+
 Reviewed-by: David Gow <davidgow@google.com>
 
 Cheers,
 -- David
 
---000000000000e6057305fe37f126
+--0000000000005e378605fe37f24b
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -142,14 +144,14 @@ jyzYFOHYQyv5IfML/3IBFKlON5OZa+V8EZYULYcNkp03DdWglafj7SXZ1/XgAbVYrC381UvrsYN8
 jndVvoa1GWwe+NVlIIK7Q3uAjV3qLEDQpaNPg1rr0oAn6YmvTccjVMqj2YNwN+RHhKNzgRGxY5ct
 FaN+8fXZhRhpv3bVbAWuPZXoMYICajCCAmYCAQEwaDBUMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQ
 R2xvYmFsU2lnbiBudi1zYTEqMCgGA1UEAxMhR2xvYmFsU2lnbiBBdGxhcyBSMyBTTUlNRSBDQSAy
-MDIwAhABAz5xDls09r2CKyYRqnNbMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCDV
-s+HrfvJPm73WGg9CXP5/AtP5KX2laG3hZRJy5reREzAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
-MBwGCSqGSIb3DQEJBTEPFw0yMzA2MTYwNDUxNThaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
+MDIwAhABAz5xDls09r2CKyYRqnNbMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBo
+JX7NdQkwBx6iX1a0EatAWcDVdFQOb2IcOo4rk6T5eTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
+MBwGCSqGSIb3DQEJBTEPFw0yMzA2MTYwNDUyMDZaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
 BAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsG
-CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAb6fA13cfBUvDL0yt/y5i
-j5gn0LQf2Qd5pPhJ9o7KSXd6Vnf1Otdrp0Nz4vYYEyx//RtzKAH7+7kIn5HZiqFrGMtuFaNHbpJD
-u+rtAazmg2t8CiNS5pGEPCnAWuTGRYMXZxgleTyyqJfgmXP9m1fF4vKvXyJlHla1ooO1FzEOVFpN
-rPk9eWxf4FlN92WzGuvOj0FhlZb49TEz+K5OLs23pp4As+jgph5mnurG1XnmkXkTdp2D485HRUB9
-DQTXuZtw+Og+MI0gT2dGMlKBEqS3QwgDN0s6l6Oy6jQ3T7giA21c54DKh+zQCoQGEDzMBtQpZdR/
-Ihw3vhZ8hHogI7hkQA==
---000000000000e6057305fe37f126--
+CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAJAcFiRTUJUyLiiPwd8cp
+lrnUaHY8BRUrM5V1ewsn6P4edMJ6K37sM1+T2UnvMx1J8qjuZiGxl0ik/BCsehwVwMLp/xu084o4
+Se6bgdL7SUIMOIDIw098akeFuHpOU3eooL7CgNZeMP7TesGg+upQAaWZRneQTEyK1MICsFBpoMau
+DqdpeYY582lTbzhZtKbaOyrZPatZCiuFyYx1wtKBre3tFaXPAqZN/oz4o735HMhYVPFRkGkWr7Pr
+poed5BNKPNoQBn6pzBNO0ZhA/SXP9UZv1xcbR+dXYUOwJrMqFXeok998QWPkmcdVI1KJQnT/QTL8
+BYOXRXeniFj6nL0vHA==
+--0000000000005e378605fe37f24b--
