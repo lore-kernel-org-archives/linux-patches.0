@@ -1,110 +1,80 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sipsolutions.net (s3.sipsolutions.net [144.76.43.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5CB8F59;
-	Fri, 16 Jun 2023 16:41:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED29C433C0;
-	Fri, 16 Jun 2023 16:41:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1686933699;
-	bh=wVP9KiItEr8mSN+tUTw1LX0kVRv/kPOjeQ4/eD7jAGQ=;
-	h=From:Date:Subject:To:Cc:From;
-	b=iYgsjdiZFE5XgFNrwAXDyB2HL4aWLv5j/6Sw40HMnepdzIRc92o0Gitqy66qikBeP
-	 ETCbvFXDbne2TZWh8TEh7U32pvcgY4hAALxNNlUw1vb2oh5ctGsRM2cRt/hfwg0RDP
-	 JkVMmurdcqDQLtcPT8wC8H4XOScWj9gd3SZzc/lgFk0wh0oYfIoJUdDh7ZvHlHguQO
-	 /1XE2TnV+K3tlsyDZ8BRZscbbkHVKVfv3HqHJaEaiRdZiFVvYVU6ducRGdYbzbSZCU
-	 PoRkI1G5rQA6SMzzYNIoBtP0oxeOpcD1754mEBYinoCsrNroU5lTl/ewifXAG1C4xr
-	 p9C5ahwTfMIjQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 16 Jun 2023 09:41:30 -0700
-Subject: [PATCH] coresight: dummy: Update type of mode parameter in
- dummy_{sink,source}_enable()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FA91ACBF
+	for <patches@lists.linux.dev>; Fri, 16 Jun 2023 16:51:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=zqjLRS5ULsCC7Xjlxjra+VOWosXaiA2+x91ErZ8Mdf8=;
+	t=1686934285; x=1688143885; b=Efc6OH73HVKvz2WDWSAOD8oTdaREdEBYY/uVBE4T+gC0tok
+	savgIp39bHYM6CSEEKdMJA+4vj1RD/ZiDpc3mn88apceD0EZRAdGAtD+eiyXqcmhJU7n0+1Kly9bQ
+	mjRx9h4DD66IFQsZL5XVcoCMIIIUJoL1TaMm/Kx43BSvnN6KawPy0URgXtLVygolsKlClekQKcLsc
+	w1pRr6Ieila+jW6PrIBX2c8Lxsj0D5q8xuC9zE1oPovTQfUqh2NEWeqRUFB0UvbV+ZRaD3RW5+d23
+	SN9quDT4BOxusC3KLEP/MPfsKp5SRU70amsnmFG8W3eMHn2r9HX+eUyx9E0Gtqng==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1qACfL-008WTL-2w;
+	Fri, 16 Jun 2023 18:51:16 +0200
+Message-ID: <1bcc48094ecae8b810e394abb7101bb8f4acb860.camel@sipsolutions.net>
+Subject: Re: [PATCH 6.3 038/160] wifi: cfg80211: fix locking in regulatory
+ disconnect
+From: Johannes Berg <johannes@sipsolutions.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>, 
+	"patches@lists.linux.dev"
+	 <patches@lists.linux.dev>, Sasha Levin <sashal@kernel.org>
+Date: Fri, 16 Jun 2023 18:51:15 +0200
+In-Reply-To: <2023061216-pry-mournful-beed@gregkh>
+References: <20230612101715.129581706@linuxfoundation.org>
+	 <20230612101716.793331479@linuxfoundation.org>
+	 <23db24e1efd0ce7904d0e57289009852cd58e29b.camel@sipsolutions.net>
+	 <2023061216-pry-mournful-beed@gregkh>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.3 (3.48.3-1.fc38) 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230616-coresight-dummy-fix-kcfi-warnings-v1-1-c55c64f8f0f5@kernel.org>
-X-B4-Tracking: v=1; b=H4sIALmQjGQC/x2NSwrDMAwFrxK8rsBOwU17ldKFYiu2KHaKlP4Iu
- XudLofhzVuNkjCpuXSrEXqx8lwbuENnQsaaCDg2Nr3tj9Y7D2EWUk55gfgs5QsTf+AeJoY3SuW
- aFLwfTjjGIVp3Nq0zohKMgjXkvVRQF5JdPITa+n9+vW3bD+4jZmeMAAAA
-To: suzuki.poulose@arm.com
-Cc: mike.leach@linaro.org, james.clark@arm.com, leo.yan@linaro.org, 
- quic_hazha@quicinc.com, coresight@lists.linaro.org, 
- linux-arm-kernel@lists.infradead.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3308; i=nathan@kernel.org;
- h=from:subject:message-id; bh=wVP9KiItEr8mSN+tUTw1LX0kVRv/kPOjeQ4/eD7jAGQ=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDCk9Ew79uibVedT37S+9vKA+PYHSCQcUI9arsrFkzlp42
- 8tC/mldRykLgxgHg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZhIAjsjw6T0jcaPGTsDbs3V
- 6PtbJ+M186UX2zWVuJfS+UdLbDy4nRn+Bzw+JiCWkxqaEqCoNeF+Za/opkuGPWxbk3OPuNy7NnM
- SNwA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+X-malware-bazaar: not-scanned
 
-Clang's kernel Control Flow Integrity (kCFI) is a compiler-based
-security mitigation that ensures the target of an indirect function call
-matches the expected type of the call and trapping if they do not match
-exactly. The warning -Wincompatible-function-pointer-types-strict aims
-to catch these issues at compile time, which reveals:
+On Mon, 2023-06-12 at 14:10 +0200, Greg Kroah-Hartman wrote:
+> On Mon, Jun 12, 2023 at 01:43:23PM +0200, Johannes Berg wrote:
+> > On Mon, 2023-06-12 at 10:26 +0000, Greg Kroah-Hartman wrote:
+> > > From: Johannes Berg <johannes.berg@intel.com>
+> > >=20
+> > > [ Upstream commit f7e60032c6618dfd643c7210d5cba2789e2de2e2 ]
+> > >=20
+> > > This should use wiphy_lock() now instead of requiring the
+> > > RTNL, since __cfg80211_leave() via cfg80211_leave() is now
+> > > requiring that lock to be held.
+> >=20
+> > You should perhaps hold off on this. While all this is correct, I misse=
+d
+> > something that Dan found later:
+> >=20
+> > https://git.kernel.org/pub/scm/linux/kernel/git/wireless/wireless.git/c=
+ommit/?id=3D996c3117dae4c02b38a3cb68e5c2aec9d907ec15
+> >=20
+> > I'll have this in the next pull request.
+> >=20
+> > I suppose _both_ should go to stable, and nobody ever seems to run into
+> > this patch (at least lockdep would loudly complain), but stills seems
+> > better in the short term to have missing locking than a deadlock.
+>=20
+> Thanks for letting me know, I've dropped this from all queues now.
+>=20
 
-  drivers/hwtracing/coresight/coresight-dummy.c:53:12: error: incompatible function pointer types initializing 'int (*)(struct coresight_device *, struct perf_event *, enum cs_mode)' with an expression of type 'int (struct coresight_device *, struct perf_event *, u32)' (aka 'int (struct coresight_device *, struct perf_event *, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-     53 |         .enable = dummy_source_enable,
-        |                   ^~~~~~~~~~~~~~~~~~~
-  drivers/hwtracing/coresight/coresight-dummy.c:62:12: error: incompatible function pointer types initializing 'int (*)(struct coresight_device *, enum cs_mode, void *)' with an expression of type 'int (struct coresight_device *, u32, void *)' (aka 'int (struct coresight_device *, unsigned int, void *)') [-Werror,-Wincompatible-function-pointer-types-strict]
-     62 |         .enable = dummy_sink_enable,
-        |                   ^~~~~~~~~~~~~~~~~
-  2 errors generated.
+The above commit has landed in Linus's tree, and I think you actually
+should pick up both of these now - there's a lockdep assertion there and
+locking issues triggered that I (if erroneously) fixed. Seems that we
+hardly ever get to that code though.
 
-Commit 9fa3682869d4 ("coresight: Use enum type for cs_mode wherever
-possible") updated the type of the mode parameter in the prototype but
-this driver was not introduced until commit 9d3ba0b6c056 ("Coresight:
-Add coresight dummy driver") and 'int' is ABI compatible with 'enum
-cs_mode', so there is no warning from regular
--Wincompatible-function-pointer-types.
+Should I send those patches individually?
 
-Adjust the type of the mode parameter in the callback implementations in
-the coresight dummy driver to match the prototype, clearing up the
-warning and avoiding kCFI failures at runtime.
-
-Fixes: 9d3ba0b6c056 ("Coresight: Add coresight dummy driver")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/hwtracing/coresight/coresight-dummy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
-index 42125b7a0f39..8035120b70b3 100644
---- a/drivers/hwtracing/coresight/coresight-dummy.c
-+++ b/drivers/hwtracing/coresight/coresight-dummy.c
-@@ -21,7 +21,7 @@ DEFINE_CORESIGHT_DEVLIST(source_devs, "dummy_source");
- DEFINE_CORESIGHT_DEVLIST(sink_devs, "dummy_sink");
- 
- static int dummy_source_enable(struct coresight_device *csdev,
--			       struct perf_event *event, u32 mode)
-+			       struct perf_event *event, enum cs_mode mode)
- {
- 	dev_dbg(csdev->dev.parent, "Dummy source enabled\n");
- 
-@@ -34,7 +34,7 @@ static void dummy_source_disable(struct coresight_device *csdev,
- 	dev_dbg(csdev->dev.parent, "Dummy source disabled\n");
- }
- 
--static int dummy_sink_enable(struct coresight_device *csdev, u32 mode,
-+static int dummy_sink_enable(struct coresight_device *csdev, enum cs_mode mode,
- 				void *data)
- {
- 	dev_dbg(csdev->dev.parent, "Dummy sink enabled\n");
-
----
-base-commit: 3b79104f80036231a40ba5d15c3e329985029a0f
-change-id: 20230616-coresight-dummy-fix-kcfi-warnings-6687abd8d019
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+johannes
