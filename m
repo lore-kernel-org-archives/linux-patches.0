@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D545381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B221C433C0;
-	Mon, 19 Jun 2023 10:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E835381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77208C433C8;
+	Mon, 19 Jun 2023 10:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171558;
-	bh=WaZVmAssyh4p/W8srJFwLUfYNxnPdzVJJ0TkrO4fgOc=;
+	s=korg; t=1687171561;
+	bh=5SRHxz0VzTHZQEDld0p6FNwZpQKvc3mUFFQLp1lMavM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIqt9eaxcIDEh9inJkdvgmPWiLFsWd4FTj4JNDrAR29F5VlW3pPHBFTR4GmmbKRMg
-	 4j0xbJfnsCUXOPpGMNUrjUe/Uk9p8cHZPf3EGsDUCz2fgVLy0SgYt1Je4oZ+LBwyr2
-	 Cu3fXvzPNlPzAuFUe3pXwB1iaTcgkfkVJdRHwXXw=
+	b=PdFjSsmH1ptEEMldTpFG+JSBqUqBv3oCjJ88USlWdWsFlYUvBdts3tkoyQnQPeHvc
+	 9g/+uhqZ4ZatvvDKWS5K5MZ70B+SO0mupMQ6F9/ZGLaAQPuq+Q5Kwj0lGYP2nR0viJ
+	 oVnarBqC6Of/DTdQKKqcJSoYswWKjod/LuqkhuNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Feifei Xu <Feifei.Xu@amd.com>,
+	michel@daenzer.net,
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 074/166] drm/amd/pm: workaround for compute workload type on some skus
-Date: Mon, 19 Jun 2023 12:29:11 +0200
-Message-ID: <20230619102158.356108898@linuxfoundation.org>
+Subject: [PATCH 6.1 075/166] drm/amdgpu: add missing radeon secondary PCI ID
+Date: Mon, 19 Jun 2023 12:29:12 +0200
+Message-ID: <20230619102158.406902835@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,69 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kenneth Feng <kenneth.feng@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 7ca302d488f80cf4529620acc1c545f9022d8bb8 upstream.
+commit e61f67749b351c19455ce3085af2ae9af80023bc upstream.
 
-On smu 13.0.0, the compute workload type cannot be set on all the skus
-due to some other problems. This workaround is to make sure compute workload type
-can also run on some specific skus.
+0x5b70 is a missing RV370 secondary id.  Add it so
+we don't try and probe it with amdgpu.
 
-v2: keep the variable consistent
-
-Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
-Acked-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
+Cc: michel@daenzer.net
+Reviewed-by: Michel Dänzer <mdaenzer@redhat.com>
+Tested-by: Michel Dänzer <mdaenzer@redhat.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   33 +++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -1675,10 +1675,39 @@ static int smu_v13_0_0_set_power_profile
- 		}
- 	}
- 
--	/* conv PP_SMC_POWER_PROFILE* to WORKLOAD_PPLIB_*_BIT */
--	workload_type = smu_cmn_to_asic_specific_index(smu,
-+	if (smu->power_profile_mode == PP_SMC_POWER_PROFILE_COMPUTE &&
-+		(((smu->adev->pdev->device == 0x744C) && (smu->adev->pdev->revision == 0xC8)) ||
-+		((smu->adev->pdev->device == 0x744C) && (smu->adev->pdev->revision == 0xCC)))) {
-+		ret = smu_cmn_update_table(smu,
-+					   SMU_TABLE_ACTIVITY_MONITOR_COEFF,
-+					   WORKLOAD_PPLIB_COMPUTE_BIT,
-+					   (void *)(&activity_monitor_external),
-+					   false);
-+		if (ret) {
-+			dev_err(smu->adev->dev, "[%s] Failed to get activity monitor!", __func__);
-+			return ret;
-+		}
-+
-+		ret = smu_cmn_update_table(smu,
-+					   SMU_TABLE_ACTIVITY_MONITOR_COEFF,
-+					   WORKLOAD_PPLIB_CUSTOM_BIT,
-+					   (void *)(&activity_monitor_external),
-+					   true);
-+		if (ret) {
-+			dev_err(smu->adev->dev, "[%s] Failed to set activity monitor!", __func__);
-+			return ret;
-+		}
-+
-+		workload_type = smu_cmn_to_asic_specific_index(smu,
-+						       CMN2ASIC_MAPPING_WORKLOAD,
-+						       PP_SMC_POWER_PROFILE_CUSTOM);
-+	} else {
-+		/* conv PP_SMC_POWER_PROFILE* to WORKLOAD_PPLIB_*_BIT */
-+		workload_type = smu_cmn_to_asic_specific_index(smu,
- 						       CMN2ASIC_MAPPING_WORKLOAD,
- 						       smu->power_profile_mode);
-+	}
-+
- 	if (workload_type < 0)
- 		return -EINVAL;
- 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -1605,6 +1605,7 @@ static const u16 amdgpu_unsupported_pcii
+ 	0x5874,
+ 	0x5940,
+ 	0x5941,
++	0x5b70,
+ 	0x5b72,
+ 	0x5b73,
+ 	0x5b74,
 
 
