@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383C78825
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:47:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E6DC433C0;
-	Mon, 19 Jun 2023 10:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABE78BE5
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:47:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6449CC433C8;
+	Mon, 19 Jun 2023 10:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171655;
-	bh=/SN+nJwgPPz/9CEA1Fg6E2GnXv0zZ4/1ziZNQrSnIY8=;
+	s=korg; t=1687171657;
+	bh=E2lpTGPZ7rvR7MuQPEYvXmAOO1DAY8csw6d3kblZGKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/roNDfcYm/90fN+jwE83wWrsOurFniqKGhZIbL6gXCQHZsxgg8GttsgyGCsjPHFd
-	 taDR7EX5nOc5uDJhlcFvf85/XKqLzmhsUoC4oy3yEFVP3u82W/rBsS8Pm/vjvqTtBc
-	 hJ3gu7xfgFUxErthN1qxBJRuFLWoNGkJlbTR/30k=
+	b=E+53r5wFKdE2qOv4b3yNk/UQzKrLGZ5Ayjyfd4NAi98DQ8VTt9wLWkWGS5m5EpLi/
+	 M8wu/AH99A0BsvGfRESzHEFPZ6ucEgPqkIwce/Acc5ZWp/atcIJUq02NCAMZXYJMH/
+	 2t+ZED2sIAAr6QdSA+iuNNL2meSoVHC33+T7MXAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernhard Seibold <mail@bernhard-seibold.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 082/166] serial: lantiq: add missing interrupt ack
-Date: Mon, 19 Jun 2023 12:29:19 +0200
-Message-ID: <20230619102158.792001581@linuxfoundation.org>
+	Stephan Bolten <stephan.bolten@gmx.net>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 083/166] usb: typec: ucsi: Fix command cancellation
+Date: Mon, 19 Jun 2023 12:29:20 +0200
+Message-ID: <20230619102158.838226760@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -34,33 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernhard Seibold <mail@bernhard-seibold.de>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 306320034e8fbe7ee1cc4f5269c55658b4612048 upstream.
+commit c4a8bfabefed706bb9150867db528ceefd5cb5fe upstream.
 
-Currently, the error interrupt is never acknowledged, so once active it
-will stay active indefinitely, causing the handler to be called in an
-infinite loop.
+The Cancel command was passed to the write callback as the
+offset instead of as the actual command which caused NULL
+pointer dereference.
 
-Fixes: 2f0fc4159a6a ("SERIAL: Lantiq: Add driver for MIPS Lantiq SOCs.")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Bernhard Seibold <mail@bernhard-seibold.de>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Message-ID: <20230602133029.546-1-mail@bernhard-seibold.de>
+Reported-by: Stephan Bolten <stephan.bolten@gmx.net>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217517
+Fixes: 094902bc6a3c ("usb: typec: ucsi: Always cancel the command if PPM reports BUSY condition")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Message-ID: <20230606115802.79339-1-heikki.krogerus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/lantiq.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/typec/ucsi/ucsi.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/lantiq.c
-+++ b/drivers/tty/serial/lantiq.c
-@@ -278,6 +278,7 @@ lqasc_err_int(int irq, void *_port)
- 	struct ltq_uart_port *ltq_port = to_ltq_uart_port(port);
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -132,10 +132,8 @@ static int ucsi_exec_command(struct ucsi
+ 	if (ret)
+ 		return ret;
  
- 	spin_lock_irqsave(&ltq_port->lock, flags);
-+	__raw_writel(ASC_IRNCR_EIR, port->membase + LTQ_ASC_IRNCR);
- 	/* clear any pending interrupts */
- 	asc_update_bits(0, ASCWHBSTATE_CLRPE | ASCWHBSTATE_CLRFE |
- 		ASCWHBSTATE_CLRROE, port->membase + LTQ_ASC_WHBSTATE);
+-	if (cci & UCSI_CCI_BUSY) {
+-		ucsi->ops->async_write(ucsi, UCSI_CANCEL, NULL, 0);
+-		return -EBUSY;
+-	}
++	if (cmd != UCSI_CANCEL && cci & UCSI_CCI_BUSY)
++		return ucsi_exec_command(ucsi, UCSI_CANCEL);
+ 
+ 	if (!(cci & UCSI_CCI_COMMAND_COMPLETE))
+ 		return -EIO;
+@@ -149,6 +147,11 @@ static int ucsi_exec_command(struct ucsi
+ 		return ucsi_read_error(ucsi);
+ 	}
+ 
++	if (cmd == UCSI_CANCEL && cci & UCSI_CCI_CANCEL_COMPLETE) {
++		ret = ucsi_acknowledge_command(ucsi);
++		return ret ? ret : -EBUSY;
++	}
++
+ 	return UCSI_CCI_LENGTH(cci);
+ }
+ 
 
 
