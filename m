@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78F4BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44280C433C0;
-	Mon, 19 Jun 2023 10:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5A9BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002E4C433C8;
+	Mon, 19 Jun 2023 10:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171696;
-	bh=Zm9VRyR2riJzio3svaHdK8zEU3Lv217R/AfSrc1B3KE=;
+	s=korg; t=1687171699;
+	bh=Y6MBSY97SJc6gArE0pDXarPoM4AXlqY9EeogjInlCE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGBfmCF4OqvJTWaiqTWyDRrCewhcAk6++hSyWaKVEtrgTZwTMYgI1zIB35INXVY7E
-	 MFofuF2+sve/NEhPTGDBufaip6HhNyDKVG5Sxvmh3/Aek5c57cm6HSrzqP+wQj5Mn0
-	 gUaWZ3jUlPxg+/o1IktHHy+I+Pc6FfTzvNmEgeas=
+	b=U/V51NtQryROb7+wa4xXsw3VYyz2hQCf6yTts0qS6APQsr5hnoBQERUIS/4qSuQCc
+	 LQPF4xB24X0Cf5tbenWRrDNgBPHDqKMIYgX4otxQgjygX7ry0FF52Txa3t3XPsWkez
+	 w9Ujx4FLhF2V70tguGZYH3lQRrxBsULXzbKlakOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/166] net: ethtool: correct MAX attribute value for stats
-Date: Mon, 19 Jun 2023 12:30:01 +0200
-Message-ID: <20230619102200.846105944@linuxfoundation.org>
+Subject: [PATCH 6.1 125/166] ipvlan: fix bound dev checking for IPv6 l3s mode
+Date: Mon, 19 Jun 2023 12:30:02 +0200
+Message-ID: <20230619102200.887638688@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,39 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 52f79609c0c5b25fddb88e85f25ce08aa7e3fb42 ]
+[ Upstream commit ce57adc222aba32431c42632b396e9213d0eb0b8 ]
 
-When compiling YNL generated code compiler complains about
-array-initializer-out-of-bounds. Turns out the MAX value
-for STATS_GRP uses the value for STATS.
+The commit 59a0b022aa24 ("ipvlan: Make skb->skb_iif track skb->dev for l3s
+mode") fixed ipvlan bonded dev checking by updating skb skb_iif. This fix
+works for IPv4, as in raw_v4_input() the dif is from inet_iif(skb), which
+is skb->skb_iif when there is no route.
 
-This may lead to random corruptions in user space (kernel
-itself doesn't use this value as it never parses stats).
+But for IPv6, the fix is not enough, because in ipv6_raw_deliver() ->
+raw_v6_match(), the dif is inet6_iif(skb), which is returns IP6CB(skb)->iif
+instead of skb->skb_iif if it's not a l3_slave. To fix the IPv6 part
+issue. Let's set IP6CB(skb)->iif to correct ifindex.
 
-Fixes: f09ea6fb1272 ("ethtool: add a new command for reading standard stats")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
+BTW, ipvlan handles NS/NA specifically. Since it works fine, I will not
+reset IP6CB(skb)->iif when addr->atype is IPVL_ICMPV6.
+
+Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2196710
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/ethtool_netlink.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ipvlan/ipvlan_l3s.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/uapi/linux/ethtool_netlink.h b/include/uapi/linux/ethtool_netlink.h
-index bb57084ac524a..69f5bec347c20 100644
---- a/include/uapi/linux/ethtool_netlink.h
-+++ b/include/uapi/linux/ethtool_netlink.h
-@@ -761,7 +761,7 @@ enum {
+diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
+index 71712ea25403d..d5b05e8032199 100644
+--- a/drivers/net/ipvlan/ipvlan_l3s.c
++++ b/drivers/net/ipvlan/ipvlan_l3s.c
+@@ -102,6 +102,10 @@ static unsigned int ipvlan_nf_input(void *priv, struct sk_buff *skb,
  
- 	/* add new constants above here */
- 	__ETHTOOL_A_STATS_GRP_CNT,
--	ETHTOOL_A_STATS_GRP_MAX = (__ETHTOOL_A_STATS_CNT - 1)
-+	ETHTOOL_A_STATS_GRP_MAX = (__ETHTOOL_A_STATS_GRP_CNT - 1)
- };
- 
- enum {
+ 	skb->dev = addr->master->dev;
+ 	skb->skb_iif = skb->dev->ifindex;
++#if IS_ENABLED(CONFIG_IPV6)
++	if (addr->atype == IPVL_IPV6)
++		IP6CB(skb)->iif = skb->dev->ifindex;
++#endif
+ 	len = skb->len + ETH_HLEN;
+ 	ipvlan_count_rx(addr->master, len, true, false);
+ out:
 -- 
 2.39.2
 
