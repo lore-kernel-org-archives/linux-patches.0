@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0B33C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85C0C433C8;
-	Mon, 19 Jun 2023 10:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16653C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F2CC433C0;
+	Mon, 19 Jun 2023 10:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171133;
-	bh=NU6FtV+glwnYxvvBXnryZ3yMhhNrZNpzjTZ1oY/t/L8=;
+	s=korg; t=1687171135;
+	bh=pQknnUIGTrufniS4kWBHkPjtXpRs2Hm2zKFwlHmJzLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nHmXaGzTwxMv6BX9AOXMuTp5f69N+bOhJrabpYoWRzAdHEr2L7aNAxoYgqm9oKiSu
-	 A+UkjWRRoCLNQWo2Ik7jI2K9WEqBLrtc71+ysRio+dwyRQA4N+H3J0MdfA1wSFTD9N
-	 pIAI9n3aIyfzbIWLTcg48UYtsiiKOMvrl2qxbLOc=
+	b=a/BRZULyD9t95o5hbAuEp49qPBWHkXvcN5A7M0AVf6b+MZ8h8rpAFvo27LrNIKDOp
+	 CH16KxT7lU8gn3M52otR0lp1iZSDqdWiQ1Xx+EAVHhTfhHFpFep/LynpMQ7XqFPYS6
+	 xtNK9myRU43XLZcXuTMHl26sdPKyY2eISaMcxmrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Roger Quadros <rogerq@kernel.org>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 160/187] net: ethernet: ti: am65-cpsw: Call of_node_put() on error path
-Date: Mon, 19 Jun 2023 12:29:38 +0200
-Message-ID: <20230619102205.313775659@linuxfoundation.org>
+Subject: [PATCH 6.3 161/187] selftests/tc-testing: Fix Error: Specified qdisc kind is unknown.
+Date: Mon, 19 Jun 2023 12:29:39 +0200
+Message-ID: <20230619102205.360677356@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -36,36 +37,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 374283a1001277e4d07491387aac1fad5aa08d43 ]
+[ Upstream commit aef6e908b54200d04f2d77dab31509fcff2e60ae ]
 
-This code returns directly but it should instead call of_node_put()
-to drop some reference counts.
+All TEQL tests assume that sch_teql module is loaded. Load module in tdc.sh
+before running qdisc tests.
 
-Fixes: dab2b265dd23 ("net: ethernet: ti: am65-cpsw: Add support for SERDES configuration")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/e3012f0c-1621-40e6-bf7d-03c276f6e07f@kili.mountain
+Fixes following example error when running tests via tdc.sh for all TEQL
+tests:
+
+ # $ sudo ./tdc.py -d eth2 -e 84a0
+ #  -- ns/SubPlugin.__init__
+ # Test 84a0: Create TEQL with default setting
+ # exit: 2
+ # exit: 0
+ # Error: Specified qdisc kind is unknown.
+ #
+ # -----> teardown stage *** Could not execute: "$TC qdisc del dev $DUMMY handle 1: root"
+ #
+ # -----> teardown stage *** Error message: "Error: Invalid handle.
+ # "
+ # returncode 2; expected [0]
+ #
+ # -----> teardown stage *** Aborting test run.
+ #
+ # <_io.BufferedReader name=3> *** stdout ***
+ #
+ # <_io.BufferedReader name=5> *** stderr ***
+ # "-----> teardown stage" did not complete successfully
+ # Exception <class '__main__.PluginMgrTestFail'> ('teardown', 'Error: Specified qdisc kind is unknown.\n', '"-----> teardown stage" did not complete successfully') (caught in test_runner, running test 2 84a0 Create TEQL with default setting stage teardown)
+ # ---------------
+ # traceback
+ #   File "/images/src/linux/tools/testing/selftests/tc-testing/./tdc.py", line 495, in test_runner
+ #     res = run_one_test(pm, args, index, tidx)
+ #   File "/images/src/linux/tools/testing/selftests/tc-testing/./tdc.py", line 434, in run_one_test
+ #     prepare_env(args, pm, 'teardown', '-----> teardown stage', tidx['teardown'], procout)
+ #   File "/images/src/linux/tools/testing/selftests/tc-testing/./tdc.py", line 245, in prepare_env
+ #     raise PluginMgrTestFail(
+ # ---------------
+ # accumulated output for this test:
+ # Error: Specified qdisc kind is unknown.
+ #
+ # ---------------
+ #
+ # All test results:
+ #
+ # 1..1
+ # ok 1 84a0 - Create TEQL with default setting # skipped - "-----> teardown stage" did not complete successfully
+
+Fixes: cc62fbe114c9 ("selftests/tc-testing: add selftests for teql qdisc")
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/tc-testing/tdc.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index bcea87b7151c0..ad69c5d5761b3 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -2031,7 +2031,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 		/* Initialize the Serdes PHY for the port */
- 		ret = am65_cpsw_init_serdes_phy(dev, port_np, port);
- 		if (ret)
--			return ret;
-+			goto of_node_put;
+diff --git a/tools/testing/selftests/tc-testing/tdc.sh b/tools/testing/selftests/tc-testing/tdc.sh
+index afb0cd86fa3df..eb357bd7923c0 100755
+--- a/tools/testing/selftests/tc-testing/tdc.sh
++++ b/tools/testing/selftests/tc-testing/tdc.sh
+@@ -2,5 +2,6 @@
+ # SPDX-License-Identifier: GPL-2.0
  
- 		port->slave.mac_only =
- 				of_property_read_bool(port_np, "ti,mac-only");
+ modprobe netdevsim
++modprobe sch_teql
+ ./tdc.py -c actions --nobuildebpf
+ ./tdc.py -c qdisc
 -- 
 2.39.2
 
