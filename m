@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4595381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB29DC433C8;
-	Mon, 19 Jun 2023 10:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105565381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB12C433C8;
+	Mon, 19 Jun 2023 10:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171401;
-	bh=fdVj8BXjOEAs5TW0LSt3vogjdTYde6j0fNINNh2ZRzM=;
+	s=korg; t=1687171403;
+	bh=e8KBPGafc4lWioyFKqhihelU5VkPeA2MRjnvL3ZBZZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxdxJ7ENvrW72Ah7WQt/ha2i/Dlrwnle3rpemR0scWJTq8td2ZAfxWG+iwfnzZIWG
-	 Xodv3jTq42wr+iE347amgsGR8iyuqVhpTC0/FhSqKsbun8uxSRL1hGeqStFHq1TL2+
-	 OzN63Us8h+BTKU3P0TEVGGoLwfrWB1ISvUo46lds=
+	b=aKpKVzifvdP4PtORsT1bUt102UR0Ni6W6tKrGMHSZcPQ41IOIXs6gGwQ6EemRgIDy
+	 HoqsineA6dGGwbEWp8J5YvB2TCe3L5mpFbG+7vhcTKcwj8r5C/w1AfuvBV7WUZaQD3
+	 anJGk/oDHVIM918OrnuD/C6DwVPLIFlN3Tzc2DXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Blakeney <mark.blakeney@bullet-systems.net>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Alexandru Sorodoc <ealex95@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/166] PCI/DPC: Quirk PIO log size for Intel Ice Lake Root Ports
-Date: Mon, 19 Jun 2023 12:28:15 +0200
-Message-ID: <20230619102155.602693443@linuxfoundation.org>
+Subject: [PATCH 6.1 019/166] platform/x86: asus-wmi: Ignore WMI events with codes 0x7B, 0xC0
+Date: Mon, 19 Jun 2023 12:28:16 +0200
+Message-ID: <20230619102155.674485773@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,60 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Alexandru Sorodoc <ealex95@gmail.com>
 
-[ Upstream commit 3b8803494a0612acdeee714cb72aa142b1e05ce5 ]
+[ Upstream commit 362c1f2ec82cb65940e1c73e15a395a7a891fc6f ]
 
-Commit 5459c0b70467 ("PCI/DPC: Quirk PIO log size for certain Intel Root
-Ports") added quirks for Tiger and Alder Lake Root Ports but missed that
-the same issue exists also in the previous generation, Ice Lake.
+On ASUS GU604V the key 0x7B is issued when the charger is connected or
+disconnected, and key 0xC0 is issued when an external display is
+connected or disconnected.
 
-Apply the quirk for Ice Lake Root Ports as well.  This prevents kernel
-complaints like:
+This commit maps them to KE_IGNORE to slience kernel messages about
+unknown keys, such as:
 
-  DPC: RP PIO log size 0 is invalid
+    kernel: asus_wmi: Unknown key code 0x7b
 
-and also enables the DPC driver to dump the RP PIO Log registers when DPC
-is triggered.
-
-[bhelgaas: add dmesg warning and RP PIO Log dump info]
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=209943
-Link: https://lore.kernel.org/r/20230511121905.73949-1-mika.westerberg@linux.intel.com
-Reported-by: Mark Blakeney <mark.blakeney@bullet-systems.net>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Alexandru Sorodoc <ealex95@gmail.com>
+Link: https://lore.kernel.org/r/20230512101517.47416-1-ealex95@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/platform/x86/asus-nb-wmi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 8d32a3834688f..ccc90656130a0 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5995,8 +5995,9 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x56c1, aspm_l1_acceptable_latency
- 
- #ifdef CONFIG_PCIE_DPC
- /*
-- * Intel Tiger Lake and Alder Lake BIOS has a bug that clears the DPC
-- * RP PIO Log Size of the integrated Thunderbolt PCIe Root Ports.
-+ * Intel Ice Lake, Tiger Lake and Alder Lake BIOS has a bug that clears
-+ * the DPC RP PIO Log Size of the integrated Thunderbolt PCIe Root
-+ * Ports.
-  */
- static void dpc_log_size(struct pci_dev *dev)
- {
-@@ -6019,6 +6020,10 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x461f, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x462f, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x463f, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x466e, dpc_log_size);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x8a1d, dpc_log_size);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x8a1f, dpc_log_size);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x8a21, dpc_log_size);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x8a23, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a23, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a25, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a27, dpc_log_size);
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index e2c9a68d12df9..fdf7da06af306 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -555,6 +555,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
+ 	{ KE_KEY, 0x71, { KEY_F13 } }, /* General-purpose button */
+ 	{ KE_IGNORE, 0x79, },  /* Charger type dectection notification */
+ 	{ KE_KEY, 0x7a, { KEY_ALS_TOGGLE } }, /* Ambient Light Sensor Toggle */
++	{ KE_IGNORE, 0x7B, }, /* Charger connect/disconnect notification */
+ 	{ KE_KEY, 0x7c, { KEY_MICMUTE } },
+ 	{ KE_KEY, 0x7D, { KEY_BLUETOOTH } }, /* Bluetooth Enable */
+ 	{ KE_KEY, 0x7E, { KEY_BLUETOOTH } }, /* Bluetooth Disable */
+@@ -584,6 +585,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
+ 	{ KE_KEY, 0xAE, { KEY_FN_F5 } }, /* Fn+F5 fan mode on 2020+ */
+ 	{ KE_KEY, 0xB3, { KEY_PROG4 } }, /* AURA */
+ 	{ KE_KEY, 0xB5, { KEY_CALC } },
++	{ KE_IGNORE, 0xC0, }, /* External display connect/disconnect notification */
+ 	{ KE_KEY, 0xC4, { KEY_KBDILLUMUP } },
+ 	{ KE_KEY, 0xC5, { KEY_KBDILLUMDOWN } },
+ 	{ KE_IGNORE, 0xC6, },  /* Ambient Light Sensor notification */
 -- 
 2.39.2
 
