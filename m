@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178071096A
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:33:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90895C433C8;
-	Mon, 19 Jun 2023 10:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EA71095B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:33:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43767C433C0;
+	Mon, 19 Jun 2023 10:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170804;
-	bh=6gpORcAxPIswk5rt3904T6pVzx2l7Ca1K3vmcaIsjyc=;
+	s=korg; t=1687170807;
+	bh=4EsQkUWGg4c61tIikPX9SeCOUW/Iu6y91stx+mB+4aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SDGOAco1u0Ph+PE79CalVeGvfl2OQFoxisbP6gxJS5pLomqVBOb/8xV4hNiWlGNlb
-	 ihHzgLcrQsQstFuzFr6y1hn/Nrhrhbkyh2rnqtr03UbSXqNiTMh9yBfdMO8PW8N/6C
-	 HsdZumCx041JMH4lRQk0pB3gjawTOeiEKnY+htj0=
+	b=pdr7xWKpLGPbVEFHlaEHn6GW2lsG5jxMBjYtP+qe6swUpoPino4YFI3wqiBm/90zu
+	 45k6kYoGteuHg1vi1F6wXtI9AGo+ONGOErf1bi6kffXlAMTyeQyGD7ECBBfgvAhmgb
+	 Z83y6Wh+HIovdvRI4NIaXwO3ZSscjqpgvo4Mr1ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Chih-Yen Chang <cc85nod@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 016/187] power: supply: Ratelimit no data debug output
-Date: Mon, 19 Jun 2023 12:27:14 +0200
-Message-ID: <20230619102158.391455354@linuxfoundation.org>
+Subject: [PATCH 6.3 007/187] ksmbd: validate smb request protocol id
+Date: Mon, 19 Jun 2023 12:27:05 +0200
+Message-ID: <20230619102157.976534972@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -36,41 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 155c45a25679f571c2ae57d10db843a9dfc63430 ]
+[ Upstream commit 1c1bcf2d3ea061613119b534f57507c377df20f9 ]
 
-Reduce the amount of output this dev_dbg() statement emits into logs,
-otherwise if system software polls the sysfs entry for data and keeps
-getting -ENODATA, it could end up filling the logs up.
+This patch add the validation for smb request protocol id.
+If it is not one of the four ids(SMB1_PROTO_NUMBER, SMB2_PROTO_NUMBER,
+SMB2_TRANSFORM_PROTO_NUM, SMB2_COMPRESSION_TRANSFORM_ID), don't allow
+processing the request. And this will fix the following KASAN warning
+also.
 
-This does in fact make systemd journald choke, since during boot the
-sysfs power supply entries are polled and if journald starts at the
-same time, the journal is just being repeatedly filled up, and the
-system stops on trying to start journald without booting any further.
+[   13.905265] BUG: KASAN: slab-out-of-bounds in init_smb2_rsp_hdr+0x1b9/0x1f0
+[   13.905900] Read of size 16 at addr ffff888005fd2f34 by task kworker/0:2/44
+...
+[   13.908553] Call Trace:
+[   13.908793]  <TASK>
+[   13.908995]  dump_stack_lvl+0x33/0x50
+[   13.909369]  print_report+0xcc/0x620
+[   13.910870]  kasan_report+0xae/0xe0
+[   13.911519]  kasan_check_range+0x35/0x1b0
+[   13.911796]  init_smb2_rsp_hdr+0x1b9/0x1f0
+[   13.912492]  handle_ksmbd_work+0xe5/0x820
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: stable@vger.kernel.org
+Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_sysfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ksmbd/connection.c |  5 +++--
+ fs/ksmbd/smb_common.c | 14 +++++++++++++-
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/power/supply/power_supply_sysfs.c b/drivers/power/supply/power_supply_sysfs.c
-index c228205e09538..4bbb3053eef44 100644
---- a/drivers/power/supply/power_supply_sysfs.c
-+++ b/drivers/power/supply/power_supply_sysfs.c
-@@ -285,7 +285,8 @@ static ssize_t power_supply_show_property(struct device *dev,
+diff --git a/fs/ksmbd/connection.c b/fs/ksmbd/connection.c
+index e11d4a1e63d73..2a717d158f02e 100644
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -364,8 +364,6 @@ int ksmbd_conn_handler_loop(void *p)
+ 			break;
  
- 		if (ret < 0) {
- 			if (ret == -ENODATA)
--				dev_dbg(dev, "driver has no data for `%s' property\n",
-+				dev_dbg_ratelimited(dev,
-+					"driver has no data for `%s' property\n",
- 					attr->attr.name);
- 			else if (ret != -ENODEV && ret != -EAGAIN)
- 				dev_err_ratelimited(dev,
+ 		memcpy(conn->request_buf, hdr_buf, sizeof(hdr_buf));
+-		if (!ksmbd_smb_request(conn))
+-			break;
+ 
+ 		/*
+ 		 * We already read 4 bytes to find out PDU size, now
+@@ -383,6 +381,9 @@ int ksmbd_conn_handler_loop(void *p)
+ 			continue;
+ 		}
+ 
++		if (!ksmbd_smb_request(conn))
++			break;
++
+ 		if (((struct smb2_hdr *)smb2_get_msg(conn->request_buf))->ProtocolId ==
+ 		    SMB2_PROTO_NUMBER) {
+ 			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
+diff --git a/fs/ksmbd/smb_common.c b/fs/ksmbd/smb_common.c
+index af0c2a9b85290..569e5eecdf3db 100644
+--- a/fs/ksmbd/smb_common.c
++++ b/fs/ksmbd/smb_common.c
+@@ -158,7 +158,19 @@ int ksmbd_verify_smb_message(struct ksmbd_work *work)
+  */
+ bool ksmbd_smb_request(struct ksmbd_conn *conn)
+ {
+-	return conn->request_buf[0] == 0;
++	__le32 *proto = (__le32 *)smb2_get_msg(conn->request_buf);
++
++	if (*proto == SMB2_COMPRESSION_TRANSFORM_ID) {
++		pr_err_ratelimited("smb2 compression not support yet");
++		return false;
++	}
++
++	if (*proto != SMB1_PROTO_NUMBER &&
++	    *proto != SMB2_PROTO_NUMBER &&
++	    *proto != SMB2_TRANSFORM_PROTO_NUM)
++		return false;
++
++	return true;
+ }
+ 
+ static bool supported_protocol(int idx)
 -- 
 2.39.2
 
