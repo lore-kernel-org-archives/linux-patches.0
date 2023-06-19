@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D028BE5
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:49:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2620C433C8;
-	Mon, 19 Jun 2023 10:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DCA8BE5
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:49:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D94C433C8;
+	Mon, 19 Jun 2023 10:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171746;
-	bh=zMCFc6cFdBfDLQ1g6nz6+4imKudIewl73e2c3Z5gM1w=;
+	s=korg; t=1687171748;
+	bh=uvPD4bGKRDWQCGUnwIAjiRstslLnmosiclP4vnJiUL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INJK13CSlQAp+yDk13bl/CxTFZ7lIjNcNVXTPnplVPL1zPIm5i6dBMl8reifFk3Ie
-	 6RBcaA7p1LvQFsv+sclMZ3xjmarAKYuQyjKZdFPYAE/JAXfpOZidnIvNfsVRnzLxJ6
-	 wsWJ10SXTTjXVbjTqnK2BrtNrNbkIINyY0i0MiGI=
+	b=QYGaXUoRBRIdTql62EBsZS8aQjwfg+v5VP7nBueQPwzx1nMz8a7gHNen+eLZK9hLf
+	 xa2ROL28LFryGAof71Mj0rzdUA3psxhNTEYm3v3EaAs+Lc1aVA0zmFZRbJuqmlcZao
+	 iglZKk9t1K2Z2lL7+OiWxSxD/gV9kozxPrf9mgnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Lee Jones <lee@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Natalia Petrova <n.petrova@fintech.ru>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/166] net/sched: cls_u32: Fix reference counter leak leading to overflow
-Date: Mon, 19 Jun 2023 12:29:44 +0200
-Message-ID: <20230619102159.999479340@linuxfoundation.org>
+Subject: [PATCH 6.1 135/166] drm/nouveau: add nv_encoder pointer check for NULL
+Date: Mon, 19 Jun 2023 12:30:12 +0200
+Message-ID: <20230619102201.325488626@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -37,74 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Natalia Petrova <n.petrova@fintech.ru>
 
-[ Upstream commit 04c55383fa5689357bcdd2c8036725a55ed632bc ]
+[ Upstream commit 55b94bb8c42464bad3d2217f6874aa1a85664eac ]
 
-In the event of a failure in tcf_change_indev(), u32_set_parms() will
-immediately return without decrementing the recently incremented
-reference counter.  If this happens enough times, the counter will
-rollover and the reference freed, leading to a double free which can be
-used to do 'bad things'.
+Pointer nv_encoder could be dereferenced at nouveau_connector.c
+in case it's equal to NULL by jumping to goto label.
+This patch adds a NULL-check to avoid it.
 
-In order to prevent this, move the point of possible failure above the
-point where the reference counter is incremented.  Also save any
-meaningful return values to be applied to the return data at the
-appropriate point in time.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This issue was caught with KASAN.
-
-Fixes: 705c7091262d ("net: sched: cls_u32: no need to call tcf_exts_change for newly allocated struct")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 3195c5f9784a ("drm/nouveau: set encoder for lvds")
+Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+[Fixed patch title]
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230512103320.82234-1-n.petrova@fintech.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_connector.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 34d25f7a0687a..a3477537c102b 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -716,13 +716,19 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
- 			 struct nlattr *est, u32 flags, u32 fl_flags,
- 			 struct netlink_ext_ack *extack)
- {
--	int err;
-+	int err, ifindex = -1;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
+index fd984733b8e6f..f40310559d13f 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_connector.c
++++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+@@ -730,7 +730,8 @@ nouveau_connector_detect_lvds(struct drm_connector *connector, bool force)
+ #endif
  
- 	err = tcf_exts_validate_ex(net, tp, tb, est, &n->exts, flags,
- 				   fl_flags, extack);
- 	if (err < 0)
- 		return err;
- 
-+	if (tb[TCA_U32_INDEV]) {
-+		ifindex = tcf_change_indev(net, tb[TCA_U32_INDEV], extack);
-+		if (ifindex < 0)
-+			return -EINVAL;
-+	}
-+
- 	if (tb[TCA_U32_LINK]) {
- 		u32 handle = nla_get_u32(tb[TCA_U32_LINK]);
- 		struct tc_u_hnode *ht_down = NULL, *ht_old;
-@@ -757,13 +763,9 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
- 		tcf_bind_filter(tp, &n->res, base);
- 	}
- 
--	if (tb[TCA_U32_INDEV]) {
--		int ret;
--		ret = tcf_change_indev(net, tb[TCA_U32_INDEV], extack);
--		if (ret < 0)
--			return -EINVAL;
--		n->ifindex = ret;
--	}
-+	if (ifindex >= 0)
-+		n->ifindex = ifindex;
-+
- 	return 0;
+ 	nouveau_connector_set_edid(nv_connector, edid);
+-	nouveau_connector_set_encoder(connector, nv_encoder);
++	if (nv_encoder)
++		nouveau_connector_set_encoder(connector, nv_encoder);
+ 	return status;
  }
  
 -- 
