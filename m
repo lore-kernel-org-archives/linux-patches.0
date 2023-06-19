@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3855381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E018C433C0;
-	Mon, 19 Jun 2023 10:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8605381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5444C433C8;
+	Mon, 19 Jun 2023 10:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171520;
-	bh=ap3jkD9bWHq32RU4HgblFqK2uQUDLFh8qSg39w0GXXY=;
+	s=korg; t=1687171523;
+	bh=mdbmSESeonHWN1aK4IwDHNYlhsoIxMfPZ0/Z6vaPIGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ll7XIOfstt6LuncefpHDOrVs46PHhzPOUpLj8ktBaAmZg7nPVA8NsDre0hG/+K+kp
-	 G4vyeWOOGy75RmDUMb4fxuCI3i+VU1vqMX+vnD47J6QhBct2nrRWoSm9EGS6ctFVQ5
-	 ECg224jpF7YwZAODokIGksvLS/TVIW+88Zult77s=
+	b=sym4Co/am6x95DmHy8X/dH0XxEBczr3ztiPQVDyIAUuid5YYnXTpAcgBddG7QLkBs
+	 C00sN+KHn5UkYqT7ZiElmazo2TML0Sn4bajSBOeIkPr2hSwCZshmDU/TMl0HLEe7FU
+	 W7GnNnhN/sa2fR9mKJEWKOyzG/obSEkWGi9y0Dzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Yi <yijun@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 053/166] LoongArch: Fix perf event id calculation
-Date: Mon, 19 Jun 2023 12:28:50 +0200
-Message-ID: <20230619102157.331362573@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 062/166] ALSA: usb-audio: Fix broken resume due to UAC3 power state
+Date: Mon, 19 Jun 2023 12:28:59 +0200
+Message-ID: <20230619102157.801180113@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -34,48 +33,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 962369120d750cbc9c4dc492f32b4304669ff6aa upstream.
+commit 8ba61c9f6c9bdfbf9d197b0282641d24ae909778 upstream.
 
-LoongArch PMCFG has 10bit event id rather than 8 bit, so fix it.
+As reported in the bugzilla below, the PM resume of a UAC3 device may
+fail due to the incomplete power state change, stuck at D1.  The
+reason is that the driver expects the full D0 power state change only
+at hw_params, while the normal PCM resume procedure doesn't call
+hw_params.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Jun Yi <yijun@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+For fixing the bug, we add the same power state update to D0 at the
+prepare callback, which is certainly called by the resume procedure.
+
+Note that, with this change, the power state change in the hw_params
+becomes almost redundant, since snd_usb_hw_params() doesn't touch the
+parameters (at least it tires so).  But dropping it is still a bit
+risky (e.g. we have the media-driver binding), so I leave the D0 power
+state change in snd_usb_hw_params() as is for now.
+
+Fixes: a0a4959eb4e9 ("ALSA: usb-audio: Operate UAC3 Power Domains in PCM callbacks")
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217539
+Link: https://lore.kernel.org/r/20230612132818.29486-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/perf_event.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/pcm.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/loongarch/kernel/perf_event.c
-+++ b/arch/loongarch/kernel/perf_event.c
-@@ -271,7 +271,7 @@ static void loongarch_pmu_enable_event(s
- 	WARN_ON(idx < 0 || idx >= loongarch_pmu.num_counters);
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -650,6 +650,10 @@ static int snd_usb_pcm_prepare(struct sn
+ 		goto unlock;
+ 	}
  
- 	/* Make sure interrupt enabled. */
--	cpuc->saved_ctrl[idx] = M_PERFCTL_EVENT(evt->event_base & 0xff) |
-+	cpuc->saved_ctrl[idx] = M_PERFCTL_EVENT(evt->event_base) |
- 		(evt->config_base & M_PERFCTL_CONFIG_MASK) | CSR_PERFCTRL_IE;
- 
- 	cpu = (event->cpu >= 0) ? event->cpu : smp_processor_id();
-@@ -594,7 +594,7 @@ static struct pmu pmu = {
- 
- static unsigned int loongarch_pmu_perf_event_encode(const struct loongarch_perf_event *pev)
- {
--	return (pev->event_id & 0xff);
-+	return M_PERFCTL_EVENT(pev->event_id);
- }
- 
- static const struct loongarch_perf_event *loongarch_pmu_map_general_event(int idx)
-@@ -849,7 +849,7 @@ static void resume_local_counters(void)
- 
- static const struct loongarch_perf_event *loongarch_pmu_map_raw_event(u64 config)
- {
--	raw_event.event_id = config & 0xff;
-+	raw_event.event_id = M_PERFCTL_EVENT(config);
- 
- 	return &raw_event;
- }
++	ret = snd_usb_pcm_change_state(subs, UAC3_PD_STATE_D0);
++	if (ret < 0)
++		goto unlock;
++
+  again:
+ 	if (subs->sync_endpoint) {
+ 		ret = snd_usb_endpoint_prepare(chip, subs->sync_endpoint);
 
 
