@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB885381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A13AC433C8;
-	Mon, 19 Jun 2023 10:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C3E5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E95C433C8;
+	Mon, 19 Jun 2023 10:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171536;
-	bh=zeXU2fAuvQ+nq44ZaqLkNwja00UOEg5AZ8e/oIEVF9w=;
+	s=korg; t=1687171539;
+	bh=I+Mmvt/J8/mtFygh1dWzkEIiZvzhJYWh4yJ4eClOigo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gf8MbK705YE4gD87p6tAQSy/h4MV5Y7RPXHl+X3fqj1HU4je0NArHc+E+nWPfStHF
-	 344XsjzlEsrdPMOQQPVka8dc8IbileLTpDndrN9pgBNCN7P74TPGyaGoDHF5BumlOk
-	 AQSFmly8PpRgnvWR0vvL/+TJPKx6ncydP0sGlsEs=
+	b=WDmq2C/8bsLVETM1WXuDVrIXPbNr8WdQPxuaWKx8vo95uX0PSazdOPxdURFncn0RU
+	 Iw09auspGXbaPGq3+HdVNL0Z3nZoYGL9uuwlJQ0JnoMVsjgUl7O5BAuKsnwH5cVjVK
+	 fzQ8sMQY0oncHlKLFNh1tFIC6QdYfKX+PL0oyL8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Herbst <kherbst@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.1 067/166] nouveau: fix client work fence deletion race
-Date: Mon, 19 Jun 2023 12:29:04 +0200
-Message-ID: <20230619102158.033370081@linuxfoundation.org>
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.1 068/166] RDMA/uverbs: Restrict usage of privileged QKEYs
+Date: Mon, 19 Jun 2023 12:29:05 +0200
+Message-ID: <20230619102158.074595085@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -34,60 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Airlie <airlied@redhat.com>
+From: Edward Srouji <edwards@nvidia.com>
 
-commit c8a5d5ea3ba6a18958f8d76430e4cd68eea33943 upstream.
+commit 0cadb4db79e1d9eea66711c4031e435c2191907e upstream.
 
-This seems to have existed for ever but is now more apparant after
-commit 9bff18d13473 ("drm/ttm: use per BO cleanup workers")
+According to the IB specification rel-1.6, section 3.5.3:
+"QKEYs with the most significant bit set are considered controlled
+QKEYs, and a HCA does not allow a consumer to arbitrarily specify a
+controlled QKEY."
 
-My analysis: two threads are running, one in the irq signalling the
-fence, in dma_fence_signal_timestamp_locked, it has done the
-DMA_FENCE_FLAG_SIGNALLED_BIT setting, but hasn't yet reached the
-callbacks.
+Thus, block non-privileged users from setting such a QKEY.
 
-The second thread in nouveau_cli_work_ready, where it sees the fence is
-signalled, so then puts the fence, cleanups the object and frees the
-work item, which contains the callback.
-
-Thread one goes again and tries to call the callback and causes the
-use-after-free.
-
-Proposed fix: lock the fence signalled check in nouveau_cli_work_ready,
-so either the callbacks are done or the memory is freed.
-
-Reviewed-by: Karol Herbst <kherbst@redhat.com>
-Fixes: 11e451e74050 ("drm/nouveau: remove fence wait code from deferred client work handler")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://lore.kernel.org/dri-devel/20230615024008.1600281-1-airlied@gmail.com/
+Fixes: bc38a6abdd5a ("[PATCH] IB uverbs: core implementation")
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://lore.kernel.org/r/c00c809ddafaaf87d6f6cb827978670989a511b3.1685960567.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_drm.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/uverbs_cmd.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -139,10 +139,16 @@ nouveau_name(struct drm_device *dev)
- static inline bool
- nouveau_cli_work_ready(struct dma_fence *fence)
- {
--	if (!dma_fence_is_signaled(fence))
--		return false;
--	dma_fence_put(fence);
--	return true;
-+	bool ret = true;
-+
-+	spin_lock_irq(fence->lock);
-+	if (!dma_fence_is_signaled_locked(fence))
-+		ret = false;
-+	spin_unlock_irq(fence->lock);
-+
-+	if (ret == true)
-+		dma_fence_put(fence);
-+	return ret;
- }
- 
- static void
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -1850,8 +1850,13 @@ static int modify_qp(struct uverbs_attr_
+ 		attr->path_mtu = cmd->base.path_mtu;
+ 	if (cmd->base.attr_mask & IB_QP_PATH_MIG_STATE)
+ 		attr->path_mig_state = cmd->base.path_mig_state;
+-	if (cmd->base.attr_mask & IB_QP_QKEY)
++	if (cmd->base.attr_mask & IB_QP_QKEY) {
++		if (cmd->base.qkey & IB_QP_SET_QKEY && !capable(CAP_NET_RAW)) {
++			ret = -EPERM;
++			goto release_qp;
++		}
+ 		attr->qkey = cmd->base.qkey;
++	}
+ 	if (cmd->base.attr_mask & IB_QP_RQ_PSN)
+ 		attr->rq_psn = cmd->base.rq_psn;
+ 	if (cmd->base.attr_mask & IB_QP_SQ_PSN)
 
 
