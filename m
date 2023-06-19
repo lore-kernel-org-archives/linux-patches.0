@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF466BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:53:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5278DC433C0;
-	Mon, 19 Jun 2023 10:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0F6BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:53:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44778C433C0;
+	Mon, 19 Jun 2023 10:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171981;
-	bh=t+Epmwcpknor611baK73NBPYheipRTY3YuwFUN4vxk4=;
+	s=korg; t=1687171984;
+	bh=Z1MDPGD8h0l+5PvCEaKDbpNbwF186cXdaQ/77C4BQrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7cbNXHJZXvWWnHgdfnrMYYhtae+iTuM0zm3FHuYtngRdZncjU4hnhl2cr0Fy2AxU
-	 soketq9oqx/aBrNMsYDdk0yze7ot1qA23oZN14JinRo/pEiBF0fZ9KEJJGm6DIq+t1
-	 INR4Fywdr4gRFE+309XqCIScgSXoUibz3PiJJth8=
+	b=vMDun07Sz+7hP475jx5RreyS1mEAPYDzeji47sgV0BMJa19BkDAImfhSDEypcbCBp
+	 8sNTOxwD/5dAv3NUHQpCSWILCzbOhLRPc5EupTtTQKS29KjeM5mRPckqIGSqtrqeYG
+	 WA96MjW/K2tbpTaS1ckgvlEWm/jw4M8EEMmWl68M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 51/64] igb: fix nvm.ops.read() error handling
-Date: Mon, 19 Jun 2023 12:30:47 +0200
-Message-ID: <20230619102135.519066762@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 60/64] neighbour: Remove unused inline function neigh_key_eq16()
+Date: Mon, 19 Jun 2023 12:30:56 +0200
+Message-ID: <20230619102135.924996592@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -35,44 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 48a821fd58837800750ec1b3962f0f799630a844 ]
+commit c8f01a4a54473f88f8cc0d9046ec9eb5a99815d5 upstream.
 
-Add error handling into igb_set_eeprom() function, in case
-nvm.ops.read() fails just quit with error code asap.
+All uses of neigh_key_eq16() have
+been removed since commit 1202cdd66531 ("Remove DECnet support
+from kernel"), so remove it.
 
-Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb_ethtool.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/net/neighbour.h |    5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-index 6196f9bbd67df..50f61b18ae1e3 100644
---- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
-+++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
-@@ -814,6 +814,8 @@ static int igb_set_eeprom(struct net_device *netdev,
- 		 */
- 		ret_val = hw->nvm.ops.read(hw, last_word, 1,
- 				   &eeprom_buff[last_word - first_word]);
-+		if (ret_val)
-+			goto out;
- 	}
+--- a/include/net/neighbour.h
++++ b/include/net/neighbour.h
+@@ -260,11 +260,6 @@ static inline void *neighbour_priv(const
  
- 	/* Device's eeprom is always little-endian, word addressable */
-@@ -833,6 +835,7 @@ static int igb_set_eeprom(struct net_device *netdev,
- 		hw->nvm.ops.update(hw);
+ extern const struct nla_policy nda_policy[];
  
- 	igb_set_fw_version(adapter);
-+out:
- 	kfree(eeprom_buff);
- 	return ret_val;
- }
--- 
-2.39.2
-
+-static inline bool neigh_key_eq16(const struct neighbour *n, const void *pkey)
+-{
+-	return *(const u16 *)n->primary_key == *(const u16 *)pkey;
+-}
+-
+ static inline bool neigh_key_eq32(const struct neighbour *n, const void *pkey)
+ {
+ 	return *(const u32 *)n->primary_key == *(const u32 *)pkey;
 
 
