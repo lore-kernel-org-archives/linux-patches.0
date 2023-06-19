@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B895381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0E7C433C0;
-	Mon, 19 Jun 2023 10:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34445381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EC1C433C8;
+	Mon, 19 Jun 2023 10:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171467;
-	bh=UL1wfdsUQBKlzGq2PJgrxBOWBUnxUBn/pysu3p7J4s0=;
+	s=korg; t=1687171470;
+	bh=CHbZjusSHvhm1S3FGdarnEpAyiu+RS/DEBMoN7yQXJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+vrSFyufCF1DXAWbVPUNAMJJXE52jCgCGWK+RuQkeuDf0i5ZUcat8EzKe/mfxFZi
-	 2eIR05GVY+Vb3g1BsqAIPHSwlskIdxXh3vyp9cCBz1cVjpfPlFvq4nbfTCbe13aiIb
-	 o4jlYk9OVRx5+2dTB9NAfi866xfAwczjHhrso7GM=
+	b=xfYoxy/4B5NbRs0y8P4ial0ew/2MzHTtwr4p30qQjcPJ0GpAFl9U3wb5LY4bhDPAe
+	 BV2qGO/e+NAgm0G1MUxumEGF/vm6dS/NUwsQWNV3i0QaRIhhrgfmPdyIIMe6EhSGT2
+	 caSXQ1uYCvQr1dRIhgkvf8P3xNiXLqkUc64QOJpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maya Matuszczyk <maccraft123mc@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/166] drm: panel-orientation-quirks: Change Airs quirk to support Air Plus
-Date: Mon, 19 Jun 2023 12:28:21 +0200
-Message-ID: <20230619102155.923808105@linuxfoundation.org>
+Subject: [PATCH 6.1 042/166] irqchip/gic: Correctly validate OF quirk descriptors
+Date: Mon, 19 Jun 2023 12:28:39 +0200
+Message-ID: <20230619102156.753730948@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,39 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maya Matuszczyk <maccraft123mc@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 1aa7f416175619e0286fddc5fc44e968b06bf2aa ]
+[ Upstream commit 91539341a3b6e9c868024a4292455dae36e6f58c ]
 
-It turned out that Aya Neo Air Plus had a different board name than
-expected.
-This patch changes Aya Neo Air's quirk to account for that, as both
-devices share "Air" in DMI product name.
+When checking for OF quirks, make sure either 'compatible' or 'property'
+is set, and give up otherwise.
 
-Tested on Air claiming to be an Air Pro, and on Air Plus.
+This avoids non-OF quirks being randomly applied as they don't have any
+of the OF data that need checking.
 
-Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230515184843.1552612-1-maccraft123mc@gmail.com
+Cc: Douglas Anderson <dianders@chromium.org>
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 44bd78dd2b88 ("irqchip/gic-v3: Disable pseudo NMIs on Mediatek devices w/ firmware issues")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-common.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index b1a38e6ce2f8f..0cb646cb04ee1 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -179,7 +179,7 @@ static const struct dmi_system_id orientation_data[] = {
- 	}, {	/* AYA NEO AIR */
- 		.matches = {
- 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
--		  DMI_MATCH(DMI_BOARD_NAME, "AIR"),
-+		  DMI_MATCH(DMI_PRODUCT_NAME, "AIR"),
- 		},
- 		.driver_data = (void *)&lcd1080x1920_leftside_up,
- 	}, {	/* AYA NEO NEXT */
+diff --git a/drivers/irqchip/irq-gic-common.c b/drivers/irqchip/irq-gic-common.c
+index de47b51cdadbe..afd6a1841715a 100644
+--- a/drivers/irqchip/irq-gic-common.c
++++ b/drivers/irqchip/irq-gic-common.c
+@@ -16,6 +16,8 @@ void gic_enable_of_quirks(const struct device_node *np,
+ 			  const struct gic_quirk *quirks, void *data)
+ {
+ 	for (; quirks->desc; quirks++) {
++		if (!quirks->compatible && !quirks->property)
++			continue;
+ 		if (quirks->compatible &&
+ 		    !of_device_is_compatible(np, quirks->compatible))
+ 			continue;
 -- 
 2.39.2
 
