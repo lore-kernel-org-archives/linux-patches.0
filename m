@@ -1,36 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8090BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:54:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208A0C433C0;
-	Mon, 19 Jun 2023 10:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB30BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:54:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668CAC433C8;
+	Mon, 19 Jun 2023 10:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172083;
-	bh=KmwBy9bTbYC04qR9IUTzUnIjy/kGHlQz3/j/b4hP76A=;
+	s=korg; t=1687172086;
+	bh=a4agFHeHv3LUURie+04g3677uYkw0LGl6UHrB/kX5I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLsogHvzTijPEkhj5U9252PgV5yRtFlYrevdN7Vqjya6z7YWO+tyMLSlGjFIm4Ai6
-	 +rPHFDWQh6aw1eK636/h10i3nPM4aAjYD0pVYP5SAJfrZ2fY6zNDZ6j/Q/DxQv7ImZ
-	 Rh1DBCNY/hf4Ehj+M9Ko1QgGMR0T0KoeQwkZz1a8=
+	b=YWSiDDPmHLU/YI+N7+jI47sl0CFDo+UGDruHTqJph83DWF9JrKOfo4IgBC+yZSRSv
+	 0+/fTvdfBfAAMGLd2g2xT3n5W8Zj1qY9DeU8rY9C5BxeJkqFA1UWaKVieoFtfPUXM4
+	 RT6C6BNcrSJcXRBsbTbfmDWB071ScN2HwYyi8dHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Russ Weight <russell.h.weight@intel.com>,
-	Tianfei Zhang <tianfei.zhang@intel.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	linux-kselftest@vger.kernel.org,
-	Dan Carpenter <error27@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 05/89] test_firmware: fix a memory leak with reqs buffer
-Date: Mon, 19 Jun 2023 12:29:53 +0200
-Message-ID: <20230619102138.534563685@linuxfoundation.org>
+Subject: [PATCH 5.10 06/89] power: supply: ab8500: Fix external_power_changed race
+Date: Mon, 19 Jun 2023 12:29:54 +0200
+Message-ID: <20230619102138.580275458@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -44,70 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit be37bed754ed90b2655382f93f9724b3c1aae847 ]
+[ Upstream commit a5299ce4e96f3e8930e9c051b28d8093ada87b08 ]
 
-Dan Carpenter spotted that test_fw_config->reqs will be leaked if
-trigger_batched_requests_store() is called two or more times.
-The same appears with trigger_batched_requests_async_store().
+ab8500_btemp_external_power_changed() dereferences di->btemp_psy,
+which gets sets in ab8500_btemp_probe() like this:
 
-This bug wasn't trigger by the tests, but observed by Dan's visual
-inspection of the code.
+        di->btemp_psy = devm_power_supply_register(dev, &ab8500_btemp_desc,
+                                                   &psy_cfg);
 
-The recommended workaround was to return -EBUSY if test_fw_config->reqs
-is already allocated.
+As soon as devm_power_supply_register() has called device_add()
+the external_power_changed callback can get called. So there is a window
+where ab8500_btemp_external_power_changed() may get called while
+di->btemp_psy has not been set yet leading to a NULL pointer dereference.
 
-Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Russ Weight <russell.h.weight@intel.com>
-Cc: Tianfei Zhang <tianfei.zhang@intel.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: linux-kselftest@vger.kernel.org
-Cc: stable@vger.kernel.org # v5.4
-Suggested-by: Dan Carpenter <error27@gmail.com>
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/20230509084746.48259-2-mirsad.todorovac@alu.unizg.hr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixing this is easy. The external_power_changed callback gets passed
+the power_supply which will eventually get stored in di->btemp_psy,
+so ab8500_btemp_external_power_changed() can simply directly use
+the passed in psy argument which is always valid.
+
+And the same applies to ab8500_fg_external_power_changed().
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_firmware.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/power/supply/ab8500_btemp.c | 6 ++----
+ drivers/power/supply/ab8500_fg.c    | 6 ++----
+ 2 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-index 4884057eb53f0..ed0455a9ded87 100644
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -863,6 +863,11 @@ static ssize_t trigger_batched_requests_store(struct device *dev,
+diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
+index 4417d64c31f97..5a1adceb6974d 100644
+--- a/drivers/power/supply/ab8500_btemp.c
++++ b/drivers/power/supply/ab8500_btemp.c
+@@ -921,10 +921,8 @@ static int ab8500_btemp_get_ext_psy_data(struct device *dev, void *data)
+  */
+ static void ab8500_btemp_external_power_changed(struct power_supply *psy)
+ {
+-	struct ab8500_btemp *di = power_supply_get_drvdata(psy);
+-
+-	class_for_each_device(power_supply_class, NULL,
+-		di->btemp_psy, ab8500_btemp_get_ext_psy_data);
++	class_for_each_device(power_supply_class, NULL, psy,
++			      ab8500_btemp_get_ext_psy_data);
+ }
  
- 	mutex_lock(&test_fw_mutex);
+ /* ab8500 btemp driver interrupts and their respective isr */
+diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
+index a6b4a94c27662..a88590563647e 100644
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -2380,10 +2380,8 @@ static int ab8500_fg_init_hw_registers(struct ab8500_fg *di)
+  */
+ static void ab8500_fg_external_power_changed(struct power_supply *psy)
+ {
+-	struct ab8500_fg *di = power_supply_get_drvdata(psy);
+-
+-	class_for_each_device(power_supply_class, NULL,
+-		di->fg_psy, ab8500_fg_get_ext_psy_data);
++	class_for_each_device(power_supply_class, NULL, psy,
++			      ab8500_fg_get_ext_psy_data);
+ }
  
-+	if (test_fw_config->reqs) {
-+		rc = -EBUSY;
-+		goto out_bail;
-+	}
-+
- 	test_fw_config->reqs =
- 		vzalloc(array3_size(sizeof(struct test_batched_req),
- 				    test_fw_config->num_requests, 2));
-@@ -962,6 +967,11 @@ ssize_t trigger_batched_requests_async_store(struct device *dev,
- 
- 	mutex_lock(&test_fw_mutex);
- 
-+	if (test_fw_config->reqs) {
-+		rc = -EBUSY;
-+		goto out_bail;
-+	}
-+
- 	test_fw_config->reqs =
- 		vzalloc(array3_size(sizeof(struct test_batched_req),
- 				    test_fw_config->num_requests, 2));
+ /**
 -- 
 2.39.2
 
