@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B103D5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348FBC433C8;
-	Mon, 19 Jun 2023 10:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE705381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D5DC433C0;
+	Mon, 19 Jun 2023 10:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171278;
-	bh=YkB3Net+meCtsXrN0EnrsYZfta2lTogAPMzG3x43fh8=;
+	s=korg; t=1687171281;
+	bh=pXuGXvLx6xbjWM3oEF84YMrCgQeTs9pbJ5iGIc8NyfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JnQ1+AC7bqJZMK9J10FgTP13VDD3lNNQZJn8+SpArDk9oXp6A3JWIqGE0jXVCRI7Z
-	 e9RBmeUtOw2sbi5mwYbHqAeE/0eBqB1jxwEmr+oAzkgQB3m+1A9aAYyvlWoKxy9x9V
-	 /FxTB+NroHLrF84r8AGYn87qeOQD9QWWSt3YAHwE=
+	b=SxeLyyZJibz2mgYaASzkb5jN98HclaVy/yaJAX5Zq0PF3oIE05HhROljPqfteR94u
+	 mt/e1FvUixS8AnUMy3gWvdRXaTNzspqIdt3dN272mb2fa4K/LZLGT0+WW2w4WX42eP
+	 4pFYB46TV/uJwqmo23FZDDBLeptsZM4cdpDyKVeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 04/49] power: supply: Ratelimit no data debug output
-Date: Mon, 19 Jun 2023 12:29:42 +0200
-Message-ID: <20230619102130.084771763@linuxfoundation.org>
+Subject: [PATCH 4.19 05/49] regulator: Fix error checking for debugfs_create_dir
+Date: Mon, 19 Jun 2023 12:29:43 +0200
+Message-ID: <20230619102130.138026096@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -36,41 +33,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Osama Muhammad <osmtendev@gmail.com>
 
-[ Upstream commit 155c45a25679f571c2ae57d10db843a9dfc63430 ]
+[ Upstream commit 2bf1c45be3b8f3a3f898d0756c1282f09719debd ]
 
-Reduce the amount of output this dev_dbg() statement emits into logs,
-otherwise if system software polls the sysfs entry for data and keeps
-getting -ENODATA, it could end up filling the logs up.
+This patch fixes the error checking in core.c in debugfs_create_dir.
+The correct way to check if an error occurred is 'IS_ERR' inline function.
 
-This does in fact make systemd journald choke, since during boot the
-sysfs power supply entries are polled and if journald starts at the
-same time, the journal is just being repeatedly filled up, and the
-system stops on trying to start journald without booting any further.
-
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Osama Muhammad <osmtendev@gmail.com
+Suggested-by: Ivan Orlov <ivan.orlov0322@gmail.com
+Link: https://lore.kernel.org/r/20230515172938.13338-1-osmtendev@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_sysfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/power_supply_sysfs.c b/drivers/power/supply/power_supply_sysfs.c
-index 5358a80d854f9..7b293a50452eb 100644
---- a/drivers/power/supply/power_supply_sysfs.c
-+++ b/drivers/power/supply/power_supply_sysfs.c
-@@ -128,7 +128,8 @@ static ssize_t power_supply_show_property(struct device *dev,
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 11656b3836748..14f9977f1ec08 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -4181,7 +4181,7 @@ static void rdev_init_debugfs(struct regulator_dev *rdev)
+ 	}
  
- 		if (ret < 0) {
- 			if (ret == -ENODATA)
--				dev_dbg(dev, "driver has no data for `%s' property\n",
-+				dev_dbg_ratelimited(dev,
-+					"driver has no data for `%s' property\n",
- 					attr->attr.name);
- 			else if (ret != -ENODEV && ret != -EAGAIN)
- 				dev_err_ratelimited(dev,
+ 	rdev->debugfs = debugfs_create_dir(rname, debugfs_root);
+-	if (!rdev->debugfs) {
++	if (IS_ERR(rdev->debugfs)) {
+ 		rdev_warn(rdev, "Failed to create debugfs directory\n");
+ 		return;
+ 	}
+@@ -4843,7 +4843,7 @@ static int __init regulator_init(void)
+ 	ret = class_register(&regulator_class);
+ 
+ 	debugfs_root = debugfs_create_dir("regulator", NULL);
+-	if (!debugfs_root)
++	if (IS_ERR(debugfs_root))
+ 		pr_warn("regulator: Failed to create debugfs directory\n");
+ 
+ 	debugfs_create_file("supply_map", 0444, debugfs_root, NULL,
 -- 
 2.39.2
 
