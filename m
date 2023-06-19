@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2BAC142
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:58:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3135C433C8;
-	Mon, 19 Jun 2023 10:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495908C06
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:58:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85F9C433C8;
+	Mon, 19 Jun 2023 10:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172314;
-	bh=PcMLzG59PngyVHlKGq9hFI9F9v8wtx5t90I4RlnfWv8=;
+	s=korg; t=1687172317;
+	bh=cEM21uNXSwfcjkspB9Ux9Si08E+g/JINtKMbx3rQ72E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AwoOEBRWLibBz8D86Lc0iJjiWimGQzBvuos4CYpDbYRHJ54PsOsJ9Eynh4t4ZxzS
-	 j+MBqK//aKmtqIRQVWOZOfnqLgYxCu2tK8RikfTXPb6mi10XpfqiSQIiwk7XZTmbI2
-	 UdlEU89BnhQDS3vQ4GQrKZ+n4I2Y+S5BRA3qr73Q=
+	b=Phd58tixQIymJUbrbXXEotuJc/OjoGm9ttOCb20zQhmdToRhK0SfTRIN+xKqnayrp
+	 1PmEdEcKRaKswgot1tvQwdQfGn6c9W8ZGfunikp6LJroTum5dROWpvPP+k82twejGP
+	 SsjrPLX+5xElgte6oFx6TI6o+zoCcJGSmeRFB/S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Ting Chen <h3xrabbit@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	xinhui pan <xinhui.pan@amd.com>,
+	Horatio Zhang <Hongkun.Zhang@amd.com>,
+	Feifei Xu <Feifei.Xu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/107] ksmbd: fix slab-out-of-bounds read in smb2_handle_negotiate
-Date: Mon, 19 Jun 2023 12:29:48 +0200
-Message-ID: <20230619102141.745140984@linuxfoundation.org>
+Subject: [PATCH 5.15 005/107] drm/amdgpu: fix Null pointer dereference error in amdgpu_device_recover_vram
+Date: Mon, 19 Jun 2023 12:29:49 +0200
+Message-ID: <20230619102141.795234604@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -36,61 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuan-Ting Chen <h3xrabbit@gmail.com>
+From: Horatio Zhang <Hongkun.Zhang@amd.com>
 
-[ Upstream commit d738950f112c8f40f0515fe967db998e8235a175 ]
+[ Upstream commit 2a1eb1a343208ce7d6839b73d62aece343e693ff ]
 
-Check request_buf length first to avoid out-of-bounds read by
-req->DialectCount.
+Use the function of amdgpu_bo_vm_destroy to handle the resource release
+of shadow bo. During the amdgpu_mes_self_test, shadow bo released, but
+vmbo->shadow_list was not, which caused a null pointer reference error
+in amdgpu_device_recover_vram when GPU reset.
 
-[ 3350.990282] BUG: KASAN: slab-out-of-bounds in smb2_handle_negotiate+0x35d7/0x3e60
-[ 3350.990282] Read of size 2 at addr ffff88810ad61346 by task kworker/5:0/276
-[ 3351.000406] Workqueue: ksmbd-io handle_ksmbd_work
-[ 3351.003499] Call Trace:
-[ 3351.006473]  <TASK>
-[ 3351.006473]  dump_stack_lvl+0x8d/0xe0
-[ 3351.006473]  print_report+0xcc/0x620
-[ 3351.006473]  kasan_report+0x92/0xc0
-[ 3351.006473]  smb2_handle_negotiate+0x35d7/0x3e60
-[ 3351.014760]  ksmbd_smb_negotiate_common+0x7a7/0xf00
-[ 3351.014760]  handle_ksmbd_work+0x3f7/0x12d0
-[ 3351.014760]  process_one_work+0xa85/0x1780
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuan-Ting Chen <h3xrabbit@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 6c032c37ac3e ("drm/amdgpu: Fix vram recover doesn't work after whole GPU reset (v2)")
+Signed-off-by: xinhui pan <xinhui.pan@amd.com>
+Signed-off-by: Horatio Zhang <Hongkun.Zhang@amd.com>
+Acked-by: Feifei Xu <Feifei.Xu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 6 ++++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c     | 1 -
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index e24fd10d85d3b..266430a2a0e07 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -1083,16 +1083,16 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
- 		return rc;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+index a0b1bf17cb74b..d03a4519f945b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -78,9 +78,10 @@ static void amdgpu_bo_user_destroy(struct ttm_buffer_object *tbo)
+ static void amdgpu_bo_vm_destroy(struct ttm_buffer_object *tbo)
+ {
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(tbo->bdev);
+-	struct amdgpu_bo *bo = ttm_to_amdgpu_bo(tbo);
++	struct amdgpu_bo *shadow_bo = ttm_to_amdgpu_bo(tbo), *bo;
+ 	struct amdgpu_bo_vm *vmbo;
+ 
++	bo = shadow_bo->parent;
+ 	vmbo = to_amdgpu_bo_vm(bo);
+ 	/* in case amdgpu_device_recover_vram got NULL of bo->parent */
+ 	if (!list_empty(&vmbo->shadow_list)) {
+@@ -690,7 +691,6 @@ int amdgpu_bo_create_vm(struct amdgpu_device *adev,
+ 		return r;
+ 
+ 	*vmbo_ptr = to_amdgpu_bo_vm(bo_ptr);
+-	INIT_LIST_HEAD(&(*vmbo_ptr)->shadow_list);
+ 	return r;
+ }
+ 
+@@ -741,6 +741,8 @@ void amdgpu_bo_add_to_shadow_list(struct amdgpu_bo_vm *vmbo)
+ 
+ 	mutex_lock(&adev->shadow_list_lock);
+ 	list_add_tail(&vmbo->shadow_list, &adev->shadow_list);
++	vmbo->shadow->parent = amdgpu_bo_ref(&vmbo->bo);
++	vmbo->shadow->tbo.destroy = &amdgpu_bo_vm_destroy;
+ 	mutex_unlock(&adev->shadow_list_lock);
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index 01710cd0d9727..924c6d5f86203 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -983,7 +983,6 @@ static int amdgpu_vm_pt_create(struct amdgpu_device *adev,
+ 		return r;
  	}
  
--	if (req->DialectCount == 0) {
--		pr_err("malformed packet\n");
-+	smb2_buf_len = get_rfc1002_len(work->request_buf);
-+	smb2_neg_size = offsetof(struct smb2_negotiate_req, Dialects) - 4;
-+	if (smb2_neg_size > smb2_buf_len) {
- 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
- 		rc = -EINVAL;
- 		goto err_out;
- 	}
+-	(*vmbo)->shadow->parent = amdgpu_bo_ref(bo);
+ 	amdgpu_bo_add_to_shadow_list(*vmbo);
  
--	smb2_buf_len = get_rfc1002_len(work->request_buf);
--	smb2_neg_size = offsetof(struct smb2_negotiate_req, Dialects) - 4;
--	if (smb2_neg_size > smb2_buf_len) {
-+	if (req->DialectCount == 0) {
-+		pr_err("malformed packet\n");
- 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
- 		rc = -EINVAL;
- 		goto err_out;
+ 	return 0;
 -- 
 2.39.2
 
