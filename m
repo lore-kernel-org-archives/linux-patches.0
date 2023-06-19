@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105565381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB12C433C8;
-	Mon, 19 Jun 2023 10:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7F55381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3480CC433C0;
+	Mon, 19 Jun 2023 10:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171403;
-	bh=e8KBPGafc4lWioyFKqhihelU5VkPeA2MRjnvL3ZBZZs=;
+	s=korg; t=1687171406;
+	bh=2k+zdiZWNOwDHqTPh7WgCTfO7D/fSThIEoX5B/c8VGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aKpKVzifvdP4PtORsT1bUt102UR0Ni6W6tKrGMHSZcPQ41IOIXs6gGwQ6EemRgIDy
-	 HoqsineA6dGGwbEWp8J5YvB2TCe3L5mpFbG+7vhcTKcwj8r5C/w1AfuvBV7WUZaQD3
-	 anJGk/oDHVIM918OrnuD/C6DwVPLIFlN3Tzc2DXk=
+	b=TkdPMbD0j0piHRX3Xzhf/g5fF/3RsIJPqmm9SmXRlOhXywcQjd3x9Py0aXcR43TgI
+	 Sq3LTQywmMDrlk5jWzroH0VGLg231ZmtRAptWosvbAzahkx4n6nWRw+DFwl2diO3lZ
+	 XXR/cS8HOEFVe9sHx2rtD3QOVqrk6G28nNEl2Xsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Sorodoc <ealex95@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/166] platform/x86: asus-wmi: Ignore WMI events with codes 0x7B, 0xC0
-Date: Mon, 19 Jun 2023 12:28:16 +0200
-Message-ID: <20230619102155.674485773@linuxfoundation.org>
+Subject: [PATCH 6.1 002/166] test_firmware: Use kstrtobool() instead of strtobool()
+Date: Mon, 19 Jun 2023 12:27:59 +0200
+Message-ID: <20230619102154.721816289@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,48 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandru Sorodoc <ealex95@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 362c1f2ec82cb65940e1c73e15a395a7a891fc6f ]
+[ Upstream commit f7d85515bd21902b218370a1a6301f76e4e636ff ]
 
-On ASUS GU604V the key 0x7B is issued when the charger is connected or
-disconnected, and key 0xC0 is issued when an external display is
-connected or disconnected.
+strtobool() is the same as kstrtobool().
+However, the latter is more used within the kernel.
 
-This commit maps them to KE_IGNORE to slience kernel messages about
-unknown keys, such as:
+In order to remove strtobool() and slightly simplify kstrtox.h, switch to
+the other function name.
 
-    kernel: asus_wmi: Unknown key code 0x7b
+While at it, include the corresponding header file (<linux/kstrtox.h>)
 
-Signed-off-by: Alexandru Sorodoc <ealex95@gmail.com>
-Link: https://lore.kernel.org/r/20230512101517.47416-1-ealex95@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/34f04735d20e0138695dd4070651bd860a36b81c.1673688120.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 4acfe3dfde68 ("test_firmware: prevent race conditions by a correct implementation of locking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ lib/test_firmware.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index e2c9a68d12df9..fdf7da06af306 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -555,6 +555,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
- 	{ KE_KEY, 0x71, { KEY_F13 } }, /* General-purpose button */
- 	{ KE_IGNORE, 0x79, },  /* Charger type dectection notification */
- 	{ KE_KEY, 0x7a, { KEY_ALS_TOGGLE } }, /* Ambient Light Sensor Toggle */
-+	{ KE_IGNORE, 0x7B, }, /* Charger connect/disconnect notification */
- 	{ KE_KEY, 0x7c, { KEY_MICMUTE } },
- 	{ KE_KEY, 0x7D, { KEY_BLUETOOTH } }, /* Bluetooth Enable */
- 	{ KE_KEY, 0x7E, { KEY_BLUETOOTH } }, /* Bluetooth Disable */
-@@ -584,6 +585,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
- 	{ KE_KEY, 0xAE, { KEY_FN_F5 } }, /* Fn+F5 fan mode on 2020+ */
- 	{ KE_KEY, 0xB3, { KEY_PROG4 } }, /* AURA */
- 	{ KE_KEY, 0xB5, { KEY_CALC } },
-+	{ KE_IGNORE, 0xC0, }, /* External display connect/disconnect notification */
- 	{ KE_KEY, 0xC4, { KEY_KBDILLUMUP } },
- 	{ KE_KEY, 0xC5, { KEY_KBDILLUMDOWN } },
- 	{ KE_IGNORE, 0xC6, },  /* Ambient Light Sensor notification */
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 7f165c517338a..6ef3e6926da8a 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -22,6 +22,7 @@
+ #include <linux/slab.h>
+ #include <linux/uaccess.h>
+ #include <linux/delay.h>
++#include <linux/kstrtox.h>
+ #include <linux/kthread.h>
+ #include <linux/vmalloc.h>
+ #include <linux/efi_embedded_fw.h>
+@@ -365,7 +366,7 @@ static int test_dev_config_update_bool(const char *buf, size_t size,
+ 	int ret;
+ 
+ 	mutex_lock(&test_fw_mutex);
+-	if (strtobool(buf, cfg) < 0)
++	if (kstrtobool(buf, cfg) < 0)
+ 		ret = -EINVAL;
+ 	else
+ 		ret = size;
 -- 
 2.39.2
 
