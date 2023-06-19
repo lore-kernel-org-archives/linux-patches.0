@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E78DBE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF528C433C8;
-	Mon, 19 Jun 2023 10:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5C2BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720D6C433C8;
+	Mon, 19 Jun 2023 10:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171831;
-	bh=8WLuV1rTsZ9DAOfWrtAyWuTgOuwrXTm9cHeQai6aEns=;
+	s=korg; t=1687171833;
+	bh=u+A3rDTqHkFMUNqOHneOO7Peb2+RUs/R5O+t+mRlmko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BkFQXh2rqrsHItVjrVVv17ES2aD3sjMRTVImvidcbmxr0Qwfxpk4aFnFs42wxGaoF
-	 IuxHQ3sClDZpxwPcgS9r8DHf+00cMcI31NECBIi9iSg0tIRlK62C1vdnRZRNLKPOJC
-	 FYsBfSdjInH4AWcTBeBW7LXkfJuVcRQmUvLdG1is=
+	b=Q0EEY0vb1qzpprgoiYHA4iCFjxymihFGLng7T8a9/Ztt0wC7QFsTyUwbWkPNXBEat
+	 JIELer9QMyGukyEcFRjP9ErpH9bzt7GNFRDTP5aKmJVIeMCzcPlMCQBT3pozwtLSH0
+	 xZb9b/61WWSH/s9e3hEMcxywZjK5OHwjROuL6cgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Nick Desaulniers <ndesaulniers@google.com>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.1 165/166] MIPS: Prefer cc-option for additions to cflags
-Date: Mon, 19 Jun 2023 12:30:42 +0200
-Message-ID: <20230619102202.675798857@linuxfoundation.org>
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: [PATCH 6.1 166/166] kbuild: Update assembler calls to use proper flags and language target
+Date: Mon, 19 Jun 2023 12:30:43 +0200
+Message-ID: <20230619102202.726577792@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -39,51 +37,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-commit 337ff6bb8960fdc128cabd264aaea3d42ca27a32 upstream.
+commit d5c8d6e0fa61401a729e9eb6a9c7077b2d3aebb0 upstream.
 
-A future change will switch as-option to use KBUILD_AFLAGS instead of
-KBUILD_CFLAGS to allow clang to drop -Qunused-arguments, which may cause
-issues if the flag being tested requires a flag previously added to
-KBUILD_CFLAGS but not KBUILD_AFLAGS. Use cc-option for cflags additions
-so that the flags are tested properly.
+as-instr uses KBUILD_AFLAGS, but as-option uses KBUILD_CFLAGS. This can
+cause as-option to fail unexpectedly when CONFIG_WERROR is set, because
+clang will emit -Werror,-Wunused-command-line-argument for various -m
+and -f flags in KBUILD_CFLAGS for assembler sources.
 
+Callers of as-option and as-instr should be adding flags to
+KBUILD_AFLAGS / aflags-y, not KBUILD_CFLAGS / cflags-y. Use
+KBUILD_AFLAGS in all macros to clear up the initial problem.
+
+Unfortunately, -Wunused-command-line-argument can still be triggered
+with clang by the presence of warning flags or macro definitions because
+'-x assembler' is used, instead of '-x assembler-with-cpp', which will
+consume these flags. Switch to '-x assembler-with-cpp' in places where
+'-x assembler' is used, as the compiler is always used as the driver for
+out of line assembler sources in the kernel.
+
+Finally, add -Werror to these macros so that they behave consistently
+whether or not CONFIG_WERROR is set.
+
+[nathan: Reworded and expanded on problems in commit message
+         Use '-x assembler-with-cpp' in a couple more places]
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1699
+Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 Tested-by: Anders Roxell <anders.roxell@linaro.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/Makefile             |    2 +-
- arch/mips/loongson2ef/Platform |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ scripts/Kconfig.include   |    2 +-
+ scripts/Makefile.compiler |    8 ++++----
+ scripts/as-version.sh     |    2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -152,7 +152,7 @@ cflags-y += -fno-stack-check
- #
- # Avoid this by explicitly disabling that assembler behaviour.
- #
--cflags-y += $(call as-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
-+cflags-y += $(call cc-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
+--- a/scripts/Kconfig.include
++++ b/scripts/Kconfig.include
+@@ -33,7 +33,7 @@ ld-option = $(success,$(LD) -v $(1))
  
- #
- # CPU-dependent compiler/assembler options for optimization.
---- a/arch/mips/loongson2ef/Platform
-+++ b/arch/mips/loongson2ef/Platform
-@@ -25,7 +25,7 @@ cflags-$(CONFIG_CPU_LOONGSON2F) += -marc
- # binutils does not merge support for the flag then we can revisit & remove
- # this later - for now it ensures vendor toolchains don't cause problems.
- #
--cflags-$(CONFIG_CPU_LOONGSON2EF)	+= $(call as-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
-+cflags-$(CONFIG_CPU_LOONGSON2EF)	+= $(call cc-option,-Wa$(comma)-mno-fix-loongson3-llsc,)
+ # $(as-instr,<instr>)
+ # Return y if the assembler supports <instr>, n otherwise
+-as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -c -x assembler -o /dev/null -)
++as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -c -x assembler-with-cpp -o /dev/null -)
  
- # Enable the workarounds for Loongson2f
- ifdef CONFIG_CPU_LOONGSON2F_WORKAROUNDS
+ # check if $(CC) and $(LD) exist
+ $(error-if,$(failure,command -v $(CC)),C compiler '$(CC)' not found)
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -29,16 +29,16 @@ try-run = $(shell set -e;		\
+ 	fi)
+ 
+ # as-option
+-# Usage: cflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
++# Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
+ 
+ as-option = $(call try-run,\
+-	$(CC) $(KBUILD_CFLAGS) $(1) -c -x assembler /dev/null -o "$$TMP",$(1),$(2))
++	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
+ 
+ # as-instr
+-# Usage: cflags-y += $(call as-instr,instr,option1,option2)
++# Usage: aflags-y += $(call as-instr,instr,option1,option2)
+ 
+ as-instr = $(call try-run,\
+-	printf "%b\n" "$(1)" | $(CC) $(KBUILD_AFLAGS) -c -x assembler -o "$$TMP" -,$(2),$(3))
++	printf "%b\n" "$(1)" | $(CC) -Werror $(KBUILD_AFLAGS) -c -x assembler-with-cpp -o "$$TMP" -,$(2),$(3))
+ 
+ # __cc-option
+ # Usage: MY_CFLAGS += $(call __cc-option,$(CC),$(MY_CFLAGS),-march=winchip-c6,-march=i586)
+--- a/scripts/as-version.sh
++++ b/scripts/as-version.sh
+@@ -45,7 +45,7 @@ orig_args="$@"
+ # Get the first line of the --version output.
+ IFS='
+ '
+-set -- $(LC_ALL=C "$@" -Wa,--version -c -x assembler /dev/null -o /dev/null 2>/dev/null)
++set -- $(LC_ALL=C "$@" -Wa,--version -c -x assembler-with-cpp /dev/null -o /dev/null 2>/dev/null)
+ 
+ # Split the line on spaces.
+ IFS=' '
 
 
