@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99E05381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F783C433CC;
-	Mon, 19 Jun 2023 10:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B895381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0E7C433C0;
+	Mon, 19 Jun 2023 10:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171464;
-	bh=cSSVDTQpJqb7XRpFpNVPyyJeOBZglaDhXgxypDATuPs=;
+	s=korg; t=1687171467;
+	bh=UL1wfdsUQBKlzGq2PJgrxBOWBUnxUBn/pysu3p7J4s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vLMUTdz2Uo6NJZDFmQxLDnTJ4yxLyi425of75a0RpKiLlwGlvzpnE4HZGREeVqqGd
-	 VzNDHZRM7BgfERPjwoQsBcuJRcbL1p4yDtvOt7Zi2+nFKUG+AAGVsqbX9PJsEZimnB
-	 C1YO1TKParwYfd6P3Xr/uNn6Ellslldwe5+LYgsw=
+	b=a+vrSFyufCF1DXAWbVPUNAMJJXE52jCgCGWK+RuQkeuDf0i5ZUcat8EzKe/mfxFZi
+	 2eIR05GVY+Vb3g1BsqAIPHSwlskIdxXh3vyp9cCBz1cVjpfPlFvq4nbfTCbe13aiIb
+	 o4jlYk9OVRx5+2dTB9NAfi866xfAwczjHhrso7GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tatsuki Sugiura <sugi@nemui.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Maya Matuszczyk <maccraft123mc@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/166] NVMe: Add MAXIO 1602 to bogus nid list.
-Date: Mon, 19 Jun 2023 12:28:38 +0200
-Message-ID: <20230619102156.711096108@linuxfoundation.org>
+Subject: [PATCH 6.1 024/166] drm: panel-orientation-quirks: Change Airs quirk to support Air Plus
+Date: Mon, 19 Jun 2023 12:28:21 +0200
+Message-ID: <20230619102155.923808105@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,69 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tatsuki Sugiura <sugi@nemui.org>
+From: Maya Matuszczyk <maccraft123mc@gmail.com>
 
-[ Upstream commit a3a9d63dcd15535e7fdf4c7c1b32bfaed762973a ]
+[ Upstream commit 1aa7f416175619e0286fddc5fc44e968b06bf2aa ]
 
-HIKSEMI FUTURE M.2 SSD uses the same dummy nguid and eui64.
-I confirmed it with my two devices.
+It turned out that Aya Neo Air Plus had a different board name than
+expected.
+This patch changes Aya Neo Air's quirk to account for that, as both
+devices share "Air" in DMI product name.
 
-This patch marks the controller as NVME_QUIRK_BOGUS_NID.
+Tested on Air claiming to be an Air Pro, and on Air Plus.
 
----------------------------------------------------------
-sugi@tempest:~% sudo nvme id-ctrl /dev/nvme0
-NVME Identify Controller:
-vid       : 0x1e4b
-ssvid     : 0x1e4b
-sn        : 30096022612
-mn        : HS-SSD-FUTURE 2048G
-fr        : SN10542
-rab       : 0
-ieee      : 000000
-cmic      : 0
-mdts      : 7
-cntlid    : 0
-ver       : 0x10400
-rtd3r     : 0x7a120
-rtd3e     : 0x1e8480
-oaes      : 0x200
-ctratt    : 0x2
-rrls      : 0
-cntrltype : 1
-fguid     : 00000000-0000-0000-0000-000000000000
-<snip...>
----------------------------------------------------------
-
----------------------------------------------------------
-sugi@tempest:~% sudo nvme id-ns /dev/nvme0n1
-NVME Identify Namespace 1:
-<snip...>
-nguid   : 00000000000000000000000000000000
-eui64   : 0000000000000002
-lbaf  0 : ms:0   lbads:9  rp:0 (in use)
----------------------------------------------------------
-
-Signed-off-by: Tatsuki Sugiura <sugi@nemui.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230515184843.1552612-1-maccraft123mc@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index ba4903c86f7ff..145fa7ef3f740 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3537,6 +3537,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1e4B, 0x1202),   /* MAXIO MAP1202 */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
-+	{ PCI_DEVICE(0x1e4B, 0x1602),   /* MAXIO MAP1602 */
-+		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1cc1, 0x5350),   /* ADATA XPG GAMMIX S50 */
- 		.driver_data = NVME_QUIRK_BOGUS_NID, },
- 	{ PCI_DEVICE(0x1dbe, 0x5236),   /* ADATA XPG GAMMIX S70 */
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index b1a38e6ce2f8f..0cb646cb04ee1 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -179,7 +179,7 @@ static const struct dmi_system_id orientation_data[] = {
+ 	}, {	/* AYA NEO AIR */
+ 		.matches = {
+ 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
+-		  DMI_MATCH(DMI_BOARD_NAME, "AIR"),
++		  DMI_MATCH(DMI_PRODUCT_NAME, "AIR"),
+ 		},
+ 		.driver_data = (void *)&lcd1080x1920_leftside_up,
+ 	}, {	/* AYA NEO NEXT */
 -- 
 2.39.2
 
