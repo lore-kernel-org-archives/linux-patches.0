@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EEE10960
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5529C4339A;
-	Mon, 19 Jun 2023 10:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2C710960
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF655C433C8;
+	Mon, 19 Jun 2023 10:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172272;
-	bh=eivSQtkr+2paRjV5sgsPYGofNDLGz0p5xGd/q3YjDbo=;
+	s=korg; t=1687172275;
+	bh=WRhW1/yv4xK5ItBe59K0gHqbborl2sOOtaP2mg9Htlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RprO+Tt2FWH6JRs7YiUqvA6QzpkrcVS1Gqa5wv114b7rFqcxhCvjKtdohw/p6R74y
-	 3JtTjJIhmGUHKd+ru/m8wKCnid/1Afhy5tMWMdx+NVmIloUr8rx4neHSK0OIMxLdx0
-	 5eLyCP0wa2IthdXLo9bcAXxAYrluSGqR7Zjhb5sM=
+	b=DqgF8u51IvOZM5o9dcsMxS+sG/tv6Td5NxCLkHV73F2GeY1Sz9S+9eFOdC5z+swcs
+	 /GzHJfL38kVMwjLowMChX938nCtTdLv3qV7fzeWSD9MH8FdOssw+wgJLSem7BoBrB2
+	 0czsHCc44JDKscPp8xSL9/s0FaE6zRrEbekdZ3Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/107] test_firmware: Use kstrtobool() instead of strtobool()
-Date: Mon, 19 Jun 2023 12:29:45 +0200
-Message-ID: <20230619102141.609155993@linuxfoundation.org>
+Subject: [PATCH 5.15 010/107] power: supply: sc27xx: Fix external_power_changed race
+Date: Mon, 19 Jun 2023 12:29:54 +0200
+Message-ID: <20230619102142.033291066@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,49 +38,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit f7d85515bd21902b218370a1a6301f76e4e636ff ]
+[ Upstream commit 4d5c129d6c8993fe96e9ae712141eedcb9ca68c2 ]
 
-strtobool() is the same as kstrtobool().
-However, the latter is more used within the kernel.
+sc27xx_fgu_external_power_changed() dereferences data->battery,
+which gets sets in ab8500_btemp_probe() like this:
 
-In order to remove strtobool() and slightly simplify kstrtox.h, switch to
-the other function name.
+	data->battery = devm_power_supply_register(dev, &sc27xx_fgu_desc,
+                                                   &fgu_cfg);
 
-While at it, include the corresponding header file (<linux/kstrtox.h>)
+As soon as devm_power_supply_register() has called device_add()
+the external_power_changed callback can get called. So there is a window
+where sc27xx_fgu_external_power_changed() may get called while
+data->battery has not been set yet leading to a NULL pointer dereference.
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/34f04735d20e0138695dd4070651bd860a36b81c.1673688120.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 4acfe3dfde68 ("test_firmware: prevent race conditions by a correct implementation of locking")
+Fixing this is easy. The external_power_changed callback gets passed
+the power_supply which will eventually get stored in data->battery,
+so sc27xx_fgu_external_power_changed() can simply directly use
+the passed in psy argument which is always valid.
+
+After this change sc27xx_fgu_external_power_changed() is reduced to just
+"power_supply_changed(psy);" and it has the same prototype. While at it
+simply replace it with making the external_power_changed callback
+directly point to power_supply_changed.
+
+Cc: Orson Zhai <orsonzhai@gmail.com>
+Cc: Chunyan Zhang <zhang.lyra@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_firmware.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/power/supply/sc27xx_fuel_gauge.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-index e337773585b9e..0b4e3de3f1748 100644
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -22,6 +22,7 @@
- #include <linux/slab.h>
- #include <linux/uaccess.h>
- #include <linux/delay.h>
-+#include <linux/kstrtox.h>
- #include <linux/kthread.h>
- #include <linux/vmalloc.h>
- #include <linux/efi_embedded_fw.h>
-@@ -326,7 +327,7 @@ static int test_dev_config_update_bool(const char *buf, size_t size,
- 	int ret;
+diff --git a/drivers/power/supply/sc27xx_fuel_gauge.c b/drivers/power/supply/sc27xx_fuel_gauge.c
+index ae45069bd5e1b..3d8a85df87f4d 100644
+--- a/drivers/power/supply/sc27xx_fuel_gauge.c
++++ b/drivers/power/supply/sc27xx_fuel_gauge.c
+@@ -733,13 +733,6 @@ static int sc27xx_fgu_set_property(struct power_supply *psy,
+ 	return ret;
+ }
  
- 	mutex_lock(&test_fw_mutex);
--	if (strtobool(buf, cfg) < 0)
-+	if (kstrtobool(buf, cfg) < 0)
- 		ret = -EINVAL;
- 	else
- 		ret = size;
+-static void sc27xx_fgu_external_power_changed(struct power_supply *psy)
+-{
+-	struct sc27xx_fgu_data *data = power_supply_get_drvdata(psy);
+-
+-	power_supply_changed(data->battery);
+-}
+-
+ static int sc27xx_fgu_property_is_writeable(struct power_supply *psy,
+ 					    enum power_supply_property psp)
+ {
+@@ -774,7 +767,7 @@ static const struct power_supply_desc sc27xx_fgu_desc = {
+ 	.num_properties		= ARRAY_SIZE(sc27xx_fgu_props),
+ 	.get_property		= sc27xx_fgu_get_property,
+ 	.set_property		= sc27xx_fgu_set_property,
+-	.external_power_changed	= sc27xx_fgu_external_power_changed,
++	.external_power_changed	= power_supply_changed,
+ 	.property_is_writeable	= sc27xx_fgu_property_is_writeable,
+ 	.no_thermal		= true,
+ };
 -- 
 2.39.2
 
