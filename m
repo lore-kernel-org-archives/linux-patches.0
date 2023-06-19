@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7053C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E23C433C8;
-	Mon, 19 Jun 2023 10:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7905B3C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C6CC433C8;
+	Mon, 19 Jun 2023 10:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171127;
-	bh=RVztm4/vrSiW5WqQ4YfeISdYVwnPIjfS9CPujgdcBMU=;
+	s=korg; t=1687171130;
+	bh=p65th1/VH7uyQAFReinMAJRxYsIds31Xi9sAAbdGQ5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDzdlhF0F3Ewpx9QBZapg+IAcIMqhdEakWT/2NdW9jenvxEYIofnjuMHPhpp3jnPA
-	 tHzpkbHIixRBXLq/38/3RjoBlvn/JEllgq0IwAFxi/g6/7MzoW284UZw4c6QQiZECB
-	 0aAifRzd3BdeSlPP7BnsHkBXjKDMVlyAIKPjKcbI=
+	b=Xc1DtrFgjx2tue+2x2/Hvlo7ul41RaPsajRFGNseD2PIwlHZapDlaaV1lDkn1nnKs
+	 zX+S1slClY6jvT73RtTmDXmlMxbaKxxbQPUe2Kb1M17ldjOEk3VK0oP0OXPaTaw1Fh
+	 kw/7e7nJnq0+cDPfS/wKt1hoAxz6cMuedD8DLdUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Natalia Petrova <n.petrova@fintech.ru>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 150/187] sctp: fix an error code in sctp_sf_eat_auth()
-Date: Mon, 19 Jun 2023 12:29:28 +0200
-Message-ID: <20230619102204.881337457@linuxfoundation.org>
+Subject: [PATCH 6.3 159/187] drm/nouveau: add nv_encoder pointer check for NULL
+Date: Mon, 19 Jun 2023 12:29:37 +0200
+Message-ID: <20230619102205.264405015@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -36,36 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Natalia Petrova <n.petrova@fintech.ru>
 
-[ Upstream commit 75e6def3b26736e7ff80639810098c9074229737 ]
+[ Upstream commit 55b94bb8c42464bad3d2217f6874aa1a85664eac ]
 
-The sctp_sf_eat_auth() function is supposed to enum sctp_disposition
-values and returning a kernel error code will cause issues in the
-caller.  Change -ENOMEM to SCTP_DISPOSITION_NOMEM.
+Pointer nv_encoder could be dereferenced at nouveau_connector.c
+in case it's equal to NULL by jumping to goto label.
+This patch adds a NULL-check to avoid it.
 
-Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 3195c5f9784a ("drm/nouveau: set encoder for lvds")
+Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+[Fixed patch title]
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230512103320.82234-1-n.petrova@fintech.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_connector.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index ce54261712062..07edf56f7b8c6 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -4484,7 +4484,7 @@ enum sctp_disposition sctp_sf_eat_auth(struct net *net,
- 				    SCTP_AUTH_NEW_KEY, GFP_ATOMIC);
+diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
+index 5dbf025e68737..f75c6f09dd2af 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_connector.c
++++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+@@ -730,7 +730,8 @@ nouveau_connector_detect_lvds(struct drm_connector *connector, bool force)
+ #endif
  
- 		if (!ev)
--			return -ENOMEM;
-+			return SCTP_DISPOSITION_NOMEM;
+ 	nouveau_connector_set_edid(nv_connector, edid);
+-	nouveau_connector_set_encoder(connector, nv_encoder);
++	if (nv_encoder)
++		nouveau_connector_set_encoder(connector, nv_encoder);
+ 	return status;
+ }
  
- 		sctp_add_cmd_sf(commands, SCTP_CMD_EVENT_ULP,
- 				SCTP_ULPEVENT(ev));
 -- 
 2.39.2
 
