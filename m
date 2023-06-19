@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26E7BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D52C433D9;
-	Mon, 19 Jun 2023 10:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CE8BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFF2C433C9;
+	Mon, 19 Jun 2023 10:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171915;
-	bh=LoC3srpFFpmnp4vhLAhfjdr0Jrn5pae3QDISMP9kKNg=;
+	s=korg; t=1687171918;
+	bh=oPYOJ/aJv3k+hNpcd1/ONC1KEGy2FYFZFb44WA2PKpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TDPdaJrfO1HL02Zdl4UVQfX/S5XEEaSSms80U47GJV8CPNDu7fMet5L85XnmHz51
-	 dKPG1EBjPGMrgBNgJ0ZsjLX1baG7Z2K9IM5gvPCsZkrFB4v1t8c3nxJGGsi8TDt6Jq
-	 YR/4mXallzxDUv+96itwL7aeAs+0E4+aanXA/5DY=
+	b=O70yTGQQoQ9UD6ycScYxFcCD6IYecGu+D3v38PuztBvkuwYHEnYizdaQbUoy8+mnO
+	 FRi7yRU5I2CBjfpuLzePj1tNy+kNJLs+ZExPYvplLRkEHydr76Eu6PSh5m0jfCbnXq
+	 9mxucNNl9M4gCY5GWG2t209l7e4cUkErZe27XG7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Lisa=20Chen=20 ?= <minjie.chen@geekplus.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 36/64] spi: spi-fsl-dspi: Remove unused chip->void_write_data
-Date: Mon, 19 Jun 2023 12:30:32 +0200
-Message-ID: <20230619102134.803783557@linuxfoundation.org>
+Subject: [PATCH 5.4 37/64] spi: fsl-dspi: avoid SCK glitches with continuous transfers
+Date: Mon, 19 Jun 2023 12:30:33 +0200
+Message-ID: <20230619102134.857894168@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -37,58 +38,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 6d6af5796e5d9a88ae83c9c753023bba61deb18b ]
+[ Upstream commit c5c31fb71f16ba75bad4ade208abbae225305b65 ]
 
-This variable has been present since the initial submission of the
-driver, and held, for some reason, the value of zero, to be sent on the
-wire in the case there wasn't any TX buffer for the current transfer.
+The DSPI controller has configurable timing for
 
-Since quite a while now, however, it isn't doing anything at all.
+(a) tCSC: the interval between the assertion of the chip select and the
+    first clock edge
 
+(b) tASC: the interval between the last clock edge and the deassertion
+    of the chip select
+
+What is a bit surprising, but is documented in the figure "Example of
+continuous transfer (CPHA=1, CONT=1)" in the datasheet, is that when the
+chip select stays asserted between multiple TX FIFO writes, the tCSC and
+tASC times still apply. With CONT=1, chip select remains asserted, but
+SCK takes a break and goes to the idle state for tASC + tCSC ns.
+
+In other words, the default values (of 0 and 0 ns) result in SCK
+glitches where the SCK transition to the idle state, as well as the SCK
+transition from the idle state, will have no delay in between, and it
+may appear that a SCK cycle has simply gone missing. The resulting
+timing violation might cause data corruption in many peripherals, as
+their chip select is asserted.
+
+The driver has device tree bindings for tCSC ("fsl,spi-cs-sck-delay")
+and tASC ("fsl,spi-sck-cs-delay"), but these are only specified to apply
+when the chip select toggles in the first place, and this timing
+characteristic depends on each peripheral. Many peripherals do not have
+explicit timing requirements, so many device trees do not have these
+properties present at all.
+
+Nonetheless, the lack of SCK glitches is a common sense requirement, and
+since the SCK stays in the idle state during transfers for tCSC+tASC ns,
+and that in itself should look like half a cycle, then let's ensure that
+tCSC and tASC are at least a quarter of a SCK period, such that their
+sum is at least half of one.
+
+Fixes: 95bf15f38641 ("spi: fsl-dspi: Add ~50ns delay between cs and sck")
+Reported-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
+Debugged-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
+Tested-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20200304220044.11193-3-olteanv@gmail.com
+Link: https://lore.kernel.org/r/20230529223402.1199503-1-vladimir.oltean@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: c5c31fb71f16 ("spi: fsl-dspi: avoid SCK glitches with continuous transfers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-dspi.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/spi/spi-fsl-dspi.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index 3e0200618af30..51e17f0828646 100644
+index 51e17f0828646..351b2989db071 100644
 --- a/drivers/spi/spi-fsl-dspi.c
 +++ b/drivers/spi/spi-fsl-dspi.c
-@@ -121,7 +121,6 @@
- 
- struct chip_data {
- 	u32			ctar_val;
--	u16			void_write_data;
- };
- 
- enum dspi_trans_mode {
-@@ -190,7 +189,6 @@ struct fsl_dspi {
- 	const void				*tx;
- 	void					*rx;
- 	void					*rx_end;
--	u16					void_write_data;
- 	u16					tx_cmd;
- 	u8					bits_per_word;
- 	u8					bytes_per_word;
-@@ -748,8 +746,6 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
- 				dspi->tx_cmd |= SPI_PUSHR_CMD_CONT;
- 		}
- 
--		dspi->void_write_data = dspi->cur_chip->void_write_data;
--
- 		dspi->tx = transfer->tx_buf;
- 		dspi->rx = transfer->rx_buf;
- 		dspi->rx_end = dspi->rx + transfer->len;
-@@ -848,8 +844,6 @@ static int dspi_setup(struct spi_device *spi)
+@@ -816,7 +816,9 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
+ static int dspi_setup(struct spi_device *spi)
+ {
+ 	struct fsl_dspi *dspi = spi_controller_get_devdata(spi->controller);
++	u32 period_ns = DIV_ROUND_UP(NSEC_PER_SEC, spi->max_speed_hz);
+ 	unsigned char br = 0, pbr = 0, pcssck = 0, cssck = 0;
++	u32 quarter_period_ns = DIV_ROUND_UP(period_ns, 4);
+ 	u32 cs_sck_delay = 0, sck_cs_delay = 0;
+ 	struct fsl_dspi_platform_data *pdata;
+ 	unsigned char pasc = 0, asc = 0;
+@@ -844,6 +846,19 @@ static int dspi_setup(struct spi_device *spi)
  		sck_cs_delay = pdata->sck_cs_delay;
  	}
  
--	chip->void_write_data = 0;
--
++	/* Since tCSC and tASC apply to continuous transfers too, avoid SCK
++	 * glitches of half a cycle by never allowing tCSC + tASC to go below
++	 * half a SCK period.
++	 */
++	if (cs_sck_delay < quarter_period_ns)
++		cs_sck_delay = quarter_period_ns;
++	if (sck_cs_delay < quarter_period_ns)
++		sck_cs_delay = quarter_period_ns;
++
++	dev_dbg(&spi->dev,
++		"DSPI controller timing params: CS-to-SCK delay %u ns, SCK-to-CS delay %u ns\n",
++		cs_sck_delay, sck_cs_delay);
++
  	clkrate = clk_get_rate(dspi->clk);
  	hz_to_spi_baud(&pbr, &br, spi->max_speed_hz, clkrate);
  
