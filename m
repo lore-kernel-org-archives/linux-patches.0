@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6255381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:35:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B91CC433C8;
-	Mon, 19 Jun 2023 10:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2AE5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:35:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D19C433C0;
+	Mon, 19 Jun 2023 10:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170938;
-	bh=Fxwm/A/YrnlbP1xH1e92iHPEpfVUU1EiQTtWPB8O+wU=;
+	s=korg; t=1687170941;
+	bh=IkULSifLx98C3O9KONoRx37bTXAjXxNA/y0IdXo1rdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rSmT0LMS1Puz4bM81pW8XBxtlyqRcO9+AZGRTk6eiKwrGSJRgqORP2uciG5ymcmU
-	 invh0SrPOnLLV6F0p1wnfez5kgmGvK5efUSg1GMc8TdlbI7/9NyE6N1/UEZebv+TQw
-	 gSGkJi/wfP0MeQ3OcJ0DD17c/LwDgNdVVi3R6bL4=
+	b=SUO0OZdtwLs/u/v5vvV+PPKWl5xkWWQYpM5kyj6jYnw+6wv6nI2yHTtWOBdRUfkmZ
+	 E8jmuTW939r61ofHSkeaZ09RT527BmJ1sqNFV54SS9fEeWrCzdvJeNy1J4Y07XCSws
+	 j7hAr+iZHxpet9K69tksuhhc/lLtSXd55kPJNh74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiadong Zhu <Jiadong.Zhu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 089/187] drm/amdgpu: Implement gfx9 patch functions for resubmission
-Date: Mon, 19 Jun 2023 12:28:27 +0200
-Message-ID: <20230619102201.913596258@linuxfoundation.org>
+Subject: [PATCH 6.3 090/187] drm/amdgpu: Modify indirect buffer packages for resubmission
+Date: Mon, 19 Jun 2023 12:28:28 +0200
+Message-ID: <20230619102201.964726292@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -36,10 +36,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiadong Zhu <Jiadong.Zhu@amd.com>
 
-commit 5b711e7f9c73e5ff44d6ac865711d9a05c2a0360 upstream.
+commit 87af86ae89963c227a3beb4d914f3dc7959a690e upstream.
 
-Patch the packages including CONTEXT_CONTROL and WRITE_DATA for gfx9
-during the resubmission scenario.
+When the preempted IB frame resubmitted to cp, we need to modify the frame
+data including:
+1. set PRE_RESUME 1 in CONTEXT_CONTROL.
+2. use meta data(DE and CE) read from CSA in WRITE_DATA.
+
+Add functions to save the location the first time IBs emitted and callback
+to patch the package when resubmission happens.
 
 Signed-off-by: Jiadong Zhu <Jiadong.Zhu@amd.com>
 Acked-by: Alex Deucher <alexander.deucher@amd.com>
@@ -47,121 +52,205 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org # 6.3.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |   80 ++++++++++++++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c     |   18 ++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h     |    9 ++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring_mux.c |   60 +++++++++++++++++++++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring_mux.h |   15 ++++++
+ 4 files changed, 102 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -5136,9 +5136,83 @@ static void gfx_v9_0_ring_emit_ib_gfx(st
- #endif
- 		lower_32_bits(ib->gpu_addr));
- 	amdgpu_ring_write(ring, upper_32_bits(ib->gpu_addr));
-+	amdgpu_ring_ib_on_emit_cntl(ring);
- 	amdgpu_ring_write(ring, control);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+@@ -581,3 +581,21 @@ void amdgpu_ring_ib_end(struct amdgpu_ri
+ 	if (ring->is_sw_ring)
+ 		amdgpu_sw_ring_ib_end(ring);
  }
- 
-+static void gfx_v9_0_ring_patch_cntl(struct amdgpu_ring *ring,
-+				     unsigned offset)
-+{
-+	u32 control = ring->ring[offset];
 +
-+	control |= INDIRECT_BUFFER_PRE_RESUME(1);
-+	ring->ring[offset] = control;
++void amdgpu_ring_ib_on_emit_cntl(struct amdgpu_ring *ring)
++{
++	if (ring->is_sw_ring)
++		amdgpu_sw_ring_ib_mark_offset(ring, AMDGPU_MUX_OFFSET_TYPE_CONTROL);
 +}
 +
-+static void gfx_v9_0_ring_patch_ce_meta(struct amdgpu_ring *ring,
-+					unsigned offset)
++void amdgpu_ring_ib_on_emit_ce(struct amdgpu_ring *ring)
 +{
-+	struct amdgpu_device *adev = ring->adev;
-+	void *ce_payload_cpu_addr;
-+	uint64_t payload_offset, payload_size;
-+
-+	payload_size = sizeof(struct v9_ce_ib_state);
-+
-+	if (ring->is_mes_queue) {
-+		payload_offset = offsetof(struct amdgpu_mes_ctx_meta_data,
-+					  gfx[0].gfx_meta_data) +
-+			offsetof(struct v9_gfx_meta_data, ce_payload);
-+		ce_payload_cpu_addr =
-+			amdgpu_mes_ctx_get_offs_cpu_addr(ring, payload_offset);
-+	} else {
-+		payload_offset = offsetof(struct v9_gfx_meta_data, ce_payload);
-+		ce_payload_cpu_addr = adev->virt.csa_cpu_addr + payload_offset;
-+	}
-+
-+	if (offset + (payload_size >> 2) <= ring->buf_mask + 1) {
-+		memcpy((void *)&ring->ring[offset], ce_payload_cpu_addr, payload_size);
-+	} else {
-+		memcpy((void *)&ring->ring[offset], ce_payload_cpu_addr,
-+		       (ring->buf_mask + 1 - offset) << 2);
-+		payload_size -= (ring->buf_mask + 1 - offset) << 2;
-+		memcpy((void *)&ring->ring[0],
-+		       ce_payload_cpu_addr + ((ring->buf_mask + 1 - offset) << 2),
-+		       payload_size);
-+	}
++	if (ring->is_sw_ring)
++		amdgpu_sw_ring_ib_mark_offset(ring, AMDGPU_MUX_OFFSET_TYPE_CE);
 +}
 +
-+static void gfx_v9_0_ring_patch_de_meta(struct amdgpu_ring *ring,
-+					unsigned offset)
++void amdgpu_ring_ib_on_emit_de(struct amdgpu_ring *ring)
 +{
-+	struct amdgpu_device *adev = ring->adev;
-+	void *de_payload_cpu_addr;
-+	uint64_t payload_offset, payload_size;
-+
-+	payload_size = sizeof(struct v9_de_ib_state);
-+
-+	if (ring->is_mes_queue) {
-+		payload_offset = offsetof(struct amdgpu_mes_ctx_meta_data,
-+					  gfx[0].gfx_meta_data) +
-+			offsetof(struct v9_gfx_meta_data, de_payload);
-+		de_payload_cpu_addr =
-+			amdgpu_mes_ctx_get_offs_cpu_addr(ring, payload_offset);
-+	} else {
-+		payload_offset = offsetof(struct v9_gfx_meta_data, de_payload);
-+		de_payload_cpu_addr = adev->virt.csa_cpu_addr + payload_offset;
-+	}
-+
-+	if (offset + (payload_size >> 2) <= ring->buf_mask + 1) {
-+		memcpy((void *)&ring->ring[offset], de_payload_cpu_addr, payload_size);
-+	} else {
-+		memcpy((void *)&ring->ring[offset], de_payload_cpu_addr,
-+		       (ring->buf_mask + 1 - offset) << 2);
-+		payload_size -= (ring->buf_mask + 1 - offset) << 2;
-+		memcpy((void *)&ring->ring[0],
-+		       de_payload_cpu_addr + ((ring->buf_mask + 1 - offset) << 2),
-+		       payload_size);
-+	}
++	if (ring->is_sw_ring)
++		amdgpu_sw_ring_ib_mark_offset(ring, AMDGPU_MUX_OFFSET_TYPE_DE);
 +}
-+
- static void gfx_v9_0_ring_emit_ib_compute(struct amdgpu_ring *ring,
- 					  struct amdgpu_job *job,
- 					  struct amdgpu_ib *ib,
-@@ -5334,6 +5408,8 @@ static void gfx_v9_0_ring_emit_ce_meta(s
- 	amdgpu_ring_write(ring, lower_32_bits(ce_payload_gpu_addr));
- 	amdgpu_ring_write(ring, upper_32_bits(ce_payload_gpu_addr));
- 
-+	amdgpu_ring_ib_on_emit_ce(ring);
-+
- 	if (resume)
- 		amdgpu_ring_write_multiple(ring, ce_payload_cpu_addr,
- 					   sizeof(ce_payload) >> 2);
-@@ -5445,6 +5521,7 @@ static void gfx_v9_0_ring_emit_de_meta(s
- 	amdgpu_ring_write(ring, lower_32_bits(de_payload_gpu_addr));
- 	amdgpu_ring_write(ring, upper_32_bits(de_payload_gpu_addr));
- 
-+	amdgpu_ring_ib_on_emit_de(ring);
- 	if (resume)
- 		amdgpu_ring_write_multiple(ring, de_payload_cpu_addr,
- 					   sizeof(de_payload) >> 2);
-@@ -6857,6 +6934,9 @@ static const struct amdgpu_ring_funcs gf
- 	.emit_reg_write_reg_wait = gfx_v9_0_ring_emit_reg_write_reg_wait,
- 	.soft_recovery = gfx_v9_0_ring_soft_recovery,
- 	.emit_mem_sync = gfx_v9_0_emit_mem_sync,
-+	.patch_cntl = gfx_v9_0_ring_patch_cntl,
-+	.patch_de = gfx_v9_0_ring_patch_de_meta,
-+	.patch_ce = gfx_v9_0_ring_patch_ce_meta,
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
+@@ -227,6 +227,9 @@ struct amdgpu_ring_funcs {
+ 	int (*preempt_ib)(struct amdgpu_ring *ring);
+ 	void (*emit_mem_sync)(struct amdgpu_ring *ring);
+ 	void (*emit_wave_limit)(struct amdgpu_ring *ring, bool enable);
++	void (*patch_cntl)(struct amdgpu_ring *ring, unsigned offset);
++	void (*patch_ce)(struct amdgpu_ring *ring, unsigned offset);
++	void (*patch_de)(struct amdgpu_ring *ring, unsigned offset);
  };
  
- static const struct amdgpu_ring_funcs gfx_v9_0_ring_funcs_compute = {
+ struct amdgpu_ring {
+@@ -316,10 +319,16 @@ struct amdgpu_ring {
+ #define amdgpu_ring_init_cond_exec(r) (r)->funcs->init_cond_exec((r))
+ #define amdgpu_ring_patch_cond_exec(r,o) (r)->funcs->patch_cond_exec((r),(o))
+ #define amdgpu_ring_preempt_ib(r) (r)->funcs->preempt_ib(r)
++#define amdgpu_ring_patch_cntl(r, o) ((r)->funcs->patch_cntl((r), (o)))
++#define amdgpu_ring_patch_ce(r, o) ((r)->funcs->patch_ce((r), (o)))
++#define amdgpu_ring_patch_de(r, o) ((r)->funcs->patch_de((r), (o)))
+ 
+ int amdgpu_ring_alloc(struct amdgpu_ring *ring, unsigned ndw);
+ void amdgpu_ring_ib_begin(struct amdgpu_ring *ring);
+ void amdgpu_ring_ib_end(struct amdgpu_ring *ring);
++void amdgpu_ring_ib_on_emit_cntl(struct amdgpu_ring *ring);
++void amdgpu_ring_ib_on_emit_ce(struct amdgpu_ring *ring);
++void amdgpu_ring_ib_on_emit_de(struct amdgpu_ring *ring);
+ 
+ void amdgpu_ring_insert_nop(struct amdgpu_ring *ring, uint32_t count);
+ void amdgpu_ring_generic_pad_ib(struct amdgpu_ring *ring, struct amdgpu_ib *ib);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring_mux.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring_mux.c
+@@ -105,6 +105,16 @@ static void amdgpu_mux_resubmit_chunks(s
+ 				amdgpu_fence_update_start_timestamp(e->ring,
+ 								    chunk->sync_seq,
+ 								    ktime_get());
++				if (chunk->sync_seq ==
++					le32_to_cpu(*(e->ring->fence_drv.cpu_addr + 2))) {
++					if (chunk->cntl_offset <= e->ring->buf_mask)
++						amdgpu_ring_patch_cntl(e->ring,
++								       chunk->cntl_offset);
++					if (chunk->ce_offset <= e->ring->buf_mask)
++						amdgpu_ring_patch_ce(e->ring, chunk->ce_offset);
++					if (chunk->de_offset <= e->ring->buf_mask)
++						amdgpu_ring_patch_de(e->ring, chunk->de_offset);
++				}
+ 				amdgpu_ring_mux_copy_pkt_from_sw_ring(mux, e->ring,
+ 								      chunk->start,
+ 								      chunk->end);
+@@ -407,6 +417,17 @@ void amdgpu_sw_ring_ib_end(struct amdgpu
+ 	amdgpu_ring_mux_end_ib(mux, ring);
+ }
+ 
++void amdgpu_sw_ring_ib_mark_offset(struct amdgpu_ring *ring, enum amdgpu_ring_mux_offset_type type)
++{
++	struct amdgpu_device *adev = ring->adev;
++	struct amdgpu_ring_mux *mux = &adev->gfx.muxer;
++	unsigned offset;
++
++	offset = ring->wptr & ring->buf_mask;
++
++	amdgpu_ring_mux_ib_mark_offset(mux, ring, offset, type);
++}
++
+ void amdgpu_ring_mux_start_ib(struct amdgpu_ring_mux *mux, struct amdgpu_ring *ring)
+ {
+ 	struct amdgpu_mux_entry *e;
+@@ -429,6 +450,10 @@ void amdgpu_ring_mux_start_ib(struct amd
+ 	}
+ 
+ 	chunk->start = ring->wptr;
++	/* the initialized value used to check if they are set by the ib submission*/
++	chunk->cntl_offset = ring->buf_mask + 1;
++	chunk->de_offset = ring->buf_mask + 1;
++	chunk->ce_offset = ring->buf_mask + 1;
+ 	list_add_tail(&chunk->entry, &e->list);
+ }
+ 
+@@ -454,6 +479,41 @@ static void scan_and_remove_signaled_chu
+ 	}
+ }
+ 
++void amdgpu_ring_mux_ib_mark_offset(struct amdgpu_ring_mux *mux,
++				    struct amdgpu_ring *ring, u64 offset,
++				    enum amdgpu_ring_mux_offset_type type)
++{
++	struct amdgpu_mux_entry *e;
++	struct amdgpu_mux_chunk *chunk;
++
++	e = amdgpu_ring_mux_sw_entry(mux, ring);
++	if (!e) {
++		DRM_ERROR("cannot find entry!\n");
++		return;
++	}
++
++	chunk = list_last_entry(&e->list, struct amdgpu_mux_chunk, entry);
++	if (!chunk) {
++		DRM_ERROR("cannot find chunk!\n");
++		return;
++	}
++
++	switch (type) {
++	case AMDGPU_MUX_OFFSET_TYPE_CONTROL:
++		chunk->cntl_offset = offset;
++		break;
++	case AMDGPU_MUX_OFFSET_TYPE_DE:
++		chunk->de_offset = offset;
++		break;
++	case AMDGPU_MUX_OFFSET_TYPE_CE:
++		chunk->ce_offset = offset;
++		break;
++	default:
++		DRM_ERROR("invalid type (%d)\n", type);
++		break;
++	}
++}
++
+ void amdgpu_ring_mux_end_ib(struct amdgpu_ring_mux *mux, struct amdgpu_ring *ring)
+ {
+ 	struct amdgpu_mux_entry *e;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring_mux.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring_mux.h
+@@ -50,6 +50,12 @@ struct amdgpu_mux_entry {
+ 	struct list_head        list;
+ };
+ 
++enum amdgpu_ring_mux_offset_type {
++	AMDGPU_MUX_OFFSET_TYPE_CONTROL,
++	AMDGPU_MUX_OFFSET_TYPE_DE,
++	AMDGPU_MUX_OFFSET_TYPE_CE,
++};
++
+ struct amdgpu_ring_mux {
+ 	struct amdgpu_ring      *real_ring;
+ 
+@@ -72,12 +78,18 @@ struct amdgpu_ring_mux {
+  * @sync_seq: the fence seqno related with the saved IB.
+  * @start:- start location on the software ring.
+  * @end:- end location on the software ring.
++ * @control_offset:- the PRE_RESUME bit position used for resubmission.
++ * @de_offset:- the anchor in write_data for de meta of resubmission.
++ * @ce_offset:- the anchor in write_data for ce meta of resubmission.
+  */
+ struct amdgpu_mux_chunk {
+ 	struct list_head        entry;
+ 	uint32_t                sync_seq;
+ 	u64                     start;
+ 	u64                     end;
++	u64                     cntl_offset;
++	u64                     de_offset;
++	u64                     ce_offset;
+ };
+ 
+ int amdgpu_ring_mux_init(struct amdgpu_ring_mux *mux, struct amdgpu_ring *ring,
+@@ -89,6 +101,8 @@ u64 amdgpu_ring_mux_get_wptr(struct amdg
+ u64 amdgpu_ring_mux_get_rptr(struct amdgpu_ring_mux *mux, struct amdgpu_ring *ring);
+ void amdgpu_ring_mux_start_ib(struct amdgpu_ring_mux *mux, struct amdgpu_ring *ring);
+ void amdgpu_ring_mux_end_ib(struct amdgpu_ring_mux *mux, struct amdgpu_ring *ring);
++void amdgpu_ring_mux_ib_mark_offset(struct amdgpu_ring_mux *mux, struct amdgpu_ring *ring,
++				    u64 offset, enum amdgpu_ring_mux_offset_type type);
+ bool amdgpu_mcbp_handle_trailing_fence_irq(struct amdgpu_ring_mux *mux);
+ 
+ u64 amdgpu_sw_ring_get_rptr_gfx(struct amdgpu_ring *ring);
+@@ -97,6 +111,7 @@ void amdgpu_sw_ring_set_wptr_gfx(struct
+ void amdgpu_sw_ring_insert_nop(struct amdgpu_ring *ring, uint32_t count);
+ void amdgpu_sw_ring_ib_begin(struct amdgpu_ring *ring);
+ void amdgpu_sw_ring_ib_end(struct amdgpu_ring *ring);
++void amdgpu_sw_ring_ib_mark_offset(struct amdgpu_ring *ring, enum amdgpu_ring_mux_offset_type type);
+ const char *amdgpu_sw_ring_name(int idx);
+ unsigned int amdgpu_sw_ring_priority(int idx);
+ 
 
 
