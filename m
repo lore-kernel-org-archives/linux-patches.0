@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2595C5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31F8C433C8;
-	Mon, 19 Jun 2023 10:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EE85381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490C3C433C0;
+	Mon, 19 Jun 2023 10:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171312;
-	bh=LMWXZlNDhmQlwcKVMXxqGTrKXbR8Vjy+2uWJFLIlpOw=;
+	s=korg; t=1687171314;
+	bh=+apODNeNVrSyPqzAGIg1n/kEm6UQna9JsexIQrCyzwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgUvELvnVup1v4MJsA1ZC/RnoZuEZh1yMuazsoqTWD120JzMnz7fboYJyCCtDXsfB
-	 KyDdsramRPFLq+EJhfncVmlxlEisCtXAzaUsCC2V70xTryY82nn5KIwwarNxUF1VIm
-	 JCpHYBlhjl2myhktnY+bgi54l7tjFQ76yqpppkx8=
+	b=HcwZ1sTe9Pw0lxa4ODs6/zmAElhEwHB06FjgugeakMcerWoHr8p2+QZJsg48eyKl5
+	 Gaw4tUUXhOzi3eZ1eFlSzsoDCpubqfgSFoXqhWbP+RE7d6P5YyER8O6IIpZRrrTefJ
+	 aW53Mf+yB2wOFBHglb9pBFFK+5BefcdUpuc8n+fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 36/49] sctp: fix an error code in sctp_sf_eat_auth()
-Date: Mon, 19 Jun 2023 12:30:14 +0200
-Message-ID: <20230619102131.799516163@linuxfoundation.org>
+Subject: [PATCH 4.19 37/49] igb: fix nvm.ops.read() error handling
+Date: Mon, 19 Jun 2023 12:30:15 +0200
+Message-ID: <20230619102131.852293984@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -36,36 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit 75e6def3b26736e7ff80639810098c9074229737 ]
+[ Upstream commit 48a821fd58837800750ec1b3962f0f799630a844 ]
 
-The sctp_sf_eat_auth() function is supposed to enum sctp_disposition
-values and returning a kernel error code will cause issues in the
-caller.  Change -ENOMEM to SCTP_DISPOSITION_NOMEM.
+Add error handling into igb_set_eeprom() function, in case
+nvm.ops.read() fails just quit with error code asap.
 
-Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_ethtool.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 3d52431dea9bf..8298f27e8de0d 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -4392,7 +4392,7 @@ enum sctp_disposition sctp_sf_eat_auth(struct net *net,
- 				    SCTP_AUTH_NEW_KEY, GFP_ATOMIC);
+diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+index d0f5b92bead73..e19fbdf2ff304 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
++++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+@@ -811,6 +811,8 @@ static int igb_set_eeprom(struct net_device *netdev,
+ 		 */
+ 		ret_val = hw->nvm.ops.read(hw, last_word, 1,
+ 				   &eeprom_buff[last_word - first_word]);
++		if (ret_val)
++			goto out;
+ 	}
  
- 		if (!ev)
--			return -ENOMEM;
-+			return SCTP_DISPOSITION_NOMEM;
+ 	/* Device's eeprom is always little-endian, word addressable */
+@@ -830,6 +832,7 @@ static int igb_set_eeprom(struct net_device *netdev,
+ 		hw->nvm.ops.update(hw);
  
- 		sctp_add_cmd_sf(commands, SCTP_CMD_EVENT_ULP,
- 				SCTP_ULPEVENT(ev));
+ 	igb_set_fw_version(adapter);
++out:
+ 	kfree(eeprom_buff);
+ 	return ret_val;
+ }
 -- 
 2.39.2
 
