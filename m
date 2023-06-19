@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D840E5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:36:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BE0C433C8;
-	Mon, 19 Jun 2023 10:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B38D5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:36:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05838C433AB;
+	Mon, 19 Jun 2023 10:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170977;
-	bh=QRkO86VZ+1mSyUquvznmlow2pQTKnNJ8Z72lt8SS5aw=;
+	s=korg; t=1687170980;
+	bh=pmNeNoP+3h+S6rfjAykYcgi0HCeznCuN8SzMCzWD/rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xd5L4+CjYYn8XYuP8hz6yI4YP0Cx+p6SG+wvAAAlNAHAqJ1WOqJcWlhZmAqZc4HXa
-	 Clk1AvBv8kXX9XmStn2F7f81D4uaClx5tlisGTBcaTy/B2qerJ2COIYjv07lNj1iE8
-	 98x9SY7qLymxSV99b+pE8u8fIdGETcZ3pcrhNQZ4=
+	b=2nZNbFpf6GcLN0OMYb3K2/KIzd4EfBh0+lS2zIWn4gIBfoW3fxAEhhOxvM3tymAap
+	 jLDKkIoPGmBEKOpTMtGJAG6ZRN2H6xBD8zhYWoGAGYwQP69vxZdgCUOaUwNjw2AveZ
+	 7eZnjED8ci5CWaEhy4DpMBqTCcbdud1VpSuJsrb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.3 104/187] usb: gadget: udc: renesas_usb3: Fix RZ/V2M {modprobe,bind} error
-Date: Mon, 19 Jun 2023 12:28:42 +0200
-Message-ID: <20230619102202.604229965@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.3 105/187] USB: dwc3: qcom: fix NULL-deref on suspend
+Date: Mon, 19 Jun 2023 12:28:43 +0200
+Message-ID: <20230619102202.648279219@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,46 +37,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 3e6ac852fbc71a234de24b5455086f6b98d3d958 upstream.
+commit d2d69354226de0b333d4405981f3d9c41ba8430a upstream.
 
-Currently {modprobe, bind} after {rmmod, unbind} results in probe failure.
+The Qualcomm dwc3 glue driver is currently accessing the driver data of
+the child core device during suspend and on wakeup interrupts. This is
+clearly a bad idea as the child may not have probed yet or could have
+been unbound from its driver.
 
-genirq: Flags mismatch irq 22. 00000004 (85070400.usb3drd) vs. 00000004 (85070400.usb3drd)
-renesas_usb3: probe of 85070000.usb3peri failed with error -16
+The first such layering violation was part of the initial version of the
+driver, but this was later made worse when the hack that accesses the
+driver data of the grand child xhci device to configure the wakeup
+interrupts was added.
 
-The reason is, it is trying to register an interrupt handler for the same
-IRQ twice. The devm_request_irq() was called with the parent device.
-So the interrupt handler won't be unregistered when the usb3-peri device
-is unbound.
+Fixing this properly is not that easily done, so add a sanity check to
+make sure that the child driver data is non-NULL before dereferencing it
+for now.
 
-Fix this issue by replacing "parent dev"->"dev" as the irq resource
-is managed by this driver.
+Note that this relies on subtleties like the fact that driver core is
+making sure that the parent is not suspended while the child is probing.
 
-Fixes: 9cad72dfc556 ("usb: gadget: Add support for RZ/V2M USB3DRD driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Message-ID: <20230530161720.179927-1-biju.das.jz@bp.renesas.com>
+Reported-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/all/20230325165217.31069-4-manivannan.sadhasivam@linaro.org/
+Fixes: d9152161b4bf ("usb: dwc3: Add Qualcomm DWC3 glue layer driver")
+Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+Cc: stable@vger.kernel.org	# 3.18: a872ab303d5d: "usb: dwc3: qcom: fix use-after-free on runtime-PM wakeup"
+Cc: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Message-ID: <20230607100540.31045-2-johan+linaro@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/renesas_usb3.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/dwc3-qcom.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/renesas_usb3.c
-+++ b/drivers/usb/gadget/udc/renesas_usb3.c
-@@ -2898,9 +2898,9 @@ static int renesas_usb3_probe(struct pla
- 		struct rzv2m_usb3drd *ddata = dev_get_drvdata(pdev->dev.parent);
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -308,7 +308,16 @@ static void dwc3_qcom_interconnect_exit(
+ /* Only usable in contexts where the role can not change. */
+ static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
+ {
+-	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
++	struct dwc3 *dwc;
++
++	/*
++	 * FIXME: Fix this layering violation.
++	 */
++	dwc = platform_get_drvdata(qcom->dwc3);
++
++	/* Core driver may not have probed yet. */
++	if (!dwc)
++		return false;
  
- 		usb3->drd_reg = ddata->reg;
--		ret = devm_request_irq(ddata->dev, ddata->drd_irq,
-+		ret = devm_request_irq(&pdev->dev, ddata->drd_irq,
- 				       renesas_usb3_otg_irq, 0,
--				       dev_name(ddata->dev), usb3);
-+				       dev_name(&pdev->dev), usb3);
- 		if (ret < 0)
- 			return ret;
- 	}
+ 	return dwc->xhci;
+ }
 
 
