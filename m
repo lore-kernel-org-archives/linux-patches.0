@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3123C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578B0C433C9;
-	Mon, 19 Jun 2023 10:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948F73C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1990CC433C0;
+	Mon, 19 Jun 2023 10:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171052;
-	bh=duqtSkOJBN+2h2UdHvkOu+DahB+A4AYXWVQtbb5b6+g=;
+	s=korg; t=1687171055;
+	bh=27r0tyXi3rEI+hpo4kFpJsSCNtKJyG5BGnB9wB8UBLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rj23K4ItbPEWFdGgaH3RO44VI19wUgMyMXGYEuDEjbFYAzwan+EkPLbz7LfNuDoKz
-	 5CuKafLpkqDiAK1C6iMvLe3IJ3ppnPA+SC5byE5RPl+oWsxk+NPCCJoX1Ifkl7rMp5
-	 D6NkHVW2vkOUIM7tboBvWJ/j0LiE2SwRF6tNEce8=
+	b=o5F43aGhUI8jvw7jlpc3OyYhM1YhZZe+V34hL5U9CyXa7i4IbYB3XkdpFu2PsnxgG
+	 TBZZxAaeIos/+7XDN2VrtbDw9k1k7PyBKy6GRmQFpiboNd4Y+tnLLom0LFE5RJCMEm
+	 bjFeBiJJtJlTzS9TBo0ZmGBomlg3fg55sosbTeI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Lee Jones <lee@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 131/187] net/sched: cls_u32: Fix reference counter leak leading to overflow
-Date: Mon, 19 Jun 2023 12:29:09 +0200
-Message-ID: <20230619102203.944644183@linuxfoundation.org>
+Subject: [PATCH 6.3 132/187] wifi: mac80211: fix link activation settings order
+Date: Mon, 19 Jun 2023 12:29:10 +0200
+Message-ID: <20230619102203.997608165@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -37,76 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 04c55383fa5689357bcdd2c8036725a55ed632bc ]
+[ Upstream commit 01605ad6c3e8608d7e147c9b75d67eb8a3d27d88 ]
 
-In the event of a failure in tcf_change_indev(), u32_set_parms() will
-immediately return without decrementing the recently incremented
-reference counter.  If this happens enough times, the counter will
-rollover and the reference freed, leading to a double free which can be
-used to do 'bad things'.
+In the normal MLME code we always call
+ieee80211_mgd_set_link_qos_params() before
+ieee80211_link_info_change_notify() and some drivers,
+notably iwlwifi, rely on that as they don't do anything
+(but store the data) in their conf_tx.
 
-In order to prevent this, move the point of possible failure above the
-point where the reference counter is incremented.  Also save any
-meaningful return values to be applied to the return data at the
-appropriate point in time.
+Fix the order here to be the same as in the normal code
+paths, so this isn't broken.
 
-This issue was caught with KASAN.
-
-Fixes: 705c7091262d ("net: sched: cls_u32: no need to call tcf_exts_change for newly allocated struct")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 3d9011029227 ("wifi: mac80211: implement link switching")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230608163202.a2a86bba2f80.Iac97e04827966d22161e63bb6e201b4061e9651b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ net/mac80211/link.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 4e2e269f121f8..d15d50de79802 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -718,13 +718,19 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
- 			 struct nlattr *est, u32 flags, u32 fl_flags,
- 			 struct netlink_ext_ack *extack)
- {
--	int err;
-+	int err, ifindex = -1;
+diff --git a/net/mac80211/link.c b/net/mac80211/link.c
+index 8c8869cc1fb4c..aab4d7b4def24 100644
+--- a/net/mac80211/link.c
++++ b/net/mac80211/link.c
+@@ -2,7 +2,7 @@
+ /*
+  * MLO link handling
+  *
+- * Copyright (C) 2022 Intel Corporation
++ * Copyright (C) 2022-2023 Intel Corporation
+  */
+ #include <linux/slab.h>
+ #include <linux/kernel.h>
+@@ -404,6 +404,7 @@ static int _ieee80211_set_active_links(struct ieee80211_sub_if_data *sdata,
+ 						 IEEE80211_CHANCTX_SHARED);
+ 		WARN_ON_ONCE(ret);
  
- 	err = tcf_exts_validate_ex(net, tp, tb, est, &n->exts, flags,
- 				   fl_flags, extack);
- 	if (err < 0)
- 		return err;
- 
-+	if (tb[TCA_U32_INDEV]) {
-+		ifindex = tcf_change_indev(net, tb[TCA_U32_INDEV], extack);
-+		if (ifindex < 0)
-+			return -EINVAL;
-+	}
-+
- 	if (tb[TCA_U32_LINK]) {
- 		u32 handle = nla_get_u32(tb[TCA_U32_LINK]);
- 		struct tc_u_hnode *ht_down = NULL, *ht_old;
-@@ -759,13 +765,9 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
- 		tcf_bind_filter(tp, &n->res, base);
++		ieee80211_mgd_set_link_qos_params(link);
+ 		ieee80211_link_info_change_notify(sdata, link,
+ 						  BSS_CHANGED_ERP_CTS_PROT |
+ 						  BSS_CHANGED_ERP_PREAMBLE |
+@@ -418,7 +419,6 @@ static int _ieee80211_set_active_links(struct ieee80211_sub_if_data *sdata,
+ 						  BSS_CHANGED_TWT |
+ 						  BSS_CHANGED_HE_OBSS_PD |
+ 						  BSS_CHANGED_HE_BSS_COLOR);
+-		ieee80211_mgd_set_link_qos_params(link);
  	}
  
--	if (tb[TCA_U32_INDEV]) {
--		int ret;
--		ret = tcf_change_indev(net, tb[TCA_U32_INDEV], extack);
--		if (ret < 0)
--			return -EINVAL;
--		n->ifindex = ret;
--	}
-+	if (ifindex >= 0)
-+		n->ifindex = ifindex;
-+
- 	return 0;
- }
- 
+ 	old_active = sdata->vif.active_links;
 -- 
 2.39.2
 
