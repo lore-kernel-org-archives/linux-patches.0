@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100085381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B32DC433C8;
-	Mon, 19 Jun 2023 10:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08AE5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CA1C433C8;
+	Mon, 19 Jun 2023 10:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171503;
-	bh=3Xbn1EwYG9/PxX2YVlraKEV2YsIoSvlFZ4SYwZJrrFE=;
+	s=korg; t=1687171506;
+	bh=WMsEmoBN7Jqx8OgNmYtXkh6lIUqdZCMyiuLG4MgDS5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WOuyIHuN/LbxDluGKUf+mQ+2fyL3IPBWzmR2dbvy5v5glX5W/hkKQoSYZc2F6+vvO
-	 Ps7bqlqb0hVhDktK/Wa8IUWo4YH0KIvC3qKKItYBatUtBoqZy1n/dBf9sUtjTiUJ5C
-	 auXVHEfyirCkKV4bVQKUmuiW+k18XmuPPDHEcxLY=
+	b=fW7BGgq1iqymTlZh+Wy9EMAgcVHt9lEwgW6G+YTKyYlW7G7zpXnnchVDK9zkaq/Hs
+	 jpa0IvrtKjj5n8ZKdgvOYD/rUfu+2PopeOtSW54If64tH8Zhlnwc5sQ4wcMtk334FY
+	 BrjFCevdDYCNAj7gtMfNg5xnkYD1ucS0Rz6G5cSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/166] ASoC: soc-pcm: test if a BE can be prepared
-Date: Mon, 19 Jun 2023 12:28:24 +0200
-Message-ID: <20230619102156.083466151@linuxfoundation.org>
+Subject: [PATCH 6.1 028/166] ASoC: Intel: avs: Account for UID of ACPI device
+Date: Mon, 19 Jun 2023 12:28:25 +0200
+Message-ID: <20230619102156.144158930@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -33,91 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit e123036be377ddf628226a7c6d4f9af5efd113d3 ]
+[ Upstream commit 836855100b87b4dd7a82546131779dc255c18b67 ]
 
-In the BE hw_params configuration, the existing code checks if any of the
-existing FEs are prepared, running, paused or suspended - and skips the
-configuration in those cases. This allows multiple calls of hw_params
-which the ALSA state machine supports.
+Configurations with multiple codecs attached to the platform are
+supported but only if each from the set is different. Add new field
+representing the 'Unique ID' so that codecs that share Vendor and Part
+IDs can be differentiated and thus enabling support for such
+configurations.
 
-This check is not handled for the prepare stage, which can lead to the
-same BE being prepared multiple times. This patch adds a check similar to
-that of the hw_params, with the main difference being that the suspended
-state is allowed: the ALSA state machine allows a transition from
-suspended to prepared with hw_params skipped.
-
-This problem was detected on Intel IPC4/SoundWire devices, where the BE
-dailink .prepare stage is used to configure the SoundWire stream with a
-bank switch. Multiple .prepare calls lead to conflicts with the .trigger
-operation with IPC4 configurations. This problem was not detected earlier
-on Intel devices, HDaudio BE dailinks detect that the link is already
-prepared and skip the configuration, and for IPC3 devices there is no BE
-trigger.
-
-Link: https://github.com/thesofproject/sof/issues/7596
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com
-Link: https://lore.kernel.org/r/20230517185731.487124-1-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20230519201711.4073845-6-amadeuszx.slawinski@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-dpcm.h |  4 ++++
- sound/soc/soc-pcm.c      | 20 ++++++++++++++++++++
- 2 files changed, 24 insertions(+)
+ include/sound/soc-acpi.h              | 1 +
+ sound/soc/intel/avs/board_selection.c | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/sound/soc-dpcm.h b/include/sound/soc-dpcm.h
-index 5b689c663290f..27a5642f07cda 100644
---- a/include/sound/soc-dpcm.h
-+++ b/include/sound/soc-dpcm.h
-@@ -125,6 +125,10 @@ int snd_soc_dpcm_can_be_free_stop(struct snd_soc_pcm_runtime *fe,
- int snd_soc_dpcm_can_be_params(struct snd_soc_pcm_runtime *fe,
- 		struct snd_soc_pcm_runtime *be, int stream);
+diff --git a/include/sound/soc-acpi.h b/include/sound/soc-acpi.h
+index b38fd25c57295..528279056b3ab 100644
+--- a/include/sound/soc-acpi.h
++++ b/include/sound/soc-acpi.h
+@@ -170,6 +170,7 @@ struct snd_soc_acpi_link_adr {
+ /* Descriptor for SST ASoC machine driver */
+ struct snd_soc_acpi_mach {
+ 	u8 id[ACPI_ID_LEN];
++	const char *uid;
+ 	const struct snd_soc_acpi_codecs *comp_ids;
+ 	const u32 link_mask;
+ 	const struct snd_soc_acpi_link_adr *links;
+diff --git a/sound/soc/intel/avs/board_selection.c b/sound/soc/intel/avs/board_selection.c
+index 87f9c18be238d..87353b4b0cd73 100644
+--- a/sound/soc/intel/avs/board_selection.c
++++ b/sound/soc/intel/avs/board_selection.c
+@@ -394,7 +394,7 @@ static int avs_register_i2s_boards(struct avs_dev *adev)
+ 	}
  
-+/* can this BE perform prepare */
-+int snd_soc_dpcm_can_be_prepared(struct snd_soc_pcm_runtime *fe,
-+				 struct snd_soc_pcm_runtime *be, int stream);
-+
- /* is the current PCM operation for this FE ? */
- int snd_soc_dpcm_fe_can_update(struct snd_soc_pcm_runtime *fe, int stream);
- 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index 7a486ca9633c1..f3964060a0447 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -2403,6 +2403,9 @@ int dpcm_be_dai_prepare(struct snd_soc_pcm_runtime *fe, int stream)
- 		if (!snd_soc_dpcm_be_can_update(fe, be, stream))
+ 	for (mach = boards->machs; mach->id[0]; mach++) {
+-		if (!acpi_dev_present(mach->id, NULL, -1))
++		if (!acpi_dev_present(mach->id, mach->uid, -1))
  			continue;
  
-+		if (!snd_soc_dpcm_can_be_prepared(fe, be, stream))
-+			continue;
-+
- 		if ((be->dpcm[stream].state != SND_SOC_DPCM_STATE_HW_PARAMS) &&
- 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_STOP) &&
- 		    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_SUSPEND) &&
-@@ -3043,3 +3046,20 @@ int snd_soc_dpcm_can_be_params(struct snd_soc_pcm_runtime *fe,
- 	return snd_soc_dpcm_check_state(fe, be, stream, state, ARRAY_SIZE(state));
- }
- EXPORT_SYMBOL_GPL(snd_soc_dpcm_can_be_params);
-+
-+/*
-+ * We can only prepare a BE DAI if any of it's FE are not prepared,
-+ * running or paused for the specified stream direction.
-+ */
-+int snd_soc_dpcm_can_be_prepared(struct snd_soc_pcm_runtime *fe,
-+				 struct snd_soc_pcm_runtime *be, int stream)
-+{
-+	const enum snd_soc_dpcm_state state[] = {
-+		SND_SOC_DPCM_STATE_START,
-+		SND_SOC_DPCM_STATE_PAUSED,
-+		SND_SOC_DPCM_STATE_PREPARE,
-+	};
-+
-+	return snd_soc_dpcm_check_state(fe, be, stream, state, ARRAY_SIZE(state));
-+}
-+EXPORT_SYMBOL_GPL(snd_soc_dpcm_can_be_prepared);
+ 		if (mach->machine_quirk)
 -- 
 2.39.2
 
