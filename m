@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6B2BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46905C433C0;
-	Mon, 19 Jun 2023 10:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30064BE56
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB06FC433C0;
+	Mon, 19 Jun 2023 10:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172241;
-	bh=Y6MBSY97SJc6gArE0pDXarPoM4AXlqY9EeogjInlCE0=;
+	s=korg; t=1687172247;
+	bh=Sa+bbO2o/syIlwzuqHuaYPlXdSgX3niR3ORb+2KxKLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYpCiYk66mBTFUtFgHfLJ/TIqDF0pVH1/PvuP21CjLXYqCEkUxojByd2FkQcpH6/C
-	 1kiyYPAlCjeQ290yK2mPIwT9VkAhQSlX85ITIWNyjB2zEBbqXmRTcdwoxzq8Y82LY+
-	 HmG3TaxO/8mmJCyRBZyyYOZBgvoBzHr8p7efdpTI=
+	b=K6t2fAMC6shK9qCqIduSuNA2HXT1/XOz3RmSHBKvu21jvNG0pDI3QngT4qbOkgesb
+	 nfV6E3kSOb+bL6DV/ScioIlt2YtKJ91PAetM3+Y3V/Q8gGREA2FW8rvsUqIh5hqNWM
+	 EADsGkVmR4zjx6qARKqRvrjdIxlMtRqOXMYmnIhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 62/89] ipvlan: fix bound dev checking for IPv6 l3s mode
-Date: Mon, 19 Jun 2023 12:30:50 +0200
-Message-ID: <20230619102141.084348275@linuxfoundation.org>
+Subject: [PATCH 5.10 64/89] igb: fix nvm.ops.read() error handling
+Date: Mon, 19 Jun 2023 12:30:52 +0200
+Message-ID: <20230619102141.175119466@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -36,48 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit ce57adc222aba32431c42632b396e9213d0eb0b8 ]
+[ Upstream commit 48a821fd58837800750ec1b3962f0f799630a844 ]
 
-The commit 59a0b022aa24 ("ipvlan: Make skb->skb_iif track skb->dev for l3s
-mode") fixed ipvlan bonded dev checking by updating skb skb_iif. This fix
-works for IPv4, as in raw_v4_input() the dif is from inet_iif(skb), which
-is skb->skb_iif when there is no route.
+Add error handling into igb_set_eeprom() function, in case
+nvm.ops.read() fails just quit with error code asap.
 
-But for IPv6, the fix is not enough, because in ipv6_raw_deliver() ->
-raw_v6_match(), the dif is inet6_iif(skb), which is returns IP6CB(skb)->iif
-instead of skb->skb_iif if it's not a l3_slave. To fix the IPv6 part
-issue. Let's set IP6CB(skb)->iif to correct ifindex.
-
-BTW, ipvlan handles NS/NA specifically. Since it works fine, I will not
-reset IP6CB(skb)->iif when addr->atype is IPVL_ICMPV6.
-
-Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2196710
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_l3s.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/intel/igb/igb_ethtool.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
-index 71712ea25403d..d5b05e8032199 100644
---- a/drivers/net/ipvlan/ipvlan_l3s.c
-+++ b/drivers/net/ipvlan/ipvlan_l3s.c
-@@ -102,6 +102,10 @@ static unsigned int ipvlan_nf_input(void *priv, struct sk_buff *skb,
+diff --git a/drivers/net/ethernet/intel/igb/igb_ethtool.c b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+index 5e3b0a5843a8e..d9de3b8115431 100644
+--- a/drivers/net/ethernet/intel/igb/igb_ethtool.c
++++ b/drivers/net/ethernet/intel/igb/igb_ethtool.c
+@@ -822,6 +822,8 @@ static int igb_set_eeprom(struct net_device *netdev,
+ 		 */
+ 		ret_val = hw->nvm.ops.read(hw, last_word, 1,
+ 				   &eeprom_buff[last_word - first_word]);
++		if (ret_val)
++			goto out;
+ 	}
  
- 	skb->dev = addr->master->dev;
- 	skb->skb_iif = skb->dev->ifindex;
-+#if IS_ENABLED(CONFIG_IPV6)
-+	if (addr->atype == IPVL_IPV6)
-+		IP6CB(skb)->iif = skb->dev->ifindex;
-+#endif
- 	len = skb->len + ETH_HLEN;
- 	ipvlan_count_rx(addr->master, len, true, false);
- out:
+ 	/* Device's eeprom is always little-endian, word addressable */
+@@ -841,6 +843,7 @@ static int igb_set_eeprom(struct net_device *netdev,
+ 		hw->nvm.ops.update(hw);
+ 
+ 	igb_set_fw_version(adapter);
++out:
+ 	kfree(eeprom_buff);
+ 	return ret_val;
+ }
 -- 
 2.39.2
 
