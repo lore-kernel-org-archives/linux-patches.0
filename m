@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5962BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429EEC433C9;
-	Mon, 19 Jun 2023 10:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F9FBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EAADC433C8;
+	Mon, 19 Jun 2023 10:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171858;
-	bh=awNbbUrZKfXcgaKH6JhIK8hfjJtLZGaowOiSziy/Zt0=;
+	s=korg; t=1687171861;
+	bh=qEUsjwhhl3BEEVwSGFW2pv6M333EyUzh6VO+NOAFXjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhkCzrqeAMqdV8aTDOFCT8IB59GDGi5g51y39JgiWbwLXU444KGmodwYIhgUjqahB
-	 lAYjWYA4CzOpd2K4QR1jp+r07zaVQ9XnsCilQbtrB3xRodaOpJRENUm7poOUXnu2UG
-	 yUq4f96wCaojDIE9yrHHykR2kGvVtAqRBO+jjbAM=
+	b=o/wLV8FR8uf6BZX1LdE0LjnGZFVXKwI60nJ8KMSaS2j3yjmkFkdYcpxIFOyAe9ZPV
+	 P6GMA0qM5SposKnAWnx1ww/VwB7GdrHOZ4n4qJGkel/rMq+mK4BWVBb7BugtTJ6YHv
+	 dr39PDd3IW03G42fIju0rCu7LXau8eqUsIT1hCZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 16/64] parisc: Flush gatt writes and adjust gatt mask in parisc_agp_mask_memory()
-Date: Mon, 19 Jun 2023 12:30:12 +0200
-Message-ID: <20230619102133.697218886@linuxfoundation.org>
+Subject: [PATCH 5.4 17/64] MIPS: Alchemy: fix dbdma2
+Date: Mon, 19 Jun 2023 12:30:13 +0200
+Message-ID: <20230619102133.757490452@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -34,59 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Manuel Lauss <manuel.lauss@gmail.com>
 
-[ Upstream commit d703797380c540bbeac03f104ebcfc364eaf47cc ]
+[ Upstream commit 2d645604f69f3a772d58ead702f9a8e84ab2b342 ]
 
-Flush caches after changing gatt entries and calculate entry according
-to SBA requirements.
+Various fixes for the Au1200/Au1550/Au1300 DBDMA2 code:
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+- skip cache invalidation if chip has working coherency circuitry.
+- invalidate KSEG0-portion of the (physical) data address.
+- force the dma channel doorbell write out to bus immediately with
+  a sync.
+
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/agp/parisc-agp.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ arch/mips/alchemy/common/dbdma.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/char/agp/parisc-agp.c b/drivers/char/agp/parisc-agp.c
-index d68d05d5d3838..514f9f287a781 100644
---- a/drivers/char/agp/parisc-agp.c
-+++ b/drivers/char/agp/parisc-agp.c
-@@ -90,6 +90,9 @@ parisc_agp_tlbflush(struct agp_memory *mem)
- {
- 	struct _parisc_agp_info *info = &parisc_agp_info;
+diff --git a/arch/mips/alchemy/common/dbdma.c b/arch/mips/alchemy/common/dbdma.c
+index 4ca2c28878e0f..e9ee9ab90a0c6 100644
+--- a/arch/mips/alchemy/common/dbdma.c
++++ b/arch/mips/alchemy/common/dbdma.c
+@@ -30,6 +30,7 @@
+  *
+  */
  
-+	/* force fdc ops to be visible to IOMMU */
-+	asm_io_sync();
-+
- 	writeq(info->gart_base | ilog2(info->gart_size), info->ioc_regs+IOC_PCOM);
- 	readq(info->ioc_regs+IOC_PCOM);	/* flush */
- }
-@@ -158,6 +161,7 @@ parisc_agp_insert_memory(struct agp_memory *mem, off_t pg_start, int type)
- 			info->gatt[j] =
- 				parisc_agp_mask_memory(agp_bridge,
- 					paddr, type);
-+			asm_io_fdc(&info->gatt[j]);
- 		}
- 	}
++#include <linux/dma-map-ops.h> /* for dma_default_coherent */
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+@@ -623,17 +624,18 @@ u32 au1xxx_dbdma_put_source(u32 chanid, dma_addr_t buf, int nbytes, u32 flags)
+ 		dp->dscr_cmd0 &= ~DSCR_CMD0_IE;
  
-@@ -191,7 +195,16 @@ static unsigned long
- parisc_agp_mask_memory(struct agp_bridge_data *bridge, dma_addr_t addr,
- 		       int type)
- {
--	return SBA_PDIR_VALID_BIT | addr;
-+	unsigned ci;			/* coherent index */
-+	dma_addr_t pa;
-+
-+	pa = addr & IOVP_MASK;
-+	asm("lci 0(%1), %0" : "=r" (ci) : "r" (phys_to_virt(pa)));
-+
-+	pa |= (ci >> PAGE_SHIFT) & 0xff;/* move CI (8 bits) into lowest byte */
-+	pa |= SBA_PDIR_VALID_BIT;	/* set "valid" bit */
-+
-+	return cpu_to_le64(pa);
- }
+ 	/*
+-	 * There is an errata on the Au1200/Au1550 parts that could result
+-	 * in "stale" data being DMA'ed. It has to do with the snoop logic on
+-	 * the cache eviction buffer.  DMA_NONCOHERENT is on by default for
+-	 * these parts. If it is fixed in the future, these dma_cache_inv will
+-	 * just be nothing more than empty macros. See io.h.
++	 * There is an erratum on certain Au1200/Au1550 revisions that could
++	 * result in "stale" data being DMA'ed. It has to do with the snoop
++	 * logic on the cache eviction buffer.  dma_default_coherent is set
++	 * to false on these parts.
+ 	 */
+-	dma_cache_wback_inv((unsigned long)buf, nbytes);
++	if (!dma_default_coherent)
++		dma_cache_wback_inv(KSEG0ADDR(buf), nbytes);
+ 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
+ 	wmb(); /* drain writebuffer */
+ 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
+ 	ctp->chan_ptr->ddma_dbell = 0;
++	wmb(); /* force doorbell write out to dma engine */
  
- static void
+ 	/* Get next descriptor pointer. */
+ 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
+@@ -685,17 +687,18 @@ u32 au1xxx_dbdma_put_dest(u32 chanid, dma_addr_t buf, int nbytes, u32 flags)
+ 			  dp->dscr_source1, dp->dscr_dest0, dp->dscr_dest1);
+ #endif
+ 	/*
+-	 * There is an errata on the Au1200/Au1550 parts that could result in
+-	 * "stale" data being DMA'ed. It has to do with the snoop logic on the
+-	 * cache eviction buffer.  DMA_NONCOHERENT is on by default for these
+-	 * parts. If it is fixed in the future, these dma_cache_inv will just
+-	 * be nothing more than empty macros. See io.h.
++	 * There is an erratum on certain Au1200/Au1550 revisions that could
++	 * result in "stale" data being DMA'ed. It has to do with the snoop
++	 * logic on the cache eviction buffer.  dma_default_coherent is set
++	 * to false on these parts.
+ 	 */
+-	dma_cache_inv((unsigned long)buf, nbytes);
++	if (!dma_default_coherent)
++		dma_cache_inv(KSEG0ADDR(buf), nbytes);
+ 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
+ 	wmb(); /* drain writebuffer */
+ 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
+ 	ctp->chan_ptr->ddma_dbell = 0;
++	wmb(); /* force doorbell write out to dma engine */
+ 
+ 	/* Get next descriptor pointer. */
+ 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
 -- 
 2.39.2
 
