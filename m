@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2736C123
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79446C433C0;
-	Mon, 19 Jun 2023 11:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AB5A94D
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC66C433C0;
+	Mon, 19 Jun 2023 11:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172427;
-	bh=HS1cTY3VVhtPUJC+ppQf1KbW49mLOBSFk4Xl5dTrVEc=;
+	s=korg; t=1687172430;
+	bh=dQ0HxSnJfNGCquyFoKv00UWmKtFyIrU/8rPr5MrLuiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+LeFZus3bljrN8A0aENcqUK8OFzKFedViFAzgWlMM+Xung5QDCV+T5nLgUxIAFy1
-	 XPzENjht3tTRy8/pnIXy3/Yf0hwvl9lE44B+lBEAEBAMErR+5INdL8hi7BzhyG1Iku
-	 hQ2gbAmUUioLMY0i3TJ2t5Um0vqc1Rohw+4Io5Zk=
+	b=ahCniji7R3xe3gNeevswzIsT1DkAF37NSMIKxJt56S1yZXF6sDNOMnRb69uB9Z+2G
+	 aku3aug98iBOL61N2cVoSnzEvMDlWPrJyrUEzMUO7fR9UqOQlEAM579cmRV7Qwd004
+	 Kbk+9+07gsCYEtx51uYYZKHsmdrGnFP2OZrjeyKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Guillaume Nault <gnault@redhat.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/107] net: enetc: correct the indexes of highest and 2nd highest TCs
-Date: Mon, 19 Jun 2023 12:30:49 +0200
-Message-ID: <20230619102144.571666223@linuxfoundation.org>
+Subject: [PATCH 5.15 066/107] ping6: Fix send to link-local addresses with VRF.
+Date: Mon, 19 Jun 2023 12:30:50 +0200
+Message-ID: <20230619102144.613868341@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -37,60 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 21225873be1472b7c59ed3650396af0e40578112 ]
+[ Upstream commit 91ffd1bae1dafbb9e34b46813f5b058581d9144d ]
 
-For ENETC hardware, the TCs are numbered from 0 to N-1, where N
-is the number of TCs. Numerically higher TC has higher priority.
-It's obvious that the highest priority TC index should be N-1 and
-the 2nd highest priority TC index should be N-2.
+Ping sockets can't send packets when they're bound to a VRF master
+device and the output interface is set to a slave device.
 
-However, the previous logic uses netdev_get_prio_tc_map() to get
-the indexes of highest priority and 2nd highest priority TCs, it
-does not make sense and is incorrect to give a "tc" argument to
-netdev_get_prio_tc_map(). So the driver may get the wrong indexes
-of the two highest priotiry TCs which would lead to failed to set
-the CBS for the two highest priotiry TCs.
+For example, when net.ipv4.ping_group_range is properly set, so that
+ping6 can use ping sockets, the following kind of commands fails:
+  $ ip vrf exec red ping6 fe80::854:e7ff:fe88:4bf1%eth1
 
-e.g.
-$ tc qdisc add dev eno0 parent root handle 100: mqprio num_tc 6 \
-	map 0 0 1 1 2 3 4 5 queues 1@0 1@1 1@2 1@3 2@4 2@6 hw 1
-$ tc qdisc replace dev eno0 parent 100:6 cbs idleslope 100000 \
-	sendslope -900000 hicredit 12 locredit -113 offload 1
-$ Error: Specified device failed to setup cbs hardware offload.
-  ^^^^^
+What happens is that sk->sk_bound_dev_if is set to the VRF master
+device, but 'oif' is set to the real output device. Since both are set
+but different, ping_v6_sendmsg() sees their value as inconsistent and
+fails.
 
-In this example, the previous logic deems the indexes of the two
-highest priotiry TCs should be 3 and 2. Actually, the indexes are
-5 and 4, because the number of TCs is 6. So it would be failed to
-configure the CBS for the two highest priority TCs.
+Fix this by allowing 'oif' to be a slave device of ->sk_bound_dev_if.
 
-Fixes: c431047c4efe ("enetc: add support Credit Based Shaper(CBS) for hardware offload")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This fixes the following kselftest failure:
+  $ ./fcnal-test.sh -t ipv6_ping
+  [...]
+  TEST: ping out, vrf device+address bind - ns-B IPv6 LLA        [FAIL]
+
+Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Closes: https://lore.kernel.org/netdev/b6191f90-ffca-dbca-7d06-88a9788def9c@alu.unizg.hr/
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Fixes: 5e457896986e ("net: ipv6: Fix ping to link-local addresses.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/6c8b53108816a8d0d5705ae37bdc5a8322b5e3d9.1686153846.git.gnault@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_qos.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/ping.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_qos.c b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-index 4e9cb1deaf810..c348b6fb0e6f9 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-@@ -197,8 +197,8 @@ int enetc_setup_tc_cbs(struct net_device *ndev, void *type_data)
- 	int bw_sum = 0;
- 	u8 bw;
+diff --git a/net/ipv6/ping.c b/net/ipv6/ping.c
+index 6ac88fe24a8e0..7fab29f3ce6e8 100644
+--- a/net/ipv6/ping.c
++++ b/net/ipv6/ping.c
+@@ -96,7 +96,8 @@ static int ping_v6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	addr_type = ipv6_addr_type(daddr);
+ 	if ((__ipv6_addr_needs_scope_id(addr_type) && !oif) ||
+ 	    (addr_type & IPV6_ADDR_MAPPED) ||
+-	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if))
++	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if &&
++	     l3mdev_master_ifindex_by_index(sock_net(sk), oif) != sk->sk_bound_dev_if))
+ 		return -EINVAL;
  
--	prio_top = netdev_get_prio_tc_map(ndev, tc_nums - 1);
--	prio_next = netdev_get_prio_tc_map(ndev, tc_nums - 2);
-+	prio_top = tc_nums - 1;
-+	prio_next = tc_nums - 2;
- 
- 	/* Support highest prio and second prio tc in cbs mode */
- 	if (tc != prio_top && tc != prio_next)
+ 	/* TODO: use ip6_datagram_send_ctl to get options from cmsg */
 -- 
 2.39.2
 
