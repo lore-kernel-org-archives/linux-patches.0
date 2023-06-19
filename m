@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6511096D
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738AAC433C0;
-	Mon, 19 Jun 2023 10:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AD610944
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDDDC433C0;
+	Mon, 19 Jun 2023 10:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170893;
-	bh=sH9HVvYilV22jYiC/xnmtGRFRNsQRkB7+KgOuE49w9s=;
+	s=korg; t=1687170896;
+	bh=GED2HBY6UQCZUAiGeL7NirtnGAhZgtcOYzsnYKjJ148=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r07aRpL81FSjmLRA3ABUq2068mrLb2/oeB4OqrEU6BQ8ELglDju+axmTsvExMxzba
-	 BwLBxed7FFW/HRaUgiv/y0tb6ZmNHjD+4pmbIvqySANG7rdCwu4NSrP8TmKBmHAxkr
-	 Hh+whek/P9bv0QZArLt5xAi2fufSI2bTl/BzkxX4=
+	b=h07j5ycFT/lFa9Y0fyjfi8CyQ3hmilCEj/W+rFjK7PMSaZ+gzP7l5l4dvdNJ09xZK
+	 MXYzf/qBZMN7LUUO5BKjP9N71eIfY3gVYY7ZmXyBlZZC+mDpjfifP3eqS0r9TCAJYN
+	 jcnV+mIPAXEmM54aaEDks92uTg/gx7J6wMwwMlyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.3 074/187] dm thin: fix issue_discard to pass GFP_NOIO to __blkdev_issue_discard
-Date: Mon, 19 Jun 2023 12:28:12 +0200
-Message-ID: <20230619102201.214134860@linuxfoundation.org>
+	Jose Abreu <Jose.Abreu@synopsys.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.3 075/187] net: ethernet: stmicro: stmmac: fix possible memory leak in __stmmac_open
+Date: Mon, 19 Jun 2023 12:28:13 +0200
+Message-ID: <20230619102201.256817437@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -33,39 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 722d90822321497e2837cfc9000202e256e6b32f upstream.
+commit 30134b7c47bd28fdb4db4d12aef824e0579cfee4 upstream.
 
-issue_discard() passes GFP_NOWAIT to __blkdev_issue_discard() despite
-its code assuming bio_alloc() always succeeds.
+Fix a possible memory leak in __stmmac_open when stmmac_init_phy fails.
+It's also needed to free everything allocated by stmmac_setup_dma_desc
+and not just the dma_conf struct.
 
-Commit 3dba53a958a75 ("dm thin: use __blkdev_issue_discard for async
-discard support") clearly shows where things went bad:
+Drop free_dma_desc_resources from __stmmac_open and correctly call
+free_dma_desc_resources on each user of __stmmac_open on error.
 
-Before commit 3dba53a958a75, dm-thin.c's open-coded
-__blkdev_issue_discard_async() properly handled using GFP_NOWAIT.
-Unfortunately __blkdev_issue_discard() doesn't and it was missed
-during review.
-
+Reported-by: Jose Abreu <Jose.Abreu@synopsys.com>
+Fixes: ba39b344e924 ("net: ethernet: stmicro: stmmac: generate stmmac dma conf before open")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Jose Abreu <Jose.Abreu@synopsys.com>
+Link: https://lore.kernel.org/r/20230614091714.15912-1-ansuelsmth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -399,8 +399,7 @@ static int issue_discard(struct discard_
- 	sector_t s = block_to_sectors(tc->pool, data_b);
- 	sector_t len = block_to_sectors(tc->pool, data_e - data_b);
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3867,7 +3867,6 @@ irq_error:
  
--	return __blkdev_issue_discard(tc->pool_dev->bdev, s, len, GFP_NOWAIT,
--				      &op->bio);
-+	return __blkdev_issue_discard(tc->pool_dev->bdev, s, len, GFP_NOIO, &op->bio);
+ 	stmmac_hw_teardown(dev);
+ init_error:
+-	free_dma_desc_resources(priv, &priv->dma_conf);
+ 	phylink_disconnect_phy(priv->phylink);
+ init_phy_error:
+ 	pm_runtime_put(priv->device);
+@@ -3885,6 +3884,9 @@ static int stmmac_open(struct net_device
+ 		return PTR_ERR(dma_conf);
+ 
+ 	ret = __stmmac_open(dev, dma_conf);
++	if (ret)
++		free_dma_desc_resources(priv, dma_conf);
++
+ 	kfree(dma_conf);
+ 	return ret;
  }
+@@ -5609,12 +5611,15 @@ static int stmmac_change_mtu(struct net_
+ 		stmmac_release(dev);
  
- static void end_discard(struct discard_op *op, int r)
+ 		ret = __stmmac_open(dev, dma_conf);
+-		kfree(dma_conf);
+ 		if (ret) {
++			free_dma_desc_resources(priv, dma_conf);
++			kfree(dma_conf);
+ 			netdev_err(priv->dev, "failed reopening the interface after MTU change\n");
+ 			return ret;
+ 		}
+ 
++		kfree(dma_conf);
++
+ 		stmmac_set_rx_mode(dev);
+ 	}
+ 
 
 
