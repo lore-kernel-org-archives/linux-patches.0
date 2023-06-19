@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421E5BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DC9C433C8;
-	Mon, 19 Jun 2023 10:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22F4BE56
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6862CC433C9;
+	Mon, 19 Jun 2023 10:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171867;
-	bh=p/IgxmZZFrxBdPYVbroxVgHz0FMQYuzCL/FQBFsDPeg=;
+	s=korg; t=1687171869;
+	bh=2iyR46J3bnTuJfcS0K0KF/ZoJeCGnsxPfGjeHFb+Ahg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+Zl3lCbKG4KZJ2AO4cTnsTv3geed+COseiDkWoYc/ym4dma5yj2Ju40YO6LSPi1n
-	 xryNIuoNbmQvAFCYlcJqY2hAR0uZSXl8+X7rgXqd84KpQpwW1CKS/AmSd0oOTMcsth
-	 L9eSgmBL+o2O/svXzwrQdBuZbPtvlhg8nLPXV5xU=
+	b=i2UDrIGjJyCoZmEkqY2ykN2uJpU6GfJG31dPPZKcukenWrZR4HuJ9hAw0WVMQ47wO
+	 La6N80Cj8bK72wEDL2NMK/Lb1ds1MCEZOjl6EPGgdD/ZaTqzIC6Uh26xl/H3eemwhk
+	 JNVhiGba/5ESSZA5eFi5813v2moZRyP5IIGjIf1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	Juergen Gross <jgross@suse.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 19/64] xen/blkfront: Only check REQ_FUA for writes
-Date: Mon, 19 Jun 2023 12:30:15 +0200
-Message-ID: <20230619102133.863733224@linuxfoundation.org>
+Subject: [PATCH 5.4 02/64] KEYS: asymmetric: Copy sig and digest in public_key_verify_signature()
+Date: Mon, 19 Jun 2023 12:29:58 +0200
+Message-ID: <20230619102132.934361819@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -35,43 +37,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit b6ebaa8100090092aa602530d7e8316816d0c98d ]
+[ Upstream commit c3d03e8e35e005e1a614e51bb59053eeb5857f76 ]
 
-The existing code silently converts read operations with the
-REQ_FUA bit set into write-barrier operations. This results in data
-loss as the backend scribbles zeroes over the data instead of returning
-it.
+Commit ac4e97abce9b8 ("scatterlist: sg_set_buf() argument must be in linear
+mapping") checks that both the signature and the digest reside in the
+linear mapping area.
 
-While the REQ_FUA bit doesn't make sense on a read operation, at least
-one well-known out-of-tree kernel module does set it and since it
-results in data loss, let's be safe here and only look at REQ_FUA for
-writes.
+However, more recently commit ba14a194a434c ("fork: Add generic vmalloced
+stack support") made it possible to move the stack in the vmalloc area,
+which is not contiguous, and thus not suitable for sg_set_buf() which needs
+adjacent pages.
 
-Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20230426164005.2213139-1-ross.lagerwall@citrix.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Always make a copy of the signature and digest in the same buffer used to
+store the key and its parameters, and pass them to sg_init_one(). Prefer it
+to conditionally doing the copy if necessary, to keep the code simple. The
+buffer allocated with kmalloc() is in the linear mapping area.
+
+Cc: stable@vger.kernel.org # 4.9.x
+Fixes: ba14a194a434 ("fork: Add generic vmalloced stack support")
+Link: https://lore.kernel.org/linux-integrity/Y4pIpxbjBdajymBJ@sol.localdomain/
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Tested-by: Stefan Berger <stefanb@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/xen-blkfront.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ crypto/asymmetric_keys/public_key.c | 36 ++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index d0538c03f0332..da67621ebc212 100644
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -779,7 +779,8 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
- 		ring_req->u.rw.handle = info->handle;
- 		ring_req->operation = rq_data_dir(req) ?
- 			BLKIF_OP_WRITE : BLKIF_OP_READ;
--		if (req_op(req) == REQ_OP_FLUSH || req->cmd_flags & REQ_FUA) {
-+		if (req_op(req) == REQ_OP_FLUSH ||
-+		    (req_op(req) == REQ_OP_WRITE && (req->cmd_flags & REQ_FUA))) {
- 			/*
- 			 * Ideally we can do an unordered flush-to-disk.
- 			 * In case the backend onlysupports barriers, use that.
+diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys/public_key.c
+index e5fae4e838c06..2d57b0b3f9a4a 100644
+--- a/crypto/asymmetric_keys/public_key.c
++++ b/crypto/asymmetric_keys/public_key.c
+@@ -255,9 +255,10 @@ int public_key_verify_signature(const struct public_key *pkey,
+ 	struct crypto_wait cwait;
+ 	struct crypto_akcipher *tfm;
+ 	struct akcipher_request *req;
+-	struct scatterlist src_sg[2];
++	struct scatterlist src_sg;
+ 	char alg_name[CRYPTO_MAX_ALG_NAME];
+-	char *key, *ptr;
++	char *buf, *ptr;
++	size_t buf_len;
+ 	int ret;
+ 
+ 	pr_devel("==>%s()\n", __func__);
+@@ -281,28 +282,31 @@ int public_key_verify_signature(const struct public_key *pkey,
+ 	if (!req)
+ 		goto error_free_tfm;
+ 
+-	key = kmalloc(pkey->keylen + sizeof(u32) * 2 + pkey->paramlen,
+-		      GFP_KERNEL);
+-	if (!key)
++	buf_len = max_t(size_t, pkey->keylen + sizeof(u32) * 2 + pkey->paramlen,
++			sig->s_size + sig->digest_size);
++
++	buf = kmalloc(buf_len, GFP_KERNEL);
++	if (!buf)
+ 		goto error_free_req;
+ 
+-	memcpy(key, pkey->key, pkey->keylen);
+-	ptr = key + pkey->keylen;
++	memcpy(buf, pkey->key, pkey->keylen);
++	ptr = buf + pkey->keylen;
+ 	ptr = pkey_pack_u32(ptr, pkey->algo);
+ 	ptr = pkey_pack_u32(ptr, pkey->paramlen);
+ 	memcpy(ptr, pkey->params, pkey->paramlen);
+ 
+ 	if (pkey->key_is_private)
+-		ret = crypto_akcipher_set_priv_key(tfm, key, pkey->keylen);
++		ret = crypto_akcipher_set_priv_key(tfm, buf, pkey->keylen);
+ 	else
+-		ret = crypto_akcipher_set_pub_key(tfm, key, pkey->keylen);
++		ret = crypto_akcipher_set_pub_key(tfm, buf, pkey->keylen);
+ 	if (ret)
+-		goto error_free_key;
++		goto error_free_buf;
+ 
+-	sg_init_table(src_sg, 2);
+-	sg_set_buf(&src_sg[0], sig->s, sig->s_size);
+-	sg_set_buf(&src_sg[1], sig->digest, sig->digest_size);
+-	akcipher_request_set_crypt(req, src_sg, NULL, sig->s_size,
++	memcpy(buf, sig->s, sig->s_size);
++	memcpy(buf + sig->s_size, sig->digest, sig->digest_size);
++
++	sg_init_one(&src_sg, buf, sig->s_size + sig->digest_size);
++	akcipher_request_set_crypt(req, &src_sg, NULL, sig->s_size,
+ 				   sig->digest_size);
+ 	crypto_init_wait(&cwait);
+ 	akcipher_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG |
+@@ -310,8 +314,8 @@ int public_key_verify_signature(const struct public_key *pkey,
+ 				      crypto_req_done, &cwait);
+ 	ret = crypto_wait_req(crypto_akcipher_verify(req), &cwait);
+ 
+-error_free_key:
+-	kfree(key);
++error_free_buf:
++	kfree(buf);
+ error_free_req:
+ 	akcipher_request_free(req);
+ error_free_tfm:
 -- 
 2.39.2
 
