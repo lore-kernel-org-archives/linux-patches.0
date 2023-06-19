@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AF3BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B866C433C8;
-	Mon, 19 Jun 2023 10:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51D77497
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5F7C433C0;
+	Mon, 19 Jun 2023 10:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172199;
-	bh=O6RYYlVwXXYj/HuWmYtTzIP5NXx3z0ZGT25etE+QaYg=;
+	s=korg; t=1687172202;
+	bh=EKZylMj1LczZsez8Yj0cqowH/+6VPMXA/Kin/w/466k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdimsf6Ctz1q5rQdrc3ODcx2RYrmDAiO++thxEcdTrqG1ov1NTKBPh7JPxNSpI5P7
-	 gkCYBbOjr3nqOs+MIy5BRiewZbXNrSxtwmr6+o+7/s8b/OVulseZwyG7t4AkCdA/BI
-	 99JfpOVgKsxRr+rZZ03WvGK3uMvoHisWgFJy0Wnc=
+	b=E7EReSp6Mb8ytQoQuV6I1qPkW47uJC6NMYlMTxcbMGAjBB84TrTrZY97rndYxlZLj
+	 XKilCEB9yjZ0aAdSqm1fP/wTdq1e1yAGY59FP5Vabv2OntAWA9Yu0VsLIa6qrX9CmJ
+	 W6VJKGTUcdKHujCKkLpiTZwdmla/f94lvAeh89G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 73/89] afs: Fix vlserver probe RTT handling
-Date: Mon, 19 Jun 2023 12:31:01 +0200
-Message-ID: <20230619102141.586370780@linuxfoundation.org>
+	John Sperbeck <jsperbeck@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	"T.J. Mercier" <tjmercier@google.com>
+Subject: [PATCH 5.10 74/89] cgroup: always put cset in cgroup_css_set_put_fork
+Date: Mon, 19 Jun 2023 12:31:02 +0200
+Message-ID: <20230619102141.628803408@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -37,48 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: John Sperbeck <jsperbeck@google.com>
 
-[ Upstream commit ba00b190670809c1a89326d80de96d714f6004f2 ]
+commit 2bd110339288c18823dcace602b63b0d8627e520 upstream.
 
-In the same spirit as commit ca57f02295f1 ("afs: Fix fileserver probe
-RTT handling"), don't rule out using a vlserver just because there
-haven't been enough packets yet to calculate a real rtt.  Always set the
-server's probe rtt from the estimate provided by rxrpc_kernel_get_srtt,
-which is capped at 1 second.
+A successful call to cgroup_css_set_fork() will always have taken
+a ref on kargs->cset (regardless of CLONE_INTO_CGROUP), so always
+do a corresponding put in cgroup_css_set_put_fork().
 
-This could lead to EDESTADDRREQ errors when accessing a cell for the
-first time, even though the vl servers are known and have responded to a
-probe.
+Without this, a cset and its contained css structures will be
+leaked for some fork failures.  The following script reproduces
+the leak for a fork failure due to exceeding pids.max in the
+pids controller.  A similar thing can happen if we jump to the
+bad_fork_cancel_cgroup label in copy_process().
 
-Fixes: 1d4adfaf6574 ("rxrpc: Make rxrpc_kernel_get_srtt() indicate validity")
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: linux-afs@lists.infradead.org
-Link: http://lists.infradead.org/pipermail/linux-afs/2023-June/006746.html
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ -z "$1" ] && echo "Usage $0 pids-root" && exit 1
+PID_ROOT=$1
+CGROUP=$PID_ROOT/foo
+
+[ -e $CGROUP ] && rmdir -f $CGROUP
+mkdir $CGROUP
+echo 5 > $CGROUP/pids.max
+echo $$ > $CGROUP/cgroup.procs
+
+fork_bomb()
+{
+	set -e
+	for i in $(seq 10); do
+		/bin/sleep 3600 &
+	done
+}
+
+(fork_bomb) &
+wait
+echo $$ > $PID_ROOT/cgroup.procs
+kill $(cat $CGROUP/cgroup.procs)
+rmdir $CGROUP
+
+Fixes: ef2c41cf38a7 ("clone3: allow spawning processes into cgroups")
+Cc: stable@vger.kernel.org # v5.7+
+Signed-off-by: John Sperbeck <jsperbeck@google.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+[TJM: This backport accommodates the lack of cgroup_unlock]
+Signed-off-by: T.J. Mercier <tjmercier@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/vl_probe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/cgroup/cgroup.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/fs/afs/vl_probe.c b/fs/afs/vl_probe.c
-index d1c7068b4346f..58452b86e6727 100644
---- a/fs/afs/vl_probe.c
-+++ b/fs/afs/vl_probe.c
-@@ -115,8 +115,8 @@ void afs_vlserver_probe_result(struct afs_call *call)
- 		}
- 	}
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -6138,19 +6138,18 @@ err:
+ static void cgroup_css_set_put_fork(struct kernel_clone_args *kargs)
+ 	__releases(&cgroup_threadgroup_rwsem) __releases(&cgroup_mutex)
+ {
++	struct cgroup *cgrp = kargs->cgrp;
++	struct css_set *cset = kargs->cset;
++
+ 	cgroup_threadgroup_change_end(current);
  
--	if (rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us) &&
--	    rtt_us < server->probe.rtt) {
-+	rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us);
-+	if (rtt_us < server->probe.rtt) {
- 		server->probe.rtt = rtt_us;
- 		server->rtt = rtt_us;
- 		alist->preferred = index;
--- 
-2.39.2
-
+-	if (kargs->flags & CLONE_INTO_CGROUP) {
+-		struct cgroup *cgrp = kargs->cgrp;
+-		struct css_set *cset = kargs->cset;
++	if (cset) {
++		put_css_set(cset);
++		kargs->cset = NULL;
++	}
+ 
++	if (kargs->flags & CLONE_INTO_CGROUP) {
+ 		mutex_unlock(&cgroup_mutex);
+-
+-		if (cset) {
+-			put_css_set(cset);
+-			kargs->cset = NULL;
+-		}
+-
+ 		if (cgrp) {
+ 			cgroup_put(cgrp);
+ 			kargs->cgrp = NULL;
 
 
