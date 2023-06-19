@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78B7BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C050C433C8;
-	Mon, 19 Jun 2023 10:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C06BE56
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71BCEC43391;
+	Mon, 19 Jun 2023 10:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172108;
-	bh=LXvEoZ2EKOeYROGVXgzVgjzcEws1DTNge38RYFtnhoY=;
+	s=korg; t=1687172114;
+	bh=6eKAIVz6YFxnQV/yvmGwnBK0h+S1XelJoBQ+OSwHmuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o3RiBquANn5dsKUGHjOddV8PYMd2mTii5t5JkTjTxyjy/S7rC/hIjhAm7R99YW8LO
-	 eTFSm1r56ALeEH+QIQeGtlyFj2SCggqR5qMW7SlhwiOn6xE+wdPWHplzpeCveaSgnk
-	 AJkm1zkARdcv8YIYj+oC+SlB2o8zJq9X9D8ZDPdQ=
+	b=o6YvG2pB0Zh5DUwubjCi9Ps2LN9t5eP0/qwAEYDEdHxJlY1cHLsyaI3u7Pd7R6u7H
+	 YTLzU7yYKnweEzcHzM2AeAe8pQoyRxpkug+jxXWf9B7tGL07/lkEdf7XIBHI65nLtM
+	 Uf6kcRx521NCBapaDJHkUxpPS7iaMPFZsr9dcVTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 40/89] ALSA: hda/realtek: Add a quirk for Compaq N14JP6
-Date: Mon, 19 Jun 2023 12:30:28 +0200
-Message-ID: <20230619102140.105079149@linuxfoundation.org>
+	Jerry Meng <jerry-meng@foxmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 42/89] USB: serial: option: add Quectel EM061KGL series
+Date: Mon, 19 Jun 2023 12:30:30 +0200
+Message-ID: <20230619102140.205536806@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -34,30 +34,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Jerry Meng <jerry-meng@foxmail.com>
 
-commit a2a871483161014f1bcc4e9a04354b01aa77cedb upstream.
+commit f1832e2b5e498e258b090af3b065b85cf8cc5161 upstream.
 
-Add a quirk for Compaq N14JP6 to fixup ALC897 headset MIC no sound.
+Add support for Quectel EM061KGL series which are based on Qualcomm
+SDX12 chip:
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230609201058.523499-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+EM061KGL_LTA(0x2c7c / 0x0123): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+EM061KGL_LMS(0x2c7c / 0x0124): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+EM061KGL_LWW(0x2c7c / 0x6008): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+EM061KGL_LCN(0x2c7c / 0x6009): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+
+Above products use the exact same interface layout and
+option driver is for interfaces DIAG, NMEA and AT.
+
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  5 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=6008 Rev= 5.04
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM061K-GL
+S:  SerialNumber=f6fa08b6
+C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Jerry Meng <jerry-meng@foxmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11199,6 +11199,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x1b0a, 0x01b8, "ACER Veriton", ALC662_FIXUP_ACER_VERITON),
- 	SND_PCI_QUIRK(0x1b35, 0x1234, "CZC ET26", ALC662_FIXUP_CZC_ET26),
- 	SND_PCI_QUIRK(0x1b35, 0x2206, "CZC P10T", ALC662_FIXUP_CZC_P10T),
-+	SND_PCI_QUIRK(0x1c6c, 0x1239, "Compaq N14JP6-V2", ALC897_FIXUP_HP_HSMIC_VERB),
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -248,6 +248,8 @@ static void option_instat_callback(struc
+ #define QUECTEL_VENDOR_ID			0x2c7c
+ /* These Quectel products use Quectel's vendor ID */
+ #define QUECTEL_PRODUCT_EC21			0x0121
++#define QUECTEL_PRODUCT_EM061K_LTA		0x0123
++#define QUECTEL_PRODUCT_EM061K_LMS		0x0124
+ #define QUECTEL_PRODUCT_EC25			0x0125
+ #define QUECTEL_PRODUCT_EG91			0x0191
+ #define QUECTEL_PRODUCT_EG95			0x0195
+@@ -266,6 +268,8 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_RM520N			0x0801
+ #define QUECTEL_PRODUCT_EC200U			0x0901
+ #define QUECTEL_PRODUCT_EC200S_CN		0x6002
++#define QUECTEL_PRODUCT_EM061K_LWW		0x6008
++#define QUECTEL_PRODUCT_EM061K_LCN		0x6009
+ #define QUECTEL_PRODUCT_EC200T			0x6026
+ #define QUECTEL_PRODUCT_RM500K			0x7001
  
- #if 0
- 	/* Below is a quirk table taken from the old code.
+@@ -1189,6 +1193,18 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LMS, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LMS, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LMS, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LTA, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LTA, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LTA, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LWW, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LWW, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LWW, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM12, 0xff, 0xff, 0xff),
+ 	  .driver_info = RSVD(1) | RSVD(2) | RSVD(3) | RSVD(4) | NUMEP2 },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM12, 0xff, 0, 0) },
 
 
