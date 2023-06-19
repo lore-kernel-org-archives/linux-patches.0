@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBC91096A
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7732BC433C0;
-	Mon, 19 Jun 2023 10:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0C410961
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCCBC433C0;
+	Mon, 19 Jun 2023 10:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170843;
-	bh=yYRZOfSY4K/fBcSUl6kbFY/O8J+kUVfRISDeqiFaAuM=;
+	s=korg; t=1687170846;
+	bh=qEDMJvTUqh1NP1VW+lxt0xbWtMqxPBWzkFOtGDfpPzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wMImtDBbPWFwPO+jXqI0KrP7nsnl3tAgALWH+LSCIz7JqCl5HPTIxrnA5MPnjEYIZ
-	 mhtkIBojAnchu5Zybbrq//BI0TkMtwPw76rngMcIZ/qx3Gm2cOcJ+7151Fpf26j2Bu
-	 A2JcEFUQf2aqO0IG49lDl24dx/c7jOKjb8xq1YFw=
+	b=EpKveK6pTk3k6DSBp6hnlIEjptp9XZ84p8+aOnUAGUQtyP2YsiPD4taBldlKs5n9+
+	 yrsUJ/OgRXMz7zOEgow6Vzc17oZH05qDAsfCT4zSr9JEnt+Z20j2qqDMg7P6TgbiYL
+	 VyL8kW2czaX40imfUz7zjqoBN6Sc27aG3P6j4/YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+33494cd0df2ec2931851@syzkaller.appspotmail.com,
+	syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 055/187] nilfs2: fix possible out-of-bounds segment allocation in resize ioctl
-Date: Mon, 19 Jun 2023 12:27:53 +0200
-Message-ID: <20230619102200.327737863@linuxfoundation.org>
+Subject: [PATCH 6.3 056/187] nilfs2: reject devices with insufficient block count
+Date: Mon, 19 Jun 2023 12:27:54 +0200
+Message-ID: <20230619102200.386465627@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -37,60 +37,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit fee5eaecca86afa544355569b831c1f90f334b85 upstream.
+commit 92c5d1b860e9581d64baca76779576c0ab0d943d upstream.
 
-Syzbot reports that in its stress test for resize ioctl, the log writing
-function nilfs_segctor_do_construct hits a WARN_ON in
-nilfs_segctor_truncate_segments().
+The current sanity check for nilfs2 geometry information lacks checks for
+the number of segments stored in superblocks, so even for device images
+that have been destructively truncated or have an unusually high number of
+segments, the mount operation may succeed.
 
-It turned out that there is a problem with the current implementation of
-the resize ioctl, which changes the writable range on the device (the
-range of allocatable segments) at the end of the resize process.
+This causes out-of-bounds block I/O on file system block reads or log
+writes to the segments, the latter in particular causing
+"a_ops->writepages" to repeatedly fail, resulting in sync_inodes_sb() to
+hang.
 
-This order is necessary for file system expansion to avoid corrupting the
-superblock at trailing edge.  However, in the case of a file system
-shrink, if log writes occur after truncating out-of-bounds trailing
-segments and before the resize is complete, segments may be allocated from
-the truncated space.
+Fix this issue by checking the number of segments stored in the superblock
+and avoiding mounting devices that can cause out-of-bounds accesses.  To
+eliminate the possibility of overflow when calculating the number of
+blocks required for the device from the number of segments, this also adds
+a helper function to calculate the upper bound on the number of segments
+and inserts a check using it.
 
-The userspace resize tool was fine as it limits the range of allocatable
-segments before performing the resize, but it can run into this issue if
-the resize ioctl is called alone.
-
-Fix this issue by changing nilfs_sufile_resize() to update the range of
-allocatable segments immediately after successful truncation of segment
-space in case of file system shrink.
-
-Link: https://lkml.kernel.org/r/20230524094348.3784-1-konishi.ryusuke@gmail.com
-Fixes: 4e33f9eab07e ("nilfs2: implement resize ioctl")
+Link: https://lkml.kernel.org/r/20230526021332.3431-1-konishi.ryusuke@gmail.com
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+33494cd0df2ec2931851@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/0000000000005434c405fbbafdc5@google.com
+Reported-by: syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=7d50f1e54a12ba3aeae2
 Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/sufile.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/nilfs2/the_nilfs.c |   43 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/sufile.c
-+++ b/fs/nilfs2/sufile.c
-@@ -779,6 +779,15 @@ int nilfs_sufile_resize(struct inode *su
- 			goto out_header;
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -405,6 +405,18 @@ unsigned long nilfs_nrsvsegs(struct the_
+ 				  100));
+ }
  
- 		sui->ncleansegs -= nsegs - newnsegs;
++/**
++ * nilfs_max_segment_count - calculate the maximum number of segments
++ * @nilfs: nilfs object
++ */
++static u64 nilfs_max_segment_count(struct the_nilfs *nilfs)
++{
++	u64 max_count = U64_MAX;
 +
-+		/*
-+		 * If the sufile is successfully truncated, immediately adjust
-+		 * the segment allocation space while locking the semaphore
-+		 * "mi_sem" so that nilfs_sufile_alloc() never allocates
-+		 * segments in the truncated space.
-+		 */
-+		sui->allocmax = newnsegs - 1;
-+		sui->allocmin = 0;
++	do_div(max_count, nilfs->ns_blocks_per_segment);
++	return min_t(u64, max_count, ULONG_MAX);
++}
++
+ void nilfs_set_nsegments(struct the_nilfs *nilfs, unsigned long nsegs)
+ {
+ 	nilfs->ns_nsegments = nsegs;
+@@ -414,6 +426,8 @@ void nilfs_set_nsegments(struct the_nilf
+ static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
+ 				   struct nilfs_super_block *sbp)
+ {
++	u64 nsegments, nblocks;
++
+ 	if (le32_to_cpu(sbp->s_rev_level) < NILFS_MIN_SUPP_REV) {
+ 		nilfs_err(nilfs->ns_sb,
+ 			  "unsupported revision (superblock rev.=%d.%d, current rev.=%d.%d). Please check the version of mkfs.nilfs(2).",
+@@ -457,7 +471,34 @@ static int nilfs_store_disk_layout(struc
+ 		return -EINVAL;
  	}
  
- 	kaddr = kmap_atomic(header_bh->b_page);
+-	nilfs_set_nsegments(nilfs, le64_to_cpu(sbp->s_nsegments));
++	nsegments = le64_to_cpu(sbp->s_nsegments);
++	if (nsegments > nilfs_max_segment_count(nilfs)) {
++		nilfs_err(nilfs->ns_sb,
++			  "segment count %llu exceeds upper limit (%llu segments)",
++			  (unsigned long long)nsegments,
++			  (unsigned long long)nilfs_max_segment_count(nilfs));
++		return -EINVAL;
++	}
++
++	nblocks = sb_bdev_nr_blocks(nilfs->ns_sb);
++	if (nblocks) {
++		u64 min_block_count = nsegments * nilfs->ns_blocks_per_segment;
++		/*
++		 * To avoid failing to mount early device images without a
++		 * second superblock, exclude that block count from the
++		 * "min_block_count" calculation.
++		 */
++
++		if (nblocks < min_block_count) {
++			nilfs_err(nilfs->ns_sb,
++				  "total number of segment blocks %llu exceeds device size (%llu blocks)",
++				  (unsigned long long)min_block_count,
++				  (unsigned long long)nblocks);
++			return -EINVAL;
++		}
++	}
++
++	nilfs_set_nsegments(nilfs, nsegments);
+ 	nilfs->ns_crc_seed = le32_to_cpu(sbp->s_crc_seed);
+ 	return 0;
+ }
 
 
