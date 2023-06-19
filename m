@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88403C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF972C433C0;
-	Mon, 19 Jun 2023 10:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBCA3C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD70C433C0;
+	Mon, 19 Jun 2023 10:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171083;
-	bh=d05Mi+bVY9x/LoQAfBmUYpFURz9+W6YdgdHzqtK+fNM=;
+	s=korg; t=1687171085;
+	bh=SWa4oByh85E1LCcA10mSgHm/ktZQlryIIhNO7aw9NCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSJtIuBEFRTQeXnWqUvUI9ky8Z2LBF285NId1NLsUg6Yuj2+WtoxZ86n3JgLO5wrK
-	 2cE5NalFH+2ofRqxElWabDh94wuXLwAh4W5eNnTXgl/Lex0qUmHGYRAOzJfYhDQKbt
-	 eGAURPamdHn7yr6V7axD0I88uH9EGXbW6M1QB5Qk=
+	b=Gj71oShpzsKg6WcREKilA+d5kYuo2pwFIq4L84k99ofeo+dkWlTohDkFMikrJFez0
+	 mxrLtyQpqeM0ovjUc3b1jPTyeFe5NHTN5L0mC7sG5sCAGByv5kqED9KY67W3KMNe9a
+	 ZvB/OGULeS4HnNwiTme5/Owt3x3y6HC0gmZgiIhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 141/187] RDMA/cma: Always set static rate to 0 for RoCE
-Date: Mon, 19 Jun 2023 12:29:19 +0200
-Message-ID: <20230619102204.470012583@linuxfoundation.org>
+Subject: [PATCH 6.3 142/187] IB/uverbs: Fix to consider event queue closing also upon non-blocking mode
+Date: Mon, 19 Jun 2023 12:29:20 +0200
+Message-ID: <20230619102204.521538165@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,82 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 58030c76cce473b6cfd630bbecb97215def0dff8 ]
+[ Upstream commit 62fab312fa1683e812e605db20d4f22de3e3fb2f ]
 
-Set static rate to 0 as it should be discovered by path query and
-has no meaning for RoCE.
-This also avoid of using the rtnl lock and ethtool API, which is
-a bottleneck when try to setup many rdma-cm connections at the same
-time, especially with multiple processes.
+Fix ib_uverbs_event_read() to consider event queue closing also upon
+non-blocking mode.
 
-Fixes: 3c86aa70bf67 ("RDMA/cm: Add RDMA CM support for IBoE devices")
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://lore.kernel.org/r/f72a4f8b667b803aee9fa794069f61afb5839ce4.1685960567.git.leon@kernel.org
+Once the queue is closed (e.g. hot-plug flow) all the existing events
+are cleaned-up as part of ib_uverbs_free_event_queue().
+
+An application that uses the non-blocking FD mode should get -EIO in
+that case to let it knows that the device was removed already.
+
+Otherwise, it can loose the indication that the device was removed and
+won't recover.
+
+As part of that, refactor the code to have a single flow with regards to
+'is_closed' for both blocking and non-blocking modes.
+
+Fixes: 14e23bd6d221 ("RDMA/core: Fix locking in ib_uverbs_event_read")
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://lore.kernel.org/r/97b00116a1e1e13f8dc4ec38a5ea81cf8c030210.1685960567.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c |  4 ++--
- include/rdma/ib_addr.h        | 23 -----------------------
- 2 files changed, 2 insertions(+), 25 deletions(-)
+ drivers/infiniband/core/uverbs_main.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index 6b9563d4f23c9..033df909b92e1 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -3297,7 +3297,7 @@ static int cma_resolve_iboe_route(struct rdma_id_private *id_priv)
- 	route->path_rec->traffic_class = tos;
- 	route->path_rec->mtu = iboe_get_mtu(ndev->mtu);
- 	route->path_rec->rate_selector = IB_SA_EQ;
--	route->path_rec->rate = iboe_get_rate(ndev);
-+	route->path_rec->rate = IB_RATE_PORT_CURRENT;
- 	dev_put(ndev);
- 	route->path_rec->packet_life_time_selector = IB_SA_EQ;
- 	/* In case ACK timeout is set, use this value to calculate
-@@ -4966,7 +4966,7 @@ static int cma_iboe_join_multicast(struct rdma_id_private *id_priv,
- 	if (!ndev)
- 		return -ENODEV;
+diff --git a/drivers/infiniband/core/uverbs_main.c b/drivers/infiniband/core/uverbs_main.c
+index bdb179a09d77c..3cd4b195007b8 100644
+--- a/drivers/infiniband/core/uverbs_main.c
++++ b/drivers/infiniband/core/uverbs_main.c
+@@ -222,8 +222,12 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
+ 	spin_lock_irq(&ev_queue->lock);
  
--	ib.rec.rate = iboe_get_rate(ndev);
-+	ib.rec.rate = IB_RATE_PORT_CURRENT;
- 	ib.rec.hop_limit = 1;
- 	ib.rec.mtu = iboe_get_mtu(ndev->mtu);
+ 	while (list_empty(&ev_queue->event_list)) {
+-		spin_unlock_irq(&ev_queue->lock);
++		if (ev_queue->is_closed) {
++			spin_unlock_irq(&ev_queue->lock);
++			return -EIO;
++		}
  
-diff --git a/include/rdma/ib_addr.h b/include/rdma/ib_addr.h
-index d808dc3d239e8..811a0f11d0dbe 100644
---- a/include/rdma/ib_addr.h
-+++ b/include/rdma/ib_addr.h
-@@ -194,29 +194,6 @@ static inline enum ib_mtu iboe_get_mtu(int mtu)
- 		return 0;
- }
++		spin_unlock_irq(&ev_queue->lock);
+ 		if (filp->f_flags & O_NONBLOCK)
+ 			return -EAGAIN;
  
--static inline int iboe_get_rate(struct net_device *dev)
--{
--	struct ethtool_link_ksettings cmd;
--	int err;
+@@ -233,12 +237,6 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
+ 			return -ERESTARTSYS;
+ 
+ 		spin_lock_irq(&ev_queue->lock);
 -
--	rtnl_lock();
--	err = __ethtool_get_link_ksettings(dev, &cmd);
--	rtnl_unlock();
--	if (err)
--		return IB_RATE_PORT_CURRENT;
--
--	if (cmd.base.speed >= 40000)
--		return IB_RATE_40_GBPS;
--	else if (cmd.base.speed >= 30000)
--		return IB_RATE_30_GBPS;
--	else if (cmd.base.speed >= 20000)
--		return IB_RATE_20_GBPS;
--	else if (cmd.base.speed >= 10000)
--		return IB_RATE_10_GBPS;
--	else
--		return IB_RATE_PORT_CURRENT;
--}
--
- static inline int rdma_link_local_addr(struct in6_addr *addr)
- {
- 	if (addr->s6_addr32[0] == htonl(0xfe800000) &&
+-		/* If device was disassociated and no event exists set an error */
+-		if (list_empty(&ev_queue->event_list) && ev_queue->is_closed) {
+-			spin_unlock_irq(&ev_queue->lock);
+-			return -EIO;
+-		}
+ 	}
+ 
+ 	event = list_entry(ev_queue->event_list.next, struct ib_uverbs_event, list);
 -- 
 2.39.2
 
