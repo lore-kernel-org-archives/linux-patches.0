@@ -1,27 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6626E5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E027CC433C0;
-	Mon, 19 Jun 2023 10:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7125381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E587C433C8;
+	Mon, 19 Jun 2023 10:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171567;
-	bh=e+qVfnpZcJy3ZLlXu79qoo7XmRAhWpFQIPxZz8yvVkk=;
+	s=korg; t=1687171569;
+	bh=O7sfz/FjLi44YVZZQ8DKN2aXuFSgVriEsjbmUJBE8Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGWEF0IGiBy/dUphfoPIqcjT285ur7oPmysD1sOmTr6irxtzgJECGMX2IC8dQQJsy
-	 jKfL+HRVzdJ90kJSkWRMcOLUPT4P9OBt4mMB5mrm4feyjPt6pCi8T7kfb/1ASuBeYy
-	 sPX856vMqVFWt04KkEasdOy/WUSU/XLUsXSMQHNw=
+	b=kviRI+kqf3xV8Fx461AZNVTGco9USodbg8t5Y0AKYQgXQhPHIxuPKRYlMT1QSVBzw
+	 1onuMi6ziZD2Ro6AJHJ9iG8yizhYLYM3yqYkJ3HpNhy1ctSteaAkZyHYhHeeApHgkx
+	 7Pe8vqPcwowWY10wC2sBldcoYHWcNBzZXZ/tltEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koba Ko <koba.ko@canonical.com>,
-	Yehezkel Bernat <YehezkelShB@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 077/166] thunderbolt: Do not touch CL state configuration during discovery
-Date: Mon, 19 Jun 2023 12:29:14 +0200
-Message-ID: <20230619102158.520578281@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Ross Zwisler <zwisler@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Philipp Rudo <prudo@redhat.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Baoquan He <bhe@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Dave Young <dyoung@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Simon Horman <horms@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Tom Rix <trix@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 055/166] kexec: support purgatories with .text.hot sections
+Date: Mon, 19 Jun 2023 12:28:52 +0200
+Message-ID: <20230619102157.416620169@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,69 +56,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 3fe95742af29b8b4eccab2ba94bc521805c6e10c upstream.
+commit 8652d44f466ad5772e7d1756e9457046189b0dfc upstream.
 
-If the boot firmware has already established tunnels, especially ones
-that have special requirements from the link such as DisplayPort, we
-should not blindly enable CL states (nor change the TMU configuration).
-Otherwise the existing tunnels may not work as expected.
+Patch series "kexec: Fix kexec_file_load for llvm16 with PGO", v7.
 
-For this reason, skip the CL state enabling when we go over the existing
-topology. This will also keep the TMU settings untouched because we do
-not change the TMU configuration when CL states are not enabled.
+When upreving llvm I realised that kexec stopped working on my test
+platform.
 
-Reported-by: Koba Ko <koba.ko@canonical.com>
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7831
-Cc: stable@vger.kernel.org # v6.0+
-Acked-By: Yehezkel Bernat <YehezkelShB@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+The reason seems to be that due to PGO there are multiple .text sections
+on the purgatory, and kexec does not supports that.
+
+
+This patch (of 4):
+
+Clang16 links the purgatory text in two sections when PGO is in use:
+
+  [ 1] .text             PROGBITS         0000000000000000  00000040
+       00000000000011a1  0000000000000000  AX       0     0     16
+  [ 2] .rela.text        RELA             0000000000000000  00003498
+       0000000000000648  0000000000000018   I      24     1     8
+  ...
+  [17] .text.hot.        PROGBITS         0000000000000000  00003220
+       000000000000020b  0000000000000000  AX       0     0     1
+  [18] .rela.text.hot.   RELA             0000000000000000  00004428
+       0000000000000078  0000000000000018   I      24    17     8
+
+And both of them have their range [sh_addr ... sh_addr+sh_size] on the
+area pointed by `e_entry`.
+
+This causes that image->start is calculated twice, once for .text and
+another time for .text.hot. The second calculation leaves image->start
+in a random location.
+
+Because of this, the system crashes immediately after:
+
+kexec_core: Starting new kernel
+
+Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-0-b05c520b7296@chromium.org
+Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-1-b05c520b7296@chromium.org
+Fixes: 930457057abe ("kernel/kexec_file.c: split up __kexec_load_puragory")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Ross Zwisler <zwisler@google.com>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Philipp Rudo <prudo@redhat.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Tom Rix <trix@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ kernel/kexec_file.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -607,6 +607,7 @@ static void tb_scan_port(struct tb_port
- {
- 	struct tb_cm *tcm = tb_priv(port->sw->tb);
- 	struct tb_port *upstream_port;
-+	bool discovery = false;
- 	struct tb_switch *sw;
- 	int ret;
+--- a/kernel/kexec_file.c
++++ b/kernel/kexec_file.c
+@@ -898,10 +898,22 @@ static int kexec_purgatory_setup_sechdrs
+ 		}
  
-@@ -674,8 +675,10 @@ static void tb_scan_port(struct tb_port
- 	 * tunnels and know which switches were authorized already by
- 	 * the boot firmware.
- 	 */
--	if (!tcm->hotplug_active)
-+	if (!tcm->hotplug_active) {
- 		dev_set_uevent_suppress(&sw->dev, true);
-+		discovery = true;
-+	}
- 
- 	/*
- 	 * At the moment Thunderbolt 2 and beyond (devices with LC) we
-@@ -705,10 +708,14 @@ static void tb_scan_port(struct tb_port
- 	 * CL0s and CL1 are enabled and supported together.
- 	 * Silently ignore CLx enabling in case CLx is not supported.
- 	 */
--	ret = tb_switch_enable_clx(sw, TB_CL1);
--	if (ret && ret != -EOPNOTSUPP)
--		tb_sw_warn(sw, "failed to enable %s on upstream port\n",
--			   tb_switch_clx_name(TB_CL1));
-+	if (discovery) {
-+		tb_sw_dbg(sw, "discovery, not touching CL states\n");
-+	} else {
-+		ret = tb_switch_enable_clx(sw, TB_CL1);
-+		if (ret && ret != -EOPNOTSUPP)
-+			tb_sw_warn(sw, "failed to enable %s on upstream port\n",
-+				   tb_switch_clx_name(TB_CL1));
-+	}
- 
- 	if (tb_switch_is_clx_enabled(sw, TB_CL1))
- 		/*
+ 		offset = ALIGN(offset, align);
++
++		/*
++		 * Check if the segment contains the entry point, if so,
++		 * calculate the value of image->start based on it.
++		 * If the compiler has produced more than one .text section
++		 * (Eg: .text.hot), they are generally after the main .text
++		 * section, and they shall not be used to calculate
++		 * image->start. So do not re-calculate image->start if it
++		 * is not set to the initial value, and warn the user so they
++		 * have a chance to fix their purgatory's linker script.
++		 */
+ 		if (sechdrs[i].sh_flags & SHF_EXECINSTR &&
+ 		    pi->ehdr->e_entry >= sechdrs[i].sh_addr &&
+ 		    pi->ehdr->e_entry < (sechdrs[i].sh_addr
+-					 + sechdrs[i].sh_size)) {
++					 + sechdrs[i].sh_size) &&
++		    !WARN_ON(kbuf->image->start != pi->ehdr->e_entry)) {
+ 			kbuf->image->start -= sechdrs[i].sh_addr;
+ 			kbuf->image->start += kbuf->mem + offset;
+ 		}
 
 
