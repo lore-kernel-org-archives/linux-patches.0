@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A135CD2E6
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:29:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2046BC433C9;
-	Mon, 19 Jun 2023 10:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F88AD2E6
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:29:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F72C433C8;
+	Mon, 19 Jun 2023 10:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170579;
-	bh=9QJv9bL0oO5x7SJ7dyVSeWu9ze8ewPSikeZc4ORUk6s=;
+	s=korg; t=1687170582;
+	bh=HWQrXfVTJKRuGlPG2qNjnKNjM14Plwp30UXncrri8Zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzN4AT5DrKBh9enKhP66FUwGs6kGUC31hNok+jBkalUCNlJviBrUJ+1ft4j5NE977
-	 WBsrQr5qvJ/kZ51XjyS7UClu4PuxQVJFDJhsH428FjMdouLls0xmD3Ec3gtZbYP1Yq
-	 Vn4CPumXsoXcdQZqg3H+22M/dX86UfC/2HBrOSOo=
+	b=sg0MJeLpCEy7ho7INnaVDGzPyTdg5niFJyuo/eCfm0WzOn0v1vMyB7nWii+1m8OAA
+	 XgYLGLGAwHCXckAP48A8TU6tFHj2HfuxYvCK6qQLjDNwkWFko3UxtenfYFhzWFcemp
+	 GoUTTtW16QagnaTl4cn32yDbdGdeTrrWRuyt10Ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+b0a35a5c1f7e846d3b09@syzkaller.appspotmail.com,
+	syzbot+33494cd0df2ec2931851@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 13/32] nilfs2: fix incomplete buffer cleanup in nilfs_btnode_abort_change_key()
-Date: Mon, 19 Jun 2023 12:29:01 +0200
-Message-ID: <20230619102128.214390233@linuxfoundation.org>
+Subject: [PATCH 4.14 14/32] nilfs2: fix possible out-of-bounds segment allocation in resize ioctl
+Date: Mon, 19 Jun 2023 12:29:02 +0200
+Message-ID: <20230619102128.268456204@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
 References: <20230619102127.461443957@linuxfoundation.org>
@@ -37,51 +37,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 2f012f2baca140c488e43d27a374029c1e59098d upstream.
+commit fee5eaecca86afa544355569b831c1f90f334b85 upstream.
 
-A syzbot fault injection test reported that nilfs_btnode_create_block, a
-helper function that allocates a new node block for b-trees, causes a
-kernel BUG for disk images where the file system block size is smaller
-than the page size.
+Syzbot reports that in its stress test for resize ioctl, the log writing
+function nilfs_segctor_do_construct hits a WARN_ON in
+nilfs_segctor_truncate_segments().
 
-This was due to unexpected flags on the newly allocated buffer head, and
-it turned out to be because the buffer flags were not cleared by
-nilfs_btnode_abort_change_key() after an error occurred during a b-tree
-update operation and the buffer was later reused in that state.
+It turned out that there is a problem with the current implementation of
+the resize ioctl, which changes the writable range on the device (the
+range of allocatable segments) at the end of the resize process.
 
-Fix this issue by using nilfs_btnode_delete() to abandon the unused
-preallocated buffer in nilfs_btnode_abort_change_key().
+This order is necessary for file system expansion to avoid corrupting the
+superblock at trailing edge.  However, in the case of a file system
+shrink, if log writes occur after truncating out-of-bounds trailing
+segments and before the resize is complete, segments may be allocated from
+the truncated space.
 
-Link: https://lkml.kernel.org/r/20230513102428.10223-1-konishi.ryusuke@gmail.com
+The userspace resize tool was fine as it limits the range of allocatable
+segments before performing the resize, but it can run into this issue if
+the resize ioctl is called alone.
+
+Fix this issue by changing nilfs_sufile_resize() to update the range of
+allocatable segments immediately after successful truncation of segment
+space in case of file system shrink.
+
+Link: https://lkml.kernel.org/r/20230524094348.3784-1-konishi.ryusuke@gmail.com
+Fixes: 4e33f9eab07e ("nilfs2: implement resize ioctl")
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+b0a35a5c1f7e846d3b09@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/000000000000d1d6c205ebc4d512@google.com
+Reported-by: syzbot+33494cd0df2ec2931851@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/0000000000005434c405fbbafdc5@google.com
 Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/btnode.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/nilfs2/sufile.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/nilfs2/btnode.c
-+++ b/fs/nilfs2/btnode.c
-@@ -304,6 +304,14 @@ void nilfs_btnode_abort_change_key(struc
- 		radix_tree_delete(&btnc->page_tree, newkey);
- 		spin_unlock_irq(&btnc->tree_lock);
- 		unlock_page(ctxt->bh->b_page);
--	} else
--		brelse(nbh);
-+	} else {
+--- a/fs/nilfs2/sufile.c
++++ b/fs/nilfs2/sufile.c
+@@ -791,6 +791,15 @@ int nilfs_sufile_resize(struct inode *su
+ 			goto out_header;
+ 
+ 		sui->ncleansegs -= nsegs - newnsegs;
++
 +		/*
-+		 * When canceling a buffer that a prepare operation has
-+		 * allocated to copy a node block to another location, use
-+		 * nilfs_btnode_delete() to initialize and release the buffer
-+		 * so that the buffer flags will not be in an inconsistent
-+		 * state when it is reallocated.
++		 * If the sufile is successfully truncated, immediately adjust
++		 * the segment allocation space while locking the semaphore
++		 * "mi_sem" so that nilfs_sufile_alloc() never allocates
++		 * segments in the truncated space.
 +		 */
-+		nilfs_btnode_delete(nbh);
-+	}
- }
++		sui->allocmax = newnsegs - 1;
++		sui->allocmin = 0;
+ 	}
+ 
+ 	kaddr = kmap_atomic(header_bh->b_page);
 
 
