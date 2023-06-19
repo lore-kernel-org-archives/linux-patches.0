@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359795381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:36:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFC9C433C0;
-	Mon, 19 Jun 2023 10:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE16D5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:36:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D528C433CA;
+	Mon, 19 Jun 2023 10:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170983;
-	bh=FDlPLZ11yp7rdcLQZ4Yrhjuclb2oiXsUBqeB06nAucg=;
+	s=korg; t=1687170988;
+	bh=btHY0qjNkqimHtKI1YMt2kc/+llHmXaN1CoD539hs2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KS96nbkrhMi5e3jk/Yya9hjh2y9Hw/R6JGWVJiPM+w/Ch3Es3mITc3qJPH66KO0Lh
-	 1pV6qMZOS2qgRVVs//59Vy7zaMJnhc3Fhd4yyEaS2zdgfAJ/j2yqSymJO/vIakTmaa
-	 564RvUkqgLTdMbPv2EH8WDZN2+hEP/WegbV2zxZ8=
+	b=GWoi4FK2/o/nUWYgX3/lO/mZvwU7L0H2as/tJXwi3RfFyl2Pv0J/DgymJzSpQVhsc
+	 W+3Bqsu8qUiE35DVPHTAkHm4ZnF5Yr+R9zLsq/5c+TCEcKbZax5vEU9eOowcjn1e5q
+	 NceBOq3QkKWxpWgZLM69XJpTUv1QoBXMjpnV1yHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <jun.li@nxp.com>,
-	Sandeep Maheswaram <quic_c_sanm@quicinc.com>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.3 106/187] USB: dwc3: fix use-after-free on core driver unbind
-Date: Mon, 19 Jun 2023 12:28:44 +0200
-Message-ID: <20230619102202.704334031@linuxfoundation.org>
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 108/187] RDMA/rtrs: Fix the last iu->buf leak in err path
+Date: Mon, 19 Jun 2023 12:28:46 +0200
+Message-ID: <20230619102202.796427230@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -38,47 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-commit e3dbb657571509044be15184a13134fa7c1fdca1 upstream.
+[ Upstream commit 3bf3a7c6985c625f64e73baefdaa36f1c2045a29 ]
 
-Some dwc3 glue drivers are currently accessing the driver data of the
-child core device directly, which is clearly a bad idea as the child may
-not have probed yet or may have been unbound from its driver.
+The last iu->buf will leak if ib_dma_mapping_error() fails.
 
-As a workaround until the glue drivers have been fixed, clear the driver
-data pointer before allowing the glue parent device to runtime suspend
-to prevent its driver from accessing data that has been freed during
-unbind.
-
-Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
-Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
-Cc: stable@vger.kernel.org      # 5.12
-Cc: Li Jun <jun.li@nxp.com>
-Cc: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Message-ID: <20230607100540.31045-3-johan+linaro@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c0894b3ea69d ("RDMA/rtrs: core: lib functions shared between client and server modules")
+Link: https://lore.kernel.org/r/1682384563-2-3-git-send-email-lizhijian@fujitsu.com
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Acked-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/ulp/rtrs/rtrs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1982,6 +1982,11 @@ static int dwc3_remove(struct platform_d
- 	pm_runtime_allow(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
-+	/*
-+	 * HACK: Clear the driver data, which is currently accessed by parent
-+	 * glue drivers, before allowing the parent to suspend.
-+	 */
-+	platform_set_drvdata(pdev, NULL);
- 	pm_runtime_set_suspended(&pdev->dev);
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs.c b/drivers/infiniband/ulp/rtrs/rtrs.c
+index 4bf9d868cc522..3696f367ff515 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs.c
+@@ -37,8 +37,10 @@ struct rtrs_iu *rtrs_iu_alloc(u32 iu_num, size_t size, gfp_t gfp_mask,
+ 			goto err;
  
- 	dwc3_free_event_buffers(dwc);
+ 		iu->dma_addr = ib_dma_map_single(dma_dev, iu->buf, size, dir);
+-		if (ib_dma_mapping_error(dma_dev, iu->dma_addr))
++		if (ib_dma_mapping_error(dma_dev, iu->dma_addr)) {
++			kfree(iu->buf);
+ 			goto err;
++		}
+ 
+ 		iu->cqe.done  = done;
+ 		iu->size      = size;
+-- 
+2.39.2
+
 
 
