@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3124CBE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B4EC433C8;
-	Mon, 19 Jun 2023 10:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E9EBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABF3C433C0;
+	Mon, 19 Jun 2023 10:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171247;
-	bh=8NGPwfZzoWCA6dFY8e1T2muWMTH4hRxLlonx8WiGI0s=;
+	s=korg; t=1687171250;
+	bh=VFkdDgufTkYR8yTESG6NXD+dY23pjlZxJMEBOt6Rw4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMXTC76+ttm4u7wQoTz6B8s8Spu4KLLoPH/yYhwOzd96Kz9OoHdVgmtlwyCuW1eRV
-	 ffkZeK4VeHCc/4SQ9DEtBMpjykhDlJu7KpnVVu77vx41+UJJcWQoIMsLyHIS/KnQF9
-	 dAZKeBMrhy8PXo0ZiV35OAMd6gskJuAEGa8uCmYY=
+	b=nkm2TifkO1GOeIbmDPQOvQqPyk9I5b+Pn2/s5L6KbuKKtVQDvDz5yuOLZixsxb3p7
+	 2aQhL9hPBz/abAPeYPCcaKItS3c3/3mL0dBBy3JvLaKks8yyN7bkDtEWIrF4M92nJu
+	 t2bs9/MwjKu1xjGKdnzzVj9ULOLWEffj9sPxjp10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 13/49] ocfs2: check new file size on fallocate call
-Date: Mon, 19 Jun 2023 12:29:51 +0200
-Message-ID: <20230619102130.546820187@linuxfoundation.org>
+	Janne Grunau <j@jannau.net>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 4.19 14/49] nios2: dts: Fix tse_mac "max-frame-size" property
+Date: Mon, 19 Jun 2023 12:29:52 +0200
+Message-ID: <20230619102130.592505074@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -41,54 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luís Henriques <ocfs2-devel@oss.oracle.com>
+From: Janne Grunau <j@jannau.net>
 
-commit 26a6ffff7de5dd369cdb12e38ba11db682f1dec0 upstream.
+commit 85041e12418fd0c08ff972b7729f7971afb361f8 upstream.
 
-When changing a file size with fallocate() the new size isn't being
-checked.  In particular, the FSIZE ulimit isn't being checked, which makes
-fstest generic/228 fail.  Simply adding a call to inode_newsize_ok() fixes
-this issue.
+The given value of 1518 seems to refer to the layer 2 ethernet frame
+size without 802.1Q tag. Actual use of the "max-frame-size" including in
+the consumer of the "altr,tse-1.0" compatible is the MTU.
 
-Link: https://lkml.kernel.org/r/20230529152645.32680-1-lhenriques@suse.de
-Signed-off-by: Luís Henriques <lhenriques@suse.de>
-Reviewed-by: Mark Fasheh <mark@fasheh.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
+Fixes: 95acd4c7b69c ("nios2: Device tree support")
+Fixes: 61c610ec61bb ("nios2: Add Max10 device tree")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/file.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/nios2/boot/dts/10m50_devboard.dts |    2 +-
+ arch/nios2/boot/dts/3c120_devboard.dts |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -2111,14 +2111,20 @@ static long ocfs2_fallocate(struct file
- 	struct ocfs2_space_resv sr;
- 	int change_size = 1;
- 	int cmd = OCFS2_IOC_RESVSP64;
-+	int ret = 0;
- 
- 	if (mode & ~(FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE))
- 		return -EOPNOTSUPP;
- 	if (!ocfs2_writes_unwritten_extents(osb))
- 		return -EOPNOTSUPP;
- 
--	if (mode & FALLOC_FL_KEEP_SIZE)
-+	if (mode & FALLOC_FL_KEEP_SIZE) {
- 		change_size = 0;
-+	} else {
-+		ret = inode_newsize_ok(inode, offset + len);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	if (mode & FALLOC_FL_PUNCH_HOLE)
- 		cmd = OCFS2_IOC_UNRESVSP64;
+--- a/arch/nios2/boot/dts/10m50_devboard.dts
++++ b/arch/nios2/boot/dts/10m50_devboard.dts
+@@ -108,7 +108,7 @@
+ 			rx-fifo-depth = <8192>;
+ 			tx-fifo-depth = <8192>;
+ 			address-bits = <48>;
+-			max-frame-size = <1518>;
++			max-frame-size = <1500>;
+ 			local-mac-address = [00 00 00 00 00 00];
+ 			altr,has-supplementary-unicast;
+ 			altr,enable-sup-addr = <1>;
+--- a/arch/nios2/boot/dts/3c120_devboard.dts
++++ b/arch/nios2/boot/dts/3c120_devboard.dts
+@@ -118,7 +118,7 @@
+ 				interrupt-names = "rx_irq", "tx_irq";
+ 				rx-fifo-depth = <8192>;
+ 				tx-fifo-depth = <8192>;
+-				max-frame-size = <1518>;
++				max-frame-size = <1500>;
+ 				local-mac-address = [ 00 00 00 00 00 00 ];
+ 				phy-mode = "rgmii-id";
+ 				phy-handle = <&phy0>;
 
 
