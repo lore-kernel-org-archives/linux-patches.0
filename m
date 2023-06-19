@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7E7C123
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:01:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A1EC433C0;
-	Mon, 19 Jun 2023 11:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1949AC123
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:01:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95071C433C8;
+	Mon, 19 Jun 2023 11:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172497;
-	bh=HNdWJPW2sDLrnXs8Oa/KHBat7BRnxFp9Ea0nXMlm0Sw=;
+	s=korg; t=1687172499;
+	bh=PQwpukr+asy9I/V3rqPWDcQKbwSgUdVY+LAzT/iLYZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iFx2p8EAlRMuGFyLuWCNT/KAP8UkdwqctJAPZUa1l8X98T2+IeUCYz75/vr4tic8V
-	 ps4+LD3tOzfU7jhzY9rWWAvDU5QNloKRI0nOouuNX7T5YHs8cCvbK4/tobxfLdupyN
-	 B/LqVmcnM0pQKyCEjSVvYi8mnaWDVILR/wtj83Zc=
+	b=qzTaIGnDoKlcFoF9m9MBfmme6rMYa/V1sF1hkQKggiQh8rnEF7GLlNDiXPJdgAAj5
+	 eZ4UTrdtYVyD4+A7LTJW7CMkNb+pNkxA6TGdBnEKcNppZGnDo+GBMj0eLww2Q5DLfH
+	 S1YOfem970Sv2f3S6m/3dSUzgRmYRV6VoiLiA/Ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natalia Petrova <n.petrova@fintech.ru>,
-	Lyude Paul <lyude@redhat.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/107] drm/nouveau: add nv_encoder pointer check for NULL
-Date: Mon, 19 Jun 2023 12:31:14 +0200
-Message-ID: <20230619102145.683245573@linuxfoundation.org>
+Subject: [PATCH 5.15 091/107] cifs: fix lease break oops in xfstest generic/098
+Date: Mon, 19 Jun 2023 12:31:15 +0200
+Message-ID: <20230619102145.725874398@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -35,41 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Natalia Petrova <n.petrova@fintech.ru>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 55b94bb8c42464bad3d2217f6874aa1a85664eac ]
+[ Upstream commit c774e6779f38bf36f0cce65e30793704bab4b0d7 ]
 
-Pointer nv_encoder could be dereferenced at nouveau_connector.c
-in case it's equal to NULL by jumping to goto label.
-This patch adds a NULL-check to avoid it.
+umount can race with lease break so need to check if
+tcon->ses->server is still valid to send the lease
+break response.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 3195c5f9784a ("drm/nouveau: set encoder for lvds")
-Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-[Fixed patch title]
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230512103320.82234-1-n.petrova@fintech.ru
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Fixes: 59a556aebc43 ("SMB3: drop reference to cfile before sending oplock break")
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/cifs/file.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
-index f5c79d367f290..7f8607b97707e 100644
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -729,7 +729,8 @@ nouveau_connector_detect_lvds(struct drm_connector *connector, bool force)
- #endif
+diff --git a/fs/cifs/file.c b/fs/cifs/file.c
+index 872aebac9f686..bda1ffe6e41f8 100644
+--- a/fs/cifs/file.c
++++ b/fs/cifs/file.c
+@@ -4929,9 +4929,13 @@ void cifs_oplock_break(struct work_struct *work)
+ 	 * disconnected since oplock already released by the server
+ 	 */
+ 	if (!oplock_break_cancelled) {
+-		rc = tcon->ses->server->ops->oplock_response(tcon, persistent_fid,
++		/* check for server null since can race with kill_sb calling tree disconnect */
++		if (tcon->ses && tcon->ses->server) {
++			rc = tcon->ses->server->ops->oplock_response(tcon, persistent_fid,
+ 				volatile_fid, net_fid, cinode);
+-		cifs_dbg(FYI, "Oplock release rc = %d\n", rc);
++			cifs_dbg(FYI, "Oplock release rc = %d\n", rc);
++		} else
++			pr_warn_once("lease break not sent for unmounted share\n");
+ 	}
  
- 	nouveau_connector_set_edid(nv_connector, edid);
--	nouveau_connector_set_encoder(connector, nv_encoder);
-+	if (nv_encoder)
-+		nouveau_connector_set_encoder(connector, nv_encoder);
- 	return status;
- }
- 
+ 	cifs_done_oplock_break(cinode);
 -- 
 2.39.2
 
