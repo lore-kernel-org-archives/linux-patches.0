@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EED2A94D
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:58:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2663DC433C8;
-	Mon, 19 Jun 2023 10:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5550BBA32
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:58:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6020C433C0;
+	Mon, 19 Jun 2023 10:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172300;
-	bh=MJ9SqAkxj+Uz/O9NmUpcMuzKZlxZQhNVDtS3Pv/kHuI=;
+	s=korg; t=1687172303;
+	bh=fdlPoKwCUC02K5lW/QydWldXt7w7BSrfpk9lXH2yN3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z03BmcI8r3A8DsIvxz1RQaI6L9y/603PAGYc/S97ySL7eEKVXTXtj4IBk8O5kWwjT
-	 1ILPM9maUntRMa48S6GIyXIcvmVl7cPEs04VzpHC7MMb6I7qOsEnUNxh6sm3JrvDE+
-	 Eg6FTd5jh88vlOhWIzHsi8S9o1THtNVm6c4tBM1Y=
+	b=clCx4YGC/GOH18CLnvPlKi/HzaQPVyBxaSrOAoD+9kyIyxLi6etfzoNnTWZAiZ/Tu
+	 wyVPX47UwgFLELLQLzrpoIgjE1PS2uAAcvvAXigesSs55HnjcX4chNiTxDEj9GoFNy
+	 nRj1jzzDbTOlZ/b27bemffGcmlKuNouoM92JZLpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Russ Weight <russell.h.weight@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Tianfei Zhang <tianfei.zhang@intel.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kselftest@vger.kernel.org,
+	Dan Carpenter <error27@gmail.com>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/107] btrfs: scrub: try harder to mark RAID56 block groups read-only
-Date: Mon, 19 Jun 2023 12:30:03 +0200
-Message-ID: <20230619102142.445479856@linuxfoundation.org>
+Subject: [PATCH 5.15 002/107] test_firmware: prevent race conditions by a correct implementation of locking
+Date: Mon, 19 Jun 2023 12:29:46 +0200
+Message-ID: <20230619102141.657503136@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -35,93 +43,256 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-[ Upstream commit 7561551e7ba870b9659083b95feb520fb2dacce3 ]
+[ Upstream commit 4acfe3dfde685a5a9eaec5555351918e2d7266a1 ]
 
-Currently we allow a block group not to be marked read-only for scrub.
+Dan Carpenter spotted a race condition in a couple of situations like
+these in the test_firmware driver:
 
-But for RAID56 block groups if we require the block group to be
-read-only, then we're allowed to use cached content from scrub stripe to
-reduce unnecessary RAID56 reads.
+static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+{
+        u8 val;
+        int ret;
 
-So this patch would:
+        ret = kstrtou8(buf, 10, &val);
+        if (ret)
+                return ret;
 
-- Make btrfs_inc_block_group_ro() try harder
-  During my tests, for cases like btrfs/061 and btrfs/064, we can hit
-  ENOSPC from btrfs_inc_block_group_ro() calls during scrub.
+        mutex_lock(&test_fw_mutex);
+        *(u8 *)cfg = val;
+        mutex_unlock(&test_fw_mutex);
 
-  The reason is if we only have one single data chunk, and trying to
-  scrub it, we won't have any space left for any newer data writes.
+        /* Always return full write size even if we didn't consume all */
+        return size;
+}
 
-  But this check should be done by the caller, especially for scrub
-  cases we only temporarily mark the chunk read-only.
-  And newer data writes would always try to allocate a new data chunk
-  when needed.
+static ssize_t config_num_requests_store(struct device *dev,
+                                         struct device_attribute *attr,
+                                         const char *buf, size_t count)
+{
+        int rc;
 
-- Return error for scrub if we failed to mark a RAID56 chunk read-only
+        mutex_lock(&test_fw_mutex);
+        if (test_fw_config->reqs) {
+                pr_err("Must call release_all_firmware prior to changing config\n");
+                rc = -EINVAL;
+                mutex_unlock(&test_fw_mutex);
+                goto out;
+        }
+        mutex_unlock(&test_fw_mutex);
 
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+        rc = test_dev_config_update_u8(buf, count,
+                                       &test_fw_config->num_requests);
+
+out:
+        return rc;
+}
+
+static ssize_t config_read_fw_idx_store(struct device *dev,
+                                        struct device_attribute *attr,
+                                        const char *buf, size_t count)
+{
+        return test_dev_config_update_u8(buf, count,
+                                         &test_fw_config->read_fw_idx);
+}
+
+The function test_dev_config_update_u8() is called from both the locked
+and the unlocked context, function config_num_requests_store() and
+config_read_fw_idx_store() which can both be called asynchronously as
+they are driver's methods, while test_dev_config_update_u8() and siblings
+change their argument pointed to by u8 *cfg or similar pointer.
+
+To avoid deadlock on test_fw_mutex, the lock is dropped before calling
+test_dev_config_update_u8() and re-acquired within test_dev_config_update_u8()
+itself, but alas this creates a race condition.
+
+Having two locks wouldn't assure a race-proof mutual exclusion.
+
+This situation is best avoided by the introduction of a new, unlocked
+function __test_dev_config_update_u8() which can be called from the locked
+context and reducing test_dev_config_update_u8() to:
+
+static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+{
+        int ret;
+
+        mutex_lock(&test_fw_mutex);
+        ret = __test_dev_config_update_u8(buf, size, cfg);
+        mutex_unlock(&test_fw_mutex);
+
+        return ret;
+}
+
+doing the locking and calling the unlocked primitive, which enables both
+locked and unlocked versions without duplication of code.
+
+The similar approach was applied to all functions called from the locked
+and the unlocked context, which safely mitigates both deadlocks and race
+conditions in the driver.
+
+__test_dev_config_update_bool(), __test_dev_config_update_u8() and
+__test_dev_config_update_size_t() unlocked versions of the functions
+were introduced to be called from the locked contexts as a workaround
+without releasing the main driver's lock and thereof causing a race
+condition.
+
+The test_dev_config_update_bool(), test_dev_config_update_u8() and
+test_dev_config_update_size_t() locked versions of the functions
+are being called from driver methods without the unnecessary multiplying
+of the locking and unlocking code for each method, and complicating
+the code with saving of the return value across lock.
+
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Russ Weight <russell.h.weight@intel.com>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Tianfei Zhang <tianfei.zhang@intel.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Colin Ian King <colin.i.king@gmail.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-kselftest@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.4
+Suggested-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/r/20230509084746.48259-1-mirsad.todorovac@alu.unizg.hr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 14 ++++++++++++--
- fs/btrfs/scrub.c       |  9 ++++++++-
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ lib/test_firmware.c | 52 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 35 insertions(+), 17 deletions(-)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 19f71c305b988..a76796f153d5f 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -2576,10 +2576,20 @@ int btrfs_inc_block_group_ro(struct btrfs_block_group *cache,
- 	}
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 0b4e3de3f1748..4ad01dbe7e729 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -321,16 +321,26 @@ static ssize_t config_test_show_str(char *dst,
+ 	return len;
+ }
  
- 	ret = inc_block_group_ro(cache, 0);
--	if (!do_chunk_alloc || ret == -ETXTBSY)
--		goto unlock_out;
- 	if (!ret)
+-static int test_dev_config_update_bool(const char *buf, size_t size,
++static inline int __test_dev_config_update_bool(const char *buf, size_t size,
+ 				       bool *cfg)
+ {
+ 	int ret;
+ 
+-	mutex_lock(&test_fw_mutex);
+ 	if (kstrtobool(buf, cfg) < 0)
+ 		ret = -EINVAL;
+ 	else
+ 		ret = size;
++
++	return ret;
++}
++
++static int test_dev_config_update_bool(const char *buf, size_t size,
++				       bool *cfg)
++{
++	int ret;
++
++	mutex_lock(&test_fw_mutex);
++	ret = __test_dev_config_update_bool(buf, size, cfg);
+ 	mutex_unlock(&test_fw_mutex);
+ 
+ 	return ret;
+@@ -341,7 +351,8 @@ static ssize_t test_dev_config_show_bool(char *buf, bool val)
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
+ }
+ 
+-static int test_dev_config_update_size_t(const char *buf,
++static int __test_dev_config_update_size_t(
++					 const char *buf,
+ 					 size_t size,
+ 					 size_t *cfg)
+ {
+@@ -352,9 +363,7 @@ static int test_dev_config_update_size_t(const char *buf,
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&test_fw_mutex);
+ 	*(size_t *)cfg = new;
+-	mutex_unlock(&test_fw_mutex);
+ 
+ 	/* Always return full write size even if we didn't consume all */
+ 	return size;
+@@ -370,7 +379,7 @@ static ssize_t test_dev_config_show_int(char *buf, int val)
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
+ }
+ 
+-static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
++static int __test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+ {
+ 	u8 val;
+ 	int ret;
+@@ -379,14 +388,23 @@ static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&test_fw_mutex);
+ 	*(u8 *)cfg = val;
+-	mutex_unlock(&test_fw_mutex);
+ 
+ 	/* Always return full write size even if we didn't consume all */
+ 	return size;
+ }
+ 
++static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
++{
++	int ret;
++
++	mutex_lock(&test_fw_mutex);
++	ret = __test_dev_config_update_u8(buf, size, cfg);
++	mutex_unlock(&test_fw_mutex);
++
++	return ret;
++}
++
+ static ssize_t test_dev_config_show_u8(char *buf, u8 val)
+ {
+ 	return snprintf(buf, PAGE_SIZE, "%u\n", val);
+@@ -413,10 +431,10 @@ static ssize_t config_num_requests_store(struct device *dev,
+ 		mutex_unlock(&test_fw_mutex);
  		goto out;
-+	if (ret == -ETXTBSY)
-+		goto unlock_out;
-+
-+	/*
-+	 * Skip chunk alloction if the bg is SYSTEM, this is to avoid system
-+	 * chunk allocation storm to exhaust the system chunk array.  Otherwise
-+	 * we still want to try our best to mark the block group read-only.
-+	 */
-+	if (!do_chunk_alloc && ret == -ENOSPC &&
-+	    (cache->flags & BTRFS_BLOCK_GROUP_SYSTEM))
-+		goto unlock_out;
-+
- 	alloc_flags = btrfs_get_alloc_profile(fs_info, cache->space_info->flags);
- 	ret = btrfs_chunk_alloc(trans, alloc_flags, CHUNK_ALLOC_FORCE);
- 	if (ret < 0)
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index ca8d6979c7887..0d1715ebdef9c 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -3812,13 +3812,20 @@ int scrub_enumerate_chunks(struct scrub_ctx *sctx,
+ 	}
+-	mutex_unlock(&test_fw_mutex);
  
- 		if (ret == 0) {
- 			ro_set = 1;
--		} else if (ret == -ENOSPC && !sctx->is_dev_replace) {
-+		} else if (ret == -ENOSPC && !sctx->is_dev_replace &&
-+			   !(cache->flags & BTRFS_BLOCK_GROUP_RAID56_MASK)) {
- 			/*
- 			 * btrfs_inc_block_group_ro return -ENOSPC when it
- 			 * failed in creating new chunk for metadata.
- 			 * It is not a problem for scrub, because
- 			 * metadata are always cowed, and our scrub paused
- 			 * commit_transactions.
-+			 *
-+			 * For RAID56 chunks, we have to mark them read-only
-+			 * for scrub, as later we would use our own cache
-+			 * out of RAID56 realm.
-+			 * Thus we want the RAID56 bg to be marked RO to
-+			 * prevent RMW from screwing up out cache.
- 			 */
- 			ro_set = 0;
- 		} else if (ret == -ETXTBSY) {
+-	rc = test_dev_config_update_u8(buf, count,
+-				       &test_fw_config->num_requests);
++	rc = __test_dev_config_update_u8(buf, count,
++					 &test_fw_config->num_requests);
++	mutex_unlock(&test_fw_mutex);
+ 
+ out:
+ 	return rc;
+@@ -460,10 +478,10 @@ static ssize_t config_buf_size_store(struct device *dev,
+ 		mutex_unlock(&test_fw_mutex);
+ 		goto out;
+ 	}
+-	mutex_unlock(&test_fw_mutex);
+ 
+-	rc = test_dev_config_update_size_t(buf, count,
+-					   &test_fw_config->buf_size);
++	rc = __test_dev_config_update_size_t(buf, count,
++					     &test_fw_config->buf_size);
++	mutex_unlock(&test_fw_mutex);
+ 
+ out:
+ 	return rc;
+@@ -490,10 +508,10 @@ static ssize_t config_file_offset_store(struct device *dev,
+ 		mutex_unlock(&test_fw_mutex);
+ 		goto out;
+ 	}
+-	mutex_unlock(&test_fw_mutex);
+ 
+-	rc = test_dev_config_update_size_t(buf, count,
+-					   &test_fw_config->file_offset);
++	rc = __test_dev_config_update_size_t(buf, count,
++					     &test_fw_config->file_offset);
++	mutex_unlock(&test_fw_mutex);
+ 
+ out:
+ 	return rc;
 -- 
 2.39.2
 
