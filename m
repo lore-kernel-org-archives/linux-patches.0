@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2143C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1738FC433C8;
-	Mon, 19 Jun 2023 10:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB6D3C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D03C433C9;
+	Mon, 19 Jun 2023 10:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171091;
-	bh=6jyfwmnEerN7JhVc/HSQEzdGRms2cMK7oIRmWwIk4Rs=;
+	s=korg; t=1687171094;
+	bh=lR6rO+UXjo9mM+Qs2jK8/hIHUKKhr3g/CBl9gj72dXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6pgZsBwXFdrRbQNWUfk6comd8PE6zOG1C3Den19WZ8Gr2UmfnI1n3kfg7IcZz9WP
-	 fzueKZWTgwJ/bUwEs+z3ugYB0BFzyxmKyNQptCqB1aS1r1fNGrtWKHgkPEPxYxWZym
-	 gwkabZwNMkZe0kgg9RixHzJg6uWK5kTwXoly2MjM=
+	b=1nYFJ07eRdK7FGHik/kmUYfqqK6HpY9VYDjw5t85tSp8wf2e8skctdLa82AYT5aCU
+	 KDSQIgoxCOWVU8V7BCqWD9IZQNR4eXyNYdkvZRmT2gg8/DsjNDqWY98s/4ymWaQRu1
+	 Dmxq/rAhnoZw/ckTu0hLDdom8koh/Oh4RE5w1j60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 144/187] IB/isert: Fix dead lock in ib_isert
-Date: Mon, 19 Jun 2023 12:29:22 +0200
-Message-ID: <20230619102204.629605874@linuxfoundation.org>
+Subject: [PATCH 6.3 145/187] IB/isert: Fix possible list corruption in CMA handler
+Date: Mon, 19 Jun 2023 12:29:23 +0200
+Message-ID: <20230619102204.674332935@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -39,117 +38,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
 
-[ Upstream commit 691b0480933f0ce88a81ed1d1a0aff340ff6293a ]
+[ Upstream commit 7651e2d6c5b359a28c2d4c904fec6608d1021ca8 ]
 
-- When a iSER session is released, ib_isert module is taking a mutex
-  lock and releasing all pending connections. As part of this, ib_isert
-  is destroying rdma cm_id. To destroy cm_id, rdma_cm module is sending
-  CM events to CMA handler of ib_isert. This handler is taking same
-  mutex lock. Hence it leads to deadlock between ib_isert & rdma_cm
-  modules.
-
-- For fix, created local list of pending connections and release the
-  connection outside of mutex lock.
-
-Calltrace:
----------
-[ 1229.791410] INFO: task kworker/10:1:642 blocked for more than 120 seconds.
-[ 1229.791416]       Tainted: G           OE    --------- -  - 4.18.0-372.9.1.el8.x86_64 #1
-[ 1229.791418] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[ 1229.791419] task:kworker/10:1    state:D stack:    0 pid:  642 ppid:     2 flags:0x80004000
-[ 1229.791424] Workqueue: ib_cm cm_work_handler [ib_cm]
-[ 1229.791436] Call Trace:
-[ 1229.791438]  __schedule+0x2d1/0x830
-[ 1229.791445]  ? select_idle_sibling+0x23/0x6f0
-[ 1229.791449]  schedule+0x35/0xa0
-[ 1229.791451]  schedule_preempt_disabled+0xa/0x10
-[ 1229.791453]  __mutex_lock.isra.7+0x310/0x420
-[ 1229.791456]  ? select_task_rq_fair+0x351/0x990
-[ 1229.791459]  isert_cma_handler+0x224/0x330 [ib_isert]
-[ 1229.791463]  ? ttwu_queue_wakelist+0x159/0x170
-[ 1229.791466]  cma_cm_event_handler+0x25/0xd0 [rdma_cm]
-[ 1229.791474]  cma_ib_handler+0xa7/0x2e0 [rdma_cm]
-[ 1229.791478]  cm_process_work+0x22/0xf0 [ib_cm]
-[ 1229.791483]  cm_work_handler+0xf4/0xf30 [ib_cm]
-[ 1229.791487]  ? move_linked_works+0x6e/0xa0
-[ 1229.791490]  process_one_work+0x1a7/0x360
-[ 1229.791491]  ? create_worker+0x1a0/0x1a0
-[ 1229.791493]  worker_thread+0x30/0x390
-[ 1229.791494]  ? create_worker+0x1a0/0x1a0
-[ 1229.791495]  kthread+0x10a/0x120
-[ 1229.791497]  ? set_kthread_struct+0x40/0x40
-[ 1229.791499]  ret_from_fork+0x1f/0x40
-
-[ 1229.791739] INFO: task targetcli:28666 blocked for more than 120 seconds.
-[ 1229.791740]       Tainted: G           OE    --------- -  - 4.18.0-372.9.1.el8.x86_64 #1
-[ 1229.791741] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[ 1229.791742] task:targetcli       state:D stack:    0 pid:28666 ppid:  5510 flags:0x00004080
-[ 1229.791743] Call Trace:
-[ 1229.791744]  __schedule+0x2d1/0x830
-[ 1229.791746]  schedule+0x35/0xa0
-[ 1229.791748]  schedule_preempt_disabled+0xa/0x10
-[ 1229.791749]  __mutex_lock.isra.7+0x310/0x420
-[ 1229.791751]  rdma_destroy_id+0x15/0x20 [rdma_cm]
-[ 1229.791755]  isert_connect_release+0x115/0x130 [ib_isert]
-[ 1229.791757]  isert_free_np+0x87/0x140 [ib_isert]
-[ 1229.791761]  iscsit_del_np+0x74/0x120 [iscsi_target_mod]
-[ 1229.791776]  lio_target_np_driver_store+0xe9/0x140 [iscsi_target_mod]
-[ 1229.791784]  configfs_write_file+0xb2/0x110
-[ 1229.791788]  vfs_write+0xa5/0x1a0
-[ 1229.791792]  ksys_write+0x4f/0xb0
-[ 1229.791794]  do_syscall_64+0x5b/0x1a0
-[ 1229.791798]  entry_SYSCALL_64_after_hwframe+0x65/0xca
+When ib_isert module receives connection error event, it is
+releasing the isert session and removes corresponding list
+node but it doesn't take appropriate mutex lock to remove
+the list node.  This can lead to linked  list corruption
 
 Fixes: bd3792205aae ("iser-target: Fix pending connections handling in target stack shutdown sequnce")
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Link: https://lore.kernel.org/r/20230606102531.162967-2-saravanan.vajravel@broadcom.com
+Link: https://lore.kernel.org/r/20230606102531.162967-3-saravanan.vajravel@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/isert/ib_isert.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/infiniband/ulp/isert/ib_isert.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
-index f290cd49698ea..b4809d2372506 100644
+index b4809d2372506..00a7303c8cc60 100644
 --- a/drivers/infiniband/ulp/isert/ib_isert.c
 +++ b/drivers/infiniband/ulp/isert/ib_isert.c
-@@ -2431,6 +2431,7 @@ isert_free_np(struct iscsi_np *np)
+@@ -657,9 +657,13 @@ static int
+ isert_connect_error(struct rdma_cm_id *cma_id)
  {
- 	struct isert_np *isert_np = np->np_context;
- 	struct isert_conn *isert_conn, *n;
-+	LIST_HEAD(drop_conn_list);
+ 	struct isert_conn *isert_conn = cma_id->qp->qp_context;
++	struct isert_np *isert_np = cma_id->context;
  
- 	if (isert_np->cm_id)
- 		rdma_destroy_id(isert_np->cm_id);
-@@ -2450,7 +2451,7 @@ isert_free_np(struct iscsi_np *np)
- 					 node) {
- 			isert_info("cleaning isert_conn %p state (%d)\n",
- 				   isert_conn, isert_conn->state);
--			isert_connect_release(isert_conn);
-+			list_move_tail(&isert_conn->node, &drop_conn_list);
- 		}
- 	}
- 
-@@ -2461,11 +2462,16 @@ isert_free_np(struct iscsi_np *np)
- 					 node) {
- 			isert_info("cleaning isert_conn %p state (%d)\n",
- 				   isert_conn, isert_conn->state);
--			isert_connect_release(isert_conn);
-+			list_move_tail(&isert_conn->node, &drop_conn_list);
- 		}
- 	}
- 	mutex_unlock(&isert_np->mutex);
- 
-+	list_for_each_entry_safe(isert_conn, n, &drop_conn_list, node) {
-+		list_del_init(&isert_conn->node);
-+		isert_connect_release(isert_conn);
-+	}
+ 	ib_drain_qp(isert_conn->qp);
 +
- 	np->np_context = NULL;
- 	kfree(isert_np);
- }
++	mutex_lock(&isert_np->mutex);
+ 	list_del_init(&isert_conn->node);
++	mutex_unlock(&isert_np->mutex);
+ 	isert_conn->cm_id = NULL;
+ 	isert_put_conn(isert_conn);
+ 
 -- 
 2.39.2
 
