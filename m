@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9453C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B82C433CB;
-	Mon, 19 Jun 2023 10:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472053C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39E6C433C0;
+	Mon, 19 Jun 2023 10:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171116;
-	bh=YvryWc8nKIvE5uaiKgvBv5SSrQnt8snbod6tU5iB1Ao=;
+	s=korg; t=1687171119;
+	bh=+dL4KD/N2q4MwQ4FKjKcVbXHpf0CN7d9dg68q7mCrug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=burAO9eVxv9+KuNEPEbV8+UqN69b5Y0KTn9NlUmtv8FNJHvP4iUQmzZb0zzmOsht6
-	 7m5yG0D69YcST9XZEWburOsl6qdE7d6pDYAujOt+jxc9CBixH463l8/PvU0FwGH835
-	 KsUc1wPx9x9oCMobWkhXYzFaUdteLlanO9ZI2veY=
+	b=dyCf02ZGjY8x3olCfW7qqszSpPUtXKlsyccsJuiuOjGcijP4I7fN3vrL6gvtOt+xH
+	 2rt+l/XRPneNSZnkUJuBJ3Zf+JtM1Myo5b3Dd23isQ3VWdT4Ccelv84hUUWjDIq+R+
+	 duv8mfbiFN0nnMnpII8au7dH5KlhP3x+/weP4HaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phong Hoang <phong.hoang.wz@renesas.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 128/187] net: renesas: rswitch: Fix timestamp feature after all descriptors are used
-Date: Mon, 19 Jun 2023 12:29:06 +0200
-Message-ID: <20230619102203.783651800@linuxfoundation.org>
+Subject: [PATCH 6.3 129/187] octeontx2-af: Fix promiscuous mode
+Date: Mon, 19 Jun 2023 12:29:07 +0200
+Message-ID: <20230619102203.835882916@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -37,88 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 0ad4982c520ed87ea7ebfc9381ea1f617ed75364 ]
+[ Upstream commit c0e489372a294044feea650b38f38c888eff57a4 ]
 
-The timestamp descriptors were intended to act cyclically. Descriptors
-from index 0 through gq->ring_size - 1 contain actual information, and
-the last index (gq->ring_size) should have LINKFIX to indicate
-the first index 0 descriptor. However, the LINKFIX value is missing,
-causing the timestamp feature to stop after all descriptors are used.
-To resolve this issue, set the LINKFIX to the timestamp descritors.
+CN10KB silicon introduced a new exact match feature,
+which is used for DMAC filtering. The state of installed
+DMAC filters in this exact match table is getting corrupted
+when promiscuous mode is toggled. Fix this by not touching
+Exact match related config when promiscuous mode is toggled.
 
-Reported-by: Phong Hoang <phong.hoang.wz@renesas.com>
-Fixes: 33f5d733b589 ("net: renesas: rswitch: Improve TX timestamp accuracy")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Fixes: 2dba9459d2c9 ("octeontx2-af: Wrapper functions for MAC addr add/del/update/reset")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/rswitch.c | 36 ++++++++++++++++----------
- 1 file changed, 22 insertions(+), 14 deletions(-)
+ .../marvell/octeontx2/af/rvu_npc_hash.c       | 29 ++-----------------
+ 1 file changed, 2 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
-index 7855d9ef81eb1..66bce799471c1 100644
---- a/drivers/net/ethernet/renesas/rswitch.c
-+++ b/drivers/net/ethernet/renesas/rswitch.c
-@@ -347,17 +347,6 @@ static int rswitch_gwca_queue_alloc(struct net_device *ndev,
- 	return -ENOMEM;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+index 51209119f0f2f..9f11c1e407373 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+@@ -1164,10 +1164,8 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
+ {
+ 	struct npc_exact_table *table;
+ 	u16 *cnt, old_cnt;
+-	bool promisc;
+ 
+ 	table = rvu->hw->table;
+-	promisc = table->promisc_mode[drop_mcam_idx];
+ 
+ 	cnt = &table->cnt_cmd_rules[drop_mcam_idx];
+ 	old_cnt = *cnt;
+@@ -1179,16 +1177,13 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
+ 
+ 	*enable_or_disable_cam = false;
+ 
+-	if (promisc)
+-		goto done;
+-
+-	/* If all rules are deleted and not already in promisc mode; disable cam */
++	/* If all rules are deleted, disable cam */
+ 	if (!*cnt && val < 0) {
+ 		*enable_or_disable_cam = true;
+ 		goto done;
+ 	}
+ 
+-	/* If rule got added and not already in promisc mode; enable cam */
++	/* If rule got added, enable cam */
+ 	if (!old_cnt && val > 0) {
+ 		*enable_or_disable_cam = true;
+ 		goto done;
+@@ -1443,7 +1438,6 @@ int rvu_npc_exact_promisc_disable(struct rvu *rvu, u16 pcifunc)
+ 	u32 drop_mcam_idx;
+ 	bool *promisc;
+ 	bool rc;
+-	u32 cnt;
+ 
+ 	table = rvu->hw->table;
+ 
+@@ -1466,17 +1460,8 @@ int rvu_npc_exact_promisc_disable(struct rvu *rvu, u16 pcifunc)
+ 		return LMAC_AF_ERR_INVALID_PARAM;
+ 	}
+ 	*promisc = false;
+-	cnt = __rvu_npc_exact_cmd_rules_cnt_update(rvu, drop_mcam_idx, 0, NULL);
+ 	mutex_unlock(&table->lock);
+ 
+-	/* If no dmac filter entries configured, disable drop rule */
+-	if (!cnt)
+-		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, false);
+-	else
+-		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, !*promisc);
+-
+-	dev_dbg(rvu->dev, "%s: disabled  promisc mode (cgx=%d lmac=%d, cnt=%d)\n",
+-		__func__, cgx_id, lmac_id, cnt);
+ 	return 0;
  }
  
--static int rswitch_gwca_ts_queue_alloc(struct rswitch_private *priv)
--{
--	struct rswitch_gwca_queue *gq = &priv->gwca.ts_queue;
+@@ -1494,7 +1479,6 @@ int rvu_npc_exact_promisc_enable(struct rvu *rvu, u16 pcifunc)
+ 	u32 drop_mcam_idx;
+ 	bool *promisc;
+ 	bool rc;
+-	u32 cnt;
+ 
+ 	table = rvu->hw->table;
+ 
+@@ -1517,17 +1501,8 @@ int rvu_npc_exact_promisc_enable(struct rvu *rvu, u16 pcifunc)
+ 		return LMAC_AF_ERR_INVALID_PARAM;
+ 	}
+ 	*promisc = true;
+-	cnt = __rvu_npc_exact_cmd_rules_cnt_update(rvu, drop_mcam_idx, 0, NULL);
+ 	mutex_unlock(&table->lock);
+ 
+-	/* If no dmac filter entries configured, disable drop rule */
+-	if (!cnt)
+-		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, false);
+-	else
+-		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, !*promisc);
 -
--	gq->ring_size = TS_RING_SIZE;
--	gq->ts_ring = dma_alloc_coherent(&priv->pdev->dev,
--					 sizeof(struct rswitch_ts_desc) *
--					 (gq->ring_size + 1), &gq->ring_dma, GFP_KERNEL);
--	return !gq->ts_ring ? -ENOMEM : 0;
--}
--
- static void rswitch_desc_set_dptr(struct rswitch_desc *desc, dma_addr_t addr)
- {
- 	desc->dptrl = cpu_to_le32(lower_32_bits(addr));
-@@ -533,6 +522,28 @@ static void rswitch_gwca_linkfix_free(struct rswitch_private *priv)
- 	gwca->linkfix_table = NULL;
+-	dev_dbg(rvu->dev, "%s: Enabled promisc mode (cgx=%d lmac=%d cnt=%d)\n",
+-		__func__, cgx_id, lmac_id, cnt);
+ 	return 0;
  }
  
-+static int rswitch_gwca_ts_queue_alloc(struct rswitch_private *priv)
-+{
-+	struct rswitch_gwca_queue *gq = &priv->gwca.ts_queue;
-+	struct rswitch_ts_desc *desc;
-+
-+	gq->ring_size = TS_RING_SIZE;
-+	gq->ts_ring = dma_alloc_coherent(&priv->pdev->dev,
-+					 sizeof(struct rswitch_ts_desc) *
-+					 (gq->ring_size + 1), &gq->ring_dma, GFP_KERNEL);
-+
-+	if (!gq->ts_ring)
-+		return -ENOMEM;
-+
-+	rswitch_gwca_ts_queue_fill(priv, 0, TS_RING_SIZE);
-+	desc = &gq->ts_ring[gq->ring_size];
-+	desc->desc.die_dt = DT_LINKFIX;
-+	rswitch_desc_set_dptr(&desc->desc, gq->ring_dma);
-+	INIT_LIST_HEAD(&priv->gwca.ts_info_list);
-+
-+	return 0;
-+}
-+
- static struct rswitch_gwca_queue *rswitch_gwca_get(struct rswitch_private *priv)
- {
- 	struct rswitch_gwca_queue *gq;
-@@ -1782,9 +1793,6 @@ static int rswitch_init(struct rswitch_private *priv)
- 	if (err < 0)
- 		goto err_ts_queue_alloc;
- 
--	rswitch_gwca_ts_queue_fill(priv, 0, TS_RING_SIZE);
--	INIT_LIST_HEAD(&priv->gwca.ts_info_list);
--
- 	for (i = 0; i < RSWITCH_NUM_PORTS; i++) {
- 		err = rswitch_device_alloc(priv, i);
- 		if (err < 0) {
 -- 
 2.39.2
 
