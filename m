@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750713C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB77C433C8;
-	Mon, 19 Jun 2023 10:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4290D3C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC06C433C0;
+	Mon, 19 Jun 2023 10:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171216;
-	bh=O6RYYlVwXXYj/HuWmYtTzIP5NXx3z0ZGT25etE+QaYg=;
+	s=korg; t=1687171219;
+	bh=bPD4W7mP1n/cvYpyZjhSLhTyHvFXJFajmXYTHdTCMMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FruSBzirCZuNrZFEk3LK1BNmrA8tesaVssCgoyKtepb9tUT4kFr2l2+v7odUVcF6a
-	 Zq8n1fO5mJpbA22GXtYU/i/K4aBItq5sE9Qpxgy6vDD6ywqVEAcn34qZlm+FNBt4FC
-	 f1b+EgNCmZM5k3c1MTaSXV4KOLBa0MH6AWSaDQqg=
+	b=A/7CNZmvEDibXnLZhsHcse5ipX6LQJnLSqWtFv60j9jNuBTVyH5QD4ySj70g4eXaz
+	 WcZOVmwBIcGGpDm65Fbwv6rwYcyWH+FpEx5IDKBIwnJK/4yjOPUbc6bZ9sYcFVEHcH
+	 E0Ru01X6eYgJM4x26pEkckX6cCmWZZ413MQpbr9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 182/187] afs: Fix vlserver probe RTT handling
-Date: Mon, 19 Jun 2023 12:30:00 +0200
-Message-ID: <20230619102206.513259937@linuxfoundation.org>
+	Ben Hutchings <benh@debian.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.3 183/187] parisc: Delete redundant register definitions in <asm/assembly.h>
+Date: Mon, 19 Jun 2023 12:30:01 +0200
+Message-ID: <20230619102206.565371378@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -37,48 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit ba00b190670809c1a89326d80de96d714f6004f2 ]
+commit b5b2a02bcaac7c287694aa0db4837a07bf178626 upstream.
 
-In the same spirit as commit ca57f02295f1 ("afs: Fix fileserver probe
-RTT handling"), don't rule out using a vlserver just because there
-haven't been enough packets yet to calculate a real rtt.  Always set the
-server's probe rtt from the estimate provided by rxrpc_kernel_get_srtt,
-which is capped at 1 second.
+We define sp and ipsw in <asm/asmregs.h> using ".reg", and when using
+current binutils (snapshot 2.40.50.20230611) the definitions in
+<asm/assembly.h> using "=" conflict with those:
 
-This could lead to EDESTADDRREQ errors when accessing a cell for the
-first time, even though the vl servers are known and have responded to a
-probe.
+arch/parisc/include/asm/assembly.h: Assembler messages:
+arch/parisc/include/asm/assembly.h:93: Error: symbol `sp' is already defined
+arch/parisc/include/asm/assembly.h:95: Error: symbol `ipsw' is already defined
 
-Fixes: 1d4adfaf6574 ("rxrpc: Make rxrpc_kernel_get_srtt() indicate validity")
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: linux-afs@lists.infradead.org
-Link: http://lists.infradead.org/pipermail/linux-afs/2023-June/006746.html
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Delete the duplicate definitions in <asm/assembly.h>.
+
+Also delete the definition of gp, which isn't used anywhere.
+
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/vl_probe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/parisc/include/asm/assembly.h |    4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/fs/afs/vl_probe.c b/fs/afs/vl_probe.c
-index d1c7068b4346f..58452b86e6727 100644
---- a/fs/afs/vl_probe.c
-+++ b/fs/afs/vl_probe.c
-@@ -115,8 +115,8 @@ void afs_vlserver_probe_result(struct afs_call *call)
- 		}
- 	}
+--- a/arch/parisc/include/asm/assembly.h
++++ b/arch/parisc/include/asm/assembly.h
+@@ -90,10 +90,6 @@
+ #include <asm/asmregs.h>
+ #include <asm/psw.h>
  
--	if (rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us) &&
--	    rtt_us < server->probe.rtt) {
-+	rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us);
-+	if (rtt_us < server->probe.rtt) {
- 		server->probe.rtt = rtt_us;
- 		server->rtt = rtt_us;
- 		alist->preferred = index;
--- 
-2.39.2
-
+-	sp	=	30
+-	gp	=	27
+-	ipsw	=	22
+-
+ 	/*
+ 	 * We provide two versions of each macro to convert from physical
+ 	 * to virtual and vice versa. The "_r1" versions take one argument
 
 
