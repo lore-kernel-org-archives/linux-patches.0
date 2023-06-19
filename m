@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52FE3C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A984C433C8;
-	Mon, 19 Jun 2023 10:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6E23C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15123C433C8;
+	Mon, 19 Jun 2023 10:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171221;
-	bh=6Omcazp4ERw0XeCK4FxAOQ7zDZ5HzxGDwzhDS7KwBuI=;
+	s=korg; t=1687171224;
+	bh=dTMHqZm+d11Fd23qGB6AK54XsswmqL+O+qaQmWOZawU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7WhwKdrcoDMf+/NKCepGf/x8LqE0s6LJtIRq9vqN+0yfV2VEsr8Bz514BVqsPy9K
-	 zq7fyWhyuC2Hb3WF9rJ5YUB5KkFMFQGN4stoic4xBbL/XAG12h42f1eWLk1KfdulXQ
-	 oIeQJhqWUVGpolmsSOm3NiFS721UrFxr/+GVSy8w=
+	b=Cfi/9kOY/SsPX6+szKWwleEJrhWGxLXgrFdiTJSqP/xRrBkQi+gQIvQ7xOpuZnLco
+	 vVCbOKr6pzlXeYh9xeUYaxq31VqkBi8H+xYoQlbbo9me9P6PCnMajQsBs3fPf3TauM
+	 VPfc+1EWqe73W8zIaY4yDuJ/kk26h9oLFN0lbLxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.3 184/187] arm64: dts: qcom: sm8550: Use the correct LLCC register scheme
-Date: Mon, 19 Jun 2023 12:30:02 +0200
-Message-ID: <20230619102206.618457421@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.3 185/187] neighbour: delete neigh_lookup_nodev as not used
+Date: Mon, 19 Jun 2023 12:30:03 +0200
+Message-ID: <20230619102206.670225174@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,47 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit 661a4f089317c877aecd598fb70cd46510cc8d29 upstream.
+commit 76b9bf965c98c9b53ef7420b3b11438dbd764f92 upstream.
 
-During the ABI-breaking (for good reasons) conversion of the LLCC
-register description, SM8550 was not taken into account, resulting
-in LLCC being broken on any kernel containing the patch referenced
-in the fixes tag.
+neigh_lookup_nodev isn't used in the kernel after removal
+of DECnet. So let's remove it.
 
-Fix it by describing the regions properly.
-
-Fixes: ee13b5008707 ("qcom: llcc/edac: Fix the base address used for accessing LLCC banks")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230517-topic-kailua-llcc-v1-2-d57bd860c43e@linaro.org
+Fixes: 1202cdd66531 ("Remove DECnet support from kernel")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/eb5656200d7964b2d177a36b77efa3c597d6d72d.1678267343.git.leonro@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/net/neighbour.h |    2 --
+ net/core/neighbour.c    |   31 -------------------------------
+ 2 files changed, 33 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -3423,9 +3423,16 @@
+--- a/include/net/neighbour.h
++++ b/include/net/neighbour.h
+@@ -336,8 +336,6 @@ void neigh_table_init(int index, struct
+ int neigh_table_clear(int index, struct neigh_table *tbl);
+ struct neighbour *neigh_lookup(struct neigh_table *tbl, const void *pkey,
+ 			       struct net_device *dev);
+-struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
+-				     const void *pkey);
+ struct neighbour *__neigh_create(struct neigh_table *tbl, const void *pkey,
+ 				 struct net_device *dev, bool want_ref);
+ static inline struct neighbour *neigh_create(struct neigh_table *tbl,
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -627,37 +627,6 @@ struct neighbour *neigh_lookup(struct ne
+ }
+ EXPORT_SYMBOL(neigh_lookup);
  
- 		system-cache-controller@25000000 {
- 			compatible = "qcom,sm8550-llcc";
--			reg = <0 0x25000000 0 0x800000>,
-+			reg = <0 0x25000000 0 0x200000>,
-+			      <0 0x25200000 0 0x200000>,
-+			      <0 0x25400000 0 0x200000>,
-+			      <0 0x25600000 0 0x200000>,
- 			      <0 0x25800000 0 0x200000>;
--			reg-names = "llcc_base", "llcc_broadcast_base";
-+			reg-names = "llcc0_base",
-+				    "llcc1_base",
-+				    "llcc2_base",
-+				    "llcc3_base",
-+				    "llcc_broadcast_base";
- 			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
+-struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
+-				     const void *pkey)
+-{
+-	struct neighbour *n;
+-	unsigned int key_len = tbl->key_len;
+-	u32 hash_val;
+-	struct neigh_hash_table *nht;
+-
+-	NEIGH_CACHE_STAT_INC(tbl, lookups);
+-
+-	rcu_read_lock_bh();
+-	nht = rcu_dereference_bh(tbl->nht);
+-	hash_val = tbl->hash(pkey, NULL, nht->hash_rnd) >> (32 - nht->hash_shift);
+-
+-	for (n = rcu_dereference_bh(nht->hash_buckets[hash_val]);
+-	     n != NULL;
+-	     n = rcu_dereference_bh(n->next)) {
+-		if (!memcmp(n->primary_key, pkey, key_len) &&
+-		    net_eq(dev_net(n->dev), net)) {
+-			if (!refcount_inc_not_zero(&n->refcnt))
+-				n = NULL;
+-			NEIGH_CACHE_STAT_INC(tbl, hits);
+-			break;
+-		}
+-	}
+-
+-	rcu_read_unlock_bh();
+-	return n;
+-}
+-EXPORT_SYMBOL(neigh_lookup_nodev);
+-
+ static struct neighbour *
+ ___neigh_create(struct neigh_table *tbl, const void *pkey,
+ 		struct net_device *dev, u32 flags,
 
 
