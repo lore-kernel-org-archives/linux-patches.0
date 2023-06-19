@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB345381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DA5C433C8;
-	Mon, 19 Jun 2023 10:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0FE5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4F0C433C8;
+	Mon, 19 Jun 2023 10:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171272;
-	bh=M0yD0AvyMCbu57f3AvnQVnhdrDc/fK7pazbk16K+zxQ=;
+	s=korg; t=1687171275;
+	bh=IWEldQ9ADDZO1uTP/02CELiKRd7zYI2XmV89unQm5KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1uu5WPTDrMS87Eu5QBMQ0PIlCV4LWMlLYrLrIxUjrCrtSSa1MtDbAT5rb2RRKvGei
-	 EaZOhXq1gkda6+xoPsbyG1QRZJXZhm6eCp3Gt21x9g1vPZ+mqsJ0ya96MOQXK3iaTG
-	 EO6HmviIycEjdcE38vDPp7KPtcoqf0ET+/+KaZfQ=
+	b=kskmYcGDPdvik9Hh2yZV7iiJFrPcJQmEU3G7TwJxcioLL52WnczccRBe6N7Qz7+pI
+	 l+/9M9l6dTCxlxXIR1IyqH9mfwZcKWS4Br6sn0H9aPbVrmRzGyFNycO+Bf9Sg8Juz3
+	 OSvTgXCgwJo1mYNTk++lgJ2GGWEd5mwNg4ju1sl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wes Huang <wes.huang@moxa.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 21/49] net: usb: qmi_wwan: add support for Compal RXM-G1
-Date: Mon, 19 Jun 2023 12:29:59 +0200
-Message-ID: <20230619102130.960535097@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 03/49] ARM: dts: vexpress: add missing cache properties
+Date: Mon, 19 Jun 2023 12:29:41 +0200
+Message-ID: <20230619102130.026224256@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -35,85 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wes Huang <wes.huang@moxa.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 863199199713908afaa47ba09332b87621c12496 upstream.
+[ Upstream commit 328acc5657c6197753238d7ce0a6924ead829347 ]
 
-Add support for Compal RXM-G1 which is based on Qualcomm SDX55 chip.
-This patch adds support for two compositions:
+As all level 2 and level 3 caches are unified, add required
+cache-unified property to fix warnings like:
 
-0x9091: DIAG + MODEM + QMI_RMNET + ADB
-0x90db: DIAG + DUN + RMNET + DPL + QDSS(Trace) + ADB
+  vexpress-v2p-ca5s.dtb: cache-controller@2c0f0000: 'cache-unified' is a required property
 
-T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=05c6 ProdID=9091 Rev= 4.14
-S:  Manufacturer=QCOM
-S:  Product=SDXPRAIRIE-MTP _SN:719AB680
-S:  SerialNumber=719ab680
-C:* #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=896mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=(none)
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=84(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=05c6 ProdID=90db Rev= 4.14
-S:  Manufacturer=QCOM
-S:  Product=SDXPRAIRIE-MTP _SN:719AB680
-S:  SerialNumber=719ab680
-C:* #Ifs= 6 Cfg#= 1 Atr=80 MxPwr=896mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=(none)
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=(none)
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=84(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=8f(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Wes Huang <wes.huang@moxa.com>
-Acked-by: Bjørn Mork <bjorn@mork.no>
-Link: https://lore.kernel.org/r/20230608030141.3546-1-wes.huang@moxa.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230423150837.118466-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/vexpress-v2p-ca5s.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1181,7 +1181,9 @@ static const struct usb_device_id produc
- 	{QMI_FIXED_INTF(0x05c6, 0x9080, 8)},
- 	{QMI_FIXED_INTF(0x05c6, 0x9083, 3)},
- 	{QMI_FIXED_INTF(0x05c6, 0x9084, 4)},
-+	{QMI_QUIRK_SET_DTR(0x05c6, 0x9091, 2)},	/* Compal RXM-G1 */
- 	{QMI_FIXED_INTF(0x05c6, 0x90b2, 3)},    /* ublox R410M */
-+	{QMI_QUIRK_SET_DTR(0x05c6, 0x90db, 2)},	/* Compal RXM-G1 */
- 	{QMI_FIXED_INTF(0x05c6, 0x920d, 0)},
- 	{QMI_FIXED_INTF(0x05c6, 0x920d, 5)},
- 	{QMI_QUIRK_SET_DTR(0x05c6, 0x9625, 4)},	/* YUGA CLM920-NC5 */
+diff --git a/arch/arm/boot/dts/vexpress-v2p-ca5s.dts b/arch/arm/boot/dts/vexpress-v2p-ca5s.dts
+index e5b4a7570a010..13a75a87d571b 100644
+--- a/arch/arm/boot/dts/vexpress-v2p-ca5s.dts
++++ b/arch/arm/boot/dts/vexpress-v2p-ca5s.dts
+@@ -118,6 +118,7 @@ L2: cache-controller@2c0f0000 {
+ 		reg = <0x2c0f0000 0x1000>;
+ 		interrupts = <0 84 4>;
+ 		cache-level = <2>;
++		cache-unified;
+ 	};
+ 
+ 	pmu {
+-- 
+2.39.2
+
 
 
