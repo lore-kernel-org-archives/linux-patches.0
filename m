@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B2AC123
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:02:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8153DC433C0;
-	Mon, 19 Jun 2023 11:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8EBC123
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:02:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38799C433C8;
+	Mon, 19 Jun 2023 11:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172540;
-	bh=l1wGd2yotprsgEzyO3Jgy40iDfQxl8stbi8bxWzyJdY=;
+	s=korg; t=1687172543;
+	bh=5VWFGm7u2f+AWphWsV5INkUAYjy7RitaUIBTN9yRMUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=laZe62m38janRApKqSCBsvlYVrGjrUqMNqwsfa980vkEqc7SGNwI1hUUCk9ek98lz
-	 e3Seby1Wc+HWGwBRYilzB1IHs4opUEkjDxPJipu2lQyKYFIXW+ja6E9I2Zlnh2gPn5
-	 7fJHl/zw4PSAE8pg3j9/KleOEEhgPMHhGFkw59g4=
+	b=MMv4CREsxu01Ex7wfL33Tv2UTlbGSFKPLo6fnzmbZkf8GqnaxAYduEeNECKc67/04
+	 epKxUPXe/hpeb6FF6JAoEBLsHGCd4dJvgW2FEYOEbQx5kxCF3UUdnRVj7EurtnDaOA
+	 et6Y5bdc+Vd6wEzei4Rr7hL6Ra2+3kZcqMDEVeVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Frank Rowand <frank.rowand@sony.com>,
-	Rob Herring <robh@kernel.org>
-Subject: [PATCH 5.15 105/107] of: overlay: add entry to of_overlay_action_name[]
-Date: Mon, 19 Jun 2023 12:31:29 +0200
-Message-ID: <20230619102146.321876642@linuxfoundation.org>
+	Christian Loehle <cloehle@hyperstone.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 106/107] mmc: block: ensure error propagation for non-blk
+Date: Mon, 19 Jun 2023 12:31:30 +0200
+Message-ID: <20230619102146.363824608@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -35,132 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Rowand <frank.rowand@sony.com>
+From: Christian Loehle <CLoehle@hyperstone.com>
 
-commit 1ac17586c950a2c129393f8a92901a2b357acf24 upstream.
+commit 003fb0a51162d940f25fc35e70b0996a12c9e08a upstream.
 
-The values of enum of_overlay_notify_action are used to index into
-array of_overlay_action_name.  Add an entry to of_overlay_action_name
-for the value recently added to of_overlay_notify_action.
+Requests to the mmc layer usually come through a block device IO.
+The exceptions are the ioctl interface, RPMB chardev ioctl
+and debugfs, which issue their own blk_mq requests through
+blk_execute_rq and do not query the BLK_STS error but the
+mmcblk-internal drv_op_result. This patch ensures that drv_op_result
+defaults to an error and has to be overwritten by the operation
+to be considered successful.
 
-Array of_overlay_action_name[] is moved into include/linux/of.h
-adjacent to enum of_overlay_notify_action to make the connection
-between the two more obvious if either is modified in the future.
+The behavior leads to a bug where the request never propagates
+the error, e.g. by directly erroring out at mmc_blk_mq_issue_rq if
+mmc_blk_part_switch fails. The ioctl caller of the rpmb chardev then
+can never see an error (BLK_STS_IOERR, but drv_op_result is unchanged)
+and thus may assume that their call executed successfully when it did not.
 
-The only use of of_overlay_action_name is for error reporting in
-overlay_notify().  All callers of overlay_notify() report the same
-error, but with fewer details.  Remove the redundant error reports
-in the callers.
+While always checking the blk_execute_rq return value would be
+advised, let's eliminate the error by always setting
+drv_op_result as -EIO to be overwritten on success (or other error)
 
-Fixes: 067c098766c6 ("of: overlay: rework overlay apply and remove kfree()s")
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Frank Rowand <frank.rowand@sony.com>
-Signed-off-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20220502181742.1402826-2-frowand.list@gmail.com
+Fixes: 614f0388f580 ("mmc: block: move single ioctl() commands to block requests")
+Signed-off-by: Christian Loehle <cloehle@hyperstone.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/59c17ada35664b818b7bd83752119b2d@hyperstone.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Christian Loehle <cloehle@hyperstone.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/overlay.c |   27 +++++----------------------
- include/linux/of.h   |   13 +++++++++++++
- 2 files changed, 18 insertions(+), 22 deletions(-)
+ drivers/mmc/core/block.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/of/overlay.c
-+++ b/drivers/of/overlay.c
-@@ -152,13 +152,6 @@ int of_overlay_notifier_unregister(struc
- }
- EXPORT_SYMBOL_GPL(of_overlay_notifier_unregister);
- 
--static char *of_overlay_action_name[] = {
--	"pre-apply",
--	"post-apply",
--	"pre-remove",
--	"post-remove",
--};
--
- static int overlay_notify(struct overlay_changeset *ovcs,
- 		enum of_overlay_notify_action action)
- {
-@@ -178,7 +171,7 @@ static int overlay_notify(struct overlay
- 		if (notifier_to_errno(ret)) {
- 			ret = notifier_to_errno(ret);
- 			pr_err("overlay changeset %s notifier error %d, target: %pOF\n",
--			       of_overlay_action_name[action], ret, nd.target);
-+			       of_overlay_action_name(action), ret, nd.target);
- 			return ret;
- 		}
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -265,6 +265,7 @@ static ssize_t power_ro_lock_store(struc
+ 		goto out_put;
  	}
-@@ -926,10 +919,8 @@ static int of_overlay_apply(struct overl
- 		goto out;
- 
- 	ret = overlay_notify(ovcs, OF_OVERLAY_PRE_APPLY);
--	if (ret) {
--		pr_err("overlay changeset pre-apply notify error %d\n", ret);
-+	if (ret)
- 		goto out;
--	}
- 
- 	ret = build_changeset(ovcs);
- 	if (ret)
-@@ -952,12 +943,9 @@ static int of_overlay_apply(struct overl
- 	/* notify failure is not fatal, continue */
- 
- 	ret_tmp = overlay_notify(ovcs, OF_OVERLAY_POST_APPLY);
--	if (ret_tmp) {
--		pr_err("overlay changeset post-apply notify error %d\n",
--		       ret_tmp);
-+	if (ret_tmp)
- 		if (!ret)
- 			ret = ret_tmp;
--	}
- 
- out:
- 	pr_debug("%s() err=%d\n", __func__, ret);
-@@ -1193,10 +1181,8 @@ int of_overlay_remove(int *ovcs_id)
+ 	req_to_mmc_queue_req(req)->drv_op = MMC_DRV_OP_BOOT_WP;
++	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
+ 	blk_execute_rq(NULL, req, 0);
+ 	ret = req_to_mmc_queue_req(req)->drv_op_result;
+ 	blk_put_request(req);
+@@ -656,6 +657,7 @@ static int mmc_blk_ioctl_cmd(struct mmc_
+ 	idatas[0] = idata;
+ 	req_to_mmc_queue_req(req)->drv_op =
+ 		rpmb ? MMC_DRV_OP_IOCTL_RPMB : MMC_DRV_OP_IOCTL;
++	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
+ 	req_to_mmc_queue_req(req)->drv_op_data = idatas;
+ 	req_to_mmc_queue_req(req)->ioc_count = 1;
+ 	blk_execute_rq(NULL, req, 0);
+@@ -725,6 +727,7 @@ static int mmc_blk_ioctl_multi_cmd(struc
  	}
- 
- 	ret = overlay_notify(ovcs, OF_OVERLAY_PRE_REMOVE);
--	if (ret) {
--		pr_err("overlay changeset pre-remove notify error %d\n", ret);
-+	if (ret)
- 		goto err_unlock;
--	}
- 
- 	ret_apply = 0;
- 	ret = __of_changeset_revert_entries(&ovcs->cset, &ret_apply);
-@@ -1219,12 +1205,9 @@ int of_overlay_remove(int *ovcs_id)
- 	 * OF_OVERLAY_POST_REMOVE returns an error.
- 	 */
- 	ret_tmp = overlay_notify(ovcs, OF_OVERLAY_POST_REMOVE);
--	if (ret_tmp) {
--		pr_err("overlay changeset post-remove notify error %d\n",
--		       ret_tmp);
-+	if (ret_tmp)
- 		if (!ret)
- 			ret = ret_tmp;
--	}
- 
- 	free_overlay_changeset(ovcs);
- 
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -1493,6 +1493,19 @@ enum of_overlay_notify_action {
- 	OF_OVERLAY_POST_REMOVE,
- };
- 
-+static inline char *of_overlay_action_name(enum of_overlay_notify_action action)
-+{
-+	static char *of_overlay_action_name[] = {
-+		"init",
-+		"pre-apply",
-+		"post-apply",
-+		"pre-remove",
-+		"post-remove",
-+	};
-+
-+	return of_overlay_action_name[action];
-+}
-+
- struct of_overlay_notify_data {
- 	struct device_node *overlay;
- 	struct device_node *target;
+ 	req_to_mmc_queue_req(req)->drv_op =
+ 		rpmb ? MMC_DRV_OP_IOCTL_RPMB : MMC_DRV_OP_IOCTL;
++	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
+ 	req_to_mmc_queue_req(req)->drv_op_data = idata;
+ 	req_to_mmc_queue_req(req)->ioc_count = num_of_cmds;
+ 	blk_execute_rq(NULL, req, 0);
+@@ -2784,6 +2787,7 @@ static int mmc_dbg_card_status_get(void
+ 	if (IS_ERR(req))
+ 		return PTR_ERR(req);
+ 	req_to_mmc_queue_req(req)->drv_op = MMC_DRV_OP_GET_CARD_STATUS;
++	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
+ 	blk_execute_rq(NULL, req, 0);
+ 	ret = req_to_mmc_queue_req(req)->drv_op_result;
+ 	if (ret >= 0) {
+@@ -2822,6 +2826,7 @@ static int mmc_ext_csd_open(struct inode
+ 		goto out_free;
+ 	}
+ 	req_to_mmc_queue_req(req)->drv_op = MMC_DRV_OP_GET_EXT_CSD;
++	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
+ 	req_to_mmc_queue_req(req)->drv_op_data = &ext_csd;
+ 	blk_execute_rq(NULL, req, 0);
+ 	err = req_to_mmc_queue_req(req)->drv_op_result;
 
 
