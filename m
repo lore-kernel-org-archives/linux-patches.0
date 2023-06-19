@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E687EBE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFF7C433C9;
-	Mon, 19 Jun 2023 10:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6065BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F056C433CA;
+	Mon, 19 Jun 2023 10:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172191;
-	bh=ED+MAY+lB/StrJYEnoVv/rQyFMLSjTygkRSN6PyxbSg=;
+	s=korg; t=1687172194;
+	bh=QeiflcY9DVkYvsUqCPAhtatkqJHNkKDn2B24oltZc1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KIatXJe07epdW/eEkaVkG3taPFIP90JTDKHwp6+tLIScJyRNrdaZTQtK8/zfMW1qO
-	 AJeISX42xBzZ3+lja1WgYF9paZ8Q1GvjCjD7RpdB+Xx/1nXX5xNXYCyk/WoUO00cJ2
-	 AXiVKXj8yR+6akYZ00i8xT3FOdUuT70nzdLITFHo=
+	b=vCP6pm4r5Kvai2mmM72Tl69FmadEGBK0rTHS2fHoqk/YcMlpuR4K2ubg0D4haIcFS
+	 hdNYdl2nKuX3ymCIROxka78My3W5bbyfFcGFZKAnyf/vzTobMkoE7H7vY9bhgwkP0N
+	 jZ05HLc2hrygehjNWLIem5k4QJUaOSBC36IgxbUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Martin Schiller <ms@dev.tdt.de>,
-	"David S. Miller" <davem@davemloft.net>,
+	Lin Ma <linma@zju.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
+	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 70/89] net: lapbether: only support ethernet devices
-Date: Mon, 19 Jun 2023 12:30:58 +0200
-Message-ID: <20230619102141.450908068@linuxfoundation.org>
+Subject: [PATCH 5.10 71/89] net: tipc: resize nlattr array to correct size
+Date: Mon, 19 Jun 2023 12:30:59 +0200
+Message-ID: <20230619102141.494569176@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -37,94 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 9eed321cde22fc1afd76eac563ce19d899e0d6b2 ]
+[ Upstream commit 44194cb1b6045dea33ae9a0d54fb7e7cd93a2e09 ]
 
-It probbaly makes no sense to support arbitrary network devices
-for lapbether.
+According to nla_parse_nested_deprecated(), the tb[] is supposed to the
+destination array with maxtype+1 elements. In current
+tipc_nl_media_get() and __tipc_nl_media_set(), a larger array is used
+which is unnecessary. This patch resize them to a proper size.
 
-syzbot reported:
-
-skbuff: skb_under_panic: text:ffff80008934c100 len:44 put:40 head:ffff0000d18dd200 data:ffff0000d18dd1ea tail:0x16 end:0x140 dev:bond1
-kernel BUG at net/core/skbuff.c:200 !
-Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 0 PID: 5643 Comm: dhcpcd Not tainted 6.4.0-rc5-syzkaller-g4641cff8e810 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
-pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : skb_panic net/core/skbuff.c:196 [inline]
-pc : skb_under_panic+0x13c/0x140 net/core/skbuff.c:210
-lr : skb_panic net/core/skbuff.c:196 [inline]
-lr : skb_under_panic+0x13c/0x140 net/core/skbuff.c:210
-sp : ffff8000973b7260
-x29: ffff8000973b7270 x28: ffff8000973b7360 x27: dfff800000000000
-x26: ffff0000d85d8150 x25: 0000000000000016 x24: ffff0000d18dd1ea
-x23: ffff0000d18dd200 x22: 000000000000002c x21: 0000000000000140
-x20: 0000000000000028 x19: ffff80008934c100 x18: ffff8000973b68a0
-x17: 0000000000000000 x16: ffff80008a43bfbc x15: 0000000000000202
-x14: 0000000000000000 x13: 0000000000000001 x12: 0000000000000001
-x11: 0000000000000201 x10: 0000000000000000 x9 : f22f7eb937cced00
-x8 : f22f7eb937cced00 x7 : 0000000000000001 x6 : 0000000000000001
-x5 : ffff8000973b6b78 x4 : ffff80008df9ee80 x3 : ffff8000805974f4
-x2 : 0000000000000001 x1 : 0000000100000201 x0 : 0000000000000086
-Call trace:
-skb_panic net/core/skbuff.c:196 [inline]
-skb_under_panic+0x13c/0x140 net/core/skbuff.c:210
-skb_push+0xf0/0x108 net/core/skbuff.c:2409
-ip6gre_header+0xbc/0x738 net/ipv6/ip6_gre.c:1383
-dev_hard_header include/linux/netdevice.h:3137 [inline]
-lapbeth_data_transmit+0x1c4/0x298 drivers/net/wan/lapbether.c:257
-lapb_data_transmit+0x8c/0xb0 net/lapb/lapb_iface.c:447
-lapb_transmit_buffer+0x178/0x204 net/lapb/lapb_out.c:149
-lapb_send_control+0x220/0x320 net/lapb/lapb_subr.c:251
-lapb_establish_data_link+0x94/0xec
-lapb_device_event+0x348/0x4e0
-notifier_call_chain+0x1a4/0x510 kernel/notifier.c:93
-raw_notifier_call_chain+0x3c/0x50 kernel/notifier.c:461
-__dev_notify_flags+0x2bc/0x544
-dev_change_flags+0xd0/0x15c net/core/dev.c:8643
-devinet_ioctl+0x858/0x17e4 net/ipv4/devinet.c:1150
-inet_ioctl+0x2ac/0x4d8 net/ipv4/af_inet.c:979
-sock_do_ioctl+0x134/0x2dc net/socket.c:1201
-sock_ioctl+0x4ec/0x858 net/socket.c:1318
-vfs_ioctl fs/ioctl.c:51 [inline]
-__do_sys_ioctl fs/ioctl.c:870 [inline]
-__se_sys_ioctl fs/ioctl.c:856 [inline]
-__arm64_sys_ioctl+0x14c/0x1c8 fs/ioctl.c:856
-__invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
-invoke_syscall+0x98/0x2c0 arch/arm64/kernel/syscall.c:52
-el0_svc_common+0x138/0x244 arch/arm64/kernel/syscall.c:142
-do_el0_svc+0x64/0x198 arch/arm64/kernel/syscall.c:191
-el0_svc+0x4c/0x160 arch/arm64/kernel/entry-common.c:647
-el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:665
-el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
-Code: aa1803e6 aa1903e7 a90023f5 947730f5 (d4210000)
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Martin Schiller <ms@dev.tdt.de>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1e55417d8fc6 ("tipc: add media set to new netlink api")
+Fixes: 46f15c6794fb ("tipc: add media get/dump to new netlink api")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
+Link: https://lore.kernel.org/r/20230614120604.1196377-1-linma@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/lapbether.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/tipc/bearer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wan/lapbether.c b/drivers/net/wan/lapbether.c
-index b965eb6a4bb17..24c53cc0c112f 100644
---- a/drivers/net/wan/lapbether.c
-+++ b/drivers/net/wan/lapbether.c
-@@ -341,6 +341,9 @@ static int lapbeth_new_device(struct net_device *dev)
+diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
+index 91e678fa3feb5..df6aba2246fa0 100644
+--- a/net/tipc/bearer.c
++++ b/net/tipc/bearer.c
+@@ -1242,7 +1242,7 @@ int tipc_nl_media_get(struct sk_buff *skb, struct genl_info *info)
+ 	struct tipc_nl_msg msg;
+ 	struct tipc_media *media;
+ 	struct sk_buff *rep;
+-	struct nlattr *attrs[TIPC_NLA_BEARER_MAX + 1];
++	struct nlattr *attrs[TIPC_NLA_MEDIA_MAX + 1];
  
- 	ASSERT_RTNL();
+ 	if (!info->attrs[TIPC_NLA_MEDIA])
+ 		return -EINVAL;
+@@ -1291,7 +1291,7 @@ int __tipc_nl_media_set(struct sk_buff *skb, struct genl_info *info)
+ 	int err;
+ 	char *name;
+ 	struct tipc_media *m;
+-	struct nlattr *attrs[TIPC_NLA_BEARER_MAX + 1];
++	struct nlattr *attrs[TIPC_NLA_MEDIA_MAX + 1];
  
-+	if (dev->type != ARPHRD_ETHER)
-+		return -EINVAL;
-+
- 	ndev = alloc_netdev(sizeof(*lapbeth), "lapb%d", NET_NAME_UNKNOWN,
- 			    lapbeth_setup);
- 	if (!ndev)
+ 	if (!info->attrs[TIPC_NLA_MEDIA])
+ 		return -EINVAL;
 -- 
 2.39.2
 
