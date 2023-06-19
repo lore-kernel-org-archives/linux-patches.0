@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82772BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31EFC433C8;
-	Mon, 19 Jun 2023 10:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580EABE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D426BC433C8;
+	Mon, 19 Jun 2023 10:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172128;
-	bh=vNWqJYZVhPQBTX1FzplyB9TyaipC4shVc9UDbZEvL2o=;
+	s=korg; t=1687172131;
+	bh=xUbVM114PwpJY/cnRqxMbO2o/4irAVAp/eGavytAMmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXjs8jrjNnKxZwNzexOKt+Ra726xrSNl4cW52uo2kQtMPobAkYn+6QNJuIwLxdxbF
-	 LbGT3hmd0nhDVdCUm10EORfzeQwD0HJc8sv4oUtPp+zL2Hne4rHD3h1PL+bfBJlS8V
-	 oIo8h28JL6p9fQ/n5U3bJ8YTf/92dWzI69VvL/uk=
+	b=L5w0BD3Z0JSPzprIjnMcVNg5gbGb9rsSBnJmUbxlfJCovvN8AuPMMrlvPtmiziYUL
+	 JwdgMHixFjlM6XPbQ6dqVMsZtke7aqqhUB2V2mlggPafP4PD0VLH9v+oq9/2jCKKc0
+	 h95u+RcUgwb5k7ID5BGYVng+iU1Qn+4HazIM7g/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 47/89] netfilter: nfnetlink: skip error delivery on batch in case of ENOMEM
-Date: Mon, 19 Jun 2023 12:30:35 +0200
-Message-ID: <20230619102140.428334483@linuxfoundation.org>
+Subject: [PATCH 5.10 48/89] net: enetc: correct the indexes of highest and 2nd highest TCs
+Date: Mon, 19 Jun 2023 12:30:36 +0200
+Message-ID: <20230619102140.470298628@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -34,34 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit a1a64a151dae8ac3581c1cbde44b672045cb658b ]
+[ Upstream commit 21225873be1472b7c59ed3650396af0e40578112 ]
 
-If caller reports ENOMEM, then stop iterating over the batch and send a
-single netlink message to userspace to report OOM.
+For ENETC hardware, the TCs are numbered from 0 to N-1, where N
+is the number of TCs. Numerically higher TC has higher priority.
+It's obvious that the highest priority TC index should be N-1 and
+the 2nd highest priority TC index should be N-2.
 
-Fixes: cbb8125eb40b ("netfilter: nfnetlink: deliver netlink errors on batch completion")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+However, the previous logic uses netdev_get_prio_tc_map() to get
+the indexes of highest priority and 2nd highest priority TCs, it
+does not make sense and is incorrect to give a "tc" argument to
+netdev_get_prio_tc_map(). So the driver may get the wrong indexes
+of the two highest priotiry TCs which would lead to failed to set
+the CBS for the two highest priotiry TCs.
+
+e.g.
+$ tc qdisc add dev eno0 parent root handle 100: mqprio num_tc 6 \
+	map 0 0 1 1 2 3 4 5 queues 1@0 1@1 1@2 1@3 2@4 2@6 hw 1
+$ tc qdisc replace dev eno0 parent 100:6 cbs idleslope 100000 \
+	sendslope -900000 hicredit 12 locredit -113 offload 1
+$ Error: Specified device failed to setup cbs hardware offload.
+  ^^^^^
+
+In this example, the previous logic deems the indexes of the two
+highest priotiry TCs should be 3 and 2. Actually, the indexes are
+5 and 4, because the number of TCs is 6. So it would be failed to
+configure the CBS for the two highest priority TCs.
+
+Fixes: c431047c4efe ("enetc: add support Credit Based Shaper(CBS) for hardware offload")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/enetc/enetc_qos.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
-index edf386a020b9e..bec9ac8b8fbef 100644
---- a/net/netfilter/nfnetlink.c
-+++ b/net/netfilter/nfnetlink.c
-@@ -473,7 +473,8 @@ static void nfnetlink_rcv_batch(struct sk_buff *skb, struct nlmsghdr *nlh,
- 			 * processed, this avoids that the same error is
- 			 * reported several times when replaying the batch.
- 			 */
--			if (nfnl_err_add(&err_list, nlh, err, &extack) < 0) {
-+			if (err == -ENOMEM ||
-+			    nfnl_err_add(&err_list, nlh, err, &extack) < 0) {
- 				/* We failed to enqueue an error, reset the
- 				 * list of errors and send OOM to userspace
- 				 * pointing to the batch header.
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_qos.c b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+index 8d92dc6bc9945..d7215bd772f3e 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_qos.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+@@ -196,8 +196,8 @@ int enetc_setup_tc_cbs(struct net_device *ndev, void *type_data)
+ 	int bw_sum = 0;
+ 	u8 bw;
+ 
+-	prio_top = netdev_get_prio_tc_map(ndev, tc_nums - 1);
+-	prio_next = netdev_get_prio_tc_map(ndev, tc_nums - 2);
++	prio_top = tc_nums - 1;
++	prio_next = tc_nums - 2;
+ 
+ 	/* Support highest prio and second prio tc in cbs mode */
+ 	if (tc != prio_top && tc != prio_next)
 -- 
 2.39.2
 
