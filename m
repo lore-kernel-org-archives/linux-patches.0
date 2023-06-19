@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF37B5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE837C433C8;
-	Mon, 19 Jun 2023 10:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5715381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87858C433C9;
+	Mon, 19 Jun 2023 10:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171284;
-	bh=ZSnVp4a4e+iHgVyv368Tui9Sw5ExoFu7ZROVjxxXJS4=;
+	s=korg; t=1687171286;
+	bh=m1MCUynJzHlzO/CxOKsxforuCCzpcqmHOzcY+f2IYXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmZFmRYZ+dxfOEUonQ3rTcxtLDYheQ78y89zTGeYAsWaXqb+uGXPgqC3CKcaPk74z
-	 OX7t0BY+fB3pex8xVSDXmtukPPIjIHgAwygZksr/Q8szP9eDwoAn2bDgHFkwNEd3yN
-	 sUnf1Cz6FOaKn0PfOOUZwUKMT5hrTkq5q1ZBL03Q=
+	b=MNmvz24xPmDmTmBC/kW4CoJ/E1JAWn5QaGzFVoJZyAGXEG7BLWZbHjaGCu/MX4Jej
+	 kh78Uz/bjqDDCmCrQyfpTRmNa98z0el88AVizlksvVqHYAYsbYJRQCxOeMsxuX/wlE
+	 fa865j+kAiQgkJ1tpAgC758Jma+Pb5JV5yuGCMZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Evan Quan <Evan.Quan@amd.com>,
+	Lijo Lazar <Lijo.Lazar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 06/49] irqchip/meson-gpio: Mark OF related data as maybe unused
-Date: Mon, 19 Jun 2023 12:29:44 +0200
-Message-ID: <20230619102130.190081433@linuxfoundation.org>
+Subject: [PATCH 4.19 07/49] power: supply: Fix logic checking if system is running from battery
+Date: Mon, 19 Jun 2023 12:29:45 +0200
+Message-ID: <20230619102130.243890513@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -36,37 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 14130211be5366a91ec07c3284c183b75d8fba17 ]
+[ Upstream commit 95339f40a8b652b5b1773def31e63fc53c26378a ]
 
-The driver can be compile tested with !CONFIG_OF making certain data
-unused:
+The logic used for power_supply_is_system_supplied() counts all power
+supplies and assumes that the system is running from AC if there is
+either a non-battery power-supply reporting to be online or if no
+power-supplies exist at all.
 
-  drivers/irqchip/irq-meson-gpio.c:153:34: error: ‘meson_irq_gpio_matches’ defined but not used [-Werror=unused-const-variable=]
+The second rule is for desktop systems, that don't have any
+battery/charger devices. These systems will incorrectly report to be
+powered from battery once a device scope power-supply is registered
+(e.g. a HID device), since these power-supplies increase the counter.
 
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230512164506.212267-1-krzysztof.kozlowski@linaro.org
+Apart from HID devices, recent dGPUs provide UCSI power supplies on a
+desktop systems. The dGPU by default doesn't have anything plugged in so
+it's 'offline'. This makes power_supply_is_system_supplied() return 0
+with a count of 1 meaning all drivers that use this get a wrong judgement.
+
+To fix this case adjust the logic to also examine the scope of the power
+supply. If the power supply is deemed a device power supply, then don't
+count it.
+
+Cc: Evan Quan <Evan.Quan@amd.com>
+Suggested-by: Lijo Lazar <Lijo.Lazar@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-meson-gpio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/power_supply_core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-meson-gpio.c b/drivers/irqchip/irq-meson-gpio.c
-index 7599b10ecf09d..dcb22f2539eff 100644
---- a/drivers/irqchip/irq-meson-gpio.c
-+++ b/drivers/irqchip/irq-meson-gpio.c
-@@ -67,7 +67,7 @@ static const struct meson_gpio_irq_params axg_params = {
- 	.nr_hwirq = 100,
- };
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index 6a2d157c24759..3715a6c2955b2 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -350,6 +350,10 @@ static int __power_supply_is_system_supplied(struct device *dev, void *data)
+ 	struct power_supply *psy = dev_get_drvdata(dev);
+ 	unsigned int *count = data;
  
--static const struct of_device_id meson_irq_gpio_matches[] = {
-+static const struct of_device_id meson_irq_gpio_matches[] __maybe_unused = {
- 	{ .compatible = "amlogic,meson8-gpio-intc", .data = &meson8_params },
- 	{ .compatible = "amlogic,meson8b-gpio-intc", .data = &meson8b_params },
- 	{ .compatible = "amlogic,meson-gxbb-gpio-intc", .data = &gxbb_params },
++	if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_SCOPE, &ret))
++		if (ret.intval == POWER_SUPPLY_SCOPE_DEVICE)
++			return 0;
++
+ 	(*count)++;
+ 	if (psy->desc->type != POWER_SUPPLY_TYPE_BATTERY)
+ 		if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_ONLINE,
+@@ -368,8 +372,8 @@ int power_supply_is_system_supplied(void)
+ 				      __power_supply_is_system_supplied);
+ 
+ 	/*
+-	 * If no power class device was found at all, most probably we are
+-	 * running on a desktop system, so assume we are on mains power.
++	 * If no system scope power class device was found at all, most probably we
++	 * are running on a desktop system, so assume we are on mains power.
+ 	 */
+ 	if (count == 0)
+ 		return 1;
 -- 
 2.39.2
 
