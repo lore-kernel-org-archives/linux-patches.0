@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094C3BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843A8C433C0;
-	Mon, 19 Jun 2023 10:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5426BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8F4C433C0;
+	Mon, 19 Jun 2023 10:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172133;
-	bh=vAdsM+hjIZKz2nXd7bnVFlV9WvNPWJyMAkawniZXSjY=;
+	s=korg; t=1687172136;
+	bh=dQ0HxSnJfNGCquyFoKv00UWmKtFyIrU/8rPr5MrLuiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEw//rpi5qb4G9kSDpzEdJIzZwef1kL9DdbU3OY21MK5I+mhwFItvxGDXpDX8DOJB
-	 Wv4hfy4BQDjBZsWpjS9eyFPfmDFp4xgWlqehj84RQszrqRyM6z2wkG/LYitvWAM0M0
-	 vOInz+8k8sewNPrPFlOD0YT9ZzAgxfzSyCS2cA4I=
+	b=o43gcGFsrHRbppAZYyH6POo/zrlwF0s418SpqEIesdktEOf5PFp4s+wNn42fpXItq
+	 HXfHbGBUPokF7wO6YkrXlL5oYS4HbbzMoMskzHEw/HWm7WnLCT2jjXW+1FXJ08kcLR
+	 O/n8v6rjF2hV6fjh2NYXw+K9hTegquED2PyH9AwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 5.10 31/89] nios2: dts: Fix tse_mac "max-frame-size" property
-Date: Mon, 19 Jun 2023 12:30:19 +0200
-Message-ID: <20230619102139.704603479@linuxfoundation.org>
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Guillaume Nault <gnault@redhat.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 49/89] ping6: Fix send to link-local addresses with VRF.
+Date: Mon, 19 Jun 2023 12:30:37 +0200
+Message-ID: <20230619102140.514443039@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -34,46 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Janne Grunau <j@jannau.net>
+From: Guillaume Nault <gnault@redhat.com>
 
-commit 85041e12418fd0c08ff972b7729f7971afb361f8 upstream.
+[ Upstream commit 91ffd1bae1dafbb9e34b46813f5b058581d9144d ]
 
-The given value of 1518 seems to refer to the layer 2 ethernet frame
-size without 802.1Q tag. Actual use of the "max-frame-size" including in
-the consumer of the "altr,tse-1.0" compatible is the MTU.
+Ping sockets can't send packets when they're bound to a VRF master
+device and the output interface is set to a slave device.
 
-Fixes: 95acd4c7b69c ("nios2: Device tree support")
-Fixes: 61c610ec61bb ("nios2: Add Max10 device tree")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Janne Grunau <j@jannau.net>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For example, when net.ipv4.ping_group_range is properly set, so that
+ping6 can use ping sockets, the following kind of commands fails:
+  $ ip vrf exec red ping6 fe80::854:e7ff:fe88:4bf1%eth1
+
+What happens is that sk->sk_bound_dev_if is set to the VRF master
+device, but 'oif' is set to the real output device. Since both are set
+but different, ping_v6_sendmsg() sees their value as inconsistent and
+fails.
+
+Fix this by allowing 'oif' to be a slave device of ->sk_bound_dev_if.
+
+This fixes the following kselftest failure:
+  $ ./fcnal-test.sh -t ipv6_ping
+  [...]
+  TEST: ping out, vrf device+address bind - ns-B IPv6 LLA        [FAIL]
+
+Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Closes: https://lore.kernel.org/netdev/b6191f90-ffca-dbca-7d06-88a9788def9c@alu.unizg.hr/
+Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Fixes: 5e457896986e ("net: ipv6: Fix ping to link-local addresses.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/6c8b53108816a8d0d5705ae37bdc5a8322b5e3d9.1686153846.git.gnault@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/nios2/boot/dts/10m50_devboard.dts |    2 +-
- arch/nios2/boot/dts/3c120_devboard.dts |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/ping.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/nios2/boot/dts/10m50_devboard.dts
-+++ b/arch/nios2/boot/dts/10m50_devboard.dts
-@@ -97,7 +97,7 @@
- 			rx-fifo-depth = <8192>;
- 			tx-fifo-depth = <8192>;
- 			address-bits = <48>;
--			max-frame-size = <1518>;
-+			max-frame-size = <1500>;
- 			local-mac-address = [00 00 00 00 00 00];
- 			altr,has-supplementary-unicast;
- 			altr,enable-sup-addr = <1>;
---- a/arch/nios2/boot/dts/3c120_devboard.dts
-+++ b/arch/nios2/boot/dts/3c120_devboard.dts
-@@ -106,7 +106,7 @@
- 				interrupt-names = "rx_irq", "tx_irq";
- 				rx-fifo-depth = <8192>;
- 				tx-fifo-depth = <8192>;
--				max-frame-size = <1518>;
-+				max-frame-size = <1500>;
- 				local-mac-address = [ 00 00 00 00 00 00 ];
- 				phy-mode = "rgmii-id";
- 				phy-handle = <&phy0>;
+diff --git a/net/ipv6/ping.c b/net/ipv6/ping.c
+index 6ac88fe24a8e0..7fab29f3ce6e8 100644
+--- a/net/ipv6/ping.c
++++ b/net/ipv6/ping.c
+@@ -96,7 +96,8 @@ static int ping_v6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ 	addr_type = ipv6_addr_type(daddr);
+ 	if ((__ipv6_addr_needs_scope_id(addr_type) && !oif) ||
+ 	    (addr_type & IPV6_ADDR_MAPPED) ||
+-	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if))
++	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if &&
++	     l3mdev_master_ifindex_by_index(sock_net(sk), oif) != sk->sk_bound_dev_if))
+ 		return -EINVAL;
+ 
+ 	/* TODO: use ip6_datagram_send_ctl to get options from cmsg */
+-- 
+2.39.2
+
 
 
