@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948F73C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1990CC433C0;
-	Mon, 19 Jun 2023 10:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6003C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43D3C433C0;
+	Mon, 19 Jun 2023 10:37:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171055;
-	bh=27r0tyXi3rEI+hpo4kFpJsSCNtKJyG5BGnB9wB8UBLU=;
+	s=korg; t=1687171058;
+	bh=9Q/Qb7ZYPRmqdEB/QUXDxCQOT5kQDYXPzIN7sSovbWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5F43aGhUI8jvw7jlpc3OyYhM1YhZZe+V34hL5U9CyXa7i4IbYB3XkdpFu2PsnxgG
-	 TBZZxAaeIos/+7XDN2VrtbDw9k1k7PyBKy6GRmQFpiboNd4Y+tnLLom0LFE5RJCMEm
-	 bjFeBiJJtJlTzS9TBo0ZmGBomlg3fg55sosbTeI4=
+	b=eQ3oNjGtYlDISDRq9SunUQQBmLeN+/ldGaOIgZUbybB+MK6GiPprvo0zIIP8UAc2H
+	 +mgPhMw/Vag015G0kMI1dpEfVrHHDMsWTxqRQFTYVlSyOx/OZLAOxsWrMSeFpDXtT8
+	 GaP2AlAaMqo628saM1bGlvumthrONoWeUDoA52v0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 132/187] wifi: mac80211: fix link activation settings order
-Date: Mon, 19 Jun 2023 12:29:10 +0200
-Message-ID: <20230619102203.997608165@linuxfoundation.org>
+Subject: [PATCH 6.3 133/187] wifi: cfg80211: fix link del callback to call correct handler
+Date: Mon, 19 Jun 2023 12:29:11 +0200
+Message-ID: <20230619102204.055297943@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,58 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 01605ad6c3e8608d7e147c9b75d67eb8a3d27d88 ]
+[ Upstream commit 1ff56684fa8682bdfbbce4e12cf67ab23cb1db05 ]
 
-In the normal MLME code we always call
-ieee80211_mgd_set_link_qos_params() before
-ieee80211_link_info_change_notify() and some drivers,
-notably iwlwifi, rely on that as they don't do anything
-(but store the data) in their conf_tx.
+The wrapper function was incorrectly calling the add handler instead of
+the del handler. This had no negative side effect as the default
+handlers are essentially identical.
 
-Fix the order here to be the same as in the normal code
-paths, so this isn't broken.
-
-Fixes: 3d9011029227 ("wifi: mac80211: implement link switching")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: f2a0290b2df2 ("wifi: cfg80211: add optional link add/remove callbacks")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230608163202.a2a86bba2f80.Iac97e04827966d22161e63bb6e201b4061e9651b@changeid
+Link: https://lore.kernel.org/r/20230608163202.ebd00e000459.Iaff7dc8d1cdecf77f53ea47a0e5080caa36ea02a@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/link.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/wireless/rdev-ops.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/link.c b/net/mac80211/link.c
-index 8c8869cc1fb4c..aab4d7b4def24 100644
---- a/net/mac80211/link.c
-+++ b/net/mac80211/link.c
+diff --git a/net/wireless/rdev-ops.h b/net/wireless/rdev-ops.h
+index 13b209a8db287..ee853a14a02de 100644
+--- a/net/wireless/rdev-ops.h
++++ b/net/wireless/rdev-ops.h
 @@ -2,7 +2,7 @@
  /*
-  * MLO link handling
-  *
-- * Copyright (C) 2022 Intel Corporation
-+ * Copyright (C) 2022-2023 Intel Corporation
+  * Portions of this file
+  * Copyright(c) 2016-2017 Intel Deutschland GmbH
+- * Copyright (C) 2018, 2021-2022 Intel Corporation
++ * Copyright (C) 2018, 2021-2023 Intel Corporation
   */
- #include <linux/slab.h>
- #include <linux/kernel.h>
-@@ -404,6 +404,7 @@ static int _ieee80211_set_active_links(struct ieee80211_sub_if_data *sdata,
- 						 IEEE80211_CHANCTX_SHARED);
- 		WARN_ON_ONCE(ret);
+ #ifndef __CFG80211_RDEV_OPS
+ #define __CFG80211_RDEV_OPS
+@@ -1441,8 +1441,8 @@ rdev_del_intf_link(struct cfg80211_registered_device *rdev,
+ 		   unsigned int link_id)
+ {
+ 	trace_rdev_del_intf_link(&rdev->wiphy, wdev, link_id);
+-	if (rdev->ops->add_intf_link)
+-		rdev->ops->add_intf_link(&rdev->wiphy, wdev, link_id);
++	if (rdev->ops->del_intf_link)
++		rdev->ops->del_intf_link(&rdev->wiphy, wdev, link_id);
+ 	trace_rdev_return_void(&rdev->wiphy);
+ }
  
-+		ieee80211_mgd_set_link_qos_params(link);
- 		ieee80211_link_info_change_notify(sdata, link,
- 						  BSS_CHANGED_ERP_CTS_PROT |
- 						  BSS_CHANGED_ERP_PREAMBLE |
-@@ -418,7 +419,6 @@ static int _ieee80211_set_active_links(struct ieee80211_sub_if_data *sdata,
- 						  BSS_CHANGED_TWT |
- 						  BSS_CHANGED_HE_OBSS_PD |
- 						  BSS_CHANGED_HE_BSS_COLOR);
--		ieee80211_mgd_set_link_qos_params(link);
- 	}
- 
- 	old_active = sdata->vif.active_links;
 -- 
 2.39.2
 
