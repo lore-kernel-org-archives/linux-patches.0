@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF385381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:47:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47A0C433C0;
-	Mon, 19 Jun 2023 10:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512A35381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:47:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0966C433C0;
+	Mon, 19 Jun 2023 10:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171634;
-	bh=l4iR0TM5TYSGVy5otvPeNXeea5rr2YLq24YhPxLCYKE=;
+	s=korg; t=1687171637;
+	bh=ETVo7aRs3T90aAd7PwWEtEbmfgNjp8P6z9BpSHgoF8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNDLuzQvehSQga8/fZ+pKI5KnMIhYe5qf1g7cQB6iks0cc54OFeM9GbmrGxbUT31P
-	 +QWewkTm1ZX/yY/mE/fjJu2JfOegvURM4gY0oY/Q4MQyhRrSloY8f2ut1yVFRlT5kQ
-	 dCjxDTJMZtX28pzgYu5XO5wK9zAe1CLXJ0TOiTZk=
+	b=NFEB1RrwrSFpoZP9seYcI1D/BhswA7YkMvDcEtQ7etYu4XdTrCU/WKa/cyDo9zgJP
+	 FNrQNYRSe8ChZtikbGrKLrii488uNH4wC7RfCLNNemFxfkNtqBybC9NXlN1zwE2p9a
+	 vP8Blkm360YUVtfRxoC7amU+i0wwNA/ZkXtcbZ+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Guillaume Nault <gnault@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
+	Yuezhen Luan <eggcar.luan@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/166] ping6: Fix send to link-local addresses with VRF.
-Date: Mon, 19 Jun 2023 12:29:38 +0200
-Message-ID: <20230619102159.680260230@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 102/166] igb: Fix extts capture value format for 82580/i354/i350
+Date: Mon, 19 Jun 2023 12:29:39 +0200
+Message-ID: <20230619102159.735572477@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -37,56 +39,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Yuezhen Luan <eggcar.luan@gmail.com>
 
-[ Upstream commit 91ffd1bae1dafbb9e34b46813f5b058581d9144d ]
+[ Upstream commit 6292d7436cf2f0a2ea8800a1d2cbb155d237818a ]
 
-Ping sockets can't send packets when they're bound to a VRF master
-device and the output interface is set to a slave device.
+82580/i354/i350 features circle-counter-like timestamp registers
+that are different with newer i210. The EXTTS capture value in
+AUXTSMPx should be converted from raw circle counter value to
+timestamp value in resolution of 1 nanosec by the driver.
 
-For example, when net.ipv4.ping_group_range is properly set, so that
-ping6 can use ping sockets, the following kind of commands fails:
-  $ ip vrf exec red ping6 fe80::854:e7ff:fe88:4bf1%eth1
+This issue can be reproduced on i350 nics, connecting an 1PPS
+signal to a SDP pin, and run 'ts2phc' command to read external
+1PPS timestamp value. On i210 this works fine, but on i350 the
+extts is not correctly converted.
 
-What happens is that sk->sk_bound_dev_if is set to the VRF master
-device, but 'oif' is set to the real output device. Since both are set
-but different, ping_v6_sendmsg() sees their value as inconsistent and
-fails.
+The i350/i354/82580's SYSTIM and other timestamp registers are
+40bit counters, presenting time range of 2^40 ns, that means these
+registers overflows every about 1099s. This causes all these regs
+can't be used directly in contrast to the newer i210/i211s.
 
-Fix this by allowing 'oif' to be a slave device of ->sk_bound_dev_if.
+The igb driver needs to convert these raw register values to
+valid time stamp format by using kernel timecounter apis for i350s
+families. Here the igb_extts() just forgot to do the convert.
 
-This fixes the following kselftest failure:
-  $ ./fcnal-test.sh -t ipv6_ping
-  [...]
-  TEST: ping out, vrf device+address bind - ns-B IPv6 LLA        [FAIL]
-
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/b6191f90-ffca-dbca-7d06-88a9788def9c@alu.unizg.hr/
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Fixes: 5e457896986e ("net: ipv6: Fix ping to link-local addresses.")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/6c8b53108816a8d0d5705ae37bdc5a8322b5e3d9.1686153846.git.gnault@redhat.com
+Fixes: 38970eac41db ("igb: support EXTTS on 82580/i354/i350")
+Signed-off-by: Yuezhen Luan <eggcar.luan@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230607164116.3768175-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ping.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_main.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ping.c b/net/ipv6/ping.c
-index 808983bc2ec9f..4651aaf70db4f 100644
---- a/net/ipv6/ping.c
-+++ b/net/ipv6/ping.c
-@@ -114,7 +114,8 @@ static int ping_v6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	addr_type = ipv6_addr_type(daddr);
- 	if ((__ipv6_addr_needs_scope_id(addr_type) && !oif) ||
- 	    (addr_type & IPV6_ADDR_MAPPED) ||
--	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if))
-+	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if &&
-+	     l3mdev_master_ifindex_by_index(sock_net(sk), oif) != sk->sk_bound_dev_if))
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index b3aed4e2ca91c..18ffbc892f86c 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -6893,6 +6893,7 @@ static void igb_extts(struct igb_adapter *adapter, int tsintr_tt)
+ 	struct e1000_hw *hw = &adapter->hw;
+ 	struct ptp_clock_event event;
+ 	struct timespec64 ts;
++	unsigned long flags;
  
- 	ipcm6_init_sk(&ipc6, np);
+ 	if (pin < 0 || pin >= IGB_N_SDP)
+ 		return;
+@@ -6900,9 +6901,12 @@ static void igb_extts(struct igb_adapter *adapter, int tsintr_tt)
+ 	if (hw->mac.type == e1000_82580 ||
+ 	    hw->mac.type == e1000_i354 ||
+ 	    hw->mac.type == e1000_i350) {
+-		s64 ns = rd32(auxstmpl);
++		u64 ns = rd32(auxstmpl);
+ 
+-		ns += ((s64)(rd32(auxstmph) & 0xFF)) << 32;
++		ns += ((u64)(rd32(auxstmph) & 0xFF)) << 32;
++		spin_lock_irqsave(&adapter->tmreg_lock, flags);
++		ns = timecounter_cyc2time(&adapter->tc, ns);
++		spin_unlock_irqrestore(&adapter->tmreg_lock, flags);
+ 		ts = ns_to_timespec64(ns);
+ 	} else {
+ 		ts.tv_nsec = rd32(auxstmpl);
 -- 
 2.39.2
 
