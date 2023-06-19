@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA885381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A94C433C8;
-	Mon, 19 Jun 2023 10:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA7C5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F4FC433C0;
+	Mon, 19 Jun 2023 10:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171459;
-	bh=SbhS7xWumawf0IXidumAoQr5bvCJ0c1u2Ym7dhm+aq8=;
+	s=korg; t=1687171461;
+	bh=g5Mcy1Hoazu8j6kQL47nV2n6axlctLe1SX0rEi+qut0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2DcKgietJOkVyTYiZO1/lx4MIC64HvGVfYsMGd27zYjsqFxuB6LVhGtv8jZCwRga
-	 dY6+NpuBPTogVkHkoWwT4V2t3Cm0nGyZtdvk8UvrEyP5xFdpcEDslmMwB8L5eobOTa
-	 /VkGmW/l3x7C0HJj/uXmqsFz18RSvIhDGGlUpYoM=
+	b=kJP6zwn592x2ntZIxjCxzOWMvN4XLolWhynpTiCk1CHq3IRWIODsLNNwV2dTUGN1t
+	 GnIxl4gFVt2YUiShPjuVEnGJlls+5BjnTeGDS2JdhqXlsgAOJ7KCxVxYqPYnW0QHbg
+	 5c/AILykcJkFC7BxpgTONbuLlqDHuFRvV5s1DAn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sukrut Bellary <sukrut.bellary@linux.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Wenwen Chen <wenwen.chen@samsung.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/166] drm:amd:amdgpu: Fix missing buffer object unlock in failure path
-Date: Mon, 19 Jun 2023 12:28:36 +0200
-Message-ID: <20230619102156.627007922@linuxfoundation.org>
+Subject: [PATCH 6.1 040/166] io_uring: unlock sqd->lock before sq thread release CPU
+Date: Mon, 19 Jun 2023 12:28:37 +0200
+Message-ID: <20230619102156.669496975@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,57 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sukrut Bellary <sukrut.bellary@linux.com>
+From: Wenwen Chen <wenwen.chen@samsung.com>
 
-[ Upstream commit 60ecaaf54886b0642d5c4744f7fbf1ff0d6b3e42 ]
+[ Upstream commit 533ab73f5b5c95dcb4152b52d5482abcc824c690 ]
 
-smatch warning -
-1) drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c:3615 gfx_v9_0_kiq_resume()
-warn: inconsistent returns 'ring->mqd_obj->tbo.base.resv'.
+The sq thread actively releases CPU resources by calling the
+cond_resched() and schedule() interfaces when it is idle. Therefore,
+more resources are available for other threads to run.
 
-2) drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c:6901 gfx_v10_0_kiq_resume()
-warn: inconsistent returns 'ring->mqd_obj->tbo.base.resv'.
+There exists a problem in sq thread: it does not unlock sqd->lock before
+releasing CPU resources every time. This makes other threads pending on
+sqd->lock for a long time. For example, the following interfaces all
+require sqd->lock: io_sq_offload_create(), io_register_iowq_max_workers()
+and io_ring_exit_work().
 
-Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Before the sq thread releases CPU resources, unlocking sqd->lock will
+provide the user a better experience because it can respond quickly to
+user requests.
+
+Signed-off-by: Kanchan Joshi<joshi.k@samsung.com>
+Signed-off-by: Wenwen Chen<wenwen.chen@samsung.com>
+Link: https://lore.kernel.org/r/20230525082626.577862-1-wenwen.chen@samsung.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c | 4 +++-
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c  | 4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ io_uring/sqpoll.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-index 2127aab74a68f..84a36b50ddd87 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-@@ -6969,8 +6969,10 @@ static int gfx_v10_0_kiq_resume(struct amdgpu_device *adev)
- 		return r;
+diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
+index 559652380672c..6ffa5cf1bbb86 100644
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -256,9 +256,13 @@ static int io_sq_thread(void *data)
+ 			sqt_spin = true;
  
- 	r = amdgpu_bo_kmap(ring->mqd_obj, (void **)&ring->mqd_ptr);
--	if (unlikely(r != 0))
-+	if (unlikely(r != 0)) {
-+		amdgpu_bo_unreserve(ring->mqd_obj);
- 		return r;
-+	}
+ 		if (sqt_spin || !time_after(jiffies, timeout)) {
+-			cond_resched();
+ 			if (sqt_spin)
+ 				timeout = jiffies + sqd->sq_thread_idle;
++			if (unlikely(need_resched())) {
++				mutex_unlock(&sqd->lock);
++				cond_resched();
++				mutex_lock(&sqd->lock);
++			}
+ 			continue;
+ 		}
  
- 	gfx_v10_0_kiq_init_queue(ring);
- 	amdgpu_bo_kunmap(ring->mqd_obj);
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index 1f3fdf6cb903e..fe371022e5104 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -3650,8 +3650,10 @@ static int gfx_v9_0_kiq_resume(struct amdgpu_device *adev)
- 		return r;
- 
- 	r = amdgpu_bo_kmap(ring->mqd_obj, (void **)&ring->mqd_ptr);
--	if (unlikely(r != 0))
-+	if (unlikely(r != 0)) {
-+		amdgpu_bo_unreserve(ring->mqd_obj);
- 		return r;
-+	}
- 
- 	gfx_v9_0_kiq_init_queue(ring);
- 	amdgpu_bo_kunmap(ring->mqd_obj);
 -- 
 2.39.2
 
