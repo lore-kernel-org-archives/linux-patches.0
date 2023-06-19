@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B529EA94D
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE564C433C0;
-	Mon, 19 Jun 2023 11:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE38AD26
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80960C433C8;
+	Mon, 19 Jun 2023 11:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172436;
-	bh=ZkDIXLnUdokvY1pT6o294zlkfX76L1K+Xpw7CWJZBjk=;
+	s=korg; t=1687172438;
+	bh=ry/3wrTq4NfdsFJUOZxLBB2BeANMNny2fFTz6vO4Dxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fIUTcFmFNQhgUFwdSt34FQMdxx/3nY5p3ASi89BObRtF1b9qFNFVolaV1M2YJoVav
-	 Uvujza6QZfQwJGsCv98GBZS3XW+hNHfSwEyslyn8zFIWziT5Utg7KenCQcBDGNdmIs
-	 cbxyy2QsOT57+eeOPWKJ5t+5uEfCFISk5KG6Z0j0=
+	b=OGcZUuBZoyCY032uqqlJGQaxf6UWCC+t6LlHoE+GGVAXralszBw4GgV3GWV7vGzTP
+	 DSgSNzHAjK4INq0UUwaA4gFiJzvTliLSDPpMm9q8SLAlrmiV9RnQkrbkQk2QXoqNPo
+	 Mn1fmDJNUenwiStJMJsnzpc8jro8j9Ib6XqkJsbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Max Tottenham <mtottenh@akamai.com>,
+	Josh Hunt <johunt@akamai.com>,
+	kernel test robot <lkp@intel.com>,
 	Pedro Tammela <pctammela@mojatatu.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/107] net/sched: act_pedit: remove extra check for key type
-Date: Mon, 19 Jun 2023 12:30:52 +0200
-Message-ID: <20230619102144.707296022@linuxfoundation.org>
+Subject: [PATCH 5.15 069/107] net/sched: act_pedit: Parse L3 Header for L4 offset
+Date: Mon, 19 Jun 2023 12:30:53 +0200
+Message-ID: <20230619102144.756427284@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -37,93 +38,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Max Tottenham <mtottenh@akamai.com>
 
-[ Upstream commit 577140180ba28d0d37bc898c7bd6702c83aa106f ]
+[ Upstream commit 6c02568fd1ae53099b4ab86365c5be1ff15f586b ]
 
-The netlink parsing already validates the key 'htype'.
-Remove the datapath check as it's redundant.
+Instead of relying on skb->transport_header being set correctly, opt
+instead to parse the L3 header length out of the L3 headers for both
+IPv4/IPv6 when the Extended Layer Op for tcp/udp is used. This fixes a
+bug if GRO is disabled, when GRO is disabled skb->transport_header is
+set by __netif_receive_skb_core() to point to the L3 header, it's later
+fixed by the upper protocol layers, but act_pedit will receive the SKB
+before the fixups are completed. The existing behavior causes the
+following to edit the L3 header if GRO is disabled instead of the UDP
+header:
 
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+    tc filter add dev eth0 ingress protocol ip flower ip_proto udp \
+ dst_ip 192.168.1.3 action pedit ex munge udp set dport 18053
+
+Also re-introduce a rate-limited warning if we were unable to extract
+the header offset when using the 'ex' interface.
+
+Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to
+the conventional network headers")
+Signed-off-by: Max Tottenham <mtottenh@akamai.com>
+Reviewed-by: Josh Hunt <johunt@akamai.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202305261541.N165u9TZ-lkp@intel.com/
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 6c02568fd1ae ("net/sched: act_pedit: Parse L3 Header for L4 offset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 29 +++++++----------------------
- 1 file changed, 7 insertions(+), 22 deletions(-)
+ net/sched/act_pedit.c | 48 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 43 insertions(+), 5 deletions(-)
 
 diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 0237d898fabea..e3bc5bb6c60ef 100644
+index e3bc5bb6c60ef..e77da0545b553 100644
 --- a/net/sched/act_pedit.c
 +++ b/net/sched/act_pedit.c
-@@ -313,37 +313,28 @@ static bool offset_valid(struct sk_buff *skb, int offset)
+@@ -13,7 +13,10 @@
+ #include <linux/rtnetlink.h>
+ #include <linux/module.h>
+ #include <linux/init.h>
++#include <linux/ip.h>
++#include <linux/ipv6.h>
+ #include <linux/slab.h>
++#include <net/ipv6.h>
+ #include <net/netlink.h>
+ #include <net/pkt_sched.h>
+ #include <linux/tc_act/tc_pedit.h>
+@@ -313,28 +316,58 @@ static bool offset_valid(struct sk_buff *skb, int offset)
  	return true;
  }
  
--static int pedit_skb_hdr_offset(struct sk_buff *skb,
--				enum pedit_header_type htype, int *hoffset)
-+static void pedit_skb_hdr_offset(struct sk_buff *skb,
-+				 enum pedit_header_type htype, int *hoffset)
+-static void pedit_skb_hdr_offset(struct sk_buff *skb,
++static int pedit_l4_skb_offset(struct sk_buff *skb, int *hoffset, const int header_type)
++{
++	const int noff = skb_network_offset(skb);
++	int ret = -EINVAL;
++	struct iphdr _iph;
++
++	switch (skb->protocol) {
++	case htons(ETH_P_IP): {
++		const struct iphdr *iph = skb_header_pointer(skb, noff, sizeof(_iph), &_iph);
++
++		if (!iph)
++			goto out;
++		*hoffset = noff + iph->ihl * 4;
++		ret = 0;
++		break;
++	}
++	case htons(ETH_P_IPV6):
++		ret = ipv6_find_hdr(skb, hoffset, header_type, NULL, NULL) == header_type ? 0 : -EINVAL;
++		break;
++	}
++out:
++	return ret;
++}
++
++static int pedit_skb_hdr_offset(struct sk_buff *skb,
+ 				 enum pedit_header_type htype, int *hoffset)
  {
--	int ret = -EINVAL;
--
-+	/* 'htype' is validated in the netlink parsing */
++	int ret = -EINVAL;
+ 	/* 'htype' is validated in the netlink parsing */
  	switch (htype) {
  	case TCA_PEDIT_KEY_EX_HDR_TYPE_ETH:
--		if (skb_mac_header_was_set(skb)) {
-+		if (skb_mac_header_was_set(skb))
+-		if (skb_mac_header_was_set(skb))
++		if (skb_mac_header_was_set(skb)) {
  			*hoffset = skb_mac_offset(skb);
--			ret = 0;
--		}
++			ret = 0;
++		}
  		break;
  	case TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK:
  	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP4:
  	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP6:
  		*hoffset = skb_network_offset(skb);
--		ret = 0;
++		ret = 0;
  		break;
  	case TCA_PEDIT_KEY_EX_HDR_TYPE_TCP:
++		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_TCP);
++		break;
  	case TCA_PEDIT_KEY_EX_HDR_TYPE_UDP:
--		if (skb_transport_header_was_set(skb)) {
-+		if (skb_transport_header_was_set(skb))
- 			*hoffset = skb_transport_offset(skb);
--			ret = 0;
--		}
+-		if (skb_transport_header_was_set(skb))
+-			*hoffset = skb_transport_offset(skb);
++		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_UDP);
  		break;
  	default:
--		ret = -EINVAL;
  		break;
  	}
--
--	return ret;
++	return ret;
  }
  
  static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
-@@ -375,10 +366,9 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
- 
- 	for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
- 		int offset = tkey->off;
-+		int hoffset = 0;
+@@ -369,6 +402,7 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 		int hoffset = 0;
  		u32 *ptr, hdata;
--		int hoffset;
  		u32 val;
--		int rc;
++		int rc;
  
  		if (tkey_ex) {
  			htype = tkey_ex->htype;
-@@ -387,12 +377,7 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+@@ -377,7 +411,11 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
  			tkey_ex++;
  		}
  
--		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
--		if (rc) {
--			pr_info("tc action pedit bad header type specified (0x%x)\n",
--				htype);
--			goto bad;
--		}
-+		pedit_skb_hdr_offset(skb, htype, &hoffset);
+-		pedit_skb_hdr_offset(skb, htype, &hoffset);
++		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
++		if (rc) {
++			pr_info_ratelimited("tc action pedit unable to extract header offset for header type (0x%x)\n", htype);
++			goto bad;
++		}
  
  		if (tkey->offmask) {
  			u8 *d, _d;
