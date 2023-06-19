@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AAEC123
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:01:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B88C433C8;
-	Mon, 19 Jun 2023 11:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080F3C142
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:01:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C68C433CA;
+	Mon, 19 Jun 2023 11:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172486;
-	bh=xTTRDidfmK57WDOK+smNfRhQQd3ht4ttZwR0D/Gt3n8=;
+	s=korg; t=1687172491;
+	bh=zq4nnTlqtmiqbR77FE7idtr8cdB+41VJ+u5WnJZMXxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lUBhHwWTPk/3M8M2ijtM3q7X6XR1Eyta9n19LbX0cDwZVj83KzkUCNZ/M5wheskZV
-	 QUfutiAzN6gpW8XYbO/B/5tKEhDPlxSxJQN2PyNhq1e6eVt5r5H8/uAuXEM/yYRrQA
-	 KAq70E+4zcoaLuSaBuO51qgDyYM+6RL46Z/xYyu0=
+	b=JAkdsWPjKa1qSPXIz+9SZVa2WIVTqQPE8g102/pkbyRvEiVyR0imqR4IeyyAiVy3C
+	 VLtf2/racF8TaZHufDWYk+VDITnMrH+e9yUQbelGk9nvEec+fgScrIR1K4OtICTbUJ
+	 sQbpdViW1G5r9B63TdHWqzWPzMBhV0oxcjSRToA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	michel@daenzer.net,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 050/107] drm/amdgpu: add missing radeon secondary PCI ID
-Date: Mon, 19 Jun 2023 12:30:34 +0200
-Message-ID: <20230619102143.896311405@linuxfoundation.org>
+	Ratchanan Srirattanamet <peathot@hotmail.com>,
+	Karol Herbst <kherbst@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 088/107] drm/nouveau: dont detect DSM for non-NVIDIA device
+Date: Mon, 19 Jun 2023 12:31:12 +0200
+Message-ID: <20230619102145.593622292@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -35,32 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Ratchanan Srirattanamet <peathot@hotmail.com>
 
-commit e61f67749b351c19455ce3085af2ae9af80023bc upstream.
+[ Upstream commit 11d24327c2d7ad7f24fcc44fb00e1fa91ebf6525 ]
 
-0x5b70 is a missing RV370 secondary id.  Add it so
-we don't try and probe it with amdgpu.
+The call site of nouveau_dsm_pci_probe() uses single set of output
+variables for all invocations. So, we must not write anything to them
+unless it's an NVIDIA device. Otherwise, if we are called with another
+device after the NVIDIA device, we'll clober the result of the NVIDIA
+device.
 
-Cc: michel@daenzer.net
-Reviewed-by: Michel Dänzer <mdaenzer@redhat.com>
-Tested-by: Michel Dänzer <mdaenzer@redhat.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For example, if the other device doesn't have _PR3 resources, the
+detection later would miss the presence of power resource support, and
+the rest of the code will keep using Optimus DSM, breaking power
+management for that machine.
+
+Also, because we're detecting NVIDIA's DSM, it doesn't make sense to run
+this detection on a non-NVIDIA device anyway. Thus, check at the
+beginning of the detection code if this is an NVIDIA card, and just
+return if it isn't.
+
+This, together with commit d22915d22ded ("drm/nouveau/devinit/tu102-:
+wait for GFW_BOOT_PROGRESS == COMPLETED") developed independently and
+landed earlier, fixes runtime power management of the NVIDIA card in
+Lenovo Legion 5-15ARH05. Without this patch, the GPU resumption code
+will "timeout", sometimes hanging userspace.
+
+As a bonus, we'll also stop preventing _PR3 usage from the bridge for
+unrelated devices, which is always nice, I guess.
+
+Fixes: ccfc2d5cdb02 ("drm/nouveau: Use generic helper to check _PR3 presence")
+Signed-off-by: Ratchanan Srirattanamet <peathot@hotmail.com>
+Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/79
+Reviewed-by: Karol Herbst <kherbst@redhat.com>
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/DM6PR19MB2780805D4BE1E3F9B3AC96D0BC409@DM6PR19MB2780.namprd19.prod.outlook.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/nouveau/nouveau_acpi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -1557,6 +1557,7 @@ static const u16 amdgpu_unsupported_pcii
- 	0x5874,
- 	0x5940,
- 	0x5941,
-+	0x5b70,
- 	0x5b72,
- 	0x5b73,
- 	0x5b74,
+diff --git a/drivers/gpu/drm/nouveau/nouveau_acpi.c b/drivers/gpu/drm/nouveau/nouveau_acpi.c
+index 7c15f64484281..9c55f205ab663 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_acpi.c
++++ b/drivers/gpu/drm/nouveau/nouveau_acpi.c
+@@ -220,6 +220,9 @@ static void nouveau_dsm_pci_probe(struct pci_dev *pdev, acpi_handle *dhandle_out
+ 	int optimus_funcs;
+ 	struct pci_dev *parent_pdev;
+ 
++	if (pdev->vendor != PCI_VENDOR_ID_NVIDIA)
++		return;
++
+ 	*has_pr3 = false;
+ 	parent_pdev = pci_upstream_bridge(pdev);
+ 	if (parent_pdev) {
+-- 
+2.39.2
+
 
 
