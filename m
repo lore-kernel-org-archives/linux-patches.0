@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E2010974
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF16C433C0;
-	Mon, 19 Jun 2023 10:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C801095F
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704CBC433C0;
+	Mon, 19 Jun 2023 10:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170625;
-	bh=zq4Gve79n6rvsqaeO4GjZGdVy3ulHvN3wJECwFUcPbc=;
+	s=korg; t=1687170627;
+	bh=0fLyNTZ4hhugsgYS/zeY7m0ISDGhU0boRxpRpOmeDBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwgqgB+RNhct+tv5gJaTPrSQ+CPPX8BFzBIr9x4ZcJwyGm27EIU7roegGOnNblILM
-	 4CWWa5lApLD9C4LJtp4FItD025yBr2nZDlM/f5z7bclAV/CpD4oxkFf3OCLYSjZ9E3
-	 EVUQVHbI9Lqkcd9Kpi1460WRQNsBOUP5Wc35V9uk=
+	b=d3ybYvYeVhe8hNGalKoF2T/VP/Go56i+N/+ILuaePo6W6K0+mZ9UF1hqFjon2Ymhn
+	 dFySHtZQnaOTj/DIRfPmStwstkFb9Ehtbt44uDWRYKrEyEfBMObmROzTLK9ug9C/vx
+	 VJWIhbheLyqHL7qxf6mYiTVRDtXuZKxWTPfhM+3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 29/32] neighbour: Remove unused inline function neigh_key_eq16()
-Date: Mon, 19 Jun 2023 12:29:17 +0200
-Message-ID: <20230619102129.078616263@linuxfoundation.org>
+Subject: [PATCH 4.14 30/32] neighbour: delete neigh_lookup_nodev as not used
+Date: Mon, 19 Jun 2023 12:29:18 +0200
+Message-ID: <20230619102129.130942122@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
 References: <20230619102127.461443957@linuxfoundation.org>
@@ -34,34 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit c8f01a4a54473f88f8cc0d9046ec9eb5a99815d5 upstream.
+commit 76b9bf965c98c9b53ef7420b3b11438dbd764f92 upstream.
 
-All uses of neigh_key_eq16() have
-been removed since commit 1202cdd66531 ("Remove DECnet support
-from kernel"), so remove it.
+neigh_lookup_nodev isn't used in the kernel after removal
+of DECnet. So let's remove it.
 
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Fixes: 1202cdd66531 ("Remove DECnet support from kernel")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/eb5656200d7964b2d177a36b77efa3c597d6d72d.1678267343.git.leonro@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/neighbour.h |    5 -----
- 1 file changed, 5 deletions(-)
+ include/net/neighbour.h |    2 --
+ net/core/neighbour.c    |   31 -------------------------------
+ 2 files changed, 33 deletions(-)
 
 --- a/include/net/neighbour.h
 +++ b/include/net/neighbour.h
-@@ -250,11 +250,6 @@ static inline void *neighbour_priv(const
- #define NEIGH_UPDATE_F_ADMIN			0x80000000
+@@ -299,8 +299,6 @@ void neigh_table_init(int index, struct
+ int neigh_table_clear(int index, struct neigh_table *tbl);
+ struct neighbour *neigh_lookup(struct neigh_table *tbl, const void *pkey,
+ 			       struct net_device *dev);
+-struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
+-				     const void *pkey);
+ struct neighbour *__neigh_create(struct neigh_table *tbl, const void *pkey,
+ 				 struct net_device *dev, bool want_ref);
+ static inline struct neighbour *neigh_create(struct neigh_table *tbl,
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -474,37 +474,6 @@ struct neighbour *neigh_lookup(struct ne
+ }
+ EXPORT_SYMBOL(neigh_lookup);
  
- 
--static inline bool neigh_key_eq16(const struct neighbour *n, const void *pkey)
+-struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
+-				     const void *pkey)
 -{
--	return *(const u16 *)n->primary_key == *(const u16 *)pkey;
--}
+-	struct neighbour *n;
+-	int key_len = tbl->key_len;
+-	u32 hash_val;
+-	struct neigh_hash_table *nht;
 -
- static inline bool neigh_key_eq32(const struct neighbour *n, const void *pkey)
+-	NEIGH_CACHE_STAT_INC(tbl, lookups);
+-
+-	rcu_read_lock_bh();
+-	nht = rcu_dereference_bh(tbl->nht);
+-	hash_val = tbl->hash(pkey, NULL, nht->hash_rnd) >> (32 - nht->hash_shift);
+-
+-	for (n = rcu_dereference_bh(nht->hash_buckets[hash_val]);
+-	     n != NULL;
+-	     n = rcu_dereference_bh(n->next)) {
+-		if (!memcmp(n->primary_key, pkey, key_len) &&
+-		    net_eq(dev_net(n->dev), net)) {
+-			if (!refcount_inc_not_zero(&n->refcnt))
+-				n = NULL;
+-			NEIGH_CACHE_STAT_INC(tbl, hits);
+-			break;
+-		}
+-	}
+-
+-	rcu_read_unlock_bh();
+-	return n;
+-}
+-EXPORT_SYMBOL(neigh_lookup_nodev);
+-
+ struct neighbour *__neigh_create(struct neigh_table *tbl, const void *pkey,
+ 				 struct net_device *dev, bool want_ref)
  {
- 	return *(const u32 *)n->primary_key == *(const u32 *)pkey;
 
 
