@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27721096A
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D55CC433C8;
-	Mon, 19 Jun 2023 10:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D11B1094D
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1144FC433C8;
+	Mon, 19 Jun 2023 10:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170633;
-	bh=BLnny9P80DTsbVfPIMz2veYcJo9yC4WgQAKsJewoqFU=;
+	s=korg; t=1687170636;
+	bh=IAaAA3F23NJfIOA6rdpIvVejUwfAYLk5v9h3cGY7u50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZvMKTYpmfhxCgbo/7wAnHMK0p1v+miquN8RkdtbFct0ljy8QasNbqfQkYcu1TlJz
-	 zHqCYSaSwhhrxM34l4PCXpC2UbRslP7ffxR3d8aHhfA+n/U1SxrXuSVxTRyHePiBqg
-	 faqDgOymU4yK1EGzy7uY6DJ+8GmnipyuEACEoiro=
+	b=K09M6qA8qNeVZWQOcBR4qo4D+rrOOPsWbhNOvBEQVH7VdATUIeRMwQTSV5sRacCLE
+	 CwjpXymC6wIy3G0u7Jr6jmxt0xgNEisGTMyBIeQoRloFJs4+zTVb4NQGyfYOyrtuZr
+	 msA2KcMqTdpXDkczD6LBP4bhS+aZwWfwSIqfiK+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <cloehle@hyperstone.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.14 32/32] mmc: block: ensure error propagation for non-blk
-Date: Mon, 19 Jun 2023 12:29:20 +0200
-Message-ID: <20230619102129.248431251@linuxfoundation.org>
+	Sagi Grimberg <sagi@grimberg.me>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 20/32] IB/isert: Fix dead lock in ib_isert
+Date: Mon, 19 Jun 2023 12:29:08 +0200
+Message-ID: <20230619102128.611621588@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
 References: <20230619102127.461443957@linuxfoundation.org>
@@ -35,81 +37,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Loehle <CLoehle@hyperstone.com>
+From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
 
-commit 003fb0a51162d940f25fc35e70b0996a12c9e08a upstream.
+[ Upstream commit 691b0480933f0ce88a81ed1d1a0aff340ff6293a ]
 
-Requests to the mmc layer usually come through a block device IO.
-The exceptions are the ioctl interface, RPMB chardev ioctl
-and debugfs, which issue their own blk_mq requests through
-blk_execute_rq and do not query the BLK_STS error but the
-mmcblk-internal drv_op_result. This patch ensures that drv_op_result
-defaults to an error and has to be overwritten by the operation
-to be considered successful.
+- When a iSER session is released, ib_isert module is taking a mutex
+  lock and releasing all pending connections. As part of this, ib_isert
+  is destroying rdma cm_id. To destroy cm_id, rdma_cm module is sending
+  CM events to CMA handler of ib_isert. This handler is taking same
+  mutex lock. Hence it leads to deadlock between ib_isert & rdma_cm
+  modules.
 
-The behavior leads to a bug where the request never propagates
-the error, e.g. by directly erroring out at mmc_blk_mq_issue_rq if
-mmc_blk_part_switch fails. The ioctl caller of the rpmb chardev then
-can never see an error (BLK_STS_IOERR, but drv_op_result is unchanged)
-and thus may assume that their call executed successfully when it did not.
+- For fix, created local list of pending connections and release the
+  connection outside of mutex lock.
 
-While always checking the blk_execute_rq return value would be
-advised, let's eliminate the error by always setting
-drv_op_result as -EIO to be overwritten on success (or other error)
+Calltrace:
+---------
+[ 1229.791410] INFO: task kworker/10:1:642 blocked for more than 120 seconds.
+[ 1229.791416]       Tainted: G           OE    --------- -  - 4.18.0-372.9.1.el8.x86_64 #1
+[ 1229.791418] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[ 1229.791419] task:kworker/10:1    state:D stack:    0 pid:  642 ppid:     2 flags:0x80004000
+[ 1229.791424] Workqueue: ib_cm cm_work_handler [ib_cm]
+[ 1229.791436] Call Trace:
+[ 1229.791438]  __schedule+0x2d1/0x830
+[ 1229.791445]  ? select_idle_sibling+0x23/0x6f0
+[ 1229.791449]  schedule+0x35/0xa0
+[ 1229.791451]  schedule_preempt_disabled+0xa/0x10
+[ 1229.791453]  __mutex_lock.isra.7+0x310/0x420
+[ 1229.791456]  ? select_task_rq_fair+0x351/0x990
+[ 1229.791459]  isert_cma_handler+0x224/0x330 [ib_isert]
+[ 1229.791463]  ? ttwu_queue_wakelist+0x159/0x170
+[ 1229.791466]  cma_cm_event_handler+0x25/0xd0 [rdma_cm]
+[ 1229.791474]  cma_ib_handler+0xa7/0x2e0 [rdma_cm]
+[ 1229.791478]  cm_process_work+0x22/0xf0 [ib_cm]
+[ 1229.791483]  cm_work_handler+0xf4/0xf30 [ib_cm]
+[ 1229.791487]  ? move_linked_works+0x6e/0xa0
+[ 1229.791490]  process_one_work+0x1a7/0x360
+[ 1229.791491]  ? create_worker+0x1a0/0x1a0
+[ 1229.791493]  worker_thread+0x30/0x390
+[ 1229.791494]  ? create_worker+0x1a0/0x1a0
+[ 1229.791495]  kthread+0x10a/0x120
+[ 1229.791497]  ? set_kthread_struct+0x40/0x40
+[ 1229.791499]  ret_from_fork+0x1f/0x40
 
-Fixes: 614f0388f580 ("mmc: block: move single ioctl() commands to block requests")
-Signed-off-by: Christian Loehle <cloehle@hyperstone.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/59c17ada35664b818b7bd83752119b2d@hyperstone.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Christian Loehle <cloehle@hyperstone.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ 1229.791739] INFO: task targetcli:28666 blocked for more than 120 seconds.
+[ 1229.791740]       Tainted: G           OE    --------- -  - 4.18.0-372.9.1.el8.x86_64 #1
+[ 1229.791741] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[ 1229.791742] task:targetcli       state:D stack:    0 pid:28666 ppid:  5510 flags:0x00004080
+[ 1229.791743] Call Trace:
+[ 1229.791744]  __schedule+0x2d1/0x830
+[ 1229.791746]  schedule+0x35/0xa0
+[ 1229.791748]  schedule_preempt_disabled+0xa/0x10
+[ 1229.791749]  __mutex_lock.isra.7+0x310/0x420
+[ 1229.791751]  rdma_destroy_id+0x15/0x20 [rdma_cm]
+[ 1229.791755]  isert_connect_release+0x115/0x130 [ib_isert]
+[ 1229.791757]  isert_free_np+0x87/0x140 [ib_isert]
+[ 1229.791761]  iscsit_del_np+0x74/0x120 [iscsi_target_mod]
+[ 1229.791776]  lio_target_np_driver_store+0xe9/0x140 [iscsi_target_mod]
+[ 1229.791784]  configfs_write_file+0xb2/0x110
+[ 1229.791788]  vfs_write+0xa5/0x1a0
+[ 1229.791792]  ksys_write+0x4f/0xb0
+[ 1229.791794]  do_syscall_64+0x5b/0x1a0
+[ 1229.791798]  entry_SYSCALL_64_after_hwframe+0x65/0xca
+
+Fixes: bd3792205aae ("iser-target: Fix pending connections handling in target stack shutdown sequnce")
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Link: https://lore.kernel.org/r/20230606102531.162967-2-saravanan.vajravel@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/block.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/ulp/isert/ib_isert.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -243,6 +243,7 @@ static ssize_t power_ro_lock_store(struc
- 		goto out_put;
+diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
+index ee3f630c92179..6a2c31528560b 100644
+--- a/drivers/infiniband/ulp/isert/ib_isert.c
++++ b/drivers/infiniband/ulp/isert/ib_isert.c
+@@ -2513,6 +2513,7 @@ isert_free_np(struct iscsi_np *np)
+ {
+ 	struct isert_np *isert_np = np->np_context;
+ 	struct isert_conn *isert_conn, *n;
++	LIST_HEAD(drop_conn_list);
+ 
+ 	if (isert_np->cm_id)
+ 		rdma_destroy_id(isert_np->cm_id);
+@@ -2532,7 +2533,7 @@ isert_free_np(struct iscsi_np *np)
+ 					 node) {
+ 			isert_info("cleaning isert_conn %p state (%d)\n",
+ 				   isert_conn, isert_conn->state);
+-			isert_connect_release(isert_conn);
++			list_move_tail(&isert_conn->node, &drop_conn_list);
+ 		}
  	}
- 	req_to_mmc_queue_req(req)->drv_op = MMC_DRV_OP_BOOT_WP;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
- 	ret = req_to_mmc_queue_req(req)->drv_op_result;
- 	blk_put_request(req);
-@@ -671,6 +672,7 @@ static int mmc_blk_ioctl_cmd(struct mmc_
- 	idatas[0] = idata;
- 	req_to_mmc_queue_req(req)->drv_op =
- 		rpmb ? MMC_DRV_OP_IOCTL_RPMB : MMC_DRV_OP_IOCTL;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	req_to_mmc_queue_req(req)->drv_op_data = idatas;
- 	req_to_mmc_queue_req(req)->ioc_count = 1;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
-@@ -741,6 +743,7 @@ static int mmc_blk_ioctl_multi_cmd(struc
+ 
+@@ -2543,11 +2544,16 @@ isert_free_np(struct iscsi_np *np)
+ 					 node) {
+ 			isert_info("cleaning isert_conn %p state (%d)\n",
+ 				   isert_conn, isert_conn->state);
+-			isert_connect_release(isert_conn);
++			list_move_tail(&isert_conn->node, &drop_conn_list);
+ 		}
  	}
- 	req_to_mmc_queue_req(req)->drv_op =
- 		rpmb ? MMC_DRV_OP_IOCTL_RPMB : MMC_DRV_OP_IOCTL;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	req_to_mmc_queue_req(req)->drv_op_data = idata;
- 	req_to_mmc_queue_req(req)->ioc_count = num_of_cmds;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
-@@ -2590,6 +2593,7 @@ static int mmc_dbg_card_status_get(void
- 	if (IS_ERR(req))
- 		return PTR_ERR(req);
- 	req_to_mmc_queue_req(req)->drv_op = MMC_DRV_OP_GET_CARD_STATUS;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
- 	ret = req_to_mmc_queue_req(req)->drv_op_result;
- 	if (ret >= 0) {
-@@ -2628,6 +2632,7 @@ static int mmc_ext_csd_open(struct inode
- 		goto out_free;
- 	}
- 	req_to_mmc_queue_req(req)->drv_op = MMC_DRV_OP_GET_EXT_CSD;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	req_to_mmc_queue_req(req)->drv_op_data = &ext_csd;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
- 	err = req_to_mmc_queue_req(req)->drv_op_result;
+ 	mutex_unlock(&isert_np->mutex);
+ 
++	list_for_each_entry_safe(isert_conn, n, &drop_conn_list, node) {
++		list_del_init(&isert_conn->node);
++		isert_connect_release(isert_conn);
++	}
++
+ 	np->np_context = NULL;
+ 	kfree(isert_np);
+ }
+-- 
+2.39.2
+
 
 
