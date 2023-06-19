@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5E98BE5
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:49:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69B2C433C0;
-	Mon, 19 Jun 2023 10:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA28C06
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83020C433C8;
+	Mon, 19 Jun 2023 10:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171798;
-	bh=4hFPkMwLMS+CCfxOLCvle9E8immgMl2eTXItmkHxd6Y=;
+	s=korg; t=1687171800;
+	bh=st9s7eaSd1f32g4PxDRxrIgd5GWNyJHZCigDb4hdYYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1B3Aum1s5jCRZGEdV7WnTfoSHr9hWnAvpMiHxuy/5Fb5mc2WM0mHNN9Rnu+6yYhe
-	 h3cRBg6uwxcUUya8Tt1SGdykkv54hrjRDGBVbg//MC4ltbnOxrt5f9sFlzALGrHr0s
-	 WyZ+s63EXNWy19HwXEVI2ANQUaI16O3GP/n2DrQs=
+	b=bzCjb19U8lhXMU8ptphF/tSRBSQdD592cYemsGYbIH8aP0MMt20a+j4uLwA4wcAWz
+	 eqZmomFb0f3/5VvGmr0GsJ6T6h2FQ0tNvVYniwc9oDbOQ2JApiTvqwgqJ66Y0cKVRJ
+	 AW9xMhC98f6KYZx5dtaFFFDUzIDU9Zrtg4rNiiOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 160/166] net/sched: act_api: add specific EXT_WARN_MSG for tc action
-Date: Mon, 19 Jun 2023 12:30:37 +0200
-Message-ID: <20230619102202.450369193@linuxfoundation.org>
+	Vlad Buslov <vladbu@nvidia.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 137/166] selftests/tc-testing: Fix Error: failed to find target LOG
+Date: Mon, 19 Jun 2023 12:30:14 +0200
+Message-ID: <20230619102201.418583314@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,59 +36,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-commit 2f59823fe696caa844249a90bb3f9aeda69cfe5c upstream.
+[ Upstream commit b849c566ee9c6ed78288a522278dcaf419f8e239 ]
 
-In my previous commit 0349b8779cc9 ("sched: add new attr TCA_EXT_WARN_MSG
-to report tc extact message") I didn't notice the tc action use different
-enum with filter. So we can't use TCA_EXT_WARN_MSG directly for tc action.
-Let's add a TCA_ROOT_EXT_WARN_MSG for tc action specifically and put this
-param before going to the TCA_ACT_TAB nest.
+Add missing netfilter config dependency.
 
-Fixes: 0349b8779cc9 ("sched: add new attr TCA_EXT_WARN_MSG to report tc extact message")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Fixes following example error when running tests via tdc.sh for all XT
+tests:
+
+ # $ sudo ./tdc.py -d eth2 -e 2029
+ # Test 2029: Add xt action with log-prefix
+ # exit: 255
+ # exit: 0
+ #  failed to find target LOG
+ #
+ # bad action parsing
+ # parse_action: bad value (7:xt)!
+ # Illegal "action"
+ #
+ # -----> teardown stage *** Could not execute: "$TC actions flush action xt"
+ #
+ # -----> teardown stage *** Error message: "Error: Cannot flush unknown TC action.
+ # We have an error flushing
+ # "
+ # returncode 1; expected [0]
+ #
+ # -----> teardown stage *** Aborting test run.
+ #
+ # <_io.BufferedReader name=3> *** stdout ***
+ #
+ # <_io.BufferedReader name=5> *** stderr ***
+ # "-----> teardown stage" did not complete successfully
+ # Exception <class '__main__.PluginMgrTestFail'> ('teardown', ' failed to find target LOG\n\nbad action parsing\nparse_action: bad value (7:xt)!\nIllegal "action"\n', '"-----> teardown stage" did not complete successfully') (caught in test_runner, running test 2 2029 Add xt action with log-prefix stage teardown)
+ # ---------------
+ # traceback
+ #   File "/images/src/linux/tools/testing/selftests/tc-testing/./tdc.py", line 495, in test_runner
+ #     res = run_one_test(pm, args, index, tidx)
+ #   File "/images/src/linux/tools/testing/selftests/tc-testing/./tdc.py", line 434, in run_one_test
+ #     prepare_env(args, pm, 'teardown', '-----> teardown stage', tidx['teardown'], procout)
+ #   File "/images/src/linux/tools/testing/selftests/tc-testing/./tdc.py", line 245, in prepare_env
+ #     raise PluginMgrTestFail(
+ # ---------------
+ # accumulated output for this test:
+ #  failed to find target LOG
+ #
+ # bad action parsing
+ # parse_action: bad value (7:xt)!
+ # Illegal "action"
+ #
+ # ---------------
+ #
+ # All test results:
+ #
+ # 1..1
+ # ok 1 2029 - Add xt action with log-prefix # skipped - "-----> teardown stage" did not complete successfully
+
+Fixes: 910d504bc187 ("selftests/tc-testings: add selftests for xt action")
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/rtnetlink.h |    1 +
- net/sched/act_api.c            |    8 ++++----
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ tools/testing/selftests/tc-testing/config | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/uapi/linux/rtnetlink.h
-+++ b/include/uapi/linux/rtnetlink.h
-@@ -789,6 +789,7 @@ enum {
- 	TCA_ROOT_FLAGS,
- 	TCA_ROOT_COUNT,
- 	TCA_ROOT_TIME_DELTA, /* in msecs */
-+	TCA_ROOT_EXT_WARN_MSG,
- 	__TCA_ROOT_MAX,
- #define	TCA_ROOT_MAX (__TCA_ROOT_MAX - 1)
- };
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1596,6 +1596,10 @@ static int tca_get_fill(struct sk_buff *
- 	t->tca__pad1 = 0;
- 	t->tca__pad2 = 0;
+diff --git a/tools/testing/selftests/tc-testing/config b/tools/testing/selftests/tc-testing/config
+index 4638c63a339ff..aec4de8bea78b 100644
+--- a/tools/testing/selftests/tc-testing/config
++++ b/tools/testing/selftests/tc-testing/config
+@@ -6,6 +6,7 @@ CONFIG_NF_CONNTRACK_MARK=y
+ CONFIG_NF_CONNTRACK_ZONES=y
+ CONFIG_NF_CONNTRACK_LABELS=y
+ CONFIG_NF_NAT=m
++CONFIG_NETFILTER_XT_TARGET_LOG=m
  
-+	if (extack && extack->_msg &&
-+	    nla_put_string(skb, TCA_ROOT_EXT_WARN_MSG, extack->_msg))
-+		goto out_nlmsg_trim;
-+
- 	nest = nla_nest_start_noflag(skb, TCA_ACT_TAB);
- 	if (!nest)
- 		goto out_nlmsg_trim;
-@@ -1605,10 +1609,6 @@ static int tca_get_fill(struct sk_buff *
+ CONFIG_NET_SCHED=y
  
- 	nla_nest_end(skb, nest);
- 
--	if (extack && extack->_msg &&
--	    nla_put_string(skb, TCA_EXT_WARN_MSG, extack->_msg))
--		goto out_nlmsg_trim;
--
- 	nlh->nlmsg_len = skb_tail_pointer(skb) - b;
- 
- 	return skb->len;
+-- 
+2.39.2
+
 
 
