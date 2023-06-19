@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457793C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA512C433C8;
-	Mon, 19 Jun 2023 10:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8193C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873D7C433C0;
+	Mon, 19 Jun 2023 10:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171727;
-	bh=GegH/2qlEnd850B3ci3jzMWYTzWyclhfivXC/H4/hAg=;
+	s=korg; t=1687171729;
+	bh=aZuNSmatyawk2Y31JTLn3Fw4OgkfgrJNMsdkFTIp9ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOj8fVkB5xuV4vrca1pQKUgFNhOzjzssobbACV3HLdo60t1nzTXFUisaW+HrsUIKs
-	 hjHLbuAfOd61LWJXdQl0CPux9yfiLqZqSSOnhA1ZRvHfpvZi85RC5CdkxSonh/PLj+
-	 eTe5ENYnTA+oBUnC41Mjtq4biRwYeBpw4cFxSSFY=
+	b=QlBN1uzl9QbGE7WrtB9Ca90Lzsasw2HMNcvFx1t8GTVCqQ9ev0x/oBAaHDQoXNuaR
+	 a2Tze+LgHUYjmptec2NRcR78m/o96stngJtID1hXw2plq9yIiC3WVOaGVHNENbpmLR
+	 5bVdNONsxtXA6lvVlaNc32YT0qxkU30Z4+9B6icE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ian Ziemba <ian.ziemba@hpe.com>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/166] wifi: mac80211: take lock before setting vif links
-Date: Mon, 19 Jun 2023 12:29:47 +0200
-Message-ID: <20230619102200.160548333@linuxfoundation.org>
+Subject: [PATCH 6.1 111/166] RDMA/rxe: Removed unused name from rxe_task struct
+Date: Mon, 19 Jun 2023 12:29:48 +0200
+Message-ID: <20230619102200.208881502@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,59 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 15846f95ab01b71fdb1cef8df73680aad41edf70 ]
+[ Upstream commit de669ae8af49ceed0eed44f5b3d51dc62affc5e4 ]
 
-ieee80211_vif_set_links requires the sdata->local->mtx lock to be held.
-Add the appropriate locking around the calls in both the link add and
-remove handlers.
+The name field in struct rxe_task is never used. This patch removes it.
 
-This causes a warning when e.g. ieee80211_link_release_channel is called
-via ieee80211_link_stop from ieee80211_vif_update_links.
-
-Fixes: 0d8c4a3c8688 ("wifi: mac80211: implement add/del interface link callbacks")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230608163202.fa0c6597fdad.I83dd70359f6cda30f86df8418d929c2064cf4995@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/r/20221021200118.2163-4-rpearsonhpe@gmail.com
+Signed-off-by: Ian Ziemba <ian.ziemba@hpe.com>
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 2a62b6210ce8 ("RDMA/rxe: Fix the use-before-initialization error of resp_pkts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c   | 9 +++------
+ drivers/infiniband/sw/rxe/rxe_task.c | 4 +---
+ drivers/infiniband/sw/rxe/rxe_task.h | 4 +---
+ 3 files changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 06b9df2fbcd77..23a44edcb11f7 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -4732,11 +4732,16 @@ static int ieee80211_add_intf_link(struct wiphy *wiphy,
- 				   unsigned int link_id)
- {
- 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
-+	int res;
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index 1f6e006c51c4a..f48a624de493d 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -242,10 +242,8 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
  
- 	if (wdev->use_4addr)
- 		return -EOPNOTSUPP;
+ 	skb_queue_head_init(&qp->req_pkts);
  
--	return ieee80211_vif_set_links(sdata, wdev->valid_links);
-+	mutex_lock(&sdata->local->mtx);
-+	res = ieee80211_vif_set_links(sdata, wdev->valid_links);
-+	mutex_unlock(&sdata->local->mtx);
-+
-+	return res;
+-	rxe_init_task(&qp->req.task, qp,
+-		      rxe_requester, "req");
+-	rxe_init_task(&qp->comp.task, qp,
+-		      rxe_completer, "comp");
++	rxe_init_task(&qp->req.task, qp, rxe_requester);
++	rxe_init_task(&qp->comp.task, qp, rxe_completer);
+ 
+ 	qp->qp_timeout_jiffies = 0; /* Can't be set for UD/UC in modify_qp */
+ 	if (init->qp_type == IB_QPT_RC) {
+@@ -292,8 +290,7 @@ static int rxe_qp_init_resp(struct rxe_dev *rxe, struct rxe_qp *qp,
+ 
+ 	skb_queue_head_init(&qp->resp_pkts);
+ 
+-	rxe_init_task(&qp->resp.task, qp,
+-		      rxe_responder, "resp");
++	rxe_init_task(&qp->resp.task, qp, rxe_responder);
+ 
+ 	qp->resp.opcode		= OPCODE_NONE;
+ 	qp->resp.msn		= 0;
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
+index ec2b7de1c4972..182d0532a8ab9 100644
+--- a/drivers/infiniband/sw/rxe/rxe_task.c
++++ b/drivers/infiniband/sw/rxe/rxe_task.c
+@@ -94,12 +94,10 @@ void rxe_do_task(struct tasklet_struct *t)
+ 	task->ret = ret;
  }
  
- static void ieee80211_del_intf_link(struct wiphy *wiphy,
-@@ -4745,7 +4750,9 @@ static void ieee80211_del_intf_link(struct wiphy *wiphy,
+-int rxe_init_task(struct rxe_task *task,
+-		  void *arg, int (*func)(void *), char *name)
++int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *))
  {
- 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
+ 	task->arg	= arg;
+ 	task->func	= func;
+-	snprintf(task->name, sizeof(task->name), "%s", name);
+ 	task->destroyed	= false;
  
-+	mutex_lock(&sdata->local->mtx);
- 	ieee80211_vif_set_links(sdata, wdev->valid_links);
-+	mutex_unlock(&sdata->local->mtx);
- }
+ 	tasklet_setup(&task->tasklet, rxe_do_task);
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.h b/drivers/infiniband/sw/rxe/rxe_task.h
+index 7f612a1c68a7b..b3dfd970d1dc6 100644
+--- a/drivers/infiniband/sw/rxe/rxe_task.h
++++ b/drivers/infiniband/sw/rxe/rxe_task.h
+@@ -25,7 +25,6 @@ struct rxe_task {
+ 	void			*arg;
+ 	int			(*func)(void *arg);
+ 	int			ret;
+-	char			name[16];
+ 	bool			destroyed;
+ };
  
- static int sta_add_link_station(struct ieee80211_local *local,
+@@ -34,8 +33,7 @@ struct rxe_task {
+  *	arg  => parameter to pass to fcn
+  *	func => function to call until it returns != 0
+  */
+-int rxe_init_task(struct rxe_task *task,
+-		  void *arg, int (*func)(void *), char *name);
++int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *));
+ 
+ /* cleanup task */
+ void rxe_cleanup_task(struct rxe_task *task);
 -- 
 2.39.2
 
