@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA0F3C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0076FC433C0;
-	Mon, 19 Jun 2023 10:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88403C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF972C433C0;
+	Mon, 19 Jun 2023 10:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171080;
-	bh=WJLGO3fYtxjJ9+Vm4eCIyW+nvhFPvCQMH4xOzt3sN7Q=;
+	s=korg; t=1687171083;
+	bh=d05Mi+bVY9x/LoQAfBmUYpFURz9+W6YdgdHzqtK+fNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3033ZCzws5ymMtK2SQcZ9bkhnR+s0YIZbi38kGGtmagHweio+i+VsIMbrCppdQcD
-	 M3z/2f5Jb6eAITn0EaK2eUr+A8b5uyo9cSmfTEJe6MHCBR8yx7VrlXENiwx5BFrZcs
-	 Nl2nwgxJLzhF+HUofxjwNTSLYWaUgn/ptKuKWPXA=
+	b=jSJtIuBEFRTQeXnWqUvUI9ky8Z2LBF285NId1NLsUg6Yuj2+WtoxZ86n3JgLO5wrK
+	 2cE5NalFH+2ofRqxElWabDh94wuXLwAh4W5eNnTXgl/Lex0qUmHGYRAOzJfYhDQKbt
+	 eGAURPamdHn7yr6V7axD0I88uH9EGXbW6M1QB5Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 123/187] net: enetc: correct the indexes of highest and 2nd highest TCs
-Date: Mon, 19 Jun 2023 12:29:01 +0200
-Message-ID: <20230619102203.477848459@linuxfoundation.org>
+Subject: [PATCH 6.3 141/187] RDMA/cma: Always set static rate to 0 for RoCE
+Date: Mon, 19 Jun 2023 12:29:19 +0200
+Message-ID: <20230619102204.470012583@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -37,60 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit 21225873be1472b7c59ed3650396af0e40578112 ]
+[ Upstream commit 58030c76cce473b6cfd630bbecb97215def0dff8 ]
 
-For ENETC hardware, the TCs are numbered from 0 to N-1, where N
-is the number of TCs. Numerically higher TC has higher priority.
-It's obvious that the highest priority TC index should be N-1 and
-the 2nd highest priority TC index should be N-2.
+Set static rate to 0 as it should be discovered by path query and
+has no meaning for RoCE.
+This also avoid of using the rtnl lock and ethtool API, which is
+a bottleneck when try to setup many rdma-cm connections at the same
+time, especially with multiple processes.
 
-However, the previous logic uses netdev_get_prio_tc_map() to get
-the indexes of highest priority and 2nd highest priority TCs, it
-does not make sense and is incorrect to give a "tc" argument to
-netdev_get_prio_tc_map(). So the driver may get the wrong indexes
-of the two highest priotiry TCs which would lead to failed to set
-the CBS for the two highest priotiry TCs.
-
-e.g.
-$ tc qdisc add dev eno0 parent root handle 100: mqprio num_tc 6 \
-	map 0 0 1 1 2 3 4 5 queues 1@0 1@1 1@2 1@3 2@4 2@6 hw 1
-$ tc qdisc replace dev eno0 parent 100:6 cbs idleslope 100000 \
-	sendslope -900000 hicredit 12 locredit -113 offload 1
-$ Error: Specified device failed to setup cbs hardware offload.
-  ^^^^^
-
-In this example, the previous logic deems the indexes of the two
-highest priotiry TCs should be 3 and 2. Actually, the indexes are
-5 and 4, because the number of TCs is 6. So it would be failed to
-configure the CBS for the two highest priority TCs.
-
-Fixes: c431047c4efe ("enetc: add support Credit Based Shaper(CBS) for hardware offload")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 3c86aa70bf67 ("RDMA/cm: Add RDMA CM support for IBoE devices")
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/f72a4f8b667b803aee9fa794069f61afb5839ce4.1685960567.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_qos.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/cma.c |  4 ++--
+ include/rdma/ib_addr.h        | 23 -----------------------
+ 2 files changed, 2 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_qos.c b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-index 83c27bbbc6edf..126007ab70f61 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-@@ -181,8 +181,8 @@ int enetc_setup_tc_cbs(struct net_device *ndev, void *type_data)
- 	int bw_sum = 0;
- 	u8 bw;
+diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
+index 6b9563d4f23c9..033df909b92e1 100644
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -3297,7 +3297,7 @@ static int cma_resolve_iboe_route(struct rdma_id_private *id_priv)
+ 	route->path_rec->traffic_class = tos;
+ 	route->path_rec->mtu = iboe_get_mtu(ndev->mtu);
+ 	route->path_rec->rate_selector = IB_SA_EQ;
+-	route->path_rec->rate = iboe_get_rate(ndev);
++	route->path_rec->rate = IB_RATE_PORT_CURRENT;
+ 	dev_put(ndev);
+ 	route->path_rec->packet_life_time_selector = IB_SA_EQ;
+ 	/* In case ACK timeout is set, use this value to calculate
+@@ -4966,7 +4966,7 @@ static int cma_iboe_join_multicast(struct rdma_id_private *id_priv,
+ 	if (!ndev)
+ 		return -ENODEV;
  
--	prio_top = netdev_get_prio_tc_map(ndev, tc_nums - 1);
--	prio_next = netdev_get_prio_tc_map(ndev, tc_nums - 2);
-+	prio_top = tc_nums - 1;
-+	prio_next = tc_nums - 2;
+-	ib.rec.rate = iboe_get_rate(ndev);
++	ib.rec.rate = IB_RATE_PORT_CURRENT;
+ 	ib.rec.hop_limit = 1;
+ 	ib.rec.mtu = iboe_get_mtu(ndev->mtu);
  
- 	/* Support highest prio and second prio tc in cbs mode */
- 	if (tc != prio_top && tc != prio_next)
+diff --git a/include/rdma/ib_addr.h b/include/rdma/ib_addr.h
+index d808dc3d239e8..811a0f11d0dbe 100644
+--- a/include/rdma/ib_addr.h
++++ b/include/rdma/ib_addr.h
+@@ -194,29 +194,6 @@ static inline enum ib_mtu iboe_get_mtu(int mtu)
+ 		return 0;
+ }
+ 
+-static inline int iboe_get_rate(struct net_device *dev)
+-{
+-	struct ethtool_link_ksettings cmd;
+-	int err;
+-
+-	rtnl_lock();
+-	err = __ethtool_get_link_ksettings(dev, &cmd);
+-	rtnl_unlock();
+-	if (err)
+-		return IB_RATE_PORT_CURRENT;
+-
+-	if (cmd.base.speed >= 40000)
+-		return IB_RATE_40_GBPS;
+-	else if (cmd.base.speed >= 30000)
+-		return IB_RATE_30_GBPS;
+-	else if (cmd.base.speed >= 20000)
+-		return IB_RATE_20_GBPS;
+-	else if (cmd.base.speed >= 10000)
+-		return IB_RATE_10_GBPS;
+-	else
+-		return IB_RATE_PORT_CURRENT;
+-}
+-
+ static inline int rdma_link_local_addr(struct in6_addr *addr)
+ {
+ 	if (addr->s6_addr32[0] == htonl(0xfe800000) &&
 -- 
 2.39.2
 
