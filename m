@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95249D532
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C88BC433C0;
-	Mon, 19 Jun 2023 10:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E86AD52C
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17DBC433C8;
+	Mon, 19 Jun 2023 10:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170605;
-	bh=IMSxW+BwXyy3mU+PMSOaQL+UkXZIvUYyfiSk3WvHIoA=;
+	s=korg; t=1687170608;
+	bh=r7jCTs05P1TocNEkA/9VDItcaXinkn85dCGSKyL0hD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPHwlWYLPqT8u8zXdROwTSuqtc8haDT2Q7Lc0BkoEa57qny7mZvtWS1bo2ordxjnE
-	 RX9sHcE64aWUe0nznuTBY/swD8YcmT0/2XPdjx+kpuZA7ws0nqtSpKclAHaA0ftcKF
-	 /Kz7CD9nokL0aYiX9yc09LocqDHqxUlTrY6WPPS4=
+	b=g56QHqfl4OH6Y/PiW7IVttdyDccTyTxBh2Lh2BhSN+LSbOFURlXjmIXNqoRPtzuRz
+	 Gj8I9NYyv4ctM25FeFGR3rdiHkfSWoRCk7Srt7mWJzzfgiQh8EJFVf1Z+6ZNFXNUG/
+	 0lfdoK6nor8/IQ07+7VpEXTLFIyLuHH15nexonPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <Evan.Quan@amd.com>,
-	Lijo Lazar <Lijo.Lazar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 06/32] power: supply: Fix logic checking if system is running from battery
-Date: Mon, 19 Jun 2023 12:28:54 +0200
-Message-ID: <20230619102127.828493927@linuxfoundation.org>
+Subject: [PATCH 4.14 07/32] MIPS: Alchemy: fix dbdma2
+Date: Mon, 19 Jun 2023 12:28:55 +0200
+Message-ID: <20230619102127.882423018@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
 References: <20230619102127.461443957@linuxfoundation.org>
@@ -37,64 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Manuel Lauss <manuel.lauss@gmail.com>
 
-[ Upstream commit 95339f40a8b652b5b1773def31e63fc53c26378a ]
+[ Upstream commit 2d645604f69f3a772d58ead702f9a8e84ab2b342 ]
 
-The logic used for power_supply_is_system_supplied() counts all power
-supplies and assumes that the system is running from AC if there is
-either a non-battery power-supply reporting to be online or if no
-power-supplies exist at all.
+Various fixes for the Au1200/Au1550/Au1300 DBDMA2 code:
 
-The second rule is for desktop systems, that don't have any
-battery/charger devices. These systems will incorrectly report to be
-powered from battery once a device scope power-supply is registered
-(e.g. a HID device), since these power-supplies increase the counter.
+- skip cache invalidation if chip has working coherency circuitry.
+- invalidate KSEG0-portion of the (physical) data address.
+- force the dma channel doorbell write out to bus immediately with
+  a sync.
 
-Apart from HID devices, recent dGPUs provide UCSI power supplies on a
-desktop systems. The dGPU by default doesn't have anything plugged in so
-it's 'offline'. This makes power_supply_is_system_supplied() return 0
-with a count of 1 meaning all drivers that use this get a wrong judgement.
-
-To fix this case adjust the logic to also examine the scope of the power
-supply. If the power supply is deemed a device power supply, then don't
-count it.
-
-Cc: Evan Quan <Evan.Quan@amd.com>
-Suggested-by: Lijo Lazar <Lijo.Lazar@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/mips/alchemy/common/dbdma.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 409ecff1a51a7..67766b500325f 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -349,6 +349,10 @@ static int __power_supply_is_system_supplied(struct device *dev, void *data)
- 	struct power_supply *psy = dev_get_drvdata(dev);
- 	unsigned int *count = data;
+diff --git a/arch/mips/alchemy/common/dbdma.c b/arch/mips/alchemy/common/dbdma.c
+index fc482d900dddb..122f8c0d258ef 100644
+--- a/arch/mips/alchemy/common/dbdma.c
++++ b/arch/mips/alchemy/common/dbdma.c
+@@ -30,6 +30,7 @@
+  *
+  */
  
-+	if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_SCOPE, &ret))
-+		if (ret.intval == POWER_SUPPLY_SCOPE_DEVICE)
-+			return 0;
-+
- 	(*count)++;
- 	if (psy->desc->type != POWER_SUPPLY_TYPE_BATTERY)
- 		if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_ONLINE,
-@@ -367,8 +371,8 @@ int power_supply_is_system_supplied(void)
- 				      __power_supply_is_system_supplied);
++#include <linux/dma-map-ops.h> /* for dma_default_coherent */
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+@@ -623,17 +624,18 @@ u32 au1xxx_dbdma_put_source(u32 chanid, dma_addr_t buf, int nbytes, u32 flags)
+ 		dp->dscr_cmd0 &= ~DSCR_CMD0_IE;
  
  	/*
--	 * If no power class device was found at all, most probably we are
--	 * running on a desktop system, so assume we are on mains power.
-+	 * If no system scope power class device was found at all, most probably we
-+	 * are running on a desktop system, so assume we are on mains power.
+-	 * There is an errata on the Au1200/Au1550 parts that could result
+-	 * in "stale" data being DMA'ed. It has to do with the snoop logic on
+-	 * the cache eviction buffer.  DMA_NONCOHERENT is on by default for
+-	 * these parts. If it is fixed in the future, these dma_cache_inv will
+-	 * just be nothing more than empty macros. See io.h.
++	 * There is an erratum on certain Au1200/Au1550 revisions that could
++	 * result in "stale" data being DMA'ed. It has to do with the snoop
++	 * logic on the cache eviction buffer.  dma_default_coherent is set
++	 * to false on these parts.
  	 */
- 	if (count == 0)
- 		return 1;
+-	dma_cache_wback_inv((unsigned long)buf, nbytes);
++	if (!dma_default_coherent)
++		dma_cache_wback_inv(KSEG0ADDR(buf), nbytes);
+ 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
+ 	wmb(); /* drain writebuffer */
+ 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
+ 	ctp->chan_ptr->ddma_dbell = 0;
++	wmb(); /* force doorbell write out to dma engine */
+ 
+ 	/* Get next descriptor pointer. */
+ 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
+@@ -685,17 +687,18 @@ u32 au1xxx_dbdma_put_dest(u32 chanid, dma_addr_t buf, int nbytes, u32 flags)
+ 			  dp->dscr_source1, dp->dscr_dest0, dp->dscr_dest1);
+ #endif
+ 	/*
+-	 * There is an errata on the Au1200/Au1550 parts that could result in
+-	 * "stale" data being DMA'ed. It has to do with the snoop logic on the
+-	 * cache eviction buffer.  DMA_NONCOHERENT is on by default for these
+-	 * parts. If it is fixed in the future, these dma_cache_inv will just
+-	 * be nothing more than empty macros. See io.h.
++	 * There is an erratum on certain Au1200/Au1550 revisions that could
++	 * result in "stale" data being DMA'ed. It has to do with the snoop
++	 * logic on the cache eviction buffer.  dma_default_coherent is set
++	 * to false on these parts.
+ 	 */
+-	dma_cache_inv((unsigned long)buf, nbytes);
++	if (!dma_default_coherent)
++		dma_cache_inv(KSEG0ADDR(buf), nbytes);
+ 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
+ 	wmb(); /* drain writebuffer */
+ 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
+ 	ctp->chan_ptr->ddma_dbell = 0;
++	wmb(); /* force doorbell write out to dma engine */
+ 
+ 	/* Get next descriptor pointer. */
+ 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
 -- 
 2.39.2
 
