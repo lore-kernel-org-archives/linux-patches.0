@@ -1,48 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C86E5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35823C433C0;
-	Mon, 19 Jun 2023 10:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9110D5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1826BC433C8;
+	Mon, 19 Jun 2023 10:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171262;
-	bh=PTQx3dUYaRuxrT7bbh8CQPhOoan1KYTv+UDJqe4gqzg=;
+	s=korg; t=1687171267;
+	bh=w8WDHzYSKO0yP3KOfli74ME4KiSicQvXuh4mGowQnpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrbJ4xIXQ2yprvvXTTBVFiDKjNHSECNOK1CSTPgRVQJFpt5S0z8K9JwXq+tgN5Xfj
-	 J3q53Y8rkxb9O9TUFqaeY3n2zamWIke+3udqzbC//Pe+MpFqhIlnoJXS7XU+XUKkSF
-	 hn7z9q3PjzKGPcpHlupdbT1tnKAgNQvxuBdDxOgs=
+	b=a8Wl6SsxRATpAZCUmq0ApZ/7MEFKohWfopTawZWXn2s0xh5BYv1DWYi0CIbiv1twF
+	 qzlWyu6dyz3Je3pLLO85E5k4ZjxiPRNNQJtx0JWEZ0+uw8iAA1JZGqyfeEMicZYfU3
+	 BADnjHDLhiPW9j+8M7n0LYCZDMR0fc1wnDQmKP/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Baoquan He <bhe@redhat.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dave Young <dyoung@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Philipp Rudo <prudo@redhat.com>,
-	Ross Zwisler <zwisler@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Tom Rix <trix@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 18/49] powerpc/purgatory: remove PGO flags
-Date: Mon, 19 Jun 2023 12:29:56 +0200
-Message-ID: <20230619102130.803524527@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 02/49] power: supply: bq27xxx: Use mod_delayed_work() instead of cancel() + schedule()
+Date: Mon, 19 Jun 2023 12:29:40 +0200
+Message-ID: <20230619102129.984617074@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -56,59 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 20188baceb7a1463dc0bcb0c8678b69c2f447df6 upstream.
+[ Upstream commit 59dddea9879713423c7b2ade43c423bb71e0d216 ]
 
-If profile-guided optimization is enabled, the purgatory ends up with
-multiple .text sections.  This is not supported by kexec and crashes the
-system.
+Use mod_delayed_work() instead of separate cancel_delayed_work_sync() +
+schedule_delayed_work() calls.
 
-Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-3-b05c520b7296@chromium.org
-Fixes: 930457057abe ("kernel/kexec_file.c: split up __kexec_load_puragory")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: <stable@vger.kernel.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Philipp Rudo <prudo@redhat.com>
-Cc: Ross Zwisler <zwisler@google.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Tom Rix <trix@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/purgatory/Makefile |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/power/supply/bq27xxx_battery.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/purgatory/Makefile
-+++ b/arch/powerpc/purgatory/Makefile
-@@ -1,6 +1,11 @@
- # SPDX-License-Identifier: GPL-2.0
- targets += trampoline.o purgatory.ro kexec-purgatory.c
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 725851ca0e757..f665553b26a2d 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -877,10 +877,8 @@ static int poll_interval_param_set(const char *val, const struct kernel_param *k
+ 		return ret;
  
-+# When profile-guided optimization is enabled, llvm emits two different
-+# overlapping text sections, which is not supported by kexec. Remove profile
-+# optimization flags.
-+KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%,$(KBUILD_CFLAGS))
-+
- LDFLAGS_purgatory.ro := -e purgatory_start -r --no-undefined
+ 	mutex_lock(&bq27xxx_list_lock);
+-	list_for_each_entry(di, &bq27xxx_battery_devices, list) {
+-		cancel_delayed_work_sync(&di->work);
+-		schedule_delayed_work(&di->work, 0);
+-	}
++	list_for_each_entry(di, &bq27xxx_battery_devices, list)
++		mod_delayed_work(system_wq, &di->work, 0);
+ 	mutex_unlock(&bq27xxx_list_lock);
  
- $(obj)/purgatory.ro: $(obj)/trampoline.o FORCE
+ 	return ret;
+-- 
+2.39.2
+
 
 
