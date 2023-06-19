@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0565381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA310C433C8;
-	Mon, 19 Jun 2023 10:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5E65381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88454C433C0;
+	Mon, 19 Jun 2023 10:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171598;
-	bh=pS2N2lntY2VpsyD69X43BDpNELB8gRZ8brV56N2u4WA=;
+	s=korg; t=1687171600;
+	bh=iVkb0vis974JkD874JD5JZbZkUFtjE9wmhbEgn8c5mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCkeV4lb6+mrl6/Dk/9l3FybdURrM2ZTKs53jpxnP5z7SsUjGx3b9Dbn2Rc6wdwD+
-	 Hk9UKT6dwAZoCIxF+BVBTExmuAG2jt1wxu1vQDHZxMQ+VF/MDDDsKBf5bALhY/RwL2
-	 ICzXkcYVW9Pc8CmecAlEIKbZcyXWbrMZHjrwdMkc=
+	b=hVYoUsYHQExUzaojPZ4fsW5x9Xa4OYC6d0RuKkLlj8Vrv0DyqIqeCf7WmgOR+9CRy
+	 OzM0rlHhMnc3DkKcS8xaoDMElCqL2nZ5TEyadBGwGl9c49mZl0i7tNB64zRqN+IbEe
+	 g/Q+GHhaJ56buNsRtSjVcQZPY/fVbwpAbX0yrVdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Elson Roy Serrao <quic_eserrao@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.1 089/166] usb: dwc3: gadget: Reset num TRBs before giving back the request
-Date: Mon, 19 Jun 2023 12:29:26 +0200
-Message-ID: <20230619102159.131154055@linuxfoundation.org>
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 090/166] RDMA/rtrs: Fix the last iu->buf leak in err path
+Date: Mon, 19 Jun 2023 12:29:27 +0200
+Message-ID: <20230619102159.174026496@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,41 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Elson Roy Serrao <quic_eserrao@quicinc.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-commit 00f8205ffcf112dcef14f8151d78075d38d22c08 upstream.
+[ Upstream commit 3bf3a7c6985c625f64e73baefdaa36f1c2045a29 ]
 
-Consider a scenario where cable disconnect happens when there is an active
-usb reqest queued to the UDC. As part of the disconnect we would issue an
-end transfer with no interrupt-on-completion before giving back this
-request. Since we are giving back the request without skipping TRBs the
-num_trbs field of dwc3_request still holds the stale value previously used.
-Function drivers re-use same request for a given bind-unbind session and
-hence their dwc3_request context gets preserved across cable
-disconnect/connect. When such a request gets re-queued after cable connect,
-we would increase the num_trbs field on top of the previous stale value
-thus incorrectly representing the number of TRBs used. Fix this by
-resetting num_trbs field before giving back the request.
+The last iu->buf will leak if ib_dma_mapping_error() fails.
 
-Fixes: 09fe1f8d7e2f ("usb: dwc3: gadget: track number of TRBs per request")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Message-ID: <1685654850-8468-1-git-send-email-quic_eserrao@quicinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c0894b3ea69d ("RDMA/rtrs: core: lib functions shared between client and server modules")
+Link: https://lore.kernel.org/r/1682384563-2-3-git-send-email-lizhijian@fujitsu.com
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Acked-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/ulp/rtrs/rtrs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -180,6 +180,7 @@ static void dwc3_gadget_del_and_unmap_re
- 	list_del(&req->list);
- 	req->remaining = 0;
- 	req->needs_extra_trb = false;
-+	req->num_trbs = 0;
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs.c b/drivers/infiniband/ulp/rtrs/rtrs.c
+index ed324b47d93ae..716ec7baddefd 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs.c
+@@ -37,8 +37,10 @@ struct rtrs_iu *rtrs_iu_alloc(u32 iu_num, size_t size, gfp_t gfp_mask,
+ 			goto err;
  
- 	if (req->request.status == -EINPROGRESS)
- 		req->request.status = status;
+ 		iu->dma_addr = ib_dma_map_single(dma_dev, iu->buf, size, dir);
+-		if (ib_dma_mapping_error(dma_dev, iu->dma_addr))
++		if (ib_dma_mapping_error(dma_dev, iu->dma_addr)) {
++			kfree(iu->buf);
+ 			goto err;
++		}
+ 
+ 		iu->cqe.done  = done;
+ 		iu->size      = size;
+-- 
+2.39.2
+
 
 
