@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A915381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6B1C433C0;
-	Mon, 19 Jun 2023 10:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA885381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A94C433C8;
+	Mon, 19 Jun 2023 10:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171456;
-	bh=MhTyEwAVoWuct1qjPySfzk9ClI6MHygYq9CIndOlE+M=;
+	s=korg; t=1687171459;
+	bh=SbhS7xWumawf0IXidumAoQr5bvCJ0c1u2Ym7dhm+aq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCH6JjlieavLdMRRJOoxBtKr024NHLpg6OjXdTPNLEmwvWMAggyAdnuf0FO/YOqDv
-	 A8p2LhaPTfnWoM001OUznRd7Pj4cEqZvyhMjL6EosqOF0y/9StUXBpjdneHs+7Akw7
-	 a7XpYpuyRgWSnmGilm4WwVThcKBAob4pfp8r6PjU=
+	b=n2DcKgietJOkVyTYiZO1/lx4MIC64HvGVfYsMGd27zYjsqFxuB6LVhGtv8jZCwRga
+	 dY6+NpuBPTogVkHkoWwT4V2t3Cm0nGyZtdvk8UvrEyP5xFdpcEDslmMwB8L5eobOTa
+	 /VkGmW/l3x7C0HJj/uXmqsFz18RSvIhDGGlUpYoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	Juergen Gross <jgross@suse.com>,
+	Sukrut Bellary <sukrut.bellary@linux.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/166] xen/blkfront: Only check REQ_FUA for writes
-Date: Mon, 19 Jun 2023 12:28:35 +0200
-Message-ID: <20230619102156.584858751@linuxfoundation.org>
+Subject: [PATCH 6.1 039/166] drm:amd:amdgpu: Fix missing buffer object unlock in failure path
+Date: Mon, 19 Jun 2023 12:28:36 +0200
+Message-ID: <20230619102156.627007922@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,43 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
+From: Sukrut Bellary <sukrut.bellary@linux.com>
 
-[ Upstream commit b6ebaa8100090092aa602530d7e8316816d0c98d ]
+[ Upstream commit 60ecaaf54886b0642d5c4744f7fbf1ff0d6b3e42 ]
 
-The existing code silently converts read operations with the
-REQ_FUA bit set into write-barrier operations. This results in data
-loss as the backend scribbles zeroes over the data instead of returning
-it.
+smatch warning -
+1) drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c:3615 gfx_v9_0_kiq_resume()
+warn: inconsistent returns 'ring->mqd_obj->tbo.base.resv'.
 
-While the REQ_FUA bit doesn't make sense on a read operation, at least
-one well-known out-of-tree kernel module does set it and since it
-results in data loss, let's be safe here and only look at REQ_FUA for
-writes.
+2) drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c:6901 gfx_v10_0_kiq_resume()
+warn: inconsistent returns 'ring->mqd_obj->tbo.base.resv'.
 
-Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20230426164005.2213139-1-ross.lagerwall@citrix.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/xen-blkfront.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c | 4 +++-
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c  | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index 35b9bcad9db90..5ddf393aa390f 100644
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -780,7 +780,8 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
- 		ring_req->u.rw.handle = info->handle;
- 		ring_req->operation = rq_data_dir(req) ?
- 			BLKIF_OP_WRITE : BLKIF_OP_READ;
--		if (req_op(req) == REQ_OP_FLUSH || req->cmd_flags & REQ_FUA) {
-+		if (req_op(req) == REQ_OP_FLUSH ||
-+		    (req_op(req) == REQ_OP_WRITE && (req->cmd_flags & REQ_FUA))) {
- 			/*
- 			 * Ideally we can do an unordered flush-to-disk.
- 			 * In case the backend onlysupports barriers, use that.
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+index 2127aab74a68f..84a36b50ddd87 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -6969,8 +6969,10 @@ static int gfx_v10_0_kiq_resume(struct amdgpu_device *adev)
+ 		return r;
+ 
+ 	r = amdgpu_bo_kmap(ring->mqd_obj, (void **)&ring->mqd_ptr);
+-	if (unlikely(r != 0))
++	if (unlikely(r != 0)) {
++		amdgpu_bo_unreserve(ring->mqd_obj);
+ 		return r;
++	}
+ 
+ 	gfx_v10_0_kiq_init_queue(ring);
+ 	amdgpu_bo_kunmap(ring->mqd_obj);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index 1f3fdf6cb903e..fe371022e5104 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -3650,8 +3650,10 @@ static int gfx_v9_0_kiq_resume(struct amdgpu_device *adev)
+ 		return r;
+ 
+ 	r = amdgpu_bo_kmap(ring->mqd_obj, (void **)&ring->mqd_ptr);
+-	if (unlikely(r != 0))
++	if (unlikely(r != 0)) {
++		amdgpu_bo_unreserve(ring->mqd_obj);
+ 		return r;
++	}
+ 
+ 	gfx_v9_0_kiq_init_queue(ring);
+ 	amdgpu_bo_kunmap(ring->mqd_obj);
 -- 
 2.39.2
 
