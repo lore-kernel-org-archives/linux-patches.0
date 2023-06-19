@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBA3BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A70C433C0;
-	Mon, 19 Jun 2023 10:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494BFBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39E0C433C0;
+	Mon, 19 Jun 2023 10:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172230;
-	bh=tyw/1INzvYwlkUZF5NwSsxLIo63T8sqs8Ids4I6zJ1c=;
+	s=korg; t=1687172233;
+	bh=iWLEbjyzYrV+chiF0vHRz9H9W1XQXVsQUNJ/de8yI5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BmrFfqwrVg81K3dMUO0ZUFiSkUm9VH20+d3b/cVRx5n8aWGAui06ho6kxmB3F06i+
-	 QAPS6NoMF/TI5WRWkBu5ARguGZS+n9iq7TPxvJ9yF/hITr2blUeIZdinhxvlfluMtv
-	 0zwvGMe24Tmf+DeGZNx4r7F4uhcM5L9fhySJcCXY=
+	b=Yl8fc0HOv6POdXKtRGQR2keEkwhV9HQN+gAn0coqc70y21e2vAyP1RRx7xBn54s6G
+	 YnF8DkRP9i0xTf3hdTt/mPXB3An0gYqy8d5yLHhRKeJ3S9tcJ7RoWQpzpGm/4WNUxC
+	 CG/yop2P6ouEYaaruQosAdXRDgV8nkw20YOpTf3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 83/89] nilfs2: reject devices with insufficient block count
-Date: Mon, 19 Jun 2023 12:31:11 +0200
-Message-ID: <20230619102142.066600154@linuxfoundation.org>
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>
+Subject: [PATCH 5.10 84/89] media: dvbdev: Fix memleak in dvb_register_device
+Date: Mon, 19 Jun 2023 12:31:12 +0200
+Message-ID: <20230619102142.109789582@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -35,105 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-commit 92c5d1b860e9581d64baca76779576c0ab0d943d upstream.
+commit 167faadfcf9339088910e9e85a1b711fcbbef8e9 upstream.
 
-The current sanity check for nilfs2 geometry information lacks checks for
-the number of segments stored in superblocks, so even for device images
-that have been destructively truncated or have an unusually high number of
-segments, the mount operation may succeed.
+When device_create() fails, dvbdev and dvbdevfops should
+be freed just like when dvb_register_media_device() fails.
 
-This causes out-of-bounds block I/O on file system block reads or log
-writes to the segments, the latter in particular causing
-"a_ops->writepages" to repeatedly fail, resulting in sync_inodes_sb() to
-hang.
-
-Fix this issue by checking the number of segments stored in the superblock
-and avoiding mounting devices that can cause out-of-bounds accesses.  To
-eliminate the possibility of overflow when calculating the number of
-blocks required for the device from the number of segments, this also adds
-a helper function to calculate the upper bound on the number of segments
-and inserts a check using it.
-
-Link: https://lkml.kernel.org/r/20230526021332.3431-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=7d50f1e54a12ba3aeae2
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/the_nilfs.c |   44 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+ drivers/media/dvb-core/dvbdev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -405,6 +405,18 @@ unsigned long nilfs_nrsvsegs(struct the_
- 				  100));
- }
- 
-+/**
-+ * nilfs_max_segment_count - calculate the maximum number of segments
-+ * @nilfs: nilfs object
-+ */
-+static u64 nilfs_max_segment_count(struct the_nilfs *nilfs)
-+{
-+	u64 max_count = U64_MAX;
-+
-+	do_div(max_count, nilfs->ns_blocks_per_segment);
-+	return min_t(u64, max_count, ULONG_MAX);
-+}
-+
- void nilfs_set_nsegments(struct the_nilfs *nilfs, unsigned long nsegs)
- {
- 	nilfs->ns_nsegments = nsegs;
-@@ -414,6 +426,8 @@ void nilfs_set_nsegments(struct the_nilf
- static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
- 				   struct nilfs_super_block *sbp)
- {
-+	u64 nsegments, nblocks;
-+
- 	if (le32_to_cpu(sbp->s_rev_level) < NILFS_MIN_SUPP_REV) {
- 		nilfs_err(nilfs->ns_sb,
- 			  "unsupported revision (superblock rev.=%d.%d, current rev.=%d.%d). Please check the version of mkfs.nilfs(2).",
-@@ -457,7 +471,35 @@ static int nilfs_store_disk_layout(struc
- 		return -EINVAL;
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -545,6 +545,9 @@ int dvb_register_device(struct dvb_adapt
+ 	if (IS_ERR(clsdev)) {
+ 		pr_err("%s: failed to create device dvb%d.%s%d (%ld)\n",
+ 		       __func__, adap->num, dnames[type], id, PTR_ERR(clsdev));
++		dvb_media_device_free(dvbdev);
++		kfree(dvbdevfops);
++		kfree(dvbdev);
+ 		return PTR_ERR(clsdev);
  	}
- 
--	nilfs_set_nsegments(nilfs, le64_to_cpu(sbp->s_nsegments));
-+	nsegments = le64_to_cpu(sbp->s_nsegments);
-+	if (nsegments > nilfs_max_segment_count(nilfs)) {
-+		nilfs_err(nilfs->ns_sb,
-+			  "segment count %llu exceeds upper limit (%llu segments)",
-+			  (unsigned long long)nsegments,
-+			  (unsigned long long)nilfs_max_segment_count(nilfs));
-+		return -EINVAL;
-+	}
-+
-+	nblocks = (u64)i_size_read(nilfs->ns_sb->s_bdev->bd_inode) >>
-+		nilfs->ns_sb->s_blocksize_bits;
-+	if (nblocks) {
-+		u64 min_block_count = nsegments * nilfs->ns_blocks_per_segment;
-+		/*
-+		 * To avoid failing to mount early device images without a
-+		 * second superblock, exclude that block count from the
-+		 * "min_block_count" calculation.
-+		 */
-+
-+		if (nblocks < min_block_count) {
-+			nilfs_err(nilfs->ns_sb,
-+				  "total number of segment blocks %llu exceeds device size (%llu blocks)",
-+				  (unsigned long long)min_block_count,
-+				  (unsigned long long)nblocks);
-+			return -EINVAL;
-+		}
-+	}
-+
-+	nilfs_set_nsegments(nilfs, nsegments);
- 	nilfs->ns_crc_seed = le32_to_cpu(sbp->s_crc_seed);
- 	return 0;
- }
+ 	dprintk("DVB: register adapter%d/%s%d @ minor: %i (0x%02x)\n",
 
 
