@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B0A1094D
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFE4C433CB;
-	Mon, 19 Jun 2023 10:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982B210955
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B30FC433C0;
+	Mon, 19 Jun 2023 10:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170619;
-	bh=7SZpRBOPuEVYE2QmaYt4jJ9GIL8+s98F+KMoarjT3RY=;
+	s=korg; t=1687170622;
+	bh=Z4Uac4RHKEB4bOwR383zVuwH0+vTf3TcsLC89UGSHnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCtY+bLfCmVOFc4PpYl4pQ3wOqeJSVcPM15Qrg1wLkeTDFVxmYtUC4hTN4qUuhkZC
-	 BV+yn4OmOOxl5lDMqioPFU7XxuJWl95L/NQUbP1aE0pybkFfdj8hCVDWdDfSx6l37v
-	 2l0WaHb6N1Y3bMJPdwN1lenzI7vSjvIShMFbgDPU=
+	b=tnGs6mma06D3xH2dcpsGAfhMNFUkYLxtXu5kARQu/fwAcF4poZE6GXOASArfUinLb
+	 P90OuEy5khC1kkOonNMWjPYy513KhLu9ZASenJ72DxMAAYmqs3lfQ3wFV75qBQR1ht
+	 OlOOM/vvC7E5jgNjaOLXIw0kJfrZAWoXwU6ywpnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Guillaume Nault <gnault@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
+	Alex Maftei <alex.maftei@amd.com>,
+	Richard Cochran <richardcochran@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 19/32] ping6: Fix send to link-local addresses with VRF.
-Date: Mon, 19 Jun 2023 12:29:07 +0200
-Message-ID: <20230619102128.553797160@linuxfoundation.org>
+Subject: [PATCH 4.14 28/32] selftests/ptp: Fix timestamp printf format for PTP_SYS_OFFSET
+Date: Mon, 19 Jun 2023 12:29:16 +0200
+Message-ID: <20230619102129.026143701@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
 References: <20230619102127.461443957@linuxfoundation.org>
@@ -37,56 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Alex Maftei <alex.maftei@amd.com>
 
-[ Upstream commit 91ffd1bae1dafbb9e34b46813f5b058581d9144d ]
+[ Upstream commit 76a4c8b82938bc5020b67663db41f451684bf327 ]
 
-Ping sockets can't send packets when they're bound to a VRF master
-device and the output interface is set to a slave device.
+Previously, timestamps were printed using "%lld.%u" which is incorrect
+for nanosecond values lower than 100,000,000 as they're fractional
+digits, therefore leading zeros are meaningful.
 
-For example, when net.ipv4.ping_group_range is properly set, so that
-ping6 can use ping sockets, the following kind of commands fails:
-  $ ip vrf exec red ping6 fe80::854:e7ff:fe88:4bf1%eth1
+This patch changes the format strings to "%lld.%09u" in order to add
+leading zeros to the nanosecond value.
 
-What happens is that sk->sk_bound_dev_if is set to the VRF master
-device, but 'oif' is set to the real output device. Since both are set
-but different, ping_v6_sendmsg() sees their value as inconsistent and
-fails.
-
-Fix this by allowing 'oif' to be a slave device of ->sk_bound_dev_if.
-
-This fixes the following kselftest failure:
-  $ ./fcnal-test.sh -t ipv6_ping
-  [...]
-  TEST: ping out, vrf device+address bind - ns-B IPv6 LLA        [FAIL]
-
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/b6191f90-ffca-dbca-7d06-88a9788def9c@alu.unizg.hr/
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Fixes: 5e457896986e ("net: ipv6: Fix ping to link-local addresses.")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/6c8b53108816a8d0d5705ae37bdc5a8322b5e3d9.1686153846.git.gnault@redhat.com
+Fixes: 568ebc5985f5 ("ptp: add the PTP_SYS_OFFSET ioctl to the testptp program")
+Fixes: 4ec54f95736f ("ptp: Fix compiler warnings in the testptp utility")
+Fixes: 6ab0e475f1f3 ("Documentation: fix misc. warnings")
+Signed-off-by: Alex Maftei <alex.maftei@amd.com>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Link: https://lore.kernel.org/r/20230615083404.57112-1-alex.maftei@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ping.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/ptp/testptp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/ping.c b/net/ipv6/ping.c
-index d5cdba8213a44..49e11bbf390cf 100644
---- a/net/ipv6/ping.c
-+++ b/net/ipv6/ping.c
-@@ -101,7 +101,8 @@ static int ping_v6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	addr_type = ipv6_addr_type(daddr);
- 	if ((__ipv6_addr_needs_scope_id(addr_type) && !oif) ||
- 	    (addr_type & IPV6_ADDR_MAPPED) ||
--	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if))
-+	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if &&
-+	     l3mdev_master_ifindex_by_index(sock_net(sk), oif) != sk->sk_bound_dev_if))
- 		return -EINVAL;
+diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
+index 5d2eae16f7ee5..f8b5e183e0063 100644
+--- a/tools/testing/selftests/ptp/testptp.c
++++ b/tools/testing/selftests/ptp/testptp.c
+@@ -504,11 +504,11 @@ int main(int argc, char *argv[])
+ 			interval = t2 - t1;
+ 			offset = (t2 + t1) / 2 - tp;
  
- 	/* TODO: use ip6_datagram_send_ctl to get options from cmsg */
+-			printf("system time: %lld.%u\n",
++			printf("system time: %lld.%09u\n",
+ 				(pct+2*i)->sec, (pct+2*i)->nsec);
+-			printf("phc    time: %lld.%u\n",
++			printf("phc    time: %lld.%09u\n",
+ 				(pct+2*i+1)->sec, (pct+2*i+1)->nsec);
+-			printf("system time: %lld.%u\n",
++			printf("system time: %lld.%09u\n",
+ 				(pct+2*i+2)->sec, (pct+2*i+2)->nsec);
+ 			printf("system/phc clock time offset is %" PRId64 " ns\n"
+ 			       "system     clock time delay  is %" PRId64 " ns\n",
 -- 
 2.39.2
 
