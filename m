@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED9BBE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28583C433C8;
-	Mon, 19 Jun 2023 10:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421E5BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DC9C433C8;
+	Mon, 19 Jun 2023 10:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171864;
-	bh=wCDJTuhEOznNXw5xC8FsaE2KX5sRtS9zL7OApwbxwMI=;
+	s=korg; t=1687171867;
+	bh=p/IgxmZZFrxBdPYVbroxVgHz0FMQYuzCL/FQBFsDPeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zG6Ig7Nx/a3ckqKzyYK9wkOP+54+Jnc6YcaFJUOcX9kSOa38hfZxANPAHRdwGuENA
-	 r8gKURQbnhot2yh2gv5YIy0/oXf9Au6Ah7W8R/QIIrL8Wb1DhpQ0sNsjobpSDOZExS
-	 T/55H9TsfMlXtqOXph559QVst4oyk9qQJ2wzNukg=
+	b=s+Zl3lCbKG4KZJ2AO4cTnsTv3geed+COseiDkWoYc/ym4dma5yj2Ju40YO6LSPi1n
+	 xryNIuoNbmQvAFCYlcJqY2hAR0uZSXl8+X7rgXqd84KpQpwW1CKS/AmSd0oOTMcsth
+	 L9eSgmBL+o2O/svXzwrQdBuZbPtvlhg8nLPXV5xU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Dudau <liviu@dudau.co.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 18/64] mips: Move initrd_start check after initrd address sanitisation.
-Date: Mon, 19 Jun 2023 12:30:14 +0200
-Message-ID: <20230619102133.809736219@linuxfoundation.org>
+Subject: [PATCH 5.4 19/64] xen/blkfront: Only check REQ_FUA for writes
+Date: Mon, 19 Jun 2023 12:30:15 +0200
+Message-ID: <20230619102133.863733224@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -35,50 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liviu Dudau <liviu@dudau.co.uk>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit 4897a898a216058dec55e5e5902534e6e224fcdf ]
+[ Upstream commit b6ebaa8100090092aa602530d7e8316816d0c98d ]
 
-PAGE_OFFSET is technically a virtual address so when checking the value of
-initrd_start against it we should make sure that it has been sanitised from
-the values passed by the bootloader. Without this change, even with a bootloader
-that passes correct addresses for an initrd, we are failing to load it on MT7621
-boards, for example.
+The existing code silently converts read operations with the
+REQ_FUA bit set into write-barrier operations. This results in data
+loss as the backend scribbles zeroes over the data instead of returning
+it.
 
-Signed-off-by: Liviu Dudau <liviu@dudau.co.uk>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+While the REQ_FUA bit doesn't make sense on a read operation, at least
+one well-known out-of-tree kernel module does set it and since it
+results in data loss, let's be safe here and only look at REQ_FUA for
+writes.
+
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Acked-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20230426164005.2213139-1-ross.lagerwall@citrix.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/setup.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/block/xen-blkfront.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/kernel/setup.c b/arch/mips/kernel/setup.c
-index 82e44b31aad59..d91b772214b5d 100644
---- a/arch/mips/kernel/setup.c
-+++ b/arch/mips/kernel/setup.c
-@@ -190,10 +190,6 @@ static unsigned long __init init_initrd(void)
- 		pr_err("initrd start must be page aligned\n");
- 		goto disable;
- 	}
--	if (initrd_start < PAGE_OFFSET) {
--		pr_err("initrd start < PAGE_OFFSET\n");
--		goto disable;
--	}
- 
- 	/*
- 	 * Sanitize initrd addresses. For example firmware
-@@ -206,6 +202,11 @@ static unsigned long __init init_initrd(void)
- 	initrd_end = (unsigned long)__va(end);
- 	initrd_start = (unsigned long)__va(__pa(initrd_start));
- 
-+	if (initrd_start < PAGE_OFFSET) {
-+		pr_err("initrd start < PAGE_OFFSET\n");
-+		goto disable;
-+	}
-+
- 	ROOT_DEV = Root_RAM0;
- 	return PFN_UP(end);
- disable:
+diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
+index d0538c03f0332..da67621ebc212 100644
+--- a/drivers/block/xen-blkfront.c
++++ b/drivers/block/xen-blkfront.c
+@@ -779,7 +779,8 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
+ 		ring_req->u.rw.handle = info->handle;
+ 		ring_req->operation = rq_data_dir(req) ?
+ 			BLKIF_OP_WRITE : BLKIF_OP_READ;
+-		if (req_op(req) == REQ_OP_FLUSH || req->cmd_flags & REQ_FUA) {
++		if (req_op(req) == REQ_OP_FLUSH ||
++		    (req_op(req) == REQ_OP_WRITE && (req->cmd_flags & REQ_FUA))) {
+ 			/*
+ 			 * Ideally we can do an unordered flush-to-disk.
+ 			 * In case the backend onlysupports barriers, use that.
 -- 
 2.39.2
 
