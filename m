@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D833310961
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:32:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FDDC433C0;
-	Mon, 19 Jun 2023 10:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08AF10974
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:33:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CAAC433C8;
+	Mon, 19 Jun 2023 10:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170779;
-	bh=awNbbUrZKfXcgaKH6JhIK8hfjJtLZGaowOiSziy/Zt0=;
+	s=korg; t=1687170782;
+	bh=e6FiqSpPzrIqBr4ifo3Fy2T912kqqu+DYRXAE8MmA+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywKLJDvvDx6VoeuZC4qt+Icq8ZwAyXEJjrF2BVO6I25Nf2smB/3CGSF3qgUHUAZbx
-	 c4j6GtXul8eLKt8Oi7t1rTGCChPnXJAD/0rRupJaM8f54YrSybBz+xGHgfHHauh6Z0
-	 uce3UH/DqNiCFn+qqj+Sh9TxVHOKtVsaqhKVY+0Q=
+	b=QEho+q9SgTJZCtSGavH9yvh7QaMnAn1/AZKzr8Cq4yTjyVJZWFVMeGQqv8hE/n9Cd
+	 VzrSTHW6xil8uun5+HLWq92GJPUaMpR4Prlp7+SJOrw7sJOXS4Nl3tOhcgPx7k3xXE
+	 88QBSJ45uVIc/g6QlJ58SUAVFUgYjWqptxom/2Ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
+	Yue Hu <huyue2@coolpad.com>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 032/187] parisc: Flush gatt writes and adjust gatt mask in parisc_agp_mask_memory()
-Date: Mon, 19 Jun 2023 12:27:30 +0200
-Message-ID: <20230619102159.200702878@linuxfoundation.org>
+Subject: [PATCH 6.3 033/187] erofs: use HIPRI by default if per-cpu kthreads are enabled
+Date: Mon, 19 Jun 2023 12:27:31 +0200
+Message-ID: <20230619102159.249464371@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -34,59 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit d703797380c540bbeac03f104ebcfc364eaf47cc ]
+[ Upstream commit cf7f2732b4b83026842832e7e4e04bf862108ac2 ]
 
-Flush caches after changing gatt entries and calculate entry according
-to SBA requirements.
+As Sandeep shown [1], high priority RT per-cpu kthreads are
+typically helpful for Android scenarios to minimize the scheduling
+latencies.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+Switch EROFS_FS_PCPU_KTHREAD_HIPRI on by default if
+EROFS_FS_PCPU_KTHREAD is on since it's the typical use cases for
+EROFS_FS_PCPU_KTHREAD.
+
+Also clean up unneeded sched_set_normal().
+
+[1] https://lore.kernel.org/r/CAB=BE-SBtO6vcoyLNA9F-9VaN5R0t3o_Zn+FW8GbO6wyUqFneQ@mail.gmail.com
+
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Reviewed-by: Sandeep Dhavale <dhavale@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230522092141.124290-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/agp/parisc-agp.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ fs/erofs/Kconfig | 1 +
+ fs/erofs/zdata.c | 2 --
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/char/agp/parisc-agp.c b/drivers/char/agp/parisc-agp.c
-index d68d05d5d3838..514f9f287a781 100644
---- a/drivers/char/agp/parisc-agp.c
-+++ b/drivers/char/agp/parisc-agp.c
-@@ -90,6 +90,9 @@ parisc_agp_tlbflush(struct agp_memory *mem)
- {
- 	struct _parisc_agp_info *info = &parisc_agp_info;
- 
-+	/* force fdc ops to be visible to IOMMU */
-+	asm_io_sync();
-+
- 	writeq(info->gart_base | ilog2(info->gart_size), info->ioc_regs+IOC_PCOM);
- 	readq(info->ioc_regs+IOC_PCOM);	/* flush */
- }
-@@ -158,6 +161,7 @@ parisc_agp_insert_memory(struct agp_memory *mem, off_t pg_start, int type)
- 			info->gatt[j] =
- 				parisc_agp_mask_memory(agp_bridge,
- 					paddr, type);
-+			asm_io_fdc(&info->gatt[j]);
- 		}
- 	}
- 
-@@ -191,7 +195,16 @@ static unsigned long
- parisc_agp_mask_memory(struct agp_bridge_data *bridge, dma_addr_t addr,
- 		       int type)
- {
--	return SBA_PDIR_VALID_BIT | addr;
-+	unsigned ci;			/* coherent index */
-+	dma_addr_t pa;
-+
-+	pa = addr & IOVP_MASK;
-+	asm("lci 0(%1), %0" : "=r" (ci) : "r" (phys_to_virt(pa)));
-+
-+	pa |= (ci >> PAGE_SHIFT) & 0xff;/* move CI (8 bits) into lowest byte */
-+	pa |= SBA_PDIR_VALID_BIT;	/* set "valid" bit */
-+
-+	return cpu_to_le64(pa);
+diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
+index 704fb59577e09..f259d92c97207 100644
+--- a/fs/erofs/Kconfig
++++ b/fs/erofs/Kconfig
+@@ -121,6 +121,7 @@ config EROFS_FS_PCPU_KTHREAD
+ config EROFS_FS_PCPU_KTHREAD_HIPRI
+ 	bool "EROFS high priority per-CPU kthread workers"
+ 	depends on EROFS_FS_ZIP && EROFS_FS_PCPU_KTHREAD
++	default y
+ 	help
+ 	  This permits EROFS to configure per-CPU kthread workers to run
+ 	  at higher priority.
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index f1708c77a9912..d7add72a09437 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -369,8 +369,6 @@ static struct kthread_worker *erofs_init_percpu_worker(int cpu)
+ 		return worker;
+ 	if (IS_ENABLED(CONFIG_EROFS_FS_PCPU_KTHREAD_HIPRI))
+ 		sched_set_fifo_low(worker->task);
+-	else
+-		sched_set_normal(worker->task, 0);
+ 	return worker;
  }
  
- static void
 -- 
 2.39.2
 
