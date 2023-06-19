@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7CF8C06
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:02:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7924C433C0;
-	Mon, 19 Jun 2023 11:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E541EBE7E
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:02:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E770C433C9;
+	Mon, 19 Jun 2023 11:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172527;
-	bh=Y4GZFs432QbMsbOXDCpVbjFY9TsBl7toCyEJmakEPog=;
+	s=korg; t=1687172529;
+	bh=Z1MDPGD8h0l+5PvCEaKDbpNbwF186cXdaQ/77C4BQrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7W4+0eO19cXUKJ/HwP3z5nzLjUgWopt72HV0DzSPgXNkrmhI46qKZxK3nUnEjQch
-	 V13z1gDiqGuRkzd+RTg8+sHqqaegEi1z9DAUxoj6whY9zAlTV4TGN+aC3Gm2CPUg8L
-	 mTLz9nKs64+Sar1sxc0e9o6bbdOnoJ2WR4VWHFeE=
+	b=XbTXrxAYCUo/olcWFUV6e3U8QNq6ziVTmynSc7STvLi1ht8OMlzQWoUY7awFL0t/x
+	 rDUDCG+5KTwtfO8ZyLOXTSYEKvE4IUjwW2o2PtNndWQ/RAj08HR4ZByTYbfZnoh6E7
+	 A9JyBW+aar2e8e0Bk3t75RXgij5sUptnhI6l3ZDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Ziwei Dai <ziwei.dai@unisoc.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>
-Subject: [PATCH 5.15 100/107] rcu/kvfree: Avoid freeing new kfree_rcu() memory after old grace period
-Date: Mon, 19 Jun 2023 12:31:24 +0200
-Message-ID: <20230619102146.108710955@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 101/107] neighbour: Remove unused inline function neigh_key_eq16()
+Date: Mon, 19 Jun 2023 12:31:25 +0200
+Message-ID: <20230619102146.151552354@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -37,164 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziwei Dai <ziwei.dai@unisoc.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 5da7cb193db32da783a3f3e77d8b639989321d48 upstream.
+commit c8f01a4a54473f88f8cc0d9046ec9eb5a99815d5 upstream.
 
-Memory passed to kvfree_rcu() that is to be freed is tracked by a
-per-CPU kfree_rcu_cpu structure, which in turn contains pointers
-to kvfree_rcu_bulk_data structures that contain pointers to memory
-that has not yet been handed to RCU, along with an kfree_rcu_cpu_work
-structure that tracks the memory that has already been handed to RCU.
-These structures track three categories of memory: (1) Memory for
-kfree(), (2) Memory for kvfree(), and (3) Memory for both that arrived
-during an OOM episode.  The first two categories are tracked in a
-cache-friendly manner involving a dynamically allocated page of pointers
-(the aforementioned kvfree_rcu_bulk_data structures), while the third
-uses a simple (but decidedly cache-unfriendly) linked list through the
-rcu_head structures in each block of memory.
+All uses of neigh_key_eq16() have
+been removed since commit 1202cdd66531 ("Remove DECnet support
+from kernel"), so remove it.
 
-On a given CPU, these three categories are handled as a unit, with that
-CPU's kfree_rcu_cpu_work structure having one pointer for each of the
-three categories.  Clearly, new memory for a given category cannot be
-placed in the corresponding kfree_rcu_cpu_work structure until any old
-memory has had its grace period elapse and thus has been removed.  And
-the kfree_rcu_monitor() function does in fact check for this.
-
-Except that the kfree_rcu_monitor() function checks these pointers one
-at a time.  This means that if the previous kfree_rcu() memory passed
-to RCU had only category 1 and the current one has only category 2, the
-kfree_rcu_monitor() function will send that current category-2 memory
-along immediately.  This can result in memory being freed too soon,
-that is, out from under unsuspecting RCU readers.
-
-To see this, consider the following sequence of events, in which:
-
-o	Task A on CPU 0 calls rcu_read_lock(), then uses "from_cset",
-	then is preempted.
-
-o	CPU 1 calls kfree_rcu(cset, rcu_head) in order to free "from_cset"
-	after a later grace period.  Except that "from_cset" is freed
-	right after the previous grace period ended, so that "from_cset"
-	is immediately freed.  Task A resumes and references "from_cset"'s
-	member, after which nothing good happens.
-
-In full detail:
-
-CPU 0					CPU 1
-----------------------			----------------------
-count_memcg_event_mm()
-|rcu_read_lock()  <---
-|mem_cgroup_from_task()
- |// css_set_ptr is the "from_cset" mentioned on CPU 1
- |css_set_ptr = rcu_dereference((task)->cgroups)
- |// Hard irq comes, current task is scheduled out.
-
-					cgroup_attach_task()
-					|cgroup_migrate()
-					|cgroup_migrate_execute()
-					|css_set_move_task(task, from_cset, to_cset, true)
-					|cgroup_move_task(task, to_cset)
-					|rcu_assign_pointer(.., to_cset)
-					|...
-					|cgroup_migrate_finish()
-					|put_css_set_locked(from_cset)
-					|from_cset->refcount return 0
-					|kfree_rcu(cset, rcu_head) // free from_cset after new gp
-					|add_ptr_to_bulk_krc_lock()
-					|schedule_delayed_work(&krcp->monitor_work, ..)
-
-					kfree_rcu_monitor()
-					|krcp->bulk_head[0]'s work attached to krwp->bulk_head_free[]
-					|queue_rcu_work(system_wq, &krwp->rcu_work)
-					|if rwork->rcu.work is not in WORK_STRUCT_PENDING_BIT state,
-					|call_rcu(&rwork->rcu, rcu_work_rcufn) <--- request new gp
-
-					// There is a perious call_rcu(.., rcu_work_rcufn)
-					// gp end, rcu_work_rcufn() is called.
-					rcu_work_rcufn()
-					|__queue_work(.., rwork->wq, &rwork->work);
-
-					|kfree_rcu_work()
-					|krwp->bulk_head_free[0] bulk is freed before new gp end!!!
-					|The "from_cset" is freed before new gp end.
-
-// the task resumes some time later.
- |css_set_ptr->subsys[(subsys_id) <--- Caused kernel crash, because css_set_ptr is freed.
-
-This commit therefore causes kfree_rcu_monitor() to refrain from moving
-kfree_rcu() memory to the kfree_rcu_cpu_work structure until the RCU
-grace period has completed for all three categories.
-
-v2: Use helper function instead of inserted code block at kfree_rcu_monitor().
-
-Fixes: 34c881745549 ("rcu: Support kfree_bulk() interface in kfree_rcu()")
-Fixes: 5f3c8d620447 ("rcu/tree: Maintain separate array for vmalloc ptrs")
-Reported-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Ziwei Dai <ziwei.dai@unisoc.com>
-Reviewed-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Tested-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/rcu/tree.c |   39 +++++++++++++++++++++++++++++++--------
- 1 file changed, 31 insertions(+), 8 deletions(-)
+ include/net/neighbour.h |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -3328,6 +3328,30 @@ static void kfree_rcu_work(struct work_s
- 	}
- }
+--- a/include/net/neighbour.h
++++ b/include/net/neighbour.h
+@@ -260,11 +260,6 @@ static inline void *neighbour_priv(const
  
-+static bool
-+need_offload_krc(struct kfree_rcu_cpu *krcp)
-+{
-+	int i;
-+
-+	for (i = 0; i < FREE_N_CHANNELS; i++)
-+		if (krcp->bkvhead[i])
-+			return true;
-+
-+	return !!krcp->head;
-+}
-+
-+static bool
-+need_wait_for_krwp_work(struct kfree_rcu_cpu_work *krwp)
-+{
-+	int i;
-+
-+	for (i = 0; i < FREE_N_CHANNELS; i++)
-+		if (krwp->bkvhead_free[i])
-+			return true;
-+
-+	return !!krwp->head_free;
-+}
-+
- /*
-  * This function is invoked after the KFREE_DRAIN_JIFFIES timeout.
-  */
-@@ -3344,14 +3368,13 @@ static void kfree_rcu_monitor(struct wor
- 	for (i = 0; i < KFREE_N_BATCHES; i++) {
- 		struct kfree_rcu_cpu_work *krwp = &(krcp->krw_arr[i]);
+ extern const struct nla_policy nda_policy[];
  
--		// Try to detach bkvhead or head and attach it over any
--		// available corresponding free channel. It can be that
--		// a previous RCU batch is in progress, it means that
--		// immediately to queue another one is not possible so
--		// in that case the monitor work is rearmed.
--		if ((krcp->bkvhead[0] && !krwp->bkvhead_free[0]) ||
--			(krcp->bkvhead[1] && !krwp->bkvhead_free[1]) ||
--				(krcp->head && !krwp->head_free)) {
-+		// Try to detach bulk_head or head and attach it, only when
-+		// all channels are free.  Any channel is not free means at krwp
-+		// there is on-going rcu work to handle krwp's free business.
-+		if (need_wait_for_krwp_work(krwp))
-+			continue;
-+
-+		if (need_offload_krc(krcp)) {
- 			// Channel 1 corresponds to the SLAB-pointer bulk path.
- 			// Channel 2 corresponds to vmalloc-pointer bulk path.
- 			for (j = 0; j < FREE_N_CHANNELS; j++) {
+-static inline bool neigh_key_eq16(const struct neighbour *n, const void *pkey)
+-{
+-	return *(const u16 *)n->primary_key == *(const u16 *)pkey;
+-}
+-
+ static inline bool neigh_key_eq32(const struct neighbour *n, const void *pkey)
+ {
+ 	return *(const u32 *)n->primary_key == *(const u32 *)pkey;
 
 
