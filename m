@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3522D5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6C0C433C9;
-	Mon, 19 Jun 2023 10:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B235381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:44:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587DFC433C9;
+	Mon, 19 Jun 2023 10:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171476;
-	bh=9ZOxKVTUrIzttJTVzTa3XupfHcO5Na4L4P3jSK5/WgA=;
+	s=korg; t=1687171478;
+	bh=ZOz9DKPiQ/1vuz5mEALs5ZmPscV62uX3Ch3lWDK52K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DAXjXWAPq3Y4VUZJZJdsCPk2MumSbnBsUoJwD1VV2kitbIO21QD4PBjx4atdyLlSh
-	 KYrMAEiYam9NAE9sF06CQRbvymC7mMjG8kujLQayVRG3EN3d3ivqu7WsqeMBZGFxa1
-	 WHBwjifWqOp9eZHr+JQD6Ws+pMbFBrmJ+QbVzyz8=
+	b=Xpld/MTn1Ijcjp8PP17yoarbRZOn7o4I1clPVwcnSVlf0VNUoZYLWIPbs3E/A51hw
+	 bbC1BIT+TVUT40AVvm5aNNWGdHxfUT8/e6sdqvTxr/m1jPa9TD2FTja2SSZTydwP3m
+	 iJgK+YarSJchyJpXspOo/03R5h7GQSB+e5rqLKQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 044/166] wifi: cfg80211: fix double lock bug in reg_wdev_chan_valid()
-Date: Mon, 19 Jun 2023 12:28:41 +0200
-Message-ID: <20230619102156.837847289@linuxfoundation.org>
+	Ben Segall <bsegall@google.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 045/166] epoll: ep_autoremove_wake_function should use list_del_init_careful
+Date: Mon, 19 Jun 2023 12:28:42 +0200
+Message-ID: <20230619102156.879761526@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -34,36 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Benjamin Segall <bsegall@google.com>
 
-commit 996c3117dae4c02b38a3cb68e5c2aec9d907ec15 upstream.
+commit 2192bba03d80f829233bfa34506b428f71e531e7 upstream.
 
-The locking was changed recently so now the caller holds the wiphy_lock()
-lock.  Taking the lock inside the reg_wdev_chan_valid() function will
-lead to a deadlock.
+autoremove_wake_function uses list_del_init_careful, so should epoll's
+more aggressive variant.  It only doesn't because it was copied from an
+older wait.c rather than the most recent.
 
-Fixes: f7e60032c661 ("wifi: cfg80211: fix locking in regulatory disconnect")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/40c4114a-6cb4-4abf-b013-300b598aba65@moroto.mountain
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[bsegall@google.com: add comment]
+  Link: https://lkml.kernel.org/r/xm26bki0ulsr.fsf_-_@google.com
+Link: https://lkml.kernel.org/r/xm26pm6hvfer.fsf@google.com
+Fixes: a16ceb139610 ("epoll: autoremove wakers even more aggressively")
+Signed-off-by: Ben Segall <bsegall@google.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/reg.c |    3 ---
- 1 file changed, 3 deletions(-)
+ fs/eventpoll.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -2442,11 +2442,8 @@ static bool reg_wdev_chan_valid(struct w
- 		case NL80211_IFTYPE_P2P_GO:
- 		case NL80211_IFTYPE_ADHOC:
- 		case NL80211_IFTYPE_MESH_POINT:
--			wiphy_lock(wiphy);
- 			ret = cfg80211_reg_can_beacon_relax(wiphy, &chandef,
- 							    iftype);
--			wiphy_unlock(wiphy);
--
- 			if (!ret)
- 				return ret;
- 			break;
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1760,7 +1760,11 @@ static int ep_autoremove_wake_function(s
+ {
+ 	int ret = default_wake_function(wq_entry, mode, sync, key);
+ 
+-	list_del_init(&wq_entry->entry);
++	/*
++	 * Pairs with list_empty_careful in ep_poll, and ensures future loop
++	 * iterations see the cause of this wakeup.
++	 */
++	list_del_init_careful(&wq_entry->entry);
+ 	return ret;
+ }
+ 
 
 
