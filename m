@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF89D79C6
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D655C433C8;
-	Mon, 19 Jun 2023 10:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802B1BA32
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070D4C433C8;
+	Mon, 19 Jun 2023 10:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171236;
-	bh=2JLfz6tfQEPJb7CnVemWAmMS6q+Kz6PN2Zzsfl1N9Jc=;
+	s=korg; t=1687171239;
+	bh=iNSIX/q69BO9D9C8quIGMYIKKtzREPqOzGa8/KIbOUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFMYAkSA1g1Ioaro7ClBh8529Ww2f5RuGZo72MwhtJM90OpZsObVO0JkXC/wmJtlm
-	 pSO1l+n7MMVpV+nIc2dQcznDmm/8zBo44+E5TqSm1KlSYMAoe8CmFSbPZcrd9gHaN1
-	 Rsmf3mLjTySC7J0Jbe0KkWAYUAS4YkSOkH8l+k7o=
+	b=yabgogawGMHqon/keTwLYl/A8l/0AGTNasaja+0YLUSU9hRFgAlRgLFvSwodGN92+
+	 KxRTlmpCe72GfzyzAQttGtczMxazu5rj6DyBhPjNozOmgOWdQoYNg6UHOv1u6wWW5p
+	 VZuHnPT+qB6gZFlthXYLiLD6w8bmABDB9WXw2KSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Liviu Dudau <liviu@dudau.co.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 01/49] power: supply: ab8500: Fix external_power_changed race
-Date: Mon, 19 Jun 2023 12:29:39 +0200
-Message-ID: <20230619102129.934197194@linuxfoundation.org>
+Subject: [PATCH 4.19 10/49] mips: Move initrd_start check after initrd address sanitisation.
+Date: Mon, 19 Jun 2023 12:29:48 +0200
+Message-ID: <20230619102130.396510186@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,71 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Liviu Dudau <liviu@dudau.co.uk>
 
-[ Upstream commit a5299ce4e96f3e8930e9c051b28d8093ada87b08 ]
+[ Upstream commit 4897a898a216058dec55e5e5902534e6e224fcdf ]
 
-ab8500_btemp_external_power_changed() dereferences di->btemp_psy,
-which gets sets in ab8500_btemp_probe() like this:
+PAGE_OFFSET is technically a virtual address so when checking the value of
+initrd_start against it we should make sure that it has been sanitised from
+the values passed by the bootloader. Without this change, even with a bootloader
+that passes correct addresses for an initrd, we are failing to load it on MT7621
+boards, for example.
 
-        di->btemp_psy = devm_power_supply_register(dev, &ab8500_btemp_desc,
-                                                   &psy_cfg);
-
-As soon as devm_power_supply_register() has called device_add()
-the external_power_changed callback can get called. So there is a window
-where ab8500_btemp_external_power_changed() may get called while
-di->btemp_psy has not been set yet leading to a NULL pointer dereference.
-
-Fixing this is easy. The external_power_changed callback gets passed
-the power_supply which will eventually get stored in di->btemp_psy,
-so ab8500_btemp_external_power_changed() can simply directly use
-the passed in psy argument which is always valid.
-
-And the same applies to ab8500_fg_external_power_changed().
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Liviu Dudau <liviu@dudau.co.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_btemp.c | 6 ++----
- drivers/power/supply/ab8500_fg.c    | 6 ++----
- 2 files changed, 4 insertions(+), 8 deletions(-)
+ arch/mips/kernel/setup.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
-index 0fd24577112eb..0bec8b90667c8 100644
---- a/drivers/power/supply/ab8500_btemp.c
-+++ b/drivers/power/supply/ab8500_btemp.c
-@@ -919,10 +919,8 @@ static int ab8500_btemp_get_ext_psy_data(struct device *dev, void *data)
-  */
- static void ab8500_btemp_external_power_changed(struct power_supply *psy)
- {
--	struct ab8500_btemp *di = power_supply_get_drvdata(psy);
--
--	class_for_each_device(power_supply_class, NULL,
--		di->btemp_psy, ab8500_btemp_get_ext_psy_data);
-+	class_for_each_device(power_supply_class, NULL, psy,
-+			      ab8500_btemp_get_ext_psy_data);
- }
+diff --git a/arch/mips/kernel/setup.c b/arch/mips/kernel/setup.c
+index 2c2480be3f365..124bc842306d6 100644
+--- a/arch/mips/kernel/setup.c
++++ b/arch/mips/kernel/setup.c
+@@ -265,10 +265,6 @@ static unsigned long __init init_initrd(void)
+ 		pr_err("initrd start must be page aligned\n");
+ 		goto disable;
+ 	}
+-	if (initrd_start < PAGE_OFFSET) {
+-		pr_err("initrd start < PAGE_OFFSET\n");
+-		goto disable;
+-	}
  
- /* ab8500 btemp driver interrupts and their respective isr */
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index 675f9d0e8471e..d0cbd7189a622 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -2380,10 +2380,8 @@ static int ab8500_fg_init_hw_registers(struct ab8500_fg *di)
-  */
- static void ab8500_fg_external_power_changed(struct power_supply *psy)
- {
--	struct ab8500_fg *di = power_supply_get_drvdata(psy);
--
--	class_for_each_device(power_supply_class, NULL,
--		di->fg_psy, ab8500_fg_get_ext_psy_data);
-+	class_for_each_device(power_supply_class, NULL, psy,
-+			      ab8500_fg_get_ext_psy_data);
- }
+ 	/*
+ 	 * Sanitize initrd addresses. For example firmware
+@@ -281,6 +277,11 @@ static unsigned long __init init_initrd(void)
+ 	initrd_end = (unsigned long)__va(end);
+ 	initrd_start = (unsigned long)__va(__pa(initrd_start));
  
- /**
++	if (initrd_start < PAGE_OFFSET) {
++		pr_err("initrd start < PAGE_OFFSET\n");
++		goto disable;
++	}
++
+ 	ROOT_DEV = Root_RAM0;
+ 	return PFN_UP(end);
+ disable:
 -- 
 2.39.2
 
