@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD4DBE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0551C433C9;
-	Mon, 19 Jun 2023 10:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D450BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF82C433C9;
+	Mon, 19 Jun 2023 10:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172186;
-	bh=oD/ZsWwc5qwScHghAn0yXx3DCRnV51znb27JCFRhJtE=;
+	s=korg; t=1687172188;
+	bh=/NOwE4/M2QRU0b0OMCwK9UC2+b2FYJe1Ru2+euKvkG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+x6uu3fJeAgCkND7ypo9xiplkTZyemOTT5AlHYYaeURiwsTALri11Lh4NSB4UOHR
-	 NiWsL0g042aEg1BriuYzd4+clFSEcJR4PwirBSdrHN6loH3HTstHKZGWmTZ36fZIzT
-	 En6Htt7vZDGAJeubSkDdaQt+JUYwCY812sI4QFqE=
+	b=XXZKHicTpXeZjIbQKb2dU+RNEVZzIlqNnpNK/3i48cKk42wZMrT8bSGdAoOCGuuTl
+	 b5YkGUwpiZxYkzEXLIke7uzYkZci/SxFJ/06z2FHj1K+U7qZtQOQ5EGpqZOhOeYtJn
+	 qqIgnyqCu02dOUt/SpgfnnrW+7QyvO4OD0Cv8pOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4acc7d910e617b360859@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>,
-	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
+	Mingshuai Ren <renmingshuai@huawei.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 68/89] ext4: drop the call to ext4_error() from ext4_get_group_info()
-Date: Mon, 19 Jun 2023 12:30:56 +0200
-Message-ID: <20230619102141.363427587@linuxfoundation.org>
+Subject: [PATCH 5.10 69/89] net/sched: cls_api: Fix lockup on flushing explicitly created chain
+Date: Mon, 19 Jun 2023 12:30:57 +0200
+Message-ID: <20230619102141.406867979@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -36,62 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit f451fd97dd2b78f286379203a47d9d295c467255 ]
+[ Upstream commit c9a82bec02c339cdda99b37c5e62b3b71fc4209c ]
 
-A recent patch added a call to ext4_error() which is problematic since
-some callers of the ext4_get_group_info() function may be holding a
-spinlock, whereas ext4_error() must never be called in atomic context.
+Mingshuai Ren reports:
 
-This triggered a report from Syzbot: "BUG: sleeping function called from
-invalid context in ext4_update_super" (see the link below).
+When a new chain is added by using tc, one soft lockup alarm will be
+ generated after delete the prio 0 filter of the chain. To reproduce
+ the problem, perform the following steps:
+(1) tc qdisc add dev eth0 root handle 1: htb default 1
+(2) tc chain add dev eth0
+(3) tc filter del dev eth0 chain 0 parent 1: prio 0
+(4) tc filter add dev eth0 chain 0 parent 1:
 
-Therefore, drop the call to ext4_error() from ext4_get_group_info(). In
-the meantime use eight characters tabs instead of nine characters ones.
+Fix the issue by accounting for additional reference to chains that are
+explicitly created by RTM_NEWCHAIN message as opposed to implicitly by
+RTM_NEWTFILTER message.
 
-Reported-by: syzbot+4acc7d910e617b360859@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/00000000000070575805fdc6cdb2@google.com/
-Fixes: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
-Suggested-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
-Link: https://lore.kernel.org/r/20230614100446.14337-1-fmdefrancesco@gmail.com
+Fixes: 726d061286ce ("net: sched: prevent insertion of new classifiers during chain flush")
+Reported-by: Mingshuai Ren <renmingshuai@huawei.com>
+Closes: https://lore.kernel.org/lkml/87legswvi3.fsf@nvidia.com/T/
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Link: https://lore.kernel.org/r/20230612093426.2867183-1-vladbu@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/balloc.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ net/sched/cls_api.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
-index a43167042b6b1..4efe71efe1277 100644
---- a/fs/ext4/balloc.c
-+++ b/fs/ext4/balloc.c
-@@ -322,17 +322,15 @@ static ext4_fsblk_t ext4_valid_block_bitmap_padding(struct super_block *sb,
- struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
- 					    ext4_group_t group)
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index befe42aad04ba..beedd0d2b5097 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -533,8 +533,8 @@ static void __tcf_chain_put(struct tcf_chain *chain, bool by_act,
  {
--	 struct ext4_group_info **grp_info;
--	 long indexv, indexh;
--
--	 if (unlikely(group >= EXT4_SB(sb)->s_groups_count)) {
--		 ext4_error(sb, "invalid group %u", group);
--		 return NULL;
--	 }
--	 indexv = group >> (EXT4_DESC_PER_BLOCK_BITS(sb));
--	 indexh = group & ((EXT4_DESC_PER_BLOCK(sb)) - 1);
--	 grp_info = sbi_array_rcu_deref(EXT4_SB(sb), s_group_info, indexv);
--	 return grp_info[indexh];
-+	struct ext4_group_info **grp_info;
-+	long indexv, indexh;
-+
-+	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
-+		return NULL;
-+	indexv = group >> (EXT4_DESC_PER_BLOCK_BITS(sb));
-+	indexh = group & ((EXT4_DESC_PER_BLOCK(sb)) - 1);
-+	grp_info = sbi_array_rcu_deref(EXT4_SB(sb), s_group_info, indexv);
-+	return grp_info[indexh];
- }
+ 	struct tcf_block *block = chain->block;
+ 	const struct tcf_proto_ops *tmplt_ops;
++	unsigned int refcnt, non_act_refcnt;
+ 	bool free_block = false;
+-	unsigned int refcnt;
+ 	void *tmplt_priv;
  
- /*
+ 	mutex_lock(&block->lock);
+@@ -554,13 +554,15 @@ static void __tcf_chain_put(struct tcf_chain *chain, bool by_act,
+ 	 * save these to temporary variables.
+ 	 */
+ 	refcnt = --chain->refcnt;
++	non_act_refcnt = refcnt - chain->action_refcnt;
+ 	tmplt_ops = chain->tmplt_ops;
+ 	tmplt_priv = chain->tmplt_priv;
+ 
+-	/* The last dropped non-action reference will trigger notification. */
+-	if (refcnt - chain->action_refcnt == 0 && !by_act) {
+-		tc_chain_notify_delete(tmplt_ops, tmplt_priv, chain->index,
+-				       block, NULL, 0, 0, false);
++	if (non_act_refcnt == chain->explicitly_created && !by_act) {
++		if (non_act_refcnt == 0)
++			tc_chain_notify_delete(tmplt_ops, tmplt_priv,
++					       chain->index, block, NULL, 0, 0,
++					       false);
+ 		/* Last reference to chain, no need to lock. */
+ 		chain->flushing = false;
+ 	}
 -- 
 2.39.2
 
