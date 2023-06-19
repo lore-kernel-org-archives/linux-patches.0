@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C9E539D
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:52:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E36C433C8;
-	Mon, 19 Jun 2023 10:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB877497
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:52:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D646CC433CC;
+	Mon, 19 Jun 2023 10:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171930;
-	bh=vAdsM+hjIZKz2nXd7bnVFlV9WvNPWJyMAkawniZXSjY=;
+	s=korg; t=1687171933;
+	bh=2O3VdNDHy5O/nyN7FP+133uHlHNEFc43xoQ11Uz0480=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0IC47FlDnsjcEM2rjrSoXuMpG6InzPDRoql4jN/o0IDy75xRQZizQo9K8vvPr3Qdz
-	 vceEM0+Bn0ZEZl6sEjzvGbOhmWX+LRhhNiyg+swVrbDZBznVcZKtZ7Y6lmAC1zRNII
-	 5pmvXoR+9RjY3IhaosBbw3Hku9YXnnxg0V8h1Q2Q=
+	b=u4fsVPS9tokGstKcer74fD82Gs/mew4InVJ9ONML4mYLWcHgIQfMYr3sE7lDl58AT
+	 yriBnrQzhnJqnZ2pdaLqF3LxCAobeSwwtHKcX0UNmII/yVz8jnlqbzg1sYwQkb1R1U
+	 DYLPzsEFBWm5wy5HLEyl+GA0nYewPyjAHup24MqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 5.4 23/64] nios2: dts: Fix tse_mac "max-frame-size" property
-Date: Mon, 19 Jun 2023 12:30:19 +0200
-Message-ID: <20230619102134.106840447@linuxfoundation.org>
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 41/64] RDMA/rxe: Remove the unused variable obj
+Date: Mon, 19 Jun 2023 12:30:37 +0200
+Message-ID: <20230619102135.047989227@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -34,46 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Janne Grunau <j@jannau.net>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-commit 85041e12418fd0c08ff972b7729f7971afb361f8 upstream.
+[ Upstream commit f07853582d1f6ed282f8d9a0b1209a87dd761f58 ]
 
-The given value of 1518 seems to refer to the layer 2 ethernet frame
-size without 802.1Q tag. Actual use of the "max-frame-size" including in
-the consumer of the "altr,tse-1.0" compatible is the MTU.
+The member variable obj in struct rxe_task is not needed.
+So remove it to save memory.
 
-Fixes: 95acd4c7b69c ("nios2: Device tree support")
-Fixes: 61c610ec61bb ("nios2: Add Max10 device tree")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Janne Grunau <j@jannau.net>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20220822011615.805603-4-yanjun.zhu@linux.dev
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 2a62b6210ce8 ("RDMA/rxe: Fix the use-before-initialization error of resp_pkts")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/nios2/boot/dts/10m50_devboard.dts |    2 +-
- arch/nios2/boot/dts/3c120_devboard.dts |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c   | 6 +++---
+ drivers/infiniband/sw/rxe/rxe_task.c | 3 +--
+ drivers/infiniband/sw/rxe/rxe_task.h | 3 +--
+ 3 files changed, 5 insertions(+), 7 deletions(-)
 
---- a/arch/nios2/boot/dts/10m50_devboard.dts
-+++ b/arch/nios2/boot/dts/10m50_devboard.dts
-@@ -97,7 +97,7 @@
- 			rx-fifo-depth = <8192>;
- 			tx-fifo-depth = <8192>;
- 			address-bits = <48>;
--			max-frame-size = <1518>;
-+			max-frame-size = <1500>;
- 			local-mac-address = [00 00 00 00 00 00];
- 			altr,has-supplementary-unicast;
- 			altr,enable-sup-addr = <1>;
---- a/arch/nios2/boot/dts/3c120_devboard.dts
-+++ b/arch/nios2/boot/dts/3c120_devboard.dts
-@@ -106,7 +106,7 @@
- 				interrupt-names = "rx_irq", "tx_irq";
- 				rx-fifo-depth = <8192>;
- 				tx-fifo-depth = <8192>;
--				max-frame-size = <1518>;
-+				max-frame-size = <1500>;
- 				local-mac-address = [ 00 00 00 00 00 00 ];
- 				phy-mode = "rgmii-id";
- 				phy-handle = <&phy0>;
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index 5dd9bcef5921a..5b59907594f75 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -278,9 +278,9 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
+ 
+ 	skb_queue_head_init(&qp->req_pkts);
+ 
+-	rxe_init_task(rxe, &qp->req.task, qp,
++	rxe_init_task(&qp->req.task, qp,
+ 		      rxe_requester, "req");
+-	rxe_init_task(rxe, &qp->comp.task, qp,
++	rxe_init_task(&qp->comp.task, qp,
+ 		      rxe_completer, "comp");
+ 
+ 	qp->qp_timeout_jiffies = 0; /* Can't be set for UD/UC in modify_qp */
+@@ -327,7 +327,7 @@ static int rxe_qp_init_resp(struct rxe_dev *rxe, struct rxe_qp *qp,
+ 
+ 	skb_queue_head_init(&qp->resp_pkts);
+ 
+-	rxe_init_task(rxe, &qp->resp.task, qp,
++	rxe_init_task(&qp->resp.task, qp,
+ 		      rxe_responder, "resp");
+ 
+ 	qp->resp.opcode		= OPCODE_NONE;
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
+index 08f05ac5f5d52..ea7d5a69eb2a3 100644
+--- a/drivers/infiniband/sw/rxe/rxe_task.c
++++ b/drivers/infiniband/sw/rxe/rxe_task.c
+@@ -114,10 +114,9 @@ void rxe_do_task(unsigned long data)
+ 	task->ret = ret;
+ }
+ 
+-int rxe_init_task(void *obj, struct rxe_task *task,
++int rxe_init_task(struct rxe_task *task,
+ 		  void *arg, int (*func)(void *), char *name)
+ {
+-	task->obj	= obj;
+ 	task->arg	= arg;
+ 	task->func	= func;
+ 	snprintf(task->name, sizeof(task->name), "%s", name);
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.h b/drivers/infiniband/sw/rxe/rxe_task.h
+index 08ff42d451c62..e87ee072e3179 100644
+--- a/drivers/infiniband/sw/rxe/rxe_task.h
++++ b/drivers/infiniband/sw/rxe/rxe_task.h
+@@ -46,7 +46,6 @@ enum {
+  * called again.
+  */
+ struct rxe_task {
+-	void			*obj;
+ 	struct tasklet_struct	tasklet;
+ 	int			state;
+ 	spinlock_t		state_lock; /* spinlock for task state */
+@@ -62,7 +61,7 @@ struct rxe_task {
+  *	arg  => parameter to pass to fcn
+  *	fcn  => function to call until it returns != 0
+  */
+-int rxe_init_task(void *obj, struct rxe_task *task,
++int rxe_init_task(struct rxe_task *task,
+ 		  void *arg, int (*func)(void *), char *name);
+ 
+ /* cleanup task */
+-- 
+2.39.2
+
 
 
