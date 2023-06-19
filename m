@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EA71095B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43767C433C0;
-	Mon, 19 Jun 2023 10:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DD410958
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:33:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D9BC433C8;
+	Mon, 19 Jun 2023 10:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170807;
-	bh=4EsQkUWGg4c61tIikPX9SeCOUW/Iu6y91stx+mB+4aA=;
+	s=korg; t=1687170810;
+	bh=fiJ/ne/Ykfv8muQRA4JGXByPGHXFo81nC8zZDoViTrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdr7xWKpLGPbVEFHlaEHn6GW2lsG5jxMBjYtP+qe6swUpoPino4YFI3wqiBm/90zu
-	 45k6kYoGteuHg1vi1F6wXtI9AGo+ONGOErf1bi6kffXlAMTyeQyGD7ECBBfgvAhmgb
-	 Z83y6Wh+HIovdvRI4NIaXwO3ZSscjqpgvo4Mr1ag=
+	b=YI0+BSWvef5didLpCXianhtwBUErPhYt4xrnYxOQ/C2hh1dvtMpa7MAaUZyLe2Jqp
+	 Psh5io13R4vCrjS4MS1wE7WXYgX9eBqNpjSMm8e4zkkArYOHRS783jqIG5Nkxnuof4
+	 UZPFHCDqopnGHz7PcmUMXBeaF2nN4XN5K4qL1Uq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Yen Chang <cc85nod@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 007/187] ksmbd: validate smb request protocol id
-Date: Mon, 19 Jun 2023 12:27:05 +0200
-Message-ID: <20230619102157.976534972@linuxfoundation.org>
+Subject: [PATCH 6.3 036/187] MIPS: Alchemy: fix dbdma2
+Date: Mon, 19 Jun 2023 12:27:34 +0200
+Message-ID: <20230619102159.376288981@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -36,86 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Manuel Lauss <manuel.lauss@gmail.com>
 
-[ Upstream commit 1c1bcf2d3ea061613119b534f57507c377df20f9 ]
+[ Upstream commit 2d645604f69f3a772d58ead702f9a8e84ab2b342 ]
 
-This patch add the validation for smb request protocol id.
-If it is not one of the four ids(SMB1_PROTO_NUMBER, SMB2_PROTO_NUMBER,
-SMB2_TRANSFORM_PROTO_NUM, SMB2_COMPRESSION_TRANSFORM_ID), don't allow
-processing the request. And this will fix the following KASAN warning
-also.
+Various fixes for the Au1200/Au1550/Au1300 DBDMA2 code:
 
-[   13.905265] BUG: KASAN: slab-out-of-bounds in init_smb2_rsp_hdr+0x1b9/0x1f0
-[   13.905900] Read of size 16 at addr ffff888005fd2f34 by task kworker/0:2/44
-...
-[   13.908553] Call Trace:
-[   13.908793]  <TASK>
-[   13.908995]  dump_stack_lvl+0x33/0x50
-[   13.909369]  print_report+0xcc/0x620
-[   13.910870]  kasan_report+0xae/0xe0
-[   13.911519]  kasan_check_range+0x35/0x1b0
-[   13.911796]  init_smb2_rsp_hdr+0x1b9/0x1f0
-[   13.912492]  handle_ksmbd_work+0xe5/0x820
+- skip cache invalidation if chip has working coherency circuitry.
+- invalidate KSEG0-portion of the (physical) data address.
+- force the dma channel doorbell write out to bus immediately with
+  a sync.
 
-Cc: stable@vger.kernel.org
-Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/connection.c |  5 +++--
- fs/ksmbd/smb_common.c | 14 +++++++++++++-
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ arch/mips/alchemy/common/dbdma.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/fs/ksmbd/connection.c b/fs/ksmbd/connection.c
-index e11d4a1e63d73..2a717d158f02e 100644
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -364,8 +364,6 @@ int ksmbd_conn_handler_loop(void *p)
- 			break;
- 
- 		memcpy(conn->request_buf, hdr_buf, sizeof(hdr_buf));
--		if (!ksmbd_smb_request(conn))
--			break;
- 
- 		/*
- 		 * We already read 4 bytes to find out PDU size, now
-@@ -383,6 +381,9 @@ int ksmbd_conn_handler_loop(void *p)
- 			continue;
- 		}
- 
-+		if (!ksmbd_smb_request(conn))
-+			break;
-+
- 		if (((struct smb2_hdr *)smb2_get_msg(conn->request_buf))->ProtocolId ==
- 		    SMB2_PROTO_NUMBER) {
- 			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
-diff --git a/fs/ksmbd/smb_common.c b/fs/ksmbd/smb_common.c
-index af0c2a9b85290..569e5eecdf3db 100644
---- a/fs/ksmbd/smb_common.c
-+++ b/fs/ksmbd/smb_common.c
-@@ -158,7 +158,19 @@ int ksmbd_verify_smb_message(struct ksmbd_work *work)
+diff --git a/arch/mips/alchemy/common/dbdma.c b/arch/mips/alchemy/common/dbdma.c
+index 5ab0430004092..6a3c890f7bbfe 100644
+--- a/arch/mips/alchemy/common/dbdma.c
++++ b/arch/mips/alchemy/common/dbdma.c
+@@ -30,6 +30,7 @@
+  *
   */
- bool ksmbd_smb_request(struct ksmbd_conn *conn)
- {
--	return conn->request_buf[0] == 0;
-+	__le32 *proto = (__le32 *)smb2_get_msg(conn->request_buf);
-+
-+	if (*proto == SMB2_COMPRESSION_TRANSFORM_ID) {
-+		pr_err_ratelimited("smb2 compression not support yet");
-+		return false;
-+	}
-+
-+	if (*proto != SMB1_PROTO_NUMBER &&
-+	    *proto != SMB2_PROTO_NUMBER &&
-+	    *proto != SMB2_TRANSFORM_PROTO_NUM)
-+		return false;
-+
-+	return true;
- }
  
- static bool supported_protocol(int idx)
++#include <linux/dma-map-ops.h> /* for dma_default_coherent */
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+@@ -623,17 +624,18 @@ u32 au1xxx_dbdma_put_source(u32 chanid, dma_addr_t buf, int nbytes, u32 flags)
+ 		dp->dscr_cmd0 &= ~DSCR_CMD0_IE;
+ 
+ 	/*
+-	 * There is an errata on the Au1200/Au1550 parts that could result
+-	 * in "stale" data being DMA'ed. It has to do with the snoop logic on
+-	 * the cache eviction buffer.  DMA_NONCOHERENT is on by default for
+-	 * these parts. If it is fixed in the future, these dma_cache_inv will
+-	 * just be nothing more than empty macros. See io.h.
++	 * There is an erratum on certain Au1200/Au1550 revisions that could
++	 * result in "stale" data being DMA'ed. It has to do with the snoop
++	 * logic on the cache eviction buffer.  dma_default_coherent is set
++	 * to false on these parts.
+ 	 */
+-	dma_cache_wback_inv((unsigned long)buf, nbytes);
++	if (!dma_default_coherent)
++		dma_cache_wback_inv(KSEG0ADDR(buf), nbytes);
+ 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
+ 	wmb(); /* drain writebuffer */
+ 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
+ 	ctp->chan_ptr->ddma_dbell = 0;
++	wmb(); /* force doorbell write out to dma engine */
+ 
+ 	/* Get next descriptor pointer. */
+ 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
+@@ -685,17 +687,18 @@ u32 au1xxx_dbdma_put_dest(u32 chanid, dma_addr_t buf, int nbytes, u32 flags)
+ 			  dp->dscr_source1, dp->dscr_dest0, dp->dscr_dest1);
+ #endif
+ 	/*
+-	 * There is an errata on the Au1200/Au1550 parts that could result in
+-	 * "stale" data being DMA'ed. It has to do with the snoop logic on the
+-	 * cache eviction buffer.  DMA_NONCOHERENT is on by default for these
+-	 * parts. If it is fixed in the future, these dma_cache_inv will just
+-	 * be nothing more than empty macros. See io.h.
++	 * There is an erratum on certain Au1200/Au1550 revisions that could
++	 * result in "stale" data being DMA'ed. It has to do with the snoop
++	 * logic on the cache eviction buffer.  dma_default_coherent is set
++	 * to false on these parts.
+ 	 */
+-	dma_cache_inv((unsigned long)buf, nbytes);
++	if (!dma_default_coherent)
++		dma_cache_inv(KSEG0ADDR(buf), nbytes);
+ 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
+ 	wmb(); /* drain writebuffer */
+ 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
+ 	ctp->chan_ptr->ddma_dbell = 0;
++	wmb(); /* force doorbell write out to dma engine */
+ 
+ 	/* Get next descriptor pointer. */
+ 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
 -- 
 2.39.2
 
