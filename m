@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C421C123
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:02:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712A4C433CB;
-	Mon, 19 Jun 2023 11:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E52C123
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:02:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE11C433C0;
+	Mon, 19 Jun 2023 11:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172554;
-	bh=Y6MBSY97SJc6gArE0pDXarPoM4AXlqY9EeogjInlCE0=;
+	s=korg; t=1687172557;
+	bh=5SpqWVTWubE2//t6VR2mjD+P0z7efoUrtkO4++NAcdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWfOXr7WvwEe2Fg4TX9o971uPdhyD/lxenvPbpDhIDJb0eqKzIIOUwHD4Vnzaonj/
-	 Imoi6HZuJoZ+zKztvIVTgZRHxtMaZ4917oQau4oVoqPijdUbqbOuWaKafD2qabM9so
-	 Fyo+MsVUnh39S5bDvRQd2n6geCxFlVvvWeoXZ9Ww=
+	b=cfu3ZKsZ3CKQSW2uE0wMWad98dkgROPoK/2uWqmJTTmgV1qWTJFG3DaVik5T535Hb
+	 QX9DGllng3Ta+Kl5zkF6SfCdx2BW53D0kDEVk196GOf7P7Vq5GTCYJPi0NDx8zGtRB
+	 UIHfxenYYRHRKf20y30nMN1+t/CWz5Qjgxfw4FWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Xin Long <lucien.xin@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 084/107] ipvlan: fix bound dev checking for IPv6 l3s mode
-Date: Mon, 19 Jun 2023 12:31:08 +0200
-Message-ID: <20230619102145.409947990@linuxfoundation.org>
+Subject: [PATCH 5.15 085/107] sctp: fix an error code in sctp_sf_eat_auth()
+Date: Mon, 19 Jun 2023 12:31:09 +0200
+Message-ID: <20230619102145.453120607@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -36,48 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit ce57adc222aba32431c42632b396e9213d0eb0b8 ]
+[ Upstream commit 75e6def3b26736e7ff80639810098c9074229737 ]
 
-The commit 59a0b022aa24 ("ipvlan: Make skb->skb_iif track skb->dev for l3s
-mode") fixed ipvlan bonded dev checking by updating skb skb_iif. This fix
-works for IPv4, as in raw_v4_input() the dif is from inet_iif(skb), which
-is skb->skb_iif when there is no route.
+The sctp_sf_eat_auth() function is supposed to enum sctp_disposition
+values and returning a kernel error code will cause issues in the
+caller.  Change -ENOMEM to SCTP_DISPOSITION_NOMEM.
 
-But for IPv6, the fix is not enough, because in ipv6_raw_deliver() ->
-raw_v6_match(), the dif is inet6_iif(skb), which is returns IP6CB(skb)->iif
-instead of skb->skb_iif if it's not a l3_slave. To fix the IPv6 part
-issue. Let's set IP6CB(skb)->iif to correct ifindex.
-
-BTW, ipvlan handles NS/NA specifically. Since it works fine, I will not
-reset IP6CB(skb)->iif when addr->atype is IPVL_ICMPV6.
-
-Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2196710
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Xin Long <lucien.xin@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_l3s.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/sctp/sm_statefuns.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
-index 71712ea25403d..d5b05e8032199 100644
---- a/drivers/net/ipvlan/ipvlan_l3s.c
-+++ b/drivers/net/ipvlan/ipvlan_l3s.c
-@@ -102,6 +102,10 @@ static unsigned int ipvlan_nf_input(void *priv, struct sk_buff *skb,
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index fb3da4d8f4a34..13acb84b00c2b 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -4478,7 +4478,7 @@ enum sctp_disposition sctp_sf_eat_auth(struct net *net,
+ 				    SCTP_AUTH_NEW_KEY, GFP_ATOMIC);
  
- 	skb->dev = addr->master->dev;
- 	skb->skb_iif = skb->dev->ifindex;
-+#if IS_ENABLED(CONFIG_IPV6)
-+	if (addr->atype == IPVL_IPV6)
-+		IP6CB(skb)->iif = skb->dev->ifindex;
-+#endif
- 	len = skb->len + ETH_HLEN;
- 	ipvlan_count_rx(addr->master, len, true, false);
- out:
+ 		if (!ev)
+-			return -ENOMEM;
++			return SCTP_DISPOSITION_NOMEM;
+ 
+ 		sctp_add_cmd_sf(commands, SCTP_CMD_EVENT_ULP,
+ 				SCTP_ULPEVENT(ev));
 -- 
 2.39.2
 
