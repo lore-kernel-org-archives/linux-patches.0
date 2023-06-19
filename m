@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA28C06
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83020C433C8;
-	Mon, 19 Jun 2023 10:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8904AD26
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAF6C433C0;
+	Mon, 19 Jun 2023 10:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171800;
-	bh=st9s7eaSd1f32g4PxDRxrIgd5GWNyJHZCigDb4hdYYc=;
+	s=korg; t=1687171803;
+	bh=McbMLBXb1zWa2kv9l4Q/ho1gDz0d6auu5uWwDs9LbZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bzCjb19U8lhXMU8ptphF/tSRBSQdD592cYemsGYbIH8aP0MMt20a+j4uLwA4wcAWz
-	 eqZmomFb0f3/5VvGmr0GsJ6T6h2FQ0tNvVYniwc9oDbOQ2JApiTvqwgqJ66Y0cKVRJ
-	 AW9xMhC98f6KYZx5dtaFFFDUzIDU9Zrtg4rNiiOw=
+	b=wCobeu8LHJl/2Idn6zU2vOeKiCDrBZl8lEysGKuv3DTpNcHMauAqWcyYUbtgTjCwH
+	 6eVFmiyfQmKOQ0np+fI/gkHeFD2Rzm6mvFtTAZiknjIvkCLCy3KaESyreQbbalxAjC
+	 3Us1zgyZXjBZMouNPPfvyHabHlURh7aQqyc8XUDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pedro Tammela <pctammela@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/166] selftests/tc-testing: Fix Error: failed to find target LOG
-Date: Mon, 19 Jun 2023 12:30:14 +0200
-Message-ID: <20230619102201.418583314@linuxfoundation.org>
+Subject: [PATCH 6.1 138/166] selftests/tc-testing: Fix SFB db test
+Date: Mon, 19 Jun 2023 12:30:15 +0200
+Message-ID: <20230619102201.461062214@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -38,81 +38,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit b849c566ee9c6ed78288a522278dcaf419f8e239 ]
+[ Upstream commit b39d8c41c7a8336ce85c376b5d4906089524a0ae ]
 
-Add missing netfilter config dependency.
+Setting very small value of db like 10ms introduces rounding errors when
+converting to/from jiffies on some kernel configs. For example, on 250hz
+the actual value will be set to 12ms which causes the test to fail:
 
-Fixes following example error when running tests via tdc.sh for all XT
-tests:
-
- # $ sudo ./tdc.py -d eth2 -e 2029
- # Test 2029: Add xt action with log-prefix
- # exit: 255
- # exit: 0
- #  failed to find target LOG
- #
- # bad action parsing
- # parse_action: bad value (7:xt)!
- # Illegal "action"
- #
- # -----> teardown stage *** Could not execute: "$TC actions flush action xt"
- #
- # -----> teardown stage *** Error message: "Error: Cannot flush unknown TC action.
- # We have an error flushing
- # "
- # returncode 1; expected [0]
- #
- # -----> teardown stage *** Aborting test run.
- #
- # <_io.BufferedReader name=3> *** stdout ***
- #
- # <_io.BufferedReader name=5> *** stderr ***
- # "-----> teardown stage" did not complete successfully
- # Exception <class '__main__.PluginMgrTestFail'> ('teardown', ' failed to find target LOG\n\nbad action parsing\nparse_action: bad value (7:xt)!\nIllegal "action"\n', '"-----> teardown stage" did not complete successfully') (caught in test_runner, running test 2 2029 Add xt action with log-prefix stage teardown)
- # ---------------
- # traceback
- #   File "/images/src/linux/tools/testing/selftests/tc-testing/./tdc.py", line 495, in test_runner
- #     res = run_one_test(pm, args, index, tidx)
- #   File "/images/src/linux/tools/testing/selftests/tc-testing/./tdc.py", line 434, in run_one_test
- #     prepare_env(args, pm, 'teardown', '-----> teardown stage', tidx['teardown'], procout)
- #   File "/images/src/linux/tools/testing/selftests/tc-testing/./tdc.py", line 245, in prepare_env
- #     raise PluginMgrTestFail(
- # ---------------
- # accumulated output for this test:
- #  failed to find target LOG
- #
- # bad action parsing
- # parse_action: bad value (7:xt)!
- # Illegal "action"
- #
- # ---------------
+ # $ sudo ./tdc.py  -d eth2 -e 3410
+ #  -- ns/SubPlugin.__init__
+ # Test 3410: Create SFB with db setting
  #
  # All test results:
  #
  # 1..1
- # ok 1 2029 - Add xt action with log-prefix # skipped - "-----> teardown stage" did not complete successfully
+ # not ok 1 3410 - Create SFB with db setting
+ #         Could not match regex pattern. Verify command output:
+ # qdisc sfb 1: root refcnt 2 rehash 600s db 12ms limit 1000p max 25p target 20p increment 0.000503548 decrement 4.57771e-05 penalty_rate 10pps penalty_burst 20p
 
-Fixes: 910d504bc187 ("selftests/tc-testings: add selftests for xt action")
+Set the value to 100ms instead which currently seem to work on 100hz,
+250hz, 300hz and 1000hz kernel configs.
+
+Fixes: 6ad92dc56fca ("selftests/tc-testing: add selftests for sfb qdisc")
 Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
 Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/tc-testing/config | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/tc-testing/tc-tests/qdiscs/sfb.json | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/tc-testing/config b/tools/testing/selftests/tc-testing/config
-index 4638c63a339ff..aec4de8bea78b 100644
---- a/tools/testing/selftests/tc-testing/config
-+++ b/tools/testing/selftests/tc-testing/config
-@@ -6,6 +6,7 @@ CONFIG_NF_CONNTRACK_MARK=y
- CONFIG_NF_CONNTRACK_ZONES=y
- CONFIG_NF_CONNTRACK_LABELS=y
- CONFIG_NF_NAT=m
-+CONFIG_NETFILTER_XT_TARGET_LOG=m
- 
- CONFIG_NET_SCHED=y
- 
+diff --git a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/sfb.json b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/sfb.json
+index ba2f5e79cdbfe..e21c7f22c6d4c 100644
+--- a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/sfb.json
++++ b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/sfb.json
+@@ -58,10 +58,10 @@
+         "setup": [
+             "$IP link add dev $DUMMY type dummy || /bin/true"
+         ],
+-        "cmdUnderTest": "$TC qdisc add dev $DUMMY handle 1: root sfb db 10",
++        "cmdUnderTest": "$TC qdisc add dev $DUMMY handle 1: root sfb db 100",
+         "expExitCode": "0",
+         "verifyCmd": "$TC qdisc show dev $DUMMY",
+-        "matchPattern": "qdisc sfb 1: root refcnt [0-9]+ rehash 600s db 10ms",
++        "matchPattern": "qdisc sfb 1: root refcnt [0-9]+ rehash 600s db 100ms",
+         "matchCount": "1",
+         "teardown": [
+             "$TC qdisc del dev $DUMMY handle 1: root",
 -- 
 2.39.2
 
