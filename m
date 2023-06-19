@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72F4BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:54:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB6DC433C8;
-	Mon, 19 Jun 2023 10:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7CEBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:54:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2B6C433C0;
+	Mon, 19 Jun 2023 10:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172053;
-	bh=awNbbUrZKfXcgaKH6JhIK8hfjJtLZGaowOiSziy/Zt0=;
+	s=korg; t=1687172056;
+	bh=B4Q+29shU6doNPTj5mHxqZsKrg+BkJUBwJTzymxo0tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJZteQvm3UdgtLh10d6ztarsesRx5Ug6o/EPWwQWXIuuZXgqzPfG3HXliweMo4AtN
-	 L80sDF1hqWyeQZrNRWjbbmt41ej7V988qiZRCrDC6m8cwdGXGLccYPcZv74dyUcCwm
-	 SXQuzPx9rhKRLOGDCyg6Aeg3Rqx7LxkxTRCHa5dE=
+	b=ElDcL1ydhUrEsqFP8fCEvCATkktbnCg5BLqYwUrvRgZdpmGrpUqINLcpfVtdQX8Jt
+	 N46LhICP0tcYI3gbj/mSYoeOMj6NB6BNKhvf4BjIuNOPf0ESIXTNAU/e3vV9WuApU+
+	 UDLAEW8JYbs2G5oKYX6cHAdXyAvIaTwRZNNOCI5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/89] parisc: Flush gatt writes and adjust gatt mask in parisc_agp_mask_memory()
-Date: Mon, 19 Jun 2023 12:30:08 +0200
-Message-ID: <20230619102139.214897016@linuxfoundation.org>
+Subject: [PATCH 5.10 03/89] test_firmware: Use kstrtobool() instead of strtobool()
+Date: Mon, 19 Jun 2023 12:29:51 +0200
+Message-ID: <20230619102138.440344488@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -34,59 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit d703797380c540bbeac03f104ebcfc364eaf47cc ]
+[ Upstream commit f7d85515bd21902b218370a1a6301f76e4e636ff ]
 
-Flush caches after changing gatt entries and calculate entry according
-to SBA requirements.
+strtobool() is the same as kstrtobool().
+However, the latter is more used within the kernel.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+In order to remove strtobool() and slightly simplify kstrtox.h, switch to
+the other function name.
+
+While at it, include the corresponding header file (<linux/kstrtox.h>)
+
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/34f04735d20e0138695dd4070651bd860a36b81c.1673688120.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 4acfe3dfde68 ("test_firmware: prevent race conditions by a correct implementation of locking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/agp/parisc-agp.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ lib/test_firmware.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/agp/parisc-agp.c b/drivers/char/agp/parisc-agp.c
-index d68d05d5d3838..514f9f287a781 100644
---- a/drivers/char/agp/parisc-agp.c
-+++ b/drivers/char/agp/parisc-agp.c
-@@ -90,6 +90,9 @@ parisc_agp_tlbflush(struct agp_memory *mem)
- {
- 	struct _parisc_agp_info *info = &parisc_agp_info;
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 3edbc17d92db5..b99cf0a50a698 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -22,6 +22,7 @@
+ #include <linux/slab.h>
+ #include <linux/uaccess.h>
+ #include <linux/delay.h>
++#include <linux/kstrtox.h>
+ #include <linux/kthread.h>
+ #include <linux/vmalloc.h>
+ #include <linux/efi_embedded_fw.h>
+@@ -326,7 +327,7 @@ static int test_dev_config_update_bool(const char *buf, size_t size,
+ 	int ret;
  
-+	/* force fdc ops to be visible to IOMMU */
-+	asm_io_sync();
-+
- 	writeq(info->gart_base | ilog2(info->gart_size), info->ioc_regs+IOC_PCOM);
- 	readq(info->ioc_regs+IOC_PCOM);	/* flush */
- }
-@@ -158,6 +161,7 @@ parisc_agp_insert_memory(struct agp_memory *mem, off_t pg_start, int type)
- 			info->gatt[j] =
- 				parisc_agp_mask_memory(agp_bridge,
- 					paddr, type);
-+			asm_io_fdc(&info->gatt[j]);
- 		}
- 	}
- 
-@@ -191,7 +195,16 @@ static unsigned long
- parisc_agp_mask_memory(struct agp_bridge_data *bridge, dma_addr_t addr,
- 		       int type)
- {
--	return SBA_PDIR_VALID_BIT | addr;
-+	unsigned ci;			/* coherent index */
-+	dma_addr_t pa;
-+
-+	pa = addr & IOVP_MASK;
-+	asm("lci 0(%1), %0" : "=r" (ci) : "r" (phys_to_virt(pa)));
-+
-+	pa |= (ci >> PAGE_SHIFT) & 0xff;/* move CI (8 bits) into lowest byte */
-+	pa |= SBA_PDIR_VALID_BIT;	/* set "valid" bit */
-+
-+	return cpu_to_le64(pa);
- }
- 
- static void
+ 	mutex_lock(&test_fw_mutex);
+-	if (strtobool(buf, cfg) < 0)
++	if (kstrtobool(buf, cfg) < 0)
+ 		ret = -EINVAL;
+ 	else
+ 		ret = size;
 -- 
 2.39.2
 
