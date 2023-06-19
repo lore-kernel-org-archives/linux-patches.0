@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B480DBE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8E1C433C8;
-	Mon, 19 Jun 2023 10:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD4DBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0551C433C9;
+	Mon, 19 Jun 2023 10:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172183;
-	bh=NhizRRzADbd1FUD2ncofJYapn+yHkNolWV52v9y0wxc=;
+	s=korg; t=1687172186;
+	bh=oD/ZsWwc5qwScHghAn0yXx3DCRnV51znb27JCFRhJtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uq4tgMC9UT9PYYT7qJJPdFoo79gtFCh/CCA6yUdbzAH6mlRWz/Vpfb6PD40rfVYpj
-	 mAke6vsWzM3K15jHRVKO8z7AMirCxp+CDy+w0vLErKl1bno6B44ew+efLuhjLib+QJ
-	 YoOZKCG+0I/nnmR9hd2bEnhUIaxJLX1LQgl50JKs=
+	b=y+x6uu3fJeAgCkND7ypo9xiplkTZyemOTT5AlHYYaeURiwsTALri11Lh4NSB4UOHR
+	 NiWsL0g042aEg1BriuYzd4+clFSEcJR4PwirBSdrHN6loH3HTstHKZGWmTZ36fZIzT
+	 En6Htt7vZDGAJeubSkDdaQt+JUYwCY812sI4QFqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot+4acc7d910e617b360859@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>,
+	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 59/89] IB/isert: Fix dead lock in ib_isert
-Date: Mon, 19 Jun 2023 12:30:47 +0200
-Message-ID: <20230619102140.951423156@linuxfoundation.org>
+Subject: [PATCH 5.10 68/89] ext4: drop the call to ext4_error() from ext4_get_group_info()
+Date: Mon, 19 Jun 2023 12:30:56 +0200
+Message-ID: <20230619102141.363427587@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -37,119 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Fabio M. De Francesco <fmdefrancesco@gmail.com>
 
-[ Upstream commit 691b0480933f0ce88a81ed1d1a0aff340ff6293a ]
+[ Upstream commit f451fd97dd2b78f286379203a47d9d295c467255 ]
 
-- When a iSER session is released, ib_isert module is taking a mutex
-  lock and releasing all pending connections. As part of this, ib_isert
-  is destroying rdma cm_id. To destroy cm_id, rdma_cm module is sending
-  CM events to CMA handler of ib_isert. This handler is taking same
-  mutex lock. Hence it leads to deadlock between ib_isert & rdma_cm
-  modules.
+A recent patch added a call to ext4_error() which is problematic since
+some callers of the ext4_get_group_info() function may be holding a
+spinlock, whereas ext4_error() must never be called in atomic context.
 
-- For fix, created local list of pending connections and release the
-  connection outside of mutex lock.
+This triggered a report from Syzbot: "BUG: sleeping function called from
+invalid context in ext4_update_super" (see the link below).
 
-Calltrace:
----------
-[ 1229.791410] INFO: task kworker/10:1:642 blocked for more than 120 seconds.
-[ 1229.791416]       Tainted: G           OE    --------- -  - 4.18.0-372.9.1.el8.x86_64 #1
-[ 1229.791418] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[ 1229.791419] task:kworker/10:1    state:D stack:    0 pid:  642 ppid:     2 flags:0x80004000
-[ 1229.791424] Workqueue: ib_cm cm_work_handler [ib_cm]
-[ 1229.791436] Call Trace:
-[ 1229.791438]  __schedule+0x2d1/0x830
-[ 1229.791445]  ? select_idle_sibling+0x23/0x6f0
-[ 1229.791449]  schedule+0x35/0xa0
-[ 1229.791451]  schedule_preempt_disabled+0xa/0x10
-[ 1229.791453]  __mutex_lock.isra.7+0x310/0x420
-[ 1229.791456]  ? select_task_rq_fair+0x351/0x990
-[ 1229.791459]  isert_cma_handler+0x224/0x330 [ib_isert]
-[ 1229.791463]  ? ttwu_queue_wakelist+0x159/0x170
-[ 1229.791466]  cma_cm_event_handler+0x25/0xd0 [rdma_cm]
-[ 1229.791474]  cma_ib_handler+0xa7/0x2e0 [rdma_cm]
-[ 1229.791478]  cm_process_work+0x22/0xf0 [ib_cm]
-[ 1229.791483]  cm_work_handler+0xf4/0xf30 [ib_cm]
-[ 1229.791487]  ? move_linked_works+0x6e/0xa0
-[ 1229.791490]  process_one_work+0x1a7/0x360
-[ 1229.791491]  ? create_worker+0x1a0/0x1a0
-[ 1229.791493]  worker_thread+0x30/0x390
-[ 1229.791494]  ? create_worker+0x1a0/0x1a0
-[ 1229.791495]  kthread+0x10a/0x120
-[ 1229.791497]  ? set_kthread_struct+0x40/0x40
-[ 1229.791499]  ret_from_fork+0x1f/0x40
+Therefore, drop the call to ext4_error() from ext4_get_group_info(). In
+the meantime use eight characters tabs instead of nine characters ones.
 
-[ 1229.791739] INFO: task targetcli:28666 blocked for more than 120 seconds.
-[ 1229.791740]       Tainted: G           OE    --------- -  - 4.18.0-372.9.1.el8.x86_64 #1
-[ 1229.791741] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-[ 1229.791742] task:targetcli       state:D stack:    0 pid:28666 ppid:  5510 flags:0x00004080
-[ 1229.791743] Call Trace:
-[ 1229.791744]  __schedule+0x2d1/0x830
-[ 1229.791746]  schedule+0x35/0xa0
-[ 1229.791748]  schedule_preempt_disabled+0xa/0x10
-[ 1229.791749]  __mutex_lock.isra.7+0x310/0x420
-[ 1229.791751]  rdma_destroy_id+0x15/0x20 [rdma_cm]
-[ 1229.791755]  isert_connect_release+0x115/0x130 [ib_isert]
-[ 1229.791757]  isert_free_np+0x87/0x140 [ib_isert]
-[ 1229.791761]  iscsit_del_np+0x74/0x120 [iscsi_target_mod]
-[ 1229.791776]  lio_target_np_driver_store+0xe9/0x140 [iscsi_target_mod]
-[ 1229.791784]  configfs_write_file+0xb2/0x110
-[ 1229.791788]  vfs_write+0xa5/0x1a0
-[ 1229.791792]  ksys_write+0x4f/0xb0
-[ 1229.791794]  do_syscall_64+0x5b/0x1a0
-[ 1229.791798]  entry_SYSCALL_64_after_hwframe+0x65/0xca
-
-Fixes: bd3792205aae ("iser-target: Fix pending connections handling in target stack shutdown sequnce")
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Link: https://lore.kernel.org/r/20230606102531.162967-2-saravanan.vajravel@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reported-by: syzbot+4acc7d910e617b360859@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/00000000000070575805fdc6cdb2@google.com/
+Fixes: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
+Suggested-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+Link: https://lore.kernel.org/r/20230614100446.14337-1-fmdefrancesco@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/isert/ib_isert.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/ext4/balloc.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
-index 2d0d966fba2c8..988b957107cc1 100644
---- a/drivers/infiniband/ulp/isert/ib_isert.c
-+++ b/drivers/infiniband/ulp/isert/ib_isert.c
-@@ -2421,6 +2421,7 @@ isert_free_np(struct iscsi_np *np)
+diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
+index a43167042b6b1..4efe71efe1277 100644
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -322,17 +322,15 @@ static ext4_fsblk_t ext4_valid_block_bitmap_padding(struct super_block *sb,
+ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
+ 					    ext4_group_t group)
  {
- 	struct isert_np *isert_np = np->np_context;
- 	struct isert_conn *isert_conn, *n;
-+	LIST_HEAD(drop_conn_list);
- 
- 	if (isert_np->cm_id)
- 		rdma_destroy_id(isert_np->cm_id);
-@@ -2440,7 +2441,7 @@ isert_free_np(struct iscsi_np *np)
- 					 node) {
- 			isert_info("cleaning isert_conn %p state (%d)\n",
- 				   isert_conn, isert_conn->state);
--			isert_connect_release(isert_conn);
-+			list_move_tail(&isert_conn->node, &drop_conn_list);
- 		}
- 	}
- 
-@@ -2451,11 +2452,16 @@ isert_free_np(struct iscsi_np *np)
- 					 node) {
- 			isert_info("cleaning isert_conn %p state (%d)\n",
- 				   isert_conn, isert_conn->state);
--			isert_connect_release(isert_conn);
-+			list_move_tail(&isert_conn->node, &drop_conn_list);
- 		}
- 	}
- 	mutex_unlock(&isert_np->mutex);
- 
-+	list_for_each_entry_safe(isert_conn, n, &drop_conn_list, node) {
-+		list_del_init(&isert_conn->node);
-+		isert_connect_release(isert_conn);
-+	}
+-	 struct ext4_group_info **grp_info;
+-	 long indexv, indexh;
+-
+-	 if (unlikely(group >= EXT4_SB(sb)->s_groups_count)) {
+-		 ext4_error(sb, "invalid group %u", group);
+-		 return NULL;
+-	 }
+-	 indexv = group >> (EXT4_DESC_PER_BLOCK_BITS(sb));
+-	 indexh = group & ((EXT4_DESC_PER_BLOCK(sb)) - 1);
+-	 grp_info = sbi_array_rcu_deref(EXT4_SB(sb), s_group_info, indexv);
+-	 return grp_info[indexh];
++	struct ext4_group_info **grp_info;
++	long indexv, indexh;
 +
- 	np->np_context = NULL;
- 	kfree(isert_np);
++	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
++		return NULL;
++	indexv = group >> (EXT4_DESC_PER_BLOCK_BITS(sb));
++	indexh = group & ((EXT4_DESC_PER_BLOCK(sb)) - 1);
++	grp_info = sbi_array_rcu_deref(EXT4_SB(sb), s_group_info, indexv);
++	return grp_info[indexh];
  }
+ 
+ /*
 -- 
 2.39.2
 
