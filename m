@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83B68BE5
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B39DC433C9;
-	Mon, 19 Jun 2023 10:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E628C06
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EF1C433C8;
+	Mon, 19 Jun 2023 10:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171897;
-	bh=2HczgtxYc6JmHN3wKYx/Nz4YbnYNJLgqwCzfiRFWGVo=;
+	s=korg; t=1687171900;
+	bh=qPDBFRw2sWhuJQCvhj0jRbZhaBp7j2BkRd298yhzYk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PiIIV3TIn/91pCyPZaMCSiJiCUTNFlZh6whu700pc2h+GDkAY34LOUX85wNgn44w+
-	 ja2LI4qgh2ZpmSISZYC0HOAbvzVK/6xeEA+zIY/LmuZ4ELN7eguhP+wqbWXlNiDZrG
-	 8Zgsb1GsijUnaifBWwx2HCVrtLa6grFoYoSMQjRE=
+	b=TvVhgEyNQkwevoySnGifrp6fb/oVDCc6DIzyDJuHdZyFMmc966MYp2QH09DJe9zUy
+	 ZEVIXrzqoEeOR8pqfnSl5rS2sWwOJ0HWdPO1Up3YsRG9qyLfObCslnU7aS/OxGy/fN
+	 xZ46+GdoCC3zkAJto8Skn+m6ykNURLBO4m07l1pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 22/64] ocfs2: check new file size on fallocate call
-Date: Mon, 19 Jun 2023 12:30:18 +0200
-Message-ID: <20230619102134.041504152@linuxfoundation.org>
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 31/64] ALSA: hda/realtek: Add a quirk for Compaq N14JP6
+Date: Mon, 19 Jun 2023 12:30:27 +0200
+Message-ID: <20230619102134.539719941@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -41,54 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luís Henriques <ocfs2-devel@oss.oracle.com>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-commit 26a6ffff7de5dd369cdb12e38ba11db682f1dec0 upstream.
+commit a2a871483161014f1bcc4e9a04354b01aa77cedb upstream.
 
-When changing a file size with fallocate() the new size isn't being
-checked.  In particular, the FSIZE ulimit isn't being checked, which makes
-fstest generic/228 fail.  Simply adding a call to inode_newsize_ok() fixes
-this issue.
+Add a quirk for Compaq N14JP6 to fixup ALC897 headset MIC no sound.
 
-Link: https://lkml.kernel.org/r/20230529152645.32680-1-lhenriques@suse.de
-Signed-off-by: Luís Henriques <lhenriques@suse.de>
-Reviewed-by: Mark Fasheh <mark@fasheh.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230609201058.523499-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/file.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -2103,14 +2103,20 @@ static long ocfs2_fallocate(struct file
- 	struct ocfs2_space_resv sr;
- 	int change_size = 1;
- 	int cmd = OCFS2_IOC_RESVSP64;
-+	int ret = 0;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10382,6 +10382,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x1b0a, 0x01b8, "ACER Veriton", ALC662_FIXUP_ACER_VERITON),
+ 	SND_PCI_QUIRK(0x1b35, 0x1234, "CZC ET26", ALC662_FIXUP_CZC_ET26),
+ 	SND_PCI_QUIRK(0x1b35, 0x2206, "CZC P10T", ALC662_FIXUP_CZC_P10T),
++	SND_PCI_QUIRK(0x1c6c, 0x1239, "Compaq N14JP6-V2", ALC897_FIXUP_HP_HSMIC_VERB),
  
- 	if (mode & ~(FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE))
- 		return -EOPNOTSUPP;
- 	if (!ocfs2_writes_unwritten_extents(osb))
- 		return -EOPNOTSUPP;
- 
--	if (mode & FALLOC_FL_KEEP_SIZE)
-+	if (mode & FALLOC_FL_KEEP_SIZE) {
- 		change_size = 0;
-+	} else {
-+		ret = inode_newsize_ok(inode, offset + len);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	if (mode & FALLOC_FL_PUNCH_HOLE)
- 		cmd = OCFS2_IOC_UNRESVSP64;
+ #if 0
+ 	/* Below is a quirk table taken from the old code.
 
 
