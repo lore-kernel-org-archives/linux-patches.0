@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448F73C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6E1C433C8;
-	Mon, 19 Jun 2023 10:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4BB3C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8998CC433C0;
+	Mon, 19 Jun 2023 10:38:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171108;
-	bh=qKZvR1QW2YGF0iN2U3D93JBb0Bqy7ty4VII+Uhz/8bE=;
+	s=korg; t=1687171110;
+	bh=obT0x4p3l/t1boyiyNS25mJUBn65VIutOhjelUZixHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jX8xA88NS3nohXs1dUzBTxeh1xw9Up7X2n2OI31oLPNFlmg+lP1A0RzEzENTMCZjo
-	 xaZKHUIY8pC7ylBCbSq253/selK41npdNE7hQZ6EJUNsTEd+/gGdw5wpnjQsO9EXhd
-	 TaRm1X5nqqQx8v+RTNudUJrZTMFKEn65waJ4q3ZM=
+	b=t23/DGkHxcyBWlBlH6vsionwYN++nzZEPb3/nYq95y8CSArcQrV13Q5KB1L6+mOfR
+	 0yOGC3TYvKjC9UXDFRfWrqzJq6wdlbKjaLg/Urdsx0oQu4Cy8xZjcFgMAlkPPgR4CV
+	 6tbTUVdXT25oi24IzFwyBDlXambUu5LjJ2BGSKdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhen Luan <eggcar.luan@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.3 125/187] igb: Fix extts capture value format for 82580/i354/i350
-Date: Mon, 19 Jun 2023 12:29:03 +0200
-Message-ID: <20230619102203.587661743@linuxfoundation.org>
+	Pedro Tammela <pctammela@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 126/187] net/sched: act_pedit: remove extra check for key type
+Date: Mon, 19 Jun 2023 12:29:04 +0200
+Message-ID: <20230619102203.642212756@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -39,69 +37,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuezhen Luan <eggcar.luan@gmail.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 6292d7436cf2f0a2ea8800a1d2cbb155d237818a ]
+[ Upstream commit 577140180ba28d0d37bc898c7bd6702c83aa106f ]
 
-82580/i354/i350 features circle-counter-like timestamp registers
-that are different with newer i210. The EXTTS capture value in
-AUXTSMPx should be converted from raw circle counter value to
-timestamp value in resolution of 1 nanosec by the driver.
+The netlink parsing already validates the key 'htype'.
+Remove the datapath check as it's redundant.
 
-This issue can be reproduced on i350 nics, connecting an 1PPS
-signal to a SDP pin, and run 'ts2phc' command to read external
-1PPS timestamp value. On i210 this works fine, but on i350 the
-extts is not correctly converted.
-
-The i350/i354/82580's SYSTIM and other timestamp registers are
-40bit counters, presenting time range of 2^40 ns, that means these
-registers overflows every about 1099s. This causes all these regs
-can't be used directly in contrast to the newer i210/i211s.
-
-The igb driver needs to convert these raw register values to
-valid time stamp format by using kernel timecounter apis for i350s
-families. Here the igb_extts() just forgot to do the convert.
-
-Fixes: 38970eac41db ("igb: support EXTTS on 82580/i354/i350")
-Signed-off-by: Yuezhen Luan <eggcar.luan@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230607164116.3768175-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 6c02568fd1ae ("net/sched: act_pedit: Parse L3 Header for L4 offset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/sched/act_pedit.c | 29 +++++++----------------------
+ 1 file changed, 7 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index 274c781b55473..f2f9f81c123b8 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -6948,6 +6948,7 @@ static void igb_extts(struct igb_adapter *adapter, int tsintr_tt)
- 	struct e1000_hw *hw = &adapter->hw;
- 	struct ptp_clock_event event;
- 	struct timespec64 ts;
-+	unsigned long flags;
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 4559a1507ea5a..1e7e959b90e48 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -313,37 +313,28 @@ static bool offset_valid(struct sk_buff *skb, int offset)
+ 	return true;
+ }
  
- 	if (pin < 0 || pin >= IGB_N_SDP)
- 		return;
-@@ -6955,9 +6956,12 @@ static void igb_extts(struct igb_adapter *adapter, int tsintr_tt)
- 	if (hw->mac.type == e1000_82580 ||
- 	    hw->mac.type == e1000_i354 ||
- 	    hw->mac.type == e1000_i350) {
--		s64 ns = rd32(auxstmpl);
-+		u64 ns = rd32(auxstmpl);
+-static int pedit_skb_hdr_offset(struct sk_buff *skb,
+-				enum pedit_header_type htype, int *hoffset)
++static void pedit_skb_hdr_offset(struct sk_buff *skb,
++				 enum pedit_header_type htype, int *hoffset)
+ {
+-	int ret = -EINVAL;
+-
++	/* 'htype' is validated in the netlink parsing */
+ 	switch (htype) {
+ 	case TCA_PEDIT_KEY_EX_HDR_TYPE_ETH:
+-		if (skb_mac_header_was_set(skb)) {
++		if (skb_mac_header_was_set(skb))
+ 			*hoffset = skb_mac_offset(skb);
+-			ret = 0;
+-		}
+ 		break;
+ 	case TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK:
+ 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP4:
+ 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP6:
+ 		*hoffset = skb_network_offset(skb);
+-		ret = 0;
+ 		break;
+ 	case TCA_PEDIT_KEY_EX_HDR_TYPE_TCP:
+ 	case TCA_PEDIT_KEY_EX_HDR_TYPE_UDP:
+-		if (skb_transport_header_was_set(skb)) {
++		if (skb_transport_header_was_set(skb))
+ 			*hoffset = skb_transport_offset(skb);
+-			ret = 0;
+-		}
+ 		break;
+ 	default:
+-		ret = -EINVAL;
+ 		break;
+ 	}
+-
+-	return ret;
+ }
  
--		ns += ((s64)(rd32(auxstmph) & 0xFF)) << 32;
-+		ns += ((u64)(rd32(auxstmph) & 0xFF)) << 32;
-+		spin_lock_irqsave(&adapter->tmreg_lock, flags);
-+		ns = timecounter_cyc2time(&adapter->tc, ns);
-+		spin_unlock_irqrestore(&adapter->tmreg_lock, flags);
- 		ts = ns_to_timespec64(ns);
- 	} else {
- 		ts.tv_nsec = rd32(auxstmpl);
+ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+@@ -376,10 +367,9 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 
+ 	for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
+ 		int offset = tkey->off;
++		int hoffset = 0;
+ 		u32 *ptr, hdata;
+-		int hoffset;
+ 		u32 val;
+-		int rc;
+ 
+ 		if (tkey_ex) {
+ 			htype = tkey_ex->htype;
+@@ -388,12 +378,7 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 			tkey_ex++;
+ 		}
+ 
+-		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
+-		if (rc) {
+-			pr_info("tc action pedit bad header type specified (0x%x)\n",
+-				htype);
+-			goto bad;
+-		}
++		pedit_skb_hdr_offset(skb, htype, &hoffset);
+ 
+ 		if (tkey->offmask) {
+ 			u8 *d, _d;
 -- 
 2.39.2
 
