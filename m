@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9110D5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1826BC433C8;
-	Mon, 19 Jun 2023 10:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F425381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEFBAC433C8;
+	Mon, 19 Jun 2023 10:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171267;
-	bh=w8WDHzYSKO0yP3KOfli74ME4KiSicQvXuh4mGowQnpQ=;
+	s=korg; t=1687171270;
+	bh=ClUy4DzBevV1UPFaRliO4Le/uBALyWHLlMsDiCw849o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8Wl6SsxRATpAZCUmq0ApZ/7MEFKohWfopTawZWXn2s0xh5BYv1DWYi0CIbiv1twF
-	 qzlWyu6dyz3Je3pLLO85E5k4ZjxiPRNNQJtx0JWEZ0+uw8iAA1JZGqyfeEMicZYfU3
-	 BADnjHDLhiPW9j+8M7n0LYCZDMR0fc1wnDQmKP/8=
+	b=rHGYODqVk+ZfyMd9GKfSTIBPdlDOXFewWEXR3OhLuo1oElXmYs8c1T1y3aL2ywuhX
+	 OqZOst2bVx7MBvZ5HKcquYsydDG0DDlqgNCQvtdje6K8aY13VMtFEs+XeKlZq1kLAP
+	 FxGOp9zRCkyMvkSFTI9znR7b0aHOsWOe8yrcqZGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 02/49] power: supply: bq27xxx: Use mod_delayed_work() instead of cancel() + schedule()
-Date: Mon, 19 Jun 2023 12:29:40 +0200
-Message-ID: <20230619102129.984617074@linuxfoundation.org>
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 4.19 20/49] RDMA/uverbs: Restrict usage of privileged QKEYs
+Date: Mon, 19 Jun 2023 12:29:58 +0200
+Message-ID: <20230619102130.907026961@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -35,39 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Edward Srouji <edwards@nvidia.com>
 
-[ Upstream commit 59dddea9879713423c7b2ade43c423bb71e0d216 ]
+commit 0cadb4db79e1d9eea66711c4031e435c2191907e upstream.
 
-Use mod_delayed_work() instead of separate cancel_delayed_work_sync() +
-schedule_delayed_work() calls.
+According to the IB specification rel-1.6, section 3.5.3:
+"QKEYs with the most significant bit set are considered controlled
+QKEYs, and a HCA does not allow a consumer to arbitrarily specify a
+controlled QKEY."
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Thus, block non-privileged users from setting such a QKEY.
+
+Cc: stable@vger.kernel.org
+Fixes: bc38a6abdd5a ("[PATCH] IB uverbs: core implementation")
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://lore.kernel.org/r/c00c809ddafaaf87d6f6cb827978670989a511b3.1685960567.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/uverbs_cmd.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 725851ca0e757..f665553b26a2d 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -877,10 +877,8 @@ static int poll_interval_param_set(const char *val, const struct kernel_param *k
- 		return ret;
- 
- 	mutex_lock(&bq27xxx_list_lock);
--	list_for_each_entry(di, &bq27xxx_battery_devices, list) {
--		cancel_delayed_work_sync(&di->work);
--		schedule_delayed_work(&di->work, 0);
--	}
-+	list_for_each_entry(di, &bq27xxx_battery_devices, list)
-+		mod_delayed_work(system_wq, &di->work, 0);
- 	mutex_unlock(&bq27xxx_list_lock);
- 
- 	return ret;
--- 
-2.39.2
-
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -2041,8 +2041,13 @@ static int modify_qp(struct ib_uverbs_fi
+ 		attr->path_mtu = cmd->base.path_mtu;
+ 	if (cmd->base.attr_mask & IB_QP_PATH_MIG_STATE)
+ 		attr->path_mig_state = cmd->base.path_mig_state;
+-	if (cmd->base.attr_mask & IB_QP_QKEY)
++	if (cmd->base.attr_mask & IB_QP_QKEY) {
++		if (cmd->base.qkey & IB_QP_SET_QKEY && !capable(CAP_NET_RAW)) {
++			ret = -EPERM;
++			goto release_qp;
++		}
+ 		attr->qkey = cmd->base.qkey;
++	}
+ 	if (cmd->base.attr_mask & IB_QP_RQ_PSN)
+ 		attr->rq_psn = cmd->base.rq_psn;
+ 	if (cmd->base.attr_mask & IB_QP_SQ_PSN)
 
 
