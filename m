@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5550BBA32
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:58:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6020C433C0;
-	Mon, 19 Jun 2023 10:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08943C142
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:58:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82319C433C0;
+	Mon, 19 Jun 2023 10:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172303;
-	bh=fdlPoKwCUC02K5lW/QydWldXt7w7BSrfpk9lXH2yN3g=;
+	s=korg; t=1687172305;
+	bh=Vvji4uh0s4T1YrkOa9+Z9ZOuG3eJAbPAuPjElVTyO2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=clCx4YGC/GOH18CLnvPlKi/HzaQPVyBxaSrOAoD+9kyIyxLi6etfzoNnTWZAiZ/Tu
-	 wyVPX47UwgFLELLQLzrpoIgjE1PS2uAAcvvAXigesSs55HnjcX4chNiTxDEj9GoFNy
-	 nRj1jzzDbTOlZ/b27bemffGcmlKuNouoM92JZLpI=
+	b=OH9g9l1cIxZqH1VeD5OCm82vk36O90iI62v2vzHTtrSqiQWoV8YHozgW+9LcXTDUi
+	 AJn2vrkoZ/Ff+si0iprCWCWclBKnYjmn3aJG+F+YYgql0BbyWtBQFXzygroLKgZlpg
+	 beoHmvkVAwwJL/fptTPcmVZfjdurX/jcs800I4V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Russ Weight <russell.h.weight@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Tianfei Zhang <tianfei.zhang@intel.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	linux-kselftest@vger.kernel.org,
-	Dan Carpenter <error27@gmail.com>,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	syzbot+d8941552e21eac774778@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	Anand Jain <anand.jain@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/107] test_firmware: prevent race conditions by a correct implementation of locking
-Date: Mon, 19 Jun 2023 12:29:46 +0200
-Message-ID: <20230619102141.657503136@linuxfoundation.org>
+Subject: [PATCH 5.15 020/107] btrfs: handle memory allocation failure in btrfs_csum_one_bio
+Date: Mon, 19 Jun 2023 12:30:04 +0200
+Message-ID: <20230619102142.497015478@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -43,256 +38,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 4acfe3dfde685a5a9eaec5555351918e2d7266a1 ]
+[ Upstream commit 806570c0bb7b4847828c22c4934fcf2dc8fc572f ]
 
-Dan Carpenter spotted a race condition in a couple of situations like
-these in the test_firmware driver:
+Since f8a53bb58ec7 ("btrfs: handle checksum generation in the storage
+layer") the failures of btrfs_csum_one_bio() are handled via
+bio_end_io().
 
-static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
-{
-        u8 val;
-        int ret;
+This means, we can return BLK_STS_RESOURCE from btrfs_csum_one_bio() in
+case the allocation of the ordered sums fails.
 
-        ret = kstrtou8(buf, 10, &val);
-        if (ret)
-                return ret;
+This also fixes a syzkaller report, where injecting a failure into the
+kvzalloc() call results in a BUG_ON().
 
-        mutex_lock(&test_fw_mutex);
-        *(u8 *)cfg = val;
-        mutex_unlock(&test_fw_mutex);
-
-        /* Always return full write size even if we didn't consume all */
-        return size;
-}
-
-static ssize_t config_num_requests_store(struct device *dev,
-                                         struct device_attribute *attr,
-                                         const char *buf, size_t count)
-{
-        int rc;
-
-        mutex_lock(&test_fw_mutex);
-        if (test_fw_config->reqs) {
-                pr_err("Must call release_all_firmware prior to changing config\n");
-                rc = -EINVAL;
-                mutex_unlock(&test_fw_mutex);
-                goto out;
-        }
-        mutex_unlock(&test_fw_mutex);
-
-        rc = test_dev_config_update_u8(buf, count,
-                                       &test_fw_config->num_requests);
-
-out:
-        return rc;
-}
-
-static ssize_t config_read_fw_idx_store(struct device *dev,
-                                        struct device_attribute *attr,
-                                        const char *buf, size_t count)
-{
-        return test_dev_config_update_u8(buf, count,
-                                         &test_fw_config->read_fw_idx);
-}
-
-The function test_dev_config_update_u8() is called from both the locked
-and the unlocked context, function config_num_requests_store() and
-config_read_fw_idx_store() which can both be called asynchronously as
-they are driver's methods, while test_dev_config_update_u8() and siblings
-change their argument pointed to by u8 *cfg or similar pointer.
-
-To avoid deadlock on test_fw_mutex, the lock is dropped before calling
-test_dev_config_update_u8() and re-acquired within test_dev_config_update_u8()
-itself, but alas this creates a race condition.
-
-Having two locks wouldn't assure a race-proof mutual exclusion.
-
-This situation is best avoided by the introduction of a new, unlocked
-function __test_dev_config_update_u8() which can be called from the locked
-context and reducing test_dev_config_update_u8() to:
-
-static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
-{
-        int ret;
-
-        mutex_lock(&test_fw_mutex);
-        ret = __test_dev_config_update_u8(buf, size, cfg);
-        mutex_unlock(&test_fw_mutex);
-
-        return ret;
-}
-
-doing the locking and calling the unlocked primitive, which enables both
-locked and unlocked versions without duplication of code.
-
-The similar approach was applied to all functions called from the locked
-and the unlocked context, which safely mitigates both deadlocks and race
-conditions in the driver.
-
-__test_dev_config_update_bool(), __test_dev_config_update_u8() and
-__test_dev_config_update_size_t() unlocked versions of the functions
-were introduced to be called from the locked contexts as a workaround
-without releasing the main driver's lock and thereof causing a race
-condition.
-
-The test_dev_config_update_bool(), test_dev_config_update_u8() and
-test_dev_config_update_size_t() locked versions of the functions
-are being called from driver methods without the unnecessary multiplying
-of the locking and unlocking code for each method, and complicating
-the code with saving of the return value across lock.
-
-Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Russ Weight <russell.h.weight@intel.com>
-Cc: Takashi Iwai <tiwai@suse.de>
-Cc: Tianfei Zhang <tianfei.zhang@intel.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: linux-kselftest@vger.kernel.org
-Cc: stable@vger.kernel.org # v5.4
-Suggested-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Link: https://lore.kernel.org/r/20230509084746.48259-1-mirsad.todorovac@alu.unizg.hr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+d8941552e21eac774778@syzkaller.appspotmail.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_firmware.c | 52 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 35 insertions(+), 17 deletions(-)
+ fs/btrfs/file-item.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-index 0b4e3de3f1748..4ad01dbe7e729 100644
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -321,16 +321,26 @@ static ssize_t config_test_show_str(char *dst,
- 	return len;
- }
- 
--static int test_dev_config_update_bool(const char *buf, size_t size,
-+static inline int __test_dev_config_update_bool(const char *buf, size_t size,
- 				       bool *cfg)
- {
- 	int ret;
- 
--	mutex_lock(&test_fw_mutex);
- 	if (kstrtobool(buf, cfg) < 0)
- 		ret = -EINVAL;
- 	else
- 		ret = size;
+diff --git a/fs/btrfs/file-item.c b/fs/btrfs/file-item.c
+index dd8b02a2a14a0..4c210b2ac6994 100644
+--- a/fs/btrfs/file-item.c
++++ b/fs/btrfs/file-item.c
+@@ -700,7 +700,9 @@ blk_status_t btrfs_csum_one_bio(struct btrfs_inode *inode, struct bio *bio,
+ 				sums = kvzalloc(btrfs_ordered_sum_size(fs_info,
+ 						      bytes_left), GFP_KERNEL);
+ 				memalloc_nofs_restore(nofs_flag);
+-				BUG_ON(!sums); /* -ENOMEM */
++				if (!sums)
++					return BLK_STS_RESOURCE;
 +
-+	return ret;
-+}
-+
-+static int test_dev_config_update_bool(const char *buf, size_t size,
-+				       bool *cfg)
-+{
-+	int ret;
-+
-+	mutex_lock(&test_fw_mutex);
-+	ret = __test_dev_config_update_bool(buf, size, cfg);
- 	mutex_unlock(&test_fw_mutex);
- 
- 	return ret;
-@@ -341,7 +351,8 @@ static ssize_t test_dev_config_show_bool(char *buf, bool val)
- 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
- }
- 
--static int test_dev_config_update_size_t(const char *buf,
-+static int __test_dev_config_update_size_t(
-+					 const char *buf,
- 					 size_t size,
- 					 size_t *cfg)
- {
-@@ -352,9 +363,7 @@ static int test_dev_config_update_size_t(const char *buf,
- 	if (ret)
- 		return ret;
- 
--	mutex_lock(&test_fw_mutex);
- 	*(size_t *)cfg = new;
--	mutex_unlock(&test_fw_mutex);
- 
- 	/* Always return full write size even if we didn't consume all */
- 	return size;
-@@ -370,7 +379,7 @@ static ssize_t test_dev_config_show_int(char *buf, int val)
- 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
- }
- 
--static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
-+static int __test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
- {
- 	u8 val;
- 	int ret;
-@@ -379,14 +388,23 @@ static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
- 	if (ret)
- 		return ret;
- 
--	mutex_lock(&test_fw_mutex);
- 	*(u8 *)cfg = val;
--	mutex_unlock(&test_fw_mutex);
- 
- 	/* Always return full write size even if we didn't consume all */
- 	return size;
- }
- 
-+static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
-+{
-+	int ret;
-+
-+	mutex_lock(&test_fw_mutex);
-+	ret = __test_dev_config_update_u8(buf, size, cfg);
-+	mutex_unlock(&test_fw_mutex);
-+
-+	return ret;
-+}
-+
- static ssize_t test_dev_config_show_u8(char *buf, u8 val)
- {
- 	return snprintf(buf, PAGE_SIZE, "%u\n", val);
-@@ -413,10 +431,10 @@ static ssize_t config_num_requests_store(struct device *dev,
- 		mutex_unlock(&test_fw_mutex);
- 		goto out;
- 	}
--	mutex_unlock(&test_fw_mutex);
- 
--	rc = test_dev_config_update_u8(buf, count,
--				       &test_fw_config->num_requests);
-+	rc = __test_dev_config_update_u8(buf, count,
-+					 &test_fw_config->num_requests);
-+	mutex_unlock(&test_fw_mutex);
- 
- out:
- 	return rc;
-@@ -460,10 +478,10 @@ static ssize_t config_buf_size_store(struct device *dev,
- 		mutex_unlock(&test_fw_mutex);
- 		goto out;
- 	}
--	mutex_unlock(&test_fw_mutex);
- 
--	rc = test_dev_config_update_size_t(buf, count,
--					   &test_fw_config->buf_size);
-+	rc = __test_dev_config_update_size_t(buf, count,
-+					     &test_fw_config->buf_size);
-+	mutex_unlock(&test_fw_mutex);
- 
- out:
- 	return rc;
-@@ -490,10 +508,10 @@ static ssize_t config_file_offset_store(struct device *dev,
- 		mutex_unlock(&test_fw_mutex);
- 		goto out;
- 	}
--	mutex_unlock(&test_fw_mutex);
- 
--	rc = test_dev_config_update_size_t(buf, count,
--					   &test_fw_config->file_offset);
-+	rc = __test_dev_config_update_size_t(buf, count,
-+					     &test_fw_config->file_offset);
-+	mutex_unlock(&test_fw_mutex);
- 
- out:
- 	return rc;
+ 				sums->len = bytes_left;
+ 				ordered = btrfs_lookup_ordered_extent(inode,
+ 								offset);
 -- 
 2.39.2
 
