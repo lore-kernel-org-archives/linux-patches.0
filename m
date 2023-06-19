@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010545381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C61BC433C0;
-	Mon, 19 Jun 2023 10:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B569E5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1EBC433C0;
+	Mon, 19 Jun 2023 10:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171547;
-	bh=xg/w/o0y1XyJU7/F+wAVFl3bYQkP2mRkFeRz0oHhQtQ=;
+	s=korg; t=1687171550;
+	bh=bqPR8NIY00okH2KeJu7laBUha6vW9xHkuckTz/BhmxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCTlAEjrWsFZU6USBu3WKedDEetUKiC5u6qJMe5pB4SvKxkLcqtBldjgk+htw0No6
-	 9mBVoZhadKSbIKMHZBHjJ9r7ye7Oy+MLUxUEmwTGEXMAlYN3USjUUuUiqbE2QCIkAH
-	 yYyeOSlqegmgse2CpyzLbZg9tS4pdCmXWmLpxWoE=
+	b=aRZQe8HuGoP+p7v0/EHScup/jAhbujsh9gMGC/d6VF/0gYvZz6QPdaP48AQwe6ABU
+	 Q/axeUqJoE3qAF4BaVYbVPdVcD7zPm1GMk2j+eF5FUUpIl+A8V7FbYK+vdMlffYXGo
+	 yqxYnx4r6YrwcX4OMjsJJXtNwNTDCg0occJNgZI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Stylon Wang <stylon.wang@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.1 071/166] drm/amd/display: edp do not add non-edid timings
-Date: Mon, 19 Jun 2023 12:29:08 +0200
-Message-ID: <20230619102158.203900182@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Marek Majkowski <marek@cloudflare.com>
+Subject: [PATCH 6.1 054/166] io_uring/net: save msghdr->msg_control for retries
+Date: Mon, 19 Jun 2023 12:28:51 +0200
+Message-ID: <20230619102157.372843953@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -38,45 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit e749dd10e5f292061ad63d2b030194bf7d7d452c upstream.
+commit cac9e4418f4cbd548ccb065b3adcafe073f7f7d2 upstream.
 
-[Why] most edp support only timings from edid. applying
-non-edid timings, especially those timings out of edp
-bandwidth, may damage edp.
+If the application sets ->msg_control and we have to later retry this
+command, or if it got queued with IOSQE_ASYNC to begin with, then we
+need to retain the original msg_control value. This is due to the net
+stack overwriting this field with an in-kernel pointer, to copy it
+in. Hitting that path for the second time will now fail the copy from
+user, as it's attempting to copy from a non-user address.
 
-[How] do not add non-edid timings for edp.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Stylon Wang <stylon.wang@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 5.10+
+Link: https://github.com/axboe/liburing/issues/880
+Reported-and-tested-by: Marek Majkowski <marek@cloudflare.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    8 +++++++-
+ io_uring/net.c |    8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6942,7 +6942,13 @@ static int amdgpu_dm_connector_get_modes
- 				drm_add_modes_noedid(connector, 640, 480);
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -65,6 +65,7 @@ struct io_sr_msg {
+ 	u16				addr_len;
+ 	u16				buf_group;
+ 	void __user			*addr;
++	void __user			*msg_control;
+ 	/* used only for send zerocopy */
+ 	struct io_kiocb 		*notif;
+ };
+@@ -182,11 +183,15 @@ static int io_sendmsg_copy_hdr(struct io
+ 			       struct io_async_msghdr *iomsg)
+ {
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
++	int ret;
+ 
+ 	iomsg->msg.msg_name = &iomsg->addr;
+ 	iomsg->free_iov = iomsg->fast_iov;
+-	return sendmsg_copy_msghdr(&iomsg->msg, sr->umsg, sr->msg_flags,
++	ret = sendmsg_copy_msghdr(&iomsg->msg, sr->umsg, sr->msg_flags,
+ 					&iomsg->free_iov);
++	/* save msg_control as sys_sendmsg() overwrites it */
++	sr->msg_control = iomsg->msg.msg_control;
++	return ret;
+ }
+ 
+ int io_send_prep_async(struct io_kiocb *req)
+@@ -284,6 +289,7 @@ int io_sendmsg(struct io_kiocb *req, uns
+ 
+ 	if (req_has_async_data(req)) {
+ 		kmsg = req->async_data;
++		kmsg->msg.msg_control = sr->msg_control;
  	} else {
- 		amdgpu_dm_connector_ddc_get_modes(connector, edid);
--		amdgpu_dm_connector_add_common_modes(encoder, connector);
-+		/* most eDP supports only timings from its edid,
-+		 * usually only detailed timings are available
-+		 * from eDP edid. timings which are not from edid
-+		 * may damage eDP
-+		 */
-+		if (connector->connector_type != DRM_MODE_CONNECTOR_eDP)
-+			amdgpu_dm_connector_add_common_modes(encoder, connector);
- 		amdgpu_dm_connector_add_freesync_modes(connector, edid);
- 	}
- 	amdgpu_dm_fbc_init(connector);
+ 		ret = io_sendmsg_copy_hdr(req, &iomsg);
+ 		if (ret)
 
 
