@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93E3BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E74C433C0;
-	Mon, 19 Jun 2023 10:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDCFBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA308C433C0;
+	Mon, 19 Jun 2023 10:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172255;
-	bh=M6MCVYh5Ea9QFabUfnRyl9JeQ0cYNhuTddcl5nGKtBo=;
+	s=korg; t=1687172258;
+	bh=53J8hAvaoEeu6f/6BLX+eKTuw8MJWKTAqjs3Tr2qlDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qVLh6MOZYCNXwJxoqc/LgA1nEjE1cPuSxb68K0w9i21Q3LdUQHZW3hMT18VkQvTW3
-	 XsXpSkY5TJVYeCNAnhU7mjsejVs3K/HKeIkRlcRuDdqNVAnAN9ihPo6NE3uC+ZCdNR
-	 DCmWSLhAWOqbJ9ZuQUVQ9vl8zzpmw4yZN5P04HtY=
+	b=ren8n0B0qjmqyzTfmwdwXQ/x79PNiM7dQsM85/tm9eoY+w3bTPTp7c/xoluXGRRIO
+	 EuX7rwqaKRmFhIP3OxVFHQHAoXvjA7vfZDSk0Dn0eowNqJspNdfwzplUkYyZy8H52v
+	 OIp6jHj8Hf1UJ/mKWokbEcfqXlXMQoCgIKzRjmvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natalia Petrova <n.petrova@fintech.ru>,
-	Lyude Paul <lyude@redhat.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 67/89] drm/nouveau: add nv_encoder pointer check for NULL
-Date: Mon, 19 Jun 2023 12:30:55 +0200
-Message-ID: <20230619102141.320568156@linuxfoundation.org>
+Subject: [PATCH 5.10 58/89] IB/uverbs: Fix to consider event queue closing also upon non-blocking mode
+Date: Mon, 19 Jun 2023 12:30:46 +0200
+Message-ID: <20230619102140.906972313@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -35,41 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Natalia Petrova <n.petrova@fintech.ru>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 55b94bb8c42464bad3d2217f6874aa1a85664eac ]
+[ Upstream commit 62fab312fa1683e812e605db20d4f22de3e3fb2f ]
 
-Pointer nv_encoder could be dereferenced at nouveau_connector.c
-in case it's equal to NULL by jumping to goto label.
-This patch adds a NULL-check to avoid it.
+Fix ib_uverbs_event_read() to consider event queue closing also upon
+non-blocking mode.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Once the queue is closed (e.g. hot-plug flow) all the existing events
+are cleaned-up as part of ib_uverbs_free_event_queue().
 
-Fixes: 3195c5f9784a ("drm/nouveau: set encoder for lvds")
-Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-[Fixed patch title]
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230512103320.82234-1-n.petrova@fintech.ru
+An application that uses the non-blocking FD mode should get -EIO in
+that case to let it knows that the device was removed already.
+
+Otherwise, it can loose the indication that the device was removed and
+won't recover.
+
+As part of that, refactor the code to have a single flow with regards to
+'is_closed' for both blocking and non-blocking modes.
+
+Fixes: 14e23bd6d221 ("RDMA/core: Fix locking in ib_uverbs_event_read")
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://lore.kernel.org/r/97b00116a1e1e13f8dc4ec38a5ea81cf8c030210.1685960567.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/uverbs_main.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
-index 7478f2a1411e6..b8884272d65e0 100644
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -726,7 +726,8 @@ nouveau_connector_detect_lvds(struct drm_connector *connector, bool force)
- #endif
+diff --git a/drivers/infiniband/core/uverbs_main.c b/drivers/infiniband/core/uverbs_main.c
+index 4bb7c642f80c4..099f5acc749e5 100644
+--- a/drivers/infiniband/core/uverbs_main.c
++++ b/drivers/infiniband/core/uverbs_main.c
+@@ -222,8 +222,12 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
+ 	spin_lock_irq(&ev_queue->lock);
  
- 	nouveau_connector_set_edid(nv_connector, edid);
--	nouveau_connector_set_encoder(connector, nv_encoder);
-+	if (nv_encoder)
-+		nouveau_connector_set_encoder(connector, nv_encoder);
- 	return status;
- }
+ 	while (list_empty(&ev_queue->event_list)) {
+-		spin_unlock_irq(&ev_queue->lock);
++		if (ev_queue->is_closed) {
++			spin_unlock_irq(&ev_queue->lock);
++			return -EIO;
++		}
  
++		spin_unlock_irq(&ev_queue->lock);
+ 		if (filp->f_flags & O_NONBLOCK)
+ 			return -EAGAIN;
+ 
+@@ -233,12 +237,6 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
+ 			return -ERESTARTSYS;
+ 
+ 		spin_lock_irq(&ev_queue->lock);
+-
+-		/* If device was disassociated and no event exists set an error */
+-		if (list_empty(&ev_queue->event_list) && ev_queue->is_closed) {
+-			spin_unlock_irq(&ev_queue->lock);
+-			return -EIO;
+-		}
+ 	}
+ 
+ 	event = list_entry(ev_queue->event_list.next, struct ib_uverbs_event, list);
 -- 
 2.39.2
 
