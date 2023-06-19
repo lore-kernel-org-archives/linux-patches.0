@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFBC5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAEB7C433C8;
-	Mon, 19 Jun 2023 10:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA937538F
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625DBC433C0;
+	Mon, 19 Jun 2023 10:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171587;
-	bh=J/tTqgo641HYVk9EzkTqYtxqHXRyv7pA9oc9qdMCfGI=;
+	s=korg; t=1687171592;
+	bh=gDrRAn/3Di0ZftnLSoA+mqE0h0skAQn1H02GdAnvofI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVYXtc2CH/Z6kp4up7hGEFVarb5jq843ImlUxJQ1v51ZavfAWa6jzXIgFzbzz7xQd
-	 H4haeJeudV5oqWloLWK+JsaSGD3z+sFI0IUJ0X1jaIJEvRH7PYicYcOQ0MtmemKfe3
-	 qA1k2gYU0bduqO6N5fMLdb1D72GPY4+K3SfMq8+I=
+	b=Ba2tAxrm/+TCJn/cMC35Q219YRjMXzlrWBCGMgOEBrzKomJQDXigzkg2QWyquyOrN
+	 0QNNAw5W6CNvPOpTO3jQdNwZt+CK1eiEEvDRANuDucvRV6ueIttHB3KpEYeOKQ+W17
+	 buz5nl+XOkwSlvCl+zvu+VEG8dXnVDfs9zJYkAPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Chris Mason <clm@fb.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 061/166] btrfs: can_nocow_file_extent should pass down args->strict from callers
-Date: Mon, 19 Jun 2023 12:28:58 +0200
-Message-ID: <20230619102157.758509442@linuxfoundation.org>
+	beld zhang <beldzhang@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 079/166] thunderbolt: Mask ring interrupt on Intel hardware as well
+Date: Mon, 19 Jun 2023 12:29:16 +0200
+Message-ID: <20230619102158.629004381@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,55 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Mason <clm@fb.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit deccae40e4b30f98837e44225194d80c8baf2233 upstream.
+commit 9f9666e65359d5047089aef97ac87c50f624ecb0 upstream.
 
-Commit 619104ba453ad0 ("btrfs: move common NOCOW checks against a file
-extent into a helper") changed our call to btrfs_cross_ref_exist() to
-always pass false for the 'strict' parameter.  We're passing this down
-through the stack so that we can do a full check for cross references
-during swapfile activation.
+When resuming from system sleep states the driver issues following
+warning on Intel hardware:
 
-With strict always false, this test fails:
+  thunderbolt 0000:07:00.0: interrupt for TX ring 0 is already enabled
 
-  btrfs subvol create swappy
-  chattr +C swappy
-  fallocate -l1G swappy/swapfile
-  chmod 600 swappy/swapfile
-  mkswap swappy/swapfile
+The reason for this is that the commit in question did not mask the ring
+interrupt on Intel hardware leaving the interrupt active. Fix this by
+masking it also in Intel hardware.
 
-  btrfs subvol snap swappy swapsnap
-  btrfs subvol del -C swapsnap
-
-  btrfs fi sync /
-  sync;sync;sync
-
-  swapon swappy/swapfile
-
-The fix is to just use args->strict, and everyone except swapfile
-activation is passing false.
-
-Fixes: 619104ba453ad0 ("btrfs: move common NOCOW checks against a file extent into a helper")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Chris Mason <clm@fb.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: beld zhang <beldzhang@gmail.com>
+Tested-by: beld zhang <beldzhang@gmail.com>
+Closes: https://lore.kernel.org/linux-usb/ZHKW5NeabmfhgLbY@debian.me/
+Fixes: c4af8e3fecd0 ("thunderbolt: Clear registers properly when auto clear isn't in use")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thunderbolt/nhi.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1849,7 +1849,7 @@ static int can_nocow_file_extent(struct
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -56,9 +56,14 @@ static int ring_interrupt_index(const st
  
- 	ret = btrfs_cross_ref_exist(root, btrfs_ino(inode),
- 				    key->offset - args->extent_offset,
--				    args->disk_bytenr, false, path);
-+				    args->disk_bytenr, args->strict, path);
- 	WARN_ON_ONCE(ret > 0 && is_freespace_inode);
- 	if (ret != 0)
- 		goto out;
+ static void nhi_mask_interrupt(struct tb_nhi *nhi, int mask, int ring)
+ {
+-	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT)
+-		return;
+-	iowrite32(mask, nhi->iobase + REG_RING_INTERRUPT_MASK_CLEAR_BASE + ring);
++	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT) {
++		u32 val;
++
++		val = ioread32(nhi->iobase + REG_RING_INTERRUPT_BASE + ring);
++		iowrite32(val & ~mask, nhi->iobase + REG_RING_INTERRUPT_BASE + ring);
++	} else {
++		iowrite32(mask, nhi->iobase + REG_RING_INTERRUPT_MASK_CLEAR_BASE + ring);
++	}
+ }
+ 
+ static void nhi_clear_interrupt(struct tb_nhi *nhi, int ring)
 
 
