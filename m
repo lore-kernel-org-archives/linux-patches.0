@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72645381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D84C433C8;
-	Mon, 19 Jun 2023 10:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54795381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FC1C433C8;
+	Mon, 19 Jun 2023 10:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171024;
-	bh=kk7G0JQ/GsMop0i9mZcn4FnLKX/wUXftZ9AoPDes9K8=;
+	s=korg; t=1687171027;
+	bh=gDrRAn/3Di0ZftnLSoA+mqE0h0skAQn1H02GdAnvofI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KB9RfzPeYONcaa9P26K9ayrFKhlcXaqm6Z0u4+GY28lZ/gsIwIjvTvTTV+5r3W6Tl
-	 X5m9xb1I/Tj8j35t3AU7ZpsICggNpmN87QL+WxSn8fQ6r1iMtIX/apSpSn9/TuXhWl
-	 7a2FkRukW/u/SAm0AbQNSNpXSvaEQOXF3Zw0hjtc=
+	b=TAMze8bnvn/rmPPQaaPSYedf5T9AtkGXxlH9zoIlSnpeGuNS8TByCwvg0Oppto00i
+	 dbi6GB3AmX083lmOtpoHhKqkkvkAK71LY6zqJFNP6o4QdTuzWgstL0YD4IPKdxb/uc
+	 Tf9hKcEchKSdFtMh/HEtewd8Kx7SrDk/mk20usvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>
-Subject: [PATCH 6.3 120/187] ice: Dont dereference NULL in ice_gnss_read error path
-Date: Mon, 19 Jun 2023 12:28:58 +0200
-Message-ID: <20230619102203.348810378@linuxfoundation.org>
+	beld zhang <beldzhang@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.3 095/187] thunderbolt: Mask ring interrupt on Intel hardware as well
+Date: Mon, 19 Jun 2023 12:28:33 +0200
+Message-ID: <20230619102202.194424270@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -37,59 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Horman <horms@kernel.org>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 05a1308a2e08e4a375bf60eb4c6c057a201d81fc ]
+commit 9f9666e65359d5047089aef97ac87c50f624ecb0 upstream.
 
-If pf is NULL in ice_gnss_read() then it will be dereferenced
-in the error path by a call to dev_dbg(ice_pf_to_dev(pf), ...).
+When resuming from system sleep states the driver issues following
+warning on Intel hardware:
 
-Avoid this by simply returning in this case.
-If logging is desired an alternate approach might be to
-use pr_err() before returning.
+  thunderbolt 0000:07:00.0: interrupt for TX ring 0 is already enabled
 
-Flagged by Smatch as:
+The reason for this is that the commit in question did not mask the ring
+interrupt on Intel hardware leaving the interrupt active. Fix this by
+masking it also in Intel hardware.
 
-  .../ice_gnss.c:196 ice_gnss_read() error: we previously assumed 'pf' could be null (see line 131)
-
-Fixes: 43113ff73453 ("ice: add TTY for GNSS module for E810T device")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: beld zhang <beldzhang@gmail.com>
+Tested-by: beld zhang <beldzhang@gmail.com>
+Closes: https://lore.kernel.org/linux-usb/ZHKW5NeabmfhgLbY@debian.me/
+Fixes: c4af8e3fecd0 ("thunderbolt: Clear registers properly when auto clear isn't in use")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_gnss.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/thunderbolt/nhi.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_gnss.c b/drivers/net/ethernet/intel/ice/ice_gnss.c
-index bd0ed155e11b6..75c9de675f202 100644
---- a/drivers/net/ethernet/intel/ice/ice_gnss.c
-+++ b/drivers/net/ethernet/intel/ice/ice_gnss.c
-@@ -96,12 +96,7 @@ static void ice_gnss_read(struct kthread_work *work)
- 	int err = 0;
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -56,9 +56,14 @@ static int ring_interrupt_index(const st
  
- 	pf = gnss->back;
--	if (!pf) {
--		err = -EFAULT;
--		goto exit;
--	}
--
--	if (!test_bit(ICE_FLAG_GNSS, pf->flags))
-+	if (!pf || !test_bit(ICE_FLAG_GNSS, pf->flags))
- 		return;
- 
- 	hw = &pf->hw;
-@@ -159,7 +154,6 @@ static void ice_gnss_read(struct kthread_work *work)
- 	free_page((unsigned long)buf);
- requeue:
- 	kthread_queue_delayed_work(gnss->kworker, &gnss->read_work, delay);
--exit:
- 	if (err)
- 		dev_dbg(ice_pf_to_dev(pf), "GNSS failed to read err=%d\n", err);
+ static void nhi_mask_interrupt(struct tb_nhi *nhi, int mask, int ring)
+ {
+-	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT)
+-		return;
+-	iowrite32(mask, nhi->iobase + REG_RING_INTERRUPT_MASK_CLEAR_BASE + ring);
++	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT) {
++		u32 val;
++
++		val = ioread32(nhi->iobase + REG_RING_INTERRUPT_BASE + ring);
++		iowrite32(val & ~mask, nhi->iobase + REG_RING_INTERRUPT_BASE + ring);
++	} else {
++		iowrite32(mask, nhi->iobase + REG_RING_INTERRUPT_MASK_CLEAR_BASE + ring);
++	}
  }
--- 
-2.39.2
-
+ 
+ static void nhi_clear_interrupt(struct tb_nhi *nhi, int ring)
 
 
