@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2C710960
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF655C433C8;
-	Mon, 19 Jun 2023 10:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D88D10960
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9909BC433C0;
+	Mon, 19 Jun 2023 10:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172275;
-	bh=WRhW1/yv4xK5ItBe59K0gHqbborl2sOOtaP2mg9Htlc=;
+	s=korg; t=1687172278;
+	bh=Z3jEnciimgfjimbOt2+a34W8ecJ/nCY3U7dP4B3QJnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqgF8u51IvOZM5o9dcsMxS+sG/tv6Td5NxCLkHV73F2GeY1Sz9S+9eFOdC5z+swcs
-	 /GzHJfL38kVMwjLowMChX938nCtTdLv3qV7fzeWSD9MH8FdOssw+wgJLSem7BoBrB2
-	 0czsHCc44JDKscPp8xSL9/s0FaE6zRrEbekdZ3Ck=
+	b=ybSqpQIvfEwcfpZ+dNdqZVrnslwLOF1Cf86KCXzECLfXZP9EmT1hXdFfCum9sqakx
+	 jOZ8NwMG4iQyzrQdEqs6VHg9r9XrYa3icrWtw6cfm42wAnTgFnsgF/LucPBdFyaafH
+	 n3vouFS60dQxaZNPX4jlNZjHSYxfvWQ0rRicpf7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
 	Hans de Goede <hdegoede@redhat.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 010/107] power: supply: sc27xx: Fix external_power_changed race
-Date: Mon, 19 Jun 2023 12:29:54 +0200
-Message-ID: <20230619102142.033291066@linuxfoundation.org>
+Subject: [PATCH 5.15 011/107] power: supply: bq27xxx: Use mod_delayed_work() instead of cancel() + schedule()
+Date: Mon, 19 Jun 2023 12:29:55 +0200
+Message-ID: <20230619102142.081193575@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -40,66 +37,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 4d5c129d6c8993fe96e9ae712141eedcb9ca68c2 ]
+[ Upstream commit 59dddea9879713423c7b2ade43c423bb71e0d216 ]
 
-sc27xx_fgu_external_power_changed() dereferences data->battery,
-which gets sets in ab8500_btemp_probe() like this:
+Use mod_delayed_work() instead of separate cancel_delayed_work_sync() +
+schedule_delayed_work() calls.
 
-	data->battery = devm_power_supply_register(dev, &sc27xx_fgu_desc,
-                                                   &fgu_cfg);
-
-As soon as devm_power_supply_register() has called device_add()
-the external_power_changed callback can get called. So there is a window
-where sc27xx_fgu_external_power_changed() may get called while
-data->battery has not been set yet leading to a NULL pointer dereference.
-
-Fixing this is easy. The external_power_changed callback gets passed
-the power_supply which will eventually get stored in data->battery,
-so sc27xx_fgu_external_power_changed() can simply directly use
-the passed in psy argument which is always valid.
-
-After this change sc27xx_fgu_external_power_changed() is reduced to just
-"power_supply_changed(psy);" and it has the same prototype. While at it
-simply replace it with making the external_power_changed callback
-directly point to power_supply_changed.
-
-Cc: Orson Zhai <orsonzhai@gmail.com>
-Cc: Chunyan Zhang <zhang.lyra@gmail.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/sc27xx_fuel_gauge.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/power/supply/sc27xx_fuel_gauge.c b/drivers/power/supply/sc27xx_fuel_gauge.c
-index ae45069bd5e1b..3d8a85df87f4d 100644
---- a/drivers/power/supply/sc27xx_fuel_gauge.c
-+++ b/drivers/power/supply/sc27xx_fuel_gauge.c
-@@ -733,13 +733,6 @@ static int sc27xx_fgu_set_property(struct power_supply *psy,
- 	return ret;
- }
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index ffb5f5c028223..7c1295986b594 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1083,10 +1083,8 @@ static int poll_interval_param_set(const char *val, const struct kernel_param *k
+ 		return ret;
  
--static void sc27xx_fgu_external_power_changed(struct power_supply *psy)
--{
--	struct sc27xx_fgu_data *data = power_supply_get_drvdata(psy);
--
--	power_supply_changed(data->battery);
--}
--
- static int sc27xx_fgu_property_is_writeable(struct power_supply *psy,
- 					    enum power_supply_property psp)
- {
-@@ -774,7 +767,7 @@ static const struct power_supply_desc sc27xx_fgu_desc = {
- 	.num_properties		= ARRAY_SIZE(sc27xx_fgu_props),
- 	.get_property		= sc27xx_fgu_get_property,
- 	.set_property		= sc27xx_fgu_set_property,
--	.external_power_changed	= sc27xx_fgu_external_power_changed,
-+	.external_power_changed	= power_supply_changed,
- 	.property_is_writeable	= sc27xx_fgu_property_is_writeable,
- 	.no_thermal		= true,
- };
+ 	mutex_lock(&bq27xxx_list_lock);
+-	list_for_each_entry(di, &bq27xxx_battery_devices, list) {
+-		cancel_delayed_work_sync(&di->work);
+-		schedule_delayed_work(&di->work, 0);
+-	}
++	list_for_each_entry(di, &bq27xxx_battery_devices, list)
++		mod_delayed_work(system_wq, &di->work, 0);
+ 	mutex_unlock(&bq27xxx_list_lock);
+ 
+ 	return ret;
 -- 
 2.39.2
 
