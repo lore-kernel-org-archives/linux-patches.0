@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC3E10961
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B203EC433C8;
-	Mon, 19 Jun 2023 10:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D730710960
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D04CC433C8;
+	Mon, 19 Jun 2023 10:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170650;
-	bh=stDmuwsmlcYKQ6xBzHPRTICf28xJZWqfTT1cqugYHN0=;
+	s=korg; t=1687170652;
+	bh=TvKaVSV7PH0o2IDTEJPk7NGATkfqXbuxkh9jlKRJAGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gX6cP9ijSABXOS4qCBVexqZr9j/z0cwa9yXDq3VqSukUrMtEl51jKq/aCaEdXM4mo
-	 iav9IXmptJZU5l9I34k4+KARGuEe5zaiq/rFeR0BylYGyPdxMJgu6CsudnL+vCrYEG
-	 cLfPJZiD8ZGn9PqcXZYMx4o3EB9Or0yZzZukntsY=
+	b=n9IdHDQc2xuhLuJZSTF4ox1y7hSPxHxOw496v57JnNly7eX9c2h3eXj2gqtixIc6q
+	 Qv6QwvHYMKDf9P7je40OeLT0qvJLJDv8uEiKTeN4umMBahbahRf2KrcsvIQ1eGOLi6
+	 RJd1B3k5Ez1NsSLwYx7TfK+6BqfAcOxnmHFGASg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natalia Petrova <n.petrova@fintech.ru>,
-	Lyude Paul <lyude@redhat.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Martin Schiller <ms@dev.tdt.de>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 25/32] drm/nouveau/dp: check for NULL nv_connector->native_mode
-Date: Mon, 19 Jun 2023 12:29:13 +0200
-Message-ID: <20230619102128.885586042@linuxfoundation.org>
+Subject: [PATCH 4.14 26/32] net: lapbether: only support ethernet devices
+Date: Mon, 19 Jun 2023 12:29:14 +0200
+Message-ID: <20230619102128.938068028@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
 References: <20230619102127.461443957@linuxfoundation.org>
@@ -35,51 +37,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Natalia Petrova <n.petrova@fintech.ru>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 20a2ce87fbaf81e4c3dcb631d738e423959eb320 ]
+[ Upstream commit 9eed321cde22fc1afd76eac563ce19d899e0d6b2 ]
 
-Add checking for NULL before calling nouveau_connector_detect_depth() in
-nouveau_connector_get_modes() function because nv_connector->native_mode
-could be dereferenced there since connector pointer passed to
-nouveau_connector_detect_depth() and the same value of
-nv_connector->native_mode is used there.
+It probbaly makes no sense to support arbitrary network devices
+for lapbether.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+syzbot reported:
 
-Fixes: d4c2c99bdc83 ("drm/nouveau/dp: remove broken display depth function, use the improved one")
+skbuff: skb_under_panic: text:ffff80008934c100 len:44 put:40 head:ffff0000d18dd200 data:ffff0000d18dd1ea tail:0x16 end:0x140 dev:bond1
+kernel BUG at net/core/skbuff.c:200 !
+Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+Modules linked in:
+CPU: 0 PID: 5643 Comm: dhcpcd Not tainted 6.4.0-rc5-syzkaller-g4641cff8e810 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
+pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : skb_panic net/core/skbuff.c:196 [inline]
+pc : skb_under_panic+0x13c/0x140 net/core/skbuff.c:210
+lr : skb_panic net/core/skbuff.c:196 [inline]
+lr : skb_under_panic+0x13c/0x140 net/core/skbuff.c:210
+sp : ffff8000973b7260
+x29: ffff8000973b7270 x28: ffff8000973b7360 x27: dfff800000000000
+x26: ffff0000d85d8150 x25: 0000000000000016 x24: ffff0000d18dd1ea
+x23: ffff0000d18dd200 x22: 000000000000002c x21: 0000000000000140
+x20: 0000000000000028 x19: ffff80008934c100 x18: ffff8000973b68a0
+x17: 0000000000000000 x16: ffff80008a43bfbc x15: 0000000000000202
+x14: 0000000000000000 x13: 0000000000000001 x12: 0000000000000001
+x11: 0000000000000201 x10: 0000000000000000 x9 : f22f7eb937cced00
+x8 : f22f7eb937cced00 x7 : 0000000000000001 x6 : 0000000000000001
+x5 : ffff8000973b6b78 x4 : ffff80008df9ee80 x3 : ffff8000805974f4
+x2 : 0000000000000001 x1 : 0000000100000201 x0 : 0000000000000086
+Call trace:
+skb_panic net/core/skbuff.c:196 [inline]
+skb_under_panic+0x13c/0x140 net/core/skbuff.c:210
+skb_push+0xf0/0x108 net/core/skbuff.c:2409
+ip6gre_header+0xbc/0x738 net/ipv6/ip6_gre.c:1383
+dev_hard_header include/linux/netdevice.h:3137 [inline]
+lapbeth_data_transmit+0x1c4/0x298 drivers/net/wan/lapbether.c:257
+lapb_data_transmit+0x8c/0xb0 net/lapb/lapb_iface.c:447
+lapb_transmit_buffer+0x178/0x204 net/lapb/lapb_out.c:149
+lapb_send_control+0x220/0x320 net/lapb/lapb_subr.c:251
+lapb_establish_data_link+0x94/0xec
+lapb_device_event+0x348/0x4e0
+notifier_call_chain+0x1a4/0x510 kernel/notifier.c:93
+raw_notifier_call_chain+0x3c/0x50 kernel/notifier.c:461
+__dev_notify_flags+0x2bc/0x544
+dev_change_flags+0xd0/0x15c net/core/dev.c:8643
+devinet_ioctl+0x858/0x17e4 net/ipv4/devinet.c:1150
+inet_ioctl+0x2ac/0x4d8 net/ipv4/af_inet.c:979
+sock_do_ioctl+0x134/0x2dc net/socket.c:1201
+sock_ioctl+0x4ec/0x858 net/socket.c:1318
+vfs_ioctl fs/ioctl.c:51 [inline]
+__do_sys_ioctl fs/ioctl.c:870 [inline]
+__se_sys_ioctl fs/ioctl.c:856 [inline]
+__arm64_sys_ioctl+0x14c/0x1c8 fs/ioctl.c:856
+__invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
+invoke_syscall+0x98/0x2c0 arch/arm64/kernel/syscall.c:52
+el0_svc_common+0x138/0x244 arch/arm64/kernel/syscall.c:142
+do_el0_svc+0x64/0x198 arch/arm64/kernel/syscall.c:191
+el0_svc+0x4c/0x160 arch/arm64/kernel/entry-common.c:647
+el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:665
+el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
+Code: aa1803e6 aa1903e7 a90023f5 947730f5 (d4210000)
 
-Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230512111526.82408-1-n.petrova@fintech.ru
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Martin Schiller <ms@dev.tdt.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wan/lapbether.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
-index b5c8219c54557..4f604d71a46ea 100644
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -945,7 +945,7 @@ nouveau_connector_get_modes(struct drm_connector *connector)
- 	/* Determine display colour depth for everything except LVDS now,
- 	 * DP requires this before mode_valid() is called.
- 	 */
--	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS)
-+	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
- 		nouveau_connector_detect_depth(connector);
+diff --git a/drivers/net/wan/lapbether.c b/drivers/net/wan/lapbether.c
+index 6233805fc032c..b2ede9acb4bcf 100644
+--- a/drivers/net/wan/lapbether.c
++++ b/drivers/net/wan/lapbether.c
+@@ -344,6 +344,9 @@ static int lapbeth_new_device(struct net_device *dev)
  
- 	/* Find the native mode if this is a digital panel, if we didn't
-@@ -966,7 +966,7 @@ nouveau_connector_get_modes(struct drm_connector *connector)
- 	 * "native" mode as some VBIOS tables require us to use the
- 	 * pixel clock as part of the lookup...
- 	 */
--	if (connector->connector_type == DRM_MODE_CONNECTOR_LVDS)
-+	if (connector->connector_type == DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
- 		nouveau_connector_detect_depth(connector);
+ 	ASSERT_RTNL();
  
- 	if (nv_encoder->dcb->type == DCB_OUTPUT_TV)
++	if (dev->type != ARPHRD_ETHER)
++		return -EINVAL;
++
+ 	ndev = alloc_netdev(sizeof(*lapbeth), "lapb%d", NET_NAME_UNKNOWN,
+ 			    lapbeth_setup);
+ 	if (!ndev)
 -- 
 2.39.2
 
