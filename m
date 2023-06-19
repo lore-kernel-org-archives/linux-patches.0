@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8685381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64BFC433C9;
-	Mon, 19 Jun 2023 10:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95CF5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B03EC433C0;
+	Mon, 19 Jun 2023 10:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171437;
-	bh=FMWsSiYerd3VpLtJ0RL80ScgmPJ4SpAcn+LdzIeVyV4=;
+	s=korg; t=1687171439;
+	bh=Yf82SHwGrVuX0UvQMTsYcg5ZU/SYk+6Qnm6Aesvf6Ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VS7cSVJPS7dmyx6s99k706JH90UCT5kPmdT4mIYmP9qX8um9quxJBwsBkRcWWIWlx
-	 LxjncfhRc3gxad2HGuzoebT0nzRw91Cd34KIs9nIV89ZfuiZbt7PyhXC0Tms3VlS17
-	 b20IcL8oxw2xkPh2wLpWapNuK6P2Ck+FIMiuVC24=
+	b=bKlXQ4+QanA1JwaC4SvZbRt85IrlX/ysDGjl5U98IU45vihVty/+YClQ7GVvYpV3W
+	 8YMX0U7MhofNKntko6+6ArOh3xXfUEcfwdJvCh8MZTM4wgwxjdy4czDm63g4eplw2B
+	 SmL9JPHEcJ0Ir5phDANe4dw7qPCV0pEQkbj6evAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <Evan.Quan@amd.com>,
-	Lijo Lazar <Lijo.Lazar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Manuel Lauss <manuel.lauss@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/166] power: supply: Fix logic checking if system is running from battery
-Date: Mon, 19 Jun 2023 12:28:20 +0200
-Message-ID: <20230619102155.861195571@linuxfoundation.org>
+Subject: [PATCH 6.1 032/166] MIPS: unhide PATA_PLATFORM
+Date: Mon, 19 Jun 2023 12:28:29 +0200
+Message-ID: <20230619102156.320968299@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -37,64 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Manuel Lauss <manuel.lauss@gmail.com>
 
-[ Upstream commit 95339f40a8b652b5b1773def31e63fc53c26378a ]
+[ Upstream commit 75b18aac6fa39a1720677970cfcb52ecea1eb44c ]
 
-The logic used for power_supply_is_system_supplied() counts all power
-supplies and assumes that the system is running from AC if there is
-either a non-battery power-supply reporting to be online or if no
-power-supplies exist at all.
+Alchemy DB1200/DB1300 boards can use the pata_platform driver.
+Unhide the config entry in all of MIPS.
 
-The second rule is for desktop systems, that don't have any
-battery/charger devices. These systems will incorrectly report to be
-powered from battery once a device scope power-supply is registered
-(e.g. a HID device), since these power-supplies increase the counter.
-
-Apart from HID devices, recent dGPUs provide UCSI power supplies on a
-desktop systems. The dGPU by default doesn't have anything plugged in so
-it's 'offline'. This makes power_supply_is_system_supplied() return 0
-with a count of 1 meaning all drivers that use this get a wrong judgement.
-
-To fix this case adjust the logic to also examine the scope of the power
-supply. If the power supply is deemed a device power supply, then don't
-count it.
-
-Cc: Evan Quan <Evan.Quan@amd.com>
-Suggested-by: Lijo Lazar <Lijo.Lazar@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Manuel Lauss <manuel.lauss@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/mips/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 8382be867d274..7871ab5e979c0 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -348,6 +348,10 @@ static int __power_supply_is_system_supplied(struct device *dev, void *data)
- 	struct power_supply *psy = dev_get_drvdata(dev);
- 	unsigned int *count = data;
- 
-+	if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_SCOPE, &ret))
-+		if (ret.intval == POWER_SUPPLY_SCOPE_DEVICE)
-+			return 0;
-+
- 	(*count)++;
- 	if (psy->desc->type != POWER_SUPPLY_TYPE_BATTERY)
- 		if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_ONLINE,
-@@ -366,8 +370,8 @@ int power_supply_is_system_supplied(void)
- 				      __power_supply_is_system_supplied);
- 
- 	/*
--	 * If no power class device was found at all, most probably we are
--	 * running on a desktop system, so assume we are on mains power.
-+	 * If no system scope power class device was found at all, most probably we
-+	 * are running on a desktop system, so assume we are on mains power.
- 	 */
- 	if (count == 0)
- 		return 1;
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index b26b77673c2cc..2f5835e300a8f 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -82,6 +82,7 @@ config MIPS
+ 	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION
+ 	select HAVE_MOD_ARCH_SPECIFIC
+ 	select HAVE_NMI
++	select HAVE_PATA_PLATFORM
+ 	select HAVE_PERF_EVENTS
+ 	select HAVE_PERF_REGS
+ 	select HAVE_PERF_USER_STACK_DUMP
 -- 
 2.39.2
 
