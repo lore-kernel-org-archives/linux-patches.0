@@ -1,32 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C752BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7BAC433C0;
-	Mon, 19 Jun 2023 10:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B0CBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BFDC433C8;
+	Mon, 19 Jun 2023 10:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171836;
-	bh=dTMHqZm+d11Fd23qGB6AK54XsswmqL+O+qaQmWOZawU=;
+	s=korg; t=1687171839;
+	bh=gzdujEU3/hRV6Pr8z9XYs+gz9JZAg2D18OESNsKRvIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T1B+3dAw/FabbsgD7dLbca0fs2hAO7RhHAmsSpgV5zrYFHNaDb+ye7oZU2brU6+EH
-	 4tTbjt4bFJtvUi5nizzkXVaOtNJMo6iCP8BK/+a3tBnTKZnUYpQw8xjR244mXVUue0
-	 5GFnZR047TTmFjfI+FyKQmz9P6WSwOjjS4HldUKc=
+	b=t218jkCYiu77x+TGYq/o+VYEZdyZhFO5ECml4ka9BnNy2rDZw8ZU9QUIwft9cqAKb
+	 jL2Mb6Msa8oB9DdFE45ua16BMWdKwyGyPZ3yF9dENxKshjxAs18Bu4kSAxt/34Pxx9
+	 ZT0o9GxP2m3Mx0O1eR+1JcMoyEBJ1huHajbnMQCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 161/166] neighbour: delete neigh_lookup_nodev as not used
-Date: Mon, 19 Jun 2023 12:30:38 +0200
-Message-ID: <20230619102202.497239823@linuxfoundation.org>
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Russ Weight <russell.h.weight@intel.com>,
+	Tianfei Zhang <tianfei.zhang@intel.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kselftest@vger.kernel.org,
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 01/64] test_firmware: fix a memory leak with reqs buffer
+Date: Mon, 19 Jun 2023 12:29:57 +0200
+Message-ID: <20230619102132.877724157@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
-References: <20230619102154.568541872@linuxfoundation.org>
+In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
+References: <20230619102132.808972458@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,75 +46,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-commit 76b9bf965c98c9b53ef7420b3b11438dbd764f92 upstream.
+[ Upstream commit be37bed754ed90b2655382f93f9724b3c1aae847 ]
 
-neigh_lookup_nodev isn't used in the kernel after removal
-of DECnet. So let's remove it.
+Dan Carpenter spotted that test_fw_config->reqs will be leaked if
+trigger_batched_requests_store() is called two or more times.
+The same appears with trigger_batched_requests_async_store().
 
-Fixes: 1202cdd66531 ("Remove DECnet support from kernel")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/eb5656200d7964b2d177a36b77efa3c597d6d72d.1678267343.git.leonro@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This bug wasn't trigger by the tests, but observed by Dan's visual
+inspection of the code.
+
+The recommended workaround was to return -EBUSY if test_fw_config->reqs
+is already allocated.
+
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Russ Weight <russell.h.weight@intel.com>
+Cc: Tianfei Zhang <tianfei.zhang@intel.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Colin Ian King <colin.i.king@gmail.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-kselftest@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.4
+Suggested-by: Dan Carpenter <error27@gmail.com>
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20230509084746.48259-2-mirsad.todorovac@alu.unizg.hr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/neighbour.h |    2 --
- net/core/neighbour.c    |   31 -------------------------------
- 2 files changed, 33 deletions(-)
+ lib/test_firmware.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/include/net/neighbour.h
-+++ b/include/net/neighbour.h
-@@ -336,8 +336,6 @@ void neigh_table_init(int index, struct
- int neigh_table_clear(int index, struct neigh_table *tbl);
- struct neighbour *neigh_lookup(struct neigh_table *tbl, const void *pkey,
- 			       struct net_device *dev);
--struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
--				     const void *pkey);
- struct neighbour *__neigh_create(struct neigh_table *tbl, const void *pkey,
- 				 struct net_device *dev, bool want_ref);
- static inline struct neighbour *neigh_create(struct neigh_table *tbl,
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -627,37 +627,6 @@ struct neighbour *neigh_lookup(struct ne
- }
- EXPORT_SYMBOL(neigh_lookup);
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 3146845f01562..38553944e9675 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -679,6 +679,11 @@ static ssize_t trigger_batched_requests_store(struct device *dev,
  
--struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
--				     const void *pkey)
--{
--	struct neighbour *n;
--	unsigned int key_len = tbl->key_len;
--	u32 hash_val;
--	struct neigh_hash_table *nht;
--
--	NEIGH_CACHE_STAT_INC(tbl, lookups);
--
--	rcu_read_lock_bh();
--	nht = rcu_dereference_bh(tbl->nht);
--	hash_val = tbl->hash(pkey, NULL, nht->hash_rnd) >> (32 - nht->hash_shift);
--
--	for (n = rcu_dereference_bh(nht->hash_buckets[hash_val]);
--	     n != NULL;
--	     n = rcu_dereference_bh(n->next)) {
--		if (!memcmp(n->primary_key, pkey, key_len) &&
--		    net_eq(dev_net(n->dev), net)) {
--			if (!refcount_inc_not_zero(&n->refcnt))
--				n = NULL;
--			NEIGH_CACHE_STAT_INC(tbl, hits);
--			break;
--		}
--	}
--
--	rcu_read_unlock_bh();
--	return n;
--}
--EXPORT_SYMBOL(neigh_lookup_nodev);
--
- static struct neighbour *
- ___neigh_create(struct neigh_table *tbl, const void *pkey,
- 		struct net_device *dev, u32 flags,
+ 	mutex_lock(&test_fw_mutex);
+ 
++	if (test_fw_config->reqs) {
++		rc = -EBUSY;
++		goto out_bail;
++	}
++
+ 	test_fw_config->reqs =
+ 		vzalloc(array3_size(sizeof(struct test_batched_req),
+ 				    test_fw_config->num_requests, 2));
+@@ -778,6 +783,11 @@ ssize_t trigger_batched_requests_async_store(struct device *dev,
+ 
+ 	mutex_lock(&test_fw_mutex);
+ 
++	if (test_fw_config->reqs) {
++		rc = -EBUSY;
++		goto out_bail;
++	}
++
+ 	test_fw_config->reqs =
+ 		vzalloc(array3_size(sizeof(struct test_batched_req),
+ 				    test_fw_config->num_requests, 2));
+-- 
+2.39.2
+
 
 
