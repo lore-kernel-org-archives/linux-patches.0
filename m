@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080F3C142
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:01:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C68C433CA;
-	Mon, 19 Jun 2023 11:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227CAC123
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:01:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D69FC433C0;
+	Mon, 19 Jun 2023 11:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172491;
-	bh=zq4nnTlqtmiqbR77FE7idtr8cdB+41VJ+u5WnJZMXxA=;
+	s=korg; t=1687172489;
+	bh=VXEv/PMPG9sHzKGA9zlWeLeTWAtVM8DyIuAfjtIizRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JAkdsWPjKa1qSPXIz+9SZVa2WIVTqQPE8g102/pkbyRvEiVyR0imqR4IeyyAiVy3C
-	 VLtf2/racF8TaZHufDWYk+VDITnMrH+e9yUQbelGk9nvEec+fgScrIR1K4OtICTbUJ
-	 sQbpdViW1G5r9B63TdHWqzWPzMBhV0oxcjSRToA0=
+	b=kz81tuWKCE5nWnRSod3EqRgRlXvarwjY0BeXZaim5UHSnMLXD1QzANVKxlp2R0ZBP
+	 VURhyk/zEDTk7WEIGUI4VBbcBRFkZEGYwEp+Bk8s7di8Vt5DfGDPJoPIoje+A+uQBW
+	 uWzd0MJj0hg+P8WTLenj/BTf2JFE3W9OrOrgbUPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratchanan Srirattanamet <peathot@hotmail.com>,
-	Karol Herbst <kherbst@redhat.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/107] drm/nouveau: dont detect DSM for non-NVIDIA device
-Date: Mon, 19 Jun 2023 12:31:12 +0200
-Message-ID: <20230619102145.593622292@linuxfoundation.org>
+Subject: [PATCH 5.15 079/107] IB/uverbs: Fix to consider event queue closing also upon non-blocking mode
+Date: Mon, 19 Jun 2023 12:31:03 +0200
+Message-ID: <20230619102145.198457550@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -35,60 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ratchanan Srirattanamet <peathot@hotmail.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 11d24327c2d7ad7f24fcc44fb00e1fa91ebf6525 ]
+[ Upstream commit 62fab312fa1683e812e605db20d4f22de3e3fb2f ]
 
-The call site of nouveau_dsm_pci_probe() uses single set of output
-variables for all invocations. So, we must not write anything to them
-unless it's an NVIDIA device. Otherwise, if we are called with another
-device after the NVIDIA device, we'll clober the result of the NVIDIA
-device.
+Fix ib_uverbs_event_read() to consider event queue closing also upon
+non-blocking mode.
 
-For example, if the other device doesn't have _PR3 resources, the
-detection later would miss the presence of power resource support, and
-the rest of the code will keep using Optimus DSM, breaking power
-management for that machine.
+Once the queue is closed (e.g. hot-plug flow) all the existing events
+are cleaned-up as part of ib_uverbs_free_event_queue().
 
-Also, because we're detecting NVIDIA's DSM, it doesn't make sense to run
-this detection on a non-NVIDIA device anyway. Thus, check at the
-beginning of the detection code if this is an NVIDIA card, and just
-return if it isn't.
+An application that uses the non-blocking FD mode should get -EIO in
+that case to let it knows that the device was removed already.
 
-This, together with commit d22915d22ded ("drm/nouveau/devinit/tu102-:
-wait for GFW_BOOT_PROGRESS == COMPLETED") developed independently and
-landed earlier, fixes runtime power management of the NVIDIA card in
-Lenovo Legion 5-15ARH05. Without this patch, the GPU resumption code
-will "timeout", sometimes hanging userspace.
+Otherwise, it can loose the indication that the device was removed and
+won't recover.
 
-As a bonus, we'll also stop preventing _PR3 usage from the bridge for
-unrelated devices, which is always nice, I guess.
+As part of that, refactor the code to have a single flow with regards to
+'is_closed' for both blocking and non-blocking modes.
 
-Fixes: ccfc2d5cdb02 ("drm/nouveau: Use generic helper to check _PR3 presence")
-Signed-off-by: Ratchanan Srirattanamet <peathot@hotmail.com>
-Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/79
-Reviewed-by: Karol Herbst <kherbst@redhat.com>
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/DM6PR19MB2780805D4BE1E3F9B3AC96D0BC409@DM6PR19MB2780.namprd19.prod.outlook.com
+Fixes: 14e23bd6d221 ("RDMA/core: Fix locking in ib_uverbs_event_read")
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://lore.kernel.org/r/97b00116a1e1e13f8dc4ec38a5ea81cf8c030210.1685960567.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_acpi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/core/uverbs_main.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_acpi.c b/drivers/gpu/drm/nouveau/nouveau_acpi.c
-index 7c15f64484281..9c55f205ab663 100644
---- a/drivers/gpu/drm/nouveau/nouveau_acpi.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_acpi.c
-@@ -220,6 +220,9 @@ static void nouveau_dsm_pci_probe(struct pci_dev *pdev, acpi_handle *dhandle_out
- 	int optimus_funcs;
- 	struct pci_dev *parent_pdev;
+diff --git a/drivers/infiniband/core/uverbs_main.c b/drivers/infiniband/core/uverbs_main.c
+index d544340887277..fa937cd268219 100644
+--- a/drivers/infiniband/core/uverbs_main.c
++++ b/drivers/infiniband/core/uverbs_main.c
+@@ -222,8 +222,12 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
+ 	spin_lock_irq(&ev_queue->lock);
  
-+	if (pdev->vendor != PCI_VENDOR_ID_NVIDIA)
-+		return;
-+
- 	*has_pr3 = false;
- 	parent_pdev = pci_upstream_bridge(pdev);
- 	if (parent_pdev) {
+ 	while (list_empty(&ev_queue->event_list)) {
+-		spin_unlock_irq(&ev_queue->lock);
++		if (ev_queue->is_closed) {
++			spin_unlock_irq(&ev_queue->lock);
++			return -EIO;
++		}
+ 
++		spin_unlock_irq(&ev_queue->lock);
+ 		if (filp->f_flags & O_NONBLOCK)
+ 			return -EAGAIN;
+ 
+@@ -233,12 +237,6 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
+ 			return -ERESTARTSYS;
+ 
+ 		spin_lock_irq(&ev_queue->lock);
+-
+-		/* If device was disassociated and no event exists set an error */
+-		if (list_empty(&ev_queue->event_list) && ev_queue->is_closed) {
+-			spin_unlock_irq(&ev_queue->lock);
+-			return -EIO;
+-		}
+ 	}
+ 
+ 	event = list_entry(ev_queue->event_list.next, struct ib_uverbs_event, list);
 -- 
 2.39.2
 
