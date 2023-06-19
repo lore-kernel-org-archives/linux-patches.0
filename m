@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2396FAD
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:47:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03120C433C0;
-	Mon, 19 Jun 2023 10:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A775D7497
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:47:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB0DC433C0;
+	Mon, 19 Jun 2023 10:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171645;
-	bh=60mE8sp1zSZyRzaIBgs5xZ3/H4dhuUMgkH167kXYk5Y=;
+	s=korg; t=1687171649;
+	bh=seBwDG90EK9ztkHzh+9UXfvB6qcy753ppZ7FAtdVqNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZKFSAZn0dwnFwELnRAud3mopRIcXEwQEyRKOQNvjRBtzwu1H+vw+BC7u3iFShTEZx
-	 PbPdNJys4y/UtXzyhEdOaGTRlwPqdND5hZVv3m1BMlGmND7EjmRDWHCgzIXz+oqkRS
-	 jff5yFCTME7vbRFpfoGqsQ+S88BfB2BYVsnRQI2g=
+	b=B/P4KMzChoR9HdV0CUYqDcCHxKkunAFg6T6EskrJ3j0x4S2m6hPHY31tbZfw+8f8P
+	 oBbrFtHKjl70s+ya9BK7SnInkVKNnh8yUQI/iPtRtbjSUxhFw0EKZD9k8zFwKHfoR2
+	 ZGxYE035eF2Rm466s3lo/1uttTCYDpuW2opRFPLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Tottenham <mtottenh@akamai.com>,
-	Josh Hunt <johunt@akamai.com>,
-	kernel test robot <lkp@intel.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/166] net/sched: act_pedit: Parse L3 Header for L4 offset
-Date: Mon, 19 Jun 2023 12:29:42 +0200
-Message-ID: <20230619102159.875205480@linuxfoundation.org>
+Subject: [PATCH 6.1 106/166] octeontx2-af: Fix promiscuous mode
+Date: Mon, 19 Jun 2023 12:29:43 +0200
+Message-ID: <20230619102159.936583181@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -38,138 +35,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Tottenham <mtottenh@akamai.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 6c02568fd1ae53099b4ab86365c5be1ff15f586b ]
+[ Upstream commit c0e489372a294044feea650b38f38c888eff57a4 ]
 
-Instead of relying on skb->transport_header being set correctly, opt
-instead to parse the L3 header length out of the L3 headers for both
-IPv4/IPv6 when the Extended Layer Op for tcp/udp is used. This fixes a
-bug if GRO is disabled, when GRO is disabled skb->transport_header is
-set by __netif_receive_skb_core() to point to the L3 header, it's later
-fixed by the upper protocol layers, but act_pedit will receive the SKB
-before the fixups are completed. The existing behavior causes the
-following to edit the L3 header if GRO is disabled instead of the UDP
-header:
+CN10KB silicon introduced a new exact match feature,
+which is used for DMAC filtering. The state of installed
+DMAC filters in this exact match table is getting corrupted
+when promiscuous mode is toggled. Fix this by not touching
+Exact match related config when promiscuous mode is toggled.
 
-    tc filter add dev eth0 ingress protocol ip flower ip_proto udp \
- dst_ip 192.168.1.3 action pedit ex munge udp set dport 18053
-
-Also re-introduce a rate-limited warning if we were unable to extract
-the header offset when using the 'ex' interface.
-
-Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to
-the conventional network headers")
-Signed-off-by: Max Tottenham <mtottenh@akamai.com>
-Reviewed-by: Josh Hunt <johunt@akamai.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202305261541.N165u9TZ-lkp@intel.com/
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Fixes: 2dba9459d2c9 ("octeontx2-af: Wrapper functions for MAC addr add/del/update/reset")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 48 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 43 insertions(+), 5 deletions(-)
+ .../marvell/octeontx2/af/rvu_npc_hash.c       | 29 ++-----------------
+ 1 file changed, 2 insertions(+), 27 deletions(-)
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 48e14cbcd8ffe..180669aa9d097 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -13,7 +13,10 @@
- #include <linux/rtnetlink.h>
- #include <linux/module.h>
- #include <linux/init.h>
-+#include <linux/ip.h>
-+#include <linux/ipv6.h>
- #include <linux/slab.h>
-+#include <net/ipv6.h>
- #include <net/netlink.h>
- #include <net/pkt_sched.h>
- #include <linux/tc_act/tc_pedit.h>
-@@ -312,28 +315,58 @@ static bool offset_valid(struct sk_buff *skb, int offset)
- 	return true;
- }
- 
--static void pedit_skb_hdr_offset(struct sk_buff *skb,
-+static int pedit_l4_skb_offset(struct sk_buff *skb, int *hoffset, const int header_type)
-+{
-+	const int noff = skb_network_offset(skb);
-+	int ret = -EINVAL;
-+	struct iphdr _iph;
-+
-+	switch (skb->protocol) {
-+	case htons(ETH_P_IP): {
-+		const struct iphdr *iph = skb_header_pointer(skb, noff, sizeof(_iph), &_iph);
-+
-+		if (!iph)
-+			goto out;
-+		*hoffset = noff + iph->ihl * 4;
-+		ret = 0;
-+		break;
-+	}
-+	case htons(ETH_P_IPV6):
-+		ret = ipv6_find_hdr(skb, hoffset, header_type, NULL, NULL) == header_type ? 0 : -EINVAL;
-+		break;
-+	}
-+out:
-+	return ret;
-+}
-+
-+static int pedit_skb_hdr_offset(struct sk_buff *skb,
- 				 enum pedit_header_type htype, int *hoffset)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+index 3182adb7b9a80..3b48b635977f6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+@@ -1168,10 +1168,8 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
  {
-+	int ret = -EINVAL;
- 	/* 'htype' is validated in the netlink parsing */
- 	switch (htype) {
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_ETH:
--		if (skb_mac_header_was_set(skb))
-+		if (skb_mac_header_was_set(skb)) {
- 			*hoffset = skb_mac_offset(skb);
-+			ret = 0;
-+		}
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP4:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP6:
- 		*hoffset = skb_network_offset(skb);
-+		ret = 0;
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_TCP:
-+		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_TCP);
-+		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_UDP:
--		if (skb_transport_header_was_set(skb))
--			*hoffset = skb_transport_offset(skb);
-+		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_UDP);
- 		break;
- 	default:
- 		break;
+ 	struct npc_exact_table *table;
+ 	u16 *cnt, old_cnt;
+-	bool promisc;
+ 
+ 	table = rvu->hw->table;
+-	promisc = table->promisc_mode[drop_mcam_idx];
+ 
+ 	cnt = &table->cnt_cmd_rules[drop_mcam_idx];
+ 	old_cnt = *cnt;
+@@ -1183,16 +1181,13 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
+ 
+ 	*enable_or_disable_cam = false;
+ 
+-	if (promisc)
+-		goto done;
+-
+-	/* If all rules are deleted and not already in promisc mode; disable cam */
++	/* If all rules are deleted, disable cam */
+ 	if (!*cnt && val < 0) {
+ 		*enable_or_disable_cam = true;
+ 		goto done;
  	}
-+	return ret;
+ 
+-	/* If rule got added and not already in promisc mode; enable cam */
++	/* If rule got added, enable cam */
+ 	if (!old_cnt && val > 0) {
+ 		*enable_or_disable_cam = true;
+ 		goto done;
+@@ -1447,7 +1442,6 @@ int rvu_npc_exact_promisc_disable(struct rvu *rvu, u16 pcifunc)
+ 	u32 drop_mcam_idx;
+ 	bool *promisc;
+ 	bool rc;
+-	u32 cnt;
+ 
+ 	table = rvu->hw->table;
+ 
+@@ -1470,17 +1464,8 @@ int rvu_npc_exact_promisc_disable(struct rvu *rvu, u16 pcifunc)
+ 		return LMAC_AF_ERR_INVALID_PARAM;
+ 	}
+ 	*promisc = false;
+-	cnt = __rvu_npc_exact_cmd_rules_cnt_update(rvu, drop_mcam_idx, 0, NULL);
+ 	mutex_unlock(&table->lock);
+ 
+-	/* If no dmac filter entries configured, disable drop rule */
+-	if (!cnt)
+-		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, false);
+-	else
+-		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, !*promisc);
+-
+-	dev_dbg(rvu->dev, "%s: disabled  promisc mode (cgx=%d lmac=%d, cnt=%d)\n",
+-		__func__, cgx_id, lmac_id, cnt);
+ 	return 0;
  }
  
- static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
-@@ -368,6 +401,7 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
- 		int hoffset = 0;
- 		u32 *ptr, hdata;
- 		u32 val;
-+		int rc;
+@@ -1498,7 +1483,6 @@ int rvu_npc_exact_promisc_enable(struct rvu *rvu, u16 pcifunc)
+ 	u32 drop_mcam_idx;
+ 	bool *promisc;
+ 	bool rc;
+-	u32 cnt;
  
- 		if (tkey_ex) {
- 			htype = tkey_ex->htype;
-@@ -376,7 +410,11 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
- 			tkey_ex++;
- 		}
+ 	table = rvu->hw->table;
  
--		pedit_skb_hdr_offset(skb, htype, &hoffset);
-+		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
-+		if (rc) {
-+			pr_info_ratelimited("tc action pedit unable to extract header offset for header type (0x%x)\n", htype);
-+			goto bad;
-+		}
+@@ -1521,17 +1505,8 @@ int rvu_npc_exact_promisc_enable(struct rvu *rvu, u16 pcifunc)
+ 		return LMAC_AF_ERR_INVALID_PARAM;
+ 	}
+ 	*promisc = true;
+-	cnt = __rvu_npc_exact_cmd_rules_cnt_update(rvu, drop_mcam_idx, 0, NULL);
+ 	mutex_unlock(&table->lock);
  
- 		if (tkey->offmask) {
- 			u8 *d, _d;
+-	/* If no dmac filter entries configured, disable drop rule */
+-	if (!cnt)
+-		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, false);
+-	else
+-		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, !*promisc);
+-
+-	dev_dbg(rvu->dev, "%s: Enabled promisc mode (cgx=%d lmac=%d cnt=%d)\n",
+-		__func__, cgx_id, lmac_id, cnt);
+ 	return 0;
+ }
+ 
 -- 
 2.39.2
 
