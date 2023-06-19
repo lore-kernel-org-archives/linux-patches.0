@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A825BBE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F03EC433C0;
-	Mon, 19 Jun 2023 10:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BBFBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:50:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1376C433C0;
+	Mon, 19 Jun 2023 10:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171825;
-	bh=SbCQRcCFEoZodA53m13DTCBFMog7e5m7zccV8x7Rf50=;
+	s=korg; t=1687171828;
+	bh=45uaUSTkyP7xeUbPTYQlXjbpq3+n6A/7C3jE7hnF+E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNA+/7/MVRlIXxeRLRNCzHTIRJbYA5qraazRlkQ4x8xYWnpzZDHw9+gRtUrUkR+K0
-	 zqpk0Q4ubTI+LLjhQJLrq26kd+qHZfplSOLKnd5ihzjBG5Oo4FfvvTkjxsWMK/JHd4
-	 8wuwdXT2M/5UN/aVH79PaAuZ+rx5QyEx6gOj89ow=
+	b=dtrAFe7bqU0EkkP5ARBzdYpD1uIVJqCh41j5H1yFkbg13MBJssl5PCSGovDhhW7wL
+	 Wv0vcRvAbiEAg7HjyzI1ruLgmcn7HoxqNSX43Dm5RW5xQvlaFb9WERN48cplMBEuri
+	 K6mOA94gRiCI2SOsTn8IU7p8Qb72W3Pu3jE8b6is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH 6.1 163/166] x86/boot/compressed: prefer cc-option for CFLAGS additions
-Date: Mon, 19 Jun 2023 12:30:40 +0200
-Message-ID: <20230619102202.581332905@linuxfoundation.org>
+	tsbogend@alpha.franken.de,
+	linux-mips@vger.kernel.org
+Subject: [PATCH 6.1 164/166] MIPS: Move -Wa,-msoft-float check from as-option to cc-option
+Date: Mon, 19 Jun 2023 12:30:41 +0200
+Message-ID: <20230619102202.626605616@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -37,43 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Desaulniers <ndesaulniers@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 994f5f7816ff963f49269cfc97f63cb2e4edb84f upstream.
+This patch is for linux-6.1.y and earlier, it has no direct mainline
+equivalent.
 
-as-option tests new options using KBUILD_CFLAGS, which causes problems
-when using as-option to update KBUILD_AFLAGS because many compiler
-options are not valid assembler options.
+In order to backport commit d5c8d6e0fa61 ("kbuild: Update assembler
+calls to use proper flags and language target") to resolve a separate
+issue regarding PowerPC, the problem noticed and fixed by
+commit 80a20d2f8288 ("MIPS: Always use -Wa,-msoft-float and eliminate
+GAS_HAS_SET_HARDFLOAT") needs to be addressed. Unfortunately, 6.1 and
+earlier do not contain commit e4412739472b ("Documentation: raise
+minimum supported version of binutils to 2.25"), so it cannot be assumed
+that all supported versions of GNU as have support for -msoft-float.
 
-This will be fixed in a follow up patch. Before doing so, move the
-assembler test for -Wa,-mrelax-relocations=no from using as-option to
-cc-option.
+In order to switch from KBUILD_CFLAGS to KBUILD_AFLAGS in as-option
+without consequence, move the '-Wa,-msoft-float' check to cc-option,
+including '$(cflags-y)' directly to avoid the issue mentioned in
+commit 80a20d2f8288 ("MIPS: Always use -Wa,-msoft-float and eliminate
+GAS_HAS_SET_HARDFLOAT").
 
-Link: https://lore.kernel.org/llvm/CAK7LNATcHt7GcXZ=jMszyH=+M_LC9Qr6yeAGRCBbE6xriLxtUQ@mail.gmail.com/
-Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/Makefile |    2 +-
+Cc: tsbogend@alpha.franken.de
+Cc: linux-mips@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/mips/Makefile |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/boot/compressed/Makefile
-+++ b/arch/x86/boot/compressed/Makefile
-@@ -50,7 +50,7 @@ KBUILD_CFLAGS += $(call cc-option,-fmacr
- KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
- KBUILD_CFLAGS += -D__DISABLE_EXPORTS
- # Disable relocation relaxation in case the link is not PIE.
--KBUILD_CFLAGS += $(call as-option,-Wa$(comma)-mrelax-relocations=no)
-+KBUILD_CFLAGS += $(call cc-option,-Wa$(comma)-mrelax-relocations=no)
- KBUILD_CFLAGS += -include $(srctree)/include/linux/hidden.h
+--- a/arch/mips/Makefile
++++ b/arch/mips/Makefile
+@@ -109,7 +109,7 @@ endif
+ # (specifically newer than 2.24.51.20140728) we then also need to explicitly
+ # set ".set hardfloat" in all files which manipulate floating point registers.
+ #
+-ifneq ($(call as-option,-Wa$(comma)-msoft-float,),)
++ifneq ($(call cc-option,$(cflags-y) -Wa$(comma)-msoft-float,),)
+ 	cflags-y		+= -DGAS_HAS_SET_HARDFLOAT -Wa,-msoft-float
+ endif
  
- # sev.c indirectly inludes inat-table.h which is generated during
 
 
