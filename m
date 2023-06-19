@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E690A8C06
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D36C433C0;
-	Mon, 19 Jun 2023 11:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532108C06
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5C1C433C0;
+	Mon, 19 Jun 2023 11:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172408;
-	bh=aKwqI6tZDyg7br+kH4IlcuCUN1y75uHhHikEfe3Qw1E=;
+	s=korg; t=1687172411;
+	bh=yzJwUkaPvVFLgyhDpqaU3cqKFscMMNjsabCwJ31bjKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wLWxkH9YJuh+tZblFlAGr52eX5/J7S7+Ii+Wfi+kWgN09Yeklxv4CDZJ/8Pd4qDs
-	 trKwVyJEST/o/EeuK1YnjsgukZyBi5wLVvW0Y80148N64pxxMhGDxsbzCYp7ON3ZWR
-	 2OJRRjrmj5gZtMG5xjnZkrNI/I5QyUPmhmlqe7No=
+	b=nLSikvBzg4PjCvY+qv/GtzW+qrsPYsuozeoCbpIEb9xMhXxzZADqxt0ZYESxfmhp/
+	 +dnLeNO6hg6eTGYuMToq3KqtfEgFp5qGkboH31XvwmuUoWetRvnlZhHUuxreh4wlum
+	 wUhS8HDFk+/jSJ6uUbdtDJZA5PY/S2FQH7L7dhfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/107] parisc: Improve cache flushing for PCXL in arch_sync_dma_for_cpu()
-Date: Mon, 19 Jun 2023 12:30:06 +0200
-Message-ID: <20230619102142.600000812@linuxfoundation.org>
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 051/107] ALSA: hda/realtek: Add a quirk for Compaq N14JP6
+Date: Mon, 19 Jun 2023 12:30:35 +0200
+Message-ID: <20230619102143.938801658@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -34,57 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-[ Upstream commit 59fa12646d9f56c842b4d5b6418ed77af625c588 ]
+commit a2a871483161014f1bcc4e9a04354b01aa77cedb upstream.
 
-Add comment in arch_sync_dma_for_device() and handle the direction flag in
-arch_sync_dma_for_cpu().
+Add a quirk for Compaq N14JP6 to fixup ALC897 headset MIC no sound.
 
-When receiving data from the device (DMA_FROM_DEVICE) unconditionally
-purge the data cache in arch_sync_dma_for_cpu().
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230609201058.523499-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/pci-dma.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/parisc/kernel/pci-dma.c b/arch/parisc/kernel/pci-dma.c
-index 36a57aa38e87e..3b0227b17c070 100644
---- a/arch/parisc/kernel/pci-dma.c
-+++ b/arch/parisc/kernel/pci-dma.c
-@@ -446,11 +446,27 @@ void arch_dma_free(struct device *dev, size_t size, void *vaddr,
- void arch_sync_dma_for_device(phys_addr_t paddr, size_t size,
- 		enum dma_data_direction dir)
- {
-+	/*
-+	 * fdc: The data cache line is written back to memory, if and only if
-+	 * it is dirty, and then invalidated from the data cache.
-+	 */
- 	flush_kernel_dcache_range((unsigned long)phys_to_virt(paddr), size);
- }
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11287,6 +11287,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x1b0a, 0x01b8, "ACER Veriton", ALC662_FIXUP_ACER_VERITON),
+ 	SND_PCI_QUIRK(0x1b35, 0x1234, "CZC ET26", ALC662_FIXUP_CZC_ET26),
+ 	SND_PCI_QUIRK(0x1b35, 0x2206, "CZC P10T", ALC662_FIXUP_CZC_P10T),
++	SND_PCI_QUIRK(0x1c6c, 0x1239, "Compaq N14JP6-V2", ALC897_FIXUP_HP_HSMIC_VERB),
  
- void arch_sync_dma_for_cpu(phys_addr_t paddr, size_t size,
- 		enum dma_data_direction dir)
- {
--	flush_kernel_dcache_range((unsigned long)phys_to_virt(paddr), size);
-+	unsigned long addr = (unsigned long) phys_to_virt(paddr);
-+
-+	switch (dir) {
-+	case DMA_TO_DEVICE:
-+	case DMA_BIDIRECTIONAL:
-+		flush_kernel_dcache_range(addr, size);
-+		return;
-+	case DMA_FROM_DEVICE:
-+		purge_kernel_dcache_range_asm(addr, addr + size);
-+		return;
-+	default:
-+		BUG();
-+	}
- }
--- 
-2.39.2
-
+ #if 0
+ 	/* Below is a quirk table taken from the old code.
 
 
