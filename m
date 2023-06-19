@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08AE5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CA1C433C8;
-	Mon, 19 Jun 2023 10:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1C75381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EC9C433C0;
+	Mon, 19 Jun 2023 10:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171506;
-	bh=WMsEmoBN7Jqx8OgNmYtXkh6lIUqdZCMyiuLG4MgDS5k=;
+	s=korg; t=1687171509;
+	bh=Luun0qN3Hqo2+HrVtNije7hzgiJtuA0kucqBhrlDmSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fW7BGgq1iqymTlZh+Wy9EMAgcVHt9lEwgW6G+YTKyYlW7G7zpXnnchVDK9zkaq/Hs
-	 jpa0IvrtKjj5n8ZKdgvOYD/rUfu+2PopeOtSW54If64tH8Zhlnwc5sQ4wcMtk334FY
-	 BrjFCevdDYCNAj7gtMfNg5xnkYD1ucS0Rz6G5cSw=
+	b=B66BMjTapA2ECJivwU4p36MyQFCfQVNcR+nkwC6gJFfAqn/RnyeiYUHmfZJgILSLa
+	 S+Z80nkiCLgNnaaY3TJi+og2Xf/WLlNcGcXadp+asSL8CFXpECA2f252e8CTdCnmVE
+	 t8hnWmEMdW7M1QtVenMM+Dh5Lsa+fKtMRi5nr1yQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/166] ASoC: Intel: avs: Account for UID of ACPI device
-Date: Mon, 19 Jun 2023 12:28:25 +0200
-Message-ID: <20230619102156.144158930@linuxfoundation.org>
+Subject: [PATCH 6.1 029/166] ASoC: Intel: avs: Add missing checks on FE startup
+Date: Mon, 19 Jun 2023 12:28:26 +0200
+Message-ID: <20230619102156.186444695@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,51 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit 836855100b87b4dd7a82546131779dc255c18b67 ]
+[ Upstream commit 25148f57a2a6d157779bae494852e172952ba980 ]
 
-Configurations with multiple codecs attached to the platform are
-supported but only if each from the set is different. Add new field
-representing the 'Unique ID' so that codecs that share Vendor and Part
-IDs can be differentiated and thus enabling support for such
-configurations.
+Constraint functions have return values, they should be checked for
+potential errors.
 
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
 Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20230519201711.4073845-6-amadeuszx.slawinski@linux.intel.com
+Link: https://lore.kernel.org/r/20230519201711.4073845-8-amadeuszx.slawinski@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-acpi.h              | 1 +
- sound/soc/intel/avs/board_selection.c | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/intel/avs/pcm.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/include/sound/soc-acpi.h b/include/sound/soc-acpi.h
-index b38fd25c57295..528279056b3ab 100644
---- a/include/sound/soc-acpi.h
-+++ b/include/sound/soc-acpi.h
-@@ -170,6 +170,7 @@ struct snd_soc_acpi_link_adr {
- /* Descriptor for SST ASoC machine driver */
- struct snd_soc_acpi_mach {
- 	u8 id[ACPI_ID_LEN];
-+	const char *uid;
- 	const struct snd_soc_acpi_codecs *comp_ids;
- 	const u32 link_mask;
- 	const struct snd_soc_acpi_link_adr *links;
-diff --git a/sound/soc/intel/avs/board_selection.c b/sound/soc/intel/avs/board_selection.c
-index 87f9c18be238d..87353b4b0cd73 100644
---- a/sound/soc/intel/avs/board_selection.c
-+++ b/sound/soc/intel/avs/board_selection.c
-@@ -394,7 +394,7 @@ static int avs_register_i2s_boards(struct avs_dev *adev)
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 8fe5917b1e263..22f21f3f612d1 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -424,21 +424,34 @@ static int avs_dai_fe_startup(struct snd_pcm_substream *substream, struct snd_so
+ 
+ 	host_stream = snd_hdac_ext_stream_assign(bus, substream, HDAC_EXT_STREAM_TYPE_HOST);
+ 	if (!host_stream) {
+-		kfree(data);
+-		return -EBUSY;
++		ret = -EBUSY;
++		goto err;
  	}
  
- 	for (mach = boards->machs; mach->id[0]; mach++) {
--		if (!acpi_dev_present(mach->id, NULL, -1))
-+		if (!acpi_dev_present(mach->id, mach->uid, -1))
- 			continue;
+ 	data->host_stream = host_stream;
+-	snd_pcm_hw_constraint_integer(runtime, SNDRV_PCM_HW_PARAM_PERIODS);
++	ret = snd_pcm_hw_constraint_integer(runtime, SNDRV_PCM_HW_PARAM_PERIODS);
++	if (ret < 0)
++		goto err;
++
+ 	/* avoid wrap-around with wall-clock */
+-	snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_BUFFER_TIME, 20, 178000000);
+-	snd_pcm_hw_constraint_list(runtime, 0, SNDRV_PCM_HW_PARAM_RATE, &hw_rates);
++	ret = snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_BUFFER_TIME, 20, 178000000);
++	if (ret < 0)
++		goto err;
++
++	ret = snd_pcm_hw_constraint_list(runtime, 0, SNDRV_PCM_HW_PARAM_RATE, &hw_rates);
++	if (ret < 0)
++		goto err;
++
+ 	snd_pcm_set_sync(substream);
  
- 		if (mach->machine_quirk)
+ 	dev_dbg(dai->dev, "%s fe STARTUP tag %d str %p",
+ 		__func__, hdac_stream(host_stream)->stream_tag, substream);
+ 
+ 	return 0;
++
++err:
++	kfree(data);
++	return ret;
+ }
+ 
+ static void avs_dai_fe_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
 -- 
 2.39.2
 
