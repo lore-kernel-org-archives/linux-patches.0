@@ -1,48 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038371095F
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D542C433C8;
-	Mon, 19 Jun 2023 10:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22A410955
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A772C433C8;
+	Mon, 19 Jun 2023 10:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170865;
-	bh=jRunHdUGCfcOmNvZ67q3nLOUlXcbtNBLyHbd2WvQzFQ=;
+	s=korg; t=1687170868;
+	bh=3oHX6kZ+MMX2KYiMsfklMP9Awa185FLNHSRbAuPbN4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CcGqvzTstosARUJWg2h30ST01L2vjaXRc3jnB0nC0utKA8+kLIAiaifuxQI2poDhm
-	 HHMcW+55U/dKucHJMsNP/ZBbi6iQfiBQCrUzrQz3J/zofx0EYOlKWZSz8a8cxPcQh/
-	 x6yG/QO0HPJR6yqE8NVxT31ejI3CqkTlz4j3nkHg=
+	b=b0hO2pSiUZGM/Ctymqn/KT54GBqXNI26ZKYf+5QKsuvZTjr8Z9q7QJab/Nd+13gQV
+	 SogtY4IZsZA9h83QYcuo5xgpDQqUpy4DjSs/71mRRq+IqbAT6frQjkh85nXjvMu8Vr
+	 9jI4jITFkdgSCKrcd6ml7ui9dkn9uuqFDRXMuGSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Baoquan He <bhe@redhat.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dave Young <dyoung@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Philipp Rudo <prudo@redhat.com>,
-	Ross Zwisler <zwisler@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Tom Rix <trix@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 063/187] riscv/purgatory: remove PGO flags
-Date: Mon, 19 Jun 2023 12:28:01 +0200
-Message-ID: <20230619102200.725429142@linuxfoundation.org>
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 038/187] ASoC: cs35l41: Fix default regmap values for some registers
+Date: Mon, 19 Jun 2023 12:27:36 +0200
+Message-ID: <20230619102159.467661593@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -56,59 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-commit 88ac3bbcf73853880a9b2a65c67e6854390741cc upstream.
+[ Upstream commit e2d035f5a7d597bbabc268e236ec6c0408c4af0e ]
 
-If profile-guided optimization is enabled, the purgatory ends up with
-multiple .text sections.  This is not supported by kexec and crashes the
-system.
+Several values do not match the defaults of CS35L41, fix them.
 
-Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-4-b05c520b7296@chromium.org
-Fixes: 930457057abe ("kernel/kexec_file.c: split up __kexec_load_puragory")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Cc: <stable@vger.kernel.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Philipp Rudo <prudo@redhat.com>
-Cc: Ross Zwisler <zwisler@google.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Tom Rix <trix@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20230414152552.574502-4-sbinding@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/purgatory/Makefile |    5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/codecs/cs35l41-lib.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/riscv/purgatory/Makefile
-+++ b/arch/riscv/purgatory/Makefile
-@@ -35,6 +35,11 @@ CFLAGS_sha256.o := -D__DISABLE_EXPORTS
- CFLAGS_string.o := -D__DISABLE_EXPORTS
- CFLAGS_ctype.o := -D__DISABLE_EXPORTS
- 
-+# When profile-guided optimization is enabled, llvm emits two different
-+# overlapping text sections, which is not supported by kexec. Remove profile
-+# optimization flags.
-+KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%,$(KBUILD_CFLAGS))
-+
- # When linking purgatory.ro with -r unresolved symbols are not checked,
- # also link a purgatory.chk binary without -r to check for unresolved symbols.
- PURGATORY_LDFLAGS := -e purgatory_start -z nodefaultlib
+diff --git a/sound/soc/codecs/cs35l41-lib.c b/sound/soc/codecs/cs35l41-lib.c
+index 04be71435491e..c2c56e5608094 100644
+--- a/sound/soc/codecs/cs35l41-lib.c
++++ b/sound/soc/codecs/cs35l41-lib.c
+@@ -46,7 +46,7 @@ static const struct reg_default cs35l41_reg[] = {
+ 	{ CS35L41_DSP1_RX5_SRC,			0x00000020 },
+ 	{ CS35L41_DSP1_RX6_SRC,			0x00000021 },
+ 	{ CS35L41_DSP1_RX7_SRC,			0x0000003A },
+-	{ CS35L41_DSP1_RX8_SRC,			0x00000001 },
++	{ CS35L41_DSP1_RX8_SRC,			0x0000003B },
+ 	{ CS35L41_NGATE1_SRC,			0x00000008 },
+ 	{ CS35L41_NGATE2_SRC,			0x00000009 },
+ 	{ CS35L41_AMP_DIG_VOL_CTRL,		0x00008000 },
+@@ -58,8 +58,8 @@ static const struct reg_default cs35l41_reg[] = {
+ 	{ CS35L41_IRQ1_MASK2,			0xFFFFFFFF },
+ 	{ CS35L41_IRQ1_MASK3,			0xFFFF87FF },
+ 	{ CS35L41_IRQ1_MASK4,			0xFEFFFFFF },
+-	{ CS35L41_GPIO1_CTRL1,			0xE1000001 },
+-	{ CS35L41_GPIO2_CTRL1,			0xE1000001 },
++	{ CS35L41_GPIO1_CTRL1,			0x81000001 },
++	{ CS35L41_GPIO2_CTRL1,			0x81000001 },
+ 	{ CS35L41_MIXER_NGATE_CFG,		0x00000000 },
+ 	{ CS35L41_MIXER_NGATE_CH1_CFG,		0x00000303 },
+ 	{ CS35L41_MIXER_NGATE_CH2_CFG,		0x00000303 },
+-- 
+2.39.2
+
 
 
