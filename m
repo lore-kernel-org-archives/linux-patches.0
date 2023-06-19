@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A5F5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:36:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19C6C433C0;
-	Mon, 19 Jun 2023 10:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3A85381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:36:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91208C433C9;
+	Mon, 19 Jun 2023 10:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170969;
-	bh=ozGwol5j77GqcGczXvIkHbM/L9VeyQvm9N7tCJbeE5o=;
+	s=korg; t=1687170971;
+	bh=PMEAXbvyLcJiV4pi5D8rwNVt4Be/Zf0x+WB38b8ei+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WcqqpXuFwXJ18dSq1fKu1XChPd0v0eeEFIgvvV07GmTbJP0ZEj3LIUkUUYPmuitYL
-	 P8ACkBSKVzGFepI6A132QNgnZUejLrs/k3UVjntowb6IXYLKzyz8aDPnewylrkRY8P
-	 2rV6lbdCf/ZJeTeuGGhWDYGsCDvjxRRomqiwQC80=
+	b=ga6yF+BwsfX3qak2ChGEtHXCLg6p1KPA50e4FKV4R5EEqWNfHEUVbD3t2iuHEOBj7
+	 /qKn0tjKxc/Ed8dDwRnJ9FKVbQJYZL21v2v0iaJtma5GqqqHVYRIvqtIkRUlErMfoT
+	 vB93B8LaahvYd2ZJFVGLphsUju1w4dC0PY4yJ2ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koba Ko <koba.ko@canonical.com>,
-	Yehezkel Bernat <YehezkelShB@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.3 093/187] thunderbolt: Do not touch CL state configuration during discovery
-Date: Mon, 19 Jun 2023 12:28:31 +0200
-Message-ID: <20230619102202.094361812@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.3 102/187] usb: gadget: udc: core: Offload usb_udc_vbus_handler processing
+Date: Mon, 19 Jun 2023 12:28:40 +0200
+Message-ID: <20230619102202.521325246@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,69 +34,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit 3fe95742af29b8b4eccab2ba94bc521805c6e10c upstream.
+commit 50966da807c81c5eb3bdfd392990fe0bba94d1ee upstream.
 
-If the boot firmware has already established tunnels, especially ones
-that have special requirements from the link such as DisplayPort, we
-should not blindly enable CL states (nor change the TMU configuration).
-Otherwise the existing tunnels may not work as expected.
+usb_udc_vbus_handler() can be invoked from interrupt context by irq
+handlers of the gadget drivers, however, usb_udc_connect_control() has
+to run in non-atomic context due to the following:
+a. Some of the gadget driver implementations expect the ->pullup
+   callback to be invoked in non-atomic context.
+b. usb_gadget_disconnect() acquires udc_lock which is a mutex.
 
-For this reason, skip the CL state enabling when we go over the existing
-topology. This will also keep the TMU settings untouched because we do
-not change the TMU configuration when CL states are not enabled.
+Hence offload invocation of usb_udc_connect_control()
+to workqueue.
 
-Reported-by: Koba Ko <koba.ko@canonical.com>
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7831
-Cc: stable@vger.kernel.org # v6.0+
-Acked-By: Yehezkel Bernat <YehezkelShB@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+UDC should not be pulled up unless gadget driver is bound. The new flag
+"allow_connect" is now set by gadget_bind_driver() and cleared by
+gadget_unbind_driver(). This prevents work item to pull up the gadget
+even if queued when the gadget driver is already unbound.
+
+Cc: stable@vger.kernel.org
+Fixes: 1016fc0c096c ("USB: gadget: Fix obscure lockdep violation for udc_mutex")
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Message-ID: <20230609010227.978661-1-badhri@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/udc/core.c |   29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -737,6 +737,7 @@ static void tb_scan_port(struct tb_port
- {
- 	struct tb_cm *tcm = tb_priv(port->sw->tb);
- 	struct tb_port *upstream_port;
-+	bool discovery = false;
- 	struct tb_switch *sw;
- 	int ret;
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -37,6 +37,9 @@ static struct bus_type gadget_bus_type;
+  * @vbus: for udcs who care about vbus status, this value is real vbus status;
+  * for udcs who do not care about vbus status, this value is always true
+  * @started: the UDC's started state. True if the UDC had started.
++ * @allow_connect: Indicates whether UDC is allowed to be pulled up.
++ * Set/cleared by gadget_(un)bind_driver() after gadget driver is bound or
++ * unbound.
+  *
+  * This represents the internal data structure which is used by the UDC-class
+  * to hold information about udc driver and gadget together.
+@@ -48,6 +51,8 @@ struct usb_udc {
+ 	struct list_head		list;
+ 	bool				vbus;
+ 	bool				started;
++	bool				allow_connect;
++	struct work_struct		vbus_work;
+ };
  
-@@ -804,8 +805,10 @@ static void tb_scan_port(struct tb_port
- 	 * tunnels and know which switches were authorized already by
- 	 * the boot firmware.
- 	 */
--	if (!tcm->hotplug_active)
-+	if (!tcm->hotplug_active) {
- 		dev_set_uevent_suppress(&sw->dev, true);
-+		discovery = true;
-+	}
+ static struct class *udc_class;
+@@ -679,7 +684,7 @@ int usb_gadget_connect(struct usb_gadget
+ 		goto out;
+ 	}
  
- 	/*
- 	 * At the moment Thunderbolt 2 and beyond (devices with LC) we
-@@ -835,10 +838,14 @@ static void tb_scan_port(struct tb_port
- 	 * CL0s and CL1 are enabled and supported together.
- 	 * Silently ignore CLx enabling in case CLx is not supported.
- 	 */
--	ret = tb_switch_enable_clx(sw, TB_CL1);
--	if (ret && ret != -EOPNOTSUPP)
--		tb_sw_warn(sw, "failed to enable %s on upstream port\n",
--			   tb_switch_clx_name(TB_CL1));
-+	if (discovery) {
-+		tb_sw_dbg(sw, "discovery, not touching CL states\n");
-+	} else {
-+		ret = tb_switch_enable_clx(sw, TB_CL1);
-+		if (ret && ret != -EOPNOTSUPP)
-+			tb_sw_warn(sw, "failed to enable %s on upstream port\n",
-+				   tb_switch_clx_name(TB_CL1));
-+	}
- 
- 	if (tb_switch_is_clx_enabled(sw, TB_CL1))
+-	if (gadget->deactivated) {
++	if (gadget->deactivated || !gadget->udc->allow_connect) {
  		/*
+ 		 * If gadget is deactivated we only save new state.
+ 		 * Gadget will be connected automatically after activation.
+@@ -1059,6 +1064,13 @@ static void usb_udc_connect_control(stru
+ 		usb_gadget_disconnect(udc->gadget);
+ }
+ 
++static void vbus_event_work(struct work_struct *work)
++{
++	struct usb_udc *udc = container_of(work, struct usb_udc, vbus_work);
++
++	usb_udc_connect_control(udc);
++}
++
+ /**
+  * usb_udc_vbus_handler - updates the udc core vbus status, and try to
+  * connect or disconnect gadget
+@@ -1067,6 +1079,14 @@ static void usb_udc_connect_control(stru
+  *
+  * The udc driver calls it when it wants to connect or disconnect gadget
+  * according to vbus status.
++ *
++ * This function can be invoked from interrupt context by irq handlers of
++ * the gadget drivers, however, usb_udc_connect_control() has to run in
++ * non-atomic context due to the following:
++ * a. Some of the gadget driver implementations expect the ->pullup
++ * callback to be invoked in non-atomic context.
++ * b. usb_gadget_disconnect() acquires udc_lock which is a mutex.
++ * Hence offload invocation of usb_udc_connect_control() to workqueue.
+  */
+ void usb_udc_vbus_handler(struct usb_gadget *gadget, bool status)
+ {
+@@ -1074,7 +1094,7 @@ void usb_udc_vbus_handler(struct usb_gad
+ 
+ 	if (udc) {
+ 		udc->vbus = status;
+-		usb_udc_connect_control(udc);
++		schedule_work(&udc->vbus_work);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(usb_udc_vbus_handler);
+@@ -1301,6 +1321,7 @@ int usb_add_gadget(struct usb_gadget *ga
+ 	mutex_lock(&udc_lock);
+ 	list_add_tail(&udc->list, &udc_list);
+ 	mutex_unlock(&udc_lock);
++	INIT_WORK(&udc->vbus_work, vbus_event_work);
+ 
+ 	ret = device_add(&udc->dev);
+ 	if (ret)
+@@ -1432,6 +1453,7 @@ void usb_del_gadget(struct usb_gadget *g
+ 	flush_work(&gadget->work);
+ 	device_del(&gadget->dev);
+ 	ida_free(&gadget_id_numbers, gadget->id_number);
++	cancel_work_sync(&udc->vbus_work);
+ 	device_unregister(&udc->dev);
+ }
+ EXPORT_SYMBOL_GPL(usb_del_gadget);
+@@ -1500,6 +1522,7 @@ static int gadget_bind_driver(struct dev
+ 	if (ret)
+ 		goto err_start;
+ 	usb_gadget_enable_async_callbacks(udc);
++	udc->allow_connect = true;
+ 	usb_udc_connect_control(udc);
+ 
+ 	kobject_uevent(&udc->dev.kobj, KOBJ_CHANGE);
+@@ -1531,6 +1554,8 @@ static void gadget_unbind_driver(struct
+ 
+ 	kobject_uevent(&udc->dev.kobj, KOBJ_CHANGE);
+ 
++	udc->allow_connect = false;
++	cancel_work_sync(&udc->vbus_work);
+ 	usb_gadget_disconnect(gadget);
+ 	usb_gadget_disable_async_callbacks(udc);
+ 	if (gadget->irq)
 
 
