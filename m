@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F191095F
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:31:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6E6C433C0;
-	Mon, 19 Jun 2023 10:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E180310955
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:31:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398F5C433C0;
+	Mon, 19 Jun 2023 10:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170712;
-	bh=/I/C8cIaL5gPR9Fb6/NVrBtqeUweLiRSbCmm5pXEwRg=;
+	s=korg; t=1687170715;
+	bh=V9LJ688+/P+aUFfdAhAfMEqYZCNWizBBuvvMTKgeNFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZoTqalVW29sDym9fufp8QqwgRp1jRxbE4wq1BcXQcH/91X4sQjr6s0RNkjCkcFV9
-	 q8EAq3kbEvVUaYwePh1fUdvDKeq6871nmxUv936mDZcbmHRAaMBrz8aiquzh6RlAgq
-	 FrEpRsydPzfIChB2PFKkXnG9yJpN9DEft3Gz3l4Y=
+	b=pVediNHdS0UibSPFvHzfQMBWmMXrkpzcO1spBqRvN2zG9I3Jj/SqQYJyz5MXbW60U
+	 dNZvyZC7IM187dhfEvYUZDGRbm/JjLPY9tC2TdHq3DR6izIu6ONNehTGbuBbLuOnS4
+	 NaXKkN2vg65DZlqQ8OcHBtOf9EfDk7naLx9DDJ7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Kamalesh Babulal <kamalesh.babulal@oracle.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 001/187] x86/head/64: Switch to KERNEL_CS as soon as new GDT is installed
-Date: Mon, 19 Jun 2023 12:26:59 +0200
-Message-ID: <20230619102157.683564289@linuxfoundation.org>
+Subject: [PATCH 6.3 002/187] cgroup: bpf: use cgroup_lock()/cgroup_unlock() wrappers
+Date: Mon, 19 Jun 2023 12:27:00 +0200
+Message-ID: <20230619102157.746293476@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,78 +37,541 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Kamalesh Babulal <kamalesh.babulal@oracle.com>
 
-[ Upstream commit a37f2699c36a7f6606ba3300f243227856c5ad6b ]
+[ Upstream commit 4cdb91b0dea7d7f59fa84a13c7753cd434fdedcf ]
 
-The call to startup_64_setup_env() will install a new GDT but does not
-actually switch to using the KERNEL_CS entry until returning from the
-function call.
+Replace mutex_[un]lock() with cgroup_[un]lock() wrappers to stay
+consistent across cgroup core and other subsystem code, while
+operating on the cgroup_mutex.
 
-Commit bcce82908333 ("x86/sev: Detect/setup SEV/SME features earlier in
-boot") moved the call to sme_enable() earlier in the boot process and in
-between the call to startup_64_setup_env() and the switch to KERNEL_CS.
-An SEV-ES or an SEV-SNP guest will trigger #VC exceptions during the call
-to sme_enable() and if the CS pushed on the stack as part of the exception
-and used by IRETQ is not mapped by the new GDT, then problems occur.
-Today, the current CS when entering startup_64 is the kernel CS value
-because it was set up by the decompressor code, so no issue is seen.
-
-However, a recent patchset that looked to avoid using the legacy
-decompressor during an EFI boot exposed this bug. At entry to startup_64,
-the CS value is that of EFI and is not mapped in the new kernel GDT. So
-when a #VC exception occurs, the CS value used by IRETQ is not valid and
-the guest boot crashes.
-
-Fix this issue by moving the block that switches to the KERNEL_CS value to
-be done immediately after returning from startup_64_setup_env().
-
-Fixes: bcce82908333 ("x86/sev: Detect/setup SEV/SME features earlier in boot")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Joerg Roedel <jroedel@suse.de>
-Link: https://lore.kernel.org/all/6ff1f28af2829cc9aea357ebee285825f90a431f.1684340801.git.thomas.lendacky%40amd.com
+Signed-off-by: Kamalesh Babulal <kamalesh.babulal@oracle.com>
+Acked-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 2bd110339288 ("cgroup: always put cset in cgroup_css_set_put_fork")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/head_64.S | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ kernel/bpf/cgroup.c        | 38 ++++++++++++------------
+ kernel/bpf/cgroup_iter.c   |  4 +--
+ kernel/bpf/local_storage.c |  4 +--
+ kernel/cgroup/cgroup-v1.c  | 16 +++++-----
+ kernel/cgroup/cgroup.c     | 60 +++++++++++++++++++-------------------
+ 5 files changed, 61 insertions(+), 61 deletions(-)
 
-diff --git a/arch/x86/kernel/head_64.S b/arch/x86/kernel/head_64.S
-index 222efd4a09bc8..f047723c6ca5d 100644
---- a/arch/x86/kernel/head_64.S
-+++ b/arch/x86/kernel/head_64.S
-@@ -85,6 +85,15 @@ SYM_CODE_START_NOALIGN(startup_64)
- 	call	startup_64_setup_env
- 	popq	%rsi
+diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+index 819f011f0a9cd..b86b907e566ca 100644
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -173,11 +173,11 @@ void bpf_cgroup_atype_put(int cgroup_atype)
+ {
+ 	int i = cgroup_atype - CGROUP_LSM_START;
  
-+	/* Now switch to __KERNEL_CS so IRET works reliably */
-+	pushq	$__KERNEL_CS
-+	leaq	.Lon_kernel_cs(%rip), %rax
-+	pushq	%rax
-+	lretq
-+
-+.Lon_kernel_cs:
-+	UNWIND_HINT_EMPTY
-+
- #ifdef CONFIG_AMD_MEM_ENCRYPT
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	if (--cgroup_lsm_atype[i].refcnt <= 0)
+ 		cgroup_lsm_atype[i].attach_btf_id = 0;
+ 	WARN_ON_ONCE(cgroup_lsm_atype[i].refcnt < 0);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ }
+ #else
+ static enum cgroup_bpf_attach_type
+@@ -282,7 +282,7 @@ static void cgroup_bpf_release(struct work_struct *work)
+ 
+ 	unsigned int atype;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	for (atype = 0; atype < ARRAY_SIZE(cgrp->bpf.progs); atype++) {
+ 		struct hlist_head *progs = &cgrp->bpf.progs[atype];
+@@ -315,7 +315,7 @@ static void cgroup_bpf_release(struct work_struct *work)
+ 		bpf_cgroup_storage_free(storage);
+ 	}
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	for (p = cgroup_parent(cgrp); p; p = cgroup_parent(p))
+ 		cgroup_bpf_put(p);
+@@ -729,9 +729,9 @@ static int cgroup_bpf_attach(struct cgroup *cgrp,
+ {
+ 	int ret;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	ret = __cgroup_bpf_attach(cgrp, prog, replace_prog, link, type, flags);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	return ret;
+ }
+ 
+@@ -831,7 +831,7 @@ static int cgroup_bpf_replace(struct bpf_link *link, struct bpf_prog *new_prog,
+ 
+ 	cg_link = container_of(link, struct bpf_cgroup_link, link);
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	/* link might have been auto-released by dying cgroup, so fail */
+ 	if (!cg_link->cgroup) {
+ 		ret = -ENOLINK;
+@@ -843,7 +843,7 @@ static int cgroup_bpf_replace(struct bpf_link *link, struct bpf_prog *new_prog,
+ 	}
+ 	ret = __cgroup_bpf_replace(cg_link->cgroup, cg_link, new_prog);
+ out_unlock:
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	return ret;
+ }
+ 
+@@ -1009,9 +1009,9 @@ static int cgroup_bpf_detach(struct cgroup *cgrp, struct bpf_prog *prog,
+ {
+ 	int ret;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	ret = __cgroup_bpf_detach(cgrp, prog, NULL, type);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	return ret;
+ }
+ 
+@@ -1120,9 +1120,9 @@ static int cgroup_bpf_query(struct cgroup *cgrp, const union bpf_attr *attr,
+ {
+ 	int ret;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	ret = __cgroup_bpf_query(cgrp, attr, uattr);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	return ret;
+ }
+ 
+@@ -1189,11 +1189,11 @@ static void bpf_cgroup_link_release(struct bpf_link *link)
+ 	if (!cg_link->cgroup)
+ 		return;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	/* re-check cgroup under lock again */
+ 	if (!cg_link->cgroup) {
+-		mutex_unlock(&cgroup_mutex);
++		cgroup_unlock();
+ 		return;
+ 	}
+ 
+@@ -1205,7 +1205,7 @@ static void bpf_cgroup_link_release(struct bpf_link *link)
+ 	cg = cg_link->cgroup;
+ 	cg_link->cgroup = NULL;
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	cgroup_put(cg);
+ }
+@@ -1232,10 +1232,10 @@ static void bpf_cgroup_link_show_fdinfo(const struct bpf_link *link,
+ 		container_of(link, struct bpf_cgroup_link, link);
+ 	u64 cg_id = 0;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	if (cg_link->cgroup)
+ 		cg_id = cgroup_id(cg_link->cgroup);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	seq_printf(seq,
+ 		   "cgroup_id:\t%llu\n"
+@@ -1251,10 +1251,10 @@ static int bpf_cgroup_link_fill_link_info(const struct bpf_link *link,
+ 		container_of(link, struct bpf_cgroup_link, link);
+ 	u64 cg_id = 0;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	if (cg_link->cgroup)
+ 		cg_id = cgroup_id(cg_link->cgroup);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	info->cgroup.cgroup_id = cg_id;
+ 	info->cgroup.attach_type = cg_link->type;
+diff --git a/kernel/bpf/cgroup_iter.c b/kernel/bpf/cgroup_iter.c
+index 06989d2788465..810378f04fbca 100644
+--- a/kernel/bpf/cgroup_iter.c
++++ b/kernel/bpf/cgroup_iter.c
+@@ -58,7 +58,7 @@ static void *cgroup_iter_seq_start(struct seq_file *seq, loff_t *pos)
+ {
+ 	struct cgroup_iter_priv *p = seq->private;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	/* cgroup_iter doesn't support read across multiple sessions. */
+ 	if (*pos > 0) {
+@@ -89,7 +89,7 @@ static void cgroup_iter_seq_stop(struct seq_file *seq, void *v)
+ {
+ 	struct cgroup_iter_priv *p = seq->private;
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	/* pass NULL to the prog for post-processing */
+ 	if (!v) {
+diff --git a/kernel/bpf/local_storage.c b/kernel/bpf/local_storage.c
+index 66d8ce2ab5b34..d6f3b7ead2c09 100644
+--- a/kernel/bpf/local_storage.c
++++ b/kernel/bpf/local_storage.c
+@@ -333,14 +333,14 @@ static void cgroup_storage_map_free(struct bpf_map *_map)
+ 	struct list_head *storages = &map->list;
+ 	struct bpf_cgroup_storage *storage, *stmp;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	list_for_each_entry_safe(storage, stmp, storages, list_map) {
+ 		bpf_cgroup_storage_unlink(storage);
+ 		bpf_cgroup_storage_free(storage);
+ 	}
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	WARN_ON(!RB_EMPTY_ROOT(&map->root));
+ 	WARN_ON(!list_empty(&map->list));
+diff --git a/kernel/cgroup/cgroup-v1.c b/kernel/cgroup/cgroup-v1.c
+index 52bb5a74a23b9..aeef06c465ef1 100644
+--- a/kernel/cgroup/cgroup-v1.c
++++ b/kernel/cgroup/cgroup-v1.c
+@@ -58,7 +58,7 @@ int cgroup_attach_task_all(struct task_struct *from, struct task_struct *tsk)
+ 	struct cgroup_root *root;
+ 	int retval = 0;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	cgroup_attach_lock(true);
+ 	for_each_root(root) {
+ 		struct cgroup *from_cgrp;
+@@ -72,7 +72,7 @@ int cgroup_attach_task_all(struct task_struct *from, struct task_struct *tsk)
+ 			break;
+ 	}
+ 	cgroup_attach_unlock(true);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	return retval;
+ }
+@@ -106,7 +106,7 @@ int cgroup_transfer_tasks(struct cgroup *to, struct cgroup *from)
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	percpu_down_write(&cgroup_threadgroup_rwsem);
+ 
+@@ -145,7 +145,7 @@ int cgroup_transfer_tasks(struct cgroup *to, struct cgroup *from)
+ out_err:
+ 	cgroup_migrate_finish(&mgctx);
+ 	percpu_up_write(&cgroup_threadgroup_rwsem);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	return ret;
+ }
+ 
+@@ -847,13 +847,13 @@ static int cgroup1_rename(struct kernfs_node *kn, struct kernfs_node *new_parent
+ 	kernfs_break_active_protection(new_parent);
+ 	kernfs_break_active_protection(kn);
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	ret = kernfs_rename(kn, new_parent, new_name_str);
+ 	if (!ret)
+ 		TRACE_CGROUP_PATH(rename, cgrp);
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	kernfs_unbreak_active_protection(kn);
+ 	kernfs_unbreak_active_protection(new_parent);
+@@ -1119,7 +1119,7 @@ int cgroup1_reconfigure(struct fs_context *fc)
+ 	trace_cgroup_remount(root);
+ 
+  out_unlock:
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	return ret;
+ }
+ 
+@@ -1246,7 +1246,7 @@ int cgroup1_get_tree(struct fs_context *fc)
+ 	if (!ret && !percpu_ref_tryget_live(&ctx->root->cgrp.self.refcnt))
+ 		ret = 1;	/* restart */
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	if (!ret)
+ 		ret = cgroup_do_get_tree(fc);
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 935e8121b21e6..83ea13f2ccb1d 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -1391,7 +1391,7 @@ static void cgroup_destroy_root(struct cgroup_root *root)
+ 	cgroup_favor_dynmods(root, false);
+ 	cgroup_exit_root_id(root);
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	cgroup_rstat_exit(cgrp);
+ 	kernfs_destroy_root(root->kf_root);
+@@ -1625,7 +1625,7 @@ void cgroup_kn_unlock(struct kernfs_node *kn)
+ 	else
+ 		cgrp = kn->parent->priv;
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	kernfs_unbreak_active_protection(kn);
+ 	cgroup_put(cgrp);
+@@ -1670,7 +1670,7 @@ struct cgroup *cgroup_kn_lock_live(struct kernfs_node *kn, bool drain_offline)
+ 	if (drain_offline)
+ 		cgroup_lock_and_drain_offline(cgrp);
+ 	else
+-		mutex_lock(&cgroup_mutex);
++		cgroup_lock();
+ 
+ 	if (!cgroup_is_dead(cgrp))
+ 		return cgrp;
+@@ -2167,13 +2167,13 @@ int cgroup_do_get_tree(struct fs_context *fc)
+ 		struct super_block *sb = fc->root->d_sb;
+ 		struct cgroup *cgrp;
+ 
+-		mutex_lock(&cgroup_mutex);
++		cgroup_lock();
+ 		spin_lock_irq(&css_set_lock);
+ 
+ 		cgrp = cset_cgroup_from_root(ctx->ns->root_cset, ctx->root);
+ 
+ 		spin_unlock_irq(&css_set_lock);
+-		mutex_unlock(&cgroup_mutex);
++		cgroup_unlock();
+ 
+ 		nsdentry = kernfs_node_dentry(cgrp->kn, sb);
+ 		dput(fc->root);
+@@ -2356,13 +2356,13 @@ int cgroup_path_ns(struct cgroup *cgrp, char *buf, size_t buflen,
+ {
+ 	int ret;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	spin_lock_irq(&css_set_lock);
+ 
+ 	ret = cgroup_path_ns_locked(cgrp, buf, buflen, ns);
+ 
+ 	spin_unlock_irq(&css_set_lock);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	return ret;
+ }
+@@ -2388,7 +2388,7 @@ int task_cgroup_path(struct task_struct *task, char *buf, size_t buflen)
+ 	int hierarchy_id = 1;
+ 	int ret;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	spin_lock_irq(&css_set_lock);
+ 
+ 	root = idr_get_next(&cgroup_hierarchy_idr, &hierarchy_id);
+@@ -2402,7 +2402,7 @@ int task_cgroup_path(struct task_struct *task, char *buf, size_t buflen)
+ 	}
+ 
+ 	spin_unlock_irq(&css_set_lock);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(task_cgroup_path);
+@@ -3111,7 +3111,7 @@ void cgroup_lock_and_drain_offline(struct cgroup *cgrp)
+ 	int ssid;
+ 
+ restart:
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	cgroup_for_each_live_descendant_post(dsct, d_css, cgrp) {
+ 		for_each_subsys(ss, ssid) {
+@@ -3125,7 +3125,7 @@ void cgroup_lock_and_drain_offline(struct cgroup *cgrp)
+ 			prepare_to_wait(&dsct->offline_waitq, &wait,
+ 					TASK_UNINTERRUPTIBLE);
+ 
+-			mutex_unlock(&cgroup_mutex);
++			cgroup_unlock();
+ 			schedule();
+ 			finish_wait(&dsct->offline_waitq, &wait);
+ 
+@@ -4374,9 +4374,9 @@ int cgroup_rm_cftypes(struct cftype *cfts)
+ 	if (!(cfts[0].flags & __CFTYPE_ADDED))
+ 		return -ENOENT;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	ret = cgroup_rm_cftypes_locked(cfts);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	return ret;
+ }
+ 
+@@ -4408,14 +4408,14 @@ static int cgroup_add_cftypes(struct cgroup_subsys *ss, struct cftype *cfts)
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	list_add_tail(&cfts->node, &ss->cfts);
+ 	ret = cgroup_apply_cftypes(cfts, true);
+ 	if (ret)
+ 		cgroup_rm_cftypes_locked(cfts);
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	return ret;
+ }
+ 
+@@ -5385,7 +5385,7 @@ static void css_release_work_fn(struct work_struct *work)
+ 	struct cgroup_subsys *ss = css->ss;
+ 	struct cgroup *cgrp = css->cgroup;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	css->flags |= CSS_RELEASED;
+ 	list_del_rcu(&css->sibling);
+@@ -5426,7 +5426,7 @@ static void css_release_work_fn(struct work_struct *work)
+ 					 NULL);
+ 	}
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	INIT_RCU_WORK(&css->destroy_rwork, css_free_rwork_fn);
+ 	queue_rcu_work(cgroup_destroy_wq, &css->destroy_rwork);
+@@ -5774,7 +5774,7 @@ static void css_killed_work_fn(struct work_struct *work)
+ 	struct cgroup_subsys_state *css =
+ 		container_of(work, struct cgroup_subsys_state, destroy_work);
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	do {
+ 		offline_css(css);
+@@ -5783,7 +5783,7 @@ static void css_killed_work_fn(struct work_struct *work)
+ 		css = css->parent;
+ 	} while (css && atomic_dec_and_test(&css->online_cnt));
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ }
+ 
+ /* css kill confirmation processing requires process context, bounce */
+@@ -5967,7 +5967,7 @@ static void __init cgroup_init_subsys(struct cgroup_subsys *ss, bool early)
+ 
+ 	pr_debug("Initializing cgroup subsys %s\n", ss->name);
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
+ 	idr_init(&ss->css_idr);
+ 	INIT_LIST_HEAD(&ss->cfts);
+@@ -6011,7 +6011,7 @@ static void __init cgroup_init_subsys(struct cgroup_subsys *ss, bool early)
+ 
+ 	BUG_ON(online_css(css));
+ 
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ }
+ 
+ /**
+@@ -6071,7 +6071,7 @@ int __init cgroup_init(void)
+ 
+ 	get_user_ns(init_cgroup_ns.user_ns);
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 
  	/*
- 	 * Activate SEV/SME memory encryption if supported/enabled. This needs to
-@@ -98,15 +107,6 @@ SYM_CODE_START_NOALIGN(startup_64)
- 	popq	%rsi
- #endif
+ 	 * Add init_css_set to the hash table so that dfl_root can link to
+@@ -6082,7 +6082,7 @@ int __init cgroup_init(void)
  
--	/* Now switch to __KERNEL_CS so IRET works reliably */
--	pushq	$__KERNEL_CS
--	leaq	.Lon_kernel_cs(%rip), %rax
--	pushq	%rax
--	lretq
--
--.Lon_kernel_cs:
--	UNWIND_HINT_EMPTY
--
- 	/* Sanitize CPU configuration */
- 	call verify_cpu
+ 	BUG_ON(cgroup_setup_root(&cgrp_dfl_root, 0));
  
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 
+ 	for_each_subsys(ss, ssid) {
+ 		if (ss->early_init) {
+@@ -6134,9 +6134,9 @@ int __init cgroup_init(void)
+ 		if (ss->bind)
+ 			ss->bind(init_css_set.subsys[ssid]);
+ 
+-		mutex_lock(&cgroup_mutex);
++		cgroup_lock();
+ 		css_populate_dir(init_css_set.subsys[ssid]);
+-		mutex_unlock(&cgroup_mutex);
++		cgroup_unlock();
+ 	}
+ 
+ 	/* init_css_set.subsys[] has been updated, re-hash */
+@@ -6241,7 +6241,7 @@ int proc_cgroup_show(struct seq_file *m, struct pid_namespace *ns,
+ 	if (!buf)
+ 		goto out;
+ 
+-	mutex_lock(&cgroup_mutex);
++	cgroup_lock();
+ 	spin_lock_irq(&css_set_lock);
+ 
+ 	for_each_root(root) {
+@@ -6296,7 +6296,7 @@ int proc_cgroup_show(struct seq_file *m, struct pid_namespace *ns,
+ 	retval = 0;
+ out_unlock:
+ 	spin_unlock_irq(&css_set_lock);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	kfree(buf);
+ out:
+ 	return retval;
+@@ -6380,7 +6380,7 @@ static int cgroup_css_set_fork(struct kernel_clone_args *kargs)
+ 	struct file *f;
+ 
+ 	if (kargs->flags & CLONE_INTO_CGROUP)
+-		mutex_lock(&cgroup_mutex);
++		cgroup_lock();
+ 
+ 	cgroup_threadgroup_change_begin(current);
+ 
+@@ -6455,7 +6455,7 @@ static int cgroup_css_set_fork(struct kernel_clone_args *kargs)
+ 
+ err:
+ 	cgroup_threadgroup_change_end(current);
+-	mutex_unlock(&cgroup_mutex);
++	cgroup_unlock();
+ 	if (f)
+ 		fput(f);
+ 	if (dst_cgrp)
+@@ -6482,7 +6482,7 @@ static void cgroup_css_set_put_fork(struct kernel_clone_args *kargs)
+ 		struct cgroup *cgrp = kargs->cgrp;
+ 		struct css_set *cset = kargs->cset;
+ 
+-		mutex_unlock(&cgroup_mutex);
++		cgroup_unlock();
+ 
+ 		if (cset) {
+ 			put_css_set(cset);
 -- 
 2.39.2
 
