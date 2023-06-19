@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7905B3C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C6CC433C8;
-	Mon, 19 Jun 2023 10:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0B33C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85C0C433C8;
+	Mon, 19 Jun 2023 10:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171130;
-	bh=p65th1/VH7uyQAFReinMAJRxYsIds31Xi9sAAbdGQ5I=;
+	s=korg; t=1687171133;
+	bh=NU6FtV+glwnYxvvBXnryZ3yMhhNrZNpzjTZ1oY/t/L8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xc1DtrFgjx2tue+2x2/Hvlo7ul41RaPsajRFGNseD2PIwlHZapDlaaV1lDkn1nnKs
-	 zX+S1slClY6jvT73RtTmDXmlMxbaKxxbQPUe2Kb1M17ldjOEk3VK0oP0OXPaTaw1Fh
-	 kw/7e7nJnq0+cDPfS/wKt1hoAxz6cMuedD8DLdUY=
+	b=nHmXaGzTwxMv6BX9AOXMuTp5f69N+bOhJrabpYoWRzAdHEr2L7aNAxoYgqm9oKiSu
+	 A+UkjWRRoCLNQWo2Ik7jI2K9WEqBLrtc71+ysRio+dwyRQA4N+H3J0MdfA1wSFTD9N
+	 pIAI9n3aIyfzbIWLTcg48UYtsiiKOMvrl2qxbLOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natalia Petrova <n.petrova@fintech.ru>,
-	Lyude Paul <lyude@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 159/187] drm/nouveau: add nv_encoder pointer check for NULL
-Date: Mon, 19 Jun 2023 12:29:37 +0200
-Message-ID: <20230619102205.264405015@linuxfoundation.org>
+Subject: [PATCH 6.3 160/187] net: ethernet: ti: am65-cpsw: Call of_node_put() on error path
+Date: Mon, 19 Jun 2023 12:29:38 +0200
+Message-ID: <20230619102205.313775659@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,41 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Natalia Petrova <n.petrova@fintech.ru>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 55b94bb8c42464bad3d2217f6874aa1a85664eac ]
+[ Upstream commit 374283a1001277e4d07491387aac1fad5aa08d43 ]
 
-Pointer nv_encoder could be dereferenced at nouveau_connector.c
-in case it's equal to NULL by jumping to goto label.
-This patch adds a NULL-check to avoid it.
+This code returns directly but it should instead call of_node_put()
+to drop some reference counts.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 3195c5f9784a ("drm/nouveau: set encoder for lvds")
-Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-[Fixed patch title]
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230512103320.82234-1-n.petrova@fintech.ru
+Fixes: dab2b265dd23 ("net: ethernet: ti: am65-cpsw: Add support for SERDES configuration")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/e3012f0c-1621-40e6-bf7d-03c276f6e07f@kili.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
-index 5dbf025e68737..f75c6f09dd2af 100644
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -730,7 +730,8 @@ nouveau_connector_detect_lvds(struct drm_connector *connector, bool force)
- #endif
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index bcea87b7151c0..ad69c5d5761b3 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2031,7 +2031,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+ 		/* Initialize the Serdes PHY for the port */
+ 		ret = am65_cpsw_init_serdes_phy(dev, port_np, port);
+ 		if (ret)
+-			return ret;
++			goto of_node_put;
  
- 	nouveau_connector_set_edid(nv_connector, edid);
--	nouveau_connector_set_encoder(connector, nv_encoder);
-+	if (nv_encoder)
-+		nouveau_connector_set_encoder(connector, nv_encoder);
- 	return status;
- }
- 
+ 		port->slave.mac_only =
+ 				of_property_read_bool(port_np, "ti,mac-only");
 -- 
 2.39.2
 
