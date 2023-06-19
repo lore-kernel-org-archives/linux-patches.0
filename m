@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22F4BE56
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6862CC433C9;
-	Mon, 19 Jun 2023 10:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5BE6FAD
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:51:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224ABC433C0;
+	Mon, 19 Jun 2023 10:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171869;
-	bh=2iyR46J3bnTuJfcS0K0KF/ZoJeCGnsxPfGjeHFb+Ahg=;
+	s=korg; t=1687171872;
+	bh=m06ceMhyO4JVZ0PtHa9pKKlIIQ9blBSeo6TuX2MCOKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2UDrIGjJyCoZmEkqY2ykN2uJpU6GfJG31dPPZKcukenWrZR4HuJ9hAw0WVMQ47wO
-	 La6N80Cj8bK72wEDL2NMK/Lb1ds1MCEZOjl6EPGgdD/ZaTqzIC6Uh26xl/H3eemwhk
-	 JNVhiGba/5ESSZA5eFi5813v2moZRyP5IIGjIf1c=
+	b=DVpZQB7Q7+XYpj/cKPNs+cC4YYZ4I9VuX3Km9+GsyZ3KFvZorb6jhqE2PRmYZocSy
+	 4bq0uwH3MLPobw0hHmCyxCrVcNC1Qcp6y/RVTticXdD88EbnlNs6qpjqwNKld1CFLu
+	 tv4TJKjKfFaducdRT7JJh0hgCDqObdMKOHJlCGxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
+	Sukrut Bellary <sukrut.bellary@linux.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 02/64] KEYS: asymmetric: Copy sig and digest in public_key_verify_signature()
-Date: Mon, 19 Jun 2023 12:29:58 +0200
-Message-ID: <20230619102132.934361819@linuxfoundation.org>
+Subject: [PATCH 5.4 20/64] drm:amd:amdgpu: Fix missing buffer object unlock in failure path
+Date: Mon, 19 Jun 2023 12:30:16 +0200
+Message-ID: <20230619102133.917094790@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -37,108 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Sukrut Bellary <sukrut.bellary@linux.com>
 
-[ Upstream commit c3d03e8e35e005e1a614e51bb59053eeb5857f76 ]
+[ Upstream commit 60ecaaf54886b0642d5c4744f7fbf1ff0d6b3e42 ]
 
-Commit ac4e97abce9b8 ("scatterlist: sg_set_buf() argument must be in linear
-mapping") checks that both the signature and the digest reside in the
-linear mapping area.
+smatch warning -
+1) drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c:3615 gfx_v9_0_kiq_resume()
+warn: inconsistent returns 'ring->mqd_obj->tbo.base.resv'.
 
-However, more recently commit ba14a194a434c ("fork: Add generic vmalloced
-stack support") made it possible to move the stack in the vmalloc area,
-which is not contiguous, and thus not suitable for sg_set_buf() which needs
-adjacent pages.
+2) drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c:6901 gfx_v10_0_kiq_resume()
+warn: inconsistent returns 'ring->mqd_obj->tbo.base.resv'.
 
-Always make a copy of the signature and digest in the same buffer used to
-store the key and its parameters, and pass them to sg_init_one(). Prefer it
-to conditionally doing the copy if necessary, to keep the code simple. The
-buffer allocated with kmalloc() is in the linear mapping area.
-
-Cc: stable@vger.kernel.org # 4.9.x
-Fixes: ba14a194a434 ("fork: Add generic vmalloced stack support")
-Link: https://lore.kernel.org/linux-integrity/Y4pIpxbjBdajymBJ@sol.localdomain/
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Tested-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/public_key.c | 36 ++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c | 4 +++-
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c  | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/public_key.c b/crypto/asymmetric_keys/public_key.c
-index e5fae4e838c06..2d57b0b3f9a4a 100644
---- a/crypto/asymmetric_keys/public_key.c
-+++ b/crypto/asymmetric_keys/public_key.c
-@@ -255,9 +255,10 @@ int public_key_verify_signature(const struct public_key *pkey,
- 	struct crypto_wait cwait;
- 	struct crypto_akcipher *tfm;
- 	struct akcipher_request *req;
--	struct scatterlist src_sg[2];
-+	struct scatterlist src_sg;
- 	char alg_name[CRYPTO_MAX_ALG_NAME];
--	char *key, *ptr;
-+	char *buf, *ptr;
-+	size_t buf_len;
- 	int ret;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+index 1d8739a4fbcad..a84deb3c79a30 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -3527,8 +3527,10 @@ static int gfx_v10_0_kiq_resume(struct amdgpu_device *adev)
+ 		return r;
  
- 	pr_devel("==>%s()\n", __func__);
-@@ -281,28 +282,31 @@ int public_key_verify_signature(const struct public_key *pkey,
- 	if (!req)
- 		goto error_free_tfm;
+ 	r = amdgpu_bo_kmap(ring->mqd_obj, (void **)&ring->mqd_ptr);
+-	if (unlikely(r != 0))
++	if (unlikely(r != 0)) {
++		amdgpu_bo_unreserve(ring->mqd_obj);
+ 		return r;
++	}
  
--	key = kmalloc(pkey->keylen + sizeof(u32) * 2 + pkey->paramlen,
--		      GFP_KERNEL);
--	if (!key)
-+	buf_len = max_t(size_t, pkey->keylen + sizeof(u32) * 2 + pkey->paramlen,
-+			sig->s_size + sig->digest_size);
-+
-+	buf = kmalloc(buf_len, GFP_KERNEL);
-+	if (!buf)
- 		goto error_free_req;
+ 	gfx_v10_0_kiq_init_queue(ring);
+ 	amdgpu_bo_kunmap(ring->mqd_obj);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index 762a407a4997a..4eba6b2d9cdec 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -3748,8 +3748,10 @@ static int gfx_v9_0_kiq_resume(struct amdgpu_device *adev)
+ 		return r;
  
--	memcpy(key, pkey->key, pkey->keylen);
--	ptr = key + pkey->keylen;
-+	memcpy(buf, pkey->key, pkey->keylen);
-+	ptr = buf + pkey->keylen;
- 	ptr = pkey_pack_u32(ptr, pkey->algo);
- 	ptr = pkey_pack_u32(ptr, pkey->paramlen);
- 	memcpy(ptr, pkey->params, pkey->paramlen);
+ 	r = amdgpu_bo_kmap(ring->mqd_obj, (void **)&ring->mqd_ptr);
+-	if (unlikely(r != 0))
++	if (unlikely(r != 0)) {
++		amdgpu_bo_unreserve(ring->mqd_obj);
+ 		return r;
++	}
  
- 	if (pkey->key_is_private)
--		ret = crypto_akcipher_set_priv_key(tfm, key, pkey->keylen);
-+		ret = crypto_akcipher_set_priv_key(tfm, buf, pkey->keylen);
- 	else
--		ret = crypto_akcipher_set_pub_key(tfm, key, pkey->keylen);
-+		ret = crypto_akcipher_set_pub_key(tfm, buf, pkey->keylen);
- 	if (ret)
--		goto error_free_key;
-+		goto error_free_buf;
- 
--	sg_init_table(src_sg, 2);
--	sg_set_buf(&src_sg[0], sig->s, sig->s_size);
--	sg_set_buf(&src_sg[1], sig->digest, sig->digest_size);
--	akcipher_request_set_crypt(req, src_sg, NULL, sig->s_size,
-+	memcpy(buf, sig->s, sig->s_size);
-+	memcpy(buf + sig->s_size, sig->digest, sig->digest_size);
-+
-+	sg_init_one(&src_sg, buf, sig->s_size + sig->digest_size);
-+	akcipher_request_set_crypt(req, &src_sg, NULL, sig->s_size,
- 				   sig->digest_size);
- 	crypto_init_wait(&cwait);
- 	akcipher_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG |
-@@ -310,8 +314,8 @@ int public_key_verify_signature(const struct public_key *pkey,
- 				      crypto_req_done, &cwait);
- 	ret = crypto_wait_req(crypto_akcipher_verify(req), &cwait);
- 
--error_free_key:
--	kfree(key);
-+error_free_buf:
-+	kfree(buf);
- error_free_req:
- 	akcipher_request_free(req);
- error_free_tfm:
+ 	gfx_v9_0_kiq_init_queue(ring);
+ 	amdgpu_bo_kunmap(ring->mqd_obj);
 -- 
 2.39.2
 
