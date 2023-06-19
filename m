@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B02ABE7E
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9DCC433C9;
-	Mon, 19 Jun 2023 11:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6284AC123
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851BCC433C9;
+	Mon, 19 Jun 2023 11:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172445;
-	bh=BmTxxHAUAGsVbFmdtGqU9pTyfLYzeZGKTx1OguvwTh4=;
+	s=korg; t=1687172447;
+	bh=ZVnskgNcEpnqTNSbqcUMFbU+Fsvac14gY6lIINMpfOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hAcCNeg0tk8K8uXh6WLzNQ3hlyDdXK/wJrZT/+Jc0xa2PUG78jq/wkla/GOWGGUJk
-	 M2XUUQX0cdFmvRzueC4fRQP380qW3nHYiaBEUwQLkjclfsBIG3WGNLIZBljUKEKKtI
-	 Bw08eKUOw3KQyjrJzU2WXglnvXkJChv++PF6Zud8=
+	b=oKdJqf0F9dMTIPLBPk/gFoDCAjmVN2gyrAxt52WgtQubiiG+SHjmnAE2o+gPeAHNp
+	 EWbybd7bOvcA8bvDtlAyBBpRuBbuTwzG5fl9gdAw8WcyaIPdIzx4WIOU6H0blhRGdw
+	 CcQzJNeVKbd5F8LRN1jacCL1Kc44+MwfCdyZr2WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Lee Jones <lee@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/107] net/sched: cls_u32: Fix reference counter leak leading to overflow
-Date: Mon, 19 Jun 2023 12:30:54 +0200
-Message-ID: <20230619102144.801863853@linuxfoundation.org>
+Subject: [PATCH 5.15 071/107] RDMA/rxe: Remove the unused variable obj
+Date: Mon, 19 Jun 2023 12:30:55 +0200
+Message-ID: <20230619102144.844946469@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -37,75 +37,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit 04c55383fa5689357bcdd2c8036725a55ed632bc ]
+[ Upstream commit f07853582d1f6ed282f8d9a0b1209a87dd761f58 ]
 
-In the event of a failure in tcf_change_indev(), u32_set_parms() will
-immediately return without decrementing the recently incremented
-reference counter.  If this happens enough times, the counter will
-rollover and the reference freed, leading to a double free which can be
-used to do 'bad things'.
+The member variable obj in struct rxe_task is not needed.
+So remove it to save memory.
 
-In order to prevent this, move the point of possible failure above the
-point where the reference counter is incremented.  Also save any
-meaningful return values to be applied to the return data at the
-appropriate point in time.
-
-This issue was caught with KASAN.
-
-Fixes: 705c7091262d ("net: sched: cls_u32: no need to call tcf_exts_change for newly allocated struct")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20220822011615.805603-4-yanjun.zhu@linux.dev
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 2a62b6210ce8 ("RDMA/rxe: Fix the use-before-initialization error of resp_pkts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c   | 6 +++---
+ drivers/infiniband/sw/rxe/rxe_task.c | 3 +--
+ drivers/infiniband/sw/rxe/rxe_task.h | 3 +--
+ 3 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 5d30db0d71574..0025fa837e857 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -716,12 +716,18 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
- 			 struct nlattr *est, u32 flags,
- 			 struct netlink_ext_ack *extack)
- {
--	int err;
-+	int err, ifindex = -1;
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index d7a968356a9bb..5b78230692fda 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -265,9 +265,9 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
  
- 	err = tcf_exts_validate(net, tp, tb, est, &n->exts, flags, extack);
- 	if (err < 0)
- 		return err;
+ 	skb_queue_head_init(&qp->req_pkts);
  
-+	if (tb[TCA_U32_INDEV]) {
-+		ifindex = tcf_change_indev(net, tb[TCA_U32_INDEV], extack);
-+		if (ifindex < 0)
-+			return -EINVAL;
-+	}
-+
- 	if (tb[TCA_U32_LINK]) {
- 		u32 handle = nla_get_u32(tb[TCA_U32_LINK]);
- 		struct tc_u_hnode *ht_down = NULL, *ht_old;
-@@ -756,13 +762,9 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
- 		tcf_bind_filter(tp, &n->res, base);
- 	}
+-	rxe_init_task(rxe, &qp->req.task, qp,
++	rxe_init_task(&qp->req.task, qp,
+ 		      rxe_requester, "req");
+-	rxe_init_task(rxe, &qp->comp.task, qp,
++	rxe_init_task(&qp->comp.task, qp,
+ 		      rxe_completer, "comp");
  
--	if (tb[TCA_U32_INDEV]) {
--		int ret;
--		ret = tcf_change_indev(net, tb[TCA_U32_INDEV], extack);
--		if (ret < 0)
--			return -EINVAL;
--		n->ifindex = ret;
--	}
-+	if (ifindex >= 0)
-+		n->ifindex = ifindex;
-+
- 	return 0;
+ 	qp->qp_timeout_jiffies = 0; /* Can't be set for UD/UC in modify_qp */
+@@ -315,7 +315,7 @@ static int rxe_qp_init_resp(struct rxe_dev *rxe, struct rxe_qp *qp,
+ 
+ 	skb_queue_head_init(&qp->resp_pkts);
+ 
+-	rxe_init_task(rxe, &qp->resp.task, qp,
++	rxe_init_task(&qp->resp.task, qp,
+ 		      rxe_responder, "resp");
+ 
+ 	qp->resp.opcode		= OPCODE_NONE;
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
+index 568cf56c236bc..f48882b20d6b2 100644
+--- a/drivers/infiniband/sw/rxe/rxe_task.c
++++ b/drivers/infiniband/sw/rxe/rxe_task.c
+@@ -95,10 +95,9 @@ void rxe_do_task(struct tasklet_struct *t)
+ 	task->ret = ret;
  }
  
+-int rxe_init_task(void *obj, struct rxe_task *task,
++int rxe_init_task(struct rxe_task *task,
+ 		  void *arg, int (*func)(void *), char *name)
+ {
+-	task->obj	= obj;
+ 	task->arg	= arg;
+ 	task->func	= func;
+ 	snprintf(task->name, sizeof(task->name), "%s", name);
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.h b/drivers/infiniband/sw/rxe/rxe_task.h
+index 11d183fd33386..7f612a1c68a7b 100644
+--- a/drivers/infiniband/sw/rxe/rxe_task.h
++++ b/drivers/infiniband/sw/rxe/rxe_task.h
+@@ -19,7 +19,6 @@ enum {
+  * called again.
+  */
+ struct rxe_task {
+-	void			*obj;
+ 	struct tasklet_struct	tasklet;
+ 	int			state;
+ 	spinlock_t		state_lock; /* spinlock for task state */
+@@ -35,7 +34,7 @@ struct rxe_task {
+  *	arg  => parameter to pass to fcn
+  *	func => function to call until it returns != 0
+  */
+-int rxe_init_task(void *obj, struct rxe_task *task,
++int rxe_init_task(struct rxe_task *task,
+ 		  void *arg, int (*func)(void *), char *name);
+ 
+ /* cleanup task */
 -- 
 2.39.2
 
