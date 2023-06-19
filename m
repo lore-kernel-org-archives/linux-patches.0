@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5CE5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A9CC433C8;
-	Mon, 19 Jun 2023 10:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A585381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2ADC433C0;
+	Mon, 19 Jun 2023 10:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171395;
-	bh=ilWEH3BtlOrYY29wnpH97XrWy7zVq/O5HyDySM8Ml0M=;
+	s=korg; t=1687171398;
+	bh=OLDhhT5qpFUeH3U2U09c/h5uBzwtuxiQ6N7R4v2aKuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSk5Hebgr6DxmTKlXCfrGVV2yG4AMsztbvHwd6zmdpMc/8mTRuw7virm6VeY/RsyS
-	 eKZrhsgBWMLuD1nGyZ4fQcK5vOUYJCo3gaxRwe8l5yQ75zz/eYRTGwAhujG5S3JDK8
-	 aGAKJW3wVoIcau79Q9eudapwz8q/vubbFx1xB6/4=
+	b=STkJqPFu2PQEE6wPDD8G2IsPMHaZQMmUE3XTSAsFJtftxst75afwjTkP1RkQ9TQwz
+	 qZb4lFUPFXjOaY/BAg7kmRrGx+mzIhh5NYWt26OvR9UgrXt9hxSIPD+AgvZDbi2RFx
+	 IGV021VFfj72N7aGZiQYHlv/S8e6QGFc8DS83Rto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Marek Vasut <marex@denx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/166] selftests: gpio: gpio-sim: Fix BUG: test FAILED due to recent change
-Date: Mon, 19 Jun 2023 12:28:13 +0200
-Message-ID: <20230619102155.489030998@linuxfoundation.org>
+Subject: [PATCH 6.1 017/166] power: supply: Ratelimit no data debug output
+Date: Mon, 19 Jun 2023 12:28:14 +0200
+Message-ID: <20230619102155.537250638@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,53 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 976d3c6778e99390c6d854d140b746d12ea18a51 ]
+[ Upstream commit 155c45a25679f571c2ae57d10db843a9dfc63430 ]
 
-According to Mirsad the gpio-sim.sh test appears to FAIL in a wrong way
-due to missing initialisation of shell variables:
+Reduce the amount of output this dev_dbg() statement emits into logs,
+otherwise if system software polls the sysfs entry for data and keeps
+getting -ENODATA, it could end up filling the logs up.
 
- 4.2. Bias settings work correctly
- cat: /sys/devices/platform/gpio-sim.0/gpiochip18/sim_gpio0/value: No such file or directory
- ./gpio-sim.sh: line 393: test: =: unary operator expected
- bias setting does not work
- GPIO gpio-sim test FAIL
+This does in fact make systemd journald choke, since during boot the
+sysfs power supply entries are polled and if journald starts at the
+same time, the journal is just being repeatedly filled up, and the
+system stops on trying to start journald without booting any further.
 
-After this change the test passed:
-
- 4.2. Bias settings work correctly
- GPIO gpio-sim test PASS
-
-His testing environment is AlmaLinux 8.7 on Lenovo desktop box with
-the latest Linux kernel based on v6.2:
-
-  Linux 6.2.0-mglru-kmlk-andy-09238-gd2980d8d8265 x86_64
-
-Suggested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/gpio/gpio-sim.sh | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/power/supply/power_supply_sysfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/gpio/gpio-sim.sh b/tools/testing/selftests/gpio/gpio-sim.sh
-index 341e3de008968..bf67b23ed29ac 100755
---- a/tools/testing/selftests/gpio/gpio-sim.sh
-+++ b/tools/testing/selftests/gpio/gpio-sim.sh
-@@ -389,6 +389,9 @@ create_chip chip
- create_bank chip bank
- set_num_lines chip bank 8
- enable_chip chip
-+DEVNAME=`configfs_dev_name chip`
-+CHIPNAME=`configfs_chip_name chip bank`
-+SYSFS_PATH="/sys/devices/platform/$DEVNAME/$CHIPNAME/sim_gpio0/value"
- $BASE_DIR/gpio-mockup-cdev -b pull-up /dev/`configfs_chip_name chip bank` 0
- test `cat $SYSFS_PATH` = "1" || fail "bias setting does not work"
- remove_chip chip
+diff --git a/drivers/power/supply/power_supply_sysfs.c b/drivers/power/supply/power_supply_sysfs.c
+index 5369abaceb5cc..7abd916d005a6 100644
+--- a/drivers/power/supply/power_supply_sysfs.c
++++ b/drivers/power/supply/power_supply_sysfs.c
+@@ -285,7 +285,8 @@ static ssize_t power_supply_show_property(struct device *dev,
+ 
+ 		if (ret < 0) {
+ 			if (ret == -ENODATA)
+-				dev_dbg(dev, "driver has no data for `%s' property\n",
++				dev_dbg_ratelimited(dev,
++					"driver has no data for `%s' property\n",
+ 					attr->attr.name);
+ 			else if (ret != -ENODEV && ret != -EAGAIN)
+ 				dev_err_ratelimited(dev,
 -- 
 2.39.2
 
