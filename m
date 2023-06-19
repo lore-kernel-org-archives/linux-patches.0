@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532108C06
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5C1C433C0;
-	Mon, 19 Jun 2023 11:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5391FA94D
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48D2C433C8;
+	Mon, 19 Jun 2023 11:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172411;
-	bh=yzJwUkaPvVFLgyhDpqaU3cqKFscMMNjsabCwJ31bjKU=;
+	s=korg; t=1687172414;
+	bh=Jm3DCfQZ32mWJXGwUPylki8DVhjB8CgL613Xt9xhvT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nLSikvBzg4PjCvY+qv/GtzW+qrsPYsuozeoCbpIEb9xMhXxzZADqxt0ZYESxfmhp/
-	 +dnLeNO6hg6eTGYuMToq3KqtfEgFp5qGkboH31XvwmuUoWetRvnlZhHUuxreh4wlum
-	 wUhS8HDFk+/jSJ6uUbdtDJZA5PY/S2FQH7L7dhfs=
+	b=2M+4um0y5smcZKtmSMSdGoiayhLSzy3HctuVAlU1rcRZibEAM1Wi7MWheQN5Wvf6/
+	 aG3lV9/n3YA4HHzoK7kc875PzDWz9PwsN77qNZnLZMoWV+gVovXO+rFO/ncg2t+vMB
+	 1Aoe96roVTw27fClN2uE4i4tkAvCbUey5b/INCLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 051/107] ALSA: hda/realtek: Add a quirk for Compaq N14JP6
-Date: Mon, 19 Jun 2023 12:30:35 +0200
-Message-ID: <20230619102143.938801658@linuxfoundation.org>
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 060/107] RDMA/rxe: Fix packet length checks
+Date: Mon, 19 Jun 2023 12:30:44 +0200
+Message-ID: <20230619102144.351121619@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -34,30 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-commit a2a871483161014f1bcc4e9a04354b01aa77cedb upstream.
+[ Upstream commit 9a3763e87379c97a78b7c6c6f40720b1e877174f ]
 
-Add a quirk for Compaq N14JP6 to fixup ALC897 headset MIC no sound.
+In rxe_net.c a received packet, from udp or loopback, is passed to
+rxe_rcv() in rxe_recv.c as a udp packet. I.e. skb->data is pointing at the
+udp header. But rxe_rcv() makes length checks to verify the packet is long
+enough to hold the roce headers as if it were a roce
+packet. I.e. skb->data pointing at the bth header. A runt packet would
+appear to have 8 more bytes than it actually does which may lead to
+incorrect behavior.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230609201058.523499-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch calls skb_pull() to adjust the skb to point at the bth header
+before calling rxe_rcv() which fixes this error.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://lore.kernel.org/r/20230517172242.1806340-1-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/sw/rxe/rxe_net.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11287,6 +11287,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x1b0a, 0x01b8, "ACER Veriton", ALC662_FIXUP_ACER_VERITON),
- 	SND_PCI_QUIRK(0x1b35, 0x1234, "CZC ET26", ALC662_FIXUP_CZC_ET26),
- 	SND_PCI_QUIRK(0x1b35, 0x2206, "CZC P10T", ALC662_FIXUP_CZC_P10T),
-+	SND_PCI_QUIRK(0x1c6c, 0x1239, "Compaq N14JP6-V2", ALC897_FIXUP_HP_HSMIC_VERB),
+diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
+index 2cb810cb890a5..be86b879a0d53 100644
+--- a/drivers/infiniband/sw/rxe/rxe_net.c
++++ b/drivers/infiniband/sw/rxe/rxe_net.c
+@@ -179,6 +179,9 @@ static int rxe_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 	pkt->mask = RXE_GRH_MASK;
+ 	pkt->paylen = be16_to_cpu(udph->len) - sizeof(*udph);
  
- #if 0
- 	/* Below is a quirk table taken from the old code.
++	/* remove udp header */
++	skb_pull(skb, sizeof(struct udphdr));
++
+ 	rxe_rcv(skb);
+ 
+ 	return 0;
+@@ -419,6 +422,9 @@ static int rxe_loopback(struct sk_buff *skb, struct rxe_pkt_info *pkt)
+ 		return -EIO;
+ 	}
+ 
++	/* remove udp header */
++	skb_pull(skb, sizeof(struct udphdr));
++
+ 	rxe_rcv(skb);
+ 
+ 	return 0;
+-- 
+2.39.2
+
 
 
