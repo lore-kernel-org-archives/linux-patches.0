@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB105381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A411CC433C8;
-	Mon, 19 Jun 2023 10:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D545381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B221C433C0;
+	Mon, 19 Jun 2023 10:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171556;
-	bh=ioJawnkvrnzO8V8DcT/WtE/qnChrJ98an3paFVx3Fno=;
+	s=korg; t=1687171558;
+	bh=WaZVmAssyh4p/W8srJFwLUfYNxnPdzVJJ0TkrO4fgOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKYa7Me4i8m4PiR5+j/guPfB62H20MKeO2J6vRld1ZSSN/qLH6HFvz3HEfAqtR4CO
-	 ElmE138HR7df8VTnEequxKwxvfHZnNvBL7YZkNqbpX5uUnJGslquk29i5acmCu4PIp
-	 Ib47/1nZTSRsPI1AFV1yC70D+VEKgEgC72YhSL3g=
+	b=eIqt9eaxcIDEh9inJkdvgmPWiLFsWd4FTj4JNDrAR29F5VlW3pPHBFTR4GmmbKRMg
+	 4j0xbJfnsCUXOPpGMNUrjUe/Uk9p8cHZPf3EGsDUCz2fgVLy0SgYt1Je4oZ+LBwyr2
+	 Cu3fXvzPNlPzAuFUe3pXwB1iaTcgkfkVJdRHwXXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 073/166] drm/amd: Tighten permissions on VBIOS flashing attributes
-Date: Mon, 19 Jun 2023 12:29:10 +0200
-Message-ID: <20230619102158.308252633@linuxfoundation.org>
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Feifei Xu <Feifei.Xu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 074/166] drm/amd/pm: workaround for compute workload type on some skus
+Date: Mon, 19 Jun 2023 12:29:11 +0200
+Message-ID: <20230619102158.356108898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -34,41 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Kenneth Feng <kenneth.feng@amd.com>
 
-commit 7ab1a4913d0051cf5196ef7987b5fa42c25e13b6 upstream.
+commit 7ca302d488f80cf4529620acc1c545f9022d8bb8 upstream.
 
-Non-root users shouldn't be able to try to trigger a VBIOS flash
-or query the flashing status.  This should be reserved for users with the
-appropriate permissions.
+On smu 13.0.0, the compute workload type cannot be set on all the skus
+due to some other problems. This workaround is to make sure compute workload type
+can also run on some specific skus.
 
-Cc: stable@vger.kernel.org
-Fixes: 8424f2ccb3c0 ("drm/amdgpu/psp: Add vbflash sysfs interface support")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+v2: keep the variable consistent
+
+Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
+Acked-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   33 +++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -3604,13 +3604,13 @@ static ssize_t amdgpu_psp_vbflash_status
- }
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -1675,10 +1675,39 @@ static int smu_v13_0_0_set_power_profile
+ 		}
+ 	}
  
- static const struct bin_attribute psp_vbflash_bin_attr = {
--	.attr = {.name = "psp_vbflash", .mode = 0664},
-+	.attr = {.name = "psp_vbflash", .mode = 0660},
- 	.size = 0,
- 	.write = amdgpu_psp_vbflash_write,
- 	.read = amdgpu_psp_vbflash_read,
- };
+-	/* conv PP_SMC_POWER_PROFILE* to WORKLOAD_PPLIB_*_BIT */
+-	workload_type = smu_cmn_to_asic_specific_index(smu,
++	if (smu->power_profile_mode == PP_SMC_POWER_PROFILE_COMPUTE &&
++		(((smu->adev->pdev->device == 0x744C) && (smu->adev->pdev->revision == 0xC8)) ||
++		((smu->adev->pdev->device == 0x744C) && (smu->adev->pdev->revision == 0xCC)))) {
++		ret = smu_cmn_update_table(smu,
++					   SMU_TABLE_ACTIVITY_MONITOR_COEFF,
++					   WORKLOAD_PPLIB_COMPUTE_BIT,
++					   (void *)(&activity_monitor_external),
++					   false);
++		if (ret) {
++			dev_err(smu->adev->dev, "[%s] Failed to get activity monitor!", __func__);
++			return ret;
++		}
++
++		ret = smu_cmn_update_table(smu,
++					   SMU_TABLE_ACTIVITY_MONITOR_COEFF,
++					   WORKLOAD_PPLIB_CUSTOM_BIT,
++					   (void *)(&activity_monitor_external),
++					   true);
++		if (ret) {
++			dev_err(smu->adev->dev, "[%s] Failed to set activity monitor!", __func__);
++			return ret;
++		}
++
++		workload_type = smu_cmn_to_asic_specific_index(smu,
++						       CMN2ASIC_MAPPING_WORKLOAD,
++						       PP_SMC_POWER_PROFILE_CUSTOM);
++	} else {
++		/* conv PP_SMC_POWER_PROFILE* to WORKLOAD_PPLIB_*_BIT */
++		workload_type = smu_cmn_to_asic_specific_index(smu,
+ 						       CMN2ASIC_MAPPING_WORKLOAD,
+ 						       smu->power_profile_mode);
++	}
++
+ 	if (workload_type < 0)
+ 		return -EINVAL;
  
--static DEVICE_ATTR(psp_vbflash_status, 0444, amdgpu_psp_vbflash_status, NULL);
-+static DEVICE_ATTR(psp_vbflash_status, 0440, amdgpu_psp_vbflash_status, NULL);
- 
- int amdgpu_psp_sysfs_init(struct amdgpu_device *adev)
- {
 
 
