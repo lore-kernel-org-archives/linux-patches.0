@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302137497
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCF1C433C8;
-	Mon, 19 Jun 2023 10:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457793C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA512C433C8;
+	Mon, 19 Jun 2023 10:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171724;
-	bh=fkPRBEtw85KZ+YB8UYveIlx4JW0/b47P2zjlwK0x1RM=;
+	s=korg; t=1687171727;
+	bh=GegH/2qlEnd850B3ci3jzMWYTzWyclhfivXC/H4/hAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4mNNWSD7Z1Q2wq5Qz08hXXsIaKeKbUWsri3Bcq7zVCe6+X6XM1tdi49TTVo36xYb
-	 PWyRxWNjlGbV6FOihLddPTr76CD/w1NHNmadv8pe3xD8ZvvnGUa5FmfPpJA9qdnYzS
-	 vTQRlN0Q9GwB1IG3gzyTYvq6cwwztlm31YEMmwkU=
+	b=zOj8fVkB5xuV4vrca1pQKUgFNhOzjzssobbACV3HLdo60t1nzTXFUisaW+HrsUIKs
+	 hjHLbuAfOd61LWJXdQl0CPux9yfiLqZqSSOnhA1ZRvHfpvZi85RC5CdkxSonh/PLj+
+	 eTe5ENYnTA+oBUnC41Mjtq4biRwYeBpw4cFxSSFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 133/166] drm/bridge: ti-sn65dsi86: Avoid possible buffer overflow
-Date: Mon, 19 Jun 2023 12:30:10 +0200
-Message-ID: <20230619102201.228739623@linuxfoundation.org>
+Subject: [PATCH 6.1 110/166] wifi: mac80211: take lock before setting vif links
+Date: Mon, 19 Jun 2023 12:29:47 +0200
+Message-ID: <20230619102200.160548333@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,37 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Su Hui <suhui@nfschina.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 95011f267c44a4d1f9ca1769e8a29ab2c559e004 ]
+[ Upstream commit 15846f95ab01b71fdb1cef8df73680aad41edf70 ]
 
-Smatch error:buffer overflow 'ti_sn_bridge_refclk_lut' 5 <= 5.
+ieee80211_vif_set_links requires the sdata->local->mtx lock to be held.
+Add the appropriate locking around the calls in both the link add and
+remove handlers.
 
-Fixes: cea86c5bb442 ("drm/bridge: ti-sn65dsi86: Implement the pwm_chip")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230608012443.839372-1-suhui@nfschina.com
+This causes a warning when e.g. ieee80211_link_release_channel is called
+via ieee80211_link_stop from ieee80211_vif_update_links.
+
+Fixes: 0d8c4a3c8688 ("wifi: mac80211: implement add/del interface link callbacks")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230608163202.fa0c6597fdad.I83dd70359f6cda30f86df8418d929c2064cf4995@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/mac80211/cfg.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index aeca9c066bf29..d16775c973c4e 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -298,6 +298,10 @@ static void ti_sn_bridge_set_refclk_freq(struct ti_sn65dsi86 *pdata)
- 		if (refclk_lut[i] == refclk_rate)
- 			break;
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 06b9df2fbcd77..23a44edcb11f7 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -4732,11 +4732,16 @@ static int ieee80211_add_intf_link(struct wiphy *wiphy,
+ 				   unsigned int link_id)
+ {
+ 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
++	int res;
  
-+	/* avoid buffer overflow and "1" is the default rate in the datasheet. */
-+	if (i >= refclk_lut_size)
-+		i = 1;
+ 	if (wdev->use_4addr)
+ 		return -EOPNOTSUPP;
+ 
+-	return ieee80211_vif_set_links(sdata, wdev->valid_links);
++	mutex_lock(&sdata->local->mtx);
++	res = ieee80211_vif_set_links(sdata, wdev->valid_links);
++	mutex_unlock(&sdata->local->mtx);
 +
- 	regmap_update_bits(pdata->regmap, SN_DPPLL_SRC_REG, REFCLK_FREQ_MASK,
- 			   REFCLK_FREQ(i));
++	return res;
+ }
  
+ static void ieee80211_del_intf_link(struct wiphy *wiphy,
+@@ -4745,7 +4750,9 @@ static void ieee80211_del_intf_link(struct wiphy *wiphy,
+ {
+ 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
+ 
++	mutex_lock(&sdata->local->mtx);
+ 	ieee80211_vif_set_links(sdata, wdev->valid_links);
++	mutex_unlock(&sdata->local->mtx);
+ }
+ 
+ static int sta_add_link_station(struct ieee80211_local *local,
 -- 
 2.39.2
 
