@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227CAC123
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:01:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D69FC433C0;
-	Mon, 19 Jun 2023 11:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96DEC123
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:01:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F800C433C8;
+	Mon, 19 Jun 2023 11:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172489;
-	bh=VXEv/PMPG9sHzKGA9zlWeLeTWAtVM8DyIuAfjtIizRQ=;
+	s=korg; t=1687172494;
+	bh=+Ook6JXlmVq2UFKEU/pllJPgODWXr8qPCHNTAMgXFQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kz81tuWKCE5nWnRSod3EqRgRlXvarwjY0BeXZaim5UHSnMLXD1QzANVKxlp2R0ZBP
-	 VURhyk/zEDTk7WEIGUI4VBbcBRFkZEGYwEp+Bk8s7di8Vt5DfGDPJoPIoje+A+uQBW
-	 uWzd0MJj0hg+P8WTLenj/BTf2JFE3W9OrOrgbUPI=
+	b=odwn4js0u2NnYCxSx6uiX2HcJBR6bVgJWBevk0TinmYF8KqUIKpzo2bO3SCpR0P7z
+	 jJgiWjQ8gc5ToenYQV1vyO93+R94S2Bvnt1sCIQ22y/qa0gEWWjHlmC7pjuDEWING1
+	 a0hX/zDAs4Orl2rJzngJ86IRe7zdH8zpzunfAFH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Natalia Petrova <n.petrova@fintech.ru>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/107] IB/uverbs: Fix to consider event queue closing also upon non-blocking mode
-Date: Mon, 19 Jun 2023 12:31:03 +0200
-Message-ID: <20230619102145.198457550@linuxfoundation.org>
+Subject: [PATCH 5.15 089/107] drm/nouveau/dp: check for NULL nv_connector->native_mode
+Date: Mon, 19 Jun 2023 12:31:13 +0200
+Message-ID: <20230619102145.641855108@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -36,66 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: Natalia Petrova <n.petrova@fintech.ru>
 
-[ Upstream commit 62fab312fa1683e812e605db20d4f22de3e3fb2f ]
+[ Upstream commit 20a2ce87fbaf81e4c3dcb631d738e423959eb320 ]
 
-Fix ib_uverbs_event_read() to consider event queue closing also upon
-non-blocking mode.
+Add checking for NULL before calling nouveau_connector_detect_depth() in
+nouveau_connector_get_modes() function because nv_connector->native_mode
+could be dereferenced there since connector pointer passed to
+nouveau_connector_detect_depth() and the same value of
+nv_connector->native_mode is used there.
 
-Once the queue is closed (e.g. hot-plug flow) all the existing events
-are cleaned-up as part of ib_uverbs_free_event_queue().
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-An application that uses the non-blocking FD mode should get -EIO in
-that case to let it knows that the device was removed already.
+Fixes: d4c2c99bdc83 ("drm/nouveau/dp: remove broken display depth function, use the improved one")
 
-Otherwise, it can loose the indication that the device was removed and
-won't recover.
-
-As part of that, refactor the code to have a single flow with regards to
-'is_closed' for both blocking and non-blocking modes.
-
-Fixes: 14e23bd6d221 ("RDMA/core: Fix locking in ib_uverbs_event_read")
-Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://lore.kernel.org/r/97b00116a1e1e13f8dc4ec38a5ea81cf8c030210.1685960567.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230512111526.82408-1-n.petrova@fintech.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_main.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_connector.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/uverbs_main.c b/drivers/infiniband/core/uverbs_main.c
-index d544340887277..fa937cd268219 100644
---- a/drivers/infiniband/core/uverbs_main.c
-+++ b/drivers/infiniband/core/uverbs_main.c
-@@ -222,8 +222,12 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
- 	spin_lock_irq(&ev_queue->lock);
+diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
+index 96be2ecb86d4d..f5c79d367f290 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_connector.c
++++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+@@ -965,7 +965,7 @@ nouveau_connector_get_modes(struct drm_connector *connector)
+ 	/* Determine display colour depth for everything except LVDS now,
+ 	 * DP requires this before mode_valid() is called.
+ 	 */
+-	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS)
++	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
+ 		nouveau_connector_detect_depth(connector);
  
- 	while (list_empty(&ev_queue->event_list)) {
--		spin_unlock_irq(&ev_queue->lock);
-+		if (ev_queue->is_closed) {
-+			spin_unlock_irq(&ev_queue->lock);
-+			return -EIO;
-+		}
+ 	/* Find the native mode if this is a digital panel, if we didn't
+@@ -986,7 +986,7 @@ nouveau_connector_get_modes(struct drm_connector *connector)
+ 	 * "native" mode as some VBIOS tables require us to use the
+ 	 * pixel clock as part of the lookup...
+ 	 */
+-	if (connector->connector_type == DRM_MODE_CONNECTOR_LVDS)
++	if (connector->connector_type == DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
+ 		nouveau_connector_detect_depth(connector);
  
-+		spin_unlock_irq(&ev_queue->lock);
- 		if (filp->f_flags & O_NONBLOCK)
- 			return -EAGAIN;
- 
-@@ -233,12 +237,6 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
- 			return -ERESTARTSYS;
- 
- 		spin_lock_irq(&ev_queue->lock);
--
--		/* If device was disassociated and no event exists set an error */
--		if (list_empty(&ev_queue->event_list) && ev_queue->is_closed) {
--			spin_unlock_irq(&ev_queue->lock);
--			return -EIO;
--		}
- 	}
- 
- 	event = list_entry(ev_queue->event_list.next, struct ib_uverbs_event, list);
+ 	if (nv_encoder->dcb->type == DCB_OUTPUT_TV)
 -- 
 2.39.2
 
