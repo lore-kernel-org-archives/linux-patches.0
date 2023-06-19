@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F165381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DB2C433C0;
-	Mon, 19 Jun 2023 10:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB105381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A411CC433C8;
+	Mon, 19 Jun 2023 10:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171553;
-	bh=6tRMIBuOXC9pFH89rn+3FIimIN3u36iI6iX/lTBKk+M=;
+	s=korg; t=1687171556;
+	bh=ioJawnkvrnzO8V8DcT/WtE/qnChrJ98an3paFVx3Fno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bh91Timx0511OuZL0glLcTur855bUG6I/8xRAkdt2mLnEopADWml9uGBHT9nldUr
-	 ShbGucZgJQzkctQTvQ6QsPqD4gdKlXa1yMwmsQPxhVe2QPaAK5m4HlR562lzt6gWvF
-	 AjU61ecnNG+0UdFH6ugkoRBhnGiY/rJmkUgJij4M=
+	b=iKYa7Me4i8m4PiR5+j/guPfB62H20MKeO2J6vRld1ZSSN/qLH6HFvz3HEfAqtR4CO
+	 ElmE138HR7df8VTnEequxKwxvfHZnNvBL7YZkNqbpX5uUnJGslquk29i5acmCu4PIp
+	 Ib47/1nZTSRsPI1AFV1yC70D+VEKgEgC72YhSL3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 072/166] drm/amd: Make sure image is written to trigger VBIOS image update flow
-Date: Mon, 19 Jun 2023 12:29:09 +0200
-Message-ID: <20230619102158.255379498@linuxfoundation.org>
+Subject: [PATCH 6.1 073/166] drm/amd: Tighten permissions on VBIOS flashing attributes
+Date: Mon, 19 Jun 2023 12:29:10 +0200
+Message-ID: <20230619102158.308252633@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,19 +36,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 3eb1a3a04056ba3df3205e169b8acc9da0c65a94 upstream.
+commit 7ab1a4913d0051cf5196ef7987b5fa42c25e13b6 upstream.
 
-The VBIOS image update flow requires userspace to:
-1) Write the image to `psp_vbflash`
-2) Read `psp_vbflash`
-3) Poll `psp_vbflash_status` to check for completion
-
-If userspace reads `psp_vbflash` before writing an image, it's
-possible that it causes problems that can put the dGPU into an invalid
-state.
-
-Explicitly check that an image has been written before letting a read
-succeed.
+Non-root users shouldn't be able to try to trigger a VBIOS flash
+or query the flashing status.  This should be reserved for users with the
+appropriate permissions.
 
 Cc: stable@vger.kernel.org
 Fixes: 8424f2ccb3c0 ("drm/amdgpu/psp: Add vbflash sysfs interface support")
@@ -57,20 +49,26 @@ Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -3550,6 +3550,9 @@ static ssize_t amdgpu_psp_vbflash_read(s
- 	void *fw_pri_cpu_addr;
- 	int ret;
+@@ -3604,13 +3604,13 @@ static ssize_t amdgpu_psp_vbflash_status
+ }
  
-+	if (adev->psp.vbflash_image_size == 0)
-+		return -EINVAL;
-+
- 	dev_info(adev->dev, "VBIOS flash to PSP started");
+ static const struct bin_attribute psp_vbflash_bin_attr = {
+-	.attr = {.name = "psp_vbflash", .mode = 0664},
++	.attr = {.name = "psp_vbflash", .mode = 0660},
+ 	.size = 0,
+ 	.write = amdgpu_psp_vbflash_write,
+ 	.read = amdgpu_psp_vbflash_read,
+ };
  
- 	ret = amdgpu_bo_create_kernel(adev, adev->psp.vbflash_image_size,
+-static DEVICE_ATTR(psp_vbflash_status, 0444, amdgpu_psp_vbflash_status, NULL);
++static DEVICE_ATTR(psp_vbflash_status, 0440, amdgpu_psp_vbflash_status, NULL);
+ 
+ int amdgpu_psp_sysfs_init(struct amdgpu_device *adev)
+ {
 
 
