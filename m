@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11D98C06
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3828EC433C0;
-	Mon, 19 Jun 2023 10:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A78A94D
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C82C433C0;
+	Mon, 19 Jun 2023 10:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172216;
-	bh=wjLsN2cerv3wu94En8S6rYdMwrhKHRbP8u5NM2sPg7A=;
+	s=korg; t=1687172219;
+	bh=7K7OaqpqCpOGcLdIrxF06hJCehC0z1AWyZo0oeWAAyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJC2Y7PFAEY8kDtsPD4IWiwOSFzbFe1KQm73Bd5V4uJgqLYjiWj1ihaNA32ISnOXh
-	 dQ1t0HKHq2Ob9LArR9+0CEHvlKFS1jeL2n8xfmLvDRVgJ98QyHfg7L9xTjoDW/n/Ol
-	 Px1siiB7G2jdqDq8OXFt1qUqwgjmskYhSL/Mxkiw=
+	b=zsTGJb7tA9xQN4ZJRWd81i2ZBQSxQZFNRNgL66/krr6EP0oXr/bKN9xIGaPUQj8nM
+	 YhL6WQ3GgLCSCidXPu8O2GJ/N7zYGuxfBx2tBsDvDoxywDXLc2wcS8blm6f7GVAIQa
+	 cnM4cVm81jRMDVoZi8FVjfZKlAHVnrKYp9EF/z0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 78/89] net: Remove DECnet leftovers from flow.h.
-Date: Mon, 19 Jun 2023 12:31:06 +0200
-Message-ID: <20230619102141.823036149@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 79/89] neighbour: delete neigh_lookup_nodev as not used
+Date: Mon, 19 Jun 2023 12:31:07 +0200
+Message-ID: <20230619102141.869187409@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -35,76 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit 9bc61c04ff6cce6a3756b86e6b34914f7b39d734 upstream.
+commit 76b9bf965c98c9b53ef7420b3b11438dbd764f92 upstream.
 
-DECnet was removed by commit 1202cdd66531 ("Remove DECnet support from
-kernel"). Let's also revome its flow structure.
+neigh_lookup_nodev isn't used in the kernel after removal
+of DECnet. So let's remove it.
 
-Compile-tested only (allmodconfig).
-
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Acked-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1202cdd66531 ("Remove DECnet support from kernel")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/eb5656200d7964b2d177a36b77efa3c597d6d72d.1678267343.git.leonro@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/flow.h |   26 --------------------------
- 1 file changed, 26 deletions(-)
+ include/net/neighbour.h |    2 --
+ net/core/neighbour.c    |   31 -------------------------------
+ 2 files changed, 33 deletions(-)
 
---- a/include/net/flow.h
-+++ b/include/net/flow.h
-@@ -54,11 +54,6 @@ union flowi_uli {
- 		__u8	code;
- 	} icmpt;
- 
--	struct {
--		__le16	dport;
--		__le16	sport;
--	} dnports;
--
- 	__be32		spi;
- 	__be32		gre_key;
- 
-@@ -156,27 +151,11 @@ struct flowi6 {
- 	__u32			mp_hash;
- } __attribute__((__aligned__(BITS_PER_LONG/8)));
- 
--struct flowidn {
--	struct flowi_common	__fl_common;
--#define flowidn_oif		__fl_common.flowic_oif
--#define flowidn_iif		__fl_common.flowic_iif
--#define flowidn_mark		__fl_common.flowic_mark
--#define flowidn_scope		__fl_common.flowic_scope
--#define flowidn_proto		__fl_common.flowic_proto
--#define flowidn_flags		__fl_common.flowic_flags
--	__le16			daddr;
--	__le16			saddr;
--	union flowi_uli		uli;
--#define fld_sport		uli.ports.sport
--#define fld_dport		uli.ports.dport
--} __attribute__((__aligned__(BITS_PER_LONG/8)));
--
- struct flowi {
- 	union {
- 		struct flowi_common	__fl_common;
- 		struct flowi4		ip4;
- 		struct flowi6		ip6;
--		struct flowidn		dn;
- 	} u;
- #define flowi_oif	u.__fl_common.flowic_oif
- #define flowi_iif	u.__fl_common.flowic_iif
-@@ -210,11 +189,6 @@ static inline struct flowi_common *flowi
- 	return &(flowi6_to_flowi(fl6)->u.__fl_common);
+--- a/include/net/neighbour.h
++++ b/include/net/neighbour.h
+@@ -309,8 +309,6 @@ void neigh_table_init(int index, struct
+ int neigh_table_clear(int index, struct neigh_table *tbl);
+ struct neighbour *neigh_lookup(struct neigh_table *tbl, const void *pkey,
+ 			       struct net_device *dev);
+-struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
+-				     const void *pkey);
+ struct neighbour *__neigh_create(struct neigh_table *tbl, const void *pkey,
+ 				 struct net_device *dev, bool want_ref);
+ static inline struct neighbour *neigh_create(struct neigh_table *tbl,
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -571,37 +571,6 @@ struct neighbour *neigh_lookup(struct ne
  }
+ EXPORT_SYMBOL(neigh_lookup);
  
--static inline struct flowi *flowidn_to_flowi(struct flowidn *fldn)
+-struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
+-				     const void *pkey)
 -{
--	return container_of(fldn, struct flowi, u.dn);
--}
+-	struct neighbour *n;
+-	unsigned int key_len = tbl->key_len;
+-	u32 hash_val;
+-	struct neigh_hash_table *nht;
 -
- __u32 __get_hash_from_flowi6(const struct flowi6 *fl6, struct flow_keys *keys);
- 
- #endif
+-	NEIGH_CACHE_STAT_INC(tbl, lookups);
+-
+-	rcu_read_lock_bh();
+-	nht = rcu_dereference_bh(tbl->nht);
+-	hash_val = tbl->hash(pkey, NULL, nht->hash_rnd) >> (32 - nht->hash_shift);
+-
+-	for (n = rcu_dereference_bh(nht->hash_buckets[hash_val]);
+-	     n != NULL;
+-	     n = rcu_dereference_bh(n->next)) {
+-		if (!memcmp(n->primary_key, pkey, key_len) &&
+-		    net_eq(dev_net(n->dev), net)) {
+-			if (!refcount_inc_not_zero(&n->refcnt))
+-				n = NULL;
+-			NEIGH_CACHE_STAT_INC(tbl, hits);
+-			break;
+-		}
+-	}
+-
+-	rcu_read_unlock_bh();
+-	return n;
+-}
+-EXPORT_SYMBOL(neigh_lookup_nodev);
+-
+ static struct neighbour *
+ ___neigh_create(struct neigh_table *tbl, const void *pkey,
+ 		struct net_device *dev, u8 flags,
 
 
