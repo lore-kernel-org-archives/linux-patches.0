@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118375381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:42:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A92CC433C0;
-	Mon, 19 Jun 2023 10:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E663A5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:42:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4D7C433C0;
+	Mon, 19 Jun 2023 10:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171333;
-	bh=ADPuoOqyYG5u8UI1C67863VARFTw91JResG5/++W1s8=;
+	s=korg; t=1687171336;
+	bh=/K29tUpEeOqoyifzLgxFADlJxC/GKBllo6iwsLSdQW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E2m/O4nRl+hsW/YOfX3rX1YzdCSd1WIIxCoy827077lPcXmoHuseLR06NMelLk4iP
-	 VSg3za/ocYro/H9LPLwKCiY5kfbrp7pobKycowzz9Im6qjbF8et7LSuTXvlOLLfeKp
-	 AslzxECxK7b0RI0nIlds1u/urOUB5K9gfjrKxN2c=
+	b=V2KboBAwHe9JOoucsqBzvX7cd3JdXBZKTEm6ycvDwwuV87KYgHvEmhojqcwUcPIjs
+	 yLRLbV7181DpS4cNOzaVNuZpyyTIO2iiNMF0T3Bnnxuf2GSFvk90DYdH12QJJFgGph
+	 xQprerYwBaX1RX9Fx0ou0+QgmG4PtgOz0UiUeO7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Maftei <alex.maftei@amd.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 43/49] selftests/ptp: Fix timestamp printf format for PTP_SYS_OFFSET
-Date: Mon, 19 Jun 2023 12:30:21 +0200
-Message-ID: <20230619102132.177387179@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 44/49] neighbour: Remove unused inline function neigh_key_eq16()
+Date: Mon, 19 Jun 2023 12:30:22 +0200
+Message-ID: <20230619102132.230621862@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -36,50 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Maftei <alex.maftei@amd.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 76a4c8b82938bc5020b67663db41f451684bf327 ]
+commit c8f01a4a54473f88f8cc0d9046ec9eb5a99815d5 upstream.
 
-Previously, timestamps were printed using "%lld.%u" which is incorrect
-for nanosecond values lower than 100,000,000 as they're fractional
-digits, therefore leading zeros are meaningful.
+All uses of neigh_key_eq16() have
+been removed since commit 1202cdd66531 ("Remove DECnet support
+from kernel"), so remove it.
 
-This patch changes the format strings to "%lld.%09u" in order to add
-leading zeros to the nanosecond value.
-
-Fixes: 568ebc5985f5 ("ptp: add the PTP_SYS_OFFSET ioctl to the testptp program")
-Fixes: 4ec54f95736f ("ptp: Fix compiler warnings in the testptp utility")
-Fixes: 6ab0e475f1f3 ("Documentation: fix misc. warnings")
-Signed-off-by: Alex Maftei <alex.maftei@amd.com>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Link: https://lore.kernel.org/r/20230615083404.57112-1-alex.maftei@amd.com
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ptp/testptp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/net/neighbour.h |    5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
-index a5d8f0ab0da00..60f0f24cee30e 100644
---- a/tools/testing/selftests/ptp/testptp.c
-+++ b/tools/testing/selftests/ptp/testptp.c
-@@ -502,11 +502,11 @@ int main(int argc, char *argv[])
- 			interval = t2 - t1;
- 			offset = (t2 + t1) / 2 - tp;
+--- a/include/net/neighbour.h
++++ b/include/net/neighbour.h
+@@ -251,11 +251,6 @@ static inline void *neighbour_priv(const
+ #define NEIGH_UPDATE_F_ADMIN			0x80000000
  
--			printf("system time: %lld.%u\n",
-+			printf("system time: %lld.%09u\n",
- 				(pct+2*i)->sec, (pct+2*i)->nsec);
--			printf("phc    time: %lld.%u\n",
-+			printf("phc    time: %lld.%09u\n",
- 				(pct+2*i+1)->sec, (pct+2*i+1)->nsec);
--			printf("system time: %lld.%u\n",
-+			printf("system time: %lld.%09u\n",
- 				(pct+2*i+2)->sec, (pct+2*i+2)->nsec);
- 			printf("system/phc clock time offset is %" PRId64 " ns\n"
- 			       "system     clock time delay  is %" PRId64 " ns\n",
--- 
-2.39.2
-
+ 
+-static inline bool neigh_key_eq16(const struct neighbour *n, const void *pkey)
+-{
+-	return *(const u16 *)n->primary_key == *(const u16 *)pkey;
+-}
+-
+ static inline bool neigh_key_eq32(const struct neighbour *n, const void *pkey)
+ {
+ 	return *(const u32 *)n->primary_key == *(const u32 *)pkey;
 
 
