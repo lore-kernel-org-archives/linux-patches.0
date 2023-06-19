@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1709E1095F
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E646C433C0;
-	Mon, 19 Jun 2023 10:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0916310974
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E135C433CB;
+	Mon, 19 Jun 2023 10:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170851;
-	bh=ap3jkD9bWHq32RU4HgblFqK2uQUDLFh8qSg39w0GXXY=;
+	s=korg; t=1687170854;
+	bh=cXS0a0auy2CBTdKj72MP5unq8TDGz1A8afRYSYyLK/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3HHivDw+l3iCzQUAxlTvAImOjgPdVAa5DBusyiI9sXkdF1nO/AdaE1mZ/LTTAttV
-	 apYLTcfP7OOAdSSqxbWVMqSkZ5HOKt6ZRHBw6Gyo0Nqi50s8O9I3wWi+gEtJ7B387s
-	 cxwCAlDL4QAeOouAzyFQ97C+uEVgyZ53TyxtPCTg=
+	b=CIqrLPG/pmnd1U0tLFllWWeEzEJ6tgJR3Tp0N6rfmysudXDFgjFyH2+Ype85iBS+n
+	 +J2fOow7AynPwPn4FdFsEAPaclRK1J6hidgrwt71BmWEHMXvhhNhar6Y5ez8nPwV8/
+	 FXWeLNuuaGyK16vEyemJBdD4GQ6HXQOZACQOzcXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Yi <yijun@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.3 058/187] LoongArch: Fix perf event id calculation
-Date: Mon, 19 Jun 2023 12:27:56 +0200
-Message-ID: <20230619102200.484482821@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Marek Majkowski <marek@cloudflare.com>
+Subject: [PATCH 6.3 059/187] io_uring/net: save msghdr->msg_control for retries
+Date: Mon, 19 Jun 2023 12:27:57 +0200
+Message-ID: <20230619102200.535541331@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -34,48 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 962369120d750cbc9c4dc492f32b4304669ff6aa upstream.
+commit cac9e4418f4cbd548ccb065b3adcafe073f7f7d2 upstream.
 
-LoongArch PMCFG has 10bit event id rather than 8 bit, so fix it.
+If the application sets ->msg_control and we have to later retry this
+command, or if it got queued with IOSQE_ASYNC to begin with, then we
+need to retain the original msg_control value. This is due to the net
+stack overwriting this field with an in-kernel pointer, to copy it
+in. Hitting that path for the second time will now fail the copy from
+user, as it's attempting to copy from a non-user address.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Jun Yi <yijun@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: stable@vger.kernel.org # 5.10+
+Link: https://github.com/axboe/liburing/issues/880
+Reported-and-tested-by: Marek Majkowski <marek@cloudflare.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/perf_event.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ io_uring/net.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/kernel/perf_event.c
-+++ b/arch/loongarch/kernel/perf_event.c
-@@ -271,7 +271,7 @@ static void loongarch_pmu_enable_event(s
- 	WARN_ON(idx < 0 || idx >= loongarch_pmu.num_counters);
- 
- 	/* Make sure interrupt enabled. */
--	cpuc->saved_ctrl[idx] = M_PERFCTL_EVENT(evt->event_base & 0xff) |
-+	cpuc->saved_ctrl[idx] = M_PERFCTL_EVENT(evt->event_base) |
- 		(evt->config_base & M_PERFCTL_CONFIG_MASK) | CSR_PERFCTRL_IE;
- 
- 	cpu = (event->cpu >= 0) ? event->cpu : smp_processor_id();
-@@ -594,7 +594,7 @@ static struct pmu pmu = {
- 
- static unsigned int loongarch_pmu_perf_event_encode(const struct loongarch_perf_event *pev)
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -65,6 +65,7 @@ struct io_sr_msg {
+ 	u16				addr_len;
+ 	u16				buf_group;
+ 	void __user			*addr;
++	void __user			*msg_control;
+ 	/* used only for send zerocopy */
+ 	struct io_kiocb 		*notif;
+ };
+@@ -195,11 +196,15 @@ static int io_sendmsg_copy_hdr(struct io
+ 			       struct io_async_msghdr *iomsg)
  {
--	return (pev->event_id & 0xff);
-+	return M_PERFCTL_EVENT(pev->event_id);
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
++	int ret;
+ 
+ 	iomsg->msg.msg_name = &iomsg->addr;
+ 	iomsg->free_iov = iomsg->fast_iov;
+-	return sendmsg_copy_msghdr(&iomsg->msg, sr->umsg, sr->msg_flags,
++	ret = sendmsg_copy_msghdr(&iomsg->msg, sr->umsg, sr->msg_flags,
+ 					&iomsg->free_iov);
++	/* save msg_control as sys_sendmsg() overwrites it */
++	sr->msg_control = iomsg->msg.msg_control;
++	return ret;
  }
  
- static const struct loongarch_perf_event *loongarch_pmu_map_general_event(int idx)
-@@ -849,7 +849,7 @@ static void resume_local_counters(void)
+ int io_send_prep_async(struct io_kiocb *req)
+@@ -297,6 +302,7 @@ int io_sendmsg(struct io_kiocb *req, uns
  
- static const struct loongarch_perf_event *loongarch_pmu_map_raw_event(u64 config)
- {
--	raw_event.event_id = config & 0xff;
-+	raw_event.event_id = M_PERFCTL_EVENT(config);
- 
- 	return &raw_event;
- }
+ 	if (req_has_async_data(req)) {
+ 		kmsg = req->async_data;
++		kmsg->msg.msg_control = sr->msg_control;
+ 	} else {
+ 		ret = io_sendmsg_copy_hdr(req, &iomsg);
+ 		if (ret)
 
 
