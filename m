@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580EABE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D426BC433C8;
-	Mon, 19 Jun 2023 10:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094C3BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843A8C433C0;
+	Mon, 19 Jun 2023 10:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172131;
-	bh=xUbVM114PwpJY/cnRqxMbO2o/4irAVAp/eGavytAMmk=;
+	s=korg; t=1687172133;
+	bh=vAdsM+hjIZKz2nXd7bnVFlV9WvNPWJyMAkawniZXSjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L5w0BD3Z0JSPzprIjnMcVNg5gbGb9rsSBnJmUbxlfJCovvN8AuPMMrlvPtmiziYUL
-	 JwdgMHixFjlM6XPbQ6dqVMsZtke7aqqhUB2V2mlggPafP4PD0VLH9v+oq9/2jCKKc0
-	 h95u+RcUgwb5k7ID5BGYVng+iU1Qn+4HazIM7g/c=
+	b=CEw//rpi5qb4G9kSDpzEdJIzZwef1kL9DdbU3OY21MK5I+mhwFItvxGDXpDX8DOJB
+	 Wv4hfy4BQDjBZsWpjS9eyFPfmDFp4xgWlqehj84RQszrqRyM6z2wkG/LYitvWAM0M0
+	 vOInz+8k8sewNPrPFlOD0YT9ZzAgxfzSyCS2cA4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 48/89] net: enetc: correct the indexes of highest and 2nd highest TCs
-Date: Mon, 19 Jun 2023 12:30:36 +0200
-Message-ID: <20230619102140.470298628@linuxfoundation.org>
+	Janne Grunau <j@jannau.net>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 5.10 31/89] nios2: dts: Fix tse_mac "max-frame-size" property
+Date: Mon, 19 Jun 2023 12:30:19 +0200
+Message-ID: <20230619102139.704603479@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -37,62 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit 21225873be1472b7c59ed3650396af0e40578112 ]
+commit 85041e12418fd0c08ff972b7729f7971afb361f8 upstream.
 
-For ENETC hardware, the TCs are numbered from 0 to N-1, where N
-is the number of TCs. Numerically higher TC has higher priority.
-It's obvious that the highest priority TC index should be N-1 and
-the 2nd highest priority TC index should be N-2.
+The given value of 1518 seems to refer to the layer 2 ethernet frame
+size without 802.1Q tag. Actual use of the "max-frame-size" including in
+the consumer of the "altr,tse-1.0" compatible is the MTU.
 
-However, the previous logic uses netdev_get_prio_tc_map() to get
-the indexes of highest priority and 2nd highest priority TCs, it
-does not make sense and is incorrect to give a "tc" argument to
-netdev_get_prio_tc_map(). So the driver may get the wrong indexes
-of the two highest priotiry TCs which would lead to failed to set
-the CBS for the two highest priotiry TCs.
-
-e.g.
-$ tc qdisc add dev eno0 parent root handle 100: mqprio num_tc 6 \
-	map 0 0 1 1 2 3 4 5 queues 1@0 1@1 1@2 1@3 2@4 2@6 hw 1
-$ tc qdisc replace dev eno0 parent 100:6 cbs idleslope 100000 \
-	sendslope -900000 hicredit 12 locredit -113 offload 1
-$ Error: Specified device failed to setup cbs hardware offload.
-  ^^^^^
-
-In this example, the previous logic deems the indexes of the two
-highest priotiry TCs should be 3 and 2. Actually, the indexes are
-5 and 4, because the number of TCs is 6. So it would be failed to
-configure the CBS for the two highest priority TCs.
-
-Fixes: c431047c4efe ("enetc: add support Credit Based Shaper(CBS) for hardware offload")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 95acd4c7b69c ("nios2: Device tree support")
+Fixes: 61c610ec61bb ("nios2: Add Max10 device tree")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_qos.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/nios2/boot/dts/10m50_devboard.dts |    2 +-
+ arch/nios2/boot/dts/3c120_devboard.dts |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_qos.c b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-index 8d92dc6bc9945..d7215bd772f3e 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-@@ -196,8 +196,8 @@ int enetc_setup_tc_cbs(struct net_device *ndev, void *type_data)
- 	int bw_sum = 0;
- 	u8 bw;
- 
--	prio_top = netdev_get_prio_tc_map(ndev, tc_nums - 1);
--	prio_next = netdev_get_prio_tc_map(ndev, tc_nums - 2);
-+	prio_top = tc_nums - 1;
-+	prio_next = tc_nums - 2;
- 
- 	/* Support highest prio and second prio tc in cbs mode */
- 	if (tc != prio_top && tc != prio_next)
--- 
-2.39.2
-
+--- a/arch/nios2/boot/dts/10m50_devboard.dts
++++ b/arch/nios2/boot/dts/10m50_devboard.dts
+@@ -97,7 +97,7 @@
+ 			rx-fifo-depth = <8192>;
+ 			tx-fifo-depth = <8192>;
+ 			address-bits = <48>;
+-			max-frame-size = <1518>;
++			max-frame-size = <1500>;
+ 			local-mac-address = [00 00 00 00 00 00];
+ 			altr,has-supplementary-unicast;
+ 			altr,enable-sup-addr = <1>;
+--- a/arch/nios2/boot/dts/3c120_devboard.dts
++++ b/arch/nios2/boot/dts/3c120_devboard.dts
+@@ -106,7 +106,7 @@
+ 				interrupt-names = "rx_irq", "tx_irq";
+ 				rx-fifo-depth = <8192>;
+ 				tx-fifo-depth = <8192>;
+-				max-frame-size = <1518>;
++				max-frame-size = <1500>;
+ 				local-mac-address = [ 00 00 00 00 00 00 ];
+ 				phy-mode = "rgmii-id";
+ 				phy-handle = <&phy0>;
 
 
