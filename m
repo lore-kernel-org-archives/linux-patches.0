@@ -1,139 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC01C123
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:02:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2743DC433C8;
-	Mon, 19 Jun 2023 11:02:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172568;
-	bh=tyw/1INzvYwlkUZF5NwSsxLIo63T8sqs8Ids4I6zJ1c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B90XDX+7zU7Ma1masvJz2oZH9Qfgkuo8AvOU0wMut4xSuB9Byko0DYAoAZhPGmjEF
-	 PYZYPEq84fs+r7m1r4x2thHI64wEJmJ2lycW/TNSKawNyFhuARjyybQXNqK+Fq4Kuu
-	 Zej+N5ZLkQXMgXlhaJMZ9wd03n+OWsLINwpE8Jq8=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 107/107] nilfs2: reject devices with insufficient block count
-Date: Mon, 19 Jun 2023 12:31:31 +0200
-Message-ID: <20230619102146.408404854@linuxfoundation.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
-References: <20230619102141.541044823@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A80C2DC
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:43:01 +0000 (UTC)
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6300510605bso16774076d6.0
+        for <patches@lists.linux.dev>; Mon, 19 Jun 2023 04:43:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687174981; x=1689766981;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xTBAhkNEAfivnk42N/MFkAxpYvk7m//AEyhvZcmNRzo=;
+        b=NiVr6xLhrXpongF3PI3mhC9/bYP7HlHDnCovgkQMEFWnC+lwDITWQwgkyl0MMjxTF9
+         6Gb2uFiZHFYs0KKl5xftXF+/Sp9t/5ZBh5P/5l+5blmAYfnEXEO7gCXdFX/5mHxPCjEo
+         h63Qr/cqxDOUjujxReqsDGOkkSWxv3aO5TVTeqL5ammZle5hDlUt4B+lhhA8/0h+mhAe
+         G0BNTN2OIbtf3iJuCLsVAxVOfQcGirdMIgwc41SxNivJPjw7vW9/lBBNlotjYbIhS421
+         7Eh+NLKFjnTIMrvaeNbSf3YUR5xnkhltHnh9Q0NLjlTG1hKxJ/VhA28Krr+4KsHNUMnY
+         xD3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687174981; x=1689766981;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xTBAhkNEAfivnk42N/MFkAxpYvk7m//AEyhvZcmNRzo=;
+        b=SceoxdPH8kxz+IYoJloCMj1AAm2wBHmu/ak/MMGJkREQqovlj40bMIq4t+eoul62Km
+         E25OZ7oFFvDhM/BfHg0s34titHghU+8YrtnWPx0kG5/6Z8yG3Awewc2px9L3sMhOdAJC
+         lIvo8DL8CED2HJwmEa0ag/U0+U1bk+fo8S4scjhHxY3AihddDnhRnryng/IripUHh/nE
+         rgNZFB6wSq+OQWaKA7oybmn3+RgcfLKcs/yo5H0+UFUiutL03ALf8RFPxUU5igDvb4bq
+         KHOzP4tZnNhOT6zR77kd7WEN9jYLfhlqYKo+r39iIfocX+mWirk1pKwaoGSwxTheATnC
+         IRsA==
+X-Gm-Message-State: AC+VfDypdE9LVYU3oMtzQ+p+2aE9cvZH7JMjVqa/NcgfoIFEFUBMZSN9
+	REawZpyqYb2QZpm7K/uE4EaaZOfQMjtP4T2x
+X-Google-Smtp-Source: ACHHUZ5lU7mEdDjnTyUD7XRJituWNTi2xBw5Vavk0uAHv8cfxcQUL1c/ybCv7UiWS386WA/GlL6KdA==
+X-Received: by 2002:a05:6214:21a3:b0:5ef:5138:1e5d with SMTP id t3-20020a05621421a300b005ef51381e5dmr11365499qvc.49.1687174980696;
+        Mon, 19 Jun 2023 04:43:00 -0700 (PDT)
+Received: from [10.178.67.29] ([192.19.248.250])
+        by smtp.gmail.com with ESMTPSA id oj2-20020a056214440200b005ef442226bbsm10390842qvb.8.2023.06.19.04.42.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Jun 2023 04:42:59 -0700 (PDT)
+Message-ID: <cf3cbd12-f108-685d-38db-9a4a448acd1b@gmail.com>
+Date: Mon, 19 Jun 2023 12:42:57 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-
-commit 92c5d1b860e9581d64baca76779576c0ab0d943d upstream.
-
-The current sanity check for nilfs2 geometry information lacks checks for
-the number of segments stored in superblocks, so even for device images
-that have been destructively truncated or have an unusually high number of
-segments, the mount operation may succeed.
-
-This causes out-of-bounds block I/O on file system block reads or log
-writes to the segments, the latter in particular causing
-"a_ops->writepages" to repeatedly fail, resulting in sync_inodes_sb() to
-hang.
-
-Fix this issue by checking the number of segments stored in the superblock
-and avoiding mounting devices that can cause out-of-bounds accesses.  To
-eliminate the possibility of overflow when calculating the number of
-blocks required for the device from the number of segments, this also adds
-a helper function to calculate the upper bound on the number of segments
-and inserts a check using it.
-
-Link: https://lkml.kernel.org/r/20230526021332.3431-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=7d50f1e54a12ba3aeae2
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/nilfs2/the_nilfs.c |   44 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
-
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -405,6 +405,18 @@ unsigned long nilfs_nrsvsegs(struct the_
- 				  100));
- }
- 
-+/**
-+ * nilfs_max_segment_count - calculate the maximum number of segments
-+ * @nilfs: nilfs object
-+ */
-+static u64 nilfs_max_segment_count(struct the_nilfs *nilfs)
-+{
-+	u64 max_count = U64_MAX;
-+
-+	do_div(max_count, nilfs->ns_blocks_per_segment);
-+	return min_t(u64, max_count, ULONG_MAX);
-+}
-+
- void nilfs_set_nsegments(struct the_nilfs *nilfs, unsigned long nsegs)
- {
- 	nilfs->ns_nsegments = nsegs;
-@@ -414,6 +426,8 @@ void nilfs_set_nsegments(struct the_nilf
- static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
- 				   struct nilfs_super_block *sbp)
- {
-+	u64 nsegments, nblocks;
-+
- 	if (le32_to_cpu(sbp->s_rev_level) < NILFS_MIN_SUPP_REV) {
- 		nilfs_err(nilfs->ns_sb,
- 			  "unsupported revision (superblock rev.=%d.%d, current rev.=%d.%d). Please check the version of mkfs.nilfs(2).",
-@@ -457,7 +471,35 @@ static int nilfs_store_disk_layout(struc
- 		return -EINVAL;
- 	}
- 
--	nilfs_set_nsegments(nilfs, le64_to_cpu(sbp->s_nsegments));
-+	nsegments = le64_to_cpu(sbp->s_nsegments);
-+	if (nsegments > nilfs_max_segment_count(nilfs)) {
-+		nilfs_err(nilfs->ns_sb,
-+			  "segment count %llu exceeds upper limit (%llu segments)",
-+			  (unsigned long long)nsegments,
-+			  (unsigned long long)nilfs_max_segment_count(nilfs));
-+		return -EINVAL;
-+	}
-+
-+	nblocks = (u64)i_size_read(nilfs->ns_sb->s_bdev->bd_inode) >>
-+		nilfs->ns_sb->s_blocksize_bits;
-+	if (nblocks) {
-+		u64 min_block_count = nsegments * nilfs->ns_blocks_per_segment;
-+		/*
-+		 * To avoid failing to mount early device images without a
-+		 * second superblock, exclude that block count from the
-+		 * "min_block_count" calculation.
-+		 */
-+
-+		if (nblocks < min_block_count) {
-+			nilfs_err(nilfs->ns_sb,
-+				  "total number of segment blocks %llu exceeds device size (%llu blocks)",
-+				  (unsigned long long)min_block_count,
-+				  (unsigned long long)nblocks);
-+			return -EINVAL;
-+		}
-+	}
-+
-+	nilfs_set_nsegments(nilfs, nsegments);
- 	nilfs->ns_crc_seed = le32_to_cpu(sbp->s_crc_seed);
- 	return 0;
- }
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 5.4 00/64] 5.4.248-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230619102132.808972458@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
+
+On 6/19/2023 11:29 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.248 release.
+> There are 64 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 21 Jun 2023 10:21:12 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.248-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
