@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB877497
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:52:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D646CC433CC;
-	Mon, 19 Jun 2023 10:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27BB79C6
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:52:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AAAAC433C8;
+	Mon, 19 Jun 2023 10:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171933;
-	bh=2O3VdNDHy5O/nyN7FP+133uHlHNEFc43xoQ11Uz0480=;
+	s=korg; t=1687171936;
+	bh=tNWHf3/P/W6vR94VOLieI6eO3dxtn/XkWHR5Jv73e94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4fsVPS9tokGstKcer74fD82Gs/mew4InVJ9ONML4mYLWcHgIQfMYr3sE7lDl58AT
-	 yriBnrQzhnJqnZ2pdaLqF3LxCAobeSwwtHKcX0UNmII/yVz8jnlqbzg1sYwQkb1R1U
-	 DYLPzsEFBWm5wy5HLEyl+GA0nYewPyjAHup24MqY=
+	b=V7s5szuRyC4OcRuhnNlUxmxJzXu+jnWx9+Vn8qzrkdm+ngkt7RbA0rrhGZ2KRu/n/
+	 C+iK8JIt5nBnYO8RhbtVYfqCwyrkq3chMESTssBeToMQ9xPsc3dTO98iIJCQFnKX20
+	 prEBNFTkfSlvNBuk4rFbXVnoHoQKb02h8Ay4wBdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Li Zhijian <lizhijian@fujitsu.com>,
+	Ian Ziemba <ian.ziemba@hpe.com>,
 	Bob Pearson <rpearsonhpe@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 41/64] RDMA/rxe: Remove the unused variable obj
-Date: Mon, 19 Jun 2023 12:30:37 +0200
-Message-ID: <20230619102135.047989227@linuxfoundation.org>
+Subject: [PATCH 5.4 42/64] RDMA/rxe: Removed unused name from rxe_task struct
+Date: Mon, 19 Jun 2023 12:30:38 +0200
+Message-ID: <20230619102135.093905312@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -37,88 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit f07853582d1f6ed282f8d9a0b1209a87dd761f58 ]
+[ Upstream commit de669ae8af49ceed0eed44f5b3d51dc62affc5e4 ]
 
-The member variable obj in struct rxe_task is not needed.
-So remove it to save memory.
+The name field in struct rxe_task is never used. This patch removes it.
 
-Link: https://lore.kernel.org/r/20220822011615.805603-4-yanjun.zhu@linux.dev
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Bob Pearson <rpearsonhpe@gmail.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Link: https://lore.kernel.org/r/20221021200118.2163-4-rpearsonhpe@gmail.com
+Signed-off-by: Ian Ziemba <ian.ziemba@hpe.com>
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Stable-dep-of: 2a62b6210ce8 ("RDMA/rxe: Fix the use-before-initialization error of resp_pkts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c   | 6 +++---
- drivers/infiniband/sw/rxe/rxe_task.c | 3 +--
- drivers/infiniband/sw/rxe/rxe_task.h | 3 +--
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c   | 9 +++------
+ drivers/infiniband/sw/rxe/rxe_task.c | 4 +---
+ drivers/infiniband/sw/rxe/rxe_task.h | 4 +---
+ 3 files changed, 5 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index 5dd9bcef5921a..5b59907594f75 100644
+index 5b59907594f75..c36000e08f65d 100644
 --- a/drivers/infiniband/sw/rxe/rxe_qp.c
 +++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -278,9 +278,9 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
+@@ -278,10 +278,8 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
  
  	skb_queue_head_init(&qp->req_pkts);
  
--	rxe_init_task(rxe, &qp->req.task, qp,
-+	rxe_init_task(&qp->req.task, qp,
- 		      rxe_requester, "req");
--	rxe_init_task(rxe, &qp->comp.task, qp,
-+	rxe_init_task(&qp->comp.task, qp,
- 		      rxe_completer, "comp");
+-	rxe_init_task(&qp->req.task, qp,
+-		      rxe_requester, "req");
+-	rxe_init_task(&qp->comp.task, qp,
+-		      rxe_completer, "comp");
++	rxe_init_task(&qp->req.task, qp, rxe_requester);
++	rxe_init_task(&qp->comp.task, qp, rxe_completer);
  
  	qp->qp_timeout_jiffies = 0; /* Can't be set for UD/UC in modify_qp */
-@@ -327,7 +327,7 @@ static int rxe_qp_init_resp(struct rxe_dev *rxe, struct rxe_qp *qp,
+ 	if (init->qp_type == IB_QPT_RC) {
+@@ -327,8 +325,7 @@ static int rxe_qp_init_resp(struct rxe_dev *rxe, struct rxe_qp *qp,
  
  	skb_queue_head_init(&qp->resp_pkts);
  
--	rxe_init_task(rxe, &qp->resp.task, qp,
-+	rxe_init_task(&qp->resp.task, qp,
- 		      rxe_responder, "resp");
+-	rxe_init_task(&qp->resp.task, qp,
+-		      rxe_responder, "resp");
++	rxe_init_task(&qp->resp.task, qp, rxe_responder);
  
  	qp->resp.opcode		= OPCODE_NONE;
+ 	qp->resp.msn		= 0;
 diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
-index 08f05ac5f5d52..ea7d5a69eb2a3 100644
+index ea7d5a69eb2a3..39b3adda16550 100644
 --- a/drivers/infiniband/sw/rxe/rxe_task.c
 +++ b/drivers/infiniband/sw/rxe/rxe_task.c
-@@ -114,10 +114,9 @@ void rxe_do_task(unsigned long data)
+@@ -114,12 +114,10 @@ void rxe_do_task(unsigned long data)
  	task->ret = ret;
  }
  
--int rxe_init_task(void *obj, struct rxe_task *task,
-+int rxe_init_task(struct rxe_task *task,
- 		  void *arg, int (*func)(void *), char *name)
+-int rxe_init_task(struct rxe_task *task,
+-		  void *arg, int (*func)(void *), char *name)
++int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *))
  {
--	task->obj	= obj;
  	task->arg	= arg;
  	task->func	= func;
- 	snprintf(task->name, sizeof(task->name), "%s", name);
+-	snprintf(task->name, sizeof(task->name), "%s", name);
+ 	task->destroyed	= false;
+ 
+ 	tasklet_init(&task->tasklet, rxe_do_task, (unsigned long)task);
 diff --git a/drivers/infiniband/sw/rxe/rxe_task.h b/drivers/infiniband/sw/rxe/rxe_task.h
-index 08ff42d451c62..e87ee072e3179 100644
+index e87ee072e3179..ecd81b1d1a8cb 100644
 --- a/drivers/infiniband/sw/rxe/rxe_task.h
 +++ b/drivers/infiniband/sw/rxe/rxe_task.h
-@@ -46,7 +46,6 @@ enum {
-  * called again.
-  */
- struct rxe_task {
--	void			*obj;
- 	struct tasklet_struct	tasklet;
- 	int			state;
- 	spinlock_t		state_lock; /* spinlock for task state */
-@@ -62,7 +61,7 @@ struct rxe_task {
+@@ -52,7 +52,6 @@ struct rxe_task {
+ 	void			*arg;
+ 	int			(*func)(void *arg);
+ 	int			ret;
+-	char			name[16];
+ 	bool			destroyed;
+ };
+ 
+@@ -61,8 +60,7 @@ struct rxe_task {
   *	arg  => parameter to pass to fcn
   *	fcn  => function to call until it returns != 0
   */
--int rxe_init_task(void *obj, struct rxe_task *task,
-+int rxe_init_task(struct rxe_task *task,
- 		  void *arg, int (*func)(void *), char *name);
+-int rxe_init_task(struct rxe_task *task,
+-		  void *arg, int (*func)(void *), char *name);
++int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *));
  
  /* cleanup task */
+ void rxe_cleanup_task(struct rxe_task *task);
 -- 
 2.39.2
 
