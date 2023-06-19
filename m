@@ -1,26 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54465381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:36:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF07C433C0;
-	Mon, 19 Jun 2023 10:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F265381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:36:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D679DC433C8;
+	Mon, 19 Jun 2023 10:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170963;
-	bh=eI0XLdGRbGkBKcXO3h1cxYBroD3tfaO6YBEd59PKZAA=;
+	s=korg; t=1687170966;
+	bh=TJknWpTf16xpxsM1O5AhO0Q3/L0J31zV44Fg6yKFBN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oBgLKqbjRSI6P4FnvC3dRlBoNhCqR13tX34XKkI5nE28Zm8tjdBjfkGxuFY3ho3vv
-	 ye4wncKMHasp2cVrYlFjsXS673U+UrEJz1hfTO+ZZuErXMkkjvigJEhb7/juCl8sNr
-	 T1h1DY6kHb6/x0F9vZzIrKFaEAhxV3VRsOk69O2I=
+	b=J7wGz+uZ6AfzScg2bGd6pLYSA/m2bptHnNIP68XXBzNrdTnoOWcsqeSlc4oeKC8Ta
+	 6Lw2py+0gzh/9vEMcVM1FMxmOPA3/yvZauevuYl3p85o64HE+iPMV1bMsMEQnc2Syj
+	 91fBSZtagW3tDcenfNTays40VSbqRgpkN40U2UTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.3 073/187] dm thin metadata: check fail_io before using data_sm
-Date: Mon, 19 Jun 2023 12:28:11 +0200
-Message-ID: <20230619102201.171792152@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Baoquan He <bhe@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Dave Young <dyoung@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Philipp Rudo <prudo@redhat.com>,
+	Ross Zwisler <zwisler@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Tom Rix <trix@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 064/187] powerpc/purgatory: remove PGO flags
+Date: Mon, 19 Jun 2023 12:28:02 +0200
+Message-ID: <20230619102200.776002949@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -34,98 +56,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit cb65b282c9640c27d3129e2e04b711ce1b352838 upstream.
+commit 20188baceb7a1463dc0bcb0c8678b69c2f447df6 upstream.
 
-Must check pmd->fail_io before using pmd->data_sm since
-pmd->data_sm may be destroyed by other processes.
+If profile-guided optimization is enabled, the purgatory ends up with
+multiple .text sections.  This is not supported by kexec and crashes the
+system.
 
-       P1(kworker)                             P2(message)
-do_worker
- process_prepared
-  process_prepared_discard_passdown_pt2
-   dm_pool_dec_data_range
-                                    pool_message
-                                     commit
-                                      dm_pool_commit_metadata
-                                        ↓
-                                       // commit failed
-                                      metadata_operation_failed
-                                       abort_transaction
-                                        dm_pool_abort_metadata
-                                         __open_or_format_metadata
-                                           ↓
-                                          dm_sm_disk_open
-                                            ↓
-                                           // open failed
-                                           // pmd->data_sm is NULL
-    dm_sm_dec_blocks
-      ↓
-     // try to access pmd->data_sm --> UAF
-
-As shown above, if dm_pool_commit_metadata() and
-dm_pool_abort_metadata() fail in pool_message process, kworker may
-trigger UAF.
-
-Fixes: be500ed721a6 ("dm space maps: improve performance with inc/dec on ranges of blocks")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-3-b05c520b7296@chromium.org
+Fixes: 930457057abe ("kernel/kexec_file.c: split up __kexec_load_puragory")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: <stable@vger.kernel.org>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Philipp Rudo <prudo@redhat.com>
+Cc: Ross Zwisler <zwisler@google.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Tom Rix <trix@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin-metadata.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ arch/powerpc/purgatory/Makefile |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/md/dm-thin-metadata.c
-+++ b/drivers/md/dm-thin-metadata.c
-@@ -1756,13 +1756,15 @@ int dm_thin_remove_range(struct dm_thin_
+--- a/arch/powerpc/purgatory/Makefile
++++ b/arch/powerpc/purgatory/Makefile
+@@ -5,6 +5,11 @@ KCSAN_SANITIZE := n
  
- int dm_pool_block_is_shared(struct dm_pool_metadata *pmd, dm_block_t b, bool *result)
- {
--	int r;
-+	int r = -EINVAL;
- 	uint32_t ref_count;
+ targets += trampoline_$(BITS).o purgatory.ro
  
- 	down_read(&pmd->root_lock);
--	r = dm_sm_get_count(pmd->data_sm, b, &ref_count);
--	if (!r)
--		*result = (ref_count > 1);
-+	if (!pmd->fail_io) {
-+		r = dm_sm_get_count(pmd->data_sm, b, &ref_count);
-+		if (!r)
-+			*result = (ref_count > 1);
-+	}
- 	up_read(&pmd->root_lock);
++# When profile-guided optimization is enabled, llvm emits two different
++# overlapping text sections, which is not supported by kexec. Remove profile
++# optimization flags.
++KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%,$(KBUILD_CFLAGS))
++
+ LDFLAGS_purgatory.ro := -e purgatory_start -r --no-undefined
  
- 	return r;
-@@ -1770,10 +1772,11 @@ int dm_pool_block_is_shared(struct dm_po
- 
- int dm_pool_inc_data_range(struct dm_pool_metadata *pmd, dm_block_t b, dm_block_t e)
- {
--	int r = 0;
-+	int r = -EINVAL;
- 
- 	pmd_write_lock(pmd);
--	r = dm_sm_inc_blocks(pmd->data_sm, b, e);
-+	if (!pmd->fail_io)
-+		r = dm_sm_inc_blocks(pmd->data_sm, b, e);
- 	pmd_write_unlock(pmd);
- 
- 	return r;
-@@ -1781,10 +1784,11 @@ int dm_pool_inc_data_range(struct dm_poo
- 
- int dm_pool_dec_data_range(struct dm_pool_metadata *pmd, dm_block_t b, dm_block_t e)
- {
--	int r = 0;
-+	int r = -EINVAL;
- 
- 	pmd_write_lock(pmd);
--	r = dm_sm_dec_blocks(pmd->data_sm, b, e);
-+	if (!pmd->fail_io)
-+		r = dm_sm_dec_blocks(pmd->data_sm, b, e);
- 	pmd_write_unlock(pmd);
- 
- 	return r;
+ $(obj)/purgatory.ro: $(obj)/trampoline_$(BITS).o FORCE
 
 
