@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA2F8BE5
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:49:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DF4C433C0;
-	Mon, 19 Jun 2023 10:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5E98BE5
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:49:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69B2C433C0;
+	Mon, 19 Jun 2023 10:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171795;
-	bh=mnzDoWwqmj6k4sThyiJG8xkxCbaWNdLgsP7OiDkgujQ=;
+	s=korg; t=1687171798;
+	bh=4hFPkMwLMS+CCfxOLCvle9E8immgMl2eTXItmkHxd6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMYpLyhAXRd7a3Gyeh2z2Tcnvao27pY1irPf2l0hHEd+9UibcxdKROP4+lE87+J3R
-	 2hhmCdBZHqVmAXybPP+LjK7/gTEPa+gGvwDWAOF9nYILuz6uuC30PEU+iAZJNSIRcv
-	 p3xdOH8lpb3jHs58kcH/Kw1aucXAeAJjuB+aaJy8=
+	b=t1B3Aum1s5jCRZGEdV7WnTfoSHr9hWnAvpMiHxuy/5Fb5mc2WM0mHNN9Rnu+6yYhe
+	 h3cRBg6uwxcUUya8Tt1SGdykkv54hrjRDGBVbg//MC4ltbnOxrt5f9sFlzALGrHr0s
+	 WyZ+s63EXNWy19HwXEVI2ANQUaI16O3GP/n2DrQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hangbin Liu <liuhangbin@gmail.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 159/166] Revert "net/sched: act_api: move TCA_EXT_WARN_MSG to the correct hierarchy"
-Date: Mon, 19 Jun 2023 12:30:36 +0200
-Message-ID: <20230619102202.408396181@linuxfoundation.org>
+Subject: [PATCH 6.1 160/166] net/sched: act_api: add specific EXT_WARN_MSG for tc action
+Date: Mon, 19 Jun 2023 12:30:37 +0200
+Message-ID: <20230619102202.450369193@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -37,36 +37,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Hangbin Liu <liuhangbin@gmail.com>
 
-commit 8de2bd02439eb839a452a853c1004c2c45ff6fef upstream.
+commit 2f59823fe696caa844249a90bb3f9aeda69cfe5c upstream.
 
-This reverts commit 923b2e30dc9cd05931da0f64e2e23d040865c035.
+In my previous commit 0349b8779cc9 ("sched: add new attr TCA_EXT_WARN_MSG
+to report tc extact message") I didn't notice the tc action use different
+enum with filter. So we can't use TCA_EXT_WARN_MSG directly for tc action.
+Let's add a TCA_ROOT_EXT_WARN_MSG for tc action specifically and put this
+param before going to the TCA_ACT_TAB nest.
 
-This is not a correct fix as TCA_EXT_WARN_MSG is not a hierarchy to
-TCA_ACT_TAB. I didn't notice the TC actions use different enum when adding
-TCA_EXT_WARN_MSG. To fix the difference I will add a new WARN enum in
-TCA_ROOT_MAX as Jamal suggested.
-
+Fixes: 0349b8779cc9 ("sched: add new attr TCA_EXT_WARN_MSG to report tc extact message")
 Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_api.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/uapi/linux/rtnetlink.h |    1 +
+ net/sched/act_api.c            |    8 ++++----
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
+--- a/include/uapi/linux/rtnetlink.h
++++ b/include/uapi/linux/rtnetlink.h
+@@ -789,6 +789,7 @@ enum {
+ 	TCA_ROOT_FLAGS,
+ 	TCA_ROOT_COUNT,
+ 	TCA_ROOT_TIME_DELTA, /* in msecs */
++	TCA_ROOT_EXT_WARN_MSG,
+ 	__TCA_ROOT_MAX,
+ #define	TCA_ROOT_MAX (__TCA_ROOT_MAX - 1)
+ };
 --- a/net/sched/act_api.c
 +++ b/net/sched/act_api.c
-@@ -1603,12 +1603,12 @@ static int tca_get_fill(struct sk_buff *
- 	if (tcf_action_dump(skb, actions, bind, ref, false) < 0)
- 		goto out_nlmsg_trim;
+@@ -1596,6 +1596,10 @@ static int tca_get_fill(struct sk_buff *
+ 	t->tca__pad1 = 0;
+ 	t->tca__pad2 = 0;
  
-+	nla_nest_end(skb, nest);
++	if (extack && extack->_msg &&
++	    nla_put_string(skb, TCA_ROOT_EXT_WARN_MSG, extack->_msg))
++		goto out_nlmsg_trim;
 +
- 	if (extack && extack->_msg &&
- 	    nla_put_string(skb, TCA_EXT_WARN_MSG, extack->_msg))
+ 	nest = nla_nest_start_noflag(skb, TCA_ACT_TAB);
+ 	if (!nest)
  		goto out_nlmsg_trim;
+@@ -1605,10 +1609,6 @@ static int tca_get_fill(struct sk_buff *
  
--	nla_nest_end(skb, nest);
+ 	nla_nest_end(skb, nest);
+ 
+-	if (extack && extack->_msg &&
+-	    nla_put_string(skb, TCA_EXT_WARN_MSG, extack->_msg))
+-		goto out_nlmsg_trim;
 -
  	nlh->nlmsg_len = skb_tail_pointer(skb) - b;
  
