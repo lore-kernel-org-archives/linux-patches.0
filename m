@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2151A10970
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:32:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42571C433C8;
-	Mon, 19 Jun 2023 10:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B94910974
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:32:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03128C433C0;
+	Mon, 19 Jun 2023 10:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170771;
-	bh=T+b1Mld9xi7m8dULwPfvheiEogr8e/MnWZp9YePKVo0=;
+	s=korg; t=1687170774;
+	bh=0l9xbhHO5u6TcLV8LFHbC5RKnck8rAa4xNop448icUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MaC/K1TK4hJQoTU301DyvllZULnXWMZDtJcWIQC7oHf4+oAOrOloHS9/xMmuqdj6J
-	 AYfhSCks5l/ry7LuCBEB0vquPFiuRByDJNlCPtYpHhqCE2bkh5JJvvQYSM6pIsQ0FF
-	 WXMj2ixcN6lfVqIlY5ND1/Dm3H4vsuJHTyhLTUNA=
+	b=FgqnAdbCAce+kFc8UfB9ipOZ3hbfBu4+LedOp0UEfhPnJUB4gG9RVealFfMWdsE++
+	 kZPq3QjsDKTqimjMc6CvSwZQW/vzeF9eUkmcYHfKjsCNY9wXXSL9VYgFyiGlTZO2V9
+	 KrmgGw0SmUqmMiC1iFOGTOVZ3bb3O2wL/mx5sHzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 029/187] ASoC: Intel: avs: Fix avs_path_module::instance_id size
-Date: Mon, 19 Jun 2023 12:27:27 +0200
-Message-ID: <20230619102159.050962655@linuxfoundation.org>
+Subject: [PATCH 6.3 030/187] ASoC: Intel: avs: Add missing checks on FE startup
+Date: Mon, 19 Jun 2023 12:27:28 +0200
+Message-ID: <20230619102159.111682430@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -38,87 +38,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit 320f4d868b83a804e3a4bd61a5b7d0f1db66380e ]
+[ Upstream commit 25148f57a2a6d157779bae494852e172952ba980 ]
 
-All IPCs using instance_id use 8 bit value. Original commit used 16 bit
-value because FW reports possible max value in 16 bit field, but in
-practice FW limits the value to 8 bits.
+Constraint functions have return values, they should be checked for
+potential errors.
 
 Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
 Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20230519201711.4073845-7-amadeuszx.slawinski@linux.intel.com
+Link: https://lore.kernel.org/r/20230519201711.4073845-8-amadeuszx.slawinski@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/avs.h    | 4 ++--
- sound/soc/intel/avs/dsp.c    | 4 ++--
- sound/soc/intel/avs/path.h   | 2 +-
- sound/soc/intel/avs/probes.c | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ sound/soc/intel/avs/pcm.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/intel/avs/avs.h b/sound/soc/intel/avs/avs.h
-index d7fccdcb9c167..0cf38c9e768e7 100644
---- a/sound/soc/intel/avs/avs.h
-+++ b/sound/soc/intel/avs/avs.h
-@@ -283,8 +283,8 @@ void avs_release_firmwares(struct avs_dev *adev);
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 31c032a0f7e4b..1fbb2c2fadb55 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -468,21 +468,34 @@ static int avs_dai_fe_startup(struct snd_pcm_substream *substream, struct snd_so
  
- int avs_dsp_init_module(struct avs_dev *adev, u16 module_id, u8 ppl_instance_id,
- 			u8 core_id, u8 domain, void *param, u32 param_size,
--			u16 *instance_id);
--void avs_dsp_delete_module(struct avs_dev *adev, u16 module_id, u16 instance_id,
-+			u8 *instance_id);
-+void avs_dsp_delete_module(struct avs_dev *adev, u16 module_id, u8 instance_id,
- 			   u8 ppl_instance_id, u8 core_id);
- int avs_dsp_create_pipeline(struct avs_dev *adev, u16 req_size, u8 priority,
- 			    bool lp, u16 attributes, u8 *instance_id);
-diff --git a/sound/soc/intel/avs/dsp.c b/sound/soc/intel/avs/dsp.c
-index b881100d3e02a..aa03af4473e94 100644
---- a/sound/soc/intel/avs/dsp.c
-+++ b/sound/soc/intel/avs/dsp.c
-@@ -225,7 +225,7 @@ static int avs_dsp_put_core(struct avs_dev *adev, u32 core_id)
+ 	host_stream = snd_hdac_ext_stream_assign(bus, substream, HDAC_EXT_STREAM_TYPE_HOST);
+ 	if (!host_stream) {
+-		kfree(data);
+-		return -EBUSY;
++		ret = -EBUSY;
++		goto err;
+ 	}
  
- int avs_dsp_init_module(struct avs_dev *adev, u16 module_id, u8 ppl_instance_id,
- 			u8 core_id, u8 domain, void *param, u32 param_size,
--			u16 *instance_id)
-+			u8 *instance_id)
- {
- 	struct avs_module_entry mentry;
- 	bool was_loaded = false;
-@@ -272,7 +272,7 @@ int avs_dsp_init_module(struct avs_dev *adev, u16 module_id, u8 ppl_instance_id,
- 	return ret;
+ 	data->host_stream = host_stream;
+-	snd_pcm_hw_constraint_integer(runtime, SNDRV_PCM_HW_PARAM_PERIODS);
++	ret = snd_pcm_hw_constraint_integer(runtime, SNDRV_PCM_HW_PARAM_PERIODS);
++	if (ret < 0)
++		goto err;
++
+ 	/* avoid wrap-around with wall-clock */
+-	snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_BUFFER_TIME, 20, 178000000);
+-	snd_pcm_hw_constraint_list(runtime, 0, SNDRV_PCM_HW_PARAM_RATE, &hw_rates);
++	ret = snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_BUFFER_TIME, 20, 178000000);
++	if (ret < 0)
++		goto err;
++
++	ret = snd_pcm_hw_constraint_list(runtime, 0, SNDRV_PCM_HW_PARAM_RATE, &hw_rates);
++	if (ret < 0)
++		goto err;
++
+ 	snd_pcm_set_sync(substream);
+ 
+ 	dev_dbg(dai->dev, "%s fe STARTUP tag %d str %p",
+ 		__func__, hdac_stream(host_stream)->stream_tag, substream);
+ 
+ 	return 0;
++
++err:
++	kfree(data);
++	return ret;
  }
  
--void avs_dsp_delete_module(struct avs_dev *adev, u16 module_id, u16 instance_id,
-+void avs_dsp_delete_module(struct avs_dev *adev, u16 module_id, u8 instance_id,
- 			   u8 ppl_instance_id, u8 core_id)
- {
- 	struct avs_module_entry mentry;
-diff --git a/sound/soc/intel/avs/path.h b/sound/soc/intel/avs/path.h
-index 197222c5e008e..657f7b093e805 100644
---- a/sound/soc/intel/avs/path.h
-+++ b/sound/soc/intel/avs/path.h
-@@ -37,7 +37,7 @@ struct avs_path_pipeline {
- 
- struct avs_path_module {
- 	u16 module_id;
--	u16 instance_id;
-+	u8 instance_id;
- 	union avs_gtw_attributes gtw_attrs;
- 
- 	struct avs_tplg_module *template;
-diff --git a/sound/soc/intel/avs/probes.c b/sound/soc/intel/avs/probes.c
-index 70a94201d6a56..275928281c6c6 100644
---- a/sound/soc/intel/avs/probes.c
-+++ b/sound/soc/intel/avs/probes.c
-@@ -18,7 +18,7 @@ static int avs_dsp_init_probe(struct avs_dev *adev, union avs_connector_node_id
- {
- 	struct avs_probe_cfg cfg = {{0}};
- 	struct avs_module_entry mentry;
--	u16 dummy;
-+	u8 dummy;
- 
- 	avs_get_module_entry(adev, &AVS_PROBE_MOD_UUID, &mentry);
- 
+ static void avs_dai_fe_shutdown(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
 -- 
 2.39.2
 
