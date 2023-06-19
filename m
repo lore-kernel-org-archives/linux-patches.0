@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF5610955
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:32:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DCFC433C0;
-	Mon, 19 Jun 2023 10:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117811096D
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:32:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857C3C433C0;
+	Mon, 19 Jun 2023 10:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170766;
-	bh=Ys+J8zyZScPPe4uXqKJZpQIViFuX+QXqtdsc0LeVe9U=;
+	s=korg; t=1687170768;
+	bh=8m1du6GOah3NQgk52bCpmZ/0Uo6WzwgfjlrA6FrWeeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZFn5GfmpH6lijFs6y21BnAvWOd6hBhsv89RW+iFRTDMBSSiW5BvsNjDruMGBNQm9
-	 pRzi2VL2URbc+AeE6GG85oIdA6tH0acBQkSCacshgNoPeAcj0+Z+CaQFM1+qrAMpKC
-	 d1YLiaMmuCyWSgYd+bNkMHb9lbPxj4hZMUQxDyvA=
+	b=2En+cvZ8LdgLf3fW9v3v8IGBKpKkL1nrUgHKYbR8Supmr78J/MZQygqxzEl7NZOoY
+	 WoC8hSESeVHMbsgxt/a1GSf+JlpmxG8Dxz3VhEatNSHdlMDulmmqBc+WekGz4ZeImL
+	 uvigMLUYwRiFHz66iwLEBKDnSh/u+YbsTGFbJZnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Lucero <alejandro.lucero-palau@amd.com>,
-	Martin Habets <habetsm.xilinx@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 027/187] sfc: fix devlink info error handling
-Date: Mon, 19 Jun 2023 12:27:25 +0200
-Message-ID: <20230619102158.952771939@linuxfoundation.org>
+Subject: [PATCH 6.3 028/187] ASoC: Intel: avs: Account for UID of ACPI device
+Date: Mon, 19 Jun 2023 12:27:26 +0200
+Message-ID: <20230619102158.999754053@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -36,152 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alejandro Lucero <alejandro.lucero-palau@amd.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit cfcb942863f6fce9266e1957a021e6c7295dee42 ]
+[ Upstream commit 836855100b87b4dd7a82546131779dc255c18b67 ]
 
-Avoid early devlink info return if errors arise with MCDI commands
-executed for getting the required info from the device. The rationale
-is some commands can fail but later ones could still give useful data.
-Moreover, some nvram partitions could not be present which needs to be
-handled as a non error.
+Configurations with multiple codecs attached to the platform are
+supported but only if each from the set is different. Add new field
+representing the 'Unique ID' so that codecs that share Vendor and Part
+IDs can be differentiated and thus enabling support for such
+configurations.
 
-The specific errors are reported through system messages and if any
-error appears, it will be reported generically through extack.
-
-Fixes 14743ddd2495 ("sfc: add devlink info support for ef100")
-Signed-off-by: Alejandro Lucero <alejandro.lucero-palau@amd.com>
-Acked-by: Martin Habets <habetsm.xilinx@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20230519201711.4073845-6-amadeuszx.slawinski@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/efx_devlink.c | 95 ++++++++++++--------------
- 1 file changed, 45 insertions(+), 50 deletions(-)
+ include/sound/soc-acpi.h              | 1 +
+ sound/soc/intel/avs/board_selection.c | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sfc/efx_devlink.c b/drivers/net/ethernet/sfc/efx_devlink.c
-index 381b805659d39..ef9971cbb695d 100644
---- a/drivers/net/ethernet/sfc/efx_devlink.c
-+++ b/drivers/net/ethernet/sfc/efx_devlink.c
-@@ -171,9 +171,14 @@ static int efx_devlink_info_nvram_partition(struct efx_nic *efx,
- 
- 	rc = efx_mcdi_nvram_metadata(efx, partition_type, NULL, version, NULL,
- 				     0);
-+
-+	/* If the partition does not exist, that is not an error. */
-+	if (rc == -ENOENT)
-+		return 0;
-+
- 	if (rc) {
--		netif_err(efx, drv, efx->net_dev, "mcdi nvram %s: failed\n",
--			  version_name);
-+		netif_err(efx, drv, efx->net_dev, "mcdi nvram %s: failed (rc=%d)\n",
-+			  version_name, rc);
- 		return rc;
+diff --git a/include/sound/soc-acpi.h b/include/sound/soc-acpi.h
+index b38fd25c57295..528279056b3ab 100644
+--- a/include/sound/soc-acpi.h
++++ b/include/sound/soc-acpi.h
+@@ -170,6 +170,7 @@ struct snd_soc_acpi_link_adr {
+ /* Descriptor for SST ASoC machine driver */
+ struct snd_soc_acpi_mach {
+ 	u8 id[ACPI_ID_LEN];
++	const char *uid;
+ 	const struct snd_soc_acpi_codecs *comp_ids;
+ 	const u32 link_mask;
+ 	const struct snd_soc_acpi_link_adr *links;
+diff --git a/sound/soc/intel/avs/board_selection.c b/sound/soc/intel/avs/board_selection.c
+index b2823c2107f77..60f8fb0bff95b 100644
+--- a/sound/soc/intel/avs/board_selection.c
++++ b/sound/soc/intel/avs/board_selection.c
+@@ -443,7 +443,7 @@ static int avs_register_i2s_boards(struct avs_dev *adev)
  	}
  
-@@ -187,36 +192,33 @@ static int efx_devlink_info_nvram_partition(struct efx_nic *efx,
- static int efx_devlink_info_stored_versions(struct efx_nic *efx,
- 					    struct devlink_info_req *req)
- {
--	int rc;
--
--	rc = efx_devlink_info_nvram_partition(efx, req,
--					      NVRAM_PARTITION_TYPE_BUNDLE,
--					      DEVLINK_INFO_VERSION_GENERIC_FW_BUNDLE_ID);
--	if (rc)
--		return rc;
--
--	rc = efx_devlink_info_nvram_partition(efx, req,
--					      NVRAM_PARTITION_TYPE_MC_FIRMWARE,
--					      DEVLINK_INFO_VERSION_GENERIC_FW_MGMT);
--	if (rc)
--		return rc;
--
--	rc = efx_devlink_info_nvram_partition(efx, req,
--					      NVRAM_PARTITION_TYPE_SUC_FIRMWARE,
--					      EFX_DEVLINK_INFO_VERSION_FW_MGMT_SUC);
--	if (rc)
--		return rc;
--
--	rc = efx_devlink_info_nvram_partition(efx, req,
--					      NVRAM_PARTITION_TYPE_EXPANSION_ROM,
--					      EFX_DEVLINK_INFO_VERSION_FW_EXPROM);
--	if (rc)
--		return rc;
-+	int err;
+ 	for (mach = boards->machs; mach->id[0]; mach++) {
+-		if (!acpi_dev_present(mach->id, NULL, -1))
++		if (!acpi_dev_present(mach->id, mach->uid, -1))
+ 			continue;
  
--	rc = efx_devlink_info_nvram_partition(efx, req,
--					      NVRAM_PARTITION_TYPE_EXPANSION_UEFI,
--					      EFX_DEVLINK_INFO_VERSION_FW_UEFI);
--	return rc;
-+	/* We do not care here about the specific error but just if an error
-+	 * happened. The specific error will be reported inside the call
-+	 * through system messages, and if any error happened in any call
-+	 * below, we report it through extack.
-+	 */
-+	err = efx_devlink_info_nvram_partition(efx, req,
-+					       NVRAM_PARTITION_TYPE_BUNDLE,
-+					       DEVLINK_INFO_VERSION_GENERIC_FW_BUNDLE_ID);
-+
-+	err |= efx_devlink_info_nvram_partition(efx, req,
-+						NVRAM_PARTITION_TYPE_MC_FIRMWARE,
-+						DEVLINK_INFO_VERSION_GENERIC_FW_MGMT);
-+
-+	err |= efx_devlink_info_nvram_partition(efx, req,
-+						NVRAM_PARTITION_TYPE_SUC_FIRMWARE,
-+						EFX_DEVLINK_INFO_VERSION_FW_MGMT_SUC);
-+
-+	err |= efx_devlink_info_nvram_partition(efx, req,
-+						NVRAM_PARTITION_TYPE_EXPANSION_ROM,
-+						EFX_DEVLINK_INFO_VERSION_FW_EXPROM);
-+
-+	err |= efx_devlink_info_nvram_partition(efx, req,
-+						NVRAM_PARTITION_TYPE_EXPANSION_UEFI,
-+						EFX_DEVLINK_INFO_VERSION_FW_UEFI);
-+	return err;
- }
- 
- #define EFX_VER_FLAG(_f)	\
-@@ -587,27 +589,20 @@ static int efx_devlink_info_get(struct devlink *devlink,
- {
- 	struct efx_devlink *devlink_private = devlink_priv(devlink);
- 	struct efx_nic *efx = devlink_private->efx;
--	int rc;
-+	int err;
- 
--	/* Several different MCDI commands are used. We report first error
--	 * through extack returning at that point. Specific error
--	 * information via system messages.
-+	/* Several different MCDI commands are used. We report if errors
-+	 * happened through extack. Specific error information via system
-+	 * messages inside the calls.
- 	 */
--	rc = efx_devlink_info_board_cfg(efx, req);
--	if (rc) {
--		NL_SET_ERR_MSG_MOD(extack, "Getting board info failed");
--		return rc;
--	}
--	rc = efx_devlink_info_stored_versions(efx, req);
--	if (rc) {
--		NL_SET_ERR_MSG_MOD(extack, "Getting stored versions failed");
--		return rc;
--	}
--	rc = efx_devlink_info_running_versions(efx, req);
--	if (rc) {
--		NL_SET_ERR_MSG_MOD(extack, "Getting running versions failed");
--		return rc;
--	}
-+	err = efx_devlink_info_board_cfg(efx, req);
-+
-+	err |= efx_devlink_info_stored_versions(efx, req);
-+
-+	err |= efx_devlink_info_running_versions(efx, req);
-+
-+	if (err)
-+		NL_SET_ERR_MSG_MOD(extack, "Errors when getting device info. Check system messages");
- 
- 	return 0;
- }
+ 		if (mach->machine_quirk)
 -- 
 2.39.2
 
