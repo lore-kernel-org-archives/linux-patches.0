@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4117BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:53:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791A4C433C0;
-	Mon, 19 Jun 2023 10:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B220A6FAD
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:53:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4E9C433C8;
+	Mon, 19 Jun 2023 10:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172017;
-	bh=ishWCwdG3VmchRTsy5Re3R5fyx+6CRMx67va0Qpv8As=;
+	s=korg; t=1687172020;
+	bh=fRfs3QQzuGQrO6m8FGhtVxjE69a9YGUKVMPjv4ccD0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5g+lMWzJErCN1wNNCZl/dvxppU/CKpqVZGVhEb/wecqM0jOBl4GVF6dd8WhnpGtX
-	 YI8oMNdnWlb9eWot5MOyqiDoG/EX634z0+r9tf5oFCclNlugUzQPdQfDmnGTSutkHM
-	 XKdHVd++MxVguwL0oo2G5Y32SC2jzg/RBsxKvkGQ=
+	b=PnOfrWHf/Wa+aPEP4sbVx1zO5jk+CQ79ZLkdLh1dOfdwWKSG13G/MMqxChvnFN8WF
+	 3Xt6AF3G8+bUXAVKTr9s6T1/MCpqkvjfRWvr1gd15FOkhlYLkmnsyUt6ru4so9gJN6
+	 ZwSJ0J3TAr9FMVNj8ULNgyUiU9dEKHAHHaesgW9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 59/64] afs: Fix vlserver probe RTT handling
-Date: Mon, 19 Jun 2023 12:30:55 +0200
-Message-ID: <20230619102135.875423267@linuxfoundation.org>
+Subject: [PATCH 5.4 50/64] sctp: fix an error code in sctp_sf_eat_auth()
+Date: Mon, 19 Jun 2023 12:30:46 +0200
+Message-ID: <20230619102135.472454954@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -37,46 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit ba00b190670809c1a89326d80de96d714f6004f2 ]
+[ Upstream commit 75e6def3b26736e7ff80639810098c9074229737 ]
 
-In the same spirit as commit ca57f02295f1 ("afs: Fix fileserver probe
-RTT handling"), don't rule out using a vlserver just because there
-haven't been enough packets yet to calculate a real rtt.  Always set the
-server's probe rtt from the estimate provided by rxrpc_kernel_get_srtt,
-which is capped at 1 second.
+The sctp_sf_eat_auth() function is supposed to enum sctp_disposition
+values and returning a kernel error code will cause issues in the
+caller.  Change -ENOMEM to SCTP_DISPOSITION_NOMEM.
 
-This could lead to EDESTADDRREQ errors when accessing a cell for the
-first time, even though the vl servers are known and have responded to a
-probe.
-
-Fixes: 1d4adfaf6574 ("rxrpc: Make rxrpc_kernel_get_srtt() indicate validity")
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: linux-afs@lists.infradead.org
-Link: http://lists.infradead.org/pipermail/linux-afs/2023-June/006746.html
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/vl_probe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sctp/sm_statefuns.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/afs/vl_probe.c b/fs/afs/vl_probe.c
-index 081b7e5b13f58..163069d9fc161 100644
---- a/fs/afs/vl_probe.c
-+++ b/fs/afs/vl_probe.c
-@@ -92,8 +92,8 @@ void afs_vlserver_probe_result(struct afs_call *call)
- 		}
- 	}
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index 1d2f633c6c7c3..67df4022853ba 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -4379,7 +4379,7 @@ enum sctp_disposition sctp_sf_eat_auth(struct net *net,
+ 				    SCTP_AUTH_NEW_KEY, GFP_ATOMIC);
  
--	if (rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us) &&
--	    rtt_us < server->probe.rtt) {
-+	rxrpc_kernel_get_srtt(call->net->socket, call->rxcall, &rtt_us);
-+	if (rtt_us < server->probe.rtt) {
- 		server->probe.rtt = rtt_us;
- 		alist->preferred = index;
- 		have_result = true;
+ 		if (!ev)
+-			return -ENOMEM;
++			return SCTP_DISPOSITION_NOMEM;
+ 
+ 		sctp_add_cmd_sf(commands, SCTP_CMD_EVENT_ULP,
+ 				SCTP_ULPEVENT(ev));
 -- 
 2.39.2
 
