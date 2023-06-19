@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B53610954
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F05C433C0;
-	Mon, 19 Jun 2023 10:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F191095F
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:31:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6E6C433C0;
+	Mon, 19 Jun 2023 10:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170658;
-	bh=9fZRLWhnGQgFi9XA2dG7hAL9nO90gc2HWWvz1bl8Lb0=;
+	s=korg; t=1687170712;
+	bh=/I/C8cIaL5gPR9Fb6/NVrBtqeUweLiRSbCmm5pXEwRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+wtnf6vb6RDRKJLE5zCI+sv5nABeLu1QzIjOihNjeJXgy9dY1/baLXhyH6MtlstA
-	 d25jeyoDNiiJaYnQmrTYp+kw3gPeFqGTLZCImd+zYMxrffvo1ip+CDZD15QMzCesE6
-	 M8HPocqoZeSjkzdScPOWST0qVTWsRMT4txW2zK1c=
+	b=CZoTqalVW29sDym9fufp8QqwgRp1jRxbE4wq1BcXQcH/91X4sQjr6s0RNkjCkcFV9
+	 q8EAq3kbEvVUaYwePh1fUdvDKeq6871nmxUv936mDZcbmHRAaMBrz8aiquzh6RlAgq
+	 FrEpRsydPzfIChB2PFKkXnG9yJpN9DEft3Gz3l4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 18/32] netfilter: nfnetlink: skip error delivery on batch in case of ENOMEM
-Date: Mon, 19 Jun 2023 12:29:06 +0200
-Message-ID: <20230619102128.507478587@linuxfoundation.org>
+Subject: [PATCH 6.3 001/187] x86/head/64: Switch to KERNEL_CS as soon as new GDT is installed
+Date: Mon, 19 Jun 2023 12:26:59 +0200
+Message-ID: <20230619102157.683564289@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
-References: <20230619102127.461443957@linuxfoundation.org>
+In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
+References: <20230619102157.579823843@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,34 +38,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-[ Upstream commit a1a64a151dae8ac3581c1cbde44b672045cb658b ]
+[ Upstream commit a37f2699c36a7f6606ba3300f243227856c5ad6b ]
 
-If caller reports ENOMEM, then stop iterating over the batch and send a
-single netlink message to userspace to report OOM.
+The call to startup_64_setup_env() will install a new GDT but does not
+actually switch to using the KERNEL_CS entry until returning from the
+function call.
 
-Fixes: cbb8125eb40b ("netfilter: nfnetlink: deliver netlink errors on batch completion")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Commit bcce82908333 ("x86/sev: Detect/setup SEV/SME features earlier in
+boot") moved the call to sme_enable() earlier in the boot process and in
+between the call to startup_64_setup_env() and the switch to KERNEL_CS.
+An SEV-ES or an SEV-SNP guest will trigger #VC exceptions during the call
+to sme_enable() and if the CS pushed on the stack as part of the exception
+and used by IRETQ is not mapped by the new GDT, then problems occur.
+Today, the current CS when entering startup_64 is the kernel CS value
+because it was set up by the decompressor code, so no issue is seen.
+
+However, a recent patchset that looked to avoid using the legacy
+decompressor during an EFI boot exposed this bug. At entry to startup_64,
+the CS value is that of EFI and is not mapped in the new kernel GDT. So
+when a #VC exception occurs, the CS value used by IRETQ is not valid and
+the guest boot crashes.
+
+Fix this issue by moving the block that switches to the KERNEL_CS value to
+be done immediately after returning from startup_64_setup_env().
+
+Fixes: bcce82908333 ("x86/sev: Detect/setup SEV/SME features earlier in boot")
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Joerg Roedel <jroedel@suse.de>
+Link: https://lore.kernel.org/all/6ff1f28af2829cc9aea357ebee285825f90a431f.1684340801.git.thomas.lendacky%40amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/head_64.S | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
-index 2cee032af46d2..96ae1c4ad9a91 100644
---- a/net/netfilter/nfnetlink.c
-+++ b/net/netfilter/nfnetlink.c
-@@ -411,7 +411,8 @@ static void nfnetlink_rcv_batch(struct sk_buff *skb, struct nlmsghdr *nlh,
- 			 * processed, this avoids that the same error is
- 			 * reported several times when replaying the batch.
- 			 */
--			if (nfnl_err_add(&err_list, nlh, err, &extack) < 0) {
-+			if (err == -ENOMEM ||
-+			    nfnl_err_add(&err_list, nlh, err, &extack) < 0) {
- 				/* We failed to enqueue an error, reset the
- 				 * list of errors and send OOM to userspace
- 				 * pointing to the batch header.
+diff --git a/arch/x86/kernel/head_64.S b/arch/x86/kernel/head_64.S
+index 222efd4a09bc8..f047723c6ca5d 100644
+--- a/arch/x86/kernel/head_64.S
++++ b/arch/x86/kernel/head_64.S
+@@ -85,6 +85,15 @@ SYM_CODE_START_NOALIGN(startup_64)
+ 	call	startup_64_setup_env
+ 	popq	%rsi
+ 
++	/* Now switch to __KERNEL_CS so IRET works reliably */
++	pushq	$__KERNEL_CS
++	leaq	.Lon_kernel_cs(%rip), %rax
++	pushq	%rax
++	lretq
++
++.Lon_kernel_cs:
++	UNWIND_HINT_EMPTY
++
+ #ifdef CONFIG_AMD_MEM_ENCRYPT
+ 	/*
+ 	 * Activate SEV/SME memory encryption if supported/enabled. This needs to
+@@ -98,15 +107,6 @@ SYM_CODE_START_NOALIGN(startup_64)
+ 	popq	%rsi
+ #endif
+ 
+-	/* Now switch to __KERNEL_CS so IRET works reliably */
+-	pushq	$__KERNEL_CS
+-	leaq	.Lon_kernel_cs(%rip), %rax
+-	pushq	%rax
+-	lretq
+-
+-.Lon_kernel_cs:
+-	UNWIND_HINT_EMPTY
+-
+ 	/* Sanitize CPU configuration */
+ 	call verify_cpu
+ 
 -- 
 2.39.2
 
