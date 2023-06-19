@@ -1,60 +1,110 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91E48BE71;
-	Mon, 19 Jun 2023 09:29:28 +0000 (UTC)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0F30A12FC;
-	Mon, 19 Jun 2023 02:30:11 -0700 (PDT)
-Received: from ewhatever.cambridge.arm.com (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id E52893F64C;
-	Mon, 19 Jun 2023 02:29:25 -0700 (PDT)
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	james.clark@arm.com,
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7206C2E0
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:29:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2B6C433C8;
+	Mon, 19 Jun 2023 10:29:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1687170568;
+	bh=N4srQR9OZBgSCwNEzl/+0LuTOtskbuyIIi8sxgsCfrU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=MtwhurrL5Fcd5jzdmjhEIPTIG4satCihGpcS5PIaSKFfhomzF+4e79TaFEFp64zsA
+	 hU8qNNdyQOx0+SE5aFTcf3r4jgzGpXm+YFNWrNjJA8PLwDrBQZtIFj9Rk5b/+1HqTm
+	 GaCuvaOC/Fp06NRa8/YSYSYjt1OwUh09f1t00U/o=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	llvm@lists.linux.dev,
-	mike.leach@linaro.org,
-	coresight@lists.linaro.org,
-	quic_hazha@quicinc.com,
-	leo.yan@linaro.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH] coresight: dummy: Update type of mode parameter in dummy_{sink,source}_enable()
-Date: Mon, 19 Jun 2023 10:29:19 +0100
-Message-Id: <168716691768.483231.16849638798350952643.b4-ty@arm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230616-coresight-dummy-fix-kcfi-warnings-v1-1-c55c64f8f0f5@kernel.org>
-References: <20230616-coresight-dummy-fix-kcfi-warnings-v1-1-c55c64f8f0f5@kernel.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 01/32] power: supply: ab8500: Fix external_power_changed race
+Date: Mon, 19 Jun 2023 12:28:49 +0200
+Message-ID: <20230619102127.551367762@linuxfoundation.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
+References: <20230619102127.461443957@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 16 Jun 2023 09:41:30 -0700, Nathan Chancellor wrote:
-> Clang's kernel Control Flow Integrity (kCFI) is a compiler-based
-> security mitigation that ensures the target of an indirect function call
-> matches the expected type of the call and trapping if they do not match
-> exactly. The warning -Wincompatible-function-pointer-types-strict aims
-> to catch these issues at compile time, which reveals:
-> 
->   drivers/hwtracing/coresight/coresight-dummy.c:53:12: error: incompatible function pointer types initializing 'int (*)(struct coresight_device *, struct perf_event *, enum cs_mode)' with an expression of type 'int (struct coresight_device *, struct perf_event *, u32)' (aka 'int (struct coresight_device *, struct perf_event *, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
->      53 |         .enable = dummy_source_enable,
->         |                   ^~~~~~~~~~~~~~~~~~~
->   drivers/hwtracing/coresight/coresight-dummy.c:62:12: error: incompatible function pointer types initializing 'int (*)(struct coresight_device *, enum cs_mode, void *)' with an expression of type 'int (struct coresight_device *, u32, void *)' (aka 'int (struct coresight_device *, unsigned int, void *)') [-Werror,-Wincompatible-function-pointer-types-strict]
->      62 |         .enable = dummy_sink_enable,
->         |                   ^~~~~~~~~~~~~~~~~
->   2 errors generated.
-> 
-> [...]
+From: Hans de Goede <hdegoede@redhat.com>
 
-Applied, thanks!
+[ Upstream commit a5299ce4e96f3e8930e9c051b28d8093ada87b08 ]
 
-[1/1] coresight: dummy: Update type of mode parameter in dummy_{sink,source}_enable()
-      commit: 185891f03f712639c082e08fc9986ff214b5d617
+ab8500_btemp_external_power_changed() dereferences di->btemp_psy,
+which gets sets in ab8500_btemp_probe() like this:
 
-Best regards,
+        di->btemp_psy = devm_power_supply_register(dev, &ab8500_btemp_desc,
+                                                   &psy_cfg);
+
+As soon as devm_power_supply_register() has called device_add()
+the external_power_changed callback can get called. So there is a window
+where ab8500_btemp_external_power_changed() may get called while
+di->btemp_psy has not been set yet leading to a NULL pointer dereference.
+
+Fixing this is easy. The external_power_changed callback gets passed
+the power_supply which will eventually get stored in di->btemp_psy,
+so ab8500_btemp_external_power_changed() can simply directly use
+the passed in psy argument which is always valid.
+
+And the same applies to ab8500_fg_external_power_changed().
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/power/supply/ab8500_btemp.c | 6 ++----
+ drivers/power/supply/ab8500_fg.c    | 6 ++----
+ 2 files changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
+index 97423a04fc0f0..c58644a3345ce 100644
+--- a/drivers/power/supply/ab8500_btemp.c
++++ b/drivers/power/supply/ab8500_btemp.c
+@@ -976,10 +976,8 @@ static int ab8500_btemp_get_ext_psy_data(struct device *dev, void *data)
+  */
+ static void ab8500_btemp_external_power_changed(struct power_supply *psy)
+ {
+-	struct ab8500_btemp *di = power_supply_get_drvdata(psy);
+-
+-	class_for_each_device(power_supply_class, NULL,
+-		di->btemp_psy, ab8500_btemp_get_ext_psy_data);
++	class_for_each_device(power_supply_class, NULL, psy,
++			      ab8500_btemp_get_ext_psy_data);
+ }
+ 
+ /* ab8500 btemp driver interrupts and their respective isr */
+diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
+index b00844103a07a..f99e248f6aed3 100644
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -2384,10 +2384,8 @@ static int ab8500_fg_init_hw_registers(struct ab8500_fg *di)
+  */
+ static void ab8500_fg_external_power_changed(struct power_supply *psy)
+ {
+-	struct ab8500_fg *di = power_supply_get_drvdata(psy);
+-
+-	class_for_each_device(power_supply_class, NULL,
+-		di->fg_psy, ab8500_fg_get_ext_psy_data);
++	class_for_each_device(power_supply_class, NULL, psy,
++			      ab8500_fg_get_ext_psy_data);
+ }
+ 
+ /**
 -- 
-Suzuki K Poulose <suzuki.poulose@arm.com>
+2.39.2
+
+
+
