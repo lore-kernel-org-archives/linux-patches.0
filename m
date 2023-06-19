@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8975381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8692FC433C0;
-	Mon, 19 Jun 2023 10:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A035381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494B7C433C0;
+	Mon, 19 Jun 2023 10:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171611;
-	bh=clj61MxufCeo8r3bfqXpiJTcJgIQC86Je0XgB64GOyg=;
+	s=korg; t=1687171614;
+	bh=oifwgF/xbbszUp9o/4+B8jtytDPKuIYtIXlp1FHcjB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XJdrHcwcD3ulGJ9HWnf72Euag+tTLJ97kNooELO7cHlVNo+PCtmoQCVqQllbSZys2
-	 TaxoRx1RYYIXmdeIH3i6Y/AFxoW6txe8YD6R62cHz5yVeUhI9SUpNCUc1iRGDQ/raV
-	 hl7E2om9UGy0tmDIdNIBs6EBT+ETRvHsdRz4VFn4=
+	b=Hpo/Cs3WZGz79y5Q9jiRyXx4R3QzLefNbSzZ2ZvmNyu/pEK6Ezgd/PPHLZcQcBsdt
+	 mr9nQgH8KQX6fJL0jB1/km08p9ivlf5pg1+vwdE/mQLnDxc1ndQpYhsaBCoG8VGZtJ
+	 Uq5ybJZJtZUdY/QT2KyvTBXHQ8I7bc4ez2cmEh/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	=?UTF-8?q?Lisa=20Chen=20 ?= <minjie.chen@geekplus.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/166] spi: cadence-quadspi: Add missing check for dma_set_mask
-Date: Mon, 19 Jun 2023 12:29:31 +0200
-Message-ID: <20230619102159.358854047@linuxfoundation.org>
+Subject: [PATCH 6.1 095/166] spi: fsl-dspi: avoid SCK glitches with continuous transfers
+Date: Mon, 19 Jun 2023 12:29:32 +0200
+Message-ID: <20230619102159.400202165@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -35,39 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 947c70a213769f60e9d5aca2bc88b50a1cfaf5a6 ]
+[ Upstream commit c5c31fb71f16ba75bad4ade208abbae225305b65 ]
 
-Add check for dma_set_mask() and return the error if it fails.
+The DSPI controller has configurable timing for
 
-Fixes: 1a6f854f7daa ("spi: cadence-quadspi: Add Xilinx Versal external DMA support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230606093859.27818-1-jiasheng@iscas.ac.cn
+(a) tCSC: the interval between the assertion of the chip select and the
+    first clock edge
+
+(b) tASC: the interval between the last clock edge and the deassertion
+    of the chip select
+
+What is a bit surprising, but is documented in the figure "Example of
+continuous transfer (CPHA=1, CONT=1)" in the datasheet, is that when the
+chip select stays asserted between multiple TX FIFO writes, the tCSC and
+tASC times still apply. With CONT=1, chip select remains asserted, but
+SCK takes a break and goes to the idle state for tASC + tCSC ns.
+
+In other words, the default values (of 0 and 0 ns) result in SCK
+glitches where the SCK transition to the idle state, as well as the SCK
+transition from the idle state, will have no delay in between, and it
+may appear that a SCK cycle has simply gone missing. The resulting
+timing violation might cause data corruption in many peripherals, as
+their chip select is asserted.
+
+The driver has device tree bindings for tCSC ("fsl,spi-cs-sck-delay")
+and tASC ("fsl,spi-sck-cs-delay"), but these are only specified to apply
+when the chip select toggles in the first place, and this timing
+characteristic depends on each peripheral. Many peripherals do not have
+explicit timing requirements, so many device trees do not have these
+properties present at all.
+
+Nonetheless, the lack of SCK glitches is a common sense requirement, and
+since the SCK stays in the idle state during transfers for tCSC+tASC ns,
+and that in itself should look like half a cycle, then let's ensure that
+tCSC and tASC are at least a quarter of a SCK period, such that their
+sum is at least half of one.
+
+Fixes: 95bf15f38641 ("spi: fsl-dspi: Add ~50ns delay between cs and sck")
+Reported-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
+Debugged-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
+Tested-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20230529223402.1199503-1-vladimir.oltean@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/spi/spi-fsl-dspi.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 30fd4bc90580e..b371e4eb41ec3 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1697,8 +1697,11 @@ static int cqspi_probe(struct platform_device *pdev)
- 			cqspi->slow_sram = true;
- 
- 		if (of_device_is_compatible(pdev->dev.of_node,
--					    "xlnx,versal-ospi-1.0"))
--			dma_set_mask(&pdev->dev, DMA_BIT_MASK(64));
-+					    "xlnx,versal-ospi-1.0")) {
-+			ret = dma_set_mask(&pdev->dev, DMA_BIT_MASK(64));
-+			if (ret)
-+				goto probe_reset_failed;
-+		}
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index a33e547b7d395..01930b52c4fb8 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -975,7 +975,9 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
+ static int dspi_setup(struct spi_device *spi)
+ {
+ 	struct fsl_dspi *dspi = spi_controller_get_devdata(spi->controller);
++	u32 period_ns = DIV_ROUND_UP(NSEC_PER_SEC, spi->max_speed_hz);
+ 	unsigned char br = 0, pbr = 0, pcssck = 0, cssck = 0;
++	u32 quarter_period_ns = DIV_ROUND_UP(period_ns, 4);
+ 	u32 cs_sck_delay = 0, sck_cs_delay = 0;
+ 	struct fsl_dspi_platform_data *pdata;
+ 	unsigned char pasc = 0, asc = 0;
+@@ -1003,6 +1005,19 @@ static int dspi_setup(struct spi_device *spi)
+ 		sck_cs_delay = pdata->sck_cs_delay;
  	}
  
- 	ret = devm_request_irq(dev, irq, cqspi_irq_handler, 0,
++	/* Since tCSC and tASC apply to continuous transfers too, avoid SCK
++	 * glitches of half a cycle by never allowing tCSC + tASC to go below
++	 * half a SCK period.
++	 */
++	if (cs_sck_delay < quarter_period_ns)
++		cs_sck_delay = quarter_period_ns;
++	if (sck_cs_delay < quarter_period_ns)
++		sck_cs_delay = quarter_period_ns;
++
++	dev_dbg(&spi->dev,
++		"DSPI controller timing params: CS-to-SCK delay %u ns, SCK-to-CS delay %u ns\n",
++		cs_sck_delay, sck_cs_delay);
++
+ 	clkrate = clk_get_rate(dspi->clk);
+ 	hz_to_spi_baud(&pbr, &br, spi->max_speed_hz, clkrate);
+ 
 -- 
 2.39.2
 
