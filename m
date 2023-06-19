@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726B41095B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997DAC433C8;
-	Mon, 19 Jun 2023 10:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBC91096A
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7732BC433C0;
+	Mon, 19 Jun 2023 10:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170841;
-	bh=apa5LjQUCPwHfND7dLxHBsRZpGi5SwgtmBlh59yV+Bw=;
+	s=korg; t=1687170843;
+	bh=yYRZOfSY4K/fBcSUl6kbFY/O8J+kUVfRISDeqiFaAuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Th1P2tOIH3O1eW79Ax9PfyVVZOqm6xikuMDPFT10lsDWOcGHfZBEE++1dlekVgY6F
-	 auEedqcjoepEDw9YXB1JLh4USTu6fFrCJ+quD65T0w61PqYWEwuS9f2Q8Bv7pPLXZf
-	 dsVthHWqnKnj7j2nogq9y2nzH34VMjEL/z8GVmik=
+	b=wMImtDBbPWFwPO+jXqI0KrP7nsnl3tAgALWH+LSCIz7JqCl5HPTIxrnA5MPnjEYIZ
+	 mhtkIBojAnchu5Zybbrq//BI0TkMtwPw76rngMcIZ/qx3Gm2cOcJ+7151Fpf26j2Bu
+	 A2JcEFUQf2aqO0IG49lDl24dx/c7jOKjb8xq1YFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liviu Dudau <liviu@dudau.co.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 037/187] mips: Move initrd_start check after initrd address sanitisation.
-Date: Mon, 19 Jun 2023 12:27:35 +0200
-Message-ID: <20230619102159.420385902@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+33494cd0df2ec2931851@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 055/187] nilfs2: fix possible out-of-bounds segment allocation in resize ioctl
+Date: Mon, 19 Jun 2023 12:27:53 +0200
+Message-ID: <20230619102200.327737863@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,52 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liviu Dudau <liviu@dudau.co.uk>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 4897a898a216058dec55e5e5902534e6e224fcdf ]
+commit fee5eaecca86afa544355569b831c1f90f334b85 upstream.
 
-PAGE_OFFSET is technically a virtual address so when checking the value of
-initrd_start against it we should make sure that it has been sanitised from
-the values passed by the bootloader. Without this change, even with a bootloader
-that passes correct addresses for an initrd, we are failing to load it on MT7621
-boards, for example.
+Syzbot reports that in its stress test for resize ioctl, the log writing
+function nilfs_segctor_do_construct hits a WARN_ON in
+nilfs_segctor_truncate_segments().
 
-Signed-off-by: Liviu Dudau <liviu@dudau.co.uk>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It turned out that there is a problem with the current implementation of
+the resize ioctl, which changes the writable range on the device (the
+range of allocatable segments) at the end of the resize process.
+
+This order is necessary for file system expansion to avoid corrupting the
+superblock at trailing edge.  However, in the case of a file system
+shrink, if log writes occur after truncating out-of-bounds trailing
+segments and before the resize is complete, segments may be allocated from
+the truncated space.
+
+The userspace resize tool was fine as it limits the range of allocatable
+segments before performing the resize, but it can run into this issue if
+the resize ioctl is called alone.
+
+Fix this issue by changing nilfs_sufile_resize() to update the range of
+allocatable segments immediately after successful truncation of segment
+space in case of file system shrink.
+
+Link: https://lkml.kernel.org/r/20230524094348.3784-1-konishi.ryusuke@gmail.com
+Fixes: 4e33f9eab07e ("nilfs2: implement resize ioctl")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+33494cd0df2ec2931851@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/0000000000005434c405fbbafdc5@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/setup.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/nilfs2/sufile.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/mips/kernel/setup.c b/arch/mips/kernel/setup.c
-index f1c88f8a1dc51..81dbb4ef52317 100644
---- a/arch/mips/kernel/setup.c
-+++ b/arch/mips/kernel/setup.c
-@@ -158,10 +158,6 @@ static unsigned long __init init_initrd(void)
- 		pr_err("initrd start must be page aligned\n");
- 		goto disable;
- 	}
--	if (initrd_start < PAGE_OFFSET) {
--		pr_err("initrd start < PAGE_OFFSET\n");
--		goto disable;
--	}
+--- a/fs/nilfs2/sufile.c
++++ b/fs/nilfs2/sufile.c
+@@ -779,6 +779,15 @@ int nilfs_sufile_resize(struct inode *su
+ 			goto out_header;
  
- 	/*
- 	 * Sanitize initrd addresses. For example firmware
-@@ -174,6 +170,11 @@ static unsigned long __init init_initrd(void)
- 	initrd_end = (unsigned long)__va(end);
- 	initrd_start = (unsigned long)__va(__pa(initrd_start));
- 
-+	if (initrd_start < PAGE_OFFSET) {
-+		pr_err("initrd start < PAGE_OFFSET\n");
-+		goto disable;
-+	}
+ 		sui->ncleansegs -= nsegs - newnsegs;
 +
- 	ROOT_DEV = Root_RAM0;
- 	return PFN_UP(end);
- disable:
--- 
-2.39.2
-
++		/*
++		 * If the sufile is successfully truncated, immediately adjust
++		 * the segment allocation space while locking the semaphore
++		 * "mi_sem" so that nilfs_sufile_alloc() never allocates
++		 * segments in the truncated space.
++		 */
++		sui->allocmax = newnsegs - 1;
++		sui->allocmin = 0;
+ 	}
+ 
+ 	kaddr = kmap_atomic(header_bh->b_page);
 
 
