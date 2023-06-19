@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1621A3C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:35:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833D0C433C0;
-	Mon, 19 Jun 2023 10:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60EF3C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:35:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D782C433C0;
+	Mon, 19 Jun 2023 10:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170916;
-	bh=OayOLNFEyo7wl8ZxiIerz/2k2gsc1pOuj+NXWQg+FYk=;
+	s=korg; t=1687170919;
+	bh=s9mrKwL6HcmwOo2sdypbeGAs4lUW4dfeHZAYUaQRDYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kiAW4sc7IKy13Fx0TaVUkScba4cJ3s+a16i7yYuMaZT26fYn9I7eaRf1lYPIUak0R
-	 4+WEfYA3eoVNkudphUHNxLN5A8DdcETM0A+QQDzWO9g1obHqV4NKRi6QxdF1Qcgzc8
-	 byre4BD1JKggPHrgGToxR8NmNVhS/3EM10EcfuSU=
+	b=h77SK0rs+maGIqP39mSCeXer0BYD8qrB+JuKObDIeQerCV/Y1WLQCkN5r72UPYToM
+	 2LVIjgkCv+7FrMkUl+7EOF7a/dQhRZ+DLoYCSi5LC+Ih9wnLztCAg+0TLIqOnlh09p
+	 CFCBy6bXKjmEI8eesKYr1yuArsham1ROK8bHvIyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Stylon Wang <stylon.wang@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.3 082/187] drm/amd/display: edp do not add non-edid timings
-Date: Mon, 19 Jun 2023 12:28:20 +0200
-Message-ID: <20230619102201.568996220@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.3 083/187] drm/amd: Make sure image is written to trigger VBIOS image update flow
+Date: Mon, 19 Jun 2023 12:28:21 +0200
+Message-ID: <20230619102201.610617892@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -38,45 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit e749dd10e5f292061ad63d2b030194bf7d7d452c upstream.
+commit 3eb1a3a04056ba3df3205e169b8acc9da0c65a94 upstream.
 
-[Why] most edp support only timings from edid. applying
-non-edid timings, especially those timings out of edp
-bandwidth, may damage edp.
+The VBIOS image update flow requires userspace to:
+1) Write the image to `psp_vbflash`
+2) Read `psp_vbflash`
+3) Poll `psp_vbflash_status` to check for completion
 
-[How] do not add non-edid timings for edp.
+If userspace reads `psp_vbflash` before writing an image, it's
+possible that it causes problems that can put the dGPU into an invalid
+state.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+Explicitly check that an image has been written before letting a read
+succeed.
+
 Cc: stable@vger.kernel.org
-Acked-by: Stylon Wang <stylon.wang@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Fixes: 8424f2ccb3c0 ("drm/amdgpu/psp: Add vbflash sysfs interface support")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7170,7 +7170,13 @@ static int amdgpu_dm_connector_get_modes
- 				drm_add_modes_noedid(connector, 640, 480);
- 	} else {
- 		amdgpu_dm_connector_ddc_get_modes(connector, edid);
--		amdgpu_dm_connector_add_common_modes(encoder, connector);
-+		/* most eDP supports only timings from its edid,
-+		 * usually only detailed timings are available
-+		 * from eDP edid. timings which are not from edid
-+		 * may damage eDP
-+		 */
-+		if (connector->connector_type != DRM_MODE_CONNECTOR_eDP)
-+			amdgpu_dm_connector_add_common_modes(encoder, connector);
- 		amdgpu_dm_connector_add_freesync_modes(connector, edid);
- 	}
- 	amdgpu_dm_fbc_init(connector);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -3538,6 +3538,9 @@ static ssize_t amdgpu_psp_vbflash_read(s
+ 	void *fw_pri_cpu_addr;
+ 	int ret;
+ 
++	if (adev->psp.vbflash_image_size == 0)
++		return -EINVAL;
++
+ 	dev_info(adev->dev, "VBIOS flash to PSP started");
+ 
+ 	ret = amdgpu_bo_create_kernel(adev, adev->psp.vbflash_image_size,
 
 
