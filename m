@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C801095F
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704CBC433C0;
-	Mon, 19 Jun 2023 10:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016AA10961
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:30:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710EAC433C8;
+	Mon, 19 Jun 2023 10:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170627;
-	bh=0fLyNTZ4hhugsgYS/zeY7m0ISDGhU0boRxpRpOmeDBw=;
+	s=korg; t=1687170630;
+	bh=YWgqQoB9YcYxt973V/BSWSpvnzGx4ljnsi+xNH+dHLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d3ybYvYeVhe8hNGalKoF2T/VP/Go56i+N/+ILuaePo6W6K0+mZ9UF1hqFjon2Ymhn
-	 dFySHtZQnaOTj/DIRfPmStwstkFb9Ehtbt44uDWRYKrEyEfBMObmROzTLK9ug9C/vx
-	 VJWIhbheLyqHL7qxf6mYiTVRDtXuZKxWTPfhM+3A=
+	b=wyv+6/EMqzqq8OWpFYGkDyfvfKdCVM03Kgif1r6qThLqwq9PN7JI0jXYx/7i7RdY0
+	 w3b6kFZJNbQGu/Bt6AXwWcNiS895/1SGhma2v7WvjOgwlIgSKRa01yvFeiYVrL/HC4
+	 yuU9Ldets+4oS3J0XR4gg8/hAa/TR1i2YhLwBZ2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 30/32] neighbour: delete neigh_lookup_nodev as not used
-Date: Mon, 19 Jun 2023 12:29:18 +0200
-Message-ID: <20230619102129.130942122@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Alyssa Ross <hi@alyssa.is>
+Subject: [PATCH 4.14 31/32] powerpc: Fix defconfig choice logic when cross compiling
+Date: Mon, 19 Jun 2023 12:29:19 +0200
+Message-ID: <20230619102129.192773653@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
 References: <20230619102127.461443957@linuxfoundation.org>
@@ -36,75 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 76b9bf965c98c9b53ef7420b3b11438dbd764f92 upstream.
+commit af5cd05de5dd38cf25d14ea4d30ae9b791d2420b upstream.
 
-neigh_lookup_nodev isn't used in the kernel after removal
-of DECnet. So let's remove it.
+Our logic for choosing defconfig doesn't work well in some situations.
 
-Fixes: 1202cdd66531 ("Remove DECnet support from kernel")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/eb5656200d7964b2d177a36b77efa3c597d6d72d.1678267343.git.leonro@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For example if you're on a ppc64le machine but you specify a non-empty
+CROSS_COMPILE, in order to use a non-default toolchain, then defconfig
+will give you ppc64_defconfig (big endian):
+
+  $ make CROSS_COMPILE=~/toolchains/gcc-8/bin/powerpc-linux- defconfig
+  *** Default configuration is based on 'ppc64_defconfig'
+
+This is because we assume that CROSS_COMPILE being set means we
+can't be on a ppc machine and rather than checking we just default to
+ppc64_defconfig.
+
+We should just ignore CROSS_COMPILE, instead check the machine with
+uname and if it's one of ppc, ppc64 or ppc64le then use that
+defconfig. If it's none of those then we fall back to ppc64_defconfig.
+
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/neighbour.h |    2 --
- net/core/neighbour.c    |   31 -------------------------------
- 2 files changed, 33 deletions(-)
+ arch/powerpc/Makefile |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/include/net/neighbour.h
-+++ b/include/net/neighbour.h
-@@ -299,8 +299,6 @@ void neigh_table_init(int index, struct
- int neigh_table_clear(int index, struct neigh_table *tbl);
- struct neighbour *neigh_lookup(struct neigh_table *tbl, const void *pkey,
- 			       struct net_device *dev);
--struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
--				     const void *pkey);
- struct neighbour *__neigh_create(struct neigh_table *tbl, const void *pkey,
- 				 struct net_device *dev, bool want_ref);
- static inline struct neighbour *neigh_create(struct neigh_table *tbl,
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -474,37 +474,6 @@ struct neighbour *neigh_lookup(struct ne
- }
- EXPORT_SYMBOL(neigh_lookup);
+--- a/arch/powerpc/Makefile
++++ b/arch/powerpc/Makefile
+@@ -29,11 +29,10 @@ endif
  
--struct neighbour *neigh_lookup_nodev(struct neigh_table *tbl, struct net *net,
--				     const void *pkey)
--{
--	struct neighbour *n;
--	int key_len = tbl->key_len;
--	u32 hash_val;
--	struct neigh_hash_table *nht;
--
--	NEIGH_CACHE_STAT_INC(tbl, lookups);
--
--	rcu_read_lock_bh();
--	nht = rcu_dereference_bh(tbl->nht);
--	hash_val = tbl->hash(pkey, NULL, nht->hash_rnd) >> (32 - nht->hash_shift);
--
--	for (n = rcu_dereference_bh(nht->hash_buckets[hash_val]);
--	     n != NULL;
--	     n = rcu_dereference_bh(n->next)) {
--		if (!memcmp(n->primary_key, pkey, key_len) &&
--		    net_eq(dev_net(n->dev), net)) {
--			if (!refcount_inc_not_zero(&n->refcnt))
--				n = NULL;
--			NEIGH_CACHE_STAT_INC(tbl, hits);
--			break;
--		}
--	}
--
--	rcu_read_unlock_bh();
--	return n;
--}
--EXPORT_SYMBOL(neigh_lookup_nodev);
--
- struct neighbour *__neigh_create(struct neigh_table *tbl, const void *pkey,
- 				 struct net_device *dev, bool want_ref)
- {
+ export CROSS32CC CROSS32AR
+ 
+-ifeq ($(CROSS_COMPILE),)
+-KBUILD_DEFCONFIG := $(shell uname -m)_defconfig
+-else
+-KBUILD_DEFCONFIG := ppc64_defconfig
+-endif
++# If we're on a ppc/ppc64/ppc64le machine use that defconfig, otherwise just use
++# ppc64_defconfig because we have nothing better to go on.
++uname := $(shell uname -m)
++KBUILD_DEFCONFIG := $(if $(filter ppc%,$(uname)),$(uname),ppc64)_defconfig
+ 
+ ifeq ($(CONFIG_PPC64),y)
+ new_nm := $(shell if $(NM) --help 2>&1 | grep -- '--synthetic' > /dev/null; then echo y; else echo n; fi)
 
 
