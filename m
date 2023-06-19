@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75037BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:53:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D72C433C0;
-	Mon, 19 Jun 2023 10:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3573DBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:53:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CE8C433C8;
+	Mon, 19 Jun 2023 10:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171998;
-	bh=mA9qCJhH/9wTKiVC8Rvfeu+aOjEz94m39S6f5tf4br4=;
+	s=korg; t=1687172001;
+	bh=VyZ1xoQ/c/qTma/aijGGuo2oo/G61WqJ2O9mKfy+TJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ak/AmjLYqDVfsgBgEw3kgUvc62CHUuc0fuVuOYbPqoJUxxrsVOSnBOFGUYy4pTMRc
-	 SXZ8YEMML4/AWwi8kZkGca8ZhcUQ43Ecr+qAJ+3px+2zNwQzuNSFFFb59/mu+JqpqI
-	 Mmkx9DSldcZ//ByxCordyCxd4FHmBO0D6oPe+daU=
+	b=P6Rl4dsI55Ul4UEyi4B7ngDuzxWER9LNVF8/mNgmwhrh1Y9ZPY0Eb4e740S6bmPLW
+	 NZPohgTN0IDW9rMaQM5XiJYg8BiueM6SuO1eb+CvFBcuI6Hup3itcsT7d8qhBhXS8H
+	 t1i3anx0qhmr8KoD/XqKINrGQEF1dx8sI/Y97fGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natalia Petrova <n.petrova@fintech.ru>,
 	Lyude Paul <lyude@redhat.com>,
+	Ben Skeggs <bskeggs@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 52/64] drm/nouveau/dp: check for NULL nv_connector->native_mode
-Date: Mon, 19 Jun 2023 12:30:48 +0200
-Message-ID: <20230619102135.562101607@linuxfoundation.org>
+Subject: [PATCH 5.4 53/64] drm/nouveau/kms: Dont change EDID when it hasnt actually changed
+Date: Mon, 19 Jun 2023 12:30:49 +0200
+Message-ID: <20230619102135.606323120@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
 References: <20230619102132.808972458@linuxfoundation.org>
@@ -35,51 +35,166 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Natalia Petrova <n.petrova@fintech.ru>
+From: Lyude Paul <lyude@redhat.com>
 
-[ Upstream commit 20a2ce87fbaf81e4c3dcb631d738e423959eb320 ]
+[ Upstream commit f28e32d3906eac2e1cb3291b448f0d528ec93996 ]
 
-Add checking for NULL before calling nouveau_connector_detect_depth() in
-nouveau_connector_get_modes() function because nv_connector->native_mode
-could be dereferenced there since connector pointer passed to
-nouveau_connector_detect_depth() and the same value of
-nv_connector->native_mode is used there.
+Currently in nouveau_connector_ddc_detect() and
+nouveau_connector_detect_lvds(), we start the connector probing process
+by releasing the previous EDID and informing DRM of the change. However,
+since commit 5186421cbfe2 ("drm: Introduce epoch counter to
+drm_connector") drm_connector_update_edid_property() actually checks
+whether the new EDID we've specified is different from the previous one,
+and updates the connector's epoch accordingly if it is. But, because we
+always set the EDID to NULL first in nouveau_connector_ddc_detect() and
+nouveau_connector_detect_lvds() we end up making DRM think that the EDID
+changes every single time we do a connector probe - which isn't needed.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+So, let's fix this by not clearing the EDID at the start of the
+connector probing process, and instead simply changing or removing it
+once near the end of the probing process. This will help prevent us from
+sending unneeded hotplug events to userspace when nothing has actually
+changed.
 
-Fixes: d4c2c99bdc83 ("drm/nouveau/dp: remove broken display depth function, use the improved one")
-
-Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230512111526.82408-1-n.petrova@fintech.ru
+Reviewed-by: Ben Skeggs <bskeggs@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200826182456.322681-19-lyude@redhat.com
+Stable-dep-of: 55b94bb8c424 ("drm/nouveau: add nv_encoder pointer check for NULL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_connector.c | 54 ++++++++++-----------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
 diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
-index 496e7dcd6b7dc..18c3aae91be26 100644
+index 18c3aae91be26..048a04701910e 100644
 --- a/drivers/gpu/drm/nouveau/nouveau_connector.c
 +++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -950,7 +950,7 @@ nouveau_connector_get_modes(struct drm_connector *connector)
- 	/* Determine display colour depth for everything except LVDS now,
- 	 * DP requires this before mode_valid() is called.
- 	 */
--	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS)
-+	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
- 		nouveau_connector_detect_depth(connector);
+@@ -538,6 +538,17 @@ nouveau_connector_set_encoder(struct drm_connector *connector,
+ 	}
+ }
  
- 	/* Find the native mode if this is a digital panel, if we didn't
-@@ -971,7 +971,7 @@ nouveau_connector_get_modes(struct drm_connector *connector)
- 	 * "native" mode as some VBIOS tables require us to use the
- 	 * pixel clock as part of the lookup...
- 	 */
--	if (connector->connector_type == DRM_MODE_CONNECTOR_LVDS)
-+	if (connector->connector_type == DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
- 		nouveau_connector_detect_depth(connector);
++static void
++nouveau_connector_set_edid(struct nouveau_connector *nv_connector,
++			   struct edid *edid)
++{
++	struct edid *old_edid = nv_connector->edid;
++
++	drm_connector_update_edid_property(&nv_connector->base, edid);
++	kfree(old_edid);
++	nv_connector->edid = edid;
++}
++
+ static enum drm_connector_status
+ nouveau_connector_detect(struct drm_connector *connector, bool force)
+ {
+@@ -551,13 +562,6 @@ nouveau_connector_detect(struct drm_connector *connector, bool force)
+ 	int ret;
+ 	enum drm_connector_status conn_status = connector_status_disconnected;
  
- 	if (nv_encoder->dcb->type == DCB_OUTPUT_TV)
+-	/* Cleanup the previous EDID block. */
+-	if (nv_connector->edid) {
+-		drm_connector_update_edid_property(connector, NULL);
+-		kfree(nv_connector->edid);
+-		nv_connector->edid = NULL;
+-	}
+-
+ 	/* Outputs are only polled while runtime active, so resuming the
+ 	 * device here is unnecessary (and would deadlock upon runtime suspend
+ 	 * because it waits for polling to finish). We do however, want to
+@@ -570,22 +574,23 @@ nouveau_connector_detect(struct drm_connector *connector, bool force)
+ 		ret = pm_runtime_get_sync(dev->dev);
+ 		if (ret < 0 && ret != -EACCES) {
+ 			pm_runtime_put_autosuspend(dev->dev);
++			nouveau_connector_set_edid(nv_connector, NULL);
+ 			return conn_status;
+ 		}
+ 	}
+ 
+ 	nv_encoder = nouveau_connector_ddc_detect(connector);
+ 	if (nv_encoder && (i2c = nv_encoder->i2c) != NULL) {
++		struct edid *new_edid;
++
+ 		if ((vga_switcheroo_handler_flags() &
+ 		     VGA_SWITCHEROO_CAN_SWITCH_DDC) &&
+ 		    nv_connector->type == DCB_CONNECTOR_LVDS)
+-			nv_connector->edid = drm_get_edid_switcheroo(connector,
+-								     i2c);
++			new_edid = drm_get_edid_switcheroo(connector, i2c);
+ 		else
+-			nv_connector->edid = drm_get_edid(connector, i2c);
++			new_edid = drm_get_edid(connector, i2c);
+ 
+-		drm_connector_update_edid_property(connector,
+-							nv_connector->edid);
++		nouveau_connector_set_edid(nv_connector, new_edid);
+ 		if (!nv_connector->edid) {
+ 			NV_ERROR(drm, "DDC responded, but no EDID for %s\n",
+ 				 connector->name);
+@@ -619,6 +624,8 @@ nouveau_connector_detect(struct drm_connector *connector, bool force)
+ 		conn_status = connector_status_connected;
+ 		drm_dp_cec_set_edid(&nv_connector->aux, nv_connector->edid);
+ 		goto out;
++	} else {
++		nouveau_connector_set_edid(nv_connector, NULL);
+ 	}
+ 
+ 	nv_encoder = nouveau_connector_of_detect(connector);
+@@ -661,18 +668,12 @@ nouveau_connector_detect_lvds(struct drm_connector *connector, bool force)
+ 	struct nouveau_drm *drm = nouveau_drm(dev);
+ 	struct nouveau_connector *nv_connector = nouveau_connector(connector);
+ 	struct nouveau_encoder *nv_encoder = NULL;
++	struct edid *edid = NULL;
+ 	enum drm_connector_status status = connector_status_disconnected;
+ 
+-	/* Cleanup the previous EDID block. */
+-	if (nv_connector->edid) {
+-		drm_connector_update_edid_property(connector, NULL);
+-		kfree(nv_connector->edid);
+-		nv_connector->edid = NULL;
+-	}
+-
+ 	nv_encoder = find_encoder(connector, DCB_OUTPUT_LVDS);
+ 	if (!nv_encoder)
+-		return connector_status_disconnected;
++		goto out;
+ 
+ 	/* Try retrieving EDID via DDC */
+ 	if (!drm->vbios.fp_no_ddc) {
+@@ -691,7 +692,8 @@ nouveau_connector_detect_lvds(struct drm_connector *connector, bool force)
+ 	 * valid - it's not (rh#613284)
+ 	 */
+ 	if (nv_encoder->dcb->lvdsconf.use_acpi_for_edid) {
+-		if ((nv_connector->edid = nouveau_acpi_edid(dev, connector))) {
++		edid = nouveau_acpi_edid(dev, connector);
++		if (edid) {
+ 			status = connector_status_connected;
+ 			goto out;
+ 		}
+@@ -711,12 +713,10 @@ nouveau_connector_detect_lvds(struct drm_connector *connector, bool force)
+ 	 * stored for the panel stored in them.
+ 	 */
+ 	if (!drm->vbios.fp_no_ddc) {
+-		struct edid *edid =
+-			(struct edid *)nouveau_bios_embedded_edid(dev);
++		edid = (struct edid *)nouveau_bios_embedded_edid(dev);
+ 		if (edid) {
+-			nv_connector->edid =
+-					kmemdup(edid, EDID_LENGTH, GFP_KERNEL);
+-			if (nv_connector->edid)
++			edid = kmemdup(edid, EDID_LENGTH, GFP_KERNEL);
++			if (edid)
+ 				status = connector_status_connected;
+ 		}
+ 	}
+@@ -729,7 +729,7 @@ nouveau_connector_detect_lvds(struct drm_connector *connector, bool force)
+ 		status = connector_status_unknown;
+ #endif
+ 
+-	drm_connector_update_edid_property(connector, nv_connector->edid);
++	nouveau_connector_set_edid(nv_connector, edid);
+ 	nouveau_connector_set_encoder(connector, nv_encoder);
+ 	return status;
+ }
 -- 
 2.39.2
 
