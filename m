@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472053C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39E6C433C0;
-	Mon, 19 Jun 2023 10:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC023C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FCFC433C0;
+	Mon, 19 Jun 2023 10:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171119;
-	bh=+dL4KD/N2q4MwQ4FKjKcVbXHpf0CN7d9dg68q7mCrug=;
+	s=korg; t=1687171121;
+	bh=NEa/W8pZ1NLjnYDn0S+kesJjh3wqAdNaACusIIVuuzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dyCf02ZGjY8x3olCfW7qqszSpPUtXKlsyccsJuiuOjGcijP4I7fN3vrL6gvtOt+xH
-	 2rt+l/XRPneNSZnkUJuBJ3Zf+JtM1Myo5b3Dd23isQ3VWdT4Ccelv84hUUWjDIq+R+
-	 duv8mfbiFN0nnMnpII8au7dH5KlhP3x+/weP4HaY=
+	b=h0cdNUfeWO/n60WeFddZPciLszsORbRYDRifeStVKpjDKKeIeh4yZEcnLUck+g+U/
+	 cbA8E0OTLlR0rgwnGAbcy4x/UEA5bPkLW7eRRXL8RidA3J2MWCGBHe2cKhsPH3/7sM
+	 wVyl6qR4ptKcM1HhTpoa5BZwDuzJ8obFJ/Qqq1Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	syzbot+04afcb3d2c840447559a@syzkaller.appspotmail.com,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 129/187] octeontx2-af: Fix promiscuous mode
-Date: Mon, 19 Jun 2023 12:29:07 +0200
-Message-ID: <20230619102203.835882916@linuxfoundation.org>
+Subject: [PATCH 6.3 130/187] net/sched: taprio: fix slab-out-of-bounds Read in taprio_dequeue_from_txq
+Date: Mon, 19 Jun 2023 12:29:08 +0200
+Message-ID: <20230619102203.889638125@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,110 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit c0e489372a294044feea650b38f38c888eff57a4 ]
+[ Upstream commit be3618d9651002cd5ff190dbfc6cf78f03e34e27 ]
 
-CN10KB silicon introduced a new exact match feature,
-which is used for DMAC filtering. The state of installed
-DMAC filters in this exact match table is getting corrupted
-when promiscuous mode is toggled. Fix this by not touching
-Exact match related config when promiscuous mode is toggled.
+As shown in [1], out-of-bounds access occurs in two cases:
+1)when the qdisc of the taprio type is used to replace the previously
+configured taprio, count and offset in tc_to_txq can be set to 0. In this
+case, the value of *txq in taprio_next_tc_txq() will increases
+continuously. When the number of accessed queues exceeds the number of
+queues on the device, out-of-bounds access occurs.
+2)When packets are dequeued, taprio can be deleted. In this case, the tc
+rule of dev is cleared. The count and offset values are also set to 0. In
+this case, out-of-bounds access is also caused.
 
-Fixes: 2dba9459d2c9 ("octeontx2-af: Wrapper functions for MAC addr add/del/update/reset")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Now the restriction on the queue number is added.
+
+[1] https://groups.google.com/g/syzkaller-bugs/c/_lYOKgkBVMg
+Fixes: 2f530df76c8c ("net/sched: taprio: give higher priority to higher TCs in software dequeue mode")
+Reported-by: syzbot+04afcb3d2c840447559a@syzkaller.appspotmail.com
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Tested-by: Pedro Tammela <pctammela@mojatatu.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/af/rvu_npc_hash.c       | 29 ++-----------------
- 1 file changed, 2 insertions(+), 27 deletions(-)
+ net/sched/sch_taprio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-index 51209119f0f2f..9f11c1e407373 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-@@ -1164,10 +1164,8 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
- {
- 	struct npc_exact_table *table;
- 	u16 *cnt, old_cnt;
--	bool promisc;
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index a6cf56a969421..7190482b52e05 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -795,6 +795,9 @@ static struct sk_buff *taprio_dequeue_tc_priority(struct Qdisc *sch,
  
- 	table = rvu->hw->table;
--	promisc = table->promisc_mode[drop_mcam_idx];
+ 			taprio_next_tc_txq(dev, tc, &q->cur_txq[tc]);
  
- 	cnt = &table->cnt_cmd_rules[drop_mcam_idx];
- 	old_cnt = *cnt;
-@@ -1179,16 +1177,13 @@ static u16 __rvu_npc_exact_cmd_rules_cnt_update(struct rvu *rvu, int drop_mcam_i
- 
- 	*enable_or_disable_cam = false;
- 
--	if (promisc)
--		goto done;
--
--	/* If all rules are deleted and not already in promisc mode; disable cam */
-+	/* If all rules are deleted, disable cam */
- 	if (!*cnt && val < 0) {
- 		*enable_or_disable_cam = true;
- 		goto done;
- 	}
- 
--	/* If rule got added and not already in promisc mode; enable cam */
-+	/* If rule got added, enable cam */
- 	if (!old_cnt && val > 0) {
- 		*enable_or_disable_cam = true;
- 		goto done;
-@@ -1443,7 +1438,6 @@ int rvu_npc_exact_promisc_disable(struct rvu *rvu, u16 pcifunc)
- 	u32 drop_mcam_idx;
- 	bool *promisc;
- 	bool rc;
--	u32 cnt;
- 
- 	table = rvu->hw->table;
- 
-@@ -1466,17 +1460,8 @@ int rvu_npc_exact_promisc_disable(struct rvu *rvu, u16 pcifunc)
- 		return LMAC_AF_ERR_INVALID_PARAM;
- 	}
- 	*promisc = false;
--	cnt = __rvu_npc_exact_cmd_rules_cnt_update(rvu, drop_mcam_idx, 0, NULL);
- 	mutex_unlock(&table->lock);
- 
--	/* If no dmac filter entries configured, disable drop rule */
--	if (!cnt)
--		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, false);
--	else
--		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, !*promisc);
--
--	dev_dbg(rvu->dev, "%s: disabled  promisc mode (cgx=%d lmac=%d, cnt=%d)\n",
--		__func__, cgx_id, lmac_id, cnt);
- 	return 0;
- }
- 
-@@ -1494,7 +1479,6 @@ int rvu_npc_exact_promisc_enable(struct rvu *rvu, u16 pcifunc)
- 	u32 drop_mcam_idx;
- 	bool *promisc;
- 	bool rc;
--	u32 cnt;
- 
- 	table = rvu->hw->table;
- 
-@@ -1517,17 +1501,8 @@ int rvu_npc_exact_promisc_enable(struct rvu *rvu, u16 pcifunc)
- 		return LMAC_AF_ERR_INVALID_PARAM;
- 	}
- 	*promisc = true;
--	cnt = __rvu_npc_exact_cmd_rules_cnt_update(rvu, drop_mcam_idx, 0, NULL);
- 	mutex_unlock(&table->lock);
- 
--	/* If no dmac filter entries configured, disable drop rule */
--	if (!cnt)
--		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, false);
--	else
--		rvu_npc_enable_mcam_by_entry_index(rvu, drop_mcam_idx, NIX_INTF_RX, !*promisc);
--
--	dev_dbg(rvu->dev, "%s: Enabled promisc mode (cgx=%d lmac=%d cnt=%d)\n",
--		__func__, cgx_id, lmac_id, cnt);
- 	return 0;
- }
- 
++			if (q->cur_txq[tc] >= dev->num_tx_queues)
++				q->cur_txq[tc] = first_txq;
++
+ 			if (skb)
+ 				return skb;
+ 		} while (q->cur_txq[tc] != first_txq);
 -- 
 2.39.2
 
