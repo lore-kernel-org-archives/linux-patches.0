@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5612D2F6
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D003C433C8;
-	Mon, 19 Jun 2023 11:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E690A8C06
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D36C433C0;
+	Mon, 19 Jun 2023 11:00:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172405;
-	bh=CHbZjusSHvhm1S3FGdarnEpAyiu+RS/DEBMoN7yQXJQ=;
+	s=korg; t=1687172408;
+	bh=aKwqI6tZDyg7br+kH4IlcuCUN1y75uHhHikEfe3Qw1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tG7zyy1P3lqdC2IaZ9mmsg/nvBsGbeT9h5mFflr2W5yCiWyDzZyT/dug6cIWR/9Bk
-	 fYgj76RucHGNgc4uuqlkK0z0UC+e96MyFEjJe724V4i1EoarR9/Lq8kMUYdOa8F8oF
-	 W/l3RK1D7VPDyPeP5k9uUZY607J1ORo1EIp0XGOM=
+	b=2wLWxkH9YJuh+tZblFlAGr52eX5/J7S7+Ii+Wfi+kWgN09Yeklxv4CDZJ/8Pd4qDs
+	 trKwVyJEST/o/EeuK1YnjsgukZyBi5wLVvW0Y80148N64pxxMhGDxsbzCYp7ON3ZWR
+	 2OJRRjrmj5gZtMG5xjnZkrNI/I5QyUPmhmlqe7No=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marc Zyngier <maz@kernel.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/107] irqchip/gic: Correctly validate OF quirk descriptors
-Date: Mon, 19 Jun 2023 12:30:15 +0200
-Message-ID: <20230619102143.004446119@linuxfoundation.org>
+Subject: [PATCH 5.15 022/107] parisc: Improve cache flushing for PCXL in arch_sync_dma_for_cpu()
+Date: Mon, 19 Jun 2023 12:30:06 +0200
+Message-ID: <20230619102142.600000812@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -36,39 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 91539341a3b6e9c868024a4292455dae36e6f58c ]
+[ Upstream commit 59fa12646d9f56c842b4d5b6418ed77af625c588 ]
 
-When checking for OF quirks, make sure either 'compatible' or 'property'
-is set, and give up otherwise.
+Add comment in arch_sync_dma_for_device() and handle the direction flag in
+arch_sync_dma_for_cpu().
 
-This avoids non-OF quirks being randomly applied as they don't have any
-of the OF data that need checking.
+When receiving data from the device (DMA_FROM_DEVICE) unconditionally
+purge the data cache in arch_sync_dma_for_cpu().
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Fixes: 44bd78dd2b88 ("irqchip/gic-v3: Disable pseudo NMIs on Mediatek devices w/ firmware issues")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/parisc/kernel/pci-dma.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-gic-common.c b/drivers/irqchip/irq-gic-common.c
-index de47b51cdadbe..afd6a1841715a 100644
---- a/drivers/irqchip/irq-gic-common.c
-+++ b/drivers/irqchip/irq-gic-common.c
-@@ -16,6 +16,8 @@ void gic_enable_of_quirks(const struct device_node *np,
- 			  const struct gic_quirk *quirks, void *data)
+diff --git a/arch/parisc/kernel/pci-dma.c b/arch/parisc/kernel/pci-dma.c
+index 36a57aa38e87e..3b0227b17c070 100644
+--- a/arch/parisc/kernel/pci-dma.c
++++ b/arch/parisc/kernel/pci-dma.c
+@@ -446,11 +446,27 @@ void arch_dma_free(struct device *dev, size_t size, void *vaddr,
+ void arch_sync_dma_for_device(phys_addr_t paddr, size_t size,
+ 		enum dma_data_direction dir)
  {
- 	for (; quirks->desc; quirks++) {
-+		if (!quirks->compatible && !quirks->property)
-+			continue;
- 		if (quirks->compatible &&
- 		    !of_device_is_compatible(np, quirks->compatible))
- 			continue;
++	/*
++	 * fdc: The data cache line is written back to memory, if and only if
++	 * it is dirty, and then invalidated from the data cache.
++	 */
+ 	flush_kernel_dcache_range((unsigned long)phys_to_virt(paddr), size);
+ }
+ 
+ void arch_sync_dma_for_cpu(phys_addr_t paddr, size_t size,
+ 		enum dma_data_direction dir)
+ {
+-	flush_kernel_dcache_range((unsigned long)phys_to_virt(paddr), size);
++	unsigned long addr = (unsigned long) phys_to_virt(paddr);
++
++	switch (dir) {
++	case DMA_TO_DEVICE:
++	case DMA_BIDIRECTIONAL:
++		flush_kernel_dcache_range(addr, size);
++		return;
++	case DMA_FROM_DEVICE:
++		purge_kernel_dcache_range_asm(addr, addr + size);
++		return;
++	default:
++		BUG();
++	}
+ }
 -- 
 2.39.2
 
