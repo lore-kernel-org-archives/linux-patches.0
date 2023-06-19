@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786255381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E47C433C0;
-	Mon, 19 Jun 2023 10:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281725381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A374C433C0;
+	Mon, 19 Jun 2023 10:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171412;
-	bh=hmCtJpQjdp9jItNQhrqO208ugFMQmvJywnybkkkOh5o=;
+	s=korg; t=1687171415;
+	bh=lzPBLcmwnZZVUC70fh24Tc3Qold7CWdjiwWc5mtEE6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epWTRASeRbsZ4B5e+Bs9nwBC/nSazXcHj3vbDcTc/QsAvun/lXmNE+nT/c4mwRjhA
-	 mVyzekeoGbbWSG/YO/EQpYpjjN62dnUQNLa+bzVOdFI/lI52WERrb7P2ffpRdy7FCp
-	 8izJD03Kmm6Pm8ZwsDXlMwzhN5h1skBqmG5+VTAA=
+	b=aydTk/GIREFF2+KFyDMhJgoA0kUvU+UwaeFu/Nyaj4tKJN+0NTXryn8vm/TF6po0u
+	 /VkixA7XybvKqj28oTQbGbKoypOCF86BJuxWUTvZOTZGq53lb4aam9gKsMTb0kLeEN
+	 3sQZmWrfn4yacsz3fbvTW5Xm8arhB5fP6tY6n664=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julius Werner <jwerner@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Russ Weight <russell.h.weight@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Tianfei Zhang <tianfei.zhang@intel.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kselftest@vger.kernel.org,
+	Dan Carpenter <error27@gmail.com>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/166] irqchip/gic-v3: Disable pseudo NMIs on Mediatek devices w/ firmware issues
-Date: Mon, 19 Jun 2023 12:28:18 +0200
-Message-ID: <20230619102155.763960813@linuxfoundation.org>
+Subject: [PATCH 6.1 003/166] test_firmware: prevent race conditions by a correct implementation of locking
+Date: Mon, 19 Jun 2023 12:28:00 +0200
+Message-ID: <20230619102154.786118291@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,135 +43,256 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-[ Upstream commit 44bd78dd2b8897f59b7e3963f088caadb7e4f047 ]
+[ Upstream commit 4acfe3dfde685a5a9eaec5555351918e2d7266a1 ]
 
-Some Chromebooks with Mediatek SoCs have a problem where the firmware
-doesn't properly save/restore certain GICR registers. Newer
-Chromebooks should fix this issue and we may be able to do firmware
-updates for old Chromebooks. At the moment, the only known issue with
-these Chromebooks is that we can't enable "pseudo NMIs" since the
-priority register can be lost. Enabling "pseudo NMIs" on Chromebooks
-with the problematic firmware causes crashes and freezes.
+Dan Carpenter spotted a race condition in a couple of situations like
+these in the test_firmware driver:
 
-Let's detect devices with this problem and then disable "pseudo NMIs"
-on them. We'll detect the problem by looking for the presence of the
-"mediatek,broken-save-restore-fw" property in the GIC device tree
-node. Any devices with fixed firmware will not have this property.
+static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+{
+        u8 val;
+        int ret;
 
-Our detection plan works because we never bake a Chromebook's device
-tree into firmware. Instead, device trees are always bundled with the
-kernel. We'll update the device trees of all affected Chromebooks and
-then we'll never enable "pseudo NMI" on a kernel that is bundled with
-old device trees. When a firmware update is shipped that fixes this
-issue it will know to patch the device tree to remove the property.
+        ret = kstrtou8(buf, 10, &val);
+        if (ret)
+                return ret;
 
-In order to make this work, the quick detection mechanism of the GICv3
-code is extended to be able to look for properties in addition to
-looking at "compatible".
+        mutex_lock(&test_fw_mutex);
+        *(u8 *)cfg = val;
+        mutex_unlock(&test_fw_mutex);
 
-Reviewed-by: Julius Werner <jwerner@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230515131353.v2.2.I88dc0a0eb1d9d537de61604cd8994ecc55c0cac1@changeid
+        /* Always return full write size even if we didn't consume all */
+        return size;
+}
+
+static ssize_t config_num_requests_store(struct device *dev,
+                                         struct device_attribute *attr,
+                                         const char *buf, size_t count)
+{
+        int rc;
+
+        mutex_lock(&test_fw_mutex);
+        if (test_fw_config->reqs) {
+                pr_err("Must call release_all_firmware prior to changing config\n");
+                rc = -EINVAL;
+                mutex_unlock(&test_fw_mutex);
+                goto out;
+        }
+        mutex_unlock(&test_fw_mutex);
+
+        rc = test_dev_config_update_u8(buf, count,
+                                       &test_fw_config->num_requests);
+
+out:
+        return rc;
+}
+
+static ssize_t config_read_fw_idx_store(struct device *dev,
+                                        struct device_attribute *attr,
+                                        const char *buf, size_t count)
+{
+        return test_dev_config_update_u8(buf, count,
+                                         &test_fw_config->read_fw_idx);
+}
+
+The function test_dev_config_update_u8() is called from both the locked
+and the unlocked context, function config_num_requests_store() and
+config_read_fw_idx_store() which can both be called asynchronously as
+they are driver's methods, while test_dev_config_update_u8() and siblings
+change their argument pointed to by u8 *cfg or similar pointer.
+
+To avoid deadlock on test_fw_mutex, the lock is dropped before calling
+test_dev_config_update_u8() and re-acquired within test_dev_config_update_u8()
+itself, but alas this creates a race condition.
+
+Having two locks wouldn't assure a race-proof mutual exclusion.
+
+This situation is best avoided by the introduction of a new, unlocked
+function __test_dev_config_update_u8() which can be called from the locked
+context and reducing test_dev_config_update_u8() to:
+
+static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+{
+        int ret;
+
+        mutex_lock(&test_fw_mutex);
+        ret = __test_dev_config_update_u8(buf, size, cfg);
+        mutex_unlock(&test_fw_mutex);
+
+        return ret;
+}
+
+doing the locking and calling the unlocked primitive, which enables both
+locked and unlocked versions without duplication of code.
+
+The similar approach was applied to all functions called from the locked
+and the unlocked context, which safely mitigates both deadlocks and race
+conditions in the driver.
+
+__test_dev_config_update_bool(), __test_dev_config_update_u8() and
+__test_dev_config_update_size_t() unlocked versions of the functions
+were introduced to be called from the locked contexts as a workaround
+without releasing the main driver's lock and thereof causing a race
+condition.
+
+The test_dev_config_update_bool(), test_dev_config_update_u8() and
+test_dev_config_update_size_t() locked versions of the functions
+are being called from driver methods without the unnecessary multiplying
+of the locking and unlocking code for each method, and complicating
+the code with saving of the return value across lock.
+
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Russ Weight <russell.h.weight@intel.com>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Tianfei Zhang <tianfei.zhang@intel.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Colin Ian King <colin.i.king@gmail.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-kselftest@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.4
+Suggested-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Link: https://lore.kernel.org/r/20230509084746.48259-1-mirsad.todorovac@alu.unizg.hr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-common.c |  8 ++++++--
- drivers/irqchip/irq-gic-common.h |  1 +
- drivers/irqchip/irq-gic-v3.c     | 20 ++++++++++++++++++++
- 3 files changed, 27 insertions(+), 2 deletions(-)
+ lib/test_firmware.c | 52 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 35 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-common.c b/drivers/irqchip/irq-gic-common.c
-index a610821c8ff2a..de47b51cdadbe 100644
---- a/drivers/irqchip/irq-gic-common.c
-+++ b/drivers/irqchip/irq-gic-common.c
-@@ -16,7 +16,11 @@ void gic_enable_of_quirks(const struct device_node *np,
- 			  const struct gic_quirk *quirks, void *data)
- {
- 	for (; quirks->desc; quirks++) {
--		if (!of_device_is_compatible(np, quirks->compatible))
-+		if (quirks->compatible &&
-+		    !of_device_is_compatible(np, quirks->compatible))
-+			continue;
-+		if (quirks->property &&
-+		    !of_property_read_bool(np, quirks->property))
- 			continue;
- 		if (quirks->init(data))
- 			pr_info("GIC: enabling workaround for %s\n",
-@@ -28,7 +32,7 @@ void gic_enable_quirks(u32 iidr, const struct gic_quirk *quirks,
- 		void *data)
- {
- 	for (; quirks->desc; quirks++) {
--		if (quirks->compatible)
-+		if (quirks->compatible || quirks->property)
- 			continue;
- 		if (quirks->iidr != (quirks->mask & iidr))
- 			continue;
-diff --git a/drivers/irqchip/irq-gic-common.h b/drivers/irqchip/irq-gic-common.h
-index 27e3d4ed4f328..3db4592cda1c0 100644
---- a/drivers/irqchip/irq-gic-common.h
-+++ b/drivers/irqchip/irq-gic-common.h
-@@ -13,6 +13,7 @@
- struct gic_quirk {
- 	const char *desc;
- 	const char *compatible;
-+	const char *property;
- 	bool (*init)(void *data);
- 	u32 iidr;
- 	u32 mask;
-diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-index 2182f87d2d12e..11f7c53e4b634 100644
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -38,6 +38,7 @@
- 
- #define FLAGS_WORKAROUND_GICR_WAKER_MSM8996	(1ULL << 0)
- #define FLAGS_WORKAROUND_CAVIUM_ERRATUM_38539	(1ULL << 1)
-+#define FLAGS_WORKAROUND_MTK_GICR_SAVE		(1ULL << 2)
- 
- #define GIC_IRQ_TYPE_PARTITION	(GIC_IRQ_TYPE_LPI + 1)
- 
-@@ -1730,6 +1731,15 @@ static bool gic_enable_quirk_msm8996(void *data)
- 	return true;
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 6ef3e6926da8a..13d3fa6aa972c 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -360,16 +360,26 @@ static ssize_t config_test_show_str(char *dst,
+ 	return len;
  }
  
-+static bool gic_enable_quirk_mtk_gicr(void *data)
-+{
-+	struct gic_chip_data *d = data;
+-static int test_dev_config_update_bool(const char *buf, size_t size,
++static inline int __test_dev_config_update_bool(const char *buf, size_t size,
+ 				       bool *cfg)
+ {
+ 	int ret;
+ 
+-	mutex_lock(&test_fw_mutex);
+ 	if (kstrtobool(buf, cfg) < 0)
+ 		ret = -EINVAL;
+ 	else
+ 		ret = size;
 +
-+	d->flags |= FLAGS_WORKAROUND_MTK_GICR_SAVE;
-+
-+	return true;
++	return ret;
 +}
 +
- static bool gic_enable_quirk_cavium_38539(void *data)
- {
- 	struct gic_chip_data *d = data;
-@@ -1802,6 +1812,11 @@ static const struct gic_quirk gic_quirks[] = {
- 		.compatible = "qcom,msm8996-gic-v3",
- 		.init	= gic_enable_quirk_msm8996,
- 	},
-+	{
-+		.desc	= "GICv3: Mediatek Chromebook GICR save problem",
-+		.property = "mediatek,broken-save-restore-fw",
-+		.init	= gic_enable_quirk_mtk_gicr,
-+	},
- 	{
- 		.desc	= "GICv3: HIP06 erratum 161010803",
- 		.iidr	= 0x0204043b,
-@@ -1844,6 +1859,11 @@ static void gic_enable_nmi_support(void)
- 	if (!gic_prio_masking_enabled())
- 		return;
- 
-+	if (gic_data.flags & FLAGS_WORKAROUND_MTK_GICR_SAVE) {
-+		pr_warn("Skipping NMI enable due to firmware issues\n");
-+		return;
-+	}
++static int test_dev_config_update_bool(const char *buf, size_t size,
++				       bool *cfg)
++{
++	int ret;
 +
- 	ppi_nmi_refs = kcalloc(gic_data.ppi_nr, sizeof(*ppi_nmi_refs), GFP_KERNEL);
- 	if (!ppi_nmi_refs)
- 		return;
++	mutex_lock(&test_fw_mutex);
++	ret = __test_dev_config_update_bool(buf, size, cfg);
+ 	mutex_unlock(&test_fw_mutex);
+ 
+ 	return ret;
+@@ -380,7 +390,8 @@ static ssize_t test_dev_config_show_bool(char *buf, bool val)
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
+ }
+ 
+-static int test_dev_config_update_size_t(const char *buf,
++static int __test_dev_config_update_size_t(
++					 const char *buf,
+ 					 size_t size,
+ 					 size_t *cfg)
+ {
+@@ -391,9 +402,7 @@ static int test_dev_config_update_size_t(const char *buf,
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&test_fw_mutex);
+ 	*(size_t *)cfg = new;
+-	mutex_unlock(&test_fw_mutex);
+ 
+ 	/* Always return full write size even if we didn't consume all */
+ 	return size;
+@@ -409,7 +418,7 @@ static ssize_t test_dev_config_show_int(char *buf, int val)
+ 	return snprintf(buf, PAGE_SIZE, "%d\n", val);
+ }
+ 
+-static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
++static int __test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+ {
+ 	u8 val;
+ 	int ret;
+@@ -418,14 +427,23 @@ static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&test_fw_mutex);
+ 	*(u8 *)cfg = val;
+-	mutex_unlock(&test_fw_mutex);
+ 
+ 	/* Always return full write size even if we didn't consume all */
+ 	return size;
+ }
+ 
++static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
++{
++	int ret;
++
++	mutex_lock(&test_fw_mutex);
++	ret = __test_dev_config_update_u8(buf, size, cfg);
++	mutex_unlock(&test_fw_mutex);
++
++	return ret;
++}
++
+ static ssize_t test_dev_config_show_u8(char *buf, u8 val)
+ {
+ 	return snprintf(buf, PAGE_SIZE, "%u\n", val);
+@@ -478,10 +496,10 @@ static ssize_t config_num_requests_store(struct device *dev,
+ 		mutex_unlock(&test_fw_mutex);
+ 		goto out;
+ 	}
+-	mutex_unlock(&test_fw_mutex);
+ 
+-	rc = test_dev_config_update_u8(buf, count,
+-				       &test_fw_config->num_requests);
++	rc = __test_dev_config_update_u8(buf, count,
++					 &test_fw_config->num_requests);
++	mutex_unlock(&test_fw_mutex);
+ 
+ out:
+ 	return rc;
+@@ -525,10 +543,10 @@ static ssize_t config_buf_size_store(struct device *dev,
+ 		mutex_unlock(&test_fw_mutex);
+ 		goto out;
+ 	}
+-	mutex_unlock(&test_fw_mutex);
+ 
+-	rc = test_dev_config_update_size_t(buf, count,
+-					   &test_fw_config->buf_size);
++	rc = __test_dev_config_update_size_t(buf, count,
++					     &test_fw_config->buf_size);
++	mutex_unlock(&test_fw_mutex);
+ 
+ out:
+ 	return rc;
+@@ -555,10 +573,10 @@ static ssize_t config_file_offset_store(struct device *dev,
+ 		mutex_unlock(&test_fw_mutex);
+ 		goto out;
+ 	}
+-	mutex_unlock(&test_fw_mutex);
+ 
+-	rc = test_dev_config_update_size_t(buf, count,
+-					   &test_fw_config->file_offset);
++	rc = __test_dev_config_update_size_t(buf, count,
++					     &test_fw_config->file_offset);
++	mutex_unlock(&test_fw_mutex);
+ 
+ out:
+ 	return rc;
 -- 
 2.39.2
 
