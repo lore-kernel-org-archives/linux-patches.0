@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E14D5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70E1C433C9;
-	Mon, 19 Jun 2023 10:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A765381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7365AC433C0;
+	Mon, 19 Jun 2023 10:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171298;
-	bh=6eKAIVz6YFxnQV/yvmGwnBK0h+S1XelJoBQ+OSwHmuU=;
+	s=korg; t=1687171300;
+	bh=HGowgLVCc9rXBMtm3tcVpOnG4GSmiIoE/D2kpZzDGHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fI6W2ViTZ3nzW0twSe4aY24F8IPG9gvSfJGec0zcH/Sp8l0pkh+g9HDqXBLkF9eb7
-	 HAtpBP8R5nZUamtAuAOBtGOygcJ/nVKWck66vekKJdnL/5yU/TOZ8qYbplBV7iTP8c
-	 sKAndUye3r5XSJFdMe5wD0OHhBCFZnP8qLcXoJUk=
+	b=CMrbEi1E0wLA79Kla8RqgWtDdxqB04CZDO6BjTsVvVPqUTW/Y4aFYmZa/hjdasnVH
+	 MfIE9PcRwWA3VN5iN67a7edmpBFkQ6+xDOgxSQzAPPpkj5BU2NDQ66imyhQvybfWPO
+	 qE7+KbJlI7fPTtTW3knUSQTelrzDKJQTiYFssmbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Meng <jerry-meng@foxmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 23/49] USB: serial: option: add Quectel EM061KGL series
-Date: Mon, 19 Jun 2023 12:30:01 +0200
-Message-ID: <20230619102131.081677935@linuxfoundation.org>
+	Maor Gottlieb <maorg@nvidia.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 32/49] IB/uverbs: Fix to consider event queue closing also upon non-blocking mode
+Date: Mon, 19 Jun 2023 12:30:10 +0200
+Message-ID: <20230619102131.550646975@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -34,99 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Meng <jerry-meng@foxmail.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-commit f1832e2b5e498e258b090af3b065b85cf8cc5161 upstream.
+[ Upstream commit 62fab312fa1683e812e605db20d4f22de3e3fb2f ]
 
-Add support for Quectel EM061KGL series which are based on Qualcomm
-SDX12 chip:
+Fix ib_uverbs_event_read() to consider event queue closing also upon
+non-blocking mode.
 
-EM061KGL_LTA(0x2c7c / 0x0123): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
-EM061KGL_LMS(0x2c7c / 0x0124): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
-EM061KGL_LWW(0x2c7c / 0x6008): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
-EM061KGL_LCN(0x2c7c / 0x6009): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+Once the queue is closed (e.g. hot-plug flow) all the existing events
+are cleaned-up as part of ib_uverbs_free_event_queue().
 
-Above products use the exact same interface layout and
-option driver is for interfaces DIAG, NMEA and AT.
+An application that uses the non-blocking FD mode should get -EIO in
+that case to let it knows that the device was removed already.
 
-T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  5 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=6008 Rev= 5.04
-S:  Manufacturer=Quectel
-S:  Product=Quectel EM061K-GL
-S:  SerialNumber=f6fa08b6
-C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Otherwise, it can loose the indication that the device was removed and
+won't recover.
 
-Signed-off-by: Jerry Meng <jerry-meng@foxmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As part of that, refactor the code to have a single flow with regards to
+'is_closed' for both blocking and non-blocking modes.
+
+Fixes: 14e23bd6d221 ("RDMA/core: Fix locking in ib_uverbs_event_read")
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://lore.kernel.org/r/97b00116a1e1e13f8dc4ec38a5ea81cf8c030210.1685960567.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/infiniband/core/uverbs_main.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -248,6 +248,8 @@ static void option_instat_callback(struc
- #define QUECTEL_VENDOR_ID			0x2c7c
- /* These Quectel products use Quectel's vendor ID */
- #define QUECTEL_PRODUCT_EC21			0x0121
-+#define QUECTEL_PRODUCT_EM061K_LTA		0x0123
-+#define QUECTEL_PRODUCT_EM061K_LMS		0x0124
- #define QUECTEL_PRODUCT_EC25			0x0125
- #define QUECTEL_PRODUCT_EG91			0x0191
- #define QUECTEL_PRODUCT_EG95			0x0195
-@@ -266,6 +268,8 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_RM520N			0x0801
- #define QUECTEL_PRODUCT_EC200U			0x0901
- #define QUECTEL_PRODUCT_EC200S_CN		0x6002
-+#define QUECTEL_PRODUCT_EM061K_LWW		0x6008
-+#define QUECTEL_PRODUCT_EM061K_LCN		0x6009
- #define QUECTEL_PRODUCT_EC200T			0x6026
- #define QUECTEL_PRODUCT_RM500K			0x7001
+diff --git a/drivers/infiniband/core/uverbs_main.c b/drivers/infiniband/core/uverbs_main.c
+index fc4b46258c756..6d8925432d6a7 100644
+--- a/drivers/infiniband/core/uverbs_main.c
++++ b/drivers/infiniband/core/uverbs_main.c
+@@ -283,8 +283,12 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
+ 	spin_lock_irq(&ev_queue->lock);
  
-@@ -1189,6 +1193,18 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0x00, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0x00, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LMS, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LMS, 0xff, 0x00, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LMS, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LTA, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LTA, 0xff, 0x00, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LTA, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LWW, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LWW, 0xff, 0x00, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LWW, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM12, 0xff, 0xff, 0xff),
- 	  .driver_info = RSVD(1) | RSVD(2) | RSVD(3) | RSVD(4) | NUMEP2 },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM12, 0xff, 0, 0) },
+ 	while (list_empty(&ev_queue->event_list)) {
+-		spin_unlock_irq(&ev_queue->lock);
++		if (ev_queue->is_closed) {
++			spin_unlock_irq(&ev_queue->lock);
++			return -EIO;
++		}
+ 
++		spin_unlock_irq(&ev_queue->lock);
+ 		if (filp->f_flags & O_NONBLOCK)
+ 			return -EAGAIN;
+ 
+@@ -294,12 +298,6 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
+ 			return -ERESTARTSYS;
+ 
+ 		spin_lock_irq(&ev_queue->lock);
+-
+-		/* If device was disassociated and no event exists set an error */
+-		if (list_empty(&ev_queue->event_list) && ev_queue->is_closed) {
+-			spin_unlock_irq(&ev_queue->lock);
+-			return -EIO;
+-		}
+ 	}
+ 
+ 	event = list_entry(ev_queue->event_list.next, struct ib_uverbs_event, list);
+-- 
+2.39.2
+
 
 
