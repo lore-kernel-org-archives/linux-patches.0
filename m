@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2822538F
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49112C433CA;
-	Mon, 19 Jun 2023 10:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0105381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:43:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944A5C433C8;
+	Mon, 19 Jun 2023 10:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171431;
-	bh=KROgIx2Er8HXLtBPRTdwlTcysasgjv094XjzHte/AWg=;
+	s=korg; t=1687171429;
+	bh=SMvFxLb+bdMa9F/pO7bJYLG7H+iZMlFfW9u5plZnxKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uODCrHnDjyoXjBxSc7bvbbM2bXlaav3fLx8RhvPkepGybOzJgzJwVhF1/PvIH4KYz
-	 qIgRBfdzUUpqpH9MMy1Hf4wGcrzOTqzV0E1Eo5A4pfLgizCYqXceLQ4uOVRXNtcCpy
-	 MdhTuqCYSUUxnV4bUdGXU/izyHW1D6MMIE5BUhtM=
+	b=u+4F0Pj+vS7PHdsV9G2JrSzMCxjN+exckiEoJ6D0XOCMqCKEOo6/aj345mgpTe68s
+	 LZfm2J2o3e/RAyIJF1irGjIPx+IrqTqhL7k1ylwmRwZ94o903MAbqkjY2Rvh7YQpDm
+	 FriLHCIsH5uJX8H71kQTpP9DD/6N0JWYBTK0Qmb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Yen Chang <cc85nod@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 009/166] ksmbd: validate smb request protocol id
-Date: Mon, 19 Jun 2023 12:28:06 +0200
-Message-ID: <20230619102155.127272954@linuxfoundation.org>
+Subject: [PATCH 6.1 008/166] EDAC/qcom: Get rid of hardcoded register offsets
+Date: Mon, 19 Jun 2023 12:28:05 +0200
+Message-ID: <20230619102155.082986925@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,86 +36,326 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 1c1bcf2d3ea061613119b534f57507c377df20f9 ]
+[ Upstream commit cbd77119b6355872cd308a60e99f9ca678435d15 ]
 
-This patch add the validation for smb request protocol id.
-If it is not one of the four ids(SMB1_PROTO_NUMBER, SMB2_PROTO_NUMBER,
-SMB2_TRANSFORM_PROTO_NUM, SMB2_COMPRESSION_TRANSFORM_ID), don't allow
-processing the request. And this will fix the following KASAN warning
-also.
+The LLCC EDAC register offsets varies between each SoC. Hardcoding the
+register offsets won't work and will often result in crash due to
+accessing the wrong locations.
 
-[   13.905265] BUG: KASAN: slab-out-of-bounds in init_smb2_rsp_hdr+0x1b9/0x1f0
-[   13.905900] Read of size 16 at addr ffff888005fd2f34 by task kworker/0:2/44
-...
-[   13.908553] Call Trace:
-[   13.908793]  <TASK>
-[   13.908995]  dump_stack_lvl+0x33/0x50
-[   13.909369]  print_report+0xcc/0x620
-[   13.910870]  kasan_report+0xae/0xe0
-[   13.911519]  kasan_check_range+0x35/0x1b0
-[   13.911796]  init_smb2_rsp_hdr+0x1b9/0x1f0
-[   13.912492]  handle_ksmbd_work+0xe5/0x820
+Hence, get the register offsets from the LLCC driver matching the
+individual SoCs.
 
-Cc: stable@vger.kernel.org
-Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: <stable@vger.kernel.org> # 6.0: 5365cea199c7 ("soc: qcom: llcc: Rename reg_offset structs to reflect LLCC version")
+Cc: <stable@vger.kernel.org> # 6.0: c13d7d261e36 ("soc: qcom: llcc: Pass LLCC version based register offsets to EDAC driver")
+Cc: <stable@vger.kernel.org> # 6.0
+Fixes: a6e9d7ef252c ("soc: qcom: llcc: Add configuration data for SM8450 SoC")
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230517114635.76358-3-manivannan.sadhasivam@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/connection.c |  5 +++--
- fs/ksmbd/smb_common.c | 14 +++++++++++++-
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/edac/qcom_edac.c           | 116 ++++++++++++++---------------
+ include/linux/soc/qcom/llcc-qcom.h |   6 --
+ 2 files changed, 58 insertions(+), 64 deletions(-)
 
-diff --git a/fs/ksmbd/connection.c b/fs/ksmbd/connection.c
-index bf8531b80a182..e1d2be19cddfa 100644
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -366,8 +366,6 @@ int ksmbd_conn_handler_loop(void *p)
- 			break;
+diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
+index b1f5b9a02d6dd..518092d7eaf73 100644
+--- a/drivers/edac/qcom_edac.c
++++ b/drivers/edac/qcom_edac.c
+@@ -21,30 +21,9 @@
+ #define TRP_SYN_REG_CNT                 6
+ #define DRP_SYN_REG_CNT                 8
  
- 		memcpy(conn->request_buf, hdr_buf, sizeof(hdr_buf));
--		if (!ksmbd_smb_request(conn))
--			break;
+-#define LLCC_COMMON_STATUS0             0x0003000c
+ #define LLCC_LB_CNT_MASK                GENMASK(31, 28)
+ #define LLCC_LB_CNT_SHIFT               28
  
- 		/*
- 		 * We already read 4 bytes to find out PDU size, now
-@@ -385,6 +383,9 @@ int ksmbd_conn_handler_loop(void *p)
- 			continue;
- 		}
+-/* Single & double bit syndrome register offsets */
+-#define TRP_ECC_SB_ERR_SYN0             0x0002304c
+-#define TRP_ECC_DB_ERR_SYN0             0x00020370
+-#define DRP_ECC_SB_ERR_SYN0             0x0004204c
+-#define DRP_ECC_DB_ERR_SYN0             0x00042070
+-
+-/* Error register offsets */
+-#define TRP_ECC_ERROR_STATUS1           0x00020348
+-#define TRP_ECC_ERROR_STATUS0           0x00020344
+-#define DRP_ECC_ERROR_STATUS1           0x00042048
+-#define DRP_ECC_ERROR_STATUS0           0x00042044
+-
+-/* TRP, DRP interrupt register offsets */
+-#define DRP_INTERRUPT_STATUS            0x00041000
+-#define TRP_INTERRUPT_0_STATUS          0x00020480
+-#define DRP_INTERRUPT_CLEAR             0x00041008
+-#define DRP_ECC_ERROR_CNTR_CLEAR        0x00040004
+-#define TRP_INTERRUPT_0_CLEAR           0x00020484
+-#define TRP_ECC_ERROR_CNTR_CLEAR        0x00020440
+-
+ /* Mask and shift macros */
+ #define ECC_DB_ERR_COUNT_MASK           GENMASK(4, 0)
+ #define ECC_DB_ERR_WAYS_MASK            GENMASK(31, 16)
+@@ -60,15 +39,6 @@
+ #define DRP_TRP_INT_CLEAR               GENMASK(1, 0)
+ #define DRP_TRP_CNT_CLEAR               GENMASK(1, 0)
  
-+		if (!ksmbd_smb_request(conn))
-+			break;
-+
- 		if (((struct smb2_hdr *)smb2_get_msg(conn->request_buf))->ProtocolId ==
- 		    SMB2_PROTO_NUMBER) {
- 			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
-diff --git a/fs/ksmbd/smb_common.c b/fs/ksmbd/smb_common.c
-index 95afb6b23a91c..05d7f3e910bf4 100644
---- a/fs/ksmbd/smb_common.c
-+++ b/fs/ksmbd/smb_common.c
-@@ -158,7 +158,19 @@ int ksmbd_verify_smb_message(struct ksmbd_work *work)
-  */
- bool ksmbd_smb_request(struct ksmbd_conn *conn)
+-/* Config registers offsets*/
+-#define DRP_ECC_ERROR_CFG               0x00040000
+-
+-/* Tag RAM, Data RAM interrupt register offsets */
+-#define CMN_INTERRUPT_0_ENABLE          0x0003001c
+-#define CMN_INTERRUPT_2_ENABLE          0x0003003c
+-#define TRP_INTERRUPT_0_ENABLE          0x00020488
+-#define DRP_INTERRUPT_ENABLE            0x0004100c
+-
+ #define SB_ERROR_THRESHOLD              0x1
+ #define SB_ERROR_THRESHOLD_SHIFT        24
+ #define SB_DB_TRP_INTERRUPT_ENABLE      0x3
+@@ -88,9 +58,6 @@ enum {
+ static const struct llcc_edac_reg_data edac_reg_data[] = {
+ 	[LLCC_DRAM_CE] = {
+ 		.name = "DRAM Single-bit",
+-		.synd_reg = DRP_ECC_SB_ERR_SYN0,
+-		.count_status_reg = DRP_ECC_ERROR_STATUS1,
+-		.ways_status_reg = DRP_ECC_ERROR_STATUS0,
+ 		.reg_cnt = DRP_SYN_REG_CNT,
+ 		.count_mask = ECC_SB_ERR_COUNT_MASK,
+ 		.ways_mask = ECC_SB_ERR_WAYS_MASK,
+@@ -98,9 +65,6 @@ static const struct llcc_edac_reg_data edac_reg_data[] = {
+ 	},
+ 	[LLCC_DRAM_UE] = {
+ 		.name = "DRAM Double-bit",
+-		.synd_reg = DRP_ECC_DB_ERR_SYN0,
+-		.count_status_reg = DRP_ECC_ERROR_STATUS1,
+-		.ways_status_reg = DRP_ECC_ERROR_STATUS0,
+ 		.reg_cnt = DRP_SYN_REG_CNT,
+ 		.count_mask = ECC_DB_ERR_COUNT_MASK,
+ 		.ways_mask = ECC_DB_ERR_WAYS_MASK,
+@@ -108,9 +72,6 @@ static const struct llcc_edac_reg_data edac_reg_data[] = {
+ 	},
+ 	[LLCC_TRAM_CE] = {
+ 		.name = "TRAM Single-bit",
+-		.synd_reg = TRP_ECC_SB_ERR_SYN0,
+-		.count_status_reg = TRP_ECC_ERROR_STATUS1,
+-		.ways_status_reg = TRP_ECC_ERROR_STATUS0,
+ 		.reg_cnt = TRP_SYN_REG_CNT,
+ 		.count_mask = ECC_SB_ERR_COUNT_MASK,
+ 		.ways_mask = ECC_SB_ERR_WAYS_MASK,
+@@ -118,9 +79,6 @@ static const struct llcc_edac_reg_data edac_reg_data[] = {
+ 	},
+ 	[LLCC_TRAM_UE] = {
+ 		.name = "TRAM Double-bit",
+-		.synd_reg = TRP_ECC_DB_ERR_SYN0,
+-		.count_status_reg = TRP_ECC_ERROR_STATUS1,
+-		.ways_status_reg = TRP_ECC_ERROR_STATUS0,
+ 		.reg_cnt = TRP_SYN_REG_CNT,
+ 		.count_mask = ECC_DB_ERR_COUNT_MASK,
+ 		.ways_mask = ECC_DB_ERR_WAYS_MASK,
+@@ -128,7 +86,7 @@ static const struct llcc_edac_reg_data edac_reg_data[] = {
+ 	},
+ };
+ 
+-static int qcom_llcc_core_setup(struct regmap *llcc_bcast_regmap)
++static int qcom_llcc_core_setup(struct llcc_drv_data *drv, struct regmap *llcc_bcast_regmap)
  {
--	return conn->request_buf[0] == 0;
-+	__le32 *proto = (__le32 *)smb2_get_msg(conn->request_buf);
-+
-+	if (*proto == SMB2_COMPRESSION_TRANSFORM_ID) {
-+		pr_err_ratelimited("smb2 compression not support yet");
-+		return false;
-+	}
-+
-+	if (*proto != SMB1_PROTO_NUMBER &&
-+	    *proto != SMB2_PROTO_NUMBER &&
-+	    *proto != SMB2_TRANSFORM_PROTO_NUM)
-+		return false;
-+
-+	return true;
+ 	u32 sb_err_threshold;
+ 	int ret;
+@@ -137,31 +95,31 @@ static int qcom_llcc_core_setup(struct regmap *llcc_bcast_regmap)
+ 	 * Configure interrupt enable registers such that Tag, Data RAM related
+ 	 * interrupts are propagated to interrupt controller for servicing
+ 	 */
+-	ret = regmap_update_bits(llcc_bcast_regmap, CMN_INTERRUPT_2_ENABLE,
++	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_2_enable,
+ 				 TRP0_INTERRUPT_ENABLE,
+ 				 TRP0_INTERRUPT_ENABLE);
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = regmap_update_bits(llcc_bcast_regmap, TRP_INTERRUPT_0_ENABLE,
++	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->trp_interrupt_0_enable,
+ 				 SB_DB_TRP_INTERRUPT_ENABLE,
+ 				 SB_DB_TRP_INTERRUPT_ENABLE);
+ 	if (ret)
+ 		return ret;
+ 
+ 	sb_err_threshold = (SB_ERROR_THRESHOLD << SB_ERROR_THRESHOLD_SHIFT);
+-	ret = regmap_write(llcc_bcast_regmap, DRP_ECC_ERROR_CFG,
++	ret = regmap_write(llcc_bcast_regmap, drv->edac_reg_offset->drp_ecc_error_cfg,
+ 			   sb_err_threshold);
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = regmap_update_bits(llcc_bcast_regmap, CMN_INTERRUPT_2_ENABLE,
++	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_2_enable,
+ 				 DRP0_INTERRUPT_ENABLE,
+ 				 DRP0_INTERRUPT_ENABLE);
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = regmap_write(llcc_bcast_regmap, DRP_INTERRUPT_ENABLE,
++	ret = regmap_write(llcc_bcast_regmap, drv->edac_reg_offset->drp_interrupt_enable,
+ 			   SB_DB_DRP_INTERRUPT_ENABLE);
+ 	return ret;
+ }
+@@ -175,24 +133,28 @@ qcom_llcc_clear_error_status(int err_type, struct llcc_drv_data *drv)
+ 	switch (err_type) {
+ 	case LLCC_DRAM_CE:
+ 	case LLCC_DRAM_UE:
+-		ret = regmap_write(drv->bcast_regmap, DRP_INTERRUPT_CLEAR,
++		ret = regmap_write(drv->bcast_regmap,
++				   drv->edac_reg_offset->drp_interrupt_clear,
+ 				   DRP_TRP_INT_CLEAR);
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = regmap_write(drv->bcast_regmap, DRP_ECC_ERROR_CNTR_CLEAR,
++		ret = regmap_write(drv->bcast_regmap,
++				   drv->edac_reg_offset->drp_ecc_error_cntr_clear,
+ 				   DRP_TRP_CNT_CLEAR);
+ 		if (ret)
+ 			return ret;
+ 		break;
+ 	case LLCC_TRAM_CE:
+ 	case LLCC_TRAM_UE:
+-		ret = regmap_write(drv->bcast_regmap, TRP_INTERRUPT_0_CLEAR,
++		ret = regmap_write(drv->bcast_regmap,
++				   drv->edac_reg_offset->trp_interrupt_0_clear,
+ 				   DRP_TRP_INT_CLEAR);
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = regmap_write(drv->bcast_regmap, TRP_ECC_ERROR_CNTR_CLEAR,
++		ret = regmap_write(drv->bcast_regmap,
++				   drv->edac_reg_offset->trp_ecc_error_cntr_clear,
+ 				   DRP_TRP_CNT_CLEAR);
+ 		if (ret)
+ 			return ret;
+@@ -205,16 +167,54 @@ qcom_llcc_clear_error_status(int err_type, struct llcc_drv_data *drv)
+ 	return ret;
  }
  
- static bool supported_protocol(int idx)
++struct qcom_llcc_syn_regs {
++	u32 synd_reg;
++	u32 count_status_reg;
++	u32 ways_status_reg;
++};
++
++static void get_reg_offsets(struct llcc_drv_data *drv, int err_type,
++			    struct qcom_llcc_syn_regs *syn_regs)
++{
++	const struct llcc_edac_reg_offset *edac_reg_offset = drv->edac_reg_offset;
++
++	switch (err_type) {
++	case LLCC_DRAM_CE:
++		syn_regs->synd_reg = edac_reg_offset->drp_ecc_sb_err_syn0;
++		syn_regs->count_status_reg = edac_reg_offset->drp_ecc_error_status1;
++		syn_regs->ways_status_reg = edac_reg_offset->drp_ecc_error_status0;
++		break;
++	case LLCC_DRAM_UE:
++		syn_regs->synd_reg = edac_reg_offset->drp_ecc_db_err_syn0;
++		syn_regs->count_status_reg = edac_reg_offset->drp_ecc_error_status1;
++		syn_regs->ways_status_reg = edac_reg_offset->drp_ecc_error_status0;
++		break;
++	case LLCC_TRAM_CE:
++		syn_regs->synd_reg = edac_reg_offset->trp_ecc_sb_err_syn0;
++		syn_regs->count_status_reg = edac_reg_offset->trp_ecc_error_status1;
++		syn_regs->ways_status_reg = edac_reg_offset->trp_ecc_error_status0;
++		break;
++	case LLCC_TRAM_UE:
++		syn_regs->synd_reg = edac_reg_offset->trp_ecc_db_err_syn0;
++		syn_regs->count_status_reg = edac_reg_offset->trp_ecc_error_status1;
++		syn_regs->ways_status_reg = edac_reg_offset->trp_ecc_error_status0;
++		break;
++	}
++}
++
+ /* Dump Syndrome registers data for Tag RAM, Data RAM bit errors*/
+ static int
+ dump_syn_reg_values(struct llcc_drv_data *drv, u32 bank, int err_type)
+ {
+ 	struct llcc_edac_reg_data reg_data = edac_reg_data[err_type];
++	struct qcom_llcc_syn_regs regs = { };
+ 	int err_cnt, err_ways, ret, i;
+ 	u32 synd_reg, synd_val;
+ 
++	get_reg_offsets(drv, err_type, &regs);
++
+ 	for (i = 0; i < reg_data.reg_cnt; i++) {
+-		synd_reg = reg_data.synd_reg + (i * 4);
++		synd_reg = regs.synd_reg + (i * 4);
+ 		ret = regmap_read(drv->regmaps[bank], synd_reg,
+ 				  &synd_val);
+ 		if (ret)
+@@ -224,7 +224,7 @@ dump_syn_reg_values(struct llcc_drv_data *drv, u32 bank, int err_type)
+ 			    reg_data.name, i, synd_val);
+ 	}
+ 
+-	ret = regmap_read(drv->regmaps[bank], reg_data.count_status_reg,
++	ret = regmap_read(drv->regmaps[bank], regs.count_status_reg,
+ 			  &err_cnt);
+ 	if (ret)
+ 		goto clear;
+@@ -234,7 +234,7 @@ dump_syn_reg_values(struct llcc_drv_data *drv, u32 bank, int err_type)
+ 	edac_printk(KERN_CRIT, EDAC_LLCC, "%s: Error count: 0x%4x\n",
+ 		    reg_data.name, err_cnt);
+ 
+-	ret = regmap_read(drv->regmaps[bank], reg_data.ways_status_reg,
++	ret = regmap_read(drv->regmaps[bank], regs.ways_status_reg,
+ 			  &err_ways);
+ 	if (ret)
+ 		goto clear;
+@@ -295,7 +295,7 @@ static irqreturn_t llcc_ecc_irq_handler(int irq, void *edev_ctl)
+ 
+ 	/* Iterate over the banks and look for Tag RAM or Data RAM errors */
+ 	for (i = 0; i < drv->num_banks; i++) {
+-		ret = regmap_read(drv->regmaps[i], DRP_INTERRUPT_STATUS,
++		ret = regmap_read(drv->regmaps[i], drv->edac_reg_offset->drp_interrupt_status,
+ 				  &drp_error);
+ 
+ 		if (!ret && (drp_error & SB_ECC_ERROR)) {
+@@ -310,7 +310,7 @@ static irqreturn_t llcc_ecc_irq_handler(int irq, void *edev_ctl)
+ 		if (!ret)
+ 			irq_rc = IRQ_HANDLED;
+ 
+-		ret = regmap_read(drv->regmaps[i], TRP_INTERRUPT_0_STATUS,
++		ret = regmap_read(drv->regmaps[i], drv->edac_reg_offset->trp_interrupt_0_status,
+ 				  &trp_error);
+ 
+ 		if (!ret && (trp_error & SB_ECC_ERROR)) {
+@@ -342,7 +342,7 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
+ 	int ecc_irq;
+ 	int rc;
+ 
+-	rc = qcom_llcc_core_setup(llcc_driv_data->bcast_regmap);
++	rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
+ 	if (rc)
+ 		return rc;
+ 
+diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+index dfa5706e90a7a..af093281e335c 100644
+--- a/include/linux/soc/qcom/llcc-qcom.h
++++ b/include/linux/soc/qcom/llcc-qcom.h
+@@ -57,9 +57,6 @@ struct llcc_slice_desc {
+ /**
+  * struct llcc_edac_reg_data - llcc edac registers data for each error type
+  * @name: Name of the error
+- * @synd_reg: Syndrome register address
+- * @count_status_reg: Status register address to read the error count
+- * @ways_status_reg: Status register address to read the error ways
+  * @reg_cnt: Number of registers
+  * @count_mask: Mask value to get the error count
+  * @ways_mask: Mask value to get the error ways
+@@ -68,9 +65,6 @@ struct llcc_slice_desc {
+  */
+ struct llcc_edac_reg_data {
+ 	char *name;
+-	u64 synd_reg;
+-	u64 count_status_reg;
+-	u64 ways_status_reg;
+ 	u32 reg_cnt;
+ 	u32 count_mask;
+ 	u32 ways_mask;
 -- 
 2.39.2
 
