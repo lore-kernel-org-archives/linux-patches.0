@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EF31095B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:33:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D127C433C0;
-	Mon, 19 Jun 2023 10:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FE41094D
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:33:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4EAC433C0;
+	Mon, 19 Jun 2023 10:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170790;
-	bh=boRuNRN+LWxU0ODgIK9wS2G5/Qgd96DdkhT01PHif+4=;
+	s=korg; t=1687170793;
+	bh=mqL994jDilpj3DORbkHAMlSuexwDHjFi8s1HMFeV82w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OmIj6q5P3zBYOhUhFCo0B6sFuNJ7ly+IWrUqnTYvAVNK3rCyi6087ak8vhLN7O0z3
-	 u8mtYGfe8jQpzCXfJWzrnFaoowyiaaCuU3M9LACJgbSI8ld6jiKXI18Ie+w1KTyDC7
-	 YPYfQIuFgo91n44fV0eYn6Tl9Y5d6xaWSMBWbsEU=
+	b=L1vmHKVWYyQqt1+7qGVxE8Fx5uLqWxhKNAJBWafHNYhwZ8nYjt6qZ8hsAn4czb5uF
+	 A27ixTpaAQduEqJoFotr0f7WEuxGOAvLLoKgX79QOFgQWp6gZ/0H1oASa8sIKi8n+c
+	 Xe8bxk5DCYKV1flVUAdsLce0ZXZSc7vGjWspBjOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 011/187] power: supply: bq27xxx: Use mod_delayed_work() instead of cancel() + schedule()
-Date: Mon, 19 Jun 2023 12:27:09 +0200
-Message-ID: <20230619102158.150766633@linuxfoundation.org>
+Subject: [PATCH 6.3 012/187] ARM: dts: vexpress: add missing cache properties
+Date: Mon, 19 Jun 2023 12:27:10 +0200
+Message-ID: <20230619102158.191556624@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,37 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 59dddea9879713423c7b2ade43c423bb71e0d216 ]
+[ Upstream commit 328acc5657c6197753238d7ce0a6924ead829347 ]
 
-Use mod_delayed_work() instead of separate cancel_delayed_work_sync() +
-schedule_delayed_work() calls.
+As all level 2 and level 3 caches are unified, add required
+cache-unified property to fix warnings like:
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+  vexpress-v2p-ca5s.dtb: cache-controller@2c0f0000: 'cache-unified' is a required property
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230423150837.118466-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/vexpress-v2p-ca5s.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 929e813b9c443..4296600e8912a 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1083,10 +1083,8 @@ static int poll_interval_param_set(const char *val, const struct kernel_param *k
- 		return ret;
+diff --git a/arch/arm/boot/dts/vexpress-v2p-ca5s.dts b/arch/arm/boot/dts/vexpress-v2p-ca5s.dts
+index 3b88209bacea2..ff1f9a1bcfcfc 100644
+--- a/arch/arm/boot/dts/vexpress-v2p-ca5s.dts
++++ b/arch/arm/boot/dts/vexpress-v2p-ca5s.dts
+@@ -132,6 +132,7 @@ L2: cache-controller@2c0f0000 {
+ 		reg = <0x2c0f0000 0x1000>;
+ 		interrupts = <0 84 4>;
+ 		cache-level = <2>;
++		cache-unified;
+ 	};
  
- 	mutex_lock(&bq27xxx_list_lock);
--	list_for_each_entry(di, &bq27xxx_battery_devices, list) {
--		cancel_delayed_work_sync(&di->work);
--		schedule_delayed_work(&di->work, 0);
--	}
-+	list_for_each_entry(di, &bq27xxx_battery_devices, list)
-+		mod_delayed_work(system_wq, &di->work, 0);
- 	mutex_unlock(&bq27xxx_list_lock);
- 
- 	return ret;
+ 	pmu {
 -- 
 2.39.2
 
