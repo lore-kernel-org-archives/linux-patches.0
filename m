@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DD6C123
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:02:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7025BC433C8;
-	Mon, 19 Jun 2023 11:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC01C123
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:02:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2743DC433C8;
+	Mon, 19 Jun 2023 11:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172565;
-	bh=lSmm4BW+xIyWiXFEdjqNXcujBUU2NcjVKkCAn+nSxnE=;
+	s=korg; t=1687172568;
+	bh=tyw/1INzvYwlkUZF5NwSsxLIo63T8sqs8Ids4I6zJ1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZEfd5v5B7LADDkTMJ1ZtS1BstnzzgWySmsNQAyNoqK7RHIrznL0Ok881NOPUZQVpj
-	 DbjB0VULoG9Qq1LaQfZl+tygnv6N147fHhwg7fOd07vXDSNKG7ZsXUzrk9z9CFG6u3
-	 IX3bsHZxtrhWhMc7vf3xph3y5iZtS+uiKUxUswPc=
+	b=B90XDX+7zU7Ma1masvJz2oZH9Qfgkuo8AvOU0wMut4xSuB9Byko0DYAoAZhPGmjEF
+	 PYZYPEq84fs+r7m1r4x2thHI64wEJmJ2lycW/TNSKawNyFhuARjyybQXNqK+Fq4Kuu
+	 Zej+N5ZLkQXMgXlhaJMZ9wd03n+OWsLINwpE8Jq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/107] RDMA/cma: Always set static rate to 0 for RoCE
-Date: Mon, 19 Jun 2023 12:31:02 +0200
-Message-ID: <20230619102145.155174234@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 107/107] nilfs2: reject devices with insufficient block count
+Date: Mon, 19 Jun 2023 12:31:31 +0200
+Message-ID: <20230619102146.408404854@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -35,84 +35,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 58030c76cce473b6cfd630bbecb97215def0dff8 ]
+commit 92c5d1b860e9581d64baca76779576c0ab0d943d upstream.
 
-Set static rate to 0 as it should be discovered by path query and
-has no meaning for RoCE.
-This also avoid of using the rtnl lock and ethtool API, which is
-a bottleneck when try to setup many rdma-cm connections at the same
-time, especially with multiple processes.
+The current sanity check for nilfs2 geometry information lacks checks for
+the number of segments stored in superblocks, so even for device images
+that have been destructively truncated or have an unusually high number of
+segments, the mount operation may succeed.
 
-Fixes: 3c86aa70bf67 ("RDMA/cm: Add RDMA CM support for IBoE devices")
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://lore.kernel.org/r/f72a4f8b667b803aee9fa794069f61afb5839ce4.1685960567.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This causes out-of-bounds block I/O on file system block reads or log
+writes to the segments, the latter in particular causing
+"a_ops->writepages" to repeatedly fail, resulting in sync_inodes_sb() to
+hang.
+
+Fix this issue by checking the number of segments stored in the superblock
+and avoiding mounting devices that can cause out-of-bounds accesses.  To
+eliminate the possibility of overflow when calculating the number of
+blocks required for the device from the number of segments, this also adds
+a helper function to calculate the upper bound on the number of segments
+and inserts a check using it.
+
+Link: https://lkml.kernel.org/r/20230526021332.3431-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=7d50f1e54a12ba3aeae2
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/cma.c |  4 ++--
- include/rdma/ib_addr.h        | 23 -----------------------
- 2 files changed, 2 insertions(+), 25 deletions(-)
+ fs/nilfs2/the_nilfs.c |   44 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 43 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index c66d8bf405854..044f9d44001bb 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -3113,7 +3113,7 @@ static int cma_resolve_iboe_route(struct rdma_id_private *id_priv)
- 	route->path_rec->traffic_class = tos;
- 	route->path_rec->mtu = iboe_get_mtu(ndev->mtu);
- 	route->path_rec->rate_selector = IB_SA_EQ;
--	route->path_rec->rate = iboe_get_rate(ndev);
-+	route->path_rec->rate = IB_RATE_PORT_CURRENT;
- 	dev_put(ndev);
- 	route->path_rec->packet_life_time_selector = IB_SA_EQ;
- 	/* In case ACK timeout is set, use this value to calculate
-@@ -4770,7 +4770,7 @@ static int cma_iboe_join_multicast(struct rdma_id_private *id_priv,
- 	if (!ndev)
- 		return -ENODEV;
- 
--	ib.rec.rate = iboe_get_rate(ndev);
-+	ib.rec.rate = IB_RATE_PORT_CURRENT;
- 	ib.rec.hop_limit = 1;
- 	ib.rec.mtu = iboe_get_mtu(ndev->mtu);
- 
-diff --git a/include/rdma/ib_addr.h b/include/rdma/ib_addr.h
-index d808dc3d239e8..811a0f11d0dbe 100644
---- a/include/rdma/ib_addr.h
-+++ b/include/rdma/ib_addr.h
-@@ -194,29 +194,6 @@ static inline enum ib_mtu iboe_get_mtu(int mtu)
- 		return 0;
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -405,6 +405,18 @@ unsigned long nilfs_nrsvsegs(struct the_
+ 				  100));
  }
  
--static inline int iboe_get_rate(struct net_device *dev)
--{
--	struct ethtool_link_ksettings cmd;
--	int err;
--
--	rtnl_lock();
--	err = __ethtool_get_link_ksettings(dev, &cmd);
--	rtnl_unlock();
--	if (err)
--		return IB_RATE_PORT_CURRENT;
--
--	if (cmd.base.speed >= 40000)
--		return IB_RATE_40_GBPS;
--	else if (cmd.base.speed >= 30000)
--		return IB_RATE_30_GBPS;
--	else if (cmd.base.speed >= 20000)
--		return IB_RATE_20_GBPS;
--	else if (cmd.base.speed >= 10000)
--		return IB_RATE_10_GBPS;
--	else
--		return IB_RATE_PORT_CURRENT;
--}
--
- static inline int rdma_link_local_addr(struct in6_addr *addr)
++/**
++ * nilfs_max_segment_count - calculate the maximum number of segments
++ * @nilfs: nilfs object
++ */
++static u64 nilfs_max_segment_count(struct the_nilfs *nilfs)
++{
++	u64 max_count = U64_MAX;
++
++	do_div(max_count, nilfs->ns_blocks_per_segment);
++	return min_t(u64, max_count, ULONG_MAX);
++}
++
+ void nilfs_set_nsegments(struct the_nilfs *nilfs, unsigned long nsegs)
  {
- 	if (addr->s6_addr32[0] == htonl(0xfe800000) &&
--- 
-2.39.2
-
+ 	nilfs->ns_nsegments = nsegs;
+@@ -414,6 +426,8 @@ void nilfs_set_nsegments(struct the_nilf
+ static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
+ 				   struct nilfs_super_block *sbp)
+ {
++	u64 nsegments, nblocks;
++
+ 	if (le32_to_cpu(sbp->s_rev_level) < NILFS_MIN_SUPP_REV) {
+ 		nilfs_err(nilfs->ns_sb,
+ 			  "unsupported revision (superblock rev.=%d.%d, current rev.=%d.%d). Please check the version of mkfs.nilfs(2).",
+@@ -457,7 +471,35 @@ static int nilfs_store_disk_layout(struc
+ 		return -EINVAL;
+ 	}
+ 
+-	nilfs_set_nsegments(nilfs, le64_to_cpu(sbp->s_nsegments));
++	nsegments = le64_to_cpu(sbp->s_nsegments);
++	if (nsegments > nilfs_max_segment_count(nilfs)) {
++		nilfs_err(nilfs->ns_sb,
++			  "segment count %llu exceeds upper limit (%llu segments)",
++			  (unsigned long long)nsegments,
++			  (unsigned long long)nilfs_max_segment_count(nilfs));
++		return -EINVAL;
++	}
++
++	nblocks = (u64)i_size_read(nilfs->ns_sb->s_bdev->bd_inode) >>
++		nilfs->ns_sb->s_blocksize_bits;
++	if (nblocks) {
++		u64 min_block_count = nsegments * nilfs->ns_blocks_per_segment;
++		/*
++		 * To avoid failing to mount early device images without a
++		 * second superblock, exclude that block count from the
++		 * "min_block_count" calculation.
++		 */
++
++		if (nblocks < min_block_count) {
++			nilfs_err(nilfs->ns_sb,
++				  "total number of segment blocks %llu exceeds device size (%llu blocks)",
++				  (unsigned long long)min_block_count,
++				  (unsigned long long)nblocks);
++			return -EINVAL;
++		}
++	}
++
++	nilfs_set_nsegments(nilfs, nsegments);
+ 	nilfs->ns_crc_seed = le32_to_cpu(sbp->s_crc_seed);
+ 	return 0;
+ }
 
 
