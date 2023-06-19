@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54795381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FC1C433C8;
-	Mon, 19 Jun 2023 10:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FE55381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38A7C433C8;
+	Mon, 19 Jun 2023 10:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171027;
-	bh=gDrRAn/3Di0ZftnLSoA+mqE0h0skAQn1H02GdAnvofI=;
+	s=korg; t=1687171030;
+	bh=v3zHjLvEo+AfNXUvrJl3Ua8pNEyiCqt6CoCyLaVrUdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TAMze8bnvn/rmPPQaaPSYedf5T9AtkGXxlH9zoIlSnpeGuNS8TByCwvg0Oppto00i
-	 dbi6GB3AmX083lmOtpoHhKqkkvkAK71LY6zqJFNP6o4QdTuzWgstL0YD4IPKdxb/uc
-	 Tf9hKcEchKSdFtMh/HEtewd8Kx7SrDk/mk20usvc=
+	b=e9WK0OvqC4QRIqI8w0inJmn5r17WTNWA9E3q2zagbHt7mDf3YeD6VpllQcXkIjYer
+	 coXKxwjAW3lSlVx3T1TzPRLdPUXQIHTIFhTWpkr+0xqO0xkJEHq3XWYeU5QSNErZhP
+	 jwTYtnhALxDvz2MsFIEewnBns4qo6mxSssvXL5Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	beld zhang <beldzhang@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.3 095/187] thunderbolt: Mask ring interrupt on Intel hardware as well
-Date: Mon, 19 Jun 2023 12:28:33 +0200
-Message-ID: <20230619102202.194424270@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.3 096/187] clk: pxa: fix NULL pointer dereference in pxa3xx_clk_update_accr
+Date: Mon, 19 Jun 2023 12:28:34 +0200
+Message-ID: <20230619102202.236201473@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,50 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 9f9666e65359d5047089aef97ac87c50f624ecb0 upstream.
+commit 23200a4c8ac284f8b4263d7cecaefecaa3ad6732 upstream.
 
-When resuming from system sleep states the driver issues following
-warning on Intel hardware:
+sparse points out an embarrasing bug in an older patch of mine,
+which uses the register offset instead of an __iomem pointer:
 
-  thunderbolt 0000:07:00.0: interrupt for TX ring 0 is already enabled
+drivers/clk/pxa/clk-pxa3xx.c:167:9: sparse: sparse: Using plain integer as NULL pointer
 
-The reason for this is that the commit in question did not mask the ring
-interrupt on Intel hardware leaving the interrupt active. Fix this by
-masking it also in Intel hardware.
+Unlike sparse, gcc and clang ignore this bug and fail to warn
+because a literal '0' is considered a valid representation of
+a NULL pointer.
 
-Reported-by: beld zhang <beldzhang@gmail.com>
-Tested-by: beld zhang <beldzhang@gmail.com>
-Closes: https://lore.kernel.org/linux-usb/ZHKW5NeabmfhgLbY@debian.me/
-Fixes: c4af8e3fecd0 ("thunderbolt: Clear registers properly when auto clear isn't in use")
+Fixes: 3c816d950a49 ("ARM: pxa: move clk register definitions to driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202305111301.RAHohdob-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230511105845.299859-1-arnd@kernel.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/nhi.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/clk/pxa/clk-pxa3xx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -56,9 +56,14 @@ static int ring_interrupt_index(const st
+--- a/drivers/clk/pxa/clk-pxa3xx.c
++++ b/drivers/clk/pxa/clk-pxa3xx.c
+@@ -164,7 +164,7 @@ void pxa3xx_clk_update_accr(u32 disable,
+ 	accr &= ~disable;
+ 	accr |= enable;
  
- static void nhi_mask_interrupt(struct tb_nhi *nhi, int mask, int ring)
- {
--	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT)
--		return;
--	iowrite32(mask, nhi->iobase + REG_RING_INTERRUPT_MASK_CLEAR_BASE + ring);
-+	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT) {
-+		u32 val;
-+
-+		val = ioread32(nhi->iobase + REG_RING_INTERRUPT_BASE + ring);
-+		iowrite32(val & ~mask, nhi->iobase + REG_RING_INTERRUPT_BASE + ring);
-+	} else {
-+		iowrite32(mask, nhi->iobase + REG_RING_INTERRUPT_MASK_CLEAR_BASE + ring);
-+	}
- }
+-	writel(accr, ACCR);
++	writel(accr, clk_regs + ACCR);
+ 	if (xclkcfg)
+ 		__asm__("mcr p14, 0, %0, c6, c0, 0\n" : : "r"(xclkcfg));
  
- static void nhi_clear_interrupt(struct tb_nhi *nhi, int ring)
 
 
