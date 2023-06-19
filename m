@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9794BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5126AC433C8;
-	Mon, 19 Jun 2023 10:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71198BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9BDC433C8;
+	Mon, 19 Jun 2023 10:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171682;
-	bh=VXEv/PMPG9sHzKGA9zlWeLeTWAtVM8DyIuAfjtIizRQ=;
+	s=korg; t=1687171685;
+	bh=Jvbzr2SUDghLYhLeyBav6vqkETHkoHwM3Uq1wREb8os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WleQ4ngToFDI9Nb5XOh+lSlp+05tKk99wLv/a+JpFmV+qieeLX2qkJFaJRNbIq3dP
-	 rGTZ3hKzhYaXvT/I1k8nS5D5/HoRJQ9SvpVRY1108HaYf4ollQNJwp/FwWgLu2zcSs
-	 vLAI0z+5+7AXUFaJCCRTjUKoY02MPGTn9ZJENStA=
+	b=GLAjdfbZePqlGFsxqQ2Ayrqtan1Wq0rHsPkOae/w/nFlr5thPWbAD7R9uod65aunF
+	 6oF7EkcocVeR7w7g3SS/whP7Nnh/atk46ns3CxmIQ8M3i+3wMPg2udxWDXhU8GOnfd
+	 1AsCBLveHF0XJ6BBoApFSuooSm/M8J3JF+C4w2yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Maor Gottlieb <maorg@nvidia.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/166] IB/uverbs: Fix to consider event queue closing also upon non-blocking mode
-Date: Mon, 19 Jun 2023 12:29:56 +0200
-Message-ID: <20230619102200.616311392@linuxfoundation.org>
+Subject: [PATCH 6.1 120/166] RDMA/mlx5: Fix affinity assignment
+Date: Mon, 19 Jun 2023 12:29:57 +0200
+Message-ID: <20230619102200.663318237@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,66 +36,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit 62fab312fa1683e812e605db20d4f22de3e3fb2f ]
+[ Upstream commit 617f5db1a626f18d5cbb7c7faf7bf8f9ea12be78 ]
 
-Fix ib_uverbs_event_read() to consider event queue closing also upon
-non-blocking mode.
+The cited commit aimed to ensure that Virtual Functions (VFs) assign a
+queue affinity to a Queue Pair (QP) to distribute traffic when
+the LAG master creates a hardware LAG. If the affinity was set while
+the hardware was not in LAG, the firmware would ignore the affinity value.
 
-Once the queue is closed (e.g. hot-plug flow) all the existing events
-are cleaned-up as part of ib_uverbs_free_event_queue().
+However, this commit unintentionally assigned an affinity to QPs on the LAG
+master's VPORT even if the RDMA device was not marked as LAG-enabled.
+In most cases, this was not an issue because when the hardware entered
+hardware LAG configuration, the RDMA device of the LAG master would be
+destroyed and a new one would be created, marked as LAG-enabled.
 
-An application that uses the non-blocking FD mode should get -EIO in
-that case to let it knows that the device was removed already.
+The problem arises when a user configures Equal-Cost Multipath (ECMP).
+In ECMP mode, traffic can be directed to different physical ports based on
+the queue affinity, which is intended for use by VPORTS other than the
+E-Switch manager. ECMP mode is supported only if both E-Switch managers are
+in switchdev mode and the appropriate route is configured via IP. In this
+configuration, the RDMA device is not destroyed, and we retain the RDMA
+device that is not marked as LAG-enabled.
 
-Otherwise, it can loose the indication that the device was removed and
-won't recover.
+To ensure correct behavior, Send Queues (SQs) opened by the E-Switch
+manager through verbs should be assigned strict affinity. This means they
+will only be able to communicate through the native physical port
+associated with the E-Switch manager. This will prevent the firmware from
+assigning affinity and will not allow the SQs to be remapped in case of
+failover.
 
-As part of that, refactor the code to have a single flow with regards to
-'is_closed' for both blocking and non-blocking modes.
-
-Fixes: 14e23bd6d221 ("RDMA/core: Fix locking in ib_uverbs_event_read")
+Fixes: 802dcc7fc5ec ("RDMA/mlx5: Support TX port affinity for VF drivers in LAG mode")
 Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://lore.kernel.org/r/97b00116a1e1e13f8dc4ec38a5ea81cf8c030210.1685960567.git.leon@kernel.org
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://lore.kernel.org/r/425b05f4da840bc684b0f7e8ebf61aeb5cef09b0.1685960567.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_main.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h                |  3 +++
+ drivers/infiniband/hw/mlx5/qp.c                     |  3 +++
+ drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h | 12 ------------
+ include/linux/mlx5/driver.h                         | 12 ++++++++++++
+ 4 files changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/infiniband/core/uverbs_main.c b/drivers/infiniband/core/uverbs_main.c
-index d544340887277..fa937cd268219 100644
---- a/drivers/infiniband/core/uverbs_main.c
-+++ b/drivers/infiniband/core/uverbs_main.c
-@@ -222,8 +222,12 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
- 	spin_lock_irq(&ev_queue->lock);
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 038522bb7113e..8d94e6834e01b 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -1564,6 +1564,9 @@ static inline bool mlx5_ib_lag_should_assign_affinity(struct mlx5_ib_dev *dev)
+ 	    MLX5_CAP_PORT_SELECTION(dev->mdev, port_select_flow_table_bypass))
+ 		return 0;
  
- 	while (list_empty(&ev_queue->event_list)) {
--		spin_unlock_irq(&ev_queue->lock);
-+		if (ev_queue->is_closed) {
-+			spin_unlock_irq(&ev_queue->lock);
-+			return -EIO;
-+		}
++	if (mlx5_lag_is_lacp_owner(dev->mdev) && !dev->lag_active)
++		return 0;
++
+ 	return dev->lag_active ||
+ 		(MLX5_CAP_GEN(dev->mdev, num_lag_ports) > 1 &&
+ 		 MLX5_CAP_GEN(dev->mdev, lag_tx_port_affinity));
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index f7d3643b08f50..ac53ed79ca64c 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -1156,6 +1156,9 @@ static int create_raw_packet_qp_tis(struct mlx5_ib_dev *dev,
  
-+		spin_unlock_irq(&ev_queue->lock);
- 		if (filp->f_flags & O_NONBLOCK)
- 			return -EAGAIN;
+ 	MLX5_SET(create_tis_in, in, uid, to_mpd(pd)->uid);
+ 	MLX5_SET(tisc, tisc, transport_domain, tdn);
++	if (!mlx5_ib_lag_should_assign_affinity(dev) &&
++	    mlx5_lag_is_lacp_owner(dev->mdev))
++		MLX5_SET(tisc, tisc, strict_lag_tx_port_affinity, 1);
+ 	if (qp->flags & IB_QP_CREATE_SOURCE_QPN)
+ 		MLX5_SET(tisc, tisc, underlay_qpn, qp->underlay_qpn);
  
-@@ -233,12 +237,6 @@ static ssize_t ib_uverbs_event_read(struct ib_uverbs_event_queue *ev_queue,
- 			return -ERESTARTSYS;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index 1a35b3c2a3674..0b560e97a3563 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -275,18 +275,6 @@ static inline bool mlx5_sriov_is_enabled(struct mlx5_core_dev *dev)
+ 	return pci_num_vf(dev->pdev) ? true : false;
+ }
  
- 		spin_lock_irq(&ev_queue->lock);
+-static inline int mlx5_lag_is_lacp_owner(struct mlx5_core_dev *dev)
+-{
+-	/* LACP owner conditions:
+-	 * 1) Function is physical.
+-	 * 2) LAG is supported by FW.
+-	 * 3) LAG is managed by driver (currently the only option).
+-	 */
+-	return  MLX5_CAP_GEN(dev, vport_group_manager) &&
+-		   (MLX5_CAP_GEN(dev, num_lag_ports) > 1) &&
+-		    MLX5_CAP_GEN(dev, lag_master);
+-}
 -
--		/* If device was disassociated and no event exists set an error */
--		if (list_empty(&ev_queue->event_list) && ev_queue->is_closed) {
--			spin_unlock_irq(&ev_queue->lock);
--			return -EIO;
--		}
- 	}
+ int mlx5_rescan_drivers_locked(struct mlx5_core_dev *dev);
+ static inline int mlx5_rescan_drivers(struct mlx5_core_dev *dev)
+ {
+diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
+index fff61e6d6d4de..3660ce6a93496 100644
+--- a/include/linux/mlx5/driver.h
++++ b/include/linux/mlx5/driver.h
+@@ -1230,6 +1230,18 @@ static inline u16 mlx5_core_max_vfs(const struct mlx5_core_dev *dev)
+ 	return dev->priv.sriov.max_vfs;
+ }
  
- 	event = list_entry(ev_queue->event_list.next, struct ib_uverbs_event, list);
++static inline int mlx5_lag_is_lacp_owner(struct mlx5_core_dev *dev)
++{
++	/* LACP owner conditions:
++	 * 1) Function is physical.
++	 * 2) LAG is supported by FW.
++	 * 3) LAG is managed by driver (currently the only option).
++	 */
++	return  MLX5_CAP_GEN(dev, vport_group_manager) &&
++		   (MLX5_CAP_GEN(dev, num_lag_ports) > 1) &&
++		    MLX5_CAP_GEN(dev, lag_master);
++}
++
+ static inline int mlx5_get_gid_table_len(u16 param)
+ {
+ 	if (param > 4) {
 -- 
 2.39.2
 
