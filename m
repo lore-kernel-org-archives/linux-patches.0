@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8AFC123
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4647C433C0;
-	Mon, 19 Jun 2023 11:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2736C123
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79446C433C0;
+	Mon, 19 Jun 2023 11:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172425;
-	bh=vTJexUNPmLpBUQltloCNbcvfxrJ336BoXAgwzEirbWw=;
+	s=korg; t=1687172427;
+	bh=HS1cTY3VVhtPUJC+ppQf1KbW49mLOBSFk4Xl5dTrVEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Az55ABiH7p9tI5nSxQtrdh8/3CFGr7ouXxPBfmFsh7KXK2O3m4l3r3h1MdFGTKPPR
-	 juimQX9+7QMpFCYv8SimPcdVhjwYH2ShhDXcZumm1skHwWPtDRvTjxY9ch0aFBlALh
-	 NcKPCEKFhoA78l3l+nZT83cQ65aQ1FjD5cQkPmcg=
+	b=J+LeFZus3bljrN8A0aENcqUK8OFzKFedViFAzgWlMM+Xung5QDCV+T5nLgUxIAFy1
+	 XPzENjht3tTRy8/pnIXy3/Yf0hwvl9lE44B+lBEAEBAMErR+5INdL8hi7BzhyG1Iku
+	 hQ2gbAmUUioLMY0i3TJ2t5Um0vqc1Rohw+4Io5Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/107] netfilter: nf_tables: incorrect error path handling with NFT_MSG_NEWRULE
-Date: Mon, 19 Jun 2023 12:30:48 +0200
-Message-ID: <20230619102144.528478590@linuxfoundation.org>
+Subject: [PATCH 5.15 065/107] net: enetc: correct the indexes of highest and 2nd highest TCs
+Date: Mon, 19 Jun 2023 12:30:49 +0200
+Message-ID: <20230619102144.571666223@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -34,73 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 1240eb93f0616b21c675416516ff3d74798fdc97 ]
+[ Upstream commit 21225873be1472b7c59ed3650396af0e40578112 ]
 
-In case of error when adding a new rule that refers to an anonymous set,
-deactivate expressions via NFT_TRANS_PREPARE state, not NFT_TRANS_RELEASE.
-Thus, the lookup expression marks anonymous sets as inactive in the next
-generation to ensure it is not reachable in this transaction anymore and
-decrement the set refcount as introduced by c1592a89942e ("netfilter:
-nf_tables: deactivate anonymous set from preparation phase"). The abort
-step takes care of undoing the anonymous set.
+For ENETC hardware, the TCs are numbered from 0 to N-1, where N
+is the number of TCs. Numerically higher TC has higher priority.
+It's obvious that the highest priority TC index should be N-1 and
+the 2nd highest priority TC index should be N-2.
 
-This is also consistent with rule deletion, where NFT_TRANS_PREPARE is
-used. Note that this error path is exercised in the preparation step of
-the commit protocol. This patch replaces nf_tables_rule_release() by the
-deactivate and destroy calls, this time with NFT_TRANS_PREPARE.
+However, the previous logic uses netdev_get_prio_tc_map() to get
+the indexes of highest priority and 2nd highest priority TCs, it
+does not make sense and is incorrect to give a "tc" argument to
+netdev_get_prio_tc_map(). So the driver may get the wrong indexes
+of the two highest priotiry TCs which would lead to failed to set
+the CBS for the two highest priotiry TCs.
 
-Due to this incorrect error handling, it is possible to access a
-dangling pointer to the anonymous set that remains in the transaction
-list.
+e.g.
+$ tc qdisc add dev eno0 parent root handle 100: mqprio num_tc 6 \
+	map 0 0 1 1 2 3 4 5 queues 1@0 1@1 1@2 1@3 2@4 2@6 hw 1
+$ tc qdisc replace dev eno0 parent 100:6 cbs idleslope 100000 \
+	sendslope -900000 hicredit 12 locredit -113 offload 1
+$ Error: Specified device failed to setup cbs hardware offload.
+  ^^^^^
 
-[1009.379054] BUG: KASAN: use-after-free in nft_set_lookup_global+0x147/0x1a0 [nf_tables]
-[1009.379106] Read of size 8 at addr ffff88816c4c8020 by task nft-rule-add/137110
-[1009.379116] CPU: 7 PID: 137110 Comm: nft-rule-add Not tainted 6.4.0-rc4+ #256
-[1009.379128] Call Trace:
-[1009.379132]  <TASK>
-[1009.379135]  dump_stack_lvl+0x33/0x50
-[1009.379146]  ? nft_set_lookup_global+0x147/0x1a0 [nf_tables]
-[1009.379191]  print_address_description.constprop.0+0x27/0x300
-[1009.379201]  kasan_report+0x107/0x120
-[1009.379210]  ? nft_set_lookup_global+0x147/0x1a0 [nf_tables]
-[1009.379255]  nft_set_lookup_global+0x147/0x1a0 [nf_tables]
-[1009.379302]  nft_lookup_init+0xa5/0x270 [nf_tables]
-[1009.379350]  nf_tables_newrule+0x698/0xe50 [nf_tables]
-[1009.379397]  ? nf_tables_rule_release+0xe0/0xe0 [nf_tables]
-[1009.379441]  ? kasan_unpoison+0x23/0x50
-[1009.379450]  nfnetlink_rcv_batch+0x97c/0xd90 [nfnetlink]
-[1009.379470]  ? nfnetlink_rcv_msg+0x480/0x480 [nfnetlink]
-[1009.379485]  ? __alloc_skb+0xb8/0x1e0
-[1009.379493]  ? __alloc_skb+0xb8/0x1e0
-[1009.379502]  ? entry_SYSCALL_64_after_hwframe+0x46/0xb0
-[1009.379509]  ? unwind_get_return_address+0x2a/0x40
-[1009.379517]  ? write_profile+0xc0/0xc0
-[1009.379524]  ? avc_lookup+0x8f/0xc0
-[1009.379532]  ? __rcu_read_unlock+0x43/0x60
+In this example, the previous logic deems the indexes of the two
+highest priotiry TCs should be 3 and 2. Actually, the indexes are
+5 and 4, because the number of TCs is 6. So it would be failed to
+configure the CBS for the two highest priority TCs.
 
-Fixes: 958bee14d071 ("netfilter: nf_tables: use new transaction infrastructure to handle sets")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: c431047c4efe ("enetc: add support Credit Based Shaper(CBS) for hardware offload")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/enetc/enetc_qos.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a1f74fd97fb36..35b9f74f0bc61 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3572,7 +3572,8 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (flow)
- 		nft_flow_rule_destroy(flow);
- err_release_rule:
--	nf_tables_rule_release(&ctx, rule);
-+	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE);
-+	nf_tables_rule_destroy(&ctx, rule);
- err_release_expr:
- 	for (i = 0; i < n; i++) {
- 		if (expr_info[i].ops) {
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_qos.c b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+index 4e9cb1deaf810..c348b6fb0e6f9 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_qos.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+@@ -197,8 +197,8 @@ int enetc_setup_tc_cbs(struct net_device *ndev, void *type_data)
+ 	int bw_sum = 0;
+ 	u8 bw;
+ 
+-	prio_top = netdev_get_prio_tc_map(ndev, tc_nums - 1);
+-	prio_next = netdev_get_prio_tc_map(ndev, tc_nums - 2);
++	prio_top = tc_nums - 1;
++	prio_next = tc_nums - 2;
+ 
+ 	/* Support highest prio and second prio tc in cbs mode */
+ 	if (tc != prio_top && tc != prio_next)
 -- 
 2.39.2
 
