@@ -1,26 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A1EBE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCEBC433C0;
-	Mon, 19 Jun 2023 10:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB50BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8663EC433C0;
+	Mon, 19 Jun 2023 10:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172178;
-	bh=J0EdczVaNxEyeTCc2eAowekOfVnOTNsp+5KyRwivq4w=;
+	s=korg; t=1687172180;
+	bh=JYYKLxwYVsGO13H0pcIDVtlGBTpF94xE4nuj952xO/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+3PkvTLpfw1qSh8lTx6f/Q/Wzpu9aXngyPykxIHEwxqv5BN2NhgP0MM5yWftwjfp
-	 c6lcX7ZArkxjraUdrwJR3BKHvZGOwGcX5RkZmM1SwISxsKjA5WVhYBQG9/v6iZzePS
-	 grVZucKsLXUbqQ+SBT+xzAx6cadfZkihs7h7+2qM=
+	b=H2ASurwLidJevmk4rrCCh9ggm8mobjYaphZMfOkrSI00jaVPadYx+IneDexM1LQDh
+	 pxaz/vlAAHTAgCQWPTXnws76SfB9xqFXUJEmquUZf242Hi3OBJ9dz7b9gJctHOWsKk
+	 MJ0PMvIGDXUQKj4p0WMDs022/MYC7Zwu43ROxTzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 5.10 38/89] RDMA/uverbs: Restrict usage of privileged QKEYs
-Date: Mon, 19 Jun 2023 12:30:26 +0200
-Message-ID: <20230619102140.016216232@linuxfoundation.org>
+	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 29/89] ocfs2: fix use-after-free when unmounting read-only filesystem
+Date: Mon, 19 Jun 2023 12:30:17 +0200
+Message-ID: <20230619102139.605365498@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -34,43 +41,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Srouji <edwards@nvidia.com>
+From: Luís Henriques <ocfs2-devel@oss.oracle.com>
 
-commit 0cadb4db79e1d9eea66711c4031e435c2191907e upstream.
+commit 50d927880e0f90d5cb25e897e9d03e5edacc79a8 upstream.
 
-According to the IB specification rel-1.6, section 3.5.3:
-"QKEYs with the most significant bit set are considered controlled
-QKEYs, and a HCA does not allow a consumer to arbitrarily specify a
-controlled QKEY."
+It's trivial to trigger a use-after-free bug in the ocfs2 quotas code using
+fstest generic/452.  After a read-only remount, quotas are suspended and
+ocfs2_mem_dqinfo is freed through ->ocfs2_local_free_info().  When unmounting
+the filesystem, an UAF access to the oinfo will eventually cause a crash.
 
-Thus, block non-privileged users from setting such a QKEY.
+BUG: KASAN: slab-use-after-free in timer_delete+0x54/0xc0
+Read of size 8 at addr ffff8880389a8208 by task umount/669
+...
+Call Trace:
+ <TASK>
+ ...
+ timer_delete+0x54/0xc0
+ try_to_grab_pending+0x31/0x230
+ __cancel_work_timer+0x6c/0x270
+ ocfs2_disable_quotas.isra.0+0x3e/0xf0 [ocfs2]
+ ocfs2_dismount_volume+0xdd/0x450 [ocfs2]
+ generic_shutdown_super+0xaa/0x280
+ kill_block_super+0x46/0x70
+ deactivate_locked_super+0x4d/0xb0
+ cleanup_mnt+0x135/0x1f0
+ ...
+ </TASK>
 
-Cc: stable@vger.kernel.org
-Fixes: bc38a6abdd5a ("[PATCH] IB uverbs: core implementation")
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://lore.kernel.org/r/c00c809ddafaaf87d6f6cb827978670989a511b3.1685960567.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Allocated by task 632:
+ kasan_save_stack+0x1c/0x40
+ kasan_set_track+0x21/0x30
+ __kasan_kmalloc+0x8b/0x90
+ ocfs2_local_read_info+0xe3/0x9a0 [ocfs2]
+ dquot_load_quota_sb+0x34b/0x680
+ dquot_load_quota_inode+0xfe/0x1a0
+ ocfs2_enable_quotas+0x190/0x2f0 [ocfs2]
+ ocfs2_fill_super+0x14ef/0x2120 [ocfs2]
+ mount_bdev+0x1be/0x200
+ legacy_get_tree+0x6c/0xb0
+ vfs_get_tree+0x3e/0x110
+ path_mount+0xa90/0xe10
+ __x64_sys_mount+0x16f/0x1a0
+ do_syscall_64+0x43/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Freed by task 650:
+ kasan_save_stack+0x1c/0x40
+ kasan_set_track+0x21/0x30
+ kasan_save_free_info+0x2a/0x50
+ __kasan_slab_free+0xf9/0x150
+ __kmem_cache_free+0x89/0x180
+ ocfs2_local_free_info+0x2ba/0x3f0 [ocfs2]
+ dquot_disable+0x35f/0xa70
+ ocfs2_susp_quotas.isra.0+0x159/0x1a0 [ocfs2]
+ ocfs2_remount+0x150/0x580 [ocfs2]
+ reconfigure_super+0x1a5/0x3a0
+ path_mount+0xc8a/0xe10
+ __x64_sys_mount+0x16f/0x1a0
+ do_syscall_64+0x43/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Link: https://lkml.kernel.org/r/20230522102112.9031-1-lhenriques@suse.de
+Signed-off-by: Luís Henriques <lhenriques@suse.de>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Tested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/uverbs_cmd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ocfs2/super.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/core/uverbs_cmd.c
-+++ b/drivers/infiniband/core/uverbs_cmd.c
-@@ -1842,8 +1842,13 @@ static int modify_qp(struct uverbs_attr_
- 		attr->path_mtu = cmd->base.path_mtu;
- 	if (cmd->base.attr_mask & IB_QP_PATH_MIG_STATE)
- 		attr->path_mig_state = cmd->base.path_mig_state;
--	if (cmd->base.attr_mask & IB_QP_QKEY)
-+	if (cmd->base.attr_mask & IB_QP_QKEY) {
-+		if (cmd->base.qkey & IB_QP_SET_QKEY && !capable(CAP_NET_RAW)) {
-+			ret = -EPERM;
-+			goto release_qp;
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -955,8 +955,10 @@ static void ocfs2_disable_quotas(struct
+ 	for (type = 0; type < OCFS2_MAXQUOTAS; type++) {
+ 		if (!sb_has_quota_loaded(sb, type))
+ 			continue;
+-		oinfo = sb_dqinfo(sb, type)->dqi_priv;
+-		cancel_delayed_work_sync(&oinfo->dqi_sync_work);
++		if (!sb_has_quota_suspended(sb, type)) {
++			oinfo = sb_dqinfo(sb, type)->dqi_priv;
++			cancel_delayed_work_sync(&oinfo->dqi_sync_work);
 +		}
- 		attr->qkey = cmd->base.qkey;
-+	}
- 	if (cmd->base.attr_mask & IB_QP_RQ_PSN)
- 		attr->rq_psn = cmd->base.rq_psn;
- 	if (cmd->base.attr_mask & IB_QP_SQ_PSN)
+ 		inode = igrab(sb->s_dquot.files[type]);
+ 		/* Turn off quotas. This will remove all dquot structures from
+ 		 * memory and so they will be automatically synced to global
 
 
