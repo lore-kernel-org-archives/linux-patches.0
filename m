@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FE55381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38A7C433C8;
-	Mon, 19 Jun 2023 10:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226EA5381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDCEC433C0;
+	Mon, 19 Jun 2023 10:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171030;
-	bh=v3zHjLvEo+AfNXUvrJl3Ua8pNEyiCqt6CoCyLaVrUdc=;
+	s=korg; t=1687171033;
+	bh=6eKAIVz6YFxnQV/yvmGwnBK0h+S1XelJoBQ+OSwHmuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e9WK0OvqC4QRIqI8w0inJmn5r17WTNWA9E3q2zagbHt7mDf3YeD6VpllQcXkIjYer
-	 coXKxwjAW3lSlVx3T1TzPRLdPUXQIHTIFhTWpkr+0xqO0xkJEHq3XWYeU5QSNErZhP
-	 jwTYtnhALxDvz2MsFIEewnBns4qo6mxSssvXL5Ks=
+	b=IrU2vKGOT5X/Zp44Zo3bCjd/vWz/5KPmiB2IsZ//yeaLH2sxpwGGdCF0adNM9OB5t
+	 QmzasT4tQ7nDTRqfa1KWgOVN4U8sjSJ5NMExDSYKDbXWy6HpXFGVqjWd8ax7cwdYik
+	 CtFr2m4HKwYdVlyBZl2r4LrLqZAKpwfmd1klEzEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.3 096/187] clk: pxa: fix NULL pointer dereference in pxa3xx_clk_update_accr
-Date: Mon, 19 Jun 2023 12:28:34 +0200
-Message-ID: <20230619102202.236201473@linuxfoundation.org>
+	Jerry Meng <jerry-meng@foxmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.3 097/187] USB: serial: option: add Quectel EM061KGL series
+Date: Mon, 19 Jun 2023 12:28:35 +0200
+Message-ID: <20230619102202.283773511@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,41 +34,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jerry Meng <jerry-meng@foxmail.com>
 
-commit 23200a4c8ac284f8b4263d7cecaefecaa3ad6732 upstream.
+commit f1832e2b5e498e258b090af3b065b85cf8cc5161 upstream.
 
-sparse points out an embarrasing bug in an older patch of mine,
-which uses the register offset instead of an __iomem pointer:
+Add support for Quectel EM061KGL series which are based on Qualcomm
+SDX12 chip:
 
-drivers/clk/pxa/clk-pxa3xx.c:167:9: sparse: sparse: Using plain integer as NULL pointer
+EM061KGL_LTA(0x2c7c / 0x0123): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+EM061KGL_LMS(0x2c7c / 0x0124): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+EM061KGL_LWW(0x2c7c / 0x6008): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+EM061KGL_LCN(0x2c7c / 0x6009): MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
 
-Unlike sparse, gcc and clang ignore this bug and fail to warn
-because a literal '0' is considered a valid representation of
-a NULL pointer.
+Above products use the exact same interface layout and
+option driver is for interfaces DIAG, NMEA and AT.
 
-Fixes: 3c816d950a49 ("ARM: pxa: move clk register definitions to driver")
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  5 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=6008 Rev= 5.04
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM061K-GL
+S:  SerialNumber=f6fa08b6
+C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Jerry Meng <jerry-meng@foxmail.com>
 Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202305111301.RAHohdob-lkp@intel.com/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230511105845.299859-1-arnd@kernel.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/pxa/clk-pxa3xx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/clk/pxa/clk-pxa3xx.c
-+++ b/drivers/clk/pxa/clk-pxa3xx.c
-@@ -164,7 +164,7 @@ void pxa3xx_clk_update_accr(u32 disable,
- 	accr &= ~disable;
- 	accr |= enable;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -248,6 +248,8 @@ static void option_instat_callback(struc
+ #define QUECTEL_VENDOR_ID			0x2c7c
+ /* These Quectel products use Quectel's vendor ID */
+ #define QUECTEL_PRODUCT_EC21			0x0121
++#define QUECTEL_PRODUCT_EM061K_LTA		0x0123
++#define QUECTEL_PRODUCT_EM061K_LMS		0x0124
+ #define QUECTEL_PRODUCT_EC25			0x0125
+ #define QUECTEL_PRODUCT_EG91			0x0191
+ #define QUECTEL_PRODUCT_EG95			0x0195
+@@ -266,6 +268,8 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_RM520N			0x0801
+ #define QUECTEL_PRODUCT_EC200U			0x0901
+ #define QUECTEL_PRODUCT_EC200S_CN		0x6002
++#define QUECTEL_PRODUCT_EM061K_LWW		0x6008
++#define QUECTEL_PRODUCT_EM061K_LCN		0x6009
+ #define QUECTEL_PRODUCT_EC200T			0x6026
+ #define QUECTEL_PRODUCT_RM500K			0x7001
  
--	writel(accr, ACCR);
-+	writel(accr, clk_regs + ACCR);
- 	if (xclkcfg)
- 		__asm__("mcr p14, 0, %0, c6, c0, 0\n" : : "r"(xclkcfg));
- 
+@@ -1189,6 +1193,18 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LCN, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LMS, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LMS, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LMS, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LTA, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LTA, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LTA, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LWW, 0xff, 0xff, 0x30) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LWW, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM061K_LWW, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM12, 0xff, 0xff, 0xff),
+ 	  .driver_info = RSVD(1) | RSVD(2) | RSVD(3) | RSVD(4) | NUMEP2 },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM12, 0xff, 0, 0) },
 
 
