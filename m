@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37093C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:39:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AFDC433C8;
-	Mon, 19 Jun 2023 10:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32C83C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A34C433C0;
+	Mon, 19 Jun 2023 10:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171199;
-	bh=YPc0r6NfNEELinNLXJAgz1eeQAItNh35zU/sjR1QM/M=;
+	s=korg; t=1687171202;
+	bh=It2DotmhJgF6bEerrBSRXbMcT0xPUBgjMzA77bJYsFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M7fYUkB0VIpnl31hsGaqiAJeBLTqTYM6EaAfdNNVwNqaBvtH9P7Z61voKV53bKNWA
-	 l26Wbkier6ja420JNOoBczjDZhZQf4zTWNmx3N5ilzZie5Cw2o+OxfGTR9+IOKweiE
-	 aDywEpCNdMuj6TVaHqkgBMjAd2h833p4UDtgm9S0=
+	b=iNTJsXn+A4PR8X97ByOP1jcaca8e2Qlh0Nn9TMjinNTNqHKYooa6wcTlOhb8jyY5f
+	 9L1dbun1K1uF3w+4KWhtUJcVPhYXf2fuldAwL0zwJJMks+9NCv5dHtd51K849NEh5C
+	 C6BQECPppmsBk74/0rn8qXi8lPK92dkHx2KGpwAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Natalia Petrova <n.petrova@fintech.ru>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 157/187] drm/bridge: ti-sn65dsi86: Avoid possible buffer overflow
-Date: Mon, 19 Jun 2023 12:29:35 +0200
-Message-ID: <20230619102205.181413751@linuxfoundation.org>
+Subject: [PATCH 6.3 158/187] drm/nouveau/dp: check for NULL nv_connector->native_mode
+Date: Mon, 19 Jun 2023 12:29:36 +0200
+Message-ID: <20230619102205.223211120@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,37 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Su Hui <suhui@nfschina.com>
+From: Natalia Petrova <n.petrova@fintech.ru>
 
-[ Upstream commit 95011f267c44a4d1f9ca1769e8a29ab2c559e004 ]
+[ Upstream commit 20a2ce87fbaf81e4c3dcb631d738e423959eb320 ]
 
-Smatch error:buffer overflow 'ti_sn_bridge_refclk_lut' 5 <= 5.
+Add checking for NULL before calling nouveau_connector_detect_depth() in
+nouveau_connector_get_modes() function because nv_connector->native_mode
+could be dereferenced there since connector pointer passed to
+nouveau_connector_detect_depth() and the same value of
+nv_connector->native_mode is used there.
 
-Fixes: cea86c5bb442 ("drm/bridge: ti-sn65dsi86: Implement the pwm_chip")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230608012443.839372-1-suhui@nfschina.com
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: d4c2c99bdc83 ("drm/nouveau/dp: remove broken display depth function, use the improved one")
+
+Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230512111526.82408-1-n.petrova@fintech.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_connector.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 1e26fa63845a2..0ae8a52acf5e4 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -298,6 +298,10 @@ static void ti_sn_bridge_set_refclk_freq(struct ti_sn65dsi86 *pdata)
- 		if (refclk_lut[i] == refclk_rate)
- 			break;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
+index 086b66b60d918..5dbf025e68737 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_connector.c
++++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+@@ -966,7 +966,7 @@ nouveau_connector_get_modes(struct drm_connector *connector)
+ 	/* Determine display colour depth for everything except LVDS now,
+ 	 * DP requires this before mode_valid() is called.
+ 	 */
+-	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS)
++	if (connector->connector_type != DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
+ 		nouveau_connector_detect_depth(connector);
  
-+	/* avoid buffer overflow and "1" is the default rate in the datasheet. */
-+	if (i >= refclk_lut_size)
-+		i = 1;
-+
- 	regmap_update_bits(pdata->regmap, SN_DPPLL_SRC_REG, REFCLK_FREQ_MASK,
- 			   REFCLK_FREQ(i));
+ 	/* Find the native mode if this is a digital panel, if we didn't
+@@ -987,7 +987,7 @@ nouveau_connector_get_modes(struct drm_connector *connector)
+ 	 * "native" mode as some VBIOS tables require us to use the
+ 	 * pixel clock as part of the lookup...
+ 	 */
+-	if (connector->connector_type == DRM_MODE_CONNECTOR_LVDS)
++	if (connector->connector_type == DRM_MODE_CONNECTOR_LVDS && nv_connector->native_mode)
+ 		nouveau_connector_detect_depth(connector);
  
+ 	if (nv_encoder->dcb->type == DCB_OUTPUT_TV)
 -- 
 2.39.2
 
