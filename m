@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7CEBE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:54:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2B6C433C0;
-	Mon, 19 Jun 2023 10:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4663D7497
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:54:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07C3C433C8;
+	Mon, 19 Jun 2023 10:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172056;
-	bh=B4Q+29shU6doNPTj5mHxqZsKrg+BkJUBwJTzymxo0tg=;
+	s=korg; t=1687172059;
+	bh=qEUsjwhhl3BEEVwSGFW2pv6M333EyUzh6VO+NOAFXjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ElDcL1ydhUrEsqFP8fCEvCATkktbnCg5BLqYwUrvRgZdpmGrpUqINLcpfVtdQX8Jt
-	 N46LhICP0tcYI3gbj/mSYoeOMj6NB6BNKhvf4BjIuNOPf0ESIXTNAU/e3vV9WuApU+
-	 UDLAEW8JYbs2G5oKYX6cHAdXyAvIaTwRZNNOCI5Q=
+	b=M1fuBVOo3taPYbY87Tz5YgVvy7jrG4mqUFOuvLYmalbhIJQrauVWfWakb+s0x/LDg
+	 E8ay1g4UVYL1lzF4D41Ea+kc7xNMC/ISl4jVWz+8WqR3D940JDwDmKyzcsdNfeG2ar
+	 3sm0597c9r0pmdjYM0ccx6Lrb5wLiUFbEoe08HwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 03/89] test_firmware: Use kstrtobool() instead of strtobool()
-Date: Mon, 19 Jun 2023 12:29:51 +0200
-Message-ID: <20230619102138.440344488@linuxfoundation.org>
+Subject: [PATCH 5.10 21/89] MIPS: Alchemy: fix dbdma2
+Date: Mon, 19 Jun 2023 12:30:09 +0200
+Message-ID: <20230619102139.256666792@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -35,49 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Manuel Lauss <manuel.lauss@gmail.com>
 
-[ Upstream commit f7d85515bd21902b218370a1a6301f76e4e636ff ]
+[ Upstream commit 2d645604f69f3a772d58ead702f9a8e84ab2b342 ]
 
-strtobool() is the same as kstrtobool().
-However, the latter is more used within the kernel.
+Various fixes for the Au1200/Au1550/Au1300 DBDMA2 code:
 
-In order to remove strtobool() and slightly simplify kstrtox.h, switch to
-the other function name.
+- skip cache invalidation if chip has working coherency circuitry.
+- invalidate KSEG0-portion of the (physical) data address.
+- force the dma channel doorbell write out to bus immediately with
+  a sync.
 
-While at it, include the corresponding header file (<linux/kstrtox.h>)
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/34f04735d20e0138695dd4070651bd860a36b81c.1673688120.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 4acfe3dfde68 ("test_firmware: prevent race conditions by a correct implementation of locking")
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_firmware.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/mips/alchemy/common/dbdma.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-index 3edbc17d92db5..b99cf0a50a698 100644
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -22,6 +22,7 @@
- #include <linux/slab.h>
- #include <linux/uaccess.h>
- #include <linux/delay.h>
-+#include <linux/kstrtox.h>
- #include <linux/kthread.h>
- #include <linux/vmalloc.h>
- #include <linux/efi_embedded_fw.h>
-@@ -326,7 +327,7 @@ static int test_dev_config_update_bool(const char *buf, size_t size,
- 	int ret;
+diff --git a/arch/mips/alchemy/common/dbdma.c b/arch/mips/alchemy/common/dbdma.c
+index 4ca2c28878e0f..e9ee9ab90a0c6 100644
+--- a/arch/mips/alchemy/common/dbdma.c
++++ b/arch/mips/alchemy/common/dbdma.c
+@@ -30,6 +30,7 @@
+  *
+  */
  
- 	mutex_lock(&test_fw_mutex);
--	if (strtobool(buf, cfg) < 0)
-+	if (kstrtobool(buf, cfg) < 0)
- 		ret = -EINVAL;
- 	else
- 		ret = size;
++#include <linux/dma-map-ops.h> /* for dma_default_coherent */
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+@@ -623,17 +624,18 @@ u32 au1xxx_dbdma_put_source(u32 chanid, dma_addr_t buf, int nbytes, u32 flags)
+ 		dp->dscr_cmd0 &= ~DSCR_CMD0_IE;
+ 
+ 	/*
+-	 * There is an errata on the Au1200/Au1550 parts that could result
+-	 * in "stale" data being DMA'ed. It has to do with the snoop logic on
+-	 * the cache eviction buffer.  DMA_NONCOHERENT is on by default for
+-	 * these parts. If it is fixed in the future, these dma_cache_inv will
+-	 * just be nothing more than empty macros. See io.h.
++	 * There is an erratum on certain Au1200/Au1550 revisions that could
++	 * result in "stale" data being DMA'ed. It has to do with the snoop
++	 * logic on the cache eviction buffer.  dma_default_coherent is set
++	 * to false on these parts.
+ 	 */
+-	dma_cache_wback_inv((unsigned long)buf, nbytes);
++	if (!dma_default_coherent)
++		dma_cache_wback_inv(KSEG0ADDR(buf), nbytes);
+ 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
+ 	wmb(); /* drain writebuffer */
+ 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
+ 	ctp->chan_ptr->ddma_dbell = 0;
++	wmb(); /* force doorbell write out to dma engine */
+ 
+ 	/* Get next descriptor pointer. */
+ 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
+@@ -685,17 +687,18 @@ u32 au1xxx_dbdma_put_dest(u32 chanid, dma_addr_t buf, int nbytes, u32 flags)
+ 			  dp->dscr_source1, dp->dscr_dest0, dp->dscr_dest1);
+ #endif
+ 	/*
+-	 * There is an errata on the Au1200/Au1550 parts that could result in
+-	 * "stale" data being DMA'ed. It has to do with the snoop logic on the
+-	 * cache eviction buffer.  DMA_NONCOHERENT is on by default for these
+-	 * parts. If it is fixed in the future, these dma_cache_inv will just
+-	 * be nothing more than empty macros. See io.h.
++	 * There is an erratum on certain Au1200/Au1550 revisions that could
++	 * result in "stale" data being DMA'ed. It has to do with the snoop
++	 * logic on the cache eviction buffer.  dma_default_coherent is set
++	 * to false on these parts.
+ 	 */
+-	dma_cache_inv((unsigned long)buf, nbytes);
++	if (!dma_default_coherent)
++		dma_cache_inv(KSEG0ADDR(buf), nbytes);
+ 	dp->dscr_cmd0 |= DSCR_CMD0_V;	/* Let it rip */
+ 	wmb(); /* drain writebuffer */
+ 	dma_cache_wback_inv((unsigned long)dp, sizeof(*dp));
+ 	ctp->chan_ptr->ddma_dbell = 0;
++	wmb(); /* force doorbell write out to dma engine */
+ 
+ 	/* Get next descriptor pointer. */
+ 	ctp->put_ptr = phys_to_virt(DSCR_GET_NXTPTR(dp->dscr_nxtptr));
 -- 
 2.39.2
 
