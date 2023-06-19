@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117811096D
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:32:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857C3C433C0;
-	Mon, 19 Jun 2023 10:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2151A10970
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:32:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42571C433C8;
+	Mon, 19 Jun 2023 10:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170768;
-	bh=8m1du6GOah3NQgk52bCpmZ/0Uo6WzwgfjlrA6FrWeeI=;
+	s=korg; t=1687170771;
+	bh=T+b1Mld9xi7m8dULwPfvheiEogr8e/MnWZp9YePKVo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2En+cvZ8LdgLf3fW9v3v8IGBKpKkL1nrUgHKYbR8Supmr78J/MZQygqxzEl7NZOoY
-	 WoC8hSESeVHMbsgxt/a1GSf+JlpmxG8Dxz3VhEatNSHdlMDulmmqBc+WekGz4ZeImL
-	 uvigMLUYwRiFHz66iwLEBKDnSh/u+YbsTGFbJZnA=
+	b=MaC/K1TK4hJQoTU301DyvllZULnXWMZDtJcWIQC7oHf4+oAOrOloHS9/xMmuqdj6J
+	 AYfhSCks5l/ry7LuCBEB0vquPFiuRByDJNlCPtYpHhqCE2bkh5JJvvQYSM6pIsQ0FF
+	 WXMj2ixcN6lfVqIlY5ND1/Dm3H4vsuJHTyhLTUNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 028/187] ASoC: Intel: avs: Account for UID of ACPI device
-Date: Mon, 19 Jun 2023 12:27:26 +0200
-Message-ID: <20230619102158.999754053@linuxfoundation.org>
+Subject: [PATCH 6.3 029/187] ASoC: Intel: avs: Fix avs_path_module::instance_id size
+Date: Mon, 19 Jun 2023 12:27:27 +0200
+Message-ID: <20230619102159.050962655@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -36,51 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit 836855100b87b4dd7a82546131779dc255c18b67 ]
+[ Upstream commit 320f4d868b83a804e3a4bd61a5b7d0f1db66380e ]
 
-Configurations with multiple codecs attached to the platform are
-supported but only if each from the set is different. Add new field
-representing the 'Unique ID' so that codecs that share Vendor and Part
-IDs can be differentiated and thus enabling support for such
-configurations.
+All IPCs using instance_id use 8 bit value. Original commit used 16 bit
+value because FW reports possible max value in 16 bit field, but in
+practice FW limits the value to 8 bits.
 
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
 Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20230519201711.4073845-6-amadeuszx.slawinski@linux.intel.com
+Link: https://lore.kernel.org/r/20230519201711.4073845-7-amadeuszx.slawinski@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-acpi.h              | 1 +
- sound/soc/intel/avs/board_selection.c | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/intel/avs/avs.h    | 4 ++--
+ sound/soc/intel/avs/dsp.c    | 4 ++--
+ sound/soc/intel/avs/path.h   | 2 +-
+ sound/soc/intel/avs/probes.c | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/sound/soc-acpi.h b/include/sound/soc-acpi.h
-index b38fd25c57295..528279056b3ab 100644
---- a/include/sound/soc-acpi.h
-+++ b/include/sound/soc-acpi.h
-@@ -170,6 +170,7 @@ struct snd_soc_acpi_link_adr {
- /* Descriptor for SST ASoC machine driver */
- struct snd_soc_acpi_mach {
- 	u8 id[ACPI_ID_LEN];
-+	const char *uid;
- 	const struct snd_soc_acpi_codecs *comp_ids;
- 	const u32 link_mask;
- 	const struct snd_soc_acpi_link_adr *links;
-diff --git a/sound/soc/intel/avs/board_selection.c b/sound/soc/intel/avs/board_selection.c
-index b2823c2107f77..60f8fb0bff95b 100644
---- a/sound/soc/intel/avs/board_selection.c
-+++ b/sound/soc/intel/avs/board_selection.c
-@@ -443,7 +443,7 @@ static int avs_register_i2s_boards(struct avs_dev *adev)
- 	}
+diff --git a/sound/soc/intel/avs/avs.h b/sound/soc/intel/avs/avs.h
+index d7fccdcb9c167..0cf38c9e768e7 100644
+--- a/sound/soc/intel/avs/avs.h
++++ b/sound/soc/intel/avs/avs.h
+@@ -283,8 +283,8 @@ void avs_release_firmwares(struct avs_dev *adev);
  
- 	for (mach = boards->machs; mach->id[0]; mach++) {
--		if (!acpi_dev_present(mach->id, NULL, -1))
-+		if (!acpi_dev_present(mach->id, mach->uid, -1))
- 			continue;
+ int avs_dsp_init_module(struct avs_dev *adev, u16 module_id, u8 ppl_instance_id,
+ 			u8 core_id, u8 domain, void *param, u32 param_size,
+-			u16 *instance_id);
+-void avs_dsp_delete_module(struct avs_dev *adev, u16 module_id, u16 instance_id,
++			u8 *instance_id);
++void avs_dsp_delete_module(struct avs_dev *adev, u16 module_id, u8 instance_id,
+ 			   u8 ppl_instance_id, u8 core_id);
+ int avs_dsp_create_pipeline(struct avs_dev *adev, u16 req_size, u8 priority,
+ 			    bool lp, u16 attributes, u8 *instance_id);
+diff --git a/sound/soc/intel/avs/dsp.c b/sound/soc/intel/avs/dsp.c
+index b881100d3e02a..aa03af4473e94 100644
+--- a/sound/soc/intel/avs/dsp.c
++++ b/sound/soc/intel/avs/dsp.c
+@@ -225,7 +225,7 @@ static int avs_dsp_put_core(struct avs_dev *adev, u32 core_id)
  
- 		if (mach->machine_quirk)
+ int avs_dsp_init_module(struct avs_dev *adev, u16 module_id, u8 ppl_instance_id,
+ 			u8 core_id, u8 domain, void *param, u32 param_size,
+-			u16 *instance_id)
++			u8 *instance_id)
+ {
+ 	struct avs_module_entry mentry;
+ 	bool was_loaded = false;
+@@ -272,7 +272,7 @@ int avs_dsp_init_module(struct avs_dev *adev, u16 module_id, u8 ppl_instance_id,
+ 	return ret;
+ }
+ 
+-void avs_dsp_delete_module(struct avs_dev *adev, u16 module_id, u16 instance_id,
++void avs_dsp_delete_module(struct avs_dev *adev, u16 module_id, u8 instance_id,
+ 			   u8 ppl_instance_id, u8 core_id)
+ {
+ 	struct avs_module_entry mentry;
+diff --git a/sound/soc/intel/avs/path.h b/sound/soc/intel/avs/path.h
+index 197222c5e008e..657f7b093e805 100644
+--- a/sound/soc/intel/avs/path.h
++++ b/sound/soc/intel/avs/path.h
+@@ -37,7 +37,7 @@ struct avs_path_pipeline {
+ 
+ struct avs_path_module {
+ 	u16 module_id;
+-	u16 instance_id;
++	u8 instance_id;
+ 	union avs_gtw_attributes gtw_attrs;
+ 
+ 	struct avs_tplg_module *template;
+diff --git a/sound/soc/intel/avs/probes.c b/sound/soc/intel/avs/probes.c
+index 70a94201d6a56..275928281c6c6 100644
+--- a/sound/soc/intel/avs/probes.c
++++ b/sound/soc/intel/avs/probes.c
+@@ -18,7 +18,7 @@ static int avs_dsp_init_probe(struct avs_dev *adev, union avs_connector_node_id
+ {
+ 	struct avs_probe_cfg cfg = {{0}};
+ 	struct avs_module_entry mentry;
+-	u16 dummy;
++	u8 dummy;
+ 
+ 	avs_get_module_entry(adev, &AVS_PROBE_MOD_UUID, &mentry);
+ 
 -- 
 2.39.2
 
