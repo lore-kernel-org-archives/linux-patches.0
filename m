@@ -1,48 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3DCBE56
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2151AC433C0;
-	Mon, 19 Jun 2023 10:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD4EBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:56:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4A5C433C8;
+	Mon, 19 Jun 2023 10:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172172;
-	bh=XIXwth59SuEvQaGLTsV9sBhMTEGy6Sea6erPeQpXrh0=;
+	s=korg; t=1687172175;
+	bh=EC7aOuozHEjad2dkj06NFrEl0fjtonCeDan1P1Tfk6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X55gtVcJMfsXoKYOTqyYbTiDTJG/GnY9TJjo4FZkcNyIFKXkHBQ2CIavB07wxovWZ
-	 kGC1eU0AiFYZpoLT2ZdS4cUnHXATPdD/yIdvbYta4dUxBWMtyNupckuYu0AvsDjoAq
-	 SxEZC6kkm1fyZKFvuV7caKVhCHuPFlY7uMLAlfIg=
+	b=C6XWa3ip40aKfUfPmOCHvIPfR0R6mJeWLEaXvKppIQhxrj06mLaMkbpGF0UXOPX0J
+	 b86q8QP7JMP+hJ4lQKgmg6upj3FzxyJupaExhAaTqVkSi4ugPzqt50mYO1jtWLJUj9
+	 YerZcLtxPZ/ijfP6exvOOluvxbGCEft7sISID4tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Baoquan He <bhe@redhat.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dave Young <dyoung@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Philipp Rudo <prudo@redhat.com>,
-	Ross Zwisler <zwisler@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Tom Rix <trix@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 36/89] powerpc/purgatory: remove PGO flags
-Date: Mon, 19 Jun 2023 12:30:24 +0200
-Message-ID: <20230619102139.925265570@linuxfoundation.org>
+	Karol Herbst <kherbst@redhat.com>,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 5.10 37/89] nouveau: fix client work fence deletion race
+Date: Mon, 19 Jun 2023 12:30:25 +0200
+Message-ID: <20230619102139.969839984@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -56,59 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Dave Airlie <airlied@redhat.com>
 
-commit 20188baceb7a1463dc0bcb0c8678b69c2f447df6 upstream.
+commit c8a5d5ea3ba6a18958f8d76430e4cd68eea33943 upstream.
 
-If profile-guided optimization is enabled, the purgatory ends up with
-multiple .text sections.  This is not supported by kexec and crashes the
-system.
+This seems to have existed for ever but is now more apparant after
+commit 9bff18d13473 ("drm/ttm: use per BO cleanup workers")
 
-Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-3-b05c520b7296@chromium.org
-Fixes: 930457057abe ("kernel/kexec_file.c: split up __kexec_load_puragory")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: <stable@vger.kernel.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Philipp Rudo <prudo@redhat.com>
-Cc: Ross Zwisler <zwisler@google.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Tom Rix <trix@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+My analysis: two threads are running, one in the irq signalling the
+fence, in dma_fence_signal_timestamp_locked, it has done the
+DMA_FENCE_FLAG_SIGNALLED_BIT setting, but hasn't yet reached the
+callbacks.
+
+The second thread in nouveau_cli_work_ready, where it sees the fence is
+signalled, so then puts the fence, cleanups the object and frees the
+work item, which contains the callback.
+
+Thread one goes again and tries to call the callback and causes the
+use-after-free.
+
+Proposed fix: lock the fence signalled check in nouveau_cli_work_ready,
+so either the callbacks are done or the memory is freed.
+
+Reviewed-by: Karol Herbst <kherbst@redhat.com>
+Fixes: 11e451e74050 ("drm/nouveau: remove fence wait code from deferred client work handler")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://lore.kernel.org/dri-devel/20230615024008.1600281-1-airlied@gmail.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/purgatory/Makefile |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_drm.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/purgatory/Makefile
-+++ b/arch/powerpc/purgatory/Makefile
-@@ -4,6 +4,11 @@ KASAN_SANITIZE := n
- 
- targets += trampoline_$(BITS).o purgatory.ro kexec-purgatory.c
- 
-+# When profile-guided optimization is enabled, llvm emits two different
-+# overlapping text sections, which is not supported by kexec. Remove profile
-+# optimization flags.
-+KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%,$(KBUILD_CFLAGS))
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -124,10 +124,16 @@ nouveau_name(struct drm_device *dev)
+ static inline bool
+ nouveau_cli_work_ready(struct dma_fence *fence)
+ {
+-	if (!dma_fence_is_signaled(fence))
+-		return false;
+-	dma_fence_put(fence);
+-	return true;
++	bool ret = true;
 +
- LDFLAGS_purgatory.ro := -e purgatory_start -r --no-undefined
++	spin_lock_irq(fence->lock);
++	if (!dma_fence_is_signaled_locked(fence))
++		ret = false;
++	spin_unlock_irq(fence->lock);
++
++	if (ret == true)
++		dma_fence_put(fence);
++	return ret;
+ }
  
- $(obj)/purgatory.ro: $(obj)/trampoline_$(BITS).o FORCE
+ static void
 
 
