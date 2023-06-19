@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AB5A94D
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC66C433C0;
-	Mon, 19 Jun 2023 11:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D9CA94D
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282A5C433C9;
+	Mon, 19 Jun 2023 11:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172430;
-	bh=dQ0HxSnJfNGCquyFoKv00UWmKtFyIrU/8rPr5MrLuiA=;
+	s=korg; t=1687172433;
+	bh=xH16Yck6jINc2i41oFGr4laPsXS83w2BuMkWLedqgB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ahCniji7R3xe3gNeevswzIsT1DkAF37NSMIKxJt56S1yZXF6sDNOMnRb69uB9Z+2G
-	 aku3aug98iBOL61N2cVoSnzEvMDlWPrJyrUEzMUO7fR9UqOQlEAM579cmRV7Qwd004
-	 Kbk+9+07gsCYEtx51uYYZKHsmdrGnFP2OZrjeyKg=
+	b=G9Tj6sJ9+Jw8jyExIoysY5lbEZ1VmtmunPLCPyPdbM8VXpQ6pRc/tCnAec19UlO/R
+	 l+rZH5oGlFV+4nZOt+yYtJCLQUB9kP02qB35jALEibQj+SMIKfZlsX4xPfWYQGpy6s
+	 KCKRptlyBLJ+mIhrlFny5cY2tAkv7o4kPKZ4pHuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Guillaume Nault <gnault@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/107] ping6: Fix send to link-local addresses with VRF.
-Date: Mon, 19 Jun 2023 12:30:50 +0200
-Message-ID: <20230619102144.613868341@linuxfoundation.org>
+Subject: [PATCH 5.15 067/107] net/sched: simplify tcf_pedit_act
+Date: Mon, 19 Jun 2023 12:30:51 +0200
+Message-ID: <20230619102144.656985406@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -37,56 +37,192 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 91ffd1bae1dafbb9e34b46813f5b058581d9144d ]
+[ Upstream commit 95b069382351826c0ae37938070aa82dbeaf288d ]
 
-Ping sockets can't send packets when they're bound to a VRF master
-device and the output interface is set to a slave device.
+Remove the check for a negative number of keys as
+this cannot ever happen
 
-For example, when net.ipv4.ping_group_range is properly set, so that
-ping6 can use ping sockets, the following kind of commands fails:
-  $ ip vrf exec red ping6 fe80::854:e7ff:fe88:4bf1%eth1
-
-What happens is that sk->sk_bound_dev_if is set to the VRF master
-device, but 'oif' is set to the real output device. Since both are set
-but different, ping_v6_sendmsg() sees their value as inconsistent and
-fails.
-
-Fix this by allowing 'oif' to be a slave device of ->sk_bound_dev_if.
-
-This fixes the following kselftest failure:
-  $ ./fcnal-test.sh -t ipv6_ping
-  [...]
-  TEST: ping out, vrf device+address bind - ns-B IPv6 LLA        [FAIL]
-
-Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Closes: https://lore.kernel.org/netdev/b6191f90-ffca-dbca-7d06-88a9788def9c@alu.unizg.hr/
-Tested-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
-Fixes: 5e457896986e ("net: ipv6: Fix ping to link-local addresses.")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/6c8b53108816a8d0d5705ae37bdc5a8322b5e3d9.1686153846.git.gnault@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 6c02568fd1ae ("net/sched: act_pedit: Parse L3 Header for L4 offset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ping.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/act_pedit.c | 137 +++++++++++++++++++++---------------------
+ 1 file changed, 67 insertions(+), 70 deletions(-)
 
-diff --git a/net/ipv6/ping.c b/net/ipv6/ping.c
-index 6ac88fe24a8e0..7fab29f3ce6e8 100644
---- a/net/ipv6/ping.c
-+++ b/net/ipv6/ping.c
-@@ -96,7 +96,8 @@ static int ping_v6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	addr_type = ipv6_addr_type(daddr);
- 	if ((__ipv6_addr_needs_scope_id(addr_type) && !oif) ||
- 	    (addr_type & IPV6_ADDR_MAPPED) ||
--	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if))
-+	    (oif && sk->sk_bound_dev_if && oif != sk->sk_bound_dev_if &&
-+	     l3mdev_master_ifindex_by_index(sock_net(sk), oif) != sk->sk_bound_dev_if))
- 		return -EINVAL;
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 051cd20928599..0237d898fabea 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -349,8 +349,12 @@ static int pedit_skb_hdr_offset(struct sk_buff *skb,
+ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 			 struct tcf_result *res)
+ {
++	enum pedit_header_type htype = TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK;
++	enum pedit_cmd cmd = TCA_PEDIT_KEY_EX_CMD_SET;
+ 	struct tcf_pedit *p = to_pedit(a);
++	struct tcf_pedit_key_ex *tkey_ex;
+ 	struct tcf_pedit_parms *parms;
++	struct tc_pedit_key *tkey;
+ 	u32 max_offset;
+ 	int i;
  
- 	/* TODO: use ip6_datagram_send_ctl to get options from cmsg */
+@@ -366,88 +370,81 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
+ 	tcf_lastuse_update(&p->tcf_tm);
+ 	tcf_action_update_bstats(&p->common, skb);
+ 
+-	if (parms->tcfp_nkeys > 0) {
+-		struct tc_pedit_key *tkey = parms->tcfp_keys;
+-		struct tcf_pedit_key_ex *tkey_ex = parms->tcfp_keys_ex;
+-		enum pedit_header_type htype =
+-			TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK;
+-		enum pedit_cmd cmd = TCA_PEDIT_KEY_EX_CMD_SET;
+-
+-		for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
+-			u32 *ptr, hdata;
+-			int offset = tkey->off;
+-			int hoffset;
+-			u32 val;
+-			int rc;
+-
+-			if (tkey_ex) {
+-				htype = tkey_ex->htype;
+-				cmd = tkey_ex->cmd;
+-
+-				tkey_ex++;
+-			}
++	tkey = parms->tcfp_keys;
++	tkey_ex = parms->tcfp_keys_ex;
+ 
+-			rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
+-			if (rc) {
+-				pr_info("tc action pedit bad header type specified (0x%x)\n",
+-					htype);
+-				goto bad;
+-			}
++	for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
++		int offset = tkey->off;
++		u32 *ptr, hdata;
++		int hoffset;
++		u32 val;
++		int rc;
+ 
+-			if (tkey->offmask) {
+-				u8 *d, _d;
+-
+-				if (!offset_valid(skb, hoffset + tkey->at)) {
+-					pr_info("tc action pedit 'at' offset %d out of bounds\n",
+-						hoffset + tkey->at);
+-					goto bad;
+-				}
+-				d = skb_header_pointer(skb, hoffset + tkey->at,
+-						       sizeof(_d), &_d);
+-				if (!d)
+-					goto bad;
+-				offset += (*d & tkey->offmask) >> tkey->shift;
+-			}
++		if (tkey_ex) {
++			htype = tkey_ex->htype;
++			cmd = tkey_ex->cmd;
+ 
+-			if (offset % 4) {
+-				pr_info("tc action pedit offset must be on 32 bit boundaries\n");
+-				goto bad;
+-			}
++			tkey_ex++;
++		}
+ 
+-			if (!offset_valid(skb, hoffset + offset)) {
+-				pr_info("tc action pedit offset %d out of bounds\n",
+-					hoffset + offset);
+-				goto bad;
+-			}
++		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
++		if (rc) {
++			pr_info("tc action pedit bad header type specified (0x%x)\n",
++				htype);
++			goto bad;
++		}
+ 
+-			ptr = skb_header_pointer(skb, hoffset + offset,
+-						 sizeof(hdata), &hdata);
+-			if (!ptr)
+-				goto bad;
+-			/* just do it, baby */
+-			switch (cmd) {
+-			case TCA_PEDIT_KEY_EX_CMD_SET:
+-				val = tkey->val;
+-				break;
+-			case TCA_PEDIT_KEY_EX_CMD_ADD:
+-				val = (*ptr + tkey->val) & ~tkey->mask;
+-				break;
+-			default:
+-				pr_info("tc action pedit bad command (%d)\n",
+-					cmd);
++		if (tkey->offmask) {
++			u8 *d, _d;
++
++			if (!offset_valid(skb, hoffset + tkey->at)) {
++				pr_info("tc action pedit 'at' offset %d out of bounds\n",
++					hoffset + tkey->at);
+ 				goto bad;
+ 			}
++			d = skb_header_pointer(skb, hoffset + tkey->at,
++					       sizeof(_d), &_d);
++			if (!d)
++				goto bad;
++			offset += (*d & tkey->offmask) >> tkey->shift;
++		}
+ 
+-			*ptr = ((*ptr & tkey->mask) ^ val);
+-			if (ptr == &hdata)
+-				skb_store_bits(skb, hoffset + offset, ptr, 4);
++		if (offset % 4) {
++			pr_info("tc action pedit offset must be on 32 bit boundaries\n");
++			goto bad;
+ 		}
+ 
+-		goto done;
+-	} else {
+-		WARN(1, "pedit BUG: index %d\n", p->tcf_index);
++		if (!offset_valid(skb, hoffset + offset)) {
++			pr_info("tc action pedit offset %d out of bounds\n",
++				hoffset + offset);
++			goto bad;
++		}
++
++		ptr = skb_header_pointer(skb, hoffset + offset,
++					 sizeof(hdata), &hdata);
++		if (!ptr)
++			goto bad;
++		/* just do it, baby */
++		switch (cmd) {
++		case TCA_PEDIT_KEY_EX_CMD_SET:
++			val = tkey->val;
++			break;
++		case TCA_PEDIT_KEY_EX_CMD_ADD:
++			val = (*ptr + tkey->val) & ~tkey->mask;
++			break;
++		default:
++			pr_info("tc action pedit bad command (%d)\n",
++				cmd);
++			goto bad;
++		}
++
++		*ptr = ((*ptr & tkey->mask) ^ val);
++		if (ptr == &hdata)
++			skb_store_bits(skb, hoffset + offset, ptr, 4);
+ 	}
+ 
++	goto done;
++
+ bad:
+ 	spin_lock(&p->tcf_lock);
+ 	p->tcf_qstats.overlimits++;
 -- 
 2.39.2
 
