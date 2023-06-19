@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6D7BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55DD4C433C0;
-	Mon, 19 Jun 2023 10:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82772BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31EFC433C8;
+	Mon, 19 Jun 2023 10:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172125;
-	bh=xapfUydBY81SVUbKj1KTB3E/atXvI0LmV2QKvdZeqlw=;
+	s=korg; t=1687172128;
+	bh=vNWqJYZVhPQBTX1FzplyB9TyaipC4shVc9UDbZEvL2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzVddb1e1JWBqAf+KJjeX6sPkRK2OfXSwRUrrTm2wCp9CO2b049b9M4DTcaVmDYhF
-	 Y0FWjqQgRs4Mgz1PDSIsAyreBUFkqGzLWTdSrs3+I4RsqN6W605GJ2upUtcuosmpE6
-	 JY2+FmWlGoTWGzWqe5mk2AkUQTqfbhlL+EQGwg5M=
+	b=MXjs8jrjNnKxZwNzexOKt+Ra726xrSNl4cW52uo2kQtMPobAkYn+6QNJuIwLxdxbF
+	 LbGT3hmd0nhDVdCUm10EORfzeQwD0HJc8sv4oUtPp+zL2Hne4rHD3h1PL+bfBJlS8V
+	 oIo8h28JL6p9fQ/n5U3bJ8YTf/92dWzI69VvL/uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lisa=20Chen=20 ?= <minjie.chen@geekplus.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 46/89] spi: fsl-dspi: avoid SCK glitches with continuous transfers
-Date: Mon, 19 Jun 2023 12:30:34 +0200
-Message-ID: <20230619102140.379308534@linuxfoundation.org>
+Subject: [PATCH 5.10 47/89] netfilter: nfnetlink: skip error delivery on batch in case of ENOMEM
+Date: Mon, 19 Jun 2023 12:30:35 +0200
+Message-ID: <20230619102140.428334483@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -36,90 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit c5c31fb71f16ba75bad4ade208abbae225305b65 ]
+[ Upstream commit a1a64a151dae8ac3581c1cbde44b672045cb658b ]
 
-The DSPI controller has configurable timing for
+If caller reports ENOMEM, then stop iterating over the batch and send a
+single netlink message to userspace to report OOM.
 
-(a) tCSC: the interval between the assertion of the chip select and the
-    first clock edge
-
-(b) tASC: the interval between the last clock edge and the deassertion
-    of the chip select
-
-What is a bit surprising, but is documented in the figure "Example of
-continuous transfer (CPHA=1, CONT=1)" in the datasheet, is that when the
-chip select stays asserted between multiple TX FIFO writes, the tCSC and
-tASC times still apply. With CONT=1, chip select remains asserted, but
-SCK takes a break and goes to the idle state for tASC + tCSC ns.
-
-In other words, the default values (of 0 and 0 ns) result in SCK
-glitches where the SCK transition to the idle state, as well as the SCK
-transition from the idle state, will have no delay in between, and it
-may appear that a SCK cycle has simply gone missing. The resulting
-timing violation might cause data corruption in many peripherals, as
-their chip select is asserted.
-
-The driver has device tree bindings for tCSC ("fsl,spi-cs-sck-delay")
-and tASC ("fsl,spi-sck-cs-delay"), but these are only specified to apply
-when the chip select toggles in the first place, and this timing
-characteristic depends on each peripheral. Many peripherals do not have
-explicit timing requirements, so many device trees do not have these
-properties present at all.
-
-Nonetheless, the lack of SCK glitches is a common sense requirement, and
-since the SCK stays in the idle state during transfers for tCSC+tASC ns,
-and that in itself should look like half a cycle, then let's ensure that
-tCSC and tASC are at least a quarter of a SCK period, such that their
-sum is at least half of one.
-
-Fixes: 95bf15f38641 ("spi: fsl-dspi: Add ~50ns delay between cs and sck")
-Reported-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
-Debugged-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
-Tested-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20230529223402.1199503-1-vladimir.oltean@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: cbb8125eb40b ("netfilter: nfnetlink: deliver netlink errors on batch completion")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-dspi.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ net/netfilter/nfnetlink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index fd004c9db9dc0..0d9201a2999de 100644
---- a/drivers/spi/spi-fsl-dspi.c
-+++ b/drivers/spi/spi-fsl-dspi.c
-@@ -975,7 +975,9 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
- static int dspi_setup(struct spi_device *spi)
- {
- 	struct fsl_dspi *dspi = spi_controller_get_devdata(spi->controller);
-+	u32 period_ns = DIV_ROUND_UP(NSEC_PER_SEC, spi->max_speed_hz);
- 	unsigned char br = 0, pbr = 0, pcssck = 0, cssck = 0;
-+	u32 quarter_period_ns = DIV_ROUND_UP(period_ns, 4);
- 	u32 cs_sck_delay = 0, sck_cs_delay = 0;
- 	struct fsl_dspi_platform_data *pdata;
- 	unsigned char pasc = 0, asc = 0;
-@@ -1003,6 +1005,19 @@ static int dspi_setup(struct spi_device *spi)
- 		sck_cs_delay = pdata->sck_cs_delay;
- 	}
- 
-+	/* Since tCSC and tASC apply to continuous transfers too, avoid SCK
-+	 * glitches of half a cycle by never allowing tCSC + tASC to go below
-+	 * half a SCK period.
-+	 */
-+	if (cs_sck_delay < quarter_period_ns)
-+		cs_sck_delay = quarter_period_ns;
-+	if (sck_cs_delay < quarter_period_ns)
-+		sck_cs_delay = quarter_period_ns;
-+
-+	dev_dbg(&spi->dev,
-+		"DSPI controller timing params: CS-to-SCK delay %u ns, SCK-to-CS delay %u ns\n",
-+		cs_sck_delay, sck_cs_delay);
-+
- 	clkrate = clk_get_rate(dspi->clk);
- 	hz_to_spi_baud(&pbr, &br, spi->max_speed_hz, clkrate);
- 
+diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
+index edf386a020b9e..bec9ac8b8fbef 100644
+--- a/net/netfilter/nfnetlink.c
++++ b/net/netfilter/nfnetlink.c
+@@ -473,7 +473,8 @@ static void nfnetlink_rcv_batch(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 			 * processed, this avoids that the same error is
+ 			 * reported several times when replaying the batch.
+ 			 */
+-			if (nfnl_err_add(&err_list, nlh, err, &extack) < 0) {
++			if (err == -ENOMEM ||
++			    nfnl_err_add(&err_list, nlh, err, &extack) < 0) {
+ 				/* We failed to enqueue an error, reset the
+ 				 * list of errors and send OOM to userspace
+ 				 * pointing to the batch header.
 -- 
 2.39.2
 
