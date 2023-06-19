@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F158C5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3154BC433C0;
-	Mon, 19 Jun 2023 10:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71745381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:46:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A2BC433C0;
+	Mon, 19 Jun 2023 10:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171603;
-	bh=Nlf7+bMWs0CW/0AEYdYObtEbl/dMsrezQuU89swQ/bc=;
+	s=korg; t=1687171606;
+	bh=ZhAyOwvSGoFPHh++mdoXSyx++vCWSFAfmWREXWYFuGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Im1VmQaLFzUPR2hve6EjWhBKzmxw2ij/WWD4V2qJurdjf02az/CO816QN6mdt7XRS
-	 EuYD+xaal536wbPBSbT4FQI1Aw3sUziHThsBQRI/Qj+maW30mVUtemaaZBn7jUgD2D
-	 IXYy/H5MtN2xVD5AbAXK5L9ExRDNMohHvsSAcSRY=
+	b=fWu4GaSAwa4ZkW2bZ7DckoWs0PcWEJb4UH56/cRvUXBm8d+jMJdvQIkIFFq2i/RDc
+	 Rp8sOnyZRJSljPG/2HeQn0fTSrMElTvMuk05x0AvcgCsI1NNWTOxRJID74nFZOCF32
+	 s2A0PAwM6YlVjzYknQEPjPsCTUALo9RAALWuK5Vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/166] RDMA/rtrs: Fix rxe_dealloc_pd warning
-Date: Mon, 19 Jun 2023 12:29:28 +0200
-Message-ID: <20230619102159.219835717@linuxfoundation.org>
+Subject: [PATCH 6.1 092/166] RDMA/rxe: Fix packet length checks
+Date: Mon, 19 Jun 2023 12:29:29 +0200
+Message-ID: <20230619102159.265719008@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,188 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 9c29c8c7df0688f358d2df5ddd16c97c2f7292b4 ]
+[ Upstream commit 9a3763e87379c97a78b7c6c6f40720b1e877174f ]
 
-In current design:
-1. PD and clt_path->s.dev are shared among connections.
-2. every con[n]'s cleanup phase will call destroy_con_cq_qp()
-3. clt_path->s.dev will be always decreased in destroy_con_cq_qp(), and
-   when clt_path->s.dev become zero, it will destroy PD.
-4. when con[1] failed to create, con[1] will not take clt_path->s.dev,
-   but it try to decreased clt_path->s.dev
+In rxe_net.c a received packet, from udp or loopback, is passed to
+rxe_rcv() in rxe_recv.c as a udp packet. I.e. skb->data is pointing at the
+udp header. But rxe_rcv() makes length checks to verify the packet is long
+enough to hold the roce headers as if it were a roce
+packet. I.e. skb->data pointing at the bth header. A runt packet would
+appear to have 8 more bytes than it actually does which may lead to
+incorrect behavior.
 
-So, in case create_cm(con[0]) succeeds but create_cm(con[1]) fails,
-destroy_con_cq_qp(con[1]) will be called first which will destroy the PD
-while this PD is still taken by con[0].
+This patch calls skb_pull() to adjust the skb to point at the bth header
+before calling rxe_rcv() which fixes this error.
 
-Here, we refactor the error path of create_cm() and init_conns(), so that
-we do the cleanup in the order they are created.
-
-The warning occurs when destroying RXE PD whose reference count is not
-zero.
-
- rnbd_client L597: Mapping device /dev/nvme0n1 on session client, (access_mode: rw, nr_poll_queues: 0)
- ------------[ cut here ]------------
- WARNING: CPU: 0 PID: 26407 at drivers/infiniband/sw/rxe/rxe_pool.c:256 __rxe_cleanup+0x13a/0x170 [rdma_rxe]
- Modules linked in: rpcrdma rdma_ucm ib_iser rnbd_client libiscsi rtrs_client scsi_transport_iscsi rtrs_core rdma_cm iw_cm ib_cm crc32_generic rdma_rxe udp_tunnel ib_uverbs ib_core kmem device_dax nd_pmem dax_pmem nd_vme crc32c_intel fuse nvme_core nfit libnvdimm dm_multipath scsi_dh_rdac scsi_dh_emc scsi_dh_alua dm_mirror dm_region_hash dm_log dm_mod
- CPU: 0 PID: 26407 Comm: rnbd-client.sh Kdump: loaded Not tainted 6.2.0-rc6-roce-flush+ #53
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
- RIP: 0010:__rxe_cleanup+0x13a/0x170 [rdma_rxe]
- Code: 45 84 e4 0f 84 5a ff ff ff 48 89 ef e8 5f 18 71 f9 84 c0 75 90 be c8 00 00 00 48 89 ef e8 be 89 1f fa 85 c0 0f 85 7b ff ff ff <0f> 0b 41 bc ea ff ff ff e9 71 ff ff ff e8 84 7f 1f fa e9 d0 fe ff
- RSP: 0018:ffffb09880b6f5f0 EFLAGS: 00010246
- RAX: 0000000000000000 RBX: ffff99401f15d6a8 RCX: 0000000000000000
- RDX: 0000000000000001 RSI: ffffffffbac8234b RDI: 00000000ffffffff
- RBP: ffff99401f15d6d0 R08: 0000000000000001 R09: 0000000000000001
- R10: 0000000000002d82 R11: 0000000000000000 R12: 0000000000000001
- R13: ffff994101eff208 R14: ffffb09880b6f6a0 R15: 00000000fffffe00
- FS:  00007fe113904740(0000) GS:ffff99413bc00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007ff6cde656c8 CR3: 000000001f108004 CR4: 00000000001706f0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- Call Trace:
-  <TASK>
-  rxe_dealloc_pd+0x16/0x20 [rdma_rxe]
-  ib_dealloc_pd_user+0x4b/0x80 [ib_core]
-  rtrs_ib_dev_put+0x79/0xd0 [rtrs_core]
-  destroy_con_cq_qp+0x8a/0xa0 [rtrs_client]
-  init_path+0x1e7/0x9a0 [rtrs_client]
-  ? __pfx_autoremove_wake_function+0x10/0x10
-  ? lock_is_held_type+0xd7/0x130
-  ? rcu_read_lock_sched_held+0x43/0x80
-  ? pcpu_alloc+0x3dd/0x7d0
-  ? rtrs_clt_init_stats+0x18/0x40 [rtrs_client]
-  rtrs_clt_open+0x24f/0x5a0 [rtrs_client]
-  ? __pfx_rnbd_clt_link_ev+0x10/0x10 [rnbd_client]
-  rnbd_clt_map_device+0x6a5/0xe10 [rnbd_client]
-
-Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Link: https://lore.kernel.org/r/1682384563-2-4-git-send-email-lizhijian@fujitsu.com
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Tested-by: Jack Wang <jinpu.wang@ionos.com>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://lore.kernel.org/r/20230517172242.1806340-1-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 55 +++++++++++---------------
- 1 file changed, 23 insertions(+), 32 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_net.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index 730f2f1e09bbd..a67f58359de9e 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -2042,6 +2042,7 @@ static int rtrs_clt_rdma_cm_handler(struct rdma_cm_id *cm_id,
- 	return 0;
- }
+diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
+index 35f327b9d4b8e..65d16024b3bf6 100644
+--- a/drivers/infiniband/sw/rxe/rxe_net.c
++++ b/drivers/infiniband/sw/rxe/rxe_net.c
+@@ -156,6 +156,9 @@ static int rxe_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
+ 	pkt->mask = RXE_GRH_MASK;
+ 	pkt->paylen = be16_to_cpu(udph->len) - sizeof(*udph);
  
-+/* The caller should do the cleanup in case of error */
- static int create_cm(struct rtrs_clt_con *con)
- {
- 	struct rtrs_path *s = con->c.path;
-@@ -2064,14 +2065,14 @@ static int create_cm(struct rtrs_clt_con *con)
- 	err = rdma_set_reuseaddr(cm_id, 1);
- 	if (err != 0) {
- 		rtrs_err(s, "Set address reuse failed, err: %d\n", err);
--		goto destroy_cm;
-+		return err;
- 	}
- 	err = rdma_resolve_addr(cm_id, (struct sockaddr *)&clt_path->s.src_addr,
- 				(struct sockaddr *)&clt_path->s.dst_addr,
- 				RTRS_CONNECT_TIMEOUT_MS);
- 	if (err) {
- 		rtrs_err(s, "Failed to resolve address, err: %d\n", err);
--		goto destroy_cm;
-+		return err;
- 	}
- 	/*
- 	 * Combine connection status and session events. This is needed
-@@ -2086,29 +2087,15 @@ static int create_cm(struct rtrs_clt_con *con)
- 		if (err == 0)
- 			err = -ETIMEDOUT;
- 		/* Timedout or interrupted */
--		goto errr;
--	}
--	if (con->cm_err < 0) {
--		err = con->cm_err;
--		goto errr;
-+		return err;
- 	}
--	if (READ_ONCE(clt_path->state) != RTRS_CLT_CONNECTING) {
-+	if (con->cm_err < 0)
-+		return con->cm_err;
-+	if (READ_ONCE(clt_path->state) != RTRS_CLT_CONNECTING)
- 		/* Device removal */
--		err = -ECONNABORTED;
--		goto errr;
--	}
-+		return -ECONNABORTED;
++	/* remove udp header */
++	skb_pull(skb, sizeof(struct udphdr));
++
+ 	rxe_rcv(skb);
  
  	return 0;
--
--errr:
--	stop_cm(con);
--	mutex_lock(&con->con_mutex);
--	destroy_con_cq_qp(con);
--	mutex_unlock(&con->con_mutex);
--destroy_cm:
--	destroy_cm(con);
--
--	return err;
- }
- 
- static void rtrs_clt_path_up(struct rtrs_clt_path *clt_path)
-@@ -2336,7 +2323,7 @@ static void rtrs_clt_close_work(struct work_struct *work)
- static int init_conns(struct rtrs_clt_path *clt_path)
- {
- 	unsigned int cid;
--	int err;
-+	int err, i;
- 
- 	/*
- 	 * On every new session connections increase reconnect counter
-@@ -2352,10 +2339,8 @@ static int init_conns(struct rtrs_clt_path *clt_path)
- 			goto destroy;
- 
- 		err = create_cm(to_clt_con(clt_path->s.con[cid]));
--		if (err) {
--			destroy_con(to_clt_con(clt_path->s.con[cid]));
-+		if (err)
- 			goto destroy;
--		}
+@@ -397,6 +400,9 @@ static int rxe_loopback(struct sk_buff *skb, struct rxe_pkt_info *pkt)
+ 		return -EIO;
  	}
- 	err = alloc_path_reqs(clt_path);
- 	if (err)
-@@ -2366,15 +2351,21 @@ static int init_conns(struct rtrs_clt_path *clt_path)
+ 
++	/* remove udp header */
++	skb_pull(skb, sizeof(struct udphdr));
++
+ 	rxe_rcv(skb);
+ 
  	return 0;
- 
- destroy:
--	while (cid--) {
--		struct rtrs_clt_con *con = to_clt_con(clt_path->s.con[cid]);
-+	/* Make sure we do the cleanup in the order they are created */
-+	for (i = 0; i <= cid; i++) {
-+		struct rtrs_clt_con *con;
- 
--		stop_cm(con);
-+		if (!clt_path->s.con[i])
-+			break;
- 
--		mutex_lock(&con->con_mutex);
--		destroy_con_cq_qp(con);
--		mutex_unlock(&con->con_mutex);
--		destroy_cm(con);
-+		con = to_clt_con(clt_path->s.con[i]);
-+		if (con->c.cm_id) {
-+			stop_cm(con);
-+			mutex_lock(&con->con_mutex);
-+			destroy_con_cq_qp(con);
-+			mutex_unlock(&con->con_mutex);
-+			destroy_cm(con);
-+		}
- 		destroy_con(con);
- 	}
- 	/*
 -- 
 2.39.2
 
