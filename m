@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE148BE5
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:49:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87917C433C9;
-	Mon, 19 Jun 2023 10:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFB98BE5
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:49:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDA2C433C8;
+	Mon, 19 Jun 2023 10:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171759;
-	bh=sXLCpU1Nx+YHYGHQTIKM7BpemttFvx0+kjSJ1m28B+E=;
+	s=korg; t=1687171762;
+	bh=MS+RDxyshMG/5IO9RS3iraWPZfM1UETS5z4jCbnUr9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=09brh0JxUVcxWuwc5k9Thl/9ALzzaCvEqvvQaiZdL/lGANiX6gV6eGdmVIfav97qn
-	 ryv0WqzkUm4htmAqoXrI+mlecAGus/x1gesAw56kc6++OvCAEgDuz79FhHyhHzw5dL
-	 6nIjD/dbhuzI9QecLkEojrHA48ooCir+buC66Ivk=
+	b=KkmtGmleC+pZ5FL2MKbbuXYeqyuU+c7tIeUFW47W7IIJC+IsfBTYd82h94HVvd0nf
+	 887FDAmd+r2Y8Mq5bnnrO6WB2ueTRd00+ou4yAB7OMm1OlEO0OdYtV8zR6VoTsielz
+	 PR9qm6OW35Ij2uq3LZTOf4OO/JbciOhBQaTFPHsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Martin Schiller <ms@dev.tdt.de>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 147/166] net: lapbether: only support ethernet devices
-Date: Mon, 19 Jun 2023 12:30:24 +0200
-Message-ID: <20230619102201.844433905@linuxfoundation.org>
+Subject: [PATCH 6.1 148/166] net: macsec: fix double free of percpu stats
+Date: Mon, 19 Jun 2023 12:30:25 +0200
+Message-ID: <20230619102201.888804141@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -37,94 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 9eed321cde22fc1afd76eac563ce19d899e0d6b2 ]
+[ Upstream commit 0c0cf3db83f8c7c9bb141c2771a34043bcf952ef ]
 
-It probbaly makes no sense to support arbitrary network devices
-for lapbether.
+Inside macsec_add_dev() we free percpu macsec->secy.tx_sc.stats and
+macsec->stats on some of the memory allocation failure paths. However, the
+net_device is already registered to that moment: in macsec_newlink(), just
+before calling macsec_add_dev(). This means that during unregister process
+its priv_destructor - macsec_free_netdev() - will be called and will free
+the stats again.
 
-syzbot reported:
+Remove freeing percpu stats inside macsec_add_dev() because
+macsec_free_netdev() will correctly free the already allocated ones. The
+pointers to unallocated stats stay NULL, and free_percpu() treats that
+correctly.
 
-skbuff: skb_under_panic: text:ffff80008934c100 len:44 put:40 head:ffff0000d18dd200 data:ffff0000d18dd1ea tail:0x16 end:0x140 dev:bond1
-kernel BUG at net/core/skbuff.c:200 !
-Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 0 PID: 5643 Comm: dhcpcd Not tainted 6.4.0-rc5-syzkaller-g4641cff8e810 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
-pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : skb_panic net/core/skbuff.c:196 [inline]
-pc : skb_under_panic+0x13c/0x140 net/core/skbuff.c:210
-lr : skb_panic net/core/skbuff.c:196 [inline]
-lr : skb_under_panic+0x13c/0x140 net/core/skbuff.c:210
-sp : ffff8000973b7260
-x29: ffff8000973b7270 x28: ffff8000973b7360 x27: dfff800000000000
-x26: ffff0000d85d8150 x25: 0000000000000016 x24: ffff0000d18dd1ea
-x23: ffff0000d18dd200 x22: 000000000000002c x21: 0000000000000140
-x20: 0000000000000028 x19: ffff80008934c100 x18: ffff8000973b68a0
-x17: 0000000000000000 x16: ffff80008a43bfbc x15: 0000000000000202
-x14: 0000000000000000 x13: 0000000000000001 x12: 0000000000000001
-x11: 0000000000000201 x10: 0000000000000000 x9 : f22f7eb937cced00
-x8 : f22f7eb937cced00 x7 : 0000000000000001 x6 : 0000000000000001
-x5 : ffff8000973b6b78 x4 : ffff80008df9ee80 x3 : ffff8000805974f4
-x2 : 0000000000000001 x1 : 0000000100000201 x0 : 0000000000000086
-Call trace:
-skb_panic net/core/skbuff.c:196 [inline]
-skb_under_panic+0x13c/0x140 net/core/skbuff.c:210
-skb_push+0xf0/0x108 net/core/skbuff.c:2409
-ip6gre_header+0xbc/0x738 net/ipv6/ip6_gre.c:1383
-dev_hard_header include/linux/netdevice.h:3137 [inline]
-lapbeth_data_transmit+0x1c4/0x298 drivers/net/wan/lapbether.c:257
-lapb_data_transmit+0x8c/0xb0 net/lapb/lapb_iface.c:447
-lapb_transmit_buffer+0x178/0x204 net/lapb/lapb_out.c:149
-lapb_send_control+0x220/0x320 net/lapb/lapb_subr.c:251
-lapb_establish_data_link+0x94/0xec
-lapb_device_event+0x348/0x4e0
-notifier_call_chain+0x1a4/0x510 kernel/notifier.c:93
-raw_notifier_call_chain+0x3c/0x50 kernel/notifier.c:461
-__dev_notify_flags+0x2bc/0x544
-dev_change_flags+0xd0/0x15c net/core/dev.c:8643
-devinet_ioctl+0x858/0x17e4 net/ipv4/devinet.c:1150
-inet_ioctl+0x2ac/0x4d8 net/ipv4/af_inet.c:979
-sock_do_ioctl+0x134/0x2dc net/socket.c:1201
-sock_ioctl+0x4ec/0x858 net/socket.c:1318
-vfs_ioctl fs/ioctl.c:51 [inline]
-__do_sys_ioctl fs/ioctl.c:870 [inline]
-__se_sys_ioctl fs/ioctl.c:856 [inline]
-__arm64_sys_ioctl+0x14c/0x1c8 fs/ioctl.c:856
-__invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
-invoke_syscall+0x98/0x2c0 arch/arm64/kernel/syscall.c:52
-el0_svc_common+0x138/0x244 arch/arm64/kernel/syscall.c:142
-do_el0_svc+0x64/0x198 arch/arm64/kernel/syscall.c:191
-el0_svc+0x4c/0x160 arch/arm64/kernel/entry-common.c:647
-el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:665
-el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
-Code: aa1803e6 aa1903e7 a90023f5 947730f5 (d4210000)
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Martin Schiller <ms@dev.tdt.de>
+Fixes: 0a28bfd4971f ("net/macsec: Add MACsec skb_metadata_dst Tx Data path support")
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/lapbether.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/macsec.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wan/lapbether.c b/drivers/net/wan/lapbether.c
-index d62a904d2e422..56326f38fe8a3 100644
---- a/drivers/net/wan/lapbether.c
-+++ b/drivers/net/wan/lapbether.c
-@@ -384,6 +384,9 @@ static int lapbeth_new_device(struct net_device *dev)
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 038a787943927..983cabf9a0f67 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -3981,17 +3981,15 @@ static int macsec_add_dev(struct net_device *dev, sci_t sci, u8 icv_len)
+ 		return -ENOMEM;
  
- 	ASSERT_RTNL();
+ 	secy->tx_sc.stats = netdev_alloc_pcpu_stats(struct pcpu_tx_sc_stats);
+-	if (!secy->tx_sc.stats) {
+-		free_percpu(macsec->stats);
++	if (!secy->tx_sc.stats)
+ 		return -ENOMEM;
+-	}
  
-+	if (dev->type != ARPHRD_ETHER)
-+		return -EINVAL;
-+
- 	ndev = alloc_netdev(sizeof(*lapbeth), "lapb%d", NET_NAME_UNKNOWN,
- 			    lapbeth_setup);
- 	if (!ndev)
+ 	secy->tx_sc.md_dst = metadata_dst_alloc(0, METADATA_MACSEC, GFP_KERNEL);
+-	if (!secy->tx_sc.md_dst) {
+-		free_percpu(secy->tx_sc.stats);
+-		free_percpu(macsec->stats);
++	if (!secy->tx_sc.md_dst)
++		/* macsec and secy percpu stats will be freed when unregistering
++		 * net_device in macsec_free_netdev()
++		 */
+ 		return -ENOMEM;
+-	}
+ 
+ 	if (sci == MACSEC_UNDEF_SCI)
+ 		sci = dev_to_sci(dev, MACSEC_PORT_ES);
 -- 
 2.39.2
 
