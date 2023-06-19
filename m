@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5715381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87858C433C9;
-	Mon, 19 Jun 2023 10:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072325381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D444C433C8;
+	Mon, 19 Jun 2023 10:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171286;
-	bh=m1MCUynJzHlzO/CxOKsxforuCCzpcqmHOzcY+f2IYXM=;
+	s=korg; t=1687171289;
+	bh=dGrqX5L8WiOq02ann3SFdrcLL+pFWgZRZorwYCf07rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MNmvz24xPmDmTmBC/kW4CoJ/E1JAWn5QaGzFVoJZyAGXEG7BLWZbHjaGCu/MX4Jej
-	 kh78Uz/bjqDDCmCrQyfpTRmNa98z0el88AVizlksvVqHYAYsbYJRQCxOeMsxuX/wlE
-	 fa865j+kAiQgkJ1tpAgC758Jma+Pb5JV5yuGCMZA=
+	b=WVnSDi6kM6kT9xG+O+dHYsSTP3a/jocLbou3qAJzdW6ake3Xo78yTouH2WLbnZ7qq
+	 IqUF2pAO0Ar31cAprt8PGTg1MkuQsIyYP7v3lHn/UV957oHPW4jdrw/iplqzOQRJKl
+	 +2iKwzNbfz815GRSIBEnJj1KRJj9Tce5htsOSLiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <Evan.Quan@amd.com>,
-	Lijo Lazar <Lijo.Lazar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 07/49] power: supply: Fix logic checking if system is running from battery
-Date: Mon, 19 Jun 2023 12:29:45 +0200
-Message-ID: <20230619102130.243890513@linuxfoundation.org>
+Subject: [PATCH 4.19 08/49] parisc: Improve cache flushing for PCXL in arch_sync_dma_for_cpu()
+Date: Mon, 19 Jun 2023 12:29:46 +0200
+Message-ID: <20230619102130.294527793@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -37,64 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 95339f40a8b652b5b1773def31e63fc53c26378a ]
+[ Upstream commit 59fa12646d9f56c842b4d5b6418ed77af625c588 ]
 
-The logic used for power_supply_is_system_supplied() counts all power
-supplies and assumes that the system is running from AC if there is
-either a non-battery power-supply reporting to be online or if no
-power-supplies exist at all.
+Add comment in arch_sync_dma_for_device() and handle the direction flag in
+arch_sync_dma_for_cpu().
 
-The second rule is for desktop systems, that don't have any
-battery/charger devices. These systems will incorrectly report to be
-powered from battery once a device scope power-supply is registered
-(e.g. a HID device), since these power-supplies increase the counter.
+When receiving data from the device (DMA_FROM_DEVICE) unconditionally
+purge the data cache in arch_sync_dma_for_cpu().
 
-Apart from HID devices, recent dGPUs provide UCSI power supplies on a
-desktop systems. The dGPU by default doesn't have anything plugged in so
-it's 'offline'. This makes power_supply_is_system_supplied() return 0
-with a count of 1 meaning all drivers that use this get a wrong judgement.
-
-To fix this case adjust the logic to also examine the scope of the power
-supply. If the power supply is deemed a device power supply, then don't
-count it.
-
-Cc: Evan Quan <Evan.Quan@amd.com>
-Suggested-by: Lijo Lazar <Lijo.Lazar@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/parisc/kernel/pci-dma.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 6a2d157c24759..3715a6c2955b2 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -350,6 +350,10 @@ static int __power_supply_is_system_supplied(struct device *dev, void *data)
- 	struct power_supply *psy = dev_get_drvdata(dev);
- 	unsigned int *count = data;
+diff --git a/arch/parisc/kernel/pci-dma.c b/arch/parisc/kernel/pci-dma.c
+index 04c48f1ef3fbd..20084336704fc 100644
+--- a/arch/parisc/kernel/pci-dma.c
++++ b/arch/parisc/kernel/pci-dma.c
+@@ -464,13 +464,29 @@ void arch_dma_free(struct device *dev, size_t size, void *vaddr,
+ void arch_sync_dma_for_device(struct device *dev, phys_addr_t paddr,
+ 		size_t size, enum dma_data_direction dir)
+ {
++	/*
++	 * fdc: The data cache line is written back to memory, if and only if
++	 * it is dirty, and then invalidated from the data cache.
++	 */
+ 	flush_kernel_dcache_range((unsigned long)phys_to_virt(paddr), size);
+ }
  
-+	if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_SCOPE, &ret))
-+		if (ret.intval == POWER_SUPPLY_SCOPE_DEVICE)
-+			return 0;
+ void arch_sync_dma_for_cpu(struct device *dev, phys_addr_t paddr,
+ 		size_t size, enum dma_data_direction dir)
+ {
+-	flush_kernel_dcache_range((unsigned long)phys_to_virt(paddr), size);
++	unsigned long addr = (unsigned long) phys_to_virt(paddr);
 +
- 	(*count)++;
- 	if (psy->desc->type != POWER_SUPPLY_TYPE_BATTERY)
- 		if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_ONLINE,
-@@ -368,8 +372,8 @@ int power_supply_is_system_supplied(void)
- 				      __power_supply_is_system_supplied);
++	switch (dir) {
++	case DMA_TO_DEVICE:
++	case DMA_BIDIRECTIONAL:
++		flush_kernel_dcache_range(addr, size);
++		return;
++	case DMA_FROM_DEVICE:
++		purge_kernel_dcache_range_asm(addr, addr + size);
++		return;
++	default:
++		BUG();
++	}
+ }
  
- 	/*
--	 * If no power class device was found at all, most probably we are
--	 * running on a desktop system, so assume we are on mains power.
-+	 * If no system scope power class device was found at all, most probably we
-+	 * are running on a desktop system, so assume we are on mains power.
- 	 */
- 	if (count == 0)
- 		return 1;
+ void arch_dma_cache_sync(struct device *dev, void *vaddr, size_t size,
 -- 
 2.39.2
 
