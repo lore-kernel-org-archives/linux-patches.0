@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479113C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:39:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF30AC433C0;
-	Mon, 19 Jun 2023 10:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6303C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:39:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A2AC433C0;
+	Mon, 19 Jun 2023 10:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171147;
-	bh=q3P5Fewt56EDjGZdBBnPqWS8EPoqncng075CdrX+MN8=;
+	s=korg; t=1687171149;
+	bh=WyovPCQsMvlRPfjKqvka22KLu5aFASKW8GFo6eBux/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jI0w89vJatR+6U7qPAymx89l0avPSN8zw/Qk/qpylX+/3Br0bc3rdGueyuCCOIAED
-	 jTaIqwqpQg5I00e7QQ6FJ9s75Wn61XITh0FGdMhud/4Z4ZpsRR4fyXDya+c7KMNukL
-	 lQz9hZFJnJ7Gs1D7lTB4Q7AwuXAGvbtJOdYeDx68=
+	b=ixmq3xrKYHtig9lCnDPkIOjS4a4WGXd8jJU6e8A8Os4QnQtfKazKszCB+rjLc/kZ/
+	 f6T8XoJEDDXs8kmbMos/R3KbUeMuWiMvTVDnxo3f3AywvWJAUcxs9ZFfWdbRWHH0QF
+	 GZJtX8wlybnjrxvwOHwOS7TW8p345BBzrjKu+zqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
+	syzbot+b53a9c0d1ea4ad62da8b@syzkaller.appspotmail.com,
+	Hillf Danton <hdanton@sina.com>,
+	Vlad Buslov <vladbu@mellanox.com>,
 	Peilin Ye <peilin.ye@bytedance.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 165/187] net/sched: Refactor qdisc_graft() for ingress and clsact Qdiscs
-Date: Mon, 19 Jun 2023 12:29:43 +0200
-Message-ID: <20230619102205.615103517@linuxfoundation.org>
+Subject: [PATCH 6.3 166/187] net/sched: qdisc_destroy() old ingress and clsact Qdiscs before grafting
+Date: Mon, 19 Jun 2023 12:29:44 +0200
+Message-ID: <20230619102205.658598141@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -40,69 +41,241 @@ Content-Transfer-Encoding: 8bit
 
 From: Peilin Ye <peilin.ye@bytedance.com>
 
-[ Upstream commit 2d5f6a8d7aef7852a9ecc555f88c673a1c91754f ]
+[ Upstream commit 84ad0af0bccd3691cb951c2974c5cb2c10594d4a ]
 
-Grafting ingress and clsact Qdiscs does not need a for-loop in
-qdisc_graft().  Refactor it.  No functional changes intended.
+mini_Qdisc_pair::p_miniq is a double pointer to mini_Qdisc, initialized
+in ingress_init() to point to net_device::miniq_ingress.  ingress Qdiscs
+access this per-net_device pointer in mini_qdisc_pair_swap().  Similar
+for clsact Qdiscs and miniq_egress.
 
-Tested-by: Pedro Tammela <pctammela@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
+Unfortunately, after introducing RTNL-unlocked RTM_{NEW,DEL,GET}TFILTER
+requests (thanks Hillf Danton for the hint), when replacing ingress or
+clsact Qdiscs, for example, the old Qdisc ("@old") could access the same
+miniq_{in,e}gress pointer(s) concurrently with the new Qdisc ("@new"),
+causing race conditions [1] including a use-after-free bug in
+mini_qdisc_pair_swap() reported by syzbot:
+
+ BUG: KASAN: slab-use-after-free in mini_qdisc_pair_swap+0x1c2/0x1f0 net/sched/sch_generic.c:1573
+ Write of size 8 at addr ffff888045b31308 by task syz-executor690/14901
+...
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0xd9/0x150 lib/dump_stack.c:106
+  print_address_description.constprop.0+0x2c/0x3c0 mm/kasan/report.c:319
+  print_report mm/kasan/report.c:430 [inline]
+  kasan_report+0x11c/0x130 mm/kasan/report.c:536
+  mini_qdisc_pair_swap+0x1c2/0x1f0 net/sched/sch_generic.c:1573
+  tcf_chain_head_change_item net/sched/cls_api.c:495 [inline]
+  tcf_chain0_head_change.isra.0+0xb9/0x120 net/sched/cls_api.c:509
+  tcf_chain_tp_insert net/sched/cls_api.c:1826 [inline]
+  tcf_chain_tp_insert_unique net/sched/cls_api.c:1875 [inline]
+  tc_new_tfilter+0x1de6/0x2290 net/sched/cls_api.c:2266
+...
+
+@old and @new should not affect each other.  In other words, @old should
+never modify miniq_{in,e}gress after @new, and @new should not update
+@old's RCU state.
+
+Fixing without changing sch_api.c turned out to be difficult (please
+refer to Closes: for discussions).  Instead, make sure @new's first call
+always happen after @old's last call (in {ingress,clsact}_destroy()) has
+finished:
+
+In qdisc_graft(), return -EBUSY if @old has any ongoing filter requests,
+and call qdisc_destroy() for @old before grafting @new.
+
+Introduce qdisc_refcount_dec_if_one() as the counterpart of
+qdisc_refcount_inc_nz() used for filter requests.  Introduce a
+non-static version of qdisc_destroy() that does a TCQ_F_BUILTIN check,
+just like qdisc_put() etc.
+
+Depends on patch "net/sched: Refactor qdisc_graft() for ingress and
+clsact Qdiscs".
+
+[1] To illustrate, the syzkaller reproducer adds ingress Qdiscs under
+TC_H_ROOT (no longer possible after commit c7cfbd115001 ("net/sched:
+sch_ingress: Only create under TC_H_INGRESS")) on eth0 that has 8
+transmission queues:
+
+  Thread 1 creates ingress Qdisc A (containing mini Qdisc a1 and a2),
+  then adds a flower filter X to A.
+
+  Thread 2 creates another ingress Qdisc B (containing mini Qdisc b1 and
+  b2) to replace A, then adds a flower filter Y to B.
+
+ Thread 1               A's refcnt   Thread 2
+  RTM_NEWQDISC (A, RTNL-locked)
+   qdisc_create(A)               1
+   qdisc_graft(A)                9
+
+  RTM_NEWTFILTER (X, RTNL-unlocked)
+   __tcf_qdisc_find(A)          10
+   tcf_chain0_head_change(A)
+   mini_qdisc_pair_swap(A) (1st)
+            |
+            |                         RTM_NEWQDISC (B, RTNL-locked)
+         RCU sync                2     qdisc_graft(B)
+            |                    1     notify_and_destroy(A)
+            |
+   tcf_block_release(A)          0    RTM_NEWTFILTER (Y, RTNL-unlocked)
+   qdisc_destroy(A)                    tcf_chain0_head_change(B)
+   tcf_chain0_head_change_cb_del(A)    mini_qdisc_pair_swap(B) (2nd)
+   mini_qdisc_pair_swap(A) (3rd)                |
+           ...                                 ...
+
+Here, B calls mini_qdisc_pair_swap(), pointing eth0->miniq_ingress to
+its mini Qdisc, b1.  Then, A calls mini_qdisc_pair_swap() again during
+ingress_destroy(), setting eth0->miniq_ingress to NULL, so ingress
+packets on eth0 will not find filter Y in sch_handle_ingress().
+
+This is just one of the possible consequences of concurrently accessing
+miniq_{in,e}gress pointers.
+
+Fixes: 7a096d579e8e ("net: sched: ingress: set 'unlocked' flag for Qdisc ops")
+Fixes: 87f373921c4e ("net: sched: ingress: set 'unlocked' flag for clsact Qdisc ops")
+Reported-by: syzbot+b53a9c0d1ea4ad62da8b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/0000000000006cf87705f79acf1a@google.com/
+Cc: Hillf Danton <hdanton@sina.com>
+Cc: Vlad Buslov <vladbu@mellanox.com>
 Signed-off-by: Peilin Ye <peilin.ye@bytedance.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 84ad0af0bccd ("net/sched: qdisc_destroy() old ingress and clsact Qdiscs before grafting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ include/net/sch_generic.h |  8 ++++++++
+ net/sched/sch_api.c       | 28 +++++++++++++++++++++++-----
+ net/sched/sch_generic.c   | 14 +++++++++++---
+ 3 files changed, 42 insertions(+), 8 deletions(-)
 
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 27271f2b37cb3..12eadecf8cd05 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -137,6 +137,13 @@ static inline void qdisc_refcount_inc(struct Qdisc *qdisc)
+ 	refcount_inc(&qdisc->refcnt);
+ }
+ 
++static inline bool qdisc_refcount_dec_if_one(struct Qdisc *qdisc)
++{
++	if (qdisc->flags & TCQ_F_BUILTIN)
++		return true;
++	return refcount_dec_if_one(&qdisc->refcnt);
++}
++
+ /* Intended to be used by unlocked users, when concurrent qdisc release is
+  * possible.
+  */
+@@ -652,6 +659,7 @@ void dev_deactivate_many(struct list_head *head);
+ struct Qdisc *dev_graft_qdisc(struct netdev_queue *dev_queue,
+ 			      struct Qdisc *qdisc);
+ void qdisc_reset(struct Qdisc *qdisc);
++void qdisc_destroy(struct Qdisc *qdisc);
+ void qdisc_put(struct Qdisc *qdisc);
+ void qdisc_put_unlocked(struct Qdisc *qdisc);
+ void qdisc_tree_reduce_backlog(struct Qdisc *qdisc, int n, int len);
 diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index b2a63d697a4aa..5fa9ddd629f95 100644
+index 5fa9ddd629f95..3f7311529cc00 100644
 --- a/net/sched/sch_api.c
 +++ b/net/sched/sch_api.c
-@@ -1077,12 +1077,12 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
- 
- 	if (parent == NULL) {
- 		unsigned int i, num_q, ingress;
-+		struct netdev_queue *dev_queue;
- 
- 		ingress = 0;
- 		num_q = dev->num_tx_queues;
+@@ -1084,10 +1084,22 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
  		if ((q && q->flags & TCQ_F_INGRESS) ||
  		    (new && new->flags & TCQ_F_INGRESS)) {
--			num_q = 1;
  			ingress = 1;
- 			if (!dev_ingress_queue(dev)) {
- 				NL_SET_ERR_MSG(extack, "Device does not have an ingress queue");
-@@ -1098,18 +1098,18 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
- 		if (new && new->ops->attach && !ingress)
- 			goto skip;
- 
--		for (i = 0; i < num_q; i++) {
--			struct netdev_queue *dev_queue = dev_ingress_queue(dev);
--
--			if (!ingress)
-+		if (!ingress) {
-+			for (i = 0; i < num_q; i++) {
- 				dev_queue = netdev_get_tx_queue(dev, i);
-+				old = dev_graft_qdisc(dev_queue, new);
- 
--			old = dev_graft_qdisc(dev_queue, new);
--			if (new && i > 0)
--				qdisc_refcount_inc(new);
--
--			if (!ingress)
-+				if (new && i > 0)
-+					qdisc_refcount_inc(new);
- 				qdisc_put(old);
-+			}
-+		} else {
+-			if (!dev_ingress_queue(dev)) {
 +			dev_queue = dev_ingress_queue(dev);
-+			old = dev_graft_qdisc(dev_queue, new);
++			if (!dev_queue) {
+ 				NL_SET_ERR_MSG(extack, "Device does not have an ingress queue");
+ 				return -ENOENT;
+ 			}
++
++			q = rtnl_dereference(dev_queue->qdisc_sleeping);
++
++			/* This is the counterpart of that qdisc_refcount_inc_nz() call in
++			 * __tcf_qdisc_find() for filter requests.
++			 */
++			if (!qdisc_refcount_dec_if_one(q)) {
++				NL_SET_ERR_MSG(extack,
++					       "Current ingress or clsact Qdisc has ongoing filter requests");
++				return -EBUSY;
++			}
+ 		}
+ 
+ 		if (dev->flags & IFF_UP)
+@@ -1108,8 +1120,16 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
+ 				qdisc_put(old);
+ 			}
+ 		} else {
+-			dev_queue = dev_ingress_queue(dev);
+-			old = dev_graft_qdisc(dev_queue, new);
++			old = dev_graft_qdisc(dev_queue, NULL);
++
++			/* {ingress,clsact}_destroy() @old before grafting @new to avoid
++			 * unprotected concurrent accesses to net_device::miniq_{in,e}gress
++			 * pointer(s) in mini_qdisc_pair_swap().
++			 */
++			qdisc_notify(net, skb, n, classid, old, new, extack);
++			qdisc_destroy(old);
++
++			dev_graft_qdisc(dev_queue, new);
  		}
  
  skip:
+@@ -1123,8 +1143,6 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
+ 
+ 			if (new && new->ops->attach)
+ 				new->ops->attach(new);
+-		} else {
+-			notify_and_destroy(net, skb, n, classid, old, new, extack);
+ 		}
+ 
+ 		if (dev->flags & IFF_UP)
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index ee43e8ac039ed..a5693e25b2482 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -1046,7 +1046,7 @@ static void qdisc_free_cb(struct rcu_head *head)
+ 	qdisc_free(q);
+ }
+ 
+-static void qdisc_destroy(struct Qdisc *qdisc)
++static void __qdisc_destroy(struct Qdisc *qdisc)
+ {
+ 	const struct Qdisc_ops  *ops = qdisc->ops;
+ 
+@@ -1070,6 +1070,14 @@ static void qdisc_destroy(struct Qdisc *qdisc)
+ 	call_rcu(&qdisc->rcu, qdisc_free_cb);
+ }
+ 
++void qdisc_destroy(struct Qdisc *qdisc)
++{
++	if (qdisc->flags & TCQ_F_BUILTIN)
++		return;
++
++	__qdisc_destroy(qdisc);
++}
++
+ void qdisc_put(struct Qdisc *qdisc)
+ {
+ 	if (!qdisc)
+@@ -1079,7 +1087,7 @@ void qdisc_put(struct Qdisc *qdisc)
+ 	    !refcount_dec_and_test(&qdisc->refcnt))
+ 		return;
+ 
+-	qdisc_destroy(qdisc);
++	__qdisc_destroy(qdisc);
+ }
+ EXPORT_SYMBOL(qdisc_put);
+ 
+@@ -1094,7 +1102,7 @@ void qdisc_put_unlocked(struct Qdisc *qdisc)
+ 	    !refcount_dec_and_rtnl_lock(&qdisc->refcnt))
+ 		return;
+ 
+-	qdisc_destroy(qdisc);
++	__qdisc_destroy(qdisc);
+ 	rtnl_unlock();
+ }
+ EXPORT_SYMBOL(qdisc_put_unlocked);
 -- 
 2.39.2
 
