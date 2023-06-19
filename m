@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CD1BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B463DC433C0;
-	Mon, 19 Jun 2023 10:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE34EBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63809C433C8;
+	Mon, 19 Jun 2023 10:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171702;
-	bh=dt4rOr8OdxNG36Kv5PYAvPVKG9VFG5qjHfzcIkWV2uA=;
+	s=korg; t=1687171704;
+	bh=9Q/Qb7ZYPRmqdEB/QUXDxCQOT5kQDYXPzIN7sSovbWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jCLsKj5K/Mv8PAToqMl3xewwqMGfn3xtA8l+p1lLin4rjyHLRrPLdwBazaS2wYIe9
-	 FjA8R9jtp59+ODhTmd89H62he31L8PaeHaSzdGIbwIbLzkkGxftsd5pr1I+wk7oJPZ
-	 OnCloG0x1P9d8F0cYhdgCUzh6/kg2BV0o32ilrsc=
+	b=wfOG/gMcS9uMDIPLjBvNEM/2ourU2Nc/BYhTZZezROSCyjXW56I5qYNR8DGRGQii1
+	 fNGDKADoGt3y6/BmWA+H6K+x9MdqEcXf/gRM2TWXB+03fzAt24qN2EDV8pLe5uo+3n
+	 1n6tg8xQ10MpUEu6Ks8E6PmrPotF08EX7biTVjAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/166] sctp: fix an error code in sctp_sf_eat_auth()
-Date: Mon, 19 Jun 2023 12:30:03 +0200
-Message-ID: <20230619102200.929507353@linuxfoundation.org>
+Subject: [PATCH 6.1 109/166] wifi: cfg80211: fix link del callback to call correct handler
+Date: Mon, 19 Jun 2023 12:29:46 +0200
+Message-ID: <20230619102200.114554493@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,36 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 75e6def3b26736e7ff80639810098c9074229737 ]
+[ Upstream commit 1ff56684fa8682bdfbbce4e12cf67ab23cb1db05 ]
 
-The sctp_sf_eat_auth() function is supposed to enum sctp_disposition
-values and returning a kernel error code will cause issues in the
-caller.  Change -ENOMEM to SCTP_DISPOSITION_NOMEM.
+The wrapper function was incorrectly calling the add handler instead of
+the del handler. This had no negative side effect as the default
+handlers are essentially identical.
 
-Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f2a0290b2df2 ("wifi: cfg80211: add optional link add/remove callbacks")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230608163202.ebd00e000459.Iaff7dc8d1cdecf77f53ea47a0e5080caa36ea02a@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/rdev-ops.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index f6ee7f4040c14..5383b6a9da61c 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -4484,7 +4484,7 @@ enum sctp_disposition sctp_sf_eat_auth(struct net *net,
- 				    SCTP_AUTH_NEW_KEY, GFP_ATOMIC);
+diff --git a/net/wireless/rdev-ops.h b/net/wireless/rdev-ops.h
+index 13b209a8db287..ee853a14a02de 100644
+--- a/net/wireless/rdev-ops.h
++++ b/net/wireless/rdev-ops.h
+@@ -2,7 +2,7 @@
+ /*
+  * Portions of this file
+  * Copyright(c) 2016-2017 Intel Deutschland GmbH
+- * Copyright (C) 2018, 2021-2022 Intel Corporation
++ * Copyright (C) 2018, 2021-2023 Intel Corporation
+  */
+ #ifndef __CFG80211_RDEV_OPS
+ #define __CFG80211_RDEV_OPS
+@@ -1441,8 +1441,8 @@ rdev_del_intf_link(struct cfg80211_registered_device *rdev,
+ 		   unsigned int link_id)
+ {
+ 	trace_rdev_del_intf_link(&rdev->wiphy, wdev, link_id);
+-	if (rdev->ops->add_intf_link)
+-		rdev->ops->add_intf_link(&rdev->wiphy, wdev, link_id);
++	if (rdev->ops->del_intf_link)
++		rdev->ops->del_intf_link(&rdev->wiphy, wdev, link_id);
+ 	trace_rdev_return_void(&rdev->wiphy);
+ }
  
- 		if (!ev)
--			return -ENOMEM;
-+			return SCTP_DISPOSITION_NOMEM;
- 
- 		sctp_add_cmd_sf(commands, SCTP_CMD_EVENT_ULP,
- 				SCTP_ULPEVENT(ev));
 -- 
 2.39.2
 
