@@ -1,48 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AC95381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:40:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04539C433C8;
-	Mon, 19 Jun 2023 10:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D610C538F
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:41:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552C4C433C9;
+	Mon, 19 Jun 2023 10:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171258;
-	bh=eb4HKlLylpTx1UrYVEV/ol2lKZmrpY6OMJtd4azxg40=;
+	s=korg; t=1687171264;
+	bh=HWh8sgvnPFqWNGo0bfESw4g+5a7VMFiAMStjfk7kylE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGnKP8NXUUsb4/6ajwsvx8+N4aMHyNaq1uKTOdZms4P6WTBZJP7NhOLV/qPlVw9yZ
-	 fkClp25DQUa0pDrGGe+4/OxHgsHyvEauEIeJ50E1mitQzpoD5A4LcXESxlOJoP8LVd
-	 tX4ReKhPfsvHjjm5iRi8WzWmsEW24WEM68YcA2aY=
+	b=0saQJZGAJmO9fm8XblzJIHbS5mIDD8jbKmH2q1xj2aQgb5sTcHzvPGX4wwhdvUkUb
+	 XcUR1r4ppc+kgZ+wnUcz0tBjqEjBzfG7X94iCeqFbgFBNwjSwSnlCpwqE+m3FxrGS0
+	 iwC1FhAzXX12UdII+kqs2BM31TKHJJNeKiD5IhAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Ross Zwisler <zwisler@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Philipp Rudo <prudo@redhat.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Baoquan He <bhe@redhat.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dave Young <dyoung@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Simon Horman <horms@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Tom Rix <trix@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 17/49] kexec: support purgatories with .text.hot sections
-Date: Mon, 19 Jun 2023 12:29:55 +0200
-Message-ID: <20230619102130.749126168@linuxfoundation.org>
+	Karol Herbst <kherbst@redhat.com>,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 4.19 19/49] nouveau: fix client work fence deletion race
+Date: Mon, 19 Jun 2023 12:29:57 +0200
+Message-ID: <20230619102130.857781927@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -56,102 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Dave Airlie <airlied@redhat.com>
 
-commit 8652d44f466ad5772e7d1756e9457046189b0dfc upstream.
+commit c8a5d5ea3ba6a18958f8d76430e4cd68eea33943 upstream.
 
-Patch series "kexec: Fix kexec_file_load for llvm16 with PGO", v7.
+This seems to have existed for ever but is now more apparant after
+commit 9bff18d13473 ("drm/ttm: use per BO cleanup workers")
 
-When upreving llvm I realised that kexec stopped working on my test
-platform.
+My analysis: two threads are running, one in the irq signalling the
+fence, in dma_fence_signal_timestamp_locked, it has done the
+DMA_FENCE_FLAG_SIGNALLED_BIT setting, but hasn't yet reached the
+callbacks.
 
-The reason seems to be that due to PGO there are multiple .text sections
-on the purgatory, and kexec does not supports that.
+The second thread in nouveau_cli_work_ready, where it sees the fence is
+signalled, so then puts the fence, cleanups the object and frees the
+work item, which contains the callback.
 
+Thread one goes again and tries to call the callback and causes the
+use-after-free.
 
-This patch (of 4):
+Proposed fix: lock the fence signalled check in nouveau_cli_work_ready,
+so either the callbacks are done or the memory is freed.
 
-Clang16 links the purgatory text in two sections when PGO is in use:
-
-  [ 1] .text             PROGBITS         0000000000000000  00000040
-       00000000000011a1  0000000000000000  AX       0     0     16
-  [ 2] .rela.text        RELA             0000000000000000  00003498
-       0000000000000648  0000000000000018   I      24     1     8
-  ...
-  [17] .text.hot.        PROGBITS         0000000000000000  00003220
-       000000000000020b  0000000000000000  AX       0     0     1
-  [18] .rela.text.hot.   RELA             0000000000000000  00004428
-       0000000000000078  0000000000000018   I      24    17     8
-
-And both of them have their range [sh_addr ... sh_addr+sh_size] on the
-area pointed by `e_entry`.
-
-This causes that image->start is calculated twice, once for .text and
-another time for .text.hot. The second calculation leaves image->start
-in a random location.
-
-Because of this, the system crashes immediately after:
-
-kexec_core: Starting new kernel
-
-Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-0-b05c520b7296@chromium.org
-Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-1-b05c520b7296@chromium.org
-Fixes: 930457057abe ("kernel/kexec_file.c: split up __kexec_load_puragory")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Ross Zwisler <zwisler@google.com>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Philipp Rudo <prudo@redhat.com>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Tom Rix <trix@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Karol Herbst <kherbst@redhat.com>
+Fixes: 11e451e74050 ("drm/nouveau: remove fence wait code from deferred client work handler")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://lore.kernel.org/dri-devel/20230615024008.1600281-1-airlied@gmail.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kexec_file.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_drm.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/kernel/kexec_file.c
-+++ b/kernel/kexec_file.c
-@@ -793,10 +793,22 @@ static int kexec_purgatory_setup_sechdrs
- 		}
- 
- 		offset = ALIGN(offset, align);
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -120,10 +120,16 @@ nouveau_name(struct drm_device *dev)
+ static inline bool
+ nouveau_cli_work_ready(struct dma_fence *fence)
+ {
+-	if (!dma_fence_is_signaled(fence))
+-		return false;
+-	dma_fence_put(fence);
+-	return true;
++	bool ret = true;
 +
-+		/*
-+		 * Check if the segment contains the entry point, if so,
-+		 * calculate the value of image->start based on it.
-+		 * If the compiler has produced more than one .text section
-+		 * (Eg: .text.hot), they are generally after the main .text
-+		 * section, and they shall not be used to calculate
-+		 * image->start. So do not re-calculate image->start if it
-+		 * is not set to the initial value, and warn the user so they
-+		 * have a chance to fix their purgatory's linker script.
-+		 */
- 		if (sechdrs[i].sh_flags & SHF_EXECINSTR &&
- 		    pi->ehdr->e_entry >= sechdrs[i].sh_addr &&
- 		    pi->ehdr->e_entry < (sechdrs[i].sh_addr
--					 + sechdrs[i].sh_size)) {
-+					 + sechdrs[i].sh_size) &&
-+		    !WARN_ON(kbuf->image->start != pi->ehdr->e_entry)) {
- 			kbuf->image->start -= sechdrs[i].sh_addr;
- 			kbuf->image->start += kbuf->mem + offset;
- 		}
++	spin_lock_irq(fence->lock);
++	if (!dma_fence_is_signaled_locked(fence))
++		ret = false;
++	spin_unlock_irq(fence->lock);
++
++	if (ret == true)
++		dma_fence_put(fence);
++	return ret;
+ }
+ 
+ static void
 
 
