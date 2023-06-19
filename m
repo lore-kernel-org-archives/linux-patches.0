@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0916310974
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E135C433CB;
-	Mon, 19 Jun 2023 10:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5C11096A
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AC3C433C0;
+	Mon, 19 Jun 2023 10:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170854;
-	bh=cXS0a0auy2CBTdKj72MP5unq8TDGz1A8afRYSYyLK/A=;
+	s=korg; t=1687170857;
+	bh=4k3pDR9DQdCDrCnrxZgNgOQ0Y3BMlPys7q1ey9lMpvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIqrLPG/pmnd1U0tLFllWWeEzEJ6tgJR3Tp0N6rfmysudXDFgjFyH2+Ype85iBS+n
-	 +J2fOow7AynPwPn4FdFsEAPaclRK1J6hidgrwt71BmWEHMXvhhNhar6Y5ez8nPwV8/
-	 FXWeLNuuaGyK16vEyemJBdD4GQ6HXQOZACQOzcXk=
+	b=ruelD03mhRFYsgg6u4i3Rdzq1VbeTmvzrpe99r/SP/iGwB1DYpuIhBYcaW1Mfai4v
+	 W8YaHT5lLjUZMT7kH5fyA0k6JNoY92PvhMn5IGwg/bL14RzSdHZ17CE/iJTXwMiwgP
+	 NgUiYOS4ZMXKAmmeNrSy5Xqr32F5t6WQmTs8rsSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Marek Majkowski <marek@cloudflare.com>
-Subject: [PATCH 6.3 059/187] io_uring/net: save msghdr->msg_control for retries
-Date: Mon, 19 Jun 2023 12:27:57 +0200
-Message-ID: <20230619102200.535541331@linuxfoundation.org>
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.3 060/187] Revert "drm/amdgpu: remove TOPDOWN flags when allocating VRAM in large bar system"
+Date: Mon, 19 Jun 2023 12:27:58 +0200
+Message-ID: <20230619102200.579966355@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -34,60 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
 
-commit cac9e4418f4cbd548ccb065b3adcafe073f7f7d2 upstream.
+commit 34e5a54327dce5033582f3609eb54812a8c61b90 upstream.
 
-If the application sets ->msg_control and we have to later retry this
-command, or if it got queued with IOSQE_ASYNC to begin with, then we
-need to retain the original msg_control value. This is due to the net
-stack overwriting this field with an in-kernel pointer, to copy it
-in. Hitting that path for the second time will now fail the copy from
-user, as it's attempting to copy from a non-user address.
+This reverts commit c105518679b6e87232874ffc989ec403bee59664.
 
-Cc: stable@vger.kernel.org # 5.10+
-Link: https://github.com/axboe/liburing/issues/880
-Reported-and-tested-by: Marek Majkowski <marek@cloudflare.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This patch disables the TOPDOWN flag for APU and few dGPU cards
+which has the VRAM size equal to the BAR size.
+
+When we enable the TOPDOWN flag, we get the free blocks at
+the highest available memory region and we don't split the
+lower order blocks. This change is required to keep off
+the fragmentation related issues particularly in ASIC
+which has VRAM space <= 500MiB
+
+Hence, we are reverting this patch.
+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2270
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -65,6 +65,7 @@ struct io_sr_msg {
- 	u16				addr_len;
- 	u16				buf_group;
- 	void __user			*addr;
-+	void __user			*msg_control;
- 	/* used only for send zerocopy */
- 	struct io_kiocb 		*notif;
- };
-@@ -195,11 +196,15 @@ static int io_sendmsg_copy_hdr(struct io
- 			       struct io_async_msghdr *iomsg)
- {
- 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
-+	int ret;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+index 3b225be89cb7..a70103ac0026 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -140,7 +140,7 @@ void amdgpu_bo_placement_from_domain(struct amdgpu_bo *abo, u32 domain)
  
- 	iomsg->msg.msg_name = &iomsg->addr;
- 	iomsg->free_iov = iomsg->fast_iov;
--	return sendmsg_copy_msghdr(&iomsg->msg, sr->umsg, sr->msg_flags,
-+	ret = sendmsg_copy_msghdr(&iomsg->msg, sr->umsg, sr->msg_flags,
- 					&iomsg->free_iov);
-+	/* save msg_control as sys_sendmsg() overwrites it */
-+	sr->msg_control = iomsg->msg.msg_control;
-+	return ret;
- }
+ 		if (flags & AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED)
+ 			places[c].lpfn = visible_pfn;
+-		else if (adev->gmc.real_vram_size != adev->gmc.visible_vram_size)
++		else
+ 			places[c].flags |= TTM_PL_FLAG_TOPDOWN;
  
- int io_send_prep_async(struct io_kiocb *req)
-@@ -297,6 +302,7 @@ int io_sendmsg(struct io_kiocb *req, uns
- 
- 	if (req_has_async_data(req)) {
- 		kmsg = req->async_data;
-+		kmsg->msg.msg_control = sr->msg_control;
- 	} else {
- 		ret = io_sendmsg_copy_hdr(req, &iomsg);
- 		if (ret)
+ 		if (flags & AMDGPU_GEM_CREATE_VRAM_CONTIGUOUS)
+-- 
+2.41.0
+
 
 
