@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32ED85381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:42:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0520C433C8;
-	Mon, 19 Jun 2023 10:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663D3538F
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:42:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB0BC433C9;
+	Mon, 19 Jun 2023 10:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171370;
-	bh=+2mnVYH94NWWfCXCQu58/iY7CNAo5eFE+qqa38jEeew=;
+	s=korg; t=1687171376;
+	bh=X77fEewRRbsc242A1IvEOhtkWHLN2cEUzLtxn19E3S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WH76O9WEg5UyveDhpUHR8JXb2R7kMLz5W1u+vpohDFmhw8aHUnsede6sQqPGd6HDD
-	 NnZWVm4lTq/7BShTSeCDwEZ7Qaz2wCgLyTLShX3JZbS7w7wOnckZXbeH0ww4vGxzwh
-	 GeYdeWaVp6syGZkXgMH7VB52+TqxHuanIfYF0n44=
+	b=GkhQv2ivVZbz9nmknTviHUrTAjPfLFQUHUgrPIzqfyTJMLC4LHnMCsCM50l9Yl1Wf
+	 WpckGwPpcr03ACwqkST+uDCVZfseJvMageDmFv2DGzFc+RAIhtqfBK1HSdBbfL3vw2
+	 FV7ZHJjnk+0e4wKwFDy51H3rfuFv3dZ+KpAggujE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+eba589d8f49c73d356da@syzkaller.appspotmail.com,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 31/49] RDMA/rxe: Fix the use-before-initialization error of resp_pkts
-Date: Mon, 19 Jun 2023 12:30:09 +0200
-Message-ID: <20230619102131.502961724@linuxfoundation.org>
+Subject: [PATCH 6.1 001/166] x86/head/64: Switch to KERNEL_CS as soon as new GDT is installed
+Date: Mon, 19 Jun 2023 12:27:58 +0200
+Message-ID: <20230619102154.662888016@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
-References: <20230619102129.856988902@linuxfoundation.org>
+In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
+References: <20230619102154.568541872@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,80 +38,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-[ Upstream commit 2a62b6210ce876c596086ab8fd4c8a0c3d10611a ]
+[ Upstream commit a37f2699c36a7f6606ba3300f243227856c5ad6b ]
 
-In the following:
+The call to startup_64_setup_env() will install a new GDT but does not
+actually switch to using the KERNEL_CS entry until returning from the
+function call.
 
-  Call Trace:
-   <TASK>
-   __dump_stack lib/dump_stack.c:88 [inline]
-   dump_stack_lvl+0xd9/0x150 lib/dump_stack.c:106
-   assign_lock_key kernel/locking/lockdep.c:982 [inline]
-   register_lock_class+0xdb6/0x1120 kernel/locking/lockdep.c:1295
-   __lock_acquire+0x10a/0x5df0 kernel/locking/lockdep.c:4951
-   lock_acquire kernel/locking/lockdep.c:5691 [inline]
-   lock_acquire+0x1b1/0x520 kernel/locking/lockdep.c:5656
-   __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
-   _raw_spin_lock_irqsave+0x3d/0x60 kernel/locking/spinlock.c:162
-   skb_dequeue+0x20/0x180 net/core/skbuff.c:3639
-   drain_resp_pkts drivers/infiniband/sw/rxe/rxe_comp.c:555 [inline]
-   rxe_completer+0x250d/0x3cc0 drivers/infiniband/sw/rxe/rxe_comp.c:652
-   rxe_qp_do_cleanup+0x1be/0x820 drivers/infiniband/sw/rxe/rxe_qp.c:761
-   execute_in_process_context+0x3b/0x150 kernel/workqueue.c:3473
-   __rxe_cleanup+0x21e/0x370 drivers/infiniband/sw/rxe/rxe_pool.c:233
-   rxe_create_qp+0x3f6/0x5f0 drivers/infiniband/sw/rxe/rxe_verbs.c:583
+Commit bcce82908333 ("x86/sev: Detect/setup SEV/SME features earlier in
+boot") moved the call to sme_enable() earlier in the boot process and in
+between the call to startup_64_setup_env() and the switch to KERNEL_CS.
+An SEV-ES or an SEV-SNP guest will trigger #VC exceptions during the call
+to sme_enable() and if the CS pushed on the stack as part of the exception
+and used by IRETQ is not mapped by the new GDT, then problems occur.
+Today, the current CS when entering startup_64 is the kernel CS value
+because it was set up by the decompressor code, so no issue is seen.
 
-This is a use-before-initialization problem.
+However, a recent patchset that looked to avoid using the legacy
+decompressor during an EFI boot exposed this bug. At entry to startup_64,
+the CS value is that of EFI and is not mapped in the new kernel GDT. So
+when a #VC exception occurs, the CS value used by IRETQ is not valid and
+the guest boot crashes.
 
-It happens because rxe_qp_do_cleanup is called during error unwind before
-the struct has been fully initialized.
+Fix this issue by moving the block that switches to the KERNEL_CS value to
+be done immediately after returning from startup_64_setup_env().
 
-Move the initialization of the skb earlier.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://lore.kernel.org/r/20230602035408.741534-1-yanjun.zhu@intel.com
-Reported-by: syzbot+eba589d8f49c73d356da@syzkaller.appspotmail.com
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: bcce82908333 ("x86/sev: Detect/setup SEV/SME features earlier in boot")
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Joerg Roedel <jroedel@suse.de>
+Link: https://lore.kernel.org/all/6ff1f28af2829cc9aea357ebee285825f90a431f.1684340801.git.thomas.lendacky%40amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/x86/kernel/head_64.S | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index b137ed1c74af1..73009bf8a9c0b 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -218,6 +218,9 @@ static void rxe_qp_init_misc(struct rxe_dev *rxe, struct rxe_qp *qp,
- 	spin_lock_init(&qp->rq.producer_lock);
- 	spin_lock_init(&qp->rq.consumer_lock);
+diff --git a/arch/x86/kernel/head_64.S b/arch/x86/kernel/head_64.S
+index d860d437631b6..998cdb112b725 100644
+--- a/arch/x86/kernel/head_64.S
++++ b/arch/x86/kernel/head_64.S
+@@ -85,6 +85,15 @@ SYM_CODE_START_NOALIGN(startup_64)
+ 	call	startup_64_setup_env
+ 	popq	%rsi
  
-+	skb_queue_head_init(&qp->req_pkts);
-+	skb_queue_head_init(&qp->resp_pkts);
++	/* Now switch to __KERNEL_CS so IRET works reliably */
++	pushq	$__KERNEL_CS
++	leaq	.Lon_kernel_cs(%rip), %rax
++	pushq	%rax
++	lretq
 +
- 	atomic_set(&qp->ssn, 0);
- 	atomic_set(&qp->skb_out, 0);
- }
-@@ -266,8 +269,6 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
- 	qp->req.opcode		= -1;
- 	qp->comp.opcode		= -1;
++.Lon_kernel_cs:
++	UNWIND_HINT_EMPTY
++
+ #ifdef CONFIG_AMD_MEM_ENCRYPT
+ 	/*
+ 	 * Activate SEV/SME memory encryption if supported/enabled. This needs to
+@@ -98,15 +107,6 @@ SYM_CODE_START_NOALIGN(startup_64)
+ 	popq	%rsi
+ #endif
  
--	skb_queue_head_init(&qp->req_pkts);
+-	/* Now switch to __KERNEL_CS so IRET works reliably */
+-	pushq	$__KERNEL_CS
+-	leaq	.Lon_kernel_cs(%rip), %rax
+-	pushq	%rax
+-	lretq
 -
- 	rxe_init_task(&qp->req.task, qp, rxe_requester);
- 	rxe_init_task(&qp->comp.task, qp, rxe_completer);
- 
-@@ -313,8 +314,6 @@ static int rxe_qp_init_resp(struct rxe_dev *rxe, struct rxe_qp *qp,
- 		}
- 	}
- 
--	skb_queue_head_init(&qp->resp_pkts);
+-.Lon_kernel_cs:
+-	UNWIND_HINT_EMPTY
 -
- 	rxe_init_task(&qp->resp.task, qp, rxe_responder);
+ 	/* Sanitize CPU configuration */
+ 	call verify_cpu
  
- 	qp->resp.opcode		= OPCODE_NONE;
 -- 
 2.39.2
 
