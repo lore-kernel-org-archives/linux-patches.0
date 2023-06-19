@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B5F10960
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E952C433C0;
-	Mon, 19 Jun 2023 10:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A5D10952
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:34:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73977C433CA;
+	Mon, 19 Jun 2023 10:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170874;
-	bh=HlwpPDD095eWKjo4oiJTfkTblpFKG89ZfJEGh62GyPQ=;
+	s=korg; t=1687170879;
+	bh=v/K2K951N1AllIDWWWztB0U6RFdbO/hSvfoFqcqQKC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=le+jMsJCUULnXHkBkaCfNNj84bhCQkHD8gtk4blNkg2RWPPiK/Gyjlv48irsND3p/
-	 qEkC7Ih03thzU8eVOaAcpDQccnnpYHM90vS4YybCreYaQtzTEXJWs6lc5l+DBdmOix
-	 UBq0HVwKafbI1BE87ipjJVSdM4X/oSF556ugn4v4=
+	b=UP6BE1Lj/wV9i8ASl2ZZllcQGmSqjyvORws/Wsn3c8Xzt39POnc383XJGRJlJPkw0
+	 gpnB9wZQseNMo2C5cnVIJrSA6C+KjA80zrKPNcu7pOrjPWNh0/wgAcpGrM9Jgl46hP
+	 dzBtKbEJMPWQea7ntLk5gWQoqHO+KUMxU3lLBh8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	Juergen Gross <jgross@suse.com>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Wenwen Chen <wenwen.chen@samsung.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 040/187] xen/blkfront: Only check REQ_FUA for writes
-Date: Mon, 19 Jun 2023 12:27:38 +0200
-Message-ID: <20230619102159.551799564@linuxfoundation.org>
+Subject: [PATCH 6.3 042/187] io_uring: unlock sqd->lock before sq thread release CPU
+Date: Mon, 19 Jun 2023 12:27:40 +0200
+Message-ID: <20230619102159.648686439@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -35,43 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
+From: Wenwen Chen <wenwen.chen@samsung.com>
 
-[ Upstream commit b6ebaa8100090092aa602530d7e8316816d0c98d ]
+[ Upstream commit 533ab73f5b5c95dcb4152b52d5482abcc824c690 ]
 
-The existing code silently converts read operations with the
-REQ_FUA bit set into write-barrier operations. This results in data
-loss as the backend scribbles zeroes over the data instead of returning
-it.
+The sq thread actively releases CPU resources by calling the
+cond_resched() and schedule() interfaces when it is idle. Therefore,
+more resources are available for other threads to run.
 
-While the REQ_FUA bit doesn't make sense on a read operation, at least
-one well-known out-of-tree kernel module does set it and since it
-results in data loss, let's be safe here and only look at REQ_FUA for
-writes.
+There exists a problem in sq thread: it does not unlock sqd->lock before
+releasing CPU resources every time. This makes other threads pending on
+sqd->lock for a long time. For example, the following interfaces all
+require sqd->lock: io_sq_offload_create(), io_register_iowq_max_workers()
+and io_ring_exit_work().
 
-Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20230426164005.2213139-1-ross.lagerwall@citrix.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Before the sq thread releases CPU resources, unlocking sqd->lock will
+provide the user a better experience because it can respond quickly to
+user requests.
+
+Signed-off-by: Kanchan Joshi<joshi.k@samsung.com>
+Signed-off-by: Wenwen Chen<wenwen.chen@samsung.com>
+Link: https://lore.kernel.org/r/20230525082626.577862-1-wenwen.chen@samsung.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/xen-blkfront.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ io_uring/sqpoll.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index 23ed258b57f0e..c1890c8a9f6e7 100644
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -780,7 +780,8 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
- 		ring_req->u.rw.handle = info->handle;
- 		ring_req->operation = rq_data_dir(req) ?
- 			BLKIF_OP_WRITE : BLKIF_OP_READ;
--		if (req_op(req) == REQ_OP_FLUSH || req->cmd_flags & REQ_FUA) {
-+		if (req_op(req) == REQ_OP_FLUSH ||
-+		    (req_op(req) == REQ_OP_WRITE && (req->cmd_flags & REQ_FUA))) {
- 			/*
- 			 * Ideally we can do an unordered flush-to-disk.
- 			 * In case the backend onlysupports barriers, use that.
+diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
+index 9db4bc1f521a3..5e329e3cd4706 100644
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -255,9 +255,13 @@ static int io_sq_thread(void *data)
+ 			sqt_spin = true;
+ 
+ 		if (sqt_spin || !time_after(jiffies, timeout)) {
+-			cond_resched();
+ 			if (sqt_spin)
+ 				timeout = jiffies + sqd->sq_thread_idle;
++			if (unlikely(need_resched())) {
++				mutex_unlock(&sqd->lock);
++				cond_resched();
++				mutex_lock(&sqd->lock);
++			}
+ 			continue;
+ 		}
+ 
 -- 
 2.39.2
 
