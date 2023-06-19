@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8FE3C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:35:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1263AC433C0;
-	Mon, 19 Jun 2023 10:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597D43C2C
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:35:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BE2C433C8;
+	Mon, 19 Jun 2023 10:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170933;
-	bh=BepBESkSn/SYV9jPUIP25R3GgUvzSqOOqVTW5Ydp2+w=;
+	s=korg; t=1687170936;
+	bh=Qs4dw/siH8p0AYXvbUCCKyGHPJJ2VAgPmMoKxX/bilU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmZqynz/QhxgFjJ4D1rTWWTaeTp9gEt6/8zRsAM3/h+wO1jqeUBqQ+fIN0B09kHQF
-	 MQU6w0kHb7SssbEOaumBMG42wCKvviZNqaC4UMOTcuRz95+Ul73DJHtaYXYeR/hAIQ
-	 AfHTpbh7FEHJxLIauHRuNUDeyEL8Hq/cngE7wde4=
+	b=aBhN0+xRQ+894bpSrO7Fv8u59MMwRvo6yRXAGPiT9XwXPad6tjQ7mjxs6GPMzC0hv
+	 HM2AblijItBHZowg+ME5y/zU08dnfjHigSH9SKoahwjGblsxjbn73unMDZHDA/mPe1
+	 4O6LgVu4SuFxaARpfm/VnSI/NmZ7rJnQ1hKswIlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiadong Zhu <Jiadong.Zhu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 087/187] drm/amdgpu: Reset CP_VMID_PREEMPT after trailing fence signaled
-Date: Mon, 19 Jun 2023 12:28:25 +0200
-Message-ID: <20230619102201.825667204@linuxfoundation.org>
+Subject: [PATCH 6.3 088/187] drm/amdgpu: Program gds backup address as zero if no gds allocated
+Date: Mon, 19 Jun 2023 12:28:26 +0200
+Message-ID: <20230619102201.870851420@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -36,51 +36,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiadong Zhu <Jiadong.Zhu@amd.com>
 
-commit 1dbcf770cc2d15baf8a1e8174d6fd014a68b45ca upstream.
+commit 94034b306ddde4a4a9c1a597ae7f61f04b710dc7 upstream.
 
-When MEC executes unmap_queue for mid command buffer preemption, it will
-kick the write pointer of the gfx ring, set CP_VMID_PREEMPT to trigger the
-preemption and wait for CP_VMID_PREEMPT becomes zero after the preemption
-done. There is a race condition that PFP may excute the resetting command
-before MEC set CP_VMID_PREEMPT. As a result, hang happens as
-CP_VMID_PREEMPT is always 0xffff.
-
-To avoid this, we send resetting CP_VMID_PREEMPT command after the trailing
-fence is siganled and update gfx write pointer explicitly.
+It is firmware requirement to set gds_backup_addrlo and gds_backup_addrhi
+of DE meta both zero if no gds partition is allocated for the frame.
 
 Signed-off-by: Jiadong Zhu <Jiadong.Zhu@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org # 6.3.x
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2535
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
 --- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
 +++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -5366,10 +5366,6 @@ static int gfx_v9_0_ring_preempt_ib(stru
- 	amdgpu_ring_alloc(ring, 13);
- 	gfx_v9_0_ring_emit_fence(ring, ring->trail_fence_gpu_addr,
- 				 ring->trail_seq, AMDGPU_FENCE_FLAG_EXEC | AMDGPU_FENCE_FLAG_INT);
--	/*reset the CP_VMID_PREEMPT after trailing fence*/
--	amdgpu_ring_emit_wreg(ring,
--			      SOC15_REG_OFFSET(GC, 0, mmCP_VMID_PREEMPT),
--			      0x0);
- 
- 	/* assert IB preemption, emit the trailing fence */
- 	kiq->pmf->kiq_unmap_queues(kiq_ring, ring, PREEMPT_QUEUES_NO_UNMAP,
-@@ -5392,6 +5388,10 @@ static int gfx_v9_0_ring_preempt_ib(stru
- 		DRM_WARN("ring %d timeout to preempt ib\n", ring->idx);
+@@ -755,7 +755,7 @@ static void gfx_v9_0_set_rlc_funcs(struc
+ static int gfx_v9_0_get_cu_info(struct amdgpu_device *adev,
+ 				struct amdgpu_cu_info *cu_info);
+ static uint64_t gfx_v9_0_get_gpu_clock_counter(struct amdgpu_device *adev);
+-static void gfx_v9_0_ring_emit_de_meta(struct amdgpu_ring *ring, bool resume);
++static void gfx_v9_0_ring_emit_de_meta(struct amdgpu_ring *ring, bool resume, bool usegds);
+ static u64 gfx_v9_0_ring_get_rptr_compute(struct amdgpu_ring *ring);
+ static void gfx_v9_0_query_ras_error_count(struct amdgpu_device *adev,
+ 					  void *ras_error_status);
+@@ -5124,7 +5124,8 @@ static void gfx_v9_0_ring_emit_ib_gfx(st
+ 			gfx_v9_0_ring_emit_de_meta(ring,
+ 						   (!amdgpu_sriov_vf(ring->adev) &&
+ 						   flags & AMDGPU_IB_PREEMPTED) ?
+-						   true : false);
++						   true : false,
++						   job->gds_size > 0 && job->gds_base != 0);
  	}
  
-+	/*reset the CP_VMID_PREEMPT after trailing fence*/
-+	amdgpu_ring_emit_wreg(ring,
-+			      SOC15_REG_OFFSET(GC, 0, mmCP_VMID_PREEMPT),
-+			      0x0);
- 	amdgpu_ring_commit(ring);
+ 	amdgpu_ring_write(ring, header);
+@@ -5399,7 +5400,7 @@ static int gfx_v9_0_ring_preempt_ib(stru
+ 	return r;
+ }
  
- 	/* deassert preemption condition */
+-static void gfx_v9_0_ring_emit_de_meta(struct amdgpu_ring *ring, bool resume)
++static void gfx_v9_0_ring_emit_de_meta(struct amdgpu_ring *ring, bool resume, bool usegds)
+ {
+ 	struct amdgpu_device *adev = ring->adev;
+ 	struct v9_de_ib_state de_payload = {0};
+@@ -5430,8 +5431,10 @@ static void gfx_v9_0_ring_emit_de_meta(s
+ 				 PAGE_SIZE);
+ 	}
+ 
+-	de_payload.gds_backup_addrlo = lower_32_bits(gds_addr);
+-	de_payload.gds_backup_addrhi = upper_32_bits(gds_addr);
++	if (usegds) {
++		de_payload.gds_backup_addrlo = lower_32_bits(gds_addr);
++		de_payload.gds_backup_addrhi = upper_32_bits(gds_addr);
++	}
+ 
+ 	cnt = (sizeof(de_payload) >> 2) + 4 - 2;
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, cnt));
 
 
