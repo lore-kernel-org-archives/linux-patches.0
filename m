@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C3E5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E95C433C8;
-	Mon, 19 Jun 2023 10:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735505381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC8CC433C8;
+	Mon, 19 Jun 2023 10:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171539;
-	bh=I+Mmvt/J8/mtFygh1dWzkEIiZvzhJYWh4yJ4eClOigo=;
+	s=korg; t=1687171542;
+	bh=KY0eM9GnRjsZzn792M24nvKSyrF17fuGc+QwLcnmjUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDmq2C/8bsLVETM1WXuDVrIXPbNr8WdQPxuaWKx8vo95uX0PSazdOPxdURFncn0RU
-	 Iw09auspGXbaPGq3+HdVNL0Z3nZoYGL9uuwlJQ0JnoMVsjgUl7O5BAuKsnwH5cVjVK
-	 fzQ8sMQY0oncHlKLFNh1tFIC6QdYfKX+PL0oyL8w=
+	b=YlRCvsuQDnEG62eadp+ueysoVKrO6i9qoAbuRuSwTH5X1Pz7pgNxiPpagb5LcSoKn
+	 Nceb+18SzCUfVRRbHCMq3f6jOSU/ZPBOsdfzYjvN13UtmLKfn8bP7lMq7uBTKBJxt4
+	 XokQaCpAjBcqirBS6eqSJpgCq9Mu3US8/nbOL1DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.1 068/166] RDMA/uverbs: Restrict usage of privileged QKEYs
-Date: Mon, 19 Jun 2023 12:29:05 +0200
-Message-ID: <20230619102158.074595085@linuxfoundation.org>
+	Sonny Jiang <sonjiang@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 069/166] drm/amdgpu: vcn_4_0 set instance 0 init sched score to 1
+Date: Mon, 19 Jun 2023 12:29:06 +0200
+Message-ID: <20230619102158.117889066@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -34,43 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Srouji <edwards@nvidia.com>
+From: Sonny Jiang <sonjiang@amd.com>
 
-commit 0cadb4db79e1d9eea66711c4031e435c2191907e upstream.
+commit 9db5ec1ceb5303398ec4f899d691073d531257c3 upstream.
 
-According to the IB specification rel-1.6, section 3.5.3:
-"QKEYs with the most significant bit set are considered controlled
-QKEYs, and a HCA does not allow a consumer to arbitrarily specify a
-controlled QKEY."
+Only vcn0 can process AV1 codecx. In order to use both vcn0 and
+vcn1 in h264/265 transcode to AV1 cases, set vcn0 sched score to 1
+at initialization time.
 
-Thus, block non-privileged users from setting such a QKEY.
-
-Cc: stable@vger.kernel.org
-Fixes: bc38a6abdd5a ("[PATCH] IB uverbs: core implementation")
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://lore.kernel.org/r/c00c809ddafaaf87d6f6cb827978670989a511b3.1685960567.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sonny Jiang <sonjiang@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/uverbs_cmd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/core/uverbs_cmd.c
-+++ b/drivers/infiniband/core/uverbs_cmd.c
-@@ -1850,8 +1850,13 @@ static int modify_qp(struct uverbs_attr_
- 		attr->path_mtu = cmd->base.path_mtu;
- 	if (cmd->base.attr_mask & IB_QP_PATH_MIG_STATE)
- 		attr->path_mig_state = cmd->base.path_mig_state;
--	if (cmd->base.attr_mask & IB_QP_QKEY)
-+	if (cmd->base.attr_mask & IB_QP_QKEY) {
-+		if (cmd->base.qkey & IB_QP_SET_QKEY && !capable(CAP_NET_RAW)) {
-+			ret = -EPERM;
-+			goto release_qp;
-+		}
- 		attr->qkey = cmd->base.qkey;
-+	}
- 	if (cmd->base.attr_mask & IB_QP_RQ_PSN)
- 		attr->rq_psn = cmd->base.rq_psn;
- 	if (cmd->base.attr_mask & IB_QP_SQ_PSN)
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
+@@ -117,7 +117,11 @@ static int vcn_v4_0_sw_init(void *handle
+ 		if (adev->vcn.harvest_config & (1 << i))
+ 			continue;
+ 
+-		atomic_set(&adev->vcn.inst[i].sched_score, 0);
++		/* Init instance 0 sched_score to 1, so it's scheduled after other instances */
++		if (i == 0)
++			atomic_set(&adev->vcn.inst[i].sched_score, 1);
++		else
++			atomic_set(&adev->vcn.inst[i].sched_score, 0);
+ 
+ 		/* VCN UNIFIED TRAP */
+ 		r = amdgpu_irq_add_id(adev, amdgpu_ih_clientid_vcns[i],
 
 
