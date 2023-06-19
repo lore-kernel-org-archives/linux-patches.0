@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE38AD26
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80960C433C8;
-	Mon, 19 Jun 2023 11:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B02ABE7E
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9DCC433C9;
+	Mon, 19 Jun 2023 11:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172438;
-	bh=ry/3wrTq4NfdsFJUOZxLBB2BeANMNny2fFTz6vO4Dxg=;
+	s=korg; t=1687172445;
+	bh=BmTxxHAUAGsVbFmdtGqU9pTyfLYzeZGKTx1OguvwTh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OGcZUuBZoyCY032uqqlJGQaxf6UWCC+t6LlHoE+GGVAXralszBw4GgV3GWV7vGzTP
-	 DSgSNzHAjK4INq0UUwaA4gFiJzvTliLSDPpMm9q8SLAlrmiV9RnQkrbkQk2QXoqNPo
-	 Mn1fmDJNUenwiStJMJsnzpc8jro8j9Ib6XqkJsbk=
+	b=hAcCNeg0tk8K8uXh6WLzNQ3hlyDdXK/wJrZT/+Jc0xa2PUG78jq/wkla/GOWGGUJk
+	 M2XUUQX0cdFmvRzueC4fRQP380qW3nHYiaBEUwQLkjclfsBIG3WGNLIZBljUKEKKtI
+	 Bw08eKUOw3KQyjrJzU2WXglnvXkJChv++PF6Zud8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Tottenham <mtottenh@akamai.com>,
-	Josh Hunt <johunt@akamai.com>,
-	kernel test robot <lkp@intel.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Lee Jones <lee@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/107] net/sched: act_pedit: Parse L3 Header for L4 offset
-Date: Mon, 19 Jun 2023 12:30:53 +0200
-Message-ID: <20230619102144.756427284@linuxfoundation.org>
+Subject: [PATCH 5.15 070/107] net/sched: cls_u32: Fix reference counter leak leading to overflow
+Date: Mon, 19 Jun 2023 12:30:54 +0200
+Message-ID: <20230619102144.801863853@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -38,138 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Tottenham <mtottenh@akamai.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 6c02568fd1ae53099b4ab86365c5be1ff15f586b ]
+[ Upstream commit 04c55383fa5689357bcdd2c8036725a55ed632bc ]
 
-Instead of relying on skb->transport_header being set correctly, opt
-instead to parse the L3 header length out of the L3 headers for both
-IPv4/IPv6 when the Extended Layer Op for tcp/udp is used. This fixes a
-bug if GRO is disabled, when GRO is disabled skb->transport_header is
-set by __netif_receive_skb_core() to point to the L3 header, it's later
-fixed by the upper protocol layers, but act_pedit will receive the SKB
-before the fixups are completed. The existing behavior causes the
-following to edit the L3 header if GRO is disabled instead of the UDP
-header:
+In the event of a failure in tcf_change_indev(), u32_set_parms() will
+immediately return without decrementing the recently incremented
+reference counter.  If this happens enough times, the counter will
+rollover and the reference freed, leading to a double free which can be
+used to do 'bad things'.
 
-    tc filter add dev eth0 ingress protocol ip flower ip_proto udp \
- dst_ip 192.168.1.3 action pedit ex munge udp set dport 18053
+In order to prevent this, move the point of possible failure above the
+point where the reference counter is incremented.  Also save any
+meaningful return values to be applied to the return data at the
+appropriate point in time.
 
-Also re-introduce a rate-limited warning if we were unable to extract
-the header offset when using the 'ex' interface.
+This issue was caught with KASAN.
 
-Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to
-the conventional network headers")
-Signed-off-by: Max Tottenham <mtottenh@akamai.com>
-Reviewed-by: Josh Hunt <johunt@akamai.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202305261541.N165u9TZ-lkp@intel.com/
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Fixes: 705c7091262d ("net: sched: cls_u32: no need to call tcf_exts_change for newly allocated struct")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 48 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 43 insertions(+), 5 deletions(-)
+ net/sched/cls_u32.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index e3bc5bb6c60ef..e77da0545b553 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -13,7 +13,10 @@
- #include <linux/rtnetlink.h>
- #include <linux/module.h>
- #include <linux/init.h>
-+#include <linux/ip.h>
-+#include <linux/ipv6.h>
- #include <linux/slab.h>
-+#include <net/ipv6.h>
- #include <net/netlink.h>
- #include <net/pkt_sched.h>
- #include <linux/tc_act/tc_pedit.h>
-@@ -313,28 +316,58 @@ static bool offset_valid(struct sk_buff *skb, int offset)
- 	return true;
- }
- 
--static void pedit_skb_hdr_offset(struct sk_buff *skb,
-+static int pedit_l4_skb_offset(struct sk_buff *skb, int *hoffset, const int header_type)
-+{
-+	const int noff = skb_network_offset(skb);
-+	int ret = -EINVAL;
-+	struct iphdr _iph;
-+
-+	switch (skb->protocol) {
-+	case htons(ETH_P_IP): {
-+		const struct iphdr *iph = skb_header_pointer(skb, noff, sizeof(_iph), &_iph);
-+
-+		if (!iph)
-+			goto out;
-+		*hoffset = noff + iph->ihl * 4;
-+		ret = 0;
-+		break;
-+	}
-+	case htons(ETH_P_IPV6):
-+		ret = ipv6_find_hdr(skb, hoffset, header_type, NULL, NULL) == header_type ? 0 : -EINVAL;
-+		break;
-+	}
-+out:
-+	return ret;
-+}
-+
-+static int pedit_skb_hdr_offset(struct sk_buff *skb,
- 				 enum pedit_header_type htype, int *hoffset)
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 5d30db0d71574..0025fa837e857 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -716,12 +716,18 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
+ 			 struct nlattr *est, u32 flags,
+ 			 struct netlink_ext_ack *extack)
  {
-+	int ret = -EINVAL;
- 	/* 'htype' is validated in the netlink parsing */
- 	switch (htype) {
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_ETH:
--		if (skb_mac_header_was_set(skb))
-+		if (skb_mac_header_was_set(skb)) {
- 			*hoffset = skb_mac_offset(skb);
-+			ret = 0;
-+		}
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP4:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP6:
- 		*hoffset = skb_network_offset(skb);
-+		ret = 0;
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_TCP:
-+		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_TCP);
-+		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_UDP:
--		if (skb_transport_header_was_set(skb))
--			*hoffset = skb_transport_offset(skb);
-+		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_UDP);
- 		break;
- 	default:
- 		break;
+-	int err;
++	int err, ifindex = -1;
+ 
+ 	err = tcf_exts_validate(net, tp, tb, est, &n->exts, flags, extack);
+ 	if (err < 0)
+ 		return err;
+ 
++	if (tb[TCA_U32_INDEV]) {
++		ifindex = tcf_change_indev(net, tb[TCA_U32_INDEV], extack);
++		if (ifindex < 0)
++			return -EINVAL;
++	}
++
+ 	if (tb[TCA_U32_LINK]) {
+ 		u32 handle = nla_get_u32(tb[TCA_U32_LINK]);
+ 		struct tc_u_hnode *ht_down = NULL, *ht_old;
+@@ -756,13 +762,9 @@ static int u32_set_parms(struct net *net, struct tcf_proto *tp,
+ 		tcf_bind_filter(tp, &n->res, base);
  	}
-+	return ret;
+ 
+-	if (tb[TCA_U32_INDEV]) {
+-		int ret;
+-		ret = tcf_change_indev(net, tb[TCA_U32_INDEV], extack);
+-		if (ret < 0)
+-			return -EINVAL;
+-		n->ifindex = ret;
+-	}
++	if (ifindex >= 0)
++		n->ifindex = ifindex;
++
+ 	return 0;
  }
  
- static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
-@@ -369,6 +402,7 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
- 		int hoffset = 0;
- 		u32 *ptr, hdata;
- 		u32 val;
-+		int rc;
- 
- 		if (tkey_ex) {
- 			htype = tkey_ex->htype;
-@@ -377,7 +411,11 @@ static int tcf_pedit_act(struct sk_buff *skb, const struct tc_action *a,
- 			tkey_ex++;
- 		}
- 
--		pedit_skb_hdr_offset(skb, htype, &hoffset);
-+		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
-+		if (rc) {
-+			pr_info_ratelimited("tc action pedit unable to extract header offset for header type (0x%x)\n", htype);
-+			goto bad;
-+		}
- 
- 		if (tkey->offmask) {
- 			u8 *d, _d;
 -- 
 2.39.2
 
