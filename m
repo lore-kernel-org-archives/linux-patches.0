@@ -1,34 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7206C2E0
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:29:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2B6C433C8;
-	Mon, 19 Jun 2023 10:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE72FC2E0
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:29:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0EBC433C8;
+	Mon, 19 Jun 2023 10:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170568;
-	bh=N4srQR9OZBgSCwNEzl/+0LuTOtskbuyIIi8sxgsCfrU=;
+	s=korg; t=1687170571;
+	bh=WPH0VvRM0KpFY/Q8zsTcLLIl9hcYu6t5Ivq+VTtOinw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtwhurrL5Fcd5jzdmjhEIPTIG4satCihGpcS5PIaSKFfhomzF+4e79TaFEFp64zsA
-	 hU8qNNdyQOx0+SE5aFTcf3r4jgzGpXm+YFNWrNjJA8PLwDrBQZtIFj9Rk5b/+1HqTm
-	 GaCuvaOC/Fp06NRa8/YSYSYjt1OwUh09f1t00U/o=
+	b=n+8pTg9EKC/SjLsmp03415JTPuh8dHs1vNkEDQw8RKESCUijmb06CGBOaWXjyEpQ9
+	 T6NXSGW5osVWPZZvdacpkXGUZSe+k3dTUfPMk/zBDEjAVvoJIl78x/0F1qLfpi0i5w
+	 x4XJwCpFfGCj3zLWEJzU3GBYzPsjjZJEBDicFw20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 01/32] power: supply: ab8500: Fix external_power_changed race
-Date: Mon, 19 Jun 2023 12:28:49 +0200
-Message-ID: <20230619102127.551367762@linuxfoundation.org>
+	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 10/32] ocfs2: fix use-after-free when unmounting read-only filesystem
+Date: Mon, 19 Jun 2023 12:28:58 +0200
+Message-ID: <20230619102128.048003491@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102127.461443957@linuxfoundation.org>
 References: <20230619102127.461443957@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,73 +41,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Luís Henriques <ocfs2-devel@oss.oracle.com>
 
-[ Upstream commit a5299ce4e96f3e8930e9c051b28d8093ada87b08 ]
+commit 50d927880e0f90d5cb25e897e9d03e5edacc79a8 upstream.
 
-ab8500_btemp_external_power_changed() dereferences di->btemp_psy,
-which gets sets in ab8500_btemp_probe() like this:
+It's trivial to trigger a use-after-free bug in the ocfs2 quotas code using
+fstest generic/452.  After a read-only remount, quotas are suspended and
+ocfs2_mem_dqinfo is freed through ->ocfs2_local_free_info().  When unmounting
+the filesystem, an UAF access to the oinfo will eventually cause a crash.
 
-        di->btemp_psy = devm_power_supply_register(dev, &ab8500_btemp_desc,
-                                                   &psy_cfg);
+BUG: KASAN: slab-use-after-free in timer_delete+0x54/0xc0
+Read of size 8 at addr ffff8880389a8208 by task umount/669
+...
+Call Trace:
+ <TASK>
+ ...
+ timer_delete+0x54/0xc0
+ try_to_grab_pending+0x31/0x230
+ __cancel_work_timer+0x6c/0x270
+ ocfs2_disable_quotas.isra.0+0x3e/0xf0 [ocfs2]
+ ocfs2_dismount_volume+0xdd/0x450 [ocfs2]
+ generic_shutdown_super+0xaa/0x280
+ kill_block_super+0x46/0x70
+ deactivate_locked_super+0x4d/0xb0
+ cleanup_mnt+0x135/0x1f0
+ ...
+ </TASK>
 
-As soon as devm_power_supply_register() has called device_add()
-the external_power_changed callback can get called. So there is a window
-where ab8500_btemp_external_power_changed() may get called while
-di->btemp_psy has not been set yet leading to a NULL pointer dereference.
+Allocated by task 632:
+ kasan_save_stack+0x1c/0x40
+ kasan_set_track+0x21/0x30
+ __kasan_kmalloc+0x8b/0x90
+ ocfs2_local_read_info+0xe3/0x9a0 [ocfs2]
+ dquot_load_quota_sb+0x34b/0x680
+ dquot_load_quota_inode+0xfe/0x1a0
+ ocfs2_enable_quotas+0x190/0x2f0 [ocfs2]
+ ocfs2_fill_super+0x14ef/0x2120 [ocfs2]
+ mount_bdev+0x1be/0x200
+ legacy_get_tree+0x6c/0xb0
+ vfs_get_tree+0x3e/0x110
+ path_mount+0xa90/0xe10
+ __x64_sys_mount+0x16f/0x1a0
+ do_syscall_64+0x43/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Fixing this is easy. The external_power_changed callback gets passed
-the power_supply which will eventually get stored in di->btemp_psy,
-so ab8500_btemp_external_power_changed() can simply directly use
-the passed in psy argument which is always valid.
+Freed by task 650:
+ kasan_save_stack+0x1c/0x40
+ kasan_set_track+0x21/0x30
+ kasan_save_free_info+0x2a/0x50
+ __kasan_slab_free+0xf9/0x150
+ __kmem_cache_free+0x89/0x180
+ ocfs2_local_free_info+0x2ba/0x3f0 [ocfs2]
+ dquot_disable+0x35f/0xa70
+ ocfs2_susp_quotas.isra.0+0x159/0x1a0 [ocfs2]
+ ocfs2_remount+0x150/0x580 [ocfs2]
+ reconfigure_super+0x1a5/0x3a0
+ path_mount+0xc8a/0xe10
+ __x64_sys_mount+0x16f/0x1a0
+ do_syscall_64+0x43/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-And the same applies to ab8500_fg_external_power_changed().
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230522102112.9031-1-lhenriques@suse.de
+Signed-off-by: Luís Henriques <lhenriques@suse.de>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Tested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/ab8500_btemp.c | 6 ++----
- drivers/power/supply/ab8500_fg.c    | 6 ++----
- 2 files changed, 4 insertions(+), 8 deletions(-)
+ fs/ocfs2/super.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
-index 97423a04fc0f0..c58644a3345ce 100644
---- a/drivers/power/supply/ab8500_btemp.c
-+++ b/drivers/power/supply/ab8500_btemp.c
-@@ -976,10 +976,8 @@ static int ab8500_btemp_get_ext_psy_data(struct device *dev, void *data)
-  */
- static void ab8500_btemp_external_power_changed(struct power_supply *psy)
- {
--	struct ab8500_btemp *di = power_supply_get_drvdata(psy);
--
--	class_for_each_device(power_supply_class, NULL,
--		di->btemp_psy, ab8500_btemp_get_ext_psy_data);
-+	class_for_each_device(power_supply_class, NULL, psy,
-+			      ab8500_btemp_get_ext_psy_data);
- }
- 
- /* ab8500 btemp driver interrupts and their respective isr */
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index b00844103a07a..f99e248f6aed3 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -2384,10 +2384,8 @@ static int ab8500_fg_init_hw_registers(struct ab8500_fg *di)
-  */
- static void ab8500_fg_external_power_changed(struct power_supply *psy)
- {
--	struct ab8500_fg *di = power_supply_get_drvdata(psy);
--
--	class_for_each_device(power_supply_class, NULL,
--		di->fg_psy, ab8500_fg_get_ext_psy_data);
-+	class_for_each_device(power_supply_class, NULL, psy,
-+			      ab8500_fg_get_ext_psy_data);
- }
- 
- /**
--- 
-2.39.2
-
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -985,8 +985,10 @@ static void ocfs2_disable_quotas(struct
+ 	for (type = 0; type < OCFS2_MAXQUOTAS; type++) {
+ 		if (!sb_has_quota_loaded(sb, type))
+ 			continue;
+-		oinfo = sb_dqinfo(sb, type)->dqi_priv;
+-		cancel_delayed_work_sync(&oinfo->dqi_sync_work);
++		if (!sb_has_quota_suspended(sb, type)) {
++			oinfo = sb_dqinfo(sb, type)->dqi_priv;
++			cancel_delayed_work_sync(&oinfo->dqi_sync_work);
++		}
+ 		inode = igrab(sb->s_dquot.files[type]);
+ 		/* Turn off quotas. This will remove all dquot structures from
+ 		 * memory and so they will be automatically synced to global
 
 
