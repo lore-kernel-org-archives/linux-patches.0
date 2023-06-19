@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15CC10944
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:35:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397DEC433C8;
-	Mon, 19 Jun 2023 10:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685FC10944
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:35:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23F6C433C0;
+	Mon, 19 Jun 2023 10:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687170902;
-	bh=1rA60v34VpalHgNbi1f2EV+1rMNTKszrS8EJULrYUgA=;
+	s=korg; t=1687170905;
+	bh=I+Mmvt/J8/mtFygh1dWzkEIiZvzhJYWh4yJ4eClOigo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEzqZQM8JFxn3pPj2+SLYdG3WJr1GmtHhucgTXlKnBBEPI1t9/ZslzlsaLG5c6mAa
-	 WM6Yh3knvJZuO5A8d9xMyBsQt7lCVwNTT5rNbhfLTdngeE43tYcJ7nzUl7MDaNN8BO
-	 TcyZQTku5xV28ha9HfE5noL+ZMq2RnBovtORuv9c=
+	b=EcLvqWhZO4oyYbakJP9uZXFSFMCn5K5rRvh08eb8h3iYedpqilhOK8LXzqCBE88Sy
+	 VZk+B4vhY3HnYWCfw7I0iSf49LaK5jB6ufKfTaNRol4PGDlzel5LMtRN2xHZkaOGLX
+	 oUmVxg1aMSl4KGEWVPREw13pznNHKjPSIMS9jP6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Li <haibo.li@mediatek.com>,
-	David Hildenbrand <david@redhat.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 077/187] mm/gup_test: fix ioctl fail for compat task
-Date: Mon, 19 Jun 2023 12:28:15 +0200
-Message-ID: <20230619102201.353391346@linuxfoundation.org>
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.3 078/187] RDMA/uverbs: Restrict usage of privileged QKEYs
+Date: Mon, 19 Jun 2023 12:28:16 +0200
+Message-ID: <20230619102201.399466361@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -38,37 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haibo Li <haibo.li@mediatek.com>
+From: Edward Srouji <edwards@nvidia.com>
 
-commit 4f572f0074b8be8a70bd150d96a749aa94c8d85f upstream.
+commit 0cadb4db79e1d9eea66711c4031e435c2191907e upstream.
 
-When tools/testing/selftests/mm/gup_test.c is compiled as 32bit, then run
-on arm64 kernel, it reports "ioctl: Inappropriate ioctl for device".
+According to the IB specification rel-1.6, section 3.5.3:
+"QKEYs with the most significant bit set are considered controlled
+QKEYs, and a HCA does not allow a consumer to arbitrarily specify a
+controlled QKEY."
 
-Fix it by filling compat_ioctl in gup_test_fops
+Thus, block non-privileged users from setting such a QKEY.
 
-Link: https://lkml.kernel.org/r/20230526022125.175728-1-haibo.li@mediatek.com
-Signed-off-by: Haibo Li <haibo.li@mediatek.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: bc38a6abdd5a ("[PATCH] IB uverbs: core implementation")
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://lore.kernel.org/r/c00c809ddafaaf87d6f6cb827978670989a511b3.1685960567.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup_test.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/uverbs_cmd.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/mm/gup_test.c
-+++ b/mm/gup_test.c
-@@ -381,6 +381,7 @@ static int gup_test_release(struct inode
- static const struct file_operations gup_test_fops = {
- 	.open = nonseekable_open,
- 	.unlocked_ioctl = gup_test_ioctl,
-+	.compat_ioctl = compat_ptr_ioctl,
- 	.release = gup_test_release,
- };
- 
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -1850,8 +1850,13 @@ static int modify_qp(struct uverbs_attr_
+ 		attr->path_mtu = cmd->base.path_mtu;
+ 	if (cmd->base.attr_mask & IB_QP_PATH_MIG_STATE)
+ 		attr->path_mig_state = cmd->base.path_mig_state;
+-	if (cmd->base.attr_mask & IB_QP_QKEY)
++	if (cmd->base.attr_mask & IB_QP_QKEY) {
++		if (cmd->base.qkey & IB_QP_SET_QKEY && !capable(CAP_NET_RAW)) {
++			ret = -EPERM;
++			goto release_qp;
++		}
+ 		attr->qkey = cmd->base.qkey;
++	}
+ 	if (cmd->base.attr_mask & IB_QP_RQ_PSN)
+ 		attr->rq_psn = cmd->base.rq_psn;
+ 	if (cmd->base.attr_mask & IB_QP_SQ_PSN)
 
 
