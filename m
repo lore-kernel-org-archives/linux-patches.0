@@ -1,27 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D84AC8CD
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:59:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91E1C433C0;
-	Mon, 19 Jun 2023 10:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000BEC8CD
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:59:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58766C433C0;
+	Mon, 19 Jun 2023 10:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172364;
-	bh=svi6qGxnp1fm22+G3/CI2v8WGSS1aZUBN7qrdBbVMgs=;
+	s=korg; t=1687172366;
+	bh=2EQWVAFCIMIqqSd1TtXCSrRyl/HOejH2CKQM2OmhEvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TA7DUJ79ha/ywzfddOG135fIQdlAJ6k5BchdOJr+iWfVa2HAxcx9SVEXWw2wF4Ys
-	 63NpmeLg9rTaXvID1Iu3FUL7O4RqiiNQaKCSYug+PZXy8RVdPvjk+Oj2whDmYd5SeR
-	 lqWNgNraFKEF4/kzh4n5EE/RcCKW1XAnfEeCN/54=
+	b=d3jcgnuHYRhZYW7ab6rjUiUJro7nEuN8YH3g1EJLeoDS012qlg9JxRvQDGrKUiv3t
+	 hFXgfsbRLTE/81aEetc7JkWEC/1aaW5IKx0gpUaicE5USwzagqeskNOYekmwLbe5JW
+	 0Uiw7NNZysXwjCSF8SckTonqN3Sav1rqsG1AoMbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manuel Lauss <manuel.lauss@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/107] MIPS: unhide PATA_PLATFORM
-Date: Mon, 19 Jun 2023 12:30:08 +0200
-Message-ID: <20230619102142.690476267@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Baoquan He <bhe@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Dave Young <dyoung@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Philipp Rudo <prudo@redhat.com>,
+	Ross Zwisler <zwisler@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Tom Rix <trix@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 042/107] x86/purgatory: remove PGO flags
+Date: Mon, 19 Jun 2023 12:30:26 +0200
+Message-ID: <20230619102143.515639242@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -35,34 +56,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manuel Lauss <manuel.lauss@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 75b18aac6fa39a1720677970cfcb52ecea1eb44c ]
+commit 97b6b9cbba40a21c1d9a344d5c1991f8cfbf136e upstream.
 
-Alchemy DB1200/DB1300 boards can use the pata_platform driver.
-Unhide the config entry in all of MIPS.
+If profile-guided optimization is enabled, the purgatory ends up with
+multiple .text sections.  This is not supported by kexec and crashes the
+system.
 
-Signed-off-by: Manuel Lauss <manuel.lauss@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-2-b05c520b7296@chromium.org
+Fixes: 930457057abe ("kernel/kexec_file.c: split up __kexec_load_puragory")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Cc: <stable@vger.kernel.org>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Philipp Rudo <prudo@redhat.com>
+Cc: Ross Zwisler <zwisler@google.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Tom Rix <trix@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/purgatory/Makefile |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
-index 393eb2133243f..56c0f75e7a76e 100644
---- a/arch/mips/Kconfig
-+++ b/arch/mips/Kconfig
-@@ -81,6 +81,7 @@ config MIPS
- 	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION
- 	select HAVE_MOD_ARCH_SPECIFIC
- 	select HAVE_NMI
-+	select HAVE_PATA_PLATFORM
- 	select HAVE_PERF_EVENTS
- 	select HAVE_PERF_REGS
- 	select HAVE_PERF_USER_STACK_DUMP
--- 
-2.39.2
-
+--- a/arch/x86/purgatory/Makefile
++++ b/arch/x86/purgatory/Makefile
+@@ -14,6 +14,11 @@ $(obj)/sha256.o: $(srctree)/lib/crypto/s
+ 
+ CFLAGS_sha256.o := -D__DISABLE_EXPORTS
+ 
++# When profile-guided optimization is enabled, llvm emits two different
++# overlapping text sections, which is not supported by kexec. Remove profile
++# optimization flags.
++KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%,$(KBUILD_CFLAGS))
++
+ # When linking purgatory.ro with -r unresolved symbols are not checked,
+ # also link a purgatory.chk binary without -r to check for unresolved symbols.
+ PURGATORY_LDFLAGS := -e purgatory_start -nostdlib -z nodefaultlib
 
 
