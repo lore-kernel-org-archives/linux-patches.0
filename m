@@ -1,34 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D685BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3A9C433C8;
-	Mon, 19 Jun 2023 10:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5CFBE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A55C433C0;
+	Mon, 19 Jun 2023 10:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172100;
-	bh=PwwsNaULNkh6X2ZrNOC4GconFN3+nu1WjyxpO2ZtWow=;
+	s=korg; t=1687172103;
+	bh=2HczgtxYc6JmHN3wKYx/Nz4YbnYNJLgqwCzfiRFWGVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrJVIJbA0OYLtOQy8U88WB+Bmk/4EzRAGnyA9FyDOXzuHk4N2iH0Z/wmog0QQNgnv
-	 QNUYONXvXTzXrIHpo4AV8KDQ6loZqz3Qa5nsolNlmpKLm5lTcj/yQlB3Yrvbx/eqhf
-	 bct7ZnIoqw3ZyGWxXgcGMqnOD3A256BL1QyN9Dc0=
+	b=UwG6hZTOea/pY5MK8LI+bch4dEMSzG+sRY3iGMIh4flsKoDpVS53hhvbjlDxKqeWa
+	 SVKYWHIkojS16mNO9hgIE/YFWo7mS8wdHPAtAbemeyVpvUjkmPvaKzujOfIC3IRpc9
+	 R4RkomQW5W9IcoyiMJ1h76hH3VFnT3NhlbL988Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 01/89] lib: cleanup kstrto*() usage
-Date: Mon, 19 Jun 2023 12:29:49 +0200
-Message-ID: <20230619102138.345102019@linuxfoundation.org>
+	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 30/89] ocfs2: check new file size on fallocate call
+Date: Mon, 19 Jun 2023 12:30:18 +0200
+Message-ID: <20230619102139.649831875@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,125 +41,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
+From: Luís Henriques <ocfs2-devel@oss.oracle.com>
 
-[ Upstream commit 506dfc9906e5cbf453bbcd5eb627689435583558 ]
+commit 26a6ffff7de5dd369cdb12e38ba11db682f1dec0 upstream.
 
-Use proper conversion functions.  kstrto*() variants exist for all
-standard types.
+When changing a file size with fallocate() the new size isn't being
+checked.  In particular, the FSIZE ulimit isn't being checked, which makes
+fstest generic/228 fail.  Simply adding a call to inode_newsize_ok() fixes
+this issue.
 
-Link: https://lkml.kernel.org/r/20201122123410.GB92364@localhost.localdomain
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Link: https://lkml.kernel.org/r/20230529152645.32680-1-lhenriques@suse.de
+Signed-off-by: Luís Henriques <lhenriques@suse.de>
+Reviewed-by: Mark Fasheh <mark@fasheh.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: 4acfe3dfde68 ("test_firmware: prevent race conditions by a correct implementation of locking")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_firmware.c |  9 +++------
- lib/test_kmod.c     | 26 ++++++++++----------------
- 2 files changed, 13 insertions(+), 22 deletions(-)
+ fs/ocfs2/file.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-index 581ee3fcdd5c2..3edbc17d92db5 100644
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -371,18 +371,15 @@ static ssize_t test_dev_config_show_int(char *buf, int val)
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -2103,14 +2103,20 @@ static long ocfs2_fallocate(struct file
+ 	struct ocfs2_space_resv sr;
+ 	int change_size = 1;
+ 	int cmd = OCFS2_IOC_RESVSP64;
++	int ret = 0;
  
- static int test_dev_config_update_u8(const char *buf, size_t size, u8 *cfg)
- {
-+	u8 val;
- 	int ret;
--	long new;
+ 	if (mode & ~(FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE))
+ 		return -EOPNOTSUPP;
+ 	if (!ocfs2_writes_unwritten_extents(osb))
+ 		return -EOPNOTSUPP;
  
--	ret = kstrtol(buf, 10, &new);
-+	ret = kstrtou8(buf, 10, &val);
- 	if (ret)
- 		return ret;
+-	if (mode & FALLOC_FL_KEEP_SIZE)
++	if (mode & FALLOC_FL_KEEP_SIZE) {
+ 		change_size = 0;
++	} else {
++		ret = inode_newsize_ok(inode, offset + len);
++		if (ret)
++			return ret;
++	}
  
--	if (new > U8_MAX)
--		return -EINVAL;
--
- 	mutex_lock(&test_fw_mutex);
--	*(u8 *)cfg = new;
-+	*(u8 *)cfg = val;
- 	mutex_unlock(&test_fw_mutex);
- 
- 	/* Always return full write size even if we didn't consume all */
-diff --git a/lib/test_kmod.c b/lib/test_kmod.c
-index c637f6b5053a9..c282728de3af0 100644
---- a/lib/test_kmod.c
-+++ b/lib/test_kmod.c
-@@ -877,20 +877,17 @@ static int test_dev_config_update_uint_sync(struct kmod_test_device *test_dev,
- 					    int (*test_sync)(struct kmod_test_device *test_dev))
- {
- 	int ret;
--	unsigned long new;
-+	unsigned int val;
- 	unsigned int old_val;
- 
--	ret = kstrtoul(buf, 10, &new);
-+	ret = kstrtouint(buf, 10, &val);
- 	if (ret)
- 		return ret;
- 
--	if (new > UINT_MAX)
--		return -EINVAL;
--
- 	mutex_lock(&test_dev->config_mutex);
- 
- 	old_val = *config;
--	*(unsigned int *)config = new;
-+	*(unsigned int *)config = val;
- 
- 	ret = test_sync(test_dev);
- 	if (ret) {
-@@ -914,18 +911,18 @@ static int test_dev_config_update_uint_range(struct kmod_test_device *test_dev,
- 					     unsigned int min,
- 					     unsigned int max)
- {
-+	unsigned int val;
- 	int ret;
--	unsigned long new;
- 
--	ret = kstrtoul(buf, 10, &new);
-+	ret = kstrtouint(buf, 10, &val);
- 	if (ret)
- 		return ret;
- 
--	if (new < min || new > max)
-+	if (val < min || val > max)
- 		return -EINVAL;
- 
- 	mutex_lock(&test_dev->config_mutex);
--	*config = new;
-+	*config = val;
- 	mutex_unlock(&test_dev->config_mutex);
- 
- 	/* Always return full write size even if we didn't consume all */
-@@ -936,18 +933,15 @@ static int test_dev_config_update_int(struct kmod_test_device *test_dev,
- 				      const char *buf, size_t size,
- 				      int *config)
- {
-+	int val;
- 	int ret;
--	long new;
- 
--	ret = kstrtol(buf, 10, &new);
-+	ret = kstrtoint(buf, 10, &val);
- 	if (ret)
- 		return ret;
- 
--	if (new < INT_MIN || new > INT_MAX)
--		return -EINVAL;
--
- 	mutex_lock(&test_dev->config_mutex);
--	*config = new;
-+	*config = val;
- 	mutex_unlock(&test_dev->config_mutex);
- 	/* Always return full write size even if we didn't consume all */
- 	return size;
--- 
-2.39.2
-
+ 	if (mode & FALLOC_FL_PUNCH_HOLE)
+ 		cmd = OCFS2_IOC_UNRESVSP64;
 
 
