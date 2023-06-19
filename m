@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA463C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C856AC433C0;
-	Mon, 19 Jun 2023 10:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72713C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:37:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8AAC433C8;
+	Mon, 19 Jun 2023 10:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171072;
-	bh=a3o3G1GJnVFqp1aaRHmbz0DXWo5dGagTNEw6KYUpR/8=;
+	s=korg; t=1687171074;
+	bh=r8R8F2KSXz7B3mK9NmRbbDeZxrHfN5wa2GOHumcC+tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XolFs1k/8OEB5xGWf9L6x9Tet7J38zlUABeDOlNESCVBQmMYC9no1Obf1J+FC1jXH
-	 po0skBshDZwSqyqJwNoqHNn/2amMIsaDedzaW4eOCmaXS95EYnIBhnMsxOWIJ/Z5aO
-	 tYJykruP4UQLFUdPPJjkCSTG6PkxPkIeLLmDNFtc=
+	b=aD1iH1hE1WEXBkR4C+i8+K49aT+JOdEpqql33JxdRFodF8ZcAcch9Wy+c/ib0kHgK
+	 i+XxgfoNCPNMSloDvDkVBHAeZdyGw70ji6C0ksC4BuUbbCT75TbXdnI5GcPmVO5unI
+	 BnWBC5+dXEA6ZVuz6ESgRllnHQOC7BPX1jPSlR1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nithin Dabilpuram <ndabilpuram@marvell.com>,
-	Naveen Mamindlapalli <naveenm@marvell.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 138/187] octeontx2-af: fix lbk link credits on cn10k
-Date: Mon, 19 Jun 2023 12:29:16 +0200
-Message-ID: <20230619102204.314407886@linuxfoundation.org>
+Subject: [PATCH 6.3 139/187] RDMA/mlx5: Initiate dropless RQ for RAW Ethernet functions
+Date: Mon, 19 Jun 2023 12:29:17 +0200
+Message-ID: <20230619102204.366052265@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -37,39 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nithin Dabilpuram <ndabilpuram@marvell.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 87e12a17eef476bbf768dc3a74419ad461f36fbc ]
+[ Upstream commit ee4d269eccfea6c17b18281bef482700d898e86f ]
 
-Fix LBK link credits on CN10K to be same as CN9K i.e
-16 * MAX_LBK_DATA_RATE instead of current scheme of
-calculation based on LBK buf length / FIFO size.
+Delay drop data is initiated for PFs that have the capability of
+rq_delay_drop and are in roce profile.
 
-Fixes: 6e54e1c5399a ("octeontx2-af: cn10K: Add MTU configuration")
-Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
-Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+However, PFs with RAW ethernet profile do not initiate delay drop data
+on function load, causing kernel panic if delay drop struct members are
+accessed later on in case a dropless RQ is created.
+
+Thus, stage the delay drop initialization as part of RAW ethernet
+PF loading process.
+
+Fixes: b5ca15ad7e61 ("IB/mlx5: Add proper representors support")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Link: https://lore.kernel.org/r/2e9d386785043d48c38711826eb910315c1de141.1685960567.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/infiniband/hw/mlx5/main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 1e058b96cbe27..f01d057ad025a 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -4081,10 +4081,6 @@ int rvu_mbox_handler_nix_set_rx_cfg(struct rvu *rvu, struct nix_rx_cfg *req,
- 
- static u64 rvu_get_lbk_link_credits(struct rvu *rvu, u16 lbk_max_frs)
- {
--	/* CN10k supports 72KB FIFO size and max packet size of 64k */
--	if (rvu->hw->lbk_bufsize == 0x12000)
--		return (rvu->hw->lbk_bufsize - lbk_max_frs) / 16;
--
- 	return 1600; /* 16 * max LBK datarate = 16 * 100Gbps */
- }
- 
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 5d45de223c43a..f0b394ed7452a 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -4275,6 +4275,9 @@ const struct mlx5_ib_profile raw_eth_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_POST_IB_REG_UMR,
+ 		     mlx5_ib_stage_post_ib_reg_umr_init,
+ 		     NULL),
++	STAGE_CREATE(MLX5_IB_STAGE_DELAY_DROP,
++		     mlx5_ib_stage_delay_drop_init,
++		     mlx5_ib_stage_delay_drop_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_RESTRACK,
+ 		     mlx5_ib_restrack_init,
+ 		     NULL),
 -- 
 2.39.2
 
