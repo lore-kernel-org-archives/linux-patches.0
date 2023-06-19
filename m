@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA7E8C06
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:54:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC23C433C8;
-	Mon, 19 Jun 2023 10:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A266BA94D
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:54:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E3DC433C9;
+	Mon, 19 Jun 2023 10:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172072;
-	bh=kFJhTZ9+oXdU21YMdmh0LIx6yZn7YVMk1DiCeyEIBPY=;
+	s=korg; t=1687172075;
+	bh=eGy7470Zs5xGo/O58VxDZU2Z/mTcEDC0f9Ixbs88Cko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bM1NDLoU+baiUetdQPS8RCLDKNPcJQM4+jPaZKepzeI9e7oc6uNDgKzI26Tok2fIq
-	 DxHi07TltCfxAiJw2shkj3zB3DPtQPlwo8kJy0mKVoMOGK7gTPR0wdaYlJ0J4gDnz+
-	 xmM7xdVBq+MZJX6SovxD/xf0o52PV9MwSg8BBRc4=
+	b=fvdXr/WLekABbGfbvbJFcbyGc43mh1VKFwA6Peir9U8HM9UkxvpdrQLKshmbnDnOf
+	 clRCYGqTUB/5B9Chv4lz66Eg6i65DSiIvJUD0hWdQE8c84s0MZvdKNlv+7QAiZM6rX
+	 vgKvzsF+nZYcOcEb9wEuLYIvllbG6EP+KVxsqpsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marc Zyngier <maz@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 26/89] irqchip/gic: Correctly validate OF quirk descriptors
-Date: Mon, 19 Jun 2023 12:30:14 +0200
-Message-ID: <20230619102139.472634077@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Querijn Voet <querijnqyn@gmail.com>
+Subject: [PATCH 5.10 27/89] io_uring: hold uring mutex around poll removal
+Date: Mon, 19 Jun 2023 12:30:15 +0200
+Message-ID: <20230619102139.519551782@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -36,41 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 91539341a3b6e9c868024a4292455dae36e6f58c ]
+Snipped from commit 9ca9fb24d5febccea354089c41f96a8ad0d853f8 upstream.
 
-When checking for OF quirks, make sure either 'compatible' or 'property'
-is set, and give up otherwise.
+While reworking the poll hashing in the v6.0 kernel, we ended up
+grabbing the ctx->uring_lock in poll update/removal. This also fixed
+a bug with linked timeouts racing with timeout expiry and poll
+removal.
 
-This avoids non-OF quirks being randomly applied as they don't have any
-of the OF data that need checking.
+Bring back just the locking fix for that.
 
-Cc: Douglas Anderson <dianders@chromium.org>
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Fixes: 44bd78dd2b88 ("irqchip/gic-v3: Disable pseudo NMIs on Mediatek devices w/ firmware issues")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-and-tested-by: Querijn Voet <querijnqyn@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/io_uring.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-common.c b/drivers/irqchip/irq-gic-common.c
-index 02828a16979af..b8a10f2e72da7 100644
---- a/drivers/irqchip/irq-gic-common.c
-+++ b/drivers/irqchip/irq-gic-common.c
-@@ -29,6 +29,8 @@ void gic_enable_of_quirks(const struct device_node *np,
- 			  const struct gic_quirk *quirks, void *data)
- {
- 	for (; quirks->desc; quirks++) {
-+		if (!quirks->compatible && !quirks->property)
-+			continue;
- 		if (quirks->compatible &&
- 		    !of_device_is_compatible(np, quirks->compatible))
- 			continue;
--- 
-2.39.2
-
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -5966,6 +5966,8 @@ static int io_poll_update(struct io_kioc
+ 	struct io_kiocb *preq;
+ 	int ret2, ret = 0;
+ 
++	io_ring_submit_lock(ctx, !(issue_flags & IO_URING_F_NONBLOCK));
++
+ 	spin_lock(&ctx->completion_lock);
+ 	preq = io_poll_find(ctx, req->poll_update.old_user_data, true);
+ 	if (!preq || !io_poll_disarm(preq)) {
+@@ -5997,6 +5999,7 @@ out:
+ 		req_set_fail(req);
+ 	/* complete update request, we're done with it */
+ 	io_req_complete(req, ret);
++	io_ring_submit_unlock(ctx, !(issue_flags & IO_URING_F_NONBLOCK));
+ 	return 0;
+ }
+ 
 
 
