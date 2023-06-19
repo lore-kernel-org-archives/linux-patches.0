@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE076BE4B
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3310DC433C8;
-	Mon, 19 Jun 2023 10:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B90BE4B
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:55:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE84CC433C0;
+	Mon, 19 Jun 2023 10:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172153;
-	bh=NsNcypueXLkV3MHVAdiWRima7C5jc046NFW5hzh+k3Y=;
+	s=korg; t=1687172156;
+	bh=jVT1bH/T1NQtrmp5hr0KqHhNgCCzSwLQTw79t2wsnEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdJsd1KpDan9q6206FDrGoeG+SwhDf1xOq1Tj2kpQC2H9yEPLtFiQBZX5H9lJ3PMS
-	 gNwMvTpztZmliO4ibrX9/rRD7faILCSY5cE89wADIO8u0xMHuK83kSVJAUOoKeserX
-	 +Li3ap+8iVlF1+V4CptyReuR+4oNO1j7gcig7WDs=
+	b=iaDEz3u+ynVdMzM7pW+MjC9WYqHUCceZPgT+a1hI/KqkaB4eKahmQIfHCHMVUbsRU
+	 +scPE0v2SuHld6198g4lPgYXGDJf7uljotOcsg3gGvpL+7uRm8wWRx2f8lNKODC7B5
+	 k0pAkzKJQewSWgUQbKCSnlMx1t9FVrMxhsTHeV6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satha Rao <skoteshwar@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	Naveen Mamindlapalli <naveenm@marvell.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 55/89] octeontx2-af: fixed resource availability check
-Date: Mon, 19 Jun 2023 12:30:43 +0200
-Message-ID: <20230619102140.775452772@linuxfoundation.org>
+Subject: [PATCH 5.10 56/89] RDMA/mlx5: Initiate dropless RQ for RAW Ethernet functions
+Date: Mon, 19 Jun 2023 12:30:44 +0200
+Message-ID: <20230619102140.818268491@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -38,39 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Satha Rao <skoteshwar@marvell.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 4e635f9d86165e47f5440196f2ebdb258efb8341 ]
+[ Upstream commit ee4d269eccfea6c17b18281bef482700d898e86f ]
 
-txschq_alloc response have two different arrays to store continuous
-and non-continuous schedulers of each level. Requested count should
-be checked for each array separately.
+Delay drop data is initiated for PFs that have the capability of
+rq_delay_drop and are in roce profile.
 
-Fixes: 5d9b976d4480 ("octeontx2-af: Support fixed transmit scheduler topology")
-Signed-off-by: Satha Rao <skoteshwar@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+However, PFs with RAW ethernet profile do not initiate delay drop data
+on function load, causing kernel panic if delay drop struct members are
+accessed later on in case a dropless RQ is created.
+
+Thus, stage the delay drop initialization as part of RAW ethernet
+PF loading process.
+
+Fixes: b5ca15ad7e61 ("IB/mlx5: Add proper representors support")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Link: https://lore.kernel.org/r/2e9d386785043d48c38711826eb910315c1de141.1685960567.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 9886a30e9723c..449f5224d1aeb 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -1385,7 +1385,8 @@ static int nix_check_txschq_alloc_req(struct rvu *rvu, int lvl, u16 pcifunc,
- 		free_cnt = rvu_rsrc_free_count(&txsch->schq);
- 	}
- 
--	if (free_cnt < req_schq || req_schq > MAX_TXSCHQ_PER_FUNC)
-+	if (free_cnt < req_schq || req->schq[lvl] > MAX_TXSCHQ_PER_FUNC ||
-+	    req->schq_contig[lvl] > MAX_TXSCHQ_PER_FUNC)
- 		return NIX_AF_ERR_TLX_ALLOC_FAIL;
- 
- 	/* If contiguous queues are needed, check for availability */
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 5ef37902e96b5..39ba7005f2c4c 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -4746,6 +4746,9 @@ const struct mlx5_ib_profile raw_eth_profile = {
+ 	STAGE_CREATE(MLX5_IB_STAGE_POST_IB_REG_UMR,
+ 		     mlx5_ib_stage_post_ib_reg_umr_init,
+ 		     NULL),
++	STAGE_CREATE(MLX5_IB_STAGE_DELAY_DROP,
++		     mlx5_ib_stage_delay_drop_init,
++		     mlx5_ib_stage_delay_drop_cleanup),
+ 	STAGE_CREATE(MLX5_IB_STAGE_RESTRACK,
+ 		     mlx5_ib_restrack_init,
+ 		     NULL),
 -- 
 2.39.2
 
