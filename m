@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0581E5381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B68BC433C9;
-	Mon, 19 Jun 2023 10:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3855381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:45:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E018C433C0;
+	Mon, 19 Jun 2023 10:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171517;
-	bh=+Uc/69FxdQG6Cx4lTgPkXnqoeB2Ro0Egv3BZI2vb6mg=;
+	s=korg; t=1687171520;
+	bh=ap3jkD9bWHq32RU4HgblFqK2uQUDLFh8qSg39w0GXXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v18ElXHcb7saOl8x490pCavfwMhHMQoHUCl9aSovz91UqrtpL+KFy/Zom7ylRU881
-	 Tvsz0cXFTuo7J0xJRDhzasfwIAWohhH22GB/I8cFXWAux/nqYwhLUrZLWkJlpiOe/9
-	 Om5aZ4X8a4VKbroDLof8pHNSmujrzgadcHZyh7pg=
+	b=ll7XIOfstt6LuncefpHDOrVs46PHhzPOUpLj8ktBaAmZg7nPVA8NsDre0hG/+K+kp
+	 G4vyeWOOGy75RmDUMb4fxuCI3i+VU1vqMX+vnD47J6QhBct2nrRWoSm9EGS6ctFVQ5
+	 ECg224jpF7YwZAODokIGksvLS/TVIW+88Zult77s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/166] irqchip/meson-gpio: Mark OF related data as maybe unused
-Date: Mon, 19 Jun 2023 12:28:19 +0200
-Message-ID: <20230619102155.805889534@linuxfoundation.org>
+	Jun Yi <yijun@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 053/166] LoongArch: Fix perf event id calculation
+Date: Mon, 19 Jun 2023 12:28:50 +0200
+Message-ID: <20230619102157.331362573@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,39 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 14130211be5366a91ec07c3284c183b75d8fba17 ]
+commit 962369120d750cbc9c4dc492f32b4304669ff6aa upstream.
 
-The driver can be compile tested with !CONFIG_OF making certain data
-unused:
+LoongArch PMCFG has 10bit event id rather than 8 bit, so fix it.
 
-  drivers/irqchip/irq-meson-gpio.c:153:34: error: ‘meson_irq_gpio_matches’ defined but not used [-Werror=unused-const-variable=]
-
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230512164506.212267-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jun Yi <yijun@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-meson-gpio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/perf_event.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/irqchip/irq-meson-gpio.c b/drivers/irqchip/irq-meson-gpio.c
-index 2aaa9aad3e87a..7da18ef952119 100644
---- a/drivers/irqchip/irq-meson-gpio.c
-+++ b/drivers/irqchip/irq-meson-gpio.c
-@@ -150,7 +150,7 @@ static const struct meson_gpio_irq_params s4_params = {
- 	INIT_MESON_S4_COMMON_DATA(82)
- };
+--- a/arch/loongarch/kernel/perf_event.c
++++ b/arch/loongarch/kernel/perf_event.c
+@@ -271,7 +271,7 @@ static void loongarch_pmu_enable_event(s
+ 	WARN_ON(idx < 0 || idx >= loongarch_pmu.num_counters);
  
--static const struct of_device_id meson_irq_gpio_matches[] = {
-+static const struct of_device_id meson_irq_gpio_matches[] __maybe_unused = {
- 	{ .compatible = "amlogic,meson8-gpio-intc", .data = &meson8_params },
- 	{ .compatible = "amlogic,meson8b-gpio-intc", .data = &meson8b_params },
- 	{ .compatible = "amlogic,meson-gxbb-gpio-intc", .data = &gxbb_params },
--- 
-2.39.2
-
+ 	/* Make sure interrupt enabled. */
+-	cpuc->saved_ctrl[idx] = M_PERFCTL_EVENT(evt->event_base & 0xff) |
++	cpuc->saved_ctrl[idx] = M_PERFCTL_EVENT(evt->event_base) |
+ 		(evt->config_base & M_PERFCTL_CONFIG_MASK) | CSR_PERFCTRL_IE;
+ 
+ 	cpu = (event->cpu >= 0) ? event->cpu : smp_processor_id();
+@@ -594,7 +594,7 @@ static struct pmu pmu = {
+ 
+ static unsigned int loongarch_pmu_perf_event_encode(const struct loongarch_perf_event *pev)
+ {
+-	return (pev->event_id & 0xff);
++	return M_PERFCTL_EVENT(pev->event_id);
+ }
+ 
+ static const struct loongarch_perf_event *loongarch_pmu_map_general_event(int idx)
+@@ -849,7 +849,7 @@ static void resume_local_counters(void)
+ 
+ static const struct loongarch_perf_event *loongarch_pmu_map_raw_event(u64 config)
+ {
+-	raw_event.event_id = config & 0xff;
++	raw_event.event_id = M_PERFCTL_EVENT(config);
+ 
+ 	return &raw_event;
+ }
 
 
