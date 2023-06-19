@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122CF107BF
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAD2C433CC;
-	Mon, 19 Jun 2023 10:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EEE10960
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:57:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5529C4339A;
+	Mon, 19 Jun 2023 10:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172269;
-	bh=X9E/Sq2j57hWI16gAjpokW2aAh9jvT9EIhmQHJfM6Z8=;
+	s=korg; t=1687172272;
+	bh=eivSQtkr+2paRjV5sgsPYGofNDLGz0p5xGd/q3YjDbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OIgL9tW0Ix8YC7fk+dzjF1IpAen1z2moMG8CD74TQSm2zt6wI9C/Y7CDuOXF6IiSO
-	 Zm5+PwiOtD8xFSb30MT9Uvqmbmm/5i5L60jA3QvexF2K4haTJTRM1N9aqRvQ8PepPz
-	 Mh12VxQp52VTTuAQV3//4TAhr9/dezxpJQI2BnME=
+	b=RprO+Tt2FWH6JRs7YiUqvA6QzpkrcVS1Gqa5wv114b7rFqcxhCvjKtdohw/p6R74y
+	 3JtTjJIhmGUHKd+ru/m8wKCnid/1Afhy5tMWMdx+NVmIloUr8rx4neHSK0OIMxLdx0
+	 5eLyCP0wa2IthdXLo9bcAXxAYrluSGqR7Zjhb5sM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Ovidiu Panait <ovidiu.panait@windriver.com>
-Subject: [PATCH 5.10 86/89] media: dvb-core: Fix use-after-free due to race at dvb_register_device()
-Date: Mon, 19 Jun 2023 12:31:14 +0200
-Message-ID: <20230619102142.205388217@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/107] test_firmware: Use kstrtobool() instead of strtobool()
+Date: Mon, 19 Jun 2023 12:29:45 +0200
+Message-ID: <20230619102141.609155993@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
-References: <20230619102138.279161276@linuxfoundation.org>
+In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
+References: <20230619102141.541044823@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,248 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 627bb528b086b4136315c25d6a447a98ea9448d3 upstream.
+[ Upstream commit f7d85515bd21902b218370a1a6301f76e4e636ff ]
 
-dvb_register_device() dynamically allocates fops with kmemdup()
-to set the fops->owner.
-And these fops are registered in 'file->f_ops' using replace_fops()
-in the dvb_device_open() process, and kfree()d in dvb_free_device().
+strtobool() is the same as kstrtobool().
+However, the latter is more used within the kernel.
 
-However, it is not common to use dynamically allocated fops instead
-of 'static const' fops as an argument of replace_fops(),
-and UAF may occur.
-These UAFs can occur on any dvb type using dvb_register_device(),
-such as dvb_dvr, dvb_demux, dvb_frontend, dvb_net, etc.
+In order to remove strtobool() and slightly simplify kstrtox.h, switch to
+the other function name.
 
-So, instead of kfree() the fops dynamically allocated in
-dvb_register_device() in dvb_free_device() called during the
-.disconnect() process, kfree() it collectively in exit_dvbdev()
-called when the dvbdev.c module is removed.
+While at it, include the corresponding header file (<linux/kstrtox.h>)
 
-Link: https://lore.kernel.org/linux-media/20221117045925.14297-4-imv4bel@gmail.com
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/34f04735d20e0138695dd4070651bd860a36b81c.1673688120.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 4acfe3dfde68 ("test_firmware: prevent race conditions by a correct implementation of locking")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvbdev.c |   84 ++++++++++++++++++++++++++++++----------
- include/media/dvbdev.h          |   15 +++++++
- 2 files changed, 78 insertions(+), 21 deletions(-)
+ lib/test_firmware.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -37,6 +37,7 @@
- #include <media/tuner.h>
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index e337773585b9e..0b4e3de3f1748 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -22,6 +22,7 @@
+ #include <linux/slab.h>
+ #include <linux/uaccess.h>
+ #include <linux/delay.h>
++#include <linux/kstrtox.h>
+ #include <linux/kthread.h>
+ #include <linux/vmalloc.h>
+ #include <linux/efi_embedded_fw.h>
+@@ -326,7 +327,7 @@ static int test_dev_config_update_bool(const char *buf, size_t size,
+ 	int ret;
  
- static DEFINE_MUTEX(dvbdev_mutex);
-+static LIST_HEAD(dvbdevfops_list);
- static int dvbdev_debug;
- 
- module_param(dvbdev_debug, int, 0644);
-@@ -462,14 +463,15 @@ int dvb_register_device(struct dvb_adapt
- 			enum dvb_device_type type, int demux_sink_pads)
- {
- 	struct dvb_device *dvbdev;
--	struct file_operations *dvbdevfops;
-+	struct file_operations *dvbdevfops = NULL;
-+	struct dvbdevfops_node *node = NULL, *new_node = NULL;
- 	struct device *clsdev;
- 	int minor;
- 	int id, ret;
- 
- 	mutex_lock(&dvbdev_register_lock);
- 
--	if ((id = dvbdev_get_free_id (adap, type)) < 0){
-+	if ((id = dvbdev_get_free_id (adap, type)) < 0) {
- 		mutex_unlock(&dvbdev_register_lock);
- 		*pdvbdev = NULL;
- 		pr_err("%s: couldn't find free device id\n", __func__);
-@@ -477,18 +479,45 @@ int dvb_register_device(struct dvb_adapt
- 	}
- 
- 	*pdvbdev = dvbdev = kzalloc(sizeof(*dvbdev), GFP_KERNEL);
--
- 	if (!dvbdev){
- 		mutex_unlock(&dvbdev_register_lock);
- 		return -ENOMEM;
- 	}
- 
--	dvbdevfops = kmemdup(template->fops, sizeof(*dvbdevfops), GFP_KERNEL);
-+	/*
-+	 * When a device of the same type is probe()d more than once,
-+	 * the first allocated fops are used. This prevents memory leaks
-+	 * that can occur when the same device is probe()d repeatedly.
-+	 */
-+	list_for_each_entry(node, &dvbdevfops_list, list_head) {
-+		if (node->fops->owner == adap->module &&
-+				node->type == type &&
-+				node->template == template) {
-+			dvbdevfops = node->fops;
-+			break;
-+		}
-+	}
- 
--	if (!dvbdevfops){
--		kfree (dvbdev);
--		mutex_unlock(&dvbdev_register_lock);
--		return -ENOMEM;
-+	if (dvbdevfops == NULL) {
-+		dvbdevfops = kmemdup(template->fops, sizeof(*dvbdevfops), GFP_KERNEL);
-+		if (!dvbdevfops) {
-+			kfree(dvbdev);
-+			mutex_unlock(&dvbdev_register_lock);
-+			return -ENOMEM;
-+		}
-+
-+		new_node = kzalloc(sizeof(struct dvbdevfops_node), GFP_KERNEL);
-+		if (!new_node) {
-+			kfree(dvbdevfops);
-+			kfree(dvbdev);
-+			mutex_unlock(&dvbdev_register_lock);
-+			return -ENOMEM;
-+		}
-+
-+		new_node->fops = dvbdevfops;
-+		new_node->type = type;
-+		new_node->template = template;
-+		list_add_tail (&new_node->list_head, &dvbdevfops_list);
- 	}
- 
- 	memcpy(dvbdev, template, sizeof(struct dvb_device));
-@@ -499,20 +528,20 @@ int dvb_register_device(struct dvb_adapt
- 	dvbdev->priv = priv;
- 	dvbdev->fops = dvbdevfops;
- 	init_waitqueue_head (&dvbdev->wait_queue);
--
- 	dvbdevfops->owner = adap->module;
--
- 	list_add_tail (&dvbdev->list_head, &adap->device_list);
--
- 	down_write(&minor_rwsem);
- #ifdef CONFIG_DVB_DYNAMIC_MINORS
- 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
- 		if (dvb_minors[minor] == NULL)
- 			break;
--
- 	if (minor == MAX_DVB_MINORS) {
-+		if (new_node) {
-+			list_del (&new_node->list_head);
-+			kfree(dvbdevfops);
-+			kfree(new_node);
-+		}
- 		list_del (&dvbdev->list_head);
--		kfree(dvbdevfops);
- 		kfree(dvbdev);
- 		up_write(&minor_rwsem);
- 		mutex_unlock(&dvbdev_register_lock);
-@@ -521,41 +550,47 @@ int dvb_register_device(struct dvb_adapt
- #else
- 	minor = nums2minor(adap->num, type, id);
- #endif
--
- 	dvbdev->minor = minor;
- 	dvb_minors[minor] = dvb_device_get(dvbdev);
- 	up_write(&minor_rwsem);
--
- 	ret = dvb_register_media_device(dvbdev, type, minor, demux_sink_pads);
- 	if (ret) {
- 		pr_err("%s: dvb_register_media_device failed to create the mediagraph\n",
- 		      __func__);
--
-+		if (new_node) {
-+			list_del (&new_node->list_head);
-+			kfree(dvbdevfops);
-+			kfree(new_node);
-+		}
- 		dvb_media_device_free(dvbdev);
- 		list_del (&dvbdev->list_head);
--		kfree(dvbdevfops);
- 		kfree(dvbdev);
- 		mutex_unlock(&dvbdev_register_lock);
- 		return ret;
- 	}
- 
--	mutex_unlock(&dvbdev_register_lock);
--
- 	clsdev = device_create(dvb_class, adap->device,
- 			       MKDEV(DVB_MAJOR, minor),
- 			       dvbdev, "dvb%d.%s%d", adap->num, dnames[type], id);
- 	if (IS_ERR(clsdev)) {
- 		pr_err("%s: failed to create device dvb%d.%s%d (%ld)\n",
- 		       __func__, adap->num, dnames[type], id, PTR_ERR(clsdev));
-+		if (new_node) {
-+			list_del (&new_node->list_head);
-+			kfree(dvbdevfops);
-+			kfree(new_node);
-+		}
- 		dvb_media_device_free(dvbdev);
- 		list_del (&dvbdev->list_head);
--		kfree(dvbdevfops);
- 		kfree(dvbdev);
-+		mutex_unlock(&dvbdev_register_lock);
- 		return PTR_ERR(clsdev);
- 	}
-+
- 	dprintk("DVB: register adapter%d/%s%d @ minor: %i (0x%02x)\n",
- 		adap->num, dnames[type], id, minor, minor);
- 
-+	mutex_unlock(&dvbdev_register_lock);
- 	return 0;
- }
- EXPORT_SYMBOL(dvb_register_device);
-@@ -584,7 +619,6 @@ static void dvb_free_device(struct kref
- {
- 	struct dvb_device *dvbdev = container_of(ref, struct dvb_device, ref);
- 
--	kfree (dvbdev->fops);
- 	kfree (dvbdev);
- }
- 
-@@ -1090,9 +1124,17 @@ error:
- 
- static void __exit exit_dvbdev(void)
- {
-+	struct dvbdevfops_node *node, *next;
-+
- 	class_destroy(dvb_class);
- 	cdev_del(&dvb_device_cdev);
- 	unregister_chrdev_region(MKDEV(DVB_MAJOR, 0), MAX_DVB_MINORS);
-+
-+	list_for_each_entry_safe(node, next, &dvbdevfops_list, list_head) {
-+		list_del (&node->list_head);
-+		kfree(node->fops);
-+		kfree(node);
-+	}
- }
- 
- subsys_initcall(init_dvbdev);
---- a/include/media/dvbdev.h
-+++ b/include/media/dvbdev.h
-@@ -190,6 +190,21 @@ struct dvb_device {
- };
- 
- /**
-+ * struct dvbdevfops_node - fops nodes registered in dvbdevfops_list
-+ *
-+ * @fops:		Dynamically allocated fops for ->owner registration
-+ * @type:		type of dvb_device
-+ * @template:		dvb_device used for registration
-+ * @list_head:		list_head for dvbdevfops_list
-+ */
-+struct dvbdevfops_node {
-+	struct file_operations *fops;
-+	enum dvb_device_type type;
-+	const struct dvb_device *template;
-+	struct list_head list_head;
-+};
-+
-+/**
-  * dvb_device_get - Increase dvb_device reference
-  *
-  * @dvbdev:	pointer to struct dvb_device
+ 	mutex_lock(&test_fw_mutex);
+-	if (strtobool(buf, cfg) < 0)
++	if (kstrtobool(buf, cfg) < 0)
+ 		ret = -EINVAL;
+ 	else
+ 		ret = size;
+-- 
+2.39.2
+
 
 
