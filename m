@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F15AA94D
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:53:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF7EC433C0;
-	Mon, 19 Jun 2023 10:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CD3AD26
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:54:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA37AC433C0;
+	Mon, 19 Jun 2023 10:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172037;
-	bh=A5zdteXpUM8no805DUNErwDVd2xG8Exjgq3OcfmlveI=;
+	s=korg; t=1687172040;
+	bh=MAjROVDjAe4W3aXoi6XTL3GDkI5A6f5Q2xeCoyCYFH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYSRGm70BDzCzYSYpO5ALCEecp8CajgE7hHFcFuqC0+PauwmJDrvOtQG0rwNfWdGN
-	 WZdqwHB2tlT7cvBuCpq3pGIAspW4R9z9i9ocAbXAygk+CShlPyJogKEbZbqVtIoVQb
-	 QNpOL5MIaWRC+iH/3DgjjOPhNFtmi7pEMNos6DDU=
+	b=cM2wV7gsF545Yo6rRSmG/9opXOeLDLnuoLwYPoepVE0XhZw82h2hmZNZB5VqEkVp+
+	 DiJuPpVcixoLNTVleHdWrCMw2D1ojgtLJTddQLXOYL4roQdsDJo8CevTep9eBZYtoX
+	 2eM5etnDE6g55sqSYG0Wlm8KwEMjcIMv85BOW9/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julius Werner <jwerner@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Evan Quan <Evan.Quan@amd.com>,
+	Lijo Lazar <Lijo.Lazar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 14/89] irqchip/gic-v3: Disable pseudo NMIs on Mediatek devices w/ firmware issues
-Date: Mon, 19 Jun 2023 12:30:02 +0200
-Message-ID: <20230619102138.937184726@linuxfoundation.org>
+Subject: [PATCH 5.10 15/89] power: supply: Fix logic checking if system is running from battery
+Date: Mon, 19 Jun 2023 12:30:03 +0200
+Message-ID: <20230619102138.981366067@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 References: <20230619102138.279161276@linuxfoundation.org>
@@ -36,135 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 44bd78dd2b8897f59b7e3963f088caadb7e4f047 ]
+[ Upstream commit 95339f40a8b652b5b1773def31e63fc53c26378a ]
 
-Some Chromebooks with Mediatek SoCs have a problem where the firmware
-doesn't properly save/restore certain GICR registers. Newer
-Chromebooks should fix this issue and we may be able to do firmware
-updates for old Chromebooks. At the moment, the only known issue with
-these Chromebooks is that we can't enable "pseudo NMIs" since the
-priority register can be lost. Enabling "pseudo NMIs" on Chromebooks
-with the problematic firmware causes crashes and freezes.
+The logic used for power_supply_is_system_supplied() counts all power
+supplies and assumes that the system is running from AC if there is
+either a non-battery power-supply reporting to be online or if no
+power-supplies exist at all.
 
-Let's detect devices with this problem and then disable "pseudo NMIs"
-on them. We'll detect the problem by looking for the presence of the
-"mediatek,broken-save-restore-fw" property in the GIC device tree
-node. Any devices with fixed firmware will not have this property.
+The second rule is for desktop systems, that don't have any
+battery/charger devices. These systems will incorrectly report to be
+powered from battery once a device scope power-supply is registered
+(e.g. a HID device), since these power-supplies increase the counter.
 
-Our detection plan works because we never bake a Chromebook's device
-tree into firmware. Instead, device trees are always bundled with the
-kernel. We'll update the device trees of all affected Chromebooks and
-then we'll never enable "pseudo NMI" on a kernel that is bundled with
-old device trees. When a firmware update is shipped that fixes this
-issue it will know to patch the device tree to remove the property.
+Apart from HID devices, recent dGPUs provide UCSI power supplies on a
+desktop systems. The dGPU by default doesn't have anything plugged in so
+it's 'offline'. This makes power_supply_is_system_supplied() return 0
+with a count of 1 meaning all drivers that use this get a wrong judgement.
 
-In order to make this work, the quick detection mechanism of the GICv3
-code is extended to be able to look for properties in addition to
-looking at "compatible".
+To fix this case adjust the logic to also examine the scope of the power
+supply. If the power supply is deemed a device power supply, then don't
+count it.
 
-Reviewed-by: Julius Werner <jwerner@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230515131353.v2.2.I88dc0a0eb1d9d537de61604cd8994ecc55c0cac1@changeid
+Cc: Evan Quan <Evan.Quan@amd.com>
+Suggested-by: Lijo Lazar <Lijo.Lazar@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-common.c |  8 ++++++--
- drivers/irqchip/irq-gic-common.h |  1 +
- drivers/irqchip/irq-gic-v3.c     | 20 ++++++++++++++++++++
- 3 files changed, 27 insertions(+), 2 deletions(-)
+ drivers/power/supply/power_supply_core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-common.c b/drivers/irqchip/irq-gic-common.c
-index f47b41dfd0238..02828a16979af 100644
---- a/drivers/irqchip/irq-gic-common.c
-+++ b/drivers/irqchip/irq-gic-common.c
-@@ -29,7 +29,11 @@ void gic_enable_of_quirks(const struct device_node *np,
- 			  const struct gic_quirk *quirks, void *data)
- {
- 	for (; quirks->desc; quirks++) {
--		if (!of_device_is_compatible(np, quirks->compatible))
-+		if (quirks->compatible &&
-+		    !of_device_is_compatible(np, quirks->compatible))
-+			continue;
-+		if (quirks->property &&
-+		    !of_property_read_bool(np, quirks->property))
- 			continue;
- 		if (quirks->init(data))
- 			pr_info("GIC: enabling workaround for %s\n",
-@@ -41,7 +45,7 @@ void gic_enable_quirks(u32 iidr, const struct gic_quirk *quirks,
- 		void *data)
- {
- 	for (; quirks->desc; quirks++) {
--		if (quirks->compatible)
-+		if (quirks->compatible || quirks->property)
- 			continue;
- 		if (quirks->iidr != (quirks->mask & iidr))
- 			continue;
-diff --git a/drivers/irqchip/irq-gic-common.h b/drivers/irqchip/irq-gic-common.h
-index ccba8b0fe0f58..b42572d88f9f7 100644
---- a/drivers/irqchip/irq-gic-common.h
-+++ b/drivers/irqchip/irq-gic-common.h
-@@ -13,6 +13,7 @@
- struct gic_quirk {
- 	const char *desc;
- 	const char *compatible;
-+	const char *property;
- 	bool (*init)(void *data);
- 	u32 iidr;
- 	u32 mask;
-diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-index 2805969e4f15a..c1f8c1be84856 100644
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -35,6 +35,7 @@
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index 53e5b3e04be13..5c8c117b396e7 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -347,6 +347,10 @@ static int __power_supply_is_system_supplied(struct device *dev, void *data)
+ 	struct power_supply *psy = dev_get_drvdata(dev);
+ 	unsigned int *count = data;
  
- #define FLAGS_WORKAROUND_GICR_WAKER_MSM8996	(1ULL << 0)
- #define FLAGS_WORKAROUND_CAVIUM_ERRATUM_38539	(1ULL << 1)
-+#define FLAGS_WORKAROUND_MTK_GICR_SAVE		(1ULL << 2)
- 
- #define GIC_IRQ_TYPE_PARTITION	(GIC_IRQ_TYPE_LPI + 1)
- 
-@@ -1587,6 +1588,15 @@ static bool gic_enable_quirk_msm8996(void *data)
- 	return true;
- }
- 
-+static bool gic_enable_quirk_mtk_gicr(void *data)
-+{
-+	struct gic_chip_data *d = data;
++	if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_SCOPE, &ret))
++		if (ret.intval == POWER_SUPPLY_SCOPE_DEVICE)
++			return 0;
 +
-+	d->flags |= FLAGS_WORKAROUND_MTK_GICR_SAVE;
-+
-+	return true;
-+}
-+
- static bool gic_enable_quirk_cavium_38539(void *data)
- {
- 	struct gic_chip_data *d = data;
-@@ -1622,6 +1632,11 @@ static const struct gic_quirk gic_quirks[] = {
- 		.compatible = "qcom,msm8996-gic-v3",
- 		.init	= gic_enable_quirk_msm8996,
- 	},
-+	{
-+		.desc	= "GICv3: Mediatek Chromebook GICR save problem",
-+		.property = "mediatek,broken-save-restore-fw",
-+		.init	= gic_enable_quirk_mtk_gicr,
-+	},
- 	{
- 		.desc	= "GICv3: HIP06 erratum 161010803",
- 		.iidr	= 0x0204043b,
-@@ -1658,6 +1673,11 @@ static void gic_enable_nmi_support(void)
- 	if (!gic_prio_masking_enabled())
- 		return;
+ 	(*count)++;
+ 	if (psy->desc->type != POWER_SUPPLY_TYPE_BATTERY)
+ 		if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_ONLINE,
+@@ -365,8 +369,8 @@ int power_supply_is_system_supplied(void)
+ 				      __power_supply_is_system_supplied);
  
-+	if (gic_data.flags & FLAGS_WORKAROUND_MTK_GICR_SAVE) {
-+		pr_warn("Skipping NMI enable due to firmware issues\n");
-+		return;
-+	}
-+
- 	ppi_nmi_refs = kcalloc(gic_data.ppi_nr, sizeof(*ppi_nmi_refs), GFP_KERNEL);
- 	if (!ppi_nmi_refs)
- 		return;
+ 	/*
+-	 * If no power class device was found at all, most probably we are
+-	 * running on a desktop system, so assume we are on mains power.
++	 * If no system scope power class device was found at all, most probably we
++	 * are running on a desktop system, so assume we are on mains power.
+ 	 */
+ 	if (count == 0)
+ 		return 1;
 -- 
 2.39.2
 
