@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1943C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53085C433C8;
-	Mon, 19 Jun 2023 10:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9453C23
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:38:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B82C433CB;
+	Mon, 19 Jun 2023 10:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171113;
-	bh=J3lpYZiCqTHDafXyj1O2xPum0suji6rUHBPBx8WA+wM=;
+	s=korg; t=1687171116;
+	bh=YvryWc8nKIvE5uaiKgvBv5SSrQnt8snbod6tU5iB1Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hddMwJ38y4meXfTYx25UNdN4JGRZSN32LZK07vF7UMQY9oP0DLgb7k7KIJ6sZz5vV
-	 e0Uj+cQUTUy67d5v923jXbTTM1KlCKcakIjZPCOBrLO5c/yaTu2VbtM/k4vVhEz7ap
-	 5GbbK1y8iZ5QJHBLBOLsdJix3qgxdToHZryFBbZY=
+	b=burAO9eVxv9+KuNEPEbV8+UqN69b5Y0KTn9NlUmtv8FNJHvP4iUQmzZb0zzmOsht6
+	 7m5yG0D69YcST9XZEWburOsl6qdE7d6pDYAujOt+jxc9CBixH463l8/PvU0FwGH835
+	 KsUc1wPx9x9oCMobWkhXYzFaUdteLlanO9ZI2veY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Tottenham <mtottenh@akamai.com>,
-	Josh Hunt <johunt@akamai.com>,
-	kernel test robot <lkp@intel.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
+	Phong Hoang <phong.hoang.wz@renesas.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 127/187] net/sched: act_pedit: Parse L3 Header for L4 offset
-Date: Mon, 19 Jun 2023 12:29:05 +0200
-Message-ID: <20230619102203.713411829@linuxfoundation.org>
+Subject: [PATCH 6.3 128/187] net: renesas: rswitch: Fix timestamp feature after all descriptors are used
+Date: Mon, 19 Jun 2023 12:29:06 +0200
+Message-ID: <20230619102203.783651800@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102157.579823843@linuxfoundation.org>
 References: <20230619102157.579823843@linuxfoundation.org>
@@ -38,138 +37,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Tottenham <mtottenh@akamai.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 6c02568fd1ae53099b4ab86365c5be1ff15f586b ]
+[ Upstream commit 0ad4982c520ed87ea7ebfc9381ea1f617ed75364 ]
 
-Instead of relying on skb->transport_header being set correctly, opt
-instead to parse the L3 header length out of the L3 headers for both
-IPv4/IPv6 when the Extended Layer Op for tcp/udp is used. This fixes a
-bug if GRO is disabled, when GRO is disabled skb->transport_header is
-set by __netif_receive_skb_core() to point to the L3 header, it's later
-fixed by the upper protocol layers, but act_pedit will receive the SKB
-before the fixups are completed. The existing behavior causes the
-following to edit the L3 header if GRO is disabled instead of the UDP
-header:
+The timestamp descriptors were intended to act cyclically. Descriptors
+from index 0 through gq->ring_size - 1 contain actual information, and
+the last index (gq->ring_size) should have LINKFIX to indicate
+the first index 0 descriptor. However, the LINKFIX value is missing,
+causing the timestamp feature to stop after all descriptors are used.
+To resolve this issue, set the LINKFIX to the timestamp descritors.
 
-    tc filter add dev eth0 ingress protocol ip flower ip_proto udp \
- dst_ip 192.168.1.3 action pedit ex munge udp set dport 18053
-
-Also re-introduce a rate-limited warning if we were unable to extract
-the header offset when using the 'ex' interface.
-
-Fixes: 71d0ed7079df ("net/act_pedit: Support using offset relative to
-the conventional network headers")
-Signed-off-by: Max Tottenham <mtottenh@akamai.com>
-Reviewed-by: Josh Hunt <johunt@akamai.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202305261541.N165u9TZ-lkp@intel.com/
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reported-by: Phong Hoang <phong.hoang.wz@renesas.com>
+Fixes: 33f5d733b589 ("net: renesas: rswitch: Improve TX timestamp accuracy")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_pedit.c | 48 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 43 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/renesas/rswitch.c | 36 ++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 1e7e959b90e48..300b5ae760dcc 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -13,7 +13,10 @@
- #include <linux/rtnetlink.h>
- #include <linux/module.h>
- #include <linux/init.h>
-+#include <linux/ip.h>
-+#include <linux/ipv6.h>
- #include <linux/slab.h>
-+#include <net/ipv6.h>
- #include <net/netlink.h>
- #include <net/pkt_sched.h>
- #include <linux/tc_act/tc_pedit.h>
-@@ -313,28 +316,58 @@ static bool offset_valid(struct sk_buff *skb, int offset)
- 	return true;
+diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
+index 7855d9ef81eb1..66bce799471c1 100644
+--- a/drivers/net/ethernet/renesas/rswitch.c
++++ b/drivers/net/ethernet/renesas/rswitch.c
+@@ -347,17 +347,6 @@ static int rswitch_gwca_queue_alloc(struct net_device *ndev,
+ 	return -ENOMEM;
  }
  
--static void pedit_skb_hdr_offset(struct sk_buff *skb,
-+static int pedit_l4_skb_offset(struct sk_buff *skb, int *hoffset, const int header_type)
+-static int rswitch_gwca_ts_queue_alloc(struct rswitch_private *priv)
+-{
+-	struct rswitch_gwca_queue *gq = &priv->gwca.ts_queue;
+-
+-	gq->ring_size = TS_RING_SIZE;
+-	gq->ts_ring = dma_alloc_coherent(&priv->pdev->dev,
+-					 sizeof(struct rswitch_ts_desc) *
+-					 (gq->ring_size + 1), &gq->ring_dma, GFP_KERNEL);
+-	return !gq->ts_ring ? -ENOMEM : 0;
+-}
+-
+ static void rswitch_desc_set_dptr(struct rswitch_desc *desc, dma_addr_t addr)
+ {
+ 	desc->dptrl = cpu_to_le32(lower_32_bits(addr));
+@@ -533,6 +522,28 @@ static void rswitch_gwca_linkfix_free(struct rswitch_private *priv)
+ 	gwca->linkfix_table = NULL;
+ }
+ 
++static int rswitch_gwca_ts_queue_alloc(struct rswitch_private *priv)
 +{
-+	const int noff = skb_network_offset(skb);
-+	int ret = -EINVAL;
-+	struct iphdr _iph;
++	struct rswitch_gwca_queue *gq = &priv->gwca.ts_queue;
++	struct rswitch_ts_desc *desc;
 +
-+	switch (skb->protocol) {
-+	case htons(ETH_P_IP): {
-+		const struct iphdr *iph = skb_header_pointer(skb, noff, sizeof(_iph), &_iph);
++	gq->ring_size = TS_RING_SIZE;
++	gq->ts_ring = dma_alloc_coherent(&priv->pdev->dev,
++					 sizeof(struct rswitch_ts_desc) *
++					 (gq->ring_size + 1), &gq->ring_dma, GFP_KERNEL);
 +
-+		if (!iph)
-+			goto out;
-+		*hoffset = noff + iph->ihl * 4;
-+		ret = 0;
-+		break;
-+	}
-+	case htons(ETH_P_IPV6):
-+		ret = ipv6_find_hdr(skb, hoffset, header_type, NULL, NULL) == header_type ? 0 : -EINVAL;
-+		break;
-+	}
-+out:
-+	return ret;
++	if (!gq->ts_ring)
++		return -ENOMEM;
++
++	rswitch_gwca_ts_queue_fill(priv, 0, TS_RING_SIZE);
++	desc = &gq->ts_ring[gq->ring_size];
++	desc->desc.die_dt = DT_LINKFIX;
++	rswitch_desc_set_dptr(&desc->desc, gq->ring_dma);
++	INIT_LIST_HEAD(&priv->gwca.ts_info_list);
++
++	return 0;
 +}
 +
-+static int pedit_skb_hdr_offset(struct sk_buff *skb,
- 				 enum pedit_header_type htype, int *hoffset)
+ static struct rswitch_gwca_queue *rswitch_gwca_get(struct rswitch_private *priv)
  {
-+	int ret = -EINVAL;
- 	/* 'htype' is validated in the netlink parsing */
- 	switch (htype) {
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_ETH:
--		if (skb_mac_header_was_set(skb))
-+		if (skb_mac_header_was_set(skb)) {
- 			*hoffset = skb_mac_offset(skb);
-+			ret = 0;
-+		}
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_NETWORK:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP4:
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_IP6:
- 		*hoffset = skb_network_offset(skb);
-+		ret = 0;
- 		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_TCP:
-+		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_TCP);
-+		break;
- 	case TCA_PEDIT_KEY_EX_HDR_TYPE_UDP:
--		if (skb_transport_header_was_set(skb))
--			*hoffset = skb_transport_offset(skb);
-+		ret = pedit_l4_skb_offset(skb, hoffset, IPPROTO_UDP);
- 		break;
- 	default:
- 		break;
- 	}
-+	return ret;
- }
+ 	struct rswitch_gwca_queue *gq;
+@@ -1782,9 +1793,6 @@ static int rswitch_init(struct rswitch_private *priv)
+ 	if (err < 0)
+ 		goto err_ts_queue_alloc;
  
- TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
-@@ -370,6 +403,7 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
- 		int hoffset = 0;
- 		u32 *ptr, hdata;
- 		u32 val;
-+		int rc;
- 
- 		if (tkey_ex) {
- 			htype = tkey_ex->htype;
-@@ -378,7 +412,11 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
- 			tkey_ex++;
- 		}
- 
--		pedit_skb_hdr_offset(skb, htype, &hoffset);
-+		rc = pedit_skb_hdr_offset(skb, htype, &hoffset);
-+		if (rc) {
-+			pr_info_ratelimited("tc action pedit unable to extract header offset for header type (0x%x)\n", htype);
-+			goto bad;
-+		}
- 
- 		if (tkey->offmask) {
- 			u8 *d, _d;
+-	rswitch_gwca_ts_queue_fill(priv, 0, TS_RING_SIZE);
+-	INIT_LIST_HEAD(&priv->gwca.ts_info_list);
+-
+ 	for (i = 0; i < RSWITCH_NUM_PORTS; i++) {
+ 		err = rswitch_device_alloc(priv, i);
+ 		if (err < 0) {
 -- 
 2.39.2
 
