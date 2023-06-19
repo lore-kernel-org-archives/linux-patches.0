@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5391FA94D
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48D2C433C8;
-	Mon, 19 Jun 2023 11:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5D6BA32
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 11:00:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA429C433C8;
+	Mon, 19 Jun 2023 11:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687172414;
-	bh=Jm3DCfQZ32mWJXGwUPylki8DVhjB8CgL613Xt9xhvT8=;
+	s=korg; t=1687172417;
+	bh=xapfUydBY81SVUbKj1KTB3E/atXvI0LmV2QKvdZeqlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2M+4um0y5smcZKtmSMSdGoiayhLSzy3HctuVAlU1rcRZibEAM1Wi7MWheQN5Wvf6/
-	 aG3lV9/n3YA4HHzoK7kc875PzDWz9PwsN77qNZnLZMoWV+gVovXO+rFO/ncg2t+vMB
-	 1Aoe96roVTw27fClN2uE4i4tkAvCbUey5b/INCLk=
+	b=eU0uPC2hgHQVVVUpMhqisgEQhP77dor3O6X6EwgdUu2MmlvgJhLAiVO18pyaLLS97
+	 lmo+P17HbVel0gt5k/UnL11H6oR0BIMsNee7DXKLcqcsPu2nPhl1O0iW4l780A7XvO
+	 OCeSuehPPzLOinC6hTMD7QuVbJFe7T1/LDgs01vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Pearson <rpearsonhpe@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	=?UTF-8?q?Lisa=20Chen=20 ?= <minjie.chen@geekplus.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/107] RDMA/rxe: Fix packet length checks
-Date: Mon, 19 Jun 2023 12:30:44 +0200
-Message-ID: <20230619102144.351121619@linuxfoundation.org>
+Subject: [PATCH 5.15 061/107] spi: fsl-dspi: avoid SCK glitches with continuous transfers
+Date: Mon, 19 Jun 2023 12:30:45 +0200
+Message-ID: <20230619102144.393758944@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 References: <20230619102141.541044823@linuxfoundation.org>
@@ -35,54 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Pearson <rpearsonhpe@gmail.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 9a3763e87379c97a78b7c6c6f40720b1e877174f ]
+[ Upstream commit c5c31fb71f16ba75bad4ade208abbae225305b65 ]
 
-In rxe_net.c a received packet, from udp or loopback, is passed to
-rxe_rcv() in rxe_recv.c as a udp packet. I.e. skb->data is pointing at the
-udp header. But rxe_rcv() makes length checks to verify the packet is long
-enough to hold the roce headers as if it were a roce
-packet. I.e. skb->data pointing at the bth header. A runt packet would
-appear to have 8 more bytes than it actually does which may lead to
-incorrect behavior.
+The DSPI controller has configurable timing for
 
-This patch calls skb_pull() to adjust the skb to point at the bth header
-before calling rxe_rcv() which fixes this error.
+(a) tCSC: the interval between the assertion of the chip select and the
+    first clock edge
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://lore.kernel.org/r/20230517172242.1806340-1-rpearsonhpe@gmail.com
-Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+(b) tASC: the interval between the last clock edge and the deassertion
+    of the chip select
+
+What is a bit surprising, but is documented in the figure "Example of
+continuous transfer (CPHA=1, CONT=1)" in the datasheet, is that when the
+chip select stays asserted between multiple TX FIFO writes, the tCSC and
+tASC times still apply. With CONT=1, chip select remains asserted, but
+SCK takes a break and goes to the idle state for tASC + tCSC ns.
+
+In other words, the default values (of 0 and 0 ns) result in SCK
+glitches where the SCK transition to the idle state, as well as the SCK
+transition from the idle state, will have no delay in between, and it
+may appear that a SCK cycle has simply gone missing. The resulting
+timing violation might cause data corruption in many peripherals, as
+their chip select is asserted.
+
+The driver has device tree bindings for tCSC ("fsl,spi-cs-sck-delay")
+and tASC ("fsl,spi-sck-cs-delay"), but these are only specified to apply
+when the chip select toggles in the first place, and this timing
+characteristic depends on each peripheral. Many peripherals do not have
+explicit timing requirements, so many device trees do not have these
+properties present at all.
+
+Nonetheless, the lack of SCK glitches is a common sense requirement, and
+since the SCK stays in the idle state during transfers for tCSC+tASC ns,
+and that in itself should look like half a cycle, then let's ensure that
+tCSC and tASC are at least a quarter of a SCK period, such that their
+sum is at least half of one.
+
+Fixes: 95bf15f38641 ("spi: fsl-dspi: Add ~50ns delay between cs and sck")
+Reported-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
+Debugged-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
+Tested-by: Lisa Chen (陈敏捷) <minjie.chen@geekplus.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20230529223402.1199503-1-vladimir.oltean@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_net.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-fsl-dspi.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
-index 2cb810cb890a5..be86b879a0d53 100644
---- a/drivers/infiniband/sw/rxe/rxe_net.c
-+++ b/drivers/infiniband/sw/rxe/rxe_net.c
-@@ -179,6 +179,9 @@ static int rxe_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
- 	pkt->mask = RXE_GRH_MASK;
- 	pkt->paylen = be16_to_cpu(udph->len) - sizeof(*udph);
- 
-+	/* remove udp header */
-+	skb_pull(skb, sizeof(struct udphdr));
-+
- 	rxe_rcv(skb);
- 
- 	return 0;
-@@ -419,6 +422,9 @@ static int rxe_loopback(struct sk_buff *skb, struct rxe_pkt_info *pkt)
- 		return -EIO;
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index fd004c9db9dc0..0d9201a2999de 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -975,7 +975,9 @@ static int dspi_transfer_one_message(struct spi_controller *ctlr,
+ static int dspi_setup(struct spi_device *spi)
+ {
+ 	struct fsl_dspi *dspi = spi_controller_get_devdata(spi->controller);
++	u32 period_ns = DIV_ROUND_UP(NSEC_PER_SEC, spi->max_speed_hz);
+ 	unsigned char br = 0, pbr = 0, pcssck = 0, cssck = 0;
++	u32 quarter_period_ns = DIV_ROUND_UP(period_ns, 4);
+ 	u32 cs_sck_delay = 0, sck_cs_delay = 0;
+ 	struct fsl_dspi_platform_data *pdata;
+ 	unsigned char pasc = 0, asc = 0;
+@@ -1003,6 +1005,19 @@ static int dspi_setup(struct spi_device *spi)
+ 		sck_cs_delay = pdata->sck_cs_delay;
  	}
  
-+	/* remove udp header */
-+	skb_pull(skb, sizeof(struct udphdr));
++	/* Since tCSC and tASC apply to continuous transfers too, avoid SCK
++	 * glitches of half a cycle by never allowing tCSC + tASC to go below
++	 * half a SCK period.
++	 */
++	if (cs_sck_delay < quarter_period_ns)
++		cs_sck_delay = quarter_period_ns;
++	if (sck_cs_delay < quarter_period_ns)
++		sck_cs_delay = quarter_period_ns;
 +
- 	rxe_rcv(skb);
++	dev_dbg(&spi->dev,
++		"DSPI controller timing params: CS-to-SCK delay %u ns, SCK-to-CS delay %u ns\n",
++		cs_sck_delay, sck_cs_delay);
++
+ 	clkrate = clk_get_rate(dspi->clk);
+ 	hz_to_spi_baud(&pbr, &br, spi->max_speed_hz, clkrate);
  
- 	return 0;
 -- 
 2.39.2
 
