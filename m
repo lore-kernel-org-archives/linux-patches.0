@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42B55381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:42:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25786C433C8;
-	Mon, 19 Jun 2023 10:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809A65381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:42:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A2CC433C8;
+	Mon, 19 Jun 2023 10:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171350;
-	bh=au3L0gv9ya6iFAYqsIbyad3Hm1RDLShwKOns8thGmZM=;
+	s=korg; t=1687171353;
+	bh=VFVGxBuqm5H4J4uwXFbJt8Tm/NJQ3pTZiq5CYB4ywaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eg6kPfRBBzl2A0KwaDr9mPby6nUxJgMPoOSiX86KEgCJjiNQizUAdxWWnqKajaj7J
-	 MTPvJNgvGIJhxlsIhyXjCZtNhULZk7uaatTYcRhP1Nb7gygMNzbjgUWFWlvCEf+xSY
-	 pdThG0pTJPwpHURUaALDW+y+gpaE2FkOkDPSiSDs=
+	b=wte8lB9GZtxZzD3nvskDjGPMKSEuoTs+DrzND28o9jctp+u4n4sx4Yo3usAUhK0ev
+	 HmqFtHLjWLw7RdzXvxIen4KTp/5wVoLHx3c9IpXs5dEQOMRkQrV2Xv+kGlegV3DM7X
+	 Z8ruSItLnw1dgvz4bRgfMU+9xM24iKn5kBG2a4lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <cloehle@hyperstone.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.19 49/49] mmc: block: ensure error propagation for non-blk
-Date: Mon, 19 Jun 2023 12:30:27 +0200
-Message-ID: <20230619102132.476456630@linuxfoundation.org>
+	Romain Izard <romain.izard.pro@gmail.com>,
+	Felipe Balbi <felipe.balbi@linux.intel.com>,
+	Joakim Tjernlund <joakim.tjernlund@infinera.com>
+Subject: [PATCH 4.19 25/49] usb: gadget: f_ncm: Add OS descriptor support
+Date: Mon, 19 Jun 2023 12:30:03 +0200
+Message-ID: <20230619102131.190677138@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -35,81 +35,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Loehle <CLoehle@hyperstone.com>
+From: Romain Izard <romain.izard.pro@gmail.com>
 
-commit 003fb0a51162d940f25fc35e70b0996a12c9e08a upstream.
+commit 793409292382027226769d0299987f06cbd97a6e upstream.
 
-Requests to the mmc layer usually come through a block device IO.
-The exceptions are the ioctl interface, RPMB chardev ioctl
-and debugfs, which issue their own blk_mq requests through
-blk_execute_rq and do not query the BLK_STS error but the
-mmcblk-internal drv_op_result. This patch ensures that drv_op_result
-defaults to an error and has to be overwritten by the operation
-to be considered successful.
+To be able to use the default USB class drivers available in Microsoft
+Windows, we need to add OS descriptors to the exported USB gadget to
+tell the OS that we are compatible with the built-in drivers.
 
-The behavior leads to a bug where the request never propagates
-the error, e.g. by directly erroring out at mmc_blk_mq_issue_rq if
-mmc_blk_part_switch fails. The ioctl caller of the rpmb chardev then
-can never see an error (BLK_STS_IOERR, but drv_op_result is unchanged)
-and thus may assume that their call executed successfully when it did not.
+Copy the OS descriptor support from f_rndis into f_ncm. As a result,
+using the WINNCM compatible ID, the UsbNcm driver is loaded on
+enumeration without the need for a custom driver or inf file.
 
-While always checking the blk_execute_rq return value would be
-advised, let's eliminate the error by always setting
-drv_op_result as -EIO to be overwritten on success (or other error)
-
-Fixes: 614f0388f580 ("mmc: block: move single ioctl() commands to block requests")
-Signed-off-by: Christian Loehle <cloehle@hyperstone.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/59c17ada35664b818b7bd83752119b2d@hyperstone.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Christian Loehle <cloehle@hyperstone.com>
+Signed-off-by: Romain Izard <romain.izard.pro@gmail.com>
+Signed-off-by: Felipe Balbi <felipe.balbi@linux.intel.com>
+Signed-off-by: Joakim Tjernlund <joakim.tjernlund@infinera.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/gadget/function/f_ncm.c |   47 +++++++++++++++++++++++++++++++++---
+ drivers/usb/gadget/function/u_ncm.h |    3 ++
+ 2 files changed, 47 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -250,6 +250,7 @@ static ssize_t power_ro_lock_store(struc
- 		goto out_put;
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -23,6 +23,7 @@
+ #include "u_ether.h"
+ #include "u_ether_configfs.h"
+ #include "u_ncm.h"
++#include "configfs.h"
+ 
+ /*
+  * This function is a "CDC Network Control Model" (CDC NCM) Ethernet link.
+@@ -1434,6 +1435,16 @@ static int ncm_bind(struct usb_configura
+ 		return -EINVAL;
+ 
+ 	ncm_opts = container_of(f->fi, struct f_ncm_opts, func_inst);
++
++	if (cdev->use_os_string) {
++		f->os_desc_table = kzalloc(sizeof(*f->os_desc_table),
++					   GFP_KERNEL);
++		if (!f->os_desc_table)
++			return -ENOMEM;
++		f->os_desc_n = 1;
++		f->os_desc_table[0].os_desc = &ncm_opts->ncm_os_desc;
++	}
++
+ 	/*
+ 	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
+ 	 * configurations are bound in sequence with list_for_each_entry,
+@@ -1447,13 +1458,15 @@ static int ncm_bind(struct usb_configura
+ 		status = gether_register_netdev(ncm_opts->net);
+ 		mutex_unlock(&ncm_opts->lock);
+ 		if (status)
+-			return status;
++			goto fail;
+ 		ncm_opts->bound = true;
  	}
- 	req_to_mmc_queue_req(req)->drv_op = MMC_DRV_OP_BOOT_WP;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
- 	ret = req_to_mmc_queue_req(req)->drv_op_result;
- 	blk_put_request(req);
-@@ -689,6 +690,7 @@ static int mmc_blk_ioctl_cmd(struct mmc_
- 	idatas[0] = idata;
- 	req_to_mmc_queue_req(req)->drv_op =
- 		rpmb ? MMC_DRV_OP_IOCTL_RPMB : MMC_DRV_OP_IOCTL;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	req_to_mmc_queue_req(req)->drv_op_data = idatas;
- 	req_to_mmc_queue_req(req)->ioc_count = 1;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
-@@ -758,6 +760,7 @@ static int mmc_blk_ioctl_multi_cmd(struc
+ 	us = usb_gstrings_attach(cdev, ncm_strings,
+ 				 ARRAY_SIZE(ncm_string_defs));
+-	if (IS_ERR(us))
+-		return PTR_ERR(us);
++	if (IS_ERR(us)) {
++		status = PTR_ERR(us);
++		goto fail;
++	}
+ 	ncm_control_intf.iInterface = us[STRING_CTRL_IDX].id;
+ 	ncm_data_nop_intf.iInterface = us[STRING_DATA_IDX].id;
+ 	ncm_data_intf.iInterface = us[STRING_DATA_IDX].id;
+@@ -1470,6 +1483,10 @@ static int ncm_bind(struct usb_configura
+ 	ncm_control_intf.bInterfaceNumber = status;
+ 	ncm_union_desc.bMasterInterface0 = status;
+ 
++	if (cdev->use_os_string)
++		f->os_desc_table[0].if_id =
++			ncm_iad_desc.bFirstInterface;
++
+ 	status = usb_interface_id(c, f);
+ 	if (status < 0)
+ 		goto fail;
+@@ -1549,6 +1566,9 @@ static int ncm_bind(struct usb_configura
+ 	return 0;
+ 
+ fail:
++	kfree(f->os_desc_table);
++	f->os_desc_n = 0;
++
+ 	if (ncm->notify_req) {
+ 		kfree(ncm->notify_req->buf);
+ 		usb_ep_free_request(ncm->notify, ncm->notify_req);
+@@ -1603,16 +1623,22 @@ static void ncm_free_inst(struct usb_fun
+ 		gether_cleanup(netdev_priv(opts->net));
+ 	else
+ 		free_netdev(opts->net);
++	kfree(opts->ncm_interf_group);
+ 	kfree(opts);
+ }
+ 
+ static struct usb_function_instance *ncm_alloc_inst(void)
+ {
+ 	struct f_ncm_opts *opts;
++	struct usb_os_desc *descs[1];
++	char *names[1];
++	struct config_group *ncm_interf_group;
+ 
+ 	opts = kzalloc(sizeof(*opts), GFP_KERNEL);
+ 	if (!opts)
+ 		return ERR_PTR(-ENOMEM);
++	opts->ncm_os_desc.ext_compat_id = opts->ncm_ext_compat_id;
++
+ 	mutex_init(&opts->lock);
+ 	opts->func_inst.free_func_inst = ncm_free_inst;
+ 	opts->net = gether_setup_default();
+@@ -1621,8 +1647,20 @@ static struct usb_function_instance *ncm
+ 		kfree(opts);
+ 		return ERR_CAST(net);
  	}
- 	req_to_mmc_queue_req(req)->drv_op =
- 		rpmb ? MMC_DRV_OP_IOCTL_RPMB : MMC_DRV_OP_IOCTL;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	req_to_mmc_queue_req(req)->drv_op_data = idata;
- 	req_to_mmc_queue_req(req)->ioc_count = num_of_cmds;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
-@@ -2748,6 +2751,7 @@ static int mmc_dbg_card_status_get(void
- 	if (IS_ERR(req))
- 		return PTR_ERR(req);
- 	req_to_mmc_queue_req(req)->drv_op = MMC_DRV_OP_GET_CARD_STATUS;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
- 	ret = req_to_mmc_queue_req(req)->drv_op_result;
- 	if (ret >= 0) {
-@@ -2786,6 +2790,7 @@ static int mmc_ext_csd_open(struct inode
- 		goto out_free;
- 	}
- 	req_to_mmc_queue_req(req)->drv_op = MMC_DRV_OP_GET_EXT_CSD;
-+	req_to_mmc_queue_req(req)->drv_op_result = -EIO;
- 	req_to_mmc_queue_req(req)->drv_op_data = &ext_csd;
- 	blk_execute_rq(mq->queue, NULL, req, 0);
- 	err = req_to_mmc_queue_req(req)->drv_op_result;
++	INIT_LIST_HEAD(&opts->ncm_os_desc.ext_prop);
++
++	descs[0] = &opts->ncm_os_desc;
++	names[0] = "ncm";
+ 
+ 	config_group_init_type_name(&opts->func_inst.group, "", &ncm_func_type);
++	ncm_interf_group =
++		usb_os_desc_prepare_interf_dir(&opts->func_inst.group, 1, descs,
++					       names, THIS_MODULE);
++	if (IS_ERR(ncm_interf_group)) {
++		ncm_free_inst(&opts->func_inst);
++		return ERR_CAST(ncm_interf_group);
++	}
++	opts->ncm_interf_group = ncm_interf_group;
+ 
+ 	return &opts->func_inst;
+ }
+@@ -1648,6 +1686,9 @@ static void ncm_unbind(struct usb_config
+ 
+ 	hrtimer_cancel(&ncm->task_timer);
+ 
++	kfree(f->os_desc_table);
++	f->os_desc_n = 0;
++
+ 	ncm_string_defs[0].id = 0;
+ 	usb_free_all_descriptors(f);
+ 
+--- a/drivers/usb/gadget/function/u_ncm.h
++++ b/drivers/usb/gadget/function/u_ncm.h
+@@ -20,6 +20,9 @@ struct f_ncm_opts {
+ 	struct net_device		*net;
+ 	bool				bound;
+ 
++	struct config_group		*ncm_interf_group;
++	struct usb_os_desc		ncm_os_desc;
++	char				ncm_ext_compat_id[16];
+ 	/*
+ 	 * Read/write access to configfs attributes is handled by configfs.
+ 	 *
 
 
