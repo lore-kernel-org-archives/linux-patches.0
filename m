@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138605381
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:42:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B879C433C0;
-	Mon, 19 Jun 2023 10:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35275381
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:42:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2F2C433C8;
+	Mon, 19 Jun 2023 10:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171344;
-	bh=gO5fFrOemlEKC6vifkRtKkrolXah1xahUdNKa7KgCO4=;
+	s=korg; t=1687171347;
+	bh=3bbKk0b9iXrqcYuyr0gUz9s8leb+8kXGN5FLPowqGZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fwk/ziMeCm/iG+5XbHYEV8kavuGyjnQFsRNvqYGS0c+cz0IRjbv09MtHJLn3Nj5zO
-	 sjhzSPGDJV/JaDCE8avCOdBQB/T+Ab2aEb5CIH17Rx+UnNQBPgzC41e5T0MLUEiAJ3
-	 11foNJM1gEDymLRX2SyMkJWhCkyV7u/SArA9hCAQ=
+	b=juwBkJC/fjBRrUfJzXc4wBbPtFmE8xLPIfcU7XAqZhXcgCr1ehQewp39YXv/bf0KQ
+	 v7pBbkv7jjM52yz3eSuDFK7cqK0/1KcTOt8tg9+dZO0e5M0h7o9n87PDpgZw6fGRSf
+	 R7tcjJ6f99l28cXDCoJqo5MyfXfRpUMV4mYHG2kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Kapshuk <alexander.kapshuk@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Ben Skeggs <bskeggs@redhat.com>
-Subject: [PATCH 4.19 47/49] drm/nouveau/kms: Fix NULL pointer dereference in nouveau_connector_detect_depth
-Date: Mon, 19 Jun 2023 12:30:25 +0200
-Message-ID: <20230619102132.370909504@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Alyssa Ross <hi@alyssa.is>
+Subject: [PATCH 4.19 48/49] powerpc: Fix defconfig choice logic when cross compiling
+Date: Mon, 19 Jun 2023 12:30:26 +0200
+Message-ID: <20230619102132.426400631@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102129.856988902@linuxfoundation.org>
 References: <20230619102129.856988902@linuxfoundation.org>
@@ -35,211 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Kapshuk <alexander.kapshuk@gmail.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 630f512280604eecae0ddc2b3f8402f7931c56fd upstream.
+commit af5cd05de5dd38cf25d14ea4d30ae9b791d2420b upstream.
 
-This oops manifests itself on the following hardware:
-01:00.0 VGA compatible controller: NVIDIA Corporation G98M [GeForce G 103M] (rev a1)
+Our logic for choosing defconfig doesn't work well in some situations.
 
-Oct 09 14:17:46 lp-sasha kernel: BUG: kernel NULL pointer dereference, address: 0000000000000000
-Oct 09 14:17:46 lp-sasha kernel: #PF: supervisor read access in kernel mode
-Oct 09 14:17:46 lp-sasha kernel: #PF: error_code(0x0000) - not-present page
-Oct 09 14:17:46 lp-sasha kernel: PGD 0 P4D 0
-Oct 09 14:17:46 lp-sasha kernel: Oops: 0000 [#1] SMP PTI
-Oct 09 14:17:46 lp-sasha kernel: CPU: 1 PID: 191 Comm: systemd-udevd Not tainted 5.9.0-rc8-next-20201009 #38
-Oct 09 14:17:46 lp-sasha kernel: Hardware name: Hewlett-Packard Compaq Presario CQ61 Notebook PC/306A, BIOS F.03 03/23/2009
-Oct 09 14:17:46 lp-sasha kernel: RIP: 0010:nouveau_connector_detect_depth+0x71/0xc0 [nouveau]
-Oct 09 14:17:46 lp-sasha kernel: Code: 0a 00 00 48 8b 49 48 c7 87 b8 00 00 00 06 00 00 00 80 b9 4d 0a 00 00 00 75 1e 83 fa 41 75 05 48 85 c0 75 29 8b 81 10 0d 00 00 <39> 06 7c 25 f6 81 14 0d 00 00 02 75 b7 c3 80 b9 0c 0d 00 00 00 75
-Oct 09 14:17:46 lp-sasha kernel: RSP: 0018:ffffc9000028f8c0 EFLAGS: 00010297
-Oct 09 14:17:46 lp-sasha kernel: RAX: 0000000000014c08 RBX: ffff8880369d4000 RCX: ffff8880369d3000
-Oct 09 14:17:46 lp-sasha kernel: RDX: 0000000000000040 RSI: 0000000000000000 RDI: ffff8880369d4000
-Oct 09 14:17:46 lp-sasha kernel: RBP: ffff88800601cc00 R08: ffff8880051da298 R09: ffffffff8226201a
-Oct 09 14:17:46 lp-sasha kernel: R10: ffff88800469aa80 R11: ffff888004c84ff8 R12: 0000000000000000
-Oct 09 14:17:46 lp-sasha kernel: R13: ffff8880051da000 R14: 0000000000002000 R15: 0000000000000003
-Oct 09 14:17:46 lp-sasha kernel: FS:  00007fd0192b3440(0000) GS:ffff8880bc900000(0000) knlGS:0000000000000000
-Oct 09 14:17:46 lp-sasha kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-Oct 09 14:17:46 lp-sasha kernel: CR2: 0000000000000000 CR3: 0000000004976000 CR4: 00000000000006e0
-Oct 09 14:17:46 lp-sasha kernel: Call Trace:
-Oct 09 14:17:46 lp-sasha kernel:  nouveau_connector_get_modes+0x1e6/0x240 [nouveau]
-Oct 09 14:17:46 lp-sasha kernel:  ? kfree+0xb9/0x240
-Oct 09 14:17:46 lp-sasha kernel:  ? drm_connector_list_iter_next+0x7c/0xa0
-Oct 09 14:17:46 lp-sasha kernel:  drm_helper_probe_single_connector_modes+0x1ba/0x7c0
-Oct 09 14:17:46 lp-sasha kernel:  drm_client_modeset_probe+0x27e/0x1360
-Oct 09 14:17:46 lp-sasha kernel:  ? nvif_object_sclass_put+0xc/0x20 [nouveau]
-Oct 09 14:17:46 lp-sasha kernel:  ? nouveau_cli_init+0x3cc/0x440 [nouveau]
-Oct 09 14:17:46 lp-sasha kernel:  ? ktime_get_mono_fast_ns+0x49/0xa0
-Oct 09 14:17:46 lp-sasha kernel:  ? nouveau_drm_open+0x4e/0x180 [nouveau]
-Oct 09 14:17:46 lp-sasha kernel:  __drm_fb_helper_initial_config_and_unlock+0x3f/0x4a0
-Oct 09 14:17:46 lp-sasha kernel:  ? drm_file_alloc+0x18f/0x260
-Oct 09 14:17:46 lp-sasha kernel:  ? mutex_lock+0x9/0x40
-Oct 09 14:17:46 lp-sasha kernel:  ? drm_client_init+0x110/0x160
-Oct 09 14:17:46 lp-sasha kernel:  nouveau_fbcon_init+0x14d/0x1c0 [nouveau]
-Oct 09 14:17:46 lp-sasha kernel:  nouveau_drm_device_init+0x1c0/0x880 [nouveau]
-Oct 09 14:17:46 lp-sasha kernel:  nouveau_drm_probe+0x11a/0x1e0 [nouveau]
-Oct 09 14:17:46 lp-sasha kernel:  pci_device_probe+0xcd/0x140
-Oct 09 14:17:46 lp-sasha kernel:  really_probe+0xd8/0x400
-Oct 09 14:17:46 lp-sasha kernel:  driver_probe_device+0x4a/0xa0
-Oct 09 14:17:46 lp-sasha kernel:  device_driver_attach+0x9c/0xc0
-Oct 09 14:17:46 lp-sasha kernel:  __driver_attach+0x6f/0x100
-Oct 09 14:17:46 lp-sasha kernel:  ? device_driver_attach+0xc0/0xc0
-Oct 09 14:17:46 lp-sasha kernel:  bus_for_each_dev+0x75/0xc0
-Oct 09 14:17:46 lp-sasha kernel:  bus_add_driver+0x106/0x1c0
-Oct 09 14:17:46 lp-sasha kernel:  driver_register+0x86/0xe0
-Oct 09 14:17:46 lp-sasha kernel:  ? 0xffffffffa044e000
-Oct 09 14:17:46 lp-sasha kernel:  do_one_initcall+0x48/0x1e0
-Oct 09 14:17:46 lp-sasha kernel:  ? _cond_resched+0x11/0x60
-Oct 09 14:17:46 lp-sasha kernel:  ? kmem_cache_alloc_trace+0x19c/0x1e0
-Oct 09 14:17:46 lp-sasha kernel:  do_init_module+0x57/0x220
-Oct 09 14:17:46 lp-sasha kernel:  __do_sys_finit_module+0xa0/0xe0
-Oct 09 14:17:46 lp-sasha kernel:  do_syscall_64+0x33/0x40
-Oct 09 14:17:46 lp-sasha kernel:  entry_SYSCALL_64_after_hwframe+0x44/0xa9
-Oct 09 14:17:46 lp-sasha kernel: RIP: 0033:0x7fd01a060d5d
-Oct 09 14:17:46 lp-sasha kernel: Code: 00 c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d e3 70 0c 00 f7 d8 64 89 01 48
-Oct 09 14:17:46 lp-sasha kernel: RSP: 002b:00007ffc8ad38a98 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-Oct 09 14:17:46 lp-sasha kernel: RAX: ffffffffffffffda RBX: 0000563f6e7fd530 RCX: 00007fd01a060d5d
-Oct 09 14:17:46 lp-sasha kernel: RDX: 0000000000000000 RSI: 00007fd01a19f95d RDI: 000000000000000f
-Oct 09 14:17:46 lp-sasha kernel: RBP: 0000000000020000 R08: 0000000000000000 R09: 0000000000000007
-Oct 09 14:17:46 lp-sasha kernel: R10: 000000000000000f R11: 0000000000000246 R12: 00007fd01a19f95d
-Oct 09 14:17:46 lp-sasha kernel: R13: 0000000000000000 R14: 0000563f6e7fbc10 R15: 0000563f6e7fd530
-Oct 09 14:17:46 lp-sasha kernel: Modules linked in: nouveau(+) ttm xt_string xt_mark xt_LOG vgem v4l2_dv_timings uvcvideo ulpi udf ts_kmp ts_fsm ts_bm snd_aloop sil164 qat_dh895xccvf nf_nat_sip nf_nat_irc nf_nat_ftp nf_nat nf_log_ipv6 nf_log_ipv4 nf_log_common ltc2990 lcd intel_qat input_leds i2c_mux gspca_main videobuf2_vmalloc videobuf2_memops videobuf2_v4l2 videobuf2_common videodev mc drivetemp cuse fuse crc_itu_t coretemp ch7006 ath5k ath algif_hash
-Oct 09 14:17:46 lp-sasha kernel: CR2: 0000000000000000
-Oct 09 14:17:46 lp-sasha kernel: ---[ end trace 0ddafe218ad30017 ]---
-Oct 09 14:17:46 lp-sasha kernel: RIP: 0010:nouveau_connector_detect_depth+0x71/0xc0 [nouveau]
-Oct 09 14:17:46 lp-sasha kernel: Code: 0a 00 00 48 8b 49 48 c7 87 b8 00 00 00 06 00 00 00 80 b9 4d 0a 00 00 00 75 1e 83 fa 41 75 05 48 85 c0 75 29 8b 81 10 0d 00 00 <39> 06 7c 25 f6 81 14 0d 00 00 02 75 b7 c3 80 b9 0c 0d 00 00 00 75
-Oct 09 14:17:46 lp-sasha kernel: RSP: 0018:ffffc9000028f8c0 EFLAGS: 00010297
-Oct 09 14:17:46 lp-sasha kernel: RAX: 0000000000014c08 RBX: ffff8880369d4000 RCX: ffff8880369d3000
-Oct 09 14:17:46 lp-sasha kernel: RDX: 0000000000000040 RSI: 0000000000000000 RDI: ffff8880369d4000
-Oct 09 14:17:46 lp-sasha kernel: RBP: ffff88800601cc00 R08: ffff8880051da298 R09: ffffffff8226201a
-Oct 09 14:17:46 lp-sasha kernel: R10: ffff88800469aa80 R11: ffff888004c84ff8 R12: 0000000000000000
-Oct 09 14:17:46 lp-sasha kernel: R13: ffff8880051da000 R14: 0000000000002000 R15: 0000000000000003
-Oct 09 14:17:46 lp-sasha kernel: FS:  00007fd0192b3440(0000) GS:ffff8880bc900000(0000) knlGS:0000000000000000
-Oct 09 14:17:46 lp-sasha kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-Oct 09 14:17:46 lp-sasha kernel: CR2: 0000000000000000 CR3: 0000000004976000 CR4: 00000000000006e0
+For example if you're on a ppc64le machine but you specify a non-empty
+CROSS_COMPILE, in order to use a non-default toolchain, then defconfig
+will give you ppc64_defconfig (big endian):
 
-The disassembly:
-Code: 0a 00 00 48 8b 49 48 c7 87 b8 00 00 00 06 00 00 00 80 b9 4d 0a 00 00 00 75 1e 83 fa 41 75 05 48 85 c0 75 29 8b 81 10 0d 00 00 <39> 06 7c 25 f6 81 14 0d 00 00 02 75 b7 c3 80 b9 0c 0d 00 00 00 75
-All code
-========
-   0:   0a 00                   or     (%rax),%al
-   2:   00 48 8b                add    %cl,-0x75(%rax)
-   5:   49                      rex.WB
-   6:   48 c7 87 b8 00 00 00    movq   $0x6,0xb8(%rdi)
-   d:   06 00 00 00
-  11:   80 b9 4d 0a 00 00 00    cmpb   $0x0,0xa4d(%rcx)
-  18:   75 1e                   jne    0x38
-  1a:   83 fa 41                cmp    $0x41,%edx
-  1d:   75 05                   jne    0x24
-  1f:   48 85 c0                test   %rax,%rax
-  22:   75 29                   jne    0x4d
-  24:   8b 81 10 0d 00 00       mov    0xd10(%rcx),%eax
-  2a:*  39 06                   cmp    %eax,(%rsi)              <-- trapping instruction
-  2c:   7c 25                   jl     0x53
-  2e:   f6 81 14 0d 00 00 02    testb  $0x2,0xd14(%rcx)
-  35:   75 b7                   jne    0xffffffffffffffee
-  37:   c3                      retq
-  38:   80 b9 0c 0d 00 00 00    cmpb   $0x0,0xd0c(%rcx)
-  3f:   75                      .byte 0x75
+  $ make CROSS_COMPILE=~/toolchains/gcc-8/bin/powerpc-linux- defconfig
+  *** Default configuration is based on 'ppc64_defconfig'
 
-Code starting with the faulting instruction
-===========================================
-   0:   39 06                   cmp    %eax,(%rsi)
-   2:   7c 25                   jl     0x29
-   4:   f6 81 14 0d 00 00 02    testb  $0x2,0xd14(%rcx)
-   b:   75 b7                   jne    0xffffffffffffffc4
-   d:   c3                      retq
-   e:   80 b9 0c 0d 00 00 00    cmpb   $0x0,0xd0c(%rcx)
-  15:   75                      .byte 0x75
+This is because we assume that CROSS_COMPILE being set means we
+can't be on a ppc machine and rather than checking we just default to
+ppc64_defconfig.
 
-objdump -SF --disassemble=nouveau_connector_detect_depth
-[...]
-        if (nv_connector->edid &&
-   c85e1:       83 fa 41                cmp    $0x41,%edx
-   c85e4:       75 05                   jne    c85eb <nouveau_connector_detect_depth+0x6b> (File Offset: 0xc866b)
-   c85e6:       48 85 c0                test   %rax,%rax
-   c85e9:       75 29                   jne    c8614 <nouveau_connector_detect_depth+0x94> (File Offset: 0xc8694)
-            nv_connector->type == DCB_CONNECTOR_LVDS_SPWG)
-                duallink = ((u8 *)nv_connector->edid)[121] == 2;
-        else
-                duallink = mode->clock >= bios->fp.duallink_transition_clk;
+We should just ignore CROSS_COMPILE, instead check the machine with
+uname and if it's one of ppc, ppc64 or ppc64le then use that
+defconfig. If it's none of those then we fall back to ppc64_defconfig.
 
-        if ((!duallink && (bios->fp.strapless_is_24bit & 1)) ||
-   c85eb:       8b 81 10 0d 00 00       mov    0xd10(%rcx),%eax
-   c85f1:       39 06                   cmp    %eax,(%rsi)
-   c85f3:       7c 25                   jl     c861a <nouveau_connector_detect_depth+0x9a> (File Offset: 0xc869a)
-            ( duallink && (bios->fp.strapless_is_24bit & 2)))
-   c85f5:       f6 81 14 0d 00 00 02    testb  $0x2,0xd14(%rcx)
-   c85fc:       75 b7                   jne    c85b5 <nouveau_connector_detect_depth+0x35> (File Offset: 0xc8635)
-                connector->display_info.bpc = 8;
-[...]
-
-% scripts/faddr2line /lib/modules/5.9.0-rc8-next-20201009/kernel/drivers/gpu/drm/nouveau/nouveau.ko nouveau_connector_detect_depth+0x71/0xc0
-nouveau_connector_detect_depth+0x71/0xc0:
-nouveau_connector_detect_depth at /home/sasha/linux-next/drivers/gpu/drm/nouveau/nouveau_connector.c:891
-
-It is actually line 889. See the disassembly below.
-889                     duallink = mode->clock >= bios->fp.duallink_transition_clk;
-
-The NULL pointer being dereferenced is mode.
-
-Git bisect has identified the following commit as bad:
-f28e32d3906e drm/nouveau/kms: Don't change EDID when it hasn't actually changed
-
-Here is the chain of events that causes the oops.
-On entry to nouveau_connector_detect_lvds, edid is set to NULL.  The call
-to nouveau_connector_detect sets nv_connector->edid to valid memory,
-with status set to connector_status_connected and the flow of execution
-branching to the out label.
-
-The subsequent call to nouveau_connector_set_edid erronously clears
-nv_connector->edid, via the local edid pointer which remains set to NULL.
-
-Fix this by setting edid to the value of the just acquired
-nv_connector->edid and executing the body of nouveau_connector_set_edid
-only if nv_connector->edid and edid point to different memory addresses
-thus preventing nv_connector->edid from being turned into a dangling
-pointer.
-
-Fixes: f28e32d3906e ("drm/nouveau/kms: Don't change EDID when it hasn't actually changed")
-Signed-off-by: Alexander Kapshuk <alexander.kapshuk@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Ben Skeggs <bskeggs@redhat.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ arch/powerpc/Makefile |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -525,11 +525,13 @@ static void
- nouveau_connector_set_edid(struct nouveau_connector *nv_connector,
- 			   struct edid *edid)
- {
--	struct edid *old_edid = nv_connector->edid;
-+	if (nv_connector->edid != edid) {
-+		struct edid *old_edid = nv_connector->edid;
+--- a/arch/powerpc/Makefile
++++ b/arch/powerpc/Makefile
+@@ -30,11 +30,10 @@ endif
+ endif
+ endif
  
--	drm_connector_update_edid_property(&nv_connector->base, edid);
--	kfree(old_edid);
--	nv_connector->edid = edid;
-+		drm_connector_update_edid_property(&nv_connector->base, edid);
-+		kfree(old_edid);
-+		nv_connector->edid = edid;
-+	}
- }
+-ifeq ($(CROSS_COMPILE),)
+-KBUILD_DEFCONFIG := $(shell uname -m)_defconfig
+-else
+-KBUILD_DEFCONFIG := ppc64_defconfig
+-endif
++# If we're on a ppc/ppc64/ppc64le machine use that defconfig, otherwise just use
++# ppc64_defconfig because we have nothing better to go on.
++uname := $(shell uname -m)
++KBUILD_DEFCONFIG := $(if $(filter ppc%,$(uname)),$(uname),ppc64)_defconfig
  
- static enum drm_connector_status
-@@ -660,8 +662,10 @@ nouveau_connector_detect_lvds(struct drm
- 	/* Try retrieving EDID via DDC */
- 	if (!drm->vbios.fp_no_ddc) {
- 		status = nouveau_connector_detect(connector, force);
--		if (status == connector_status_connected)
-+		if (status == connector_status_connected) {
-+			edid = nv_connector->edid;
- 			goto out;
-+		}
- 	}
- 
- 	/* On some laptops (Sony, i'm looking at you) there appears to
+ ifdef CONFIG_PPC64
+ new_nm := $(shell if $(NM) --help 2>&1 | grep -- '--synthetic' > /dev/null; then echo y; else echo n; fi)
 
 
