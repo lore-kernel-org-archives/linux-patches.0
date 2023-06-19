@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8193C23
-	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873D7C433C0;
-	Mon, 19 Jun 2023 10:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83946FAD
+	for <patches@lists.linux.dev>; Mon, 19 Jun 2023 10:48:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3229FC433C8;
+	Mon, 19 Jun 2023 10:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687171729;
-	bh=aZuNSmatyawk2Y31JTLn3Fw4OgkfgrJNMsdkFTIp9ms=;
+	s=korg; t=1687171732;
+	bh=1ClQn+/z21XN/IP09NtjPQFyqxP9zSwToes9dvmoUEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QlBN1uzl9QbGE7WrtB9Ca90Lzsasw2HMNcvFx1t8GTVCqQ9ev0x/oBAaHDQoXNuaR
-	 a2Tze+LgHUYjmptec2NRcR78m/o96stngJtID1hXw2plq9yIiC3WVOaGVHNENbpmLR
-	 5bVdNONsxtXA6lvVlaNc32YT0qxkU30Z4+9B6icE=
+	b=Hs465gV4FpFdNn1bolxjcOm11EP3aFEFIdF9qUSSO5//5ZgVMwx7V/WvvRhudOd79
+	 SRQZEzZPOsnR25JIR53onvuquGgQBN2g8KqzsGyZkGAtNH52sl55bZ1Tt2a2wXJ18V
+	 UhLM9g1a0PtuU+dM48mTRSSYLoSU1I6aeve+g0Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Ziemba <ian.ziemba@hpe.com>,
-	Bob Pearson <rpearsonhpe@gmail.com>,
+	syzbot+eba589d8f49c73d356da@syzkaller.appspotmail.com,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/166] RDMA/rxe: Removed unused name from rxe_task struct
-Date: Mon, 19 Jun 2023 12:29:48 +0200
-Message-ID: <20230619102200.208881502@linuxfoundation.org>
+Subject: [PATCH 6.1 112/166] RDMA/rxe: Fix the use-before-initialization error of resp_pkts
+Date: Mon, 19 Jun 2023 12:29:49 +0200
+Message-ID: <20230619102200.260881611@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
 References: <20230619102154.568541872@linuxfoundation.org>
@@ -36,91 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Pearson <rpearsonhpe@gmail.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit de669ae8af49ceed0eed44f5b3d51dc62affc5e4 ]
+[ Upstream commit 2a62b6210ce876c596086ab8fd4c8a0c3d10611a ]
 
-The name field in struct rxe_task is never used. This patch removes it.
+In the following:
 
-Link: https://lore.kernel.org/r/20221021200118.2163-4-rpearsonhpe@gmail.com
-Signed-off-by: Ian Ziemba <ian.ziemba@hpe.com>
-Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+  Call Trace:
+   <TASK>
+   __dump_stack lib/dump_stack.c:88 [inline]
+   dump_stack_lvl+0xd9/0x150 lib/dump_stack.c:106
+   assign_lock_key kernel/locking/lockdep.c:982 [inline]
+   register_lock_class+0xdb6/0x1120 kernel/locking/lockdep.c:1295
+   __lock_acquire+0x10a/0x5df0 kernel/locking/lockdep.c:4951
+   lock_acquire kernel/locking/lockdep.c:5691 [inline]
+   lock_acquire+0x1b1/0x520 kernel/locking/lockdep.c:5656
+   __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+   _raw_spin_lock_irqsave+0x3d/0x60 kernel/locking/spinlock.c:162
+   skb_dequeue+0x20/0x180 net/core/skbuff.c:3639
+   drain_resp_pkts drivers/infiniband/sw/rxe/rxe_comp.c:555 [inline]
+   rxe_completer+0x250d/0x3cc0 drivers/infiniband/sw/rxe/rxe_comp.c:652
+   rxe_qp_do_cleanup+0x1be/0x820 drivers/infiniband/sw/rxe/rxe_qp.c:761
+   execute_in_process_context+0x3b/0x150 kernel/workqueue.c:3473
+   __rxe_cleanup+0x21e/0x370 drivers/infiniband/sw/rxe/rxe_pool.c:233
+   rxe_create_qp+0x3f6/0x5f0 drivers/infiniband/sw/rxe/rxe_verbs.c:583
+
+This is a use-before-initialization problem.
+
+It happens because rxe_qp_do_cleanup is called during error unwind before
+the struct has been fully initialized.
+
+Move the initialization of the skb earlier.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://lore.kernel.org/r/20230602035408.741534-1-yanjun.zhu@intel.com
+Reported-by: syzbot+eba589d8f49c73d356da@syzkaller.appspotmail.com
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: 2a62b6210ce8 ("RDMA/rxe: Fix the use-before-initialization error of resp_pkts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c   | 9 +++------
- drivers/infiniband/sw/rxe/rxe_task.c | 4 +---
- drivers/infiniband/sw/rxe/rxe_task.h | 4 +---
- 3 files changed, 5 insertions(+), 12 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index 1f6e006c51c4a..f48a624de493d 100644
+index f48a624de493d..59b2024b34ef4 100644
 --- a/drivers/infiniband/sw/rxe/rxe_qp.c
 +++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -242,10 +242,8 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
+@@ -180,6 +180,9 @@ static void rxe_qp_init_misc(struct rxe_dev *rxe, struct rxe_qp *qp,
+ 	spin_lock_init(&qp->rq.producer_lock);
+ 	spin_lock_init(&qp->rq.consumer_lock);
  
- 	skb_queue_head_init(&qp->req_pkts);
++	skb_queue_head_init(&qp->req_pkts);
++	skb_queue_head_init(&qp->resp_pkts);
++
+ 	atomic_set(&qp->ssn, 0);
+ 	atomic_set(&qp->skb_out, 0);
+ }
+@@ -240,8 +243,6 @@ static int rxe_qp_init_req(struct rxe_dev *rxe, struct rxe_qp *qp,
+ 	qp->req.opcode		= -1;
+ 	qp->comp.opcode		= -1;
  
--	rxe_init_task(&qp->req.task, qp,
--		      rxe_requester, "req");
--	rxe_init_task(&qp->comp.task, qp,
--		      rxe_completer, "comp");
-+	rxe_init_task(&qp->req.task, qp, rxe_requester);
-+	rxe_init_task(&qp->comp.task, qp, rxe_completer);
+-	skb_queue_head_init(&qp->req_pkts);
+-
+ 	rxe_init_task(&qp->req.task, qp, rxe_requester);
+ 	rxe_init_task(&qp->comp.task, qp, rxe_completer);
  
- 	qp->qp_timeout_jiffies = 0; /* Can't be set for UD/UC in modify_qp */
- 	if (init->qp_type == IB_QPT_RC) {
-@@ -292,8 +290,7 @@ static int rxe_qp_init_resp(struct rxe_dev *rxe, struct rxe_qp *qp,
+@@ -288,8 +289,6 @@ static int rxe_qp_init_resp(struct rxe_dev *rxe, struct rxe_qp *qp,
+ 		}
+ 	}
  
- 	skb_queue_head_init(&qp->resp_pkts);
- 
--	rxe_init_task(&qp->resp.task, qp,
--		      rxe_responder, "resp");
-+	rxe_init_task(&qp->resp.task, qp, rxe_responder);
+-	skb_queue_head_init(&qp->resp_pkts);
+-
+ 	rxe_init_task(&qp->resp.task, qp, rxe_responder);
  
  	qp->resp.opcode		= OPCODE_NONE;
- 	qp->resp.msn		= 0;
-diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
-index ec2b7de1c4972..182d0532a8ab9 100644
---- a/drivers/infiniband/sw/rxe/rxe_task.c
-+++ b/drivers/infiniband/sw/rxe/rxe_task.c
-@@ -94,12 +94,10 @@ void rxe_do_task(struct tasklet_struct *t)
- 	task->ret = ret;
- }
- 
--int rxe_init_task(struct rxe_task *task,
--		  void *arg, int (*func)(void *), char *name)
-+int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *))
- {
- 	task->arg	= arg;
- 	task->func	= func;
--	snprintf(task->name, sizeof(task->name), "%s", name);
- 	task->destroyed	= false;
- 
- 	tasklet_setup(&task->tasklet, rxe_do_task);
-diff --git a/drivers/infiniband/sw/rxe/rxe_task.h b/drivers/infiniband/sw/rxe/rxe_task.h
-index 7f612a1c68a7b..b3dfd970d1dc6 100644
---- a/drivers/infiniband/sw/rxe/rxe_task.h
-+++ b/drivers/infiniband/sw/rxe/rxe_task.h
-@@ -25,7 +25,6 @@ struct rxe_task {
- 	void			*arg;
- 	int			(*func)(void *arg);
- 	int			ret;
--	char			name[16];
- 	bool			destroyed;
- };
- 
-@@ -34,8 +33,7 @@ struct rxe_task {
-  *	arg  => parameter to pass to fcn
-  *	func => function to call until it returns != 0
-  */
--int rxe_init_task(struct rxe_task *task,
--		  void *arg, int (*func)(void *), char *name);
-+int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *));
- 
- /* cleanup task */
- void rxe_cleanup_task(struct rxe_task *task);
 -- 
 2.39.2
 
