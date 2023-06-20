@@ -1,170 +1,170 @@
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0ABD15B2
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 03:49:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1687232983; x=1718768983;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=ab46j1TmWm+Qr6FjkqUGKk5RNLQx13s8AJ1cm07nycI=;
-  b=jc1m8fN31/0E9ZUnCi1Gtz2p/BUvRy/TiemRjtC1726j//RRU5YLrYfx
-   1g8Vh3ca1ASBWyBh4ai/9b8vNVY2+MRU4d38Rmqn0y8Y049kLoRVkoM8L
-   GDPv6Xqg8LdlvqsHB94IkEK60vywt2mZ0BxhsiCZmqBKef0IAzSi+vdRE
-   +kVAPPUlVWCOLDy5PXTdMODgJq0G4qaCAGS7D2P4fe/eVeindlwHGS2Ea
-   VTj3XgfBSXjO0vW45Hbtcs0VxXfCLWdJg656a2SVHU4IaRJyGE7YhPMhg
-   jZFolrp6/4gAn0GwCJ1i1W44vN4Zq06W+25+FK0ZjPkOmp0Q5XwclNquJ
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10746"; a="446134400"
-X-IronPort-AV: E=Sophos;i="6.00,256,1681196400"; 
-   d="scan'208";a="446134400"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jun 2023 20:49:42 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10746"; a="743654809"
-X-IronPort-AV: E=Sophos;i="6.00,256,1681196400"; 
-   d="scan'208";a="743654809"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by orsmga008.jf.intel.com with ESMTP; 19 Jun 2023 20:49:42 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23; Mon, 19 Jun 2023 20:49:41 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23 via Frontend Transport; Mon, 19 Jun 2023 20:49:41 -0700
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.43) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.23; Mon, 19 Jun 2023 20:49:40 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VU1FdYRwNND6FY1e0dVRpQm2oz+jbLKNUrUfE0ajBkErXrVLN4sOf3M28/KDo1Ep004zK+9nY0w05eU0Iq27W35UBpuVR88QbgrD+dg52Z9DrjKiCDbo90plCqdveJofWfIgc9l+TJYhcjT1YxMZpbSPDVkFNF/em/HFE9nxqfZXgZZwZgEK7lPkWjAuUuvJvaatlg7PBnuJbKrqmkgp3v2aZ5rRTKcx3jT8GXp9Egu0LPln3xwXWqbhblpgAva2semETMxBpO+Vzlsfn9xZ90Y3LthvM+/i4qAtdc5I0JxAbi/l9xkHx4XLPdUiFsdl4hP+YM0ZNxkS3Av5ipQAkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=s3sFs9LtDgLLne9EQZ/HTd28xicpq5fPx8AgWg10qWc=;
- b=DzPwOY5oTLj5127tA2EHfJhWJue0QNC6iYPCwmFpbWrw1dJGZt1dDlS48RylzU7kM5IsavfcGrO2EIc/q11BhCn+1kf1PBN7UuOjMs42EkwOpHxsINquD/6vCrCErTqVF+skEKaI5Cuzt/iafY19GCwB5w5i+sSYKdzPQYIGTVZce3bUjUYIiBVLBUekWonmAE+2QzYtTfMrlo6RmloTf5V8iviqT0ceOXGvEYullwW0QXX0/eiSfGxX0JqSv2km/+l5/W7BEHL88d+1w7dB1oU62BV5yQ95L0Mw+U+xZQudkL7J9l1PlO0HxtOb0D9fZ1VHdXuEDOYedzV9jr3zVA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by PH8PR11MB6951.namprd11.prod.outlook.com (2603:10b6:510:225::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6500.37; Tue, 20 Jun
- 2023 03:49:37 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::f232:e1a0:b936:2aed]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::f232:e1a0:b936:2aed%7]) with mapi id 15.20.6500.036; Tue, 20 Jun 2023
- 03:49:36 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: James Morse <james.morse@arm.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
-	"Chatre, Reinette" <reinette.chatre@intel.com>, Drew Fustini
-	<dfustini@baylibre.com>, Babu Moger <Babu.Moger@amd.com>, Peter Newman
-	<peternewman@google.com>
-CC: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>, H Peter Anvin <hpa@zytor.com>,
-	"shameerali.kolothum.thodi@huawei.com"
-	<shameerali.kolothum.thodi@huawei.com>, D Scott Phillips OS
-	<scott@os.amperecomputing.com>, "carl@os.amperecomputing.com"
-	<carl@os.amperecomputing.com>, "lcherian@marvell.com" <lcherian@marvell.com>,
-	"bobo.shaobowang@huawei.com" <bobo.shaobowang@huawei.com>,
-	"tan.shaopeng@fujitsu.com" <tan.shaopeng@fujitsu.com>,
-	"xingxin.hx@openanolis.org" <xingxin.hx@openanolis.org>,
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>, Jamie Iles
-	<quic_jiles@quicinc.com>, Xin Hao <xhao@linux.alibaba.com>, "Pitre, Nicolas"
-	<npitre@baylibre.com>, Kevin Hilman <khilman@baylibre.com>,
-	"aricciardi@baylibre.com" <aricciardi@baylibre.com>, "x86@kernel.org"
-	<x86@kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: RE: [RFC PATCH 0/2] Resctrl - rewrite (WIP)
-Thread-Topic: [RFC PATCH 0/2] Resctrl - rewrite (WIP)
-Thread-Index: AQHZoyiDuZCsHP7U1EeCATLJj0kK+q+TDQZQ
-Date: Tue, 20 Jun 2023 03:49:36 +0000
-Message-ID: <SJ1PR11MB6083D16326FF2D56C4A1CE20FC5CA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20230620033702.33344-1-tony.luck@intel.com>
-In-Reply-To: <20230620033702.33344-1-tony.luck@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|PH8PR11MB6951:EE_
-x-ms-office365-filtering-correlation-id: 01d14953-e850-478e-5b53-08db71415dfc
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 8Dvcdz+oA19zlXr2A8MUh2r9r67EbJx+bj0SAHckyP3zElBZqVc3kXdYle/gpt4ZKaO9uBBDony0FtRuTs4nxUnDqFEC9xlHv5JVRZEDsvebKiTQGeG8FZWN4w4E0QvRhjVwmnxtKuz8YHSp6nFuNAzr7IeTvvWZMYLcPmggHbJQtUY+hWbDq3iid/bgsQDpD7j+hNskGaj/lrH3By5l9J7B7SLLfbBg8jHKqgWbFYSEVPFEBTqXpvJLJ9SyPp/99x+HjCFxox3h5FLVCKjuU0jOQvHOUuun40qDk6fqI/CoHIkYK9b4sL57ZtI/v0Rfg4z/y7iXvz8NHFF9HgRa6tTpxHVfplUCM1e7QhlB3nuieQk0Ie6p88ESeUIEe2ZlwemTJblSl3CCv0dFxrSVDoNjykU5vVvbo9h74+B8VSc4p0aQoVSrP27qY4wXLumR9oWhPnGLCW3mHj6C380VAAmB6csIs2TH0HpsO3xTaVwUsiQgX8DNj64WPPiU1LlGTxOIT55ms1ysQHuloh0ZfD6fBHTnHoOHVPexnaL2QkueOzxvaof+6gSldoY/BkElUWS0j6Lm0U76sXdWaBT5OlApBCjFR/nfQRGpwjXYvBp4uixkoGbx1xkyyiZngftb
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(136003)(39860400002)(376002)(396003)(346002)(366004)(451199021)(8936002)(41300700001)(8676002)(478600001)(38100700002)(122000001)(71200400001)(82960400001)(83380400001)(26005)(9686003)(186003)(6506007)(7696005)(55016003)(54906003)(110136005)(38070700005)(86362001)(316002)(4326008)(33656002)(64756008)(66556008)(66476007)(66946007)(76116006)(66446008)(7416002)(4744005)(52536014)(2906002)(5660300002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?UJO4WT0aMADP/VoF2gM1MKS4fVorn26tBqgH6kNAWQn14shxvZyLMqa+kLuA?=
- =?us-ascii?Q?Zt7js99+3zNpjMPozOLB4MkOTvWZAsS0c4RL811mOS89NB9eP3xnhOs8ngHA?=
- =?us-ascii?Q?J4b22IWYXX2+KgJY7BtBPjbaoefjR6+4CNvnhpA4ReLbQvWZuAznoYNeaaS5?=
- =?us-ascii?Q?As9KOShdX8vGW4mvGt7y1+A8FvqpwsrbetoUXqGCUbXY9ZNwNKJbCYhPg7/3?=
- =?us-ascii?Q?SGciOocVcVLbYy0CA+Tp5HOKtn4a6jc+NuayVXK4eazHOEbGZ3hxE7BderO4?=
- =?us-ascii?Q?p9MMSkiE/MMflsmQVYfUz4M8tbyN/3f6F7xvkht8mzh3SICC49h9lcqyPZkn?=
- =?us-ascii?Q?MLX6RP8OZbRH3W8zrSNohdnZdlht6Rkr8UMLUBEsfRuBAUzMvWp6h3Rl0D09?=
- =?us-ascii?Q?qV8PguqZsvroNQPl9nTdU41khuVQf+Zux1Ytmn65eRMDrka7PH5lScFuAVya?=
- =?us-ascii?Q?g88t/wEP09XC0G2jUyNlInkSrlS9WpxNb9cWa0r3bnEV2uwvsqlWqkjIorBb?=
- =?us-ascii?Q?gZNAAg42Roz6oE9Up0OZSJH0epJQA/1WbOdUm7KcCThqgG2XtaHhfjiAHeFt?=
- =?us-ascii?Q?djT0s7p5rcEof98DHhOXPjZuY6KGavsk6MUR3zYm5l4vJTeL54/vQlQnnmVr?=
- =?us-ascii?Q?ap+0FOajTFBAKk6FwFHSxPnKCYQ33pkZGcp+9BLREx8sRzOk5QwZFT+kJ384?=
- =?us-ascii?Q?/d+w7YBnonea5cy2ETTHiveT1poANAcZGzpRgTvFR2KhoJXft1P0YESuacLz?=
- =?us-ascii?Q?de1ujRvUCiUK6aDD6ySk7mrYjDWYY2wiameCgiQDyQIV8M065NmclNg67S9u?=
- =?us-ascii?Q?fQHkMVQIEwsYK7RttOSwTHPm3psQE9yXEab0RIMre3c4gq0IJPDQ8qulrHpP?=
- =?us-ascii?Q?Ldlbx48iWWhH42PdEc0ywkpFmbT2M67b4hBKd8l/wu2V3RdKVVztTagL8dXJ?=
- =?us-ascii?Q?Slj/wheaILCuBDcG3w+K9G9NgLEM1nVdohu2Xpz8q9nGgdxCZ7HJytLmQeGm?=
- =?us-ascii?Q?7H/7fx9FBm9fJ9wj42895tZeEqOk7RsYppCPi3WII6ajM5u/e+EFWGpKnUvD?=
- =?us-ascii?Q?GbMItyZPi0v9lJyd4BU61SCfFqoHeLMb6LJjUy3jfjqFaNyF62GGWRL35jMn?=
- =?us-ascii?Q?UadysvjrhDDrcuxBpl9bJ5A5dbMR2RP5p+kflDGtpHC4Ls9pOC06CWFtm5nE?=
- =?us-ascii?Q?KtEcy33S8RLTDTwn7kQxY21Htun7VbCBQZofIxP3O65DWbsJzsbMt4bJ/l0a?=
- =?us-ascii?Q?0lWd3rbvL3a3tTod/qHWb6hrINKLR4yFI5sBmQBG57T29ppjb645RaiYLHoz?=
- =?us-ascii?Q?hAnCc9j5mjYfvi29+GtjSTAMWjmdzAYAZ2hNONXZJBa5T8FTlXfEjwscMSGT?=
- =?us-ascii?Q?oInSIuNckDNg6Nompz+5tQ+FEgiUN44bn2lDQtQoX/bnag95bPqYm6AGqwRZ?=
- =?us-ascii?Q?lcTgyxrCwikjTy4J+n81SsxRomXx9lQgVdO5pq5tFMa4qFCeOYZLAejwvCJO?=
- =?us-ascii?Q?xIQPAmh9Osn8irQZlcfXQLagqCwavafRjABfmqVXPTYP4H3NZfdI5hOvNmXz?=
- =?us-ascii?Q?Mfu/s3x0FNl9m0v1O+I=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E66C19A
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:41:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC91C433CD
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:41:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1687236088;
+	bh=/tNS/QGR44nW36zshBiU7IiaxE+ykcQcF4Z0lFSXucQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=EpPH8HMRpyms7W99dqqhXXK+Sii6yecxcVE0WRGLvrYKBY7SvnLFbGT7P07TLdVEg
+	 Nnt4a6ppXp8GEs4ar2dRjQ5r4e39P5Qp0ryglHfhVOb7ZPexwfHMoTLHirZNK5iO1K
+	 1e6c/MstcY4Hj1MG53qCAnVUO6qKlMEkCOclFfdn/Qx4AGj2uMAkvCGXxXaBOP+Jpr
+	 1eTaIrPU/WGdedBdjEy77QKPphV0/nJa+4Q8zLD6Ri/DVwAlD6Ldv2HIXiHBG+Mlne
+	 1MbvJZy91XBFOgr8RPYOtao4vpX9CcZBY2kRApaFGq3JVvcRAMmOU23sKA8IG8kiQ5
+	 96Ckv6n2H5ttg==
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-39ebd5a22e0so1913497b6e.3
+        for <patches@lists.linux.dev>; Mon, 19 Jun 2023 21:41:27 -0700 (PDT)
+X-Gm-Message-State: AC+VfDx8lOEhdLrkuv4FpzFt9Szk0pHiH7gmH46ZNI8F3Gq3gC/CYk2L
+	7JDTcjR9lMHz/4yoVt4SmS1T1ShJl2u/pICJ3aw=
+X-Google-Smtp-Source: ACHHUZ4rhVjsVwtS8VJ2pgphBj1N7Hrk6R8ryMDWtFyaVPm2XkqPwXT+sLBvZ7vqc6fXhEfeqob/iRQyPzJfD2JPpc4=
+X-Received: by 2002:a05:6808:1524:b0:39e:c806:5889 with SMTP id
+ u36-20020a056808152400b0039ec8065889mr8808160oiw.28.1687236087177; Mon, 19
+ Jun 2023 21:41:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 01d14953-e850-478e-5b53-08db71415dfc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jun 2023 03:49:36.6429
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wQcTwBu1DHyPvUgfFkWe0dG4VlUc30nGt5OxQrmhJBLJtDUB4xfnfXI+gZTZx7QY216f58Mpq1NIQuwxk9zpzA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB6951
-X-OriginatorOrg: intel.com
+References: <20230616001631.463536-1-ojeda@kernel.org> <20230616001631.463536-6-ojeda@kernel.org>
+In-Reply-To: <20230616001631.463536-6-ojeda@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Tue, 20 Jun 2023 13:40:50 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQc0oSA5wtb3J2PYXPy2WsL1ZDBE6vip1qXhDOS+-QjMA@mail.gmail.com>
+Message-ID: <CAK7LNAQc0oSA5wtb3J2PYXPy2WsL1ZDBE6vip1qXhDOS+-QjMA@mail.gmail.com>
+Subject: Re: [PATCH v2 05/11] kbuild: rust_is_available: add check for
+ `bindgen` invocation
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
+	Andreas Hindborg <nmi@metaspace.dk>, linux-kbuild@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, =?UTF-8?Q?Fran=C3=A7ois_Valenduc?= <francoisvalenduc@gmail.com>, 
+	Alexandru Radovici <msg4alex@gmail.com>, Matthew Leach <dev@mattleach.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 38 files changed, 3306 insertions(+), 2 deletions(-)
+On Fri, Jun 16, 2023 at 9:17=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> `scripts/rust_is_available.sh` calls `bindgen` with a special
+> header in order to check whether the `libclang` version in use
+> is suitable.
+>
+> However, the invocation itself may fail if, for instance, `bindgen`
+> cannot locate `libclang`. This is fine for Kconfig (since the
+> script will still fail and therefore disable Rust as it should),
+> but it is pretty confusing for users of the `rustavailable` target
+> given the error will be unrelated:
+>
+>     ./scripts/rust_is_available.sh: 21: arithmetic expression: expecting =
+primary: "100000 *  + 100 *  + "
+>     make: *** [Makefile:1816: rustavailable] Error 2
+>
+> Instead, run the `bindgen` invocation independently in a previous
+> step, saving its output and return code. If it fails, then show
+> the user a proper error message. Otherwise, continue as usual
+> with the saved output.
+>
+> Since the previous patch we show a reference to the docs, and
+> the docs now explain how `bindgen` looks for `libclang`,
+> thus the error message can leverage the documentation, avoiding
+> duplication here (and making users aware of the setup guide in
+> the documentation).
+>
+> Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+> Link: https://lore.kernel.org/rust-for-linux/CAKwvOdm5JT4wbdQQYuW+RT07rCi=
+6whGBM2iUAyg8A1CmLXG6Nw@mail.gmail.com/
+> Reported-by: Fran=C3=A7ois Valenduc <francoisvalenduc@gmail.com>
+> Closes: https://github.com/Rust-for-Linux/linux/issues/934
+> Reported-by: Alexandru Radovici <msg4alex@gmail.com>
+> Closes: https://github.com/Rust-for-Linux/linux/pull/921
+> Reported-by: Matthew Leach <dev@mattleach.net>
+> Closes: https://lore.kernel.org/rust-for-linux/20230507084116.1099067-1-d=
+ev@mattleach.net/
+> Fixes: 78521f3399ab ("scripts: add `rust_is_available.sh`")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
 
-Lest this be too scary, I'll note the original resctrl code looks like:
 
-$ find arch/x86/kernel/cpu/resctrl  -type f | xargs wc -l
-    43 arch/x86/kernel/cpu/resctrl/pseudo_lock_event.h
-     4 arch/x86/kernel/cpu/resctrl/Makefile
-   996 arch/x86/kernel/cpu/resctrl/core.c
-   581 arch/x86/kernel/cpu/resctrl/ctrlmondata.c
-   560 arch/x86/kernel/cpu/resctrl/internal.h
-   845 arch/x86/kernel/cpu/resctrl/monitor.c
-  1600 arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-  3733 arch/x86/kernel/cpu/resctrl/rdtgroup.c
-  8362 total
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
 
-I'm haven't included pseudo_lock ... but I have most of the rest, so
-I'm confident this will end up as a net reduction in lines of code.
 
--Tony
+
+
+>  scripts/rust_is_available.sh | 22 +++++++++++++++++++++-
+>  1 file changed, 21 insertions(+), 1 deletion(-)
+>
+> diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
+> index 6b8131d5b547..1bdff4472cbe 100755
+> --- a/scripts/rust_is_available.sh
+> +++ b/scripts/rust_is_available.sh
+> @@ -106,8 +106,28 @@ if [ "$rust_bindings_generator_cversion" -gt "$rust_=
+bindings_generator_min_cvers
+>  fi
+>
+>  # Check that the `libclang` used by the Rust bindings generator is suita=
+ble.
+> +#
+> +# In order to do that, first invoke `bindgen` to get the `libclang` vers=
+ion
+> +# found by `bindgen`. This step may already fail if, for instance, `libc=
+lang`
+> +# is not found, thus inform the user in such a case.
+> +bindgen_libclang_output=3D$( \
+> +       LC_ALL=3DC "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_lib=
+clang.h 2>&1 >/dev/null
+
+
+Nit.
+
+To avoid shellcheck warnings, you can quote as follows:
+
+"$(dirname "$0")/rust_is_available_bindgen_libclang.h"
+
+
+You can do shellcheck scanning to avoid new warnings.
+
+(Of course, 02/11 intentionally unquote $CC, though)
+
+
+
+> +) || bindgen_libclang_code=3D$?
+> +if [ -n "$bindgen_libclang_code" ]; then
+> +       echo >&2 "***"
+> +       echo >&2 "*** Running '$BINDGEN' to check the libclang version (u=
+sed by the Rust"
+> +       echo >&2 "*** bindings generator) failed with code $bindgen_libcl=
+ang_code. This may be caused by"
+> +       echo >&2 "*** a failure to locate libclang. See output and docs b=
+elow for details:"
+> +       echo >&2 "***"
+> +       echo >&2 "$bindgen_libclang_output"
+> +       echo >&2 "***"
+> +       exit 1
+> +fi
+> +
+> +# `bindgen` returned successfully, thus use the output to check that the=
+ version
+> +# of the `libclang` found by the Rust bindings generator is suitable.
+>  bindgen_libclang_version=3D$( \
+> -       LC_ALL=3DC "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_lib=
+clang.h 2>&1 >/dev/null \
+> +       echo "$bindgen_libclang_output" \
+>                 | grep -F 'clang version ' \
+>                 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
+>                 | head -n 1 \
+> --
+> 2.41.0
+>
+
+
+--=20
+Best Regards
+Masahiro Yamada
