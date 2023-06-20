@@ -1,98 +1,78 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C2C101DE
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 12:44:51 +0000 (UTC)
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-51a20c744ebso5500343a12.1
-        for <patches@lists.linux.dev>; Tue, 20 Jun 2023 05:44:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1687265090; x=1689857090;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Woy9uXIbm09rqBjX1mw8Ry8Yy7O1r7e9UR5ScGw9hbM=;
-        b=bUq6B/fjuqhJGJhb5F4omVZxP5j6n2opJA03bG7H4M8PKjLi+kiu7BFjM5zAtTgx5v
-         akG2by3SZjL0jaePtm/ixtTEeXpaxulBN1B0PtzRj5OytQtu6CGquxk9LYtodMY/zn98
-         yQW4O0UVPAixNUg5QC7ADwdj5ZXawlmiuoucNKFezIhyfofpC3AKNQnvyifz2e1kiTM3
-         s8l9gnD0ERusHwVd9bsfhyigW5MTch2mUkCcWUAjjlXWutQBPdc4FxjJWxxfpZvtYO7x
-         anf+UraBULroMpoqLiZpH6y7jbV439DB7y72/cOqEFT1mdITl5uVPmiQYC2xWAA15Plu
-         1Cww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687265090; x=1689857090;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Woy9uXIbm09rqBjX1mw8Ry8Yy7O1r7e9UR5ScGw9hbM=;
-        b=DoQjz9u6h+cQ7CLloxOP7vJ2V0Au4GexuvphdBFGrON+5+IlzzrjF679ai9zFogCun
-         iA9XY2+XJbz/WTL/h1vAla27FJ6E7MzvIjNFfxNxWHUYwwMoj1dRxJoZKKRvdP0FtX5Q
-         o55dytoXrqVOlXG965HMqcnL3vCH59YrJ9mrtv1pS+Yy4hFLOx8/rFgxnwejGSDk6LRa
-         zy09aCOus6yljWDjTIvTWbsN6H+6J6Ynzre1e/wCHMvHwR8uymCsu3O5olVI2bnH6HfH
-         snL8g5dcdPBd01M1Gvm9vd9EBCpOUjAJT86jpSoKxcQ2q2VO18mHzE3LKLvXIw0v8my/
-         2SAw==
-X-Gm-Message-State: AC+VfDwgh+J4/d8AZKar4l6Pm04HyKISy3V/yhrUperq+ZkHJgy0pZR3
-	e6Z75DlrGZbm2VYPq1xxcsxItTrEw07smEmfEPVqkg==
-X-Google-Smtp-Source: ACHHUZ6+prkdM6kZZEktw29hRWVkIfpIaf/jCzXL1Y0+PKO/f1QZdU2GYr6hdrLVYRpcWNFABBLfvyTb+4mDWXeI71Y=
-X-Received: by 2002:aa7:d605:0:b0:518:92a2:1697 with SMTP id
- c5-20020aa7d605000000b0051892a21697mr7702125edr.15.1687265089834; Tue, 20 Jun
- 2023 05:44:49 -0700 (PDT)
+Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A39DB16400;
+	Tue, 20 Jun 2023 13:22:55 +0000 (UTC)
+Received: from uucp by elvis.franken.de with local-rmail (Exim 3.36 #1)
+	id 1qBaqt-00087y-00; Tue, 20 Jun 2023 14:52:55 +0200
+Received: by alpha.franken.de (Postfix, from userid 1000)
+	id F1BACC0346; Tue, 20 Jun 2023 14:50:37 +0200 (CEST)
+Date: Tue, 20 Jun 2023 14:50:37 +0200
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: ndesaulniers@google.com, trix@redhat.com, jiaxun.yang@flygoat.com,
+	linux-mips@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] MIPS: Mark core_vpe_count() as __init
+Message-ID: <20230620125037.GC10520@alpha.franken.de>
+References: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230619102154.568541872@linuxfoundation.org>
-In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
-From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 20 Jun 2023 21:44:38 +0900
-Message-ID: <CAKL4bV6nbRsiufHPdGEQQgCKRBDE84ApYCoAB2pJEhhfP6wdcQ@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/166] 6.1.35-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi Greg
+On Thu, Jun 15, 2023 at 09:21:18AM -0700, Nathan Chancellor wrote:
+> After commit 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters"),
+> modpost complains when building with clang:
+> 
+>   WARNING: modpost: vmlinux.o: section mismatch in reference: core_vpe_count (section: .text) -> smp_max_threads (section: .init.data)
+> 
+> This warning occurs when core_vpe_count() is not inlined, as it appears
+> that a non-init function is referring to an init symbol. However, this
+> is not a problem in practice because core_vpe_count() is only called
+> from __init functions, cps_smp_setup() and cps_prepare_cpus().
+> 
+> Resolve the warning by marking core_vpe_count() as __init, as it is only
+> called in an init context so it can refer to init functions and symbols
+> and have its memory freed on boot.
+> 
+> Fixes: 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  arch/mips/kernel/smp-cps.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
+> index bea6a13ea464..92575222713b 100644
+> --- a/arch/mips/kernel/smp-cps.c
+> +++ b/arch/mips/kernel/smp-cps.c
+> @@ -29,7 +29,7 @@ static DECLARE_BITMAP(core_power, NR_CPUS);
+>  
+>  struct core_boot_config *mips_cps_core_bootcfg;
+>  
+> -static unsigned core_vpe_count(unsigned int cluster, unsigned core)
+> +static unsigned __init core_vpe_count(unsigned int cluster, unsigned core)
+>  {
+>  	return min(smp_max_threads, mips_cps_numvps(cluster, core));
+>  }
+> 
+> ---
+> base-commit: 5cad8323040bb8d47e130c10ea4dcb7175c7602a
+> change-id: 20230615-mips-mark-core_vpe_count-as-init-600dc73e367d
+> 
+> Best regards,
+> -- 
+> Nathan Chancellor <nathan@kernel.org>
+> 
 
-On Mon, Jun 19, 2023 at 7:44=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.35 release.
-> There are 166 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 21 Jun 2023 10:21:12 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.35-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+applied to mips-next.
 
-6.1.35-rc1 tested.
+Thomas.
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64), arch linux)
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+-- 
+Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
+good idea.                                                [ RFC1925, 2.3 ]
