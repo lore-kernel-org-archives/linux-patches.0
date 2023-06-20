@@ -1,43 +1,43 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF87FC01
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 10:57:28 +0000 (UTC)
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-31126037f41so4216285f8f.2
-        for <patches@lists.linux.dev>; Tue, 20 Jun 2023 03:57:27 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211CBC2EE
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 11:04:15 +0000 (UTC)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-3f9002a1a39so29662655e9.2
+        for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:04:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687258646; x=1689850646;
+        d=gmail.com; s=20221208; t=1687259054; x=1689851054;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=12MHpXVfV5/4NMPgWQ0+SabaxFmiyGuGrPFVvOL1TDA=;
-        b=N4W7GsufFgmP6oHtlt9Q1p8seFK+wS3lXJ9dyNPgdJUGjAzzp6AaPtChargp3nIhXE
-         hkSoxyLoT8DK0oUX+iwKIJNQetG8CK9gx+0WuVcEkEkLVYQlidvOP82tcSYyFRi/as/B
-         HBp/pLZLysaJBJm/b3zbRgK1cFBmJ1qhqEuxmKN1a0dbwQzEt2d9SKdx8MfZSqiKcrfb
-         L6RBYAiv/RI+2L1mdZJKoaEDHh8SIwTYEOvwWket7x4IfzoyjdSC6IrTCJR3VNhhZC4p
-         iW2pwd6qykK+IZVmtDE04umldg+eWbkDNTdlxVgbifwQEyJHhe9INA/WwXyj6YWWfbk2
-         xqaw==
+        bh=K1k3rGnyXvdKjWguVkT115FPYubbJOTIhBUBMhUo48I=;
+        b=SS9wwZh3bfCPL3dB/ihqCc9IQwTSy1m2MKfJvQ/FVGvqki9SijHFbLiSzOTk5rOHlP
+         r83R653DnOrRjDQ4PH2MHR5u4Ft3DzJqcxHIxgnqRRaQovugfR+2eml1HhK/NpqTaCyN
+         6CjvL6OY8I2bUEsNbrsClGT8tZ5kB4Dta5Q+sfAaP8dKy3NlrFHCRGHPklZOnf0dxauT
+         xSldxZXdTAUL58QOS2h3xyTPXjr8EKaoR8ZBnVOLyamtl/iGXLRVQZuv5iJEfdQ7In4v
+         oe6ti7ftxRTK1F1NNSuhxYPI7FqO6FjmtdsSviX7KaTjuhWTIDYiuyxMdy8cjA0cTZTY
+         X45g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687258646; x=1689850646;
+        d=1e100.net; s=20221208; t=1687259054; x=1689851054;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=12MHpXVfV5/4NMPgWQ0+SabaxFmiyGuGrPFVvOL1TDA=;
-        b=SBwmr1psd8lO6A1b0kEscRW/XEqgRugpUas49IVjd3ECSPPNsLwcz9uIbLCBb7MvY9
-         Xp//5CFVxl40dCjjYVghEz1I6VTTxfdGV7iI3JnGcHt8xf4ZsSjUgmKePsbCXrNr2bLw
-         dVXl5yNS3sfWy6+iTZgfAufuhemu8UHigOOQzv91mYYXbs2Ab5k0Rbvkeq1NG1mfBoMW
-         5vpIxETukOsHMAQwHw4ibOV5ow+BrDV1/U5kSHPwm0LrezVuRpOjHDIK+MxU0XYMh+R6
-         6jUqY+F+Hx6KXQFu+S4/dPO5285e5SpstV9xzdxXfO+R0GZLJ+z4eK18jVT+jAkeTw6+
-         1QZg==
-X-Gm-Message-State: AC+VfDytsP/U+443nVQwwhhTwoi63DlXyvkA6vrSVE3TR5hooGX9TH3c
-	AQKs9iWS5HksEG/y6dHwIio=
-X-Google-Smtp-Source: ACHHUZ49J3mc1NBJrhjMDak0Nllb38q8xGqs3Yq3y4XRXRcxCJ3z7KE1nqBdaw1gUYYEI1AgxaYxAA==
-X-Received: by 2002:a5d:453b:0:b0:311:1b8d:e565 with SMTP id j27-20020a5d453b000000b003111b8de565mr9229426wra.34.1687258646031;
-        Tue, 20 Jun 2023 03:57:26 -0700 (PDT)
+        bh=K1k3rGnyXvdKjWguVkT115FPYubbJOTIhBUBMhUo48I=;
+        b=iav57PSYE95Eb4IEXtgAOlT2S4N0FshpzRoTwbXbB7M0xXq/n0rIvy9QyKxp3J3/tW
+         wwS3lZhB5LC9i8HleyJ2MGWCpGFiF7sju1e9k3Yy2wBfpnRwVUQURCV2D0zx0GTIsepX
+         SmnOmbk1TWvC8XBpA7HwhFcL7G/WMQ2G0mltCu5UxfeKRHDHM8EgC7hpovE7z9aKxb3V
+         Rxm+zzPY4xhqXfSS5lyI/QVZxCwoTZ6hiDi6Cr7J9m4yZNHByyttjOpMXfZOnNCMytG7
+         mxZXmIzPnnPRzdG/MeqNnaj21u2RsQf1Zmb96DGDRn9lqCUYPtVZudgxsYpZ/OkPkRnG
+         N85Q==
+X-Gm-Message-State: AC+VfDydGp/zv7gpIQdCig7OcU0AI29Ev3VkXdkahULTtSjqnelqiqfc
+	Cbbg5zezlME2HKmUmzCyxqc=
+X-Google-Smtp-Source: ACHHUZ5tmzX7Gky4FoWcYqK/XgAiBZmxx4GZwfY7Maprf5PGAjVNZO2ffi7wJPr4zJq4mCocezaMUw==
+X-Received: by 2002:a05:600c:3797:b0:3f8:f749:efae with SMTP id o23-20020a05600c379700b003f8f749efaemr7880771wmr.33.1687259054028;
+        Tue, 20 Jun 2023 04:04:14 -0700 (PDT)
 Received: from debian ([63.135.72.41])
-        by smtp.gmail.com with ESMTPSA id x5-20020adff645000000b0031276f8be22sm1701779wrp.97.2023.06.20.03.57.25
+        by smtp.gmail.com with ESMTPSA id n22-20020a7bcbd6000000b003f908ee3091sm8459764wmi.3.2023.06.20.04.04.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jun 2023 03:57:25 -0700 (PDT)
-Date: Tue, 20 Jun 2023 11:57:24 +0100
+        Tue, 20 Jun 2023 04:04:13 -0700 (PDT)
+Date: Tue, 20 Jun 2023 12:04:12 +0100
 From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -46,9 +46,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
 	rwarsow@gmx.de
-Subject: Re: [PATCH 5.4 00/64] 5.4.248-rc1 review
-Message-ID: <ZJGGFPe1KWMyC891@debian>
-References: <20230619102132.808972458@linuxfoundation.org>
+Subject: Re: [PATCH 5.10 00/89] 5.10.185-rc1 review
+Message-ID: <ZJGHrHSvmNQHr2me@debian>
+References: <20230619102138.279161276@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,20 +57,20 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230619102132.808972458@linuxfoundation.org>
+In-Reply-To: <20230619102138.279161276@linuxfoundation.org>
 
 Hi Greg,
 
-On Mon, Jun 19, 2023 at 12:29:56PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.248 release.
-> There are 64 patches in this series, all will be posted as a response
+On Mon, Jun 19, 2023 at 12:29:48PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.185 release.
+> There are 89 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
 Build test (gcc version 11.3.1 20230511):
-mips: 65 configs -> 3 failures
-arm: 106 configs -> no failure
-arm64: 2 configs -> no failure
+mips: 63 configs -> 3 failures
+arm: 104 configs -> no failure
+arm64: 3 configs -> no failure
 x86_64: 4 configs -> no failure
 alpha allmodconfig -> no failure
 powerpc allmodconfig -> no failure
@@ -79,18 +79,22 @@ s390 allmodconfig -> no failure
 xtensa allmodconfig -> no failure
 
 Note:
-mips db1xxx_defconfig, gpr_defconfig and mtx1_defconfig failed to build with:
+mips db1xxx_defconfig, gpr_defconfig and mtx1_defconfig fails with:
 
-arch/mips/alchemy/common/dbdma.c:33:10: fatal error: linux/dma-map-ops.h: No such file or directory
-   33 | #include <linux/dma-map-ops.h> /* for dma_default_coherent */
-      |          ^~~~~~~~~~~~~~~~~~~~~
+arch/mips/alchemy/common/dbdma.c: In function 'au1xxx_dbdma_put_source':
+arch/mips/alchemy/common/dbdma.c:632:14: error: 'dma_default_coherent' undeclared (first use in this function); did you mean 'dma_free_coherent'?
+  632 |         if (!dma_default_coherent)
+      |              ^~~~~~~~~~~~~~~~~~~~
+      |              dma_free_coherent
 
 
 Boot test:
 x86_64: Booted on my test laptop. No regression.
 x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
 
-[1]. https://openqa.qa.codethink.co.uk/tests/4066
+[1]. https://openqa.qa.codethink.co.uk/tests/4067
+[2]. https://openqa.qa.codethink.co.uk/tests/4068
 
 
 Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
