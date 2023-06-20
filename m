@@ -1,82 +1,96 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EEB10961
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 11:24:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1687260244; x=1718796244;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ObSwR3z5gLc7CWALv2Ch7IeWIRyke2xnjULZNZqbszg=;
-  b=d8u/tE7TpzcT9DGPD+AUHNQTv+RKimeDU/QfE6eTQS6ke+xgBT/t4PVq
-   dnP2kxpDcTMAXYLFxkh7pHp+0P2M+62ffvw1qG+UVfpL4zzCn3hYN188L
-   JXauTHSZcjC/YYk8xty13V2a52in76Br86zeBItTUSu1Mf8dvzf0nAuBS
-   u8+EP8RMwzpXam7L/LAW/XP/wY8L+MiadgmHT8bRpe35zpDU12dsOpQgJ
-   PDpZv0tZ4sKxd+9tMYxrNOvG//kqS9jK4dEIbHiUmqK3ZZuunxFDnM1m4
-   2ZfLCQfVKFLb70MBgulko6wjedJlaSoh2a96ldAxEZ6ckBKguNhF61YTH
-   Q==;
-X-IronPort-AV: E=Sophos;i="6.00,256,1681196400"; 
-   d="asc'?scan'208";a="231095395"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa1.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 20 Jun 2023 04:23:56 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex02.mchp-main.com (10.10.85.144) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Tue, 20 Jun 2023 04:23:56 -0700
-Received: from wendy (10.10.115.15) by chn-vm-ex03.mchp-main.com
- (10.10.85.151) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
- Transport; Tue, 20 Jun 2023 04:23:53 -0700
-Date: Tue, 20 Jun 2023 12:23:27 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348CA125C7
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 11:34:45 +0000 (UTC)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-307d58b3efbso3619622f8f.0
+        for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:34:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687260883; x=1689852883;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wNmsRYXp3LiMqLeElIlXoDkwLqAfcZRTSlTeIqHQMaw=;
+        b=gwnNn5B6lVlUbAXTwAt+yfhy6qCOBy+QHoiWSvoijiW/fbPhfoQRhGpjlvbMJn8Quv
+         Ol04JoXSx/BhqgeHX4cg4sXvYowweqDffc7xTIBt4nq3STc98+gZBAO8pDgRkMfRIUtQ
+         CpBcqDpji77J/OEb8gfe1Q0NEZ0Ne136da7BUtnq3Tmk1LwNnKf4lOwwjZwdVNgy3J6s
+         Y5e7LKaQggLU0sEFyMjgIQ4wEVVjBW8y3LCAXyafOg5rcUKto7lYRo9qIRE7R3LdGF0f
+         jqY3T+U2gNjW0ZxFPXJ3YzITFh+rTm/gNWtdN9Q/USlC0jAcisPoq49h+r5DY5QbGp9k
+         J/oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687260883; x=1689852883;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wNmsRYXp3LiMqLeElIlXoDkwLqAfcZRTSlTeIqHQMaw=;
+        b=eg+ctL0fGbb3MwBAJVrhgd4Fwd2cypXSCQVmOLCO14OEfKT8ETeSgaTfPQ3K3bzSir
+         ZMiCnnN8clPlCUKHhNnspd1gZ8AM7qCLaoRbwqx+DU0eWKUMFeTDhPrlLOrVYTfGziDi
+         nI2PtjvB9ehG35b1OvW6JNT9+N65Rop6sDlcrX2SBwkQnSdrFW3IQ3V5epo50Tik+CuB
+         apo/jk/EHILIpk9VPEnjE5S8eIdp3VEzSyl6cPEvcWIM71vfFstmJHUnD4wCCLQ2+15z
+         SApRHBPn5fMD6KuQ8BLEjZfvWjqyDPxTi2c8hALRmPxRAbHOG8lYFpQvc6caA30SHx9m
+         RhlA==
+X-Gm-Message-State: AC+VfDwtjWGB1M4XFp/D4/4ldNmQUJBF4F6DHGHLpKjsvi2qethRvYKd
+	erB0qTQGYIWtZrpMX0Ob1hA=
+X-Google-Smtp-Source: ACHHUZ7FRsTITb47OtP9ObIFUmd0XF8iyk78I8fpCv07AssJh1O0cUuctFjrufZYXNKwsEQuA04d/A==
+X-Received: by 2002:a5d:6289:0:b0:311:ac3:909f with SMTP id k9-20020a5d6289000000b003110ac3909fmr8263127wru.56.1687260883200;
+        Tue, 20 Jun 2023 04:34:43 -0700 (PDT)
+Received: from debian ([63.135.72.41])
+        by smtp.gmail.com with ESMTPSA id i14-20020a5d558e000000b0030ab5ebefa8sm1795944wrv.46.2023.06.20.04.34.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jun 2023 04:34:42 -0700 (PDT)
+Date: Tue, 20 Jun 2023 12:34:40 +0100
+From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>
-Subject: Re: [PATCH 6.1 000/166] 6.1.35-rc1 review
-Message-ID: <20230620-mandate-capsize-e8dfcce96656@wendy>
-References: <20230619102154.568541872@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 000/107] 5.15.118-rc1 review
+Message-ID: <ZJGO0LTm9Fu4lNc1@debian>
+References: <20230619102141.541044823@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="X5M9avvAq7l2RkVl"
-Content-Disposition: inline
-In-Reply-To: <20230619102154.568541872@linuxfoundation.org>
-
---X5M9avvAq7l2RkVl
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
 
-On Mon, Jun 19, 2023 at 12:27:57PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.35 release.
-> There are 166 patches in this series, all will be posted as a response
+Hi Greg,
+
+On Mon, Jun 19, 2023 at 12:29:44PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.118 release.
+> There are 107 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Build test (gcc version 12.2.1 20230511):
+mips: 62 configs -> no failure
+arm: 99 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
 
-Cheers,
-Conor.
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
 
---X5M9avvAq7l2RkVl
-Content-Type: application/pgp-signature; name="signature.asc"
+[1]. https://openqa.qa.codethink.co.uk/tests/4074
+[2]. https://openqa.qa.codethink.co.uk/tests/4072
+[3]. https://openqa.qa.codethink.co.uk/tests/4070
 
------BEGIN PGP SIGNATURE-----
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZJGMLgAKCRB4tDGHoIJi
-0njvAP0XYkx/pajmHmA2RE+wIYvGrRd0VoRhKQJyWeZ8viOryQD/SxOX2X5bd0qu
-huJFxG1Xv4VngDi7MgDUWqTh5JSFvQQ=
-=9L50
------END PGP SIGNATURE-----
-
---X5M9avvAq7l2RkVl--
+-- 
+Regards
+Sudip
