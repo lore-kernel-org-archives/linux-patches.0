@@ -1,78 +1,231 @@
-Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A39DB16400;
-	Tue, 20 Jun 2023 13:22:55 +0000 (UTC)
-Received: from uucp by elvis.franken.de with local-rmail (Exim 3.36 #1)
-	id 1qBaqt-00087y-00; Tue, 20 Jun 2023 14:52:55 +0200
-Received: by alpha.franken.de (Postfix, from userid 1000)
-	id F1BACC0346; Tue, 20 Jun 2023 14:50:37 +0200 (CEST)
-Date: Tue, 20 Jun 2023 14:50:37 +0200
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: ndesaulniers@google.com, trix@redhat.com, jiaxun.yang@flygoat.com,
-	linux-mips@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] MIPS: Mark core_vpe_count() as __init
-Message-ID: <20230620125037.GC10520@alpha.franken.de>
-References: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
+Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4652016400
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 13:46:12 +0000 (UTC)
+Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-471740b7e00so1260767e0c.1
+        for <patches@lists.linux.dev>; Tue, 20 Jun 2023 06:46:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1687268772; x=1689860772;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WcJCG56qv3SmBGDxfHQD2CThgz4mtwNLX+rRWuwbSbw=;
+        b=C6lG92cgKkpAVqdPf/+kfYhbGfzGw0ijZRCo1LZ5+Dds967JBZd/mMhSmnIalidWWy
+         yhBnmSpWERId0kz3K4S+579oH1XNQy4Cbl1bnGqVFB5YnbsCX1aEu6nBBtFocfURNW5l
+         ekCO0yCPIxJWbYbd4LLvhl0Uc3n45EhNWzFK6yQtBri1Zzy3EifQDSSerf2w2XZ83j31
+         o5A6taC6X1OVjML94K4vZnvwRPxyq8yFkVMSlwkURpbLS7f2IMIFqqfPG0fB4+0fcSgJ
+         8W8xcXeQ3HTNaau3QzwBgWGsWvCSqp9D2SkaNBuyhDZvk9cONGJHi0v5vqhmVzmWTaB+
+         zxMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687268772; x=1689860772;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WcJCG56qv3SmBGDxfHQD2CThgz4mtwNLX+rRWuwbSbw=;
+        b=ERi5S6ggbN/3/5GzWKo2F7hzTWbXY9yfF9nPXcL1ISgGVI3mGE+YabSM3UJyuYJKRP
+         qLNXvyqKy+sdvwealnrEyYzRMyL2OewPA2Z56lI/WKm9vADy7lno9puxMgNhm/6J4ADG
+         h5TVh/Jr70WTtl0fW3/yya98tXZbFJc7aSjpQdNBG+W71GEMamX+JkXUVsYqOUlY57oJ
+         YZTUHnHGC2RN2xbbhhMfQpMwFvKoTGA6G+s6o3Pg/1YDKqeX7ewB36nwQZj3EAo7tusl
+         DxXgZXMFQSAEKlC4rHU9z3GLVT0JZaUqEXtVigH3ilewHV3HYTb6v4Fh8eFsJl9Uo3bb
+         JErQ==
+X-Gm-Message-State: AC+VfDx+wtoTjY4saTUIIb2z6SAejH5E9l89qfJKcxXcm5wSu5WvvZpc
+	YS4PJzabvv/h+VGxdDhflyBieFUdgE6MvCP8gidRRw==
+X-Google-Smtp-Source: ACHHUZ7LyLpgdajqJ8eAW188Ghx5k/iDZpGh8m5wskPIyToCVUBLZmhjwi1g5PH+fXKJaQSqUxbkRjlnnvaKZCQfIYk=
+X-Received: by 2002:a1f:e1c7:0:b0:46e:7102:7211 with SMTP id
+ y190-20020a1fe1c7000000b0046e71027211mr4487185vkg.11.1687268771687; Tue, 20
+ Jun 2023 06:46:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230615-mips-mark-core_vpe_count-as-init-v1-1-99c124367ea8@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20230619102141.541044823@linuxfoundation.org>
+In-Reply-To: <20230619102141.541044823@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 20 Jun 2023 19:16:00 +0530
+Message-ID: <CA+G9fYuLStZT5JN0DngsfeTZf_TBLB1UQqEcNgDJYaut_27FvA@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/107] 5.15.118-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 15, 2023 at 09:21:18AM -0700, Nathan Chancellor wrote:
-> After commit 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters"),
-> modpost complains when building with clang:
-> 
->   WARNING: modpost: vmlinux.o: section mismatch in reference: core_vpe_count (section: .text) -> smp_max_threads (section: .init.data)
-> 
-> This warning occurs when core_vpe_count() is not inlined, as it appears
-> that a non-init function is referring to an init symbol. However, this
-> is not a problem in practice because core_vpe_count() is only called
-> from __init functions, cps_smp_setup() and cps_prepare_cpus().
-> 
-> Resolve the warning by marking core_vpe_count() as __init, as it is only
-> called in an init context so it can refer to init functions and symbols
-> and have its memory freed on boot.
-> 
-> Fixes: 96cb8ae28c65 ("MIPS: Rework smt cmdline parameters")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  arch/mips/kernel/smp-cps.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
-> index bea6a13ea464..92575222713b 100644
-> --- a/arch/mips/kernel/smp-cps.c
-> +++ b/arch/mips/kernel/smp-cps.c
-> @@ -29,7 +29,7 @@ static DECLARE_BITMAP(core_power, NR_CPUS);
->  
->  struct core_boot_config *mips_cps_core_bootcfg;
->  
-> -static unsigned core_vpe_count(unsigned int cluster, unsigned core)
-> +static unsigned __init core_vpe_count(unsigned int cluster, unsigned core)
->  {
->  	return min(smp_max_threads, mips_cps_numvps(cluster, core));
->  }
-> 
-> ---
-> base-commit: 5cad8323040bb8d47e130c10ea4dcb7175c7602a
-> change-id: 20230615-mips-mark-core_vpe_count-as-init-600dc73e367d
-> 
-> Best regards,
-> -- 
-> Nathan Chancellor <nathan@kernel.org>
-> 
+On Mon, 19 Jun 2023 at 16:28, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.118 release.
+> There are 107 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 21 Jun 2023 10:21:12 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.118-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-applied to mips-next.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-Thomas.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
--- 
-Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
-good idea.                                                [ RFC1925, 2.3 ]
+## Build
+* kernel: 5.15.118-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.15.y
+* git commit: 71c980089d7356d54f2dc0be100c29d8c4534602
+* git describe: v5.15.117-108-g71c980089d73
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
+.117-108-g71c980089d73
+
+## Test Regressions (compared to v5.15.116)
+
+## Metric Regressions (compared to v5.15.116)
+
+## Test Fixes (compared to v5.15.116)
+
+## Metric Fixes (compared to v5.15.116)
+
+## Test result summary
+total: 133496, pass: 108841, fail: 3835, skip: 20716, xfail: 104
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 117 total, 116 passed, 1 failed
+* arm64: 45 total, 43 passed, 2 failed
+* i386: 35 total, 32 passed, 3 failed
+* mips: 27 total, 26 passed, 1 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 27 total, 26 passed, 1 failed
+* riscv: 11 total, 11 passed, 0 failed
+* s390: 12 total, 11 passed, 1 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 38 total, 36 passed, 2 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
