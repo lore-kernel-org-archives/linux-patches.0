@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E66C19A
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:41:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC91C433CD
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE181380
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:59:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B412DC433CC
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1687236088;
-	bh=/tNS/QGR44nW36zshBiU7IiaxE+ykcQcF4Z0lFSXucQ=;
+	s=k20201202; t=1687237194;
+	bh=uVrcvEWzbHKx2kIdsdGpoiYhBsvKk5Y5rcbq20JBwzw=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=EpPH8HMRpyms7W99dqqhXXK+Sii6yecxcVE0WRGLvrYKBY7SvnLFbGT7P07TLdVEg
-	 Nnt4a6ppXp8GEs4ar2dRjQ5r4e39P5Qp0ryglHfhVOb7ZPexwfHMoTLHirZNK5iO1K
-	 1e6c/MstcY4Hj1MG53qCAnVUO6qKlMEkCOclFfdn/Qx4AGj2uMAkvCGXxXaBOP+Jpr
-	 1eTaIrPU/WGdedBdjEy77QKPphV0/nJa+4Q8zLD6Ri/DVwAlD6Ldv2HIXiHBG+Mlne
-	 1MbvJZy91XBFOgr8RPYOtao4vpX9CcZBY2kRApaFGq3JVvcRAMmOU23sKA8IG8kiQ5
-	 96Ckv6n2H5ttg==
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-39ebd5a22e0so1913497b6e.3
-        for <patches@lists.linux.dev>; Mon, 19 Jun 2023 21:41:27 -0700 (PDT)
-X-Gm-Message-State: AC+VfDx8lOEhdLrkuv4FpzFt9Szk0pHiH7gmH46ZNI8F3Gq3gC/CYk2L
-	7JDTcjR9lMHz/4yoVt4SmS1T1ShJl2u/pICJ3aw=
-X-Google-Smtp-Source: ACHHUZ4rhVjsVwtS8VJ2pgphBj1N7Hrk6R8ryMDWtFyaVPm2XkqPwXT+sLBvZ7vqc6fXhEfeqob/iRQyPzJfD2JPpc4=
-X-Received: by 2002:a05:6808:1524:b0:39e:c806:5889 with SMTP id
- u36-20020a056808152400b0039ec8065889mr8808160oiw.28.1687236087177; Mon, 19
- Jun 2023 21:41:27 -0700 (PDT)
+	b=f7cY/uQ4i4aoojP8StpCzjj/pVEBw10ErcqKL7gsmtNyWKEc7QUclWS2SFWpGqKNI
+	 LZXAoZRx0mOGM23/pc5Iq0fbBS2B9f5IfUdUavtyih+p3hZ+V84VnBOu6f48bvJ8Hy
+	 /Hfsy39OeNTJ2v8rQkWbGvCaH5qzQj8Bt9j50Cqr7KLIokz+Jq4BkMABKP5kiNm3n/
+	 4X9oEsVPHAELlEZTfEhrPwmGwq2U2BIlXVtgA361N3hNYCAsctcgRwGWFdT4LAh3Gx
+	 oCHE+UqUXEfuhpGPs/ztd4HnHNGXRZlPnT6d41JFNUgcgthmm9/+nXx1DmNyEt66U6
+	 6ezXqy7T6V/zA==
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-55e4b840858so1215558eaf.1
+        for <patches@lists.linux.dev>; Mon, 19 Jun 2023 21:59:54 -0700 (PDT)
+X-Gm-Message-State: AC+VfDyzxkFELHDBNXVo5Hdsf4PFYITAE6awJkqb9K+H9mkSby9RLai/
+	W6k9EwQMBSEqBMYrJO4X9TU/EiqFMuzmlOysKPQ=
+X-Google-Smtp-Source: ACHHUZ7WJQN6LmDaWYeNXV+vap/lm6Wm0tVxAs3sutK/kP5IIUMvoNjUYnzoIf8rjMdQ7zl9/kmYsloZI7dvRKToQ6E=
+X-Received: by 2002:a05:6808:16a6:b0:39e:c615:949f with SMTP id
+ bb38-20020a05680816a600b0039ec615949fmr8837818oib.24.1687237193895; Mon, 19
+ Jun 2023 21:59:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230616001631.463536-1-ojeda@kernel.org> <20230616001631.463536-6-ojeda@kernel.org>
-In-Reply-To: <20230616001631.463536-6-ojeda@kernel.org>
+References: <20230616001631.463536-1-ojeda@kernel.org> <20230616001631.463536-7-ojeda@kernel.org>
+In-Reply-To: <20230616001631.463536-7-ojeda@kernel.org>
 From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Tue, 20 Jun 2023 13:40:50 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAQc0oSA5wtb3J2PYXPy2WsL1ZDBE6vip1qXhDOS+-QjMA@mail.gmail.com>
-Message-ID: <CAK7LNAQc0oSA5wtb3J2PYXPy2WsL1ZDBE6vip1qXhDOS+-QjMA@mail.gmail.com>
-Subject: Re: [PATCH v2 05/11] kbuild: rust_is_available: add check for
- `bindgen` invocation
+Date: Tue, 20 Jun 2023 13:59:17 +0900
+X-Gmail-Original-Message-ID: <CAK7LNASzJpDuAE+0TbAOW4D1fH3ghVGFy3-a=AjqJRT-+bwD=A@mail.gmail.com>
+Message-ID: <CAK7LNASzJpDuAE+0TbAOW4D1fH3ghVGFy3-a=AjqJRT-+bwD=A@mail.gmail.com>
+Subject: Re: [PATCH v2 06/11] kbuild: rust_is_available: check that
+ environment variables are set
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
@@ -45,121 +45,127 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.co
 	Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, 
 	Andreas Hindborg <nmi@metaspace.dk>, linux-kbuild@vger.kernel.org, 
 	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, =?UTF-8?Q?Fran=C3=A7ois_Valenduc?= <francoisvalenduc@gmail.com>, 
-	Alexandru Radovici <msg4alex@gmail.com>, Matthew Leach <dev@mattleach.net>
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Fri, Jun 16, 2023 at 9:17=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> `scripts/rust_is_available.sh` calls `bindgen` with a special
-> header in order to check whether the `libclang` version in use
-> is suitable.
+> Sometimes [1] users may attempt to setup the Rust support by
+> checking what Kbuild does and they end up finding out about
+> `scripts/rust_is_available.sh`. Inevitably, they run the script
+> directly, but unless they setup the required variables,
+> the result of the script is not meaningful.
 >
-> However, the invocation itself may fail if, for instance, `bindgen`
-> cannot locate `libclang`. This is fine for Kconfig (since the
-> script will still fail and therefore disable Rust as it should),
-> but it is pretty confusing for users of the `rustavailable` target
-> given the error will be unrelated:
+> We could add some defaults to the variables, but that could be
+> confusing for those that may override the defaults (compared
+> to their kernel builds), and `$CC` would not be a simple default
+> in any case.
 >
->     ./scripts/rust_is_available.sh: 21: arithmetic expression: expecting =
-primary: "100000 *  + 100 *  + "
->     make: *** [Makefile:1816: rustavailable] Error 2
+> Therefore, instead, explicitly check whether the expected variables
+> are set (`$RUSTC`, `$BINDGEN` and `$CC`). If not, print an explanation
+> about the fact that the script is meant to be called from Kbuild,
+> since that is the most likely cause for the variables not being set.
 >
-> Instead, run the `bindgen` invocation independently in a previous
-> step, saving its output and return code. If it fails, then show
-> the user a proper error message. Otherwise, continue as usual
-> with the saved output.
->
-> Since the previous patch we show a reference to the docs, and
-> the docs now explain how `bindgen` looks for `libclang`,
-> thus the error message can leverage the documentation, avoiding
-> duplication here (and making users aware of the setup guide in
-> the documentation).
->
-> Reported-by: Nick Desaulniers <ndesaulniers@google.com>
-> Link: https://lore.kernel.org/rust-for-linux/CAKwvOdm5JT4wbdQQYuW+RT07rCi=
-6whGBM2iUAyg8A1CmLXG6Nw@mail.gmail.com/
-> Reported-by: Fran=C3=A7ois Valenduc <francoisvalenduc@gmail.com>
-> Closes: https://github.com/Rust-for-Linux/linux/issues/934
-> Reported-by: Alexandru Radovici <msg4alex@gmail.com>
-> Closes: https://github.com/Rust-for-Linux/linux/pull/921
-> Reported-by: Matthew Leach <dev@mattleach.net>
-> Closes: https://lore.kernel.org/rust-for-linux/20230507084116.1099067-1-d=
-ev@mattleach.net/
-> Fixes: 78521f3399ab ("scripts: add `rust_is_available.sh`")
+> Link: https://lore.kernel.org/oe-kbuild-all/Y6r4mXz5NS0+HVXo@zn.tnic/ [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
-
-
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-
-
-
-
->  scripts/rust_is_available.sh | 22 +++++++++++++++++++++-
->  1 file changed, 21 insertions(+), 1 deletion(-)
+>  scripts/rust_is_available.sh | 29 +++++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
 >
 > diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-> index 6b8131d5b547..1bdff4472cbe 100755
+> index 1bdff4472cbe..7e0368babe64 100755
 > --- a/scripts/rust_is_available.sh
 > +++ b/scripts/rust_is_available.sh
-> @@ -106,8 +106,28 @@ if [ "$rust_bindings_generator_cversion" -gt "$rust_=
-bindings_generator_min_cvers
->  fi
+> @@ -28,11 +28,40 @@ print_docs_reference()
+>         echo >&2 "***"
+>  }
 >
->  # Check that the `libclang` used by the Rust bindings generator is suita=
-ble.
-> +#
-> +# In order to do that, first invoke `bindgen` to get the `libclang` vers=
-ion
-> +# found by `bindgen`. This step may already fail if, for instance, `libc=
-lang`
-> +# is not found, thus inform the user in such a case.
-> +bindgen_libclang_output=3D$( \
-> +       LC_ALL=3DC "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_lib=
-clang.h 2>&1 >/dev/null
-
-
-Nit.
-
-To avoid shellcheck warnings, you can quote as follows:
-
-"$(dirname "$0")/rust_is_available_bindgen_libclang.h"
-
-
-You can do shellcheck scanning to avoid new warnings.
-
-(Of course, 02/11 intentionally unquote $CC, though)
-
-
-
-> +) || bindgen_libclang_code=3D$?
-> +if [ -n "$bindgen_libclang_code" ]; then
+> +# Print an explanation about the fact that the script is meant to be cal=
+led from Kbuild.
+> +print_kbuild_explanation()
+> +{
 > +       echo >&2 "***"
-> +       echo >&2 "*** Running '$BINDGEN' to check the libclang version (u=
-sed by the Rust"
-> +       echo >&2 "*** bindings generator) failed with code $bindgen_libcl=
-ang_code. This may be caused by"
-> +       echo >&2 "*** a failure to locate libclang. See output and docs b=
-elow for details:"
-> +       echo >&2 "***"
-> +       echo >&2 "$bindgen_libclang_output"
-> +       echo >&2 "***"
+> +       echo >&2 "*** This script is intended to be called from Kbuild."
+> +       echo >&2 "*** Please use the 'rustavailable' target to call it in=
+stead."
+> +       echo >&2 "*** Otherwise, the results may not be meaningful."
 > +       exit 1
+> +}
+> +
+>  # If the script fails for any reason, or if there was any warning, then
+>  # print a reference to the documentation on exit.
+>  warning=3D0
+>  trap 'if [ $? -ne 0 ] || [ $warning -ne 0 ]; then print_docs_reference; =
+fi' EXIT
+>
+> +# Check that the expected environment variables are set.
+> +if [ -z "${RUSTC+x}" ]; then
+> +       echo >&2 "***"
+> +       echo >&2 "*** Environment variable 'RUSTC' is not set."
+> +       print_kbuild_explanation
+> +fi
+
+
+So, you want to check whether RUSTC is set or unset.
+(that is, you allow a case where RUSTC is set, but empty.
+It will eventually fail with a different error message anyway.)
+
+
+
+
+$ ./scripts/rust_is_available.sh
+***
+*** Environment variable 'RUSTC' is not set.
+***
+*** This script is intended to be called from Kbuild.
+*** Please use the 'rustavailable' target to call it instead.
+*** Otherwise, the results may not be meaningful.
+***
+*** Please see Documentation/rust/quick-start.rst for details
+*** on how to set up the Rust support.
+***
+
+$ RUSTC=3D BINDGEN=3D CC=3D ./scripts/rust_is_available.sh
+***
+*** Rust compiler '' could not be found.
+***
+***
+*** Please see Documentation/rust/quick-start.rst for details
+*** on how to set up the Rust support.
+***
+
+
+
+I would rather check whether RUSTC is empty or not
+with simpler code.
+
+
+if [ -z "${RUSTC}" ]; then
+         ...
+fi
+
+
+
+
+
+> +
+> +if [ -z "${BINDGEN+x}" ]; then
+> +       echo >&2 "***"
+> +       echo >&2 "*** Environment variable 'BINDGEN' is not set."
+> +       print_kbuild_explanation
 > +fi
 > +
-> +# `bindgen` returned successfully, thus use the output to check that the=
- version
-> +# of the `libclang` found by the Rust bindings generator is suitable.
->  bindgen_libclang_version=3D$( \
-> -       LC_ALL=3DC "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_lib=
-clang.h 2>&1 >/dev/null \
-> +       echo "$bindgen_libclang_output" \
->                 | grep -F 'clang version ' \
->                 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
->                 | head -n 1 \
+> +if [ -z "${CC+x}" ]; then
+> +       echo >&2 "***"
+> +       echo >&2 "*** Environment variable 'CC' is not set."
+> +       print_kbuild_explanation
+> +fi
+> +
+>  # Check that the Rust compiler exists.
+>  if ! command -v "$RUSTC" >/dev/null; then
+>         echo >&2 "***"
 > --
 > 2.41.0
 >
