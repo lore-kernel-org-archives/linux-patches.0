@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3E21C13
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 05:14:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ADEC433C9
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 05:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7146F1C13
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 05:16:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA256C433CD
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 05:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1687238076;
-	bh=tSbgfbEMjBLEEAVbj8xv8hBno3G6UMoqv4nf2rzY0Sk=;
+	s=k20201202; t=1687238201;
+	bh=hzpaa3iGkGe9xtkcsnYk+Um0tqxkVjDTyjZm8EOU0Os=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=B/T7whBDgSg6+gTU5UDlslJtGxe8VnLqm06Ps8gQFPYfT64sVfZiJ1GpnXudwQfPU
-	 rI4DfVK7WHYQY1WLiPrpfUBK1it7BCjsVv8ATRg9cPUYf6zVU2fKBe993I5O/smvRs
-	 cBIfeuvuwTCd/X+axBoQjcjdIzCrCzUeP0Nr1AQ9wpmBMFBVQ0aqFgV5QgUEIEvZrt
-	 p7zjZANNd3YdkQiWn/6vTwDKxT1QlEErmqvxFuvUULPbV7QPtY8m9hA8z3zw1Krp3q
-	 yaI6+JyL3e7u+kuXD3ZZ6BY2MJNhScsl8HGBrLDbaAVHkxhCfbGA/weaD7rFvE9YBm
-	 OfxcC+JS0IMHQ==
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6b2c3ec38f0so2593738a34.1
-        for <patches@lists.linux.dev>; Mon, 19 Jun 2023 22:14:36 -0700 (PDT)
-X-Gm-Message-State: AC+VfDyfKMcuVesCkE9mGn4L/I+mGCbfEU1N3H2K6G/GUqAml4ZCPcuM
-	OSKVYlbxHS8Ty9Z3btW4enD1yNgtn/5wLXG28PI=
-X-Google-Smtp-Source: ACHHUZ4TedQEyOyNlDl9ckn5WcHyeii1NIgJKE20on5yzLcd9430oT16nGeQYx8F1v6pTgoENP3b5CfK9ueKxwplFpk=
-X-Received: by 2002:a9d:6d86:0:b0:6b5:92e9:98cb with SMTP id
- x6-20020a9d6d86000000b006b592e998cbmr757411otp.29.1687238075964; Mon, 19 Jun
- 2023 22:14:35 -0700 (PDT)
+	b=OQx/8INO9GEPdUH3BI8erf6zQ9q4FihvaiEzWpSyC6i//qpAbEAYcW5jze8qcuSIo
+	 cReVt2JMp8KbSAlKMT7vzYzat8HB61aqay4Ei4Ft4o++q9oIyaIEt0mCeGC1LlmXCL
+	 g9AqkfPJdpGqYQcUJEPMJD8RTn6py4/BOr6bwPSh0YF28we0KZWAODkuEmQSNjMUhS
+	 VohJkux7BF2mEpBj8yK71BVkGdZ1vbObE2jy/pI51DNkUMJpkaAl+UOsfG7teYJJuh
+	 OlYa3/aIPSNurQ3eurJezaMmkkeofnLbxhnpiuo4wtNx/LFpm3WEweIQ+/6RyQn9kf
+	 Hudmn8djwc6Sg==
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-55e0706af99so3066706eaf.1
+        for <patches@lists.linux.dev>; Mon, 19 Jun 2023 22:16:41 -0700 (PDT)
+X-Gm-Message-State: AC+VfDzsK7fU0SIkzIv4rbNB9tGzc7INf8pBqrPeh3Y96O/UWpCy9NjH
+	jbHMZdgmA9k/lm00KsQcYNJkh87Utjh+qsz9D60=
+X-Google-Smtp-Source: ACHHUZ5UPUAVUe7wK3MR/2HPSQYplZtvZ60obrm6pHMoETfd92DeaSbpzYdzMWQq9rjcCHB8xH4OWgnaU9Y2B/o5NoM=
+X-Received: by 2002:a4a:ba1a:0:b0:560:8d95:55f4 with SMTP id
+ b26-20020a4aba1a000000b005608d9555f4mr790814oop.4.1687238201141; Mon, 19 Jun
+ 2023 22:16:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230616001631.463536-1-ojeda@kernel.org>
-In-Reply-To: <20230616001631.463536-1-ojeda@kernel.org>
+References: <20230616001631.463536-1-ojeda@kernel.org> <20230616001631.463536-9-ojeda@kernel.org>
+In-Reply-To: <20230616001631.463536-9-ojeda@kernel.org>
 From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Tue, 20 Jun 2023 14:13:59 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAQnFe8eTGcbh9zxy0eF4HiMbyFzU1vXQ92exFecdAFmxA@mail.gmail.com>
-Message-ID: <CAK7LNAQnFe8eTGcbh9zxy0eF4HiMbyFzU1vXQ92exFecdAFmxA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/11] `scripts/rust_is_available.sh` improvements
+Date: Tue, 20 Jun 2023 14:16:05 +0900
+X-Gmail-Original-Message-ID: <CAK7LNASOsLzYMOU90JXSfEjsMaxCq8pOOsVzDfq2nSS_B8K9qQ@mail.gmail.com>
+Message-ID: <CAK7LNASOsLzYMOU90JXSfEjsMaxCq8pOOsVzDfq2nSS_B8K9qQ@mail.gmail.com>
+Subject: Re: [PATCH v2 08/11] kbuild: rust_is_available: normalize version matching
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
@@ -48,65 +48,82 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.co
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 16, 2023 at 9:16=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+On Fri, Jun 16, 2023 at 9:17=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> This is the patch series to improve `scripts/rust_is_available.sh`.
+> In order to match the version string, `sed` is used in a couple
+> cases, and `grep` and `head` in a couple others.
 >
-> The major addition in v2 is the test suite in the last commit. I added
-> it because I wanted to have a proper way to test any further changes to
-> it (such as the suggested `set --` idea to avoid forking by Masahiro),
-> and so that adding new checks was easier to justify too (i.e. vs. the
-> added complexity).
+> Make the script more consistent and easier to understand by
+> using the same method, `sed`, for all of them.
 >
-> In addition, there are also a few new checks in the script, to cover for
-> even some more cases, which hopefully make problematic setups easier to
-> identify and solve by users building the kernel. For instance, running
-> the script externally gives:
+> This makes the version matching also a bit more strict for
+> the changed cases, since the strings `rustc ` and `bindgen `
+> will now be required, which should be fine since `rustc`
+> complains if one attempts to call it with another program
+> name, and `bindgen` uses a hardcoded string.
 >
->     $ scripts/rust_is_available.sh
->     ***
->     *** Environment variable 'RUSTC' is not set.
->     ***
->     *** This script is intended to be called from Kbuild.
->     *** Please use the 'rustavailable' target to call it instead.
->     *** Otherwise, the results may not be meaningful.
->     ***
->     *** Please see Documentation/rust/quick-start.rst for details
->     *** on how to set up the Rust support.
->     ***
+> In addition, clarify why one of the existing `sed` commands
+> does not provide an address like the others.
 >
-> I also changed it to avoid setting `-e` as Masahiro suggested.
-> Similarly, I now check for `$RUSTC`, `$BINDGEN` and `$CC`, instead of
-> `$MAKEFLAGS`, as he also suggested (but I gave it their own error
-> message rather than use the `${CC?: is not set}` approach. This goes in
-> line with the reasons outlined above, i.e. trying to give users a clear
-> error of what step exactly failed).
->
-> In the test suite I included previously problematic compiler version
-> strings we got reports for. The test suite covers all current branches
-> in the script, and we should keep it that way in the future.
->
-> The patch series also include Masahiro's patch to remove the `-v`
-> option, as well as Russell's patch for supporting multiple arguments
-> in `$CC`.
->
-> All in all, this should solve all the issues we got so far (unless I
-> have missed something) and improve things further with the new checks
-> plus the test suite to hopefully have an easier time in the future.
->
-> Testers for this one are appreciated, especially if you have uncommon or
-> custom setups for building the kernel.
->
-> This could go through either the Kbuild or the Rust tree.
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 
-Please feel free to apply it to the Rust tree.
-Perhaps I may add minor comments, but it is up to you.
+
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
 
 
 
 
+> ---
+>  scripts/rust_is_available.sh | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+>
+> diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
+> index 810691af66eb..b7e0781fdea9 100755
+> --- a/scripts/rust_is_available.sh
+> +++ b/scripts/rust_is_available.sh
+> @@ -83,8 +83,7 @@ fi
+>  # Non-stable and distributions' versions may have a version suffix, e.g.=
+ `-dev`.
+>  rust_compiler_version=3D$( \
+>         LC_ALL=3DC "$RUSTC" --version 2>/dev/null \
+> -               | head -n 1 \
+> -               | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
+> +               | sed -nE '1s:.*rustc ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
+>  )
+>  rust_compiler_min_version=3D$($min_tool_version rustc)
+>  rust_compiler_cversion=3D$(get_canonical_version $rust_compiler_version)
+> @@ -111,8 +110,7 @@ fi
+>  # Non-stable and distributions' versions may have a version suffix, e.g.=
+ `-dev`.
+>  rust_bindings_generator_version=3D$( \
+>         LC_ALL=3DC "$BINDGEN" --version 2>/dev/null \
+> -               | head -n 1 \
+> -               | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
+> +               | sed -nE '1s:.*bindgen ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
+>  )
+>  rust_bindings_generator_min_version=3D$($min_tool_version bindgen)
+>  rust_bindings_generator_cversion=3D$(get_canonical_version $rust_binding=
+s_generator_version)
+> @@ -155,6 +153,9 @@ fi
+>
+>  # `bindgen` returned successfully, thus use the output to check that the=
+ version
+>  # of the `libclang` found by the Rust bindings generator is suitable.
+> +#
+> +# Unlike other version checks, note that this one does not necessarily a=
+ppear
+> +# in the first line of the output, thus no `sed` address is provided.
+>  bindgen_libclang_version=3D$( \
+>         echo "$bindgen_libclang_output" \
+>                 | sed -nE 's:.*clang version ([0-9]+\.[0-9]+\.[0-9]+).*:\=
+1:p'
+> --
+> 2.41.0
+>
 
+
+--=20
 Best Regards
 Masahiro Yamada
