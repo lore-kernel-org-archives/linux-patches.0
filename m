@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE181380
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:59:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B412DC433CC
-	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 04:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3E21C13
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 05:14:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ADEC433C9
+	for <patches@lists.linux.dev>; Tue, 20 Jun 2023 05:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1687237194;
-	bh=uVrcvEWzbHKx2kIdsdGpoiYhBsvKk5Y5rcbq20JBwzw=;
+	s=k20201202; t=1687238076;
+	bh=tSbgfbEMjBLEEAVbj8xv8hBno3G6UMoqv4nf2rzY0Sk=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=f7cY/uQ4i4aoojP8StpCzjj/pVEBw10ErcqKL7gsmtNyWKEc7QUclWS2SFWpGqKNI
-	 LZXAoZRx0mOGM23/pc5Iq0fbBS2B9f5IfUdUavtyih+p3hZ+V84VnBOu6f48bvJ8Hy
-	 /Hfsy39OeNTJ2v8rQkWbGvCaH5qzQj8Bt9j50Cqr7KLIokz+Jq4BkMABKP5kiNm3n/
-	 4X9oEsVPHAELlEZTfEhrPwmGwq2U2BIlXVtgA361N3hNYCAsctcgRwGWFdT4LAh3Gx
-	 oCHE+UqUXEfuhpGPs/ztd4HnHNGXRZlPnT6d41JFNUgcgthmm9/+nXx1DmNyEt66U6
-	 6ezXqy7T6V/zA==
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-55e4b840858so1215558eaf.1
-        for <patches@lists.linux.dev>; Mon, 19 Jun 2023 21:59:54 -0700 (PDT)
-X-Gm-Message-State: AC+VfDyzxkFELHDBNXVo5Hdsf4PFYITAE6awJkqb9K+H9mkSby9RLai/
-	W6k9EwQMBSEqBMYrJO4X9TU/EiqFMuzmlOysKPQ=
-X-Google-Smtp-Source: ACHHUZ7WJQN6LmDaWYeNXV+vap/lm6Wm0tVxAs3sutK/kP5IIUMvoNjUYnzoIf8rjMdQ7zl9/kmYsloZI7dvRKToQ6E=
-X-Received: by 2002:a05:6808:16a6:b0:39e:c615:949f with SMTP id
- bb38-20020a05680816a600b0039ec615949fmr8837818oib.24.1687237193895; Mon, 19
- Jun 2023 21:59:53 -0700 (PDT)
+	b=B/T7whBDgSg6+gTU5UDlslJtGxe8VnLqm06Ps8gQFPYfT64sVfZiJ1GpnXudwQfPU
+	 rI4DfVK7WHYQY1WLiPrpfUBK1it7BCjsVv8ATRg9cPUYf6zVU2fKBe993I5O/smvRs
+	 cBIfeuvuwTCd/X+axBoQjcjdIzCrCzUeP0Nr1AQ9wpmBMFBVQ0aqFgV5QgUEIEvZrt
+	 p7zjZANNd3YdkQiWn/6vTwDKxT1QlEErmqvxFuvUULPbV7QPtY8m9hA8z3zw1Krp3q
+	 yaI6+JyL3e7u+kuXD3ZZ6BY2MJNhScsl8HGBrLDbaAVHkxhCfbGA/weaD7rFvE9YBm
+	 OfxcC+JS0IMHQ==
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6b2c3ec38f0so2593738a34.1
+        for <patches@lists.linux.dev>; Mon, 19 Jun 2023 22:14:36 -0700 (PDT)
+X-Gm-Message-State: AC+VfDyfKMcuVesCkE9mGn4L/I+mGCbfEU1N3H2K6G/GUqAml4ZCPcuM
+	OSKVYlbxHS8Ty9Z3btW4enD1yNgtn/5wLXG28PI=
+X-Google-Smtp-Source: ACHHUZ4TedQEyOyNlDl9ckn5WcHyeii1NIgJKE20on5yzLcd9430oT16nGeQYx8F1v6pTgoENP3b5CfK9ueKxwplFpk=
+X-Received: by 2002:a9d:6d86:0:b0:6b5:92e9:98cb with SMTP id
+ x6-20020a9d6d86000000b006b592e998cbmr757411otp.29.1687238075964; Mon, 19 Jun
+ 2023 22:14:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230616001631.463536-1-ojeda@kernel.org> <20230616001631.463536-7-ojeda@kernel.org>
-In-Reply-To: <20230616001631.463536-7-ojeda@kernel.org>
+References: <20230616001631.463536-1-ojeda@kernel.org>
+In-Reply-To: <20230616001631.463536-1-ojeda@kernel.org>
 From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Tue, 20 Jun 2023 13:59:17 +0900
-X-Gmail-Original-Message-ID: <CAK7LNASzJpDuAE+0TbAOW4D1fH3ghVGFy3-a=AjqJRT-+bwD=A@mail.gmail.com>
-Message-ID: <CAK7LNASzJpDuAE+0TbAOW4D1fH3ghVGFy3-a=AjqJRT-+bwD=A@mail.gmail.com>
-Subject: Re: [PATCH v2 06/11] kbuild: rust_is_available: check that
- environment variables are set
+Date: Tue, 20 Jun 2023 14:13:59 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQnFe8eTGcbh9zxy0eF4HiMbyFzU1vXQ92exFecdAFmxA@mail.gmail.com>
+Message-ID: <CAK7LNAQnFe8eTGcbh9zxy0eF4HiMbyFzU1vXQ92exFecdAFmxA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] `scripts/rust_is_available.sh` improvements
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
@@ -49,128 +48,65 @@ Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.co
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 16, 2023 at 9:17=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+On Fri, Jun 16, 2023 at 9:16=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
 te:
 >
-> Sometimes [1] users may attempt to setup the Rust support by
-> checking what Kbuild does and they end up finding out about
-> `scripts/rust_is_available.sh`. Inevitably, they run the script
-> directly, but unless they setup the required variables,
-> the result of the script is not meaningful.
+> This is the patch series to improve `scripts/rust_is_available.sh`.
 >
-> We could add some defaults to the variables, but that could be
-> confusing for those that may override the defaults (compared
-> to their kernel builds), and `$CC` would not be a simple default
-> in any case.
+> The major addition in v2 is the test suite in the last commit. I added
+> it because I wanted to have a proper way to test any further changes to
+> it (such as the suggested `set --` idea to avoid forking by Masahiro),
+> and so that adding new checks was easier to justify too (i.e. vs. the
+> added complexity).
 >
-> Therefore, instead, explicitly check whether the expected variables
-> are set (`$RUSTC`, `$BINDGEN` and `$CC`). If not, print an explanation
-> about the fact that the script is meant to be called from Kbuild,
-> since that is the most likely cause for the variables not being set.
+> In addition, there are also a few new checks in the script, to cover for
+> even some more cases, which hopefully make problematic setups easier to
+> identify and solve by users building the kernel. For instance, running
+> the script externally gives:
 >
-> Link: https://lore.kernel.org/oe-kbuild-all/Y6r4mXz5NS0+HVXo@zn.tnic/ [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  scripts/rust_is_available.sh | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
+>     $ scripts/rust_is_available.sh
+>     ***
+>     *** Environment variable 'RUSTC' is not set.
+>     ***
+>     *** This script is intended to be called from Kbuild.
+>     *** Please use the 'rustavailable' target to call it instead.
+>     *** Otherwise, the results may not be meaningful.
+>     ***
+>     *** Please see Documentation/rust/quick-start.rst for details
+>     *** on how to set up the Rust support.
+>     ***
 >
-> diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-> index 1bdff4472cbe..7e0368babe64 100755
-> --- a/scripts/rust_is_available.sh
-> +++ b/scripts/rust_is_available.sh
-> @@ -28,11 +28,40 @@ print_docs_reference()
->         echo >&2 "***"
->  }
+> I also changed it to avoid setting `-e` as Masahiro suggested.
+> Similarly, I now check for `$RUSTC`, `$BINDGEN` and `$CC`, instead of
+> `$MAKEFLAGS`, as he also suggested (but I gave it their own error
+> message rather than use the `${CC?: is not set}` approach. This goes in
+> line with the reasons outlined above, i.e. trying to give users a clear
+> error of what step exactly failed).
 >
-> +# Print an explanation about the fact that the script is meant to be cal=
-led from Kbuild.
-> +print_kbuild_explanation()
-> +{
-> +       echo >&2 "***"
-> +       echo >&2 "*** This script is intended to be called from Kbuild."
-> +       echo >&2 "*** Please use the 'rustavailable' target to call it in=
-stead."
-> +       echo >&2 "*** Otherwise, the results may not be meaningful."
-> +       exit 1
-> +}
-> +
->  # If the script fails for any reason, or if there was any warning, then
->  # print a reference to the documentation on exit.
->  warning=3D0
->  trap 'if [ $? -ne 0 ] || [ $warning -ne 0 ]; then print_docs_reference; =
-fi' EXIT
+> In the test suite I included previously problematic compiler version
+> strings we got reports for. The test suite covers all current branches
+> in the script, and we should keep it that way in the future.
 >
-> +# Check that the expected environment variables are set.
-> +if [ -z "${RUSTC+x}" ]; then
-> +       echo >&2 "***"
-> +       echo >&2 "*** Environment variable 'RUSTC' is not set."
-> +       print_kbuild_explanation
-> +fi
-
-
-So, you want to check whether RUSTC is set or unset.
-(that is, you allow a case where RUSTC is set, but empty.
-It will eventually fail with a different error message anyway.)
-
-
-
-
-$ ./scripts/rust_is_available.sh
-***
-*** Environment variable 'RUSTC' is not set.
-***
-*** This script is intended to be called from Kbuild.
-*** Please use the 'rustavailable' target to call it instead.
-*** Otherwise, the results may not be meaningful.
-***
-*** Please see Documentation/rust/quick-start.rst for details
-*** on how to set up the Rust support.
-***
-
-$ RUSTC=3D BINDGEN=3D CC=3D ./scripts/rust_is_available.sh
-***
-*** Rust compiler '' could not be found.
-***
-***
-*** Please see Documentation/rust/quick-start.rst for details
-*** on how to set up the Rust support.
-***
-
-
-
-I would rather check whether RUSTC is empty or not
-with simpler code.
-
-
-if [ -z "${RUSTC}" ]; then
-         ...
-fi
-
-
-
-
-
-> +
-> +if [ -z "${BINDGEN+x}" ]; then
-> +       echo >&2 "***"
-> +       echo >&2 "*** Environment variable 'BINDGEN' is not set."
-> +       print_kbuild_explanation
-> +fi
-> +
-> +if [ -z "${CC+x}" ]; then
-> +       echo >&2 "***"
-> +       echo >&2 "*** Environment variable 'CC' is not set."
-> +       print_kbuild_explanation
-> +fi
-> +
->  # Check that the Rust compiler exists.
->  if ! command -v "$RUSTC" >/dev/null; then
->         echo >&2 "***"
-> --
-> 2.41.0
+> The patch series also include Masahiro's patch to remove the `-v`
+> option, as well as Russell's patch for supporting multiple arguments
+> in `$CC`.
 >
+> All in all, this should solve all the issues we got so far (unless I
+> have missed something) and improve things further with the new checks
+> plus the test suite to hopefully have an easier time in the future.
+>
+> Testers for this one are appreciated, especially if you have uncommon or
+> custom setups for building the kernel.
+>
+> This could go through either the Kbuild or the Rust tree.
 
 
---=20
+Please feel free to apply it to the Rust tree.
+Perhaps I may add minor comments, but it is up to you.
+
+
+
+
+
 Best Regards
 Masahiro Yamada
