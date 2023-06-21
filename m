@@ -1,90 +1,122 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EDB19E43
-	for <patches@lists.linux.dev>; Wed, 21 Jun 2023 17:52:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=gMoi/Kpkd2t++Ir/CViW4ziy87M/IAsQ7OmN0fHf2Dw=; b=J6+W9nxHLgw1DgYyz/zaXz7NqW
-	o84OefmCJAT5zF9/nwmpIGa5bBaUnBu58d5v22SX4F2lWBoIM5fspymsNGpIuCUg2QbIJNbKCx8Ms
-	Za1EvbZk7F/02l8SFb+BWLzuJ9phGRv5lM/4H/9B2lUyCTw3+w5w8Rlqzz5X3zP0EBgYQLICRTHuP
-	LM7mhfg+qcHfSUY1YpjZD3T1wAN0mq7G50/bVSVdVNx/oooiHr3VE2R4jTIU+b6LZg7HsnchplvEj
-	z9+WuA+pzkQNLxRHQMgr8bxb53yT5KPiuFV+D2ZkM45Wr/gI2rNNmdM8pQysfw9tYvG/4GxrprSVG
-	ejXEb38w==;
-Received: from [2601:1c2:980:9ec0::2764]
-	by bombadil.infradead.org with esmtpsa (Exim 4.96 #2 (Red Hat Linux))
-	id 1qC200-00FIdQ-0N;
-	Wed, 21 Jun 2023 17:52:08 +0000
-Message-ID: <23e944f2-789d-9758-a26e-0cb99861f30d@infradead.org>
-Date: Wed, 21 Jun 2023 10:52:07 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D965A2595
+	for <patches@lists.linux.dev>; Wed, 21 Jun 2023 18:45:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7E1C433C0;
+	Wed, 21 Jun 2023 18:45:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1687373123;
+	bh=IgqlO8KTP+GODhAzey1igAT7BLCCxVaUygzSBMIxHXs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fLNoYFnAKeA8fVVLFypZVx6AC0V3CT+ZhJgz9WxAa9CvRGkCXsd62pI94A1HEFI+b
+	 1rVAhLmRpr8bMm8ClRcE0ZOC29NLrDkKYmV8Ly8nIO1HjL/1/8N8ykaQpOz4ot1GsA
+	 Aq8PoaI2tZYxmXagak9hAdUZdVoqxHxfMN3tjCeI=
+Date: Wed, 21 Jun 2023 20:45:12 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>,
+	Felix Riemann <felix.riemann@sma.de>, patches@lists.linux.dev,
+	sashal@kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 5.15 070/371] tpm, tpm_tis: Claim locality before writing
+ interrupt registers
+Message-ID: <2023062100-retrace-kitten-7241@gregkh>
+References: <20230508094814.897191675@linuxfoundation.org>
+ <20230515153759.2072-1-svc.sw.rte.linux@sma.de>
+ <382309d7c0ae593d507eb816982f6a66c2cda00a.camel@kernel.org>
+ <2023060906-starter-scrounger-1bca@gregkh>
+ <3bdaa40e-16dc-6c04-b9e4-9e5951267e7e@kunbus.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 6/7] x86/resctrl: Update documentation with Sub-NUMA
- cluster changes
-Content-Language: en-US
-To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
- Reinette Chatre <reinette.chatre@intel.com>,
- Peter Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
- x86@kernel.org
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
- <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
- Babu Moger <babu.moger@amd.com>, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, patches@lists.linux.dev
-References: <20230621174006.42533-1-tony.luck@intel.com>
- <20230621174006.42533-7-tony.luck@intel.com>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20230621174006.42533-7-tony.luck@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3bdaa40e-16dc-6c04-b9e4-9e5951267e7e@kunbus.com>
 
-Hi Tony,
-
-On 6/21/23 10:40, Tony Luck wrote:
-> With Sub-NUMA Cluster mode enabled the scope of monitoring resources is
-> per-NODE instead of per-L3 cache. Suffixes of directories with "L3" in
-> their name refer to Sub-NUMA nodes instead of L3 cache ids.
+On Fri, Jun 09, 2023 at 05:42:20PM +0200, Lino Sanfilippo wrote:
+> Hi,
 > 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->  Documentation/arch/x86/resctrl.rst | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
+> On 09.06.23 11:07, Greg KH wrote:
+> > 
+> > On Wed, May 24, 2023 at 04:07:41AM +0300, Jarkko Sakkinen wrote:
+> >> On Mon, 2023-05-15 at 17:37 +0200, Felix Riemann wrote:
+> >>> Hi!
+> >>>
+> >>>> [ Upstream commit 15d7aa4e46eba87242a320f39773aa16faddadee ]
+> >>>>
+> >>>> In tpm_tis_probe_single_irq() interrupt registers TPM_INT_VECTOR,
+> >>>> TPM_INT_STATUS and TPM_INT_ENABLE are modified to setup the interrupts.
+> >>>> Currently these modifications are done without holding a locality thus they
+> >>>> have no effect. Fix this by claiming the (default) locality before the
+> >>>> registers are written.
+> >>>>
+> >>>> Since now tpm_tis_gen_interrupt() is called with the locality already
+> >>>> claimed remove locality request and release from this function.
+> >>>
+> >>> On systems with SPI-connected TPM and the interrupt still configured
+> >>> (despite it not working before) this may introduce a kernel crash.
+> >>> The issue is that it will now trigger an SPI transfer (which will wait)
+> >>> from the IRQ handler:
+> >>>
+> >>> BUG: scheduling while atomic: systemd-journal/272/0x00010001
+> >>> Modules linked in: spi_fsl_lpspi
+> >>> CPU: 0 PID: 272 Comm: systemd-journal Not tainted 5.15.111-06679-g56b9923f2840 #50
+> >>> Call trace:
+> >>>  dump_backtrace+0x0/0x1e0
+> >>>  show_stack+0x18/0x40
+> >>>  dump_stack_lvl+0x68/0x84
+> >>>  dump_stack+0x18/0x34
+> >>>  __schedule_bug+0x54/0x70
+> >>>  __schedule+0x664/0x760
+> >>>  schedule+0x88/0x100
+> >>>  schedule_timeout+0x80/0xf0
+> >>>  wait_for_completion_timeout+0x80/0x10c
+> >>>  fsl_lpspi_transfer_one+0x25c/0x4ac [spi_fsl_lpspi]
+> >>>  spi_transfer_one_message+0x22c/0x440
+> >>>  __spi_pump_messages+0x330/0x5b4
+> >>>  __spi_sync+0x230/0x264
+> >>>  spi_sync_locked+0x10/0x20
+> >>>  tpm_tis_spi_transfer+0x1ec/0x250
+> >>>  tpm_tis_spi_read_bytes+0x14/0x20
+> >>>  tpm_tis_spi_read32+0x38/0x70
+> >>>  tis_int_handler+0x48/0x15c
+> >>>  *snip*
+> >>>
+> >>> The immediate error is fixable by also picking 0c7e66e5fd ("tpm, tpm_tis:
+> >>> Request threaded interrupt handler") from the same patchset[1].
+> >>> However, as
+> >>> the driver's IRQ test logic is still faulty it will fail the check and fall
+> >>> back to the polling behaviour without actually disabling the IRQ in hard-
+> >>> and software again. For this at least e644b2f498 ("tpm, tpm_tis: Enable
+> >>> interrupt test") and 0e069265bc ("tpm, tpm_tis: Claim locality in interrupt
+> >>> handler") are necessary.
+> >>>
+> >>> At this point 9 of the set's 14 patches are applied and I am not sure
+> >>> whether it's better to pick the remaining five patches as well or just
+> >>> revert the initial six patches. Especially considering there were initially
+> >>> no plans to submit these patches to stable[2] and the IRQ feature was (at
+> >>> least on SPI) not working before.
+> >>
+> >> I think the right thing to do would be to revert 6 initial patches.
+> > 
+> > Ok, I think this isn't needed anymore with the latest 5.15.116 release,
+> > right?  If not, please let me know.
+> > 
 > 
-> diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-> index cb05d90111b4..13fc9fa664fc 100644
-> --- a/Documentation/arch/x86/resctrl.rst
-> +++ b/Documentation/arch/x86/resctrl.rst
-> @@ -345,9 +345,13 @@ When control is enabled all CTRL_MON groups will also contain:
->  When monitoring is enabled all MON groups will also contain:
->  
->  "mon_data":
-> -	This contains a set of files organized by L3 domain and by
-> -	RDT event. E.g. on a system with two L3 domains there will
-> -	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
-> +	This contains a set of files organized by L3 domain or by NUMA
-> +	node (depending on whether Sub-NUMA Cluster (SNC) mode is disabled
-> +	or enabled respectively) and by RDT event. E.g. on a system with
-> +	SNC mode disabled with two L3 domains there will be subdirectories
-> +	"mon_L3_00" and "mon_L3_01" the numerical suffix refers to the
+> 
+> With 0c7e66e5fd ("tpm, tpm_tis: Request threaded interrupt handler") applied the
+> above bug is fixed in 5.15.y. There is however still the issue that the interrupts may
+> not be acknowledged properly in the interrupt handler, since the concerning register is written
+> without the required locality held (Felix mentions this above).
+> This can be fixed with 0e069265bce5 ("tpm, tpm_tis: Claim locality in interrupt handler").
+> 
+> So instead of reverting the initial patches, I suggest to
+> 
+> 1. also apply 0e069265bce5 ("tpm, tpm_tis: Claim locality in interrupt handler")
 
-	                "mon_L3_01". The
-or just insert a semi-colon. Anything to break up the run-on sentence.
+I've now done this, thanks.
 
-> +	L3 cache id.  With SNC enabled the directory names are the same,
-> +	but the numerical suffix refers to the node id.  Each of these
->  	directories have one file per event (e.g. "llc_occupancy",
-
-	            has
-
->  	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
->  	files provide a read out of the current value of the event for
-
--- 
-~Randy
+greg k-h
