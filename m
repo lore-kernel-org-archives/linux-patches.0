@@ -1,30 +1,30 @@
 Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA6119BD4
-	for <patches@lists.linux.dev>; Wed, 21 Jun 2023 17:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1F118C16
+	for <patches@lists.linux.dev>; Wed, 21 Jun 2023 17:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1687369239; x=1718905239;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=7ao2OThthz21P6Yl50SPghVSsGnyGwhkun9NS+QMgvU=;
-  b=DZRx5Lokr9DqoqL7Vo+GxS6LBkCMJxMKTG/Q//bL6iEEpDRKCOfKH0o7
-   K5qakuCEBM3MAyisx5qykTrzflc48il6cyqdptRaZzgVcf4m961Q8/F6e
-   oE58P09U1yF/ERqkPZnIxp46jIDqV6hjEvTnzeWkhyG9PkD3r8+Xpmhbj
-   7wewUHW0RlyURdKlZSgi8WMpJ5ARuO2fIjyqf817vP+SRhYqnnJpiuun4
-   FJvxMqcJCxctEyc66ZqNrFpJgqB437bO8usvRQ5PeqcjWdYHHU3n9HlKH
-   bdJvRw/ZhygkXsohD98Z+ny28TsFqNc/l9NcrvlV1LRDzL/VPe2mruKnU
+  t=1687369238; x=1718905238;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=zscfrxdAKvIMfClhhYxsHjBzQxOHA2lu7MZycfa8Ovc=;
+  b=MsdAHxGMVUOzw1d/2IjPb3jEyj0byURUkn1ygSUoeae03c5NcGrpmp+w
+   ygTV0h1ZsuHvBxLVbbcC6gNJVtMODF2XoYKzd62gC+93NKh7MU8ca7wor
+   500/e9/Ra9KxNN30p3YEAArGl+vEp85hAS5b2ytmflLfg+wgqxDwI5fGZ
+   gUjg9/YdQ/FPwGpFTWVAHsoOmRcBmkBFtfZ3Ujp/7yJQqqTs2J2oiwjdK
+   VDMHplfU2tLsIB/yGEdTO4aX6G+tzNp3ihRloyS9X3XIjA3FnVhduG3Lp
+   GAkYFU/Y/srFoYZcun/tsSGxXXKNM7Sbd/Tz8S28+E9vkby1XHvwJoWtP
    w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10748"; a="359120504"
+X-IronPort-AV: E=McAfee;i="6600,9927,10748"; a="359120494"
 X-IronPort-AV: E=Sophos;i="6.00,261,1681196400"; 
-   d="scan'208";a="359120504"
+   d="scan'208";a="359120494"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2023 10:40:16 -0700
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2023 10:40:15 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10748"; a="779921558"
+X-IronPort-AV: E=McAfee;i="6600,9927,10748"; a="779921554"
 X-IronPort-AV: E=Sophos;i="6.00,261,1681196400"; 
-   d="scan'208";a="779921558"
+   d="scan'208";a="779921554"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
   by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2023 10:40:15 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -41,12 +41,10 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v2 1/7] x86/resctrl: Refactor in preparation for node-scoped resources
-Date: Wed, 21 Jun 2023 10:40:00 -0700
-Message-Id: <20230621174006.42533-2-tony.luck@intel.com>
+Subject: [PATCH v2 0/7] x86/resctrl: Add support for Sub-NUMA cluster (SNC) systems
+Date: Wed, 21 Jun 2023 10:39:59 -0700
+Message-Id: <20230621174006.42533-1-tony.luck@intel.com>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230621174006.42533-1-tony.luck@intel.com>
-References: <20230621174006.42533-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,157 +53,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Sub-NUMA cluster systems provide monitoring resources at the NUMA
-node scope instead of the L3 cache scope.
+There isn't a simple hardware enumeration to indicate to software that
+a system is running with Sub-NUMA Clustering enabled.
 
-Rename the cache_level field in struct rdt_resource to the more
-generic "scope" and add symbolic names and a helper function.
+Compare the number of NUMA nodes with the number of L3 caches to calculate
+the number of Sub-NUMA nodes per L3 cache.
 
-No functional change.
+When Sub-NUMA clustering mode is enabled in BIOS setup, the RMID counters
+are distributed equally between the SNC nodes within each socket.
+
+E.g. if there are 400 RMID counters, and the system is configured with
+two SNC nodes per socket, then RMID counter 0..199 are used on SNC node
+0 on the socket, and RMID counter 200..399 on SNC node 1.
+
+A model specific MSR (0xca0) can change the configuration of the RMIDs
+when SNC mode is enabled.
+
+The MSR controls the interpretation of the RMID field in the
+IA32_PQR_ASSOC MSR so that the appropriate hardware counters
+within the SNC node are updated. If reconfigured from default, RMIDs
+ are divided evenly across clusters.
+.  
+
+Also initialize a per-cpu RMID offset value. Use this
+to calculate the value to write to the IA32_QM_EVTSEL MSR when
+reading RMID event values.
+
+N.B. this works well for well-behaved NUMA applications that access
+memory predominantly from the local memory node. For applications that
+access memory across multiple nodes it may be necessary for the user
+to read counters for all SNC nodes on a socket and add the values to
+get the actual LLC occupancy or memory bandwidth. Perhaps this isn't
+all that different from applications that span across multiple sockets
+in a legacy system.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- include/linux/resctrl.h                   |  4 ++--
- arch/x86/kernel/cpu/resctrl/internal.h    |  5 +++++
- arch/x86/kernel/cpu/resctrl/core.c        | 17 +++++++++++------
- arch/x86/kernel/cpu/resctrl/pseudo_lock.c |  2 +-
- arch/x86/kernel/cpu/resctrl/rdtgroup.c    |  2 +-
- 5 files changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index 8334eeacfec5..25051daa6655 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -150,7 +150,7 @@ struct resctrl_schema;
-  * @alloc_capable:	Is allocation available on this machine
-  * @mon_capable:	Is monitor feature available on this machine
-  * @num_rmid:		Number of RMIDs available
-- * @cache_level:	Which cache level defines scope of this resource
-+ * @scope:		Scope of this resource (cache level or NUMA node)
-  * @cache:		Cache allocation related data
-  * @membw:		If the component has bandwidth controls, their properties.
-  * @domains:		All domains for this resource
-@@ -168,7 +168,7 @@ struct rdt_resource {
- 	bool			alloc_capable;
- 	bool			mon_capable;
- 	int			num_rmid;
--	int			cache_level;
-+	int			scope;
- 	struct resctrl_cache	cache;
- 	struct resctrl_membw	membw;
- 	struct list_head	domains;
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index 85ceaf9a31ac..8275b8a74f7e 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -440,6 +440,11 @@ enum resctrl_res_level {
- 	RDT_NUM_RESOURCES,
- };
- 
-+enum resctrl_scope {
-+	SCOPE_L2_CACHE = 2,
-+	SCOPE_L3_CACHE = 3
-+};
-+
- static inline struct rdt_resource *resctrl_inc(struct rdt_resource *res)
- {
- 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(res);
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 030d3b409768..6571514752f3 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -65,7 +65,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
- 		.r_resctrl = {
- 			.rid			= RDT_RESOURCE_L3,
- 			.name			= "L3",
--			.cache_level		= 3,
-+			.scope			= SCOPE_L3_CACHE,
- 			.domains		= domain_init(RDT_RESOURCE_L3),
- 			.parse_ctrlval		= parse_cbm,
- 			.format_str		= "%d=%0*x",
-@@ -79,7 +79,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
- 		.r_resctrl = {
- 			.rid			= RDT_RESOURCE_L2,
- 			.name			= "L2",
--			.cache_level		= 2,
-+			.scope			= SCOPE_L2_CACHE,
- 			.domains		= domain_init(RDT_RESOURCE_L2),
- 			.parse_ctrlval		= parse_cbm,
- 			.format_str		= "%d=%0*x",
-@@ -93,7 +93,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
- 		.r_resctrl = {
- 			.rid			= RDT_RESOURCE_MBA,
- 			.name			= "MB",
--			.cache_level		= 3,
-+			.scope			= SCOPE_L3_CACHE,
- 			.domains		= domain_init(RDT_RESOURCE_MBA),
- 			.parse_ctrlval		= parse_bw,
- 			.format_str		= "%d=%*u",
-@@ -105,7 +105,7 @@ struct rdt_hw_resource rdt_resources_all[] = {
- 		.r_resctrl = {
- 			.rid			= RDT_RESOURCE_SMBA,
- 			.name			= "SMBA",
--			.cache_level		= 3,
-+			.scope			= 3,
- 			.domains		= domain_init(RDT_RESOURCE_SMBA),
- 			.parse_ctrlval		= parse_bw,
- 			.format_str		= "%d=%*u",
-@@ -487,6 +487,11 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
- 	return 0;
- }
- 
-+static int get_domain_id(int cpu, enum resctrl_scope scope)
-+{
-+	return get_cpu_cacheinfo_id(cpu, scope);
-+}
-+
- /*
-  * domain_add_cpu - Add a cpu to a resource's domain list.
-  *
-@@ -502,7 +507,7 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
-  */
- static void domain_add_cpu(int cpu, struct rdt_resource *r)
- {
--	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
-+	int id = get_domain_id(cpu, r->scope);
- 	struct list_head *add_pos = NULL;
- 	struct rdt_hw_domain *hw_dom;
- 	struct rdt_domain *d;
-@@ -552,7 +557,7 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
- 
- static void domain_remove_cpu(int cpu, struct rdt_resource *r)
- {
--	int id = get_cpu_cacheinfo_id(cpu, r->cache_level);
-+	int id = get_domain_id(cpu, r->scope);
- 	struct rdt_hw_domain *hw_dom;
- 	struct rdt_domain *d;
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-index 458cb7419502..42f124ffb968 100644
---- a/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-+++ b/arch/x86/kernel/cpu/resctrl/pseudo_lock.c
-@@ -297,7 +297,7 @@ static int pseudo_lock_region_init(struct pseudo_lock_region *plr)
- 	plr->size = rdtgroup_cbm_to_size(plr->s->res, plr->d, plr->cbm);
- 
- 	for (i = 0; i < ci->num_leaves; i++) {
--		if (ci->info_list[i].level == plr->s->res->cache_level) {
-+		if (ci->info_list[i].level == plr->s->res->scope) {
- 			plr->line_size = ci->info_list[i].coherency_line_size;
- 			return 0;
- 		}
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 725344048f85..418658f0a9ad 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -1348,7 +1348,7 @@ unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
- 	num_b = bitmap_weight(&cbm, r->cache.cbm_len);
- 	ci = get_cpu_cacheinfo(cpumask_any(&d->cpu_mask));
- 	for (i = 0; i < ci->num_leaves; i++) {
--		if (ci->info_list[i].level == r->cache_level) {
-+		if (ci->info_list[i].level == r->scope) {
- 			size = ci->info_list[i].size / r->cache.cbm_len * num_b;
- 			break;
- 		}
+---
+
+Changes since v1:
+
+Re-based to tip/master (on June 21, 2023)
+
+Fenghua:
++ Better comment for l3_mon_evt_init()
++ Don't need .fflags = RFTYPE_RES_MB for node resource. Use .fflags = 0
+
+James:
++ Add helper function to choose resource based on snc_ways
++ Drop the info/snc_ways file. No current justification for it.
++ Typos s/Suffices/Suffixes/, s/Sun-NUMA/Sub-NUMA/
++ Expand SNC acronym on first use in Documentation/x86/resctrl.rst
+
+Peter:
++ Add checks for cpu-less nodes.
+
+Tony Luck (7):
+  x86/resctrl: Refactor in preparation for node-scoped resources
+  x86/resctrl: Remove hard code of RDT_RESOURCE_L3 in monitor.c
+  x86/resctrl: Add a new node-scoped resource to rdt_resources_all[]
+  x86/resctrl: Add code to setup monitoring at L3 or NODE scope.
+  x86/resctrl: Add package scoped resource
+  x86/resctrl: Update documentation with Sub-NUMA cluster changes
+  x86/resctrl: Determine if Sub-NUMA Cluster is enabled and initialize.
+
+ Documentation/arch/x86/resctrl.rst        |  10 +-
+ include/linux/resctrl.h                   |   5 +-
+ arch/x86/include/asm/resctrl.h            |   2 +
+ arch/x86/kernel/cpu/resctrl/internal.h    |  20 +++
+ arch/x86/kernel/cpu/resctrl/core.c        | 154 ++++++++++++++++++++--
+ arch/x86/kernel/cpu/resctrl/monitor.c     |  24 ++--
+ arch/x86/kernel/cpu/resctrl/pseudo_lock.c |   2 +-
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c    |   4 +-
+ 8 files changed, 191 insertions(+), 30 deletions(-)
+
+
+base-commit: 746d03317c1175666aad909ecc45384da42218aa
 -- 
 2.40.1
 
