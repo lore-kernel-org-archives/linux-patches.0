@@ -1,32 +1,32 @@
 Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1F118C16
-	for <patches@lists.linux.dev>; Wed, 21 Jun 2023 17:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF9B18C16
+	for <patches@lists.linux.dev>; Wed, 21 Jun 2023 17:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1687369238; x=1718905238;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=zscfrxdAKvIMfClhhYxsHjBzQxOHA2lu7MZycfa8Ovc=;
-  b=MsdAHxGMVUOzw1d/2IjPb3jEyj0byURUkn1ygSUoeae03c5NcGrpmp+w
-   ygTV0h1ZsuHvBxLVbbcC6gNJVtMODF2XoYKzd62gC+93NKh7MU8ca7wor
-   500/e9/Ra9KxNN30p3YEAArGl+vEp85hAS5b2ytmflLfg+wgqxDwI5fGZ
-   gUjg9/YdQ/FPwGpFTWVAHsoOmRcBmkBFtfZ3Ujp/7yJQqqTs2J2oiwjdK
-   VDMHplfU2tLsIB/yGEdTO4aX6G+tzNp3ihRloyS9X3XIjA3FnVhduG3Lp
-   GAkYFU/Y/srFoYZcun/tsSGxXXKNM7Sbd/Tz8S28+E9vkby1XHvwJoWtP
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10748"; a="359120494"
+  t=1687369241; x=1718905241;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=dhSYaV/feip3Bku5n5e/swWWwTp+mDFZDryH6jxbEoc=;
+  b=SHujggXhOUNDzO/+U3WPvLBWVxK8IPTzDllHz8KPpcN0Jqi9tq+0z2gk
+   ROGLSXQbaLzweMvWIofaknNw6/AEc7LjW6cVtAleIuVZtsGoreiVyking
+   z1Hh6bl/tvJ8gCQLVelbxDOxgZ4YlrlNs+Nj9Ec6S8TFDkBBfiBbrLfFy
+   rHJzJE6WyTj0G3jXn2DoRTqPlSgyuz3bHbDgyFKCcqC5WzRo70Keqp5aN
+   OV97/E/lDe+ZT6yJ7pdu0QkgEgyqCEfidKcnm41sTAE6GBS46bE9/UWs2
+   I68kIBftkgSOJ+bFKzMQ3Qq66JdL/Nk3Zt7AVU3kghmLYD99LKWpBFQnv
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10748"; a="359120515"
 X-IronPort-AV: E=Sophos;i="6.00,261,1681196400"; 
-   d="scan'208";a="359120494"
+   d="scan'208";a="359120515"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2023 10:40:15 -0700
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2023 10:40:16 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10748"; a="779921554"
+X-IronPort-AV: E=McAfee;i="6600,9927,10748"; a="779921564"
 X-IronPort-AV: E=Sophos;i="6.00,261,1681196400"; 
-   d="scan'208";a="779921554"
+   d="scan'208";a="779921564"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2023 10:40:15 -0700
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2023 10:40:16 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -41,10 +41,12 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v2 0/7] x86/resctrl: Add support for Sub-NUMA cluster (SNC) systems
-Date: Wed, 21 Jun 2023 10:39:59 -0700
-Message-Id: <20230621174006.42533-1-tony.luck@intel.com>
+Subject: [PATCH v2 2/7] x86/resctrl: Remove hard code of RDT_RESOURCE_L3 in monitor.c
+Date: Wed, 21 Jun 2023 10:40:01 -0700
+Message-Id: <20230621174006.42533-3-tony.luck@intel.com>
 X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230621174006.42533-1-tony.luck@intel.com>
+References: <20230621174006.42533-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,82 +55,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There isn't a simple hardware enumeration to indicate to software that
-a system is running with Sub-NUMA Clustering enabled.
+Scope of monitoring may be scoped at L3 cache granularity (legacy) or
+at the node level (systems with Sub NUMA Cluster enabled).
 
-Compare the number of NUMA nodes with the number of L3 caches to calculate
-the number of Sub-NUMA nodes per L3 cache.
+Save the struct rdt_resource pointer that was used to initialize
+the monitor sections of code and use that value instead of the
+hard-coded RDT_RESOURCE_L3.
 
-When Sub-NUMA clustering mode is enabled in BIOS setup, the RMID counters
-are distributed equally between the SNC nodes within each socket.
-
-E.g. if there are 400 RMID counters, and the system is configured with
-two SNC nodes per socket, then RMID counter 0..199 are used on SNC node
-0 on the socket, and RMID counter 200..399 on SNC node 1.
-
-A model specific MSR (0xca0) can change the configuration of the RMIDs
-when SNC mode is enabled.
-
-The MSR controls the interpretation of the RMID field in the
-IA32_PQR_ASSOC MSR so that the appropriate hardware counters
-within the SNC node are updated. If reconfigured from default, RMIDs
- are divided evenly across clusters.
-.  
-
-Also initialize a per-cpu RMID offset value. Use this
-to calculate the value to write to the IA32_QM_EVTSEL MSR when
-reading RMID event values.
-
-N.B. this works well for well-behaved NUMA applications that access
-memory predominantly from the local memory node. For applications that
-access memory across multiple nodes it may be necessary for the user
-to read counters for all SNC nodes on a socket and add the values to
-get the actual LLC occupancy or memory bandwidth. Perhaps this isn't
-all that different from applications that span across multiple sockets
-in a legacy system.
+No functional change.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-
 ---
+ arch/x86/kernel/cpu/resctrl/monitor.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-Changes since v1:
-
-Re-based to tip/master (on June 21, 2023)
-
-Fenghua:
-+ Better comment for l3_mon_evt_init()
-+ Don't need .fflags = RFTYPE_RES_MB for node resource. Use .fflags = 0
-
-James:
-+ Add helper function to choose resource based on snc_ways
-+ Drop the info/snc_ways file. No current justification for it.
-+ Typos s/Suffices/Suffixes/, s/Sun-NUMA/Sub-NUMA/
-+ Expand SNC acronym on first use in Documentation/x86/resctrl.rst
-
-Peter:
-+ Add checks for cpu-less nodes.
-
-Tony Luck (7):
-  x86/resctrl: Refactor in preparation for node-scoped resources
-  x86/resctrl: Remove hard code of RDT_RESOURCE_L3 in monitor.c
-  x86/resctrl: Add a new node-scoped resource to rdt_resources_all[]
-  x86/resctrl: Add code to setup monitoring at L3 or NODE scope.
-  x86/resctrl: Add package scoped resource
-  x86/resctrl: Update documentation with Sub-NUMA cluster changes
-  x86/resctrl: Determine if Sub-NUMA Cluster is enabled and initialize.
-
- Documentation/arch/x86/resctrl.rst        |  10 +-
- include/linux/resctrl.h                   |   5 +-
- arch/x86/include/asm/resctrl.h            |   2 +
- arch/x86/kernel/cpu/resctrl/internal.h    |  20 +++
- arch/x86/kernel/cpu/resctrl/core.c        | 154 ++++++++++++++++++++--
- arch/x86/kernel/cpu/resctrl/monitor.c     |  24 ++--
- arch/x86/kernel/cpu/resctrl/pseudo_lock.c |   2 +-
- arch/x86/kernel/cpu/resctrl/rdtgroup.c    |   4 +-
- 8 files changed, 191 insertions(+), 30 deletions(-)
-
-
-base-commit: 746d03317c1175666aad909ecc45384da42218aa
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index ded1fc7cb7cb..9be6ffdd01ae 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -30,6 +30,8 @@ struct rmid_entry {
+ 	struct list_head		list;
+ };
+ 
++static struct rdt_resource *mon_resource;
++
+ /**
+  * @rmid_free_lru    A least recently used list of free RMIDs
+  *     These RMIDs are guaranteed to have an occupancy less than the
+@@ -268,7 +270,7 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_domain *d,
+  */
+ void __check_limbo(struct rdt_domain *d, bool force_free)
+ {
+-	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
++	struct rdt_resource *r = mon_resource;
+ 	struct rmid_entry *entry;
+ 	u32 crmid = 1, nrmid;
+ 	bool rmid_dirty;
+@@ -333,7 +335,7 @@ int alloc_rmid(void)
+ 
+ static void add_rmid_to_limbo(struct rmid_entry *entry)
+ {
+-	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
++	struct rdt_resource *r = mon_resource;
+ 	struct rdt_domain *d;
+ 	int cpu, err;
+ 	u64 val = 0;
+@@ -645,7 +647,7 @@ void cqm_handle_limbo(struct work_struct *work)
+ 
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+-	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
++	r = mon_resource;
+ 	d = container_of(work, struct rdt_domain, cqm_limbo.work);
+ 
+ 	__check_limbo(d, false);
+@@ -681,7 +683,7 @@ void mbm_handle_overflow(struct work_struct *work)
+ 	if (!static_branch_likely(&rdt_mon_enable_key))
+ 		goto out_unlock;
+ 
+-	r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
++	r = mon_resource;
+ 	d = container_of(work, struct rdt_domain, mbm_over.work);
+ 
+ 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
+@@ -759,9 +761,9 @@ static struct mon_evt mbm_local_event = {
+ /*
+  * Initialize the event list for the resource.
+  *
+- * Note that MBM events are also part of RDT_RESOURCE_L3 resource
+- * because as per the SDM the total and local memory bandwidth
+- * are enumerated as part of L3 monitoring.
++ * Monitor events can either be part of RDT_RESOURCE_L3 resource,
++ * or they may be per NUMA node on systems with sub-NUMA cluster
++ * enabled and are then in the RDT_RESOURCE_NODE resource.
+  */
+ static void l3_mon_evt_init(struct rdt_resource *r)
+ {
+@@ -773,6 +775,8 @@ static void l3_mon_evt_init(struct rdt_resource *r)
+ 		list_add_tail(&mbm_total_event.list, &r->evt_list);
+ 	if (is_mbm_local_enabled())
+ 		list_add_tail(&mbm_local_event.list, &r->evt_list);
++
++	mon_resource = r;
+ }
+ 
+ int __init rdt_get_mon_l3_config(struct rdt_resource *r)
 -- 
 2.40.1
 
