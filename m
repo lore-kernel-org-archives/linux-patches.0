@@ -1,141 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC051EA98;
-	Thu, 22 Jun 2023 16:54:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E05C433C8;
-	Thu, 22 Jun 2023 16:54:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1687452852;
-	bh=WvPMeVtT8HySVlQQYfCD9Qi6NPFDyHkTCRsPrIqcEts=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SX7wwboWbkVlRORAbsFOmJf2/KjqoskquLbeQwt+WXUKFFFnqejBShUZNP5XQqqW5
-	 Gru5bbKxs0zW/wV9kc4I5TKWsKB4mpc6m/Rlep7PmPdqLgn6mOOz6Kus6gzuDeoVAn
-	 xLCsreE+Ecnf7a1GwyDPTTHbxWEkcJRSSylevY3IM4wnhmsxXyXylitOf09tivZUs7
-	 2HpPWw+jNAth/cJN/BGsX+iR18YKfUIOM2rj1uHUzhDLBkkH24CN9biidt0kit6Lvi
-	 Yv7MCDrlnip/SDDTMrnNPh3Lff+sgVqReI55CVfw9JiFuu3hiKLGie9mRWHKoSF6Om
-	 mkCMBtHv0JaTg==
-Date: Thu, 22 Jun 2023 17:54:05 +0100
-From: Lee Jones <lee@kernel.org>
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, sean.wang@mediatek.com,
-	pavel@ucw.cz, matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com, trix@redhat.com,
-	linux-leds@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] leds: leds-mt6323: Adjust return/parameter types in wled
- get/set callbacks
-Message-ID: <20230622165405.GX10378@google.com>
-References: <20230622-mt6323-wled-wincompatible-function-pointer-types-strict-v1-1-6ad256f220e8@kernel.org>
- <CAKwvOd=jHrch4a-AZgXmScGKW2Fs4MHwH0iaW_8PgR=iYfvrEg@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456A51E536
+	for <patches@lists.linux.dev>; Thu, 22 Jun 2023 18:46:37 +0000 (UTC)
+Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-338bd590bc1so5145015ab.1
+        for <patches@lists.linux.dev>; Thu, 22 Jun 2023 11:46:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1687459596; x=1690051596;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=manSCipOOhmWOPB1AQ+dPEX6xxX8Josbxr+cGJcmDTw=;
+        b=BF0clXInxT/cyf32LbIk93WOsKiO08d4WNaZaiK5Jlzy1NZ1uHoiZtnlIMZuCQfkrD
+         6KiPrvyI1cIyL440IlfvkV9mvxuiTnRSaZLjGM/R0LrSfRjkmYtiI2O4Cuqh7KUZlDen
+         CDCI52XDqLUV16ARPWW5rdJnTccK6UKgy3aLI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687459596; x=1690051596;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=manSCipOOhmWOPB1AQ+dPEX6xxX8Josbxr+cGJcmDTw=;
+        b=QcnDAHYbe9Kvrvg6eaOy8JW0Ivc7zMiWCLTOZIg1ftjW1vmHvwJ1bYw4VaLgDRzISn
+         HifRUaGCnLM+CI25Tutar4/4CETAa8mOguLlPUn6Lhu9TZoIU0iljZvGwO5eW1uNBTLL
+         5XTiezaFNXUCW9NurE0wbcdgQJPrR4rXYw7+xJ7YjWHEwR6wFLB8QrVUO2KXVUaJ+xEl
+         k1avJRdInjrddukS7EEMGG801s8a02mFnGi/Ybnez72GzB+5tOm7FjLaq2l2VN+sRwzT
+         XagCGipcM65JBpQfPIaI1SAlTaJgz4ThwbmUrD6Jvw1jA0RKyjCgZeFdLv7evfyToc/f
+         NM+A==
+X-Gm-Message-State: AC+VfDy35A/4hwGDP5WpeWaXlEpNK7vnQ5QKVoRKsndkNAcmSW92LfIa
+	1NQwYUwDU0hwSjlKPyRDd/7d6A==
+X-Google-Smtp-Source: ACHHUZ5qRksVQUc529ilEx05M1/JeEvBhIQIatLjK3cFdJpcMXoMxSJVzYBIbdbPXvmVV1YjZ8jF/g==
+X-Received: by 2002:a92:740d:0:b0:338:4b36:5097 with SMTP id p13-20020a92740d000000b003384b365097mr18131055ilc.1.1687459596143;
+        Thu, 22 Jun 2023 11:46:36 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id x10-20020a92060a000000b0034255d2d3c5sm2143703ilg.48.2023.06.22.11.46.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Jun 2023 11:46:35 -0700 (PDT)
+Message-ID: <74c961a0-4a36-51db-5ed7-6f0185e499ce@linuxfoundation.org>
+Date: Thu, 22 Jun 2023 12:46:34 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKwvOd=jHrch4a-AZgXmScGKW2Fs4MHwH0iaW_8PgR=iYfvrEg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 5.15 000/107] 5.15.118-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230619102141.541044823@linuxfoundation.org>
+ <f7bf3aa8-f1b8-a1b5-8e51-46d51d002633@linuxfoundation.org>
+ <2023062150-expansive-polygon-7b5f@gregkh>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <2023062150-expansive-polygon-7b5f@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, 22 Jun 2023, Nick Desaulniers wrote:
-
-> On Thu, Jun 22, 2023 at 9:12 AM Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > Clang's kernel Control Flow Integrity (kCFI) is a compiler-based
-> > security mitigation that ensures the target of an indirect function call
-> > matches the expected type of the call and trapping if they do not match
-> > exactly. The warning -Wincompatible-function-pointer-types-strict aims
-> > to catch these issues at compile time, which reveals:
-> >
-> >  drivers/leds/leds-mt6323.c:598:49: error: incompatible function pointer types assigning to 'int (*)(struct led_classdev *, enum led_brightness)' from 'int (struct led_classdev *, unsigned int)' [-Werror,-Wincompatible-function-pointer-types-strict]
-> >    598 |                         leds->led[reg]->cdev.brightness_set_blocking =
-> >        |                                                                      ^
-> >    599 |                                                 mt6323_wled_set_brightness;
-> >        |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >  drivers/leds/leds-mt6323.c:600:40: error: incompatible function pointer types assigning to 'enum led_brightness (*)(struct led_classdev *)' from 'unsigned int (struct led_classdev *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-> >    600 |                         leds->led[reg]->cdev.brightness_get =
-> >        |                                                             ^
-> >    601 |                                                 mt6323_get_wled_brightness;
-> >        |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >  2 errors generated.
-> >
-> > While 'unsigned int' is ABI compatible with 'enum led_brightness' (hence
-> > no warning from -Wincompatible-function-pointer-types) and the callers
-> > of these callbacks use/pass the values as 'unsigned int', the mismatch
-> > between the prototype and the called function will trip kCFI at runtime.
-> >
-> > Change the types in the implementations to match the prototypes, clearing
-> > up the warning and avoiding kCFI failures.
-> >
-> > Fixes: 9bb0a9e0626c ("leds: leds-mt6323: Add support for WLEDs and MT6332")
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On 6/21/23 07:59, Greg Kroah-Hartman wrote:
+> On Tue, Jun 20, 2023 at 03:04:12PM -0600, Shuah Khan wrote:
+>> On 6/19/23 04:29, Greg Kroah-Hartman wrote:
+>>> This is the start of the stable review cycle for the 5.15.118 release.
+>>> There are 107 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>
+>>> Responses should be made by Wed, 21 Jun 2023 10:21:12 +0000.
+>>> Anything received after that time might be too late.
+>>>
+>>> The whole patch series can be found in one patch at:
+>>> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.118-rc1.gz
+>>> or in the git tree and branch at:
+>>> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+>>> and the diffstat can be found below.
+>>>
+>>> thanks,
+>>>
+>>> greg k-h
+>>>
+>>
+>> Compiled and boots, but doesn't get to login prompt. Keeps running
+>> into NMIs and watchdog detects had lockups.
+>>
+>> I am starting bisect and will keep you updated.
 > 
-> Thanks for the patch! Consider additionally having
-> mt6323_get_wled_brightness return LED_OFF rather than 0 in its
-> ternary.
-
-https://elixir.bootlin.com/linux/latest/source/include/linux/leds.h#L32
-
-Perhaps this is not relevant for this older driver though?
-
-I'd really like some more information from Pavel on the history.
-
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+> Very odd, let me know what you find, thanks!
 > 
-> 
-> > ---
-> >  drivers/leds/leds-mt6323.c | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/leds/leds-mt6323.c b/drivers/leds/leds-mt6323.c
-> > index e8fecfc2e90a..24f35bdb55fb 100644
-> > --- a/drivers/leds/leds-mt6323.c
-> > +++ b/drivers/leds/leds-mt6323.c
-> > @@ -76,7 +76,7 @@ struct mt6323_led {
-> >         int                     id;
-> >         struct mt6323_leds      *parent;
-> >         struct led_classdev     cdev;
-> > -       unsigned int            current_brightness;
-> > +       enum led_brightness     current_brightness;
-> >  };
-> >
-> >  /**
-> > @@ -451,7 +451,7 @@ static int mtk_wled_hw_off(struct led_classdev *cdev)
-> >         return 0;
-> >  }
-> >
-> > -static unsigned int mt6323_get_wled_brightness(struct led_classdev *cdev)
-> > +static enum led_brightness mt6323_get_wled_brightness(struct led_classdev *cdev)
-> >  {
-> >         struct mt6323_led *led = container_of(cdev, struct mt6323_led, cdev);
-> >         struct mt6323_leds *leds = led->parent;
-> > @@ -471,7 +471,7 @@ static unsigned int mt6323_get_wled_brightness(struct led_classdev *cdev)
-> >  }
-> >
-> >  static int mt6323_wled_set_brightness(struct led_classdev *cdev,
-> > -                                     unsigned int brightness)
-> > +                                     enum led_brightness brightness)
-> >  {
-> >         struct mt6323_led *led = container_of(cdev, struct mt6323_led, cdev);
-> >         struct mt6323_leds *leds = led->parent;
-> >
-> > ---
-> > base-commit: 7bd932d9adbcc5c5370d968bdb0b00385606bf3a
-> > change-id: 20230621-mt6323-wled-wincompatible-function-pointer-types-strict-334f06d92ffb
-> >
-> > Best regards,
-> > --
-> > Nathan Chancellor <nathan@kernel.org>
-> >
-> >
-> 
-> 
-> -- 
-> Thanks,
-> ~Nick Desaulniers
+> greg k-h
 
--- 
-Lee Jones [李琼斯]
+Bisect flagged the following commit and I don't think
+this commit could be the cause on an AMD system
+
+# first bad commit: [17627e3f8f0cca041becbec376c07724968c1bf5] of: overlay: rename variables to be consistent
+
+Please go ahead with the release. I will keep debugging.
+
+thanks,
+-- Shuah
+
+
