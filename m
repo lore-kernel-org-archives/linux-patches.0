@@ -1,142 +1,105 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE1F1F164
-	for <patches@lists.linux.dev>; Thu, 22 Jun 2023 14:26:00 +0000 (UTC)
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4007b5bafceso69671cf.1
-        for <patches@lists.linux.dev>; Thu, 22 Jun 2023 07:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687443959; x=1690035959;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3OvkU8UisH4BuGnYm+XG1wAvh/7S0gay7JPC/9n8Vw4=;
-        b=495aCHMsXONb/7fk1o4BWI0cJufNsm6mSfC0X0UydCS7YJ40z6x4y1oFq4O73WAv2/
-         PivI1PeQ6BvsG/OHG81s7Coc0vWWsZr4x9AW4lveNrWCBzR+RRC5J2jR0/ROhvTLskKh
-         d+MoXFylY8oe3cij7GSXwnTQ4A2DOtWO/enmlxXIjyKsMk+WrfJc0WRZXJ7FdgDR07uF
-         dLVCYV44b8onYroGILw3bTZhQCw/clwNlOfOPr4Kn3V9n5q4bxbblymddZeRTMr4ae0l
-         RorrcI45qpKerreWFVfU9QZV5V9Q0VeSXBEjGzOWH+wRAK4dNdmZFBYCWeaVqvBDS58+
-         Oc6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687443959; x=1690035959;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3OvkU8UisH4BuGnYm+XG1wAvh/7S0gay7JPC/9n8Vw4=;
-        b=aWI7zgMh0SVsjPK/h6y2YCl8ND1FxB4czH///9XlYTw8tVxwyt1G6SRNGx6OaA4qrx
-         Gqii/46V2alnRyWhATdqbVV9jbOB78rTUNuxumsQVsXpRHRpxNolB2CTLzAIKyyI95rc
-         TvSaNpjNQGu4K6Y6xEJ9Tt2ikjqhEYVm10Sd+GaGwibblyfDEljWHMQ1hAvJqj7lSLnU
-         yZWLcnbcKzJZEQANfUCV0gdcZLa67tSvNiwiSnvO47E2YYhaGtMEzl8i2/jSUrKRajBP
-         fc6U70SvYUulFbejD/kOut4x169H58lGtWBNO6UyPnJHikgzZGPtXSMnVww8CcQwtbq3
-         ajtQ==
-X-Gm-Message-State: AC+VfDxkDFg+MsSUg3AHKzHPqYD46h2iLTKpLP0FYSC9/mJdcCnCHPWR
-	RDNOgvdZlT+4GM61yWzNHsaDDAGtVo8QZcM6Z/u31A==
-X-Google-Smtp-Source: ACHHUZ7uUs4bnPr21LwAzMF128NWxNRIN5dXaoxu+IPGm/xXmIMIi2Rhx50YN8/p1xyv+58+Bcl5JwW0NuXrO0euY4E=
-X-Received: by 2002:ac8:5954:0:b0:3ef:3083:a437 with SMTP id
- 20-20020ac85954000000b003ef3083a437mr448649qtz.18.1687443959520; Thu, 22 Jun
- 2023 07:25:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B393AA98;
+	Thu, 22 Jun 2023 15:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E905C433C0;
+	Thu, 22 Jun 2023 15:56:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1687449397;
+	bh=KuNfl/le8W+tk5pj4CEfMdhcf3haC1/lnKFZoEA+xQ8=;
+	h=From:Date:Subject:To:Cc:From;
+	b=DkEDIT4UBYHIa99zqkTxpmTrj4B/F3AK2eaeyiXA4pIt+ZstWnbGy1jV9/rFeJ3Sm
+	 OX0+mkZeAyml/vm0tc2UUgIqKzrc7UL9QohZBE/H8xjEZUj0pyCWOoMda1PLv2EhNe
+	 qGohq7oWexD1eoMC04cR0aKmyUWxc1LEip0FIAJRNvEzff3cDZRw1L+/+aDpyqbjnp
+	 11HDjYwel8qzRaKAqb8mkaouY1PTLcJiobdnhQSwVRzU9FJNrU/7UQJDLuMnZ0SpUD
+	 jBFiids4vJJx/WVOFVn9dA9rZQby1ODx+Q2ui3Rzwi8N6EYvaBOyZbG7LXseb9dEOA
+	 M9Rn/oS54iUMA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 22 Jun 2023 15:56:19 +0000
+Subject: [PATCH] clk: ralink: mtmips: Fix uninitialized use of ret in
+ mtmips_register_{fixed,factor}_clocks()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230621174006.42533-1-tony.luck@intel.com> <20230621174006.42533-8-tony.luck@intel.com>
-In-Reply-To: <20230621174006.42533-8-tony.luck@intel.com>
-From: Peter Newman <peternewman@google.com>
-Date: Thu, 22 Jun 2023 16:25:48 +0200
-Message-ID: <CALPaoCgF04M0Jc-c4VmbKkRSFo677SBGoPHzNCSeQ4S6Bqb60w@mail.gmail.com>
-Subject: Re: [PATCH v2 7/7] x86/resctrl: Determine if Sub-NUMA Cluster is
- enabled and initialize.
-To: Tony Luck <tony.luck@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>, Reinette Chatre <reinette.chatre@intel.com>, 
-	Jonathan Corbet <corbet@lwn.net>, x86@kernel.org, Shaopeng Tan <tan.shaopeng@fujitsu.com>, 
-	James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, 
-	Babu Moger <babu.moger@amd.com>, linux-kernel@vger.kernel.org, 
-	linux-doc@vger.kernel.org, patches@lists.linux.dev, 
-	Stephane Eranian <eranian@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230622-mips-ralink-clk-wuninitialized-v1-1-ea9041240d10@kernel.org>
+X-B4-Tracking: v=1; b=H4sIACJvlGQC/x2NSw6CQBAFr0J6bSfziWi8CnEBTKsvYENm+AXC3
+ Z24rFpUHZQkQhI9ioOiLEgYNIO9FNR+an0LI2QmZ5w3pXP8xZg41j2047bveJ0VignZ7BLYXk0
+ TjPelvd8oR8YoL2z/QfU8zx8nr3sycAAAAA==
+To: tsbogend@alpha.franken.de
+Cc: sergio.paracuellos@gmail.com, sboyd@kernel.org, nathan@kernel.org, 
+ ndesaulniers@google.com, trix@redhat.com, linux-clk@vger.kernel.org, 
+ linux-mips@vger.kernel.org, patches@lists.linux.dev, llvm@lists.linux.dev
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2238; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=KuNfl/le8W+tk5pj4CEfMdhcf3haC1/lnKFZoEA+xQ8=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDClT8k3W7xfiYss4OC/2w2LP13xJWld9nMv+hl7qa1gwd
+ d7iC+e7OkpZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEDP0YGeb++aLxN1z75LLv
+ u16dZ5P6HXd5qv7OL96FZvv7yh/Oc33M8D/l6z7ZfA6D07JSd048mv3/kHNG2qkad4P3U//pmys
+ vVeADAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi Tony,
+Clang warns:
 
-On Wed, Jun 21, 2023 at 7:40=E2=80=AFPM Tony Luck <tony.luck@intel.com> wro=
-te:
->
-> There isn't a simple hardware enumeration to indicate to software that
-> a system is running with Sub-NUMA Cluster enabled.
->
-> Compare the number of NUMA nodes with the number of L3 caches to calculat=
-e
-> the number of Sub-NUMA nodes per L3 cache.
->
-> When Sub-NUMA cluster mode is enabled in BIOS setup the RMID counters
-> are distributed equally between the SNC nodes within each socket.
->
-> E.g. if there are 400 RMID counters, and the system is configured with
-> two SNC nodes per socket, then RMID counter 0..199 are used on SNC node
-> 0 on the socket, and RMID counter 200..399 on SNC node 1.
->
-> A model specific MSR (0xca0) can change the configuration of the RMIDs
-> when SNC mode is enabled.
->
-> The MSR controls the interpretation of the RMID field in the
-> IA32_PQR_ASSOC MSR so that the appropriate hardware counters
-> within the SNC node are updated.
->
-> Also initialize a per-cpu RMID offset value. Use this
-> to calculate the value to write to the IA32_QM_EVTSEL MSR when
-> reading RMID event values.
->
-> N.B. this works well for well-behaved NUMA applications that access
-> memory predominantly from the local memory node. For applications that
-> access memory across multiple nodes it may be necessary for the user
-> to read counters for all SNC nodes on a socket and add the values to
-> get the actual LLC occupancy or memory bandwidth. Perhaps this isn't
-> all that different from applications that span across multiple sockets
-> in a legacy system.
+  drivers/clk/ralink/clk-mtmips.c:309:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
+    309 |         return ret;
+        |                ^~~
+  drivers/clk/ralink/clk-mtmips.c:285:9: note: initialize the variable 'ret' to silence this warning
+    285 |         int ret, i;
+        |                ^
+        |                 = 0
+  drivers/clk/ralink/clk-mtmips.c:359:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
+    359 |         return ret;
+        |                ^~~
+  drivers/clk/ralink/clk-mtmips.c:335:9: note: initialize the variable 'ret' to silence this warning
+    335 |         int ret, i;
+        |                ^
+        |                 = 0
+  2 errors generated.
 
-Unfortunately I'm not getting as good of results with the new series.
-The main difference seems to be updating the 0xca0 MSR instead of
-applying the offset to PQR_ASSOC.
+Set ret to the return value of clk_hw_register_fixed_rate() using the
+PTR_ERR() macro, which ensures ret is not used uninitialized, clearing
+up the warning.
 
-In my test case of generating bandwidth on 20 random CPUs in 20 random
-RMIDs, I'm only getting correct counts from CPUs in node 0. Node 1
-CPUs are showing counts which are too small, and nodes 2 and 3 are
-seeing no bandwidth at all:
+Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS SoCs")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1879
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/clk/ralink/clk-mtmips.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-(expected bandwidth is around 30 GB, value in first parenthesis is L3 cache=
- id)
+diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
+index 9322c6210a33..1e7991439527 100644
+--- a/drivers/clk/ralink/clk-mtmips.c
++++ b/drivers/clk/ralink/clk-mtmips.c
+@@ -292,6 +292,7 @@ static int mtmips_register_fixed_clocks(struct clk_hw_onecell_data *clk_data,
+ 						      sclk->parent, 0,
+ 						      sclk->rate);
+ 		if (IS_ERR(sclk->hw)) {
++			ret = PTR_ERR(sclk->hw);
+ 			pr_err("Couldn't register fixed clock %d\n", idx);
+ 			goto err_clk_unreg;
+ 		}
+@@ -342,6 +343,7 @@ static int mtmips_register_factor_clocks(struct clk_hw_onecell_data *clk_data,
+ 						  sclk->parent, sclk->flags,
+ 						  sclk->mult, sclk->div);
+ 		if (IS_ERR(sclk->hw)) {
++			ret = PTR_ERR(sclk->hw);
+ 			pr_err("Couldn't register factor clock %d\n", idx);
+ 			goto err_clk_unreg;
+ 		}
 
-cpu: 134 (0), rmid: 30 (g29):   0 -> 30640791552 (30640791552)
-cpu: 138 (0), rmid: 103 (g101): 0 -> 28196962304 (28196962304)
+---
+base-commit: fd99ac5055d4705e91c73d1adba18bc71c8511a8
+change-id: 20230622-mips-ralink-clk-wuninitialized-150bd0336187
 
-cpu: 35 (0), rmid: 211 (g209):  0 -> 3039232 (3039232)
-cpu: 55 (0), rmid: 113 (g111):  0 -> 4874240 (4874240)
-cpu: 41 (0), rmid: 83 (g81):    0 -> 2637824 (2637824)
-cpu: 42 (0), rmid: 218 (g216):  0 -> 2408448 (2408448)
-cpu: 161 (0), rmid: 8 (g7):     0 -> 7856128 (7856128)
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-cpu: 86 (1), rmid: 171 (g169):  0 -> 0 (0)
-cpu: 86 (1), rmid: 121 (g119):  0 -> 0 (0)
-cpu: 212 (1), rmid: 163 (g161): 0 -> 0 (0)
-cpu: 180 (1), rmid: 129 (g127): 0 -> 0 (0)
-cpu: 205 (1), rmid: 186 (g184): 0 -> 0 (0)
-cpu: 194 (1), rmid: 160 (g158): 0 -> 0 (0)
-cpu: 186 (1), rmid: 196 (g194): 0 -> 0 (0)
-cpu: 106 (1), rmid: 93 (g91):   0 -> 0 (0)
-cpu: 84 (1), rmid: 168 (g166):  0 -> 0 (0)
-cpu: 197 (1), rmid: 104 (g102): 0 -> 0 (0)
-cpu: 64 (1), rmid: 103 (g101):  0 -> 0 (0)
-cpu: 71 (1), rmid: 81 (g79):    0 -> 0 (0)
-cpu: 60 (1), rmid: 221 (g219):  0 -> 0 (0)
-
-Here's the output of `cat /sys/devices/system/node/node*/cpulist` on
-this machine for reference:
-
-0-27,112-139
-28-55,140-167
-56-83,168-195
-84-111,196-223
-
--Peter
