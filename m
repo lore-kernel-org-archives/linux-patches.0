@@ -1,99 +1,141 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D58B1EA98;
-	Thu, 22 Jun 2023 16:53:51 +0000 (UTC)
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6b45cfe3110so5310575a34.0;
-        Thu, 22 Jun 2023 09:53:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687452831; x=1690044831;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D8yYMEX/t8Klnote5y9PwMV4v/R5Zq9BMnCmr1KijqA=;
-        b=Pt1nXkO/26/fQa155yjH3pyzn/SzDu3Ys72LfiAAiA8CfR5SeaxYWJASav/l6pUjtS
-         ZUXeytL3yArUtBMuoMxRoCIx+/FL1NrxI2W3mFvKZm2J4MyDyRxqPNZ5CuZcPcc/HEaC
-         ywe/1ATR5kfk9gUWiazxzFWlf6qDUU6T2z+AY/eK0KhEg40G3Ac79NRNwvmbhgKXwxjv
-         vkgCkhwSKVNxTFyd8enD+DvHPdCiIEaFtq1ZyTLZ7sMfN1jruh4TMaq0tSWEqhBKMI/K
-         55objcP8XfnkQJB0xnc+yNYP/bFVnGQUG31lNeHvoB8H8wXdlGfWWnvQ+1P2vV73cHLm
-         N8Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687452831; x=1690044831;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D8yYMEX/t8Klnote5y9PwMV4v/R5Zq9BMnCmr1KijqA=;
-        b=bOFWGknkRqh7bN8ILpeDn4ORUFjiRzrWV+7oqgPX8cTDUDK5hX4BA9/PlmDpHTIgym
-         qGsrAuktHOfeXj5LqaMTQzVWntoCiMV+Fs0Q8HVIkPr3aa6n27j8HCJIVl6ONaRde7nF
-         bpjUDhi3NLdqDhNm8XUY2J/lb9fVO2ZB/T/qJvPtygLMl4HOnI5SUjK0bAjJgNc6bDh2
-         /y3cpefu6d28Lhy4x88wzAHKW2tlW90IXz/7K5RevlYNQtdnA4acRkQgaAm8NKYj7+Zg
-         8SQm2RnWR8qFSxtYAJ62park9fvC8JZcQ1wFA07hYag8Kow6RacIFle0vPp3Xj0hwr2x
-         jIGg==
-X-Gm-Message-State: AC+VfDxa2evYpo+/LkAz8VyVm3Jiv6MU8S8pQV/4ESQyM49AqvemWmQ1
-	XmfjkkiTGcPk8ZHuPtWRN+8qZ39wH8qCeJ5hZEE=
-X-Google-Smtp-Source: ACHHUZ5wJu27nrivTok6qs1B5hPokhBnncL+1s3kNTj874MuSDplDrZIaOADSQJQsgir26+dJQ0jdGdQR5JUGcopGA4=
-X-Received: by 2002:a05:6871:4f18:b0:1a9:8484:40d with SMTP id
- zu24-20020a0568714f1800b001a98484040dmr15092643oab.23.1687452830873; Thu, 22
- Jun 2023 09:53:50 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC051EA98;
+	Thu, 22 Jun 2023 16:54:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E05C433C8;
+	Thu, 22 Jun 2023 16:54:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1687452852;
+	bh=WvPMeVtT8HySVlQQYfCD9Qi6NPFDyHkTCRsPrIqcEts=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SX7wwboWbkVlRORAbsFOmJf2/KjqoskquLbeQwt+WXUKFFFnqejBShUZNP5XQqqW5
+	 Gru5bbKxs0zW/wV9kc4I5TKWsKB4mpc6m/Rlep7PmPdqLgn6mOOz6Kus6gzuDeoVAn
+	 xLCsreE+Ecnf7a1GwyDPTTHbxWEkcJRSSylevY3IM4wnhmsxXyXylitOf09tivZUs7
+	 2HpPWw+jNAth/cJN/BGsX+iR18YKfUIOM2rj1uHUzhDLBkkH24CN9biidt0kit6Lvi
+	 Yv7MCDrlnip/SDDTMrnNPh3Lff+sgVqReI55CVfw9JiFuu3hiKLGie9mRWHKoSF6Om
+	 mkCMBtHv0JaTg==
+Date: Thu, 22 Jun 2023 17:54:05 +0100
+From: Lee Jones <lee@kernel.org>
+To: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>, sean.wang@mediatek.com,
+	pavel@ucw.cz, matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com, trix@redhat.com,
+	linux-leds@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] leds: leds-mt6323: Adjust return/parameter types in wled
+ get/set callbacks
+Message-ID: <20230622165405.GX10378@google.com>
+References: <20230622-mt6323-wled-wincompatible-function-pointer-types-strict-v1-1-6ad256f220e8@kernel.org>
+ <CAKwvOd=jHrch4a-AZgXmScGKW2Fs4MHwH0iaW_8PgR=iYfvrEg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230622-mips-ralink-clk-wuninitialized-v1-1-ea9041240d10@kernel.org>
-In-Reply-To: <20230622-mips-ralink-clk-wuninitialized-v1-1-ea9041240d10@kernel.org>
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Date: Thu, 22 Jun 2023 18:53:39 +0200
-Message-ID: <CAMhs-H_aKYGrCYemyOoNk+nHzDfmAU+BoV2pA7eauZ+k5PhGEQ@mail.gmail.com>
-Subject: Re: [PATCH] clk: ralink: mtmips: Fix uninitialized use of ret in mtmips_register_{fixed,factor}_clocks()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: tsbogend@alpha.franken.de, sboyd@kernel.org, ndesaulniers@google.com, 
-	trix@redhat.com, linux-clk@vger.kernel.org, linux-mips@vger.kernel.org, 
-	patches@lists.linux.dev, llvm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKwvOd=jHrch4a-AZgXmScGKW2Fs4MHwH0iaW_8PgR=iYfvrEg@mail.gmail.com>
 
-On Thu, Jun 22, 2023 at 5:56=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> Clang warns:
->
->   drivers/clk/ralink/clk-mtmips.c:309:9: error: variable 'ret' is uniniti=
-alized when used here [-Werror,-Wuninitialized]
->     309 |         return ret;
->         |                ^~~
->   drivers/clk/ralink/clk-mtmips.c:285:9: note: initialize the variable 'r=
-et' to silence this warning
->     285 |         int ret, i;
->         |                ^
->         |                 =3D 0
->   drivers/clk/ralink/clk-mtmips.c:359:9: error: variable 'ret' is uniniti=
-alized when used here [-Werror,-Wuninitialized]
->     359 |         return ret;
->         |                ^~~
->   drivers/clk/ralink/clk-mtmips.c:335:9: note: initialize the variable 'r=
-et' to silence this warning
->     335 |         int ret, i;
->         |                ^
->         |                 =3D 0
->   2 errors generated.
->
-> Set ret to the return value of clk_hw_register_fixed_rate() using the
-> PTR_ERR() macro, which ensures ret is not used uninitialized, clearing
-> up the warning.
->
-> Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS =
-SoCs")
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/1879
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/clk/ralink/clk-mtmips.c | 2 ++
->  1 file changed, 2 insertions(+)
+On Thu, 22 Jun 2023, Nick Desaulniers wrote:
 
-Thanks for the patch, Nathan!!
+> On Thu, Jun 22, 2023 at 9:12 AM Nathan Chancellor <nathan@kernel.org> wrote:
+> >
+> > Clang's kernel Control Flow Integrity (kCFI) is a compiler-based
+> > security mitigation that ensures the target of an indirect function call
+> > matches the expected type of the call and trapping if they do not match
+> > exactly. The warning -Wincompatible-function-pointer-types-strict aims
+> > to catch these issues at compile time, which reveals:
+> >
+> >  drivers/leds/leds-mt6323.c:598:49: error: incompatible function pointer types assigning to 'int (*)(struct led_classdev *, enum led_brightness)' from 'int (struct led_classdev *, unsigned int)' [-Werror,-Wincompatible-function-pointer-types-strict]
+> >    598 |                         leds->led[reg]->cdev.brightness_set_blocking =
+> >        |                                                                      ^
+> >    599 |                                                 mt6323_wled_set_brightness;
+> >        |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >  drivers/leds/leds-mt6323.c:600:40: error: incompatible function pointer types assigning to 'enum led_brightness (*)(struct led_classdev *)' from 'unsigned int (struct led_classdev *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+> >    600 |                         leds->led[reg]->cdev.brightness_get =
+> >        |                                                             ^
+> >    601 |                                                 mt6323_get_wled_brightness;
+> >        |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >  2 errors generated.
+> >
+> > While 'unsigned int' is ABI compatible with 'enum led_brightness' (hence
+> > no warning from -Wincompatible-function-pointer-types) and the callers
+> > of these callbacks use/pass the values as 'unsigned int', the mismatch
+> > between the prototype and the called function will trip kCFI at runtime.
+> >
+> > Change the types in the implementations to match the prototypes, clearing
+> > up the warning and avoiding kCFI failures.
+> >
+> > Fixes: 9bb0a9e0626c ("leds: leds-mt6323: Add support for WLEDs and MT6332")
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> 
+> Thanks for the patch! Consider additionally having
+> mt6323_get_wled_brightness return LED_OFF rather than 0 in its
+> ternary.
 
-Acked-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+https://elixir.bootlin.com/linux/latest/source/include/linux/leds.h#L32
 
-Best regards,
-    Sergio Paracuellos
+Perhaps this is not relevant for this older driver though?
+
+I'd really like some more information from Pavel on the history.
+
+> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+> 
+> 
+> > ---
+> >  drivers/leds/leds-mt6323.c | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/leds/leds-mt6323.c b/drivers/leds/leds-mt6323.c
+> > index e8fecfc2e90a..24f35bdb55fb 100644
+> > --- a/drivers/leds/leds-mt6323.c
+> > +++ b/drivers/leds/leds-mt6323.c
+> > @@ -76,7 +76,7 @@ struct mt6323_led {
+> >         int                     id;
+> >         struct mt6323_leds      *parent;
+> >         struct led_classdev     cdev;
+> > -       unsigned int            current_brightness;
+> > +       enum led_brightness     current_brightness;
+> >  };
+> >
+> >  /**
+> > @@ -451,7 +451,7 @@ static int mtk_wled_hw_off(struct led_classdev *cdev)
+> >         return 0;
+> >  }
+> >
+> > -static unsigned int mt6323_get_wled_brightness(struct led_classdev *cdev)
+> > +static enum led_brightness mt6323_get_wled_brightness(struct led_classdev *cdev)
+> >  {
+> >         struct mt6323_led *led = container_of(cdev, struct mt6323_led, cdev);
+> >         struct mt6323_leds *leds = led->parent;
+> > @@ -471,7 +471,7 @@ static unsigned int mt6323_get_wled_brightness(struct led_classdev *cdev)
+> >  }
+> >
+> >  static int mt6323_wled_set_brightness(struct led_classdev *cdev,
+> > -                                     unsigned int brightness)
+> > +                                     enum led_brightness brightness)
+> >  {
+> >         struct mt6323_led *led = container_of(cdev, struct mt6323_led, cdev);
+> >         struct mt6323_leds *leds = led->parent;
+> >
+> > ---
+> > base-commit: 7bd932d9adbcc5c5370d968bdb0b00385606bf3a
+> > change-id: 20230621-mt6323-wled-wincompatible-function-pointer-types-strict-334f06d92ffb
+> >
+> > Best regards,
+> > --
+> > Nathan Chancellor <nathan@kernel.org>
+> >
+> >
+> 
+> 
+> -- 
+> Thanks,
+> ~Nick Desaulniers
+
+-- 
+Lee Jones [李琼斯]
