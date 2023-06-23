@@ -1,218 +1,91 @@
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97D42310C
-	for <patches@lists.linux.dev>; Fri, 23 Jun 2023 12:09:30 +0000 (UTC)
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 4F5B11EC041E;
-	Fri, 23 Jun 2023 14:09:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1687522162;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=M/dFIGeObXNSK0+1Vrh8UN2vBkMfuX0DSniP7oF6zVc=;
-	b=XtcQ9jj1rD6NHncvrJ+irOwTz/ZgbAvLGDyUpvlFEQiizWAoPdfaHG5lE+LS1DWZJXyp2r
-	euaiWfItr5qx77dcps0kn2hELb+gxH48FilIsIcnLpELOYiKWcP6208FFENCy3UA+NO2Ha
-	bUv1n/kc5ocL148c64ItZRBAXsWyG+0=
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id DFGmczbKggKd; Fri, 23 Jun 2023 12:09:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1687522158; bh=M/dFIGeObXNSK0+1Vrh8UN2vBkMfuX0DSniP7oF6zVc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KdrTBOkliNkjURxqsJdzGgczP38MWSAa37VDidfRhAx66Fg8z9FcZX7Q8DcYH80XG
-	 bCRXJx2fjcMfvgCOPz1CiWUQAWTMW/QRzwnXYzHjB27O1xijwQopICr0lSiY5PNDAY
-	 Gi/aGj4H/VsvWMW7Y5jbKIvO9rjIoWN9iXs/VqEjmHmIV4RWZCo3v9gz3l98DJ/aHE
-	 iR48lFziRd9OiP0zzwlIX13chBZo+bnMMcaqPQDTrvO9xFG9w1EJ3QayA77+8weRD+
-	 XuiyC7y8amYRsLM0/YfSWJIM/rQK/u250MD8bcJXFkfS/DclcCNXMV+etzMt/KVMO9
-	 mszJCYABngkZBk2/6CxhXKY4lJvsbY/Qf3cEQrvc3EomPhUBVxch0ePCqHVCysoHwG
-	 VLO6vQIdsh/KUQ5V1VY/gLOVs//FyUV34atwcN4i4nSYGiLBMeejRyBuhFBMjP6pOX
-	 10zlTyEbH+9VDHxiXaz9aIkmV3CwXdixvW0n1Gd/Am/VF1ZtdklSZVEmavc9YrWbnf
-	 tEfLLdtj7b5BeKVcxu31HjdXXe0DJ3E5KA0rdW62raY8MO3/LWcef99d0xZMCwDAmx
-	 sfUBIFcN3LNs7R0nh0SgcV7RRfm9xAgdOflsJdZjxNrjfSK8ts9MbQdP09BocEAJrX
-	 YvTSRZ5zS/lGO8uyJMm0eLbY=
-Received: from zn.tnic (pd9530d32.dip0.t-ipconnect.de [217.83.13.50])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 411D940E01D0;
-	Fri, 23 Jun 2023 12:09:10 +0000 (UTC)
-Date: Fri, 23 Jun 2023 14:09:04 +0200
-From: Borislav Petkov <bp@alien8.de>
-To: Tony Luck <tony.luck@intel.com>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
-	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
-	x86@kernel.org, linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v6 2/4] x86/mce: Add per-bank CMCI storm mitigation
-Message-ID: <20230623120904.GAZJWLYMP0XxIr5k7s@fat_crate.local>
-References: <20230411173841.70491-1-tony.luck@intel.com>
- <20230616182744.17632-1-tony.luck@intel.com>
- <20230616182744.17632-3-tony.luck@intel.com>
+Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 932EC79CF;
+	Fri, 23 Jun 2023 13:16:47 +0000 (UTC)
+Received: from uucp by elvis.franken.de with local-rmail (Exim 3.36 #1)
+	id 1qCgeU-0002sh-00; Fri, 23 Jun 2023 15:16:38 +0200
+Received: by alpha.franken.de (Postfix, from userid 1000)
+	id 32743C0301; Fri, 23 Jun 2023 15:09:23 +0200 (CEST)
+Date: Fri, 23 Jun 2023 15:09:23 +0200
+From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: sergio.paracuellos@gmail.com, sboyd@kernel.org, ndesaulniers@google.com,
+	trix@redhat.com, linux-clk@vger.kernel.org,
+	linux-mips@vger.kernel.org, patches@lists.linux.dev,
+	llvm@lists.linux.dev
+Subject: Re: [PATCH] clk: ralink: mtmips: Fix uninitialized use of ret in
+ mtmips_register_{fixed,factor}_clocks()
+Message-ID: <20230623130923.GB11636@alpha.franken.de>
+References: <20230622-mips-ralink-clk-wuninitialized-v1-1-ea9041240d10@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230616182744.17632-3-tony.luck@intel.com>
+In-Reply-To: <20230622-mips-ralink-clk-wuninitialized-v1-1-ea9041240d10@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Fri, Jun 16, 2023 at 11:27:42AM -0700, Tony Luck wrote:
-> -void mce_timer_kick(unsigned long interval);
-> +void mce_timer_kick(bool storm);
-> +void mce_handle_storm(int bank, bool on);
-> +void cmci_storm_begin(int bank);
-> +void cmci_storm_end(int bank);
-> +
-> +/**
+On Thu, Jun 22, 2023 at 03:56:19PM +0000, Nathan Chancellor wrote:
+> Clang warns:
+> 
+>   drivers/clk/ralink/clk-mtmips.c:309:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
+>     309 |         return ret;
+>         |                ^~~
+>   drivers/clk/ralink/clk-mtmips.c:285:9: note: initialize the variable 'ret' to silence this warning
+>     285 |         int ret, i;
+>         |                ^
+>         |                 = 0
+>   drivers/clk/ralink/clk-mtmips.c:359:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
+>     359 |         return ret;
+>         |                ^~~
+>   drivers/clk/ralink/clk-mtmips.c:335:9: note: initialize the variable 'ret' to silence this warning
+>     335 |         int ret, i;
+>         |                ^
+>         |                 = 0
+>   2 errors generated.
+> 
+> Set ret to the return value of clk_hw_register_fixed_rate() using the
+> PTR_ERR() macro, which ensures ret is not used uninitialized, clearing
+> up the warning.
+> 
+> Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS SoCs")
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/1879
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/clk/ralink/clk-mtmips.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
+> index 9322c6210a33..1e7991439527 100644
+> --- a/drivers/clk/ralink/clk-mtmips.c
+> +++ b/drivers/clk/ralink/clk-mtmips.c
+> @@ -292,6 +292,7 @@ static int mtmips_register_fixed_clocks(struct clk_hw_onecell_data *clk_data,
+>  						      sclk->parent, 0,
+>  						      sclk->rate);
+>  		if (IS_ERR(sclk->hw)) {
+> +			ret = PTR_ERR(sclk->hw);
+>  			pr_err("Couldn't register fixed clock %d\n", idx);
+>  			goto err_clk_unreg;
+>  		}
+> @@ -342,6 +343,7 @@ static int mtmips_register_factor_clocks(struct clk_hw_onecell_data *clk_data,
+>  						  sclk->parent, sclk->flags,
+>  						  sclk->mult, sclk->div);
+>  		if (IS_ERR(sclk->hw)) {
+> +			ret = PTR_ERR(sclk->hw);
+>  			pr_err("Couldn't register factor clock %d\n", idx);
+>  			goto err_clk_unreg;
+>  		}
+> 
+> ---
+> base-commit: fd99ac5055d4705e91c73d1adba18bc71c8511a8
+> change-id: 20230622-mips-ralink-clk-wuninitialized-150bd0336187
 
-Yeah, let's not add kernel-doc comments about structs in internal.h
-which are no one's business outside of MCA.
+applied to mips-next.
 
-> + * struct mca_storm_desc - CMCI storm tracking data
-> + * @stormy_bank_count: count of MC banks in storm state
-> + * @bank_history: bitmask tracking of corrected errors seen in each bank
-> + * @bank_storm: determines whether the bank is in storm mode
-> + * @bank_time_stamp: last time (in jiffies) that each bank was polled
-> + */
-> +struct mca_storm_desc {
-> +	int		stormy_bank_count;
-> +	u64		bank_history[MAX_NR_BANKS];
-> +	bool		bank_storm[MAX_NR_BANKS];
-> +	unsigned long	bank_time_stamp[MAX_NR_BANKS];
-> +};
-> +DECLARE_PER_CPU(struct mca_storm_desc, storm_desc);
-
-Would that make the members organization even better:
-
-struct storm_bank {
-	u64 history;
-	u64 timestamp;
-	bool storm;
-};
-
-struct mca_storm_desc {
-	struct storm_bank banks[MAX_NR_BANKS];
-	unsigned int	  bank_count;
-};
-
-?
-
-From the previous mail:
-
-> storm_poll_mode is a regular per-cpu variable that indicates a CPU is in
-> poll mode because one or more of the banks it owns has gone over the
-> storm threshold.
-
-It is still a per-CPU var which can be part of the storm descriptor, no?
-
-> bank_storm - is a per-cpu per-bank indicator that a particular bank
-> on a particular CPU is in storm mode.
-
-Ok, so the above can be extended to:
-
-struct mca_storm_desc {
-        struct storm_bank banks[MAX_NR_BANKS];
-        unsigned int      bank_count;
-	bool		  poll_mode;
-};
-
-?
-
-> +/*
-> + * How many polls of machine check bank without an error before declaring
-> + * the storm is over
-> + */
-> +#define STORM_END_POLL_THRESHOLD	30
-
-So what's stopping you from doing
-
-/*
- * How many polls of machine check bank without an error before declaring
- * the storm is over. Since it is tracked in the struct
- * storm_bank.history member as a bitmask, the mask is 30 bits [0 ... 29]
- */
-#define STORM_END_POLL_THRESHOLD	29
-
-?
-
-And you've also explained it in text too so that it is perfectly clear
-what the intent is.
-
->  #ifdef CONFIG_ACPI_APEI
->  int apei_write_mce(struct mce *m);
-> diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-> index e7936be84204..cd9d9ea5bb0a 100644
-> --- a/arch/x86/kernel/cpu/mce/core.c
-> +++ b/arch/x86/kernel/cpu/mce/core.c
-> @@ -607,6 +607,83 @@ static struct notifier_block mce_default_nb = {
->  	.priority	= MCE_PRIO_LOWEST,
->  };
->  
-> +DEFINE_PER_CPU(struct mca_storm_desc, storm_desc);
-> +
-> +void cmci_storm_begin(int bank)
-> +{
-> +	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
-> +
-> +	__set_bit(bank, this_cpu_ptr(mce_poll_banks));
-> +	storm->bank_storm[bank] = true;
-> +
-> +	/*
-> +	 * If this is the first bank on this CPU to enter storm mode
-> +	 * start polling
-> +	 */
-> +	if (++storm->stormy_bank_count == 1)
-
-	if (++storm->stormy_bank_count)
-
-> +		mce_timer_kick(true);
-> +}
-> +
-> +void cmci_storm_end(int bank)
-> +{
-> +	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
-> +
-> +	__clear_bit(bank, this_cpu_ptr(mce_poll_banks));
-> +	storm->bank_history[bank] = 0ull;
-> +	storm->bank_storm[bank] = false;
-> +
-> +	/* If no banks left in storm mode, stop polling */
-> +	if (!this_cpu_dec_return(storm_desc.stormy_bank_count))
-> +		mce_timer_kick(false);
-> +}
-> +
-> +void track_cmci_storm(int bank, u64 status)
-
-This is still not called cmci_track_storm() ;-\
-
-And looking at the AMD side of things, there's a track_cmci_storm() in
-amd_threshold_interrupt() which doesn't make any sense whatsoever.
-
-Or at least this was my initial reaction because why would the AMD side
-call a "CMCI" specific function. So they're prefixed with "cmci_" but
-they don't really have anything to do with the Intel CMCI feature - it
-is a storm handling code.
-
-Which means, since those are used by both, the confusing "cmci" should
-not be in the names.
-
-And which also means, those should be static and private to mce/core.c.
-But I'll see what functionality the rest of the patches need and how it
-all should be split/exported properly.
-
-Thx.
+Thomas.
 
 -- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
+good idea.                                                [ RFC1925, 2.3 ]
