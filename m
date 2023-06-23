@@ -1,112 +1,129 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F5C15A2
-	for <patches@lists.linux.dev>; Fri, 23 Jun 2023 06:12:39 +0000 (UTC)
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-3f9c532f9e3so3942075e9.1
-        for <patches@lists.linux.dev>; Thu, 22 Jun 2023 23:12:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1687500757; x=1690092757;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cH76kt6UTmIx3qjb+jJaF/n8MOD0hF4u7nMAFs65XK0=;
-        b=ablaUhmcEHIJieh3y2uEPumflActhxF3w2uUefbopG41DHD/4IguWMQM6LmV/eJhJt
-         kpI7kJ5qu5GvsxvZSFC1bv08urkcOCWNjpGXKhMXgLLBQbjpZIHbnnDaNjtTfu7HrHqm
-         D+CZvJKvv5wH8Yp01G63XjLTf7zlnBPerepHcijNPVszvDde1LQhbzMrLXjCJpo/RmXF
-         fM0SVswubH6P8O9+WABzmAsRwQmO5592fKrXGcw1DKmZrnUtoslz7swOR3UT0Cg3Z6J0
-         33bOaM6NV7AWp2EcM9SmM8h+gd5GPjLp3Ze0ZXCWJTo2EEnlJILk5ILZMoZbCi8Tgda8
-         PsYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687500757; x=1690092757;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cH76kt6UTmIx3qjb+jJaF/n8MOD0hF4u7nMAFs65XK0=;
-        b=NtS09xv4QMz8H4ue0Wa9LYxOKjQzZVaRZXdJoaJQ4Sl2DZkolbCVOj33e2b80BrKXb
-         agkNpTs+d5vLcdxpqCAb6U36ArnDFeAC5P9kFDEwvLgez35mKLeue4+/CBJMw1F/5PXW
-         l4VuejMbC8EaOStAK+nYfq/DLPGLOHX3QwwOpMMBhx7tiETB0f8GrkVUdw4H9twfMyOd
-         5zQEZcrqawocMZjnBTq1pO0aR7Cy0DfxxTyq4/lu3z0ZgMmGs0nJdhOCXq1IJ+kS+7RL
-         JbxP3ym78f9/zZBU/tof94dsas8tkYUKezUovkrmqgtbPceO90QLim7Yk+7WEOp+2r9x
-         yyAA==
-X-Gm-Message-State: AC+VfDy0ZvQyWu5ngcbKxekNQcCm2MKEsCP0laDWj9cenHqPscwNU1v7
-	s9Nrujpz/8brpiPYcIDdhAOz/A==
-X-Google-Smtp-Source: ACHHUZ49+GAafnSTu35IsubJ8ajqMPMD2FfaOa0PM7wZ1CfvRVc4avU2TwVtAfElopHYu6azWxfjgA==
-X-Received: by 2002:adf:ffce:0:b0:30a:ec3b:58d8 with SMTP id x14-20020adfffce000000b0030aec3b58d8mr16321353wrs.3.1687500757261;
-        Thu, 22 Jun 2023 23:12:37 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id r7-20020adfce87000000b0030af54c5f33sm8635028wrn.113.2023.06.22.23.12.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Jun 2023 23:12:35 -0700 (PDT)
-Date: Fri, 23 Jun 2023 09:12:30 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, tsbogend@alpha.franken.de,
-	sergio.paracuellos@gmail.com, sboyd@kernel.org, trix@redhat.com,
-	linux-clk@vger.kernel.org, linux-mips@vger.kernel.org,
-	patches@lists.linux.dev, llvm@lists.linux.dev
-Subject: Re: [PATCH] clk: ralink: mtmips: Fix uninitialized use of ret in
- mtmips_register_{fixed,factor}_clocks()
-Message-ID: <27507a23-c1f4-40b2-a999-d6ebd10269f0@moroto.mountain>
-References: <20230622-mips-ralink-clk-wuninitialized-v1-1-ea9041240d10@kernel.org>
- <CAKwvOd=jaaf7jpjFYe=J0uBiOkGbY3hQ1JsSThp+171cyOsP7Q@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367C617D3;
+	Fri, 23 Jun 2023 08:04:47 +0000 (UTC)
+Received: from [IPV6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2] (unknown [IPv6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id EDC806607135;
+	Fri, 23 Jun 2023 09:04:45 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1687507486;
+	bh=wU3COEvvTx4nFaqAnosOYGf9sIPS0XZKMWTKQM1B8fI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=FkHTmFBGZjhmkIy2vJ2HIV541nVjVMa0FjD00n5HTl38Sn+biTJQudQDQRr9nP9x5
+	 Q9w5r/ElT3w0sPXXi0Tnlk5FugU2bYSraJ9bc3/mdpay2siJnU083xzam4fe5AU5hn
+	 y/ImTXO41+jx6L2AtyHHrLBZeyJkqw0VY+IEmnO4xf/419epZzJt16XKplD+nAMRb7
+	 N7/zrj5XAaAqS0bJDDpRtUhC0EvV3npPkUNNpnTQudDKC2X2+66xDy5ToU8LIIsHwX
+	 D9bWFzhhMaS3PJyTJijNtgT5RRJhTmYEokxVJoDu7x0ct02nwtvn5VVxjsy0QVYr9W
+	 cANoHjJEsztqQ==
+Message-ID: <57be8178-e4f9-3908-745f-bc02657e0b3a@collabora.com>
+Date: Fri, 23 Jun 2023 10:04:43 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKwvOd=jaaf7jpjFYe=J0uBiOkGbY3hQ1JsSThp+171cyOsP7Q@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH] leds: leds-mt6323: Adjust return/parameter types in wled
+ get/set callbacks
+To: Nathan Chancellor <nathan@kernel.org>, lee@kernel.org
+Cc: sean.wang@mediatek.com, pavel@ucw.cz, matthias.bgg@gmail.com,
+ ndesaulniers@google.com, trix@redhat.com, linux-leds@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev
+References: <20230622-mt6323-wled-wincompatible-function-pointer-types-strict-v1-1-6ad256f220e8@kernel.org>
+Content-Language: en-US
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20230622-mt6323-wled-wincompatible-function-pointer-types-strict-v1-1-6ad256f220e8@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 22, 2023 at 09:36:53AM -0700, Nick Desaulniers wrote:
-> On Thu, Jun 22, 2023 at 8:56 AM Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > Clang warns:
-> >
-> >   drivers/clk/ralink/clk-mtmips.c:309:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
-> >     309 |         return ret;
-> >         |                ^~~
-> >   drivers/clk/ralink/clk-mtmips.c:285:9: note: initialize the variable 'ret' to silence this warning
-> >     285 |         int ret, i;
-> >         |                ^
-> >         |                 = 0
-> >   drivers/clk/ralink/clk-mtmips.c:359:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
-> >     359 |         return ret;
-> >         |                ^~~
-> >   drivers/clk/ralink/clk-mtmips.c:335:9: note: initialize the variable 'ret' to silence this warning
-> >     335 |         int ret, i;
-> >         |                ^
-> >         |                 = 0
-> >   2 errors generated.
-> >
-> > Set ret to the return value of clk_hw_register_fixed_rate() using the
-> > PTR_ERR() macro, which ensures ret is not used uninitialized, clearing
-> > up the warning.
-> >
-> > Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS SoCs")
-> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1879
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Il 22/06/23 18:12, Nathan Chancellor ha scritto:
+> Clang's kernel Control Flow Integrity (kCFI) is a compiler-based
+> security mitigation that ensures the target of an indirect function call
+> matches the expected type of the call and trapping if they do not match
+> exactly. The warning -Wincompatible-function-pointer-types-strict aims
+> to catch these issues at compile time, which reveals:
 > 
-> Thanks for the patch!
-> PTR_ERR returns a long; assigning to an int risks truncation of the
-> error.  The use of PTR_ERR on L1079 has a similar risk...]
+>   drivers/leds/leds-mt6323.c:598:49: error: incompatible function pointer types assigning to 'int (*)(struct led_classdev *, enum led_brightness)' from 'int (struct led_classdev *, unsigned int)' [-Werror,-Wincompatible-function-pointer-types-strict]
+>     598 |                         leds->led[reg]->cdev.brightness_set_blocking =
+>         |                                                                      ^
+>     599 |                                                 mt6323_wled_set_brightness;
+>         |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   drivers/leds/leds-mt6323.c:600:40: error: incompatible function pointer types assigning to 'enum led_brightness (*)(struct led_classdev *)' from 'unsigned int (struct led_classdev *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+>     600 |                         leds->led[reg]->cdev.brightness_get =
+>         |                                                             ^
+>     601 |                                                 mt6323_get_wled_brightness;
+>         |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   2 errors generated.
 > 
+> While 'unsigned int' is ABI compatible with 'enum led_brightness' (hence
+> no warning from -Wincompatible-function-pointer-types) and the callers
+> of these callbacks use/pass the values as 'unsigned int', the mismatch
+> between the prototype and the called function will trip kCFI at runtime.
+> 
+> Change the types in the implementations to match the prototypes, clearing
+> up the warning and avoiding kCFI failures.
+> 
+> Fixes: 9bb0a9e0626c ("leds: leds-mt6323: Add support for WLEDs and MT6332")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-If PTR_ERR() ever returns anything outside of the (-4095)-(0) range then
-we are already screwed.
+leds need to deprecate said enumeration for real, since it's marked for
+deprecation but, in the meanwhile, we can't have kCFI failures on this driver.
 
-I'm 90% sure there is a reason why PTR_ERR() returns long but I can't
-think off the top of my head why that is...  It's been that way since
-before the git era.  I could imagine type promotion bugs involving
-u32 and int if we changed it.
+For this reason,
 
-	ssize_t ret_val = PTR_ERR(x) ?: u32_something;
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-Or maybe Linus just felt casting a pointer to int was ugly.
+Cheers,
+Angelo
 
-regards,
-dan carpenter
+> ---
+>   drivers/leds/leds-mt6323.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/leds/leds-mt6323.c b/drivers/leds/leds-mt6323.c
+> index e8fecfc2e90a..24f35bdb55fb 100644
+> --- a/drivers/leds/leds-mt6323.c
+> +++ b/drivers/leds/leds-mt6323.c
+> @@ -76,7 +76,7 @@ struct mt6323_led {
+>   	int			id;
+>   	struct mt6323_leds	*parent;
+>   	struct led_classdev	cdev;
+> -	unsigned int		current_brightness;
+> +	enum led_brightness	current_brightness;
+>   };
+>   
+>   /**
+> @@ -451,7 +451,7 @@ static int mtk_wled_hw_off(struct led_classdev *cdev)
+>   	return 0;
+>   }
+>   
+> -static unsigned int mt6323_get_wled_brightness(struct led_classdev *cdev)
+> +static enum led_brightness mt6323_get_wled_brightness(struct led_classdev *cdev)
+>   {
+>   	struct mt6323_led *led = container_of(cdev, struct mt6323_led, cdev);
+>   	struct mt6323_leds *leds = led->parent;
+> @@ -471,7 +471,7 @@ static unsigned int mt6323_get_wled_brightness(struct led_classdev *cdev)
+>   }
+>   
+>   static int mt6323_wled_set_brightness(struct led_classdev *cdev,
+> -				      unsigned int brightness)
+> +				      enum led_brightness brightness)
+>   {
+>   	struct mt6323_led *led = container_of(cdev, struct mt6323_led, cdev);
+>   	struct mt6323_leds *leds = led->parent;
+> 
+> ---
+> base-commit: 7bd932d9adbcc5c5370d968bdb0b00385606bf3a
+> change-id: 20230621-mt6323-wled-wincompatible-function-pointer-types-strict-334f06d92ffb
+> 
+> Best regards,
+
 
