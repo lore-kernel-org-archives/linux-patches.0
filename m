@@ -1,129 +1,218 @@
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367C617D3;
-	Fri, 23 Jun 2023 08:04:47 +0000 (UTC)
-Received: from [IPV6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2] (unknown [IPv6:2001:b07:2ed:14ed:c5f8:7372:f042:90a2])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97D42310C
+	for <patches@lists.linux.dev>; Fri, 23 Jun 2023 12:09:30 +0000 (UTC)
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id EDC806607135;
-	Fri, 23 Jun 2023 09:04:45 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1687507486;
-	bh=wU3COEvvTx4nFaqAnosOYGf9sIPS0XZKMWTKQM1B8fI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FkHTmFBGZjhmkIy2vJ2HIV541nVjVMa0FjD00n5HTl38Sn+biTJQudQDQRr9nP9x5
-	 Q9w5r/ElT3w0sPXXi0Tnlk5FugU2bYSraJ9bc3/mdpay2siJnU083xzam4fe5AU5hn
-	 y/ImTXO41+jx6L2AtyHHrLBZeyJkqw0VY+IEmnO4xf/419epZzJt16XKplD+nAMRb7
-	 N7/zrj5XAaAqS0bJDDpRtUhC0EvV3npPkUNNpnTQudDKC2X2+66xDy5ToU8LIIsHwX
-	 D9bWFzhhMaS3PJyTJijNtgT5RRJhTmYEokxVJoDu7x0ct02nwtvn5VVxjsy0QVYr9W
-	 cANoHjJEsztqQ==
-Message-ID: <57be8178-e4f9-3908-745f-bc02657e0b3a@collabora.com>
-Date: Fri, 23 Jun 2023 10:04:43 +0200
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 4F5B11EC041E;
+	Fri, 23 Jun 2023 14:09:22 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1687522162;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=M/dFIGeObXNSK0+1Vrh8UN2vBkMfuX0DSniP7oF6zVc=;
+	b=XtcQ9jj1rD6NHncvrJ+irOwTz/ZgbAvLGDyUpvlFEQiizWAoPdfaHG5lE+LS1DWZJXyp2r
+	euaiWfItr5qx77dcps0kn2hELb+gxH48FilIsIcnLpELOYiKWcP6208FFENCy3UA+NO2Ha
+	bUv1n/kc5ocL148c64ItZRBAXsWyG+0=
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id DFGmczbKggKd; Fri, 23 Jun 2023 12:09:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1687522158; bh=M/dFIGeObXNSK0+1Vrh8UN2vBkMfuX0DSniP7oF6zVc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KdrTBOkliNkjURxqsJdzGgczP38MWSAa37VDidfRhAx66Fg8z9FcZX7Q8DcYH80XG
+	 bCRXJx2fjcMfvgCOPz1CiWUQAWTMW/QRzwnXYzHjB27O1xijwQopICr0lSiY5PNDAY
+	 Gi/aGj4H/VsvWMW7Y5jbKIvO9rjIoWN9iXs/VqEjmHmIV4RWZCo3v9gz3l98DJ/aHE
+	 iR48lFziRd9OiP0zzwlIX13chBZo+bnMMcaqPQDTrvO9xFG9w1EJ3QayA77+8weRD+
+	 XuiyC7y8amYRsLM0/YfSWJIM/rQK/u250MD8bcJXFkfS/DclcCNXMV+etzMt/KVMO9
+	 mszJCYABngkZBk2/6CxhXKY4lJvsbY/Qf3cEQrvc3EomPhUBVxch0ePCqHVCysoHwG
+	 VLO6vQIdsh/KUQ5V1VY/gLOVs//FyUV34atwcN4i4nSYGiLBMeejRyBuhFBMjP6pOX
+	 10zlTyEbH+9VDHxiXaz9aIkmV3CwXdixvW0n1Gd/Am/VF1ZtdklSZVEmavc9YrWbnf
+	 tEfLLdtj7b5BeKVcxu31HjdXXe0DJ3E5KA0rdW62raY8MO3/LWcef99d0xZMCwDAmx
+	 sfUBIFcN3LNs7R0nh0SgcV7RRfm9xAgdOflsJdZjxNrjfSK8ts9MbQdP09BocEAJrX
+	 YvTSRZ5zS/lGO8uyJMm0eLbY=
+Received: from zn.tnic (pd9530d32.dip0.t-ipconnect.de [217.83.13.50])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 411D940E01D0;
+	Fri, 23 Jun 2023 12:09:10 +0000 (UTC)
+Date: Fri, 23 Jun 2023 14:09:04 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
+	x86@kernel.org, linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v6 2/4] x86/mce: Add per-bank CMCI storm mitigation
+Message-ID: <20230623120904.GAZJWLYMP0XxIr5k7s@fat_crate.local>
+References: <20230411173841.70491-1-tony.luck@intel.com>
+ <20230616182744.17632-1-tony.luck@intel.com>
+ <20230616182744.17632-3-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] leds: leds-mt6323: Adjust return/parameter types in wled
- get/set callbacks
-To: Nathan Chancellor <nathan@kernel.org>, lee@kernel.org
-Cc: sean.wang@mediatek.com, pavel@ucw.cz, matthias.bgg@gmail.com,
- ndesaulniers@google.com, trix@redhat.com, linux-leds@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- llvm@lists.linux.dev, patches@lists.linux.dev
-References: <20230622-mt6323-wled-wincompatible-function-pointer-types-strict-v1-1-6ad256f220e8@kernel.org>
-Content-Language: en-US
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-In-Reply-To: <20230622-mt6323-wled-wincompatible-function-pointer-types-strict-v1-1-6ad256f220e8@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230616182744.17632-3-tony.luck@intel.com>
 
-Il 22/06/23 18:12, Nathan Chancellor ha scritto:
-> Clang's kernel Control Flow Integrity (kCFI) is a compiler-based
-> security mitigation that ensures the target of an indirect function call
-> matches the expected type of the call and trapping if they do not match
-> exactly. The warning -Wincompatible-function-pointer-types-strict aims
-> to catch these issues at compile time, which reveals:
-> 
->   drivers/leds/leds-mt6323.c:598:49: error: incompatible function pointer types assigning to 'int (*)(struct led_classdev *, enum led_brightness)' from 'int (struct led_classdev *, unsigned int)' [-Werror,-Wincompatible-function-pointer-types-strict]
->     598 |                         leds->led[reg]->cdev.brightness_set_blocking =
->         |                                                                      ^
->     599 |                                                 mt6323_wled_set_brightness;
->         |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
->   drivers/leds/leds-mt6323.c:600:40: error: incompatible function pointer types assigning to 'enum led_brightness (*)(struct led_classdev *)' from 'unsigned int (struct led_classdev *)' [-Werror,-Wincompatible-function-pointer-types-strict]
->     600 |                         leds->led[reg]->cdev.brightness_get =
->         |                                                             ^
->     601 |                                                 mt6323_get_wled_brightness;
->         |                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~
->   2 errors generated.
-> 
-> While 'unsigned int' is ABI compatible with 'enum led_brightness' (hence
-> no warning from -Wincompatible-function-pointer-types) and the callers
-> of these callbacks use/pass the values as 'unsigned int', the mismatch
-> between the prototype and the called function will trip kCFI at runtime.
-> 
-> Change the types in the implementations to match the prototypes, clearing
-> up the warning and avoiding kCFI failures.
-> 
-> Fixes: 9bb0a9e0626c ("leds: leds-mt6323: Add support for WLEDs and MT6332")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On Fri, Jun 16, 2023 at 11:27:42AM -0700, Tony Luck wrote:
+> -void mce_timer_kick(unsigned long interval);
+> +void mce_timer_kick(bool storm);
+> +void mce_handle_storm(int bank, bool on);
+> +void cmci_storm_begin(int bank);
+> +void cmci_storm_end(int bank);
+> +
+> +/**
 
-leds need to deprecate said enumeration for real, since it's marked for
-deprecation but, in the meanwhile, we can't have kCFI failures on this driver.
+Yeah, let's not add kernel-doc comments about structs in internal.h
+which are no one's business outside of MCA.
 
-For this reason,
+> + * struct mca_storm_desc - CMCI storm tracking data
+> + * @stormy_bank_count: count of MC banks in storm state
+> + * @bank_history: bitmask tracking of corrected errors seen in each bank
+> + * @bank_storm: determines whether the bank is in storm mode
+> + * @bank_time_stamp: last time (in jiffies) that each bank was polled
+> + */
+> +struct mca_storm_desc {
+> +	int		stormy_bank_count;
+> +	u64		bank_history[MAX_NR_BANKS];
+> +	bool		bank_storm[MAX_NR_BANKS];
+> +	unsigned long	bank_time_stamp[MAX_NR_BANKS];
+> +};
+> +DECLARE_PER_CPU(struct mca_storm_desc, storm_desc);
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Would that make the members organization even better:
 
-Cheers,
-Angelo
+struct storm_bank {
+	u64 history;
+	u64 timestamp;
+	bool storm;
+};
 
-> ---
->   drivers/leds/leds-mt6323.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/leds/leds-mt6323.c b/drivers/leds/leds-mt6323.c
-> index e8fecfc2e90a..24f35bdb55fb 100644
-> --- a/drivers/leds/leds-mt6323.c
-> +++ b/drivers/leds/leds-mt6323.c
-> @@ -76,7 +76,7 @@ struct mt6323_led {
->   	int			id;
->   	struct mt6323_leds	*parent;
->   	struct led_classdev	cdev;
-> -	unsigned int		current_brightness;
-> +	enum led_brightness	current_brightness;
->   };
->   
->   /**
-> @@ -451,7 +451,7 @@ static int mtk_wled_hw_off(struct led_classdev *cdev)
->   	return 0;
->   }
->   
-> -static unsigned int mt6323_get_wled_brightness(struct led_classdev *cdev)
-> +static enum led_brightness mt6323_get_wled_brightness(struct led_classdev *cdev)
->   {
->   	struct mt6323_led *led = container_of(cdev, struct mt6323_led, cdev);
->   	struct mt6323_leds *leds = led->parent;
-> @@ -471,7 +471,7 @@ static unsigned int mt6323_get_wled_brightness(struct led_classdev *cdev)
->   }
->   
->   static int mt6323_wled_set_brightness(struct led_classdev *cdev,
-> -				      unsigned int brightness)
-> +				      enum led_brightness brightness)
->   {
->   	struct mt6323_led *led = container_of(cdev, struct mt6323_led, cdev);
->   	struct mt6323_leds *leds = led->parent;
-> 
-> ---
-> base-commit: 7bd932d9adbcc5c5370d968bdb0b00385606bf3a
-> change-id: 20230621-mt6323-wled-wincompatible-function-pointer-types-strict-334f06d92ffb
-> 
-> Best regards,
+struct mca_storm_desc {
+	struct storm_bank banks[MAX_NR_BANKS];
+	unsigned int	  bank_count;
+};
 
+?
 
+From the previous mail:
+
+> storm_poll_mode is a regular per-cpu variable that indicates a CPU is in
+> poll mode because one or more of the banks it owns has gone over the
+> storm threshold.
+
+It is still a per-CPU var which can be part of the storm descriptor, no?
+
+> bank_storm - is a per-cpu per-bank indicator that a particular bank
+> on a particular CPU is in storm mode.
+
+Ok, so the above can be extended to:
+
+struct mca_storm_desc {
+        struct storm_bank banks[MAX_NR_BANKS];
+        unsigned int      bank_count;
+	bool		  poll_mode;
+};
+
+?
+
+> +/*
+> + * How many polls of machine check bank without an error before declaring
+> + * the storm is over
+> + */
+> +#define STORM_END_POLL_THRESHOLD	30
+
+So what's stopping you from doing
+
+/*
+ * How many polls of machine check bank without an error before declaring
+ * the storm is over. Since it is tracked in the struct
+ * storm_bank.history member as a bitmask, the mask is 30 bits [0 ... 29]
+ */
+#define STORM_END_POLL_THRESHOLD	29
+
+?
+
+And you've also explained it in text too so that it is perfectly clear
+what the intent is.
+
+>  #ifdef CONFIG_ACPI_APEI
+>  int apei_write_mce(struct mce *m);
+> diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+> index e7936be84204..cd9d9ea5bb0a 100644
+> --- a/arch/x86/kernel/cpu/mce/core.c
+> +++ b/arch/x86/kernel/cpu/mce/core.c
+> @@ -607,6 +607,83 @@ static struct notifier_block mce_default_nb = {
+>  	.priority	= MCE_PRIO_LOWEST,
+>  };
+>  
+> +DEFINE_PER_CPU(struct mca_storm_desc, storm_desc);
+> +
+> +void cmci_storm_begin(int bank)
+> +{
+> +	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
+> +
+> +	__set_bit(bank, this_cpu_ptr(mce_poll_banks));
+> +	storm->bank_storm[bank] = true;
+> +
+> +	/*
+> +	 * If this is the first bank on this CPU to enter storm mode
+> +	 * start polling
+> +	 */
+> +	if (++storm->stormy_bank_count == 1)
+
+	if (++storm->stormy_bank_count)
+
+> +		mce_timer_kick(true);
+> +}
+> +
+> +void cmci_storm_end(int bank)
+> +{
+> +	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
+> +
+> +	__clear_bit(bank, this_cpu_ptr(mce_poll_banks));
+> +	storm->bank_history[bank] = 0ull;
+> +	storm->bank_storm[bank] = false;
+> +
+> +	/* If no banks left in storm mode, stop polling */
+> +	if (!this_cpu_dec_return(storm_desc.stormy_bank_count))
+> +		mce_timer_kick(false);
+> +}
+> +
+> +void track_cmci_storm(int bank, u64 status)
+
+This is still not called cmci_track_storm() ;-\
+
+And looking at the AMD side of things, there's a track_cmci_storm() in
+amd_threshold_interrupt() which doesn't make any sense whatsoever.
+
+Or at least this was my initial reaction because why would the AMD side
+call a "CMCI" specific function. So they're prefixed with "cmci_" but
+they don't really have anything to do with the Intel CMCI feature - it
+is a storm handling code.
+
+Which means, since those are used by both, the confusing "cmci" should
+not be in the names.
+
+And which also means, those should be static and private to mce/core.c.
+But I'll see what functionality the rest of the patches need and how it
+all should be split/exported properly.
+
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
