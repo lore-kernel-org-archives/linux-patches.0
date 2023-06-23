@@ -1,91 +1,145 @@
-Received: from elvis.franken.de (elvis.franken.de [193.175.24.41])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 932EC79CF;
-	Fri, 23 Jun 2023 13:16:47 +0000 (UTC)
-Received: from uucp by elvis.franken.de with local-rmail (Exim 3.36 #1)
-	id 1qCgeU-0002sh-00; Fri, 23 Jun 2023 15:16:38 +0200
-Received: by alpha.franken.de (Postfix, from userid 1000)
-	id 32743C0301; Fri, 23 Jun 2023 15:09:23 +0200 (CEST)
-Date: Fri, 23 Jun 2023 15:09:23 +0200
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: sergio.paracuellos@gmail.com, sboyd@kernel.org, ndesaulniers@google.com,
-	trix@redhat.com, linux-clk@vger.kernel.org,
-	linux-mips@vger.kernel.org, patches@lists.linux.dev,
-	llvm@lists.linux.dev
-Subject: Re: [PATCH] clk: ralink: mtmips: Fix uninitialized use of ret in
- mtmips_register_{fixed,factor}_clocks()
-Message-ID: <20230623130923.GB11636@alpha.franken.de>
-References: <20230622-mips-ralink-clk-wuninitialized-v1-1-ea9041240d10@kernel.org>
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF94D8486
+	for <patches@lists.linux.dev>; Fri, 23 Jun 2023 14:46:01 +0000 (UTC)
+Received: from mail.alien8.de (mail.alien8.de [IPv6:2a01:4f9:3051:3f93::2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 256561EC03C0;
+	Fri, 23 Jun 2023 16:45:59 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1687531559;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=72D4APT785MRKgb7gE3/xsKu0nhOfh7JKYy3cm9up4g=;
+	b=A47UKYtvPgnL6kVloE5ywvQb9Ozq9Ni+7YlmLYxhUTxCvg457TnKArE/qQ5YOKHPz4Vzpx
+	YZKcUhKnGS0nCj0T7eowehLqdSYAvN6cl4znZaWpIYDt8kDGkaI95Dh5D/ttnlJXjEqMHy
+	r8Lffb2y/P9ECW2S3bg8/qrvOdqvD+U=
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id kQRBcalhvEKI; Fri, 23 Jun 2023 14:45:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1687531556; bh=72D4APT785MRKgb7gE3/xsKu0nhOfh7JKYy3cm9up4g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TZjDVvarNOaVPisbHs0oKMUW3BgWFkeVYSIzPiJd/vEaa7me+YUiVGAjEH7buGmqB
+	 l+iCMzfX4Yh9cIPCR4An0FubDvQpTA7AWOPWMnuEgLicCLVu+tfuqc8gI0g5qOhwz7
+	 GnyGkvEA5pSUcvaAex55vur8ZDP0D2shs/tMtquvWlVgc0mW6ZLZQJPbXqZwmFw+ZD
+	 rjIXJX813fHEo89TSPlqBZRYfAi1uNQkKxFsBjqIOhqC+gTjqRm8kEPujqDQmNN7tS
+	 HhCaQngA6STEWC86PNxK8dJr9Qk5MJlWMg+3WQM5yPD5f87JYJqsyoEgErqFEasDFZ
+	 Hzym5HczzeXmZOKBsyQMO3IPaLhH/rleeDfNLTkGdSdZmDh7PTEBPb+lur5aWd/R2b
+	 gAUt1vePRQGG5S2GxfANpIijhlBnewhVfUAsndfkUU0dU9WFjvrXxG4QC7H1hA3Nlk
+	 +GvvyvZVrlNHjNo/FQb00gU/fYWxSg9fr79JLXs/b7WXOoE2mjgm5IZx8auxi9E/To
+	 FYzqD8ZIyRJhwp3jIrPGa93Rl9bFSZBl1JdTwaRRnzWEjrM8Y3sSGnFTYUzolehnk+
+	 P65OYUpTWXyPAEFHjiTHEbicr0vSflSVpK/W/JnagVvt7tUwD7OByAaFl7pkf0MMIZ
+	 4ZHYhwikdu1t7n0cBAuuC/Bg=
+Received: from zn.tnic (pd9530d32.dip0.t-ipconnect.de [217.83.13.50])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 58BFA40E01DB;
+	Fri, 23 Jun 2023 14:45:48 +0000 (UTC)
+Date: Fri, 23 Jun 2023 16:45:42 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Smita.KoralahalliChannabasappa@amd.com
+Cc: Tony Luck <tony.luck@intel.com>, Yazen Ghannam <yazen.ghannam@amd.com>,
+	dave.hansen@linux.intel.com, x86@kernel.org,
+	linux-edac@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v6 3/4] x86/mce: Handle AMD threshold interrupt storms
+Message-ID: <20230623144542.GBZJWwFvA+1uXC1A1g@fat_crate.local>
+References: <20230411173841.70491-1-tony.luck@intel.com>
+ <20230616182744.17632-1-tony.luck@intel.com>
+ <20230616182744.17632-4-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230622-mips-ralink-clk-wuninitialized-v1-1-ea9041240d10@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20230616182744.17632-4-tony.luck@intel.com>
 
-On Thu, Jun 22, 2023 at 03:56:19PM +0000, Nathan Chancellor wrote:
-> Clang warns:
-> 
->   drivers/clk/ralink/clk-mtmips.c:309:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
->     309 |         return ret;
->         |                ^~~
->   drivers/clk/ralink/clk-mtmips.c:285:9: note: initialize the variable 'ret' to silence this warning
->     285 |         int ret, i;
->         |                ^
->         |                 = 0
->   drivers/clk/ralink/clk-mtmips.c:359:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
->     359 |         return ret;
->         |                ^~~
->   drivers/clk/ralink/clk-mtmips.c:335:9: note: initialize the variable 'ret' to silence this warning
->     335 |         int ret, i;
->         |                ^
->         |                 = 0
->   2 errors generated.
-> 
-> Set ret to the return value of clk_hw_register_fixed_rate() using the
-> PTR_ERR() macro, which ensures ret is not used uninitialized, clearing
-> up the warning.
-> 
-> Fixes: 6f3b15586eef ("clk: ralink: add clock and reset driver for MTMIPS SoCs")
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/1879
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/clk/ralink/clk-mtmips.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
-> index 9322c6210a33..1e7991439527 100644
-> --- a/drivers/clk/ralink/clk-mtmips.c
-> +++ b/drivers/clk/ralink/clk-mtmips.c
-> @@ -292,6 +292,7 @@ static int mtmips_register_fixed_clocks(struct clk_hw_onecell_data *clk_data,
->  						      sclk->parent, 0,
->  						      sclk->rate);
->  		if (IS_ERR(sclk->hw)) {
-> +			ret = PTR_ERR(sclk->hw);
->  			pr_err("Couldn't register fixed clock %d\n", idx);
->  			goto err_clk_unreg;
->  		}
-> @@ -342,6 +343,7 @@ static int mtmips_register_factor_clocks(struct clk_hw_onecell_data *clk_data,
->  						  sclk->parent, sclk->flags,
->  						  sclk->mult, sclk->div);
->  		if (IS_ERR(sclk->hw)) {
-> +			ret = PTR_ERR(sclk->hw);
->  			pr_err("Couldn't register factor clock %d\n", idx);
->  			goto err_clk_unreg;
->  		}
-> 
-> ---
-> base-commit: fd99ac5055d4705e91c73d1adba18bc71c8511a8
-> change-id: 20230622-mips-ralink-clk-wuninitialized-150bd0336187
+On Fri, Jun 16, 2023 at 11:27:43AM -0700, Tony Luck wrote:
+> +static void _reset_block(struct threshold_block *block)
+> +{
+> +	struct thresh_restart tr;
+> +
+> +	memset(&tr, 0, sizeof(tr));
+> +	tr.b = block;
+> +	threshold_restart_bank(&tr);
+> +}
 
-applied to mips-next.
+> +
+> +static void toggle_interrupt_reset_block(struct threshold_block *block, bool on)
+> +{
+> +	if (!block)
+> +		return;
+> +
+> +	block->interrupt_enable = !!on;
+> +	_reset_block(block);
+> +}
+> +
+> +void mce_amd_handle_storm(int bank, bool on)
+> +{
+> +	struct threshold_block *first_block = NULL, *block = NULL, *tmp = NULL;
+> +	struct threshold_bank **bp = this_cpu_read(threshold_banks);
+> +	unsigned long flags;
+> +
+> +	if (!bp)
+> +		return;
+> +
+> +	local_irq_save(flags);
+> +
+> +	first_block = bp[bank]->blocks;
+> +	if (!first_block)
+> +		goto end;
+> +
+> +	toggle_interrupt_reset_block(first_block, on);
+> +
+> +	list_for_each_entry_safe(block, tmp, &first_block->miscj, miscj)
+> +		toggle_interrupt_reset_block(block, on);
+> +end:
+> +	local_irq_restore(flags);
+> +}
 
-Thomas.
+There's already other code which does this threshold block control. Pls
+refactor and unify it instead of adding almost redundant similar functions.
+
+>  static void mce_threshold_block_init(struct threshold_block *b, int offset)
+>  {
+>  	struct thresh_restart tr = {
+> @@ -868,6 +909,7 @@ static void amd_threshold_interrupt(void)
+>  	struct threshold_block *first_block = NULL, *block = NULL, *tmp = NULL;
+>  	struct threshold_bank **bp = this_cpu_read(threshold_banks);
+>  	unsigned int bank, cpu = smp_processor_id();
+> +	u64 status;
+>  
+>  	/*
+>  	 * Validate that the threshold bank has been initialized already. The
+> @@ -881,6 +923,13 @@ static void amd_threshold_interrupt(void)
+>  		if (!(per_cpu(bank_map, cpu) & BIT_ULL(bank)))
+>  			continue;
+>  
+> +		rdmsrl(mca_msr_reg(bank, MCA_STATUS), status);
+> +		track_cmci_storm(bank, status);
+
+So this is called from interrupt context.
+
+There's another track_cmci_storm() from machine_check_poll() which can
+happen in process context.
+
+And there's no sync (locking) between the two. Not good.
+
+Why are even two calls needed on AMD?
 
 -- 
-Crap can work. Given enough thrust pigs will fly, but it's not necessarily a
-good idea.                                                [ RFC1925, 2.3 ]
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
