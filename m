@@ -1,28 +1,28 @@
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+Received: from mail-4318.protonmail.ch (mail-4318.protonmail.ch [185.70.43.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8114433
-	for <patches@lists.linux.dev>; Sat, 24 Jun 2023 14:55:31 +0000 (UTC)
-Date: Sat, 24 Jun 2023 14:55:03 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E210D5668
+	for <patches@lists.linux.dev>; Sat, 24 Jun 2023 14:58:59 +0000 (UTC)
+Date: Sat, 24 Jun 2023 14:58:50 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1687618519; x=1687877719;
-	bh=YV5/XlO7DY5i9iDZ5ZmMmTj4xvcJ6rJdDPORDOCsGYI=;
+	s=protonmail3; t=1687618734; x=1687877934;
+	bh=PGrRg8/LesaPKKANzQnFHjiA3Roa28wYAQr/ty0Oxv0=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=fXB8WBmtq1Lk+tnc5sME0w+8jCgQvFVvXDv5UDr8/Z1mvV0iZ0VUstye85cMmqTlO
-	 WY7u7vQ+VhRzTYIMfCgFbps4OBvwN5zZID0QplZhrVIiNIx70bJXzRIVJYMDuC+9Eo
-	 P0gRZw+WR+xnWC2lqk4jnYbnPs/0tQMqgSt7xdu8jSdUBP4HQ7yzHOiPhFvU/W6f7t
-	 jN4Fnof4uCKdplTknTpIFcdHNy11u//TmVyn6E1qCkak/48Es8ukMOGiWG94w5P2gF
-	 gy2zuD9qDpZ5HIMp3dCup/XF/RAuBH36dQF1fBE9fRTDefRx5cDBVxxtbrVDfoee73
-	 C0xp0FrZ8VClg==
+	b=Z00Av2p9BVo2ONknTbvNUUaLKcap3c75jTieiUM6I/ztToIqLInzdQXOqEVPC40lI
+	 TN2P9I1qs+IC+T0thp+i0TQfS0Sq/DFX6E284xWT9HaqBA7UlZ4er4Hv46kIPxRDM2
+	 uwyMIZPSErZYLQxQkADQ6nqAsK1SH+dPXFeXDHOztihR12KyQKKzah5RgQDYSNAEiU
+	 v4d1KD2xSVIRedNHbXXzy2+5pBG9IeP/IZXrCw9S6lcOUyiT9LO2CAtgu1+w1MMQCl
+	 1JgIPZ5ji68SoB+UrdVfCN5785wVu07mMAKAb+OTTeD9c4Nwzb/aJfQljruQXSzoGf
+	 xd1h737Yg2l5A==
 To: Benno Lossin <benno.lossin@proton.me>
 From: =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina <lina@asahilina.net>
-Subject: Re: [PATCH 2/7] rust: add derive macro for `Zeroable`
-Message-ID: <QDJDJxiCJaB6_91GlTTIJmyfDegTJpRXwrcPRPubdau5diJRPA96rLxC1oILb0zKKDCQ9703xQn4diE7TCtRpknvg-9yAXoigoKoXwxj9fQ=@protonmail.com>
-In-Reply-To: <20230624092330.157338-2-benno.lossin@proton.me>
-References: <20230624092330.157338-1-benno.lossin@proton.me> <20230624092330.157338-2-benno.lossin@proton.me>
+Subject: Re: [PATCH 3/7] rust: init: make guards in the init macros hygienic
+Message-ID: <U0tuqEm3_89s8FWU9JE8TeHN9vg24GUOGjQgM2n7xREBJAFkRctJAIxoujeYo6vh4m4XxC6COyGwain_6D1D3zoLa3W6njwSIuQDCGIsE1U=@protonmail.com>
+In-Reply-To: <20230624092330.157338-3-benno.lossin@proton.me>
+References: <20230624092330.157338-1-benno.lossin@proton.me> <20230624092330.157338-3-benno.lossin@proton.me>
 Feedback-ID: 27884398:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,13 +36,15 @@ Content-Transfer-Encoding: quoted-printable
 On Saturday, June 24th, 2023 at 11:25, Benno Lossin <benno.lossin@proton.me=
 > wrote:
 
-> Add a derive proc-macro for the `Zeroable` trait. The macro supports
-> structs where every field implements the `Zeroable` trait. This way
-> `unsafe` implementations can be avoided.
->=20
-> The macro is split into two parts:
-> - a proc-macro to parse generics into impl and ty generics,
-> - a declarative macro that expands to the impl block.
+> Use hygienic identifiers for the guards instead of the field names. This
+> makes the init macros feel more like normal struct initializers, since
+> assigning identifiers with the name of a field does not create
+> conflicts.
+> Also change the internals of the guards, no need to make the `forget`
+> function `unsafe`, since users cannot access the guards anyways. Now the
+> guards are carried directly on the stack and have no extra `Cell<bool>`
+> field that marks if they have been forgotten or not, instead they are
+> just forgotten via `mem::forget`.
 >=20
 > Suggested-by: Asahi Lina <lina@asahilina.net>
 > Signed-off-by: Benno Lossin <benno.lossin@proton.me>
@@ -50,152 +52,261 @@ On Saturday, June 24th, 2023 at 11:25, Benno Lossin <benno.lossin@proton.me=
 Reviewed-by: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
 
 > ---
->  rust/kernel/init/macros.rs | 28 ++++++++++++++++++++++++++++
->  rust/kernel/prelude.rs     |  2 +-
->  rust/macros/lib.rs         | 20 ++++++++++++++++++++
->  rust/macros/quote.rs       |  6 ++++++
->  rust/macros/zeroable.rs    | 25 +++++++++++++++++++++++++
->  5 files changed, 80 insertions(+), 1 deletion(-)
->  create mode 100644 rust/macros/zeroable.rs
+>  rust/kernel/init.rs            |  1 -
+>  rust/kernel/init/__internal.rs | 25 +++------------
+>  rust/kernel/init/macros.rs     | 56 ++++++++++++----------------------
+>  3 files changed, 23 insertions(+), 59 deletions(-)
+>=20
+> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
+> index d9a91950cba2..ecf6a4bd0ce4 100644
+> --- a/rust/kernel/init.rs
+> +++ b/rust/kernel/init.rs
+> @@ -206,7 +206,6 @@
+>  use alloc::boxed::Box;
+>  use core::{
+>      alloc::AllocError,
+> -    cell::Cell,
+>      convert::Infallible,
+>      marker::PhantomData,
+>      mem::MaybeUninit,
+> diff --git a/rust/kernel/init/__internal.rs b/rust/kernel/init/__internal=
+.rs
+> index 44751fb62b51..7abd1fb65e41 100644
+> --- a/rust/kernel/init/__internal.rs
+> +++ b/rust/kernel/init/__internal.rs
+> @@ -174,7 +174,6 @@ pub fn init<E>(self: Pin<&mut Self>, init: impl PinIn=
+it<T, E>) -> Result<Pin<&mu
+>  /// Can be forgotten to prevent the drop.
+>  pub struct DropGuard<T: ?Sized> {
+>      ptr: *mut T,
+> -    do_drop: Cell<bool>,
+>  }
+>=20
+>  impl<T: ?Sized> DropGuard<T> {
+> @@ -190,32 +189,16 @@ impl<T: ?Sized> DropGuard<T> {
+>      /// - will not be dropped by any other means.
+>      #[inline]
+>      pub unsafe fn new(ptr: *mut T) -> Self {
+> -        Self {
+> -            ptr,
+> -            do_drop: Cell::new(true),
+> -        }
+> -    }
+> -
+> -    /// Prevents this guard from dropping the supplied pointer.
+> -    ///
+> -    /// # Safety
+> -    ///
+> -    /// This function is unsafe in order to prevent safe code from forge=
+tting this guard. It should
+> -    /// only be called by the macros in this module.
+> -    #[inline]
+> -    pub unsafe fn forget(&self) {
+> -        self.do_drop.set(false);
+> +        Self { ptr }
+>      }
+>  }
+>=20
+>  impl<T: ?Sized> Drop for DropGuard<T> {
+>      #[inline]
+>      fn drop(&mut self) {
+> -        if self.do_drop.get() {
+> -            // SAFETY: A `DropGuard` can only be constructed using the u=
+nsafe `new` function
+> -            // ensuring that this operation is safe.
+> -            unsafe { ptr::drop_in_place(self.ptr) }
+> -        }
+> +        // SAFETY: A `DropGuard` can only be constructed using the unsaf=
+e `new` function
+> +        // ensuring that this operation is safe.
+> +        unsafe { ptr::drop_in_place(self.ptr) }
+>      }
+>  }
 >=20
 > diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-> index fbaebd34f218..e8165ff53a94 100644
+> index e8165ff53a94..df4281743175 100644
 > --- a/rust/kernel/init/macros.rs
 > +++ b/rust/kernel/init/macros.rs
-> @@ -1213,3 +1213,31 @@ macro_rules! __init_internal {
+> @@ -992,7 +992,6 @@ impl<$($impl_generics)*> $pin_data<$($ty_generics)*>
+>  /// - `init_slot`: recursively creates the code that initializes all fie=
+lds in `slot`.
+>  /// - `make_initializer`: recursively create the struct initializer that=
+ guarantees that every
+>  ///   field has been initialized exactly once.
+> -/// - `forget_guards`: recursively forget the drop guards for every fiel=
+d.
+>  #[doc(hidden)]
+>  #[macro_export]
+>  macro_rules! __init_internal {
+> @@ -1032,6 +1031,7 @@ macro_rules! __init_internal {
+>                      $crate::__init_internal!(init_slot($($use_data)?):
+>                          @data(data),
+>                          @slot(slot),
+> +                        @guards(),
+>                          @munch_fields($($fields)*,),
+>                      );
+>                      // We use unreachable code to ensure that all fields=
+ have been mentioned exactly
+> @@ -1046,10 +1046,6 @@ macro_rules! __init_internal {
+>                              @acc(),
+>                          );
+>                      }
+> -                    // Forget all guards, since initialization was a suc=
+cess.
+> -                    $crate::__init_internal!(forget_guards:
+> -                        @munch_fields($($fields)*,),
+> -                    );
+>                  }
+>                  Ok(__InitOk)
+>              }
+> @@ -1063,13 +1059,17 @@ macro_rules! __init_internal {
+>      (init_slot($($use_data:ident)?):
+>          @data($data:ident),
+>          @slot($slot:ident),
+> +        @guards($($guards:ident,)*),
+>          @munch_fields($(,)?),
+>      ) =3D> {
+> -        // Endpoint of munching, no fields are left.
+> +        // Endpoint of munching, no fields are left. If execution reache=
+s this point, all fields
+> +        // have been initialized. Therefore we can now dismiss the guard=
+s by forgetting them.
+> +        $(::core::mem::forget($guards);)*
+>      };
+>      (init_slot($use_data:ident): // use_data is present, so we use the `=
+data` to init fields.
+>          @data($data:ident),
+>          @slot($slot:ident),
+> +        @guards($($guards:ident,)*),
+>          // In-place initialization syntax.
+>          @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
+>      ) =3D> {
+> @@ -1080,24 +1080,26 @@ macro_rules! __init_internal {
+>          // return when an error/panic occurs.
+>          // We also use the `data` to require the correct trait (`Init` o=
+r `PinInit`) for `$field`.
+>          unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field)=
+, $field)? };
+> -        // Create the drop guard.
+> +        // Create the drop guard:
+>          //
+> -        // We only give access to `&DropGuard`, so it cannot be forgotte=
+n via safe code.
+> +        // We rely on macro hygiene to make it impossible for users to a=
+ccess this local variable.
+>          //
+>          // SAFETY: We forget the guard later when initialization has suc=
+ceeded.
+> -        let $field =3D &unsafe {
+> +        let guard =3D unsafe {
+>              $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
+f_mut!((*$slot).$field))
+>          };
+>=20
+>          $crate::__init_internal!(init_slot($use_data):
+>              @data($data),
+>              @slot($slot),
+> +            @guards(guard, $($guards,)*),
+>              @munch_fields($($rest)*),
 >          );
 >      };
->  }
-> +
-> +#[doc(hidden)]
-> +#[macro_export]
-> +macro_rules! __derive_zeroable {
-> +    (parse_input:
-> +        @sig(
-> +            $(#[$($struct_attr:tt)*])*
-> +            $vis:vis struct $name:ident
-> +            $(where $($whr:tt)*)?
-> +        ),
-> +        @impl_generics($($impl_generics:tt)*),
-> +        @ty_generics($($ty_generics:tt)*),
-> +        @body({
-> +            $(
-> +                $(#[$($field_attr:tt)*])*
-> +                $field:ident : $field_ty:ty
-> +            ),* $(,)?
-> +        }),
-> +    ) =3D> {
-> +        // SAFETY: every field type implements `Zeroable` and padding by=
-tes may be zero.
-> +        #[automatically_derived]
-> +        unsafe impl<$($impl_generics)*> $crate::Zeroable for $name<$($ty=
-_generics)*>
-> +        where
-> +            $($field_ty: $crate::Zeroable,)*
-> +            $($($whr)*)?
-> +        {}
-> +    };
-> +}
-> diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
-> index c28587d68ebc..ae21600970b3 100644
-> --- a/rust/kernel/prelude.rs
-> +++ b/rust/kernel/prelude.rs
-> @@ -18,7 +18,7 @@
->  pub use alloc::{boxed::Box, vec::Vec};
+>      (init_slot(): // no use_data, so we use `Init::__init` directly.
+>          @data($data:ident),
+>          @slot($slot:ident),
+> +        @guards($($guards:ident,)*),
+>          // In-place initialization syntax.
+>          @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
+>      ) =3D> {
+> @@ -1107,24 +1109,26 @@ macro_rules! __init_internal {
+>          // SAFETY: `slot` is valid, because we are inside of an initiali=
+zer closure, we
+>          // return when an error/panic occurs.
+>          unsafe { $crate::init::Init::__init($field, ::core::ptr::addr_of=
+_mut!((*$slot).$field))? };
+> -        // Create the drop guard.
+> +        // Create the drop guard:
+>          //
+> -        // We only give access to `&DropGuard`, so it cannot be forgotte=
+n via safe code.
+> +        // We rely on macro hygiene to make it impossible for users to a=
+ccess this local variable.
+>          //
+>          // SAFETY: We forget the guard later when initialization has suc=
+ceeded.
+> -        let $field =3D &unsafe {
+> +        let guard =3D unsafe {
+>              $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
+f_mut!((*$slot).$field))
+>          };
 >=20
->  #[doc(no_inline)]
-> -pub use macros::{module, pin_data, pinned_drop, vtable};
-> +pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
->=20
->  pub use super::build_assert;
->=20
-> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
-> index 3fc74cb4ea19..9f056a5c780a 100644
-> --- a/rust/macros/lib.rs
-> +++ b/rust/macros/lib.rs
-> @@ -10,6 +10,7 @@
->  mod pin_data;
->  mod pinned_drop;
->  mod vtable;
-> +mod zeroable;
->=20
->  use proc_macro::TokenStream;
->=20
-> @@ -246,3 +247,22 @@ pub fn pin_data(inner: TokenStream, item: TokenStrea=
-m) -> TokenStream {
->  pub fn pinned_drop(args: TokenStream, input: TokenStream) -> TokenStream=
- {
->      pinned_drop::pinned_drop(args, input)
->  }
-> +
-> +/// Derives the [`Zeroable`] trait for the given struct.
-> +///
-> +/// This can only be used for structs where every field implements the [=
-`Zeroable`] trait.
-> +///
-> +/// # Examples
-> +///
-> +/// ```rust
-> +/// #[derive(Zeroable)]
-> +/// pub struct DriverData {
-> +///     id: i64,
-> +///     buf_ptr: *mut u8,
-> +///     len: usize,
-> +/// }
-> +/// ```
-> +#[proc_macro_derive(Zeroable)]
-> +pub fn derive_zeroable(input: TokenStream) -> TokenStream {
-> +    zeroable::derive(input)
-> +}
-> diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
-> index dddbb4e6f4cb..b76c198a4ed5 100644
-> --- a/rust/macros/quote.rs
-> +++ b/rust/macros/quote.rs
-> @@ -124,6 +124,12 @@ macro_rules! quote_spanned {
->          ));
->          quote_spanned!(@proc $v $span $($tt)*);
+>          $crate::__init_internal!(init_slot():
+>              @data($data),
+>              @slot($slot),
+> +            @guards(guard, $($guards,)*),
+>              @munch_fields($($rest)*),
+>          );
 >      };
-> +    (@proc $v:ident $span:ident ; $($tt:tt)*) =3D> {
-> +        $v.push(::proc_macro::TokenTree::Punct(
-> +                ::proc_macro::Punct::new(';', ::proc_macro::Spacing::Alo=
-ne)
-> +        ));
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
->      (@proc $v:ident $span:ident $id:ident $($tt:tt)*) =3D> {
->          $v.push(::proc_macro::TokenTree::Ident(::proc_macro::Ident::new(=
-stringify!($id), $span)));
->          quote_spanned!(@proc $v $span $($tt)*);
-> diff --git a/rust/macros/zeroable.rs b/rust/macros/zeroable.rs
-> new file mode 100644
-> index 000000000000..cddb866c44ef
-> --- /dev/null
-> +++ b/rust/macros/zeroable.rs
-> @@ -0,0 +1,25 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +use crate::helpers::{parse_generics, Generics};
-> +use proc_macro::TokenStream;
-> +
-> +pub(crate) fn derive(input: TokenStream) -> TokenStream {
-> +    let (
-> +        Generics {
-> +            impl_generics,
-> +            ty_generics,
-> +        },
-> +        mut rest,
-> +    ) =3D parse_generics(input);
-> +    // This should be the body of the struct `{...}`.
-> +    let last =3D rest.pop();
-> +    quote! {
-> +        ::kernel::__derive_zeroable!(
-> +            parse_input:
-> +                @sig(#(#rest)*),
-> +                @impl_generics(#(#impl_generics)*),
-> +                @ty_generics(#(#ty_generics)*),
-> +                @body(#last),
-> +        );
-> +    }
-> +}
+>      (init_slot($($use_data:ident)?):
+>          @data($data:ident),
+>          @slot($slot:ident),
+> +        @guards($($guards:ident,)*),
+>          // Init by-value.
+>          @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
+>      ) =3D> {
+> @@ -1135,16 +1139,17 @@ macro_rules! __init_internal {
+>          unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$=
+field), $field) };
+>          // Create the drop guard:
+>          //
+> -        // We only give access to `&DropGuard`, so it cannot be accident=
+ally forgotten.
+> +        // We rely on macro hygiene to make it impossible for users to a=
+ccess this local variable.
+>          //
+>          // SAFETY: We forget the guard later when initialization has suc=
+ceeded.
+> -        let $field =3D &unsafe {
+> +        let guard =3D unsafe {
+>              $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
+f_mut!((*$slot).$field))
+>          };
+>=20
+>          $crate::__init_internal!(init_slot($($use_data)?):
+>              @data($data),
+>              @slot($slot),
+> +            @guards(guard, $($guards,)*),
+>              @munch_fields($($rest)*),
+>          );
+>      };
+> @@ -1189,29 +1194,6 @@ macro_rules! __init_internal {
+>              @acc($($acc)* $field: ::core::panic!(),),
+>          );
+>      };
+> -    (forget_guards:
+> -        @munch_fields($(,)?),
+> -    ) =3D> {
+> -        // Munching finished.
+> -    };
+> -    (forget_guards:
+> -        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
+> -    ) =3D> {
+> -        unsafe { $crate::init::__internal::DropGuard::forget($field) };
+> -
+> -        $crate::__init_internal!(forget_guards:
+> -            @munch_fields($($rest)*),
+> -        );
+> -    };
+> -    (forget_guards:
+> -        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
+> -    ) =3D> {
+> -        unsafe { $crate::init::__internal::DropGuard::forget($field) };
+> -
+> -        $crate::__init_internal!(forget_guards:
+> -            @munch_fields($($rest)*),
+> -        );
+> -    };
+>  }
+>=20
+>  #[doc(hidden)]
 > --
 > 2.41.0
