@@ -1,29 +1,29 @@
-Received: from mail-40140.protonmail.ch (mail-40140.protonmail.ch [185.70.40.140])
+Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959D153BA
-	for <patches@lists.linux.dev>; Sat, 24 Jun 2023 15:20:52 +0000 (UTC)
-Date: Sat, 24 Jun 2023 15:20:36 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1687620044; x=1687879244;
-	bh=UJJ+xg0BEjeX07rbDKXrDZQrXSRpl2S3/JvIkzR6HHY=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC316AA8
+	for <patches@lists.linux.dev>; Sat, 24 Jun 2023 21:05:36 +0000 (UTC)
+Date: Sat, 24 Jun 2023 21:05:28 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1687640733; x=1687899933;
+	bh=+s2qFVdzSz1dpYq79TE2KMsy1jB2F75QErlkZyaVuak=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=bi2r/0LH420keA+7CxhIvE6aswX5462BYjSlArWFC6ao3ArHSWAkDMQGx3P64tqJZ
-	 Qg1pA2NCfpKZtb8Fc4neqlw4YPe0B3n7SdMtVWKK7XYJSxOMtRfi0aoy3nvnYhYnws
-	 yFZY3bbkUTjVwifNubXh8TWcKhMCXVIM7xMMaq2ZaL6l2ibXr9npmF4RcSLGV0wJoR
-	 XUiYjJjGi9aJFneHgDP/ZF872U8b3VFUdzD2/P6/EwRIUKnJPjigqpudM/ldpiONmK
-	 hfJ2TVZKWF9Wxb9dNWiTcWlQPa6zzZk0LhQbScRSXcjYUbglj3+8iFnyjenxehmqjO
-	 nG67p7xfZdjCA==
-To: Benno Lossin <benno.lossin@proton.me>
-From: =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina <lina@asahilina.net>
-Subject: Re: [PATCH 7/7] rust: init: add support for arbitrary paths in init macros
-Message-ID: <NG5bXau04NtegfM6w7YC15zWwZoV_aoQq3j767IV1thbyyueLU5cekNnMkmc4w-geoSbz2VyA7ZGab_Z3x9xm1DZSmLIsdWA0ykoHaWpZCc=@protonmail.com>
-In-Reply-To: <20230624092330.157338-7-benno.lossin@proton.me>
-References: <20230624092330.157338-1-benno.lossin@proton.me> <20230624092330.157338-7-benno.lossin@proton.me>
-Feedback-ID: 27884398:user:proton
+	b=Ig2IeD3atLhIkkOEdLwbcZrefkSYwpRAza/XJ8Zjwi7uQQgg5TxKoeg/QTY1oLqOX
+	 VZ4fU8tSo+C26sC++G1cQFInRO8rhBGnLSi+HlFq++l/1fvbtyUw5ffP4NnCuMj45+
+	 6+i12Yy9qwDXVtLAdp7ijVvJNpiDtt53cfZaO7m+YCLn3OpW/ymLZ7KDyTseGu2N68
+	 axvv90ptAztRXM8R48NZ1FpMyXOg3onvAfccJBVLoKOQ6WXzrstHeDhjUuIQdKilTO
+	 86XOEBOkcmNe41KuTR8VerYbOlhB56agJrcaRcPJb9tlM/+5y2ZHEFBHaG5cB0Ks33
+	 V6npSjhBlx+9A==
+To: =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 4/7] rust: init: wrap type checking struct initializers in a closure
+Message-ID: <Cs0WvAGhcBydk2RmwKLuog68EzhWu-Uc6ZTUrXBs7vgUozT07W9JebR0KiFQokDpWVGkotW68iEzW9TYFym5jDvpGMp5AqlpSsmLUUDgeNE=@proton.me>
+In-Reply-To: <zLJ2TSszsTrjSQ39Y8JsZLnZQ2qe8JLp_dK7vSArkClDKOzaCzO94OXwYdco6FLBNTr-MeRp0c75a-aKm_8wKlb9aPgfvf9nz2Ha5XbrutE=@protonmail.com>
+References: <20230624092330.157338-1-benno.lossin@proton.me> <20230624092330.157338-4-benno.lossin@proton.me> <zLJ2TSszsTrjSQ39Y8JsZLnZQ2qe8JLp_dK7vSArkClDKOzaCzO94OXwYdco6FLBNTr-MeRp0c75a-aKm_8wKlb9aPgfvf9nz2Ha5XbrutE=@protonmail.com>
+Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,227 +33,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Saturday, June 24th, 2023 at 11:25, Benno Lossin <benno.lossin@proton.me=
-> wrote:
+On 6/24/23 17:03, Bj=C3=B6rn Roy Baron wrote:
+> On Saturday, June 24th, 2023 at 11:25, Benno Lossin <benno.lossin@proton.=
+me> wrote:
+>=20
+>> In the implementation of the init macros there is a `if false` statement
+>> that type checks the initializer to ensure every field is initialized.
+>> Since the next patch has a stack variable to store the struct, the
+>> function might allocate too much memory on debug builds. Putting the
+>> struct into a closure ensures that even in debug builds no stack
+>> overflow error is caused. In release builds this was not a problem since
+>> the code was optimized away due to the `if false`.
+>>
+>> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
+>> ---
+>>   rust/kernel/init/macros.rs | 18 +++++++++++-------
+>>   1 file changed, 11 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
+>> index df4281743175..1e0c4aca055a 100644
+>> --- a/rust/kernel/init/macros.rs
+>> +++ b/rust/kernel/init/macros.rs
+>> @@ -1037,14 +1037,18 @@ macro_rules! __init_internal {
+>>                       // We use unreachable code to ensure that all fiel=
+ds have been mentioned exactly
+>>                       // once, this struct initializer will still be typ=
+e-checked and complain with a
+>>                       // very natural error message if a field is forgot=
+ten/mentioned more than once.
+>> -                    #[allow(unreachable_code, clippy::diverging_sub_exp=
+ression)]
+>> +                    #[allow(unreachable_code,
+>> +                            clippy::diverging_sub_expression,
+>> +                            clippy::redundant_closure_call)]
+>>                       if false {
+>> -                        $crate::__init_internal!(make_initializer:
+>> -                            @slot(slot),
+>> -                            @type_name($t),
+>> -                            @munch_fields($($fields)*,),
+>> -                            @acc(),
+>> -                        );
+>> +                        (|| {
+>> +                            $crate::__init_internal!(make_initializer:
+>> +                                @slot(slot),
+>> +                                @type_name($t),
+>> +                                @munch_fields($($fields)*,),
+>> +                                @acc(),
+>> +                            );
+>> +                        })();
+>=20
+> Is it necessary to call this closure? Typechecking of the closure should =
+happen even without calling it.
 
-> Previously only `ident` and generic types were supported in the
-> `{try_}{pin_}init!` macros. This patch allows arbitrary path fragments,
-> so for example `Foo::Bar` but also very complex paths such as
-> `<Foo as Baz>::Bar::<0, i32>`.
->=20
-> Internally this is accomplished by using `path` fragments. Due to some
-> peculiar declarative macro limitations, we have to "forget" certain
-> additional parsing information in the token trees. This is achieved by
-> the new `retokenize` proc macro. It does not modify the input, but just
-> strips this information. For example, if a declarative macro takes
-> `$t:path` as its input, it cannot sensibly propagate this to a macro that
-> takes `$($p:tt)*` as its input, since the `$t` token will only be
-> considered one `tt` token for the second macro. If we first pipe the
-> tokens through `retokenize`, then it parses as expected.
->=20
-> Suggested-by: Asahi Lina <lina@asahilina.net>
-> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
+You are right, I do not need to call it. Will fix.
 
-Reviewed-by: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
+--=20
+Cheers,
+Benno
 
-> ---
->  rust/kernel/init/__internal.rs |  2 ++
->  rust/kernel/init/macros.rs     | 42 +++++++++++++++++++---------------
->  rust/macros/lib.rs             | 17 +++++++++++++-
->  3 files changed, 41 insertions(+), 20 deletions(-)
 >=20
-> diff --git a/rust/kernel/init/__internal.rs b/rust/kernel/init/__internal=
-.rs
-> index 7abd1fb65e41..e36a706a4a1b 100644
-> --- a/rust/kernel/init/__internal.rs
-> +++ b/rust/kernel/init/__internal.rs
-> @@ -9,6 +9,8 @@
+>>                       }
+>>                   }
+>>                   Ok(__InitOk)
+>> --
+>> 2.41.0
 >=20
->  use super::*;
->=20
-> +pub use ::macros::retokenize;
-> +
->  /// See the [nomicon] for what subtyping is. See also [this table].
->  ///
->  /// [nomicon]: https://doc.rust-lang.org/nomicon/subtyping.html
-> diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-> index 5dcb2e513f26..6a82be675808 100644
-> --- a/rust/kernel/init/macros.rs
-> +++ b/rust/kernel/init/macros.rs
-> @@ -998,7 +998,7 @@ impl<$($impl_generics)*> $pin_data<$($ty_generics)*>
->  macro_rules! __init_internal {
->      (
->          @this($($this:ident)?),
-> -        @typ($t:ident $(::<$($generics:ty),*>)?),
-> +        @typ($t:path),
->          @fields($($fields:tt)*),
->          @error($err:ty),
->          // Either `PinData` or `InitData`, `$use_data` should only be pr=
-esent in the `PinData`
-> @@ -1012,7 +1012,7 @@ macro_rules! __init_internal {
->      ) =3D> {
->          $crate::__init_internal!(with_update_parsed:
->              @this($($this)?),
-> -            @typ($t $(::<$($generics),*>)? ),
-> +            @typ($t),
->              @fields($($fields)*),
->              @error($err),
->              @data($data, $($use_data)?),
-> @@ -1023,7 +1023,7 @@ macro_rules! __init_internal {
->      };
->      (
->          @this($($this:ident)?),
-> -        @typ($t:ident $(::<$($generics:ty),*>)?),
-> +        @typ($t:path),
->          @fields($($fields:tt)*),
->          @error($err:ty),
->          // Either `PinData` or `InitData`, `$use_data` should only be pr=
-esent in the `PinData`
-> @@ -1037,7 +1037,7 @@ macro_rules! __init_internal {
->      ) =3D> {
->          $crate::__init_internal!(with_update_parsed:
->              @this($($this)?),
-> -            @typ($t $(::<$($generics),*>)? ),
-> +            @typ($t),
->              @fields($($fields)*),
->              @error($err),
->              @data($data, $($use_data)?),
-> @@ -1048,7 +1048,7 @@ macro_rules! __init_internal {
->      };
->      (
->          @this($($this:ident)?),
-> -        @typ($t:ident $(::<$($generics:ty),*>)?),
-> +        @typ($t:path),
->          @fields($($fields:tt)*),
->          @error($err:ty),
->          // Either `PinData` or `InitData`, `$use_data` should only be pr=
-esent in the `PinData`
-> @@ -1062,7 +1062,7 @@ macro_rules! __init_internal {
->      ) =3D> {
->          $crate::__init_internal!(
->              @this($($this)?),
-> -            @typ($t $(::<$($generics),*>)? ),
-> +            @typ($t),
->              @fields($($fields)*),
->              @error($err),
->              @data($data, $($use_data)?),
-> @@ -1073,7 +1073,7 @@ macro_rules! __init_internal {
->      };
->      (with_update_parsed:
->          @this($($this:ident)?),
-> -        @typ($t:ident $(::<$($generics:ty),*>)?),
-> +        @typ($t:path),
->          @fields($($fields:tt)*),
->          @error($err:ty),
->          // Either `PinData` or `InitData`, `$use_data` should only be pr=
-esent in the `PinData`
-> @@ -1092,7 +1092,7 @@ macro_rules! __init_internal {
->          // Get the data about fields from the supplied type.
->          let data =3D unsafe {
->              use $crate::init::__internal::$has_data;
-> -            $t$(::<$($generics),*>)?::$get_data()
-> +            $crate::init::__internal::retokenize!($t::$get_data())
->          };
->          // Ensure that `data` really is of type `$data` and help with ty=
-pe inference:
->          let init =3D $crate::init::__internal::$data::make_closure::<_, =
-__InitOk, $err>(
-> @@ -1247,7 +1247,7 @@ fn is_zeroable<T: Zeroable>(ptr: *mut T) {}
->      };
->      (make_initializer:
->          @slot($slot:ident),
-> -        @type_name($t:ident),
-> +        @type_name($t:path),
->          @munch_fields(..Zeroable::zeroed() $(,)?),
->          @acc($($acc:tt)*),
->      ) =3D> {
-> @@ -1263,15 +1263,17 @@ fn is_zeroable<T: Zeroable>(ptr: *mut T) {}
->              // not get executed, so it has no effect.
->              ::core::ptr::write($slot, zeroed);
->              zeroed =3D ::core::mem::zeroed();
-> -            ::core::ptr::write($slot, $t {
-> -                $($acc)*
-> -                ..zeroed
-> -            });
-> +            $crate::init::__internal::retokenize!(
-> +                ::core::ptr::write($slot, $t {
-> +                    $($acc)*
-> +                    ..zeroed
-> +                });
-> +            );
->          }
->      };
->      (make_initializer:
->          @slot($slot:ident),
-> -        @type_name($t:ident),
-> +        @type_name($t:path),
->          @munch_fields($(,)?),
->          @acc($($acc:tt)*),
->      ) =3D> {
-> @@ -1279,14 +1281,16 @@ fn is_zeroable<T: Zeroable>(ptr: *mut T) {}
->          // Since we are in the `if false` branch, this will never get ex=
-ecuted. We abuse `slot` to
->          // get the correct type inference here:
->          unsafe {
-> -            ::core::ptr::write($slot, $t {
-> -                $($acc)*
-> -            });
-> +            $crate::init::__internal::retokenize!(
-> +                ::core::ptr::write($slot, $t {
-> +                    $($acc)*
-> +                });
-> +            );
->          }
->      };
->      (make_initializer:
->          @slot($slot:ident),
-> -        @type_name($t:ident),
-> +        @type_name($t:path),
->          @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
->          @acc($($acc:tt)*),
->      ) =3D> {
-> @@ -1299,7 +1303,7 @@ fn is_zeroable<T: Zeroable>(ptr: *mut T) {}
->      };
->      (make_initializer:
->          @slot($slot:ident),
-> -        @type_name($t:ident),
-> +        @type_name($t:path),
->          @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
->          @acc($($acc:tt)*),
->      ) =3D> {
-> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
-> index 9f056a5c780a..d329ab622fd4 100644
-> --- a/rust/macros/lib.rs
-> +++ b/rust/macros/lib.rs
-> @@ -12,7 +12,7 @@
->  mod vtable;
->  mod zeroable;
->=20
-> -use proc_macro::TokenStream;
-> +use proc_macro::{Group, TokenStream, TokenTree};
->=20
->  /// Declares a kernel module.
->  ///
-> @@ -266,3 +266,18 @@ pub fn pinned_drop(args: TokenStream, input: TokenSt=
-ream) -> TokenStream {
->  pub fn derive_zeroable(input: TokenStream) -> TokenStream {
->      zeroable::derive(input)
->  }
-> +
-> +/// Does not modify the given TokenStream, but removes any declarative m=
-acro information.
-> +#[proc_macro]
-> +pub fn retokenize(input: TokenStream) -> TokenStream {
-> +    fn id(tt: TokenTree) -> TokenTree {
-> +        match tt {
-> +            TokenTree::Group(g) =3D> TokenTree::Group(Group::new(
-> +                g.delimiter(),
-> +                g.stream().into_iter().map(id).collect(),
-> +            )),
-> +            x =3D> x,
-> +        }
-> +    }
-> +    input.into_iter().map(id).collect()
-> +}
-> --
-> 2.41.0
+> Cheers,
+> Bj=C3=B6rn
+
