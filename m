@@ -1,28 +1,28 @@
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EB24433
-	for <patches@lists.linux.dev>; Sat, 24 Jun 2023 14:49:26 +0000 (UTC)
-Date: Sat, 24 Jun 2023 14:49:05 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8114433
+	for <patches@lists.linux.dev>; Sat, 24 Jun 2023 14:55:31 +0000 (UTC)
+Date: Sat, 24 Jun 2023 14:55:03 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1687618153; x=1687877353;
-	bh=dMRiCLgZUvFInm227pREypU/fJR4j8l/ICaqV2UCGNo=;
+	s=protonmail3; t=1687618519; x=1687877719;
+	bh=YV5/XlO7DY5i9iDZ5ZmMmTj4xvcJ6rJdDPORDOCsGYI=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=JbaBdacgmzV+tM/pN5waog+TWYuG3qcDn9B2REAPvLDH0ZdFUkp52qPCF2iWxTiM4
-	 cuNeugz2OQzlRx5Gw7k5y0SHom5lf5kXp0ACQWdVY4pcO9/VjIDDJa/pe5xT2JPfgj
-	 ExBsyWF0iRds5TevEdGI/GSzIozc9y0J3EnVl5O7LhLyOVpaWsbp8D5xlVDj3LcV18
-	 y7MUP212mfANUgggae8E59zt1kSv8R6/SQC2+OA21yto+BLRXzSB3WHJu6eTw1fbiO
-	 v2JWt4DYJZeIXg9j53x7tj+XvnHI5IO/Pi6eTdWJ/tf2vbnJ1Ci8omcW3XdOPjqwOE
-	 PtAzWIPGrrdLw==
+	b=fXB8WBmtq1Lk+tnc5sME0w+8jCgQvFVvXDv5UDr8/Z1mvV0iZ0VUstye85cMmqTlO
+	 WY7u7vQ+VhRzTYIMfCgFbps4OBvwN5zZID0QplZhrVIiNIx70bJXzRIVJYMDuC+9Eo
+	 P0gRZw+WR+xnWC2lqk4jnYbnPs/0tQMqgSt7xdu8jSdUBP4HQ7yzHOiPhFvU/W6f7t
+	 jN4Fnof4uCKdplTknTpIFcdHNy11u//TmVyn6E1qCkak/48Es8ukMOGiWG94w5P2gF
+	 gy2zuD9qDpZ5HIMp3dCup/XF/RAuBH36dQF1fBE9fRTDefRx5cDBVxxtbrVDfoee73
+	 C0xp0FrZ8VClg==
 To: Benno Lossin <benno.lossin@proton.me>
 From: =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 1/7] rust: init: consolidate init macros
-Message-ID: <hQnTDlX7ZVPZWH-VtKIJ5kY_JACoanlm-GPYPUdIN-RUK2vI_9fenFZ4dp9f11Kcr12jR2eL23P_loDK-As0SBRfFEFQy_d6iBj0I2AlBNo=@protonmail.com>
-In-Reply-To: <20230624092330.157338-1-benno.lossin@proton.me>
-References: <20230624092330.157338-1-benno.lossin@proton.me>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina <lina@asahilina.net>
+Subject: Re: [PATCH 2/7] rust: add derive macro for `Zeroable`
+Message-ID: <QDJDJxiCJaB6_91GlTTIJmyfDegTJpRXwrcPRPubdau5diJRPA96rLxC1oILb0zKKDCQ9703xQn4diE7TCtRpknvg-9yAXoigoKoXwxj9fQ=@protonmail.com>
+In-Reply-To: <20230624092330.157338-2-benno.lossin@proton.me>
+References: <20230624092330.157338-1-benno.lossin@proton.me> <20230624092330.157338-2-benno.lossin@proton.me>
 Feedback-ID: 27884398:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,834 +33,169 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Saturday, June 24th, 2023 at 11:24, Benno Lossin <benno.lossin@proton.me=
+On Saturday, June 24th, 2023 at 11:25, Benno Lossin <benno.lossin@proton.me=
 > wrote:
 
-> Merges the implementations of `try_init!` and `try_pin_init!`. These two
-> macros are very similar, but use different traits. The new macro
-> `__init_internal!` that is now the implementation for both takes these
-> traits as parameters.
+> Add a derive proc-macro for the `Zeroable` trait. The macro supports
+> structs where every field implements the `Zeroable` trait. This way
+> `unsafe` implementations can be avoided.
 >=20
-> This change does not affect any users, as no public API has been
-> changed, but it should simplify maintaining the init macros.
+> The macro is split into two parts:
+> - a proc-macro to parse generics into impl and ty generics,
+> - a declarative macro that expands to the impl block.
 >=20
+> Suggested-by: Asahi Lina <lina@asahilina.net>
 > Signed-off-by: Benno Lossin <benno.lossin@proton.me>
-
-A bit hard to review due to the large blocks of code that were moved, but g=
-it show --color-moved didn't show anything weird. Nice to see less code dup=
-lication in any case.
 
 Reviewed-by: Bj=C3=B6rn Roy Baron <bjorn3_gh@protonmail.com>
 
 > ---
->  rust/kernel/init.rs        | 388 +++----------------------------------
->  rust/kernel/init/macros.rs | 237 +++++++++++++++++++++-
->  2 files changed, 259 insertions(+), 366 deletions(-)
+>  rust/kernel/init/macros.rs | 28 ++++++++++++++++++++++++++++
+>  rust/kernel/prelude.rs     |  2 +-
+>  rust/macros/lib.rs         | 20 ++++++++++++++++++++
+>  rust/macros/quote.rs       |  6 ++++++
+>  rust/macros/zeroable.rs    | 25 +++++++++++++++++++++++++
+>  5 files changed, 80 insertions(+), 1 deletion(-)
+>  create mode 100644 rust/macros/zeroable.rs
 >=20
-> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-> index b4332a4ec1f4..d9a91950cba2 100644
-> --- a/rust/kernel/init.rs
-> +++ b/rust/kernel/init.rs
-> @@ -540,11 +540,14 @@ macro_rules! pin_init {
->      ($(&$this:ident in)? $t:ident $(::<$($generics:ty),* $(,)?>)? {
->          $($fields:tt)*
->      }) =3D> {
-> -        $crate::try_pin_init!(
-> +        $crate::__init_internal!(
->              @this($($this)?),
->              @typ($t $(::<$($generics),*>)?),
->              @fields($($fields)*),
->              @error(::core::convert::Infallible),
-> +            @data(PinData, use_data),
-> +            @has_data(HasPinData, __pin_data),
-> +            @construct_closure(pin_init_from_closure),
->          )
->      };
->  }
-> @@ -593,205 +596,29 @@ macro_rules! try_pin_init {
->      ($(&$this:ident in)? $t:ident $(::<$($generics:ty),* $(,)?>)? {
->          $($fields:tt)*
->      }) =3D> {
-> -        $crate::try_pin_init!(
-> +        $crate::__init_internal!(
->              @this($($this)?),
->              @typ($t $(::<$($generics),*>)? ),
->              @fields($($fields)*),
->              @error($crate::error::Error),
-> +            @data(PinData, use_data),
-> +            @has_data(HasPinData, __pin_data),
-> +            @construct_closure(pin_init_from_closure),
->          )
->      };
->      ($(&$this:ident in)? $t:ident $(::<$($generics:ty),* $(,)?>)? {
->          $($fields:tt)*
->      }? $err:ty) =3D> {
-> -        $crate::try_pin_init!(
-> +        $crate::__init_internal!(
->              @this($($this)?),
->              @typ($t $(::<$($generics),*>)? ),
->              @fields($($fields)*),
->              @error($err),
-> +            @data(PinData, use_data),
-> +            @has_data(HasPinData, __pin_data),
-> +            @construct_closure(pin_init_from_closure),
->          )
->      };
-> -    (
-> -        @this($($this:ident)?),
-> -        @typ($t:ident $(::<$($generics:ty),*>)?),
-> -        @fields($($fields:tt)*),
-> -        @error($err:ty),
-> -    ) =3D> {{
-> -        // We do not want to allow arbitrary returns, so we declare this=
- type as the `Ok` return
-> -        // type and shadow it later when we insert the arbitrary user co=
-de. That way there will be
-> -        // no possibility of returning without `unsafe`.
-> -        struct __InitOk;
-> -        // Get the pin data from the supplied type.
-> -        let data =3D unsafe {
-> -            use $crate::init::__internal::HasPinData;
-> -            $t$(::<$($generics),*>)?::__pin_data()
-> -        };
-> -        // Ensure that `data` really is of type `PinData` and help with =
-type inference:
-> -        let init =3D $crate::init::__internal::PinData::make_closure::<_=
-, __InitOk, $err>(
-> -            data,
-> -            move |slot| {
-> -                {
-> -                    // Shadow the structure so it cannot be used to retu=
-rn early.
-> -                    struct __InitOk;
-> -                    // Create the `this` so it can be referenced by the =
-user inside of the
-> -                    // expressions creating the individual fields.
-> -                    $(let $this =3D unsafe { ::core::ptr::NonNull::new_u=
-nchecked(slot) };)?
-> -                    // Initialize every field.
-> -                    $crate::try_pin_init!(init_slot:
-> -                        @data(data),
-> -                        @slot(slot),
-> -                        @munch_fields($($fields)*,),
-> -                    );
-> -                    // We use unreachable code to ensure that all fields=
- have been mentioned exactly
-> -                    // once, this struct initializer will still be type-=
-checked and complain with a
-> -                    // very natural error message if a field is forgotte=
-n/mentioned more than once.
-> -                    #[allow(unreachable_code, clippy::diverging_sub_expr=
-ession)]
-> -                    if false {
-> -                        $crate::try_pin_init!(make_initializer:
-> -                            @slot(slot),
-> -                            @type_name($t),
-> -                            @munch_fields($($fields)*,),
-> -                            @acc(),
-> -                        );
-> -                    }
-> -                    // Forget all guards, since initialization was a suc=
-cess.
-> -                    $crate::try_pin_init!(forget_guards:
-> -                        @munch_fields($($fields)*,),
-> -                    );
-> -                }
-> -                Ok(__InitOk)
-> -            }
-> -        );
-> -        let init =3D move |slot| -> ::core::result::Result<(), $err> {
-> -            init(slot).map(|__InitOk| ())
-> -        };
-> -        let init =3D unsafe { $crate::init::pin_init_from_closure::<_, $=
-err>(init) };
-> -        init
-> -    }};
-> -    (init_slot:
-> -        @data($data:ident),
-> -        @slot($slot:ident),
-> -        @munch_fields($(,)?),
-> -    ) =3D> {
-> -        // Endpoint of munching, no fields are left.
-> -    };
-> -    (init_slot:
-> -        @data($data:ident),
-> -        @slot($slot:ident),
-> -        // In-place initialization syntax.
-> -        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> -    ) =3D> {
-> -        let $field =3D $val;
-> -        // Call the initializer.
-> -        //
-> -        // SAFETY: `slot` is valid, because we are inside of an initiali=
-zer closure, we
-> -        // return when an error/panic occurs.
-> -        // We also use the `data` to require the correct trait (`Init` o=
-r `PinInit`) for `$field`.
-> -        unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field)=
-, $field)? };
-> -        // Create the drop guard.
-> -        //
-> -        // We only give access to `&DropGuard`, so it cannot be forgotte=
-n via safe code.
-> -        //
-> -        // SAFETY: We forget the guard later when initialization has suc=
-ceeded.
-> -        let $field =3D &unsafe {
-> -            $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
-f_mut!((*$slot).$field))
-> -        };
-> -
-> -        $crate::try_pin_init!(init_slot:
-> -            @data($data),
-> -            @slot($slot),
-> -            @munch_fields($($rest)*),
-> -        );
-> -    };
-> -    (init_slot:
-> -        @data($data:ident),
-> -        @slot($slot:ident),
-> -        // Direct value init, this is safe for every field.
-> -        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-> -    ) =3D> {
-> -        $(let $field =3D $val;)?
-> -        // Initialize the field.
-> -        //
-> -        // SAFETY: The memory at `slot` is uninitialized.
-> -        unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$=
-field), $field) };
-> -        // Create the drop guard:
-> -        //
-> -        // We only give access to `&DropGuard`, so it cannot be accident=
-ally forgotten.
-> -        //
-> -        // SAFETY: We forget the guard later when initialization has suc=
-ceeded.
-> -        let $field =3D &unsafe {
-> -            $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
-f_mut!((*$slot).$field))
-> -        };
-> -
-> -        $crate::try_pin_init!(init_slot:
-> -            @data($data),
-> -            @slot($slot),
-> -            @munch_fields($($rest)*),
-> -        );
-> -    };
-> -    (make_initializer:
-> -        @slot($slot:ident),
-> -        @type_name($t:ident),
-> -        @munch_fields($(,)?),
-> -        @acc($($acc:tt)*),
-> -    ) =3D> {
-> -        // Endpoint, nothing more to munch, create the initializer.
-> -        // Since we are in the `if false` branch, this will never get ex=
-ecuted. We abuse `slot` to
-> -        // get the correct type inference here:
-> -        unsafe {
-> -            ::core::ptr::write($slot, $t {
-> -                $($acc)*
-> -            });
-> -        }
-> -    };
-> -    (make_initializer:
-> -        @slot($slot:ident),
-> -        @type_name($t:ident),
-> -        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> -        @acc($($acc:tt)*),
-> -    ) =3D> {
-> -        $crate::try_pin_init!(make_initializer:
-> -            @slot($slot),
-> -            @type_name($t),
-> -            @munch_fields($($rest)*),
-> -            @acc($($acc)* $field: ::core::panic!(),),
-> -        );
-> -    };
-> -    (make_initializer:
-> -        @slot($slot:ident),
-> -        @type_name($t:ident),
-> -        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-> -        @acc($($acc:tt)*),
-> -    ) =3D> {
-> -        $crate::try_pin_init!(make_initializer:
-> -            @slot($slot),
-> -            @type_name($t),
-> -            @munch_fields($($rest)*),
-> -            @acc($($acc)* $field: ::core::panic!(),),
-> -        );
-> -    };
-> -    (forget_guards:
-> -        @munch_fields($(,)?),
-> -    ) =3D> {
-> -        // Munching finished.
-> -    };
-> -    (forget_guards:
-> -        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> -    ) =3D> {
-> -        unsafe { $crate::init::__internal::DropGuard::forget($field) };
-> -
-> -        $crate::try_pin_init!(forget_guards:
-> -            @munch_fields($($rest)*),
-> -        );
-> -    };
-> -    (forget_guards:
-> -        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-> -    ) =3D> {
-> -        unsafe { $crate::init::__internal::DropGuard::forget($field) };
-> -
-> -        $crate::try_pin_init!(forget_guards:
-> -            @munch_fields($($rest)*),
-> -        );
-> -    };
->  }
->=20
->  /// Construct an in-place initializer for `struct`s.
-> @@ -816,11 +643,14 @@ macro_rules! init {
->      ($(&$this:ident in)? $t:ident $(::<$($generics:ty),* $(,)?>)? {
->          $($fields:tt)*
->      }) =3D> {
-> -        $crate::try_init!(
-> +        $crate::__init_internal!(
->              @this($($this)?),
->              @typ($t $(::<$($generics),*>)?),
->              @fields($($fields)*),
->              @error(::core::convert::Infallible),
-> +            @data(InitData, /*no use_data*/),
-> +            @has_data(HasInitData, __init_data),
-> +            @construct_closure(init_from_closure),
->          )
->      }
->  }
-> @@ -863,199 +693,29 @@ macro_rules! try_init {
->      ($(&$this:ident in)? $t:ident $(::<$($generics:ty),* $(,)?>)? {
->          $($fields:tt)*
->      }) =3D> {
-> -        $crate::try_init!(
-> +        $crate::__init_internal!(
->              @this($($this)?),
->              @typ($t $(::<$($generics),*>)?),
->              @fields($($fields)*),
->              @error($crate::error::Error),
-> +            @data(InitData, /*no use_data*/),
-> +            @has_data(HasInitData, __init_data),
-> +            @construct_closure(init_from_closure),
->          )
->      };
->      ($(&$this:ident in)? $t:ident $(::<$($generics:ty),* $(,)?>)? {
->          $($fields:tt)*
->      }? $err:ty) =3D> {
-> -        $crate::try_init!(
-> +        $crate::__init_internal!(
->              @this($($this)?),
->              @typ($t $(::<$($generics),*>)?),
->              @fields($($fields)*),
->              @error($err),
-> +            @data(InitData, /*no use_data*/),
-> +            @has_data(HasInitData, __init_data),
-> +            @construct_closure(init_from_closure),
->          )
->      };
-> -    (
-> -        @this($($this:ident)?),
-> -        @typ($t:ident $(::<$($generics:ty),*>)?),
-> -        @fields($($fields:tt)*),
-> -        @error($err:ty),
-> -    ) =3D> {{
-> -        // We do not want to allow arbitrary returns, so we declare this=
- type as the `Ok` return
-> -        // type and shadow it later when we insert the arbitrary user co=
-de. That way there will be
-> -        // no possibility of returning without `unsafe`.
-> -        struct __InitOk;
-> -        // Get the init data from the supplied type.
-> -        let data =3D unsafe {
-> -            use $crate::init::__internal::HasInitData;
-> -            $t$(::<$($generics),*>)?::__init_data()
-> -        };
-> -        // Ensure that `data` really is of type `InitData` and help with=
- type inference:
-> -        let init =3D $crate::init::__internal::InitData::make_closure::<=
-_, __InitOk, $err>(
-> -            data,
-> -            move |slot| {
-> -                {
-> -                    // Shadow the structure so it cannot be used to retu=
-rn early.
-> -                    struct __InitOk;
-> -                    // Create the `this` so it can be referenced by the =
-user inside of the
-> -                    // expressions creating the individual fields.
-> -                    $(let $this =3D unsafe { ::core::ptr::NonNull::new_u=
-nchecked(slot) };)?
-> -                    // Initialize every field.
-> -                    $crate::try_init!(init_slot:
-> -                        @slot(slot),
-> -                        @munch_fields($($fields)*,),
-> -                    );
-> -                    // We use unreachable code to ensure that all fields=
- have been mentioned exactly
-> -                    // once, this struct initializer will still be type-=
-checked and complain with a
-> -                    // very natural error message if a field is forgotte=
-n/mentioned more than once.
-> -                    #[allow(unreachable_code, clippy::diverging_sub_expr=
-ession)]
-> -                    if false {
-> -                        $crate::try_init!(make_initializer:
-> -                            @slot(slot),
-> -                            @type_name($t),
-> -                            @munch_fields($($fields)*,),
-> -                            @acc(),
-> -                        );
-> -                    }
-> -                    // Forget all guards, since initialization was a suc=
-cess.
-> -                    $crate::try_init!(forget_guards:
-> -                        @munch_fields($($fields)*,),
-> -                    );
-> -                }
-> -                Ok(__InitOk)
-> -            }
-> -        );
-> -        let init =3D move |slot| -> ::core::result::Result<(), $err> {
-> -            init(slot).map(|__InitOk| ())
-> -        };
-> -        let init =3D unsafe { $crate::init::init_from_closure::<_, $err>=
-(init) };
-> -        init
-> -    }};
-> -    (init_slot:
-> -        @slot($slot:ident),
-> -        @munch_fields( $(,)?),
-> -    ) =3D> {
-> -        // Endpoint of munching, no fields are left.
-> -    };
-> -    (init_slot:
-> -        @slot($slot:ident),
-> -        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> -    ) =3D> {
-> -        let $field =3D $val;
-> -        // Call the initializer.
-> -        //
-> -        // SAFETY: `slot` is valid, because we are inside of an initiali=
-zer closure, we
-> -        // return when an error/panic occurs.
-> -        unsafe {
-> -            $crate::init::Init::__init($field, ::core::ptr::addr_of_mut!=
-((*$slot).$field))?;
-> -        }
-> -        // Create the drop guard.
-> -        //
-> -        // We only give access to `&DropGuard`, so it cannot be accident=
-ally forgotten.
-> -        //
-> -        // SAFETY: We forget the guard later when initialization has suc=
-ceeded.
-> -        let $field =3D &unsafe {
-> -            $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
-f_mut!((*$slot).$field))
-> -        };
-> -
-> -        $crate::try_init!(init_slot:
-> -            @slot($slot),
-> -            @munch_fields($($rest)*),
-> -        );
-> -    };
-> -    (init_slot:
-> -        @slot($slot:ident),
-> -        // Direct value init.
-> -        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-> -    ) =3D> {
-> -        $(let $field =3D $val;)?
-> -        // Call the initializer.
-> -        //
-> -        // SAFETY: The memory at `slot` is uninitialized.
-> -        unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$=
-field), $field) };
-> -        // Create the drop guard.
-> -        //
-> -        // We only give access to `&DropGuard`, so it cannot be accident=
-ally forgotten.
-> -        //
-> -        // SAFETY: We forget the guard later when initialization has suc=
-ceeded.
-> -        let $field =3D &unsafe {
-> -            $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
-f_mut!((*$slot).$field))
-> -        };
-> -
-> -        $crate::try_init!(init_slot:
-> -            @slot($slot),
-> -            @munch_fields($($rest)*),
-> -        );
-> -    };
-> -    (make_initializer:
-> -        @slot($slot:ident),
-> -        @type_name($t:ident),
-> -        @munch_fields( $(,)?),
-> -        @acc($($acc:tt)*),
-> -    ) =3D> {
-> -        // Endpoint, nothing more to munch, create the initializer.
-> -        // Since we are in the `if false` branch, this will never get ex=
-ecuted. We abuse `slot` to
-> -        // get the correct type inference here:
-> -        unsafe {
-> -            ::core::ptr::write($slot, $t {
-> -                $($acc)*
-> -            });
-> -        }
-> -    };
-> -    (make_initializer:
-> -        @slot($slot:ident),
-> -        @type_name($t:ident),
-> -        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> -        @acc($($acc:tt)*),
-> -    ) =3D> {
-> -        $crate::try_init!(make_initializer:
-> -            @slot($slot),
-> -            @type_name($t),
-> -            @munch_fields($($rest)*),
-> -            @acc($($acc)*$field: ::core::panic!(),),
-> -        );
-> -    };
-> -    (make_initializer:
-> -        @slot($slot:ident),
-> -        @type_name($t:ident),
-> -        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-> -        @acc($($acc:tt)*),
-> -    ) =3D> {
-> -        $crate::try_init!(make_initializer:
-> -            @slot($slot),
-> -            @type_name($t),
-> -            @munch_fields($($rest)*),
-> -            @acc($($acc)*$field: ::core::panic!(),),
-> -        );
-> -    };
-> -    (forget_guards:
-> -        @munch_fields($(,)?),
-> -    ) =3D> {
-> -        // Munching finished.
-> -    };
-> -    (forget_guards:
-> -        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> -    ) =3D> {
-> -        unsafe { $crate::init::__internal::DropGuard::forget($field) };
-> -
-> -        $crate::try_init!(forget_guards:
-> -            @munch_fields($($rest)*),
-> -        );
-> -    };
-> -    (forget_guards:
-> -        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-> -    ) =3D> {
-> -        unsafe { $crate::init::__internal::DropGuard::forget($field) };
-> -
-> -        $crate::try_init!(forget_guards:
-> -            @munch_fields($($rest)*),
-> -        );
-> -    };
->  }
->=20
->  /// A pin-initializer for the type `T`.
 > diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-> index 00aa4e956c0a..fbaebd34f218 100644
+> index fbaebd34f218..e8165ff53a94 100644
 > --- a/rust/kernel/init/macros.rs
 > +++ b/rust/kernel/init/macros.rs
-> @@ -1,10 +1,12 @@
->  // SPDX-License-Identifier: Apache-2.0 OR MIT
->=20
->  //! This module provides the macros that actually implement the proc-mac=
-ros `pin_data` and
-> -//! `pinned_drop`.
-> +//! `pinned_drop`. It also contains `__init_internal` the implementation=
- of the `{try_}{pin_}init!`
-> +//! macros.
->  //!
->  //! These macros should never be called directly, since they expect thei=
-r input to be
-> -//! in a certain format which is internal. Use the proc-macros instead.
-> +//! in a certain format which is internal. If used incorrectly, these ma=
-cros can lead to UB even in
-> +//! safe code! Use the public facing macros instead.
->  //!
->  //! This architecture has been chosen because the kernel does not yet ha=
-ve access to `syn` which
->  //! would make matters a lot easier for implementing these as proc-macro=
-s.
-> @@ -980,3 +982,234 @@ impl<$($impl_generics)*> $pin_data<$($ty_generics)*=
->
->          }
+> @@ -1213,3 +1213,31 @@ macro_rules! __init_internal {
+>          );
 >      };
 >  }
 > +
-> +/// The internal init macro. Do not call manually!
-> +///
-> +/// This is called by the `{try_}{pin_}init!` macros with various inputs=
-.
-> +///
-> +/// This macro has multiple internal call configurations, these are alwa=
-ys the very first ident:
-> +/// - nothing: this is the base case and called by the `{try_}{pin_}init=
-!` macros.
-> +/// - `init_slot`: recursively creates the code that initializes all fie=
-lds in `slot`.
-> +/// - `make_initializer`: recursively create the struct initializer that=
- guarantees that every
-> +///   field has been initialized exactly once.
-> +/// - `forget_guards`: recursively forget the drop guards for every fiel=
-d.
 > +#[doc(hidden)]
 > +#[macro_export]
-> +macro_rules! __init_internal {
-> +    (
-> +        @this($($this:ident)?),
-> +        @typ($t:ident $(::<$($generics:ty),*>)?),
-> +        @fields($($fields:tt)*),
-> +        @error($err:ty),
-> +        // Either `PinData` or `InitData`, `$use_data` should only be pr=
-esent in the `PinData`
-> +        // case.
-> +        @data($data:ident, $($use_data:ident)?),
-> +        // `HasPinData` or `HasInitData`.
-> +        @has_data($has_data:ident, $get_data:ident),
-> +        // `pin_init_from_closure` or `init_from_closure`.
-> +        @construct_closure($construct_closure:ident),
-> +    ) =3D> {{
-> +        // We do not want to allow arbitrary returns, so we declare this=
- type as the `Ok` return
-> +        // type and shadow it later when we insert the arbitrary user co=
-de. That way there will be
-> +        // no possibility of returning without `unsafe`.
-> +        struct __InitOk;
-> +        // Get the data about fields from the supplied type.
-> +        let data =3D unsafe {
-> +            use $crate::init::__internal::$has_data;
-> +            $t$(::<$($generics),*>)?::$get_data()
-> +        };
-> +        // Ensure that `data` really is of type `$data` and help with ty=
-pe inference:
-> +        let init =3D $crate::init::__internal::$data::make_closure::<_, =
-__InitOk, $err>(
-> +            data,
-> +            move |slot| {
-> +                {
-> +                    // Shadow the structure so it cannot be used to retu=
-rn early.
-> +                    struct __InitOk;
-> +                    // Create the `this` so it can be referenced by the =
-user inside of the
-> +                    // expressions creating the individual fields.
-> +                    $(let $this =3D unsafe { ::core::ptr::NonNull::new_u=
-nchecked(slot) };)?
-> +                    // Initialize every field.
-> +                    $crate::__init_internal!(init_slot($($use_data)?):
-> +                        @data(data),
-> +                        @slot(slot),
-> +                        @munch_fields($($fields)*,),
-> +                    );
-> +                    // We use unreachable code to ensure that all fields=
- have been mentioned exactly
-> +                    // once, this struct initializer will still be type-=
-checked and complain with a
-> +                    // very natural error message if a field is forgotte=
-n/mentioned more than once.
-> +                    #[allow(unreachable_code, clippy::diverging_sub_expr=
-ession)]
-> +                    if false {
-> +                        $crate::__init_internal!(make_initializer:
-> +                            @slot(slot),
-> +                            @type_name($t),
-> +                            @munch_fields($($fields)*,),
-> +                            @acc(),
-> +                        );
-> +                    }
-> +                    // Forget all guards, since initialization was a suc=
-cess.
-> +                    $crate::__init_internal!(forget_guards:
-> +                        @munch_fields($($fields)*,),
-> +                    );
-> +                }
-> +                Ok(__InitOk)
-> +            }
-> +        );
-> +        let init =3D move |slot| -> ::core::result::Result<(), $err> {
-> +            init(slot).map(|__InitOk| ())
-> +        };
-> +        let init =3D unsafe { $crate::init::$construct_closure::<_, $err=
->(init) };
-> +        init
-> +    }};
-> +    (init_slot($($use_data:ident)?):
-> +        @data($data:ident),
-> +        @slot($slot:ident),
-> +        @munch_fields($(,)?),
+> +macro_rules! __derive_zeroable {
+> +    (parse_input:
+> +        @sig(
+> +            $(#[$($struct_attr:tt)*])*
+> +            $vis:vis struct $name:ident
+> +            $(where $($whr:tt)*)?
+> +        ),
+> +        @impl_generics($($impl_generics:tt)*),
+> +        @ty_generics($($ty_generics:tt)*),
+> +        @body({
+> +            $(
+> +                $(#[$($field_attr:tt)*])*
+> +                $field:ident : $field_ty:ty
+> +            ),* $(,)?
+> +        }),
 > +    ) =3D> {
-> +        // Endpoint of munching, no fields are left.
-> +    };
-> +    (init_slot($use_data:ident): // use_data is present, so we use the `=
-data` to init fields.
-> +        @data($data:ident),
-> +        @slot($slot:ident),
-> +        // In-place initialization syntax.
-> +        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> +    ) =3D> {
-> +        let $field =3D $val;
-> +        // Call the initializer.
-> +        //
-> +        // SAFETY: `slot` is valid, because we are inside of an initiali=
-zer closure, we
-> +        // return when an error/panic occurs.
-> +        // We also use the `data` to require the correct trait (`Init` o=
-r `PinInit`) for `$field`.
-> +        unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field)=
-, $field)? };
-> +        // Create the drop guard.
-> +        //
-> +        // We only give access to `&DropGuard`, so it cannot be forgotte=
-n via safe code.
-> +        //
-> +        // SAFETY: We forget the guard later when initialization has suc=
-ceeded.
-> +        let $field =3D &unsafe {
-> +            $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
-f_mut!((*$slot).$field))
-> +        };
-> +
-> +        $crate::__init_internal!(init_slot($use_data):
-> +            @data($data),
-> +            @slot($slot),
-> +            @munch_fields($($rest)*),
-> +        );
-> +    };
-> +    (init_slot(): // no use_data, so we use `Init::__init` directly.
-> +        @data($data:ident),
-> +        @slot($slot:ident),
-> +        // In-place initialization syntax.
-> +        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> +    ) =3D> {
-> +        let $field =3D $val;
-> +        // Call the initializer.
-> +        //
-> +        // SAFETY: `slot` is valid, because we are inside of an initiali=
-zer closure, we
-> +        // return when an error/panic occurs.
-> +        unsafe { $crate::init::Init::__init($field, ::core::ptr::addr_of=
-_mut!((*$slot).$field))? };
-> +        // Create the drop guard.
-> +        //
-> +        // We only give access to `&DropGuard`, so it cannot be forgotte=
-n via safe code.
-> +        //
-> +        // SAFETY: We forget the guard later when initialization has suc=
-ceeded.
-> +        let $field =3D &unsafe {
-> +            $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
-f_mut!((*$slot).$field))
-> +        };
-> +
-> +        $crate::__init_internal!(init_slot():
-> +            @data($data),
-> +            @slot($slot),
-> +            @munch_fields($($rest)*),
-> +        );
-> +    };
-> +    (init_slot($($use_data:ident)?):
-> +        @data($data:ident),
-> +        @slot($slot:ident),
-> +        // Init by-value.
-> +        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-> +    ) =3D> {
-> +        $(let $field =3D $val;)?
-> +        // Initialize the field.
-> +        //
-> +        // SAFETY: The memory at `slot` is uninitialized.
-> +        unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$=
-field), $field) };
-> +        // Create the drop guard:
-> +        //
-> +        // We only give access to `&DropGuard`, so it cannot be accident=
-ally forgotten.
-> +        //
-> +        // SAFETY: We forget the guard later when initialization has suc=
-ceeded.
-> +        let $field =3D &unsafe {
-> +            $crate::init::__internal::DropGuard::new(::core::ptr::addr_o=
-f_mut!((*$slot).$field))
-> +        };
-> +
-> +        $crate::__init_internal!(init_slot($($use_data)?):
-> +            @data($data),
-> +            @slot($slot),
-> +            @munch_fields($($rest)*),
-> +        );
-> +    };
-> +    (make_initializer:
-> +        @slot($slot:ident),
-> +        @type_name($t:ident),
-> +        @munch_fields($(,)?),
-> +        @acc($($acc:tt)*),
-> +    ) =3D> {
-> +        // Endpoint, nothing more to munch, create the initializer.
-> +        // Since we are in the `if false` branch, this will never get ex=
-ecuted. We abuse `slot` to
-> +        // get the correct type inference here:
-> +        unsafe {
-> +            ::core::ptr::write($slot, $t {
-> +                $($acc)*
-> +            });
-> +        }
-> +    };
-> +    (make_initializer:
-> +        @slot($slot:ident),
-> +        @type_name($t:ident),
-> +        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> +        @acc($($acc:tt)*),
-> +    ) =3D> {
-> +        $crate::__init_internal!(make_initializer:
-> +            @slot($slot),
-> +            @type_name($t),
-> +            @munch_fields($($rest)*),
-> +            @acc($($acc)* $field: ::core::panic!(),),
-> +        );
-> +    };
-> +    (make_initializer:
-> +        @slot($slot:ident),
-> +        @type_name($t:ident),
-> +        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-> +        @acc($($acc:tt)*),
-> +    ) =3D> {
-> +        $crate::__init_internal!(make_initializer:
-> +            @slot($slot),
-> +            @type_name($t),
-> +            @munch_fields($($rest)*),
-> +            @acc($($acc)* $field: ::core::panic!(),),
-> +        );
-> +    };
-> +    (forget_guards:
-> +        @munch_fields($(,)?),
-> +    ) =3D> {
-> +        // Munching finished.
-> +    };
-> +    (forget_guards:
-> +        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
-> +    ) =3D> {
-> +        unsafe { $crate::init::__internal::DropGuard::forget($field) };
-> +
-> +        $crate::__init_internal!(forget_guards:
-> +            @munch_fields($($rest)*),
-> +        );
-> +    };
-> +    (forget_guards:
-> +        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
-> +    ) =3D> {
-> +        unsafe { $crate::init::__internal::DropGuard::forget($field) };
-> +
-> +        $crate::__init_internal!(forget_guards:
-> +            @munch_fields($($rest)*),
-> +        );
+> +        // SAFETY: every field type implements `Zeroable` and padding by=
+tes may be zero.
+> +        #[automatically_derived]
+> +        unsafe impl<$($impl_generics)*> $crate::Zeroable for $name<$($ty=
+_generics)*>
+> +        where
+> +            $($field_ty: $crate::Zeroable,)*
+> +            $($($whr)*)?
+> +        {}
 > +    };
 > +}
+> diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
+> index c28587d68ebc..ae21600970b3 100644
+> --- a/rust/kernel/prelude.rs
+> +++ b/rust/kernel/prelude.rs
+> @@ -18,7 +18,7 @@
+>  pub use alloc::{boxed::Box, vec::Vec};
 >=20
-> base-commit: d2e3115d717197cb2bc020dd1f06b06538474ac3
+>  #[doc(no_inline)]
+> -pub use macros::{module, pin_data, pinned_drop, vtable};
+> +pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
+>=20
+>  pub use super::build_assert;
+>=20
+> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+> index 3fc74cb4ea19..9f056a5c780a 100644
+> --- a/rust/macros/lib.rs
+> +++ b/rust/macros/lib.rs
+> @@ -10,6 +10,7 @@
+>  mod pin_data;
+>  mod pinned_drop;
+>  mod vtable;
+> +mod zeroable;
+>=20
+>  use proc_macro::TokenStream;
+>=20
+> @@ -246,3 +247,22 @@ pub fn pin_data(inner: TokenStream, item: TokenStrea=
+m) -> TokenStream {
+>  pub fn pinned_drop(args: TokenStream, input: TokenStream) -> TokenStream=
+ {
+>      pinned_drop::pinned_drop(args, input)
+>  }
+> +
+> +/// Derives the [`Zeroable`] trait for the given struct.
+> +///
+> +/// This can only be used for structs where every field implements the [=
+`Zeroable`] trait.
+> +///
+> +/// # Examples
+> +///
+> +/// ```rust
+> +/// #[derive(Zeroable)]
+> +/// pub struct DriverData {
+> +///     id: i64,
+> +///     buf_ptr: *mut u8,
+> +///     len: usize,
+> +/// }
+> +/// ```
+> +#[proc_macro_derive(Zeroable)]
+> +pub fn derive_zeroable(input: TokenStream) -> TokenStream {
+> +    zeroable::derive(input)
+> +}
+> diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
+> index dddbb4e6f4cb..b76c198a4ed5 100644
+> --- a/rust/macros/quote.rs
+> +++ b/rust/macros/quote.rs
+> @@ -124,6 +124,12 @@ macro_rules! quote_spanned {
+>          ));
+>          quote_spanned!(@proc $v $span $($tt)*);
+>      };
+> +    (@proc $v:ident $span:ident ; $($tt:tt)*) =3D> {
+> +        $v.push(::proc_macro::TokenTree::Punct(
+> +                ::proc_macro::Punct::new(';', ::proc_macro::Spacing::Alo=
+ne)
+> +        ));
+> +        quote_spanned!(@proc $v $span $($tt)*);
+> +    };
+>      (@proc $v:ident $span:ident $id:ident $($tt:tt)*) =3D> {
+>          $v.push(::proc_macro::TokenTree::Ident(::proc_macro::Ident::new(=
+stringify!($id), $span)));
+>          quote_spanned!(@proc $v $span $($tt)*);
+> diff --git a/rust/macros/zeroable.rs b/rust/macros/zeroable.rs
+> new file mode 100644
+> index 000000000000..cddb866c44ef
+> --- /dev/null
+> +++ b/rust/macros/zeroable.rs
+> @@ -0,0 +1,25 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +use crate::helpers::{parse_generics, Generics};
+> +use proc_macro::TokenStream;
+> +
+> +pub(crate) fn derive(input: TokenStream) -> TokenStream {
+> +    let (
+> +        Generics {
+> +            impl_generics,
+> +            ty_generics,
+> +        },
+> +        mut rest,
+> +    ) =3D parse_generics(input);
+> +    // This should be the body of the struct `{...}`.
+> +    let last =3D rest.pop();
+> +    quote! {
+> +        ::kernel::__derive_zeroable!(
+> +            parse_input:
+> +                @sig(#(#rest)*),
+> +                @impl_generics(#(#impl_generics)*),
+> +                @ty_generics(#(#ty_generics)*),
+> +                @body(#last),
+> +        );
+> +    }
+> +}
 > --
 > 2.41.0
