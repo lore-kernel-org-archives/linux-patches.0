@@ -1,54 +1,29 @@
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A06811C82
-	for <patches@lists.linux.dev>; Fri, 23 Jun 2023 20:20:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1687551641; x=1719087641;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=lAryfG9qk31DDSMUJF1vjuoirKqKEz/0CPZgNOgSylg=;
-  b=ATpaf8aOVUYp1nJ5VtfPQdixod2z9ujbxNB4yV1HY2WGTlAc1USkjsZg
-   XNWrwejPdVYKBh3QPmgKmqTwVdeWCVs++fAjeaTaLmMBK60DDRBgnb67H
-   gA4hkDM7io+eOc9tVWfQ8mkz7tI/E0yyCf0sGYUljhCj2CDjlkzqD4r3t
-   Ruva75dE6A5MfwDCnNGLTfUUP89GDc274BT1NElxBL7m/gUAlNzaN3oDQ
-   CX97vldPRqkk+42o+Tfn2KtoowP7KrMai3wJ8cDS99VouynrFx0kMcktH
-   tHJsWpi2fg2vYYBVArot5x9/mjuPNgEJHry6I/93weC0O4IdgnU44ne2d
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10750"; a="363404550"
-X-IronPort-AV: E=Sophos;i="6.01,153,1684825200"; 
-   d="scan'208";a="363404550"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2023 13:20:40 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10750"; a="709565377"
-X-IronPort-AV: E=Sophos;i="6.01,153,1684825200"; 
-   d="scan'208";a="709565377"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2023 13:20:39 -0700
-Date: Fri, 23 Jun 2023 13:20:38 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Peter Newman <peternewman@google.com>
-Cc: "Yu, Fenghua" <fenghua.yu@intel.com>,
-	"Chatre, Reinette" <reinette.chatre@intel.com>,
-	Jonathan Corbet <corbet@lwn.net>, "x86@kernel.org" <x86@kernel.org>,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"Eranian, Stephane" <eranian@google.com>
-Subject: Re: [PATCH v2 7/7] x86/resctrl: Determine if Sub-NUMA Cluster is
- enabled and initialize.
-Message-ID: <ZJX+lmQTUEujF88U@agluck-desk3>
-References: <20230621174006.42533-1-tony.luck@intel.com>
- <20230621174006.42533-8-tony.luck@intel.com>
- <CALPaoCgF04M0Jc-c4VmbKkRSFo677SBGoPHzNCSeQ4S6Bqb60w@mail.gmail.com>
- <SJ1PR11MB60836CD7493B0EAF0F687051FC22A@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <CALPaoCiaknUMSU4CunSQrRP=WS8DAbToVo5jibh8TaWNZXGMbQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D455120EE
+	for <patches@lists.linux.dev>; Sat, 24 Jun 2023 09:25:26 +0000 (UTC)
+Date: Sat, 24 Jun 2023 09:25:03 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1687598716; x=1687857916;
+	bh=8VcczR7TSrM7NM+PW6yKJnJo9tNhZ0vALWp60pbLLGg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=CQ8JgzRY5eg8ZFcZ8U/kQhsNREbJ5BKQRnOYiPvVf/nAkIyKAYf6M0555lN4BsGux
+	 BgbRBJRRq6SPFVx3OK1+8IOj8efQfXqs7HoBvUSAjSsMsXf+amhcMnj7ZZmwHT1SCW
+	 dw9NwCnI3mIOpdzgtoInHRNvvfVFCSrW9lkgSGG15BWohm61FZ0I9gy/wjXnPiXODD
+	 ceMgI69ITB2prVNu2aW4W5EaPhoVI7OzGIp0JPResWODeinoRFa2W4ydfKxbShz6wQ
+	 PMbmYti9KDxP1GN5xvtVFWuodPTXqd5JVEugWP77yQkVSRTkMkk9xudkH0LYHXLibS
+	 QxSC+2lhM4/Tg==
+To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina <lina@asahilina.net>
+Subject: [PATCH 2/7] rust: add derive macro for `Zeroable`
+Message-ID: <20230624092330.157338-2-benno.lossin@proton.me>
+In-Reply-To: <20230624092330.157338-1-benno.lossin@proton.me>
+References: <20230624092330.157338-1-benno.lossin@proton.me>
+Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,116 +31,166 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALPaoCiaknUMSU4CunSQrRP=WS8DAbToVo5jibh8TaWNZXGMbQ@mail.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 23, 2023 at 05:19:37PM +0200, Peter Newman wrote:
-> Hi Tony,
-> 
-> On Thu, Jun 22, 2023 at 6:02 PM Luck, Tony <tony.luck@intel.com> wrote:
-> >
-> > > Unfortunately I'm not getting as good of results with the new series.
-> > > The main difference seems to be updating the 0xca0 MSR instead of
-> > > applying the offset to PQR_ASSOC.
-> >
-> > I think I may have reversed the actions to update the MSR in one of
-> > my refactor/rebase. The comment here is correct, but that's not
-> > what the code is doing :-(
-> >
-> > Can you swap the bodies of these two functions and retest?
-> 
-> It's a small improvement, but still not great. Still only node 0
-> giving believable results, but at least no more empty results from the
-> second package.
-> 
-> I poked around in /proc/kcore and noticed that my snc_ways is still 1, though.
+Add a derive proc-macro for the `Zeroable` trait. The macro supports
+structs where every field implements the `Zeroable` trait. This way
+`unsafe` implementations can be avoided.
 
-Below is the patch I applied to reverse the add/remove package actions
-together with some debug to make double sure SNC is being detected as
-I expect and the right actions taken.
+The macro is split into two parts:
+- a proc-macro to parse generics into impl and ty generics,
+- a declarative macro that expands to the impl block.
 
-When booting the debug messages say:
-
-[    9.458624] resctrl: SNC_ways = 2
-[    9.458801] resctrl: CPU0: set MSR_RMID_SNC_CONFIG to 0x0
-[    9.461986] resctrl: CPU56: set MSR_RMID_SNC_CONFIG to 0x0
-
-which is all good and correct.
-
-For my tests I have a memory hog process that loops on a memcpy()
-of 100 MBytes to generate enough traffic to be totally obvious when
-looking at the mbm counters.
-
-Test 1: I used taskset(1) to start a copy on the first CPU of node0
-and checked the MBM counters. Both local and remote showed around
-25 GB/s on node 0. Killed this process.
-
-Tests 2, 3, 4: Same as 1, but started the process on first CPU of node
-1, 2, 3.  Same result. Around 25 GB/s appeared in the MBM counts for
-the right node in each cycle.
-
-Test 5: Started on node0, then periodically used taskset to bind the
-running process onto a CPU on another node.  It looks like Linux
-migrates the memory for the job shortly after the affinity of the
-process is changed. A few seconds after each process migration, the
-MBM counters reflect traffic on the node that is the new home of the
-process.
-
--Tony
-
-From 414341db02cd51daaf4a9ea8bd68b22a23cf4b59 Mon Sep 17 00:00:00 2001
-From: Tony Luck <tony.luck@intel.com>
-Date: Fri, 23 Jun 2023 08:57:57 -0700
-Subject: [PATCH] Fix inverted SNC enable/disable MSR writes. Add some debug
- too.
-
+Suggested-by: Asahi Lina <lina@asahilina.net>
+Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 ---
- arch/x86/kernel/cpu/resctrl/core.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ rust/kernel/init/macros.rs | 28 ++++++++++++++++++++++++++++
+ rust/kernel/prelude.rs     |  2 +-
+ rust/macros/lib.rs         | 20 ++++++++++++++++++++
+ rust/macros/quote.rs       |  6 ++++++
+ rust/macros/zeroable.rs    | 25 +++++++++++++++++++++++++
+ 5 files changed, 80 insertions(+), 1 deletion(-)
+ create mode 100644 rust/macros/zeroable.rs
 
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 869cfb46e8e4..e66b2b84fe6f 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -546,18 +546,20 @@ static void snc_add_pkg(void)
- {
- 	u64	msrval;
- 
--	rdmsrl(MSR_RMID_SNC_CONFIG, msrval);
--	msrval |= BIT_ULL(0);
--	wrmsrl(MSR_RMID_SNC_CONFIG, msrval);
--}
--
--static void snc_remove_pkg(void)
--{
--	u64	msrval;
--
- 	rdmsrl(MSR_RMID_SNC_CONFIG, msrval);
- 	msrval &= ~BIT_ULL(0);
- 	wrmsrl(MSR_RMID_SNC_CONFIG, msrval);
-+pr_info("CPU%d: set MSR_RMID_SNC_CONFIG to 0x%llx\n", raw_smp_processor_id(), msrval);
+diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
+index fbaebd34f218..e8165ff53a94 100644
+--- a/rust/kernel/init/macros.rs
++++ b/rust/kernel/init/macros.rs
+@@ -1213,3 +1213,31 @@ macro_rules! __init_internal {
+         );
+     };
+ }
++
++#[doc(hidden)]
++#[macro_export]
++macro_rules! __derive_zeroable {
++    (parse_input:
++        @sig(
++            $(#[$($struct_attr:tt)*])*
++            $vis:vis struct $name:ident
++            $(where $($whr:tt)*)?
++        ),
++        @impl_generics($($impl_generics:tt)*),
++        @ty_generics($($ty_generics:tt)*),
++        @body({
++            $(
++                $(#[$($field_attr:tt)*])*
++                $field:ident : $field_ty:ty
++            ),* $(,)?
++        }),
++    ) =3D> {
++        // SAFETY: every field type implements `Zeroable` and padding byte=
+s may be zero.
++        #[automatically_derived]
++        unsafe impl<$($impl_generics)*> $crate::Zeroable for $name<$($ty_g=
+enerics)*>
++        where
++            $($field_ty: $crate::Zeroable,)*
++            $($($whr)*)?
++        {}
++    };
 +}
-+
-+static void snc_remove_pkg(void)
-+{
-+	u64	msrval;
-+
-+	rdmsrl(MSR_RMID_SNC_CONFIG, msrval);
-+	msrval |= BIT_ULL(0);
-+	wrmsrl(MSR_RMID_SNC_CONFIG, msrval);
-+pr_info("CPU%d: set MSR_RMID_SNC_CONFIG to 0x%llx\n", raw_smp_processor_id(), msrval);
+diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
+index c28587d68ebc..ae21600970b3 100644
+--- a/rust/kernel/prelude.rs
++++ b/rust/kernel/prelude.rs
+@@ -18,7 +18,7 @@
+ pub use alloc::{boxed::Box, vec::Vec};
+
+ #[doc(no_inline)]
+-pub use macros::{module, pin_data, pinned_drop, vtable};
++pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
+
+ pub use super::build_assert;
+
+diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+index 3fc74cb4ea19..9f056a5c780a 100644
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -10,6 +10,7 @@
+ mod pin_data;
+ mod pinned_drop;
+ mod vtable;
++mod zeroable;
+
+ use proc_macro::TokenStream;
+
+@@ -246,3 +247,22 @@ pub fn pin_data(inner: TokenStream, item: TokenStream)=
+ -> TokenStream {
+ pub fn pinned_drop(args: TokenStream, input: TokenStream) -> TokenStream {
+     pinned_drop::pinned_drop(args, input)
  }
- 
- /*
-@@ -987,6 +989,7 @@ static __init int find_snc_ways(void)
- 	if (ret > 1)
- 		rdt_resources_all[RDT_RESOURCE_PKG].r_resctrl.pkg_actions = true;
- 
-+pr_info("SNC_ways = %d\n", ret);
- 	return ret;
- }
- 
--- 
-2.40.1
++
++/// Derives the [`Zeroable`] trait for the given struct.
++///
++/// This can only be used for structs where every field implements the [`Z=
+eroable`] trait.
++///
++/// # Examples
++///
++/// ```rust
++/// #[derive(Zeroable)]
++/// pub struct DriverData {
++///     id: i64,
++///     buf_ptr: *mut u8,
++///     len: usize,
++/// }
++/// ```
++#[proc_macro_derive(Zeroable)]
++pub fn derive_zeroable(input: TokenStream) -> TokenStream {
++    zeroable::derive(input)
++}
+diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
+index dddbb4e6f4cb..b76c198a4ed5 100644
+--- a/rust/macros/quote.rs
++++ b/rust/macros/quote.rs
+@@ -124,6 +124,12 @@ macro_rules! quote_spanned {
+         ));
+         quote_spanned!(@proc $v $span $($tt)*);
+     };
++    (@proc $v:ident $span:ident ; $($tt:tt)*) =3D> {
++        $v.push(::proc_macro::TokenTree::Punct(
++                ::proc_macro::Punct::new(';', ::proc_macro::Spacing::Alone=
+)
++        ));
++        quote_spanned!(@proc $v $span $($tt)*);
++    };
+     (@proc $v:ident $span:ident $id:ident $($tt:tt)*) =3D> {
+         $v.push(::proc_macro::TokenTree::Ident(::proc_macro::Ident::new(st=
+ringify!($id), $span)));
+         quote_spanned!(@proc $v $span $($tt)*);
+diff --git a/rust/macros/zeroable.rs b/rust/macros/zeroable.rs
+new file mode 100644
+index 000000000000..cddb866c44ef
+--- /dev/null
++++ b/rust/macros/zeroable.rs
+@@ -0,0 +1,25 @@
++// SPDX-License-Identifier: GPL-2.0
++
++use crate::helpers::{parse_generics, Generics};
++use proc_macro::TokenStream;
++
++pub(crate) fn derive(input: TokenStream) -> TokenStream {
++    let (
++        Generics {
++            impl_generics,
++            ty_generics,
++        },
++        mut rest,
++    ) =3D parse_generics(input);
++    // This should be the body of the struct `{...}`.
++    let last =3D rest.pop();
++    quote! {
++        ::kernel::__derive_zeroable!(
++            parse_input:
++                @sig(#(#rest)*),
++                @impl_generics(#(#impl_generics)*),
++                @ty_generics(#(#ty_generics)*),
++                @body(#last),
++        );
++    }
++}
+--
+2.41.0
+
 
