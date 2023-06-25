@@ -1,35 +1,35 @@
-Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2118.outbound.protection.outlook.com [40.107.11.118])
+Received: from GBR01-LO2-obe.outbound.protection.outlook.com (mail-lo2gbr01on2093.outbound.protection.outlook.com [40.107.10.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A6979D4
-	for <patches@lists.linux.dev>; Sun, 25 Jun 2023 20:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A037472
+	for <patches@lists.linux.dev>; Sun, 25 Jun 2023 20:54:58 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cqbAZ755DNzGVItyl3A9a5WVuO+HXBQd4FVZE5aZ2YxG3n0W7/t7gkSYGrD2beRKSBwwEjWhlO17Twftf0HSVW6HZ3GHg3Ww6ozzJx7ne6mDNfcVnHg+XkUHbPx6+/BkqBXMNhuVLOXWigePKJ/P5RuOZoKHKk6aM8cJb45rJTHOWD+5d47ObN0On2NKCw5u+ZgIByKvXsOhST5qIIRZuuiryc9/EKVxl1Fg7Ek94qFN7yhjk3xJXWXq/gHAYSP1PBuXyXTQNqZOnX5ihT5e7S96LNZore9dw2Mn1/G0vigkzRWEOZDWIC/QLs8RcsMxFwR7Ma5ySIN02BxbQvpsQw==
+ b=bqXg+thWdl3mJjNP67VLgS5THbJtz+3HqIu9VG4W8l4gk31WCyftwRKI6ZzyDagYb0kkIt97hxmEgFPEzwK/Nxko9q27h1BglS0janAfZm5isByGFUjig47ypVeU8BAk171lo/trp716dB7Fbj5ju8ZZNWHkZET6+bKD+NmtujszzkqQT9O2NzVY2bVvr8fYNW5RTIbniUu0GvNgKLE9ngUobN29Pay6pF4S7OXLUAxv0cNVKsuP7JoBNOuKdVOCakDqc9uZQ9Nc+mnz1Mb9a/X3PbDJjXdpLkwnQ8hLmy+V+gQD+D6DzoKVcTZ2F8RAx9B0tzOVKLBAAYasgV5Opw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RYSjce05f6pUFb+SXkbuw7/LOb8HcLqI/h6nePF5C3U=;
- b=QTWZf41V2BKKWyMUjicEjs5lM1IY9UQXGAWNReF7cfx+Wu0VYBQV1n63XJFMWvxMkpwrly4Q0rRt8O9ARywNnyGGmW/OnUjNyRNBrGuwHgnCbYXl+eTvHVhVjp67lzTTtK15D/VEJVrevaL4YWZa5Wl9xXKLLaow/ScIfX9ZsRgDb+bRx3X+9iE9nu5mv/Yq0A7r9XSZ0umBoRAJ9zPhKzs97dME81KQzat8/+h/V/Rzt7OYa8/6qrNNX7Hs75U+Ke6PUY/MptJEzp41zWDnbXxeGOlNvxIhqVNciTdTGVBwAd+9C/MmLTCxaMmL2sUzUO08/fcw58t9TUSlU+PFyA==
+ bh=UKuR1sdu0xOg5qCjeeHoPIPbEPaqrAsxu0W8JgXgHHE=;
+ b=EE3rtyidltVS+BCWt1Ddsmq2bMVYodAwr0Xo9Z8hIR4KJm5bJYjxVhzIrTVgCBaxr69n0J+iFInYAWYSLV0VJAvOrFFqqNfp4PTKEXXhb9ZNJz2FSnNyukbGZkSoSCQk2fvY+TruthS9MHuhiEOvQITHTutMe13BsEoVKUzrFFERU2Tt40DbLKST4xosD3t/PgZDWlw83Dq2Le/iJhurlrBkd3pbOJvM7Xbhkzt+X/tsnR6dn26XjOs3Luw+2Z7LLD8fZP9NvFZv2SiQ9wF5eFOWz1EHeJSAvdGMgBJWIa2aqKs03N7rMf0zxUoxxKSPjoxX9HNcCvqyhRYBtXa+SA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
  dkim=pass header.d=garyguo.net; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RYSjce05f6pUFb+SXkbuw7/LOb8HcLqI/h6nePF5C3U=;
- b=GTsUkbylcHCknlhvkhc87kmq8Zo6K75HhflD8q6hAmVe4dWWW8xPNyx3ImLCeC7J1oxDX7bED+EG75p7JCHLF4Gy1KlSdEGZRKpepG0M9jG7oe+rfUTNUTFTB4CdmWTDRvOyuBKsAv7q8oMgVjY/oTdYkxhIFdqedlDk/+7cMbU=
+ bh=UKuR1sdu0xOg5qCjeeHoPIPbEPaqrAsxu0W8JgXgHHE=;
+ b=y8JNaIjT0Ow/Doc9sDAXtiJSH5z4QhBquaw8pO3DnqP1peAMYMkL5A9mkQ5UpXqzGtCY9RmZlq4tgUUNhuUrAqL9dgfCuiczVJq1McFIQH+sY5P5sS/IWXGyyixlJFh9ZATzyLOjujBwPZpd7AlKpxJbLiviv4isPDfbkytDUsU=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=garyguo.net;
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
  by CWXP265MB1815.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:30::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.26; Sun, 25 Jun
- 2023 20:46:39 +0000
+ 2023 20:54:56 +0000
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::25e2:a08b:cd9c:c3c9]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::25e2:a08b:cd9c:c3c9%3]) with mapi id 15.20.6521.026; Sun, 25 Jun 2023
- 20:46:39 +0000
-Date: Sun, 25 Jun 2023 21:46:28 +0100
+ 20:54:56 +0000
+Date: Sun, 25 Jun 2023 21:54:53 +0100
 From: Gary Guo <gary@garyguo.net>
 To: Benno Lossin <benno.lossin@proton.me>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
@@ -39,16 +39,16 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
  Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina
  <lina@asahilina.net>
-Subject: Re: [PATCH 2/7] rust: add derive macro for `Zeroable`
-Message-ID: <20230625214628.32d55a54.gary@garyguo.net>
-In-Reply-To: <20230624092330.157338-2-benno.lossin@proton.me>
+Subject: Re: [PATCH 3/7] rust: init: make guards in the init macros hygienic
+Message-ID: <20230625215453.25aa38a0.gary@garyguo.net>
+In-Reply-To: <20230624092330.157338-3-benno.lossin@proton.me>
 References: <20230624092330.157338-1-benno.lossin@proton.me>
-	<20230624092330.157338-2-benno.lossin@proton.me>
+	<20230624092330.157338-3-benno.lossin@proton.me>
 X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0650.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:296::20) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-ClientProxiedBy: LO2P265CA0305.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:a5::29) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -58,212 +58,311 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|CWXP265MB1815:EE_
-X-MS-Office365-Filtering-Correlation-Id: 32391ceb-6f87-4265-c98c-08db75bd4634
+X-MS-Office365-Filtering-Correlation-Id: fd581893-e88e-4465-8aee-08db75be6e92
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	E1Vs+xo1lxFm2hZLrh1YkuKohwowf/wZlseqwf4f6FQBZBNQ04dAGh7qV1K6pZ7Z7VeuGXdoXGUrzaF1sA/dzjcF2te42COhwu3ImCcqibzOLj5hevUBubxhMImrYch0uZTY2uoG2zD2l5y7BOjRD5MLFYxyFBkylXwzUdOsrcuy1CwoaCgvukRZm8HujOo3syoIBdIhRZUYKGNZ5n5YInp8HaVOjB9aPD1hGRY6pqqekgG45Ugy6I/pV2PvtB+sRZoIGqXnL9nM4tTXWLOPan01qeMD4pWp1FGWGf8DXTYMtXlEcSk4g15omwkg26DQj/4AkD3neZppZz4V58n7ITwP/UFl89LpBStl0S0pqbT5qiaUOFVKu4WG/R1U+pKU5q0KsNsDvrhFznGyL2+Pb6+bvVMNtGCiXi4RTpTc1k5TbWy0ayakiI4Ol55ALIcuBH+wCNj8K0r2VHINMd4Ng+ZpJvOTSioB0Z31B34XVaVxFhZcbaAI/y9W43ppU7jrSg1CvXJN4bH8cNEts5iVIr5KkFzeoM2l4gJb/bAmwWbJANGoail3bBCbVx/RdbCTngDQ7JPuTfJcuD6og3CmtpTg4Ahc49qoJCjoSRcUt8U=
+	IbiM9Q/qYJP5RaTxpBfJXjnV1/Jm20VaaEA1Ccg6ri56SsG+YRXs4N6/AVtIzACm4sUQ5wbnF0+Ja+w0EhFMH7wj+Dvg1HtXFRCe5kDp8uzYlSgE0SHqLev18V8VbTf2wr9unIvJfyA/bM7eDguSl5BWevQTM+RVjR09Us7BShNPqYqfjA+xho0GBginSVRYWo4G+Te+Sojc48MThTq5F3cn4s72oaRFbcpeHgboUJR2CzJFQlJQ+IRn0kPLZ9ZEP9S5FPpQlgWnH4VfmmyGJiDQSTCzofI/7x88K0ukkg2/VgsyI8J8MUUnha+Sxdw8Jcmhvz4qdjnpbir8XwVcoeTkkbrFFwX80mKo72L8RZdqXl4ThQYzbxDdagOA3JQr3Gpvukq0TJyizog69AEvCr40+nyWVWDWGma9I6f0RB1VNwjh+VwbXWGSSZTA8HkT3QsKm9hLW8eSzVdC2f0TLdXOm+WxPh1ZIaQ41i1PKTwKeTrsUq+dnpf7+8y9PuwcGC188StUjx4BzBtcUCq1LQ5f1dwzAwynYah1BQYHjZU=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(366004)(376002)(136003)(346002)(39830400003)(396003)(451199021)(36756003)(5660300002)(7416002)(6916009)(8936002)(8676002)(41300700001)(86362001)(66556008)(66476007)(38100700002)(4326008)(316002)(66946007)(1076003)(6506007)(26005)(6512007)(2906002)(186003)(2616005)(478600001)(6666004)(83380400001)(54906003)(6486002)(81973001);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(366004)(376002)(136003)(346002)(39830400003)(396003)(451199021)(36756003)(5660300002)(7416002)(6916009)(8936002)(8676002)(41300700001)(86362001)(66556008)(66476007)(38100700002)(4326008)(316002)(66946007)(966005)(1076003)(6506007)(26005)(6512007)(2906002)(186003)(2616005)(478600001)(6666004)(83380400001)(54906003)(6486002);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Hx3FyO0cVsl2h8uWPmAi4ruwPKJr5eaLIbvDOLH655qv4rHTEAgtW0VAqEBn?=
- =?us-ascii?Q?tv/pIBu/jAHiZDka/kgPMuQy0RzhwQYBPO0Q3gZH0jzkakRS5c41YjsHGYEQ?=
- =?us-ascii?Q?Ub8iRM0M4vAfr4owqLSryuIxQ3v7HkIYoKVrp3n019jeZ9L5loI/hOSmuIpO?=
- =?us-ascii?Q?liLWj72tEg3zOrhSmEfclSri3bplhF+e0H7eEKxNbZ3F+iDy+VHIA5FpixM2?=
- =?us-ascii?Q?HXO6afOhO7MfvOxtYMT9rdyLcYzlKDWGR7iZsfEPfKDiBNU23mkH6TMNIoAi?=
- =?us-ascii?Q?+5XjF3lOE2GRbII0lryUWTSqH/gPO+VE4nwGggxqHpYyHjsjcl9g6LWD1n/X?=
- =?us-ascii?Q?xlcyFzhBLTkMjNKXPGerZEJRBe1KSnU8OuRD9j+KjFf8QAsoX6IXh/uGGsR1?=
- =?us-ascii?Q?ln2E/CIEjz6UnHeyC9GizRJ6ZsD3w929YmMF2OBpT+SnSZQEdSgFGhzPnilU?=
- =?us-ascii?Q?LTpdg6dKq/zUpmk/rbIPDIzYz/eCdgVlT7+LCxaoF+K3TALSzmC2/kkbFPTl?=
- =?us-ascii?Q?1CJKvoNH3Wxu65eLfv1xi6X9BBzLh01udNTRxY6sFQjSQMVgHzFFkDOdzCtn?=
- =?us-ascii?Q?X6LazXZhf7scDsaZfp3oFIdOt6Jf0nPEoicFbQX5sb6eRRPTwWeb+qMAPVJa?=
- =?us-ascii?Q?6UCjdWrGPQb05shWoq/gac8JdTgI6dLNgWbPXAmfS/WLoreME3mFP1ZuION0?=
- =?us-ascii?Q?cFCpJhfUZiSH9MjuQB7BkIeLvxXUkD1ll1BzMqX+GU7eidR+CeNqlwwsuklz?=
- =?us-ascii?Q?dYUnQ2o7On4eAYVZV2sxdst6jX45tLcnfL2TigV92XCp7G6cGv0124B5ie3C?=
- =?us-ascii?Q?F40Fj+C0sXyHDGHpInX31EkntpkLH8DUaZbbO2QqkAgx943qsvUzGYZ73D16?=
- =?us-ascii?Q?qM/oi2YpXu3kdWx/3txvkNBI7xoN15ixaJBSzzPl02c/N8rgph4z1KNYO7A5?=
- =?us-ascii?Q?Z4QQBdKHTIQe61WexAdzOrQ6shzgH8TFK/plmflO+VtF/wfA+B5Zy9K/y9NH?=
- =?us-ascii?Q?ogLys1wOPPZ/IAjyxL/RQMFFO4BvUgMKSPDmDLrDZVFHvYwh/7HQH/SwD1w1?=
- =?us-ascii?Q?1yt+hG3QMEZkqYKZNPM6RhrvkwEtWWedVmfWinrQbVxvTnc3/k5/Y5R3Dnzl?=
- =?us-ascii?Q?1YaKaU72JtWF5EPGPlkKtKU+kS1lIDfUyZMD3YOoMQyvLV3N/VpejiZg+bXa?=
- =?us-ascii?Q?erJne2aBgfUxcPvLC5fRXgPcCSEVm6/+KqKZneUx+bLm25wPpK89fZKeKK67?=
- =?us-ascii?Q?X6Lseja24cvdvpU9se+uXyZEhnOSU2RS9FYJyS70EfgTn8Vi/ErIsmjJRFdb?=
- =?us-ascii?Q?JPVIPMHubL7ezgUfb9wesop4MZ1j94lGQQd/O0EqW0WonUd0YHB+RqIBnZVi?=
- =?us-ascii?Q?6irAIppNGgnEN28q3EaMAB1w8J5H80bm5Ya6Jq7V4lxKGHH+wcOPEUq688Qk?=
- =?us-ascii?Q?8wFxjlvwjElJyxRZJe+J/kYilxI1iuFl19HV/tzjL9DXwoVi+kenxKAn09K2?=
- =?us-ascii?Q?itFkQsG0t2uDCLIVvjLAU/R8xLqHd/GUdRIFfUCrpCgQ76JnWwY3WvXKCv7s?=
- =?us-ascii?Q?G6l2NZNqhOajy5uQhquommiCy9x4sZt/QAAGj3F/?=
+	=?us-ascii?Q?2r7SWKsHoxSpzAa+jKUZrVay/ML1QI1WHEQV+boAKOdfxD3L1p21V8xEG1MP?=
+ =?us-ascii?Q?iXcS6O5/8X9/jr8WEKfCpL3RK0TBuEGpM8FO9ZMkAFDyO8TlMY0JSOT7sGU6?=
+ =?us-ascii?Q?r8r6ZSze3oVcVuxckGdTxdIIdzF5lMFBwVs/P6D/4f4qEQjeavVy26d0BgVz?=
+ =?us-ascii?Q?6CdM2XR0QiAX6WylCrCNyPnoD93IWFlg/Rr7MHtUsSpwmDxNk55K95os2gTa?=
+ =?us-ascii?Q?Ly2RmivBiVaaQB+VFaacWtvyZp/KcKVslh6jy9iKM+3FA/q6/hUkyLHUlI0p?=
+ =?us-ascii?Q?kiuhiiK05mpcVFdXvmjB6Tu1XOOEDrR/VFEkgVbfXn/qUYgnvoo4KvcByhQp?=
+ =?us-ascii?Q?nj/KpUuIDd3zVY5fDM2jJvfn0NGv8qDMM4gHBBPmI6+kEUCLS7syRJ2iKn+y?=
+ =?us-ascii?Q?BLypzU23b7Q8HiFxZ7BFFBqiiJVTb2yNsY/zDRF1d1OvkCVz6lW+lt1sSPEc?=
+ =?us-ascii?Q?x76UegBKn9WL147nfYWBs2MghRL94wJdQG52fN3KLGI+MpPGveIGhydpbHr1?=
+ =?us-ascii?Q?ugxqSeb1ncAYBVG60VuwoalOrJ8/HM0pX5Ly9zPm2KanWYB7BWJBFojGfxop?=
+ =?us-ascii?Q?9oCUeuspkwgkl+j8hBCGHIfEJxJrZjd2l95TYC1L0GvvIP76jtSNo8UAKV++?=
+ =?us-ascii?Q?wxtI4OO7kT7q3hCm3NwoZYST7cLJyWx4mkbXZyK0PgbJoOuo1nnOty/9R2Jo?=
+ =?us-ascii?Q?mXtIU2crfZGxksT/DTS/kjhb423GZRxX6msu+kvoPgJEx8aUg90WsG0//gJc?=
+ =?us-ascii?Q?k+Ff4rX3GUD1QnAVQKGwvXQ2WAuNmt+tbfxEnzYkyaQMO529D3t3yq3oc1zI?=
+ =?us-ascii?Q?i1gzoRNCgHFco35aZyc+6LfGThY5sklYjMAxa0EfTgu1PaJ8cs/JguEJWmJN?=
+ =?us-ascii?Q?4i3RWByknklv6Hmn6RdkEKyj4vJaoebyPO/cv27qb1nOVRXoLFh3BY0lgNfj?=
+ =?us-ascii?Q?rXjkgTzZR57gZxQe00miWLPT4D9JoogR0Hv74EM5pHbSRABlyZ44EkSwFFSB?=
+ =?us-ascii?Q?DyiXeco3YyR4sWbcr3PhVupBfjdjThNEWz2Iik0C/leMdr0V01LA+6xBX7TL?=
+ =?us-ascii?Q?EG+TWrmspHOfvdWnSjvKPz+/rsJL6rz/krAbv6ZyHyoRcMeNExdB3XnLFzLv?=
+ =?us-ascii?Q?2OAs47Fdey66utvja9HrHQTuT91u5vjnO2yZkm3vZ8gvJlzuQOf42avP5219?=
+ =?us-ascii?Q?Qo8PsLgGq2UIeUS2PcTcYT0mkqJVMqGQlBZ5oeHYa1KD8bifYMWRuKU2S0JV?=
+ =?us-ascii?Q?/ktMliUmdmydlNPgw8v2jzVse0Ob6LzJ3wVOKGikWxUYLz15O0tec7LHiPnF?=
+ =?us-ascii?Q?/9bMCgGiH1Z0qlSuQJUPhKcG7AbJw7OvKl6nj/LnoOBT2WN+TSz/wl8mGb8X?=
+ =?us-ascii?Q?hzxPnSHyOENaT+jFkb9pEdiI6uYHrv2ex+Rjak3utZ/ft5vt0zs+ImAcGB1o?=
+ =?us-ascii?Q?8DwRdtFypKAL6DdvHgWqletI1nm9qeDOW29GThg937L0h+94uS3fKLbbuPuL?=
+ =?us-ascii?Q?u2tA3zhqylKhged6G/LlXKx2PuSg43qLp4GasDQN0al+zlwitMMC9T3yifjN?=
+ =?us-ascii?Q?Jnlffgzaiu/CZLefek0WvQBCEM8MtXtWK+/O6IEQ?=
 X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 32391ceb-6f87-4265-c98c-08db75bd4634
+X-MS-Exchange-CrossTenant-Network-Message-Id: fd581893-e88e-4465-8aee-08db75be6e92
 X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jun 2023 20:46:39.1279
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jun 2023 20:54:56.3702
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0jiUFFx+PbTGUWdHy0DaEhwUQvdC9iJ6+7NDbmjaO/3kMvxlZfDjkpT11dZB4o1Eg5XvIOTWrAcn8oK5q8/DUQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: xr9IDKuR3K1zVRMbHawizbzAA1lXR1f2YW0i09GEBzmH1THRcRfJggynKF8R65KHDkXwHXA4yMghpgpJBKDusQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWXP265MB1815
 
-On Sat, 24 Jun 2023 09:25:03 +0000
+On Sat, 24 Jun 2023 09:25:10 +0000
 Benno Lossin <benno.lossin@proton.me> wrote:
 
-> Add a derive proc-macro for the `Zeroable` trait. The macro supports
-> structs where every field implements the `Zeroable` trait. This way
-> `unsafe` implementations can be avoided.
-> 
-> The macro is split into two parts:
-> - a proc-macro to parse generics into impl and ty generics,
-> - a declarative macro that expands to the impl block.
-> 
-> Suggested-by: Asahi Lina <lina@asahilina.net>
-> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
+> Use hygienic identifiers for the guards instead of the field names. This
+> makes the init macros feel more like normal struct initializers, since
+> assigning identifiers with the name of a field does not create
+> conflicts.
+> Also change the internals of the guards, no need to make the `forget`
+> function `unsafe`, since users cannot access the guards anyways. Now the
+> guards are carried directly on the stack and have no extra `Cell<bool>`
+> field that marks if they have been forgotten or not, instead they are
+> just forgotten via `mem::forget`.
+
+The code LGTM, so:
 
 Reviewed-by: Gary Guo <gary@garyguo.net>
 
+Although this will cause the new expansion we have to be no longer
+compatible with a totally-proc-macro impl, if we want to do everything
+in proc macro in the future.
+
+If we have the paste macro upstream (
+https://github.com/nbdd0121/linux/commit/fff00461b0be7fd3ec218dcc428f25886b5ec04a
+) then we can replace the `guard` with `paste!([<$field>])` and keep
+the expansion identical.
+
+> 
+> Suggested-by: Asahi Lina <lina@asahilina.net>
+> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 > ---
->  rust/kernel/init/macros.rs | 28 ++++++++++++++++++++++++++++
->  rust/kernel/prelude.rs     |  2 +-
->  rust/macros/lib.rs         | 20 ++++++++++++++++++++
->  rust/macros/quote.rs       |  6 ++++++
->  rust/macros/zeroable.rs    | 25 +++++++++++++++++++++++++
->  5 files changed, 80 insertions(+), 1 deletion(-)
->  create mode 100644 rust/macros/zeroable.rs
+>  rust/kernel/init.rs            |  1 -
+>  rust/kernel/init/__internal.rs | 25 +++------------
+>  rust/kernel/init/macros.rs     | 56 ++++++++++++----------------------
+>  3 files changed, 23 insertions(+), 59 deletions(-)
+> 
+> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
+> index d9a91950cba2..ecf6a4bd0ce4 100644
+> --- a/rust/kernel/init.rs
+> +++ b/rust/kernel/init.rs
+> @@ -206,7 +206,6 @@
+>  use alloc::boxed::Box;
+>  use core::{
+>      alloc::AllocError,
+> -    cell::Cell,
+>      convert::Infallible,
+>      marker::PhantomData,
+>      mem::MaybeUninit,
+> diff --git a/rust/kernel/init/__internal.rs b/rust/kernel/init/__internal.rs
+> index 44751fb62b51..7abd1fb65e41 100644
+> --- a/rust/kernel/init/__internal.rs
+> +++ b/rust/kernel/init/__internal.rs
+> @@ -174,7 +174,6 @@ pub fn init<E>(self: Pin<&mut Self>, init: impl PinInit<T, E>) -> Result<Pin<&mu
+>  /// Can be forgotten to prevent the drop.
+>  pub struct DropGuard<T: ?Sized> {
+>      ptr: *mut T,
+> -    do_drop: Cell<bool>,
+>  }
+> 
+>  impl<T: ?Sized> DropGuard<T> {
+> @@ -190,32 +189,16 @@ impl<T: ?Sized> DropGuard<T> {
+>      /// - will not be dropped by any other means.
+>      #[inline]
+>      pub unsafe fn new(ptr: *mut T) -> Self {
+> -        Self {
+> -            ptr,
+> -            do_drop: Cell::new(true),
+> -        }
+> -    }
+> -
+> -    /// Prevents this guard from dropping the supplied pointer.
+> -    ///
+> -    /// # Safety
+> -    ///
+> -    /// This function is unsafe in order to prevent safe code from forgetting this guard. It should
+> -    /// only be called by the macros in this module.
+> -    #[inline]
+> -    pub unsafe fn forget(&self) {
+> -        self.do_drop.set(false);
+> +        Self { ptr }
+>      }
+>  }
+> 
+>  impl<T: ?Sized> Drop for DropGuard<T> {
+>      #[inline]
+>      fn drop(&mut self) {
+> -        if self.do_drop.get() {
+> -            // SAFETY: A `DropGuard` can only be constructed using the unsafe `new` function
+> -            // ensuring that this operation is safe.
+> -            unsafe { ptr::drop_in_place(self.ptr) }
+> -        }
+> +        // SAFETY: A `DropGuard` can only be constructed using the unsafe `new` function
+> +        // ensuring that this operation is safe.
+> +        unsafe { ptr::drop_in_place(self.ptr) }
+>      }
+>  }
 > 
 > diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-> index fbaebd34f218..e8165ff53a94 100644
+> index e8165ff53a94..df4281743175 100644
 > --- a/rust/kernel/init/macros.rs
 > +++ b/rust/kernel/init/macros.rs
-> @@ -1213,3 +1213,31 @@ macro_rules! __init_internal {
+> @@ -992,7 +992,6 @@ impl<$($impl_generics)*> $pin_data<$($ty_generics)*>
+>  /// - `init_slot`: recursively creates the code that initializes all fields in `slot`.
+>  /// - `make_initializer`: recursively create the struct initializer that guarantees that every
+>  ///   field has been initialized exactly once.
+> -/// - `forget_guards`: recursively forget the drop guards for every field.
+>  #[doc(hidden)]
+>  #[macro_export]
+>  macro_rules! __init_internal {
+> @@ -1032,6 +1031,7 @@ macro_rules! __init_internal {
+>                      $crate::__init_internal!(init_slot($($use_data)?):
+>                          @data(data),
+>                          @slot(slot),
+> +                        @guards(),
+>                          @munch_fields($($fields)*,),
+>                      );
+>                      // We use unreachable code to ensure that all fields have been mentioned exactly
+> @@ -1046,10 +1046,6 @@ macro_rules! __init_internal {
+>                              @acc(),
+>                          );
+>                      }
+> -                    // Forget all guards, since initialization was a success.
+> -                    $crate::__init_internal!(forget_guards:
+> -                        @munch_fields($($fields)*,),
+> -                    );
+>                  }
+>                  Ok(__InitOk)
+>              }
+> @@ -1063,13 +1059,17 @@ macro_rules! __init_internal {
+>      (init_slot($($use_data:ident)?):
+>          @data($data:ident),
+>          @slot($slot:ident),
+> +        @guards($($guards:ident,)*),
+>          @munch_fields($(,)?),
+>      ) => {
+> -        // Endpoint of munching, no fields are left.
+> +        // Endpoint of munching, no fields are left. If execution reaches this point, all fields
+> +        // have been initialized. Therefore we can now dismiss the guards by forgetting them.
+> +        $(::core::mem::forget($guards);)*
+>      };
+>      (init_slot($use_data:ident): // use_data is present, so we use the `data` to init fields.
+>          @data($data:ident),
+>          @slot($slot:ident),
+> +        @guards($($guards:ident,)*),
+>          // In-place initialization syntax.
+>          @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
+>      ) => {
+> @@ -1080,24 +1080,26 @@ macro_rules! __init_internal {
+>          // return when an error/panic occurs.
+>          // We also use the `data` to require the correct trait (`Init` or `PinInit`) for `$field`.
+>          unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), $field)? };
+> -        // Create the drop guard.
+> +        // Create the drop guard:
+>          //
+> -        // We only give access to `&DropGuard`, so it cannot be forgotten via safe code.
+> +        // We rely on macro hygiene to make it impossible for users to access this local variable.
+>          //
+>          // SAFETY: We forget the guard later when initialization has succeeded.
+> -        let $field = &unsafe {
+> +        let guard = unsafe {
+>              $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
+>          };
+> 
+>          $crate::__init_internal!(init_slot($use_data):
+>              @data($data),
+>              @slot($slot),
+> +            @guards(guard, $($guards,)*),
+>              @munch_fields($($rest)*),
 >          );
 >      };
->  }
-> +
-> +#[doc(hidden)]
-> +#[macro_export]
-> +macro_rules! __derive_zeroable {
-> +    (parse_input:
-> +        @sig(
-> +            $(#[$($struct_attr:tt)*])*
-> +            $vis:vis struct $name:ident
-> +            $(where $($whr:tt)*)?
-> +        ),
-> +        @impl_generics($($impl_generics:tt)*),
-> +        @ty_generics($($ty_generics:tt)*),
-> +        @body({
-> +            $(
-> +                $(#[$($field_attr:tt)*])*
-> +                $field:ident : $field_ty:ty
-> +            ),* $(,)?
-> +        }),
-> +    ) => {
-> +        // SAFETY: every field type implements `Zeroable` and padding bytes may be zero.
-> +        #[automatically_derived]
-> +        unsafe impl<$($impl_generics)*> $crate::Zeroable for $name<$($ty_generics)*>
-> +        where
-> +            $($field_ty: $crate::Zeroable,)*
-> +            $($($whr)*)?
-> +        {}
-> +    };
-> +}
-> diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
-> index c28587d68ebc..ae21600970b3 100644
-> --- a/rust/kernel/prelude.rs
-> +++ b/rust/kernel/prelude.rs
-> @@ -18,7 +18,7 @@
->  pub use alloc::{boxed::Box, vec::Vec};
+>      (init_slot(): // no use_data, so we use `Init::__init` directly.
+>          @data($data:ident),
+>          @slot($slot:ident),
+> +        @guards($($guards:ident,)*),
+>          // In-place initialization syntax.
+>          @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
+>      ) => {
+> @@ -1107,24 +1109,26 @@ macro_rules! __init_internal {
+>          // SAFETY: `slot` is valid, because we are inside of an initializer closure, we
+>          // return when an error/panic occurs.
+>          unsafe { $crate::init::Init::__init($field, ::core::ptr::addr_of_mut!((*$slot).$field))? };
+> -        // Create the drop guard.
+> +        // Create the drop guard:
+>          //
+> -        // We only give access to `&DropGuard`, so it cannot be forgotten via safe code.
+> +        // We rely on macro hygiene to make it impossible for users to access this local variable.
+>          //
+>          // SAFETY: We forget the guard later when initialization has succeeded.
+> -        let $field = &unsafe {
+> +        let guard = unsafe {
+>              $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
+>          };
 > 
->  #[doc(no_inline)]
-> -pub use macros::{module, pin_data, pinned_drop, vtable};
-> +pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
-> 
->  pub use super::build_assert;
-> 
-> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
-> index 3fc74cb4ea19..9f056a5c780a 100644
-> --- a/rust/macros/lib.rs
-> +++ b/rust/macros/lib.rs
-> @@ -10,6 +10,7 @@
->  mod pin_data;
->  mod pinned_drop;
->  mod vtable;
-> +mod zeroable;
-> 
->  use proc_macro::TokenStream;
-> 
-> @@ -246,3 +247,22 @@ pub fn pin_data(inner: TokenStream, item: TokenStream) -> TokenStream {
->  pub fn pinned_drop(args: TokenStream, input: TokenStream) -> TokenStream {
->      pinned_drop::pinned_drop(args, input)
->  }
-> +
-> +/// Derives the [`Zeroable`] trait for the given struct.
-> +///
-> +/// This can only be used for structs where every field implements the [`Zeroable`] trait.
-> +///
-> +/// # Examples
-> +///
-> +/// ```rust
-> +/// #[derive(Zeroable)]
-> +/// pub struct DriverData {
-> +///     id: i64,
-> +///     buf_ptr: *mut u8,
-> +///     len: usize,
-> +/// }
-> +/// ```
-> +#[proc_macro_derive(Zeroable)]
-> +pub fn derive_zeroable(input: TokenStream) -> TokenStream {
-> +    zeroable::derive(input)
-> +}
-> diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
-> index dddbb4e6f4cb..b76c198a4ed5 100644
-> --- a/rust/macros/quote.rs
-> +++ b/rust/macros/quote.rs
-> @@ -124,6 +124,12 @@ macro_rules! quote_spanned {
->          ));
->          quote_spanned!(@proc $v $span $($tt)*);
+>          $crate::__init_internal!(init_slot():
+>              @data($data),
+>              @slot($slot),
+> +            @guards(guard, $($guards,)*),
+>              @munch_fields($($rest)*),
+>          );
 >      };
-> +    (@proc $v:ident $span:ident ; $($tt:tt)*) => {
-> +        $v.push(::proc_macro::TokenTree::Punct(
-> +                ::proc_macro::Punct::new(';', ::proc_macro::Spacing::Alone)
-> +        ));
-> +        quote_spanned!(@proc $v $span $($tt)*);
-> +    };
->      (@proc $v:ident $span:ident $id:ident $($tt:tt)*) => {
->          $v.push(::proc_macro::TokenTree::Ident(::proc_macro::Ident::new(stringify!($id), $span)));
->          quote_spanned!(@proc $v $span $($tt)*);
-> diff --git a/rust/macros/zeroable.rs b/rust/macros/zeroable.rs
-> new file mode 100644
-> index 000000000000..cddb866c44ef
-> --- /dev/null
-> +++ b/rust/macros/zeroable.rs
-> @@ -0,0 +1,25 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +use crate::helpers::{parse_generics, Generics};
-> +use proc_macro::TokenStream;
-> +
-> +pub(crate) fn derive(input: TokenStream) -> TokenStream {
-> +    let (
-> +        Generics {
-> +            impl_generics,
-> +            ty_generics,
-> +        },
-> +        mut rest,
-> +    ) = parse_generics(input);
-> +    // This should be the body of the struct `{...}`.
-> +    let last = rest.pop();
-> +    quote! {
-> +        ::kernel::__derive_zeroable!(
-> +            parse_input:
-> +                @sig(#(#rest)*),
-> +                @impl_generics(#(#impl_generics)*),
-> +                @ty_generics(#(#ty_generics)*),
-> +                @body(#last),
-> +        );
-> +    }
-> +}
+>      (init_slot($($use_data:ident)?):
+>          @data($data:ident),
+>          @slot($slot:ident),
+> +        @guards($($guards:ident,)*),
+>          // Init by-value.
+>          @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
+>      ) => {
+> @@ -1135,16 +1139,17 @@ macro_rules! __init_internal {
+>          unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
+>          // Create the drop guard:
+>          //
+> -        // We only give access to `&DropGuard`, so it cannot be accidentally forgotten.
+> +        // We rely on macro hygiene to make it impossible for users to access this local variable.
+>          //
+>          // SAFETY: We forget the guard later when initialization has succeeded.
+> -        let $field = &unsafe {
+> +        let guard = unsafe {
+>              $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
+>          };
+> 
+>          $crate::__init_internal!(init_slot($($use_data)?):
+>              @data($data),
+>              @slot($slot),
+> +            @guards(guard, $($guards,)*),
+>              @munch_fields($($rest)*),
+>          );
+>      };
+> @@ -1189,29 +1194,6 @@ macro_rules! __init_internal {
+>              @acc($($acc)* $field: ::core::panic!(),),
+>          );
+>      };
+> -    (forget_guards:
+> -        @munch_fields($(,)?),
+> -    ) => {
+> -        // Munching finished.
+> -    };
+> -    (forget_guards:
+> -        @munch_fields($field:ident <- $val:expr, $($rest:tt)*),
+> -    ) => {
+> -        unsafe { $crate::init::__internal::DropGuard::forget($field) };
+> -
+> -        $crate::__init_internal!(forget_guards:
+> -            @munch_fields($($rest)*),
+> -        );
+> -    };
+> -    (forget_guards:
+> -        @munch_fields($field:ident $(: $val:expr)?, $($rest:tt)*),
+> -    ) => {
+> -        unsafe { $crate::init::__internal::DropGuard::forget($field) };
+> -
+> -        $crate::__init_internal!(forget_guards:
+> -            @munch_fields($($rest)*),
+> -        );
+> -    };
+>  }
+> 
+>  #[doc(hidden)]
 > --
 > 2.41.0
 > 
