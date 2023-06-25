@@ -1,147 +1,271 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2118.outbound.protection.outlook.com [40.107.11.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B856B7C
-	for <patches@lists.linux.dev>; Sun, 25 Jun 2023 16:46:25 +0000 (UTC)
-Date: Sun, 25 Jun 2023 16:46:19 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1687711582; x=1687970782;
-	bh=UiwcovPu5D6YP531Fs0Dmh7sLnagRakiziEoNif0OK0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=GfpbcRsSZQ7svs4/PAthoEJAPODQtFPWvBA/VHFU+AmCuQnZndEAtEzddlpKmj2cn
-	 /DK6pw2KjJDqrIvjy94GyslatfJP7AxKXCJeyReJ9k+iaVCsrUPS4Gx1JEeTtdoZVY
-	 agnrNQ2R+4ENodKJp641s9srz/zEnt27LvzYGfitSz6ziI5TFmBFAUXPZi4bBajRPB
-	 Ass6krGGpP685vfHvH2UyTgnLN5bMi+IR6OjieDxgbljJL/xAmBl5Z/pM8cWoBIqKU
-	 aOrrr5jsZY1PMznSp2rqTo9y6/Rnv/2y+ELnbuwD1MAbsAoF7W63qD6ouK8EmU2Pcu
-	 dKz5x7xXZxrgg==
-To: =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina <lina@asahilina.net>
-Subject: Re: [PATCH 5/7] rust: init: add `..Zeroable::zeroed()` syntax for zeroing all missing fields
-Message-ID: <0f99bc49-5280-c300-719f-86c138f48eaf@proton.me>
-In-Reply-To: <8lCE3SyChVVb2HphigkwKsxv7etgmS0N3AzcDyYtCEoqcFEKvY-5ILkOrWUr_vnWrvsWrAHXVfwcWARfsiMHC8Yc03sND-PuuK-2z9j4z6I=@protonmail.com>
-References: <20230624092330.157338-1-benno.lossin@proton.me> <20230624092330.157338-5-benno.lossin@proton.me> <W1fY0aa_v9j7lJNWXk_WNaxY2qruJo1R6k7u0g-X5L5Rxuod-VMBMmByICDwjF_fFGvNJTV41QapW0WeVduNYqxgo9S243gnNGXbexq6P3Q=@protonmail.com> <f4bcd952-1ad9-42b7-6e0b-72a115dcbe8e@proton.me> <we7PHkrpBV6kIgFZojiBFerqlXtSJB9HWkj129OGUWUVyVFwtuoirr3gVybgLzW2hmpUqqSAAQUPsdfL9QC2JyNKOLRNX0mSTfgD8llSJKE=@protonmail.com> <6f4e1d68-f828-8990-4859-8ab24907fa46@proton.me> <8lCE3SyChVVb2HphigkwKsxv7etgmS0N3AzcDyYtCEoqcFEKvY-5ILkOrWUr_vnWrvsWrAHXVfwcWARfsiMHC8Yc03sND-PuuK-2z9j4z6I=@protonmail.com>
-Feedback-ID: 71780778:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A6979D4
+	for <patches@lists.linux.dev>; Sun, 25 Jun 2023 20:46:41 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cqbAZ755DNzGVItyl3A9a5WVuO+HXBQd4FVZE5aZ2YxG3n0W7/t7gkSYGrD2beRKSBwwEjWhlO17Twftf0HSVW6HZ3GHg3Ww6ozzJx7ne6mDNfcVnHg+XkUHbPx6+/BkqBXMNhuVLOXWigePKJ/P5RuOZoKHKk6aM8cJb45rJTHOWD+5d47ObN0On2NKCw5u+ZgIByKvXsOhST5qIIRZuuiryc9/EKVxl1Fg7Ek94qFN7yhjk3xJXWXq/gHAYSP1PBuXyXTQNqZOnX5ihT5e7S96LNZore9dw2Mn1/G0vigkzRWEOZDWIC/QLs8RcsMxFwR7Ma5ySIN02BxbQvpsQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RYSjce05f6pUFb+SXkbuw7/LOb8HcLqI/h6nePF5C3U=;
+ b=QTWZf41V2BKKWyMUjicEjs5lM1IY9UQXGAWNReF7cfx+Wu0VYBQV1n63XJFMWvxMkpwrly4Q0rRt8O9ARywNnyGGmW/OnUjNyRNBrGuwHgnCbYXl+eTvHVhVjp67lzTTtK15D/VEJVrevaL4YWZa5Wl9xXKLLaow/ScIfX9ZsRgDb+bRx3X+9iE9nu5mv/Yq0A7r9XSZ0umBoRAJ9zPhKzs97dME81KQzat8/+h/V/Rzt7OYa8/6qrNNX7Hs75U+Ke6PUY/MptJEzp41zWDnbXxeGOlNvxIhqVNciTdTGVBwAd+9C/MmLTCxaMmL2sUzUO08/fcw58t9TUSlU+PFyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RYSjce05f6pUFb+SXkbuw7/LOb8HcLqI/h6nePF5C3U=;
+ b=GTsUkbylcHCknlhvkhc87kmq8Zo6K75HhflD8q6hAmVe4dWWW8xPNyx3ImLCeC7J1oxDX7bED+EG75p7JCHLF4Gy1KlSdEGZRKpepG0M9jG7oe+rfUTNUTFTB4CdmWTDRvOyuBKsAv7q8oMgVjY/oTdYkxhIFdqedlDk/+7cMbU=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
+ by CWXP265MB1815.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:30::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.26; Sun, 25 Jun
+ 2023 20:46:39 +0000
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::25e2:a08b:cd9c:c3c9]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::25e2:a08b:cd9c:c3c9%3]) with mapi id 15.20.6521.026; Sun, 25 Jun 2023
+ 20:46:39 +0000
+Date: Sun, 25 Jun 2023 21:46:28 +0100
+From: Gary Guo <gary@garyguo.net>
+To: Benno Lossin <benno.lossin@proton.me>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
+ <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng
+ <boqun.feng@gmail.com>, =?UTF-8?B?QmrDtnJu?= Roy Baron
+ <bjorn3_gh@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas
+ Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina
+ <lina@asahilina.net>
+Subject: Re: [PATCH 2/7] rust: add derive macro for `Zeroable`
+Message-ID: <20230625214628.32d55a54.gary@garyguo.net>
+In-Reply-To: <20230624092330.157338-2-benno.lossin@proton.me>
+References: <20230624092330.157338-1-benno.lossin@proton.me>
+	<20230624092330.157338-2-benno.lossin@proton.me>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0650.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:296::20) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|CWXP265MB1815:EE_
+X-MS-Office365-Filtering-Correlation-Id: 32391ceb-6f87-4265-c98c-08db75bd4634
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	E1Vs+xo1lxFm2hZLrh1YkuKohwowf/wZlseqwf4f6FQBZBNQ04dAGh7qV1K6pZ7Z7VeuGXdoXGUrzaF1sA/dzjcF2te42COhwu3ImCcqibzOLj5hevUBubxhMImrYch0uZTY2uoG2zD2l5y7BOjRD5MLFYxyFBkylXwzUdOsrcuy1CwoaCgvukRZm8HujOo3syoIBdIhRZUYKGNZ5n5YInp8HaVOjB9aPD1hGRY6pqqekgG45Ugy6I/pV2PvtB+sRZoIGqXnL9nM4tTXWLOPan01qeMD4pWp1FGWGf8DXTYMtXlEcSk4g15omwkg26DQj/4AkD3neZppZz4V58n7ITwP/UFl89LpBStl0S0pqbT5qiaUOFVKu4WG/R1U+pKU5q0KsNsDvrhFznGyL2+Pb6+bvVMNtGCiXi4RTpTc1k5TbWy0ayakiI4Ol55ALIcuBH+wCNj8K0r2VHINMd4Ng+ZpJvOTSioB0Z31B34XVaVxFhZcbaAI/y9W43ppU7jrSg1CvXJN4bH8cNEts5iVIr5KkFzeoM2l4gJb/bAmwWbJANGoail3bBCbVx/RdbCTngDQ7JPuTfJcuD6og3CmtpTg4Ahc49qoJCjoSRcUt8U=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(366004)(376002)(136003)(346002)(39830400003)(396003)(451199021)(36756003)(5660300002)(7416002)(6916009)(8936002)(8676002)(41300700001)(86362001)(66556008)(66476007)(38100700002)(4326008)(316002)(66946007)(1076003)(6506007)(26005)(6512007)(2906002)(186003)(2616005)(478600001)(6666004)(83380400001)(54906003)(6486002)(81973001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Hx3FyO0cVsl2h8uWPmAi4ruwPKJr5eaLIbvDOLH655qv4rHTEAgtW0VAqEBn?=
+ =?us-ascii?Q?tv/pIBu/jAHiZDka/kgPMuQy0RzhwQYBPO0Q3gZH0jzkakRS5c41YjsHGYEQ?=
+ =?us-ascii?Q?Ub8iRM0M4vAfr4owqLSryuIxQ3v7HkIYoKVrp3n019jeZ9L5loI/hOSmuIpO?=
+ =?us-ascii?Q?liLWj72tEg3zOrhSmEfclSri3bplhF+e0H7eEKxNbZ3F+iDy+VHIA5FpixM2?=
+ =?us-ascii?Q?HXO6afOhO7MfvOxtYMT9rdyLcYzlKDWGR7iZsfEPfKDiBNU23mkH6TMNIoAi?=
+ =?us-ascii?Q?+5XjF3lOE2GRbII0lryUWTSqH/gPO+VE4nwGggxqHpYyHjsjcl9g6LWD1n/X?=
+ =?us-ascii?Q?xlcyFzhBLTkMjNKXPGerZEJRBe1KSnU8OuRD9j+KjFf8QAsoX6IXh/uGGsR1?=
+ =?us-ascii?Q?ln2E/CIEjz6UnHeyC9GizRJ6ZsD3w929YmMF2OBpT+SnSZQEdSgFGhzPnilU?=
+ =?us-ascii?Q?LTpdg6dKq/zUpmk/rbIPDIzYz/eCdgVlT7+LCxaoF+K3TALSzmC2/kkbFPTl?=
+ =?us-ascii?Q?1CJKvoNH3Wxu65eLfv1xi6X9BBzLh01udNTRxY6sFQjSQMVgHzFFkDOdzCtn?=
+ =?us-ascii?Q?X6LazXZhf7scDsaZfp3oFIdOt6Jf0nPEoicFbQX5sb6eRRPTwWeb+qMAPVJa?=
+ =?us-ascii?Q?6UCjdWrGPQb05shWoq/gac8JdTgI6dLNgWbPXAmfS/WLoreME3mFP1ZuION0?=
+ =?us-ascii?Q?cFCpJhfUZiSH9MjuQB7BkIeLvxXUkD1ll1BzMqX+GU7eidR+CeNqlwwsuklz?=
+ =?us-ascii?Q?dYUnQ2o7On4eAYVZV2sxdst6jX45tLcnfL2TigV92XCp7G6cGv0124B5ie3C?=
+ =?us-ascii?Q?F40Fj+C0sXyHDGHpInX31EkntpkLH8DUaZbbO2QqkAgx943qsvUzGYZ73D16?=
+ =?us-ascii?Q?qM/oi2YpXu3kdWx/3txvkNBI7xoN15ixaJBSzzPl02c/N8rgph4z1KNYO7A5?=
+ =?us-ascii?Q?Z4QQBdKHTIQe61WexAdzOrQ6shzgH8TFK/plmflO+VtF/wfA+B5Zy9K/y9NH?=
+ =?us-ascii?Q?ogLys1wOPPZ/IAjyxL/RQMFFO4BvUgMKSPDmDLrDZVFHvYwh/7HQH/SwD1w1?=
+ =?us-ascii?Q?1yt+hG3QMEZkqYKZNPM6RhrvkwEtWWedVmfWinrQbVxvTnc3/k5/Y5R3Dnzl?=
+ =?us-ascii?Q?1YaKaU72JtWF5EPGPlkKtKU+kS1lIDfUyZMD3YOoMQyvLV3N/VpejiZg+bXa?=
+ =?us-ascii?Q?erJne2aBgfUxcPvLC5fRXgPcCSEVm6/+KqKZneUx+bLm25wPpK89fZKeKK67?=
+ =?us-ascii?Q?X6Lseja24cvdvpU9se+uXyZEhnOSU2RS9FYJyS70EfgTn8Vi/ErIsmjJRFdb?=
+ =?us-ascii?Q?JPVIPMHubL7ezgUfb9wesop4MZ1j94lGQQd/O0EqW0WonUd0YHB+RqIBnZVi?=
+ =?us-ascii?Q?6irAIppNGgnEN28q3EaMAB1w8J5H80bm5Ya6Jq7V4lxKGHH+wcOPEUq688Qk?=
+ =?us-ascii?Q?8wFxjlvwjElJyxRZJe+J/kYilxI1iuFl19HV/tzjL9DXwoVi+kenxKAn09K2?=
+ =?us-ascii?Q?itFkQsG0t2uDCLIVvjLAU/R8xLqHd/GUdRIFfUCrpCgQ76JnWwY3WvXKCv7s?=
+ =?us-ascii?Q?G6l2NZNqhOajy5uQhquommiCy9x4sZt/QAAGj3F/?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 32391ceb-6f87-4265-c98c-08db75bd4634
+X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jun 2023 20:46:39.1279
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0jiUFFx+PbTGUWdHy0DaEhwUQvdC9iJ6+7NDbmjaO/3kMvxlZfDjkpT11dZB4o1Eg5XvIOTWrAcn8oK5q8/DUQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWXP265MB1815
 
-On 6/25/23 16:17, Bj=C3=B6rn Roy Baron wrote:
-> On Sunday, June 25th, 2023 at 15:07, Benno Lossin <benno.lossin@proton.me=
-> wrote:
->> On 25.06.23 14:56, Bj=C3=B6rn Roy Baron wrote:
->>> On Saturday, June 24th, 2023 at 23:14, Benno Lossin <benno.lossin@proto=
-n.me> wrote:
->>
->>>>>> +                        // Ensure that the struct is indeed `Zeroab=
-le`.
->>>>>> +                        is_zeroable(slot);
->>>>>> +                        // SAFETY:  The type implements `Zeroable` =
-by the check above.
->>>>>> +                        unsafe { ::core::ptr::write_bytes(slot, 0, =
-1) };
->>>>>> +                        $init_zeroed // this will be `()` if set.
->>>>>
->>>>> How does this work? Shouldn't there be a ; after $init_zeroed to cons=
-ume the () value?
->>>>
->>>> It is the last expression of a block and since it is `()` it is ok
->>>> (adding a ; would also be ok, but it is not necessary).
->>>
->>> I'm surprised it is considered the last expression of a block. Unlike w=
-ith {} using $()? will still
->>> allow variables defined inside this as if they were outside of it. Also=
- I can't reproduce this
->>> behavior with:
->>>
->>>       macro_rules! foo {
->>>           ($($a:expr)?) =3D> {
->>>               $($a)?
->>>               bar();
->>>           }
->>>       }
->>>
->>>       fn main() {
->>>           foo!(());
->>>       }
->>>
->>> Is there something I'm missing?
->>>
->>> Cheers,
->>> Bj=C3=B6rn
->>
->> Not sure what you mean with "allow variables defined inside this
->> as if they were outside of it". But note that in the macro `$init_zeroed=
-`
->> is the last expression of a block. Here is a small example:
->=20
-> $(let $this =3D unsafe { ::core::ptr::NonNull::new_unchecked(slot) };)? c=
-omes after
-> this code in the same block that contains struct __InitOk;. And after tha=
-t another
-> $crate::__init_internal!() invocation. That is why I don't get that this =
-is allowed
-> at all.
->=20
+On Sat, 24 Jun 2023 09:25:03 +0000
+Benno Lossin <benno.lossin@proton.me> wrote:
 
-Oh I see the issue now, I thought I wrote
-```
-$({
-     fn assert_zeroable<T: Zeroable>(ptr: *mut T) {}
-     // Ensure that the struct is indeed `Zeroable`.
-     assert_zeroable(slot);
-     // SAFETY:  The type implements `Zeroable` by the check above.
-     unsafe { ::core::ptr::write_bytes(slot, 0, 1) };
-     $init_zeroed // this will be `()` if set.
-})?
-```
+> Add a derive proc-macro for the `Zeroable` trait. The macro supports
+> structs where every field implements the `Zeroable` trait. This way
+> `unsafe` implementations can be avoided.
+> 
+> The macro is split into two parts:
+> - a proc-macro to parse generics into impl and ty generics,
+> - a declarative macro that expands to the impl block.
+> 
+> Suggested-by: Asahi Lina <lina@asahilina.net>
+> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 
-But I forgot the inner `{}`. Good catch!
+Reviewed-by: Gary Guo <gary@garyguo.net>
 
---
-Cheers,
-Benno
-
->>
->> ```
->> macro_rules! foo {
->>       ($($a:expr)?) =3D> {{
->>           $(
->>               bar();
->>               $a
->>           )?
->>       }};
->> }
->>
->> fn bar() {}
->>
->> fn main() {
->>       foo!(());
->>       foo!();
->> }
->> ```
->>
->> it expands to this:
->> ```
->> fn main() {
->>       {
->>           bar();
->>           ()
->>       };
->>       {};
->> }
->> ```
->>
->> --
->> Cheers,
->> Benno
->>
-
+> ---
+>  rust/kernel/init/macros.rs | 28 ++++++++++++++++++++++++++++
+>  rust/kernel/prelude.rs     |  2 +-
+>  rust/macros/lib.rs         | 20 ++++++++++++++++++++
+>  rust/macros/quote.rs       |  6 ++++++
+>  rust/macros/zeroable.rs    | 25 +++++++++++++++++++++++++
+>  5 files changed, 80 insertions(+), 1 deletion(-)
+>  create mode 100644 rust/macros/zeroable.rs
+> 
+> diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
+> index fbaebd34f218..e8165ff53a94 100644
+> --- a/rust/kernel/init/macros.rs
+> +++ b/rust/kernel/init/macros.rs
+> @@ -1213,3 +1213,31 @@ macro_rules! __init_internal {
+>          );
+>      };
+>  }
+> +
+> +#[doc(hidden)]
+> +#[macro_export]
+> +macro_rules! __derive_zeroable {
+> +    (parse_input:
+> +        @sig(
+> +            $(#[$($struct_attr:tt)*])*
+> +            $vis:vis struct $name:ident
+> +            $(where $($whr:tt)*)?
+> +        ),
+> +        @impl_generics($($impl_generics:tt)*),
+> +        @ty_generics($($ty_generics:tt)*),
+> +        @body({
+> +            $(
+> +                $(#[$($field_attr:tt)*])*
+> +                $field:ident : $field_ty:ty
+> +            ),* $(,)?
+> +        }),
+> +    ) => {
+> +        // SAFETY: every field type implements `Zeroable` and padding bytes may be zero.
+> +        #[automatically_derived]
+> +        unsafe impl<$($impl_generics)*> $crate::Zeroable for $name<$($ty_generics)*>
+> +        where
+> +            $($field_ty: $crate::Zeroable,)*
+> +            $($($whr)*)?
+> +        {}
+> +    };
+> +}
+> diff --git a/rust/kernel/prelude.rs b/rust/kernel/prelude.rs
+> index c28587d68ebc..ae21600970b3 100644
+> --- a/rust/kernel/prelude.rs
+> +++ b/rust/kernel/prelude.rs
+> @@ -18,7 +18,7 @@
+>  pub use alloc::{boxed::Box, vec::Vec};
+> 
+>  #[doc(no_inline)]
+> -pub use macros::{module, pin_data, pinned_drop, vtable};
+> +pub use macros::{module, pin_data, pinned_drop, vtable, Zeroable};
+> 
+>  pub use super::build_assert;
+> 
+> diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+> index 3fc74cb4ea19..9f056a5c780a 100644
+> --- a/rust/macros/lib.rs
+> +++ b/rust/macros/lib.rs
+> @@ -10,6 +10,7 @@
+>  mod pin_data;
+>  mod pinned_drop;
+>  mod vtable;
+> +mod zeroable;
+> 
+>  use proc_macro::TokenStream;
+> 
+> @@ -246,3 +247,22 @@ pub fn pin_data(inner: TokenStream, item: TokenStream) -> TokenStream {
+>  pub fn pinned_drop(args: TokenStream, input: TokenStream) -> TokenStream {
+>      pinned_drop::pinned_drop(args, input)
+>  }
+> +
+> +/// Derives the [`Zeroable`] trait for the given struct.
+> +///
+> +/// This can only be used for structs where every field implements the [`Zeroable`] trait.
+> +///
+> +/// # Examples
+> +///
+> +/// ```rust
+> +/// #[derive(Zeroable)]
+> +/// pub struct DriverData {
+> +///     id: i64,
+> +///     buf_ptr: *mut u8,
+> +///     len: usize,
+> +/// }
+> +/// ```
+> +#[proc_macro_derive(Zeroable)]
+> +pub fn derive_zeroable(input: TokenStream) -> TokenStream {
+> +    zeroable::derive(input)
+> +}
+> diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
+> index dddbb4e6f4cb..b76c198a4ed5 100644
+> --- a/rust/macros/quote.rs
+> +++ b/rust/macros/quote.rs
+> @@ -124,6 +124,12 @@ macro_rules! quote_spanned {
+>          ));
+>          quote_spanned!(@proc $v $span $($tt)*);
+>      };
+> +    (@proc $v:ident $span:ident ; $($tt:tt)*) => {
+> +        $v.push(::proc_macro::TokenTree::Punct(
+> +                ::proc_macro::Punct::new(';', ::proc_macro::Spacing::Alone)
+> +        ));
+> +        quote_spanned!(@proc $v $span $($tt)*);
+> +    };
+>      (@proc $v:ident $span:ident $id:ident $($tt:tt)*) => {
+>          $v.push(::proc_macro::TokenTree::Ident(::proc_macro::Ident::new(stringify!($id), $span)));
+>          quote_spanned!(@proc $v $span $($tt)*);
+> diff --git a/rust/macros/zeroable.rs b/rust/macros/zeroable.rs
+> new file mode 100644
+> index 000000000000..cddb866c44ef
+> --- /dev/null
+> +++ b/rust/macros/zeroable.rs
+> @@ -0,0 +1,25 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +use crate::helpers::{parse_generics, Generics};
+> +use proc_macro::TokenStream;
+> +
+> +pub(crate) fn derive(input: TokenStream) -> TokenStream {
+> +    let (
+> +        Generics {
+> +            impl_generics,
+> +            ty_generics,
+> +        },
+> +        mut rest,
+> +    ) = parse_generics(input);
+> +    // This should be the body of the struct `{...}`.
+> +    let last = rest.pop();
+> +    quote! {
+> +        ::kernel::__derive_zeroable!(
+> +            parse_input:
+> +                @sig(#(#rest)*),
+> +                @impl_generics(#(#impl_generics)*),
+> +                @ty_generics(#(#ty_generics)*),
+> +                @body(#last),
+> +        );
+> +    }
+> +}
+> --
+> 2.41.0
+> 
+> 
 
