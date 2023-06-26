@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CB9BA36
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:33:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C20C433C8;
-	Mon, 26 Jun 2023 18:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDA58F57
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:33:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF42C433C0;
+	Mon, 26 Jun 2023 18:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804388;
-	bh=IQCHX5haFxfgrjAssA0YLTFwJoXVSpCrVbfGFT44hk8=;
+	s=korg; t=1687804391;
+	bh=Uv003vicND/G753xX0IhfVL95/zp91QUq/ajjZCdMQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2F+iVrd0thFFVdk7Ofx7RZZdx3vWjo42OOuMKcW5cUz7Hhln3I+QtnNK7/jo71nZ
-	 hkjzsEnyxzLWH9Nhz3o4/VTR0pUDZ4P2mMzbIBvxe1qLqho82tJvmSJdOc9fIQJS4i
-	 nunbRQMzz/GWWqAaduzL50UOMbZlsFIen3lrNMmU=
+	b=ADUAMOcYwfpKlF/2T+qBGZfJFQ70guXHhB1B5/ibwNqAgHpkqpWfkgydXYeo/MMD4
+	 No6F9pxOHWSQXycHFVRU/mj6M/tS/SBSXgvRh4cSsthtK6aFd0NKdimqVoSpiKE12C
+	 DQrKHjrGHoyJLzm+KPaDzr74+lTqM79IG4/eZmOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/170] netfilter: nf_tables: add NFT_TRANS_PREPARE_ERROR to deal with bound set/chain
-Date: Mon, 26 Jun 2023 20:11:20 +0200
-Message-ID: <20230626180805.506134599@linuxfoundation.org>
+Subject: [PATCH 6.1 112/170] netfilter: nf_tables: drop map element references from preparation phase
+Date: Mon, 26 Jun 2023 20:11:21 +0200
+Message-ID: <20230626180805.556728784@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,172 +36,463 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 26b5a5712eb85e253724e56a54c17f8519bd8e4e ]
+[ Upstream commit 628bd3e49cba1c066228e23d71a852c23e26da73 ]
 
-Add a new state to deal with rule expressions deactivation from the
-newrule error path, otherwise the anonymous set remains in the list in
-inactive state for the next generation. Mark the set/chain transaction
-as unbound so the abort path releases this object, set it as inactive in
-the next generation so it is not reachable anymore from this transaction
-and reference counter is dropped.
+set .destroy callback releases the references to other objects in maps.
+This is very late and it results in spurious EBUSY errors. Drop refcount
+from the preparation phase instead, update set backend not to drop
+reference counter from set .destroy path.
 
-Fixes: 1240eb93f061 ("netfilter: nf_tables: incorrect error path handling with NFT_MSG_NEWRULE")
+Exceptions: NFT_TRANS_PREPARE_ERROR does not require to drop the
+reference counter because the transaction abort path releases the map
+references for each element since the set is unbound. The abort path
+also deals with releasing reference counter for new elements added to
+unbound sets.
+
+Fixes: 591054469b3e ("netfilter: nf_tables: revisit chain/object refcounting from elements")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 ++
- net/netfilter/nf_tables_api.c     | 45 ++++++++++++++++++++++++++-----
- net/netfilter/nft_immediate.c     |  3 +++
- 3 files changed, 43 insertions(+), 7 deletions(-)
+ include/net/netfilter/nf_tables.h |   5 +-
+ net/netfilter/nf_tables_api.c     | 147 ++++++++++++++++++++++++++----
+ net/netfilter/nft_set_bitmap.c    |   5 +-
+ net/netfilter/nft_set_hash.c      |  23 ++++-
+ net/netfilter/nft_set_pipapo.c    |  14 ++-
+ net/netfilter/nft_set_rbtree.c    |   5 +-
+ 6 files changed, 167 insertions(+), 32 deletions(-)
 
 diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index c13a84c0b4965..984f7d3087735 100644
+index 984f7d3087735..bbcd558f19344 100644
 --- a/include/net/netfilter/nf_tables.h
 +++ b/include/net/netfilter/nf_tables.h
-@@ -895,6 +895,7 @@ struct nft_expr_type {
+@@ -467,7 +467,8 @@ struct nft_set_ops {
+ 	int				(*init)(const struct nft_set *set,
+ 						const struct nft_set_desc *desc,
+ 						const struct nlattr * const nla[]);
+-	void				(*destroy)(const struct nft_set *set);
++	void				(*destroy)(const struct nft_ctx *ctx,
++						   const struct nft_set *set);
+ 	void				(*gc_init)(const struct nft_set *set);
  
- enum nft_trans_phase {
- 	NFT_TRANS_PREPARE,
-+	NFT_TRANS_PREPARE_ERROR,
- 	NFT_TRANS_ABORT,
- 	NFT_TRANS_COMMIT,
- 	NFT_TRANS_RELEASE
-@@ -1089,6 +1090,7 @@ int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
- 			 struct nft_set_elem *elem);
- int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set);
- int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain);
-+void nf_tables_unbind_chain(const struct nft_ctx *ctx, struct nft_chain *chain);
+ 	unsigned int			elemsize;
+@@ -804,6 +805,8 @@ int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+ 			    struct nft_expr *expr_array[]);
+ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
+ 			  bool destroy_expr);
++void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
++				const struct nft_set *set, void *elem);
  
- enum nft_chain_types {
- 	NFT_CHAIN_T_DEFAULT = 0,
+ /**
+  *	struct nft_set_gc_batch_head - nf_tables set garbage collection batch
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 8f8e315691dde..72bb2b3977480 100644
+index 72bb2b3977480..337bab663540a 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -171,7 +171,8 @@ static void nft_trans_destroy(struct nft_trans *trans)
- 	kfree(trans);
+@@ -561,6 +561,58 @@ static int nft_trans_set_add(const struct nft_ctx *ctx, int msg_type,
+ 	return __nft_trans_set_add(ctx, msg_type, set, NULL);
  }
  
--static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
-+static void __nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set,
-+				 bool bind)
++static void nft_setelem_data_deactivate(const struct net *net,
++					const struct nft_set *set,
++					struct nft_set_elem *elem);
++
++static int nft_mapelem_deactivate(const struct nft_ctx *ctx,
++				  struct nft_set *set,
++				  const struct nft_set_iter *iter,
++				  struct nft_set_elem *elem)
++{
++	nft_setelem_data_deactivate(ctx->net, set, elem);
++
++	return 0;
++}
++
++struct nft_set_elem_catchall {
++	struct list_head	list;
++	struct rcu_head		rcu;
++	void			*elem;
++};
++
++static void nft_map_catchall_deactivate(const struct nft_ctx *ctx,
++					struct nft_set *set)
++{
++	u8 genmask = nft_genmask_next(ctx->net);
++	struct nft_set_elem_catchall *catchall;
++	struct nft_set_elem elem;
++	struct nft_set_ext *ext;
++
++	list_for_each_entry(catchall, &set->catchall_list, list) {
++		ext = nft_set_elem_ext(set, catchall->elem);
++		if (!nft_set_elem_active(ext, genmask))
++			continue;
++
++		elem.priv = catchall->elem;
++		nft_setelem_data_deactivate(ctx->net, set, &elem);
++		break;
++	}
++}
++
++static void nft_map_deactivate(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	struct nft_set_iter iter = {
++		.genmask	= nft_genmask_next(ctx->net),
++		.fn		= nft_mapelem_deactivate,
++	};
++
++	set->ops->walk(ctx, set, &iter);
++	WARN_ON_ONCE(iter.err);
++
++	nft_map_catchall_deactivate(ctx, set);
++}
++
+ static int nft_delset(const struct nft_ctx *ctx, struct nft_set *set)
  {
- 	struct nftables_pernet *nft_net;
- 	struct net *net = ctx->net;
-@@ -185,17 +186,28 @@ static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
- 		switch (trans->msg_type) {
- 		case NFT_MSG_NEWSET:
- 			if (nft_trans_set(trans) == set)
--				nft_trans_set_bound(trans) = true;
-+				nft_trans_set_bound(trans) = bind;
- 			break;
- 		case NFT_MSG_NEWSETELEM:
- 			if (nft_trans_elem_set(trans) == set)
--				nft_trans_elem_set_bound(trans) = true;
-+				nft_trans_elem_set_bound(trans) = bind;
- 			break;
- 		}
- 	}
- }
+ 	int err;
+@@ -569,6 +621,9 @@ static int nft_delset(const struct nft_ctx *ctx, struct nft_set *set)
+ 	if (err < 0)
+ 		return err;
  
--static void nft_chain_trans_bind(const struct nft_ctx *ctx, struct nft_chain *chain)
-+static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
-+{
-+	return __nft_set_trans_bind(ctx, set, true);
-+}
++	if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++		nft_map_deactivate(ctx, set);
 +
-+static void nft_set_trans_unbind(const struct nft_ctx *ctx, struct nft_set *set)
-+{
-+	return __nft_set_trans_bind(ctx, set, false);
-+}
-+
-+static void __nft_chain_trans_bind(const struct nft_ctx *ctx,
-+				   struct nft_chain *chain, bool bind)
- {
- 	struct nftables_pernet *nft_net;
- 	struct net *net = ctx->net;
-@@ -209,16 +221,22 @@ static void nft_chain_trans_bind(const struct nft_ctx *ctx, struct nft_chain *ch
- 		switch (trans->msg_type) {
- 		case NFT_MSG_NEWCHAIN:
- 			if (nft_trans_chain(trans) == chain)
--				nft_trans_chain_bound(trans) = true;
-+				nft_trans_chain_bound(trans) = bind;
- 			break;
- 		case NFT_MSG_NEWRULE:
- 			if (trans->ctx.chain == chain)
--				nft_trans_rule_bound(trans) = true;
-+				nft_trans_rule_bound(trans) = bind;
- 			break;
- 		}
- 	}
- }
+ 	nft_deactivate_next(ctx->net, set);
+ 	ctx->table->use--;
  
-+static void nft_chain_trans_bind(const struct nft_ctx *ctx,
-+				 struct nft_chain *chain)
-+{
-+	__nft_chain_trans_bind(ctx, chain, true);
-+}
-+
- int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain)
- {
- 	if (!nft_chain_binding(chain))
-@@ -237,6 +255,11 @@ int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain)
+@@ -3484,12 +3539,6 @@ int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
  	return 0;
  }
  
-+void nf_tables_unbind_chain(const struct nft_ctx *ctx, struct nft_chain *chain)
+-struct nft_set_elem_catchall {
+-	struct list_head	list;
+-	struct rcu_head		rcu;
+-	void			*elem;
+-};
+-
+ int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+ 	u8 genmask = nft_genmask_next(ctx->net);
+@@ -4808,7 +4857,7 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 	for (i = 0; i < set->num_exprs; i++)
+ 		nft_expr_destroy(&ctx, set->exprs[i]);
+ err_set_destroy:
+-	ops->destroy(set);
++	ops->destroy(&ctx, set);
+ err_set_init:
+ 	kfree(set->name);
+ err_set_name:
+@@ -4823,7 +4872,7 @@ static void nft_set_catchall_destroy(const struct nft_ctx *ctx,
+ 
+ 	list_for_each_entry_safe(catchall, next, &set->catchall_list, list) {
+ 		list_del_rcu(&catchall->list);
+-		nft_set_elem_destroy(set, catchall->elem, true);
++		nf_tables_set_elem_destroy(ctx, set, catchall->elem);
+ 		kfree_rcu(catchall, rcu);
+ 	}
+ }
+@@ -4838,7 +4887,7 @@ static void nft_set_destroy(const struct nft_ctx *ctx, struct nft_set *set)
+ 	for (i = 0; i < set->num_exprs; i++)
+ 		nft_expr_destroy(ctx, set->exprs[i]);
+ 
+-	set->ops->destroy(set);
++	set->ops->destroy(ctx, set);
+ 	nft_set_catchall_destroy(ctx, set);
+ 	kfree(set->name);
+ 	kvfree(set);
+@@ -4999,10 +5048,60 @@ static void nf_tables_unbind_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 	}
+ }
+ 
++static void nft_setelem_data_activate(const struct net *net,
++				      const struct nft_set *set,
++				      struct nft_set_elem *elem);
++
++static int nft_mapelem_activate(const struct nft_ctx *ctx,
++				struct nft_set *set,
++				const struct nft_set_iter *iter,
++				struct nft_set_elem *elem)
 +{
-+	__nft_chain_trans_bind(ctx, chain, false);
++	nft_setelem_data_activate(ctx->net, set, elem);
++
++	return 0;
 +}
 +
- static int nft_netdev_register_hooks(struct net *net,
- 				     struct list_head *hook_list)
- {
-@@ -3709,7 +3732,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (flow)
- 		nft_flow_rule_destroy(flow);
- err_release_rule:
--	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE);
-+	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE_ERROR);
- 	nf_tables_rule_destroy(&ctx, rule);
- err_release_expr:
- 	for (i = 0; i < n; i++) {
-@@ -4990,6 +5013,13 @@ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
- 			      enum nft_trans_phase phase)
- {
- 	switch (phase) {
-+	case NFT_TRANS_PREPARE_ERROR:
-+		nft_set_trans_unbind(ctx, set);
-+		if (nft_set_is_anonymous(set))
-+			nft_deactivate_next(ctx->net, set);
++static void nft_map_catchall_activate(const struct nft_ctx *ctx,
++				      struct nft_set *set)
++{
++	u8 genmask = nft_genmask_next(ctx->net);
++	struct nft_set_elem_catchall *catchall;
++	struct nft_set_elem elem;
++	struct nft_set_ext *ext;
 +
-+		set->use--;
++	list_for_each_entry(catchall, &set->catchall_list, list) {
++		ext = nft_set_elem_ext(set, catchall->elem);
++		if (!nft_set_elem_active(ext, genmask))
++			continue;
++
++		elem.priv = catchall->elem;
++		nft_setelem_data_activate(ctx->net, set, &elem);
 +		break;
- 	case NFT_TRANS_PREPARE:
- 		if (nft_set_is_anonymous(set))
- 			nft_deactivate_next(ctx->net, set);
-@@ -7494,6 +7524,7 @@ void nf_tables_deactivate_flowtable(const struct nft_ctx *ctx,
- 				    enum nft_trans_phase phase)
++	}
++}
++
++static void nft_map_activate(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	struct nft_set_iter iter = {
++		.genmask	= nft_genmask_next(ctx->net),
++		.fn		= nft_mapelem_activate,
++	};
++
++	set->ops->walk(ctx, set, &iter);
++	WARN_ON_ONCE(iter.err);
++
++	nft_map_catchall_activate(ctx, set);
++}
++
+ void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set)
  {
- 	switch (phase) {
-+	case NFT_TRANS_PREPARE_ERROR:
+-	if (nft_set_is_anonymous(set))
++	if (nft_set_is_anonymous(set)) {
++		if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++			nft_map_activate(ctx, set);
++
+ 		nft_clear(ctx->net, set);
++	}
+ 
+ 	set->use++;
+ }
+@@ -5021,13 +5120,20 @@ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 		set->use--;
+ 		break;
  	case NFT_TRANS_PREPARE:
+-		if (nft_set_is_anonymous(set))
+-			nft_deactivate_next(ctx->net, set);
++		if (nft_set_is_anonymous(set)) {
++			if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++				nft_map_deactivate(ctx, set);
+ 
++			nft_deactivate_next(ctx->net, set);
++		}
+ 		set->use--;
+ 		return;
  	case NFT_TRANS_ABORT:
  	case NFT_TRANS_RELEASE:
-diff --git a/net/netfilter/nft_immediate.c b/net/netfilter/nft_immediate.c
-index 457fc1e218410..900e75e8c3465 100644
---- a/net/netfilter/nft_immediate.c
-+++ b/net/netfilter/nft_immediate.c
-@@ -150,6 +150,9 @@ static void nft_immediate_deactivate(const struct nft_ctx *ctx,
- 				nft_rule_expr_deactivate(&chain_ctx, rule, phase);
++		if (nft_set_is_anonymous(set) &&
++		    set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++			nft_map_deactivate(ctx, set);
++
+ 		set->use--;
+ 		fallthrough;
+ 	default:
+@@ -5780,6 +5886,7 @@ static void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+ 		__nft_set_elem_expr_destroy(ctx, expr);
+ }
  
- 			switch (phase) {
-+			case NFT_TRANS_PREPARE_ERROR:
-+				nf_tables_unbind_chain(ctx, chain);
-+				fallthrough;
- 			case NFT_TRANS_PREPARE:
- 				nft_deactivate_next(ctx->net, chain);
- 				break;
++/* Drop references and destroy. Called from gc, dynset and abort path. */
+ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
+ 			  bool destroy_expr)
+ {
+@@ -5801,11 +5908,11 @@ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
+ }
+ EXPORT_SYMBOL_GPL(nft_set_elem_destroy);
+ 
+-/* Only called from commit path, nft_setelem_data_deactivate() already deals
+- * with the refcounting from the preparation phase.
++/* Destroy element. References have been already dropped in the preparation
++ * path via nft_setelem_data_deactivate().
+  */
+-static void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
+-				       const struct nft_set *set, void *elem)
++void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
++				const struct nft_set *set, void *elem)
+ {
+ 	struct nft_set_ext *ext = nft_set_elem_ext(set, elem);
+ 
+@@ -6438,7 +6545,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	if (obj)
+ 		obj->use--;
+ err_elem_userdata:
+-	nf_tables_set_elem_destroy(ctx, set, elem.priv);
++	nft_set_elem_destroy(set, elem.priv, true);
+ err_parse_data:
+ 	if (nla[NFTA_SET_ELEM_DATA] != NULL)
+ 		nft_data_release(&elem.data.val, desc.type);
+@@ -9482,6 +9589,9 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 		case NFT_MSG_DELSET:
+ 			trans->ctx.table->use++;
+ 			nft_clear(trans->ctx.net, nft_trans_set(trans));
++			if (nft_trans_set(trans)->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++				nft_map_activate(&trans->ctx, nft_trans_set(trans));
++
+ 			nft_trans_destroy(trans);
+ 			break;
+ 		case NFT_MSG_NEWSETELEM:
+@@ -10248,6 +10358,9 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
+ 	list_for_each_entry_safe(set, ns, &table->sets, list) {
+ 		list_del(&set->list);
+ 		table->use--;
++		if (set->flags & (NFT_SET_MAP | NFT_SET_OBJECT))
++			nft_map_deactivate(&ctx, set);
++
+ 		nft_set_destroy(&ctx, set);
+ 	}
+ 	list_for_each_entry_safe(obj, ne, &table->objects, list) {
+diff --git a/net/netfilter/nft_set_bitmap.c b/net/netfilter/nft_set_bitmap.c
+index 96081ac8d2b4c..1e5e7a181e0bc 100644
+--- a/net/netfilter/nft_set_bitmap.c
++++ b/net/netfilter/nft_set_bitmap.c
+@@ -271,13 +271,14 @@ static int nft_bitmap_init(const struct nft_set *set,
+ 	return 0;
+ }
+ 
+-static void nft_bitmap_destroy(const struct nft_set *set)
++static void nft_bitmap_destroy(const struct nft_ctx *ctx,
++			       const struct nft_set *set)
+ {
+ 	struct nft_bitmap *priv = nft_set_priv(set);
+ 	struct nft_bitmap_elem *be, *n;
+ 
+ 	list_for_each_entry_safe(be, n, &priv->list, head)
+-		nft_set_elem_destroy(set, be, true);
++		nf_tables_set_elem_destroy(ctx, set, be);
+ }
+ 
+ static bool nft_bitmap_estimate(const struct nft_set_desc *desc, u32 features,
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index 76de6c8d98655..0b73cb0e752f7 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -400,19 +400,31 @@ static int nft_rhash_init(const struct nft_set *set,
+ 	return 0;
+ }
+ 
++struct nft_rhash_ctx {
++	const struct nft_ctx	ctx;
++	const struct nft_set	*set;
++};
++
+ static void nft_rhash_elem_destroy(void *ptr, void *arg)
+ {
+-	nft_set_elem_destroy(arg, ptr, true);
++	struct nft_rhash_ctx *rhash_ctx = arg;
++
++	nf_tables_set_elem_destroy(&rhash_ctx->ctx, rhash_ctx->set, ptr);
+ }
+ 
+-static void nft_rhash_destroy(const struct nft_set *set)
++static void nft_rhash_destroy(const struct nft_ctx *ctx,
++			      const struct nft_set *set)
+ {
+ 	struct nft_rhash *priv = nft_set_priv(set);
++	struct nft_rhash_ctx rhash_ctx = {
++		.ctx	= *ctx,
++		.set	= set,
++	};
+ 
+ 	cancel_delayed_work_sync(&priv->gc_work);
+ 	rcu_barrier();
+ 	rhashtable_free_and_destroy(&priv->ht, nft_rhash_elem_destroy,
+-				    (void *)set);
++				    (void *)&rhash_ctx);
+ }
+ 
+ /* Number of buckets is stored in u32, so cap our result to 1U<<31 */
+@@ -643,7 +655,8 @@ static int nft_hash_init(const struct nft_set *set,
+ 	return 0;
+ }
+ 
+-static void nft_hash_destroy(const struct nft_set *set)
++static void nft_hash_destroy(const struct nft_ctx *ctx,
++			     const struct nft_set *set)
+ {
+ 	struct nft_hash *priv = nft_set_priv(set);
+ 	struct nft_hash_elem *he;
+@@ -653,7 +666,7 @@ static void nft_hash_destroy(const struct nft_set *set)
+ 	for (i = 0; i < priv->buckets; i++) {
+ 		hlist_for_each_entry_safe(he, next, &priv->table[i], node) {
+ 			hlist_del_rcu(&he->node);
+-			nft_set_elem_destroy(set, he, true);
++			nf_tables_set_elem_destroy(ctx, set, he);
+ 		}
+ 	}
+ }
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 15e451dc3fc46..c867b5b772e86 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -2148,10 +2148,12 @@ static int nft_pipapo_init(const struct nft_set *set,
+ 
+ /**
+  * nft_set_pipapo_match_destroy() - Destroy elements from key mapping array
++ * @ctx:	context
+  * @set:	nftables API set representation
+  * @m:		matching data pointing to key mapping array
+  */
+-static void nft_set_pipapo_match_destroy(const struct nft_set *set,
++static void nft_set_pipapo_match_destroy(const struct nft_ctx *ctx,
++					 const struct nft_set *set,
+ 					 struct nft_pipapo_match *m)
+ {
+ 	struct nft_pipapo_field *f;
+@@ -2168,15 +2170,17 @@ static void nft_set_pipapo_match_destroy(const struct nft_set *set,
+ 
+ 		e = f->mt[r].e;
+ 
+-		nft_set_elem_destroy(set, e, true);
++		nf_tables_set_elem_destroy(ctx, set, e);
+ 	}
+ }
+ 
+ /**
+  * nft_pipapo_destroy() - Free private data for set and all committed elements
++ * @ctx:	context
+  * @set:	nftables API set representation
+  */
+-static void nft_pipapo_destroy(const struct nft_set *set)
++static void nft_pipapo_destroy(const struct nft_ctx *ctx,
++			       const struct nft_set *set)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct nft_pipapo_match *m;
+@@ -2186,7 +2190,7 @@ static void nft_pipapo_destroy(const struct nft_set *set)
+ 	if (m) {
+ 		rcu_barrier();
+ 
+-		nft_set_pipapo_match_destroy(set, m);
++		nft_set_pipapo_match_destroy(ctx, set, m);
+ 
+ #ifdef NFT_PIPAPO_ALIGN
+ 		free_percpu(m->scratch_aligned);
+@@ -2203,7 +2207,7 @@ static void nft_pipapo_destroy(const struct nft_set *set)
+ 		m = priv->clone;
+ 
+ 		if (priv->dirty)
+-			nft_set_pipapo_match_destroy(set, m);
++			nft_set_pipapo_match_destroy(ctx, set, m);
+ 
+ #ifdef NFT_PIPAPO_ALIGN
+ 		free_percpu(priv->clone->scratch_aligned);
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 2f114aa10f1a7..5c05c9b990fba 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -664,7 +664,8 @@ static int nft_rbtree_init(const struct nft_set *set,
+ 	return 0;
+ }
+ 
+-static void nft_rbtree_destroy(const struct nft_set *set)
++static void nft_rbtree_destroy(const struct nft_ctx *ctx,
++			       const struct nft_set *set)
+ {
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	struct nft_rbtree_elem *rbe;
+@@ -675,7 +676,7 @@ static void nft_rbtree_destroy(const struct nft_set *set)
+ 	while ((node = priv->root.rb_node) != NULL) {
+ 		rb_erase(node, &priv->root);
+ 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
+-		nft_set_elem_destroy(set, rbe, true);
++		nf_tables_set_elem_destroy(ctx, set, rbe);
+ 	}
+ }
+ 
 -- 
 2.39.2
 
