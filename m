@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B739E134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3231EC433C0;
-	Mon, 26 Jun 2023 18:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57C2134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E3AC433C9;
+	Mon, 26 Jun 2023 18:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803963;
-	bh=ORNtt1uyS+bdExhzytTopnz8wPg88MGBmGRh9gE1AJI=;
+	s=korg; t=1687803966;
+	bh=yFkQHx5l4Duc4TCIvJ4ExrFuDF+a32YQJSujytrRTik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgYtEFfj2zSPpujbIswGa0BA35MTaLTKZ/2pk0RlOQZXoHW1jAKpQqf9t3fcZWC4/
-	 yoM1uyV796wvX2OABzLdrJEte3MAfwZvhChuWQzgpy9YgZWA6eROabs7UmQOMCAjSc
-	 sF4+8pYFz6Tbz1STNx4oTx3k0m2cwP5zb2uk5DpY=
+	b=DnUjVtJ8VqZLk25t0kXnOTS9yjbiZCXjpR26nd82o6KQ3oRaJSttiH663MUSkyOXN
+	 5rBL5ei9Ev2voooEI2ybdrEKZ/7xYpK3x6yZV38CdjMdduKV+Gv7mFUx2wIDzJ4Vec
+	 B6fXQw2Ox5HKH04VbcJ/B5RddNOSC5xydm6PmA3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Min Li <lm0963hack@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 29/41] scsi: target: iscsi: Prevent login threads from racing between each other
-Date: Mon, 26 Jun 2023 20:11:52 +0200
-Message-ID: <20230626180737.368385576@linuxfoundation.org>
+Subject: [PATCH 4.19 38/41] drm/exynos: fix race condition UAF in exynos_g2d_exec_ioctl
+Date: Mon, 26 Jun 2023 20:12:01 +0200
+Message-ID: <20230626180737.687642245@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -36,68 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Min Li <lm0963hack@gmail.com>
 
-[ Upstream commit 2a737d3b8c792400118d6cf94958f559de9c5e59 ]
+[ Upstream commit 48bfd02569f5db49cc033f259e66d57aa6efc9a3 ]
 
-The tpg->np_login_sem is a semaphore that is used to serialize the login
-process when multiple login threads run concurrently against the same
-target portal group.
+If it is async, runqueue_node is freed in g2d_runqueue_worker on another
+worker thread. So in extreme cases, if g2d_runqueue_worker runs first, and
+then executes the following if statement, there will be use-after-free.
 
-The iscsi_target_locate_portal() function finds the tpg, calls
-iscsit_access_np() against the np_login_sem semaphore and saves the tpg
-pointer in conn->tpg;
-
-If iscsi_target_locate_portal() fails, the caller will check for the
-conn->tpg pointer and, if it's not NULL, then it will assume that
-iscsi_target_locate_portal() called iscsit_access_np() on the semaphore.
-
-Make sure that conn->tpg gets initialized only if iscsit_access_np() was
-successful, otherwise iscsit_deaccess_np() may end up being called against
-a semaphore we never took, allowing more than one thread to access the same
-tpg.
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Link: https://lore.kernel.org/r/20230508162219.1731964-4-mlombard@redhat.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Min Li <lm0963hack@gmail.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target_nego.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/exynos/exynos_drm_g2d.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target_nego.c b/drivers/target/iscsi/iscsi_target_nego.c
-index 5db8842a80265..e39177f9fdb0a 100644
---- a/drivers/target/iscsi/iscsi_target_nego.c
-+++ b/drivers/target/iscsi/iscsi_target_nego.c
-@@ -1072,6 +1072,7 @@ int iscsi_target_locate_portal(
- 	iscsi_target_set_sock_callbacks(conn);
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.c b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
+index f2481a2014bb3..2b7ecc02b2774 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_g2d.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.c
+@@ -1327,7 +1327,7 @@ int exynos_g2d_exec_ioctl(struct drm_device *drm_dev, void *data,
+ 	/* Let the runqueue know that there is work to do. */
+ 	queue_work(g2d->g2d_workq, &g2d->runqueue_work);
  
- 	login->np = np;
-+	conn->tpg = NULL;
+-	if (runqueue_node->async)
++	if (req->async)
+ 		goto out;
  
- 	login_req = (struct iscsi_login_req *) login->req;
- 	payload_length = ntoh24(login_req->dlength);
-@@ -1141,7 +1142,6 @@ int iscsi_target_locate_portal(
- 	 */
- 	sessiontype = strncmp(s_buf, DISCOVERY, 9);
- 	if (!sessiontype) {
--		conn->tpg = iscsit_global->discovery_tpg;
- 		if (!login->leading_connection)
- 			goto get_target;
- 
-@@ -1158,9 +1158,11 @@ int iscsi_target_locate_portal(
- 		 * Serialize access across the discovery struct iscsi_portal_group to
- 		 * process login attempt.
- 		 */
-+		conn->tpg = iscsit_global->discovery_tpg;
- 		if (iscsit_access_np(np, conn->tpg) < 0) {
- 			iscsit_tx_login_rsp(conn, ISCSI_STATUS_CLS_TARGET_ERR,
- 				ISCSI_LOGIN_STATUS_SVC_UNAVAILABLE);
-+			conn->tpg = NULL;
- 			ret = -1;
- 			goto out;
- 		}
+ 	wait_for_completion(&runqueue_node->complete);
 -- 
 2.39.2
 
