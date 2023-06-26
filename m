@@ -1,27 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516DB13AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD87C433C8;
-	Mon, 26 Jun 2023 18:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C7113AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D77C433C0;
+	Mon, 26 Jun 2023 18:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803287;
-	bh=hNbypIWMPjlqFzQqY4wEJZSqof/S3UClAnU+H0oTECg=;
+	s=korg; t=1687803290;
+	bh=2Pb0O4lZV3y9fkbZ1F9uotQjaSVGpgTrJqBP2l6VvjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MeSWjTbkj/Pm6jG1k9KrDELOAlCMgseC8vMSImH+MBvX3j/LCzkrM+ZnaHA/i/c83
-	 a6zhAfGNoG01wmFqPuK2F+gG/3wMGv64b2j6WdJxHrInplBCcLSx2mOXrjf8I8zkHc
-	 MXZ9IEeRPut1wAqqRdnuAqK2m00DHYhnI+QWgNeg=
+	b=GyqSMJ8u8N00TLevXxHAiRnpkq7fYNoP+fqB4JbjbIZ1wse3AyfT7fFjEyikzEe4L
+	 rACwRGi+T3FLkttvBgC7JY/G0QDnmRAHrRDtGLp60YSImkPhOdfxEN0vvxn5Dfsr55
+	 NVj3W8A4/NGG825recatTO+Yr1kPUf7PXLxj9mgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.3 010/199] ksmbd: validate session id and tree id in the compound request
-Date: Mon, 26 Jun 2023 20:08:36 +0200
-Message-ID: <20230626180806.105257976@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	Dongwon Kim <dongwon.kim@intel.com>,
+	James Houghton <jthoughton@google.com>,
+	Jerome Marchand <jmarchan@redhat.com>,
+	Junxiao Chang <junxiao.chang@intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 011/199] udmabuf: revert Add support for mapping hugepages (v4)
+Date: Mon, 26 Jun 2023 20:08:37 +0200
+Message-ID: <20230626180806.139123832@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -35,156 +44,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit 5005bcb4219156f1bf7587b185080ec1da08518e upstream.
+commit b7cb3821905b79b6ed474fd5ba34d1e187649139 upstream.
 
-This patch validate session id and tree id in compound request.
-If first operation in the compound is SMB2 ECHO request, ksmbd bypass
-session and tree validation. So work->sess and work->tcon could be NULL.
-If secound request in the compound access work->sess or tcon, It cause
-NULL pointer dereferecing error.
+This effectively reverts commit 16c243e99d33 ("udmabuf: Add support for
+mapping hugepages (v4)").  Recently, Junxiao Chang found a BUG with page
+map counting as described here [1].  This issue pointed out that the
+udmabuf driver was making direct use of subpages of hugetlb pages.  This
+is not a good idea, and no other mm code attempts such use.  In addition
+to the mapcount issue, this also causes issues with hugetlb vmemmap
+optimization and page poisoning.
 
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-21165
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+For now, remove hugetlb support.
+
+If udmabuf wants to be used on hugetlb mappings, it should be changed to
+only use complete hugetlb pages.  This will require different alignment
+and size requirements on the UDMABUF_CREATE API.
+
+[1] https://lore.kernel.org/linux-mm/20230512072036.1027784-1-junxiao.chang@intel.com/
+
+Link: https://lkml.kernel.org/r/20230608204927.88711-1-mike.kravetz@oracle.com
+Fixes: 16c243e99d33 ("udmabuf: Add support for mapping hugepages (v4)")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Dongwon Kim <dongwon.kim@intel.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Jerome Marchand <jmarchan@redhat.com>
+Cc: Junxiao Chang <junxiao.chang@intel.com>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/server.c  |   33 ++++++++++++++++++++-------------
- fs/ksmbd/smb2pdu.c |   44 +++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 59 insertions(+), 18 deletions(-)
+ drivers/dma-buf/udmabuf.c |   47 +++++-----------------------------------------
+ 1 file changed, 6 insertions(+), 41 deletions(-)
 
---- a/fs/ksmbd/server.c
-+++ b/fs/ksmbd/server.c
-@@ -185,24 +185,31 @@ static void __handle_ksmbd_work(struct k
- 		goto send;
- 	}
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -12,7 +12,6 @@
+ #include <linux/shmem_fs.h>
+ #include <linux/slab.h>
+ #include <linux/udmabuf.h>
+-#include <linux/hugetlb.h>
+ #include <linux/vmalloc.h>
+ #include <linux/iosys-map.h>
  
--	if (conn->ops->check_user_session) {
--		rc = conn->ops->check_user_session(work);
--		if (rc < 0) {
--			command = conn->ops->get_cmd_val(work);
--			conn->ops->set_rsp_status(work,
--					STATUS_USER_SESSION_DELETED);
--			goto send;
--		} else if (rc > 0) {
--			rc = conn->ops->get_ksmbd_tcon(work);
-+	do {
-+		if (conn->ops->check_user_session) {
-+			rc = conn->ops->check_user_session(work);
- 			if (rc < 0) {
--				conn->ops->set_rsp_status(work,
--					STATUS_NETWORK_NAME_DELETED);
-+				if (rc == -EINVAL)
-+					conn->ops->set_rsp_status(work,
-+						STATUS_INVALID_PARAMETER);
-+				else
-+					conn->ops->set_rsp_status(work,
-+						STATUS_USER_SESSION_DELETED);
- 				goto send;
-+			} else if (rc > 0) {
-+				rc = conn->ops->get_ksmbd_tcon(work);
-+				if (rc < 0) {
-+					if (rc == -EINVAL)
-+						conn->ops->set_rsp_status(work,
-+							STATUS_INVALID_PARAMETER);
-+					else
-+						conn->ops->set_rsp_status(work,
-+							STATUS_NETWORK_NAME_DELETED);
-+					goto send;
-+				}
+@@ -207,9 +206,7 @@ static long udmabuf_create(struct miscde
+ 	struct udmabuf *ubuf;
+ 	struct dma_buf *buf;
+ 	pgoff_t pgoff, pgcnt, pgidx, pgbuf = 0, pglimit;
+-	struct page *page, *hpage = NULL;
+-	pgoff_t subpgoff, maxsubpgs;
+-	struct hstate *hpstate;
++	struct page *page;
+ 	int seals, ret = -EINVAL;
+ 	u32 i, flags;
+ 
+@@ -245,7 +242,7 @@ static long udmabuf_create(struct miscde
+ 		if (!memfd)
+ 			goto err;
+ 		mapping = memfd->f_mapping;
+-		if (!shmem_mapping(mapping) && !is_file_hugepages(memfd))
++		if (!shmem_mapping(mapping))
+ 			goto err;
+ 		seals = memfd_fcntl(memfd, F_GET_SEALS, 0);
+ 		if (seals == -EINVAL)
+@@ -256,48 +253,16 @@ static long udmabuf_create(struct miscde
+ 			goto err;
+ 		pgoff = list[i].offset >> PAGE_SHIFT;
+ 		pgcnt = list[i].size   >> PAGE_SHIFT;
+-		if (is_file_hugepages(memfd)) {
+-			hpstate = hstate_file(memfd);
+-			pgoff = list[i].offset >> huge_page_shift(hpstate);
+-			subpgoff = (list[i].offset &
+-				    ~huge_page_mask(hpstate)) >> PAGE_SHIFT;
+-			maxsubpgs = huge_page_size(hpstate) >> PAGE_SHIFT;
+-		}
+ 		for (pgidx = 0; pgidx < pgcnt; pgidx++) {
+-			if (is_file_hugepages(memfd)) {
+-				if (!hpage) {
+-					hpage = find_get_page_flags(mapping, pgoff,
+-								    FGP_ACCESSED);
+-					if (!hpage) {
+-						ret = -EINVAL;
+-						goto err;
+-					}
+-				}
+-				page = hpage + subpgoff;
+-				get_page(page);
+-				subpgoff++;
+-				if (subpgoff == maxsubpgs) {
+-					put_page(hpage);
+-					hpage = NULL;
+-					subpgoff = 0;
+-					pgoff++;
+-				}
+-			} else {
+-				page = shmem_read_mapping_page(mapping,
+-							       pgoff + pgidx);
+-				if (IS_ERR(page)) {
+-					ret = PTR_ERR(page);
+-					goto err;
+-				}
++			page = shmem_read_mapping_page(mapping, pgoff + pgidx);
++			if (IS_ERR(page)) {
++				ret = PTR_ERR(page);
++				goto err;
  			}
+ 			ubuf->pages[pgbuf++] = page;
  		}
--	}
- 
--	do {
- 		rc = __process_request(work, conn, &command);
- 		if (rc == SERVER_HANDLER_ABORT)
- 			break;
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -91,7 +91,6 @@ int smb2_get_ksmbd_tcon(struct ksmbd_wor
- 	unsigned int cmd = le16_to_cpu(req_hdr->Command);
- 	int tree_id;
- 
--	work->tcon = NULL;
- 	if (cmd == SMB2_TREE_CONNECT_HE ||
- 	    cmd ==  SMB2_CANCEL_HE ||
- 	    cmd ==  SMB2_LOGOFF_HE) {
-@@ -105,10 +104,28 @@ int smb2_get_ksmbd_tcon(struct ksmbd_wor
+ 		fput(memfd);
+ 		memfd = NULL;
+-		if (hpage) {
+-			put_page(hpage);
+-			hpage = NULL;
+-		}
  	}
  
- 	tree_id = le32_to_cpu(req_hdr->Id.SyncId.TreeId);
-+
-+	/*
-+	 * If request is not the first in Compound request,
-+	 * Just validate tree id in header with work->tcon->id.
-+	 */
-+	if (work->next_smb2_rcv_hdr_off) {
-+		if (!work->tcon) {
-+			pr_err("The first operation in the compound does not have tcon\n");
-+			return -EINVAL;
-+		}
-+		if (work->tcon->id != tree_id) {
-+			pr_err("tree id(%u) is different with id(%u) in first operation\n",
-+					tree_id, work->tcon->id);
-+			return -EINVAL;
-+		}
-+		return 1;
-+	}
-+
- 	work->tcon = ksmbd_tree_conn_lookup(work->sess, tree_id);
- 	if (!work->tcon) {
- 		pr_err("Invalid tid %d\n", tree_id);
--		return -EINVAL;
-+		return -ENOENT;
- 	}
- 
- 	return 1;
-@@ -547,7 +564,6 @@ int smb2_check_user_session(struct ksmbd
- 	unsigned int cmd = conn->ops->get_cmd_val(work);
- 	unsigned long long sess_id;
- 
--	work->sess = NULL;
- 	/*
- 	 * SMB2_ECHO, SMB2_NEGOTIATE, SMB2_SESSION_SETUP command do not
- 	 * require a session id, so no need to validate user session's for
-@@ -558,15 +574,33 @@ int smb2_check_user_session(struct ksmbd
- 		return 0;
- 
- 	if (!ksmbd_conn_good(conn))
--		return -EINVAL;
-+		return -EIO;
- 
- 	sess_id = le64_to_cpu(req_hdr->SessionId);
-+
-+	/*
-+	 * If request is not the first in Compound request,
-+	 * Just validate session id in header with work->sess->id.
-+	 */
-+	if (work->next_smb2_rcv_hdr_off) {
-+		if (!work->sess) {
-+			pr_err("The first operation in the compound does not have sess\n");
-+			return -EINVAL;
-+		}
-+		if (work->sess->id != sess_id) {
-+			pr_err("session id(%llu) is different with the first operation(%lld)\n",
-+					sess_id, work->sess->id);
-+			return -EINVAL;
-+		}
-+		return 1;
-+	}
-+
- 	/* Check for validity of user session */
- 	work->sess = ksmbd_session_lookup_all(conn, sess_id);
- 	if (work->sess)
- 		return 1;
- 	ksmbd_debug(SMB, "Invalid user session, Uid %llu\n", sess_id);
--	return -EINVAL;
-+	return -ENOENT;
- }
- 
- static void destroy_previous_session(struct ksmbd_conn *conn,
+ 	exp_info.ops  = &udmabuf_ops;
 
 
