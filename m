@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8127134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210EFC433C0;
-	Mon, 26 Jun 2023 18:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8548134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217D6C433C8;
+	Mon, 26 Jun 2023 18:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803708;
-	bh=L0Ggq2lNCEivK3SWsW+C/LiJpC98UjhY2u6R+4ivwQg=;
+	s=korg; t=1687803711;
+	bh=y6CU+D8yXZi0WEIjTTIiHiQM5Qh4spXwfg2U/THRhF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wWoSX9Rd7NRQlDG5k/MsdzWXyNJ3Dp/mVUoArRwQ9YBf969oJLopF6/wsGEwZq6Ky
-	 1XNiu6Zehfllc34Ru0GJF3s3c+yei4G4QauquvdVm8JtWjOzvF8JzjYTDaur3diunH
-	 0BxSH4qOQPIv8dOrFfA7vkZ0pQeFzN6utKN+IfJU=
+	b=Z6BhfR4vEjVFxOjafAgwsu5F/7BtrpZC8PUoZculPTf8nPMaaBCMMFxuyF8aZX+Iw
+	 RZ884z71byTRjZ8NckabnbT4h19dM+nqK/xTqvsSh5jUjNFmMUTkcu0be+eQn9wCR6
+	 +brPLb08WYxVqSAaOXZKd7AxcnxczaalU4gv7rZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 149/199] gpiolib: Fix irq_domain resource tracking for gpiochip_irqchip_add_domain()
-Date: Mon, 26 Jun 2023 20:10:55 +0200
-Message-ID: <20230626180812.173981939@linuxfoundation.org>
+Subject: [PATCH 6.3 123/199] net: dsa: mt7530: fix trapping frames on non-MT7621 SoC MT7530 switch
+Date: Mon, 26 Jun 2023 20:10:29 +0200
+Message-ID: <20230626180811.041618695@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -38,70 +38,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <mwalle@kernel.org>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit ff7a1790fbf92f1bdd0966d3f0da3ea808ede876 ]
+[ Upstream commit 4ae90f90e4909e3014e2dc6a0627964617a7b824 ]
 
-Up until commit 6a45b0e2589f ("gpiolib: Introduce
-gpiochip_irqchip_add_domain()") all irq_domains were allocated
-by gpiolib itself and thus gpiolib also takes care of freeing it.
+All MT7530 switch IP variants share the MT7530_MFC register, but the
+current driver only writes it for the switch variant that is integrated in
+the MT7621 SoC. Modify the code to include all MT7530 derivatives.
 
-With gpiochip_irqchip_add_domain() a user of gpiolib can associate an
-irq_domain with the gpio_chip. This irq_domain is not managed by
-gpiolib and therefore must not be freed by gpiolib.
-
-Fixes: 6a45b0e2589f ("gpiolib: Introduce gpiochip_irqchip_add_domain()")
-Reported-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Suggested-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c      | 3 ++-
- include/linux/gpio/driver.h | 8 ++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 1cfddbb3443d0..ce8f71e06eb62 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -1716,7 +1716,7 @@ static void gpiochip_irqchip_remove(struct gpio_chip *gc)
- 	}
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 0c81f5830b90a..7dbbd5e509d3b 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -1013,7 +1013,7 @@ mt753x_cpu_port_enable(struct dsa_switch *ds, int port)
+ 		   UNU_FFP(BIT(port)));
  
- 	/* Remove all IRQ mappings and delete the domain */
--	if (gc->irq.domain) {
-+	if (!gc->irq.domain_is_allocated_externally && gc->irq.domain) {
- 		unsigned int irq;
+ 	/* Set CPU port number */
+-	if (priv->id == ID_MT7621)
++	if (priv->id == ID_MT7530 || priv->id == ID_MT7621)
+ 		mt7530_rmw(priv, MT7530_MFC, CPU_MASK, CPU_EN | CPU_PORT(port));
  
- 		for (offset = 0; offset < gc->ngpio; offset++) {
-@@ -1762,6 +1762,7 @@ int gpiochip_irqchip_add_domain(struct gpio_chip *gc,
- 
- 	gc->to_irq = gpiochip_to_irq;
- 	gc->irq.domain = domain;
-+	gc->irq.domain_is_allocated_externally = true;
- 
- 	/*
- 	 * Using barrier() here to prevent compiler from reordering
-diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
-index ccd8a512d8546..b769ff6b00fdd 100644
---- a/include/linux/gpio/driver.h
-+++ b/include/linux/gpio/driver.h
-@@ -244,6 +244,14 @@ struct gpio_irq_chip {
- 	 */
- 	bool initialized;
- 
-+	/**
-+	 * @domain_is_allocated_externally:
-+	 *
-+	 * True it the irq_domain was allocated outside of gpiolib, in which
-+	 * case gpiolib won't free the irq_domain itself.
-+	 */
-+	bool domain_is_allocated_externally;
-+
- 	/**
- 	 * @init_hw: optional routine to initialize hardware before
- 	 * an IRQ chip will be added. This is quite useful when
+ 	/* CPU port gets connected to all user ports of
 -- 
 2.39.2
 
