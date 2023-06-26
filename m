@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338BFC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:46:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28A0C433C0;
-	Mon, 26 Jun 2023 18:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D8346B6
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83828C433C0;
+	Mon, 26 Jun 2023 18:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805215;
-	bh=Iho5+NIDC9AnUiaUeD4K159JU0K+DV3z0ixwIxR15FQ=;
+	s=korg; t=1687805217;
+	bh=yWiSuxZDz6Vc0AXizlDt3DGzDcIoBGwE1wbMAGTk158=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnWc+Pmr2Qb5WKYtaLNPfH5jaY71HuF6gn5IO5Z8t8VbF0r/d/i8tqqPtIA0uNgKj
-	 NkCtSIrQRZ0uxrLJGx6srbIkwrV/qUCxXwktwnrKupAaSYyFKSzqijKrei0VukN3OU
-	 WBrbVKEkfUmelT6lVO6gCibOmKJ3+XjU3IF0kg/k=
+	b=IiiF/0fgERAVbMCEfsks+VlWszT7voI8ZAvInndFg1sFWsQKsUPSc469m+8YOudYY
+	 tPR8P4df7srkk7Q4rWjSRx7MUU9A1ELckxuaFwbMFedpEdOGHLIKBGlhxaxHdQTRPy
+	 eHq1Gc8lHQq8mVBC56YzCXU9tmWAQXSIWL5t5wc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Denis Arefev <arefev@swemel.ru>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 70/81] ASoC: nau8824: Add quirk to active-high jack-detect
-Date: Mon, 26 Jun 2023 20:12:52 +0200
-Message-ID: <20230626180747.299433299@linuxfoundation.org>
+Subject: [PATCH 5.10 61/81] HID: wacom: Add error check to wacom_parse_and_register()
+Date: Mon, 26 Jun 2023 20:12:43 +0200
+Message-ID: <20230626180746.958018968@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -35,57 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit e384dba03e3294ce7ea69e4da558e9bf8f0e8946 ]
+[ Upstream commit 16a9c24f24fbe4564284eb575b18cc20586b9270 ]
 
-Add  entries for Positivo laptops: CW14Q01P, K1424G, N14ZP74G to the
-DMI table, so that  active-high jack-detect will work properly on
-these laptops.
+   Added a variable check and
+   transition in case of an error
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Link: https://lore.kernel.org/r/20230529181911.632851-1-edson.drosdeck@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8824.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/hid/wacom_sys.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/nau8824.c b/sound/soc/codecs/nau8824.c
-index a95fe3fff1db8..9b22219a76937 100644
---- a/sound/soc/codecs/nau8824.c
-+++ b/sound/soc/codecs/nau8824.c
-@@ -1896,6 +1896,30 @@ static const struct dmi_system_id nau8824_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
- 	},
-+	{
-+		/* Positivo CW14Q01P */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "CW14Q01P"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Positivo K1424G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "K1424G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Positivo N14ZP74G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "N14ZP74G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
- 	{}
- };
+diff --git a/drivers/hid/wacom_sys.c b/drivers/hid/wacom_sys.c
+index a93070f5b214c..36cb456709ed7 100644
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2419,8 +2419,13 @@ static int wacom_parse_and_register(struct wacom *wacom, bool wireless)
+ 		goto fail_quirks;
+ 	}
  
+-	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR)
++	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR) {
+ 		error = hid_hw_open(hdev);
++		if (error) {
++			hid_err(hdev, "hw open failed\n");
++			goto fail_quirks;
++		}
++	}
+ 
+ 	wacom_set_shared_values(wacom_wac);
+ 	devres_close_group(&hdev->dev, wacom);
 -- 
 2.39.2
 
