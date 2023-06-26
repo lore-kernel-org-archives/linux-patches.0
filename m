@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF404D526
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F29C433C8;
-	Mon, 26 Jun 2023 18:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40E7107AD
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69DEDC433C8;
+	Mon, 26 Jun 2023 18:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805045;
-	bh=xNQ54ytPvumoCeiLgJc7OnP+1PsgOlLIuIcEDfadQF8=;
+	s=korg; t=1687805048;
+	bh=P3h2hjZrHdqdljlQE0cOsJ4YhJ0VXF462+NZJyCH0XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6b8ukvnENt0ooKhdmkZ462pe0PXsF55zr2S4R8p9SN/1TRCNfCfU2PO0ZjPmZvOM
-	 ACa7VA8HOKO3FmUQqiEoWdktlpTXwkFrGV8ADfLstrS3JWRaPGuhwkPsrjzX2qUE5I
-	 WyCJNDgf0MtfqMQOi3yMhQMCcP8/HRLmja4zt7JQ=
+	b=OKKqj1/U72RYuxZl4O/uESrUfp8JDsEtxZiT0iJOc5GjHRWmz6qsWdqNAU22te7W6
+	 8VFIi3QQzdpFcNFEvjWXBQM8eQEjyeMSkE55ixpp0skJUTMega+cXO3GjTw7TiNiX0
+	 UEDiOPrthSgXq51o2WcU0E5TBZPOUOTUu6kvg9KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Krause <minipli@grsecurity.net>,
-	"Bhatnagar, Rishabh" <risbhat@amazon.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Richard W.M. Jones" <rjones@redhat.com>,
-	SeongJae Park <sj@kernel.org>
-Subject: [PATCH 5.10 04/81] tick/common: Align tick period during sched_timer setup
-Date: Mon, 26 Jun 2023 20:11:46 +0200
-Message-ID: <20230626180744.637066310@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 05/81] selftests: mptcp: lib: skip if missing symbol
+Date: Mon, 26 Jun 2023 20:11:47 +0200
+Message-ID: <20230626180744.674168952@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -38,95 +34,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 13bb06f8dd42071cb9a49f6e21099eea05d4b856 upstream.
+commit 673004821ab98c6645bd21af56a290854e88f533 upstream.
 
-The tick period is aligned very early while the first clock_event_device is
-registered. At that point the system runs in periodic mode and switches
-later to one-shot mode if possible.
+Selftests are supposed to run on any kernels, including the old ones not
+supporting all MPTCP features.
 
-The next wake-up event is programmed based on the aligned value
-(tick_next_period) but the delta value, that is used to program the
-clock_event_device, is computed based on ktime_get().
+New functions are now available to easily detect if a certain feature is
+missing by looking at kallsyms.
 
-With the subtracted offset, the device fires earlier than the exact time
-frame. With a large enough offset the system programs the timer for the
-next wake-up and the remaining time left is too small to make any boot
-progress. The system hangs.
+These new helpers are going to be used in the following commits. In
+order to ease the backport of such future patches, it would be good if
+this patch is backported up to the introduction of MPTCP selftests,
+hence the Fixes tag below: this type of check was supposed to be done
+from the beginning.
 
-Move the alignment later to the setup of tick_sched timer. At this point
-the system switches to oneshot mode and a high resolution clocksource is
-available. At this point it is safe to align tick_next_period because
-ktime_get() will now return accurate (not jiffies based) time.
-
-[bigeasy: Patch description + testing].
-
-Fixes: e9523a0d81899 ("tick/common: Align tick period with the HZ tick.")
-Reported-by: Mathias Krause <minipli@grsecurity.net>
-Reported-by: "Bhatnagar, Rishabh" <risbhat@amazon.com>
-Suggested-by: Mathias Krause <minipli@grsecurity.net>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Richard W.M. Jones <rjones@redhat.com>
-Tested-by: Mathias Krause <minipli@grsecurity.net>
-Acked-by: SeongJae Park <sj@kernel.org>
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
+Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/5a56290d-806e-b9a5-f37c-f21958b5a8c0@grsecurity.net
-Link: https://lore.kernel.org/12c6f9a3-d087-b824-0d05-0d18c9bc1bf3@amazon.com
-Link: https://lore.kernel.org/r/20230615091830.RxMV2xf_@linutronix.de
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/tick-common.c |   13 +------------
- kernel/time/tick-sched.c  |   13 ++++++++++++-
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ tools/testing/selftests/net/mptcp/config       |    1 
+ tools/testing/selftests/net/mptcp/mptcp_lib.sh |   38 +++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -216,19 +216,8 @@ static void tick_setup_device(struct tic
- 		 * this cpu:
- 		 */
- 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
--			ktime_t next_p;
--			u32 rem;
--
- 			tick_do_timer_cpu = cpu;
--
--			next_p = ktime_get();
--			div_u64_rem(next_p, TICK_NSEC, &rem);
--			if (rem) {
--				next_p -= rem;
--				next_p += TICK_NSEC;
--			}
--
--			tick_next_period = next_p;
-+			tick_next_period = ktime_get();
- #ifdef CONFIG_NO_HZ_FULL
- 			/*
- 			 * The boot CPU may be nohz_full, in which case set
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -129,8 +129,19 @@ static ktime_t tick_init_jiffy_update(vo
- 	raw_spin_lock(&jiffies_lock);
- 	write_seqcount_begin(&jiffies_seq);
- 	/* Did we start the jiffies update yet ? */
--	if (last_jiffies_update == 0)
-+	if (last_jiffies_update == 0) {
-+		u32 rem;
+--- a/tools/testing/selftests/net/mptcp/config
++++ b/tools/testing/selftests/net/mptcp/config
+@@ -1,3 +1,4 @@
++CONFIG_KALLSYMS=y
+ CONFIG_MPTCP=y
+ CONFIG_IPV6=y
+ CONFIG_MPTCP_IPV6=y
+--- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
+@@ -38,3 +38,41 @@ mptcp_lib_check_mptcp() {
+ 		exit ${KSFT_SKIP}
+ 	fi
+ }
 +
-+		/*
-+		 * Ensure that the tick is aligned to a multiple of
-+		 * TICK_NSEC.
-+		 */
-+		div_u64_rem(tick_next_period, TICK_NSEC, &rem);
-+		if (rem)
-+			tick_next_period += TICK_NSEC - rem;
++mptcp_lib_check_kallsyms() {
++	if ! mptcp_lib_has_file "/proc/kallsyms"; then
++		echo "SKIP: CONFIG_KALLSYMS is missing"
++		exit ${KSFT_SKIP}
++	fi
++}
 +
- 		last_jiffies_update = tick_next_period;
-+	}
- 	period = last_jiffies_update;
- 	write_seqcount_end(&jiffies_seq);
- 	raw_spin_unlock(&jiffies_lock);
++# Internal: use mptcp_lib_kallsyms_has() instead
++__mptcp_lib_kallsyms_has() {
++	local sym="${1}"
++
++	mptcp_lib_check_kallsyms
++
++	grep -q " ${sym}" /proc/kallsyms
++}
++
++# $1: part of a symbol to look at, add '$' at the end for full name
++mptcp_lib_kallsyms_has() {
++	local sym="${1}"
++
++	if __mptcp_lib_kallsyms_has "${sym}"; then
++		return 0
++	fi
++
++	mptcp_lib_fail_if_expected_feature "${sym} symbol not found"
++}
++
++# $1: part of a symbol to look at, add '$' at the end for full name
++mptcp_lib_kallsyms_doesnt_have() {
++	local sym="${1}"
++
++	if ! __mptcp_lib_kallsyms_has "${sym}"; then
++		return 0
++	fi
++
++	mptcp_lib_fail_if_expected_feature "${sym} symbol has been found"
++}
 
 
