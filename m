@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2025711CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AE8C433C0;
-	Mon, 26 Jun 2023 18:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EF711CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A1BC433C8;
+	Mon, 26 Jun 2023 18:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804746;
-	bh=8gHV8AHvNYiogcKy7vhbDKr7kWbDaNO9tY2+/KsbvMg=;
+	s=korg; t=1687804748;
+	bh=RKBTwqm8IhRH8ToEOuNzKUaR5v2pw82o3jABbB6u7JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzq6P/cht3Uaoh5GK0tJL2B98/2sMaLvmfy4ShHi3gypJ3+sevfxdrPM7I8zW6Ry+
-	 PwP1gRV5ocOIxnxGAIdkHkKj8AcwbydmOO5HG9E+0mVXZjv9srzEq9QVt6LNHmLVzX
-	 ASByx5bifkoG8HL6+Stu4FrjKzkZAxPBHGxZsyFg=
+	b=Szx9bXMbt5JomFcjViVBlRLfHmO51CMZ15tooa81NS67ihDHn268Nsnj7p4oy+Dbd
+	 Iow8YFe/+1SBRNxG15vFGHUCzFWWe8CfpsoN7Gs+pqzB4PG1GJr4cPNZjUviDKUmpB
+	 oK0LVKcFl5Eo65YzgGq8LhCrl2eaRV0fS1OanZMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yann Gautier <yann.gautier@foss.st.com>,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 27/96] mmc: mmci: stm32: fix max busy timeout calculation
-Date: Mon, 26 Jun 2023 20:11:42 +0200
-Message-ID: <20230626180748.068776247@linuxfoundation.org>
+	Matthias May <matthias.may@westermo.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Subject: [PATCH 5.15 28/96] ip_tunnels: allow VXLAN/GENEVE to inherit TOS/TTL from VLAN
+Date: Mon, 26 Jun 2023 20:11:43 +0200
+Message-ID: <20230626180748.118686737@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -35,36 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Kerello <christophe.kerello@foss.st.com>
+From: Matthias May <matthias.may@westermo.com>
 
-commit 47b3ad6b7842f49d374a01b054a4b1461a621bdc upstream.
+commit 7074732c8faee201a245a6f983008a5789c0be33 upstream.
 
-The way that the timeout is currently calculated could lead to a u64
-timeout value in mmci_start_command(). This value is then cast in a u32
-register that leads to mmc erase failed issue with some SD cards.
+The current code allows for VXLAN and GENEVE to inherit the TOS
+respective the TTL when skb-protocol is ETH_P_IP or ETH_P_IPV6.
+However when the payload is VLAN encapsulated, then this inheriting
+does not work, because the visible skb-protocol is of type
+ETH_P_8021Q or ETH_P_8021AD.
 
-Fixes: 8266c585f489 ("mmc: mmci: add hardware busy timeout feature")
-Signed-off-by: Yann Gautier <yann.gautier@foss.st.com>
-Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230613134146.418016-1-yann.gautier@foss.st.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Instead of skb->protocol use skb_protocol().
+
+Signed-off-by: Matthias May <matthias.may@westermo.com>
+Link: https://lore.kernel.org/r/20220721202718.10092-1-matthias.may@westermo.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/ip_tunnels.h |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -1729,7 +1729,8 @@ static void mmci_set_max_busy_timeout(st
- 		return;
- 
- 	if (host->variant->busy_timeout && mmc->actual_clock)
--		max_busy_timeout = ~0UL / (mmc->actual_clock / MSEC_PER_SEC);
-+		max_busy_timeout = U32_MAX / DIV_ROUND_UP(mmc->actual_clock,
-+							  MSEC_PER_SEC);
- 
- 	mmc->max_busy_timeout = max_busy_timeout;
- }
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -377,9 +377,11 @@ static inline int ip_tunnel_encap(struct
+ static inline u8 ip_tunnel_get_dsfield(const struct iphdr *iph,
+ 				       const struct sk_buff *skb)
+ {
+-	if (skb->protocol == htons(ETH_P_IP))
++	__be16 payload_protocol = skb_protocol(skb, true);
++
++	if (payload_protocol == htons(ETH_P_IP))
+ 		return iph->tos;
+-	else if (skb->protocol == htons(ETH_P_IPV6))
++	else if (payload_protocol == htons(ETH_P_IPV6))
+ 		return ipv6_get_dsfield((const struct ipv6hdr *)iph);
+ 	else
+ 		return 0;
+@@ -388,9 +390,11 @@ static inline u8 ip_tunnel_get_dsfield(c
+ static inline u8 ip_tunnel_get_ttl(const struct iphdr *iph,
+ 				       const struct sk_buff *skb)
+ {
+-	if (skb->protocol == htons(ETH_P_IP))
++	__be16 payload_protocol = skb_protocol(skb, true);
++
++	if (payload_protocol == htons(ETH_P_IP))
+ 		return iph->ttl;
+-	else if (skb->protocol == htons(ETH_P_IPV6))
++	else if (payload_protocol == htons(ETH_P_IPV6))
+ 		return ((const struct ipv6hdr *)iph)->hop_limit;
+ 	else
+ 		return 0;
 
 
