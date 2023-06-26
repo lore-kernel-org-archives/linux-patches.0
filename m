@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB2A134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:17:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E68C433CA;
-	Mon, 26 Jun 2023 18:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7114A134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:17:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC9DC433C0;
+	Mon, 26 Jun 2023 18:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803427;
-	bh=rP2MeqLLUgl1Ei5xvpXJUaYZgUsPDufemiISO7xtU58=;
+	s=korg; t=1687803430;
+	bh=cmOIWXKRlm6R0XRISnhNMwNrUVkK9hw0Xev84FwBN/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEL0Rwrwz8KOC+YXZCXWwIYfkqHSNtgjNwsai/hEGRNFfrEkuvDMMXSDpNz051KXe
-	 3/3q/zbyMYGmDUJsxdVGnB6k26nmNU/ok/ZmHMzJhSvE6CAamKQRgDjGqc9df+EiCd
-	 CwBLWGlEDAj2LJjLK6mXzduObmbIOGeWwl7A4+tY=
+	b=i80/5gQUySV3ltY0m4KSbvIx09fEEaswVd1lHZarmtOc4ZbhrMc+xN1dsqlKix2qk
+	 byiUV2T7/h0e8vRdp56Q4ILQ3Py4LcYrqWRwiWYvcokLnlJK6LeBpbwctvmpSzUXlQ
+	 3lddoCBUD7B7bnoZQGOdeLcOZiBlP5LebeVXgvqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 030/199] selftests: mptcp: sockopt: skip TCP_INQ checks if not supported
-Date: Mon, 26 Jun 2023 20:08:56 +0200
-Message-ID: <20230626180806.945172432@linuxfoundation.org>
+	Bernhard Krug <b.krug@elektronenpumpe.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.3 057/199] thermal/intel/intel_soc_dts_iosf: Fix reporting wrong temperatures
+Date: Mon, 26 Jun 2023 20:09:23 +0200
+Message-ID: <20230626180808.069859988@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -34,68 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit b631e3a4e94c77c9007d60b577a069c203ce9594 upstream.
+commit 0bb619f9227aa370330d2b309733d74750705053 upstream.
 
-Selftests are supposed to run on any kernels, including the old ones not
-supporting all MPTCP features.
+Since commit 955fb8719efb ("thermal/intel/intel_soc_dts_iosf: Use Intel
+TCC library") intel_soc_dts_iosf is reporting the wrong temperature.
 
-One of them is TCP_INQ cmsg support introduced in commit 2c9e77659a0c
-("mptcp: add TCP_INQ cmsg support").
+The driver expects tj_max to be in milli-degrees-celcius but after
+the switch to the TCC library this is now in degrees celcius so
+instead of e.g. 90000 it is set to 90 causing a temperature 45
+degrees below tj_max to be reported as -44910 milli-degrees
+instead of as 45000 milli-degrees.
 
-It is possible to look for "mptcp_ioctl" in kallsyms because it was
-needed to introduce the mentioned feature. We can skip these tests and
-not set TCPINQ option if the feature is not supported.
+Fix this by adding back the lost factor of 1000.
 
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: 5cbd886ce2a9 ("selftests: mptcp: add TCP_INQ support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 955fb8719efb ("thermal/intel/intel_soc_dts_iosf: Use Intel TCC library")
+Reported-by: Bernhard Krug <b.krug@elektronenpumpe.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Zhang Rui <rui.zhang@intel.com>
+Cc: 6.3+ <stable@vger.kernel.org> # 6.3+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_sockopt.sh |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/thermal/intel/intel_soc_dts_iosf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
-@@ -187,9 +187,14 @@ do_transfer()
- 		local_addr="0.0.0.0"
- 	fi
- 
-+	cmsg="TIMESTAMPNS"
-+	if mptcp_lib_kallsyms_has "mptcp_ioctl$"; then
-+		cmsg+=",TCPINQ"
-+	fi
-+
- 	timeout ${timeout_test} \
- 		ip netns exec ${listener_ns} \
--			$mptcp_connect -t ${timeout_poll} -l -M 1 -p $port -s ${srv_proto} -c TIMESTAMPNS,TCPINQ \
-+			$mptcp_connect -t ${timeout_poll} -l -M 1 -p $port -s ${srv_proto} -c "${cmsg}" \
- 				${local_addr} < "$sin" > "$sout" &
- 	local spid=$!
- 
-@@ -197,7 +202,7 @@ do_transfer()
- 
- 	timeout ${timeout_test} \
- 		ip netns exec ${connector_ns} \
--			$mptcp_connect -t ${timeout_poll} -M 2 -p $port -s ${cl_proto} -c TIMESTAMPNS,TCPINQ \
-+			$mptcp_connect -t ${timeout_poll} -M 2 -p $port -s ${cl_proto} -c "${cmsg}" \
- 				$connect_addr < "$cin" > "$cout" &
- 
- 	local cpid=$!
-@@ -313,6 +318,11 @@ do_tcpinq_tests()
- {
- 	local lret=0
- 
-+	if ! mptcp_lib_kallsyms_has "mptcp_ioctl$"; then
-+		echo "INFO: TCP_INQ not supported: SKIP"
-+		return
-+	fi
-+
- 	local args
- 	for args in "-t tcp" "-r tcp"; do
- 		do_tcpinq_test $args
+--- a/drivers/thermal/intel/intel_soc_dts_iosf.c
++++ b/drivers/thermal/intel/intel_soc_dts_iosf.c
+@@ -401,7 +401,7 @@ struct intel_soc_dts_sensors *intel_soc_
+ 	spin_lock_init(&sensors->intr_notify_lock);
+ 	mutex_init(&sensors->dts_update_lock);
+ 	sensors->intr_type = intr_type;
+-	sensors->tj_max = tj_max;
++	sensors->tj_max = tj_max * 1000;
+ 	if (intr_type == INTEL_SOC_DTS_INTERRUPT_NONE)
+ 		notification = false;
+ 	else
 
 
