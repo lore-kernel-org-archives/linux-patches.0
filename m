@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945BF134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:20:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3DEC433C8;
-	Mon, 26 Jun 2023 18:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE13134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:20:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AF6C433C8;
+	Mon, 26 Jun 2023 18:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803604;
-	bh=qxe/rOKW83cQ9OOWZXLCtE8DzWX8uT6cRoDc3jgK1dQ=;
+	s=korg; t=1687803607;
+	bh=U1WP+wywmwTYfoJG24IM1926hIeSyuga01PtxEr31WA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WsnwSpPmzXR3KMS6h8z7QRfrUnH/q4wTbaSSYE7Z8B4RKcPOIaT1WCrZLhocuz4Gr
-	 cWy5PZX/NMkNAMeZ+X17xcO+gTlesuf8h8rXpnS/OP/UtoRBanu3Vt5Jn/awCrcqwX
-	 5TshXXXpDwqf4pnefEvafOEx4MPcXVUhCDc9VJ7Y=
+	b=OVgtMV30q/3hbYhwYL2a0Re8enMKtZE52Zp5wDvRy8Kdp21I5UHCmFuowxY4PDWs6
+	 L7eUg7zjaetq/4rqic0bllfzB+z/lZ4jlNxakfpx2hiZiAAVoJuLxrfmnTsWelOOnp
+	 HgTeodrV3XYAUxwu/ItPUougadLTBmq7a9Prcci4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 117/199] mmc: omap_hsmmc: fix deferred probing
-Date: Mon, 26 Jun 2023 20:10:23 +0200
-Message-ID: <20230626180810.775442101@linuxfoundation.org>
+Subject: [PATCH 6.3 118/199] mmc: owl: fix deferred probing
+Date: Mon, 26 Jun 2023 20:10:24 +0200
+Message-ID: <20230626180810.819239366@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -37,40 +37,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit fb51b74a57859b707c3e8055ed0c25a7ca4f6a29 ]
+[ Upstream commit 3c482e1e830d79b9be8afb900a965135c01f7893 ]
 
 The driver overrides the error codes returned by platform_get_irq() to
--ENXIO, so if it returns -EPROBE_DEFER, the driver will fail the probe
+-EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
 permanently instead of the deferred probing. Switch to propagating the
 error codes upstream.
 
-Fixes: 9ec36cafe43b ("of/irq: do irq resolution in platform_get_irq")
+Fixes: ff65ffe46d28 ("mmc: Add Actions Semi Owl SoCs SD/MMC driver")
 Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20230617203622.6812-7-s.shtylyov@omp.ru
+Link: https://lore.kernel.org/r/20230617203622.6812-8-s.shtylyov@omp.ru
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/omap_hsmmc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mmc/host/owl-mmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/omap_hsmmc.c b/drivers/mmc/host/omap_hsmmc.c
-index 4bd7447552055..2db3a16e63c48 100644
---- a/drivers/mmc/host/omap_hsmmc.c
-+++ b/drivers/mmc/host/omap_hsmmc.c
-@@ -1791,9 +1791,11 @@ static int omap_hsmmc_probe(struct platform_device *pdev)
+diff --git a/drivers/mmc/host/owl-mmc.c b/drivers/mmc/host/owl-mmc.c
+index 3dc143b039397..679b8b0b310e5 100644
+--- a/drivers/mmc/host/owl-mmc.c
++++ b/drivers/mmc/host/owl-mmc.c
+@@ -638,7 +638,7 @@ static int owl_mmc_probe(struct platform_device *pdev)
+ 
+ 	owl_host->irq = platform_get_irq(pdev, 0);
+ 	if (owl_host->irq < 0) {
+-		ret = -EINVAL;
++		ret = owl_host->irq;
+ 		goto err_release_channel;
  	}
  
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	irq = platform_get_irq(pdev, 0);
--	if (res == NULL || irq < 0)
-+	if (!res)
- 		return -ENXIO;
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return irq;
- 
- 	base = devm_ioremap_resource(&pdev->dev, res);
- 	if (IS_ERR(base))
 -- 
 2.39.2
 
