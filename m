@@ -1,193 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD6813AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE8FC433C9;
-	Mon, 26 Jun 2023 18:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4070F13AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE045C433C0;
+	Mon, 26 Jun 2023 18:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803281;
-	bh=E60ysgSxu9+zVZtnqGYeknoO5HJg4LBgPFo1cPe5Jd8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ISXC2BW9k4cwIJxSMB5iTtloRkSTDuiMGZUTE8w233C/o3Un40dzXhBERfhs1Ra6T
-	 S6GOTxhxczJkuAKQLUDopu9y/fkBi/KxYZyAnz4+beGfCssin0KoKsah8TnakqjUzd
-	 Lo/w55vBII0Mgw83Kbaj3ibBbU1Zlurm44wW8Nx4=
+	s=korg; t=1687803284;
+	bh=EEgIrj2hFldh456ixCZUq4PUi8lbRH7PEELfX7Ug3K4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=PIE9VlJdKnYUkBqAT/VSXidL51IDXGQVuA6RCOO5unqs0quVLJ0kmUrQuK6I2ss3j
+	 aBxCQJlJckB5sAN0bGCl7ZXNPrlLOQZ4vnZFa6TxIY9ObKQP/Gu1qS2oArlGB6dY5q
+	 ZwA/bIyfDV73KkuvvOKE28FqcgK4vGAtyki5T09o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org
-Subject: [PATCH 4.14 00/26] 4.14.320-rc1 review
-Date: Mon, 26 Jun 2023 20:11:02 +0200
-Message-ID: <20230626180733.699092073@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 001/199] cifs: fix status checks in cifs_tree_connect
+Date: Mon, 26 Jun 2023 20:08:27 +0200
+Message-ID: <20230626180805.707594369@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
+References: <20230626180805.643662628@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.320-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.320-rc1
-X-KernelTest-Deadline: 2023-06-28T18:07+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.14.320 release.
-There are 26 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-Responses should be made by Wed, 28 Jun 2023 18:07:23 +0000.
-Anything received after that time might be too late.
+[ Upstream commit 91f4480c41f56f7c723323cf7f581f1d95d9ffbc ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.320-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
+The ordering of status checks at the beginning of
+cifs_tree_connect is wrong. As a result, a tcon
+which is good may stay marked as needing reconnect
+infinitely.
 
-thanks,
+Fixes: 2f0e4f034220 ("cifs: check only tcon status on tcon related functions")
+Cc: stable@vger.kernel.org # 6.3
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/cifs/connect.c | 9 +++++----
+ fs/cifs/dfs.c     | 9 +++++----
+ 2 files changed, 10 insertions(+), 8 deletions(-)
 
-greg k-h
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index 8e9a672320ab7..1250d156619b7 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -4086,16 +4086,17 @@ int cifs_tree_connect(const unsigned int xid, struct cifs_tcon *tcon, const stru
+ 
+ 	/* only send once per connect */
+ 	spin_lock(&tcon->tc_lock);
++	if (tcon->status == TID_GOOD) {
++		spin_unlock(&tcon->tc_lock);
++		return 0;
++	}
++
+ 	if (tcon->status != TID_NEW &&
+ 	    tcon->status != TID_NEED_TCON) {
+ 		spin_unlock(&tcon->tc_lock);
+ 		return -EHOSTDOWN;
+ 	}
+ 
+-	if (tcon->status == TID_GOOD) {
+-		spin_unlock(&tcon->tc_lock);
+-		return 0;
+-	}
+ 	tcon->status = TID_IN_TCON;
+ 	spin_unlock(&tcon->tc_lock);
+ 
+diff --git a/fs/cifs/dfs.c b/fs/cifs/dfs.c
+index 2f93bf8c3325a..2390b2fedd6a3 100644
+--- a/fs/cifs/dfs.c
++++ b/fs/cifs/dfs.c
+@@ -575,16 +575,17 @@ int cifs_tree_connect(const unsigned int xid, struct cifs_tcon *tcon, const stru
+ 
+ 	/* only send once per connect */
+ 	spin_lock(&tcon->tc_lock);
++	if (tcon->status == TID_GOOD) {
++		spin_unlock(&tcon->tc_lock);
++		return 0;
++	}
++
+ 	if (tcon->status != TID_NEW &&
+ 	    tcon->status != TID_NEED_TCON) {
+ 		spin_unlock(&tcon->tc_lock);
+ 		return -EHOSTDOWN;
+ 	}
+ 
+-	if (tcon->status == TID_GOOD) {
+-		spin_unlock(&tcon->tc_lock);
+-		return 0;
+-	}
+ 	tcon->status = TID_IN_TCON;
+ 	spin_unlock(&tcon->tc_lock);
+ 
+-- 
+2.39.2
 
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.320-rc1
-
-Clark Wang <xiaoning.wang@nxp.com>
-    i2c: imx-lpi2c: fix type char overflow issue when calculating the clock cycle
-
-Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
-    x86/apic: Fix kernel panic when booting with intremap=off and x2apic_phys
-
-Min Li <lm0963hack@gmail.com>
-    drm/radeon: fix race condition UAF in radeon_gem_set_domain_ioctl
-
-Min Li <lm0963hack@gmail.com>
-    drm/exynos: fix race condition UAF in exynos_g2d_exec_ioctl
-
-Inki Dae <inki.dae@samsung.com>
-    drm/exynos: vidi: fix a wrong error return
-
-Vineeth Vijayan <vneethv@linux.ibm.com>
-    s390/cio: unregister device when the only path is gone
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    usb: gadget: udc: fix NULL dereference in remove()
-
-Helge Deller <deller@gmx.de>
-    fbdev: imsttfb: Release framebuffer and dealloc cmap on error path
-
-Osama Muhammad <osmtendev@gmail.com>
-    nfcsim.c: Fix error checking for debugfs_create_dir
-
-Marc Zyngier <maz@kernel.org>
-    arm64: Add missing Set/Way CMO encodings
-
-Denis Arefev <arefev@swemel.ru>
-    HID: wacom: Add error check to wacom_parse_and_register()
-
-Maurizio Lombardi <mlombard@redhat.com>
-    scsi: target: iscsi: Prevent login threads from racing between each other
-
-Pablo Neira Ayuso <pablo@netfilter.org>
-    netfilter: nf_tables: disallow element updates of bound anonymous sets
-
-Ross Lagerwall <ross.lagerwall@citrix.com>
-    be2net: Extend xmit workaround to BE3 chip
-
-Sergey Shtylyov <s.shtylyov@omp.ru>
-    mmc: usdhi60rol0: fix deferred probing
-
-Sergey Shtylyov <s.shtylyov@omp.ru>
-    mmc: omap_hsmmc: fix deferred probing
-
-Sergey Shtylyov <s.shtylyov@omp.ru>
-    mmc: omap: fix deferred probing
-
-Sergey Shtylyov <s.shtylyov@omp.ru>
-    mmc: mtk-sd: fix deferred probing
-
-Stefan Wahren <stefan.wahren@i2se.com>
-    net: qca_spi: Avoid high load if QCA7000 is not available
-
-Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-    xfrm: Linearize the skb after offloading if needed.
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: prevent general protection fault in nilfs_clear_dirty_page()
-
-Xiu Jianfeng <xiujianfeng@huawei.com>
-    cgroup: Do not corrupt task iteration when rebinding subsystem
-
-Michael Kelley <mikelley@microsoft.com>
-    Drivers: hv: vmbus: Fix vmbus_wait_for_unload() to scan present CPUs
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: fix buffer corruption due to concurrent device reads
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: reject devices with insufficient block count
-
-Bernhard Seibold <mail@bernhard-seibold.de>
-    serial: lantiq: add missing interrupt ack
-
-
--------------
-
-Diffstat:
-
- Makefile                                    |  4 +--
- arch/arm64/include/asm/sysreg.h             |  6 ++++
- arch/x86/kernel/apic/x2apic_phys.c          |  5 +++-
- drivers/gpu/drm/exynos/exynos_drm_g2d.c     |  2 +-
- drivers/gpu/drm/exynos/exynos_drm_vidi.c    |  2 --
- drivers/gpu/drm/radeon/radeon_gem.c         |  4 +--
- drivers/hid/wacom_sys.c                     |  7 ++++-
- drivers/hv/channel_mgmt.c                   | 18 ++++++++++--
- drivers/i2c/busses/i2c-imx-lpi2c.c          |  4 +--
- drivers/mmc/host/mtk-sd.c                   |  2 +-
- drivers/mmc/host/omap.c                     |  2 +-
- drivers/mmc/host/omap_hsmmc.c               |  6 ++--
- drivers/mmc/host/usdhi6rol0.c               |  6 ++--
- drivers/net/ethernet/emulex/benet/be_main.c |  4 +--
- drivers/net/ethernet/qualcomm/qca_spi.c     |  3 +-
- drivers/nfc/nfcsim.c                        |  4 ---
- drivers/s390/cio/device.c                   |  5 +++-
- drivers/target/iscsi/iscsi_target_nego.c    |  4 ++-
- drivers/tty/serial/lantiq.c                 |  1 +
- drivers/usb/gadget/udc/amd5536udc_pci.c     |  3 ++
- drivers/video/fbdev/imsttfb.c               |  6 +++-
- fs/nilfs2/page.c                            | 10 ++++++-
- fs/nilfs2/segbuf.c                          |  6 ++++
- fs/nilfs2/segment.c                         |  7 +++++
- fs/nilfs2/super.c                           | 25 ++++++++++++++--
- fs/nilfs2/the_nilfs.c                       | 44 ++++++++++++++++++++++++++++-
- kernel/cgroup/cgroup.c                      | 20 +++++++++++--
- net/ipv4/esp4_offload.c                     |  3 ++
- net/ipv6/esp6_offload.c                     |  3 ++
- net/netfilter/nf_tables_api.c               |  7 +++--
- 30 files changed, 183 insertions(+), 40 deletions(-)
 
 
