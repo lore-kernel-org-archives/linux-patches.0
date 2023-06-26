@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5294D14A8C
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:31:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67C1C433C0;
-	Mon, 26 Jun 2023 18:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FE214A99
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:31:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C37C433C0;
+	Mon, 26 Jun 2023 18:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804262;
-	bh=u1JjxdzQLojSgdKqg6LD1W1egvWlWQYgVBHv7T0xZsM=;
+	s=korg; t=1687804265;
+	bh=RM9MCRWAnImi2lfeWTR0UhUleem5vgZVzUtycurYpeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewThv28S1F58rifg+9lotzg15IBloRupdo5Y7h0aLepqCRRp9vm7WaYPbCq8qFBPJ
-	 7ERTw808CxD0STPanK4qKZutn5MrI4LQdE2xA4yhFc5FOfepGSfe9qOr+EhInEYAbE
-	 JFYnHMmmR6USWB7FTpnylzD4H3nUqKPz30z9Eaog=
+	b=vuAcrQG62spDEMEdoPRJ2S6Q01E+KOdaofdjm6KzBYLYkJqqAhko6dccI2sAzRtdH
+	 vsXmETr+lFde0l5p/um00XeDc5TbAUw4ZjAGORvAdiy7prhmMHHqMcdkPVETnerrv0
+	 DgUxxMD4tfQ2ig6FKJqVHzFasLehCGnmU15ZpA6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Marc-Andr Lureau <marcandre.lureau@redhat.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/170] memfd: check for non-NULL file_seals in memfd_create() syscall
-Date: Mon, 26 Jun 2023 20:10:48 +0200
-Message-ID: <20230626180804.159880487@linuxfoundation.org>
+Subject: [PATCH 6.1 097/170] mmc: mtk-sd: fix deferred probing
+Date: Mon, 26 Jun 2023 20:11:06 +0200
+Message-ID: <20230626180804.910319367@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -37,40 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 935d44acf621aa0688fef8312dec3e5940f38f4e ]
+[ Upstream commit 0c4dc0f054891a2cbde0426b0c0fdf232d89f47f ]
 
-Ensure that file_seals is non-NULL before using it in the memfd_create()
-syscall.  One situation in which memfd_file_seals_ptr() could return a
-NULL pointer when CONFIG_SHMEM=n, oopsing the kernel.
+The driver overrides the error codes returned by platform_get_irq() to
+-EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing. Switch to propagating the
+error codes upstream.
 
-Link: https://lkml.kernel.org/r/20230607132427.2867435-1-roberto.sassu@huaweicloud.com
-Fixes: 47b9012ecdc7 ("shmem: add sealing support to hugetlb-backed memfd")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Cc: Marc-Andr Lureau <marcandre.lureau@redhat.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20230617203622.6812-4-s.shtylyov@omp.ru
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memfd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/mtk-sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/memfd.c b/mm/memfd.c
-index 08f5f8304746f..b0104b49bf82c 100644
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -328,7 +328,8 @@ SYSCALL_DEFINE2(memfd_create,
+diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+index 26bc59b5a7ccf..425efb3fba048 100644
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -2658,7 +2658,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
  
- 	if (flags & MFD_ALLOW_SEALING) {
- 		file_seals = memfd_file_seals_ptr(file);
--		*file_seals &= ~F_SEAL_SEAL;
-+		if (file_seals)
-+			*file_seals &= ~F_SEAL_SEAL;
+ 	host->irq = platform_get_irq(pdev, 0);
+ 	if (host->irq < 0) {
+-		ret = -EINVAL;
++		ret = host->irq;
+ 		goto host_free;
  	}
  
- 	fd_install(fd, file);
 -- 
 2.39.2
 
