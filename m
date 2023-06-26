@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232028C1D
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:32:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FE5C433CD;
-	Mon, 26 Jun 2023 18:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21438F57
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:32:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318B2C433C8;
+	Mon, 26 Jun 2023 18:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804365;
-	bh=WBr0WNKViwuNr+qWHHZC9kwY9xhA2LnqqlzLVY0tyXA=;
+	s=korg; t=1687804368;
+	bh=TuLzzCdwhkhBZcdxz5+Y7I5tSKp/GRIolPwkPsF9hxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lx5a9nfyLRoFE2n5kr1dGuHGCo9DoJzNPoYRLvBTgwH8cP4J+fSwWlEVtIFz5u9qW
-	 putavjW45AnyGDwbscGpRiDfVPtJqQFiq7J3wu10CAWxURwT8DNmNOYSm3Ow3dPoUp
-	 IjsFEc4rRHcfQEHS/2zW12Kh/dARaU9xcjvOY0lw=
+	b=vY4bIRqfb/GC9QdZE+hJ1f9rBa8hItJt+YDdfkaZwvEE9muxRoVlJUwY40z4RMaMy
+	 W88qDDs7+pXAimHtg2W6kNWusA99uRO60hWlX1C7bKyakr+B3Yt3p0JsIL0GnqbdC7
+	 NJjCjpJSVS3w4EsKizUhwMhfH8sSH5jmHlq4liTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 131/170] gpiolib: Fix irq_domain resource tracking for gpiochip_irqchip_add_domain()
-Date: Mon, 26 Jun 2023 20:11:40 +0200
-Message-ID: <20230626180806.455251068@linuxfoundation.org>
+Subject: [PATCH 6.1 132/170] scsi: target: iscsi: Prevent login threads from racing between each other
+Date: Mon, 26 Jun 2023 20:11:41 +0200
+Message-ID: <20230626180806.502787245@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -38,70 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <mwalle@kernel.org>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit ff7a1790fbf92f1bdd0966d3f0da3ea808ede876 ]
+[ Upstream commit 2a737d3b8c792400118d6cf94958f559de9c5e59 ]
 
-Up until commit 6a45b0e2589f ("gpiolib: Introduce
-gpiochip_irqchip_add_domain()") all irq_domains were allocated
-by gpiolib itself and thus gpiolib also takes care of freeing it.
+The tpg->np_login_sem is a semaphore that is used to serialize the login
+process when multiple login threads run concurrently against the same
+target portal group.
 
-With gpiochip_irqchip_add_domain() a user of gpiolib can associate an
-irq_domain with the gpio_chip. This irq_domain is not managed by
-gpiolib and therefore must not be freed by gpiolib.
+The iscsi_target_locate_portal() function finds the tpg, calls
+iscsit_access_np() against the np_login_sem semaphore and saves the tpg
+pointer in conn->tpg;
 
-Fixes: 6a45b0e2589f ("gpiolib: Introduce gpiochip_irqchip_add_domain()")
-Reported-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+If iscsi_target_locate_portal() fails, the caller will check for the
+conn->tpg pointer and, if it's not NULL, then it will assume that
+iscsi_target_locate_portal() called iscsit_access_np() on the semaphore.
+
+Make sure that conn->tpg gets initialized only if iscsit_access_np() was
+successful, otherwise iscsit_deaccess_np() may end up being called against
+a semaphore we never took, allowing more than one thread to access the same
+tpg.
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Link: https://lore.kernel.org/r/20230508162219.1731964-4-mlombard@redhat.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c      | 3 ++-
- include/linux/gpio/driver.h | 8 ++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target_nego.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index f2cb070931850..6d3e3454a6ed6 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -1650,7 +1650,7 @@ static void gpiochip_irqchip_remove(struct gpio_chip *gc)
- 	}
+diff --git a/drivers/target/iscsi/iscsi_target_nego.c b/drivers/target/iscsi/iscsi_target_nego.c
+index ff49c8f3fe241..62b2d0dcfda86 100644
+--- a/drivers/target/iscsi/iscsi_target_nego.c
++++ b/drivers/target/iscsi/iscsi_target_nego.c
+@@ -1128,6 +1128,7 @@ int iscsi_target_locate_portal(
+ 	iscsi_target_set_sock_callbacks(conn);
  
- 	/* Remove all IRQ mappings and delete the domain */
--	if (gc->irq.domain) {
-+	if (!gc->irq.domain_is_allocated_externally && gc->irq.domain) {
- 		unsigned int irq;
+ 	login->np = np;
++	conn->tpg = NULL;
  
- 		for (offset = 0; offset < gc->ngpio; offset++) {
-@@ -1696,6 +1696,7 @@ int gpiochip_irqchip_add_domain(struct gpio_chip *gc,
- 
- 	gc->to_irq = gpiochip_to_irq;
- 	gc->irq.domain = domain;
-+	gc->irq.domain_is_allocated_externally = true;
- 
- 	/*
- 	 * Using barrier() here to prevent compiler from reordering
-diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
-index 6aeea1071b1b2..78bcb1639999e 100644
---- a/include/linux/gpio/driver.h
-+++ b/include/linux/gpio/driver.h
-@@ -244,6 +244,14 @@ struct gpio_irq_chip {
+ 	login_req = (struct iscsi_login_req *) login->req;
+ 	payload_length = ntoh24(login_req->dlength);
+@@ -1195,7 +1196,6 @@ int iscsi_target_locate_portal(
  	 */
- 	bool initialized;
+ 	sessiontype = strncmp(s_buf, DISCOVERY, 9);
+ 	if (!sessiontype) {
+-		conn->tpg = iscsit_global->discovery_tpg;
+ 		if (!login->leading_connection)
+ 			goto get_target;
  
-+	/**
-+	 * @domain_is_allocated_externally:
-+	 *
-+	 * True it the irq_domain was allocated outside of gpiolib, in which
-+	 * case gpiolib won't free the irq_domain itself.
-+	 */
-+	bool domain_is_allocated_externally;
-+
- 	/**
- 	 * @init_hw: optional routine to initialize hardware before
- 	 * an IRQ chip will be added. This is quite useful when
+@@ -1212,9 +1212,11 @@ int iscsi_target_locate_portal(
+ 		 * Serialize access across the discovery struct iscsi_portal_group to
+ 		 * process login attempt.
+ 		 */
++		conn->tpg = iscsit_global->discovery_tpg;
+ 		if (iscsit_access_np(np, conn->tpg) < 0) {
+ 			iscsit_tx_login_rsp(conn, ISCSI_STATUS_CLS_TARGET_ERR,
+ 				ISCSI_LOGIN_STATUS_SVC_UNAVAILABLE);
++			conn->tpg = NULL;
+ 			ret = -1;
+ 			goto out;
+ 		}
 -- 
 2.39.2
 
