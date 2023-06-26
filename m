@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22F4134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6836DC433C0;
-	Mon, 26 Jun 2023 18:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F26134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56545C433CA;
+	Mon, 26 Jun 2023 18:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803954;
-	bh=O1TeodQpXH7fpQHjOF/TDpot2qKNrnaRjiIfccIIj6c=;
+	s=korg; t=1687803957;
+	bh=TNOKYMpqXtynV043r0ftXVk+Rqw3D1IY/crP7G4zZS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjXoU28eSukLhEcu+BNoBNke7JO8KjKuep8GcrUMLnZpzqBIgUF2o6H5vv/KuYGlF
-	 ejqEq7CVJp8f/hO5am7hzSfEoVMcxBbhAIx8rAC42kPmbezcTYFIHPxEcqX9qD45zj
-	 GNQrUMVC8crgnjxISbIUOM7+sH+eEOMLxt2DgoMQ=
+	b=G7IBxBgbthcCvZdNJDOEiYNiPkJSfnHwHyaDM29b5wcDSsNg3z+wZiH/wtVI1ZP6y
+	 Ooo72sPkjagUAdheJ/Qc6d9LDifrzE9zxgwjuWvcDCxK6+8/otWKa8+fANF+6MmvdB
+	 BMPNXviJSomZ653JFPJnNkJiFtRSSrd3EEEa+LXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Camuso <tcamuso@redhat.com>,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 4.19 08/41] ipmi: move message error checking to avoid deadlock
-Date: Mon, 26 Jun 2023 20:11:31 +0200
-Message-ID: <20230626180736.594497623@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 09/41] nilfs2: fix buffer corruption due to concurrent device reads
+Date: Mon, 26 Jun 2023 20:11:32 +0200
+Message-ID: <20230626180736.626314873@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -34,190 +35,147 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Camuso <tcamuso@redhat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 383035211c79d4d98481a09ad429b31c7dbf22bd upstream.
+commit 679bd7ebdd315bf457a4740b306ae99f1d0a403d upstream.
 
-V1->V2: in handle_one_rcv_msg, if data_size > 2, set requeue to zero and
-        goto out instead of calling ipmi_free_msg.
-        Kosuke Tatsukawa <tatsu@ab.jp.nec.com>
+As a result of analysis of a syzbot report, it turned out that in three
+cases where nilfs2 allocates block device buffers directly via sb_getblk,
+concurrent reads to the device can corrupt the allocated buffers.
 
-In the source stack trace below, function set_need_watch tries to
-take out the same si_lock that was taken earlier by ipmi_thread.
+Nilfs2 uses sb_getblk for segment summary blocks, that make up a log
+header, and the super root block, that is the trailer, and when moving and
+writing the second super block after fs resize.
 
-ipmi_thread() [drivers/char/ipmi/ipmi_si_intf.c:995]
- smi_event_handler() [drivers/char/ipmi/ipmi_si_intf.c:765]
-  handle_transaction_done() [drivers/char/ipmi/ipmi_si_intf.c:555]
-   deliver_recv_msg() [drivers/char/ipmi/ipmi_si_intf.c:283]
-    ipmi_smi_msg_received() [drivers/char/ipmi/ipmi_msghandler.c:4503]
-     intf_err_seq() [drivers/char/ipmi/ipmi_msghandler.c:1149]
-      smi_remove_watch() [drivers/char/ipmi/ipmi_msghandler.c:999]
-       set_need_watch() [drivers/char/ipmi/ipmi_si_intf.c:1066]
+In any of these, since the uptodate flag is not set when storing metadata
+to be written in the allocated buffers, the stored metadata will be
+overwritten if a device read of the same block occurs concurrently before
+the write.  This causes metadata corruption and misbehavior in the log
+write itself, causing warnings in nilfs_btree_assign() as reported.
 
-Upstream commit e1891cffd4c4896a899337a243273f0e23c028df adds code to
-ipmi_smi_msg_received() to call smi_remove_watch() via intf_err_seq()
-and this seems to be causing the deadlock.
+Fix these issues by setting an uptodate flag on the buffer head on the
+first or before modifying each buffer obtained with sb_getblk, and
+clearing the flag on failure.
 
-commit e1891cffd4c4896a899337a243273f0e23c028df
-Author: Corey Minyard <cminyard@mvista.com>
-Date:   Wed Oct 24 15:17:04 2018 -0500
-    ipmi: Make the smi watcher be disabled immediately when not needed
+When setting the uptodate flag, the lock_buffer/unlock_buffer pair is used
+to perform necessary exclusive control, and the buffer is filled to ensure
+that uninitialized bytes are not mixed into the data read from others.  As
+for buffers for segment summary blocks, they are filled incrementally, so
+if the uptodate flag was unset on their allocation, set the flag and zero
+fill the buffer once at that point.
 
-The fix is to put all messages in the queue and move the message
-checking code out of ipmi_smi_msg_received and into handle_one_recv_msg,
-which processes the message checking after ipmi_thread releases its
-locks.
+Also, regarding the superblock move routine, the starting point of the
+memset call to zerofill the block is incorrectly specified, which can
+cause a buffer overflow on file systems with block sizes greater than
+4KiB.  In addition, if the superblock is moved within a large block, it is
+necessary to assume the possibility that the data in the superblock will
+be destroyed by zero-filling before copying.  So fix these potential
+issues as well.
 
-Additionally,Kosuke Tatsukawa <tatsu@ab.jp.nec.com> reported that
-handle_new_recv_msgs calls ipmi_free_msg when handle_one_rcv_msg returns
-zero, so that the call to ipmi_free_msg in handle_one_rcv_msg introduced
-another panic when "ipmitool sensor list" was run in a loop. He
-submitted this part of the patch.
-
-+free_msg:
-+               requeue = 0;
-+               goto out;
-
-Reported by: Osamu Samukawa <osa-samukawa@tg.jp.nec.com>
-Characterized by: Kosuke Tatsukawa <tatsu@ab.jp.nec.com>
-Signed-off-by: Tony Camuso <tcamuso@redhat.com>
-Fixes: e1891cffd4c4 ("ipmi: Make the smi watcher be disabled immediately when not needed")
-Cc: stable@vger.kernel.org # 5.1
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Link: https://lkml.kernel.org/r/20230609035732.20426-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/00000000000030000a05e981f475@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |  114 ++++++++++++++++++------------------
- 1 file changed, 57 insertions(+), 57 deletions(-)
+ fs/nilfs2/segbuf.c  |    6 ++++++
+ fs/nilfs2/segment.c |    7 +++++++
+ fs/nilfs2/super.c   |   23 ++++++++++++++++++++++-
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -4239,7 +4239,53 @@ static int handle_one_recv_msg(struct ip
- 	int chan;
+--- a/fs/nilfs2/segbuf.c
++++ b/fs/nilfs2/segbuf.c
+@@ -101,6 +101,12 @@ int nilfs_segbuf_extend_segsum(struct ni
+ 	if (unlikely(!bh))
+ 		return -ENOMEM;
  
- 	ipmi_debug_msg("Recv:", msg->rsp, msg->rsp_size);
--	if (msg->rsp_size < 2) {
++	lock_buffer(bh);
++	if (!buffer_uptodate(bh)) {
++		memset(bh->b_data, 0, bh->b_size);
++		set_buffer_uptodate(bh);
++	}
++	unlock_buffer(bh);
+ 	nilfs_segbuf_add_segsum_buffer(segbuf, bh);
+ 	return 0;
+ }
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -984,10 +984,13 @@ static void nilfs_segctor_fill_in_super_
+ 	unsigned int isz, srsz;
+ 
+ 	bh_sr = NILFS_LAST_SEGBUF(&sci->sc_segbufs)->sb_super_root;
 +
-+	if ((msg->data_size >= 2)
-+	    && (msg->data[0] == (IPMI_NETFN_APP_REQUEST << 2))
-+	    && (msg->data[1] == IPMI_SEND_MSG_CMD)
-+	    && (msg->user_data == NULL)) {
-+
-+		if (intf->in_shutdown)
-+			goto free_msg;
++	lock_buffer(bh_sr);
+ 	raw_sr = (struct nilfs_super_root *)bh_sr->b_data;
+ 	isz = nilfs->ns_inode_size;
+ 	srsz = NILFS_SR_BYTES(isz);
+ 
++	raw_sr->sr_sum = 0;  /* Ensure initialization within this update */
+ 	raw_sr->sr_bytes = cpu_to_le16(srsz);
+ 	raw_sr->sr_nongc_ctime
+ 		= cpu_to_le64(nilfs_doing_gc() ?
+@@ -1001,6 +1004,8 @@ static void nilfs_segctor_fill_in_super_
+ 	nilfs_write_inode_common(nilfs->ns_sufile, (void *)raw_sr +
+ 				 NILFS_SR_SUFILE_OFFSET(isz), 1);
+ 	memset((void *)raw_sr + srsz, 0, nilfs->ns_blocksize - srsz);
++	set_buffer_uptodate(bh_sr);
++	unlock_buffer(bh_sr);
+ }
+ 
+ static void nilfs_redirty_inodes(struct list_head *head)
+@@ -1778,6 +1783,7 @@ static void nilfs_abort_logs(struct list
+ 	list_for_each_entry(segbuf, logs, sb_list) {
+ 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
+ 				    b_assoc_buffers) {
++			clear_buffer_uptodate(bh);
+ 			if (bh->b_page != bd_page) {
+ 				if (bd_page)
+ 					end_page_writeback(bd_page);
+@@ -1789,6 +1795,7 @@ static void nilfs_abort_logs(struct list
+ 				    b_assoc_buffers) {
+ 			clear_buffer_async_write(bh);
+ 			if (bh == segbuf->sb_super_root) {
++				clear_buffer_uptodate(bh);
+ 				if (bh->b_page != bd_page) {
+ 					end_page_writeback(bd_page);
+ 					bd_page = bh->b_page;
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -374,10 +374,31 @@ static int nilfs_move_2nd_super(struct s
+ 		goto out;
+ 	}
+ 	nsbp = (void *)nsbh->b_data + offset;
+-	memset(nsbp, 0, nilfs->ns_blocksize);
+ 
++	lock_buffer(nsbh);
+ 	if (sb2i >= 0) {
++		/*
++		 * The position of the second superblock only changes by 4KiB,
++		 * which is larger than the maximum superblock data size
++		 * (= 1KiB), so there is no need to use memmove() to allow
++		 * overlap between source and destination.
++		 */
+ 		memcpy(nsbp, nilfs->ns_sbp[sb2i], nilfs->ns_sbsize);
 +
 +		/*
-+		 * This is the local response to a command send, start
-+		 * the timer for these.  The user_data will not be
-+		 * NULL if this is a response send, and we will let
-+		 * response sends just go through.
++		 * Zero fill after copy to avoid overwriting in case of move
++		 * within the same block.
 +		 */
++		memset(nsbh->b_data, 0, offset);
++		memset((void *)nsbp + nilfs->ns_sbsize, 0,
++		       nsbh->b_size - offset - nilfs->ns_sbsize);
++	} else {
++		memset(nsbh->b_data, 0, nsbh->b_size);
++	}
++	set_buffer_uptodate(nsbh);
++	unlock_buffer(nsbh);
 +
-+		/*
-+		 * Check for errors, if we get certain errors (ones
-+		 * that mean basically we can try again later), we
-+		 * ignore them and start the timer.  Otherwise we
-+		 * report the error immediately.
-+		 */
-+		if ((msg->rsp_size >= 3) && (msg->rsp[2] != 0)
-+		    && (msg->rsp[2] != IPMI_NODE_BUSY_ERR)
-+		    && (msg->rsp[2] != IPMI_LOST_ARBITRATION_ERR)
-+		    && (msg->rsp[2] != IPMI_BUS_ERR)
-+		    && (msg->rsp[2] != IPMI_NAK_ON_WRITE_ERR)) {
-+			int ch = msg->rsp[3] & 0xf;
-+			struct ipmi_channel *chans;
-+
-+			/* Got an error sending the message, handle it. */
-+
-+			chans = READ_ONCE(intf->channel_list)->c;
-+			if ((chans[ch].medium == IPMI_CHANNEL_MEDIUM_8023LAN)
-+			    || (chans[ch].medium == IPMI_CHANNEL_MEDIUM_ASYNC))
-+				ipmi_inc_stat(intf, sent_lan_command_errs);
-+			else
-+				ipmi_inc_stat(intf, sent_ipmb_command_errs);
-+			intf_err_seq(intf, msg->msgid, msg->rsp[2]);
-+		} else
-+			/* The message was sent, start the timer. */
-+			intf_start_seq_timer(intf, msg->msgid);
-+free_msg:
-+		requeue = 0;
-+		goto out;
-+
-+	} else if (msg->rsp_size < 2) {
- 		/* Message is too small to be correct. */
- 		dev_warn(intf->si_dev,
- 			 PFX "BMC returned to small a message for netfn %x cmd %x, got %d bytes\n",
-@@ -4496,62 +4542,16 @@ void ipmi_smi_msg_received(struct ipmi_s
- 	unsigned long flags = 0; /* keep us warning-free. */
- 	int run_to_completion = intf->run_to_completion;
- 
--	if ((msg->data_size >= 2)
--	    && (msg->data[0] == (IPMI_NETFN_APP_REQUEST << 2))
--	    && (msg->data[1] == IPMI_SEND_MSG_CMD)
--	    && (msg->user_data == NULL)) {
--
--		if (intf->in_shutdown)
--			goto free_msg;
--
--		/*
--		 * This is the local response to a command send, start
--		 * the timer for these.  The user_data will not be
--		 * NULL if this is a response send, and we will let
--		 * response sends just go through.
--		 */
--
--		/*
--		 * Check for errors, if we get certain errors (ones
--		 * that mean basically we can try again later), we
--		 * ignore them and start the timer.  Otherwise we
--		 * report the error immediately.
--		 */
--		if ((msg->rsp_size >= 3) && (msg->rsp[2] != 0)
--		    && (msg->rsp[2] != IPMI_NODE_BUSY_ERR)
--		    && (msg->rsp[2] != IPMI_LOST_ARBITRATION_ERR)
--		    && (msg->rsp[2] != IPMI_BUS_ERR)
--		    && (msg->rsp[2] != IPMI_NAK_ON_WRITE_ERR)) {
--			int ch = msg->rsp[3] & 0xf;
--			struct ipmi_channel *chans;
--
--			/* Got an error sending the message, handle it. */
--
--			chans = READ_ONCE(intf->channel_list)->c;
--			if ((chans[ch].medium == IPMI_CHANNEL_MEDIUM_8023LAN)
--			    || (chans[ch].medium == IPMI_CHANNEL_MEDIUM_ASYNC))
--				ipmi_inc_stat(intf, sent_lan_command_errs);
--			else
--				ipmi_inc_stat(intf, sent_ipmb_command_errs);
--			intf_err_seq(intf, msg->msgid, msg->rsp[2]);
--		} else
--			/* The message was sent, start the timer. */
--			intf_start_seq_timer(intf, msg->msgid);
--
--free_msg:
--		ipmi_free_smi_msg(msg);
--	} else {
--		/*
--		 * To preserve message order, we keep a queue and deliver from
--		 * a tasklet.
--		 */
--		if (!run_to_completion)
--			spin_lock_irqsave(&intf->waiting_rcv_msgs_lock, flags);
--		list_add_tail(&msg->link, &intf->waiting_rcv_msgs);
--		if (!run_to_completion)
--			spin_unlock_irqrestore(&intf->waiting_rcv_msgs_lock,
--					       flags);
--	}
-+	/*
-+	 * To preserve message order, we keep a queue and deliver from
-+	 * a tasklet.
-+	 */
-+	if (!run_to_completion)
-+		spin_lock_irqsave(&intf->waiting_rcv_msgs_lock, flags);
-+	list_add_tail(&msg->link, &intf->waiting_rcv_msgs);
-+	if (!run_to_completion)
-+		spin_unlock_irqrestore(&intf->waiting_rcv_msgs_lock,
-+				       flags);
- 
- 	if (!run_to_completion)
- 		spin_lock_irqsave(&intf->xmit_msgs_lock, flags);
++	if (sb2i >= 0) {
+ 		brelse(nilfs->ns_sbh[sb2i]);
+ 		nilfs->ns_sbh[sb2i] = nsbh;
+ 		nilfs->ns_sbp[sb2i] = nsbp;
 
 
