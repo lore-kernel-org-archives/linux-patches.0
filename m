@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA83E11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEA8C433C8;
-	Mon, 26 Jun 2023 18:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB4211CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFE3C433C0;
+	Mon, 26 Jun 2023 18:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805111;
-	bh=xx1kqnwRUMOCGElY5ot1Rv6y5BbTqyCpHmkjn+0PJlY=;
+	s=korg; t=1687805114;
+	bh=KVPShYAaCqWaqBIzp8kFNJgddeo+w+oTuVnoYHA2/+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2zfDKuOkTVv0zrUBVspQx7jqGvkS8BcShFT7lPKBIfeRI/QDuqneSdcZ7AYgEFoO
-	 hxufyWzhAyD3AAV5ficLeMeHd+fYuqLyaNPGgzuOzlrrJd9RpOVVg6qVafZdNrEKLS
-	 6XYpL310CnPWmajIyFbwf7hVLQ0C9a+Bz9gbCwXQ=
+	b=DUdJoVczGkQOSOqjv+EACJhPXjIm8/CzXAWUG+ahbP6GWxOQaw/Gaenf0xmAPFx/1
+	 L790khGFOxvW3+chl/qqmY9VU44zSsH6Pgh8CnFKIR9sWEoPvxLa3x91OytdwQA4uf
+	 EabnMLuyRgPdf5p9tALAQH+ZwolJ9Zp8xFufiyds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 53/81] netfilter: nft_set_pipapo: .walk does not deal with generations
-Date: Mon, 26 Jun 2023 20:12:35 +0200
-Message-ID: <20230626180746.626790496@linuxfoundation.org>
+Subject: [PATCH 5.10 54/81] netfilter: nf_tables: disallow element updates of bound anonymous sets
+Date: Mon, 26 Jun 2023 20:12:36 +0200
+Message-ID: <20230626180746.663684389@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -36,42 +36,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 2b84e215f87443c74ac0aa7f76bb172d43a87033 ]
+[ Upstream commit c88c535b592d3baeee74009f3eceeeaf0fdd5e1b ]
 
-The .walk callback iterates over the current active set, but it might be
-useful to iterate over the next generation set. Use the generation mask
-to determine what set view (either current or next generation) is use
-for the walk iteration.
+Anonymous sets come with NFT_SET_CONSTANT from userspace. Although API
+allows to create anonymous sets without NFT_SET_CONSTANT, it makes no
+sense to allow to add and to delete elements for bound anonymous sets.
 
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Fixes: 96518518cc41 ("netfilter: add nftables")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 30cf0673d6c19..eb5934eb3adfc 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1949,12 +1949,16 @@ static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
- 			    struct nft_set_iter *iter)
- {
- 	struct nft_pipapo *priv = nft_set_priv(set);
-+	struct net *net = read_pnet(&set->net);
- 	struct nft_pipapo_match *m;
- 	struct nft_pipapo_field *f;
- 	int i, r;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index fe51cedd9cc3c..92ea3332cdda3 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5460,7 +5460,8 @@ static int nf_tables_newsetelem(struct net *net, struct sock *nlsk,
+ 	if (IS_ERR(set))
+ 		return PTR_ERR(set);
  
- 	rcu_read_lock();
--	m = rcu_dereference(priv->match);
-+	if (iter->genmask == nft_genmask_cur(net))
-+		m = rcu_dereference(priv->match);
-+	else
-+		m = priv->clone;
+-	if (!list_empty(&set->bindings) && set->flags & NFT_SET_CONSTANT)
++	if (!list_empty(&set->bindings) &&
++	    (set->flags & (NFT_SET_CONSTANT | NFT_SET_ANONYMOUS)))
+ 		return -EBUSY;
  
- 	if (unlikely(!m))
- 		goto out;
+ 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
+@@ -5666,7 +5667,9 @@ static int nf_tables_delsetelem(struct net *net, struct sock *nlsk,
+ 	set = nft_set_lookup(ctx.table, nla[NFTA_SET_ELEM_LIST_SET], genmask);
+ 	if (IS_ERR(set))
+ 		return PTR_ERR(set);
+-	if (!list_empty(&set->bindings) && set->flags & NFT_SET_CONSTANT)
++
++	if (!list_empty(&set->bindings) &&
++	    (set->flags & (NFT_SET_CONSTANT | NFT_SET_ANONYMOUS)))
+ 		return -EBUSY;
+ 
+ 	if (nla[NFTA_SET_ELEM_LIST_ELEMENTS] == NULL) {
 -- 
 2.39.2
 
