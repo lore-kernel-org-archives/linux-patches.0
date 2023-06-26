@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C61134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67308C433C0;
-	Mon, 26 Jun 2023 18:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4C1134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59152C433C8;
+	Mon, 26 Jun 2023 18:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803562;
-	bh=WeN4srA0DkEZQlg3rpa5C9MuLxMp0F6httUrlXchiiU=;
+	s=korg; t=1687803565;
+	bh=OM6a/IlQykWJ/Mcfc6wtWyvyuVoTz1e/0DbcrUGWN04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZLvjWJZNsyRiV8tO0jtj5sGMApWkJmbQWUxNAeCAEp2ZXhK5Dn15z80IIgCiNGIf
-	 AxF+aFJgRJB5zkzEuSDt10IA4FkjRahFaEU1XAi9R1fztXzc4HqaDsE0MfQjNsDAb2
-	 2+FKWMVm3l/HD9/eO65UiLU6xuqAPKQ6+GuXeogk=
+	b=S88cYLPI3QXvhcj+63WkfbSpFByQC7e4Wag3r7w9eC6mXqJzygp3i2TtpeSFmi+2I
+	 /Mc4UAkTwLQ/a//2OzqPUPIWsYOGeQk5uA31frBcIT8gvmf6mUGlRW2jLWOs260kGu
+	 FMVHitQsreWkbf65esVLHV6iefyYdLfkFX0k6FTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maxim@isovalent.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yhs@fb.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>
-Subject: [PATCH 6.3 104/199] bpf: Fix verifier id tracking of scalars on spill
-Date: Mon, 26 Jun 2023 20:10:10 +0200
-Message-ID: <20230626180810.213201476@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Benedict Wong <benedictwong@google.com>,
+	Yan Yan <evitayan@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 105/199] xfrm: fix inbound ipv4/udp/esp packets to UDPv6 dualstack sockets
+Date: Mon, 26 Jun 2023 20:10:11 +0200
+Message-ID: <20230626180810.255438712@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -37,69 +40,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Mikityanskiy <maxim@isovalent.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-[ Upstream commit 713274f1f2c896d37017efee333fd44149710119 ]
+[ Upstream commit 1166a530a84758bb9e6b448fc8c195ed413f5ded ]
 
-The following scenario describes a bug in the verifier where it
-incorrectly concludes about equivalent scalar IDs which could lead to
-verifier bypass in privileged mode:
+Before Linux v5.8 an AF_INET6 SOCK_DGRAM (udp/udplite) socket
+with SOL_UDP, UDP_ENCAP, UDP_ENCAP_ESPINUDP{,_NON_IKE} enabled
+would just unconditionally use xfrm4_udp_encap_rcv(), afterwards
+such a socket would use the newly added xfrm6_udp_encap_rcv()
+which only handles IPv6 packets.
 
-1. Prepare a 32-bit rogue number.
-2. Put the rogue number into the upper half of a 64-bit register, and
-   roll a random (unknown to the verifier) bit in the lower half. The
-   rest of the bits should be zero (although variations are possible).
-3. Assign an ID to the register by MOVing it to another arbitrary
-   register.
-4. Perform a 32-bit spill of the register, then perform a 32-bit fill to
-   another register. Due to a bug in the verifier, the ID will be
-   preserved, although the new register will contain only the lower 32
-   bits, i.e. all zeros except one random bit.
-
-At this point there are two registers with different values but the same
-ID, which means the integrity of the verifier state has been corrupted.
-
-5. Compare the new 32-bit register with 0. In the branch where it's
-   equal to 0, the verifier will believe that the original 64-bit
-   register is also 0, because it has the same ID, but its actual value
-   still contains the rogue number in the upper half.
-   Some optimizations of the verifier prevent the actual bypass, so
-   extra care is needed: the comparison must be between two registers,
-   and both branches must be reachable (this is why one random bit is
-   needed). Both branches are still suitable for the bypass.
-6. Right shift the original register by 32 bits to pop the rogue number.
-7. Use the rogue number as an offset with any pointer. The verifier will
-   believe that the offset is 0, while in reality it's the given number.
-
-The fix is similar to the 32-bit BPF_MOV handling in check_alu_op for
-SCALAR_VALUE. If the spill is narrowing the actual register value, don't
-keep the ID, make sure it's reset to 0.
-
-Fixes: 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
-Signed-off-by: Maxim Mikityanskiy <maxim@isovalent.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Andrii Nakryiko <andrii@kernel.org> # Checked veristat delta
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20230607123951.558971-2-maxtram95@gmail.com
+Cc: Sabrina Dubroca <sd@queasysnail.net>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Benedict Wong <benedictwong@google.com>
+Cc: Yan Yan <evitayan@google.com>
+Fixes: 0146dca70b87 ("xfrm: add support for UDPv6 encapsulation of ESP")
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/xfrm4_input.c | 1 +
+ net/ipv6/xfrm6_input.c | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 1f6c0c5a1741d..b039990137444 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -3559,6 +3559,9 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 				return err;
- 		}
- 		save_register_state(state, spi, reg, size);
-+		/* Break the relation on a narrowing spill. */
-+		if (fls64(reg->umax_value) > BITS_PER_BYTE * size)
-+			state->stack[spi].spilled_ptr.id = 0;
- 	} else if (!reg && !(off % BPF_REG_SIZE) && is_bpf_st_mem(insn) &&
- 		   insn->imm != 0 && env->bpf_capable) {
- 		struct bpf_reg_state fake_reg = {};
+diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
+index ad2afeef4f106..eac206a290d05 100644
+--- a/net/ipv4/xfrm4_input.c
++++ b/net/ipv4/xfrm4_input.c
+@@ -164,6 +164,7 @@ int xfrm4_udp_encap_rcv(struct sock *sk, struct sk_buff *skb)
+ 	kfree_skb(skb);
+ 	return 0;
+ }
++EXPORT_SYMBOL(xfrm4_udp_encap_rcv);
+ 
+ int xfrm4_rcv(struct sk_buff *skb)
+ {
+diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
+index 04cbeefd89828..4907ab241d6be 100644
+--- a/net/ipv6/xfrm6_input.c
++++ b/net/ipv6/xfrm6_input.c
+@@ -86,6 +86,9 @@ int xfrm6_udp_encap_rcv(struct sock *sk, struct sk_buff *skb)
+ 	__be32 *udpdata32;
+ 	__u16 encap_type = up->encap_type;
+ 
++	if (skb->protocol == htons(ETH_P_IP))
++		return xfrm4_udp_encap_rcv(sk, skb);
++
+ 	/* if this is not encapsulated socket, then just return now */
+ 	if (!encap_type)
+ 		return 1;
 -- 
 2.39.2
 
