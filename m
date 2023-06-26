@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A5EC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52E7C433C9;
-	Mon, 26 Jun 2023 18:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38005C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE9AC433C8;
+	Mon, 26 Jun 2023 18:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804634;
-	bh=WojL8egNg8VQgEXFo1FB9It8jiQ2ip8ME0OModaYAJo=;
+	s=korg; t=1687804637;
+	bh=nOJF3uqruE2dvtotTaomKVO4u4lvjW+nE7ogsJraftg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s//bxR9xNE38nU8aLvJr+l/sr376X5FqjTB9rHxjOA6xrSqLlvxaQ/Jf3r6ydNz98
-	 UFNm25wZle/8pggYrLKHOYD9FSLPQ05yDUfKTsg5TtlblwqzrM/pLk5DUNsNeoM1Qa
-	 DAz26XZ+m+9wIa3l7zHu762X73Ke8h9chQaJoUJM=
+	b=JA/xwNTVRC9VebVK31BM6wyXhiR2sFirYQsOyZBOg8EdBhrGAE9X/H8QSNuSRdekF
+	 7ceNEMJyNNxjmRctCcSV4wNkOgLP+Oz7sCvfx4Of9ZLhvYTKY2tK8ck6F6a66UvGZB
+	 eMNaaYdPgVppMKm6K4xDUK35EkbaxjongVoP3shU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 50/60] s390/cio: unregister device when the only path is gone
-Date: Mon, 26 Jun 2023 20:12:29 +0200
-Message-ID: <20230626180741.631065898@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.4 24/60] x86/mm: Avoid using set_pgd() outside of real PGD pages
+Date: Mon, 26 Jun 2023 20:12:03 +0200
+Message-ID: <20230626180740.516271870@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -36,62 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 89c0c62e947a01e7a36b54582fd9c9e346170255 ]
+commit d082d48737c75d2b3cc1f972b8c8674c25131534 upstream.
 
-Currently, if the device is offline and all the channel paths are
-either configured or varied offline, the associated subchannel gets
-unregistered. Don't unregister the subchannel, instead unregister
-offline device.
+KPTI keeps around two PGDs: one for userspace and another for the
+kernel. Among other things, set_pgd() contains infrastructure to
+ensure that updates to the kernel PGD are reflected in the user PGD
+as well.
 
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+One side-effect of this is that set_pgd() expects to be passed whole
+pages.  Unfortunately, init_trampoline_kaslr() passes in a single entry:
+'trampoline_pgd_entry'.
+
+When KPTI is on, set_pgd() will update 'trampoline_pgd_entry' (an
+8-Byte globally stored [.bss] variable) and will then proceed to
+replicate that value into the non-existent neighboring user page
+(located +4k away), leading to the corruption of other global [.bss]
+stored variables.
+
+Fix it by directly assigning 'trampoline_pgd_entry' and avoiding
+set_pgd().
+
+[ dhansen: tweak subject and changelog ]
+
+Fixes: 0925dda5962e ("x86/mm/KASLR: Use only one PUD entry for real mode trampoline")
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/all/20230614163859.924309-1-lee@kernel.org/g
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/device.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/mm/kaslr.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
-index 23e9227e60fd7..d7ca75efb49fb 100644
---- a/drivers/s390/cio/device.c
-+++ b/drivers/s390/cio/device.c
-@@ -1385,6 +1385,7 @@ void ccw_device_set_notoper(struct ccw_device *cdev)
- enum io_sch_action {
- 	IO_SCH_UNREG,
- 	IO_SCH_ORPH_UNREG,
-+	IO_SCH_UNREG_CDEV,
- 	IO_SCH_ATTACH,
- 	IO_SCH_UNREG_ATTACH,
- 	IO_SCH_ORPH_ATTACH,
-@@ -1417,7 +1418,7 @@ static enum io_sch_action sch_get_action(struct subchannel *sch)
+--- a/arch/x86/mm/kaslr.c
++++ b/arch/x86/mm/kaslr.c
+@@ -182,11 +182,11 @@ static void __meminit init_trampoline_pu
+ 		set_p4d(p4d_tramp,
+ 			__p4d(_KERNPG_TABLE | __pa(pud_page_tramp)));
+ 
+-		set_pgd(&trampoline_pgd_entry,
+-			__pgd(_KERNPG_TABLE | __pa(p4d_page_tramp)));
++		trampoline_pgd_entry =
++			__pgd(_KERNPG_TABLE | __pa(p4d_page_tramp));
+ 	} else {
+-		set_pgd(&trampoline_pgd_entry,
+-			__pgd(_KERNPG_TABLE | __pa(pud_page_tramp)));
++		trampoline_pgd_entry =
++			__pgd(_KERNPG_TABLE | __pa(pud_page_tramp));
  	}
- 	if ((sch->schib.pmcw.pam & sch->opm) == 0) {
- 		if (ccw_device_notify(cdev, CIO_NO_PATH) != NOTIFY_OK)
--			return IO_SCH_UNREG;
-+			return IO_SCH_UNREG_CDEV;
- 		return IO_SCH_DISC;
- 	}
- 	if (device_is_disconnected(cdev))
-@@ -1479,6 +1480,7 @@ static int io_subchannel_sch_event(struct subchannel *sch, int process)
- 	case IO_SCH_ORPH_ATTACH:
- 		ccw_device_set_disconnected(cdev);
- 		break;
-+	case IO_SCH_UNREG_CDEV:
- 	case IO_SCH_UNREG_ATTACH:
- 	case IO_SCH_UNREG:
- 		if (!cdev)
-@@ -1512,6 +1514,7 @@ static int io_subchannel_sch_event(struct subchannel *sch, int process)
- 		if (rc)
- 			goto out;
- 		break;
-+	case IO_SCH_UNREG_CDEV:
- 	case IO_SCH_UNREG_ATTACH:
- 		spin_lock_irqsave(sch->lock, flags);
- 		if (cdev->private->flags.resuming) {
--- 
-2.39.2
-
+ }
+ 
 
 
