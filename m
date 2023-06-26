@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D424A13AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43008C433C0;
-	Mon, 26 Jun 2023 18:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA50213AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DB1C433C8;
+	Mon, 26 Jun 2023 18:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804015;
-	bh=63HRqoZ97aVX8/+9AGQxERkNCOLukHfX0jNI7gW1kO4=;
+	s=korg; t=1687804018;
+	bh=D0zZBGq7+jwn8lW4SJbamJJBlhamxxsvd+QSsXqkCqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RfEkmFb2oZuZT4XTAqVVwlG3ssVhRmQhSNjLpY210ddZVpdsNthOSBUz0+9pcUBlv
-	 wrv6NUJnUG9u+4BPOMKT+mIcpUul+ZdJVe808MTelQQX8i3+fY6ybEB1t1Be/jeBjS
-	 cjJYi42btRC4UpavoCxKVGbO5fQyFNutgTb3aexA=
+	b=2DzHpV5ZygcWDfV+meUC4VzN1GHpQcDsOiZtvTNLanmGdcIGrFrZkv6aDNL4eaqHN
+	 cPd1WZYF+cDi0G8GI2FklgqjMaTKIUgNBd9IxKHRL7T1isHuG9nHnbE59NkBmhMSFG
+	 +Q5QS2hhOr5jqI9ocPPZQ6mf0laqrWUN8LJ6tZPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Krause <minipli@grsecurity.net>,
-	"Bhatnagar, Rishabh" <risbhat@amazon.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Richard W.M. Jones" <rjones@redhat.com>,
-	SeongJae Park <sj@kernel.org>
-Subject: [PATCH 6.1 013/170] tick/common: Align tick period during sched_timer setup
-Date: Mon, 26 Jun 2023 20:09:42 +0200
-Message-ID: <20230626180801.146886575@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 014/170] selftests: mptcp: remove duplicated entries in usage
+Date: Mon, 26 Jun 2023 20:09:43 +0200
+Message-ID: <20230626180801.197139853@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -38,95 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 13bb06f8dd42071cb9a49f6e21099eea05d4b856 upstream.
+commit 0a85264e48b642d360720589fdb837a3643fb9b0 upstream.
 
-The tick period is aligned very early while the first clock_event_device is
-registered. At that point the system runs in periodic mode and switches
-later to one-shot mode if possible.
+mptcp_connect tool was printing some duplicated entries when showing how
+to use it: -j -l -r
 
-The next wake-up event is programmed based on the aligned value
-(tick_next_period) but the delta value, that is used to program the
-clock_event_device, is computed based on ktime_get().
+While at it, I also:
 
-With the subtracted offset, the device fires earlier than the exact time
-frame. With a large enough offset the system programs the timer for the
-next wake-up and the remaining time left is too small to make any boot
-progress. The system hangs.
+ - moved the very few entries that were not sorted,
 
-Move the alignment later to the setup of tick_sched timer. At this point
-the system switches to oneshot mode and a high resolution clocksource is
-available. At this point it is safe to align tick_next_period because
-ktime_get() will now return accurate (not jiffies based) time.
+ - added -R that was missing since
+   commit 8a4b910d005d ("mptcp: selftests: add rcvbuf set option"),
 
-[bigeasy: Patch description + testing].
+ - removed the -u parameter that has been removed in
+   commit f730b65c9d85 ("selftests: mptcp: try to set mptcp ulp mode in different sk states").
 
-Fixes: e9523a0d81899 ("tick/common: Align tick period with the HZ tick.")
-Reported-by: Mathias Krause <minipli@grsecurity.net>
-Reported-by: "Bhatnagar, Rishabh" <risbhat@amazon.com>
-Suggested-by: Mathias Krause <minipli@grsecurity.net>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Richard W.M. Jones <rjones@redhat.com>
-Tested-by: Mathias Krause <minipli@grsecurity.net>
-Acked-by: SeongJae Park <sj@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/5a56290d-806e-b9a5-f37c-f21958b5a8c0@grsecurity.net
-Link: https://lore.kernel.org/12c6f9a3-d087-b824-0d05-0d18c9bc1bf3@amazon.com
-Link: https://lore.kernel.org/r/20230615091830.RxMV2xf_@linutronix.de
+No need to backport this, it is just an internal tool used by our
+selftests. The help menu is mainly useful for MPTCP kernel devs.
+
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/tick-common.c |   13 +------------
- kernel/time/tick-sched.c  |   13 ++++++++++++-
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -218,19 +218,8 @@ static void tick_setup_device(struct tic
- 		 * this cpu:
- 		 */
- 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
--			ktime_t next_p;
--			u32 rem;
--
- 			tick_do_timer_cpu = cpu;
--
--			next_p = ktime_get();
--			div_u64_rem(next_p, TICK_NSEC, &rem);
--			if (rem) {
--				next_p -= rem;
--				next_p += TICK_NSEC;
--			}
--
--			tick_next_period = next_p;
-+			tick_next_period = ktime_get();
- #ifdef CONFIG_NO_HZ_FULL
- 			/*
- 			 * The boot CPU may be nohz_full, in which case set
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -161,8 +161,19 @@ static ktime_t tick_init_jiffy_update(vo
- 	raw_spin_lock(&jiffies_lock);
- 	write_seqcount_begin(&jiffies_seq);
- 	/* Did we start the jiffies update yet ? */
--	if (last_jiffies_update == 0)
-+	if (last_jiffies_update == 0) {
-+		u32 rem;
-+
-+		/*
-+		 * Ensure that the tick is aligned to a multiple of
-+		 * TICK_NSEC.
-+		 */
-+		div_u64_rem(tick_next_period, TICK_NSEC, &rem);
-+		if (rem)
-+			tick_next_period += TICK_NSEC - rem;
-+
- 		last_jiffies_update = tick_next_period;
-+	}
- 	period = last_jiffies_update;
- 	write_seqcount_end(&jiffies_seq);
- 	raw_spin_unlock(&jiffies_lock);
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
+@@ -98,8 +98,8 @@ static struct cfg_sockopt_types cfg_sock
+ static void die_usage(void)
+ {
+ 	fprintf(stderr, "Usage: mptcp_connect [-6] [-c cmsg] [-f offset] [-i file] [-I num] [-j] [-l] "
+-		"[-m mode] [-M mark] [-o option] [-p port] [-P mode] [-j] [-l] [-r num] "
+-		"[-s MPTCP|TCP] [-S num] [-r num] [-t num] [-T num] [-u] [-w sec] connect_address\n");
++		"[-m mode] [-M mark] [-o option] [-p port] [-P mode] [-r num] [-R num] "
++		"[-s MPTCP|TCP] [-S num] [-t num] [-T num] [-w sec] connect_address\n");
+ 	fprintf(stderr, "\t-6 use ipv6\n");
+ 	fprintf(stderr, "\t-c cmsg -- test cmsg type <cmsg>\n");
+ 	fprintf(stderr, "\t-f offset -- stop the I/O after receiving and sending the specified amount "
+@@ -118,13 +118,13 @@ static void die_usage(void)
+ 	fprintf(stderr, "\t-p num -- use port num\n");
+ 	fprintf(stderr,
+ 		"\t-P [saveWithPeek|saveAfterPeek] -- save data with/after MSG_PEEK form tcp socket\n");
+-	fprintf(stderr, "\t-t num -- set poll timeout to num\n");
+-	fprintf(stderr, "\t-T num -- set expected runtime to num ms\n");
+ 	fprintf(stderr, "\t-r num -- enable slow mode, limiting each write to num bytes "
+ 		"-- for remove addr tests\n");
+ 	fprintf(stderr, "\t-R num -- set SO_RCVBUF to num\n");
+ 	fprintf(stderr, "\t-s [MPTCP|TCP] -- use mptcp(default) or tcp sockets\n");
+ 	fprintf(stderr, "\t-S num -- set SO_SNDBUF to num\n");
++	fprintf(stderr, "\t-t num -- set poll timeout to num\n");
++	fprintf(stderr, "\t-T num -- set expected runtime to num ms\n");
+ 	fprintf(stderr, "\t-w num -- wait num sec before closing the socket\n");
+ 	exit(1);
+ }
 
 
