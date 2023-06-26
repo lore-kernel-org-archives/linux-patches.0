@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399513AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15593C433C8;
-	Mon, 26 Jun 2023 18:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED8B13AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED729C433C8;
+	Mon, 26 Jun 2023 18:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803998;
-	bh=VoCyN92JMw4IzOJxg/gH06Ss8/ZSL0OYhFeq2csDpCY=;
+	s=korg; t=1687804001;
+	bh=mFOcPboIVuuAJGtFNcK7kV9mQjo0V52vXHknO89E3YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZVa6Pd8Rm6dnfPx5NYDbhDazADVDWUjkA2gqra0k7fBWmA71fGNUSbabqShCx+D3
-	 DlmXeQl0DH0HUv5q5ZT1R68IE4Mk3fYzZLY/2iO1VeoqqPB+MZ/8xw14s/VADgAT77
-	 qomXsh2hwzGssfGwennoiowxbvM/hU1WqvWaFkWw=
+	b=0Tph0W0qukqbg3dTauaFeg8+RcgqRiLNemUc8tI1dLM3RkzGl2uO+VyC89ipQekwg
+	 KnB3idIHX6Ci7Wn4tKyCXUotqjEOqYl+U0tfXmP2WB0xGPd977cj8tiPsYWn8NLkA5
+	 f8+qZw5BZCbxvFltwLjP0kzjE6PyaNtWkf1nMec8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inki Dae <inki.dae@samsung.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jiri Pirko <jiri@resnulli.us>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 37/41] drm/exynos: vidi: fix a wrong error return
-Date: Mon, 26 Jun 2023 20:12:00 +0200
-Message-ID: <20230626180737.649452010@linuxfoundation.org>
+Subject: [PATCH 4.19 28/41] sch_netem: acquire qdisc lock in netem_change()
+Date: Mon, 26 Jun 2023 20:11:51 +0200
+Message-ID: <20230626180737.330781577@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -35,36 +41,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Inki Dae <inki.dae@samsung.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4a059559809fd1ddbf16f847c4d2237309c08edf ]
+[ Upstream commit 2174a08db80d1efeea382e25ac41c4e7511eb6d6 ]
 
-Fix a wrong error return by dropping an error return.
+syzbot managed to trigger a divide error [1] in netem.
 
-When vidi driver is remvoed, if ctx->raw_edid isn't same as fake_edid_info
-then only what we have to is to free ctx->raw_edid so that driver removing
-can work correctly - it's not an error case.
+It could happen if q->rate changes while netem_enqueue()
+is running, since q->rate is read twice.
 
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+It turns out netem_change() always lacked proper synchronization.
+
+[1]
+divide error: 0000 [#1] SMP KASAN
+CPU: 1 PID: 7867 Comm: syz-executor.1 Not tainted 6.1.30-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
+RIP: 0010:div64_u64 include/linux/math64.h:69 [inline]
+RIP: 0010:packet_time_ns net/sched/sch_netem.c:357 [inline]
+RIP: 0010:netem_enqueue+0x2067/0x36d0 net/sched/sch_netem.c:576
+Code: 89 e2 48 69 da 00 ca 9a 3b 42 80 3c 28 00 4c 8b a4 24 88 00 00 00 74 0d 4c 89 e7 e8 c3 4f 3b fd 48 8b 4c 24 18 48 89 d8 31 d2 <49> f7 34 24 49 01 c7 4c 8b 64 24 48 4d 01 f7 4c 89 e3 48 c1 eb 03
+RSP: 0018:ffffc9000dccea60 EFLAGS: 00010246
+RAX: 000001a442624200 RBX: 000001a442624200 RCX: ffff888108a4f000
+RDX: 0000000000000000 RSI: 000000000000070d RDI: 000000000000070d
+RBP: ffffc9000dcceb90 R08: ffffffff849c5e26 R09: fffffbfff10e1297
+R10: 0000000000000000 R11: dffffc0000000001 R12: ffff888108a4f358
+R13: dffffc0000000000 R14: 0000001a8cd9a7ec R15: 0000000000000000
+FS: 00007fa73fe18700(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fa73fdf7718 CR3: 000000011d36e000 CR4: 0000000000350ee0
+Call Trace:
+<TASK>
+[<ffffffff84714385>] __dev_xmit_skb net/core/dev.c:3931 [inline]
+[<ffffffff84714385>] __dev_queue_xmit+0xcf5/0x3370 net/core/dev.c:4290
+[<ffffffff84d22df2>] dev_queue_xmit include/linux/netdevice.h:3030 [inline]
+[<ffffffff84d22df2>] neigh_hh_output include/net/neighbour.h:531 [inline]
+[<ffffffff84d22df2>] neigh_output include/net/neighbour.h:545 [inline]
+[<ffffffff84d22df2>] ip_finish_output2+0xb92/0x10d0 net/ipv4/ip_output.c:235
+[<ffffffff84d21e63>] __ip_finish_output+0xc3/0x2b0
+[<ffffffff84d10a81>] ip_finish_output+0x31/0x2a0 net/ipv4/ip_output.c:323
+[<ffffffff84d10f14>] NF_HOOK_COND include/linux/netfilter.h:298 [inline]
+[<ffffffff84d10f14>] ip_output+0x224/0x2a0 net/ipv4/ip_output.c:437
+[<ffffffff84d123b5>] dst_output include/net/dst.h:444 [inline]
+[<ffffffff84d123b5>] ip_local_out net/ipv4/ip_output.c:127 [inline]
+[<ffffffff84d123b5>] __ip_queue_xmit+0x1425/0x2000 net/ipv4/ip_output.c:542
+[<ffffffff84d12fdc>] ip_queue_xmit+0x4c/0x70 net/ipv4/ip_output.c:556
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Stephen Hemminger <stephen@networkplumber.org>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Cc: Jiri Pirko <jiri@resnulli.us>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230620184425.1179809-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_vidi.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/sched/sch_netem.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-index 19697c1362d8f..947c9627c565a 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -480,8 +480,6 @@ static int vidi_remove(struct platform_device *pdev)
- 	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
- 		kfree(ctx->raw_edid);
- 		ctx->raw_edid = NULL;
--
--		return -EINVAL;
- 	}
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 31793af1a77bd..93548b9e07cf1 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -943,6 +943,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	if (ret < 0)
+ 		return ret;
  
- 	component_del(&pdev->dev, &vidi_component_ops);
++	sch_tree_lock(sch);
+ 	/* backup q->clg and q->loss_model */
+ 	old_clg = q->clg;
+ 	old_loss_model = q->loss_model;
+@@ -951,7 +952,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
+ 		if (ret) {
+ 			q->loss_model = old_loss_model;
+-			return ret;
++			goto unlock;
+ 		}
+ 	} else {
+ 		q->loss_model = CLG_RANDOM;
+@@ -1018,6 +1019,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	/* capping jitter to the range acceptable by tabledist() */
+ 	q->jitter = min_t(s64, abs(q->jitter), INT_MAX);
+ 
++unlock:
++	sch_tree_unlock(sch);
+ 	return ret;
+ 
+ get_table_failure:
+@@ -1027,7 +1030,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	 */
+ 	q->clg = old_clg;
+ 	q->loss_model = old_loss_model;
+-	return ret;
++
++	goto unlock;
+ }
+ 
+ static int netem_init(struct Qdisc *sch, struct nlattr *opt,
 -- 
 2.39.2
 
