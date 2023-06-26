@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B3A134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3135CC433C8;
-	Mon, 26 Jun 2023 18:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3559134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2167BC433C0;
+	Mon, 26 Jun 2023 18:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803876;
-	bh=3FkqOXNbYIBgDjIiFIHHZIAfxF/Ou7ED+aYCdk5snCs=;
+	s=korg; t=1687803879;
+	bh=vLQbXwcygw6NILeCjHqCwZleHo5s7H+9gD6WiMTDPMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bckonpQhl4jzi6umvW064RTby2HVh3jv6zl9fwEvEhUDF/UK65CHrQktRqJXCJhBh
-	 0BrrrZjBebHINoFDmz3d3Pt8GPwxHnWF7xA+z3yS2sPpEWF3//8Y4nAZx44rasSf2Q
-	 UYMFAI953KHQi1RWqse5SYtL1x5B+5OkRT8PbsD0=
+	b=Xr/QHNmyM6UXEkNXfN/2JzuMlaKT6IBYRTWPJThAoW62a/zEssgQHhgCCbXz6NkjS
+	 ZElPYl3cEEjVB4b9IvTZRHYrVxVdtlnFZFw0h5pAmX6QWNfHB4hyGVYosi7h6AfSPq
+	 lSNfbX8jLdhIwij5uBs5TclnX63aFiMG8hUi5Cgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	"Sayed, Karimuddin" <karimuddin.sayed@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Sayed
-Subject: [PATCH 6.3 181/199] ALSA: hda/realtek: Add "Intel Reference board" and "NUC 13" SSID in the ALC256
-Date: Mon, 26 Jun 2023 20:11:27 +0200
-Message-ID: <20230626180813.704027960@linuxfoundation.org>
+	Songjun Wu <songjun.wu@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 01/41] serial: lantiq: Change ltq_w32_mask to asc_update_bits
+Date: Mon, 26 Jun 2023 20:11:24 +0200
+Message-ID: <20230626180736.298698585@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
-References: <20230626180805.643662628@linuxfoundation.org>
+In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
+References: <20230626180736.243379844@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,43 +36,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sayed, Karimuddin <karimuddin.sayed@intel.com>
+From: Songjun Wu <songjun.wu@linux.intel.com>
 
-[ Upstream commit 1a93f10c5b12bd766a537b24a50fca5373467303 ]
+[ Upstream commit fccf231ae907dc9eb45eb8a9adb961195066b2c6 ]
 
-Add "Intel Reference boad" and "Intel NUC 13" SSID in the alc256.
-  Enable jack headset volume buttons
+ltq prefix is platform specific function, asc prefix
+is more generic.
 
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Signed-off-by: Sayed, Karimuddin <karimuddin.sayed@intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230602193812.66768-1-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Songjun Wu <songjun.wu@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 306320034e8f ("serial: lantiq: add missing interrupt ack")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/lantiq.c | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 920e44ba998a5..eb049014f87ac 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9594,6 +9594,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x10ec, 0x1252, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x10ec, 0x1254, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
-+	SND_PCI_QUIRK(0x10ec, 0x12cc, "Intel Reference board", ALC225_FIXUP_HEADSET_JACK),
- 	SND_PCI_QUIRK(0x10f7, 0x8338, "Panasonic CF-SZ6", ALC269_FIXUP_HEADSET_MODE),
- 	SND_PCI_QUIRK(0x144d, 0xc109, "Samsung Ativ book 9 (NP900X3G)", ALC269_FIXUP_INV_DMIC),
- 	SND_PCI_QUIRK(0x144d, 0xc169, "Samsung Notebook 9 Pen (NP930SBE-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
-@@ -9814,6 +9815,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
-+	SND_PCI_QUIRK(0x8086, 0x3038, "Intel NUC 13", ALC225_FIXUP_HEADSET_JACK),
- 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+diff --git a/drivers/tty/serial/lantiq.c b/drivers/tty/serial/lantiq.c
+index 044128277248b..848286a12c20b 100644
+--- a/drivers/tty/serial/lantiq.c
++++ b/drivers/tty/serial/lantiq.c
+@@ -113,6 +113,13 @@ struct ltq_uart_port {
+ 	unsigned int		err_irq;
+ };
  
- #if 0
++static inline void asc_update_bits(u32 clear, u32 set, void __iomem *reg)
++{
++	u32 tmp = readl(reg);
++
++	writel((tmp & ~clear) | set, reg);
++}
++
+ static inline struct
+ ltq_uart_port *to_ltq_uart_port(struct uart_port *port)
+ {
+@@ -163,16 +170,16 @@ lqasc_rx_chars(struct uart_port *port)
+ 		if (rsr & ASCSTATE_ANY) {
+ 			if (rsr & ASCSTATE_PE) {
+ 				port->icount.parity++;
+-				ltq_w32_mask(0, ASCWHBSTATE_CLRPE,
++				asc_update_bits(0, ASCWHBSTATE_CLRPE,
+ 					port->membase + LTQ_ASC_WHBSTATE);
+ 			} else if (rsr & ASCSTATE_FE) {
+ 				port->icount.frame++;
+-				ltq_w32_mask(0, ASCWHBSTATE_CLRFE,
++				asc_update_bits(0, ASCWHBSTATE_CLRFE,
+ 					port->membase + LTQ_ASC_WHBSTATE);
+ 			}
+ 			if (rsr & ASCSTATE_ROE) {
+ 				port->icount.overrun++;
+-				ltq_w32_mask(0, ASCWHBSTATE_CLRROE,
++				asc_update_bits(0, ASCWHBSTATE_CLRROE,
+ 					port->membase + LTQ_ASC_WHBSTATE);
+ 			}
+ 
+@@ -252,7 +259,7 @@ lqasc_err_int(int irq, void *_port)
+ 	struct uart_port *port = (struct uart_port *)_port;
+ 	spin_lock_irqsave(&ltq_asc_lock, flags);
+ 	/* clear any pending interrupts */
+-	ltq_w32_mask(0, ASCWHBSTATE_CLRPE | ASCWHBSTATE_CLRFE |
++	asc_update_bits(0, ASCWHBSTATE_CLRPE | ASCWHBSTATE_CLRFE |
+ 		ASCWHBSTATE_CLRROE, port->membase + LTQ_ASC_WHBSTATE);
+ 	spin_unlock_irqrestore(&ltq_asc_lock, flags);
+ 	return IRQ_HANDLED;
+@@ -304,7 +311,7 @@ lqasc_startup(struct uart_port *port)
+ 		clk_enable(ltq_port->clk);
+ 	port->uartclk = clk_get_rate(ltq_port->fpiclk);
+ 
+-	ltq_w32_mask(ASCCLC_DISS | ASCCLC_RMCMASK, (1 << ASCCLC_RMCOFFSET),
++	asc_update_bits(ASCCLC_DISS | ASCCLC_RMCMASK, (1 << ASCCLC_RMCOFFSET),
+ 		port->membase + LTQ_ASC_CLC);
+ 
+ 	ltq_w32(0, port->membase + LTQ_ASC_PISEL);
+@@ -320,7 +327,7 @@ lqasc_startup(struct uart_port *port)
+ 	 * setting enable bits
+ 	 */
+ 	wmb();
+-	ltq_w32_mask(0, ASCCON_M_8ASYNC | ASCCON_FEN | ASCCON_TOEN |
++	asc_update_bits(0, ASCCON_M_8ASYNC | ASCCON_FEN | ASCCON_TOEN |
+ 		ASCCON_ROEN, port->membase + LTQ_ASC_CON);
+ 
+ 	retval = request_irq(ltq_port->tx_irq, lqasc_tx_int,
+@@ -364,9 +371,9 @@ lqasc_shutdown(struct uart_port *port)
+ 	free_irq(ltq_port->err_irq, port);
+ 
+ 	ltq_w32(0, port->membase + LTQ_ASC_CON);
+-	ltq_w32_mask(ASCRXFCON_RXFEN, ASCRXFCON_RXFFLU,
++	asc_update_bits(ASCRXFCON_RXFEN, ASCRXFCON_RXFFLU,
+ 		port->membase + LTQ_ASC_RXFCON);
+-	ltq_w32_mask(ASCTXFCON_TXFEN, ASCTXFCON_TXFFLU,
++	asc_update_bits(ASCTXFCON_TXFEN, ASCTXFCON_TXFFLU,
+ 		port->membase + LTQ_ASC_TXFCON);
+ 	if (!IS_ERR(ltq_port->clk))
+ 		clk_disable(ltq_port->clk);
+@@ -438,7 +445,7 @@ lqasc_set_termios(struct uart_port *port,
+ 	spin_lock_irqsave(&ltq_asc_lock, flags);
+ 
+ 	/* set up CON */
+-	ltq_w32_mask(0, con, port->membase + LTQ_ASC_CON);
++	asc_update_bits(0, con, port->membase + LTQ_ASC_CON);
+ 
+ 	/* Set baud rate - take a divider of 2 into account */
+ 	baud = uart_get_baud_rate(port, new, old, 0, port->uartclk / 16);
+@@ -446,19 +453,19 @@ lqasc_set_termios(struct uart_port *port,
+ 	divisor = divisor / 2 - 1;
+ 
+ 	/* disable the baudrate generator */
+-	ltq_w32_mask(ASCCON_R, 0, port->membase + LTQ_ASC_CON);
++	asc_update_bits(ASCCON_R, 0, port->membase + LTQ_ASC_CON);
+ 
+ 	/* make sure the fractional divider is off */
+-	ltq_w32_mask(ASCCON_FDE, 0, port->membase + LTQ_ASC_CON);
++	asc_update_bits(ASCCON_FDE, 0, port->membase + LTQ_ASC_CON);
+ 
+ 	/* set up to use divisor of 2 */
+-	ltq_w32_mask(ASCCON_BRS, 0, port->membase + LTQ_ASC_CON);
++	asc_update_bits(ASCCON_BRS, 0, port->membase + LTQ_ASC_CON);
+ 
+ 	/* now we can write the new baudrate into the register */
+ 	ltq_w32(divisor, port->membase + LTQ_ASC_BG);
+ 
+ 	/* turn the baudrate generator back on */
+-	ltq_w32_mask(0, ASCCON_R, port->membase + LTQ_ASC_CON);
++	asc_update_bits(0, ASCCON_R, port->membase + LTQ_ASC_CON);
+ 
+ 	/* enable rx */
+ 	ltq_w32(ASCWHBSTATE_SETREN, port->membase + LTQ_ASC_WHBSTATE);
 -- 
 2.39.2
 
