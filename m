@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F4214AA1
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:30:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4396C433C0;
-	Mon, 26 Jun 2023 18:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2718314A81
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:30:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C02C433C0;
+	Mon, 26 Jun 2023 18:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804227;
-	bh=XtE5cSi56aanLgRMLi/1rPQ4RKbZ+jG6pCGvL869Ki4=;
+	s=korg; t=1687804230;
+	bh=VYLH5n8IPeIldbYbhbsNlQ1X+8ADqiCq0EGLs32y/6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmMCLFX89C24inOe0jvnZLMkgWE9vvTeQrvZOtPO27lYCh/PfkSYqD8iNGv52NH46
-	 ZHsPKjnO7Au64Z2OZzns9TA3PRjAZzFL3Gth9AngC05YDERjt4jZMFsh6i17NGk/Kj
-	 10AmZ+I85qlAfvGrKn+3CTx04wUV1fKPSqY8XTS0=
+	b=x8onOMc95cdYAHFGnh5EsPOaygfqolRocjDsbaOd+GzrfUQAZJVkNU9p834z1Ifrj
+	 0O7yP5bRh493TgyAeugL9OXu9OKMzYsS7pdr1eb9a5GRCPlI+XqzqFGAGbhlV2W6Mv
+	 TpposRYbs99qmF3S2x6yBTA50OujiG2djoo85Xgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.1 046/170] ACPI: sleep: Avoid breaking S3 wakeup due to might_sleep()
-Date: Mon, 26 Jun 2023 20:10:15 +0200
-Message-ID: <20230626180802.604582492@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 078/170] x86/mm: Avoid using set_pgd() outside of real PGD pages
+Date: Mon, 26 Jun 2023 20:10:47 +0200
+Message-ID: <20230626180804.106833289@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,86 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 22db06337f590d01d79f60f181d8dfe5a9ef9085 upstream.
+commit d082d48737c75d2b3cc1f972b8c8674c25131534 upstream.
 
-The addition of might_sleep() to down_timeout() caused the latter to
-enable interrupts unconditionally in some cases, which in turn broke
-the ACPI S3 wakeup path in acpi_suspend_enter(), where down_timeout()
-is called by acpi_disable_all_gpes() via acpi_ut_acquire_mutex().
+KPTI keeps around two PGDs: one for userspace and another for the
+kernel. Among other things, set_pgd() contains infrastructure to
+ensure that updates to the kernel PGD are reflected in the user PGD
+as well.
 
-Namely, if CONFIG_DEBUG_ATOMIC_SLEEP is set, might_sleep() causes
-might_resched() to be used and if CONFIG_PREEMPT_VOLUNTARY is set,
-this triggers __cond_resched() which may call preempt_schedule_common(),
-so __schedule() gets invoked and it ends up with enabled interrupts (in
-the prev == next case).
+One side-effect of this is that set_pgd() expects to be passed whole
+pages.  Unfortunately, init_trampoline_kaslr() passes in a single entry:
+'trampoline_pgd_entry'.
 
-Now, enabling interrupts early in the S3 wakeup path causes the kernel
-to crash.
+When KPTI is on, set_pgd() will update 'trampoline_pgd_entry' (an
+8-Byte globally stored [.bss] variable) and will then proceed to
+replicate that value into the non-existent neighboring user page
+(located +4k away), leading to the corruption of other global [.bss]
+stored variables.
 
-Address this by modifying acpi_suspend_enter() to disable GPEs without
-attempting to acquire the sleeping lock which is not needed in that code
-path anyway.
+Fix it by directly assigning 'trampoline_pgd_entry' and avoiding
+set_pgd().
 
-Fixes: 99409b935c9a ("locking/semaphore: Add might_sleep() to down_*() family")
-Reported-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: 5.15+ <stable@vger.kernel.org> # 5.15+
+[ dhansen: tweak subject and changelog ]
+
+Fixes: 0925dda5962e ("x86/mm/KASLR: Use only one PUD entry for real mode trampoline")
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/all/20230614163859.924309-1-lee@kernel.org/g
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/achware.h |    2 --
- drivers/acpi/sleep.c          |   16 ++++++++++++----
- include/acpi/acpixf.h         |    1 +
- 3 files changed, 13 insertions(+), 6 deletions(-)
+ arch/x86/mm/kaslr.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/acpi/acpica/achware.h
-+++ b/drivers/acpi/acpica/achware.h
-@@ -101,8 +101,6 @@ acpi_status
- acpi_hw_get_gpe_status(struct acpi_gpe_event_info *gpe_event_info,
- 		       acpi_event_status *event_status);
+--- a/arch/x86/mm/kaslr.c
++++ b/arch/x86/mm/kaslr.c
+@@ -172,10 +172,10 @@ void __meminit init_trampoline_kaslr(voi
+ 		set_p4d(p4d_tramp,
+ 			__p4d(_KERNPG_TABLE | __pa(pud_page_tramp)));
  
--acpi_status acpi_hw_disable_all_gpes(void);
--
- acpi_status acpi_hw_enable_all_runtime_gpes(void);
- 
- acpi_status acpi_hw_enable_all_wakeup_gpes(void);
---- a/drivers/acpi/sleep.c
-+++ b/drivers/acpi/sleep.c
-@@ -636,11 +636,19 @@ static int acpi_suspend_enter(suspend_st
+-		set_pgd(&trampoline_pgd_entry,
+-			__pgd(_KERNPG_TABLE | __pa(p4d_page_tramp)));
++		trampoline_pgd_entry =
++			__pgd(_KERNPG_TABLE | __pa(p4d_page_tramp));
+ 	} else {
+-		set_pgd(&trampoline_pgd_entry,
+-			__pgd(_KERNPG_TABLE | __pa(pud_page_tramp)));
++		trampoline_pgd_entry =
++			__pgd(_KERNPG_TABLE | __pa(pud_page_tramp));
  	}
- 
- 	/*
--	 * Disable and clear GPE status before interrupt is enabled. Some GPEs
--	 * (like wakeup GPE) haven't handler, this can avoid such GPE misfire.
--	 * acpi_leave_sleep_state will reenable specific GPEs later
-+	 * Disable all GPE and clear their status bits before interrupts are
-+	 * enabled. Some GPEs (like wakeup GPEs) have no handlers and this can
-+	 * prevent them from producing spurious interrups.
-+	 *
-+	 * acpi_leave_sleep_state() will reenable specific GPEs later.
-+	 *
-+	 * Because this code runs on one CPU with disabled interrupts (all of
-+	 * the other CPUs are offline at this time), it need not acquire any
-+	 * sleeping locks which may trigger an implicit preemption point even
-+	 * if there is no contention, so avoid doing that by using a low-level
-+	 * library routine here.
- 	 */
--	acpi_disable_all_gpes();
-+	acpi_hw_disable_all_gpes();
- 	/* Allow EC transactions to happen. */
- 	acpi_ec_unblock_transactions();
- 
---- a/include/acpi/acpixf.h
-+++ b/include/acpi/acpixf.h
-@@ -751,6 +751,7 @@ ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_sta
- 						     acpi_event_status
- 						     *event_status))
- ACPI_HW_DEPENDENT_RETURN_UINT32(u32 acpi_dispatch_gpe(acpi_handle gpe_device, u32 gpe_number))
-+ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_hw_disable_all_gpes(void))
- ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_disable_all_gpes(void))
- ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_enable_all_runtime_gpes(void))
- ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_enable_all_wakeup_gpes(void))
+ }
 
 
