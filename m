@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5258134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53533C433C0;
-	Mon, 26 Jun 2023 18:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADACF134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A47BC433C9;
+	Mon, 26 Jun 2023 18:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803870;
-	bh=/jy0jdXDEhOY3t3DIBzvRMyMooNFsh+AkjgnCmlVeMY=;
+	s=korg; t=1687803873;
+	bh=DR/koBfaG96uoj9BgDFos+jSlB1OMixns2+1EpNn7rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qc7fPEvpMz1zXF3ZoROOoKE9RKz6FMBvCC2rO4uZ6Q67h03ImaNVsC2KCG5/39aRp
-	 fvdTLhNH9ITzd/3TpdO3RUPp9k/v5pKzaqHO1oPbhPOjq4MRZyYOuKJzAZYfE2ZCpE
-	 Ds9TGQobHEieU1UintusqQQpCNxXHTEXl5lxxfRM=
+	b=TsBudqJlj7y+CEfkEhRGs/3MCRwm8382HOA3J9fHlVRaoz7zeb7ftMPDffCeOm+HG
+	 LDKtKgpsPi2sl4/CFvRHHMzAk5JWjDR2qbhNu+pwb+bE0G1v20LlWiUzrtkvFqk6yh
+	 Z7MbZSHf1W1+WYmQK8NwaEG+ozttWctzzfhy/HGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Tao <rongtao@cestc.cn>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jason Wang <jasowang@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 189/199] tools/virtio: Fix arm64 ringtest compilation error
-Date: Mon, 26 Jun 2023 20:11:35 +0200
-Message-ID: <20230626180814.018526508@linuxfoundation.org>
+Subject: [PATCH 6.3 190/199] vhost_vdpa: tell vqs about the negotiated
+Date: Mon, 26 Jun 2023 20:11:36 +0200
+Message-ID: <20230626180814.061298111@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -35,101 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rong Tao <rongtao@cestc.cn>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 57380fd1249b20ef772549af2c58ef57b21faba7 ]
+[ Upstream commit 376daf317753ccb6b1ecbdece66018f7f6313a7f ]
 
-Add cpu_relax() for arm64 instead of directly assert(), and add assert.h
-header file. Also, add smp_wmb and smp_mb for arm64.
+As is done in the net, iscsi, and vsock vhost support, let the vdpa vqs
+know about the features that have been negotiated.  This allows vhost
+to more safely make decisions based on the features, such as when using
+PACKED vs split queues.
 
-Compilation error as follows, avoid __always_inline undefined.
-
-    $ make
-    cc -Wall -pthread -O2 -ggdb -flto -fwhole-program -c -o ring.o ring.c
-    In file included from ring.c:10:
-    main.h: In function ‘busy_wait’:
-    main.h:99:21: warning: implicit declaration of function ‘assert’
-    [-Wimplicit-function-declaration]
-    99 | #define cpu_relax() assert(0)
-        |                     ^~~~~~
-    main.h:107:17: note: in expansion of macro ‘cpu_relax’
-    107 |                 cpu_relax();
-        |                 ^~~~~~~~~
-    main.h:12:1: note: ‘assert’ is defined in header ‘<assert.h>’; did you
-    forget to ‘#include <assert.h>’?
-    11 | #include <stdbool.h>
-    +++ |+#include <assert.h>
-    12 |
-    main.h: At top level:
-    main.h:143:23: error: expected ‘;’ before ‘void’
-    143 | static __always_inline
-        |                       ^
-        |                       ;
-    144 | void __read_once_size(const volatile void *p, void *res, int
-    size)
-        | ~~~~
-    main.h:158:23: error: expected ‘;’ before ‘void’
-    158 | static __always_inline void __write_once_size(volatile void *p,
-    void *res, int size)
-        |                       ^~~~~
-        |                       ;
-    make: *** [<builtin>: ring.o] Error 1
-
-Signed-off-by: Rong Tao <rongtao@cestc.cn>
-Message-Id: <tencent_F53E159DD7925174445D830DA19FACF44B07@qq.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20230424225031.18947-2-shannon.nelson@amd.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/virtio/ringtest/main.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/vhost/vdpa.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tools/virtio/ringtest/main.h b/tools/virtio/ringtest/main.h
-index b68920d527503..d18dd317e27f9 100644
---- a/tools/virtio/ringtest/main.h
-+++ b/tools/virtio/ringtest/main.h
-@@ -8,6 +8,7 @@
- #ifndef MAIN_H
- #define MAIN_H
- 
-+#include <assert.h>
- #include <stdbool.h>
- 
- extern int param;
-@@ -95,6 +96,8 @@ extern unsigned ring_size;
- #define cpu_relax() asm ("rep; nop" ::: "memory")
- #elif defined(__s390x__)
- #define cpu_relax() barrier()
-+#elif defined(__aarch64__)
-+#define cpu_relax() asm ("yield" ::: "memory")
- #else
- #define cpu_relax() assert(0)
- #endif
-@@ -112,6 +115,8 @@ static inline void busy_wait(void)
- 
- #if defined(__x86_64__) || defined(__i386__)
- #define smp_mb()     asm volatile("lock; addl $0,-132(%%rsp)" ::: "memory", "cc")
-+#elif defined(__aarch64__)
-+#define smp_mb()     asm volatile("dmb ish" ::: "memory")
- #else
- /*
-  * Not using __ATOMIC_SEQ_CST since gcc docs say they are only synchronized
-@@ -136,10 +141,16 @@ static inline void busy_wait(void)
- 
- #if defined(__i386__) || defined(__x86_64__) || defined(__s390x__)
- #define smp_wmb() barrier()
-+#elif defined(__aarch64__)
-+#define smp_wmb() asm volatile("dmb ishst" ::: "memory")
- #else
- #define smp_wmb() smp_release()
- #endif
- 
-+#ifndef __always_inline
-+#define __always_inline inline __attribute__((always_inline))
-+#endif
-+
- static __always_inline
- void __read_once_size(const volatile void *p, void *res, int size)
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 779fc44677162..22e6b23ac96ff 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -385,7 +385,10 @@ static long vhost_vdpa_set_features(struct vhost_vdpa *v, u64 __user *featurep)
  {
+ 	struct vdpa_device *vdpa = v->vdpa;
+ 	const struct vdpa_config_ops *ops = vdpa->config;
++	struct vhost_dev *d = &v->vdev;
++	u64 actual_features;
+ 	u64 features;
++	int i;
+ 
+ 	/*
+ 	 * It's not allowed to change the features after they have
+@@ -400,6 +403,16 @@ static long vhost_vdpa_set_features(struct vhost_vdpa *v, u64 __user *featurep)
+ 	if (vdpa_set_features(vdpa, features))
+ 		return -EINVAL;
+ 
++	/* let the vqs know what has been configured */
++	actual_features = ops->get_driver_features(vdpa);
++	for (i = 0; i < d->nvqs; ++i) {
++		struct vhost_virtqueue *vq = d->vqs[i];
++
++		mutex_lock(&vq->mutex);
++		vq->acked_features = actual_features;
++		mutex_unlock(&vq->mutex);
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.2
 
