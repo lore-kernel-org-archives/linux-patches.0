@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FC413AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:20:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C29FC433C8;
-	Mon, 26 Jun 2023 18:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD0F13AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:20:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AE9C433C0;
+	Mon, 26 Jun 2023 18:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803634;
-	bh=8rtgpqyGTpDXC8Q8jyIJhPtG8+v+3BaIWxRHGhthRHY=;
+	s=korg; t=1687803637;
+	bh=AmBA0ztjgbDoXZgNFJzWMe5QfpwUXIMNVABa6zYbQTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LC89NUvcsKOsIsIVYtNP/zV1aGPi0/4s0shQqsMCuHl5+SdEmX7rjR9L6QI6kJhJW
-	 f5g5DNqYqyLTVRlgQI8pXpuWwKAwxlhK82MHcMUS4F9QoaO+JoZlzewB/PRsoM0lK2
-	 FNhwKySf1XAO9RI4QcRXvehcZJ8eLcwHGtZjiXqk=
+	b=dseAQZdqpneTFY00E9fgA3+Y1Sm2UbWo6LMiMeJrkXZI8T7yq7bdLytmN+sZFsGuE
+	 uK0nZ2yEGeC/2FKWlEoly+z5fP/JW707cLsABYnT2QZ65H+h9iS9R4XD84s6SpGzk3
+	 Lxsha3UL/Etv3Bp63FVrqNSsWKOqneNN/ucHZ44I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 120/199] mmc: sh_mmcif: fix deferred probing
-Date: Mon, 26 Jun 2023 20:10:26 +0200
-Message-ID: <20230626180810.908202446@linuxfoundation.org>
+Subject: [PATCH 6.3 129/199] netfilter: nf_tables: add NFT_TRANS_PREPARE_ERROR to deal with bound set/chain
+Date: Mon, 26 Jun 2023 20:10:35 +0200
+Message-ID: <20230626180811.313211561@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -35,37 +34,174 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 5b067d7f855c61df7f8e2e8ccbcee133c282415e ]
+[ Upstream commit 26b5a5712eb85e253724e56a54c17f8519bd8e4e ]
 
-The driver overrides the error codes returned by platform_get_irq() to
--ENXIO, so if it returns -EPROBE_DEFER, the driver will fail the probe
-permanently instead of the deferred probing. Switch to propagating the
-error codes upstream.
+Add a new state to deal with rule expressions deactivation from the
+newrule error path, otherwise the anonymous set remains in the list in
+inactive state for the next generation. Mark the set/chain transaction
+as unbound so the abort path releases this object, set it as inactive in
+the next generation so it is not reachable anymore from this transaction
+and reference counter is dropped.
 
-Fixes: 9ec36cafe43b ("of/irq: do irq resolution in platform_get_irq")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20230617203622.6812-11-s.shtylyov@omp.ru
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 1240eb93f061 ("netfilter: nf_tables: incorrect error path handling with NFT_MSG_NEWRULE")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sh_mmcif.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netfilter/nf_tables.h |  2 ++
+ net/netfilter/nf_tables_api.c     | 45 ++++++++++++++++++++++++++-----
+ net/netfilter/nft_immediate.c     |  3 +++
+ 3 files changed, 43 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mmc/host/sh_mmcif.c b/drivers/mmc/host/sh_mmcif.c
-index 0fd4c9d644dd5..5cf53348372a4 100644
---- a/drivers/mmc/host/sh_mmcif.c
-+++ b/drivers/mmc/host/sh_mmcif.c
-@@ -1400,7 +1400,7 @@ static int sh_mmcif_probe(struct platform_device *pdev)
- 	irq[0] = platform_get_irq(pdev, 0);
- 	irq[1] = platform_get_irq_optional(pdev, 1);
- 	if (irq[0] < 0)
--		return -ENXIO;
-+		return irq[0];
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 91bf88dab245f..55c14754e5e4e 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -901,6 +901,7 @@ struct nft_expr_type {
  
- 	reg = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(reg))
+ enum nft_trans_phase {
+ 	NFT_TRANS_PREPARE,
++	NFT_TRANS_PREPARE_ERROR,
+ 	NFT_TRANS_ABORT,
+ 	NFT_TRANS_COMMIT,
+ 	NFT_TRANS_RELEASE
+@@ -1096,6 +1097,7 @@ int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
+ 			 struct nft_set_elem *elem);
+ int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set);
+ int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain);
++void nf_tables_unbind_chain(const struct nft_ctx *ctx, struct nft_chain *chain);
+ 
+ enum nft_chain_types {
+ 	NFT_CHAIN_T_DEFAULT = 0,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 281ee688128ab..837925cf0b848 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -171,7 +171,8 @@ static void nft_trans_destroy(struct nft_trans *trans)
+ 	kfree(trans);
+ }
+ 
+-static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
++static void __nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set,
++				 bool bind)
+ {
+ 	struct nftables_pernet *nft_net;
+ 	struct net *net = ctx->net;
+@@ -185,17 +186,28 @@ static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
+ 		switch (trans->msg_type) {
+ 		case NFT_MSG_NEWSET:
+ 			if (nft_trans_set(trans) == set)
+-				nft_trans_set_bound(trans) = true;
++				nft_trans_set_bound(trans) = bind;
+ 			break;
+ 		case NFT_MSG_NEWSETELEM:
+ 			if (nft_trans_elem_set(trans) == set)
+-				nft_trans_elem_set_bound(trans) = true;
++				nft_trans_elem_set_bound(trans) = bind;
+ 			break;
+ 		}
+ 	}
+ }
+ 
+-static void nft_chain_trans_bind(const struct nft_ctx *ctx, struct nft_chain *chain)
++static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	return __nft_set_trans_bind(ctx, set, true);
++}
++
++static void nft_set_trans_unbind(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	return __nft_set_trans_bind(ctx, set, false);
++}
++
++static void __nft_chain_trans_bind(const struct nft_ctx *ctx,
++				   struct nft_chain *chain, bool bind)
+ {
+ 	struct nftables_pernet *nft_net;
+ 	struct net *net = ctx->net;
+@@ -209,16 +221,22 @@ static void nft_chain_trans_bind(const struct nft_ctx *ctx, struct nft_chain *ch
+ 		switch (trans->msg_type) {
+ 		case NFT_MSG_NEWCHAIN:
+ 			if (nft_trans_chain(trans) == chain)
+-				nft_trans_chain_bound(trans) = true;
++				nft_trans_chain_bound(trans) = bind;
+ 			break;
+ 		case NFT_MSG_NEWRULE:
+ 			if (trans->ctx.chain == chain)
+-				nft_trans_rule_bound(trans) = true;
++				nft_trans_rule_bound(trans) = bind;
+ 			break;
+ 		}
+ 	}
+ }
+ 
++static void nft_chain_trans_bind(const struct nft_ctx *ctx,
++				 struct nft_chain *chain)
++{
++	__nft_chain_trans_bind(ctx, chain, true);
++}
++
+ int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain)
+ {
+ 	if (!nft_chain_binding(chain))
+@@ -237,6 +255,11 @@ int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain)
+ 	return 0;
+ }
+ 
++void nf_tables_unbind_chain(const struct nft_ctx *ctx, struct nft_chain *chain)
++{
++	__nft_chain_trans_bind(ctx, chain, false);
++}
++
+ static int nft_netdev_register_hooks(struct net *net,
+ 				     struct list_head *hook_list)
+ {
+@@ -3821,7 +3844,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
+ 	if (flow)
+ 		nft_flow_rule_destroy(flow);
+ err_release_rule:
+-	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE);
++	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE_ERROR);
+ 	nf_tables_rule_destroy(&ctx, rule);
+ err_release_expr:
+ 	for (i = 0; i < n; i++) {
+@@ -5114,6 +5137,13 @@ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 			      enum nft_trans_phase phase)
+ {
+ 	switch (phase) {
++	case NFT_TRANS_PREPARE_ERROR:
++		nft_set_trans_unbind(ctx, set);
++		if (nft_set_is_anonymous(set))
++			nft_deactivate_next(ctx->net, set);
++
++		set->use--;
++		break;
+ 	case NFT_TRANS_PREPARE:
+ 		if (nft_set_is_anonymous(set))
+ 			nft_deactivate_next(ctx->net, set);
+@@ -7626,6 +7656,7 @@ void nf_tables_deactivate_flowtable(const struct nft_ctx *ctx,
+ 				    enum nft_trans_phase phase)
+ {
+ 	switch (phase) {
++	case NFT_TRANS_PREPARE_ERROR:
+ 	case NFT_TRANS_PREPARE:
+ 	case NFT_TRANS_ABORT:
+ 	case NFT_TRANS_RELEASE:
+diff --git a/net/netfilter/nft_immediate.c b/net/netfilter/nft_immediate.c
+index 0492a04064f11..3d76ebfe8939b 100644
+--- a/net/netfilter/nft_immediate.c
++++ b/net/netfilter/nft_immediate.c
+@@ -150,6 +150,9 @@ static void nft_immediate_deactivate(const struct nft_ctx *ctx,
+ 				nft_rule_expr_deactivate(&chain_ctx, rule, phase);
+ 
+ 			switch (phase) {
++			case NFT_TRANS_PREPARE_ERROR:
++				nf_tables_unbind_chain(ctx, chain);
++				fallthrough;
+ 			case NFT_TRANS_PREPARE:
+ 				nft_deactivate_next(ctx->net, chain);
+ 				break;
 -- 
 2.39.2
 
