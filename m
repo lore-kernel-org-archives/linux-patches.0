@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A696111CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5015C433C0;
-	Mon, 26 Jun 2023 18:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C7211CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA04C433C0;
+	Mon, 26 Jun 2023 18:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805117;
-	bh=3MFVvBzskfxez+OXlmwnCza4I97JtrDApIf947jMKUU=;
+	s=korg; t=1687805120;
+	bh=yAci5x5K8o2YMbN2h6gTIIMWfDQeM13K7n6GwNyzMe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bcCUsferX5N995iUQzw+SpcTvshZcXzIV84nxutpvZrRizh9ej9wKpUFc0JxaWAc8
-	 0UImRYW5zgX9vCywZ/ViSbqzT86clMb0pYGsBH8uoErl+Ou8aa7Y+whz5Ub7XcFfCV
-	 ED9oF0iKV+0YZw7xAcKFtWEisQE+y2RzC1dWlZX4=
+	b=W2iePFnaGw+OiLBrrHQKxKqeblCqT+qKA+AJaaInCe/MQgBaa2BwY4+YxhwIJwWrJ
+	 qV5Vk4hqn1hcRPBoXSgVHyriH43ON3GAw3POqGrR+8bF23xAkLzk7a1LxLmKyk95VM
+	 Skrc77qn80B03CHcAInGpSCGobjIKqwKQA0U998E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Praneeth Bajjuri <praneeth@ti.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 55/81] netfilter: nfnetlink_osf: fix module autoload
-Date: Mon, 26 Jun 2023 20:12:37 +0200
-Message-ID: <20230626180746.701701245@linuxfoundation.org>
+Subject: [PATCH 5.10 56/81] Revert "net: phy: dp83867: perform soft reset and retain established link"
+Date: Mon, 26 Jun 2023 20:12:38 +0200
+Message-ID: <20230626180746.741183271@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -34,38 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 62f9a68a36d4441a6c412b81faed102594bc6670 ]
+[ Upstream commit a129b41fe0a8b4da828c46b10f5244ca07a3fec3 ]
 
-Move the alias from xt_osf to nfnetlink_osf.
+This reverts commit da9ef50f545f86ffe6ff786174d26500c4db737a.
 
-Fixes: f9324952088f ("netfilter: nfnetlink_osf: extract nfnetlink_subsystem code from xt_osf.c")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+This fixes a regression in which the link would come up, but no
+communication was possible.
+
+The reverted commit was also removing a comment about
+DP83867_PHYCR_FORCE_LINK_GOOD, this is not added back in this commits
+since it seems that this is unrelated to the original code change.
+
+Closes: https://lore.kernel.org/all/ZGuDJos8D7N0J6Z2@francesco-nb.int.toradex.com/
+Fixes: da9ef50f545f ("net: phy: dp83867: perform soft reset and retain established link")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Praneeth Bajjuri <praneeth@ti.com>
+Link: https://lore.kernel.org/r/20230619154435.355485-1-francesco@dolcini.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_osf.c | 1 +
- net/netfilter/xt_osf.c        | 1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/dp83867.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
-index 51e3953b414c0..9dbaa5ce24e51 100644
---- a/net/netfilter/nfnetlink_osf.c
-+++ b/net/netfilter/nfnetlink_osf.c
-@@ -440,3 +440,4 @@ module_init(nfnl_osf_init);
- module_exit(nfnl_osf_fini);
+diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
+index 5fabcd15ef77a..834bf63dc2009 100644
+--- a/drivers/net/phy/dp83867.c
++++ b/drivers/net/phy/dp83867.c
+@@ -802,7 +802,7 @@ static int dp83867_phy_reset(struct phy_device *phydev)
+ {
+ 	int err;
  
- MODULE_LICENSE("GPL");
-+MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_OSF);
-diff --git a/net/netfilter/xt_osf.c b/net/netfilter/xt_osf.c
-index e1990baf3a3b7..dc9485854002a 100644
---- a/net/netfilter/xt_osf.c
-+++ b/net/netfilter/xt_osf.c
-@@ -71,4 +71,3 @@ MODULE_AUTHOR("Evgeniy Polyakov <zbr@ioremap.net>");
- MODULE_DESCRIPTION("Passive OS fingerprint matching.");
- MODULE_ALIAS("ipt_osf");
- MODULE_ALIAS("ip6t_osf");
--MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_OSF);
+-	err = phy_write(phydev, DP83867_CTRL, DP83867_SW_RESTART);
++	err = phy_write(phydev, DP83867_CTRL, DP83867_SW_RESET);
+ 	if (err < 0)
+ 		return err;
+ 
 -- 
 2.39.2
 
