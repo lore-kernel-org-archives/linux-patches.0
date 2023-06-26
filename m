@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657BA134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:15:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC9A0C433C0;
-	Mon, 26 Jun 2023 18:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E7E134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:15:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4A5C433C8;
+	Mon, 26 Jun 2023 18:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803316;
-	bh=i/P3ARdGPoW+wIi+D/wvlyDeGXM+LpDZa83HIYtpyLU=;
+	s=korg; t=1687803319;
+	bh=P3h2hjZrHdqdljlQE0cOsJ4YhJ0VXF462+NZJyCH0XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1exCkjHnj25+ShW36jNMSZMDw1ooKXG/3QgNF/rye3JqNLObVgySjETX4TJywxRG+
-	 SqYObDkfVA9/6a7NZ+EZb0y8FcGst4k3rrN0PdMuh/c6NtO3BlZZE7Sh5Zo6+XXa5J
-	 pnci/42oPnVpgHDLw4TesGzhoYXXNeQ/FCNCalb8=
+	b=DUqqC2eOhWJ5GXCtwXZLl5dwacIE1kKtN53sjjNTKrXsxEhWmGeirLbsGIYzrT/Ra
+	 NlBKjjPH0LsEyg9T8tyopfBoOJZ0W00xNeTWCuww87mWjHjkmf9oRzcH/2YueA3G8Z
+	 WyfcLWRZpMgUxU+bME1ybYqglumZt0axQgh4hDuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <Harry.Wentland@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 002/199] drm/amd/display: Use dc_update_planes_and_stream
-Date: Mon, 26 Jun 2023 20:08:28 +0200
-Message-ID: <20230626180805.757504509@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.3 020/199] selftests: mptcp: lib: skip if missing symbol
+Date: Mon, 26 Jun 2023 20:08:46 +0200
+Message-ID: <20230626180806.551093938@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -38,87 +34,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-[ Upstream commit f7511289821ffccc07579406d6ab520aa11049f5 ]
+commit 673004821ab98c6645bd21af56a290854e88f533 upstream.
 
-[Why & How]
-The old dc_commit_updates_for_stream lacks manipulation for many corner
-cases where the DC feature requires special attention; as a result, it
-starts to show its limitation (e.g., the SubVP feature is not supported
-by it, among other cases). To modernize and unify our internal API, this
-commit replaces the old dc_commit_updates_for_stream with
-dc_update_planes_and_stream, which has more features.
+Selftests are supposed to run on any kernels, including the old ones not
+supporting all MPTCP features.
 
-Reviewed-by: Harry Wentland <Harry.Wentland@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: ea2062dd1f03 ("drm/amd/display: fix the system hang while disable PSR")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+New functions are now available to easily detect if a certain feature is
+missing by looking at kallsyms.
+
+These new helpers are going to be used in the following commits. In
+order to ease the backport of such future patches, it would be good if
+this patch is backported up to the introduction of MPTCP selftests,
+hence the Fixes tag below: this type of check was supposed to be done
+from the beginning.
+
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
+Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 30 +++++++++----------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ tools/testing/selftests/net/mptcp/config       |    1 
+ tools/testing/selftests/net/mptcp/mptcp_lib.sh |   38 +++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 289c261ffe876..ae58f24be511c 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2683,10 +2683,12 @@ static void dm_gpureset_commit_state(struct dc_state *dc_state,
- 			bundle->surface_updates[m].surface->force_full_update =
- 				true;
- 		}
--		dc_commit_updates_for_stream(
--			dm->dc, bundle->surface_updates,
+--- a/tools/testing/selftests/net/mptcp/config
++++ b/tools/testing/selftests/net/mptcp/config
+@@ -1,3 +1,4 @@
++CONFIG_KALLSYMS=y
+ CONFIG_MPTCP=y
+ CONFIG_IPV6=y
+ CONFIG_MPTCP_IPV6=y
+--- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
+@@ -38,3 +38,41 @@ mptcp_lib_check_mptcp() {
+ 		exit ${KSFT_SKIP}
+ 	fi
+ }
 +
-+		dc_update_planes_and_stream(dm->dc,
-+			bundle->surface_updates,
- 			dc_state->stream_status->plane_count,
--			dc_state->streams[k], &bundle->stream_update, dc_state);
-+			dc_state->streams[k],
-+			&bundle->stream_update);
- 	}
- 
- cleanup:
-@@ -8198,12 +8200,11 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
- 				acrtc_state->stream->link->psr_settings.psr_allow_active)
- 			amdgpu_dm_psr_disable(acrtc_state->stream);
- 
--		dc_commit_updates_for_stream(dm->dc,
--						     bundle->surface_updates,
--						     planes_count,
--						     acrtc_state->stream,
--						     &bundle->stream_update,
--						     dc_state);
-+		dc_update_planes_and_stream(dm->dc,
-+					    bundle->surface_updates,
-+					    planes_count,
-+					    acrtc_state->stream,
-+					    &bundle->stream_update);
- 
- 		/**
- 		 * Enable or disable the interrupts on the backend.
-@@ -8741,12 +8742,11 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
- 
- 
- 		mutex_lock(&dm->dc_lock);
--		dc_commit_updates_for_stream(dm->dc,
--						     dummy_updates,
--						     status->plane_count,
--						     dm_new_crtc_state->stream,
--						     &stream_update,
--						     dc_state);
-+		dc_update_planes_and_stream(dm->dc,
-+					    dummy_updates,
-+					    status->plane_count,
-+					    dm_new_crtc_state->stream,
-+					    &stream_update);
- 		mutex_unlock(&dm->dc_lock);
- 	}
- 
--- 
-2.39.2
-
++mptcp_lib_check_kallsyms() {
++	if ! mptcp_lib_has_file "/proc/kallsyms"; then
++		echo "SKIP: CONFIG_KALLSYMS is missing"
++		exit ${KSFT_SKIP}
++	fi
++}
++
++# Internal: use mptcp_lib_kallsyms_has() instead
++__mptcp_lib_kallsyms_has() {
++	local sym="${1}"
++
++	mptcp_lib_check_kallsyms
++
++	grep -q " ${sym}" /proc/kallsyms
++}
++
++# $1: part of a symbol to look at, add '$' at the end for full name
++mptcp_lib_kallsyms_has() {
++	local sym="${1}"
++
++	if __mptcp_lib_kallsyms_has "${sym}"; then
++		return 0
++	fi
++
++	mptcp_lib_fail_if_expected_feature "${sym} symbol not found"
++}
++
++# $1: part of a symbol to look at, add '$' at the end for full name
++mptcp_lib_kallsyms_doesnt_have() {
++	local sym="${1}"
++
++	if ! __mptcp_lib_kallsyms_has "${sym}"; then
++		return 0
++	fi
++
++	mptcp_lib_fail_if_expected_feature "${sym} symbol has been found"
++}
 
 
