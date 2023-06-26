@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B186513AD2
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:20:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B787C433C8;
-	Mon, 26 Jun 2023 18:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A2413AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:20:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAE0C433C8;
+	Mon, 26 Jun 2023 18:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803628;
-	bh=VYLH5n8IPeIldbYbhbsNlQ1X+8ADqiCq0EGLs32y/6M=;
+	s=korg; t=1687803631;
+	bh=OzeipN3I+iR/9kL2cyXVLietlRx4UE/bzV8CPzpaz8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eSfwNVxGenSTOLdKZIX0OrRhBVvJmd4P1LM1f26f7cxxvMJ1JkxqsV0DEyNxlUZaf
-	 VeDQEduBl3js5mdw1JjSFteUZ2EA535+Dnh+/j/XWgzCPdqkXGvnf7Ty19vu76OKgQ
-	 ThSVLYNGdFkF72KAXoSe81V7rfCxjtSb26xYXHk0=
+	b=Huf2fippZWnSETLsS+uBCJmd/xfnGiFFf5EerW9uOfIXYJt8ZcxOk2Eu/Qllpk1xE
+	 ByFVf7nQHgFNeMy1cXXB8GjAEXao7HF6mOCeYvkP9n2pMPnq9/iEUomRjg/ub5OOxX
+	 QgCZ+TT0uUa5zIL/yS+9yYoQ/mPwZDjyg9+pTzr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.3 098/199] x86/mm: Avoid using set_pgd() outside of real PGD pages
-Date: Mon, 26 Jun 2023 20:10:04 +0200
-Message-ID: <20230626180809.928598873@linuxfoundation.org>
+	Teresa Remmet <t.remmet@phytec.de>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 089/199] regulator: pca9450: Fix LDO3OUT and LDO4OUT MASK
+Date: Mon, 26 Jun 2023 20:09:55 +0200
+Message-ID: <20230626180809.503340143@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -34,57 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Teresa Remmet <t.remmet@phytec.de>
 
-commit d082d48737c75d2b3cc1f972b8c8674c25131534 upstream.
+[ Upstream commit 7257d930aadcd62d1c7971ab14f3b1126356abdc ]
 
-KPTI keeps around two PGDs: one for userspace and another for the
-kernel. Among other things, set_pgd() contains infrastructure to
-ensure that updates to the kernel PGD are reflected in the user PGD
-as well.
+L3_OUT and L4_OUT Bit fields range from Bit 0:4 and thus the
+mask should be 0x1F instead of 0x0F.
 
-One side-effect of this is that set_pgd() expects to be passed whole
-pages.  Unfortunately, init_trampoline_kaslr() passes in a single entry:
-'trampoline_pgd_entry'.
-
-When KPTI is on, set_pgd() will update 'trampoline_pgd_entry' (an
-8-Byte globally stored [.bss] variable) and will then proceed to
-replicate that value into the non-existent neighboring user page
-(located +4k away), leading to the corruption of other global [.bss]
-stored variables.
-
-Fix it by directly assigning 'trampoline_pgd_entry' and avoiding
-set_pgd().
-
-[ dhansen: tweak subject and changelog ]
-
-Fixes: 0925dda5962e ("x86/mm/KASLR: Use only one PUD entry for real mode trampoline")
-Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/all/20230614163859.924309-1-lee@kernel.org/g
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0935ff5f1f0a ("regulator: pca9450: add pca9450 pmic driver")
+Signed-off-by: Teresa Remmet <t.remmet@phytec.de>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Link: https://lore.kernel.org/r/20230614125240.3946519-1-t.remmet@phytec.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/kaslr.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/linux/regulator/pca9450.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/mm/kaslr.c
-+++ b/arch/x86/mm/kaslr.c
-@@ -172,10 +172,10 @@ void __meminit init_trampoline_kaslr(voi
- 		set_p4d(p4d_tramp,
- 			__p4d(_KERNPG_TABLE | __pa(pud_page_tramp)));
+diff --git a/include/linux/regulator/pca9450.h b/include/linux/regulator/pca9450.h
+index 3c01c2bf84f53..505c908dbb817 100644
+--- a/include/linux/regulator/pca9450.h
++++ b/include/linux/regulator/pca9450.h
+@@ -196,11 +196,11 @@ enum {
  
--		set_pgd(&trampoline_pgd_entry,
--			__pgd(_KERNPG_TABLE | __pa(p4d_page_tramp)));
-+		trampoline_pgd_entry =
-+			__pgd(_KERNPG_TABLE | __pa(p4d_page_tramp));
- 	} else {
--		set_pgd(&trampoline_pgd_entry,
--			__pgd(_KERNPG_TABLE | __pa(pud_page_tramp)));
-+		trampoline_pgd_entry =
-+			__pgd(_KERNPG_TABLE | __pa(pud_page_tramp));
- 	}
- }
+ /* PCA9450_REG_LDO3_VOLT bits */
+ #define LDO3_EN_MASK			0xC0
+-#define LDO3OUT_MASK			0x0F
++#define LDO3OUT_MASK			0x1F
+ 
+ /* PCA9450_REG_LDO4_VOLT bits */
+ #define LDO4_EN_MASK			0xC0
+-#define LDO4OUT_MASK			0x0F
++#define LDO4OUT_MASK			0x1F
+ 
+ /* PCA9450_REG_LDO5_VOLT bits */
+ #define LDO5L_EN_MASK			0xC0
+-- 
+2.39.2
+
 
 
