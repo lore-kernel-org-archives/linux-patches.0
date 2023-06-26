@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C084134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:18:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB20C433C8;
-	Mon, 26 Jun 2023 18:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503A5134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE474C433C8;
+	Mon, 26 Jun 2023 18:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803539;
-	bh=qUed5+93A/YpFWSPfHdvI4Dw4TE0rLKuQeCIEYLEvJs=;
+	s=korg; t=1687803542;
+	bh=O4uWZHEIB2ex5oRPyCl+gJNG9w1mu1fMHb1by1eSEAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0Vdjy/40gp9OL1dDrcUfPaEY+LwRadLd8PXBElyn/OXXhNpS9omDQ99QICRNR3jQ
-	 VvqEh2hpz5lx95Rm775MWcfOGcDc8gYYYEARvv3HTbVfIo74NvJPxDW5tLnesqYXjH
-	 imHphHLMB4JO7ewPDbH82NFPYRzx39FIG0rDONC4=
+	b=scdfs0vuPd5eWFRv5szblKkhcU4RQ0y5WvT7YV50LPeuUAyNNjRyUxLFk3m7GDwl8
+	 FC0Kei6tX7wSJXDdyQfZiO/9EGw17hYo3wS0IKb1WcPtHrQc1sJWbUSZdQdLYQuALE
+	 odW/vWd2jtkNCA0CteLe93uB17+/Cw8AUerYFApA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dexuan Cui <decui@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.3 067/199] PCI: hv: Add a per-bus mutex state_lock
-Date: Mon, 26 Jun 2023 20:09:33 +0200
-Message-ID: <20230626180808.477018139@linuxfoundation.org>
+	Shuai Hu <hshuai@redhat.com>,
+	Zhenyu Zhang <zhenyzha@redhat.com>,
+	Gavin Shan <gshan@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Peter Xu <peterx@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Shaoqin Huang <shahuang@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.3 058/199] KVM: Avoid illegal stage2 mapping on invalid memory slot
+Date: Mon, 26 Jun 2023 20:09:24 +0200
+Message-ID: <20230626180808.119337413@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,163 +41,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Gavin Shan <gshan@redhat.com>
 
-commit 067d6ec7ed5b49380688e06c1e5f883a71bef4fe upstream.
+commit 2230f9e1171a2e9731422a14d1bbc313c0b719d1 upstream.
 
-In the case of fast device addition/removal, it's possible that
-hv_eject_device_work() can start to run before create_root_hv_pci_bus()
-starts to run; as a result, the pci_get_domain_bus_and_slot() in
-hv_eject_device_work() can return a 'pdev' of NULL, and
-hv_eject_device_work() can remove the 'hpdev', and immediately send a
-message PCI_EJECTION_COMPLETE to the host, and the host immediately
-unassigns the PCI device from the guest; meanwhile,
-create_root_hv_pci_bus() and the PCI device driver can be probing the
-dead PCI device and reporting timeout errors.
+We run into guest hang in edk2 firmware when KSM is kept as running on
+the host. The edk2 firmware is waiting for status 0x80 from QEMU's pflash
+device (TYPE_PFLASH_CFI01) during the operation of sector erasing or
+buffered write. The status is returned by reading the memory region of
+the pflash device and the read request should have been forwarded to QEMU
+and emulated by it. Unfortunately, the read request is covered by an
+illegal stage2 mapping when the guest hang issue occurs. The read request
+is completed with QEMU bypassed and wrong status is fetched. The edk2
+firmware runs into an infinite loop with the wrong status.
 
-Fix the issue by adding a per-bus mutex 'state_lock' and grabbing the
-mutex before powering on the PCI bus in hv_pci_enter_d0(): when
-hv_eject_device_work() starts to run, it's able to find the 'pdev' and call
-pci_stop_and_remove_bus_device(pdev): if the PCI device driver has
-loaded, the PCI device driver's probe() function is already called in
-create_root_hv_pci_bus() -> pci_bus_add_devices(), and now
-hv_eject_device_work() -> pci_stop_and_remove_bus_device() is able
-to call the PCI device driver's remove() function and remove the device
-reliably; if the PCI device driver hasn't loaded yet, the function call
-hv_eject_device_work() -> pci_stop_and_remove_bus_device() is able to
-remove the PCI device reliably and the PCI device driver's probe()
-function won't be called; if the PCI device driver's probe() is already
-running (e.g., systemd-udev is loading the PCI device driver), it must
-be holding the per-device lock, and after the probe() finishes and releases
-the lock, hv_eject_device_work() -> pci_stop_and_remove_bus_device() is
-able to proceed to remove the device reliably.
+The illegal stage2 mapping is populated due to same page sharing by KSM
+at (C) even the associated memory slot has been marked as invalid at (B)
+when the memory slot is requested to be deleted. It's notable that the
+active and inactive memory slots can't be swapped when we're in the middle
+of kvm_mmu_notifier_change_pte() because kvm->mn_active_invalidate_count
+is elevated, and kvm_swap_active_memslots() will busy loop until it reaches
+to zero again. Besides, the swapping from the active to the inactive memory
+slots is also avoided by holding &kvm->srcu in __kvm_handle_hva_range(),
+corresponding to synchronize_srcu_expedited() in kvm_swap_active_memslots().
 
-Fixes: 4daace0d8ce8 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230615044451.5580-6-decui@microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+  CPU-A                    CPU-B
+  -----                    -----
+                           ioctl(kvm_fd, KVM_SET_USER_MEMORY_REGION)
+                           kvm_vm_ioctl_set_memory_region
+                           kvm_set_memory_region
+                           __kvm_set_memory_region
+                           kvm_set_memslot(kvm, old, NULL, KVM_MR_DELETE)
+                             kvm_invalidate_memslot
+                               kvm_copy_memslot
+                               kvm_replace_memslot
+                               kvm_swap_active_memslots        (A)
+                               kvm_arch_flush_shadow_memslot   (B)
+  same page sharing by KSM
+  kvm_mmu_notifier_invalidate_range_start
+        :
+  kvm_mmu_notifier_change_pte
+    kvm_handle_hva_range
+    __kvm_handle_hva_range
+    kvm_set_spte_gfn            (C)
+        :
+  kvm_mmu_notifier_invalidate_range_end
+
+Fix the issue by skipping the invalid memory slot at (C) to avoid the
+illegal stage2 mapping so that the read request for the pflash's status
+is forwarded to QEMU and emulated by it. In this way, the correct pflash's
+status can be returned from QEMU to break the infinite loop in the edk2
+firmware.
+
+We tried a git-bisect and the first problematic commit is cd4c71835228 ("
+KVM: arm64: Convert to the gfn-based MMU notifier callbacks"). With this,
+clean_dcache_guest_page() is called after the memory slots are iterated
+in kvm_mmu_notifier_change_pte(). clean_dcache_guest_page() is called
+before the iteration on the memory slots before this commit. This change
+literally enlarges the racy window between kvm_mmu_notifier_change_pte()
+and memory slot removal so that we're able to reproduce the issue in a
+practical test case. However, the issue exists since commit d5d8184d35c9
+("KVM: ARM: Memory virtualization setup").
+
+Cc: stable@vger.kernel.org # v3.9+
+Fixes: d5d8184d35c9 ("KVM: ARM: Memory virtualization setup")
+Reported-by: Shuai Hu <hshuai@redhat.com>
+Reported-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Message-Id: <20230615054259.14911-1-gshan@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-hyperv.c |   29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ virt/kvm/kvm_main.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -489,7 +489,10 @@ struct hv_pcibus_device {
- 	struct fwnode_handle *fwnode;
- 	/* Protocol version negotiated with the host */
- 	enum pci_protocol_version_t protocol_version;
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -683,6 +683,24 @@ static __always_inline int kvm_handle_hv
+ 
+ 	return __kvm_handle_hva_range(kvm, &range);
+ }
 +
-+	struct mutex state_lock;
- 	enum hv_pcibus_state state;
++static bool kvm_change_spte_gfn(struct kvm *kvm, struct kvm_gfn_range *range)
++{
++	/*
++	 * Skipping invalid memslots is correct if and only change_pte() is
++	 * surrounded by invalidate_range_{start,end}(), which is currently
++	 * guaranteed by the primary MMU.  If that ever changes, KVM needs to
++	 * unmap the memslot instead of skipping the memslot to ensure that KVM
++	 * doesn't hold references to the old PFN.
++	 */
++	WARN_ON_ONCE(!READ_ONCE(kvm->mn_active_invalidate_count));
 +
- 	struct hv_device *hdev;
- 	resource_size_t low_mmio_space;
- 	resource_size_t high_mmio_space;
-@@ -2512,6 +2515,8 @@ static void pci_devices_present_work(str
- 	if (!dr)
++	if (range->slot->flags & KVM_MEMSLOT_INVALID)
++		return false;
++
++	return kvm_set_spte_gfn(kvm, range);
++}
++
+ static void kvm_mmu_notifier_change_pte(struct mmu_notifier *mn,
+ 					struct mm_struct *mm,
+ 					unsigned long address,
+@@ -704,7 +722,7 @@ static void kvm_mmu_notifier_change_pte(
+ 	if (!READ_ONCE(kvm->mmu_invalidate_in_progress))
  		return;
  
-+	mutex_lock(&hbus->state_lock);
-+
- 	/* First, mark all existing children as reported missing. */
- 	spin_lock_irqsave(&hbus->device_list_lock, flags);
- 	list_for_each_entry(hpdev, &hbus->children, list_entry) {
-@@ -2593,6 +2598,8 @@ static void pci_devices_present_work(str
- 		break;
- 	}
- 
-+	mutex_unlock(&hbus->state_lock);
-+
- 	kfree(dr);
+-	kvm_handle_hva_range(mn, address, address + 1, pte, kvm_set_spte_gfn);
++	kvm_handle_hva_range(mn, address, address + 1, pte, kvm_change_spte_gfn);
  }
  
-@@ -2741,6 +2748,8 @@ static void hv_eject_device_work(struct
- 	hpdev = container_of(work, struct hv_pci_dev, wrk);
- 	hbus = hpdev->hbus;
- 
-+	mutex_lock(&hbus->state_lock);
-+
- 	/*
- 	 * Ejection can come before or after the PCI bus has been set up, so
- 	 * attempt to find it and tear down the bus state, if it exists.  This
-@@ -2777,6 +2786,8 @@ static void hv_eject_device_work(struct
- 	put_pcichild(hpdev);
- 	put_pcichild(hpdev);
- 	/* hpdev has been freed. Do not use it any more. */
-+
-+	mutex_unlock(&hbus->state_lock);
- }
- 
- /**
-@@ -3567,6 +3578,7 @@ static int hv_pci_probe(struct hv_device
- 		return -ENOMEM;
- 
- 	hbus->bridge = bridge;
-+	mutex_init(&hbus->state_lock);
- 	hbus->state = hv_pcibus_init;
- 	hbus->wslot_res_allocated = -1;
- 
-@@ -3675,9 +3687,11 @@ static int hv_pci_probe(struct hv_device
- 	if (ret)
- 		goto free_irq_domain;
- 
-+	mutex_lock(&hbus->state_lock);
-+
- 	ret = hv_pci_enter_d0(hdev);
- 	if (ret)
--		goto free_irq_domain;
-+		goto release_state_lock;
- 
- 	ret = hv_pci_allocate_bridge_windows(hbus);
- 	if (ret)
-@@ -3695,12 +3709,15 @@ static int hv_pci_probe(struct hv_device
- 	if (ret)
- 		goto free_windows;
- 
-+	mutex_unlock(&hbus->state_lock);
- 	return 0;
- 
- free_windows:
- 	hv_pci_free_bridge_windows(hbus);
- exit_d0:
- 	(void) hv_pci_bus_exit(hdev, true);
-+release_state_lock:
-+	mutex_unlock(&hbus->state_lock);
- free_irq_domain:
- 	irq_domain_remove(hbus->irq_domain);
- free_fwnode:
-@@ -3950,20 +3967,26 @@ static int hv_pci_resume(struct hv_devic
- 	if (ret)
- 		goto out;
- 
-+	mutex_lock(&hbus->state_lock);
-+
- 	ret = hv_pci_enter_d0(hdev);
- 	if (ret)
--		goto out;
-+		goto release_state_lock;
- 
- 	ret = hv_send_resources_allocated(hdev);
- 	if (ret)
--		goto out;
-+		goto release_state_lock;
- 
- 	prepopulate_bars(hbus);
- 
- 	hv_pci_restore_msi_state(hbus);
- 
- 	hbus->state = hv_pcibus_installed;
-+	mutex_unlock(&hbus->state_lock);
- 	return 0;
-+
-+release_state_lock:
-+	mutex_unlock(&hbus->state_lock);
- out:
- 	vmbus_close(hdev->channel);
- 	return ret;
+ void kvm_mmu_invalidate_begin(struct kvm *kvm, unsigned long start,
 
 
