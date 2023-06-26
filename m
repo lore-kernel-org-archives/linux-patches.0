@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3317E134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F587C433C8;
-	Mon, 26 Jun 2023 18:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1979E134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C050C433C8;
+	Mon, 26 Jun 2023 18:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803557;
-	bh=lCdTGhxBlKJaSlM58gqMj9tQKAzdUXJvTGj5DGskd3c=;
+	s=korg; t=1687803559;
+	bh=Hvl/mQyThRdD9ButtZMhVUgxXtKcwlbSIb4GSy4nPCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0tLn8uyQryiMxsG2NbXsIf+RJV9LZW/MO+M2chWqdJucXS+peyd7pz2h4KS6lioNQ
-	 zWAbgeTl0+5VjPtLP40iitX0uICXA0TqDl4u++x9D70W9x4u2NKCG65sR5hIOQaiXf
-	 BeFC87IEJ5BYhvtnfC8UEnpyI/to3+WVmgS5DcA4=
+	b=BypKMc3l09nbRFqyLVc0478VcMyd+CljTHplTDZC1hbS+0l/9DyEN77bYCslgoad9
+	 W10uTxkwKWXhH91hWgWlDP6AFOdE0cMz1r/4eQjgzjXyd2toKIXxNxETThhgDWNEya
+	 3JXeuz8SJfgfbY6+KYfj24tEdj330jjOpmKWm1bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reiji Watanabe <reijiw@google.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 102/199] KVM: arm64: PMU: Restore the hosts PMUSERENR_EL0
-Date: Mon, 26 Jun 2023 20:10:08 +0200
-Message-ID: <20230626180810.113683661@linuxfoundation.org>
+Subject: [PATCH 6.3 103/199] xfrm: add missed call to delete offloaded policies
+Date: Mon, 26 Jun 2023 20:10:09 +0200
+Message-ID: <20230626180810.160323167@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -35,56 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reiji Watanabe <reijiw@google.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 8681f71759010503892f9e3ddb05f65c0f21b690 ]
+[ Upstream commit bf06fcf4be0feefebd27deb8b60ad262f4230489 ]
 
-Restore the host's PMUSERENR_EL0 value instead of clearing it,
-before returning back to userspace, as the host's EL0 might have
-a direct access to PMU registers (some bits of PMUSERENR_EL0 for
-might not be zero for the host EL0).
+Offloaded policies are deleted through two flows: netdev is going
+down and policy flush.
 
-Fixes: 83a7a4d643d3 ("arm64: perf: Enable PMU counter userspace access for perf event")
-Signed-off-by: Reiji Watanabe <reijiw@google.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230603025035.3781797-2-reijiw@google.com
+In both cases, the code lacks relevant call to delete offloaded policy.
+
+Fixes: 919e43fad516 ("xfrm: add an interface to offload policy")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/include/hyp/switch.h | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_policy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
-index 33f4d42003296..168365167a137 100644
---- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-@@ -81,7 +81,12 @@ static inline void __activate_traps_common(struct kvm_vcpu *vcpu)
- 	 * EL1 instead of being trapped to EL2.
- 	 */
- 	if (kvm_arm_support_pmu_v3()) {
-+		struct kvm_cpu_context *hctxt;
-+
- 		write_sysreg(0, pmselr_el0);
-+
-+		hctxt = &this_cpu_ptr(&kvm_host_data)->host_ctxt;
-+		ctxt_sys_reg(hctxt, PMUSERENR_EL0) = read_sysreg(pmuserenr_el0);
- 		write_sysreg(ARMV8_PMU_USERENR_MASK, pmuserenr_el0);
- 	}
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index ff58ce6c030ca..e7617c9959c31 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -1831,6 +1831,7 @@ int xfrm_policy_flush(struct net *net, u8 type, bool task_valid)
  
-@@ -105,8 +110,12 @@ static inline void __deactivate_traps_common(struct kvm_vcpu *vcpu)
- 	write_sysreg(vcpu->arch.mdcr_el2_host, mdcr_el2);
+ 		__xfrm_policy_unlink(pol, dir);
+ 		spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
++		xfrm_dev_policy_delete(pol);
+ 		cnt++;
+ 		xfrm_audit_policy_delete(pol, 1, task_valid);
+ 		xfrm_policy_kill(pol);
+@@ -1869,6 +1870,7 @@ int xfrm_dev_policy_flush(struct net *net, struct net_device *dev,
  
- 	write_sysreg(0, hstr_el2);
--	if (kvm_arm_support_pmu_v3())
--		write_sysreg(0, pmuserenr_el0);
-+	if (kvm_arm_support_pmu_v3()) {
-+		struct kvm_cpu_context *hctxt;
-+
-+		hctxt = &this_cpu_ptr(&kvm_host_data)->host_ctxt;
-+		write_sysreg(ctxt_sys_reg(hctxt, PMUSERENR_EL0), pmuserenr_el0);
-+	}
- 
- 	if (cpus_have_final_cap(ARM64_SME)) {
- 		sysreg_clear_set_s(SYS_HFGRTR_EL2, 0,
+ 		__xfrm_policy_unlink(pol, dir);
+ 		spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
++		xfrm_dev_policy_delete(pol);
+ 		cnt++;
+ 		xfrm_audit_policy_delete(pol, 1, task_valid);
+ 		xfrm_policy_kill(pol);
 -- 
 2.39.2
 
