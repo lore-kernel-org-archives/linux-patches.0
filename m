@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8508D134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AB9C433C8;
-	Mon, 26 Jun 2023 18:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CD7134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C30C433C8;
+	Mon, 26 Jun 2023 18:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803714;
-	bh=tUH00yyE4wQ/jUInbYBJIIke763jhJXKk/7E7+xsa18=;
+	s=korg; t=1687803717;
+	bh=dA1nQ76mrOlueHD3jvpGHQbp6p2xAZi//vk6SgLtTU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OfI10Ec1MrraRyx2KOP1YCG2ADkM/JnuX7dpPdZlP5N9KMCSKD7fMsX1i2Q/i6Yxv
-	 /MZ3e6QUYYLKa9LFCvUYPmQMboCD/SBYH1HebWqLy6TDkzyBmAIUujVCDh/CsgccNd
-	 8zksCP1au18OAXRYsC7P6zEldHM9eVJsJ7acN09g=
+	b=qupeS5mjZMrkl9ErlUWp3RzlaTqttq2PQ9ajfRdWogWW4Kns4lZYxGT6dTiYbL12o
+	 5/ey3m96N1YlV88gql0LztfZZQjnN+yF4TLI8cHgTOYGpw8HCRtQWcry4yfo70IG9F
+	 uwzVIIp7yXncmNDPk0/vwDbjEdmDQSDrF3G0H2DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 124/199] net: dsa: mt7530: fix handling of BPDUs on MT7530 switch
-Date: Mon, 26 Jun 2023 20:10:30 +0200
-Message-ID: <20230626180811.089730380@linuxfoundation.org>
+Subject: [PATCH 6.3 125/199] net: dsa: mt7530: fix handling of LLDP frames
+Date: Mon, 26 Jun 2023 20:10:31 +0200
+Message-ID: <20230626180811.129469753@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -40,13 +40,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit d7c66073559386b836bded7cdc8b66ee5c049129 ]
+[ Upstream commit 8332cf6fd7c7087dbc2067115b33979c9851bbc4 ]
 
-BPDUs are link-local frames, therefore they must be trapped to the CPU
-port. Currently, the MT7530 switch treats BPDUs as regular multicast
-frames, therefore flooding them to user ports. To fix this, set BPDUs to be
-trapped to the CPU port. Group this on mt7530_setup() and
-mt7531_setup_common() into mt753x_trap_frames() and call that.
+LLDP frames are link-local frames, therefore they must be trapped to the
+CPU port. Currently, the MT753X switches treat LLDP frames as regular
+multicast frames, therefore flooding them to user ports. To fix this, set
+LLDP frames to be trapped to the CPU port(s).
 
 Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
 Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
@@ -56,48 +55,41 @@ Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mt7530.c | 4 ++++
+ drivers/net/dsa/mt7530.h | 5 +++++
+ 2 files changed, 9 insertions(+)
 
 diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 7dbbd5e509d3b..40be635d2ecc9 100644
+index 40be635d2ecc9..e542f5dbe5831 100644
 --- a/drivers/net/dsa/mt7530.c
 +++ b/drivers/net/dsa/mt7530.c
-@@ -991,6 +991,14 @@ static void mt7530_setup_port5(struct dsa_switch *ds, phy_interface_t interface)
- 	mutex_unlock(&priv->reg_mutex);
+@@ -997,6 +997,10 @@ mt753x_trap_frames(struct mt7530_priv *priv)
+ 	/* Trap BPDUs to the CPU port(s) */
+ 	mt7530_rmw(priv, MT753X_BPC, MT753X_BPDU_PORT_FW_MASK,
+ 		   MT753X_BPDU_CPU_ONLY);
++
++	/* Trap LLDP frames with :0E MAC DA to the CPU port(s) */
++	mt7530_rmw(priv, MT753X_RGAC2, MT753X_R0E_PORT_FW_MASK,
++		   MT753X_R0E_PORT_FW(MT753X_BPDU_CPU_ONLY));
  }
  
-+static void
-+mt753x_trap_frames(struct mt7530_priv *priv)
-+{
-+	/* Trap BPDUs to the CPU port(s) */
-+	mt7530_rmw(priv, MT753X_BPC, MT753X_BPDU_PORT_FW_MASK,
-+		   MT753X_BPDU_CPU_ONLY);
-+}
-+
  static int
- mt753x_cpu_port_enable(struct dsa_switch *ds, int port)
- {
-@@ -2214,6 +2222,8 @@ mt7530_setup(struct dsa_switch *ds)
+diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
+index 6b2fc6290ea84..31c0f7156b699 100644
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -65,6 +65,11 @@ enum mt753x_id {
+ #define MT753X_BPC			0x24
+ #define  MT753X_BPDU_PORT_FW_MASK	GENMASK(2, 0)
  
- 	priv->p6_interface = PHY_INTERFACE_MODE_NA;
- 
-+	mt753x_trap_frames(priv);
++/* Register for :03 and :0E MAC DA frame control */
++#define MT753X_RGAC2			0x2c
++#define  MT753X_R0E_PORT_FW_MASK	GENMASK(18, 16)
++#define  MT753X_R0E_PORT_FW(x)		FIELD_PREP(MT753X_R0E_PORT_FW_MASK, x)
 +
- 	/* Enable and reset MIB counters */
- 	mt7530_mib_reset(ds);
- 
-@@ -2320,8 +2330,8 @@ mt7531_setup_common(struct dsa_switch *ds)
- 			   BIT(cpu_dp->index));
- 		break;
- 	}
--	mt7530_rmw(priv, MT753X_BPC, MT753X_BPDU_PORT_FW_MASK,
--		   MT753X_BPDU_CPU_ONLY);
-+
-+	mt753x_trap_frames(priv);
- 
- 	/* Enable and reset MIB counters */
- 	mt7530_mib_reset(ds);
+ enum mt753x_bpdu_port_fw {
+ 	MT753X_BPDU_FOLLOW_MFC,
+ 	MT753X_BPDU_CPU_EXCLUDE = 4,
 -- 
 2.39.2
 
