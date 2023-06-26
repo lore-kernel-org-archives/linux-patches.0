@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4E613AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442A3C433C0;
-	Mon, 26 Jun 2023 18:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76C613AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24333C433C0;
+	Mon, 26 Jun 2023 18:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804171;
-	bh=dhZneaUi7W/r+uKBoWD9WfUV4JA3BkezyGzkrmfEb7M=;
+	s=korg; t=1687804174;
+	bh=vqIqFnWSJE0E90bomROB1dnMkiZREdqIziRgYD7M7P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ba0XpSaI0a0XCZVsiML8YF7i1Gs+qg/Qh2Ky16iPikh6b5oyllmuvLGhab7URXDxn
-	 puj8mc0wQ4gYjWo+cldZENcKr076Ou9/LQ5O+uJ4jeebJXFNQFeoRuHl72vvXgFpAY
-	 ZSm5B3xbkEZIruJTe26i6uYpfz3ROBqG/P8WWWZI=
+	b=dAclFkhDqFWe13yGAO3r0I5pua09tLfutHfkghRkz5y5XLGvq3mLYPqE6maj6cpQG
+	 s+841UeQAy9i4W5gbaaQk+oAnG6PeOcA2f44exlEpclzBcS/vn1EvnCzLd6kT7q3aD
+	 qrcEYurl38D48DWUK4wmb+LxhTa6/gHEonLNBq+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Dexuan Cui <decui@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.1 048/170] Drivers: hv: vmbus: Call hv_synic_free() if hv_synic_alloc() fails
-Date: Mon, 26 Jun 2023 20:10:17 +0200
-Message-ID: <20230626180802.712039449@linuxfoundation.org>
+	Yann Gautier <yann.gautier@foss.st.com>,
+	Christophe Kerello <christophe.kerello@foss.st.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 066/170] mmc: mmci: stm32: fix max busy timeout calculation
+Date: Mon, 26 Jun 2023 20:10:35 +0200
+Message-ID: <20230626180803.554106948@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,50 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Christophe Kerello <christophe.kerello@foss.st.com>
 
-commit ec97e112985c2581ee61854a4b74f080f6cdfc2c upstream.
+commit 47b3ad6b7842f49d374a01b054a4b1461a621bdc upstream.
 
-Commit 572086325ce9 ("Drivers: hv: vmbus: Cleanup synic memory free path")
-says "Any memory allocations that succeeded will be freed when the caller
-cleans up by calling hv_synic_free()", but if the get_zeroed_page() in
-hv_synic_alloc() fails, currently hv_synic_free() is not really called
-in vmbus_bus_init(), consequently there will be a memory leak, e.g.
-hv_context.hv_numa_map is not freed in the error path. Fix this by
-updating the goto labels.
+The way that the timeout is currently calculated could lead to a u64
+timeout value in mmci_start_command(). This value is then cast in a u32
+register that leads to mmc erase failed issue with some SD cards.
 
-Cc: stable@kernel.org
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Fixes: 4df4cb9e99f8 ("x86/hyperv: Initialize clockevents earlier in CPU onlining")
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20230504224155.10484-1-decui@microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fixes: 8266c585f489 ("mmc: mmci: add hardware busy timeout feature")
+Signed-off-by: Yann Gautier <yann.gautier@foss.st.com>
+Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230613134146.418016-1-yann.gautier@foss.st.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/vmbus_drv.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/mmc/host/mmci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -1504,7 +1504,7 @@ static int vmbus_bus_init(void)
- 	ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "hyperv/vmbus:online",
- 				hv_synic_init, hv_synic_cleanup);
- 	if (ret < 0)
--		goto err_cpuhp;
-+		goto err_alloc;
- 	hyperv_cpuhp_online = ret;
+--- a/drivers/mmc/host/mmci.c
++++ b/drivers/mmc/host/mmci.c
+@@ -1735,7 +1735,8 @@ static void mmci_set_max_busy_timeout(st
+ 		return;
  
- 	ret = vmbus_connect();
-@@ -1555,9 +1555,8 @@ static int vmbus_bus_init(void)
+ 	if (host->variant->busy_timeout && mmc->actual_clock)
+-		max_busy_timeout = ~0UL / (mmc->actual_clock / MSEC_PER_SEC);
++		max_busy_timeout = U32_MAX / DIV_ROUND_UP(mmc->actual_clock,
++							  MSEC_PER_SEC);
  
- err_connect:
- 	cpuhp_remove_state(hyperv_cpuhp_online);
--err_cpuhp:
--	hv_synic_free();
- err_alloc:
-+	hv_synic_free();
- 	if (vmbus_irq == -1) {
- 		hv_remove_vmbus_handler();
- 	} else {
+ 	mmc->max_busy_timeout = max_busy_timeout;
+ }
 
 
