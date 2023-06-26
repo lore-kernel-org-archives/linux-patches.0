@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884E7C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F5FC433C8;
-	Mon, 26 Jun 2023 18:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E833C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D771C433C8;
+	Mon, 26 Jun 2023 18:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804640;
-	bh=Iho5+NIDC9AnUiaUeD4K159JU0K+DV3z0ixwIxR15FQ=;
+	s=korg; t=1687804643;
+	bh=wlO1hhNcHYrGl629nKou/DbDgxx+DiKkZ5/d07sFcVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWVGT0V9MI0DSceuMeVkCnBLRh6nrNDjssevrTQEQgG6uDtXtAwEqEQl94qeLSekU
-	 IwC4KbDkXTfZQbNUqoiglHy9lEcKxD2D4MyJqW1tRrKC8W9QB6cB67rhbLddT8NHDx
-	 mepCsQiOKvkMgQ1zWV/OEtPBLxi3ycSD3pa4CFmU=
+	b=KsR2+sw1eDY3GqlpM8JqRPgXpdOr9tmIuHx3C7KEDsaXYpSGOIPSAFjLAXgKU/6eq
+	 hC4z++XpLf6ydQUQ6CxgJirqxG/wsTS9Hj/zcEQIbL6nVEd11rEVC+WxZumXgIMtY2
+	 FsWx/Ju/Rtx9Kg4bXhEYQZNWTB0co+Xj/0350nik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Bart Van Assche <bart.vanassche@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Johannes Thumshirn <jthumshirn@suse.de>,
+	Shane M Seymour <shane.seymour@hpe.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 51/60] ASoC: nau8824: Add quirk to active-high jack-detect
-Date: Mon, 26 Jun 2023 20:12:30 +0200
-Message-ID: <20230626180741.665907076@linuxfoundation.org>
+Subject: [PATCH 5.4 25/60] rcu: Upgrade rcu_swap_protected() to rcu_replace_pointer()
+Date: Mon, 26 Jun 2023 20:12:04 +0200
+Message-ID: <20230626180740.557010717@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -35,57 +41,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit e384dba03e3294ce7ea69e4da558e9bf8f0e8946 ]
+[ Upstream commit a63fc6b75cca984c71f095282e0227a390ba88f3 ]
 
-Add  entries for Positivo laptops: CW14Q01P, K1424G, N14ZP74G to the
-DMI table, so that  active-high jack-detect will work properly on
-these laptops.
+Although the rcu_swap_protected() macro follows the example of
+swap(), the interactions with RCU make its update of its argument
+somewhat counter-intuitive.  This commit therefore introduces
+an rcu_replace_pointer() that returns the old value of the RCU
+pointer instead of doing the argument update.  Once all the uses of
+rcu_swap_protected() are updated to instead use rcu_replace_pointer(),
+rcu_swap_protected() will be removed.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Link: https://lore.kernel.org/r/20230529181911.632851-1-edson.drosdeck@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/lkml/CAHk-=wiAsJLw1egFEE=Z7-GGtM6wcvtyytXZA1+BHqta4gg6Hw@mail.gmail.com/
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+[ paulmck: From rcu_replace() to rcu_replace_pointer() per Ingo Molnar. ]
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: Bart Van Assche <bart.vanassche@wdc.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Johannes Thumshirn <jthumshirn@suse.de>
+Cc: Shane M Seymour <shane.seymour@hpe.com>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: a61675294735 ("ieee802154: hwsim: Fix possible memory leaks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8824.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ include/linux/rcupdate.h | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/sound/soc/codecs/nau8824.c b/sound/soc/codecs/nau8824.c
-index a95fe3fff1db8..9b22219a76937 100644
---- a/sound/soc/codecs/nau8824.c
-+++ b/sound/soc/codecs/nau8824.c
-@@ -1896,6 +1896,30 @@ static const struct dmi_system_id nau8824_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
- 	},
-+	{
-+		/* Positivo CW14Q01P */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "CW14Q01P"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Positivo K1424G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "K1424G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Positivo N14ZP74G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "N14ZP74G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
- 	{}
- };
+diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
+index 09e6ac4b669b2..c75b38ba4a728 100644
+--- a/include/linux/rcupdate.h
++++ b/include/linux/rcupdate.h
+@@ -384,6 +384,24 @@ do {									      \
+ 		smp_store_release(&p, RCU_INITIALIZER((typeof(p))_r_a_p__v)); \
+ } while (0)
  
++/**
++ * rcu_replace_pointer() - replace an RCU pointer, returning its old value
++ * @rcu_ptr: RCU pointer, whose old value is returned
++ * @ptr: regular pointer
++ * @c: the lockdep conditions under which the dereference will take place
++ *
++ * Perform a replacement, where @rcu_ptr is an RCU-annotated
++ * pointer and @c is the lockdep argument that is passed to the
++ * rcu_dereference_protected() call used to read that pointer.  The old
++ * value of @rcu_ptr is returned, and @rcu_ptr is set to @ptr.
++ */
++#define rcu_replace_pointer(rcu_ptr, ptr, c)				\
++({									\
++	typeof(ptr) __tmp = rcu_dereference_protected((rcu_ptr), (c));	\
++	rcu_assign_pointer((rcu_ptr), (ptr));				\
++	__tmp;								\
++})
++
+ /**
+  * rcu_swap_protected() - swap an RCU and a regular pointer
+  * @rcu_ptr: RCU pointer
 -- 
 2.39.2
 
