@@ -1,48 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE77C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B193BC433C8;
-	Mon, 26 Jun 2023 18:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C8BC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:36:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59F5C433C9;
+	Mon, 26 Jun 2023 18:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804558;
-	bh=g5YYxPU/SVLQupiy2ypeCxNWYb61mfRrUNSJY1SDZSA=;
+	s=korg; t=1687804561;
+	bh=xNQ54ytPvumoCeiLgJc7OnP+1PsgOlLIuIcEDfadQF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ljzfMcM6ITQGiGKeATe3g7qVAM92FfjlHK+hcWcu7+oAgrrTIDri0jJjQYV/GQtc+
-	 ds7ru4OW11/BLCsFa3G/SSjVOfWQWn3Qwn10QXpn3bL9EUFgl7ne8jwSpDDnj1kXXf
-	 b/3AG2cqzzIWQzKUnGGgdIxtQqK8VTt7Dr25KwUo=
+	b=1hUw8/aU5C8HQPPDiw9l9TqK+KLof9PNTmDX1uQkk17euvMPIhhqyWDPGsWAXfeQC
+	 Mk01Thmu3XLXD9wChlhtmAlcah+x96UA3E4A4NgxuCChlDjVrCZCi0MoIw9FrSxH5J
+	 JRyx4WpTyFSAv0BAOT4OGZPIefF3uwEINMsI5KcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Baoquan He <bhe@redhat.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dave Young <dyoung@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Philipp Rudo <prudo@redhat.com>,
-	Ross Zwisler <zwisler@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Mathias Krause <minipli@grsecurity.net>,
+	"Bhatnagar, Rishabh" <risbhat@amazon.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Tom Rix <trix@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 06/60] x86/purgatory: remove PGO flags
-Date: Mon, 26 Jun 2023 20:11:45 +0200
-Message-ID: <20230626180739.805376303@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Richard W.M. Jones" <rjones@redhat.com>,
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH 5.4 07/60] tick/common: Align tick period during sched_timer setup
+Date: Mon, 26 Jun 2023 20:11:46 +0200
+Message-ID: <20230626180739.855278973@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -56,60 +38,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 97b6b9cbba40a21c1d9a344d5c1991f8cfbf136e upstream.
+commit 13bb06f8dd42071cb9a49f6e21099eea05d4b856 upstream.
 
-If profile-guided optimization is enabled, the purgatory ends up with
-multiple .text sections.  This is not supported by kexec and crashes the
-system.
+The tick period is aligned very early while the first clock_event_device is
+registered. At that point the system runs in periodic mode and switches
+later to one-shot mode if possible.
 
-Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-2-b05c520b7296@chromium.org
-Fixes: 930457057abe ("kernel/kexec_file.c: split up __kexec_load_puragory")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Cc: <stable@vger.kernel.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Philipp Rudo <prudo@redhat.com>
-Cc: Ross Zwisler <zwisler@google.com>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Tom Rix <trix@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Ricardo Ribalda Delgado <ribalda@chromium.org>
+The next wake-up event is programmed based on the aligned value
+(tick_next_period) but the delta value, that is used to program the
+clock_event_device, is computed based on ktime_get().
+
+With the subtracted offset, the device fires earlier than the exact time
+frame. With a large enough offset the system programs the timer for the
+next wake-up and the remaining time left is too small to make any boot
+progress. The system hangs.
+
+Move the alignment later to the setup of tick_sched timer. At this point
+the system switches to oneshot mode and a high resolution clocksource is
+available. At this point it is safe to align tick_next_period because
+ktime_get() will now return accurate (not jiffies based) time.
+
+[bigeasy: Patch description + testing].
+
+Fixes: e9523a0d81899 ("tick/common: Align tick period with the HZ tick.")
+Reported-by: Mathias Krause <minipli@grsecurity.net>
+Reported-by: "Bhatnagar, Rishabh" <risbhat@amazon.com>
+Suggested-by: Mathias Krause <minipli@grsecurity.net>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Richard W.M. Jones <rjones@redhat.com>
+Tested-by: Mathias Krause <minipli@grsecurity.net>
+Acked-by: SeongJae Park <sj@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/5a56290d-806e-b9a5-f37c-f21958b5a8c0@grsecurity.net
+Link: https://lore.kernel.org/12c6f9a3-d087-b824-0d05-0d18c9bc1bf3@amazon.com
+Link: https://lore.kernel.org/r/20230615091830.RxMV2xf_@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/purgatory/Makefile |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/time/tick-common.c |   13 +------------
+ kernel/time/tick-sched.c  |   13 ++++++++++++-
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/arch/x86/purgatory/Makefile
-+++ b/arch/x86/purgatory/Makefile
-@@ -14,6 +14,11 @@ $(obj)/sha256.o: $(srctree)/lib/crypto/s
- 
- CFLAGS_sha256.o := -D__DISABLE_EXPORTS
- 
-+# When profile-guided optimization is enabled, llvm emits two different
-+# overlapping text sections, which is not supported by kexec. Remove profile
-+# optimization flags.
-+KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%,$(KBUILD_CFLAGS))
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -216,19 +216,8 @@ static void tick_setup_device(struct tic
+ 		 * this cpu:
+ 		 */
+ 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
+-			ktime_t next_p;
+-			u32 rem;
+-
+ 			tick_do_timer_cpu = cpu;
+-
+-			next_p = ktime_get();
+-			div_u64_rem(next_p, TICK_NSEC, &rem);
+-			if (rem) {
+-				next_p -= rem;
+-				next_p += TICK_NSEC;
+-			}
+-
+-			tick_next_period = next_p;
++			tick_next_period = ktime_get();
+ #ifdef CONFIG_NO_HZ_FULL
+ 			/*
+ 			 * The boot CPU may be nohz_full, in which case set
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -129,8 +129,19 @@ static ktime_t tick_init_jiffy_update(vo
+ 	raw_spin_lock(&jiffies_lock);
+ 	write_seqcount_begin(&jiffies_seq);
+ 	/* Did we start the jiffies update yet ? */
+-	if (last_jiffies_update == 0)
++	if (last_jiffies_update == 0) {
++		u32 rem;
 +
- LDFLAGS_purgatory.ro := -e purgatory_start -r --no-undefined -nostdlib -z nodefaultlib
- targets += purgatory.ro
- 
++		/*
++		 * Ensure that the tick is aligned to a multiple of
++		 * TICK_NSEC.
++		 */
++		div_u64_rem(tick_next_period, TICK_NSEC, &rem);
++		if (rem)
++			tick_next_period += TICK_NSEC - rem;
++
+ 		last_jiffies_update = tick_next_period;
++	}
+ 	period = last_jiffies_update;
+ 	write_seqcount_end(&jiffies_seq);
+ 	raw_spin_unlock(&jiffies_lock);
 
 
