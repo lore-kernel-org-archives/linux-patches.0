@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A019512B9C
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:28:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E990C433C8;
-	Mon, 26 Jun 2023 18:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF5912B9C
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:28:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208E1C433C8;
+	Mon, 26 Jun 2023 18:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804080;
-	bh=xfe7n/CuJ6Vusd9L6zDgyic7yjmrIHBWVSrOq2mjl2c=;
+	s=korg; t=1687804083;
+	bh=a2SaCbXzACe8eSna/hwzbcAmmg712Oz860P9k3Ct8Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hpwjJh+BhFbJB9gIbkWDlqbyE0AoIJlVSdiBEMyiybIVTNKA6r6K1U0ZLNtbvSGxL
-	 rdJkBBojhybSyOEmtI8jG053NPZoNGEq3HBPgJuL1ZN6i7YuL0numew7GDTSv6IIQV
-	 T5ufNrAdfLN+Fk3TN2BHv+s7smrbnwweNh/FHzH4=
+	b=bzOHRwZpwO3QLMQSwebYEizNTCCpYKoek2wIozbP/Dfm+EyE3WcVPs87/6VIYYh7u
+	 Bf1sqlWNpLhqZJibLTGuNlur5ljkOTWvKmb0CVSpUoqKqp5iwLQXxKq6RGmtPev/NS
+	 yZxJzlNC8zGJyeZCJ1JfB/szrIwY92Xg2xH+4LiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 017/170] selftests: mptcp: connect: skip transp tests if not supported
-Date: Mon, 26 Jun 2023 20:09:46 +0200
-Message-ID: <20230626180801.327355265@linuxfoundation.org>
+Subject: [PATCH 6.1 035/170] selftests: mptcp: join: skip MPC backups tests if not supported
+Date: Mon, 26 Jun 2023 20:10:04 +0200
+Message-ID: <20230626180802.122656431@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,56 +36,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 07bf49401909264a38fa3427c3cce43e8304436a upstream.
+commit 632978f0a961b4591a05ba9e39eab24541d83e84 upstream.
 
 Selftests are supposed to run on any kernels, including the old ones not
 supporting all MPTCP features.
 
-One of them is the support of IP(V6)_TRANSPARENT socket option with
-MPTCP connections introduced by commit c9406a23c116 ("mptcp: sockopt:
-add SOL_IP freebind & transparent options").
+One of them is the support of sending an MP_PRIO signal for the initial
+subflow, introduced by commit c157bbe776b7 ("mptcp: allow the in kernel
+PM to set MPC subflow priority").
 
-It is possible to look for "__ip_sock_set_tos" in kallsyms because
-IP(V6)_TRANSPARENT socket option support has been added after TOS
-support which came with the required infrastructure in MPTCP sockopt
-code. To support TOS, the following function has been exported (T). Not
-great but better than checking for a specific kernel version.
+It is possible to look for "mptcp_subflow_send_ack" in kallsyms because
+it was needed to introduce the mentioned feature. So we can know in
+advance if the feature is supported instead of trying and accepting any
+results.
 
 Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: 5fb62e9cd3ad ("selftests: mptcp: add tproxy test case")
+Fixes: 914f6a59b10f ("selftests: mptcp: add MPC backup tests")
 Cc: stable@vger.kernel.org
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.sh |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-@@ -144,6 +144,7 @@ cleanup()
- }
- 
- mptcp_lib_check_mptcp
-+mptcp_lib_check_kallsyms
- 
- ip -Version > /dev/null 2>&1
- if [ $? -ne 0 ];then
-@@ -696,6 +697,15 @@ run_test_transparent()
- 		return 0
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2607,14 +2607,16 @@ backup_tests()
+ 		chk_prio_nr 1 1
  	fi
  
-+	# IP(V6)_TRANSPARENT has been added after TOS support which came with
-+	# the required infrastructure in MPTCP sockopt code. To support TOS, the
-+	# following function has been exported (T). Not great but better than
-+	# checking for a specific kernel version.
-+	if ! mptcp_lib_kallsyms_has "T __ip_sock_set_tos$"; then
-+		echo "INFO: ${msg} not supported by the kernel: SKIP"
-+		return
-+	fi
-+
- ip netns exec "$listener_ns" nft -f /dev/stdin <<"EOF"
- flush ruleset
- table inet mangle {
+-	if reset "mpc backup"; then
++	if reset "mpc backup" &&
++	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,backup
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 0 slow
+ 		chk_join_nr 0 0 0
+ 		chk_prio_nr 0 1
+ 	fi
+ 
+-	if reset "mpc backup both sides"; then
++	if reset "mpc backup both sides" &&
++	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns1 10.0.1.1 flags subflow,backup
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,backup
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 0 slow
+@@ -2622,14 +2624,16 @@ backup_tests()
+ 		chk_prio_nr 1 1
+ 	fi
+ 
+-	if reset "mpc switch to backup"; then
++	if reset "mpc switch to backup" &&
++	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 0 slow backup
+ 		chk_join_nr 0 0 0
+ 		chk_prio_nr 0 1
+ 	fi
+ 
+-	if reset "mpc switch to backup both sides"; then
++	if reset "mpc switch to backup both sides" &&
++	   continue_if mptcp_lib_kallsyms_doesnt_have "mptcp_subflow_send_ack$"; then
+ 		pm_nl_add_endpoint $ns1 10.0.1.1 flags subflow
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow
+ 		run_tests $ns1 $ns2 10.0.1.1 0 0 0 slow backup
 
 
