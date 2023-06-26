@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F55134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D51C433C0;
-	Mon, 26 Jun 2023 18:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB4A134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C08C433C8;
+	Mon, 26 Jun 2023 18:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803809;
-	bh=vgy54zVLHfKxQrPWgzf6k7yx1TAALDUu5NoFA/xkWhw=;
+	s=korg; t=1687803812;
+	bh=OU6nnv2G9WVBthz755bwpd8EJ+LMKuGvk/LoTtkIfD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BonehY+6DjBDpSsNyFDfkCGLnIb3lcWx9d8CtIFGLI5woK0w7cy1JtBOXzPYnP2K9
-	 mZIaSMt9VDdIezqQW6TDbFAO/Mo5aMzL/74R0ZkhzYwtplXgje2E3nPQe8UU1I5jA3
-	 Yg6p+SdEq9lgFF4BuIIgisan/xA9B0+x2SM4sCv0=
+	b=YjHn/jw0ZNRKv8Z1/Cp6sexupeZY/2+etstYlTzDvmRY8UHtEWVNuxz9obE4dPXXu
+	 M8m6GGcOzOOi9oHOAbxWNib35ihnm+GLtL7iWdhZ6kHwkDaYT+I4LxajrV4ijwQVpG
+	 q9RIbPq94cNnGbdEr5hhRWEya+iSm5uVn3FuvOg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 156/199] media: cec: core: disable adapter in cec_devnode_unregister
-Date: Mon, 26 Jun 2023 20:11:02 +0200
-Message-ID: <20230626180812.486522309@linuxfoundation.org>
+Subject: [PATCH 6.3 157/199] media: cec: core: dont set last_initiator if tx in progress
+Date: Mon, 26 Jun 2023 20:11:03 +0200
+Message-ID: <20230626180812.534229217@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -37,72 +37,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit fe4526d99e2e06b08bb80316c3a596ea6a807b75 ]
+[ Upstream commit 73af6c7511038249cad3d5f3b44bf8d78ac0f499 ]
 
-Explicitly disable the CEC adapter in cec_devnode_unregister()
-
-Usually this does not really do anything important, but for drivers
-that use the CEC pin framework this is needed to properly stop the
-hrtimer. Without this a crash would happen when such a driver is
-unloaded with rmmod.
+When a message was received the last_initiator is set to 0xff.
+This will force the signal free time for the next transmit
+to that for a new initiator. However, if a new transmit is
+already in progress, then don't set last_initiator, since
+that's the initiator of the current transmit. Overwriting
+this would cause the signal free time of a following transmit
+to be that of the new initiator instead of a next transmit.
 
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/core/cec-adap.c | 5 ++++-
- drivers/media/cec/core/cec-core.c | 2 ++
- drivers/media/cec/core/cec-priv.h | 1 +
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/media/cec/core/cec-adap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
-index 4f5ab3cae8a71..ac18707fddcd2 100644
+index ac18707fddcd2..b1512f9c5895c 100644
 --- a/drivers/media/cec/core/cec-adap.c
 +++ b/drivers/media/cec/core/cec-adap.c
-@@ -1582,7 +1582,7 @@ static void cec_claim_log_addrs(struct cec_adapter *adap, bool block)
-  *
-  * This function is called with adap->lock held.
-  */
--static int cec_adap_enable(struct cec_adapter *adap)
-+int cec_adap_enable(struct cec_adapter *adap)
- {
- 	bool enable;
- 	int ret = 0;
-@@ -1592,6 +1592,9 @@ static int cec_adap_enable(struct cec_adapter *adap)
- 	if (adap->needs_hpd)
- 		enable = enable && adap->phys_addr != CEC_PHYS_ADDR_INVALID;
- 
-+	if (adap->devnode.unregistered)
-+		enable = false;
-+
- 	if (enable == adap->is_enabled)
- 		return 0;
- 
-diff --git a/drivers/media/cec/core/cec-core.c b/drivers/media/cec/core/cec-core.c
-index af358e901b5f3..7e153c5cad04f 100644
---- a/drivers/media/cec/core/cec-core.c
-+++ b/drivers/media/cec/core/cec-core.c
-@@ -191,6 +191,8 @@ static void cec_devnode_unregister(struct cec_adapter *adap)
+@@ -1090,7 +1090,8 @@ void cec_received_msg_ts(struct cec_adapter *adap,
  	mutex_lock(&adap->lock);
- 	__cec_s_phys_addr(adap, CEC_PHYS_ADDR_INVALID, false);
- 	__cec_s_log_addrs(adap, NULL, false);
-+	// Disable the adapter (since adap->devnode.unregistered is true)
-+	cec_adap_enable(adap);
- 	mutex_unlock(&adap->lock);
+ 	dprintk(2, "%s: %*ph\n", __func__, msg->len, msg->msg);
  
- 	cdev_device_del(&devnode->cdev, &devnode->dev);
-diff --git a/drivers/media/cec/core/cec-priv.h b/drivers/media/cec/core/cec-priv.h
-index b78df931aa74b..ed1f8c67626bf 100644
---- a/drivers/media/cec/core/cec-priv.h
-+++ b/drivers/media/cec/core/cec-priv.h
-@@ -47,6 +47,7 @@ int cec_monitor_pin_cnt_inc(struct cec_adapter *adap);
- void cec_monitor_pin_cnt_dec(struct cec_adapter *adap);
- int cec_adap_status(struct seq_file *file, void *priv);
- int cec_thread_func(void *_adap);
-+int cec_adap_enable(struct cec_adapter *adap);
- void __cec_s_phys_addr(struct cec_adapter *adap, u16 phys_addr, bool block);
- int __cec_s_log_addrs(struct cec_adapter *adap,
- 		      struct cec_log_addrs *log_addrs, bool block);
+-	adap->last_initiator = 0xff;
++	if (!adap->transmit_in_progress)
++		adap->last_initiator = 0xff;
+ 
+ 	/* Check if this message was for us (directed or broadcast). */
+ 	if (!cec_msg_is_broadcast(msg))
 -- 
 2.39.2
 
