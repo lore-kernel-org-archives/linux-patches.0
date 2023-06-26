@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71564134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E801AC433C0;
-	Mon, 26 Jun 2023 18:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CDF134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D08C433C8;
+	Mon, 26 Jun 2023 18:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803969;
-	bh=AlyljVhLcoW6ffreaLuFfYb+N+jU/OaKfpzfPbWU+p4=;
+	s=korg; t=1687803972;
+	bh=sPLT7ECfxhFm2I/VJRs5KNOFWnQEE5rL1s88HmZWCpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7qWdTc/R8Qu3C+d027ZAI/nz6KpmJ6E5D2sYt0cZgyzug9RZ6op2NNev+MS0ASu2
-	 ddj7kIo5H8g+TumoQL9qI9hcnn1o0kNMAId9up3eJlZfrITk5+sNexl+It6yhDuIxm
-	 aF73tBDQ1QF4T4KouSenIASQ8SYgPu64VZrILKKc=
+	b=adTKGMET8K+np4EtaBnmGlYACajdI/SvMJ69BCwaNJizsoyxTI2pUbJ+13jnasMXB
+	 jwdZfUaosF71RXjig2m6ycaMVK3UoYe8GNlyxPMoX8y6Zg3UbedMV5Iq06WVmA1cdW
+	 YS2oEol7kk8++0oUdKfEEw/uXT2ZT05ATMCI2WRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Min Li <lm0963hack@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Kishon Vijay Abraham I <kvijayab@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 39/41] drm/radeon: fix race condition UAF in radeon_gem_set_domain_ioctl
-Date: Mon, 26 Jun 2023 20:12:02 +0200
-Message-ID: <20230626180737.722844231@linuxfoundation.org>
+Subject: [PATCH 4.19 40/41] x86/apic: Fix kernel panic when booting with intremap=off and x2apic_phys
+Date: Mon, 26 Jun 2023 20:12:03 +0200
+Message-ID: <20230626180737.753414340@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -36,49 +39,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Min Li <lm0963hack@gmail.com>
+From: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
 
-[ Upstream commit 982b173a6c6d9472730c3116051977e05d17c8c5 ]
+[ Upstream commit 85d38d5810e285d5aec7fb5283107d1da70c12a9 ]
 
-Userspace can race to free the gobj(robj converted from), robj should not
-be accessed again after drm_gem_object_put, otherwith it will result in
-use-after-free.
+When booting with "intremap=off" and "x2apic_phys" on the kernel command
+line, the physical x2APIC driver ends up being used even when x2APIC
+mode is disabled ("intremap=off" disables x2APIC mode). This happens
+because the first compound condition check in x2apic_phys_probe() is
+false due to x2apic_mode == 0 and so the following one returns true
+after default_acpi_madt_oem_check() having already selected the physical
+x2APIC driver.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Min Li <lm0963hack@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This results in the following panic:
+
+   kernel BUG at arch/x86/kernel/apic/io_apic.c:2409!
+   invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+   CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-rc2-ver4.1rc2 #2
+   Hardware name: Dell Inc. PowerEdge R6515/07PXPY, BIOS 2.3.6 07/06/2021
+   RIP: 0010:setup_IO_APIC+0x9c/0xaf0
+   Call Trace:
+    <TASK>
+    ? native_read_msr
+    apic_intr_mode_init
+    x86_late_time_init
+    start_kernel
+    x86_64_start_reservations
+    x86_64_start_kernel
+    secondary_startup_64_no_verify
+    </TASK>
+
+which is:
+
+setup_IO_APIC:
+  apic_printk(APIC_VERBOSE, "ENABLING IO-APIC IRQs\n");
+  for_each_ioapic(ioapic)
+  	BUG_ON(mp_irqdomain_create(ioapic));
+
+Return 0 to denote that x2APIC has not been enabled when probing the
+physical x2APIC driver.
+
+  [ bp: Massage commit message heavily. ]
+
+Fixes: 9ebd680bd029 ("x86, apic: Use probe routines to simplify apic selection")
+Signed-off-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Kishon Vijay Abraham I <kvijayab@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20230616212236.1389-1-dheerajkumar.srivastava@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_gem.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/x86/kernel/apic/x2apic_phys.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_gem.c b/drivers/gpu/drm/radeon/radeon_gem.c
-index 27d8e7dd2d067..46f7789693ea0 100644
---- a/drivers/gpu/drm/radeon/radeon_gem.c
-+++ b/drivers/gpu/drm/radeon/radeon_gem.c
-@@ -377,7 +377,6 @@ int radeon_gem_set_domain_ioctl(struct drm_device *dev, void *data,
- 	struct radeon_device *rdev = dev->dev_private;
- 	struct drm_radeon_gem_set_domain *args = data;
- 	struct drm_gem_object *gobj;
--	struct radeon_bo *robj;
- 	int r;
+diff --git a/arch/x86/kernel/apic/x2apic_phys.c b/arch/x86/kernel/apic/x2apic_phys.c
+index 8e70c2ba21b3d..fb17767552ef4 100644
+--- a/arch/x86/kernel/apic/x2apic_phys.c
++++ b/arch/x86/kernel/apic/x2apic_phys.c
+@@ -102,7 +102,10 @@ static void init_x2apic_ldr(void)
  
- 	/* for now if someone requests domain CPU -
-@@ -390,13 +389,12 @@ int radeon_gem_set_domain_ioctl(struct drm_device *dev, void *data,
- 		up_read(&rdev->exclusive_lock);
- 		return -ENOENT;
- 	}
--	robj = gem_to_radeon_bo(gobj);
+ static int x2apic_phys_probe(void)
+ {
+-	if (x2apic_mode && (x2apic_phys || x2apic_fadt_phys()))
++	if (!x2apic_mode)
++		return 0;
++
++	if (x2apic_phys || x2apic_fadt_phys())
+ 		return 1;
  
- 	r = radeon_gem_set_domain(gobj, args->read_domains, args->write_domain);
- 
- 	drm_gem_object_put_unlocked(gobj);
- 	up_read(&rdev->exclusive_lock);
--	r = radeon_gem_handle_lockup(robj->rdev, r);
-+	r = radeon_gem_handle_lockup(rdev, r);
- 	return r;
- }
- 
+ 	return apic == &apic_x2apic_phys;
 -- 
 2.39.2
 
