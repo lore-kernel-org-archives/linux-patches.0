@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E5911CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F53C433C0;
-	Mon, 26 Jun 2023 18:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EF811CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8ADC433C0;
+	Mon, 26 Jun 2023 18:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805057;
-	bh=x4B5VUxdpBRZZzL6sMJR3BnF8QzAMDxABARCQXOtAtE=;
+	s=korg; t=1687805060;
+	bh=bUZZwzzs4b3AQlnibtSs3zEKDfHZiUMsmN4Uu8fVrtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOOlUXQZPFQcDQbBl6T8PKxXn7PFBo2qJogBeUEjaxJVkKsLUsu1Gn5RnPEk8y837
-	 ny/BzTeVjQ5aVh+y+rrHQiIAsRnT4hs54jBtBpfO5+dFDlihRbmfTyDJnVA6NQqBJP
-	 acaOS1sR5is1AP6ypOR97FWuyn5I3bH+1I2meaUo=
+	b=eraqOGDNRfMve1YEFp12ymyFK3DB+SvoJZkMosoMF7UgQhlK9PnqMf6dfzbF2LX+S
+	 qbUaN82ao9aD7QAVZznG4subq3RKdCnAnuXbmtnguwz0hvRf7/z21jMWJcu2xkeXTr
+	 IIWO5iRnveMhcyZ1/F/K59Ca4JygmgxLW0SH8Cxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 08/81] selftests: mptcp: join: skip check if MIB counter not supported
-Date: Mon, 26 Jun 2023 20:11:50 +0200
-Message-ID: <20230626180744.791244828@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 09/81] nilfs2: fix buffer corruption due to concurrent device reads
+Date: Mon, 26 Jun 2023 20:11:51 +0200
+Message-ID: <20230626180744.834474487@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -34,168 +35,147 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 47867f0a7e831e24e5eab3330667ce9682d50fb1 upstream.
+commit 679bd7ebdd315bf457a4740b306ae99f1d0a403d upstream.
 
-Selftests are supposed to run on any kernels, including the old ones not
-supporting all MPTCP features.
+As a result of analysis of a syzbot report, it turned out that in three
+cases where nilfs2 allocates block device buffers directly via sb_getblk,
+concurrent reads to the device can corrupt the allocated buffers.
 
-One of them is the MPTCP MIB counters introduced in commit fc518953bc9c
-("mptcp: add and use MIB counter infrastructure") and more later. The
-MPTCP Join selftest heavily relies on these counters.
+Nilfs2 uses sb_getblk for segment summary blocks, that make up a log
+header, and the super root block, that is the trailer, and when moving and
+writing the second super block after fs resize.
 
-If a counter is not supported by the kernel, it is not displayed when
-using 'nstat -z'. We can then detect that and skip the verification. A
-new helper (get_counter()) has been added to do the required checks and
-return an error if the counter is not available.
+In any of these, since the uptodate flag is not set when storing metadata
+to be written in the allocated buffers, the stored metadata will be
+overwritten if a device read of the same block occurs concurrently before
+the write.  This causes metadata corruption and misbehavior in the log
+write itself, causing warnings in nilfs_btree_assign() as reported.
 
-Note that if we expect to have these features available and if
-SELFTESTS_MPTCP_LIB_EXPECT_ALL_FEATURES env var is set to 1, the tests
-will be marked as failed instead of skipped.
+Fix these issues by setting an uptodate flag on the buffer head on the
+first or before modifying each buffer obtained with sb_getblk, and
+clearing the flag on failure.
 
-This new helper also makes sure we get the exact counter we want to
-avoid issues we had in the past, e.g. with MPTcpExtRmAddr and
-MPTcpExtRmAddrDrop sharing the same prefix. While at it, we uniform the
-way we fetch a MIB counter.
+When setting the uptodate flag, the lock_buffer/unlock_buffer pair is used
+to perform necessary exclusive control, and the buffer is filled to ensure
+that uninitialized bytes are not mixed into the data read from others.  As
+for buffers for segment summary blocks, they are filled incrementally, so
+if the uptodate flag was unset on their allocation, set the flag and zero
+fill the buffer once at that point.
 
-Note for the backports: we rarely change these modified blocks so if
-there is are conflicts, it is very likely because a counter is not used
-in the older kernels and we don't need that chunk.
+Also, regarding the superblock move routine, the starting point of the
+memset call to zerofill the block is incorrectly specified, which can
+cause a buffer overflow on file systems with block sizes greater than
+4KiB.  In addition, if the superblock is moved within a large block, it is
+necessary to assume the possibility that the data in the superblock will
+be destroyed by zero-filling before copying.  So fix these potential
+issues as well.
 
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: b08fbf241064 ("selftests: add test-cases for MPTCP MP_JOIN")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Link: https://lkml.kernel.org/r/20230609035732.20426-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/00000000000030000a05e981f475@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   65 ++++++++++++++++--------
- 1 file changed, 44 insertions(+), 21 deletions(-)
+ fs/nilfs2/segbuf.c  |    6 ++++++
+ fs/nilfs2/segment.c |    7 +++++++
+ fs/nilfs2/super.c   |   23 ++++++++++++++++++++++-
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -130,6 +130,22 @@ do_ping()
- 	fi
+--- a/fs/nilfs2/segbuf.c
++++ b/fs/nilfs2/segbuf.c
+@@ -101,6 +101,12 @@ int nilfs_segbuf_extend_segsum(struct ni
+ 	if (unlikely(!bh))
+ 		return -ENOMEM;
+ 
++	lock_buffer(bh);
++	if (!buffer_uptodate(bh)) {
++		memset(bh->b_data, 0, bh->b_size);
++		set_buffer_uptodate(bh);
++	}
++	unlock_buffer(bh);
+ 	nilfs_segbuf_add_segsum_buffer(segbuf, bh);
+ 	return 0;
+ }
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -984,10 +984,13 @@ static void nilfs_segctor_fill_in_super_
+ 	unsigned int isz, srsz;
+ 
+ 	bh_sr = NILFS_LAST_SEGBUF(&sci->sc_segbufs)->sb_super_root;
++
++	lock_buffer(bh_sr);
+ 	raw_sr = (struct nilfs_super_root *)bh_sr->b_data;
+ 	isz = nilfs->ns_inode_size;
+ 	srsz = NILFS_SR_BYTES(isz);
+ 
++	raw_sr->sr_sum = 0;  /* Ensure initialization within this update */
+ 	raw_sr->sr_bytes = cpu_to_le16(srsz);
+ 	raw_sr->sr_nongc_ctime
+ 		= cpu_to_le64(nilfs_doing_gc() ?
+@@ -1001,6 +1004,8 @@ static void nilfs_segctor_fill_in_super_
+ 	nilfs_write_inode_common(nilfs->ns_sufile, (void *)raw_sr +
+ 				 NILFS_SR_SUFILE_OFFSET(isz), 1);
+ 	memset((void *)raw_sr + srsz, 0, nilfs->ns_blocksize - srsz);
++	set_buffer_uptodate(bh_sr);
++	unlock_buffer(bh_sr);
  }
  
-+# $1: ns ; $2: counter
-+get_counter()
-+{
-+	local ns="${1}"
-+	local counter="${2}"
-+	local count
+ static void nilfs_redirty_inodes(struct list_head *head)
+@@ -1783,6 +1788,7 @@ static void nilfs_abort_logs(struct list
+ 	list_for_each_entry(segbuf, logs, sb_list) {
+ 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
+ 				    b_assoc_buffers) {
++			clear_buffer_uptodate(bh);
+ 			if (bh->b_page != bd_page) {
+ 				if (bd_page)
+ 					end_page_writeback(bd_page);
+@@ -1794,6 +1800,7 @@ static void nilfs_abort_logs(struct list
+ 				    b_assoc_buffers) {
+ 			clear_buffer_async_write(bh);
+ 			if (bh == segbuf->sb_super_root) {
++				clear_buffer_uptodate(bh);
+ 				if (bh->b_page != bd_page) {
+ 					end_page_writeback(bd_page);
+ 					bd_page = bh->b_page;
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -372,10 +372,31 @@ static int nilfs_move_2nd_super(struct s
+ 		goto out;
+ 	}
+ 	nsbp = (void *)nsbh->b_data + offset;
+-	memset(nsbp, 0, nilfs->ns_blocksize);
+ 
++	lock_buffer(nsbh);
+ 	if (sb2i >= 0) {
++		/*
++		 * The position of the second superblock only changes by 4KiB,
++		 * which is larger than the maximum superblock data size
++		 * (= 1KiB), so there is no need to use memmove() to allow
++		 * overlap between source and destination.
++		 */
+ 		memcpy(nsbp, nilfs->ns_sbp[sb2i], nilfs->ns_sbsize);
 +
-+	count=$(ip netns exec ${ns} nstat -asz "${counter}" | awk 'NR==1 {next} {print $2}')
-+	if [ -z "${count}" ]; then
-+		mptcp_lib_fail_if_expected_feature "${counter} counter"
-+		return 1
-+	fi
++		/*
++		 * Zero fill after copy to avoid overwriting in case of move
++		 * within the same block.
++		 */
++		memset(nsbh->b_data, 0, offset);
++		memset((void *)nsbp + nilfs->ns_sbsize, 0,
++		       nsbh->b_size - offset - nilfs->ns_sbsize);
++	} else {
++		memset(nsbh->b_data, 0, nsbh->b_size);
++	}
++	set_buffer_uptodate(nsbh);
++	unlock_buffer(nsbh);
 +
-+	echo "${count}"
-+}
-+
- do_transfer()
- {
- 	listener_ns="$1"
-@@ -291,9 +307,10 @@ chk_join_nr()
- 	local dump_stats
- 
- 	printf "%02u %-36s %s" "$TEST_COUNT" "$msg" "syn"
--	count=`ip netns exec $ns1 nstat -as | grep MPTcpExtMPJoinSynRx | awk '{print $2}'`
--	[ -z "$count" ] && count=0
--	if [ "$count" != "$syn_nr" ]; then
-+	count=$(get_counter ${ns1} "MPTcpExtMPJoinSynRx")
-+	if [ -z "$count" ]; then
-+		echo -n "[skip]"
-+	elif [ "$count" != "$syn_nr" ]; then
- 		echo "[fail] got $count JOIN[s] syn expected $syn_nr"
- 		ret=1
- 		dump_stats=1
-@@ -302,9 +319,10 @@ chk_join_nr()
- 	fi
- 
- 	echo -n " - synack"
--	count=`ip netns exec $ns2 nstat -as | grep MPTcpExtMPJoinSynAckRx | awk '{print $2}'`
--	[ -z "$count" ] && count=0
--	if [ "$count" != "$syn_ack_nr" ]; then
-+	count=$(get_counter ${ns2} "MPTcpExtMPJoinSynAckRx")
-+	if [ -z "$count" ]; then
-+		echo -n "[skip]"
-+	elif [ "$count" != "$syn_ack_nr" ]; then
- 		echo "[fail] got $count JOIN[s] synack expected $syn_ack_nr"
- 		ret=1
- 		dump_stats=1
-@@ -313,9 +331,10 @@ chk_join_nr()
- 	fi
- 
- 	echo -n " - ack"
--	count=`ip netns exec $ns1 nstat -as | grep MPTcpExtMPJoinAckRx | awk '{print $2}'`
--	[ -z "$count" ] && count=0
--	if [ "$count" != "$ack_nr" ]; then
-+	count=$(get_counter ${ns1} "MPTcpExtMPJoinAckRx")
-+	if [ -z "$count" ]; then
-+		echo "[skip]"
-+	elif [ "$count" != "$ack_nr" ]; then
- 		echo "[fail] got $count JOIN[s] ack expected $ack_nr"
- 		ret=1
- 		dump_stats=1
-@@ -338,9 +357,10 @@ chk_add_nr()
- 	local dump_stats
- 
- 	printf "%-39s %s" " " "add"
--	count=`ip netns exec $ns2 nstat -as | grep MPTcpExtAddAddr | awk '{print $2}'`
--	[ -z "$count" ] && count=0
--	if [ "$count" != "$add_nr" ]; then
-+	count=$(get_counter ${ns2} "MPTcpExtAddAddr")
-+	if [ -z "$count" ]; then
-+		echo -n "[skip]"
-+	elif [ "$count" != "$add_nr" ]; then
- 		echo "[fail] got $count ADD_ADDR[s] expected $add_nr"
- 		ret=1
- 		dump_stats=1
-@@ -349,9 +369,10 @@ chk_add_nr()
- 	fi
- 
- 	echo -n " - echo  "
--	count=`ip netns exec $ns1 nstat -as | grep MPTcpExtEchoAdd | awk '{print $2}'`
--	[ -z "$count" ] && count=0
--	if [ "$count" != "$echo_nr" ]; then
-+	count=$(get_counter ${ns1} "MPTcpExtEchoAdd")
-+	if [ -z "$count" ]; then
-+		echo "[skip]"
-+	elif [ "$count" != "$echo_nr" ]; then
- 		echo "[fail] got $count ADD_ADDR echo[s] expected $echo_nr"
- 		ret=1
- 		dump_stats=1
-@@ -375,9 +396,10 @@ chk_rm_nr()
- 	local dump_stats
- 
- 	printf "%-39s %s" " " "rm "
--	count=`ip netns exec $ns1 nstat -as | grep MPTcpExtRmAddr | awk '{print $2}'`
--	[ -z "$count" ] && count=0
--	if [ "$count" != "$rm_addr_nr" ]; then
-+	count=$(get_counter ${ns1} "MPTcpExtRmAddr")
-+	if [ -z "$count" ]; then
-+		echo -n "[skip]"
-+	elif [ "$count" != "$rm_addr_nr" ]; then
- 		echo "[fail] got $count RM_ADDR[s] expected $rm_addr_nr"
- 		ret=1
- 		dump_stats=1
-@@ -386,9 +408,10 @@ chk_rm_nr()
- 	fi
- 
- 	echo -n " - sf    "
--	count=`ip netns exec $ns2 nstat -as | grep MPTcpExtRmSubflow | awk '{print $2}'`
--	[ -z "$count" ] && count=0
--	if [ "$count" != "$rm_subflow_nr" ]; then
-+	count=$(get_counter ${ns2} "MPTcpExtRmSubflow")
-+	if [ -z "$count" ]; then
-+		echo "[skip]"
-+	elif [ "$count" != "$rm_subflow_nr" ]; then
- 		echo "[fail] got $count RM_SUBFLOW[s] expected $rm_subflow_nr"
- 		ret=1
- 		dump_stats=1
++	if (sb2i >= 0) {
+ 		brelse(nilfs->ns_sbh[sb2i]);
+ 		nilfs->ns_sbh[sb2i] = nsbh;
+ 		nilfs->ns_sbp[sb2i] = nsbp;
 
 
