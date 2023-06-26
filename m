@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CCC134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0965DC433C8;
-	Mon, 26 Jun 2023 18:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B638134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB58C433C0;
+	Mon, 26 Jun 2023 18:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803824;
-	bh=WX97hGv7nM7zOSIgNl2gsNEkMonhpFfsgn9gTcWRj4Y=;
+	s=korg; t=1687803827;
+	bh=Q5zSiWJ0vmNNzB7g/rE4g9HguPrQrB5wuWCQRbLI8EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4350LlrqdSKXJkPwiFE8059djAniiK6S17bKc5sws+CG0+NydE2XgATJJAYjm5QZ
-	 +8ZeEXqQEJGyXNEgEAvxcWCYeFnxjbeS3SG4vpAalsncpj41Hc/69LUvUXjcOMTWxx
-	 WBkvM7P2r208ypx1scikI1Xiz5XgQvKy2ziAjxjw=
+	b=dC0Wj+ZkcnXpp1FPxpkRR18L5WEV1dRSKftlqEtlQ7A/LxhpZXf5oK4JdgWp3Mkmg
+	 YhhAHpct2iSZHCi4HysA9KwVrSe6V3enF5XSF92rCrqJ9/siwF7ESDxvnAQPpFXo2d
+	 bYrVHT7VmzdNYf7nYTQurLI+57dQFklkA9eMJywE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Andrey Smetanin <asmetanin@yandex-team.ru>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 182/199] i2c: mchp-pci1xxxx: Avoid cast to incompatible function type
-Date: Mon, 26 Jun 2023 20:11:28 +0200
-Message-ID: <20230626180813.753453935@linuxfoundation.org>
+Subject: [PATCH 6.3 191/199] vhost_net: revert upend_idx only on retriable error
+Date: Mon, 26 Jun 2023 20:11:37 +0200
+Message-ID: <20230626180814.110493206@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -38,60 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Horman <horms@kernel.org>
+From: Andrey Smetanin <asmetanin@yandex-team.ru>
 
-[ Upstream commit 7ebfd881abe9e0ea9557b29dab6aa28d294fabb4 ]
+[ Upstream commit 1f5d2e3bab16369d5d4b4020a25db4ab1f4f082c ]
 
-Rather than casting pci1xxxx_i2c_shutdown to an incompatible function type,
-update the type to match that expected by __devm_add_action.
+Fix possible virtqueue used buffers leak and corresponding stuck
+in case of temporary -EIO from sendmsg() which is produced by
+tun driver while backend device is not up.
 
-Reported by clang-16 with W-1:
+In case of no-retriable error and zcopy do not revert upend_idx
+to pass packet data (that is update used_idx in corresponding
+vhost_zerocopy_signal_used()) as if packet data has been
+transferred successfully.
 
- .../i2c-mchp-pci1xxxx.c:1159:29: error: cast from 'void (*)(struct pci1xxxx_i2c *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
-         ret = devm_add_action(dev, (void (*)(void *))pci1xxxx_i2c_shutdown, i2c);
-                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ./include/linux/device.h:251:29: note: expanded from macro 'devm_add_action'
-         __devm_add_action(release, action, data, #action)
-                                   ^~~~~~
+v2: set vq->heads[ubuf->desc].len equal to VHOST_DMA_DONE_LEN
+in case of fake successful transmit.
 
-No functional change intended.
-Compile tested only.
-
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Reviewed-by: Tharun Kumar P<tharunkumar.pasumarthi@microchip.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Andrey Smetanin <asmetanin@yandex-team.ru>
+Message-Id: <20230424204411.24888-1-asmetanin@yandex-team.ru>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Andrey Smetanin <asmetanin@yandex-team.ru>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-mchp-pci1xxxx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/vhost/net.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-mchp-pci1xxxx.c b/drivers/i2c/busses/i2c-mchp-pci1xxxx.c
-index b21ffd6df9276..5ef136c3ecb12 100644
---- a/drivers/i2c/busses/i2c-mchp-pci1xxxx.c
-+++ b/drivers/i2c/busses/i2c-mchp-pci1xxxx.c
-@@ -1118,8 +1118,10 @@ static int pci1xxxx_i2c_resume(struct device *dev)
- static DEFINE_SIMPLE_DEV_PM_OPS(pci1xxxx_i2c_pm_ops, pci1xxxx_i2c_suspend,
- 			 pci1xxxx_i2c_resume);
+diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
+index 07181cd8d52e6..ae2273196b0c9 100644
+--- a/drivers/vhost/net.c
++++ b/drivers/vhost/net.c
+@@ -935,13 +935,18 @@ static void handle_tx_zerocopy(struct vhost_net *net, struct socket *sock)
  
--static void pci1xxxx_i2c_shutdown(struct pci1xxxx_i2c *i2c)
-+static void pci1xxxx_i2c_shutdown(void *data)
- {
-+	struct pci1xxxx_i2c *i2c = data;
+ 		err = sock->ops->sendmsg(sock, &msg, len);
+ 		if (unlikely(err < 0)) {
++			bool retry = err == -EAGAIN || err == -ENOMEM || err == -ENOBUFS;
 +
- 	pci1xxxx_i2c_config_padctrl(i2c, false);
- 	pci1xxxx_i2c_configure_core_reg(i2c, false);
- }
-@@ -1156,7 +1158,7 @@ static int pci1xxxx_i2c_probe_pci(struct pci_dev *pdev,
- 	init_completion(&i2c->i2c_xfer_done);
- 	pci1xxxx_i2c_init(i2c);
- 
--	ret = devm_add_action(dev, (void (*)(void *))pci1xxxx_i2c_shutdown, i2c);
-+	ret = devm_add_action(dev, pci1xxxx_i2c_shutdown, i2c);
- 	if (ret)
- 		return ret;
- 
+ 			if (zcopy_used) {
+ 				if (vq->heads[ubuf->desc].len == VHOST_DMA_IN_PROGRESS)
+ 					vhost_net_ubuf_put(ubufs);
+-				nvq->upend_idx = ((unsigned)nvq->upend_idx - 1)
+-					% UIO_MAXIOV;
++				if (retry)
++					nvq->upend_idx = ((unsigned)nvq->upend_idx - 1)
++						% UIO_MAXIOV;
++				else
++					vq->heads[ubuf->desc].len = VHOST_DMA_DONE_LEN;
+ 			}
+-			if (err == -EAGAIN || err == -ENOMEM || err == -ENOBUFS) {
++			if (retry) {
+ 				vhost_discard_vq_desc(vq, 1);
+ 				vhost_net_enable_vq(net, vq);
+ 				break;
 -- 
 2.39.2
 
