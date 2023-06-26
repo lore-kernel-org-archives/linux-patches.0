@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C9F14A8F
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:31:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4677DC433C8;
-	Mon, 26 Jun 2023 18:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1E714A80
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:32:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C2FC433C8;
+	Mon, 26 Jun 2023 18:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804318;
-	bh=8F1DG4SDZ44WZxPEApkhfcEgEKIFfibc6JN+iCrgXQA=;
+	s=korg; t=1687804321;
+	bh=ZQsHNlfvGWXK8XmJ9koA0qK7hcn9k08Lw3IBr3lEckg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cp1p75tPys2K4tVsS9J+UtrueveYL0M7sFf98yWloYkue5qJBIRKjn02xl8Op9Y55
-	 Uxv6E7jA+VUqLLWDNa4QqTF2N78D749k9NzWIVSsIcim/mqdrtWhqUfEutTB8ZiOZs
-	 Sv8jpELiyPzCCREWVa4X3bFN1ostunZ+szYhpJz8=
+	b=bu4601RfMprZPlTqtBLPiLxLojBoHPsz3xSLxjX0xqw1sIqT5L1hs5PpiUzgLNCWK
+	 UNpbUpDNCqZof7/MSrpLK/H2i2uTxDk/tRqT85Ux4xFr2P7A8dVaFiUAz9uYo1nKKg
+	 aqMlyX//1iJDxaj7pLvNyiLJ/mLHw1Bun8DaOKRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/170] net: dsa: mt7530: fix handling of LLDP frames
-Date: Mon, 26 Jun 2023 20:11:17 +0200
-Message-ID: <20230626180805.373897059@linuxfoundation.org>
+Subject: [PATCH 6.1 117/170] netfilter: nf_tables: disallow updates of anonymous sets
+Date: Mon, 26 Jun 2023 20:11:26 +0200
+Message-ID: <20230626180805.809508065@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -38,58 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 8332cf6fd7c7087dbc2067115b33979c9851bbc4 ]
+[ Upstream commit b770283c98e0eee9133c47bc03b6cc625dc94723 ]
 
-LLDP frames are link-local frames, therefore they must be trapped to the
-CPU port. Currently, the MT753X switches treat LLDP frames as regular
-multicast frames, therefore flooding them to user ports. To fix this, set
-LLDP frames to be trapped to the CPU port(s).
+Disallow updates of set timeout and garbage collection parameters for
+anonymous sets.
 
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 123b99619cca ("netfilter: nf_tables: honor set timeout and garbage collection updates")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 4 ++++
- drivers/net/dsa/mt7530.h | 5 +++++
- 2 files changed, 9 insertions(+)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index ec43edcaa7d9f..51d2ef0dc835c 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -1004,6 +1004,10 @@ mt753x_trap_frames(struct mt7530_priv *priv)
- 	/* Trap BPDUs to the CPU port(s) */
- 	mt7530_rmw(priv, MT753X_BPC, MT753X_BPDU_PORT_FW_MASK,
- 		   MT753X_BPDU_CPU_ONLY);
-+
-+	/* Trap LLDP frames with :0E MAC DA to the CPU port(s) */
-+	mt7530_rmw(priv, MT753X_RGAC2, MT753X_R0E_PORT_FW_MASK,
-+		   MT753X_R0E_PORT_FW(MT753X_BPDU_CPU_ONLY));
- }
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 984720964a498..7f71bdbc82672 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4774,6 +4774,9 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 		if (info->nlh->nlmsg_flags & NLM_F_REPLACE)
+ 			return -EOPNOTSUPP;
  
- static int
-diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
-index e8d9664353504..9a45663d8b4ef 100644
---- a/drivers/net/dsa/mt7530.h
-+++ b/drivers/net/dsa/mt7530.h
-@@ -65,6 +65,11 @@ enum mt753x_id {
- #define MT753X_BPC			0x24
- #define  MT753X_BPDU_PORT_FW_MASK	GENMASK(2, 0)
- 
-+/* Register for :03 and :0E MAC DA frame control */
-+#define MT753X_RGAC2			0x2c
-+#define  MT753X_R0E_PORT_FW_MASK	GENMASK(18, 16)
-+#define  MT753X_R0E_PORT_FW(x)		FIELD_PREP(MT753X_R0E_PORT_FW_MASK, x)
++		if (nft_set_is_anonymous(set))
++			return -EOPNOTSUPP;
 +
- enum mt753x_bpdu_port_fw {
- 	MT753X_BPDU_FOLLOW_MFC,
- 	MT753X_BPDU_CPU_EXCLUDE = 4,
+ 		err = nft_set_expr_alloc(&ctx, set, nla, exprs, &num_exprs, flags);
+ 		if (err < 0)
+ 			return err;
 -- 
 2.39.2
 
