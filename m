@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C54C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCC5C433C9;
-	Mon, 26 Jun 2023 18:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1DEC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6629BC433C8;
+	Mon, 26 Jun 2023 18:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804531;
-	bh=11Qs/pxTgm+da5i+O7GC+r8g6TgLnr3h7fqcDQyrH3s=;
+	s=korg; t=1687804534;
+	bh=cyIc4jyLpv2ZhMQ4aAYi5gbcJrDlAYEqWTalrl4ljFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTygWMsEvHVlAYbkeerGh5tVZxt/f7gndcFuvDZiqzo69uTH+HUU+3/yKzXhUDQaY
-	 8LRaT4wGvXGj/x9AVX+TImNP2PCvXbUr0hnEKisRl3yY8UuDCHAh7VBfhuhUDfX4F4
-	 wNCjqC1DfmILbifRfgQErJtPYFigZca6wvjCrL8s=
+	b=NHy6HdpA2IOaxjlP5MkQbCps5gGBmhjV/tLz7WDfhg90tvkCKctn579PTHw3w3RDb
+	 /7Suw+Z1gaDC8kOZeijYuuNLd9176oKNnP9jSAPG2eeR4ee70I5QMnSvH04eboD8Cy
+	 i1gb2qb6XRsesBt1DSf9YgbDSonF4O7cE44vZAEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias May <matthias.may@westermo.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Subject: [PATCH 5.4 16/60] ip_tunnels: allow VXLAN/GENEVE to inherit TOS/TTL from VLAN
-Date: Mon, 26 Jun 2023 20:11:55 +0200
-Message-ID: <20230626180740.220824140@linuxfoundation.org>
+	Rafael Aquini <aquini@redhat.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Aristeu Rozanski <aris@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 17/60] writeback: fix dereferencing NULL mapping->host on writeback_page_template
+Date: Mon, 26 Jun 2023 20:11:56 +0200
+Message-ID: <20230626180740.261023650@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -35,56 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias May <matthias.may@westermo.com>
+From: Rafael Aquini <aquini@redhat.com>
 
-commit 7074732c8faee201a245a6f983008a5789c0be33 upstream.
+commit 54abe19e00cfcc5a72773d15cd00ed19ab763439 upstream.
 
-The current code allows for VXLAN and GENEVE to inherit the TOS
-respective the TTL when skb-protocol is ETH_P_IP or ETH_P_IPV6.
-However when the payload is VLAN encapsulated, then this inheriting
-does not work, because the visible skb-protocol is of type
-ETH_P_8021Q or ETH_P_8021AD.
+When commit 19343b5bdd16 ("mm/page-writeback: introduce tracepoint for
+wait_on_page_writeback()") repurposed the writeback_dirty_page trace event
+as a template to create its new wait_on_page_writeback trace event, it
+ended up opening a window to NULL pointer dereference crashes due to the
+(infrequent) occurrence of a race where an access to a page in the
+swap-cache happens concurrently with the moment this page is being written
+to disk and the tracepoint is enabled:
 
-Instead of skb->protocol use skb_protocol().
+    BUG: kernel NULL pointer dereference, address: 0000000000000040
+    #PF: supervisor read access in kernel mode
+    #PF: error_code(0x0000) - not-present page
+    PGD 800000010ec0a067 P4D 800000010ec0a067 PUD 102353067 PMD 0
+    Oops: 0000 [#1] PREEMPT SMP PTI
+    CPU: 1 PID: 1320 Comm: shmem-worker Kdump: loaded Not tainted 6.4.0-rc5+ #13
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230301gitf80f052277c8-1.fc37 03/01/2023
+    RIP: 0010:trace_event_raw_event_writeback_folio_template+0x76/0xf0
+    Code: 4d 85 e4 74 5c 49 8b 3c 24 e8 06 98 ee ff 48 89 c7 e8 9e 8b ee ff ba 20 00 00 00 48 89 ef 48 89 c6 e8 fe d4 1a 00 49 8b 04 24 <48> 8b 40 40 48 89 43 28 49 8b 45 20 48 89 e7 48 89 43 30 e8 a2 4d
+    RSP: 0000:ffffaad580b6fb60 EFLAGS: 00010246
+    RAX: 0000000000000000 RBX: ffff90e38035c01c RCX: 0000000000000000
+    RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff90e38035c044
+    RBP: ffff90e38035c024 R08: 0000000000000002 R09: 0000000000000006
+    R10: ffff90e38035c02e R11: 0000000000000020 R12: ffff90e380bac000
+    R13: ffffe3a7456d9200 R14: 0000000000001b81 R15: ffffe3a7456d9200
+    FS:  00007f2e4e8a15c0(0000) GS:ffff90e3fbc80000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: 0000000000000040 CR3: 00000001150c6003 CR4: 0000000000170ee0
+    Call Trace:
+     <TASK>
+     ? __die+0x20/0x70
+     ? page_fault_oops+0x76/0x170
+     ? kernelmode_fixup_or_oops+0x84/0x110
+     ? exc_page_fault+0x65/0x150
+     ? asm_exc_page_fault+0x22/0x30
+     ? trace_event_raw_event_writeback_folio_template+0x76/0xf0
+     folio_wait_writeback+0x6b/0x80
+     shmem_swapin_folio+0x24a/0x500
+     ? filemap_get_entry+0xe3/0x140
+     shmem_get_folio_gfp+0x36e/0x7c0
+     ? find_busiest_group+0x43/0x1a0
+     shmem_fault+0x76/0x2a0
+     ? __update_load_avg_cfs_rq+0x281/0x2f0
+     __do_fault+0x33/0x130
+     do_read_fault+0x118/0x160
+     do_pte_missing+0x1ed/0x2a0
+     __handle_mm_fault+0x566/0x630
+     handle_mm_fault+0x91/0x210
+     do_user_addr_fault+0x22c/0x740
+     exc_page_fault+0x65/0x150
+     asm_exc_page_fault+0x22/0x30
 
-Signed-off-by: Matthias May <matthias.may@westermo.com>
-Link: https://lore.kernel.org/r/20220721202718.10092-1-matthias.may@westermo.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+This problem arises from the fact that the repurposed writeback_dirty_page
+trace event code was written assuming that every pointer to mapping
+(struct address_space) would come from a file-mapped page-cache object,
+thus mapping->host would always be populated, and that was a valid case
+before commit 19343b5bdd16.  The swap-cache address space
+(swapper_spaces), however, doesn't populate its ->host (struct inode)
+pointer, thus leading to the crashes in the corner-case aforementioned.
+
+commit 19343b5bdd16 ended up breaking the assignment of __entry->name and
+__entry->ino for the wait_on_page_writeback tracepoint -- both dependent
+on mapping->host carrying a pointer to a valid inode.  The assignment of
+__entry->name was fixed by commit 68f23b89067f ("memcg: fix a crash in
+wb_workfn when a device disappears"), and this commit fixes the remaining
+case, for __entry->ino.
+
+Link: https://lkml.kernel.org/r/20230606233613.1290819-1-aquini@redhat.com
+Fixes: 19343b5bdd16 ("mm/page-writeback: introduce tracepoint for wait_on_page_writeback()")
+Signed-off-by: Rafael Aquini <aquini@redhat.com>
+Reviewed-by: Yafang Shao <laoar.shao@gmail.com>
+Cc: Aristeu Rozanski <aris@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ip_tunnels.h |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -374,9 +374,11 @@ static inline int ip_tunnel_encap(struct
- static inline u8 ip_tunnel_get_dsfield(const struct iphdr *iph,
- 				       const struct sk_buff *skb)
- {
--	if (skb->protocol == htons(ETH_P_IP))
-+	__be16 payload_protocol = skb_protocol(skb, true);
-+
-+	if (payload_protocol == htons(ETH_P_IP))
- 		return iph->tos;
--	else if (skb->protocol == htons(ETH_P_IPV6))
-+	else if (payload_protocol == htons(ETH_P_IPV6))
- 		return ipv6_get_dsfield((const struct ipv6hdr *)iph);
- 	else
- 		return 0;
-@@ -385,9 +387,11 @@ static inline u8 ip_tunnel_get_dsfield(c
- static inline u8 ip_tunnel_get_ttl(const struct iphdr *iph,
- 				       const struct sk_buff *skb)
- {
--	if (skb->protocol == htons(ETH_P_IP))
-+	__be16 payload_protocol = skb_protocol(skb, true);
-+
-+	if (payload_protocol == htons(ETH_P_IP))
- 		return iph->ttl;
--	else if (skb->protocol == htons(ETH_P_IPV6))
-+	else if (payload_protocol == htons(ETH_P_IPV6))
- 		return ((const struct ipv6hdr *)iph)->hop_limit;
- 	else
- 		return 0;
+---
+ include/trace/events/writeback.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/include/trace/events/writeback.h
++++ b/include/trace/events/writeback.h
+@@ -68,7 +68,7 @@ DECLARE_EVENT_CLASS(writeback_page_templ
+ 		strscpy_pad(__entry->name,
+ 			    bdi_dev_name(mapping ? inode_to_bdi(mapping->host) :
+ 					 NULL), 32);
+-		__entry->ino = mapping ? mapping->host->i_ino : 0;
++		__entry->ino = (mapping && mapping->host) ? mapping->host->i_ino : 0;
+ 		__entry->index = page->index;
+ 	),
+ 
 
 
