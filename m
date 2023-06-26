@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BFA13AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:27:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98807C433C9;
-	Mon, 26 Jun 2023 18:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0C813AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:27:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC49C433C0;
+	Mon, 26 Jun 2023 18:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804033;
-	bh=o55GBpZFcIEWLBySimbT8MCSm5JynwD2K2UG/V9bkCo=;
+	s=korg; t=1687804036;
+	bh=opLz/IE6HuML0EPEBNkoNBWypqsBM4bom6q3CeTrcPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MRjjwLuLz3igyMNs0qq8g9bX/814/M8sNCVPfVOQVofR2hlv+NgCr61JKjCm4B5RD
-	 DI3MddI7Iw2sEl1D/bVHaNHahZ+eoBwPcwyElXIxB9oxTQE1hp/zojE7nq1uc4Vv6S
-	 l/p0tAqPCOOUgeDa9QRLm8GYxBUkOFiX+ILAMidQ=
+	b=AwCXPJPF4PYjuleqQDsVo9z5jw5KmT4DDWAZ/y6bxj0k5qyJFknpxw9NsLME6GrMv
+	 rUWFHcTUcXnRri4pn4isUi7Q3lBkFKGqH3RNeWajjksEJNTjS2eJ7fb06f4n5Uf6qj
+	 LS5TPNw4HsJffGTmvNugSUPJuKeGGtQhy1V2paXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Joe Breuer <linux-kernel@jmbreuer.net>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/170] ata: libata-scsi: Avoid deadlock on rescan after device resume
-Date: Mon, 26 Jun 2023 20:09:35 +0200
-Message-ID: <20230626180800.790347981@linuxfoundation.org>
+	Hsin-Wei Hung <hsinweih@uci.edu>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Florian Lehner <dev@der-flo.net>,
+	Javier Honduvilla Coto <javierhonduco@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>
+Subject: [PATCH 6.1 007/170] mm: Fix copy_from_user_nofault().
+Date: Mon, 26 Jun 2023 20:09:36 +0200
+Message-ID: <20230626180800.843434879@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -37,143 +37,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 6aa0365a3c8512587fffd42fe438768709ddef8e ]
+commit d319f344561de23e810515d109c7278919bff7b0 upstream.
 
-When an ATA port is resumed from sleep, the port is reset and a power
-management request issued to libata EH to reset the port and rescanning
-the device(s) attached to the port. Device rescanning is done by
-scheduling an ata_scsi_dev_rescan() work, which will execute
-scsi_rescan_device().
+There are several issues with copy_from_user_nofault():
 
-However, scsi_rescan_device() takes the generic device lock, which is
-also taken by dpm_resume() when the SCSI device is resumed as well. If
-a device rescan execution starts before the completion of the SCSI
-device resume, the rcu locking used to refresh the cached VPD pages of
-the device, combined with the generic device locking from
-scsi_rescan_device() and from dpm_resume() can cause a deadlock.
+- access_ok() is designed for user context only and for that reason
+it has WARN_ON_IN_IRQ() which triggers when bpf, kprobe, eprobe
+and perf on ppc are calling it from irq.
 
-Avoid this situation by changing struct ata_port scsi_rescan_task to be
-a delayed work instead of a simple work_struct. ata_scsi_dev_rescan() is
-modified to check if the SCSI device associated with the ATA device that
-must be rescanned is not suspended. If the SCSI device is still
-suspended, ata_scsi_dev_rescan() returns early and reschedule itself for
-execution after an arbitrary delay of 5ms.
+- it's missing nmi_uaccess_okay() which is a nop on all architectures
+except x86 where it's required.
+The comment in arch/x86/mm/tlb.c explains the details why it's necessary.
+Calling copy_from_user_nofault() from bpf, [ke]probe without this check is not safe.
 
-Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Reported-by: Joe Breuer <linux-kernel@jmbreuer.net>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217530
-Fixes: a19a93e4c6a9 ("scsi: core: pm: Rely on the device driver core for async power management")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Tested-by: Joe Breuer <linux-kernel@jmbreuer.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+- __copy_from_user_inatomic() under CONFIG_HARDENED_USERCOPY is calling
+check_object_size()->__check_object_size()->check_heap_object()->find_vmap_area()->spin_lock()
+which is not safe to do from bpf, [ke]probe and perf due to potential deadlock.
+
+Fix all three issues. At the end the copy_from_user_nofault() becomes
+equivalent to copy_from_user_nmi() from safety point of view with
+a difference in the return value.
+
+Reported-by: Hsin-Wei Hung <hsinweih@uci.edu>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Florian Lehner <dev@der-flo.net>
+Tested-by: Hsin-Wei Hung <hsinweih@uci.edu>
+Tested-by: Florian Lehner <dev@der-flo.net>
+Link: https://lore.kernel.org/r/20230410174345.4376-2-dev@der-flo.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: Javier Honduvilla Coto <javierhonduco@gmail.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |  3 ++-
- drivers/ata/libata-eh.c   |  2 +-
- drivers/ata/libata-scsi.c | 22 +++++++++++++++++++++-
- include/linux/libata.h    |  2 +-
- 4 files changed, 25 insertions(+), 4 deletions(-)
+ mm/maccess.c  |   16 +++++++++++-----
+ mm/usercopy.c |    2 +-
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index a5ea144722fa3..0ba0c3d1613f1 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -5313,7 +5313,7 @@ struct ata_port *ata_port_alloc(struct ata_host *host)
+--- a/mm/maccess.c
++++ b/mm/maccess.c
+@@ -5,6 +5,7 @@
+ #include <linux/export.h>
+ #include <linux/mm.h>
+ #include <linux/uaccess.h>
++#include <asm/tlb.h>
  
- 	mutex_init(&ap->scsi_scan_mutex);
- 	INIT_DELAYED_WORK(&ap->hotplug_task, ata_scsi_hotplug);
--	INIT_WORK(&ap->scsi_rescan_task, ata_scsi_dev_rescan);
-+	INIT_DELAYED_WORK(&ap->scsi_rescan_task, ata_scsi_dev_rescan);
- 	INIT_LIST_HEAD(&ap->eh_done_q);
- 	init_waitqueue_head(&ap->eh_wait_q);
- 	init_completion(&ap->park_req_pending);
-@@ -5919,6 +5919,7 @@ static void ata_port_detach(struct ata_port *ap)
- 	WARN_ON(!(ap->pflags & ATA_PFLAG_UNLOADED));
- 
- 	cancel_delayed_work_sync(&ap->hotplug_task);
-+	cancel_delayed_work_sync(&ap->scsi_rescan_task);
- 
-  skip_eh:
- 	/* clean up zpodd on port removal */
-diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
-index 08e11bc312c28..a3ae5fc2a42fc 100644
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -2973,7 +2973,7 @@ static int ata_eh_revalidate_and_attach(struct ata_link *link,
- 			ehc->i.flags |= ATA_EHI_SETMODE;
- 
- 			/* schedule the scsi_rescan_device() here */
--			schedule_work(&(ap->scsi_rescan_task));
-+			schedule_delayed_work(&ap->scsi_rescan_task, 0);
- 		} else if (dev->class == ATA_DEV_UNKNOWN &&
- 			   ehc->tries[dev->devno] &&
- 			   ata_class_enabled(ehc->classes[dev->devno])) {
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 39e1ff9b686b9..9c0052d28078a 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -4601,10 +4601,11 @@ int ata_scsi_user_scan(struct Scsi_Host *shost, unsigned int channel,
- void ata_scsi_dev_rescan(struct work_struct *work)
+ bool __weak copy_from_kernel_nofault_allowed(const void *unsafe_src,
+ 		size_t size)
+@@ -113,11 +114,16 @@ Efault:
+ long copy_from_user_nofault(void *dst, const void __user *src, size_t size)
  {
- 	struct ata_port *ap =
--		container_of(work, struct ata_port, scsi_rescan_task);
-+		container_of(work, struct ata_port, scsi_rescan_task.work);
- 	struct ata_link *link;
- 	struct ata_device *dev;
- 	unsigned long flags;
-+	bool delay_rescan = false;
- 
- 	mutex_lock(&ap->scsi_scan_mutex);
- 	spin_lock_irqsave(ap->lock, flags);
-@@ -4618,6 +4619,21 @@ void ata_scsi_dev_rescan(struct work_struct *work)
- 			if (scsi_device_get(sdev))
- 				continue;
- 
-+			/*
-+			 * If the rescan work was scheduled because of a resume
-+			 * event, the port is already fully resumed, but the
-+			 * SCSI device may not yet be fully resumed. In such
-+			 * case, executing scsi_rescan_device() may cause a
-+			 * deadlock with the PM code on device_lock(). Prevent
-+			 * this by giving up and retrying rescan after a short
-+			 * delay.
-+			 */
-+			delay_rescan = sdev->sdev_gendev.power.is_suspended;
-+			if (delay_rescan) {
-+				scsi_device_put(sdev);
-+				break;
-+			}
+ 	long ret = -EFAULT;
+-	if (access_ok(src, size)) {
+-		pagefault_disable();
+-		ret = __copy_from_user_inatomic(dst, src, size);
+-		pagefault_enable();
+-	}
 +
- 			spin_unlock_irqrestore(ap->lock, flags);
- 			scsi_rescan_device(&(sdev->sdev_gendev));
- 			scsi_device_put(sdev);
-@@ -4627,4 +4643,8 @@ void ata_scsi_dev_rescan(struct work_struct *work)
- 
- 	spin_unlock_irqrestore(ap->lock, flags);
- 	mutex_unlock(&ap->scsi_scan_mutex);
++	if (!__access_ok(src, size))
++		return ret;
 +
-+	if (delay_rescan)
-+		schedule_delayed_work(&ap->scsi_rescan_task,
-+				      msecs_to_jiffies(5));
- }
-diff --git a/include/linux/libata.h b/include/linux/libata.h
-index fe990176e6ee9..9713f4d8f15f4 100644
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -834,7 +834,7 @@ struct ata_port {
++	if (!nmi_uaccess_okay())
++		return ret;
++
++	pagefault_disable();
++	ret = __copy_from_user_inatomic(dst, src, size);
++	pagefault_enable();
  
- 	struct mutex		scsi_scan_mutex;
- 	struct delayed_work	hotplug_task;
--	struct work_struct	scsi_rescan_task;
-+	struct delayed_work	scsi_rescan_task;
+ 	if (ret)
+ 		return -EFAULT;
+--- a/mm/usercopy.c
++++ b/mm/usercopy.c
+@@ -172,7 +172,7 @@ static inline void check_heap_object(con
+ 		return;
+ 	}
  
- 	unsigned int		hsm_task_state;
+-	if (is_vmalloc_addr(ptr)) {
++	if (is_vmalloc_addr(ptr) && !pagefault_disabled()) {
+ 		struct vmap_area *area = find_vmap_area(addr);
  
--- 
-2.39.2
-
+ 		if (!area)
 
 
