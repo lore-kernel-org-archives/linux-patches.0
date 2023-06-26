@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1564411CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C26C433C8;
-	Mon, 26 Jun 2023 18:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153BD11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81416C433C8;
+	Mon, 26 Jun 2023 18:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804730;
-	bh=h4OGgYGOoaXe/jUyCZ6HglYxQTZ2kVuM9bEgDzkmnGo=;
+	s=korg; t=1687804733;
+	bh=VzYi389IZAOLJPmIumt6ROjP2CXCWL/vX0svcB2SYJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+5v2UOizvUyCa/EA8dq2Vc58rMaLM9Jjtt3cg7knEc78WNv56KWINhp++M8vofn3
-	 Ru2Ud4pJukWZOPMdjdl7ztVSZYE00rp+Tb+/uBmd41rXa9VksNLtH1x/ekoipwHBfi
-	 E++csuC/A4WCXtDrAzMYjEOZ4LxCV9tIFWOupsbw=
+	b=eyPY2T/bP8OhKAoaM5C4lDEkIM+Xk1xZJZSryrgYwmZy9CQXpwQL1AAXdRpo+4PRh
+	 KPTjh/3RKMj6cNfXF1q7LgSppBS3adzCqAF+YmqFfLnmqMo2yY/nG66t1k2MAHPV4j
+	 wZOdovsKNKA7gyBhcDtqQlxbbnlr7f5YLM+M4IqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dexuan Cui <decui@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 5.15 23/96] PCI: hv: Add a per-bus mutex state_lock
-Date: Mon, 26 Jun 2023 20:11:38 +0200
-Message-ID: <20230626180747.895428436@linuxfoundation.org>
+	Harry Wentland <Harry.Wentland@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 06/96] drm/amd/display: Add wrapper to call planes and stream update
+Date: Mon, 26 Jun 2023 20:11:21 +0200
+Message-ID: <20230626180747.196611720@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -36,163 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-commit 067d6ec7ed5b49380688e06c1e5f883a71bef4fe upstream.
+commit 81f743a08f3b214638aa389e252ae5e6c3592e7c upstream.
 
-In the case of fast device addition/removal, it's possible that
-hv_eject_device_work() can start to run before create_root_hv_pci_bus()
-starts to run; as a result, the pci_get_domain_bus_and_slot() in
-hv_eject_device_work() can return a 'pdev' of NULL, and
-hv_eject_device_work() can remove the 'hpdev', and immediately send a
-message PCI_EJECTION_COMPLETE to the host, and the host immediately
-unassigns the PCI device from the guest; meanwhile,
-create_root_hv_pci_bus() and the PCI device driver can be probing the
-dead PCI device and reporting timeout errors.
+[Why & How]
+This commit is part of a sequence of changes that replaces the commit
+sequence used in the DC with a new one. As a result of this transition,
+we moved some specific parts from the commit sequence and brought them
+to amdgpu_dm. This commit adds a wrapper inside DM that enable our
+drivers to do any necessary preparation or change before we offload the
+plane/stream update to DC.
 
-Fix the issue by adding a per-bus mutex 'state_lock' and grabbing the
-mutex before powering on the PCI bus in hv_pci_enter_d0(): when
-hv_eject_device_work() starts to run, it's able to find the 'pdev' and call
-pci_stop_and_remove_bus_device(pdev): if the PCI device driver has
-loaded, the PCI device driver's probe() function is already called in
-create_root_hv_pci_bus() -> pci_bus_add_devices(), and now
-hv_eject_device_work() -> pci_stop_and_remove_bus_device() is able
-to call the PCI device driver's remove() function and remove the device
-reliably; if the PCI device driver hasn't loaded yet, the function call
-hv_eject_device_work() -> pci_stop_and_remove_bus_device() is able to
-remove the PCI device reliably and the PCI device driver's probe()
-function won't be called; if the PCI device driver's probe() is already
-running (e.g., systemd-udev is loading the PCI device driver), it must
-be holding the per-device lock, and after the probe() finishes and releases
-the lock, hv_eject_device_work() -> pci_stop_and_remove_bus_device() is
-able to proceed to remove the device reliably.
-
-Fixes: 4daace0d8ce8 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230615044451.5580-6-decui@microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Reviewed-by: Harry Wentland <Harry.Wentland@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-hyperv.c |   29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   51 +++++++++++++++++-----
+ 1 file changed, 41 insertions(+), 10 deletions(-)
 
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -483,7 +483,10 @@ struct hv_pcibus_device {
- 	struct fwnode_handle *fwnode;
- 	/* Protocol version negotiated with the host */
- 	enum pci_protocol_version_t protocol_version;
-+
-+	struct mutex state_lock;
- 	enum hv_pcibus_state state;
-+
- 	struct hv_device *hdev;
- 	resource_size_t low_mmio_space;
- 	resource_size_t high_mmio_space;
-@@ -2191,6 +2194,8 @@ static void pci_devices_present_work(str
- 	if (!dr)
- 		return;
- 
-+	mutex_lock(&hbus->state_lock);
-+
- 	/* First, mark all existing children as reported missing. */
- 	spin_lock_irqsave(&hbus->device_list_lock, flags);
- 	list_for_each_entry(hpdev, &hbus->children, list_entry) {
-@@ -2272,6 +2277,8 @@ static void pci_devices_present_work(str
- 		break;
- 	}
- 
-+	mutex_unlock(&hbus->state_lock);
-+
- 	kfree(dr);
- }
- 
-@@ -2420,6 +2427,8 @@ static void hv_eject_device_work(struct
- 	hpdev = container_of(work, struct hv_pci_dev, wrk);
- 	hbus = hpdev->hbus;
- 
-+	mutex_lock(&hbus->state_lock);
-+
- 	/*
- 	 * Ejection can come before or after the PCI bus has been set up, so
- 	 * attempt to find it and tear down the bus state, if it exists.  This
-@@ -2456,6 +2465,8 @@ static void hv_eject_device_work(struct
- 	put_pcichild(hpdev);
- 	put_pcichild(hpdev);
- 	/* hpdev has been freed. Do not use it any more. */
-+
-+	mutex_unlock(&hbus->state_lock);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -354,6 +354,35 @@ static inline bool is_dc_timing_adjust_n
  }
  
  /**
-@@ -3218,6 +3229,7 @@ static int hv_pci_probe(struct hv_device
- 		return -ENOMEM;
- 
- 	hbus->bridge = bridge;
-+	mutex_init(&hbus->state_lock);
- 	hbus->state = hv_pcibus_init;
- 	hbus->wslot_res_allocated = -1;
- 
-@@ -3322,9 +3334,11 @@ static int hv_pci_probe(struct hv_device
- 	if (ret)
- 		goto free_irq_domain;
- 
-+	mutex_lock(&hbus->state_lock);
++ * update_planes_and_stream_adapter() - Send planes to be updated in DC
++ *
++ * DC has a generic way to update planes and stream via
++ * dc_update_planes_and_stream function; however, DM might need some
++ * adjustments and preparation before calling it. This function is a wrapper
++ * for the dc_update_planes_and_stream that does any required configuration
++ * before passing control to DC.
++ */
++static inline bool update_planes_and_stream_adapter(struct dc *dc,
++						    int update_type,
++						    int planes_count,
++						    struct dc_stream_state *stream,
++						    struct dc_stream_update *stream_update,
++						    struct dc_surface_update *array_of_surface_update)
++{
++	/*
++	 * Previous frame finished and HW is ready for optimization.
++	 */
++	if (update_type == UPDATE_TYPE_FAST)
++		dc_post_update_surfaces_to_stream(dc);
 +
- 	ret = hv_pci_enter_d0(hdev);
- 	if (ret)
--		goto free_irq_domain;
-+		goto release_state_lock;
- 
- 	ret = hv_pci_allocate_bridge_windows(hbus);
- 	if (ret)
-@@ -3342,12 +3356,15 @@ static int hv_pci_probe(struct hv_device
- 	if (ret)
- 		goto free_windows;
- 
-+	mutex_unlock(&hbus->state_lock);
- 	return 0;
- 
- free_windows:
- 	hv_pci_free_bridge_windows(hbus);
- exit_d0:
- 	(void) hv_pci_bus_exit(hdev, true);
-+release_state_lock:
-+	mutex_unlock(&hbus->state_lock);
- free_irq_domain:
- 	irq_domain_remove(hbus->irq_domain);
- free_fwnode:
-@@ -3580,20 +3597,26 @@ static int hv_pci_resume(struct hv_devic
- 	if (ret)
- 		goto out;
- 
-+	mutex_lock(&hbus->state_lock);
++	return dc_update_planes_and_stream(dc,
++					   array_of_surface_update,
++					   planes_count,
++					   stream,
++					   stream_update);
++}
 +
- 	ret = hv_pci_enter_d0(hdev);
- 	if (ret)
--		goto out;
-+		goto release_state_lock;
++/**
+  * dm_pflip_high_irq() - Handle pageflip interrupt
+  * @interrupt_params: ignored
+  *
+@@ -2551,11 +2580,12 @@ static void dm_gpureset_commit_state(str
+ 				true;
+ 		}
  
- 	ret = hv_send_resources_allocated(hdev);
- 	if (ret)
--		goto out;
-+		goto release_state_lock;
+-		dc_update_planes_and_stream(dm->dc,
+-			bundle->surface_updates,
+-			dc_state->stream_status->plane_count,
+-			dc_state->streams[k],
+-			&bundle->stream_update);
++		update_planes_and_stream_adapter(dm->dc,
++					 UPDATE_TYPE_FULL,
++					 dc_state->stream_status->plane_count,
++					 dc_state->streams[k],
++					 &bundle->stream_update,
++					 bundle->surface_updates);
+ 	}
  
- 	prepopulate_bars(hbus);
+ cleanup:
+@@ -9240,11 +9270,12 @@ static void amdgpu_dm_commit_planes(stru
+ 		}
+ 		mutex_lock(&dm->dc_lock);
  
- 	hv_pci_restore_msi_state(hbus);
+-		dc_update_planes_and_stream(dm->dc,
+-					    bundle->surface_updates,
+-					    planes_count,
+-					    acrtc_state->stream,
+-					    &bundle->stream_update);
++		update_planes_and_stream_adapter(dm->dc,
++					 acrtc_state->update_type,
++					 planes_count,
++					 acrtc_state->stream,
++					 &bundle->stream_update,
++					 bundle->surface_updates);
  
- 	hbus->state = hv_pcibus_installed;
-+	mutex_unlock(&hbus->state_lock);
- 	return 0;
-+
-+release_state_lock:
-+	mutex_unlock(&hbus->state_lock);
- out:
- 	vmbus_close(hdev->channel);
- 	return ret;
+ 		/**
+ 		 * Enable or disable the interrupts on the backend.
 
 
