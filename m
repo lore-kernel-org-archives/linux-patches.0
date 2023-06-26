@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5083134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D995C433C8;
-	Mon, 26 Jun 2023 18:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E18134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32072C433C8;
+	Mon, 26 Jun 2023 18:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803571;
-	bh=QnsAWiIGc5DFg3WiUAfmD8ul+vWcK0urVQdZLVTnyVs=;
+	s=korg; t=1687803574;
+	bh=jdYWIxzs82q9RpCJpDa9hlI+5258VOn35quQwpRlC1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/6e4n/GHuLIUGFixWrMnJOvqnDnHHTE0MkXi2G/KtCS1LCaFJ+ksRsa8X4zCpgRR
-	 nYa69FRuBGhUWvAUVBor9QkyaDOxas6GsX6y61DfWTZOirGKHPnQgrtTOBqt2WprRH
-	 cGaH7eXcS+7R3ydDrcj9jRg4f7M9CvrWsbAbuyqU=
+	b=tKY/99kmrCaWTcH7DbV1HcMBEdWZJ0H7Imm1367h9c4upIjvgOS8qejimhx01BWWZ
+	 DBhyqHhQvFB7FbunYz/TnfpVCxFYYWhAkp4WJBFV3EsuKkJwkoT/BzLSeTGfpZT0jL
+	 vbDukLl2K31bIgJqxAtuhsjjXEI1UoqHHr2mLkPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
 	Magali Lemes <magali.lemes@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 107/199] selftests: net: tls: check if FIPS mode is enabled
-Date: Mon, 26 Jun 2023 20:10:13 +0200
-Message-ID: <20230626180810.350373449@linuxfoundation.org>
+Subject: [PATCH 6.3 108/199] selftests: net: vrf-xfrm-tests: change authentication and encryption algos
+Date: Mon, 26 Jun 2023 20:10:14 +0200
+Message-ID: <20230626180810.393980656@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -37,101 +38,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Magali Lemes <magali.lemes@canonical.com>
 
-[ Upstream commit d113c395c67b62fc0d3f2004c0afc406aca0a2b7 ]
+[ Upstream commit cb43c60e64ca67fcc9d23bd08f51d2ab8209d9d7 ]
 
-TLS selftests use the ChaCha20-Poly1305 and SM4 algorithms, which are not
-FIPS compliant. When fips=1, this set of tests fails. Add a check and only
-run these tests if not in FIPS mode.
+The vrf-xfrm-tests tests use the hmac(md5) and cbc(des3_ede)
+algorithms for performing authentication and encryption, respectively.
+This causes the tests to fail when fips=1 is set, since these algorithms
+are not allowed in FIPS mode. Therefore, switch from hmac(md5) and
+cbc(des3_ede) to hmac(sha1) and cbc(aes), which are FIPS compliant.
 
-Fixes: 4f336e88a870 ("selftests/tls: add CHACHA20-POLY1305 to tls selftests")
-Fixes: e506342a03c7 ("selftests/tls: add SM4 GCM/CCM to tls selftests")
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3f251d741150 ("selftests: Add tests for vrf and xfrms")
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: Magali Lemes <magali.lemes@canonical.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tls.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/vrf-xfrm-tests.sh | 32 +++++++++----------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/tools/testing/selftests/net/tls.c b/tools/testing/selftests/net/tls.c
-index 2cbb12736596d..c0ad8385441f2 100644
---- a/tools/testing/selftests/net/tls.c
-+++ b/tools/testing/selftests/net/tls.c
-@@ -25,6 +25,8 @@
- #define TLS_PAYLOAD_MAX_LEN 16384
- #define SOL_TLS 282
+diff --git a/tools/testing/selftests/net/vrf-xfrm-tests.sh b/tools/testing/selftests/net/vrf-xfrm-tests.sh
+index 184da81f554ff..452638ae8aed8 100755
+--- a/tools/testing/selftests/net/vrf-xfrm-tests.sh
++++ b/tools/testing/selftests/net/vrf-xfrm-tests.sh
+@@ -264,60 +264,60 @@ setup_xfrm()
+ 	ip -netns host1 xfrm state add src ${HOST1_4} dst ${HOST2_4} \
+ 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_1} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
++	    enc 'cbc(aes)' ${ENC_1} \
+ 	    sel src ${h1_4} dst ${h2_4} ${devarg}
  
-+static int fips_enabled;
-+
- struct tls_crypto_info_keys {
- 	union {
- 		struct tls12_crypto_info_aes_gcm_128 aes128;
-@@ -235,7 +237,7 @@ FIXTURE_VARIANT(tls)
- {
- 	uint16_t tls_version;
- 	uint16_t cipher_type;
--	bool nopad;
-+	bool nopad, fips_non_compliant;
- };
+ 	ip -netns host2 xfrm state add src ${HOST1_4} dst ${HOST2_4} \
+ 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_1} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
++	    enc 'cbc(aes)' ${ENC_1} \
+ 	    sel src ${h1_4} dst ${h2_4}
  
- FIXTURE_VARIANT_ADD(tls, 12_aes_gcm)
-@@ -254,24 +256,28 @@ FIXTURE_VARIANT_ADD(tls, 12_chacha)
- {
- 	.tls_version = TLS_1_2_VERSION,
- 	.cipher_type = TLS_CIPHER_CHACHA20_POLY1305,
-+	.fips_non_compliant = true,
- };
  
- FIXTURE_VARIANT_ADD(tls, 13_chacha)
- {
- 	.tls_version = TLS_1_3_VERSION,
- 	.cipher_type = TLS_CIPHER_CHACHA20_POLY1305,
-+	.fips_non_compliant = true,
- };
+ 	ip -netns host1 xfrm state add src ${HOST2_4} dst ${HOST1_4} \
+ 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_2} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
++	    enc 'cbc(aes)' ${ENC_2} \
+ 	    sel src ${h2_4} dst ${h1_4} ${devarg}
  
- FIXTURE_VARIANT_ADD(tls, 13_sm4_gcm)
- {
- 	.tls_version = TLS_1_3_VERSION,
- 	.cipher_type = TLS_CIPHER_SM4_GCM,
-+	.fips_non_compliant = true,
- };
+ 	ip -netns host2 xfrm state add src ${HOST2_4} dst ${HOST1_4} \
+ 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_2} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
++	    enc 'cbc(aes)' ${ENC_2} \
+ 	    sel src ${h2_4} dst ${h1_4}
  
- FIXTURE_VARIANT_ADD(tls, 13_sm4_ccm)
- {
- 	.tls_version = TLS_1_3_VERSION,
- 	.cipher_type = TLS_CIPHER_SM4_CCM,
-+	.fips_non_compliant = true,
- };
  
- FIXTURE_VARIANT_ADD(tls, 12_aes_ccm)
-@@ -311,6 +317,9 @@ FIXTURE_SETUP(tls)
- 	int one = 1;
- 	int ret;
+ 	ip -6 -netns host1 xfrm state add src ${HOST1_6} dst ${HOST2_6} \
+ 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_1} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
++	    enc 'cbc(aes)' ${ENC_1} \
+ 	    sel src ${h1_6} dst ${h2_6} ${devarg}
  
-+	if (fips_enabled && variant->fips_non_compliant)
-+		SKIP(return, "Unsupported cipher in FIPS mode");
-+
- 	tls_crypto_info_init(variant->tls_version, variant->cipher_type,
- 			     &tls12);
+ 	ip -6 -netns host2 xfrm state add src ${HOST1_6} dst ${HOST2_6} \
+ 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_1} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
++	    enc 'cbc(aes)' ${ENC_1} \
+ 	    sel src ${h1_6} dst ${h2_6}
  
-@@ -1820,4 +1829,17 @@ TEST(tls_v6ops) {
- 	close(sfd);
+ 
+ 	ip -6 -netns host1 xfrm state add src ${HOST2_6} dst ${HOST1_6} \
+ 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_2} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
++	    enc 'cbc(aes)' ${ENC_2} \
+ 	    sel src ${h2_6} dst ${h1_6} ${devarg}
+ 
+ 	ip -6 -netns host2 xfrm state add src ${HOST2_6} dst ${HOST1_6} \
+ 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_2} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
++	    enc 'cbc(aes)' ${ENC_2} \
+ 	    sel src ${h2_6} dst ${h1_6}
  }
  
-+static void __attribute__((constructor)) fips_check(void) {
-+	int res;
-+	FILE *f;
-+
-+	f = fopen("/proc/sys/crypto/fips_enabled", "r");
-+	if (f) {
-+		res = fscanf(f, "%d", &fips_enabled);
-+		if (res != 1)
-+			ksft_print_msg("ERROR: Couldn't read /proc/sys/crypto/fips_enabled\n");
-+		fclose(f);
-+	}
-+}
-+
- TEST_HARNESS_MAIN
 -- 
 2.39.2
 
