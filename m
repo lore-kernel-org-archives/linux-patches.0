@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4A6134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D86C433C9;
-	Mon, 26 Jun 2023 18:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82090134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA386C433C0;
+	Mon, 26 Jun 2023 18:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803782;
-	bh=FxyDFM80gAodbMr/Zh0mljDGdPjue49EbrEZmedq9oU=;
+	s=korg; t=1687803785;
+	bh=8YCPQa2X4QTcHRnnV0hdZsWBdlZBqIomQ70I0X5aPZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J6shyNAB+4EHklxvTnjGMf9xWYCdDLp+rU4kyJxFx5xSb1hXqU9SHMpPfWFoCf2lN
-	 k6yfp1GAzIslkbyRD0n8teQr/CFieSrLAPQ1OqdU6kFdWDj2WPfvGq9oYBsFwagrW9
-	 hox8qQ9QaTX1pZT0k935oQnXShnLlg36ft0hwRPs=
+	b=C7F/xR1RH6opcg4jiAbNNjcFXjR4w7a0nRJtJrUpuqrd5HPl0IesgIohPUkzz+QRs
+	 pjj0d9i7nUolg2EQWpXmlZO7EcAfFPvKAX4lVmE87zHtvvkXB664+4s+MYILLgbdBH
+	 SDwPtl7ltE75ymY+pMJck24PXvtzU8h9/bx27+N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Sicong Jiang <kevin.jiangsc@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 175/199] ASoC: nau8824: Add quirk to active-high jack-detect
-Date: Mon, 26 Jun 2023 20:11:21 +0200
-Message-ID: <20230626180813.416348181@linuxfoundation.org>
+Subject: [PATCH 6.3 176/199] ASoC: amd: yc: Add Thinkpad Neo14 to quirks list for acp6x
+Date: Mon, 26 Jun 2023 20:11:22 +0200
+Message-ID: <20230626180813.458246539@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -35,57 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Sicong Jiang <kevin.jiangsc@gmail.com>
 
-[ Upstream commit e384dba03e3294ce7ea69e4da558e9bf8f0e8946 ]
+[ Upstream commit 57d1e8900495cf1751cec74db16fe1a0fe47efbb ]
 
-Add  entries for Positivo laptops: CW14Q01P, K1424G, N14ZP74G to the
-DMI table, so that  active-high jack-detect will work properly on
-these laptops.
+Thinkpad Neo14 Ryzen Edition uses Ryzen 6800H processor, and adding to
+quirks list for acp6x will enable internal mic.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Link: https://lore.kernel.org/r/20230529181911.632851-1-edson.drosdeck@gmail.com
+Signed-off-by: Sicong Jiang <kevin.jiangsc@gmail.com>
+Link: https://lore.kernel.org/r/20230531090635.89565-1-kevin.jiangsc@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8824.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/codecs/nau8824.c b/sound/soc/codecs/nau8824.c
-index 4f19fd9b65d11..5a4db8944d06a 100644
---- a/sound/soc/codecs/nau8824.c
-+++ b/sound/soc/codecs/nau8824.c
-@@ -1903,6 +1903,30 @@ static const struct dmi_system_id nau8824_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(NAU8824_MONO_SPEAKER),
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 84b401b685f7f..c1ca3ceac5f2f 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -171,6 +171,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21CL"),
+ 		}
  	},
 +	{
-+		/* Positivo CW14Q01P */
++		.driver_data = &acp6x_card,
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "CW14Q01P"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21EF"),
++		}
 +	},
-+	{
-+		/* Positivo K1424G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "K1424G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Positivo N14ZP74G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "N14ZP74G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
- 	{}
- };
- 
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.2
 
