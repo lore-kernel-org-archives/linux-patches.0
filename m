@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E95134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D99C433C9;
-	Mon, 26 Jun 2023 18:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1FA134DC
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5E7C433C8;
+	Mon, 26 Jun 2023 18:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803975;
-	bh=TtG0jafKbWMBgkdJZJMB8+Z3plmeLh+k/jnKqkLC8i8=;
+	s=korg; t=1687803980;
+	bh=6B0uD/SW1mtEkKwc/TQ7EhqxppsghSjhM0fW+fwclHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGlK11LWWUejia1Ge5xVeo7Ri33nXe6duXVD59yRP6n3lkLdSjkECc4GIygET0nOU
-	 0WEabQa2+sAdwt0nDCPPaVjMagpO/FzALtUp5B/pk2rkqCTFC/ihKKLeMy30LoMgVN
-	 3wMyG1a8rVu5lQh98rbLELaL3xm0f58zuRF+3bFQ=
+	b=sPYsQ+7FIIA/fmlXERww9ic1vKIvqjCt0VQPQT1gXoODU6kBnrSvEXJjtpRB1FuPh
+	 3YViYghuQSevdOsWArexYifABc5ZyEpin54nxj/sv2H3QwRLGLJitBH/04r+L9U9L3
+	 v2HwFI3NLu0QdbImtYIU1LQX05zfbAPVBfIKIkd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Carlos Song <carlos.song@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Cornelia Huck <cohuck@redhat.com>,
+	Steven Price <steven.price@arm.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 41/41] i2c: imx-lpi2c: fix type char overflow issue when calculating the clock cycle
-Date: Mon, 26 Jun 2023 20:12:04 +0200
-Message-ID: <20230626180737.788051891@linuxfoundation.org>
+Subject: [PATCH 4.19 31/41] arm64: Add missing Set/Way CMO encodings
+Date: Mon, 26 Jun 2023 20:11:54 +0200
+Message-ID: <20230626180737.439435063@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -37,38 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Clark Wang <xiaoning.wang@nxp.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit e69b9bc170c6d93ee375a5cbfd15f74c0fb59bdd ]
+[ Upstream commit 8d0f019e4c4f2ee2de81efd9bf1c27e9fb3c0460 ]
 
-Claim clkhi and clklo as integer type to avoid possible calculation
-errors caused by data overflow.
+Add the missing Set/Way CMOs that apply to tagged memory.
 
-Fixes: a55fa9d0e42e ("i2c: imx-lpi2c: add low power i2c bus driver")
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20230515204601.1270428-2-maz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/sysreg.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
-index f494b27497005..a4f90796032b3 100644
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -206,8 +206,8 @@ static void lpi2c_imx_stop(struct lpi2c_imx_struct *lpi2c_imx)
- /* CLKLO = I2C_CLK_RATIO * CLKHI, SETHOLD = CLKHI, DATAVD = CLKHI/2 */
- static int lpi2c_imx_config(struct lpi2c_imx_struct *lpi2c_imx)
- {
--	u8 prescale, filt, sethold, clkhi, clklo, datavd;
--	unsigned int clk_rate, clk_cycle;
-+	u8 prescale, filt, sethold, datavd;
-+	unsigned int clk_rate, clk_cycle, clkhi, clklo;
- 	enum lpi2c_imx_pincfg pincfg;
- 	unsigned int temp;
+diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
+index e90cf51b87eca..22266c7e2cc1e 100644
+--- a/arch/arm64/include/asm/sysreg.h
++++ b/arch/arm64/include/asm/sysreg.h
+@@ -98,8 +98,14 @@
+ 				       (!!x)<<8 | 0x1f)
  
+ #define SYS_DC_ISW			sys_insn(1, 0, 7, 6, 2)
++#define SYS_DC_IGSW			sys_insn(1, 0, 7, 6, 4)
++#define SYS_DC_IGDSW			sys_insn(1, 0, 7, 6, 6)
+ #define SYS_DC_CSW			sys_insn(1, 0, 7, 10, 2)
++#define SYS_DC_CGSW			sys_insn(1, 0, 7, 10, 4)
++#define SYS_DC_CGDSW			sys_insn(1, 0, 7, 10, 6)
+ #define SYS_DC_CISW			sys_insn(1, 0, 7, 14, 2)
++#define SYS_DC_CIGSW			sys_insn(1, 0, 7, 14, 4)
++#define SYS_DC_CIGDSW			sys_insn(1, 0, 7, 14, 6)
+ 
+ #define SYS_OSDTRRX_EL1			sys_reg(2, 0, 0, 0, 2)
+ #define SYS_MDCCINT_EL1			sys_reg(2, 0, 0, 2, 0)
 -- 
 2.39.2
 
