@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F02411CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF4CC433C0;
-	Mon, 26 Jun 2023 18:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4187F11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:40:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2570C433C8;
+	Mon, 26 Jun 2023 18:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804799;
-	bh=SOnP5WpYmOLVHaWADXT8/Hg2Oqlkup17un7CQb2H2kg=;
+	s=korg; t=1687804803;
+	bh=ImzEELaRKnXVD1AMZi4RmuTT/+yZQM20W5B/RnknwNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uIJ+o3CMXu55Z/MSVpG51jhAWciV4mZ6I1qWL7hlQV+kH/1FEzjp1j9p1hDD9Tm5j
-	 rslZ6Aqb4/MXbtN+aenjQc2No2ayLg+fJ2VMYF7n7nr/18f/fsiKiIH9psM+snVO2c
-	 XJFzH4Rw+pN1LDySKXEGltionn+NfEiWOWZBb4P4=
+	b=NCfUXo3ZxqcaGu8IGZNWe+rn98FRgoCScX+jcYb6Qth2VCRdp4U2c12sx+uN7OaZi
+	 h5d34LOv6YTa1zdOo/UAoFIKvJENSx3IjcTVzk7edI6V1bvnfMZBU3vY0LBaUL1Ves
+	 OBMnnMubh46VuiCSzs4MMcLJPihrp5u+Ux7xM6xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Magali Lemes <magali.lemes@canonical.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 46/96] selftests: net: fcnal-test: check if FIPS mode is enabled
-Date: Mon, 26 Jun 2023 20:12:01 +0200
-Message-ID: <20230626180748.880824028@linuxfoundation.org>
+Subject: [PATCH 5.15 47/96] xfrm: Linearize the skb after offloading if needed.
+Date: Mon, 26 Jun 2023 20:12:02 +0200
+Message-ID: <20230626180748.930543669@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -36,90 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Magali Lemes <magali.lemes@canonical.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit d7a2fc1437f71cb058c7b11bc33dfc19e4bf277a ]
+[ Upstream commit f015b900bc3285322029b4a7d132d6aeb0e51857 ]
 
-There are some MD5 tests which fail when the kernel is in FIPS mode,
-since MD5 is not FIPS compliant. Add a check and only run those tests
-if FIPS mode is not enabled.
+With offloading enabled, esp_xmit() gets invoked very late, from within
+validate_xmit_xfrm() which is after validate_xmit_skb() validates and
+linearizes the skb if the underlying device does not support fragments.
 
-Fixes: f0bee1ebb5594 ("fcnal-test: Add TCP MD5 tests")
-Fixes: 5cad8bce26e01 ("fcnal-test: Add TCP MD5 tests for VRF")
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Magali Lemes <magali.lemes@canonical.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+esp_output_tail() may add a fragment to the skb while adding the auth
+tag/ IV. Devices without the proper support will then send skb->data
+points to with the correct length so the packet will have garbage at the
+end. A pcap sniffer will claim that the proper data has been sent since
+it parses the skb properly.
+
+It is not affected with INET_ESP_OFFLOAD disabled.
+
+Linearize the skb after offloading if the sending hardware requires it.
+It was tested on v4, v6 has been adopted.
+
+Fixes: 7785bba299a8d ("esp: Add a software GRO codepath")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fcnal-test.sh | 27 ++++++++++++++++-------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ net/ipv4/esp4_offload.c | 3 +++
+ net/ipv6/esp6_offload.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
-index 364c82b797c19..6ecdbbe1b54fb 100755
---- a/tools/testing/selftests/net/fcnal-test.sh
-+++ b/tools/testing/selftests/net/fcnal-test.sh
-@@ -84,6 +84,13 @@ NSC_CMD="ip netns exec ${NSC}"
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index 2ddba1e2cf228..ab6fe94b8fd90 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -337,6 +337,9 @@ static int esp_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features_
  
- which ping6 > /dev/null 2>&1 && ping6=$(which ping6) || ping6=$(which ping)
+ 	secpath_reset(skb);
  
-+# Check if FIPS mode is enabled
-+if [ -f /proc/sys/crypto/fips_enabled ]; then
-+	fips_enabled=`cat /proc/sys/crypto/fips_enabled`
-+else
-+	fips_enabled=0
-+fi
-+
- ################################################################################
- # utilities
- 
-@@ -1202,7 +1209,7 @@ ipv4_tcp_novrf()
- 	run_cmd nettest -d ${NSA_DEV} -r ${a}
- 	log_test_addr ${a} $? 1 "No server, device client, local conn"
- 
--	ipv4_tcp_md5_novrf
-+	[ "$fips_enabled" = "1" ] || ipv4_tcp_md5_novrf
++	if (skb_needs_linearize(skb, skb->dev->features) &&
++	    __skb_linearize(skb))
++		return -ENOMEM;
+ 	return 0;
  }
  
- ipv4_tcp_vrf()
-@@ -1256,9 +1263,11 @@ ipv4_tcp_vrf()
- 	log_test_addr ${a} $? 1 "Global server, local connection"
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index 4cc19acfc369e..6b30f34c79783 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -372,6 +372,9 @@ static int esp6_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features
  
- 	# run MD5 tests
--	setup_vrf_dup
--	ipv4_tcp_md5
--	cleanup_vrf_dup
-+	if [ "$fips_enabled" = "0" ]; then
-+		setup_vrf_dup
-+		ipv4_tcp_md5
-+		cleanup_vrf_dup
-+	fi
+ 	secpath_reset(skb);
  
- 	#
- 	# enable VRF global server
-@@ -2674,7 +2683,7 @@ ipv6_tcp_novrf()
- 		log_test_addr ${a} $? 1 "No server, device client, local conn"
- 	done
- 
--	ipv6_tcp_md5_novrf
-+	[ "$fips_enabled" = "1" ] || ipv6_tcp_md5_novrf
++	if (skb_needs_linearize(skb, skb->dev->features) &&
++	    __skb_linearize(skb))
++		return -ENOMEM;
+ 	return 0;
  }
  
- ipv6_tcp_vrf()
-@@ -2744,9 +2753,11 @@ ipv6_tcp_vrf()
- 	log_test_addr ${a} $? 1 "Global server, local connection"
- 
- 	# run MD5 tests
--	setup_vrf_dup
--	ipv6_tcp_md5
--	cleanup_vrf_dup
-+	if [ "$fips_enabled" = "0" ]; then
-+		setup_vrf_dup
-+		ipv6_tcp_md5
-+		cleanup_vrf_dup
-+	fi
- 
- 	#
- 	# enable VRF global server
 -- 
 2.39.2
 
