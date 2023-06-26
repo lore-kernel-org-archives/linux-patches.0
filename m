@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102D1C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C66C433C8;
-	Mon, 26 Jun 2023 18:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F72AC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC62C433C8;
+	Mon, 26 Jun 2023 18:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804680;
-	bh=K29/hOnzNh/QsfHDfjp3a0vEpl++AeTm1IP/DC4tFkg=;
+	s=korg; t=1687804683;
+	bh=1B/HTmtjUh8zPzNnyQ7IHoYpiFw291K65cXdnB6nkyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bx5RZBV9qV/iyyKMTYJykrhhAjGal9Ub97O4kpZ5UoOqVO21U8yKu0oFtNR5OGbdb
-	 c7hKaXHRVBhAEkbrb6gOQE4esf8BsVtA+LShcOyEJLWFDHuxHR8b0BD96hQI1bWKxJ
-	 RkkTcX0nwiVu75GBENuHdFTLhL0QcP+DdENNjyPU=
+	b=vKYoHj9KVH45/4gy6L/BdWduE6mnHPeg5/lF1Mv78hWlL/y/9w3+v9idbis3GpkOn
+	 om2FZEMZMVhRSIbAVyaal0GU31pP+axEKaJHux7EQBaOy8UpEKgd45i/SiCoCLM7Lr
+	 vlCDUWAECzafG/2S9eOGX9xg0ngjjXP3B5FPCRbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2fc0712f8f8b8b8fa0ef@syzkaller.appspotmail.com,
-	Hugh Dickins <hughd@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.4 59/60] mm: make wait_on_page_writeback() wait for multiple pending writebacks
-Date: Mon, 26 Jun 2023 20:12:38 +0200
-Message-ID: <20230626180741.976238210@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	Dave Chinner <david@fromorbit.com>,
+	Chandan Babu R <chandan.babu@oracle.com>
+Subject: [PATCH 5.4 60/60] xfs: verify buffer contents when we skip log replay
+Date: Mon, 26 Jun 2023 20:12:39 +0200
+Message-ID: <20230626180742.017312565@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -38,102 +36,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit c2407cf7d22d0c0d94cf20342b3b8f06f1d904e7 upstream.
+commit 22ed903eee23a5b174e240f1cdfa9acf393a5210 upstream.
 
-Ever since commit 2a9127fcf229 ("mm: rewrite wait_on_page_bit_common()
-logic") we've had some very occasional reports of BUG_ON(PageWriteback)
-in write_cache_pages(), which we thought we already fixed in commit
-073861ed77b6 ("mm: fix VM_BUG_ON(PageTail) and BUG_ON(PageWriteback)").
+syzbot detected a crash during log recovery:
 
-But syzbot just reported another one, even with that commit in place.
+XFS (loop0): Mounting V5 Filesystem bfdc47fc-10d8-4eed-a562-11a831b3f791
+XFS (loop0): Torn write (CRC failure) detected at log block 0x180. Truncating head block from 0x200.
+XFS (loop0): Starting recovery (logdev: internal)
+==================================================================
+BUG: KASAN: slab-out-of-bounds in xfs_btree_lookup_get_block+0x15c/0x6d0 fs/xfs/libxfs/xfs_btree.c:1813
+Read of size 8 at addr ffff88807e89f258 by task syz-executor132/5074
 
-And it turns out that there's a simpler way to trigger the BUG_ON() than
-the one Hugh found with page re-use.  It all boils down to the fact that
-the page writeback is ostensibly serialized by the page lock, but that
-isn't actually really true.
+CPU: 0 PID: 5074 Comm: syz-executor132 Not tainted 6.2.0-rc1-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x290 lib/dump_stack.c:106
+ print_address_description+0x74/0x340 mm/kasan/report.c:306
+ print_report+0x107/0x1f0 mm/kasan/report.c:417
+ kasan_report+0xcd/0x100 mm/kasan/report.c:517
+ xfs_btree_lookup_get_block+0x15c/0x6d0 fs/xfs/libxfs/xfs_btree.c:1813
+ xfs_btree_lookup+0x346/0x12c0 fs/xfs/libxfs/xfs_btree.c:1913
+ xfs_btree_simple_query_range+0xde/0x6a0 fs/xfs/libxfs/xfs_btree.c:4713
+ xfs_btree_query_range+0x2db/0x380 fs/xfs/libxfs/xfs_btree.c:4953
+ xfs_refcount_recover_cow_leftovers+0x2d1/0xa60 fs/xfs/libxfs/xfs_refcount.c:1946
+ xfs_reflink_recover_cow+0xab/0x1b0 fs/xfs/xfs_reflink.c:930
+ xlog_recover_finish+0x824/0x920 fs/xfs/xfs_log_recover.c:3493
+ xfs_log_mount_finish+0x1ec/0x3d0 fs/xfs/xfs_log.c:829
+ xfs_mountfs+0x146a/0x1ef0 fs/xfs/xfs_mount.c:933
+ xfs_fs_fill_super+0xf95/0x11f0 fs/xfs/xfs_super.c:1666
+ get_tree_bdev+0x400/0x620 fs/super.c:1282
+ vfs_get_tree+0x88/0x270 fs/super.c:1489
+ do_new_mount+0x289/0xad0 fs/namespace.c:3145
+ do_mount fs/namespace.c:3488 [inline]
+ __do_sys_mount fs/namespace.c:3697 [inline]
+ __se_sys_mount+0x2d3/0x3c0 fs/namespace.c:3674
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f89fa3f4aca
+Code: 83 c4 08 5b 5d c3 66 2e 0f 1f 84 00 00 00 00 00 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fffd5fb5ef8 EFLAGS: 00000206 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 00646975756f6e2c RCX: 00007f89fa3f4aca
+RDX: 0000000020000100 RSI: 0000000020009640 RDI: 00007fffd5fb5f10
+RBP: 00007fffd5fb5f10 R08: 00007fffd5fb5f50 R09: 000000000000970d
+R10: 0000000000200800 R11: 0000000000000206 R12: 0000000000000004
+R13: 0000555556c6b2c0 R14: 0000000000200800 R15: 00007fffd5fb5f50
+ </TASK>
 
-Yes, the people _setting_ writeback all do so under the page lock, but
-the actual clearing of the bit - and waking up any waiters - happens
-without any page lock.
+The fuzzed image contains an AGF with an obviously garbage
+agf_refcount_level value of 32, and a dirty log with a buffer log item
+for that AGF.  The ondisk AGF has a higher LSN than the recovered log
+item.  xlog_recover_buf_commit_pass2 reads the buffer, compares the
+LSNs, and decides to skip replay because the ondisk buffer appears to be
+newer.
 
-This gives us this fairly simple race condition:
+Unfortunately, the ondisk buffer is corrupt, but recovery just read the
+buffer with no buffer ops specified:
 
-  CPU1 = end previous writeback
-  CPU2 = start new writeback under page lock
-  CPU3 = write_cache_pages()
+	error = xfs_buf_read(mp->m_ddev_targp, buf_f->blf_blkno,
+			buf_f->blf_len, buf_flags, &bp, NULL);
 
-  CPU1          CPU2            CPU3
-  ----          ----            ----
+Skipping the buffer leaves its contents in memory unverified.  This sets
+us up for a kernel crash because xfs_refcount_recover_cow_leftovers
+reads the buffer (which is still around in XBF_DONE state, so no read
+verification) and creates a refcountbt cursor of height 32.  This is
+impossible so we run off the end of the cursor object and crash.
 
-  end_page_writeback()
-    test_clear_page_writeback(page)
-    ... delayed...
+Fix this by invoking the verifier on all skipped buffers and aborting
+log recovery if the ondisk buffer is corrupt.  It might be smarter to
+force replay the log item atop the buffer and then see if it'll pass the
+write verifier (like ext4 does) but for now let's go with the
+conservative option where we stop immediately.
 
-                lock_page();
-                set_page_writeback()
-                unlock_page()
-
-                                lock_page()
-                                wait_on_page_writeback();
-
-    wake_up_page(page, PG_writeback);
-    .. wakes up CPU3 ..
-
-                                BUG_ON(PageWriteback(page));
-
-where the BUG_ON() happens because we woke up the PG_writeback bit
-becasue of the _previous_ writeback, but a new one had already been
-started because the clearing of the bit wasn't actually atomic wrt the
-actual wakeup or serialized by the page lock.
-
-The reason this didn't use to happen was that the old logic in waiting
-on a page bit would just loop if it ever saw the bit set again.
-
-The nice proper fix would probably be to get rid of the whole "wait for
-writeback to clear, and then set it" logic in the writeback path, and
-replace it with an atomic "wait-to-set" (ie the same as we have for page
-locking: we set the page lock bit with a single "lock_page()", not with
-"wait for lock bit to clear and then set it").
-
-However, out current model for writeback is that the waiting for the
-writeback bit is done by the generic VFS code (ie write_cache_pages()),
-but the actual setting of the writeback bit is done much later by the
-filesystem ".writepages()" function.
-
-IOW, to make the writeback bit have that same kind of "wait-to-set"
-behavior as we have for page locking, we'd have to change our roughly
-~50 different writeback functions.  Painful.
-
-Instead, just make "wait_on_page_writeback()" loop on the very unlikely
-situation that the PG_writeback bit is still set, basically re-instating
-the old behavior.  This is very non-optimal in case of contention, but
-since we only ever set the bit under the page lock, that situation is
-controlled.
-
-Reported-by: syzbot+2fc0712f8f8b8b8fa0ef@syzkaller.appspotmail.com
-Fixes: 2a9127fcf229 ("mm: rewrite wait_on_page_bit_common() logic")
-Acked-by: Hugh Dickins <hughd@google.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: stable@kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://syzkaller.appspot.com/bug?extid=7e9494b8b399902e994e
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Dave Chinner <david@fromorbit.com>
+Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page-writeback.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/xfs_log_recover.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -2811,7 +2811,7 @@ EXPORT_SYMBOL(__test_set_page_writeback)
-  */
- void wait_on_page_writeback(struct page *page)
- {
--	if (PageWriteback(page)) {
-+	while (PageWriteback(page)) {
- 		trace_wait_on_page_writeback(page, page_mapping(page));
- 		wait_on_page_bit(page, PG_writeback);
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -2783,6 +2783,16 @@ xlog_recover_buffer_pass2(
+ 	if (lsn && lsn != -1 && XFS_LSN_CMP(lsn, current_lsn) >= 0) {
+ 		trace_xfs_log_recover_buf_skip(log, buf_f);
+ 		xlog_recover_validate_buf_type(mp, bp, buf_f, NULLCOMMITLSN);
++
++		/*
++		 * We're skipping replay of this buffer log item due to the log
++		 * item LSN being behind the ondisk buffer.  Verify the buffer
++		 * contents since we aren't going to run the write verifier.
++		 */
++		if (bp->b_ops) {
++			bp->b_ops->verify_read(bp);
++			error = bp->b_error;
++		}
+ 		goto out_release;
  	}
+ 
 
 
