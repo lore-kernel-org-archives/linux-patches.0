@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874F5BA36
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CCEC433C8;
-	Mon, 26 Jun 2023 18:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12BCBA36
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40F9C433C8;
+	Mon, 26 Jun 2023 18:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804477;
-	bh=gJEpnJ0wpWc+ck6hBGw0T6033jqcibRi+Yoz4MudVZA=;
+	s=korg; t=1687804480;
+	bh=BTSyExj0K+ylLZERpJeALYBf8Qakbgtntea/TrquynU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XWWhr7dv+4pYO1Rppyv+WZNF2Qu7F9cvxAGKiWP6AbfGFF66JHOo1n2GyRrMpzUtt
-	 flTiPIKmF+GO4SM+2x9oTQCArbvs/CkhXBh6UIZwPuWN3N43FLnxPVv07/jPl+g2op
-	 HyFqCS7119ZFNaIbYjhP4Yxvu9I5PHJXXv6X6plA=
+	b=oiMPkT+ZZZ9dgVrenvl+LKL0Avzd+h6nEJP1CfpIFq82EGsPi/qhTcsRNefrhwTay
+	 uKDh1cBq/0GiE5+9aOAJxaoC5GQufpmWb2VN8ThwVf0zYvcVqHuzI3xsWwgN81Pu1q
+	 /28sVC6QEMHkIYldbIgxg2A653j8or1GpJRVQZbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,13 +20,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Randy Jennings <randyj@purestorage.com>,
 	Uday Shankar <ushankar@purestorage.com>,
 	Hannes Reinecke <hare@suse.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
 	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/170] nvme: check IO start time when deciding to defer KA
-Date: Mon, 26 Jun 2023 20:11:51 +0200
-Message-ID: <20230626180806.912340029@linuxfoundation.org>
+Subject: [PATCH 6.1 143/170] nvme: improve handling of long keep alives
+Date: Mon, 26 Jun 2023 20:11:52 +0200
+Message-ID: <20230626180806.954518925@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -42,102 +41,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Uday Shankar <ushankar@purestorage.com>
 
-[ Upstream commit 774a9636514764ddc0d072ae0d1d1c01a47e6ddd ]
+[ Upstream commit c7275ce6a5fd32ca9f5a6294ed89cf0523181af9 ]
 
-When a command completes, we set a flag which will skip sending a
-keep alive at the next run of nvme_keep_alive_work when TBKAS is on.
-However, if the command was submitted long ago, it's possible that
-the controller may have also restarted its keep alive timer (as a
-result of receiving the command) long ago. The following trace
-demonstrates the issue, assuming TBKAS is on and KATO = 8 for
-simplicity:
+Upon keep alive completion, nvme_keep_alive_work is scheduled with the
+same delay every time. If keep alive commands are completing slowly,
+this may cause a keep alive timeout. The following trace illustrates the
+issue, taking KATO = 8 and TBKAS off for simplicity:
 
-1. t = 0: submit I/O commands A, B, C, D, E
-2. t = 0.5: commands A, B, C, D, E reach controller, restart its keep
-            alive timer
-3. t = 1: A completes
-4. t = 2: run nvme_keep_alive_work, see recent completion, do nothing
-5. t = 3: B completes
-6. t = 4: run nvme_keep_alive_work, see recent completion, do nothing
-7. t = 5: C completes
-8. t = 6: run nvme_keep_alive_work, see recent completion, do nothing
-9. t = 7: D completes
-10. t = 8: run nvme_keep_alive_work, see recent completion, do nothing
-11. t = 9: E completes
+1. t = 0: run nvme_keep_alive_work, send keep alive
+2. t = ε: keep alive reaches controller, controller restarts its keep
+          alive timer
+3. t = 4: host receives keep alive completion, schedules
+          nvme_keep_alive_work with delay 4
+4. t = 8: run nvme_keep_alive_work, send keep alive
 
-At this point, 8.5 seconds have passed without restarting the
-controller's keep alive timer, so the controller will detect a keep
-alive timeout.
+Here, a keep alive having RTT of 4 causes a delay of at least 8 - ε
+between the controller receiving successive keep alives. With ε small,
+the controller is likely to detect a keep alive timeout.
 
-Fix this by checking the IO start time when deciding to defer sending a
-keep alive command. Only set comp_seen if the command started after the
-most recent run of nvme_keep_alive_work. With this change, the
-completions of B, C, and D will not set comp_seen and the run of
-nvme_keep_alive_work at t = 4 will send a keep alive.
+Fix this by calculating the RTT of the keep alive command, and adjusting
+the scheduling delay of the next keep alive work accordingly.
 
 Reported-by: Costa Sapuntzakis <costa@purestorage.com>
 Reported-by: Randy Jennings <randyj@purestorage.com>
 Signed-off-by: Uday Shankar <ushankar@purestorage.com>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 14 +++++++++++++-
- drivers/nvme/host/nvme.h |  1 +
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index a97f2f21c5321..15eb2ee1be66e 100644
+index 15eb2ee1be66e..a7d9b5b42b388 100644
 --- a/drivers/nvme/host/core.c
 +++ b/drivers/nvme/host/core.c
-@@ -395,7 +395,16 @@ void nvme_complete_rq(struct request *req)
- 	trace_nvme_complete_rq(req);
- 	nvme_cleanup_cmd(req);
- 
--	if (ctrl->kas)
-+	/*
-+	 * Completions of long-running commands should not be able to
-+	 * defer sending of periodic keep alives, since the controller
-+	 * may have completed processing such commands a long time ago
-+	 * (arbitrarily close to command submission time).
-+	 * req->deadline - req->timeout is the command submission time
-+	 * in jiffies.
-+	 */
-+	if (ctrl->kas &&
-+	    req->deadline - req->timeout >= ctrl->ka_last_check_time)
- 		ctrl->comp_seen = true;
- 
- 	switch (nvme_decide_disposition(req)) {
-@@ -1235,6 +1244,7 @@ static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
- 		return RQ_END_IO_NONE;
- 	}
- 
-+	ctrl->ka_last_check_time = jiffies;
- 	ctrl->comp_seen = false;
- 	spin_lock_irqsave(&ctrl->lock, flags);
- 	if (ctrl->state == NVME_CTRL_LIVE ||
-@@ -1253,6 +1263,8 @@ static void nvme_keep_alive_work(struct work_struct *work)
- 	bool comp_seen = ctrl->comp_seen;
- 	struct request *rq;
- 
-+	ctrl->ka_last_check_time = jiffies;
+@@ -1234,6 +1234,20 @@ static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
+ 	struct nvme_ctrl *ctrl = rq->end_io_data;
+ 	unsigned long flags;
+ 	bool startka = false;
++	unsigned long rtt = jiffies - (rq->deadline - rq->timeout);
++	unsigned long delay = nvme_keep_alive_work_period(ctrl);
 +
- 	if ((ctrl->ctratt & NVME_CTRL_ATTR_TBKAS) && comp_seen) {
- 		dev_dbg(ctrl->device,
- 			"reschedule traffic based keep-alive timer\n");
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 3f82de6060ef7..2aa514c3dfa17 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -323,6 +323,7 @@ struct nvme_ctrl {
- 	struct delayed_work ka_work;
- 	struct delayed_work failfast_work;
- 	struct nvme_command ka_cmd;
-+	unsigned long ka_last_check_time;
- 	struct work_struct fw_act_work;
- 	unsigned long events;
++	/*
++	 * Subtract off the keepalive RTT so nvme_keep_alive_work runs
++	 * at the desired frequency.
++	 */
++	if (rtt <= delay) {
++		delay -= rtt;
++	} else {
++		dev_warn(ctrl->device, "long keepalive RTT (%u ms)\n",
++			 jiffies_to_msecs(rtt));
++		delay = 0;
++	}
+ 
+ 	blk_mq_free_request(rq);
+ 
+@@ -1252,7 +1266,7 @@ static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
+ 		startka = true;
+ 	spin_unlock_irqrestore(&ctrl->lock, flags);
+ 	if (startka)
+-		nvme_queue_keep_alive_work(ctrl);
++		queue_delayed_work(nvme_wq, &ctrl->ka_work, delay);
+ 	return RQ_END_IO_NONE;
+ }
  
 -- 
 2.39.2
