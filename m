@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E833C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D771C433C8;
-	Mon, 26 Jun 2023 18:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E648CC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7339AC433CA;
+	Mon, 26 Jun 2023 18:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804643;
-	bh=wlO1hhNcHYrGl629nKou/DbDgxx+DiKkZ5/d07sFcVs=;
+	s=korg; t=1687804645;
+	bh=D2GftmIEuMGayFHWQc0knIsXhZD09VHDal1qbFEc/bE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KsR2+sw1eDY3GqlpM8JqRPgXpdOr9tmIuHx3C7KEDsaXYpSGOIPSAFjLAXgKU/6eq
-	 hC4z++XpLf6ydQUQ6CxgJirqxG/wsTS9Hj/zcEQIbL6nVEd11rEVC+WxZumXgIMtY2
-	 FsWx/Ju/Rtx9Kg4bXhEYQZNWTB0co+Xj/0350nik=
+	b=XFh6EGFQv/rWCOjIB7pUxNIY7ASlmrNL4Ouurz+sQbxd3WaZ22flXRCrIG8qMz3kv
+	 tWGICTN/BG1N1GXPHx+DlgcjW7Gx9Rpf/GI0HyhMK8Gh49+NOX2xmIOWDttaj7IOKx
+	 4j9gnrKWTP4vq/30Gaa6lA4QXvLwmFrVCSLDk9gM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Bart Van Assche <bart.vanassche@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Johannes Thumshirn <jthumshirn@suse.de>,
-	Shane M Seymour <shane.seymour@hpe.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Chen Aotian <chenaotian2@163.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 25/60] rcu: Upgrade rcu_swap_protected() to rcu_replace_pointer()
-Date: Mon, 26 Jun 2023 20:12:04 +0200
-Message-ID: <20230626180740.557010717@linuxfoundation.org>
+Subject: [PATCH 5.4 26/60] ieee802154: hwsim: Fix possible memory leaks
+Date: Mon, 26 Jun 2023 20:12:05 +0200
+Message-ID: <20230626180740.598387568@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -41,63 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Chen Aotian <chenaotian2@163.com>
 
-[ Upstream commit a63fc6b75cca984c71f095282e0227a390ba88f3 ]
+[ Upstream commit a61675294735570daca3779bd1dbb3715f7232bd ]
 
-Although the rcu_swap_protected() macro follows the example of
-swap(), the interactions with RCU make its update of its argument
-somewhat counter-intuitive.  This commit therefore introduces
-an rcu_replace_pointer() that returns the old value of the RCU
-pointer instead of doing the argument update.  Once all the uses of
-rcu_swap_protected() are updated to instead use rcu_replace_pointer(),
-rcu_swap_protected() will be removed.
+After replacing e->info, it is necessary to free the old einfo.
 
-Link: https://lore.kernel.org/lkml/CAHk-=wiAsJLw1egFEE=Z7-GGtM6wcvtyytXZA1+BHqta4gg6Hw@mail.gmail.com/
-Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
-[ paulmck: From rcu_replace() to rcu_replace_pointer() per Ingo Molnar. ]
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: Bart Van Assche <bart.vanassche@wdc.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: Johannes Thumshirn <jthumshirn@suse.de>
-Cc: Shane M Seymour <shane.seymour@hpe.com>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: a61675294735 ("ieee802154: hwsim: Fix possible memory leaks")
+Fixes: f25da51fdc38 ("ieee802154: hwsim: add replacement for fakelb")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Chen Aotian <chenaotian2@163.com>
+Link: https://lore.kernel.org/r/20230409022048.61223-1-chenaotian2@163.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rcupdate.h | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/net/ieee802154/mac802154_hwsim.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
-index 09e6ac4b669b2..c75b38ba4a728 100644
---- a/include/linux/rcupdate.h
-+++ b/include/linux/rcupdate.h
-@@ -384,6 +384,24 @@ do {									      \
- 		smp_store_release(&p, RCU_INITIALIZER((typeof(p))_r_a_p__v)); \
- } while (0)
- 
-+/**
-+ * rcu_replace_pointer() - replace an RCU pointer, returning its old value
-+ * @rcu_ptr: RCU pointer, whose old value is returned
-+ * @ptr: regular pointer
-+ * @c: the lockdep conditions under which the dereference will take place
-+ *
-+ * Perform a replacement, where @rcu_ptr is an RCU-annotated
-+ * pointer and @c is the lockdep argument that is passed to the
-+ * rcu_dereference_protected() call used to read that pointer.  The old
-+ * value of @rcu_ptr is returned, and @rcu_ptr is set to @ptr.
-+ */
-+#define rcu_replace_pointer(rcu_ptr, ptr, c)				\
-+({									\
-+	typeof(ptr) __tmp = rcu_dereference_protected((rcu_ptr), (c));	\
-+	rcu_assign_pointer((rcu_ptr), (ptr));				\
-+	__tmp;								\
-+})
-+
- /**
-  * rcu_swap_protected() - swap an RCU and a regular pointer
-  * @rcu_ptr: RCU pointer
+diff --git a/drivers/net/ieee802154/mac802154_hwsim.c b/drivers/net/ieee802154/mac802154_hwsim.c
+index 1d181eff0c299..4028cbe275d67 100644
+--- a/drivers/net/ieee802154/mac802154_hwsim.c
++++ b/drivers/net/ieee802154/mac802154_hwsim.c
+@@ -522,7 +522,7 @@ static int hwsim_del_edge_nl(struct sk_buff *msg, struct genl_info *info)
+ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
+ {
+ 	struct nlattr *edge_attrs[MAC802154_HWSIM_EDGE_ATTR_MAX + 1];
+-	struct hwsim_edge_info *einfo;
++	struct hwsim_edge_info *einfo, *einfo_old;
+ 	struct hwsim_phy *phy_v0;
+ 	struct hwsim_edge *e;
+ 	u32 v0, v1;
+@@ -560,8 +560,10 @@ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
+ 	list_for_each_entry_rcu(e, &phy_v0->edges, list) {
+ 		if (e->endpoint->idx == v1) {
+ 			einfo->lqi = lqi;
+-			rcu_assign_pointer(e->info, einfo);
++			einfo_old = rcu_replace_pointer(e->info, einfo,
++							lockdep_is_held(&hwsim_phys_lock));
+ 			rcu_read_unlock();
++			kfree_rcu(einfo_old, rcu);
+ 			mutex_unlock(&hwsim_phys_lock);
+ 			return 0;
+ 		}
 -- 
 2.39.2
 
