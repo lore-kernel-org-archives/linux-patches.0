@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E367311CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:42:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1A3C433C0;
-	Mon, 26 Jun 2023 18:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCEB11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:42:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31248C433C0;
+	Mon, 26 Jun 2023 18:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804927;
-	bh=8WpkNaqlzrCdWtc0ZiYsBRXoIZPGOkQUBjDAFyzepYU=;
+	s=korg; t=1687804930;
+	bh=/2eu/IzHEjIEziEOgpfNknSs8ILwYCCzdmfnALL8w/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXqkbMrgF21LJ1KsUKGWVOmWd3jjj2j/UbsOzwqJuCCooJa03UWy4cy1Vy1EHtwQm
-	 P9zsmMyJE+nZptYhUDEyyGJ9oUnN1Gy63y6oFxvZCk8flu9DiXW3X++YFsfk1A8sBT
-	 QLDPrTsx3hk5HqHlffMEELhAgpsMov+NUcvSiQRM=
+	b=05iMYg01MbqAFAWbvEzzZozkz0f59KRYs+/nFHmLLwagKCz8QQl6JL+XvTnzD0F2s
+	 9V7cy8hE9PcLlM4TlCasdkXijtN6jGp1czHgChC57+H0++u541tkGSLNijvdz0uKuv
+	 XsU2XvSlEM9mj1nOSmuCaHsXswMHq/pzxyYRkLmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 88/96] ASoC: nau8824: Add quirk to active-high jack-detect
-Date: Mon, 26 Jun 2023 20:12:43 +0200
-Message-ID: <20230626180750.681385530@linuxfoundation.org>
+Subject: [PATCH 5.15 89/96] s390/purgatory: disable branch profiling
+Date: Mon, 26 Jun 2023 20:12:44 +0200
+Message-ID: <20230626180750.716068440@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -35,57 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-[ Upstream commit e384dba03e3294ce7ea69e4da558e9bf8f0e8946 ]
+[ Upstream commit 03c5c83b70dca3729a3eb488e668e5044bd9a5ea ]
 
-Add  entries for Positivo laptops: CW14Q01P, K1424G, N14ZP74G to the
-DMI table, so that  active-high jack-detect will work properly on
-these laptops.
+Avoid linker error for randomly generated config file that
+has CONFIG_BRANCH_PROFILE_NONE enabled and make it similar
+to riscv, x86 and also to commit 4bf3ec384edf ("s390: disable
+branch profiling for vdso").
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Link: https://lore.kernel.org/r/20230529181911.632851-1-edson.drosdeck@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8824.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ arch/s390/purgatory/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/nau8824.c b/sound/soc/codecs/nau8824.c
-index 27589900f4fbf..f7ff130a9485d 100644
---- a/sound/soc/codecs/nau8824.c
-+++ b/sound/soc/codecs/nau8824.c
-@@ -1866,6 +1866,30 @@ static const struct dmi_system_id nau8824_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
- 	},
-+	{
-+		/* Positivo CW14Q01P */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "CW14Q01P"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Positivo K1424G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "K1424G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Positivo N14ZP74G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "N14ZP74G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
- 	{}
- };
- 
+diff --git a/arch/s390/purgatory/Makefile b/arch/s390/purgatory/Makefile
+index 360ada80d20c3..d22ec8acb13c5 100644
+--- a/arch/s390/purgatory/Makefile
++++ b/arch/s390/purgatory/Makefile
+@@ -26,6 +26,7 @@ KBUILD_CFLAGS += -Wno-pointer-sign -Wno-sign-compare
+ KBUILD_CFLAGS += -fno-zero-initialized-in-bss -fno-builtin -ffreestanding
+ KBUILD_CFLAGS += -c -MD -Os -m64 -msoft-float -fno-common
+ KBUILD_CFLAGS += -fno-stack-protector
++KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
+ KBUILD_CFLAGS += $(CLANG_FLAGS)
+ KBUILD_CFLAGS += $(call cc-option,-fno-PIE)
+ KBUILD_AFLAGS := $(filter-out -DCC_USING_EXPOLINE,$(KBUILD_AFLAGS))
 -- 
 2.39.2
 
