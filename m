@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B15134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:13:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F22C433C8;
-	Mon, 26 Jun 2023 18:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02368134C0
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:13:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736E6C433C0;
+	Mon, 26 Jun 2023 18:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803227;
-	bh=OUkPyFZ7YysV8myAgTggcb6E/Rexi/BkL/+tGbXZ0cE=;
+	s=korg; t=1687803230;
+	bh=iH5sptddWZcnlTxUPs2tB+BDolK9udB4DIFGmPbcGAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2U52mavvOUTToAsoZx1eAoBmb8WOpKqbkneJLzF4qYxIdks9mcbh8aSIey9dhedp2
-	 9WIB7eAa7EgTNWqVQEZhfrpYNsPujl0U89Dos8aysq+H2jR0P50zqdpo+VSJ5emhYd
-	 VWJVvWwFVKQedqMbMNZsZrKiHVF7X1y8+qjCD1YE=
+	b=k+6PSMu/EKXPs/V/sktuHa5iCNt5ZkZTw1Qam5RXbevpWDwhih0rY2acfVz5fn1mz
+	 bDm+mtP6NwRVBMw2oU5PPQ/GeEA2ZThRYXa+rV67RaWACWOlwwNkeT4enzHOSeQqLp
+	 c8tryVFKtRThvUx+JgIU4Nmf4fJEdVu5yysnxe/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Cornelia Huck <cohuck@redhat.com>,
-	Steven Price <steven.price@arm.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
+	Osama Muhammad <osmtendev@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 17/26] arm64: Add missing Set/Way CMO encodings
-Date: Mon, 26 Jun 2023 20:11:19 +0200
-Message-ID: <20230626180734.334868321@linuxfoundation.org>
+Subject: [PATCH 4.14 18/26] nfcsim.c: Fix error checking for debugfs_create_dir
+Date: Mon, 26 Jun 2023 20:11:20 +0200
+Message-ID: <20230626180734.374758123@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180733.699092073@linuxfoundation.org>
 References: <20230626180733.699092073@linuxfoundation.org>
@@ -37,41 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Osama Muhammad <osmtendev@gmail.com>
 
-[ Upstream commit 8d0f019e4c4f2ee2de81efd9bf1c27e9fb3c0460 ]
+[ Upstream commit 9b9e46aa07273ceb96866b2e812b46f1ee0b8d2f ]
 
-Add the missing Set/Way CMOs that apply to tagged memory.
+This patch fixes the error checking in nfcsim.c.
+The DebugFS kernel API is developed in
+a way that the caller can safely ignore the errors that
+occur during the creation of DebugFS nodes.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20230515204601.1270428-2-maz@kernel.org
+Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/sysreg.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nfc/nfcsim.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-index 3bbf0dc5ecad0..78d6f4bf117d6 100644
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -98,8 +98,14 @@
- 				       (!!x)<<8 | 0x1f)
+diff --git a/drivers/nfc/nfcsim.c b/drivers/nfc/nfcsim.c
+index 533e3aa6275cd..cf07b366500e9 100644
+--- a/drivers/nfc/nfcsim.c
++++ b/drivers/nfc/nfcsim.c
+@@ -345,10 +345,6 @@ static struct dentry *nfcsim_debugfs_root;
+ static void nfcsim_debugfs_init(void)
+ {
+ 	nfcsim_debugfs_root = debugfs_create_dir("nfcsim", NULL);
+-
+-	if (!nfcsim_debugfs_root)
+-		pr_err("Could not create debugfs entry\n");
+-
+ }
  
- #define SYS_DC_ISW			sys_insn(1, 0, 7, 6, 2)
-+#define SYS_DC_IGSW			sys_insn(1, 0, 7, 6, 4)
-+#define SYS_DC_IGDSW			sys_insn(1, 0, 7, 6, 6)
- #define SYS_DC_CSW			sys_insn(1, 0, 7, 10, 2)
-+#define SYS_DC_CGSW			sys_insn(1, 0, 7, 10, 4)
-+#define SYS_DC_CGDSW			sys_insn(1, 0, 7, 10, 6)
- #define SYS_DC_CISW			sys_insn(1, 0, 7, 14, 2)
-+#define SYS_DC_CIGSW			sys_insn(1, 0, 7, 14, 4)
-+#define SYS_DC_CIGDSW			sys_insn(1, 0, 7, 14, 6)
- 
- #define SYS_OSDTRRX_EL1			sys_reg(2, 0, 0, 0, 2)
- #define SYS_MDCCINT_EL1			sys_reg(2, 0, 0, 2, 0)
+ static void nfcsim_debugfs_remove(void)
 -- 
 2.39.2
 
