@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C8BC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:36:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59F5C433C9;
-	Mon, 26 Jun 2023 18:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498BEC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:36:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C6DC433C8;
+	Mon, 26 Jun 2023 18:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804561;
-	bh=xNQ54ytPvumoCeiLgJc7OnP+1PsgOlLIuIcEDfadQF8=;
+	s=korg; t=1687804564;
+	bh=iWLEbjyzYrV+chiF0vHRz9H9W1XQXVsQUNJ/de8yI5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hUw8/aU5C8HQPPDiw9l9TqK+KLof9PNTmDX1uQkk17euvMPIhhqyWDPGsWAXfeQC
-	 Mk01Thmu3XLXD9wChlhtmAlcah+x96UA3E4A4NgxuCChlDjVrCZCi0MoIw9FrSxH5J
-	 JRyx4WpTyFSAv0BAOT4OGZPIefF3uwEINMsI5KcA=
+	b=E7J7yyXzodMvBIsDeHkA/xhc7irSJX10se5mmaID48E855HbvByV7oVZ8lizeaq9c
+	 DIJUvZs8luN+dUDwdUDnPu5sV+LA/jQa87wrgErEkpEe5Sl/qZQw+FWdh100EF0LC7
+	 lhxccQiVo2OimVcNeJ3PhbkqAQJxtYuz9KBjlNDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Krause <minipli@grsecurity.net>,
-	"Bhatnagar, Rishabh" <risbhat@amazon.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Richard W.M. Jones" <rjones@redhat.com>,
-	SeongJae Park <sj@kernel.org>
-Subject: [PATCH 5.4 07/60] tick/common: Align tick period during sched_timer setup
-Date: Mon, 26 Jun 2023 20:11:46 +0200
-Message-ID: <20230626180739.855278973@linuxfoundation.org>
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>
+Subject: [PATCH 5.4 08/60] media: dvbdev: Fix memleak in dvb_register_device
+Date: Mon, 26 Jun 2023 20:11:47 +0200
+Message-ID: <20230626180739.897780657@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -38,95 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-commit 13bb06f8dd42071cb9a49f6e21099eea05d4b856 upstream.
+commit 167faadfcf9339088910e9e85a1b711fcbbef8e9 upstream.
 
-The tick period is aligned very early while the first clock_event_device is
-registered. At that point the system runs in periodic mode and switches
-later to one-shot mode if possible.
+When device_create() fails, dvbdev and dvbdevfops should
+be freed just like when dvb_register_media_device() fails.
 
-The next wake-up event is programmed based on the aligned value
-(tick_next_period) but the delta value, that is used to program the
-clock_event_device, is computed based on ktime_get().
-
-With the subtracted offset, the device fires earlier than the exact time
-frame. With a large enough offset the system programs the timer for the
-next wake-up and the remaining time left is too small to make any boot
-progress. The system hangs.
-
-Move the alignment later to the setup of tick_sched timer. At this point
-the system switches to oneshot mode and a high resolution clocksource is
-available. At this point it is safe to align tick_next_period because
-ktime_get() will now return accurate (not jiffies based) time.
-
-[bigeasy: Patch description + testing].
-
-Fixes: e9523a0d81899 ("tick/common: Align tick period with the HZ tick.")
-Reported-by: Mathias Krause <minipli@grsecurity.net>
-Reported-by: "Bhatnagar, Rishabh" <risbhat@amazon.com>
-Suggested-by: Mathias Krause <minipli@grsecurity.net>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Richard W.M. Jones <rjones@redhat.com>
-Tested-by: Mathias Krause <minipli@grsecurity.net>
-Acked-by: SeongJae Park <sj@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/5a56290d-806e-b9a5-f37c-f21958b5a8c0@grsecurity.net
-Link: https://lore.kernel.org/12c6f9a3-d087-b824-0d05-0d18c9bc1bf3@amazon.com
-Link: https://lore.kernel.org/r/20230615091830.RxMV2xf_@linutronix.de
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/tick-common.c |   13 +------------
- kernel/time/tick-sched.c  |   13 ++++++++++++-
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ drivers/media/dvb-core/dvbdev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -216,19 +216,8 @@ static void tick_setup_device(struct tic
- 		 * this cpu:
- 		 */
- 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
--			ktime_t next_p;
--			u32 rem;
--
- 			tick_do_timer_cpu = cpu;
--
--			next_p = ktime_get();
--			div_u64_rem(next_p, TICK_NSEC, &rem);
--			if (rem) {
--				next_p -= rem;
--				next_p += TICK_NSEC;
--			}
--
--			tick_next_period = next_p;
-+			tick_next_period = ktime_get();
- #ifdef CONFIG_NO_HZ_FULL
- 			/*
- 			 * The boot CPU may be nohz_full, in which case set
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -129,8 +129,19 @@ static ktime_t tick_init_jiffy_update(vo
- 	raw_spin_lock(&jiffies_lock);
- 	write_seqcount_begin(&jiffies_seq);
- 	/* Did we start the jiffies update yet ? */
--	if (last_jiffies_update == 0)
-+	if (last_jiffies_update == 0) {
-+		u32 rem;
-+
-+		/*
-+		 * Ensure that the tick is aligned to a multiple of
-+		 * TICK_NSEC.
-+		 */
-+		div_u64_rem(tick_next_period, TICK_NSEC, &rem);
-+		if (rem)
-+			tick_next_period += TICK_NSEC - rem;
-+
- 		last_jiffies_update = tick_next_period;
-+	}
- 	period = last_jiffies_update;
- 	write_seqcount_end(&jiffies_seq);
- 	raw_spin_unlock(&jiffies_lock);
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -545,6 +545,9 @@ int dvb_register_device(struct dvb_adapt
+ 	if (IS_ERR(clsdev)) {
+ 		pr_err("%s: failed to create device dvb%d.%s%d (%ld)\n",
+ 		       __func__, adap->num, dnames[type], id, PTR_ERR(clsdev));
++		dvb_media_device_free(dvbdev);
++		kfree(dvbdevfops);
++		kfree(dvbdev);
+ 		return PTR_ERR(clsdev);
+ 	}
+ 	dprintk("DVB: register adapter%d/%s%d @ minor: %i (0x%02x)\n",
 
 
