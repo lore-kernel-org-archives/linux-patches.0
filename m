@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0C4134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:18:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885BFC433C0;
-	Mon, 26 Jun 2023 18:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0253134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:18:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2D0C433C8;
+	Mon, 26 Jun 2023 18:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803521;
-	bh=16V4H6Wq+emRL2D9kUckP9PavZ9dpDIi62ehlHajSu0=;
+	s=korg; t=1687803524;
+	bh=rrs4nCHkru8iasTk9B7yIUjabFLcWPWOQER3r64I9c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxeYTeImU0ghM8GU05hRHqEEPYTWZxwZA/xUKPnyjulON1TZrxyYdkntqil2244aH
-	 /QPPNt5IiCDyrSfrD6eKIfF6AzBXd/OMbD4bAoRm3vwqFuf2RSjUu6rfijNJ7HeCeg
-	 6VfnqMPA74DmeyI6QioYz0DcIrRo+sWn6AjCp2fE=
+	b=uYyfj9z1gvlArb6YQDnGhPcvAWq01AdhOZzLn5PLybSZF4dZQ8THBO7/JjEEazN7p
+	 lWuj/Vj0/gethZndgtS4Sey+1sp52omitEzYF7OrdQpSJaNey9E2+ZVThtAR3+mwM6
+	 UC7Lyr3SuYd61iGdojptElg3qyLqxrhOvQ3wIteU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 088/199] spi: spi-geni-qcom: correctly handle -EPROBE_DEFER from dma_request_chan()
-Date: Mon, 26 Jun 2023 20:09:54 +0200
-Message-ID: <20230626180809.453424293@linuxfoundation.org>
+	John Starks <jostarks@microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.3 062/199] Drivers: hv: vmbus: Fix vmbus_wait_for_unload() to scan present CPUs
+Date: Mon, 26 Jun 2023 20:09:28 +0200
+Message-ID: <20230626180808.292519267@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -35,39 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Michael Kelley <mikelley@microsoft.com>
 
-[ Upstream commit 9d7054fb3ac2e8d252aae1268f20623f244e644f ]
+commit 320805ab61e5f1e2a5729ae266e16bec2904050c upstream.
 
-Now spi_geni_grab_gpi_chan() errors are correctly reported, the
--EPROBE_DEFER error should be returned from probe in case the
-GPI dma driver is built as module and/or not probed yet.
+vmbus_wait_for_unload() may be called in the panic path after other
+CPUs are stopped. vmbus_wait_for_unload() currently loops through
+online CPUs looking for the UNLOAD response message. But the values of
+CONFIG_KEXEC_CORE and crash_kexec_post_notifiers affect the path used
+to stop the other CPUs, and in one of the paths the stopped CPUs
+are removed from cpu_online_mask. This removal happens in both
+x86/x64 and arm64 architectures. In such a case, vmbus_wait_for_unload()
+only checks the panic'ing CPU, and misses the UNLOAD response message
+except when the panic'ing CPU is CPU 0. vmbus_wait_for_unload()
+eventually times out, but only after waiting 100 seconds.
 
-Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
-Fixes: 6532582c353f ("spi: spi-geni-qcom: fix error handling in spi_geni_grab_gpi_chan()")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230615-topic-sm8550-upstream-fix-spi-geni-qcom-probe-v2-1-670c3d9e8c9c@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by looping through *present* CPUs in vmbus_wait_for_unload().
+The cpu_present_mask is not modified by stopping the other CPUs in the
+panic path, nor should it be.
+
+Also, in a CoCo VM the synic_message_page is not allocated in
+hv_synic_alloc(), but is set and cleared in hv_synic_enable_regs()
+and hv_synic_disable_regs() such that it is set only when the CPU is
+online.  If not all present CPUs are online when vmbus_wait_for_unload()
+is called, the synic_message_page might be NULL. Add a check for this.
+
+Fixes: cd95aad55793 ("Drivers: hv: vmbus: handle various crash scenarios")
+Cc: stable@vger.kernel.org
+Reported-by: John Starks <jostarks@microsoft.com>
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/1684422832-38476-1-git-send-email-mikelley@microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-geni-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hv/channel_mgmt.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index b106faf21a723..baf477383682d 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -646,6 +646,8 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 			geni_se_select_mode(se, GENI_GPI_DMA);
- 			dev_dbg(mas->dev, "Using GPI DMA mode for SPI\n");
- 			break;
-+		} else if (ret == -EPROBE_DEFER) {
-+			goto out_pm;
- 		}
- 		/*
- 		 * in case of failure to get gpi dma channel, we can still do the
--- 
-2.39.2
-
+--- a/drivers/hv/channel_mgmt.c
++++ b/drivers/hv/channel_mgmt.c
+@@ -829,11 +829,22 @@ static void vmbus_wait_for_unload(void)
+ 		if (completion_done(&vmbus_connection.unload_event))
+ 			goto completed;
+ 
+-		for_each_online_cpu(cpu) {
++		for_each_present_cpu(cpu) {
+ 			struct hv_per_cpu_context *hv_cpu
+ 				= per_cpu_ptr(hv_context.cpu_context, cpu);
+ 
++			/*
++			 * In a CoCo VM the synic_message_page is not allocated
++			 * in hv_synic_alloc(). Instead it is set/cleared in
++			 * hv_synic_enable_regs() and hv_synic_disable_regs()
++			 * such that it is set only when the CPU is online. If
++			 * not all present CPUs are online, the message page
++			 * might be NULL, so skip such CPUs.
++			 */
+ 			page_addr = hv_cpu->synic_message_page;
++			if (!page_addr)
++				continue;
++
+ 			msg = (struct hv_message *)page_addr
+ 				+ VMBUS_MESSAGE_SINT;
+ 
+@@ -867,11 +878,14 @@ completed:
+ 	 * maybe-pending messages on all CPUs to be able to receive new
+ 	 * messages after we reconnect.
+ 	 */
+-	for_each_online_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		struct hv_per_cpu_context *hv_cpu
+ 			= per_cpu_ptr(hv_context.cpu_context, cpu);
+ 
+ 		page_addr = hv_cpu->synic_message_page;
++		if (!page_addr)
++			continue;
++
+ 		msg = (struct hv_message *)page_addr + VMBUS_MESSAGE_SINT;
+ 		msg->header.message_type = HVMSG_NONE;
+ 	}
 
 
