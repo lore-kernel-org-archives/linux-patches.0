@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB73AC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:36:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750B1C433CA;
-	Mon, 26 Jun 2023 18:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F6BC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:36:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4B0C433C8;
+	Mon, 26 Jun 2023 18:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804572;
-	bh=VJaVBTYUPT8lxunxp5u6E0VrFppW5VIlI6v11XKaSZ0=;
+	s=korg; t=1687804575;
+	bh=s3t+jAj9NgbxdX7YXvIVEu9OWpklnpWKOzakAar2Ckc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xkans/v/Q9D5zOGhp/+grrqf/tpAYufmzBHh3O1DR4rrJsN8dYUOD/xm6pwQzSwVw
-	 O5mpl8W/9TWJ8Z/EzgSTyt5MYCMP+UTbR03WG7RzYzeH5ZZmih7m+xLcUm8dZNmwIu
-	 vpfStCXd8+fPSfJNJwoB1s3s3HJbwl/2qobHSC7M=
+	b=n9jKYq15quDzkVHogLonLiS+vvqKtq9EZ2nV8IfYmsPO7Ev5e45GBkZee08+qdtKc
+	 UWM0moGVXBUwvLZVTKNEwuem8V+yE17H4jwSxJh/yEaAnYYF0BOErsxtoP+2YOQntR
+	 +ZpTnfPjNjqrl9xzhgIHjWmIP0l5yS+TRz7ES+Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Aurelien Aptel <aaptel@suse.com>,
-	Steve French <stfrench@microsoft.com>,
-	Rishabh Bhatnagar <risbhat@amazon.com>
-Subject: [PATCH 5.4 22/60] cifs: Merge is_path_valid() into get_normalized_path()
-Date: Mon, 26 Jun 2023 20:12:01 +0200
-Message-ID: <20230626180740.452292122@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 31/60] mmc: mvsdio: fix deferred probing
+Date: Mon, 26 Jun 2023 20:12:10 +0200
+Message-ID: <20230626180740.803173743@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -36,87 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Paulo Alcantara (SUSE)" <pc@cjr.nz>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit ff2f7fc08268f266372c30a815349749e8499eb5 upstream.
+[ Upstream commit 8d84064da0d4672e74f984e8710f27881137472c ]
 
-Just do the trivial path validation in get_normalized_path().
+The driver overrides the error codes returned by platform_get_irq() to
+-ENXIO, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing. Switch to propagating the
+error codes upstream.
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Reviewed-by: Aurelien Aptel <aaptel@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Rishabh Bhatnagar <risbhat@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9ec36cafe43b ("of/irq: do irq resolution in platform_get_irq")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20230617203622.6812-5-s.shtylyov@omp.ru
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/dfs_cache.c |   21 ++++-----------------
- 1 file changed, 4 insertions(+), 17 deletions(-)
+ drivers/mmc/host/mvsdio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/cifs/dfs_cache.c
-+++ b/fs/cifs/dfs_cache.c
-@@ -75,13 +75,11 @@ static void refresh_cache_worker(struct
+diff --git a/drivers/mmc/host/mvsdio.c b/drivers/mmc/host/mvsdio.c
+index 203b617126014..0dfcf7bea9ffa 100644
+--- a/drivers/mmc/host/mvsdio.c
++++ b/drivers/mmc/host/mvsdio.c
+@@ -704,7 +704,7 @@ static int mvsd_probe(struct platform_device *pdev)
+ 	}
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+-		return -ENXIO;
++		return irq;
  
- static DECLARE_DELAYED_WORK(refresh_task, refresh_cache_worker);
- 
--static inline bool is_path_valid(const char *path)
-+static int get_normalized_path(const char *path, char **npath)
- {
--	return path && (strchr(path + 1, '\\') || strchr(path + 1, '/'));
--}
-+	if (!path || strlen(path) < 3 || (*path != '\\' && *path != '/'))
-+		return -EINVAL;
- 
--static inline int get_normalized_path(const char *path, char **npath)
--{
- 	if (*path == '\\') {
- 		*npath = (char *)path;
- 	} else {
-@@ -828,9 +826,6 @@ int dfs_cache_find(const unsigned int xi
- 	char *npath;
- 	struct cache_entry *ce;
- 
--	if (unlikely(!is_path_valid(path)))
--		return -EINVAL;
--
- 	rc = get_normalized_path(path, &npath);
- 	if (rc)
- 		return rc;
-@@ -875,9 +870,6 @@ int dfs_cache_noreq_find(const char *pat
- 	char *npath;
- 	struct cache_entry *ce;
- 
--	if (unlikely(!is_path_valid(path)))
--		return -EINVAL;
--
- 	rc = get_normalized_path(path, &npath);
- 	if (rc)
- 		return rc;
-@@ -929,9 +921,6 @@ int dfs_cache_update_tgthint(const unsig
- 	struct cache_entry *ce;
- 	struct cache_dfs_tgt *t;
- 
--	if (unlikely(!is_path_valid(path)))
--		return -EINVAL;
--
- 	rc = get_normalized_path(path, &npath);
- 	if (rc)
- 		return rc;
-@@ -989,7 +978,7 @@ int dfs_cache_noreq_update_tgthint(const
- 	struct cache_entry *ce;
- 	struct cache_dfs_tgt *t;
- 
--	if (unlikely(!is_path_valid(path)) || !it)
-+	if (!it)
- 		return -EINVAL;
- 
- 	rc = get_normalized_path(path, &npath);
-@@ -1049,8 +1038,6 @@ int dfs_cache_get_tgt_referral(const cha
- 
- 	if (!it || !ref)
- 		return -EINVAL;
--	if (unlikely(!is_path_valid(path)))
--		return -EINVAL;
- 
- 	rc = get_normalized_path(path, &npath);
- 	if (rc)
+ 	mmc = mmc_alloc_host(sizeof(struct mvsd_host), &pdev->dev);
+ 	if (!mmc) {
+-- 
+2.39.2
+
 
 
