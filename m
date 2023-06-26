@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B638134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB58C433C0;
-	Mon, 26 Jun 2023 18:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A55134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8648C433C8;
+	Mon, 26 Jun 2023 18:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803827;
-	bh=Q5zSiWJ0vmNNzB7g/rE4g9HguPrQrB5wuWCQRbLI8EM=;
+	s=korg; t=1687803830;
+	bh=RD03h99Z7i3+/28C0q3OKC7flKm44aKMn6olaaLGMg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dC0Wj+ZkcnXpp1FPxpkRR18L5WEV1dRSKftlqEtlQ7A/LxhpZXf5oK4JdgWp3Mkmg
-	 YhhAHpct2iSZHCi4HysA9KwVrSe6V3enF5XSF92rCrqJ9/siwF7ESDxvnAQPpFXo2d
-	 bYrVHT7VmzdNYf7nYTQurLI+57dQFklkA9eMJywE=
+	b=VkmAmYoC0NWI69ixZCdbreeyYsyWMiMQGWPwXglA7jaeCsF39YaRYvzlNsO521egH
+	 roVYS+gGSAmiAPi8qYX/2ErI3p8vtz8WYEgLse+EZ+SEfb02pO21cHuH3HhpVRg5Un
+	 mNGH62a4vzXATTkAfOol8nTXWpbz6d1988Y+6ROI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Smetanin <asmetanin@yandex-team.ru>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Omar Sandoval <osandov@fb.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 191/199] vhost_net: revert upend_idx only on retriable error
-Date: Mon, 26 Jun 2023 20:11:37 +0200
-Message-ID: <20230626180814.110493206@linuxfoundation.org>
+Subject: [PATCH 6.3 192/199] x86/unwind/orc: Add ELF section with ORC version identifier
+Date: Mon, 26 Jun 2023 20:11:38 +0200
+Message-ID: <20230626180814.160044340@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,58 +36,179 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrey Smetanin <asmetanin@yandex-team.ru>
+From: Omar Sandoval <osandov@fb.com>
 
-[ Upstream commit 1f5d2e3bab16369d5d4b4020a25db4ab1f4f082c ]
+[ Upstream commit b9f174c811e3ae4ae8959dc57e6adb9990e913f4 ]
 
-Fix possible virtqueue used buffers leak and corresponding stuck
-in case of temporary -EIO from sendmsg() which is produced by
-tun driver while backend device is not up.
+Commits ffb1b4a41016 ("x86/unwind/orc: Add 'signal' field to ORC
+metadata") and fb799447ae29 ("x86,objtool: Split UNWIND_HINT_EMPTY in
+two") changed the ORC format. Although ORC is internal to the kernel,
+it's the only way for external tools to get reliable kernel stack traces
+on x86-64. In particular, the drgn debugger [1] uses ORC for stack
+unwinding, and these format changes broke it [2]. As the drgn
+maintainer, I don't care how often or how much the kernel changes the
+ORC format as long as I have a way to detect the change.
 
-In case of no-retriable error and zcopy do not revert upend_idx
-to pass packet data (that is update used_idx in corresponding
-vhost_zerocopy_signal_used()) as if packet data has been
-transferred successfully.
+It suffices to store a version identifier in the vmlinux and kernel
+module ELF files (to use when parsing ORC sections from ELF), and in
+kernel memory (to use when parsing ORC from a core dump+symbol table).
+Rather than hard-coding a version number that needs to be manually
+bumped, Peterz suggested hashing the definitions from orc_types.h. If
+there is a format change that isn't caught by this, the hashing script
+can be updated.
 
-v2: set vq->heads[ubuf->desc].len equal to VHOST_DMA_DONE_LEN
-in case of fake successful transmit.
+This patch adds an .orc_header allocated ELF section containing the
+20-byte hash to vmlinux and kernel modules, along with the corresponding
+__start_orc_header and __stop_orc_header symbols in vmlinux.
 
-Signed-off-by: Andrey Smetanin <asmetanin@yandex-team.ru>
-Message-Id: <20230424204411.24888-1-asmetanin@yandex-team.ru>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Andrey Smetanin <asmetanin@yandex-team.ru>
-Acked-by: Jason Wang <jasowang@redhat.com>
+1: https://github.com/osandov/drgn
+2: https://github.com/osandov/drgn/issues/303
+
+Fixes: ffb1b4a41016 ("x86/unwind/orc: Add 'signal' field to ORC metadata")
+Fixes: fb799447ae29 ("x86,objtool: Split UNWIND_HINT_EMPTY in two")
+Signed-off-by: Omar Sandoval <osandov@fb.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lkml.kernel.org/r/aef9c8dc43915b886a8c48509a12ec1b006ca1ca.1686690801.git.osandov@osandov.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/Makefile                 | 12 ++++++++++++
+ arch/x86/include/asm/Kbuild       |  1 +
+ arch/x86/include/asm/orc_header.h | 19 +++++++++++++++++++
+ arch/x86/kernel/unwind_orc.c      |  3 +++
+ include/asm-generic/vmlinux.lds.h |  3 +++
+ scripts/mod/modpost.c             |  5 +++++
+ scripts/orc_hash.sh               | 16 ++++++++++++++++
+ 7 files changed, 59 insertions(+)
+ create mode 100644 arch/x86/include/asm/orc_header.h
+ create mode 100644 scripts/orc_hash.sh
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index 07181cd8d52e6..ae2273196b0c9 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -935,13 +935,18 @@ static void handle_tx_zerocopy(struct vhost_net *net, struct socket *sock)
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+index b39975977c037..fdc2e3abd6152 100644
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -305,6 +305,18 @@ ifeq ($(RETPOLINE_CFLAGS),)
+ endif
+ endif
  
- 		err = sock->ops->sendmsg(sock, &msg, len);
- 		if (unlikely(err < 0)) {
-+			bool retry = err == -EAGAIN || err == -ENOMEM || err == -ENOBUFS;
++ifdef CONFIG_UNWINDER_ORC
++orc_hash_h := arch/$(SRCARCH)/include/generated/asm/orc_hash.h
++orc_hash_sh := $(srctree)/scripts/orc_hash.sh
++targets += $(orc_hash_h)
++quiet_cmd_orc_hash = GEN     $@
++      cmd_orc_hash = mkdir -p $(dir $@); \
++		     $(CONFIG_SHELL) $(orc_hash_sh) < $< > $@
++$(orc_hash_h): $(srctree)/arch/x86/include/asm/orc_types.h $(orc_hash_sh) FORCE
++	$(call if_changed,orc_hash)
++archprepare: $(orc_hash_h)
++endif
 +
- 			if (zcopy_used) {
- 				if (vq->heads[ubuf->desc].len == VHOST_DMA_IN_PROGRESS)
- 					vhost_net_ubuf_put(ubufs);
--				nvq->upend_idx = ((unsigned)nvq->upend_idx - 1)
--					% UIO_MAXIOV;
-+				if (retry)
-+					nvq->upend_idx = ((unsigned)nvq->upend_idx - 1)
-+						% UIO_MAXIOV;
-+				else
-+					vq->heads[ubuf->desc].len = VHOST_DMA_DONE_LEN;
- 			}
--			if (err == -EAGAIN || err == -ENOMEM || err == -ENOBUFS) {
-+			if (retry) {
- 				vhost_discard_vq_desc(vq, 1);
- 				vhost_net_enable_vq(net, vq);
- 				break;
+ archclean:
+ 	$(Q)rm -rf $(objtree)/arch/i386
+ 	$(Q)rm -rf $(objtree)/arch/x86_64
+diff --git a/arch/x86/include/asm/Kbuild b/arch/x86/include/asm/Kbuild
+index 1e51650b79d7c..4f1ce5fc4e194 100644
+--- a/arch/x86/include/asm/Kbuild
++++ b/arch/x86/include/asm/Kbuild
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ 
++generated-y += orc_hash.h
+ generated-y += syscalls_32.h
+ generated-y += syscalls_64.h
+ generated-y += syscalls_x32.h
+diff --git a/arch/x86/include/asm/orc_header.h b/arch/x86/include/asm/orc_header.h
+new file mode 100644
+index 0000000000000..07bacf3e160ea
+--- /dev/null
++++ b/arch/x86/include/asm/orc_header.h
+@@ -0,0 +1,19 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Copyright (c) Meta Platforms, Inc. and affiliates. */
++
++#ifndef _ORC_HEADER_H
++#define _ORC_HEADER_H
++
++#include <linux/types.h>
++#include <linux/compiler.h>
++#include <asm/orc_hash.h>
++
++/*
++ * The header is currently a 20-byte hash of the ORC entry definition; see
++ * scripts/orc_hash.sh.
++ */
++#define ORC_HEADER					\
++	__used __section(".orc_header") __aligned(4)	\
++	static const u8 orc_header[] = { ORC_HASH }
++
++#endif /* _ORC_HEADER_H */
+diff --git a/arch/x86/kernel/unwind_orc.c b/arch/x86/kernel/unwind_orc.c
+index 37307b40f8daf..c960f250624ab 100644
+--- a/arch/x86/kernel/unwind_orc.c
++++ b/arch/x86/kernel/unwind_orc.c
+@@ -7,6 +7,9 @@
+ #include <asm/unwind.h>
+ #include <asm/orc_types.h>
+ #include <asm/orc_lookup.h>
++#include <asm/orc_header.h>
++
++ORC_HEADER;
+ 
+ #define orc_warn(fmt, ...) \
+ 	printk_deferred_once(KERN_WARNING "WARNING: " fmt, ##__VA_ARGS__)
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index d1f57e4868ed3..7058b01e9f146 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -839,6 +839,9 @@
+ 
+ #ifdef CONFIG_UNWINDER_ORC
+ #define ORC_UNWIND_TABLE						\
++	.orc_header : AT(ADDR(.orc_header) - LOAD_OFFSET) {		\
++		BOUNDED_SECTION_BY(.orc_header, _orc_header)		\
++	}								\
+ 	. = ALIGN(4);							\
+ 	.orc_unwind_ip : AT(ADDR(.orc_unwind_ip) - LOAD_OFFSET) {	\
+ 		BOUNDED_SECTION_BY(.orc_unwind_ip, _orc_unwind_ip)	\
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index 9466b6a2abae4..5b3964b39709f 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1985,6 +1985,11 @@ static void add_header(struct buffer *b, struct module *mod)
+ 	buf_printf(b, "#include <linux/vermagic.h>\n");
+ 	buf_printf(b, "#include <linux/compiler.h>\n");
+ 	buf_printf(b, "\n");
++	buf_printf(b, "#ifdef CONFIG_UNWINDER_ORC\n");
++	buf_printf(b, "#include <asm/orc_header.h>\n");
++	buf_printf(b, "ORC_HEADER;\n");
++	buf_printf(b, "#endif\n");
++	buf_printf(b, "\n");
+ 	buf_printf(b, "BUILD_SALT;\n");
+ 	buf_printf(b, "BUILD_LTO_INFO;\n");
+ 	buf_printf(b, "\n");
+diff --git a/scripts/orc_hash.sh b/scripts/orc_hash.sh
+new file mode 100644
+index 0000000000000..466611aa0053f
+--- /dev/null
++++ b/scripts/orc_hash.sh
+@@ -0,0 +1,16 @@
++#!/bin/sh
++# SPDX-License-Identifier: GPL-2.0-or-later
++# Copyright (c) Meta Platforms, Inc. and affiliates.
++
++set -e
++
++printf '%s' '#define ORC_HASH '
++
++awk '
++/^#define ORC_(REG|TYPE)_/ { print }
++/^struct orc_entry {$/ { p=1 }
++p { print }
++/^}/ { p=0 }' |
++	sha1sum |
++	cut -d " " -f 1 |
++	sed 's/\([0-9a-f]\{2\}\)/0x\1,/g'
 -- 
 2.39.2
 
