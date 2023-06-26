@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9245F14A96
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:30:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8E5C433C8;
-	Mon, 26 Jun 2023 18:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762C014AA1
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:30:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27B6C433C9;
+	Mon, 26 Jun 2023 18:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804250;
-	bh=sSf0vIatUGAH0pQuqh6VfqVownHwOXL2AxjSa1+Qrag=;
+	s=korg; t=1687804253;
+	bh=kQ/c/9y3pvo8knkXdUpR1gRtoLueUemBMgTPCK4nB78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PmaDHk9wUZocg3zh4KXg8slI5VF6RBO5GZ9g1mWZ6QdhYZaofW56eVFH7Y87V5fvm
-	 lgG7lYCrY3Z1QwF0DrW9UtlXfUS2GyThJTki91JPqKtKsPsmlD5B1lE/y2koLoQC8w
-	 c1QGXEJWuIFYBRfJgGaaPJ2bh1t8nR3IEOENrICE=
+	b=2AABF1Pn4z3MuAJglqjzicUXun4nOrctVLrDlJwLhxSNPDnuLmjG/7BD3s+IVx9+F
+	 BTPoFBJc8/v7d84G08wU5ofvpPZRzmY5EUl/DwiGDLlDV09FKU41kRYZWt3S/5hdPP
+	 XSaPa3QrhCBaIJfw8k0inX0tC/pR/M/dkM3gHj8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Alex Vesker <valex@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/170] xfrm: Linearize the skb after offloading if needed.
-Date: Mon, 26 Jun 2023 20:11:02 +0200
-Message-ID: <20230626180804.747128181@linuxfoundation.org>
+Subject: [PATCH 6.1 094/170] net/mlx5: DR, Fix wrong action data allocation in decap action
+Date: Mon, 26 Jun 2023 20:11:03 +0200
+Message-ID: <20230626180804.787426960@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,62 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-[ Upstream commit f015b900bc3285322029b4a7d132d6aeb0e51857 ]
+[ Upstream commit ef4c5afc783dc3d47640270a9b94713229c697e8 ]
 
-With offloading enabled, esp_xmit() gets invoked very late, from within
-validate_xmit_xfrm() which is after validate_xmit_skb() validates and
-linearizes the skb if the underlying device does not support fragments.
+When TUNNEL_L3_TO_L2 decap action was created, a pointer to a local
+variable was passed as its HW action data, resulting in attempt to
+free invalid address:
 
-esp_output_tail() may add a fragment to the skb while adding the auth
-tag/ IV. Devices without the proper support will then send skb->data
-points to with the correct length so the packet will have garbage at the
-end. A pcap sniffer will claim that the proper data has been sent since
-it parses the skb properly.
+  BUG: KASAN: invalid-free in mlx5dr_action_destroy+0x318/0x410 [mlx5_core]
 
-It is not affected with INET_ESP_OFFLOAD disabled.
-
-Linearize the skb after offloading if the sending hardware requires it.
-It was tested on v4, v6 has been adopted.
-
-Fixes: 7785bba299a8d ("esp: Add a software GRO codepath")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 4781df92f4da ("net/mlx5: DR, Move STEv0 modify header logic")
+Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Reviewed-by: Alex Vesker <valex@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4_offload.c | 3 +++
- net/ipv6/esp6_offload.c | 3 +++
- 2 files changed, 6 insertions(+)
+ .../net/ethernet/mellanox/mlx5/core/steering/dr_action.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
-index 3969fa805679c..ee848be59e65a 100644
---- a/net/ipv4/esp4_offload.c
-+++ b/net/ipv4/esp4_offload.c
-@@ -340,6 +340,9 @@ static int esp_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features_
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_action.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_action.c
+index b1dfad274a39e..a3e7602b044e5 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_action.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_action.c
+@@ -1200,9 +1200,13 @@ dr_action_create_reformat_action(struct mlx5dr_domain *dmn,
+ 	}
+ 	case DR_ACTION_TYP_TNL_L3_TO_L2:
+ 	{
+-		u8 hw_actions[ACTION_CACHE_LINE_SIZE] = {};
++		u8 *hw_actions;
+ 		int ret;
  
- 	secpath_reset(skb);
++		hw_actions = kzalloc(ACTION_CACHE_LINE_SIZE, GFP_KERNEL);
++		if (!hw_actions)
++			return -ENOMEM;
++
+ 		ret = mlx5dr_ste_set_action_decap_l3_list(dmn->ste_ctx,
+ 							  data, data_sz,
+ 							  hw_actions,
+@@ -1210,6 +1214,7 @@ dr_action_create_reformat_action(struct mlx5dr_domain *dmn,
+ 							  &action->rewrite->num_of_actions);
+ 		if (ret) {
+ 			mlx5dr_dbg(dmn, "Failed creating decap l3 action list\n");
++			kfree(hw_actions);
+ 			return ret;
+ 		}
  
-+	if (skb_needs_linearize(skb, skb->dev->features) &&
-+	    __skb_linearize(skb))
-+		return -ENOMEM;
- 	return 0;
- }
+@@ -1217,6 +1222,7 @@ dr_action_create_reformat_action(struct mlx5dr_domain *dmn,
+ 								DR_CHUNK_SIZE_8);
+ 		if (!action->rewrite->chunk) {
+ 			mlx5dr_dbg(dmn, "Failed allocating modify header chunk\n");
++			kfree(hw_actions);
+ 			return -ENOMEM;
+ 		}
  
-diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
-index 242f4295940e6..fc6a5be732634 100644
---- a/net/ipv6/esp6_offload.c
-+++ b/net/ipv6/esp6_offload.c
-@@ -375,6 +375,9 @@ static int esp6_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features
- 
- 	secpath_reset(skb);
- 
-+	if (skb_needs_linearize(skb, skb->dev->features) &&
-+	    __skb_linearize(skb))
-+		return -ENOMEM;
- 	return 0;
- }
- 
+@@ -1230,6 +1236,7 @@ dr_action_create_reformat_action(struct mlx5dr_domain *dmn,
+ 		if (ret) {
+ 			mlx5dr_dbg(dmn, "Writing decap l3 actions to ICM failed\n");
+ 			mlx5dr_icm_free_chunk(action->rewrite->chunk);
++			kfree(hw_actions);
+ 			return ret;
+ 		}
+ 		return 0;
 -- 
 2.39.2
 
