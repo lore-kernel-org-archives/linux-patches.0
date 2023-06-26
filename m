@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD74CC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D3AC433C8;
-	Mon, 26 Jun 2023 18:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF10EC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3381CC433C9;
+	Mon, 26 Jun 2023 18:37:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804654;
-	bh=ka4y9tD9nFpCoOS3+IXuFvFkCSqi0h2EsfQZkUXZ6+U=;
+	s=korg; t=1687804657;
+	bh=k8cebMUC1HzA/OLOaDTCYsdJDPnZSo/0ZJcUIwKpstA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=itbowffVO9PxAVMo0k0uIQrB3EiUkkxVr4SyCxu2pMkycuVmwSfms8GqpgffirpIN
-	 1fHJWe3B2SWcuT+4/2S1jGFsDkjtpzln/773ximxcgRNQZGve06pgyCar/xQuhX9tD
-	 b9Fze6UWgN9q97oxFfRO1IrCydX/2d6qOW3fMbKw=
+	b=DyJ4goQsvff1nXZgnRmhvJNeztLKHV5FcdMaw75flt3L5voz4zfK4pBsTTpLYecQC
+	 PxRVJwivtvVqk2bLqCpLQF91p9shEdw1ycjghhCXSvDS7feZ/exYHXz8VcGifwd8Ov
+	 z/Zh/8Ijki2j9cwH/OluKQBXKZ/1aFxgI+42JW6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Yangtao Li <tiny.windzz@gmail.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 29/60] mmc: mtk-sd: fix deferred probing
-Date: Mon, 26 Jun 2023 20:12:08 +0200
-Message-ID: <20230626180740.721037005@linuxfoundation.org>
+Subject: [PATCH 5.4 30/60] mmc: mvsdio: convert to devm_platform_ioremap_resource
+Date: Mon, 26 Jun 2023 20:12:09 +0200
+Message-ID: <20230626180740.764186004@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -35,37 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Yangtao Li <tiny.windzz@gmail.com>
 
-[ Upstream commit 0c4dc0f054891a2cbde0426b0c0fdf232d89f47f ]
+[ Upstream commit 0a337eb168d6cbb85f6b4eb56d1be55e24c80452 ]
 
-The driver overrides the error codes returned by platform_get_irq() to
--EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
-permanently instead of the deferred probing. Switch to propagating the
-error codes upstream.
+Use devm_platform_ioremap_resource() to simplify code.
 
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20230617203622.6812-4-s.shtylyov@omp.ru
+Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
+Link: https://lore.kernel.org/r/20191215175120.3290-11-tiny.windzz@gmail.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 8d84064da0d4 ("mmc: mvsdio: fix deferred probing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/mvsdio.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
-index 1254a5650cfff..2673890c76900 100644
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -2249,7 +2249,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
+diff --git a/drivers/mmc/host/mvsdio.c b/drivers/mmc/host/mvsdio.c
+index 74a0a7fbbf7fd..203b617126014 100644
+--- a/drivers/mmc/host/mvsdio.c
++++ b/drivers/mmc/host/mvsdio.c
+@@ -696,16 +696,14 @@ static int mvsd_probe(struct platform_device *pdev)
+ 	struct mmc_host *mmc = NULL;
+ 	struct mvsd_host *host = NULL;
+ 	const struct mbus_dram_target_info *dram;
+-	struct resource *r;
+ 	int ret, irq;
  
- 	host->irq = platform_get_irq(pdev, 0);
- 	if (host->irq < 0) {
--		ret = -EINVAL;
-+		ret = host->irq;
- 		goto host_free;
+ 	if (!np) {
+ 		dev_err(&pdev->dev, "no DT node\n");
+ 		return -ENODEV;
  	}
+-	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	irq = platform_get_irq(pdev, 0);
+-	if (!r || irq < 0)
++	if (irq < 0)
+ 		return -ENXIO;
  
+ 	mmc = mmc_alloc_host(sizeof(struct mvsd_host), &pdev->dev);
+@@ -758,7 +756,7 @@ static int mvsd_probe(struct platform_device *pdev)
+ 
+ 	spin_lock_init(&host->lock);
+ 
+-	host->base = devm_ioremap_resource(&pdev->dev, r);
++	host->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(host->base)) {
+ 		ret = PTR_ERR(host->base);
+ 		goto out;
 -- 
 2.39.2
 
