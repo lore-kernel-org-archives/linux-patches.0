@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BF3C2CF
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13C2C433C9;
-	Mon, 26 Jun 2023 18:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F7DC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA83C433CA;
+	Mon, 26 Jun 2023 18:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804517;
-	bh=UCyr2ie/rM1BwnUrAk3j7pLpi+M3epYGd7Dw+ZCbKoQ=;
+	s=korg; t=1687804520;
+	bh=y89qHqVN4BjB3k5HM5zexA7wkcRhNsPCAzQ1zu8Jodg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d3pqzRjtjWqIB+7qjOo+ySgbXuI55WlE3RKvzLp2tFjNABCR7X3OGCtyd/43A5ofu
-	 V2iNSiE5cvv6Al3Q1QP7KwL3cwjWX9OsZ9IJENffB1dCKaMutS1vRaMcGQpI729EMS
-	 CJRvraggj1TedIGMAxBUzOL9IMAnTuhq4wf2XekA=
+	b=uoQ1jHNefxR1p0QUiEHgBbu+FBqzbFE2UtuD/KuO9p7Z055Vv7UazQB/EehmGWT44
+	 wYvVcKvsieaN05Qkxls2UTiu2n+h3GepjhDwPEl86mh1kR+Ku6+SsD68bYUTPPq8iK
+	 JyD4dgALM1C5iEbwNzJV8cnEr6ugFFvbibdn3glg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 11/60] nilfs2: fix buffer corruption due to concurrent device reads
-Date: Mon, 26 Jun 2023 20:11:50 +0200
-Message-ID: <20230626180740.011847575@linuxfoundation.org>
+	John Starks <jostarks@microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 5.4 12/60] Drivers: hv: vmbus: Fix vmbus_wait_for_unload() to scan present CPUs
+Date: Mon, 26 Jun 2023 20:11:51 +0200
+Message-ID: <20230626180740.063459323@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -35,147 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Michael Kelley <mikelley@microsoft.com>
 
-commit 679bd7ebdd315bf457a4740b306ae99f1d0a403d upstream.
+commit 320805ab61e5f1e2a5729ae266e16bec2904050c upstream.
 
-As a result of analysis of a syzbot report, it turned out that in three
-cases where nilfs2 allocates block device buffers directly via sb_getblk,
-concurrent reads to the device can corrupt the allocated buffers.
+vmbus_wait_for_unload() may be called in the panic path after other
+CPUs are stopped. vmbus_wait_for_unload() currently loops through
+online CPUs looking for the UNLOAD response message. But the values of
+CONFIG_KEXEC_CORE and crash_kexec_post_notifiers affect the path used
+to stop the other CPUs, and in one of the paths the stopped CPUs
+are removed from cpu_online_mask. This removal happens in both
+x86/x64 and arm64 architectures. In such a case, vmbus_wait_for_unload()
+only checks the panic'ing CPU, and misses the UNLOAD response message
+except when the panic'ing CPU is CPU 0. vmbus_wait_for_unload()
+eventually times out, but only after waiting 100 seconds.
 
-Nilfs2 uses sb_getblk for segment summary blocks, that make up a log
-header, and the super root block, that is the trailer, and when moving and
-writing the second super block after fs resize.
+Fix this by looping through *present* CPUs in vmbus_wait_for_unload().
+The cpu_present_mask is not modified by stopping the other CPUs in the
+panic path, nor should it be.
 
-In any of these, since the uptodate flag is not set when storing metadata
-to be written in the allocated buffers, the stored metadata will be
-overwritten if a device read of the same block occurs concurrently before
-the write.  This causes metadata corruption and misbehavior in the log
-write itself, causing warnings in nilfs_btree_assign() as reported.
+Also, in a CoCo VM the synic_message_page is not allocated in
+hv_synic_alloc(), but is set and cleared in hv_synic_enable_regs()
+and hv_synic_disable_regs() such that it is set only when the CPU is
+online.  If not all present CPUs are online when vmbus_wait_for_unload()
+is called, the synic_message_page might be NULL. Add a check for this.
 
-Fix these issues by setting an uptodate flag on the buffer head on the
-first or before modifying each buffer obtained with sb_getblk, and
-clearing the flag on failure.
-
-When setting the uptodate flag, the lock_buffer/unlock_buffer pair is used
-to perform necessary exclusive control, and the buffer is filled to ensure
-that uninitialized bytes are not mixed into the data read from others.  As
-for buffers for segment summary blocks, they are filled incrementally, so
-if the uptodate flag was unset on their allocation, set the flag and zero
-fill the buffer once at that point.
-
-Also, regarding the superblock move routine, the starting point of the
-memset call to zerofill the block is incorrectly specified, which can
-cause a buffer overflow on file systems with block sizes greater than
-4KiB.  In addition, if the superblock is moved within a large block, it is
-necessary to assume the possibility that the data in the superblock will
-be destroyed by zero-filling before copying.  So fix these potential
-issues as well.
-
-Link: https://lkml.kernel.org/r/20230609035732.20426-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/00000000000030000a05e981f475@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: cd95aad55793 ("Drivers: hv: vmbus: handle various crash scenarios")
+Cc: stable@vger.kernel.org
+Reported-by: John Starks <jostarks@microsoft.com>
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/1684422832-38476-1-git-send-email-mikelley@microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segbuf.c  |    6 ++++++
- fs/nilfs2/segment.c |    7 +++++++
- fs/nilfs2/super.c   |   23 ++++++++++++++++++++++-
- 3 files changed, 35 insertions(+), 1 deletion(-)
+ drivers/hv/channel_mgmt.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/segbuf.c
-+++ b/fs/nilfs2/segbuf.c
-@@ -101,6 +101,12 @@ int nilfs_segbuf_extend_segsum(struct ni
- 	if (unlikely(!bh))
- 		return -ENOMEM;
+--- a/drivers/hv/channel_mgmt.c
++++ b/drivers/hv/channel_mgmt.c
+@@ -802,11 +802,22 @@ static void vmbus_wait_for_unload(void)
+ 		if (completion_done(&vmbus_connection.unload_event))
+ 			goto completed;
  
-+	lock_buffer(bh);
-+	if (!buffer_uptodate(bh)) {
-+		memset(bh->b_data, 0, bh->b_size);
-+		set_buffer_uptodate(bh);
-+	}
-+	unlock_buffer(bh);
- 	nilfs_segbuf_add_segsum_buffer(segbuf, bh);
- 	return 0;
- }
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -984,10 +984,13 @@ static void nilfs_segctor_fill_in_super_
- 	unsigned int isz, srsz;
+-		for_each_online_cpu(cpu) {
++		for_each_present_cpu(cpu) {
+ 			struct hv_per_cpu_context *hv_cpu
+ 				= per_cpu_ptr(hv_context.cpu_context, cpu);
  
- 	bh_sr = NILFS_LAST_SEGBUF(&sci->sc_segbufs)->sb_super_root;
++			/*
++			 * In a CoCo VM the synic_message_page is not allocated
++			 * in hv_synic_alloc(). Instead it is set/cleared in
++			 * hv_synic_enable_regs() and hv_synic_disable_regs()
++			 * such that it is set only when the CPU is online. If
++			 * not all present CPUs are online, the message page
++			 * might be NULL, so skip such CPUs.
++			 */
+ 			page_addr = hv_cpu->synic_message_page;
++			if (!page_addr)
++				continue;
 +
-+	lock_buffer(bh_sr);
- 	raw_sr = (struct nilfs_super_root *)bh_sr->b_data;
- 	isz = nilfs->ns_inode_size;
- 	srsz = NILFS_SR_BYTES(isz);
+ 			msg = (struct hv_message *)page_addr
+ 				+ VMBUS_MESSAGE_SINT;
  
-+	raw_sr->sr_sum = 0;  /* Ensure initialization within this update */
- 	raw_sr->sr_bytes = cpu_to_le16(srsz);
- 	raw_sr->sr_nongc_ctime
- 		= cpu_to_le64(nilfs_doing_gc() ?
-@@ -1001,6 +1004,8 @@ static void nilfs_segctor_fill_in_super_
- 	nilfs_write_inode_common(nilfs->ns_sufile, (void *)raw_sr +
- 				 NILFS_SR_SUFILE_OFFSET(isz), 1);
- 	memset((void *)raw_sr + srsz, 0, nilfs->ns_blocksize - srsz);
-+	set_buffer_uptodate(bh_sr);
-+	unlock_buffer(bh_sr);
- }
+@@ -840,11 +851,14 @@ completed:
+ 	 * maybe-pending messages on all CPUs to be able to receive new
+ 	 * messages after we reconnect.
+ 	 */
+-	for_each_online_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		struct hv_per_cpu_context *hv_cpu
+ 			= per_cpu_ptr(hv_context.cpu_context, cpu);
  
- static void nilfs_redirty_inodes(struct list_head *head)
-@@ -1778,6 +1783,7 @@ static void nilfs_abort_logs(struct list
- 	list_for_each_entry(segbuf, logs, sb_list) {
- 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
- 				    b_assoc_buffers) {
-+			clear_buffer_uptodate(bh);
- 			if (bh->b_page != bd_page) {
- 				if (bd_page)
- 					end_page_writeback(bd_page);
-@@ -1789,6 +1795,7 @@ static void nilfs_abort_logs(struct list
- 				    b_assoc_buffers) {
- 			clear_buffer_async_write(bh);
- 			if (bh == segbuf->sb_super_root) {
-+				clear_buffer_uptodate(bh);
- 				if (bh->b_page != bd_page) {
- 					end_page_writeback(bd_page);
- 					bd_page = bh->b_page;
---- a/fs/nilfs2/super.c
-+++ b/fs/nilfs2/super.c
-@@ -367,10 +367,31 @@ static int nilfs_move_2nd_super(struct s
- 		goto out;
+ 		page_addr = hv_cpu->synic_message_page;
++		if (!page_addr)
++			continue;
++
+ 		msg = (struct hv_message *)page_addr + VMBUS_MESSAGE_SINT;
+ 		msg->header.message_type = HVMSG_NONE;
  	}
- 	nsbp = (void *)nsbh->b_data + offset;
--	memset(nsbp, 0, nilfs->ns_blocksize);
- 
-+	lock_buffer(nsbh);
- 	if (sb2i >= 0) {
-+		/*
-+		 * The position of the second superblock only changes by 4KiB,
-+		 * which is larger than the maximum superblock data size
-+		 * (= 1KiB), so there is no need to use memmove() to allow
-+		 * overlap between source and destination.
-+		 */
- 		memcpy(nsbp, nilfs->ns_sbp[sb2i], nilfs->ns_sbsize);
-+
-+		/*
-+		 * Zero fill after copy to avoid overwriting in case of move
-+		 * within the same block.
-+		 */
-+		memset(nsbh->b_data, 0, offset);
-+		memset((void *)nsbp + nilfs->ns_sbsize, 0,
-+		       nsbh->b_size - offset - nilfs->ns_sbsize);
-+	} else {
-+		memset(nsbh->b_data, 0, nsbh->b_size);
-+	}
-+	set_buffer_uptodate(nsbh);
-+	unlock_buffer(nsbh);
-+
-+	if (sb2i >= 0) {
- 		brelse(nilfs->ns_sbh[sb2i]);
- 		nilfs->ns_sbh[sb2i] = nsbh;
- 		nilfs->ns_sbp[sb2i] = nsbp;
 
 
