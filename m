@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1D1C8F8
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745FFC433C0;
-	Mon, 26 Jun 2023 18:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF404D526
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F29C433C8;
+	Mon, 26 Jun 2023 18:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805042;
-	bh=0KK1jfcXl4jDTacNCH/v4dSYab6frae1XwEBIB1ohqo=;
+	s=korg; t=1687805045;
+	bh=xNQ54ytPvumoCeiLgJc7OnP+1PsgOlLIuIcEDfadQF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THvqrAhztcwgvMbb1cKw/rmUwgyIuJjvtaJ/ZZ3fepP3Nb1vEQjqSesquIBxlYpPC
-	 88wMGgB53QXmJsmol7TERsuPoJI2EzEwWQ5UYCL95s9zfb4IomLLWhctzgoMdjbxVh
-	 V/gaUoRbmNLJeM+W1n4sNF8CpxWiEziHOPcSow54=
+	b=O6b8ukvnENt0ooKhdmkZ462pe0PXsF55zr2S4R8p9SN/1TRCNfCfU2PO0ZjPmZvOM
+	 ACa7VA8HOKO3FmUQqiEoWdktlpTXwkFrGV8ADfLstrS3JWRaPGuhwkPsrjzX2qUE5I
+	 WyCJNDgf0MtfqMQOi3yMhQMCcP8/HRLmja4zt7JQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 03/81] tracing: Add tracing_reset_all_online_cpus_unlocked() function
-Date: Mon, 26 Jun 2023 20:11:45 +0200
-Message-ID: <20230626180744.596623070@linuxfoundation.org>
+	Mathias Krause <minipli@grsecurity.net>,
+	"Bhatnagar, Rishabh" <risbhat@amazon.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Richard W.M. Jones" <rjones@redhat.com>,
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH 5.10 04/81] tick/common: Align tick period during sched_timer setup
+Date: Mon, 26 Jun 2023 20:11:46 +0200
+Message-ID: <20230626180744.637066310@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -36,106 +38,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit e18eb8783ec4949adebc7d7b0fdb65f65bfeefd9 upstream.
+commit 13bb06f8dd42071cb9a49f6e21099eea05d4b856 upstream.
 
-Currently the tracing_reset_all_online_cpus() requires the
-trace_types_lock held. But only one caller of this function actually has
-that lock held before calling it, and the other just takes the lock so
-that it can call it. More users of this function is needed where the lock
-is not held.
+The tick period is aligned very early while the first clock_event_device is
+registered. At that point the system runs in periodic mode and switches
+later to one-shot mode if possible.
 
-Add a tracing_reset_all_online_cpus_unlocked() function for the one use
-case that calls it without being held, and also add a lockdep_assert to
-make sure it is held when called.
+The next wake-up event is programmed based on the aligned value
+(tick_next_period) but the delta value, that is used to program the
+clock_event_device, is computed based on ktime_get().
 
-Then have tracing_reset_all_online_cpus() take the lock internally, such
-that callers do not need to worry about taking it.
+With the subtracted offset, the device fires earlier than the exact time
+frame. With a large enough offset the system programs the timer for the
+next wake-up and the remaining time left is too small to make any boot
+progress. The system hangs.
 
-Link: https://lkml.kernel.org/r/20221123192741.658273220@goodmis.org
+Move the alignment later to the setup of tick_sched timer. At this point
+the system switches to oneshot mode and a high resolution clocksource is
+available. At this point it is safe to align tick_next_period because
+ktime_get() will now return accurate (not jiffies based) time.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+[bigeasy: Patch description + testing].
+
+Fixes: e9523a0d81899 ("tick/common: Align tick period with the HZ tick.")
+Reported-by: Mathias Krause <minipli@grsecurity.net>
+Reported-by: "Bhatnagar, Rishabh" <risbhat@amazon.com>
+Suggested-by: Mathias Krause <minipli@grsecurity.net>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Richard W.M. Jones <rjones@redhat.com>
+Tested-by: Mathias Krause <minipli@grsecurity.net>
+Acked-by: SeongJae Park <sj@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/5a56290d-806e-b9a5-f37c-f21958b5a8c0@grsecurity.net
+Link: https://lore.kernel.org/12c6f9a3-d087-b824-0d05-0d18c9bc1bf3@amazon.com
+Link: https://lore.kernel.org/r/20230615091830.RxMV2xf_@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c              |   11 ++++++++++-
- kernel/trace/trace.h              |    1 +
- kernel/trace/trace_events.c       |    2 +-
- kernel/trace/trace_events_synth.c |    2 --
- 4 files changed, 12 insertions(+), 4 deletions(-)
+ kernel/time/tick-common.c |   13 +------------
+ kernel/time/tick-sched.c  |   13 ++++++++++++-
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -2178,10 +2178,12 @@ void tracing_reset_online_cpus(struct ar
- }
- 
- /* Must have trace_types_lock held */
--void tracing_reset_all_online_cpus(void)
-+void tracing_reset_all_online_cpus_unlocked(void)
- {
- 	struct trace_array *tr;
- 
-+	lockdep_assert_held(&trace_types_lock);
-+
- 	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
- 		if (!tr->clear_trace)
- 			continue;
-@@ -2193,6 +2195,13 @@ void tracing_reset_all_online_cpus(void)
- 	}
- }
- 
-+void tracing_reset_all_online_cpus(void)
-+{
-+	mutex_lock(&trace_types_lock);
-+	tracing_reset_all_online_cpus_unlocked();
-+	mutex_unlock(&trace_types_lock);
-+}
-+
- /*
-  * The tgid_map array maps from pid to tgid; i.e. the value stored at index i
-  * is the tgid last observed corresponding to pid=i.
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -725,6 +725,7 @@ int tracing_is_enabled(void);
- void tracing_reset_online_cpus(struct array_buffer *buf);
- void tracing_reset_current(int cpu);
- void tracing_reset_all_online_cpus(void);
-+void tracing_reset_all_online_cpus_unlocked(void);
- int tracing_open_generic(struct inode *inode, struct file *filp);
- int tracing_open_generic_tr(struct inode *inode, struct file *filp);
- bool tracing_is_disabled(void);
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -2661,7 +2661,7 @@ static void trace_module_remove_events(s
- 	 * over from this module may be passed to the new module events and
- 	 * unexpected results may occur.
- 	 */
--	tracing_reset_all_online_cpus();
-+	tracing_reset_all_online_cpus_unlocked();
- }
- 
- static int trace_module_notify(struct notifier_block *self,
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -1363,7 +1363,6 @@ int synth_event_delete(const char *event
- 	mutex_unlock(&event_mutex);
- 
- 	if (mod) {
--		mutex_lock(&trace_types_lock);
- 		/*
- 		 * It is safest to reset the ring buffer if the module
- 		 * being unloaded registered any events that were
-@@ -1375,7 +1374,6 @@ int synth_event_delete(const char *event
- 		 * occur.
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -216,19 +216,8 @@ static void tick_setup_device(struct tic
+ 		 * this cpu:
  		 */
- 		tracing_reset_all_online_cpus();
--		mutex_unlock(&trace_types_lock);
- 	}
- 
- 	return ret;
+ 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
+-			ktime_t next_p;
+-			u32 rem;
+-
+ 			tick_do_timer_cpu = cpu;
+-
+-			next_p = ktime_get();
+-			div_u64_rem(next_p, TICK_NSEC, &rem);
+-			if (rem) {
+-				next_p -= rem;
+-				next_p += TICK_NSEC;
+-			}
+-
+-			tick_next_period = next_p;
++			tick_next_period = ktime_get();
+ #ifdef CONFIG_NO_HZ_FULL
+ 			/*
+ 			 * The boot CPU may be nohz_full, in which case set
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -129,8 +129,19 @@ static ktime_t tick_init_jiffy_update(vo
+ 	raw_spin_lock(&jiffies_lock);
+ 	write_seqcount_begin(&jiffies_seq);
+ 	/* Did we start the jiffies update yet ? */
+-	if (last_jiffies_update == 0)
++	if (last_jiffies_update == 0) {
++		u32 rem;
++
++		/*
++		 * Ensure that the tick is aligned to a multiple of
++		 * TICK_NSEC.
++		 */
++		div_u64_rem(tick_next_period, TICK_NSEC, &rem);
++		if (rem)
++			tick_next_period += TICK_NSEC - rem;
++
+ 		last_jiffies_update = tick_next_period;
++	}
+ 	period = last_jiffies_update;
+ 	write_seqcount_end(&jiffies_seq);
+ 	raw_spin_unlock(&jiffies_lock);
 
 
