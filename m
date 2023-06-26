@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AE6134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA07C433C9;
-	Mon, 26 Jun 2023 18:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E393134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E24C433C8;
+	Mon, 26 Jun 2023 18:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803888;
-	bh=5MILmWV1rWV7MNCHcwIKZGHGlAyGN+2CyiKNvZDsO9s=;
+	s=korg; t=1687803891;
+	bh=UkcvQeGlBwvWKAmrA6+9reRwq5WoIFucTljsXLzofnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kfJpaFFcvGNvjW6xdjijV0pdCMZEdcCdDQ32+tR9IN5sLVpOjuPVOJDeliRR4viUV
-	 NiYtmrEA8W+ThmQYRKlqGfF89ns+7syGKyYEI48+AjiPRdGU5B5+56fhL9YxVjWcQi
-	 E17DlOGMQK6HCBXLcgIp5OFJNMQbxOBUfpKgz+bY=
+	b=hHp4gxRCrIIPONpKq82PCdFFpJ1EkUTOukx4URUDxbYdYQtH5QP72iiTRoJvOxIEb
+	 waivgsrV4NkBpj/55VtJ4QLDp/p1/1SgKjRSVtSjcFGbTztXBTpm9P/OPmX4hNmjaU
+	 iSywjX32n1tbPaWVSIwAmzIOsvt7Lr7DBsR5GxAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 4.19 12/41] cgroup: Do not corrupt task iteration when rebinding subsystem
-Date: Mon, 26 Jun 2023 20:11:35 +0200
-Message-ID: <20230626180736.742217409@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 13/41] nilfs2: prevent general protection fault in nilfs_clear_dirty_page()
+Date: Mon, 26 Jun 2023 20:11:36 +0200
+Message-ID: <20230626180736.784492004@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -36,122 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 6f363f5aa845561f7ea496d8b1175e3204470486 upstream.
+commit 782e53d0c14420858dbf0f8f797973c150d3b6d7 upstream.
 
-We found a refcount UAF bug as follows:
+In a syzbot stress test that deliberately causes file system errors on
+nilfs2 with a corrupted disk image, it has been reported that
+nilfs_clear_dirty_page() called from nilfs_clear_dirty_pages() can cause a
+general protection fault.
 
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 1 PID: 342 at lib/refcount.c:25 refcount_warn_saturate+0xa0/0x148
-Workqueue: events cpuset_hotplug_workfn
-Call trace:
- refcount_warn_saturate+0xa0/0x148
- __refcount_add.constprop.0+0x5c/0x80
- css_task_iter_advance_css_set+0xd8/0x210
- css_task_iter_advance+0xa8/0x120
- css_task_iter_next+0x94/0x158
- update_tasks_root_domain+0x58/0x98
- rebuild_root_domains+0xa0/0x1b0
- rebuild_sched_domains_locked+0x144/0x188
- cpuset_hotplug_workfn+0x138/0x5a0
- process_one_work+0x1e8/0x448
- worker_thread+0x228/0x3e0
- kthread+0xe0/0xf0
- ret_from_fork+0x10/0x20
+In nilfs_clear_dirty_pages(), when looking up dirty pages from the page
+cache and calling nilfs_clear_dirty_page() for each dirty page/folio
+retrieved, the back reference from the argument page to "mapping" may have
+been changed to NULL (and possibly others).  It is necessary to check this
+after locking the page/folio.
 
-then a kernel panic will be triggered as below:
+So, fix this issue by not calling nilfs_clear_dirty_page() on a page/folio
+after locking it in nilfs_clear_dirty_pages() if the back reference
+"mapping" from the page/folio is different from the "mapping" that held
+the page/folio just before.
 
-Unable to handle kernel paging request at virtual address 00000000c0000010
-Call trace:
- cgroup_apply_control_disable+0xa4/0x16c
- rebind_subsystems+0x224/0x590
- cgroup_destroy_root+0x64/0x2e0
- css_free_rwork_fn+0x198/0x2a0
- process_one_work+0x1d4/0x4bc
- worker_thread+0x158/0x410
- kthread+0x108/0x13c
- ret_from_fork+0x10/0x18
-
-The race that cause this bug can be shown as below:
-
-(hotplug cpu)                | (umount cpuset)
-mutex_lock(&cpuset_mutex)    | mutex_lock(&cgroup_mutex)
-cpuset_hotplug_workfn        |
- rebuild_root_domains        |  rebind_subsystems
-  update_tasks_root_domain   |   spin_lock_irq(&css_set_lock)
-   css_task_iter_start       |    list_move_tail(&cset->e_cset_node[ss->id]
-   while(css_task_iter_next) |                  &dcgrp->e_csets[ss->id]);
-   css_task_iter_end         |   spin_unlock_irq(&css_set_lock)
-mutex_unlock(&cpuset_mutex)  | mutex_unlock(&cgroup_mutex)
-
-Inside css_task_iter_start/next/end, css_set_lock is hold and then
-released, so when iterating task(left side), the css_set may be moved to
-another list(right side), then it->cset_head points to the old list head
-and it->cset_pos->next points to the head node of new list, which can't
-be used as struct css_set.
-
-To fix this issue, switch from all css_sets to only scgrp's css_sets to
-patch in-flight iterators to preserve correct iteration, and then
-update it->cset_head as well.
-
-Reported-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://www.spinics.net/lists/cgroups/msg37935.html
-Suggested-by: Michal Koutný <mkoutny@suse.com>
-Link: https://lore.kernel.org/all/20230526114139.70274-1-xiujianfeng@huaweicloud.com/
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Fixes: 2d8f243a5e6e ("cgroup: implement cgroup->e_csets[]")
-Cc: stable@vger.kernel.org # v3.16+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Link: https://lkml.kernel.org/r/20230612021456.3682-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/000000000000da4f6b05eb9bf593@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ fs/nilfs2/page.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -1652,7 +1652,7 @@ int rebind_subsystems(struct cgroup_root
- {
- 	struct cgroup *dcgrp = &dst_root->cgrp;
- 	struct cgroup_subsys *ss;
--	int ssid, i, ret;
-+	int ssid, ret;
- 	u16 dfl_disable_ss_mask = 0;
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -372,7 +372,15 @@ void nilfs_clear_dirty_pages(struct addr
+ 			struct page *page = pvec.pages[i];
  
- 	lockdep_assert_held(&cgroup_mutex);
-@@ -1696,7 +1696,8 @@ int rebind_subsystems(struct cgroup_root
- 		struct cgroup_root *src_root = ss->root;
- 		struct cgroup *scgrp = &src_root->cgrp;
- 		struct cgroup_subsys_state *css = cgroup_css(scgrp, ss);
--		struct css_set *cset;
-+		struct css_set *cset, *cset_pos;
-+		struct css_task_iter *it;
- 
- 		WARN_ON(!css || cgroup_css(dcgrp, ss));
- 
-@@ -1714,9 +1715,22 @@ int rebind_subsystems(struct cgroup_root
- 		css->cgroup = dcgrp;
- 
- 		spin_lock_irq(&css_set_lock);
--		hash_for_each(css_set_table, i, cset, hlist)
-+		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
-+		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
-+					 e_cset_node[ss->id]) {
- 			list_move_tail(&cset->e_cset_node[ss->id],
- 				       &dcgrp->e_csets[ss->id]);
+ 			lock_page(page);
+-			nilfs_clear_dirty_page(page, silent);
++
 +			/*
-+			 * all css_sets of scgrp together in same order to dcgrp,
-+			 * patch in-flight iterators to preserve correct iteration.
-+			 * since the iterator is always advanced right away and
-+			 * finished when it->cset_pos meets it->cset_head, so only
-+			 * update it->cset_head is enough here.
++			 * This page may have been removed from the address
++			 * space by truncation or invalidation when the lock
++			 * was acquired.  Skip processing in that case.
 +			 */
-+			list_for_each_entry(it, &cset->task_iters, iters_node)
-+				if (it->cset_head == &scgrp->e_csets[ss->id])
-+					it->cset_head = &dcgrp->e_csets[ss->id];
-+		}
- 		spin_unlock_irq(&css_set_lock);
- 
- 		/* default hierarchy doesn't enable controllers by default */
++			if (likely(page->mapping == mapping))
++				nilfs_clear_dirty_page(page, silent);
++
+ 			unlock_page(page);
+ 		}
+ 		pagevec_release(&pvec);
 
 
