@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76C613AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24333C433C0;
-	Mon, 26 Jun 2023 18:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B9813AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F47C433C0;
+	Mon, 26 Jun 2023 18:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804174;
-	bh=vqIqFnWSJE0E90bomROB1dnMkiZREdqIziRgYD7M7P4=;
+	s=korg; t=1687804177;
+	bh=GnWpuZEfvTiYWqD/8r+MpLe2GYEoWanCZ7n8xxtefMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAclFkhDqFWe13yGAO3r0I5pua09tLfutHfkghRkz5y5XLGvq3mLYPqE6maj6cpQG
-	 s+841UeQAy9i4W5gbaaQk+oAnG6PeOcA2f44exlEpclzBcS/vn1EvnCzLd6kT7q3aD
-	 qrcEYurl38D48DWUK4wmb+LxhTa6/gHEonLNBq+U=
+	b=MeY+Io3CXFc1q+rZ8N47lu+Yv5rxfQU5xs1NiQrQe/7mBMQTXkWmsptJQlULd/3bd
+	 DpqrxHdhX5L4dBninKaBHZDDA5X5/FQ/dvskvfZ9lPzzvL2xDaFtP2A0hfah2v9Byq
+	 U4cTkFvE4Qthb5NmGSGSeatXvkTztzP7VQ5daaQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yann Gautier <yann.gautier@foss.st.com>,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 066/170] mmc: mmci: stm32: fix max busy timeout calculation
-Date: Mon, 26 Jun 2023 20:10:35 +0200
-Message-ID: <20230626180803.554106948@linuxfoundation.org>
+Subject: [PATCH 6.1 067/170] mmc: sdhci-spear: fix deferred probing
+Date: Mon, 26 Jun 2023 20:10:36 +0200
+Message-ID: <20230626180803.608908862@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,36 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Kerello <christophe.kerello@foss.st.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit 47b3ad6b7842f49d374a01b054a4b1461a621bdc upstream.
+commit 8d0caeedcd05a721f3cc2537b0ea212ec4027307 upstream.
 
-The way that the timeout is currently calculated could lead to a u64
-timeout value in mmci_start_command(). This value is then cast in a u32
-register that leads to mmc erase failed issue with some SD cards.
+The driver overrides the error codes and IRQ0 returned by platform_get_irq()
+to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing. Switch to propagating the error
+codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
+in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
+so we now can safely ignore it...
 
-Fixes: 8266c585f489 ("mmc: mmci: add hardware busy timeout feature")
-Signed-off-by: Yann Gautier <yann.gautier@foss.st.com>
-Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230613134146.418016-1-yann.gautier@foss.st.com
+Fixes: 682798a596a6 ("mmc: sdhci-spear: Handle return value of platform_get_irq")
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20230617203622.6812-10-s.shtylyov@omp.ru
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-spear.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -1735,7 +1735,8 @@ static void mmci_set_max_busy_timeout(st
- 		return;
- 
- 	if (host->variant->busy_timeout && mmc->actual_clock)
--		max_busy_timeout = ~0UL / (mmc->actual_clock / MSEC_PER_SEC);
-+		max_busy_timeout = U32_MAX / DIV_ROUND_UP(mmc->actual_clock,
-+							  MSEC_PER_SEC);
- 
- 	mmc->max_busy_timeout = max_busy_timeout;
- }
+--- a/drivers/mmc/host/sdhci-spear.c
++++ b/drivers/mmc/host/sdhci-spear.c
+@@ -65,8 +65,8 @@ static int sdhci_probe(struct platform_d
+ 	host->hw_name = "sdhci";
+ 	host->ops = &sdhci_pltfm_ops;
+ 	host->irq = platform_get_irq(pdev, 0);
+-	if (host->irq <= 0) {
+-		ret = -EINVAL;
++	if (host->irq < 0) {
++		ret = host->irq;
+ 		goto err_host;
+ 	}
+ 	host->quirks = SDHCI_QUIRK_BROKEN_ADMA;
 
 
