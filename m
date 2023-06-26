@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E18134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32072C433C8;
-	Mon, 26 Jun 2023 18:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE4C134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DE2C433C0;
+	Mon, 26 Jun 2023 18:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803574;
-	bh=jdYWIxzs82q9RpCJpDa9hlI+5258VOn35quQwpRlC1o=;
+	s=korg; t=1687803577;
+	bh=wU4FfD56033/Si1reuDGs9OQsJP5VREbxSRtpZ3wtmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tKY/99kmrCaWTcH7DbV1HcMBEdWZJ0H7Imm1367h9c4upIjvgOS8qejimhx01BWWZ
-	 DBhyqHhQvFB7FbunYz/TnfpVCxFYYWhAkp4WJBFV3EsuKkJwkoT/BzLSeTGfpZT0jL
-	 vbDukLl2K31bIgJqxAtuhsjjXEI1UoqHHr2mLkPA=
+	b=kniaEooONxAJjBYUlSxXD8Mi8MG3QX+tb02xuVcfgIgIk+mDmuOFBBE52D1XMkEr5
+	 xvBOhYiIyvD8NiaPwa2q7esYonNJ7Ya8LpomgCNf8+TBs0nPzgEHwUslwQeZOlyK7s
+	 2vewZfTWxJCGRMs9eod1ArDq58p3F2BHdj5Ub8qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Magali Lemes <magali.lemes@canonical.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 108/199] selftests: net: vrf-xfrm-tests: change authentication and encryption algos
-Date: Mon, 26 Jun 2023 20:10:14 +0200
-Message-ID: <20230626180810.393980656@linuxfoundation.org>
+Subject: [PATCH 6.3 091/199] ksmbd: remove internal.h include
+Date: Mon, 26 Jun 2023 20:09:57 +0200
+Message-ID: <20230626180809.593896061@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,106 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Magali Lemes <magali.lemes@canonical.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit cb43c60e64ca67fcc9d23bd08f51d2ab8209d9d7 ]
+[ Upstream commit 211db0ac9e3dc6c46f2dd53395b34d76af929faf ]
 
-The vrf-xfrm-tests tests use the hmac(md5) and cbc(des3_ede)
-algorithms for performing authentication and encryption, respectively.
-This causes the tests to fail when fips=1 is set, since these algorithms
-are not allowed in FIPS mode. Therefore, switch from hmac(md5) and
-cbc(des3_ede) to hmac(sha1) and cbc(aes), which are FIPS compliant.
+Since vfs_path_lookup is exported, It should not be internal.
+Move vfs_path_lookup prototype in internal.h to linux/namei.h.
 
-Fixes: 3f251d741150 ("selftests: Add tests for vrf and xfrms")
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Magali Lemes <magali.lemes@canonical.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Stable-dep-of: 40b268d384a2 ("ksmbd: add mnt_want_write to ksmbd vfs functions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/vrf-xfrm-tests.sh | 32 +++++++++----------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ fs/internal.h         | 2 --
+ fs/ksmbd/vfs.c        | 2 --
+ include/linux/namei.h | 2 ++
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/vrf-xfrm-tests.sh b/tools/testing/selftests/net/vrf-xfrm-tests.sh
-index 184da81f554ff..452638ae8aed8 100755
---- a/tools/testing/selftests/net/vrf-xfrm-tests.sh
-+++ b/tools/testing/selftests/net/vrf-xfrm-tests.sh
-@@ -264,60 +264,60 @@ setup_xfrm()
- 	ip -netns host1 xfrm state add src ${HOST1_4} dst ${HOST2_4} \
- 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
- 	    replay-window 4 replay-oseq 0x4 \
--	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
--	    enc 'cbc(des3_ede)' ${ENC_1} \
-+	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
-+	    enc 'cbc(aes)' ${ENC_1} \
- 	    sel src ${h1_4} dst ${h2_4} ${devarg}
+diff --git a/fs/internal.h b/fs/internal.h
+index dc4eb91a577a8..071a7517f1a74 100644
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -59,8 +59,6 @@ extern int finish_clean_context(struct fs_context *fc);
+  */
+ extern int filename_lookup(int dfd, struct filename *name, unsigned flags,
+ 			   struct path *path, struct path *root);
+-extern int vfs_path_lookup(struct dentry *, struct vfsmount *,
+-			   const char *, unsigned int, struct path *);
+ int do_rmdir(int dfd, struct filename *name);
+ int do_unlinkat(int dfd, struct filename *name);
+ int may_linkat(struct mnt_idmap *idmap, const struct path *link);
+diff --git a/fs/ksmbd/vfs.c b/fs/ksmbd/vfs.c
+index f6a8b26593090..1ad97df1dfb6f 100644
+--- a/fs/ksmbd/vfs.c
++++ b/fs/ksmbd/vfs.c
+@@ -19,8 +19,6 @@
+ #include <linux/sched/xacct.h>
+ #include <linux/crc32c.h>
  
- 	ip -netns host2 xfrm state add src ${HOST1_4} dst ${HOST2_4} \
- 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
- 	    replay-window 4 replay-oseq 0x4 \
--	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
--	    enc 'cbc(des3_ede)' ${ENC_1} \
-+	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
-+	    enc 'cbc(aes)' ${ENC_1} \
- 	    sel src ${h1_4} dst ${h2_4}
+-#include "../internal.h"	/* for vfs_path_lookup */
+-
+ #include "glob.h"
+ #include "oplock.h"
+ #include "connection.h"
+diff --git a/include/linux/namei.h b/include/linux/namei.h
+index 0d797f3367cad..ba9b32b4d1b07 100644
+--- a/include/linux/namei.h
++++ b/include/linux/namei.h
+@@ -63,6 +63,8 @@ extern struct dentry *kern_path_create(int, const char *, struct path *, unsigne
+ extern struct dentry *user_path_create(int, const char __user *, struct path *, unsigned int);
+ extern void done_path_create(struct path *, struct dentry *);
+ extern struct dentry *kern_path_locked(const char *, struct path *);
++int vfs_path_lookup(struct dentry *, struct vfsmount *, const char *,
++		    unsigned int, struct path *);
  
- 
- 	ip -netns host1 xfrm state add src ${HOST2_4} dst ${HOST1_4} \
- 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
- 	    replay-window 4 replay-oseq 0x4 \
--	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
--	    enc 'cbc(des3_ede)' ${ENC_2} \
-+	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
-+	    enc 'cbc(aes)' ${ENC_2} \
- 	    sel src ${h2_4} dst ${h1_4} ${devarg}
- 
- 	ip -netns host2 xfrm state add src ${HOST2_4} dst ${HOST1_4} \
- 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
- 	    replay-window 4 replay-oseq 0x4 \
--	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
--	    enc 'cbc(des3_ede)' ${ENC_2} \
-+	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
-+	    enc 'cbc(aes)' ${ENC_2} \
- 	    sel src ${h2_4} dst ${h1_4}
- 
- 
- 	ip -6 -netns host1 xfrm state add src ${HOST1_6} dst ${HOST2_6} \
- 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
- 	    replay-window 4 replay-oseq 0x4 \
--	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
--	    enc 'cbc(des3_ede)' ${ENC_1} \
-+	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
-+	    enc 'cbc(aes)' ${ENC_1} \
- 	    sel src ${h1_6} dst ${h2_6} ${devarg}
- 
- 	ip -6 -netns host2 xfrm state add src ${HOST1_6} dst ${HOST2_6} \
- 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
- 	    replay-window 4 replay-oseq 0x4 \
--	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
--	    enc 'cbc(des3_ede)' ${ENC_1} \
-+	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
-+	    enc 'cbc(aes)' ${ENC_1} \
- 	    sel src ${h1_6} dst ${h2_6}
- 
- 
- 	ip -6 -netns host1 xfrm state add src ${HOST2_6} dst ${HOST1_6} \
- 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
- 	    replay-window 4 replay-oseq 0x4 \
--	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
--	    enc 'cbc(des3_ede)' ${ENC_2} \
-+	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
-+	    enc 'cbc(aes)' ${ENC_2} \
- 	    sel src ${h2_6} dst ${h1_6} ${devarg}
- 
- 	ip -6 -netns host2 xfrm state add src ${HOST2_6} dst ${HOST1_6} \
- 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
- 	    replay-window 4 replay-oseq 0x4 \
--	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
--	    enc 'cbc(des3_ede)' ${ENC_2} \
-+	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
-+	    enc 'cbc(aes)' ${ENC_2} \
- 	    sel src ${h2_6} dst ${h1_6}
- }
- 
+ extern struct dentry *try_lookup_one_len(const char *, struct dentry *, int);
+ extern struct dentry *lookup_one_len(const char *, struct dentry *, int);
 -- 
 2.39.2
 
