@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9C1BA36
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:33:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBF1C433C8;
-	Mon, 26 Jun 2023 18:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE51BA36
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:33:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD310C433C8;
+	Mon, 26 Jun 2023 18:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804430;
-	bh=8YCPQa2X4QTcHRnnV0hdZsWBdlZBqIomQ70I0X5aPZg=;
+	s=korg; t=1687804433;
+	bh=rSEb/w50RTkiFKiOzkPGyvLE6/1Q7fd6nKAAIBZYvxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lBFoGZB/W1srIsLaPIBuBBHDoQyCqyJ/d4w3pMJlVpw9HwK1k15JuSq4C/FO0oDIG
-	 NgDTEZO8xh1zZduPG+glHjF5WBUnRWJEmuYRP8OVM+aINeqZX/ZzwaReZr3Sw5Of7E
-	 OUUxRJfeSfXcuFOpXlEsdtSqh87Su8Ixt5hbULng=
+	b=xh6ydESiHY0UaICAypirNzPtQygeKl+BUIzKugUZiAJ1lf20jouanb1MDlIdjhgy5
+	 frXoT45dJza7kqd3Kn5JSvTv9gNVvUHkjyKjKHZKEIfEjF0952NLpX8MvAlDlmB/Y7
+	 3ECSUNvoEFyB2GKP3sPrPBvM5HNdkd9a+etOGYRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sicong Jiang <kevin.jiangsc@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/170] ASoC: amd: yc: Add Thinkpad Neo14 to quirks list for acp6x
-Date: Mon, 26 Jun 2023 20:12:03 +0200
-Message-ID: <20230626180807.389445025@linuxfoundation.org>
+Subject: [PATCH 6.1 155/170] gfs2: Dont get stuck writing page onto itself under direct I/O
+Date: Mon, 26 Jun 2023 20:12:04 +0200
+Message-ID: <20230626180807.432250916@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,39 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sicong Jiang <kevin.jiangsc@gmail.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 57d1e8900495cf1751cec74db16fe1a0fe47efbb ]
+[ Upstream commit fa58cc888d67e640e354d8b3ceef877ea167b0cf ]
 
-Thinkpad Neo14 Ryzen Edition uses Ryzen 6800H processor, and adding to
-quirks list for acp6x will enable internal mic.
+When a direct I/O write is performed, iomap_dio_rw() invalidates the
+part of the page cache which the write is going to before carrying out
+the write.  In the odd case, the direct I/O write will be reading from
+the same page it is writing to.  gfs2 carries out writes with page
+faults disabled, so it should have been obvious that this page
+invalidation can cause iomap_dio_rw() to never make any progress.
+Currently, gfs2 will end up in an endless retry loop in
+gfs2_file_direct_write() instead, though.
 
-Signed-off-by: Sicong Jiang <kevin.jiangsc@gmail.com>
-Link: https://lore.kernel.org/r/20230531090635.89565-1-kevin.jiangsc@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Break this endless loop by limiting the number of retries and falling
+back to buffered I/O after that.
+
+Also simplify should_fault_in_pages() sightly and add a comment to make
+the above case easier to understand.
+
+Reported-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/gfs2/file.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 84b401b685f7f..c1ca3ceac5f2f 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -171,6 +171,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21CL"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21EF"),
+diff --git a/fs/gfs2/file.c b/fs/gfs2/file.c
+index 60c6fb91fb589..bc6cd5f4b1077 100644
+--- a/fs/gfs2/file.c
++++ b/fs/gfs2/file.c
+@@ -783,9 +783,13 @@ static inline bool should_fault_in_pages(struct iov_iter *i,
+ 	if (!user_backed_iter(i))
+ 		return false;
+ 
++	/*
++	 * Try to fault in multiple pages initially.  When that doesn't result
++	 * in any progress, fall back to a single page.
++	 */
+ 	size = PAGE_SIZE;
+ 	offs = offset_in_page(iocb->ki_pos);
+-	if (*prev_count != count || !*window_size) {
++	if (*prev_count != count) {
+ 		size_t nr_dirtied;
+ 
+ 		nr_dirtied = max(current->nr_dirtied_pause -
+@@ -869,6 +873,7 @@ static ssize_t gfs2_file_direct_write(struct kiocb *iocb, struct iov_iter *from,
+ 	struct gfs2_inode *ip = GFS2_I(inode);
+ 	size_t prev_count = 0, window_size = 0;
+ 	size_t written = 0;
++	bool enough_retries;
+ 	ssize_t ret;
+ 
+ 	/*
+@@ -912,11 +917,17 @@ static ssize_t gfs2_file_direct_write(struct kiocb *iocb, struct iov_iter *from,
+ 	if (ret > 0)
+ 		written = ret;
+ 
++	enough_retries = prev_count == iov_iter_count(from) &&
++			 window_size <= PAGE_SIZE;
+ 	if (should_fault_in_pages(from, iocb, &prev_count, &window_size)) {
+ 		gfs2_glock_dq(gh);
+ 		window_size -= fault_in_iov_iter_readable(from, window_size);
+-		if (window_size)
+-			goto retry;
++		if (window_size) {
++			if (!enough_retries)
++				goto retry;
++			/* fall back to buffered I/O */
++			ret = 0;
 +		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+ 	}
+ out_unlock:
+ 	if (gfs2_holder_queued(gh))
 -- 
 2.39.2
 
