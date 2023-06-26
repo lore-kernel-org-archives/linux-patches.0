@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3793C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC11C433C8;
-	Mon, 26 Jun 2023 18:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1661C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C63DC433C9;
+	Mon, 26 Jun 2023 18:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804546;
-	bh=pbElzT0knfLf0iH3ecE7byXZZCrei3QmW3UVR7vHEDM=;
+	s=korg; t=1687804549;
+	bh=lvinI8XWT+0Hpfs2lWjT7YFSZScXMgdmHKg0CmjXk1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1xPbR9en5btY7YHmHK90CY6eAbOAe0foqSWwPDnn3Of/qngiSo1SCkbihFHOwJzB0
-	 LBdfkazyc/DM6/bWZuGFWUFH5LgMC+cUlJOrdF4O6Y8CxkWrf74ScOSArtCqqDdk7E
-	 nBYUmenlz4iZ2YIJZqaP00auvY2qAN1QNCKhefBc=
+	b=1ayAYJZ/gFHbCIhCQQuDO+TmL4qhVziYQ6fB8XpzbSE5UuHKh0CDvVm0tEdUb0QE3
+	 r8GZ487gfwXdCWiuTU+ZJYTNn8gxMfBy2tol+et4kp3DIXXXDRdV1aTFv4jhNpJuHk
+	 RCYeXl1fpON7LkB8X/YG6dShNq0RI/e9pG8nfnJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Aurelien Aptel <aaptel@suse.com>,
-	Steve French <stfrench@microsoft.com>,
-	Rishabh Bhatnagar <risbhat@amazon.com>
-Subject: [PATCH 5.4 20/60] cifs: Get rid of kstrdup_const()d paths
-Date: Mon, 26 Jun 2023 20:11:59 +0200
-Message-ID: <20230626180740.387801285@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 03/60] list: add "list_del_init_careful()" to go with "list_empty_careful()"
+Date: Mon, 26 Jun 2023 20:11:42 +0200
+Message-ID: <20230626180739.683954679@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -36,49 +34,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Paulo Alcantara (SUSE)" <pc@cjr.nz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 199c6bdfb04b71d88a7765e08285885fbca60df4 upstream.
+[ Upstream commit c6fe44d96fc1536af5b11cd859686453d1b7bfd1 ]
 
-The DFS cache API is mostly used with heap allocated strings.
+That gives us ordering guarantees around the pair.
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Reviewed-by: Aurelien Aptel <aaptel@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Rishabh Bhatnagar <risbhat@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 2192bba03d80 ("epoll: ep_autoremove_wake_function should use list_del_init_careful")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/dfs_cache.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/list.h | 20 +++++++++++++++++++-
+ kernel/sched/wait.c  |  2 +-
+ mm/filemap.c         |  7 +------
+ 3 files changed, 21 insertions(+), 8 deletions(-)
 
---- a/fs/cifs/dfs_cache.c
-+++ b/fs/cifs/dfs_cache.c
-@@ -131,7 +131,7 @@ static inline void flush_cache_ent(struc
- 		return;
+diff --git a/include/linux/list.h b/include/linux/list.h
+index ce19c6b632a59..231ff089f7d1c 100644
+--- a/include/linux/list.h
++++ b/include/linux/list.h
+@@ -268,6 +268,24 @@ static inline int list_empty(const struct list_head *head)
+ 	return READ_ONCE(head->next) == head;
+ }
  
- 	hlist_del_init_rcu(&ce->hlist);
--	kfree_const(ce->path);
-+	kfree(ce->path);
- 	free_tgts(ce);
- 	cache_count--;
- 	call_rcu(&ce->rcu, free_cache_entry);
-@@ -420,7 +420,7 @@ static struct cache_entry *alloc_cache_e
- 	if (!ce)
- 		return ERR_PTR(-ENOMEM);
++/**
++ * list_del_init_careful - deletes entry from list and reinitialize it.
++ * @entry: the element to delete from the list.
++ *
++ * This is the same as list_del_init(), except designed to be used
++ * together with list_empty_careful() in a way to guarantee ordering
++ * of other memory operations.
++ *
++ * Any memory operations done before a list_del_init_careful() are
++ * guaranteed to be visible after a list_empty_careful() test.
++ */
++static inline void list_del_init_careful(struct list_head *entry)
++{
++	__list_del_entry(entry);
++	entry->prev = entry;
++	smp_store_release(&entry->next, entry);
++}
++
+ /**
+  * list_empty_careful - tests whether a list is empty and not being modified
+  * @head: the list to test
+@@ -283,7 +301,7 @@ static inline int list_empty(const struct list_head *head)
+  */
+ static inline int list_empty_careful(const struct list_head *head)
+ {
+-	struct list_head *next = head->next;
++	struct list_head *next = smp_load_acquire(&head->next);
+ 	return (next == head) && (next == head->prev);
+ }
  
--	ce->path = kstrdup_const(path, GFP_KERNEL);
-+	ce->path = kstrndup(path, strlen(path), GFP_KERNEL);
- 	if (!ce->path) {
- 		kmem_cache_free(cache_slab, ce);
- 		return ERR_PTR(-ENOMEM);
-@@ -430,7 +430,7 @@ static struct cache_entry *alloc_cache_e
+diff --git a/kernel/sched/wait.c b/kernel/sched/wait.c
+index 7d668b31dbc6d..c76fe1d4d91e2 100644
+--- a/kernel/sched/wait.c
++++ b/kernel/sched/wait.c
+@@ -384,7 +384,7 @@ int autoremove_wake_function(struct wait_queue_entry *wq_entry, unsigned mode, i
+ 	int ret = default_wake_function(wq_entry, mode, sync, key);
  
- 	rc = copy_ref_data(refs, numrefs, ce, NULL);
- 	if (rc) {
--		kfree_const(ce->path);
-+		kfree(ce->path);
- 		kmem_cache_free(cache_slab, ce);
- 		ce = ERR_PTR(rc);
- 	}
+ 	if (ret)
+-		list_del_init(&wq_entry->entry);
++		list_del_init_careful(&wq_entry->entry);
+ 
+ 	return ret;
+ }
+diff --git a/mm/filemap.c b/mm/filemap.c
+index 83b324420046b..a106d63e84679 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -1085,13 +1085,8 @@ static int wake_page_function(wait_queue_entry_t *wait, unsigned mode, int sync,
+ 	 * since after list_del_init(&wait->entry) the wait entry
+ 	 * might be de-allocated and the process might even have
+ 	 * exited.
+-	 *
+-	 * We _really_ should have a "list_del_init_careful()" to
+-	 * properly pair with the unlocked "list_empty_careful()"
+-	 * in finish_wait().
+ 	 */
+-	smp_mb();
+-	list_del_init(&wait->entry);
++	list_del_init_careful(&wait->entry);
+ 	return ret;
+ }
+ 
+-- 
+2.39.2
+
 
 
