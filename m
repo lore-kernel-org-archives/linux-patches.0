@@ -1,28 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DF7C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3669C433C9;
-	Mon, 26 Jun 2023 18:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE77C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B193BC433C8;
+	Mon, 26 Jun 2023 18:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804555;
-	bh=C2cGXg6uTi3fvTAqUskRlrKlw3UUzQsbJnR01+rgsiI=;
+	s=korg; t=1687804558;
+	bh=g5YYxPU/SVLQupiy2ypeCxNWYb61mfRrUNSJY1SDZSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tA2DbMea8cNgD+Y8TB46J27jVK//A2YVVcu8hnPABPhTZLCA4Ek/aotuWQe73mSjv
-	 qwIuaJR5mEjYhdG4KjuSwFUZf8J+bTK099iZlmNsCNzOE1MUurQXCYCSkaWy+SsuRr
-	 MSnVcM66R+LufijwYjOP7dbrRvcVi9uqLKXoWIHQ=
+	b=ljzfMcM6ITQGiGKeATe3g7qVAM92FfjlHK+hcWcu7+oAgrrTIDri0jJjQYV/GQtc+
+	 ds7ru4OW11/BLCsFa3G/SSjVOfWQWn3Qwn10QXpn3bL9EUFgl7ne8jwSpDDnj1kXXf
+	 b/3AG2cqzzIWQzKUnGGgdIxtQqK8VTt7Dr25KwUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 05/60] tracing: Add tracing_reset_all_online_cpus_unlocked() function
-Date: Mon, 26 Jun 2023 20:11:44 +0200
-Message-ID: <20230626180739.765724069@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Baoquan He <bhe@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Dave Young <dyoung@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Philipp Rudo <prudo@redhat.com>,
+	Ross Zwisler <zwisler@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Tom Rix <trix@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 06/60] x86/purgatory: remove PGO flags
+Date: Mon, 26 Jun 2023 20:11:45 +0200
+Message-ID: <20230626180739.805376303@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -36,87 +56,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit e18eb8783ec4949adebc7d7b0fdb65f65bfeefd9 upstream.
+commit 97b6b9cbba40a21c1d9a344d5c1991f8cfbf136e upstream.
 
-Currently the tracing_reset_all_online_cpus() requires the
-trace_types_lock held. But only one caller of this function actually has
-that lock held before calling it, and the other just takes the lock so
-that it can call it. More users of this function is needed where the lock
-is not held.
+If profile-guided optimization is enabled, the purgatory ends up with
+multiple .text sections.  This is not supported by kexec and crashes the
+system.
 
-Add a tracing_reset_all_online_cpus_unlocked() function for the one use
-case that calls it without being held, and also add a lockdep_assert to
-make sure it is held when called.
-
-Then have tracing_reset_all_online_cpus() take the lock internally, such
-that callers do not need to worry about taking it.
-
-Link: https://lkml.kernel.org/r/20221123192741.658273220@goodmis.org
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Link: https://lkml.kernel.org/r/20230321-kexec_clang16-v7-2-b05c520b7296@chromium.org
+Fixes: 930457057abe ("kernel/kexec_file.c: split up __kexec_load_puragory")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Cc: <stable@vger.kernel.org>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Philipp Rudo <prudo@redhat.com>
+Cc: Ross Zwisler <zwisler@google.com>
+Cc: Simon Horman <horms@kernel.org>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Tom Rix <trix@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ricardo Ribalda Delgado <ribalda@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c        |   11 ++++++++++-
- kernel/trace/trace.h        |    1 +
- kernel/trace/trace_events.c |    2 +-
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ arch/x86/purgatory/Makefile |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -1931,10 +1931,12 @@ void tracing_reset_online_cpus(struct tr
- }
+--- a/arch/x86/purgatory/Makefile
++++ b/arch/x86/purgatory/Makefile
+@@ -14,6 +14,11 @@ $(obj)/sha256.o: $(srctree)/lib/crypto/s
  
- /* Must have trace_types_lock held */
--void tracing_reset_all_online_cpus(void)
-+void tracing_reset_all_online_cpus_unlocked(void)
- {
- 	struct trace_array *tr;
+ CFLAGS_sha256.o := -D__DISABLE_EXPORTS
  
-+	lockdep_assert_held(&trace_types_lock);
++# When profile-guided optimization is enabled, llvm emits two different
++# overlapping text sections, which is not supported by kexec. Remove profile
++# optimization flags.
++KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%,$(KBUILD_CFLAGS))
 +
- 	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
- 		if (!tr->clear_trace)
- 			continue;
-@@ -1946,6 +1948,13 @@ void tracing_reset_all_online_cpus(void)
- 	}
- }
+ LDFLAGS_purgatory.ro := -e purgatory_start -r --no-undefined -nostdlib -z nodefaultlib
+ targets += purgatory.ro
  
-+void tracing_reset_all_online_cpus(void)
-+{
-+	mutex_lock(&trace_types_lock);
-+	tracing_reset_all_online_cpus_unlocked();
-+	mutex_unlock(&trace_types_lock);
-+}
-+
- /*
-  * The tgid_map array maps from pid to tgid; i.e. the value stored at index i
-  * is the tgid last observed corresponding to pid=i.
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -677,6 +677,7 @@ int tracing_is_enabled(void);
- void tracing_reset_online_cpus(struct trace_buffer *buf);
- void tracing_reset_current(int cpu);
- void tracing_reset_all_online_cpus(void);
-+void tracing_reset_all_online_cpus_unlocked(void);
- int tracing_open_generic(struct inode *inode, struct file *filp);
- int tracing_open_generic_tr(struct inode *inode, struct file *filp);
- bool tracing_is_disabled(void);
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -2440,7 +2440,7 @@ static void trace_module_remove_events(s
- 	 * over from this module may be passed to the new module events and
- 	 * unexpected results may occur.
- 	 */
--	tracing_reset_all_online_cpus();
-+	tracing_reset_all_online_cpus_unlocked();
- }
- 
- static int trace_module_notify(struct notifier_block *self,
 
 
