@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4C0C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418CCC433C9;
-	Mon, 26 Jun 2023 18:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FDBC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6622AC433CA;
+	Mon, 26 Jun 2023 18:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804540;
-	bh=sGmK9OQ7as425n0foYDnXFFI8KnPUlSnMnmP3ss0dnk=;
+	s=korg; t=1687804543;
+	bh=6NclyYsBb5XjbhRVTJgjJBi+5sN6i0iTbxIZhe4wOic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKhnikjwqs/Dym/nWLRmRFtZrDOc7IYWz+4Kq/DVaAze6TG1jJpYoYk3z51KM2e4V
-	 VIcIRWY9ZYEs+jRv9xFXsSGR+lzvaE2jpOIiqd2kHxMaTYEHaaLAYSraNJWRLUMk6q
-	 3mZ1kCNRgeK3EIwzLl2CYKH0QYDy8iw4Oair6uX4=
+	b=whI5cl0Cb9su8IQ3/QCecJNIC+CMaG/f1gxi8wLJ0IemY42IxVJXLRBasSm4Tehfq
+	 aQw3PUU3CCpc/nIchOZI7TW/syLH1bAX+1bm+6YhP8xDuA4bMr+C3DdP4M0mBLDrX5
+	 vpgbmSGAP1foHJMBjzUpmjeMrU6htY3BjG7u2QAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Aurelien Aptel <aaptel@suse.com>,
-	Steve French <stfrench@microsoft.com>,
-	Rishabh Bhatnagar <risbhat@amazon.com>
-Subject: [PATCH 5.4 19/60] cifs: Clean up DFS referral cache
-Date: Mon, 26 Jun 2023 20:11:58 +0200
-Message-ID: <20230626180740.347509996@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 02/60] mm: rewrite wait_on_page_bit_common() logic
+Date: Mon, 26 Jun 2023 20:11:41 +0200
+Message-ID: <20230626180739.640524541@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -36,1252 +37,227 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Paulo Alcantara (SUSE)" <pc@cjr.nz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 185352ae6171c845951e21017b2925a6f2795904 upstream.
+[ Upstream commit 2a9127fcf2296674d58024f83981f40b128fffea ]
 
-Do some renaming and code cleanup.
+It turns out that wait_on_page_bit_common() had several problems,
+ranging from just unfair behavioe due to re-queueing at the end of the
+wait queue when re-trying, and an outright bug that could result in
+missed wakeups (but probably never happened in practice).
 
-No functional changes.
+This rewrites the whole logic to avoid both issues, by simply moving the
+logic to check (and possibly take) the bit lock into the wakeup path
+instead.
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Reviewed-by: Aurelien Aptel <aaptel@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Rishabh Bhatnagar <risbhat@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+That makes everything much more straightforward, and means that we never
+need to re-queue the wait entry: if we get woken up, we'll be notified
+through WQ_FLAG_WOKEN, and the wait queue entry will have been removed,
+and everything will have been done for us.
+
+Link: https://lore.kernel.org/lkml/CAHk-=wjJA2Z3kUFb-5s=6+n0qbTs8ELqKFt9B3pH85a8fGD73w@mail.gmail.com/
+Link: https://lore.kernel.org/lkml/alpine.LSU.2.11.2007221359450.1017@eggly.anvils/
+Reported-by: Oleg Nesterov <oleg@redhat.com>
+Reported-by: Hugh Dickins <hughd@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 2192bba03d80 ("epoll: ep_autoremove_wake_function should use list_del_init_careful")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/dfs_cache.c |  565 +++++++++++++++++++++++++---------------------------
- 1 file changed, 279 insertions(+), 286 deletions(-)
+ mm/filemap.c | 132 +++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 85 insertions(+), 47 deletions(-)
 
---- a/fs/cifs/dfs_cache.c
-+++ b/fs/cifs/dfs_cache.c
-@@ -22,60 +22,59 @@
+diff --git a/mm/filemap.c b/mm/filemap.c
+index c094103191a6e..83b324420046b 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -1046,6 +1046,7 @@ struct wait_page_queue {
  
- #include "dfs_cache.h"
- 
--#define DFS_CACHE_HTABLE_SIZE 32
--#define DFS_CACHE_MAX_ENTRIES 64
-+#define CACHE_HTABLE_SIZE 32
-+#define CACHE_MAX_ENTRIES 64
- 
- #define IS_INTERLINK_SET(v) ((v) & (DFSREF_REFERRAL_SERVER | \
- 				    DFSREF_STORAGE_SERVER))
- 
--struct dfs_cache_tgt {
--	char *t_name;
--	struct list_head t_list;
-+struct cache_dfs_tgt {
-+	char *name;
-+	struct list_head list;
- };
- 
--struct dfs_cache_entry {
--	struct hlist_node ce_hlist;
--	const char *ce_path;
--	int ce_ttl;
--	int ce_srvtype;
--	int ce_flags;
--	struct timespec64 ce_etime;
--	int ce_path_consumed;
--	int ce_numtgts;
--	struct list_head ce_tlist;
--	struct dfs_cache_tgt *ce_tgthint;
--	struct rcu_head ce_rcu;
-+struct cache_entry {
-+	struct hlist_node hlist;
-+	const char *path;
-+	int ttl;
-+	int srvtype;
-+	int flags;
-+	struct timespec64 etime;
-+	int path_consumed;
-+	int numtgts;
-+	struct list_head tlist;
-+	struct cache_dfs_tgt *tgthint;
-+	struct rcu_head rcu;
- };
- 
--static struct kmem_cache *dfs_cache_slab __read_mostly;
--
--struct dfs_cache_vol_info {
--	char *vi_fullpath;
--	struct smb_vol vi_vol;
--	char *vi_mntdata;
--	struct list_head vi_list;
-+struct vol_info {
-+	char *fullpath;
-+	struct smb_vol smb_vol;
-+	char *mntdata;
-+	struct list_head list;
- };
- 
--struct dfs_cache {
--	struct mutex dc_lock;
--	struct nls_table *dc_nlsc;
--	struct list_head dc_vol_list;
--	int dc_ttl;
--	struct delayed_work dc_refresh;
--};
-+static struct kmem_cache *cache_slab __read_mostly;
-+static struct workqueue_struct *dfscache_wq __read_mostly;
- 
--static struct dfs_cache dfs_cache;
-+static int cache_ttl;
-+static struct nls_table *cache_nlsc;
- 
- /*
-  * Number of entries in the cache
-  */
--static size_t dfs_cache_count;
-+static size_t cache_count;
-+
-+static struct hlist_head cache_htable[CACHE_HTABLE_SIZE];
-+static DEFINE_MUTEX(list_lock);
- 
--static DEFINE_MUTEX(dfs_cache_list_lock);
--static struct hlist_head dfs_cache_htable[DFS_CACHE_HTABLE_SIZE];
-+static LIST_HEAD(vol_list);
-+static DEFINE_MUTEX(vol_lock);
- 
- static void refresh_cache_worker(struct work_struct *work);
- 
-+static DECLARE_DELAYED_WORK(refresh_task, refresh_cache_worker);
-+
- static inline bool is_path_valid(const char *path)
+ static int wake_page_function(wait_queue_entry_t *wait, unsigned mode, int sync, void *arg)
  {
- 	return path && (strchr(path + 1, '\\') || strchr(path + 1, '/'));
-@@ -100,42 +99,42 @@ static inline void free_normalized_path(
- 		kfree(npath);
- }
++	int ret;
+ 	struct wait_page_key *key = arg;
+ 	struct wait_page_queue *wait_page
+ 		= container_of(wait, struct wait_page_queue, wait);
+@@ -1058,17 +1059,40 @@ static int wake_page_function(wait_queue_entry_t *wait, unsigned mode, int sync,
+ 		return 0;
  
--static inline bool cache_entry_expired(const struct dfs_cache_entry *ce)
-+static inline bool cache_entry_expired(const struct cache_entry *ce)
- {
- 	struct timespec64 ts;
- 
- 	ktime_get_coarse_real_ts64(&ts);
--	return timespec64_compare(&ts, &ce->ce_etime) >= 0;
-+	return timespec64_compare(&ts, &ce->etime) >= 0;
- }
- 
--static inline void free_tgts(struct dfs_cache_entry *ce)
-+static inline void free_tgts(struct cache_entry *ce)
- {
--	struct dfs_cache_tgt *t, *n;
-+	struct cache_dfs_tgt *t, *n;
- 
--	list_for_each_entry_safe(t, n, &ce->ce_tlist, t_list) {
--		list_del(&t->t_list);
--		kfree(t->t_name);
-+	list_for_each_entry_safe(t, n, &ce->tlist, list) {
-+		list_del(&t->list);
-+		kfree(t->name);
- 		kfree(t);
- 	}
- }
- 
- static void free_cache_entry(struct rcu_head *rcu)
- {
--	struct dfs_cache_entry *ce = container_of(rcu, struct dfs_cache_entry,
--						  ce_rcu);
--	kmem_cache_free(dfs_cache_slab, ce);
-+	struct cache_entry *ce = container_of(rcu, struct cache_entry, rcu);
-+
-+	kmem_cache_free(cache_slab, ce);
- }
- 
--static inline void flush_cache_ent(struct dfs_cache_entry *ce)
-+static inline void flush_cache_ent(struct cache_entry *ce)
- {
--	if (hlist_unhashed(&ce->ce_hlist))
-+	if (hlist_unhashed(&ce->hlist))
- 		return;
- 
--	hlist_del_init_rcu(&ce->ce_hlist);
--	kfree_const(ce->ce_path);
-+	hlist_del_init_rcu(&ce->hlist);
-+	kfree_const(ce->path);
- 	free_tgts(ce);
--	dfs_cache_count--;
--	call_rcu(&ce->ce_rcu, free_cache_entry);
-+	cache_count--;
-+	call_rcu(&ce->rcu, free_cache_entry);
- }
- 
- static void flush_cache_ents(void)
-@@ -143,11 +142,11 @@ static void flush_cache_ents(void)
- 	int i;
- 
- 	rcu_read_lock();
--	for (i = 0; i < DFS_CACHE_HTABLE_SIZE; i++) {
--		struct hlist_head *l = &dfs_cache_htable[i];
--		struct dfs_cache_entry *ce;
-+	for (i = 0; i < CACHE_HTABLE_SIZE; i++) {
-+		struct hlist_head *l = &cache_htable[i];
-+		struct cache_entry *ce;
- 
--		hlist_for_each_entry_rcu(ce, l, ce_hlist)
-+		hlist_for_each_entry_rcu(ce, l, hlist)
- 			flush_cache_ent(ce);
- 	}
- 	rcu_read_unlock();
-@@ -159,35 +158,35 @@ static void flush_cache_ents(void)
- static int dfscache_proc_show(struct seq_file *m, void *v)
- {
- 	int bucket;
--	struct dfs_cache_entry *ce;
--	struct dfs_cache_tgt *t;
-+	struct cache_entry *ce;
-+	struct cache_dfs_tgt *t;
- 
- 	seq_puts(m, "DFS cache\n---------\n");
- 
--	mutex_lock(&dfs_cache_list_lock);
-+	mutex_lock(&list_lock);
- 
- 	rcu_read_lock();
--	hash_for_each_rcu(dfs_cache_htable, bucket, ce, ce_hlist) {
-+	hash_for_each_rcu(cache_htable, bucket, ce, hlist) {
- 		seq_printf(m,
- 			   "cache entry: path=%s,type=%s,ttl=%d,etime=%ld,"
- 			   "interlink=%s,path_consumed=%d,expired=%s\n",
--			   ce->ce_path,
--			   ce->ce_srvtype == DFS_TYPE_ROOT ? "root" : "link",
--			   ce->ce_ttl, ce->ce_etime.tv_nsec,
--			   IS_INTERLINK_SET(ce->ce_flags) ? "yes" : "no",
--			   ce->ce_path_consumed,
-+			   ce->path,
-+			   ce->srvtype == DFS_TYPE_ROOT ? "root" : "link",
-+			   ce->ttl, ce->etime.tv_nsec,
-+			   IS_INTERLINK_SET(ce->flags) ? "yes" : "no",
-+			   ce->path_consumed,
- 			   cache_entry_expired(ce) ? "yes" : "no");
- 
--		list_for_each_entry(t, &ce->ce_tlist, t_list) {
-+		list_for_each_entry(t, &ce->tlist, list) {
- 			seq_printf(m, "  %s%s\n",
--				   t->t_name,
--				   ce->ce_tgthint == t ? " (target hint)" : "");
-+				   t->name,
-+				   ce->tgthint == t ? " (target hint)" : "");
- 		}
- 
- 	}
- 	rcu_read_unlock();
- 
--	mutex_unlock(&dfs_cache_list_lock);
-+	mutex_unlock(&list_lock);
- 	return 0;
- }
- 
-@@ -205,9 +204,9 @@ static ssize_t dfscache_proc_write(struc
- 		return -EINVAL;
- 
- 	cifs_dbg(FYI, "clearing dfs cache");
--	mutex_lock(&dfs_cache_list_lock);
-+	mutex_lock(&list_lock);
- 	flush_cache_ents();
--	mutex_unlock(&dfs_cache_list_lock);
-+	mutex_unlock(&list_lock);
- 
- 	return count;
- }
-@@ -226,25 +225,25 @@ const struct file_operations dfscache_pr
- };
- 
- #ifdef CONFIG_CIFS_DEBUG2
--static inline void dump_tgts(const struct dfs_cache_entry *ce)
-+static inline void dump_tgts(const struct cache_entry *ce)
- {
--	struct dfs_cache_tgt *t;
-+	struct cache_dfs_tgt *t;
- 
- 	cifs_dbg(FYI, "target list:\n");
--	list_for_each_entry(t, &ce->ce_tlist, t_list) {
--		cifs_dbg(FYI, "  %s%s\n", t->t_name,
--			 ce->ce_tgthint == t ? " (target hint)" : "");
-+	list_for_each_entry(t, &ce->tlist, list) {
-+		cifs_dbg(FYI, "  %s%s\n", t->name,
-+			 ce->tgthint == t ? " (target hint)" : "");
- 	}
- }
- 
--static inline void dump_ce(const struct dfs_cache_entry *ce)
-+static inline void dump_ce(const struct cache_entry *ce)
- {
- 	cifs_dbg(FYI, "cache entry: path=%s,type=%s,ttl=%d,etime=%ld,"
--		 "interlink=%s,path_consumed=%d,expired=%s\n", ce->ce_path,
--		 ce->ce_srvtype == DFS_TYPE_ROOT ? "root" : "link", ce->ce_ttl,
--		 ce->ce_etime.tv_nsec,
--		 IS_INTERLINK_SET(ce->ce_flags) ? "yes" : "no",
--		 ce->ce_path_consumed,
-+		 "interlink=%s,path_consumed=%d,expired=%s\n", ce->path,
-+		 ce->srvtype == DFS_TYPE_ROOT ? "root" : "link", ce->ttl,
-+		 ce->etime.tv_nsec,
-+		 IS_INTERLINK_SET(ce->flags) ? "yes" : "no",
-+		 ce->path_consumed,
- 		 cache_entry_expired(ce) ? "yes" : "no");
- 	dump_tgts(ce);
- }
-@@ -284,25 +283,34 @@ static inline void dump_refs(const struc
-  */
- int dfs_cache_init(void)
- {
-+	int rc;
- 	int i;
- 
--	dfs_cache_slab = kmem_cache_create("cifs_dfs_cache",
--					   sizeof(struct dfs_cache_entry), 0,
--					   SLAB_HWCACHE_ALIGN, NULL);
--	if (!dfs_cache_slab)
-+	dfscache_wq = alloc_workqueue("cifs-dfscache",
-+				      WQ_FREEZABLE | WQ_MEM_RECLAIM, 1);
-+	if (!dfscache_wq)
- 		return -ENOMEM;
- 
--	for (i = 0; i < DFS_CACHE_HTABLE_SIZE; i++)
--		INIT_HLIST_HEAD(&dfs_cache_htable[i]);
-+	cache_slab = kmem_cache_create("cifs_dfs_cache",
-+				       sizeof(struct cache_entry), 0,
-+				       SLAB_HWCACHE_ALIGN, NULL);
-+	if (!cache_slab) {
-+		rc = -ENOMEM;
-+		goto out_destroy_wq;
+ 	/*
+-	 * Stop walking if it's locked.
+-	 * Is this safe if put_and_wait_on_page_locked() is in use?
+-	 * Yes: the waker must hold a reference to this page, and if PG_locked
+-	 * has now already been set by another task, that task must also hold
+-	 * a reference to the *same usage* of this page; so there is no need
+-	 * to walk on to wake even the put_and_wait_on_page_locked() callers.
++	 * If it's an exclusive wait, we get the bit for it, and
++	 * stop walking if we can't.
++	 *
++	 * If it's a non-exclusive wait, then the fact that this
++	 * wake function was called means that the bit already
++	 * was cleared, and we don't care if somebody then
++	 * re-took it.
+ 	 */
+-	if (test_bit(key->bit_nr, &key->page->flags))
+-		return -1;
++	ret = 0;
++	if (wait->flags & WQ_FLAG_EXCLUSIVE) {
++		if (test_and_set_bit(key->bit_nr, &key->page->flags))
++			return -1;
++		ret = 1;
 +	}
++	wait->flags |= WQ_FLAG_WOKEN;
+ 
+-	return autoremove_wake_function(wait, mode, sync, key);
++	wake_up_state(wait->private, mode);
 +
-+	for (i = 0; i < CACHE_HTABLE_SIZE; i++)
-+		INIT_HLIST_HEAD(&cache_htable[i]);
- 
--	INIT_LIST_HEAD(&dfs_cache.dc_vol_list);
--	mutex_init(&dfs_cache.dc_lock);
--	INIT_DELAYED_WORK(&dfs_cache.dc_refresh, refresh_cache_worker);
--	dfs_cache.dc_ttl = -1;
--	dfs_cache.dc_nlsc = load_nls_default();
-+	cache_ttl = -1;
-+	cache_nlsc = load_nls_default();
- 
- 	cifs_dbg(FYI, "%s: initialized DFS referral cache\n", __func__);
- 	return 0;
-+
-+out_destroy_wq:
-+	destroy_workqueue(dfscache_wq);
-+	return rc;
++	/*
++	 * Ok, we have successfully done what we're waiting for,
++	 * and we can unconditionally remove the wait entry.
++	 *
++	 * Note that this has to be the absolute last thing we do,
++	 * since after list_del_init(&wait->entry) the wait entry
++	 * might be de-allocated and the process might even have
++	 * exited.
++	 *
++	 * We _really_ should have a "list_del_init_careful()" to
++	 * properly pair with the unlocked "list_empty_careful()"
++	 * in finish_wait().
++	 */
++	smp_mb();
++	list_del_init(&wait->entry);
++	return ret;
  }
  
- static inline unsigned int cache_entry_hash(const void *data, int size)
-@@ -310,7 +318,7 @@ static inline unsigned int cache_entry_h
- 	unsigned int h;
+ static void wake_up_page_bit(struct page *page, int bit_nr)
+@@ -1147,16 +1171,31 @@ enum behavior {
+ 			 */
+ };
  
- 	h = jhash(data, size, 0);
--	return h & (DFS_CACHE_HTABLE_SIZE - 1);
-+	return h & (CACHE_HTABLE_SIZE - 1);
- }
- 
- /* Check whether second path component of @path is SYSVOL or NETLOGON */
-@@ -325,11 +333,11 @@ static inline bool is_sysvol_or_netlogon
- }
- 
- /* Return target hint of a DFS cache entry */
--static inline char *get_tgt_name(const struct dfs_cache_entry *ce)
-+static inline char *get_tgt_name(const struct cache_entry *ce)
- {
--	struct dfs_cache_tgt *t = ce->ce_tgthint;
-+	struct cache_dfs_tgt *t = ce->tgthint;
- 
--	return t ? t->t_name : ERR_PTR(-ENOENT);
-+	return t ? t->name : ERR_PTR(-ENOENT);
- }
- 
- /* Return expire time out of a new entry's TTL */
-@@ -346,19 +354,19 @@ static inline struct timespec64 get_expi
- }
- 
- /* Allocate a new DFS target */
--static inline struct dfs_cache_tgt *alloc_tgt(const char *name)
-+static inline struct cache_dfs_tgt *alloc_tgt(const char *name)
- {
--	struct dfs_cache_tgt *t;
-+	struct cache_dfs_tgt *t;
- 
- 	t = kmalloc(sizeof(*t), GFP_KERNEL);
- 	if (!t)
- 		return ERR_PTR(-ENOMEM);
--	t->t_name = kstrndup(name, strlen(name), GFP_KERNEL);
--	if (!t->t_name) {
-+	t->name = kstrndup(name, strlen(name), GFP_KERNEL);
-+	if (!t->name) {
- 		kfree(t);
- 		return ERR_PTR(-ENOMEM);
- 	}
--	INIT_LIST_HEAD(&t->t_list);
-+	INIT_LIST_HEAD(&t->list);
- 	return t;
- }
- 
-@@ -367,63 +375,63 @@ static inline struct dfs_cache_tgt *allo
-  * target hint.
-  */
- static int copy_ref_data(const struct dfs_info3_param *refs, int numrefs,
--			 struct dfs_cache_entry *ce, const char *tgthint)
-+			 struct cache_entry *ce, const char *tgthint)
- {
- 	int i;
- 
--	ce->ce_ttl = refs[0].ttl;
--	ce->ce_etime = get_expire_time(ce->ce_ttl);
--	ce->ce_srvtype = refs[0].server_type;
--	ce->ce_flags = refs[0].ref_flag;
--	ce->ce_path_consumed = refs[0].path_consumed;
-+	ce->ttl = refs[0].ttl;
-+	ce->etime = get_expire_time(ce->ttl);
-+	ce->srvtype = refs[0].server_type;
-+	ce->flags = refs[0].ref_flag;
-+	ce->path_consumed = refs[0].path_consumed;
- 
- 	for (i = 0; i < numrefs; i++) {
--		struct dfs_cache_tgt *t;
-+		struct cache_dfs_tgt *t;
- 
- 		t = alloc_tgt(refs[i].node_name);
- 		if (IS_ERR(t)) {
- 			free_tgts(ce);
- 			return PTR_ERR(t);
- 		}
--		if (tgthint && !strcasecmp(t->t_name, tgthint)) {
--			list_add(&t->t_list, &ce->ce_tlist);
-+		if (tgthint && !strcasecmp(t->name, tgthint)) {
-+			list_add(&t->list, &ce->tlist);
- 			tgthint = NULL;
- 		} else {
--			list_add_tail(&t->t_list, &ce->ce_tlist);
-+			list_add_tail(&t->list, &ce->tlist);
- 		}
--		ce->ce_numtgts++;
-+		ce->numtgts++;
- 	}
- 
--	ce->ce_tgthint = list_first_entry_or_null(&ce->ce_tlist,
--						  struct dfs_cache_tgt, t_list);
-+	ce->tgthint = list_first_entry_or_null(&ce->tlist,
-+					       struct cache_dfs_tgt, list);
- 
- 	return 0;
- }
- 
- /* Allocate a new cache entry */
--static struct dfs_cache_entry *
--alloc_cache_entry(const char *path, const struct dfs_info3_param *refs,
--		  int numrefs)
-+static struct cache_entry *alloc_cache_entry(const char *path,
-+					     const struct dfs_info3_param *refs,
-+					     int numrefs)
- {
--	struct dfs_cache_entry *ce;
-+	struct cache_entry *ce;
- 	int rc;
- 
--	ce = kmem_cache_zalloc(dfs_cache_slab, GFP_KERNEL);
-+	ce = kmem_cache_zalloc(cache_slab, GFP_KERNEL);
- 	if (!ce)
- 		return ERR_PTR(-ENOMEM);
- 
--	ce->ce_path = kstrdup_const(path, GFP_KERNEL);
--	if (!ce->ce_path) {
--		kmem_cache_free(dfs_cache_slab, ce);
-+	ce->path = kstrdup_const(path, GFP_KERNEL);
-+	if (!ce->path) {
-+		kmem_cache_free(cache_slab, ce);
- 		return ERR_PTR(-ENOMEM);
- 	}
--	INIT_HLIST_NODE(&ce->ce_hlist);
--	INIT_LIST_HEAD(&ce->ce_tlist);
-+	INIT_HLIST_NODE(&ce->hlist);
-+	INIT_LIST_HEAD(&ce->tlist);
- 
- 	rc = copy_ref_data(refs, numrefs, ce, NULL);
- 	if (rc) {
--		kfree_const(ce->ce_path);
--		kmem_cache_free(dfs_cache_slab, ce);
-+		kfree_const(ce->path);
-+		kmem_cache_free(cache_slab, ce);
- 		ce = ERR_PTR(rc);
- 	}
- 	return ce;
-@@ -432,13 +440,13 @@ alloc_cache_entry(const char *path, cons
- static void remove_oldest_entry(void)
- {
- 	int bucket;
--	struct dfs_cache_entry *ce;
--	struct dfs_cache_entry *to_del = NULL;
-+	struct cache_entry *ce;
-+	struct cache_entry *to_del = NULL;
- 
- 	rcu_read_lock();
--	hash_for_each_rcu(dfs_cache_htable, bucket, ce, ce_hlist) {
--		if (!to_del || timespec64_compare(&ce->ce_etime,
--						  &to_del->ce_etime) < 0)
-+	hash_for_each_rcu(cache_htable, bucket, ce, hlist) {
-+		if (!to_del || timespec64_compare(&ce->etime,
-+						  &to_del->etime) < 0)
- 			to_del = ce;
- 	}
- 	if (!to_del) {
-@@ -453,93 +461,84 @@ out:
- }
- 
- /* Add a new DFS cache entry */
--static inline struct dfs_cache_entry *
-+static inline struct cache_entry *
- add_cache_entry(unsigned int hash, const char *path,
- 		const struct dfs_info3_param *refs, int numrefs)
- {
--	struct dfs_cache_entry *ce;
-+	struct cache_entry *ce;
- 
- 	ce = alloc_cache_entry(path, refs, numrefs);
- 	if (IS_ERR(ce))
- 		return ce;
- 
--	hlist_add_head_rcu(&ce->ce_hlist, &dfs_cache_htable[hash]);
-+	hlist_add_head_rcu(&ce->hlist, &cache_htable[hash]);
- 
--	mutex_lock(&dfs_cache.dc_lock);
--	if (dfs_cache.dc_ttl < 0) {
--		dfs_cache.dc_ttl = ce->ce_ttl;
--		queue_delayed_work(cifsiod_wq, &dfs_cache.dc_refresh,
--				   dfs_cache.dc_ttl * HZ);
-+	mutex_lock(&vol_lock);
-+	if (cache_ttl < 0) {
-+		cache_ttl = ce->ttl;
-+		queue_delayed_work(dfscache_wq, &refresh_task, cache_ttl * HZ);
- 	} else {
--		dfs_cache.dc_ttl = min_t(int, dfs_cache.dc_ttl, ce->ce_ttl);
--		mod_delayed_work(cifsiod_wq, &dfs_cache.dc_refresh,
--				 dfs_cache.dc_ttl * HZ);
-+		cache_ttl = min_t(int, cache_ttl, ce->ttl);
-+		mod_delayed_work(dfscache_wq, &refresh_task, cache_ttl * HZ);
- 	}
--	mutex_unlock(&dfs_cache.dc_lock);
-+	mutex_unlock(&vol_lock);
- 
- 	return ce;
- }
- 
--static struct dfs_cache_entry *__find_cache_entry(unsigned int hash,
--						  const char *path)
 +/*
-+ * Find a DFS cache entry in hash table and optionally check prefix path against
-+ * @path.
-+ * Use whole path components in the match.
-+ * Return ERR_PTR(-ENOENT) if the entry is not found.
++ * Attempt to check (or get) the page bit, and mark the
++ * waiter woken if successful.
 + */
-+static struct cache_entry *lookup_cache_entry(const char *path,
-+					      unsigned int *hash)
- {
--	struct dfs_cache_entry *ce;
-+	struct cache_entry *ce;
-+	unsigned int h;
- 	bool found = false;
- 
--	rcu_read_lock();
--	hlist_for_each_entry_rcu(ce, &dfs_cache_htable[hash], ce_hlist) {
--		if (!strcasecmp(path, ce->ce_path)) {
--#ifdef CONFIG_CIFS_DEBUG2
--			char *name = get_tgt_name(ce);
-+	h = cache_entry_hash(path, strlen(path));
- 
--			if (IS_ERR(name)) {
--				rcu_read_unlock();
--				return ERR_CAST(name);
--			}
--			cifs_dbg(FYI, "%s: cache hit\n", __func__);
--			cifs_dbg(FYI, "%s: target hint: %s\n", __func__, name);
--#endif
-+	rcu_read_lock();
-+	hlist_for_each_entry_rcu(ce, &cache_htable[h], hlist) {
-+		if (!strcasecmp(path, ce->path)) {
- 			found = true;
-+			dump_ce(ce);
- 			break;
- 		}
- 	}
- 	rcu_read_unlock();
--	return found ? ce : ERR_PTR(-ENOENT);
--}
- 
--/*
-- * Find a DFS cache entry in hash table and optionally check prefix path against
-- * @path.
-- * Use whole path components in the match.
-- * Return ERR_PTR(-ENOENT) if the entry is not found.
-- */
--static inline struct dfs_cache_entry *find_cache_entry(const char *path,
--						       unsigned int *hash)
--{
--	*hash = cache_entry_hash(path, strlen(path));
--	return __find_cache_entry(*hash, path);
-+	if (!found)
-+		ce = ERR_PTR(-ENOENT);
-+	if (hash)
-+		*hash = h;
++static inline bool trylock_page_bit_common(struct page *page, int bit_nr,
++					struct wait_queue_entry *wait)
++{
++	if (wait->flags & WQ_FLAG_EXCLUSIVE) {
++		if (test_and_set_bit(bit_nr, &page->flags))
++			return false;
++	} else if (test_bit(bit_nr, &page->flags))
++		return false;
 +
-+	return ce;
- }
- 
- static inline void destroy_slab_cache(void)
++	wait->flags |= WQ_FLAG_WOKEN;
++	return true;
++}
++
+ static inline int wait_on_page_bit_common(wait_queue_head_t *q,
+ 	struct page *page, int bit_nr, int state, enum behavior behavior)
  {
- 	rcu_barrier();
--	kmem_cache_destroy(dfs_cache_slab);
-+	kmem_cache_destroy(cache_slab);
- }
+ 	struct wait_page_queue wait_page;
+ 	wait_queue_entry_t *wait = &wait_page.wait;
+-	bool bit_is_set;
+ 	bool thrashing = false;
+ 	bool delayacct = false;
+ 	unsigned long pflags;
+-	int ret = 0;
  
--static inline void free_vol(struct dfs_cache_vol_info *vi)
-+static inline void free_vol(struct vol_info *vi)
- {
--	list_del(&vi->vi_list);
--	kfree(vi->vi_fullpath);
--	kfree(vi->vi_mntdata);
--	cifs_cleanup_volume_info_contents(&vi->vi_vol);
-+	list_del(&vi->list);
-+	kfree(vi->fullpath);
-+	kfree(vi->mntdata);
-+	cifs_cleanup_volume_info_contents(&vi->smb_vol);
- 	kfree(vi);
- }
+ 	if (bit_nr == PG_locked &&
+ 	    !PageUptodate(page) && PageWorkingset(page)) {
+@@ -1174,48 +1213,47 @@ static inline int wait_on_page_bit_common(wait_queue_head_t *q,
+ 	wait_page.page = page;
+ 	wait_page.bit_nr = bit_nr;
  
- static inline void free_vol_list(void)
- {
--	struct dfs_cache_vol_info *vi, *nvi;
-+	struct vol_info *vi, *nvi;
+-	for (;;) {
+-		spin_lock_irq(&q->lock);
++	/*
++	 * Do one last check whether we can get the
++	 * page bit synchronously.
++	 *
++	 * Do the SetPageWaiters() marking before that
++	 * to let any waker we _just_ missed know they
++	 * need to wake us up (otherwise they'll never
++	 * even go to the slow case that looks at the
++	 * page queue), and add ourselves to the wait
++	 * queue if we need to sleep.
++	 *
++	 * This part needs to be done under the queue
++	 * lock to avoid races.
++	 */
++	spin_lock_irq(&q->lock);
++	SetPageWaiters(page);
++	if (!trylock_page_bit_common(page, bit_nr, wait))
++		__add_wait_queue_entry_tail(q, wait);
++	spin_unlock_irq(&q->lock);
  
--	list_for_each_entry_safe(vi, nvi, &dfs_cache.dc_vol_list, vi_list)
-+	list_for_each_entry_safe(vi, nvi, &vol_list, list)
- 		free_vol(vi);
- }
+-		if (likely(list_empty(&wait->entry))) {
+-			__add_wait_queue_entry_tail(q, wait);
+-			SetPageWaiters(page);
+-		}
++	/*
++	 * From now on, all the logic will be based on
++	 * the WQ_FLAG_WOKEN flag, and the and the page
++	 * bit testing (and setting) will be - or has
++	 * already been - done by the wake function.
++	 *
++	 * We can drop our reference to the page.
++	 */
++	if (behavior == DROP)
++		put_page(page);
  
-@@ -548,40 +547,38 @@ static inline void free_vol_list(void)
-  */
- void dfs_cache_destroy(void)
- {
--	cancel_delayed_work_sync(&dfs_cache.dc_refresh);
--	unload_nls(dfs_cache.dc_nlsc);
-+	cancel_delayed_work_sync(&refresh_task);
-+	unload_nls(cache_nlsc);
- 	free_vol_list();
--	mutex_destroy(&dfs_cache.dc_lock);
++	for (;;) {
+ 		set_current_state(state);
+ 
+-		spin_unlock_irq(&q->lock);
 -
- 	flush_cache_ents();
- 	destroy_slab_cache();
--	mutex_destroy(&dfs_cache_list_lock);
-+	destroy_workqueue(dfscache_wq);
- 
- 	cifs_dbg(FYI, "%s: destroyed DFS referral cache\n", __func__);
- }
- 
--static inline struct dfs_cache_entry *
-+static inline struct cache_entry *
- __update_cache_entry(const char *path, const struct dfs_info3_param *refs,
- 		     int numrefs)
- {
- 	int rc;
- 	unsigned int h;
--	struct dfs_cache_entry *ce;
-+	struct cache_entry *ce;
- 	char *s, *th = NULL;
- 
--	ce = find_cache_entry(path, &h);
-+	ce = lookup_cache_entry(path, &h);
- 	if (IS_ERR(ce))
- 		return ce;
- 
--	if (ce->ce_tgthint) {
--		s = ce->ce_tgthint->t_name;
-+	if (ce->tgthint) {
-+		s = ce->tgthint->name;
- 		th = kstrndup(s, strlen(s), GFP_KERNEL);
- 		if (!th)
- 			return ERR_PTR(-ENOMEM);
- 	}
- 
- 	free_tgts(ce);
--	ce->ce_numtgts = 0;
-+	ce->numtgts = 0;
- 
- 	rc = copy_ref_data(refs, numrefs, ce, th);
- 	kfree(th);
-@@ -593,10 +590,10 @@ __update_cache_entry(const char *path, c
- }
- 
- /* Update an expired cache entry by getting a new DFS referral from server */
--static struct dfs_cache_entry *
-+static struct cache_entry *
- update_cache_entry(const unsigned int xid, struct cifs_ses *ses,
- 		   const struct nls_table *nls_codepage, int remap,
--		   const char *path, struct dfs_cache_entry *ce)
-+		   const char *path, struct cache_entry *ce)
- {
- 	int rc;
- 	struct dfs_info3_param *refs = NULL;
-@@ -636,20 +633,20 @@ update_cache_entry(const unsigned int xi
-  * For interlinks, __cifs_dfs_mount() and expand_dfs_referral() are supposed to
-  * handle them properly.
-  */
--static struct dfs_cache_entry *
-+static struct cache_entry *
- do_dfs_cache_find(const unsigned int xid, struct cifs_ses *ses,
- 		  const struct nls_table *nls_codepage, int remap,
- 		  const char *path, bool noreq)
- {
- 	int rc;
- 	unsigned int h;
--	struct dfs_cache_entry *ce;
-+	struct cache_entry *ce;
- 	struct dfs_info3_param *nrefs;
- 	int numnrefs;
- 
- 	cifs_dbg(FYI, "%s: search path: %s\n", __func__, path);
- 
--	ce = find_cache_entry(path, &h);
-+	ce = lookup_cache_entry(path, &h);
- 	if (IS_ERR(ce)) {
- 		cifs_dbg(FYI, "%s: cache miss\n", __func__);
- 		/*
-@@ -690,9 +687,9 @@ do_dfs_cache_find(const unsigned int xid
- 
- 		cifs_dbg(FYI, "%s: new cache entry\n", __func__);
- 
--		if (dfs_cache_count >= DFS_CACHE_MAX_ENTRIES) {
-+		if (cache_count >= CACHE_MAX_ENTRIES) {
- 			cifs_dbg(FYI, "%s: reached max cache size (%d)",
--				 __func__, DFS_CACHE_MAX_ENTRIES);
-+				 __func__, CACHE_MAX_ENTRIES);
- 			remove_oldest_entry();
- 		}
- 		ce = add_cache_entry(h, path, nrefs, numnrefs);
-@@ -701,7 +698,7 @@ do_dfs_cache_find(const unsigned int xid
- 		if (IS_ERR(ce))
- 			return ce;
- 
--		dfs_cache_count++;
-+		cache_count++;
- 	}
- 
- 	dump_ce(ce);
-@@ -723,7 +720,7 @@ do_dfs_cache_find(const unsigned int xid
- }
- 
- /* Set up a new DFS referral from a given cache entry */
--static int setup_ref(const char *path, const struct dfs_cache_entry *ce,
-+static int setup_ref(const char *path, const struct cache_entry *ce,
- 		     struct dfs_info3_param *ref, const char *tgt)
- {
- 	int rc;
-@@ -736,7 +733,7 @@ static int setup_ref(const char *path, c
- 	if (!ref->path_name)
- 		return -ENOMEM;
- 
--	ref->path_consumed = ce->ce_path_consumed;
-+	ref->path_consumed = ce->path_consumed;
- 
- 	ref->node_name = kstrndup(tgt, strlen(tgt), GFP_KERNEL);
- 	if (!ref->node_name) {
-@@ -744,9 +741,9 @@ static int setup_ref(const char *path, c
- 		goto err_free_path;
- 	}
- 
--	ref->ttl = ce->ce_ttl;
--	ref->server_type = ce->ce_srvtype;
--	ref->ref_flag = ce->ce_flags;
-+	ref->ttl = ce->ttl;
-+	ref->server_type = ce->srvtype;
-+	ref->ref_flag = ce->flags;
- 
- 	return 0;
- 
-@@ -757,25 +754,25 @@ err_free_path:
- }
- 
- /* Return target list of a DFS cache entry */
--static int get_tgt_list(const struct dfs_cache_entry *ce,
-+static int get_tgt_list(const struct cache_entry *ce,
- 			struct dfs_cache_tgt_list *tl)
- {
- 	int rc;
- 	struct list_head *head = &tl->tl_list;
--	struct dfs_cache_tgt *t;
-+	struct cache_dfs_tgt *t;
- 	struct dfs_cache_tgt_iterator *it, *nit;
- 
- 	memset(tl, 0, sizeof(*tl));
- 	INIT_LIST_HEAD(head);
- 
--	list_for_each_entry(t, &ce->ce_tlist, t_list) {
-+	list_for_each_entry(t, &ce->tlist, list) {
- 		it = kzalloc(sizeof(*it), GFP_KERNEL);
- 		if (!it) {
- 			rc = -ENOMEM;
- 			goto err_free_it;
- 		}
- 
--		it->it_name = kstrndup(t->t_name, strlen(t->t_name),
-+		it->it_name = kstrndup(t->name, strlen(t->name),
- 				       GFP_KERNEL);
- 		if (!it->it_name) {
- 			kfree(it);
-@@ -783,12 +780,12 @@ static int get_tgt_list(const struct dfs
- 			goto err_free_it;
- 		}
- 
--		if (ce->ce_tgthint == t)
-+		if (ce->tgthint == t)
- 			list_add(&it->it_list, head);
- 		else
- 			list_add_tail(&it->it_list, head);
- 	}
--	tl->tl_numtgts = ce->ce_numtgts;
-+	tl->tl_numtgts = ce->numtgts;
- 
- 	return 0;
- 
-@@ -829,7 +826,7 @@ int dfs_cache_find(const unsigned int xi
- {
- 	int rc;
- 	char *npath;
--	struct dfs_cache_entry *ce;
-+	struct cache_entry *ce;
- 
- 	if (unlikely(!is_path_valid(path)))
- 		return -EINVAL;
-@@ -838,7 +835,7 @@ int dfs_cache_find(const unsigned int xi
- 	if (rc)
- 		return rc;
- 
--	mutex_lock(&dfs_cache_list_lock);
-+	mutex_lock(&list_lock);
- 	ce = do_dfs_cache_find(xid, ses, nls_codepage, remap, npath, false);
- 	if (!IS_ERR(ce)) {
- 		if (ref)
-@@ -850,7 +847,7 @@ int dfs_cache_find(const unsigned int xi
- 	} else {
- 		rc = PTR_ERR(ce);
- 	}
--	mutex_unlock(&dfs_cache_list_lock);
-+	mutex_unlock(&list_lock);
- 	free_normalized_path(path, npath);
- 	return rc;
- }
-@@ -876,7 +873,7 @@ int dfs_cache_noreq_find(const char *pat
- {
- 	int rc;
- 	char *npath;
--	struct dfs_cache_entry *ce;
-+	struct cache_entry *ce;
- 
- 	if (unlikely(!is_path_valid(path)))
- 		return -EINVAL;
-@@ -885,7 +882,7 @@ int dfs_cache_noreq_find(const char *pat
- 	if (rc)
- 		return rc;
- 
--	mutex_lock(&dfs_cache_list_lock);
-+	mutex_lock(&list_lock);
- 	ce = do_dfs_cache_find(0, NULL, NULL, 0, npath, true);
- 	if (IS_ERR(ce)) {
- 		rc = PTR_ERR(ce);
-@@ -899,7 +896,7 @@ int dfs_cache_noreq_find(const char *pat
- 	if (!rc && tgt_list)
- 		rc = get_tgt_list(ce, tgt_list);
- out:
--	mutex_unlock(&dfs_cache_list_lock);
-+	mutex_unlock(&list_lock);
- 	free_normalized_path(path, npath);
- 	return rc;
- }
-@@ -929,8 +926,8 @@ int dfs_cache_update_tgthint(const unsig
- {
- 	int rc;
- 	char *npath;
--	struct dfs_cache_entry *ce;
--	struct dfs_cache_tgt *t;
-+	struct cache_entry *ce;
-+	struct cache_dfs_tgt *t;
- 
- 	if (unlikely(!is_path_valid(path)))
- 		return -EINVAL;
-@@ -941,7 +938,7 @@ int dfs_cache_update_tgthint(const unsig
- 
- 	cifs_dbg(FYI, "%s: path: %s\n", __func__, npath);
- 
--	mutex_lock(&dfs_cache_list_lock);
-+	mutex_lock(&list_lock);
- 	ce = do_dfs_cache_find(xid, ses, nls_codepage, remap, npath, false);
- 	if (IS_ERR(ce)) {
- 		rc = PTR_ERR(ce);
-@@ -950,14 +947,14 @@ int dfs_cache_update_tgthint(const unsig
- 
- 	rc = 0;
- 
--	t = ce->ce_tgthint;
-+	t = ce->tgthint;
- 
--	if (likely(!strcasecmp(it->it_name, t->t_name)))
-+	if (likely(!strcasecmp(it->it_name, t->name)))
- 		goto out;
- 
--	list_for_each_entry(t, &ce->ce_tlist, t_list) {
--		if (!strcasecmp(t->t_name, it->it_name)) {
--			ce->ce_tgthint = t;
-+	list_for_each_entry(t, &ce->tlist, list) {
-+		if (!strcasecmp(t->name, it->it_name)) {
-+			ce->tgthint = t;
- 			cifs_dbg(FYI, "%s: new target hint: %s\n", __func__,
- 				 it->it_name);
+-		bit_is_set = test_bit(bit_nr, &page->flags);
+-		if (behavior == DROP)
+-			put_page(page);
+-
+-		if (likely(bit_is_set))
+-			io_schedule();
+-
+-		if (behavior == EXCLUSIVE) {
+-			if (!test_and_set_bit_lock(bit_nr, &page->flags))
+-				break;
+-		} else if (behavior == SHARED) {
+-			if (!test_bit(bit_nr, &page->flags))
+-				break;
+-		}
+-
+-		if (signal_pending_state(state, current)) {
+-			ret = -EINTR;
++		if (signal_pending_state(state, current))
  			break;
-@@ -965,7 +962,7 @@ int dfs_cache_update_tgthint(const unsig
- 	}
+-		}
  
- out:
--	mutex_unlock(&dfs_cache_list_lock);
-+	mutex_unlock(&list_lock);
- 	free_normalized_path(path, npath);
- 	return rc;
- }
-@@ -989,8 +986,8 @@ int dfs_cache_noreq_update_tgthint(const
- {
- 	int rc;
- 	char *npath;
--	struct dfs_cache_entry *ce;
--	struct dfs_cache_tgt *t;
-+	struct cache_entry *ce;
-+	struct cache_dfs_tgt *t;
- 
- 	if (unlikely(!is_path_valid(path)) || !it)
- 		return -EINVAL;
-@@ -1001,7 +998,7 @@ int dfs_cache_noreq_update_tgthint(const
- 
- 	cifs_dbg(FYI, "%s: path: %s\n", __func__, npath);
- 
--	mutex_lock(&dfs_cache_list_lock);
-+	mutex_lock(&list_lock);
- 
- 	ce = do_dfs_cache_find(0, NULL, NULL, 0, npath, true);
- 	if (IS_ERR(ce)) {
-@@ -1011,14 +1008,14 @@ int dfs_cache_noreq_update_tgthint(const
- 
- 	rc = 0;
- 
--	t = ce->ce_tgthint;
-+	t = ce->tgthint;
- 
--	if (unlikely(!strcasecmp(it->it_name, t->t_name)))
-+	if (unlikely(!strcasecmp(it->it_name, t->name)))
- 		goto out;
- 
--	list_for_each_entry(t, &ce->ce_tlist, t_list) {
--		if (!strcasecmp(t->t_name, it->it_name)) {
--			ce->ce_tgthint = t;
-+	list_for_each_entry(t, &ce->tlist, list) {
-+		if (!strcasecmp(t->name, it->it_name)) {
-+			ce->tgthint = t;
- 			cifs_dbg(FYI, "%s: new target hint: %s\n", __func__,
- 				 it->it_name);
+-		if (behavior == DROP) {
+-			/*
+-			 * We can no longer safely access page->flags:
+-			 * even if CONFIG_MEMORY_HOTREMOVE is not enabled,
+-			 * there is a risk of waiting forever on a page reused
+-			 * for something that keeps it locked indefinitely.
+-			 * But best check for -EINTR above before breaking.
+-			 */
++		if (wait->flags & WQ_FLAG_WOKEN)
  			break;
-@@ -1026,7 +1023,7 @@ int dfs_cache_noreq_update_tgthint(const
+-		}
++
++		io_schedule();
  	}
  
- out:
--	mutex_unlock(&dfs_cache_list_lock);
-+	mutex_unlock(&list_lock);
- 	free_normalized_path(path, npath);
- 	return rc;
- }
-@@ -1047,7 +1044,7 @@ int dfs_cache_get_tgt_referral(const cha
- {
- 	int rc;
- 	char *npath;
--	struct dfs_cache_entry *ce;
-+	struct cache_entry *ce;
- 	unsigned int h;
+ 	finish_wait(q, wait);
+@@ -1234,7 +1272,7 @@ static inline int wait_on_page_bit_common(wait_queue_head_t *q,
+ 	 * bother with signals either.
+ 	 */
  
- 	if (!it || !ref)
-@@ -1061,9 +1058,9 @@ int dfs_cache_get_tgt_referral(const cha
- 
- 	cifs_dbg(FYI, "%s: path: %s\n", __func__, npath);
- 
--	mutex_lock(&dfs_cache_list_lock);
-+	mutex_lock(&list_lock);
- 
--	ce = find_cache_entry(npath, &h);
-+	ce = lookup_cache_entry(npath, &h);
- 	if (IS_ERR(ce)) {
- 		rc = PTR_ERR(ce);
- 		goto out;
-@@ -1074,7 +1071,7 @@ int dfs_cache_get_tgt_referral(const cha
- 	rc = setup_ref(path, ce, ref, it->it_name);
- 
- out:
--	mutex_unlock(&dfs_cache_list_lock);
-+	mutex_unlock(&list_lock);
- 	free_normalized_path(path, npath);
- 	return rc;
- }
-@@ -1085,7 +1082,7 @@ static int dup_vol(struct smb_vol *vol,
- 
- 	if (vol->username) {
- 		new->username = kstrndup(vol->username, strlen(vol->username),
--					GFP_KERNEL);
-+					 GFP_KERNEL);
- 		if (!new->username)
- 			return -ENOMEM;
- 	}
-@@ -1103,7 +1100,7 @@ static int dup_vol(struct smb_vol *vol,
- 	}
- 	if (vol->domainname) {
- 		new->domainname = kstrndup(vol->domainname,
--					  strlen(vol->domainname), GFP_KERNEL);
-+					   strlen(vol->domainname), GFP_KERNEL);
- 		if (!new->domainname)
- 			goto err_free_unc;
- 	}
-@@ -1150,7 +1147,7 @@ err_free_username:
- int dfs_cache_add_vol(char *mntdata, struct smb_vol *vol, const char *fullpath)
- {
- 	int rc;
--	struct dfs_cache_vol_info *vi;
-+	struct vol_info *vi;
- 
- 	if (!vol || !fullpath || !mntdata)
- 		return -EINVAL;
-@@ -1161,38 +1158,37 @@ int dfs_cache_add_vol(char *mntdata, str
- 	if (!vi)
- 		return -ENOMEM;
- 
--	vi->vi_fullpath = kstrndup(fullpath, strlen(fullpath), GFP_KERNEL);
--	if (!vi->vi_fullpath) {
-+	vi->fullpath = kstrndup(fullpath, strlen(fullpath), GFP_KERNEL);
-+	if (!vi->fullpath) {
- 		rc = -ENOMEM;
- 		goto err_free_vi;
- 	}
- 
--	rc = dup_vol(vol, &vi->vi_vol);
-+	rc = dup_vol(vol, &vi->smb_vol);
- 	if (rc)
- 		goto err_free_fullpath;
- 
--	vi->vi_mntdata = mntdata;
-+	vi->mntdata = mntdata;
- 
--	mutex_lock(&dfs_cache.dc_lock);
--	list_add_tail(&vi->vi_list, &dfs_cache.dc_vol_list);
--	mutex_unlock(&dfs_cache.dc_lock);
-+	mutex_lock(&vol_lock);
-+	list_add_tail(&vi->list, &vol_list);
-+	mutex_unlock(&vol_lock);
- 	return 0;
- 
- err_free_fullpath:
--	kfree(vi->vi_fullpath);
-+	kfree(vi->fullpath);
- err_free_vi:
- 	kfree(vi);
- 	return rc;
+-	return ret;
++	return wait->flags & WQ_FLAG_WOKEN ? 0 : -EINTR;
  }
  
--static inline struct dfs_cache_vol_info *find_vol(const char *fullpath)
-+static inline struct vol_info *find_vol(const char *fullpath)
- {
--	struct dfs_cache_vol_info *vi;
-+	struct vol_info *vi;
- 
--	list_for_each_entry(vi, &dfs_cache.dc_vol_list, vi_list) {
--		cifs_dbg(FYI, "%s: vi->vi_fullpath: %s\n", __func__,
--			 vi->vi_fullpath);
--		if (!strcasecmp(vi->vi_fullpath, fullpath))
-+	list_for_each_entry(vi, &vol_list, list) {
-+		cifs_dbg(FYI, "%s: vi->fullpath: %s\n", __func__, vi->fullpath);
-+		if (!strcasecmp(vi->fullpath, fullpath))
- 			return vi;
- 	}
- 	return ERR_PTR(-ENOENT);
-@@ -1209,14 +1205,14 @@ static inline struct dfs_cache_vol_info
- int dfs_cache_update_vol(const char *fullpath, struct TCP_Server_Info *server)
- {
- 	int rc;
--	struct dfs_cache_vol_info *vi;
-+	struct vol_info *vi;
- 
- 	if (!fullpath || !server)
- 		return -EINVAL;
- 
- 	cifs_dbg(FYI, "%s: fullpath: %s\n", __func__, fullpath);
- 
--	mutex_lock(&dfs_cache.dc_lock);
-+	mutex_lock(&vol_lock);
- 
- 	vi = find_vol(fullpath);
- 	if (IS_ERR(vi)) {
-@@ -1225,12 +1221,12 @@ int dfs_cache_update_vol(const char *ful
- 	}
- 
- 	cifs_dbg(FYI, "%s: updating volume info\n", __func__);
--	memcpy(&vi->vi_vol.dstaddr, &server->dstaddr,
--	       sizeof(vi->vi_vol.dstaddr));
-+	memcpy(&vi->smb_vol.dstaddr, &server->dstaddr,
-+	       sizeof(vi->smb_vol.dstaddr));
- 	rc = 0;
- 
- out:
--	mutex_unlock(&dfs_cache.dc_lock);
-+	mutex_unlock(&vol_lock);
- 	return rc;
- }
- 
-@@ -1241,18 +1237,18 @@ out:
-  */
- void dfs_cache_del_vol(const char *fullpath)
- {
--	struct dfs_cache_vol_info *vi;
-+	struct vol_info *vi;
- 
- 	if (!fullpath || !*fullpath)
- 		return;
- 
- 	cifs_dbg(FYI, "%s: fullpath: %s\n", __func__, fullpath);
- 
--	mutex_lock(&dfs_cache.dc_lock);
-+	mutex_lock(&vol_lock);
- 	vi = find_vol(fullpath);
- 	if (!IS_ERR(vi))
- 		free_vol(vi);
--	mutex_unlock(&dfs_cache.dc_lock);
-+	mutex_unlock(&vol_lock);
- }
- 
- /* Get all tcons that are within a DFS namespace and can be refreshed */
-@@ -1280,7 +1276,7 @@ static void get_tcons(struct TCP_Server_
- 	spin_unlock(&cifs_tcp_ses_lock);
- }
- 
--static inline bool is_dfs_link(const char *path)
-+static bool is_dfs_link(const char *path)
- {
- 	char *s;
- 
-@@ -1290,7 +1286,7 @@ static inline bool is_dfs_link(const cha
- 	return !!strchr(s + 1, '\\');
- }
- 
--static inline char *get_dfs_root(const char *path)
-+static char *get_dfs_root(const char *path)
- {
- 	char *s, *npath;
- 
-@@ -1310,8 +1306,9 @@ static inline char *get_dfs_root(const c
- }
- 
- /* Find root SMB session out of a DFS link path */
--static struct cifs_ses *find_root_ses(struct dfs_cache_vol_info *vi,
--				      struct cifs_tcon *tcon, const char *path)
-+static struct cifs_ses *find_root_ses(struct vol_info *vi,
-+				      struct cifs_tcon *tcon,
-+				      const char *path)
- {
- 	char *rpath;
- 	int rc;
-@@ -1333,8 +1330,7 @@ static struct cifs_ses *find_root_ses(st
- 		goto out;
- 	}
- 
--	mdata = cifs_compose_mount_options(vi->vi_mntdata, rpath, &ref,
--					   &devname);
-+	mdata = cifs_compose_mount_options(vi->mntdata, rpath, &ref, &devname);
- 	free_dfs_info_param(&ref);
- 
- 	if (IS_ERR(mdata)) {
-@@ -1373,14 +1369,13 @@ out:
- }
- 
- /* Refresh DFS cache entry from a given tcon */
--static void do_refresh_tcon(struct dfs_cache *dc, struct dfs_cache_vol_info *vi,
--			    struct cifs_tcon *tcon)
-+static void refresh_tcon(struct vol_info *vi, struct cifs_tcon *tcon)
- {
- 	int rc = 0;
- 	unsigned int xid;
- 	char *path, *npath;
- 	unsigned int h;
--	struct dfs_cache_entry *ce;
-+	struct cache_entry *ce;
- 	struct dfs_info3_param *refs = NULL;
- 	int numrefs = 0;
- 	struct cifs_ses *root_ses = NULL, *ses;
-@@ -1393,9 +1388,9 @@ static void do_refresh_tcon(struct dfs_c
- 	if (rc)
- 		goto out;
- 
--	mutex_lock(&dfs_cache_list_lock);
--	ce = find_cache_entry(npath, &h);
--	mutex_unlock(&dfs_cache_list_lock);
-+	mutex_lock(&list_lock);
-+	ce = lookup_cache_entry(npath, &h);
-+	mutex_unlock(&list_lock);
- 
- 	if (IS_ERR(ce)) {
- 		rc = PTR_ERR(ce);
-@@ -1421,12 +1416,12 @@ static void do_refresh_tcon(struct dfs_c
- 		rc = -EOPNOTSUPP;
- 	} else {
- 		rc = ses->server->ops->get_dfs_refer(xid, ses, path, &refs,
--						     &numrefs, dc->dc_nlsc,
-+						     &numrefs, cache_nlsc,
- 						     tcon->remap);
- 		if (!rc) {
--			mutex_lock(&dfs_cache_list_lock);
-+			mutex_lock(&list_lock);
- 			ce = __update_cache_entry(npath, refs, numrefs);
--			mutex_unlock(&dfs_cache_list_lock);
-+			mutex_unlock(&list_lock);
- 			dump_refs(refs, numrefs);
- 			free_dfs_info_array(refs, numrefs);
- 			if (IS_ERR(ce))
-@@ -1448,30 +1443,28 @@ out:
-  */
- static void refresh_cache_worker(struct work_struct *work)
- {
--	struct dfs_cache *dc = container_of(work, struct dfs_cache,
--					    dc_refresh.work);
--	struct dfs_cache_vol_info *vi;
-+	struct vol_info *vi;
- 	struct TCP_Server_Info *server;
- 	LIST_HEAD(list);
- 	struct cifs_tcon *tcon, *ntcon;
- 
--	mutex_lock(&dc->dc_lock);
-+	mutex_lock(&vol_lock);
- 
--	list_for_each_entry(vi, &dc->dc_vol_list, vi_list) {
--		server = cifs_find_tcp_session(&vi->vi_vol);
-+	list_for_each_entry(vi, &vol_list, list) {
-+		server = cifs_find_tcp_session(&vi->smb_vol);
- 		if (IS_ERR_OR_NULL(server))
- 			continue;
- 		if (server->tcpStatus != CifsGood)
- 			goto next;
- 		get_tcons(server, &list);
- 		list_for_each_entry_safe(tcon, ntcon, &list, ulist) {
--			do_refresh_tcon(dc, vi, tcon);
-+			refresh_tcon(vi, tcon);
- 			list_del_init(&tcon->ulist);
- 			cifs_put_tcon(tcon);
- 		}
- next:
- 		cifs_put_tcp_session(server, 0);
- 	}
--	queue_delayed_work(cifsiod_wq, &dc->dc_refresh, dc->dc_ttl * HZ);
--	mutex_unlock(&dc->dc_lock);
-+	queue_delayed_work(dfscache_wq, &refresh_task, cache_ttl * HZ);
-+	mutex_unlock(&vol_lock);
- }
+ void wait_on_page_bit(struct page *page, int bit_nr)
+-- 
+2.39.2
+
 
 
