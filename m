@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3D9BA4F
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A232C433C9;
-	Mon, 26 Jun 2023 18:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A515BE6B
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D6BC433C8;
+	Mon, 26 Jun 2023 18:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804508;
-	bh=Pm6ZkV4+A5KeYt3uWhxoHD7HH6jyVEp+Yd98bdrxBQM=;
+	s=korg; t=1687804511;
+	bh=pjKTmWTxXTtSCggtG5QcHuMj0EZAPgQ5bJmgahUltsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uyWGAriFBkBKpNGBPtNctmfXwWycbF45Dq811xUDFOhSWLkWZa7aJ69KORGCCiFId
-	 PrFj7iSFdEYPxcrjbqI1uBC3E6Q8DNSRaA/h7yXNoHo/nRbc/Yzz0vkwYSL6O2Q8Hl
-	 Z22UBy9vTSJYvEZ44VzJFHfXw2hWXISDaYTKEuCc=
+	b=xzALC6g40Op3JaZVgOHRJ9olcCBcj7XakwsG9qweffqJjZdFL69Yu0eiJ74sKcqZc
+	 yDJ6YJqTyXruAmFAX4ZhetE+7+7FodjoiMckBOSN454O22Pl5liAlu/YPxPBXMGwzW
+	 SHHX4sGKOnXJUjj2cggeANe+osWAnCIe7tnqz138=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Kishon Vijay Abraham I <kvijayab@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/170] x86/apic: Fix kernel panic when booting with intremap=off and x2apic_phys
-Date: Mon, 26 Jun 2023 20:12:17 +0200
-Message-ID: <20230626180808.000728585@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 01/60] nilfs2: reject devices with insufficient block count
+Date: Mon, 26 Jun 2023 20:11:40 +0200
+Message-ID: <20230626180739.609188177@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
-References: <20230626180800.476539630@linuxfoundation.org>
+In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
+References: <20230626180739.558575012@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,79 +37,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 85d38d5810e285d5aec7fb5283107d1da70c12a9 ]
+commit 92c5d1b860e9581d64baca76779576c0ab0d943d upstream.
 
-When booting with "intremap=off" and "x2apic_phys" on the kernel command
-line, the physical x2APIC driver ends up being used even when x2APIC
-mode is disabled ("intremap=off" disables x2APIC mode). This happens
-because the first compound condition check in x2apic_phys_probe() is
-false due to x2apic_mode == 0 and so the following one returns true
-after default_acpi_madt_oem_check() having already selected the physical
-x2APIC driver.
+The current sanity check for nilfs2 geometry information lacks checks for
+the number of segments stored in superblocks, so even for device images
+that have been destructively truncated or have an unusually high number of
+segments, the mount operation may succeed.
 
-This results in the following panic:
+This causes out-of-bounds block I/O on file system block reads or log
+writes to the segments, the latter in particular causing
+"a_ops->writepages" to repeatedly fail, resulting in sync_inodes_sb() to
+hang.
 
-   kernel BUG at arch/x86/kernel/apic/io_apic.c:2409!
-   invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-   CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-rc2-ver4.1rc2 #2
-   Hardware name: Dell Inc. PowerEdge R6515/07PXPY, BIOS 2.3.6 07/06/2021
-   RIP: 0010:setup_IO_APIC+0x9c/0xaf0
-   Call Trace:
-    <TASK>
-    ? native_read_msr
-    apic_intr_mode_init
-    x86_late_time_init
-    start_kernel
-    x86_64_start_reservations
-    x86_64_start_kernel
-    secondary_startup_64_no_verify
-    </TASK>
+Fix this issue by checking the number of segments stored in the superblock
+and avoiding mounting devices that can cause out-of-bounds accesses.  To
+eliminate the possibility of overflow when calculating the number of
+blocks required for the device from the number of segments, this also adds
+a helper function to calculate the upper bound on the number of segments
+and inserts a check using it.
 
-which is:
-
-setup_IO_APIC:
-  apic_printk(APIC_VERBOSE, "ENABLING IO-APIC IRQs\n");
-  for_each_ioapic(ioapic)
-  	BUG_ON(mp_irqdomain_create(ioapic));
-
-Return 0 to denote that x2APIC has not been enabled when probing the
-physical x2APIC driver.
-
-  [ bp: Massage commit message heavily. ]
-
-Fixes: 9ebd680bd029 ("x86, apic: Use probe routines to simplify apic selection")
-Signed-off-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Kishon Vijay Abraham I <kvijayab@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20230616212236.1389-1-dheerajkumar.srivastava@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230526021332.3431-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=7d50f1e54a12ba3aeae2
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/x2apic_phys.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/nilfs2/the_nilfs.c |   44 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 43 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/apic/x2apic_phys.c b/arch/x86/kernel/apic/x2apic_phys.c
-index 6bde05a86b4ed..896bc41cb2ba7 100644
---- a/arch/x86/kernel/apic/x2apic_phys.c
-+++ b/arch/x86/kernel/apic/x2apic_phys.c
-@@ -97,7 +97,10 @@ static void init_x2apic_ldr(void)
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -375,6 +375,18 @@ unsigned long nilfs_nrsvsegs(struct the_
+ 				  100));
+ }
  
- static int x2apic_phys_probe(void)
- {
--	if (x2apic_mode && (x2apic_phys || x2apic_fadt_phys()))
-+	if (!x2apic_mode)
-+		return 0;
++/**
++ * nilfs_max_segment_count - calculate the maximum number of segments
++ * @nilfs: nilfs object
++ */
++static u64 nilfs_max_segment_count(struct the_nilfs *nilfs)
++{
++	u64 max_count = U64_MAX;
 +
-+	if (x2apic_phys || x2apic_fadt_phys())
- 		return 1;
++	do_div(max_count, nilfs->ns_blocks_per_segment);
++	return min_t(u64, max_count, ULONG_MAX);
++}
++
+ void nilfs_set_nsegments(struct the_nilfs *nilfs, unsigned long nsegs)
+ {
+ 	nilfs->ns_nsegments = nsegs;
+@@ -384,6 +396,8 @@ void nilfs_set_nsegments(struct the_nilf
+ static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
+ 				   struct nilfs_super_block *sbp)
+ {
++	u64 nsegments, nblocks;
++
+ 	if (le32_to_cpu(sbp->s_rev_level) < NILFS_MIN_SUPP_REV) {
+ 		nilfs_msg(nilfs->ns_sb, KERN_ERR,
+ 			  "unsupported revision (superblock rev.=%d.%d, current rev.=%d.%d). Please check the version of mkfs.nilfs(2).",
+@@ -430,7 +444,35 @@ static int nilfs_store_disk_layout(struc
+ 		return -EINVAL;
+ 	}
  
- 	return apic == &apic_x2apic_phys;
--- 
-2.39.2
-
+-	nilfs_set_nsegments(nilfs, le64_to_cpu(sbp->s_nsegments));
++	nsegments = le64_to_cpu(sbp->s_nsegments);
++	if (nsegments > nilfs_max_segment_count(nilfs)) {
++		nilfs_msg(nilfs->ns_sb, KERN_ERR,
++			  "segment count %llu exceeds upper limit (%llu segments)",
++			  (unsigned long long)nsegments,
++			  (unsigned long long)nilfs_max_segment_count(nilfs));
++		return -EINVAL;
++	}
++
++	nblocks = (u64)i_size_read(nilfs->ns_sb->s_bdev->bd_inode) >>
++		nilfs->ns_sb->s_blocksize_bits;
++	if (nblocks) {
++		u64 min_block_count = nsegments * nilfs->ns_blocks_per_segment;
++		/*
++		 * To avoid failing to mount early device images without a
++		 * second superblock, exclude that block count from the
++		 * "min_block_count" calculation.
++		 */
++
++		if (nblocks < min_block_count) {
++			nilfs_msg(nilfs->ns_sb, KERN_ERR,
++				  "total number of segment blocks %llu exceeds device size (%llu blocks)",
++				  (unsigned long long)min_block_count,
++				  (unsigned long long)nblocks);
++			return -EINVAL;
++		}
++	}
++
++	nilfs_set_nsegments(nilfs, nsegments);
+ 	nilfs->ns_crc_seed = le32_to_cpu(sbp->s_crc_seed);
+ 	return 0;
+ }
 
 
