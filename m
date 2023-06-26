@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA50213AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DB1C433C8;
-	Mon, 26 Jun 2023 18:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7030513AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:27:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44F0C433C0;
+	Mon, 26 Jun 2023 18:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804018;
-	bh=D0zZBGq7+jwn8lW4SJbamJJBlhamxxsvd+QSsXqkCqo=;
+	s=korg; t=1687804021;
+	bh=Tp1bLcVO1OTsjWVnqhNef1kiixho48cakRBX1h7OEmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2DzHpV5ZygcWDfV+meUC4VzN1GHpQcDsOiZtvTNLanmGdcIGrFrZkv6aDNL4eaqHN
-	 cPd1WZYF+cDi0G8GI2FklgqjMaTKIUgNBd9IxKHRL7T1isHuG9nHnbE59NkBmhMSFG
-	 +Q5QS2hhOr5jqI9ocPPZQ6mf0laqrWUN8LJ6tZPM=
+	b=E92wYySq8cApAx890RWI+3kGZ4gJBbZyBPXlP3fwy/0XJEsFKuBv64Onmj8JHPkDy
+	 3/tbnOCpo0WEOeqDTejAbLEiS0DTd1sn/RFCAa9cVOapvs0uLuDerd9gPMHFHHk5eJ
+	 yG2UAx8+1EokC9o85ibYpxz/do4h4HjGNrJER4cM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 014/170] selftests: mptcp: remove duplicated entries in usage
-Date: Mon, 26 Jun 2023 20:09:43 +0200
-Message-ID: <20230626180801.197139853@linuxfoundation.org>
+	Harry Wentland <Harry.Wentland@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 002/170] drm/amd/display: Add wrapper to call planes and stream update
+Date: Mon, 26 Jun 2023 20:09:31 +0200
+Message-ID: <20230626180800.605695141@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,62 +38,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-commit 0a85264e48b642d360720589fdb837a3643fb9b0 upstream.
+[ Upstream commit 81f743a08f3b214638aa389e252ae5e6c3592e7c ]
 
-mptcp_connect tool was printing some duplicated entries when showing how
-to use it: -j -l -r
+[Why & How]
+This commit is part of a sequence of changes that replaces the commit
+sequence used in the DC with a new one. As a result of this transition,
+we moved some specific parts from the commit sequence and brought them
+to amdgpu_dm. This commit adds a wrapper inside DM that enable our
+drivers to do any necessary preparation or change before we offload the
+plane/stream update to DC.
 
-While at it, I also:
-
- - moved the very few entries that were not sorted,
-
- - added -R that was missing since
-   commit 8a4b910d005d ("mptcp: selftests: add rcvbuf set option"),
-
- - removed the -u parameter that has been removed in
-   commit f730b65c9d85 ("selftests: mptcp: try to set mptcp ulp mode in different sk states").
-
-No need to backport this, it is just an internal tool used by our
-selftests. The help menu is mainly useful for MPTCP kernel devs.
-
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Harry Wentland <Harry.Wentland@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: ea2062dd1f03 ("drm/amd/display: fix the system hang while disable PSR")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 51 +++++++++++++++----
+ 1 file changed, 41 insertions(+), 10 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-@@ -98,8 +98,8 @@ static struct cfg_sockopt_types cfg_sock
- static void die_usage(void)
- {
- 	fprintf(stderr, "Usage: mptcp_connect [-6] [-c cmsg] [-f offset] [-i file] [-I num] [-j] [-l] "
--		"[-m mode] [-M mark] [-o option] [-p port] [-P mode] [-j] [-l] [-r num] "
--		"[-s MPTCP|TCP] [-S num] [-r num] [-t num] [-T num] [-u] [-w sec] connect_address\n");
-+		"[-m mode] [-M mark] [-o option] [-p port] [-P mode] [-r num] [-R num] "
-+		"[-s MPTCP|TCP] [-S num] [-t num] [-T num] [-w sec] connect_address\n");
- 	fprintf(stderr, "\t-6 use ipv6\n");
- 	fprintf(stderr, "\t-c cmsg -- test cmsg type <cmsg>\n");
- 	fprintf(stderr, "\t-f offset -- stop the I/O after receiving and sending the specified amount "
-@@ -118,13 +118,13 @@ static void die_usage(void)
- 	fprintf(stderr, "\t-p num -- use port num\n");
- 	fprintf(stderr,
- 		"\t-P [saveWithPeek|saveAfterPeek] -- save data with/after MSG_PEEK form tcp socket\n");
--	fprintf(stderr, "\t-t num -- set poll timeout to num\n");
--	fprintf(stderr, "\t-T num -- set expected runtime to num ms\n");
- 	fprintf(stderr, "\t-r num -- enable slow mode, limiting each write to num bytes "
- 		"-- for remove addr tests\n");
- 	fprintf(stderr, "\t-R num -- set SO_RCVBUF to num\n");
- 	fprintf(stderr, "\t-s [MPTCP|TCP] -- use mptcp(default) or tcp sockets\n");
- 	fprintf(stderr, "\t-S num -- set SO_SNDBUF to num\n");
-+	fprintf(stderr, "\t-t num -- set poll timeout to num\n");
-+	fprintf(stderr, "\t-T num -- set expected runtime to num ms\n");
- 	fprintf(stderr, "\t-w num -- wait num sec before closing the socket\n");
- 	exit(1);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index a7bc57529e6c9..91f074f4f262c 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -348,6 +348,35 @@ static inline bool is_dc_timing_adjust_needed(struct dm_crtc_state *old_state,
+ 		return false;
  }
+ 
++/**
++ * update_planes_and_stream_adapter() - Send planes to be updated in DC
++ *
++ * DC has a generic way to update planes and stream via
++ * dc_update_planes_and_stream function; however, DM might need some
++ * adjustments and preparation before calling it. This function is a wrapper
++ * for the dc_update_planes_and_stream that does any required configuration
++ * before passing control to DC.
++ */
++static inline bool update_planes_and_stream_adapter(struct dc *dc,
++						    int update_type,
++						    int planes_count,
++						    struct dc_stream_state *stream,
++						    struct dc_stream_update *stream_update,
++						    struct dc_surface_update *array_of_surface_update)
++{
++	/*
++	 * Previous frame finished and HW is ready for optimization.
++	 */
++	if (update_type == UPDATE_TYPE_FAST)
++		dc_post_update_surfaces_to_stream(dc);
++
++	return dc_update_planes_and_stream(dc,
++					   array_of_surface_update,
++					   planes_count,
++					   stream,
++					   stream_update);
++}
++
+ /**
+  * dm_pflip_high_irq() - Handle pageflip interrupt
+  * @interrupt_params: ignored
+@@ -2633,11 +2662,12 @@ static void dm_gpureset_commit_state(struct dc_state *dc_state,
+ 				true;
+ 		}
+ 
+-		dc_update_planes_and_stream(dm->dc,
+-			bundle->surface_updates,
+-			dc_state->stream_status->plane_count,
+-			dc_state->streams[k],
+-			&bundle->stream_update);
++		update_planes_and_stream_adapter(dm->dc,
++					 UPDATE_TYPE_FULL,
++					 dc_state->stream_status->plane_count,
++					 dc_state->streams[k],
++					 &bundle->stream_update,
++					 bundle->surface_updates);
+ 	}
+ 
+ cleanup:
+@@ -7889,11 +7919,12 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
+ 				acrtc_state->stream->link->psr_settings.psr_allow_active)
+ 			amdgpu_dm_psr_disable(acrtc_state->stream);
+ 
+-		dc_update_planes_and_stream(dm->dc,
+-					    bundle->surface_updates,
+-					    planes_count,
+-					    acrtc_state->stream,
+-					    &bundle->stream_update);
++		update_planes_and_stream_adapter(dm->dc,
++					 acrtc_state->update_type,
++					 planes_count,
++					 acrtc_state->stream,
++					 &bundle->stream_update,
++					 bundle->surface_updates);
+ 
+ 		/**
+ 		 * Enable or disable the interrupts on the backend.
+-- 
+2.39.2
+
 
 
