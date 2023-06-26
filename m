@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B9213AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78564C433C0;
-	Mon, 26 Jun 2023 18:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A3513AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5690CC433C0;
+	Mon, 26 Jun 2023 18:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803262;
-	bh=vKttgYsGTa1IqvVskRkA35W3aWIXdAtwe/X4nEs6ElI=;
+	s=korg; t=1687803265;
+	bh=dw1H8PsZJAKVTAH63UOU+iRK0xmIm0ua9HwGUmJG/AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSNhH/bfZUps0cHCVBLWz3vuWSY2+o27N4guc1iiAvkC4ObvdnXqKCx9FLgPLWsfQ
-	 E2PftX1OXM7U5d6L7u4uENSWmPLGWVDG5j5DMeSHjDc9kUJD0wYsSfS4KnhLGajcMF
-	 Z30daXgTKA+W+LnwABS83X3csrB0flnVLO2piYcU=
+	b=ziJGw5djJyQkoB6N29i2EgOYDQxOavlDvrPOIvnptUKIw145IyxyWfGmyNpKG2UbY
+	 LEoGWX9u1Sf1tSopeIz6jlPNtCZ4FtApbrprdqqKPy1VYuQ/E5UaayKE5qIMfSovW2
+	 TY+UobwRKmG1U7WyMgLn6evU7g2cuTafUT9EvN6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 4.14 04/26] Drivers: hv: vmbus: Fix vmbus_wait_for_unload() to scan present CPUs
-Date: Mon, 26 Jun 2023 20:11:06 +0200
-Message-ID: <20230626180733.851172577@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 4.14 05/26] cgroup: Do not corrupt task iteration when rebinding subsystem
+Date: Mon, 26 Jun 2023 20:11:07 +0200
+Message-ID: <20230626180733.880699455@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180733.699092073@linuxfoundation.org>
 References: <20230626180733.699092073@linuxfoundation.org>
@@ -36,84 +36,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-commit 320805ab61e5f1e2a5729ae266e16bec2904050c upstream.
+commit 6f363f5aa845561f7ea496d8b1175e3204470486 upstream.
 
-vmbus_wait_for_unload() may be called in the panic path after other
-CPUs are stopped. vmbus_wait_for_unload() currently loops through
-online CPUs looking for the UNLOAD response message. But the values of
-CONFIG_KEXEC_CORE and crash_kexec_post_notifiers affect the path used
-to stop the other CPUs, and in one of the paths the stopped CPUs
-are removed from cpu_online_mask. This removal happens in both
-x86/x64 and arm64 architectures. In such a case, vmbus_wait_for_unload()
-only checks the panic'ing CPU, and misses the UNLOAD response message
-except when the panic'ing CPU is CPU 0. vmbus_wait_for_unload()
-eventually times out, but only after waiting 100 seconds.
+We found a refcount UAF bug as follows:
 
-Fix this by looping through *present* CPUs in vmbus_wait_for_unload().
-The cpu_present_mask is not modified by stopping the other CPUs in the
-panic path, nor should it be.
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 1 PID: 342 at lib/refcount.c:25 refcount_warn_saturate+0xa0/0x148
+Workqueue: events cpuset_hotplug_workfn
+Call trace:
+ refcount_warn_saturate+0xa0/0x148
+ __refcount_add.constprop.0+0x5c/0x80
+ css_task_iter_advance_css_set+0xd8/0x210
+ css_task_iter_advance+0xa8/0x120
+ css_task_iter_next+0x94/0x158
+ update_tasks_root_domain+0x58/0x98
+ rebuild_root_domains+0xa0/0x1b0
+ rebuild_sched_domains_locked+0x144/0x188
+ cpuset_hotplug_workfn+0x138/0x5a0
+ process_one_work+0x1e8/0x448
+ worker_thread+0x228/0x3e0
+ kthread+0xe0/0xf0
+ ret_from_fork+0x10/0x20
 
-Also, in a CoCo VM the synic_message_page is not allocated in
-hv_synic_alloc(), but is set and cleared in hv_synic_enable_regs()
-and hv_synic_disable_regs() such that it is set only when the CPU is
-online.  If not all present CPUs are online when vmbus_wait_for_unload()
-is called, the synic_message_page might be NULL. Add a check for this.
+then a kernel panic will be triggered as below:
 
-Fixes: cd95aad55793 ("Drivers: hv: vmbus: handle various crash scenarios")
-Cc: stable@vger.kernel.org
-Reported-by: John Starks <jostarks@microsoft.com>
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://lore.kernel.org/r/1684422832-38476-1-git-send-email-mikelley@microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Unable to handle kernel paging request at virtual address 00000000c0000010
+Call trace:
+ cgroup_apply_control_disable+0xa4/0x16c
+ rebind_subsystems+0x224/0x590
+ cgroup_destroy_root+0x64/0x2e0
+ css_free_rwork_fn+0x198/0x2a0
+ process_one_work+0x1d4/0x4bc
+ worker_thread+0x158/0x410
+ kthread+0x108/0x13c
+ ret_from_fork+0x10/0x18
+
+The race that cause this bug can be shown as below:
+
+(hotplug cpu)                | (umount cpuset)
+mutex_lock(&cpuset_mutex)    | mutex_lock(&cgroup_mutex)
+cpuset_hotplug_workfn        |
+ rebuild_root_domains        |  rebind_subsystems
+  update_tasks_root_domain   |   spin_lock_irq(&css_set_lock)
+   css_task_iter_start       |    list_move_tail(&cset->e_cset_node[ss->id]
+   while(css_task_iter_next) |                  &dcgrp->e_csets[ss->id]);
+   css_task_iter_end         |   spin_unlock_irq(&css_set_lock)
+mutex_unlock(&cpuset_mutex)  | mutex_unlock(&cgroup_mutex)
+
+Inside css_task_iter_start/next/end, css_set_lock is hold and then
+released, so when iterating task(left side), the css_set may be moved to
+another list(right side), then it->cset_head points to the old list head
+and it->cset_pos->next points to the head node of new list, which can't
+be used as struct css_set.
+
+To fix this issue, switch from all css_sets to only scgrp's css_sets to
+patch in-flight iterators to preserve correct iteration, and then
+update it->cset_head as well.
+
+Reported-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://www.spinics.net/lists/cgroups/msg37935.html
+Suggested-by: Michal Koutný <mkoutny@suse.com>
+Link: https://lore.kernel.org/all/20230526114139.70274-1-xiujianfeng@huaweicloud.com/
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Fixes: 2d8f243a5e6e ("cgroup: implement cgroup->e_csets[]")
+Cc: stable@vger.kernel.org # v3.16+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/channel_mgmt.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ kernel/cgroup/cgroup.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/drivers/hv/channel_mgmt.c
-+++ b/drivers/hv/channel_mgmt.c
-@@ -803,11 +803,22 @@ static void vmbus_wait_for_unload(void)
- 		if (completion_done(&vmbus_connection.unload_event))
- 			goto completed;
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -1600,7 +1600,7 @@ int rebind_subsystems(struct cgroup_root
+ {
+ 	struct cgroup *dcgrp = &dst_root->cgrp;
+ 	struct cgroup_subsys *ss;
+-	int ssid, i, ret;
++	int ssid, ret;
+ 	u16 dfl_disable_ss_mask = 0;
  
--		for_each_online_cpu(cpu) {
-+		for_each_present_cpu(cpu) {
- 			struct hv_per_cpu_context *hv_cpu
- 				= per_cpu_ptr(hv_context.cpu_context, cpu);
+ 	lockdep_assert_held(&cgroup_mutex);
+@@ -1644,7 +1644,8 @@ int rebind_subsystems(struct cgroup_root
+ 		struct cgroup_root *src_root = ss->root;
+ 		struct cgroup *scgrp = &src_root->cgrp;
+ 		struct cgroup_subsys_state *css = cgroup_css(scgrp, ss);
+-		struct css_set *cset;
++		struct css_set *cset, *cset_pos;
++		struct css_task_iter *it;
  
+ 		WARN_ON(!css || cgroup_css(dcgrp, ss));
+ 
+@@ -1662,9 +1663,22 @@ int rebind_subsystems(struct cgroup_root
+ 		css->cgroup = dcgrp;
+ 
+ 		spin_lock_irq(&css_set_lock);
+-		hash_for_each(css_set_table, i, cset, hlist)
++		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
++		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
++					 e_cset_node[ss->id]) {
+ 			list_move_tail(&cset->e_cset_node[ss->id],
+ 				       &dcgrp->e_csets[ss->id]);
 +			/*
-+			 * In a CoCo VM the synic_message_page is not allocated
-+			 * in hv_synic_alloc(). Instead it is set/cleared in
-+			 * hv_synic_enable_regs() and hv_synic_disable_regs()
-+			 * such that it is set only when the CPU is online. If
-+			 * not all present CPUs are online, the message page
-+			 * might be NULL, so skip such CPUs.
++			 * all css_sets of scgrp together in same order to dcgrp,
++			 * patch in-flight iterators to preserve correct iteration.
++			 * since the iterator is always advanced right away and
++			 * finished when it->cset_pos meets it->cset_head, so only
++			 * update it->cset_head is enough here.
 +			 */
- 			page_addr = hv_cpu->synic_message_page;
-+			if (!page_addr)
-+				continue;
-+
- 			msg = (struct hv_message *)page_addr
- 				+ VMBUS_MESSAGE_SINT;
++			list_for_each_entry(it, &cset->task_iters, iters_node)
++				if (it->cset_head == &scgrp->e_csets[ss->id])
++					it->cset_head = &dcgrp->e_csets[ss->id];
++		}
+ 		spin_unlock_irq(&css_set_lock);
  
-@@ -841,11 +852,14 @@ completed:
- 	 * maybe-pending messages on all CPUs to be able to receive new
- 	 * messages after we reconnect.
- 	 */
--	for_each_online_cpu(cpu) {
-+	for_each_present_cpu(cpu) {
- 		struct hv_per_cpu_context *hv_cpu
- 			= per_cpu_ptr(hv_context.cpu_context, cpu);
- 
- 		page_addr = hv_cpu->synic_message_page;
-+		if (!page_addr)
-+			continue;
-+
- 		msg = (struct hv_message *)page_addr + VMBUS_MESSAGE_SINT;
- 		msg->header.message_type = HVMSG_NONE;
- 	}
+ 		/* default hierarchy doesn't enable controllers by default */
 
 
