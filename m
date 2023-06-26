@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB2F134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:18:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB4ECC433C0;
-	Mon, 26 Jun 2023 18:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A5E134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:18:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E50C433C8;
+	Mon, 26 Jun 2023 18:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803504;
-	bh=5u1krze54Vr3YCW2gn+XDn86yQzfX3k9QSKmUf/cDRY=;
+	s=korg; t=1687803507;
+	bh=qdKruKs4HqvA412d4SY2SxCxvl8cXtovmU3hq5Gu8qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgJ3nrJ/+6MvWmQcVNlaV/V8JSpVSDjMyQ50S0B1dsv7q102ONvID4qNEE4q7Frz9
-	 tS3WHRc7dpCy5GNqaNUtinyP2/HZ2w3cLbTdrKP/nuGnLNR0gX8nuUwRcrRrXV0okW
-	 hDPk3sw3/t3rnjmlP0u33gqKTNxOKbHYzLdZ7ErM=
+	b=sGHVyUgw46/6I0OJEolpW+8WYMVbmV924WwHvpI+Xe7ppI2WAJo+pKeKh7GCrcJ1n
+	 McrfqEmaBat40HAeMGesbREVuUNxs9DTns0Chh1LpraIDPXa9uJwQk4obXUxtZaypX
+	 VguBoPabfQ1N8IcKYHmPCiaycVEXo92FS9bHxz5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.3 083/199] mmc: bcm2835: fix deferred probing
-Date: Mon, 26 Jun 2023 20:09:49 +0200
-Message-ID: <20230626180809.233568844@linuxfoundation.org>
+Subject: [PATCH 6.3 084/199] mmc: sunxi: fix deferred probing
+Date: Mon, 26 Jun 2023 20:09:50 +0200
+Message-ID: <20230626180809.279080518@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-commit 71150ac12558bcd9d75e6e24cf7c872c2efd80f3 upstream.
+commit c2df53c5806cfd746dae08e07bc8c4ad247c3b70 upstream.
 
 The driver overrides the error codes and IRQ0 returned by platform_get_irq()
 to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
@@ -45,27 +46,28 @@ codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
 in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
 so we now can safely ignore it...
 
-Fixes: 660fc733bd74 ("mmc: bcm2835: Add new driver for the sdhost controller.")
+Fixes: 2408a08583d2 ("mmc: sunxi-mmc: Handle return value of platform_get_irq")
 Cc: stable@vger.kernel.org # v5.19+
 Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20230617203622.6812-2-s.shtylyov@omp.ru
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20230617203622.6812-12-s.shtylyov@omp.ru
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/bcm2835.c |    4 ++--
+ drivers/mmc/host/sunxi-mmc.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/bcm2835.c
-+++ b/drivers/mmc/host/bcm2835.c
-@@ -1403,8 +1403,8 @@ static int bcm2835_probe(struct platform
- 	host->max_clk = clk_get_rate(clk);
+--- a/drivers/mmc/host/sunxi-mmc.c
++++ b/drivers/mmc/host/sunxi-mmc.c
+@@ -1350,8 +1350,8 @@ static int sunxi_mmc_resource_request(st
+ 		return ret;
  
  	host->irq = platform_get_irq(pdev, 0);
 -	if (host->irq <= 0) {
 -		ret = -EINVAL;
 +	if (host->irq < 0) {
 +		ret = host->irq;
- 		goto err;
+ 		goto error_disable_mmc;
  	}
  
 
