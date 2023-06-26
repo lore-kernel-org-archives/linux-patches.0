@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE4C134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DE2C433C0;
-	Mon, 26 Jun 2023 18:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC842134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56046C433C8;
+	Mon, 26 Jun 2023 18:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803577;
-	bh=wU4FfD56033/Si1reuDGs9OQsJP5VREbxSRtpZ3wtmw=;
+	s=korg; t=1687803580;
+	bh=wFhrg8hnJNJ/MY29E5mKx8BlOwwpIX/G+69TpONV3uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kniaEooONxAJjBYUlSxXD8Mi8MG3QX+tb02xuVcfgIgIk+mDmuOFBBE52D1XMkEr5
-	 xvBOhYiIyvD8NiaPwa2q7esYonNJ7Ya8LpomgCNf8+TBs0nPzgEHwUslwQeZOlyK7s
-	 2vewZfTWxJCGRMs9eod1ArDq58p3F2BHdj5Ub8qU=
+	b=HcmqEuigFBS1fbeh4enS6jpvKepk4dkXz8tMwq6JUp2qzt6W7M5a8dQDlCprw15LE
+	 RJmfAU7123YeNhpyxFptR6JyCHJDWNzS6YtCgj2oidDkz6yEINT0xvBRKeZ87oJGTD
+	 JDGkWgd56UimmDeWBkagbk79i05Sm7w1lSBeXFi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	Magali Lemes <magali.lemes@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 091/199] ksmbd: remove internal.h include
-Date: Mon, 26 Jun 2023 20:09:57 +0200
-Message-ID: <20230626180809.593896061@linuxfoundation.org>
+Subject: [PATCH 6.3 109/199] selftests: net: fcnal-test: check if FIPS mode is enabled
+Date: Mon, 26 Jun 2023 20:10:15 +0200
+Message-ID: <20230626180810.427931281@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,64 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Magali Lemes <magali.lemes@canonical.com>
 
-[ Upstream commit 211db0ac9e3dc6c46f2dd53395b34d76af929faf ]
+[ Upstream commit d7a2fc1437f71cb058c7b11bc33dfc19e4bf277a ]
 
-Since vfs_path_lookup is exported, It should not be internal.
-Move vfs_path_lookup prototype in internal.h to linux/namei.h.
+There are some MD5 tests which fail when the kernel is in FIPS mode,
+since MD5 is not FIPS compliant. Add a check and only run those tests
+if FIPS mode is not enabled.
 
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Stable-dep-of: 40b268d384a2 ("ksmbd: add mnt_want_write to ksmbd vfs functions")
+Fixes: f0bee1ebb5594 ("fcnal-test: Add TCP MD5 tests")
+Fixes: 5cad8bce26e01 ("fcnal-test: Add TCP MD5 tests for VRF")
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Magali Lemes <magali.lemes@canonical.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/internal.h         | 2 --
- fs/ksmbd/vfs.c        | 2 --
- include/linux/namei.h | 2 ++
- 3 files changed, 2 insertions(+), 4 deletions(-)
+ tools/testing/selftests/net/fcnal-test.sh | 27 ++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/fs/internal.h b/fs/internal.h
-index dc4eb91a577a8..071a7517f1a74 100644
---- a/fs/internal.h
-+++ b/fs/internal.h
-@@ -59,8 +59,6 @@ extern int finish_clean_context(struct fs_context *fc);
-  */
- extern int filename_lookup(int dfd, struct filename *name, unsigned flags,
- 			   struct path *path, struct path *root);
--extern int vfs_path_lookup(struct dentry *, struct vfsmount *,
--			   const char *, unsigned int, struct path *);
- int do_rmdir(int dfd, struct filename *name);
- int do_unlinkat(int dfd, struct filename *name);
- int may_linkat(struct mnt_idmap *idmap, const struct path *link);
-diff --git a/fs/ksmbd/vfs.c b/fs/ksmbd/vfs.c
-index f6a8b26593090..1ad97df1dfb6f 100644
---- a/fs/ksmbd/vfs.c
-+++ b/fs/ksmbd/vfs.c
-@@ -19,8 +19,6 @@
- #include <linux/sched/xacct.h>
- #include <linux/crc32c.h>
+diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
+index 21ca91473c095..ee6880ac3e5ed 100755
+--- a/tools/testing/selftests/net/fcnal-test.sh
++++ b/tools/testing/selftests/net/fcnal-test.sh
+@@ -92,6 +92,13 @@ NSC_CMD="ip netns exec ${NSC}"
  
--#include "../internal.h"	/* for vfs_path_lookup */
--
- #include "glob.h"
- #include "oplock.h"
- #include "connection.h"
-diff --git a/include/linux/namei.h b/include/linux/namei.h
-index 0d797f3367cad..ba9b32b4d1b07 100644
---- a/include/linux/namei.h
-+++ b/include/linux/namei.h
-@@ -63,6 +63,8 @@ extern struct dentry *kern_path_create(int, const char *, struct path *, unsigne
- extern struct dentry *user_path_create(int, const char __user *, struct path *, unsigned int);
- extern void done_path_create(struct path *, struct dentry *);
- extern struct dentry *kern_path_locked(const char *, struct path *);
-+int vfs_path_lookup(struct dentry *, struct vfsmount *, const char *,
-+		    unsigned int, struct path *);
+ which ping6 > /dev/null 2>&1 && ping6=$(which ping6) || ping6=$(which ping)
  
- extern struct dentry *try_lookup_one_len(const char *, struct dentry *, int);
- extern struct dentry *lookup_one_len(const char *, struct dentry *, int);
++# Check if FIPS mode is enabled
++if [ -f /proc/sys/crypto/fips_enabled ]; then
++	fips_enabled=`cat /proc/sys/crypto/fips_enabled`
++else
++	fips_enabled=0
++fi
++
+ ################################################################################
+ # utilities
+ 
+@@ -1216,7 +1223,7 @@ ipv4_tcp_novrf()
+ 	run_cmd nettest -d ${NSA_DEV} -r ${a}
+ 	log_test_addr ${a} $? 1 "No server, device client, local conn"
+ 
+-	ipv4_tcp_md5_novrf
++	[ "$fips_enabled" = "1" ] || ipv4_tcp_md5_novrf
+ }
+ 
+ ipv4_tcp_vrf()
+@@ -1270,9 +1277,11 @@ ipv4_tcp_vrf()
+ 	log_test_addr ${a} $? 1 "Global server, local connection"
+ 
+ 	# run MD5 tests
+-	setup_vrf_dup
+-	ipv4_tcp_md5
+-	cleanup_vrf_dup
++	if [ "$fips_enabled" = "0" ]; then
++		setup_vrf_dup
++		ipv4_tcp_md5
++		cleanup_vrf_dup
++	fi
+ 
+ 	#
+ 	# enable VRF global server
+@@ -2772,7 +2781,7 @@ ipv6_tcp_novrf()
+ 		log_test_addr ${a} $? 1 "No server, device client, local conn"
+ 	done
+ 
+-	ipv6_tcp_md5_novrf
++	[ "$fips_enabled" = "1" ] || ipv6_tcp_md5_novrf
+ }
+ 
+ ipv6_tcp_vrf()
+@@ -2842,9 +2851,11 @@ ipv6_tcp_vrf()
+ 	log_test_addr ${a} $? 1 "Global server, local connection"
+ 
+ 	# run MD5 tests
+-	setup_vrf_dup
+-	ipv6_tcp_md5
+-	cleanup_vrf_dup
++	if [ "$fips_enabled" = "0" ]; then
++		setup_vrf_dup
++		ipv6_tcp_md5
++		cleanup_vrf_dup
++	fi
+ 
+ 	#
+ 	# enable VRF global server
 -- 
 2.39.2
 
