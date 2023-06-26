@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD864125AB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:40:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3FBC433C0;
-	Mon, 26 Jun 2023 18:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCDD125AB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:41:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2901AC433C0;
+	Mon, 26 Jun 2023 18:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804859;
-	bh=pip250l9QRYrNxTregSwR4UZsGIWOnUkRWGUb8gtMwE=;
+	s=korg; t=1687804862;
+	bh=IMOzBSATkuH+OIU8aGFy/67obfGFI+Me6NJ7SoB1L84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smeGorBBVqIX5W5plZGLPru5NS2Q6OifGFWiWhnbPAJBgUGW8wyOafpHM3qJzvfQt
-	 S7Y0nsuYk+A/c+TkDlly6HgP5ddTWNhuQTMr7L0/SSCMtH3py1muIvMkFCIe/oW7Ty
-	 6kikgZPtB5NO6FFtLf0YgQu6Rg/833LR6nvtVIKE=
+	b=F0EYnTok1TSS5n+R90OegdR3rbk/DTWVPY4nAOLVdTbK0ebamtr3IJxrPlhPjdee9
+	 VKByZlTuz4BxU8kCuHZaSwMzCIzl3dU/HXgMEGd2c7mAre+Y8/aKPrXZS/GkVbBXKF
+	 v0H+W9OEM6PbeqwGzeaS+zli3NY20ESv+H4yHnk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Chen Aotian <chenaotian2@163.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 65/96] netfilter: nf_tables: reject unbound anonymous set before commit phase
-Date: Mon, 26 Jun 2023 20:12:20 +0200
-Message-ID: <20230626180749.643671404@linuxfoundation.org>
+Subject: [PATCH 5.15 39/96] ieee802154: hwsim: Fix possible memory leaks
+Date: Mon, 26 Jun 2023 20:11:54 +0200
+Message-ID: <20230626180748.577252145@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -34,142 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Chen Aotian <chenaotian2@163.com>
 
-[ Upstream commit 938154b93be8cd611ddfd7bafc1849f3c4355201 ]
+[ Upstream commit a61675294735570daca3779bd1dbb3715f7232bd ]
 
-Add a new list to track set transaction and to check for unbound
-anonymous sets before entering the commit phase.
+After replacing e->info, it is necessary to free the old einfo.
 
-Bail out at the end of the transaction handling if an anonymous set
-remains unbound.
-
-Fixes: 96518518cc41 ("netfilter: add nftables")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f25da51fdc38 ("ieee802154: hwsim: add replacement for fakelb")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Chen Aotian <chenaotian2@163.com>
+Link: https://lore.kernel.org/r/20230409022048.61223-1-chenaotian2@163.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  3 +++
- net/netfilter/nf_tables_api.c     | 35 ++++++++++++++++++++++++++++---
- 2 files changed, 35 insertions(+), 3 deletions(-)
+ drivers/net/ieee802154/mac802154_hwsim.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 603c156da210b..7da74b9428b9f 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1503,6 +1503,7 @@ static inline void nft_set_elem_clear_busy(struct nft_set_ext *ext)
-  *	struct nft_trans - nf_tables object update in transaction
-  *
-  *	@list: used internally
-+ *	@binding_list: list of objects with possible bindings
-  *	@msg_type: message type
-  *	@put_net: ctx->net needs to be put
-  *	@ctx: transaction context
-@@ -1510,6 +1511,7 @@ static inline void nft_set_elem_clear_busy(struct nft_set_ext *ext)
-  */
- struct nft_trans {
- 	struct list_head		list;
-+	struct list_head		binding_list;
- 	int				msg_type;
- 	bool				put_net;
- 	struct nft_ctx			ctx;
-@@ -1648,6 +1650,7 @@ static inline int nft_request_module(struct net *net, const char *fmt, ...) { re
- struct nftables_pernet {
- 	struct list_head	tables;
- 	struct list_head	commit_list;
-+	struct list_head	binding_list;
- 	struct list_head	module_list;
- 	struct list_head	notify_list;
- 	struct mutex		commit_mutex;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index c4e3aaeeb795c..010ef3bce9e5f 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -153,6 +153,7 @@ static struct nft_trans *nft_trans_alloc_gfp(const struct nft_ctx *ctx,
- 		return NULL;
- 
- 	INIT_LIST_HEAD(&trans->list);
-+	INIT_LIST_HEAD(&trans->binding_list);
- 	trans->msg_type = msg_type;
- 	trans->ctx	= *ctx;
- 
-@@ -165,9 +166,15 @@ static struct nft_trans *nft_trans_alloc(const struct nft_ctx *ctx,
- 	return nft_trans_alloc_gfp(ctx, msg_type, size, GFP_KERNEL);
- }
- 
--static void nft_trans_destroy(struct nft_trans *trans)
-+static void nft_trans_list_del(struct nft_trans *trans)
+diff --git a/drivers/net/ieee802154/mac802154_hwsim.c b/drivers/net/ieee802154/mac802154_hwsim.c
+index 36f1c5aa98fc6..1ab1ba41c4305 100644
+--- a/drivers/net/ieee802154/mac802154_hwsim.c
++++ b/drivers/net/ieee802154/mac802154_hwsim.c
+@@ -522,7 +522,7 @@ static int hwsim_del_edge_nl(struct sk_buff *msg, struct genl_info *info)
+ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
  {
- 	list_del(&trans->list);
-+	list_del(&trans->binding_list);
-+}
-+
-+static void nft_trans_destroy(struct nft_trans *trans)
-+{
-+	nft_trans_list_del(trans);
- 	kfree(trans);
- }
- 
-@@ -359,6 +366,14 @@ static void nft_trans_commit_list_add_tail(struct net *net, struct nft_trans *tr
- {
- 	struct nftables_pernet *nft_net = nft_pernet(net);
- 
-+	switch (trans->msg_type) {
-+	case NFT_MSG_NEWSET:
-+		if (!nft_trans_set_update(trans) &&
-+		    nft_set_is_anonymous(nft_trans_set(trans)))
-+			list_add_tail(&trans->binding_list, &nft_net->binding_list);
-+		break;
-+	}
-+
- 	list_add_tail(&trans->list, &nft_net->commit_list);
- }
- 
-@@ -8565,7 +8580,7 @@ static void nf_tables_trans_destroy_work(struct work_struct *w)
- 	synchronize_rcu();
- 
- 	list_for_each_entry_safe(trans, next, &head, list) {
--		list_del(&trans->list);
-+		nft_trans_list_del(trans);
- 		nft_commit_release(trans);
- 	}
- }
-@@ -8883,6 +8898,19 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 		return 0;
- 	}
- 
-+	list_for_each_entry(trans, &nft_net->binding_list, binding_list) {
-+		switch (trans->msg_type) {
-+		case NFT_MSG_NEWSET:
-+			if (!nft_trans_set_update(trans) &&
-+			    nft_set_is_anonymous(nft_trans_set(trans)) &&
-+			    !nft_trans_set_bound(trans)) {
-+				pr_warn_once("nftables ruleset with unbound set\n");
-+				return -EINVAL;
-+			}
-+			break;
-+		}
-+	}
-+
- 	/* 0. Validate ruleset, otherwise roll back for error reporting. */
- 	if (nf_tables_validate(net) < 0)
- 		return -EAGAIN;
-@@ -9356,7 +9384,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 
- 	list_for_each_entry_safe_reverse(trans, next,
- 					 &nft_net->commit_list, list) {
--		list_del(&trans->list);
-+		nft_trans_list_del(trans);
- 		nf_tables_abort_release(trans);
- 	}
- 
-@@ -10129,6 +10157,7 @@ static int __net_init nf_tables_init_net(struct net *net)
- 
- 	INIT_LIST_HEAD(&nft_net->tables);
- 	INIT_LIST_HEAD(&nft_net->commit_list);
-+	INIT_LIST_HEAD(&nft_net->binding_list);
- 	INIT_LIST_HEAD(&nft_net->module_list);
- 	INIT_LIST_HEAD(&nft_net->notify_list);
- 	mutex_init(&nft_net->commit_mutex);
+ 	struct nlattr *edge_attrs[MAC802154_HWSIM_EDGE_ATTR_MAX + 1];
+-	struct hwsim_edge_info *einfo;
++	struct hwsim_edge_info *einfo, *einfo_old;
+ 	struct hwsim_phy *phy_v0;
+ 	struct hwsim_edge *e;
+ 	u32 v0, v1;
+@@ -560,8 +560,10 @@ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
+ 	list_for_each_entry_rcu(e, &phy_v0->edges, list) {
+ 		if (e->endpoint->idx == v1) {
+ 			einfo->lqi = lqi;
+-			rcu_assign_pointer(e->info, einfo);
++			einfo_old = rcu_replace_pointer(e->info, einfo,
++							lockdep_is_held(&hwsim_phys_lock));
+ 			rcu_read_unlock();
++			kfree_rcu(einfo_old, rcu);
+ 			mutex_unlock(&hwsim_phys_lock);
+ 			return 0;
+ 		}
 -- 
 2.39.2
 
