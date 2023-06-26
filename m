@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA028C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:43:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B73C433C0;
-	Mon, 26 Jun 2023 18:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2D0C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:43:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADEBC433C0;
+	Mon, 26 Jun 2023 18:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805016;
-	bh=CfaFQfla770SxEg3zAb7vGI99dNkxPO+7hWJRkkffgI=;
+	s=korg; t=1687805019;
+	bh=rPgMxkpThX9+J+4tVv57L/SQafxgrssfeiKXYdWlNPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ce7IqLV1SO6rF45zzipImKEZys66Dg7GCSsPrRonmjP7lSnFTaMT3ucOyAjxABiJX
-	 qQPcsxVbTCN7fywDDjTq/DW1g5PLXqHDFskYxUF6BEC+HINvTYRaFW/6QZ6Qn1+tdo
-	 5nJzQ15u5/b/dbGJhgGk2t2+znLLhtA8uykcWrxs=
+	b=ujI1z96gXwT8Ff4W8xMpPyerguYinmbiitwjFC3g2O3s3lhKuQjyO/2LEtXOrbnc0
+	 /dT92O6wcDE/fuimj4MLAWjl8k4u9U70HZjITEnPNzmSwAPldvMaOR2sn7dC6krpZc
+	 e2FhRWjFmAPqiOiyZEHLjOJxl+7x+pmAnpbZhEf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Gerlach <matthew.gerlach@linux.intel.com>,
-	Russ Weight <russell.h.weight@intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/81] regmap: spi-avmm: Fix regmap_bus max_raw_write
-Date: Mon, 26 Jun 2023 20:12:03 +0200
-Message-ID: <20230626180745.339656657@linuxfoundation.org>
+	Rafael Aquini <aquini@redhat.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Aristeu Rozanski <aris@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 22/81] writeback: fix dereferencing NULL mapping->host on writeback_page_template
+Date: Mon, 26 Jun 2023 20:12:04 +0200
+Message-ID: <20230626180745.380056707@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -36,52 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russ Weight <russell.h.weight@intel.com>
+From: Rafael Aquini <aquini@redhat.com>
 
-[ Upstream commit c8e796895e2310b6130e7577248da1d771431a77 ]
+commit 54abe19e00cfcc5a72773d15cd00ed19ab763439 upstream.
 
-The max_raw_write member of the regmap_spi_avmm_bus structure is defined
-as:
-	.max_raw_write = SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT
+When commit 19343b5bdd16 ("mm/page-writeback: introduce tracepoint for
+wait_on_page_writeback()") repurposed the writeback_dirty_page trace event
+as a template to create its new wait_on_page_writeback trace event, it
+ended up opening a window to NULL pointer dereference crashes due to the
+(infrequent) occurrence of a race where an access to a page in the
+swap-cache happens concurrently with the moment this page is being written
+to disk and the tracepoint is enabled:
 
-SPI_AVMM_VAL_SIZE == 4 and MAX_WRITE_CNT == 1 so this results in a
-maximum write transfer size of 4 bytes which provides only enough space to
-transfer the address of the target register. It provides no space for the
-value to be transferred. This bug became an issue (divide-by-zero in
-_regmap_raw_write()) after the following was accepted into mainline:
+    BUG: kernel NULL pointer dereference, address: 0000000000000040
+    #PF: supervisor read access in kernel mode
+    #PF: error_code(0x0000) - not-present page
+    PGD 800000010ec0a067 P4D 800000010ec0a067 PUD 102353067 PMD 0
+    Oops: 0000 [#1] PREEMPT SMP PTI
+    CPU: 1 PID: 1320 Comm: shmem-worker Kdump: loaded Not tainted 6.4.0-rc5+ #13
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230301gitf80f052277c8-1.fc37 03/01/2023
+    RIP: 0010:trace_event_raw_event_writeback_folio_template+0x76/0xf0
+    Code: 4d 85 e4 74 5c 49 8b 3c 24 e8 06 98 ee ff 48 89 c7 e8 9e 8b ee ff ba 20 00 00 00 48 89 ef 48 89 c6 e8 fe d4 1a 00 49 8b 04 24 <48> 8b 40 40 48 89 43 28 49 8b 45 20 48 89 e7 48 89 43 30 e8 a2 4d
+    RSP: 0000:ffffaad580b6fb60 EFLAGS: 00010246
+    RAX: 0000000000000000 RBX: ffff90e38035c01c RCX: 0000000000000000
+    RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff90e38035c044
+    RBP: ffff90e38035c024 R08: 0000000000000002 R09: 0000000000000006
+    R10: ffff90e38035c02e R11: 0000000000000020 R12: ffff90e380bac000
+    R13: ffffe3a7456d9200 R14: 0000000000001b81 R15: ffffe3a7456d9200
+    FS:  00007f2e4e8a15c0(0000) GS:ffff90e3fbc80000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: 0000000000000040 CR3: 00000001150c6003 CR4: 0000000000170ee0
+    Call Trace:
+     <TASK>
+     ? __die+0x20/0x70
+     ? page_fault_oops+0x76/0x170
+     ? kernelmode_fixup_or_oops+0x84/0x110
+     ? exc_page_fault+0x65/0x150
+     ? asm_exc_page_fault+0x22/0x30
+     ? trace_event_raw_event_writeback_folio_template+0x76/0xf0
+     folio_wait_writeback+0x6b/0x80
+     shmem_swapin_folio+0x24a/0x500
+     ? filemap_get_entry+0xe3/0x140
+     shmem_get_folio_gfp+0x36e/0x7c0
+     ? find_busiest_group+0x43/0x1a0
+     shmem_fault+0x76/0x2a0
+     ? __update_load_avg_cfs_rq+0x281/0x2f0
+     __do_fault+0x33/0x130
+     do_read_fault+0x118/0x160
+     do_pte_missing+0x1ed/0x2a0
+     __handle_mm_fault+0x566/0x630
+     handle_mm_fault+0x91/0x210
+     do_user_addr_fault+0x22c/0x740
+     exc_page_fault+0x65/0x150
+     asm_exc_page_fault+0x22/0x30
 
-commit 3981514180c9 ("regmap: Account for register length when chunking")
+This problem arises from the fact that the repurposed writeback_dirty_page
+trace event code was written assuming that every pointer to mapping
+(struct address_space) would come from a file-mapped page-cache object,
+thus mapping->host would always be populated, and that was a valid case
+before commit 19343b5bdd16.  The swap-cache address space
+(swapper_spaces), however, doesn't populate its ->host (struct inode)
+pointer, thus leading to the crashes in the corner-case aforementioned.
 
-Change max_raw_write to include space (4 additional bytes) for both the
-register address and value:
+commit 19343b5bdd16 ended up breaking the assignment of __entry->name and
+__entry->ino for the wait_on_page_writeback tracepoint -- both dependent
+on mapping->host carrying a pointer to a valid inode.  The assignment of
+__entry->name was fixed by commit 68f23b89067f ("memcg: fix a crash in
+wb_workfn when a device disappears"), and this commit fixes the remaining
+case, for __entry->ino.
 
-	.max_raw_write = SPI_AVMM_REG_SIZE + SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT
-
-Fixes: 7f9fb67358a2 ("regmap: add Intel SPI Slave to AVMM Bus Bridge support")
-Reviewed-by: Matthew Gerlach <matthew.gerlach@linux.intel.com>
-Signed-off-by: Russ Weight <russell.h.weight@intel.com>
-Link: https://lore.kernel.org/r/20230620202824.380313-1-russell.h.weight@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230606233613.1290819-1-aquini@redhat.com
+Fixes: 19343b5bdd16 ("mm/page-writeback: introduce tracepoint for wait_on_page_writeback()")
+Signed-off-by: Rafael Aquini <aquini@redhat.com>
+Reviewed-by: Yafang Shao <laoar.shao@gmail.com>
+Cc: Aristeu Rozanski <aris@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap-spi-avmm.c | 2 +-
+
+---
+ include/trace/events/writeback.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regmap-spi-avmm.c b/drivers/base/regmap/regmap-spi-avmm.c
-index ad1da83e849fe..67f89937219c3 100644
---- a/drivers/base/regmap/regmap-spi-avmm.c
-+++ b/drivers/base/regmap/regmap-spi-avmm.c
-@@ -666,7 +666,7 @@ static const struct regmap_bus regmap_spi_avmm_bus = {
- 	.reg_format_endian_default = REGMAP_ENDIAN_NATIVE,
- 	.val_format_endian_default = REGMAP_ENDIAN_NATIVE,
- 	.max_raw_read = SPI_AVMM_VAL_SIZE * MAX_READ_CNT,
--	.max_raw_write = SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT,
-+	.max_raw_write = SPI_AVMM_REG_SIZE + SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT,
- 	.free_context = spi_avmm_bridge_ctx_free,
- };
+--- a/include/trace/events/writeback.h
++++ b/include/trace/events/writeback.h
+@@ -67,7 +67,7 @@ DECLARE_EVENT_CLASS(writeback_page_templ
+ 		strscpy_pad(__entry->name,
+ 			    bdi_dev_name(mapping ? inode_to_bdi(mapping->host) :
+ 					 NULL), 32);
+-		__entry->ino = mapping ? mapping->host->i_ino : 0;
++		__entry->ino = (mapping && mapping->host) ? mapping->host->i_ino : 0;
+ 		__entry->index = page->index;
+ 	),
  
--- 
-2.39.2
-
 
 
