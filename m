@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9716C8F8
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6448CC433C8;
-	Mon, 26 Jun 2023 18:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB4CD526
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BACC433C9;
+	Mon, 26 Jun 2023 18:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804701;
-	bh=M26HKupsejBWg5UI81erau+TMbQIXTHPjsVtfGpMoss=;
+	s=korg; t=1687804704;
+	bh=0f0/ysHr7SC7W3rVZbJbbMfE++pxOQtsuiwSp4i5XLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nryGU42j3wyDAUFsMqd9O3ZV0Je7O2vEvVb3iOzlhaCnw0r62tPnW9Rf0ATMb2yHq
-	 2M56fcAk+FcgiNGV5ZwXzi/uSGGYsupl7VZ2JgoMb5h2Sm1oNrXZVDnWf0rMgkpwS2
-	 2x1GU+lkknEznAK8d1ryLKCFrzs2sD26JkJGq2eA=
+	b=Z2YSMW6o3PRJXy5067qBG+meU316MJFg2aPAhHSDHuap9+40H4yupM2zIpouyGa49
+	 5ityHhEJyMHoF12jthOgsWFb8TPgXEWMDnRuUKjLtI1Mr9Y/gKEoN2mnm5xDLHiM75
+	 NV4kay0f2pnSYoqV/r6piL8W/JL2BnOecBdWArik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <Harry.Wentland@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 05/96] drm/amd/display: Use dc_update_planes_and_stream
-Date: Mon, 26 Jun 2023 20:11:20 +0200
-Message-ID: <20230626180747.161922880@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 14/96] nilfs2: fix buffer corruption due to concurrent device reads
+Date: Mon, 26 Jun 2023 20:11:29 +0200
+Message-ID: <20230626180747.507226633@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -37,81 +35,147 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit f7511289821ffccc07579406d6ab520aa11049f5 upstream.
+commit 679bd7ebdd315bf457a4740b306ae99f1d0a403d upstream.
 
-[Why & How]
-The old dc_commit_updates_for_stream lacks manipulation for many corner
-cases where the DC feature requires special attention; as a result, it
-starts to show its limitation (e.g., the SubVP feature is not supported
-by it, among other cases). To modernize and unify our internal API, this
-commit replaces the old dc_commit_updates_for_stream with
-dc_update_planes_and_stream, which has more features.
+As a result of analysis of a syzbot report, it turned out that in three
+cases where nilfs2 allocates block device buffers directly via sb_getblk,
+concurrent reads to the device can corrupt the allocated buffers.
 
-Reviewed-by: Harry Wentland <Harry.Wentland@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Nilfs2 uses sb_getblk for segment summary blocks, that make up a log
+header, and the super root block, that is the trailer, and when moving and
+writing the second super block after fs resize.
+
+In any of these, since the uptodate flag is not set when storing metadata
+to be written in the allocated buffers, the stored metadata will be
+overwritten if a device read of the same block occurs concurrently before
+the write.  This causes metadata corruption and misbehavior in the log
+write itself, causing warnings in nilfs_btree_assign() as reported.
+
+Fix these issues by setting an uptodate flag on the buffer head on the
+first or before modifying each buffer obtained with sb_getblk, and
+clearing the flag on failure.
+
+When setting the uptodate flag, the lock_buffer/unlock_buffer pair is used
+to perform necessary exclusive control, and the buffer is filled to ensure
+that uninitialized bytes are not mixed into the data read from others.  As
+for buffers for segment summary blocks, they are filled incrementally, so
+if the uptodate flag was unset on their allocation, set the flag and zero
+fill the buffer once at that point.
+
+Also, regarding the superblock move routine, the starting point of the
+memset call to zerofill the block is incorrectly specified, which can
+cause a buffer overflow on file systems with block sizes greater than
+4KiB.  In addition, if the superblock is moved within a large block, it is
+necessary to assume the possibility that the data in the superblock will
+be destroyed by zero-filling before copying.  So fix these potential
+issues as well.
+
+Link: https://lkml.kernel.org/r/20230609035732.20426-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/00000000000030000a05e981f475@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   30 +++++++++++-----------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ fs/nilfs2/segbuf.c  |    6 ++++++
+ fs/nilfs2/segment.c |    7 +++++++
+ fs/nilfs2/super.c   |   23 ++++++++++++++++++++++-
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2550,10 +2550,12 @@ static void dm_gpureset_commit_state(str
- 			bundle->surface_updates[m].surface->force_full_update =
- 				true;
- 		}
--		dc_commit_updates_for_stream(
--			dm->dc, bundle->surface_updates,
+--- a/fs/nilfs2/segbuf.c
++++ b/fs/nilfs2/segbuf.c
+@@ -101,6 +101,12 @@ int nilfs_segbuf_extend_segsum(struct ni
+ 	if (unlikely(!bh))
+ 		return -ENOMEM;
+ 
++	lock_buffer(bh);
++	if (!buffer_uptodate(bh)) {
++		memset(bh->b_data, 0, bh->b_size);
++		set_buffer_uptodate(bh);
++	}
++	unlock_buffer(bh);
+ 	nilfs_segbuf_add_segsum_buffer(segbuf, bh);
+ 	return 0;
+ }
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -979,10 +979,13 @@ static void nilfs_segctor_fill_in_super_
+ 	unsigned int isz, srsz;
+ 
+ 	bh_sr = NILFS_LAST_SEGBUF(&sci->sc_segbufs)->sb_super_root;
 +
-+		dc_update_planes_and_stream(dm->dc,
-+			bundle->surface_updates,
- 			dc_state->stream_status->plane_count,
--			dc_state->streams[k], &bundle->stream_update, dc_state);
-+			dc_state->streams[k],
-+			&bundle->stream_update);
++	lock_buffer(bh_sr);
+ 	raw_sr = (struct nilfs_super_root *)bh_sr->b_data;
+ 	isz = nilfs->ns_inode_size;
+ 	srsz = NILFS_SR_BYTES(isz);
+ 
++	raw_sr->sr_sum = 0;  /* Ensure initialization within this update */
+ 	raw_sr->sr_bytes = cpu_to_le16(srsz);
+ 	raw_sr->sr_nongc_ctime
+ 		= cpu_to_le64(nilfs_doing_gc() ?
+@@ -996,6 +999,8 @@ static void nilfs_segctor_fill_in_super_
+ 	nilfs_write_inode_common(nilfs->ns_sufile, (void *)raw_sr +
+ 				 NILFS_SR_SUFILE_OFFSET(isz), 1);
+ 	memset((void *)raw_sr + srsz, 0, nilfs->ns_blocksize - srsz);
++	set_buffer_uptodate(bh_sr);
++	unlock_buffer(bh_sr);
+ }
+ 
+ static void nilfs_redirty_inodes(struct list_head *head)
+@@ -1778,6 +1783,7 @@ static void nilfs_abort_logs(struct list
+ 	list_for_each_entry(segbuf, logs, sb_list) {
+ 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
+ 				    b_assoc_buffers) {
++			clear_buffer_uptodate(bh);
+ 			if (bh->b_page != bd_page) {
+ 				if (bd_page)
+ 					end_page_writeback(bd_page);
+@@ -1789,6 +1795,7 @@ static void nilfs_abort_logs(struct list
+ 				    b_assoc_buffers) {
+ 			clear_buffer_async_write(bh);
+ 			if (bh == segbuf->sb_super_root) {
++				clear_buffer_uptodate(bh);
+ 				if (bh->b_page != bd_page) {
+ 					end_page_writeback(bd_page);
+ 					bd_page = bh->b_page;
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -372,10 +372,31 @@ static int nilfs_move_2nd_super(struct s
+ 		goto out;
  	}
+ 	nsbp = (void *)nsbh->b_data + offset;
+-	memset(nsbp, 0, nilfs->ns_blocksize);
  
- cleanup:
-@@ -9238,12 +9240,11 @@ static void amdgpu_dm_commit_planes(stru
- 		}
- 		mutex_lock(&dm->dc_lock);
- 
--		dc_commit_updates_for_stream(dm->dc,
--						     bundle->surface_updates,
--						     planes_count,
--						     acrtc_state->stream,
--						     &bundle->stream_update,
--						     dc_state);
-+		dc_update_planes_and_stream(dm->dc,
-+					    bundle->surface_updates,
-+					    planes_count,
-+					    acrtc_state->stream,
-+					    &bundle->stream_update);
- 
- 		/**
- 		 * Enable or disable the interrupts on the backend.
-@@ -9669,12 +9670,11 @@ static void amdgpu_dm_atomic_commit_tail
- 
- 
- 		mutex_lock(&dm->dc_lock);
--		dc_commit_updates_for_stream(dm->dc,
--						     dummy_updates,
--						     status->plane_count,
--						     dm_new_crtc_state->stream,
--						     &stream_update,
--						     dc_state);
-+		dc_update_planes_and_stream(dm->dc,
-+					    dummy_updates,
-+					    status->plane_count,
-+					    dm_new_crtc_state->stream,
-+					    &stream_update);
- 		mutex_unlock(&dm->dc_lock);
- 	}
- 
++	lock_buffer(nsbh);
+ 	if (sb2i >= 0) {
++		/*
++		 * The position of the second superblock only changes by 4KiB,
++		 * which is larger than the maximum superblock data size
++		 * (= 1KiB), so there is no need to use memmove() to allow
++		 * overlap between source and destination.
++		 */
+ 		memcpy(nsbp, nilfs->ns_sbp[sb2i], nilfs->ns_sbsize);
++
++		/*
++		 * Zero fill after copy to avoid overwriting in case of move
++		 * within the same block.
++		 */
++		memset(nsbh->b_data, 0, offset);
++		memset((void *)nsbp + nilfs->ns_sbsize, 0,
++		       nsbh->b_size - offset - nilfs->ns_sbsize);
++	} else {
++		memset(nsbh->b_data, 0, nsbh->b_size);
++	}
++	set_buffer_uptodate(nsbh);
++	unlock_buffer(nsbh);
++
++	if (sb2i >= 0) {
+ 		brelse(nilfs->ns_sbh[sb2i]);
+ 		nilfs->ns_sbh[sb2i] = nsbh;
+ 		nilfs->ns_sbp[sb2i] = nsbp;
 
 
