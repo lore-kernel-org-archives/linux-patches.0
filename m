@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EF711CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A1BC433C8;
-	Mon, 26 Jun 2023 18:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98CD11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DA9C433C8;
+	Mon, 26 Jun 2023 18:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804748;
-	bh=RKBTwqm8IhRH8ToEOuNzKUaR5v2pw82o3jABbB6u7JI=;
+	s=korg; t=1687804751;
+	bh=Mwmv7TOShvdaXqq8ZPlApCMMtOUQUCWe+zLuJfemTOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Szx9bXMbt5JomFcjViVBlRLfHmO51CMZ15tooa81NS67ihDHn268Nsnj7p4oy+Dbd
-	 Iow8YFe/+1SBRNxG15vFGHUCzFWWe8CfpsoN7Gs+pqzB4PG1GJr4cPNZjUviDKUmpB
-	 oK0LVKcFl5Eo65YzgGq8LhCrl2eaRV0fS1OanZMk=
+	b=QW2DZZgx48cNW0hedmBJZEAc8nL5d3ZGwHGYWUw90tuDXZ9RZGC4VyAUDmgk2HvqX
+	 SVPHOwu+5NSxpYeOG6AYWkEqbTyfOMHrg7FNYBb1F8mEfiHEenN79G5Cd6xQUxD1W0
+	 yuovovxSkx6BsVLre+dZZjMWvJIFTB97IZz7LaIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias May <matthias.may@westermo.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Subject: [PATCH 5.15 28/96] ip_tunnels: allow VXLAN/GENEVE to inherit TOS/TTL from VLAN
-Date: Mon, 26 Jun 2023 20:11:43 +0200
-Message-ID: <20230626180748.118686737@linuxfoundation.org>
+	Teresa Remmet <t.remmet@phytec.de>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 29/96] regulator: pca9450: Fix LDO3OUT and LDO4OUT MASK
+Date: Mon, 26 Jun 2023 20:11:44 +0200
+Message-ID: <20230626180748.167425297@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -35,56 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias May <matthias.may@westermo.com>
+From: Teresa Remmet <t.remmet@phytec.de>
 
-commit 7074732c8faee201a245a6f983008a5789c0be33 upstream.
+[ Upstream commit 7257d930aadcd62d1c7971ab14f3b1126356abdc ]
 
-The current code allows for VXLAN and GENEVE to inherit the TOS
-respective the TTL when skb-protocol is ETH_P_IP or ETH_P_IPV6.
-However when the payload is VLAN encapsulated, then this inheriting
-does not work, because the visible skb-protocol is of type
-ETH_P_8021Q or ETH_P_8021AD.
+L3_OUT and L4_OUT Bit fields range from Bit 0:4 and thus the
+mask should be 0x1F instead of 0x0F.
 
-Instead of skb->protocol use skb_protocol().
-
-Signed-off-by: Matthias May <matthias.may@westermo.com>
-Link: https://lore.kernel.org/r/20220721202718.10092-1-matthias.may@westermo.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0935ff5f1f0a ("regulator: pca9450: add pca9450 pmic driver")
+Signed-off-by: Teresa Remmet <t.remmet@phytec.de>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Link: https://lore.kernel.org/r/20230614125240.3946519-1-t.remmet@phytec.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_tunnels.h |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/linux/regulator/pca9450.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -377,9 +377,11 @@ static inline int ip_tunnel_encap(struct
- static inline u8 ip_tunnel_get_dsfield(const struct iphdr *iph,
- 				       const struct sk_buff *skb)
- {
--	if (skb->protocol == htons(ETH_P_IP))
-+	__be16 payload_protocol = skb_protocol(skb, true);
-+
-+	if (payload_protocol == htons(ETH_P_IP))
- 		return iph->tos;
--	else if (skb->protocol == htons(ETH_P_IPV6))
-+	else if (payload_protocol == htons(ETH_P_IPV6))
- 		return ipv6_get_dsfield((const struct ipv6hdr *)iph);
- 	else
- 		return 0;
-@@ -388,9 +390,11 @@ static inline u8 ip_tunnel_get_dsfield(c
- static inline u8 ip_tunnel_get_ttl(const struct iphdr *iph,
- 				       const struct sk_buff *skb)
- {
--	if (skb->protocol == htons(ETH_P_IP))
-+	__be16 payload_protocol = skb_protocol(skb, true);
-+
-+	if (payload_protocol == htons(ETH_P_IP))
- 		return iph->ttl;
--	else if (skb->protocol == htons(ETH_P_IPV6))
-+	else if (payload_protocol == htons(ETH_P_IPV6))
- 		return ((const struct ipv6hdr *)iph)->hop_limit;
- 	else
- 		return 0;
+diff --git a/include/linux/regulator/pca9450.h b/include/linux/regulator/pca9450.h
+index 71902f41c9199..0c3edff6bdfff 100644
+--- a/include/linux/regulator/pca9450.h
++++ b/include/linux/regulator/pca9450.h
+@@ -196,11 +196,11 @@ enum {
+ 
+ /* PCA9450_REG_LDO3_VOLT bits */
+ #define LDO3_EN_MASK			0xC0
+-#define LDO3OUT_MASK			0x0F
++#define LDO3OUT_MASK			0x1F
+ 
+ /* PCA9450_REG_LDO4_VOLT bits */
+ #define LDO4_EN_MASK			0xC0
+-#define LDO4OUT_MASK			0x0F
++#define LDO4OUT_MASK			0x1F
+ 
+ /* PCA9450_REG_LDO5_VOLT bits */
+ #define LDO5L_EN_MASK			0xC0
+-- 
+2.39.2
+
 
 
