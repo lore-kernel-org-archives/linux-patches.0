@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CCD11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C23C433C0;
-	Mon, 26 Jun 2023 18:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9579811CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CCFC433C0;
+	Mon, 26 Jun 2023 18:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805066;
-	bh=Z3J9P18vc3vEFlJ/8qbyublIiQX1BQE4Uwsp+tY1sTo=;
+	s=korg; t=1687805069;
+	bh=XBCWyBR5TRzdxKyIl31Xkahy6W584das4R5YX6v+eoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IL90hfy9qE+d93NqVYdIu4E0ILi2GxqKsvGAwN+wK2ArHq0998Dt98XEavKdjv0XI
-	 f/JyR9FjAzWDPqliNqaYpYU9XTi+vEc/vsHdrzLF0UaHsVmpMdGHMrRusd+TpCJ26A
-	 ry4eJk+5cHUSKDHMrRdBnSG9DE5Dy0d0oTZxh/WI=
+	b=sqCHX5b9e6GFFyYpqsp3OVqfKhdKLcZdSZWBFlQy21uXaOMkjQroKF4JUZeNaqj3a
+	 lTCyonvlkKz6wQd6Wrn2j5nNWB2S5H40fdUJtk9Q9AJb9fAnwJfcOl4WvTSy44Mqe7
+	 Xd0HBQAtTEZgXwYDDY/HzPLXNeZamr8MrewaLc+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexander Aring <aahringo@redhat.com>,
-	Chen Aotian <chenaotian2@163.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 31/81] ieee802154: hwsim: Fix possible memory leaks
-Date: Mon, 26 Jun 2023 20:12:13 +0200
-Message-ID: <20230626180745.733034593@linuxfoundation.org>
+Subject: [PATCH 5.10 40/81] xfrm: Linearize the skb after offloading if needed.
+Date: Mon, 26 Jun 2023 20:12:22 +0200
+Message-ID: <20230626180746.095914039@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -37,48 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Aotian <chenaotian2@163.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit a61675294735570daca3779bd1dbb3715f7232bd ]
+[ Upstream commit f015b900bc3285322029b4a7d132d6aeb0e51857 ]
 
-After replacing e->info, it is necessary to free the old einfo.
+With offloading enabled, esp_xmit() gets invoked very late, from within
+validate_xmit_xfrm() which is after validate_xmit_skb() validates and
+linearizes the skb if the underlying device does not support fragments.
 
-Fixes: f25da51fdc38 ("ieee802154: hwsim: add replacement for fakelb")
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: Chen Aotian <chenaotian2@163.com>
-Link: https://lore.kernel.org/r/20230409022048.61223-1-chenaotian2@163.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+esp_output_tail() may add a fragment to the skb while adding the auth
+tag/ IV. Devices without the proper support will then send skb->data
+points to with the correct length so the packet will have garbage at the
+end. A pcap sniffer will claim that the proper data has been sent since
+it parses the skb properly.
+
+It is not affected with INET_ESP_OFFLOAD disabled.
+
+Linearize the skb after offloading if the sending hardware requires it.
+It was tested on v4, v6 has been adopted.
+
+Fixes: 7785bba299a8d ("esp: Add a software GRO codepath")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/mac802154_hwsim.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ipv4/esp4_offload.c | 3 +++
+ net/ipv6/esp6_offload.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/ieee802154/mac802154_hwsim.c b/drivers/net/ieee802154/mac802154_hwsim.c
-index 97981cf7661ad..344f63bc94a21 100644
---- a/drivers/net/ieee802154/mac802154_hwsim.c
-+++ b/drivers/net/ieee802154/mac802154_hwsim.c
-@@ -522,7 +522,7 @@ static int hwsim_del_edge_nl(struct sk_buff *msg, struct genl_info *info)
- static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
- {
- 	struct nlattr *edge_attrs[MAC802154_HWSIM_EDGE_ATTR_MAX + 1];
--	struct hwsim_edge_info *einfo;
-+	struct hwsim_edge_info *einfo, *einfo_old;
- 	struct hwsim_phy *phy_v0;
- 	struct hwsim_edge *e;
- 	u32 v0, v1;
-@@ -560,8 +560,10 @@ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
- 	list_for_each_entry_rcu(e, &phy_v0->edges, list) {
- 		if (e->endpoint->idx == v1) {
- 			einfo->lqi = lqi;
--			rcu_assign_pointer(e->info, einfo);
-+			einfo_old = rcu_replace_pointer(e->info, einfo,
-+							lockdep_is_held(&hwsim_phys_lock));
- 			rcu_read_unlock();
-+			kfree_rcu(einfo_old, rcu);
- 			mutex_unlock(&hwsim_phys_lock);
- 			return 0;
- 		}
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index 84257678160a3..dc50764b01807 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -338,6 +338,9 @@ static int esp_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features_
+ 
+ 	secpath_reset(skb);
+ 
++	if (skb_needs_linearize(skb, skb->dev->features) &&
++	    __skb_linearize(skb))
++		return -ENOMEM;
+ 	return 0;
+ }
+ 
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index 7608be04d0f58..87dbd53c29a6e 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -372,6 +372,9 @@ static int esp6_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features
+ 
+ 	secpath_reset(skb);
+ 
++	if (skb_needs_linearize(skb, skb->dev->features) &&
++	    __skb_linearize(skb))
++		return -ENOMEM;
+ 	return 0;
+ }
+ 
 -- 
 2.39.2
 
