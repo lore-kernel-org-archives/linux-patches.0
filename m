@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D9B13AE7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:30:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8D2C433C8;
-	Mon, 26 Jun 2023 18:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D822F13AD3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AAE7C433C0;
+	Mon, 26 Jun 2023 18:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804206;
-	bh=XkCv8m+SwglEKpH2hgINfBZTfuigdB5mMl/5EvINsKU=;
+	s=korg; t=1687804209;
+	bh=l15jnZ/i7qE/A3PEVGMmo0QkMs+AmSrGDA1I8OenQxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsVu8bTXSQbKP3ecYJVt1pGD833vJw3z4adETwpzdOW6tzQa6q9ghq8ScYJ+h0idy
-	 gYWm+oe0tnHx5hXpouxYsyNkEipqgchRSyuEse6oLps6JTzX+tgZx+kOVX3kIHLXWm
-	 sagj09emDjHXR188zHl0xumtxQRDX1hOxPuwwzdI=
+	b=Fw2kgyPDKt5CUjE3at3VLITIO/oEkbntsgLd2xW1GqFrivIbb1FiklyqsTaKYc7rG
+	 r3D1JGG5kEvfhwlT8GS8RWvuz2dbZudc14+cBJ59hbXUGld5UOX4NCXn+5+qsx/hbp
+	 Zr157SzbmHHi8QNccHhJZgdEGbXFs8d1p973bmtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Querijn Voet <querijnqyn@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 076/170] io_uring/poll: serialize poll linked timer start with poll removal
-Date: Mon, 26 Jun 2023 20:10:45 +0200
-Message-ID: <20230626180804.026649747@linuxfoundation.org>
+	Dexuan Cui <decui@microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.1 050/170] PCI: hv: Fix a race condition bug in hv_pci_query_relations()
+Date: Mon, 26 Jun 2023 20:10:19 +0200
+Message-ID: <20230626180802.812101139@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -34,71 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Dexuan Cui <decui@microsoft.com>
 
-Commit ef7dfac51d8ed961b742218f526bd589f3900a59 upstream.
+commit 440b5e3663271b0ffbd4908115044a6a51fb938b upstream.
 
-We selectively grab the ctx->uring_lock for poll update/removal, but
-we really should grab it from the start to fully synchronize with
-linked timeouts. Normally this is indeed the case, but if requests
-are forced async by the application, we don't fully cover removal
-and timer disarm within the uring_lock.
+Since day 1 of the driver, there has been a race between
+hv_pci_query_relations() and survey_child_resources(): during fast
+device hotplug, hv_pci_query_relations() may error out due to
+device-remove and the stack variable 'comp' is no longer valid;
+however, pci_devices_present_work() -> survey_child_resources() ->
+complete() may be running on another CPU and accessing the no-longer-valid
+'comp'. Fix the race by flushing the workqueue before we exit from
+hv_pci_query_relations().
 
-Make this simpler by having consistent locking state for poll removal.
-
-Cc: stable@vger.kernel.org # 6.1+
-Reported-by: Querijn Voet <querijnqyn@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 4daace0d8ce8 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230615044451.5580-2-decui@microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/pci/controller/pci-hyperv.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -993,8 +993,9 @@ int io_poll_remove(struct io_kiocb *req,
- 	struct io_hash_bucket *bucket;
- 	struct io_kiocb *preq;
- 	int ret2, ret = 0;
--	bool locked;
-+	bool locked = true;
+--- a/drivers/pci/controller/pci-hyperv.c
++++ b/drivers/pci/controller/pci-hyperv.c
+@@ -3321,6 +3321,24 @@ static int hv_pci_query_relations(struct
+ 	if (!ret)
+ 		ret = wait_for_response(hdev, &comp);
  
-+	io_ring_submit_lock(ctx, issue_flags);
- 	preq = io_poll_find(ctx, true, &cd, &ctx->cancel_table, &bucket);
- 	ret2 = io_poll_disarm(preq);
- 	if (bucket)
-@@ -1006,12 +1007,10 @@ int io_poll_remove(struct io_kiocb *req,
- 		goto out;
- 	}
++	/*
++	 * In the case of fast device addition/removal, it's possible that
++	 * vmbus_sendpacket() or wait_for_response() returns -ENODEV but we
++	 * already got a PCI_BUS_RELATIONS* message from the host and the
++	 * channel callback already scheduled a work to hbus->wq, which can be
++	 * running pci_devices_present_work() -> survey_child_resources() ->
++	 * complete(&hbus->survey_event), even after hv_pci_query_relations()
++	 * exits and the stack variable 'comp' is no longer valid; as a result,
++	 * a hang or a page fault may happen when the complete() calls
++	 * raw_spin_lock_irqsave(). Flush hbus->wq before we exit from
++	 * hv_pci_query_relations() to avoid the issues. Note: if 'ret' is
++	 * -ENODEV, there can't be any more work item scheduled to hbus->wq
++	 * after the flush_workqueue(): see vmbus_onoffer_rescind() ->
++	 * vmbus_reset_channel_cb(), vmbus_rescind_cleanup() ->
++	 * channel->rescind = true.
++	 */
++	flush_workqueue(hbus->wq);
++
+ 	return ret;
+ }
  
--	io_ring_submit_lock(ctx, issue_flags);
- 	preq = io_poll_find(ctx, true, &cd, &ctx->cancel_table_locked, &bucket);
- 	ret2 = io_poll_disarm(preq);
- 	if (bucket)
- 		spin_unlock(&bucket->lock);
--	io_ring_submit_unlock(ctx, issue_flags);
- 	if (ret2) {
- 		ret = ret2;
- 		goto out;
-@@ -1035,7 +1034,7 @@ found:
- 		if (poll_update->update_user_data)
- 			preq->cqe.user_data = poll_update->new_user_data;
- 
--		ret2 = io_poll_add(preq, issue_flags);
-+		ret2 = io_poll_add(preq, issue_flags & ~IO_URING_F_UNLOCKED);
- 		/* successfully updated, don't complete poll request */
- 		if (!ret2 || ret2 == -EIOCBQUEUED)
- 			goto out;
-@@ -1043,9 +1042,9 @@ found:
- 
- 	req_set_fail(preq);
- 	io_req_set_res(preq, -ECANCELED, 0);
--	locked = !(issue_flags & IO_URING_F_UNLOCKED);
- 	io_req_task_complete(preq, &locked);
- out:
-+	io_ring_submit_unlock(ctx, issue_flags);
- 	if (ret < 0) {
- 		req_set_fail(req);
- 		return ret;
 
 
