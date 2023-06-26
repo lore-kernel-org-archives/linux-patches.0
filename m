@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC710134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:18:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D1BC433C0;
-	Mon, 26 Jun 2023 18:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1F8134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:18:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE20C433C8;
+	Mon, 26 Jun 2023 18:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803492;
-	bh=oqlHtEu4VUoNWDbcB/jLW5LbqQLHZsASLTHEpoETFcw=;
+	s=korg; t=1687803495;
+	bh=L2g0TRGK5NjJmqA6qo/2TAeo5KwZtGXvH2luOqTkg0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TYLVdDeaJ32AUtVVOZkLaN6zDMsDLE6G9oTiO8yJtDx34uD/+gZLCqOk3GuqPD3Xa
-	 em/qxuR3xrGhE3G7wF/TE0ziOkoMHCcxefKzP6ozZvff5mgGMp4LcsoCC3PuJnK+Fj
-	 nQFu3fTNDWEA2LPozPy/SNVs59Uc+4Iq5ir8aIDE=
+	b=D0FWwsIpvZFjxJpM7jwYrsyrJrR4zNl3elx6K+GvI/GdYFBpx/eMrJglDO0D19O/l
+	 67U3qMBI0zGIcqEfy0YsodM0GzpvypzK3jhEpIx6reslinK8A0sHwCEjCBzA7ec2bh
+	 3isW5Z2TUPxkEsa6yoFTU/PCPPQTdIgoqQHYpILY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.3 079/199] mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
-Date: Mon, 26 Jun 2023 20:09:45 +0200
-Message-ID: <20230626180809.037839953@linuxfoundation.org>
+Subject: [PATCH 6.3 080/199] mmc: meson-gx: remove redundant mmc_request_done() call from irq context
+Date: Mon, 26 Jun 2023 20:09:46 +0200
+Message-ID: <20230626180809.087004640@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -35,73 +34,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Martin Hundebøll <martin@geanix.com>
 
-commit e6f9e590b72e12bbb86b1b8be7e1981f357392ad upstream.
+commit 3c40eb8145325b0f5b93b8a169146078cb2c49d6 upstream.
 
-While SDHCI claims to support 64-bit DMA on MSM8916 it does not seem to
-be properly functional. It is not immediately obvious because SDHCI is
-usually used with IOMMU bypassed on this SoC, and all physical memory
-has 32-bit addresses. But when trying to enable the IOMMU it quickly
-fails with an error such as the following:
+The call to mmc_request_done() can schedule, so it must not be called
+from irq context. Wake the irq thread if it needs to be called, and let
+its existing logic do its work.
 
-  arm-smmu 1e00000.iommu: Unhandled context fault:
-    fsr=0x402, iova=0xfffff200, fsynr=0xe0000, cbfrsynra=0x140, cb=3
-  mmc1: ADMA error: 0x02000000
-  mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
-  mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00002e02
-  mmc1: sdhci: Blk size:  0x00000008 | Blk cnt:  0x00000000
-  mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000013
-  mmc1: sdhci: Present:   0x03f80206 | Host ctl: 0x00000019
-  mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
-  mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
-  mmc1: sdhci: Timeout:   0x0000000a | Int stat: 0x00000001
-  mmc1: sdhci: Int enab:  0x03ff900b | Sig enab: 0x03ff100b
-  mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-  mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x00008007
-  mmc1: sdhci: Cmd:       0x0000333a | Max curr: 0x00000000
-  mmc1: sdhci: Resp[0]:   0x00000920 | Resp[1]:  0x5b590000
-  mmc1: sdhci: Resp[2]:   0xe6487f80 | Resp[3]:  0x0a404094
-  mmc1: sdhci: Host ctl2: 0x00000008
-  mmc1: sdhci: ADMA Err:  0x00000001 | ADMA Ptr: 0x0000000ffffff224
-  mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
-  mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:  0x60006400 | DLL cfg2: 0x00000000
-  mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:  0x00000000 | DDR cfg: 0x00000000
-  mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88018a8 Vndr func3: 0x00000000
-  mmc1: sdhci: ============================================
-  mmc1: sdhci: fffffffff200: DMA 0x0000ffffffffe100, LEN 0x0008, Attr=0x21
-  mmc1: sdhci: fffffffff20c: DMA 0x0000000000000000, LEN 0x0000, Attr=0x03
+Fixes the following kernel bug, which appears when running an RT patched
+kernel on the AmLogic Meson AXG A113X SoC:
+[   11.111407] BUG: scheduling while atomic: kworker/0:1H/75/0x00010001
+[   11.111438] Modules linked in:
+[   11.111451] CPU: 0 PID: 75 Comm: kworker/0:1H Not tainted 6.4.0-rc3-rt2-rtx-00081-gfd07f41ed6b4-dirty #1
+[   11.111461] Hardware name: RTX AXG A113X Linux Platform Board (DT)
+[   11.111469] Workqueue: kblockd blk_mq_run_work_fn
+[   11.111492] Call trace:
+[   11.111497]  dump_backtrace+0xac/0xe8
+[   11.111510]  show_stack+0x18/0x28
+[   11.111518]  dump_stack_lvl+0x48/0x60
+[   11.111530]  dump_stack+0x18/0x24
+[   11.111537]  __schedule_bug+0x4c/0x68
+[   11.111548]  __schedule+0x80/0x574
+[   11.111558]  schedule_loop+0x2c/0x50
+[   11.111567]  schedule_rtlock+0x14/0x20
+[   11.111576]  rtlock_slowlock_locked+0x468/0x730
+[   11.111587]  rt_spin_lock+0x40/0x64
+[   11.111596]  __wake_up_common_lock+0x5c/0xc4
+[   11.111610]  __wake_up+0x18/0x24
+[   11.111620]  mmc_blk_mq_req_done+0x68/0x138
+[   11.111633]  mmc_request_done+0x104/0x118
+[   11.111644]  meson_mmc_request_done+0x38/0x48
+[   11.111654]  meson_mmc_irq+0x128/0x1f0
+[   11.111663]  __handle_irq_event_percpu+0x70/0x114
+[   11.111674]  handle_irq_event_percpu+0x18/0x4c
+[   11.111683]  handle_irq_event+0x80/0xb8
+[   11.111691]  handle_fasteoi_irq+0xa4/0x120
+[   11.111704]  handle_irq_desc+0x20/0x38
+[   11.111712]  generic_handle_domain_irq+0x1c/0x28
+[   11.111721]  gic_handle_irq+0x8c/0xa8
+[   11.111735]  call_on_irq_stack+0x24/0x4c
+[   11.111746]  do_interrupt_handler+0x88/0x94
+[   11.111757]  el1_interrupt+0x34/0x64
+[   11.111769]  el1h_64_irq_handler+0x18/0x24
+[   11.111779]  el1h_64_irq+0x64/0x68
+[   11.111786]  __add_wait_queue+0x0/0x4c
+[   11.111795]  mmc_blk_rw_wait+0x84/0x118
+[   11.111804]  mmc_blk_mq_issue_rq+0x5c4/0x654
+[   11.111814]  mmc_mq_queue_rq+0x194/0x214
+[   11.111822]  blk_mq_dispatch_rq_list+0x3ac/0x528
+[   11.111834]  __blk_mq_sched_dispatch_requests+0x340/0x4d0
+[   11.111847]  blk_mq_sched_dispatch_requests+0x38/0x70
+[   11.111858]  blk_mq_run_work_fn+0x3c/0x70
+[   11.111865]  process_one_work+0x17c/0x1f0
+[   11.111876]  worker_thread+0x1d4/0x26c
+[   11.111885]  kthread+0xe4/0xf4
+[   11.111894]  ret_from_fork+0x10/0x20
 
-Looking closely it's obvious that only the 32-bit part of the address
-(0xfffff200) arrives at the SMMU, the higher 16-bit (0xffff...) get
-lost somewhere. This might not be a limitation of the SDHCI itself but
-perhaps the bus/interconnect it is connected to, or even the connection
-to the SMMU.
-
-Work around this by setting SDHCI_QUIRK2_BROKEN_64_BIT_DMA to avoid
-using 64-bit addresses.
-
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: 51c5d8447bd7 ("MMC: meson: initial support for GX platforms")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net
+Signed-off-by: Martin Hundebøll <martin@geanix.com>
+Link: https://lore.kernel.org/r/20230607082713.517157-1-martin@geanix.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-msm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/host/meson-gx-mmc.c |   10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2479,6 +2479,9 @@ static inline void sdhci_msm_get_of_prop
- 		msm_host->ddr_config = DDR_CONFIG_POR_VAL;
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -1006,11 +1006,8 @@ static irqreturn_t meson_mmc_irq(int irq
  
- 	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+ 		if (data && !cmd->error)
+ 			data->bytes_xfered = data->blksz * data->blocks;
+-		if (meson_mmc_bounce_buf_read(data) ||
+-		    meson_mmc_get_next_command(cmd))
+-			ret = IRQ_WAKE_THREAD;
+-		else
+-			ret = IRQ_HANDLED;
 +
-+	if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
-+		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
++		return IRQ_WAKE_THREAD;
+ 	}
+ 
+ out:
+@@ -1022,9 +1019,6 @@ out:
+ 		writel(start, host->regs + SD_EMMC_START);
+ 	}
+ 
+-	if (ret == IRQ_HANDLED)
+-		meson_mmc_request_done(host->mmc, cmd->mrq);
+-
+ 	return ret;
  }
  
- static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
 
 
