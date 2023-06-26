@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4F613AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:28:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4EDC433C0;
-	Mon, 26 Jun 2023 18:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C24F13AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:28:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B4FC433C0;
+	Mon, 26 Jun 2023 18:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804124;
-	bh=7CTrHphkJ6u2S+EF3nGoWXIBOjIb8e2bymsPVUtyGFE=;
+	s=korg; t=1687804127;
+	bh=lCzTTXsK9F3LiXP1DIfPcuSePbR6FNxIucFb5rRfXm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aR0oA7MFZXFywdJeuWjHqsWeVbi0qJE9p9mefTMhAdjFKzqYGBjz4IYdyruZBcExP
-	 wmLWu465IiUSa/wfmHgh6chFCDwvArJb/yN8PMP79KdQR5MdM0R/z5vuVvHQ0CINrp
-	 JzdRvPPzNX3zz8zWGGXZpZ26R2UACw65HIvf7wpo=
+	b=r8ZQflPVmpanzQcWeILkGd2URUQ25PN37RQ5iyUaBz0lAPywiv6GL2T2iQJCXYk9e
+	 ZzAqm6aDmBLsSqlK5t6PfRelrta4SmUX+Y3uI7LEmIDm4WWcRULT25ml5jh8XeFfZ0
+	 fxW6Ff2m4Fz/N94bHuGI2nv2+WzTFuUToyz+Z33U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 021/170] selftests: mptcp: sockopt: relax expected returned size
-Date: Mon, 26 Jun 2023 20:09:50 +0200
-Message-ID: <20230626180801.504719639@linuxfoundation.org>
+Subject: [PATCH 6.1 022/170] selftests: mptcp: sockopt: skip getsockopt checks if not supported
+Date: Mon, 26 Jun 2023 20:09:51 +0200
+Message-ID: <20230626180801.547524090@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,7 +36,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 8dee6ca2ac1e5630a7bb6a98bc0b686916fc2000 upstream.
+commit c6f7eccc519837ebde1d099d9610c4f1d5bd975e upstream.
 
 Selftests are supposed to run on any kernels, including the old ones not
 supporting all MPTCP features.
@@ -45,17 +45,9 @@ One of them is the getsockopt(SOL_MPTCP) to get info about the MPTCP
 connections introduced by commit 55c42fa7fa33 ("mptcp: add MPTCP_INFO
 getsockopt") and the following ones.
 
-We cannot guess in advance which sizes the kernel will returned: older
-kernel can returned smaller sizes, e.g. recently the tcp_info structure
-has been modified in commit 71fc704768f6 ("tcp: add rcv_wnd and
-plb_rehash to TCP_INFO") where a new field has been added.
-
-The userspace can also expect a smaller size if it is compiled with old
-uAPI kernel headers.
-
-So for these sizes, we can only check if they are above a certain
-threshold, 0 for the moment. We can also only compared sizes with the
-ones set by the kernel.
+It is possible to look for "mptcp_diag_fill_info" in kallsyms because
+it is introduced by the mentioned feature. So we can know in advance if
+the feature is supported and skip the sub-test if not.
 
 Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
 Fixes: ce9979129a0b ("selftests: mptcp: add mptcp getsockopt test cases")
@@ -64,62 +56,30 @@ Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/net/mptcp/mptcp_sockopt.c        | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_sockopt.sh |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_sockopt.c b/tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-index ae61f39556ca..b35148edbf02 100644
---- a/tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-@@ -87,6 +87,10 @@ struct so_state {
- 	uint64_t tcpi_rcv_delta;
- };
+--- a/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_sockopt.sh
+@@ -84,6 +84,7 @@ cleanup()
+ }
  
-+#ifndef MIN
-+#define MIN(a, b) ((a) < (b) ? (a) : (b))
-+#endif
-+
- static void die_perror(const char *msg)
+ mptcp_lib_check_mptcp
++mptcp_lib_check_kallsyms
+ 
+ ip -Version > /dev/null 2>&1
+ if [ $? -ne 0 ];then
+@@ -248,6 +249,11 @@ do_mptcp_sockopt_tests()
  {
- 	perror(msg);
-@@ -349,13 +353,14 @@ static void do_getsockopt_tcp_info(struct so_state *s, int fd, size_t r, size_t
- 			xerror("getsockopt MPTCP_TCPINFO (tries %d, %m)");
+ 	local lret=0
  
- 		assert(olen <= sizeof(ti));
--		assert(ti.d.size_user == ti.d.size_kernel);
--		assert(ti.d.size_user == sizeof(struct tcp_info));
-+		assert(ti.d.size_kernel > 0);
-+		assert(ti.d.size_user ==
-+		       MIN(ti.d.size_kernel, sizeof(struct tcp_info)));
- 		assert(ti.d.num_subflows == 1);
++	if ! mptcp_lib_kallsyms_has "mptcp_diag_fill_info$"; then
++		echo "INFO: MPTCP sockopt not supported: SKIP"
++		return
++	fi
++
+ 	ip netns exec "$ns_sbox" ./mptcp_sockopt
+ 	lret=$?
  
- 		assert(olen > (socklen_t)sizeof(struct mptcp_subflow_data));
- 		olen -= sizeof(struct mptcp_subflow_data);
--		assert(olen == sizeof(struct tcp_info));
-+		assert(olen == ti.d.size_user);
- 
- 		if (ti.ti[0].tcpi_bytes_sent == w &&
- 		    ti.ti[0].tcpi_bytes_received == r)
-@@ -401,13 +406,14 @@ static void do_getsockopt_subflow_addrs(int fd)
- 		die_perror("getsockopt MPTCP_SUBFLOW_ADDRS");
- 
- 	assert(olen <= sizeof(addrs));
--	assert(addrs.d.size_user == addrs.d.size_kernel);
--	assert(addrs.d.size_user == sizeof(struct mptcp_subflow_addrs));
-+	assert(addrs.d.size_kernel > 0);
-+	assert(addrs.d.size_user ==
-+	       MIN(addrs.d.size_kernel, sizeof(struct mptcp_subflow_addrs)));
- 	assert(addrs.d.num_subflows == 1);
- 
- 	assert(olen > (socklen_t)sizeof(struct mptcp_subflow_data));
- 	olen -= sizeof(struct mptcp_subflow_data);
--	assert(olen == sizeof(struct mptcp_subflow_addrs));
-+	assert(olen == addrs.d.size_user);
- 
- 	llen = sizeof(local);
- 	ret = getsockname(fd, (struct sockaddr *)&local, &llen);
--- 
-2.41.0
-
 
 
