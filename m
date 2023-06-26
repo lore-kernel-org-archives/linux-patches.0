@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230D4134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907BFC433C0;
-	Mon, 26 Jun 2023 18:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2365A134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91934C433CB;
+	Mon, 26 Jun 2023 18:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803676;
-	bh=PIjjKVmZQ320dfLxqLy0VJY/NsmorB4h19c0vikRn68=;
+	s=korg; t=1687803679;
+	bh=kFmtX6/BnYsyS+GMNpB+ypvggE5ebgj3PSPYRGPJSxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O1OQeRnqZHIq/quLs/PmGhs4jfgp6TJV8DvLArkeAj2/uhbIusvOLGDwqWyYxWotw
-	 qDu5xDQDWdJDU+VAL0Ecl2GaRM/RgCYVZancinn86X9FH03TMXI+EufEE67m0A26tV
-	 GM2QbIfWDbVj7sd/6ATAwFzJA6FTtwyInJ54Dl6k=
+	b=olMJT4+av+9BxfOaXE/8gZMgJSgCqAI285HKIIhAvR49+EgGG72bfX4tFHEAjsc4D
+	 mbo+MlnhWp4EXmIX7nNW9Pubr4/wqMA6D91JE7hTX0Y4giqGy6DchdT362dEm6iHyt
+	 1JhjSwhdu9ELo6SepTYRIAvxgjPyGEAKCLxIhQiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	kernel test robot <lkp@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 139/199] bpf: Force kprobe multi expected_attach_type for kprobe_multi link
-Date: Mon, 26 Jun 2023 20:10:45 +0200
-Message-ID: <20230626180811.698715648@linuxfoundation.org>
+Subject: [PATCH 6.3 140/199] io_uring/net: use the correct msghdr union member in io_sendmsg_copy_hdr
+Date: Mon, 26 Jun 2023 20:10:46 +0200
+Message-ID: <20230626180811.747680456@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,47 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit db8eae6bc5c702d8e3ab2d0c6bb5976c131576eb ]
+[ Upstream commit 26fed83653d0154704cadb7afc418f315c7ac1f0 ]
 
-We currently allow to create perf link for program with
-expected_attach_type == BPF_TRACE_KPROBE_MULTI.
+Rather than assign the user pointer to msghdr->msg_control, assign it
+to msghdr->msg_control_user to make sparse happy. They are in a union
+so the end result is the same, but let's avoid new sparse warnings and
+squash this one.
 
-This will cause crash when we call helpers like get_attach_cookie or
-get_func_ip in such program, because it will call the kprobe_multi's
-version (current->bpf_ctx context setup) of those helpers while it
-expects perf_link's current->bpf_ctx context setup.
-
-Making sure that we use BPF_TRACE_KPROBE_MULTI expected_attach_type
-only for programs attaching through kprobe_multi link.
-
-Fixes: ca74823c6e16 ("bpf: Add cookie support to programs attached with kprobe multi link")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230618131414.75649-1-jolsa@kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202306210654.mDMcyMuB-lkp@intel.com/
+Fixes: cac9e4418f4c ("io_uring/net: save msghdr->msg_control for retries")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ io_uring/net.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index adc83cb82f379..8bd5e3741d418 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3412,6 +3412,11 @@ static int bpf_prog_attach_check_attach_type(const struct bpf_prog *prog,
- 		return prog->enforce_expected_attach_type &&
- 			prog->expected_attach_type != attach_type ?
- 			-EINVAL : 0;
-+	case BPF_PROG_TYPE_KPROBE:
-+		if (prog->expected_attach_type == BPF_TRACE_KPROBE_MULTI &&
-+		    attach_type != BPF_TRACE_KPROBE_MULTI)
-+			return -EINVAL;
-+		return 0;
- 	default:
- 		return 0;
- 	}
+diff --git a/io_uring/net.c b/io_uring/net.c
+index 49dc43d1d9fd5..2cf671cef0b61 100644
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -203,7 +203,7 @@ static int io_sendmsg_copy_hdr(struct io_kiocb *req,
+ 	ret = sendmsg_copy_msghdr(&iomsg->msg, sr->umsg, sr->msg_flags,
+ 					&iomsg->free_iov);
+ 	/* save msg_control as sys_sendmsg() overwrites it */
+-	sr->msg_control = iomsg->msg.msg_control;
++	sr->msg_control = iomsg->msg.msg_control_user;
+ 	return ret;
+ }
+ 
+@@ -302,7 +302,7 @@ int io_sendmsg(struct io_kiocb *req, unsigned int issue_flags)
+ 
+ 	if (req_has_async_data(req)) {
+ 		kmsg = req->async_data;
+-		kmsg->msg.msg_control = sr->msg_control;
++		kmsg->msg.msg_control_user = sr->msg_control;
+ 	} else {
+ 		ret = io_sendmsg_copy_hdr(req, &iomsg);
+ 		if (ret)
 -- 
 2.39.2
 
