@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D65413AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F915C433CB;
-	Mon, 26 Jun 2023 18:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CD113AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C22C433C9;
+	Mon, 26 Jun 2023 18:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804141;
-	bh=SesFy4arrJuGxDVjfRSOZoNezECgi4DJkjPU9W0ROvU=;
+	s=korg; t=1687804144;
+	bh=6kzFPY5wPvlO+ZvPUuJVlfEL/70LjeVKtlWzsLdyAwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hX1F+qPOcJvOIi2Kl2mt0TwX3VVpYKen3Kt9bPcrMoytiHR9+a4IDgZCYlD96Q/xL
-	 glsKEgiW2hP2IonB6LBc38/5/Zn4OPDolUcWOTDPKdeCFe2M0EWqD3WFPZGdUm2huI
-	 RPQ35ziJjygp2UODhsg8Jf94nEFTLNq66fQcxHJs=
+	b=b8rfJcoT2mDLnDlWzG7qdAekh/Z44mqBPbd/OoJshY5N77yAg/wOj/YY0n56pYXW1
+	 nLIIO4CSFmGWcN2247PY4+bSYYUg1A4LJCFR1BypFfjcSFzAw9vjqtVqeqE/kp1fWN
+	 12LJy8wyNZ5IZmo8zGkBayocZqL0/uJ1pz7oAzIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 056/170] io_uring/net: disable partial retries for recvmsg with cmsg
-Date: Mon, 26 Jun 2023 20:10:25 +0200
-Message-ID: <20230626180803.093850140@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Christoph Paasch <cpaasch@apple.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 057/170] mptcp: handle correctly disconnect() failures
+Date: Mon, 26 Jun 2023 20:10:26 +0200
+Message-ID: <20230626180803.141430398@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -34,53 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 78d0d2063bab954d19a1696feae4c7706a626d48 upstream.
+commit c2b2ae3925b65070adb27d5a31a31c376f26dec7 upstream.
 
-We cannot sanely handle partial retries for recvmsg if we have cmsg
-attached. If we don't, then we'd just be overwriting the initial cmsg
-header on retries. Alternatively we could increment and handle this
-appropriately, but it doesn't seem worth the complication.
+Currently the mptcp code has assumes that disconnect() can fail only
+at mptcp_sendmsg_fastopen() time - to avoid a deadlock scenario - and
+don't even bother returning an error code.
 
-Move the MSG_WAITALL check into the non-multishot case while at it,
-since MSG_WAITALL is explicitly disabled for multishot anyway.
+Soon mptcp_disconnect() will handle more error conditions: let's track
+them explicitly.
 
-Link: https://lore.kernel.org/io-uring/0b0d4411-c8fd-4272-770b-e030af6919a0@kernel.dk/
-Cc: stable@vger.kernel.org # 5.10+
-Reported-by: Stefan Metzmacher <metze@samba.org>
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+As a bonus, explicitly annotate TCP-level disconnect as not failing:
+the mptcp code never blocks for event on the subflows.
+
+Fixes: 7d803344fdc3 ("mptcp: fix deadlock in fastopen error path")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -781,16 +781,19 @@ retry_multishot:
- 	flags = sr->msg_flags;
- 	if (force_nonblock)
- 		flags |= MSG_DONTWAIT;
--	if (flags & MSG_WAITALL)
--		min_ret = iov_iter_count(&kmsg->msg.msg_iter);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1708,7 +1708,13 @@ static int mptcp_sendmsg_fastopen(struct
+ 		if (ret && ret != -EINPROGRESS && ret != -ERESTARTSYS && ret != -EINTR)
+ 			*copied_syn = 0;
+ 	} else if (ret && ret != -EINPROGRESS) {
+-		mptcp_disconnect(sk, 0);
++		/* The disconnect() op called by tcp_sendmsg_fastopen()/
++		 * __inet_stream_connect() can fail, due to looking check,
++		 * see mptcp_disconnect().
++		 * Attempt it again outside the problematic scope.
++		 */
++		if (!mptcp_disconnect(sk, 0))
++			sk->sk_socket->state = SS_UNCONNECTED;
+ 	}
  
- 	kmsg->msg.msg_get_inq = 1;
--	if (req->flags & REQ_F_APOLL_MULTISHOT)
-+	if (req->flags & REQ_F_APOLL_MULTISHOT) {
- 		ret = io_recvmsg_multishot(sock, sr, kmsg, flags,
- 					   &mshot_finished);
--	else
-+	} else {
-+		/* disable partial retry for recvmsg with cmsg attached */
-+		if (flags & MSG_WAITALL && !kmsg->msg.msg_controllen)
-+			min_ret = iov_iter_count(&kmsg->msg.msg_iter);
-+
- 		ret = __sys_recvmsg_sock(sock, &kmsg->msg, sr->umsg,
- 					 kmsg->uaddr, flags);
-+	}
+ 	return ret;
+@@ -2375,7 +2381,10 @@ static void __mptcp_close_ssk(struct soc
  
- 	if (ret < min_ret) {
- 		if (ret == -EAGAIN && force_nonblock) {
+ 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
+ 	if (!dispose_it) {
+-		tcp_disconnect(ssk, 0);
++		/* The MPTCP code never wait on the subflow sockets, TCP-level
++		 * disconnect should never fail
++		 */
++		WARN_ON_ONCE(tcp_disconnect(ssk, 0));
+ 		msk->subflow->state = SS_UNCONNECTED;
+ 		mptcp_subflow_ctx_reset(subflow);
+ 		release_sock(ssk);
+@@ -2799,7 +2808,7 @@ void mptcp_subflow_shutdown(struct sock
+ 			break;
+ 		fallthrough;
+ 	case TCP_SYN_SENT:
+-		tcp_disconnect(ssk, O_NONBLOCK);
++		WARN_ON_ONCE(tcp_disconnect(ssk, O_NONBLOCK));
+ 		break;
+ 	default:
+ 		if (__mptcp_check_fallback(mptcp_sk(sk))) {
+@@ -3053,11 +3062,10 @@ static int mptcp_disconnect(struct sock
+ 
+ 	/* We are on the fastopen error path. We can't call straight into the
+ 	 * subflows cleanup code due to lock nesting (we are already under
+-	 * msk->firstsocket lock). Do nothing and leave the cleanup to the
+-	 * caller.
++	 * msk->firstsocket lock).
+ 	 */
+ 	if (msk->fastopening)
+-		return 0;
++		return -EBUSY;
+ 
+ 	inet_sk_state_store(sk, TCP_CLOSE);
+ 
 
 
