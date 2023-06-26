@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8195611CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001AEC433C8;
-	Mon, 26 Jun 2023 18:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890CF11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0056AC433C8;
+	Mon, 26 Jun 2023 18:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804772;
-	bh=V1aeuxXObHP5fwAg9Nw3YSc27Jjs2aasKMFlzhkHOvI=;
+	s=korg; t=1687804775;
+	bh=P3h2hjZrHdqdljlQE0cOsJ4YhJ0VXF462+NZJyCH0XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ggtLrvuSD8UeL+eACtIdlddeQXQCtjLR3pwBZTpe7LXUtmiOAWHdeGgrsDvKUAoZ
-	 5i97ygAFPHVvFi+NLaVa/fENR4Ckz9tLsQzFtctNn6wKLOeFSMQeDSPxVlXArC5BDt
-	 klXckx8HVyxTIFiJ9SGYK7/83CsEUZwGpCK5t6rU=
+	b=oeZsGgVHGFdv0iR66A7EZtlBzE3mufVr2mJxXD20pcu7kL9aP7YXRAR0sbGoMq38H
+	 ooQ2mh/GOj0okfDhXS3woNvEVEM6ZOdtu/Yl38R6fhoOxbXVAjhzb4SK61/9AOoAg4
+	 8MkZ3ILyR9NulAiCsfG79yqXDZHYsOykbSOo1gm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 35/96] nilfs2: prevent general protection fault in nilfs_clear_dirty_page()
-Date: Mon, 26 Jun 2023 20:11:50 +0200
-Message-ID: <20230626180748.416529272@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 08/96] selftests: mptcp: lib: skip if missing symbol
+Date: Mon, 26 Jun 2023 20:11:23 +0200
+Message-ID: <20230626180747.280147768@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -35,56 +34,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 782e53d0c14420858dbf0f8f797973c150d3b6d7 upstream.
+commit 673004821ab98c6645bd21af56a290854e88f533 upstream.
 
-In a syzbot stress test that deliberately causes file system errors on
-nilfs2 with a corrupted disk image, it has been reported that
-nilfs_clear_dirty_page() called from nilfs_clear_dirty_pages() can cause a
-general protection fault.
+Selftests are supposed to run on any kernels, including the old ones not
+supporting all MPTCP features.
 
-In nilfs_clear_dirty_pages(), when looking up dirty pages from the page
-cache and calling nilfs_clear_dirty_page() for each dirty page/folio
-retrieved, the back reference from the argument page to "mapping" may have
-been changed to NULL (and possibly others).  It is necessary to check this
-after locking the page/folio.
+New functions are now available to easily detect if a certain feature is
+missing by looking at kallsyms.
 
-So, fix this issue by not calling nilfs_clear_dirty_page() on a page/folio
-after locking it in nilfs_clear_dirty_pages() if the back reference
-"mapping" from the page/folio is different from the "mapping" that held
-the page/folio just before.
+These new helpers are going to be used in the following commits. In
+order to ease the backport of such future patches, it would be good if
+this patch is backported up to the introduction of MPTCP selftests,
+hence the Fixes tag below: this type of check was supposed to be done
+from the beginning.
 
-Link: https://lkml.kernel.org/r/20230612021456.3682-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/000000000000da4f6b05eb9bf593@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
+Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/page.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/config       |    1 
+ tools/testing/selftests/net/mptcp/mptcp_lib.sh |   38 +++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -369,7 +369,15 @@ void nilfs_clear_dirty_pages(struct addr
- 			struct page *page = pvec.pages[i];
- 
- 			lock_page(page);
--			nilfs_clear_dirty_page(page, silent);
+--- a/tools/testing/selftests/net/mptcp/config
++++ b/tools/testing/selftests/net/mptcp/config
+@@ -1,3 +1,4 @@
++CONFIG_KALLSYMS=y
+ CONFIG_MPTCP=y
+ CONFIG_IPV6=y
+ CONFIG_MPTCP_IPV6=y
+--- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
+@@ -38,3 +38,41 @@ mptcp_lib_check_mptcp() {
+ 		exit ${KSFT_SKIP}
+ 	fi
+ }
 +
-+			/*
-+			 * This page may have been removed from the address
-+			 * space by truncation or invalidation when the lock
-+			 * was acquired.  Skip processing in that case.
-+			 */
-+			if (likely(page->mapping == mapping))
-+				nilfs_clear_dirty_page(page, silent);
++mptcp_lib_check_kallsyms() {
++	if ! mptcp_lib_has_file "/proc/kallsyms"; then
++		echo "SKIP: CONFIG_KALLSYMS is missing"
++		exit ${KSFT_SKIP}
++	fi
++}
 +
- 			unlock_page(page);
- 		}
- 		pagevec_release(&pvec);
++# Internal: use mptcp_lib_kallsyms_has() instead
++__mptcp_lib_kallsyms_has() {
++	local sym="${1}"
++
++	mptcp_lib_check_kallsyms
++
++	grep -q " ${sym}" /proc/kallsyms
++}
++
++# $1: part of a symbol to look at, add '$' at the end for full name
++mptcp_lib_kallsyms_has() {
++	local sym="${1}"
++
++	if __mptcp_lib_kallsyms_has "${sym}"; then
++		return 0
++	fi
++
++	mptcp_lib_fail_if_expected_feature "${sym} symbol not found"
++}
++
++# $1: part of a symbol to look at, add '$' at the end for full name
++mptcp_lib_kallsyms_doesnt_have() {
++	local sym="${1}"
++
++	if ! __mptcp_lib_kallsyms_has "${sym}"; then
++		return 0
++	fi
++
++	mptcp_lib_fail_if_expected_feature "${sym} symbol has been found"
++}
 
 
