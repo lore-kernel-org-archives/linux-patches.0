@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153BD11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81416C433C8;
-	Mon, 26 Jun 2023 18:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005C611CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7531FC433C8;
+	Mon, 26 Jun 2023 18:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804733;
-	bh=VzYi389IZAOLJPmIumt6ROjP2CXCWL/vX0svcB2SYJY=;
+	s=korg; t=1687804736;
+	bh=7qmsuYJux3w1dXJQLnj4yWgolBj7EC/7tExWw4xpzVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eyPY2T/bP8OhKAoaM5C4lDEkIM+Xk1xZJZSryrgYwmZy9CQXpwQL1AAXdRpo+4PRh
-	 KPTjh/3RKMj6cNfXF1q7LgSppBS3adzCqAF+YmqFfLnmqMo2yY/nG66t1k2MAHPV4j
-	 wZOdovsKNKA7gyBhcDtqQlxbbnlr7f5YLM+M4IqY=
+	b=q5LvZQO3u/6nEQ5K/iRKyoZFdpzXCf6eRRUpwimzUeIp5Ls/E+L+FY2MJdmuEhnK1
+	 zHzFxphIT8xjWk+4ThcVaEky/iBlMcnOnVo6wOr9HKM/9TIMVyG1CsFuy2DjJVBynD
+	 gFW+44bTey+muQWayYLCkTzp5LtX/MYIyaP9kMEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <Harry.Wentland@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 06/96] drm/amd/display: Add wrapper to call planes and stream update
-Date: Mon, 26 Jun 2023 20:11:21 +0200
-Message-ID: <20230626180747.196611720@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 5.15 24/96] cgroup: Do not corrupt task iteration when rebinding subsystem
+Date: Mon, 26 Jun 2023 20:11:39 +0200
+Message-ID: <20230626180747.936759338@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -37,101 +36,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-commit 81f743a08f3b214638aa389e252ae5e6c3592e7c upstream.
+commit 6f363f5aa845561f7ea496d8b1175e3204470486 upstream.
 
-[Why & How]
-This commit is part of a sequence of changes that replaces the commit
-sequence used in the DC with a new one. As a result of this transition,
-we moved some specific parts from the commit sequence and brought them
-to amdgpu_dm. This commit adds a wrapper inside DM that enable our
-drivers to do any necessary preparation or change before we offload the
-plane/stream update to DC.
+We found a refcount UAF bug as follows:
 
-Reviewed-by: Harry Wentland <Harry.Wentland@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 1 PID: 342 at lib/refcount.c:25 refcount_warn_saturate+0xa0/0x148
+Workqueue: events cpuset_hotplug_workfn
+Call trace:
+ refcount_warn_saturate+0xa0/0x148
+ __refcount_add.constprop.0+0x5c/0x80
+ css_task_iter_advance_css_set+0xd8/0x210
+ css_task_iter_advance+0xa8/0x120
+ css_task_iter_next+0x94/0x158
+ update_tasks_root_domain+0x58/0x98
+ rebuild_root_domains+0xa0/0x1b0
+ rebuild_sched_domains_locked+0x144/0x188
+ cpuset_hotplug_workfn+0x138/0x5a0
+ process_one_work+0x1e8/0x448
+ worker_thread+0x228/0x3e0
+ kthread+0xe0/0xf0
+ ret_from_fork+0x10/0x20
+
+then a kernel panic will be triggered as below:
+
+Unable to handle kernel paging request at virtual address 00000000c0000010
+Call trace:
+ cgroup_apply_control_disable+0xa4/0x16c
+ rebind_subsystems+0x224/0x590
+ cgroup_destroy_root+0x64/0x2e0
+ css_free_rwork_fn+0x198/0x2a0
+ process_one_work+0x1d4/0x4bc
+ worker_thread+0x158/0x410
+ kthread+0x108/0x13c
+ ret_from_fork+0x10/0x18
+
+The race that cause this bug can be shown as below:
+
+(hotplug cpu)                | (umount cpuset)
+mutex_lock(&cpuset_mutex)    | mutex_lock(&cgroup_mutex)
+cpuset_hotplug_workfn        |
+ rebuild_root_domains        |  rebind_subsystems
+  update_tasks_root_domain   |   spin_lock_irq(&css_set_lock)
+   css_task_iter_start       |    list_move_tail(&cset->e_cset_node[ss->id]
+   while(css_task_iter_next) |                  &dcgrp->e_csets[ss->id]);
+   css_task_iter_end         |   spin_unlock_irq(&css_set_lock)
+mutex_unlock(&cpuset_mutex)  | mutex_unlock(&cgroup_mutex)
+
+Inside css_task_iter_start/next/end, css_set_lock is hold and then
+released, so when iterating task(left side), the css_set may be moved to
+another list(right side), then it->cset_head points to the old list head
+and it->cset_pos->next points to the head node of new list, which can't
+be used as struct css_set.
+
+To fix this issue, switch from all css_sets to only scgrp's css_sets to
+patch in-flight iterators to preserve correct iteration, and then
+update it->cset_head as well.
+
+Reported-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://www.spinics.net/lists/cgroups/msg37935.html
+Suggested-by: Michal Koutný <mkoutny@suse.com>
+Link: https://lore.kernel.org/all/20230526114139.70274-1-xiujianfeng@huaweicloud.com/
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Fixes: 2d8f243a5e6e ("cgroup: implement cgroup->e_csets[]")
+Cc: stable@vger.kernel.org # v3.16+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   51 +++++++++++++++++-----
- 1 file changed, 41 insertions(+), 10 deletions(-)
+ kernel/cgroup/cgroup.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -354,6 +354,35 @@ static inline bool is_dc_timing_adjust_n
- }
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -1741,7 +1741,7 @@ int rebind_subsystems(struct cgroup_root
+ {
+ 	struct cgroup *dcgrp = &dst_root->cgrp;
+ 	struct cgroup_subsys *ss;
+-	int ssid, i, ret;
++	int ssid, ret;
+ 	u16 dfl_disable_ss_mask = 0;
  
- /**
-+ * update_planes_and_stream_adapter() - Send planes to be updated in DC
-+ *
-+ * DC has a generic way to update planes and stream via
-+ * dc_update_planes_and_stream function; however, DM might need some
-+ * adjustments and preparation before calling it. This function is a wrapper
-+ * for the dc_update_planes_and_stream that does any required configuration
-+ * before passing control to DC.
-+ */
-+static inline bool update_planes_and_stream_adapter(struct dc *dc,
-+						    int update_type,
-+						    int planes_count,
-+						    struct dc_stream_state *stream,
-+						    struct dc_stream_update *stream_update,
-+						    struct dc_surface_update *array_of_surface_update)
-+{
-+	/*
-+	 * Previous frame finished and HW is ready for optimization.
-+	 */
-+	if (update_type == UPDATE_TYPE_FAST)
-+		dc_post_update_surfaces_to_stream(dc);
-+
-+	return dc_update_planes_and_stream(dc,
-+					   array_of_surface_update,
-+					   planes_count,
-+					   stream,
-+					   stream_update);
-+}
-+
-+/**
-  * dm_pflip_high_irq() - Handle pageflip interrupt
-  * @interrupt_params: ignored
-  *
-@@ -2551,11 +2580,12 @@ static void dm_gpureset_commit_state(str
- 				true;
- 		}
+ 	lockdep_assert_held(&cgroup_mutex);
+@@ -1785,7 +1785,8 @@ int rebind_subsystems(struct cgroup_root
+ 		struct cgroup_root *src_root = ss->root;
+ 		struct cgroup *scgrp = &src_root->cgrp;
+ 		struct cgroup_subsys_state *css = cgroup_css(scgrp, ss);
+-		struct css_set *cset;
++		struct css_set *cset, *cset_pos;
++		struct css_task_iter *it;
  
--		dc_update_planes_and_stream(dm->dc,
--			bundle->surface_updates,
--			dc_state->stream_status->plane_count,
--			dc_state->streams[k],
--			&bundle->stream_update);
-+		update_planes_and_stream_adapter(dm->dc,
-+					 UPDATE_TYPE_FULL,
-+					 dc_state->stream_status->plane_count,
-+					 dc_state->streams[k],
-+					 &bundle->stream_update,
-+					 bundle->surface_updates);
- 	}
+ 		WARN_ON(!css || cgroup_css(dcgrp, ss));
  
- cleanup:
-@@ -9240,11 +9270,12 @@ static void amdgpu_dm_commit_planes(stru
- 		}
- 		mutex_lock(&dm->dc_lock);
+@@ -1803,9 +1804,22 @@ int rebind_subsystems(struct cgroup_root
+ 		css->cgroup = dcgrp;
  
--		dc_update_planes_and_stream(dm->dc,
--					    bundle->surface_updates,
--					    planes_count,
--					    acrtc_state->stream,
--					    &bundle->stream_update);
-+		update_planes_and_stream_adapter(dm->dc,
-+					 acrtc_state->update_type,
-+					 planes_count,
-+					 acrtc_state->stream,
-+					 &bundle->stream_update,
-+					 bundle->surface_updates);
+ 		spin_lock_irq(&css_set_lock);
+-		hash_for_each(css_set_table, i, cset, hlist)
++		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
++		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
++					 e_cset_node[ss->id]) {
+ 			list_move_tail(&cset->e_cset_node[ss->id],
+ 				       &dcgrp->e_csets[ss->id]);
++			/*
++			 * all css_sets of scgrp together in same order to dcgrp,
++			 * patch in-flight iterators to preserve correct iteration.
++			 * since the iterator is always advanced right away and
++			 * finished when it->cset_pos meets it->cset_head, so only
++			 * update it->cset_head is enough here.
++			 */
++			list_for_each_entry(it, &cset->task_iters, iters_node)
++				if (it->cset_head == &scgrp->e_csets[ss->id])
++					it->cset_head = &dcgrp->e_csets[ss->id];
++		}
+ 		spin_unlock_irq(&css_set_lock);
  
- 		/**
- 		 * Enable or disable the interrupts on the backend.
+ 		if (ss->css_rstat_flush) {
 
 
