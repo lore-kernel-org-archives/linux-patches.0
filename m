@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52EE134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:17:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDDEC433C0;
-	Mon, 26 Jun 2023 18:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D45134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:17:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A42C433C0;
+	Mon, 26 Jun 2023 18:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803474;
-	bh=QKo343TrisK5KbGRso+3uKdyedADtZanVkz/FhzQEYo=;
+	s=korg; t=1687803477;
+	bh=woGTmBM6Oq62b2nOBm3ISgO13MbsyT6ie4DERgzHVBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1BF5fPcRcQJl1LNh5D/Bu5HEtbcK8iiglusqP2mjAofbz/BcMZu38FxGH+HTgKr3t
-	 k3bOnUMg8qkY4d8RXTIb6vXubp+UB6I0CqLD2QHB+Or6puHs2pn2bejR00sEXFvxBX
-	 DqSlqkH2D8Chm4HnzPpbPEd/6uYbcHt5TfWogvak=
+	b=gc78gepAlzWpDWotirnu1RJhpaSEsDjeuStrXl1B/dnkMxuq7oFMxngcr/zFodi28
+	 IqsfD631qayIdg0RCx+MO3WzGE79/KvZa7zu5axJndaYB0jnfFmlXnBFniV1TIQS7A
+	 VADuyFogLc6IHonVb87ZuL39YjFRjBDI6v8BKrvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 074/199] mptcp: ensure listener is unhashed before updating the sk status
-Date: Mon, 26 Jun 2023 20:09:40 +0200
-Message-ID: <20230626180808.788586976@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.3 075/199] cgroup: Do not corrupt task iteration when rebinding subsystem
+Date: Mon, 26 Jun 2023 20:09:41 +0200
+Message-ID: <20230626180808.841340657@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,104 +36,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-commit 57fc0f1ceaa4016354cf6f88533e20b56190e41a upstream.
+commit 6f363f5aa845561f7ea496d8b1175e3204470486 upstream.
 
-The MPTCP protocol access the listener subflow in a lockless
-manner in a couple of places (poll, diag). That works only if
-the msk itself leaves the listener status only after that the
-subflow itself has been closed/disconnected. Otherwise we risk
-deadlock in diag, as reported by Christoph.
+We found a refcount UAF bug as follows:
 
-Address the issue ensuring that the first subflow (the listener
-one) is always disconnected before updating the msk socket status.
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 1 PID: 342 at lib/refcount.c:25 refcount_warn_saturate+0xa0/0x148
+Workqueue: events cpuset_hotplug_workfn
+Call trace:
+ refcount_warn_saturate+0xa0/0x148
+ __refcount_add.constprop.0+0x5c/0x80
+ css_task_iter_advance_css_set+0xd8/0x210
+ css_task_iter_advance+0xa8/0x120
+ css_task_iter_next+0x94/0x158
+ update_tasks_root_domain+0x58/0x98
+ rebuild_root_domains+0xa0/0x1b0
+ rebuild_sched_domains_locked+0x144/0x188
+ cpuset_hotplug_workfn+0x138/0x5a0
+ process_one_work+0x1e8/0x448
+ worker_thread+0x228/0x3e0
+ kthread+0xe0/0xf0
+ ret_from_fork+0x10/0x20
 
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/407
-Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+then a kernel panic will be triggered as below:
+
+Unable to handle kernel paging request at virtual address 00000000c0000010
+Call trace:
+ cgroup_apply_control_disable+0xa4/0x16c
+ rebind_subsystems+0x224/0x590
+ cgroup_destroy_root+0x64/0x2e0
+ css_free_rwork_fn+0x198/0x2a0
+ process_one_work+0x1d4/0x4bc
+ worker_thread+0x158/0x410
+ kthread+0x108/0x13c
+ ret_from_fork+0x10/0x18
+
+The race that cause this bug can be shown as below:
+
+(hotplug cpu)                | (umount cpuset)
+mutex_lock(&cpuset_mutex)    | mutex_lock(&cgroup_mutex)
+cpuset_hotplug_workfn        |
+ rebuild_root_domains        |  rebind_subsystems
+  update_tasks_root_domain   |   spin_lock_irq(&css_set_lock)
+   css_task_iter_start       |    list_move_tail(&cset->e_cset_node[ss->id]
+   while(css_task_iter_next) |                  &dcgrp->e_csets[ss->id]);
+   css_task_iter_end         |   spin_unlock_irq(&css_set_lock)
+mutex_unlock(&cpuset_mutex)  | mutex_unlock(&cgroup_mutex)
+
+Inside css_task_iter_start/next/end, css_set_lock is hold and then
+released, so when iterating task(left side), the css_set may be moved to
+another list(right side), then it->cset_head points to the old list head
+and it->cset_pos->next points to the head node of new list, which can't
+be used as struct css_set.
+
+To fix this issue, switch from all css_sets to only scgrp's css_sets to
+patch in-flight iterators to preserve correct iteration, and then
+update it->cset_head as well.
+
+Reported-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://www.spinics.net/lists/cgroups/msg37935.html
+Suggested-by: Michal Koutný <mkoutny@suse.com>
+Link: https://lore.kernel.org/all/20230526114139.70274-1-xiujianfeng@huaweicloud.com/
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Fixes: 2d8f243a5e6e ("cgroup: implement cgroup->e_csets[]")
+Cc: stable@vger.kernel.org # v3.16+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    1 +
- net/mptcp/protocol.c   |   31 +++++++++++++++++++------------
- 2 files changed, 20 insertions(+), 12 deletions(-)
+ kernel/cgroup/cgroup.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1047,6 +1047,7 @@ static int mptcp_pm_nl_create_listen_soc
- 	if (err)
- 		return err;
- 
-+	inet_sk_state_store(newsk, TCP_LISTEN);
- 	err = kernel_listen(ssock, backlog);
- 	if (err)
- 		return err;
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2385,13 +2385,6 @@ static void __mptcp_close_ssk(struct soc
- 		kfree_rcu(subflow, rcu);
- 	} else {
- 		/* otherwise tcp will dispose of the ssk and subflow ctx */
--		if (ssk->sk_state == TCP_LISTEN) {
--			tcp_set_state(ssk, TCP_CLOSE);
--			mptcp_subflow_queue_clean(sk, ssk);
--			inet_csk_listen_stop(ssk);
--			mptcp_event_pm_listener(ssk, MPTCP_EVENT_LISTENER_CLOSED);
--		}
--
- 		__tcp_close(ssk, 0);
- 
- 		/* close acquired an extra ref */
-@@ -2926,10 +2919,24 @@ static __poll_t mptcp_check_readable(str
- 	return EPOLLIN | EPOLLRDNORM;
- }
- 
--static void mptcp_listen_inuse_dec(struct sock *sk)
-+static void mptcp_check_listen_stop(struct sock *sk)
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -1788,7 +1788,7 @@ int rebind_subsystems(struct cgroup_root
  {
--	if (inet_sk_state_load(sk) == TCP_LISTEN)
--		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
-+	struct sock *ssk;
-+
-+	if (inet_sk_state_load(sk) != TCP_LISTEN)
-+		return;
-+
-+	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
-+	ssk = mptcp_sk(sk)->first;
-+	if (WARN_ON_ONCE(!ssk || inet_sk_state_load(ssk) != TCP_LISTEN))
-+		return;
-+
-+	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
-+	mptcp_subflow_queue_clean(sk, ssk);
-+	inet_csk_listen_stop(ssk);
-+	mptcp_event_pm_listener(ssk, MPTCP_EVENT_LISTENER_CLOSED);
-+	tcp_set_state(ssk, TCP_CLOSE);
-+	release_sock(ssk);
- }
+ 	struct cgroup *dcgrp = &dst_root->cgrp;
+ 	struct cgroup_subsys *ss;
+-	int ssid, i, ret;
++	int ssid, ret;
+ 	u16 dfl_disable_ss_mask = 0;
  
- bool __mptcp_close(struct sock *sk, long timeout)
-@@ -2942,7 +2949,7 @@ bool __mptcp_close(struct sock *sk, long
- 	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
+ 	lockdep_assert_held(&cgroup_mutex);
+@@ -1832,7 +1832,8 @@ int rebind_subsystems(struct cgroup_root
+ 		struct cgroup_root *src_root = ss->root;
+ 		struct cgroup *scgrp = &src_root->cgrp;
+ 		struct cgroup_subsys_state *css = cgroup_css(scgrp, ss);
+-		struct css_set *cset;
++		struct css_set *cset, *cset_pos;
++		struct css_task_iter *it;
  
- 	if ((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE)) {
--		mptcp_listen_inuse_dec(sk);
-+		mptcp_check_listen_stop(sk);
- 		inet_sk_state_store(sk, TCP_CLOSE);
- 		goto cleanup;
- 	}
-@@ -3056,7 +3063,7 @@ static int mptcp_disconnect(struct sock
- 	if (msk->fastopening)
- 		return -EBUSY;
+ 		WARN_ON(!css || cgroup_css(dcgrp, ss));
  
--	mptcp_listen_inuse_dec(sk);
-+	mptcp_check_listen_stop(sk);
- 	inet_sk_state_store(sk, TCP_CLOSE);
+@@ -1850,9 +1851,22 @@ int rebind_subsystems(struct cgroup_root
+ 		css->cgroup = dcgrp;
  
- 	mptcp_stop_timer(sk);
+ 		spin_lock_irq(&css_set_lock);
+-		hash_for_each(css_set_table, i, cset, hlist)
++		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
++		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
++					 e_cset_node[ss->id]) {
+ 			list_move_tail(&cset->e_cset_node[ss->id],
+ 				       &dcgrp->e_csets[ss->id]);
++			/*
++			 * all css_sets of scgrp together in same order to dcgrp,
++			 * patch in-flight iterators to preserve correct iteration.
++			 * since the iterator is always advanced right away and
++			 * finished when it->cset_pos meets it->cset_head, so only
++			 * update it->cset_head is enough here.
++			 */
++			list_for_each_entry(it, &cset->task_iters, iters_node)
++				if (it->cset_head == &scgrp->e_csets[ss->id])
++					it->cset_head = &dcgrp->e_csets[ss->id];
++		}
+ 		spin_unlock_irq(&css_set_lock);
+ 
+ 		if (ss->css_rstat_flush) {
 
 
