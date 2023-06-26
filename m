@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B92F134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC4EC433C0;
-	Mon, 26 Jun 2023 18:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988D4134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEB3C433C0;
+	Mon, 26 Jun 2023 18:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803924;
-	bh=xn3NhUOHVX07065STk+IN3fOab0bBqOpLpGcpr36qrM=;
+	s=korg; t=1687803927;
+	bh=BnY9tEwl581+ZH4RcY8BDKcQ4ZemhFuZDyycVn4W940=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QhwPOuUzXgIEs2XJrfg8m3ahqgM6HQHdfALAIcFb3HXxi682fk3lGJP2X4QP10gv+
-	 DxuxjVL7pEDMEZIjI0V+rZJrP0GgGDp0Ytt1NU7mXnHaK6jpesJAf9DpuFUjZwnPU9
-	 CfIIcNCZlxVd4dsG3XXCXpkD3XNy4/r2i1bTDY3g=
+	b=SeLP3jD3ZEp5x9dqUlYKOa+eHI88/N6DDNF+xn2E5bjYwbYHTDJLsRF+dc4thr9zY
+	 b1dmJ+UVDPIpNfmSTZA00v4Go+83G6cHuylun/kqjNZnO7QnJAmCa0t2/hSo+0/1uJ
+	 rAmKHjp4WYUGaPZFMmM1vWoTsAinnuglC2hR0qxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 23/41] mmc: sdhci-acpi: fix deferred probing
-Date: Mon, 26 Jun 2023 20:11:46 +0200
-Message-ID: <20230626180737.151602868@linuxfoundation.org>
+Subject: [PATCH 4.19 24/41] mmc: usdhi60rol0: fix deferred probing
+Date: Mon, 26 Jun 2023 20:11:47 +0200
+Message-ID: <20230626180737.191679319@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -38,36 +37,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit b465dea5e1540c7d7b5211adaf94926980d3014b ]
+[ Upstream commit 413db499730248431c1005b392e8ed82c4fa19bf ]
 
-The driver overrides the error codes returned by platform_get_irq() to
--EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
-permanently instead of the deferred probing. Switch to propagating the
-error codes upstream.
+The driver overrides the error codes returned by platform_get_irq_byname()
+to -ENODEV, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing.  Switch to propagating error
+codes upstream.
 
-Fixes: 1b7ba57ecc86 ("mmc: sdhci-acpi: Handle return value of platform_get_irq")
+Fixes: 9ec36cafe43b ("of/irq: do irq resolution in platform_get_irq")
 Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20230617203622.6812-9-s.shtylyov@omp.ru
+Link: https://lore.kernel.org/r/20230617203622.6812-13-s.shtylyov@omp.ru
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-acpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/usdhi6rol0.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-acpi.c b/drivers/mmc/host/sdhci-acpi.c
-index 6cc187ce3a329..069b9a07aca5d 100644
---- a/drivers/mmc/host/sdhci-acpi.c
-+++ b/drivers/mmc/host/sdhci-acpi.c
-@@ -721,7 +721,7 @@ static int sdhci_acpi_probe(struct platform_device *pdev)
- 	host->ops	= &sdhci_acpi_ops_dflt;
- 	host->irq	= platform_get_irq(pdev, 0);
- 	if (host->irq < 0) {
--		err = -EINVAL;
-+		err = host->irq;
- 		goto err_free;
- 	}
+diff --git a/drivers/mmc/host/usdhi6rol0.c b/drivers/mmc/host/usdhi6rol0.c
+index b88728b686e8a..e436f7e7a3ee0 100644
+--- a/drivers/mmc/host/usdhi6rol0.c
++++ b/drivers/mmc/host/usdhi6rol0.c
+@@ -1749,8 +1749,10 @@ static int usdhi6_probe(struct platform_device *pdev)
+ 	irq_cd = platform_get_irq_byname(pdev, "card detect");
+ 	irq_sd = platform_get_irq_byname(pdev, "data");
+ 	irq_sdio = platform_get_irq_byname(pdev, "SDIO");
+-	if (irq_sd < 0 || irq_sdio < 0)
+-		return -ENODEV;
++	if (irq_sd < 0)
++		return irq_sd;
++	if (irq_sdio < 0)
++		return irq_sdio;
  
+ 	mmc = mmc_alloc_host(sizeof(struct usdhi6_host), dev);
+ 	if (!mmc)
 -- 
 2.39.2
 
