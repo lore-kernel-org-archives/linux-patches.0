@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9B4134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA37DC433C8;
-	Mon, 26 Jun 2023 18:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C61D134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC49C433C0;
+	Mon, 26 Jun 2023 18:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803933;
-	bh=p7ipOKXkggp00tJEOsCaq/mfWKeRpEyelZj9DPXOOnY=;
+	s=korg; t=1687803936;
+	bh=guFFuS4FhMwT78heOdaxGrrD7gFadLq40rlremOJwkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JAsNKlmahhLzGr7B6WUNu8MoTLg5HYDo7XAcUtLm5pN92+y+WXQJ77YUTzSc8KU1f
-	 Bp5lvdyf9blnHwg99F8ug3vxNJGVNlinK30ptH/V0l0dF9Xkhc1DW3yPTuiqSXF6As
-	 GhBRaTRI6GY1pTpi3tjiEu0WmZ9reUH9Gw7Siw4k=
+	b=HTb42dyfUVk8cBrta6/ZNHz4ipACf6qwbGKGyJpfE+QKqPsusd89AwxydiAnyX1A7
+	 3wk60EP/8Y8Pn0l6C6/9nJe51yyRgnurnXAQIqQodh7ZFNEmgp59bsrJaopzO1ei56
+	 GrJQubQ1CsEqNDKvMFaOAbvJUf0LGWsIlFOhckuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 26/41] netfilter: nf_tables: disallow element updates of bound anonymous sets
-Date: Mon, 26 Jun 2023 20:11:49 +0200
-Message-ID: <20230626180737.270374813@linuxfoundation.org>
+Subject: [PATCH 4.19 27/41] netfilter: nfnetlink_osf: fix module autoload
+Date: Mon, 26 Jun 2023 20:11:50 +0200
+Message-ID: <20230626180737.300196298@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -36,44 +36,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit c88c535b592d3baeee74009f3eceeeaf0fdd5e1b ]
+[ Upstream commit 62f9a68a36d4441a6c412b81faed102594bc6670 ]
 
-Anonymous sets come with NFT_SET_CONSTANT from userspace. Although API
-allows to create anonymous sets without NFT_SET_CONSTANT, it makes no
-sense to allow to add and to delete elements for bound anonymous sets.
+Move the alias from xt_osf to nfnetlink_osf.
 
-Fixes: 96518518cc41 ("netfilter: add nftables")
+Fixes: f9324952088f ("netfilter: nfnetlink_osf: extract nfnetlink_subsystem code from xt_osf.c")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/netfilter/nfnetlink_osf.c | 1 +
+ net/netfilter/xt_osf.c        | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 62bc4cd0b7bec..2968f21915ddf 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4640,7 +4640,8 @@ static int nf_tables_newsetelem(struct net *net, struct sock *nlsk,
- 	if (IS_ERR(set))
- 		return PTR_ERR(set);
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index 917f06110c823..21e4554c76955 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -442,3 +442,4 @@ module_init(nfnl_osf_init);
+ module_exit(nfnl_osf_fini);
  
--	if (!list_empty(&set->bindings) && set->flags & NFT_SET_CONSTANT)
-+	if (!list_empty(&set->bindings) &&
-+	    (set->flags & (NFT_SET_CONSTANT | NFT_SET_ANONYMOUS)))
- 		return -EBUSY;
- 
- 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
-@@ -4823,7 +4824,9 @@ static int nf_tables_delsetelem(struct net *net, struct sock *nlsk,
- 	set = nft_set_lookup(ctx.table, nla[NFTA_SET_ELEM_LIST_SET], genmask);
- 	if (IS_ERR(set))
- 		return PTR_ERR(set);
--	if (!list_empty(&set->bindings) && set->flags & NFT_SET_CONSTANT)
-+
-+	if (!list_empty(&set->bindings) &&
-+	    (set->flags & (NFT_SET_CONSTANT | NFT_SET_ANONYMOUS)))
- 		return -EBUSY;
- 
- 	if (nla[NFTA_SET_ELEM_LIST_ELEMENTS] == NULL) {
+ MODULE_LICENSE("GPL");
++MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_OSF);
+diff --git a/net/netfilter/xt_osf.c b/net/netfilter/xt_osf.c
+index bf7bba80e24c1..226a317d52a0d 100644
+--- a/net/netfilter/xt_osf.c
++++ b/net/netfilter/xt_osf.c
+@@ -90,4 +90,3 @@ MODULE_AUTHOR("Evgeniy Polyakov <zbr@ioremap.net>");
+ MODULE_DESCRIPTION("Passive OS fingerprint matching.");
+ MODULE_ALIAS("ipt_osf");
+ MODULE_ALIAS("ip6t_osf");
+-MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_OSF);
 -- 
 2.39.2
 
