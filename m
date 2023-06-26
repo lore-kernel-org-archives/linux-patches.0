@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD36134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:15:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B172C433C9;
-	Mon, 26 Jun 2023 18:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69375134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:15:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C88C433C8;
+	Mon, 26 Jun 2023 18:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803310;
-	bh=Fp/jRla06eo+PHnEa076siFyVKkTnyosf7wAe6P5QiU=;
+	s=korg; t=1687803313;
+	bh=Cwdv4uwS/vIXOzw5rtcjvFzvC9mH2IaZYfZ2St5M6fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BjJ1gfPoeKXwTnZuNWo6jLH6i9+kHkY6Q9Ja3Ck5k2eFab8AwwZn6MEqYCdfNWFWn
-	 WyqYUi3g61fV52RmcbC5WRGpjueMaCUZoZUFbRob+XOP1AprwUJ/PMG7xcOcEtnJ1h
-	 XMib6H2udiHXz9TgpiNxwYUwsi1PA3GJZ3JJR+tw=
+	b=mTb2Bxm0LE5fNVLje/D4zeQmUchvNBCBZxD70JHmp+eWh9/vEsKIOWhO4VXvcck6+
+	 K/5f2Yt/v44bnPQwv6hl4gDNaZpR7fjT8w3sl4I6MnskSRY6LT9+bSDdbboA8FIcaL
+	 Aht73eOkkHR6rko2z4qFgM/pKEV0XXPbKv7OGuKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.3 018/199] selftests: mptcp: remove duplicated entries in usage
-Date: Mon, 26 Jun 2023 20:08:44 +0200
-Message-ID: <20230626180806.468424093@linuxfoundation.org>
+Subject: [PATCH 6.3 019/199] selftests: mptcp: join: fix ShellCheck warnings
+Date: Mon, 26 Jun 2023 20:08:45 +0200
+Message-ID: <20230626180806.510317201@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -37,60 +36,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 0a85264e48b642d360720589fdb837a3643fb9b0 upstream.
+commit 0fcd72df8847d3a62eb34a084862157ce0564a94 upstream.
 
-mptcp_connect tool was printing some duplicated entries when showing how
-to use it: -j -l -r
+Most of the code had an issue according to ShellCheck.
 
-While at it, I also:
+That's mainly due to the fact it incorrectly believes most of the code
+was unreachable because it's invoked by variable name, see how the
+"tests" array is used.
 
- - moved the very few entries that were not sorted,
+Once SC2317 has been ignored, three small warnings were still visible:
 
- - added -R that was missing since
-   commit 8a4b910d005d ("mptcp: selftests: add rcvbuf set option"),
+ - SC2155: Declare and assign separately to avoid masking return values.
 
- - removed the -u parameter that has been removed in
-   commit f730b65c9d85 ("selftests: mptcp: try to set mptcp ulp mode in different sk states").
+ - SC2046: Quote this to prevent word splitting: can be ignored because
+   "ip netns pids" can display more than one pid.
 
-No need to backport this, it is just an internal tool used by our
-selftests. The help menu is mainly useful for MPTCP kernel devs.
+ - SC2166: Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.
 
-Acked-by: Paolo Abeni <pabeni@redhat.com>
+This probably didn't fix any actual issues but it might help spotting
+new interesting warnings reported by ShellCheck as just before,
+ShellCheck was reporting issues for most lines making it a bit useless.
+
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-@@ -106,8 +106,8 @@ static struct cfg_sockopt_types cfg_sock
- static void die_usage(void)
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -8,6 +8,10 @@
+ 
+ . "$(dirname "${0}")/mptcp_lib.sh"
+ 
++# ShellCheck incorrectly believes that most of the code here is unreachable
++# because it's invoked by variable name, see how the "tests" array is used
++#shellcheck disable=SC2317
++
+ ret=0
+ sin=""
+ sinfail=""
+@@ -377,8 +381,9 @@ check_transfer()
+ 
+ 	local line
+ 	if [ -n "$bytes" ]; then
++		local out_size
+ 		# when truncating we must check the size explicitly
+-		local out_size=$(wc -c $out | awk '{print $1}')
++		out_size=$(wc -c $out | awk '{print $1}')
+ 		if [ $out_size -ne $bytes ]; then
+ 			echo "[ FAIL ] $what output file has wrong size ($out_size, $bytes)"
+ 			fail_test
+@@ -513,6 +518,7 @@ kill_events_pids()
+ 
+ kill_tests_wait()
  {
- 	fprintf(stderr, "Usage: mptcp_connect [-6] [-c cmsg] [-f offset] [-i file] [-I num] [-j] [-l] "
--		"[-m mode] [-M mark] [-o option] [-p port] [-P mode] [-j] [-l] [-r num] "
--		"[-s MPTCP|TCP] [-S num] [-r num] [-t num] [-T num] [-u] [-w sec] connect_address\n");
-+		"[-m mode] [-M mark] [-o option] [-p port] [-P mode] [-r num] [-R num] "
-+		"[-s MPTCP|TCP] [-S num] [-t num] [-T num] [-w sec] connect_address\n");
- 	fprintf(stderr, "\t-6 use ipv6\n");
- 	fprintf(stderr, "\t-c cmsg -- test cmsg type <cmsg>\n");
- 	fprintf(stderr, "\t-f offset -- stop the I/O after receiving and sending the specified amount "
-@@ -126,13 +126,13 @@ static void die_usage(void)
- 	fprintf(stderr, "\t-p num -- use port num\n");
- 	fprintf(stderr,
- 		"\t-P [saveWithPeek|saveAfterPeek] -- save data with/after MSG_PEEK form tcp socket\n");
--	fprintf(stderr, "\t-t num -- set poll timeout to num\n");
--	fprintf(stderr, "\t-T num -- set expected runtime to num ms\n");
- 	fprintf(stderr, "\t-r num -- enable slow mode, limiting each write to num bytes "
- 		"-- for remove addr tests\n");
- 	fprintf(stderr, "\t-R num -- set SO_RCVBUF to num\n");
- 	fprintf(stderr, "\t-s [MPTCP|TCP] -- use mptcp(default) or tcp sockets\n");
- 	fprintf(stderr, "\t-S num -- set SO_SNDBUF to num\n");
-+	fprintf(stderr, "\t-t num -- set poll timeout to num\n");
-+	fprintf(stderr, "\t-T num -- set expected runtime to num ms\n");
- 	fprintf(stderr, "\t-w num -- wait num sec before closing the socket\n");
- 	exit(1);
++	#shellcheck disable=SC2046
+ 	kill -SIGUSR1 $(ip netns pids $ns2) $(ip netns pids $ns1)
+ 	wait
  }
+@@ -1725,7 +1731,7 @@ chk_subflow_nr()
+ 
+ 	cnt1=$(ss -N $ns1 -tOni | grep -c token)
+ 	cnt2=$(ss -N $ns2 -tOni | grep -c token)
+-	if [ "$cnt1" != "$subflow_nr" -o "$cnt2" != "$subflow_nr" ]; then
++	if [ "$cnt1" != "$subflow_nr" ] || [ "$cnt2" != "$subflow_nr" ]; then
+ 		echo "[fail] got $cnt1:$cnt2 subflows expected $subflow_nr"
+ 		fail_test
+ 		dump_stats=1
 
 
