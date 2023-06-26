@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78A214A96
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:31:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A572C433C0;
-	Mon, 26 Jun 2023 18:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C9F14A8F
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:31:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4677DC433C8;
+	Mon, 26 Jun 2023 18:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804315;
-	bh=V1aeuxXObHP5fwAg9Nw3YSc27Jjs2aasKMFlzhkHOvI=;
+	s=korg; t=1687804318;
+	bh=8F1DG4SDZ44WZxPEApkhfcEgEKIFfibc6JN+iCrgXQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zf+caF6wxvJwCMUvhqYFMjqxF2joqSaD+SGGoC/Zl/fHj29dFZ4J4VwLNWXCHk2gw
-	 N6rY6wxSBZwGRmvPlWtRqZ18WdICc3VTrcVAcqV0IGMueALC8XuKBpzmEyjQYdxf2d
-	 gfBGqY1E5aMP8reiHxwg709IbGeK+7886VYep3mQ=
+	b=cp1p75tPys2K4tVsS9J+UtrueveYL0M7sFf98yWloYkue5qJBIRKjn02xl8Op9Y55
+	 Uxv6E7jA+VUqLLWDNa4QqTF2N78D749k9NzWIVSsIcim/mqdrtWhqUfEutTB8ZiOZs
+	 Sv8jpELiyPzCCREWVa4X3bFN1ostunZ+szYhpJz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 077/170] nilfs2: prevent general protection fault in nilfs_clear_dirty_page()
-Date: Mon, 26 Jun 2023 20:10:46 +0200
-Message-ID: <20230626180804.064428004@linuxfoundation.org>
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 108/170] net: dsa: mt7530: fix handling of LLDP frames
+Date: Mon, 26 Jun 2023 20:11:17 +0200
+Message-ID: <20230626180805.373897059@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,56 +38,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-commit 782e53d0c14420858dbf0f8f797973c150d3b6d7 upstream.
+[ Upstream commit 8332cf6fd7c7087dbc2067115b33979c9851bbc4 ]
 
-In a syzbot stress test that deliberately causes file system errors on
-nilfs2 with a corrupted disk image, it has been reported that
-nilfs_clear_dirty_page() called from nilfs_clear_dirty_pages() can cause a
-general protection fault.
+LLDP frames are link-local frames, therefore they must be trapped to the
+CPU port. Currently, the MT753X switches treat LLDP frames as regular
+multicast frames, therefore flooding them to user ports. To fix this, set
+LLDP frames to be trapped to the CPU port(s).
 
-In nilfs_clear_dirty_pages(), when looking up dirty pages from the page
-cache and calling nilfs_clear_dirty_page() for each dirty page/folio
-retrieved, the back reference from the argument page to "mapping" may have
-been changed to NULL (and possibly others).  It is necessary to check this
-after locking the page/folio.
-
-So, fix this issue by not calling nilfs_clear_dirty_page() on a page/folio
-after locking it in nilfs_clear_dirty_pages() if the back reference
-"mapping" from the page/folio is different from the "mapping" that held
-the page/folio just before.
-
-Link: https://lkml.kernel.org/r/20230612021456.3682-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/000000000000da4f6b05eb9bf593@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/page.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c | 4 ++++
+ drivers/net/dsa/mt7530.h | 5 +++++
+ 2 files changed, 9 insertions(+)
 
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -369,7 +369,15 @@ void nilfs_clear_dirty_pages(struct addr
- 			struct page *page = pvec.pages[i];
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index ec43edcaa7d9f..51d2ef0dc835c 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -1004,6 +1004,10 @@ mt753x_trap_frames(struct mt7530_priv *priv)
+ 	/* Trap BPDUs to the CPU port(s) */
+ 	mt7530_rmw(priv, MT753X_BPC, MT753X_BPDU_PORT_FW_MASK,
+ 		   MT753X_BPDU_CPU_ONLY);
++
++	/* Trap LLDP frames with :0E MAC DA to the CPU port(s) */
++	mt7530_rmw(priv, MT753X_RGAC2, MT753X_R0E_PORT_FW_MASK,
++		   MT753X_R0E_PORT_FW(MT753X_BPDU_CPU_ONLY));
+ }
  
- 			lock_page(page);
--			nilfs_clear_dirty_page(page, silent);
+ static int
+diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
+index e8d9664353504..9a45663d8b4ef 100644
+--- a/drivers/net/dsa/mt7530.h
++++ b/drivers/net/dsa/mt7530.h
+@@ -65,6 +65,11 @@ enum mt753x_id {
+ #define MT753X_BPC			0x24
+ #define  MT753X_BPDU_PORT_FW_MASK	GENMASK(2, 0)
+ 
++/* Register for :03 and :0E MAC DA frame control */
++#define MT753X_RGAC2			0x2c
++#define  MT753X_R0E_PORT_FW_MASK	GENMASK(18, 16)
++#define  MT753X_R0E_PORT_FW(x)		FIELD_PREP(MT753X_R0E_PORT_FW_MASK, x)
 +
-+			/*
-+			 * This page may have been removed from the address
-+			 * space by truncation or invalidation when the lock
-+			 * was acquired.  Skip processing in that case.
-+			 */
-+			if (likely(page->mapping == mapping))
-+				nilfs_clear_dirty_page(page, silent);
-+
- 			unlock_page(page);
- 		}
- 		pagevec_release(&pvec);
+ enum mt753x_bpdu_port_fw {
+ 	MT753X_BPDU_FOLLOW_MFC,
+ 	MT753X_BPDU_CPU_EXCLUDE = 4,
+-- 
+2.39.2
+
 
 
