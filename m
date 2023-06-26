@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EE713AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:27:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3394C433C8;
-	Mon, 26 Jun 2023 18:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BFA13AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:27:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98807C433C9;
+	Mon, 26 Jun 2023 18:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804030;
-	bh=En6cyVhig4P71uvHOkeVN2rB/1pzjjQFS9+3GOfF+0A=;
+	s=korg; t=1687804033;
+	bh=o55GBpZFcIEWLBySimbT8MCSm5JynwD2K2UG/V9bkCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JaBT4GIESkWTzUHLmNTX0+xxlgNfzChpLKwOkYzq8SYBqqqEz7N5/CgljW3BRu0k
-	 1eTnMv8CYHr2kIkHxcfONLOmtY1mIfFVW570LWwxhrL4arQgQlQsH9e4r/72o9/XBx
-	 EMhZx/4SnzSupEbz2p9XcXut5/MPw4BOaDHGd/Fc=
+	b=MRjjwLuLz3igyMNs0qq8g9bX/814/M8sNCVPfVOQVofR2hlv+NgCr61JKjCm4B5RD
+	 DI3MddI7Iw2sEl1D/bVHaNHahZ+eoBwPcwyElXIxB9oxTQE1hp/zojE7nq1uc4Vv6S
+	 l/p0tAqPCOOUgeDa9QRLm8GYxBUkOFiX+ILAMidQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Robert Hodaszi <robert.hodaszi@digi.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Joe Breuer <linux-kernel@jmbreuer.net>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/170] tty: serial: fsl_lpuart: reduce RX watermark to 0 on LS1028A
-Date: Mon, 26 Jun 2023 20:09:34 +0200
-Message-ID: <20230626180800.743009302@linuxfoundation.org>
+Subject: [PATCH 6.1 006/170] ata: libata-scsi: Avoid deadlock on rescan after device resume
+Date: Mon, 26 Jun 2023 20:09:35 +0200
+Message-ID: <20230626180800.790347981@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,44 +37,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Hodaszi <robert.hodaszi@digi.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit a82c3df955f8c1c726e4976527aa6ae924a67dd9 ]
+[ Upstream commit 6aa0365a3c8512587fffd42fe438768709ddef8e ]
 
-LS1028A is using DMA with LPUART. Having RX watermark set to 1, means
-DMA transactions are started only after receiving the second character.
+When an ATA port is resumed from sleep, the port is reset and a power
+management request issued to libata EH to reset the port and rescanning
+the device(s) attached to the port. Device rescanning is done by
+scheduling an ata_scsi_dev_rescan() work, which will execute
+scsi_rescan_device().
 
-On other platforms with newer LPUART IP, Receiver Idle Empty function
-initiates the DMA request after the receiver is idling for 4 characters.
-But this feature is missing on LS1028A, which is causing a 1-character
-delay in the RX direction on this platform.
+However, scsi_rescan_device() takes the generic device lock, which is
+also taken by dpm_resume() when the SCSI device is resumed as well. If
+a device rescan execution starts before the completion of the SCSI
+device resume, the rcu locking used to refresh the cached VPD pages of
+the device, combined with the generic device locking from
+scsi_rescan_device() and from dpm_resume() can cause a deadlock.
 
-Set RX watermark to 0 to initiate RX DMA after each character.
+Avoid this situation by changing struct ata_port scsi_rescan_task to be
+a delayed work instead of a simple work_struct. ata_scsi_dev_rescan() is
+modified to check if the SCSI device associated with the ATA device that
+must be rescanned is not suspended. If the SCSI device is still
+suspended, ata_scsi_dev_rescan() returns early and reschedule itself for
+execution after an arbitrary delay of 5ms.
 
-Link: https://lore.kernel.org/linux-serial/20230607103459.1222426-1-robert.hodaszi@digi.com/
-Fixes: 9ad9df844754 ("tty: serial: fsl_lpuart: Fix the wrong RXWATER setting for rx dma case")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Robert Hodaszi <robert.hodaszi@digi.com>
-Message-ID: <20230609121334.1878626-1-robert.hodaszi@digi.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Reported-by: Joe Breuer <linux-kernel@jmbreuer.net>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217530
+Fixes: a19a93e4c6a9 ("scsi: core: pm: Rely on the device driver core for async power management")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Tested-by: Joe Breuer <linux-kernel@jmbreuer.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/libata-core.c |  3 ++-
+ drivers/ata/libata-eh.c   |  2 +-
+ drivers/ata/libata-scsi.c | 22 +++++++++++++++++++++-
+ include/linux/libata.h    |  2 +-
+ 4 files changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index 82066f17bdfb1..1093c74b52840 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -302,7 +302,7 @@ static const struct lpuart_soc_data ls1021a_data = {
- static const struct lpuart_soc_data ls1028a_data = {
- 	.devtype = LS1028A_LPUART,
- 	.iotype = UPIO_MEM32,
--	.rx_watermark = 1,
-+	.rx_watermark = 0,
- };
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index a5ea144722fa3..0ba0c3d1613f1 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -5313,7 +5313,7 @@ struct ata_port *ata_port_alloc(struct ata_host *host)
  
- static struct lpuart_soc_data imx7ulp_data = {
+ 	mutex_init(&ap->scsi_scan_mutex);
+ 	INIT_DELAYED_WORK(&ap->hotplug_task, ata_scsi_hotplug);
+-	INIT_WORK(&ap->scsi_rescan_task, ata_scsi_dev_rescan);
++	INIT_DELAYED_WORK(&ap->scsi_rescan_task, ata_scsi_dev_rescan);
+ 	INIT_LIST_HEAD(&ap->eh_done_q);
+ 	init_waitqueue_head(&ap->eh_wait_q);
+ 	init_completion(&ap->park_req_pending);
+@@ -5919,6 +5919,7 @@ static void ata_port_detach(struct ata_port *ap)
+ 	WARN_ON(!(ap->pflags & ATA_PFLAG_UNLOADED));
+ 
+ 	cancel_delayed_work_sync(&ap->hotplug_task);
++	cancel_delayed_work_sync(&ap->scsi_rescan_task);
+ 
+  skip_eh:
+ 	/* clean up zpodd on port removal */
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 08e11bc312c28..a3ae5fc2a42fc 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -2973,7 +2973,7 @@ static int ata_eh_revalidate_and_attach(struct ata_link *link,
+ 			ehc->i.flags |= ATA_EHI_SETMODE;
+ 
+ 			/* schedule the scsi_rescan_device() here */
+-			schedule_work(&(ap->scsi_rescan_task));
++			schedule_delayed_work(&ap->scsi_rescan_task, 0);
+ 		} else if (dev->class == ATA_DEV_UNKNOWN &&
+ 			   ehc->tries[dev->devno] &&
+ 			   ata_class_enabled(ehc->classes[dev->devno])) {
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 39e1ff9b686b9..9c0052d28078a 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -4601,10 +4601,11 @@ int ata_scsi_user_scan(struct Scsi_Host *shost, unsigned int channel,
+ void ata_scsi_dev_rescan(struct work_struct *work)
+ {
+ 	struct ata_port *ap =
+-		container_of(work, struct ata_port, scsi_rescan_task);
++		container_of(work, struct ata_port, scsi_rescan_task.work);
+ 	struct ata_link *link;
+ 	struct ata_device *dev;
+ 	unsigned long flags;
++	bool delay_rescan = false;
+ 
+ 	mutex_lock(&ap->scsi_scan_mutex);
+ 	spin_lock_irqsave(ap->lock, flags);
+@@ -4618,6 +4619,21 @@ void ata_scsi_dev_rescan(struct work_struct *work)
+ 			if (scsi_device_get(sdev))
+ 				continue;
+ 
++			/*
++			 * If the rescan work was scheduled because of a resume
++			 * event, the port is already fully resumed, but the
++			 * SCSI device may not yet be fully resumed. In such
++			 * case, executing scsi_rescan_device() may cause a
++			 * deadlock with the PM code on device_lock(). Prevent
++			 * this by giving up and retrying rescan after a short
++			 * delay.
++			 */
++			delay_rescan = sdev->sdev_gendev.power.is_suspended;
++			if (delay_rescan) {
++				scsi_device_put(sdev);
++				break;
++			}
++
+ 			spin_unlock_irqrestore(ap->lock, flags);
+ 			scsi_rescan_device(&(sdev->sdev_gendev));
+ 			scsi_device_put(sdev);
+@@ -4627,4 +4643,8 @@ void ata_scsi_dev_rescan(struct work_struct *work)
+ 
+ 	spin_unlock_irqrestore(ap->lock, flags);
+ 	mutex_unlock(&ap->scsi_scan_mutex);
++
++	if (delay_rescan)
++		schedule_delayed_work(&ap->scsi_rescan_task,
++				      msecs_to_jiffies(5));
+ }
+diff --git a/include/linux/libata.h b/include/linux/libata.h
+index fe990176e6ee9..9713f4d8f15f4 100644
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -834,7 +834,7 @@ struct ata_port {
+ 
+ 	struct mutex		scsi_scan_mutex;
+ 	struct delayed_work	hotplug_task;
+-	struct work_struct	scsi_rescan_task;
++	struct delayed_work	scsi_rescan_task;
+ 
+ 	unsigned int		hsm_task_state;
+ 
 -- 
 2.39.2
 
