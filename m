@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8678ABA36
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072F3C433C8;
-	Mon, 26 Jun 2023 18:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EA0BA36
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BB0C433C0;
+	Mon, 26 Jun 2023 18:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804468;
-	bh=kIsf8AbSmXSzhxQYkllhPv2Z+84eoqLgyPp+vctmyI8=;
+	s=korg; t=1687804471;
+	bh=zDkmCzoJ4gm1dJ3VkRsGn50ZQ7htLUi14Cd3SrW/GRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YrBcpANNytinjnb0A2SPCLwaUHFSGPg6A2sWEvRaTi//qzYDH260EI91BwA6Wo9UX
-	 +RlGQXJ5pUaUK9ShJ6HUQo2EYAsvpT0bjOkEP/AkqgQ9tVoE8VOKhtSwGPf7dyU7CG
-	 gYHSk4cs4pbBzy/55G+nt2aLAY5yASY3LyTQBd4o=
+	b=hpZ1In1YukyOqb22qfRZwqwb1AHGosTYO//hq1l70rouVj2Z4XUt+2pDAUDqegJbK
+	 gNL7TEjMS85JtFaozPFtsz4lpi+VZryj30M07HOyGH0+fosGohj2DOycNchdDAqZ+R
+	 O8TEaSw6rH70M0VYReIoimjDHrsYkQU9OV0kYmXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Smetanin <asmetanin@yandex-team.ru>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 166/170] vhost_net: revert upend_idx only on retriable error
-Date: Mon, 26 Jun 2023 20:12:15 +0200
-Message-ID: <20230626180807.916601652@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.1 167/170] KVM: arm64: Restore GICv2-on-GICv3 functionality
+Date: Mon, 26 Jun 2023 20:12:16 +0200
+Message-ID: <20230626180807.958296521@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,60 +34,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrey Smetanin <asmetanin@yandex-team.ru>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 1f5d2e3bab16369d5d4b4020a25db4ab1f4f082c ]
+commit 1caa71a7a600f7781ce05ef1e84701c459653663 upstream.
 
-Fix possible virtqueue used buffers leak and corresponding stuck
-in case of temporary -EIO from sendmsg() which is produced by
-tun driver while backend device is not up.
+When reworking the vgic locking, the vgic distributor registration
+got simplified, which was a very good cleanup. But just a tad too
+radical, as we now register the *native* vgic only, ignoring the
+GICv2-on-GICv3 that allows pre-historic VMs (or so I thought)
+to run.
 
-In case of no-retriable error and zcopy do not revert upend_idx
-to pass packet data (that is update used_idx in corresponding
-vhost_zerocopy_signal_used()) as if packet data has been
-transferred successfully.
+As it turns out, QEMU still defaults to GICv2 in some cases, and
+this breaks Nathan's setup!
 
-v2: set vq->heads[ubuf->desc].len equal to VHOST_DMA_DONE_LEN
-in case of fake successful transmit.
+Fix it by propagating the *requested* vgic type rather than the
+host's version.
 
-Signed-off-by: Andrey Smetanin <asmetanin@yandex-team.ru>
-Message-Id: <20230424204411.24888-1-asmetanin@yandex-team.ru>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Andrey Smetanin <asmetanin@yandex-team.ru>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 59112e9c390b ("KVM: arm64: vgic: Fix a circular locking issue")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+link: https://lore.kernel.org/r/20230606221525.GA2269598@dev-arch.thelio-3990X
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/net.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/vgic/vgic-init.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index 4c538b30fd76d..4418192ab8aaa 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -934,13 +934,18 @@ static void handle_tx_zerocopy(struct vhost_net *net, struct socket *sock)
+--- a/arch/arm64/kvm/vgic/vgic-init.c
++++ b/arch/arm64/kvm/vgic/vgic-init.c
+@@ -446,6 +446,7 @@ int vgic_lazy_init(struct kvm *kvm)
+ int kvm_vgic_map_resources(struct kvm *kvm)
+ {
+ 	struct vgic_dist *dist = &kvm->arch.vgic;
++	enum vgic_type type;
+ 	gpa_t dist_base;
+ 	int ret = 0;
  
- 		err = sock->ops->sendmsg(sock, &msg, len);
- 		if (unlikely(err < 0)) {
-+			bool retry = err == -EAGAIN || err == -ENOMEM || err == -ENOBUFS;
-+
- 			if (zcopy_used) {
- 				if (vq->heads[ubuf->desc].len == VHOST_DMA_IN_PROGRESS)
- 					vhost_net_ubuf_put(ubufs);
--				nvq->upend_idx = ((unsigned)nvq->upend_idx - 1)
--					% UIO_MAXIOV;
-+				if (retry)
-+					nvq->upend_idx = ((unsigned)nvq->upend_idx - 1)
-+						% UIO_MAXIOV;
-+				else
-+					vq->heads[ubuf->desc].len = VHOST_DMA_DONE_LEN;
- 			}
--			if (err == -EAGAIN || err == -ENOMEM || err == -ENOBUFS) {
-+			if (retry) {
- 				vhost_discard_vq_desc(vq, 1);
- 				vhost_net_enable_vq(net, vq);
- 				break;
--- 
-2.39.2
-
+@@ -460,10 +461,13 @@ int kvm_vgic_map_resources(struct kvm *k
+ 	if (!irqchip_in_kernel(kvm))
+ 		goto out;
+ 
+-	if (dist->vgic_model == KVM_DEV_TYPE_ARM_VGIC_V2)
++	if (dist->vgic_model == KVM_DEV_TYPE_ARM_VGIC_V2) {
+ 		ret = vgic_v2_map_resources(kvm);
+-	else
++		type = VGIC_V2;
++	} else {
+ 		ret = vgic_v3_map_resources(kvm);
++		type = VGIC_V3;
++	}
+ 
+ 	if (ret) {
+ 		__kvm_vgic_destroy(kvm);
+@@ -473,8 +477,7 @@ int kvm_vgic_map_resources(struct kvm *k
+ 	dist_base = dist->vgic_dist_base;
+ 	mutex_unlock(&kvm->arch.config_lock);
+ 
+-	ret = vgic_register_dist_iodev(kvm, dist_base,
+-				       kvm_vgic_global_state.type);
++	ret = vgic_register_dist_iodev(kvm, dist_base, type);
+ 	if (ret) {
+ 		kvm_err("Unable to register VGIC dist MMIO regions\n");
+ 		kvm_vgic_destroy(kvm);
 
 
