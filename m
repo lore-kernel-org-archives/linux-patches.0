@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7D7134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:13:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B79C433C0;
-	Mon, 26 Jun 2023 18:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B15134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:13:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F22C433C8;
+	Mon, 26 Jun 2023 18:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803224;
-	bh=2ByIcyxnN5zggGi9AIVTkb8AfABO0oZ9oy71RHOyZwo=;
+	s=korg; t=1687803227;
+	bh=OUkPyFZ7YysV8myAgTggcb6E/Rexi/BkL/+tGbXZ0cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4z0Fsm+clnoVlAU96mwvbmauOb9n6yObhUvLYm0/aediA1XRG+0vzYtaryUHAdvx
-	 34fV6T8rAJ7bNYmcsqhojX6+xBX7XOxsGtq4mNUOE5pgPOxSuiYLJvNEDz6OtcIu0z
-	 cOClnopIYUNIsg02VAmNoFIFUoHuHgp2hg+g83P0=
+	b=2U52mavvOUTToAsoZx1eAoBmb8WOpKqbkneJLzF4qYxIdks9mcbh8aSIey9dhedp2
+	 9WIB7eAa7EgTNWqVQEZhfrpYNsPujl0U89Dos8aysq+H2jR0P50zqdpo+VSJ5emhYd
+	 VWJVvWwFVKQedqMbMNZsZrKiHVF7X1y8+qjCD1YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Marc Zyngier <maz@kernel.org>,
+	Cornelia Huck <cohuck@redhat.com>,
+	Steven Price <steven.price@arm.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 16/26] HID: wacom: Add error check to wacom_parse_and_register()
-Date: Mon, 26 Jun 2023 20:11:18 +0200
-Message-ID: <20230626180734.304965857@linuxfoundation.org>
+Subject: [PATCH 4.14 17/26] arm64: Add missing Set/Way CMO encodings
+Date: Mon, 26 Jun 2023 20:11:19 +0200
+Message-ID: <20230626180734.334868321@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180733.699092073@linuxfoundation.org>
 References: <20230626180733.699092073@linuxfoundation.org>
@@ -36,42 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 16a9c24f24fbe4564284eb575b18cc20586b9270 ]
+[ Upstream commit 8d0f019e4c4f2ee2de81efd9bf1c27e9fb3c0460 ]
 
-   Added a variable check and
-   transition in case of an error
+Add the missing Set/Way CMOs that apply to tagged memory.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20230515204601.1270428-2-maz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_sys.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/sysreg.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/hid/wacom_sys.c b/drivers/hid/wacom_sys.c
-index 3d521f289984a..28e7a4950b74a 100644
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -2251,8 +2251,13 @@ static int wacom_parse_and_register(struct wacom *wacom, bool wireless)
- 		goto fail_quirks;
- 	}
+diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
+index 3bbf0dc5ecad0..78d6f4bf117d6 100644
+--- a/arch/arm64/include/asm/sysreg.h
++++ b/arch/arm64/include/asm/sysreg.h
+@@ -98,8 +98,14 @@
+ 				       (!!x)<<8 | 0x1f)
  
--	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR)
-+	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR) {
- 		error = hid_hw_open(hdev);
-+		if (error) {
-+			hid_err(hdev, "hw open failed\n");
-+			goto fail_quirks;
-+		}
-+	}
+ #define SYS_DC_ISW			sys_insn(1, 0, 7, 6, 2)
++#define SYS_DC_IGSW			sys_insn(1, 0, 7, 6, 4)
++#define SYS_DC_IGDSW			sys_insn(1, 0, 7, 6, 6)
+ #define SYS_DC_CSW			sys_insn(1, 0, 7, 10, 2)
++#define SYS_DC_CGSW			sys_insn(1, 0, 7, 10, 4)
++#define SYS_DC_CGDSW			sys_insn(1, 0, 7, 10, 6)
+ #define SYS_DC_CISW			sys_insn(1, 0, 7, 14, 2)
++#define SYS_DC_CIGSW			sys_insn(1, 0, 7, 14, 4)
++#define SYS_DC_CIGDSW			sys_insn(1, 0, 7, 14, 6)
  
- 	wacom_set_shared_values(wacom_wac);
- 	devres_close_group(&hdev->dev, wacom);
+ #define SYS_OSDTRRX_EL1			sys_reg(2, 0, 0, 0, 2)
+ #define SYS_MDCCINT_EL1			sys_reg(2, 0, 0, 2, 0)
 -- 
 2.39.2
 
