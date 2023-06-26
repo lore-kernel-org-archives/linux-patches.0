@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189CD134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:16:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5E2C433C8;
-	Mon, 26 Jun 2023 18:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17F4134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:16:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E90AC433C0;
+	Mon, 26 Jun 2023 18:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803383;
-	bh=Yr7/swIdGh0G0QO+NuvqW9w7TJVT9hqfrjfPs8nXqdA=;
+	s=korg; t=1687803386;
+	bh=MHTuyvWLsollqj7cq6TUAV9tq16VoQCsgwBkTl/hgVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s6dkzrZX8bENLbtowAkglB9ejacthciAbP0fJ/2bpvGpapUMMOffMVk5enPNdrGSU
-	 D7oZ3uRCnT2h5hqS7n4scvEnXqGfrdKq6uix0GTbXA4xeEgJF2Qe5J0+g8VoXlr9E/
-	 DZYB7KlZ/NANulzZ10FOobhZrRlueNWXIevAe+i4=
+	b=ylk0tXrmbmyg65yAVxWkZugqVbmer7Gpf7OdnEGnfkYYVMdkJ3LkFzON4oJnJJZWi
+	 6bQGCd/8WTcXY2Kbgs6eVHA/RUw0O3YZXMjYHLDEHZ3BkncRXy5c55I/bW+79X9gX/
+	 LaNyLcoL3b/BW9bidE849DLTbn0zcnczujwVCppM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 043/199] selftests: mptcp: join: skip backup if set flag on ID not supported
-Date: Mon, 26 Jun 2023 20:09:09 +0200
-Message-ID: <20230626180807.484212753@linuxfoundation.org>
+Subject: [PATCH 6.3 044/199] selftests: mptcp: join: skip fullmesh flag tests if not supported
+Date: Mon, 26 Jun 2023 20:09:10 +0200
+Message-ID: <20230626180807.527679330@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,67 +36,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 07216a3c5d926bf1b6b360a0073747228a1f9b7f upstream.
+commit 9db34c4294af9999edc773d96744e2d2d4eb5060 upstream.
 
 Selftests are supposed to run on any kernels, including the old ones not
 supporting all MPTCP features.
 
-Commit bccefb762439 ("selftests: mptcp: simplify pm_nl_change_endpoint")
-has simplified the way the backup flag is set on an endpoint. Instead of
-doing:
+One of them is the support of the fullmesh flag for the in-kernel PM
+introduced by commit 2843ff6f36db ("mptcp: remote addresses fullmesh")
+and commit 1a0d6136c5f0 ("mptcp: local addresses fullmesh").
 
-  ./pm_nl_ctl set 10.0.2.1 flags backup
-
-Now we do:
-
-  ./pm_nl_ctl set id 1 flags backup
-
-The new way is easier to maintain but it is also incompatible with older
-kernels not supporting the implicit endpoints putting in place the
-infrastructure to set flags per ID, hence the second Fixes tag.
+It looks like there is no easy external sign we can use to predict the
+expected behaviour. We could add the flag and then check if it has been
+added but for that, and for each fullmesh test, we would need to setup a
+new environment, do the checks, clean it and then only start the test
+from yet another clean environment. To keep it simple and avoid
+introducing new issues, we look for a specific kernel version. That's
+not ideal but an acceptable solution for this case.
 
 Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: bccefb762439 ("selftests: mptcp: simplify pm_nl_change_endpoint")
+Fixes: 6a0653b96f5d ("selftests: mptcp: add fullmesh setting tests")
 Cc: stable@vger.kernel.org
-Fixes: 4cf86ae84c71 ("mptcp: strict local address ID selection")
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
 +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -2639,7 +2639,8 @@ mixed_tests()
- backup_tests()
- {
- 	# single subflow, backup
--	if reset "single subflow, backup"; then
-+	if reset "single subflow, backup" &&
-+	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
- 		pm_nl_set_limits $ns1 0 1
- 		pm_nl_set_limits $ns2 0 1
- 		pm_nl_add_endpoint $ns2 10.0.3.2 flags subflow,backup
-@@ -2649,7 +2650,8 @@ backup_tests()
+@@ -3058,7 +3058,8 @@ fullmesh_tests()
  	fi
  
- 	# single address, backup
--	if reset "single address, backup"; then
-+	if reset "single address, backup" &&
-+	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
- 		pm_nl_set_limits $ns1 0 1
- 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
- 		pm_nl_set_limits $ns2 1 1
-@@ -2660,7 +2662,8 @@ backup_tests()
+ 	# set fullmesh flag
+-	if reset "set fullmesh flag test"; then
++	if reset "set fullmesh flag test" &&
++	   continue_if mptcp_lib_kversion_ge 5.18; then
+ 		pm_nl_set_limits $ns1 4 4
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 flags subflow
+ 		pm_nl_set_limits $ns2 4 4
+@@ -3068,7 +3069,8 @@ fullmesh_tests()
  	fi
  
- 	# single address with port, backup
--	if reset "single address with port, backup"; then
-+	if reset "single address with port, backup" &&
-+	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
- 		pm_nl_set_limits $ns1 0 1
- 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal port 10100
- 		pm_nl_set_limits $ns2 1 1
+ 	# set nofullmesh flag
+-	if reset "set nofullmesh flag test"; then
++	if reset "set nofullmesh flag test" &&
++	   continue_if mptcp_lib_kversion_ge 5.18; then
+ 		pm_nl_set_limits $ns1 4 4
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 flags subflow,fullmesh
+ 		pm_nl_set_limits $ns2 4 4
+@@ -3078,7 +3080,8 @@ fullmesh_tests()
+ 	fi
+ 
+ 	# set backup,fullmesh flags
+-	if reset "set backup,fullmesh flags test"; then
++	if reset "set backup,fullmesh flags test" &&
++	   continue_if mptcp_lib_kversion_ge 5.18; then
+ 		pm_nl_set_limits $ns1 4 4
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 flags subflow
+ 		pm_nl_set_limits $ns2 4 4
+@@ -3089,7 +3092,8 @@ fullmesh_tests()
+ 	fi
+ 
+ 	# set nobackup,nofullmesh flags
+-	if reset "set nobackup,nofullmesh flags test"; then
++	if reset "set nobackup,nofullmesh flags test" &&
++	   continue_if mptcp_lib_kversion_ge 5.18; then
+ 		pm_nl_set_limits $ns1 4 4
+ 		pm_nl_set_limits $ns2 4 4
+ 		pm_nl_add_endpoint $ns2 10.0.2.2 flags subflow,backup,fullmesh
 
 
