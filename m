@@ -1,181 +1,252 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F26134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56545C433CA;
-	Mon, 26 Jun 2023 18:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6296134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EC4C433C9;
+	Mon, 26 Jun 2023 18:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803957;
-	bh=TNOKYMpqXtynV043r0ftXVk+Rqw3D1IY/crP7G4zZS0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7IBxBgbthcCvZdNJDOEiYNiPkJSfnHwHyaDM29b5wcDSsNg3z+wZiH/wtVI1ZP6y
-	 Ooo72sPkjagUAdheJ/Qc6d9LDifrzE9zxgwjuWvcDCxK6+8/otWKa8+fANF+6MmvdB
-	 BMPNXviJSomZ653JFPJnNkJiFtRSSrd3EEEa+LXg=
+	s=korg; t=1687803960;
+	bh=THhTlgnn6oSlYwHLnwkMsAOskbb8mvuWX8rJxZyHWcQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=gw7Ua3E5Y9JcoShwpUyi4Sa5aAFF8bCrRkdYBi2u4a8+DYGqV79czLmXZ9Ss8aWyk
+	 ICYpi/JRoC5ugjo8WMza4iLuy27tjkNvWNbhTbdxC6Ed6HzHNOwszfa1gbqM0qSHRx
+	 68xmlFKvrQ9QmHhsRWrEmlFBUaiJGd9e//0aPL0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 09/41] nilfs2: fix buffer corruption due to concurrent device reads
-Date: Mon, 26 Jun 2023 20:11:32 +0200
-Message-ID: <20230626180736.626314873@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 4.19 00/41] 4.19.288-rc1 review
+Date: Mon, 26 Jun 2023 20:11:23 +0200
+Message-ID: <20230626180736.243379844@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
-References: <20230626180736.243379844@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.288-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.288-rc1
+X-KernelTest-Deadline: 2023-06-28T18:07+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+This is the start of the stable review cycle for the 4.19.288 release.
+There are 41 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 679bd7ebdd315bf457a4740b306ae99f1d0a403d upstream.
+Responses should be made by Wed, 28 Jun 2023 18:07:23 +0000.
+Anything received after that time might be too late.
 
-As a result of analysis of a syzbot report, it turned out that in three
-cases where nilfs2 allocates block device buffers directly via sb_getblk,
-concurrent reads to the device can corrupt the allocated buffers.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.288-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
 
-Nilfs2 uses sb_getblk for segment summary blocks, that make up a log
-header, and the super root block, that is the trailer, and when moving and
-writing the second super block after fs resize.
+thanks,
 
-In any of these, since the uptodate flag is not set when storing metadata
-to be written in the allocated buffers, the stored metadata will be
-overwritten if a device read of the same block occurs concurrently before
-the write.  This causes metadata corruption and misbehavior in the log
-write itself, causing warnings in nilfs_btree_assign() as reported.
+greg k-h
 
-Fix these issues by setting an uptodate flag on the buffer head on the
-first or before modifying each buffer obtained with sb_getblk, and
-clearing the flag on failure.
+-------------
+Pseudo-Shortlog of commits:
 
-When setting the uptodate flag, the lock_buffer/unlock_buffer pair is used
-to perform necessary exclusive control, and the buffer is filled to ensure
-that uninitialized bytes are not mixed into the data read from others.  As
-for buffers for segment summary blocks, they are filled incrementally, so
-if the uptodate flag was unset on their allocation, set the flag and zero
-fill the buffer once at that point.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.288-rc1
 
-Also, regarding the superblock move routine, the starting point of the
-memset call to zerofill the block is incorrectly specified, which can
-cause a buffer overflow on file systems with block sizes greater than
-4KiB.  In addition, if the superblock is moved within a large block, it is
-necessary to assume the possibility that the data in the superblock will
-be destroyed by zero-filling before copying.  So fix these potential
-issues as well.
+Clark Wang <xiaoning.wang@nxp.com>
+    i2c: imx-lpi2c: fix type char overflow issue when calculating the clock cycle
 
-Link: https://lkml.kernel.org/r/20230609035732.20426-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/00000000000030000a05e981f475@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/nilfs2/segbuf.c  |    6 ++++++
- fs/nilfs2/segment.c |    7 +++++++
- fs/nilfs2/super.c   |   23 ++++++++++++++++++++++-
- 3 files changed, 35 insertions(+), 1 deletion(-)
+Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+    x86/apic: Fix kernel panic when booting with intremap=off and x2apic_phys
 
---- a/fs/nilfs2/segbuf.c
-+++ b/fs/nilfs2/segbuf.c
-@@ -101,6 +101,12 @@ int nilfs_segbuf_extend_segsum(struct ni
- 	if (unlikely(!bh))
- 		return -ENOMEM;
- 
-+	lock_buffer(bh);
-+	if (!buffer_uptodate(bh)) {
-+		memset(bh->b_data, 0, bh->b_size);
-+		set_buffer_uptodate(bh);
-+	}
-+	unlock_buffer(bh);
- 	nilfs_segbuf_add_segsum_buffer(segbuf, bh);
- 	return 0;
- }
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -984,10 +984,13 @@ static void nilfs_segctor_fill_in_super_
- 	unsigned int isz, srsz;
- 
- 	bh_sr = NILFS_LAST_SEGBUF(&sci->sc_segbufs)->sb_super_root;
-+
-+	lock_buffer(bh_sr);
- 	raw_sr = (struct nilfs_super_root *)bh_sr->b_data;
- 	isz = nilfs->ns_inode_size;
- 	srsz = NILFS_SR_BYTES(isz);
- 
-+	raw_sr->sr_sum = 0;  /* Ensure initialization within this update */
- 	raw_sr->sr_bytes = cpu_to_le16(srsz);
- 	raw_sr->sr_nongc_ctime
- 		= cpu_to_le64(nilfs_doing_gc() ?
-@@ -1001,6 +1004,8 @@ static void nilfs_segctor_fill_in_super_
- 	nilfs_write_inode_common(nilfs->ns_sufile, (void *)raw_sr +
- 				 NILFS_SR_SUFILE_OFFSET(isz), 1);
- 	memset((void *)raw_sr + srsz, 0, nilfs->ns_blocksize - srsz);
-+	set_buffer_uptodate(bh_sr);
-+	unlock_buffer(bh_sr);
- }
- 
- static void nilfs_redirty_inodes(struct list_head *head)
-@@ -1778,6 +1783,7 @@ static void nilfs_abort_logs(struct list
- 	list_for_each_entry(segbuf, logs, sb_list) {
- 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
- 				    b_assoc_buffers) {
-+			clear_buffer_uptodate(bh);
- 			if (bh->b_page != bd_page) {
- 				if (bd_page)
- 					end_page_writeback(bd_page);
-@@ -1789,6 +1795,7 @@ static void nilfs_abort_logs(struct list
- 				    b_assoc_buffers) {
- 			clear_buffer_async_write(bh);
- 			if (bh == segbuf->sb_super_root) {
-+				clear_buffer_uptodate(bh);
- 				if (bh->b_page != bd_page) {
- 					end_page_writeback(bd_page);
- 					bd_page = bh->b_page;
---- a/fs/nilfs2/super.c
-+++ b/fs/nilfs2/super.c
-@@ -374,10 +374,31 @@ static int nilfs_move_2nd_super(struct s
- 		goto out;
- 	}
- 	nsbp = (void *)nsbh->b_data + offset;
--	memset(nsbp, 0, nilfs->ns_blocksize);
- 
-+	lock_buffer(nsbh);
- 	if (sb2i >= 0) {
-+		/*
-+		 * The position of the second superblock only changes by 4KiB,
-+		 * which is larger than the maximum superblock data size
-+		 * (= 1KiB), so there is no need to use memmove() to allow
-+		 * overlap between source and destination.
-+		 */
- 		memcpy(nsbp, nilfs->ns_sbp[sb2i], nilfs->ns_sbsize);
-+
-+		/*
-+		 * Zero fill after copy to avoid overwriting in case of move
-+		 * within the same block.
-+		 */
-+		memset(nsbh->b_data, 0, offset);
-+		memset((void *)nsbp + nilfs->ns_sbsize, 0,
-+		       nsbh->b_size - offset - nilfs->ns_sbsize);
-+	} else {
-+		memset(nsbh->b_data, 0, nsbh->b_size);
-+	}
-+	set_buffer_uptodate(nsbh);
-+	unlock_buffer(nsbh);
-+
-+	if (sb2i >= 0) {
- 		brelse(nilfs->ns_sbh[sb2i]);
- 		nilfs->ns_sbh[sb2i] = nsbh;
- 		nilfs->ns_sbp[sb2i] = nsbp;
+Min Li <lm0963hack@gmail.com>
+    drm/radeon: fix race condition UAF in radeon_gem_set_domain_ioctl
+
+Min Li <lm0963hack@gmail.com>
+    drm/exynos: fix race condition UAF in exynos_g2d_exec_ioctl
+
+Inki Dae <inki.dae@samsung.com>
+    drm/exynos: vidi: fix a wrong error return
+
+Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+    ASoC: nau8824: Add quirk to active-high jack-detect
+
+Vineeth Vijayan <vneethv@linux.ibm.com>
+    s390/cio: unregister device when the only path is gone
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    usb: gadget: udc: fix NULL dereference in remove()
+
+Osama Muhammad <osmtendev@gmail.com>
+    nfcsim.c: Fix error checking for debugfs_create_dir
+
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: cec: core: don't set last_initiator if tx in progress
+
+Marc Zyngier <maz@kernel.org>
+    arm64: Add missing Set/Way CMO encodings
+
+Denis Arefev <arefev@swemel.ru>
+    HID: wacom: Add error check to wacom_parse_and_register()
+
+Maurizio Lombardi <mlombard@redhat.com>
+    scsi: target: iscsi: Prevent login threads from racing between each other
+
+Eric Dumazet <edumazet@google.com>
+    sch_netem: acquire qdisc lock in netem_change()
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nfnetlink_osf: fix module autoload
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nf_tables: disallow element updates of bound anonymous sets
+
+Ross Lagerwall <ross.lagerwall@citrix.com>
+    be2net: Extend xmit workaround to BE3 chip
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: usdhi60rol0: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: sdhci-acpi: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: omap_hsmmc: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: omap: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: mvsdio: fix deferred probing
+
+Yangtao Li <tiny.windzz@gmail.com>
+    mmc: mvsdio: convert to devm_platform_ioremap_resource
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: mtk-sd: fix deferred probing
+
+Stefan Wahren <stefan.wahren@i2se.com>
+    net: qca_spi: Avoid high load if QCA7000 is not available
+
+Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+    xfrm: Linearize the skb after offloading if needed.
+
+Chen Aotian <chenaotian2@163.com>
+    ieee802154: hwsim: Fix possible memory leaks
+
+Paul E. McKenney <paulmck@kernel.org>
+    rcu: Upgrade rcu_swap_protected() to rcu_replace_pointer()
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: prevent general protection fault in nilfs_clear_dirty_page()
+
+Xiu Jianfeng <xiujianfeng@huawei.com>
+    cgroup: Do not corrupt task iteration when rebinding subsystem
+
+Dexuan Cui <decui@microsoft.com>
+    PCI: hv: Fix a race condition bug in hv_pci_query_relations()
+
+Michael Kelley <mikelley@microsoft.com>
+    Drivers: hv: vmbus: Fix vmbus_wait_for_unload() to scan present CPUs
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix buffer corruption due to concurrent device reads
+
+Tony Camuso <tcamuso@redhat.com>
+    ipmi: move message error checking to avoid deadlock
+
+Corey Minyard <cminyard@mvista.com>
+    ipmi: Make the smi watcher be disabled immediately when not needed
+
+Ricardo Ribalda <ribalda@chromium.org>
+    x86/purgatory: remove PGO flags
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: reject devices with insufficient block count
+
+Bernhard Seibold <mail@bernhard-seibold.de>
+    serial: lantiq: add missing interrupt ack
+
+Hauke Mehrtens <hauke@hauke-m.de>
+    serial: lantiq: Do not swap register read/writes
+
+Songjun Wu <songjun.wu@linux.intel.com>
+    serial: lantiq: Use readl/writel instead of ltq_r32/ltq_w32
+
+Songjun Wu <songjun.wu@linux.intel.com>
+    serial: lantiq: Change ltq_w32_mask to asc_update_bits
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                    |   4 +-
+ arch/arm64/include/asm/sysreg.h             |   6 +
+ arch/x86/kernel/apic/x2apic_phys.c          |   5 +-
+ arch/x86/purgatory/Makefile                 |   5 +
+ drivers/char/ipmi/ipmi_msghandler.c         | 278 +++++++++++++++-------------
+ drivers/char/ipmi/ipmi_si_intf.c            |   2 +-
+ drivers/char/ipmi/ipmi_ssif.c               |   2 +-
+ drivers/gpu/drm/exynos/exynos_drm_g2d.c     |   2 +-
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c    |   2 -
+ drivers/gpu/drm/radeon/radeon_gem.c         |   4 +-
+ drivers/hid/wacom_sys.c                     |   7 +-
+ drivers/hv/channel_mgmt.c                   |  18 +-
+ drivers/i2c/busses/i2c-imx-lpi2c.c          |   4 +-
+ drivers/media/cec/cec-adap.c                |   3 +-
+ drivers/mmc/host/mtk-sd.c                   |   2 +-
+ drivers/mmc/host/mvsdio.c                   |   8 +-
+ drivers/mmc/host/omap.c                     |   2 +-
+ drivers/mmc/host/omap_hsmmc.c               |   6 +-
+ drivers/mmc/host/sdhci-acpi.c               |   2 +-
+ drivers/mmc/host/usdhi6rol0.c               |   6 +-
+ drivers/net/ethernet/emulex/benet/be_main.c |   4 +-
+ drivers/net/ethernet/qualcomm/qca_spi.c     |   3 +-
+ drivers/net/ieee802154/mac802154_hwsim.c    |   6 +-
+ drivers/nfc/nfcsim.c                        |   4 -
+ drivers/pci/controller/pci-hyperv.c         |  18 ++
+ drivers/s390/cio/device.c                   |   5 +-
+ drivers/target/iscsi/iscsi_target_nego.c    |   4 +-
+ drivers/tty/serial/lantiq.c                 |  74 ++++----
+ drivers/usb/gadget/udc/amd5536udc_pci.c     |   3 +
+ fs/nilfs2/page.c                            |  10 +-
+ fs/nilfs2/segbuf.c                          |   6 +
+ fs/nilfs2/segment.c                         |   7 +
+ fs/nilfs2/super.c                           |  25 ++-
+ fs/nilfs2/the_nilfs.c                       |  44 ++++-
+ include/linux/ipmi_smi.h                    |  17 +-
+ include/linux/rcupdate.h                    |  18 ++
+ kernel/cgroup/cgroup.c                      |  20 +-
+ net/ipv4/esp4_offload.c                     |   3 +
+ net/ipv6/esp6_offload.c                     |   3 +
+ net/netfilter/nf_tables_api.c               |   7 +-
+ net/netfilter/nfnetlink_osf.c               |   1 +
+ net/netfilter/xt_osf.c                      |   1 -
+ net/sched/sch_netem.c                       |   8 +-
+ sound/soc/codecs/nau8824.c                  |  24 +++
+ 44 files changed, 454 insertions(+), 229 deletions(-)
 
 
