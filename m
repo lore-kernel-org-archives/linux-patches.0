@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C35134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:18:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F68C433C0;
-	Mon, 26 Jun 2023 18:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26B6134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:18:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FB1C433C9;
+	Mon, 26 Jun 2023 18:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803515;
-	bh=tYyfMgHnGAZxaUDYFsbmAarf858ivoPyM2VJuOtueCM=;
+	s=korg; t=1687803518;
+	bh=8yGq27hEsLLbeqrP7XAuptcDpE5+4toHRfVRgchp2m0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+bV+H97bgpfuUSegxcsnbGTSWxeqRTeCUeili520q9FTJu85LiheMPmzPltOdFRT
-	 cA/JcYy2XPHj+DUbCqq396Nc8OGIFxHPH0TaUa03WtgzccZ8TcMC6yFfO3thFk042Q
-	 D5E0Kj8lH0DjCcdRicSjwc7BfFcUnKSYSAXytmr0=
+	b=lY8y4lYa3nE3gxnvi+PJT2sdVbuwCAn5EQm8+taiqEnkIZrceP+QpZapW16XeIDWR
+	 l3hDbMNKOBRqgsWSYjR6PmnMdIq6iFwtmP2aHOFKOdXUVLsaQ6wOKQzy+kWVDnD0p6
+	 mK6EOLpl8+UxuvsnezZLV+WMgmrBjqo7d5GbjHgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Sisodiya <mukesh.sisodiya@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 087/199] wifi: iwlwifi: pcie: Handle SO-F device for PCI id 0x7AF0
-Date: Mon, 26 Jun 2023 20:09:53 +0200
-Message-ID: <20230626180809.412141939@linuxfoundation.org>
+	stable@kernel.org,
+	Dexuan Cui <decui@microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.3 061/199] Drivers: hv: vmbus: Call hv_synic_free() if hv_synic_alloc() fails
+Date: Mon, 26 Jun 2023 20:09:27 +0200
+Message-ID: <20230626180808.251372962@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,34 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
+From: Dexuan Cui <decui@microsoft.com>
 
-commit 4e9f0ec38852c18faa9689322e758575af33e5d4 upstream.
+commit ec97e112985c2581ee61854a4b74f080f6cdfc2c upstream.
 
-Add support for AX1690i and AX1690s devices with
-PCIE id 0x7AF0.
+Commit 572086325ce9 ("Drivers: hv: vmbus: Cleanup synic memory free path")
+says "Any memory allocations that succeeded will be freed when the caller
+cleans up by calling hv_synic_free()", but if the get_zeroed_page() in
+hv_synic_alloc() fails, currently hv_synic_free() is not really called
+in vmbus_bus_init(), consequently there will be a memory leak, e.g.
+hv_context.hv_numa_map is not freed in the error path. Fix this by
+updating the goto labels.
 
-Cc: stable@vger.kernel.org # 6.1+
-Signed-off-by: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://lore.kernel.org/r/20230619150233.461290-2-johannes@sipsolutions.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Fixes: 4df4cb9e99f8 ("x86/hyperv: Initialize clockevents earlier in CPU onlining")
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20230504224155.10484-1-decui@microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hv/vmbus_drv.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -547,6 +547,8 @@ static const struct iwl_dev_info iwl_dev
- 	IWL_DEV_INFO(0x54F0, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
- 	IWL_DEV_INFO(0x7A70, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
- 	IWL_DEV_INFO(0x7A70, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
-+	IWL_DEV_INFO(0x7AF0, 0x1691, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690s_name),
-+	IWL_DEV_INFO(0x7AF0, 0x1692, iwlax411_2ax_cfg_so_gf4_a0, iwl_ax411_killer_1690i_name),
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -1525,7 +1525,7 @@ static int vmbus_bus_init(void)
+ 	ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "hyperv/vmbus:online",
+ 				hv_synic_init, hv_synic_cleanup);
+ 	if (ret < 0)
+-		goto err_cpuhp;
++		goto err_alloc;
+ 	hyperv_cpuhp_online = ret;
  
- 	IWL_DEV_INFO(0x271C, 0x0214, iwl9260_2ac_cfg, iwl9260_1_name),
- 	IWL_DEV_INFO(0x7E40, 0x1691, iwl_cfg_ma_a0_gf4_a0, iwl_ax411_killer_1690s_name),
+ 	ret = vmbus_connect();
+@@ -1577,9 +1577,8 @@ static int vmbus_bus_init(void)
+ 
+ err_connect:
+ 	cpuhp_remove_state(hyperv_cpuhp_online);
+-err_cpuhp:
+-	hv_synic_free();
+ err_alloc:
++	hv_synic_free();
+ 	if (vmbus_irq == -1) {
+ 		hv_remove_vmbus_handler();
+ 	} else {
 
 
