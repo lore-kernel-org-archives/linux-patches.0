@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757FA13AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72152C433C0;
-	Mon, 26 Jun 2023 18:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26C613AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E053C433C8;
+	Mon, 26 Jun 2023 18:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803986;
-	bh=iH5sptddWZcnlTxUPs2tB+BDolK9udB4DIFGmPbcGAE=;
+	s=korg; t=1687803989;
+	bh=kOLsJa76zqfPuOfw8I5+PGjN1wLCPIKt8iink4QIXMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1AHzl3eZwS6aQNEpFB7Cr9F7l/FMsIIljHnn9yRknPbj+iexR0kQ5CsWWMq9DPOV
-	 mHOrKdOwQ6yhvnxLG34TW2CN2pBNJ6YLKKUUuA6HAuiKQ53h84RQtPfHcD8KPJWEj8
-	 py9nmpeGgtOE9UUvShGarRcG4px7tiFR5/Siw6yk=
+	b=XVsyhDrkmLTPdGjm8fkMTOhCMuMntzNKyuzGUG/QZlaFHqbjasQQFrB84gRqaVcEF
+	 +EEsFNwPCPtvZJijHevBHALCWS6pTclCNb6ieOy0xz1NJy7IfVM0oBhay+BNL6vpAz
+	 Lmluzg7K3062Y1fCyS9CXtyZRhqi4uStAPGFdb0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Muhammad <osmtendev@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 33/41] nfcsim.c: Fix error checking for debugfs_create_dir
-Date: Mon, 26 Jun 2023 20:11:56 +0200
-Message-ID: <20230626180737.516908265@linuxfoundation.org>
+Subject: [PATCH 4.19 34/41] usb: gadget: udc: fix NULL dereference in remove()
+Date: Mon, 26 Jun 2023 20:11:57 +0200
+Message-ID: <20230626180737.546868430@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -36,38 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Osama Muhammad <osmtendev@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 9b9e46aa07273ceb96866b2e812b46f1ee0b8d2f ]
+[ Upstream commit 016da9c65fec9f0e78c4909ed9a0f2d567af6775 ]
 
-This patch fixes the error checking in nfcsim.c.
-The DebugFS kernel API is developed in
-a way that the caller can safely ignore the errors that
-occur during the creation of DebugFS nodes.
+The "udc" pointer was never set in the probe() function so it will
+lead to a NULL dereference in udc_pci_remove() when we do:
 
-Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+	usb_del_gadget_udc(&udc->gadget);
+
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/ZG+A/dNpFWAlCChk@kili
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nfcsim.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/usb/gadget/udc/amd5536udc_pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nfc/nfcsim.c b/drivers/nfc/nfcsim.c
-index 533e3aa6275cd..cf07b366500e9 100644
---- a/drivers/nfc/nfcsim.c
-+++ b/drivers/nfc/nfcsim.c
-@@ -345,10 +345,6 @@ static struct dentry *nfcsim_debugfs_root;
- static void nfcsim_debugfs_init(void)
- {
- 	nfcsim_debugfs_root = debugfs_create_dir("nfcsim", NULL);
--
--	if (!nfcsim_debugfs_root)
--		pr_err("Could not create debugfs entry\n");
--
- }
+diff --git a/drivers/usb/gadget/udc/amd5536udc_pci.c b/drivers/usb/gadget/udc/amd5536udc_pci.c
+index 362284057d307..a3d15c3fb82a9 100644
+--- a/drivers/usb/gadget/udc/amd5536udc_pci.c
++++ b/drivers/usb/gadget/udc/amd5536udc_pci.c
+@@ -171,6 +171,9 @@ static int udc_pci_probe(
+ 		retval = -ENODEV;
+ 		goto err_probe;
+ 	}
++
++	udc = dev;
++
+ 	return 0;
  
- static void nfcsim_debugfs_remove(void)
+ err_probe:
 -- 
 2.39.2
 
