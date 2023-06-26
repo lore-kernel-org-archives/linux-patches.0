@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109C611CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8000EC433C8;
-	Mon, 26 Jun 2023 18:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E263511CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62AD9C433C8;
+	Mon, 26 Jun 2023 18:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805125;
-	bh=LLCvYwMHEXWm5SuHxbVaJMRG/uwMYoTI9uLtZG+eGPI=;
+	s=korg; t=1687805128;
+	bh=hkcHD/nxlAepqxYUrWHyvZbA4ZcM4Q/GWVroJj3Nims=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2t7Qjtn6ymT8osSLcXufq64uk6CRkbV8OENxOartpReplY+5LiJkWvepqy7Rvw15
-	 cBJU7/eqnaFSJo5z9wvEcA+y3d267JTsTHftqG3gfH3L78dlmr8BcH7zsBtWYgBk9H
-	 0GoWOQTPQNzvYv2EjQqNuXa5dFea3POmbEbZs6Go=
+	b=vQTyNSdFkEzw4/GrSDvrcI8TWqEWz8SVc/vvTe+StH2iiy/jiZ9umO3VZ+h5hJtVl
+	 pdjBNnhIc3lQBZSG6RHQW/jxx8yLlsLIslhg5F6V17W8OZ1rNdVrxrK57RWwK8LfbB
+	 LPJ/O7+n2Kg761rDVl6wOkjeX3Ga3YnKDJjRV+Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Joey Gouly <joey.gouly@arm.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 58/81] gpio: Allow per-parent interrupt data
-Date: Mon, 26 Jun 2023 20:12:40 +0200
-Message-ID: <20230626180746.832452734@linuxfoundation.org>
+Subject: [PATCH 5.10 59/81] gpiolib: Fix GPIO chip IRQ initialization restriction
+Date: Mon, 26 Jun 2023 20:12:41 +0200
+Message-ID: <20230626180746.873827965@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -36,97 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit cfe6807d82e97e81c3209dca9448f091e1448a57 ]
+[ Upstream commit 8c00914e5438e3636f26b4f814b3297ae2a1b9ee ]
 
-The core gpiolib code is able to deal with multiple interrupt parents
-for a single gpio irqchip. It however only allows a single piece
-of data to be conveyed to all flow handlers (either the gpio_chip
-or some other, driver-specific data).
+In case of gpio-regmap, IRQ chip is added by regmap-irq and associated with
+GPIO chip by gpiochip_irqchip_add_domain(). The initialization flag was not
+added in gpiochip_irqchip_add_domain(), causing gpiochip_to_irq() to return
+-EPROBE_DEFER.
 
-This means that drivers have to go through some interesting dance
-to find the correct context, something that isn't great in interrupt
-context (see aebdc8abc9db86e2bd33070fc2f961012fff74b4 for a prime
-example).
-
-Instead, offer an optional way for a pinctrl/gpio driver to provide
-an array of pointers which gets used to provide the correct context
-to the flow handler.
-
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Joey Gouly <joey.gouly@arm.com>
+Fixes: 5467801f1fcb ("gpio: Restrict usage of GPIO chip irq members before initialization")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20211026175815.52703-2-joey.gouly@arm.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: 8c00914e5438 ("gpiolib: Fix GPIO chip IRQ initialization restriction")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c      |  9 +++++++--
- include/linux/gpio/driver.h | 19 +++++++++++++++++--
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 3e01a3ac652d1..7ac86037a4191 100644
+index 7ac86037a4191..d10f621085e2e 100644
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -1595,9 +1595,14 @@ static int gpiochip_add_irqchip(struct gpio_chip *gc,
- 	}
+@@ -1792,6 +1792,14 @@ int gpiochip_irqchip_add_domain(struct gpio_chip *gc,
+ 	gc->to_irq = gpiochip_to_irq;
+ 	gc->irq.domain = domain;
  
- 	if (gc->irq.parent_handler) {
--		void *data = gc->irq.parent_handler_data ?: gc;
--
- 		for (i = 0; i < gc->irq.num_parents; i++) {
-+			void *data;
-+
-+			if (gc->irq.per_parent_data)
-+				data = gc->irq.parent_handler_data_array[i];
-+			else
-+				data = gc->irq.parent_handler_data ?: gc;
-+
- 			/*
- 			 * The parent IRQ chip is already using the chip_data
- 			 * for this IRQ chip, so our callbacks simply use the
-diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
-index 0552a9859a01e..64c93a36a3a92 100644
---- a/include/linux/gpio/driver.h
-+++ b/include/linux/gpio/driver.h
-@@ -168,11 +168,18 @@ struct gpio_irq_chip {
- 
- 	/**
- 	 * @parent_handler_data:
-+	 * @parent_handler_data_array:
- 	 *
- 	 * Data associated, and passed to, the handler for the parent
--	 * interrupt.
-+	 * interrupt. Can either be a single pointer if @per_parent_data
-+	 * is false, or an array of @num_parents pointers otherwise.  If
-+	 * @per_parent_data is true, @parent_handler_data_array cannot be
-+	 * NULL.
- 	 */
--	void *parent_handler_data;
-+	union {
-+		void *parent_handler_data;
-+		void **parent_handler_data_array;
-+	};
- 
- 	/**
- 	 * @num_parents:
-@@ -203,6 +210,14 @@ struct gpio_irq_chip {
- 	 */
- 	bool threaded;
- 
-+	/**
-+	 * @per_parent_data:
-+	 *
-+	 * True if parent_handler_data_array describes a @num_parents
-+	 * sized array to be used as parent data.
++	/*
++	 * Using barrier() here to prevent compiler from reordering
++	 * gc->irq.initialized before adding irqdomain.
 +	 */
-+	bool per_parent_data;
++	barrier();
 +
- 	/**
- 	 * @init_hw: optional routine to initialize hardware before
- 	 * an IRQ chip will be added. This is quite useful when
++	gc->irq.initialized = true;
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(gpiochip_irqchip_add_domain);
 -- 
 2.39.2
 
