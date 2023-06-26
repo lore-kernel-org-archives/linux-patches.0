@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA823C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725A9C433C8;
-	Mon, 26 Jun 2023 18:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBE8C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D60C433C8;
+	Mon, 26 Jun 2023 18:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804686;
-	bh=MzSFTVDuDWDDWc6mShI1jWVnF9m90TM5KCA9xufXyYc=;
+	s=korg; t=1687804689;
+	bh=QQghzQrbqNjPB+FgRF2fmOkhCByXr7+H3dskt103s0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PjQS9bnqaGdf+d5Y80qVPFDdGhLS/P3vfBFhqfg8xRaCh80vp9eeCcRIFGK9FsBhb
-	 g0fVHWq9daSXMlwj2SuqFDfo3+5rsXpdLRJOm1e615BO88fYsUJYY1Mr6K5jEgdUVd
-	 rPn8GVTWHMUG1ZmRMN0cwERsyZ6aFlWKnJlnQnpQ=
+	b=aPZRzfYIiVOvIflBJ38IvxLQsGCEjKJ39wuNzwQt1Td/LlMcBL8QwGTXDxSwJB7hZ
+	 QB8adX0x8krpTSzZ1ybUaMReUWfRL6KtU2cjy2Ua0LuOIQPMJek6i9PzEfO1cXEGo+
+	 2C4s+Jj0tG2aDoDaT8Xopkpb1QhC2yQI3PS+v6bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Stylon Wang <stylon.wang@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 52/60] ARM: dts: Fix erroneous ADS touchscreen polarities
-Date: Mon, 26 Jun 2023 20:12:31 +0200
-Message-ID: <20230626180741.705059684@linuxfoundation.org>
+Subject: [PATCH 5.15 01/96] drm/amd/display: fix the system hang while disable PSR
+Date: Mon, 26 Jun 2023 20:11:16 +0200
+Message-ID: <20230626180746.999471241@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
-References: <20230626180739.558575012@linuxfoundation.org>
+In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
+References: <20230626180746.943455203@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,175 +41,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-[ Upstream commit 4a672d500bfd6bb87092c33d5a2572c3d0a1cf83 ]
+[ Upstream commit ea2062dd1f0384ae1b136d333ee4ced15bedae38 ]
 
-Several device tree files get the polarity of the pendown-gpios
-wrong: this signal is active low. Fix up all incorrect flags, so
-that operating systems can rely on the flag being correctly set.
+[Why]
+When the PSR enabled. If you try to adjust the timing parameters,
+it may cause system hang. Because the timing mismatch with the
+DMCUB settings.
 
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20230510105156.1134320-1-linus.walleij@linaro.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+[How]
+Disable the PSR before adjusting timing parameters.
+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Acked-by: Stylon Wang <stylon.wang@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Reviewed-by: Wayne Lin <Wayne.Lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/am57xx-cl-som-am57x.dts          | 2 +-
- arch/arm/boot/dts/at91sam9261ek.dts                | 2 +-
- arch/arm/boot/dts/imx7d-pico-hobbit.dts            | 2 +-
- arch/arm/boot/dts/imx7d-sdb.dts                    | 2 +-
- arch/arm/boot/dts/omap3-cm-t3x.dtsi                | 2 +-
- arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi | 2 +-
- arch/arm/boot/dts/omap3-lilly-a83x.dtsi            | 2 +-
- arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi    | 2 +-
- arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi    | 2 +-
- arch/arm/boot/dts/omap3-pandora-common.dtsi        | 2 +-
- arch/arm/boot/dts/omap5-cm-t54.dts                 | 2 +-
- 11 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/am57xx-cl-som-am57x.dts b/arch/arm/boot/dts/am57xx-cl-som-am57x.dts
-index e86d4795e0244..e542a9f59e936 100644
---- a/arch/arm/boot/dts/am57xx-cl-som-am57x.dts
-+++ b/arch/arm/boot/dts/am57xx-cl-som-am57x.dts
-@@ -527,7 +527,7 @@
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 938aa11acb2d4..5acd088f34f3d 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9218,6 +9218,12 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
+ 		if (acrtc_state->abm_level != dm_old_crtc_state->abm_level)
+ 			bundle->stream_update.abm_level = &acrtc_state->abm_level;
  
- 		interrupt-parent = <&gpio1>;
- 		interrupts = <31 0>;
--		pendown-gpio = <&gpio1 31 0>;
-+		pendown-gpio = <&gpio1 31 GPIO_ACTIVE_LOW>;
++		mutex_lock(&dm->dc_lock);
++		if ((acrtc_state->update_type > UPDATE_TYPE_FAST) &&
++				acrtc_state->stream->link->psr_settings.psr_allow_active)
++			amdgpu_dm_psr_disable(acrtc_state->stream);
++		mutex_unlock(&dm->dc_lock);
++
+ 		/*
+ 		 * If FreeSync state on the stream has changed then we need to
+ 		 * re-adjust the min/max bounds now that DC doesn't handle this
+@@ -9231,9 +9237,6 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
+ 			spin_unlock_irqrestore(&pcrtc->dev->event_lock, flags);
+ 		}
+ 		mutex_lock(&dm->dc_lock);
+-		if ((acrtc_state->update_type > UPDATE_TYPE_FAST) &&
+-				acrtc_state->stream->link->psr_settings.psr_allow_active)
+-			amdgpu_dm_psr_disable(acrtc_state->stream);
  
- 
- 		ti,x-min = /bits/ 16 <0x0>;
-diff --git a/arch/arm/boot/dts/at91sam9261ek.dts b/arch/arm/boot/dts/at91sam9261ek.dts
-index c4ef74fea97c2..ee90ea09e781f 100644
---- a/arch/arm/boot/dts/at91sam9261ek.dts
-+++ b/arch/arm/boot/dts/at91sam9261ek.dts
-@@ -156,7 +156,7 @@
- 					compatible = "ti,ads7843";
- 					interrupts-extended = <&pioC 2 IRQ_TYPE_EDGE_BOTH>;
- 					spi-max-frequency = <3000000>;
--					pendown-gpio = <&pioC 2 GPIO_ACTIVE_HIGH>;
-+					pendown-gpio = <&pioC 2 GPIO_ACTIVE_LOW>;
- 
- 					ti,x-min = /bits/ 16 <150>;
- 					ti,x-max = /bits/ 16 <3830>;
-diff --git a/arch/arm/boot/dts/imx7d-pico-hobbit.dts b/arch/arm/boot/dts/imx7d-pico-hobbit.dts
-index d917dc4f2f227..6ad39dca70096 100644
---- a/arch/arm/boot/dts/imx7d-pico-hobbit.dts
-+++ b/arch/arm/boot/dts/imx7d-pico-hobbit.dts
-@@ -64,7 +64,7 @@
- 		interrupt-parent = <&gpio2>;
- 		interrupts = <7 0>;
- 		spi-max-frequency = <1000000>;
--		pendown-gpio = <&gpio2 7 0>;
-+		pendown-gpio = <&gpio2 7 GPIO_ACTIVE_LOW>;
- 		vcc-supply = <&reg_3p3v>;
- 		ti,x-min = /bits/ 16 <0>;
- 		ti,x-max = /bits/ 16 <4095>;
-diff --git a/arch/arm/boot/dts/imx7d-sdb.dts b/arch/arm/boot/dts/imx7d-sdb.dts
-index 363d1f57a608b..88e62801b82e1 100644
---- a/arch/arm/boot/dts/imx7d-sdb.dts
-+++ b/arch/arm/boot/dts/imx7d-sdb.dts
-@@ -176,7 +176,7 @@
- 		pinctrl-0 = <&pinctrl_tsc2046_pendown>;
- 		interrupt-parent = <&gpio2>;
- 		interrupts = <29 0>;
--		pendown-gpio = <&gpio2 29 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio2 29 GPIO_ACTIVE_LOW>;
- 		touchscreen-max-pressure = <255>;
- 		wakeup-source;
- 	};
-diff --git a/arch/arm/boot/dts/omap3-cm-t3x.dtsi b/arch/arm/boot/dts/omap3-cm-t3x.dtsi
-index cdb632df152a1..11ae189441954 100644
---- a/arch/arm/boot/dts/omap3-cm-t3x.dtsi
-+++ b/arch/arm/boot/dts/omap3-cm-t3x.dtsi
-@@ -227,7 +227,7 @@
- 
- 		interrupt-parent = <&gpio2>;
- 		interrupts = <25 0>;		/* gpio_57 */
--		pendown-gpio = <&gpio2 25 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio2 25 GPIO_ACTIVE_LOW>;
- 
- 		ti,x-min = /bits/ 16 <0x0>;
- 		ti,x-max = /bits/ 16 <0x0fff>;
-diff --git a/arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi b/arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi
-index 3decc2d78a6ca..a7f99ae0c1fe9 100644
---- a/arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi
-+++ b/arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi
-@@ -54,7 +54,7 @@
- 
- 		interrupt-parent = <&gpio1>;
- 		interrupts = <27 0>;		/* gpio_27 */
--		pendown-gpio = <&gpio1 27 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio1 27 GPIO_ACTIVE_LOW>;
- 
- 		ti,x-min = /bits/ 16 <0x0>;
- 		ti,x-max = /bits/ 16 <0x0fff>;
-diff --git a/arch/arm/boot/dts/omap3-lilly-a83x.dtsi b/arch/arm/boot/dts/omap3-lilly-a83x.dtsi
-index c22833d4e5685..fba69b3f79c2b 100644
---- a/arch/arm/boot/dts/omap3-lilly-a83x.dtsi
-+++ b/arch/arm/boot/dts/omap3-lilly-a83x.dtsi
-@@ -311,7 +311,7 @@
- 		interrupt-parent = <&gpio1>;
- 		interrupts = <8 0>;   /* boot6 / gpio_8 */
- 		spi-max-frequency = <1000000>;
--		pendown-gpio = <&gpio1 8 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio1 8 GPIO_ACTIVE_LOW>;
- 		vcc-supply = <&reg_vcc3>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&tsc2048_pins>;
-diff --git a/arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi b/arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi
-index 185ce53de0ece..0523a369a4d75 100644
---- a/arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi
-+++ b/arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi
-@@ -149,7 +149,7 @@
- 
- 		interrupt-parent = <&gpio4>;
- 		interrupts = <18 0>;			/* gpio_114 */
--		pendown-gpio = <&gpio4 18 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio4 18 GPIO_ACTIVE_LOW>;
- 
- 		ti,x-min = /bits/ 16 <0x0>;
- 		ti,x-max = /bits/ 16 <0x0fff>;
-diff --git a/arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi b/arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi
-index 7fe0f9148232b..d340eb722f129 100644
---- a/arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi
-+++ b/arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi
-@@ -160,7 +160,7 @@
- 
- 		interrupt-parent = <&gpio4>;
- 		interrupts = <18 0>;			/* gpio_114 */
--		pendown-gpio = <&gpio4 18 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio4 18 GPIO_ACTIVE_LOW>;
- 
- 		ti,x-min = /bits/ 16 <0x0>;
- 		ti,x-max = /bits/ 16 <0x0fff>;
-diff --git a/arch/arm/boot/dts/omap3-pandora-common.dtsi b/arch/arm/boot/dts/omap3-pandora-common.dtsi
-index 150d5be42d278..4ea5656825de7 100644
---- a/arch/arm/boot/dts/omap3-pandora-common.dtsi
-+++ b/arch/arm/boot/dts/omap3-pandora-common.dtsi
-@@ -651,7 +651,7 @@
- 		pinctrl-0 = <&penirq_pins>;
- 		interrupt-parent = <&gpio3>;
- 		interrupts = <30 IRQ_TYPE_NONE>;	/* GPIO_94 */
--		pendown-gpio = <&gpio3 30 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio3 30 GPIO_ACTIVE_LOW>;
- 		vcc-supply = <&vaux4>;
- 
- 		ti,x-min = /bits/ 16 <0>;
-diff --git a/arch/arm/boot/dts/omap5-cm-t54.dts b/arch/arm/boot/dts/omap5-cm-t54.dts
-index e78d3718f145d..d38781025eef8 100644
---- a/arch/arm/boot/dts/omap5-cm-t54.dts
-+++ b/arch/arm/boot/dts/omap5-cm-t54.dts
-@@ -354,7 +354,7 @@
- 
- 		interrupt-parent = <&gpio1>;
- 		interrupts = <15 0>;			/* gpio1_wk15 */
--		pendown-gpio = <&gpio1 15 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio1 15 GPIO_ACTIVE_LOW>;
- 
- 
- 		ti,x-min = /bits/ 16 <0x0>;
+ 		dc_commit_updates_for_stream(dm->dc,
+ 						     bundle->surface_updates,
 -- 
 2.39.2
 
