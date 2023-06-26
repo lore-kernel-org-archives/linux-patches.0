@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33096C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:41:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3713C433C0;
-	Mon, 26 Jun 2023 18:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB07C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:41:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C764C433C0;
+	Mon, 26 Jun 2023 18:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804886;
-	bh=wNglwoURq8vEIIdrbCFMTUUTkH2ne/6BMHWSqNu+2Ok=;
+	s=korg; t=1687804889;
+	bh=sn2IKEwdj/SlpGfzBw23euWcHWfnYvBDBogcN0hFLGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hp5RYC2r5SyIOg328zj+XQ0o+7C6xgZx8tqJQ//66ZmG9qA2iPnZd0hL43d5E6v7n
-	 kZmCJ2DJ/Ws8LR4Teu4DVUqQFvp3ISGOBoLVnjFwbh7IKeismEBUNovYBWQ2aluYZ4
-	 Mhr4Yi+BAV7q9ORPMq+rREROVFhSiBuinad0F7ys=
+	b=NMPAis3TlWBc7U95RTOHMQl6EllRjmu/jYTWHR8lwPdXO8ejHVGpLOFkzrqx9NdOg
+	 bsIaapcd30LStKpwjyGvgO+eCPns48RZigznh6Gy15yw89NoBYXNvtAih4t95V8N4t
+	 s+H/PKXbJFSpenvOuap33hAInKrk+TkPxZ462VHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 67/96] netfilter: nf_tables: disallow updates of anonymous sets
-Date: Mon, 26 Jun 2023 20:12:22 +0200
-Message-ID: <20230626180749.741800897@linuxfoundation.org>
+Subject: [PATCH 5.15 76/96] scsi: target: iscsi: Prevent login threads from racing between each other
+Date: Mon, 26 Jun 2023 20:12:31 +0200
+Message-ID: <20230626180750.165672175@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -34,34 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit b770283c98e0eee9133c47bc03b6cc625dc94723 ]
+[ Upstream commit 2a737d3b8c792400118d6cf94958f559de9c5e59 ]
 
-Disallow updates of set timeout and garbage collection parameters for
-anonymous sets.
+The tpg->np_login_sem is a semaphore that is used to serialize the login
+process when multiple login threads run concurrently against the same
+target portal group.
 
-Fixes: 123b99619cca ("netfilter: nf_tables: honor set timeout and garbage collection updates")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The iscsi_target_locate_portal() function finds the tpg, calls
+iscsit_access_np() against the np_login_sem semaphore and saves the tpg
+pointer in conn->tpg;
+
+If iscsi_target_locate_portal() fails, the caller will check for the
+conn->tpg pointer and, if it's not NULL, then it will assume that
+iscsi_target_locate_portal() called iscsit_access_np() on the semaphore.
+
+Make sure that conn->tpg gets initialized only if iscsit_access_np() was
+successful, otherwise iscsit_deaccess_np() may end up being called against
+a semaphore we never took, allowing more than one thread to access the same
+tpg.
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Link: https://lore.kernel.org/r/20230508162219.1731964-4-mlombard@redhat.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/target/iscsi/iscsi_target_nego.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 66328326ec05e..826bd961d90c1 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4628,6 +4628,9 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 		if (info->nlh->nlmsg_flags & NLM_F_REPLACE)
- 			return -EOPNOTSUPP;
+diff --git a/drivers/target/iscsi/iscsi_target_nego.c b/drivers/target/iscsi/iscsi_target_nego.c
+index c0ed6f8e5c5b9..32a2852352db1 100644
+--- a/drivers/target/iscsi/iscsi_target_nego.c
++++ b/drivers/target/iscsi/iscsi_target_nego.c
+@@ -1071,6 +1071,7 @@ int iscsi_target_locate_portal(
+ 	iscsi_target_set_sock_callbacks(conn);
  
-+		if (nft_set_is_anonymous(set))
-+			return -EOPNOTSUPP;
-+
- 		err = nft_set_expr_alloc(&ctx, set, nla, exprs, &num_exprs, flags);
- 		if (err < 0)
- 			return err;
+ 	login->np = np;
++	conn->tpg = NULL;
+ 
+ 	login_req = (struct iscsi_login_req *) login->req;
+ 	payload_length = ntoh24(login_req->dlength);
+@@ -1138,7 +1139,6 @@ int iscsi_target_locate_portal(
+ 	 */
+ 	sessiontype = strncmp(s_buf, DISCOVERY, 9);
+ 	if (!sessiontype) {
+-		conn->tpg = iscsit_global->discovery_tpg;
+ 		if (!login->leading_connection)
+ 			goto get_target;
+ 
+@@ -1155,9 +1155,11 @@ int iscsi_target_locate_portal(
+ 		 * Serialize access across the discovery struct iscsi_portal_group to
+ 		 * process login attempt.
+ 		 */
++		conn->tpg = iscsit_global->discovery_tpg;
+ 		if (iscsit_access_np(np, conn->tpg) < 0) {
+ 			iscsit_tx_login_rsp(conn, ISCSI_STATUS_CLS_TARGET_ERR,
+ 				ISCSI_LOGIN_STATUS_SVC_UNAVAILABLE);
++			conn->tpg = NULL;
+ 			ret = -1;
+ 			goto out;
+ 		}
 -- 
 2.39.2
 
