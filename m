@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED8B13AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED729C433C8;
-	Mon, 26 Jun 2023 18:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552E113AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85BAC433C8;
+	Mon, 26 Jun 2023 18:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804001;
-	bh=mFOcPboIVuuAJGtFNcK7kV9mQjo0V52vXHknO89E3YA=;
+	s=korg; t=1687804004;
+	bh=7aqut26EGQ+mODKBZ+s4r/H1RUE9kewyP+rKBlcRevA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Tph0W0qukqbg3dTauaFeg8+RcgqRiLNemUc8tI1dLM3RkzGl2uO+VyC89ipQekwg
-	 KnB3idIHX6Ci7Wn4tKyCXUotqjEOqYl+U0tfXmP2WB0xGPd977cj8tiPsYWn8NLkA5
-	 f8+qZw5BZCbxvFltwLjP0kzjE6PyaNtWkf1nMec8=
+	b=aetk1jtALINDeo9K4RjQ3HRsug+jjulnYMgCVIc8jJUpng+k3Mk9CtNHfARkpYPNl
+	 RQshK8FEgBXRBIR1/9Pb/0/mTPuagRmsIyFM6SYxRixm/LU/I3jKbIKvP7PcaAdSpd
+	 mJhQ4jKj8h6Y62KLpWueFsVkdGkho82kH4mned7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiri Pirko <jiri@resnulli.us>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Harry Wentland <Harry.Wentland@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 28/41] sch_netem: acquire qdisc lock in netem_change()
-Date: Mon, 26 Jun 2023 20:11:51 +0200
-Message-ID: <20230626180737.330781577@linuxfoundation.org>
+Subject: [PATCH 6.1 001/170] drm/amd/display: Use dc_update_planes_and_stream
+Date: Mon, 26 Jun 2023 20:09:30 +0200
+Message-ID: <20230626180800.552644952@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
-References: <20230626180736.243379844@linuxfoundation.org>
+In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
+References: <20230626180800.476539630@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,107 +40,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit 2174a08db80d1efeea382e25ac41c4e7511eb6d6 ]
+[ Upstream commit f7511289821ffccc07579406d6ab520aa11049f5 ]
 
-syzbot managed to trigger a divide error [1] in netem.
+[Why & How]
+The old dc_commit_updates_for_stream lacks manipulation for many corner
+cases where the DC feature requires special attention; as a result, it
+starts to show its limitation (e.g., the SubVP feature is not supported
+by it, among other cases). To modernize and unify our internal API, this
+commit replaces the old dc_commit_updates_for_stream with
+dc_update_planes_and_stream, which has more features.
 
-It could happen if q->rate changes while netem_enqueue()
-is running, since q->rate is read twice.
-
-It turns out netem_change() always lacked proper synchronization.
-
-[1]
-divide error: 0000 [#1] SMP KASAN
-CPU: 1 PID: 7867 Comm: syz-executor.1 Not tainted 6.1.30-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
-RIP: 0010:div64_u64 include/linux/math64.h:69 [inline]
-RIP: 0010:packet_time_ns net/sched/sch_netem.c:357 [inline]
-RIP: 0010:netem_enqueue+0x2067/0x36d0 net/sched/sch_netem.c:576
-Code: 89 e2 48 69 da 00 ca 9a 3b 42 80 3c 28 00 4c 8b a4 24 88 00 00 00 74 0d 4c 89 e7 e8 c3 4f 3b fd 48 8b 4c 24 18 48 89 d8 31 d2 <49> f7 34 24 49 01 c7 4c 8b 64 24 48 4d 01 f7 4c 89 e3 48 c1 eb 03
-RSP: 0018:ffffc9000dccea60 EFLAGS: 00010246
-RAX: 000001a442624200 RBX: 000001a442624200 RCX: ffff888108a4f000
-RDX: 0000000000000000 RSI: 000000000000070d RDI: 000000000000070d
-RBP: ffffc9000dcceb90 R08: ffffffff849c5e26 R09: fffffbfff10e1297
-R10: 0000000000000000 R11: dffffc0000000001 R12: ffff888108a4f358
-R13: dffffc0000000000 R14: 0000001a8cd9a7ec R15: 0000000000000000
-FS: 00007fa73fe18700(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fa73fdf7718 CR3: 000000011d36e000 CR4: 0000000000350ee0
-Call Trace:
-<TASK>
-[<ffffffff84714385>] __dev_xmit_skb net/core/dev.c:3931 [inline]
-[<ffffffff84714385>] __dev_queue_xmit+0xcf5/0x3370 net/core/dev.c:4290
-[<ffffffff84d22df2>] dev_queue_xmit include/linux/netdevice.h:3030 [inline]
-[<ffffffff84d22df2>] neigh_hh_output include/net/neighbour.h:531 [inline]
-[<ffffffff84d22df2>] neigh_output include/net/neighbour.h:545 [inline]
-[<ffffffff84d22df2>] ip_finish_output2+0xb92/0x10d0 net/ipv4/ip_output.c:235
-[<ffffffff84d21e63>] __ip_finish_output+0xc3/0x2b0
-[<ffffffff84d10a81>] ip_finish_output+0x31/0x2a0 net/ipv4/ip_output.c:323
-[<ffffffff84d10f14>] NF_HOOK_COND include/linux/netfilter.h:298 [inline]
-[<ffffffff84d10f14>] ip_output+0x224/0x2a0 net/ipv4/ip_output.c:437
-[<ffffffff84d123b5>] dst_output include/net/dst.h:444 [inline]
-[<ffffffff84d123b5>] ip_local_out net/ipv4/ip_output.c:127 [inline]
-[<ffffffff84d123b5>] __ip_queue_xmit+0x1425/0x2000 net/ipv4/ip_output.c:542
-[<ffffffff84d12fdc>] ip_queue_xmit+0x4c/0x70 net/ipv4/ip_output.c:556
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Hemminger <stephen@networkplumber.org>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Cong Wang <xiyou.wangcong@gmail.com>
-Cc: Jiri Pirko <jiri@resnulli.us>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230620184425.1179809-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Harry Wentland <Harry.Wentland@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: ea2062dd1f03 ("drm/amd/display: fix the system hang while disable PSR")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 30 +++++++++----------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 31793af1a77bd..93548b9e07cf1 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -943,6 +943,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	if (ret < 0)
- 		return ret;
- 
-+	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
- 	old_loss_model = q->loss_model;
-@@ -951,7 +952,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
- 		if (ret) {
- 			q->loss_model = old_loss_model;
--			return ret;
-+			goto unlock;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 53687de6c0530..a7bc57529e6c9 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2632,10 +2632,12 @@ static void dm_gpureset_commit_state(struct dc_state *dc_state,
+ 			bundle->surface_updates[m].surface->force_full_update =
+ 				true;
  		}
- 	} else {
- 		q->loss_model = CLG_RANDOM;
-@@ -1018,6 +1019,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	/* capping jitter to the range acceptable by tabledist() */
- 	q->jitter = min_t(s64, abs(q->jitter), INT_MAX);
- 
-+unlock:
-+	sch_tree_unlock(sch);
- 	return ret;
- 
- get_table_failure:
-@@ -1027,7 +1030,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	 */
- 	q->clg = old_clg;
- 	q->loss_model = old_loss_model;
--	return ret;
+-		dc_commit_updates_for_stream(
+-			dm->dc, bundle->surface_updates,
 +
-+	goto unlock;
- }
++		dc_update_planes_and_stream(dm->dc,
++			bundle->surface_updates,
+ 			dc_state->stream_status->plane_count,
+-			dc_state->streams[k], &bundle->stream_update, dc_state);
++			dc_state->streams[k],
++			&bundle->stream_update);
+ 	}
  
- static int netem_init(struct Qdisc *sch, struct nlattr *opt,
+ cleanup:
+@@ -7887,12 +7889,11 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
+ 				acrtc_state->stream->link->psr_settings.psr_allow_active)
+ 			amdgpu_dm_psr_disable(acrtc_state->stream);
+ 
+-		dc_commit_updates_for_stream(dm->dc,
+-						     bundle->surface_updates,
+-						     planes_count,
+-						     acrtc_state->stream,
+-						     &bundle->stream_update,
+-						     dc_state);
++		dc_update_planes_and_stream(dm->dc,
++					    bundle->surface_updates,
++					    planes_count,
++					    acrtc_state->stream,
++					    &bundle->stream_update);
+ 
+ 		/**
+ 		 * Enable or disable the interrupts on the backend.
+@@ -8334,12 +8335,11 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
+ 
+ 
+ 		mutex_lock(&dm->dc_lock);
+-		dc_commit_updates_for_stream(dm->dc,
+-						     dummy_updates,
+-						     status->plane_count,
+-						     dm_new_crtc_state->stream,
+-						     &stream_update,
+-						     dc_state);
++		dc_update_planes_and_stream(dm->dc,
++					    dummy_updates,
++					    status->plane_count,
++					    dm_new_crtc_state->stream,
++					    &stream_update);
+ 		mutex_unlock(&dm->dc_lock);
+ 	}
+ 
 -- 
 2.39.2
 
