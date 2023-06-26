@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50BE11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4442BC433C8;
-	Mon, 26 Jun 2023 18:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DF311CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:46:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36617C433C9;
+	Mon, 26 Jun 2023 18:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805158;
-	bh=U3HQo0GdT9luSfZJf0Fr2Rv1R0ETfwhOpUlPEw3Xn3M=;
+	s=korg; t=1687805161;
+	bh=CPJtvXq+0UcPj+i21l3YUmyr8tluJ4O7kby0EZfq1Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzUBymdsS6mNdmQHDICtjDGmskQ24yzrQgu9s26/GYhEAoPNMXGlIfq2FzX93mmyE
-	 tX8I/Cq5/fBca3p5kzFwbIOdt6u+wwoE47dAvEVrwbLWV+umdr86QSVEihaN7IfN5r
-	 RoTztr1MzlmmygX/2cytyBgOaj3WeicCovnV76sE=
+	b=zJnXRXXOyd9F4yZCDbq7C/N6WGyjpw8cQpfL5MqKDL9NQMVtwbBBFjFvhB+N9NGOl
+	 bJiZcnJjoUClP6KZEpFkPMEiMgdkrDQzzOCUdMBpf9DdFXSsMobgKNFtrehcHLCC7d
+	 lHwXjqP2IAqoV03X6A0RNs8N2AZdCMOy4AhXPQMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Cornelia Huck <cohuck@redhat.com>,
-	Steven Price <steven.price@arm.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 62/81] arm64: Add missing Set/Way CMO encodings
-Date: Mon, 26 Jun 2023 20:12:44 +0200
-Message-ID: <20230626180746.988801418@linuxfoundation.org>
+Subject: [PATCH 5.10 71/81] s390/purgatory: disable branch profiling
+Date: Mon, 26 Jun 2023 20:12:53 +0200
+Message-ID: <20230626180747.331010362@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -37,41 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-[ Upstream commit 8d0f019e4c4f2ee2de81efd9bf1c27e9fb3c0460 ]
+[ Upstream commit 03c5c83b70dca3729a3eb488e668e5044bd9a5ea ]
 
-Add the missing Set/Way CMOs that apply to tagged memory.
+Avoid linker error for randomly generated config file that
+has CONFIG_BRANCH_PROFILE_NONE enabled and make it similar
+to riscv, x86 and also to commit 4bf3ec384edf ("s390: disable
+branch profiling for vdso").
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20230515204601.1270428-2-maz@kernel.org
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/sysreg.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/s390/purgatory/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-index 06755fad38304..9fea6e9768096 100644
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -104,8 +104,14 @@
- #define SB_BARRIER_INSN			__SYS_BARRIER_INSN(0, 7, 31)
- 
- #define SYS_DC_ISW			sys_insn(1, 0, 7, 6, 2)
-+#define SYS_DC_IGSW			sys_insn(1, 0, 7, 6, 4)
-+#define SYS_DC_IGDSW			sys_insn(1, 0, 7, 6, 6)
- #define SYS_DC_CSW			sys_insn(1, 0, 7, 10, 2)
-+#define SYS_DC_CGSW			sys_insn(1, 0, 7, 10, 4)
-+#define SYS_DC_CGDSW			sys_insn(1, 0, 7, 10, 6)
- #define SYS_DC_CISW			sys_insn(1, 0, 7, 14, 2)
-+#define SYS_DC_CIGSW			sys_insn(1, 0, 7, 14, 4)
-+#define SYS_DC_CIGDSW			sys_insn(1, 0, 7, 14, 6)
- 
- /*
-  * System registers, organised loosely by encoding but grouped together
+diff --git a/arch/s390/purgatory/Makefile b/arch/s390/purgatory/Makefile
+index 21c4ebe29b9a2..a93c9aba834be 100644
+--- a/arch/s390/purgatory/Makefile
++++ b/arch/s390/purgatory/Makefile
+@@ -25,6 +25,7 @@ KBUILD_CFLAGS += -Wno-pointer-sign -Wno-sign-compare
+ KBUILD_CFLAGS += -fno-zero-initialized-in-bss -fno-builtin -ffreestanding
+ KBUILD_CFLAGS += -c -MD -Os -m64 -msoft-float -fno-common
+ KBUILD_CFLAGS += -fno-stack-protector
++KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
+ KBUILD_CFLAGS += $(CLANG_FLAGS)
+ KBUILD_CFLAGS += $(call cc-option,-fno-PIE)
+ KBUILD_AFLAGS := $(filter-out -DCC_USING_EXPOLINE,$(KBUILD_AFLAGS))
 -- 
 2.39.2
 
