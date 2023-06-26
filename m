@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B7A14AA1
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:31:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0D5C433C0;
-	Mon, 26 Jun 2023 18:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B1F14A8D
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:31:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B99C433C8;
+	Mon, 26 Jun 2023 18:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804292;
-	bh=ecGjtdVn7VetRtDP0c7LiRk3qZfMx4C7qQQzkl4LVcY=;
+	s=korg; t=1687804295;
+	bh=Xa2x4kVWdVQQlh+WnM5xo0kfThg4kia53md8Hl+lXbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTeaCcEnbxhz6tArFsHsN2r65rb4Z7SYvO2bVIcPR/5zfBTHxDnvlN9Pl9xyv2lPA
-	 FF6I0P7MdkMDOWgDWy6VsRgl+cTB6ztAZ4XS11BfZbK0FSsTv6upUYS9yyuSLHPezE
-	 OcMUzvSZ/Q+35uqf5bfVMkPZjLf0s6AP++CIR2gs=
+	b=x6wzW/Spp2mIslita4AhyEC/L8pB7DZVXI58KnPXwSgQLFZVX9SRfAf6qDJe1Z/F4
+	 XjsvNQLISRfpUnNfGVxjaGPj+WhiJQCMIN4IrTtlPugognMO+OZH3/FM0QDbIiv6gC
+	 G02/oII/0QFGvoS9RDPJ+nbXyytJQQQMrjGyZTBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <olteanv@gmail.com>,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/170] net: dsa: mt7530: fix trapping frames on non-MT7621 SoC MT7530 switch
-Date: Mon, 26 Jun 2023 20:11:15 +0200
-Message-ID: <20230626180805.286357769@linuxfoundation.org>
+Subject: [PATCH 6.1 080/170] mmc: meson-gx: fix deferred probing
+Date: Mon, 26 Jun 2023 20:10:49 +0200
+Message-ID: <20230626180804.202629629@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -38,39 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 4ae90f90e4909e3014e2dc6a0627964617a7b824 ]
+[ Upstream commit b8ada54fa1b83f3b6480d4cced71354301750153 ]
 
-All MT7530 switch IP variants share the MT7530_MFC register, but the
-current driver only writes it for the switch variant that is integrated in
-the MT7621 SoC. Modify the code to include all MT7530 derivatives.
+The driver overrides the error codes and IRQ0 returned by platform_get_irq()
+to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing. Switch to propagating the error
+codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
+in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
+so we now can safely ignore it...
 
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
-Suggested-by: Vladimir Oltean <olteanv@gmail.com>
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: cbcaac6d7dd2 ("mmc: meson-gx-mmc: Fix platform_get_irq's error checking")
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230617203622.6812-3-s.shtylyov@omp.ru
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/meson-gx-mmc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 855220c5ce339..886dc7d3d85d3 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -1020,7 +1020,7 @@ mt753x_cpu_port_enable(struct dsa_switch *ds, int port)
- 		   UNU_FFP(BIT(port)));
+diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
+index 5fb18be6f8660..0f39f86bd0c26 100644
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -1227,8 +1227,8 @@ static int meson_mmc_probe(struct platform_device *pdev)
+ 	}
  
- 	/* Set CPU port number */
--	if (priv->id == ID_MT7621)
-+	if (priv->id == ID_MT7530 || priv->id == ID_MT7621)
- 		mt7530_rmw(priv, MT7530_MFC, CPU_MASK, CPU_EN | CPU_PORT(port));
+ 	host->irq = platform_get_irq(pdev, 0);
+-	if (host->irq <= 0) {
+-		ret = -EINVAL;
++	if (host->irq < 0) {
++		ret = host->irq;
+ 		goto free_host;
+ 	}
  
- 	/* CPU port gets connected to all user ports of
 -- 
 2.39.2
 
