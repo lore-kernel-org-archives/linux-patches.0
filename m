@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF89C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4320C433C8;
-	Mon, 26 Jun 2023 18:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E41C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86056C433C8;
+	Mon, 26 Jun 2023 18:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804526;
-	bh=f6Kj+mioisNQ/C7P05ex5g/wxLSdzzzz/+Z5Nj/koQg=;
+	s=korg; t=1687804528;
+	bh=DIz8u9g0v7X/QMKtngp0wgHhlS7IHJOUFVeI2tcTbUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2G+455YhLYQUDnZ2AYnTSjRIQK+cqQu1JlajhWv165T2BXXy6+45kxl32VfSaRDkJ
-	 xrLvzAdDRqCexkWBHcUHM15RGTo8CqwvDZOw/OL9uVRKJSs/bPhOMktLKXrmlYa7oO
-	 I+3Uedfr3YgQOZZs5xU+KsXBtpwfRRtdyCDDgQFw=
+	b=wuHtVWB3J+DI6Smv3QVS0Caen8daYUGn530jVgLBeHn5lhlhVVxh47JZoOkAaT44K
+	 URk9oQTSdEf8OH0uDeqNZZJtyan33zk2yrgkRYNvMlyjD1/9QmI9tj3QhlA12OqJpb
+	 qUBaFSFNkl4QVlX895TEytqrVH/0PYAIMASntdck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 5.4 14/60] cgroup: Do not corrupt task iteration when rebinding subsystem
-Date: Mon, 26 Jun 2023 20:11:53 +0200
-Message-ID: <20230626180740.145383392@linuxfoundation.org>
+	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 15/60] mmc: meson-gx: remove redundant mmc_request_done() call from irq context
+Date: Mon, 26 Jun 2023 20:11:54 +0200
+Message-ID: <20230626180740.180050324@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -36,122 +34,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Martin Hundebøll <martin@geanix.com>
 
-commit 6f363f5aa845561f7ea496d8b1175e3204470486 upstream.
+commit 3c40eb8145325b0f5b93b8a169146078cb2c49d6 upstream.
 
-We found a refcount UAF bug as follows:
+The call to mmc_request_done() can schedule, so it must not be called
+from irq context. Wake the irq thread if it needs to be called, and let
+its existing logic do its work.
 
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 1 PID: 342 at lib/refcount.c:25 refcount_warn_saturate+0xa0/0x148
-Workqueue: events cpuset_hotplug_workfn
-Call trace:
- refcount_warn_saturate+0xa0/0x148
- __refcount_add.constprop.0+0x5c/0x80
- css_task_iter_advance_css_set+0xd8/0x210
- css_task_iter_advance+0xa8/0x120
- css_task_iter_next+0x94/0x158
- update_tasks_root_domain+0x58/0x98
- rebuild_root_domains+0xa0/0x1b0
- rebuild_sched_domains_locked+0x144/0x188
- cpuset_hotplug_workfn+0x138/0x5a0
- process_one_work+0x1e8/0x448
- worker_thread+0x228/0x3e0
- kthread+0xe0/0xf0
- ret_from_fork+0x10/0x20
+Fixes the following kernel bug, which appears when running an RT patched
+kernel on the AmLogic Meson AXG A113X SoC:
+[   11.111407] BUG: scheduling while atomic: kworker/0:1H/75/0x00010001
+[   11.111438] Modules linked in:
+[   11.111451] CPU: 0 PID: 75 Comm: kworker/0:1H Not tainted 6.4.0-rc3-rt2-rtx-00081-gfd07f41ed6b4-dirty #1
+[   11.111461] Hardware name: RTX AXG A113X Linux Platform Board (DT)
+[   11.111469] Workqueue: kblockd blk_mq_run_work_fn
+[   11.111492] Call trace:
+[   11.111497]  dump_backtrace+0xac/0xe8
+[   11.111510]  show_stack+0x18/0x28
+[   11.111518]  dump_stack_lvl+0x48/0x60
+[   11.111530]  dump_stack+0x18/0x24
+[   11.111537]  __schedule_bug+0x4c/0x68
+[   11.111548]  __schedule+0x80/0x574
+[   11.111558]  schedule_loop+0x2c/0x50
+[   11.111567]  schedule_rtlock+0x14/0x20
+[   11.111576]  rtlock_slowlock_locked+0x468/0x730
+[   11.111587]  rt_spin_lock+0x40/0x64
+[   11.111596]  __wake_up_common_lock+0x5c/0xc4
+[   11.111610]  __wake_up+0x18/0x24
+[   11.111620]  mmc_blk_mq_req_done+0x68/0x138
+[   11.111633]  mmc_request_done+0x104/0x118
+[   11.111644]  meson_mmc_request_done+0x38/0x48
+[   11.111654]  meson_mmc_irq+0x128/0x1f0
+[   11.111663]  __handle_irq_event_percpu+0x70/0x114
+[   11.111674]  handle_irq_event_percpu+0x18/0x4c
+[   11.111683]  handle_irq_event+0x80/0xb8
+[   11.111691]  handle_fasteoi_irq+0xa4/0x120
+[   11.111704]  handle_irq_desc+0x20/0x38
+[   11.111712]  generic_handle_domain_irq+0x1c/0x28
+[   11.111721]  gic_handle_irq+0x8c/0xa8
+[   11.111735]  call_on_irq_stack+0x24/0x4c
+[   11.111746]  do_interrupt_handler+0x88/0x94
+[   11.111757]  el1_interrupt+0x34/0x64
+[   11.111769]  el1h_64_irq_handler+0x18/0x24
+[   11.111779]  el1h_64_irq+0x64/0x68
+[   11.111786]  __add_wait_queue+0x0/0x4c
+[   11.111795]  mmc_blk_rw_wait+0x84/0x118
+[   11.111804]  mmc_blk_mq_issue_rq+0x5c4/0x654
+[   11.111814]  mmc_mq_queue_rq+0x194/0x214
+[   11.111822]  blk_mq_dispatch_rq_list+0x3ac/0x528
+[   11.111834]  __blk_mq_sched_dispatch_requests+0x340/0x4d0
+[   11.111847]  blk_mq_sched_dispatch_requests+0x38/0x70
+[   11.111858]  blk_mq_run_work_fn+0x3c/0x70
+[   11.111865]  process_one_work+0x17c/0x1f0
+[   11.111876]  worker_thread+0x1d4/0x26c
+[   11.111885]  kthread+0xe4/0xf4
+[   11.111894]  ret_from_fork+0x10/0x20
 
-then a kernel panic will be triggered as below:
-
-Unable to handle kernel paging request at virtual address 00000000c0000010
-Call trace:
- cgroup_apply_control_disable+0xa4/0x16c
- rebind_subsystems+0x224/0x590
- cgroup_destroy_root+0x64/0x2e0
- css_free_rwork_fn+0x198/0x2a0
- process_one_work+0x1d4/0x4bc
- worker_thread+0x158/0x410
- kthread+0x108/0x13c
- ret_from_fork+0x10/0x18
-
-The race that cause this bug can be shown as below:
-
-(hotplug cpu)                | (umount cpuset)
-mutex_lock(&cpuset_mutex)    | mutex_lock(&cgroup_mutex)
-cpuset_hotplug_workfn        |
- rebuild_root_domains        |  rebind_subsystems
-  update_tasks_root_domain   |   spin_lock_irq(&css_set_lock)
-   css_task_iter_start       |    list_move_tail(&cset->e_cset_node[ss->id]
-   while(css_task_iter_next) |                  &dcgrp->e_csets[ss->id]);
-   css_task_iter_end         |   spin_unlock_irq(&css_set_lock)
-mutex_unlock(&cpuset_mutex)  | mutex_unlock(&cgroup_mutex)
-
-Inside css_task_iter_start/next/end, css_set_lock is hold and then
-released, so when iterating task(left side), the css_set may be moved to
-another list(right side), then it->cset_head points to the old list head
-and it->cset_pos->next points to the head node of new list, which can't
-be used as struct css_set.
-
-To fix this issue, switch from all css_sets to only scgrp's css_sets to
-patch in-flight iterators to preserve correct iteration, and then
-update it->cset_head as well.
-
-Reported-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://www.spinics.net/lists/cgroups/msg37935.html
-Suggested-by: Michal Koutný <mkoutny@suse.com>
-Link: https://lore.kernel.org/all/20230526114139.70274-1-xiujianfeng@huaweicloud.com/
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Fixes: 2d8f243a5e6e ("cgroup: implement cgroup->e_csets[]")
-Cc: stable@vger.kernel.org # v3.16+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 51c5d8447bd7 ("MMC: meson: initial support for GX platforms")
+Cc: stable@vger.kernel.org
+Signed-off-by: Martin Hundebøll <martin@geanix.com>
+Link: https://lore.kernel.org/r/20230607082713.517157-1-martin@geanix.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/mmc/host/meson-gx-mmc.c |   10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -1723,7 +1723,7 @@ int rebind_subsystems(struct cgroup_root
- {
- 	struct cgroup *dcgrp = &dst_root->cgrp;
- 	struct cgroup_subsys *ss;
--	int ssid, i, ret;
-+	int ssid, ret;
- 	u16 dfl_disable_ss_mask = 0;
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -973,11 +973,8 @@ static irqreturn_t meson_mmc_irq(int irq
+ 	if (status & (IRQ_END_OF_CHAIN | IRQ_RESP_STATUS)) {
+ 		if (data && !cmd->error)
+ 			data->bytes_xfered = data->blksz * data->blocks;
+-		if (meson_mmc_bounce_buf_read(data) ||
+-		    meson_mmc_get_next_command(cmd))
+-			ret = IRQ_WAKE_THREAD;
+-		else
+-			ret = IRQ_HANDLED;
++
++		return IRQ_WAKE_THREAD;
+ 	}
  
- 	lockdep_assert_held(&cgroup_mutex);
-@@ -1767,7 +1767,8 @@ int rebind_subsystems(struct cgroup_root
- 		struct cgroup_root *src_root = ss->root;
- 		struct cgroup *scgrp = &src_root->cgrp;
- 		struct cgroup_subsys_state *css = cgroup_css(scgrp, ss);
--		struct css_set *cset;
-+		struct css_set *cset, *cset_pos;
-+		struct css_task_iter *it;
+ out:
+@@ -989,9 +986,6 @@ out:
+ 		writel(start, host->regs + SD_EMMC_START);
+ 	}
  
- 		WARN_ON(!css || cgroup_css(dcgrp, ss));
+-	if (ret == IRQ_HANDLED)
+-		meson_mmc_request_done(host->mmc, cmd->mrq);
+-
+ 	return ret;
+ }
  
-@@ -1785,9 +1786,22 @@ int rebind_subsystems(struct cgroup_root
- 		css->cgroup = dcgrp;
- 
- 		spin_lock_irq(&css_set_lock);
--		hash_for_each(css_set_table, i, cset, hlist)
-+		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
-+		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
-+					 e_cset_node[ss->id]) {
- 			list_move_tail(&cset->e_cset_node[ss->id],
- 				       &dcgrp->e_csets[ss->id]);
-+			/*
-+			 * all css_sets of scgrp together in same order to dcgrp,
-+			 * patch in-flight iterators to preserve correct iteration.
-+			 * since the iterator is always advanced right away and
-+			 * finished when it->cset_pos meets it->cset_head, so only
-+			 * update it->cset_head is enough here.
-+			 */
-+			list_for_each_entry(it, &cset->task_iters, iters_node)
-+				if (it->cset_head == &scgrp->e_csets[ss->id])
-+					it->cset_head = &dcgrp->e_csets[ss->id];
-+		}
- 		spin_unlock_irq(&css_set_lock);
- 
- 		/* default hierarchy doesn't enable controllers by default */
 
 
