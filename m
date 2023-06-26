@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2175F14A96
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:32:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64EA9C433C8;
-	Mon, 26 Jun 2023 18:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0897C14A8D
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:32:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7846CC433C0;
+	Mon, 26 Jun 2023 18:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804345;
-	bh=a9Oy0MxKigZg00yyBSawMWwV3+A+bp21q92JtF8UxF8=;
+	s=korg; t=1687804347;
+	bh=vPUUTyssrNbE/8hMkvKTxQVq/V0gf78gfz98ng5mpxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9khdwpCUTYpz4EeC+zmcZ77Cf9nuTD5oexewzRmyLq7Fd4JJN1tuQuX3qeRz04vX
-	 LESyd9I9j2GANmECda3NUWIWcS7uqDg3sBegSk6iOFIRYkLuPsoyG6v3lKHIi8fOgq
-	 HT+XCt9E1hvCXcGaLt00mlwq7Pk90o37COm4wQJw=
+	b=hnTf9yXBG0a/kcAW1tylAw9WICoz9vMKCwA8CNCqaDPtQjvygJiP0oVFIKwkEig9w
+	 +wbjgjW/gE0Wi/CxWD8cc2REl2RoG8p6UqYAvElLo/WsyhP5T4x60Mo+4yKEv5Wu+C
+	 1EzNu008kumXDlvsgAfbiE4h8uVXPJqU7aWQWPXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiri Pirko <jiri@resnulli.us>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Simon Horman <simon.horman@corigine.com>,
 	Paolo Abeni <pabeni@redhat.com>,
+	Eyal Birger <eyal.birger@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Patrick Rohr <prohr@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/170] sch_netem: acquire qdisc lock in netem_change()
-Date: Mon, 26 Jun 2023 20:11:34 +0200
-Message-ID: <20230626180806.175134894@linuxfoundation.org>
+Subject: [PATCH 6.1 126/170] revert "net: align SO_RCVMARK required privileges with SO_MARK"
+Date: Mon, 26 Jun 2023 20:11:35 +0200
+Message-ID: <20230626180806.215021956@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -41,107 +42,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-[ Upstream commit 2174a08db80d1efeea382e25ac41c4e7511eb6d6 ]
+[ Upstream commit a9628e88776eb7d045cf46467f1afdd0f7fe72ea ]
 
-syzbot managed to trigger a divide error [1] in netem.
+This reverts commit 1f86123b9749 ("net: align SO_RCVMARK required
+privileges with SO_MARK") because the reasoning in the commit message
+is not really correct:
+  SO_RCVMARK is used for 'reading' incoming skb mark (via cmsg), as such
+  it is more equivalent to 'getsockopt(SO_MARK)' which has no priv check
+  and retrieves the socket mark, rather than 'setsockopt(SO_MARK) which
+  sets the socket mark and does require privs.
 
-It could happen if q->rate changes while netem_enqueue()
-is running, since q->rate is read twice.
+  Additionally incoming skb->mark may already be visible if
+  sysctl_fwmark_reflect and/or sysctl_tcp_fwmark_accept are enabled.
 
-It turns out netem_change() always lacked proper synchronization.
+  Furthermore, it is easier to block the getsockopt via bpf
+  (either cgroup setsockopt hook, or via syscall filters)
+  then to unblock it if it requires CAP_NET_RAW/ADMIN.
 
-[1]
-divide error: 0000 [#1] SMP KASAN
-CPU: 1 PID: 7867 Comm: syz-executor.1 Not tainted 6.1.30-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
-RIP: 0010:div64_u64 include/linux/math64.h:69 [inline]
-RIP: 0010:packet_time_ns net/sched/sch_netem.c:357 [inline]
-RIP: 0010:netem_enqueue+0x2067/0x36d0 net/sched/sch_netem.c:576
-Code: 89 e2 48 69 da 00 ca 9a 3b 42 80 3c 28 00 4c 8b a4 24 88 00 00 00 74 0d 4c 89 e7 e8 c3 4f 3b fd 48 8b 4c 24 18 48 89 d8 31 d2 <49> f7 34 24 49 01 c7 4c 8b 64 24 48 4d 01 f7 4c 89 e3 48 c1 eb 03
-RSP: 0018:ffffc9000dccea60 EFLAGS: 00010246
-RAX: 000001a442624200 RBX: 000001a442624200 RCX: ffff888108a4f000
-RDX: 0000000000000000 RSI: 000000000000070d RDI: 000000000000070d
-RBP: ffffc9000dcceb90 R08: ffffffff849c5e26 R09: fffffbfff10e1297
-R10: 0000000000000000 R11: dffffc0000000001 R12: ffff888108a4f358
-R13: dffffc0000000000 R14: 0000001a8cd9a7ec R15: 0000000000000000
-FS: 00007fa73fe18700(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fa73fdf7718 CR3: 000000011d36e000 CR4: 0000000000350ee0
-Call Trace:
-<TASK>
-[<ffffffff84714385>] __dev_xmit_skb net/core/dev.c:3931 [inline]
-[<ffffffff84714385>] __dev_queue_xmit+0xcf5/0x3370 net/core/dev.c:4290
-[<ffffffff84d22df2>] dev_queue_xmit include/linux/netdevice.h:3030 [inline]
-[<ffffffff84d22df2>] neigh_hh_output include/net/neighbour.h:531 [inline]
-[<ffffffff84d22df2>] neigh_output include/net/neighbour.h:545 [inline]
-[<ffffffff84d22df2>] ip_finish_output2+0xb92/0x10d0 net/ipv4/ip_output.c:235
-[<ffffffff84d21e63>] __ip_finish_output+0xc3/0x2b0
-[<ffffffff84d10a81>] ip_finish_output+0x31/0x2a0 net/ipv4/ip_output.c:323
-[<ffffffff84d10f14>] NF_HOOK_COND include/linux/netfilter.h:298 [inline]
-[<ffffffff84d10f14>] ip_output+0x224/0x2a0 net/ipv4/ip_output.c:437
-[<ffffffff84d123b5>] dst_output include/net/dst.h:444 [inline]
-[<ffffffff84d123b5>] ip_local_out net/ipv4/ip_output.c:127 [inline]
-[<ffffffff84d123b5>] __ip_queue_xmit+0x1425/0x2000 net/ipv4/ip_output.c:542
-[<ffffffff84d12fdc>] ip_queue_xmit+0x4c/0x70 net/ipv4/ip_output.c:556
+On Android the socket mark is (among other things) used to store
+the network identifier a socket is bound to.  Setting it is privileged,
+but retrieving it is not.  We'd like unprivileged userspace to be able
+to read the network id of incoming packets (where mark is set via
+iptables [to be moved to bpf])...
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Hemminger <stephen@networkplumber.org>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Cong Wang <xiyou.wangcong@gmail.com>
-Cc: Jiri Pirko <jiri@resnulli.us>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+An alternative would be to add another sysctl to control whether
+setting SO_RCVMARK is privilged or not.
+(or even a MASK of which bits in the mark can be exposed)
+But this seems like over-engineering...
+
+Note: This is a non-trivial revert, due to later merged commit e42c7beee71d
+("bpf: net: Consider has_current_bpf_ctx() when testing capable() in sk_setsockopt()")
+which changed both 'ns_capable' into 'sockopt_ns_capable' calls.
+
+Fixes: 1f86123b9749 ("net: align SO_RCVMARK required privileges with SO_MARK")
+Cc: Larysa Zaremba <larysa.zaremba@intel.com>
+Cc: Simon Horman <simon.horman@corigine.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Eyal Birger <eyal.birger@gmail.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Patrick Rohr <prohr@google.com>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230620184425.1179809-1-edumazet@google.com
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230618103130.51628-1-maze@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/core/sock.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index fb00ac40ecb72..aa9842158df0a 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -966,6 +966,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	if (ret < 0)
- 		return ret;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 83f590d8d0850..b021cb9c95ef3 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1355,12 +1355,6 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 		__sock_set_mark(sk, val);
+ 		break;
+ 	case SO_RCVMARK:
+-		if (!sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_RAW) &&
+-		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
+-			ret = -EPERM;
+-			break;
+-		}
+-
+ 		sock_valbool_flag(sk, SOCK_RCVMARK, valbool);
+ 		break;
  
-+	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
- 	old_loss_model = q->loss_model;
-@@ -974,7 +975,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
- 		if (ret) {
- 			q->loss_model = old_loss_model;
--			return ret;
-+			goto unlock;
- 		}
- 	} else {
- 		q->loss_model = CLG_RANDOM;
-@@ -1041,6 +1042,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	/* capping jitter to the range acceptable by tabledist() */
- 	q->jitter = min_t(s64, abs(q->jitter), INT_MAX);
- 
-+unlock:
-+	sch_tree_unlock(sch);
- 	return ret;
- 
- get_table_failure:
-@@ -1050,7 +1053,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	 */
- 	q->clg = old_clg;
- 	q->loss_model = old_loss_model;
--	return ret;
-+
-+	goto unlock;
- }
- 
- static int netem_init(struct Qdisc *sch, struct nlattr *opt,
 -- 
 2.39.2
 
