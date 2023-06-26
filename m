@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4F7134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAB8C433C0;
-	Mon, 26 Jun 2023 18:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8127134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210EFC433C0;
+	Mon, 26 Jun 2023 18:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803705;
-	bh=YHrJlFnn6URmQHZxJAJNjwvVjq/iIncFuqNPNNo+0ww=;
+	s=korg; t=1687803708;
+	bh=L0Ggq2lNCEivK3SWsW+C/LiJpC98UjhY2u6R+4ivwQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdTEjU0GsOCU+bDuromg6ZFzI+zKYsdGsCa1swDusU53F9EnXQcWl4qOgDiB/S7Fh
-	 tyQRMZh7Hh8bc7h6M1FerfRRwuVEIv0grMXz7VFRweErJWJ3i6PAdI45GSGeE6c6KC
-	 ET+AU4teJtUzzYk4hMAqog/sFa8xxqo0JL7RpouM=
+	b=wWoSX9Rd7NRQlDG5k/MsdzWXyNJ3Dp/mVUoArRwQ9YBf969oJLopF6/wsGEwZq6Ky
+	 1XNiu6Zehfllc34Ru0GJF3s3c+yei4G4QauquvdVm8JtWjOzvF8JzjYTDaur3diunH
+	 0BxSH4qOQPIv8dOrFfA7vkZ0pQeFzN6utKN+IfJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terin Stock <terin@cloudflare.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 122/199] ipvs: align inner_mac_header for encapsulation
-Date: Mon, 26 Jun 2023 20:10:28 +0200
-Message-ID: <20230626180810.991488247@linuxfoundation.org>
+Subject: [PATCH 6.3 149/199] gpiolib: Fix irq_domain resource tracking for gpiochip_irqchip_add_domain()
+Date: Mon, 26 Jun 2023 20:10:55 +0200
+Message-ID: <20230626180812.173981939@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -37,80 +38,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Terin Stock <terin@cloudflare.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit d7fce52fdf96663ddc2eb21afecff3775588612a ]
+[ Upstream commit ff7a1790fbf92f1bdd0966d3f0da3ea808ede876 ]
 
-When using encapsulation the original packet's headers are copied to the
-inner headers. This preserves the space for an inner mac header, which
-is not used by the inner payloads for the encapsulation types supported
-by IPVS. If a packet is using GUE or GRE encapsulation and needs to be
-segmented, flow can be passed to __skb_udp_tunnel_segment() which
-calculates a negative tunnel header length. A negative tunnel header
-length causes pskb_may_pull() to fail, dropping the packet.
+Up until commit 6a45b0e2589f ("gpiolib: Introduce
+gpiochip_irqchip_add_domain()") all irq_domains were allocated
+by gpiolib itself and thus gpiolib also takes care of freeing it.
 
-This can be observed by attaching probes to ip_vs_in_hook(),
-__dev_queue_xmit(), and __skb_udp_tunnel_segment():
+With gpiochip_irqchip_add_domain() a user of gpiolib can associate an
+irq_domain with the gpio_chip. This irq_domain is not managed by
+gpiolib and therefore must not be freed by gpiolib.
 
-    perf probe --add '__dev_queue_xmit skb->inner_mac_header \
-    skb->inner_network_header skb->mac_header skb->network_header'
-    perf probe --add '__skb_udp_tunnel_segment:7 tnl_hlen'
-    perf probe -m ip_vs --add 'ip_vs_in_hook skb->inner_mac_header \
-    skb->inner_network_header skb->mac_header skb->network_header'
-
-These probes the headers and tunnel header length for packets which
-traverse the IPVS encapsulation path. A TCP packet can be forced into
-the segmentation path by being smaller than a calculated clamped MSS,
-but larger than the advertised MSS.
-
-    probe:ip_vs_in_hook: inner_mac_header=0x0 inner_network_header=0x0 mac_header=0x44 network_header=0x52
-    probe:ip_vs_in_hook: inner_mac_header=0x44 inner_network_header=0x52 mac_header=0x44 network_header=0x32
-    probe:dev_queue_xmit: inner_mac_header=0x44 inner_network_header=0x52 mac_header=0x44 network_header=0x32
-    probe:__skb_udp_tunnel_segment_L7: tnl_hlen=-2
-
-When using veth-based encapsulation, the interfaces are set to be
-mac-less, which does not preserve space for an inner mac header. This
-prevents this issue from occurring.
-
-In our real-world testing of sending a 32KB file we observed operation
-time increasing from ~75ms for veth-based encapsulation to over 1.5s
-using IPVS encapsulation due to retries from dropped packets.
-
-This changeset modifies the packet on the encapsulation path in
-ip_vs_tunnel_xmit() and ip_vs_tunnel_xmit_v6() to remove the inner mac
-header offset. This fixes UDP segmentation for both encapsulation types,
-and corrects the inner headers for any IPIP flows that may use it.
-
-Fixes: 84c0d5e96f3a ("ipvs: allow tunneling with gue encapsulation")
-Signed-off-by: Terin Stock <terin@cloudflare.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Acked-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 6a45b0e2589f ("gpiolib: Introduce gpiochip_irqchip_add_domain()")
+Reported-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_xmit.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpio/gpiolib.c      | 3 ++-
+ include/linux/gpio/driver.h | 8 ++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index 80448885c3d71..b452eb3ddcecb 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -1225,6 +1225,7 @@ ip_vs_tunnel_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	skb->transport_header = skb->network_header;
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 1cfddbb3443d0..ce8f71e06eb62 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -1716,7 +1716,7 @@ static void gpiochip_irqchip_remove(struct gpio_chip *gc)
+ 	}
  
- 	skb_set_inner_ipproto(skb, next_protocol);
-+	skb_set_inner_mac_header(skb, skb_inner_network_offset(skb));
+ 	/* Remove all IRQ mappings and delete the domain */
+-	if (gc->irq.domain) {
++	if (!gc->irq.domain_is_allocated_externally && gc->irq.domain) {
+ 		unsigned int irq;
  
- 	if (tun_type == IP_VS_CONN_F_TUNNEL_TYPE_GUE) {
- 		bool check = false;
-@@ -1373,6 +1374,7 @@ ip_vs_tunnel_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	skb->transport_header = skb->network_header;
+ 		for (offset = 0; offset < gc->ngpio; offset++) {
+@@ -1762,6 +1762,7 @@ int gpiochip_irqchip_add_domain(struct gpio_chip *gc,
  
- 	skb_set_inner_ipproto(skb, next_protocol);
-+	skb_set_inner_mac_header(skb, skb_inner_network_offset(skb));
+ 	gc->to_irq = gpiochip_to_irq;
+ 	gc->irq.domain = domain;
++	gc->irq.domain_is_allocated_externally = true;
  
- 	if (tun_type == IP_VS_CONN_F_TUNNEL_TYPE_GUE) {
- 		bool check = false;
+ 	/*
+ 	 * Using barrier() here to prevent compiler from reordering
+diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
+index ccd8a512d8546..b769ff6b00fdd 100644
+--- a/include/linux/gpio/driver.h
++++ b/include/linux/gpio/driver.h
+@@ -244,6 +244,14 @@ struct gpio_irq_chip {
+ 	 */
+ 	bool initialized;
+ 
++	/**
++	 * @domain_is_allocated_externally:
++	 *
++	 * True it the irq_domain was allocated outside of gpiolib, in which
++	 * case gpiolib won't free the irq_domain itself.
++	 */
++	bool domain_is_allocated_externally;
++
+ 	/**
+ 	 * @init_hw: optional routine to initialize hardware before
+ 	 * an IRQ chip will be added. This is quite useful when
 -- 
 2.39.2
 
