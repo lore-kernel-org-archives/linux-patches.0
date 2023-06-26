@@ -1,36 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552E113AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85BAC433C8;
-	Mon, 26 Jun 2023 18:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395CB13AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91BDC433C0;
+	Mon, 26 Jun 2023 18:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804004;
-	bh=7aqut26EGQ+mODKBZ+s4r/H1RUE9kewyP+rKBlcRevA=;
+	s=korg; t=1687804007;
+	bh=1s+3K2boAs13FPzN8Y58AAOHn3J/E5gF7TQ/ZhrrL1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aetk1jtALINDeo9K4RjQ3HRsug+jjulnYMgCVIc8jJUpng+k3Mk9CtNHfARkpYPNl
-	 RQshK8FEgBXRBIR1/9Pb/0/mTPuagRmsIyFM6SYxRixm/LU/I3jKbIKvP7PcaAdSpd
-	 mJhQ4jKj8h6Y62KLpWueFsVkdGkho82kH4mned7Y=
+	b=H743W4mSx9zHj9YUxUIi1d9ejIE3YpTkPzmsQqpiEpL6/z5BJgil2NZFeyxoT4HV1
+	 eqmoEW+3HBOfs9RwuAC/pqe8vjcwE8ox5zHb28nSbdcuXQxbbAwkNW9SStLTLzqMp6
+	 xond+L4ArRy5yRQ1nwzbmQKO7tSpKqB4sxcq0CI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <Harry.Wentland@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/170] drm/amd/display: Use dc_update_planes_and_stream
-Date: Mon, 26 Jun 2023 20:09:30 +0200
-Message-ID: <20230626180800.552644952@linuxfoundation.org>
+	Chih-Yen Chang <cc85nod@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 010/170] ksmbd: validate command payload size
+Date: Mon, 26 Jun 2023 20:09:39 +0200
+Message-ID: <20230626180800.993822956@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,87 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit f7511289821ffccc07579406d6ab520aa11049f5 ]
+commit 2b9b8f3b68edb3d67d79962f02e26dbb5ae3808d upstream.
 
-[Why & How]
-The old dc_commit_updates_for_stream lacks manipulation for many corner
-cases where the DC feature requires special attention; as a result, it
-starts to show its limitation (e.g., the SubVP feature is not supported
-by it, among other cases). To modernize and unify our internal API, this
-commit replaces the old dc_commit_updates_for_stream with
-dc_update_planes_and_stream, which has more features.
+->StructureSize2 indicates command payload size. ksmbd should validate
+this size with rfc1002 length before accessing it.
+This patch remove unneeded check and add the validation for this.
 
-Reviewed-by: Harry Wentland <Harry.Wentland@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: ea2062dd1f03 ("drm/amd/display: fix the system hang while disable PSR")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[    8.912583] BUG: KASAN: slab-out-of-bounds in ksmbd_smb2_check_message+0x12a/0xc50
+[    8.913051] Read of size 2 at addr ffff88800ac7d92c by task kworker/0:0/7
+...
+[    8.914967] Call Trace:
+[    8.915126]  <TASK>
+[    8.915267]  dump_stack_lvl+0x33/0x50
+[    8.915506]  print_report+0xcc/0x620
+[    8.916558]  kasan_report+0xae/0xe0
+[    8.917080]  kasan_check_range+0x35/0x1b0
+[    8.917334]  ksmbd_smb2_check_message+0x12a/0xc50
+[    8.917935]  ksmbd_verify_smb_message+0xae/0xd0
+[    8.918223]  handle_ksmbd_work+0x192/0x820
+[    8.918478]  process_one_work+0x419/0x760
+[    8.918727]  worker_thread+0x2a2/0x6f0
+[    8.919222]  kthread+0x187/0x1d0
+[    8.919723]  ret_from_fork+0x1f/0x30
+[    8.919954]  </TASK>
+
+Cc: stable@vger.kernel.org
+Reported-by: Chih-Yen Chang <cc85nod@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 30 +++++++++----------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ fs/ksmbd/smb2misc.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 53687de6c0530..a7bc57529e6c9 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2632,10 +2632,12 @@ static void dm_gpureset_commit_state(struct dc_state *dc_state,
- 			bundle->surface_updates[m].surface->force_full_update =
- 				true;
+--- a/fs/ksmbd/smb2misc.c
++++ b/fs/ksmbd/smb2misc.c
+@@ -351,6 +351,7 @@ int ksmbd_smb2_check_message(struct ksmb
+ 	int command;
+ 	__u32 clc_len;  /* calculated length */
+ 	__u32 len = get_rfc1002_len(work->request_buf);
++	__u32 req_struct_size;
+ 
+ 	if (le32_to_cpu(hdr->NextCommand) > 0)
+ 		len = le32_to_cpu(hdr->NextCommand);
+@@ -373,17 +374,9 @@ int ksmbd_smb2_check_message(struct ksmb
+ 	}
+ 
+ 	if (smb2_req_struct_sizes[command] != pdu->StructureSize2) {
+-		if (command != SMB2_OPLOCK_BREAK_HE &&
+-		    (hdr->Status == 0 || pdu->StructureSize2 != SMB2_ERROR_STRUCTURE_SIZE2_LE)) {
+-			/* error packets have 9 byte structure size */
+-			ksmbd_debug(SMB,
+-				    "Illegal request size %u for command %d\n",
+-				    le16_to_cpu(pdu->StructureSize2), command);
+-			return 1;
+-		} else if (command == SMB2_OPLOCK_BREAK_HE &&
+-			   hdr->Status == 0 &&
+-			   le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_20 &&
+-			   le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_21) {
++		if (command == SMB2_OPLOCK_BREAK_HE &&
++		    le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_20 &&
++		    le16_to_cpu(pdu->StructureSize2) != OP_BREAK_STRUCT_SIZE_21) {
+ 			/* special case for SMB2.1 lease break message */
+ 			ksmbd_debug(SMB,
+ 				    "Illegal request size %d for oplock break\n",
+@@ -392,6 +385,14 @@ int ksmbd_smb2_check_message(struct ksmb
  		}
--		dc_commit_updates_for_stream(
--			dm->dc, bundle->surface_updates,
+ 	}
+ 
++	req_struct_size = le16_to_cpu(pdu->StructureSize2) +
++		__SMB2_HEADER_STRUCTURE_SIZE;
++	if (command == SMB2_LOCK_HE)
++		req_struct_size -= sizeof(struct smb2_lock_element);
 +
-+		dc_update_planes_and_stream(dm->dc,
-+			bundle->surface_updates,
- 			dc_state->stream_status->plane_count,
--			dc_state->streams[k], &bundle->stream_update, dc_state);
-+			dc_state->streams[k],
-+			&bundle->stream_update);
- 	}
++	if (req_struct_size > len + 1)
++		return 1;
++
+ 	if (smb2_calc_size(hdr, &clc_len))
+ 		return 1;
  
- cleanup:
-@@ -7887,12 +7889,11 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
- 				acrtc_state->stream->link->psr_settings.psr_allow_active)
- 			amdgpu_dm_psr_disable(acrtc_state->stream);
- 
--		dc_commit_updates_for_stream(dm->dc,
--						     bundle->surface_updates,
--						     planes_count,
--						     acrtc_state->stream,
--						     &bundle->stream_update,
--						     dc_state);
-+		dc_update_planes_and_stream(dm->dc,
-+					    bundle->surface_updates,
-+					    planes_count,
-+					    acrtc_state->stream,
-+					    &bundle->stream_update);
- 
- 		/**
- 		 * Enable or disable the interrupts on the backend.
-@@ -8334,12 +8335,11 @@ static void amdgpu_dm_atomic_commit_tail(struct drm_atomic_state *state)
- 
- 
- 		mutex_lock(&dm->dc_lock);
--		dc_commit_updates_for_stream(dm->dc,
--						     dummy_updates,
--						     status->plane_count,
--						     dm_new_crtc_state->stream,
--						     &stream_update,
--						     dc_state);
-+		dc_update_planes_and_stream(dm->dc,
-+					    dummy_updates,
-+					    status->plane_count,
-+					    dm_new_crtc_state->stream,
-+					    &stream_update);
- 		mutex_unlock(&dm->dc_lock);
- 	}
- 
--- 
-2.39.2
-
 
 
