@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D41F11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DB6C433C8;
-	Mon, 26 Jun 2023 18:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A41B11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8A1C433C8;
+	Mon, 26 Jun 2023 18:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805078;
-	bh=oWln9belhgx/LvrKwxE+bs+QSjk7FRGBKTwAnqyyOuI=;
+	s=korg; t=1687805081;
+	bh=pQns4SttK3iPAYZKZeTvQ+NlSsNOrLEhqmKRuHUQxPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDvrQBlWxtHPXBPmoSyMJknRalMwbFR9tHzdG9vn2ANzhhXFk0nXEsSXRMwZt50KM
-	 ii+6kpd1oHSzqvUiadPa/BXdK+VaX8yySNrAAgf8bpZ3WcczbZ7y7lhc0dT3BNdX03
-	 BCYTozcdutHUC/H5AMrIEIDJ2y/BM/YI5/y6obqQ=
+	b=HXL27W1pwZoJStlB27nX6ntpcDTUV2X8hCHlfrkHyGXc+tmyT2ARWeMTu1gn1NVEK
+	 zgVBSwluXyLM1Wvs4Ztk9GkY2BfZqEJyH8vcikZYeiz60e5v8xOJW2fH68rhdvyr35
+	 W3tjpDi3DSza/3IWJTuAm9euOxG+CvDCqULlO1Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 43/81] mmc: mvsdio: fix deferred probing
-Date: Mon, 26 Jun 2023 20:12:25 +0200
-Message-ID: <20230626180746.231231834@linuxfoundation.org>
+Subject: [PATCH 5.10 44/81] mmc: omap: fix deferred probing
+Date: Mon, 26 Jun 2023 20:12:26 +0200
+Message-ID: <20230626180746.274460594@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -37,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 8d84064da0d4672e74f984e8710f27881137472c ]
+[ Upstream commit aedf4ba1ad00aaa94c1b66c73ecaae95e2564b95 ]
 
 The driver overrides the error codes returned by platform_get_irq() to
 -ENXIO, so if it returns -EPROBE_DEFER, the driver will fail the probe
@@ -46,26 +46,26 @@ error codes upstream.
 
 Fixes: 9ec36cafe43b ("of/irq: do irq resolution in platform_get_irq")
 Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20230617203622.6812-5-s.shtylyov@omp.ru
+Link: https://lore.kernel.org/r/20230617203622.6812-6-s.shtylyov@omp.ru
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mvsdio.c | 2 +-
+ drivers/mmc/host/omap.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/mvsdio.c b/drivers/mmc/host/mvsdio.c
-index 629efbe639c4f..b4f6a0a2fcb51 100644
---- a/drivers/mmc/host/mvsdio.c
-+++ b/drivers/mmc/host/mvsdio.c
-@@ -704,7 +704,7 @@ static int mvsd_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/mmc/host/omap.c b/drivers/mmc/host/omap.c
+index 6aa0537f1f847..eb978b75d8e78 100644
+--- a/drivers/mmc/host/omap.c
++++ b/drivers/mmc/host/omap.c
+@@ -1344,7 +1344,7 @@ static int mmc_omap_probe(struct platform_device *pdev)
+ 
  	irq = platform_get_irq(pdev, 0);
  	if (irq < 0)
 -		return -ENXIO;
 +		return irq;
  
- 	mmc = mmc_alloc_host(sizeof(struct mvsd_host), &pdev->dev);
- 	if (!mmc) {
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	host->virt_base = devm_ioremap_resource(&pdev->dev, res);
 -- 
 2.39.2
 
