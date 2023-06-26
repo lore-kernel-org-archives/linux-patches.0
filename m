@@ -1,73 +1,193 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A696C13AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD61C433C8;
-	Mon, 26 Jun 2023 18:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD6813AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE8FC433C9;
+	Mon, 26 Jun 2023 18:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803278;
-	bh=D/QqrU7YWZuGFmv2FdUa+J1Abg/q6d98nuSNr+f5BXc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cG/R0zFNJWS6nlkXVle0TfL4+zkxqeNYm2hUGKwaiCf6pKXWcvozo7WBfa71L7Xfv
-	 9NYZBSqxQuD/GrBQqzyBCRHpPNd7SmUj8q5rN/OA0Ct6zyKBz8F7u9WUGUHXY5uL+f
-	 L2yb2XSlDEQ43tOqIAgwdTLO7mdoXi6V9kdSoUCY=
+	s=korg; t=1687803281;
+	bh=E60ysgSxu9+zVZtnqGYeknoO5HJg4LBgPFo1cPe5Jd8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ISXC2BW9k4cwIJxSMB5iTtloRkSTDuiMGZUTE8w233C/o3Un40dzXhBERfhs1Ra6T
+	 S6GOTxhxczJkuAKQLUDopu9y/fkBi/KxYZyAnz4+beGfCssin0KoKsah8TnakqjUzd
+	 Lo/w55vBII0Mgw83Kbaj3ibBbU1Zlurm44wW8Nx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 09/26] mmc: mtk-sd: fix deferred probing
-Date: Mon, 26 Jun 2023 20:11:11 +0200
-Message-ID: <20230626180734.010459039@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 4.14 00/26] 4.14.320-rc1 review
+Date: Mon, 26 Jun 2023 20:11:02 +0200
+Message-ID: <20230626180733.699092073@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230626180733.699092073@linuxfoundation.org>
-References: <20230626180733.699092073@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.320-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.14.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.14.320-rc1
+X-KernelTest-Deadline: 2023-06-28T18:07+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+This is the start of the stable review cycle for the 4.14.320 release.
+There are 26 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 0c4dc0f054891a2cbde0426b0c0fdf232d89f47f ]
+Responses should be made by Wed, 28 Jun 2023 18:07:23 +0000.
+Anything received after that time might be too late.
 
-The driver overrides the error codes returned by platform_get_irq() to
--EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
-permanently instead of the deferred probing. Switch to propagating the
-error codes upstream.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.320-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+and the diffstat can be found below.
 
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20230617203622.6812-4-s.shtylyov@omp.ru
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/mmc/host/mtk-sd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+thanks,
 
-diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
-index e51a62cff5ecc..3c77469df73b1 100644
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -1663,7 +1663,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
- 
- 	host->irq = platform_get_irq(pdev, 0);
- 	if (host->irq < 0) {
--		ret = -EINVAL;
-+		ret = host->irq;
- 		goto host_free;
- 	}
- 
--- 
-2.39.2
+greg k-h
 
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.14.320-rc1
+
+Clark Wang <xiaoning.wang@nxp.com>
+    i2c: imx-lpi2c: fix type char overflow issue when calculating the clock cycle
+
+Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+    x86/apic: Fix kernel panic when booting with intremap=off and x2apic_phys
+
+Min Li <lm0963hack@gmail.com>
+    drm/radeon: fix race condition UAF in radeon_gem_set_domain_ioctl
+
+Min Li <lm0963hack@gmail.com>
+    drm/exynos: fix race condition UAF in exynos_g2d_exec_ioctl
+
+Inki Dae <inki.dae@samsung.com>
+    drm/exynos: vidi: fix a wrong error return
+
+Vineeth Vijayan <vneethv@linux.ibm.com>
+    s390/cio: unregister device when the only path is gone
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    usb: gadget: udc: fix NULL dereference in remove()
+
+Helge Deller <deller@gmx.de>
+    fbdev: imsttfb: Release framebuffer and dealloc cmap on error path
+
+Osama Muhammad <osmtendev@gmail.com>
+    nfcsim.c: Fix error checking for debugfs_create_dir
+
+Marc Zyngier <maz@kernel.org>
+    arm64: Add missing Set/Way CMO encodings
+
+Denis Arefev <arefev@swemel.ru>
+    HID: wacom: Add error check to wacom_parse_and_register()
+
+Maurizio Lombardi <mlombard@redhat.com>
+    scsi: target: iscsi: Prevent login threads from racing between each other
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nf_tables: disallow element updates of bound anonymous sets
+
+Ross Lagerwall <ross.lagerwall@citrix.com>
+    be2net: Extend xmit workaround to BE3 chip
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: usdhi60rol0: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: omap_hsmmc: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: omap: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: mtk-sd: fix deferred probing
+
+Stefan Wahren <stefan.wahren@i2se.com>
+    net: qca_spi: Avoid high load if QCA7000 is not available
+
+Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+    xfrm: Linearize the skb after offloading if needed.
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: prevent general protection fault in nilfs_clear_dirty_page()
+
+Xiu Jianfeng <xiujianfeng@huawei.com>
+    cgroup: Do not corrupt task iteration when rebinding subsystem
+
+Michael Kelley <mikelley@microsoft.com>
+    Drivers: hv: vmbus: Fix vmbus_wait_for_unload() to scan present CPUs
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix buffer corruption due to concurrent device reads
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: reject devices with insufficient block count
+
+Bernhard Seibold <mail@bernhard-seibold.de>
+    serial: lantiq: add missing interrupt ack
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                    |  4 +--
+ arch/arm64/include/asm/sysreg.h             |  6 ++++
+ arch/x86/kernel/apic/x2apic_phys.c          |  5 +++-
+ drivers/gpu/drm/exynos/exynos_drm_g2d.c     |  2 +-
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c    |  2 --
+ drivers/gpu/drm/radeon/radeon_gem.c         |  4 +--
+ drivers/hid/wacom_sys.c                     |  7 ++++-
+ drivers/hv/channel_mgmt.c                   | 18 ++++++++++--
+ drivers/i2c/busses/i2c-imx-lpi2c.c          |  4 +--
+ drivers/mmc/host/mtk-sd.c                   |  2 +-
+ drivers/mmc/host/omap.c                     |  2 +-
+ drivers/mmc/host/omap_hsmmc.c               |  6 ++--
+ drivers/mmc/host/usdhi6rol0.c               |  6 ++--
+ drivers/net/ethernet/emulex/benet/be_main.c |  4 +--
+ drivers/net/ethernet/qualcomm/qca_spi.c     |  3 +-
+ drivers/nfc/nfcsim.c                        |  4 ---
+ drivers/s390/cio/device.c                   |  5 +++-
+ drivers/target/iscsi/iscsi_target_nego.c    |  4 ++-
+ drivers/tty/serial/lantiq.c                 |  1 +
+ drivers/usb/gadget/udc/amd5536udc_pci.c     |  3 ++
+ drivers/video/fbdev/imsttfb.c               |  6 +++-
+ fs/nilfs2/page.c                            | 10 ++++++-
+ fs/nilfs2/segbuf.c                          |  6 ++++
+ fs/nilfs2/segment.c                         |  7 +++++
+ fs/nilfs2/super.c                           | 25 ++++++++++++++--
+ fs/nilfs2/the_nilfs.c                       | 44 ++++++++++++++++++++++++++++-
+ kernel/cgroup/cgroup.c                      | 20 +++++++++++--
+ net/ipv4/esp4_offload.c                     |  3 ++
+ net/ipv6/esp6_offload.c                     |  3 ++
+ net/netfilter/nf_tables_api.c               |  7 +++--
+ 30 files changed, 183 insertions(+), 40 deletions(-)
 
 
