@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277EF134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997DFC433C0;
-	Mon, 26 Jun 2023 18:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DB5134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939EBC433C8;
+	Mon, 26 Jun 2023 18:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803670;
-	bh=Z4KiCw03x0j+LJGQG3xk0KceWDlSs4YQs1yWnzzY5eU=;
+	s=korg; t=1687803673;
+	bh=qSo0Tgj7TTxIAkf/je6u+cf9idg19v4XVazAAAeSJWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wW+N0vSAj/0bdBzf1CUckcrxM2MisJGP8jnyCGA70z3NfoMZrAJwYR/Z4J9htsNTp
-	 iB6XKn/zBDRJVSYOYlvwdzRztaVVu3PvGhMokYSQXks/fFZmgrsS/dJ1d/nDNHvaX3
-	 pyizRTVSOemz1YL+h6064nvR06dhUwmGWxDTRs2w=
+	b=x6R7SvNzIinRSkrITz9OH+xbKF/RAmMRfi4P9dqMnntfb417SmEOptD+RQE5N+hwH
+	 /4B8uP/Rr92h8NfvL68MK0EVxjHoXtditqAliFzXmtCuFDHwe3Rpy7H6SWVMHVvEmF
+	 bNmYWjlZTRTPdho9c1FMk6exNo6FLWENGIo+AZMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yhs@meta.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 138/199] bpf/btf: Accept function names that contain dots
-Date: Mon, 26 Jun 2023 20:10:44 +0200
-Message-ID: <20230626180811.658404027@linuxfoundation.org>
+Subject: [PATCH 6.3 121/199] mmc: usdhi60rol0: fix deferred probing
+Date: Mon, 26 Jun 2023 20:10:27 +0200
+Message-ID: <20230626180810.956724656@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -38,118 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florent Revest <revest@chromium.org>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 9724160b3942b0a967b91a59f81da5593f28b8ba ]
+[ Upstream commit 413db499730248431c1005b392e8ed82c4fa19bf ]
 
-When building a kernel with LLVM=1, LLVM_IAS=0 and CONFIG_KASAN=y, LLVM
-leaves DWARF tags for the "asan.module_ctor" & co symbols. In turn,
-pahole creates BTF_KIND_FUNC entries for these and this makes the BTF
-metadata validation fail because they contain a dot.
+The driver overrides the error codes returned by platform_get_irq_byname()
+to -ENODEV, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing.  Switch to propagating error
+codes upstream.
 
-In a dramatic turn of event, this BTF verification failure can cause
-the netfilter_bpf initialization to fail, causing netfilter_core to
-free the netfilter_helper hashmap and netfilter_ftp to trigger a
-use-after-free. The risk of u-a-f in netfilter will be addressed
-separately but the existence of "asan.module_ctor" debug info under some
-build conditions sounds like a good enough reason to accept functions
-that contain dots in BTF.
-
-Although using only LLVM=1 is the recommended way to compile clang-based
-kernels, users can certainly do LLVM=1, LLVM_IAS=0 as well and we still
-try to support that combination according to Nick. To clarify:
-
-  - > v5.10 kernel, LLVM=1 (LLVM_IAS=0 is not the default) is recommended,
-    but user can still have LLVM=1, LLVM_IAS=0 to trigger the issue
-
-  - <= 5.10 kernel, LLVM=1 (LLVM_IAS=0 is the default) is recommended in
-    which case GNU as will be used
-
-Fixes: 1dc92851849c ("bpf: kernel side support for BTF Var and DataSec")
-Signed-off-by: Florent Revest <revest@chromium.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Cc: Yonghong Song <yhs@meta.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/bpf/20230615145607.3469985-1-revest@chromium.org
+Fixes: 9ec36cafe43b ("of/irq: do irq resolution in platform_get_irq")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20230617203622.6812-13-s.shtylyov@omp.ru
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/mmc/host/usdhi6rol0.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 46bce5577fb48..3cc3232f8c334 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -735,13 +735,12 @@ static bool btf_name_offset_valid(const struct btf *btf, u32 offset)
- 	return offset < btf->hdr.str_len;
- }
+diff --git a/drivers/mmc/host/usdhi6rol0.c b/drivers/mmc/host/usdhi6rol0.c
+index 99515be6e5e57..2032e4e1ee68b 100644
+--- a/drivers/mmc/host/usdhi6rol0.c
++++ b/drivers/mmc/host/usdhi6rol0.c
+@@ -1757,8 +1757,10 @@ static int usdhi6_probe(struct platform_device *pdev)
+ 	irq_cd = platform_get_irq_byname(pdev, "card detect");
+ 	irq_sd = platform_get_irq_byname(pdev, "data");
+ 	irq_sdio = platform_get_irq_byname(pdev, "SDIO");
+-	if (irq_sd < 0 || irq_sdio < 0)
+-		return -ENODEV;
++	if (irq_sd < 0)
++		return irq_sd;
++	if (irq_sdio < 0)
++		return irq_sdio;
  
--static bool __btf_name_char_ok(char c, bool first, bool dot_ok)
-+static bool __btf_name_char_ok(char c, bool first)
- {
- 	if ((first ? !isalpha(c) :
- 		     !isalnum(c)) &&
- 	    c != '_' &&
--	    ((c == '.' && !dot_ok) ||
--	      c != '.'))
-+	    c != '.')
- 		return false;
- 	return true;
- }
-@@ -758,20 +757,20 @@ static const char *btf_str_by_offset(const struct btf *btf, u32 offset)
- 	return NULL;
- }
- 
--static bool __btf_name_valid(const struct btf *btf, u32 offset, bool dot_ok)
-+static bool __btf_name_valid(const struct btf *btf, u32 offset)
- {
- 	/* offset must be valid */
- 	const char *src = btf_str_by_offset(btf, offset);
- 	const char *src_limit;
- 
--	if (!__btf_name_char_ok(*src, true, dot_ok))
-+	if (!__btf_name_char_ok(*src, true))
- 		return false;
- 
- 	/* set a limit on identifier length */
- 	src_limit = src + KSYM_NAME_LEN;
- 	src++;
- 	while (*src && src < src_limit) {
--		if (!__btf_name_char_ok(*src, false, dot_ok))
-+		if (!__btf_name_char_ok(*src, false))
- 			return false;
- 		src++;
- 	}
-@@ -779,17 +778,14 @@ static bool __btf_name_valid(const struct btf *btf, u32 offset, bool dot_ok)
- 	return !*src;
- }
- 
--/* Only C-style identifier is permitted. This can be relaxed if
-- * necessary.
-- */
- static bool btf_name_valid_identifier(const struct btf *btf, u32 offset)
- {
--	return __btf_name_valid(btf, offset, false);
-+	return __btf_name_valid(btf, offset);
- }
- 
- static bool btf_name_valid_section(const struct btf *btf, u32 offset)
- {
--	return __btf_name_valid(btf, offset, true);
-+	return __btf_name_valid(btf, offset);
- }
- 
- static const char *__btf_name_by_offset(const struct btf *btf, u32 offset)
-@@ -4450,7 +4446,7 @@ static s32 btf_var_check_meta(struct btf_verifier_env *env,
- 	}
- 
- 	if (!t->name_off ||
--	    !__btf_name_valid(env->btf, t->name_off, true)) {
-+	    !__btf_name_valid(env->btf, t->name_off)) {
- 		btf_verifier_log_type(env, t, "Invalid name");
- 		return -EINVAL;
- 	}
+ 	mmc = mmc_alloc_host(sizeof(struct usdhi6_host), dev);
+ 	if (!mmc)
 -- 
 2.39.2
 
