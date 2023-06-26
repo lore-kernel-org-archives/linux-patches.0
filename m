@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED79E134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C060C433C8;
-	Mon, 26 Jun 2023 18:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B2C134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C67C433C8;
+	Mon, 26 Jun 2023 18:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803660;
-	bh=A78/0PGxVltLsOcZnNACqTxJurkHMuzHOAnKpjZFU38=;
+	s=korg; t=1687803663;
+	bh=Girculq8WNjdGq0XvLOlu4PytQvEU9ZgR4wgY9fPMog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mWBf9i/lQ7Q2M4eUIWJ8tsABNxy28Yq1MJOysFZvG9k19tS12ZuC/EuKYnbmwMQei
-	 DPmVRxk7MHzv8YSa9N0SPDUQUzlezURrSPDfcqjq/QdU69C5+PfBgcjf/vocA+/X/D
-	 e7aFCIt0TlUE8DlkSQisbVMm9fj8H+OrksxCxyKA=
+	b=zj12ZwlkAhaxOQu+5cFXtlP5YfX43ouB6pN87ByNahswyOcy0nxGSP8DF9H/xnsqH
+	 ZH93s5CgvvUXzG8TUpKuS+YVHJtLDhxyHfE8CXlVs/Rqg2ItGr8jMQJQyn6MuXdEna
+	 wIwGDfHkuz9usfo56d9J90OS/3RBcVw1xdWUKEP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 135/199] netfilter: nf_tables: disallow updates of anonymous sets
-Date: Mon, 26 Jun 2023 20:10:41 +0200
-Message-ID: <20230626180811.533744415@linuxfoundation.org>
+Subject: [PATCH 6.3 136/199] netfilter: nfnetlink_osf: fix module autoload
+Date: Mon, 26 Jun 2023 20:10:42 +0200
+Message-ID: <20230626180811.573476548@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,32 +36,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit b770283c98e0eee9133c47bc03b6cc625dc94723 ]
+[ Upstream commit 62f9a68a36d4441a6c412b81faed102594bc6670 ]
 
-Disallow updates of set timeout and garbage collection parameters for
-anonymous sets.
+Move the alias from xt_osf to nfnetlink_osf.
 
-Fixes: 123b99619cca ("netfilter: nf_tables: honor set timeout and garbage collection updates")
+Fixes: f9324952088f ("netfilter: nfnetlink_osf: extract nfnetlink_subsystem code from xt_osf.c")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/nfnetlink_osf.c | 1 +
+ net/netfilter/xt_osf.c        | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index f065542750376..b9e276820c722 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4894,6 +4894,9 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 		if (info->nlh->nlmsg_flags & NLM_F_REPLACE)
- 			return -EOPNOTSUPP;
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index ee6840bd59337..8f1bfa6ccc2d9 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -439,3 +439,4 @@ module_init(nfnl_osf_init);
+ module_exit(nfnl_osf_fini);
  
-+		if (nft_set_is_anonymous(set))
-+			return -EOPNOTSUPP;
-+
- 		err = nft_set_expr_alloc(&ctx, set, nla, exprs, &num_exprs, flags);
- 		if (err < 0)
- 			return err;
+ MODULE_LICENSE("GPL");
++MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_OSF);
+diff --git a/net/netfilter/xt_osf.c b/net/netfilter/xt_osf.c
+index e1990baf3a3b7..dc9485854002a 100644
+--- a/net/netfilter/xt_osf.c
++++ b/net/netfilter/xt_osf.c
+@@ -71,4 +71,3 @@ MODULE_AUTHOR("Evgeniy Polyakov <zbr@ioremap.net>");
+ MODULE_DESCRIPTION("Passive OS fingerprint matching.");
+ MODULE_ALIAS("ipt_osf");
+ MODULE_ALIAS("ip6t_osf");
+-MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_OSF);
 -- 
 2.39.2
 
