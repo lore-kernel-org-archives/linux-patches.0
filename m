@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395FA134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F78C433C0;
-	Mon, 26 Jun 2023 18:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7D7134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:13:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B79C433C0;
+	Mon, 26 Jun 2023 18:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803222;
-	bh=C+7t1mrgPlpYYMk5TwLT8REVaqGEg0d/uW1IlD46v2c=;
+	s=korg; t=1687803224;
+	bh=2ByIcyxnN5zggGi9AIVTkb8AfABO0oZ9oy71RHOyZwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INOH2/L4i1fXVgAmNHI8CGC2XdWKrTkIn906U3Ebb40sCCOMkRtJ/DkANZ8HyRYfd
-	 As9yxI+lbUkZnL7prF6D+UZFVhlS8TCU/d3DTl8z3c8kL6kp2fVAw1iOHOlhVhvKwV
-	 xFrXcOsfhBfe9eZmdXp5o2k9g+lINWcU33RMt36Y=
+	b=q4z0Fsm+clnoVlAU96mwvbmauOb9n6yObhUvLYm0/aediA1XRG+0vzYtaryUHAdvx
+	 34fV6T8rAJ7bNYmcsqhojX6+xBX7XOxsGtq4mNUOE5pgPOxSuiYLJvNEDz6OtcIu0z
+	 cOClnopIYUNIsg02VAmNoFIFUoHuHgp2hg+g83P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Denis Arefev <arefev@swemel.ru>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 15/26] scsi: target: iscsi: Prevent login threads from racing between each other
-Date: Mon, 26 Jun 2023 20:11:17 +0200
-Message-ID: <20230626180734.273619823@linuxfoundation.org>
+Subject: [PATCH 4.14 16/26] HID: wacom: Add error check to wacom_parse_and_register()
+Date: Mon, 26 Jun 2023 20:11:18 +0200
+Message-ID: <20230626180734.304965857@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180733.699092073@linuxfoundation.org>
 References: <20230626180733.699092073@linuxfoundation.org>
@@ -36,68 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit 2a737d3b8c792400118d6cf94958f559de9c5e59 ]
+[ Upstream commit 16a9c24f24fbe4564284eb575b18cc20586b9270 ]
 
-The tpg->np_login_sem is a semaphore that is used to serialize the login
-process when multiple login threads run concurrently against the same
-target portal group.
+   Added a variable check and
+   transition in case of an error
 
-The iscsi_target_locate_portal() function finds the tpg, calls
-iscsit_access_np() against the np_login_sem semaphore and saves the tpg
-pointer in conn->tpg;
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-If iscsi_target_locate_portal() fails, the caller will check for the
-conn->tpg pointer and, if it's not NULL, then it will assume that
-iscsi_target_locate_portal() called iscsit_access_np() on the semaphore.
-
-Make sure that conn->tpg gets initialized only if iscsit_access_np() was
-successful, otherwise iscsit_deaccess_np() may end up being called against
-a semaphore we never took, allowing more than one thread to access the same
-tpg.
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Link: https://lore.kernel.org/r/20230508162219.1731964-4-mlombard@redhat.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target_nego.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hid/wacom_sys.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target_nego.c b/drivers/target/iscsi/iscsi_target_nego.c
-index 07335357418c8..d94f711afee07 100644
---- a/drivers/target/iscsi/iscsi_target_nego.c
-+++ b/drivers/target/iscsi/iscsi_target_nego.c
-@@ -1067,6 +1067,7 @@ int iscsi_target_locate_portal(
- 	iscsi_target_set_sock_callbacks(conn);
+diff --git a/drivers/hid/wacom_sys.c b/drivers/hid/wacom_sys.c
+index 3d521f289984a..28e7a4950b74a 100644
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2251,8 +2251,13 @@ static int wacom_parse_and_register(struct wacom *wacom, bool wireless)
+ 		goto fail_quirks;
+ 	}
  
- 	login->np = np;
-+	conn->tpg = NULL;
+-	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR)
++	if (features->device_type & WACOM_DEVICETYPE_WL_MONITOR) {
+ 		error = hid_hw_open(hdev);
++		if (error) {
++			hid_err(hdev, "hw open failed\n");
++			goto fail_quirks;
++		}
++	}
  
- 	login_req = (struct iscsi_login_req *) login->req;
- 	payload_length = ntoh24(login_req->dlength);
-@@ -1136,7 +1137,6 @@ int iscsi_target_locate_portal(
- 	 */
- 	sessiontype = strncmp(s_buf, DISCOVERY, 9);
- 	if (!sessiontype) {
--		conn->tpg = iscsit_global->discovery_tpg;
- 		if (!login->leading_connection)
- 			goto get_target;
- 
-@@ -1153,9 +1153,11 @@ int iscsi_target_locate_portal(
- 		 * Serialize access across the discovery struct iscsi_portal_group to
- 		 * process login attempt.
- 		 */
-+		conn->tpg = iscsit_global->discovery_tpg;
- 		if (iscsit_access_np(np, conn->tpg) < 0) {
- 			iscsit_tx_login_rsp(conn, ISCSI_STATUS_CLS_TARGET_ERR,
- 				ISCSI_LOGIN_STATUS_SVC_UNAVAILABLE);
-+			conn->tpg = NULL;
- 			ret = -1;
- 			goto out;
- 		}
+ 	wacom_set_shared_values(wacom_wac);
+ 	devres_close_group(&hdev->dev, wacom);
 -- 
 2.39.2
 
