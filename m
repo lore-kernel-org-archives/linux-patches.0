@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4CCBE6B
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:40:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CFC9C433C8;
-	Mon, 26 Jun 2023 18:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BD5BE6B
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:40:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34036C433C0;
+	Mon, 26 Jun 2023 18:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804841;
-	bh=T7IvSxqxpK1ikItY9Nc9X3zmjDnOnxEZVBeNctXJdR8=;
+	s=korg; t=1687804844;
+	bh=qPdjSeRTJmgO58+2QftlPctk6GmTfbQ6c2FZDO7jRR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wv60pxhfF8fPMw8Ohbk+94yatvRWyQe//iuX6vGQ6sLZjkjT/2y+N65n9BBxQ9bW+
-	 yv9wZAC+yN2nYU5GDBRJ1I8Gel6qM/MUxCNZ7s8ze4W0/RphI3uEN/n1MGXwcHXZb2
-	 OtsemaGerYDlv8WkjFF0JomAwRCX/HNW2IQ2vU20=
+	b=lS2+IIV9CTQeiqx3EhLUkCHAd1gYEsULSks8hvJKK6csOQnkn+ThliMPgm62mxR7e
+	 lT9OOP+fux3h8IAqF3tCLs44LT1IcfUigGW/ztKZRHjPQ7TpMpubcSPGR1oDLK2SKE
+	 LCAMgDPssd/l/7cMwD7olhButH14mA+PNRPyaO7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 59/96] net: dsa: mt7530: fix handling of BPDUs on MT7530 switch
-Date: Mon, 26 Jun 2023 20:12:14 +0200
-Message-ID: <20230626180749.397841575@linuxfoundation.org>
+Subject: [PATCH 5.15 60/96] be2net: Extend xmit workaround to BE3 chip
+Date: Mon, 26 Jun 2023 20:12:15 +0200
+Message-ID: <20230626180749.439181577@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -38,66 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit d7c66073559386b836bded7cdc8b66ee5c049129 ]
+[ Upstream commit 7580e0a78eb29e7bb1a772eba4088250bbb70d41 ]
 
-BPDUs are link-local frames, therefore they must be trapped to the CPU
-port. Currently, the MT7530 switch treats BPDUs as regular multicast
-frames, therefore flooding them to user ports. To fix this, set BPDUs to be
-trapped to the CPU port. Group this on mt7530_setup() and
-mt7531_setup_common() into mt753x_trap_frames() and call that.
+We have seen a bug where the NIC incorrectly changes the length in the
+IP header of a padded packet to include the padding bytes. The driver
+already has a workaround for this so do the workaround for this NIC too.
+This resolves the issue.
 
-Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The NIC in question identifies itself as follows:
+
+[    8.828494] be2net 0000:02:00.0: FW version is 10.7.110.31
+[    8.834759] be2net 0000:02:00.0: Emulex OneConnect(be3): PF FLEX10 port 1
+
+02:00.0 Ethernet controller: Emulex Corporation OneConnect 10Gb NIC (be3) (rev 01)
+
+Fixes: ca34fe38f06d ("be2net: fix wrong usage of adapter->generation")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Link: https://lore.kernel.org/r/20230616164549.2863037-1-ross.lagerwall@citrix.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 4aa3d0cba7b84..f74d9fbd08178 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -993,6 +993,14 @@ static void mt7530_setup_port5(struct dsa_switch *ds, phy_interface_t interface)
- 	mutex_unlock(&priv->reg_mutex);
- }
- 
-+static void
-+mt753x_trap_frames(struct mt7530_priv *priv)
-+{
-+	/* Trap BPDUs to the CPU port(s) */
-+	mt7530_rmw(priv, MT753X_BPC, MT753X_BPDU_PORT_FW_MASK,
-+		   MT753X_BPDU_CPU_ONLY);
-+}
-+
- static int
- mt753x_cpu_port_enable(struct dsa_switch *ds, int port)
- {
-@@ -2194,6 +2202,8 @@ mt7530_setup(struct dsa_switch *ds)
- 
- 	priv->p6_interface = PHY_INTERFACE_MODE_NA;
- 
-+	mt753x_trap_frames(priv);
-+
- 	/* Enable and reset MIB counters */
- 	mt7530_mib_reset(ds);
- 
-@@ -2300,8 +2310,8 @@ mt7531_setup_common(struct dsa_switch *ds)
- 			   BIT(cpu_dp->index));
- 		break;
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index 361c1c87c1830..e874b907bfbdf 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -1136,8 +1136,8 @@ static struct sk_buff *be_lancer_xmit_workarounds(struct be_adapter *adapter,
+ 	eth_hdr_len = ntohs(skb->protocol) == ETH_P_8021Q ?
+ 						VLAN_ETH_HLEN : ETH_HLEN;
+ 	if (skb->len <= 60 &&
+-	    (lancer_chip(adapter) || skb_vlan_tag_present(skb)) &&
+-	    is_ipv4_pkt(skb)) {
++	    (lancer_chip(adapter) || BE3_chip(adapter) ||
++	     skb_vlan_tag_present(skb)) && is_ipv4_pkt(skb)) {
+ 		ip = (struct iphdr *)ip_hdr(skb);
+ 		pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len));
  	}
--	mt7530_rmw(priv, MT753X_BPC, MT753X_BPDU_PORT_FW_MASK,
--		   MT753X_BPDU_CPU_ONLY);
-+
-+	mt753x_trap_frames(priv);
- 
- 	/* Enable and reset MIB counters */
- 	mt7530_mib_reset(ds);
 -- 
 2.39.2
 
