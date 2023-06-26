@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BC0C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111EAC433C9;
-	Mon, 26 Jun 2023 18:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DF7C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3669C433C9;
+	Mon, 26 Jun 2023 18:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804552;
-	bh=v7pmnwCE80ZhgGzf3m+4GZLv86wicdfa/gHJOKXld+k=;
+	s=korg; t=1687804555;
+	bh=C2cGXg6uTi3fvTAqUskRlrKlw3UUzQsbJnR01+rgsiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mwne/lCdyzprHzuR25v4CdqqOV1+pxLO+qidNEPa1swMiYJTEwBlPOOYnA1y0Ewwm
-	 DelSeH4EdntByEqnDRHQaagSykzeQfKodqAyjz/1lNbDZuYlBcSeKOp/NF6yeIUeh3
-	 8DDju6bgvQVTSPgpRU0Q4/jWTpvgCOKojZ6yK+os=
+	b=tA2DbMea8cNgD+Y8TB46J27jVK//A2YVVcu8hnPABPhTZLCA4Ek/aotuWQe73mSjv
+	 qwIuaJR5mEjYhdG4KjuSwFUZf8J+bTK099iZlmNsCNzOE1MUurQXCYCSkaWy+SsuRr
+	 MSnVcM66R+LufijwYjOP7dbrRvcVi9uqLKXoWIHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Segall <bsegall@google.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 04/60] epoll: ep_autoremove_wake_function should use list_del_init_careful
-Date: Mon, 26 Jun 2023 20:11:43 +0200
-Message-ID: <20230626180739.725179251@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 05/60] tracing: Add tracing_reset_all_online_cpus_unlocked() function
+Date: Mon, 26 Jun 2023 20:11:44 +0200
+Message-ID: <20230626180739.765724069@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -37,47 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Segall <bsegall@google.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 2192bba03d80f829233bfa34506b428f71e531e7 ]
+commit e18eb8783ec4949adebc7d7b0fdb65f65bfeefd9 upstream.
 
-autoremove_wake_function uses list_del_init_careful, so should epoll's
-more aggressive variant.  It only doesn't because it was copied from an
-older wait.c rather than the most recent.
+Currently the tracing_reset_all_online_cpus() requires the
+trace_types_lock held. But only one caller of this function actually has
+that lock held before calling it, and the other just takes the lock so
+that it can call it. More users of this function is needed where the lock
+is not held.
 
-[bsegall@google.com: add comment]
-  Link: https://lkml.kernel.org/r/xm26bki0ulsr.fsf_-_@google.com
-Link: https://lkml.kernel.org/r/xm26pm6hvfer.fsf@google.com
-Fixes: a16ceb139610 ("epoll: autoremove wakers even more aggressively")
-Signed-off-by: Ben Segall <bsegall@google.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a tracing_reset_all_online_cpus_unlocked() function for the one use
+case that calls it without being held, and also add a lockdep_assert to
+make sure it is held when called.
+
+Then have tracing_reset_all_online_cpus() take the lock internally, such
+that callers do not need to worry about taking it.
+
+Link: https://lkml.kernel.org/r/20221123192741.658273220@goodmis.org
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c        |   11 ++++++++++-
+ kernel/trace/trace.h        |    1 +
+ kernel/trace/trace_events.c |    2 +-
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 877f9f61a4e8d..8c0e94183186f 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -1814,7 +1814,11 @@ static int ep_autoremove_wake_function(struct wait_queue_entry *wq_entry,
- {
- 	int ret = default_wake_function(wq_entry, mode, sync, key);
- 
--	list_del_init(&wq_entry->entry);
-+	/*
-+	 * Pairs with list_empty_careful in ep_poll, and ensures future loop
-+	 * iterations see the cause of this wakeup.
-+	 */
-+	list_del_init_careful(&wq_entry->entry);
- 	return ret;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1931,10 +1931,12 @@ void tracing_reset_online_cpus(struct tr
  }
  
--- 
-2.39.2
-
+ /* Must have trace_types_lock held */
+-void tracing_reset_all_online_cpus(void)
++void tracing_reset_all_online_cpus_unlocked(void)
+ {
+ 	struct trace_array *tr;
+ 
++	lockdep_assert_held(&trace_types_lock);
++
+ 	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
+ 		if (!tr->clear_trace)
+ 			continue;
+@@ -1946,6 +1948,13 @@ void tracing_reset_all_online_cpus(void)
+ 	}
+ }
+ 
++void tracing_reset_all_online_cpus(void)
++{
++	mutex_lock(&trace_types_lock);
++	tracing_reset_all_online_cpus_unlocked();
++	mutex_unlock(&trace_types_lock);
++}
++
+ /*
+  * The tgid_map array maps from pid to tgid; i.e. the value stored at index i
+  * is the tgid last observed corresponding to pid=i.
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -677,6 +677,7 @@ int tracing_is_enabled(void);
+ void tracing_reset_online_cpus(struct trace_buffer *buf);
+ void tracing_reset_current(int cpu);
+ void tracing_reset_all_online_cpus(void);
++void tracing_reset_all_online_cpus_unlocked(void);
+ int tracing_open_generic(struct inode *inode, struct file *filp);
+ int tracing_open_generic_tr(struct inode *inode, struct file *filp);
+ bool tracing_is_disabled(void);
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -2440,7 +2440,7 @@ static void trace_module_remove_events(s
+ 	 * over from this module may be passed to the new module events and
+ 	 * unexpected results may occur.
+ 	 */
+-	tracing_reset_all_online_cpus();
++	tracing_reset_all_online_cpus_unlocked();
+ }
+ 
+ static int trace_module_notify(struct notifier_block *self,
 
 
