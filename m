@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1E7134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4ECC433C0;
-	Mon, 26 Jun 2023 18:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4287134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:16:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CABC433C8;
+	Mon, 26 Jun 2023 18:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803415;
-	bh=zN4DjmB1ti/yxFGysYgocZtEa1PR+w260NfbTfJ/K7U=;
+	s=korg; t=1687803418;
+	bh=NxIUZbJz5v6w4+mQOFoW1JAtTYiyotzlZMJek+Wzjlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVmMJqfCMUKx5/hfsPM86hwiDx+Vrdk7TIV1wHP/FDSqUBkTjMAahvJgSFpLm9IpO
-	 s6fn7mQ1gw9p8g489JnVY6PrcyLEbeK559r0ZV8ZGPc5gqVU1S0eiocGi+hVZfxulN
-	 QmJOqsyiDM4k3Q7NqP/J9avQ3+NvXDoqM02B2Rfw=
+	b=c6wOY0yfYbQj5kASdOu4fYUkz9dSO6EjXG14riRYw29v2ODd8IPJIkBIUUdOo405O
+	 yQaCZT6yhBforKTL7G4riVadq1glPKTNaYVCXrsjJdHgft5ZwzNv8qPPbkNuXM/txf
+	 DFuphPRGE2Z4Y+g0YtFeGQLAw6dB2ShfSLRP+aK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathu Baronia <prathubaronia2011@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Ingo Molnar <mingo@kernel.org>,
-	Yury Norov <yury.norov@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 053/199] scripts: fix the gfp flags header path in gfp-translate
-Date: Mon, 26 Jun 2023 20:09:19 +0200
-Message-ID: <20230626180807.905545560@linuxfoundation.org>
+Subject: [PATCH 6.3 054/199] nilfs2: fix buffer corruption due to concurrent device reads
+Date: Mon, 26 Jun 2023 20:09:20 +0200
+Message-ID: <20230626180807.938903121@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -41,46 +35,147 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prathu Baronia <prathubaronia2011@gmail.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 2049a7d0cbc6ac8e370e836ed68597be04a7dc49 upstream.
+commit 679bd7ebdd315bf457a4740b306ae99f1d0a403d upstream.
 
-Since gfp flags have been shifted to gfp_types.h so update the path in
-the gfp-translate script.
+As a result of analysis of a syzbot report, it turned out that in three
+cases where nilfs2 allocates block device buffers directly via sb_getblk,
+concurrent reads to the device can corrupt the allocated buffers.
 
-Link: https://lkml.kernel.org/r/20230608154450.21758-1-prathubaronia2011@gmail.com
-Fixes: cb5a065b4ea9c ("headers/deps: mm: Split <linux/gfp_types.h> out of <linux/gfp.h>")
-Signed-off-by: Prathu Baronia <prathubaronia2011@gmail.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Yury Norov <yury.norov@gmail.com>
+Nilfs2 uses sb_getblk for segment summary blocks, that make up a log
+header, and the super root block, that is the trailer, and when moving and
+writing the second super block after fs resize.
+
+In any of these, since the uptodate flag is not set when storing metadata
+to be written in the allocated buffers, the stored metadata will be
+overwritten if a device read of the same block occurs concurrently before
+the write.  This causes metadata corruption and misbehavior in the log
+write itself, causing warnings in nilfs_btree_assign() as reported.
+
+Fix these issues by setting an uptodate flag on the buffer head on the
+first or before modifying each buffer obtained with sb_getblk, and
+clearing the flag on failure.
+
+When setting the uptodate flag, the lock_buffer/unlock_buffer pair is used
+to perform necessary exclusive control, and the buffer is filled to ensure
+that uninitialized bytes are not mixed into the data read from others.  As
+for buffers for segment summary blocks, they are filled incrementally, so
+if the uptodate flag was unset on their allocation, set the flag and zero
+fill the buffer once at that point.
+
+Also, regarding the superblock move routine, the starting point of the
+memset call to zerofill the block is incorrectly specified, which can
+cause a buffer overflow on file systems with block sizes greater than
+4KiB.  In addition, if the superblock is moved within a large block, it is
+necessary to assume the possibility that the data in the superblock will
+be destroyed by zero-filling before copying.  So fix these potential
+issues as well.
+
+Link: https://lkml.kernel.org/r/20230609035732.20426-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/00000000000030000a05e981f475@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gfp-translate |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/nilfs2/segbuf.c  |    6 ++++++
+ fs/nilfs2/segment.c |    7 +++++++
+ fs/nilfs2/super.c   |   23 ++++++++++++++++++++++-
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
---- a/scripts/gfp-translate
-+++ b/scripts/gfp-translate
-@@ -63,11 +63,11 @@ fi
+--- a/fs/nilfs2/segbuf.c
++++ b/fs/nilfs2/segbuf.c
+@@ -101,6 +101,12 @@ int nilfs_segbuf_extend_segsum(struct ni
+ 	if (unlikely(!bh))
+ 		return -ENOMEM;
  
- # Extract GFP flags from the kernel source
- TMPFILE=`mktemp -t gfptranslate-XXXXXX` || exit 1
--grep -q ___GFP $SOURCE/include/linux/gfp.h
-+grep -q ___GFP $SOURCE/include/linux/gfp_types.h
- if [ $? -eq 0 ]; then
--	grep "^#define ___GFP" $SOURCE/include/linux/gfp.h | sed -e 's/u$//' | grep -v GFP_BITS > $TMPFILE
-+	grep "^#define ___GFP" $SOURCE/include/linux/gfp_types.h | sed -e 's/u$//' | grep -v GFP_BITS > $TMPFILE
- else
--	grep "^#define __GFP" $SOURCE/include/linux/gfp.h | sed -e 's/(__force gfp_t)//' | sed -e 's/u)/)/' | grep -v GFP_BITS | sed -e 's/)\//) \//' > $TMPFILE
-+	grep "^#define __GFP" $SOURCE/include/linux/gfp_types.h | sed -e 's/(__force gfp_t)//' | sed -e 's/u)/)/' | grep -v GFP_BITS | sed -e 's/)\//) \//' > $TMPFILE
- fi
++	lock_buffer(bh);
++	if (!buffer_uptodate(bh)) {
++		memset(bh->b_data, 0, bh->b_size);
++		set_buffer_uptodate(bh);
++	}
++	unlock_buffer(bh);
+ 	nilfs_segbuf_add_segsum_buffer(segbuf, bh);
+ 	return 0;
+ }
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -981,10 +981,13 @@ static void nilfs_segctor_fill_in_super_
+ 	unsigned int isz, srsz;
  
- # Parse the flags
+ 	bh_sr = NILFS_LAST_SEGBUF(&sci->sc_segbufs)->sb_super_root;
++
++	lock_buffer(bh_sr);
+ 	raw_sr = (struct nilfs_super_root *)bh_sr->b_data;
+ 	isz = nilfs->ns_inode_size;
+ 	srsz = NILFS_SR_BYTES(isz);
+ 
++	raw_sr->sr_sum = 0;  /* Ensure initialization within this update */
+ 	raw_sr->sr_bytes = cpu_to_le16(srsz);
+ 	raw_sr->sr_nongc_ctime
+ 		= cpu_to_le64(nilfs_doing_gc() ?
+@@ -998,6 +1001,8 @@ static void nilfs_segctor_fill_in_super_
+ 	nilfs_write_inode_common(nilfs->ns_sufile, (void *)raw_sr +
+ 				 NILFS_SR_SUFILE_OFFSET(isz), 1);
+ 	memset((void *)raw_sr + srsz, 0, nilfs->ns_blocksize - srsz);
++	set_buffer_uptodate(bh_sr);
++	unlock_buffer(bh_sr);
+ }
+ 
+ static void nilfs_redirty_inodes(struct list_head *head)
+@@ -1780,6 +1785,7 @@ static void nilfs_abort_logs(struct list
+ 	list_for_each_entry(segbuf, logs, sb_list) {
+ 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
+ 				    b_assoc_buffers) {
++			clear_buffer_uptodate(bh);
+ 			if (bh->b_page != bd_page) {
+ 				if (bd_page)
+ 					end_page_writeback(bd_page);
+@@ -1791,6 +1797,7 @@ static void nilfs_abort_logs(struct list
+ 				    b_assoc_buffers) {
+ 			clear_buffer_async_write(bh);
+ 			if (bh == segbuf->sb_super_root) {
++				clear_buffer_uptodate(bh);
+ 				if (bh->b_page != bd_page) {
+ 					end_page_writeback(bd_page);
+ 					bd_page = bh->b_page;
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -372,10 +372,31 @@ static int nilfs_move_2nd_super(struct s
+ 		goto out;
+ 	}
+ 	nsbp = (void *)nsbh->b_data + offset;
+-	memset(nsbp, 0, nilfs->ns_blocksize);
+ 
++	lock_buffer(nsbh);
+ 	if (sb2i >= 0) {
++		/*
++		 * The position of the second superblock only changes by 4KiB,
++		 * which is larger than the maximum superblock data size
++		 * (= 1KiB), so there is no need to use memmove() to allow
++		 * overlap between source and destination.
++		 */
+ 		memcpy(nsbp, nilfs->ns_sbp[sb2i], nilfs->ns_sbsize);
++
++		/*
++		 * Zero fill after copy to avoid overwriting in case of move
++		 * within the same block.
++		 */
++		memset(nsbh->b_data, 0, offset);
++		memset((void *)nsbp + nilfs->ns_sbsize, 0,
++		       nsbh->b_size - offset - nilfs->ns_sbsize);
++	} else {
++		memset(nsbh->b_data, 0, nsbh->b_size);
++	}
++	set_buffer_uptodate(nsbh);
++	unlock_buffer(nsbh);
++
++	if (sb2i >= 0) {
+ 		brelse(nilfs->ns_sbh[sb2i]);
+ 		nilfs->ns_sbh[sb2i] = nsbh;
+ 		nilfs->ns_sbp[sb2i] = nsbp;
 
 
