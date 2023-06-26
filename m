@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A8413AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA5AC433CB;
-	Mon, 26 Jun 2023 18:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399513AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:26:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15593C433C8;
+	Mon, 26 Jun 2023 18:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803995;
-	bh=xcVet4QUYlmeBQFF0cY9pek2NTN+5js8BLGNsyiNVdI=;
+	s=korg; t=1687803998;
+	bh=VoCyN92JMw4IzOJxg/gH06Ss8/ZSL0OYhFeq2csDpCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kE/QwHyzda+DNTHIb5nWsxl2IbzrjqO9CKF3RY+3fgU/B/dIufr6DdhmLUMbtyjGz
-	 KHsixYtX1GBGIb5Li3DyyOI5gY831QdPXbpT99E8JRybsX9uuNZx+V033/dwTCCHlc
-	 cfWpn/AyRKyLX1qCz/xo7dWY5UZ7qExWoqSapnBg=
+	b=DZVa6Pd8Rm6dnfPx5NYDbhDazADVDWUjkA2gqra0k7fBWmA71fGNUSbabqShCx+D3
+	 DlmXeQl0DH0HUv5q5ZT1R68IE4Mk3fYzZLY/2iO1VeoqqPB+MZ/8xw14s/VADgAT77
+	 qomXsh2hwzGssfGwennoiowxbvM/hU1WqvWaFkWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Inki Dae <inki.dae@samsung.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 36/41] ASoC: nau8824: Add quirk to active-high jack-detect
-Date: Mon, 26 Jun 2023 20:11:59 +0200
-Message-ID: <20230626180737.611191246@linuxfoundation.org>
+Subject: [PATCH 4.19 37/41] drm/exynos: vidi: fix a wrong error return
+Date: Mon, 26 Jun 2023 20:12:00 +0200
+Message-ID: <20230626180737.649452010@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -35,57 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Inki Dae <inki.dae@samsung.com>
 
-[ Upstream commit e384dba03e3294ce7ea69e4da558e9bf8f0e8946 ]
+[ Upstream commit 4a059559809fd1ddbf16f847c4d2237309c08edf ]
 
-Add  entries for Positivo laptops: CW14Q01P, K1424G, N14ZP74G to the
-DMI table, so that  active-high jack-detect will work properly on
-these laptops.
+Fix a wrong error return by dropping an error return.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Link: https://lore.kernel.org/r/20230529181911.632851-1-edson.drosdeck@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+When vidi driver is remvoed, if ctx->raw_edid isn't same as fake_edid_info
+then only what we have to is to free ctx->raw_edid so that driver removing
+can work correctly - it's not an error case.
+
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/nau8824.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/codecs/nau8824.c b/sound/soc/codecs/nau8824.c
-index 4f18bb272e929..0ecea65a80b46 100644
---- a/sound/soc/codecs/nau8824.c
-+++ b/sound/soc/codecs/nau8824.c
-@@ -1899,6 +1899,30 @@ static const struct dmi_system_id nau8824_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
- 	},
-+	{
-+		/* Positivo CW14Q01P */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "CW14Q01P"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Positivo K1424G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "K1424G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
-+	{
-+		/* Positivo N14ZP74G */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Positivo Tecnologia SA"),
-+			DMI_MATCH(DMI_BOARD_NAME, "N14ZP74G"),
-+		},
-+		.driver_data = (void *)(NAU8824_JD_ACTIVE_HIGH),
-+	},
- 	{}
- };
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+index 19697c1362d8f..947c9627c565a 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -480,8 +480,6 @@ static int vidi_remove(struct platform_device *pdev)
+ 	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
+ 		kfree(ctx->raw_edid);
+ 		ctx->raw_edid = NULL;
+-
+-		return -EINVAL;
+ 	}
  
+ 	component_del(&pdev->dev, &vidi_component_ops);
 -- 
 2.39.2
 
