@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747B013AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:28:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59A1C433C9;
-	Mon, 26 Jun 2023 18:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611BC13AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:28:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C9FC433C0;
+	Mon, 26 Jun 2023 18:28:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804133;
-	bh=6vnA6jPQa68N90ix/jLKmQOG1Pp5Q2rLiyWlAqmtkco=;
+	s=korg; t=1687804136;
+	bh=KzUclD03LFXaEQVh16vqAtaX631bFiBkIJDbmMHPzac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOwKRRQk12eHuTBVXSQn9li/ywOoGoxqu7IbnoSzOj3383INDgjRnxOeu8Zo43COX
-	 y5XBm+tGKFjAc6oTzAnJa3xQntWvsE8MjAjfz0Zvp+ZDF1E7d4GJo6ovxoI7fRPBto
-	 ltiIvLHMLPuL+hdWY/VqJA7UqipOP/T6Jlms1Fho=
+	b=Y34m39VsWZg9UbHAfPKJGNtSDUTBSbk1jEIWh/3E8YWdRPQF2bWAnQdwhZMjlV+Ee
+	 DUV282nxrH3AltosNMEmzvGZ7eFUbG0zqB0qDl+4KPlrkeffNgucPp1wP1j/EZTBJY
+	 G6Quj4cz0YqU4T1fiNIc7Jn8z3JntQudc83kGGik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 024/170] selftests: mptcp: userspace pm: skip if not supported
-Date: Mon, 26 Jun 2023 20:09:53 +0200
-Message-ID: <20230626180801.641318805@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 015/170] selftests: mptcp: join: fix ShellCheck warnings
+Date: Mon, 26 Jun 2023 20:09:44 +0200
+Message-ID: <20230626180801.237714250@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,45 +36,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit f90adb033891d418c5dafef34a9aa49f3c860991 upstream.
+commit 0fcd72df8847d3a62eb34a084862157ce0564a94 upstream.
 
-Selftests are supposed to run on any kernels, including the old ones not
-supporting all MPTCP features.
+Most of the code had an issue according to ShellCheck.
 
-One of them is the MPTCP Userspace PM introduced by commit 4638de5aefe5
-("mptcp: handle local addrs announced by userspace PMs").
+That's mainly due to the fact it incorrectly believes most of the code
+was unreachable because it's invoked by variable name, see how the
+"tests" array is used.
 
-We can skip all these tests if the feature is not supported simply by
-looking for the MPTCP pm_type's sysctl knob.
+Once SC2317 has been ignored, three small warnings were still visible:
 
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: 259a834fadda ("selftests: mptcp: functional tests for the userspace PM type")
-Cc: stable@vger.kernel.org
+ - SC2155: Declare and assign separately to avoid masking return values.
+
+ - SC2046: Quote this to prevent word splitting: can be ignored because
+   "ip netns pids" can display more than one pid.
+
+ - SC2166: Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.
+
+This probably didn't fix any actual issues but it might help spotting
+new interesting warnings reported by ShellCheck as just before,
+ShellCheck was reporting issues for most lines making it a bit useless.
+
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/userspace_pm.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/userspace_pm.sh b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-index 192ab818f292..38a1d34f7b4d 100755
---- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
-+++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-@@ -5,6 +5,11 @@
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -8,6 +8,10 @@
  
- mptcp_lib_check_mptcp
+ . "$(dirname "${0}")/mptcp_lib.sh"
  
-+if ! mptcp_lib_has_file '/proc/sys/net/mptcp/pm_type'; then
-+	echo "userspace pm tests are not supported by the kernel: SKIP"
-+	exit ${KSFT_SKIP}
-+fi
++# ShellCheck incorrectly believes that most of the code here is unreachable
++# because it's invoked by variable name, see how the "tests" array is used
++#shellcheck disable=SC2317
 +
- ip -Version > /dev/null 2>&1
- if [ $? -ne 0 ];then
- 	echo "SKIP: Cannot not run test without ip tool"
--- 
-2.41.0
-
+ ret=0
+ sin=""
+ sinfail=""
+@@ -357,8 +361,9 @@ check_transfer()
+ 
+ 	local line
+ 	if [ -n "$bytes" ]; then
++		local out_size
+ 		# when truncating we must check the size explicitly
+-		local out_size=$(wc -c $out | awk '{print $1}')
++		out_size=$(wc -c $out | awk '{print $1}')
+ 		if [ $out_size -ne $bytes ]; then
+ 			echo "[ FAIL ] $what output file has wrong size ($out_size, $bytes)"
+ 			fail_test
+@@ -487,6 +492,7 @@ kill_wait()
+ 
+ kill_tests_wait()
+ {
++	#shellcheck disable=SC2046
+ 	kill -SIGUSR1 $(ip netns pids $ns2) $(ip netns pids $ns1)
+ 	wait
+ }
+@@ -1726,7 +1732,7 @@ chk_subflow_nr()
+ 
+ 	cnt1=$(ss -N $ns1 -tOni | grep -c token)
+ 	cnt2=$(ss -N $ns2 -tOni | grep -c token)
+-	if [ "$cnt1" != "$subflow_nr" -o "$cnt2" != "$subflow_nr" ]; then
++	if [ "$cnt1" != "$subflow_nr" ] || [ "$cnt2" != "$subflow_nr" ]; then
+ 		echo "[fail] got $cnt1:$cnt2 subflows expected $subflow_nr"
+ 		fail_test
+ 		dump_stats=1
 
 
