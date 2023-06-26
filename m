@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90AC13AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AAAC433C8;
-	Mon, 26 Jun 2023 18:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF87313AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F87C433C0;
+	Mon, 26 Jun 2023 18:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804162;
-	bh=ix6j8afGVxIzL3s2P4mVFN2x2KgsncL7lEv2rQhiVU8=;
+	s=korg; t=1687804165;
+	bh=l6jq4AWYsTS/9DUqimOVYFxnnorLO2AQi0pi5c4bjyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXqMmrUGaqvoe9qkqaSVwox9dvDAvUy0gBA09z+MFPjLaC/4aDaiMBEH0RC5jVngN
-	 xa/LpIJLElppV9ub10aLIr4nNxNDMn1dq/8Ut8P7q/T5yzOKfPwFROJYpoOhBbn/7i
-	 1NL39ZKNfeU/3OOb2w/Wa6ktZtykqDubpNh1igTE=
+	b=QfFHseL+S/pepIWbxJXQi5jCJKIFlCY00V2dzSP0Usi2W4sU9BpWbffgGoEDUAunv
+	 /QzUnxJa24CSZKgPuJHbrLlpuEWwwIvRUu+zVDAbb+Ho/DwflYHffhf8n8LuPNCE9w
+	 r/BCwtNOftIcMPGR8F2ZXF1VPUuXjPm3SP02xo5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Gabriel Somlo <gsomlo@gmail.com>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 063/170] mmc: litex_mmc: set PROBE_PREFER_ASYNCHRONOUS
-Date: Mon, 26 Jun 2023 20:10:32 +0200
-Message-ID: <20230626180803.410587710@linuxfoundation.org>
+Subject: [PATCH 6.1 064/170] mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
+Date: Mon, 26 Jun 2023 20:10:33 +0200
+Message-ID: <20230626180803.446181485@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,36 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-commit f334ad47683606b682b4166b800d8b372d315436 upstream.
+commit e6f9e590b72e12bbb86b1b8be7e1981f357392ad upstream.
 
-mmc host drivers should have enabled the asynchronous probe option, but
-it seems like we didn't set it for litex_mmc when introducing litex mmc
-support, so let's set it now.
+While SDHCI claims to support 64-bit DMA on MSM8916 it does not seem to
+be properly functional. It is not immediately obvious because SDHCI is
+usually used with IOMMU bypassed on this SoC, and all physical memory
+has 32-bit addresses. But when trying to enable the IOMMU it quickly
+fails with an error such as the following:
 
-Tested with linux-on-litex-vexriscv on sipeed tang nano 20K fpga.
+  arm-smmu 1e00000.iommu: Unhandled context fault:
+    fsr=0x402, iova=0xfffff200, fsynr=0xe0000, cbfrsynra=0x140, cb=3
+  mmc1: ADMA error: 0x02000000
+  mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+  mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00002e02
+  mmc1: sdhci: Blk size:  0x00000008 | Blk cnt:  0x00000000
+  mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000013
+  mmc1: sdhci: Present:   0x03f80206 | Host ctl: 0x00000019
+  mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
+  mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+  mmc1: sdhci: Timeout:   0x0000000a | Int stat: 0x00000001
+  mmc1: sdhci: Int enab:  0x03ff900b | Sig enab: 0x03ff100b
+  mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+  mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x00008007
+  mmc1: sdhci: Cmd:       0x0000333a | Max curr: 0x00000000
+  mmc1: sdhci: Resp[0]:   0x00000920 | Resp[1]:  0x5b590000
+  mmc1: sdhci: Resp[2]:   0xe6487f80 | Resp[3]:  0x0a404094
+  mmc1: sdhci: Host ctl2: 0x00000008
+  mmc1: sdhci: ADMA Err:  0x00000001 | ADMA Ptr: 0x0000000ffffff224
+  mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+  mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:  0x60006400 | DLL cfg2: 0x00000000
+  mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:  0x00000000 | DDR cfg: 0x00000000
+  mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88018a8 Vndr func3: 0x00000000
+  mmc1: sdhci: ============================================
+  mmc1: sdhci: fffffffff200: DMA 0x0000ffffffffe100, LEN 0x0008, Attr=0x21
+  mmc1: sdhci: fffffffff20c: DMA 0x0000000000000000, LEN 0x0000, Attr=0x03
 
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Acked-by: Gabriel Somlo <gsomlo@gmail.com>
-Fixes: 92e099104729 ("mmc: Add driver for LiteX's LiteSDCard interface")
+Looking closely it's obvious that only the 32-bit part of the address
+(0xfffff200) arrives at the SMMU, the higher 16-bit (0xffff...) get
+lost somewhere. This might not be a limitation of the SDHCI itself but
+perhaps the bus/interconnect it is connected to, or even the connection
+to the SMMU.
+
+Work around this by setting SDHCI_QUIRK2_BROKEN_64_BIT_DMA to avoid
+using 64-bit addresses.
+
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230617085319.2139-1-jszhang@kernel.org
+Link: https://lore.kernel.org/r/20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/litex_mmc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci-msm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/host/litex_mmc.c
-+++ b/drivers/mmc/host/litex_mmc.c
-@@ -649,6 +649,7 @@ static struct platform_driver litex_mmc_
- 	.driver = {
- 		.name = "litex-mmc",
- 		.of_match_table = litex_match,
-+		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
- 	},
- };
- module_platform_driver(litex_mmc_driver);
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -2486,6 +2486,9 @@ static inline void sdhci_msm_get_of_prop
+ 		msm_host->ddr_config = DDR_CONFIG_POR_VAL;
+ 
+ 	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
++
++	if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
++		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
+ }
+ 
+ static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
 
 
