@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A1E13AC5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:27:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EFCC433C0;
-	Mon, 26 Jun 2023 18:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088A913AC5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:27:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C04C433C0;
+	Mon, 26 Jun 2023 18:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804053;
-	bh=jCdtrtpvdLOaV8b1aA11gRXspS3cfdYnQFjjc4IhBZ8=;
+	s=korg; t=1687804056;
+	bh=P5BQhKun/LDc9HeG2nxgzb6lrj+ddVlJm1Z2p3pt+cU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Snu15B4py6kYjSTMW7n9/GguioT3yRCPYuXm+cFkjgFZHa5qjASRU0pG6QwgyLrO/
-	 bjHaLDi18ZUYPl2OHjmfjfhFBmX5QTGi3xoCUdBiJmnuS7f73sENzdR2TGktjZN1Ue
-	 L4qbYDLWCFh67zeb/bDfW71gxcZXO/+gezKL0gS4=
+	b=LFlud7Eqq1UliDGQGU3E3Ft8dJWy7hBKsCEW+KPOyCqjzoY7wFJ/X9Eg69Fd3dD4R
+	 R2TniFvkL6rfL52TDCwBgjSYM5ZWXsuAV7nKMscV8c7GA3oo+3SUKieOnSzs/Eqq5w
+	 mec3o1TrcqGwtpF90QFxvVtcQYo+EEupE5ugX3UY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 026/170] selftests: mptcp: join: use iptables-legacy if available
-Date: Mon, 26 Jun 2023 20:09:55 +0200
-Message-ID: <20230626180801.722630540@linuxfoundation.org>
+Subject: [PATCH 6.1 027/170] selftests: mptcp: join: helpers to skip tests
+Date: Mon, 26 Jun 2023 20:09:56 +0200
+Message-ID: <20230626180801.765240753@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,83 +36,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 0c4cd3f86a40028845ad6f8af5b37165666404cd upstream.
+commit cdb50525345cf5a8359ee391032ef606a7826f08 upstream.
 
-IPTables commands using 'iptables-nft' fail on old kernels, at least
-5.15 because it doesn't see the default IPTables chains:
+Selftests are supposed to run on any kernels, including the old ones not
+supporting all MPTCP features.
 
-  $ iptables -L
-  iptables/1.8.2 Failed to initialize nft: Protocol not supported
+Here are some helpers that will be used to mark subtests as skipped if a
+feature is not supported. Marking as a fix for the commit introducing
+this selftest to help with the backports.
 
-As a first step before switching to NFTables, we can use iptables-legacy
-if available.
+While at it, also check if kallsyms feature is available as it will also
+be used in the following commits to check if MPTCP features are
+available before starting a test.
 
 Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: 8d014eaa9254 ("selftests: mptcp: add ADD_ADDR timeout test case")
+Fixes: b08fbf241064 ("selftests: add test-cases for MPTCP MP_JOIN")
 Cc: stable@vger.kernel.org
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   27 ++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
 --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
 +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -25,6 +25,8 @@ capout=""
- ns1=""
- ns2=""
- ksft_skip=4
-+iptables="iptables"
-+ip6tables="ip6tables"
- timeout_poll=30
- timeout_test=$((timeout_poll * 2 + 1))
- capture=0
-@@ -141,7 +143,11 @@ check_tools()
- 		exit $ksft_skip
- 	fi
+@@ -137,6 +137,7 @@ cleanup_partial()
+ check_tools()
+ {
+ 	mptcp_lib_check_mptcp
++	mptcp_lib_check_kallsyms
  
--	if ! iptables -V &> /dev/null; then
-+	# Use the legacy version if available to support old kernel versions
-+	if iptables-legacy -V &> /dev/null; then
-+		iptables="iptables-legacy"
-+		ip6tables="ip6tables-legacy"
-+	elif ! iptables -V &> /dev/null; then
- 		echo "SKIP: Could not run all tests without iptables tool"
- 		exit $ksft_skip
- 	fi
-@@ -239,9 +245,9 @@ reset_with_add_addr_timeout()
- 
- 	reset "${1}" || return 1
- 
--	tables="iptables"
-+	tables="${iptables}"
- 	if [ $ip -eq 6 ]; then
--		tables="ip6tables"
-+		tables="${ip6tables}"
- 	fi
- 
- 	ip netns exec $ns1 sysctl -q net.mptcp.add_addr_timeout=1
-@@ -306,9 +312,9 @@ reset_with_fail()
- 	local ip="${3:-4}"
- 	local tables
- 
--	tables="iptables"
-+	tables="${iptables}"
- 	if [ $ip -eq 6 ]; then
--		tables="ip6tables"
-+		tables="${ip6tables}"
- 	fi
- 
- 	ip netns exec $ns2 $tables \
-@@ -678,7 +684,7 @@ filter_tcp_from()
- 	local src="${2}"
- 	local target="${3}"
- 
--	ip netns exec "${ns}" iptables -A INPUT -s "${src}" -p tcp -j "${target}"
-+	ip netns exec "${ns}" ${iptables} -A INPUT -s "${src}" -p tcp -j "${target}"
+ 	if ! ip -Version &> /dev/null; then
+ 		echo "SKIP: Could not run test without ip tool"
+@@ -183,6 +184,32 @@ cleanup()
+ 	cleanup_partial
  }
  
- do_transfer()
++# $1: msg
++print_title()
++{
++	printf "%03u %-36s %s" "${TEST_COUNT}" "${TEST_NAME}" "${1}"
++}
++
++# [ $1: fail msg ]
++mark_as_skipped()
++{
++	local msg="${1:-"Feature not supported"}"
++
++	mptcp_lib_fail_if_expected_feature "${msg}"
++
++	print_title "[ skip ] ${msg}"
++	printf "\n"
++}
++
++# $@: condition
++continue_if()
++{
++	if ! "${@}"; then
++		mark_as_skipped
++		return 1
++	fi
++}
++
+ skip_test()
+ {
+ 	if [ "${#only_tests_ids[@]}" -eq 0 ] && [ "${#only_tests_names[@]}" -eq 0 ]; then
 
 
