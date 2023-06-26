@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51281C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B96C433C9;
-	Mon, 26 Jun 2023 18:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A5EC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52E7C433C9;
+	Mon, 26 Jun 2023 18:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804631;
-	bh=kOLsJa76zqfPuOfw8I5+PGjN1wLCPIKt8iink4QIXMw=;
+	s=korg; t=1687804634;
+	bh=WojL8egNg8VQgEXFo1FB9It8jiQ2ip8ME0OModaYAJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIJ40PMoh++zelM6JhbVkuP0K8sTqKKyUHuh6WEfa734BGL4aud88ChZsIPZc0uzk
-	 VDZlgdHje0Ik27MMwZ9Yd1jRC9wvkm/bdqdCx5Qxv1RCWnZJz5d5+efTlrUUjalpic
-	 d26ZePkJyf2j7UyX6uvf1qy3MooTtpi8sYHQyAQU=
+	b=s//bxR9xNE38nU8aLvJr+l/sr376X5FqjTB9rHxjOA6xrSqLlvxaQ/Jf3r6ydNz98
+	 UFNm25wZle/8pggYrLKHOYD9FSLPQ05yDUfKTsg5TtlblwqzrM/pLk5DUNsNeoM1Qa
+	 DAz26XZ+m+9wIa3l7zHu762X73Ke8h9chQaJoUJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 49/60] usb: gadget: udc: fix NULL dereference in remove()
-Date: Mon, 26 Jun 2023 20:12:28 +0200
-Message-ID: <20230626180741.589129920@linuxfoundation.org>
+Subject: [PATCH 5.4 50/60] s390/cio: unregister device when the only path is gone
+Date: Mon, 26 Jun 2023 20:12:29 +0200
+Message-ID: <20230626180741.631065898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -34,37 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-[ Upstream commit 016da9c65fec9f0e78c4909ed9a0f2d567af6775 ]
+[ Upstream commit 89c0c62e947a01e7a36b54582fd9c9e346170255 ]
 
-The "udc" pointer was never set in the probe() function so it will
-lead to a NULL dereference in udc_pci_remove() when we do:
+Currently, if the device is offline and all the channel paths are
+either configured or varied offline, the associated subchannel gets
+unregistered. Don't unregister the subchannel, instead unregister
+offline device.
 
-	usb_del_gadget_udc(&udc->gadget);
-
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/ZG+A/dNpFWAlCChk@kili
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/amd5536udc_pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/s390/cio/device.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/amd5536udc_pci.c b/drivers/usb/gadget/udc/amd5536udc_pci.c
-index 362284057d307..a3d15c3fb82a9 100644
---- a/drivers/usb/gadget/udc/amd5536udc_pci.c
-+++ b/drivers/usb/gadget/udc/amd5536udc_pci.c
-@@ -171,6 +171,9 @@ static int udc_pci_probe(
- 		retval = -ENODEV;
- 		goto err_probe;
+diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
+index 23e9227e60fd7..d7ca75efb49fb 100644
+--- a/drivers/s390/cio/device.c
++++ b/drivers/s390/cio/device.c
+@@ -1385,6 +1385,7 @@ void ccw_device_set_notoper(struct ccw_device *cdev)
+ enum io_sch_action {
+ 	IO_SCH_UNREG,
+ 	IO_SCH_ORPH_UNREG,
++	IO_SCH_UNREG_CDEV,
+ 	IO_SCH_ATTACH,
+ 	IO_SCH_UNREG_ATTACH,
+ 	IO_SCH_ORPH_ATTACH,
+@@ -1417,7 +1418,7 @@ static enum io_sch_action sch_get_action(struct subchannel *sch)
  	}
-+
-+	udc = dev;
-+
- 	return 0;
- 
- err_probe:
+ 	if ((sch->schib.pmcw.pam & sch->opm) == 0) {
+ 		if (ccw_device_notify(cdev, CIO_NO_PATH) != NOTIFY_OK)
+-			return IO_SCH_UNREG;
++			return IO_SCH_UNREG_CDEV;
+ 		return IO_SCH_DISC;
+ 	}
+ 	if (device_is_disconnected(cdev))
+@@ -1479,6 +1480,7 @@ static int io_subchannel_sch_event(struct subchannel *sch, int process)
+ 	case IO_SCH_ORPH_ATTACH:
+ 		ccw_device_set_disconnected(cdev);
+ 		break;
++	case IO_SCH_UNREG_CDEV:
+ 	case IO_SCH_UNREG_ATTACH:
+ 	case IO_SCH_UNREG:
+ 		if (!cdev)
+@@ -1512,6 +1514,7 @@ static int io_subchannel_sch_event(struct subchannel *sch, int process)
+ 		if (rc)
+ 			goto out;
+ 		break;
++	case IO_SCH_UNREG_CDEV:
+ 	case IO_SCH_UNREG_ATTACH:
+ 		spin_lock_irqsave(sch->lock, flags);
+ 		if (cdev->private->flags.resuming) {
 -- 
 2.39.2
 
