@@ -1,181 +1,427 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EF811CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8ADC433C0;
-	Mon, 26 Jun 2023 18:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB5411CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C134CC433C8;
+	Mon, 26 Jun 2023 18:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805060;
-	bh=bUZZwzzs4b3AQlnibtSs3zEKDfHZiUMsmN4Uu8fVrtQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eraqOGDNRfMve1YEFp12ymyFK3DB+SvoJZkMosoMF7UgQhlK9PnqMf6dfzbF2LX+S
-	 qbUaN82ao9aD7QAVZznG4subq3RKdCnAnuXbmtnguwz0hvRf7/z21jMWJcu2xkeXTr
-	 IIWO5iRnveMhcyZ1/F/K59Ca4JygmgxLW0SH8Cxg=
+	s=korg; t=1687805063;
+	bh=2tojs1BJAiHzd59kX2EReAbrI/4H8YS5Gslz6CT3s+U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=NxEElAwXRRliXb0J18o2o7qZblmN0AtXdrzq8eWVFI/CXKZKomjpl1CXV9fUigu4O
+	 GYHXyfhqyOXDusIFfkalMEb10CaCnuC4DRai70O+OAGnFygzP9YzE1/xwcFR6xoe6C
+	 zsHSDNEN8/4nWJ9Ck+EOR//ZqYoiW2YMnb9bSZPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 09/81] nilfs2: fix buffer corruption due to concurrent device reads
-Date: Mon, 26 Jun 2023 20:11:51 +0200
-Message-ID: <20230626180744.834474487@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 5.10 00/81] 5.10.186-rc1 review
+Date: Mon, 26 Jun 2023 20:11:42 +0200
+Message-ID: <20230626180744.453069285@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
-References: <20230626180744.453069285@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.186-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.10.186-rc1
+X-KernelTest-Deadline: 2023-06-28T18:07+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+This is the start of the stable review cycle for the 5.10.186 release.
+There are 81 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 679bd7ebdd315bf457a4740b306ae99f1d0a403d upstream.
+Responses should be made by Wed, 28 Jun 2023 18:07:23 +0000.
+Anything received after that time might be too late.
 
-As a result of analysis of a syzbot report, it turned out that in three
-cases where nilfs2 allocates block device buffers directly via sb_getblk,
-concurrent reads to the device can corrupt the allocated buffers.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.186-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+and the diffstat can be found below.
 
-Nilfs2 uses sb_getblk for segment summary blocks, that make up a log
-header, and the super root block, that is the trailer, and when moving and
-writing the second super block after fs resize.
+thanks,
 
-In any of these, since the uptodate flag is not set when storing metadata
-to be written in the allocated buffers, the stored metadata will be
-overwritten if a device read of the same block occurs concurrently before
-the write.  This causes metadata corruption and misbehavior in the log
-write itself, causing warnings in nilfs_btree_assign() as reported.
+greg k-h
 
-Fix these issues by setting an uptodate flag on the buffer head on the
-first or before modifying each buffer obtained with sb_getblk, and
-clearing the flag on failure.
+-------------
+Pseudo-Shortlog of commits:
 
-When setting the uptodate flag, the lock_buffer/unlock_buffer pair is used
-to perform necessary exclusive control, and the buffer is filled to ensure
-that uninitialized bytes are not mixed into the data read from others.  As
-for buffers for segment summary blocks, they are filled incrementally, so
-if the uptodate flag was unset on their allocation, set the flag and zero
-fill the buffer once at that point.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.10.186-rc1
 
-Also, regarding the superblock move routine, the starting point of the
-memset call to zerofill the block is incorrectly specified, which can
-cause a buffer overflow on file systems with block sizes greater than
-4KiB.  In addition, if the superblock is moved within a large block, it is
-necessary to assume the possibility that the data in the superblock will
-be destroyed by zero-filling before copying.  So fix these potential
-issues as well.
+Florent Revest <revest@chromium.org>
+    bpf/btf: Accept function names that contain dots
 
-Link: https://lkml.kernel.org/r/20230609035732.20426-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+31837fe952932efc8fb9@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/00000000000030000a05e981f475@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/nilfs2/segbuf.c  |    6 ++++++
- fs/nilfs2/segment.c |    7 +++++++
- fs/nilfs2/super.c   |   23 ++++++++++++++++++++++-
- 3 files changed, 35 insertions(+), 1 deletion(-)
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nf_tables: hold mutex on netns pre_exit path
 
---- a/fs/nilfs2/segbuf.c
-+++ b/fs/nilfs2/segbuf.c
-@@ -101,6 +101,12 @@ int nilfs_segbuf_extend_segsum(struct ni
- 	if (unlikely(!bh))
- 		return -ENOMEM;
- 
-+	lock_buffer(bh);
-+	if (!buffer_uptodate(bh)) {
-+		memset(bh->b_data, 0, bh->b_size);
-+		set_buffer_uptodate(bh);
-+	}
-+	unlock_buffer(bh);
- 	nilfs_segbuf_add_segsum_buffer(segbuf, bh);
- 	return 0;
- }
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -984,10 +984,13 @@ static void nilfs_segctor_fill_in_super_
- 	unsigned int isz, srsz;
- 
- 	bh_sr = NILFS_LAST_SEGBUF(&sci->sc_segbufs)->sb_super_root;
-+
-+	lock_buffer(bh_sr);
- 	raw_sr = (struct nilfs_super_root *)bh_sr->b_data;
- 	isz = nilfs->ns_inode_size;
- 	srsz = NILFS_SR_BYTES(isz);
- 
-+	raw_sr->sr_sum = 0;  /* Ensure initialization within this update */
- 	raw_sr->sr_bytes = cpu_to_le16(srsz);
- 	raw_sr->sr_nongc_ctime
- 		= cpu_to_le64(nilfs_doing_gc() ?
-@@ -1001,6 +1004,8 @@ static void nilfs_segctor_fill_in_super_
- 	nilfs_write_inode_common(nilfs->ns_sufile, (void *)raw_sr +
- 				 NILFS_SR_SUFILE_OFFSET(isz), 1);
- 	memset((void *)raw_sr + srsz, 0, nilfs->ns_blocksize - srsz);
-+	set_buffer_uptodate(bh_sr);
-+	unlock_buffer(bh_sr);
- }
- 
- static void nilfs_redirty_inodes(struct list_head *head)
-@@ -1783,6 +1788,7 @@ static void nilfs_abort_logs(struct list
- 	list_for_each_entry(segbuf, logs, sb_list) {
- 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
- 				    b_assoc_buffers) {
-+			clear_buffer_uptodate(bh);
- 			if (bh->b_page != bd_page) {
- 				if (bd_page)
- 					end_page_writeback(bd_page);
-@@ -1794,6 +1800,7 @@ static void nilfs_abort_logs(struct list
- 				    b_assoc_buffers) {
- 			clear_buffer_async_write(bh);
- 			if (bh == segbuf->sb_super_root) {
-+				clear_buffer_uptodate(bh);
- 				if (bh->b_page != bd_page) {
- 					end_page_writeback(bd_page);
- 					bd_page = bh->b_page;
---- a/fs/nilfs2/super.c
-+++ b/fs/nilfs2/super.c
-@@ -372,10 +372,31 @@ static int nilfs_move_2nd_super(struct s
- 		goto out;
- 	}
- 	nsbp = (void *)nsbh->b_data + offset;
--	memset(nsbp, 0, nilfs->ns_blocksize);
- 
-+	lock_buffer(nsbh);
- 	if (sb2i >= 0) {
-+		/*
-+		 * The position of the second superblock only changes by 4KiB,
-+		 * which is larger than the maximum superblock data size
-+		 * (= 1KiB), so there is no need to use memmove() to allow
-+		 * overlap between source and destination.
-+		 */
- 		memcpy(nsbp, nilfs->ns_sbp[sb2i], nilfs->ns_sbsize);
-+
-+		/*
-+		 * Zero fill after copy to avoid overwriting in case of move
-+		 * within the same block.
-+		 */
-+		memset(nsbh->b_data, 0, offset);
-+		memset((void *)nsbp + nilfs->ns_sbsize, 0,
-+		       nsbh->b_size - offset - nilfs->ns_sbsize);
-+	} else {
-+		memset(nsbh->b_data, 0, nsbh->b_size);
-+	}
-+	set_buffer_uptodate(nsbh);
-+	unlock_buffer(nsbh);
-+
-+	if (sb2i >= 0) {
- 		brelse(nilfs->ns_sbh[sb2i]);
- 		nilfs->ns_sbh[sb2i] = nsbh;
- 		nilfs->ns_sbp[sb2i] = nsbp;
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nf_tables: validate registers coming from userspace.
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nftables: statify nft_parse_register()
+
+Clark Wang <xiaoning.wang@nxp.com>
+    i2c: imx-lpi2c: fix type char overflow issue when calculating the clock cycle
+
+Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+    x86/apic: Fix kernel panic when booting with intremap=off and x2apic_phys
+
+Min Li <lm0963hack@gmail.com>
+    drm/radeon: fix race condition UAF in radeon_gem_set_domain_ioctl
+
+Min Li <lm0963hack@gmail.com>
+    drm/exynos: fix race condition UAF in exynos_g2d_exec_ioctl
+
+Inki Dae <inki.dae@samsung.com>
+    drm/exynos: vidi: fix a wrong error return
+
+Linus Walleij <linus.walleij@linaro.org>
+    ARM: dts: Fix erroneous ADS touchscreen polarities
+
+Alexander Gordeev <agordeev@linux.ibm.com>
+    s390/purgatory: disable branch profiling
+
+Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+    ASoC: nau8824: Add quirk to active-high jack-detect
+
+Herve Codina <herve.codina@bootlin.com>
+    ASoC: simple-card: Add missing of_node_put() in case of error
+
+Clark Wang <xiaoning.wang@nxp.com>
+    spi: lpspi: disable lpspi module irq in DMA mode
+
+Vineeth Vijayan <vneethv@linux.ibm.com>
+    s390/cio: unregister device when the only path is gone
+
+Hans de Goede <hdegoede@redhat.com>
+    Input: soc_button_array - add invalid acpi_index DMI quirk handling
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    usb: gadget: udc: fix NULL dereference in remove()
+
+Osama Muhammad <osmtendev@gmail.com>
+    nfcsim.c: Fix error checking for debugfs_create_dir
+
+Hans Verkuil <hverkuil-cisco@xs4all.nl>
+    media: cec: core: don't set last_initiator if tx in progress
+
+Marc Zyngier <maz@kernel.org>
+    arm64: Add missing Set/Way CMO encodings
+
+Denis Arefev <arefev@swemel.ru>
+    HID: wacom: Add error check to wacom_parse_and_register()
+
+Maurizio Lombardi <mlombard@redhat.com>
+    scsi: target: iscsi: Prevent login threads from racing between each other
+
+Jiawen Wu <jiawenwu@trustnetic.com>
+    gpiolib: Fix GPIO chip IRQ initialization restriction
+
+Marc Zyngier <maz@kernel.org>
+    gpio: Allow per-parent interrupt data
+
+Eric Dumazet <edumazet@google.com>
+    sch_netem: acquire qdisc lock in netem_change()
+
+Francesco Dolcini <francesco.dolcini@toradex.com>
+    Revert "net: phy: dp83867: perform soft reset and retain established link"
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nfnetlink_osf: fix module autoload
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nf_tables: disallow element updates of bound anonymous sets
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nft_set_pipapo: .walk does not deal with generations
+
+Ross Lagerwall <ross.lagerwall@citrix.com>
+    be2net: Extend xmit workaround to BE3 chip
+
+Arınç ÜNAL <arinc.unal@arinc9.com>
+    net: dsa: mt7530: fix trapping frames on non-MT7621 SoC MT7530 switch
+
+Terin Stock <terin@cloudflare.com>
+    ipvs: align inner_mac_header for encapsulation
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: usdhi60rol0: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: sh_mmcif: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: sdhci-acpi: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: owl: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: omap_hsmmc: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: omap: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: mvsdio: fix deferred probing
+
+Sergey Shtylyov <s.shtylyov@omp.ru>
+    mmc: mtk-sd: fix deferred probing
+
+Stefan Wahren <stefan.wahren@i2se.com>
+    net: qca_spi: Avoid high load if QCA7000 is not available
+
+Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+    xfrm: Linearize the skb after offloading if needed.
+
+Magali Lemes <magali.lemes@canonical.com>
+    selftests: net: fcnal-test: check if FIPS mode is enabled
+
+Magali Lemes <magali.lemes@canonical.com>
+    selftests: net: vrf-xfrm-tests: change authentication and encryption algos
+
+Maciej Żenczykowski <maze@google.com>
+    xfrm: fix inbound ipv4/udp/esp packets to UDPv6 dualstack sockets
+
+Maxim Mikityanskiy <maxim@isovalent.com>
+    bpf: Fix verifier id tracking of scalars on spill
+
+Eduard Zingerman <eddyz87@gmail.com>
+    bpf: track immediate values written to stack by BPF_ST instruction
+
+Benedict Wong <benedictwong@google.com>
+    xfrm: Ensure policies always checked on XFRM-I input path
+
+Eyal Birger <eyal.birger@gmail.com>
+    xfrm: interface: rename xfrm_interface.c to xfrm_interface_core.c
+
+Benedict Wong <benedictwong@google.com>
+    xfrm: Treat already-verified secpath entries as optional
+
+Chen Aotian <chenaotian2@163.com>
+    ieee802154: hwsim: Fix possible memory leaks
+
+Roberto Sassu <roberto.sassu@huawei.com>
+    memfd: check for non-NULL file_seals in memfd_create() syscall
+
+Xiaoming Ni <nixiaoming@huawei.com>
+    sysctl: move some boundary constants from sysctl.c to sysctl_vals
+
+Suren Baghdasaryan <surenb@google.com>
+    mm/pagealloc: sysctl: change watermark_scale_factor max limit to 30%
+
+Lee Jones <lee@kernel.org>
+    x86/mm: Avoid using set_pgd() outside of real PGD pages
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: prevent general protection fault in nilfs_clear_dirty_page()
+
+Jens Axboe <axboe@kernel.dk>
+    io_uring/net: disable partial retries for recvmsg with cmsg
+
+Jens Axboe <axboe@kernel.dk>
+    io_uring/net: clear msg_controllen on partial sendmsg retry
+
+Jens Axboe <axboe@kernel.dk>
+    io_uring/net: save msghdr->msg_control for retries
+
+Rafael Aquini <aquini@redhat.com>
+    writeback: fix dereferencing NULL mapping->host on writeback_page_template
+
+Russ Weight <russell.h.weight@intel.com>
+    regmap: spi-avmm: Fix regmap_bus max_raw_write
+
+Teresa Remmet <t.remmet@phytec.de>
+    regulator: pca9450: Fix LDO3OUT and LDO4OUT MASK
+
+Matthias May <matthias.may@westermo.com>
+    ip_tunnels: allow VXLAN/GENEVE to inherit TOS/TTL from VLAN
+
+Christophe Kerello <christophe.kerello@foss.st.com>
+    mmc: mmci: stm32: fix max busy timeout calculation
+
+Martin Hundebøll <martin@geanix.com>
+    mmc: meson-gx: remove redundant mmc_request_done() call from irq context
+
+Stephan Gerhold <stephan@gerhold.net>
+    mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
+
+Xiu Jianfeng <xiujianfeng@huawei.com>
+    cgroup: Do not corrupt task iteration when rebinding subsystem
+
+Dexuan Cui <decui@microsoft.com>
+    PCI: hv: Fix a race condition in hv_irq_unmask() that can cause panic
+
+Dexuan Cui <decui@microsoft.com>
+    PCI: hv: Remove the useless hv_pcichild_state from struct hv_pci_dev
+
+Dexuan Cui <decui@microsoft.com>
+    Revert "PCI: hv: Fix a timing issue which causes kdump to fail occasionally"
+
+Dexuan Cui <decui@microsoft.com>
+    PCI: hv: Fix a race condition bug in hv_pci_query_relations()
+
+Michael Kelley <mikelley@microsoft.com>
+    Drivers: hv: vmbus: Fix vmbus_wait_for_unload() to scan present CPUs
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix buffer corruption due to concurrent device reads
+
+Matthieu Baerts <matthieu.baerts@tessares.net>
+    selftests: mptcp: join: skip check if MIB counter not supported
+
+Matthieu Baerts <matthieu.baerts@tessares.net>
+    selftests: mptcp: pm nl: remove hardcoded default limits
+
+Matthieu Baerts <matthieu.baerts@tessares.net>
+    selftests: mptcp: lib: skip if not below kernel version
+
+Matthieu Baerts <matthieu.baerts@tessares.net>
+    selftests: mptcp: lib: skip if missing symbol
+
+Thomas Gleixner <tglx@linutronix.de>
+    tick/common: Align tick period during sched_timer setup
+
+Steven Rostedt (Google) <rostedt@goodmis.org>
+    tracing: Add tracing_reset_all_online_cpus_unlocked() function
+
+Peilin Ye <peilin.ye@bytedance.com>
+    net/sched: Refactor qdisc_graft() for ingress and clsact Qdiscs
+
+Tom Chung <chiahsuan.chung@amd.com>
+    drm/amd/display: fix the system hang while disable PSR
+
+
+-------------
+
+Diffstat:
+
+ Documentation/admin-guide/sysctl/vm.rst            |   2 +-
+ Makefile                                           |   4 +-
+ arch/arm/boot/dts/am57xx-cl-som-am57x.dts          |   2 +-
+ arch/arm/boot/dts/at91sam9261ek.dts                |   2 +-
+ arch/arm/boot/dts/imx7d-pico-hobbit.dts            |   2 +-
+ arch/arm/boot/dts/imx7d-sdb.dts                    |   2 +-
+ arch/arm/boot/dts/omap3-cm-t3x.dtsi                |   2 +-
+ arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi |   2 +-
+ arch/arm/boot/dts/omap3-lilly-a83x.dtsi            |   2 +-
+ arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi    |   2 +-
+ arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi    |   2 +-
+ arch/arm/boot/dts/omap3-pandora-common.dtsi        |   2 +-
+ arch/arm/boot/dts/omap5-cm-t54.dts                 |   2 +-
+ arch/arm64/include/asm/sysreg.h                    |   6 ++
+ arch/s390/purgatory/Makefile                       |   1 +
+ arch/x86/kernel/apic/x2apic_phys.c                 |   5 +-
+ arch/x86/mm/kaslr.c                                |   8 +-
+ drivers/base/regmap/regmap-spi-avmm.c              |   2 +-
+ drivers/gpio/gpiolib.c                             |  17 +++-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |   9 +-
+ drivers/gpu/drm/exynos/exynos_drm_g2d.c            |   2 +-
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c           |   2 -
+ drivers/gpu/drm/radeon/radeon_gem.c                |   4 +-
+ drivers/hid/wacom_sys.c                            |   7 +-
+ drivers/hv/channel_mgmt.c                          |  18 +++-
+ drivers/i2c/busses/i2c-imx-lpi2c.c                 |   4 +-
+ drivers/input/misc/soc_button_array.c              |  30 ++++++
+ drivers/media/cec/core/cec-adap.c                  |   3 +-
+ drivers/mmc/host/meson-gx-mmc.c                    |  10 +-
+ drivers/mmc/host/mmci.c                            |   3 +-
+ drivers/mmc/host/mtk-sd.c                          |   2 +-
+ drivers/mmc/host/mvsdio.c                          |   2 +-
+ drivers/mmc/host/omap.c                            |   2 +-
+ drivers/mmc/host/omap_hsmmc.c                      |   6 +-
+ drivers/mmc/host/owl-mmc.c                         |   2 +-
+ drivers/mmc/host/sdhci-acpi.c                      |   2 +-
+ drivers/mmc/host/sdhci-msm.c                       |   3 +
+ drivers/mmc/host/sh_mmcif.c                        |   2 +-
+ drivers/mmc/host/usdhi6rol0.c                      |   6 +-
+ drivers/net/dsa/mt7530.c                           |   2 +-
+ drivers/net/ethernet/emulex/benet/be_main.c        |   4 +-
+ drivers/net/ethernet/qualcomm/qca_spi.c            |   3 +-
+ drivers/net/ieee802154/mac802154_hwsim.c           |   6 +-
+ drivers/net/phy/dp83867.c                          |   2 +-
+ drivers/nfc/nfcsim.c                               |   4 -
+ drivers/pci/controller/pci-hyperv.c                | 112 +++++++++++----------
+ drivers/s390/cio/device.c                          |   5 +-
+ drivers/spi/spi-fsl-lpspi.c                        |   7 +-
+ drivers/target/iscsi/iscsi_target_nego.c           |   4 +-
+ drivers/usb/gadget/udc/amd5536udc_pci.c            |   3 +
+ fs/nilfs2/page.c                                   |  10 +-
+ fs/nilfs2/segbuf.c                                 |   6 ++
+ fs/nilfs2/segment.c                                |   7 ++
+ fs/nilfs2/super.c                                  |  25 ++++-
+ fs/proc/proc_sysctl.c                              |   2 +-
+ include/linux/gpio/driver.h                        |  19 +++-
+ include/linux/regulator/pca9450.h                  |   4 +-
+ include/linux/sysctl.h                             |  13 ++-
+ include/net/ip_tunnels.h                           |  12 ++-
+ include/net/netfilter/nf_tables.h                  |   1 -
+ include/net/xfrm.h                                 |   1 +
+ include/trace/events/writeback.h                   |   2 +-
+ io_uring/io_uring.c                                |  15 ++-
+ kernel/bpf/btf.c                                   |  20 ++--
+ kernel/bpf/verifier.c                              |  21 +++-
+ kernel/cgroup/cgroup.c                             |  20 +++-
+ kernel/sysctl.c                                    |  44 ++++----
+ kernel/time/tick-common.c                          |  13 +--
+ kernel/time/tick-sched.c                           |  13 ++-
+ kernel/trace/trace.c                               |  11 +-
+ kernel/trace/trace.h                               |   1 +
+ kernel/trace/trace_events.c                        |   2 +-
+ kernel/trace/trace_events_synth.c                  |   2 -
+ mm/memfd.c                                         |   3 +-
+ net/ipv4/esp4_offload.c                            |   3 +
+ net/ipv4/xfrm4_input.c                             |   1 +
+ net/ipv6/esp6_offload.c                            |   3 +
+ net/ipv6/xfrm6_input.c                             |   3 +
+ net/netfilter/ipvs/ip_vs_xmit.c                    |   2 +
+ net/netfilter/nf_tables_api.c                      |  41 ++++----
+ net/netfilter/nfnetlink_osf.c                      |   1 +
+ net/netfilter/nft_set_pipapo.c                     |   6 +-
+ net/netfilter/xt_osf.c                             |   1 -
+ net/sched/sch_api.c                                |  20 ++--
+ net/sched/sch_netem.c                              |   8 +-
+ net/xfrm/Makefile                                  |   2 +
+ net/xfrm/xfrm_input.c                              |   1 +
+ .../{xfrm_interface.c => xfrm_interface_core.c}    |  54 +++++++++-
+ net/xfrm/xfrm_policy.c                             |  12 +++
+ sound/soc/codecs/nau8824.c                         |  24 +++++
+ sound/soc/generic/simple-card.c                    |   1 +
+ .../bpf/verifier/bounds_mix_sign_unsign.c          | 110 +++++++++++---------
+ tools/testing/selftests/net/fcnal-test.sh          |  27 +++--
+ tools/testing/selftests/net/mptcp/config           |   1 +
+ tools/testing/selftests/net/mptcp/mptcp_join.sh    |  65 ++++++++----
+ tools/testing/selftests/net/mptcp/mptcp_lib.sh     |  64 ++++++++++++
+ tools/testing/selftests/net/mptcp/pm_netlink.sh    |  12 ++-
+ tools/testing/selftests/net/vrf-xfrm-tests.sh      |  32 +++---
+ 98 files changed, 763 insertions(+), 336 deletions(-)
 
 
