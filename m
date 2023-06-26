@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FDBC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6622AC433CA;
-	Mon, 26 Jun 2023 18:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3793C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC11C433C8;
+	Mon, 26 Jun 2023 18:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804543;
-	bh=6NclyYsBb5XjbhRVTJgjJBi+5sN6i0iTbxIZhe4wOic=;
+	s=korg; t=1687804546;
+	bh=pbElzT0knfLf0iH3ecE7byXZZCrei3QmW3UVR7vHEDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=whI5cl0Cb9su8IQ3/QCecJNIC+CMaG/f1gxi8wLJ0IemY42IxVJXLRBasSm4Tehfq
-	 aQw3PUU3CCpc/nIchOZI7TW/syLH1bAX+1bm+6YhP8xDuA4bMr+C3DdP4M0mBLDrX5
-	 vpgbmSGAP1foHJMBjzUpmjeMrU6htY3BjG7u2QAg=
+	b=1xPbR9en5btY7YHmHK90CY6eAbOAe0foqSWwPDnn3Of/qngiSo1SCkbihFHOwJzB0
+	 LBdfkazyc/DM6/bWZuGFWUFH5LgMC+cUlJOrdF4O6Y8CxkWrf74ScOSArtCqqDdk7E
+	 nBYUmenlz4iZ2YIJZqaP00auvY2qAN1QNCKhefBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 02/60] mm: rewrite wait_on_page_bit_common() logic
-Date: Mon, 26 Jun 2023 20:11:41 +0200
-Message-ID: <20230626180739.640524541@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Aurelien Aptel <aaptel@suse.com>,
+	Steve French <stfrench@microsoft.com>,
+	Rishabh Bhatnagar <risbhat@amazon.com>
+Subject: [PATCH 5.4 20/60] cifs: Get rid of kstrdup_const()d paths
+Date: Mon, 26 Jun 2023 20:11:59 +0200
+Message-ID: <20230626180740.387801285@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -37,227 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Paulo Alcantara (SUSE)" <pc@cjr.nz>
 
-[ Upstream commit 2a9127fcf2296674d58024f83981f40b128fffea ]
+commit 199c6bdfb04b71d88a7765e08285885fbca60df4 upstream.
 
-It turns out that wait_on_page_bit_common() had several problems,
-ranging from just unfair behavioe due to re-queueing at the end of the
-wait queue when re-trying, and an outright bug that could result in
-missed wakeups (but probably never happened in practice).
+The DFS cache API is mostly used with heap allocated strings.
 
-This rewrites the whole logic to avoid both issues, by simply moving the
-logic to check (and possibly take) the bit lock into the wakeup path
-instead.
-
-That makes everything much more straightforward, and means that we never
-need to re-queue the wait entry: if we get woken up, we'll be notified
-through WQ_FLAG_WOKEN, and the wait queue entry will have been removed,
-and everything will have been done for us.
-
-Link: https://lore.kernel.org/lkml/CAHk-=wjJA2Z3kUFb-5s=6+n0qbTs8ELqKFt9B3pH85a8fGD73w@mail.gmail.com/
-Link: https://lore.kernel.org/lkml/alpine.LSU.2.11.2007221359450.1017@eggly.anvils/
-Reported-by: Oleg Nesterov <oleg@redhat.com>
-Reported-by: Hugh Dickins <hughd@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: 2192bba03d80 ("epoll: ep_autoremove_wake_function should use list_del_init_careful")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Reviewed-by: Aurelien Aptel <aaptel@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Rishabh Bhatnagar <risbhat@amazon.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c | 132 +++++++++++++++++++++++++++++++++------------------
- 1 file changed, 85 insertions(+), 47 deletions(-)
+ fs/cifs/dfs_cache.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index c094103191a6e..83b324420046b 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -1046,6 +1046,7 @@ struct wait_page_queue {
+--- a/fs/cifs/dfs_cache.c
++++ b/fs/cifs/dfs_cache.c
+@@ -131,7 +131,7 @@ static inline void flush_cache_ent(struc
+ 		return;
  
- static int wake_page_function(wait_queue_entry_t *wait, unsigned mode, int sync, void *arg)
- {
-+	int ret;
- 	struct wait_page_key *key = arg;
- 	struct wait_page_queue *wait_page
- 		= container_of(wait, struct wait_page_queue, wait);
-@@ -1058,17 +1059,40 @@ static int wake_page_function(wait_queue_entry_t *wait, unsigned mode, int sync,
- 		return 0;
+ 	hlist_del_init_rcu(&ce->hlist);
+-	kfree_const(ce->path);
++	kfree(ce->path);
+ 	free_tgts(ce);
+ 	cache_count--;
+ 	call_rcu(&ce->rcu, free_cache_entry);
+@@ -420,7 +420,7 @@ static struct cache_entry *alloc_cache_e
+ 	if (!ce)
+ 		return ERR_PTR(-ENOMEM);
  
- 	/*
--	 * Stop walking if it's locked.
--	 * Is this safe if put_and_wait_on_page_locked() is in use?
--	 * Yes: the waker must hold a reference to this page, and if PG_locked
--	 * has now already been set by another task, that task must also hold
--	 * a reference to the *same usage* of this page; so there is no need
--	 * to walk on to wake even the put_and_wait_on_page_locked() callers.
-+	 * If it's an exclusive wait, we get the bit for it, and
-+	 * stop walking if we can't.
-+	 *
-+	 * If it's a non-exclusive wait, then the fact that this
-+	 * wake function was called means that the bit already
-+	 * was cleared, and we don't care if somebody then
-+	 * re-took it.
- 	 */
--	if (test_bit(key->bit_nr, &key->page->flags))
--		return -1;
-+	ret = 0;
-+	if (wait->flags & WQ_FLAG_EXCLUSIVE) {
-+		if (test_and_set_bit(key->bit_nr, &key->page->flags))
-+			return -1;
-+		ret = 1;
-+	}
-+	wait->flags |= WQ_FLAG_WOKEN;
+-	ce->path = kstrdup_const(path, GFP_KERNEL);
++	ce->path = kstrndup(path, strlen(path), GFP_KERNEL);
+ 	if (!ce->path) {
+ 		kmem_cache_free(cache_slab, ce);
+ 		return ERR_PTR(-ENOMEM);
+@@ -430,7 +430,7 @@ static struct cache_entry *alloc_cache_e
  
--	return autoremove_wake_function(wait, mode, sync, key);
-+	wake_up_state(wait->private, mode);
-+
-+	/*
-+	 * Ok, we have successfully done what we're waiting for,
-+	 * and we can unconditionally remove the wait entry.
-+	 *
-+	 * Note that this has to be the absolute last thing we do,
-+	 * since after list_del_init(&wait->entry) the wait entry
-+	 * might be de-allocated and the process might even have
-+	 * exited.
-+	 *
-+	 * We _really_ should have a "list_del_init_careful()" to
-+	 * properly pair with the unlocked "list_empty_careful()"
-+	 * in finish_wait().
-+	 */
-+	smp_mb();
-+	list_del_init(&wait->entry);
-+	return ret;
- }
- 
- static void wake_up_page_bit(struct page *page, int bit_nr)
-@@ -1147,16 +1171,31 @@ enum behavior {
- 			 */
- };
- 
-+/*
-+ * Attempt to check (or get) the page bit, and mark the
-+ * waiter woken if successful.
-+ */
-+static inline bool trylock_page_bit_common(struct page *page, int bit_nr,
-+					struct wait_queue_entry *wait)
-+{
-+	if (wait->flags & WQ_FLAG_EXCLUSIVE) {
-+		if (test_and_set_bit(bit_nr, &page->flags))
-+			return false;
-+	} else if (test_bit(bit_nr, &page->flags))
-+		return false;
-+
-+	wait->flags |= WQ_FLAG_WOKEN;
-+	return true;
-+}
-+
- static inline int wait_on_page_bit_common(wait_queue_head_t *q,
- 	struct page *page, int bit_nr, int state, enum behavior behavior)
- {
- 	struct wait_page_queue wait_page;
- 	wait_queue_entry_t *wait = &wait_page.wait;
--	bool bit_is_set;
- 	bool thrashing = false;
- 	bool delayacct = false;
- 	unsigned long pflags;
--	int ret = 0;
- 
- 	if (bit_nr == PG_locked &&
- 	    !PageUptodate(page) && PageWorkingset(page)) {
-@@ -1174,48 +1213,47 @@ static inline int wait_on_page_bit_common(wait_queue_head_t *q,
- 	wait_page.page = page;
- 	wait_page.bit_nr = bit_nr;
- 
--	for (;;) {
--		spin_lock_irq(&q->lock);
-+	/*
-+	 * Do one last check whether we can get the
-+	 * page bit synchronously.
-+	 *
-+	 * Do the SetPageWaiters() marking before that
-+	 * to let any waker we _just_ missed know they
-+	 * need to wake us up (otherwise they'll never
-+	 * even go to the slow case that looks at the
-+	 * page queue), and add ourselves to the wait
-+	 * queue if we need to sleep.
-+	 *
-+	 * This part needs to be done under the queue
-+	 * lock to avoid races.
-+	 */
-+	spin_lock_irq(&q->lock);
-+	SetPageWaiters(page);
-+	if (!trylock_page_bit_common(page, bit_nr, wait))
-+		__add_wait_queue_entry_tail(q, wait);
-+	spin_unlock_irq(&q->lock);
- 
--		if (likely(list_empty(&wait->entry))) {
--			__add_wait_queue_entry_tail(q, wait);
--			SetPageWaiters(page);
--		}
-+	/*
-+	 * From now on, all the logic will be based on
-+	 * the WQ_FLAG_WOKEN flag, and the and the page
-+	 * bit testing (and setting) will be - or has
-+	 * already been - done by the wake function.
-+	 *
-+	 * We can drop our reference to the page.
-+	 */
-+	if (behavior == DROP)
-+		put_page(page);
- 
-+	for (;;) {
- 		set_current_state(state);
- 
--		spin_unlock_irq(&q->lock);
--
--		bit_is_set = test_bit(bit_nr, &page->flags);
--		if (behavior == DROP)
--			put_page(page);
--
--		if (likely(bit_is_set))
--			io_schedule();
--
--		if (behavior == EXCLUSIVE) {
--			if (!test_and_set_bit_lock(bit_nr, &page->flags))
--				break;
--		} else if (behavior == SHARED) {
--			if (!test_bit(bit_nr, &page->flags))
--				break;
--		}
--
--		if (signal_pending_state(state, current)) {
--			ret = -EINTR;
-+		if (signal_pending_state(state, current))
- 			break;
--		}
- 
--		if (behavior == DROP) {
--			/*
--			 * We can no longer safely access page->flags:
--			 * even if CONFIG_MEMORY_HOTREMOVE is not enabled,
--			 * there is a risk of waiting forever on a page reused
--			 * for something that keeps it locked indefinitely.
--			 * But best check for -EINTR above before breaking.
--			 */
-+		if (wait->flags & WQ_FLAG_WOKEN)
- 			break;
--		}
-+
-+		io_schedule();
+ 	rc = copy_ref_data(refs, numrefs, ce, NULL);
+ 	if (rc) {
+-		kfree_const(ce->path);
++		kfree(ce->path);
+ 		kmem_cache_free(cache_slab, ce);
+ 		ce = ERR_PTR(rc);
  	}
- 
- 	finish_wait(q, wait);
-@@ -1234,7 +1272,7 @@ static inline int wait_on_page_bit_common(wait_queue_head_t *q,
- 	 * bother with signals either.
- 	 */
- 
--	return ret;
-+	return wait->flags & WQ_FLAG_WOKEN ? 0 : -EINTR;
- }
- 
- void wait_on_page_bit(struct page *page, int bit_nr)
--- 
-2.39.2
-
 
 
