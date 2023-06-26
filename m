@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E5E11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:42:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F794C433C0;
-	Mon, 26 Jun 2023 18:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991D1C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:42:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F6EC433C8;
+	Mon, 26 Jun 2023 18:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804945;
-	bh=AZ8Q9VAYM223LUexf8dbA47go9hxrVRQN86tSdl0m4s=;
+	s=korg; t=1687804948;
+	bh=Pm6ZkV4+A5KeYt3uWhxoHD7HH6jyVEp+Yd98bdrxBQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OM0qSChmo2neHqiOOw/Q5/4EX9jPpGzbZ/p4sLUJp/lZSW8SjCf4Qw6S/YK6hyQAL
-	 MyONT6sR+i4shyUmQu5C5f6wer9ruBa3PWcXCwj3b79arzXtvO6j6ShTG/Enpo7ryb
-	 FrgHlXEKxaAuw0lEXPXCep2Yei1UcDF7rsTgK1Ls=
+	b=AqCtTtsejayIJbq5AcLT+YJ72K9HkWyjzbtM3148/32Ftd/Pg0/R0h0zbHq6TLKKf
+	 +anfZCbILvld2FXLtr0pZr5vYgfNfPD1IMlzz7SCG0XYvbsqjoUZGyLUJZ3KEbDQuB
+	 jE3ZZZoNoHj4rjaFPWAfGSwKYcfEBLJ66ousDgls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Smetanin <asmetanin@yandex-team.ru>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Kishon Vijay Abraham I <kvijayab@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 94/96] vhost_net: revert upend_idx only on retriable error
-Date: Mon, 26 Jun 2023 20:12:49 +0200
-Message-ID: <20230626180750.967675598@linuxfoundation.org>
+Subject: [PATCH 5.15 95/96] x86/apic: Fix kernel panic when booting with intremap=off and x2apic_phys
+Date: Mon, 26 Jun 2023 20:12:50 +0200
+Message-ID: <20230626180751.017659887@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -36,58 +39,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrey Smetanin <asmetanin@yandex-team.ru>
+From: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
 
-[ Upstream commit 1f5d2e3bab16369d5d4b4020a25db4ab1f4f082c ]
+[ Upstream commit 85d38d5810e285d5aec7fb5283107d1da70c12a9 ]
 
-Fix possible virtqueue used buffers leak and corresponding stuck
-in case of temporary -EIO from sendmsg() which is produced by
-tun driver while backend device is not up.
+When booting with "intremap=off" and "x2apic_phys" on the kernel command
+line, the physical x2APIC driver ends up being used even when x2APIC
+mode is disabled ("intremap=off" disables x2APIC mode). This happens
+because the first compound condition check in x2apic_phys_probe() is
+false due to x2apic_mode == 0 and so the following one returns true
+after default_acpi_madt_oem_check() having already selected the physical
+x2APIC driver.
 
-In case of no-retriable error and zcopy do not revert upend_idx
-to pass packet data (that is update used_idx in corresponding
-vhost_zerocopy_signal_used()) as if packet data has been
-transferred successfully.
+This results in the following panic:
 
-v2: set vq->heads[ubuf->desc].len equal to VHOST_DMA_DONE_LEN
-in case of fake successful transmit.
+   kernel BUG at arch/x86/kernel/apic/io_apic.c:2409!
+   invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+   CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-rc2-ver4.1rc2 #2
+   Hardware name: Dell Inc. PowerEdge R6515/07PXPY, BIOS 2.3.6 07/06/2021
+   RIP: 0010:setup_IO_APIC+0x9c/0xaf0
+   Call Trace:
+    <TASK>
+    ? native_read_msr
+    apic_intr_mode_init
+    x86_late_time_init
+    start_kernel
+    x86_64_start_reservations
+    x86_64_start_kernel
+    secondary_startup_64_no_verify
+    </TASK>
 
-Signed-off-by: Andrey Smetanin <asmetanin@yandex-team.ru>
-Message-Id: <20230424204411.24888-1-asmetanin@yandex-team.ru>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Andrey Smetanin <asmetanin@yandex-team.ru>
-Acked-by: Jason Wang <jasowang@redhat.com>
+which is:
+
+setup_IO_APIC:
+  apic_printk(APIC_VERBOSE, "ENABLING IO-APIC IRQs\n");
+  for_each_ioapic(ioapic)
+  	BUG_ON(mp_irqdomain_create(ioapic));
+
+Return 0 to denote that x2APIC has not been enabled when probing the
+physical x2APIC driver.
+
+  [ bp: Massage commit message heavily. ]
+
+Fixes: 9ebd680bd029 ("x86, apic: Use probe routines to simplify apic selection")
+Signed-off-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Kishon Vijay Abraham I <kvijayab@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20230616212236.1389-1-dheerajkumar.srivastava@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/kernel/apic/x2apic_phys.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index 32148f0112004..00f10d3402590 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -933,13 +933,18 @@ static void handle_tx_zerocopy(struct vhost_net *net, struct socket *sock)
+diff --git a/arch/x86/kernel/apic/x2apic_phys.c b/arch/x86/kernel/apic/x2apic_phys.c
+index 6bde05a86b4ed..896bc41cb2ba7 100644
+--- a/arch/x86/kernel/apic/x2apic_phys.c
++++ b/arch/x86/kernel/apic/x2apic_phys.c
+@@ -97,7 +97,10 @@ static void init_x2apic_ldr(void)
  
- 		err = sock->ops->sendmsg(sock, &msg, len);
- 		if (unlikely(err < 0)) {
-+			bool retry = err == -EAGAIN || err == -ENOMEM || err == -ENOBUFS;
+ static int x2apic_phys_probe(void)
+ {
+-	if (x2apic_mode && (x2apic_phys || x2apic_fadt_phys()))
++	if (!x2apic_mode)
++		return 0;
 +
- 			if (zcopy_used) {
- 				if (vq->heads[ubuf->desc].len == VHOST_DMA_IN_PROGRESS)
- 					vhost_net_ubuf_put(ubufs);
--				nvq->upend_idx = ((unsigned)nvq->upend_idx - 1)
--					% UIO_MAXIOV;
-+				if (retry)
-+					nvq->upend_idx = ((unsigned)nvq->upend_idx - 1)
-+						% UIO_MAXIOV;
-+				else
-+					vq->heads[ubuf->desc].len = VHOST_DMA_DONE_LEN;
- 			}
--			if (err == -EAGAIN || err == -ENOMEM || err == -ENOBUFS) {
-+			if (retry) {
- 				vhost_discard_vq_desc(vq, 1);
- 				vhost_net_enable_vq(net, vq);
- 				break;
++	if (x2apic_phys || x2apic_fadt_phys())
+ 		return 1;
+ 
+ 	return apic == &apic_x2apic_phys;
 -- 
 2.39.2
 
