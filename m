@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD4C11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1763FC433C8;
-	Mon, 26 Jun 2023 18:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CD111CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1707EC433C8;
+	Mon, 26 Jun 2023 18:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804763;
-	bh=KsTkjRpki8yvZFzxeket3X1M1VPFhJTi5rpxfCfB86E=;
+	s=korg; t=1687804766;
+	bh=63HRqoZ97aVX8/+9AGQxERkNCOLukHfX0jNI7gW1kO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZVVNWbDlRzuZEO0a8axSdOS5STMuKTqhvji/l3aS7XWyzz2tEuOt3OhAGvy8LlIV
-	 HahBhK2aAsgt2rHaAWgNt5vUBIpqSbc0+gTNrPUHFqFGI94i8zITglFZ1rOGEZwva+
-	 K1L3JJoCrSNO5kc7en4GR7oqYJm63bt6v6Knm4Q0=
+	b=hqrwBtSWdgoQPNi/CyBgZiw9lpBNH3tpsJ9e8PB4luXl/G7G48E+qYSh4nSbwrjNz
+	 F8fBOEdexfElvemKwL79H6luLv411OXQe83DAdpFN9XG5nRKQj8zWyl9u8RsQZ9hd6
+	 OPi3c/Wv3VqVsJdI2UBlD890xz/pBUoYtg5IKypY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 33/96] io_uring/net: clear msg_controllen on partial sendmsg retry
-Date: Mon, 26 Jun 2023 20:11:48 +0200
-Message-ID: <20230626180748.327422235@linuxfoundation.org>
+	Mathias Krause <minipli@grsecurity.net>,
+	"Bhatnagar, Rishabh" <risbhat@amazon.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Richard W.M. Jones" <rjones@redhat.com>,
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH 5.15 07/96] tick/common: Align tick period during sched_timer setup
+Date: Mon, 26 Jun 2023 20:11:22 +0200
+Message-ID: <20230626180747.233855562@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -34,33 +38,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-Commit b1dc492087db0f2e5a45f1072a743d04618dd6be upstream.
+commit 13bb06f8dd42071cb9a49f6e21099eea05d4b856 upstream.
 
-If we have cmsg attached AND we transferred partial data at least, clear
-msg_controllen on retry so we don't attempt to send that again.
+The tick period is aligned very early while the first clock_event_device is
+registered. At that point the system runs in periodic mode and switches
+later to one-shot mode if possible.
 
-Cc: stable@vger.kernel.org # 5.10+
-Fixes: cac9e4418f4c ("io_uring/net: save msghdr->msg_control for retries")
-Reported-by: Stefan Metzmacher <metze@samba.org>
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The next wake-up event is programmed based on the aligned value
+(tick_next_period) but the delta value, that is used to program the
+clock_event_device, is computed based on ktime_get().
+
+With the subtracted offset, the device fires earlier than the exact time
+frame. With a large enough offset the system programs the timer for the
+next wake-up and the remaining time left is too small to make any boot
+progress. The system hangs.
+
+Move the alignment later to the setup of tick_sched timer. At this point
+the system switches to oneshot mode and a high resolution clocksource is
+available. At this point it is safe to align tick_next_period because
+ktime_get() will now return accurate (not jiffies based) time.
+
+[bigeasy: Patch description + testing].
+
+Fixes: e9523a0d81899 ("tick/common: Align tick period with the HZ tick.")
+Reported-by: Mathias Krause <minipli@grsecurity.net>
+Reported-by: "Bhatnagar, Rishabh" <risbhat@amazon.com>
+Suggested-by: Mathias Krause <minipli@grsecurity.net>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Richard W.M. Jones <rjones@redhat.com>
+Tested-by: Mathias Krause <minipli@grsecurity.net>
+Acked-by: SeongJae Park <sj@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/5a56290d-806e-b9a5-f37c-f21958b5a8c0@grsecurity.net
+Link: https://lore.kernel.org/12c6f9a3-d087-b824-0d05-0d18c9bc1bf3@amazon.com
+Link: https://lore.kernel.org/r/20230615091830.RxMV2xf_@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/time/tick-common.c |   13 +------------
+ kernel/time/tick-sched.c  |   13 ++++++++++++-
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -4949,6 +4949,8 @@ static int io_sendmsg(struct io_kiocb *r
- 		if (ret == -ERESTARTSYS)
- 			ret = -EINTR;
- 		if (ret > 0 && io_net_retry(sock, flags)) {
-+			kmsg->msg.msg_controllen = 0;
-+			kmsg->msg.msg_control = NULL;
- 			sr->done_io += ret;
- 			req->flags |= REQ_F_PARTIAL_IO;
- 			return io_setup_async_msg(req, kmsg);
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -218,19 +218,8 @@ static void tick_setup_device(struct tic
+ 		 * this cpu:
+ 		 */
+ 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
+-			ktime_t next_p;
+-			u32 rem;
+-
+ 			tick_do_timer_cpu = cpu;
+-
+-			next_p = ktime_get();
+-			div_u64_rem(next_p, TICK_NSEC, &rem);
+-			if (rem) {
+-				next_p -= rem;
+-				next_p += TICK_NSEC;
+-			}
+-
+-			tick_next_period = next_p;
++			tick_next_period = ktime_get();
+ #ifdef CONFIG_NO_HZ_FULL
+ 			/*
+ 			 * The boot CPU may be nohz_full, in which case set
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -161,8 +161,19 @@ static ktime_t tick_init_jiffy_update(vo
+ 	raw_spin_lock(&jiffies_lock);
+ 	write_seqcount_begin(&jiffies_seq);
+ 	/* Did we start the jiffies update yet ? */
+-	if (last_jiffies_update == 0)
++	if (last_jiffies_update == 0) {
++		u32 rem;
++
++		/*
++		 * Ensure that the tick is aligned to a multiple of
++		 * TICK_NSEC.
++		 */
++		div_u64_rem(tick_next_period, TICK_NSEC, &rem);
++		if (rem)
++			tick_next_period += TICK_NSEC - rem;
++
+ 		last_jiffies_update = tick_next_period;
++	}
+ 	period = last_jiffies_update;
+ 	write_seqcount_end(&jiffies_seq);
+ 	raw_spin_unlock(&jiffies_lock);
 
 
