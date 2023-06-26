@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A41B11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8A1C433C8;
-	Mon, 26 Jun 2023 18:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E47D11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDD9C433C8;
+	Mon, 26 Jun 2023 18:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805081;
-	bh=pQns4SttK3iPAYZKZeTvQ+NlSsNOrLEhqmKRuHUQxPE=;
+	s=korg; t=1687805084;
+	bh=Y2ch87XGz+i138KxfrDSSSymqNHNHI93UZt7SdbPHOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HXL27W1pwZoJStlB27nX6ntpcDTUV2X8hCHlfrkHyGXc+tmyT2ARWeMTu1gn1NVEK
-	 zgVBSwluXyLM1Wvs4Ztk9GkY2BfZqEJyH8vcikZYeiz60e5v8xOJW2fH68rhdvyr35
-	 W3tjpDi3DSza/3IWJTuAm9euOxG+CvDCqULlO1Yc=
+	b=kx/mlCHK8k+2/4hPSPKqk2h2KRO3AYpYLtYLtyjfi/mQCMdAKWCrO9AqIfQbPWTiB
+	 gtlrJemIPV7YQITdPkoMHdCJ44LLxiUt3dycBEgLH3Ehg8MIYQeAnDsOWUZHRDx/oj
+	 n8lMwWjMeR7NLM338wTkx5NQBjJ8PCITdsxU9+oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 44/81] mmc: omap: fix deferred probing
-Date: Mon, 26 Jun 2023 20:12:26 +0200
-Message-ID: <20230626180746.274460594@linuxfoundation.org>
+Subject: [PATCH 5.10 45/81] mmc: omap_hsmmc: fix deferred probing
+Date: Mon, 26 Jun 2023 20:12:27 +0200
+Message-ID: <20230626180746.322675346@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -37,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit aedf4ba1ad00aaa94c1b66c73ecaae95e2564b95 ]
+[ Upstream commit fb51b74a57859b707c3e8055ed0c25a7ca4f6a29 ]
 
 The driver overrides the error codes returned by platform_get_irq() to
 -ENXIO, so if it returns -EPROBE_DEFER, the driver will fail the probe
@@ -46,26 +46,31 @@ error codes upstream.
 
 Fixes: 9ec36cafe43b ("of/irq: do irq resolution in platform_get_irq")
 Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20230617203622.6812-6-s.shtylyov@omp.ru
+Link: https://lore.kernel.org/r/20230617203622.6812-7-s.shtylyov@omp.ru
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/omap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/omap_hsmmc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/omap.c b/drivers/mmc/host/omap.c
-index 6aa0537f1f847..eb978b75d8e78 100644
---- a/drivers/mmc/host/omap.c
-+++ b/drivers/mmc/host/omap.c
-@@ -1344,7 +1344,7 @@ static int mmc_omap_probe(struct platform_device *pdev)
- 
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0)
--		return -ENXIO;
-+		return irq;
+diff --git a/drivers/mmc/host/omap_hsmmc.c b/drivers/mmc/host/omap_hsmmc.c
+index 5b6ede81fc9f2..098075449ccd0 100644
+--- a/drivers/mmc/host/omap_hsmmc.c
++++ b/drivers/mmc/host/omap_hsmmc.c
+@@ -1832,9 +1832,11 @@ static int omap_hsmmc_probe(struct platform_device *pdev)
+ 	}
  
  	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	host->virt_base = devm_ioremap_resource(&pdev->dev, res);
+-	irq = platform_get_irq(pdev, 0);
+-	if (res == NULL || irq < 0)
++	if (!res)
+ 		return -ENXIO;
++	irq = platform_get_irq(pdev, 0);
++	if (irq < 0)
++		return irq;
+ 
+ 	base = devm_ioremap_resource(&pdev->dev, res);
+ 	if (IS_ERR(base))
 -- 
 2.39.2
 
