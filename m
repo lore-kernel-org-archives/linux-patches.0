@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E7E134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:15:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4A5C433C8;
-	Mon, 26 Jun 2023 18:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A44134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:15:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77909C433C0;
+	Mon, 26 Jun 2023 18:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803319;
-	bh=P3h2hjZrHdqdljlQE0cOsJ4YhJ0VXF462+NZJyCH0XE=;
+	s=korg; t=1687803321;
+	bh=oLUxILXUCu6VihYf6eyIhuwZup0iak52LxSxIhw2N94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DUqqC2eOhWJ5GXCtwXZLl5dwacIE1kKtN53sjjNTKrXsxEhWmGeirLbsGIYzrT/Ra
-	 NlBKjjPH0LsEyg9T8tyopfBoOJZ0W00xNeTWCuww87mWjHjkmf9oRzcH/2YueA3G8Z
-	 WyfcLWRZpMgUxU+bME1ybYqglumZt0axQgh4hDuo=
+	b=xBrseLfKgMdtZRO+Gp8+pc+qbIqrDlrx/Hr1uQcdzeuOkhQE4sytMfT5+yDp28FM+
+	 y0s8wNsbUbTl97fn6VkUSEieup3PrCmmkzS9u/mDwe+1ATIsbgYFKwEOPoWJ3LvjI3
+	 QLnS6W/pfUrtTQumR/Fn9qdNdcz/lUSqmu/v9loc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 020/199] selftests: mptcp: lib: skip if missing symbol
-Date: Mon, 26 Jun 2023 20:08:46 +0200
-Message-ID: <20230626180806.551093938@linuxfoundation.org>
+Subject: [PATCH 6.3 021/199] selftests: mptcp: connect: skip transp tests if not supported
+Date: Mon, 26 Jun 2023 20:08:47 +0200
+Message-ID: <20230626180806.585423031@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,81 +36,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 673004821ab98c6645bd21af56a290854e88f533 upstream.
+commit 07bf49401909264a38fa3427c3cce43e8304436a upstream.
 
 Selftests are supposed to run on any kernels, including the old ones not
 supporting all MPTCP features.
 
-New functions are now available to easily detect if a certain feature is
-missing by looking at kallsyms.
+One of them is the support of IP(V6)_TRANSPARENT socket option with
+MPTCP connections introduced by commit c9406a23c116 ("mptcp: sockopt:
+add SOL_IP freebind & transparent options").
 
-These new helpers are going to be used in the following commits. In
-order to ease the backport of such future patches, it would be good if
-this patch is backported up to the introduction of MPTCP selftests,
-hence the Fixes tag below: this type of check was supposed to be done
-from the beginning.
+It is possible to look for "__ip_sock_set_tos" in kallsyms because
+IP(V6)_TRANSPARENT socket option support has been added after TOS
+support which came with the required infrastructure in MPTCP sockopt
+code. To support TOS, the following function has been exported (T). Not
+great but better than checking for a specific kernel version.
 
 Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
-Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
+Fixes: 5fb62e9cd3ad ("selftests: mptcp: add tproxy test case")
 Cc: stable@vger.kernel.org
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/config       |    1 
- tools/testing/selftests/net/mptcp/mptcp_lib.sh |   38 +++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_connect.sh |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/config
-+++ b/tools/testing/selftests/net/mptcp/config
-@@ -1,3 +1,4 @@
-+CONFIG_KALLSYMS=y
- CONFIG_MPTCP=y
- CONFIG_IPV6=y
- CONFIG_MPTCP_IPV6=y
---- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-@@ -38,3 +38,41 @@ mptcp_lib_check_mptcp() {
- 		exit ${KSFT_SKIP}
- 	fi
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
+@@ -144,6 +144,7 @@ cleanup()
  }
-+
-+mptcp_lib_check_kallsyms() {
-+	if ! mptcp_lib_has_file "/proc/kallsyms"; then
-+		echo "SKIP: CONFIG_KALLSYMS is missing"
-+		exit ${KSFT_SKIP}
-+	fi
-+}
-+
-+# Internal: use mptcp_lib_kallsyms_has() instead
-+__mptcp_lib_kallsyms_has() {
-+	local sym="${1}"
-+
-+	mptcp_lib_check_kallsyms
-+
-+	grep -q " ${sym}" /proc/kallsyms
-+}
-+
-+# $1: part of a symbol to look at, add '$' at the end for full name
-+mptcp_lib_kallsyms_has() {
-+	local sym="${1}"
-+
-+	if __mptcp_lib_kallsyms_has "${sym}"; then
-+		return 0
+ 
+ mptcp_lib_check_mptcp
++mptcp_lib_check_kallsyms
+ 
+ ip -Version > /dev/null 2>&1
+ if [ $? -ne 0 ];then
+@@ -695,6 +696,15 @@ run_test_transparent()
+ 		return 0
+ 	fi
+ 
++	# IP(V6)_TRANSPARENT has been added after TOS support which came with
++	# the required infrastructure in MPTCP sockopt code. To support TOS, the
++	# following function has been exported (T). Not great but better than
++	# checking for a specific kernel version.
++	if ! mptcp_lib_kallsyms_has "T __ip_sock_set_tos$"; then
++		echo "INFO: ${msg} not supported by the kernel: SKIP"
++		return
 +	fi
 +
-+	mptcp_lib_fail_if_expected_feature "${sym} symbol not found"
-+}
-+
-+# $1: part of a symbol to look at, add '$' at the end for full name
-+mptcp_lib_kallsyms_doesnt_have() {
-+	local sym="${1}"
-+
-+	if ! __mptcp_lib_kallsyms_has "${sym}"; then
-+		return 0
-+	fi
-+
-+	mptcp_lib_fail_if_expected_feature "${sym} symbol has been found"
-+}
+ ip netns exec "$listener_ns" nft -f /dev/stdin <<"EOF"
+ flush ruleset
+ table inet mangle {
 
 
