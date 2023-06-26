@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B474BC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:36:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C48BC433C8;
-	Mon, 26 Jun 2023 18:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D06C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:36:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C658C433CA;
+	Mon, 26 Jun 2023 18:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804613;
-	bh=lcHmgGzPv6b/GI7U4QvRRbjnK7/YNTh8lZsjGdmpRYw=;
+	s=korg; t=1687804616;
+	bh=VvcDlxUQaRiX2ruxjT8DhrhgUh+QPAZStuGAHH2eEFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIsThMrHvuGQ0ggnqh1qS4MKWPXQArpuVxrBSoJKNI2VDC96950TcRtHvWnagpQG0
-	 8x8jk0wXZ1MFIXk6bUAwPQIqQ49LhrH+bmwe8JjQgRw18HRKTVVpNrMiiKRUDhjaxA
-	 v6oAsXNzTXKFA7KAlISPUReDyGDb+M5kkyFzXUIY=
+	b=GYl1aWTf5j6pNo+W5XTHZ89ft6wHcuWOXiBlme5Dr5HOeJlNJ36tgPPVRRrWdWRg8
+	 EhaPJnnk/JQ/mivTY/MeTg7RI1oDYMvIRD0lIMfbzlS0lF8IMOWILsCcB+ma/6ioCr
+	 GfBRdFr4NdA+FpMrABNRFMPS5R2mY8L6klIIc+ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jiri Pirko <jiri@resnulli.us>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 43/60] sch_netem: acquire qdisc lock in netem_change()
-Date: Mon, 26 Jun 2023 20:12:22 +0200
-Message-ID: <20230626180741.335312769@linuxfoundation.org>
+Subject: [PATCH 5.4 44/60] scsi: target: iscsi: Prevent login threads from racing between each other
+Date: Mon, 26 Jun 2023 20:12:23 +0200
+Message-ID: <20230626180741.385793935@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -41,107 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 2174a08db80d1efeea382e25ac41c4e7511eb6d6 ]
+[ Upstream commit 2a737d3b8c792400118d6cf94958f559de9c5e59 ]
 
-syzbot managed to trigger a divide error [1] in netem.
+The tpg->np_login_sem is a semaphore that is used to serialize the login
+process when multiple login threads run concurrently against the same
+target portal group.
 
-It could happen if q->rate changes while netem_enqueue()
-is running, since q->rate is read twice.
+The iscsi_target_locate_portal() function finds the tpg, calls
+iscsit_access_np() against the np_login_sem semaphore and saves the tpg
+pointer in conn->tpg;
 
-It turns out netem_change() always lacked proper synchronization.
+If iscsi_target_locate_portal() fails, the caller will check for the
+conn->tpg pointer and, if it's not NULL, then it will assume that
+iscsi_target_locate_portal() called iscsit_access_np() on the semaphore.
 
-[1]
-divide error: 0000 [#1] SMP KASAN
-CPU: 1 PID: 7867 Comm: syz-executor.1 Not tainted 6.1.30-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
-RIP: 0010:div64_u64 include/linux/math64.h:69 [inline]
-RIP: 0010:packet_time_ns net/sched/sch_netem.c:357 [inline]
-RIP: 0010:netem_enqueue+0x2067/0x36d0 net/sched/sch_netem.c:576
-Code: 89 e2 48 69 da 00 ca 9a 3b 42 80 3c 28 00 4c 8b a4 24 88 00 00 00 74 0d 4c 89 e7 e8 c3 4f 3b fd 48 8b 4c 24 18 48 89 d8 31 d2 <49> f7 34 24 49 01 c7 4c 8b 64 24 48 4d 01 f7 4c 89 e3 48 c1 eb 03
-RSP: 0018:ffffc9000dccea60 EFLAGS: 00010246
-RAX: 000001a442624200 RBX: 000001a442624200 RCX: ffff888108a4f000
-RDX: 0000000000000000 RSI: 000000000000070d RDI: 000000000000070d
-RBP: ffffc9000dcceb90 R08: ffffffff849c5e26 R09: fffffbfff10e1297
-R10: 0000000000000000 R11: dffffc0000000001 R12: ffff888108a4f358
-R13: dffffc0000000000 R14: 0000001a8cd9a7ec R15: 0000000000000000
-FS: 00007fa73fe18700(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fa73fdf7718 CR3: 000000011d36e000 CR4: 0000000000350ee0
-Call Trace:
-<TASK>
-[<ffffffff84714385>] __dev_xmit_skb net/core/dev.c:3931 [inline]
-[<ffffffff84714385>] __dev_queue_xmit+0xcf5/0x3370 net/core/dev.c:4290
-[<ffffffff84d22df2>] dev_queue_xmit include/linux/netdevice.h:3030 [inline]
-[<ffffffff84d22df2>] neigh_hh_output include/net/neighbour.h:531 [inline]
-[<ffffffff84d22df2>] neigh_output include/net/neighbour.h:545 [inline]
-[<ffffffff84d22df2>] ip_finish_output2+0xb92/0x10d0 net/ipv4/ip_output.c:235
-[<ffffffff84d21e63>] __ip_finish_output+0xc3/0x2b0
-[<ffffffff84d10a81>] ip_finish_output+0x31/0x2a0 net/ipv4/ip_output.c:323
-[<ffffffff84d10f14>] NF_HOOK_COND include/linux/netfilter.h:298 [inline]
-[<ffffffff84d10f14>] ip_output+0x224/0x2a0 net/ipv4/ip_output.c:437
-[<ffffffff84d123b5>] dst_output include/net/dst.h:444 [inline]
-[<ffffffff84d123b5>] ip_local_out net/ipv4/ip_output.c:127 [inline]
-[<ffffffff84d123b5>] __ip_queue_xmit+0x1425/0x2000 net/ipv4/ip_output.c:542
-[<ffffffff84d12fdc>] ip_queue_xmit+0x4c/0x70 net/ipv4/ip_output.c:556
+Make sure that conn->tpg gets initialized only if iscsit_access_np() was
+successful, otherwise iscsit_deaccess_np() may end up being called against
+a semaphore we never took, allowing more than one thread to access the same
+tpg.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Hemminger <stephen@networkplumber.org>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Cong Wang <xiyou.wangcong@gmail.com>
-Cc: Jiri Pirko <jiri@resnulli.us>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230620184425.1179809-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Link: https://lore.kernel.org/r/20230508162219.1731964-4-mlombard@redhat.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/target/iscsi/iscsi_target_nego.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 1802f134aa407..69034c8cc3b86 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -969,6 +969,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	if (ret < 0)
- 		return ret;
+diff --git a/drivers/target/iscsi/iscsi_target_nego.c b/drivers/target/iscsi/iscsi_target_nego.c
+index e32d93b927428..4017464a5909b 100644
+--- a/drivers/target/iscsi/iscsi_target_nego.c
++++ b/drivers/target/iscsi/iscsi_target_nego.c
+@@ -1053,6 +1053,7 @@ int iscsi_target_locate_portal(
+ 	iscsi_target_set_sock_callbacks(conn);
  
-+	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
- 	old_loss_model = q->loss_model;
-@@ -977,7 +978,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
- 		if (ret) {
- 			q->loss_model = old_loss_model;
--			return ret;
-+			goto unlock;
- 		}
- 	} else {
- 		q->loss_model = CLG_RANDOM;
-@@ -1044,6 +1045,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	/* capping jitter to the range acceptable by tabledist() */
- 	q->jitter = min_t(s64, abs(q->jitter), INT_MAX);
+ 	login->np = np;
++	conn->tpg = NULL;
  
-+unlock:
-+	sch_tree_unlock(sch);
- 	return ret;
- 
- get_table_failure:
-@@ -1053,7 +1056,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	login_req = (struct iscsi_login_req *) login->req;
+ 	payload_length = ntoh24(login_req->dlength);
+@@ -1122,7 +1123,6 @@ int iscsi_target_locate_portal(
  	 */
- 	q->clg = old_clg;
- 	q->loss_model = old_loss_model;
--	return ret;
-+
-+	goto unlock;
- }
+ 	sessiontype = strncmp(s_buf, DISCOVERY, 9);
+ 	if (!sessiontype) {
+-		conn->tpg = iscsit_global->discovery_tpg;
+ 		if (!login->leading_connection)
+ 			goto get_target;
  
- static int netem_init(struct Qdisc *sch, struct nlattr *opt,
+@@ -1139,9 +1139,11 @@ int iscsi_target_locate_portal(
+ 		 * Serialize access across the discovery struct iscsi_portal_group to
+ 		 * process login attempt.
+ 		 */
++		conn->tpg = iscsit_global->discovery_tpg;
+ 		if (iscsit_access_np(np, conn->tpg) < 0) {
+ 			iscsit_tx_login_rsp(conn, ISCSI_STATUS_CLS_TARGET_ERR,
+ 				ISCSI_LOGIN_STATUS_SVC_UNAVAILABLE);
++			conn->tpg = NULL;
+ 			ret = -1;
+ 			goto out;
+ 		}
 -- 
 2.39.2
 
