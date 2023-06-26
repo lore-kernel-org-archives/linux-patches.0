@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9B3134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B127C433C0;
-	Mon, 26 Jun 2023 18:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0570D134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AC5C433C0;
+	Mon, 26 Jun 2023 18:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803684;
-	bh=smyZdL5ee86kJ3+kmLSfZD3L3ijeQnQ7ASqNsAvwRuA=;
+	s=korg; t=1687803690;
+	bh=8DkVQBQ73QrWZW5zuri/braT1uY6yx/R4JM/Q/ezPgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdDVZbvcUEiHy9jMMstx8LneQ7FAIOUW3YDz2DO9Qyp7voOvG8Y9owm0LZg3D8IXh
-	 rhauT9eaB0hZpucyHa2Y1hIX7kA17AdxNqB4j94U9wezPf/AV7xAvIthuTgbW2Ka1V
-	 M17VIm7JkBlrQw/ksidF8YT7O9BHetirAhrhXgRc=
+	b=1JOMf8gOgnx+ZLKa18FjzBVOEQfeJg48QdzFCtCHGq4LV5F38hlvqNNMwivo0zIKL
+	 w+bdk2vLwi8YbxkkbKEEBSGKzD/Jkpo2IMAOWG0Xy+79H61cBBNOc11t4+UiRvCi/2
+	 bAgwkV+hS8g83lvAo/ZYrDYOhscH6sPGaTT2sAek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allen Zhong <allen@atr.me>,
-	Patil Rajesh Reddy <Patil.Reddy@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eyal Birger <eyal.birger@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Patrick Rohr <prohr@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 142/199] platform/x86/amd/pmf: Register notify handler only if SPS is enabled
-Date: Mon, 26 Jun 2023 20:10:48 +0200
-Message-ID: <20230626180811.840887575@linuxfoundation.org>
+Subject: [PATCH 6.3 144/199] revert "net: align SO_RCVMARK required privileges with SO_MARK"
+Date: Mon, 26 Jun 2023 20:10:50 +0200
+Message-ID: <20230626180811.931957370@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -38,103 +42,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-[ Upstream commit 146b6f6855e7656e8329910606595220c761daac ]
+[ Upstream commit a9628e88776eb7d045cf46467f1afdd0f7fe72ea ]
 
-Power source notify handler is getting registered even when none of the
-PMF feature in enabled leading to a crash.
+This reverts commit 1f86123b9749 ("net: align SO_RCVMARK required
+privileges with SO_MARK") because the reasoning in the commit message
+is not really correct:
+  SO_RCVMARK is used for 'reading' incoming skb mark (via cmsg), as such
+  it is more equivalent to 'getsockopt(SO_MARK)' which has no priv check
+  and retrieves the socket mark, rather than 'setsockopt(SO_MARK) which
+  sets the socket mark and does require privs.
 
-...
-[   22.592162] Call Trace:
-[   22.592164]  <TASK>
-[   22.592164]  ? rcu_note_context_switch+0x5e0/0x660
-[   22.592166]  ? __warn+0x81/0x130
-[   22.592171]  ? rcu_note_context_switch+0x5e0/0x660
-[   22.592172]  ? report_bug+0x171/0x1a0
-[   22.592175]  ? prb_read_valid+0x1b/0x30
-[   22.592177]  ? handle_bug+0x3c/0x80
-[   22.592178]  ? exc_invalid_op+0x17/0x70
-[   22.592179]  ? asm_exc_invalid_op+0x1a/0x20
-[   22.592182]  ? rcu_note_context_switch+0x5e0/0x660
-[   22.592183]  ? acpi_ut_delete_object_desc+0x86/0xb0
-[   22.592186]  ? acpi_ut_update_ref_count.part.0+0x22d/0x930
-[   22.592187]  __schedule+0xc0/0x1410
-[   22.592189]  ? ktime_get+0x3c/0xa0
-[   22.592191]  ? lapic_next_event+0x1d/0x30
-[   22.592193]  ? hrtimer_start_range_ns+0x25b/0x350
-[   22.592196]  schedule+0x5e/0xd0
-[   22.592197]  schedule_hrtimeout_range_clock+0xbe/0x140
-[   22.592199]  ? __pfx_hrtimer_wakeup+0x10/0x10
-[   22.592200]  usleep_range_state+0x64/0x90
-[   22.592203]  amd_pmf_send_cmd+0x106/0x2a0 [amd_pmf bddfe0fe3712aaa99acce3d5487405c5213c6616]
-[   22.592207]  amd_pmf_update_slider+0x56/0x1b0 [amd_pmf bddfe0fe3712aaa99acce3d5487405c5213c6616]
-[   22.592210]  amd_pmf_set_sps_power_limits+0x72/0x80 [amd_pmf bddfe0fe3712aaa99acce3d5487405c5213c6616]
-[   22.592213]  amd_pmf_pwr_src_notify_call+0x49/0x90 [amd_pmf bddfe0fe3712aaa99acce3d5487405c5213c6616]
-[   22.592216]  notifier_call_chain+0x5a/0xd0
-[   22.592218]  atomic_notifier_call_chain+0x32/0x50
-...
+  Additionally incoming skb->mark may already be visible if
+  sysctl_fwmark_reflect and/or sysctl_tcp_fwmark_accept are enabled.
 
-Fix this by moving the registration of source change notify handler only
-when SPS(Static Slider) is advertised as supported.
+  Furthermore, it is easier to block the getsockopt via bpf
+  (either cgroup setsockopt hook, or via syscall filters)
+  then to unblock it if it requires CAP_NET_RAW/ADMIN.
 
-Reported-by: Allen Zhong <allen@atr.me>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217571
-Fixes: 4c71ae414474 ("platform/x86/amd/pmf: Add support SPS PMF feature")
-Tested-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20230622060309.310001-1-Shyam-sundar.S-k@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+On Android the socket mark is (among other things) used to store
+the network identifier a socket is bound to.  Setting it is privileged,
+but retrieving it is not.  We'd like unprivileged userspace to be able
+to read the network id of incoming packets (where mark is set via
+iptables [to be moved to bpf])...
+
+An alternative would be to add another sysctl to control whether
+setting SO_RCVMARK is privilged or not.
+(or even a MASK of which bits in the mark can be exposed)
+But this seems like over-engineering...
+
+Note: This is a non-trivial revert, due to later merged commit e42c7beee71d
+("bpf: net: Consider has_current_bpf_ctx() when testing capable() in sk_setsockopt()")
+which changed both 'ns_capable' into 'sockopt_ns_capable' calls.
+
+Fixes: 1f86123b9749 ("net: align SO_RCVMARK required privileges with SO_MARK")
+Cc: Larysa Zaremba <larysa.zaremba@intel.com>
+Cc: Simon Horman <simon.horman@corigine.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Eyal Birger <eyal.birger@gmail.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Patrick Rohr <prohr@google.com>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230618103130.51628-1-maze@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/core.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/core/sock.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
-index dc9803e1a4b9b..73d2357e32f8e 100644
---- a/drivers/platform/x86/amd/pmf/core.c
-+++ b/drivers/platform/x86/amd/pmf/core.c
-@@ -297,6 +297,8 @@ static void amd_pmf_init_features(struct amd_pmf_dev *dev)
- 	/* Enable Static Slider */
- 	if (is_apmf_func_supported(dev, APMF_FUNC_STATIC_SLIDER_GRANULAR)) {
- 		amd_pmf_init_sps(dev);
-+		dev->pwr_src_notifier.notifier_call = amd_pmf_pwr_src_notify_call;
-+		power_supply_reg_notifier(&dev->pwr_src_notifier);
- 		dev_dbg(dev->dev, "SPS enabled and Platform Profiles registered\n");
- 	}
- 
-@@ -315,8 +317,10 @@ static void amd_pmf_init_features(struct amd_pmf_dev *dev)
- 
- static void amd_pmf_deinit_features(struct amd_pmf_dev *dev)
- {
--	if (is_apmf_func_supported(dev, APMF_FUNC_STATIC_SLIDER_GRANULAR))
-+	if (is_apmf_func_supported(dev, APMF_FUNC_STATIC_SLIDER_GRANULAR)) {
-+		power_supply_unreg_notifier(&dev->pwr_src_notifier);
- 		amd_pmf_deinit_sps(dev);
-+	}
- 
- 	if (is_apmf_func_supported(dev, APMF_FUNC_AUTO_MODE)) {
- 		amd_pmf_deinit_auto_mode(dev);
-@@ -399,9 +403,6 @@ static int amd_pmf_probe(struct platform_device *pdev)
- 	apmf_install_handler(dev);
- 	amd_pmf_dbgfs_register(dev);
- 
--	dev->pwr_src_notifier.notifier_call = amd_pmf_pwr_src_notify_call;
--	power_supply_reg_notifier(&dev->pwr_src_notifier);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 3fd71f343c9f2..b34c48f802e98 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1362,12 +1362,6 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 		__sock_set_mark(sk, val);
+ 		break;
+ 	case SO_RCVMARK:
+-		if (!sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_RAW) &&
+-		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
+-			ret = -EPERM;
+-			break;
+-		}
 -
- 	dev_info(dev->dev, "registered PMF device successfully\n");
+ 		sock_valbool_flag(sk, SOCK_RCVMARK, valbool);
+ 		break;
  
- 	return 0;
-@@ -411,7 +412,6 @@ static int amd_pmf_remove(struct platform_device *pdev)
- {
- 	struct amd_pmf_dev *dev = platform_get_drvdata(pdev);
- 
--	power_supply_unreg_notifier(&dev->pwr_src_notifier);
- 	amd_pmf_deinit_features(dev);
- 	apmf_acpi_deinit(dev);
- 	amd_pmf_dbgfs_unregister(dev);
 -- 
 2.39.2
 
