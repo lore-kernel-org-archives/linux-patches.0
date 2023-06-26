@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A996134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A60C433C8;
-	Mon, 26 Jun 2023 18:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345AC134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A802FC433C0;
+	Mon, 26 Jun 2023 18:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803545;
-	bh=VJwSSW7VUjSIMxSRaaQ2XZoVmSOxinwNm4f1SFdGTQE=;
+	s=korg; t=1687803548;
+	bh=L+4/jXpgVXLoejmE/s8K69GuiFib2xP2AzggdEype/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbzwgZEGsmqTzshxcSizLB5sJKyhzjuJtDDcErCJ952Hn9Xf1Rm7uaklngwwGRqqe
-	 1NV1eRc9mKR8Ggj5U+Zthii3cpVgxJMkdfG3omCLC37YWdp4vC01+QTWx5kuJOL6d7
-	 qzOBjTBuIBZVqXRS91izi2fyuOagMym0UlKFEt9U=
+	b=J5NMVBbE7mUPjOI05jIjurh74AfACTVDn/voBnIovcVMJegI7j9bKt55nt5zodfKH
+	 5ccSK880MlbyQ0/KBjidEsQNsr+WV2lKk+QjfOGu0eYfc5NtHh+xQ1d5OFQsxrw72m
+	 +sKOzgcPGoekcTOKLGCh01P4Ik6FfsAZK9hzlAVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Gerlach <matthew.gerlach@linux.intel.com>,
-	Russ Weight <russell.h.weight@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Chen Aotian <chenaotian2@163.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 090/199] regmap: spi-avmm: Fix regmap_bus max_raw_write
-Date: Mon, 26 Jun 2023 20:09:56 +0200
-Message-ID: <20230626180809.543515215@linuxfoundation.org>
+Subject: [PATCH 6.3 099/199] ieee802154: hwsim: Fix possible memory leaks
+Date: Mon, 26 Jun 2023 20:10:05 +0200
+Message-ID: <20230626180809.971050089@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,50 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russ Weight <russell.h.weight@intel.com>
+From: Chen Aotian <chenaotian2@163.com>
 
-[ Upstream commit c8e796895e2310b6130e7577248da1d771431a77 ]
+[ Upstream commit a61675294735570daca3779bd1dbb3715f7232bd ]
 
-The max_raw_write member of the regmap_spi_avmm_bus structure is defined
-as:
-	.max_raw_write = SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT
+After replacing e->info, it is necessary to free the old einfo.
 
-SPI_AVMM_VAL_SIZE == 4 and MAX_WRITE_CNT == 1 so this results in a
-maximum write transfer size of 4 bytes which provides only enough space to
-transfer the address of the target register. It provides no space for the
-value to be transferred. This bug became an issue (divide-by-zero in
-_regmap_raw_write()) after the following was accepted into mainline:
-
-commit 3981514180c9 ("regmap: Account for register length when chunking")
-
-Change max_raw_write to include space (4 additional bytes) for both the
-register address and value:
-
-	.max_raw_write = SPI_AVMM_REG_SIZE + SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT
-
-Fixes: 7f9fb67358a2 ("regmap: add Intel SPI Slave to AVMM Bus Bridge support")
-Reviewed-by: Matthew Gerlach <matthew.gerlach@linux.intel.com>
-Signed-off-by: Russ Weight <russell.h.weight@intel.com>
-Link: https://lore.kernel.org/r/20230620202824.380313-1-russell.h.weight@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f25da51fdc38 ("ieee802154: hwsim: add replacement for fakelb")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Chen Aotian <chenaotian2@163.com>
+Link: https://lore.kernel.org/r/20230409022048.61223-1-chenaotian2@163.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-spi-avmm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ieee802154/mac802154_hwsim.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/regmap/regmap-spi-avmm.c b/drivers/base/regmap/regmap-spi-avmm.c
-index 4c2b94b3e30be..6af692844c196 100644
---- a/drivers/base/regmap/regmap-spi-avmm.c
-+++ b/drivers/base/regmap/regmap-spi-avmm.c
-@@ -660,7 +660,7 @@ static const struct regmap_bus regmap_spi_avmm_bus = {
- 	.reg_format_endian_default = REGMAP_ENDIAN_NATIVE,
- 	.val_format_endian_default = REGMAP_ENDIAN_NATIVE,
- 	.max_raw_read = SPI_AVMM_VAL_SIZE * MAX_READ_CNT,
--	.max_raw_write = SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT,
-+	.max_raw_write = SPI_AVMM_REG_SIZE + SPI_AVMM_VAL_SIZE * MAX_WRITE_CNT,
- 	.free_context = spi_avmm_bridge_ctx_free,
- };
- 
+diff --git a/drivers/net/ieee802154/mac802154_hwsim.c b/drivers/net/ieee802154/mac802154_hwsim.c
+index 8445c2189d116..31cba9aa76366 100644
+--- a/drivers/net/ieee802154/mac802154_hwsim.c
++++ b/drivers/net/ieee802154/mac802154_hwsim.c
+@@ -685,7 +685,7 @@ static int hwsim_del_edge_nl(struct sk_buff *msg, struct genl_info *info)
+ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
+ {
+ 	struct nlattr *edge_attrs[MAC802154_HWSIM_EDGE_ATTR_MAX + 1];
+-	struct hwsim_edge_info *einfo;
++	struct hwsim_edge_info *einfo, *einfo_old;
+ 	struct hwsim_phy *phy_v0;
+ 	struct hwsim_edge *e;
+ 	u32 v0, v1;
+@@ -723,8 +723,10 @@ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
+ 	list_for_each_entry_rcu(e, &phy_v0->edges, list) {
+ 		if (e->endpoint->idx == v1) {
+ 			einfo->lqi = lqi;
+-			rcu_assign_pointer(e->info, einfo);
++			einfo_old = rcu_replace_pointer(e->info, einfo,
++							lockdep_is_held(&hwsim_phys_lock));
+ 			rcu_read_unlock();
++			kfree_rcu(einfo_old, rcu);
+ 			mutex_unlock(&hwsim_phys_lock);
+ 			return 0;
+ 		}
 -- 
 2.39.2
 
