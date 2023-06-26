@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E019134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193F9C433C9;
-	Mon, 26 Jun 2023 18:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AE6134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA07C433C9;
+	Mon, 26 Jun 2023 18:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803885;
-	bh=LW7Ba/gICkWus5mwEmCusr0AOesDkDoQfsauCS98rjE=;
+	s=korg; t=1687803888;
+	bh=5MILmWV1rWV7MNCHcwIKZGHGlAyGN+2CyiKNvZDsO9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDRpNXq0xuFUMKqY/n87A61uRe/UBNupevTma44cq1qf27L3MI4Cux0Mem2wU3xuK
-	 Stv+k8XE43fTi2lBHtLP5V8fYAw1CoP0wVAV6J9uhoEd3IDNsU8aNX05VW8hhrYrNb
-	 +FYCL/j6MhB4RMy3ZV/nHnX1xw+cuwi7OjwYlB48=
+	b=kfJpaFFcvGNvjW6xdjijV0pdCMZEdcCdDQ32+tR9IN5sLVpOjuPVOJDeliRR4viUV
+	 NiYtmrEA8W+ThmQYRKlqGfF89ns+7syGKyYEI48+AjiPRdGU5B5+56fhL9YxVjWcQi
+	 E17DlOGMQK6HCBXLcgIp5OFJNMQbxOBUfpKgz+bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dexuan Cui <decui@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 4.19 11/41] PCI: hv: Fix a race condition bug in hv_pci_query_relations()
-Date: Mon, 26 Jun 2023 20:11:34 +0200
-Message-ID: <20230626180736.706994463@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 4.19 12/41] cgroup: Do not corrupt task iteration when rebinding subsystem
+Date: Mon, 26 Jun 2023 20:11:35 +0200
+Message-ID: <20230626180736.742217409@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -36,57 +36,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-commit 440b5e3663271b0ffbd4908115044a6a51fb938b upstream.
+commit 6f363f5aa845561f7ea496d8b1175e3204470486 upstream.
 
-Since day 1 of the driver, there has been a race between
-hv_pci_query_relations() and survey_child_resources(): during fast
-device hotplug, hv_pci_query_relations() may error out due to
-device-remove and the stack variable 'comp' is no longer valid;
-however, pci_devices_present_work() -> survey_child_resources() ->
-complete() may be running on another CPU and accessing the no-longer-valid
-'comp'. Fix the race by flushing the workqueue before we exit from
-hv_pci_query_relations().
+We found a refcount UAF bug as follows:
 
-Fixes: 4daace0d8ce8 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230615044451.5580-2-decui@microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 1 PID: 342 at lib/refcount.c:25 refcount_warn_saturate+0xa0/0x148
+Workqueue: events cpuset_hotplug_workfn
+Call trace:
+ refcount_warn_saturate+0xa0/0x148
+ __refcount_add.constprop.0+0x5c/0x80
+ css_task_iter_advance_css_set+0xd8/0x210
+ css_task_iter_advance+0xa8/0x120
+ css_task_iter_next+0x94/0x158
+ update_tasks_root_domain+0x58/0x98
+ rebuild_root_domains+0xa0/0x1b0
+ rebuild_sched_domains_locked+0x144/0x188
+ cpuset_hotplug_workfn+0x138/0x5a0
+ process_one_work+0x1e8/0x448
+ worker_thread+0x228/0x3e0
+ kthread+0xe0/0xf0
+ ret_from_fork+0x10/0x20
+
+then a kernel panic will be triggered as below:
+
+Unable to handle kernel paging request at virtual address 00000000c0000010
+Call trace:
+ cgroup_apply_control_disable+0xa4/0x16c
+ rebind_subsystems+0x224/0x590
+ cgroup_destroy_root+0x64/0x2e0
+ css_free_rwork_fn+0x198/0x2a0
+ process_one_work+0x1d4/0x4bc
+ worker_thread+0x158/0x410
+ kthread+0x108/0x13c
+ ret_from_fork+0x10/0x18
+
+The race that cause this bug can be shown as below:
+
+(hotplug cpu)                | (umount cpuset)
+mutex_lock(&cpuset_mutex)    | mutex_lock(&cgroup_mutex)
+cpuset_hotplug_workfn        |
+ rebuild_root_domains        |  rebind_subsystems
+  update_tasks_root_domain   |   spin_lock_irq(&css_set_lock)
+   css_task_iter_start       |    list_move_tail(&cset->e_cset_node[ss->id]
+   while(css_task_iter_next) |                  &dcgrp->e_csets[ss->id]);
+   css_task_iter_end         |   spin_unlock_irq(&css_set_lock)
+mutex_unlock(&cpuset_mutex)  | mutex_unlock(&cgroup_mutex)
+
+Inside css_task_iter_start/next/end, css_set_lock is hold and then
+released, so when iterating task(left side), the css_set may be moved to
+another list(right side), then it->cset_head points to the old list head
+and it->cset_pos->next points to the head node of new list, which can't
+be used as struct css_set.
+
+To fix this issue, switch from all css_sets to only scgrp's css_sets to
+patch in-flight iterators to preserve correct iteration, and then
+update it->cset_head as well.
+
+Reported-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://www.spinics.net/lists/cgroups/msg37935.html
+Suggested-by: Michal Koutný <mkoutny@suse.com>
+Link: https://lore.kernel.org/all/20230526114139.70274-1-xiujianfeng@huaweicloud.com/
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Fixes: 2d8f243a5e6e ("cgroup: implement cgroup->e_csets[]")
+Cc: stable@vger.kernel.org # v3.16+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-hyperv.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ kernel/cgroup/cgroup.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -2445,6 +2445,24 @@ static int hv_pci_query_relations(struct
- 	if (!ret)
- 		ret = wait_for_response(hdev, &comp);
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -1652,7 +1652,7 @@ int rebind_subsystems(struct cgroup_root
+ {
+ 	struct cgroup *dcgrp = &dst_root->cgrp;
+ 	struct cgroup_subsys *ss;
+-	int ssid, i, ret;
++	int ssid, ret;
+ 	u16 dfl_disable_ss_mask = 0;
  
-+	/*
-+	 * In the case of fast device addition/removal, it's possible that
-+	 * vmbus_sendpacket() or wait_for_response() returns -ENODEV but we
-+	 * already got a PCI_BUS_RELATIONS* message from the host and the
-+	 * channel callback already scheduled a work to hbus->wq, which can be
-+	 * running pci_devices_present_work() -> survey_child_resources() ->
-+	 * complete(&hbus->survey_event), even after hv_pci_query_relations()
-+	 * exits and the stack variable 'comp' is no longer valid; as a result,
-+	 * a hang or a page fault may happen when the complete() calls
-+	 * raw_spin_lock_irqsave(). Flush hbus->wq before we exit from
-+	 * hv_pci_query_relations() to avoid the issues. Note: if 'ret' is
-+	 * -ENODEV, there can't be any more work item scheduled to hbus->wq
-+	 * after the flush_workqueue(): see vmbus_onoffer_rescind() ->
-+	 * vmbus_reset_channel_cb(), vmbus_rescind_cleanup() ->
-+	 * channel->rescind = true.
-+	 */
-+	flush_workqueue(hbus->wq);
-+
- 	return ret;
- }
+ 	lockdep_assert_held(&cgroup_mutex);
+@@ -1696,7 +1696,8 @@ int rebind_subsystems(struct cgroup_root
+ 		struct cgroup_root *src_root = ss->root;
+ 		struct cgroup *scgrp = &src_root->cgrp;
+ 		struct cgroup_subsys_state *css = cgroup_css(scgrp, ss);
+-		struct css_set *cset;
++		struct css_set *cset, *cset_pos;
++		struct css_task_iter *it;
  
+ 		WARN_ON(!css || cgroup_css(dcgrp, ss));
+ 
+@@ -1714,9 +1715,22 @@ int rebind_subsystems(struct cgroup_root
+ 		css->cgroup = dcgrp;
+ 
+ 		spin_lock_irq(&css_set_lock);
+-		hash_for_each(css_set_table, i, cset, hlist)
++		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
++		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
++					 e_cset_node[ss->id]) {
+ 			list_move_tail(&cset->e_cset_node[ss->id],
+ 				       &dcgrp->e_csets[ss->id]);
++			/*
++			 * all css_sets of scgrp together in same order to dcgrp,
++			 * patch in-flight iterators to preserve correct iteration.
++			 * since the iterator is always advanced right away and
++			 * finished when it->cset_pos meets it->cset_head, so only
++			 * update it->cset_head is enough here.
++			 */
++			list_for_each_entry(it, &cset->task_iters, iters_node)
++				if (it->cset_head == &scgrp->e_csets[ss->id])
++					it->cset_head = &dcgrp->e_csets[ss->id];
++		}
+ 		spin_unlock_irq(&css_set_lock);
+ 
+ 		/* default hierarchy doesn't enable controllers by default */
 
 
