@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E64D11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC0BC433C8;
-	Mon, 26 Jun 2023 18:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D41F11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DB6C433C8;
+	Mon, 26 Jun 2023 18:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805075;
-	bh=2RZtmDk2SyXASr82iwKKz2hQF1xgDQxd3Mn3ekykuWU=;
+	s=korg; t=1687805078;
+	bh=oWln9belhgx/LvrKwxE+bs+QSjk7FRGBKTwAnqyyOuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWfA1ciRsiMM0Iao4c/ZVxI+8ggcwq3rhIy5qeV1YyvBqyW0DgRdul7I4pV/N8oJ5
-	 PKlPwirzHtU4MNXsrNS+QgaWTeASpqU/lOoK29ttWN5/AoUtLnP8HMSVhmj7zMcY59
-	 CaKBBkSbrJLFEnBwicHq1CZR0PS5QNuEUAecE5yw=
+	b=hDvrQBlWxtHPXBPmoSyMJknRalMwbFR9tHzdG9vn2ANzhhXFk0nXEsSXRMwZt50KM
+	 ii+6kpd1oHSzqvUiadPa/BXdK+VaX8yySNrAAgf8bpZ3WcczbZ7y7lhc0dT3BNdX03
+	 BCYTozcdutHUC/H5AMrIEIDJ2y/BM/YI5/y6obqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sergey Shtylyov <s.shtylyov@omp.ru>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 42/81] mmc: mtk-sd: fix deferred probing
-Date: Mon, 26 Jun 2023 20:12:24 +0200
-Message-ID: <20230626180746.188117585@linuxfoundation.org>
+Subject: [PATCH 5.10 43/81] mmc: mvsdio: fix deferred probing
+Date: Mon, 26 Jun 2023 20:12:25 +0200
+Message-ID: <20230626180746.231231834@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -37,35 +37,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 0c4dc0f054891a2cbde0426b0c0fdf232d89f47f ]
+[ Upstream commit 8d84064da0d4672e74f984e8710f27881137472c ]
 
 The driver overrides the error codes returned by platform_get_irq() to
--EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+-ENXIO, so if it returns -EPROBE_DEFER, the driver will fail the probe
 permanently instead of the deferred probing. Switch to propagating the
 error codes upstream.
 
-Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Fixes: 9ec36cafe43b ("of/irq: do irq resolution in platform_get_irq")
 Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20230617203622.6812-4-s.shtylyov@omp.ru
+Link: https://lore.kernel.org/r/20230617203622.6812-5-s.shtylyov@omp.ru
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c | 2 +-
+ drivers/mmc/host/mvsdio.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
-index d71c113f428f6..2c9ea5ed0b2fc 100644
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -2443,7 +2443,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
- 
- 	host->irq = platform_get_irq(pdev, 0);
- 	if (host->irq < 0) {
--		ret = -EINVAL;
-+		ret = host->irq;
- 		goto host_free;
+diff --git a/drivers/mmc/host/mvsdio.c b/drivers/mmc/host/mvsdio.c
+index 629efbe639c4f..b4f6a0a2fcb51 100644
+--- a/drivers/mmc/host/mvsdio.c
++++ b/drivers/mmc/host/mvsdio.c
+@@ -704,7 +704,7 @@ static int mvsd_probe(struct platform_device *pdev)
  	}
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+-		return -ENXIO;
++		return irq;
  
+ 	mmc = mmc_alloc_host(sizeof(struct mvsd_host), &pdev->dev);
+ 	if (!mmc) {
 -- 
 2.39.2
 
