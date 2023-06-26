@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A27134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4126C433C0;
-	Mon, 26 Jun 2023 18:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E45C134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EC3C433C0;
+	Mon, 26 Jun 2023 18:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803856;
-	bh=sWbHzwJcjcN+KF7MSAJcYgZc3gqXfiFwPGSEio7TPEE=;
+	s=korg; t=1687803859;
+	bh=GS0pPVjWt188lZEoepBV2THYAmcEA8YdD0oC8UPiH2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E/zwksMiDaWoZZQMcT9FafssFA7mGYsEp35Jngq9yEKmtf/ZeP2zc5p2uAdwXg1Hu
-	 KtaTaUo81H3qFsv3M65u0ttNMiVMaq8iBALILodcH1qZ8X2ZOEmBVYjUXzxdlMYqRB
-	 JPTSorup9T21l4O06vWrBrrtZ1Rp1zCMcA7S/cLY=
+	b=lIhxyZfvAKLINPYN5UvLb5xEEzjp+xtGL+Owejfkd7d5S/eW7A8cGp4ZOoRQpekW+
+	 wuXqy56wll0Z/8N6udXGnbiVyND+Q4zeNp5FRXvx+H3Fn9kJwX83CgVRcqOQk9CK7I
+	 zpomX5D9iL1qotfPqrUn6wm2tCkogFRWU/av65j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Anuj Gupta <anuj20.g@samsung.com>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 184/199] ARM: dts: Fix erroneous ADS touchscreen polarities
-Date: Mon, 26 Jun 2023 20:11:30 +0200
-Message-ID: <20230626180813.820151816@linuxfoundation.org>
+Subject: [PATCH 6.3 185/199] null_blk: Fix: memory release when memory_backed=1
+Date: Mon, 26 Jun 2023 20:11:31 +0200
+Message-ID: <20230626180813.862034004@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -35,175 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Nitesh Shetty <nj.shetty@samsung.com>
 
-[ Upstream commit 4a672d500bfd6bb87092c33d5a2572c3d0a1cf83 ]
+[ Upstream commit 8cfb98196cceec35416041c6b91212d2b99392e4 ]
 
-Several device tree files get the polarity of the pendown-gpios
-wrong: this signal is active low. Fix up all incorrect flags, so
-that operating systems can rely on the flag being correctly set.
+Memory/pages are not freed, when unloading nullblk driver.
 
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20230510105156.1134320-1-linus.walleij@linaro.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Steps to reproduce issue
+  1.free -h
+        total        used        free      shared  buff/cache   available
+Mem:    7.8Gi       260Mi       7.1Gi       3.0Mi       395Mi       7.3Gi
+Swap:      0B          0B          0B
+  2.modprobe null_blk memory_backed=1
+  3.dd if=/dev/urandom of=/dev/nullb0 oflag=direct bs=1M count=1000
+  4.modprobe -r null_blk
+  5.free -h
+        total        used        free      shared  buff/cache   available
+Mem:    7.8Gi       1.2Gi       6.1Gi       3.0Mi       398Mi       6.3Gi
+Swap:      0B          0B          0B
+
+Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
+Signed-off-by: Nitesh Shetty <nj.shetty@samsung.com>
+Link: https://lore.kernel.org/r/20230605062354.24785-1-nj.shetty@samsung.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/am57xx-cl-som-am57x.dts          | 2 +-
- arch/arm/boot/dts/at91sam9261ek.dts                | 2 +-
- arch/arm/boot/dts/imx7d-pico-hobbit.dts            | 2 +-
- arch/arm/boot/dts/imx7d-sdb.dts                    | 2 +-
- arch/arm/boot/dts/omap3-cm-t3x.dtsi                | 2 +-
- arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi | 2 +-
- arch/arm/boot/dts/omap3-lilly-a83x.dtsi            | 2 +-
- arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi    | 2 +-
- arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi    | 2 +-
- arch/arm/boot/dts/omap3-pandora-common.dtsi        | 2 +-
- arch/arm/boot/dts/omap5-cm-t54.dts                 | 2 +-
- 11 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/block/null_blk/main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/am57xx-cl-som-am57x.dts b/arch/arm/boot/dts/am57xx-cl-som-am57x.dts
-index 2fc9a5d5e0c0d..625b9b311b49d 100644
---- a/arch/arm/boot/dts/am57xx-cl-som-am57x.dts
-+++ b/arch/arm/boot/dts/am57xx-cl-som-am57x.dts
-@@ -527,7 +527,7 @@
+diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
+index 14491952047f5..3b6b4cb400f42 100644
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -2212,6 +2212,7 @@ static void null_destroy_dev(struct nullb *nullb)
+ 	struct nullb_device *dev = nullb->dev;
  
- 		interrupt-parent = <&gpio1>;
- 		interrupts = <31 0>;
--		pendown-gpio = <&gpio1 31 0>;
-+		pendown-gpio = <&gpio1 31 GPIO_ACTIVE_LOW>;
+ 	null_del_dev(nullb);
++	null_free_device_storage(dev, false);
+ 	null_free_dev(dev);
+ }
  
- 
- 		ti,x-min = /bits/ 16 <0x0>;
-diff --git a/arch/arm/boot/dts/at91sam9261ek.dts b/arch/arm/boot/dts/at91sam9261ek.dts
-index 88869ca874d1a..045cb253f23a6 100644
---- a/arch/arm/boot/dts/at91sam9261ek.dts
-+++ b/arch/arm/boot/dts/at91sam9261ek.dts
-@@ -156,7 +156,7 @@
- 					compatible = "ti,ads7843";
- 					interrupts-extended = <&pioC 2 IRQ_TYPE_EDGE_BOTH>;
- 					spi-max-frequency = <3000000>;
--					pendown-gpio = <&pioC 2 GPIO_ACTIVE_HIGH>;
-+					pendown-gpio = <&pioC 2 GPIO_ACTIVE_LOW>;
- 
- 					ti,x-min = /bits/ 16 <150>;
- 					ti,x-max = /bits/ 16 <3830>;
-diff --git a/arch/arm/boot/dts/imx7d-pico-hobbit.dts b/arch/arm/boot/dts/imx7d-pico-hobbit.dts
-index d917dc4f2f227..6ad39dca70096 100644
---- a/arch/arm/boot/dts/imx7d-pico-hobbit.dts
-+++ b/arch/arm/boot/dts/imx7d-pico-hobbit.dts
-@@ -64,7 +64,7 @@
- 		interrupt-parent = <&gpio2>;
- 		interrupts = <7 0>;
- 		spi-max-frequency = <1000000>;
--		pendown-gpio = <&gpio2 7 0>;
-+		pendown-gpio = <&gpio2 7 GPIO_ACTIVE_LOW>;
- 		vcc-supply = <&reg_3p3v>;
- 		ti,x-min = /bits/ 16 <0>;
- 		ti,x-max = /bits/ 16 <4095>;
-diff --git a/arch/arm/boot/dts/imx7d-sdb.dts b/arch/arm/boot/dts/imx7d-sdb.dts
-index f483bc0afe5ea..234e5fc647b22 100644
---- a/arch/arm/boot/dts/imx7d-sdb.dts
-+++ b/arch/arm/boot/dts/imx7d-sdb.dts
-@@ -205,7 +205,7 @@
- 		pinctrl-0 = <&pinctrl_tsc2046_pendown>;
- 		interrupt-parent = <&gpio2>;
- 		interrupts = <29 0>;
--		pendown-gpio = <&gpio2 29 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio2 29 GPIO_ACTIVE_LOW>;
- 		touchscreen-max-pressure = <255>;
- 		wakeup-source;
- 	};
-diff --git a/arch/arm/boot/dts/omap3-cm-t3x.dtsi b/arch/arm/boot/dts/omap3-cm-t3x.dtsi
-index e61b8a2bfb7de..51baedf1603bd 100644
---- a/arch/arm/boot/dts/omap3-cm-t3x.dtsi
-+++ b/arch/arm/boot/dts/omap3-cm-t3x.dtsi
-@@ -227,7 +227,7 @@
- 
- 		interrupt-parent = <&gpio2>;
- 		interrupts = <25 0>;		/* gpio_57 */
--		pendown-gpio = <&gpio2 25 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio2 25 GPIO_ACTIVE_LOW>;
- 
- 		ti,x-min = /bits/ 16 <0x0>;
- 		ti,x-max = /bits/ 16 <0x0fff>;
-diff --git a/arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi b/arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi
-index 3decc2d78a6ca..a7f99ae0c1fe9 100644
---- a/arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi
-+++ b/arch/arm/boot/dts/omap3-devkit8000-lcd-common.dtsi
-@@ -54,7 +54,7 @@
- 
- 		interrupt-parent = <&gpio1>;
- 		interrupts = <27 0>;		/* gpio_27 */
--		pendown-gpio = <&gpio1 27 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio1 27 GPIO_ACTIVE_LOW>;
- 
- 		ti,x-min = /bits/ 16 <0x0>;
- 		ti,x-max = /bits/ 16 <0x0fff>;
-diff --git a/arch/arm/boot/dts/omap3-lilly-a83x.dtsi b/arch/arm/boot/dts/omap3-lilly-a83x.dtsi
-index c595afe4181d7..d310b5c7bac36 100644
---- a/arch/arm/boot/dts/omap3-lilly-a83x.dtsi
-+++ b/arch/arm/boot/dts/omap3-lilly-a83x.dtsi
-@@ -311,7 +311,7 @@
- 		interrupt-parent = <&gpio1>;
- 		interrupts = <8 0>;   /* boot6 / gpio_8 */
- 		spi-max-frequency = <1000000>;
--		pendown-gpio = <&gpio1 8 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio1 8 GPIO_ACTIVE_LOW>;
- 		vcc-supply = <&reg_vcc3>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&tsc2048_pins>;
-diff --git a/arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi b/arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi
-index 1d6e88f99eb31..c3570acc35fad 100644
---- a/arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi
-+++ b/arch/arm/boot/dts/omap3-overo-common-lcd35.dtsi
-@@ -149,7 +149,7 @@
- 
- 		interrupt-parent = <&gpio4>;
- 		interrupts = <18 0>;			/* gpio_114 */
--		pendown-gpio = <&gpio4 18 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio4 18 GPIO_ACTIVE_LOW>;
- 
- 		ti,x-min = /bits/ 16 <0x0>;
- 		ti,x-max = /bits/ 16 <0x0fff>;
-diff --git a/arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi b/arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi
-index 7e30f9d45790e..d95a0e130058c 100644
---- a/arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi
-+++ b/arch/arm/boot/dts/omap3-overo-common-lcd43.dtsi
-@@ -160,7 +160,7 @@
- 
- 		interrupt-parent = <&gpio4>;
- 		interrupts = <18 0>;			/* gpio_114 */
--		pendown-gpio = <&gpio4 18 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio4 18 GPIO_ACTIVE_LOW>;
- 
- 		ti,x-min = /bits/ 16 <0x0>;
- 		ti,x-max = /bits/ 16 <0x0fff>;
-diff --git a/arch/arm/boot/dts/omap3-pandora-common.dtsi b/arch/arm/boot/dts/omap3-pandora-common.dtsi
-index 559853764487f..4c3b6bab179cc 100644
---- a/arch/arm/boot/dts/omap3-pandora-common.dtsi
-+++ b/arch/arm/boot/dts/omap3-pandora-common.dtsi
-@@ -651,7 +651,7 @@
- 		pinctrl-0 = <&penirq_pins>;
- 		interrupt-parent = <&gpio3>;
- 		interrupts = <30 IRQ_TYPE_NONE>;	/* GPIO_94 */
--		pendown-gpio = <&gpio3 30 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio3 30 GPIO_ACTIVE_LOW>;
- 		vcc-supply = <&vaux4>;
- 
- 		ti,x-min = /bits/ 16 <0>;
-diff --git a/arch/arm/boot/dts/omap5-cm-t54.dts b/arch/arm/boot/dts/omap5-cm-t54.dts
-index 2d87b9fc230ee..af288d63a26a4 100644
---- a/arch/arm/boot/dts/omap5-cm-t54.dts
-+++ b/arch/arm/boot/dts/omap5-cm-t54.dts
-@@ -354,7 +354,7 @@
- 
- 		interrupt-parent = <&gpio1>;
- 		interrupts = <15 0>;			/* gpio1_wk15 */
--		pendown-gpio = <&gpio1 15 GPIO_ACTIVE_HIGH>;
-+		pendown-gpio = <&gpio1 15 GPIO_ACTIVE_LOW>;
- 
- 
- 		ti,x-min = /bits/ 16 <0x0>;
 -- 
 2.39.2
 
