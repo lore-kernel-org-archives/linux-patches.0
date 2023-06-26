@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEAB134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2470AC433C0;
-	Mon, 26 Jun 2023 18:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B679134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:19:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AAA2C433C8;
+	Mon, 26 Jun 2023 18:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803592;
-	bh=hhEiur+hRRcMVfgVgFHDp3d7Ojq3kO+TaFm1uCZoSYk=;
+	s=korg; t=1687803595;
+	bh=PkmAwMMpaQ2Z0zOxhGAcWgpqvFpbZEtlmac6vlhcASA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D0zSJk56BjzBiuK3UhmtDIwv+x1MH8Iu37018Iz6z4xkNBnmEx/dJH6ZxqtAv8BRR
-	 geJTTR5JX80zM7kH3lxEGhj3aietVQfslmsR4xM/JdQyFVmu8hkth70IEx22PKHc1E
-	 09Aw0uRVHNiSsmvulct3xtztPiaaMemdmag4FINY=
+	b=JqOv3LrGhhO3NuJ/ioFpn1unCxQ4sXdcPur5JIDKSabS1rU7DxFHfe15tBodedYJW
+	 R3VfxWwZ9g2UNQ9P3svyfH3FDKQ+kB2y8DhN22ODljfTz7/BzvyLw/J5v+HtlXRZaG
+	 QDgbZCwxsbA4Dx3ERo7NQ/+bELnIhccgIKt77jHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <stefan.wahren@i2se.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 113/199] net: qca_spi: Avoid high load if QCA7000 is not available
-Date: Mon, 26 Jun 2023 20:10:19 +0200
-Message-ID: <20230626180810.608016615@linuxfoundation.org>
+Subject: [PATCH 6.3 114/199] mmc: mtk-sd: fix deferred probing
+Date: Mon, 26 Jun 2023 20:10:20 +0200
+Message-ID: <20230626180810.649598537@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -35,38 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Wahren <stefan.wahren@i2se.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 92717c2356cb62c89e8a3dc37cbbab2502562524 ]
+[ Upstream commit 0c4dc0f054891a2cbde0426b0c0fdf232d89f47f ]
 
-In case the QCA7000 is not available via SPI (e.g. in reset),
-the driver will cause a high load. The reason for this is
-that the synchronization is never finished and schedule()
-is never called. Since the synchronization is not timing
-critical, it's safe to drop this from the scheduling condition.
+The driver overrides the error codes returned by platform_get_irq() to
+-EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
+permanently instead of the deferred probing. Switch to propagating the
+error codes upstream.
 
-Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
-Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 208489032bdd ("mmc: mediatek: Add Mediatek MMC driver")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20230617203622.6812-4-s.shtylyov@omp.ru
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/qca_spi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/mmc/host/mtk-sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
-index c865a4be05eec..4a1b94e5a8ea9 100644
---- a/drivers/net/ethernet/qualcomm/qca_spi.c
-+++ b/drivers/net/ethernet/qualcomm/qca_spi.c
-@@ -582,8 +582,7 @@ qcaspi_spi_thread(void *data)
- 	while (!kthread_should_stop()) {
- 		set_current_state(TASK_INTERRUPTIBLE);
- 		if ((qca->intr_req == qca->intr_svc) &&
--		    (qca->txr.skb[qca->txr.head] == NULL) &&
--		    (qca->sync == QCASPI_SYNC_READY))
-+		    !qca->txr.skb[qca->txr.head])
- 			schedule();
+diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+index edade0e54a0c2..9785ec91654f7 100644
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -2680,7 +2680,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
  
- 		set_current_state(TASK_RUNNING);
+ 	host->irq = platform_get_irq(pdev, 0);
+ 	if (host->irq < 0) {
+-		ret = -EINVAL;
++		ret = host->irq;
+ 		goto host_free;
+ 	}
+ 
 -- 
 2.39.2
 
