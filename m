@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7DE11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F57C433C0;
-	Mon, 26 Jun 2023 18:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50BE11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4442BC433C8;
+	Mon, 26 Jun 2023 18:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805155;
-	bh=yT6nokENrCHLciP+rMGK+fmdcAvNa5ZyGosY0qkP1NE=;
+	s=korg; t=1687805158;
+	bh=U3HQo0GdT9luSfZJf0Fr2Rv1R0ETfwhOpUlPEw3Xn3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zwyrtb0Z60M3+PyL9z2ljp2zX1J7Nq2BW3HhkF7dQ1NAulmMEQz8usR4IG3YK9P9o
-	 +gixlrPCtu3X4az2Ufp7wC8K2As3kqB7fz4W/i38aDaZjyWKbQKDqaCy+ou9uIykwa
-	 s9SrlkuDWzKKKP8CEBC88xSyg75Rv7/40zWN7X9Q=
+	b=XzUBymdsS6mNdmQHDICtjDGmskQ24yzrQgu9s26/GYhEAoPNMXGlIfq2FzX93mmyE
+	 tX8I/Cq5/fBca3p5kzFwbIOdt6u+wwoE47dAvEVrwbLWV+umdr86QSVEihaN7IfN5r
+	 RoTztr1MzlmmygX/2cytyBgOaj3WeicCovnV76sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Marc-Andr Lureau <marcandre.lureau@redhat.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Cornelia Huck <cohuck@redhat.com>,
+	Steven Price <steven.price@arm.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 30/81] memfd: check for non-NULL file_seals in memfd_create() syscall
-Date: Mon, 26 Jun 2023 20:12:12 +0200
-Message-ID: <20230626180745.702623352@linuxfoundation.org>
+Subject: [PATCH 5.10 62/81] arm64: Add missing Set/Way CMO encodings
+Date: Mon, 26 Jun 2023 20:12:44 +0200
+Message-ID: <20230626180746.988801418@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -37,40 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 935d44acf621aa0688fef8312dec3e5940f38f4e ]
+[ Upstream commit 8d0f019e4c4f2ee2de81efd9bf1c27e9fb3c0460 ]
 
-Ensure that file_seals is non-NULL before using it in the memfd_create()
-syscall.  One situation in which memfd_file_seals_ptr() could return a
-NULL pointer when CONFIG_SHMEM=n, oopsing the kernel.
+Add the missing Set/Way CMOs that apply to tagged memory.
 
-Link: https://lkml.kernel.org/r/20230607132427.2867435-1-roberto.sassu@huaweicloud.com
-Fixes: 47b9012ecdc7 ("shmem: add sealing support to hugetlb-backed memfd")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Cc: Marc-Andr Lureau <marcandre.lureau@redhat.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20230515204601.1270428-2-maz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memfd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/sysreg.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/mm/memfd.c b/mm/memfd.c
-index fae4142f7d254..278e5636623e6 100644
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -330,7 +330,8 @@ SYSCALL_DEFINE2(memfd_create,
+diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
+index 06755fad38304..9fea6e9768096 100644
+--- a/arch/arm64/include/asm/sysreg.h
++++ b/arch/arm64/include/asm/sysreg.h
+@@ -104,8 +104,14 @@
+ #define SB_BARRIER_INSN			__SYS_BARRIER_INSN(0, 7, 31)
  
- 	if (flags & MFD_ALLOW_SEALING) {
- 		file_seals = memfd_file_seals_ptr(file);
--		*file_seals &= ~F_SEAL_SEAL;
-+		if (file_seals)
-+			*file_seals &= ~F_SEAL_SEAL;
- 	}
+ #define SYS_DC_ISW			sys_insn(1, 0, 7, 6, 2)
++#define SYS_DC_IGSW			sys_insn(1, 0, 7, 6, 4)
++#define SYS_DC_IGDSW			sys_insn(1, 0, 7, 6, 6)
+ #define SYS_DC_CSW			sys_insn(1, 0, 7, 10, 2)
++#define SYS_DC_CGSW			sys_insn(1, 0, 7, 10, 4)
++#define SYS_DC_CGDSW			sys_insn(1, 0, 7, 10, 6)
+ #define SYS_DC_CISW			sys_insn(1, 0, 7, 14, 2)
++#define SYS_DC_CIGSW			sys_insn(1, 0, 7, 14, 4)
++#define SYS_DC_CIGDSW			sys_insn(1, 0, 7, 14, 6)
  
- 	fd_install(fd, file);
+ /*
+  * System registers, organised loosely by encoding but grouped together
 -- 
 2.39.2
 
