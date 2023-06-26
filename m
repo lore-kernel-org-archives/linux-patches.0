@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2243213AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:30:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F7CC433C8;
-	Mon, 26 Jun 2023 18:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA6413AE7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:30:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C86C433C9;
+	Mon, 26 Jun 2023 18:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804201;
-	bh=D1Arx740KZgOgqjOrApaOd0z4DuI3rFsWR/0sO8CYLU=;
+	s=korg; t=1687804203;
+	bh=rrs4nCHkru8iasTk9B7yIUjabFLcWPWOQER3r64I9c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SELnhM6os+AHVwspC8mZoSPfd5beybyhlGqUA6MuF7pfp4H45Pr+G88pUU8FX0llZ
-	 kbirs7gO/7vC3ic6QuT+uNsh2zjVYXEPgk8R3Fh06c8Y0a82y0El4CYQSVuEeJt8zH
-	 jB7LDISjvzh22TMB4TyUO2nGS57a1w7fQnNpZMJQ=
+	b=iG9WwYnd4EtX0Hiva11672EU6EJxFdsmOVLD9pqCTTJhKWiGMOKheZOVCqA0z1U0R
+	 /mloXKB5l2i20DggU2r7QSb/0BWIWR/UsbeH2DZSAFjbqh5xyESRd88gB58eEZ+j6u
+	 6y21Jxwhe2pUc33kozSCBMPhmnnrUjRkXMJSzsDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Powers-Holmes <aholmes@omnom.net>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.1 075/170] arm64: dts: rockchip: Fix rk356x PCIe register and range mappings
-Date: Mon, 26 Jun 2023 20:10:44 +0200
-Message-ID: <20230626180803.993054908@linuxfoundation.org>
+	John Starks <jostarks@microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.1 049/170] Drivers: hv: vmbus: Fix vmbus_wait_for_unload() to scan present CPUs
+Date: Mon, 26 Jun 2023 20:10:18 +0200
+Message-ID: <20230626180802.765220185@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -37,82 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Powers-Holmes <aholmes@omnom.net>
+From: Michael Kelley <mikelley@microsoft.com>
 
-commit 568a67e742dfa90b19a23305317164c5c350b71e upstream.
+commit 320805ab61e5f1e2a5729ae266e16bec2904050c upstream.
 
-The register and range mappings for the PCIe controller in Rockchip's
-RK356x SoCs are incorrect. Replace them with corrected values from the
-vendor BSP sources, updated to match current DT schema.
+vmbus_wait_for_unload() may be called in the panic path after other
+CPUs are stopped. vmbus_wait_for_unload() currently loops through
+online CPUs looking for the UNLOAD response message. But the values of
+CONFIG_KEXEC_CORE and crash_kexec_post_notifiers affect the path used
+to stop the other CPUs, and in one of the paths the stopped CPUs
+are removed from cpu_online_mask. This removal happens in both
+x86/x64 and arm64 architectures. In such a case, vmbus_wait_for_unload()
+only checks the panic'ing CPU, and misses the UNLOAD response message
+except when the panic'ing CPU is CPU 0. vmbus_wait_for_unload()
+eventually times out, but only after waiting 100 seconds.
 
-These values are also used in u-boot.
+Fix this by looping through *present* CPUs in vmbus_wait_for_unload().
+The cpu_present_mask is not modified by stopping the other CPUs in the
+panic path, nor should it be.
 
-Fixes: 66b51ea7d70f ("arm64: dts: rockchip: Add rk3568 PCIe2x1 controller")
+Also, in a CoCo VM the synic_message_page is not allocated in
+hv_synic_alloc(), but is set and cleared in hv_synic_enable_regs()
+and hv_synic_disable_regs() such that it is set only when the CPU is
+online.  If not all present CPUs are online when vmbus_wait_for_unload()
+is called, the synic_message_page might be NULL. Add a check for this.
+
+Fixes: cd95aad55793 ("Drivers: hv: vmbus: handle various crash scenarios")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrew Powers-Holmes <aholmes@omnom.net>
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Signed-off-by: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
-Tested-by: Diederik de Haas <didi.debian@cknow.org>
-Link: https://lore.kernel.org/r/20230601132516.153934-1-frattaroli.nicolas@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Reported-by: John Starks <jostarks@microsoft.com>
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/1684422832-38476-1-git-send-email-mikelley@microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568.dtsi |   14 ++++++++------
- arch/arm64/boot/dts/rockchip/rk356x.dtsi |    7 ++++---
- 2 files changed, 12 insertions(+), 9 deletions(-)
+ drivers/hv/channel_mgmt.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
-@@ -94,9 +94,10 @@
- 		power-domains = <&power RK3568_PD_PIPE>;
- 		reg = <0x3 0xc0400000 0x0 0x00400000>,
- 		      <0x0 0xfe270000 0x0 0x00010000>,
--		      <0x3 0x7f000000 0x0 0x01000000>;
--		ranges = <0x01000000 0x0 0x3ef00000 0x3 0x7ef00000 0x0 0x00100000>,
--			 <0x02000000 0x0 0x00000000 0x3 0x40000000 0x0 0x3ef00000>;
-+		      <0x0 0xf2000000 0x0 0x00100000>;
-+		ranges = <0x01000000 0x0 0xf2100000 0x0 0xf2100000 0x0 0x00100000>,
-+			 <0x02000000 0x0 0xf2200000 0x0 0xf2200000 0x0 0x01e00000>,
-+			 <0x03000000 0x0 0x40000000 0x3 0x40000000 0x0 0x40000000>;
- 		reg-names = "dbi", "apb", "config";
- 		resets = <&cru SRST_PCIE30X1_POWERUP>;
- 		reset-names = "pipe";
-@@ -146,9 +147,10 @@
- 		power-domains = <&power RK3568_PD_PIPE>;
- 		reg = <0x3 0xc0800000 0x0 0x00400000>,
- 		      <0x0 0xfe280000 0x0 0x00010000>,
--		      <0x3 0xbf000000 0x0 0x01000000>;
--		ranges = <0x01000000 0x0 0x3ef00000 0x3 0xbef00000 0x0 0x00100000>,
--			 <0x02000000 0x0 0x00000000 0x3 0x80000000 0x0 0x3ef00000>;
-+		      <0x0 0xf0000000 0x0 0x00100000>;
-+		ranges = <0x01000000 0x0 0xf0100000 0x0 0xf0100000 0x0 0x00100000>,
-+			 <0x02000000 0x0 0xf0200000 0x0 0xf0200000 0x0 0x01e00000>,
-+			 <0x03000000 0x0 0x40000000 0x3 0x80000000 0x0 0x40000000>;
- 		reg-names = "dbi", "apb", "config";
- 		resets = <&cru SRST_PCIE30X2_POWERUP>;
- 		reset-names = "pipe";
---- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-@@ -951,7 +951,7 @@
- 		compatible = "rockchip,rk3568-pcie";
- 		reg = <0x3 0xc0000000 0x0 0x00400000>,
- 		      <0x0 0xfe260000 0x0 0x00010000>,
--		      <0x3 0x3f000000 0x0 0x01000000>;
-+		      <0x0 0xf4000000 0x0 0x00100000>;
- 		reg-names = "dbi", "apb", "config";
- 		interrupts = <GIC_SPI 75 IRQ_TYPE_LEVEL_HIGH>,
- 			     <GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH>,
-@@ -981,8 +981,9 @@
- 		phys = <&combphy2 PHY_TYPE_PCIE>;
- 		phy-names = "pcie-phy";
- 		power-domains = <&power RK3568_PD_PIPE>;
--		ranges = <0x01000000 0x0 0x3ef00000 0x3 0x3ef00000 0x0 0x00100000
--			  0x02000000 0x0 0x00000000 0x3 0x00000000 0x0 0x3ef00000>;
-+		ranges = <0x01000000 0x0 0xf4100000 0x0 0xf4100000 0x0 0x00100000>,
-+			 <0x02000000 0x0 0xf4200000 0x0 0xf4200000 0x0 0x01e00000>,
-+			 <0x03000000 0x0 0x40000000 0x3 0x00000000 0x0 0x40000000>;
- 		resets = <&cru SRST_PCIE20_POWERUP>;
- 		reset-names = "pipe";
- 		#address-cells = <3>;
+--- a/drivers/hv/channel_mgmt.c
++++ b/drivers/hv/channel_mgmt.c
+@@ -829,11 +829,22 @@ static void vmbus_wait_for_unload(void)
+ 		if (completion_done(&vmbus_connection.unload_event))
+ 			goto completed;
+ 
+-		for_each_online_cpu(cpu) {
++		for_each_present_cpu(cpu) {
+ 			struct hv_per_cpu_context *hv_cpu
+ 				= per_cpu_ptr(hv_context.cpu_context, cpu);
+ 
++			/*
++			 * In a CoCo VM the synic_message_page is not allocated
++			 * in hv_synic_alloc(). Instead it is set/cleared in
++			 * hv_synic_enable_regs() and hv_synic_disable_regs()
++			 * such that it is set only when the CPU is online. If
++			 * not all present CPUs are online, the message page
++			 * might be NULL, so skip such CPUs.
++			 */
+ 			page_addr = hv_cpu->synic_message_page;
++			if (!page_addr)
++				continue;
++
+ 			msg = (struct hv_message *)page_addr
+ 				+ VMBUS_MESSAGE_SINT;
+ 
+@@ -867,11 +878,14 @@ completed:
+ 	 * maybe-pending messages on all CPUs to be able to receive new
+ 	 * messages after we reconnect.
+ 	 */
+-	for_each_online_cpu(cpu) {
++	for_each_present_cpu(cpu) {
+ 		struct hv_per_cpu_context *hv_cpu
+ 			= per_cpu_ptr(hv_context.cpu_context, cpu);
+ 
+ 		page_addr = hv_cpu->synic_message_page;
++		if (!page_addr)
++			continue;
++
+ 		msg = (struct hv_message *)page_addr + VMBUS_MESSAGE_SINT;
+ 		msg->header.message_type = HVMSG_NONE;
+ 	}
 
 
