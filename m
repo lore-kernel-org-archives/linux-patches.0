@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F5311CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106E7C433C8;
-	Mon, 26 Jun 2023 18:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C026B11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:39:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE2CC433C8;
+	Mon, 26 Jun 2023 18:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804781;
-	bh=cGw9QHCVuDwSqJtvv4C0gVXI19jHMBQvtscjn1aNeiE=;
+	s=korg; t=1687804784;
+	bh=sxyg1I702fd50L5jYVFqEbuytSaJjn7iAEUHcVKwcF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6qfBGHSKfEQ/15isDxdbatebConqq8cTcLmhDKczQY+zfl5S9FWT4NrvKW11EkvH
-	 32UTfesJ4rNP3Pnw08Ajme+DIh/+fjsM21kcADI2h8757IzEzjjCqHbUVBdqoOolyz
-	 igeFPKbBtmSZhUksWzklYaYqKIQirilIjghEUjUg=
+	b=f9akn6jBpNDlHycGfJaP2jQ30FEjnMVBiEjpS+oa5ICLN1R5BQjyih1Rg10N988Cr
+	 6bC0OUIYR8crSZQJ/bt7V+sG90thWb4Gzx+pFdTj4UBkcRT5cI0HrzDch8PocShfhF
+	 YPU/VgLi9k67Pw43OEY0eppybqRK15koJGfhqDBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Hardik Garg <hargar@linux.microsoft.com>
-Subject: [PATCH 5.15 10/96] selftests/mount_setattr: fix redefine struct mount_attr build error
-Date: Mon, 26 Jun 2023 20:11:25 +0200
-Message-ID: <20230626180747.365210276@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 11/96] selftests: mptcp: pm nl: remove hardcoded default limits
+Date: Mon, 26 Jun 2023 20:11:26 +0200
+Message-ID: <20230626180747.395175970@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -34,46 +34,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuah Khan <skhan@linuxfoundation.org>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit d8e45bf1aed2e5fddd8985b5bb1aaf774a97aba8 upstream.
+commit 2177d0b08e421971e035672b70f3228d9485c650 upstream.
 
-Fix the following build error due to redefining struct mount_attr by
-removing duplicate define from mount_setattr_test.c
+Selftests are supposed to run on any kernels, including the old ones not
+supporting all MPTCP features.
 
-gcc -g -isystem .../tools/testing/selftests/../../../usr/include -Wall -O2 -pthread     mount_setattr_test.c  -o .../tools/testing/selftests/mount_setattr/mount_setattr_test
-mount_setattr_test.c:107:8: error: redefinition of ‘struct mount_attr’
-  107 | struct mount_attr {
-      |        ^~~~~~~~~~
-In file included from /usr/include/x86_64-linux-gnu/sys/mount.h:32,
-                 from mount_setattr_test.c:10:
-.../usr/include/linux/mount.h:129:8: note: originally defined here
-  129 | struct mount_attr {
-      |        ^~~~~~~~~~
-make: *** [../lib.mk:145: .../tools/testing/selftests/mount_setattr/mount_setattr_test] Error 1
+One of them is the checks of the default limits returned by the MPTCP
+in-kernel path-manager. The default values have been modified by commit
+72bcbc46a5c3 ("mptcp: increase default max additional subflows to 2").
+Instead of comparing with hardcoded values, we can get the default one
+and compare with them.
 
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Hardik Garg <hargar@linux.microsoft.com>
+Note that if we expect to have the latest version, we continue to check
+the hardcoded values to avoid unexpected behaviour changes.
+
+Link: https://github.com/multipath-tcp/mptcp_net-next/issues/368
+Fixes: eedbc685321b ("selftests: add PM netlink functional tests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mount_setattr/mount_setattr_test.c |    7 -------
- 1 file changed, 7 deletions(-)
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-+++ b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-@@ -104,13 +104,6 @@
- 	#else
- 		#define __NR_mount_setattr 442
- 	#endif
--
--struct mount_attr {
--	__u64 attr_set;
--	__u64 attr_clr;
--	__u64 propagation;
--	__u64 userns_fd;
--};
- #endif
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -73,8 +73,12 @@ check()
+ }
  
- #ifndef __NR_open_tree
+ check "ip netns exec $ns1 ./pm_nl_ctl dump" "" "defaults addr list"
+-check "ip netns exec $ns1 ./pm_nl_ctl limits" "accept 0
++
++default_limits="$(ip netns exec $ns1 ./pm_nl_ctl limits)"
++if mptcp_lib_expect_all_features; then
++	check "ip netns exec $ns1 ./pm_nl_ctl limits" "accept 0
+ subflows 0" "defaults limits"
++fi
+ 
+ ip netns exec $ns1 ./pm_nl_ctl add 10.0.1.1
+ ip netns exec $ns1 ./pm_nl_ctl add 10.0.1.2 flags subflow dev lo
+@@ -121,12 +125,10 @@ ip netns exec $ns1 ./pm_nl_ctl flush
+ check "ip netns exec $ns1 ./pm_nl_ctl dump" "" "flush addrs"
+ 
+ ip netns exec $ns1 ./pm_nl_ctl limits 9 1
+-check "ip netns exec $ns1 ./pm_nl_ctl limits" "accept 0
+-subflows 0" "rcv addrs above hard limit"
++check "ip netns exec $ns1 ./pm_nl_ctl limits" "$default_limits" "rcv addrs above hard limit"
+ 
+ ip netns exec $ns1 ./pm_nl_ctl limits 1 9
+-check "ip netns exec $ns1 ./pm_nl_ctl limits" "accept 0
+-subflows 0" "subflows above hard limit"
++check "ip netns exec $ns1 ./pm_nl_ctl limits" "$default_limits" "subflows above hard limit"
+ 
+ ip netns exec $ns1 ./pm_nl_ctl limits 8 8
+ check "ip netns exec $ns1 ./pm_nl_ctl limits" "accept 8
 
 
