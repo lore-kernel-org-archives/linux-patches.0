@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21724C155
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:41:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC0AC433C0;
-	Mon, 26 Jun 2023 18:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182FDC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:41:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88255C433C0;
+	Mon, 26 Jun 2023 18:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804874;
-	bh=A7R/cC/4bnd3PSBE18dGWU4Va1blHu3yDAuhMMXiHHc=;
+	s=korg; t=1687804876;
+	bh=gdasKYzgKq3xo1PycJLrWJ3t2Z2hJ7sAmD3PN7XHBQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7NgqqYeJOlCycAn6ezlNzgS4XC6GEtZXamOzsxBgRU4qsZV/oyvu3V6v/IJuskZf
-	 o2SakGgaZVzawv16yaDYDgWTZIT0qqGxIl+vZAWlBXWCDKFygPS69QHyqWvn2N/80w
-	 iYnQH0mH0+b+f03wqfiPZZOL714xLH4xqlXcE0IU=
+	b=tLIPThAnTBjLn8QEordVSom4QmRFphbNQ30cwJsozndhCLJO+RoMibXMX48y5cn5H
+	 Atx2qibqcz1TtdCM6RNP1/UyKJWByPparipyX5tvwOZbtURGz7q9b7I5Oux5isVjIT
+	 TxyIajRQs6OYpgPScfkuLzdypREc+La8bo8bsgck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 43/96] bpf: track immediate values written to stack by BPF_ST instruction
-Date: Mon, 26 Jun 2023 20:11:58 +0200
-Message-ID: <20230626180748.733855427@linuxfoundation.org>
+	Maxim Mikityanskiy <maxim@isovalent.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yhs@fb.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>
+Subject: [PATCH 5.15 44/96] bpf: Fix verifier id tracking of scalars on spill
+Date: Mon, 26 Jun 2023 20:11:59 +0200
+Message-ID: <20230626180748.784462243@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -35,482 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Maxim Mikityanskiy <maxim@isovalent.com>
 
-[ Upstream commit ecdf985d7615356b78241fdb159c091830ed0380 ]
+[ Upstream commit 713274f1f2c896d37017efee333fd44149710119 ]
 
-For aligned stack writes using BPF_ST instruction track stored values
-in a same way BPF_STX is handled, e.g. make sure that the following
-commands produce similar verifier knowledge:
+The following scenario describes a bug in the verifier where it
+incorrectly concludes about equivalent scalar IDs which could lead to
+verifier bypass in privileged mode:
 
-  fp[-8] = 42;             r1 = 42;
-                       fp[-8] = r1;
+1. Prepare a 32-bit rogue number.
+2. Put the rogue number into the upper half of a 64-bit register, and
+   roll a random (unknown to the verifier) bit in the lower half. The
+   rest of the bits should be zero (although variations are possible).
+3. Assign an ID to the register by MOVing it to another arbitrary
+   register.
+4. Perform a 32-bit spill of the register, then perform a 32-bit fill to
+   another register. Due to a bug in the verifier, the ID will be
+   preserved, although the new register will contain only the lower 32
+   bits, i.e. all zeros except one random bit.
 
-This covers two cases:
- - non-null values written to stack are stored as spill of fake
-   registers;
- - null values written to stack are stored as STACK_ZERO marks.
+At this point there are two registers with different values but the same
+ID, which means the integrity of the verifier state has been corrupted.
 
-Previously both cases above used STACK_MISC marks instead.
+5. Compare the new 32-bit register with 0. In the branch where it's
+   equal to 0, the verifier will believe that the original 64-bit
+   register is also 0, because it has the same ID, but its actual value
+   still contains the rogue number in the upper half.
+   Some optimizations of the verifier prevent the actual bypass, so
+   extra care is needed: the comparison must be between two registers,
+   and both branches must be reachable (this is why one random bit is
+   needed). Both branches are still suitable for the bypass.
+6. Right shift the original register by 32 bits to pop the rogue number.
+7. Use the rogue number as an offset with any pointer. The verifier will
+   believe that the offset is 0, while in reality it's the given number.
 
-Some verifier test cases relied on the old logic to obtain STACK_MISC
-marks for some stack values. These test cases are updated in the same
-commit to avoid failures during bisect.
+The fix is similar to the 32-bit BPF_MOV handling in check_alu_op for
+SCALAR_VALUE. If the spill is narrowing the actual register value, don't
+keep the ID, make sure it's reset to 0.
 
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20230214232030.1502829-2-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 713274f1f2c8 ("bpf: Fix verifier id tracking of scalars on spill")
+Fixes: 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
+Signed-off-by: Maxim Mikityanskiy <maxim@isovalent.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Andrii Nakryiko <andrii@kernel.org> # Checked veristat delta
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20230607123951.558971-2-maxtram95@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                         |  18 ++-
- .../bpf/verifier/bounds_mix_sign_unsign.c     | 110 ++++++++++--------
- 2 files changed, 80 insertions(+), 48 deletions(-)
+ kernel/bpf/verifier.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 27fd331aefe57..9d7a6bf5f7c1f 100644
+index 9d7a6bf5f7c1f..4f2271f27a1db 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -2659,6 +2659,11 @@ static void save_register_state(struct bpf_func_state *state,
- 		scrub_spilled_slot(&state->stack[spi].slot_type[i - 1]);
- }
- 
-+static bool is_bpf_st_mem(struct bpf_insn *insn)
-+{
-+	return BPF_CLASS(insn->code) == BPF_ST && BPF_MODE(insn->code) == BPF_MEM;
-+}
-+
- /* check_stack_{read,write}_fixed_off functions track spill/fill of registers,
-  * stack boundary and alignment are checked in check_mem_access()
-  */
-@@ -2670,8 +2675,9 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- {
- 	struct bpf_func_state *cur; /* state of the current function */
- 	int i, slot = -off - 1, spi = slot / BPF_REG_SIZE, err;
--	u32 dst_reg = env->prog->insnsi[insn_idx].dst_reg;
-+	struct bpf_insn *insn = &env->prog->insnsi[insn_idx];
- 	struct bpf_reg_state *reg = NULL;
-+	u32 dst_reg = insn->dst_reg;
- 
- 	err = grow_stack_state(state, round_up(slot + 1, BPF_REG_SIZE));
- 	if (err)
-@@ -2719,6 +2725,13 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+@@ -2725,6 +2725,9 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
  				return err;
  		}
  		save_register_state(state, spi, reg, size);
-+	} else if (!reg && !(off % BPF_REG_SIZE) && is_bpf_st_mem(insn) &&
-+		   insn->imm != 0 && env->bpf_capable) {
-+		struct bpf_reg_state fake_reg = {};
-+
-+		__mark_reg_known(&fake_reg, (u32)insn->imm);
-+		fake_reg.type = SCALAR_VALUE;
-+		save_register_state(state, spi, &fake_reg, size);
- 	} else if (reg && is_spillable_regtype(reg->type)) {
- 		/* register containing pointer is being spilled into stack */
- 		if (size != BPF_REG_SIZE) {
-@@ -2753,7 +2766,8 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 			state->stack[spi].spilled_ptr.live |= REG_LIVE_WRITTEN;
- 
- 		/* when we zero initialize stack slots mark them as such */
--		if (reg && register_is_null(reg)) {
-+		if ((reg && register_is_null(reg)) ||
-+		    (!reg && is_bpf_st_mem(insn) && insn->imm == 0)) {
- 			/* backtracking doesn't work for STACK_ZERO yet. */
- 			err = mark_chain_precision(env, value_regno);
- 			if (err)
-diff --git a/tools/testing/selftests/bpf/verifier/bounds_mix_sign_unsign.c b/tools/testing/selftests/bpf/verifier/bounds_mix_sign_unsign.c
-index c2aa6f26738b4..bf82b923c5fe5 100644
---- a/tools/testing/selftests/bpf/verifier/bounds_mix_sign_unsign.c
-+++ b/tools/testing/selftests/bpf/verifier/bounds_mix_sign_unsign.c
-@@ -1,13 +1,14 @@
- {
- 	"bounds checks mixing signed and unsigned, positive bounds",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 7),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 6),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, 2),
- 	BPF_JMP_REG(BPF_JGE, BPF_REG_2, BPF_REG_1, 3),
-@@ -17,20 +18,21 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 7),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 6),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, -1),
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_1, BPF_REG_2, 3),
-@@ -40,20 +42,21 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 2",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 9),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 8),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, -1),
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_1, BPF_REG_2, 5),
-@@ -65,20 +68,21 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 3",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 8),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 7),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, -1),
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_1, BPF_REG_2, 4),
-@@ -89,20 +93,21 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 4",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 7),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 6),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, 1),
- 	BPF_ALU64_REG(BPF_AND, BPF_REG_1, BPF_REG_2),
-@@ -112,19 +117,20 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.result = ACCEPT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 5",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 9),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 8),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, -1),
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_1, BPF_REG_2, 5),
-@@ -135,17 +141,20 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 6",
- 	.insns = {
-+	BPF_MOV64_REG(BPF_REG_9, BPF_REG_1),
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
-+	BPF_MOV64_REG(BPF_REG_1, BPF_REG_9),
- 	BPF_MOV64_IMM(BPF_REG_2, 0),
- 	BPF_MOV64_REG(BPF_REG_3, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_3, -512),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_4, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_6, -1),
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_4, BPF_REG_6, 5),
-@@ -163,13 +172,14 @@
- {
- 	"bounds checks mixing signed and unsigned, variant 7",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 7),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 6),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, 1024 * 1024 * 1024),
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_1, BPF_REG_2, 3),
-@@ -179,19 +189,20 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.result = ACCEPT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 8",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 9),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 8),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, -1),
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_2, BPF_REG_1, 2),
-@@ -203,20 +214,21 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 9",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 10),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 9),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_LD_IMM64(BPF_REG_2, -9223372036854775808ULL),
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_2, BPF_REG_1, 2),
-@@ -228,19 +240,20 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.result = ACCEPT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 10",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 9),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 8),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, 0),
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_2, BPF_REG_1, 2),
-@@ -252,20 +265,21 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 11",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 9),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 8),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, -1),
- 	BPF_JMP_REG(BPF_JGE, BPF_REG_2, BPF_REG_1, 2),
-@@ -278,20 +292,21 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 12",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 9),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 8),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, -6),
- 	BPF_JMP_REG(BPF_JGE, BPF_REG_2, BPF_REG_1, 2),
-@@ -303,20 +318,21 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 13",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 6),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 5),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, 2),
- 	BPF_JMP_REG(BPF_JGE, BPF_REG_2, BPF_REG_1, 2),
-@@ -331,7 +347,7 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
-@@ -340,13 +356,14 @@
- 	.insns = {
- 	BPF_LDX_MEM(BPF_W, BPF_REG_9, BPF_REG_1,
- 		    offsetof(struct __sk_buff, mark)),
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 8),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 7),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, -1),
- 	BPF_MOV64_IMM(BPF_REG_8, 2),
-@@ -360,20 +377,21 @@
- 	BPF_JMP_REG(BPF_JGT, BPF_REG_1, BPF_REG_2, -3),
- 	BPF_JMP_IMM(BPF_JA, 0, 0, -7),
- 	},
--	.fixup_map_hash_8b = { 4 },
-+	.fixup_map_hash_8b = { 6 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
- {
- 	"bounds checks mixing signed and unsigned, variant 15",
- 	.insns = {
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_STX_MEM(BPF_DW, BPF_REG_10, BPF_REG_0, -16),
- 	BPF_ST_MEM(BPF_DW, BPF_REG_10, -8, 0),
- 	BPF_MOV64_REG(BPF_REG_2, BPF_REG_10),
- 	BPF_ALU64_IMM(BPF_ADD, BPF_REG_2, -8),
- 	BPF_LD_MAP_FD(BPF_REG_1, 0),
- 	BPF_RAW_INSN(BPF_JMP | BPF_CALL, 0, 0, 0, BPF_FUNC_map_lookup_elem),
--	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 4),
--	BPF_ST_MEM(BPF_DW, BPF_REG_10, -16, -8),
-+	BPF_JMP_IMM(BPF_JEQ, BPF_REG_0, 0, 3),
- 	BPF_LDX_MEM(BPF_DW, BPF_REG_1, BPF_REG_10, -16),
- 	BPF_MOV64_IMM(BPF_REG_2, -6),
- 	BPF_JMP_REG(BPF_JGE, BPF_REG_2, BPF_REG_1, 2),
-@@ -387,7 +405,7 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 0),
- 	BPF_EXIT_INSN(),
- 	},
--	.fixup_map_hash_8b = { 3 },
-+	.fixup_map_hash_8b = { 5 },
- 	.errstr = "unbounded min value",
- 	.result = REJECT,
- },
++		/* Break the relation on a narrowing spill. */
++		if (fls64(reg->umax_value) > BITS_PER_BYTE * size)
++			state->stack[spi].spilled_ptr.id = 0;
+ 	} else if (!reg && !(off % BPF_REG_SIZE) && is_bpf_st_mem(insn) &&
+ 		   insn->imm != 0 && env->bpf_capable) {
+ 		struct bpf_reg_state fake_reg = {};
 -- 
 2.39.2
 
