@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6D8C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:41:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84684C433C0;
-	Mon, 26 Jun 2023 18:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9E7C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:41:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FACC433C0;
+	Mon, 26 Jun 2023 18:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804879;
-	bh=OM6a/IlQykWJ/Mcfc6wtWyvyuVoTz1e/0DbcrUGWN04=;
+	s=korg; t=1687804883;
+	bh=VYLH5n8IPeIldbYbhbsNlQ1X+8ADqiCq0EGLs32y/6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7n7bc23P11cz9T+qHZqg1ikEtoGKYhkZhs/enFV7l7kA+ZPr/tea6fUYYs6KKCLd
-	 cUjbRKu/JpRbPJPWKO97wBkKLGhwTMSQiCt6e+uCyrHG3oRdTQe3OZaOdM+9q5JfGf
-	 8xqYeV6ghSoxmwxkRhBd9/PBUbFAiD5gEg4mqfug=
+	b=E95AijEAL/K+H+yer8VhA8pHFly90c4/gg5vA43gnu6VkSZqMzLvz5YF9m+OW6U75
+	 9fGInAqcNVxb3GNLQXN37BOjPzQWFLMNbYWgKJ0OwAAFvJz3Bka1B3lQwKwHWYhRCP
+	 ydmwLBIvOXnYjGyp4jUmxr1Zf3tKT//ia6O7dI24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Benedict Wong <benedictwong@google.com>,
-	Yan Yan <evitayan@google.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 45/96] xfrm: fix inbound ipv4/udp/esp packets to UDPv6 dualstack sockets
-Date: Mon, 26 Jun 2023 20:12:00 +0200
-Message-ID: <20230626180748.835992381@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.15 36/96] x86/mm: Avoid using set_pgd() outside of real PGD pages
+Date: Mon, 26 Jun 2023 20:11:51 +0200
+Message-ID: <20230626180748.459708552@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -40,60 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Żenczykowski <maze@google.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 1166a530a84758bb9e6b448fc8c195ed413f5ded ]
+commit d082d48737c75d2b3cc1f972b8c8674c25131534 upstream.
 
-Before Linux v5.8 an AF_INET6 SOCK_DGRAM (udp/udplite) socket
-with SOL_UDP, UDP_ENCAP, UDP_ENCAP_ESPINUDP{,_NON_IKE} enabled
-would just unconditionally use xfrm4_udp_encap_rcv(), afterwards
-such a socket would use the newly added xfrm6_udp_encap_rcv()
-which only handles IPv6 packets.
+KPTI keeps around two PGDs: one for userspace and another for the
+kernel. Among other things, set_pgd() contains infrastructure to
+ensure that updates to the kernel PGD are reflected in the user PGD
+as well.
 
-Cc: Sabrina Dubroca <sd@queasysnail.net>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Benedict Wong <benedictwong@google.com>
-Cc: Yan Yan <evitayan@google.com>
-Fixes: 0146dca70b87 ("xfrm: add support for UDPv6 encapsulation of ESP")
-Signed-off-by: Maciej Żenczykowski <maze@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+One side-effect of this is that set_pgd() expects to be passed whole
+pages.  Unfortunately, init_trampoline_kaslr() passes in a single entry:
+'trampoline_pgd_entry'.
+
+When KPTI is on, set_pgd() will update 'trampoline_pgd_entry' (an
+8-Byte globally stored [.bss] variable) and will then proceed to
+replicate that value into the non-existent neighboring user page
+(located +4k away), leading to the corruption of other global [.bss]
+stored variables.
+
+Fix it by directly assigning 'trampoline_pgd_entry' and avoiding
+set_pgd().
+
+[ dhansen: tweak subject and changelog ]
+
+Fixes: 0925dda5962e ("x86/mm/KASLR: Use only one PUD entry for real mode trampoline")
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/all/20230614163859.924309-1-lee@kernel.org/g
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/xfrm4_input.c | 1 +
- net/ipv6/xfrm6_input.c | 3 +++
- 2 files changed, 4 insertions(+)
+ arch/x86/mm/kaslr.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
-index ad2afeef4f106..eac206a290d05 100644
---- a/net/ipv4/xfrm4_input.c
-+++ b/net/ipv4/xfrm4_input.c
-@@ -164,6 +164,7 @@ int xfrm4_udp_encap_rcv(struct sock *sk, struct sk_buff *skb)
- 	kfree_skb(skb);
- 	return 0;
+--- a/arch/x86/mm/kaslr.c
++++ b/arch/x86/mm/kaslr.c
+@@ -172,10 +172,10 @@ void __meminit init_trampoline_kaslr(voi
+ 		set_p4d(p4d_tramp,
+ 			__p4d(_KERNPG_TABLE | __pa(pud_page_tramp)));
+ 
+-		set_pgd(&trampoline_pgd_entry,
+-			__pgd(_KERNPG_TABLE | __pa(p4d_page_tramp)));
++		trampoline_pgd_entry =
++			__pgd(_KERNPG_TABLE | __pa(p4d_page_tramp));
+ 	} else {
+-		set_pgd(&trampoline_pgd_entry,
+-			__pgd(_KERNPG_TABLE | __pa(pud_page_tramp)));
++		trampoline_pgd_entry =
++			__pgd(_KERNPG_TABLE | __pa(pud_page_tramp));
+ 	}
  }
-+EXPORT_SYMBOL(xfrm4_udp_encap_rcv);
- 
- int xfrm4_rcv(struct sk_buff *skb)
- {
-diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
-index 04cbeefd89828..4907ab241d6be 100644
---- a/net/ipv6/xfrm6_input.c
-+++ b/net/ipv6/xfrm6_input.c
-@@ -86,6 +86,9 @@ int xfrm6_udp_encap_rcv(struct sock *sk, struct sk_buff *skb)
- 	__be32 *udpdata32;
- 	__u16 encap_type = up->encap_type;
- 
-+	if (skb->protocol == htons(ETH_P_IP))
-+		return xfrm4_udp_encap_rcv(sk, skb);
-+
- 	/* if this is not encapsulated socket, then just return now */
- 	if (!encap_type)
- 		return 1;
--- 
-2.39.2
-
 
 
