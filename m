@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EA0BA36
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BB0C433C0;
-	Mon, 26 Jun 2023 18:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FADFBA36
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6F8C433C8;
+	Mon, 26 Jun 2023 18:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804471;
-	bh=zDkmCzoJ4gm1dJ3VkRsGn50ZQ7htLUi14Cd3SrW/GRY=;
+	s=korg; t=1687804474;
+	bh=Lf3w0L+5xigT1D9IKLu+7PG0FIbTduzNNklOfXW3rHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hpZ1In1YukyOqb22qfRZwqwb1AHGosTYO//hq1l70rouVj2Z4XUt+2pDAUDqegJbK
-	 gNL7TEjMS85JtFaozPFtsz4lpi+VZryj30M07HOyGH0+fosGohj2DOycNchdDAqZ+R
-	 O8TEaSw6rH70M0VYReIoimjDHrsYkQU9OV0kYmXY=
+	b=Fs44lzi86Tg0XFA1Msx3Sa7xuvbJ3K7t01WmZV9RF/5MYDVt+zHdoSBGrvrhWb4Dt
+	 +4q0T3B1jIUNjKPkYjsEWr64gXt8vbLP5VBx9trHAVrHO7u2gExRtM6S5Oli9GLP5C
+	 uTgk0XuyuwccPh0AmHwvgzY7GSWia5nSTvrsGAJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 167/170] KVM: arm64: Restore GICv2-on-GICv3 functionality
-Date: Mon, 26 Jun 2023 20:12:16 +0200
-Message-ID: <20230626180807.958296521@linuxfoundation.org>
+	Costa Sapuntzakis <costa@purestorage.com>,
+	Randy Jennings <randyj@purestorage.com>,
+	Uday Shankar <ushankar@purestorage.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 141/170] nvme: double KA polling frequency to avoid KATO with TBKAS on
+Date: Mon, 26 Jun 2023 20:11:50 +0200
+Message-ID: <20230626180806.871464562@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -34,67 +40,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Uday Shankar <ushankar@purestorage.com>
 
-commit 1caa71a7a600f7781ce05ef1e84701c459653663 upstream.
+[ Upstream commit ea4d453b9ec9ea279c39744cd0ecb47ef48ede35 ]
 
-When reworking the vgic locking, the vgic distributor registration
-got simplified, which was a very good cleanup. But just a tad too
-radical, as we now register the *native* vgic only, ignoring the
-GICv2-on-GICv3 that allows pre-historic VMs (or so I thought)
-to run.
+With TBKAS on, the completion of one command can defer sending a
+keep alive for up to twice the delay between successive runs of
+nvme_keep_alive_work. The current delay of KATO / 2 thus makes it
+possible for one command to defer sending a keep alive for up to
+KATO, which can result in the controller detecting a KATO. The following
+trace demonstrates the issue, taking KATO = 8 for simplicity:
 
-As it turns out, QEMU still defaults to GICv2 in some cases, and
-this breaks Nathan's setup!
+1. t = 0: run nvme_keep_alive_work, no keep-alive sent
+2. t = ε: I/O completion seen, set comp_seen = true
+3. t = 4: run nvme_keep_alive_work, see comp_seen == true,
+          skip sending keep-alive, set comp_seen = false
+4. t = 8: run nvme_keep_alive_work, see comp_seen == false,
+          send a keep-alive command.
 
-Fix it by propagating the *requested* vgic type rather than the
-host's version.
+Here, there is a delay of 8 - ε between receiving a command completion
+and sending the next command. With ε small, the controller is likely to
+detect a keep alive timeout.
 
-Fixes: 59112e9c390b ("KVM: arm64: vgic: Fix a circular locking issue")
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-link: https://lore.kernel.org/r/20230606221525.GA2269598@dev-arch.thelio-3990X
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by running nvme_keep_alive_work with a delay of KATO / 4
+whenever TBKAS is on. Going through the above trace now gives us a
+worst-case delay of 4 - ε, which is in line with the recommendation of
+sending a command every KATO / 2 in the NVMe specification.
+
+Reported-by: Costa Sapuntzakis <costa@purestorage.com>
+Reported-by: Randy Jennings <randyj@purestorage.com>
+Signed-off-by: Uday Shankar <ushankar@purestorage.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-init.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/nvme/host/core.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-init.c
-+++ b/arch/arm64/kvm/vgic/vgic-init.c
-@@ -446,6 +446,7 @@ int vgic_lazy_init(struct kvm *kvm)
- int kvm_vgic_map_resources(struct kvm *kvm)
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 2e22c78991ccf..a97f2f21c5321 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1198,9 +1198,25 @@ EXPORT_SYMBOL_NS_GPL(nvme_execute_passthru_rq, NVME_TARGET_PASSTHRU);
+  *   The host should send Keep Alive commands at half of the Keep Alive Timeout
+  *   accounting for transport roundtrip times [..].
+  */
++static unsigned long nvme_keep_alive_work_period(struct nvme_ctrl *ctrl)
++{
++	unsigned long delay = ctrl->kato * HZ / 2;
++
++	/*
++	 * When using Traffic Based Keep Alive, we need to run
++	 * nvme_keep_alive_work at twice the normal frequency, as one
++	 * command completion can postpone sending a keep alive command
++	 * by up to twice the delay between runs.
++	 */
++	if (ctrl->ctratt & NVME_CTRL_ATTR_TBKAS)
++		delay /= 2;
++	return delay;
++}
++
+ static void nvme_queue_keep_alive_work(struct nvme_ctrl *ctrl)
  {
- 	struct vgic_dist *dist = &kvm->arch.vgic;
-+	enum vgic_type type;
- 	gpa_t dist_base;
- 	int ret = 0;
+-	queue_delayed_work(nvme_wq, &ctrl->ka_work, ctrl->kato * HZ / 2);
++	queue_delayed_work(nvme_wq, &ctrl->ka_work,
++			   nvme_keep_alive_work_period(ctrl));
+ }
  
-@@ -460,10 +461,13 @@ int kvm_vgic_map_resources(struct kvm *k
- 	if (!irqchip_in_kernel(kvm))
- 		goto out;
- 
--	if (dist->vgic_model == KVM_DEV_TYPE_ARM_VGIC_V2)
-+	if (dist->vgic_model == KVM_DEV_TYPE_ARM_VGIC_V2) {
- 		ret = vgic_v2_map_resources(kvm);
--	else
-+		type = VGIC_V2;
-+	} else {
- 		ret = vgic_v3_map_resources(kvm);
-+		type = VGIC_V3;
-+	}
- 
- 	if (ret) {
- 		__kvm_vgic_destroy(kvm);
-@@ -473,8 +477,7 @@ int kvm_vgic_map_resources(struct kvm *k
- 	dist_base = dist->vgic_dist_base;
- 	mutex_unlock(&kvm->arch.config_lock);
- 
--	ret = vgic_register_dist_iodev(kvm, dist_base,
--				       kvm_vgic_global_state.type);
-+	ret = vgic_register_dist_iodev(kvm, dist_base, type);
- 	if (ret) {
- 		kvm_err("Unable to register VGIC dist MMIO regions\n");
- 		kvm_vgic_destroy(kvm);
+ static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
+-- 
+2.39.2
+
 
 
