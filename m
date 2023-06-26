@@ -1,68 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F57AC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37339C433C8;
-	Mon, 26 Jun 2023 18:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1D1C8F8
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745FFC433C0;
+	Mon, 26 Jun 2023 18:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805040;
-	bh=0LA+D8IUozFZSs8td560Y7MgW7OSGP5A3ybuIBwsADA=;
+	s=korg; t=1687805042;
+	bh=0KK1jfcXl4jDTacNCH/v4dSYab6frae1XwEBIB1ohqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zKG7cM9LeOKi8OpiOH6T1VQ87fjA+4rGhowmlSVas3zAbqKswpx79RMTRcM5MA5BY
-	 ey78UO97WByVoDITmai/iBcHU9M6k0W9H82coWnZQm1UEEWGe0NvTaCSIJIQa6Lnht
-	 9arwaM2jYvbJt3mAQpQ8c14ELZotk5ICptOG9d04=
+	b=THvqrAhztcwgvMbb1cKw/rmUwgyIuJjvtaJ/ZZ3fepP3Nb1vEQjqSesquIBxlYpPC
+	 88wMGgB53QXmJsmol7TERsuPoJI2EzEwWQ5UYCL95s9zfb4IomLLWhctzgoMdjbxVh
+	 V/gaUoRbmNLJeM+W1n4sNF8CpxWiEziHOPcSow54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoming Ni <nixiaoming@huawei.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Benjamin LaHaise <bcrl@kvack.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Iurii Zaikin <yzaikin@google.com>,
-	Jan Kara <jack@suse.cz>,
-	Paul Turner <pjt@google.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Qing Wang <wangqing@vivo.com>,
-	Sebastian Reichel <sre@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Stephen Kitt <steve@sk2.org>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Antti Palosaari <crope@iki.fi>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Clemens Ladisch <clemens@ladisch.de>,
-	David Airlie <airlied@linux.ie>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Lukas Middendorf <kernel@tuxforce.de>,
-	Mark Fasheh <mark@fasheh.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Theodore Tso" <tytso@mit.edu>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 29/81] sysctl: move some boundary constants from sysctl.c to sysctl_vals
-Date: Mon, 26 Jun 2023 20:12:11 +0200
-Message-ID: <20230626180745.662767749@linuxfoundation.org>
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 03/81] tracing: Add tracing_reset_all_online_cpus_unlocked() function
+Date: Mon, 26 Jun 2023 20:11:45 +0200
+Message-ID: <20230626180744.596623070@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -76,302 +36,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiaoming Ni <nixiaoming@huawei.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 78e36f3b0dae586f623c4a37ec5eb5496f5abbe1 ]
+commit e18eb8783ec4949adebc7d7b0fdb65f65bfeefd9 upstream.
 
-sysctl has helpers which let us specify boundary values for a min or max
-int value.  Since these are used for a boundary check only they don't
-change, so move these variables to sysctl_vals to avoid adding duplicate
-variables.  This will help with our cleanup of kernel/sysctl.c.
+Currently the tracing_reset_all_online_cpus() requires the
+trace_types_lock held. But only one caller of this function actually has
+that lock held before calling it, and the other just takes the lock so
+that it can call it. More users of this function is needed where the lock
+is not held.
 
-[akpm@linux-foundation.org: update it for "mm/pagealloc: sysctl: change watermark_scale_factor max limit to 30%"]
-[mcgrof@kernel.org: major rebase]
+Add a tracing_reset_all_online_cpus_unlocked() function for the one use
+case that calls it without being held, and also add a lockdep_assert to
+make sure it is held when called.
 
-Link: https://lkml.kernel.org/r/20211123202347.818157-3-mcgrof@kernel.org
-Signed-off-by: Xiaoming Ni <nixiaoming@huawei.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Benjamin LaHaise <bcrl@kvack.org>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Iurii Zaikin <yzaikin@google.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Paul Turner <pjt@google.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Qing Wang <wangqing@vivo.com>
-Cc: Sebastian Reichel <sre@kernel.org>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Stephen Kitt <steve@sk2.org>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Cc: Antti Palosaari <crope@iki.fi>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Clemens Ladisch <clemens@ladisch.de>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Julia Lawall <julia.lawall@inria.fr>
-Cc: Lukas Middendorf <kernel@tuxforce.de>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Phillip Potter <phil@philpotter.co.uk>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Douglas Gilbert <dgilbert@interlog.com>
-Cc: James E.J. Bottomley <jejb@linux.ibm.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: "Theodore Ts'o" <tytso@mit.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: 935d44acf621 ("memfd: check for non-NULL file_seals in memfd_create() syscall")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Then have tracing_reset_all_online_cpus() take the lock internally, such
+that callers do not need to worry about taking it.
+
+Link: https://lkml.kernel.org/r/20221123192741.658273220@goodmis.org
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/proc_sysctl.c  |  2 +-
- include/linux/sysctl.h | 13 +++++++++---
- kernel/sysctl.c        | 45 ++++++++++++++++++------------------------
- 3 files changed, 30 insertions(+), 30 deletions(-)
+ kernel/trace/trace.c              |   11 ++++++++++-
+ kernel/trace/trace.h              |    1 +
+ kernel/trace/trace_events.c       |    2 +-
+ kernel/trace/trace_events_synth.c |    2 --
+ 4 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index 1655b7b2a5abe..682f2bf2e5259 100644
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -26,7 +26,7 @@ static const struct file_operations proc_sys_dir_file_operations;
- static const struct inode_operations proc_sys_dir_operations;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -2178,10 +2178,12 @@ void tracing_reset_online_cpus(struct ar
+ }
  
- /* shared constants to be used in various sysctls */
--const int sysctl_vals[] = { 0, 1, INT_MAX };
-+const int sysctl_vals[] = { -1, 0, 1, 2, 4, 100, 200, 1000, 3000, INT_MAX };
- EXPORT_SYMBOL(sysctl_vals);
+ /* Must have trace_types_lock held */
+-void tracing_reset_all_online_cpus(void)
++void tracing_reset_all_online_cpus_unlocked(void)
+ {
+ 	struct trace_array *tr;
  
- /* Support for permanently empty directories */
-diff --git a/include/linux/sysctl.h b/include/linux/sysctl.h
-index 4393de94cb32d..c202a72e16906 100644
---- a/include/linux/sysctl.h
-+++ b/include/linux/sysctl.h
-@@ -38,9 +38,16 @@ struct ctl_table_header;
- struct ctl_dir;
++	lockdep_assert_held(&trace_types_lock);
++
+ 	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
+ 		if (!tr->clear_trace)
+ 			continue;
+@@ -2193,6 +2195,13 @@ void tracing_reset_all_online_cpus(void)
+ 	}
+ }
  
- /* Keep the same order as in fs/proc/proc_sysctl.c */
--#define SYSCTL_ZERO	((void *)&sysctl_vals[0])
--#define SYSCTL_ONE	((void *)&sysctl_vals[1])
--#define SYSCTL_INT_MAX	((void *)&sysctl_vals[2])
-+#define SYSCTL_NEG_ONE			((void *)&sysctl_vals[0])
-+#define SYSCTL_ZERO			((void *)&sysctl_vals[1])
-+#define SYSCTL_ONE			((void *)&sysctl_vals[2])
-+#define SYSCTL_TWO			((void *)&sysctl_vals[3])
-+#define SYSCTL_FOUR			((void *)&sysctl_vals[4])
-+#define SYSCTL_ONE_HUNDRED		((void *)&sysctl_vals[5])
-+#define SYSCTL_TWO_HUNDRED		((void *)&sysctl_vals[6])
-+#define SYSCTL_ONE_THOUSAND		((void *)&sysctl_vals[7])
-+#define SYSCTL_THREE_THOUSAND		((void *)&sysctl_vals[8])
-+#define SYSCTL_INT_MAX			((void *)&sysctl_vals[9])
++void tracing_reset_all_online_cpus(void)
++{
++	mutex_lock(&trace_types_lock);
++	tracing_reset_all_online_cpus_unlocked();
++	mutex_unlock(&trace_types_lock);
++}
++
+ /*
+  * The tgid_map array maps from pid to tgid; i.e. the value stored at index i
+  * is the tgid last observed corresponding to pid=i.
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -725,6 +725,7 @@ int tracing_is_enabled(void);
+ void tracing_reset_online_cpus(struct array_buffer *buf);
+ void tracing_reset_current(int cpu);
+ void tracing_reset_all_online_cpus(void);
++void tracing_reset_all_online_cpus_unlocked(void);
+ int tracing_open_generic(struct inode *inode, struct file *filp);
+ int tracing_open_generic_tr(struct inode *inode, struct file *filp);
+ bool tracing_is_disabled(void);
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -2661,7 +2661,7 @@ static void trace_module_remove_events(s
+ 	 * over from this module may be passed to the new module events and
+ 	 * unexpected results may occur.
+ 	 */
+-	tracing_reset_all_online_cpus();
++	tracing_reset_all_online_cpus_unlocked();
+ }
  
- extern const int sysctl_vals[];
+ static int trace_module_notify(struct notifier_block *self,
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -1363,7 +1363,6 @@ int synth_event_delete(const char *event
+ 	mutex_unlock(&event_mutex);
  
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 953c021039704..a45f0dd10b9a3 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -111,16 +111,9 @@
- static int sixty = 60;
- #endif
+ 	if (mod) {
+-		mutex_lock(&trace_types_lock);
+ 		/*
+ 		 * It is safest to reset the ring buffer if the module
+ 		 * being unloaded registered any events that were
+@@ -1375,7 +1374,6 @@ int synth_event_delete(const char *event
+ 		 * occur.
+ 		 */
+ 		tracing_reset_all_online_cpus();
+-		mutex_unlock(&trace_types_lock);
+ 	}
  
--static int __maybe_unused neg_one = -1;
--static int __maybe_unused two = 2;
--static int __maybe_unused four = 4;
- static unsigned long zero_ul;
- static unsigned long one_ul = 1;
- static unsigned long long_max = LONG_MAX;
--static int one_hundred = 100;
--static int two_hundred = 200;
--static int one_thousand = 1000;
--static int three_thousand = 3000;
- #ifdef CONFIG_PRINTK
- static int ten_thousand = 10000;
- #endif
-@@ -2011,7 +2004,7 @@ static struct ctl_table kern_table[] = {
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax,
--		.extra1		= &neg_one,
-+		.extra1		= SYSCTL_NEG_ONE,
- 		.extra2		= SYSCTL_ONE,
- 	},
- #endif
-@@ -2342,7 +2335,7 @@ static struct ctl_table kern_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax_sysadmin,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &two,
-+		.extra2		= SYSCTL_TWO,
- 	},
- #endif
- 	{
-@@ -2602,7 +2595,7 @@ static struct ctl_table kern_table[] = {
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax,
--		.extra1		= &neg_one,
-+		.extra1		= SYSCTL_NEG_ONE,
- 	},
- #endif
- #ifdef CONFIG_RT_MUTEXES
-@@ -2664,7 +2657,7 @@ static struct ctl_table kern_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= perf_cpu_time_max_percent_handler,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &one_hundred,
-+		.extra2		= SYSCTL_ONE_HUNDRED,
- 	},
- 	{
- 		.procname	= "perf_event_max_stack",
-@@ -2682,7 +2675,7 @@ static struct ctl_table kern_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= perf_event_max_stack_handler,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &one_thousand,
-+		.extra2		= SYSCTL_ONE_THOUSAND,
- 	},
- #endif
- 	{
-@@ -2713,7 +2706,7 @@ static struct ctl_table kern_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= bpf_unpriv_handler,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &two,
-+		.extra2		= SYSCTL_TWO,
- 	},
- 	{
- 		.procname	= "bpf_stats_enabled",
-@@ -2756,7 +2749,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= overcommit_policy_handler,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &two,
-+		.extra2		= SYSCTL_TWO,
- 	},
- 	{
- 		.procname	= "panic_on_oom",
-@@ -2765,7 +2758,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &two,
-+		.extra2		= SYSCTL_TWO,
- 	},
- 	{
- 		.procname	= "oom_kill_allocating_task",
-@@ -2810,7 +2803,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= dirty_background_ratio_handler,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &one_hundred,
-+		.extra2		= SYSCTL_ONE_HUNDRED,
- 	},
- 	{
- 		.procname	= "dirty_background_bytes",
-@@ -2827,7 +2820,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= dirty_ratio_handler,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &one_hundred,
-+		.extra2		= SYSCTL_ONE_HUNDRED,
- 	},
- 	{
- 		.procname	= "dirty_bytes",
-@@ -2867,7 +2860,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &two_hundred,
-+		.extra2		= SYSCTL_TWO_HUNDRED,
- 	},
- #ifdef CONFIG_NUMA
- 	{
-@@ -2926,7 +2919,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0200,
- 		.proc_handler	= drop_caches_sysctl_handler,
- 		.extra1		= SYSCTL_ONE,
--		.extra2		= &four,
-+		.extra2		= SYSCTL_FOUR,
- 	},
- #ifdef CONFIG_COMPACTION
- 	{
-@@ -2943,7 +2936,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &one_hundred,
-+		.extra2		= SYSCTL_ONE_HUNDRED,
- 	},
- 	{
- 		.procname	= "extfrag_threshold",
-@@ -2988,7 +2981,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= watermark_scale_factor_sysctl_handler,
- 		.extra1		= SYSCTL_ONE,
--		.extra2		= &three_thousand,
-+		.extra2		= SYSCTL_THREE_THOUSAND,
- 	},
- 	{
- 		.procname	= "percpu_pagelist_fraction",
-@@ -3075,7 +3068,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= sysctl_min_unmapped_ratio_sysctl_handler,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &one_hundred,
-+		.extra2		= SYSCTL_ONE_HUNDRED,
- 	},
- 	{
- 		.procname	= "min_slab_ratio",
-@@ -3084,7 +3077,7 @@ static struct ctl_table vm_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= sysctl_min_slab_ratio_sysctl_handler,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &one_hundred,
-+		.extra2		= SYSCTL_ONE_HUNDRED,
- 	},
- #endif
- #ifdef CONFIG_SMP
-@@ -3367,7 +3360,7 @@ static struct ctl_table fs_table[] = {
- 		.mode		= 0600,
- 		.proc_handler	= proc_dointvec_minmax,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &two,
-+		.extra2		= SYSCTL_TWO,
- 	},
- 	{
- 		.procname	= "protected_regular",
-@@ -3376,7 +3369,7 @@ static struct ctl_table fs_table[] = {
- 		.mode		= 0600,
- 		.proc_handler	= proc_dointvec_minmax,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &two,
-+		.extra2		= SYSCTL_TWO,
- 	},
- 	{
- 		.procname	= "suid_dumpable",
-@@ -3385,7 +3378,7 @@ static struct ctl_table fs_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax_coredump,
- 		.extra1		= SYSCTL_ZERO,
--		.extra2		= &two,
-+		.extra2		= SYSCTL_TWO,
- 	},
- #if defined(CONFIG_BINFMT_MISC) || defined(CONFIG_BINFMT_MISC_MODULE)
- 	{
--- 
-2.39.2
-
+ 	return ret;
 
 
