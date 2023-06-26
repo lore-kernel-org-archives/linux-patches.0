@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3271BC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:43:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1694C433C8;
-	Mon, 26 Jun 2023 18:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19205C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:43:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858B5C433C0;
+	Mon, 26 Jun 2023 18:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805028;
-	bh=E1fO1tt4fUwGv2DQigrQHa/p/so8o+gzWkZ7OFxdBao=;
+	s=korg; t=1687805030;
+	bh=V1aeuxXObHP5fwAg9Nw3YSc27Jjs2aasKMFlzhkHOvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hi0EHrkOSS96zIdvUfVmiegI7UDz+hGxeqRE/caLXGUU/uvDzgIoKk6uFhYqhNhlC
-	 gfAxdm2bZxRRnn732d3ZCnbMe46yY5aAr51mtMmbkPEsh0R9c/JbVmme2PwpgjYbjU
-	 Pd5FEczJhh7b23luBjQ4+7a6wgTBRuXTuYxSP3go=
+	b=0vlsOjQI6PKRawF5jhXAbD8E5D1/7yHwDOr9hFkbfuwfbfC4hUoH6jlK+2B7rpChl
+	 I/h1OfxAGBXvm0c6kC5Gm4MjtrXSF5f0mIoA1rwwutEQvBQ56f5JHOmFYsL6LFl0Fj
+	 h6Wh2yWxRN+L3vOw8UEvGncDtQPPsYMG090/HAEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 25/81] io_uring/net: disable partial retries for recvmsg with cmsg
-Date: Mon, 26 Jun 2023 20:12:07 +0200
-Message-ID: <20230626180745.519692460@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 26/81] nilfs2: prevent general protection fault in nilfs_clear_dirty_page()
+Date: Mon, 26 Jun 2023 20:12:08 +0200
+Message-ID: <20230626180745.555887940@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -34,38 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-Commit 78d0d2063bab954d19a1696feae4c7706a626d48 upstream.
+commit 782e53d0c14420858dbf0f8f797973c150d3b6d7 upstream.
 
-We cannot sanely handle partial retries for recvmsg if we have cmsg
-attached. If we don't, then we'd just be overwriting the initial cmsg
-header on retries. Alternatively we could increment and handle this
-appropriately, but it doesn't seem worth the complication.
+In a syzbot stress test that deliberately causes file system errors on
+nilfs2 with a corrupted disk image, it has been reported that
+nilfs_clear_dirty_page() called from nilfs_clear_dirty_pages() can cause a
+general protection fault.
 
-Move the MSG_WAITALL check into the non-multishot case while at it,
-since MSG_WAITALL is explicitly disabled for multishot anyway.
+In nilfs_clear_dirty_pages(), when looking up dirty pages from the page
+cache and calling nilfs_clear_dirty_page() for each dirty page/folio
+retrieved, the back reference from the argument page to "mapping" may have
+been changed to NULL (and possibly others).  It is necessary to check this
+after locking the page/folio.
 
-Link: https://lore.kernel.org/io-uring/0b0d4411-c8fd-4272-770b-e030af6919a0@kernel.dk/
-Cc: stable@vger.kernel.org # 5.10+
-Reported-by: Stefan Metzmacher <metze@samba.org>
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+So, fix this issue by not calling nilfs_clear_dirty_page() on a page/folio
+after locking it in nilfs_clear_dirty_pages() if the back reference
+"mapping" from the page/folio is different from the "mapping" that held
+the page/folio just before.
+
+Link: https://lkml.kernel.org/r/20230612021456.3682-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/000000000000da4f6b05eb9bf593@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/page.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -5053,7 +5053,7 @@ static int io_recvmsg(struct io_kiocb *r
- 	flags = req->sr_msg.msg_flags;
- 	if (force_nonblock)
- 		flags |= MSG_DONTWAIT;
--	if (flags & MSG_WAITALL)
-+	if (flags & MSG_WAITALL && !kmsg->msg.msg_controllen)
- 		min_ret = iov_iter_count(&kmsg->msg.msg_iter);
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -369,7 +369,15 @@ void nilfs_clear_dirty_pages(struct addr
+ 			struct page *page = pvec.pages[i];
  
- 	ret = __sys_recvmsg_sock(sock, &kmsg->msg, req->sr_msg.umsg,
+ 			lock_page(page);
+-			nilfs_clear_dirty_page(page, silent);
++
++			/*
++			 * This page may have been removed from the address
++			 * space by truncation or invalidation when the lock
++			 * was acquired.  Skip processing in that case.
++			 */
++			if (likely(page->mapping == mapping))
++				nilfs_clear_dirty_page(page, silent);
++
+ 			unlock_page(page);
+ 		}
+ 		pagevec_release(&pvec);
 
 
