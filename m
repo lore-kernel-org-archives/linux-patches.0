@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9E713AD2
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:20:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8D6C433CD;
-	Mon, 26 Jun 2023 18:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13E713AD2
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:20:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312F7C433CA;
+	Mon, 26 Jun 2023 18:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803622;
-	bh=lCdrSBBnf+pP20fLiCNvWVrG/YG274yASOAWt+DEm6I=;
+	s=korg; t=1687803625;
+	bh=gPolrfdBPnL3mLsoNRkQ39dUXLqo9Hm6fob8gOjGjo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mXkJnwTqKpNkHc4qWXXFgJii9QFYIpJpwIX61YbLO8jRECvx2ktdJIVf6htC/Sv7T
-	 HuBRwT90+gaQVVatCwC5SVafrHnlYPy8cfhSQWO2gr0U1sv2Miwsv8WSV/GvmPV0HO
-	 c1dUloQsW5ULkHzZvEBERxvNBF1B8m/Hnc5EAjmw=
+	b=mUDiGMI0m23kCpS81gEwhd0ahrHTfkRjGOsDJ2jpCuRun1nr/p3xG77b0u/FumN3v
+	 0REsC2PIMklgWrF9w8KCSuBEmiEvxLB8qM+0Ubi1/ynDJWVNsgyziwL2QKEiGg7yYO
+	 OQctcC21v09EwJupQmojBtKnBapEc9S5+Vj9yNVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Jay Shin <jaeshin@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
+	Querijn Voet <querijnqyn@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.3 096/199] block: make sure local irq is disabled when calling __blkcg_rstat_flush
-Date: Mon, 26 Jun 2023 20:10:02 +0200
-Message-ID: <20230626180809.833924745@linuxfoundation.org>
+Subject: [PATCH 6.3 097/199] io_uring/poll: serialize poll linked timer start with poll removal
+Date: Mon, 26 Jun 2023 20:10:03 +0200
+Message-ID: <20230626180809.884844269@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -38,64 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 9c39b7a905d84b7da5f59d80f2e455853fea7217 upstream.
+Commit ef7dfac51d8ed961b742218f526bd589f3900a59 upstream.
 
-When __blkcg_rstat_flush() is called from cgroup_rstat_flush*() code
-path, interrupt is always disabled.
+We selectively grab the ctx->uring_lock for poll update/removal, but
+we really should grab it from the start to fully synchronize with
+linked timeouts. Normally this is indeed the case, but if requests
+are forced async by the application, we don't fully cover removal
+and timer disarm within the uring_lock.
 
-When we start to flush blkcg per-cpu stats list in __blkg_release()
-for avoiding to leak blkcg_gq's reference in commit 20cb1c2fb756
-("blk-cgroup: Flush stats before releasing blkcg_gq"), local irq
-isn't disabled yet, then lockdep warning may be triggered because
-the dependent cgroup locks may be acquired from irq(soft irq) handler.
+Make this simpler by having consistent locking state for poll removal.
 
-Fix the issue by disabling local irq always.
-
-Fixes: 20cb1c2fb756 ("blk-cgroup: Flush stats before releasing blkcg_gq")
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Closes: https://lore.kernel.org/linux-block/pz2wzwnmn5tk3pwpskmjhli6g3qly7eoknilb26of376c7kwxy@qydzpvt6zpis/T/#u
-Cc: stable@vger.kernel.org
-Cc: Jay Shin <jaeshin@redhat.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Waiman Long <longman@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Link: https://lore.kernel.org/r/20230622084249.1208005-1-ming.lei@redhat.com
+Cc: stable@vger.kernel.org # 6.1+
+Reported-by: Querijn Voet <querijnqyn@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ io_uring/poll.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -907,6 +907,7 @@ static void __blkcg_rstat_flush(struct b
- 	struct llist_head *lhead = per_cpu_ptr(blkcg->lhead, cpu);
- 	struct llist_node *lnode;
- 	struct blkg_iostat_set *bisc, *next_bisc;
-+	unsigned long flags;
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -977,8 +977,9 @@ int io_poll_remove(struct io_kiocb *req,
+ 	struct io_hash_bucket *bucket;
+ 	struct io_kiocb *preq;
+ 	int ret2, ret = 0;
+-	bool locked;
++	bool locked = true;
  
- 	rcu_read_lock();
- 
-@@ -920,7 +921,7 @@ static void __blkcg_rstat_flush(struct b
- 	 * When flushing from cgroup, cgroup_rstat_lock is always held, so
- 	 * this lock won't cause contention most of time.
- 	 */
--	raw_spin_lock(&blkg_stat_lock);
-+	raw_spin_lock_irqsave(&blkg_stat_lock, flags);
- 
- 	/*
- 	 * Iterate only the iostat_cpu's queued in the lockless list.
-@@ -946,7 +947,7 @@ static void __blkcg_rstat_flush(struct b
- 			blkcg_iostat_update(parent, &blkg->iostat.cur,
- 					    &blkg->iostat.last);
++	io_ring_submit_lock(ctx, issue_flags);
+ 	preq = io_poll_find(ctx, true, &cd, &ctx->cancel_table, &bucket);
+ 	ret2 = io_poll_disarm(preq);
+ 	if (bucket)
+@@ -990,12 +991,10 @@ int io_poll_remove(struct io_kiocb *req,
+ 		goto out;
  	}
--	raw_spin_unlock(&blkg_stat_lock);
-+	raw_spin_unlock_irqrestore(&blkg_stat_lock, flags);
+ 
+-	io_ring_submit_lock(ctx, issue_flags);
+ 	preq = io_poll_find(ctx, true, &cd, &ctx->cancel_table_locked, &bucket);
+ 	ret2 = io_poll_disarm(preq);
+ 	if (bucket)
+ 		spin_unlock(&bucket->lock);
+-	io_ring_submit_unlock(ctx, issue_flags);
+ 	if (ret2) {
+ 		ret = ret2;
+ 		goto out;
+@@ -1019,7 +1018,7 @@ found:
+ 		if (poll_update->update_user_data)
+ 			preq->cqe.user_data = poll_update->new_user_data;
+ 
+-		ret2 = io_poll_add(preq, issue_flags);
++		ret2 = io_poll_add(preq, issue_flags & ~IO_URING_F_UNLOCKED);
+ 		/* successfully updated, don't complete poll request */
+ 		if (!ret2 || ret2 == -EIOCBQUEUED)
+ 			goto out;
+@@ -1027,9 +1026,9 @@ found:
+ 
+ 	req_set_fail(preq);
+ 	io_req_set_res(preq, -ECANCELED, 0);
+-	locked = !(issue_flags & IO_URING_F_UNLOCKED);
+ 	io_req_task_complete(preq, &locked);
  out:
- 	rcu_read_unlock();
- }
++	io_ring_submit_unlock(ctx, issue_flags);
+ 	if (ret < 0) {
+ 		req_set_fail(req);
+ 		return ret;
 
 
