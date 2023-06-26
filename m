@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FD612B9C
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01B3C433C0;
-	Mon, 26 Jun 2023 18:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3816612B9C
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97BAC433C9;
+	Mon, 26 Jun 2023 18:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803836;
-	bh=ZA6HGdFkzewqRjH4VHrbdjHoyYvgsQXlOpW98633N0k=;
+	s=korg; t=1687803839;
+	bh=wNkBY1az243WiHCcVzdWlQDF8CSoO1SrrEccfHheBdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdO1StlYCVVWYlYdhY2pzjeem1j8Ns5iw89TVIMMuMjrvCuX3LqqOAw7HCgvCVvqP
-	 cW+Lkc3tyj+CffDX6NYPnWhtv9a1h9LNFUOOJuKQG3/0j8zaUe7sifwkYUFT5MMuA7
-	 bAUeCXaHnx3Hp2PjVX29rAmpeQTWKnoHIbMRyWoI=
+	b=SrPY1+VBELGgzPqEkP3hgtIxVZHE17HjYecSOH+5bxozbfMvKBR3QZPRHDLHJhqWl
+	 iPhPHH224oX8btvGtjaZrCjAV4gEOQo3dYkdQL48oOM60OkxbeaOp5c0yHQaGhcxZU
+	 OujFvNxQwGpSoDIza7wd77oAdcnLDHYVefreH5Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Carlos Song <carlos.song@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 194/199] i2c: imx-lpi2c: fix type char overflow issue when calculating the clock cycle
-Date: Mon, 26 Jun 2023 20:11:40 +0200
-Message-ID: <20230626180814.256958443@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.3 195/199] netfilter: nf_tables: drop module reference after updating chain
+Date: Mon, 26 Jun 2023 20:11:41 +0200
+Message-ID: <20230626180814.298714943@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -37,40 +33,29 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Clark Wang <xiaoning.wang@nxp.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit e69b9bc170c6d93ee375a5cbfd15f74c0fb59bdd ]
+commit 043d2acf57227db1fdaaa620b2a420acfaa56d6e upstream.
 
-Claim clkhi and clklo as integer type to avoid possible calculation
-errors caused by data overflow.
+Otherwise the module reference counter is leaked.
 
-Fixes: a55fa9d0e42e ("i2c: imx-lpi2c: add low power i2c bus driver")
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_tables_api.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
-index a49b14d52a986..ff12018bc2060 100644
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -201,8 +201,8 @@ static void lpi2c_imx_stop(struct lpi2c_imx_struct *lpi2c_imx)
- /* CLKLO = I2C_CLK_RATIO * CLKHI, SETHOLD = CLKHI, DATAVD = CLKHI/2 */
- static int lpi2c_imx_config(struct lpi2c_imx_struct *lpi2c_imx)
- {
--	u8 prescale, filt, sethold, clkhi, clklo, datavd;
--	unsigned int clk_rate, clk_cycle;
-+	u8 prescale, filt, sethold, datavd;
-+	unsigned int clk_rate, clk_cycle, clkhi, clklo;
- 	enum lpi2c_imx_pincfg pincfg;
- 	unsigned int temp;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -2664,6 +2664,8 @@ static int nf_tables_updchain(struct nft
+ 	nft_trans_basechain(trans) = basechain;
+ 	INIT_LIST_HEAD(&nft_trans_chain_hooks(trans));
+ 	list_splice(&hook.list, &nft_trans_chain_hooks(trans));
++	if (nla[NFTA_CHAIN_HOOK])
++		module_put(hook.type->owner);
  
--- 
-2.39.2
-
+ 	nft_trans_commit_list_add_tail(ctx->net, trans);
+ 
 
 
