@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAF7C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:43:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBDFC433C9;
-	Mon, 26 Jun 2023 18:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE758C8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:43:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B05C433C0;
+	Mon, 26 Jun 2023 18:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805010;
-	bh=E3+bFpV8cOwrEAPSTSmSdKkeIkO2ACFyrV2/zrEiPKM=;
+	s=korg; t=1687805013;
+	bh=Mwmv7TOShvdaXqq8ZPlApCMMtOUQUCWe+zLuJfemTOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BTddLSw2y0neol/jcznCITWHy/yhudwZYVtkVp46YrXdD/MHtkdVEZxyKET/9MCuZ
-	 GlEawt1CWXjVBN0BUqKNFyVjIO6kYOlxHwPigm4yxb2gZmDGoUWqijNybhWUIqWlap
-	 dpVhsYk/zpNRIrao1b0qR/VCD9mzzLSkDEg8ENDI=
+	b=WkwKGJs9C4cvizDa+L+RCsbx5bREym49FYTa2/QgCAsNbm4OiYdn0qnx7dfGwtqQn
+	 YZy9fjpCNe2UrPyu3PgGW6nsNf62sJ8O9UG5ZZoRp9KLZqmOC+1PNTrOdM1CV9en2X
+	 pC6tU48yGGrrAlHaPB+v6kmcqJjs7qmBcCQwj2dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Peilin Ye <peilin.ye@bytedance.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Teresa Remmet <t.remmet@phytec.de>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 02/81] net/sched: Refactor qdisc_graft() for ingress and clsact Qdiscs
-Date: Mon, 26 Jun 2023 20:11:44 +0200
-Message-ID: <20230626180744.556242511@linuxfoundation.org>
+Subject: [PATCH 5.10 20/81] regulator: pca9450: Fix LDO3OUT and LDO4OUT MASK
+Date: Mon, 26 Jun 2023 20:12:02 +0200
+Message-ID: <20230626180745.288405546@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -38,71 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peilin Ye <peilin.ye@bytedance.com>
+From: Teresa Remmet <t.remmet@phytec.de>
 
-[ Upstream commit 2d5f6a8d7aef7852a9ecc555f88c673a1c91754f ]
+[ Upstream commit 7257d930aadcd62d1c7971ab14f3b1126356abdc ]
 
-Grafting ingress and clsact Qdiscs does not need a for-loop in
-qdisc_graft().  Refactor it.  No functional changes intended.
+L3_OUT and L4_OUT Bit fields range from Bit 0:4 and thus the
+mask should be 0x1F instead of 0x0F.
 
-Tested-by: Pedro Tammela <pctammela@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Vlad Buslov <vladbu@nvidia.com>
-Signed-off-by: Peilin Ye <peilin.ye@bytedance.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 84ad0af0bccd ("net/sched: qdisc_destroy() old ingress and clsact Qdiscs before grafting")
+Fixes: 0935ff5f1f0a ("regulator: pca9450: add pca9450 pmic driver")
+Signed-off-by: Teresa Remmet <t.remmet@phytec.de>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Link: https://lore.kernel.org/r/20230614125240.3946519-1-t.remmet@phytec.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ include/linux/regulator/pca9450.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 2084724c36ad3..fb50e3f3283f9 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1044,12 +1044,12 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
+diff --git a/include/linux/regulator/pca9450.h b/include/linux/regulator/pca9450.h
+index 71902f41c9199..0c3edff6bdfff 100644
+--- a/include/linux/regulator/pca9450.h
++++ b/include/linux/regulator/pca9450.h
+@@ -196,11 +196,11 @@ enum {
  
- 	if (parent == NULL) {
- 		unsigned int i, num_q, ingress;
-+		struct netdev_queue *dev_queue;
+ /* PCA9450_REG_LDO3_VOLT bits */
+ #define LDO3_EN_MASK			0xC0
+-#define LDO3OUT_MASK			0x0F
++#define LDO3OUT_MASK			0x1F
  
- 		ingress = 0;
- 		num_q = dev->num_tx_queues;
- 		if ((q && q->flags & TCQ_F_INGRESS) ||
- 		    (new && new->flags & TCQ_F_INGRESS)) {
--			num_q = 1;
- 			ingress = 1;
- 			if (!dev_ingress_queue(dev)) {
- 				NL_SET_ERR_MSG(extack, "Device does not have an ingress queue");
-@@ -1065,18 +1065,18 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
- 		if (new && new->ops->attach)
- 			goto skip;
+ /* PCA9450_REG_LDO4_VOLT bits */
+ #define LDO4_EN_MASK			0xC0
+-#define LDO4OUT_MASK			0x0F
++#define LDO4OUT_MASK			0x1F
  
--		for (i = 0; i < num_q; i++) {
--			struct netdev_queue *dev_queue = dev_ingress_queue(dev);
--
--			if (!ingress)
-+		if (!ingress) {
-+			for (i = 0; i < num_q; i++) {
- 				dev_queue = netdev_get_tx_queue(dev, i);
-+				old = dev_graft_qdisc(dev_queue, new);
- 
--			old = dev_graft_qdisc(dev_queue, new);
--			if (new && i > 0)
--				qdisc_refcount_inc(new);
--
--			if (!ingress)
-+				if (new && i > 0)
-+					qdisc_refcount_inc(new);
- 				qdisc_put(old);
-+			}
-+		} else {
-+			dev_queue = dev_ingress_queue(dev);
-+			old = dev_graft_qdisc(dev_queue, new);
- 		}
- 
- skip:
+ /* PCA9450_REG_LDO5_VOLT bits */
+ #define LDO5L_EN_MASK			0xC0
 -- 
 2.39.2
 
