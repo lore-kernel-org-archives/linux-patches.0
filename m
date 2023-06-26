@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D61BD520
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018C6C433C8;
-	Mon, 26 Jun 2023 18:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8574ED520
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0420DC433C8;
+	Mon, 26 Jun 2023 18:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803909;
-	bh=qiKPmjSaXHSgN3O8dhucsfj3hkzZFcO8GO3GJF56XSQ=;
+	s=korg; t=1687803912;
+	bh=ZbKjYiRG85dX+Emv373Vh460iMfk/VFEhiKzOKuSA5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdRcY+lekpCI14vZiqqDXMhLrOv5fcB0bBV1Q/fqJJ/8Brz9itGrFcW29aClByJbt
-	 1IZ2M8wcEJ80zVXpoKZponR3rHHQo7ZLBSBC7omm3UJB9ZxWR5QE9wwV8VtCO1xWPn
-	 59sMissNk/qaaEi4G3KpcpTrt6TMtaay9EsMF9jU=
+	b=C+Lcf7wyjfp4HTq7KV05ulb4mI8id7ztWIE+ZegZ6BfGbT0RiZ49JAIPgf/6A0WRy
+	 cwCy1xKXsqZtS7lkQ2dEm/sAcaKh8lGU9RLAhS0cjWxUtjg0Fqld0WXOO+30HDzQBG
+	 WTQ84+TdRYlR7mtkHXjbDIPLj42qMTfCcBnNwkSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangtao Li <tiny.windzz@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Songjun Wu <songjun.wu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 19/41] mmc: mvsdio: convert to devm_platform_ioremap_resource
-Date: Mon, 26 Jun 2023 20:11:42 +0200
-Message-ID: <20230626180737.027796631@linuxfoundation.org>
+Subject: [PATCH 4.19 02/41] serial: lantiq: Use readl/writel instead of ltq_r32/ltq_w32
+Date: Mon, 26 Jun 2023 20:11:25 +0200
+Message-ID: <20230626180736.330822845@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -35,52 +34,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <tiny.windzz@gmail.com>
+From: Songjun Wu <songjun.wu@linux.intel.com>
 
-[ Upstream commit 0a337eb168d6cbb85f6b4eb56d1be55e24c80452 ]
+[ Upstream commit 89b8bd2082bbbccbd95b849b34ff8b6ab3056bf7 ]
 
-Use devm_platform_ioremap_resource() to simplify code.
+Previous implementation uses platform-dependent functions
+ltq_w32()/ltq_r32() to access registers. Those functions are not
+available for other SoC which uses the same IP.
+Change to OS provided readl()/writel() and readb()/writeb(), so
+that different SoCs can use the same driver.
 
-Signed-off-by: Yangtao Li <tiny.windzz@gmail.com>
-Link: https://lore.kernel.org/r/20191215175120.3290-11-tiny.windzz@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: 8d84064da0d4 ("mmc: mvsdio: fix deferred probing")
+Signed-off-by: Songjun Wu <songjun.wu@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 306320034e8f ("serial: lantiq: add missing interrupt ack")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mvsdio.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/tty/serial/lantiq.c | 38 ++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/mmc/host/mvsdio.c b/drivers/mmc/host/mvsdio.c
-index e22bbff89c8d2..3ad8d1108fd08 100644
---- a/drivers/mmc/host/mvsdio.c
-+++ b/drivers/mmc/host/mvsdio.c
-@@ -699,16 +699,14 @@ static int mvsd_probe(struct platform_device *pdev)
- 	struct mmc_host *mmc = NULL;
- 	struct mvsd_host *host = NULL;
- 	const struct mbus_dram_target_info *dram;
--	struct resource *r;
- 	int ret, irq;
+diff --git a/drivers/tty/serial/lantiq.c b/drivers/tty/serial/lantiq.c
+index 848286a12c20b..c8dce404ed0c2 100644
+--- a/drivers/tty/serial/lantiq.c
++++ b/drivers/tty/serial/lantiq.c
+@@ -145,7 +145,7 @@ lqasc_start_tx(struct uart_port *port)
+ static void
+ lqasc_stop_rx(struct uart_port *port)
+ {
+-	ltq_w32(ASCWHBSTATE_CLRREN, port->membase + LTQ_ASC_WHBSTATE);
++	writel(ASCWHBSTATE_CLRREN, port->membase + LTQ_ASC_WHBSTATE);
+ }
  
- 	if (!np) {
- 		dev_err(&pdev->dev, "no DT node\n");
- 		return -ENODEV;
+ static int
+@@ -154,11 +154,11 @@ lqasc_rx_chars(struct uart_port *port)
+ 	struct tty_port *tport = &port->state->port;
+ 	unsigned int ch = 0, rsr = 0, fifocnt;
+ 
+-	fifocnt = ltq_r32(port->membase + LTQ_ASC_FSTAT) & ASCFSTAT_RXFFLMASK;
++	fifocnt = readl(port->membase + LTQ_ASC_FSTAT) & ASCFSTAT_RXFFLMASK;
+ 	while (fifocnt--) {
+ 		u8 flag = TTY_NORMAL;
+-		ch = ltq_r8(port->membase + LTQ_ASC_RBUF);
+-		rsr = (ltq_r32(port->membase + LTQ_ASC_STATE)
++		ch = readb(port->membase + LTQ_ASC_RBUF);
++		rsr = (readl(port->membase + LTQ_ASC_STATE)
+ 			& ASCSTATE_ANY) | UART_DUMMY_UER_RX;
+ 		tty_flip_buffer_push(tport);
+ 		port->icount.rx++;
+@@ -218,10 +218,10 @@ lqasc_tx_chars(struct uart_port *port)
+ 		return;
  	}
--	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	irq = platform_get_irq(pdev, 0);
--	if (!r || irq < 0)
-+	if (irq < 0)
- 		return -ENXIO;
  
- 	mmc = mmc_alloc_host(sizeof(struct mvsd_host), &pdev->dev);
-@@ -761,7 +759,7 @@ static int mvsd_probe(struct platform_device *pdev)
+-	while (((ltq_r32(port->membase + LTQ_ASC_FSTAT) &
++	while (((readl(port->membase + LTQ_ASC_FSTAT) &
+ 		ASCFSTAT_TXFREEMASK) >> ASCFSTAT_TXFREEOFF) != 0) {
+ 		if (port->x_char) {
+-			ltq_w8(port->x_char, port->membase + LTQ_ASC_TBUF);
++			writeb(port->x_char, port->membase + LTQ_ASC_TBUF);
+ 			port->icount.tx++;
+ 			port->x_char = 0;
+ 			continue;
+@@ -230,7 +230,7 @@ lqasc_tx_chars(struct uart_port *port)
+ 		if (uart_circ_empty(xmit))
+ 			break;
  
- 	spin_lock_init(&host->lock);
+-		ltq_w8(port->state->xmit.buf[port->state->xmit.tail],
++		writeb(port->state->xmit.buf[port->state->xmit.tail],
+ 			port->membase + LTQ_ASC_TBUF);
+ 		xmit->tail = (xmit->tail + 1) & (UART_XMIT_SIZE - 1);
+ 		port->icount.tx++;
+@@ -246,7 +246,7 @@ lqasc_tx_int(int irq, void *_port)
+ 	unsigned long flags;
+ 	struct uart_port *port = (struct uart_port *)_port;
+ 	spin_lock_irqsave(&ltq_asc_lock, flags);
+-	ltq_w32(ASC_IRNCR_TIR, port->membase + LTQ_ASC_IRNCR);
++	writel(ASC_IRNCR_TIR, port->membase + LTQ_ASC_IRNCR);
+ 	spin_unlock_irqrestore(&ltq_asc_lock, flags);
+ 	lqasc_start_tx(port);
+ 	return IRQ_HANDLED;
+@@ -271,7 +271,7 @@ lqasc_rx_int(int irq, void *_port)
+ 	unsigned long flags;
+ 	struct uart_port *port = (struct uart_port *)_port;
+ 	spin_lock_irqsave(&ltq_asc_lock, flags);
+-	ltq_w32(ASC_IRNCR_RIR, port->membase + LTQ_ASC_IRNCR);
++	writel(ASC_IRNCR_RIR, port->membase + LTQ_ASC_IRNCR);
+ 	lqasc_rx_chars(port);
+ 	spin_unlock_irqrestore(&ltq_asc_lock, flags);
+ 	return IRQ_HANDLED;
+@@ -281,7 +281,7 @@ static unsigned int
+ lqasc_tx_empty(struct uart_port *port)
+ {
+ 	int status;
+-	status = ltq_r32(port->membase + LTQ_ASC_FSTAT) & ASCFSTAT_TXFFLMASK;
++	status = readl(port->membase + LTQ_ASC_FSTAT) & ASCFSTAT_TXFFLMASK;
+ 	return status ? 0 : TIOCSER_TEMT;
+ }
  
--	host->base = devm_ioremap_resource(&pdev->dev, r);
-+	host->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(host->base)) {
- 		ret = PTR_ERR(host->base);
- 		goto out;
+@@ -314,12 +314,12 @@ lqasc_startup(struct uart_port *port)
+ 	asc_update_bits(ASCCLC_DISS | ASCCLC_RMCMASK, (1 << ASCCLC_RMCOFFSET),
+ 		port->membase + LTQ_ASC_CLC);
+ 
+-	ltq_w32(0, port->membase + LTQ_ASC_PISEL);
+-	ltq_w32(
++	writel(0, port->membase + LTQ_ASC_PISEL);
++	writel(
+ 		((TXFIFO_FL << ASCTXFCON_TXFITLOFF) & ASCTXFCON_TXFITLMASK) |
+ 		ASCTXFCON_TXFEN | ASCTXFCON_TXFFLU,
+ 		port->membase + LTQ_ASC_TXFCON);
+-	ltq_w32(
++	writel(
+ 		((RXFIFO_FL << ASCRXFCON_RXFITLOFF) & ASCRXFCON_RXFITLMASK)
+ 		| ASCRXFCON_RXFEN | ASCRXFCON_RXFFLU,
+ 		port->membase + LTQ_ASC_RXFCON);
+@@ -351,7 +351,7 @@ lqasc_startup(struct uart_port *port)
+ 		goto err2;
+ 	}
+ 
+-	ltq_w32(ASC_IRNREN_RX | ASC_IRNREN_ERR | ASC_IRNREN_TX,
++	writel(ASC_IRNREN_RX | ASC_IRNREN_ERR | ASC_IRNREN_TX,
+ 		port->membase + LTQ_ASC_IRNREN);
+ 	return 0;
+ 
+@@ -370,7 +370,7 @@ lqasc_shutdown(struct uart_port *port)
+ 	free_irq(ltq_port->rx_irq, port);
+ 	free_irq(ltq_port->err_irq, port);
+ 
+-	ltq_w32(0, port->membase + LTQ_ASC_CON);
++	writel(0, port->membase + LTQ_ASC_CON);
+ 	asc_update_bits(ASCRXFCON_RXFEN, ASCRXFCON_RXFFLU,
+ 		port->membase + LTQ_ASC_RXFCON);
+ 	asc_update_bits(ASCTXFCON_TXFEN, ASCTXFCON_TXFFLU,
+@@ -462,13 +462,13 @@ lqasc_set_termios(struct uart_port *port,
+ 	asc_update_bits(ASCCON_BRS, 0, port->membase + LTQ_ASC_CON);
+ 
+ 	/* now we can write the new baudrate into the register */
+-	ltq_w32(divisor, port->membase + LTQ_ASC_BG);
++	writel(divisor, port->membase + LTQ_ASC_BG);
+ 
+ 	/* turn the baudrate generator back on */
+ 	asc_update_bits(0, ASCCON_R, port->membase + LTQ_ASC_CON);
+ 
+ 	/* enable rx */
+-	ltq_w32(ASCWHBSTATE_SETREN, port->membase + LTQ_ASC_WHBSTATE);
++	writel(ASCWHBSTATE_SETREN, port->membase + LTQ_ASC_WHBSTATE);
+ 
+ 	spin_unlock_irqrestore(&ltq_asc_lock, flags);
+ 
+@@ -579,10 +579,10 @@ lqasc_console_putchar(struct uart_port *port, int ch)
+ 		return;
+ 
+ 	do {
+-		fifofree = (ltq_r32(port->membase + LTQ_ASC_FSTAT)
++		fifofree = (readl(port->membase + LTQ_ASC_FSTAT)
+ 			& ASCFSTAT_TXFREEMASK) >> ASCFSTAT_TXFREEOFF;
+ 	} while (fifofree == 0);
+-	ltq_w8(ch, port->membase + LTQ_ASC_TBUF);
++	writeb(ch, port->membase + LTQ_ASC_TBUF);
+ }
+ 
+ static void lqasc_serial_port_write(struct uart_port *port, const char *s,
 -- 
 2.39.2
 
