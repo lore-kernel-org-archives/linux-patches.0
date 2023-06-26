@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9B513AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B515C433C8;
-	Mon, 26 Jun 2023 18:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB1813AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:29:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66198C433C8;
+	Mon, 26 Jun 2023 18:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804153;
-	bh=NRoZxmMA0fm2omZNJRnr8sdS68McYDMhS0l+Qijzlfg=;
+	s=korg; t=1687804156;
+	bh=YLDlcn8d1wU++9sA69WzYD9f17Zjw5cI41OSqaosmD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhcxjcCUNcug2fKQeDLdpDzTPKsG8d0ddZXV/eZdXVHL8SIkvojV9x76JLHpTvvNI
-	 IFeBEpoB65luOlTYDCUFyjnFjVkLr/3KzrPp4UPgO/Al636miNvr9rltj522OuOBoR
-	 FXuVkshWlRBIgYia626QAvO9nQn1kUcJSWoQQ8KA=
+	b=NyXs5dAf/cA/VTfyNefSKFwm7e9q9pMVFV1eJZwbyZTye6omBhm9F/7tyNxaVi4lp
+	 yg7iwnCE989DB3b75Q6UiCDFv34LfU+XH2yezut9cb7zqsthyag2CDePtQQxnR3urI
+	 /ijIf7P2xpcQuCCYYx2rTq6sUBXMZixqNHrPN2Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 060/170] mptcp: consolidate fallback and non fallback state machine
-Date: Mon, 26 Jun 2023 20:10:29 +0200
-Message-ID: <20230626180803.282373923@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.1 061/170] cgroup: Do not corrupt task iteration when rebinding subsystem
+Date: Mon, 26 Jun 2023 20:10:30 +0200
+Message-ID: <20230626180803.321140175@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,205 +36,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-commit 81c1d029016001f994ce1c46849c5e9900d8eab8 upstream.
+commit 6f363f5aa845561f7ea496d8b1175e3204470486 upstream.
 
-An orphaned msk releases the used resources via the worker,
-when the latter first see the msk in CLOSED status.
+We found a refcount UAF bug as follows:
 
-If the msk status transitions to TCP_CLOSE in the release callback
-invoked by the worker's final release_sock(), such instance of the
-workqueue will not take any action.
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 1 PID: 342 at lib/refcount.c:25 refcount_warn_saturate+0xa0/0x148
+Workqueue: events cpuset_hotplug_workfn
+Call trace:
+ refcount_warn_saturate+0xa0/0x148
+ __refcount_add.constprop.0+0x5c/0x80
+ css_task_iter_advance_css_set+0xd8/0x210
+ css_task_iter_advance+0xa8/0x120
+ css_task_iter_next+0x94/0x158
+ update_tasks_root_domain+0x58/0x98
+ rebuild_root_domains+0xa0/0x1b0
+ rebuild_sched_domains_locked+0x144/0x188
+ cpuset_hotplug_workfn+0x138/0x5a0
+ process_one_work+0x1e8/0x448
+ worker_thread+0x228/0x3e0
+ kthread+0xe0/0xf0
+ ret_from_fork+0x10/0x20
 
-Additionally the MPTCP code prevents scheduling the worker once the
-socket reaches the CLOSE status: such msk resources will be leaked.
+then a kernel panic will be triggered as below:
 
-The only code path that can trigger the above scenario is the
-__mptcp_check_send_data_fin() in fallback mode.
+Unable to handle kernel paging request at virtual address 00000000c0000010
+Call trace:
+ cgroup_apply_control_disable+0xa4/0x16c
+ rebind_subsystems+0x224/0x590
+ cgroup_destroy_root+0x64/0x2e0
+ css_free_rwork_fn+0x198/0x2a0
+ process_one_work+0x1d4/0x4bc
+ worker_thread+0x158/0x410
+ kthread+0x108/0x13c
+ ret_from_fork+0x10/0x18
 
-Address the issue removing the special handling of fallback socket
-in __mptcp_check_send_data_fin(), consolidating the state machine
-for fallback and non fallback socket.
+The race that cause this bug can be shown as below:
 
-Since non-fallback sockets do not send and do not receive data_fin,
-the mptcp code can update the msk internal status to match the next
-step in the SM every time data fin (ack) should be generated or
-received.
+(hotplug cpu)                | (umount cpuset)
+mutex_lock(&cpuset_mutex)    | mutex_lock(&cgroup_mutex)
+cpuset_hotplug_workfn        |
+ rebuild_root_domains        |  rebind_subsystems
+  update_tasks_root_domain   |   spin_lock_irq(&css_set_lock)
+   css_task_iter_start       |    list_move_tail(&cset->e_cset_node[ss->id]
+   while(css_task_iter_next) |                  &dcgrp->e_csets[ss->id]);
+   css_task_iter_end         |   spin_unlock_irq(&css_set_lock)
+mutex_unlock(&cpuset_mutex)  | mutex_unlock(&cgroup_mutex)
 
-As a consequence we can remove a bunch of checks for fallback from
-the fastpath.
+Inside css_task_iter_start/next/end, css_set_lock is hold and then
+released, so when iterating task(left side), the css_set may be moved to
+another list(right side), then it->cset_head points to the old list head
+and it->cset_pos->next points to the head node of new list, which can't
+be used as struct css_set.
 
-Fixes: 6e628cd3a8f7 ("mptcp: use mptcp release_cb for delayed tasks")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+To fix this issue, switch from all css_sets to only scgrp's css_sets to
+patch in-flight iterators to preserve correct iteration, and then
+update it->cset_head as well.
+
+Reported-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://www.spinics.net/lists/cgroups/msg37935.html
+Suggested-by: Michal Koutný <mkoutny@suse.com>
+Link: https://lore.kernel.org/all/20230526114139.70274-1-xiujianfeng@huaweicloud.com/
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Fixes: 2d8f243a5e6e ("cgroup: implement cgroup->e_csets[]")
+Cc: stable@vger.kernel.org # v3.16+
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   41 +++++++++++++++--------------------------
- net/mptcp/subflow.c  |   17 ++++++++++-------
- 2 files changed, 25 insertions(+), 33 deletions(-)
+ kernel/cgroup/cgroup.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -53,7 +53,7 @@ enum {
- static struct percpu_counter mptcp_sockets_allocated ____cacheline_aligned_in_smp;
- 
- static void __mptcp_destroy_sock(struct sock *sk);
--static void __mptcp_check_send_data_fin(struct sock *sk);
-+static void mptcp_check_send_data_fin(struct sock *sk);
- 
- DEFINE_PER_CPU(struct mptcp_delegated_action, mptcp_delegated_actions);
- static struct net_device mptcp_napi_dev;
-@@ -420,8 +420,7 @@ static bool mptcp_pending_data_fin_ack(s
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -1782,7 +1782,7 @@ int rebind_subsystems(struct cgroup_root
  {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	struct cgroup *dcgrp = &dst_root->cgrp;
+ 	struct cgroup_subsys *ss;
+-	int ssid, i, ret;
++	int ssid, ret;
+ 	u16 dfl_disable_ss_mask = 0;
  
--	return !__mptcp_check_fallback(msk) &&
--	       ((1 << sk->sk_state) &
-+	return ((1 << sk->sk_state) &
- 		(TCPF_FIN_WAIT1 | TCPF_CLOSING | TCPF_LAST_ACK)) &&
- 	       msk->write_seq == READ_ONCE(msk->snd_una);
- }
-@@ -579,9 +578,6 @@ static bool mptcp_check_data_fin(struct
- 	u64 rcv_data_fin_seq;
- 	bool ret = false;
+ 	lockdep_assert_held(&cgroup_mutex);
+@@ -1826,7 +1826,8 @@ int rebind_subsystems(struct cgroup_root
+ 		struct cgroup_root *src_root = ss->root;
+ 		struct cgroup *scgrp = &src_root->cgrp;
+ 		struct cgroup_subsys_state *css = cgroup_css(scgrp, ss);
+-		struct css_set *cset;
++		struct css_set *cset, *cset_pos;
++		struct css_task_iter *it;
  
--	if (__mptcp_check_fallback(msk))
--		return ret;
--
- 	/* Need to ack a DATA_FIN received from a peer while this side
- 	 * of the connection is in ESTABLISHED, FIN_WAIT1, or FIN_WAIT2.
- 	 * msk->rcv_data_fin was set when parsing the incoming options
-@@ -619,7 +615,8 @@ static bool mptcp_check_data_fin(struct
- 		}
+ 		WARN_ON(!css || cgroup_css(dcgrp, ss));
  
- 		ret = true;
--		mptcp_send_ack(msk);
-+		if (!__mptcp_check_fallback(msk))
-+			mptcp_send_ack(msk);
- 		mptcp_close_wake_up(sk);
- 	}
- 	return ret;
-@@ -1606,7 +1603,7 @@ out:
- 	if (!mptcp_timer_pending(sk))
- 		mptcp_reset_timer(sk);
- 	if (do_check_data_fin)
--		__mptcp_check_send_data_fin(sk);
-+		mptcp_check_send_data_fin(sk);
- }
+@@ -1844,9 +1845,22 @@ int rebind_subsystems(struct cgroup_root
+ 		css->cgroup = dcgrp;
  
- static void __mptcp_subflow_push_pending(struct sock *sk, struct sock *ssk)
-@@ -2665,8 +2662,6 @@ static void mptcp_worker(struct work_str
- 	if (unlikely((1 << state) & (TCPF_CLOSE | TCPF_LISTEN)))
- 		goto unlock;
- 
--	mptcp_check_data_fin_ack(sk);
--
- 	mptcp_check_fastclose(msk);
- 
- 	mptcp_pm_nl_work(msk);
-@@ -2674,7 +2669,8 @@ static void mptcp_worker(struct work_str
- 	if (test_and_clear_bit(MPTCP_WORK_EOF, &msk->flags))
- 		mptcp_check_for_eof(msk);
- 
--	__mptcp_check_send_data_fin(sk);
-+	mptcp_check_send_data_fin(sk);
-+	mptcp_check_data_fin_ack(sk);
- 	mptcp_check_data_fin(sk);
- 
- 	if (test_and_clear_bit(MPTCP_WORK_CLOSE_SUBFLOW, &msk->flags))
-@@ -2815,6 +2811,12 @@ void mptcp_subflow_shutdown(struct sock
- 			pr_debug("Fallback");
- 			ssk->sk_shutdown |= how;
- 			tcp_shutdown(ssk, how);
-+
-+			/* simulate the data_fin ack reception to let the state
-+			 * machine move forward
+ 		spin_lock_irq(&css_set_lock);
+-		hash_for_each(css_set_table, i, cset, hlist)
++		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
++		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
++					 e_cset_node[ss->id]) {
+ 			list_move_tail(&cset->e_cset_node[ss->id],
+ 				       &dcgrp->e_csets[ss->id]);
++			/*
++			 * all css_sets of scgrp together in same order to dcgrp,
++			 * patch in-flight iterators to preserve correct iteration.
++			 * since the iterator is always advanced right away and
++			 * finished when it->cset_pos meets it->cset_head, so only
++			 * update it->cset_head is enough here.
 +			 */
-+			WRITE_ONCE(mptcp_sk(sk)->snd_una, mptcp_sk(sk)->snd_nxt);
-+			mptcp_schedule_work(sk);
- 		} else {
- 			pr_debug("Sending DATA_FIN on subflow %p", ssk);
- 			tcp_send_ack(ssk);
-@@ -2854,7 +2856,7 @@ static int mptcp_close_state(struct sock
- 	return next & TCP_ACTION_FIN;
- }
++			list_for_each_entry(it, &cset->task_iters, iters_node)
++				if (it->cset_head == &scgrp->e_csets[ss->id])
++					it->cset_head = &dcgrp->e_csets[ss->id];
++		}
+ 		spin_unlock_irq(&css_set_lock);
  
--static void __mptcp_check_send_data_fin(struct sock *sk)
-+static void mptcp_check_send_data_fin(struct sock *sk)
- {
- 	struct mptcp_subflow_context *subflow;
- 	struct mptcp_sock *msk = mptcp_sk(sk);
-@@ -2872,19 +2874,6 @@ static void __mptcp_check_send_data_fin(
- 
- 	WRITE_ONCE(msk->snd_nxt, msk->write_seq);
- 
--	/* fallback socket will not get data_fin/ack, can move to the next
--	 * state now
--	 */
--	if (__mptcp_check_fallback(msk)) {
--		WRITE_ONCE(msk->snd_una, msk->write_seq);
--		if ((1 << sk->sk_state) & (TCPF_CLOSING | TCPF_LAST_ACK)) {
--			inet_sk_state_store(sk, TCP_CLOSE);
--			mptcp_close_wake_up(sk);
--		} else if (sk->sk_state == TCP_FIN_WAIT1) {
--			inet_sk_state_store(sk, TCP_FIN_WAIT2);
--		}
--	}
--
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *tcp_sk = mptcp_subflow_tcp_sock(subflow);
- 
-@@ -2904,7 +2893,7 @@ static void __mptcp_wr_shutdown(struct s
- 	WRITE_ONCE(msk->write_seq, msk->write_seq + 1);
- 	WRITE_ONCE(msk->snd_data_fin_enable, 1);
- 
--	__mptcp_check_send_data_fin(sk);
-+	mptcp_check_send_data_fin(sk);
- }
- 
- static void __mptcp_destroy_sock(struct sock *sk)
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1688,14 +1688,16 @@ static void subflow_state_change(struct
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
- 	struct sock *parent = subflow->conn;
-+	struct mptcp_sock *msk;
- 
- 	__subflow_state_change(sk);
- 
-+	msk = mptcp_sk(parent);
- 	if (subflow_simultaneous_connect(sk)) {
- 		mptcp_propagate_sndbuf(parent, sk);
- 		mptcp_do_fallback(sk);
--		mptcp_rcv_space_init(mptcp_sk(parent), sk);
--		pr_fallback(mptcp_sk(parent));
-+		mptcp_rcv_space_init(msk, sk);
-+		pr_fallback(msk);
- 		subflow->conn_finished = 1;
- 		mptcp_set_connected(parent);
- 	}
-@@ -1711,11 +1713,12 @@ static void subflow_state_change(struct
- 
- 	subflow_sched_work_if_closed(mptcp_sk(parent), sk);
- 
--	if (__mptcp_check_fallback(mptcp_sk(parent)) &&
--	    !subflow->rx_eof && subflow_is_done(sk)) {
--		subflow->rx_eof = 1;
--		mptcp_subflow_eof(parent);
--	}
-+	/* when the fallback subflow closes the rx side, trigger a 'dummy'
-+	 * ingress data fin, so that the msk state will follow along
-+	 */
-+	if (__mptcp_check_fallback(msk) && subflow_is_done(sk) && msk->first == sk &&
-+	    mptcp_update_rcv_data_fin(msk, READ_ONCE(msk->ack_seq), true))
-+		mptcp_schedule_work(parent);
- }
- 
- void mptcp_subflow_queue_clean(struct sock *listener_sk, struct sock *listener_ssk)
+ 		if (ss->css_rstat_flush) {
 
 
