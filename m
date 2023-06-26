@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371E111CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:44:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8AC0C433A9;
-	Mon, 26 Jun 2023 18:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618CF11CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:45:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0815C433C8;
+	Mon, 26 Jun 2023 18:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687805099;
-	bh=AJDQWVt5FKaaCGVhPurGLT4Aub8OZTKqpX4uQNWfWGg=;
+	s=korg; t=1687805102;
+	bh=SIX+pzaLS2MU86ITBjsEE8C1aTHUnUzmil2W4GDwUaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBafsxYVUXkae/6t8GY2MEFwd55zy909uZDe+TznHRUVN36nRQDp+j7jT7dvWUmHK
-	 rNjIPBeKJyZ03i8pTHkpC+iRak7ED5Rxf2KiR02rck1pBl/vxs9YInUpKmt8C2zNlN
-	 OJBF0d7jYwMmVs5kCZuE0UGuZxMZ3xWBVZDKDl6c=
+	b=UAvqMWSyluKzonjtVaMI7qlDYviNoZjb4VF29/aoTj9N0xqgTqZa2Pil7gZ74m1Ry
+	 zYVPGnSV92aEcrB4igke9bmh8cfJPYD+j+Dtx8B9SK0oSkx81iNAUu843JIwtJU6Up
+	 MzojHMfwHAZlmo1gqhdvT1CP3W9DDRLCAZ11cfJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benedict Wong <benedictwong@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Terin Stock <terin@cloudflare.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 32/81] xfrm: Treat already-verified secpath entries as optional
-Date: Mon, 26 Jun 2023 20:12:14 +0200
-Message-ID: <20230626180745.778707015@linuxfoundation.org>
+Subject: [PATCH 5.10 50/81] ipvs: align inner_mac_header for encapsulation
+Date: Mon, 26 Jun 2023 20:12:32 +0200
+Message-ID: <20230626180746.504429247@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -35,98 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benedict Wong <benedictwong@google.com>
+From: Terin Stock <terin@cloudflare.com>
 
-[ Upstream commit 1f8b6df6a997a430b0c48b504638154b520781ad ]
+[ Upstream commit d7fce52fdf96663ddc2eb21afecff3775588612a ]
 
-This change allows inbound traffic through nested IPsec tunnels to
-successfully match policies and templates, while retaining the secpath
-stack trace as necessary for netfilter policies.
+When using encapsulation the original packet's headers are copied to the
+inner headers. This preserves the space for an inner mac header, which
+is not used by the inner payloads for the encapsulation types supported
+by IPVS. If a packet is using GUE or GRE encapsulation and needs to be
+segmented, flow can be passed to __skb_udp_tunnel_segment() which
+calculates a negative tunnel header length. A negative tunnel header
+length causes pskb_may_pull() to fail, dropping the packet.
 
-Specifically, this patch marks secpath entries that have already matched
-against a relevant policy as having been verified, allowing it to be
-treated as optional and skipped after a tunnel decapsulation (during
-which the src/dst/proto/etc may have changed, and the correct policy
-chain no long be resolvable).
+This can be observed by attaching probes to ip_vs_in_hook(),
+__dev_queue_xmit(), and __skb_udp_tunnel_segment():
 
-This approach is taken as opposed to the iteration in b0355dbbf13c,
-where the secpath was cleared, since that breaks subsequent validations
-that rely on the existence of the secpath entries (netfilter policies, or
-transport-in-tunnel mode, where policies remain resolvable).
+    perf probe --add '__dev_queue_xmit skb->inner_mac_header \
+    skb->inner_network_header skb->mac_header skb->network_header'
+    perf probe --add '__skb_udp_tunnel_segment:7 tnl_hlen'
+    perf probe -m ip_vs --add 'ip_vs_in_hook skb->inner_mac_header \
+    skb->inner_network_header skb->mac_header skb->network_header'
 
-Fixes: b0355dbbf13c ("Fix XFRM-I support for nested ESP tunnels")
-Test: Tested against Android Kernel Unit Tests
-Test: Tested against Android CTS
-Signed-off-by: Benedict Wong <benedictwong@google.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+These probes the headers and tunnel header length for packets which
+traverse the IPVS encapsulation path. A TCP packet can be forced into
+the segmentation path by being smaller than a calculated clamped MSS,
+but larger than the advertised MSS.
+
+    probe:ip_vs_in_hook: inner_mac_header=0x0 inner_network_header=0x0 mac_header=0x44 network_header=0x52
+    probe:ip_vs_in_hook: inner_mac_header=0x44 inner_network_header=0x52 mac_header=0x44 network_header=0x32
+    probe:dev_queue_xmit: inner_mac_header=0x44 inner_network_header=0x52 mac_header=0x44 network_header=0x32
+    probe:__skb_udp_tunnel_segment_L7: tnl_hlen=-2
+
+When using veth-based encapsulation, the interfaces are set to be
+mac-less, which does not preserve space for an inner mac header. This
+prevents this issue from occurring.
+
+In our real-world testing of sending a 32KB file we observed operation
+time increasing from ~75ms for veth-based encapsulation to over 1.5s
+using IPVS encapsulation due to retries from dropped packets.
+
+This changeset modifies the packet on the encapsulation path in
+ip_vs_tunnel_xmit() and ip_vs_tunnel_xmit_v6() to remove the inner mac
+header offset. This fixes UDP segmentation for both encapsulation types,
+and corrects the inner headers for any IPIP flows that may use it.
+
+Fixes: 84c0d5e96f3a ("ipvs: allow tunneling with gue encapsulation")
+Signed-off-by: Terin Stock <terin@cloudflare.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Acked-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h     |  1 +
- net/xfrm/xfrm_input.c  |  1 +
- net/xfrm/xfrm_policy.c | 12 ++++++++++++
- 3 files changed, 14 insertions(+)
+ net/netfilter/ipvs/ip_vs_xmit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index 726a2dbb407f1..7865db2f827e6 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -1034,6 +1034,7 @@ struct xfrm_offload {
- struct sec_path {
- 	int			len;
- 	int			olen;
-+	int			verified_cnt;
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index d2e5a8f644b80..cd2130e98836b 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -1225,6 +1225,7 @@ ip_vs_tunnel_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
+ 	skb->transport_header = skb->network_header;
  
- 	struct xfrm_state	*xvec[XFRM_MAX_DEPTH];
- 	struct xfrm_offload	ovec[XFRM_MAX_OFFLOAD_DEPTH];
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index fef99a1c5df10..f3bccab983f05 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -129,6 +129,7 @@ struct sec_path *secpath_set(struct sk_buff *skb)
- 	memset(sp->ovec, 0, sizeof(sp->ovec));
- 	sp->olen = 0;
- 	sp->len = 0;
-+	sp->verified_cnt = 0;
+ 	skb_set_inner_ipproto(skb, next_protocol);
++	skb_set_inner_mac_header(skb, skb_inner_network_offset(skb));
  
- 	return sp;
- }
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index d3b128b74a382..465d28341ed6d 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -3277,6 +3277,13 @@ xfrm_policy_ok(const struct xfrm_tmpl *tmpl, const struct sec_path *sp, int star
- 		if (xfrm_state_ok(tmpl, sp->xvec[idx], family, if_id))
- 			return ++idx;
- 		if (sp->xvec[idx]->props.mode != XFRM_MODE_TRANSPORT) {
-+			if (idx < sp->verified_cnt) {
-+				/* Secpath entry previously verified, consider optional and
-+				 * continue searching
-+				 */
-+				continue;
-+			}
-+
- 			if (start == -1)
- 				start = -2-idx;
- 			break;
-@@ -3688,6 +3695,9 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
- 		 * Order is _important_. Later we will implement
- 		 * some barriers, but at the moment barriers
- 		 * are implied between each two transformations.
-+		 * Upon success, marks secpath entries as having been
-+		 * verified to allow them to be skipped in future policy
-+		 * checks (e.g. nested tunnels).
- 		 */
- 		for (i = xfrm_nr-1, k = 0; i >= 0; i--) {
- 			k = xfrm_policy_ok(tpp[i], sp, k, family, if_id);
-@@ -3706,6 +3716,8 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
- 		}
+ 	if (tun_type == IP_VS_CONN_F_TUNNEL_TYPE_GUE) {
+ 		bool check = false;
+@@ -1373,6 +1374,7 @@ ip_vs_tunnel_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
+ 	skb->transport_header = skb->network_header;
  
- 		xfrm_pols_put(pols, npols);
-+		sp->verified_cnt = k;
-+
- 		return 1;
- 	}
- 	XFRM_INC_STATS(net, LINUX_MIB_XFRMINPOLBLOCK);
+ 	skb_set_inner_ipproto(skb, next_protocol);
++	skb_set_inner_mac_header(skb, skb_inner_network_offset(skb));
+ 
+ 	if (tun_type == IP_VS_CONN_F_TUNNEL_TYPE_GUE) {
+ 		bool check = false;
 -- 
 2.39.2
 
