@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83E7D526
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3093CC433C9;
-	Mon, 26 Jun 2023 18:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AD4D526
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA4AC433C8;
+	Mon, 26 Jun 2023 18:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804707;
-	bh=kR5t8bTEO73iH89VJlnnEQ9itMI1V0WT//U1zwobbgQ=;
+	s=korg; t=1687804710;
+	bh=YtoAU3eukpvvJErUwR5tBtOrs/6b3TjJ2QBaUkB+uMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WB02v9ofGeP/c2ZY6I+mv91i37S1Q8mLddGVVg6FvuEB/WmU4HEnNkp6nZga/fTU5
-	 oF+ThJUGRq8pfsHBreGMnQ3ZBxarIVq0GN9pKgVktZkrmbQdvT0+cDLUbvEHPLZ3hn
-	 MKfWCyQByAWimyjVBeqjM3XJIxDaSg2KcUc/Btf0=
+	b=Zb3msFWL/bIrLoB6yu5g7MsWYSC1i68Dy+QI7v/tLYD9neh0EsFOLhyxhq18lpD8a
+	 8o8MGrwkN9tVgFasTLfO/WoueHhuUQaYy/HNgYNWizHJEsPhRgDkUJsvUAk9/9k0Md
+	 0C+nxCodxYQKHHTJsj+Vf5RT0sFA3Lm/g6COBYsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.15 15/96] ACPI: sleep: Avoid breaking S3 wakeup due to might_sleep()
-Date: Mon, 26 Jun 2023 20:11:30 +0200
-Message-ID: <20230626180747.554067525@linuxfoundation.org>
+	Shuai Hu <hshuai@redhat.com>,
+	Zhenyu Zhang <zhenyzha@redhat.com>,
+	Gavin Shan <gshan@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Peter Xu <peterx@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Shaoqin Huang <shahuang@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 16/96] KVM: Avoid illegal stage2 mapping on invalid memory slot
+Date: Mon, 26 Jun 2023 20:11:31 +0200
+Message-ID: <20230626180747.600081893@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -35,86 +41,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Gavin Shan <gshan@redhat.com>
 
-commit 22db06337f590d01d79f60f181d8dfe5a9ef9085 upstream.
+commit 2230f9e1171a2e9731422a14d1bbc313c0b719d1 upstream.
 
-The addition of might_sleep() to down_timeout() caused the latter to
-enable interrupts unconditionally in some cases, which in turn broke
-the ACPI S3 wakeup path in acpi_suspend_enter(), where down_timeout()
-is called by acpi_disable_all_gpes() via acpi_ut_acquire_mutex().
+We run into guest hang in edk2 firmware when KSM is kept as running on
+the host. The edk2 firmware is waiting for status 0x80 from QEMU's pflash
+device (TYPE_PFLASH_CFI01) during the operation of sector erasing or
+buffered write. The status is returned by reading the memory region of
+the pflash device and the read request should have been forwarded to QEMU
+and emulated by it. Unfortunately, the read request is covered by an
+illegal stage2 mapping when the guest hang issue occurs. The read request
+is completed with QEMU bypassed and wrong status is fetched. The edk2
+firmware runs into an infinite loop with the wrong status.
 
-Namely, if CONFIG_DEBUG_ATOMIC_SLEEP is set, might_sleep() causes
-might_resched() to be used and if CONFIG_PREEMPT_VOLUNTARY is set,
-this triggers __cond_resched() which may call preempt_schedule_common(),
-so __schedule() gets invoked and it ends up with enabled interrupts (in
-the prev == next case).
+The illegal stage2 mapping is populated due to same page sharing by KSM
+at (C) even the associated memory slot has been marked as invalid at (B)
+when the memory slot is requested to be deleted. It's notable that the
+active and inactive memory slots can't be swapped when we're in the middle
+of kvm_mmu_notifier_change_pte() because kvm->mn_active_invalidate_count
+is elevated, and kvm_swap_active_memslots() will busy loop until it reaches
+to zero again. Besides, the swapping from the active to the inactive memory
+slots is also avoided by holding &kvm->srcu in __kvm_handle_hva_range(),
+corresponding to synchronize_srcu_expedited() in kvm_swap_active_memslots().
 
-Now, enabling interrupts early in the S3 wakeup path causes the kernel
-to crash.
+  CPU-A                    CPU-B
+  -----                    -----
+                           ioctl(kvm_fd, KVM_SET_USER_MEMORY_REGION)
+                           kvm_vm_ioctl_set_memory_region
+                           kvm_set_memory_region
+                           __kvm_set_memory_region
+                           kvm_set_memslot(kvm, old, NULL, KVM_MR_DELETE)
+                             kvm_invalidate_memslot
+                               kvm_copy_memslot
+                               kvm_replace_memslot
+                               kvm_swap_active_memslots        (A)
+                               kvm_arch_flush_shadow_memslot   (B)
+  same page sharing by KSM
+  kvm_mmu_notifier_invalidate_range_start
+        :
+  kvm_mmu_notifier_change_pte
+    kvm_handle_hva_range
+    __kvm_handle_hva_range
+    kvm_set_spte_gfn            (C)
+        :
+  kvm_mmu_notifier_invalidate_range_end
 
-Address this by modifying acpi_suspend_enter() to disable GPEs without
-attempting to acquire the sleeping lock which is not needed in that code
-path anyway.
+Fix the issue by skipping the invalid memory slot at (C) to avoid the
+illegal stage2 mapping so that the read request for the pflash's status
+is forwarded to QEMU and emulated by it. In this way, the correct pflash's
+status can be returned from QEMU to break the infinite loop in the edk2
+firmware.
 
-Fixes: 99409b935c9a ("locking/semaphore: Add might_sleep() to down_*() family")
-Reported-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: 5.15+ <stable@vger.kernel.org> # 5.15+
+We tried a git-bisect and the first problematic commit is cd4c71835228 ("
+KVM: arm64: Convert to the gfn-based MMU notifier callbacks"). With this,
+clean_dcache_guest_page() is called after the memory slots are iterated
+in kvm_mmu_notifier_change_pte(). clean_dcache_guest_page() is called
+before the iteration on the memory slots before this commit. This change
+literally enlarges the racy window between kvm_mmu_notifier_change_pte()
+and memory slot removal so that we're able to reproduce the issue in a
+practical test case. However, the issue exists since commit d5d8184d35c9
+("KVM: ARM: Memory virtualization setup").
+
+Cc: stable@vger.kernel.org # v3.9+
+Fixes: d5d8184d35c9 ("KVM: ARM: Memory virtualization setup")
+Reported-by: Shuai Hu <hshuai@redhat.com>
+Reported-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Message-Id: <20230615054259.14911-1-gshan@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpica/achware.h |    2 --
- drivers/acpi/sleep.c          |   16 ++++++++++++----
- include/acpi/acpixf.h         |    1 +
- 3 files changed, 13 insertions(+), 6 deletions(-)
+ virt/kvm/kvm_main.c |   20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/acpica/achware.h
-+++ b/drivers/acpi/acpica/achware.h
-@@ -101,8 +101,6 @@ acpi_status
- acpi_hw_get_gpe_status(struct acpi_gpe_event_info *gpe_event_info,
- 		       acpi_event_status *event_status);
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -636,6 +636,24 @@ static __always_inline int kvm_handle_hv
  
--acpi_status acpi_hw_disable_all_gpes(void);
--
- acpi_status acpi_hw_enable_all_runtime_gpes(void);
+ 	return __kvm_handle_hva_range(kvm, &range);
+ }
++
++static bool kvm_change_spte_gfn(struct kvm *kvm, struct kvm_gfn_range *range)
++{
++	/*
++	 * Skipping invalid memslots is correct if and only change_pte() is
++	 * surrounded by invalidate_range_{start,end}(), which is currently
++	 * guaranteed by the primary MMU.  If that ever changes, KVM needs to
++	 * unmap the memslot instead of skipping the memslot to ensure that KVM
++	 * doesn't hold references to the old PFN.
++	 */
++	WARN_ON_ONCE(!READ_ONCE(kvm->mn_active_invalidate_count));
++
++	if (range->slot->flags & KVM_MEMSLOT_INVALID)
++		return false;
++
++	return kvm_set_spte_gfn(kvm, range);
++}
++
+ static void kvm_mmu_notifier_change_pte(struct mmu_notifier *mn,
+ 					struct mm_struct *mm,
+ 					unsigned long address,
+@@ -656,7 +674,7 @@ static void kvm_mmu_notifier_change_pte(
+ 	if (!READ_ONCE(kvm->mmu_notifier_count))
+ 		return;
  
- acpi_status acpi_hw_enable_all_wakeup_gpes(void);
---- a/drivers/acpi/sleep.c
-+++ b/drivers/acpi/sleep.c
-@@ -635,11 +635,19 @@ static int acpi_suspend_enter(suspend_st
- 	}
+-	kvm_handle_hva_range(mn, address, address + 1, pte, kvm_set_spte_gfn);
++	kvm_handle_hva_range(mn, address, address + 1, pte, kvm_change_spte_gfn);
+ }
  
- 	/*
--	 * Disable and clear GPE status before interrupt is enabled. Some GPEs
--	 * (like wakeup GPE) haven't handler, this can avoid such GPE misfire.
--	 * acpi_leave_sleep_state will reenable specific GPEs later
-+	 * Disable all GPE and clear their status bits before interrupts are
-+	 * enabled. Some GPEs (like wakeup GPEs) have no handlers and this can
-+	 * prevent them from producing spurious interrups.
-+	 *
-+	 * acpi_leave_sleep_state() will reenable specific GPEs later.
-+	 *
-+	 * Because this code runs on one CPU with disabled interrupts (all of
-+	 * the other CPUs are offline at this time), it need not acquire any
-+	 * sleeping locks which may trigger an implicit preemption point even
-+	 * if there is no contention, so avoid doing that by using a low-level
-+	 * library routine here.
- 	 */
--	acpi_disable_all_gpes();
-+	acpi_hw_disable_all_gpes();
- 	/* Allow EC transactions to happen. */
- 	acpi_ec_unblock_transactions();
- 
---- a/include/acpi/acpixf.h
-+++ b/include/acpi/acpixf.h
-@@ -749,6 +749,7 @@ ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_sta
- 						     acpi_event_status
- 						     *event_status))
- ACPI_HW_DEPENDENT_RETURN_UINT32(u32 acpi_dispatch_gpe(acpi_handle gpe_device, u32 gpe_number))
-+ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_hw_disable_all_gpes(void))
- ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_disable_all_gpes(void))
- ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_enable_all_runtime_gpes(void))
- ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_enable_all_wakeup_gpes(void))
+ void kvm_inc_notifier_count(struct kvm *kvm, unsigned long start,
 
 
