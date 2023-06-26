@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6DB11CAB
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:41:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EBFC433C8;
-	Mon, 26 Jun 2023 18:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976D311CAB
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:41:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A167C433C0;
+	Mon, 26 Jun 2023 18:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804912;
-	bh=R4cFYMTHiIorinObX3dptgI0cJ6QHM46sg5qMty0A4Q=;
+	s=korg; t=1687804915;
+	bh=CBc4GKNO1MRLJg1eKVWqxkEoP1h79fxST86ixGuqN60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CwhP5R5W0rrTf/qMfgHZwxUiFzKJx0HLNJcs8/HIOvbP/8W90iNBoIMjM4yyWuyeI
-	 lgrGFRioQGozAEnG3KjK8bpIcZsaf1WjZJHxaSlbRkXu8RSBEIm01pQJnFrHCm2QpT
-	 lZRpEx9ohaR0DYDA9VxYVQuq4Wsm3TE7YF63eRdE=
+	b=LnUEJXBZ8rpKwadzEbf7uoIE6QZHuCa4KaCyMCDeZzrW6SoIQ+suYFKWrcU7IXLpt
+	 /RvykMvo7Iau3m1eEOSfpX8mg4wN28Etw52QHPHrsSRE17QG2Zg7vjx0yRZ/Ag8N5r
+	 LtS8hu2eHJavspprlYJbUhIwFkhhBqOZDUVUgbFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 84/96] s390/cio: unregister device when the only path is gone
-Date: Mon, 26 Jun 2023 20:12:39 +0200
-Message-ID: <20230626180750.496973258@linuxfoundation.org>
+Subject: [PATCH 5.15 85/96] spi: lpspi: disable lpspi module irq in DMA mode
+Date: Mon, 26 Jun 2023 20:12:40 +0200
+Message-ID: <20230626180750.540139557@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -36,60 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Clark Wang <xiaoning.wang@nxp.com>
 
-[ Upstream commit 89c0c62e947a01e7a36b54582fd9c9e346170255 ]
+[ Upstream commit 9728fb3ce11729aa8c276825ddf504edeb00611d ]
 
-Currently, if the device is offline and all the channel paths are
-either configured or varied offline, the associated subchannel gets
-unregistered. Don't unregister the subchannel, instead unregister
-offline device.
+When all bits of IER are set to 0, we still can observe the lpspi irq events
+when using DMA mode to transfer data.
 
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+So disable irq to avoid the too much irq events.
+
+Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
+Link: https://lore.kernel.org/r/20230505063557.3962220-1-xiaoning.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/device.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-lpspi.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
-index b21fa57d1a46b..a111154a90465 100644
---- a/drivers/s390/cio/device.c
-+++ b/drivers/s390/cio/device.c
-@@ -1379,6 +1379,7 @@ void ccw_device_set_notoper(struct ccw_device *cdev)
- enum io_sch_action {
- 	IO_SCH_UNREG,
- 	IO_SCH_ORPH_UNREG,
-+	IO_SCH_UNREG_CDEV,
- 	IO_SCH_ATTACH,
- 	IO_SCH_UNREG_ATTACH,
- 	IO_SCH_ORPH_ATTACH,
-@@ -1411,7 +1412,7 @@ static enum io_sch_action sch_get_action(struct subchannel *sch)
- 	}
- 	if ((sch->schib.pmcw.pam & sch->opm) == 0) {
- 		if (ccw_device_notify(cdev, CIO_NO_PATH) != NOTIFY_OK)
--			return IO_SCH_UNREG;
-+			return IO_SCH_UNREG_CDEV;
- 		return IO_SCH_DISC;
- 	}
- 	if (device_is_disconnected(cdev))
-@@ -1473,6 +1474,7 @@ static int io_subchannel_sch_event(struct subchannel *sch, int process)
- 	case IO_SCH_ORPH_ATTACH:
- 		ccw_device_set_disconnected(cdev);
- 		break;
-+	case IO_SCH_UNREG_CDEV:
- 	case IO_SCH_UNREG_ATTACH:
- 	case IO_SCH_UNREG:
- 		if (!cdev)
-@@ -1506,6 +1508,7 @@ static int io_subchannel_sch_event(struct subchannel *sch, int process)
- 		if (rc)
- 			goto out;
- 		break;
-+	case IO_SCH_UNREG_CDEV:
- 	case IO_SCH_UNREG_ATTACH:
- 		spin_lock_irqsave(sch->lock, flags);
- 		sch_set_cdev(sch, NULL);
+diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
+index 5d98611dd999d..c5ff6e8c45be0 100644
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -906,9 +906,14 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
+ 	ret = fsl_lpspi_dma_init(&pdev->dev, fsl_lpspi, controller);
+ 	if (ret == -EPROBE_DEFER)
+ 		goto out_pm_get;
+-
+ 	if (ret < 0)
+ 		dev_err(&pdev->dev, "dma setup error %d, use pio\n", ret);
++	else
++		/*
++		 * disable LPSPI module IRQ when enable DMA mode successfully,
++		 * to prevent the unexpected LPSPI module IRQ events.
++		 */
++		disable_irq(irq);
+ 
+ 	ret = devm_spi_register_controller(&pdev->dev, controller);
+ 	if (ret < 0) {
 -- 
 2.39.2
 
