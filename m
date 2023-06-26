@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57BE134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2689DC433C0;
-	Mon, 26 Jun 2023 18:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AF0134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:24:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FECC433CB;
+	Mon, 26 Jun 2023 18:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803847;
-	bh=vVWoUSN831JSi8Ng2jjyfRjOKZ67+eBu8bLbQszSAYQ=;
+	s=korg; t=1687803850;
+	bh=1SNA1AhD3meXTukFvadt6ADtVpWTZQxnT38MVcWf1G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKh2yWuQ5hS9sTk7We43nMVmsocfOvapVF2hErXOGASPFnL3HM1QX7SxTB8rUGDqp
-	 xICzsvVkpzlhtQYbJldLdfWxIxmTjICbmIODWNHpFTI4lTOL6E/KBY3YFdY9nTES9j
-	 iKAeI/Ms3wuekwe19j9+8+4CKAnnr9oip95B2E4s=
+	b=vguNLPRm77EODBBaNseRbC/azmHMXX9k6o+oVIYPymtx5/A3I03zS41NXK0JgdPBk
+	 zvJj8kvHfMqah9enHHSyATPQnkjgMq2uZx7TO5VXa+1b0AxWgLfZZxWTcaeVZK2H/q
+	 eqBDBzvaOnf9lyRYeidia7WSTNpiEJoO0EGsNvT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coverity Scan <scan-admin@coverity.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 198/199] ksmbd: fix uninitialized pointer read in smb2_create_link()
-Date: Mon, 26 Jun 2023 20:11:44 +0200
-Message-ID: <20230626180814.416899622@linuxfoundation.org>
+Subject: [PATCH 6.3 199/199] ksmbd: call putname after using the last component
+Date: Mon, 26 Jun 2023 20:11:45 +0200
+Message-ID: <20230626180814.466695834@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -37,42 +36,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit df14afeed2e6c1bbadef7d2f9c46887bbd6d8d94 upstream.
+commit 6fe55c2799bc29624770c26f98ba7b06214f43e0 upstream.
 
-There is a case that file_present is true and path is uninitialized.
-This patch change file_present is set to false by default and set to
-true when patch is initialized.
+last component point filename struct. Currently putname is called after
+vfs_path_parent_lookup(). And then last component is used for
+lookup_one_qstr_excl(). name in last component is freed by previous
+calling putname(). And It cause file lookup failure when testing
+generic/464 test of xfstest.
 
 Fixes: 74d7970febf7 ("ksmbd: fix racy issue from using ->d_parent and ->d_name")
-Reported-by: Coverity Scan <scan-admin@coverity.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ksmbd/vfs.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -5560,7 +5560,7 @@ static int smb2_create_link(struct ksmbd
- {
- 	char *link_name = NULL, *target_name = NULL, *pathname = NULL;
- 	struct path path;
--	bool file_present = true;
-+	bool file_present = false;
- 	int rc;
+--- a/fs/ksmbd/vfs.c
++++ b/fs/ksmbd/vfs.c
+@@ -86,12 +86,14 @@ static int ksmbd_vfs_path_lookup_locked(
+ 	err = vfs_path_parent_lookup(filename, flags,
+ 				     &parent_path, &last, &type,
+ 				     root_share_path);
+-	putname(filename);
+-	if (err)
++	if (err) {
++		putname(filename);
+ 		return err;
++	}
  
- 	if (buf_len < (u64)sizeof(struct smb2_file_link_info) +
-@@ -5593,8 +5593,8 @@ static int smb2_create_link(struct ksmbd
- 	if (rc) {
- 		if (rc != -ENOENT)
- 			goto out;
--		file_present = false;
--	}
-+	} else
-+		file_present = true;
+ 	if (unlikely(type != LAST_NORM)) {
+ 		path_put(&parent_path);
++		putname(filename);
+ 		return -ENOENT;
+ 	}
  
- 	if (file_info->ReplaceIfExists) {
- 		if (file_present) {
+@@ -108,12 +110,14 @@ static int ksmbd_vfs_path_lookup_locked(
+ 	path->dentry = d;
+ 	path->mnt = share_conf->vfs_path.mnt;
+ 	path_put(&parent_path);
++	putname(filename);
+ 
+ 	return 0;
+ 
+ err_out:
+ 	inode_unlock(parent_path.dentry->d_inode);
+ 	path_put(&parent_path);
++	putname(filename);
+ 	return -ENOENT;
+ }
+ 
 
 
