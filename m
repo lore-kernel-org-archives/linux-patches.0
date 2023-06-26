@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F202ABA36
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DAEC433C8;
-	Mon, 26 Jun 2023 18:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831B6BA36
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F201DC433C8;
+	Mon, 26 Jun 2023 18:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804483;
-	bh=0CVterN2oNR0snu/uDzo3u9HlQDH7EmEEvZabB0r2sE=;
+	s=korg; t=1687804486;
+	bh=xq0pn5t5F9mf/kVVYoBWo2It+9+9nTLmtJpxR4Nyx+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ThCWA1ZW1wdtRR8SIB1sEP283VaqX2hpbx7jDt3T9NXLsaeD/erPJodGW4s0vrp1h
-	 ZBvbUKxOYSy3w52bT2nBn7Bg9keVaGIUFKF8inTFPAt7qFRKkABMG+BNJVoWuucHZb
-	 FYCpG5kTZDFhDg07pqP7inDjD68S73belqNTNvbQ=
+	b=WynCR4ND5StDkcC/ZDzvwA42J5I2rvAb0IvmjzhyAp0E4yNRWlqQdiL3v+4tUNcnn
+	 yySUKYvuUzeGN0xBcnVcjhAyNd5o0Di6Ly97ZwsNX6tiXKBkSdICnLWB2giXMxvazC
+	 xyDHYP0lL935yRPnz4TE8rOVs/FgPpjGvmQXiPIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/170] Input: soc_button_array - add invalid acpi_index DMI quirk handling
-Date: Mon, 26 Jun 2023 20:11:53 +0200
-Message-ID: <20230626180807.000307986@linuxfoundation.org>
+Subject: [PATCH 6.1 145/170] arm64: dts: qcom: sc7280-idp: drop incorrect dai-cells from WCD938x SDW
+Date: Mon, 26 Jun 2023 20:11:54 +0200
+Message-ID: <20230626180807.033733275@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,89 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 20a99a291d564a559cc2fd013b4824a3bb3f1db7 ]
+[ Upstream commit ca8fc6814844d8787e7fec61b2544a871ea8b675 ]
 
-Some devices have a wrong entry in their button array which points to
-a GPIO which is required in another driver, so soc_button_array must
-not claim it.
+The WCD938x audio codec Soundwire interface part is not a DAI and does
+not allow sound-dai-cells:
 
-A specific example of this is the Lenovo Yoga Book X90F / X90L,
-where the PNP0C40 home button entry points to a GPIO which is not
-a home button and which is required by the lenovo-yogabook driver.
+  sc7280-idp.dtb: codec@0,4: '#sound-dai-cells' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-Add a DMI quirk table which can specify an ACPI GPIO resource index which
-should be skipped; and add an entry for the Lenovo Yoga Book X90F / X90L
-to this new DMI quirk table.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230414072116.4497-1-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230220095401.64196-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/soc_button_array.c | 30 +++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/input/misc/soc_button_array.c b/drivers/input/misc/soc_button_array.c
-index 09489380afda7..e79f5497948b8 100644
---- a/drivers/input/misc/soc_button_array.c
-+++ b/drivers/input/misc/soc_button_array.c
-@@ -108,6 +108,27 @@ static const struct dmi_system_id dmi_use_low_level_irq[] = {
- 	{} /* Terminating entry */
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index ca50f0ba9b815..1c370dcfe60b9 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -488,7 +488,6 @@
+ 	wcd_rx: codec@0,4 {
+ 		compatible = "sdw20217010d00";
+ 		reg = <0 4>;
+-		#sound-dai-cells = <1>;
+ 		qcom,rx-port-mapping = <1 2 3 4 5>;
+ 	};
  };
- 
-+/*
-+ * Some devices have a wrong entry which points to a GPIO which is
-+ * required in another driver, so this driver must not claim it.
-+ */
-+static const struct dmi_system_id dmi_invalid_acpi_index[] = {
-+	{
-+		/*
-+		 * Lenovo Yoga Book X90F / X90L, the PNP0C40 home button entry
-+		 * points to a GPIO which is not a home button and which is
-+		 * required by the lenovo-yogabook driver.
-+		 */
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
-+		},
-+		.driver_data = (void *)1l,
-+	},
-+	{} /* Terminating entry */
-+};
-+
- /*
-  * Get the Nth GPIO number from the ACPI object.
-  */
-@@ -137,6 +158,8 @@ soc_button_device_create(struct platform_device *pdev,
- 	struct platform_device *pd;
- 	struct gpio_keys_button *gpio_keys;
- 	struct gpio_keys_platform_data *gpio_keys_pdata;
-+	const struct dmi_system_id *dmi_id;
-+	int invalid_acpi_index = -1;
- 	int error, gpio, irq;
- 	int n_buttons = 0;
- 
-@@ -154,10 +177,17 @@ soc_button_device_create(struct platform_device *pdev,
- 	gpio_keys = (void *)(gpio_keys_pdata + 1);
- 	n_buttons = 0;
- 
-+	dmi_id = dmi_first_match(dmi_invalid_acpi_index);
-+	if (dmi_id)
-+		invalid_acpi_index = (long)dmi_id->driver_data;
-+
- 	for (info = button_info; info->name; info++) {
- 		if (info->autorepeat != autorepeat)
- 			continue;
- 
-+		if (info->acpi_index == invalid_acpi_index)
-+			continue;
-+
- 		error = soc_button_lookup_gpio(&pdev->dev, info->acpi_index, &gpio, &irq);
- 		if (error || irq < 0) {
- 			/*
+@@ -499,7 +498,6 @@
+ 	wcd_tx: codec@0,3 {
+ 		compatible = "sdw20217010d00";
+ 		reg = <0 3>;
+-		#sound-dai-cells = <1>;
+ 		qcom,tx-port-mapping = <1 2 3 4>;
+ 	};
+ };
 -- 
 2.39.2
 
