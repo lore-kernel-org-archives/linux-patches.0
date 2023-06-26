@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F35BA36
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7B2C433C8;
-	Mon, 26 Jun 2023 18:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB657BA36
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:34:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A04CC433C0;
+	Mon, 26 Jun 2023 18:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804453;
-	bh=dl9c9airJ9gRrweXyC7jRYfXSh1NGAcASrPhlq6/GFk=;
+	s=korg; t=1687804456;
+	bh=VRkjnQDfjXAu6adCt3PdtX8T/zECSCAXojz7WBO3BNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsZhNDW4D5q5I+VzgoKH421QDiNwGp7EWBV4rYJAqcVIoN2GlZ1veKpS3XHctShQm
-	 PNyfzz2F6YlcngYMM6mCsrVX4W1G2w8WHbF59BT0ac0x5JBN7c5dd3kXnmP/6BQtFv
-	 JPiKitNxq3VdfMPSyw8EjTb9KNIW9sWefco8S6yg=
+	b=yAhnFIk/j6AtZgvd1JPn0XjFFj/QXm7l4BM3tjMUsf4eu6CS+RN59Xswv+q4L0MIE
+	 p273PdYVpeVdlFnWMlUHxLSDNfPJBYtli5CUeF09VENsYE0zcop05B0gJCegjUhbnT
+	 0Y+ot5s4Gibg+IOjeBURJMVwflelH3jvxLU2RcfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anuj Gupta <anuj20.g@samsung.com>,
-	Nitesh Shetty <nj.shetty@samsung.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Inki Dae <inki.dae@samsung.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/170] null_blk: Fix: memory release when memory_backed=1
-Date: Mon, 26 Jun 2023 20:12:10 +0200
-Message-ID: <20230626180807.689208168@linuxfoundation.org>
+Subject: [PATCH 6.1 162/170] drm/exynos: vidi: fix a wrong error return
+Date: Mon, 26 Jun 2023 20:12:11 +0200
+Message-ID: <20230626180807.730169564@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,46 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nitesh Shetty <nj.shetty@samsung.com>
+From: Inki Dae <inki.dae@samsung.com>
 
-[ Upstream commit 8cfb98196cceec35416041c6b91212d2b99392e4 ]
+[ Upstream commit 4a059559809fd1ddbf16f847c4d2237309c08edf ]
 
-Memory/pages are not freed, when unloading nullblk driver.
+Fix a wrong error return by dropping an error return.
 
-Steps to reproduce issue
-  1.free -h
-        total        used        free      shared  buff/cache   available
-Mem:    7.8Gi       260Mi       7.1Gi       3.0Mi       395Mi       7.3Gi
-Swap:      0B          0B          0B
-  2.modprobe null_blk memory_backed=1
-  3.dd if=/dev/urandom of=/dev/nullb0 oflag=direct bs=1M count=1000
-  4.modprobe -r null_blk
-  5.free -h
-        total        used        free      shared  buff/cache   available
-Mem:    7.8Gi       1.2Gi       6.1Gi       3.0Mi       398Mi       6.3Gi
-Swap:      0B          0B          0B
+When vidi driver is remvoed, if ctx->raw_edid isn't same as fake_edid_info
+then only what we have to is to free ctx->raw_edid so that driver removing
+can work correctly - it's not an error case.
 
-Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
-Signed-off-by: Nitesh Shetty <nj.shetty@samsung.com>
-Link: https://lore.kernel.org/r/20230605062354.24785-1-nj.shetty@samsung.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index c45d09a9a9421..e8cb914223cdf 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -2194,6 +2194,7 @@ static void null_destroy_dev(struct nullb *nullb)
- 	struct nullb_device *dev = nullb->dev;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+index 4d56c8c799c5a..f5e1adfcaa514 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -469,8 +469,6 @@ static int vidi_remove(struct platform_device *pdev)
+ 	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
+ 		kfree(ctx->raw_edid);
+ 		ctx->raw_edid = NULL;
+-
+-		return -EINVAL;
+ 	}
  
- 	null_del_dev(nullb);
-+	null_free_device_storage(dev, false);
- 	null_free_dev(dev);
- }
- 
+ 	component_del(&pdev->dev, &vidi_component_ops);
 -- 
 2.39.2
 
