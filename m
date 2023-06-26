@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190A1134C7
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF9BC433C8;
-	Mon, 26 Jun 2023 18:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCE1134C7
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:15:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E25C433C0;
+	Mon, 26 Jun 2023 18:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803298;
-	bh=VqsY9zkU5RGM4pY6LXmOL/OUHAlDRYNb69Fob3DJmLg=;
+	s=korg; t=1687803301;
+	bh=63HRqoZ97aVX8/+9AGQxERkNCOLukHfX0jNI7gW1kO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnMmEN/Tg4XcporVLxbdWoANOyx6N8MBFWt4kz3GFOFgjr42lG4HDs965JmIeFl0H
-	 tjwKfgTwq7aw4WBOTM5MIomEHAsuBCxXvxw/nTTWlJbYA3nVfNxcmmjzHzTToVY2pE
-	 k/rqA7la54hwk7QEB2gyS4udMvR4C4HWoGS7Ik7s=
+	b=DPDdvIYmBnvGJRJImp51U+2ayZfKNKP2poi8nScf/bPazlVQ8fNWhGq0RQaPrqIHf
+	 2NVSrNm8WHVkoHD+NK8+u7b8w23jmcolV0EewsTuNFsSLUiKcF3xxlrl11cZawej+0
+	 GdJgfJCfKODy8LsLB2H3IqIVFNHbBclG1hXysB+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org
-Subject: [PATCH 6.3 014/199] afs: Fix waiting for writeback then skipping folio
-Date: Mon, 26 Jun 2023 20:08:40 +0200
-Message-ID: <20230626180806.295572167@linuxfoundation.org>
+	Mathias Krause <minipli@grsecurity.net>,
+	"Bhatnagar, Rishabh" <risbhat@amazon.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Richard W.M. Jones" <rjones@redhat.com>,
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH 6.3 015/199] tick/common: Align tick period during sched_timer setup
+Date: Mon, 26 Jun 2023 20:08:41 +0200
+Message-ID: <20230626180806.336689861@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,55 +38,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 819da022dd007398d0c42ebcd8dbb1b681acea53 upstream.
+commit 13bb06f8dd42071cb9a49f6e21099eea05d4b856 upstream.
 
-Commit acc8d8588cb7 converted afs_writepages_region() to write back a
-folio batch. The function waits for writeback to a folio, but then
-proceeds to the rest of the batch without trying to write that folio
-again. This patch fixes has it attempt to write the folio again.
+The tick period is aligned very early while the first clock_event_device is
+registered. At that point the system runs in periodic mode and switches
+later to one-shot mode if possible.
 
-[DH: Also remove an 'else' that adding a goto makes redundant]
+The next wake-up event is programmed based on the aligned value
+(tick_next_period) but the delta value, that is used to program the
+clock_event_device, is computed based on ktime_get().
 
-Fixes: acc8d8588cb7 ("afs: convert afs_writepages_region() to use filemap_get_folios_tag()")
-Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/20230607204120.89416-2-vishal.moola@gmail.com/
+With the subtracted offset, the device fires earlier than the exact time
+frame. With a large enough offset the system programs the timer for the
+next wake-up and the remaining time left is too small to make any boot
+progress. The system hangs.
+
+Move the alignment later to the setup of tick_sched timer. At this point
+the system switches to oneshot mode and a high resolution clocksource is
+available. At this point it is safe to align tick_next_period because
+ktime_get() will now return accurate (not jiffies based) time.
+
+[bigeasy: Patch description + testing].
+
+Fixes: e9523a0d81899 ("tick/common: Align tick period with the HZ tick.")
+Reported-by: Mathias Krause <minipli@grsecurity.net>
+Reported-by: "Bhatnagar, Rishabh" <risbhat@amazon.com>
+Suggested-by: Mathias Krause <minipli@grsecurity.net>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Richard W.M. Jones <rjones@redhat.com>
+Tested-by: Mathias Krause <minipli@grsecurity.net>
+Acked-by: SeongJae Park <sj@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/5a56290d-806e-b9a5-f37c-f21958b5a8c0@grsecurity.net
+Link: https://lore.kernel.org/12c6f9a3-d087-b824-0d05-0d18c9bc1bf3@amazon.com
+Link: https://lore.kernel.org/r/20230615091830.RxMV2xf_@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/write.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/time/tick-common.c |   13 +------------
+ kernel/time/tick-sched.c  |   13 ++++++++++++-
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/fs/afs/write.c b/fs/afs/write.c
-index fd433024070e..8750b99c3f56 100644
---- a/fs/afs/write.c
-+++ b/fs/afs/write.c
-@@ -731,6 +731,7 @@ static int afs_writepages_region(struct address_space *mapping,
- 			 * (changing page->mapping to NULL), or even swizzled
- 			 * back from swapper_space to tmpfs file mapping
- 			 */
-+try_again:
- 			if (wbc->sync_mode != WB_SYNC_NONE) {
- 				ret = folio_lock_killable(folio);
- 				if (ret < 0) {
-@@ -757,9 +758,10 @@ static int afs_writepages_region(struct address_space *mapping,
- #ifdef CONFIG_AFS_FSCACHE
- 					folio_wait_fscache(folio);
- #endif
--				} else {
--					start += folio_size(folio);
-+					goto try_again;
- 				}
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -218,19 +218,8 @@ static void tick_setup_device(struct tic
+ 		 * this cpu:
+ 		 */
+ 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
+-			ktime_t next_p;
+-			u32 rem;
+-
+ 			tick_do_timer_cpu = cpu;
+-
+-			next_p = ktime_get();
+-			div_u64_rem(next_p, TICK_NSEC, &rem);
+-			if (rem) {
+-				next_p -= rem;
+-				next_p += TICK_NSEC;
+-			}
+-
+-			tick_next_period = next_p;
++			tick_next_period = ktime_get();
+ #ifdef CONFIG_NO_HZ_FULL
+ 			/*
+ 			 * The boot CPU may be nohz_full, in which case set
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -161,8 +161,19 @@ static ktime_t tick_init_jiffy_update(vo
+ 	raw_spin_lock(&jiffies_lock);
+ 	write_seqcount_begin(&jiffies_seq);
+ 	/* Did we start the jiffies update yet ? */
+-	if (last_jiffies_update == 0)
++	if (last_jiffies_update == 0) {
++		u32 rem;
 +
-+				start += folio_size(folio);
- 				if (wbc->sync_mode == WB_SYNC_NONE) {
- 					if (skips >= 5 || need_resched()) {
- 						*_next = start;
--- 
-2.41.0
-
++		/*
++		 * Ensure that the tick is aligned to a multiple of
++		 * TICK_NSEC.
++		 */
++		div_u64_rem(tick_next_period, TICK_NSEC, &rem);
++		if (rem)
++			tick_next_period += TICK_NSEC - rem;
++
+ 		last_jiffies_update = tick_next_period;
++	}
+ 	period = last_jiffies_update;
+ 	write_seqcount_end(&jiffies_seq);
+ 	raw_spin_unlock(&jiffies_lock);
 
 
