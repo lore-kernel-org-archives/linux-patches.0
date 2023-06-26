@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A362134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3CCC433C8;
-	Mon, 26 Jun 2023 18:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D6C134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3591C433C0;
+	Mon, 26 Jun 2023 18:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803815;
-	bh=Jb2eDNzb5clEgaqpLLm/ZuGYk4VLgm9j+GK5focns5U=;
+	s=korg; t=1687803818;
+	bh=wt89E2zvd//pr6N38PwZsdGNGiF/Mbbhvn6+II2neb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=udq/BEa4MK36bDHAR+VIXfMyWUHVJVG6hbd5gHwOvKfcuJ/eM8QIDYQ5cNMBCOJER
-	 SUW7YjfDk53oQTLSEzUi5AaRhnjD5N4/P4yLKXASPzV9pc+bHX/kWzKHhyNMLmAguF
-	 nBspRVE+uthPvwtuD5KktlkyUibPV6JqRDJsx+us=
+	b=qp7QYQfUzRaL05dpJf+93IY1QZdqP2hiivBR/39si8j9GyDnw8nqoNNFAqSPziG+w
+	 eom9Ih6V7pJ0PKJmLeUR2lO3tBmFV3EHQZB1he6gIbJBEy8e/Ggi83wGfwgoZiORPU
+	 CezjgVn7/Tp+XnK2PFGi/nIRXbAozIjk6lnyrJLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Muhammad <osmtendev@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	k2ci <kernel-bot@kylinos.cn>,
+	Anand Jain <anand.jain@oracle.com>,
+	Shida Zhang <zhangshida@kylinos.cn>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 158/199] nfcsim.c: Fix error checking for debugfs_create_dir
-Date: Mon, 26 Jun 2023 20:11:04 +0200
-Message-ID: <20230626180812.575170651@linuxfoundation.org>
+Subject: [PATCH 6.3 159/199] btrfs: fix an uninitialized variable warning in btrfs_log_inode
+Date: Mon, 26 Jun 2023 20:11:05 +0200
+Message-ID: <20230626180812.626914610@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,38 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Osama Muhammad <osmtendev@gmail.com>
+From: Shida Zhang <zhangshida@kylinos.cn>
 
-[ Upstream commit 9b9e46aa07273ceb96866b2e812b46f1ee0b8d2f ]
+[ Upstream commit 8fd9f4232d8152c650fd15127f533a0f6d0a4b2b ]
 
-This patch fixes the error checking in nfcsim.c.
-The DebugFS kernel API is developed in
-a way that the caller can safely ignore the errors that
-occur during the creation of DebugFS nodes.
+This fixes the following warning reported by gcc 10.2.1 under x86_64:
 
-Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+../fs/btrfs/tree-log.c: In function ‘btrfs_log_inode’:
+../fs/btrfs/tree-log.c:6211:9: error: ‘last_range_start’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+ 6211 |   ret = insert_dir_log_key(trans, log, path, key.objectid,
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 6212 |       first_dir_index, last_dir_index);
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../fs/btrfs/tree-log.c:6161:6: note: ‘last_range_start’ was declared here
+ 6161 |  u64 last_range_start;
+      |      ^~~~~~~~~~~~~~~~
+
+This might be a false positive fixed in later compiler versions but we
+want to have it fixed.
+
+Reported-by: k2ci <kernel-bot@kylinos.cn>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nfcsim.c | 4 ----
- 1 file changed, 4 deletions(-)
+ fs/btrfs/tree-log.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/nfcsim.c b/drivers/nfc/nfcsim.c
-index 85bf8d586c707..0f6befe8be1e2 100644
---- a/drivers/nfc/nfcsim.c
-+++ b/drivers/nfc/nfcsim.c
-@@ -336,10 +336,6 @@ static struct dentry *nfcsim_debugfs_root;
- static void nfcsim_debugfs_init(void)
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 200cea6e49e51..b91fa398b8141 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -6163,7 +6163,7 @@ static int log_delayed_deletions_incremental(struct btrfs_trans_handle *trans,
  {
- 	nfcsim_debugfs_root = debugfs_create_dir("nfcsim", NULL);
--
--	if (!nfcsim_debugfs_root)
--		pr_err("Could not create debugfs entry\n");
--
- }
+ 	struct btrfs_root *log = inode->root->log_root;
+ 	const struct btrfs_delayed_item *curr;
+-	u64 last_range_start;
++	u64 last_range_start = 0;
+ 	u64 last_range_end = 0;
+ 	struct btrfs_key key;
  
- static void nfcsim_debugfs_remove(void)
 -- 
 2.39.2
 
