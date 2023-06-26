@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1448134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:20:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733B5C433C8;
-	Mon, 26 Jun 2023 18:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED79E134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C060C433C8;
+	Mon, 26 Jun 2023 18:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803657;
-	bh=8Pf0VeINT0n5rT+ycPQQ1i5dgnm6Sc5PK8LY/K5mIKc=;
+	s=korg; t=1687803660;
+	bh=A78/0PGxVltLsOcZnNACqTxJurkHMuzHOAnKpjZFU38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wjlbw3Gvgb8Fb7I8uUWpw7H83X9ugtFZaR4RlWdNXhOuTCf/x+bdGxGDuaMSKfvVE
-	 /QYzxVIPFJf5LPOGdpfqrNU3dR4VOEezuVQjAHsR17giarStNIr4fM/H+6UF5cVUXV
-	 J4x4L8U6nBRFeSbyYISjWDTmQ8aFkgXRY4DMTJXM=
+	b=mWBf9i/lQ7Q2M4eUIWJ8tsABNxy28Yq1MJOysFZvG9k19tS12ZuC/EuKYnbmwMQei
+	 DPmVRxk7MHzv8YSa9N0SPDUQUzlezURrSPDfcqjq/QdU69C5+PfBgcjf/vocA+/X/D
+	 e7aFCIt0TlUE8DlkSQisbVMm9fj8H+OrksxCxyKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 134/199] netfilter: nf_tables: reject unbound chain set before commit phase
-Date: Mon, 26 Jun 2023 20:10:40 +0200
-Message-ID: <20230626180811.501345768@linuxfoundation.org>
+Subject: [PATCH 6.3 135/199] netfilter: nf_tables: disallow updates of anonymous sets
+Date: Mon, 26 Jun 2023 20:10:41 +0200
+Message-ID: <20230626180811.533744415@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,52 +36,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 62e1e94b246e685d89c3163aaef4b160e42ceb02 ]
+[ Upstream commit b770283c98e0eee9133c47bc03b6cc625dc94723 ]
 
-Use binding list to track set transaction and to check for unbound
-chains before entering the commit phase.
+Disallow updates of set timeout and garbage collection parameters for
+anonymous sets.
 
-Bail out if chain binding remain unused before entering the commit
-step.
-
-Fixes: d0e2c7de92c7 ("netfilter: nf_tables: add NFT_CHAIN_BINDING")
+Fixes: 123b99619cca ("netfilter: nf_tables: honor set timeout and garbage collection updates")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 2e3a374db1b9f..f065542750376 100644
+index f065542750376..b9e276820c722 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -372,6 +372,11 @@ static void nft_trans_commit_list_add_tail(struct net *net, struct nft_trans *tr
- 		    nft_set_is_anonymous(nft_trans_set(trans)))
- 			list_add_tail(&trans->binding_list, &nft_net->binding_list);
- 		break;
-+	case NFT_MSG_NEWCHAIN:
-+		if (!nft_trans_chain_update(trans) &&
-+		    nft_chain_binding(nft_trans_chain(trans)))
-+			list_add_tail(&trans->binding_list, &nft_net->binding_list);
-+		break;
- 	}
+@@ -4894,6 +4894,9 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 		if (info->nlh->nlmsg_flags & NLM_F_REPLACE)
+ 			return -EOPNOTSUPP;
  
- 	list_add_tail(&trans->list, &nft_net->commit_list);
-@@ -9419,6 +9424,14 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 				return -EINVAL;
- 			}
- 			break;
-+		case NFT_MSG_NEWCHAIN:
-+			if (!nft_trans_chain_update(trans) &&
-+			    nft_chain_binding(nft_trans_chain(trans)) &&
-+			    !nft_trans_chain_bound(trans)) {
-+				pr_warn_once("nftables ruleset with unbound chain\n");
-+				return -EINVAL;
-+			}
-+			break;
- 		}
- 	}
- 
++		if (nft_set_is_anonymous(set))
++			return -EOPNOTSUPP;
++
+ 		err = nft_set_expr_alloc(&ctx, set, nla, exprs, &num_exprs, flags);
+ 		if (err < 0)
+ 			return err;
 -- 
 2.39.2
 
