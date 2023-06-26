@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC23D13AC4
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2E2C433C8;
-	Mon, 26 Jun 2023 18:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C4B13AC4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:14:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409F9C433C0;
+	Mon, 26 Jun 2023 18:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803268;
-	bh=Shv8dSsCM4UdJhoMRep/Rt2uHbDJGcsTdh8G7IKnOnc=;
+	s=korg; t=1687803271;
+	bh=bI5ADwk+i/ECTMZFMhN23VkwjbhH6kY7ZbDNsEG8Twc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uv/WiUQNKdJG73GTxgMWTCJNjOTsr9ilMwMY8wf8gHjFKSzBW1r5jM9cE2RMFBETD
-	 s+gn4m+0IFtUBWVGi2+8a9OJSCcqRhn4ZtfC99m6dLJ/6HHvnTVqldG+ku7E4EJLQE
-	 sNBOOWAIdMPHw0JgNnQ17EdHB66h3xzoccqlhFAo=
+	b=DvhaY/JoqzfqO4zIARbHmqIQlhYDcqvERR96i5RDxdAzJIbCa0Y8scbRjqC5FLqo6
+	 zmQZ7TafOaON5Wl13ntfJQvWguvHR2bqpK34Ttf9u/WSlPobnxkHOm4ul5HovPSq1u
+	 LTddiyp+iQWOar6JcwEcpHKUF73uFPQgmp46HZRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 06/26] nilfs2: prevent general protection fault in nilfs_clear_dirty_page()
-Date: Mon, 26 Jun 2023 20:11:08 +0200
-Message-ID: <20230626180733.913507569@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 07/26] xfrm: Linearize the skb after offloading if needed.
+Date: Mon, 26 Jun 2023 20:11:09 +0200
+Message-ID: <20230626180733.945498148@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180733.699092073@linuxfoundation.org>
 References: <20230626180733.699092073@linuxfoundation.org>
@@ -35,56 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 782e53d0c14420858dbf0f8f797973c150d3b6d7 upstream.
+[ Upstream commit f015b900bc3285322029b4a7d132d6aeb0e51857 ]
 
-In a syzbot stress test that deliberately causes file system errors on
-nilfs2 with a corrupted disk image, it has been reported that
-nilfs_clear_dirty_page() called from nilfs_clear_dirty_pages() can cause a
-general protection fault.
+With offloading enabled, esp_xmit() gets invoked very late, from within
+validate_xmit_xfrm() which is after validate_xmit_skb() validates and
+linearizes the skb if the underlying device does not support fragments.
 
-In nilfs_clear_dirty_pages(), when looking up dirty pages from the page
-cache and calling nilfs_clear_dirty_page() for each dirty page/folio
-retrieved, the back reference from the argument page to "mapping" may have
-been changed to NULL (and possibly others).  It is necessary to check this
-after locking the page/folio.
+esp_output_tail() may add a fragment to the skb while adding the auth
+tag/ IV. Devices without the proper support will then send skb->data
+points to with the correct length so the packet will have garbage at the
+end. A pcap sniffer will claim that the proper data has been sent since
+it parses the skb properly.
 
-So, fix this issue by not calling nilfs_clear_dirty_page() on a page/folio
-after locking it in nilfs_clear_dirty_pages() if the back reference
-"mapping" from the page/folio is different from the "mapping" that held
-the page/folio just before.
+It is not affected with INET_ESP_OFFLOAD disabled.
 
-Link: https://lkml.kernel.org/r/20230612021456.3682-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+53369d11851d8f26735c@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/000000000000da4f6b05eb9bf593@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Linearize the skb after offloading if the sending hardware requires it.
+It was tested on v4, v6 has been adopted.
+
+Fixes: 7785bba299a8d ("esp: Add a software GRO codepath")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/page.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/ipv4/esp4_offload.c | 3 +++
+ net/ipv6/esp6_offload.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -382,7 +382,15 @@ void nilfs_clear_dirty_pages(struct addr
- 			struct page *page = pvec.pages[i];
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index 29b333a62ab01..5be59ccb61aa2 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -268,6 +268,9 @@ static int esp_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features_
  
- 			lock_page(page);
--			nilfs_clear_dirty_page(page, silent);
-+
-+			/*
-+			 * This page may have been removed from the address
-+			 * space by truncation or invalidation when the lock
-+			 * was acquired.  Skip processing in that case.
-+			 */
-+			if (likely(page->mapping == mapping))
-+				nilfs_clear_dirty_page(page, silent);
-+
- 			unlock_page(page);
- 		}
- 		pagevec_release(&pvec);
+ 	secpath_reset(skb);
+ 
++	if (skb_needs_linearize(skb, skb->dev->features) &&
++	    __skb_linearize(skb))
++		return -ENOMEM;
+ 	return 0;
+ }
+ 
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index a50d1943dd620..7c72b85c93396 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -304,6 +304,9 @@ static int esp6_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features
+ 
+ 	secpath_reset(skb);
+ 
++	if (skb_needs_linearize(skb, skb->dev->features) &&
++	    __skb_linearize(skb))
++		return -ENOMEM;
+ 	return 0;
+ }
+ 
+-- 
+2.39.2
+
 
 
