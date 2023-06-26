@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA72CC8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:43:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FDAC433C9;
-	Mon, 26 Jun 2023 18:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5AFC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:43:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AD9C433C0;
+	Mon, 26 Jun 2023 18:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804995;
-	bh=u2dFV4itYQKWLkh1s4XZWPGwMZYcyUUNkeZ9PBI3mGc=;
+	s=korg; t=1687804998;
+	bh=tlWDpZOBMBJau3gg17bF5NgoRIAh0n2DcCMYYFyqnPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kPX+i5/pB8Zz6uaVi0cUBw8lG7Mhoyc1QtZT/Lx8A3VtIw03Pl9UW+bNMdUJsZu96
-	 S8qyKnPbcmbUf7E5xEz3lnbILUiM29oWxP8an1I/Frooc0SLNiHF4RJHS46pXr/cCk
-	 J4coeot21Kn46ECW3GP3uEzbGcYRGI/pBjLsW3pk=
+	b=xNH6mtf7WPEAXpJJHAl1qyyxdSioICAUFuSxhZkbVxc+kci40CM2LFoCnyi4lsbZK
+	 fMeXocO4xOfnvBAaSMK+Ra5G1ivwFk641LsVPl3cr+qTg1LKs9IV0RicUjoFsOGoRu
+	 ElGQQJCdZnXycSbHfHHy59IOD/VnpRZpHCJE5TFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 5.10 15/81] cgroup: Do not corrupt task iteration when rebinding subsystem
-Date: Mon, 26 Jun 2023 20:11:57 +0200
-Message-ID: <20230626180745.076768581@linuxfoundation.org>
+	Stephan Gerhold <stephan@gerhold.net>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 16/81] mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
+Date: Mon, 26 Jun 2023 20:11:58 +0200
+Message-ID: <20230626180745.119049776@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180744.453069285@linuxfoundation.org>
 References: <20230626180744.453069285@linuxfoundation.org>
@@ -36,122 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-commit 6f363f5aa845561f7ea496d8b1175e3204470486 upstream.
+commit e6f9e590b72e12bbb86b1b8be7e1981f357392ad upstream.
 
-We found a refcount UAF bug as follows:
+While SDHCI claims to support 64-bit DMA on MSM8916 it does not seem to
+be properly functional. It is not immediately obvious because SDHCI is
+usually used with IOMMU bypassed on this SoC, and all physical memory
+has 32-bit addresses. But when trying to enable the IOMMU it quickly
+fails with an error such as the following:
 
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 1 PID: 342 at lib/refcount.c:25 refcount_warn_saturate+0xa0/0x148
-Workqueue: events cpuset_hotplug_workfn
-Call trace:
- refcount_warn_saturate+0xa0/0x148
- __refcount_add.constprop.0+0x5c/0x80
- css_task_iter_advance_css_set+0xd8/0x210
- css_task_iter_advance+0xa8/0x120
- css_task_iter_next+0x94/0x158
- update_tasks_root_domain+0x58/0x98
- rebuild_root_domains+0xa0/0x1b0
- rebuild_sched_domains_locked+0x144/0x188
- cpuset_hotplug_workfn+0x138/0x5a0
- process_one_work+0x1e8/0x448
- worker_thread+0x228/0x3e0
- kthread+0xe0/0xf0
- ret_from_fork+0x10/0x20
+  arm-smmu 1e00000.iommu: Unhandled context fault:
+    fsr=0x402, iova=0xfffff200, fsynr=0xe0000, cbfrsynra=0x140, cb=3
+  mmc1: ADMA error: 0x02000000
+  mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+  mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00002e02
+  mmc1: sdhci: Blk size:  0x00000008 | Blk cnt:  0x00000000
+  mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000013
+  mmc1: sdhci: Present:   0x03f80206 | Host ctl: 0x00000019
+  mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
+  mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+  mmc1: sdhci: Timeout:   0x0000000a | Int stat: 0x00000001
+  mmc1: sdhci: Int enab:  0x03ff900b | Sig enab: 0x03ff100b
+  mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+  mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x00008007
+  mmc1: sdhci: Cmd:       0x0000333a | Max curr: 0x00000000
+  mmc1: sdhci: Resp[0]:   0x00000920 | Resp[1]:  0x5b590000
+  mmc1: sdhci: Resp[2]:   0xe6487f80 | Resp[3]:  0x0a404094
+  mmc1: sdhci: Host ctl2: 0x00000008
+  mmc1: sdhci: ADMA Err:  0x00000001 | ADMA Ptr: 0x0000000ffffff224
+  mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+  mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:  0x60006400 | DLL cfg2: 0x00000000
+  mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:  0x00000000 | DDR cfg: 0x00000000
+  mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88018a8 Vndr func3: 0x00000000
+  mmc1: sdhci: ============================================
+  mmc1: sdhci: fffffffff200: DMA 0x0000ffffffffe100, LEN 0x0008, Attr=0x21
+  mmc1: sdhci: fffffffff20c: DMA 0x0000000000000000, LEN 0x0000, Attr=0x03
 
-then a kernel panic will be triggered as below:
+Looking closely it's obvious that only the 32-bit part of the address
+(0xfffff200) arrives at the SMMU, the higher 16-bit (0xffff...) get
+lost somewhere. This might not be a limitation of the SDHCI itself but
+perhaps the bus/interconnect it is connected to, or even the connection
+to the SMMU.
 
-Unable to handle kernel paging request at virtual address 00000000c0000010
-Call trace:
- cgroup_apply_control_disable+0xa4/0x16c
- rebind_subsystems+0x224/0x590
- cgroup_destroy_root+0x64/0x2e0
- css_free_rwork_fn+0x198/0x2a0
- process_one_work+0x1d4/0x4bc
- worker_thread+0x158/0x410
- kthread+0x108/0x13c
- ret_from_fork+0x10/0x18
+Work around this by setting SDHCI_QUIRK2_BROKEN_64_BIT_DMA to avoid
+using 64-bit addresses.
 
-The race that cause this bug can be shown as below:
-
-(hotplug cpu)                | (umount cpuset)
-mutex_lock(&cpuset_mutex)    | mutex_lock(&cgroup_mutex)
-cpuset_hotplug_workfn        |
- rebuild_root_domains        |  rebind_subsystems
-  update_tasks_root_domain   |   spin_lock_irq(&css_set_lock)
-   css_task_iter_start       |    list_move_tail(&cset->e_cset_node[ss->id]
-   while(css_task_iter_next) |                  &dcgrp->e_csets[ss->id]);
-   css_task_iter_end         |   spin_unlock_irq(&css_set_lock)
-mutex_unlock(&cpuset_mutex)  | mutex_unlock(&cgroup_mutex)
-
-Inside css_task_iter_start/next/end, css_set_lock is hold and then
-released, so when iterating task(left side), the css_set may be moved to
-another list(right side), then it->cset_head points to the old list head
-and it->cset_pos->next points to the head node of new list, which can't
-be used as struct css_set.
-
-To fix this issue, switch from all css_sets to only scgrp's css_sets to
-patch in-flight iterators to preserve correct iteration, and then
-update it->cset_head as well.
-
-Reported-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://www.spinics.net/lists/cgroups/msg37935.html
-Suggested-by: Michal Koutný <mkoutny@suse.com>
-Link: https://lore.kernel.org/all/20230526114139.70274-1-xiujianfeng@huaweicloud.com/
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Fixes: 2d8f243a5e6e ("cgroup: implement cgroup->e_csets[]")
-Cc: stable@vger.kernel.org # v3.16+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/mmc/host/sdhci-msm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -1712,7 +1712,7 @@ int rebind_subsystems(struct cgroup_root
- {
- 	struct cgroup *dcgrp = &dst_root->cgrp;
- 	struct cgroup_subsys *ss;
--	int ssid, i, ret;
-+	int ssid, ret;
- 	u16 dfl_disable_ss_mask = 0;
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -2228,6 +2228,9 @@ static inline void sdhci_msm_get_of_prop
+ 		msm_host->ddr_config = DDR_CONFIG_POR_VAL;
  
- 	lockdep_assert_held(&cgroup_mutex);
-@@ -1756,7 +1756,8 @@ int rebind_subsystems(struct cgroup_root
- 		struct cgroup_root *src_root = ss->root;
- 		struct cgroup *scgrp = &src_root->cgrp;
- 		struct cgroup_subsys_state *css = cgroup_css(scgrp, ss);
--		struct css_set *cset;
-+		struct css_set *cset, *cset_pos;
-+		struct css_task_iter *it;
+ 	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
++
++	if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
++		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
+ }
  
- 		WARN_ON(!css || cgroup_css(dcgrp, ss));
- 
-@@ -1774,9 +1775,22 @@ int rebind_subsystems(struct cgroup_root
- 		css->cgroup = dcgrp;
- 
- 		spin_lock_irq(&css_set_lock);
--		hash_for_each(css_set_table, i, cset, hlist)
-+		WARN_ON(!list_empty(&dcgrp->e_csets[ss->id]));
-+		list_for_each_entry_safe(cset, cset_pos, &scgrp->e_csets[ss->id],
-+					 e_cset_node[ss->id]) {
- 			list_move_tail(&cset->e_cset_node[ss->id],
- 				       &dcgrp->e_csets[ss->id]);
-+			/*
-+			 * all css_sets of scgrp together in same order to dcgrp,
-+			 * patch in-flight iterators to preserve correct iteration.
-+			 * since the iterator is always advanced right away and
-+			 * finished when it->cset_pos meets it->cset_head, so only
-+			 * update it->cset_head is enough here.
-+			 */
-+			list_for_each_entry(it, &cset->task_iters, iters_node)
-+				if (it->cset_head == &scgrp->e_csets[ss->id])
-+					it->cset_head = &dcgrp->e_csets[ss->id];
-+		}
- 		spin_unlock_irq(&css_set_lock);
- 
- 		/* default hierarchy doesn't enable controllers by default */
+ static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
 
 
