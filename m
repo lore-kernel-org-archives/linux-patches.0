@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DD0C8E5
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C90AC433C8;
-	Mon, 26 Jun 2023 18:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F3FC8E5
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:37:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21ABC433C8;
+	Mon, 26 Jun 2023 18:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804622;
-	bh=xUyf5LkmVWcJM1kAFRvNbQdgsFnxwmpbs/uEy87eLQE=;
+	s=korg; t=1687804625;
+	bh=XwERnW4Pnic3eOpM/mKDTGDmoa4xHYVBZQbDvRPgLAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SXPvtsylva4M9LXv67+zUluFlnP5kqQOgiCqOMEHQCVdUH8ulvjauZh/1HnYGOjbA
-	 d+kdJzlXxuyxnSkvOxYOtJ9S0qzVeMk9GrjWDL7p9ucL86faErnJLdxGOCGuTJhF9V
-	 oL4zFfCKM/5ZD1y1ddDsNVrc8irKPeY3qbY7dcZ0=
+	b=Bp8LO5xHx3yYI7vvPEICcIux6oynRdmrEkDmQytkzGkw9VyXSa6+AO+69I0mT90RG
+	 4T5Seojdeo6oN6ywnJ6VflHUl4gGE09Zp0zUQutenLf+tjzRd29c3Kq3A1mEL92CrN
+	 sevVyu+COuQQG1PbqxHVzbyh/Nr/mBUV1XIZN9r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Cornelia Huck <cohuck@redhat.com>,
-	Steven Price <steven.price@arm.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 46/60] arm64: Add missing Set/Way CMO encodings
-Date: Mon, 26 Jun 2023 20:12:25 +0200
-Message-ID: <20230626180741.476001544@linuxfoundation.org>
+Subject: [PATCH 5.4 47/60] media: cec: core: dont set last_initiator if tx in progress
+Date: Mon, 26 Jun 2023 20:12:26 +0200
+Message-ID: <20230626180741.516461543@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
@@ -37,41 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 8d0f019e4c4f2ee2de81efd9bf1c27e9fb3c0460 ]
+[ Upstream commit 73af6c7511038249cad3d5f3b44bf8d78ac0f499 ]
 
-Add the missing Set/Way CMOs that apply to tagged memory.
+When a message was received the last_initiator is set to 0xff.
+This will force the signal free time for the next transmit
+to that for a new initiator. However, if a new transmit is
+already in progress, then don't set last_initiator, since
+that's the initiator of the current transmit. Overwriting
+this would cause the signal free time of a following transmit
+to be that of the new initiator instead of a next transmit.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20230515204601.1270428-2-maz@kernel.org
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/sysreg.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/cec/cec-adap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-index 5b3bdad66b27e..1ff93878c8132 100644
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -102,8 +102,14 @@
- #define SB_BARRIER_INSN			__SYS_BARRIER_INSN(0, 7, 31)
+diff --git a/drivers/media/cec/cec-adap.c b/drivers/media/cec/cec-adap.c
+index c665f7d20c448..4c1770b8128cb 100644
+--- a/drivers/media/cec/cec-adap.c
++++ b/drivers/media/cec/cec-adap.c
+@@ -1077,7 +1077,8 @@ void cec_received_msg_ts(struct cec_adapter *adap,
+ 	mutex_lock(&adap->lock);
+ 	dprintk(2, "%s: %*ph\n", __func__, msg->len, msg->msg);
  
- #define SYS_DC_ISW			sys_insn(1, 0, 7, 6, 2)
-+#define SYS_DC_IGSW			sys_insn(1, 0, 7, 6, 4)
-+#define SYS_DC_IGDSW			sys_insn(1, 0, 7, 6, 6)
- #define SYS_DC_CSW			sys_insn(1, 0, 7, 10, 2)
-+#define SYS_DC_CGSW			sys_insn(1, 0, 7, 10, 4)
-+#define SYS_DC_CGDSW			sys_insn(1, 0, 7, 10, 6)
- #define SYS_DC_CISW			sys_insn(1, 0, 7, 14, 2)
-+#define SYS_DC_CIGSW			sys_insn(1, 0, 7, 14, 4)
-+#define SYS_DC_CIGDSW			sys_insn(1, 0, 7, 14, 6)
+-	adap->last_initiator = 0xff;
++	if (!adap->transmit_in_progress)
++		adap->last_initiator = 0xff;
  
- #define SYS_OSDTRRX_EL1			sys_reg(2, 0, 0, 0, 2)
- #define SYS_MDCCINT_EL1			sys_reg(2, 0, 0, 2, 0)
+ 	/* Check if this message was for us (directed or broadcast). */
+ 	if (!cec_msg_is_broadcast(msg))
 -- 
 2.39.2
 
