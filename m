@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A515BE6B
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D6BC433C8;
-	Mon, 26 Jun 2023 18:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6406DC155
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:35:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06E0C433C8;
+	Mon, 26 Jun 2023 18:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804511;
-	bh=pjKTmWTxXTtSCggtG5QcHuMj0EZAPgQ5bJmgahUltsU=;
+	s=korg; t=1687804514;
+	bh=X9E/Sq2j57hWI16gAjpokW2aAh9jvT9EIhmQHJfM6Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzALC6g40Op3JaZVgOHRJ9olcCBcj7XakwsG9qweffqJjZdFL69Yu0eiJ74sKcqZc
-	 yDJ6YJqTyXruAmFAX4ZhetE+7+7FodjoiMckBOSN454O22Pl5liAlu/YPxPBXMGwzW
-	 SHHX4sGKOnXJUjj2cggeANe+osWAnCIe7tnqz138=
+	b=yMchmMfcZuolj8GkTG9sm5Kc84BPOCKlTsD1/dYVuK8Cw7XBMv+ESTcgT7j4uGCSh
+	 z5OFaobU5dQoku7DUM2MmN3azg9jb5QHK0PB4KuM2xQOQBA9NORRY/CCjUquJ5gLXr
+	 UJv6iCfz01h5368FfHUooukeVesdHgP6HCnELM/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 01/60] nilfs2: reject devices with insufficient block count
-Date: Mon, 26 Jun 2023 20:11:40 +0200
-Message-ID: <20230626180739.609188177@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Ovidiu Panait <ovidiu.panait@windriver.com>
+Subject: [PATCH 5.4 10/60] media: dvb-core: Fix use-after-free due to race at dvb_register_device()
+Date: Mon, 26 Jun 2023 20:11:49 +0200
+Message-ID: <20230626180739.966123465@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180739.558575012@linuxfoundation.org>
 References: <20230626180739.558575012@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,105 +37,248 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 92c5d1b860e9581d64baca76779576c0ab0d943d upstream.
+commit 627bb528b086b4136315c25d6a447a98ea9448d3 upstream.
 
-The current sanity check for nilfs2 geometry information lacks checks for
-the number of segments stored in superblocks, so even for device images
-that have been destructively truncated or have an unusually high number of
-segments, the mount operation may succeed.
+dvb_register_device() dynamically allocates fops with kmemdup()
+to set the fops->owner.
+And these fops are registered in 'file->f_ops' using replace_fops()
+in the dvb_device_open() process, and kfree()d in dvb_free_device().
 
-This causes out-of-bounds block I/O on file system block reads or log
-writes to the segments, the latter in particular causing
-"a_ops->writepages" to repeatedly fail, resulting in sync_inodes_sb() to
-hang.
+However, it is not common to use dynamically allocated fops instead
+of 'static const' fops as an argument of replace_fops(),
+and UAF may occur.
+These UAFs can occur on any dvb type using dvb_register_device(),
+such as dvb_dvr, dvb_demux, dvb_frontend, dvb_net, etc.
 
-Fix this issue by checking the number of segments stored in the superblock
-and avoiding mounting devices that can cause out-of-bounds accesses.  To
-eliminate the possibility of overflow when calculating the number of
-blocks required for the device from the number of segments, this also adds
-a helper function to calculate the upper bound on the number of segments
-and inserts a check using it.
+So, instead of kfree() the fops dynamically allocated in
+dvb_register_device() in dvb_free_device() called during the
+.disconnect() process, kfree() it collectively in exit_dvbdev()
+called when the dvbdev.c module is removed.
 
-Link: https://lkml.kernel.org/r/20230526021332.3431-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+7d50f1e54a12ba3aeae2@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=7d50f1e54a12ba3aeae2
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/linux-media/20221117045925.14297-4-imv4bel@gmail.com
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/the_nilfs.c |   44 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+ drivers/media/dvb-core/dvbdev.c |   84 ++++++++++++++++++++++++++++++----------
+ include/media/dvbdev.h          |   15 +++++++
+ 2 files changed, 78 insertions(+), 21 deletions(-)
 
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -375,6 +375,18 @@ unsigned long nilfs_nrsvsegs(struct the_
- 				  100));
- }
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -37,6 +37,7 @@
+ #include <media/tuner.h>
  
-+/**
-+ * nilfs_max_segment_count - calculate the maximum number of segments
-+ * @nilfs: nilfs object
-+ */
-+static u64 nilfs_max_segment_count(struct the_nilfs *nilfs)
-+{
-+	u64 max_count = U64_MAX;
-+
-+	do_div(max_count, nilfs->ns_blocks_per_segment);
-+	return min_t(u64, max_count, ULONG_MAX);
-+}
-+
- void nilfs_set_nsegments(struct the_nilfs *nilfs, unsigned long nsegs)
+ static DEFINE_MUTEX(dvbdev_mutex);
++static LIST_HEAD(dvbdevfops_list);
+ static int dvbdev_debug;
+ 
+ module_param(dvbdev_debug, int, 0644);
+@@ -462,14 +463,15 @@ int dvb_register_device(struct dvb_adapt
+ 			enum dvb_device_type type, int demux_sink_pads)
  {
- 	nilfs->ns_nsegments = nsegs;
-@@ -384,6 +396,8 @@ void nilfs_set_nsegments(struct the_nilf
- static int nilfs_store_disk_layout(struct the_nilfs *nilfs,
- 				   struct nilfs_super_block *sbp)
- {
-+	u64 nsegments, nblocks;
-+
- 	if (le32_to_cpu(sbp->s_rev_level) < NILFS_MIN_SUPP_REV) {
- 		nilfs_msg(nilfs->ns_sb, KERN_ERR,
- 			  "unsupported revision (superblock rev.=%d.%d, current rev.=%d.%d). Please check the version of mkfs.nilfs(2).",
-@@ -430,7 +444,35 @@ static int nilfs_store_disk_layout(struc
- 		return -EINVAL;
+ 	struct dvb_device *dvbdev;
+-	struct file_operations *dvbdevfops;
++	struct file_operations *dvbdevfops = NULL;
++	struct dvbdevfops_node *node = NULL, *new_node = NULL;
+ 	struct device *clsdev;
+ 	int minor;
+ 	int id, ret;
+ 
+ 	mutex_lock(&dvbdev_register_lock);
+ 
+-	if ((id = dvbdev_get_free_id (adap, type)) < 0){
++	if ((id = dvbdev_get_free_id (adap, type)) < 0) {
+ 		mutex_unlock(&dvbdev_register_lock);
+ 		*pdvbdev = NULL;
+ 		pr_err("%s: couldn't find free device id\n", __func__);
+@@ -477,18 +479,45 @@ int dvb_register_device(struct dvb_adapt
  	}
  
--	nilfs_set_nsegments(nilfs, le64_to_cpu(sbp->s_nsegments));
-+	nsegments = le64_to_cpu(sbp->s_nsegments);
-+	if (nsegments > nilfs_max_segment_count(nilfs)) {
-+		nilfs_msg(nilfs->ns_sb, KERN_ERR,
-+			  "segment count %llu exceeds upper limit (%llu segments)",
-+			  (unsigned long long)nsegments,
-+			  (unsigned long long)nilfs_max_segment_count(nilfs));
-+		return -EINVAL;
-+	}
-+
-+	nblocks = (u64)i_size_read(nilfs->ns_sb->s_bdev->bd_inode) >>
-+		nilfs->ns_sb->s_blocksize_bits;
-+	if (nblocks) {
-+		u64 min_block_count = nsegments * nilfs->ns_blocks_per_segment;
-+		/*
-+		 * To avoid failing to mount early device images without a
-+		 * second superblock, exclude that block count from the
-+		 * "min_block_count" calculation.
-+		 */
-+
-+		if (nblocks < min_block_count) {
-+			nilfs_msg(nilfs->ns_sb, KERN_ERR,
-+				  "total number of segment blocks %llu exceeds device size (%llu blocks)",
-+				  (unsigned long long)min_block_count,
-+				  (unsigned long long)nblocks);
-+			return -EINVAL;
+ 	*pdvbdev = dvbdev = kzalloc(sizeof(*dvbdev), GFP_KERNEL);
+-
+ 	if (!dvbdev){
+ 		mutex_unlock(&dvbdev_register_lock);
+ 		return -ENOMEM;
+ 	}
+ 
+-	dvbdevfops = kmemdup(template->fops, sizeof(*dvbdevfops), GFP_KERNEL);
++	/*
++	 * When a device of the same type is probe()d more than once,
++	 * the first allocated fops are used. This prevents memory leaks
++	 * that can occur when the same device is probe()d repeatedly.
++	 */
++	list_for_each_entry(node, &dvbdevfops_list, list_head) {
++		if (node->fops->owner == adap->module &&
++				node->type == type &&
++				node->template == template) {
++			dvbdevfops = node->fops;
++			break;
 +		}
 +	}
+ 
+-	if (!dvbdevfops){
+-		kfree (dvbdev);
+-		mutex_unlock(&dvbdev_register_lock);
+-		return -ENOMEM;
++	if (dvbdevfops == NULL) {
++		dvbdevfops = kmemdup(template->fops, sizeof(*dvbdevfops), GFP_KERNEL);
++		if (!dvbdevfops) {
++			kfree(dvbdev);
++			mutex_unlock(&dvbdev_register_lock);
++			return -ENOMEM;
++		}
 +
-+	nilfs_set_nsegments(nilfs, nsegments);
- 	nilfs->ns_crc_seed = le32_to_cpu(sbp->s_crc_seed);
++		new_node = kzalloc(sizeof(struct dvbdevfops_node), GFP_KERNEL);
++		if (!new_node) {
++			kfree(dvbdevfops);
++			kfree(dvbdev);
++			mutex_unlock(&dvbdev_register_lock);
++			return -ENOMEM;
++		}
++
++		new_node->fops = dvbdevfops;
++		new_node->type = type;
++		new_node->template = template;
++		list_add_tail (&new_node->list_head, &dvbdevfops_list);
+ 	}
+ 
+ 	memcpy(dvbdev, template, sizeof(struct dvb_device));
+@@ -499,20 +528,20 @@ int dvb_register_device(struct dvb_adapt
+ 	dvbdev->priv = priv;
+ 	dvbdev->fops = dvbdevfops;
+ 	init_waitqueue_head (&dvbdev->wait_queue);
+-
+ 	dvbdevfops->owner = adap->module;
+-
+ 	list_add_tail (&dvbdev->list_head, &adap->device_list);
+-
+ 	down_write(&minor_rwsem);
+ #ifdef CONFIG_DVB_DYNAMIC_MINORS
+ 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
+ 		if (dvb_minors[minor] == NULL)
+ 			break;
+-
+ 	if (minor == MAX_DVB_MINORS) {
++		if (new_node) {
++			list_del (&new_node->list_head);
++			kfree(dvbdevfops);
++			kfree(new_node);
++		}
+ 		list_del (&dvbdev->list_head);
+-		kfree(dvbdevfops);
+ 		kfree(dvbdev);
+ 		up_write(&minor_rwsem);
+ 		mutex_unlock(&dvbdev_register_lock);
+@@ -521,41 +550,47 @@ int dvb_register_device(struct dvb_adapt
+ #else
+ 	minor = nums2minor(adap->num, type, id);
+ #endif
+-
+ 	dvbdev->minor = minor;
+ 	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 	up_write(&minor_rwsem);
+-
+ 	ret = dvb_register_media_device(dvbdev, type, minor, demux_sink_pads);
+ 	if (ret) {
+ 		pr_err("%s: dvb_register_media_device failed to create the mediagraph\n",
+ 		      __func__);
+-
++		if (new_node) {
++			list_del (&new_node->list_head);
++			kfree(dvbdevfops);
++			kfree(new_node);
++		}
+ 		dvb_media_device_free(dvbdev);
+ 		list_del (&dvbdev->list_head);
+-		kfree(dvbdevfops);
+ 		kfree(dvbdev);
+ 		mutex_unlock(&dvbdev_register_lock);
+ 		return ret;
+ 	}
+ 
+-	mutex_unlock(&dvbdev_register_lock);
+-
+ 	clsdev = device_create(dvb_class, adap->device,
+ 			       MKDEV(DVB_MAJOR, minor),
+ 			       dvbdev, "dvb%d.%s%d", adap->num, dnames[type], id);
+ 	if (IS_ERR(clsdev)) {
+ 		pr_err("%s: failed to create device dvb%d.%s%d (%ld)\n",
+ 		       __func__, adap->num, dnames[type], id, PTR_ERR(clsdev));
++		if (new_node) {
++			list_del (&new_node->list_head);
++			kfree(dvbdevfops);
++			kfree(new_node);
++		}
+ 		dvb_media_device_free(dvbdev);
+ 		list_del (&dvbdev->list_head);
+-		kfree(dvbdevfops);
+ 		kfree(dvbdev);
++		mutex_unlock(&dvbdev_register_lock);
+ 		return PTR_ERR(clsdev);
+ 	}
++
+ 	dprintk("DVB: register adapter%d/%s%d @ minor: %i (0x%02x)\n",
+ 		adap->num, dnames[type], id, minor, minor);
+ 
++	mutex_unlock(&dvbdev_register_lock);
  	return 0;
  }
+ EXPORT_SYMBOL(dvb_register_device);
+@@ -584,7 +619,6 @@ static void dvb_free_device(struct kref
+ {
+ 	struct dvb_device *dvbdev = container_of(ref, struct dvb_device, ref);
+ 
+-	kfree (dvbdev->fops);
+ 	kfree (dvbdev);
+ }
+ 
+@@ -1090,9 +1124,17 @@ error:
+ 
+ static void __exit exit_dvbdev(void)
+ {
++	struct dvbdevfops_node *node, *next;
++
+ 	class_destroy(dvb_class);
+ 	cdev_del(&dvb_device_cdev);
+ 	unregister_chrdev_region(MKDEV(DVB_MAJOR, 0), MAX_DVB_MINORS);
++
++	list_for_each_entry_safe(node, next, &dvbdevfops_list, list_head) {
++		list_del (&node->list_head);
++		kfree(node->fops);
++		kfree(node);
++	}
+ }
+ 
+ subsys_initcall(init_dvbdev);
+--- a/include/media/dvbdev.h
++++ b/include/media/dvbdev.h
+@@ -190,6 +190,21 @@ struct dvb_device {
+ };
+ 
+ /**
++ * struct dvbdevfops_node - fops nodes registered in dvbdevfops_list
++ *
++ * @fops:		Dynamically allocated fops for ->owner registration
++ * @type:		type of dvb_device
++ * @template:		dvb_device used for registration
++ * @list_head:		list_head for dvbdevfops_list
++ */
++struct dvbdevfops_node {
++	struct file_operations *fops;
++	enum dvb_device_type type;
++	const struct dvb_device *template;
++	struct list_head list_head;
++};
++
++/**
+  * dvb_device_get - Increase dvb_device reference
+  *
+  * @dvbdev:	pointer to struct dvb_device
 
 
