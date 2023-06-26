@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988D4134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEB3C433C0;
-	Mon, 26 Jun 2023 18:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8342D134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00199C433CA;
+	Mon, 26 Jun 2023 18:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803927;
-	bh=BnY9tEwl581+ZH4RcY8BDKcQ4ZemhFuZDyycVn4W940=;
+	s=korg; t=1687803930;
+	bh=njSrz8J2ck3zyZzLZGFbUcRhMQd9FEXWCCXxj7aQN9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SeLP3jD3ZEp5x9dqUlYKOa+eHI88/N6DDNF+xn2E5bjYwbYHTDJLsRF+dc4thr9zY
-	 b1dmJ+UVDPIpNfmSTZA00v4Go+83G6cHuylun/kqjNZnO7QnJAmCa0t2/hSo+0/1uJ
-	 rAmKHjp4WYUGaPZFMmM1vWoTsAinnuglC2hR0qxc=
+	b=bXz3mTJ8SkzLA0e9yyIM7DGvXlrV2kWuqIwu5XHyny/IpyWtBLAeGQ67DsaguDrYK
+	 5uBDMiCz/L9N0l3N1oMSd9y9BL32qe37w+xSXRNdim/zVJ7+eZAnCIei6s2HggLCyo
+	 2Ucjv+j94zo2gEX635JHV8E6oM/wV1o6mtQfJLBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 24/41] mmc: usdhi60rol0: fix deferred probing
-Date: Mon, 26 Jun 2023 20:11:47 +0200
-Message-ID: <20230626180737.191679319@linuxfoundation.org>
+Subject: [PATCH 4.19 25/41] be2net: Extend xmit workaround to BE3 chip
+Date: Mon, 26 Jun 2023 20:11:48 +0200
+Message-ID: <20230626180737.225954012@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -35,41 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit 413db499730248431c1005b392e8ed82c4fa19bf ]
+[ Upstream commit 7580e0a78eb29e7bb1a772eba4088250bbb70d41 ]
 
-The driver overrides the error codes returned by platform_get_irq_byname()
-to -ENODEV, so if it returns -EPROBE_DEFER, the driver will fail the probe
-permanently instead of the deferred probing.  Switch to propagating error
-codes upstream.
+We have seen a bug where the NIC incorrectly changes the length in the
+IP header of a padded packet to include the padding bytes. The driver
+already has a workaround for this so do the workaround for this NIC too.
+This resolves the issue.
 
-Fixes: 9ec36cafe43b ("of/irq: do irq resolution in platform_get_irq")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20230617203622.6812-13-s.shtylyov@omp.ru
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+The NIC in question identifies itself as follows:
+
+[    8.828494] be2net 0000:02:00.0: FW version is 10.7.110.31
+[    8.834759] be2net 0000:02:00.0: Emulex OneConnect(be3): PF FLEX10 port 1
+
+02:00.0 Ethernet controller: Emulex Corporation OneConnect 10Gb NIC (be3) (rev 01)
+
+Fixes: ca34fe38f06d ("be2net: fix wrong usage of adapter->generation")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Link: https://lore.kernel.org/r/20230616164549.2863037-1-ross.lagerwall@citrix.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/usdhi6rol0.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/usdhi6rol0.c b/drivers/mmc/host/usdhi6rol0.c
-index b88728b686e8a..e436f7e7a3ee0 100644
---- a/drivers/mmc/host/usdhi6rol0.c
-+++ b/drivers/mmc/host/usdhi6rol0.c
-@@ -1749,8 +1749,10 @@ static int usdhi6_probe(struct platform_device *pdev)
- 	irq_cd = platform_get_irq_byname(pdev, "card detect");
- 	irq_sd = platform_get_irq_byname(pdev, "data");
- 	irq_sdio = platform_get_irq_byname(pdev, "SDIO");
--	if (irq_sd < 0 || irq_sdio < 0)
--		return -ENODEV;
-+	if (irq_sd < 0)
-+		return irq_sd;
-+	if (irq_sdio < 0)
-+		return irq_sdio;
- 
- 	mmc = mmc_alloc_host(sizeof(struct usdhi6_host), dev);
- 	if (!mmc)
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index 05cb2f7cc35c3..8603df2ae1736 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -1136,8 +1136,8 @@ static struct sk_buff *be_lancer_xmit_workarounds(struct be_adapter *adapter,
+ 	eth_hdr_len = ntohs(skb->protocol) == ETH_P_8021Q ?
+ 						VLAN_ETH_HLEN : ETH_HLEN;
+ 	if (skb->len <= 60 &&
+-	    (lancer_chip(adapter) || skb_vlan_tag_present(skb)) &&
+-	    is_ipv4_pkt(skb)) {
++	    (lancer_chip(adapter) || BE3_chip(adapter) ||
++	     skb_vlan_tag_present(skb)) && is_ipv4_pkt(skb)) {
+ 		ip = (struct iphdr *)ip_hdr(skb);
+ 		pskb_trim(skb, eth_hdr_len + ntohs(ip->tot_len));
+ 	}
 -- 
 2.39.2
 
