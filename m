@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A307BA36
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:32:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A00C433C0;
-	Mon, 26 Jun 2023 18:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635E6BA36
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:32:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A08C433C8;
+	Mon, 26 Jun 2023 18:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804374;
-	bh=SNeHZdA+/GRdBVUx2LtBVyhcwEvjjnPlzJqkO+RKOBU=;
+	s=korg; t=1687804377;
+	bh=mmdudRkuSbiUU5LPtsxAkTPhX5voY/Mn+ojKMk7dSZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3vY2VDDAuO1XzLjOChJ/yzCXii+zwpFiGECUUkCGXV4t8/iocu5n+dWV/QwAFiu9
-	 pEfWqvorlUWUqKZUJqhICKVMRz5acxKIOpg5tzWovlLlcn0RQ5pusAJjNFc2lCKa/M
-	 x+T8xKJNu+DqQ4RRWH2hIsdb+DB5xlPw3HKF0WaE=
+	b=ZT7rdmbyQdPnm9RoCMTg0ajtFaCGEUyl9+n/nrz7urK9SYDT8lvVtSS22b14F7Hee
+	 2bIelupeltGYHMgeWIYQY0sCURRgVP6D7txkU63V2OsV174iGRA8zwtR/8CPa4U9XR
+	 3VDf9FW+SNuq8ESroigZ1ldwuZchhG9fdjrm5w2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Cornelia Huck <cohuck@redhat.com>,
-	Steven Price <steven.price@arm.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/170] arm64: Add missing Set/Way CMO encodings
-Date: Mon, 26 Jun 2023 20:11:43 +0200
-Message-ID: <20230626180806.572194366@linuxfoundation.org>
+Subject: [PATCH 6.1 135/170] smb3: missing null check in SMB2_change_notify
+Date: Mon, 26 Jun 2023 20:11:44 +0200
+Message-ID: <20230626180806.622508535@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -37,41 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 8d0f019e4c4f2ee2de81efd9bf1c27e9fb3c0460 ]
+[ Upstream commit b535cc796a4b4942cd189652588e8d37c1f5925a ]
 
-Add the missing Set/Way CMOs that apply to tagged memory.
+If plen is null when passed in, we only checked for null
+in one of the two places where it could be used. Although
+plen is always valid (not null) for current callers of the
+SMB2_change_notify function, this change makes it more consistent.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20230515204601.1270428-2-maz@kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/all/202305251831.3V1gbbFs-lkp@intel.com/
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/sysreg.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/cifs/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-index 7d301700d1a93..3a448ab0924b3 100644
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -111,8 +111,14 @@
- #define SB_BARRIER_INSN			__SYS_BARRIER_INSN(0, 7, 31)
+diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
+index 537e8679900b8..3ca593cdda76e 100644
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -3779,7 +3779,7 @@ SMB2_change_notify(const unsigned int xid, struct cifs_tcon *tcon,
+ 		if (*out_data == NULL) {
+ 			rc = -ENOMEM;
+ 			goto cnotify_exit;
+-		} else
++		} else if (plen)
+ 			*plen = le32_to_cpu(smb_rsp->OutputBufferLength);
+ 	}
  
- #define SYS_DC_ISW			sys_insn(1, 0, 7, 6, 2)
-+#define SYS_DC_IGSW			sys_insn(1, 0, 7, 6, 4)
-+#define SYS_DC_IGDSW			sys_insn(1, 0, 7, 6, 6)
- #define SYS_DC_CSW			sys_insn(1, 0, 7, 10, 2)
-+#define SYS_DC_CGSW			sys_insn(1, 0, 7, 10, 4)
-+#define SYS_DC_CGDSW			sys_insn(1, 0, 7, 10, 6)
- #define SYS_DC_CISW			sys_insn(1, 0, 7, 14, 2)
-+#define SYS_DC_CIGSW			sys_insn(1, 0, 7, 14, 4)
-+#define SYS_DC_CIGDSW			sys_insn(1, 0, 7, 14, 6)
- 
- /*
-  * Automatically generated definitions for system registers, the
 -- 
 2.39.2
 
