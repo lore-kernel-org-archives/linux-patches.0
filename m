@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DC714A8D
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:32:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89EF2C433C0;
-	Mon, 26 Jun 2023 18:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2175F14A96
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:32:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64EA9C433C8;
+	Mon, 26 Jun 2023 18:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804341;
-	bh=smyZdL5ee86kJ3+kmLSfZD3L3ijeQnQ7ASqNsAvwRuA=;
+	s=korg; t=1687804345;
+	bh=a9Oy0MxKigZg00yyBSawMWwV3+A+bp21q92JtF8UxF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFs8YVy93P/TWfuMGlYJ7TMQnByrxs/v8wwWmQaSp5c6GyvY8vMFuz5EzTxZFM4Ny
-	 9t2k7EMnYSGUjWTLk3qP577OkJ0ZY8AT7hM70cPJlw97RL9yXqj2Kks89bS8LwSomH
-	 cChROy6Ba5prYLUCy7mXldObikV1Xwca4NpwAZ74=
+	b=b9khdwpCUTYpz4EeC+zmcZ77Cf9nuTD5oexewzRmyLq7Fd4JJN1tuQuX3qeRz04vX
+	 LESyd9I9j2GANmECda3NUWIWcS7uqDg3sBegSk6iOFIRYkLuPsoyG6v3lKHIi8fOgq
+	 HT+XCt9E1hvCXcGaLt00mlwq7Pk90o37COm4wQJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allen Zhong <allen@atr.me>,
-	Patil Rajesh Reddy <Patil.Reddy@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jiri Pirko <jiri@resnulli.us>,
+	Simon Horman <simon.horman@corigine.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/170] platform/x86/amd/pmf: Register notify handler only if SPS is enabled
-Date: Mon, 26 Jun 2023 20:11:33 +0200
-Message-ID: <20230626180806.120531206@linuxfoundation.org>
+Subject: [PATCH 6.1 125/170] sch_netem: acquire qdisc lock in netem_change()
+Date: Mon, 26 Jun 2023 20:11:34 +0200
+Message-ID: <20230626180806.175134894@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -38,103 +41,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 146b6f6855e7656e8329910606595220c761daac ]
+[ Upstream commit 2174a08db80d1efeea382e25ac41c4e7511eb6d6 ]
 
-Power source notify handler is getting registered even when none of the
-PMF feature in enabled leading to a crash.
+syzbot managed to trigger a divide error [1] in netem.
 
-...
-[   22.592162] Call Trace:
-[   22.592164]  <TASK>
-[   22.592164]  ? rcu_note_context_switch+0x5e0/0x660
-[   22.592166]  ? __warn+0x81/0x130
-[   22.592171]  ? rcu_note_context_switch+0x5e0/0x660
-[   22.592172]  ? report_bug+0x171/0x1a0
-[   22.592175]  ? prb_read_valid+0x1b/0x30
-[   22.592177]  ? handle_bug+0x3c/0x80
-[   22.592178]  ? exc_invalid_op+0x17/0x70
-[   22.592179]  ? asm_exc_invalid_op+0x1a/0x20
-[   22.592182]  ? rcu_note_context_switch+0x5e0/0x660
-[   22.592183]  ? acpi_ut_delete_object_desc+0x86/0xb0
-[   22.592186]  ? acpi_ut_update_ref_count.part.0+0x22d/0x930
-[   22.592187]  __schedule+0xc0/0x1410
-[   22.592189]  ? ktime_get+0x3c/0xa0
-[   22.592191]  ? lapic_next_event+0x1d/0x30
-[   22.592193]  ? hrtimer_start_range_ns+0x25b/0x350
-[   22.592196]  schedule+0x5e/0xd0
-[   22.592197]  schedule_hrtimeout_range_clock+0xbe/0x140
-[   22.592199]  ? __pfx_hrtimer_wakeup+0x10/0x10
-[   22.592200]  usleep_range_state+0x64/0x90
-[   22.592203]  amd_pmf_send_cmd+0x106/0x2a0 [amd_pmf bddfe0fe3712aaa99acce3d5487405c5213c6616]
-[   22.592207]  amd_pmf_update_slider+0x56/0x1b0 [amd_pmf bddfe0fe3712aaa99acce3d5487405c5213c6616]
-[   22.592210]  amd_pmf_set_sps_power_limits+0x72/0x80 [amd_pmf bddfe0fe3712aaa99acce3d5487405c5213c6616]
-[   22.592213]  amd_pmf_pwr_src_notify_call+0x49/0x90 [amd_pmf bddfe0fe3712aaa99acce3d5487405c5213c6616]
-[   22.592216]  notifier_call_chain+0x5a/0xd0
-[   22.592218]  atomic_notifier_call_chain+0x32/0x50
-...
+It could happen if q->rate changes while netem_enqueue()
+is running, since q->rate is read twice.
 
-Fix this by moving the registration of source change notify handler only
-when SPS(Static Slider) is advertised as supported.
+It turns out netem_change() always lacked proper synchronization.
 
-Reported-by: Allen Zhong <allen@atr.me>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217571
-Fixes: 4c71ae414474 ("platform/x86/amd/pmf: Add support SPS PMF feature")
-Tested-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20230622060309.310001-1-Shyam-sundar.S-k@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+[1]
+divide error: 0000 [#1] SMP KASAN
+CPU: 1 PID: 7867 Comm: syz-executor.1 Not tainted 6.1.30-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
+RIP: 0010:div64_u64 include/linux/math64.h:69 [inline]
+RIP: 0010:packet_time_ns net/sched/sch_netem.c:357 [inline]
+RIP: 0010:netem_enqueue+0x2067/0x36d0 net/sched/sch_netem.c:576
+Code: 89 e2 48 69 da 00 ca 9a 3b 42 80 3c 28 00 4c 8b a4 24 88 00 00 00 74 0d 4c 89 e7 e8 c3 4f 3b fd 48 8b 4c 24 18 48 89 d8 31 d2 <49> f7 34 24 49 01 c7 4c 8b 64 24 48 4d 01 f7 4c 89 e3 48 c1 eb 03
+RSP: 0018:ffffc9000dccea60 EFLAGS: 00010246
+RAX: 000001a442624200 RBX: 000001a442624200 RCX: ffff888108a4f000
+RDX: 0000000000000000 RSI: 000000000000070d RDI: 000000000000070d
+RBP: ffffc9000dcceb90 R08: ffffffff849c5e26 R09: fffffbfff10e1297
+R10: 0000000000000000 R11: dffffc0000000001 R12: ffff888108a4f358
+R13: dffffc0000000000 R14: 0000001a8cd9a7ec R15: 0000000000000000
+FS: 00007fa73fe18700(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fa73fdf7718 CR3: 000000011d36e000 CR4: 0000000000350ee0
+Call Trace:
+<TASK>
+[<ffffffff84714385>] __dev_xmit_skb net/core/dev.c:3931 [inline]
+[<ffffffff84714385>] __dev_queue_xmit+0xcf5/0x3370 net/core/dev.c:4290
+[<ffffffff84d22df2>] dev_queue_xmit include/linux/netdevice.h:3030 [inline]
+[<ffffffff84d22df2>] neigh_hh_output include/net/neighbour.h:531 [inline]
+[<ffffffff84d22df2>] neigh_output include/net/neighbour.h:545 [inline]
+[<ffffffff84d22df2>] ip_finish_output2+0xb92/0x10d0 net/ipv4/ip_output.c:235
+[<ffffffff84d21e63>] __ip_finish_output+0xc3/0x2b0
+[<ffffffff84d10a81>] ip_finish_output+0x31/0x2a0 net/ipv4/ip_output.c:323
+[<ffffffff84d10f14>] NF_HOOK_COND include/linux/netfilter.h:298 [inline]
+[<ffffffff84d10f14>] ip_output+0x224/0x2a0 net/ipv4/ip_output.c:437
+[<ffffffff84d123b5>] dst_output include/net/dst.h:444 [inline]
+[<ffffffff84d123b5>] ip_local_out net/ipv4/ip_output.c:127 [inline]
+[<ffffffff84d123b5>] __ip_queue_xmit+0x1425/0x2000 net/ipv4/ip_output.c:542
+[<ffffffff84d12fdc>] ip_queue_xmit+0x4c/0x70 net/ipv4/ip_output.c:556
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Stephen Hemminger <stephen@networkplumber.org>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Cc: Jiri Pirko <jiri@resnulli.us>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230620184425.1179809-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/core.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/sched/sch_netem.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
-index dc9803e1a4b9b..73d2357e32f8e 100644
---- a/drivers/platform/x86/amd/pmf/core.c
-+++ b/drivers/platform/x86/amd/pmf/core.c
-@@ -297,6 +297,8 @@ static void amd_pmf_init_features(struct amd_pmf_dev *dev)
- 	/* Enable Static Slider */
- 	if (is_apmf_func_supported(dev, APMF_FUNC_STATIC_SLIDER_GRANULAR)) {
- 		amd_pmf_init_sps(dev);
-+		dev->pwr_src_notifier.notifier_call = amd_pmf_pwr_src_notify_call;
-+		power_supply_reg_notifier(&dev->pwr_src_notifier);
- 		dev_dbg(dev->dev, "SPS enabled and Platform Profiles registered\n");
- 	}
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index fb00ac40ecb72..aa9842158df0a 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -966,6 +966,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	if (ret < 0)
+ 		return ret;
  
-@@ -315,8 +317,10 @@ static void amd_pmf_init_features(struct amd_pmf_dev *dev)
++	sch_tree_lock(sch);
+ 	/* backup q->clg and q->loss_model */
+ 	old_clg = q->clg;
+ 	old_loss_model = q->loss_model;
+@@ -974,7 +975,7 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
+ 		if (ret) {
+ 			q->loss_model = old_loss_model;
+-			return ret;
++			goto unlock;
+ 		}
+ 	} else {
+ 		q->loss_model = CLG_RANDOM;
+@@ -1041,6 +1042,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	/* capping jitter to the range acceptable by tabledist() */
+ 	q->jitter = min_t(s64, abs(q->jitter), INT_MAX);
  
- static void amd_pmf_deinit_features(struct amd_pmf_dev *dev)
- {
--	if (is_apmf_func_supported(dev, APMF_FUNC_STATIC_SLIDER_GRANULAR))
-+	if (is_apmf_func_supported(dev, APMF_FUNC_STATIC_SLIDER_GRANULAR)) {
-+		power_supply_unreg_notifier(&dev->pwr_src_notifier);
- 		amd_pmf_deinit_sps(dev);
-+	}
++unlock:
++	sch_tree_unlock(sch);
+ 	return ret;
  
- 	if (is_apmf_func_supported(dev, APMF_FUNC_AUTO_MODE)) {
- 		amd_pmf_deinit_auto_mode(dev);
-@@ -399,9 +403,6 @@ static int amd_pmf_probe(struct platform_device *pdev)
- 	apmf_install_handler(dev);
- 	amd_pmf_dbgfs_register(dev);
+ get_table_failure:
+@@ -1050,7 +1053,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	 */
+ 	q->clg = old_clg;
+ 	q->loss_model = old_loss_model;
+-	return ret;
++
++	goto unlock;
+ }
  
--	dev->pwr_src_notifier.notifier_call = amd_pmf_pwr_src_notify_call;
--	power_supply_reg_notifier(&dev->pwr_src_notifier);
--
- 	dev_info(dev->dev, "registered PMF device successfully\n");
- 
- 	return 0;
-@@ -411,7 +412,6 @@ static int amd_pmf_remove(struct platform_device *pdev)
- {
- 	struct amd_pmf_dev *dev = platform_get_drvdata(pdev);
- 
--	power_supply_unreg_notifier(&dev->pwr_src_notifier);
- 	amd_pmf_deinit_features(dev);
- 	apmf_acpi_deinit(dev);
- 	amd_pmf_dbgfs_unregister(dev);
+ static int netem_init(struct Qdisc *sch, struct nlattr *opt,
 -- 
 2.39.2
 
