@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A55134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8648C433C8;
-	Mon, 26 Jun 2023 18:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C8412B9C
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:23:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2ECC433C8;
+	Mon, 26 Jun 2023 18:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803830;
-	bh=RD03h99Z7i3+/28C0q3OKC7flKm44aKMn6olaaLGMg0=;
+	s=korg; t=1687803833;
+	bh=Pm6ZkV4+A5KeYt3uWhxoHD7HH6jyVEp+Yd98bdrxBQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VkmAmYoC0NWI69ixZCdbreeyYsyWMiMQGWPwXglA7jaeCsF39YaRYvzlNsO521egH
-	 roVYS+gGSAmiAPi8qYX/2ErI3p8vtz8WYEgLse+EZ+SEfb02pO21cHuH3HhpVRg5Un
-	 mNGH62a4vzXATTkAfOol8nTXWpbz6d1988Y+6ROI=
+	b=1YMblF0CzfXiT8cAoQgN68447+xpP7aUqpdlcsXoQXa7FAeNCgES887gfeyKa3udw
+	 YpEOxRmKQnG8NgwQkZwJxh+w1d4F5gZZy+81mtPxhB6lYvvLu1WLbvIM0DsdRiK8C9
+	 D0eZCo0pSnjLGxl7/KFnGI14oMl4nIewL15SzkD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Omar Sandoval <osandov@fb.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Kishon Vijay Abraham I <kvijayab@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 192/199] x86/unwind/orc: Add ELF section with ORC version identifier
-Date: Mon, 26 Jun 2023 20:11:38 +0200
-Message-ID: <20230626180814.160044340@linuxfoundation.org>
+Subject: [PATCH 6.3 193/199] x86/apic: Fix kernel panic when booting with intremap=off and x2apic_phys
+Date: Mon, 26 Jun 2023 20:11:39 +0200
+Message-ID: <20230626180814.209353916@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -36,179 +39,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Omar Sandoval <osandov@fb.com>
+From: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
 
-[ Upstream commit b9f174c811e3ae4ae8959dc57e6adb9990e913f4 ]
+[ Upstream commit 85d38d5810e285d5aec7fb5283107d1da70c12a9 ]
 
-Commits ffb1b4a41016 ("x86/unwind/orc: Add 'signal' field to ORC
-metadata") and fb799447ae29 ("x86,objtool: Split UNWIND_HINT_EMPTY in
-two") changed the ORC format. Although ORC is internal to the kernel,
-it's the only way for external tools to get reliable kernel stack traces
-on x86-64. In particular, the drgn debugger [1] uses ORC for stack
-unwinding, and these format changes broke it [2]. As the drgn
-maintainer, I don't care how often or how much the kernel changes the
-ORC format as long as I have a way to detect the change.
+When booting with "intremap=off" and "x2apic_phys" on the kernel command
+line, the physical x2APIC driver ends up being used even when x2APIC
+mode is disabled ("intremap=off" disables x2APIC mode). This happens
+because the first compound condition check in x2apic_phys_probe() is
+false due to x2apic_mode == 0 and so the following one returns true
+after default_acpi_madt_oem_check() having already selected the physical
+x2APIC driver.
 
-It suffices to store a version identifier in the vmlinux and kernel
-module ELF files (to use when parsing ORC sections from ELF), and in
-kernel memory (to use when parsing ORC from a core dump+symbol table).
-Rather than hard-coding a version number that needs to be manually
-bumped, Peterz suggested hashing the definitions from orc_types.h. If
-there is a format change that isn't caught by this, the hashing script
-can be updated.
+This results in the following panic:
 
-This patch adds an .orc_header allocated ELF section containing the
-20-byte hash to vmlinux and kernel modules, along with the corresponding
-__start_orc_header and __stop_orc_header symbols in vmlinux.
+   kernel BUG at arch/x86/kernel/apic/io_apic.c:2409!
+   invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+   CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.4.0-rc2-ver4.1rc2 #2
+   Hardware name: Dell Inc. PowerEdge R6515/07PXPY, BIOS 2.3.6 07/06/2021
+   RIP: 0010:setup_IO_APIC+0x9c/0xaf0
+   Call Trace:
+    <TASK>
+    ? native_read_msr
+    apic_intr_mode_init
+    x86_late_time_init
+    start_kernel
+    x86_64_start_reservations
+    x86_64_start_kernel
+    secondary_startup_64_no_verify
+    </TASK>
 
-1: https://github.com/osandov/drgn
-2: https://github.com/osandov/drgn/issues/303
+which is:
 
-Fixes: ffb1b4a41016 ("x86/unwind/orc: Add 'signal' field to ORC metadata")
-Fixes: fb799447ae29 ("x86,objtool: Split UNWIND_HINT_EMPTY in two")
-Signed-off-by: Omar Sandoval <osandov@fb.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lkml.kernel.org/r/aef9c8dc43915b886a8c48509a12ec1b006ca1ca.1686690801.git.osandov@osandov.com
+setup_IO_APIC:
+  apic_printk(APIC_VERBOSE, "ENABLING IO-APIC IRQs\n");
+  for_each_ioapic(ioapic)
+  	BUG_ON(mp_irqdomain_create(ioapic));
+
+Return 0 to denote that x2APIC has not been enabled when probing the
+physical x2APIC driver.
+
+  [ bp: Massage commit message heavily. ]
+
+Fixes: 9ebd680bd029 ("x86, apic: Use probe routines to simplify apic selection")
+Signed-off-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Kishon Vijay Abraham I <kvijayab@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20230616212236.1389-1-dheerajkumar.srivastava@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Makefile                 | 12 ++++++++++++
- arch/x86/include/asm/Kbuild       |  1 +
- arch/x86/include/asm/orc_header.h | 19 +++++++++++++++++++
- arch/x86/kernel/unwind_orc.c      |  3 +++
- include/asm-generic/vmlinux.lds.h |  3 +++
- scripts/mod/modpost.c             |  5 +++++
- scripts/orc_hash.sh               | 16 ++++++++++++++++
- 7 files changed, 59 insertions(+)
- create mode 100644 arch/x86/include/asm/orc_header.h
- create mode 100644 scripts/orc_hash.sh
+ arch/x86/kernel/apic/x2apic_phys.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index b39975977c037..fdc2e3abd6152 100644
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -305,6 +305,18 @@ ifeq ($(RETPOLINE_CFLAGS),)
- endif
- endif
+diff --git a/arch/x86/kernel/apic/x2apic_phys.c b/arch/x86/kernel/apic/x2apic_phys.c
+index 6bde05a86b4ed..896bc41cb2ba7 100644
+--- a/arch/x86/kernel/apic/x2apic_phys.c
++++ b/arch/x86/kernel/apic/x2apic_phys.c
+@@ -97,7 +97,10 @@ static void init_x2apic_ldr(void)
  
-+ifdef CONFIG_UNWINDER_ORC
-+orc_hash_h := arch/$(SRCARCH)/include/generated/asm/orc_hash.h
-+orc_hash_sh := $(srctree)/scripts/orc_hash.sh
-+targets += $(orc_hash_h)
-+quiet_cmd_orc_hash = GEN     $@
-+      cmd_orc_hash = mkdir -p $(dir $@); \
-+		     $(CONFIG_SHELL) $(orc_hash_sh) < $< > $@
-+$(orc_hash_h): $(srctree)/arch/x86/include/asm/orc_types.h $(orc_hash_sh) FORCE
-+	$(call if_changed,orc_hash)
-+archprepare: $(orc_hash_h)
-+endif
+ static int x2apic_phys_probe(void)
+ {
+-	if (x2apic_mode && (x2apic_phys || x2apic_fadt_phys()))
++	if (!x2apic_mode)
++		return 0;
 +
- archclean:
- 	$(Q)rm -rf $(objtree)/arch/i386
- 	$(Q)rm -rf $(objtree)/arch/x86_64
-diff --git a/arch/x86/include/asm/Kbuild b/arch/x86/include/asm/Kbuild
-index 1e51650b79d7c..4f1ce5fc4e194 100644
---- a/arch/x86/include/asm/Kbuild
-+++ b/arch/x86/include/asm/Kbuild
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
++	if (x2apic_phys || x2apic_fadt_phys())
+ 		return 1;
  
- 
-+generated-y += orc_hash.h
- generated-y += syscalls_32.h
- generated-y += syscalls_64.h
- generated-y += syscalls_x32.h
-diff --git a/arch/x86/include/asm/orc_header.h b/arch/x86/include/asm/orc_header.h
-new file mode 100644
-index 0000000000000..07bacf3e160ea
---- /dev/null
-+++ b/arch/x86/include/asm/orc_header.h
-@@ -0,0 +1,19 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Copyright (c) Meta Platforms, Inc. and affiliates. */
-+
-+#ifndef _ORC_HEADER_H
-+#define _ORC_HEADER_H
-+
-+#include <linux/types.h>
-+#include <linux/compiler.h>
-+#include <asm/orc_hash.h>
-+
-+/*
-+ * The header is currently a 20-byte hash of the ORC entry definition; see
-+ * scripts/orc_hash.sh.
-+ */
-+#define ORC_HEADER					\
-+	__used __section(".orc_header") __aligned(4)	\
-+	static const u8 orc_header[] = { ORC_HASH }
-+
-+#endif /* _ORC_HEADER_H */
-diff --git a/arch/x86/kernel/unwind_orc.c b/arch/x86/kernel/unwind_orc.c
-index 37307b40f8daf..c960f250624ab 100644
---- a/arch/x86/kernel/unwind_orc.c
-+++ b/arch/x86/kernel/unwind_orc.c
-@@ -7,6 +7,9 @@
- #include <asm/unwind.h>
- #include <asm/orc_types.h>
- #include <asm/orc_lookup.h>
-+#include <asm/orc_header.h>
-+
-+ORC_HEADER;
- 
- #define orc_warn(fmt, ...) \
- 	printk_deferred_once(KERN_WARNING "WARNING: " fmt, ##__VA_ARGS__)
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index d1f57e4868ed3..7058b01e9f146 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -839,6 +839,9 @@
- 
- #ifdef CONFIG_UNWINDER_ORC
- #define ORC_UNWIND_TABLE						\
-+	.orc_header : AT(ADDR(.orc_header) - LOAD_OFFSET) {		\
-+		BOUNDED_SECTION_BY(.orc_header, _orc_header)		\
-+	}								\
- 	. = ALIGN(4);							\
- 	.orc_unwind_ip : AT(ADDR(.orc_unwind_ip) - LOAD_OFFSET) {	\
- 		BOUNDED_SECTION_BY(.orc_unwind_ip, _orc_unwind_ip)	\
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 9466b6a2abae4..5b3964b39709f 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1985,6 +1985,11 @@ static void add_header(struct buffer *b, struct module *mod)
- 	buf_printf(b, "#include <linux/vermagic.h>\n");
- 	buf_printf(b, "#include <linux/compiler.h>\n");
- 	buf_printf(b, "\n");
-+	buf_printf(b, "#ifdef CONFIG_UNWINDER_ORC\n");
-+	buf_printf(b, "#include <asm/orc_header.h>\n");
-+	buf_printf(b, "ORC_HEADER;\n");
-+	buf_printf(b, "#endif\n");
-+	buf_printf(b, "\n");
- 	buf_printf(b, "BUILD_SALT;\n");
- 	buf_printf(b, "BUILD_LTO_INFO;\n");
- 	buf_printf(b, "\n");
-diff --git a/scripts/orc_hash.sh b/scripts/orc_hash.sh
-new file mode 100644
-index 0000000000000..466611aa0053f
---- /dev/null
-+++ b/scripts/orc_hash.sh
-@@ -0,0 +1,16 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+# Copyright (c) Meta Platforms, Inc. and affiliates.
-+
-+set -e
-+
-+printf '%s' '#define ORC_HASH '
-+
-+awk '
-+/^#define ORC_(REG|TYPE)_/ { print }
-+/^struct orc_entry {$/ { p=1 }
-+p { print }
-+/^}/ { p=0 }' |
-+	sha1sum |
-+	cut -d " " -f 1 |
-+	sed 's/\([0-9a-f]\{2\}\)/0x\1,/g'
+ 	return apic == &apic_x2apic_phys;
 -- 
 2.39.2
 
