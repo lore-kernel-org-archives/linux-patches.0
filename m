@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5892107AD
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E55C433C9;
-	Mon, 26 Jun 2023 18:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB68A10973
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:38:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E174AC433C8;
+	Mon, 26 Jun 2023 18:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804716;
-	bh=+OuxsiHWDK4OKZ74d89J3eV8v9xsvgozHG3hxU+frI0=;
+	s=korg; t=1687804719;
+	bh=wn5mc2WIDyrRrHKdqV4mUbVfqA7ku+qD0hiLSx8oVmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMxf0Ww9Xc0+vNfu0uDrkBh7p48CNbA7yg4NwlB0r5nAhg962AodogD+iPNddG1lx
-	 2itMx+7800WmoxEFeA8PMR1k0b0qSGno2lf0Vatj9XIhNhh0Wn7KyDpqIYyqkjIZQH
-	 FPdWl7UFbxCPPnlQTHfQn5E3IYkII0xj1KOovcng=
+	b=QMq7gNdkYCzku2DqQ2VRgB5EysN09S6WQPsLiLXlJNX7P4pf6Le80yyevCngv8Kf1
+	 IlTckSj1mWRwEq/w3gpj1MDO64GDOIwYuS5DI72qxqaq3KuhJb18z+hc747sYmbhMJ
+	 dmW6/VXZog2Gl03jkQ3cc8eaz0M3+gZzE9Sh7KRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
+	Dexuan Cui <decui@microsoft.com>,
 	Michael Kelley <mikelley@microsoft.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 5.15 18/96] Drivers: hv: vmbus: Fix vmbus_wait_for_unload() to scan present CPUs
-Date: Mon, 26 Jun 2023 20:11:33 +0200
-Message-ID: <20230626180747.687262766@linuxfoundation.org>
+Subject: [PATCH 5.15 19/96] PCI: hv: Fix a race condition bug in hv_pci_query_relations()
+Date: Mon, 26 Jun 2023 20:11:34 +0200
+Message-ID: <20230626180747.728251110@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
 References: <20230626180746.943455203@linuxfoundation.org>
@@ -36,84 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Dexuan Cui <decui@microsoft.com>
 
-commit 320805ab61e5f1e2a5729ae266e16bec2904050c upstream.
+commit 440b5e3663271b0ffbd4908115044a6a51fb938b upstream.
 
-vmbus_wait_for_unload() may be called in the panic path after other
-CPUs are stopped. vmbus_wait_for_unload() currently loops through
-online CPUs looking for the UNLOAD response message. But the values of
-CONFIG_KEXEC_CORE and crash_kexec_post_notifiers affect the path used
-to stop the other CPUs, and in one of the paths the stopped CPUs
-are removed from cpu_online_mask. This removal happens in both
-x86/x64 and arm64 architectures. In such a case, vmbus_wait_for_unload()
-only checks the panic'ing CPU, and misses the UNLOAD response message
-except when the panic'ing CPU is CPU 0. vmbus_wait_for_unload()
-eventually times out, but only after waiting 100 seconds.
+Since day 1 of the driver, there has been a race between
+hv_pci_query_relations() and survey_child_resources(): during fast
+device hotplug, hv_pci_query_relations() may error out due to
+device-remove and the stack variable 'comp' is no longer valid;
+however, pci_devices_present_work() -> survey_child_resources() ->
+complete() may be running on another CPU and accessing the no-longer-valid
+'comp'. Fix the race by flushing the workqueue before we exit from
+hv_pci_query_relations().
 
-Fix this by looping through *present* CPUs in vmbus_wait_for_unload().
-The cpu_present_mask is not modified by stopping the other CPUs in the
-panic path, nor should it be.
-
-Also, in a CoCo VM the synic_message_page is not allocated in
-hv_synic_alloc(), but is set and cleared in hv_synic_enable_regs()
-and hv_synic_disable_regs() such that it is set only when the CPU is
-online.  If not all present CPUs are online when vmbus_wait_for_unload()
-is called, the synic_message_page might be NULL. Add a check for this.
-
-Fixes: cd95aad55793 ("Drivers: hv: vmbus: handle various crash scenarios")
+Fixes: 4daace0d8ce8 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Acked-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
 Cc: stable@vger.kernel.org
-Reported-by: John Starks <jostarks@microsoft.com>
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://lore.kernel.org/r/1684422832-38476-1-git-send-email-mikelley@microsoft.com
+Link: https://lore.kernel.org/r/20230615044451.5580-2-decui@microsoft.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/channel_mgmt.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-hyperv.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/drivers/hv/channel_mgmt.c
-+++ b/drivers/hv/channel_mgmt.c
-@@ -827,11 +827,22 @@ static void vmbus_wait_for_unload(void)
- 		if (completion_done(&vmbus_connection.unload_event))
- 			goto completed;
+--- a/drivers/pci/controller/pci-hyperv.c
++++ b/drivers/pci/controller/pci-hyperv.c
+@@ -2959,6 +2959,24 @@ static int hv_pci_query_relations(struct
+ 	if (!ret)
+ 		ret = wait_for_response(hdev, &comp);
  
--		for_each_online_cpu(cpu) {
-+		for_each_present_cpu(cpu) {
- 			struct hv_per_cpu_context *hv_cpu
- 				= per_cpu_ptr(hv_context.cpu_context, cpu);
- 
-+			/*
-+			 * In a CoCo VM the synic_message_page is not allocated
-+			 * in hv_synic_alloc(). Instead it is set/cleared in
-+			 * hv_synic_enable_regs() and hv_synic_disable_regs()
-+			 * such that it is set only when the CPU is online. If
-+			 * not all present CPUs are online, the message page
-+			 * might be NULL, so skip such CPUs.
-+			 */
- 			page_addr = hv_cpu->synic_message_page;
-+			if (!page_addr)
-+				continue;
++	/*
++	 * In the case of fast device addition/removal, it's possible that
++	 * vmbus_sendpacket() or wait_for_response() returns -ENODEV but we
++	 * already got a PCI_BUS_RELATIONS* message from the host and the
++	 * channel callback already scheduled a work to hbus->wq, which can be
++	 * running pci_devices_present_work() -> survey_child_resources() ->
++	 * complete(&hbus->survey_event), even after hv_pci_query_relations()
++	 * exits and the stack variable 'comp' is no longer valid; as a result,
++	 * a hang or a page fault may happen when the complete() calls
++	 * raw_spin_lock_irqsave(). Flush hbus->wq before we exit from
++	 * hv_pci_query_relations() to avoid the issues. Note: if 'ret' is
++	 * -ENODEV, there can't be any more work item scheduled to hbus->wq
++	 * after the flush_workqueue(): see vmbus_onoffer_rescind() ->
++	 * vmbus_reset_channel_cb(), vmbus_rescind_cleanup() ->
++	 * channel->rescind = true.
++	 */
++	flush_workqueue(hbus->wq);
 +
- 			msg = (struct hv_message *)page_addr
- 				+ VMBUS_MESSAGE_SINT;
+ 	return ret;
+ }
  
-@@ -865,11 +876,14 @@ completed:
- 	 * maybe-pending messages on all CPUs to be able to receive new
- 	 * messages after we reconnect.
- 	 */
--	for_each_online_cpu(cpu) {
-+	for_each_present_cpu(cpu) {
- 		struct hv_per_cpu_context *hv_cpu
- 			= per_cpu_ptr(hv_context.cpu_context, cpu);
- 
- 		page_addr = hv_cpu->synic_message_page;
-+		if (!page_addr)
-+			continue;
-+
- 		msg = (struct hv_message *)page_addr + VMBUS_MESSAGE_SINT;
- 		msg->header.message_type = HVMSG_NONE;
- 	}
 
 
