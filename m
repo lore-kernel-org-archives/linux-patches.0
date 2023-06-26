@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AF2134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:22:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0462DC433C0;
-	Mon, 26 Jun 2023 18:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE148134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:22:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C22FC433C8;
+	Mon, 26 Jun 2023 18:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803747;
-	bh=9FETLYpHpQmRjxrXHtnCT3+YFl3NMWsnqtOfWKSMHAg=;
+	s=korg; t=1687803750;
+	bh=0CVterN2oNR0snu/uDzo3u9HlQDH7EmEEvZabB0r2sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fTYIhmQCvLqU27gVnzaQhAk8JooKzWRKuz3ydzPrhhAYB+xmQnanLi2ONWRZ2UDYo
-	 96G4fD6dpnXqf8BnNCtr7FWn0vUfDGyLdtB0TZlmaPN6AV+KywxJckcImg6FFIRB1n
-	 urHIYUnJakaeIo85ei3JiiQmQ3matWGc7XiO9ZWI=
+	b=0K+RRknwgY6KK2VGgatNd2ByC1kZKSn9ZuCv+g66z31w/k7L664xcbvvswYjGdV7y
+	 YKMN7WQSvNERd+Knxu4jpTYG29y/yC/spqAMn1MvtcjKHc5+E0xPz2wAcutpVjSUqD
+	 96c2O75Kn+Mhty9UOxnbrSfVyXTxg8urz5j7y/E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Costa Sapuntzakis <costa@purestorage.com>,
-	Randy Jennings <randyj@purestorage.com>,
-	Uday Shankar <ushankar@purestorage.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 164/199] nvme: improve handling of long keep alives
-Date: Mon, 26 Jun 2023 20:11:10 +0200
-Message-ID: <20230626180812.865723472@linuxfoundation.org>
+Subject: [PATCH 6.3 165/199] Input: soc_button_array - add invalid acpi_index DMI quirk handling
+Date: Mon, 26 Jun 2023 20:11:11 +0200
+Message-ID: <20230626180812.915700083@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -39,74 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uday Shankar <ushankar@purestorage.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit c7275ce6a5fd32ca9f5a6294ed89cf0523181af9 ]
+[ Upstream commit 20a99a291d564a559cc2fd013b4824a3bb3f1db7 ]
 
-Upon keep alive completion, nvme_keep_alive_work is scheduled with the
-same delay every time. If keep alive commands are completing slowly,
-this may cause a keep alive timeout. The following trace illustrates the
-issue, taking KATO = 8 and TBKAS off for simplicity:
+Some devices have a wrong entry in their button array which points to
+a GPIO which is required in another driver, so soc_button_array must
+not claim it.
 
-1. t = 0: run nvme_keep_alive_work, send keep alive
-2. t = ε: keep alive reaches controller, controller restarts its keep
-          alive timer
-3. t = 4: host receives keep alive completion, schedules
-          nvme_keep_alive_work with delay 4
-4. t = 8: run nvme_keep_alive_work, send keep alive
+A specific example of this is the Lenovo Yoga Book X90F / X90L,
+where the PNP0C40 home button entry points to a GPIO which is not
+a home button and which is required by the lenovo-yogabook driver.
 
-Here, a keep alive having RTT of 4 causes a delay of at least 8 - ε
-between the controller receiving successive keep alives. With ε small,
-the controller is likely to detect a keep alive timeout.
+Add a DMI quirk table which can specify an ACPI GPIO resource index which
+should be skipped; and add an entry for the Lenovo Yoga Book X90F / X90L
+to this new DMI quirk table.
 
-Fix this by calculating the RTT of the keep alive command, and adjusting
-the scheduling delay of the next keep alive work accordingly.
-
-Reported-by: Costa Sapuntzakis <costa@purestorage.com>
-Reported-by: Randy Jennings <randyj@purestorage.com>
-Signed-off-by: Uday Shankar <ushankar@purestorage.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230414072116.4497-1-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/input/misc/soc_button_array.c | 30 +++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index d87b8dfda622a..8a632bf7f5a8f 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1199,6 +1199,20 @@ static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
- 	struct nvme_ctrl *ctrl = rq->end_io_data;
- 	unsigned long flags;
- 	bool startka = false;
-+	unsigned long rtt = jiffies - (rq->deadline - rq->timeout);
-+	unsigned long delay = nvme_keep_alive_work_period(ctrl);
+diff --git a/drivers/input/misc/soc_button_array.c b/drivers/input/misc/soc_button_array.c
+index 09489380afda7..e79f5497948b8 100644
+--- a/drivers/input/misc/soc_button_array.c
++++ b/drivers/input/misc/soc_button_array.c
+@@ -108,6 +108,27 @@ static const struct dmi_system_id dmi_use_low_level_irq[] = {
+ 	{} /* Terminating entry */
+ };
+ 
++/*
++ * Some devices have a wrong entry which points to a GPIO which is
++ * required in another driver, so this driver must not claim it.
++ */
++static const struct dmi_system_id dmi_invalid_acpi_index[] = {
++	{
++		/*
++		 * Lenovo Yoga Book X90F / X90L, the PNP0C40 home button entry
++		 * points to a GPIO which is not a home button and which is
++		 * required by the lenovo-yogabook driver.
++		 */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
++		},
++		.driver_data = (void *)1l,
++	},
++	{} /* Terminating entry */
++};
 +
-+	/*
-+	 * Subtract off the keepalive RTT so nvme_keep_alive_work runs
-+	 * at the desired frequency.
-+	 */
-+	if (rtt <= delay) {
-+		delay -= rtt;
-+	} else {
-+		dev_warn(ctrl->device, "long keepalive RTT (%u ms)\n",
-+			 jiffies_to_msecs(rtt));
-+		delay = 0;
-+	}
+ /*
+  * Get the Nth GPIO number from the ACPI object.
+  */
+@@ -137,6 +158,8 @@ soc_button_device_create(struct platform_device *pdev,
+ 	struct platform_device *pd;
+ 	struct gpio_keys_button *gpio_keys;
+ 	struct gpio_keys_platform_data *gpio_keys_pdata;
++	const struct dmi_system_id *dmi_id;
++	int invalid_acpi_index = -1;
+ 	int error, gpio, irq;
+ 	int n_buttons = 0;
  
- 	blk_mq_free_request(rq);
+@@ -154,10 +177,17 @@ soc_button_device_create(struct platform_device *pdev,
+ 	gpio_keys = (void *)(gpio_keys_pdata + 1);
+ 	n_buttons = 0;
  
-@@ -1217,7 +1231,7 @@ static enum rq_end_io_ret nvme_keep_alive_end_io(struct request *rq,
- 		startka = true;
- 	spin_unlock_irqrestore(&ctrl->lock, flags);
- 	if (startka)
--		nvme_queue_keep_alive_work(ctrl);
-+		queue_delayed_work(nvme_wq, &ctrl->ka_work, delay);
- 	return RQ_END_IO_NONE;
- }
++	dmi_id = dmi_first_match(dmi_invalid_acpi_index);
++	if (dmi_id)
++		invalid_acpi_index = (long)dmi_id->driver_data;
++
+ 	for (info = button_info; info->name; info++) {
+ 		if (info->autorepeat != autorepeat)
+ 			continue;
  
++		if (info->acpi_index == invalid_acpi_index)
++			continue;
++
+ 		error = soc_button_lookup_gpio(&pdev->dev, info->acpi_index, &gpio, &irq);
+ 		if (error || irq < 0) {
+ 			/*
 -- 
 2.39.2
 
