@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0570D134B3
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AC5C433C0;
-	Mon, 26 Jun 2023 18:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF08134B3
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:21:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699CAC433C8;
+	Mon, 26 Jun 2023 18:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803690;
-	bh=8DkVQBQ73QrWZW5zuri/braT1uY6yx/R4JM/Q/ezPgc=;
+	s=korg; t=1687803693;
+	bh=7PKezqBwVf2n/vLQqNTcNM58UvcVlGXiRTaYp1oOv5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JOMf8gOgnx+ZLKa18FjzBVOEQfeJg48QdzFCtCHGq4LV5F38hlvqNNMwivo0zIKL
-	 w+bdk2vLwi8YbxkkbKEEBSGKzD/Jkpo2IMAOWG0Xy+79H61cBBNOc11t4+UiRvCi/2
-	 bAgwkV+hS8g83lvAo/ZYrDYOhscH6sPGaTT2sAek=
+	b=pimE9lhBHmxSrdDcydNG+uB6bEjznULC0wsoCzMNjvu9GjDinwSvLw17fBeU+Y/EW
+	 21TJN/CtE+rNhzlB6ZOF7EbEFxmdL58vAPItliaAc4ZOIqHKno6FXaSx5VLQjr9AP+
+	 UUapKcZCKdJUZ82UiYk/4Ok1BJzTyWllI3OIjYrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eyal Birger <eyal.birger@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Patrick Rohr <prohr@google.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Nicolas Frattaroli <frattaroli.nicolas@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 144/199] revert "net: align SO_RCVMARK required privileges with SO_MARK"
-Date: Mon, 26 Jun 2023 20:10:50 +0200
-Message-ID: <20230626180811.931957370@linuxfoundation.org>
+Subject: [PATCH 6.3 145/199] arm64: dts: rockchip: fix nEXTRST on SOQuartz
+Date: Mon, 26 Jun 2023 20:10:51 +0200
+Message-ID: <20230626180811.974318515@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
 References: <20230626180805.643662628@linuxfoundation.org>
@@ -42,75 +35,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Żenczykowski <maze@google.com>
+From: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
 
-[ Upstream commit a9628e88776eb7d045cf46467f1afdd0f7fe72ea ]
+[ Upstream commit cf9ae4a0077496e8224d68fc88e3df13dd7e5f37 ]
 
-This reverts commit 1f86123b9749 ("net: align SO_RCVMARK required
-privileges with SO_MARK") because the reasoning in the commit message
-is not really correct:
-  SO_RCVMARK is used for 'reading' incoming skb mark (via cmsg), as such
-  it is more equivalent to 'getsockopt(SO_MARK)' which has no priv check
-  and retrieves the socket mark, rather than 'setsockopt(SO_MARK) which
-  sets the socket mark and does require privs.
+In pre-production prototypes (of which I only know one person
+having one, Peter Geis), GPIO0 pin A5 was tied to the SDMMC
+power enable pin on the CM4 connector. On all production models,
+this is not the case; instead, this pin is used for the nEXTRST
+signal, and the SDMMC power enable pin is always pulled high.
 
-  Additionally incoming skb->mark may already be visible if
-  sysctl_fwmark_reflect and/or sysctl_tcp_fwmark_accept are enabled.
+Since everyone currently using the SOQuartz device trees will
+want this change, it is made to the tree without splitting the
+trees into two separate ones of which users will then inevitably
+choose the wrong one.
 
-  Furthermore, it is easier to block the getsockopt via bpf
-  (either cgroup setsockopt hook, or via syscall filters)
-  then to unblock it if it requires CAP_NET_RAW/ADMIN.
+This fixes USB and PCIe on a wide variety of CM4IO-compatible
+boards which use the nEXTRST signal.
 
-On Android the socket mark is (among other things) used to store
-the network identifier a socket is bound to.  Setting it is privileged,
-but retrieving it is not.  We'd like unprivileged userspace to be able
-to read the network id of incoming packets (where mark is set via
-iptables [to be moved to bpf])...
-
-An alternative would be to add another sysctl to control whether
-setting SO_RCVMARK is privilged or not.
-(or even a MASK of which bits in the mark can be exposed)
-But this seems like over-engineering...
-
-Note: This is a non-trivial revert, due to later merged commit e42c7beee71d
-("bpf: net: Consider has_current_bpf_ctx() when testing capable() in sk_setsockopt()")
-which changed both 'ns_capable' into 'sockopt_ns_capable' calls.
-
-Fixes: 1f86123b9749 ("net: align SO_RCVMARK required privileges with SO_MARK")
-Cc: Larysa Zaremba <larysa.zaremba@intel.com>
-Cc: Simon Horman <simon.horman@corigine.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Eyal Birger <eyal.birger@gmail.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Patrick Rohr <prohr@google.com>
-Signed-off-by: Maciej Żenczykowski <maze@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230618103130.51628-1-maze@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 5859b5a9c3ac ("arm64: dts: rockchip: add SoQuartz CM4IO dts")
+Signed-off-by: Nicolas Frattaroli <frattaroli.nicolas@gmail.com>
+Link: https://lore.kernel.org/r/20230421152610.21688-1-frattaroli.nicolas@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 6 ------
- 1 file changed, 6 deletions(-)
+ .../boot/dts/rockchip/rk3566-soquartz-cm4.dts | 18 +++++++-----
+ .../boot/dts/rockchip/rk3566-soquartz.dtsi    | 29 +++++++++----------
+ 2 files changed, 24 insertions(+), 23 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 3fd71f343c9f2..b34c48f802e98 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1362,12 +1362,6 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
- 		__sock_set_mark(sk, val);
- 		break;
- 	case SO_RCVMARK:
--		if (!sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_RAW) &&
--		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
--			ret = -EPERM;
--			break;
--		}
--
- 		sock_valbool_flag(sk, SOCK_RCVMARK, valbool);
- 		break;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-soquartz-cm4.dts b/arch/arm64/boot/dts/rockchip/rk3566-soquartz-cm4.dts
+index 263ce40770dde..cddf6cd2fecb1 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-soquartz-cm4.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-soquartz-cm4.dts
+@@ -28,6 +28,16 @@
+ 		regulator-max-microvolt = <5000000>;
+ 		vin-supply = <&vcc12v_dcin>;
+ 	};
++
++	vcc_sd_pwr: vcc-sd-pwr-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_sd_pwr";
++		regulator-always-on;
++		regulator-boot-on;
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		vin-supply = <&vcc3v3_sys>;
++	};
+ };
  
+ /* phy for pcie */
+@@ -130,13 +140,7 @@
+ };
+ 
+ &sdmmc0 {
+-	vmmc-supply = <&sdmmc_pwr>;
+-	status = "okay";
+-};
+-
+-&sdmmc_pwr {
+-	regulator-min-microvolt = <3300000>;
+-	regulator-max-microvolt = <3300000>;
++	vmmc-supply = <&vcc_sd_pwr>;
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-soquartz.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-soquartz.dtsi
+index 102e448bc026a..31aa2b8efe393 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-soquartz.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-soquartz.dtsi
+@@ -104,16 +104,6 @@
+ 		regulator-max-microvolt = <3300000>;
+ 		vin-supply = <&vcc5v0_sys>;
+ 	};
+-
+-	sdmmc_pwr: sdmmc-pwr-regulator {
+-		compatible = "regulator-fixed";
+-		enable-active-high;
+-		gpio = <&gpio0 RK_PA5 GPIO_ACTIVE_HIGH>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&sdmmc_pwr_h>;
+-		regulator-name = "sdmmc_pwr";
+-		status = "disabled";
+-	};
+ };
+ 
+ &cpu0 {
+@@ -155,6 +145,19 @@
+ 	status = "disabled";
+ };
+ 
++&gpio0 {
++	nextrst-hog {
++		gpio-hog;
++		/*
++		 * GPIO_ACTIVE_LOW + output-low here means that the pin is set
++		 * to high, because output-low decides the value pre-inversion.
++		 */
++		gpios = <RK_PA5 GPIO_ACTIVE_LOW>;
++		line-name = "nEXTRST";
++		output-low;
++	};
++};
++
+ &gpu {
+ 	mali-supply = <&vdd_gpu>;
+ 	status = "okay";
+@@ -538,12 +541,6 @@
+ 			rockchip,pins = <2 RK_PC2 RK_FUNC_GPIO &pcfg_pull_none>;
+ 		};
+ 	};
+-
+-	sdmmc-pwr {
+-		sdmmc_pwr_h: sdmmc-pwr-h {
+-			rockchip,pins = <0 RK_PA5 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
+-	};
+ };
+ 
+ &pmu_io_domains {
 -- 
 2.39.2
 
