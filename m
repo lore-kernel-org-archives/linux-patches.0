@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C39B134CE
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF337C433C8;
-	Mon, 26 Jun 2023 18:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAC3134CE
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:25:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F001C433C8;
+	Mon, 26 Jun 2023 18:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687803900;
-	bh=+5XjyKA4/baDnSDTTpgTbmhJSP+YIa+O7q1daG+5pVU=;
+	s=korg; t=1687803903;
+	bh=dbMyz+fBb1s2KaT/mOcSRnsqPF33KYePagxTmZA6CXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1VIZu7q7f3EYbcvANWyGDNKbo2xW2P9PksKZS5hnvWWoEMrpx6ljMU2E7+6qCDbSh
-	 E6uto3GXBOZmD+YSg2z+uAvBU7W2QHI3bTyfnwQT/S6FyZW3XsnpiSyIQ/qISdit6r
-	 fyIOmgH9IAT4oNSyFkOMBoYcECbNx/8NF+SJCEps=
+	b=uj6yR3ppAmYmD1qCVzr9nrzCpFFwcbyQjCsbLOk6ZrQaVB3wbOSaTeVwQnopAsdev
+	 R8VmKR1W/nEOo2+S8R/6q5QBOQhSn9+EF4C1SZKL7zGkiIc+2pwjMu/6lO/BuT/s5P
+	 GIRXp+Dyg/X9yTW9qXXJxxdhRA8I9WMTy5H0xrrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 16/41] xfrm: Linearize the skb after offloading if needed.
-Date: Mon, 26 Jun 2023 20:11:39 +0200
-Message-ID: <20230626180736.915717488@linuxfoundation.org>
+Subject: [PATCH 4.19 17/41] net: qca_spi: Avoid high load if QCA7000 is not available
+Date: Mon, 26 Jun 2023 20:11:40 +0200
+Message-ID: <20230626180736.955380133@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180736.243379844@linuxfoundation.org>
 References: <20230626180736.243379844@linuxfoundation.org>
@@ -35,62 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Stefan Wahren <stefan.wahren@i2se.com>
 
-[ Upstream commit f015b900bc3285322029b4a7d132d6aeb0e51857 ]
+[ Upstream commit 92717c2356cb62c89e8a3dc37cbbab2502562524 ]
 
-With offloading enabled, esp_xmit() gets invoked very late, from within
-validate_xmit_xfrm() which is after validate_xmit_skb() validates and
-linearizes the skb if the underlying device does not support fragments.
+In case the QCA7000 is not available via SPI (e.g. in reset),
+the driver will cause a high load. The reason for this is
+that the synchronization is never finished and schedule()
+is never called. Since the synchronization is not timing
+critical, it's safe to drop this from the scheduling condition.
 
-esp_output_tail() may add a fragment to the skb while adding the auth
-tag/ IV. Devices without the proper support will then send skb->data
-points to with the correct length so the packet will have garbage at the
-end. A pcap sniffer will claim that the proper data has been sent since
-it parses the skb properly.
-
-It is not affected with INET_ESP_OFFLOAD disabled.
-
-Linearize the skb after offloading if the sending hardware requires it.
-It was tested on v4, v6 has been adopted.
-
-Fixes: 7785bba299a8d ("esp: Add a software GRO codepath")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
+Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4_offload.c | 3 +++
- net/ipv6/esp6_offload.c | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/net/ethernet/qualcomm/qca_spi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
-index 58834a10c0be7..93045373e44bd 100644
---- a/net/ipv4/esp4_offload.c
-+++ b/net/ipv4/esp4_offload.c
-@@ -237,6 +237,9 @@ static int esp_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features_
+diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
+index afd49c7fd87fe..3e6095f0cb5f5 100644
+--- a/drivers/net/ethernet/qualcomm/qca_spi.c
++++ b/drivers/net/ethernet/qualcomm/qca_spi.c
+@@ -553,8 +553,7 @@ qcaspi_spi_thread(void *data)
+ 	while (!kthread_should_stop()) {
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		if ((qca->intr_req == qca->intr_svc) &&
+-		    (qca->txr.skb[qca->txr.head] == NULL) &&
+-		    (qca->sync == QCASPI_SYNC_READY))
++		    !qca->txr.skb[qca->txr.head])
+ 			schedule();
  
- 	secpath_reset(skb);
- 
-+	if (skb_needs_linearize(skb, skb->dev->features) &&
-+	    __skb_linearize(skb))
-+		return -ENOMEM;
- 	return 0;
- }
- 
-diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
-index eeee64a8a72c2..69313ec24264e 100644
---- a/net/ipv6/esp6_offload.c
-+++ b/net/ipv6/esp6_offload.c
-@@ -272,6 +272,9 @@ static int esp6_xmit(struct xfrm_state *x, struct sk_buff *skb,  netdev_features
- 
- 	secpath_reset(skb);
- 
-+	if (skb_needs_linearize(skb, skb->dev->features) &&
-+	    __skb_linearize(skb))
-+		return -ENOMEM;
- 	return 0;
- }
- 
+ 		set_current_state(TASK_RUNNING);
 -- 
 2.39.2
 
