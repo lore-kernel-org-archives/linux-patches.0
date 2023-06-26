@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00072BA36
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:33:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7415EC433C8;
-	Mon, 26 Jun 2023 18:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CB9BA36
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:33:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C20C433C8;
+	Mon, 26 Jun 2023 18:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804385;
-	bh=OU6nnv2G9WVBthz755bwpd8EJ+LMKuGvk/LoTtkIfD8=;
+	s=korg; t=1687804388;
+	bh=IQCHX5haFxfgrjAssA0YLTFwJoXVSpCrVbfGFT44hk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIcIY3GngKj4wYhx+r+dQSKCc2h0h05DhpLpQ7aJdtPhjKhwuezD+EP/U3jpi80UQ
-	 ypNPcSwQROWBDkdE8byFHIkM7cm/ZYA1kGpfxAHw0ktHJCo8ZWVzSMbconcn4Luwh0
-	 s0nJScSNNPY1yZb+O5ah26HB4Qp8fiFVwPU+ul4k=
+	b=n2F+iVrd0thFFVdk7Ofx7RZZdx3vWjo42OOuMKcW5cUz7Hhln3I+QtnNK7/jo71nZ
+	 hkjzsEnyxzLWH9Nhz3o4/VTR0pUDZ4P2mMzbIBvxe1qLqho82tJvmSJdOc9fIQJS4i
+	 nunbRQMzz/GWWqAaduzL50UOMbZlsFIen3lrNMmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/170] media: cec: core: dont set last_initiator if tx in progress
-Date: Mon, 26 Jun 2023 20:11:46 +0200
-Message-ID: <20230626180806.704990310@linuxfoundation.org>
+Subject: [PATCH 6.1 111/170] netfilter: nf_tables: add NFT_TRANS_PREPARE_ERROR to deal with bound set/chain
+Date: Mon, 26 Jun 2023 20:11:20 +0200
+Message-ID: <20230626180805.506134599@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -35,39 +34,174 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 73af6c7511038249cad3d5f3b44bf8d78ac0f499 ]
+[ Upstream commit 26b5a5712eb85e253724e56a54c17f8519bd8e4e ]
 
-When a message was received the last_initiator is set to 0xff.
-This will force the signal free time for the next transmit
-to that for a new initiator. However, if a new transmit is
-already in progress, then don't set last_initiator, since
-that's the initiator of the current transmit. Overwriting
-this would cause the signal free time of a following transmit
-to be that of the new initiator instead of a next transmit.
+Add a new state to deal with rule expressions deactivation from the
+newrule error path, otherwise the anonymous set remains in the list in
+inactive state for the next generation. Mark the set/chain transaction
+as unbound so the abort path releases this object, set it as inactive in
+the next generation so it is not reachable anymore from this transaction
+and reference counter is dropped.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 1240eb93f061 ("netfilter: nf_tables: incorrect error path handling with NFT_MSG_NEWRULE")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/core/cec-adap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/netfilter/nf_tables.h |  2 ++
+ net/netfilter/nf_tables_api.c     | 45 ++++++++++++++++++++++++++-----
+ net/netfilter/nft_immediate.c     |  3 +++
+ 3 files changed, 43 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/cec/core/cec-adap.c b/drivers/media/cec/core/cec-adap.c
-index ac18707fddcd2..b1512f9c5895c 100644
---- a/drivers/media/cec/core/cec-adap.c
-+++ b/drivers/media/cec/core/cec-adap.c
-@@ -1090,7 +1090,8 @@ void cec_received_msg_ts(struct cec_adapter *adap,
- 	mutex_lock(&adap->lock);
- 	dprintk(2, "%s: %*ph\n", __func__, msg->len, msg->msg);
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index c13a84c0b4965..984f7d3087735 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -895,6 +895,7 @@ struct nft_expr_type {
  
--	adap->last_initiator = 0xff;
-+	if (!adap->transmit_in_progress)
-+		adap->last_initiator = 0xff;
+ enum nft_trans_phase {
+ 	NFT_TRANS_PREPARE,
++	NFT_TRANS_PREPARE_ERROR,
+ 	NFT_TRANS_ABORT,
+ 	NFT_TRANS_COMMIT,
+ 	NFT_TRANS_RELEASE
+@@ -1089,6 +1090,7 @@ int nft_setelem_validate(const struct nft_ctx *ctx, struct nft_set *set,
+ 			 struct nft_set_elem *elem);
+ int nft_set_catchall_validate(const struct nft_ctx *ctx, struct nft_set *set);
+ int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain);
++void nf_tables_unbind_chain(const struct nft_ctx *ctx, struct nft_chain *chain);
  
- 	/* Check if this message was for us (directed or broadcast). */
- 	if (!cec_msg_is_broadcast(msg))
+ enum nft_chain_types {
+ 	NFT_CHAIN_T_DEFAULT = 0,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 8f8e315691dde..72bb2b3977480 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -171,7 +171,8 @@ static void nft_trans_destroy(struct nft_trans *trans)
+ 	kfree(trans);
+ }
+ 
+-static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
++static void __nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set,
++				 bool bind)
+ {
+ 	struct nftables_pernet *nft_net;
+ 	struct net *net = ctx->net;
+@@ -185,17 +186,28 @@ static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
+ 		switch (trans->msg_type) {
+ 		case NFT_MSG_NEWSET:
+ 			if (nft_trans_set(trans) == set)
+-				nft_trans_set_bound(trans) = true;
++				nft_trans_set_bound(trans) = bind;
+ 			break;
+ 		case NFT_MSG_NEWSETELEM:
+ 			if (nft_trans_elem_set(trans) == set)
+-				nft_trans_elem_set_bound(trans) = true;
++				nft_trans_elem_set_bound(trans) = bind;
+ 			break;
+ 		}
+ 	}
+ }
+ 
+-static void nft_chain_trans_bind(const struct nft_ctx *ctx, struct nft_chain *chain)
++static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	return __nft_set_trans_bind(ctx, set, true);
++}
++
++static void nft_set_trans_unbind(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	return __nft_set_trans_bind(ctx, set, false);
++}
++
++static void __nft_chain_trans_bind(const struct nft_ctx *ctx,
++				   struct nft_chain *chain, bool bind)
+ {
+ 	struct nftables_pernet *nft_net;
+ 	struct net *net = ctx->net;
+@@ -209,16 +221,22 @@ static void nft_chain_trans_bind(const struct nft_ctx *ctx, struct nft_chain *ch
+ 		switch (trans->msg_type) {
+ 		case NFT_MSG_NEWCHAIN:
+ 			if (nft_trans_chain(trans) == chain)
+-				nft_trans_chain_bound(trans) = true;
++				nft_trans_chain_bound(trans) = bind;
+ 			break;
+ 		case NFT_MSG_NEWRULE:
+ 			if (trans->ctx.chain == chain)
+-				nft_trans_rule_bound(trans) = true;
++				nft_trans_rule_bound(trans) = bind;
+ 			break;
+ 		}
+ 	}
+ }
+ 
++static void nft_chain_trans_bind(const struct nft_ctx *ctx,
++				 struct nft_chain *chain)
++{
++	__nft_chain_trans_bind(ctx, chain, true);
++}
++
+ int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain)
+ {
+ 	if (!nft_chain_binding(chain))
+@@ -237,6 +255,11 @@ int nf_tables_bind_chain(const struct nft_ctx *ctx, struct nft_chain *chain)
+ 	return 0;
+ }
+ 
++void nf_tables_unbind_chain(const struct nft_ctx *ctx, struct nft_chain *chain)
++{
++	__nft_chain_trans_bind(ctx, chain, false);
++}
++
+ static int nft_netdev_register_hooks(struct net *net,
+ 				     struct list_head *hook_list)
+ {
+@@ -3709,7 +3732,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
+ 	if (flow)
+ 		nft_flow_rule_destroy(flow);
+ err_release_rule:
+-	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE);
++	nft_rule_expr_deactivate(&ctx, rule, NFT_TRANS_PREPARE_ERROR);
+ 	nf_tables_rule_destroy(&ctx, rule);
+ err_release_expr:
+ 	for (i = 0; i < n; i++) {
+@@ -4990,6 +5013,13 @@ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 			      enum nft_trans_phase phase)
+ {
+ 	switch (phase) {
++	case NFT_TRANS_PREPARE_ERROR:
++		nft_set_trans_unbind(ctx, set);
++		if (nft_set_is_anonymous(set))
++			nft_deactivate_next(ctx->net, set);
++
++		set->use--;
++		break;
+ 	case NFT_TRANS_PREPARE:
+ 		if (nft_set_is_anonymous(set))
+ 			nft_deactivate_next(ctx->net, set);
+@@ -7494,6 +7524,7 @@ void nf_tables_deactivate_flowtable(const struct nft_ctx *ctx,
+ 				    enum nft_trans_phase phase)
+ {
+ 	switch (phase) {
++	case NFT_TRANS_PREPARE_ERROR:
+ 	case NFT_TRANS_PREPARE:
+ 	case NFT_TRANS_ABORT:
+ 	case NFT_TRANS_RELEASE:
+diff --git a/net/netfilter/nft_immediate.c b/net/netfilter/nft_immediate.c
+index 457fc1e218410..900e75e8c3465 100644
+--- a/net/netfilter/nft_immediate.c
++++ b/net/netfilter/nft_immediate.c
+@@ -150,6 +150,9 @@ static void nft_immediate_deactivate(const struct nft_ctx *ctx,
+ 				nft_rule_expr_deactivate(&chain_ctx, rule, phase);
+ 
+ 			switch (phase) {
++			case NFT_TRANS_PREPARE_ERROR:
++				nf_tables_unbind_chain(ctx, chain);
++				fallthrough;
+ 			case NFT_TRANS_PREPARE:
+ 				nft_deactivate_next(ctx->net, chain);
+ 				break;
 -- 
 2.39.2
 
