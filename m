@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B1F14A8D
-	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:31:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B99C433C8;
-	Mon, 26 Jun 2023 18:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDE614AA4
+	for <patches@lists.linux.dev>; Mon, 26 Jun 2023 18:31:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F826C433C0;
+	Mon, 26 Jun 2023 18:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1687804295;
-	bh=Xa2x4kVWdVQQlh+WnM5xo0kfThg4kia53md8Hl+lXbs=;
+	s=korg; t=1687804298;
+	bh=NijAJVmfBjKpi7aahqrC9ZHvx4R08UPEKZ7N1zz4c0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6wzW/Spp2mIslita4AhyEC/L8pB7DZVXI58KnPXwSgQLFZVX9SRfAf6qDJe1Z/F4
-	 XjsvNQLISRfpUnNfGVxjaGPj+WhiJQCMIN4IrTtlPugognMO+OZH3/FM0QDbIiv6gC
-	 G02/oII/0QFGvoS9RDPJ+nbXyytJQQQMrjGyZTBo=
+	b=Mo5VQjAEneiU9PPg/dWY6bO1BKOWGmSWJlSdLcHQXKFdQ9ZYmdN7+xGZQrOOmhczs
+	 wkLP4owzaoJye3tooV6yNksyo94Cai73mBPkxd1HU0eRi/Sl+TQah3BKPBIl6I7WWB
+	 CQDlzlPpnAebQOSp1a/4FILIRo+mZzdHxwLLbY9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Chen Aotian <chenaotian2@163.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/170] mmc: meson-gx: fix deferred probing
-Date: Mon, 26 Jun 2023 20:10:49 +0200
-Message-ID: <20230626180804.202629629@linuxfoundation.org>
+Subject: [PATCH 6.1 081/170] ieee802154: hwsim: Fix possible memory leaks
+Date: Mon, 26 Jun 2023 20:10:50 +0200
+Message-ID: <20230626180804.235827471@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 References: <20230626180800.476539630@linuxfoundation.org>
@@ -36,43 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Chen Aotian <chenaotian2@163.com>
 
-[ Upstream commit b8ada54fa1b83f3b6480d4cced71354301750153 ]
+[ Upstream commit a61675294735570daca3779bd1dbb3715f7232bd ]
 
-The driver overrides the error codes and IRQ0 returned by platform_get_irq()
-to -EINVAL, so if it returns -EPROBE_DEFER, the driver will fail the probe
-permanently instead of the deferred probing. Switch to propagating the error
-codes upstream.  Since commit ce753ad1549c ("platform: finally disallow IRQ0
-in platform_get_irq() and its ilk") IRQ0 is no longer returned by those APIs,
-so we now can safely ignore it...
+After replacing e->info, it is necessary to free the old einfo.
 
-Fixes: cbcaac6d7dd2 ("mmc: meson-gx-mmc: Fix platform_get_irq's error checking")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230617203622.6812-3-s.shtylyov@omp.ru
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: f25da51fdc38 ("ieee802154: hwsim: add replacement for fakelb")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Chen Aotian <chenaotian2@163.com>
+Link: https://lore.kernel.org/r/20230409022048.61223-1-chenaotian2@163.com
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/meson-gx-mmc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ieee802154/mac802154_hwsim.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
-index 5fb18be6f8660..0f39f86bd0c26 100644
---- a/drivers/mmc/host/meson-gx-mmc.c
-+++ b/drivers/mmc/host/meson-gx-mmc.c
-@@ -1227,8 +1227,8 @@ static int meson_mmc_probe(struct platform_device *pdev)
- 	}
- 
- 	host->irq = platform_get_irq(pdev, 0);
--	if (host->irq <= 0) {
--		ret = -EINVAL;
-+	if (host->irq < 0) {
-+		ret = host->irq;
- 		goto free_host;
- 	}
- 
+diff --git a/drivers/net/ieee802154/mac802154_hwsim.c b/drivers/net/ieee802154/mac802154_hwsim.c
+index 2f0544dd7c2ad..9b3da61840a8f 100644
+--- a/drivers/net/ieee802154/mac802154_hwsim.c
++++ b/drivers/net/ieee802154/mac802154_hwsim.c
+@@ -522,7 +522,7 @@ static int hwsim_del_edge_nl(struct sk_buff *msg, struct genl_info *info)
+ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
+ {
+ 	struct nlattr *edge_attrs[MAC802154_HWSIM_EDGE_ATTR_MAX + 1];
+-	struct hwsim_edge_info *einfo;
++	struct hwsim_edge_info *einfo, *einfo_old;
+ 	struct hwsim_phy *phy_v0;
+ 	struct hwsim_edge *e;
+ 	u32 v0, v1;
+@@ -560,8 +560,10 @@ static int hwsim_set_edge_lqi(struct sk_buff *msg, struct genl_info *info)
+ 	list_for_each_entry_rcu(e, &phy_v0->edges, list) {
+ 		if (e->endpoint->idx == v1) {
+ 			einfo->lqi = lqi;
+-			rcu_assign_pointer(e->info, einfo);
++			einfo_old = rcu_replace_pointer(e->info, einfo,
++							lockdep_is_held(&hwsim_phys_lock));
+ 			rcu_read_unlock();
++			kfree_rcu(einfo_old, rcu);
+ 			mutex_unlock(&hwsim_phys_lock);
+ 			return 0;
+ 		}
 -- 
 2.39.2
 
