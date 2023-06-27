@@ -1,105 +1,82 @@
-Received: from qproxy3-pub.mail.unifiedlayer.com (qproxy3-pub.mail.unifiedlayer.com [67.222.38.20])
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54485168D8
-	for <patches@lists.linux.dev>; Tue, 27 Jun 2023 09:31:49 +0000 (UTC)
-Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
-	by qproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id DBF55803F7A9
-	for <patches@lists.linux.dev>; Tue, 27 Jun 2023 09:10:42 +0000 (UTC)
-Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
-	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id 75D5010047D82
-	for <patches@lists.linux.dev>; Tue, 27 Jun 2023 09:10:35 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id E4iZqZ1twNX2aE4iZq2Qvu; Tue, 27 Jun 2023 09:10:35 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=NMAQR22g c=1 sm=1 tr=0 ts=649aa78b
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=of4jigFt-DYA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=px7gO8tibA5P/jgVTKrwYkVP+3FKSXVqtURPHT/Z82E=; b=hQa23w41qB7ODzSfANaeBAYXHM
-	yJU/UrmBY2uRdQPULeFlyMOmHMVXmZBWVEExYKv0uuTuZAQmvREIE2OOsTYvAQeOOQ0BUo5ESI8op
-	BOk0tQjLEgHpQMPyvUzb3X6RceXp//At+/JluugQOiSx6Rt9LDDP6sW4N4C8TKqkcKHC3GqE0qWWa
-	KG8o5ImLPmWmAmppRNjedsRB70dXjCJjTlPwNViO1gnbKnLGo87FEwFLlrDd0VBDJQr0o3ZXD4YVX
-	c+ZptZndPrT5OyV69joZ2TWumDP85b288gcJLP0/jP+5UQop0M6kN2AkD1Bibc27/G+kdfFChFfp1
-	6MzeR03w==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:45586 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1qE4iY-003VcY-8B;
-	Tue, 27 Jun 2023 03:10:34 -0600
-Subject: Re: [PATCH 6.3 000/199] 6.3.10-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230626180805.643662628@linuxfoundation.org>
-In-Reply-To: <20230626180805.643662628@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <3db7c227-1d9b-39df-2ec8-cf39cdb5c039@w6rz.net>
-Date: Tue, 27 Jun 2023 02:10:32 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C0B154B2
+	for <patches@lists.linux.dev>; Tue, 27 Jun 2023 13:39:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1687873160; x=1719409160;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=LbkL7tXxwlJdWU6yvK9qq0d59PKW1IuqSiGV1lLmpm0=;
+  b=tUPQvWgCk5pQ+iDdubrZVazizHRZNJFjWqP/LTMO4NiV8+aBZKrPRVSK
+   34Xo5fPno2MoeDzYNVMHmbcmT4jAzIza1XWpZcqLyY8nHZovl8d5jwNMZ
+   PRBOxikOt4jP4hMQlfp2XTD6KH6V4x0mk8+PD7sH1ubZnx94pD5gaUZvf
+   KhipNGFVUOELVd49SVCIuNDMjxlPtlteXepISuY7Bk9pGvomwPNoIFxfZ
+   GjeF/hwzEn8vyS2tzHAZVz998ZjktbABfO7le/Vy3hSnMsDGJQrjaYo2a
+   TXXJlZ/E1fjY+DZQVuIht3cX9Pe81W4gB/o1kSccpxp311uoklazNdiS+
+   A==;
+X-IronPort-AV: E=Sophos;i="6.01,162,1684825200"; 
+   d="asc'?scan'208";a="222147104"
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa2.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 27 Jun 2023 06:39:10 -0700
+Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
+ chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Tue, 27 Jun 2023 06:38:47 -0700
+Received: from wendy (10.10.115.15) by chn-vm-ex04.mchp-main.com
+ (10.10.85.152) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
+ Transport; Tue, 27 Jun 2023 06:38:45 -0700
+Date: Tue, 27 Jun 2023 14:38:17 +0100
+From: Conor Dooley <conor.dooley@microchip.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
+	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>
+Subject: Re: [PATCH 6.1 000/170] 6.1.36-rc1 review
+Message-ID: <20230627-paying-untangled-02a11b535346@wendy>
+References: <20230626180800.476539630@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qE4iY-003VcY-8B
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:45586
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="c+jIQADTZPCON90F"
+Content-Disposition: inline
+In-Reply-To: <20230626180800.476539630@linuxfoundation.org>
 
-On 6/26/23 11:08 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.10 release.
-> There are 199 patches in this series, all will be posted as a response
+--c+jIQADTZPCON90F
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Mon, Jun 26, 2023 at 08:09:29PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.36 release.
+> There are 170 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Wed, 28 Jun 2023 18:07:23 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.10-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-Tested-by: Ron Economos <re@w6rz.net>
+Cheers,
+Conor.
 
+--c+jIQADTZPCON90F
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZJrmSAAKCRB4tDGHoIJi
+0m/kAQCZItFJPvjCZjQq6mgT6kT1CMX+57+otcs5NeszzWM10gD/e9c5NGstRzP9
+FGV0I520y2b/1Y6fKCso6XXNSgY7gww=
+=Q0Sj
+-----END PGP SIGNATURE-----
+
+--c+jIQADTZPCON90F--
