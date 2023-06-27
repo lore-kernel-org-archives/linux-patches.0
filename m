@@ -1,277 +1,78 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C638F846A
-	for <patches@lists.linux.dev>; Tue, 27 Jun 2023 07:38:02 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 8D9A01F8C2;
-	Tue, 27 Jun 2023 07:37:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1687851475; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=qyb6eGX+kWo/2KlAT9Otl5qMd3NG37t3julQmTVAVFg=;
-	b=xKtK+I5bgDfyHGMlKJguXS5bmsKDd5hTEH1SPqYLmj//J9UMB5/sViDLQx/QDCSW34sz6s
-	81dOCKwKbGt6xz2Uo7FwxsxlJ0IOYWFRHJRO7n/B3F5/YrGdo2O87xg6qBJxwOC9KnfiiU
-	rJai7LCPIKpo+GK96QNnlcSDP+RH5ME=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1687851475;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=qyb6eGX+kWo/2KlAT9Otl5qMd3NG37t3julQmTVAVFg=;
-	b=dUzA23sedc4C6mg6ITAfvbNNQU/vFGqGOsFqFJ7DHHvaiAAMqF+sMSHuqQ7EmXswDNMTXN
-	HCxaNrhFCnXNyrCA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 54BD413462;
-	Tue, 27 Jun 2023 07:37:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id 9PRKE9ORmmTKIAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 27 Jun 2023 07:37:55 +0000
-Message-ID: <1c39c9b0-ec37-f910-2b09-cedf7acf6e91@suse.cz>
-Date: Tue, 27 Jun 2023 09:37:55 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851B61386
+	for <patches@lists.linux.dev>; Tue, 27 Jun 2023 08:38:05 +0000 (UTC)
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-57325434999so58971127b3.1
+        for <patches@lists.linux.dev>; Tue, 27 Jun 2023 01:38:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1687855084; x=1690447084;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZX1lTnuqVI3xAbN0fkRezsoOIB0K6fV+WnbtqyeDXzY=;
+        b=NKcD/UfQpGef7fdG3Tncm/U34Ba3BIuBrO0YDK445gyZQVjIL/6eUBqRmFl8t0vS/s
+         c+Lkpdamq7kXAJasvS1boxlS4oEC4i8uvpZ3+Iee1hyKcQmLXyAIWDKmOfUHJLieaYsa
+         o7Rsc1rnc/8w3lXhV9mMCOiS5gNBgSEEDcoNMTlXcP2d1ILVJXZbXRmkv8a7/HXV0PFX
+         uqnuARTlCnK4ui11KrIKZhbF3bM92C+b/D/D6PX6dz1P19awu1TUX8O+5vXX8vtD0U/S
+         wovBmhW7jVUbVYX88X/dtseKjkz6PUxwBB0bvVR+Se/V/MFWahX7DB88KGYdy4A1uMye
+         IY3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687855084; x=1690447084;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZX1lTnuqVI3xAbN0fkRezsoOIB0K6fV+WnbtqyeDXzY=;
+        b=RJXsmwX7+SfPnRV4kJX2LQc0bOImS4fogE7BhL0ZOui2G06epo8U2SrL1YNAXQDUfo
+         QofL8oosTNujLxp1s8noRZODFui23W/THO/o/wFUniautBOWDUG5PX3Kx8NBkXYMI6Xu
+         q7k4xHZ7fjF2rczqesGA39UrThwrV2+zD2q6asCLbu8LEhs1csb2GOY8vju/8fxntcGg
+         WL5TLU2rJ2MmEHMApbYS2yWwqfUifdYXrBpIXr1OMO91rWG8y6OEgiyVblSV+E4P7GWD
+         hdEh6vRPwgewg8ONXUgaLBEpbjD+adOewwmitlv9QS6xCcxrzVIZMOcF5TQNpjZ/8xIw
+         CfoA==
+X-Gm-Message-State: AC+VfDyZ5JLskUlD+LxIt+TI4BzsO9qF596aAj7nN1Gg7csVj2ycW2p+
+	oKZxJz9Wb6eAZaLMiQZB/dI+8caUycmLpws=
+X-Google-Smtp-Source: ACHHUZ7sJFtiw5uGwhdVMFxKYmXzmNFpEiedpDpJFFo2lYQOaQ0104CTQKmue7tZvryVzKj88m1TeFAxt/7aCus=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a25:d886:0:b0:bc4:5077:f59e with SMTP id
+ p128-20020a25d886000000b00bc45077f59emr14311498ybg.13.1687855084298; Tue, 27
+ Jun 2023 01:38:04 -0700 (PDT)
+Date: Tue, 27 Jun 2023 08:38:01 +0000
+In-Reply-To: <kHwlRfK_EtV6I7xbaDgyCbR2Xz0cHmM4Sh_edMi-Wr0JaJNlvVEQH9ZOqWuSr5hBx6cu8nreQdIlWNrHLQ6ehUT4hWtgBalWeQpcVVlBOQ0=@proton.me>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: [GIT PULL] slab updates for 6.5
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Jesper Dangaard Brouer <brouer@redhat.com>, David Sterba <dsterba@suse.com>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <kHwlRfK_EtV6I7xbaDgyCbR2Xz0cHmM4Sh_edMi-Wr0JaJNlvVEQH9ZOqWuSr5hBx6cu8nreQdIlWNrHLQ6ehUT4hWtgBalWeQpcVVlBOQ0=@proton.me>
+X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
+Message-ID: <20230627083801.1737103-1-aliceryhl@google.com>
+Subject: Re: [PATCH v2 8/8] rust: workqueue: add examples
+From: Alice Ryhl <aliceryhl@google.com>
+To: benno.lossin@proton.me
+Cc: alex.gaynor@gmail.com, aliceryhl@google.com, bjorn3_gh@protonmail.com, 
+	boqun.feng@gmail.com, gary@garyguo.net, jiangshanlai@gmail.com, 
+	linux-kernel@vger.kernel.org, ojeda@kernel.org, patches@lists.linux.dev, 
+	rust-for-linux@vger.kernel.org, tj@kernel.org, wedsonaf@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Linus,
+Benno Lossin <benno.lossin@proton.me> writes:
+> On 01.06.23 15:49, Alice Ryhl wrote:
+>> This adds two examples of how to use the workqueue. The first example
+>> shows how to use it when you only have one `work_struct` field, and the
+>> second example shows how to use it when you have multiple `work_struct`
+>> fields.
+>> 
+>> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> 
+> Reviewed-by: Benno Lossin <benno.lossin@proton.me>
+> 
+> I really like that you added these examples!
+> Is there some particular reason you decided to not use
+> 0 as the first index in the second example? (you can keep
+> it this way)
 
-please pull the latest slab updates from:
+In my head, it felt more natural for the first field to be called 1 and
+the second field to be called 2. But it doesn't really matter which
+numbers you use.
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.5
+Alice
 
-the changes are summarized below. There will be a (not completely trivial) conflict
-with the mm tree. Stephen's resolution [1] is ok; I would personally move the flags
-SLAB_NO_MERGE modification hunk above the minalign hunk for better logical separation,
-but correctness wise there's no difference.
-
-[1] https://lore.kernel.org/all/20230619140330.28437ac3@canb.auug.org.au/T/#u
-
-======================================
-
-* SLAB deprecation
-
-  Following the discussion at LSF/MM 2023 [1] and no objections, the SLAB
-  allocator is deprecated by renaming the config option (to make its users
-  notice) to CONFIG_SLAB_DEPRECATED with updated help text. SLUB should be
-  used instead. Existing defconfigs with CONFIG_SLAB are also updated.
-
-* SLAB_NO_MERGE kmem_cache flag, by Jesper Dangaard Brouer
-
-  There are (very limited) cases where kmem_cache merging is undesirable, and
-  existing ways to prevent it are hacky. Introduce a new flag to do that
-  cleanly and convert the existing hacky users. Btrfs plans to use this for
-  debug kernel builds (that use case is always fine), networking for
-  performance reasons (that should be very rare).
-
-* Replace the usage of weak PRNGs, by David Keisar Schmidt
-
-  In addition to using stronger RNGs for the security related features, the
-  code is a bit cleaner.
-
-* Misc code cleanups, by SeongJae Parki, Xiongwei Song, Zhen Lei, and
-  zhaoxinchao.
-
-[1] https://lwn.net/Articles/932201/
-
-----------------------------------------------------------------
-David Keisar Schmidt (2):
-      mm/slab: Replace invocation of weak PRNG
-      mm/slab_common: Replace invocation of weak PRNG
-
-Jesper Dangaard Brouer (1):
-      mm/slab: introduce kmem_cache flag SLAB_NO_MERGE
-
-SeongJae Park (2):
-      mm/slab: add a missing semicolon on SLAB_TYPESAFE_BY_RCU example code
-      mm/slab: break up RCU readers on SLAB_TYPESAFE_BY_RCU example code
-
-Vlastimil Babka (4):
-      mm/slab: remove HAVE_HARDENED_USERCOPY_ALLOCATOR
-      mm/slab: rename CONFIG_SLAB to CONFIG_SLAB_DEPRECATED
-      mm/slab_common: use SLAB_NO_MERGE instead of negative refcount
-      Merge branches 'slab/for-6.5/prandom', 'slab/for-6.5/slab_no_merge' and 'slab/for-6.5/slab-deprecate' into slab/for-next
-
-Xiongwei Song (5):
-      slub: Correct the error code when slab_kset is NULL
-      slub: Put objects_show() into CONFIG_SLUB_DEBUG enabled block
-      slub: Remove CONFIG_SMP defined check
-      slub: Remove slabs_node() function
-      slub: Don't read nr_slabs and total_objects directly
-
-Zhen Lei (1):
-      mm/slab_common: reduce an if statement in create_cache()
-
-zhaoxinchao (1):
-      mm/slab: correct return values in comment for _kmem_cache_create()
-
- arch/arc/configs/axs103_smp_defconfig           |  1 -
- arch/arc/configs/haps_hs_defconfig              |  1 -
- arch/arc/configs/haps_hs_smp_defconfig          |  1 -
- arch/arc/configs/hsdk_defconfig                 |  1 -
- arch/arc/configs/tb10x_defconfig                |  1 -
- arch/arm/configs/am200epdkit_defconfig          |  1 -
- arch/arm/configs/at91_dt_defconfig              |  1 -
- arch/arm/configs/dove_defconfig                 |  1 -
- arch/arm/configs/ep93xx_defconfig               |  1 -
- arch/arm/configs/imx_v4_v5_defconfig            |  1 -
- arch/arm/configs/lpc32xx_defconfig              |  1 -
- arch/arm/configs/mmp2_defconfig                 |  1 -
- arch/arm/configs/mvebu_v7_defconfig             |  1 -
- arch/arm/configs/nhk8815_defconfig              |  1 -
- arch/arm/configs/omap2plus_defconfig            |  1 -
- arch/arm/configs/pxa168_defconfig               |  1 -
- arch/arm/configs/pxa3xx_defconfig               |  1 -
- arch/arm/configs/pxa910_defconfig               |  1 -
- arch/arm/configs/realview_defconfig             |  1 -
- arch/arm/configs/rpc_defconfig                  |  1 -
- arch/arm/configs/sama5_defconfig                |  1 -
- arch/arm/configs/sama7_defconfig                |  1 -
- arch/arm/configs/shmobile_defconfig             |  1 -
- arch/arm/configs/sp7021_defconfig               |  1 -
- arch/arm/configs/tegra_defconfig                |  1 -
- arch/arm/configs/versatile_defconfig            |  1 -
- arch/m68k/configs/amiga_defconfig               |  1 -
- arch/m68k/configs/apollo_defconfig              |  1 -
- arch/m68k/configs/atari_defconfig               |  1 -
- arch/m68k/configs/bvme6000_defconfig            |  1 -
- arch/m68k/configs/hp300_defconfig               |  1 -
- arch/m68k/configs/mac_defconfig                 |  1 -
- arch/m68k/configs/multi_defconfig               |  1 -
- arch/m68k/configs/mvme147_defconfig             |  1 -
- arch/m68k/configs/mvme16x_defconfig             |  1 -
- arch/m68k/configs/q40_defconfig                 |  1 -
- arch/m68k/configs/sun3_defconfig                |  1 -
- arch/m68k/configs/sun3x_defconfig               |  1 -
- arch/microblaze/configs/mmu_defconfig           |  1 -
- arch/mips/configs/ar7_defconfig                 |  1 -
- arch/mips/configs/bcm47xx_defconfig             |  1 -
- arch/mips/configs/bigsur_defconfig              |  1 -
- arch/mips/configs/cavium_octeon_defconfig       |  1 -
- arch/mips/configs/ci20_defconfig                |  1 -
- arch/mips/configs/cu1000-neo_defconfig          |  1 -
- arch/mips/configs/cu1830-neo_defconfig          |  1 -
- arch/mips/configs/db1xxx_defconfig              |  1 -
- arch/mips/configs/decstation_64_defconfig       |  1 -
- arch/mips/configs/decstation_defconfig          |  1 -
- arch/mips/configs/decstation_r4k_defconfig      |  1 -
- arch/mips/configs/fuloong2e_defconfig           |  1 -
- arch/mips/configs/gpr_defconfig                 |  1 -
- arch/mips/configs/ip22_defconfig                |  1 -
- arch/mips/configs/ip27_defconfig                |  1 -
- arch/mips/configs/ip28_defconfig                |  1 -
- arch/mips/configs/ip32_defconfig                |  1 -
- arch/mips/configs/jazz_defconfig                |  1 -
- arch/mips/configs/malta_defconfig               |  1 -
- arch/mips/configs/malta_kvm_defconfig           |  1 -
- arch/mips/configs/malta_qemu_32r6_defconfig     |  1 -
- arch/mips/configs/maltaaprp_defconfig           |  1 -
- arch/mips/configs/maltasmvp_defconfig           |  1 -
- arch/mips/configs/maltasmvp_eva_defconfig       |  1 -
- arch/mips/configs/maltaup_defconfig             |  1 -
- arch/mips/configs/maltaup_xpa_defconfig         |  1 -
- arch/mips/configs/mtx1_defconfig                |  1 -
- arch/mips/configs/pic32mzda_defconfig           |  1 -
- arch/mips/configs/qi_lb60_defconfig             |  1 -
- arch/mips/configs/rb532_defconfig               |  1 -
- arch/mips/configs/rbtx49xx_defconfig            |  1 -
- arch/mips/configs/rm200_defconfig               |  1 -
- arch/mips/configs/rs90_defconfig                |  1 -
- arch/mips/configs/sb1250_swarm_defconfig        |  1 -
- arch/nios2/configs/10m50_defconfig              |  1 -
- arch/nios2/configs/3c120_defconfig              |  1 -
- arch/parisc/configs/generic-32bit_defconfig     |  1 -
- arch/powerpc/configs/40x/klondike_defconfig     |  1 -
- arch/powerpc/configs/52xx/pcm030_defconfig      |  1 -
- arch/powerpc/configs/83xx/kmeter1_defconfig     |  1 -
- arch/powerpc/configs/83xx/mpc837x_rdb_defconfig |  1 -
- arch/powerpc/configs/85xx/ge_imp3a_defconfig    |  1 -
- arch/powerpc/configs/ep8248e_defconfig          |  1 -
- arch/powerpc/configs/gamecube_defconfig         |  1 -
- arch/powerpc/configs/mgcoge_defconfig           |  1 -
- arch/powerpc/configs/mpc512x_defconfig          |  1 -
- arch/powerpc/configs/mpc83xx_defconfig          |  1 -
- arch/powerpc/configs/ps3_defconfig              |  1 -
- arch/powerpc/configs/wii_defconfig              |  1 -
- arch/sh/configs/ap325rxa_defconfig              |  1 -
- arch/sh/configs/apsh4a3a_defconfig              |  1 -
- arch/sh/configs/apsh4ad0a_defconfig             |  1 -
- arch/sh/configs/dreamcast_defconfig             |  1 -
- arch/sh/configs/ecovec24-romimage_defconfig     |  1 -
- arch/sh/configs/ecovec24_defconfig              |  1 -
- arch/sh/configs/espt_defconfig                  |  1 -
- arch/sh/configs/hp6xx_defconfig                 |  1 -
- arch/sh/configs/kfr2r09-romimage_defconfig      |  1 -
- arch/sh/configs/kfr2r09_defconfig               |  1 -
- arch/sh/configs/landisk_defconfig               |  1 -
- arch/sh/configs/lboxre2_defconfig               |  1 -
- arch/sh/configs/magicpanelr2_defconfig          |  1 -
- arch/sh/configs/microdev_defconfig              |  1 -
- arch/sh/configs/migor_defconfig                 |  1 -
- arch/sh/configs/polaris_defconfig               |  1 -
- arch/sh/configs/r7780mp_defconfig               |  1 -
- arch/sh/configs/r7785rp_defconfig               |  1 -
- arch/sh/configs/rsk7264_defconfig               |  1 -
- arch/sh/configs/rsk7269_defconfig               |  1 -
- arch/sh/configs/rts7751r2d1_defconfig           |  1 -
- arch/sh/configs/rts7751r2dplus_defconfig        |  1 -
- arch/sh/configs/sdk7786_defconfig               |  1 -
- arch/sh/configs/se7343_defconfig                |  1 -
- arch/sh/configs/se7619_defconfig                |  1 -
- arch/sh/configs/se7705_defconfig                |  1 -
- arch/sh/configs/se7712_defconfig                |  1 -
- arch/sh/configs/se7721_defconfig                |  1 -
- arch/sh/configs/se7724_defconfig                |  1 -
- arch/sh/configs/se7750_defconfig                |  1 -
- arch/sh/configs/se7751_defconfig                |  1 -
- arch/sh/configs/se7780_defconfig                |  1 -
- arch/sh/configs/secureedge5410_defconfig        |  1 -
- arch/sh/configs/sh03_defconfig                  |  1 -
- arch/sh/configs/sh2007_defconfig                |  1 -
- arch/sh/configs/sh7710voipgw_defconfig          |  1 -
- arch/sh/configs/sh7757lcr_defconfig             |  1 -
- arch/sh/configs/sh7763rdp_defconfig             |  1 -
- arch/sh/configs/sh7785lcr_32bit_defconfig       |  1 -
- arch/sh/configs/sh7785lcr_defconfig             |  1 -
- arch/sh/configs/titan_defconfig                 |  1 -
- arch/sh/configs/urquell_defconfig               |  1 -
- arch/sparc/configs/sparc32_defconfig            |  1 -
- arch/sparc/configs/sparc64_defconfig            |  1 -
- arch/um/configs/i386_defconfig                  |  1 -
- arch/um/configs/x86_64_defconfig                |  1 -
- include/linux/slab.h                            | 22 +++++++++---
- kernel/configs/tiny.config                      |  1 -
- mm/Kconfig                                      | 18 +++++++---
- mm/kfence/kfence_test.c                         |  7 ++--
- mm/slab.c                                       | 37 ++++++-------------
- mm/slab.h                                       | 13 ++-----
- mm/slab_common.c                                | 31 +++++++---------
- mm/slub.c                                       | 47 ++++++++++---------------
- security/Kconfig                                |  8 -----
- 143 files changed, 79 insertions(+), 239 deletions(-)
