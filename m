@@ -1,82 +1,117 @@
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7198BD50B
-	for <patches@lists.linux.dev>; Wed, 28 Jun 2023 17:38:57 +0000 (UTC)
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3a0457d6b77so5291095b6e.0
-        for <patches@lists.linux.dev>; Wed, 28 Jun 2023 10:38:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687973936; x=1690565936;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cWldZ174xGCS2Gs9xZ7wHxkpqbJdzsS714AuaqaJcGc=;
-        b=IncwhENVMCB+5fqBC/VlDxPnjb5MRamc7lX1hqFGcFsMVLGq9UVcRPJm1uaxIIhmpe
-         PeUJou+xTHRkVJhK+5C1kvW+YkzWy1wc+EFz1ybEhKv1HKAVYFbjr827X6KC8WHy2UPD
-         1ABWFfwpGtCnPIir00Qbev4cjF+6v3Oeejr28Ou8RC/7VstYwip0mQz3zijpbuDhML4G
-         Vtutc/epw70sZ+aSkDRdHZ+6Y735/+Pfcl4/sPGatXCsqvLvV4JpHFvuS9eX7DGG4OIL
-         PxQPmxMS2VDbFVhURt1wKrQjcqFUvCBUHtdmvS9BM5Nq7IwBwJ+pCEbNh2Pq5Cf9zoXd
-         SgXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687973936; x=1690565936;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cWldZ174xGCS2Gs9xZ7wHxkpqbJdzsS714AuaqaJcGc=;
-        b=ABcV3I6d7vk76kkEhWXAYjzlfVx7Q0RzQkkcXJ/cZ/bqIwahzLjsaEb0X89Kz+FKf8
-         vfMniaP0LXazfEGf4B11EYSWMpG9r+onIX9ffoidkNqAzkCReizdR6qwH31s9kMo3fjE
-         RU/FGkqBalYEc70kxcHkXfl9cajLBy4pvhKRMgfj4SkqMaC03j4Z67T+5+spAnkZRmP9
-         LgdHUvY3/Y09J//EKUVpdLTbwVwa73lxG0cuGDOhFuPq/ua2kbuZ0kvpmP5F2x7hifLv
-         GkhO+WqND6gYlYkXroEmLh7DGjfSRC5Wn1wvhzEI6uAnvyN03zJIuZKT2Q1VT+w8p84P
-         LnbA==
-X-Gm-Message-State: AC+VfDyR3Lvi0dJjqXnc6UV+4jDu20QDGhqlTJ7JqtlAeW+iImdWW2B5
-	G0zAfz0+gjUzviRdjheAn0tllipvvWOfmjO5Dpg=
-X-Google-Smtp-Source: ACHHUZ5zCwL8ebBj47RFOKQlNLdPZtnvNZoB0jdId69CdbJu3AgINjUedNvNDGCXntBxMZTaduocIChOfpEfwPFalQc=
-X-Received: by 2002:a05:6808:2122:b0:3a2:ee9b:4232 with SMTP id
- r34-20020a056808212200b003a2ee9b4232mr5841254oiw.58.1687973936409; Wed, 28
- Jun 2023 10:38:56 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141DBD52D
+	for <patches@lists.linux.dev>; Wed, 28 Jun 2023 18:24:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=rZ7tW+lP5VbpS09o8l8H9B+pWyICkkk7HcLmzLLVSYE=; b=jLIna+47HDapmlKg2krsqqOn5u
+	LaxSJ37gnbaRB7oSlZEOHwBRws4MDZKwLLN+LcRVt8hOBi7MkzgUi+C9O2raUKUlMilwnio8IY1cn
+	kJgPP+F+IgqgQ0vfi9aHP5q2042JXQSvTgXFkDZOBYoMXiLgcYpB+Y1vNth5ec8nd6wnZ3+1A4AFO
+	j3ACuczFst0UWGk/5CbnMDu3uKXO318BI1YSfe/S2/G2KiO9mnV0WAKbXZt/cqJy17UK4meO+14XZ
+	7z9+2P7+fkF59UClddYhILm8VYpfQkh/TQKjNpH8Bg1w8Hu5rh5D8R2UYWLqKsbytogEkvJqvP/w8
+	Tzp8N4ig==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1qEZq5-00GO51-0t;
+	Wed, 28 Jun 2023 18:24:25 +0000
+Date: Wed, 28 Jun 2023 11:24:25 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com,
+	j.granados@samsung.com, patches@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mcgrof@kernel.org
+Subject: [GIT PULL] sysctl changes for v6.5-rc1
+Message-ID: <ZJx62RvS9TwjUUCi@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230626180746.943455203@linuxfoundation.org>
-In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
-From: Allen Pais <stable.kernel.dev@gmail.com>
-Date: Wed, 28 Jun 2023 10:38:45 -0700
-Message-ID: <CAJq+SaDMbKq6wvAP-qA9odEB6E2avudft=OvRFg4eMX1HexCWg@mail.gmail.com>
-Subject: Re: [PATCH 5.15 00/96] 5.15.119-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-> This is the start of the stable review cycle for the 5.15.119 release.
-> There are 96 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 28 Jun 2023 18:07:23 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.119-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+The following changes since commit f1fcbaa18b28dec10281551dfe6ed3a3ed80e3d6:
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+  Linux 6.4-rc2 (2023-05-14 12:51:40 -0700)
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+are available in the Git repository at:
 
-Thanks.
+  git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/v6.5-rc1-sysctl-next
+
+for you to fetch changes up to 2f2665c13af4895b26761107c2f637c2f112d8e9:
+
+  sysctl: replace child with an enumeration (2023-06-18 02:32:54 -0700)
+
+----------------------------------------------------------------
+v6.5-rc1-sysctl-next
+
+The changes queued up for v6.5-rc1 for sysctl are in line with
+prior efforts to stop usage of deprecated routines which incur
+recursion and also make it hard to remove the empty array element
+in each sysctl array declaration. The most difficult user to modify
+was parport which required a bit of re-thinking of how to declare shared
+sysctls there, Joel Granados has stepped up to the plate to do most of
+this work and eventual removal of register_sysctl_table(). That work
+ended up saving us about 1465 bytes according to bloat-o-meter. Since
+we gained a few bloat-o-meter karma points I moved two rather small
+sysctl arrays from kernel/sysctl.c leaving us only two more sysctl
+arrays to move left.
+
+Most changes have been tested on linux-next for about a month. The last
+straggler patches are a minor parport fix, changes to the sysctl
+kernel selftest so to verify correctness and prevent regressions for
+the future change he made to provide an alternative solution for the
+special sysctl mount point target which was using the now deprecated
+sysctl child element.
+
+This is all prep work to now finally be able to remove the empty
+array element in all sysctl declarations / registrations which is
+expected to save us a bit of bytes all over the kernel. That work
+will be tested early after v6.5-rc1 is out.
+
+----------------------------------------------------------------
+Joel Granados (16):
+      parport: Move magic number "15" to a define
+      parport: Remove register_sysctl_table from parport_proc_register
+      parport: Remove register_sysctl_table from parport_device_proc_register
+      parport: Remove register_sysctl_table from parport_default_proc_register
+      parport: Removed sysctl related defines
+      sysctl: stop exporting register_sysctl_table
+      sysctl: Refactor base paths registrations
+      sysctl: Remove register_sysctl_table
+      parport: plug a sysctl register leak
+      test_sysctl: Fix test metadata getters
+      test_sysctl: Group node sysctl test under one func
+      test_sysctl: Add an unregister sysctl test
+      test_sysctl: Add an option to prevent test skip
+      test_sysclt: Test for registering a mount point
+      sysctl: Remove debugging dump_stack
+      sysctl: replace child with an enumeration
+
+Luis Chamberlain (4):
+      sysctl: remove empty dev table
+      signal: move show_unhandled_signals sysctl to its own file
+      sysctl: move umh sysctl registration to its own file
+      sysctl: move security keys sysctl registration to its own file
+
+ drivers/parport/procfs.c                 | 185 ++++++++++++-----------
+ drivers/parport/share.c                  |   2 +-
+ fs/proc/proc_sysctl.c                    | 244 +++----------------------------
+ fs/sysctls.c                             |   5 +-
+ include/linux/key.h                      |   3 -
+ include/linux/parport.h                  |   2 +
+ include/linux/sysctl.h                   |  45 ++----
+ include/linux/umh.h                      |   2 -
+ kernel/signal.c                          |  23 +++
+ kernel/sysctl.c                          |  40 +----
+ kernel/umh.c                             |  11 +-
+ lib/test_sysctl.c                        |  91 +++++++++++-
+ scripts/check-sysctl-docs                |  10 --
+ security/keys/sysctl.c                   |   7 +
+ tools/testing/selftests/sysctl/sysctl.sh | 115 +++++++++++----
+ 15 files changed, 351 insertions(+), 434 deletions(-)
