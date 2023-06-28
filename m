@@ -1,105 +1,120 @@
-Received: from qproxy1-pub.mail.unifiedlayer.com (qproxy1-pub.mail.unifiedlayer.com [173.254.64.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9C863AD
-	for <patches@lists.linux.dev>; Wed, 28 Jun 2023 07:47:52 +0000 (UTC)
-Received: from alt-proxy28.mail.unifiedlayer.com (unknown [74.220.216.123])
-	by qproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id 7AE01802A319
-	for <patches@lists.linux.dev>; Wed, 28 Jun 2023 07:27:17 +0000 (UTC)
-Received: from cmgw15.mail.unifiedlayer.com (unknown [10.0.90.130])
-	by progateway1.mail.pro1.eigbox.com (Postfix) with ESMTP id 110721003A121
-	for <patches@lists.linux.dev>; Wed, 28 Jun 2023 07:27:10 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id EPa1qWxN6xKeeEPa1qCY1v; Wed, 28 Jun 2023 07:27:10 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=NvUUz+RJ c=1 sm=1 tr=0 ts=649be0ce
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=of4jigFt-DYA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=EQbkGBY0Drc2aUyH78u9WpO5Y+VD/CrnpeIbXLGwLqw=; b=sZJJ5PDyGD4QmwN3GWko5Y3vXu
-	rVKgzaO5Ya4BX6ksQuWFly0dql3FcKC9PZwzoGbiXJXb2VtOpFToOJbyx4/P3CrBwITXKMciDsgnM
-	f0xKq+fH86rYFFI2Xy0XCB+xf+SzemkNBViKZlByVX+QCuKQyi8BAz0ksbnsSjmueedsXK/5tQnXz
-	aLl2RWMJOHmPF/5tWdv/DzMZdRtF89JF9sLU7O1QYg/SYdeDd0aYale8ZuztqtbucqVFeyxr7m6Lr
-	YPgoBS7lBgNUSBfMipzSFo1KKiptRBfhCJvd2r+yT0ic0dx0r7TvsCxtaa9VRG8DoyxoNpcn0sMkW
-	ElYw9+zQ==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:45726 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1qEPa0-003RMo-Fx;
-	Wed, 28 Jun 2023 01:27:08 -0600
-Subject: Re: [PATCH 5.15 00/96] 5.15.119-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20230626180746.943455203@linuxfoundation.org>
-In-Reply-To: <20230626180746.943455203@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <f7b841bf-0edd-243a-38aa-2213fcec3ec1@w6rz.net>
-Date: Wed, 28 Jun 2023 00:27:06 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99C479C8
+	for <patches@lists.linux.dev>; Wed, 28 Jun 2023 09:43:25 +0000 (UTC)
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4007b5bafceso175191cf.1
+        for <patches@lists.linux.dev>; Wed, 28 Jun 2023 02:43:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1687945404; x=1690537404;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xc48rBVZsLOiSEa3oMkPeMBce2yb6sDPpiW6pwcCNoo=;
+        b=x3ZsMrbusFi+IePpNS5Mo9bZDJ7S5QC7ngE0gCBFadsOV4f3BaMeHc1SAzWFJ8qyW+
+         0IFdOx4YhwYo9b13PAxRuk7idaR3uLiL7+lN3bUfAblMLv72W9YRvYGNK8M67Pw1G1Fw
+         Tn6zOOast0mxVVvMHCf8tocHCxd3UYUoe2AiKCWwYZPk9K7VPOkzFJRo3U0TSNQzA00j
+         7GYqkmoa160qDgxhMnhGrbsbNiGmtzFnVyUghYw929i7jE8JN7dYIYKMGgEkoFUCIsD1
+         U136wG/+/DN/EwiRssjCwnDRMBehpIO+nRj4njxjNS10MIJlneKctvWWM9VpaPl7yaex
+         eTGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687945404; x=1690537404;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xc48rBVZsLOiSEa3oMkPeMBce2yb6sDPpiW6pwcCNoo=;
+        b=HYeA+OZJXB0adWTdIoLMVkSA8ZQWvvSIyB3pBJG0RZDRNiQTbnK5xSEey97/lbiQ8k
+         HarzhMUbEtCMtMZ3yXbKBCC9jXkCWwJFHiQvO8ADc9vFvInzXVMMHeacWHpVAfv2AjaS
+         TtjC8gJScSMDXEx1GD1n9OtwU8UWLYyrwKPdlLCP2lut2zUVyFVJRO6+7hL+r0/8g3Cf
+         N4LdLo4jPzYjBm3aBa6HhZQMHBDO8Nzh46pySRHM+5u19eNkzTeCNmUVoUJED+mTWAX1
+         TZumKeIKFvDmREz6z44DT7D760MQDar1ONZs8ReTkSfEelvPjigbwcHnha4K6k3THZ8s
+         9Xxg==
+X-Gm-Message-State: AC+VfDxl0s/NxUUdh7y7s9GeEcy00k2CjgtiXyDK7+MrpdWaw3lHMEOB
+	4MYbqSa5gOaTQxQHkInGlDmiJVzlikDkDlN+aixr7w==
+X-Google-Smtp-Source: ACHHUZ5ThdefZ5zrxt8vbic/eVPtftP8/D0ci1YRpZ+PpEC4vB72hVRtLPei4agSrnA6TWDJ8Y0zaMUyKmkLLpVlQPs=
+X-Received: by 2002:ac8:5710:0:b0:3ef:343b:fe7e with SMTP id
+ 16-20020ac85710000000b003ef343bfe7emr197664qtw.2.1687945403876; Wed, 28 Jun
+ 2023 02:43:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1qEPa0-003RMo-Fx
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:45726
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+References: <20230620033702.33344-1-tony.luck@intel.com>
+In-Reply-To: <20230620033702.33344-1-tony.luck@intel.com>
+From: Peter Newman <peternewman@google.com>
+Date: Wed, 28 Jun 2023 11:43:13 +0200
+Message-ID: <CALPaoChfFSKiWeVC39wFoxUXG+hYU3_HQtCU6AQaB+kAYh3ffg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] Resctrl - rewrite (WIP)
+To: Tony Luck <tony.luck@intel.com>
+Cc: James Morse <james.morse@arm.com>, Fenghua Yu <fenghua.yu@intel.com>, 
+	Reinette Chatre <reinette.chatre@intel.com>, Drew Fustini <dfustini@baylibre.com>, 
+	Babu Moger <Babu.Moger@amd.com>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
+	Borislav Petkov <bp@alien8.de>, H Peter Anvin <hpa@zytor.com>, shameerali.kolothum.thodi@huawei.com, 
+	D Scott Phillips OS <scott@os.amperecomputing.com>, carl@os.amperecomputing.com, 
+	lcherian@marvell.com, bobo.shaobowang@huawei.com, tan.shaopeng@fujitsu.com, 
+	xingxin.hx@openanolis.org, baolin.wang@linux.alibaba.com, 
+	Jamie Iles <quic_jiles@quicinc.com>, Xin Hao <xhao@linux.alibaba.com>, 
+	Nicolas Pitre <npitre@baylibre.com>, Kevin Hilman <khilman@baylibre.com>, aricciardi@baylibre.com, 
+	x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Stephane Eranian <eranian@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/26/23 11:11 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.119 release.
-> There are 96 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 28 Jun 2023 18:07:23 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.119-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi Tony,
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+On Tue, Jun 20, 2023 at 5:37=E2=80=AFAM Tony Luck <tony.luck@intel.com> wro=
+te:
+>
+> Back in April I posted some RFC patches that added a "driver
+> registration" interface to the core resctrl code so that additional
+> resource control and monitor features could be added without further
+> complicating the core code. Link to that discussion:
+>
+> https://lore.kernel.org/all/20230420220636.53527-1-tony.luck@intel.com/
+>
+> Reinette gave the feedback that it would be better to base the module
+> registration on the resctrl resource structure. Reinette also pointed
+> me to work from James Morse, and some additional discussion happened
+> here:
+>
+> https://lore.kernel.org/all/ZG%2FMZVrWYrCHm%2Ffr@agluck-desk3/
+>
+> James provided details on where ARM's MPAM has similarities and
+> differences from the Intel Resource Director Technology and AMD's
+> similar implementation. Drew Fustini was also pulled into that
+> conversation to comment on RISC-V CBQRI.
+>
+> From those discussions I believed we need a do-over on the core
+> /sys/fs/resctrl implementation to make it friendlier for architecural
+> variations. Here's what I have so far.
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> | N.B. This is a general direction check. There are many obvious        |
+> | rough edges (e.g. some careful thought needs to happen on locking     |
+> | for the files in /sys/fs/resctrl that are "owned" by modules that     |
+> | can be unloaded). I'm mostly looking for feedback from AMD, ARM and   |
+> | RISCV on whether this is a foundation to build on, whether some small |
+> | tweaks could make it better, or if this is still going to be really   |
+> | hard for architectures that have radical divergence from the Intel    |
+> | model.                                                                |
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Tested-by: Ron Economos <re@w6rz.net>
+Thanks for working on this! I played with these changes locally on
+some of our machines and they seemed reasonably functional so far and
+was happy to see dynamically adding and removing resources working.
 
+I will need to try working with the code to give it a serious
+evaluation, though. Would you consider it ready for me to try
+re-implementing soft RMIDs on it?
+
+I'm also very interested in James's opinion and what this means for
+the ongoing MPAM upstreaming.
+
+Thanks!
+-Peter
