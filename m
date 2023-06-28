@@ -1,85 +1,53 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6785F1119C
-	for <patches@lists.linux.dev>; Wed, 28 Jun 2023 22:07:55 +0000 (UTC)
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2b69f71a7easo402601fa.1
-        for <patches@lists.linux.dev>; Wed, 28 Jun 2023 15:07:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1687990073; x=1690582073;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LafiJyNgbZmNNbdJGp4ZrkLO2f20OEreitolc2Mh/lo=;
-        b=OXj6n2h9HrVbQYMFoM14lfzi6flG9VwlaUQXgRLPZhhkGRfmuPQbZdGqyIVsRkEdGe
-         XvMvvmQnlWDwAKgTDQM5nKyPnKovV84E4t2oTV8SvIcieWv3doOdU4nXnptspaaBJgfe
-         TsTQbg8S2VG1mHl6kwuptuRSQ2SeoKi6yrVrc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687990073; x=1690582073;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LafiJyNgbZmNNbdJGp4ZrkLO2f20OEreitolc2Mh/lo=;
-        b=lh429rN9S/PH1DXZohGouMX06pDzPBO/XQ3/eVsUpqQEdJNkMasJmlNB1eAnlJXPgY
-         zAwpm14atw46+7PROqySyiIRANPLCfgfHNlLV0qDNOoaxB5dVoVB/7YU4aUat0Ul8oWD
-         UT1buDWOGU+vyJKMMdFT0lIwjHF5jJ2stDnJM1JJMkx4pAIgyLCUp+5YHb+3TMtJ/Xcq
-         vrDuJ/S3G6TOJh2FcEs6uRZXVNmYOs3VUmc/X2En7Auh/dqSrbBI3BmckMjkXbZnKJW0
-         p9kCOOHE/UuQjKp7BOIlnUIO/KlCaI8m4FF62OWV3FGcVkyy+Mb6rYkpPYDtd7GnP7I2
-         f0TQ==
-X-Gm-Message-State: ABy/qLZDn3lNtekTv8Ay7mfu3W9FnxT1rE4m4MpbwA7OqzAZPEgJ0fMJ
-	8Qmu5R85EkRhOh4Qo8yMlrXcJ+UQDnM3QjYwV4KZRbCF
-X-Google-Smtp-Source: APBJJlEkCtnPNVsOOvz1RbUH9GYLXwrqWbARUGPDxaUAbGQcckNxIRuR1rWaQvA99OuMWdF/rHx4mQ==
-X-Received: by 2002:a05:6512:6d2:b0:4fb:97e8:ed8c with SMTP id u18-20020a05651206d200b004fb97e8ed8cmr549544lff.4.1687990072990;
-        Wed, 28 Jun 2023 15:07:52 -0700 (PDT)
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com. [209.85.208.177])
-        by smtp.gmail.com with ESMTPSA id p14-20020ac246ce000000b004eff1163c37sm1748995lfo.308.2023.06.28.15.07.51
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jun 2023 15:07:52 -0700 (PDT)
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2b6985de215so317511fa.2
-        for <patches@lists.linux.dev>; Wed, 28 Jun 2023 15:07:51 -0700 (PDT)
-X-Received: by 2002:aa7:c947:0:b0:51a:2c81:72ee with SMTP id
- h7-20020aa7c947000000b0051a2c8172eemr23606011edt.20.1687990050285; Wed, 28
- Jun 2023 15:07:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1B910EE
+	for <patches@lists.linux.dev>; Wed, 28 Jun 2023 23:15:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A5A0AC433C0;
+	Wed, 28 Jun 2023 23:15:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1687994145;
+	bh=jQtG4oSQAoL4fFfOh4CXrO5qW72f8Y4h+6N2u/DUTnU=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=UBN6HVyNJ0eKxeA7gCr2Tyg0GQbxiMyB03lH5xqzckkEDlK7nbOB3Vj/eqN7moo3j
+	 AAr9fmVddbpBMIOR4Z0u7qx+DG0YM7uW6fPFrF3TjiQeyIcp1jzWlfAuq3Yk5bX55d
+	 WGbI/FK5RepIGmo517wYOLsD6tp49ayItDI4MlPTajrA9Oudj6yHWZLdL8B7TnyWsV
+	 xyTRwj1wtOvSBVXR4qQ4kL80XHwgKgE0IqRQUgtfUfa3tmgehnRLh1RODpNTN8A37l
+	 q0Ycr9PH8TjzEGoWFwHuAClpNHoYHegH+5LuqyYP0VPrIFBRuCt8QOxb/86N+ifQ84
+	 3WaSltBzW8YqQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8E0A0C0C40E;
+	Wed, 28 Jun 2023 23:15:45 +0000 (UTC)
+Subject: Re: [GIT PULL] sysctl changes for v6.5-rc1
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <ZJx62RvS9TwjUUCi@bombadil.infradead.org>
+References: <ZJx62RvS9TwjUUCi@bombadil.infradead.org>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <ZJx62RvS9TwjUUCi@bombadil.infradead.org>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/v6.5-rc1-sysctl-next
+X-PR-Tracked-Commit-Id: 2f2665c13af4895b26761107c2f637c2f112d8e9
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 6a8cbd9253abc1bd0df4d60c4c24fa555190376d
+Message-Id: <168799414556.32317.4109949634442251096.pr-tracker-bot@kernel.org>
+Date: Wed, 28 Jun 2023 23:15:45 +0000
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com, j.granados@samsung.com, patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, mcgrof@kernel.org
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <ZHTCK2_1pF61yWIr@hovoldconsulting.com> <CAHk-=wg7ihygotpO9x5a6QJO5oAom9o91==L_Kx-gUHvRYuXiQ@mail.gmail.com>
- <ZHYitt7P7W+8ZlSB@bombadil.infradead.org> <499e30cc-d015-8353-1364-50d17da58f47@redhat.com>
- <ZHd8bLPY4OQCb/Z5@bombadil.infradead.org> <ba60bca6-b682-4c27-3c54-2512b6f16151@redhat.com>
- <ZHoTFDkPIgglW0sU@bombadil.infradead.org> <fa3f1a1f-edc6-f13b-cc84-f3264b03b0b1@redhat.com>
- <ZH38lpTHZ/RISC1v@bombadil.infradead.org> <ZH3/KVCHhX4D4yh9@bombadil.infradead.org>
- <ZJyBhv6yrAfYvMh5@bombadil.infradead.org> <CAHk-=wiSRTEOgiDA5qUTPGcw=Fbk9Ou2i97kfSBcj3pey3X=fQ@mail.gmail.com>
-In-Reply-To: <CAHk-=wiSRTEOgiDA5qUTPGcw=Fbk9Ou2i97kfSBcj3pey3X=fQ@mail.gmail.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 28 Jun 2023 15:07:12 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgPz4Fj9M_h7sRSHAK9QeJiTFaYMWX3fDyZ-Bj41HftmA@mail.gmail.com>
-Message-ID: <CAHk-=wgPz4Fj9M_h7sRSHAK9QeJiTFaYMWX3fDyZ-Bj41HftmA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>, song@kernel.org, Johan Hovold <johan@kernel.org>, 
-	Lucas De Marchi <lucas.demarchi@intel.com>, Petr Pavlu <petr.pavlu@suse.com>, 
-	gregkh@linuxfoundation.org, rafael@kernel.org, lucas.de.marchi@gmail.com, 
-	christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org, 
-	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz, mhocko@suse.com, 
-	dave.hansen@linux.intel.com, colin.i.king@gmail.com, jim.cromie@gmail.com, 
-	catalin.marinas@arm.com, jbaron@akamai.com, rick.p.edgecombe@intel.com, 
-	yujie.liu@intel.com, tglx@linutronix.de, hch@lst.de, patches@lists.linux.dev, 
-	linux-modules@vger.kernel.org, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com, 
-	lennart@poettering.net
-Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 28 Jun 2023 at 13:14, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> In other areas, I may send out patches, but I don't feel like I'm a
-> maintainer, so I then think that "the real maintainer can decide if
-> these patches are good or not".
+The pull request you sent on Wed, 28 Jun 2023 11:24:25 -0700:
 
-Anyway, since I clearly didn't communicate clearly that I was throwing
-the patch over to you, let me go and find it and just apply it myself.
+> git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/v6.5-rc1-sysctl-next
 
-           Linus
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/6a8cbd9253abc1bd0df4d60c4c24fa555190376d
+
+Thank you!
+
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
