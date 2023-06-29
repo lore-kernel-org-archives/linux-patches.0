@@ -1,91 +1,236 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7FE134C6
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CB1C433C0;
-	Thu, 29 Jun 2023 18:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9355C134C6
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0556C433C0;
+	Thu, 29 Jun 2023 18:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064534;
-	bh=4NvKQeRYA1WfxzHUitway+95HOYw1Z7kO+UNKSXrfjk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u28eKUFepvzgzGlnOEKMec5+aSA1vsm649nN6evvBvQy503hqLyhHw3yYEU4E7H+O
-	 frdqcdWGSnWCHllsnhJVcTo5PFhb9DD1vdGycyxAmfukIB2gpPpI+SjjwB90cEPeD9
-	 XmC9COhJIvqFGIL9F7S77m2A6zzAycxQ3+w98CFM=
+	s=korg; t=1688064537;
+	bh=ZfTLEH6IjyRqkwQp/uGdkTaLb9wo3gFLL56KATPt0pU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=gLkWbuBU/g0Xy9wl5ZpzKztYTQUK5j55MsdRgFtUaWtRQ9D8iW0rLhSIG19Lt2KT5
+	 Xe5CNtMX9N1owHxM9yUvULG0ppYBPj7/2Slfx+CPY25g8buK+FAKEoemYWbtU076/T
+	 zXNDpOHcQ8sD3SOcSs0JAClLmLrrNa77NLSxNBB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 09/28] maple_tree: fix potential out-of-bounds access in mas_wr_end_piv()
-Date: Thu, 29 Jun 2023 20:43:57 +0200
-Message-ID: <20230629184152.256585483@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 6.4 00/28] 6.4.1-rc1 review
+Date: Thu, 29 Jun 2023 20:43:48 +0200
+Message-ID: <20230629184151.888604958@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230629184151.888604958@linuxfoundation.org>
-References: <20230629184151.888604958@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.1-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.4.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.4.1-rc1
+X-KernelTest-Deadline: 2023-07-01T18:41+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Zhang <zhangpeng.00@bytedance.com>
+This is the start of the stable review cycle for the 6.4.1 release.
+There are 28 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit cd00dd2585c4158e81fdfac0bbcc0446afbad26d upstream.
+Responses should be made by Sat, 01 Jul 2023 18:41:39 +0000.
+Anything received after that time might be too late.
 
-Check the write offset end bounds before using it as the offset into the
-pivot array.  This avoids a possible out-of-bounds access on the pivot
-array if the write extends to the last slot in the node, in which case the
-node maximum should be used as the end pivot.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.1-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+and the diffstat can be found below.
 
-akpm: this doesn't affect any current callers, but new users of mapletree
-may encounter this problem if backported into earlier kernels, so let's
-fix it in -stable kernels in case of this.
+thanks,
 
-Link: https://lkml.kernel.org/r/20230506024752.2550-1-zhangpeng.00@bytedance.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Peng Zhang <zhangpeng.00@bytedance.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- lib/maple_tree.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+greg k-h
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -4263,11 +4263,13 @@ done:
- 
- static inline void mas_wr_end_piv(struct ma_wr_state *wr_mas)
- {
--	while ((wr_mas->mas->last > wr_mas->end_piv) &&
--	       (wr_mas->offset_end < wr_mas->node_end))
--		wr_mas->end_piv = wr_mas->pivots[++wr_mas->offset_end];
-+	while ((wr_mas->offset_end < wr_mas->node_end) &&
-+	       (wr_mas->mas->last > wr_mas->pivots[wr_mas->offset_end]))
-+		wr_mas->offset_end++;
- 
--	if (wr_mas->mas->last > wr_mas->end_piv)
-+	if (wr_mas->offset_end < wr_mas->node_end)
-+		wr_mas->end_piv = wr_mas->pivots[wr_mas->offset_end];
-+	else
- 		wr_mas->end_piv = wr_mas->mas->max;
- }
- 
-@@ -4424,7 +4426,6 @@ static inline void *mas_wr_store_entry(s
- 	}
- 
- 	/* At this point, we are at the leaf node that needs to be altered. */
--	wr_mas->end_piv = wr_mas->r_max;
- 	mas_wr_end_piv(wr_mas);
- 
- 	if (!wr_mas->entry)
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.4.1-rc1
+
+Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+    Revert "thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe"
+
+Mike Hommey <mh@glandium.org>
+    HID: logitech-hidpp: add HIDPP_QUIRK_DELAYED_INIT for the T651.
+
+Ludvig Michaelsson <ludvig.michaelsson@yubico.com>
+    HID: hidraw: fix data race on device refcount
+
+Zhang Shurong <zhang_shurong@foxmail.com>
+    fbdev: fix potential OOB read in fast_imageblit()
+
+Hugh Dickins <hughd@google.com>
+    mm/khugepaged: fix regression in collapse_file()
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    gup: add warning if some caller would seem to want stack expansion
+
+Jason Gerecke <jason.gerecke@wacom.com>
+    HID: wacom: Use ktime_t rather than int when dealing with timestamps
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    mm: always expand the stack with the mmap write lock held
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    execve: expand new process stack manually ahead of time
+
+Liam R. Howlett <Liam.Howlett@oracle.com>
+    mm: make find_extend_vma() fail if write lock not held
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    powerpc/mm: convert coprocessor fault to lock_mm_and_find_vma()
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    mm/fault: convert remaining simple cases to lock_mm_and_find_vma()
+
+Ben Hutchings <ben@decadent.org.uk>
+    arm/mm: Convert to using lock_mm_and_find_vma()
+
+Ben Hutchings <ben@decadent.org.uk>
+    riscv/mm: Convert to using lock_mm_and_find_vma()
+
+Ben Hutchings <ben@decadent.org.uk>
+    mips/mm: Convert to using lock_mm_and_find_vma()
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/mm: Convert to using lock_mm_and_find_vma()
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    arm64/mm: Convert to using lock_mm_and_find_vma()
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    mm: make the page fault mmap locking killable
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    mm: introduce new 'lock_mm_and_find_vma()' page fault helper
+
+Peng Zhang <zhangpeng.00@bytedance.com>
+    maple_tree: fix potential out-of-bounds access in mas_wr_end_piv()
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: isotp: isotp_sendmsg(): fix return error fix on TX path
+
+Wyes Karny <wyes.karny@amd.com>
+    cpufreq: amd-pstate: Make amd-pstate EPP driver name hyphenated
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/smp: Cure kexec() vs. mwait_play_dead() breakage
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/smp: Use dedicated cache-line for mwait_play_dead()
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/smp: Remove pointless wmb()s from native_stop_other_cpus()
+
+Tony Battersby <tonyb@cybernetics.com>
+    x86/smp: Dont access non-existing CPUID leaf
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/smp: Make stop_other_cpus() more robust
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/microcode/AMD: Load late on both threads too
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                  |   4 +-
+ arch/alpha/Kconfig                        |   1 +
+ arch/alpha/mm/fault.c                     |  13 +--
+ arch/arc/Kconfig                          |   1 +
+ arch/arc/mm/fault.c                       |  11 +--
+ arch/arm/Kconfig                          |   1 +
+ arch/arm/mm/fault.c                       |  63 ++++-----------
+ arch/arm64/Kconfig                        |   1 +
+ arch/arm64/mm/fault.c                     |  47 ++---------
+ arch/csky/Kconfig                         |   1 +
+ arch/csky/mm/fault.c                      |  22 ++----
+ arch/hexagon/Kconfig                      |   1 +
+ arch/hexagon/mm/vm_fault.c                |  18 +----
+ arch/ia64/mm/fault.c                      |  36 ++-------
+ arch/loongarch/Kconfig                    |   1 +
+ arch/loongarch/mm/fault.c                 |  16 ++--
+ arch/m68k/mm/fault.c                      |   9 ++-
+ arch/microblaze/mm/fault.c                |   5 +-
+ arch/mips/Kconfig                         |   1 +
+ arch/mips/mm/fault.c                      |  12 +--
+ arch/nios2/Kconfig                        |   1 +
+ arch/nios2/mm/fault.c                     |  17 +---
+ arch/openrisc/mm/fault.c                  |   5 +-
+ arch/parisc/mm/fault.c                    |  23 +++---
+ arch/powerpc/Kconfig                      |   1 +
+ arch/powerpc/mm/copro_fault.c             |  14 +---
+ arch/powerpc/mm/fault.c                   |  39 +--------
+ arch/riscv/Kconfig                        |   1 +
+ arch/riscv/mm/fault.c                     |  31 +++-----
+ arch/s390/mm/fault.c                      |   5 +-
+ arch/sh/Kconfig                           |   1 +
+ arch/sh/mm/fault.c                        |  17 +---
+ arch/sparc/Kconfig                        |   1 +
+ arch/sparc/mm/fault_32.c                  |  32 ++------
+ arch/sparc/mm/fault_64.c                  |   8 +-
+ arch/um/kernel/trap.c                     |  11 +--
+ arch/x86/Kconfig                          |   1 +
+ arch/x86/include/asm/cpu.h                |   2 +
+ arch/x86/include/asm/smp.h                |   2 +
+ arch/x86/kernel/cpu/microcode/amd.c       |   2 +-
+ arch/x86/kernel/process.c                 |  28 ++++++-
+ arch/x86/kernel/smp.c                     |  73 ++++++++++-------
+ arch/x86/kernel/smpboot.c                 |  81 ++++++++++++++++---
+ arch/x86/mm/fault.c                       |  52 +-----------
+ arch/xtensa/Kconfig                       |   1 +
+ arch/xtensa/mm/fault.c                    |  14 +---
+ drivers/cpufreq/amd-pstate.c              |   2 +-
+ drivers/hid/hid-logitech-hidpp.c          |   2 +-
+ drivers/hid/hidraw.c                      |   9 ++-
+ drivers/hid/wacom_wac.c                   |   6 +-
+ drivers/hid/wacom_wac.h                   |   2 +-
+ drivers/iommu/amd/iommu_v2.c              |   4 +-
+ drivers/iommu/iommu-sva.c                 |   2 +-
+ drivers/thermal/mediatek/auxadc_thermal.c |  14 +---
+ drivers/video/fbdev/core/sysimgblt.c      |   2 +-
+ fs/binfmt_elf.c                           |   6 +-
+ fs/exec.c                                 |  38 +++++----
+ include/linux/mm.h                        |  16 ++--
+ lib/maple_tree.c                          |  11 +--
+ mm/Kconfig                                |   4 +
+ mm/gup.c                                  |  14 +++-
+ mm/khugepaged.c                           |   7 +-
+ mm/memory.c                               | 127 ++++++++++++++++++++++++++++++
+ mm/mmap.c                                 | 121 ++++++++++++++++++++++++----
+ mm/nommu.c                                |  17 ++--
+ net/can/isotp.c                           |   5 +-
+ 66 files changed, 605 insertions(+), 531 deletions(-)
 
 
