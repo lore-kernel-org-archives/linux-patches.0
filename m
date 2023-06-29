@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF4A12B7C
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:46:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B468EC433C0;
-	Thu, 29 Jun 2023 18:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ADD12B7C
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:46:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AEB2C433C0;
+	Thu, 29 Jun 2023 18:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064416;
-	bh=Rqn+tf1KvsjMspe8JE1sSAvChCRRPOEzwcoTKygBHLg=;
+	s=korg; t=1688064418;
+	bh=6M0ceHhK6SMdTkt5fWpVW5EomiEFxUY/oCA/cK1gMcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rdKc17xtL+35hpTyHyTP37mG5F7gUAeRbQGafyBCNhsPhYttc+VcmCq0vVwxuXhMT
-	 MwvBEea2N7Dxe9RTGgosW9X6gD8pHdNq9R2H4pZLOAcUepkyKFyoeJfZMZYPWwl7p9
-	 uiHApdaf4IZyvkUMULZUvIcRnYyaQEq2ahDvoIjY=
+	b=j92a4MeKBhUmysqJH3MGvmsnIwWPdpe4p7huQ8xezSnud3nva9pFMbtrIGc1dgn/a
+	 hMEC0lc70W+jJa6geeG9x4woYtYA3pnha1vaSoAYTl1BjyFgj0n9yakItNDWaS2R9T
+	 mPuFRPvn2nh3h8RrBSSa16Cfbn6r+wQFuaLU+Dh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.3 24/29] gup: add warning if some caller would seem to want stack expansion
-Date: Thu, 29 Jun 2023 20:43:54 +0200
-Message-ID: <20230629184152.709052253@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.3 03/29] x86/microcode/AMD: Load late on both threads too
+Date: Thu, 29 Jun 2023 20:43:33 +0200
+Message-ID: <20230629184151.864698065@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.705870770@linuxfoundation.org>
 References: <20230629184151.705870770@linuxfoundation.org>
@@ -33,59 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit a425ac5365f6cb3cc47bf83e6bff0213c10445f7 upstream.
+commit a32b0f0db3f396f1c9be2fe621e77c09ec3d8e7d upstream.
 
-It feels very unlikely that anybody would want to do a GUP in an
-unmapped area under the stack pointer, but real users sometimes do some
-really strange things.  So add a (temporary) warning for the case where
-a GUP fails and expanding the stack might have made it work.
+Do the same as early loading - load on both threads.
 
-It's trivial to do the expansion in the caller as part of getting the mm
-lock in the first place - see __access_remote_vm() for ptrace, for
-example - it's just that it's unnecessarily painful to do it deep in the
-guts of the GUP lookup when we might have to drop and re-take the lock.
-
-I doubt anybody actually does anything quite this strange, but let's be
-proactive: adding these warnings is simple, and will make debugging it
-much easier if they trigger.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230605141332.25948-1-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1096,7 +1096,11 @@ static long __get_user_pages(struct mm_s
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -705,7 +705,7 @@ static enum ucode_state apply_microcode_
+ 	rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
  
- 		/* first iteration or cross vma bound */
- 		if (!vma || start >= vma->vm_end) {
--			vma = vma_lookup(mm, start);
-+			vma = find_vma(mm, start);
-+			if (vma && (start < vma->vm_start)) {
-+				WARN_ON_ONCE(vma->vm_flags & VM_GROWSDOWN);
-+				vma = NULL;
-+			}
- 			if (!vma && in_gate_area(mm, start)) {
- 				ret = get_gate_page(mm, start & PAGE_MASK,
- 						gup_flags, &vma,
-@@ -1265,9 +1269,13 @@ int fixup_user_fault(struct mm_struct *m
- 		fault_flags |= FAULT_FLAG_ALLOW_RETRY | FAULT_FLAG_KILLABLE;
- 
- retry:
--	vma = vma_lookup(mm, address);
-+	vma = find_vma(mm, address);
- 	if (!vma)
- 		return -EFAULT;
-+	if (address < vma->vm_start ) {
-+		WARN_ON_ONCE(vma->vm_flags & VM_GROWSDOWN);
-+		return -EFAULT;
-+	}
- 
- 	if (!vma_permits_fault(vma, fault_flags))
- 		return -EFAULT;
+ 	/* need to apply patch? */
+-	if (rev >= mc_amd->hdr.patch_id) {
++	if (rev > mc_amd->hdr.patch_id) {
+ 		ret = UCODE_OK;
+ 		goto out;
+ 	}
 
 
