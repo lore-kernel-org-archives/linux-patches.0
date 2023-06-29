@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2207DF9ED
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:47:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D20C433C8;
-	Thu, 29 Jun 2023 18:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF155F9ED
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:47:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C66C433C9;
+	Thu, 29 Jun 2023 18:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064474;
-	bh=TBVHtEbZ/W3SWtyrUpP2/O3hikomBNNCo2pC8QHy0RE=;
+	s=korg; t=1688064476;
+	bh=paPZ35gR6SjrhYO7UNkzGmAJ8x/CYm9ksGOz0uXLiOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y6O2Kb2rNQ6d/7C18KxPf8swwQ3PQvCvnmqg/ND3wv0M3EpyLeKlo+k8EEiu/6rx4
-	 h56JGWhLuW23VVZ/tA44KoMQtEW37D2R4G2fNuDa0M4cYV0IlPFXE4J0OS4Gwv/A39
-	 h/45SfcQT3Et/syZJ9R5CDHNCfP1ggOrgkIflVIc=
+	b=K2WsOSFVrW5xcDSywGOXtC8Y8Rbt7wLPzUL97/tXwIwYGRBAn7WS67jrqTnLfpMTm
+	 BkUSwDtWUyExszJfN3NXAXeVVc4NnZHXLpDiqhKlzNAIclhgEWpKipRK6xXOqUXwOR
+	 0UM7nXGZ5yX8VsIn/CqZLBBMt1+8rYrCkGkUYhro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ben Hutchings <ben@decadent.org.uk>,
 	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.4 15/28] riscv/mm: Convert to using lock_mm_and_find_vma()
-Date: Thu, 29 Jun 2023 20:44:03 +0200
-Message-ID: <20230629184152.490497192@linuxfoundation.org>
+Subject: [PATCH 6.4 16/28] arm/mm: Convert to using lock_mm_and_find_vma()
+Date: Thu, 29 Jun 2023 20:44:04 +0200
+Message-ID: <20230629184152.539078552@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.888604958@linuxfoundation.org>
 References: <20230629184151.888604958@linuxfoundation.org>
@@ -36,93 +36,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Ben Hutchings <ben@decadent.org.uk>
 
-commit 7267ef7b0b77f4ed23b7b3c87d8eca7bd9c2d007 upstream.
+commit 8b35ca3e45e35a26a21427f35d4093606e93ad0a upstream.
+
+arm has an additional check for address < FIRST_USER_ADDRESS before
+expanding the stack.  Since FIRST_USER_ADDRESS is defined everywhere
+(generally as 0), move that check to the generic expand_downwards().
 
 Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig    |    1 +
- arch/riscv/mm/fault.c |   31 +++++++++++++------------------
- 2 files changed, 14 insertions(+), 18 deletions(-)
+ arch/arm/Kconfig    |    1 
+ arch/arm/mm/fault.c |   63 +++++++++++-----------------------------------------
+ mm/mmap.c           |    2 -
+ 3 files changed, 16 insertions(+), 50 deletions(-)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -126,6 +126,7 @@ config RISCV
- 	select IRQ_DOMAIN
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -125,6 +125,7 @@ config ARM
+ 	select HAVE_UID16
+ 	select HAVE_VIRT_CPU_ACCOUNTING_GEN
  	select IRQ_FORCED_THREADING
- 	select KASAN_VMALLOC if KASAN
 +	select LOCK_MM_AND_FIND_VMA
- 	select MODULES_USE_ELF_RELA if MODULES
- 	select MODULE_SECTIONS if MODULES
- 	select OF
---- a/arch/riscv/mm/fault.c
-+++ b/arch/riscv/mm/fault.c
-@@ -84,13 +84,13 @@ static inline void mm_fault_error(struct
- 	BUG();
+ 	select MODULES_USE_ELF_REL
+ 	select NEED_DMA_MAP_STATE
+ 	select OF_EARLY_FLATTREE if OF
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -232,37 +232,11 @@ static inline bool is_permission_fault(u
+ 	return false;
  }
  
--static inline void bad_area(struct pt_regs *regs, struct mm_struct *mm, int code, unsigned long addr)
-+static inline void
-+bad_area_nosemaphore(struct pt_regs *regs, int code, unsigned long addr)
+-static vm_fault_t __kprobes
+-__do_page_fault(struct mm_struct *mm, unsigned long addr, unsigned int flags,
+-		unsigned long vma_flags, struct pt_regs *regs)
+-{
+-	struct vm_area_struct *vma = find_vma(mm, addr);
+-	if (unlikely(!vma))
+-		return VM_FAULT_BADMAP;
+-
+-	if (unlikely(vma->vm_start > addr)) {
+-		if (!(vma->vm_flags & VM_GROWSDOWN))
+-			return VM_FAULT_BADMAP;
+-		if (addr < FIRST_USER_ADDRESS)
+-			return VM_FAULT_BADMAP;
+-		if (expand_stack(vma, addr))
+-			return VM_FAULT_BADMAP;
+-	}
+-
+-	/*
+-	 * ok, we have a good vm_area for this memory access, check the
+-	 * permissions on the VMA allow for the fault which occurred.
+-	 */
+-	if (!(vma->vm_flags & vma_flags))
+-		return VM_FAULT_BADACCESS;
+-
+-	return handle_mm_fault(vma, addr & PAGE_MASK, flags, regs);
+-}
+-
+ static int __kprobes
+ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
  {
- 	/*
- 	 * Something tried to access memory that isn't in our memory map.
- 	 * Fix it, but check if it's kernel or user first.
- 	 */
--	mmap_read_unlock(mm);
- 	/* User mode accesses just cause a SIGSEGV */
- 	if (user_mode(regs)) {
- 		do_trap(regs, SIGSEGV, code, addr);
-@@ -100,6 +100,15 @@ static inline void bad_area(struct pt_re
- 	no_context(regs, addr);
- }
+ 	struct mm_struct *mm = current->mm;
++	struct vm_area_struct *vma;
+ 	int sig, code;
+ 	vm_fault_t fault;
+ 	unsigned int flags = FAULT_FLAG_DEFAULT;
+@@ -301,31 +275,21 @@ do_page_fault(unsigned long addr, unsign
  
-+static inline void
-+bad_area(struct pt_regs *regs, struct mm_struct *mm, int code,
-+	 unsigned long addr)
-+{
-+	mmap_read_unlock(mm);
-+
-+	bad_area_nosemaphore(regs, code, addr);
-+}
-+
- static inline void vmalloc_fault(struct pt_regs *regs, int code, unsigned long addr)
- {
- 	pgd_t *pgd, *pgd_k;
-@@ -287,23 +296,10 @@ void handle_page_fault(struct pt_regs *r
- 	else if (cause == EXC_INST_PAGE_FAULT)
- 		flags |= FAULT_FLAG_INSTRUCTION;
+ 	perf_sw_event(PERF_COUNT_SW_PAGE_FAULTS, 1, regs, addr);
+ 
+-	/*
+-	 * As per x86, we may deadlock here.  However, since the kernel only
+-	 * validly references user space from well defined areas of the code,
+-	 * we can bug out early if this is from code which shouldn't.
+-	 */
+-	if (!mmap_read_trylock(mm)) {
+-		if (!user_mode(regs) && !search_exception_tables(regs->ARM_pc))
+-			goto no_context;
  retry:
--	mmap_read_lock(mm);
--	vma = find_vma(mm, addr);
+-		mmap_read_lock(mm);
+-	} else {
+-		/*
+-		 * The above down_read_trylock() might have succeeded in
+-		 * which case, we'll have missed the might_sleep() from
+-		 * down_read()
+-		 */
+-		might_sleep();
+-#ifdef CONFIG_DEBUG_VM
+-		if (!user_mode(regs) &&
+-		    !search_exception_tables(regs->ARM_pc))
+-			goto no_context;
+-#endif
 +	vma = lock_mm_and_find_vma(mm, addr, regs);
- 	if (unlikely(!vma)) {
- 		tsk->thread.bad_cause = cause;
--		bad_area(regs, mm, code, addr);
--		return;
--	}
--	if (likely(vma->vm_start <= addr))
--		goto good_area;
--	if (unlikely(!(vma->vm_flags & VM_GROWSDOWN))) {
--		tsk->thread.bad_cause = cause;
--		bad_area(regs, mm, code, addr);
--		return;
--	}
--	if (unlikely(expand_stack(vma, addr))) {
--		tsk->thread.bad_cause = cause;
--		bad_area(regs, mm, code, addr);
-+		bad_area_nosemaphore(regs, code, addr);
- 		return;
++	if (unlikely(!vma)) {
++		fault = VM_FAULT_BADMAP;
++		goto bad_area;
  	}
  
-@@ -311,7 +307,6 @@ retry:
- 	 * Ok, we have a good vm_area for this memory access, so
- 	 * we can handle it.
- 	 */
--good_area:
- 	code = SEGV_ACCERR;
+-	fault = __do_page_fault(mm, addr, flags, vm_flags, regs);
++	/*
++	 * ok, we have a good vm_area for this memory access, check the
++	 * permissions on the VMA allow for the fault which occurred.
++	 */
++	if (!(vma->vm_flags & vm_flags))
++		fault = VM_FAULT_BADACCESS;
++	else
++		fault = handle_mm_fault(vma, addr & PAGE_MASK, flags, regs);
  
- 	if (unlikely(access_error(cause, vma))) {
+ 	/* If we need to retry but a fatal signal is pending, handle the
+ 	 * signal first. We do not need to release the mmap_lock because
+@@ -356,6 +320,7 @@ retry:
+ 	if (likely(!(fault & (VM_FAULT_ERROR | VM_FAULT_BADMAP | VM_FAULT_BADACCESS))))
+ 		return 0;
+ 
++bad_area:
+ 	/*
+ 	 * If we are in kernel mode at this point, we
+ 	 * have no context to handle this fault with.
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -2036,7 +2036,7 @@ int expand_downwards(struct vm_area_stru
+ 	int error = 0;
+ 
+ 	address &= PAGE_MASK;
+-	if (address < mmap_min_addr)
++	if (address < mmap_min_addr || address < FIRST_USER_ADDRESS)
+ 		return -EPERM;
+ 
+ 	/* Enforce stack_guard_gap */
 
 
