@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1869E134A5
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC16C433C9;
-	Thu, 29 Jun 2023 18:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5B114284
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:47:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CC4C433C8;
+	Thu, 29 Jun 2023 18:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064452;
-	bh=jGuwhosPqR+8otm7NNUjp6JfVxgUTuY+fcRDuzgsDJY=;
+	s=korg; t=1688064456;
+	bh=6M0ceHhK6SMdTkt5fWpVW5EomiEFxUY/oCA/cK1gMcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrnfFL3mBHnfEr1cfGgnACLO3KQxMf6oyOJPATBmYdw/8Qs/qesbszOhQCtyEGL6t
-	 tCaJBcyPTwfCIUkbbqy0T2JhSUlQf7I4B5fCV/h/jcY3tNz2AYuxrjK7pr9Rjq7zuA
-	 SiRqMtQ3oYh8Gjpr6lqlBD6Fs++UKbyl/EN19lUs=
+	b=2KfL5d8HVL+WgGkbGKxS4UZb7AMij8hTNtPzbQd9EvyTQtUf3IthWEn2F1ad8S7qf
+	 OHU51E3qf8fXt1GX5IGVVJOiEGAx5GnmbF42sSuMeYsibWdbiZYjK3zMsbCJWU6zzR
+	 8o1fhSmJN68+BT6lLjo+b2BoxRzbiuTTQEnJbXC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.3 25/29] fbdev: fix potential OOB read in fast_imageblit()
-Date: Thu, 29 Jun 2023 20:43:55 +0200
-Message-ID: <20230629184152.738910643@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.4 01/28] x86/microcode/AMD: Load late on both threads too
+Date: Thu, 29 Jun 2023 20:43:49 +0200
+Message-ID: <20230629184151.956223957@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230629184151.705870770@linuxfoundation.org>
-References: <20230629184151.705870770@linuxfoundation.org>
+In-Reply-To: <20230629184151.888604958@linuxfoundation.org>
+References: <20230629184151.888604958@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,40 +36,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit c2d22806aecb24e2de55c30a06e5d6eb297d161d upstream.
+commit a32b0f0db3f396f1c9be2fe621e77c09ec3d8e7d upstream.
 
-There is a potential OOB read at fast_imageblit, for
-"colortab[(*src >> 4)]" can become a negative value due to
-"const char *s = image->data, *src".
-This change makes sure the index for colortab always positive
-or zero.
+Do the same as early loading - load on both threads.
 
-Similar commit:
-https://patchwork.kernel.org/patch/11746067
-
-Potential bug report:
-https://groups.google.com/g/syzkaller-bugs/c/9ubBXKeKXf4/m/k-QXy4UgAAAJ
-
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230605141332.25948-1-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/sysimgblt.c |    2 +-
+ arch/x86/kernel/cpu/microcode/amd.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/sysimgblt.c
-+++ b/drivers/video/fbdev/core/sysimgblt.c
-@@ -189,7 +189,7 @@ static void fast_imageblit(const struct
- 	u32 fgx = fgcolor, bgx = bgcolor, bpp = p->var.bits_per_pixel;
- 	u32 ppw = 32/bpp, spitch = (image->width + 7)/8;
- 	u32 bit_mask, eorx, shift;
--	const char *s = image->data, *src;
-+	const u8 *s = image->data, *src;
- 	u32 *dst;
- 	const u32 *tab;
- 	size_t tablen;
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -705,7 +705,7 @@ static enum ucode_state apply_microcode_
+ 	rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+ 
+ 	/* need to apply patch? */
+-	if (rev >= mc_amd->hdr.patch_id) {
++	if (rev > mc_amd->hdr.patch_id) {
+ 		ret = UCODE_OK;
+ 		goto out;
+ 	}
 
 
