@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E197E14267
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:44:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B451C433C0;
-	Thu, 29 Jun 2023 18:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCA014267
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:44:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59999C433C8;
+	Thu, 29 Jun 2023 18:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064293;
-	bh=cX3Af1i+c9IHNdRmBFmi7FD/Gm1J/o5DXw2VaQT9qIM=;
+	s=korg; t=1688064296;
+	bh=ftY2B0Lm3XkRVDXFZ36sxKwa9zZmnhLED56S4O4Wg8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2AZB/IIj9XHf41OH87NUyw77eqkq2zeDUUDptMp0+xTL9tkZ57gvicxdy2AiFxnx
-	 i2MMRQ9JY+sinG90RDRklEBunIAT8qqFGe+uhiu5pVxReS3coV3f95VavXp0k6hRUK
-	 gQ+d8W7openJEiZ5uQUIUuM7j09Mrlq2EKxRDhiA=
+	b=JCL8D30L7k31oD3lTFMRVnhQvoc/wzPOeSiJCYNQhWRB4nlrGzb1dldVs3k1xSuQe
+	 ikHPaIC0AQQrdWHO4Qm0HhKGjPgFa/CTf4pbu8eL4aFapnDCRJRB+RLebdGyPQrOck
+	 GQhnyAWqnfUtvNl/PMO4qgtkCWwcGBWF2ScRgmpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Samuel Mendoza-Jonas <samjonas@amazon.com>,
-	David Woodhouse <dwmw@amazon.co.uk>
-Subject: [PATCH 6.1 15/30] mm: make the page fault mmap locking killable
-Date: Thu, 29 Jun 2023 20:43:34 +0200
-Message-ID: <20230629184152.278785439@linuxfoundation.org>
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Liam R . Howlett" <Liam.Howlett@oracle.com>
+Subject: [PATCH 6.1 16/30] arm64/mm: Convert to using lock_mm_and_find_vma()
+Date: Thu, 29 Jun 2023 20:43:35 +0200
+Message-ID: <20230629184152.325743401@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.651069086@linuxfoundation.org>
 References: <20230629184151.651069086@linuxfoundation.org>
@@ -37,46 +39,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit eda0047296a16d65a7f2bc60a408f70d178b2014 upstream.
+commit ae870a68b5d13d67cf4f18d47bb01ee3fee40acb upstream.
 
-This is done as a separate patch from introducing the new
-lock_mm_and_find_vma() helper, because while it's an obvious change,
-it's not what x86 used to do in this area.
+This converts arm64 to use the new page fault helper.  It was very
+straightforward, but still needed a fix for the "obvious" conversion I
+initially did.  Thanks to Suren for the fix and testing.
 
-We already abort the page fault on fatal signals anyway, so why should
-we wait for the mmap lock only to then abort later? With the new helper
-function that returns without the lock held on failure anyway, this is
-particularly easy and straightforward.
-
+Fixed-and-tested-by: Suren Baghdasaryan <surenb@google.com>
+Unnecessary-code-removal-by: Liam R. Howlett <Liam.Howlett@oracle.com>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+[6.1: Ignore CONFIG_PER_VMA_LOCK context]
 Signed-off-by: Samuel Mendoza-Jonas <samjonas@amazon.com>
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/arm64/Kconfig    |    1 +
+ arch/arm64/mm/fault.c |   46 +++++++++-------------------------------------
+ 2 files changed, 10 insertions(+), 37 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -5275,8 +5275,7 @@ static inline bool get_mmap_lock_careful
- 			return false;
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -211,6 +211,7 @@ config ARM64
+ 	select IRQ_DOMAIN
+ 	select IRQ_FORCED_THREADING
+ 	select KASAN_VMALLOC if KASAN
++	select LOCK_MM_AND_FIND_VMA
+ 	select MODULES_USE_ELF_RELA
+ 	select NEED_DMA_MAP_STATE
+ 	select NEED_SG_DMA_LENGTH
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -483,27 +483,14 @@ static void do_bad_area(unsigned long fa
+ #define VM_FAULT_BADMAP		((__force vm_fault_t)0x010000)
+ #define VM_FAULT_BADACCESS	((__force vm_fault_t)0x020000)
+ 
+-static vm_fault_t __do_page_fault(struct mm_struct *mm, unsigned long addr,
++static vm_fault_t __do_page_fault(struct mm_struct *mm,
++				  struct vm_area_struct *vma, unsigned long addr,
+ 				  unsigned int mm_flags, unsigned long vm_flags,
+ 				  struct pt_regs *regs)
+ {
+-	struct vm_area_struct *vma = find_vma(mm, addr);
+-
+-	if (unlikely(!vma))
+-		return VM_FAULT_BADMAP;
+-
+ 	/*
+ 	 * Ok, we have a good vm_area for this memory access, so we can handle
+ 	 * it.
+-	 */
+-	if (unlikely(vma->vm_start > addr)) {
+-		if (!(vma->vm_flags & VM_GROWSDOWN))
+-			return VM_FAULT_BADMAP;
+-		if (expand_stack(vma, addr))
+-			return VM_FAULT_BADMAP;
+-	}
+-
+-	/*
+ 	 * Check that the permissions on the VMA allow for the fault which
+ 	 * occurred.
+ 	 */
+@@ -535,6 +522,7 @@ static int __kprobes do_page_fault(unsig
+ 	unsigned long vm_flags;
+ 	unsigned int mm_flags = FAULT_FLAG_DEFAULT;
+ 	unsigned long addr = untagged_addr(far);
++	struct vm_area_struct *vma;
+ 
+ 	if (kprobe_page_fault(regs, esr))
+ 		return 0;
+@@ -585,31 +573,14 @@ static int __kprobes do_page_fault(unsig
+ 
+ 	perf_sw_event(PERF_COUNT_SW_PAGE_FAULTS, 1, regs, addr);
+ 
+-	/*
+-	 * As per x86, we may deadlock here. However, since the kernel only
+-	 * validly references user space from well defined areas of the code,
+-	 * we can bug out early if this is from code which shouldn't.
+-	 */
+-	if (!mmap_read_trylock(mm)) {
+-		if (!user_mode(regs) && !search_exception_tables(regs->pc))
+-			goto no_context;
+ retry:
+-		mmap_read_lock(mm);
+-	} else {
+-		/*
+-		 * The above mmap_read_trylock() might have succeeded in which
+-		 * case, we'll have missed the might_sleep() from down_read().
+-		 */
+-		might_sleep();
+-#ifdef CONFIG_DEBUG_VM
+-		if (!user_mode(regs) && !search_exception_tables(regs->pc)) {
+-			mmap_read_unlock(mm);
+-			goto no_context;
+-		}
+-#endif
++	vma = lock_mm_and_find_vma(mm, addr, regs);
++	if (unlikely(!vma)) {
++		fault = VM_FAULT_BADMAP;
++		goto done;
  	}
  
--	mmap_read_lock(mm);
--	return true;
-+	return !mmap_read_lock_killable(mm);
- }
+-	fault = __do_page_fault(mm, addr, mm_flags, vm_flags, regs);
++	fault = __do_page_fault(mm, vma, addr, mm_flags, vm_flags, regs);
  
- static inline bool mmap_upgrade_trylock(struct mm_struct *mm)
-@@ -5300,8 +5299,7 @@ static inline bool upgrade_mmap_lock_car
- 		if (!search_exception_tables(ip))
- 			return false;
+ 	/* Quick path to respond to signals */
+ 	if (fault_signal_pending(fault, regs)) {
+@@ -628,6 +599,7 @@ retry:
  	}
--	mmap_write_lock(mm);
--	return true;
-+	return !mmap_write_lock_killable(mm);
- }
+ 	mmap_read_unlock(mm);
  
- /*
++done:
+ 	/*
+ 	 * Handle the "normal" (no error) case first.
+ 	 */
 
 
