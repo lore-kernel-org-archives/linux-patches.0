@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAC3134C6
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F9DC433C0;
-	Thu, 29 Jun 2023 18:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFE2134C6
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01747C433C8;
+	Thu, 29 Jun 2023 18:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064498;
-	bh=u8kq7XpHg+QojxXK4JsUWNoBh1GBdmXfSwRG+qMdz1s=;
+	s=korg; t=1688064501;
+	bh=Rqn+tf1KvsjMspe8JE1sSAvChCRRPOEzwcoTKygBHLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKUL5Gu1G7WQ6DfFv4Mj8j8hTXh7r/4Ptfnr+5CoMAO+wrAx6giKiQLU0ju+Jf9UF
-	 cCSIm/c4MEtu+iIgVwVoTBjHkjj8OeqgP+9pIfwb9cN9GxFc2R6tv7GUoO6JD1TxiH
-	 qtCfokmVUsXAgh17VXTqqF7qGY6nVbZFtipY1d5w=
+	b=kOUD97hhWaMkBuSoDxv9gKeXlXzAQiyLOKmlOwwWJpU4nxU2k3ks4TMn1EuxNM2RH
+	 u4Lnqh9DE4ADWOvo8CWC9tQ95Uht78ZJOfaYcZ7fVMIF6yQkBPta3hrnSpVFm5mIo6
+	 +IdNxiXPqNg5madydrapWU6f7nFQW+7SkNI/PnL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.4 22/28] HID: wacom: Use ktime_t rather than int when dealing with timestamps
-Date: Thu, 29 Jun 2023 20:44:10 +0200
-Message-ID: <20230629184152.764470714@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.4 23/28] gup: add warning if some caller would seem to want stack expansion
+Date: Thu, 29 Jun 2023 20:44:11 +0200
+Message-ID: <20230629184152.797695288@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.888604958@linuxfoundation.org>
 References: <20230629184151.888604958@linuxfoundation.org>
@@ -35,70 +33,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gerecke <jason.gerecke@wacom.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 9a6c0e28e215535b2938c61ded54603b4e5814c5 upstream.
+commit a425ac5365f6cb3cc47bf83e6bff0213c10445f7 upstream.
 
-Code which interacts with timestamps needs to use the ktime_t type
-returned by functions like ktime_get. The int type does not offer
-enough space to store these values, and attempting to use it is a
-recipe for problems. In this particular case, overflows would occur
-when calculating/storing timestamps leading to incorrect values being
-reported to userspace. In some cases these bad timestamps cause input
-handling in userspace to appear hung.
+It feels very unlikely that anybody would want to do a GUP in an
+unmapped area under the stack pointer, but real users sometimes do some
+really strange things.  So add a (temporary) warning for the case where
+a GUP fails and expanding the stack might have made it work.
 
-Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/901
-Fixes: 17d793f3ed53 ("HID: wacom: insert timestamp to packed Bluetooth (BT) events")
-CC: stable@vger.kernel.org
-Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
-Reviewed-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20230608213828.2108-1-jason.gerecke@wacom.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+It's trivial to do the expansion in the caller as part of getting the mm
+lock in the first place - see __access_remote_vm() for ptrace, for
+example - it's just that it's unnecessarily painful to do it deep in the
+guts of the GUP lookup when we might have to drop and re-take the lock.
+
+I doubt anybody actually does anything quite this strange, but let's be
+proactive: adding these warnings is simple, and will make debugging it
+much easier if they trigger.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |    6 +++---
- drivers/hid/wacom_wac.h |    2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ mm/gup.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1314,7 +1314,7 @@ static void wacom_intuos_pro2_bt_pen(str
- 	struct input_dev *pen_input = wacom->pen_input;
- 	unsigned char *data = wacom->data;
- 	int number_of_valid_frames = 0;
--	int time_interval = 15000000;
-+	ktime_t time_interval = 15000000;
- 	ktime_t time_packet_received = ktime_get();
- 	int i;
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -1096,7 +1096,11 @@ static long __get_user_pages(struct mm_s
  
-@@ -1348,7 +1348,7 @@ static void wacom_intuos_pro2_bt_pen(str
- 	if (number_of_valid_frames) {
- 		if (wacom->hid_data.time_delayed)
- 			time_interval = ktime_get() - wacom->hid_data.time_delayed;
--		time_interval /= number_of_valid_frames;
-+		time_interval = div_u64(time_interval, number_of_valid_frames);
- 		wacom->hid_data.time_delayed = time_packet_received;
- 	}
+ 		/* first iteration or cross vma bound */
+ 		if (!vma || start >= vma->vm_end) {
+-			vma = vma_lookup(mm, start);
++			vma = find_vma(mm, start);
++			if (vma && (start < vma->vm_start)) {
++				WARN_ON_ONCE(vma->vm_flags & VM_GROWSDOWN);
++				vma = NULL;
++			}
+ 			if (!vma && in_gate_area(mm, start)) {
+ 				ret = get_gate_page(mm, start & PAGE_MASK,
+ 						gup_flags, &vma,
+@@ -1265,9 +1269,13 @@ int fixup_user_fault(struct mm_struct *m
+ 		fault_flags |= FAULT_FLAG_ALLOW_RETRY | FAULT_FLAG_KILLABLE;
  
-@@ -1359,7 +1359,7 @@ static void wacom_intuos_pro2_bt_pen(str
- 		bool range = frame[0] & 0x20;
- 		bool invert = frame[0] & 0x10;
- 		int frames_number_reversed = number_of_valid_frames - i - 1;
--		int event_timestamp = time_packet_received - frames_number_reversed * time_interval;
-+		ktime_t event_timestamp = time_packet_received - frames_number_reversed * time_interval;
+ retry:
+-	vma = vma_lookup(mm, address);
++	vma = find_vma(mm, address);
+ 	if (!vma)
+ 		return -EFAULT;
++	if (address < vma->vm_start ) {
++		WARN_ON_ONCE(vma->vm_flags & VM_GROWSDOWN);
++		return -EFAULT;
++	}
  
- 		if (!valid)
- 			continue;
---- a/drivers/hid/wacom_wac.h
-+++ b/drivers/hid/wacom_wac.h
-@@ -324,7 +324,7 @@ struct hid_data {
- 	int ps_connected;
- 	bool pad_input_event_flag;
- 	unsigned short sequence_number;
--	int time_delayed;
-+	ktime_t time_delayed;
- };
- 
- struct wacom_remote_data {
+ 	if (!vma_permits_fault(vma, fault_flags))
+ 		return -EFAULT;
 
 
