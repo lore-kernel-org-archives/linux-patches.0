@@ -1,28 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD7F14267
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:45:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8832CC433C8;
-	Thu, 29 Jun 2023 18:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97AD14267
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:45:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36592C433C9;
+	Thu, 29 Jun 2023 18:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064340;
-	bh=TxhtcA1zsQ8zjXDSDK52qjCg4Y+jlD4LBuDNlZ5N0MI=;
+	s=korg; t=1688064343;
+	bh=OkFqDeX5wuIxtjHxYM3s5Bu4FivkxdjowXZpF1aUYG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AA5LpY4FGspBcv8E0H2I1HSR4dxymg5rcD1/tQrqGqncgsjNPFTW541cIV+lBxIMK
-	 GA70sXVkNZuxba6+d6e+OjoiVnv4n6K8Xr/O7FpFWBC2YOZAM9EU8WJnilvrulPb9w
-	 fRSosaMSbmj45efpn/4pVaRiiuaGdqj8eud2clww=
+	b=BQfAk7vz6hxAWaiceWq3VTjPjIAeXJrV9t13F+D48CM4WTapWa92M3r+4Bb5VEQIk
+	 Us4i0WOEErWHUUHIxFf1af8i2I14xAvbnTJhdPOZemuAIrzngO2fcopgUjN8hXbwCk
+	 IHTpxKdTXXenyTAqg/yrKvI45M6faSm/jdU7wvbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 03/30] mptcp: ensure listener is unhashed before updating the sk status
-Date: Thu, 29 Jun 2023 20:43:22 +0200
-Message-ID: <20230629184151.798150717@linuxfoundation.org>
+	Tony Luck <tony.luck@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Alexander Potapenko <glider@google.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jane Chu <jane.chu@oracle.com>
+Subject: [PATCH 6.1 04/30] mm, hwpoison: try to recover from copy-on write faults
+Date: Thu, 29 Jun 2023 20:43:23 +0200
+Message-ID: <20230629184151.838432539@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.651069086@linuxfoundation.org>
 References: <20230629184151.651069086@linuxfoundation.org>
@@ -36,98 +44,214 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Tony Luck <tony.luck@intel.com>
 
-commit 57fc0f1ceaa4016354cf6f88533e20b56190e41a upstream.
+commit a873dfe1032a132bf89f9e19a6ac44f5a0b78754 upstream.
 
-The MPTCP protocol access the listener subflow in a lockless
-manner in a couple of places (poll, diag). That works only if
-the msk itself leaves the listener status only after that the
-subflow itself has been closed/disconnected. Otherwise we risk
-deadlock in diag, as reported by Christoph.
+Patch series "Copy-on-write poison recovery", v3.
 
-Address the issue ensuring that the first subflow (the listener
-one) is always disconnected before updating the msk socket status.
+Part 1 deals with the process that triggered the copy on write fault with
+a store to a shared read-only page.  That process is send a SIGBUS with
+the usual machine check decoration to specify the virtual address of the
+lost page, together with the scope.
 
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/407
-Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Part 2 sets up to asynchronously take the page with the uncorrected error
+offline to prevent additional machine check faults.  H/t to Miaohe Lin
+<linmiaohe@huawei.com> and Shuai Xue <xueshuai@linux.alibaba.com> for
+pointing me to the existing function to queue a call to memory_failure().
+
+On x86 there is some duplicate reporting (because the error is also
+signalled by the memory controller as well as by the core that triggered
+the machine check).  Console logs look like this:
+
+
+This patch (of 2):
+
+If the kernel is copying a page as the result of a copy-on-write
+fault and runs into an uncorrectable error, Linux will crash because
+it does not have recovery code for this case where poison is consumed
+by the kernel.
+
+It is easy to set up a test case. Just inject an error into a private
+page, fork(2), and have the child process write to the page.
+
+I wrapped that neatly into a test at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/aegl/ras-tools.git
+
+just enable ACPI error injection and run:
+
+  # ./einj_mem-uc -f copy-on-write
+
+Add a new copy_user_highpage_mc() function that uses copy_mc_to_kernel()
+on architectures where that is available (currently x86 and powerpc).
+When an error is detected during the page copy, return VM_FAULT_HWPOISON
+to caller of wp_page_copy(). This propagates up the call stack. Both x86
+and powerpc have code in their fault handler to deal with this code by
+sending a SIGBUS to the application.
+
+Note that this patch avoids a system crash and signals the process that
+triggered the copy-on-write action. It does not take any action for the
+memory error that is still in the shared page. To handle that a call to
+memory_failure() is needed. But this cannot be done from wp_page_copy()
+because it holds mmap_lock(). Perhaps the architecture fault handlers
+can deal with this loose end in a subsequent patch?
+
+On Intel/x86 this loose end will often be handled automatically because
+the memory controller provides an additional notification of the h/w
+poison in memory, the handler for this will call memory_failure(). This
+isn't a 100% solution. If there are multiple errors, not all may be
+logged in this way.
+
+[tony.luck@intel.com: add call to kmsan_unpoison_memory(), per Miaohe Lin]
+  Link: https://lkml.kernel.org/r/20221031201029.102123-2-tony.luck@intel.com
+Link: https://lkml.kernel.org/r/20221021200120.175753-1-tony.luck@intel.com
+Link: https://lkml.kernel.org/r/20221021200120.175753-2-tony.luck@intel.com
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Tested-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Igned-off-by: Jane Chu <jane.chu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    1 +
- net/mptcp/protocol.c   |   26 ++++++++++++++++++++------
- 2 files changed, 21 insertions(+), 6 deletions(-)
+ include/linux/highmem.h |   26 ++++++++++++++++++++++++++
+ mm/memory.c             |   30 ++++++++++++++++++++----------
+ 2 files changed, 46 insertions(+), 10 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1039,6 +1039,7 @@ static int mptcp_pm_nl_create_listen_soc
- 		return err;
- 	}
+--- a/include/linux/highmem.h
++++ b/include/linux/highmem.h
+@@ -319,6 +319,32 @@ static inline void copy_user_highpage(st
  
-+	inet_sk_state_store(newsk, TCP_LISTEN);
- 	err = kernel_listen(ssock, backlog);
- 	if (err) {
- 		pr_warn("kernel_listen error, err=%d", err);
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2400,12 +2400,6 @@ static void __mptcp_close_ssk(struct soc
- 		kfree_rcu(subflow, rcu);
- 	} else {
- 		/* otherwise tcp will dispose of the ssk and subflow ctx */
--		if (ssk->sk_state == TCP_LISTEN) {
--			tcp_set_state(ssk, TCP_CLOSE);
--			mptcp_subflow_queue_clean(sk, ssk);
--			inet_csk_listen_stop(ssk);
--		}
--
- 		__tcp_close(ssk, 0);
+ #endif
  
- 		/* close acquired an extra ref */
-@@ -2939,6 +2933,24 @@ static __poll_t mptcp_check_readable(str
- 	return EPOLLIN | EPOLLRDNORM;
++#ifdef copy_mc_to_kernel
++static inline int copy_mc_user_highpage(struct page *to, struct page *from,
++					unsigned long vaddr, struct vm_area_struct *vma)
++{
++	unsigned long ret;
++	char *vfrom, *vto;
++
++	vfrom = kmap_local_page(from);
++	vto = kmap_local_page(to);
++	ret = copy_mc_to_kernel(vto, vfrom, PAGE_SIZE);
++	if (!ret)
++		kmsan_unpoison_memory(page_address(to), PAGE_SIZE);
++	kunmap_local(vto);
++	kunmap_local(vfrom);
++
++	return ret;
++}
++#else
++static inline int copy_mc_user_highpage(struct page *to, struct page *from,
++					unsigned long vaddr, struct vm_area_struct *vma)
++{
++	copy_user_highpage(to, from, vaddr, vma);
++	return 0;
++}
++#endif
++
+ #ifndef __HAVE_ARCH_COPY_HIGHPAGE
+ 
+ static inline void copy_highpage(struct page *to, struct page *from)
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -2843,10 +2843,16 @@ static inline int pte_unmap_same(struct
+ 	return same;
  }
  
-+static void mptcp_check_listen_stop(struct sock *sk)
-+{
-+	struct sock *ssk;
-+
-+	if (inet_sk_state_load(sk) != TCP_LISTEN)
-+		return;
-+
-+	ssk = mptcp_sk(sk)->first;
-+	if (WARN_ON_ONCE(!ssk || inet_sk_state_load(ssk) != TCP_LISTEN))
-+		return;
-+
-+	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
-+	mptcp_subflow_queue_clean(sk, ssk);
-+	inet_csk_listen_stop(ssk);
-+	tcp_set_state(ssk, TCP_CLOSE);
-+	release_sock(ssk);
-+}
-+
- bool __mptcp_close(struct sock *sk, long timeout)
+-static inline bool __wp_page_copy_user(struct page *dst, struct page *src,
+-				       struct vm_fault *vmf)
++/*
++ * Return:
++ *	0:		copied succeeded
++ *	-EHWPOISON:	copy failed due to hwpoison in source page
++ *	-EAGAIN:	copied failed (some other reason)
++ */
++static inline int __wp_page_copy_user(struct page *dst, struct page *src,
++				      struct vm_fault *vmf)
  {
- 	struct mptcp_subflow_context *subflow;
-@@ -2949,6 +2961,7 @@ bool __mptcp_close(struct sock *sk, long
- 	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
+-	bool ret;
++	int ret;
+ 	void *kaddr;
+ 	void __user *uaddr;
+ 	bool locked = false;
+@@ -2855,8 +2861,9 @@ static inline bool __wp_page_copy_user(s
+ 	unsigned long addr = vmf->address;
  
- 	if ((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE)) {
-+		mptcp_check_listen_stop(sk);
- 		inet_sk_state_store(sk, TCP_CLOSE);
- 		goto cleanup;
+ 	if (likely(src)) {
+-		copy_user_highpage(dst, src, addr, vma);
+-		return true;
++		if (copy_mc_user_highpage(dst, src, addr, vma))
++			return -EHWPOISON;
++		return 0;
  	}
-@@ -3062,6 +3075,7 @@ static int mptcp_disconnect(struct sock
- 	if (msk->fastopening)
- 		return -EBUSY;
  
-+	mptcp_check_listen_stop(sk);
- 	inet_sk_state_store(sk, TCP_CLOSE);
+ 	/*
+@@ -2883,7 +2890,7 @@ static inline bool __wp_page_copy_user(s
+ 			 * and update local tlb only
+ 			 */
+ 			update_mmu_tlb(vma, addr, vmf->pte);
+-			ret = false;
++			ret = -EAGAIN;
+ 			goto pte_unlock;
+ 		}
  
- 	mptcp_stop_timer(sk);
+@@ -2908,7 +2915,7 @@ static inline bool __wp_page_copy_user(s
+ 		if (!likely(pte_same(*vmf->pte, vmf->orig_pte))) {
+ 			/* The PTE changed under us, update local tlb */
+ 			update_mmu_tlb(vma, addr, vmf->pte);
+-			ret = false;
++			ret = -EAGAIN;
+ 			goto pte_unlock;
+ 		}
+ 
+@@ -2927,7 +2934,7 @@ warn:
+ 		}
+ 	}
+ 
+-	ret = true;
++	ret = 0;
+ 
+ pte_unlock:
+ 	if (locked)
+@@ -3099,6 +3106,7 @@ static vm_fault_t wp_page_copy(struct vm
+ 	pte_t entry;
+ 	int page_copied = 0;
+ 	struct mmu_notifier_range range;
++	int ret;
+ 
+ 	delayacct_wpcopy_start();
+ 
+@@ -3116,19 +3124,21 @@ static vm_fault_t wp_page_copy(struct vm
+ 		if (!new_page)
+ 			goto oom;
+ 
+-		if (!__wp_page_copy_user(new_page, old_page, vmf)) {
++		ret = __wp_page_copy_user(new_page, old_page, vmf);
++		if (ret) {
+ 			/*
+ 			 * COW failed, if the fault was solved by other,
+ 			 * it's fine. If not, userspace would re-fault on
+ 			 * the same address and we will handle the fault
+ 			 * from the second attempt.
++			 * The -EHWPOISON case will not be retried.
+ 			 */
+ 			put_page(new_page);
+ 			if (old_page)
+ 				put_page(old_page);
+ 
+ 			delayacct_wpcopy_end();
+-			return 0;
++			return ret == -EHWPOISON ? VM_FAULT_HWPOISON : 0;
+ 		}
+ 		kmsan_copy_page_meta(new_page, old_page);
+ 	}
 
 
