@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF8714267
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:45:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04ECBC433C8;
-	Thu, 29 Jun 2023 18:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE6D14267
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:45:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B064DC433C0;
+	Thu, 29 Jun 2023 18:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064317;
-	bh=FlB5wt17aW/pqUoY1V5Nd/8hzbTss0vAB6qfu/wIMuA=;
+	s=korg; t=1688064320;
+	bh=11hR8QGPNIISIUZMZdOAA8nTk7zCKp60RW8MKPTJXtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x0jUHHgNZ6RukymviK2lgArvQ9vIV3rUc6WQMcjTOKc1zp5KIwizlNYvnxjKxir5m
-	 AL3lqeTP8OCdaEZi56ja3w/2rOTnD5+PnwLxrTVEIRUQ7+34HoDWjViiHL0bUaQzvJ
-	 RLdx0y1cSFvRImj/8lJ75b8c8YsRit3wLcNBWfh8=
+	b=P5GryiGRQoHpmKtNLBQSSsi0ZxvCgUszNHxsscov4laKKD0IEtA4q6EkDWywFqo+k
+	 FoznVQSWv+Epk0LTuhFBETXN9mhnJ4UTog9FUw73arE7gZvP/knU4KnB8JyIOYhwE3
+	 pdV/pHV62tu0Q84M3ugLJQL8uaKoWp70HbpKX4xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Samuel Mendoza-Jonas <samjonas@amazon.com>,
 	David Woodhouse <dwmw@amazon.co.uk>
-Subject: [PATCH 6.1 22/30] powerpc/mm: convert coprocessor fault to lock_mm_and_find_vma()
-Date: Thu, 29 Jun 2023 20:43:41 +0200
-Message-ID: <20230629184152.564594083@linuxfoundation.org>
+Subject: [PATCH 6.1 23/30] mm: make find_extend_vma() fail if write lock not held
+Date: Thu, 29 Jun 2023 20:43:42 +0200
+Message-ID: <20230629184152.595881502@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.651069086@linuxfoundation.org>
 References: <20230629184151.651069086@linuxfoundation.org>
@@ -35,49 +37,244 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Liam R. Howlett" <Liam.Howlett@oracle.com>
 
-commit 2cd76c50d0b41cec5c87abfcdf25b236a2793fb6 upstream.
+commit f440fa1ac955e2898893f9301568435eb5cdfc4b upstream.
 
-This is one of the simple cases, except there's no pt_regs pointer.
-Which is fine, as lock_mm_and_find_vma() is set up to work fine with a
-NULL pt_regs.
+Make calls to extend_vma() and find_extend_vma() fail if the write lock
+is required.
 
-Powerpc already enabled LOCK_MM_AND_FIND_VMA for the main CPU faulting,
-so we can just use the helper without any extra work.
+To avoid making this a flag-day event, this still allows the old
+read-locking case for the trivial situations, and passes in a flag to
+say "is it write-locked".  That way write-lockers can say "yes, I'm
+being careful", and legacy users will continue to work in all the common
+cases until they have been fully converted to the new world order.
 
+Co-Developed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Samuel Mendoza-Jonas <samjonas@amazon.com>
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/mm/copro_fault.c |   14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ fs/binfmt_elf.c    |    6 +++---
+ fs/exec.c          |    5 +++--
+ include/linux/mm.h |   10 +++++++---
+ mm/memory.c        |    2 +-
+ mm/mmap.c          |   50 +++++++++++++++++++++++++++++++++-----------------
+ mm/nommu.c         |    3 ++-
+ 6 files changed, 49 insertions(+), 27 deletions(-)
 
---- a/arch/powerpc/mm/copro_fault.c
-+++ b/arch/powerpc/mm/copro_fault.c
-@@ -33,19 +33,11 @@ int copro_handle_mm_fault(struct mm_stru
- 	if (mm->pgd == NULL)
+--- a/fs/binfmt_elf.c
++++ b/fs/binfmt_elf.c
+@@ -315,10 +315,10 @@ create_elf_tables(struct linux_binprm *b
+ 	 * Grow the stack manually; some architectures have a limit on how
+ 	 * far ahead a user-space access may be in order to grow the stack.
+ 	 */
+-	if (mmap_read_lock_killable(mm))
++	if (mmap_write_lock_killable(mm))
+ 		return -EINTR;
+-	vma = find_extend_vma(mm, bprm->p);
+-	mmap_read_unlock(mm);
++	vma = find_extend_vma_locked(mm, bprm->p, true);
++	mmap_write_unlock(mm);
+ 	if (!vma)
  		return -EFAULT;
  
--	mmap_read_lock(mm);
--	ret = -EFAULT;
--	vma = find_vma(mm, ea);
-+	vma = lock_mm_and_find_vma(mm, ea, NULL);
- 	if (!vma)
--		goto out_unlock;
--
--	if (ea < vma->vm_start) {
--		if (!(vma->vm_flags & VM_GROWSDOWN))
--			goto out_unlock;
--		if (expand_stack(vma, ea))
--			goto out_unlock;
--	}
-+		return -EFAULT;
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -203,7 +203,8 @@ static struct page *get_arg_page(struct
  
-+	ret = -EFAULT;
- 	is_write = dsisr & DSISR_ISSTORE;
- 	if (is_write) {
- 		if (!(vma->vm_flags & VM_WRITE))
+ #ifdef CONFIG_STACK_GROWSUP
+ 	if (write) {
+-		ret = expand_downwards(bprm->vma, pos);
++		/* We claim to hold the lock - nobody to race with */
++		ret = expand_downwards(bprm->vma, pos, true);
+ 		if (ret < 0)
+ 			return NULL;
+ 	}
+@@ -854,7 +855,7 @@ int setup_arg_pages(struct linux_binprm
+ 		stack_base = vma->vm_start - stack_expand;
+ #endif
+ 	current->mm->start_stack = bprm->p;
+-	ret = expand_stack(vma, stack_base);
++	ret = expand_stack_locked(vma, stack_base, true);
+ 	if (ret)
+ 		ret = -EFAULT;
+ 
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -2810,11 +2810,13 @@ extern vm_fault_t filemap_page_mkwrite(s
+ 
+ extern unsigned long stack_guard_gap;
+ /* Generic expand stack which grows the stack according to GROWS{UP,DOWN} */
+-extern int expand_stack(struct vm_area_struct *vma, unsigned long address);
++int expand_stack_locked(struct vm_area_struct *vma, unsigned long address,
++		bool write_locked);
++#define expand_stack(vma,addr) expand_stack_locked(vma,addr,false)
+ 
+ /* CONFIG_STACK_GROWSUP still needs to grow downwards at some places */
+-extern int expand_downwards(struct vm_area_struct *vma,
+-		unsigned long address);
++int expand_downwards(struct vm_area_struct *vma, unsigned long address,
++		bool write_locked);
+ #if VM_GROWSUP
+ extern int expand_upwards(struct vm_area_struct *vma, unsigned long address);
+ #else
+@@ -2915,6 +2917,8 @@ unsigned long change_prot_numa(struct vm
+ #endif
+ 
+ struct vm_area_struct *find_extend_vma(struct mm_struct *, unsigned long addr);
++struct vm_area_struct *find_extend_vma_locked(struct mm_struct *,
++		unsigned long addr, bool write_locked);
+ int remap_pfn_range(struct vm_area_struct *, unsigned long addr,
+ 			unsigned long pfn, unsigned long size, pgprot_t);
+ int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -5364,7 +5364,7 @@ struct vm_area_struct *lock_mm_and_find_
+ 			goto fail;
+ 	}
+ 
+-	if (expand_stack(vma, addr))
++	if (expand_stack_locked(vma, addr, true))
+ 		goto fail;
+ 
+ success:
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -1945,7 +1945,8 @@ static int acct_stack_growth(struct vm_a
+  * PA-RISC uses this for its stack; IA64 for its Register Backing Store.
+  * vma is the last one with address > vma->vm_end.  Have to extend vma.
+  */
+-int expand_upwards(struct vm_area_struct *vma, unsigned long address)
++int expand_upwards(struct vm_area_struct *vma, unsigned long address,
++		bool write_locked)
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	struct vm_area_struct *next;
+@@ -1969,6 +1970,8 @@ int expand_upwards(struct vm_area_struct
+ 	if (gap_addr < address || gap_addr > TASK_SIZE)
+ 		gap_addr = TASK_SIZE;
+ 
++	if (!write_locked)
++		return -EAGAIN;
+ 	next = find_vma_intersection(mm, vma->vm_end, gap_addr);
+ 	if (next && vma_is_accessible(next)) {
+ 		if (!(next->vm_flags & VM_GROWSUP))
+@@ -2037,7 +2040,8 @@ int expand_upwards(struct vm_area_struct
+ /*
+  * vma is the first one with address < vma->vm_start.  Have to extend vma.
+  */
+-int expand_downwards(struct vm_area_struct *vma, unsigned long address)
++int expand_downwards(struct vm_area_struct *vma, unsigned long address,
++		bool write_locked)
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	MA_STATE(mas, &mm->mm_mt, vma->vm_start, vma->vm_start);
+@@ -2051,10 +2055,13 @@ int expand_downwards(struct vm_area_stru
+ 	/* Enforce stack_guard_gap */
+ 	prev = mas_prev(&mas, 0);
+ 	/* Check that both stack segments have the same anon_vma? */
+-	if (prev && !(prev->vm_flags & VM_GROWSDOWN) &&
+-			vma_is_accessible(prev)) {
+-		if (address - prev->vm_end < stack_guard_gap)
++	if (prev) {
++		if (!(prev->vm_flags & VM_GROWSDOWN) &&
++		    vma_is_accessible(prev) &&
++		    (address - prev->vm_end < stack_guard_gap))
+ 			return -ENOMEM;
++		if (!write_locked && (prev->vm_end == address))
++			return -EAGAIN;
+ 	}
+ 
+ 	if (mas_preallocate(&mas, vma, GFP_KERNEL))
+@@ -2132,13 +2139,14 @@ static int __init cmdline_parse_stack_gu
+ __setup("stack_guard_gap=", cmdline_parse_stack_guard_gap);
+ 
+ #ifdef CONFIG_STACK_GROWSUP
+-int expand_stack(struct vm_area_struct *vma, unsigned long address)
++int expand_stack_locked(struct vm_area_struct *vma, unsigned long address,
++		bool write_locked)
+ {
+-	return expand_upwards(vma, address);
++	return expand_upwards(vma, address, write_locked);
+ }
+ 
+-struct vm_area_struct *
+-find_extend_vma(struct mm_struct *mm, unsigned long addr)
++struct vm_area_struct *find_extend_vma_locked(struct mm_struct *mm,
++		unsigned long addr, bool write_locked)
+ {
+ 	struct vm_area_struct *vma, *prev;
+ 
+@@ -2146,20 +2154,25 @@ find_extend_vma(struct mm_struct *mm, un
+ 	vma = find_vma_prev(mm, addr, &prev);
+ 	if (vma && (vma->vm_start <= addr))
+ 		return vma;
+-	if (!prev || expand_stack(prev, addr))
++	if (!prev)
++		return NULL;
++	if (expand_stack_locked(prev, addr, write_locked))
+ 		return NULL;
+ 	if (prev->vm_flags & VM_LOCKED)
+ 		populate_vma_page_range(prev, addr, prev->vm_end, NULL);
+ 	return prev;
+ }
+ #else
+-int expand_stack(struct vm_area_struct *vma, unsigned long address)
++int expand_stack_locked(struct vm_area_struct *vma, unsigned long address,
++		bool write_locked)
+ {
+-	return expand_downwards(vma, address);
++	if (unlikely(!(vma->vm_flags & VM_GROWSDOWN)))
++		return -EINVAL;
++	return expand_downwards(vma, address, write_locked);
+ }
+ 
+-struct vm_area_struct *
+-find_extend_vma(struct mm_struct *mm, unsigned long addr)
++struct vm_area_struct *find_extend_vma_locked(struct mm_struct *mm,
++		unsigned long addr, bool write_locked)
+ {
+ 	struct vm_area_struct *vma;
+ 	unsigned long start;
+@@ -2170,10 +2183,8 @@ find_extend_vma(struct mm_struct *mm, un
+ 		return NULL;
+ 	if (vma->vm_start <= addr)
+ 		return vma;
+-	if (!(vma->vm_flags & VM_GROWSDOWN))
+-		return NULL;
+ 	start = vma->vm_start;
+-	if (expand_stack(vma, addr))
++	if (expand_stack_locked(vma, addr, write_locked))
+ 		return NULL;
+ 	if (vma->vm_flags & VM_LOCKED)
+ 		populate_vma_page_range(vma, addr, start, NULL);
+@@ -2181,6 +2192,11 @@ find_extend_vma(struct mm_struct *mm, un
+ }
+ #endif
+ 
++struct vm_area_struct *find_extend_vma(struct mm_struct *mm,
++		unsigned long addr)
++{
++	return find_extend_vma_locked(mm, addr, false);
++}
+ EXPORT_SYMBOL_GPL(find_extend_vma);
+ 
+ /*
+--- a/mm/nommu.c
++++ b/mm/nommu.c
+@@ -694,7 +694,8 @@ struct vm_area_struct *find_extend_vma(s
+  * expand a stack to a given address
+  * - not supported under NOMMU conditions
+  */
+-int expand_stack(struct vm_area_struct *vma, unsigned long address)
++int expand_stack_locked(struct vm_area_struct *vma, unsigned long address,
++		bool write_locked)
+ {
+ 	return -ENOMEM;
+ }
 
 
