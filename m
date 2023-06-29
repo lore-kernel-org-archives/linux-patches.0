@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446BD134C6
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:49:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0E2C433C8;
-	Thu, 29 Jun 2023 18:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDBA134C6
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:49:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81AA5C433C9;
+	Thu, 29 Jun 2023 18:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064543;
-	bh=K+MzIwaoPyUU2Hhc0WU9WICu6rpHqVPJ91hE5j2Pfs0=;
+	s=korg; t=1688064545;
+	bh=LBjn/Pz+9UNS62YtSJIUKTSQKpSSxxVma/nFzlqTTaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jr5TQrh914nf5rovCECKtzNq4fDpfM4DsDl4YXU+aONrX3Uf2AZ+tmAb6DCnlOcbk
-	 RR1lSZ+MM2FVMmlQeHg/09iGD8EAkQsocsHrRxdoRvCxd6R+FNEUjPbnPD3NM8X2Zj
-	 2CA97VT3pEmIwldG6Fv2wfzi75GpTGMQ1ZOpXPFc=
+	b=kE+aI9YOffxC/DOTZ9UwCTILfwV6Vjc1j03iW57I8tkOupr4AZwl6daRmh+/3O2KG
+	 ZxhZd5jTHSAxTTNLM4ud5HMFbMBofb1SusjzInFJC0TJ5j0EAGPulE/lKr1wdPT96N
+	 u/h0haeUnfPxQsvxp7xbTiHXRzslj2zJv9044BP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 6.4 28/28] Revert "thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe"
-Date: Thu, 29 Jun 2023 20:44:16 +0200
-Message-ID: <20230629184152.971745659@linuxfoundation.org>
+	Ludvig Michaelsson <ludvig.michaelsson@yubico.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Subject: [PATCH 6.4 26/28] HID: hidraw: fix data race on device refcount
+Date: Thu, 29 Jun 2023 20:44:14 +0200
+Message-ID: <20230629184152.902104594@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.888604958@linuxfoundation.org>
 References: <20230629184151.888604958@linuxfoundation.org>
@@ -35,58 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+From: Ludvig Michaelsson <ludvig.michaelsson@yubico.com>
 
-commit 86edac7d3888c715fe3a81bd61f3617ecfe2e1dd upstream.
+commit 944ee77dc6ec7b0afd8ec70ffc418b238c92f12b upstream.
 
-This reverts commit f05c7b7d9ea9477fcc388476c6f4ade8c66d2d26.
+The hidraw_open() function increments the hidraw device reference
+counter. The counter has no dedicated synchronization mechanism,
+resulting in a potential data race when concurrently opening a device.
 
-That change was causing a regression in the generic-adc-thermal-probed
-bootrr test as reported in the kernelci-results list [1].
-A proper rework will take longer, so revert it for now.
+The race is a regression introduced by commit 8590222e4b02 ("HID:
+hidraw: Replace hidraw device table mutex with a rwsem"). While
+minors_rwsem is intended to protect the hidraw_table itself, by instead
+acquiring the lock for writing, the reference counter is also protected.
+This is symmetrical to hidraw_release().
 
-[1] https://groups.io/g/kernelci-results/message/42660
-
-Fixes: f05c7b7d9ea9 ("thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe")
-Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230525121811.3360268-1-ricardo.canuelo@collabora.com
+Link: https://github.com/systemd/systemd/issues/27947
+Fixes: 8590222e4b02 ("HID: hidraw: Replace hidraw device table mutex with a rwsem")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ludvig Michaelsson <ludvig.michaelsson@yubico.com>
+Link: https://lore.kernel.org/r/20230621-hidraw-race-v1-1-a58e6ac69bab@yubico.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/mediatek/auxadc_thermal.c |   14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/hid/hidraw.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/thermal/mediatek/auxadc_thermal.c
-+++ b/drivers/thermal/mediatek/auxadc_thermal.c
-@@ -1222,12 +1222,7 @@ static int mtk_thermal_probe(struct plat
- 		return -ENODEV;
+--- a/drivers/hid/hidraw.c
++++ b/drivers/hid/hidraw.c
+@@ -272,7 +272,12 @@ static int hidraw_open(struct inode *ino
+ 		goto out;
  	}
  
--	auxadc_base = devm_of_iomap(&pdev->dev, auxadc, 0, NULL);
--	if (IS_ERR(auxadc_base)) {
--		of_node_put(auxadc);
--		return PTR_ERR(auxadc_base);
--	}
--
-+	auxadc_base = of_iomap(auxadc, 0);
- 	auxadc_phys_base = of_get_phys_base(auxadc);
- 
- 	of_node_put(auxadc);
-@@ -1243,12 +1238,7 @@ static int mtk_thermal_probe(struct plat
- 		return -ENODEV;
- 	}
- 
--	apmixed_base = devm_of_iomap(&pdev->dev, apmixedsys, 0, NULL);
--	if (IS_ERR(apmixed_base)) {
--		of_node_put(apmixedsys);
--		return PTR_ERR(apmixed_base);
--	}
--
-+	apmixed_base = of_iomap(apmixedsys, 0);
- 	apmixed_phys_base = of_get_phys_base(apmixedsys);
- 
- 	of_node_put(apmixedsys);
+-	down_read(&minors_rwsem);
++	/*
++	 * Technically not writing to the hidraw_table but a write lock is
++	 * required to protect the device refcount. This is symmetrical to
++	 * hidraw_release().
++	 */
++	down_write(&minors_rwsem);
+ 	if (!hidraw_table[minor] || !hidraw_table[minor]->exist) {
+ 		err = -ENODEV;
+ 		goto out_unlock;
+@@ -301,7 +306,7 @@ static int hidraw_open(struct inode *ino
+ 	spin_unlock_irqrestore(&hidraw_table[minor]->list_lock, flags);
+ 	file->private_data = list;
+ out_unlock:
+-	up_read(&minors_rwsem);
++	up_write(&minors_rwsem);
+ out:
+ 	if (err < 0)
+ 		kfree(list);
 
 
