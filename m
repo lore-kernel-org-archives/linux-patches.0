@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4366614267
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:45:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91D4C433C8;
-	Thu, 29 Jun 2023 18:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD7F14267
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:45:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8832CC433C8;
+	Thu, 29 Jun 2023 18:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064338;
-	bh=Fq2JK5spwtla5IM4u8HtI1hN08Dsk6FxoZqPFo6i+4o=;
+	s=korg; t=1688064340;
+	bh=TxhtcA1zsQ8zjXDSDK52qjCg4Y+jlD4LBuDNlZ5N0MI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/Rp0ZWQRInGQKwLpxJhaxZj0LhLQz+o6v/qUKsk46NOlegoc06lSX3FpL5Hu8vIi
-	 M9KxZs9m89LV8iHyuoQKVriNiV5d2H7+oHWeYItdGeteDYP9o2rZRlmwETcS2KwwUz
-	 hDPLaqtuD/Gy5uSQFuM5c5ZztS0T+eprG1sqGq9w=
+	b=AA5LpY4FGspBcv8E0H2I1HSR4dxymg5rcD1/tQrqGqncgsjNPFTW541cIV+lBxIMK
+	 GA70sXVkNZuxba6+d6e+OjoiVnv4n6K8Xr/O7FpFWBC2YOZAM9EU8WJnilvrulPb9w
+	 fRSosaMSbmj45efpn/4pVaRiiuaGdqj8eud2clww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Hommey <mh@glandium.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Subject: [PATCH 6.1 29/30] HID: logitech-hidpp: add HIDPP_QUIRK_DELAYED_INIT for the T651.
-Date: Thu, 29 Jun 2023 20:43:48 +0200
-Message-ID: <20230629184152.813023654@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 03/30] mptcp: ensure listener is unhashed before updating the sk status
+Date: Thu, 29 Jun 2023 20:43:22 +0200
+Message-ID: <20230629184151.798150717@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.651069086@linuxfoundation.org>
 References: <20230629184151.651069086@linuxfoundation.org>
@@ -34,34 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Hommey <mh@glandium.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 5fe251112646d8626818ea90f7af325bab243efa upstream.
+commit 57fc0f1ceaa4016354cf6f88533e20b56190e41a upstream.
 
-commit 498ba2069035 ("HID: logitech-hidpp: Don't restart communication if
-not necessary") put restarting communication behind that flag, and this
-was apparently necessary on the T651, but the flag was not set for it.
+The MPTCP protocol access the listener subflow in a lockless
+manner in a couple of places (poll, diag). That works only if
+the msk itself leaves the listener status only after that the
+subflow itself has been closed/disconnected. Otherwise we risk
+deadlock in diag, as reported by Christoph.
 
-Fixes: 498ba2069035 ("HID: logitech-hidpp: Don't restart communication if not necessary")
+Address the issue ensuring that the first subflow (the listener
+one) is always disconnected before updating the msk socket status.
+
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/407
+Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Hommey <mh@glandium.org>
-Link: https://lore.kernel.org/r/20230617230957.6mx73th4blv7owqk@glandium.org
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-logitech-hidpp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c |    1 +
+ net/mptcp/protocol.c   |   26 ++++++++++++++++++++------
+ 2 files changed, 21 insertions(+), 6 deletions(-)
 
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4348,7 +4348,7 @@ static const struct hid_device_id hidpp_
- 	{ /* wireless touchpad T651 */
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH,
- 		USB_DEVICE_ID_LOGITECH_T651),
--	  .driver_data = HIDPP_QUIRK_CLASS_WTP },
-+	  .driver_data = HIDPP_QUIRK_CLASS_WTP | HIDPP_QUIRK_DELAYED_INIT },
- 	{ /* Mouse Logitech Anywhere MX */
- 	  LDJ_DEVICE(0x1017), .driver_data = HIDPP_QUIRK_HI_RES_SCROLL_1P0 },
- 	{ /* Mouse logitech M560 */
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1039,6 +1039,7 @@ static int mptcp_pm_nl_create_listen_soc
+ 		return err;
+ 	}
+ 
++	inet_sk_state_store(newsk, TCP_LISTEN);
+ 	err = kernel_listen(ssock, backlog);
+ 	if (err) {
+ 		pr_warn("kernel_listen error, err=%d", err);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2400,12 +2400,6 @@ static void __mptcp_close_ssk(struct soc
+ 		kfree_rcu(subflow, rcu);
+ 	} else {
+ 		/* otherwise tcp will dispose of the ssk and subflow ctx */
+-		if (ssk->sk_state == TCP_LISTEN) {
+-			tcp_set_state(ssk, TCP_CLOSE);
+-			mptcp_subflow_queue_clean(sk, ssk);
+-			inet_csk_listen_stop(ssk);
+-		}
+-
+ 		__tcp_close(ssk, 0);
+ 
+ 		/* close acquired an extra ref */
+@@ -2939,6 +2933,24 @@ static __poll_t mptcp_check_readable(str
+ 	return EPOLLIN | EPOLLRDNORM;
+ }
+ 
++static void mptcp_check_listen_stop(struct sock *sk)
++{
++	struct sock *ssk;
++
++	if (inet_sk_state_load(sk) != TCP_LISTEN)
++		return;
++
++	ssk = mptcp_sk(sk)->first;
++	if (WARN_ON_ONCE(!ssk || inet_sk_state_load(ssk) != TCP_LISTEN))
++		return;
++
++	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
++	mptcp_subflow_queue_clean(sk, ssk);
++	inet_csk_listen_stop(ssk);
++	tcp_set_state(ssk, TCP_CLOSE);
++	release_sock(ssk);
++}
++
+ bool __mptcp_close(struct sock *sk, long timeout)
+ {
+ 	struct mptcp_subflow_context *subflow;
+@@ -2949,6 +2961,7 @@ bool __mptcp_close(struct sock *sk, long
+ 	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
+ 
+ 	if ((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE)) {
++		mptcp_check_listen_stop(sk);
+ 		inet_sk_state_store(sk, TCP_CLOSE);
+ 		goto cleanup;
+ 	}
+@@ -3062,6 +3075,7 @@ static int mptcp_disconnect(struct sock
+ 	if (msk->fastopening)
+ 		return -EBUSY;
+ 
++	mptcp_check_listen_stop(sk);
+ 	inet_sk_state_store(sk, TCP_CLOSE);
+ 
+ 	mptcp_stop_timer(sk);
 
 
