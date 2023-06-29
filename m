@@ -1,25 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFE2134C6
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01747C433C8;
-	Thu, 29 Jun 2023 18:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DF0134C6
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B664AC433C0;
+	Thu, 29 Jun 2023 18:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064501;
-	bh=Rqn+tf1KvsjMspe8JE1sSAvChCRRPOEzwcoTKygBHLg=;
+	s=korg; t=1688064504;
+	bh=BwgWa4pe5c3TgDwaWenw+X9dmZ9oAdttw/SMw4P+HCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOUD97hhWaMkBuSoDxv9gKeXlXzAQiyLOKmlOwwWJpU4nxU2k3ks4TMn1EuxNM2RH
-	 u4Lnqh9DE4ADWOvo8CWC9tQ95Uht78ZJOfaYcZ7fVMIF6yQkBPta3hrnSpVFm5mIo6
-	 +IdNxiXPqNg5madydrapWU6f7nFQW+7SkNI/PnL0=
+	b=zNgCxug4+JHbCSCeNdygXhgbmpTgn6u7X3TkQPFmnIy2gfE/9t2mJWevJVp+o/06w
+	 7L3e2RquhU+E/Pa6npHpsy8yicw4+VpOU/mNifTEUU6f9/RkGq7cuNvG6fP8Wc5zSE
+	 GZ5Q6VUstikl1ny6L5SOFLDlvqgyHsrTYNOPkem8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hugh Dickins <hughd@google.com>,
+	stable@kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	David Stevens <stevensd@chromium.org>,
+	Peter Xu <peterx@redhat.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.4 23/28] gup: add warning if some caller would seem to want stack expansion
-Date: Thu, 29 Jun 2023 20:44:11 +0200
-Message-ID: <20230629184152.797695288@linuxfoundation.org>
+Subject: [PATCH 6.4 24/28] mm/khugepaged: fix regression in collapse_file()
+Date: Thu, 29 Jun 2023 20:44:12 +0200
+Message-ID: <20230629184152.832327871@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.888604958@linuxfoundation.org>
 References: <20230629184151.888604958@linuxfoundation.org>
@@ -33,59 +39,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Hugh Dickins <hughd@google.com>
 
-commit a425ac5365f6cb3cc47bf83e6bff0213c10445f7 upstream.
+commit e8c716bc6812202ccf4ce0f0bad3428b794fb39c upstream.
 
-It feels very unlikely that anybody would want to do a GUP in an
-unmapped area under the stack pointer, but real users sometimes do some
-really strange things.  So add a (temporary) warning for the case where
-a GUP fails and expanding the stack might have made it work.
+There is no xas_pause(&xas) in collapse_file()'s main loop, at the points
+where it does xas_unlock_irq(&xas) and then continues.
 
-It's trivial to do the expansion in the caller as part of getting the mm
-lock in the first place - see __access_remote_vm() for ptrace, for
-example - it's just that it's unnecessarily painful to do it deep in the
-guts of the GUP lookup when we might have to drop and re-take the lock.
+That would explain why, once two weeks ago and twice yesterday, I have
+hit the VM_BUG_ON_PAGE(page != xas_load(&xas), page) since "mm/khugepaged:
+fix iteration in collapse_file" removed the xas_set(&xas, index) just
+before it: xas.xa_node could be left pointing to a stale node, if there
+was concurrent activity on the file which transformed its xarray.
 
-I doubt anybody actually does anything quite this strange, but let's be
-proactive: adding these warnings is simple, and will make debugging it
-much easier if they trigger.
+I tried inserting xas_pause()s, but then even bootup crashed on that
+VM_BUG_ON_PAGE(): there appears to be a subtle "nextness" implicit in
+xas_pause().
 
+xas_next() and xas_pause() are good for use in simple loops, but not in
+this one: xas_set() worked well until now, so use xas_set(&xas, index)
+explicitly at the head of the loop; and change that VM_BUG_ON_PAGE() not
+to need its own xas_set(), and not to interfere with the xa_state (which
+would probably stop the crashes from xas_pause(), but I trust that less).
+
+The user-visible effects of this bug (if VM_BUG_ONs are configured out)
+would be data loss and data leak - potentially - though in practice I
+expect it is more likely that a subsequent check (e.g. on mapping or on
+nr_none) would notice an inconsistency, and just abandon the collapse.
+
+Link: https://lore.kernel.org/linux-mm/f18e4b64-3f88-a8ab-56cc-d1f5f9c58d4@google.com/
+Fixes: c8a8f3b4a95a ("mm/khugepaged: fix iteration in collapse_file")
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Cc: stable@kernel.org
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: David Stevens <stevensd@chromium.org>
+Cc: Peter Xu <peterx@redhat.com>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ mm/khugepaged.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1096,7 +1096,11 @@ static long __get_user_pages(struct mm_s
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1918,9 +1918,9 @@ static int collapse_file(struct mm_struc
+ 		}
+ 	} while (1);
  
- 		/* first iteration or cross vma bound */
- 		if (!vma || start >= vma->vm_end) {
--			vma = vma_lookup(mm, start);
-+			vma = find_vma(mm, start);
-+			if (vma && (start < vma->vm_start)) {
-+				WARN_ON_ONCE(vma->vm_flags & VM_GROWSDOWN);
-+				vma = NULL;
-+			}
- 			if (!vma && in_gate_area(mm, start)) {
- 				ret = get_gate_page(mm, start & PAGE_MASK,
- 						gup_flags, &vma,
-@@ -1265,9 +1269,13 @@ int fixup_user_fault(struct mm_struct *m
- 		fault_flags |= FAULT_FLAG_ALLOW_RETRY | FAULT_FLAG_KILLABLE;
+-	xas_set(&xas, start);
+ 	for (index = start; index < end; index++) {
+-		page = xas_next(&xas);
++		xas_set(&xas, index);
++		page = xas_load(&xas);
  
- retry:
--	vma = vma_lookup(mm, address);
-+	vma = find_vma(mm, address);
- 	if (!vma)
- 		return -EFAULT;
-+	if (address < vma->vm_start ) {
-+		WARN_ON_ONCE(vma->vm_flags & VM_GROWSDOWN);
-+		return -EFAULT;
-+	}
+ 		VM_BUG_ON(index != xas.xa_index);
+ 		if (is_shmem) {
+@@ -1935,7 +1935,6 @@ static int collapse_file(struct mm_struc
+ 						result = SCAN_TRUNCATED;
+ 						goto xa_locked;
+ 					}
+-					xas_set(&xas, index + 1);
+ 				}
+ 				if (!shmem_charge(mapping->host, 1)) {
+ 					result = SCAN_FAIL;
+@@ -2071,7 +2070,7 @@ static int collapse_file(struct mm_struc
  
- 	if (!vma_permits_fault(vma, fault_flags))
- 		return -EFAULT;
+ 		xas_lock_irq(&xas);
+ 
+-		VM_BUG_ON_PAGE(page != xas_load(&xas), page);
++		VM_BUG_ON_PAGE(page != xa_load(xas.xa, index), page);
+ 
+ 		/*
+ 		 * We control three references to the page:
 
 
