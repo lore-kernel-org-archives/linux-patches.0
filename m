@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A666014267
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:46:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262C4C433C0;
-	Thu, 29 Jun 2023 18:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A0814267
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:46:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6701C433C8;
+	Thu, 29 Jun 2023 18:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064383;
-	bh=MsjhHz4/eAjk3gF0r5SBQso/up9q5yV/ZfeE+Pf3iIE=;
+	s=korg; t=1688064386;
+	bh=MyZxKhfQmxLcuN8nPjSb3y5k7IMFZCQn6jRhkQWBIcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFNwM27lUveZjr7IO7c/ZWY8P7O3MmCITF/5bRxyDr6VAGJBE2MBYefEaNm7Twt8i
-	 BSg1Nw77m/TpKpDVZuCE0ICg6hsC/EsLhYqsXnd3+0cneTuNFAfmHKNJ70q/2JXz1h
-	 pRX1n35OQvxY/dAAm3HL/1RuEAu8ltsrUsgUQSnQ=
+	b=wBdVerP3tpBzb9dVUH/+280bcsRrBWt/tgNkq22TKDYCq4ZLV2iP4unBYuF4fE3VE
+	 qOdAqqXbyO3lZUlJ0SZc49gMa/iAy43hj+UfC9N+NJMm8QvU8VWEJvB8sZ4xoEcZdU
+	 U5aBl1SMND33oapg3tSqe0aJKmD021u6ezgitLNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Liam R . Howlett" <Liam.Howlett@oracle.com>
-Subject: [PATCH 6.3 14/29] arm64/mm: Convert to using lock_mm_and_find_vma()
-Date: Thu, 29 Jun 2023 20:43:44 +0200
-Message-ID: <20230629184152.316913697@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.3 15/29] powerpc/mm: Convert to using lock_mm_and_find_vma()
+Date: Thu, 29 Jun 2023 20:43:45 +0200
+Message-ID: <20230629184152.351626040@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.705870770@linuxfoundation.org>
 References: <20230629184151.705870770@linuxfoundation.org>
@@ -35,101 +34,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit ae870a68b5d13d67cf4f18d47bb01ee3fee40acb upstream.
+commit e6fe228c4ffafdfc970cf6d46883a1f481baf7ea upstream.
 
-This converts arm64 to use the new page fault helper.  It was very
-straightforward, but still needed a fix for the "obvious" conversion I
-initially did.  Thanks to Suren for the fix and testing.
-
-Fixed-and-tested-by: Suren Baghdasaryan <surenb@google.com>
-Unnecessary-code-removal-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/Kconfig    |    1 +
- arch/arm64/mm/fault.c |   44 +++++++-------------------------------------
- 2 files changed, 8 insertions(+), 37 deletions(-)
+ arch/powerpc/Kconfig    |    1 +
+ arch/powerpc/mm/fault.c |   41 ++++-------------------------------------
+ 2 files changed, 5 insertions(+), 37 deletions(-)
 
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -219,6 +219,7 @@ config ARM64
+--- a/arch/powerpc/Kconfig
++++ b/arch/powerpc/Kconfig
+@@ -263,6 +263,7 @@ config PPC
  	select IRQ_DOMAIN
  	select IRQ_FORCED_THREADING
- 	select KASAN_VMALLOC if KASAN
+ 	select KASAN_VMALLOC			if KASAN && MODULES
 +	select LOCK_MM_AND_FIND_VMA
- 	select MODULES_USE_ELF_RELA
- 	select NEED_DMA_MAP_STATE
- 	select NEED_SG_DMA_LENGTH
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -483,27 +483,14 @@ static void do_bad_area(unsigned long fa
- #define VM_FAULT_BADMAP		((__force vm_fault_t)0x010000)
- #define VM_FAULT_BADACCESS	((__force vm_fault_t)0x020000)
+ 	select MMU_GATHER_PAGE_SIZE
+ 	select MMU_GATHER_RCU_TABLE_FREE
+ 	select MMU_GATHER_MERGE_VMAS
+--- a/arch/powerpc/mm/fault.c
++++ b/arch/powerpc/mm/fault.c
+@@ -84,11 +84,6 @@ static int __bad_area(struct pt_regs *re
+ 	return __bad_area_nosemaphore(regs, address, si_code);
+ }
  
--static vm_fault_t __do_page_fault(struct mm_struct *mm, unsigned long addr,
-+static vm_fault_t __do_page_fault(struct mm_struct *mm,
-+				  struct vm_area_struct *vma, unsigned long addr,
- 				  unsigned int mm_flags, unsigned long vm_flags,
- 				  struct pt_regs *regs)
+-static noinline int bad_area(struct pt_regs *regs, unsigned long address)
+-{
+-	return __bad_area(regs, address, SEGV_MAPERR);
+-}
+-
+ static noinline int bad_access_pkey(struct pt_regs *regs, unsigned long address,
+ 				    struct vm_area_struct *vma)
  {
--	struct vm_area_struct *vma = find_vma(mm, addr);
--
--	if (unlikely(!vma))
--		return VM_FAULT_BADMAP;
--
- 	/*
- 	 * Ok, we have a good vm_area for this memory access, so we can handle
- 	 * it.
+@@ -481,40 +476,12 @@ static int ___do_page_fault(struct pt_re
+ 	 * we will deadlock attempting to validate the fault against the
+ 	 * address space.  Luckily the kernel only validly references user
+ 	 * space from well defined areas of code, which are listed in the
+-	 * exceptions table.
+-	 *
+-	 * As the vast majority of faults will be valid we will only perform
+-	 * the source reference check when there is a possibility of a deadlock.
+-	 * Attempt to lock the address space, if we cannot we then validate the
+-	 * source.  If this is invalid we can skip the address space check,
+-	 * thus avoiding the deadlock.
 -	 */
--	if (unlikely(vma->vm_start > addr)) {
--		if (!(vma->vm_flags & VM_GROWSDOWN))
--			return VM_FAULT_BADMAP;
--		if (expand_stack(vma, addr))
--			return VM_FAULT_BADMAP;
--	}
+-	if (unlikely(!mmap_read_trylock(mm))) {
+-		if (!is_user && !search_exception_tables(regs->nip))
+-			return bad_area_nosemaphore(regs, address);
 -
--	/*
- 	 * Check that the permissions on the VMA allow for the fault which
- 	 * occurred.
- 	 */
-@@ -585,31 +572,14 @@ static int __kprobes do_page_fault(unsig
- 
- 	perf_sw_event(PERF_COUNT_SW_PAGE_FAULTS, 1, regs, addr);
- 
--	/*
--	 * As per x86, we may deadlock here. However, since the kernel only
--	 * validly references user space from well defined areas of the code,
--	 * we can bug out early if this is from code which shouldn't.
--	 */
--	if (!mmap_read_trylock(mm)) {
--		if (!user_mode(regs) && !search_exception_tables(regs->pc))
--			goto no_context;
++	 * exceptions table. lock_mm_and_find_vma() handles that logic.
++	 */
  retry:
 -		mmap_read_lock(mm);
 -	} else {
 -		/*
--		 * The above mmap_read_trylock() might have succeeded in which
--		 * case, we'll have missed the might_sleep() from down_read().
+-		 * The above down_read_trylock() might have succeeded in
+-		 * which case we'll have missed the might_sleep() from
+-		 * down_read():
 -		 */
 -		might_sleep();
--#ifdef CONFIG_DEBUG_VM
--		if (!user_mode(regs) && !search_exception_tables(regs->pc)) {
--			mmap_read_unlock(mm);
--			goto no_context;
--		}
--#endif
-+	vma = lock_mm_and_find_vma(mm, addr, regs);
-+	if (unlikely(!vma)) {
-+		fault = VM_FAULT_BADMAP;
-+		goto done;
- 	}
+-	}
+-
+-	vma = find_vma(mm, address);
++	vma = lock_mm_and_find_vma(mm, address, regs);
+ 	if (unlikely(!vma))
+-		return bad_area(regs, address);
+-
+-	if (unlikely(vma->vm_start > address)) {
+-		if (unlikely(!(vma->vm_flags & VM_GROWSDOWN)))
+-			return bad_area(regs, address);
+-
+-		if (unlikely(expand_stack(vma, address)))
+-			return bad_area(regs, address);
+-	}
++		return bad_area_nosemaphore(regs, address);
  
--	fault = __do_page_fault(mm, addr, mm_flags, vm_flags, regs);
-+	fault = __do_page_fault(mm, vma, addr, mm_flags, vm_flags, regs);
- 
- 	/* Quick path to respond to signals */
- 	if (fault_signal_pending(fault, regs)) {
+ 	if (unlikely(access_pkey_error(is_write, is_exec,
+ 				       (error_code & DSISR_KEYFAULT), vma)))
 
 
