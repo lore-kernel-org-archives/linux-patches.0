@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5633414267
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:45:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87C8C433C0;
-	Thu, 29 Jun 2023 18:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DAD14267
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:45:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C220BC433C0;
+	Thu, 29 Jun 2023 18:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064332;
-	bh=LBjn/Pz+9UNS62YtSJIUKTSQKpSSxxVma/nFzlqTTaw=;
+	s=korg; t=1688064335;
+	bh=gY4Tk7R0VRwZcMUrdUuLk8sFAR3TIsakYI6YsOaPSC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dh/FJOJAZId2JezTG3w79ep5994ZHhZ7JUhDmi9ejVzxq5Gn+xMssuEwlcsIT5GlF
-	 u3IzMVjuWp14stwKGUuUuYY8eP6dJdtk7Dem5sV3Kt5DD0aO7ppF6M5f9zb8T3xixq
-	 jOii1BMLE/YBSge60nCglwvDm/pMyooccIvtAwnw=
+	b=vuVH9BLLIxRfG80LD3w9dBfln/4YAShyyGr0TePa6lQbJVsURN6QhWnlMeuqjUOqp
+	 PSs+Uz9FD8UzfDgkBISXCk/UZXc6Yyc3Fx+C0wJZm74X+lBU5n/QC1OnLhTgRvpyRW
+	 nH5KGRFCoQC/13skqclhvTQorT+ezFHoPC2+WrLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ludvig Michaelsson <ludvig.michaelsson@yubico.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Subject: [PATCH 6.1 27/30] HID: hidraw: fix data race on device refcount
-Date: Thu, 29 Jun 2023 20:43:46 +0200
-Message-ID: <20230629184152.744413892@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.1 28/30] HID: wacom: Use ktime_t rather than int when dealing with timestamps
+Date: Thu, 29 Jun 2023 20:43:47 +0200
+Message-ID: <20230629184152.774275021@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.651069086@linuxfoundation.org>
 References: <20230629184151.651069086@linuxfoundation.org>
@@ -34,55 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ludvig Michaelsson <ludvig.michaelsson@yubico.com>
+From: Jason Gerecke <jason.gerecke@wacom.com>
 
-commit 944ee77dc6ec7b0afd8ec70ffc418b238c92f12b upstream.
+commit 9a6c0e28e215535b2938c61ded54603b4e5814c5 upstream.
 
-The hidraw_open() function increments the hidraw device reference
-counter. The counter has no dedicated synchronization mechanism,
-resulting in a potential data race when concurrently opening a device.
+Code which interacts with timestamps needs to use the ktime_t type
+returned by functions like ktime_get. The int type does not offer
+enough space to store these values, and attempting to use it is a
+recipe for problems. In this particular case, overflows would occur
+when calculating/storing timestamps leading to incorrect values being
+reported to userspace. In some cases these bad timestamps cause input
+handling in userspace to appear hung.
 
-The race is a regression introduced by commit 8590222e4b02 ("HID:
-hidraw: Replace hidraw device table mutex with a rwsem"). While
-minors_rwsem is intended to protect the hidraw_table itself, by instead
-acquiring the lock for writing, the reference counter is also protected.
-This is symmetrical to hidraw_release().
-
-Link: https://github.com/systemd/systemd/issues/27947
-Fixes: 8590222e4b02 ("HID: hidraw: Replace hidraw device table mutex with a rwsem")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ludvig Michaelsson <ludvig.michaelsson@yubico.com>
-Link: https://lore.kernel.org/r/20230621-hidraw-race-v1-1-a58e6ac69bab@yubico.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/901
+Fixes: 17d793f3ed53 ("HID: wacom: insert timestamp to packed Bluetooth (BT) events")
+CC: stable@vger.kernel.org
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Reviewed-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Link: https://lore.kernel.org/r/20230608213828.2108-1-jason.gerecke@wacom.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hidraw.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/hid/wacom_wac.c |    6 +++---
+ drivers/hid/wacom_wac.h |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/hid/hidraw.c
-+++ b/drivers/hid/hidraw.c
-@@ -272,7 +272,12 @@ static int hidraw_open(struct inode *ino
- 		goto out;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1309,7 +1309,7 @@ static void wacom_intuos_pro2_bt_pen(str
+ 	struct input_dev *pen_input = wacom->pen_input;
+ 	unsigned char *data = wacom->data;
+ 	int number_of_valid_frames = 0;
+-	int time_interval = 15000000;
++	ktime_t time_interval = 15000000;
+ 	ktime_t time_packet_received = ktime_get();
+ 	int i;
+ 
+@@ -1343,7 +1343,7 @@ static void wacom_intuos_pro2_bt_pen(str
+ 	if (number_of_valid_frames) {
+ 		if (wacom->hid_data.time_delayed)
+ 			time_interval = ktime_get() - wacom->hid_data.time_delayed;
+-		time_interval /= number_of_valid_frames;
++		time_interval = div_u64(time_interval, number_of_valid_frames);
+ 		wacom->hid_data.time_delayed = time_packet_received;
  	}
  
--	down_read(&minors_rwsem);
-+	/*
-+	 * Technically not writing to the hidraw_table but a write lock is
-+	 * required to protect the device refcount. This is symmetrical to
-+	 * hidraw_release().
-+	 */
-+	down_write(&minors_rwsem);
- 	if (!hidraw_table[minor] || !hidraw_table[minor]->exist) {
- 		err = -ENODEV;
- 		goto out_unlock;
-@@ -301,7 +306,7 @@ static int hidraw_open(struct inode *ino
- 	spin_unlock_irqrestore(&hidraw_table[minor]->list_lock, flags);
- 	file->private_data = list;
- out_unlock:
--	up_read(&minors_rwsem);
-+	up_write(&minors_rwsem);
- out:
- 	if (err < 0)
- 		kfree(list);
+@@ -1354,7 +1354,7 @@ static void wacom_intuos_pro2_bt_pen(str
+ 		bool range = frame[0] & 0x20;
+ 		bool invert = frame[0] & 0x10;
+ 		int frames_number_reversed = number_of_valid_frames - i - 1;
+-		int event_timestamp = time_packet_received - frames_number_reversed * time_interval;
++		ktime_t event_timestamp = time_packet_received - frames_number_reversed * time_interval;
+ 
+ 		if (!valid)
+ 			continue;
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -324,7 +324,7 @@ struct hid_data {
+ 	int ps_connected;
+ 	bool pad_input_event_flag;
+ 	unsigned short sequence_number;
+-	int time_delayed;
++	ktime_t time_delayed;
+ };
+ 
+ struct wacom_remote_data {
 
 
