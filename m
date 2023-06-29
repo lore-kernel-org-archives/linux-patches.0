@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38689134A5
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:47:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB8BC433C0;
-	Thu, 29 Jun 2023 18:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA028134A5
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:47:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F300C433C0;
+	Thu, 29 Jun 2023 18:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064430;
-	bh=h5PR7Wgwhi1iyTKlrso8SOYcxZPqeKgx78DJMRlDUd8=;
+	s=korg; t=1688064432;
+	bh=3xnK1hpynKmNkUpN6jq4fH0lA409V7kHZTMMkGAkZbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apYaLJP+MHTqzi+XFdtVqnjIMrRuXeZRLRIWlu51YI8JrOzs0GmR2alp1HqzagXiT
-	 B67qrGhvcxAHAyVLlgX7i/xyp6alALLsVmh0XSO/627ZTf+0upDTz87MP0yCtmHzLZ
-	 WaUtWf4zfGLcGfU0/bXrz71LCaYOQJIufS7uvoho=
+	b=CjSO1LSA2KZPa0T29wivcjQCX5wvSSFCY/C6Xres+flD48w0bKl0OJXA2i/g9ELrB
+	 Bgjk5OHDrp4cMEEy87LuECZbCDN8zT6YPKJW77A4k4U6psHNBA+Fgu5QYF3C9UhEsq
+	 jYEkGRCd2XNIFKRziZ/YlKeI4vh0bT6f6756FyrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
 	Ashok Raj <ashok.raj@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.3 07/29] x86/smp: Use dedicated cache-line for mwait_play_dead()
-Date: Thu, 29 Jun 2023 20:43:37 +0200
-Message-ID: <20230629184152.044147986@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.3 08/29] x86/smp: Cure kexec() vs. mwait_play_dead() breakage
+Date: Thu, 29 Jun 2023 20:43:38 +0200
+Message-ID: <20230629184152.080539377@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.705870770@linuxfoundation.org>
 References: <20230629184151.705870770@linuxfoundation.org>
@@ -37,89 +36,177 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit f9c9987bf52f4e42e940ae217333ebb5a4c3b506 upstream.
+commit d7893093a7417527c0d73c9832244e65c9d0114f upstream.
 
-Monitoring idletask::thread_info::flags in mwait_play_dead() has been an
-obvious choice as all what is needed is a cache line which is not written
-by other CPUs.
+TLDR: It's a mess.
 
-But there is a use case where a "dead" CPU needs to be brought out of
-MWAIT: kexec().
+When kexec() is executed on a system with offline CPUs, which are parked in
+mwait_play_dead() it can end up in a triple fault during the bootup of the
+kexec kernel or cause hard to diagnose data corruption.
 
-This is required as kexec() can overwrite text, pagetables, stacks and the
-monitored cacheline of the original kernel. The latter causes MWAIT to
-resume execution which obviously causes havoc on the kexec kernel which
-results usually in triple faults.
+The reason is that kexec() eventually overwrites the previous kernel's text,
+page tables, data and stack. If it writes to the cache line which is
+monitored by a previously offlined CPU, MWAIT resumes execution and ends
+up executing the wrong text, dereferencing overwritten page tables or
+corrupting the kexec kernels data.
 
-Use a dedicated per CPU storage to prepare for that.
+Cure this by bringing the offlined CPUs out of MWAIT into HLT.
 
+Write to the monitored cache line of each offline CPU, which makes MWAIT
+resume execution. The written control word tells the offlined CPUs to issue
+HLT, which does not have the MWAIT problem.
+
+That does not help, if a stray NMI, MCE or SMI hits the offlined CPUs as
+those make it come out of HLT.
+
+A follow up change will put them into INIT, which protects at least against
+NMI and SMI.
+
+Fixes: ea53069231f9 ("x86, hotplug: Use mwait to offline a processor, fix the legacy case")
+Reported-by: Ashok Raj <ashok.raj@intel.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Ashok Raj <ashok.raj@intel.com>
 Reviewed-by: Ashok Raj <ashok.raj@intel.com>
-Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230615193330.434553750@linutronix.de
+Link: https://lore.kernel.org/r/20230615193330.492257119@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/smpboot.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ arch/x86/include/asm/smp.h |    2 +
+ arch/x86/kernel/smp.c      |    5 +++
+ arch/x86/kernel/smpboot.c  |   59 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 66 insertions(+)
 
+--- a/arch/x86/include/asm/smp.h
++++ b/arch/x86/include/asm/smp.h
+@@ -131,6 +131,8 @@ void wbinvd_on_cpu(int cpu);
+ int wbinvd_on_all_cpus(void);
+ void cond_wakeup_cpu0(void);
+ 
++void smp_kick_mwait_play_dead(void);
++
+ void native_smp_send_reschedule(int cpu);
+ void native_send_call_func_ipi(const struct cpumask *mask);
+ void native_send_call_func_single_ipi(int cpu);
+--- a/arch/x86/kernel/smp.c
++++ b/arch/x86/kernel/smp.c
+@@ -21,6 +21,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/cpu.h>
+ #include <linux/gfp.h>
++#include <linux/kexec.h>
+ 
+ #include <asm/mtrr.h>
+ #include <asm/tlbflush.h>
+@@ -157,6 +158,10 @@ static void native_stop_other_cpus(int w
+ 	if (atomic_cmpxchg(&stopping_cpu, -1, cpu) != -1)
+ 		return;
+ 
++	/* For kexec, ensure that offline CPUs are out of MWAIT and in HLT */
++	if (kexec_in_progress)
++		smp_kick_mwait_play_dead();
++
+ 	/*
+ 	 * 1) Send an IPI on the reboot vector to all other CPUs.
+ 	 *
 --- a/arch/x86/kernel/smpboot.c
 +++ b/arch/x86/kernel/smpboot.c
-@@ -101,6 +101,17 @@ EXPORT_PER_CPU_SYMBOL(cpu_die_map);
- DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
- EXPORT_PER_CPU_SYMBOL(cpu_info);
+@@ -53,6 +53,7 @@
+ #include <linux/tboot.h>
+ #include <linux/gfp.h>
+ #include <linux/cpuidle.h>
++#include <linux/kexec.h>
+ #include <linux/numa.h>
+ #include <linux/pgtable.h>
+ #include <linux/overflow.h>
+@@ -106,6 +107,9 @@ struct mwait_cpu_dead {
+ 	unsigned int	status;
+ };
  
-+struct mwait_cpu_dead {
-+	unsigned int	control;
-+	unsigned int	status;
-+};
++#define CPUDEAD_MWAIT_WAIT	0xDEADBEEF
++#define CPUDEAD_MWAIT_KEXEC_HLT	0x4A17DEAD
 +
-+/*
-+ * Cache line aligned data for mwait_play_dead(). Separate on purpose so
-+ * that it's unlikely to be touched by other CPUs.
-+ */
-+static DEFINE_PER_CPU_ALIGNED(struct mwait_cpu_dead, mwait_cpu_dead);
-+
- /* Logical package management. We might want to allocate that dynamically */
- unsigned int __max_logical_packages __read_mostly;
- EXPORT_SYMBOL(__max_logical_packages);
-@@ -1750,10 +1761,10 @@ EXPORT_SYMBOL_GPL(cond_wakeup_cpu0);
-  */
- static inline void mwait_play_dead(void)
+ /*
+  * Cache line aligned data for mwait_play_dead(). Separate on purpose so
+  * that it's unlikely to be touched by other CPUs.
+@@ -168,6 +172,10 @@ static void smp_callin(void)
  {
-+	struct mwait_cpu_dead *md = this_cpu_ptr(&mwait_cpu_dead);
- 	unsigned int eax, ebx, ecx, edx;
- 	unsigned int highest_cstate = 0;
- 	unsigned int highest_subcstate = 0;
--	void *mwait_ptr;
- 	int i;
+ 	int cpuid;
  
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-@@ -1788,13 +1799,6 @@ static inline void mwait_play_dead(void)
++	/* Mop up eventual mwait_play_dead() wreckage */
++	this_cpu_write(mwait_cpu_dead.status, 0);
++	this_cpu_write(mwait_cpu_dead.control, 0);
++
+ 	/*
+ 	 * If waken up by an INIT in an 82489DX configuration
+ 	 * cpu_callout_mask guarantees we don't get here before
+@@ -1799,6 +1807,10 @@ static inline void mwait_play_dead(void)
  			(highest_subcstate - 1);
  	}
  
--	/*
--	 * This should be a memory location in a cache line which is
--	 * unlikely to be touched by other processors.  The actual
--	 * content is immaterial as it is not actually modified in any way.
--	 */
--	mwait_ptr = &current_thread_info()->flags;
--
++	/* Set up state for the kexec() hack below */
++	md->status = CPUDEAD_MWAIT_WAIT;
++	md->control = CPUDEAD_MWAIT_WAIT;
++
  	wbinvd();
  
  	while (1) {
-@@ -1806,9 +1810,9 @@ static inline void mwait_play_dead(void)
- 		 * case where we return around the loop.
- 		 */
- 		mb();
--		clflush(mwait_ptr);
-+		clflush(md);
- 		mb();
--		__monitor(mwait_ptr, 0, 0);
-+		__monitor(md, 0, 0);
+@@ -1816,10 +1828,57 @@ static inline void mwait_play_dead(void)
  		mb();
  		__mwait(eax, 0);
  
++		if (READ_ONCE(md->control) == CPUDEAD_MWAIT_KEXEC_HLT) {
++			/*
++			 * Kexec is about to happen. Don't go back into mwait() as
++			 * the kexec kernel might overwrite text and data including
++			 * page tables and stack. So mwait() would resume when the
++			 * monitor cache line is written to and then the CPU goes
++			 * south due to overwritten text, page tables and stack.
++			 *
++			 * Note: This does _NOT_ protect against a stray MCE, NMI,
++			 * SMI. They will resume execution at the instruction
++			 * following the HLT instruction and run into the problem
++			 * which this is trying to prevent.
++			 */
++			WRITE_ONCE(md->status, CPUDEAD_MWAIT_KEXEC_HLT);
++			while(1)
++				native_halt();
++		}
++
+ 		cond_wakeup_cpu0();
+ 	}
+ }
+ 
++/*
++ * Kick all "offline" CPUs out of mwait on kexec(). See comment in
++ * mwait_play_dead().
++ */
++void smp_kick_mwait_play_dead(void)
++{
++	u32 newstate = CPUDEAD_MWAIT_KEXEC_HLT;
++	struct mwait_cpu_dead *md;
++	unsigned int cpu, i;
++
++	for_each_cpu_andnot(cpu, cpu_present_mask, cpu_online_mask) {
++		md = per_cpu_ptr(&mwait_cpu_dead, cpu);
++
++		/* Does it sit in mwait_play_dead() ? */
++		if (READ_ONCE(md->status) != CPUDEAD_MWAIT_WAIT)
++			continue;
++
++		/* Wait up to 5ms */
++		for (i = 0; READ_ONCE(md->status) != newstate && i < 1000; i++) {
++			/* Bring it out of mwait */
++			WRITE_ONCE(md->control, newstate);
++			udelay(5);
++		}
++
++		if (READ_ONCE(md->status) != newstate)
++			pr_err_once("CPU%u is stuck in mwait_play_dead()\n", cpu);
++	}
++}
++
+ void hlt_play_dead(void)
+ {
+ 	if (__this_cpu_read(cpu_info.x86) >= 4)
 
 
