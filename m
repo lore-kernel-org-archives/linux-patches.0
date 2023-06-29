@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C6B134C6
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6966FC433C8;
-	Thu, 29 Jun 2023 18:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF35134C6
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EAB4C433C0;
+	Thu, 29 Jun 2023 18:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064490;
-	bh=mi4lGTDBEd84OaduJF8ub/cpZt/AzKRXOOTFzSGKBZo=;
+	s=korg; t=1688064492;
+	bh=bI9D4P6dLTHH8C5rIBuO9SDUUcKuewKVbiECUG34xBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfOVWIxcpVq0Ad+Of+sJMYiv8uOjAjQa2s4RG055C+n0+MtwhxCvMHFRLHL1KbI96
-	 +tsoJC77UwbIgfc1LQHAP6ph1F6vEckCwDBPVdJQGK0BLeniSsT16Gk42uFxd6Vro0
-	 Fi3uqyAFO3RQK7lCLL9H/RTrUVwNNIKQM6M5rNE0=
+	b=ISGT5KloQ1twPsxrWSeBWj97Vxjp2MkL30D5pvRuGyxo8Z9zErww6VTvN3NlbIjU0
+	 HctJcx2JfAkLCE36qBHh5TlqkmvXWLQJKN1sl2FTN/ftE+N3rNNEC5ZPcER/g93F1u
+	 2UW3e3NwMHdxrAvKXgZhdn2FIJ/v5BIz0GyhvfE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Battersby <tonyb@cybernetics.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ashok Raj <ashok.raj@intel.com>
-Subject: [PATCH 6.4 02/28] x86/smp: Make stop_other_cpus() more robust
-Date: Thu, 29 Jun 2023 20:43:50 +0200
-Message-ID: <20230629184152.006895402@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.4 20/28] execve: expand new process stack manually ahead of time
+Date: Thu, 29 Jun 2023 20:44:08 +0200
+Message-ID: <20230629184152.699200577@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.888604958@linuxfoundation.org>
 References: <20230629184151.888604958@linuxfoundation.org>
@@ -36,235 +33,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 1f5e7eb7868e42227ac426c96d437117e6e06e8e upstream.
+commit f313c51d26aa87e69633c9b46efb37a930faca71 upstream.
 
-Tony reported intermittent lockups on poweroff. His analysis identified the
-wbinvd() in stop_this_cpu() as the culprit. This was added to ensure that
-on SME enabled machines a kexec() does not leave any stale data in the
-caches when switching from encrypted to non-encrypted mode or vice versa.
+This is a small step towards a model where GUP itself would not expand
+the stack, and any user that needs GUP to not look up existing mappings,
+but actually expand on them, would have to do so manually before-hand,
+and with the mm lock held for writing.
 
-That wbinvd() is conditional on the SME feature bit which is read directly
-from CPUID. But that readout does not check whether the CPUID leaf is
-available or not. If it's not available the CPU will return the value of
-the highest supported leaf instead. Depending on the content the "SME" bit
-might be set or not.
+It turns out that execve() already did almost exactly that, except it
+didn't take the mm lock at all (it's single-threaded so no locking
+technically needed, but it could cause lockdep errors).  And it only did
+it for the CONFIG_STACK_GROWSUP case, since in that case GUP has
+obviously never expanded the stack downwards.
 
-That's incorrect but harmless. Making the CPUID readout conditional makes
-the observed hangs go away, but it does not fix the underlying problem:
+So just make that CONFIG_STACK_GROWSUP case do the right thing with
+locking, and enable it generally.  This will eventually help GUP, and in
+the meantime avoids a special case and the lockdep issue.
 
-CPU0					CPU1
-
- stop_other_cpus()
-   send_IPIs(REBOOT);			stop_this_cpu()
-   while (num_online_cpus() > 1);         set_online(false);
-   proceed... -> hang
-				          wbinvd()
-
-WBINVD is an expensive operation and if multiple CPUs issue it at the same
-time the resulting delays are even larger.
-
-But CPU0 already observed num_online_cpus() going down to 1 and proceeds
-which causes the system to hang.
-
-This issue exists independent of WBINVD, but the delays caused by WBINVD
-make it more prominent.
-
-Make this more robust by adding a cpumask which is initialized to the
-online CPU mask before sending the IPIs and CPUs clear their bit in
-stop_this_cpu() after the WBINVD completed. Check for that cpumask to
-become empty in stop_other_cpus() instead of watching num_online_cpus().
-
-The cpumask cannot plug all holes either, but it's better than a raw
-counter and allows to restrict the NMI fallback IPI to be sent only the
-CPUs which have not reported within the timeout window.
-
-Fixes: 08f253ec3767 ("x86/cpu: Clear SME feature flag when not in use")
-Reported-by: Tony Battersby <tonyb@cybernetics.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ashok Raj <ashok.raj@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/3817d810-e0f1-8ef8-0bbd-663b919ca49b@cybernetics.com
-Link: https://lore.kernel.org/r/87h6r770bv.ffs@tglx
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpu.h |    2 +
- arch/x86/kernel/process.c  |   23 +++++++++++++++-
- arch/x86/kernel/smp.c      |   62 +++++++++++++++++++++++++++++----------------
- 3 files changed, 64 insertions(+), 23 deletions(-)
+ fs/exec.c |   37 +++++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
 
---- a/arch/x86/include/asm/cpu.h
-+++ b/arch/x86/include/asm/cpu.h
-@@ -98,4 +98,6 @@ extern u64 x86_read_arch_cap_msr(void);
- int intel_find_matching_signature(void *mc, unsigned int csig, int cpf);
- int intel_microcode_sanity_check(void *mc, bool print_err, int hdr_type);
- 
-+extern struct cpumask cpus_stop_mask;
-+
- #endif /* _ASM_X86_CPU_H */
---- a/arch/x86/kernel/process.c
-+++ b/arch/x86/kernel/process.c
-@@ -759,13 +759,23 @@ bool xen_set_default_idle(void)
- }
- #endif
- 
-+struct cpumask cpus_stop_mask;
-+
- void __noreturn stop_this_cpu(void *dummy)
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -200,34 +200,39 @@ static struct page *get_arg_page(struct
+ 		int write)
  {
-+	unsigned int cpu = smp_processor_id();
-+
- 	local_irq_disable();
-+
- 	/*
--	 * Remove this CPU:
-+	 * Remove this CPU from the online mask and disable it
-+	 * unconditionally. This might be redundant in case that the reboot
-+	 * vector was handled late and stop_other_cpus() sent an NMI.
-+	 *
-+	 * According to SDM and APM NMIs can be accepted even after soft
-+	 * disabling the local APIC.
- 	 */
--	set_cpu_online(smp_processor_id(), false);
-+	set_cpu_online(cpu, false);
- 	disable_local_APIC();
- 	mcheck_cpu_clear(this_cpu_ptr(&cpu_info));
+ 	struct page *page;
++	struct vm_area_struct *vma = bprm->vma;
++	struct mm_struct *mm = bprm->mm;
+ 	int ret;
+-	unsigned int gup_flags = 0;
  
-@@ -783,6 +793,15 @@ void __noreturn stop_this_cpu(void *dumm
- 	 */
- 	if (cpuid_eax(0x8000001f) & BIT(0))
- 		native_wbinvd();
-+
+-#ifdef CONFIG_STACK_GROWSUP
+-	if (write) {
+-		/* We claim to hold the lock - nobody to race with */
+-		ret = expand_downwards(bprm->vma, pos, true);
+-		if (ret < 0)
 +	/*
-+	 * This brings a cache line back and dirties it, but
-+	 * native_stop_other_cpus() will overwrite cpus_stop_mask after it
-+	 * observed that all CPUs reported stop. This write will invalidate
-+	 * the related cache line on this CPU.
++	 * Avoid relying on expanding the stack down in GUP (which
++	 * does not work for STACK_GROWSUP anyway), and just do it
++	 * by hand ahead of time.
 +	 */
-+	cpumask_clear_cpu(cpu, &cpus_stop_mask);
-+
- 	for (;;) {
- 		/*
- 		 * Use native_halt() so that memory contents don't change
---- a/arch/x86/kernel/smp.c
-+++ b/arch/x86/kernel/smp.c
-@@ -27,6 +27,7 @@
- #include <asm/mmu_context.h>
- #include <asm/proto.h>
- #include <asm/apic.h>
-+#include <asm/cpu.h>
- #include <asm/idtentry.h>
- #include <asm/nmi.h>
- #include <asm/mce.h>
-@@ -146,31 +147,43 @@ static int register_stop_handler(void)
- 
- static void native_stop_other_cpus(int wait)
- {
--	unsigned long flags;
--	unsigned long timeout;
-+	unsigned int cpu = smp_processor_id();
-+	unsigned long flags, timeout;
- 
- 	if (reboot_force)
- 		return;
- 
--	/*
--	 * Use an own vector here because smp_call_function
--	 * does lots of things not suitable in a panic situation.
--	 */
-+	/* Only proceed if this is the first CPU to reach this code */
-+	if (atomic_cmpxchg(&stopping_cpu, -1, cpu) != -1)
-+		return;
++	if (write && pos < vma->vm_start) {
++		mmap_write_lock(mm);
++		ret = expand_downwards(vma, pos, true);
++		if (unlikely(ret < 0)) {
++			mmap_write_unlock(mm);
+ 			return NULL;
+-	}
+-#endif
+-
+-	if (write)
+-		gup_flags |= FOLL_WRITE;
++		}
++		mmap_write_downgrade(mm);
++	} else
++		mmap_read_lock(mm);
  
  	/*
--	 * We start by using the REBOOT_VECTOR irq.
--	 * The irq is treated as a sync point to allow critical
--	 * regions of code on other cpus to release their spin locks
--	 * and re-enable irqs.  Jumping straight to an NMI might
--	 * accidentally cause deadlocks with further shutdown/panic
--	 * code.  By syncing, we give the cpus up to one second to
--	 * finish their work before we force them off with the NMI.
-+	 * 1) Send an IPI on the reboot vector to all other CPUs.
-+	 *
-+	 *    The other CPUs should react on it after leaving critical
-+	 *    sections and re-enabling interrupts. They might still hold
-+	 *    locks, but there is nothing which can be done about that.
-+	 *
-+	 * 2) Wait for all other CPUs to report that they reached the
-+	 *    HLT loop in stop_this_cpu()
-+	 *
-+	 * 3) If #2 timed out send an NMI to the CPUs which did not
-+	 *    yet report
-+	 *
-+	 * 4) Wait for all other CPUs to report that they reached the
-+	 *    HLT loop in stop_this_cpu()
-+	 *
-+	 * #3 can obviously race against a CPU reaching the HLT loop late.
-+	 * That CPU will have reported already and the "have all CPUs
-+	 * reached HLT" condition will be true despite the fact that the
-+	 * other CPU is still handling the NMI. Again, there is no
-+	 * protection against that as "disabled" APICs still respond to
-+	 * NMIs.
+ 	 * We are doing an exec().  'current' is the process
+-	 * doing the exec and bprm->mm is the new process's mm.
++	 * doing the exec and 'mm' is the new process's mm.
  	 */
--	if (num_online_cpus() > 1) {
--		/* did someone beat us here? */
--		if (atomic_cmpxchg(&stopping_cpu, -1, safe_smp_processor_id()) != -1)
--			return;
-+	cpumask_copy(&cpus_stop_mask, cpu_online_mask);
-+	cpumask_clear_cpu(cpu, &cpus_stop_mask);
+-	mmap_read_lock(bprm->mm);
+-	ret = get_user_pages_remote(bprm->mm, pos, 1, gup_flags,
++	ret = get_user_pages_remote(mm, pos, 1,
++			write ? FOLL_WRITE : 0,
+ 			&page, NULL, NULL);
+-	mmap_read_unlock(bprm->mm);
++	mmap_read_unlock(mm);
+ 	if (ret <= 0)
+ 		return NULL;
  
-+	if (!cpumask_empty(&cpus_stop_mask)) {
- 		/* sync above data before sending IRQ */
- 		wmb();
+ 	if (write)
+-		acct_arg_size(bprm, vma_pages(bprm->vma));
++		acct_arg_size(bprm, vma_pages(vma));
  
-@@ -183,12 +196,12 @@ static void native_stop_other_cpus(int w
- 		 * CPUs reach shutdown state.
- 		 */
- 		timeout = USEC_PER_SEC;
--		while (num_online_cpus() > 1 && timeout--)
-+		while (!cpumask_empty(&cpus_stop_mask) && timeout--)
- 			udelay(1);
- 	}
- 
- 	/* if the REBOOT_VECTOR didn't work, try with the NMI */
--	if (num_online_cpus() > 1) {
-+	if (!cpumask_empty(&cpus_stop_mask)) {
- 		/*
- 		 * If NMI IPI is enabled, try to register the stop handler
- 		 * and send the IPI. In any case try to wait for the other
-@@ -200,7 +213,8 @@ static void native_stop_other_cpus(int w
- 
- 			pr_emerg("Shutting down cpus with NMI\n");
- 
--			apic_send_IPI_allbutself(NMI_VECTOR);
-+			for_each_cpu(cpu, &cpus_stop_mask)
-+				apic->send_IPI(cpu, NMI_VECTOR);
- 		}
- 		/*
- 		 * Don't wait longer than 10 ms if the caller didn't
-@@ -208,7 +222,7 @@ static void native_stop_other_cpus(int w
- 		 * one or more CPUs do not reach shutdown state.
- 		 */
- 		timeout = USEC_PER_MSEC * 10;
--		while (num_online_cpus() > 1 && (wait || timeout--))
-+		while (!cpumask_empty(&cpus_stop_mask) && (wait || timeout--))
- 			udelay(1);
- 	}
- 
-@@ -216,6 +230,12 @@ static void native_stop_other_cpus(int w
- 	disable_local_APIC();
- 	mcheck_cpu_clear(this_cpu_ptr(&cpu_info));
- 	local_irq_restore(flags);
-+
-+	/*
-+	 * Ensure that the cpus_stop_mask cache lines are invalidated on
-+	 * the other CPUs. See comment vs. SME in stop_this_cpu().
-+	 */
-+	cpumask_clear(&cpus_stop_mask);
+ 	return page;
  }
- 
- /*
 
 
