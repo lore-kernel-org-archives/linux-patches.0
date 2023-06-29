@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87192134C6
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CC0C433C0;
-	Thu, 29 Jun 2023 18:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE57134C6
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4B6C433C0;
+	Thu, 29 Jun 2023 18:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064514;
-	bh=nWgWPGv8CBwLY98GMC+Y6sSczCH5PlqgIQz6Ff4XSPU=;
+	s=korg; t=1688064517;
+	bh=3vSbWLjv9UUblbzmPTM+s7NwleWeUaNyaGWb/hbwl5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbIXXKSsD0Q/HwZx0jz0xbejUIaEQawn8rhvDwP/U/xGhH//GPDHs/vN29QlhxTEa
-	 3fzNtkYrbYHApogG6/ev+UXRbm+TXn4SfVPf9n59Sn7RvgaZ5SI0CtsGac+9jtxBsN
-	 00pqfa/TkH8+yEZjDYmdwMEtLUp/iDmNHSH0eNnU=
+	b=1WZIigYq7nlJVXUOelb4+c86/A4EiMI7yqazv0mbqVhtpkzbbAFUwCWpxirWE2nkN
+	 PJ7f04VRo66Aje5veXboNGiNeFi/4W7xoUlUMD3JrE/0JmcqTgkXLKdMiUQj41kFMA
+	 OjO5DpnzDnyX4ubNiOXwp+E5i4HCAGaNnCSSPm7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Ashok Raj <ashok.raj@intel.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.4 04/28] x86/smp: Remove pointless wmb()s from native_stop_other_cpus()
-Date: Thu, 29 Jun 2023 20:43:52 +0200
-Message-ID: <20230629184152.070823428@linuxfoundation.org>
+Subject: [PATCH 6.4 05/28] x86/smp: Use dedicated cache-line for mwait_play_dead()
+Date: Thu, 29 Jun 2023 20:43:53 +0200
+Message-ID: <20230629184152.109222984@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.888604958@linuxfoundation.org>
 References: <20230629184151.888604958@linuxfoundation.org>
@@ -36,46 +37,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 2affa6d6db28855e6340b060b809c23477aa546e upstream.
+commit f9c9987bf52f4e42e940ae217333ebb5a4c3b506 upstream.
 
-The wmb()s before sending the IPIs are not synchronizing anything.
+Monitoring idletask::thread_info::flags in mwait_play_dead() has been an
+obvious choice as all what is needed is a cache line which is not written
+by other CPUs.
 
-If at all then the apic IPI functions have to provide or act as appropriate
-barriers.
+But there is a use case where a "dead" CPU needs to be brought out of
+MWAIT: kexec().
 
-Remove these cargo cult barriers which have no explanation of what they are
-synchronizing.
+This is required as kexec() can overwrite text, pagetables, stacks and the
+monitored cacheline of the original kernel. The latter causes MWAIT to
+resume execution which obviously causes havoc on the kexec kernel which
+results usually in triple faults.
+
+Use a dedicated per CPU storage to prepare for that.
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Ashok Raj <ashok.raj@intel.com>
 Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230615193330.378358382@linutronix.de
+Link: https://lore.kernel.org/r/20230615193330.434553750@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/smp.c |    6 ------
- 1 file changed, 6 deletions(-)
+ arch/x86/kernel/smpboot.c |   24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
---- a/arch/x86/kernel/smp.c
-+++ b/arch/x86/kernel/smp.c
-@@ -184,9 +184,6 @@ static void native_stop_other_cpus(int w
- 	cpumask_clear_cpu(cpu, &cpus_stop_mask);
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -101,6 +101,17 @@ EXPORT_PER_CPU_SYMBOL(cpu_die_map);
+ DEFINE_PER_CPU_READ_MOSTLY(struct cpuinfo_x86, cpu_info);
+ EXPORT_PER_CPU_SYMBOL(cpu_info);
  
- 	if (!cpumask_empty(&cpus_stop_mask)) {
--		/* sync above data before sending IRQ */
--		wmb();
++struct mwait_cpu_dead {
++	unsigned int	control;
++	unsigned int	status;
++};
++
++/*
++ * Cache line aligned data for mwait_play_dead(). Separate on purpose so
++ * that it's unlikely to be touched by other CPUs.
++ */
++static DEFINE_PER_CPU_ALIGNED(struct mwait_cpu_dead, mwait_cpu_dead);
++
+ /* Logical package management. We might want to allocate that dynamically */
+ unsigned int __max_logical_packages __read_mostly;
+ EXPORT_SYMBOL(__max_logical_packages);
+@@ -1758,10 +1769,10 @@ EXPORT_SYMBOL_GPL(cond_wakeup_cpu0);
+  */
+ static inline void mwait_play_dead(void)
+ {
++	struct mwait_cpu_dead *md = this_cpu_ptr(&mwait_cpu_dead);
+ 	unsigned int eax, ebx, ecx, edx;
+ 	unsigned int highest_cstate = 0;
+ 	unsigned int highest_subcstate = 0;
+-	void *mwait_ptr;
+ 	int i;
+ 
+ 	if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
+@@ -1796,13 +1807,6 @@ static inline void mwait_play_dead(void)
+ 			(highest_subcstate - 1);
+ 	}
+ 
+-	/*
+-	 * This should be a memory location in a cache line which is
+-	 * unlikely to be touched by other processors.  The actual
+-	 * content is immaterial as it is not actually modified in any way.
+-	 */
+-	mwait_ptr = &current_thread_info()->flags;
 -
- 		apic_send_IPI_allbutself(REBOOT_VECTOR);
+ 	wbinvd();
  
- 		/*
-@@ -208,9 +205,6 @@ static void native_stop_other_cpus(int w
- 		 * CPUs to stop.
+ 	while (1) {
+@@ -1814,9 +1818,9 @@ static inline void mwait_play_dead(void)
+ 		 * case where we return around the loop.
  		 */
- 		if (!smp_no_nmi_ipi && !register_stop_handler()) {
--			/* Sync above data before sending IRQ */
--			wmb();
--
- 			pr_emerg("Shutting down cpus with NMI\n");
+ 		mb();
+-		clflush(mwait_ptr);
++		clflush(md);
+ 		mb();
+-		__monitor(mwait_ptr, 0, 0);
++		__monitor(md, 0, 0);
+ 		mb();
+ 		__mwait(eax, 0);
  
- 			for_each_cpu(cpu, &cpus_stop_mask)
 
 
