@@ -1,190 +1,151 @@
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E1C12B89
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 16:09:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1688054968; x=1719590968;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=w60ZQIqwkubfUgjZNaUWpIjcuI/aSpX9DlE9mVEYAU4=;
-  b=gJV+XAsSwTjRN+4Hs08fjrX1QV5+d3BRDE9jOaVACdY5UaQD6CCFYn53
-   kbKjPiGQOn95oN6bLqp+F/J521Iv7537rzENtQ1iDF8P5ghoNyc7u5Qi4
-   MP1e5KDNthEMPYn+V1nrgFDvgENa8sZ7GjDAXuoNT2ihmhlBcC+6xUgqs
-   qLOfFp6385lGVbuEgPmPOliT4tUqQYjaEQtTcR07ZNYRvrGW6E/BBD6Iv
-   NPG4MtX+Fg8qXkyZczQPJaNTI6UpyqAmf34WjI+17Ugf9jYy4iEemixXK
-   SAVBatgdCz7HiVnqANReMIWD0HszQjQ79vfrd9+I83LIrhanHoi6Z4YpA
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10756"; a="362188884"
-X-IronPort-AV: E=Sophos;i="6.01,168,1684825200"; 
-   d="scan'208";a="362188884"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2023 09:05:51 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10756"; a="782717607"
-X-IronPort-AV: E=Sophos;i="6.01,168,1684825200"; 
-   d="scan'208";a="782717607"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by fmsmga008.fm.intel.com with ESMTP; 29 Jun 2023 09:05:49 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Thu, 29 Jun 2023 09:05:49 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Thu, 29 Jun 2023 09:05:48 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27 via Frontend Transport; Thu, 29 Jun 2023 09:05:48 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.108)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.27; Thu, 29 Jun 2023 09:05:47 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Jd71GjicLtBPg8SePPczj2m2EBhpxpppJEY/qbwz+sHGil1Gyihu0TBUGF58pu/134pZ6+9vUDkpyDZP8sBfkssWIY+AtVlj2Ji20MQlv0Rc/t3tFJENnGqoSszMEUJHagchdjyhlCqYFRIgNnLNqBdJFA0es1i2d2ZCY1ogurSrYSwAAmaFx+7T5vLqlQ8hjyBxjG/WmJ6qER0FURKm4YQdJjUApmEsCqGvqa9T6T/FBYPPKAIx0iTc1PfmxDjLLkurj3Gj2UeU/eJxVifKNLlqtbb7Prgt5h3UDwVJjZ7nL7mexhFt2fn/BZ4HyAq2MPU3se0l8SVPKNMEK0qFXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w60ZQIqwkubfUgjZNaUWpIjcuI/aSpX9DlE9mVEYAU4=;
- b=WQuvI6bikWeHOoI7cq2fNVDG+OXqCaDrITz9ZWSX9ulTcMFLbgweQlD45elRWS7wus65oV68bqZtGVTq+dQOdeOkp8RFvK2rG96qiPbgJSz+HFdXxAC7HhpnkmaKcpDWudLfWYhzzxaeNl2KL0FTE4Yd1LCed+IgrAR5ZPr+vvyWFP4JaK+/2m5OF5Yw+pcMlJLcPBFZzXIgUqj0GO33p4s+l4jN8L1JonQBsSJ3CAJ8fjA3l65oPbpf6i+hI/nnc+iSntmMw0isuJR9aaLAQlQgYv2gcTta/i3zq+DK38llnTXtM3wY9rOtH3p8hqU44zJ8TR8ZYgRMUO/98jWtLQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by SN7PR11MB6948.namprd11.prod.outlook.com (2603:10b6:806:2ab::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.26; Thu, 29 Jun
- 2023 16:05:45 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::f232:e1a0:b936:2aed]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::f232:e1a0:b936:2aed%7]) with mapi id 15.20.6521.024; Thu, 29 Jun 2023
- 16:05:45 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>, "Yu, Fenghua"
-	<fenghua.yu@intel.com>, "Chatre, Reinette" <reinette.chatre@intel.com>,
-	"Peter Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
-	"x86@kernel.org" <x86@kernel.org>
-CC: James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-doc@vger.kernel.org"
-	<linux-doc@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: RE: [PATCH v2 0/7] x86/resctrl: Add support for Sub-NUMA cluster
- (SNC) systems
-Thread-Topic: [PATCH v2 0/7] x86/resctrl: Add support for Sub-NUMA cluster
- (SNC) systems
-Thread-Index: AQHZpGd4opVYQG8LVkKVNIWhOE3q1q+henYAgACBwNA=
-Date: Thu, 29 Jun 2023 16:05:45 +0000
-Message-ID: <SJ1PR11MB608331B7F85320DD4CD93448FC25A@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20230621174006.42533-1-tony.luck@intel.com>
- <TYAPR01MB6330B9B17686EF426D2C3F308B25A@TYAPR01MB6330.jpnprd01.prod.outlook.com>
-In-Reply-To: <TYAPR01MB6330B9B17686EF426D2C3F308B25A@TYAPR01MB6330.jpnprd01.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels: MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_Enabled=true;
- MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_SetDate=2023-06-29T08:08:47Z;
- MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_Method=Standard;
- MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_Name=FUJITSU-RESTRICTED?;
- MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_SiteId=a19f121d-81e1-4858-a9d8-736e267fd4c7;
- MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_ActionId=b73e44bf-f1e5-48f7-90bc-39d98fdc2335;
- MSIP_Label_a7295cc1-d279-42ac-ab4d-3b0f4fece050_ContentBits=0
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|SN7PR11MB6948:EE_
-x-ms-office365-filtering-correlation-id: dd1961c6-8082-47e0-abc2-08db78bab254
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: rqLY7P4cE/N5KyHZB8UtqLm285TpXQEFHHAm+fSiWrA2q9/GiUOFXepGhO3M2g/KeKcS6hBtE7EZIni5vzSF8NIyc8dHrNRPh5atBg4AxQU6tan/EUFuv/iSsD2STxwn9Vn0GLGUAL3inAH5pRvI63yUBIxxoJUY33JVLHG6RUUMMuVU0TFwVFbQT75XnSPnT2ZGIPXnEPmnK7j63gtLdR5r2T/nYRB0l3Is4PdDxMFmZtgwfoDTkytn9TRvTxqeUz9zNbdiYZzp19E7ePGUQulXcleEQdhF4wfcLgrzmH4sjjso+iiocPJqzvQolZs0Fj4vueNDRJqpfH4Uj/K/5Julv6uJTH7hSZDTipJadpxHg3i+sHQrkOEBjWT/7retn2xsSOt3KkEBozBfAm8TD+FJX/0cgWhKZBgBX1b8kwtXGQV2VdFmdMIB9i71l6n0czIdOm+eNtQaAc3sS1tYDw3w5z1KrI4RDuZFmO+dQ4mS8Scyg76cjJAKeaDFGfveZIspTFMuAffHnXGbnughdQgREjQSJhdPmOFZMz9W3C9+w0HG2+KQanAShTROyUA4saTVT80RCwYABOMhRgB9g7RsbTEIXkZy5Qnmf8LW7KFvY8Sy2/ubXvjwCl5lxbiV
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(136003)(396003)(366004)(346002)(39860400002)(376002)(451199021)(66446008)(33656002)(52536014)(38070700005)(5660300002)(64756008)(66476007)(86362001)(66556008)(7416002)(41300700001)(122000001)(8676002)(8936002)(76116006)(55016003)(316002)(4326008)(38100700002)(66946007)(82960400001)(9686003)(2906002)(186003)(478600001)(6506007)(26005)(7696005)(110136005)(71200400001)(54906003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?tVGM47S9b6RgEkHQbkhThuudq6xGN9dXpRv3v38p6Or5YOQw6tgegJqsiuJY?=
- =?us-ascii?Q?1R2mkNFP1R+LWygC4nYeQS9U3TeAtCsDhxpfq8yTtz5sbidMWfFjCJxWf1Df?=
- =?us-ascii?Q?VGkB5NSTIe25TJHZvRWaXL5kqypP213YoGgwhdR3wEghAkJ0eijhDfvK2ERU?=
- =?us-ascii?Q?A7MTz2TDYji/0wWVFfE9aUYwaAomTCmsBguty5KFQteum8ZEUT8xUm28UIks?=
- =?us-ascii?Q?tAzh80rMucowPvSaRRMx/9a3El8zVzbc4bo1hJ0EGsFaH6CB1KeH1VoDM0uC?=
- =?us-ascii?Q?bdl2mrqncfA7NsxIqs4UFh/qaqOWfsfX0JVsi7dEz56+zNxwjXK1BwD02CUf?=
- =?us-ascii?Q?npffoj5Z8jIuNtY040rDZdxJiD+VwrWTrn9aIg4vCzEi0dKnR5+BL7hvYSEZ?=
- =?us-ascii?Q?FGUgYBZaf2FB3a1K94Zm3Fhrr2l3uSygBcL/KS//TlndwZ2t+p8TU68aAKFZ?=
- =?us-ascii?Q?wgV8pzxWqjmZNT2G3Wb53QXaiV05/BLO6fBSWdSoGm+9uCGexCnp0BirvUK/?=
- =?us-ascii?Q?/1rNWelaLnSE1igDP2EnYl2tZALiselGH8vQxpf+hGC75u79jKMUrl4bE3fY?=
- =?us-ascii?Q?PeU3JMsImxDG2inXjPLCZPyU/6RUCxLTscGkGBM9J0Qd0BFiwCyJ3dXgNaKF?=
- =?us-ascii?Q?Fq9Ari6zWiec0d0YzMhYX2iTR9iUPZ8fpoOeV9SO7mMg1VEsJqzwlpLvpdFY?=
- =?us-ascii?Q?0Vhyh46RCqh4zHZMHGW4mSqwsasb1ahZscdcg9+5dERrhb9b0GYS7quPYfb1?=
- =?us-ascii?Q?uBxxQdUE/7JDMKwKfOYqWMg4gb3Kw1E3nvN7FZTlUB1MKeaf5FsIbxE+8/dN?=
- =?us-ascii?Q?4nNQ0WXxZu+gfO4D3ZqDpEoVE818LAMP7L/kT8iDOilLMi7A9/m7exu3EwfW?=
- =?us-ascii?Q?bBXGnKh68ZTdmNFpUscU87ERJWpwDyogLlkaomRJawrHSmm+bzBGaGQ4+7CM?=
- =?us-ascii?Q?CgYhFXpr47uteHt1IdpivXZ9vv8D2yOt6ExaMsDGEuiKW69BUrX5kM7iI+/T?=
- =?us-ascii?Q?vA0il0GW27Sy96gFVgIn9C7WpbkJRfYrOdioKKE8VemgSpcHmPDUL7DQham1?=
- =?us-ascii?Q?vVvuaphmyu13vfNrb6TPF7rlUru+lqNDdO3gQenPPFKQyY8JHME+lUW3hBfV?=
- =?us-ascii?Q?toIwKsH3YC6pHtUgickXgZw5DtImZE9lqwpeLSJ2MUzIzbe3a8Y3mPJUEckA?=
- =?us-ascii?Q?zV6wacVJjyGtdS5PUqG6o2iuFbalWCBOhdnVp1hH7LaxddPIVIyGSCjh4shk?=
- =?us-ascii?Q?1uVLvX/53duvMvEUOJ/I4zim56ijx+dWoNPWGltAY2GJXjJks4mgQwsBWy2N?=
- =?us-ascii?Q?NwaVgAYWUP/55AcCd7l/fSToW+qJ1g4pCjmnuQZN4j71Ri0VbgzGNCdA7RJH?=
- =?us-ascii?Q?+lRljWoyHgGt7frmvajQjSL8IwKMf0eW3qUDpSLwibzohp+JKl/8H0q5nhUO?=
- =?us-ascii?Q?eMhubqJCBSqwdXoXKjws2X/wObdRwo1QMGzZOoEDyu9UoSxbohbYHbf4aPac?=
- =?us-ascii?Q?sVUTFmFNhswgaeHAIyWp34P2TX525y9RsedntTwYo2NqeKcFGJGUBHffC5xt?=
- =?us-ascii?Q?exJyewb6xNNQsq7z7x0=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E075814267
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:44:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A2AC433C0;
+	Thu, 29 Jun 2023 18:44:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1688064276;
+	bh=jiBNPPQlhBhI9RuBfeQMzcn3DZgZQWtK/fidqMTM90k=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cDpPMFsicc7DXTS+l/VdeDNhT+W7uqu+SWWtk8ONwj56VP2y/Hg4tyHwOhBhUCZ1z
+	 5lGK2F2MUK+9JjYK4unBFzzxwLIT0I2kh8cGcs4sN3bJZAAlbiyiy1HBmf8rNELvSr
+	 o4aghNGjvNnQkufEvY6r+HzQE1TI2L8uVMNSTKT0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PATCH 6.1 01/30] mm/mmap: Fix error path in do_vmi_align_munmap()
+Date: Thu, 29 Jun 2023 20:43:20 +0200
+Message-ID: <20230629184151.707413629@linuxfoundation.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230629184151.651069086@linuxfoundation.org>
+References: <20230629184151.651069086@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dd1961c6-8082-47e0-abc2-08db78bab254
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Jun 2023 16:05:45.4068
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: QDXbFGqwQXKfPSVc3Sw6zK1BcQSldrWsR87OSZpCg/AHo5DUXC9tLswj4x5kYvaPHY9cgovQCn9cPglSIPouGw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6948
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> I ran selftest/resctrl in my environment,
-> CMT test failed when I enabled Sub-NUMA Cluster.
->
-> I don't know why it failed yet,
-> I paste the test results below.
->
-> Processer in my environment:
-> Intel(R) Xeon(R) Gold 6254 CPU @ 3.10GHz
->
-> $ sudo make -C tools/testing/selftests/resctrl run_tests
-> # # Starting CMT test ...
-> # # Mounting resctrl to "/sys/fs/resctrl"
-> # # Mounting resctrl to "/sys/fs/resctrl"
-> # # Cache size :25952256
-> # # Benchmark PID: 8638
-> # # Writing benchmark parameters to resctrl FS
-> # # Checking for pass/fail
-> # # Fail: Check cache miss rate within 15%
-> # # Percent diff=3D21
-> # # Number of bits: 5
-> # # Average LLC val: 9216000
-> # # Cache span (bytes): 11796480
-> # not ok 3 CMT: test
+From: "Liam R. Howlett" <Liam.Howlett@oracle.com>
 
-This is expected. When SNC is enabled, CAT still supports the same number o=
-f
-bits in the allocation cache mask. But each bit represents half as much cac=
-he.
+commit 606c812eb1d5b5fb0dd9e330ca94b52d7c227830 upstream
 
-Think of the cache as a 2-D matrix with the cache-ways (bits in the CAT mas=
-k)
-as the columns, and the rows are the hashed index of the physical address.
-When SNC is turned on the hash function for physical addresses from one
-of the SNC number nodes will only pick half of those rows (and the other
-SNC node gets the other half of the rows).
+The error unrolling was leaving the VMAs detached in many cases and
+leaving the locked_vm statistic altered, and skipping the unrolling
+entirely in the case of the vma tree write failing.
 
--Tony
+Fix the error path by re-attaching the detached VMAs and adding the
+necessary goto for the failed vma tree write, and fix the locked_vm
+statistic by only updating after the vma tree write succeeds.
+
+Fixes: 763ecb035029 ("mm: remove the vma linked list")
+Reported-by: Vegard Nossum <vegard.nossum@oracle.com>
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+[ dwmw2: Strictly, the original patch wasn't *re-attaching* the
+         detached VMAs. They *were* still attached but just had
+         the 'detached' flag set, which is an optimisation. Which
+         doesn't exist in 6.3, so drop that. Also drop the call
+         to vma_start_write() which came in with the per-VMA
+         locking in 6.4. ]
+[ dwmw2 (6.1): It's do_mas_align_munmap() here. And has two call
+         sites for the now-removed munmap_sidetree() function.
+         Inline them both rather then trying to backport various
+         dependencies with potentially subtle interactions. ]
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ mm/mmap.c |   33 ++++++++++++++-------------------
+ 1 file changed, 14 insertions(+), 19 deletions(-)
+
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -2311,19 +2311,6 @@ int split_vma(struct mm_struct *mm, stru
+ 	return __split_vma(mm, vma, addr, new_below);
+ }
+ 
+-static inline int munmap_sidetree(struct vm_area_struct *vma,
+-				   struct ma_state *mas_detach)
+-{
+-	mas_set_range(mas_detach, vma->vm_start, vma->vm_end - 1);
+-	if (mas_store_gfp(mas_detach, vma, GFP_KERNEL))
+-		return -ENOMEM;
+-
+-	if (vma->vm_flags & VM_LOCKED)
+-		vma->vm_mm->locked_vm -= vma_pages(vma);
+-
+-	return 0;
+-}
+-
+ /*
+  * do_mas_align_munmap() - munmap the aligned region from @start to @end.
+  * @mas: The maple_state, ideally set up to alter the correct tree location.
+@@ -2345,6 +2332,7 @@ do_mas_align_munmap(struct ma_state *mas
+ 	struct maple_tree mt_detach;
+ 	int count = 0;
+ 	int error = -ENOMEM;
++	unsigned long locked_vm = 0;
+ 	MA_STATE(mas_detach, &mt_detach, 0, 0);
+ 	mt_init_flags(&mt_detach, mas->tree->ma_flags & MT_FLAGS_LOCK_MASK);
+ 	mt_set_external_lock(&mt_detach, &mm->mmap_lock);
+@@ -2403,18 +2391,23 @@ do_mas_align_munmap(struct ma_state *mas
+ 
+ 			mas_set(mas, end);
+ 			split = mas_prev(mas, 0);
+-			error = munmap_sidetree(split, &mas_detach);
++			mas_set_range(&mas_detach, split->vm_start, split->vm_end - 1);
++			error = mas_store_gfp(&mas_detach, split, GFP_KERNEL);
+ 			if (error)
+-				goto munmap_sidetree_failed;
++				goto munmap_gather_failed;
++			if (next->vm_flags & VM_LOCKED)
++				locked_vm += vma_pages(split);
+ 
+ 			count++;
+ 			if (vma == next)
+ 				vma = split;
+ 			break;
+ 		}
+-		error = munmap_sidetree(next, &mas_detach);
+-		if (error)
+-			goto munmap_sidetree_failed;
++		mas_set_range(&mas_detach, next->vm_start, next->vm_end - 1);
++		if (mas_store_gfp(&mas_detach, next, GFP_KERNEL))
++			goto munmap_gather_failed;
++		if (next->vm_flags & VM_LOCKED)
++			locked_vm += vma_pages(next);
+ 
+ 		count++;
+ #ifdef CONFIG_DEBUG_VM_MAPLE_TREE
+@@ -2464,6 +2457,8 @@ do_mas_align_munmap(struct ma_state *mas
+ 	}
+ #endif
+ 	mas_store_prealloc(mas, NULL);
++
++	mm->locked_vm -= locked_vm;
+ 	mm->map_count -= count;
+ 	/*
+ 	 * Do not downgrade mmap_lock if we are next to VM_GROWSDOWN or
+@@ -2490,7 +2485,7 @@ do_mas_align_munmap(struct ma_state *mas
+ 	return downgrade ? 1 : 0;
+ 
+ userfaultfd_error:
+-munmap_sidetree_failed:
++munmap_gather_failed:
+ end_split_failed:
+ 	__mt_destroy(&mt_detach);
+ start_split_failed:
+
+
