@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E76134C6
-	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA43DC433C0;
-	Thu, 29 Jun 2023 18:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C6B134C6
+	for <patches@lists.linux.dev>; Thu, 29 Jun 2023 18:48:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6966FC433C8;
+	Thu, 29 Jun 2023 18:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688064487;
-	bh=X8rRh/NCPkMS8S+8HDjKiuAyLj8TM2Bm5jlGKLyXAsE=;
+	s=korg; t=1688064490;
+	bh=mi4lGTDBEd84OaduJF8ub/cpZt/AzKRXOOTFzSGKBZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AC06quXDZ5UkBVAGcJTejiItVoX66THZWzTFsiwMLwJJIaeW21RW+6h+3KKpuNKY8
-	 WRpriMiFNK+q9mzKicr4ZywgDDhg9LN9D1W36DBFWvyOo0y0D7T75YTbajQ6rqqfhw
-	 mcKw7zVgL1PVemZxB2p7836QM2sP9lASRce3uqb8=
+	b=hfOVWIxcpVq0Ad+Of+sJMYiv8uOjAjQa2s4RG055C+n0+MtwhxCvMHFRLHL1KbI96
+	 +tsoJC77UwbIgfc1LQHAP6ph1F6vEckCwDBPVdJQGK0BLeniSsT16Gk42uFxd6Vro0
+	 Fi3uqyAFO3RQK7lCLL9H/RTrUVwNNIKQM6M5rNE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.4 19/28] mm: make find_extend_vma() fail if write lock not held
-Date: Thu, 29 Jun 2023 20:44:07 +0200
-Message-ID: <20230629184152.663378382@linuxfoundation.org>
+	Tony Battersby <tonyb@cybernetics.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ashok Raj <ashok.raj@intel.com>
+Subject: [PATCH 6.4 02/28] x86/smp: Make stop_other_cpus() more robust
+Date: Thu, 29 Jun 2023 20:43:50 +0200
+Message-ID: <20230629184152.006895402@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230629184151.888604958@linuxfoundation.org>
 References: <20230629184151.888604958@linuxfoundation.org>
@@ -35,242 +36,235 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit f440fa1ac955e2898893f9301568435eb5cdfc4b upstream.
+commit 1f5e7eb7868e42227ac426c96d437117e6e06e8e upstream.
 
-Make calls to extend_vma() and find_extend_vma() fail if the write lock
-is required.
+Tony reported intermittent lockups on poweroff. His analysis identified the
+wbinvd() in stop_this_cpu() as the culprit. This was added to ensure that
+on SME enabled machines a kexec() does not leave any stale data in the
+caches when switching from encrypted to non-encrypted mode or vice versa.
 
-To avoid making this a flag-day event, this still allows the old
-read-locking case for the trivial situations, and passes in a flag to
-say "is it write-locked".  That way write-lockers can say "yes, I'm
-being careful", and legacy users will continue to work in all the common
-cases until they have been fully converted to the new world order.
+That wbinvd() is conditional on the SME feature bit which is read directly
+from CPUID. But that readout does not check whether the CPUID leaf is
+available or not. If it's not available the CPU will return the value of
+the highest supported leaf instead. Depending on the content the "SME" bit
+might be set or not.
 
-Co-Developed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+That's incorrect but harmless. Making the CPUID readout conditional makes
+the observed hangs go away, but it does not fix the underlying problem:
+
+CPU0					CPU1
+
+ stop_other_cpus()
+   send_IPIs(REBOOT);			stop_this_cpu()
+   while (num_online_cpus() > 1);         set_online(false);
+   proceed... -> hang
+				          wbinvd()
+
+WBINVD is an expensive operation and if multiple CPUs issue it at the same
+time the resulting delays are even larger.
+
+But CPU0 already observed num_online_cpus() going down to 1 and proceeds
+which causes the system to hang.
+
+This issue exists independent of WBINVD, but the delays caused by WBINVD
+make it more prominent.
+
+Make this more robust by adding a cpumask which is initialized to the
+online CPU mask before sending the IPIs and CPUs clear their bit in
+stop_this_cpu() after the WBINVD completed. Check for that cpumask to
+become empty in stop_other_cpus() instead of watching num_online_cpus().
+
+The cpumask cannot plug all holes either, but it's better than a raw
+counter and allows to restrict the NMI fallback IPI to be sent only the
+CPUs which have not reported within the timeout window.
+
+Fixes: 08f253ec3767 ("x86/cpu: Clear SME feature flag when not in use")
+Reported-by: Tony Battersby <tonyb@cybernetics.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Ashok Raj <ashok.raj@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/3817d810-e0f1-8ef8-0bbd-663b919ca49b@cybernetics.com
+Link: https://lore.kernel.org/r/87h6r770bv.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_elf.c    |    6 +++---
- fs/exec.c          |    5 +++--
- include/linux/mm.h |   10 +++++++---
- mm/memory.c        |    2 +-
- mm/mmap.c          |   50 +++++++++++++++++++++++++++++++++-----------------
- mm/nommu.c         |    3 ++-
- 6 files changed, 49 insertions(+), 27 deletions(-)
+ arch/x86/include/asm/cpu.h |    2 +
+ arch/x86/kernel/process.c  |   23 +++++++++++++++-
+ arch/x86/kernel/smp.c      |   62 +++++++++++++++++++++++++++++----------------
+ 3 files changed, 64 insertions(+), 23 deletions(-)
 
---- a/fs/binfmt_elf.c
-+++ b/fs/binfmt_elf.c
-@@ -320,10 +320,10 @@ create_elf_tables(struct linux_binprm *b
- 	 * Grow the stack manually; some architectures have a limit on how
- 	 * far ahead a user-space access may be in order to grow the stack.
+--- a/arch/x86/include/asm/cpu.h
++++ b/arch/x86/include/asm/cpu.h
+@@ -98,4 +98,6 @@ extern u64 x86_read_arch_cap_msr(void);
+ int intel_find_matching_signature(void *mc, unsigned int csig, int cpf);
+ int intel_microcode_sanity_check(void *mc, bool print_err, int hdr_type);
+ 
++extern struct cpumask cpus_stop_mask;
++
+ #endif /* _ASM_X86_CPU_H */
+--- a/arch/x86/kernel/process.c
++++ b/arch/x86/kernel/process.c
+@@ -759,13 +759,23 @@ bool xen_set_default_idle(void)
+ }
+ #endif
+ 
++struct cpumask cpus_stop_mask;
++
+ void __noreturn stop_this_cpu(void *dummy)
+ {
++	unsigned int cpu = smp_processor_id();
++
+ 	local_irq_disable();
++
+ 	/*
+-	 * Remove this CPU:
++	 * Remove this CPU from the online mask and disable it
++	 * unconditionally. This might be redundant in case that the reboot
++	 * vector was handled late and stop_other_cpus() sent an NMI.
++	 *
++	 * According to SDM and APM NMIs can be accepted even after soft
++	 * disabling the local APIC.
  	 */
--	if (mmap_read_lock_killable(mm))
-+	if (mmap_write_lock_killable(mm))
- 		return -EINTR;
--	vma = find_extend_vma(mm, bprm->p);
--	mmap_read_unlock(mm);
-+	vma = find_extend_vma_locked(mm, bprm->p, true);
-+	mmap_write_unlock(mm);
- 	if (!vma)
- 		return -EFAULT;
+-	set_cpu_online(smp_processor_id(), false);
++	set_cpu_online(cpu, false);
+ 	disable_local_APIC();
+ 	mcheck_cpu_clear(this_cpu_ptr(&cpu_info));
  
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -205,7 +205,8 @@ static struct page *get_arg_page(struct
+@@ -783,6 +793,15 @@ void __noreturn stop_this_cpu(void *dumm
+ 	 */
+ 	if (cpuid_eax(0x8000001f) & BIT(0))
+ 		native_wbinvd();
++
++	/*
++	 * This brings a cache line back and dirties it, but
++	 * native_stop_other_cpus() will overwrite cpus_stop_mask after it
++	 * observed that all CPUs reported stop. This write will invalidate
++	 * the related cache line on this CPU.
++	 */
++	cpumask_clear_cpu(cpu, &cpus_stop_mask);
++
+ 	for (;;) {
+ 		/*
+ 		 * Use native_halt() so that memory contents don't change
+--- a/arch/x86/kernel/smp.c
++++ b/arch/x86/kernel/smp.c
+@@ -27,6 +27,7 @@
+ #include <asm/mmu_context.h>
+ #include <asm/proto.h>
+ #include <asm/apic.h>
++#include <asm/cpu.h>
+ #include <asm/idtentry.h>
+ #include <asm/nmi.h>
+ #include <asm/mce.h>
+@@ -146,31 +147,43 @@ static int register_stop_handler(void)
  
- #ifdef CONFIG_STACK_GROWSUP
- 	if (write) {
--		ret = expand_downwards(bprm->vma, pos);
-+		/* We claim to hold the lock - nobody to race with */
-+		ret = expand_downwards(bprm->vma, pos, true);
- 		if (ret < 0)
- 			return NULL;
- 	}
-@@ -853,7 +854,7 @@ int setup_arg_pages(struct linux_binprm
- 	stack_base = vma->vm_end - stack_expand;
- #endif
- 	current->mm->start_stack = bprm->p;
--	ret = expand_stack(vma, stack_base);
-+	ret = expand_stack_locked(vma, stack_base, true);
- 	if (ret)
- 		ret = -EFAULT;
- 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -3192,11 +3192,13 @@ extern vm_fault_t filemap_page_mkwrite(s
- 
- extern unsigned long stack_guard_gap;
- /* Generic expand stack which grows the stack according to GROWS{UP,DOWN} */
--extern int expand_stack(struct vm_area_struct *vma, unsigned long address);
-+int expand_stack_locked(struct vm_area_struct *vma, unsigned long address,
-+		bool write_locked);
-+#define expand_stack(vma,addr) expand_stack_locked(vma,addr,false)
- 
- /* CONFIG_STACK_GROWSUP still needs to grow downwards at some places */
--extern int expand_downwards(struct vm_area_struct *vma,
--		unsigned long address);
-+int expand_downwards(struct vm_area_struct *vma, unsigned long address,
-+		bool write_locked);
- #if VM_GROWSUP
- extern int expand_upwards(struct vm_area_struct *vma, unsigned long address);
- #else
-@@ -3297,6 +3299,8 @@ unsigned long change_prot_numa(struct vm
- #endif
- 
- struct vm_area_struct *find_extend_vma(struct mm_struct *, unsigned long addr);
-+struct vm_area_struct *find_extend_vma_locked(struct mm_struct *,
-+		unsigned long addr, bool write_locked);
- int remap_pfn_range(struct vm_area_struct *, unsigned long addr,
- 			unsigned long pfn, unsigned long size, pgprot_t);
- int remap_pfn_range_notrack(struct vm_area_struct *vma, unsigned long addr,
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -5368,7 +5368,7 @@ struct vm_area_struct *lock_mm_and_find_
- 			goto fail;
- 	}
- 
--	if (expand_stack(vma, addr))
-+	if (expand_stack_locked(vma, addr, true))
- 		goto fail;
- 
- success:
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1935,7 +1935,8 @@ static int acct_stack_growth(struct vm_a
-  * PA-RISC uses this for its stack; IA64 for its Register Backing Store.
-  * vma is the last one with address > vma->vm_end.  Have to extend vma.
-  */
--int expand_upwards(struct vm_area_struct *vma, unsigned long address)
-+int expand_upwards(struct vm_area_struct *vma, unsigned long address,
-+		bool write_locked)
+ static void native_stop_other_cpus(int wait)
  {
- 	struct mm_struct *mm = vma->vm_mm;
- 	struct vm_area_struct *next;
-@@ -1959,6 +1960,8 @@ int expand_upwards(struct vm_area_struct
- 	if (gap_addr < address || gap_addr > TASK_SIZE)
- 		gap_addr = TASK_SIZE;
+-	unsigned long flags;
+-	unsigned long timeout;
++	unsigned int cpu = smp_processor_id();
++	unsigned long flags, timeout;
  
-+	if (!write_locked)
-+		return -EAGAIN;
- 	next = find_vma_intersection(mm, vma->vm_end, gap_addr);
- 	if (next && vma_is_accessible(next)) {
- 		if (!(next->vm_flags & VM_GROWSUP))
-@@ -2028,7 +2031,8 @@ int expand_upwards(struct vm_area_struct
- /*
-  * vma is the first one with address < vma->vm_start.  Have to extend vma.
-  */
--int expand_downwards(struct vm_area_struct *vma, unsigned long address)
-+int expand_downwards(struct vm_area_struct *vma, unsigned long address,
-+		bool write_locked)
- {
- 	struct mm_struct *mm = vma->vm_mm;
- 	MA_STATE(mas, &mm->mm_mt, vma->vm_start, vma->vm_start);
-@@ -2042,10 +2046,13 @@ int expand_downwards(struct vm_area_stru
- 	/* Enforce stack_guard_gap */
- 	prev = mas_prev(&mas, 0);
- 	/* Check that both stack segments have the same anon_vma? */
--	if (prev && !(prev->vm_flags & VM_GROWSDOWN) &&
--			vma_is_accessible(prev)) {
--		if (address - prev->vm_end < stack_guard_gap)
-+	if (prev) {
-+		if (!(prev->vm_flags & VM_GROWSDOWN) &&
-+		    vma_is_accessible(prev) &&
-+		    (address - prev->vm_end < stack_guard_gap))
- 			return -ENOMEM;
-+		if (!write_locked && (prev->vm_end == address))
-+			return -EAGAIN;
+ 	if (reboot_force)
+ 		return;
+ 
+-	/*
+-	 * Use an own vector here because smp_call_function
+-	 * does lots of things not suitable in a panic situation.
+-	 */
++	/* Only proceed if this is the first CPU to reach this code */
++	if (atomic_cmpxchg(&stopping_cpu, -1, cpu) != -1)
++		return;
+ 
+ 	/*
+-	 * We start by using the REBOOT_VECTOR irq.
+-	 * The irq is treated as a sync point to allow critical
+-	 * regions of code on other cpus to release their spin locks
+-	 * and re-enable irqs.  Jumping straight to an NMI might
+-	 * accidentally cause deadlocks with further shutdown/panic
+-	 * code.  By syncing, we give the cpus up to one second to
+-	 * finish their work before we force them off with the NMI.
++	 * 1) Send an IPI on the reboot vector to all other CPUs.
++	 *
++	 *    The other CPUs should react on it after leaving critical
++	 *    sections and re-enabling interrupts. They might still hold
++	 *    locks, but there is nothing which can be done about that.
++	 *
++	 * 2) Wait for all other CPUs to report that they reached the
++	 *    HLT loop in stop_this_cpu()
++	 *
++	 * 3) If #2 timed out send an NMI to the CPUs which did not
++	 *    yet report
++	 *
++	 * 4) Wait for all other CPUs to report that they reached the
++	 *    HLT loop in stop_this_cpu()
++	 *
++	 * #3 can obviously race against a CPU reaching the HLT loop late.
++	 * That CPU will have reported already and the "have all CPUs
++	 * reached HLT" condition will be true despite the fact that the
++	 * other CPU is still handling the NMI. Again, there is no
++	 * protection against that as "disabled" APICs still respond to
++	 * NMIs.
+ 	 */
+-	if (num_online_cpus() > 1) {
+-		/* did someone beat us here? */
+-		if (atomic_cmpxchg(&stopping_cpu, -1, safe_smp_processor_id()) != -1)
+-			return;
++	cpumask_copy(&cpus_stop_mask, cpu_online_mask);
++	cpumask_clear_cpu(cpu, &cpus_stop_mask);
+ 
++	if (!cpumask_empty(&cpus_stop_mask)) {
+ 		/* sync above data before sending IRQ */
+ 		wmb();
+ 
+@@ -183,12 +196,12 @@ static void native_stop_other_cpus(int w
+ 		 * CPUs reach shutdown state.
+ 		 */
+ 		timeout = USEC_PER_SEC;
+-		while (num_online_cpus() > 1 && timeout--)
++		while (!cpumask_empty(&cpus_stop_mask) && timeout--)
+ 			udelay(1);
  	}
  
- 	if (mas_preallocate(&mas, GFP_KERNEL))
-@@ -2124,13 +2131,14 @@ static int __init cmdline_parse_stack_gu
- __setup("stack_guard_gap=", cmdline_parse_stack_guard_gap);
+ 	/* if the REBOOT_VECTOR didn't work, try with the NMI */
+-	if (num_online_cpus() > 1) {
++	if (!cpumask_empty(&cpus_stop_mask)) {
+ 		/*
+ 		 * If NMI IPI is enabled, try to register the stop handler
+ 		 * and send the IPI. In any case try to wait for the other
+@@ -200,7 +213,8 @@ static void native_stop_other_cpus(int w
  
- #ifdef CONFIG_STACK_GROWSUP
--int expand_stack(struct vm_area_struct *vma, unsigned long address)
-+int expand_stack_locked(struct vm_area_struct *vma, unsigned long address,
-+		bool write_locked)
- {
--	return expand_upwards(vma, address);
-+	return expand_upwards(vma, address, write_locked);
+ 			pr_emerg("Shutting down cpus with NMI\n");
+ 
+-			apic_send_IPI_allbutself(NMI_VECTOR);
++			for_each_cpu(cpu, &cpus_stop_mask)
++				apic->send_IPI(cpu, NMI_VECTOR);
+ 		}
+ 		/*
+ 		 * Don't wait longer than 10 ms if the caller didn't
+@@ -208,7 +222,7 @@ static void native_stop_other_cpus(int w
+ 		 * one or more CPUs do not reach shutdown state.
+ 		 */
+ 		timeout = USEC_PER_MSEC * 10;
+-		while (num_online_cpus() > 1 && (wait || timeout--))
++		while (!cpumask_empty(&cpus_stop_mask) && (wait || timeout--))
+ 			udelay(1);
+ 	}
+ 
+@@ -216,6 +230,12 @@ static void native_stop_other_cpus(int w
+ 	disable_local_APIC();
+ 	mcheck_cpu_clear(this_cpu_ptr(&cpu_info));
+ 	local_irq_restore(flags);
++
++	/*
++	 * Ensure that the cpus_stop_mask cache lines are invalidated on
++	 * the other CPUs. See comment vs. SME in stop_this_cpu().
++	 */
++	cpumask_clear(&cpus_stop_mask);
  }
- 
--struct vm_area_struct *
--find_extend_vma(struct mm_struct *mm, unsigned long addr)
-+struct vm_area_struct *find_extend_vma_locked(struct mm_struct *mm,
-+		unsigned long addr, bool write_locked)
- {
- 	struct vm_area_struct *vma, *prev;
- 
-@@ -2138,20 +2146,25 @@ find_extend_vma(struct mm_struct *mm, un
- 	vma = find_vma_prev(mm, addr, &prev);
- 	if (vma && (vma->vm_start <= addr))
- 		return vma;
--	if (!prev || expand_stack(prev, addr))
-+	if (!prev)
-+		return NULL;
-+	if (expand_stack_locked(prev, addr, write_locked))
- 		return NULL;
- 	if (prev->vm_flags & VM_LOCKED)
- 		populate_vma_page_range(prev, addr, prev->vm_end, NULL);
- 	return prev;
- }
- #else
--int expand_stack(struct vm_area_struct *vma, unsigned long address)
-+int expand_stack_locked(struct vm_area_struct *vma, unsigned long address,
-+		bool write_locked)
- {
--	return expand_downwards(vma, address);
-+	if (unlikely(!(vma->vm_flags & VM_GROWSDOWN)))
-+		return -EINVAL;
-+	return expand_downwards(vma, address, write_locked);
- }
- 
--struct vm_area_struct *
--find_extend_vma(struct mm_struct *mm, unsigned long addr)
-+struct vm_area_struct *find_extend_vma_locked(struct mm_struct *mm,
-+		unsigned long addr, bool write_locked)
- {
- 	struct vm_area_struct *vma;
- 	unsigned long start;
-@@ -2162,10 +2175,8 @@ find_extend_vma(struct mm_struct *mm, un
- 		return NULL;
- 	if (vma->vm_start <= addr)
- 		return vma;
--	if (!(vma->vm_flags & VM_GROWSDOWN))
--		return NULL;
- 	start = vma->vm_start;
--	if (expand_stack(vma, addr))
-+	if (expand_stack_locked(vma, addr, write_locked))
- 		return NULL;
- 	if (vma->vm_flags & VM_LOCKED)
- 		populate_vma_page_range(vma, addr, start, NULL);
-@@ -2173,6 +2184,11 @@ find_extend_vma(struct mm_struct *mm, un
- }
- #endif
- 
-+struct vm_area_struct *find_extend_vma(struct mm_struct *mm,
-+		unsigned long addr)
-+{
-+	return find_extend_vma_locked(mm, addr, false);
-+}
- EXPORT_SYMBOL_GPL(find_extend_vma);
  
  /*
---- a/mm/nommu.c
-+++ b/mm/nommu.c
-@@ -643,7 +643,8 @@ struct vm_area_struct *find_extend_vma(s
-  * expand a stack to a given address
-  * - not supported under NOMMU conditions
-  */
--int expand_stack(struct vm_area_struct *vma, unsigned long address)
-+int expand_stack_locked(struct vm_area_struct *vma, unsigned long address,
-+		bool write_locked)
- {
- 	return -ENOMEM;
- }
 
 
