@@ -1,78 +1,90 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325AD3FD4
-	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 06:21:05 +0000 (UTC)
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2b5c231f842so22940841fa.2
-        for <patches@lists.linux.dev>; Thu, 29 Jun 2023 23:21:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1688106064; x=1690698064;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rRbIAUxLipf503mIOlM3ZYKM925BvMPEOuWIEIxYBNQ=;
-        b=J3lkofH26gqKDY5t4dxPDICKkFC+dkZWUPX5Sk92DZ9UQgDmBrG+zpRDtG41e3ZIb2
-         klUhkV9VsSRWZNVQA4bNIgh/rYW/ebyZllvv0mVN54YQQI4g9W9h0z08Rj36OOQAPuQP
-         x6d447QBc+WrUsQQ5UjE9Xekc+sfrVYiQs6J0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688106064; x=1690698064;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rRbIAUxLipf503mIOlM3ZYKM925BvMPEOuWIEIxYBNQ=;
-        b=iqIpJdggdtHkVgk2V2A98tuPo+24repyXn4a1AxJuuR56QEjHkbbminYmkxm/SILxL
-         mDbLLpdOQXEzzYNsCscP7DeIWLGBqNorrj/POP8CW38xKquCbMh5IIe4qEcl57y+OX7A
-         vvcxcDo0vdYgnUymjc4HXsIe3bjcQo6SPd+4dA7rJu4ors/yn/lW7Hqms3q8jLhIR3Hw
-         H3UrjZitMqiUugUCm4f5VsPCz+EJ6WcaB+Vm7zMJ5gpS25GA3gGyagBM9/JwpEVzdl0f
-         31b2bSXjaitdF4l94n+nHwM0sjpauMkjTM+3tpzWTVVNqH5JoAfg6/tF0+hB77Il8ucG
-         r26A==
-X-Gm-Message-State: ABy/qLZtQFiHq4DgDZ1k81Ov8D5ubOON+49Cw21E87Fh8/XKdgehVZ0e
-	ela3KLuZLdvdDQeTU0/SI2rF0d33H3FwgYkB8rNf2AFp
-X-Google-Smtp-Source: APBJJlGO4BNXSm7EGLC2o+fc1K2dAI3MFiKRhgsKevW6qLR27o7YulCCdiFYtxBOdz3FD+Qxl4Grug==
-X-Received: by 2002:a2e:7d13:0:b0:2b6:982f:df6 with SMTP id y19-20020a2e7d13000000b002b6982f0df6mr1239147ljc.11.1688106063696;
-        Thu, 29 Jun 2023 23:21:03 -0700 (PDT)
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com. [209.85.208.176])
-        by smtp.gmail.com with ESMTPSA id x12-20020a2e880c000000b002b69c2fed0dsm2645426ljh.54.2023.06.29.23.21.02
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jun 2023 23:21:02 -0700 (PDT)
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2b5c231f842so22940401fa.2
-        for <patches@lists.linux.dev>; Thu, 29 Jun 2023 23:21:02 -0700 (PDT)
-X-Received: by 2002:a05:651c:206:b0:2b6:9f64:c375 with SMTP id
- y6-20020a05651c020600b002b69f64c375mr1282639ljn.47.1688106061998; Thu, 29 Jun
- 2023 23:21:01 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45E95240
+	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 06:28:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5394C433C8;
+	Fri, 30 Jun 2023 06:28:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1688106492;
+	bh=Bi17cT6QoK7w71H2ZRGDKU6Rdu/zSgePXPQhfko9J8Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Op4YO4XvQomo8SNJDAxBwXEwCGYGWevNc15VeB2aO9HLmoBecGSfE20gWbPMdLpcO
+	 wymprc0KVy7u0RjEELYWV6za4d23z/DxsiIitw7VASJ7wJg2LcgPtg5moLT2vCTUv9
+	 qA+mq5zDxRhd5SWBq2Selty5MNFU49W7wutXq4Mc=
+Date: Fri, 30 Jun 2023 08:28:09 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, linux-parisc <linux-parisc@vger.kernel.org>,
+	sparclinux@vger.kernel.org, Stephen Rothwell <sfr@canb.auug.org.au>,
+	Helge Deller <deller@gmx.de>, Jason Wang <wangborong@cdjrlc.com>
+Subject: Re: [PATCH 6.4 00/28] 6.4.1-rc1 review
+Message-ID: <2023063043-feminine-clasp-1d11@gregkh>
+References: <20230629184151.888604958@linuxfoundation.org>
+ <CA+G9fYsM2s3q1k=+wHszvNbkKbHGe1pskkffWvaGXjYrp6qR=g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230630055626.202608973@linuxfoundation.org>
-In-Reply-To: <20230630055626.202608973@linuxfoundation.org>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 29 Jun 2023 23:20:45 -0700
-X-Gmail-Original-Message-ID: <CAHk-=when9OgPprG57O+DtVFM7X9_wb6x2h4Veq4Gu6TUvxyiQ@mail.gmail.com>
-Message-ID: <CAHk-=when9OgPprG57O+DtVFM7X9_wb6x2h4Veq4Gu6TUvxyiQ@mail.gmail.com>
-Subject: Re: [PATCH 6.4 00/29] 6.4.1-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
-	conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+G9fYsM2s3q1k=+wHszvNbkKbHGe1pskkffWvaGXjYrp6qR=g@mail.gmail.com>
 
-On Thu, 29 Jun 2023 at 22:59, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> Linus Torvalds <torvalds@linux-foundation.org>
->     gup: add warning if some caller would seem to want stack expansion
+On Fri, Jun 30, 2023 at 11:00:51AM +0530, Naresh Kamboju wrote:
+> On Fri, 30 Jun 2023 at 00:18, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.4.1 release.
+> > There are 28 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Sat, 01 Jul 2023 18:41:39 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.1-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> Results from Linaro’s test farm.
+> 
+> Following build regression noticed on Linux stable-rc 6.4 and also noticed on
+> Linux mainline master.
+> 
+> Regressions found on Parisc and Sparc build failed:
+>  - build/gcc-11-defconfig
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Parisc Build log:
+> =============
+> arch/parisc/mm/fault.c: In function 'do_page_fault':
+> arch/parisc/mm/fault.c:292:22: error: 'prev' undeclared (first use in
+> this function)
+>   292 |                 if (!prev || !(prev->vm_flags & VM_GROWSUP))
+>       |                      ^~~~
+> arch/parisc/mm/fault.c:292:22: note: each undeclared identifier is
+> reported only once for each function it appears in
 
-Did you decide to take that one after all?
+This is now fixed in Linus's tree with ea3f8272876f ("parisc: fix
+expand_stack() conversion"), so I'll queue it up and push out
+yet-another-rc...
 
-It's not exactly wrong, and it might help find any odd cases, but I do
-suspect you can get syzbot etc to trigger the warning. It's designed
-to find crazy users, and syzbot is - pretty much by definition and by
-design - one of the craziest out there.
+thanks,
 
-            Linus
+greg k-h
