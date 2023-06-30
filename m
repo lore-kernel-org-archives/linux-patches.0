@@ -1,91 +1,90 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B822E561
-	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 15:07:37 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1b6824141b4so12208535ad.1
-        for <patches@lists.linux.dev>; Fri, 30 Jun 2023 08:07:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google; t=1688137656; x=1690729656;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8EnuOO6oK/ZVqVGz3O9HMiKg2lC4Al7i/4UAuVg8htY=;
-        b=PDNb3JOlAYukvjfbvtQ8ZLFvnbUoRaeNLFtvnAXu5kbH/6T7dn4pTHw5k8zpwiETGL
-         v9PQYHRTz9ctIdIWj9bV9ajKu870gPZlcBRKrZcjLhCY+tLRhybDb33Z+Fd1QgoVy920
-         KIdd1JfBuwockiY6424G/jo7krbCswaHzVaKg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688137656; x=1690729656;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8EnuOO6oK/ZVqVGz3O9HMiKg2lC4Al7i/4UAuVg8htY=;
-        b=ZLCL8VCx5KLNvi9+JrVIbcm/5jJeq2z/zUuZO+olfGFHcPD8EKcKFdQTizdAM1blp4
-         jYlJAUIK8eTlWweY3WIPABZ8aKuqdmy74e6KPpTXxLIoYtyV4MbojtAp87j/SwkRk7r7
-         A7s7H5Ekvf2jP98e5aY8uENAjrtt0unLOZU59PKXART1L/vkTEu7nUkxC8jkij7ATToE
-         WqAfTyCTUVvydr89kTAZgX/BuMWwirnKTW0QVkOA8hyWliD8bfcNgTI3eYk/IxgRyRfD
-         PIbUu6eARLzRQhRA5TGwh2mnKbkik55pbxP+j4TeorrnmV0Z4DpqNc0kic4yY2Mc27HY
-         3wsA==
-X-Gm-Message-State: AC+VfDyUJFxLrI8MOF/PzH9v4t3jaXPswfmCUJdRzxyuxrkFacxGb+TH
-	1hLHZG0DYm39Ugjr9xBUkEvQrA==
-X-Google-Smtp-Source: ACHHUZ5iqx/PxCy9A0NgfSEXCrVRwBebxEv2MkEa873Y9HdaqjtDpTpqnWXbi6zOPsH61dYoDU2WJA==
-X-Received: by 2002:a17:902:c411:b0:1b6:92f0:b6f5 with SMTP id k17-20020a170902c41100b001b692f0b6f5mr10240571plk.14.1688137656539;
-        Fri, 30 Jun 2023 08:07:36 -0700 (PDT)
-Received: from 88b90ce288d3 ([122.199.31.3])
-        by smtp.gmail.com with ESMTPSA id x12-20020a170902820c00b001b3d7205401sm10867637pln.303.2023.06.30.08.07.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jun 2023 08:07:35 -0700 (PDT)
-Date: Fri, 30 Jun 2023 15:07:27 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 6.4 00/31] 6.4.1-rc3 review
-Message-ID: <ZJ7vr/OtdYiwqLy2@88b90ce288d3>
-References: <20230630072101.040486316@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36B616415
+	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 15:35:07 +0000 (UTC)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id ECDEE5C1D56;
+	Fri, 30 Jun 2023 11:32:58 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Fri, 30 Jun 2023 11:32:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
+	1688139178; x=1688225578; bh=hhBomBeAlOmsPL3qCHSlVfZmdBVSngojM0t
+	0AkUf/oY=; b=X9J310eeZDjBWSv3x9bGvUYm6RSBDvVnQkm3AgoaiNmTSjazQ+0
+	u61SPv8b4QmmmaDu3cLHR0QF7UkLBfShoRTMXdwy36uQelIYu22ou6Lqtru6o1zz
+	eNqjI1CRa9eqlsJI67t3+bUV2zaZnZ91aRsDcppoKgb3aRooAG+yT8cgCU0RHUmx
+	C8INgfwLw4qEfTyiZCNP3OlkJ8y+4YAiglAkbRPi3BWSkuDvGVBUCPb0ykSmDxWr
+	ErmKFHkF6sxxHoIncH3RBC0SxIAsNgfjUUEUkQ2OmPPwJF2m3jJrEXciuC4iVTMK
+	PdDqYymKPdIMFYIQX7Kqcm09vpKOqOIvpXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1688139178; x=1688225578; bh=hhBomBeAlOmsPL3qCHSlVfZmdBVSngojM0t
+	0AkUf/oY=; b=gM5/CB7KkpABu1vzt1euSdFBywQmG+sEehJNJgFbgIOXbN+gJ1s
+	sm04k4BvgGLiQF88ElgjNzufy4RuRYNZxT6S/NzKIsMdcnbJqPKoaoqUaRSe776T
+	zZ2i1OPul+ACzlGTwpni08oMCZ/UMyro6h56a5lyCVSQSD18tEAK2NO7xOMQxWPf
+	+VVTsEOuz7+VBIip3gIq5oA/tyPAZt2hvUbyHw78SfWCrF53+CJwDmTdBSqcOTiG
+	d3+Qdq9Tb3KscXiRoa0Z9c8iOTxN0g09n2M9EA24LO41JsVV3tjHse6LwO8hd4u1
+	A2oGBSUEtmEOdvrk0XP1w2l+YvypeEH9JcA==
+X-ME-Sender: <xms:qfWeZEaUgFvq51TlJudLsDT-lveGksLn10qW1G6w_F7WM0C8dCacsg>
+    <xme:qfWeZPYhdCeGF2uRXPXz5l1LJ-RnR5xfwumjjsOuFW4_fRAQEB3qwadym8p51aYku
+    LpExwKzhznvPIO6fw>
+X-ME-Received: <xmr:qfWeZO_RHb2aD9-hXkmgGv7a2Nm1XXHKDjmiDNJ2Gmd18vMf-L-c-DzikHqQXk3KgOjU5M3U8yRvuc5QIBVziQlBQTuWqNWeo3kuoA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrtdeigdekkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheptehlihgt
+    vgcutfihhhhluceorghlihgtvgesrhihhhhlrdhioheqnecuggftrfgrthhtvghrnhephe
+    duuddvteekvdektdduledugfffhfdugeejgeeuvdevtdetveejheehiefffeegnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvgesrh
+    ihhhhlrdhioh
+X-ME-Proxy: <xmx:qfWeZOqIhl_hAvqV0HfBPttWtTCg5gwNK2hBOjAC87EpoRwmXXoZpg>
+    <xmx:qfWeZPpLRuvwyezFe0Jgxxlr8v0oZ0BcpukP2NKKli2LvcoWFttmMA>
+    <xmx:qfWeZMSRj6zmdKKH48lRBDyY-KgLdTtoHiehvHbsS-pSQqfUmisWLA>
+    <xmx:qvWeZMjQHwcwyl_16HSKdFe4C3UbLudv-WE0H3U0OvqnqeCVlgzQ5Q>
+Feedback-ID: i56684263:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 30 Jun 2023 11:32:55 -0400 (EDT)
+Message-ID: <11c59308-1842-13ba-0945-a68e79d079b8@ryhl.io>
+Date: Fri, 30 Jun 2023 17:32:53 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230630072101.040486316@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] rust: types: make `Opaque` be `!Unpin`
+Content-Language: en-US-large
+To: Benno Lossin <benno.lossin@proton.me>, Miguel Ojeda <ojeda@kernel.org>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20230630150216.109789-1-benno.lossin@proton.me>
+From: Alice Ryhl <alice@ryhl.io>
+In-Reply-To: <20230630150216.109789-1-benno.lossin@proton.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 30, 2023 at 09:33:31AM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.4.1 release.
-> There are 31 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 6/30/23 17:03, Benno Lossin wrote:
+> Adds a `PhantomPinned` field to `Opaque<T>`. This removes the last Rust
+> guarantee: the assumption that the type `T` can be freely moved. This is
+> not the case for many types from the C side (e.g. if they contain a
+> `struct list_head`). This change removes the need to add a
+> `PhantomPinned` field manually to Rust structs that contain C structs
+> which must not be moved.
 > 
-> Responses should be made by Sun, 02 Jul 2023 07:20:45 +0000.
-> Anything received after that time might be too late.
+> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 
-Hi Greg,
-
-6.4.1-rc3 tested.
-
-Run tested on:
-- Allwinner H6 (Tanix TX6)
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
-
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- NXP iMX6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
-
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
---
-Rudi
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
