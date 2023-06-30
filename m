@@ -1,149 +1,108 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D0417FE3
-	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 18:18:02 +0000 (UTC)
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-9926623e367so253298366b.0
-        for <patches@lists.linux.dev>; Fri, 30 Jun 2023 11:18:02 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954258820
+	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 22:51:56 +0000 (UTC)
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3a1a47b33d8so1815360b6e.2
+        for <patches@lists.linux.dev>; Fri, 30 Jun 2023 15:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688149081; x=1690741081;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UqvAUyb2tsPBhVSd0pIEgVQNyRCdhhmwRegA/E/fvz0=;
-        b=duN6wGf0bxxTJFbCNwVHPjr7piWFkTJPQZgv1afCEzKQwDw2lMrEF4OAbr2HfhaUYO
-         jh1l0QSgxaxHS98eIs1HPD6HdKQIHWxS+07MIZxUX/1iFNd9QHrzRh2dAeD6EGhY48/a
-         lDu1N5z37d2hHaPoFA9FAzXklnk7gw/2jVeZKpiHZ/UsT8NYih5egxqa1LM46oK2CRn2
-         0yquiQaU1DnmIP6JZXLb1G6mjm7s/1amNXQGGLuWXC+75LdLsQFlwtUbJfV2X3Qnoo1d
-         fogyq6pGmOxyC3U8EdekDn4KS7hP0zlhLulQVu1kqHoExtNaH+fbsskVmMt+BExs4div
-         KoLw==
+        d=gmail.com; s=20221208; t=1688165515; x=1690757515;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=s0DLJtIFkdaIm3EidvG6OQVVTyxJT0X48wGGYbh5HAw=;
+        b=EXn+3tWSnFQ5GY6rP7GE9JMHCvrLOm+cLngXDgMJmXI0Ln4fgaMo3X+NBorR656w7O
+         aevcccY+g/mmU3fLA/JpJRR3QQeW1SAHBtHvQZUAZ1owSD76HywJxmLYl0IiIyZCrG6r
+         OcxquBB7yJU14hr9mKJ90AfPCsytIQZ/rUQcJvca+gtBLqCw8G9uiuckCJaYGLd9syrp
+         v2unNgJHHVgzAL456iazwwB6n4xx0BjKQpx3WNcN377XTpY4U8cMJ5GESFF3hqh/WyFL
+         /Sx4NCIWWbQKBxqPVU0VrKPxSMJdAMVTZen6eEuPA4jhK+LheD7b1j0wptKrkABctnBh
+         6eCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688149081; x=1690741081;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UqvAUyb2tsPBhVSd0pIEgVQNyRCdhhmwRegA/E/fvz0=;
-        b=F3NN7zEDP0gNZ9K61TF5K8tQTc4jhJ0u/CHUpXpBh/1stYXyN+TSDeV1xS03M/p40+
-         Al9vRlM+kVthX1SUdpOZ6sGS3sV8Q9LZhGC7INzMs9EsvKdooylLbrkwzd9c0pjgkcoQ
-         CzbYfvrfDzDQ/iDCBXNU53jHP76RiYZXSlkjqEWdu2YDMC++jPfnwLBdilfV4b1FMNJZ
-         3b5rSJpO0S8sRT/lB0NWgkBWOXd+iFwW1jVVwmzQVKqCStVOLZpmJpFnTRnAHJLWc9+c
-         5R9xPalxu0ZzqaxdpEgLhvznPLF9mpltDIe66hVXxUK2M9nPcvZc0x1FZvG2BYZV0bJW
-         3YJA==
-X-Gm-Message-State: ABy/qLb2VmhZnlvd7tncmHH3KgL2nlKn2oAufFpqWXte6YCTRqrF7aHO
-	0BBlmH2YAn9OsL26IdGGF0o=
-X-Google-Smtp-Source: APBJJlGtB9G3yRkfYsVLgiguvw7i3+UIzHgYg4xyjSXgx8V5csjh4PZAF8vuBRPuGUQixHBPlWhhBw==
-X-Received: by 2002:a17:906:4e52:b0:992:9a5e:3172 with SMTP id g18-20020a1709064e5200b009929a5e3172mr2089125ejw.59.1688149080879;
-        Fri, 30 Jun 2023 11:18:00 -0700 (PDT)
-Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com. [66.111.4.228])
-        by smtp.gmail.com with ESMTPSA id qp7-20020a170907206700b0098d0c01d9aasm8319773ejb.87.2023.06.30.11.17.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jun 2023 11:18:00 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailauth.nyi.internal (Postfix) with ESMTP id 86A5827C0071;
-	Fri, 30 Jun 2023 14:17:57 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 30 Jun 2023 14:17:57 -0400
-X-ME-Sender: <xms:UhyfZPpQEaPpLULou0AlaB4w_kc4Q7a46gTT5jxcRJL35CRGbSfX8g>
-    <xme:UhyfZJoyjreAsALv6A2JpNpR_k8e-9_TTRzs-VxgVK6vKLq47Mcygqlp6yITzf4cQ
-    S1nuiAR__7Tsg9wPw>
-X-ME-Received: <xmr:UhyfZMM_WhLpbSVNgrmF8VPFBle0Ke85DhZgCeB4hOzXVUSMXKrCYp95unU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrtdeigdduvdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehoqhhu
-    nhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrg
-    htthgvrhhnpeehudfgudffffetuedtvdehueevledvhfelleeivedtgeeuhfegueeviedu
-    ffeivdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    gsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdei
-    gedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfih
-    igmhgvrdhnrghmvg
-X-ME-Proxy: <xmx:UhyfZC7EXQzf2J3GAyTRcHrj79MN_2U5H9y4l00GrjaFJYmWjmdgkw>
-    <xmx:UhyfZO6f2XwVe1s6RCy-O24q5gpuG9Rr7dpuyl8ocrgN3OmSC5sI2w>
-    <xmx:UhyfZKiIpwLmYeD3v-UymYYio3cXox6chlW8RfnExEa2jCzS8blciw>
-    <xmx:VRyfZBr4Luyc2-jW86YWefXHSznNUKPv1jnDUt6VTJq0d02fDbD1Ug>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 Jun 2023 14:17:53 -0400 (EDT)
-Date: Fri, 30 Jun 2023 11:17:25 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: David Gow <davidgow@google.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <nmi@metaspace.dk>,
-	Philip Li <philip.li@intel.com>, kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 5/6] rust: support running Rust documentation tests as
- KUnit ones
-Message-ID: <ZJ8cNUW3oR2p+gL1@boqun-archlinux>
-References: <20230614180837.630180-1-ojeda@kernel.org>
- <20230614180837.630180-6-ojeda@kernel.org>
+        d=1e100.net; s=20221208; t=1688165515; x=1690757515;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s0DLJtIFkdaIm3EidvG6OQVVTyxJT0X48wGGYbh5HAw=;
+        b=ZVl0K46yQUndT6UYaYlecgrrrT/uF1DYw74oLJMva9Pda8FfKi4l3H2CTXxe0k7cj9
+         SKVGsRRqCXtbKmKgY8eSlTzlT3cID4J1DfbX51C0hTe7UOj/EWCTUGrWE4iRah5jWMCA
+         /mo8vOBy6p0ulRe5o1KNPe1wObgLHK4lCichGO2TVg2gHNr5AbiFILWTJnd4Eu2bqVq7
+         ax8trVIf3lpaAvW3DIyqm9Rc1qyzD50PUX/xVMW1i6vPQ1+XBdmeLry4VQkdGXFwnu3E
+         G3bC7i1c/yi17cId5pbhS9TSbYtje6fpPxVcmOS5yGB9Rw1bAYs3EV4iVeW5HC2c0C6h
+         NKEw==
+X-Gm-Message-State: AC+VfDxDPCI0lt0dwNKhBgts8Wjkqlbr3LOoMRV6tfU8z2hL3myDA6OD
+	fVeVffbft6IMyAGMrQt2rVs=
+X-Google-Smtp-Source: ACHHUZ6c1GxefJyh3YrPniRtPAxf2uGw39aCAcbKu4NKgfYjiSxuM45CpYSbWVnkfDi5uUblP2rUSw==
+X-Received: by 2002:a05:6808:318:b0:3a0:83cf:1d82 with SMTP id i24-20020a056808031800b003a083cf1d82mr3974942oie.22.1688165515388;
+        Fri, 30 Jun 2023 15:51:55 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id x14-20020a056a00270e00b005d22639b577sm6437968pfv.165.2023.06.30.15.51.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Jun 2023 15:51:54 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <fb63ea7b-c44b-fb1b-2014-3d23794fa896@roeck-us.net>
+Date: Fri, 30 Jun 2023 15:51:51 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230614180837.630180-6-ojeda@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Content-Language: en-US
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, linux-parisc
+ <linux-parisc@vger.kernel.org>, sparclinux@vger.kernel.org,
+ Stephen Rothwell <sfr@canb.auug.org.au>, Helge Deller <deller@gmx.de>,
+ Jason Wang <wangborong@cdjrlc.com>
+References: <20230629184151.888604958@linuxfoundation.org>
+ <CA+G9fYsM2s3q1k=+wHszvNbkKbHGe1pskkffWvaGXjYrp6qR=g@mail.gmail.com>
+ <CAHk-=whaO3RZmKj8NDjs4f6JEwuwQWWesOfFu-URzOqTkyPoxw@mail.gmail.com>
+ <fbe57907-b03f-ac8c-f3f4-4d6959bbc59c@roeck-us.net>
+ <CAHk-=wgE9iTd_g20RU+FYa0NPhGSdiUDPW+moEqdHR4du1jmVA@mail.gmail.com>
+ <CAHk-=wiN5H-2dh2zCo_jXE7_ekrxSHvQcMw4xfUKjuQs2=BN4w@mail.gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 6.4 00/28] 6.4.1-rc1 review
+In-Reply-To: <CAHk-=wiN5H-2dh2zCo_jXE7_ekrxSHvQcMw4xfUKjuQs2=BN4w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jun 14, 2023 at 08:08:29PM +0200, Miguel Ojeda wrote:
-> diff --git a/rust/helpers.c b/rust/helpers.c
-> index bb594da56137..49a5e1a4f0ae 100644
-> --- a/rust/helpers.c
-> +++ b/rust/helpers.c
-> @@ -18,6 +18,7 @@
->   * accidentally exposed.
->   */
->  
-> +#include <kunit/test-bug.h>
+On 6/29/23 23:47, Linus Torvalds wrote:
+> On Thu, 29 Jun 2023 at 23:33, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+>>
+>> Oh well.  We'll get them all. Eventually. Let me go fix up that csky case.
+> 
+> It's commit e55e5df193d2 ("csky: fix up lock_mm_and_find_vma() conversion").
+> 
+> Let's hope all the problems are these kinds of silly - but obvious -
+> naming differences between different architectures.
+> 
+> Because as long as they cause build errors, they may be embarrassing,
+> but easy to find and notice.
+> 
+> I may not have cared enough about some of these architectures, and it
+> shows. sparc32. parisc. csky...
+> 
 
-When CONFIG_KUNIT=n, the above file is mostly just a function that
-returns "NULL", however, since "NULL" is not defined: kunit/test-bug.h
-includes nothing if CONFIG_KUNIT=n, bindgen is not happy about it:
+There is one more, unfortunately.
 
-  ./include/kunit/test-bug.h:63:67: error: use of undeclared identifier 'NULL'
+Building xtensa:de212:kc705-nommu:nommu_kc705_defconfig ... failed
+------------
+Error log:
+arch/xtensa/mm/fault.c: In function ‘do_page_fault’:
+arch/xtensa/mm/fault.c:133:8: error: implicit declaration of function ‘lock_mm_and_find_vma’
 
-, we can fix this in Rust side by adding linux/stddef.h before
-kunit/test-bug.h as below, but maybe it's better fixed inside
-kunit/test-bug.h?
+This affects all stable release candidates as well as mainline.
+mmu builds are fine, and indeed lock_mm_and_find_vma() is only declared
+for CONFIG_MMU. I don't know if this needs a dummy or some other fix
+for the nommu case.
 
-Regards,
-Boqun
+Guenter
 
--------------------------------->8
-diff --git a/rust/helpers.c b/rust/helpers.c
-index 49a5e1a4f0ae..048d11c7d796 100644
---- a/rust/helpers.c
-+++ b/rust/helpers.c
-@@ -18,6 +18,7 @@
-  * accidentally exposed.
-  */
- 
-+#include <linux/stddef.h>
- #include <kunit/test-bug.h>
- #include <linux/bug.h>
- #include <linux/build_bug.h>
-
->  #include <linux/bug.h>
->  #include <linux/build_bug.h>
->  #include <linux/err.h>
-> @@ -135,6 +136,12 @@ void rust_helper_put_task_struct(struct task_struct *t)
->  }
->  EXPORT_SYMBOL_GPL(rust_helper_put_task_struct);
->  
-> +struct kunit *rust_helper_kunit_get_current_test(void)
-> +{
-> +	return kunit_get_current_test();
-> +}
-> +EXPORT_SYMBOL_GPL(rust_helper_kunit_get_current_test);
-> +
->  /*
->   * We use `bindgen`'s `--size_t-is-usize` option to bind the C `size_t` type
->   * as the Rust `usize` type, so we can use it in contexts where Rust
