@@ -1,113 +1,117 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342311C3F
-	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 05:25:26 +0000 (UTC)
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-26307d808a4so1060642a91.1
-        for <patches@lists.linux.dev>; Thu, 29 Jun 2023 22:25:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688102725; x=1690694725;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WzaczCUBTZTvAfZLPO+zN4aCSdU9+F5DHZ/dQrcjWzU=;
-        b=gyQqADp/Sx903gGG+OLLNk+axKHxz5gbLh03VL9H3rJuq5frIVmqzynqnNdfUUkSO0
-         chWzDJq2lk/NdeF58MtUmYE7rgpSzHA4Ilke0sHlMqPANkrZEudFK0RYm5MfTpP/s4Ga
-         zW1HeN0uelHRkHaABPcmIdqJBVT4QvqCgK1/PBqH2yqrko+u3/kb0jmSz/FnArnW0Kqh
-         wrFJRW6IeMWEJW/aUiQsaSI9Xxiw3LH/pbgdrhIti3ipTb0RUrDI2ehb/mTLq/y2lpBh
-         W4nEVl1stzehvrVw5xWZnqomsyIQkIRFXHzVqK+nmyXlm+P1JPB8V4Y4cT2wxjx49U3H
-         ZH3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688102725; x=1690694725;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WzaczCUBTZTvAfZLPO+zN4aCSdU9+F5DHZ/dQrcjWzU=;
-        b=LCsmdGAFOrlBQ/RUr3KOGl8yYa6LhHYVQ5vcsZUvUeSMhTJoogmoAY9IlJV1RyuQIu
-         I+in7xPR5HQP+SVL1we+WOdpfBTK7JliWzfXmacGvUniAvgbjrZbQ8JDZ3pgh5+xUbNa
-         ZlSB/ckiapCktsWB/m0ldoom6gf/8quq555We4YSDfcMmWEgFa2EQsg8YCVnWUAgbWC9
-         LjAjtN+y4USMhMsWvi2B1RYqEAhxlSTrtIoiAvtd/HUt85/UDX0cP/2UfvVakGy/y/PV
-         LDyR5XLTuqGOJ8TJGPRjoOhujqxG7Gj7dqW1Co5mk1SR1nUJwsa3c+Ll1aNZNKfvJ+rq
-         Y0Zw==
-X-Gm-Message-State: ABy/qLZ/b9nG2ee1AJ0QDit1IB2TbfZsfGSsSMS4E0JRDIe8r1EkCD50
-	2448R5qf4flQjiyejfVnw13T5DdQFtxNafcPTcigVg==
-X-Google-Smtp-Source: APBJJlEerSM3CUZkODwE5AWzXSKWK4mLESDhEoDSC1FUtMU+f/Z6odp2bCPSDoFODGkGksQKGE17TmrF/h6P0IVn9PA=
-X-Received: by 2002:a17:90a:3e0c:b0:262:ea83:ed34 with SMTP id
- j12-20020a17090a3e0c00b00262ea83ed34mr1463410pjc.0.1688102725225; Thu, 29 Jun
- 2023 22:25:25 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACA81FC5
+	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 05:30:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6173C433C0;
+	Fri, 30 Jun 2023 05:30:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1688103021;
+	bh=VQ7M4kh/KWrQfcfzfESBFkxMeyVAo5YH08YHeaFFudE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PyZSBXc+IjAJdfbqxhueGEJ81oOk98F8HiGhW3MKhwotqDGRPCT4jCyW5+6yemTtz
+	 cuBHAYdMQB6p/oQKIe0aX7kragMuEtE5DE2jJs2hHU4XK/sFqlAj0Qsi0jCXRIC4sR
+	 FDw6cD79AbUMgoMZdkOAjyjt9ttY+nM/HwPbn/OA=
+Date: Fri, 30 Jun 2023 07:30:18 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org
+Subject: Re: [PATCH 6.1 00/30] 6.1.37-rc1 review
+Message-ID: <2023063058-enchanted-narrow-eb7d@gregkh>
+References: <20230629184151.651069086@linuxfoundation.org>
+ <CAEUSe7-xC90CGpJjQD4w10ea=nXMiGhsFouhaa8fVK5W-WJJJQ@mail.gmail.com>
+ <2023063056-waviness-unearth-08aa@gregkh>
+ <CAEUSe7_3+JHgdEAkJ=7ha5pm=24dV5zN_LakKMM6RUBo+nABXQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230629184151.705870770@linuxfoundation.org> <CAEUSe7__cNqH6d1D96m8XriVckS9MnL6CRfd+iTYXnNkqu9nvQ@mail.gmail.com>
- <2023063037-matrix-urologist-030d@gregkh>
-In-Reply-To: <2023063037-matrix-urologist-030d@gregkh>
-From: =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
-Date: Thu, 29 Jun 2023 23:25:13 -0600
-Message-ID: <CAEUSe7-K199dv5_11O877i4pWYtCkaZU2zrsfVo4-QnNPdPQ+A@mail.gmail.com>
-Subject: Re: [PATCH 6.3 00/29] 6.3.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAEUSe7_3+JHgdEAkJ=7ha5pm=24dV5zN_LakKMM6RUBo+nABXQ@mail.gmail.com>
 
-Hello!
-
-On Thu, 29 Jun 2023 at 23:19, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
-> On Thu, Jun 29, 2023 at 03:54:03PM -0600, Daniel D=C3=ADaz wrote:
-> > Hello!
+On Thu, Jun 29, 2023 at 11:21:39PM -0600, Daniel Díaz wrote:
+> Hello!
+> 
+> On Thu, 29 Jun 2023 at 23:18, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> > On Thu, Jun 29, 2023 at 04:25:40PM -0600, Daniel Díaz wrote:
+> > > Hello!
+> > >
+> > > On Thu, 29 Jun 2023 at 12:46, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > > This is the start of the stable review cycle for the 6.1.37 release.
+> > > > There are 30 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Sat, 01 Jul 2023 18:41:39 +0000.
+> > > > Anything received after that time might be too late.
+> > > >
+> > > > The whole patch series can be found in one patch at:
+> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.37-rc1.gz
+> > > > or in the git tree and branch at:
+> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > > > and the diffstat can be found below.
+> > > >
+> > > > thanks,
+> > > >
+> > > > greg k-h
+> > >
+> > > Early report of failures.
+> > >
+> > > SPARC and PA-RISC both fail to build (GCC-8 and GCC-11).
+> > >
+> > > For SPARC:
+> > > * allnoconfig
+> > > * defconfig
+> > > * tinyconfig
+> > >
+> > > -----8<-----
+> > > /builds/linux/arch/sparc/mm/fault_32.c: In function 'force_user_fault':
+> > > /builds/linux/arch/sparc/mm/fault_32.c:312:49: error: 'regs'
+> > > undeclared (first use in this function)
+> > >   312 |         vma = lock_mm_and_find_vma(mm, address, regs);
+> > >       |                                                 ^~~~
+> > > /builds/linux/arch/sparc/mm/fault_32.c:312:49: note: each undeclared
+> > > identifier is reported only once for each function it appears in
+> > > make[4]: *** [/builds/linux/scripts/Makefile.build:250:
+> > > arch/sparc/mm/fault_32.o] Error 1
+> > > make[4]: Target 'arch/sparc/mm/' not remade because of errors.
+> > > ----->8-----
+> > >
+> > > For PA-RISC:
+> > > * allnoconfig
+> > > * tinyconfig
+> > >
+> > > -----8<-----
+> > > /builds/linux/arch/parisc/mm/fault.c: In function 'do_page_fault':
+> > > /builds/linux/arch/parisc/mm/fault.c:292:22: error: 'prev' undeclared
+> > > (first use in this function)
+> > >   292 |                 if (!prev || !(prev->vm_flags & VM_GROWSUP))
+> > >       |                      ^~~~
+> > > /builds/linux/arch/parisc/mm/fault.c:292:22: note: each undeclared
+> > > identifier is reported only once for each function it appears in
+> > > make[4]: *** [/builds/linux/scripts/Makefile.build:250:
+> > > arch/parisc/mm/fault.o] Error 1
+> > > make[4]: Target 'arch/parisc/mm/' not remade because of errors.
+> > > ----->8-----
 > >
-> > Early report of failures.
-> >
-> > Arm64 fails with GCC-11 on the following configurations:
-> > * lkftconfig
-> > * lkftconfig-64k_page_size
-> > * lkftconfig-debug
-> > * lkftconfig-debug-kmemleak
-> > * lkftconfig-kasan
-> > * lkftconfig-kselftest
-> > * lkftconfig-kunit
-> > * lkftconfig-libgpiod
-> > * lkftconfig-perf
-> > * lkftconfig-rcutorture
-> >
-> > lkftconfig is basically defconfig + a few fragments [1]. The suffixes
-> > mean that we're enabling a few other kconfigs.
-> >
-> > Failure:
-> > -----8<-----
-> > /builds/linux/arch/arm64/mm/fault.c: In function 'do_page_fault':
-> > /builds/linux/arch/arm64/mm/fault.c:576:9: error: 'vma' undeclared
-> > (first use in this function); did you mean 'vmap'?
-> >   576 |         vma =3D lock_mm_and_find_vma(mm, addr, regs);
-> >       |         ^~~
-> >       |         vmap
-> > /builds/linux/arch/arm64/mm/fault.c:576:9: note: each undeclared
-> > identifier is reported only once for each function it appears in
-> > /builds/linux/arch/arm64/mm/fault.c:579:17: error: label 'done' used
-> > but not defined
-> >   579 |                 goto done;
-> >       |                 ^~~~
-> > make[4]: *** [/builds/linux/scripts/Makefile.build:252:
-> > arch/arm64/mm/fault.o] Error 1
-> > make[4]: Target 'arch/arm64/mm/' not remade because of errors.
-> > ----->8-----
->
-> Is this also failing in Linus's tree?
+> > These issues are also in Linus's tree right now, right?  Or are they
+> > unique to the -rc releases right now?
+> 
+> Correct. I went to look at mainline and it fails the same way there
+> for SPARC and PA-RISC, so 6.1 and 6.4 are on par there; 6.3's failures
+> on Arm64 are only seen there.
 
-(Sorry for the previous top-post.)
+Thanks, I'll go dig into the 6.3 failures after coffee...
 
-No, only here on 6.3.
-
-Greetings!
-
-Daniel D=C3=ADaz
-daniel.diaz@linaro.org
