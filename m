@@ -1,96 +1,252 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3C1881E
-	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 06:57:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de;
- s=s31663417; t=1688108200; x=1688713000; i=deller@gmx.de;
- bh=0q0VUzs1KzIduNEEYU3fEHEwVR18u+xqcQFYFJu20RU=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
- b=htYO+Y87Hk65LKUyVkqEY/06G0o0PPyEFpbg3y2XgzOya4Mgs8PJeGYIhSV7uaIVmG+XqP7
- DJqm62soTcN663xdijGjoCBko18dtY+361fLBD7T10ukBZjipKbtxdlsF05owBEm//snxtdyo
- v4/2bOPQqJubG/SpzEJ/4Rdj55Vagl+OHrt9lapfj7FLNlxiDaPYBCZAESS9eKckxdHZl+iaM
- GrNzB1tmcPAGAmNi1ELZs3QL9W9lo3ETkxS1n7ksr0szCflSRgf9XAofuVQtTXrPx0Yr05fkQ
- mo082CdfJ/+GwPYo2cU/NVon0eL6fqOuEByfSYQNMbQfs1UPelsw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.60] ([94.134.148.7]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mqs4Z-1pkgzB08R7-00mvVz; Fri, 30
- Jun 2023 08:56:40 +0200
-Message-ID: <0b2aefa4-7407-4936-6604-dedfb1614483@gmx.de>
-Date: Fri, 30 Jun 2023 08:56:36 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47665C97
+	for <patches@lists.linux.dev>; Fri, 30 Jun 2023 07:32:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0947C433C0;
+	Fri, 30 Jun 2023 07:32:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1688110373;
+	bh=odjDHapv52yiwIorgPFPpyfEDiNSbN5pwFd1e9SWaqw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=uUYB6OkG4akaG43sszBMuOWWKm7WLbNAdXU/bzGti2mp7MTOR05E/kjVhngbTZ53j
+	 z9GTDXu8+Gf8wbNikjZ0fDzc+MxJJ1JNeaTrsvHok8CHAb2OhCl4m+RlYu23XZ/J5I
+	 PGPd6wSIyiBF2hkOn9Qj/1Tghym5Y89BCrolUtQ0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 6.1 00/33] 6.1.37-rc3 review
+Date: Fri, 30 Jun 2023 09:32:49 +0200
+Message-ID: <20230630072124.944461414@linuxfoundation.org>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 6.4 00/28] 6.4.1-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- linux-parisc <linux-parisc@vger.kernel.org>, sparclinux@vger.kernel.org,
- Stephen Rothwell <sfr@canb.auug.org.au>, Jason Wang <wangborong@cdjrlc.com>
-References: <20230629184151.888604958@linuxfoundation.org>
- <CA+G9fYsM2s3q1k=+wHszvNbkKbHGe1pskkffWvaGXjYrp6qR=g@mail.gmail.com>
- <CAHk-=whaO3RZmKj8NDjs4f6JEwuwQWWesOfFu-URzOqTkyPoxw@mail.gmail.com>
- <2023063001-overlying-browse-de1a@gregkh>
-From: Helge Deller <deller@gmx.de>
-In-Reply-To: <2023063001-overlying-browse-de1a@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:579RH/hxDQUZKy2JPrhdJGMkIR7PS/wWM2AUassTtV1Scraepz9
- +cSDfD2O+9+RtAFxZKlWQEzaRvmM5lNQtPz1kc6tiG3zk8wpAnbBC06p+sSr61Q2foZyPEO
- +y3V9cnLoVZQfBOXRzuhC7+LxOCJApqbfL5Z0PrCzwglxna6GinPHPjMw4QWED/QEp3jSqy
- YFYnKVsDe02eQ7uCpUZRw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:oX3xCpx1BDs=;6HP9D34Bw/26MSDKE4PCqBQFzIq
- ODo9vbV53GlPub7zuUS0PfKoxCLEhiT/+8jZ4iXTEl0+Y2njPFJFOgA0MDP8KDbZEmi1hRZaU
- xg48tkVLL2RnhbRMJTaM7Ijx6c2Pmf3cFRDynsQe+iV2tvDKcMoG/1HSBkUt+Q0koa7adc4Ij
- 8Eu+eSapnmV0Om/q6WFTWNxhyqo9yXWohHZCakbkL40HUCwNO6c+OZUiudyLGxsUJDxQx8ixa
- 7/irnUJl02evNJGvwRv83p3HzaNopu4vorEWXHTu4gSUqDAkrDmC9m/rBScyBuveONeaqUFKR
- NaCWUkCaIaM6PKZ5WparWFHT+m/zaLp0k7U+n2R6M1Rsr3bBjgBDp2dDPjE9FqtayowqsyC9W
- u8V2z6Kj3RauYFi8i2iaBk1Wa/laKUMVhLdZB3i2QBTDAfwWTpcU3g2PgQG5GQxM6FoOHyOzS
- UC0cr48hdqoooMnrmMlkh6k5fOG8pzZpdOOuysaCDfDvWzLg+22SvUtGfJszSi7V5G3dV1JYP
- PZVIh/C+aryjw8ypXaNE6l21fG+mIabU7c2bTaPQKyy1Cc8qKqKT6eO13Pt1i7E+auQkNea+/
- zzeVevC5sSvjOlh9zSraWRqyIB8JU6UCo2nscKm5JRkF0tF+Zq/Ge4KC7kEgzbuFJxC1bL8M+
- JplyGDxfhq3ZIFyUKP4rVLazIM/dJ41KQLPZmqUQAJaCK9XUKIZdL80w6ZuK2B3iSru6eYL+e
- hxBClLLgUW4GtQoTymjjLT1GppdoJP7BvGa+t68wG46TNyUXdVfpgSW7ZjfxshSZBiWYvyKWd
- AyugYY6KljR01+C4YS1gsbUJ5fgdjc4wIwRR1lLSPdmB1wfNKmeloOH6dgOdaxUteJ6tOgHFq
- 5Zt3gPK/vg+kwSEmyGkOFiHKGublbaQ2btlaaJ/NN8k47hgXZHLBZGJTGVAdKUrmvU+smYXqh
- +ecxoQj0LxRH2gZWcXSPW5U+Aqo=
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.37-rc3.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.1.37-rc3
+X-KernelTest-Deadline: 2023-07-02T07:21+00:00
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 6/30/23 08:29, Greg Kroah-Hartman wrote:
-> On Thu, Jun 29, 2023 at 11:16:21PM -0700, Linus Torvalds wrote:
->> On Thu, 29 Jun 2023 at 22:31, Naresh Kamboju <naresh.kamboju@linaro.org=
-> wrote:
->>>
->>> arch/parisc/mm/fault.c: In function 'do_page_fault':
->>> arch/parisc/mm/fault.c:292:22: error: 'prev' undeclared (first use in =
-this function)
->>>    292 |                 if (!prev || !(prev->vm_flags & VM_GROWSUP))
->>
->> Bah. "prev" should be "prev_vma" here.
->>
->> I've pushed out the fix. Greg, apologies. It's
->>
->>     ea3f8272876f parisc: fix expand_stack() conversion
->>
->> and Naresh already pointed to the similarly silly sparc32 fix.
->
-> Ah, I saw it hit your repo before your email here, sorry about that.
-> Now picked up.
+This is the start of the stable review cycle for the 6.1.37 release.
+There are 33 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-I've just cherry-picked ea3f8272876f on top of -rc2, built and run-tested =
-it,
-and everything is OK on parisc.
+Responses should be made by Sun, 02 Jul 2023 07:21:12 +0000.
+Anything received after that time might be too late.
 
-Thanks!
-Helge
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.37-rc3.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+and the diffstat can be found below.
+
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.1.37-rc3
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    csky: fix up lock_mm_and_find_vma() conversion
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    parisc: fix expand_stack() conversion
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    sparc32: fix lock_mm_and_find_vma() conversion
+
+Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+    Revert "thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe"
+
+Mike Hommey <mh@glandium.org>
+    HID: logitech-hidpp: add HIDPP_QUIRK_DELAYED_INIT for the T651.
+
+Jason Gerecke <jason.gerecke@wacom.com>
+    HID: wacom: Use ktime_t rather than int when dealing with timestamps
+
+Ludvig Michaelsson <ludvig.michaelsson@yubico.com>
+    HID: hidraw: fix data race on device refcount
+
+Zhang Shurong <zhang_shurong@foxmail.com>
+    fbdev: fix potential OOB read in fast_imageblit()
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    mm: always expand the stack with the mmap write lock held
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    execve: expand new process stack manually ahead of time
+
+Liam R. Howlett <Liam.Howlett@oracle.com>
+    mm: make find_extend_vma() fail if write lock not held
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    powerpc/mm: convert coprocessor fault to lock_mm_and_find_vma()
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    mm/fault: convert remaining simple cases to lock_mm_and_find_vma()
+
+Ben Hutchings <ben@decadent.org.uk>
+    arm/mm: Convert to using lock_mm_and_find_vma()
+
+Ben Hutchings <ben@decadent.org.uk>
+    riscv/mm: Convert to using lock_mm_and_find_vma()
+
+Ben Hutchings <ben@decadent.org.uk>
+    mips/mm: Convert to using lock_mm_and_find_vma()
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/mm: Convert to using lock_mm_and_find_vma()
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    arm64/mm: Convert to using lock_mm_and_find_vma()
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    mm: make the page fault mmap locking killable
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    mm: introduce new 'lock_mm_and_find_vma()' page fault helper
+
+Peng Zhang <zhangpeng.00@bytedance.com>
+    maple_tree: fix potential out-of-bounds access in mas_wr_end_piv()
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: isotp: isotp_sendmsg(): fix return error fix on TX path
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/smp: Cure kexec() vs. mwait_play_dead() breakage
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/smp: Use dedicated cache-line for mwait_play_dead()
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/smp: Remove pointless wmb()s from native_stop_other_cpus()
+
+Tony Battersby <tonyb@cybernetics.com>
+    x86/smp: Dont access non-existing CPUID leaf
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/smp: Make stop_other_cpus() more robust
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/microcode/AMD: Load late on both threads too
+
+Tony Luck <tony.luck@intel.com>
+    mm, hwpoison: when copy-on-write hits poison, take page offline
+
+Tony Luck <tony.luck@intel.com>
+    mm, hwpoison: try to recover from copy-on write faults
+
+Paolo Abeni <pabeni@redhat.com>
+    mptcp: ensure listener is unhashed before updating the sk status
+
+David Woodhouse <dwmw@amazon.co.uk>
+    mm/mmap: Fix error return in do_vmi_align_munmap()
+
+Liam R. Howlett <Liam.Howlett@oracle.com>
+    mm/mmap: Fix error path in do_vmi_align_munmap()
+
+
+-------------
+
+Diffstat:
+
+ Makefile                             |   4 +-
+ arch/alpha/Kconfig                   |   1 +
+ arch/alpha/mm/fault.c                |  13 +--
+ arch/arc/Kconfig                     |   1 +
+ arch/arc/mm/fault.c                  |  11 +--
+ arch/arm/Kconfig                     |   1 +
+ arch/arm/mm/fault.c                  |  63 +++-----------
+ arch/arm64/Kconfig                   |   1 +
+ arch/arm64/mm/fault.c                |  46 ++--------
+ arch/csky/Kconfig                    |   1 +
+ arch/csky/mm/fault.c                 |  22 ++---
+ arch/hexagon/Kconfig                 |   1 +
+ arch/hexagon/mm/vm_fault.c           |  18 +---
+ arch/ia64/mm/fault.c                 |  36 ++------
+ arch/loongarch/Kconfig               |   1 +
+ arch/loongarch/mm/fault.c            |  16 ++--
+ arch/m68k/mm/fault.c                 |   9 +-
+ arch/microblaze/mm/fault.c           |   5 +-
+ arch/mips/Kconfig                    |   1 +
+ arch/mips/mm/fault.c                 |  12 +--
+ arch/nios2/Kconfig                   |   1 +
+ arch/nios2/mm/fault.c                |  17 +---
+ arch/openrisc/mm/fault.c             |   5 +-
+ arch/parisc/mm/fault.c               |  23 +++--
+ arch/powerpc/Kconfig                 |   1 +
+ arch/powerpc/mm/copro_fault.c        |  14 +--
+ arch/powerpc/mm/fault.c              |  39 +--------
+ arch/riscv/Kconfig                   |   1 +
+ arch/riscv/mm/fault.c                |  31 +++----
+ arch/s390/mm/fault.c                 |   5 +-
+ arch/sh/Kconfig                      |   1 +
+ arch/sh/mm/fault.c                   |  17 +---
+ arch/sparc/Kconfig                   |   1 +
+ arch/sparc/mm/fault_32.c             |  32 ++-----
+ arch/sparc/mm/fault_64.c             |   8 +-
+ arch/um/kernel/trap.c                |  11 +--
+ arch/x86/Kconfig                     |   1 +
+ arch/x86/include/asm/cpu.h           |   2 +
+ arch/x86/include/asm/smp.h           |   2 +
+ arch/x86/kernel/cpu/microcode/amd.c  |   2 +-
+ arch/x86/kernel/process.c            |  28 +++++-
+ arch/x86/kernel/smp.c                |  73 ++++++++++------
+ arch/x86/kernel/smpboot.c            |  81 ++++++++++++++++--
+ arch/x86/mm/fault.c                  |  52 +-----------
+ arch/xtensa/Kconfig                  |   1 +
+ arch/xtensa/mm/fault.c               |  14 +--
+ drivers/hid/hid-logitech-hidpp.c     |   2 +-
+ drivers/hid/hidraw.c                 |   9 +-
+ drivers/hid/wacom_wac.c              |   6 +-
+ drivers/hid/wacom_wac.h              |   2 +-
+ drivers/iommu/amd/iommu_v2.c         |   4 +-
+ drivers/iommu/io-pgfault.c           |   2 +-
+ drivers/thermal/mtk_thermal.c        |  14 +--
+ drivers/video/fbdev/core/sysimgblt.c |   2 +-
+ fs/binfmt_elf.c                      |   6 +-
+ fs/exec.c                            |  38 +++++----
+ include/linux/highmem.h              |  26 ++++++
+ include/linux/mm.h                   |  21 ++---
+ lib/maple_tree.c                     |  11 +--
+ mm/Kconfig                           |   4 +
+ mm/gup.c                             |   6 +-
+ mm/memory.c                          | 159 ++++++++++++++++++++++++++++++++---
+ mm/mmap.c                            | 154 +++++++++++++++++++++++++--------
+ mm/nommu.c                           |  17 ++--
+ net/can/isotp.c                      |   5 +-
+ net/mptcp/pm_netlink.c               |   1 +
+ net/mptcp/protocol.c                 |  26 ++++--
+ 67 files changed, 682 insertions(+), 559 deletions(-)
+
+
