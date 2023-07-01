@@ -1,52 +1,52 @@
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489F53C17
-	for <patches@lists.linux.dev>; Sat,  1 Jul 2023 07:32:51 +0000 (UTC)
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-793f262b6a9so975971241.1
-        for <patches@lists.linux.dev>; Sat, 01 Jul 2023 00:32:51 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6FE23AE
+	for <patches@lists.linux.dev>; Sat,  1 Jul 2023 08:33:59 +0000 (UTC)
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-4718aa39ee6so759367e0c.0
+        for <patches@lists.linux.dev>; Sat, 01 Jul 2023 01:33:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1688196771; x=1690788771;
+        d=linaro.org; s=google; t=1688200438; x=1690792438;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aD+LfTs/YUVGMOZop79OlYJyRVQVHBTiplDmX5niAXE=;
-        b=eomZy8tHMfRCtQSDUIWFJu4NG0JyfbRd5b+IchHOT0c7mu53+luovdsyekrgq8jIcu
-         PgfloDtggpvPEO3Y4KrfahefwnEDHMb3P6X8+m3ODOm+aKSpUrQIR5RtyJC03sLlZ0i5
-         ksTXZ3KeXLq/d8J6MtVrKTBJbE0qOL2yijS+ISo+UnnjQbdgbNNSYcdBto+K3RR7SeaM
-         S2JXoer71I1h12vRxvQ5G5KjpebuQ2vRrsLRNz1QR3GLnhtLL31u6VM7OhUE/nQHW2cQ
-         fODbaCdGYXt4nIyEmRaacqy+mq6WRMHRKCXztSqUt8HhLBdehiU3jzcxHgq6blnqVhgL
-         NXrA==
+        bh=xcNvbuaIlv1gwLBFKc6vhXussHqO67ZMr6Hh1pCp9v8=;
+        b=xpHa5oNjpdiUPZaBjlyQSkonXJukLriMNTdoNWvJBDnrmgi9Ue1wN3oZ1rOOmiXqQB
+         R93fSykFhExR15JVkY5sijLzK9PWwKAf0qTPf9Efoo/S42kGPuZEbM/j62LE7hjm/DOO
+         kFb8kYe2XT80ZCxaO9Js3pCpKrn5YCpamnscT02XCxhjSILUeniTJfV4zJm4fDuPym8C
+         w+cv0zMNb6+As+pe6Tr3TzXp1YEdJv3AhTzO5E5+9BT5AbW5ZhPMCyfcORoWuDQafK+Y
+         IJyNdMLr+PqvkdOqVgIOf7kLqMsBm2Iw/7ahQIas5bj4jmTKHns+1Rf+BH0co1RELZef
+         B89A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688196771; x=1690788771;
+        d=1e100.net; s=20221208; t=1688200438; x=1690792438;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=aD+LfTs/YUVGMOZop79OlYJyRVQVHBTiplDmX5niAXE=;
-        b=invy2vzcJ9iT3a7jsKbvNjY2vx3KFyKDlk+OMUpeQDgMoSu1dAnVfAySaYVOKoXwtT
-         hRACoPrRibz4eW/A0uG+w1FFYiuFH0JfW3d5gThwTxYo19NVFjOpU/t9VTyJ0eREaAhE
-         KUUDlLHR+KdJ2BEycx+AR3rNb/83aVBXoJydbtGMsCjIcY3pn04yRRh0APEd7Cp1vOgI
-         Q2HLtP7Z+75Az/MWYZ85yD7ssi8M54zICkhjQQVshOSpcaOYd5YARWXrePexDdBlKyRS
-         PTpQDu/3N9ZkxwniRjjFTIPqo0f5sm/9NHpCiigfSQS9ueIxHb8f4O2qYfaq9CnXFEVL
-         asEw==
-X-Gm-Message-State: ABy/qLZD3ey42sOXw0APFBdug/pkKT3rsYtJugsRCPpIulI7m2dGbOmn
-	SBAJJ20WxW4VmvHC97vwZb1e1IuFgMYN8tXVu6TM6g==
-X-Google-Smtp-Source: APBJJlF/QltIkVcclcTGxqfBAGVKo3dDm+j6KFPLRV27KQi/NXDB4ODN4rxZSjvAzwKMz/CQHapisokoeaApyOmO4l8=
-X-Received: by 2002:a05:6102:2e2:b0:443:9037:d8d5 with SMTP id
- j2-20020a05610202e200b004439037d8d5mr3086615vsj.23.1688196770722; Sat, 01 Jul
- 2023 00:32:50 -0700 (PDT)
+        bh=xcNvbuaIlv1gwLBFKc6vhXussHqO67ZMr6Hh1pCp9v8=;
+        b=jJL6XwD4rtXyTBS/0w4rD+VmQfGsAcNMvN+DJPi1Hp8cUcUndy/uwQ4B02Iq8EOZol
+         4RK1BpJJ5vdHaLGrKdy/BrdS1sNEPWBGGy1iqjMLorCELTdKlKaf/k9A1qc+ymFdqLhX
+         BLyUOHfW4QpUjylZr3uR/wJGYSja2FsW8HGckQSceB3yAQK9BymC+2to2U8F7b6wQxJC
+         CMy3MW6tDR2ew3U0Gsdf39Ju3GVet7t7thcns+TWM5p8vtkFtvTZcmdqhHergANXHT8f
+         yCnULEGC1fcKDoFCBmfWpKMd0/NDpUBNKSR9j/qXszlvmf2Z9p3H9x1JcyDF4UxpXHfV
+         Lxpw==
+X-Gm-Message-State: ABy/qLZwSfbZ98DxvKhyksoVJYhZ0VtqCYx6cYwuFL3YuC2WmpGjuIup
+	Tg7kilAXRmu7bYumw172BWXgGJwRHOBJv0669h3R2g==
+X-Google-Smtp-Source: APBJJlH0I2HYlfuH3kSTq1UWWc6XFX1mtdGexglzmNqAupVxlQPg6qeFOIiFPhjGcJ/vJcP+Rs5qP5NQX/KaaQQedx0=
+X-Received: by 2002:a67:f6d6:0:b0:443:62c2:7f4f with SMTP id
+ v22-20020a67f6d6000000b0044362c27f4fmr2011479vso.32.1688200438090; Sat, 01
+ Jul 2023 01:33:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230630072120.689306958@linuxfoundation.org>
-In-Reply-To: <20230630072120.689306958@linuxfoundation.org>
+References: <20230630072101.040486316@linuxfoundation.org>
+In-Reply-To: <20230630072101.040486316@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sat, 1 Jul 2023 13:02:39 +0530
-Message-ID: <CA+G9fYuXf0pv7Z0HA3auQ+BRpVrC-Z2ncBY3s71L2ZbRg3-vuQ@mail.gmail.com>
-Subject: Re: [PATCH 6.3 00/32] 6.3.11-rc4 review
+Date: Sat, 1 Jul 2023 14:03:46 +0530
+Message-ID: <CA+G9fYt=rW=3+YK5wB9+6Mo9Sy7WuGSw1dWyvUJ3F1cq8YMDPg@mail.gmail.com>
+Subject: Re: [PATCH 6.4 00/31] 6.4.1-rc3 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -60,20 +60,20 @@ Content-Transfer-Encoding: quoted-printable
 On Fri, 30 Jun 2023 at 13:03, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.3.11 release.
-> There are 32 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.4.1 release.
+> There are 31 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Sun, 02 Jul 2023 07:21:08 +0000.
+> Responses should be made by Sun, 02 Jul 2023 07:20:45 +0000.
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.3.11-rc4.gz
+6.4.1-rc3.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.3.y
+-rc.git linux-6.4.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -85,9 +85,123 @@ Results from Linaro=E2=80=99s test farm.
 No regressions on arm64, arm, x86_64, and i386.
 
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
 NOTE:
-Build warnings on x86 with KCSAN config enabled with clang 16 tool chain.
+1) Following kernel BUG noticed while booting and running KASAN /
+KFENCE testing on
+qemu-arm64 and qemu-x86_64. This is always reproducible.
+
+Boot log:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+<6>[  508.503587]     KTAP version 1
+<6>[  508.504164]     # Subtest: input_core
+<6>[  508.505615]     1..3
+<6>[  508.514268] input: Test input device as /devices/virtual/input/input1
+<3>[  508.533860]
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+<3>[  508.535501] BUG: KASAN: slab-use-after-free in input_free_device+0x20=
+/0x74
+<3>[  508.537680] Read of size 1 at addr ffff0000c60dd548 by task
+kunit_try_catch/471
+<3>[  508.539159]
+<3>[  508.540334] CPU: 1 PID: 471 Comm: kunit_try_catch Tainted: G
+            N 6.4.1-rc3 #1
+<3>[  508.542035] Hardware name: linux,dummy-virt (DT)
+<3>[  508.543528] Call trace:
+<3>[  508.544275]  dump_backtrace+0x94/0x100
+<3>[  508.545430]  show_stack+0x18/0x24
+<3>[  508.546378]  dump_stack_lvl+0x48/0x60
+<3>[  508.547602]  print_report+0xf8/0x5c0
+<3>[  508.548600]  kasan_report+0x78/0xc0
+<3>[  508.549629]  __asan_load1+0x60/0x6c
+<3>[  508.550799]  input_free_device+0x20/0x74
+<3>[  508.551884]  input_test_exit+0x2c/0x3c
+<3>[  508.553028]  kunit_try_run_case+0x94/0x118
+<3>[  508.554249]  kunit_generic_run_threadfn_adapter+0x30/0x4c
+<3>[  508.555496]  kthread+0x1d4/0x1e4
+<3>[  508.556452]  ret_from_fork+0x10/0x20
+<3>[  508.558125]
+<3>[  508.558816] Allocated by task 471:
+<4>[  508.559974]  kasan_save_stack+0x2c/0x54
+<4>[  508.561120]  kasan_set_track+0x2c/0x40
+<4>[  508.562131]  kasan_save_alloc_info+0x24/0x34
+<4>[  508.563206]  __kasan_kmalloc+0xa0/0xb8
+<4>[  508.564204]  kmalloc_trace+0x54/0x68
+<4>[  508.565387]  input_allocate_device+0x30/0x164
+<4>[  508.566523]  input_test_init+0x94/0x1c4
+<4>[  508.567540]  kunit_try_run_case+0x60/0x118
+<4>[  508.568615]  kunit_generic_run_threadfn_adapter+0x30/0x4c
+<4>[  508.569927]  kthread+0x1d4/0x1e4
+<4>[  508.570869]  ret_from_fork+0x10/0x20
+<3>[  508.571923]
+<3>[  508.572538] Freed by task 471:
+<4>[  508.573365]  kasan_save_stack+0x2c/0x54
+<4>[  508.574404]  kasan_set_track+0x2c/0x40
+<4>[  508.575376]  kasan_save_free_info+0x38/0x60
+<4>[  508.576452]  __kasan_slab_free+0xe8/0x154
+<4>[  508.577537]  __kmem_cache_free+0x194/0x360
+<4>[  508.578423]  kfree+0x60/0x74
+<4>[  508.579332]  input_dev_release+0x64/0x80
+<4>[  508.580610]  device_release+0x94/0x10c
+<4>[  508.581712]  kobject_put+0xe0/0x184
+<4>[  508.582682]  put_device+0x14/0x24
+<4>[  508.583595]  input_unregister_device+0x78/0x90
+<4>[  508.584664]  input_test_exit+0x24/0x3c
+<4>[  508.585797]  kunit_try_run_case+0x94/0x118
+<4>[  508.586839]  kunit_generic_run_threadfn_adapter+0x30/0x4c
+<4>[  508.588072]  kthread+0x1d4/0x1e4
+<4>[  508.589121]  ret_from_fork+0x10/0x20
+<3>[  508.590175]
+<3>[  508.591009] The buggy address belongs to the object at ffff0000c60dd0=
+00
+<3>[  508.591009]  which belongs to the cache kmalloc-2k of size 2048
+<3>[  508.593404] The buggy address is located 1352 bytes inside of
+<3>[  508.593404]  freed 2048-byte region [ffff0000c60dd000, ffff0000c60dd8=
+00)
+<3>[  508.595234]
+<3>[  508.596225] The buggy address belongs to the physical page:
+<4>[  508.597748] page:00000000c20b6f30 refcount:1 mapcount:0
+mapping:0000000000000000 index:0x0 pfn:0x1060d8
+<4>[  508.599925] head:00000000c20b6f30 order:3 entire_mapcount:0
+nr_pages_mapped:0 pincount:0
+<4>[  508.601649] flags:
+0xbfffc0000010200(slab|head|node=3D0|zone=3D2|lastcpupid=3D0xffff)
+<4>[  508.603059] page_type: 0xffffffff()
+<4>[  508.604620] raw: 0bfffc0000010200 ffff0000c0002900
+dead000000000122 0000000000000000
+<4>[  508.606267] raw: 0000000000000000 0000000080080008
+00000001ffffffff 0000000000000000
+<4>[  508.607742] page dumped because: kasan: bad access detected
+<3>[  508.608610]
+<3>[  508.609452] Memory state around the buggy address:
+<3>[  508.611047]  ffff0000c60dd400: fb fb fb fb fb fb fb fb fb fb fb
+fb fb fb fb fb
+<3>[  508.612333]  ffff0000c60dd480: fb fb fb fb fb fb fb fb fb fb fb
+fb fb fb fb fb
+<3>[  508.613892] >ffff0000c60dd500: fb fb fb fb fb fb fb fb fb fb fb
+fb fb fb fb fb
+<3>[  508.615057]                                               ^
+<3>[  508.616277]  ffff0000c60dd580: fb fb fb fb fb fb fb fb fb fb fb
+fb fb fb fb fb
+<3>[  508.618324]  ffff0000c60dd600: fb fb fb fb fb fb fb fb fb fb fb
+fb fb fb fb fb
+<3>[  508.619628]
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+<4>[  508.621915] Disabling lock debugging due to kernel taint
+
+Links:
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.4.y/build/v6.=
+4-32-g94976aa9d87c/testrun/18006002/suite/log-parser-boot/test/check-kernel=
+-bug/log
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.4.y/build/v6.=
+4-32-g94976aa9d87c/testrun/18006002/suite/log-parser-boot/tests/
+
+2) Build warnings on x86 with KCSAN config enabled with clang 16 tool chain=
+.
 
 * x86_64, build
   - clang-16-lkftconfig-kcsan-warnings
@@ -101,31 +215,30 @@ vmlinux.o: warning: objtool: set_ftrace_ops_ro+0x27: relocation to
 vmlinux.o: warning: objtool: set_ftrace_ops_ro+0x3d: relocation to
 !ENDBR: .text+0x1b622c
 
+Link:
+ - https://storage.tuxsuite.com/public/linaro/lkft/builds/2RurEsG9Cn0pVN7kl=
+R71yKdp57r/
 
 ## Build
-* kernel: 6.3.11-rc4
+* kernel: 6.4.1-rc3
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.3.y
-* git commit: 45e606c9f23d18a36b9c799e8b7d2cf5bf750021
-* git describe: v6.3.10-33-g45e606c9f23d
+* git branch: linux-6.4.y
+* git commit: 94976aa9d87c63c78bc4d660382977fcf89d2921
+* git describe: v6.4-32-g94976aa9d87c
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.3.y/build/v6.3.1=
-0-33-g45e606c9f23d
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.4.y/build/v6.4-3=
+2-g94976aa9d87c/
 
-## Test Regressions (compared to v6.3.10)
+## Test Regressions (compared to v6.4)
 
-## Metric Regressions (compared to v6.3.10)
-* x86_64, build
-  - clang-16-lkftconfig-kcsan-warnings
-  -- https://storage.tuxsuite.com/public/linaro/lkft/builds/2RvmFs88FE1miMa=
-qYXJOs8Uy8yY/
+## Metric Regressions (compared to v6.4)
 
-## Test Fixes (compared to v6.3.10)
+## Test Fixes (compared to v6.4)
 
-## Metric Fixes (compared to v6.3.10)
+## Metric Fixes (compared to v6.4)
 
 ## Test result summary
-total: 183827, pass: 149450, fail: 2930, skip: 31289, xfail: 158
+total: 188717, pass: 153596, fail: 3192, skip: 31929
 
 ## Build Summary
 * arc: 5 total, 5 passed, 0 failed
