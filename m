@@ -1,69 +1,56 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E811665D
-	for <patches@lists.linux.dev>; Sat,  1 Jul 2023 02:49:43 +0000 (UTC)
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7659dc74d91so251055285a.0
-        for <patches@lists.linux.dev>; Fri, 30 Jun 2023 19:49:43 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB94315D1
+	for <patches@lists.linux.dev>; Sat,  1 Jul 2023 02:51:41 +0000 (UTC)
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6b46e61638eso2114422a34.0
+        for <patches@lists.linux.dev>; Fri, 30 Jun 2023 19:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688179782; x=1690771782;
+        d=gmail.com; s=20221208; t=1688179900; x=1690771900;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UFqIqSRBSLc1Ges7V4RrWVh1QvEfZbr10hghH4pahl4=;
-        b=joBIbtBiHuJSgzRq5oUo3wvVDjYntBYzr1nu/HT0snBPFR9KqOX2u6IVdOVMcinCAi
-         pufu6OGNMF6Zq6MnTzHrpEVO+ZqAknfkyy3O73Uify9Z5o3PJJqmdBsAy5t4SwSHpdrB
-         jLrMVTz6SU0kfBNDkHpwUtOqLwRdQuSgLwhFec7wtrwIwLuvO+GF0u0ft6rJkE5mX7S6
-         RSGBczju7bXSwOXvjX9gt/hjRsOrks2Crkch0Vw4pgCTYHKFC1IZ93I549kMZWFvrfsU
-         nuauTwH20djPpgXSYUcvHfMxUCtOMMseeDIDau6usnvH+G5gUw6GTAQryE6tSJNuz6P2
-         yF6Q==
+        bh=kLPVDuMNu8QoPIrCuHyB3Va+xnlEJ/NgNsqkyyDjCyc=;
+        b=OPEUcxnDrKfU6GZ6mi4LV50hrrWi8CImvIlvn/lA9vOnJ/aYEfKtT3LRJQci33Sls7
+         8a5dFbeIL7fce4t6BXggaaWhG40EBftFZipYgkl+2TwIEwafqHW2Q+mk2DLOcwgyLtIE
+         sX96SAdGOdR3mmfNXWBShZcxLvu8e6AH6zqWbKzRE6K6FE5ATus5Ny5fJk5oWzvuCGL1
+         dbbJsj6VVUGrFzwvxD0DjOwe+hec2wF3tewIXYv0AD8+Grw+QOygbfrSoS594KAS+N/Z
+         ZmkJN3JLVSZYJYx6PHaRBCtqSDZNa+M3j64VC5rdiWG/C9Jj8G59nc5mlMKW91F+2Gni
+         lG/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688179782; x=1690771782;
+        d=1e100.net; s=20221208; t=1688179900; x=1690771900;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UFqIqSRBSLc1Ges7V4RrWVh1QvEfZbr10hghH4pahl4=;
-        b=DJrYAEbvRKlYaevznWlUNGx0u7IwT1YHmXR9W1z/Rc2FR3ChmqhHag1r9hfnNDXG/U
-         y8YJXRc0gwDCWRs7m5pFH8TOhrMDG9EwrwwTAfuFGBVlxy+kQqdKm2D4mo0VytRWcMQr
-         sXEzHCJirXWtfXWDoyezP6quRX2Y3cx1aBtp5Nn/QpwZepiyUnM5ZALF1zi2r6G6Z69z
-         6WE9MUSS6fOewoPDWFkOs+eAuI0Ve2uCc0QaYR39wFaUFoGY66y8FugICM7Mi4M+GnDP
-         LqcmbrcyzEyWMjoz+xziBbWaGSIuj6UmIcRzKyRNewducWhMY/cmM4hI1Z792lHj9b9d
-         JV8w==
-X-Gm-Message-State: AC+VfDzjoXneMYFF902aVb0TEGTW6agtFe7fX4zXfZLnPOwgcPHWC0Ky
-	n2cmM9Atrx772Lcfj9fsvD4=
-X-Google-Smtp-Source: ACHHUZ4B6R4I+euwxmhxe2vEfD8fzPBZAFh9e9ic9lkRZHYEO5MIfilrT0jQhbbhk57WtDvOG52dAA==
-X-Received: by 2002:a05:620a:4249:b0:75b:23a1:3606 with SMTP id w9-20020a05620a424900b0075b23a13606mr5310663qko.23.1688179782577;
-        Fri, 30 Jun 2023 19:49:42 -0700 (PDT)
+        bh=kLPVDuMNu8QoPIrCuHyB3Va+xnlEJ/NgNsqkyyDjCyc=;
+        b=eVApl3euXvJ7AwEeOBXCdf4k6d3nWPXJqegWoKAilsTCeeutF1DE/WcpErzd6Skg2A
+         9LugJdYwUt/x/iILq6Mbf/kL94vs6ORi6z4E0pnGnXM3XfoWwKar7wlXZlOYjAuUZYXK
+         xVAhaEqZ7kGVdH8JEUjlkD9vuJcw/5L0GRsZJJ/ZuebpypzCn1x3qt0ZGG2jtmy0SGhO
+         prKccJQrFKic/6ABtXIURjKb1JzTtY2OwY1R+qhGnE96ouyJ3XatgCxAi8nDcjUdAmKd
+         MAr+TJrbvfMzlCZAOJKedRHCGSwA/g76VEyBGhYhMgTwjOf++FjHKzbQOKRTqfkssZKf
+         YP9g==
+X-Gm-Message-State: AC+VfDxUysNQ1PrQdor5a218wBT/H7Ibv64CCIXiUeFUFTWgThmWOkNV
+	rjB8nVIJ3dwU5NAEThPJMPM=
+X-Google-Smtp-Source: ACHHUZ75LvssH6Yx3LyBVIJFhCpmgOUIxglC/nRzy7Wt7L6yiDHPk9/ZNXK0ChdrTCt1PV+N59S6mA==
+X-Received: by 2002:a05:6830:1288:b0:6b7:1e57:aa96 with SMTP id z8-20020a056830128800b006b71e57aa96mr4668578otp.6.1688179900746;
+        Fri, 30 Jun 2023 19:51:40 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id k6-20020aa78206000000b0064aea45b040sm10510104pfi.168.2023.06.30.19.49.41
+        by smtp.gmail.com with ESMTPSA id ne11-20020a17090b374b00b00259b729eea9sm11408080pjb.8.2023.06.30.19.51.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jun 2023 19:49:41 -0700 (PDT)
+        Fri, 30 Jun 2023 19:51:40 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 30 Jun 2023 19:49:40 -0700
+Date: Fri, 30 Jun 2023 19:51:39 -0700
 From: Guenter Roeck <linux@roeck-us.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Chris Zankel <chris@zankel.net>, Max Filippov <jcmvbkbc@gmail.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	linux-parisc <linux-parisc@vger.kernel.org>,
-	sparclinux@vger.kernel.org, Stephen Rothwell <sfr@canb.auug.org.au>,
-	Helge Deller <deller@gmx.de>, Jason Wang <wangborong@cdjrlc.com>
-Subject: Re: [PATCH 6.4 00/28] 6.4.1-rc1 review
-Message-ID: <e4dd115b-1a41-4859-bbeb-b3a6a75bf664@roeck-us.net>
-References: <20230629184151.888604958@linuxfoundation.org>
- <CA+G9fYsM2s3q1k=+wHszvNbkKbHGe1pskkffWvaGXjYrp6qR=g@mail.gmail.com>
- <CAHk-=whaO3RZmKj8NDjs4f6JEwuwQWWesOfFu-URzOqTkyPoxw@mail.gmail.com>
- <fbe57907-b03f-ac8c-f3f4-4d6959bbc59c@roeck-us.net>
- <CAHk-=wgE9iTd_g20RU+FYa0NPhGSdiUDPW+moEqdHR4du1jmVA@mail.gmail.com>
- <CAHk-=wiN5H-2dh2zCo_jXE7_ekrxSHvQcMw4xfUKjuQs2=BN4w@mail.gmail.com>
- <fb63ea7b-c44b-fb1b-2014-3d23794fa896@roeck-us.net>
- <CAHk-=whh_aUHYF6LCV36K9NYHR4ofEZ0gwcg0RY5hj=B7AT4YQ@mail.gmail.com>
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Subject: Re: [PATCH 6.1 00/33] 6.1.37-rc3 review
+Message-ID: <7dc94d48-4e2e-4bb2-8a53-3555295b5a3e@roeck-us.net>
+References: <20230630072124.944461414@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -72,103 +59,25 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHk-=whh_aUHYF6LCV36K9NYHR4ofEZ0gwcg0RY5hj=B7AT4YQ@mail.gmail.com>
+In-Reply-To: <20230630072124.944461414@linuxfoundation.org>
 
-On Fri, Jun 30, 2023 at 06:24:49PM -0700, Linus Torvalds wrote:
-> On Fri, 30 Jun 2023 at 15:51, Guenter Roeck <linux@roeck-us.net> wrote:
-> >
-> > There is one more, unfortunately.
-> >
-> > Building xtensa:de212:kc705-nommu:nommu_kc705_defconfig ... failed
+On Fri, Jun 30, 2023 at 09:32:49AM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.37 release.
+> There are 33 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Heh. I didn't even realize that anybody would ever do
-> lock_mm_and_find_vma() code on a nommu platform.
+> Responses should be made by Sun, 02 Jul 2023 07:21:12 +0000.
+> Anything received after that time might be too late.
 > 
-> With nommu, handle_mm_fault() will just BUG(), so it's kind of
-> pointless to do any of this at all, and I didn't expect anybody to
-> have this page faulting path that just causes that BUG() for any
-> faults.
-> 
-> But it turns out xtensa has a notion of protection faults even for
-> NOMMU configs:
-> 
->     config PFAULT
->         bool "Handle protection faults" if EXPERT && !MMU
->         default y
->         help
->           Handle protection faults. MMU configurations must enable it.
->           noMMU configurations may disable it if used memory map never
->           generates protection faults or faults are always fatal.
-> 
->           If unsure, say Y.
-> 
-> which is why it violated my expectations so badly.
-> 
-> I'm not sure if that protection fault handling really ever gets quite
-> this far (it certainly should *not* make it to the BUG() in
-> handle_mm_fault()), but I think the attached patch is likely the right
-> thing to do.
-> 
-> Can you check if it fixes that xtensa case? It looks
-> ObviouslyCorrect(tm) to me, but considering that I clearly missed this
-> case existing AT ALL, it might be best to double-check.
-> 
->                Linus
 
-Yes, the patch below fixes the problem.
+Build results:
+	total: 155 pass: 155 fail: 0
+Qemu test results:
+	total: 519 pass: 518 fail: 1
+Failed tests:
+	xtensa:de212:kc705-nommu:nommu_kc705_defconfig
 
-Building xtensa:de212:kc705-nommu:nommu_kc705_defconfig ... running ......... passed
+The mmu code again. Patch from Linus incoming.
 
-Thanks,
 Guenter
-
->  include/linux/mm.h |  5 +++--
->  mm/nommu.c         | 11 +++++++++++
->  2 files changed, 14 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/linux/mm.h b/include/linux/mm.h
-> index 39aa409e84d5..4f2c33c273eb 100644
-> --- a/include/linux/mm.h
-> +++ b/include/linux/mm.h
-> @@ -2323,6 +2323,9 @@ void pagecache_isize_extended(struct inode *inode, loff_t from, loff_t to);
->  void truncate_pagecache_range(struct inode *inode, loff_t offset, loff_t end);
->  int generic_error_remove_page(struct address_space *mapping, struct page *page);
->  
-> +struct vm_area_struct *lock_mm_and_find_vma(struct mm_struct *mm,
-> +		unsigned long address, struct pt_regs *regs);
-> +
->  #ifdef CONFIG_MMU
->  extern vm_fault_t handle_mm_fault(struct vm_area_struct *vma,
->  				  unsigned long address, unsigned int flags,
-> @@ -2334,8 +2337,6 @@ void unmap_mapping_pages(struct address_space *mapping,
->  		pgoff_t start, pgoff_t nr, bool even_cows);
->  void unmap_mapping_range(struct address_space *mapping,
->  		loff_t const holebegin, loff_t const holelen, int even_cows);
-> -struct vm_area_struct *lock_mm_and_find_vma(struct mm_struct *mm,
-> -		unsigned long address, struct pt_regs *regs);
->  #else
->  static inline vm_fault_t handle_mm_fault(struct vm_area_struct *vma,
->  					 unsigned long address, unsigned int flags,
-> diff --git a/mm/nommu.c b/mm/nommu.c
-> index 37d0b03143f1..fdc392735ec6 100644
-> --- a/mm/nommu.c
-> +++ b/mm/nommu.c
-> @@ -630,6 +630,17 @@ struct vm_area_struct *find_vma(struct mm_struct *mm, unsigned long addr)
->  }
->  EXPORT_SYMBOL(find_vma);
->  
-> +/*
-> + * At least xtensa ends up having protection faults even with no
-> + * MMU.. No stack expansion, at least.
-> + */
-> +struct vm_area_struct *lock_mm_and_find_vma(struct mm_struct *mm,
-> +			unsigned long addr, struct pt_regs *regs)
-> +{
-> +	mmap_read_lock(mm);
-> +	return vma_lookup(mm, addr);
-> +}
-> +
->  /*
->   * expand a stack to a given address
->   * - not supported under NOMMU conditions
-
