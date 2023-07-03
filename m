@@ -1,99 +1,149 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35238111AB
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE6BC433C7;
-	Mon,  3 Jul 2023 18:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE9C111AB
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310FFC433C8;
+	Mon,  3 Jul 2023 18:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410661;
-	bh=Kl4CfAYI1L5wnyBfeyExd0BYYAlu9emDipyfVkjjPek=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMgFvf3uHYZ7DDVPcV9dOfRirNn6DKyxnlOsfePh2+EB8T1KnP/ZkSi1C6ArK7Lyg
-	 l6ZIVMXOP0ebVId7Nti7haiKG5XMI/Zt8ixsbsXeelzXTd9jvzQfytqolwmQtdq+0Y
-	 gqwBtGxeVH397OoAz2rhB6g81rFL/xPGu9Pg0Npo=
+	s=korg; t=1688410663;
+	bh=ZP3cJ2R+JbG+59E5fYy11eI5Z25vNRTQd6BPmrkpEXw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=G+aLUe1sFfmIpdNpIkBfQsJ+3Q8xw8reWVQ1kluQAW22CO0PiJxMplLzX3uK1/cie
+	 Mb9MtaaO/V0kMZp8q/yQ2286QtpfhPDyYOIC9t3d2kYVuZEz4Ie5lynJwL6cDHfGZd
+	 p0vhWs0V0POlsgXeafwwgedl1cb7aK/VeJrOEWDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Yonghong Song <yhs@fb.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 5.15 09/15] bpf: ensure main program has an extable
-Date: Mon,  3 Jul 2023 20:54:54 +0200
-Message-ID: <20230703184519.147572129@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 5.15 00/15] 5.15.120-rc1 review
+Date: Mon,  3 Jul 2023 20:54:45 +0200
+Message-ID: <20230703184518.896751186@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230703184518.896751186@linuxfoundation.org>
-References: <20230703184518.896751186@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.120-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.15.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.15.120-rc1
+X-KernelTest-Deadline: 2023-07-05T18:45+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+This is the start of the stable review cycle for the 5.15.120 release.
+There are 15 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 0108a4e9f3584a7a2c026d1601b0682ff7335d95 upstream.
+Responses should be made by Wed, 05 Jul 2023 18:45:08 +0000.
+Anything received after that time might be too late.
 
-When subprograms are in use, the main program is not jit'd after the
-subprograms because jit_subprogs sets a value for prog->bpf_func upon
-success.  Subsequent calls to the JIT are bypassed when this value is
-non-NULL.  This leads to a situation where the main program and its
-func[0] counterpart are both in the bpf kallsyms tree, but only func[0]
-has an extable.  Extables are only created during JIT.  Now there are
-two nearly identical program ksym entries in the tree, but only one has
-an extable.  Depending upon how the entries are placed, there's a chance
-that a fault will call search_extable on the aux with the NULL entry.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.120-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+and the diffstat can be found below.
 
-Since jit_subprogs already copies state from func[0] to the main
-program, include the extable pointer in this state duplication.
-Additionally, ensure that the copy of the main program in func[0] is not
-added to the bpf_prog_kallsyms table. Instead, let the main program get
-added later in bpf_prog_load().  This ensures there is only a single
-copy of the main program in the kallsyms table, and that its tag matches
-the tag observed by tooling like bpftool.
+thanks,
 
-Cc: stable@vger.kernel.org
-Fixes: 1c2a088a6626 ("bpf: x64: add JIT support for multi-function programs")
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Tested-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Link: https://lore.kernel.org/r/6de9b2f4b4724ef56efbb0339daaa66c8b68b1e7.1686616663.git.kjlx@templeofstupid.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- kernel/bpf/verifier.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+greg k-h
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -12588,9 +12588,10 @@ static int jit_subprogs(struct bpf_verif
- 	}
- 
- 	/* finally lock prog and jit images for all functions and
--	 * populate kallsysm
-+	 * populate kallsysm. Begin at the first subprogram, since
-+	 * bpf_prog_load will add the kallsyms for the main program.
- 	 */
--	for (i = 0; i < env->subprog_cnt; i++) {
-+	for (i = 1; i < env->subprog_cnt; i++) {
- 		bpf_prog_lock_ro(func[i]);
- 		bpf_prog_kallsyms_add(func[i]);
- 	}
-@@ -12615,6 +12616,8 @@ static int jit_subprogs(struct bpf_verif
- 
- 	prog->jited = 1;
- 	prog->bpf_func = func[0]->bpf_func;
-+	prog->aux->extable = func[0]->aux->extable;
-+	prog->aux->num_exentries = func[0]->aux->num_exentries;
- 	prog->aux->func = func;
- 	prog->aux->func_cnt = env->subprog_cnt;
- 	bpf_prog_jit_attempt_done(prog);
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.15.120-rc1
+
+Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+    drm/amdgpu: Validate VM ioctl flags.
+
+Ahmed S. Darwish <darwi@linutronix.de>
+    scripts/tags.sh: Resolve gtags empty index generation
+
+Krister Johansen <kjlx@templeofstupid.com>
+    perf symbols: Symbol lookup with kcore can fail if multiple segments match stext
+
+Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+    Revert "thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe"
+
+Mike Hommey <mh@glandium.org>
+    HID: logitech-hidpp: add HIDPP_QUIRK_DELAYED_INIT for the T651.
+
+Jason Gerecke <jason.gerecke@wacom.com>
+    HID: wacom: Use ktime_t rather than int when dealing with timestamps
+
+Krister Johansen <kjlx@templeofstupid.com>
+    bpf: ensure main program has an extable
+
+Oliver Hartkopp <socketcan@hartkopp.net>
+    can: isotp: isotp_sendmsg(): fix return error fix on TX path
+
+Thomas Gleixner <tglx@linutronix.de>
+    x86/smp: Use dedicated cache-line for mwait_play_dead()
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/microcode/AMD: Load late on both threads too
+
+Philip Yang <Philip.Yang@amd.com>
+    drm/amdgpu: Set vmbo destroy after pt bo is created
+
+Jane Chu <jane.chu@oracle.com>
+    mm, hwpoison: when copy-on-write hits poison, take page offline
+
+Tony Luck <tony.luck@intel.com>
+    mm, hwpoison: try to recover from copy-on write faults
+
+Paolo Abeni <pabeni@redhat.com>
+    mptcp: consolidate fallback and non fallback state machine
+
+Paolo Abeni <pabeni@redhat.com>
+    mptcp: fix possible divide by zero in recvmsg()
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                   |  4 +--
+ arch/x86/kernel/cpu/microcode/amd.c        |  2 +-
+ arch/x86/kernel/smpboot.c                  | 24 +++++++++-------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |  1 -
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c     |  4 +++
+ drivers/hid/hid-logitech-hidpp.c           |  2 +-
+ drivers/hid/wacom_wac.c                    |  6 ++--
+ drivers/hid/wacom_wac.h                    |  2 +-
+ drivers/thermal/mtk_thermal.c              | 14 ++-------
+ include/linux/highmem.h                    | 24 ++++++++++++++++
+ include/linux/mm.h                         |  5 +++-
+ kernel/bpf/verifier.c                      |  7 +++--
+ mm/memory.c                                | 33 ++++++++++++++-------
+ net/can/isotp.c                            |  5 ++--
+ net/mptcp/protocol.c                       | 46 ++++++++++++++----------------
+ net/mptcp/subflow.c                        | 17 ++++++-----
+ scripts/tags.sh                            |  9 +++++-
+ tools/perf/util/symbol.c                   | 17 +++++++++--
+ 18 files changed, 142 insertions(+), 80 deletions(-)
 
 
