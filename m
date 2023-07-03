@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A421094A
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBD0C433C7;
-	Mon,  3 Jul 2023 18:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189481094A
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF9DC433C8;
+	Mon,  3 Jul 2023 18:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410632;
-	bh=7wwdWGyFfjDDBnQlVbssNn+waZa93z13xjpKnYtD430=;
+	s=korg; t=1688410634;
+	bh=1ePM7I9C8nVCelAovbcB1ZKDq5SSbvg42UchnAwvqew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gp9GnQNQ8HM21GngJZw7WR4/Mw3TfSoFnBR3qqu/0jritkt/BzsNU+v2xQDaUVkvB
-	 7oKb3q+B+vOH8CeKFTndp44lA3N0jXupHs5TKH/vaF9BE6MshMgVSh5XRbCCi6JyWn
-	 O+qsit+sCn2sKJi65O53piG6jQ0BOs0dSfTIgeDM=
+	b=t7pa4GXwnKOFStGnoTxVL3jB7iWE/VbCDYmKljz7a+/Rz2iyabyqRhjTWgNk65H+T
+	 cYA5n0br/NEUtjpedkOXc1t7H6gHhEFRdJZEutDQ3iL7UJUQIUSURdhVaMOjBHQnkG
+	 J8dNqKjOMLG9b6oW3GmmoqfwS8VBrKY+s6aT84Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 5.15 12/15] Revert "thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe"
-Date: Mon,  3 Jul 2023 20:54:57 +0200
-Message-ID: <20230703184519.227428938@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	David Reaver <me@davidreaver.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 5.15 13/15] perf symbols: Symbol lookup with kcore can fail if multiple segments match stext
+Date: Mon,  3 Jul 2023 20:54:58 +0200
+Message-ID: <20230703184519.254046765@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230703184518.896751186@linuxfoundation.org>
 References: <20230703184518.896751186@linuxfoundation.org>
@@ -35,58 +43,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit 86edac7d3888c715fe3a81bd61f3617ecfe2e1dd upstream.
+commit 1c249565426e3a9940102c0ba9f63914f7cda73d upstream.
 
-This reverts commit f05c7b7d9ea9477fcc388476c6f4ade8c66d2d26.
+This problem was encountered on an arm64 system with a lot of memory.
+Without kernel debug symbols installed, and with both kcore and kallsyms
+available, perf managed to get confused and returned "unknown" for all
+of the kernel symbols that it tried to look up.
 
-That change was causing a regression in the generic-adc-thermal-probed
-bootrr test as reported in the kernelci-results list [1].
-A proper rework will take longer, so revert it for now.
+On this system, stext fell within the vmalloc segment.  The kcore symbol
+matching code tries to find the first segment that contains stext and
+uses that to replace the segment generated from just the kallsyms
+information.  In this case, however, there were two: a very large
+vmalloc segment, and the text segment.  This caused perf to get confused
+because multiple overlapping segments were inserted into the RB tree
+that holds the discovered segments.  However, that alone wasn't
+sufficient to cause the problem. Even when we could find the segment,
+the offsets were adjusted in such a way that the newly generated symbols
+didn't line up with the instruction addresses in the trace.  The most
+obvious solution would be to consult which segment type is text from
+kcore, but this information is not exposed to users.
 
-[1] https://groups.io/g/kernelci-results/message/42660
+Instead, select the smallest matching segment that contains stext
+instead of the first matching segment.  This allows us to match the text
+segment instead of vmalloc, if one is contained within the other.
 
-Fixes: f05c7b7d9ea9 ("thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe")
-Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230525121811.3360268-1-ricardo.canuelo@collabora.com
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: David Reaver <me@davidreaver.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: http://lore.kernel.org/lkml/20230125183418.GD1963@templeofstupid.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/mtk_thermal.c |   14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ tools/perf/util/symbol.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/thermal/mtk_thermal.c
-+++ b/drivers/thermal/mtk_thermal.c
-@@ -1028,12 +1028,7 @@ static int mtk_thermal_probe(struct plat
- 		return -ENODEV;
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -1357,10 +1357,23 @@ static int dso__load_kcore(struct dso *d
+ 
+ 	/* Find the kernel map using the '_stext' symbol */
+ 	if (!kallsyms__get_function_start(kallsyms_filename, "_stext", &stext)) {
++		u64 replacement_size = 0;
++
+ 		list_for_each_entry(new_map, &md.maps, node) {
+-			if (stext >= new_map->start && stext < new_map->end) {
++			u64 new_size = new_map->end - new_map->start;
++
++			if (!(stext >= new_map->start && stext < new_map->end))
++				continue;
++
++			/*
++			 * On some architectures, ARM64 for example, the kernel
++			 * text can get allocated inside of the vmalloc segment.
++			 * Select the smallest matching segment, in case stext
++			 * falls within more than one in the list.
++			 */
++			if (!replacement_map || new_size < replacement_size) {
+ 				replacement_map = new_map;
+-				break;
++				replacement_size = new_size;
+ 			}
+ 		}
  	}
- 
--	auxadc_base = devm_of_iomap(&pdev->dev, auxadc, 0, NULL);
--	if (IS_ERR(auxadc_base)) {
--		of_node_put(auxadc);
--		return PTR_ERR(auxadc_base);
--	}
--
-+	auxadc_base = of_iomap(auxadc, 0);
- 	auxadc_phys_base = of_get_phys_base(auxadc);
- 
- 	of_node_put(auxadc);
-@@ -1049,12 +1044,7 @@ static int mtk_thermal_probe(struct plat
- 		return -ENODEV;
- 	}
- 
--	apmixed_base = devm_of_iomap(&pdev->dev, apmixedsys, 0, NULL);
--	if (IS_ERR(apmixed_base)) {
--		of_node_put(apmixedsys);
--		return PTR_ERR(apmixed_base);
--	}
--
-+	apmixed_base = of_iomap(apmixedsys, 0);
- 	apmixed_phys_base = of_get_phys_base(apmixedsys);
- 
- 	of_node_put(apmixedsys);
 
 
