@@ -1,149 +1,88 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE9C111AB
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310FFC433C8;
-	Mon,  3 Jul 2023 18:57:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410663;
-	bh=ZP3cJ2R+JbG+59E5fYy11eI5Z25vNRTQd6BPmrkpEXw=;
-	h=From:To:Cc:Subject:Date:From;
-	b=G+aLUe1sFfmIpdNpIkBfQsJ+3Q8xw8reWVQ1kluQAW22CO0PiJxMplLzX3uK1/cie
-	 Mb9MtaaO/V0kMZp8q/yQ2286QtpfhPDyYOIC9t3d2kYVuZEz4Ie5lynJwL6cDHfGZd
-	 p0vhWs0V0POlsgXeafwwgedl1cb7aK/VeJrOEWDQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org
-Subject: [PATCH 5.15 00/15] 5.15.120-rc1 review
-Date: Mon,  3 Jul 2023 20:54:45 +0200
-Message-ID: <20230703184518.896751186@linuxfoundation.org>
-X-Mailer: git-send-email 2.41.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D40134AC
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 21:43:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7351EC433C7;
+	Mon,  3 Jul 2023 21:43:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1688420607;
+	bh=8y+SNWLYMoVyVwgZLAuF57aq+7opUlqb5b7Z/N4orm4=;
+	h=From:Date:Subject:To:Cc:From;
+	b=mv4YJlvgm1SlSpznYjAjbgujdIS68To7CwD54A+VEkghowgSxY5pIfHtnnb+/v+Qr
+	 k0wSiXwS14wHksnqd4+QeesoNWWrPg26NasnP2ue8J3dZpMbVlDLn7Fjzd3PCaXOGn
+	 dRNZ+p01IFUD6ObE38eaPcPaUj3Mo321P2bJPffqsjdxkEfMSxn1iRtF6DN3AvnA1n
+	 xaAvRiRn7I34dPlO6uIXf2VZQLtgjq8LK+lL9ygURwe2+ctYYPn1AZfG22B2216+As
+	 YiNQbUhax30rKh6Hnc41R5H0bA0aqu+GY/xOuiXnie7RjrCNVMwhkjib6Vq23EEUf0
+	 wnE06F84lQblA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 03 Jul 2023 14:43:15 -0700
+Subject: [PATCH] ASoC: cs35l45: Select REGMAP_IRQ
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.120-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.15.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.15.120-rc1
-X-KernelTest-Deadline: 2023-07-05T18:45+00:00
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230703-cs35l45-select-regmap_irq-v1-1-37d7e838b614@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAPJAo2QC/x3MTQqDQAxA4atI1g2MxlH0KqUUmYk2YP1JShFk7
+ u7g8lu8d4KxChv0xQnKfzFZl4zyUUD4DMvEKDEbKleRax1hMPJz7dF45vBD5ek7bG/RHd0Yu9h
+ Q2TYUIPeb8ijH/X6+UroAUgS0gGsAAAA=
+To: broonie@kernel.org
+Cc: lgirdwood@gmail.com, vkarpovi@opensource.cirrus.com, 
+ rf@opensource.cirrus.com, ckeepax@opensource.cirrus.com, 
+ alsa-devel@alsa-project.org, patches@lists.linux.dev, 
+ stable@vger.kernel.org, Marcus Seyfarth <m.seyfarth@gmail.com>, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1317; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=8y+SNWLYMoVyVwgZLAuF57aq+7opUlqb5b7Z/N4orm4=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCmLHf7xP/pwQPDv7kvHVpdEXpn22+3jXY95geWR1mmmK
+ mK7rt9f2lHKwiDGwSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmEq/B8FeKt3XClNzZi6dk
+ tF/+zbnK5ruU+Tctk8tHToizTUz1mWXKyPCD9/ubhO18J1r6RC/cUTr1zfdo0vnZzstda74s15F
+ bHcwEAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-This is the start of the stable review cycle for the 5.15.120 release.
-There are 15 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+After commit 6085f9e6dc19 ("ASoC: cs35l45: IRQ support"), without any
+other configuration that selects CONFIG_REGMAP_IRQ, modpost errors out
+with:
 
-Responses should be made by Wed, 05 Jul 2023 18:45:08 +0000.
-Anything received after that time might be too late.
+  ERROR: modpost: "regmap_irq_get_virq" [sound/soc/codecs/snd-soc-cs35l45.ko] undefined!
+  ERROR: modpost: "devm_regmap_add_irq_chip" [sound/soc/codecs/snd-soc-cs35l45.ko] undefined!
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.120-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-and the diffstat can be found below.
+Add the Kconfig selection to ensure these functions get built and
+included, which resolves the build failure.
 
-thanks,
+Cc: stable@vger.kernel.org
+Fixes: 6085f9e6dc19 ("ASoC: cs35l45: IRQ support")
+Reported-by: Marcus Seyfarth <m.seyfarth@gmail.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1882
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ sound/soc/codecs/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-greg k-h
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index 0cd107fa112f..76ddd3ffc496 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -715,6 +715,7 @@ config SND_SOC_CS35L41_I2C
+ 
+ config SND_SOC_CS35L45
+ 	tristate
++	select REGMAP_IRQ
+ 
+ config SND_SOC_CS35L45_SPI
+ 	tristate "Cirrus Logic CS35L45 CODEC (SPI)"
 
--------------
-Pseudo-Shortlog of commits:
+---
+base-commit: 6f49256897083848ce9a59651f6b53fc80462397
+change-id: 20230703-cs35l45-select-regmap_irq-0fd9d631763c
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.15.120-rc1
-
-Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-    drm/amdgpu: Validate VM ioctl flags.
-
-Ahmed S. Darwish <darwi@linutronix.de>
-    scripts/tags.sh: Resolve gtags empty index generation
-
-Krister Johansen <kjlx@templeofstupid.com>
-    perf symbols: Symbol lookup with kcore can fail if multiple segments match stext
-
-Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-    Revert "thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe"
-
-Mike Hommey <mh@glandium.org>
-    HID: logitech-hidpp: add HIDPP_QUIRK_DELAYED_INIT for the T651.
-
-Jason Gerecke <jason.gerecke@wacom.com>
-    HID: wacom: Use ktime_t rather than int when dealing with timestamps
-
-Krister Johansen <kjlx@templeofstupid.com>
-    bpf: ensure main program has an extable
-
-Oliver Hartkopp <socketcan@hartkopp.net>
-    can: isotp: isotp_sendmsg(): fix return error fix on TX path
-
-Thomas Gleixner <tglx@linutronix.de>
-    x86/smp: Use dedicated cache-line for mwait_play_dead()
-
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/microcode/AMD: Load late on both threads too
-
-Philip Yang <Philip.Yang@amd.com>
-    drm/amdgpu: Set vmbo destroy after pt bo is created
-
-Jane Chu <jane.chu@oracle.com>
-    mm, hwpoison: when copy-on-write hits poison, take page offline
-
-Tony Luck <tony.luck@intel.com>
-    mm, hwpoison: try to recover from copy-on write faults
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: consolidate fallback and non fallback state machine
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: fix possible divide by zero in recvmsg()
-
-
--------------
-
-Diffstat:
-
- Makefile                                   |  4 +--
- arch/x86/kernel/cpu/microcode/amd.c        |  2 +-
- arch/x86/kernel/smpboot.c                  | 24 +++++++++-------
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |  1 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c     |  4 +++
- drivers/hid/hid-logitech-hidpp.c           |  2 +-
- drivers/hid/wacom_wac.c                    |  6 ++--
- drivers/hid/wacom_wac.h                    |  2 +-
- drivers/thermal/mtk_thermal.c              | 14 ++-------
- include/linux/highmem.h                    | 24 ++++++++++++++++
- include/linux/mm.h                         |  5 +++-
- kernel/bpf/verifier.c                      |  7 +++--
- mm/memory.c                                | 33 ++++++++++++++-------
- net/can/isotp.c                            |  5 ++--
- net/mptcp/protocol.c                       | 46 ++++++++++++++----------------
- net/mptcp/subflow.c                        | 17 ++++++-----
- scripts/tags.sh                            |  9 +++++-
- tools/perf/util/symbol.c                   | 17 +++++++++--
- 18 files changed, 142 insertions(+), 80 deletions(-)
-
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
