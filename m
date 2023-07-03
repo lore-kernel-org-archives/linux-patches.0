@@ -1,138 +1,67 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC5A20F7
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 09:34:24 +0000 (UTC)
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-4fb7769f15aso6539125e87.0
-        for <patches@lists.linux.dev>; Mon, 03 Jul 2023 02:34:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1688376862; x=1690968862;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=qFhvCFqAXehqBRjZH7xGnUqT1VUtEV+4hwF7vSBD5kY=;
-        b=QDmX7US6YcMAgmXBL8+nRgR/dRajVeyGSzO9kr04HZ74tuBP+94DpzYzKT7Cy+wrFD
-         gTYuFG9k/iLNK+DWnj9FZG9KjYoiLX1N3cDqkXPTZRprdTrHJgv49fR6h3anrlq5CC4t
-         FzSuDQMPfXBaDzB4fuVNJbOT3ihCTPgerpbXsi/PaY4CWSCNthLNxt8x+mo9G6MUOYhM
-         9kfRyd7jtV4m8ldSeg+EhWtdvFIhOMZgzVHVnOg4bBasJOTbrRHpmMHH1Wmj8za42jsp
-         D2/1IkSovyVjFdnco14dHYIUaFiMLzpMxuggT6DGojKZxn+nwFIadtRNG+eK/aaO7zUM
-         keAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688376862; x=1690968862;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qFhvCFqAXehqBRjZH7xGnUqT1VUtEV+4hwF7vSBD5kY=;
-        b=PLghHMZ+915TvOwzln6bQV27Bq69sPMGz9PfNfVEFiHIlNAMW1PoNah1zQIJ6kCr03
-         Rzef9HR4qHMJJOmEd4FVQTNsxbujqqxPaHMSTLLMh4LcDDXMX7IYCDMMUEFg32m7OxJs
-         iYzJNBDRxmIsya3i2FE9Nj7HjO7WuLOleNia0sfdDlbHQyhYygwUQPxrja9MSkHPiE+l
-         Te9rdGrn/MYEHeneogNNL2zgvbsu/Xq5GuUS46/MBSPxLejajchZaak9I4DSKZYYBMaH
-         Lb6sODxxnEzbifDBZMMo3Tp9lSaSyuh0rHXE39UQ+kfSejrTLljLLwIvWQQodD1ndV+h
-         gcJQ==
-X-Gm-Message-State: ABy/qLbq9xcZ9aOf0LKd20fxwDW8N+oltcq44bKQpL7u+sBo4gy2XkBi
-	joBVSKp6OFTbRCHUe8GsHKpBpA==
-X-Google-Smtp-Source: APBJJlEP5/VzNY9M/lHHzn4JqHyCy7vhJD90vxmot+mAJWzQVW5jwFi0C6nYq4sdl+5I1W/Nis7tmQ==
-X-Received: by 2002:a2e:9844:0:b0:2b6:cd6a:17f7 with SMTP id e4-20020a2e9844000000b002b6cd6a17f7mr6719111ljj.20.1688376862267;
-        Mon, 03 Jul 2023 02:34:22 -0700 (PDT)
-Received: from localhost ([79.142.230.34])
-        by smtp.gmail.com with ESMTPSA id e13-20020a50fb8d000000b0051e0be09297sm1954178edq.53.2023.07.03.02.34.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Jul 2023 02:34:21 -0700 (PDT)
-References: <20230630150216.109789-1-benno.lossin@proton.me>
-User-agent: mu4e 1.10.4; emacs 28.2.50
-From: "Andreas Hindborg (Samsung)" <nmi@metaspace.dk>
-To: Benno Lossin <benno.lossin@proton.me>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
- <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn?=
- Roy Baron
- <bjorn3_gh@protonmail.com>, Alice Ryhl <aliceryhl@google.com>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-Subject: Re: [PATCH] rust: types: make `Opaque` be `!Unpin`
-Date: Mon, 03 Jul 2023 11:30:56 +0200
-In-reply-to: <20230630150216.109789-1-benno.lossin@proton.me>
-Message-ID: <87mt0dcp9f.fsf@metaspace.dk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3217D1FDA
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 10:02:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4400DC433C7;
+	Mon,  3 Jul 2023 10:02:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1688378563;
+	bh=pSNfSIIOb4ZKqOMQEnJnIbxoercou0jXFPcNNcBTu7c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=usR3Ze5ULeh3lOdrcFNFbqHEHOoUOxlEe7I2otACCqOPfkNzRxD9J6vafeVv9wVXx
+	 y/eOF5eEBoSnkNcQuuE+fi9vFHa/b5Vp1KCL9IohNDjUpbjDmHodSiCDyWro4EYwac
+	 qQYrnD/SoD3/V2xoNIxEpNB7IaCYvJ09PZ65YAsI=
+Date: Mon, 3 Jul 2023 12:02:40 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>
+Subject: Re: [PATCH 6.3 02/29] mm/mmap: Fix error return in
+ do_vmi_align_munmap()
+Message-ID: <2023070340-alibi-monsoon-e6b6@gregkh>
+References: <20230629184151.705870770@linuxfoundation.org>
+ <20230629184151.812335573@linuxfoundation.org>
+ <aec8346199e1128f4608ffef6882652938cca5fe.camel@infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aec8346199e1128f4608ffef6882652938cca5fe.camel@infradead.org>
 
+On Mon, Jul 03, 2023 at 10:23:59AM +0100, David Woodhouse wrote:
+> On Thu, 2023-06-29 at 20:43 +0200, Greg Kroah-Hartman wrote:
+> > From: David Woodhouse <dwmw@amazon.co.uk>
+> > 
+> > commit 6c26bd4384da24841bac4f067741bbca18b0fb74 upstream,
+> > 
+> > If mas_store_gfp() in the gather loop failed, the 'error' variable that
+> > ultimately gets returned was not being set. In many cases, its original
+> > value of -ENOMEM was still in place, and that was fine. But if VMAs had
+> > been split at the start or end of the range, then 'error' could be zero.
+> > 
+> > Change to the 'error = foo(); if (error) goto â€¦' idiom to fix the bug.
+> 
+> Hrm, that isn't what the original commit message said. It said:
+> 
+> > Change to the 'error = foo(); if (error) goto …' idiom to fix the bug.
+> 
+> This far into the 21st century, we don't see a lot of tools injecting
+> Mojibake any more; the mantra of "everything is UTF-8, all of the time"
+> mostly seems to work.
+> 
+> Granted, there are more important problems in the world, but it'd be
+> good to identify where that happened and file bugs if needed.
 
-Benno Lossin <benno.lossin@proton.me> writes:
+This is probably due to me going from 'git format-patch' to 'quit
+import' and then to 'git am' as part of the workflow I use here.  I'll
+try to narrow it down as to where this went wrong...
 
-> Adds a `PhantomPinned` field to `Opaque<T>`. This removes the last Rust
-> guarantee: the assumption that the type `T` can be freely moved. This is
-> not the case for many types from the C side (e.g. if they contain a
-> `struct list_head`). This change removes the need to add a
-> `PhantomPinned` field manually to Rust structs that contain C structs
-> which must not be moved.
->
-> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
-> ---
+thanks,
 
-Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
-
-> This patch depends on the patch that swaps `UnsafeCell` with
-> `MaybeUninit` inside `Opaque` [1].
->
-> [1]: https://lore.kernel.org/rust-for-linux/20230614115328.2825961-1-aliceryhl@google.com/
-> ---
->  rust/kernel/types.rs | 19 ++++++++++++++-----
->  1 file changed, 14 insertions(+), 5 deletions(-)
->
-> diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-> index fb41635f1e1f..e664a2beef30 100644
-> --- a/rust/kernel/types.rs
-> +++ b/rust/kernel/types.rs
-> @@ -6,7 +6,7 @@
->  use alloc::boxed::Box;
->  use core::{
->      cell::UnsafeCell,
-> -    marker::PhantomData,
-> +    marker::{PhantomData, PhantomPinned},
->      mem::MaybeUninit,
->      ops::{Deref, DerefMut},
->      ptr::NonNull,
-> @@ -224,17 +224,26 @@ fn drop(&mut self) {
->  ///
->  /// This is meant to be used with FFI objects that are never interpreted by Rust code.
->  #[repr(transparent)]
-> -pub struct Opaque<T>(UnsafeCell<MaybeUninit<T>>);
-> +pub struct Opaque<T> {
-> +    value: UnsafeCell<MaybeUninit<T>>,
-> +    _pin: PhantomPinned,
-> +}
->  
->  impl<T> Opaque<T> {
->      /// Creates a new opaque value.
->      pub const fn new(value: T) -> Self {
-> -        Self(UnsafeCell::new(MaybeUninit::new(value)))
-> +        Self {
-> +            value: UnsafeCell::new(MaybeUninit::new(value)),
-> +            _pin: PhantomPinned,
-> +        }
->      }
->  
->      /// Creates an uninitialised value.
->      pub const fn uninit() -> Self {
-> -        Self(UnsafeCell::new(MaybeUninit::uninit()))
-> +        Self {
-> +            value: UnsafeCell::new(MaybeUninit::uninit()),
-> +            _pin: PhantomPinned,
-> +        }
->      }
->  
->      /// Creates a pin-initializer from the given initializer closure.
-> @@ -258,7 +267,7 @@ pub fn ffi_init(init_func: impl FnOnce(*mut T)) -> impl PinInit<Self> {
->  
->      /// Returns a raw pointer to the opaque data.
->      pub fn get(&self) -> *mut T {
-> -        UnsafeCell::get(&self.0).cast::<T>()
-> +        UnsafeCell::get(&self.value).cast::<T>()
->      }
->  
->      /// Gets the value behind `this`.
-
+greg k-h
