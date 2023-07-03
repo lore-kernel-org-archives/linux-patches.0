@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770CB1094A
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0451CC433C8;
-	Mon,  3 Jul 2023 18:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253C41094A
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A569AC433C9;
+	Mon,  3 Jul 2023 18:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410601;
-	bh=FM2FZD3XMMZ4LcjN5nnVh4kN9kWa0KoC93RCCXXbGlM=;
+	s=korg; t=1688410604;
+	bh=iCaroraDxRykNmS3uPIdwW/nyWD72wqSmwB94HNSslE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmC/2pd935D+Bp+VD/X2mwMeelGRtoNgDvwPgBvi09wjqY21NDg5us8iqSQroL0Sy
-	 vbSi3zkGE+Xu77YnXG3t7wz8wXvDdtGchzNb280HO2Tu4I/cksGP9HlfEeSclSlVZB
-	 EjwRMecV3JnTM49OyK9JXxRpkn5JsNaua8K9CoOw=
+	b=WfTmY9HO1ycrgGi+XW9moi3O/ZBfaYB2JaDvMIn5lEuh5p5eYOd3qdzDAa18LNRtG
+	 nbY8pncOI2azStsOYlQCcmyRRwICRcLg+D+3FVZtl56ft4lgJQrI5NiaqAq8ZyFiLP
+	 eGtSgERifx/Cc1qB+sK5286ui+BkFoY4WOqpOQk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Broadworth <mark.broadworth@amd.com>,
-	Aric Cyr <Aric.Cyr@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alvin Lee <Alvin.Lee2@amd.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 02/11] drm/amd/display: Remove optimization for VRR updates
-Date: Mon,  3 Jul 2023 20:54:21 +0200
-Message-ID: <20230703184519.190634362@linuxfoundation.org>
+Subject: [PATCH 6.1 03/11] drm/amd/display: Do not update DRR while BW optimizations pending
+Date: Mon,  3 Jul 2023 20:54:22 +0200
+Message-ID: <20230703184519.217176801@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230703184519.121965745@linuxfoundation.org>
 References: <20230703184519.121965745@linuxfoundation.org>
@@ -38,34 +37,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvin Lee <Alvin.Lee2@amd.com>
+From: Aric Cyr <aric.cyr@amd.com>
 
-commit 3442f4e0e55555d14b099c17382453fdfd2508d5 upstream.
+commit 32953485c558cecf08f33fbfa251e80e44cef981 upstream.
 
-Optimization caused unexpected regression, so remove for now.
+[why]
+While bandwidth optimizations are pending, it's possible a pstate change
+will occur.  During this time, VSYNC handler should not also try to update
+DRR parameters causing pstate hang
 
-Tested-by: Mark Broadworth <mark.broadworth@amd.com>
-Reviewed-by: Aric Cyr <Aric.Cyr@amd.com>
-Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alvin Lee <Alvin.Lee2@amd.com>
+[how]
+Do not adjust DRR if optimize bandwidth is set.
+
+Reviewed-by: Aric Cyr <aric.cyr@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Aric Cyr <aric.cyr@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c |   48 ++++++++++++++++++-------------
+ 1 file changed, 29 insertions(+), 19 deletions(-)
 
 --- a/drivers/gpu/drm/amd/display/dc/core/dc.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -401,9 +401,6 @@ bool dc_stream_adjust_vmin_vmax(struct d
+@@ -401,6 +401,13 @@ bool dc_stream_adjust_vmin_vmax(struct d
  {
  	int i;
  
--	if (memcmp(adjust, &stream->adjust, sizeof(struct dc_crtc_timing_adjust)) == 0)
--		return true;
--
++	/*
++	 * Don't adjust DRR while there's bandwidth optimizations pending to
++	 * avoid conflicting with firmware updates.
++	 */
++	if (dc->optimized_required || dc->wm_optimized_required)
++		return false;
++
  	stream->adjust.v_total_max = adjust->v_total_max;
  	stream->adjust.v_total_mid = adjust->v_total_mid;
  	stream->adjust.v_total_mid_frame_num = adjust->v_total_mid_frame_num;
+@@ -2021,27 +2028,33 @@ void dc_post_update_surfaces_to_stream(s
+ 
+ 	post_surface_trace(dc);
+ 
+-	if (dc->ctx->dce_version >= DCE_VERSION_MAX)
+-		TRACE_DCN_CLOCK_STATE(&context->bw_ctx.bw.dcn.clk);
+-	else
++	/*
++	 * Only relevant for DCN behavior where we can guarantee the optimization
++	 * is safe to apply - retain the legacy behavior for DCE.
++	 */
++
++	if (dc->ctx->dce_version < DCE_VERSION_MAX)
+ 		TRACE_DCE_CLOCK_STATE(&context->bw_ctx.bw.dce);
++	else {
++		TRACE_DCN_CLOCK_STATE(&context->bw_ctx.bw.dcn.clk);
+ 
+-	if (is_flip_pending_in_pipes(dc, context))
+-		return;
++		if (is_flip_pending_in_pipes(dc, context))
++			return;
+ 
+-	for (i = 0; i < dc->res_pool->pipe_count; i++)
+-		if (context->res_ctx.pipe_ctx[i].stream == NULL ||
+-		    context->res_ctx.pipe_ctx[i].plane_state == NULL) {
+-			context->res_ctx.pipe_ctx[i].pipe_idx = i;
+-			dc->hwss.disable_plane(dc, &context->res_ctx.pipe_ctx[i]);
+-		}
++		for (i = 0; i < dc->res_pool->pipe_count; i++)
++			if (context->res_ctx.pipe_ctx[i].stream == NULL ||
++					context->res_ctx.pipe_ctx[i].plane_state == NULL) {
++				context->res_ctx.pipe_ctx[i].pipe_idx = i;
++				dc->hwss.disable_plane(dc, &context->res_ctx.pipe_ctx[i]);
++			}
+ 
+-	process_deferred_updates(dc);
++		process_deferred_updates(dc);
+ 
+-	dc->hwss.optimize_bandwidth(dc, context);
++		dc->hwss.optimize_bandwidth(dc, context);
+ 
+-	if (dc->debug.enable_double_buffered_dsc_pg_support)
+-		dc->hwss.update_dsc_pg(dc, context, true);
++		if (dc->debug.enable_double_buffered_dsc_pg_support)
++			dc->hwss.update_dsc_pg(dc, context, true);
++	}
+ 
+ 	dc->optimized_required = false;
+ 	dc->wm_optimized_required = false;
+@@ -3866,12 +3879,9 @@ void dc_commit_updates_for_stream(struct
+ 			if (new_pipe->plane_state && new_pipe->plane_state != old_pipe->plane_state)
+ 				new_pipe->plane_state->force_full_update = true;
+ 		}
+-	} else if (update_type == UPDATE_TYPE_FAST && dc_ctx->dce_version >= DCE_VERSION_MAX) {
++	} else if (update_type == UPDATE_TYPE_FAST) {
+ 		/*
+ 		 * Previous frame finished and HW is ready for optimization.
+-		 *
+-		 * Only relevant for DCN behavior where we can guarantee the optimization
+-		 * is safe to apply - retain the legacy behavior for DCE.
+ 		 */
+ 		dc_post_update_surfaces_to_stream(dc);
+ 	}
 
 
