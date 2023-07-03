@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2561094A
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DF1C433C8;
-	Mon,  3 Jul 2023 18:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EB31094A
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C15EC433C7;
+	Mon,  3 Jul 2023 18:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410624;
-	bh=xlEC9XqBm0HrybmZPEXfHEplMLHBePgEgZakez4kLm8=;
+	s=korg; t=1688410627;
+	bh=v4800kz5ymUjJrbwDMR2ep4IKddXTSWrEZaqz7DIEG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFcSjIBi2dCy4Q7v5SEpBpNOAL5YWALMpW6Vbsex2udVB1QadRBb6YNBXndvFxRYu
-	 uocGxCe7LpK0WLwshl3Az0gzIjokdFSeV2YKFiYecWIg/k06F3JlmuQMjaxFb4nr+w
-	 z7Z3P75+oA4uMCY7nK0lY4BBrLiCuQCjyams4HLs=
+	b=qKI8Xry0A+RHukbCo+lSrdZ8ZtcmxU8VKaTDqVSa9TBvIng3B9XknFZq8brmiRBy6
+	 itYipuRzz/VqXctb9eRCkd1+QqVs7aen52np6fnAR7DoIOGOJZif63bUWnrVnVuYqm
+	 ATJgIFOVT6a96ZQcAbE6/x/lsZ+ZtgWDwOY1AXFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 01/15] mptcp: fix possible divide by zero in recvmsg()
-Date: Mon,  3 Jul 2023 20:54:46 +0200
-Message-ID: <20230703184518.936530437@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 5.15 10/15] HID: wacom: Use ktime_t rather than int when dealing with timestamps
+Date: Mon,  3 Jul 2023 20:54:55 +0200
+Message-ID: <20230703184519.174179697@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230703184518.896751186@linuxfoundation.org>
 References: <20230703184518.896751186@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,95 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Jason Gerecke <jason.gerecke@wacom.com>
 
-commit 0ad529d9fd2bfa3fc619552a8d2fb2f2ef0bce2e upstream.
+commit 9a6c0e28e215535b2938c61ded54603b4e5814c5 upstream.
 
-Christoph reported a divide by zero bug in mptcp_recvmsg():
+Code which interacts with timestamps needs to use the ktime_t type
+returned by functions like ktime_get. The int type does not offer
+enough space to store these values, and attempting to use it is a
+recipe for problems. In this particular case, overflows would occur
+when calculating/storing timestamps leading to incorrect values being
+reported to userspace. In some cases these bad timestamps cause input
+handling in userspace to appear hung.
 
-divide error: 0000 [#1] PREEMPT SMP
-CPU: 1 PID: 19978 Comm: syz-executor.6 Not tainted 6.4.0-rc2-gffcc7899081b #20
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
-RIP: 0010:__tcp_select_window+0x30e/0x420 net/ipv4/tcp_output.c:3018
-Code: 11 ff 0f b7 cd c1 e9 0c b8 ff ff ff ff d3 e0 89 c1 f7 d1 01 cb 21 c3 eb 17 e8 2e 83 11 ff 31 db eb 0e e8 25 83 11 ff 89 d8 99 <f7> 7c 24 04 29 d3 65 48 8b 04 25 28 00 00 00 48 3b 44 24 10 75 60
-RSP: 0018:ffffc90000a07a18 EFLAGS: 00010246
-RAX: 000000000000ffd7 RBX: 000000000000ffd7 RCX: 0000000000040000
-RDX: 0000000000000000 RSI: 000000000003ffff RDI: 0000000000040000
-RBP: 000000000000ffd7 R08: ffffffff820cf297 R09: 0000000000000001
-R10: 0000000000000000 R11: ffffffff8103d1a0 R12: 0000000000003f00
-R13: 0000000000300000 R14: ffff888101cf3540 R15: 0000000000180000
-FS:  00007f9af4c09640(0000) GS:ffff88813bd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b33824000 CR3: 000000012f241001 CR4: 0000000000170ee0
-Call Trace:
- <TASK>
- __tcp_cleanup_rbuf+0x138/0x1d0 net/ipv4/tcp.c:1611
- mptcp_recvmsg+0xcb8/0xdd0 net/mptcp/protocol.c:2034
- inet_recvmsg+0x127/0x1f0 net/ipv4/af_inet.c:861
- ____sys_recvmsg+0x269/0x2b0 net/socket.c:1019
- ___sys_recvmsg+0xe6/0x260 net/socket.c:2764
- do_recvmmsg+0x1a5/0x470 net/socket.c:2858
- __do_sys_recvmmsg net/socket.c:2937 [inline]
- __se_sys_recvmmsg net/socket.c:2953 [inline]
- __x64_sys_recvmmsg+0xa6/0x130 net/socket.c:2953
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x47/0xa0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-RIP: 0033:0x7f9af58fc6a9
-Code: 5c c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 4f 37 0d 00 f7 d8 64 89 01 48
-RSP: 002b:00007f9af4c08cd8 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
-RAX: ffffffffffffffda RBX: 00000000006bc050 RCX: 00007f9af58fc6a9
-RDX: 0000000000000001 RSI: 0000000020000140 RDI: 0000000000000004
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000f00 R11: 0000000000000246 R12: 00000000006bc05c
-R13: fffffffffffffea8 R14: 00000000006bc050 R15: 000000000001fe40
- </TASK>
-
-mptcp_recvmsg is allowed to release the msk socket lock when
-blocking, and before re-acquiring it another thread could have
-switched the sock to TCP_LISTEN status - with a prior
-connect(AF_UNSPEC) - also clearing icsk_ack.rcv_mss.
-
-Address the issue preventing the disconnect if some other process is
-concurrently performing a blocking syscall on the same socket, alike
-commit 4faeee0cf8a5 ("tcp: deny tcp_disconnect() when threads are waiting").
-
-Fixes: a6b118febbab ("mptcp: add receive buffer auto-tuning")
-Cc: stable@vger.kernel.org
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/404
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Tested-by: Christoph Paasch <cpaasch@apple.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/901
+Fixes: 17d793f3ed53 ("HID: wacom: insert timestamp to packed Bluetooth (BT) events")
+CC: stable@vger.kernel.org
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Reviewed-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Link: https://lore.kernel.org/r/20230608213828.2108-1-jason.gerecke@wacom.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/wacom_wac.c |    6 +++---
+ drivers/hid/wacom_wac.h |    2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2807,6 +2807,12 @@ static int mptcp_disconnect(struct sock
- 	struct mptcp_subflow_context *subflow;
- 	struct mptcp_sock *msk = mptcp_sk(sk);
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1314,7 +1314,7 @@ static void wacom_intuos_pro2_bt_pen(str
+ 	struct input_dev *pen_input = wacom->pen_input;
+ 	unsigned char *data = wacom->data;
+ 	int number_of_valid_frames = 0;
+-	int time_interval = 15000000;
++	ktime_t time_interval = 15000000;
+ 	ktime_t time_packet_received = ktime_get();
+ 	int i;
  
-+	/* Deny disconnect if other threads are blocked in sk_wait_event()
-+	 * or inet_wait_for_connect().
-+	 */
-+	if (sk->sk_wait_pending)
-+		return -EBUSY;
-+
- 	mptcp_do_flush_join_list(msk);
+@@ -1348,7 +1348,7 @@ static void wacom_intuos_pro2_bt_pen(str
+ 	if (number_of_valid_frames) {
+ 		if (wacom->hid_data.time_delayed)
+ 			time_interval = ktime_get() - wacom->hid_data.time_delayed;
+-		time_interval /= number_of_valid_frames;
++		time_interval = div_u64(time_interval, number_of_valid_frames);
+ 		wacom->hid_data.time_delayed = time_packet_received;
+ 	}
  
- 	mptcp_for_each_subflow(msk, subflow) {
-@@ -2845,6 +2851,7 @@ struct sock *mptcp_sk_clone(const struct
- 		inet_sk(nsk)->pinet6 = mptcp_inet6_sk(nsk);
- #endif
+@@ -1359,7 +1359,7 @@ static void wacom_intuos_pro2_bt_pen(str
+ 		bool range = frame[0] & 0x20;
+ 		bool invert = frame[0] & 0x10;
+ 		int frames_number_reversed = number_of_valid_frames - i - 1;
+-		int event_timestamp = time_packet_received - frames_number_reversed * time_interval;
++		ktime_t event_timestamp = time_packet_received - frames_number_reversed * time_interval;
  
-+	nsk->sk_wait_pending = 0;
- 	__mptcp_init_sock(nsk);
+ 		if (!valid)
+ 			continue;
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -321,7 +321,7 @@ struct hid_data {
+ 	int bat_connected;
+ 	int ps_connected;
+ 	bool pad_input_event_flag;
+-	int time_delayed;
++	ktime_t time_delayed;
+ };
  
- 	msk = mptcp_sk(nsk);
+ struct wacom_remote_data {
 
 
