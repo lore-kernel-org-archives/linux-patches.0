@@ -1,128 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527AB1094A
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75DCC433C8;
-	Mon,  3 Jul 2023 18:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2561094A
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DF1C433C8;
+	Mon,  3 Jul 2023 18:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410622;
-	bh=uXGgUq0PG4Hr4m0AZtyS2fWMtp45vW8lW+MmbkOjaGE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=N7BLrJZwOcmYAXZMX9vpfuOQZatVIC0krh5ZlNm/aPqmGHjrlScsVhB8V0FOnObHc
-	 mKlLR1+QzvXkiWbCUofHNLW/aSFCiERCm6Yy2Ujf7o5XRjUEOERd5Mx4j9MrObadIz
-	 U3cbUP09E/mlsxUEN4E66/sU6cqrZtUl4bn8+rZI=
+	s=korg; t=1688410624;
+	bh=xlEC9XqBm0HrybmZPEXfHEplMLHBePgEgZakez4kLm8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=zFcSjIBi2dCy4Q7v5SEpBpNOAL5YWALMpW6Vbsex2udVB1QadRBb6YNBXndvFxRYu
+	 uocGxCe7LpK0WLwshl3Az0gzIjokdFSeV2YKFiYecWIg/k06F3JlmuQMjaxFb4nr+w
+	 z7Z3P75+oA4uMCY7nK0lY4BBrLiCuQCjyams4HLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org
-Subject: [PATCH 6.1 00/11] 6.1.38-rc1 review
-Date: Mon,  3 Jul 2023 20:54:19 +0200
-Message-ID: <20230703184519.121965745@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 01/15] mptcp: fix possible divide by zero in recvmsg()
+Date: Mon,  3 Jul 2023 20:54:46 +0200
+Message-ID: <20230703184518.936530437@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230703184518.896751186@linuxfoundation.org>
+References: <20230703184518.896751186@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.38-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.38-rc1
-X-KernelTest-Deadline: 2023-07-05T18:45+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.1.38 release.
-There are 11 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Paolo Abeni <pabeni@redhat.com>
 
-Responses should be made by Wed, 05 Jul 2023 18:45:08 +0000.
-Anything received after that time might be too late.
+commit 0ad529d9fd2bfa3fc619552a8d2fb2f2ef0bce2e upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.38-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
+Christoph reported a divide by zero bug in mptcp_recvmsg():
 
-thanks,
+divide error: 0000 [#1] PREEMPT SMP
+CPU: 1 PID: 19978 Comm: syz-executor.6 Not tainted 6.4.0-rc2-gffcc7899081b #20
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+RIP: 0010:__tcp_select_window+0x30e/0x420 net/ipv4/tcp_output.c:3018
+Code: 11 ff 0f b7 cd c1 e9 0c b8 ff ff ff ff d3 e0 89 c1 f7 d1 01 cb 21 c3 eb 17 e8 2e 83 11 ff 31 db eb 0e e8 25 83 11 ff 89 d8 99 <f7> 7c 24 04 29 d3 65 48 8b 04 25 28 00 00 00 48 3b 44 24 10 75 60
+RSP: 0018:ffffc90000a07a18 EFLAGS: 00010246
+RAX: 000000000000ffd7 RBX: 000000000000ffd7 RCX: 0000000000040000
+RDX: 0000000000000000 RSI: 000000000003ffff RDI: 0000000000040000
+RBP: 000000000000ffd7 R08: ffffffff820cf297 R09: 0000000000000001
+R10: 0000000000000000 R11: ffffffff8103d1a0 R12: 0000000000003f00
+R13: 0000000000300000 R14: ffff888101cf3540 R15: 0000000000180000
+FS:  00007f9af4c09640(0000) GS:ffff88813bd00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b33824000 CR3: 000000012f241001 CR4: 0000000000170ee0
+Call Trace:
+ <TASK>
+ __tcp_cleanup_rbuf+0x138/0x1d0 net/ipv4/tcp.c:1611
+ mptcp_recvmsg+0xcb8/0xdd0 net/mptcp/protocol.c:2034
+ inet_recvmsg+0x127/0x1f0 net/ipv4/af_inet.c:861
+ ____sys_recvmsg+0x269/0x2b0 net/socket.c:1019
+ ___sys_recvmsg+0xe6/0x260 net/socket.c:2764
+ do_recvmmsg+0x1a5/0x470 net/socket.c:2858
+ __do_sys_recvmmsg net/socket.c:2937 [inline]
+ __se_sys_recvmmsg net/socket.c:2953 [inline]
+ __x64_sys_recvmmsg+0xa6/0x130 net/socket.c:2953
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x47/0xa0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+RIP: 0033:0x7f9af58fc6a9
+Code: 5c c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 4f 37 0d 00 f7 d8 64 89 01 48
+RSP: 002b:00007f9af4c08cd8 EFLAGS: 00000246 ORIG_RAX: 000000000000012b
+RAX: ffffffffffffffda RBX: 00000000006bc050 RCX: 00007f9af58fc6a9
+RDX: 0000000000000001 RSI: 0000000020000140 RDI: 0000000000000004
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000f00 R11: 0000000000000246 R12: 00000000006bc05c
+R13: fffffffffffffea8 R14: 00000000006bc050 R15: 000000000001fe40
+ </TASK>
 
-greg k-h
+mptcp_recvmsg is allowed to release the msk socket lock when
+blocking, and before re-acquiring it another thread could have
+switched the sock to TCP_LISTEN status - with a prior
+connect(AF_UNSPEC) - also clearing icsk_ack.rcv_mss.
 
--------------
-Pseudo-Shortlog of commits:
+Address the issue preventing the disconnect if some other process is
+concurrently performing a blocking syscall on the same socket, alike
+commit 4faeee0cf8a5 ("tcp: deny tcp_disconnect() when threads are waiting").
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.38-rc1
+Fixes: a6b118febbab ("mptcp: add receive buffer auto-tuning")
+Cc: stable@vger.kernel.org
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/404
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/mptcp/protocol.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-    drm/amdgpu: Validate VM ioctl flags.
-
-Ahmed S. Darwish <darwi@linutronix.de>
-    docs: Set minimal gtags / GNU GLOBAL version to 6.6.5
-
-Ahmed S. Darwish <darwi@linutronix.de>
-    scripts/tags.sh: Resolve gtags empty index generation
-
-Krister Johansen <kjlx@templeofstupid.com>
-    perf symbols: Symbol lookup with kcore can fail if multiple segments match stext
-
-Finn Thain <fthain@linux-m68k.org>
-    nubus: Partially revert proc_create_single_data() conversion
-
-Linus Torvalds <torvalds@linux-foundation.org>
-    execve: always mark stack as growing down during early stack setup
-
-Mario Limonciello <mario.limonciello@amd.com>
-    PCI/ACPI: Call _REG when transitioning D-states
-
-Bjorn Helgaas <bhelgaas@google.com>
-    PCI/ACPI: Validate acpi_pci_set_power_state() parameter
-
-Aric Cyr <aric.cyr@amd.com>
-    drm/amd/display: Do not update DRR while BW optimizations pending
-
-Alvin Lee <Alvin.Lee2@amd.com>
-    drm/amd/display: Remove optimization for VRR updates
-
-Max Filippov <jcmvbkbc@gmail.com>
-    xtensa: fix lock_mm_and_find_vma in case VMA not found
-
-
--------------
-
-Diffstat:
-
- Documentation/process/changes.rst        |  7 +++++
- Makefile                                 |  4 +--
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c   |  4 +++
- drivers/gpu/drm/amd/display/dc/core/dc.c | 49 ++++++++++++++++-------------
- drivers/nubus/proc.c                     | 22 ++++++++++---
- drivers/pci/pci-acpi.c                   | 53 ++++++++++++++++++++++++--------
- include/linux/mm.h                       |  4 ++-
- mm/nommu.c                               |  7 ++++-
- scripts/tags.sh                          |  9 +++++-
- tools/perf/util/symbol.c                 | 17 ++++++++--
- 10 files changed, 130 insertions(+), 46 deletions(-)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2807,6 +2807,12 @@ static int mptcp_disconnect(struct sock
+ 	struct mptcp_subflow_context *subflow;
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 
++	/* Deny disconnect if other threads are blocked in sk_wait_event()
++	 * or inet_wait_for_connect().
++	 */
++	if (sk->sk_wait_pending)
++		return -EBUSY;
++
+ 	mptcp_do_flush_join_list(msk);
+ 
+ 	mptcp_for_each_subflow(msk, subflow) {
+@@ -2845,6 +2851,7 @@ struct sock *mptcp_sk_clone(const struct
+ 		inet_sk(nsk)->pinet6 = mptcp_inet6_sk(nsk);
+ #endif
+ 
++	nsk->sk_wait_pending = 0;
+ 	__mptcp_init_sock(nsk);
+ 
+ 	msk = mptcp_sk(nsk);
 
 
