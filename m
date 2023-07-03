@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF18101C3
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B017C433C8;
-	Mon,  3 Jul 2023 18:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864CA101C3
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEEFC433C7;
+	Mon,  3 Jul 2023 18:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410585;
-	bh=0HyXh3ZIgxPjn2Pj5ByUT2iF6oZ7zKM9xBUJI/OV9Sk=;
+	s=korg; t=1688410588;
+	bh=DUEdUhfkjFg4dEHv6hhIC0ZS7mD55KNny4uT0v4xvK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A7cCezM5qAN98QBq+KQFxZXjwD6Ne1I8QXa8EzJ/7WEFVhfI1VhY2Iw1yJly+Qedx
-	 DpEtslmF/+OaefRHW0f8jkjAcItJiVWb5GEQzL+2P1QtPn3uoX7M68iQBQOyRjvror
-	 xMa05rk9Or4X3DRzmHBZ3em6DaGkpBRxtN8kN9vw=
+	b=KfKmO7jQZ998A3gn5AIr2GaPe9wxfNZhERUMRKtZbO0JUiuvKU/vFxj2/aEG5OLPf
+	 zOuRHmURELr1Zg7FAQ/Kdt5vkbs9f7AVzGJ87zq6ixZwdNohhgips+rAQOrppkPs5V
+	 S+6hK+wgWvKf4/9zm12p+BxTic3jZRawJwE6JtP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH 6.3 08/13] nubus: Partially revert proc_create_single_data() conversion
-Date: Mon,  3 Jul 2023 20:54:18 +0200
-Message-ID: <20230703184519.446268753@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Erdem Aktas <erdemaktas@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Vishal Annapurve <vannapurve@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 09/13] hugetlb: revert use of page_cache_next_miss()
+Date: Mon,  3 Jul 2023 20:54:19 +0200
+Message-ID: <20230703184519.477133328@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230703184519.206275653@linuxfoundation.org>
 References: <20230703184519.206275653@linuxfoundation.org>
@@ -35,117 +41,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit 0e96647cff9224db564a1cee6efccb13dbe11ee2 upstream.
+commit fd4aed8d985a3236d0877ff6d0c80ad39d4ce81a upstream.
 
-The conversion to proc_create_single_data() introduced a regression
-whereby reading a file in /proc/bus/nubus results in a seg fault:
+Ackerley Tng reported an issue with hugetlbfs fallocate as noted in the
+Closes tag.  The issue showed up after the conversion of hugetlb page
+cache lookup code to use page_cache_next_miss.  User visible effects are:
 
-    # grep -r . /proc/bus/nubus/e/
-    Data read fault at 0x00000020 in Super Data (pc=0x1074c2)
-    BAD KERNEL BUSERR
-    Oops: 00000000
-    Modules linked in:
-    PC: [<001074c2>] PDE_DATA+0xc/0x16
-    SR: 2010  SP: 38284958  a2: 01152370
-    d0: 00000001    d1: 01013000    d2: 01002790    d3: 00000000
-    d4: 00000001    d5: 0008ce2e    a0: 00000000    a1: 00222a40
-    Process grep (pid: 45, task=142f8727)
-    Frame format=B ssw=074d isc=2008 isb=4e5e daddr=00000020 dobuf=01199e70
-    baddr=001074c8 dibuf=ffffffff ver=f
-    Stack from 01199e48:
-	    01199e70 00222a58 01002790 00000000 011a3000 01199eb0 015000c0 00000000
-	    00000000 01199ec0 01199ec0 000d551a 011a3000 00000001 00000000 00018000
-	    d003f000 00000003 00000001 0002800d 01052840 01199fa8 c01f8000 00000000
-	    00000029 0b532b80 00000000 00000000 00000029 0b532b80 01199ee4 00103640
-	    011198c0 d003f000 00018000 01199fa8 00000000 011198c0 00000000 01199f4c
-	    000b3344 011198c0 d003f000 00018000 01199fa8 00000000 00018000 011198c0
-    Call Trace: [<00222a58>] nubus_proc_rsrc_show+0x18/0xa0
-     [<000d551a>] seq_read+0xc4/0x510
-     [<00018000>] fp_fcos+0x2/0x82
-     [<0002800d>] __sys_setreuid+0x115/0x1c6
-     [<00103640>] proc_reg_read+0x5c/0xb0
-     [<00018000>] fp_fcos+0x2/0x82
-     [<000b3344>] __vfs_read+0x2c/0x13c
-     [<00018000>] fp_fcos+0x2/0x82
-     [<00018000>] fp_fcos+0x2/0x82
-     [<000b8aa2>] sys_statx+0x60/0x7e
-     [<000b34b6>] vfs_read+0x62/0x12a
-     [<00018000>] fp_fcos+0x2/0x82
-     [<00018000>] fp_fcos+0x2/0x82
-     [<000b39c2>] ksys_read+0x48/0xbe
-     [<00018000>] fp_fcos+0x2/0x82
-     [<000b3a4e>] sys_read+0x16/0x1a
-     [<00018000>] fp_fcos+0x2/0x82
-     [<00002b84>] syscall+0x8/0xc
-     [<00018000>] fp_fcos+0x2/0x82
-     [<0000c016>] not_ext+0xa/0x18
-    Code: 4e5e 4e75 4e56 0000 206e 0008 2068 ffe8 <2068> 0020 2008 4e5e 4e75 4e56 0000 2f0b 206e 0008 2068 0004 2668 0020 206b ffe8
-    Disabling lock debugging due to kernel taint
+- hugetlbfs fallocate incorrectly returns -EEXIST if pages are presnet
+  in the file.
+- hugetlb pages will not be included in core dumps if they need to be
+  brought in via GUP.
+- userfaultfd UFFDIO_COPY will not notice pages already present in the
+  cache.  It may try to allocate a new page and potentially return
+  ENOMEM as opposed to EEXIST.
 
-    Segmentation fault
+Revert the use page_cache_next_miss() in hugetlb code.
 
-The proc_create_single_data() conversion does not work because
-single_open(file, nubus_proc_rsrc_show, PDE_DATA(inode)) is not
-equivalent to the original code.
+IMPORTANT NOTE FOR STABLE BACKPORTS:
+This patch will apply cleanly to v6.3.  However, due to the change of
+filemap_get_folio() return values, it will not function correctly.  This
+patch must be modified for stable backports.
 
-Fixes: 3f3942aca6da ("proc: introduce proc_create_single{,_data}")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: stable@vger.kernel.org # 5.6+
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/d4e2a586e793cc8d9442595684ab8a077c0fe726.1678783919.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+[dan.carpenter@linaro.org: fix hugetlbfs_pagecache_present()]
+  Link: https://lkml.kernel.org/r/efa86091-6a2c-4064-8f55-9b44e1313015@moroto.mountain
+Link: https://lkml.kernel.org/r/20230621212403.174710-2-mike.kravetz@oracle.com
+Fixes: d0ce0e47b323 ("mm/hugetlb: convert hugetlb fault paths to use alloc_hugetlb_folio()")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reported-by: Ackerley Tng <ackerleytng@google.com>
+Closes: https://lore.kernel.org/linux-mm/cover.1683069252.git.ackerleytng@google.com
+Reviewed-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: Erdem Aktas <erdemaktas@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Vishal Annapurve <vannapurve@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nubus/proc.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ fs/hugetlbfs/inode.c |    8 +++-----
+ mm/hugetlb.c         |   12 ++++++------
+ 2 files changed, 9 insertions(+), 11 deletions(-)
 
---- a/drivers/nubus/proc.c
-+++ b/drivers/nubus/proc.c
-@@ -137,6 +137,18 @@ static int nubus_proc_rsrc_show(struct s
- 	return 0;
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -821,7 +821,6 @@ static long hugetlbfs_fallocate(struct f
+ 		 */
+ 		struct folio *folio;
+ 		unsigned long addr;
+-		bool present;
+ 
+ 		cond_resched();
+ 
+@@ -845,10 +844,9 @@ static long hugetlbfs_fallocate(struct f
+ 		mutex_lock(&hugetlb_fault_mutex_table[hash]);
+ 
+ 		/* See if already present in mapping to avoid alloc/free */
+-		rcu_read_lock();
+-		present = page_cache_next_miss(mapping, index, 1) != index;
+-		rcu_read_unlock();
+-		if (present) {
++		folio = filemap_get_folio(mapping, index);
++		if (!IS_ERR(folio)) {
++			folio_put(folio);
+ 			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
+ 			hugetlb_drop_vma_policy(&pseudo_vma);
+ 			continue;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5672,13 +5672,13 @@ static bool hugetlbfs_pagecache_present(
+ {
+ 	struct address_space *mapping = vma->vm_file->f_mapping;
+ 	pgoff_t idx = vma_hugecache_offset(h, vma, address);
+-	bool present;
++	struct folio *folio;
+ 
+-	rcu_read_lock();
+-	present = page_cache_next_miss(mapping, idx, 1) != idx;
+-	rcu_read_unlock();
+-
+-	return present;
++	folio = filemap_get_folio(mapping, idx);
++	if (IS_ERR(folio))
++		return false;
++	folio_put(folio);
++	return true;
  }
  
-+static int nubus_rsrc_proc_open(struct inode *inode, struct file *file)
-+{
-+	return single_open(file, nubus_proc_rsrc_show, inode);
-+}
-+
-+static const struct proc_ops nubus_rsrc_proc_ops = {
-+	.proc_open	= nubus_rsrc_proc_open,
-+	.proc_read	= seq_read,
-+	.proc_lseek	= seq_lseek,
-+	.proc_release	= single_release,
-+};
-+
- void nubus_proc_add_rsrc_mem(struct proc_dir_entry *procdir,
- 			     const struct nubus_dirent *ent,
- 			     unsigned int size)
-@@ -152,8 +164,8 @@ void nubus_proc_add_rsrc_mem(struct proc
- 		pded = nubus_proc_alloc_pde_data(nubus_dirptr(ent), size);
- 	else
- 		pded = NULL;
--	proc_create_single_data(name, S_IFREG | 0444, procdir,
--			nubus_proc_rsrc_show, pded);
-+	proc_create_data(name, S_IFREG | 0444, procdir,
-+			 &nubus_rsrc_proc_ops, pded);
- }
- 
- void nubus_proc_add_rsrc(struct proc_dir_entry *procdir,
-@@ -166,9 +178,9 @@ void nubus_proc_add_rsrc(struct proc_dir
- 		return;
- 
- 	snprintf(name, sizeof(name), "%x", ent->type);
--	proc_create_single_data(name, S_IFREG | 0444, procdir,
--			nubus_proc_rsrc_show,
--			nubus_proc_alloc_pde_data(data, 0));
-+	proc_create_data(name, S_IFREG | 0444, procdir,
-+			 &nubus_rsrc_proc_ops,
-+			 nubus_proc_alloc_pde_data(data, 0));
- }
- 
- /*
+ int hugetlb_add_to_page_cache(struct folio *folio, struct address_space *mapping,
 
 
