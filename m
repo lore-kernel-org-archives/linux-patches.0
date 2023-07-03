@@ -1,28 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEB91094A
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B84C433C8;
-	Mon,  3 Jul 2023 18:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E481094A
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEDAC433C7;
+	Mon,  3 Jul 2023 18:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410642;
-	bh=cpJZEsQMdqQHkbjouKTadWuOH6KX38Cgcyv6Sn/HRj8=;
+	s=korg; t=1688410645;
+	bh=QvUT5CLdWwZs0yZNg654AaRKjbaxBHfXJnibD6AgEb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R8Qeu3du8oxl9LBQpqLZdSDvsSoYZLQf7rlsoTwdmEKLeyPd3zNbboXMKcwrUJ2pv
-	 Ei5JJYp/Wsbz+nboY2KxLLnP48sSw84OMtqXA7tAGhO7rbW7Ng8Hd2xIjVshwLgL0x
-	 74V+HqFCShyRjGswP4qNj2b5K2UdofGI5xneMcOQ=
+	b=oTHg3qSLqxdV3fH0TP+g1Q+69O8P4NhAvSeA5LUNNSXtZ1qApzkaTSeRsy0DWgt4A
+	 nZ9aGczm9zLRzo4/4KWSAsuYnBbkTGd5NbKJbTt+VkE3Qn6ZRywfOr5ogp8wINFD7N
+	 i6eSZK6ySHHvvpX5HnYzD7e3ECvTBaNDtZ21UPvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 02/15] mptcp: consolidate fallback and non fallback state machine
-Date: Mon,  3 Jul 2023 20:54:47 +0200
-Message-ID: <20230703184518.962554478@linuxfoundation.org>
+	Tony Luck <tony.luck@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Alexander Potapenko <glider@google.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jane Chu <jane.chu@oracle.com>
+Subject: [PATCH 5.15 03/15] mm, hwpoison: try to recover from copy-on write faults
+Date: Mon,  3 Jul 2023 20:54:48 +0200
+Message-ID: <20230703184518.989435975@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230703184518.896751186@linuxfoundation.org>
 References: <20230703184518.896751186@linuxfoundation.org>
@@ -36,203 +44,222 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Tony Luck <tony.luck@intel.com>
 
-commit 81c1d029016001f994ce1c46849c5e9900d8eab8 upstream.
+commit a873dfe1032a132bf89f9e19a6ac44f5a0b78754 upstream.
 
-An orphaned msk releases the used resources via the worker,
-when the latter first see the msk in CLOSED status.
+Patch series "Copy-on-write poison recovery", v3.
 
-If the msk status transitions to TCP_CLOSE in the release callback
-invoked by the worker's final release_sock(), such instance of the
-workqueue will not take any action.
+Part 1 deals with the process that triggered the copy on write fault with
+a store to a shared read-only page.  That process is send a SIGBUS with
+the usual machine check decoration to specify the virtual address of the
+lost page, together with the scope.
 
-Additionally the MPTCP code prevents scheduling the worker once the
-socket reaches the CLOSE status: such msk resources will be leaked.
+Part 2 sets up to asynchronously take the page with the uncorrected error
+offline to prevent additional machine check faults.  H/t to Miaohe Lin
+<linmiaohe@huawei.com> and Shuai Xue <xueshuai@linux.alibaba.com> for
+pointing me to the existing function to queue a call to memory_failure().
 
-The only code path that can trigger the above scenario is the
-__mptcp_check_send_data_fin() in fallback mode.
+On x86 there is some duplicate reporting (because the error is also
+signalled by the memory controller as well as by the core that triggered
+the machine check).  Console logs look like this:
 
-Address the issue removing the special handling of fallback socket
-in __mptcp_check_send_data_fin(), consolidating the state machine
-for fallback and non fallback socket.
+This patch (of 2):
 
-Since non-fallback sockets do not send and do not receive data_fin,
-the mptcp code can update the msk internal status to match the next
-step in the SM every time data fin (ack) should be generated or
-received.
+If the kernel is copying a page as the result of a copy-on-write
+fault and runs into an uncorrectable error, Linux will crash because
+it does not have recovery code for this case where poison is consumed
+by the kernel.
 
-As a consequence we can remove a bunch of checks for fallback from
-the fastpath.
+It is easy to set up a test case. Just inject an error into a private
+page, fork(2), and have the child process write to the page.
 
-Fixes: 6e628cd3a8f7 ("mptcp: use mptcp release_cb for delayed tasks")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+I wrapped that neatly into a test at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/aegl/ras-tools.git
+
+just enable ACPI error injection and run:
+
+  # ./einj_mem-uc -f copy-on-write
+
+Add a new copy_user_highpage_mc() function that uses copy_mc_to_kernel()
+on architectures where that is available (currently x86 and powerpc).
+When an error is detected during the page copy, return VM_FAULT_HWPOISON
+to caller of wp_page_copy(). This propagates up the call stack. Both x86
+and powerpc have code in their fault handler to deal with this code by
+sending a SIGBUS to the application.
+
+Note that this patch avoids a system crash and signals the process that
+triggered the copy-on-write action. It does not take any action for the
+memory error that is still in the shared page. To handle that a call to
+memory_failure() is needed. But this cannot be done from wp_page_copy()
+because it holds mmap_lock(). Perhaps the architecture fault handlers
+can deal with this loose end in a subsequent patch?
+
+On Intel/x86 this loose end will often be handled automatically because
+the memory controller provides an additional notification of the h/w
+poison in memory, the handler for this will call memory_failure(). This
+isn't a 100% solution. If there are multiple errors, not all may be
+logged in this way.
+
+Cc: <stable@vger.kernel.org>
+[tony.luck@intel.com: add call to kmsan_unpoison_memory(), per Miaohe Lin]
+  Link: https://lkml.kernel.org/r/20221031201029.102123-2-tony.luck@intel.com
+Link: https://lkml.kernel.org/r/20221021200120.175753-1-tony.luck@intel.com
+Link: https://lkml.kernel.org/r/20221021200120.175753-2-tony.luck@intel.com
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Tested-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Due to missing commits
+  c89357e27f20d ("mm: support GUP-triggered unsharing of anonymous pages")
+  662ce1dc9caf4 ("delayacct: track delays from write-protect copy")
+  b073d7f8aee4e ("mm: kmsan: maintain KMSAN metadata for page operations")
+  The impact of c89357e27f20d is a name change from cow_user_page() to
+  __wp_page_copy_user().
+  The impact of 662ce1dc9caf4 is the introduction of a new feature of
+  tracking write-protect copy in delayacct.
+  The impact of b073d7f8aee4e is an introduction of KASAN feature.
+  None of these commits establishes meaningful dependency, hence resolve by
+  ignoring them. - jane]
+Signed-off-by: Jane Chu <jane.chu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   39 +++++++++++++++------------------------
- net/mptcp/subflow.c  |   17 ++++++++++-------
- 2 files changed, 25 insertions(+), 31 deletions(-)
+ include/linux/highmem.h |   24 ++++++++++++++++++++++++
+ mm/memory.c             |   31 +++++++++++++++++++++----------
+ 2 files changed, 45 insertions(+), 10 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -51,7 +51,7 @@ enum {
- static struct percpu_counter mptcp_sockets_allocated;
+--- a/include/linux/highmem.h
++++ b/include/linux/highmem.h
+@@ -247,6 +247,30 @@ static inline void copy_user_highpage(st
  
- static void __mptcp_destroy_sock(struct sock *sk);
--static void __mptcp_check_send_data_fin(struct sock *sk);
-+static void mptcp_check_send_data_fin(struct sock *sk);
+ #endif
  
- DEFINE_PER_CPU(struct mptcp_delegated_action, mptcp_delegated_actions);
- static struct net_device mptcp_napi_dev;
-@@ -355,8 +355,7 @@ static bool mptcp_pending_data_fin_ack(s
- {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
++#ifdef copy_mc_to_kernel
++static inline int copy_mc_user_highpage(struct page *to, struct page *from,
++					unsigned long vaddr, struct vm_area_struct *vma)
++{
++	unsigned long ret;
++	char *vfrom, *vto;
++
++	vfrom = kmap_local_page(from);
++	vto = kmap_local_page(to);
++	ret = copy_mc_to_kernel(vto, vfrom, PAGE_SIZE);
++	kunmap_local(vto);
++	kunmap_local(vfrom);
++
++	return ret;
++}
++#else
++static inline int copy_mc_user_highpage(struct page *to, struct page *from,
++					unsigned long vaddr, struct vm_area_struct *vma)
++{
++	copy_user_highpage(to, from, vaddr, vma);
++	return 0;
++}
++#endif
++
+ #ifndef __HAVE_ARCH_COPY_HIGHPAGE
  
--	return !__mptcp_check_fallback(msk) &&
--	       ((1 << sk->sk_state) &
-+	return ((1 << sk->sk_state) &
- 		(TCPF_FIN_WAIT1 | TCPF_CLOSING | TCPF_LAST_ACK)) &&
- 	       msk->write_seq == READ_ONCE(msk->snd_una);
+ static inline void copy_highpage(struct page *to, struct page *from)
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -2753,10 +2753,16 @@ static inline int pte_unmap_same(struct
+ 	return same;
  }
-@@ -509,9 +508,6 @@ static bool mptcp_check_data_fin(struct
- 	u64 rcv_data_fin_seq;
- 	bool ret = false;
  
--	if (__mptcp_check_fallback(msk))
--		return ret;
--
- 	/* Need to ack a DATA_FIN received from a peer while this side
- 	 * of the connection is in ESTABLISHED, FIN_WAIT1, or FIN_WAIT2.
- 	 * msk->rcv_data_fin was set when parsing the incoming options
-@@ -549,7 +545,8 @@ static bool mptcp_check_data_fin(struct
+-static inline bool cow_user_page(struct page *dst, struct page *src,
+-				 struct vm_fault *vmf)
++/*
++ * Return:
++ *	0:		copied succeeded
++ *	-EHWPOISON:	copy failed due to hwpoison in source page
++ *	-EAGAIN:	copied failed (some other reason)
++ */
++static inline int cow_user_page(struct page *dst, struct page *src,
++				      struct vm_fault *vmf)
+ {
+-	bool ret;
++	int ret;
+ 	void *kaddr;
+ 	void __user *uaddr;
+ 	bool locked = false;
+@@ -2765,8 +2771,9 @@ static inline bool cow_user_page(struct
+ 	unsigned long addr = vmf->address;
+ 
+ 	if (likely(src)) {
+-		copy_user_highpage(dst, src, addr, vma);
+-		return true;
++		if (copy_mc_user_highpage(dst, src, addr, vma))
++			return -EHWPOISON;
++		return 0;
+ 	}
+ 
+ 	/*
+@@ -2793,7 +2800,7 @@ static inline bool cow_user_page(struct
+ 			 * and update local tlb only
+ 			 */
+ 			update_mmu_tlb(vma, addr, vmf->pte);
+-			ret = false;
++			ret = -EAGAIN;
+ 			goto pte_unlock;
  		}
  
- 		ret = true;
--		mptcp_send_ack(msk);
-+		if (!__mptcp_check_fallback(msk))
-+			mptcp_send_ack(msk);
- 		mptcp_close_wake_up(sk);
+@@ -2818,7 +2825,7 @@ static inline bool cow_user_page(struct
+ 		if (!likely(pte_same(*vmf->pte, vmf->orig_pte))) {
+ 			/* The PTE changed under us, update local tlb */
+ 			update_mmu_tlb(vma, addr, vmf->pte);
+-			ret = false;
++			ret = -EAGAIN;
+ 			goto pte_unlock;
+ 		}
+ 
+@@ -2837,7 +2844,7 @@ warn:
+ 		}
  	}
- 	return ret;
-@@ -1612,7 +1609,7 @@ out:
- 	if (!mptcp_timer_pending(sk))
- 		mptcp_reset_timer(sk);
- 	if (copied)
--		__mptcp_check_send_data_fin(sk);
-+		mptcp_check_send_data_fin(sk);
- }
  
- static void __mptcp_subflow_push_pending(struct sock *sk, struct sock *ssk)
-@@ -2451,7 +2448,6 @@ static void mptcp_worker(struct work_str
- 	if (unlikely((1 << state) & (TCPF_CLOSE | TCPF_LISTEN)))
- 		goto unlock;
+-	ret = true;
++	ret = 0;
  
--	mptcp_check_data_fin_ack(sk);
- 	mptcp_flush_join_list(msk);
+ pte_unlock:
+ 	if (locked)
+@@ -3003,6 +3010,7 @@ static vm_fault_t wp_page_copy(struct vm
+ 	pte_t entry;
+ 	int page_copied = 0;
+ 	struct mmu_notifier_range range;
++	int ret;
  
- 	mptcp_check_fastclose(msk);
-@@ -2462,7 +2458,8 @@ static void mptcp_worker(struct work_str
- 	if (test_and_clear_bit(MPTCP_WORK_EOF, &msk->flags))
- 		mptcp_check_for_eof(msk);
+ 	if (unlikely(anon_vma_prepare(vma)))
+ 		goto oom;
+@@ -3018,17 +3026,20 @@ static vm_fault_t wp_page_copy(struct vm
+ 		if (!new_page)
+ 			goto oom;
  
--	__mptcp_check_send_data_fin(sk);
-+	mptcp_check_send_data_fin(sk);
-+	mptcp_check_data_fin_ack(sk);
- 	mptcp_check_data_fin(sk);
- 
- 	/* There is no point in keeping around an orphaned sk timedout or
-@@ -2591,6 +2588,12 @@ void mptcp_subflow_shutdown(struct sock
- 			pr_debug("Fallback");
- 			ssk->sk_shutdown |= how;
- 			tcp_shutdown(ssk, how);
+-		if (!cow_user_page(new_page, old_page, vmf)) {
++		ret = cow_user_page(new_page, old_page, vmf);
++		if (ret) {
+ 			/*
+ 			 * COW failed, if the fault was solved by other,
+ 			 * it's fine. If not, userspace would re-fault on
+ 			 * the same address and we will handle the fault
+ 			 * from the second attempt.
++			 * The -EHWPOISON case will not be retried.
+ 			 */
+ 			put_page(new_page);
+ 			if (old_page)
+ 				put_page(old_page);
+-			return 0;
 +
-+			/* simulate the data_fin ack reception to let the state
-+			 * machine move forward
-+			 */
-+			WRITE_ONCE(mptcp_sk(sk)->snd_una, mptcp_sk(sk)->snd_nxt);
-+			mptcp_schedule_work(sk);
- 		} else {
- 			pr_debug("Sending DATA_FIN on subflow %p", ssk);
- 			tcp_send_ack(ssk);
-@@ -2630,7 +2633,7 @@ static int mptcp_close_state(struct sock
- 	return next & TCP_ACTION_FIN;
- }
- 
--static void __mptcp_check_send_data_fin(struct sock *sk)
-+static void mptcp_check_send_data_fin(struct sock *sk)
- {
- 	struct mptcp_subflow_context *subflow;
- 	struct mptcp_sock *msk = mptcp_sk(sk);
-@@ -2648,18 +2651,6 @@ static void __mptcp_check_send_data_fin(
- 
- 	WRITE_ONCE(msk->snd_nxt, msk->write_seq);
- 
--	/* fallback socket will not get data_fin/ack, can move to the next
--	 * state now
--	 */
--	if (__mptcp_check_fallback(msk)) {
--		if ((1 << sk->sk_state) & (TCPF_CLOSING | TCPF_LAST_ACK)) {
--			inet_sk_state_store(sk, TCP_CLOSE);
--			mptcp_close_wake_up(sk);
--		} else if (sk->sk_state == TCP_FIN_WAIT1) {
--			inet_sk_state_store(sk, TCP_FIN_WAIT2);
--		}
--	}
--
- 	mptcp_flush_join_list(msk);
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *tcp_sk = mptcp_subflow_tcp_sock(subflow);
-@@ -2680,7 +2671,7 @@ static void __mptcp_wr_shutdown(struct s
- 	WRITE_ONCE(msk->write_seq, msk->write_seq + 1);
- 	WRITE_ONCE(msk->snd_data_fin_enable, 1);
- 
--	__mptcp_check_send_data_fin(sk);
-+	mptcp_check_send_data_fin(sk);
- }
- 
- static void __mptcp_destroy_sock(struct sock *sk)
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1653,14 +1653,16 @@ static void subflow_state_change(struct
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
- 	struct sock *parent = subflow->conn;
-+	struct mptcp_sock *msk;
- 
- 	__subflow_state_change(sk);
- 
-+	msk = mptcp_sk(parent);
- 	if (subflow_simultaneous_connect(sk)) {
- 		mptcp_propagate_sndbuf(parent, sk);
- 		mptcp_do_fallback(sk);
--		mptcp_rcv_space_init(mptcp_sk(parent), sk);
--		pr_fallback(mptcp_sk(parent));
-+		mptcp_rcv_space_init(msk, sk);
-+		pr_fallback(msk);
- 		subflow->conn_finished = 1;
- 		mptcp_set_connected(parent);
++			return ret == -EHWPOISON ? VM_FAULT_HWPOISON : 0;
+ 		}
  	}
-@@ -1676,11 +1678,12 @@ static void subflow_state_change(struct
  
- 	subflow_sched_work_if_closed(mptcp_sk(parent), sk);
- 
--	if (__mptcp_check_fallback(mptcp_sk(parent)) &&
--	    !subflow->rx_eof && subflow_is_done(sk)) {
--		subflow->rx_eof = 1;
--		mptcp_subflow_eof(parent);
--	}
-+	/* when the fallback subflow closes the rx side, trigger a 'dummy'
-+	 * ingress data fin, so that the msk state will follow along
-+	 */
-+	if (__mptcp_check_fallback(msk) && subflow_is_done(sk) && msk->first == sk &&
-+	    mptcp_update_rcv_data_fin(msk, READ_ONCE(msk->ack_seq), true))
-+		mptcp_schedule_work(parent);
- }
- 
- static int subflow_ulp_init(struct sock *sk)
 
 
