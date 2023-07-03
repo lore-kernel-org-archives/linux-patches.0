@@ -1,67 +1,70 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3217D1FDA
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 10:02:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4400DC433C7;
-	Mon,  3 Jul 2023 10:02:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688378563;
-	bh=pSNfSIIOb4ZKqOMQEnJnIbxoercou0jXFPcNNcBTu7c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=usR3Ze5ULeh3lOdrcFNFbqHEHOoUOxlEe7I2otACCqOPfkNzRxD9J6vafeVv9wVXx
-	 y/eOF5eEBoSnkNcQuuE+fi9vFHa/b5Vp1KCL9IohNDjUpbjDmHodSiCDyWro4EYwac
-	 qQYrnD/SoD3/V2xoNIxEpNB7IaCYvJ09PZ65YAsI=
-Date: Mon, 3 Jul 2023 12:02:40 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>
-Subject: Re: [PATCH 6.3 02/29] mm/mmap: Fix error return in
- do_vmi_align_munmap()
-Message-ID: <2023070340-alibi-monsoon-e6b6@gregkh>
-References: <20230629184151.705870770@linuxfoundation.org>
- <20230629184151.812335573@linuxfoundation.org>
- <aec8346199e1128f4608ffef6882652938cca5fe.camel@infradead.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81444E55D
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 11:50:07 +0000 (UTC)
+Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-94f7a2b21fdso379603566b.2
+        for <patches@lists.linux.dev>; Mon, 03 Jul 2023 04:50:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1688385005; x=1690977005;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2SzNF2Xp9ZY8Wj02jDl62Q9tRowvgKYaFK1hebcuMF8=;
+        b=pgdnlTh7+dQSQr4HXDzPTcsLOQlcjEHZQKHGP8SUHPN3/ATvqnlbPaxBaM0s7GaUvw
+         RNvdRo93wXLXicgZGyBhr6ZaC7R7ulc3EeshDcjqG+ymW8vmixEwqNuGgEZgFwma+dXs
+         PuAJ3SfbY6DIDtw7FWQQehgD5uzUfk/kymMLnXbNQaYbsaHYBje2TTwgvzNaVUl5hyAu
+         mjU5Htde/TqTtks02Ohuj1rUzDg6n9J+Od7vyRrVjEeU723xdaTuLfKYG9rmCbv1HqKq
+         Qwo0hAGqQyNLiF1/67JGjZjZUaJ7oZpn8LbSv7zzUM7/f5VgOaTJPHaDBhaZfaAScZtR
+         Tp1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688385005; x=1690977005;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2SzNF2Xp9ZY8Wj02jDl62Q9tRowvgKYaFK1hebcuMF8=;
+        b=QfQeo/opn8uLwQwpp12cXOOoPOhtacZ72EqpQZfCzWmd72wOTQBoa8nlMjCS+mZTfb
+         Gdr/QFX7FZ918gyfvMgZVApc13D4Ff5L5qt4PJtnncFyaPPu4khpmEZKXfl+Tzpr9ZjY
+         pIYzoddI+BonVhAKgpSpeF05NwaJkYRZTRBGGyHZF5ZcRTLvZoRU7OKCz+NADecLLEuU
+         uMFCzwWKIYnzcwQyY8n4BVj5xTcXhRhF8Dkj1x2LXZOowOT/4jWSpa+2+9xtUIgOwIKn
+         khF/XAQIwttguyjm07Hfbdc3q00tORMD2QIT81LyZuRsqC1+K0qEAj86VMfMIHxLmnwI
+         DlIQ==
+X-Gm-Message-State: ABy/qLbrhRfwEiixdH7k9c3J/GE5tkVcZH0b5vgNynjOboqDRLhkjw/B
+	4W4k+qH2b3patAfSsE0S1Abvg7h4gmLvWc8=
+X-Google-Smtp-Source: APBJJlFgAj9K0YUTqhagRD6cI8VCPje3jm3GVaqxDZ8a4l8+2/DnyNUX8Fzj6a1eJXu/gYFu03qpStGBcxSRJ3I=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a17:906:4bcd:b0:992:4ba4:dc4a with SMTP
+ id x13-20020a1709064bcd00b009924ba4dc4amr24697ejv.13.1688385005551; Mon, 03
+ Jul 2023 04:50:05 -0700 (PDT)
+Date: Mon,  3 Jul 2023 11:50:00 +0000
+In-Reply-To: <20230624092330.157338-2-benno.lossin@proton.me>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aec8346199e1128f4608ffef6882652938cca5fe.camel@infradead.org>
+Mime-Version: 1.0
+References: <20230624092330.157338-2-benno.lossin@proton.me>
+X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
+Message-ID: <20230703115000.2006682-1-aliceryhl@google.com>
+Subject: [PATCH 2/7] rust: add derive macro for `Zeroable`
+From: Alice Ryhl <aliceryhl@google.com>
+To: benno.lossin@proton.me
+Cc: alex.gaynor@gmail.com, aliceryhl@google.com, bjorn3_gh@protonmail.com, 
+	boqun.feng@gmail.com, gary@garyguo.net, lina@asahilina.net, 
+	linux-kernel@vger.kernel.org, nmi@metaspace.dk, ojeda@kernel.org, 
+	patches@lists.linux.dev, rust-for-linux@vger.kernel.org, wedsonaf@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jul 03, 2023 at 10:23:59AM +0100, David Woodhouse wrote:
-> On Thu, 2023-06-29 at 20:43 +0200, Greg Kroah-Hartman wrote:
-> > From: David Woodhouse <dwmw@amazon.co.uk>
-> > 
-> > commit 6c26bd4384da24841bac4f067741bbca18b0fb74 upstream,
-> > 
-> > If mas_store_gfp() in the gather loop failed, the 'error' variable that
-> > ultimately gets returned was not being set. In many cases, its original
-> > value of -ENOMEM was still in place, and that was fine. But if VMAs had
-> > been split at the start or end of the range, then 'error' could be zero.
-> > 
-> > Change to the 'error = foo(); if (error) goto â€¦' idiom to fix the bug.
+Benno Lossin <benno.lossin@proton.me> writes:
+> Add a derive proc-macro for the `Zeroable` trait. The macro supports
+> structs where every field implements the `Zeroable` trait. This way
+> `unsafe` implementations can be avoided.
 > 
-> Hrm, that isn't what the original commit message said. It said:
+> The macro is split into two parts:
+> - a proc-macro to parse generics into impl and ty generics,
+> - a declarative macro that expands to the impl block.
 > 
-> > Change to the 'error = foo(); if (error) goto …' idiom to fix the bug.
-> 
-> This far into the 21st century, we don't see a lot of tools injecting
-> Mojibake any more; the mantra of "everything is UTF-8, all of the time"
-> mostly seems to work.
-> 
-> Granted, there are more important problems in the world, but it'd be
-> good to identify where that happened and file bugs if needed.
+> Suggested-by: Asahi Lina <lina@asahilina.net>
+> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 
-This is probably due to me going from 'git format-patch' to 'quit
-import' and then to 'git am' as part of the workflow I use here.  I'll
-try to narrow it down as to where this went wrong...
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 
-thanks,
-
-greg k-h
