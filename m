@@ -1,53 +1,45 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EB7C8F5
-	for <patches@lists.linux.dev>; Sat,  1 Jul 2023 16:12:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 432EEC433C7;
-	Sat,  1 Jul 2023 16:12:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1688227923;
-	bh=6IsqIh05oW0elN2m/vV35hMLVDlGmRyuxBmcoCSSojE=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=Zva+SWeBtCyuNrQUj5aoJVlKQBwFMauhtpw/tkLHH2pOk9ArpSAX8v00FDy6W0L7w
-	 oStwZc3XHIduuSGukJMd5al4b6PWscMP/xJM1Q4Fsqy53bLAJljgeo55EyEzEYOwTp
-	 H4M79SetZ3VClukMI6FUAdXW0aKrNNu2eSPEL2QUnOQwGRHRXe0NlaCUb82XoUNWwS
-	 xZiqJiVUqNmZayFZwj6iXTdk9xjaQHl6kpavBw3Rzm9vsN8A0+pGQyeLyF0rZJPUeJ
-	 yOEKU5JQPmEiFOp4ZtpdT+zXb/RwDkapRsgfLU9vBOfBmUa749TkIAQq8BYjJRKGGs
-	 kUYdi3dArJwaw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2D943E5381B;
-	Sat,  1 Jul 2023 16:12:03 +0000 (UTC)
-Subject: Re: [GIT PULL] second set of sysctl fixes v6.5-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <ZJ9q4AUkeaENryE7@bombadil.infradead.org>
-References: <ZJ9q4AUkeaENryE7@bombadil.infradead.org>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <ZJ9q4AUkeaENryE7@bombadil.infradead.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-fixes-v2-v6.4-rc1
-X-PR-Tracked-Commit-Id: 7fffbc71075dcb733068d711c2593127cdce86f0
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: be21a73edd5ded67524eabb9dad42799b42c0585
-Message-Id: <168822792318.621.6724226652558527403.pr-tracker-bot@kernel.org>
-Date: Sat, 01 Jul 2023 16:12:03 +0000
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, trix@redhat.com, keescook@chromium.org, ebiederm@xmission.com, yzaikin@google.com, j.granados@samsung.com, patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, mcgrof@kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D03D7E3;
+	Mon,  3 Jul 2023 05:30:30 +0000 (UTC)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4QvZ8J4CWDz4wxp;
+	Mon,  3 Jul 2023 15:23:28 +1000 (AEST)
+From: Michael Ellerman <patch-notifications@ellerman.id.au>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: npiggin@gmail.com, christophe.leroy@csgroup.eu, ndesaulniers@google.com, trix@redhat.com, linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+In-Reply-To: <20230427-remove-power10-args-from-boot-aflags-clang-v1-1-9107f7c943bc@kernel.org>
+References: <20230427-remove-power10-args-from-boot-aflags-clang-v1-1-9107f7c943bc@kernel.org>
+Subject: Re: [PATCH] powerpc/boot: Disable power10 features after BOOTAFLAGS assignment
+Message-Id: <168836167604.46386.2142822866200803568.b4-ty@ellerman.id.au>
+Date: Mon, 03 Jul 2023 15:21:16 +1000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 
-The pull request you sent on Fri, 30 Jun 2023 16:53:04 -0700:
+On Thu, 27 Apr 2023 12:34:53 -0700, Nathan Chancellor wrote:
+> When building the boot wrapper assembly files with clang after
+> commit 648a1783fe25 ("powerpc/boot: Fix boot wrapper code generation
+> with CONFIG_POWER10_CPU"), the following warnings appear for each file
+> built:
+> 
+>   '-prefixed' is not a recognized feature for this target (ignoring feature)
+>   '-pcrel' is not a recognized feature for this target (ignoring feature)
+> 
+> [...]
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/sysctl-fixes-v2-v6.4-rc1
+Applied to powerpc/fixes.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/be21a73edd5ded67524eabb9dad42799b42c0585
+[1/1] powerpc/boot: Disable power10 features after BOOTAFLAGS assignment
+      https://git.kernel.org/powerpc/c/2b694fc96fe33a7c042e3a142d27d945c8c668b0
 
-Thank you!
-
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+cheers
