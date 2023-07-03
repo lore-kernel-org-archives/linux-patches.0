@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AC4101C3
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E563FC433C8;
-	Mon,  3 Jul 2023 18:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF18101C3
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B017C433C8;
+	Mon,  3 Jul 2023 18:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410583;
-	bh=tkZebvUB7jLTzwBGztrLg//YN0Jnz0GbwLfeCJGdngI=;
+	s=korg; t=1688410585;
+	bh=0HyXh3ZIgxPjn2Pj5ByUT2iF6oZ7zKM9xBUJI/OV9Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6gWh0IrvYHzDif0zpg/JzwpIQx2/nQvUzrQ78188DAFD7AyFLITWmNh2JQTAPy94
-	 j7hbrOge2mIXbvaLQJpsEFor2I+28gP+0+9vMj8FMIS9dxMA7ZxRI2ZjwKrD8j/ooL
-	 SQQCo21PbZv1r1OAKwiBYth8XlLJDf4BxOGI0tG0=
+	b=A7cCezM5qAN98QBq+KQFxZXjwD6Ne1I8QXa8EzJ/7WEFVhfI1VhY2Iw1yJly+Qedx
+	 DpEtslmF/+OaefRHW0f8jkjAcItJiVWb5GEQzL+2P1QtPn3uoX7M68iQBQOyRjvror
+	 xMa05rk9Or4X3DRzmHBZ3em6DaGkpBRxtN8kN9vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.3 07/13] Revert "cxl/port: Enable the HDM decoder capability for switch ports"
-Date: Mon,  3 Jul 2023 20:54:17 +0200
-Message-ID: <20230703184519.419646733@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: [PATCH 6.3 08/13] nubus: Partially revert proc_create_single_data() conversion
+Date: Mon,  3 Jul 2023 20:54:18 +0200
+Message-ID: <20230703184519.446268753@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230703184519.206275653@linuxfoundation.org>
 References: <20230703184519.206275653@linuxfoundation.org>
@@ -35,185 +35,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-commit 8f0220af58c3b73e9041377a23708d37600b33c1 upstream.
+commit 0e96647cff9224db564a1cee6efccb13dbe11ee2 upstream.
 
-commit eb0764b822b9 ("cxl/port: Enable the HDM decoder capability for switch ports")
+The conversion to proc_create_single_data() introduced a regression
+whereby reading a file in /proc/bus/nubus results in a seg fault:
 
-...was added on the observation of CXL memory not being accessible after
-setting up a region on a "cold-plugged" device. A "cold-plugged" CXL
-device is one that was not present at boot, so platform-firmware/BIOS
-has no chance to set it up.
+    # grep -r . /proc/bus/nubus/e/
+    Data read fault at 0x00000020 in Super Data (pc=0x1074c2)
+    BAD KERNEL BUSERR
+    Oops: 00000000
+    Modules linked in:
+    PC: [<001074c2>] PDE_DATA+0xc/0x16
+    SR: 2010  SP: 38284958  a2: 01152370
+    d0: 00000001    d1: 01013000    d2: 01002790    d3: 00000000
+    d4: 00000001    d5: 0008ce2e    a0: 00000000    a1: 00222a40
+    Process grep (pid: 45, task=142f8727)
+    Frame format=B ssw=074d isc=2008 isb=4e5e daddr=00000020 dobuf=01199e70
+    baddr=001074c8 dibuf=ffffffff ver=f
+    Stack from 01199e48:
+	    01199e70 00222a58 01002790 00000000 011a3000 01199eb0 015000c0 00000000
+	    00000000 01199ec0 01199ec0 000d551a 011a3000 00000001 00000000 00018000
+	    d003f000 00000003 00000001 0002800d 01052840 01199fa8 c01f8000 00000000
+	    00000029 0b532b80 00000000 00000000 00000029 0b532b80 01199ee4 00103640
+	    011198c0 d003f000 00018000 01199fa8 00000000 011198c0 00000000 01199f4c
+	    000b3344 011198c0 d003f000 00018000 01199fa8 00000000 00018000 011198c0
+    Call Trace: [<00222a58>] nubus_proc_rsrc_show+0x18/0xa0
+     [<000d551a>] seq_read+0xc4/0x510
+     [<00018000>] fp_fcos+0x2/0x82
+     [<0002800d>] __sys_setreuid+0x115/0x1c6
+     [<00103640>] proc_reg_read+0x5c/0xb0
+     [<00018000>] fp_fcos+0x2/0x82
+     [<000b3344>] __vfs_read+0x2c/0x13c
+     [<00018000>] fp_fcos+0x2/0x82
+     [<00018000>] fp_fcos+0x2/0x82
+     [<000b8aa2>] sys_statx+0x60/0x7e
+     [<000b34b6>] vfs_read+0x62/0x12a
+     [<00018000>] fp_fcos+0x2/0x82
+     [<00018000>] fp_fcos+0x2/0x82
+     [<000b39c2>] ksys_read+0x48/0xbe
+     [<00018000>] fp_fcos+0x2/0x82
+     [<000b3a4e>] sys_read+0x16/0x1a
+     [<00018000>] fp_fcos+0x2/0x82
+     [<00002b84>] syscall+0x8/0xc
+     [<00018000>] fp_fcos+0x2/0x82
+     [<0000c016>] not_ext+0xa/0x18
+    Code: 4e5e 4e75 4e56 0000 206e 0008 2068 ffe8 <2068> 0020 2008 4e5e 4e75 4e56 0000 2f0b 206e 0008 2068 0004 2668 0020 206b ffe8
+    Disabling lock debugging due to kernel taint
 
-While it is true that the debug found the enable bit clear in the
-host-bridge's instance of the global control register (CXL 3.0
-8.2.4.19.2 CXL HDM Decoder Global Control Register), that bit is
-described as:
+    Segmentation fault
 
-"This bit is only applicable to CXL.mem devices and shall
-return 0 on CXL Host Bridges and Upstream Switch Ports."
+The proc_create_single_data() conversion does not work because
+single_open(file, nubus_proc_rsrc_show, PDE_DATA(inode)) is not
+equivalent to the original code.
 
-So it is meant to be zero, and further testing confirmed that this "fix"
-had no effect on the failure. Revert it, and be more vigilant about
-proposed fixes in the future. Since the original copied stable@, flag
-this revert for stable@ as well.
-
-Cc: <stable@vger.kernel.org>
-Fixes: eb0764b822b9 ("cxl/port: Enable the HDM decoder capability for switch ports")
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/168685882012.3475336.16733084892658264991.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: 3f3942aca6da ("proc: introduce proc_create_single{,_data}")
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: stable@vger.kernel.org # 5.6+
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/d4e2a586e793cc8d9442595684ab8a077c0fe726.1678783919.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/pci.c        | 27 ++++-----------------------
- drivers/cxl/cxl.h             |  1 -
- drivers/cxl/port.c            | 14 +++++---------
- tools/testing/cxl/Kbuild      |  1 -
- tools/testing/cxl/test/mock.c | 15 ---------------
- 5 files changed, 9 insertions(+), 49 deletions(-)
+ drivers/nubus/proc.c |   22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index 67f4ab6daa34..74962b18e3b2 100644
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -308,36 +308,17 @@ static void disable_hdm(void *_cxlhdm)
- 	       hdm + CXL_HDM_DECODER_CTRL_OFFSET);
+--- a/drivers/nubus/proc.c
++++ b/drivers/nubus/proc.c
+@@ -137,6 +137,18 @@ static int nubus_proc_rsrc_show(struct s
+ 	return 0;
  }
  
--int devm_cxl_enable_hdm(struct cxl_port *port, struct cxl_hdm *cxlhdm)
-+static int devm_cxl_enable_hdm(struct device *host, struct cxl_hdm *cxlhdm)
- {
--	void __iomem *hdm;
-+	void __iomem *hdm = cxlhdm->regs.hdm_decoder;
- 	u32 global_ctrl;
- 
--	/*
--	 * If the hdm capability was not mapped there is nothing to enable and
--	 * the caller is responsible for what happens next.  For example,
--	 * emulate a passthrough decoder.
--	 */
--	if (IS_ERR(cxlhdm))
--		return 0;
--
--	hdm = cxlhdm->regs.hdm_decoder;
- 	global_ctrl = readl(hdm + CXL_HDM_DECODER_CTRL_OFFSET);
--
--	/*
--	 * If the HDM decoder capability was enabled on entry, skip
--	 * registering disable_hdm() since this decode capability may be
--	 * owned by platform firmware.
--	 */
--	if (global_ctrl & CXL_HDM_DECODER_ENABLE)
--		return 0;
--
- 	writel(global_ctrl | CXL_HDM_DECODER_ENABLE,
- 	       hdm + CXL_HDM_DECODER_CTRL_OFFSET);
- 
--	return devm_add_action_or_reset(&port->dev, disable_hdm, cxlhdm);
-+	return devm_add_action_or_reset(host, disable_hdm, cxlhdm);
++static int nubus_rsrc_proc_open(struct inode *inode, struct file *file)
++{
++	return single_open(file, nubus_proc_rsrc_show, inode);
++}
++
++static const struct proc_ops nubus_rsrc_proc_ops = {
++	.proc_open	= nubus_rsrc_proc_open,
++	.proc_read	= seq_read,
++	.proc_lseek	= seq_lseek,
++	.proc_release	= single_release,
++};
++
+ void nubus_proc_add_rsrc_mem(struct proc_dir_entry *procdir,
+ 			     const struct nubus_dirent *ent,
+ 			     unsigned int size)
+@@ -152,8 +164,8 @@ void nubus_proc_add_rsrc_mem(struct proc
+ 		pded = nubus_proc_alloc_pde_data(nubus_dirptr(ent), size);
+ 	else
+ 		pded = NULL;
+-	proc_create_single_data(name, S_IFREG | 0444, procdir,
+-			nubus_proc_rsrc_show, pded);
++	proc_create_data(name, S_IFREG | 0444, procdir,
++			 &nubus_rsrc_proc_ops, pded);
  }
--EXPORT_SYMBOL_NS_GPL(devm_cxl_enable_hdm, CXL);
  
- int cxl_dvsec_rr_decode(struct device *dev, int d,
- 			struct cxl_endpoint_dvsec_info *info)
-@@ -511,7 +492,7 @@ int cxl_hdm_decode_init(struct cxl_dev_state *cxlds, struct cxl_hdm *cxlhdm,
- 	if (info->mem_enabled)
- 		return 0;
+ void nubus_proc_add_rsrc(struct proc_dir_entry *procdir,
+@@ -166,9 +178,9 @@ void nubus_proc_add_rsrc(struct proc_dir
+ 		return;
  
--	rc = devm_cxl_enable_hdm(port, cxlhdm);
-+	rc = devm_cxl_enable_hdm(&port->dev, cxlhdm);
- 	if (rc)
- 		return rc;
- 
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index f309b1387858..f0c428cb9a71 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -710,7 +710,6 @@ struct cxl_endpoint_dvsec_info {
- struct cxl_hdm;
- struct cxl_hdm *devm_cxl_setup_hdm(struct cxl_port *port,
- 				   struct cxl_endpoint_dvsec_info *info);
--int devm_cxl_enable_hdm(struct cxl_port *port, struct cxl_hdm *cxlhdm);
- int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm,
- 				struct cxl_endpoint_dvsec_info *info);
- int devm_cxl_add_passthrough_decoder(struct cxl_port *port);
-diff --git a/drivers/cxl/port.c b/drivers/cxl/port.c
-index c23b6164e1c0..07c5ac598da1 100644
---- a/drivers/cxl/port.c
-+++ b/drivers/cxl/port.c
-@@ -60,17 +60,13 @@ static int discover_region(struct device *dev, void *root)
- static int cxl_switch_port_probe(struct cxl_port *port)
- {
- 	struct cxl_hdm *cxlhdm;
--	int rc, nr_dports;
--
--	nr_dports = devm_cxl_port_enumerate_dports(port);
--	if (nr_dports < 0)
--		return nr_dports;
-+	int rc;
- 
--	cxlhdm = devm_cxl_setup_hdm(port, NULL);
--	rc = devm_cxl_enable_hdm(port, cxlhdm);
--	if (rc)
-+	rc = devm_cxl_port_enumerate_dports(port);
-+	if (rc < 0)
- 		return rc;
- 
-+	cxlhdm = devm_cxl_setup_hdm(port, NULL);
- 	if (!IS_ERR(cxlhdm))
- 		return devm_cxl_enumerate_decoders(cxlhdm, NULL);
- 
-@@ -79,7 +75,7 @@ static int cxl_switch_port_probe(struct cxl_port *port)
- 		return PTR_ERR(cxlhdm);
- 	}
- 
--	if (nr_dports == 1) {
-+	if (rc == 1) {
- 		dev_dbg(&port->dev, "Fallback to passthrough decoder\n");
- 		return devm_cxl_add_passthrough_decoder(port);
- 	}
-diff --git a/tools/testing/cxl/Kbuild b/tools/testing/cxl/Kbuild
-index 6f9347ade82c..fba7bec96acd 100644
---- a/tools/testing/cxl/Kbuild
-+++ b/tools/testing/cxl/Kbuild
-@@ -6,7 +6,6 @@ ldflags-y += --wrap=acpi_pci_find_root
- ldflags-y += --wrap=nvdimm_bus_register
- ldflags-y += --wrap=devm_cxl_port_enumerate_dports
- ldflags-y += --wrap=devm_cxl_setup_hdm
--ldflags-y += --wrap=devm_cxl_enable_hdm
- ldflags-y += --wrap=devm_cxl_add_passthrough_decoder
- ldflags-y += --wrap=devm_cxl_enumerate_decoders
- ldflags-y += --wrap=cxl_await_media_ready
-diff --git a/tools/testing/cxl/test/mock.c b/tools/testing/cxl/test/mock.c
-index 284416527644..de3933a776fd 100644
---- a/tools/testing/cxl/test/mock.c
-+++ b/tools/testing/cxl/test/mock.c
-@@ -149,21 +149,6 @@ struct cxl_hdm *__wrap_devm_cxl_setup_hdm(struct cxl_port *port,
+ 	snprintf(name, sizeof(name), "%x", ent->type);
+-	proc_create_single_data(name, S_IFREG | 0444, procdir,
+-			nubus_proc_rsrc_show,
+-			nubus_proc_alloc_pde_data(data, 0));
++	proc_create_data(name, S_IFREG | 0444, procdir,
++			 &nubus_rsrc_proc_ops,
++			 nubus_proc_alloc_pde_data(data, 0));
  }
- EXPORT_SYMBOL_NS_GPL(__wrap_devm_cxl_setup_hdm, CXL);
  
--int __wrap_devm_cxl_enable_hdm(struct cxl_port *port, struct cxl_hdm *cxlhdm)
--{
--	int index, rc;
--	struct cxl_mock_ops *ops = get_cxl_mock_ops(&index);
--
--	if (ops && ops->is_mock_port(port->uport))
--		rc = 0;
--	else
--		rc = devm_cxl_enable_hdm(port, cxlhdm);
--	put_cxl_mock_ops(index);
--
--	return rc;
--}
--EXPORT_SYMBOL_NS_GPL(__wrap_devm_cxl_enable_hdm, CXL);
--
- int __wrap_devm_cxl_add_passthrough_decoder(struct cxl_port *port)
- {
- 	int rc, index;
--- 
-2.41.0
-
+ /*
 
 
