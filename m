@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5AF101DB
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550D0C433C8;
-	Mon,  3 Jul 2023 18:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628261094A
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01A9C433C7;
+	Mon,  3 Jul 2023 18:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410593;
-	bh=hzFFwQadPoJv6g2uUeD/gXw2tXMV1EOGOmDiTSgPLK0=;
+	s=korg; t=1688410596;
+	bh=etqMsFn4RSS5ug2q9deNG4dwM6wEb7mVP8RpGSIbIXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kD7hwmgqQ0wmLakvtAQoTA2bG/oYY5wRAY4I+Tpo8Yk2vcI1GZ+xqzmeAjwM5HwJ/
-	 8xPFnD/SvHCPqNRga2PFamF/XkzaPy8SJ72/P2Ve5iut5lVfvCzA7EjVoEr8vl0MXF
-	 WloeKavHIw6iHpPmDD2dlZsLowJTnC3ol6oBURLc=
+	b=pP5gBNIfM0pl6uDm0A9nQDCCTWkKHnvcNOa5rZxdhtUpN1Xc5FeWqTp9OV1kIt96m
+	 5BDcMvS/5v0vnTo3ZtyIqgMbCs0Xm97vGpREt66ns2P6X4Eod9x+Lf3v1q3VeBCijc
+	 nNo5T+nkoS6dM/C7mxbYcLjV0S3qf0dlUEWkYRp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 01/11] xtensa: fix lock_mm_and_find_vma in case VMA not found
-Date: Mon,  3 Jul 2023 20:54:20 +0200
-Message-ID: <20230703184519.163367398@linuxfoundation.org>
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.1 10/11] docs: Set minimal gtags / GNU GLOBAL version to 6.6.5
+Date: Mon,  3 Jul 2023 20:54:29 +0200
+Message-ID: <20230703184519.424897496@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230703184519.121965745@linuxfoundation.org>
 References: <20230703184519.121965745@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,38 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-commit 03f889378f33aa9a9d8e5f49ba94134cf6158090 upstream.
+commit b230235b386589d8f0d631b1c77a95ca79bb0732 upstream.
 
-MMU version of lock_mm_and_find_vma releases the mm lock before
-returning when VMA is not found. Do the same in noMMU version.
-This fixes hang on an attempt to handle protection fault.
+Kernel build now uses the gtags "-C (--directory)" option, available
+since GNU GLOBAL v6.6.5.  Update the documentation accordingly.
 
-Fixes: d85a143b69ab ("xtensa: fix NOMMU build with lock_mm_and_find_vma() conversion")
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lists.gnu.org/archive/html/info-global/2020-09/msg00000.html
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/nommu.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ Documentation/process/changes.rst |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/mm/nommu.c
-+++ b/mm/nommu.c
-@@ -688,8 +688,13 @@ EXPORT_SYMBOL(find_vma);
- struct vm_area_struct *lock_mm_and_find_vma(struct mm_struct *mm,
- 			unsigned long addr, struct pt_regs *regs)
- {
-+	struct vm_area_struct *vma;
-+
- 	mmap_read_lock(mm);
--	return vma_lookup(mm, addr);
-+	vma = vma_lookup(mm, addr);
-+	if (!vma)
-+		mmap_read_unlock(mm);
-+	return vma;
- }
+--- a/Documentation/process/changes.rst
++++ b/Documentation/process/changes.rst
+@@ -60,6 +60,7 @@ openssl & libcrypto    1.0.0
+ bc                     1.06.95          bc --version
+ Sphinx\ [#f1]_         1.7              sphinx-build --version
+ cpio                   any              cpio --version
++gtags (optional)       6.6.5            gtags --version
+ ====================== ===============  ========================================
  
- /*
+ .. [#f1] Sphinx is needed only to build the Kernel documentation
+@@ -174,6 +175,12 @@ You will need openssl to build kernels 3
+ enabled.  You will also need openssl development packages to build kernels 4.3
+ and higher.
+ 
++gtags / GNU GLOBAL (optional)
++-----------------------------
++
++The kernel build requires GNU GLOBAL version 6.6.5 or later to generate
++tag files through ``make gtags``.  This is due to its use of the gtags
++``-C (--directory)`` flag.
+ 
+ System utilities
+ ****************
 
 
