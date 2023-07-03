@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A1E6103
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E45C433C8;
-	Mon,  3 Jul 2023 18:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E05101C3
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63614C433C7;
+	Mon,  3 Jul 2023 18:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410578;
-	bh=noE0e4HY5zAoedrJ6SmcmXcaVfOpIyilJ3/svPZjXV8=;
+	s=korg; t=1688410580;
+	bh=TE0mFY3Must18Ex0giXvU+DY/z4D7YzXzozS8O1LrOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ys37MJXsvrogpJ+V0BpljTXzDGGrHnTQKuPQf0AK81KjY15RXRxGMMPg4b+4adUHX
-	 QQlL7u7vgVJJYQmRgp+AqqRRIyCUherfXZAFZBCU165YLe0yaMdQXK0SLigMxYaxAR
-	 Uf/4u4TMnIOBx6WxYp0XbgUoNuVQVYNyIFR/XgRQ=
+	b=queoqXX9J9b5Rh/nbWQIJIEJyPnM4+wpAhXM+kx0/s3W+pvrAKSjKnNAivsmMCuT0
+	 MNPFNyGwVd6zRDVl5iwEORZjeoZHLCSLuZprT6ZbafvpmChvdj6TBapn92uQVpTHlc
+	 Q12HGlKNQ4wg8RdAj/aT6mHAXkAWyum71uhwZF0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Helge Deller <deller@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.3 05/13] execve: always mark stack as growing down during early stack setup
-Date: Mon,  3 Jul 2023 20:54:15 +0200
-Message-ID: <20230703184519.359440866@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Boyang Xue <bxue@redhat.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.3 06/13] nfs: dont report STATX_BTIME in ->getattr
+Date: Mon,  3 Jul 2023 20:54:16 +0200
+Message-ID: <20230703184519.387886611@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230703184519.206275653@linuxfoundation.org>
 References: <20230703184519.206275653@linuxfoundation.org>
@@ -36,79 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit f66066bc5136f25e36a2daff4896c768f18c211e upstream.
+commit cded49ba366220ae7009d71c5804baa01acfb860 upstream.
 
-While our user stacks can grow either down (all common architectures) or
-up (parisc and the ia64 register stack), the initial stack setup when we
-copy the argument and environment strings to the new stack at execve()
-time is always done by extending the stack downwards.
+NFS doesn't properly support reporting the btime in getattr (yet), but
+61a968b4f05e mistakenly added it to the request_mask. This causes statx
+for STATX_BTIME to report a zeroed out btime instead of properly
+clearing the flag.
 
-But it turns out that in commit 8d7071af8907 ("mm: always expand the
-stack with the mmap write lock held"), as part of making the stack
-growing code more robust, 'expand_downwards()' was now made to actually
-check the vma flags:
-
-	if (!(vma->vm_flags & VM_GROWSDOWN))
-		return -EFAULT;
-
-and that meant that this execve-time stack expansion started failing on
-parisc, because on that architecture, the stack flags do not contain the
-VM_GROWSDOWN bit.
-
-At the same time the new check in expand_downwards() is clearly correct,
-and simplified the callers, so let's not remove it.
-
-The solution is instead to just codify the fact that yes, during
-execve(), the stack grows down.  This not only matches reality, it ends
-up being particularly simple: we already have special execve-time flags
-for the stack (VM_STACK_INCOMPLETE_SETUP) and use those flags to avoid
-page migration during this setup time (see vma_is_temporary_stack() and
-invalid_migration_vma()).
-
-So just add VM_GROWSDOWN to that set of temporary flags, and now our
-stack flags automatically match reality, and the parisc stack expansion
-works again.
-
-Note that the VM_STACK_INCOMPLETE_SETUP bits will be cleared when the
-stack is finalized, so we only add the extra VM_GROWSDOWN bit on
-CONFIG_STACK_GROWSUP architectures (ie parisc) rather than adding it in
-general.
-
-Link: https://lore.kernel.org/all/612eaa53-6904-6e16-67fc-394f4faa0e16@bell.net/
-Link: https://lore.kernel.org/all/5fd98a09-4792-1433-752d-029ae3545168@gmx.de/
-Fixes: 8d7071af8907 ("mm: always expand the stack with the mmap write lock held")
-Reported-by: John David Anglin <dave.anglin@bell.net>
-Reported-and-tested-by: Helge Deller <deller@gmx.de>
-Reported-and-tested-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org # v6.3+
+Fixes: 61a968b4f05e ("nfs: report the inode version in getattr if requested")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2214134
+Reported-by: Boyang Xue <bxue@redhat.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -384,7 +384,7 @@ extern unsigned int kobjsize(const void
- #endif /* CONFIG_HAVE_ARCH_USERFAULTFD_MINOR */
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index a910b9a638c5..8172dd4135a1 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -845,7 +845,7 @@ int nfs_getattr(struct mnt_idmap *idmap, const struct path *path,
  
- /* Bits set in the VMA until the stack is in its final location */
--#define VM_STACK_INCOMPLETE_SETUP	(VM_RAND_READ | VM_SEQ_READ)
-+#define VM_STACK_INCOMPLETE_SETUP (VM_RAND_READ | VM_SEQ_READ | VM_STACK_EARLY)
+ 	request_mask &= STATX_TYPE | STATX_MODE | STATX_NLINK | STATX_UID |
+ 			STATX_GID | STATX_ATIME | STATX_MTIME | STATX_CTIME |
+-			STATX_INO | STATX_SIZE | STATX_BLOCKS | STATX_BTIME |
++			STATX_INO | STATX_SIZE | STATX_BLOCKS |
+ 			STATX_CHANGE_COOKIE;
  
- #define TASK_EXEC ((current->personality & READ_IMPLIES_EXEC) ? VM_EXEC : 0)
- 
-@@ -406,8 +406,10 @@ extern unsigned int kobjsize(const void
- 
- #ifdef CONFIG_STACK_GROWSUP
- #define VM_STACK	VM_GROWSUP
-+#define VM_STACK_EARLY	VM_GROWSDOWN
- #else
- #define VM_STACK	VM_GROWSDOWN
-+#define VM_STACK_EARLY	0
- #endif
- 
- #define VM_STACK_FLAGS	(VM_STACK | VM_STACK_DEFAULT_FLAGS | VM_ACCOUNT)
+ 	if ((query_flags & AT_STATX_DONT_SYNC) && !force_sync) {
+-- 
+2.41.0
+
 
 
