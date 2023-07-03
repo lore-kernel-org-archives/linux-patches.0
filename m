@@ -1,98 +1,128 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19991094A
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD42C433C8;
-	Mon,  3 Jul 2023 18:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527AB1094A
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:57:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75DCC433C8;
+	Mon,  3 Jul 2023 18:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410619;
-	bh=ln4r+vmpH23KoNZHVJdU5V0ROUIfMCtXx4NbdtEtVmg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1IVtFzI7NNy6ZA/KU8yryhPZjbAtRjNrwkcAjde/PY2oRb07M2WTEPqLJHZDCFnR
-	 IvttYzGjaHF3eCAKzOOs91OXXJ4vE5MO3ER5GKBX+uemgi0uvcO9fRaK9ic/jabaim
-	 ecDdrS35eYriMzB/IPufW/SKJJ0zPhp35U6WPjU8=
+	s=korg; t=1688410622;
+	bh=uXGgUq0PG4Hr4m0AZtyS2fWMtp45vW8lW+MmbkOjaGE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=N7BLrJZwOcmYAXZMX9vpfuOQZatVIC0krh5ZlNm/aPqmGHjrlScsVhB8V0FOnObHc
+	 mKlLR1+QzvXkiWbCUofHNLW/aSFCiERCm6Yy2Ujf7o5XRjUEOERd5Mx4j9MrObadIz
+	 U3cbUP09E/mlsxUEN4E66/sU6cqrZtUl4bn8+rZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.1 09/11] scripts/tags.sh: Resolve gtags empty index generation
-Date: Mon,  3 Jul 2023 20:54:28 +0200
-Message-ID: <20230703184519.398455250@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 6.1 00/11] 6.1.38-rc1 review
+Date: Mon,  3 Jul 2023 20:54:19 +0200
+Message-ID: <20230703184519.121965745@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230703184519.121965745@linuxfoundation.org>
-References: <20230703184519.121965745@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.38-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.1.38-rc1
+X-KernelTest-Deadline: 2023-07-05T18:45+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+This is the start of the stable review cycle for the 6.1.38 release.
+There are 11 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit e1b37563caffc410bb4b55f153ccb14dede66815 upstream.
+Responses should be made by Wed, 05 Jul 2023 18:45:08 +0000.
+Anything received after that time might be too late.
 
-gtags considers any file outside of its current working directory
-"outside the source tree" and refuses to index it. For O= kernel builds,
-or when "make" is invoked from a directory other then the kernel source
-tree, gtags ignores the entire kernel source and generates an empty
-index.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.38-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+and the diffstat can be found below.
 
-Force-set gtags current working directory to the kernel source tree.
+thanks,
 
-Due to commit 9da0763bdd82 ("kbuild: Use relative path when building in
-a subdir of the source tree"), if the kernel build is done in a
-sub-directory of the kernel source tree, the kernel Makefile will set
-the kernel's $srctree to ".." for shorter compile-time and run-time
-warnings. Consequently, the list of files to be indexed will be in the
-"../*" form, rendering all such paths invalid once gtags switches to the
-kernel source tree as its current working directory.
+greg k-h
 
-If gtags indexing is requested and the build directory is not the kernel
-source tree, index all files in absolute-path form.
+-------------
+Pseudo-Shortlog of commits:
 
-Note, indexing in absolute-path form will not affect the generated
-index, as paths in gtags indices are always relative to the gtags "root
-directory" anyway (as evidenced by "gtags --dump").
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.1.38-rc1
 
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- scripts/tags.sh |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+    drm/amdgpu: Validate VM ioctl flags.
 
---- a/scripts/tags.sh
-+++ b/scripts/tags.sh
-@@ -25,6 +25,13 @@ else
- 	tree=${srctree}/
- fi
- 
-+# gtags(1) refuses to index any file outside of its current working dir.
-+# If gtags indexing is requested and the build output directory is not
-+# the kernel source tree, index all files in absolute-path form.
-+if [[ "$1" == "gtags" && -n "${tree}" ]]; then
-+	tree=$(realpath "$tree")/
-+fi
-+
- # Detect if ALLSOURCE_ARCHS is set. If not, we assume SRCARCH
- if [ "${ALLSOURCE_ARCHS}" = "" ]; then
- 	ALLSOURCE_ARCHS=${SRCARCH}
-@@ -124,7 +131,7 @@ docscope()
- 
- dogtags()
- {
--	all_target_sources | gtags -i -f -
-+	all_target_sources | gtags -i -C "${tree:-.}" -f - "$PWD"
- }
- 
- # Basic regular expressions with an optional /kind-spec/ for ctags and
+Ahmed S. Darwish <darwi@linutronix.de>
+    docs: Set minimal gtags / GNU GLOBAL version to 6.6.5
+
+Ahmed S. Darwish <darwi@linutronix.de>
+    scripts/tags.sh: Resolve gtags empty index generation
+
+Krister Johansen <kjlx@templeofstupid.com>
+    perf symbols: Symbol lookup with kcore can fail if multiple segments match stext
+
+Finn Thain <fthain@linux-m68k.org>
+    nubus: Partially revert proc_create_single_data() conversion
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    execve: always mark stack as growing down during early stack setup
+
+Mario Limonciello <mario.limonciello@amd.com>
+    PCI/ACPI: Call _REG when transitioning D-states
+
+Bjorn Helgaas <bhelgaas@google.com>
+    PCI/ACPI: Validate acpi_pci_set_power_state() parameter
+
+Aric Cyr <aric.cyr@amd.com>
+    drm/amd/display: Do not update DRR while BW optimizations pending
+
+Alvin Lee <Alvin.Lee2@amd.com>
+    drm/amd/display: Remove optimization for VRR updates
+
+Max Filippov <jcmvbkbc@gmail.com>
+    xtensa: fix lock_mm_and_find_vma in case VMA not found
+
+
+-------------
+
+Diffstat:
+
+ Documentation/process/changes.rst        |  7 +++++
+ Makefile                                 |  4 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c   |  4 +++
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 49 ++++++++++++++++-------------
+ drivers/nubus/proc.c                     | 22 ++++++++++---
+ drivers/pci/pci-acpi.c                   | 53 ++++++++++++++++++++++++--------
+ include/linux/mm.h                       |  4 ++-
+ mm/nommu.c                               |  7 ++++-
+ scripts/tags.sh                          |  9 +++++-
+ tools/perf/util/symbol.c                 | 17 ++++++++--
+ 10 files changed, 130 insertions(+), 46 deletions(-)
 
 
