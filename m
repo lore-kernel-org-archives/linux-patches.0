@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47C81094A
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA3EC433C8;
-	Mon,  3 Jul 2023 18:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B641094A
+	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 18:56:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77174C433C9;
+	Mon,  3 Jul 2023 18:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688410614;
-	bh=0HyXh3ZIgxPjn2Pj5ByUT2iF6oZ7zKM9xBUJI/OV9Sk=;
+	s=korg; t=1688410617;
+	bh=S7fQKOAAYtvGKw4Z/UMBp460D47jEEeRyq9b4SgdkoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jPKg0lk2ck4xv8BJEZ7wfACTegoAKbidQdtnEmUAlNr9H5yR8Yj6wBMxePXeonsko
-	 YMagme0n+b/TnsUw84wKr0TZUhSNoLgkZ5C0RpthJwdhhHwfh7X4vdjzvPxz0TBgLB
-	 yzMZsr4Z5g4z4Ps6bNbfbHVGKn+MKMTXx+84mwWA=
+	b=ASWkegSi8lhgJacOTKVlMZsmKXJPegEvYoMYIJdQ0+Xo468o2s/PDLOqkIuSwGaEF
+	 lW+q0RaGBlWqOd5mbwfMrHzYoQ/zqfAbjq8pTLibOo3tPuGLK5lTAOlOjIcKAZtX9g
+	 0JiW7EeK/4uGu6dCbeZ130zG7jzaeXA2EMpqicBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH 6.1 07/11] nubus: Partially revert proc_create_single_data() conversion
-Date: Mon,  3 Jul 2023 20:54:26 +0200
-Message-ID: <20230703184519.336588697@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	David Reaver <me@davidreaver.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 6.1 08/11] perf symbols: Symbol lookup with kcore can fail if multiple segments match stext
+Date: Mon,  3 Jul 2023 20:54:27 +0200
+Message-ID: <20230703184519.363891736@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230703184519.121965745@linuxfoundation.org>
 References: <20230703184519.121965745@linuxfoundation.org>
@@ -35,117 +43,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit 0e96647cff9224db564a1cee6efccb13dbe11ee2 upstream.
+commit 1c249565426e3a9940102c0ba9f63914f7cda73d upstream.
 
-The conversion to proc_create_single_data() introduced a regression
-whereby reading a file in /proc/bus/nubus results in a seg fault:
+This problem was encountered on an arm64 system with a lot of memory.
+Without kernel debug symbols installed, and with both kcore and kallsyms
+available, perf managed to get confused and returned "unknown" for all
+of the kernel symbols that it tried to look up.
 
-    # grep -r . /proc/bus/nubus/e/
-    Data read fault at 0x00000020 in Super Data (pc=0x1074c2)
-    BAD KERNEL BUSERR
-    Oops: 00000000
-    Modules linked in:
-    PC: [<001074c2>] PDE_DATA+0xc/0x16
-    SR: 2010  SP: 38284958  a2: 01152370
-    d0: 00000001    d1: 01013000    d2: 01002790    d3: 00000000
-    d4: 00000001    d5: 0008ce2e    a0: 00000000    a1: 00222a40
-    Process grep (pid: 45, task=142f8727)
-    Frame format=B ssw=074d isc=2008 isb=4e5e daddr=00000020 dobuf=01199e70
-    baddr=001074c8 dibuf=ffffffff ver=f
-    Stack from 01199e48:
-	    01199e70 00222a58 01002790 00000000 011a3000 01199eb0 015000c0 00000000
-	    00000000 01199ec0 01199ec0 000d551a 011a3000 00000001 00000000 00018000
-	    d003f000 00000003 00000001 0002800d 01052840 01199fa8 c01f8000 00000000
-	    00000029 0b532b80 00000000 00000000 00000029 0b532b80 01199ee4 00103640
-	    011198c0 d003f000 00018000 01199fa8 00000000 011198c0 00000000 01199f4c
-	    000b3344 011198c0 d003f000 00018000 01199fa8 00000000 00018000 011198c0
-    Call Trace: [<00222a58>] nubus_proc_rsrc_show+0x18/0xa0
-     [<000d551a>] seq_read+0xc4/0x510
-     [<00018000>] fp_fcos+0x2/0x82
-     [<0002800d>] __sys_setreuid+0x115/0x1c6
-     [<00103640>] proc_reg_read+0x5c/0xb0
-     [<00018000>] fp_fcos+0x2/0x82
-     [<000b3344>] __vfs_read+0x2c/0x13c
-     [<00018000>] fp_fcos+0x2/0x82
-     [<00018000>] fp_fcos+0x2/0x82
-     [<000b8aa2>] sys_statx+0x60/0x7e
-     [<000b34b6>] vfs_read+0x62/0x12a
-     [<00018000>] fp_fcos+0x2/0x82
-     [<00018000>] fp_fcos+0x2/0x82
-     [<000b39c2>] ksys_read+0x48/0xbe
-     [<00018000>] fp_fcos+0x2/0x82
-     [<000b3a4e>] sys_read+0x16/0x1a
-     [<00018000>] fp_fcos+0x2/0x82
-     [<00002b84>] syscall+0x8/0xc
-     [<00018000>] fp_fcos+0x2/0x82
-     [<0000c016>] not_ext+0xa/0x18
-    Code: 4e5e 4e75 4e56 0000 206e 0008 2068 ffe8 <2068> 0020 2008 4e5e 4e75 4e56 0000 2f0b 206e 0008 2068 0004 2668 0020 206b ffe8
-    Disabling lock debugging due to kernel taint
+On this system, stext fell within the vmalloc segment.  The kcore symbol
+matching code tries to find the first segment that contains stext and
+uses that to replace the segment generated from just the kallsyms
+information.  In this case, however, there were two: a very large
+vmalloc segment, and the text segment.  This caused perf to get confused
+because multiple overlapping segments were inserted into the RB tree
+that holds the discovered segments.  However, that alone wasn't
+sufficient to cause the problem. Even when we could find the segment,
+the offsets were adjusted in such a way that the newly generated symbols
+didn't line up with the instruction addresses in the trace.  The most
+obvious solution would be to consult which segment type is text from
+kcore, but this information is not exposed to users.
 
-    Segmentation fault
+Instead, select the smallest matching segment that contains stext
+instead of the first matching segment.  This allows us to match the text
+segment instead of vmalloc, if one is contained within the other.
 
-The proc_create_single_data() conversion does not work because
-single_open(file, nubus_proc_rsrc_show, PDE_DATA(inode)) is not
-equivalent to the original code.
-
-Fixes: 3f3942aca6da ("proc: introduce proc_create_single{,_data}")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: stable@vger.kernel.org # 5.6+
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/d4e2a586e793cc8d9442595684ab8a077c0fe726.1678783919.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: David Reaver <me@davidreaver.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: http://lore.kernel.org/lkml/20230125183418.GD1963@templeofstupid.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nubus/proc.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ tools/perf/util/symbol.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/nubus/proc.c
-+++ b/drivers/nubus/proc.c
-@@ -137,6 +137,18 @@ static int nubus_proc_rsrc_show(struct s
- 	return 0;
- }
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -1368,10 +1368,23 @@ static int dso__load_kcore(struct dso *d
  
-+static int nubus_rsrc_proc_open(struct inode *inode, struct file *file)
-+{
-+	return single_open(file, nubus_proc_rsrc_show, inode);
-+}
+ 	/* Find the kernel map using the '_stext' symbol */
+ 	if (!kallsyms__get_function_start(kallsyms_filename, "_stext", &stext)) {
++		u64 replacement_size = 0;
 +
-+static const struct proc_ops nubus_rsrc_proc_ops = {
-+	.proc_open	= nubus_rsrc_proc_open,
-+	.proc_read	= seq_read,
-+	.proc_lseek	= seq_lseek,
-+	.proc_release	= single_release,
-+};
+ 		list_for_each_entry(new_map, &md.maps, node) {
+-			if (stext >= new_map->start && stext < new_map->end) {
++			u64 new_size = new_map->end - new_map->start;
 +
- void nubus_proc_add_rsrc_mem(struct proc_dir_entry *procdir,
- 			     const struct nubus_dirent *ent,
- 			     unsigned int size)
-@@ -152,8 +164,8 @@ void nubus_proc_add_rsrc_mem(struct proc
- 		pded = nubus_proc_alloc_pde_data(nubus_dirptr(ent), size);
- 	else
- 		pded = NULL;
--	proc_create_single_data(name, S_IFREG | 0444, procdir,
--			nubus_proc_rsrc_show, pded);
-+	proc_create_data(name, S_IFREG | 0444, procdir,
-+			 &nubus_rsrc_proc_ops, pded);
- }
- 
- void nubus_proc_add_rsrc(struct proc_dir_entry *procdir,
-@@ -166,9 +178,9 @@ void nubus_proc_add_rsrc(struct proc_dir
- 		return;
- 
- 	snprintf(name, sizeof(name), "%x", ent->type);
--	proc_create_single_data(name, S_IFREG | 0444, procdir,
--			nubus_proc_rsrc_show,
--			nubus_proc_alloc_pde_data(data, 0));
-+	proc_create_data(name, S_IFREG | 0444, procdir,
-+			 &nubus_rsrc_proc_ops,
-+			 nubus_proc_alloc_pde_data(data, 0));
- }
- 
- /*
++			if (!(stext >= new_map->start && stext < new_map->end))
++				continue;
++
++			/*
++			 * On some architectures, ARM64 for example, the kernel
++			 * text can get allocated inside of the vmalloc segment.
++			 * Select the smallest matching segment, in case stext
++			 * falls within more than one in the list.
++			 */
++			if (!replacement_map || new_size < replacement_size) {
+ 				replacement_map = new_map;
+-				break;
++				replacement_size = new_size;
+ 			}
+ 		}
+ 	}
 
 
