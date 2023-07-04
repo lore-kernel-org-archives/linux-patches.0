@@ -1,98 +1,98 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D22566B
-	for <patches@lists.linux.dev>; Tue,  4 Jul 2023 11:27:57 +0000 (UTC)
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-51d7e8dd118so6921924a12.1
-        for <patches@lists.linux.dev>; Tue, 04 Jul 2023 04:27:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1688470075; x=1691062075;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tEHN8kv/zUiWgy4LCdHK93+q2EPHQUuAQ4UHUBp2+7o=;
-        b=TMKyon/RMqj8v3axB/OMKH7FLtiDFJ9dKfeRHovlqyfJE5uDkbvTNEg8qdIT3Blp/y
-         rcKityLrQhpDrrLqRsd30fWApdFILzX+KuXWhzvQID3oN84HJfrmkt7os7WgoLxii2Xm
-         eaUJ5HCnwOODeVMWFTxV6H62t3UwAAProjDxgam7RL7jccDLRU+1vwoNq80xLiSgkhL/
-         /K/IpxfgLWm8SaXpx1JmhV2EfmKj95/0Kxe3doqE7iE8F0JPiCJAzEtcSLStQE7uWxDM
-         a8KK7/R5rsfN+cIHTmEvRgU/OyVuMUcY9akXi8EOJw6oCTWPJwhc2GQecvqLA/sVPQ+/
-         ItiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688470075; x=1691062075;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tEHN8kv/zUiWgy4LCdHK93+q2EPHQUuAQ4UHUBp2+7o=;
-        b=EmMK4FkScPmNXs6R1B0iMSSr+Fc4eItwY4ArCwxw9ic6KaWZ/oc4cBw2N9up91Rp6c
-         2hwoRXww/SX/njDVpHg7XibDjdAQibX/qA5GRd2yc3x26Yb6u4AVh6BerQ3/i+ma3xF6
-         5SN0yvHL4Pl6Yih6Y9rTwuQA1SOaIGu+bTjtl6+nirseObjfFZXQNeT+y5V0LmVCwEVl
-         82z8u85WGAnCNVQozb4R0Xv9i0PCA8DBGi6V4FJWsHkJwCcWQiZWmBz8xgSFrthuOwLu
-         IxUqxCNuKllHpyPsy04aQqoIZ3/uamfe6paXgmmoeSFyt22zFRQmvB6BDCWCowsL4/LL
-         MMQw==
-X-Gm-Message-State: ABy/qLaikI65F/zesYdbqc6dEBvp+3e0oZNaBFJICd2r8mQAFgFJJcmn
-	1I63q2UTqLplKzzjlZ3T6N44niOmLc2BZEwIJ/CskQ==
-X-Google-Smtp-Source: APBJJlHGu4FFmWCFmb+vUNh9gFQsSwpK9KXjYVAgV/FEhd+i6bDEYar8yytbjOvvBmWmwyyYiDsyRN8kw99pc17rxrs=
-X-Received: by 2002:a05:6402:2ca:b0:51d:955f:9e17 with SMTP id
- b10-20020a05640202ca00b0051d955f9e17mr9928219edx.16.1688470075098; Tue, 04
- Jul 2023 04:27:55 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE1C568A
+	for <patches@lists.linux.dev>; Tue,  4 Jul 2023 12:28:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9CEC433C7;
+	Tue,  4 Jul 2023 12:28:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1688473715;
+	bh=eAnnv+dDV9eU46cnv4COWRKpmReSFfmKhoejTXImYPU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Z6fjDnuvhzCBPiy5g7CnAG0oRDmwrNtho1EjwGTU7aXf5ppGM0U1rPd/I9QuIA1M0
+	 a3/kHKq0qRClXiTUhmbxqcRkaO36/IhWDU4Ncjz02x+pUmbe4dZEGUtdzL2fcjCh8Z
+	 TerM7Vs29xllT5hqiZfzAGmXEa5Y652sqUJHnUI4=
+Date: Tue, 4 Jul 2023 13:28:31 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Thorsten Leemhuis <linux@leemhuis.info>
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	Vegard Nossum <vegard.nossum@oracle.com>
+Subject: Re: [PATCH 6.3 00/13] 6.3.12-rc1 review
+Message-ID: <2023070446-sublevel-humid-7b01@gregkh>
+References: <20230703184519.206275653@linuxfoundation.org>
+ <CA+G9fYvf-sw8tCHjxhoMvHrtzzdE69EwvB2PmypUkGDdCFFASA@mail.gmail.com>
+ <2023070411-steadfast-overtly-02a3@gregkh>
+ <2023070416-wow-phrasing-b92c@gregkh>
+ <37f9e884-6535-1ed7-8675-d98d0a6d8b36@oracle.com>
+ <2023070444-untimed-clerical-565a@gregkh>
+ <db4bf839-df6a-c2b9-a03c-3b9d1680c2a9@leemhuis.info>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230704084611.071971014@linuxfoundation.org>
-In-Reply-To: <20230704084611.071971014@linuxfoundation.org>
-From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 4 Jul 2023 20:27:44 +0900
-Message-ID: <CAKL4bV4H62QdBJ7G6=QpPRqaG+OkYJ=F9HReS+oyGzKpUCDTNw@mail.gmail.com>
-Subject: Re: [PATCH 6.1 00/13] 6.1.38-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <db4bf839-df6a-c2b9-a03c-3b9d1680c2a9@leemhuis.info>
 
-Hi Greg
+On Tue, Jul 04, 2023 at 11:56:11AM +0200, Thorsten Leemhuis wrote:
+> On 04.07.23 10:47, Greg Kroah-Hartman wrote:
+> > On Tue, Jul 04, 2023 at 02:13:03PM +0530, Harshit Mogalapalli wrote:
+> >> On 04/07/23 1:54 pm, Greg Kroah-Hartman wrote:
+> >>>>> While running LTP hugetlb testing on x86 the following kernel BUG noticed
+> >>>>> on running stable-rc 6.3.12-rc1.
+> >>
+> >> Have you looked at Patch 9 of this series:
+> >>
+> >> https://lore.kernel.org/stable/2023070416-wow-phrasing-b92c@gregkh/T/#m12068530e846ac8b9668bd83941d82ec3f22ac15
+> >>
+> >> Looks very much related, it also has a note on Backporting.
+> >> As I think it could be related, I am sharing this.(But haven't tested
+> >> anything)
+> > 
+> > Yes, that's the offending patch.  I should have read over the full
+> > changelogs before doing bisection, but bisection/test proved that this
+> > was not correct for 6.3.y at this point in time.
+> 
+> FWIW, I'm preparing a few small tweaks for
+> Documentation/process/stable-kernel-rules.rst (to be submitted after the
+> merge window). I among others consider adding something like this that
+> might help avoiding this situation:
+> 
+> ```
+> To delay pick up of patches submitted via :ref:`option_1`, use the
+> following format:
+> 
+> .. code-block:: none
+> 
+>      Cc: <stable@vger.kernel.org> # after 4 weeks in mainline
+> 
+> For any other requests related to patches submitted via :ref:`option_1`,
+> just add a note to the stable tag. This for example can be used to point
+> out known problems:
+> 
+> .. code-block:: none
+> 
+>      Cc: <stable@vger.kernel.org> # see patch description, needs
+> adjustments for 6.3 and earlier
+> 
+> ```
+> 
+> Greg, if this is stupid or in case you want it to say something else,
+> just say so.
 
-On Tue, Jul 4, 2023 at 5:49=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.38 release.
-> There are 13 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 06 Jul 2023 08:46:01 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.38-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+That looks great, hopefully people notice this.  We still have a huge
+number of people refusing to even put cc: stable in a patch, let alone
+these extra hints :)
 
-6.1.38-rc2 tested.
+thanks,
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64), arch linux)
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+greg k-h
