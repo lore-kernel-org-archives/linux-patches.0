@@ -1,157 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0D7468B
-	for <patches@lists.linux.dev>; Tue,  4 Jul 2023 08:48:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097FDC433C7;
-	Tue,  4 Jul 2023 08:48:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688460530;
-	bh=EspsVqameX3ivIVN5aauxB90aVJe0cYYkjZn3kRiGLU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=jqrIIeXyoc6en53BlOEUtKPKy2iFs8k//xVUesPlJg4UhvaW6h4OlfwtO4e7XCH4T
-	 CoYz3wsIqtLPt5rZX6KAMd/0h7QRmgqwtqQDR1FyZSDpwwFaidd5+zlMinBw6mAvnB
-	 tSlps86+mnF//ZyPggJTfIf2Mqs2DsqkproNMeyw=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org
-Subject: [PATCH 5.15 00/17] 5.15.120-rc2 review
-Date: Tue,  4 Jul 2023 09:48:47 +0100
-Message-ID: <20230704084610.981452877@linuxfoundation.org>
-X-Mailer: git-send-email 2.41.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C450C539F
+	for <patches@lists.linux.dev>; Tue,  4 Jul 2023 09:56:17 +0000 (UTC)
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	id 1qGclY-00040o-SF; Tue, 04 Jul 2023 11:56:12 +0200
+Message-ID: <db4bf839-df6a-c2b9-a03c-3b9d1680c2a9@leemhuis.info>
+Date: Tue, 4 Jul 2023 11:56:11 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.120-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.15.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.15.120-rc2
-X-KernelTest-Deadline: 2023-07-06T08:46+00:00
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 6.3 00/13] 6.3.12-rc1 review
+Content-Language: en-US, de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, Vegard Nossum <vegard.nossum@oracle.com>
+References: <20230703184519.206275653@linuxfoundation.org>
+ <CA+G9fYvf-sw8tCHjxhoMvHrtzzdE69EwvB2PmypUkGDdCFFASA@mail.gmail.com>
+ <2023070411-steadfast-overtly-02a3@gregkh>
+ <2023070416-wow-phrasing-b92c@gregkh>
+ <37f9e884-6535-1ed7-8675-d98d0a6d8b36@oracle.com>
+ <2023070444-untimed-clerical-565a@gregkh>
+From: Thorsten Leemhuis <linux@leemhuis.info>
+In-Reply-To: <2023070444-untimed-clerical-565a@gregkh>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1688464577;42f6fc46;
+X-HE-SMSGID: 1qGclY-00040o-SF
 
-This is the start of the stable review cycle for the 5.15.120 release.
-There are 17 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+On 04.07.23 10:47, Greg Kroah-Hartman wrote:
+> On Tue, Jul 04, 2023 at 02:13:03PM +0530, Harshit Mogalapalli wrote:
+>> On 04/07/23 1:54 pm, Greg Kroah-Hartman wrote:
+>>>>> While running LTP hugetlb testing on x86 the following kernel BUG noticed
+>>>>> on running stable-rc 6.3.12-rc1.
+>>
+>> Have you looked at Patch 9 of this series:
+>>
+>> https://lore.kernel.org/stable/2023070416-wow-phrasing-b92c@gregkh/T/#m12068530e846ac8b9668bd83941d82ec3f22ac15
+>>
+>> Looks very much related, it also has a note on Backporting.
+>> As I think it could be related, I am sharing this.(But haven't tested
+>> anything)
+> 
+> Yes, that's the offending patch.  I should have read over the full
+> changelogs before doing bisection, but bisection/test proved that this
+> was not correct for 6.3.y at this point in time.
 
-Responses should be made by Thu, 06 Jul 2023 08:46:01 +0000.
-Anything received after that time might be too late.
+FWIW, I'm preparing a few small tweaks for
+Documentation/process/stable-kernel-rules.rst (to be submitted after the
+merge window). I among others consider adding something like this that
+might help avoiding this situation:
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.120-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-and the diffstat can be found below.
+```
+To delay pick up of patches submitted via :ref:`option_1`, use the
+following format:
 
-thanks,
+.. code-block:: none
 
-greg k-h
+     Cc: <stable@vger.kernel.org> # after 4 weeks in mainline
 
--------------
-Pseudo-Shortlog of commits:
+For any other requests related to patches submitted via :ref:`option_1`,
+just add a note to the stable tag. This for example can be used to point
+out known problems:
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.15.120-rc2
+.. code-block:: none
 
-Finn Thain <fthain@linux-m68k.org>
-    nubus: Partially revert proc_create_single_data() conversion
+     Cc: <stable@vger.kernel.org> # see patch description, needs
+adjustments for 6.3 and earlier
 
-Ben Hutchings <benh@debian.org>
-    parisc: Delete redundant register definitions in <asm/assembly.h>
+```
 
-Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-    drm/amdgpu: Validate VM ioctl flags.
+Greg, if this is stupid or in case you want it to say something else,
+just say so.
 
-Ahmed S. Darwish <darwi@linutronix.de>
-    scripts/tags.sh: Resolve gtags empty index generation
-
-Krister Johansen <kjlx@templeofstupid.com>
-    perf symbols: Symbol lookup with kcore can fail if multiple segments match stext
-
-Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-    Revert "thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe"
-
-Mike Hommey <mh@glandium.org>
-    HID: logitech-hidpp: add HIDPP_QUIRK_DELAYED_INIT for the T651.
-
-Jason Gerecke <jason.gerecke@wacom.com>
-    HID: wacom: Use ktime_t rather than int when dealing with timestamps
-
-Krister Johansen <kjlx@templeofstupid.com>
-    bpf: ensure main program has an extable
-
-Oliver Hartkopp <socketcan@hartkopp.net>
-    can: isotp: isotp_sendmsg(): fix return error fix on TX path
-
-Thomas Gleixner <tglx@linutronix.de>
-    x86/smp: Use dedicated cache-line for mwait_play_dead()
-
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/microcode/AMD: Load late on both threads too
-
-Philip Yang <Philip.Yang@amd.com>
-    drm/amdgpu: Set vmbo destroy after pt bo is created
-
-Jane Chu <jane.chu@oracle.com>
-    mm, hwpoison: when copy-on-write hits poison, take page offline
-
-Tony Luck <tony.luck@intel.com>
-    mm, hwpoison: try to recover from copy-on write faults
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: consolidate fallback and non fallback state machine
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: fix possible divide by zero in recvmsg()
-
-
--------------
-
-Diffstat:
-
- Makefile                                   |  4 +--
- arch/parisc/include/asm/assembly.h         |  4 ---
- arch/x86/kernel/cpu/microcode/amd.c        |  2 +-
- arch/x86/kernel/smpboot.c                  | 24 +++++++++-------
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |  1 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c     |  4 +++
- drivers/hid/hid-logitech-hidpp.c           |  2 +-
- drivers/hid/wacom_wac.c                    |  6 ++--
- drivers/hid/wacom_wac.h                    |  2 +-
- drivers/nubus/proc.c                       | 22 ++++++++++----
- drivers/thermal/mtk_thermal.c              | 14 ++-------
- include/linux/highmem.h                    | 24 ++++++++++++++++
- include/linux/mm.h                         |  5 +++-
- kernel/bpf/verifier.c                      |  7 +++--
- mm/memory.c                                | 33 ++++++++++++++-------
- net/can/isotp.c                            |  5 ++--
- net/mptcp/protocol.c                       | 46 ++++++++++++++----------------
- net/mptcp/subflow.c                        | 17 ++++++-----
- scripts/tags.sh                            |  9 +++++-
- tools/perf/util/symbol.c                   | 17 +++++++++--
- 20 files changed, 159 insertions(+), 89 deletions(-)
-
-
+Ciao, Thorsten
