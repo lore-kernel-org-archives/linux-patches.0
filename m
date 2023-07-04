@@ -1,139 +1,98 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6989EBC
-	for <patches@lists.linux.dev>; Tue,  4 Jul 2023 10:53:39 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 9768D5C027C;
-	Tue,  4 Jul 2023 06:53:38 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Tue, 04 Jul 2023 06:53:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm2; t=1688468018; x=1688554418; bh=KL
-	sZWuI+VjipuyvuWBTWE6vo83syrjKoVbPEreEW6BE=; b=HN4fYNxR3LjTwXgXOe
-	/+NhtE9yRZ8BxtkofVurr/pHK3ipCXj3fSsHAIep3HFwKFnQ9uft4hmnT7c3EgGk
-	4xP+kmH7Mu4ibS/GLsET4c6SGlHBAM7VjqjMMDZYimOhoRu360M+6H0+n2zxJlHx
-	IFMfqSOcRid3w6tk04BKcygiDjqiNf6zDdxYuDWc/8+jQLnz+2mDTj7wntM+KVSv
-	QY2iHCwq36JRtwBx2xCOhtZzjxfEol6eWmhhk42Jdp7mxOLxRFRjf+6h+GfURe8+
-	GiGVPGmnrjwgq4tso6hJDMD9imK4f3QabC2VDBjnfr1uHDa6UZLq2+OMkgAUKcUy
-	/qOA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1688468018; x=1688554418; bh=KLsZWuI+Vjipu
-	yvuWBTWE6vo83syrjKoVbPEreEW6BE=; b=RvWWQHr2VfqQzN+tr0z6zalSxtjAI
-	4ZO94uUfRzW4E0nANpXW1wS3I90Ix7Z9PFN2M6s40Yq0RHhsGH63nQ4E0yBmgs5B
-	mEgaZgzJsaiGP2B5aUe5Lh7SDlcnr+c/OYnpNXElnqbxvnIqQH3y1ZtGVFnRHJmg
-	jHUfE1SwfJC//uwp6Bw+k2w03dVwn+xpcDZiJgVAhpc7Y4WhPh4vXnBW6mPR0fQm
-	Xd8k0FBcJf3p1DtCPNQ1T6uEeSzVkYf+LSBS8lXKN2iqBSuGgiBvVC6aztbZd22o
-	qtKHWpTGNx5KlWY6Pm4VigEWUv1z20LNxp1XowDxNTD+5Bv372ciaaBAQ==
-X-ME-Sender: <xms:MfqjZBJBDEasCnUjWBIATTC60d3XiG5jSqaQZBG0xpgrcTfqgunXmw>
-    <xme:MfqjZNL8O7bz-qHt6Tdtb2-zWINOm6OATnDzUzGYoGlWvspjw0YIxIqYPs93sJJWs
-    EaHa8_XWoXeE4v1ibA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudeggdeffecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
-    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
-    gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
-    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
-    hnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:MvqjZJupp6HnR_H9BuCC2ZASgFPLr1rKvU_iRI5T3zPFZ7nwh7xmVA>
-    <xmx:MvqjZCbli4BY_EnafUW2C4ag-QRbUzDwBNlu9yf4rlzeaXwW8-fxnA>
-    <xmx:MvqjZIZ5vNqduZtKEGVdCHwB0T2FNJ9657mNUauTAikrr86umpxxgQ>
-    <xmx:MvqjZFKPTxZgIIIeM-P932C7LqIyGeRL4CM3aP0C4Y0UmNrdYPyWhQ>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id E510AB60086; Tue,  4 Jul 2023 06:53:37 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-527-gee7b8d90aa-fm-20230629.001-gee7b8d90
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D22566B
+	for <patches@lists.linux.dev>; Tue,  4 Jul 2023 11:27:57 +0000 (UTC)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-51d7e8dd118so6921924a12.1
+        for <patches@lists.linux.dev>; Tue, 04 Jul 2023 04:27:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1688470075; x=1691062075;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tEHN8kv/zUiWgy4LCdHK93+q2EPHQUuAQ4UHUBp2+7o=;
+        b=TMKyon/RMqj8v3axB/OMKH7FLtiDFJ9dKfeRHovlqyfJE5uDkbvTNEg8qdIT3Blp/y
+         rcKityLrQhpDrrLqRsd30fWApdFILzX+KuXWhzvQID3oN84HJfrmkt7os7WgoLxii2Xm
+         eaUJ5HCnwOODeVMWFTxV6H62t3UwAAProjDxgam7RL7jccDLRU+1vwoNq80xLiSgkhL/
+         /K/IpxfgLWm8SaXpx1JmhV2EfmKj95/0Kxe3doqE7iE8F0JPiCJAzEtcSLStQE7uWxDM
+         a8KK7/R5rsfN+cIHTmEvRgU/OyVuMUcY9akXi8EOJw6oCTWPJwhc2GQecvqLA/sVPQ+/
+         ItiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688470075; x=1691062075;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tEHN8kv/zUiWgy4LCdHK93+q2EPHQUuAQ4UHUBp2+7o=;
+        b=EmMK4FkScPmNXs6R1B0iMSSr+Fc4eItwY4ArCwxw9ic6KaWZ/oc4cBw2N9up91Rp6c
+         2hwoRXww/SX/njDVpHg7XibDjdAQibX/qA5GRd2yc3x26Yb6u4AVh6BerQ3/i+ma3xF6
+         5SN0yvHL4Pl6Yih6Y9rTwuQA1SOaIGu+bTjtl6+nirseObjfFZXQNeT+y5V0LmVCwEVl
+         82z8u85WGAnCNVQozb4R0Xv9i0PCA8DBGi6V4FJWsHkJwCcWQiZWmBz8xgSFrthuOwLu
+         IxUqxCNuKllHpyPsy04aQqoIZ3/uamfe6paXgmmoeSFyt22zFRQmvB6BDCWCowsL4/LL
+         MMQw==
+X-Gm-Message-State: ABy/qLaikI65F/zesYdbqc6dEBvp+3e0oZNaBFJICd2r8mQAFgFJJcmn
+	1I63q2UTqLplKzzjlZ3T6N44niOmLc2BZEwIJ/CskQ==
+X-Google-Smtp-Source: APBJJlHGu4FFmWCFmb+vUNh9gFQsSwpK9KXjYVAgV/FEhd+i6bDEYar8yytbjOvvBmWmwyyYiDsyRN8kw99pc17rxrs=
+X-Received: by 2002:a05:6402:2ca:b0:51d:955f:9e17 with SMTP id
+ b10-20020a05640202ca00b0051d955f9e17mr9928219edx.16.1688470075098; Tue, 04
+ Jul 2023 04:27:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Message-Id: <e653087d-207f-483c-8795-fc278ccad765@app.fastmail.com>
-In-Reply-To: 
- <CA+G9fYvf-sw8tCHjxhoMvHrtzzdE69EwvB2PmypUkGDdCFFASA@mail.gmail.com>
-References: <20230703184519.206275653@linuxfoundation.org>
- <CA+G9fYvf-sw8tCHjxhoMvHrtzzdE69EwvB2PmypUkGDdCFFASA@mail.gmail.com>
-Date: Tue, 04 Jul 2023 12:53:16 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Naresh Kamboju" <naresh.kamboju@linaro.org>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- "Linus Torvalds" <torvalds@linux-foundation.org>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Guenter Roeck" <linux@roeck-us.net>, shuah <shuah@kernel.org>,
- patches@kernelci.org, lkft-triage@lists.linaro.org,
- "Pavel Machek" <pavel@denx.de>, "Jon Hunter" <jonathanh@nvidia.com>,
- "Florian Fainelli" <f.fainelli@gmail.com>,
- "Sudip Mukherjee" <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
- rwarsow@gmx.de, "Conor Dooley" <conor@kernel.org>
-Subject: Re: [PATCH 6.3 00/13] 6.3.12-rc1 review
-Content-Type: text/plain
+MIME-Version: 1.0
+References: <20230704084611.071971014@linuxfoundation.org>
+In-Reply-To: <20230704084611.071971014@linuxfoundation.org>
+From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 4 Jul 2023 20:27:44 +0900
+Message-ID: <CAKL4bV4H62QdBJ7G6=QpPRqaG+OkYJ=F9HReS+oyGzKpUCDTNw@mail.gmail.com>
+Subject: Re: [PATCH 6.1 00/13] 6.1.38-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 4, 2023, at 09:34, Naresh Kamboju wrote:
-> On Tue, 4 Jul 2023 at 00:26, Greg Kroah-Hartman
-> [   54.386939] hugefallocate01 (410): drop_caches: 3
-> g tests.......
-> tst_hugepage.c:83: TINFO: 2 huge[   54.396708] BUG: kernel NULL
-> pointer dereference, address: 0000000000000034
-> [   54.404495] #PF: supervisor write access in kernel mode
-> [   54.409718] #PF: error_code(0x0002) - not-present page
-> [   54.414849] PGD 800000010394a067 P4D 800000010394a067 PUD 1033ba067 PMD 0
-> [   54.421721] Oops: 0002 [#1] PREEMPT SMP PTI
-> [   54.425900] CPU: 3 PID: 411 Comm: hugefallocate01 Not tainted 6.3.12-rc1 #1
-> [   54.432860] Hardware name: Supermicro SYS-5019S-ML/X11SSH-F, BIOS
-> 2.5 11/26/2020
-> [   54.440244] RIP: 0010:hugetlbfs_fallocate+0x256/0x580
-> [   54.445296] Code: 3d 6f 37 06 02 89 c3 48 c1 e3 05 48 01 df e8 71
-> fa cb 00 31 c9 31 d2 4c 89 e6 4c 89 f7 e8 72 a6 de ff 48 3d 00 f0 ff
-> ff 77 53 <f0> ff 48 34 74 43 48 03 1d 3d 37 06 02 48 89 df e8 25 f0 cb
-> 00 48
-> [   54.464041] RSP: 0018:ffffab24409f7dc0 EFLAGS: 00010207
-> [   54.469260] RAX: 0000000000000000 RBX: 0000000000000080 RCX: 0000000000000000
-> [   54.476390] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff9fe006b253c0
-> [   54.483514] RBP: ffffab24409f7ec0 R08: 0000000000000000 R09: 0000000000000000
-> [   54.490640] R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
-> [   54.497762] R13: ffff9fe006a68010 R14: ffff9fe006a68188 R15: 0000000000000000
-> [   54.504887] FS:  00007f8bec2ff740(0000) GS:ffff9fe367b80000(0000)
-> knlGS:0000000000000000
-> [   54.512965] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [   54.518702] CR2: 0000000000000034 CR3: 0000000101cd2003 CR4: 00000000003706e0
-> [   54.525826] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-> [   54.532950] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-> [   54.540075] Call Trace:
-> [   54.542519]  <TASK>
-> [   54.544618]  ? show_regs+0x6e/0x80
-> [   54.548022]  ? __die+0x29/0x70
-> [   54.551080]  ? page_fault_oops+0x154/0x470
-> [   54.555186]  ? do_user_addr_fault+0x2f3/0x580
-> [   54.559551]  ? exc_page_fault+0x6b/0x170
-> [   54.563502]  ? asm_exc_page_fault+0x2b/0x30
-> [   54.567686]  ? hugetlbfs_fallocate+0x256/0x580
+Hi Greg
 
-From your vmlinux file I see this hugetlbfs_fallocate+0x256/0x580
-is folio_put(NULL):
+On Tue, Jul 4, 2023 at 5:49=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.38 release.
+> There are 13 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 06 Jul 2023 08:46:01 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.38-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-ffffffff815bdd29:       e8 72 a6 de ff          call   ffffffff813a83a0 <__filemap_get_folio>
-ffffffff815bdd2e:       48 3d 00 f0 ff ff       cmp    $0xfffffffffffff000,%rax
-ffffffff815bdd34:       77 53                   ja     ffffffff815bdd89 <hugetlbfs_fallocate+0x2a9>
-ffffffff815bdd36:       f0 ff 48 34             lock decl 0x34(%rax)
+6.1.38-rc2 tested.
 
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-                /* See if already present in mapping to avoid alloc/free */
-                folio = filemap_get_folio(mapping, index);
-                if (!IS_ERR(folio)) {
-                        folio_put(folio);
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64), arch linux)
 
-It looks like filemap_get_folio() has always returned NULL on error
-rather than an error pointer.
+Thanks
 
-     Arnd
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
