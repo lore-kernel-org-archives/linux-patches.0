@@ -1,69 +1,68 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B96B138A
-	for <patches@lists.linux.dev>; Mon,  3 Jul 2023 23:02:21 +0000 (UTC)
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-51d810010deso4686961a12.0
-        for <patches@lists.linux.dev>; Mon, 03 Jul 2023 16:02:21 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98567ED9
+	for <patches@lists.linux.dev>; Tue,  4 Jul 2023 07:01:11 +0000 (UTC)
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-791b8500a1dso1255811241.1
+        for <patches@lists.linux.dev>; Tue, 04 Jul 2023 00:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1688425340; x=1691017340;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ugEEPDI78ePccslV5nFSda7Y+u/b3y8toq3vF1cGXRM=;
-        b=Gxg1d296aYhiThTBErhnK4dFyBlXUAQZR1j5FPxBeNRWewzsI9EYOok18orw1+ka1x
-         +bln1Pl9uVN9FKWcvin7zQoyOTdfSeP7iYT1KquHv/2Guvb2gEQwQ0bS3yurHb84tRcd
-         UZn/uttOqZ42oBsM2Lu7jsF+dofR+ZkktI39f1FtTVw5cnxdpAv0WkPyPnEqoLhgumXg
-         y6tUYBc+rnuSm1I4rgSIcZhOPR2nIvmgJ5+hSjhmOY/sX7RqoCZY37moGpkZjpQ94Fn6
-         SwfY8aaKo0F2wt8qwbc3NJqvuyTok8oCtlw8LNWm7yoWR9iVHYiXNBGMdl+HkL7AJrLc
-         BnQg==
+        d=linaro.org; s=google; t=1688454070; x=1691046070;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9pLLIHKvmmk4zC9SwsHcTfPMPfVegexthgZQWT/NwCU=;
+        b=a+pGwLbbwJCReamWGknbZ4TgzzLts/gLAaV9nWXDmYXu0RTVp+HIc+Pa5JAYWjgpdF
+         H3fX/q7DfDx0zMsbAPblAmXluwU/A9dc0AhZezBWT79vpiLO+o1tuCH6sGyzqFChV2dC
+         Uc1eqxPxYnhMHR4q6neEN0OIycj2nx/jme2PN/0FqU44PITVQ/4tg+vyfWar0vJmN1eO
+         fP+xS2MijKwNJc4tHpHwMpSqMHBYMnThA8K7aVAiPcJOekMHvfxGmpnIPr97LeieNmJW
+         SQczBMVI3gEGRq3onvjyWCQhxP0OHv0lDiSOehDBzyPnTlqafLzgjAM6ds8/zcm+lGjV
+         d7vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688425340; x=1691017340;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ugEEPDI78ePccslV5nFSda7Y+u/b3y8toq3vF1cGXRM=;
-        b=ZDQ1oDw1GBi0oJ9iWkcDpv7xsNLQGPKkwFb4PPbFyM9/dD0jO5oUq/NTDZshyIz2Mg
-         4X/RIvAv8rGeieYDhpUNbNwyXKDjW8hAIJImFVeaCTHvO/ObLEWwZM3zylaVaSnTQZSg
-         E8eNo5XgA7ju1zNcgoQUUtDK5PGUiv8+a3i6c7e6IqYgmQ+vrY/f3y0y7GFy65HAXmDG
-         41wLqWgHm+JO/6HHd5+HBmOIDKtUk0Fhq3GioFTwsqmra/+HGAa8bYyKqzOfZ0Lboz8p
-         7uume7SzMKIr6afi2GGcLhuIE4V8AnmitVfOzh1/mawbjXWSUqTEZVXOuINTyD5ZG7+5
-         DQRQ==
-X-Gm-Message-State: ABy/qLZvEtRCGa1WP9KwPB/Bf3OCgwXXagtwEw+KXButeyWu0FrqtOpa
-	8eZFTUkjY+lScIVHXim36Z5G/4SxuQDPi93dG1iyPg==
-X-Google-Smtp-Source: APBJJlFfCePKSzholqHXh1bDMosUBsG+EpDt5w4T90POrytUx446YR+AKSabi0OjjX5yBnw0LUAcyx0QPDihFPk1n/8=
-X-Received: by 2002:aa7:c697:0:b0:51d:960d:5fce with SMTP id
- n23-20020aa7c697000000b0051d960d5fcemr6204738edq.14.1688425340062; Mon, 03
- Jul 2023 16:02:20 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1688454070; x=1691046070;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9pLLIHKvmmk4zC9SwsHcTfPMPfVegexthgZQWT/NwCU=;
+        b=BpxfrZpTLV9INsgMdq2ocbQrPe2mUMvmF3eCLFuVgJZe4jveFPuboPz0tNGtLIVMbo
+         Fs6QEzJMWacq471sNXIsQk1mXpYuG5pQbcrTVWd2phCiAnkJqelg71U+82Ij9CsFrMTp
+         lvhjDN3ua9+w1Rp5plmVqqJoTDqK8aC/WPe4lJXnNahSNkKLHrhsB2l5NFkVZ2hJ75Yu
+         a7MM0vh8w3zIc0Okq6kz6jhmaJMblOG+HF2nVlUIRRmhN8PhVLpmKGHJQKFsrXoSoe91
+         snZE97hSHTDWpx2A7qSlA8WaaGNnzlBjeEnumJyJNoC7FySjBQpgncDGwI1wFaacmWi0
+         8Blw==
+X-Gm-Message-State: ABy/qLYTFfcixQfazjqIF09bSSMX+ELYFcyLxYEUNVOBldZUW1MVMI88
+	5FFnt30CqeQtUnfrzeYZ1u7OEgvGk/iLTu99ZmXoNQ==
+X-Google-Smtp-Source: APBJJlHHFru7hehy/Zd70AaP3FWkvc1cUSv1H/u4Os+sP54Zrm6/BsfpbzuKyGRVs/aUbzDELUweyKecQMONkFL4CGM=
+X-Received: by 2002:a67:f413:0:b0:444:c294:afc7 with SMTP id
+ p19-20020a67f413000000b00444c294afc7mr3671389vsn.26.1688454070103; Tue, 04
+ Jul 2023 00:01:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230703184519.121965745@linuxfoundation.org>
-In-Reply-To: <20230703184519.121965745@linuxfoundation.org>
-From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 4 Jul 2023 08:02:09 +0900
-Message-ID: <CAKL4bV6wTXVoYP7Ui9u0vSfx4Ga0GY+VPZeQp8TLJ+zvxjoHhQ@mail.gmail.com>
-Subject: Re: [PATCH 6.1 00/11] 6.1.38-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+References: <20230703184518.896751186@linuxfoundation.org>
+In-Reply-To: <20230703184518.896751186@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 4 Jul 2023 12:30:58 +0530
+Message-ID: <CA+G9fYueycAbx7DDR3S57d43UX49SOGnW6igQUZ0voEcapxdYw@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/15] 5.15.120-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-parisc <linux-parisc@vger.kernel.org>, 
+	Helge Deller <deller@gmx.de>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	Vishal Bhoj <vishal.bhoj@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	=?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Greg
-
-On Tue, Jul 4, 2023 at 3:57=E2=80=AFAM Greg Kroah-Hartman
+On Tue, 4 Jul 2023 at 00:27, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.1.38 release.
-> There are 11 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.15.120 release.
+> There are 15 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -71,28 +70,40 @@ On Tue, Jul 4, 2023 at 3:57=E2=80=AFAM Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.38-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.120-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
->
 
-6.1.38-rc1 tested.
+Following build regressions noticed on stable-rc 5.15.
+This build failure started happening from v5.15.119 from date June 28, 2023.
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64), arch linux)
+Regressions found on parisc:
 
-Thanks
+  - build/gcc-11-allnoconfig
+  - build/gcc-11-defconfig
+  - build/gcc-11-tinyconfig
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Build errors:
+=============
+arch/parisc/include/asm/assembly.h: Assembler messages:
+arch/parisc/include/asm/assembly.h:75: Error: symbol `sp' is already defined
+arch/parisc/include/asm/assembly.h:77: Error: symbol `ipsw' is already defined
+make[3]: *** [scripts/Makefile.build:391: arch/parisc/kernel/head.o] Error 1
+arch/parisc/include/asm/assembly.h: Assembler messages:
+
+Links:
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.119-16-g66130849c020/testrun/18074467/suite/build/test/gcc-11-defconfig/log
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.119-16-g66130849c020/testrun/18074467/suite/build/test/gcc-11-defconfig/details/
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.119-16-g66130849c020/testrun/18074467/suite/build/test/gcc-11-defconfig/history/
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
