@@ -1,110 +1,162 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14E4568A
-	for <patches@lists.linux.dev>; Tue,  4 Jul 2023 12:29:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1C3C433C7;
-	Tue,  4 Jul 2023 12:29:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688473766;
-	bh=IbwfdctXwTJ4UTld0cV2kX+bTLKKpaeeyTG5F1V8YAQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ojCjFSWaZTwKTX6+Dlpb0gWI5lf/XxnyucZBL3FyDQYY90QUIM35a/hxYsK/JFZ+c
-	 +P6XUwxD5pwHG+jRJSPWbCxY7ZoYNEzQYVbYReV0FQGr2RE4hbD1+rIGKSNLiaQEmY
-	 bfVKI5DE/sRWSrqL/k+KkRNtubqo0XifIGqNTEYI=
-Date: Tue, 4 Jul 2023 13:29:22 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Guenter Roeck <linux@roeck-us.net>, shuah <shuah@kernel.org>,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	Pavel Machek <pavel@denx.de>, Jon Hunter <jonathanh@nvidia.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
-	rwarsow@gmx.de, Conor Dooley <conor@kernel.org>
-Subject: Re: [PATCH 6.3 00/13] 6.3.12-rc1 review
-Message-ID: <2023070435-wipe-tables-7c0a@gregkh>
-References: <20230703184519.206275653@linuxfoundation.org>
- <CA+G9fYvf-sw8tCHjxhoMvHrtzzdE69EwvB2PmypUkGDdCFFASA@mail.gmail.com>
- <e653087d-207f-483c-8795-fc278ccad765@app.fastmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A593D4417
+	for <patches@lists.linux.dev>; Tue,  4 Jul 2023 12:44:34 +0000 (UTC)
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-401d1d967beso678721cf.0
+        for <patches@lists.linux.dev>; Tue, 04 Jul 2023 05:44:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1688474673; x=1691066673;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=46ITuGL3ZNdtf3XPTH191bqtT78mJQaPQAjnN2Ligrc=;
+        b=G9dEsTYlJY7rrIhiJX2pO5eZFnteoP74190Ma/YYzlLB39KwGpPzOjSx4w4hiSkEMe
+         +erhStJa5EZHzaz9gKQse3RgkDeifRHLOZ4n/mw8OMtOLMvMUKWY7GA9K+APnP+mGvO7
+         +QswzMI8pHNUspASk45G0z5uvuTrUUC2LFXfHnIf+tI4B3Y4iBQwAPZIxozP55xUXtdg
+         k9TM5VC0bf4dcjj30Wv3w62ybpyvc6VR/TLIYE1j3OSC2azAkc7ndbGuLQKHQZ/OapyH
+         XC6ZJKwDxpZnYK5oN4UKzxzQdut7lLcste23KqrWF9HCcMRuxmjlzoh7K2L/JuPZ/Lv3
+         sYuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688474673; x=1691066673;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=46ITuGL3ZNdtf3XPTH191bqtT78mJQaPQAjnN2Ligrc=;
+        b=ezttwEjE8gx8mFlvKKLZI4kpZ4GED8wYNQWRuo6hgp7t0avQ38DHmUFeTvGNGLVNfh
+         mhMe9XRz9wfGMWuK1BGIezgSUquCmdFSgYnI3Gw1ZzZMSRl9gow4d8+2wqlOe1yYJRNJ
+         MDtsipydnJXPB6CtqSyw0QlZayoplhtNLnj29XNAVbvUWBbBxemjZfebTizT+IcChtPF
+         Qt/c/8Qp0vgN6Aa5xt02kKggEprwKUkgx3I4CVs0LLprc1KUBxm+o8omNeL+Z/Vnc4Rg
+         nKi5S7aSTXg24shMzRuShL68N22s0ODwHx+XV0ie0chY+BPLwmzElm0AsRPGzvEXwzKo
+         /5CA==
+X-Gm-Message-State: ABy/qLa2tm8XVGtxf8j/mxLKuadx560Q9Yn6xkg8FMzuA3dDqODLBijs
+	cCKgU8t09/yUNSmKdX9ex+B2WaGL3i3/HAsMDSZjTg==
+X-Google-Smtp-Source: APBJJlGi/if+3FWJlQjkWxchtte2XHbZnPbLiXlnFDF4GG64r5JEqeUrMPfPS4J29Epnh8YgtcEthsNmPpDPuntbz7c=
+X-Received: by 2002:ac8:7f12:0:b0:3f8:5b2:aeee with SMTP id
+ f18-20020ac87f12000000b003f805b2aeeemr111627qtk.22.1688474673336; Tue, 04 Jul
+ 2023 05:44:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e653087d-207f-483c-8795-fc278ccad765@app.fastmail.com>
+References: <20230620033702.33344-1-tony.luck@intel.com> <20230620033702.33344-3-tony.luck@intel.com>
+In-Reply-To: <20230620033702.33344-3-tony.luck@intel.com>
+From: Peter Newman <peternewman@google.com>
+Date: Tue, 4 Jul 2023 14:44:22 +0200
+Message-ID: <CALPaoChdFLTfA5g=vawTuOLk5T6dEkG79XXqm27shh-VeqNCOw@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] resctrl2: Arch x86 modules for most of the legacy
+ control/monitor functions
+To: Tony Luck <tony.luck@intel.com>
+Cc: James Morse <james.morse@arm.com>, Fenghua Yu <fenghua.yu@intel.com>, 
+	Reinette Chatre <reinette.chatre@intel.com>, Drew Fustini <dfustini@baylibre.com>, 
+	Babu Moger <Babu.Moger@amd.com>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
+	Borislav Petkov <bp@alien8.de>, H Peter Anvin <hpa@zytor.com>, shameerali.kolothum.thodi@huawei.com, 
+	D Scott Phillips OS <scott@os.amperecomputing.com>, carl@os.amperecomputing.com, 
+	lcherian@marvell.com, bobo.shaobowang@huawei.com, tan.shaopeng@fujitsu.com, 
+	xingxin.hx@openanolis.org, baolin.wang@linux.alibaba.com, 
+	Jamie Iles <quic_jiles@quicinc.com>, Xin Hao <xhao@linux.alibaba.com>, 
+	Nicolas Pitre <npitre@baylibre.com>, Kevin Hilman <khilman@baylibre.com>, aricciardi@baylibre.com, 
+	x86@kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 04, 2023 at 12:53:16PM +0200, Arnd Bergmann wrote:
-> On Tue, Jul 4, 2023, at 09:34, Naresh Kamboju wrote:
-> > On Tue, 4 Jul 2023 at 00:26, Greg Kroah-Hartman
-> > [   54.386939] hugefallocate01 (410): drop_caches: 3
-> > g tests.......
-> > tst_hugepage.c:83: TINFO: 2 huge[   54.396708] BUG: kernel NULL
-> > pointer dereference, address: 0000000000000034
-> > [   54.404495] #PF: supervisor write access in kernel mode
-> > [   54.409718] #PF: error_code(0x0002) - not-present page
-> > [   54.414849] PGD 800000010394a067 P4D 800000010394a067 PUD 1033ba067 PMD 0
-> > [   54.421721] Oops: 0002 [#1] PREEMPT SMP PTI
-> > [   54.425900] CPU: 3 PID: 411 Comm: hugefallocate01 Not tainted 6.3.12-rc1 #1
-> > [   54.432860] Hardware name: Supermicro SYS-5019S-ML/X11SSH-F, BIOS
-> > 2.5 11/26/2020
-> > [   54.440244] RIP: 0010:hugetlbfs_fallocate+0x256/0x580
-> > [   54.445296] Code: 3d 6f 37 06 02 89 c3 48 c1 e3 05 48 01 df e8 71
-> > fa cb 00 31 c9 31 d2 4c 89 e6 4c 89 f7 e8 72 a6 de ff 48 3d 00 f0 ff
-> > ff 77 53 <f0> ff 48 34 74 43 48 03 1d 3d 37 06 02 48 89 df e8 25 f0 cb
-> > 00 48
-> > [   54.464041] RSP: 0018:ffffab24409f7dc0 EFLAGS: 00010207
-> > [   54.469260] RAX: 0000000000000000 RBX: 0000000000000080 RCX: 0000000000000000
-> > [   54.476390] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff9fe006b253c0
-> > [   54.483514] RBP: ffffab24409f7ec0 R08: 0000000000000000 R09: 0000000000000000
-> > [   54.490640] R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
-> > [   54.497762] R13: ffff9fe006a68010 R14: ffff9fe006a68188 R15: 0000000000000000
-> > [   54.504887] FS:  00007f8bec2ff740(0000) GS:ffff9fe367b80000(0000)
-> > knlGS:0000000000000000
-> > [   54.512965] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> > [   54.518702] CR2: 0000000000000034 CR3: 0000000101cd2003 CR4: 00000000003706e0
-> > [   54.525826] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-> > [   54.532950] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-> > [   54.540075] Call Trace:
-> > [   54.542519]  <TASK>
-> > [   54.544618]  ? show_regs+0x6e/0x80
-> > [   54.548022]  ? __die+0x29/0x70
-> > [   54.551080]  ? page_fault_oops+0x154/0x470
-> > [   54.555186]  ? do_user_addr_fault+0x2f3/0x580
-> > [   54.559551]  ? exc_page_fault+0x6b/0x170
-> > [   54.563502]  ? asm_exc_page_fault+0x2b/0x30
-> > [   54.567686]  ? hugetlbfs_fallocate+0x256/0x580
-> 
-> >From your vmlinux file I see this hugetlbfs_fallocate+0x256/0x580
-> is folio_put(NULL):
-> 
-> ffffffff815bdd29:       e8 72 a6 de ff          call   ffffffff813a83a0 <__filemap_get_folio>
-> ffffffff815bdd2e:       48 3d 00 f0 ff ff       cmp    $0xfffffffffffff000,%rax
-> ffffffff815bdd34:       77 53                   ja     ffffffff815bdd89 <hugetlbfs_fallocate+0x2a9>
-> ffffffff815bdd36:       f0 ff 48 34             lock decl 0x34(%rax)
-> 
-> 
->                 /* See if already present in mapping to avoid alloc/free */
->                 folio = filemap_get_folio(mapping, index);
->                 if (!IS_ERR(folio)) {
->                         folio_put(folio);
-> 
-> It looks like filemap_get_folio() has always returned NULL on error
-> rather than an error pointer.
+Hi Tony,
 
-Yeah, this needs to be reworked from 6.3.y, as the commit message said,
-I just missed it, my fault.
+On Tue, Jun 20, 2023 at 5:37=E2=80=AFAM Tony Luck <tony.luck@intel.com> wro=
+te:
+> +struct rmid {
+> +       struct list_head        list;
+> +       struct list_head        child_list;
+> +       bool                    is_parent;
+> +static void __rdt_rmid_read(void *info)
+> +{
+> +       struct rrmid_info *rr =3D info;
+> +       unsigned long flags;
+> +       struct rmid *cr, *r;
+> +       struct mydomain *m;
+> +       u64 chunks;
+> +
+> +       m =3D get_mydomain(rr->domain);
+> +
+> +       if (rr->event <=3D EV_LOC) {
+> +               spin_lock_irqsave(&m->msr_lock, flags);
 
-Hopefully 6.3.y doesn't live much longer (maybe a few days), then we
-don't have to deal with this api mismatch which will only cause
-problems with backports...
+Will there ultimately be any locking at the filesystem layer? I recall
+from feedback on my change adding a spinlock here[1] before that the
+filesystem-layer locking took care of this.
 
-thanks,
+> +               wrmsrl(MSR_IA32_QM_EVTSEL, (rr->rmid << 32) | rr->event);
+> +               rdmsrl(MSR_IA32_QM_CTR, chunks);
+> +       } else {
+> +               chunks =3D 0;
+> +       }
+> +
+> +       rr->chunks =3D adjust(m, rr->rmid, rr->event, chunks);
+> +
+> +       r =3D &rmid_array[rr->rmid];
+> +       if (r->is_parent && !list_empty(&r->child_list)) {
+> +               list_for_each_entry(cr, &r->child_list, child_list) {
+> +                       u64 crmid =3D cr - rmid_array;
+> +
+> +                       if (rr->event <=3D EV_LOC) {
+> +                               wrmsrl(MSR_IA32_QM_EVTSEL, (crmid << 32) =
+| rr->event);
+> +                               rdmsrl(MSR_IA32_QM_CTR, chunks);
+> +                       } else {
+> +                               chunks =3D 0;
+> +                       }
+> +
+> +                       rr->chunks +=3D adjust(m, crmid, rr->event, chunk=
+s);
+> +               }
+> +       }
+> +
+> +       if (rr->event <=3D EV_LOC)
+> +               spin_unlock_irqrestore(&m->msr_lock, flags);
+> +}
+> +
+> +u64 rdt_rmid_read(int domain_id, int rmid, int event)
+> +{
+> +       struct resctrl_domain *d;
+> +       struct rrmid_info rr;
+> +       struct mydomain *m;
+> +
+> +       list_for_each_entry(d, &monitor.domains, list)
+> +               if (d->id =3D=3D domain_id)
+> +                       goto found;
+> +       return ~0ull;
+> +found:
+> +       m =3D get_mydomain(d);
+> +
+> +       rr.domain =3D d;
+> +       rr.rmid =3D rmid;
+> +       rr.event =3D event;
+> +
+> +       if (event <=3D EV_LOC)
+> +               smp_call_function_any(&d->cpu_mask, __rdt_rmid_read, &rr,=
+ 1);
+> +       else
+> +               __rdt_rmid_read(&rr);
 
-greg k-h
+I like that the driver is responsible for deciding where IPIs need to
+be sent, but it looks like the consequence is that RDT-level code
+wants to add in the child monitors' event counts once executing within
+the correct domain. The one-per-domain IPI assumption from the current
+resctrl code being wrong is probably harder to overcome than needing
+to figure out what additional RMIDs to read, but I'd really need to
+know the synchronization requirements for __rdt_rmid_read() to inspect
+the monitoring group hierarchy.
+
+Would you continue to promise that the FS structure won't change
+during a monitor read?  To us, the biggest priority for
+parallelization is reading all the domain-group combinations in the
+system, because we have a lot of them and want the tightest possible
+snapshot of bandwidth usage, broken down by group.
+
+Thanks!
+-Peter
+
+[1] https://lore.kernel.org/all/242db225-8ddc-968e-a754-6aaefd1b7da9@intel.=
+com/
