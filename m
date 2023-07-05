@@ -1,32 +1,56 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0217246AB
-	for <patches@lists.linux.dev>; Wed,  5 Jul 2023 16:25:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA71DC433C7;
-	Wed,  5 Jul 2023 16:25:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688574326;
-	bh=l65JmUivLY90VE8juzqY+hoZRfzpdY5o0Cbe6TLs4zA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Pw5oKXfEFazKk34nO+C4r/CzXjeW1J3yy9JYhiijAOixGeU1m2QXSj+KkAAhKT5kj
-	 xYJKPAh2uFHCZNNse/s0iVEX0IxX6OH8tQOrwN4ySJd5TKUANl6QBpWx1re38108gW
-	 lTupx/xdnKJ7v0RrUhPOx3xLQCTCCbK8DgOsM7PU=
-Date: Wed, 5 Jul 2023 17:25:24 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E207511CAC
+	for <patches@lists.linux.dev>; Wed,  5 Jul 2023 16:28:08 +0000 (UTC)
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-57688a146ecso81439897b3.2
+        for <patches@lists.linux.dev>; Wed, 05 Jul 2023 09:28:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688574487; x=1691166487;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bkxMlZkzxcysGkTdihnDiCidqfVsFE06UkOpIAnvMdc=;
+        b=lAq0ZB1eGH5dJe58j9ci2XXr6ef1D7OEnFG/jNK/W1/C+bvNZK619vhRQFzS9hk614
+         pbtSlTih9e/sznVefJrdZp5nRYYYu/2B6gutDBOLQfuENvZa/3mWHtOWoqoVNpTJBYZB
+         jB/R3MJrHft4HgdmFTa1nLYKczPbka02i8VkRHvMaO1v8oexVFM5DvLSumDVXUA8TKvI
+         wHeqrsfNVL3VFInfvC8FTJqocO4UaE2ao8xIzuFWEzq8uhMslmOaKkB1Y4H6v8rVpBn2
+         FfDCrjWrNSjcUe9URURoBjFfCKMXtPBXVJlw2gNkZbrXRyJxQwzJnqdEqa446MCnLl95
+         +0PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688574487; x=1691166487;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bkxMlZkzxcysGkTdihnDiCidqfVsFE06UkOpIAnvMdc=;
+        b=eD1HuNiDQtu1zBhTgfapn8ArgV9yl17UmwpvJjbPs5gjJ/dyy/sKJeIs+Q+PsXbZrx
+         5GDj3KskIYG1lG7j0bcBE8RcdzxaxijHh82PAXxN0Jw3BoyAU9Kp4BU0ow2eWbgm3I6J
+         5d2YtsFUWu+m3D+03VMyJL+mROEnlCEKSKIVNBJo7h6LFR7taau+wjNRHFrre42f9laM
+         Ji0ZpUq8jGfgZk8MaGnRywTKTwi3dQ+YmkmGmdo9jOtllpgTABcMoQy9+2Fi974i3Y0a
+         /OGPUQaAh2Dh+h+g1AtmEN3cH9KLyU23w/QR/E6JxNkDXfhqaGscR36k9Kma/WRQz/fO
+         +4Mw==
+X-Gm-Message-State: ABy/qLYOpLPF7HrgFj8t5MUkkbTe+DBTWiAZGZaaFG3v59jKevf8wUDT
+	g9yLGBFYul4UNNV2kuEbeEFiDGq3N4U=
+X-Google-Smtp-Source: APBJJlGLYHnbvn6/Hhhn0iphucwrngQ/E9k2ghdR3X2ehjg4bTn+GtbLH/9FHSJ/C1pfaUL/dT8GsQ==
+X-Received: by 2002:a5b:14c:0:b0:c62:fded:6559 with SMTP id c12-20020a5b014c000000b00c62fded6559mr1869676ybp.5.1688574487594;
+        Wed, 05 Jul 2023 09:28:07 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id r17-20020a258451000000b00bb0a8342723sm5138047ybm.50.2023.07.05.09.28.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Jul 2023 09:28:07 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Wed, 5 Jul 2023 09:28:05 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 00/13] 6.1.38-rc2 review
-Message-ID: <2023070551-matcher-camping-98f0@gregkh>
-References: <20230704084611.071971014@linuxfoundation.org>
- <824705ec-38ca-1587-573c-595b146ee2e1@roeck-us.net>
- <2023070529-barcode-unpleased-5705@gregkh>
- <2bbf215e-840d-138b-511f-b2602a3eeda8@roeck-us.net>
+Subject: Re: [PATCH 5.15 00/17] 5.15.120-rc2 review
+Message-ID: <8d6e9db9-22dd-48f3-ac3c-9d4aff8459d8@roeck-us.net>
+References: <20230704084610.981452877@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,58 +59,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2bbf215e-840d-138b-511f-b2602a3eeda8@roeck-us.net>
+In-Reply-To: <20230704084610.981452877@linuxfoundation.org>
 
-On Wed, Jul 05, 2023 at 09:13:58AM -0700, Guenter Roeck wrote:
-> On 7/5/23 09:06, Greg Kroah-Hartman wrote:
-> > On Wed, Jul 05, 2023 at 07:23:30AM -0700, Guenter Roeck wrote:
-> > > On 7/4/23 01:48, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 6.1.38 release.
-> > > > There are 13 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > > 
-> > > > Responses should be made by Thu, 06 Jul 2023 08:46:01 +0000.
-> > > > Anything received after that time might be too late.
-> > > > 
-> > > > The whole patch series can be found in one patch at:
-> > > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.38-rc2.gz
-> > > > or in the git tree and branch at:
-> > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > > and the diffstat can be found below.
-> > > > 
-> > > > thanks,
-> > > > 
-> > > > greg k-h
-> > > > 
-> > > > -------------
-> > > > Pseudo-Shortlog of commits:
-> > > > 
-> > > > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > >       Linux 6.1.38-rc2
-> > > > 
-> > > > Linus Torvalds <torvalds@linux-foundation.org>
-> > > >       gup: avoid stack expansion warning for known-good case
-> > > > 
-> > > 
-> > > I am a bit puzzled by this patch. It avoids a warning introduced with
-> > > upstream commit a425ac5365f6 ("gup: add warning if some caller would
-> > > seem to want stack expansion"), or at least it says so, but that patch
-> > > is not in v6.1.y. Why is this patch needed here ?
-> > 
-> > It isn't, and was dropped for -rc2, right?
-> > 
+On Tue, Jul 04, 2023 at 09:48:47AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.120 release.
+> There are 17 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> The above is from the -rc2 log so, no, it was not dropped. I checked in the
-> repository to be sure. It is also in v6.3.12-rc2 and v6.4.2-rc2, but there
-> it makes sense because a425ac5365f6 was applied/backported to those branches.
+> Responses should be made by Thu, 06 Jul 2023 08:46:01 +0000.
+> Anything received after that time might be too late.
+> 
 
-Ah, I must have dropped it right after the -rc2 announcement, it's been
-a long week already:
-	https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=a5847f7c495fdc9c0a7b63703237f2891a6b6ed1
+Build results:
+	total: 160 pass: 160 fail: 0
+Qemu test results:
+	total: 499 pass: 499 fail: 0
 
-but be sure, it's gone from all branches now.
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-thanks,
-
-greg k-h
+Guenter
