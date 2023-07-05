@@ -1,84 +1,57 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2109.outbound.protection.outlook.com [40.107.11.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F6B134A7
-	for <patches@lists.linux.dev>; Wed,  5 Jul 2023 17:37:22 +0000 (UTC)
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 365HZNig029054;
-	Wed, 5 Jul 2023 17:37:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : references : content-type : in-reply-to :
- mime-version; s=corp-2023-03-30;
- bh=AianEGOOI0S0OitlRl8T/hXzed9SW7dJ+z6I5UuopMM=;
- b=as/d2srH87aHiZM/oJRv55sAMr2WGItspWaO63YKz3nnetm+KloW92/XBal+x4vjOQN1
- E7G9XA3K2N8ENndMf+3JMHUh4Or4eiFbDeCAZlpR/fckAhTQRJD7Eg+sdp8KUNrUZHM9
- rW6dL8mVdWdBIcifdPSimcLy3e3rebiEVhLj7bb3r9vqmQTlgk/T/yg8CxFyy1rR5rbM
- qJ+JEQUzfvjpSyL0Ldi45XS0U7DQwE187aTyDHzy8c83rPm6nx8Fh3GI60zrqbIhsE84
- 9ZvnhlL51/t1jmt974ILS/Ku24i9bs3HaEpCmq3qz+YiPWm6gfpzmx5dkAOawL5s+7jV Rw== 
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3rnc0xg685-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 05 Jul 2023 17:37:00 +0000
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 365GgmDH033374;
-	Wed, 5 Jul 2023 17:36:59 GMT
-Received: from nam11-bn8-obe.outbound.protection.outlook.com (mail-bn8nam11lp2169.outbound.protection.outlook.com [104.47.58.169])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3rjak654k5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 05 Jul 2023 17:36:59 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA302134C0
+	for <patches@lists.linux.dev>; Wed,  5 Jul 2023 17:48:40 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kxugfoj7BabPXaeZv+IpiOg0czbVwSQnGv+J0cy7Gi/tDQaB3Wk9Rl5QFycnWbWIBImY93o1u+0JwuQci9PQvkqWJOczHCUY68tMYmSz+4OMDD/qagRoxvVJNiQtCW/n4opIsqNSyvQ78n5smTjgFZ8q96WVLSuIFG4qXoAer95K5HMQPovZBucWk8F53xtR+AJE6otsa9N0sLiGJttmBFeiACoR2nKCkMeaR2KTq2Z2bKLI0MTsbVmcGSA9k677VBXYQivuQGi0wYs7qsIbeScYdQQC5Btlj0lYiVvtU7VMYC3C02cbQAUjlbYD+4SK78MlWCXYy6Yy50NmuwXUTw==
+ b=BLJxfmz3NeVV+l+Kpzimr65jYWFfRp5voLtWr8Ze0dD+6X44EwVa+F+3eHaowLmnf5SNox3847ZKPz59eTHmdCuIJ7rQ91G7z41tKePARPL0zu6R+DckjqXx+mNruDzR0zXQZVf6PJha+Ad8kE4qbwSNQpQ3aasibZYGko+UjWqDBEThCnHUwHkWPSQszZ7JYBlSuKBzXSkNH/9+tTr1SIwbQ8JZZ4Q34s9CA9KCM1g2oje/52fbHlzlhrJKHabx5LrdUwX5TmmAgK2Q2Glvd3IQaE2FoyiOy1TmG+gX0EffgOy9KVgBL9rF84tXufFTHROJUFygutKDY9VxMOPsqg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AianEGOOI0S0OitlRl8T/hXzed9SW7dJ+z6I5UuopMM=;
- b=ShJf/AVRMw+6wdE2Pu1hLbm47ohdY/jBLRI6IQ1cUdDmEH4P69XR0c9h1EItClMXh5oiEyI+Wat15+zIW82pquyT+NyRYbQTunukvZo/TYSOFkt9DCNLb0poYYicn3PDpn2rZVYkphmaX28BwOUuUSJkvbHZUne7tYWPdN1fuNtgNIhirIt12R68KM+zmMZhZTzu5Ir9sIWmGLcbKnjZ9wi68Wp/j8v67Pw0/zdlyerGWk6wzIR5GIekpSl1Y1zmG7Enfv3JAjBOtIEpWsqK5fE7s+/QJ1YghR7QpF09xHXu62wVZm9s/moyzo+MtOe037s5pmyGd4HFJCRlwSha7Q==
+ bh=k5a2kR98bvOzcx26LDqjULVofdHTS5osDgAMTPS2DV4=;
+ b=FAZr+0Ec63fqbpmlJVDj3N38XECilBfiXxEUpCc9XrT+OL8bJIjFLMrQ41Ww8RwJQuotbHUDhWfQZUXaHi91YWdYBTh05rrtP6jHrSoCzvdFyKHsLmdgH/4pLKp6LYaQWN7fkyohQX0GNhWLkFy0PFYyfNUYXN4RmUz1ca1PuB1uvf15uzBNCTzXs4F1OnWGU0CNTAINcaiMnV2uqsu5Mu42ambflQW6pq6QlblwN+/iSOoKI8B3otVEuq8LyBGz+zNwhVPaELgIsoknFrSyJVf46gCwlLyCqLASeXACyzCzowfUHk4MDPjMH8Zd6q23Ndc7W1VX3Fog9NX74x+ojA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
+ dkim=pass header.d=garyguo.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AianEGOOI0S0OitlRl8T/hXzed9SW7dJ+z6I5UuopMM=;
- b=D0ul9PADv0tOPbgoSo54PRpMXmKC3QuKn66Ruw+yDMlvSKC73tbZpyAbOBVvZQfDyhdiLmCyR6NDuGO3PU+a4SnGb9r1T5eoyCT/hgPGmHZvACP4Z0iO7BnctpRV48MzO3qZGc2gNahnSW8JcQ33blrUH5pK6UWXusMBtS6wvGU=
-Received: from BY5PR10MB4196.namprd10.prod.outlook.com (2603:10b6:a03:20d::23)
- by PH7PR10MB7055.namprd10.prod.outlook.com (2603:10b6:510:278::7) with
+ bh=k5a2kR98bvOzcx26LDqjULVofdHTS5osDgAMTPS2DV4=;
+ b=b50WarrPnbHoY2epRsy6s9dU9CNpxUGYo+17BVeTKUHiw5HEKerprweHMMkZxiR8SvoDWhosxcO64i6eRVagpfR7LkWtHxE9xh2Fj9UMsSBksqzTHLuiRIJoj1L+5Ck81ah7rfjWS9UZ8lcpZ/QiStC/mpeeFchfanuyyD8OyXY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=garyguo.net;
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
+ by LO4P265MB6333.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:2e2::9) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.24; Wed, 5 Jul
- 2023 17:36:57 +0000
-Received: from BY5PR10MB4196.namprd10.prod.outlook.com
- ([fe80::4a17:13b0:2876:97f2]) by BY5PR10MB4196.namprd10.prod.outlook.com
- ([fe80::4a17:13b0:2876:97f2%7]) with mapi id 15.20.6565.016; Wed, 5 Jul 2023
- 17:36:56 +0000
-Date: Wed, 5 Jul 2023 10:36:53 -0700
-From: Mike Kravetz <mike.kravetz@oracle.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Thorsten Leemhuis <linux@leemhuis.info>,
-        Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-        patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-        torvalds@linux-foundation.org, akpm@linux-foundation.org,
-        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
-        rwarsow@gmx.de, conor@kernel.org,
-        Vegard Nossum <vegard.nossum@oracle.com>
-Subject: Re: [PATCH 6.3 00/13] 6.3.12-rc1 review
-Message-ID: <20230705173653.GB6575@monkey>
-References: <20230703184519.206275653@linuxfoundation.org>
- <CA+G9fYvf-sw8tCHjxhoMvHrtzzdE69EwvB2PmypUkGDdCFFASA@mail.gmail.com>
- <2023070411-steadfast-overtly-02a3@gregkh>
- <2023070416-wow-phrasing-b92c@gregkh>
- <37f9e884-6535-1ed7-8675-d98d0a6d8b36@oracle.com>
- <2023070444-untimed-clerical-565a@gregkh>
- <db4bf839-df6a-c2b9-a03c-3b9d1680c2a9@leemhuis.info>
- <2023070446-sublevel-humid-7b01@gregkh>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2023070446-sublevel-humid-7b01@gregkh>
-X-ClientProxiedBy: MW3PR05CA0016.namprd05.prod.outlook.com
- (2603:10b6:303:2b::21) To BY5PR10MB4196.namprd10.prod.outlook.com
- (2603:10b6:a03:20d::23)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.17; Wed, 5 Jul
+ 2023 17:48:38 +0000
+Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::25e2:a08b:cd9c:c3c9]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ ([fe80::25e2:a08b:cd9c:c3c9%3]) with mapi id 15.20.6565.016; Wed, 5 Jul 2023
+ 17:48:38 +0000
+Date: Wed, 5 Jul 2023 18:48:36 +0100
+From: Gary Guo <gary@garyguo.net>
+To: Boqun Feng <boqun.feng@gmail.com>
+Cc: Benno Lossin <benno.lossin@proton.me>, Miguel Ojeda <ojeda@kernel.org>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor
+ <alex.gaynor@gmail.com>, =?UTF-8?B?QmrDtnJu?= Roy Baron
+ <bjorn3_gh@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas
+ Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina
+ <lina@asahilina.net>
+Subject: Re: [PATCH 5/7] rust: init: add `..Zeroable::zeroed()` syntax for
+ zeroing all missing fields
+Message-ID: <20230705184836.363c8c8b.gary@garyguo.net>
+In-Reply-To: <ZKMQW4UGPQZ8yF39@boqun-archlinux>
+References: <20230624092330.157338-1-benno.lossin@proton.me>
+	<20230624092330.157338-5-benno.lossin@proton.me>
+	<ZKMQW4UGPQZ8yF39@boqun-archlinux>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0354.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:18d::17) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -86,149 +59,131 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR10MB4196:EE_|PH7PR10MB7055:EE_
-X-MS-Office365-Filtering-Correlation-Id: 36660b9d-b9f0-4f6a-9995-08db7d7e6dfb
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO4P265MB6333:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3b1d0610-6c92-44a9-05cf-08db7d800fef
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	Fpx1IW2T2Te7540pQJsHZOMLIoyz/JP8x9eRviXF5PbDffdDJxJBFHP4UnmLrrRHRFEIkG7VmTqOWbn0Qj9/s2/T0Ci2eXEXPyb+GsHZAZpydig94RC/0HrkM12LDluf8MVvbB07xMW0o7CanvlntpfuQLjNgYgDQhy2SzZ67RQFqjxal0zeGqZU17orbKFbeh9LNoaTuORpW71ttwMW2HzdwKSKWCwsFqwPWvq2KSJh0b5K/tiwgZXLBw39vG8lVpMACubO4eL0QTus936V7KX2AfnXMNX01F6qvvcXldwHRBxh/anqLOR2P0FHmVN+76iBIe4WjAlbQhmBxz1aIQnkZKVvv2HM2KK5FKjL+yHPvAUiTvIYFCislnxO2n9P0bHVcJ+bbfIfouLDO7zEn6NmMw07WAWeQ+mWIEaV6zP5C0kjEjF2HcFOahtDefGQM5Dfb1npQ2WgEPvVdqP5rgAcuYhrmdzdP6HkP0cMOxrslyW8NK8hpOe/p7XxuTs1YsVREv13fX5FfbfX/vJteKP3fWW7H9Ai3+FLesl/DK+qkcNhObZAtspJgmoaexSrAebgke/a2TunYiByW0M77Q==
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR10MB4196.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(7916004)(396003)(366004)(136003)(346002)(39860400002)(376002)(451199021)(41300700001)(2906002)(33716001)(6486002)(6666004)(38100700002)(83380400001)(107886003)(53546011)(6506007)(6512007)(9686003)(186003)(26005)(1076003)(966005)(54906003)(86362001)(4326008)(316002)(478600001)(6916009)(66556008)(33656002)(66946007)(66476007)(8936002)(8676002)(7416002)(44832011)(5660300002);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info:
+	qmC0cQnvUhH6n0XdHYhoigM7mQOmQ7yfLJ3oEeflVckHxmFghOySjyn4qIcs/TYYp9qYKg65YMwBNcaH2B29JzhgetIzNtdx8X6JSsnADlWUSklDVXfcfDa3UFpQXK39DXcrJZk1r2uWuvFqZjdGAlPhJUOgT6PeL0vcNMzMvSlcPZ0v0LgYfQBMpQPtdkDtlEG1LNBwPBf4p2G2U5P3ScMcxxYl/A9CCJV65OApwYFI22628aHdpglNAnM74KdlIadg0ep2M2th4KBV/5e1FFsGOQnbEIBV6uDSvPiGUvOQBnQBwhzJW2yUTr9PRxwwOriLB/UxkXoULOSGuCrS5Zt8BJJPilRGG8ZWI1Xn6A6OzV0Sxn+RSzfREWBs6wxMfzlCDf9QOPsr4YnnHAe3yNnUPXHTNEZdEwDDtYMUm2Z8UpPcF53QA8A1tMifmBKh4kH7m7yTykZY9pvooHDmHjh927kp2slEplAL45rJJ/teEagxoxn54pAySDsjbaU4fx3rHuNbJZySZhpMM8KrLlDQtgQXfNNduEHLCgkFLNIbYmWBrkSogND2XD/a0fUe
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(396003)(136003)(39830400003)(366004)(376002)(346002)(451199021)(2616005)(6506007)(4326008)(38100700002)(66476007)(66946007)(66556008)(6916009)(186003)(86362001)(6512007)(36756003)(6486002)(478600001)(26005)(54906003)(1076003)(8936002)(8676002)(5660300002)(7416002)(2906002)(316002)(41300700001)(83380400001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?us-ascii?Q?xDF1HXahDevjVRfS3JGpnCo7reVY0DiWkqvuaw86+OcptdbDXsTMe3zMSxLy?=
- =?us-ascii?Q?2hw/Ng0j7NxJlLkCq90JF3FYv0QNYBbax8/f0FWo+SAe2XtdtCV5rLU4R4Zl?=
- =?us-ascii?Q?0FQKp03ECMU+5UsmEDqgr2MsdNp9IcCQ7EJAROhC7MMya2ewmpDaO3xmcDnu?=
- =?us-ascii?Q?x4UCK8Br4CuLWhOG3YGw4d8M05wWUl3HYyBig2lfv0nf6dyccermAJ+O/KNe?=
- =?us-ascii?Q?+oDEKqEkmdYYLxMAfYKYBl2zvux/9Dz0FVmbK+tZJFN+fqNJIp0UgKVH87dV?=
- =?us-ascii?Q?CxVbovEkctLh1HOgXuyDhNZjPlFXmL94eqjYXSw24bTgjVf/b5BONfehAb3s?=
- =?us-ascii?Q?659aH3yZi2Zb1M11BE7NnmaAnnAukGevjxZLtnsmLctdxH6VB/zREAfB43z6?=
- =?us-ascii?Q?F4D2upIkH48D3nxsUzW3djwjGMt0B2Xiu44FODJZolooWOfqiudeLLRy08dH?=
- =?us-ascii?Q?fY4sjupFpkh/+AmZX9/7gk/S/HZMcF7CmqqAl87jOjGd6x+1UlvBWWX8eZ3o?=
- =?us-ascii?Q?eIeteKXKC2RYR0bWbIFSB/muEyi4W+lwMye5nJYhfXdKWkqL7ZeQLMPbeOpn?=
- =?us-ascii?Q?RKhi4QZDaj8IbskrS2QAdxtECs5PGmlBVyN5x33tVLXbf92q+bO8Z1FbnR3W?=
- =?us-ascii?Q?sb0LEIgnllMsDqJC4HMy3Bk89/ObVvfZRrcKqyh+oHg+RfDjtGv6v7ECUHQe?=
- =?us-ascii?Q?hasjHWXhh6X4WARPzzJlZB7aKPQ7vj+nh9QVohRtE2P6mOltks152cR/Ty4G?=
- =?us-ascii?Q?fv/hDhCvyYLvHG+mgkt8dlalfq+BijEYn0Zv9QJW+kRaS7xnQWMgeSbWFCMR?=
- =?us-ascii?Q?jahSezwYvjqge7DBWYxZ+h7u0Gg/IFr1g+F9k6cMHbcvZLSkazOTkl1ROgMz?=
- =?us-ascii?Q?YNuCAbv0YqYctVcQpxx488IFRnaR4KoKhPlyHnzcsZg4k9RdgEkJucrFZ4TB?=
- =?us-ascii?Q?SfiMsGtvGrVTMzPkUVa3RasrtRBUEs0MyLKjB1WcdDtXbUK9FxsrDs7sbMk/?=
- =?us-ascii?Q?EvyglD3PQnFrOGokXLl5PJ6oZugET5iK7NwDrwEIlrlUamqb5yM6LbhtlIBR?=
- =?us-ascii?Q?U7cZgZeBXxhF06HetqxDc3GLwFxvLrUcoowaYXZY9rJxkzkD5sXpr7Dpjigb?=
- =?us-ascii?Q?YKvylZ+W8vQmLyKwupKa8obymHSU2Ke4Fx0JhOZpzs989eF4N220OG350GJ9?=
- =?us-ascii?Q?jQ4FUVhoXfupuXvR4QRE46Y1tmYyIMUxlSEXmXWWe/Q2phzuOfPGP5ftUfBm?=
- =?us-ascii?Q?oFT+w/EZV1yorEJOHSNGNCp57bCsfCh2pJeDbdKi6ynKSkK55mng15YZRk/q?=
- =?us-ascii?Q?4Y+vNl9NQb3bai9Qa0xSFGEX/3NZxvwjP6lDnz8jMrejAfGiIQRU9QjS2YX4?=
- =?us-ascii?Q?2ERGKR7hzGVODLijrt5sc3iHKbt9K4q5unkSM21gOnPhJYMoWMObgtXcwQf8?=
- =?us-ascii?Q?Vf4I3cwBI5tbBWGXolCkbHcKxzULgEL8jafcrWLupy0QO7rfTh9trbNw/Fxb?=
- =?us-ascii?Q?ktTOMLbxlBpqSLIRiruYp/NZ0ipLawbXXuKqMRKt8W1zonTDvJyEzAKciNOi?=
- =?us-ascii?Q?aKxGVlxS3LeJde/tP4kosfMCw5n4SISIdNN/5+UH?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	=?us-ascii?Q?VeRvRTBpEOYmJg3AshPHo1kWVmLr7UaiJaQfw09S3DjX9aEPDpKgmcGaKm5z?=
- =?us-ascii?Q?h4EMSmVxUDSbssm2Zv+scdzMIbX3/WBrf1HsLOguuavlHJveAKP+xCTrshn7?=
- =?us-ascii?Q?F8vTOFmbe+6+LkPxEe9PHX8z2gflYhLfQ8JSEHZJuxqJLpTdOegksDDySu8D?=
- =?us-ascii?Q?I16+mQXcDWyqvGkkSayuHE1EN4EWlYccA6LwdEnhT6NI9n+hrrhh+/v6hLn4?=
- =?us-ascii?Q?yP5VkAAcf6HUSamq9sjjz+AOV92q9nZjnIMBrqiB//I54P7N6BpLMuTyB1d1?=
- =?us-ascii?Q?Pq+taM0F/kEIAoaSzs12NKsjJIbKUHfi3RWvUVB3/w0ge7O5N26YytNH8ZjO?=
- =?us-ascii?Q?DNy2kNQlQcJjcn2ilpdcDhVYckRyk6wnw/HH4RzxveaDjzPyNUoJdr6xCQnT?=
- =?us-ascii?Q?FXnl2DLfBWmtGIGHzU/DMGTSzrxe91zi2h6aEVp8Xi+94eHhAq/kSvUZTSDR?=
- =?us-ascii?Q?F1AuWAPo9z/Ehk5hN7MJJ89obqciOLtBsOQp9BeJkc+paPuFg7joc8RwAhcn?=
- =?us-ascii?Q?h4K9lVB6O3dHtg0STeuOJnV5a1tKmH1RvUlkCwPU0rdHQuRiDgwTYlNco6DW?=
- =?us-ascii?Q?nnbu9jOWbvWu5nwhT3XtWURkEvm4b5u4ID1eSXxn0JqUH9+tZw9YY5CWhWJJ?=
- =?us-ascii?Q?Kd4rwYzBMezK1/NvoZVDVWlhntqR3BwWFsP7FeA25+NpOFIgtsWPy6syZaab?=
- =?us-ascii?Q?L712S1XV24I902eiSGfGtiqVZhZHfG/8xmE1yhMLajZrNV9QA0FfGwPzFtC3?=
- =?us-ascii?Q?27XbMBPirwEiKIHvdjqA9mpa2XCIGYw9gCGpokR9EzMrIABzj8saLQLPaTOI?=
- =?us-ascii?Q?L9W/BwBSfcCG7M3r1hEC5hmUUs0Ii/jeGjO4Ic7ejlmu5qi+JswGuWJwKdnR?=
- =?us-ascii?Q?vr9aQfF7mKqoZgLS5+mbBhuVep9LHLdRynmC/dQgRdcBVeK5ey01YWDMxjZM?=
- =?us-ascii?Q?ycHOPc4SjedSAYoh1nGXcJr5COPGFnb4+TrjEGDsIFQGQFMKldqGO0SxDNsC?=
- =?us-ascii?Q?jwu5+Rgtez1E1tBIVyLm5qLASMPAxcAN+1oS0bLfuCy+2mO7Y8vtKAMl1DXF?=
- =?us-ascii?Q?2hzPDqNCOUv38469cAX2DHvZWdFkOdBXEd0z3Oe7K1nTUCUQ/tsQrcGCMsd6?=
- =?us-ascii?Q?0AEBdX5wLkNtjJ4qMggeW5wk7uHlpPDJHr/595FWzkR6RgzcJVkGPaZZmATv?=
- =?us-ascii?Q?FhW2FQzLAeLU/WxIpc/G0mthZnSbqPwVMw2DuN0N0xNQxggG8eZLF8T7ZsSJ?=
- =?us-ascii?Q?KW1SJgcGzue6IQyGoVvu?=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 36660b9d-b9f0-4f6a-9995-08db7d7e6dfb
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR10MB4196.namprd10.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?hRh38Vc+EpDAMnx5cIuhYvvJLzxgUJNE1nsjWGPZWAvfuMjgcyEJTONr9h2X?=
+ =?us-ascii?Q?KWMMn+d+pD4llNvVxuKd3gAJGiky8j8YVjuDTsPh63l+Ka9jNEevOQlf+Mom?=
+ =?us-ascii?Q?dLMP35iHSv4zeafGq4gV+0gdIo8h74ZIZ73gOp3i4MK4IfgMoEvfAinsRk5L?=
+ =?us-ascii?Q?TwapNrebnRJkGXD85FaEF48xvrqEJYd4XwESxGsJruviGdlYIm+0zGBdiVi3?=
+ =?us-ascii?Q?eRitLuibI8ebGB7P/frRLn0DYhWaitnPYFO/k6rto6yhKDRTTiBZ1TKiKId8?=
+ =?us-ascii?Q?pmu0YkE4NafgMzHvPIpbY8ajw1ClXLGtz7A+6azFBub3jf1kaWs5MF0QMmcB?=
+ =?us-ascii?Q?DzrPMVyyJa2eOyK95zKejFrRT1pUWoC/y8+P3zYjBZSKou1Zb/1SkDo7tExX?=
+ =?us-ascii?Q?Rzr3m8AVyuOiLRwqyQrqMW7ooJ9rTMSYqqdGirhnAxDliCytgYSA601vFkYN?=
+ =?us-ascii?Q?UqfG3GTsAgMUAmTRCcs9BqkpaKSmEjp+jE6RdBBZ0uGg6eexUwjmNxcZ0JlD?=
+ =?us-ascii?Q?QfEzkr0lqprsz/VC5WXntPfLRPNvyLpnqtHlt26Hh1Szlw7pIM74pYJGKbb9?=
+ =?us-ascii?Q?kdvYQWTfC1fxPycStZ0m9Ie9aqwdBJFNlBNTXCjpJJKydGeM14OI3lFT3Kb3?=
+ =?us-ascii?Q?QmpVM2Q7oPn4S2D5G7c467xtfAXXU9+o5W+UG81RccSLwHY9rbkp6GiOz5x2?=
+ =?us-ascii?Q?LjyI2gD2NtA5wVkmaiARswuhHSjxhtylWErCojG8SovUjZHvzd7+0RgLxl9v?=
+ =?us-ascii?Q?S0KLAZITXs8etSYWn3046fiVTeEi2lQhmbT7f0uykpOP0kQPcVa+krQDZjHC?=
+ =?us-ascii?Q?Vf+UhpaGneU3P5iBUdGqfbxiX7kv/ZiYC9I9ci9tIALuns6NJOGQbG2pLEB7?=
+ =?us-ascii?Q?MADf+oh7gRkm5V0nAohriL8UhtwBCDGYBFKVQyjdNnyZReciFJwiKeT5/nKU?=
+ =?us-ascii?Q?I3FepOafPzt/d9F5XK6HCJNRCWErqRA/npRZsLIIrLZUe05gEcO5+qya8+kl?=
+ =?us-ascii?Q?HGKQ1UTjAnAraXU+nSudHKRK8L2649x7zj2+HczlppUZWDceDzya6NF+fyxd?=
+ =?us-ascii?Q?zrQu9SJUUKNactPCs/vjl3IhQBVjzJFG6mx0oK27D8RkC3tehiQ10u5wB3rn?=
+ =?us-ascii?Q?XYDQIBfCi7XcuUmi+ulltWTVKdDcR64nX2Uw2oWd/9IszaBXEcq97XX2U6+A?=
+ =?us-ascii?Q?kDq4osy8mXvSVC1AMq0NV1yzZk75BRfFjcjd0s0ijLNxxuxfMSzoqEe50aQ0?=
+ =?us-ascii?Q?Bz4Rs3yA43rK4Q5d/Z3544wvtTsrWTh2jzVDi0XxmsXGOa5JDlNRE96vok6m?=
+ =?us-ascii?Q?FNASyKlQ3zT+SeHhCtLYHQRwIFJHJ7YeN5HK/JOuomaZgf6906YQru6EhR2Q?=
+ =?us-ascii?Q?NdsxdnHE1ueyWxJ1oMRqFh06Jf4VWjMTtbL042t36zQW8rKrzNhhHjPK9FVQ?=
+ =?us-ascii?Q?vVcod8l66mkNxgSk3Ojif8nPiPbxPWo5f7JV65QEbqZXeufPTQ21/Tyt67Ic?=
+ =?us-ascii?Q?lZROoJq6rmAr3pl1uNukeS+liOUJDVsHnV1IKf73dXMgZIAoXvjV89TdO3u0?=
+ =?us-ascii?Q?hGNLnTwBRB2iUhFVxJhFRbP3DRQ61gWpNc/1n3Zr?=
+X-OriginatorOrg: garyguo.net
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3b1d0610-6c92-44a9-05cf-08db7d800fef
+X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jul 2023 17:36:56.9115
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jul 2023 17:48:38.1570
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: E5v834tq+AqpGMDJ9pDG/cAWbmhrJaacq0lohi3VRMXAE8LE7dZ5fN7c4paHoM1qIMoCCZgHRqFITBD0VKwTNw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB7055
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-05_09,2023-07-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 bulkscore=0 suspectscore=0
- malwarescore=0 phishscore=0 mlxscore=0 spamscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2307050160
-X-Proofpoint-ORIG-GUID: 6Nom3ErRrIJSi4mjVVsKOWPsRGS3Belp
-X-Proofpoint-GUID: 6Nom3ErRrIJSi4mjVVsKOWPsRGS3Belp
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2zq9sb/kvYmwoMb9VOFNooQL7G2HiDetdFijPpRD3HpRzjgTla0N0jFap16wXyhZnzUK4LYV+jzwRcY6GrqD+Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO4P265MB6333
 
-On 07/04/23 13:28, Greg Kroah-Hartman wrote:
-> On Tue, Jul 04, 2023 at 11:56:11AM +0200, Thorsten Leemhuis wrote:
-> > On 04.07.23 10:47, Greg Kroah-Hartman wrote:
-> > > On Tue, Jul 04, 2023 at 02:13:03PM +0530, Harshit Mogalapalli wrote:
-> > >> On 04/07/23 1:54 pm, Greg Kroah-Hartman wrote:
-> > >>>>> While running LTP hugetlb testing on x86 the following kernel BUG noticed
-> > >>>>> on running stable-rc 6.3.12-rc1.
-> > >>
-> > >> Have you looked at Patch 9 of this series:
-> > >>
-> > >> https://lore.kernel.org/stable/2023070416-wow-phrasing-b92c@gregkh/T/#m12068530e846ac8b9668bd83941d82ec3f22ac15
-> > >>
-> > >> Looks very much related, it also has a note on Backporting.
-> > >> As I think it could be related, I am sharing this.(But haven't tested
-> > >> anything)
-> > > 
-> > > Yes, that's the offending patch.  I should have read over the full
-> > > changelogs before doing bisection, but bisection/test proved that this
-> > > was not correct for 6.3.y at this point in time.
-> > 
-> > FWIW, I'm preparing a few small tweaks for
-> > Documentation/process/stable-kernel-rules.rst (to be submitted after the
-> > merge window). I among others consider adding something like this that
-> > might help avoiding this situation:
-> > 
-> > ```
-> > To delay pick up of patches submitted via :ref:`option_1`, use the
-> > following format:
-> > 
-> > .. code-block:: none
-> > 
-> >      Cc: <stable@vger.kernel.org> # after 4 weeks in mainline
-> > 
-> > For any other requests related to patches submitted via :ref:`option_1`,
-> > just add a note to the stable tag. This for example can be used to point
-> > out known problems:
-> > 
-> > .. code-block:: none
-> > 
-> >      Cc: <stable@vger.kernel.org> # see patch description, needs
-> > adjustments for 6.3 and earlier
-> > 
-> > ```
-> > 
-> > Greg, if this is stupid or in case you want it to say something else,
-> > just say so.
+On Mon, 3 Jul 2023 11:15:55 -0700
+Boqun Feng <boqun.feng@gmail.com> wrote:
+
+> On Sat, Jun 24, 2023 at 09:25:19AM +0000, Benno Lossin wrote:
+> [...]
+> (this is `init_slot`)
+> > @@ -1064,7 +1152,7 @@ macro_rules! __init_internal {
+> >          @data($data:ident),
+> >          @slot($slot:ident),
+> >          @guards($($guards:ident,)*),
+> > -        @munch_fields($(,)?),
+> > +        @munch_fields($(..Zeroable::zeroed())? $(,)?),  
 > 
-> That looks great, hopefully people notice this.  We still have a huge
-> number of people refusing to even put cc: stable in a patch, let alone
-> these extra hints :)
+> since you append an unconditional comma ',' to init_slot and
+> make_initializer when "calling" them in with_update_parsed, shouldn't
+> this be:
+> 
+> +        @munch_fields($(..Zeroable::zeroed(),)? $(,)?),
+> 
+> , and..
+> 
+> >      ) => {
+> >          // Endpoint of munching, no fields are left. If execution reaches this point, all fields
+> >          // have been initialized. Therefore we can now dismiss the guards by forgetting them.
+> > @@ -1157,6 +1245,30 @@ macro_rules! __init_internal {
+> >              @munch_fields($($rest)*),
+> >          );
+> >      };
+> > +    (make_initializer:
+> > +        @slot($slot:ident),
+> > +        @type_name($t:ident),
+> > +        @munch_fields(..Zeroable::zeroed() $(,)?),  
+> 
+> this should be:
+> 
+> +        @munch_fields(..Zeroable::zeroed() , $(,)?),
+> 
+> Otherwise the example before `pin_init!()` wouldn't compile:
+> 
+> 	/// pin_init!(Buf {
+> 	///     buf: [1; 64],
+> 	///     ..Zeroable::zeroed(),
+> 	/// });
 
-We were trying to follow "Option 2" of the stable rules with this patch.
-Because of the issue with 6.3.y, cc: stable was intentionally left off the
-upstream patch.  And, after the patch was in Linus's tree a 6.3.y specific
-version was sent:
-https://lore.kernel.org/lkml/20230629211817.194786-1-sidhartha.kumar@oracle.com/
+Comma is not allowed after base struct.
 
-To complicate matters, a bug was found and fixed in the upstream patch during
-this process.
+> 
+> Regards,
+> Boqun
+> 
+> > +        @acc($($acc:tt)*),
+> > +    ) => {
+> > +        // Endpoint, nothing more to munch, create the initializer. Since the users specified
+> > +        // `..Zeroable::zeroed()`, the slot will already have been zeroed and all field that have
+> > +        // not been overwritten are thus zero and initialized. We still check that all fields are
+> > +        // actually accessible by using the struct update syntax ourselves.
+> > +        // Since we are in the `if false` branch, this will never get executed. We abuse `slot` to
+> > +        // get the correct type inference here:
+> > +        unsafe {
+> > +            let mut zeroed = ::core::mem::zeroed();
+> > +            // We have to use type inference her to make zeroed have the correct type. This does
+> > +            // not get executed, so it has no effect.
+> > +            ::core::ptr::write($slot, zeroed);
+> > +            zeroed = ::core::mem::zeroed();
+> > +            ::core::ptr::write($slot, $t {
+> > +                $($acc)*
+> > +                ..zeroed
+> > +            });
+> > +        }
+> > +    };
+> >      (make_initializer:
+> >          @slot($slot:ident),
+> >          @type_name($t:ident),
+> > --
+> > 2.41.0
+> > 
+> >   
 
-Apologies if things were not done correctly.
--- 
-Mike Kravetz
