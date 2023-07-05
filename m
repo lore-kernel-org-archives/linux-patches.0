@@ -1,77 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A9511CA4
-	for <patches@lists.linux.dev>; Wed,  5 Jul 2023 16:06:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BC8C433C8;
-	Wed,  5 Jul 2023 16:06:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688573165;
-	bh=zcbwmkRhZSBxVlltXrtaXLWraw9XRA5aayEuGWq66Iw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FVRHslv3pvP8n8Aznz01EcHcmgl3dpj2UahkGRhqEpzoTrs6HEzdLQ/nxuuTBmqgm
-	 mlMqna6fkPzh8UVJqh6yEDgXzY3GhkLkwSY327qBUdn9RDmFd4jz6eyzC3yVHQCv77
-	 TMC7SrilUTHGtnJ/oNBDQW8QghvMIEfL8V9cfKe4=
-Date: Wed, 5 Jul 2023 17:06:02 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.1 00/13] 6.1.38-rc2 review
-Message-ID: <2023070529-barcode-unpleased-5705@gregkh>
-References: <20230704084611.071971014@linuxfoundation.org>
- <824705ec-38ca-1587-573c-595b146ee2e1@roeck-us.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A3211CA4
+	for <patches@lists.linux.dev>; Wed,  5 Jul 2023 16:14:02 +0000 (UTC)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5700b15c12fso83297917b3.1
+        for <patches@lists.linux.dev>; Wed, 05 Jul 2023 09:14:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688573642; x=1691165642;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gw0Zxy/BztVceHNcMVwFl+OZGpEJCXfDTHiq05LhgNY=;
+        b=cwhVaL0WPmlt6G8uw55JHBvxf0gLJlkWQVyU97BY6hKoJcWlzXWTGwsLOY9QO2GNOV
+         WduX2BNFm83bvQJ7NpFcmMWKYeakc6QWPMh9EJ4fd/3xTZs6v04IyqDDPiA0bEpvO9oC
+         by4Z5xMdC+Dj2KPnmeLiGRUG1SkHtLmEoDEyUmVE9fk7J2assaapvKvhd2bJ9B/lUk7p
+         IHep/QC/pvff7OUQHSF5WZz/+Mij6dP86h3bL9uden6A8GI7TGh1OGbet7lkwvxN7Cnj
+         bvpDtMnGcX4QqTriMDyDaDQzBGqmPj2QeG/R89pVviI6SITGHYJ1TAO3HY6X86GHpl3a
+         b88A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688573642; x=1691165642;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gw0Zxy/BztVceHNcMVwFl+OZGpEJCXfDTHiq05LhgNY=;
+        b=DymlBe0wNGX/RnT7Fw3/mbru0IMDsEBZGit6xpshLjhcXvTH7whbzx4PH2UuY1S80n
+         RhRRQsWkcBkd6TMw8iq/qUovJnYg/zhyJK0siGPFdMnzv7k8OJgzjqrU4umK892CITSs
+         HHhQhdeSGW/kcnYHpY3w6fzh5oNQSHgra+dhr5C+e5O2YLUgHVxkECBC65yOYN3hk9+q
+         86pnTpK9hhV8dY1aRaupdTfDN3QZX8ADfqUyM+SDtgAbeZZEPgvIWQAoVRQ1T3GX262u
+         W+a7x8Nc14cwxydKXQ8w6x945vDySZyrMPPfNUw25tOSeY8ti9u2avVDaI1QoKrT3xj4
+         FDVw==
+X-Gm-Message-State: ABy/qLYYavpnG0AHu4M/RYGaHHpS6IwiywuHKNR1VlaWNAqddTayhaZ1
+	Ds2mmHtJYa3hs6wFnmNv/Wc=
+X-Google-Smtp-Source: APBJJlHxEL2paOtCv9rxpg7Abk1vFgYqFDHbvEfj/0Lp0TueL+kAX91299cyBSuzGI7RjBJ5IXwrVg==
+X-Received: by 2002:a81:6c0a:0:b0:57a:135a:1bd6 with SMTP id h10-20020a816c0a000000b0057a135a1bd6mr7177738ywc.42.1688573641715;
+        Wed, 05 Jul 2023 09:14:01 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id i18-20020a0ddf12000000b0057328423a05sm6207948ywe.80.2023.07.05.09.13.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jul 2023 09:14:01 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <2bbf215e-840d-138b-511f-b2602a3eeda8@roeck-us.net>
+Date: Wed, 5 Jul 2023 09:13:58 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <824705ec-38ca-1587-573c-595b146ee2e1@roeck-us.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230704084611.071971014@linuxfoundation.org>
+ <824705ec-38ca-1587-573c-595b146ee2e1@roeck-us.net>
+ <2023070529-barcode-unpleased-5705@gregkh>
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 6.1 00/13] 6.1.38-rc2 review
+In-Reply-To: <2023070529-barcode-unpleased-5705@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 05, 2023 at 07:23:30AM -0700, Guenter Roeck wrote:
-> On 7/4/23 01:48, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.1.38 release.
-> > There are 13 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Thu, 06 Jul 2023 08:46:01 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.38-rc2.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> > 
-> > -------------
-> > Pseudo-Shortlog of commits:
-> > 
-> > Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> >      Linux 6.1.38-rc2
-> > 
-> > Linus Torvalds <torvalds@linux-foundation.org>
-> >      gup: avoid stack expansion warning for known-good case
-> > 
+On 7/5/23 09:06, Greg Kroah-Hartman wrote:
+> On Wed, Jul 05, 2023 at 07:23:30AM -0700, Guenter Roeck wrote:
+>> On 7/4/23 01:48, Greg Kroah-Hartman wrote:
+>>> This is the start of the stable review cycle for the 6.1.38 release.
+>>> There are 13 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>
+>>> Responses should be made by Thu, 06 Jul 2023 08:46:01 +0000.
+>>> Anything received after that time might be too late.
+>>>
+>>> The whole patch series can be found in one patch at:
+>>> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.38-rc2.gz
+>>> or in the git tree and branch at:
+>>> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+>>> and the diffstat can be found below.
+>>>
+>>> thanks,
+>>>
+>>> greg k-h
+>>>
+>>> -------------
+>>> Pseudo-Shortlog of commits:
+>>>
+>>> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>>       Linux 6.1.38-rc2
+>>>
+>>> Linus Torvalds <torvalds@linux-foundation.org>
+>>>       gup: avoid stack expansion warning for known-good case
+>>>
+>>
+>> I am a bit puzzled by this patch. It avoids a warning introduced with
+>> upstream commit a425ac5365f6 ("gup: add warning if some caller would
+>> seem to want stack expansion"), or at least it says so, but that patch
+>> is not in v6.1.y. Why is this patch needed here ?
 > 
-> I am a bit puzzled by this patch. It avoids a warning introduced with
-> upstream commit a425ac5365f6 ("gup: add warning if some caller would
-> seem to want stack expansion"), or at least it says so, but that patch
-> is not in v6.1.y. Why is this patch needed here ?
+> It isn't, and was dropped for -rc2, right?
+> 
 
-It isn't, and was dropped for -rc2, right?
+The above is from the -rc2 log so, no, it was not dropped. I checked in the
+repository to be sure. It is also in v6.3.12-rc2 and v6.4.2-rc2, but there
+it makes sense because a425ac5365f6 was applied/backported to those branches.
 
-thanks,
+Thanks,
+Guenter
 
-greg k-h
