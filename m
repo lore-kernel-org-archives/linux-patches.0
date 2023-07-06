@@ -1,144 +1,135 @@
-Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2104.outbound.protection.outlook.com [40.107.114.104])
+Received: from mail-4321.protonmail.ch (mail-4321.protonmail.ch [185.70.43.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3484D8F60
-	for <patches@lists.linux.dev>; Thu,  6 Jul 2023 12:33:29 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FrcMC56TIc7mYXzsnv5LIh2NqmBXiJ/jfJEHSpEPqUNvHZbC7FFNTg1YofS3KaREVIRpmlRHIY5IzkCjH6NZ+4vgPdBsJJbDYKfhEWFRZmG+fZwgZWvo+TIsPOWkvAaZxO2+OElqewK06Qf8O6rs5XZ/0KXC3S+U2j/cAEAtscKWW1efr+7nh+tOIpGeiyjgKYwSZhAAZmFkmRASchR+FP07pMA+gSEzTS/hpL5mr4kboq5Y6evzH3lgFrOlaE1xqLCzyIumg1Fcq6BjgtvMeoxVeUE8U5rnEUgfuQW1QYVeuvRag8/HARPPHysPRvo03ROcMCG1oFIk2koj0/JLew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=woAIix99L3mAIOrctDG35LjcJ3/SblHitII4EALaeYk=;
- b=RZTta/+FbON8y4Ujc8oQBqj/4ibNgq2EuJC5Gyvrw7wzJeRDGuNz7xRtpjXVq9rX50wlGOJyLwSvLRPDrUR/Jr2wlOJ8muGJXITEQqZqPiHiNUJ5GEXVml45at6k+UQQ3scuzQMsRT+Eh08Erk0p4FfemlKlKZtMOJKJWxcKHkWB+5ZyDW4BlYrKWoNAv65UhWu6Vhnf9EFG8sN9B8enY0tyBeIF/WnuWEMkOumPC9V0Zx7DKsvA5YJW+DzLsYN5wNX0a3Q1a6EOxEQb4uLredtBI1p0301TT4+0F1Y8WN3Z+pYqhCNj8u94ThSUyV5L0NVYQXDqXBwp8J/Y410ZMw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=woAIix99L3mAIOrctDG35LjcJ3/SblHitII4EALaeYk=;
- b=JWvqZya7J30bVVjH/GwkKYFkvfc50ZRKRSEykn+0MiNo7FFLfr6uLx4O+/HQeZOkIZl7C5i75LgExZuu+UdH7dTI4eSB7Hd63wo9sHnJ79DCfMnjcPW/upEb/foKDKslU2+iDO5OqRJPkivW8QgeEnGyXw9BvQ5i1DA0cTRQUK4=
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
- by OS3PR01MB5941.jpnprd01.prod.outlook.com (2603:1096:604:b4::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.17; Thu, 6 Jul
- 2023 12:33:27 +0000
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a4f8:4204:cbe6:6cb3]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a4f8:4204:cbe6:6cb3%3]) with mapi id 15.20.6565.016; Thu, 6 Jul 2023
- 12:33:27 +0000
-From: Chris Paterson <Chris.Paterson2@renesas.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>
-CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
-	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
-	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
-	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
-	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
-	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
-	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
-	"rwarsow@gmx.de" <rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>
-Subject: RE: [PATCH 6.4 00/15] 6.4.2-rc2 review
-Thread-Topic: [PATCH 6.4 00/15] 6.4.2-rc2 review
-Thread-Index: AQHZrlRxZNzzrhL0WEeAE8WNpJMogq+sizfg
-Date: Thu, 6 Jul 2023 12:33:27 +0000
-Message-ID:
- <TY2PR01MB3788D087FDA8695A369E561AB72CA@TY2PR01MB3788.jpnprd01.prod.outlook.com>
-References: <20230704084611.900603362@linuxfoundation.org>
-In-Reply-To: <20230704084611.900603362@linuxfoundation.org>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|OS3PR01MB5941:EE_
-x-ms-office365-filtering-correlation-id: 8ebec6a6-d34a-4fc2-2a28-08db7e1d32bf
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- nRoAm1huqNwwQesJ8e3S/rOzkbY7snh9DDUcNhMEwR9rcL4s5t9cmQj6n8rCCdvKflT5iigFTYi+rXhHas2lSb73/OO/ecACrAo0H/Mj6Dqx6lhyURvePjv7xkkaHK5JcIhWtBHvkDzaHUJEpkdiONlAxdQsEpayexHj1+fDFpVgoLQn/AawSDEfDas9d4OpjviPfg3nnVlN+5drZSRYeZT3Dug/VsouZwtSstASKrKCwJ3czKsqWmXDNefbLFvC+bGnwzas2QeY1EYGdJ+/Opp3KxZTF+VLSBurAzDi7HYDuUng65zps3OVu7ZfIdeqljDBlJmATPdF475TJf8hiiXnzoQaxLLHKGVb0VOCUcfBmh61HThllTKhz+e8QqgkqbS53Teo1v+sohNi0o6xHLKbL2+S66M8i5a+iDV3e6i4yi+qgEG+V27Fvw4PXoCmz1W9HvTCyaJsvsj7diPP/1NioCwnCSGSDgQMYBNxSDtNnIQRohKXiBsAoDovIEMo9u3Pfp+qMDfrXuduJYY9t4TiAyZ8es2AwuMVY/MJo5kOSz323ZwaeikfGIOPfysAyqfiXA1UjbrDMl9WiZdtJ6KVgcDAE1mWezAC18n7B/7THb/9aNx1PhTiN8raE1wKZT11tTYj7fWdNcOUonMIcw==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(346002)(376002)(366004)(396003)(39860400002)(451199021)(4744005)(5660300002)(8936002)(8676002)(41300700001)(316002)(2906002)(7416002)(52536014)(55016003)(122000001)(66476007)(38100700002)(66446008)(66556008)(64756008)(66946007)(4326008)(76116006)(478600001)(86362001)(54906003)(6506007)(26005)(110136005)(9686003)(186003)(33656002)(71200400001)(38070700005)(7696005)(966005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?Windows-1252?Q?8nqMlUOFpM2+UAzlJqh64N8Wr+kBbmZHUecaGOQzKCbae2uJq3cXL54A?=
- =?Windows-1252?Q?C5aib+OalY7Kyld7g2pvnSP2jHHy/v/8OPSvYSLKap9ljWsbTQZefzIO?=
- =?Windows-1252?Q?z93Rkbxgw2tNo0pAPz25xks09hfdo9BJNFRC2oV5N8hvbXsA9Q17IIOy?=
- =?Windows-1252?Q?11yqiWQVHQRmRlkzLs9+2SQGbOHm3yCRHq3+y2qthgEFQzm+c5mSKVuL?=
- =?Windows-1252?Q?DP800of3ZI/dsAs802KrpSF26ge5R6fmiDHpb/AUIlsFFm7RU8q+TDhz?=
- =?Windows-1252?Q?Ibp1q9weCXcWUhnkuSp5OT4qoj7J+/bfnhavtDC8EDGUwiAswVXiKXWY?=
- =?Windows-1252?Q?i5MYkiT6qSDDqjvTvLZMuyz8IRZOjyG7e5a+lQRgCXERP0G6YMPBMpdz?=
- =?Windows-1252?Q?BX1Dv4iBU2Kg2Gg8JdI7p9NB+8owbQ/8ivYSEF90fPn7ED9c6c7OpTOP?=
- =?Windows-1252?Q?NF9l8tyhjClLCbVtP+cJQi16FOd+oJ/TzifiNzJ/Fp5gBjOrw1pKI2C8?=
- =?Windows-1252?Q?k3Nkl/imA6ItW1wCmfO60D4RARHNuI6s7Nc/+hsZ07VseoFEGww9aTa4?=
- =?Windows-1252?Q?SoPeel47dO3xKpPZkZ+7L0JdMFxFrv2MJB70cGgAjiE9Uf10fzqwmcaY?=
- =?Windows-1252?Q?8Zs8AinRfGVEtOvNAevwUtFWrAQ7ZT6et6haDb8De/pQuYhlLR7kNSkB?=
- =?Windows-1252?Q?ySX4KpJh+WCXMA7+UWqlEomeKKgvVpgjDmQnwM8mt82eLctuy1MWIU/W?=
- =?Windows-1252?Q?VQ+N1slOdK+1b2fY0VrI3tXHvPg0ySm855ICtWhVvwRwhEITay3VShaV?=
- =?Windows-1252?Q?wdf3UrWuWoTpZXsvR4oPqIcl95pH+ztUnq+okzkMdgxCWRZ/qldj/AzA?=
- =?Windows-1252?Q?c53/8NMRtl8gwfH55OP4Ay+pcv2h8k3Ti3DyoQFbhpTTYkrLA0qTRedj?=
- =?Windows-1252?Q?qDCk8fT3snxZ1XjmYmGoDY+OjU3Tco4/rkV6558SXUv3uq4qeBElakMP?=
- =?Windows-1252?Q?xXrnmUsO5dtrMsAMjGecQ+/nzT73A3I2XKIcwGUIM9d2i7tSnnPOourf?=
- =?Windows-1252?Q?+uNF2mhSGVoA0onPIz7/EUcOyFKaX2cxpfhswRZsA8+9IE+L3SLTK21w?=
- =?Windows-1252?Q?QbrsYVA7ciQK7wPsuIE7TRt8BVgTCRg7eIoscasFnwJD59mLIAVpYzwg?=
- =?Windows-1252?Q?rNB9+1dshvH4uvHLp3Clwxk4DLzo4FS60cMixa4wemW/GQlnS7qHwAEr?=
- =?Windows-1252?Q?k7IA3kI7EW/6OolmiYMBYDZBII+nvsnPitpQhgcD9FzVY5lVi3XMXoIw?=
- =?Windows-1252?Q?JNm2Y4xN5Wx2+LoqESPruI9vptiGRDckcI+w2X2jgkpUT42W/Ok4Hsg6?=
- =?Windows-1252?Q?+Ci5fBFXbqkKGcDzbW5mihhbIkFyBv2+42IIfgw1q+myn3hTcJVpFO4C?=
- =?Windows-1252?Q?//YB8JmPyVo2uOyOlloafHbeJVkZh97vQeFJMUNPoi8AbSfyO0mWcONc?=
- =?Windows-1252?Q?HBk6WWkTgz3Ny+Sq7r5OAYXn7C2qneP+yZCoi7htzOoMKs/v8Rixvv9j?=
- =?Windows-1252?Q?RM4YPI4I2sqUu8y/XD12pYcSL0L9PBbkcSbc6JtQAuhPJla82KqwWZ7i?=
- =?Windows-1252?Q?4U4b119i3kHbh5xCPoRD8KlMjAreR9l43Uas12thznEmCGv+6aeMSpAH?=
- =?Windows-1252?Q?FmpgDiKwMu9sJNGF0unB/+GFYn+nGrTgOh+IhKDQLmvOJPeOrBgvuw?=
- =?Windows-1252?Q?=3D=3D?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60F89460
+	for <patches@lists.linux.dev>; Thu,  6 Jul 2023 17:40:22 +0000 (UTC)
+Date: Thu, 06 Jul 2023 17:33:20 +0000
+Authentication-Results: mail-4321.protonmail.ch;
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="NKF0/9Jh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1688664806; x=1688924006;
+	bh=gO2BKfjwlzki2Tjw5P6AggQxCkuHmpo/jAvQ/A+lNUg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=NKF0/9JhQoNuzDECKLmD1fcbeeNWtc1rryijHUc0GVmn1vcPbGiu59/vtk47PS/o+
+	 M3rzg2Fv9Z4RcuH4fcVceXnsAIN07P1bj3YtABxw0Hb/0gce1831tkflSm3TS/vrXd
+	 8ImMK2UitpLButHPsCNMhZuyrEuZcyZLmNyi0oiOJML/irg11Qa/nQ6D07eDm33kRz
+	 uhtOALL9NyvOsMycO/2LNVfiUqlF3TUmRmykLVJP+5npnmqoGa58WURa8+bM+nd25a
+	 x/u1qQorKwze8EYmXCEyfo/1me9zVDM4aWRC9RdaVjpQNA3UZpoWbZRWRToyaQVq6Z
+	 ACQRdeXBJTqXQ==
+To: Alice Ryhl <aliceryhl@google.com>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] rust: delete `ForeignOwnable::borrow_mut`
+Message-ID: <ZxQ3Iwjmp3_Nitm5A7iA-MvgW2LSxiw1vgwxwkyMHv6P4KfBxQT69uVPV43H4mGZcwJGdea-6ILhJGi8zdjmZF5-3UHshUQdKzep_7eMTTY=@proton.me>
+In-Reply-To: <20230706094615.3080784-1-aliceryhl@google.com>
+References: <20230706094615.3080784-1-aliceryhl@google.com>
+Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8ebec6a6-d34a-4fc2-2a28-08db7e1d32bf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jul 2023 12:33:27.3251
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: +sLM0IRcLE9AaeuvEpD5SahgEjtbmOb3Wd121L5DjxJIYKPXxIUbxbRE35jGnFxMeR+4BWRchOXf4qPx8MwZvHW9B1mNpkXH23xF5b8T76A=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3PR01MB5941
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello Greg,
-
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Sent: Tuesday, July 4, 2023 9:48 AM
+On 06.07.23 11:46, Alice Ryhl wrote:
+> We discovered that the current design of `borrow_mut` is problematic.
+> This patch removes it until a better solution can be found.
 >=20
-> This is the start of the stable review cycle for the 6.4.2 release.
-> There are 15 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> Specifically, the current design gives you access to a `&mut T`, which
+> lets you change where the `ForeignOwnable` points (e.g., with
+> `core::mem::swap`). No upcoming user of this API intended to make that
+> possible, making all of them unsound.
 >=20
-> Responses should be made by Thu, 06 Jul 2023 08:46:01 +0000.
-> Anything received after that time might be too late.
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 
-Thank you for the release!
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 
-CIP configurations built and booted okay with Linux 6.4.2-rc2 (289036004f4b=
-):
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/9=
-23134632
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
-ux-6.4.y
-
-Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
-
-Kind regards, Chris
+> ---
+>   rust/kernel/sync/arc.rs |  3 +--
+>   rust/kernel/types.rs    | 22 ++--------------------
+>   2 files changed, 3 insertions(+), 22 deletions(-)
+>=20
+> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+> index a89843cacaad..172f563976a9 100644
+> --- a/rust/kernel/sync/arc.rs
+> +++ b/rust/kernel/sync/arc.rs
+> @@ -243,8 +243,7 @@ unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -=
+> ArcBorrow<'a, T> {
+>           let inner =3D NonNull::new(ptr as *mut ArcInner<T>).unwrap();
+>=20
+>           // SAFETY: The safety requirements of `from_foreign` ensure tha=
+t the object remains alive
+> -        // for the lifetime of the returned value. Additionally, the saf=
+ety requirements of
+> -        // `ForeignOwnable::borrow_mut` ensure that no new mutable refer=
+ences are created.
+> +        // for the lifetime of the returned value.
+>           unsafe { ArcBorrow::new(inner) }
+>       }
+>=20
+> diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
+> index 1e5380b16ed5..d479f8da8f38 100644
+> --- a/rust/kernel/types.rs
+> +++ b/rust/kernel/types.rs
+> @@ -35,34 +35,16 @@ pub trait ForeignOwnable: Sized {
+>       ///
+>       /// `ptr` must have been returned by a previous call to [`ForeignOw=
+nable::into_foreign`] for
+>       /// which a previous matching [`ForeignOwnable::from_foreign`] hasn=
+'t been called yet.
+> -    /// Additionally, all instances (if any) of values returned by [`For=
+eignOwnable::borrow_mut`]
+> -    /// for this object must have been dropped.
+>       unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Self::Borrow=
+ed<'a>;
+>=20
+> -    /// Mutably borrows a foreign-owned object.
+> -    ///
+> -    /// # Safety
+> -    ///
+> -    /// `ptr` must have been returned by a previous call to [`ForeignOwn=
+able::into_foreign`] for
+> -    /// which a previous matching [`ForeignOwnable::from_foreign`] hasn'=
+t been called yet.
+> -    /// Additionally, all instances (if any) of values returned by [`For=
+eignOwnable::borrow`] and
+> -    /// [`ForeignOwnable::borrow_mut`] for this object must have been dr=
+opped.
+> -    unsafe fn borrow_mut(ptr: *const core::ffi::c_void) -> ScopeGuard<Se=
+lf, fn(Self)> {
+> -        // SAFETY: The safety requirements ensure that `ptr` came from a=
+ previous call to
+> -        // `into_foreign`.
+> -        ScopeGuard::new_with_data(unsafe { Self::from_foreign(ptr) }, |d=
+| {
+> -            d.into_foreign();
+> -        })
+> -    }
+> -
+>       /// Converts a foreign-owned object back to a Rust-owned one.
+>       ///
+>       /// # Safety
+>       ///
+>       /// `ptr` must have been returned by a previous call to [`ForeignOw=
+nable::into_foreign`] for
+>       /// which a previous matching [`ForeignOwnable::from_foreign`] hasn=
+'t been called yet.
+> -    /// Additionally, all instances (if any) of values returned by [`For=
+eignOwnable::borrow`] and
+> -    /// [`ForeignOwnable::borrow_mut`] for this object must have been dr=
+opped.
+> +    /// Additionally, all instances (if any) of values returned by [`For=
+eignOwnable::borrow`] for
+> +    /// this object must have been dropped.
+>       unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self;
+>   }
+>=20
+>=20
+> base-commit: d2e3115d717197cb2bc020dd1f06b06538474ac3
+> --
+> 2.41.0.255.g8b1d071c50-goog
+> 
