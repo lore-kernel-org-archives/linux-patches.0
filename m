@@ -1,129 +1,130 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78185134C5
-	for <patches@lists.linux.dev>; Wed,  5 Jul 2023 21:44:40 +0000 (UTC)
-Date: Wed, 05 Jul 2023 21:44:16 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1688593472; x=1688852672;
-	bh=BsxqveEuWUXuxAC8tXYge4xIJEmM7wZqtaoyhSMuH9A=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=baIRJTcH2TwferdGWwGYFCBD1n1CVqnDMs2JrPsYN/pvdhesSH6w+Dmfhv+k8oH9/
-	 NKeofawqRPpIs83RXdQnWPh6ohYYEyhgVPBCwEgiystbjTKRKuHqQexMCv1TiX1UG4
-	 Tgtp5ho7hM7kZn1iUqUZxxbx9ibm2g7J7rQTPN5rQPh5WtZX+uChurmXa1whzABgDB
-	 2H9MX/vSorp0UGtZUcI4Iy8OMj7MVwK+3BeMiuYGoT4owXPFMWvLd9EObqLlSrYUpw
-	 E+AxKNF9n+uTyOwhLSPW7lxQFvpXr4V1Zb7J754LOnyT4v5+LzyMAbCJvcDd8AVFNj
-	 T8YY0VDnxlUoA==
-To: Gary Guo <gary@garyguo.net>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Alice Ryhl <aliceryhl@google.com>, Andreas Hindborg <nmi@metaspace.dk>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Asahi Lina <lina@asahilina.net>
-Subject: Re: [PATCH 5/7] rust: init: add `..Zeroable::zeroed()` syntax for zeroing all missing fields
-Message-ID: <YfprOGVPci8tiiFEBN5olLh8NiFh8mRJOcQQ5icOWAhXjncFLKy9Aj-Tr5sidcCiSguYYykfdv_4PM2UoF238vjzuXHeckZal5cGNMW2y8c=@proton.me>
-In-Reply-To: <20230705184836.363c8c8b.gary@garyguo.net>
-References: <20230624092330.157338-1-benno.lossin@proton.me> <20230624092330.157338-5-benno.lossin@proton.me> <ZKMQW4UGPQZ8yF39@boqun-archlinux> <20230705184836.363c8c8b.gary@garyguo.net>
-Feedback-ID: 71780778:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240544A3B
+	for <patches@lists.linux.dev>; Thu,  6 Jul 2023 09:46:24 +0000 (UTC)
+Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-51da39aa6dcso442785a12.2
+        for <patches@lists.linux.dev>; Thu, 06 Jul 2023 02:46:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1688636783; x=1691228783;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0eYCSqQxSlAR3RibXXnHPvPQ1h6TQ1/VygEPnbsiTbg=;
+        b=H1tRYgNOzaDextngjG1i4fRJhAypNqzhecp294gztutf6ZBH1wl5Ew+HgbKmFp8cM9
+         x6SvTCcxQ3ARUDbkgO/lWmwyIk6zK8U6l9/EXSp6Pi7+RjegS4lD39Uf8idzxr80pqPF
+         bjpeA2CTI28mosSlpzVDMkmYsCn+17IqyL7lEehCKl+q4VXuk3LnppdTUfeWEeTp5ido
+         yzRwFow3HTTW9PPWHVl8yK6GZ32aKCMQcHis/NPnknLNfOJE+1eXSrZ9nla31dgoiFeI
+         nIzqkLiUsAiSvzA+B8L6TQbz2R07iW5IsTtfvloT0jIXgZUvk/aFUBmVqyl0jCVxGGL7
+         6bfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688636783; x=1691228783;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0eYCSqQxSlAR3RibXXnHPvPQ1h6TQ1/VygEPnbsiTbg=;
+        b=NYGTfSmQD3yeMbZaYE9TZsLHBp/tOzNn4Eku1OWvMdwScjx7jMoIJbdgaXg9y6FD2T
+         hPa84LdpVbTtEAAdyAJVGon7oe5IfOKF6ft2Le/t8gJyBLoSGsdoqbTnb5xEyMfceMqG
+         kneo4E+0/lM4nwUujF7Pfm+KuOPXKvCF6Y/E8bS9iEurF4SaRMv7UzYs17B1Q5KqLpFz
+         3HhWC+tACtLthYh086UJPirgSGEQnEPTm3WY6EolN120+h63dZ7nxyQvl0Q89M4+PF5O
+         uxp0WgBPHaHHL3Dsbj4yE4fEsYYVMz/xik3/03eokYHO68EFnQSfdTrMrijBYi9w+hZM
+         Ky7g==
+X-Gm-Message-State: ABy/qLapLhmZgkalGqjhuR4Z/x4ks31HaHyyu44r5WoxTrc5KAxErcSy
+	ODwPw88oDwWSZasjbbUvYxiOKLAXkmOSh38=
+X-Google-Smtp-Source: APBJJlGlXnXSogXQMZLv1m0sa+cO8bIZhhr+Phsktwd5wancAgiLZxSk5gVA7y7E4iW379DNToZn7e9HT6WW0/g=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a50:9345:0:b0:51d:9659:4dae with SMTP id
+ n5-20020a509345000000b0051d96594daemr7394eda.5.1688636783141; Thu, 06 Jul
+ 2023 02:46:23 -0700 (PDT)
+Date: Thu,  6 Jul 2023 09:46:15 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
+Message-ID: <20230706094615.3080784-1-aliceryhl@google.com>
+Subject: [PATCH] rust: delete `ForeignOwnable::borrow_mut`
+From: Alice Ryhl <aliceryhl@google.com>
+To: rust-for-linux@vger.kernel.org
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, 
+	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
+	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 05.07.23 19:48, Gary Guo wrote:
-> On Mon, 3 Jul 2023 11:15:55 -0700
-> Boqun Feng <boqun.feng@gmail.com> wrote:
->=20
->> On Sat, Jun 24, 2023 at 09:25:19AM +0000, Benno Lossin wrote:
->> [...]
->> (this is `init_slot`)
->>> @@ -1064,7 +1152,7 @@ macro_rules! __init_internal {
->>>           @data($data:ident),
->>>           @slot($slot:ident),
->>>           @guards($($guards:ident,)*),
->>> -        @munch_fields($(,)?),
->>> +        @munch_fields($(..Zeroable::zeroed())? $(,)?),
->>
->> since you append an unconditional comma ',' to init_slot and
->> make_initializer when "calling" them in with_update_parsed, shouldn't
->> this be:
->>
->> +        @munch_fields($(..Zeroable::zeroed(),)? $(,)?),
->>
->> , and..
->>
->>>       ) =3D> {
->>>           // Endpoint of munching, no fields are left. If execution rea=
-ches this point, all fields
->>>           // have been initialized. Therefore we can now dismiss the gu=
-ards by forgetting them.
->>> @@ -1157,6 +1245,30 @@ macro_rules! __init_internal {
->>>               @munch_fields($($rest)*),
->>>           );
->>>       };
->>> +    (make_initializer:
->>> +        @slot($slot:ident),
->>> +        @type_name($t:ident),
->>> +        @munch_fields(..Zeroable::zeroed() $(,)?),
->>
->> this should be:
->>
->> +        @munch_fields(..Zeroable::zeroed() , $(,)?),
->>
->> Otherwise the example before `pin_init!()` wouldn't compile:
->>
->> =09/// pin_init!(Buf {
->> =09///     buf: [1; 64],
->> =09///     ..Zeroable::zeroed(),
->> =09/// });
->=20
-> Comma is not allowed after base struct.
+We discovered that the current design of `borrow_mut` is problematic.
+This patch removes it until a better solution can be found.
 
-Yes this is a mistake in the example, will fix.
+Specifically, the current design gives you access to a `&mut T`, which
+lets you change where the `ForeignOwnable` points (e.g., with
+`core::mem::swap`). No upcoming user of this API intended to make that
+possible, making all of them unsound.
 
---=20
-Cheers,
-Benno
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+---
+ rust/kernel/sync/arc.rs |  3 +--
+ rust/kernel/types.rs    | 22 ++--------------------
+ 2 files changed, 3 insertions(+), 22 deletions(-)
 
->=20
->>
->> Regards,
->> Boqun
->>
->>> +        @acc($($acc:tt)*),
->>> +    ) =3D> {
->>> +        // Endpoint, nothing more to munch, create the initializer. Si=
-nce the users specified
->>> +        // `..Zeroable::zeroed()`, the slot will already have been zer=
-oed and all field that have
->>> +        // not been overwritten are thus zero and initialized. We stil=
-l check that all fields are
->>> +        // actually accessible by using the struct update syntax ourse=
-lves.
->>> +        // Since we are in the `if false` branch, this will never get =
-executed. We abuse `slot` to
->>> +        // get the correct type inference here:
->>> +        unsafe {
->>> +            let mut zeroed =3D ::core::mem::zeroed();
->>> +            // We have to use type inference her to make zeroed have t=
-he correct type. This does
->>> +            // not get executed, so it has no effect.
->>> +            ::core::ptr::write($slot, zeroed);
->>> +            zeroed =3D ::core::mem::zeroed();
->>> +            ::core::ptr::write($slot, $t {
->>> +                $($acc)*
->>> +                ..zeroed
->>> +            });
->>> +        }
->>> +    };
->>>       (make_initializer:
->>>           @slot($slot:ident),
->>>           @type_name($t:ident),
->>> --
->>> 2.41.0
->>>
->>>
-> 
+diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+index a89843cacaad..172f563976a9 100644
+--- a/rust/kernel/sync/arc.rs
++++ b/rust/kernel/sync/arc.rs
+@@ -243,8 +243,7 @@ unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> ArcBorrow<'a, T> {
+         let inner = NonNull::new(ptr as *mut ArcInner<T>).unwrap();
+ 
+         // SAFETY: The safety requirements of `from_foreign` ensure that the object remains alive
+-        // for the lifetime of the returned value. Additionally, the safety requirements of
+-        // `ForeignOwnable::borrow_mut` ensure that no new mutable references are created.
++        // for the lifetime of the returned value.
+         unsafe { ArcBorrow::new(inner) }
+     }
+ 
+diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
+index 1e5380b16ed5..d479f8da8f38 100644
+--- a/rust/kernel/types.rs
++++ b/rust/kernel/types.rs
+@@ -35,34 +35,16 @@ pub trait ForeignOwnable: Sized {
+     ///
+     /// `ptr` must have been returned by a previous call to [`ForeignOwnable::into_foreign`] for
+     /// which a previous matching [`ForeignOwnable::from_foreign`] hasn't been called yet.
+-    /// Additionally, all instances (if any) of values returned by [`ForeignOwnable::borrow_mut`]
+-    /// for this object must have been dropped.
+     unsafe fn borrow<'a>(ptr: *const core::ffi::c_void) -> Self::Borrowed<'a>;
+ 
+-    /// Mutably borrows a foreign-owned object.
+-    ///
+-    /// # Safety
+-    ///
+-    /// `ptr` must have been returned by a previous call to [`ForeignOwnable::into_foreign`] for
+-    /// which a previous matching [`ForeignOwnable::from_foreign`] hasn't been called yet.
+-    /// Additionally, all instances (if any) of values returned by [`ForeignOwnable::borrow`] and
+-    /// [`ForeignOwnable::borrow_mut`] for this object must have been dropped.
+-    unsafe fn borrow_mut(ptr: *const core::ffi::c_void) -> ScopeGuard<Self, fn(Self)> {
+-        // SAFETY: The safety requirements ensure that `ptr` came from a previous call to
+-        // `into_foreign`.
+-        ScopeGuard::new_with_data(unsafe { Self::from_foreign(ptr) }, |d| {
+-            d.into_foreign();
+-        })
+-    }
+-
+     /// Converts a foreign-owned object back to a Rust-owned one.
+     ///
+     /// # Safety
+     ///
+     /// `ptr` must have been returned by a previous call to [`ForeignOwnable::into_foreign`] for
+     /// which a previous matching [`ForeignOwnable::from_foreign`] hasn't been called yet.
+-    /// Additionally, all instances (if any) of values returned by [`ForeignOwnable::borrow`] and
+-    /// [`ForeignOwnable::borrow_mut`] for this object must have been dropped.
++    /// Additionally, all instances (if any) of values returned by [`ForeignOwnable::borrow`] for
++    /// this object must have been dropped.
+     unsafe fn from_foreign(ptr: *const core::ffi::c_void) -> Self;
+ }
+ 
+
+base-commit: d2e3115d717197cb2bc020dd1f06b06538474ac3
+-- 
+2.41.0.255.g8b1d071c50-goog
+
