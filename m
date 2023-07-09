@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71D44699
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:17:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48BF2C433C8;
-	Sun,  9 Jul 2023 11:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981CF4699
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:17:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D04C433C8;
+	Sun,  9 Jul 2023 11:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901432;
-	bh=v65KEQYa+gJPx/xD52gelBoCgyFHxyrzVgQowJwdRgw=;
+	s=korg; t=1688901435;
+	bh=7cc0PnaJmdFU76YjjptSHjlQuxq+M58aSoWEzgtEz9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2J/kucsaSoLvHGX3jGaaOp9VAmFNYaX+Y8u2n8L0xi3o3KdBemBbImg74+CpdtHRh
-	 YnBWoB53x1iBeiLa85F0rz6CWLMr9FMDO/pCOzClOHCmTJCKk9GJuyjSRkT4oa/vVX
-	 xUD6eeg3NSCDBNOz/K6mFRgmxYJwyUdYDYGJe9Dk=
+	b=qq5Bs2ulqzHA68tsw3M2sVtVKulgFkiKUGSPIlrJrpQkcs5U7kMiXSwtmwTuuO8RS
+	 nqj6jjpqaxYjaJOO9GN6ZDH2T4DvqqzhXSuRyRRFoIJvNCRu7sSSwErXunB+0Jpx7g
+	 zZ1ZjFd01dz8AytdMS3fPwPh7+Wm/zOCw+Qugq4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 019/431] md/raid10: fix overflow of md/safe_mode_delay
-Date: Sun,  9 Jul 2023 13:09:27 +0200
-Message-ID: <20230709111451.555007716@linuxfoundation.org>
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Lyude Paul <lyude@redhat.com>,
+	"Limonciello, Mario" <mario.limonciello@amd.com>
+Subject: [PATCH 6.3 002/431] drm: use mgr->dev in drm_dbg_kms in drm_dp_add_payload_part2
+Date: Sun,  9 Jul 2023 13:09:10 +0200
+Message-ID: <20230709111451.163952244@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,51 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 6beb489b2eed25978523f379a605073f99240c50 ]
+commit 54d217406afe250d7a768783baaa79a035f21d38 upstream.
 
-There is no input check when echo md/safe_mode_delay in safe_delay_store().
-And msec might also overflow when HZ < 1000 in safe_delay_show(), Fix it by
-checking overflow in safe_delay_store() and use unsigned long conversion in
-safe_delay_show().
+I've been experiencing some intermittent crashes down in the display
+driver code. The symptoms are ususally a line like this in dmesg:
 
-Fixes: 72e02075a33f ("md: factor out parsing of fixed-point numbers")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230522072535.1523740-2-linan666@huaweicloud.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    amdgpu 0000:30:00.0: [drm] Failed to create MST payload for port 000000006d3a3885: -5
+
+...followed by an Oops due to a NULL pointer dereference.
+
+Switch to using mgr->dev instead of state->dev since "state" can be
+NULL in some cases.
+
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2184855
+Suggested-by: Jani Nikula <jani.nikula@linux.intel.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230419112447.18471-1-jlayton@kernel.org
+Cc: "Limonciello, Mario" <mario.limonciello@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index d479e1656ef33..61ad7dfe0e99a 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -3814,8 +3814,9 @@ int strict_strtoul_scaled(const char *cp, unsigned long *res, int scale)
- static ssize_t
- safe_delay_show(struct mddev *mddev, char *page)
- {
--	int msec = (mddev->safemode_delay*1000)/HZ;
--	return sprintf(page, "%d.%03d\n", msec/1000, msec%1000);
-+	unsigned int msec = ((unsigned long)mddev->safemode_delay*1000)/HZ;
-+
-+	return sprintf(page, "%u.%03u\n", msec/1000, msec%1000);
- }
- static ssize_t
- safe_delay_store(struct mddev *mddev, const char *cbuf, size_t len)
-@@ -3827,7 +3828,7 @@ safe_delay_store(struct mddev *mddev, const char *cbuf, size_t len)
- 		return -EINVAL;
- 	}
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -3404,7 +3404,7 @@ int drm_dp_add_payload_part2(struct drm_
  
--	if (strict_strtoul_scaled(cbuf, &msec, 3) < 0)
-+	if (strict_strtoul_scaled(cbuf, &msec, 3) < 0 || msec > UINT_MAX / HZ)
- 		return -EINVAL;
- 	if (msec == 0)
- 		mddev->safemode_delay = 0;
--- 
-2.39.2
-
+ 	/* Skip failed payloads */
+ 	if (payload->vc_start_slot == -1) {
+-		drm_dbg_kms(state->dev, "Part 1 of payload creation for %s failed, skipping part 2\n",
++		drm_dbg_kms(mgr->dev, "Part 1 of payload creation for %s failed, skipping part 2\n",
+ 			    payload->port->connector->name);
+ 		return -EIO;
+ 	}
 
 
