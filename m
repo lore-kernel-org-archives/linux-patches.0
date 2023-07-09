@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB061522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFE5C433C7;
-	Sun,  9 Jul 2023 11:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0F6522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E85FC433C8;
+	Sun,  9 Jul 2023 11:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901613;
-	bh=Sc/Y6taSEYeoSv/ZciwiOBAlYZa0aU2zKcDbdnJhlYo=;
+	s=korg; t=1688901616;
+	bh=iUSRCU4s9x5u4NXgagCdljN1NamwjsBKrGKdnDzzU4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jsCw47pNsqyAPrnWboF43iAnX4bG+QtUv10IBDIblzKriD6Ro8Y/2pnMNE0fILH0k
-	 evWO0VdmQo6NjQi81JWSkyimnIIGurZOtL+TeFwFOnE2K8kLijGo1Q3k8TB9wHQ3pm
-	 yU6qD0Q+k27ohWJsDatFEhPwwETC1nB4d6r6Ewuc=
+	b=LhlpFfzF4zzu0ru7FiJWDiM62xZNO6SaMb9BnrWMTmw4cFMrUtvAkw7G6Ysra8Fo8
+	 M7eKrxEHiak7twGFkFcYe2g8RsL1blOvOrG/3hnxYnUVIGrGsAXflIwe0hULih7Z+K
+	 RqyAq096cvKtd0j8igCPjIaVqgaDaxPZgKVt3wh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Amisha Patel <amisha.patel@microchip.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 082/431] spi: spi-geni-qcom: Correct CS_TOGGLE bit in SPI_TRANS_CFG
-Date: Sun,  9 Jul 2023 13:10:30 +0200
-Message-ID: <20230709111453.073500455@linuxfoundation.org>
+Subject: [PATCH 6.3 083/431] wifi: wilc1000: fix for absent RSN capabilities WFA testcase
+Date: Sun,  9 Jul 2023 13:10:31 +0200
+Message-ID: <20230709111453.096879496@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -33,42 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+From: Amisha Patel <amisha.patel@microchip.com>
 
-[ Upstream commit 5fd7c99ecf45c8ee8a9b1268f0ffc91cc6271da2 ]
+[ Upstream commit 9ce4bb09123e9754996e358bd808d39f5d112899 ]
 
-The CS_TOGGLE bit when set is supposed to instruct FW to
-toggle CS line between words. The driver with intent of
-disabling this behaviour has been unsetting BIT(0). This has
-not caused any trouble so far because the original BIT(1)
-is untouched and BIT(0) likely wasn't being used.
+Mandatory WFA testcase
+CT_Security_WPA2Personal_STA_RSNEBoundsVerification-AbsentRSNCap,
+performs bounds verfication on Beacon and/or Probe response frames. It
+failed and observed the reason to be absence of cipher suite and AKM
+suite in RSN information. To fix this, enable the RSN flag before extracting RSN
+capabilities.
 
-Correct this to prevent a potential future bug.
-
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org
-Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
-Reviewed-by: Douglas Anderson <dianders@chromium.org
-Link: https://lore.kernel.org/r/1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+Fixes: cd21d99e595e ("wifi: wilc1000: validate pairwise and authentication suite offsets")
+Signed-off-by: Amisha Patel <amisha.patel@microchip.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230421181005.4865-1-amisha.patel@microchip.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-geni-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/microchip/wilc1000/hif.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index baf477383682d..d147519fe1089 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -35,7 +35,7 @@
- #define CS_DEMUX_OUTPUT_SEL	GENMASK(3, 0)
+diff --git a/drivers/net/wireless/microchip/wilc1000/hif.c b/drivers/net/wireless/microchip/wilc1000/hif.c
+index 5adc69d5bcae3..a28da59384813 100644
+--- a/drivers/net/wireless/microchip/wilc1000/hif.c
++++ b/drivers/net/wireless/microchip/wilc1000/hif.c
+@@ -485,6 +485,9 @@ void *wilc_parse_join_bss_param(struct cfg80211_bss *bss,
+ 		int rsn_ie_len = sizeof(struct element) + rsn_ie[1];
+ 		int offset = 8;
  
- #define SE_SPI_TRANS_CFG	0x25c
--#define CS_TOGGLE		BIT(0)
-+#define CS_TOGGLE		BIT(1)
++		param->mode_802_11i = 2;
++		param->rsn_found = true;
++
+ 		/* extract RSN capabilities */
+ 		if (offset < rsn_ie_len) {
+ 			/* skip over pairwise suites */
+@@ -494,11 +497,8 @@ void *wilc_parse_join_bss_param(struct cfg80211_bss *bss,
+ 				/* skip over authentication suites */
+ 				offset += (rsn_ie[offset] * 4) + 2;
  
- #define SE_SPI_WORD_LEN		0x268
- #define WORD_LEN_MSK		GENMASK(9, 0)
+-				if (offset + 1 < rsn_ie_len) {
+-					param->mode_802_11i = 2;
+-					param->rsn_found = true;
++				if (offset + 1 < rsn_ie_len)
+ 					memcpy(param->rsn_cap, &rsn_ie[offset], 2);
+-				}
+ 			}
+ 		}
+ 	}
 -- 
 2.39.2
 
