@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42984522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:24:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7695C433C7;
-	Sun,  9 Jul 2023 11:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E58522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:24:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD8AC433C7;
+	Sun,  9 Jul 2023 11:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901867;
-	bh=hK6WbM7ak9/4cHluDf2POQTKODUcFiz9WD8OiIVTIpI=;
+	s=korg; t=1688901870;
+	bh=5aTeKyXvANEJZRkfhVinKmKB3XeZdIyA2OgfN2Jxnac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6bVjm/szkE+3pjgu/r7sDPPpAn4Cw+S42VzbrQDqoZeeqA4B5wyWlNp8m4dJMH2i
-	 j6VCXJhNzZt90uhTpnKW6Er/3IRkAhICwbE3yR7Srf3xgFXx7bbVZ9qZLquXRqmIQ7
-	 vljJB0jzaissN3B9bMYUDbh5my+U+9KmtM4MiUaw=
+	b=JpDPDjp/U0o/dSf1Z+w/xpy+e6m1j8c+2I82J7Us21biNJe2Qh8KZ3Ot2lJR2fitm
+	 QcsTwG8yqMaC0f9bbNFuw40nb0mIdOc48FjmP3gE5AcO98eSkYQeyCb+J5ovcGD1c4
+	 MllI8xA7/uB3MA4UwP8zeqhoWVVN9r6xbyL4q4Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 172/431] drm/bridge: tc358768: Add atomic_get_input_bus_fmts() implementation
-Date: Sun,  9 Jul 2023 13:12:00 +0200
-Message-ID: <20230709111455.203425118@linuxfoundation.org>
+Subject: [PATCH 6.3 173/431] drm/bridge: tc358768: fix TCLK_TRAILCNT computation
+Date: Sun,  9 Jul 2023 13:12:01 +0200
+Message-ID: <20230709111455.226993709@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,94 +37,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit cec5ccef85bd0128cf895612de54a9d21d2015d0 ]
+[ Upstream commit ee18698e212b1659dd0850d7e2ae0f22e16ed3d3 ]
 
-Add atomic_get_input_bus_fmts() implementation, tc358768 has a parallel
-RGB input interface with the actual bus format depending on the amount
-of parallel input data lines.
+Correct computation of TCLK_TRAILCNT register.
 
-Without this change when the tc358768 is used with less than 24bit the
-color mapping is completely wrong.
+The driver does not implement non-continuous clock mode, so the actual
+value doesn't make a practical difference yet. However this change also
+ensures that the value does not write to reserved registers bits in case
+of under/overflow.
 
+This register must be set to a value that ensures that
+
+TCLK-TRAIL > 60ns
+ and
+TEOT <= (105 ns + 12 x UI)
+
+with the actual value of TCLK-TRAIL being
+
+(TCLK_TRAILCNT + (1 to 2)) xHSByteClkCycle +
+ (2 + (1 to 2)) * HSBYTECLKCycle - (PHY output delay)
+
+with PHY output delay being about
+
+(2 to 3) x MIPIBitClk cycle in the BitClk conversion.
+
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
 Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 Reviewed-by: Robert Foss <rfoss@kernel.org>
 Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230330095941.428122-7-francesco@dolcini.it
-Stable-dep-of: ee18698e212b ("drm/bridge: tc358768: fix TCLK_TRAILCNT computation")
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 44 +++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ drivers/gpu/drm/bridge/tc358768.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index aff400c360662..487bfe33edc88 100644
+index 487bfe33edc88..4cb46a3e6be8c 100644
 --- a/drivers/gpu/drm/bridge/tc358768.c
 +++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -9,6 +9,7 @@
- #include <linux/gpio/consumer.h>
+@@ -10,6 +10,7 @@
  #include <linux/i2c.h>
  #include <linux/kernel.h>
-+#include <linux/media-bus-format.h>
+ #include <linux/media-bus-format.h>
++#include <linux/minmax.h>
  #include <linux/module.h>
  #include <linux/regmap.h>
  #include <linux/regulator/consumer.h>
-@@ -918,6 +919,44 @@ static void tc358768_bridge_enable(struct drm_bridge *bridge)
- 	}
- }
+@@ -639,6 +640,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	struct mipi_dsi_device *dsi_dev = priv->output.dev;
+ 	unsigned long mode_flags = dsi_dev->mode_flags;
+ 	u32 val, val2, lptxcnt, hact, data_type;
++	s32 raw_val;
+ 	const struct drm_display_mode *mode;
+ 	u32 dsibclk_nsk, dsiclk_nsk, ui_nsk, phy_delay_nsk;
+ 	u32 dsiclk, dsibclk, video_start;
+@@ -750,9 +752,9 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	dev_dbg(priv->dev, "TCLK_HEADERCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_TCLK_HEADERCNT, val);
  
-+#define MAX_INPUT_SEL_FORMATS	1
-+
-+static u32 *
-+tc358768_atomic_get_input_bus_fmts(struct drm_bridge *bridge,
-+				   struct drm_bridge_state *bridge_state,
-+				   struct drm_crtc_state *crtc_state,
-+				   struct drm_connector_state *conn_state,
-+				   u32 output_fmt,
-+				   unsigned int *num_input_fmts)
-+{
-+	struct tc358768_priv *priv = bridge_to_tc358768(bridge);
-+	u32 *input_fmts;
-+
-+	*num_input_fmts = 0;
-+
-+	input_fmts = kcalloc(MAX_INPUT_SEL_FORMATS, sizeof(*input_fmts),
-+			     GFP_KERNEL);
-+	if (!input_fmts)
-+		return NULL;
-+
-+	switch (priv->pd_lines) {
-+	case 16:
-+		input_fmts[0] = MEDIA_BUS_FMT_RGB565_1X16;
-+		break;
-+	case 18:
-+		input_fmts[0] = MEDIA_BUS_FMT_RGB666_1X18;
-+		break;
-+	default:
-+	case 24:
-+		input_fmts[0] = MEDIA_BUS_FMT_RGB888_1X24;
-+		break;
-+	};
-+
-+	*num_input_fmts = MAX_INPUT_SEL_FORMATS;
-+
-+	return input_fmts;
-+}
-+
- static const struct drm_bridge_funcs tc358768_bridge_funcs = {
- 	.attach = tc358768_bridge_attach,
- 	.mode_valid = tc358768_bridge_mode_valid,
-@@ -925,6 +964,11 @@ static const struct drm_bridge_funcs tc358768_bridge_funcs = {
- 	.enable = tc358768_bridge_enable,
- 	.disable = tc358768_bridge_disable,
- 	.post_disable = tc358768_bridge_post_disable,
-+
-+	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
-+	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
-+	.atomic_reset = drm_atomic_helper_bridge_reset,
-+	.atomic_get_input_bus_fmts = tc358768_atomic_get_input_bus_fmts,
- };
+-	/* TCLK_TRAIL > 60ns + 3*UI */
+-	val = 60 + tc358768_to_ns(3 * ui_nsk);
+-	val = tc358768_ns_to_cnt(val, dsibclk_nsk) - 5;
++	/* TCLK_TRAIL > 60ns AND TEOT <= 105 ns + 12*UI */
++	raw_val = tc358768_ns_to_cnt(60 + tc358768_to_ns(2 * ui_nsk), dsibclk_nsk) - 5;
++	val = clamp(raw_val, 0, 127);
+ 	dev_dbg(priv->dev, "TCLK_TRAILCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_TCLK_TRAILCNT, val);
  
- static const struct drm_bridge_timings default_tc358768_timings = {
 -- 
 2.39.2
 
