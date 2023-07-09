@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFF4522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:31:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE28C433C8;
-	Sun,  9 Jul 2023 11:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792E7522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:31:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C2AC433C8;
+	Sun,  9 Jul 2023 11:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902305;
-	bh=+nvfuXGaWBc5EfdQEZttQ/wkcL89p5cqfTmmq3UQDLk=;
+	s=korg; t=1688902311;
+	bh=QBy7HyL+eDcqZxhQe0sIzJonSO97AzdOGdlUKcSdZIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGUW4DKgqq0FWkbO7IEbYXxpuZjIJoaXYgcaErmFV1RyOgfgcKr5er2lCUtjuyG/L
-	 6GtOAtuXxnkrF/mFUMk79dSQxjI4SQlLHV36sUcZOgGcYwJrava68+64foM0ax2cfk
-	 JEvgBskgAargnUqTy9eztg/eXXyCD8XqIj0/bA5w=
+	b=DFuPyXwvWwjDtzzlG/8jGklOTLg6O9GXrPUr+43RyduPgC4cUh/Vn3phBuRW5tUve
+	 /f3X/1+DP8ji8JXKIMTCEDALl8LcDQSgFLoPMZXTgRnMCY3EQWxytOXL/4pN0QFp+1
+	 8H6gEGMSehYMudEPcd/p0koVPkPZL2+JWe6v6bZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Romanov <avromanov@sberdevices.ru>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 328/431] drivers: meson: secure-pwrc: always enable DMA domain
-Date: Sun,  9 Jul 2023 13:14:36 +0200
-Message-ID: <20230709111458.866157312@linuxfoundation.org>
+Subject: [PATCH 6.3 330/431] ASoC: imx-audmix: check return value of devm_kasprintf()
+Date: Sun,  9 Jul 2023 13:14:38 +0200
+Message-ID: <20230709111458.912454150@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,40 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Romanov <avromanov@sberdevices.ru>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 0bb4644d583789c97e74d3e3047189f0c59c4742 ]
+[ Upstream commit 2f76e1d6ca524a888d29aafe29f2ad2003857971 ]
 
-Starting from commit e45f243409db ("firmware: meson_sm:
-populate platform devices from sm device tree data") pwrc
-is probed successfully and disables unused pwr domains.
-By A1 SoC family design, any TEE requires DMA pwr domain
-always enabled.
+devm_kasprintf() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-Fixes: b3dde5013e13 ("soc: amlogic: Add support for Secure power domains controller")
-Signed-off-by: Alexey Romanov <avromanov@sberdevices.ru>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230610090414.90529-1-avromanov@sberdevices.ru
-[narmstrong: added fixes tag]
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: b86ef5367761 ("ASoC: fsl: Add Audio Mixer machine driver")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230614121509.443926-1-claudiu.beznea@microchip.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/amlogic/meson-secure-pwrc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/imx-audmix.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/soc/amlogic/meson-secure-pwrc.c b/drivers/soc/amlogic/meson-secure-pwrc.c
-index e935187635267..25b4b71df9b89 100644
---- a/drivers/soc/amlogic/meson-secure-pwrc.c
-+++ b/drivers/soc/amlogic/meson-secure-pwrc.c
-@@ -105,7 +105,7 @@ static struct meson_secure_pwrc_domain_desc a1_pwrc_domains[] = {
- 	SEC_PD(ACODEC,	0),
- 	SEC_PD(AUDIO,	0),
- 	SEC_PD(OTP,	0),
--	SEC_PD(DMA,	0),
-+	SEC_PD(DMA,	GENPD_FLAG_ALWAYS_ON | GENPD_FLAG_IRQ_SAFE),
- 	SEC_PD(SD_EMMC,	0),
- 	SEC_PD(RAMA,	0),
- 	/* SRAMB is used as ATF runtime memory, and should be always on */
+diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
+index 1292a845c4244..d8e99b263ab21 100644
+--- a/sound/soc/fsl/imx-audmix.c
++++ b/sound/soc/fsl/imx-audmix.c
+@@ -228,6 +228,8 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 
+ 		dai_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s%s",
+ 					  fe_name_pref, args.np->full_name + 1);
++		if (!dai_name)
++			return -ENOMEM;
+ 
+ 		dev_info(pdev->dev.parent, "DAI FE name:%s\n", dai_name);
+ 
+@@ -236,6 +238,8 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 			capture_dai_name =
+ 				devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s %s",
+ 					       dai_name, "CPU-Capture");
++			if (!capture_dai_name)
++				return -ENOMEM;
+ 		}
+ 
+ 		priv->dai[i].cpus = &dlc[0];
+@@ -266,6 +270,8 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 				       "AUDMIX-Playback-%d", i);
+ 		be_cp = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 				       "AUDMIX-Capture-%d", i);
++		if (!be_name || !be_pb || !be_cp)
++			return -ENOMEM;
+ 
+ 		priv->dai[num_dai + i].cpus = &dlc[3];
+ 		priv->dai[num_dai + i].codecs = &dlc[4];
+@@ -293,6 +299,9 @@ static int imx_audmix_probe(struct platform_device *pdev)
+ 		priv->dapm_routes[i].source =
+ 			devm_kasprintf(&pdev->dev, GFP_KERNEL, "%s %s",
+ 				       dai_name, "CPU-Playback");
++		if (!priv->dapm_routes[i].source)
++			return -ENOMEM;
++
+ 		priv->dapm_routes[i].sink = be_pb;
+ 		priv->dapm_routes[num_dai + i].source   = be_pb;
+ 		priv->dapm_routes[num_dai + i].sink     = be_cp;
 -- 
 2.39.2
 
