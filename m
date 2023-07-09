@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429AF522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B45C433C7;
-	Sun,  9 Jul 2023 11:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AEC522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B47CC433C8;
+	Sun,  9 Jul 2023 11:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902417;
-	bh=b4aDIJsYHPCcG85cEpSQBYX4Ui66WK5ExCnv8e0O/i0=;
+	s=korg; t=1688902419;
+	bh=Pi8GV7qEk1ibPzj4Wp2ILk8Di4v2NlFk0/HEY21e4wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HXTzxcLzI+vz4BhO00BRhpcaRrjV88+3ytEBESLcHpS/hwpqKPiNCtXIoimK3zNZd
-	 mgNZVh+7Q4n/6ffVSIOmdP/tTOGpoo+YsUpTiqQNBAwvmx8OhxHEsnL4THfZfoxb1M
-	 Xpx0R8Oq/DWnQPuCTKLKmYb6lC7zyPZgO/5zYXAo=
+	b=nDt1smB1VkfH/7on8BiruDbkdDF4yg6LyFPZrL0qyaPvJIfTNfQXaV0O79F6a2jGd
+	 qCPPU6coAf1DvS39uG3lCLDauCutprQospeC+GSvrpaVeKGxp9L/tnMaQdf/V5EzTS
+	 csj3vlOUr6d6WtPaiM1M7Kcl8M3QMKt92+Lb5A4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 332/431] ARM: dts: lan966x: kontron-d10: fix board reset
-Date: Sun,  9 Jul 2023 13:14:40 +0200
-Message-ID: <20230709111458.958681261@linuxfoundation.org>
+Subject: [PATCH 6.3 362/431] pinctrl: cherryview: Return correct value if pin in push-pull mode
+Date: Sun,  9 Jul 2023 13:15:10 +0200
+Message-ID: <20230709111459.657134855@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,49 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <mwalle@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit bfcd5714f6424c03e385e0e9296dcd69855cfea7 ]
+[ Upstream commit 5835196a17be5cfdcad0b617f90cf4abe16951a4 ]
 
-The pinctrl node was missing which change the pin mux to GPIO mode. Add
-it.
+Currently the getter returns ENOTSUPP on pin configured in
+the push-pull mode. Fix this by adding the missed switch case.
 
-Fixes: 79d83b3a458e ("ARM: dts: lan966x: add basic Kontron KSwitch D10 support")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-[claudiu.beznea: moved pinctrl-* bindings after compatible]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230616-feature-d10-dt-cleanups-v1-1-50dd0452b8fe@kernel.org
+Fixes: ccdf81d08dbe ("pinctrl: cherryview: add option to set open-drain pin config")
+Fixes: 6e08d6bbebeb ("pinctrl: Add Intel Cherryview/Braswell pin controller support")
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/pinctrl/intel/pinctrl-cherryview.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-index 0097e72e3fb22..42be207509a46 100644
---- a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-+++ b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-@@ -18,6 +18,8 @@ chosen {
+diff --git a/drivers/pinctrl/intel/pinctrl-cherryview.c b/drivers/pinctrl/intel/pinctrl-cherryview.c
+index 722990e278361..87cf1e7403979 100644
+--- a/drivers/pinctrl/intel/pinctrl-cherryview.c
++++ b/drivers/pinctrl/intel/pinctrl-cherryview.c
+@@ -949,11 +949,6 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned int pin,
  
- 	gpio-restart {
- 		compatible = "gpio-restart";
-+		pinctrl-0 = <&reset_pins>;
-+		pinctrl-names = "default";
- 		gpios = <&gpio 56 GPIO_ACTIVE_LOW>;
- 		priority = <200>;
- 	};
-@@ -59,6 +61,12 @@ miim_c_pins: miim-c-pins {
- 		function = "miim_c";
- 	};
+ 		break;
  
-+	reset_pins: reset-pins {
-+		/* SYS_RST# */
-+		pins = "GPIO_56";
-+		function = "gpio";
-+	};
+-	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
+-		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
+-			return -EINVAL;
+-		break;
+-
+ 	case PIN_CONFIG_BIAS_HIGH_IMPEDANCE: {
+ 		u32 cfg;
+ 
+@@ -963,6 +958,16 @@ static int chv_config_get(struct pinctrl_dev *pctldev, unsigned int pin,
+ 			return -EINVAL;
+ 
+ 		break;
 +
- 	sgpio_a_pins: sgpio-a-pins {
- 		/* SCK, D0, D1 */
- 		pins = "GPIO_32", "GPIO_33", "GPIO_34";
++	case PIN_CONFIG_DRIVE_PUSH_PULL:
++		if (ctrl1 & CHV_PADCTRL1_ODEN)
++			return -EINVAL;
++		break;
++
++	case PIN_CONFIG_DRIVE_OPEN_DRAIN:
++		if (!(ctrl1 & CHV_PADCTRL1_ODEN))
++			return -EINVAL;
++		break;
+ 	}
+ 
+ 	default:
 -- 
 2.39.2
 
