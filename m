@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913E7522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BB7C433CA;
-	Sun,  9 Jul 2023 11:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF174522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D409EC433CB;
+	Sun,  9 Jul 2023 11:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902425;
-	bh=ZlGXPgyKSM2Il5uBGGoDwvmrKEPaBoH3KAEbiaN4QKs=;
+	s=korg; t=1688902428;
+	bh=l1oOy5CzvbbUJu5sbUyetYlv8L5ugZrV9CmR1R/u12g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iIdiwKnovxR4t3DOalxEvaQTcv78yW/RwQf7xL/Ro3JGnBhKXWsbmM0GkCvJe3uz2
-	 q9JEKe/NPfBA62QtoT5Nz7Fh96D1OXVruBf9HwuYVvmA3FxNumv7BprPxN+KeBxTnG
-	 EEVjIWkbroaZbIn04uI0VoYWqTTrgbxIaIWmRzbg=
+	b=Zs33CoLfAVsVocjTWywlOAAt4po91mZcECOUUF0Hl++U812mTibDaWGBlzbs6F6n8
+	 FTfpfK+oCjeRbzhAouEDZAulDGQdye7Cu5rcd5diLUyFQ4QSKnqQXbEYp9vF3LFbnP
+	 OjjMqBPu5MIUnnV4zbXMM4VwQE7oZWiwALi1A3kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 372/431] perf script: Fix allocation of evsel->priv related to per-event dump files
-Date: Sun,  9 Jul 2023 13:15:20 +0200
-Message-ID: <20230709111459.883546052@linuxfoundation.org>
+Subject: [PATCH 6.3 373/431] platform/x86: thinkpad_acpi: Fix lkp-tests warnings for platform profiles
+Date: Sun,  9 Jul 2023 13:15:21 +0200
+Message-ID: <20230709111459.906514841@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -39,97 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 36d3e4138e1b6cc9ab179f3f397b5548f8b1eaae ]
+[ Upstream commit f999e23ce66c1555d7b653fba171a88ecee53704 ]
 
-When printing output we may want to generate per event files, where the
---per-event-dump option should be used, creating perf.data.EVENT.dump
-files instead of printing to stdout.
+Fix issues identified in dytc_profile_refresh identified by lkp-tests.
+drivers/platform/x86/thinkpad_acpi.c:10538
+	dytc_profile_refresh() error: uninitialized symbol 'funcmode'.
+drivers/platform/x86/thinkpad_acpi.c:10531
+	dytc_profile_refresh() error: uninitialized symbol 'output'.
+drivers/platform/x86/thinkpad_acpi.c:10537
+	dytc_profile_refresh() error: uninitialized symbol 'output'.
 
-The callback thar processes event thus expects that evsel->priv->fp
-should point to either the per-event FILE descriptor or to stdout.
+These issues should not lead to real problems in the field as the refresh
+function should only be called if MMC or PSC mode enabled. But good to fix.
 
-The a3af66f51bd0bca7 ("perf script: Fix crash because of missing
-evsel->priv") changeset fixed a case where evsel->priv wasn't setup,
-thus set to NULL, causing a segfault when trying to access
-evsel->priv->fp.
+Thanks to Dan Carpenter and the lkp-tests project for flagging these.
 
-But it did it for the non --per-event-dump case by allocating a 'struct
-perf_evsel_script' just to set its ->fp to stdout.
-
-Since evsel->priv is only freed when --per-event-dump is used, we ended
-up with a memory leak, detected using ASAN.
-
-Fix it by using the same method as perf_script__setup_per_event_dump(),
-and reuse that static 'struct perf_evsel_script'.
-
-Also check if evsel_script__new() failed.
-
-Fixes: a3af66f51bd0bca7 ("perf script: Fix crash because of missing evsel->priv")
-Reported-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
-Link: https://lore.kernel.org/lkml/ZH+F0wGAWV14zvMP@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202306011202.1hbgLRD4-lkp@intel.com/
+Fixes: 1bc5d819f0b9 ("platform/x86: thinkpad_acpi: Fix profile modes on Intel platforms")
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20230606151804.8819-1-mpearson-lenovo@squebb.ca
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-script.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/platform/x86/thinkpad_acpi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-script.c b/tools/perf/builtin-script.c
-index d8c174a719383..72a3faa28c394 100644
---- a/tools/perf/builtin-script.c
-+++ b/tools/perf/builtin-script.c
-@@ -2425,6 +2425,9 @@ static int process_sample_event(struct perf_tool *tool,
- 	return ret;
- }
- 
-+// Used when scr->per_event_dump is not set
-+static struct evsel_script es_stdout;
-+
- static int process_attr(struct perf_tool *tool, union perf_event *event,
- 			struct evlist **pevlist)
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index e40cbe81b12c1..97c6ec12d0829 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -10524,8 +10524,8 @@ static int dytc_profile_set(struct platform_profile_handler *pprof,
+ static void dytc_profile_refresh(void)
  {
-@@ -2433,7 +2436,6 @@ static int process_attr(struct perf_tool *tool, union perf_event *event,
- 	struct evsel *evsel, *pos;
- 	u64 sample_type;
- 	int err;
--	static struct evsel_script *es;
+ 	enum platform_profile_option profile;
+-	int output, err = 0;
+-	int perfmode, funcmode;
++	int output = 0, err = 0;
++	int perfmode, funcmode = 0;
  
- 	err = perf_event__process_attr(tool, event, pevlist);
- 	if (err)
-@@ -2443,14 +2445,13 @@ static int process_attr(struct perf_tool *tool, union perf_event *event,
- 	evsel = evlist__last(*pevlist);
- 
- 	if (!evsel->priv) {
--		if (scr->per_event_dump) {
-+		if (scr->per_event_dump) { 
- 			evsel->priv = evsel_script__new(evsel, scr->session->data);
--		} else {
--			es = zalloc(sizeof(*es));
--			if (!es)
-+			if (!evsel->priv)
- 				return -ENOMEM;
--			es->fp = stdout;
--			evsel->priv = es;
-+		} else { // Replicate what is done in perf_script__setup_per_event_dump()
-+			es_stdout.fp = stdout;
-+			evsel->priv = &es_stdout;
- 		}
+ 	mutex_lock(&dytc_mutex);
+ 	if (dytc_capabilities & BIT(DYTC_FC_MMC)) {
+@@ -10538,6 +10538,8 @@ static void dytc_profile_refresh(void)
+ 		err = dytc_command(DYTC_CMD_GET, &output);
+ 		/* Check if we are PSC mode, or have AMT enabled */
+ 		funcmode = (output >> DYTC_GET_FUNCTION_BIT) & 0xF;
++	} else { /* Unknown profile mode */
++		err = -ENODEV;
  	}
- 
-@@ -2756,7 +2757,6 @@ static int perf_script__fopen_per_event_dump(struct perf_script *script)
- static int perf_script__setup_per_event_dump(struct perf_script *script)
- {
- 	struct evsel *evsel;
--	static struct evsel_script es_stdout;
- 
- 	if (script->per_event_dump)
- 		return perf_script__fopen_per_event_dump(script);
+ 	mutex_unlock(&dytc_mutex);
+ 	if (err)
 -- 
 2.39.2
 
