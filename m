@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6374522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC50C433C8;
-	Sun,  9 Jul 2023 11:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA5C522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0E5C433C7;
+	Sun,  9 Jul 2023 11:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901911;
-	bh=/f/qe/x5uw5guA6TWeQzDNDdWGfZFolipMOvbV/kCZM=;
+	s=korg; t=1688901914;
+	bh=4dfYZu7lTbQS+MEGQvxf2A32+YSh6k4CTYYUB3cM0QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGr3AD2CuYMFMhsxZsBycV2GlG9Pxpw1e+nZTJam3epJ1b+9/YsULqWRiDnI+/KmU
-	 fL5EnS57XTm6/qmwY/rmKQ/cSc8pU5zodbfhCgJCr0A+wQJC/kySECZMw0YgPH1nJY
-	 w8vtQhnqDR43YVcMFTqEPlMT5Mxdb9+p9tSwKJiQ=
+	b=EIK86AO8LEq7E0ndbEXKgSHIzuJTijn6iuhNnywwqbYX3u+9DmvAVAF7je/c/SLar
+	 gNY+9Cd4CW/8wVOwg28lDGp0O8eGXYgkKPyEQoEH8QDztejHU6ABuGlm1l1BvmWZPo
+	 ccZO6SlVQia1TzL/KtqWAogysxdukvjIG3BEivsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 181/431] clk: vc7: Fix .driver_data content in i2c_device_id
-Date: Sun,  9 Jul 2023 13:12:09 +0200
-Message-ID: <20230709111455.424031257@linuxfoundation.org>
+Subject: [PATCH 6.3 190/431] ASoC: dt-bindings: mediatek,mt8188-afe: correct clock name
+Date: Sun,  9 Jul 2023 13:12:18 +0200
+Message-ID: <20230709111455.630475095@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,41 +33,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Trevor Wu <trevor.wu@mediatek.com>
 
-[ Upstream commit b5e10beeafaa3266559c582dde7534ae3fe8cefb ]
+[ Upstream commit 1e4fe75e9746be8e40c57132bb3fba1ce3dd24af ]
 
-The .driver_data content in i2c_device_id table must match the
-.data content in of_device_id table, else device_get_match_data()
-would return bogus value on i2c_device_id match. Align the two
-tables.
+The original clock names are different from the list in driver code.
+Correct the mismatched binding names in the patch.
 
-The i2c_device_id table is now converted from of_device_id using
-'s@.compatible = "renesas,\([^"]\+"\), .data = \(.*\)@"\1, .driver_data = (kernel_ulong_t)\2@'
+Because no mt8188 upstream dts exists, it doesn't affect the existing
+dts file.
 
-Fixes: 48c5e98fedd9 ("clk: Renesas versaclock7 ccf device driver")
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Link: https://lore.kernel.org/r/20230507133906.15061-2-marek.vasut+renesas@mailbox.org
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 692d25b67e10 ("ASoC: dt-bindings: mediatek,mt8188-afe: add audio afe document")
+Signed-off-by: Trevor Wu <trevor.wu@mediatek.com
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230510035526.18137-9-trevor.wu@mediatek.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-versaclock7.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/sound/mediatek,mt8188-afe.yaml   | 36 +++++++++----------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/clk/clk-versaclock7.c b/drivers/clk/clk-versaclock7.c
-index 8e4f86e852aa0..0ae191f50b4b2 100644
---- a/drivers/clk/clk-versaclock7.c
-+++ b/drivers/clk/clk-versaclock7.c
-@@ -1282,7 +1282,7 @@ static const struct regmap_config vc7_regmap_config = {
- };
+diff --git a/Documentation/devicetree/bindings/sound/mediatek,mt8188-afe.yaml b/Documentation/devicetree/bindings/sound/mediatek,mt8188-afe.yaml
+index 82ccb32f08f27..9e877f0d19fbb 100644
+--- a/Documentation/devicetree/bindings/sound/mediatek,mt8188-afe.yaml
++++ b/Documentation/devicetree/bindings/sound/mediatek,mt8188-afe.yaml
+@@ -63,15 +63,15 @@ properties:
+       - const: apll12_div2
+       - const: apll12_div3
+       - const: apll12_div9
+-      - const: a1sys_hp_sel
+-      - const: aud_intbus_sel
+-      - const: audio_h_sel
+-      - const: audio_local_bus_sel
+-      - const: dptx_m_sel
+-      - const: i2so1_m_sel
+-      - const: i2so2_m_sel
+-      - const: i2si1_m_sel
+-      - const: i2si2_m_sel
++      - const: top_a1sys_hp
++      - const: top_aud_intbus
++      - const: top_audio_h
++      - const: top_audio_local_bus
++      - const: top_dptx
++      - const: top_i2so1
++      - const: top_i2so2
++      - const: top_i2si1
++      - const: top_i2si2
+       - const: adsp_audio_26m
  
- static const struct i2c_device_id vc7_i2c_id[] = {
--	{ "rc21008a", VC7_RC21008A },
-+	{ "rc21008a", .driver_data = (kernel_ulong_t)&vc7_rc21008a_info },
- 	{}
- };
- MODULE_DEVICE_TABLE(i2c, vc7_i2c_id);
+   mediatek,etdm-in1-cowork-source:
+@@ -193,15 +193,15 @@ examples:
+                       "apll12_div2",
+                       "apll12_div3",
+                       "apll12_div9",
+-                      "a1sys_hp_sel",
+-                      "aud_intbus_sel",
+-                      "audio_h_sel",
+-                      "audio_local_bus_sel",
+-                      "dptx_m_sel",
+-                      "i2so1_m_sel",
+-                      "i2so2_m_sel",
+-                      "i2si1_m_sel",
+-                      "i2si2_m_sel",
++                      "top_a1sys_hp",
++                      "top_aud_intbus",
++                      "top_audio_h",
++                      "top_audio_local_bus",
++                      "top_dptx",
++                      "top_i2so1",
++                      "top_i2so2",
++                      "top_i2si1",
++                      "top_i2si2",
+                       "adsp_audio_26m";
+     };
+ 
 -- 
 2.39.2
 
