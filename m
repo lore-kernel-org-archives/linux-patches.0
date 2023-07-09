@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B754A522D
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B8AC433C7;
-	Sun,  9 Jul 2023 11:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996AC522D
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081C4C43397;
+	Sun,  9 Jul 2023 11:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901278;
-	bh=JZk0yN1cG4O5ARik7AJnsNBIkCv+udHoqBWNdnRb4tQ=;
+	s=korg; t=1688901281;
+	bh=LZtVAwtME7iP+q2uqEAfoqIyf7Iti8DPLXHXcXXzCPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B4Zhre8c7JMkUYakh08ltQQcEUH0LB2ZRJ1SEZpKPaiTIDqA2kjzmR0cwYh5xBwzv
-	 s3oXE1ropjeU+l/YyokAb0YDYdsFPwidRHFJCVD+E1l/J2IK/RBunz9zhWkwZ5yzfM
-	 +j9Xa5EQ/b5spMuHgO/Q75Lqqm2VPUmzTywVpvj4=
+	b=oeAQfhxfDbF8R6LZ+6VIEXDlsxd7xTGQpkNasyNrztjTGoEQti3FfupZ07y/ztDXJ
+	 unR1keXhl7boECRqn8n3ZLQzpcGPb/rFcJPYCz4iv4SYHHA8hW5R19i9endgRNyEmY
+	 qsjkJpWZUSIZH5K87F/T8Of5WEBxHMbUnp8lZXLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Collingbourne <pcc@google.com>,
-	Qun-wei Lin <Qun-wei.Lin@mediatek.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Steven Price <steven.price@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Oscar Salvador <osalvador@suse.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 5/8] mm: call arch_swap_restore() from do_swap_page()
-Date: Sun,  9 Jul 2023 13:14:11 +0200
-Message-ID: <20230709111345.460811210@linuxfoundation.org>
+Subject: [PATCH 6.4 6/8] bootmem: remove the vmemmap pages from kmemleak in free_bootmem_page
+Date: Sun,  9 Jul 2023 13:14:12 +0200
+Message-ID: <20230709111345.488184873@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111345.297026264@linuxfoundation.org>
 References: <20230709111345.297026264@linuxfoundation.org>
@@ -39,48 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Collingbourne <pcc@google.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-commit 6dca4ac6fc91fd41ea4d6c4511838d37f4e0eab2 upstream.
+commit 028725e73375a1ff080bbdf9fb503306d0116f28 upstream.
 
-Commit c145e0b47c77 ("mm: streamline COW logic in do_swap_page()") moved
-the call to swap_free() before the call to set_pte_at(), which meant that
-the MTE tags could end up being freed before set_pte_at() had a chance to
-restore them.  Fix it by adding a call to the arch_swap_restore() hook
-before the call to swap_free().
+commit dd0ff4d12dd2 ("bootmem: remove the vmemmap pages from kmemleak in
+put_page_bootmem") fix an overlaps existing problem of kmemleak.  But the
+problem still existed when HAVE_BOOTMEM_INFO_NODE is disabled, because in
+this case, free_bootmem_page() will call free_reserved_page() directly.
 
-Link: https://lkml.kernel.org/r/20230523004312.1807357-2-pcc@google.com
-Link: https://linux-review.googlesource.com/id/I6470efa669e8bd2f841049b8c61020c510678965
-Fixes: c145e0b47c77 ("mm: streamline COW logic in do_swap_page()")
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Reported-by: Qun-wei Lin <Qun-wei.Lin@mediatek.com>
-Closes: https://lore.kernel.org/all/5050805753ac469e8d727c797c2218a9d780d434.camel@mediatek.com/
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: "Huang, Ying" <ying.huang@intel.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: <stable@vger.kernel.org>	[6.1+]
+Fix the problem by adding kmemleak_free_part() in free_bootmem_page() when
+HAVE_BOOTMEM_INFO_NODE is disabled.
+
+Link: https://lkml.kernel.org/r/20230704101942.2819426-1-liushixin2@huawei.com
+Fixes: f41f2ed43ca5 ("mm: hugetlb: free the vmemmap pages associated with each HugeTLB page")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Acked-by: Muchun Song <songmuchun@bytedance.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ include/linux/bootmem_info.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3933,6 +3933,13 @@ vm_fault_t do_swap_page(struct vm_fault
- 	}
+--- a/include/linux/bootmem_info.h
++++ b/include/linux/bootmem_info.h
+@@ -3,6 +3,7 @@
+ #define __LINUX_BOOTMEM_INFO_H
  
- 	/*
-+	 * Some architectures may have to restore extra metadata to the page
-+	 * when reading from swap. This metadata may be indexed by swap entry
-+	 * so this must be called before swap_free().
-+	 */
-+	arch_swap_restore(entry, folio);
-+
-+	/*
- 	 * Remove the swap entry and conditionally try to free up the swapcache.
- 	 * We're already holding a reference on the page but haven't mapped it
- 	 * yet.
+ #include <linux/mm.h>
++#include <linux/kmemleak.h>
+ 
+ /*
+  * Types for free bootmem stored in page->lru.next. These have to be in
+@@ -59,6 +60,7 @@ static inline void get_page_bootmem(unsi
+ 
+ static inline void free_bootmem_page(struct page *page)
+ {
++	kmemleak_free_part(page_to_virt(page), PAGE_SIZE);
+ 	free_reserved_page(page);
+ }
+ #endif
 
 
