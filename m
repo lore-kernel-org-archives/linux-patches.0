@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A65522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0DAC433C8;
-	Sun,  9 Jul 2023 11:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EAE522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDD7C433C8;
+	Sun,  9 Jul 2023 11:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902548;
-	bh=lrSTKECLh5UyieDOYBCmMbD/hbAb3/C1glw8GSIIOGE=;
+	s=korg; t=1688902550;
+	bh=seFkwHfovXlqN6zLMnKQGR6B2zS52l9j10g99w64Aro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GNZDZlWt6Udd9sMCilUWpD6SygaXq08rrwp5d5eR69/kz9hVirqtIcV7mpzUp1fWB
-	 uK/TIkZGCJSPzJ0frlOzhTp9/5FlNh6PcgWMpwtbdZB5rS3xDiwV/jx+wvr1LEqkss
-	 nx0kuiPFoNTncfny/pe5OP/2p4CK9ptiZhVZis9U=
+	b=BUdgTXV3zBJKZupqdVTJmslfP/pa349Ua3lYfY3P9cEUPwW+bZsabdXMZT5mqMoWg
+	 EueWmbSAL/EeTfw10A7eJQ5VqAqmjMH+luLtO4TGKzjik9Ou5/dxNz/pgjOIpeUdjt
+	 d2qeErEASTSUJc59dNLbXdM+sT5SMoYeuNokVO/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Joe Fradley <joefradley@google.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kees Cook <keescook@chromium.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 415/431] hwrng: st - keep clock enabled while hwrng is registered
-Date: Sun,  9 Jul 2023 13:16:03 +0200
-Message-ID: <20230709111500.915671582@linuxfoundation.org>
+Subject: [PATCH 6.3 416/431] kbuild: Fix CFI failures with GCOV
+Date: Sun,  9 Jul 2023 13:16:04 +0200
+Message-ID: <20230709111500.940451278@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,94 +39,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Sami Tolvanen <samitolvanen@google.com>
 
-[ Upstream commit 501e197a02d4aef157f53ba3a0b9049c3e52fedc ]
+[ Upstream commit ddf56288eebd1fe82c46fc9f693b5b18045cddb6 ]
 
-The st-rng driver uses devres to register itself with the hwrng core,
-the driver will be unregistered from hwrng when its device goes out of
-scope. This happens after the driver's remove function is called.
+With GCOV_PROFILE_ALL, Clang injects __llvm_gcov_* functions to
+each object file, and the functions are indirectly called during
+boot. However, when code is injected to object files that are not
+part of vmlinux.o, it's also not processed by objtool, which breaks
+CFI hash randomization as the hashes in these files won't be
+included in the .cfi_sites section and thus won't be randomized.
 
-However, st-rng's clock is disabled in the remove function. There's a
-short timeframe where st-rng is still registered with the hwrng core
-although its clock is disabled. I suppose the clock must be active to
-access the hardware and serve requests from the hwrng core.
+Similarly to commit 42633ed852de ("kbuild: Fix CFI hash
+randomization with KASAN"), disable GCOV for .vmlinux.export.o and
+init/version-timestamp.o to avoid emitting unnecessary functions to
+object files that don't otherwise have executable code.
 
-Switch to devm_clk_get_enabled and let devres disable the clock and
-unregister the hwrng. This avoids the race condition.
-
-Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 0c3e806ec0f9 ("x86/cfi: Add boot time hash randomization")
+Reported-by: Joe Fradley <joefradley@google.com>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/st-rng.c | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ init/Makefile            | 1 +
+ scripts/Makefile.vmlinux | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/char/hw_random/st-rng.c b/drivers/char/hw_random/st-rng.c
-index 15ba1e6fae4d2..6e9dfac9fc9f4 100644
---- a/drivers/char/hw_random/st-rng.c
-+++ b/drivers/char/hw_random/st-rng.c
-@@ -42,7 +42,6 @@
+diff --git a/init/Makefile b/init/Makefile
+index 26de459006c4e..ec557ada3c12e 100644
+--- a/init/Makefile
++++ b/init/Makefile
+@@ -60,3 +60,4 @@ include/generated/utsversion.h: FORCE
+ $(obj)/version-timestamp.o: include/generated/utsversion.h
+ CFLAGS_version-timestamp.o := -include include/generated/utsversion.h
+ KASAN_SANITIZE_version-timestamp.o := n
++GCOV_PROFILE_version-timestamp.o := n
+diff --git a/scripts/Makefile.vmlinux b/scripts/Makefile.vmlinux
+index 10176dec97eac..3cd6ca15f390d 100644
+--- a/scripts/Makefile.vmlinux
++++ b/scripts/Makefile.vmlinux
+@@ -19,6 +19,7 @@ quiet_cmd_cc_o_c = CC      $@
  
- struct st_rng_data {
- 	void __iomem	*base;
--	struct clk	*clk;
- 	struct hwrng	ops;
- };
- 
-@@ -85,26 +84,18 @@ static int st_rng_probe(struct platform_device *pdev)
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
- 
--	clk = devm_clk_get(&pdev->dev, NULL);
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(clk))
- 		return PTR_ERR(clk);
- 
--	ret = clk_prepare_enable(clk);
--	if (ret)
--		return ret;
--
- 	ddata->ops.priv	= (unsigned long)ddata;
- 	ddata->ops.read	= st_rng_read;
- 	ddata->ops.name	= pdev->name;
- 	ddata->base	= base;
--	ddata->clk	= clk;
--
--	dev_set_drvdata(&pdev->dev, ddata);
- 
- 	ret = devm_hwrng_register(&pdev->dev, &ddata->ops);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register HW RNG\n");
--		clk_disable_unprepare(clk);
- 		return ret;
- 	}
- 
-@@ -113,15 +104,6 @@ static int st_rng_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int st_rng_remove(struct platform_device *pdev)
--{
--	struct st_rng_data *ddata = dev_get_drvdata(&pdev->dev);
--
--	clk_disable_unprepare(ddata->clk);
--
--	return 0;
--}
--
- static const struct of_device_id st_rng_match[] __maybe_unused = {
- 	{ .compatible = "st,rng" },
- 	{},
-@@ -134,7 +116,6 @@ static struct platform_driver st_rng_driver = {
- 		.of_match_table = of_match_ptr(st_rng_match),
- 	},
- 	.probe = st_rng_probe,
--	.remove = st_rng_remove
- };
- 
- module_platform_driver(st_rng_driver);
+ ifdef CONFIG_MODULES
+ KASAN_SANITIZE_.vmlinux.export.o := n
++GCOV_PROFILE_.vmlinux.export.o := n
+ targets += .vmlinux.export.o
+ vmlinux: .vmlinux.export.o
+ endif
 -- 
 2.39.2
 
