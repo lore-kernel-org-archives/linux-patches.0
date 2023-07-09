@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC47522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30BFC433C8;
-	Sun,  9 Jul 2023 11:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD8E522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69CE9C433C7;
+	Sun,  9 Jul 2023 11:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901923;
-	bh=X+kT1oQ8n6bKvVaOHHWJx/EBykQV1Xs7jNl7HikPjmc=;
+	s=korg; t=1688901925;
+	bh=kSwWEuHZH4v7RbCGNvEiW/j4GFuGkz2LIvxEC+cR2x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CG3/mJQrnhnlYR0RPyqSFO7YAOyuRRQRbJJXbKm0seMGmYusQZ2n+dgTWKbSQrP8D
-	 7h8t8rvbcoE6F2vfOvM7PvrpSc2LF4/EAqCOz3c8RPtVVCYnJnKha+Z9Nz6A3J1tXN
-	 63F8+PglVQkfL5ByVlabr7E0W4Ws4pC+aAGdBwDk=
+	b=tjL/NgXPbTg2bLGIpEZx4gvEh3IG+HLR8vuyZIU6oSrSkSmkr1Jbul66YMlGxD1OW
+	 0ayTgBuwxysrP1VV4hQhrUio2wlyRkcehHZwb70koT0CPuGs8Mcb/j862kREtiQQnt
+	 n3aT+XljXiqJDwq5QNSXb7PzTW7HrPTDXB/twhPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arthur Grillo <arthurgrillo@riseup.net>,
 	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 193/431] drm: Add fixed-point helper to get rounded integer values
-Date: Sun,  9 Jul 2023 13:12:21 +0200
-Message-ID: <20230709111455.699903028@linuxfoundation.org>
+Subject: [PATCH 6.3 194/431] drm/vkms: Fix RGB565 pixel conversion
+Date: Sun,  9 Jul 2023 13:12:22 +0200
+Message-ID: <20230709111455.723439375@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -38,50 +38,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 8b25320887d7feac98875546ea0f521628b745bb ]
+[ Upstream commit ab87f558dcfb2562c3497e89600dec798a446665 ]
 
-Create a new fixed-point helper to allow us to return the rounded value
-of our fixed point value.
+Currently, the pixel conversion isn't rounding the fixed-point values
+before assigning it to the RGB coefficients, which is causing the IGT
+pixel-format tests to fail. So, use the drm_fixp2int_round() fixed-point
+helper to round the values when assigning it to the RGB coefficients.
+
+Tested with igt@kms_plane@pixel-format and igt@kms_plane@pixel-format-source-clamping.
 
 [v2]:
-    * Create the function drm_fixp2int_round() (Melissa Wen).
-[v3]:
-    * Use drm_fixp2int() instead of shifting manually (Arthur Grillo).
+    * Use drm_fixp2int_round() to fix the pixel conversion instead of
+      casting the values to s32 (Melissa Wen).
 
+Fixes: 89b03aeaef16 ("drm/vkms: fix 32bit compilation error by replacing macros")
 Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Reviewed-by: Arthur Grillo <arthurgrillo@riseup.net>
 Signed-off-by: Maíra Canal <mairacanal@riseup.net>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230512104044.65034-1-mcanal@igalia.com
-Stable-dep-of: ab87f558dcfb ("drm/vkms: Fix RGB565 pixel conversion")
+Link: https://patchwork.freedesktop.org/patch/msgid/20230512104044.65034-2-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_fixed.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/vkms/vkms_formats.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/drm/drm_fixed.h b/include/drm/drm_fixed.h
-index 255645c1f9a89..6ea339d5de088 100644
---- a/include/drm/drm_fixed.h
-+++ b/include/drm/drm_fixed.h
-@@ -71,6 +71,7 @@ static inline u32 dfixed_div(fixed20_12 A, fixed20_12 B)
+diff --git a/drivers/gpu/drm/vkms/vkms_formats.c b/drivers/gpu/drm/vkms/vkms_formats.c
+index 8d948c73741ef..b11342026485f 100644
+--- a/drivers/gpu/drm/vkms/vkms_formats.c
++++ b/drivers/gpu/drm/vkms/vkms_formats.c
+@@ -97,9 +97,9 @@ static void RGB565_to_argb_u16(u8 *src_pixels, struct pixel_argb_u16 *out_pixel)
+ 	s64 fp_b = drm_int2fixp(rgb_565 & 0x1f);
+ 
+ 	out_pixel->a = (u16)0xffff;
+-	out_pixel->r = drm_fixp2int(drm_fixp_mul(fp_r, fp_rb_ratio));
+-	out_pixel->g = drm_fixp2int(drm_fixp_mul(fp_g, fp_g_ratio));
+-	out_pixel->b = drm_fixp2int(drm_fixp_mul(fp_b, fp_rb_ratio));
++	out_pixel->r = drm_fixp2int_round(drm_fixp_mul(fp_r, fp_rb_ratio));
++	out_pixel->g = drm_fixp2int_round(drm_fixp_mul(fp_g, fp_g_ratio));
++	out_pixel->b = drm_fixp2int_round(drm_fixp_mul(fp_b, fp_rb_ratio));
  }
  
- #define DRM_FIXED_POINT		32
-+#define DRM_FIXED_POINT_HALF	16
- #define DRM_FIXED_ONE		(1ULL << DRM_FIXED_POINT)
- #define DRM_FIXED_DECIMAL_MASK	(DRM_FIXED_ONE - 1)
- #define DRM_FIXED_DIGITS_MASK	(~DRM_FIXED_DECIMAL_MASK)
-@@ -87,6 +88,11 @@ static inline int drm_fixp2int(s64 a)
- 	return ((s64)a) >> DRM_FIXED_POINT;
- }
+ void vkms_compose_row(struct line_buffer *stage_buffer, struct vkms_plane_state *plane, int y)
+@@ -216,9 +216,9 @@ static void argb_u16_to_RGB565(struct vkms_frame_info *frame_info,
+ 		s64 fp_g = drm_int2fixp(in_pixels[x].g);
+ 		s64 fp_b = drm_int2fixp(in_pixels[x].b);
  
-+static inline int drm_fixp2int_round(s64 a)
-+{
-+	return drm_fixp2int(a + (1 << (DRM_FIXED_POINT_HALF - 1)));
-+}
-+
- static inline int drm_fixp2int_ceil(s64 a)
- {
- 	if (a > 0)
+-		u16 r = drm_fixp2int(drm_fixp_div(fp_r, fp_rb_ratio));
+-		u16 g = drm_fixp2int(drm_fixp_div(fp_g, fp_g_ratio));
+-		u16 b = drm_fixp2int(drm_fixp_div(fp_b, fp_rb_ratio));
++		u16 r = drm_fixp2int_round(drm_fixp_div(fp_r, fp_rb_ratio));
++		u16 g = drm_fixp2int_round(drm_fixp_div(fp_g, fp_g_ratio));
++		u16 b = drm_fixp2int_round(drm_fixp_div(fp_b, fp_rb_ratio));
+ 
+ 		*dst_pixels = cpu_to_le16(r << 11 | g << 5 | b);
+ 	}
 -- 
 2.39.2
 
