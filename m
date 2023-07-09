@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC22522D
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8CCC433C7;
-	Sun,  9 Jul 2023 11:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499D1522D
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:16:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04CAC433C7;
+	Sun,  9 Jul 2023 11:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901415;
-	bh=bBBoWLc+LqIFaX+5FcXfxGKwK9xiiRajkAZYiu4WXsM=;
+	s=korg; t=1688901418;
+	bh=qepqbFVSEd23dBSdxTrQnPhaswCs8I7QOPj+sHsouEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vrxe/D2sn/lfwNBnwl0QvI1Qk1h/2v5v46V0ci23qltL/mFp6XMyMbAVn9KL7oUGi
-	 Ezrbf6JR7xjuFrtXuA3/0iZmSMB/4MH3B6MEgxWWS1PXXiVlnTkFfjsJ9y14on7Zrf
-	 fkT1+AzuiPcAIr/CaD0vfd2z881ddIvx/5wC2+i8=
+	b=a0J2Bj2fJyw2D4ibEjcqJXU+3AIaYd5/yADVzg/undOBcUXvi2V/ujBqrYdAmMj9X
+	 rpLkZHRtMJ6aON6Mew0YOeOmcYPbQfSaX9N7AWll8YmC1ACCFruUetHZSBsPBR/VhM
+	 xM81POIIZnMhvWYAa83kPCXqscW0ix56u59xws4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	NeilBrown <neilb@suse.de>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 013/431] lockd: drop inappropriate svc_get() from locked_get()
-Date: Sun,  9 Jul 2023 13:09:21 +0200
-Message-ID: <20230709111451.419165026@linuxfoundation.org>
+Subject: [PATCH 6.3 014/431] nvme-core: fix memory leak in dhchap_secret_store
+Date: Sun,  9 Jul 2023 13:09:22 +0200
+Message-ID: <20230709111451.442093933@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,55 +38,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neilb@suse.de>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-[ Upstream commit 665e89ab7c5af1f2d260834c861a74b01a30f95f ]
+[ Upstream commit a836ca33c5b07d34dd5347af9f64d25651d12674 ]
 
-The below-mentioned patch was intended to simplify refcounting on the
-svc_serv used by locked.  The goal was to only ever have a single
-reference from the single thread.  To that end we dropped a call to
-lockd_start_svc() (except when creating thread) which would take a
-reference, and dropped the svc_put(serv) that would drop that reference.
+Free dhchap_secret in nvme_ctrl_dhchap_secret_store() before we return
+fix following kmemleack:-
 
-Unfortunately we didn't also remove the svc_get() from
-lockd_create_svc() in the case where the svc_serv already existed.
-So after the patch:
- - on the first call the svc_serv was allocated and the one reference
-   was given to the thread, so there are no extra references
- - on subsequent calls svc_get() was called so there is now an extra
-   reference.
-This is clearly not consistent.
+unreferenced object 0xffff8886376ea800 (size 64):
+  comm "check", pid 22048, jiffies 4344316705 (age 92.199s)
+  hex dump (first 32 bytes):
+    44 48 48 43 2d 31 3a 30 30 3a 6e 78 72 35 4b 67  DHHC-1:00:nxr5Kg
+    75 58 34 75 6f 41 78 73 4a 61 34 63 2f 68 75 4c  uX4uoAxsJa4c/huL
+  backtrace:
+    [<0000000030ce5d4b>] __kmalloc+0x4b/0x130
+    [<000000009be1cdc1>] nvme_ctrl_dhchap_secret_store+0x8f/0x160 [nvme_core]
+    [<00000000ac06c96a>] kernfs_fop_write_iter+0x12b/0x1c0
+    [<00000000437e7ced>] vfs_write+0x2ba/0x3c0
+    [<00000000f9491baf>] ksys_write+0x5f/0xe0
+    [<000000001c46513d>] do_syscall_64+0x3b/0x90
+    [<00000000ecf348fe>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
+unreferenced object 0xffff8886376eaf00 (size 64):
+  comm "check", pid 22048, jiffies 4344316736 (age 92.168s)
+  hex dump (first 32 bytes):
+    44 48 48 43 2d 31 3a 30 30 3a 6e 78 72 35 4b 67  DHHC-1:00:nxr5Kg
+    75 58 34 75 6f 41 78 73 4a 61 34 63 2f 68 75 4c  uX4uoAxsJa4c/huL
+  backtrace:
+    [<0000000030ce5d4b>] __kmalloc+0x4b/0x130
+    [<000000009be1cdc1>] nvme_ctrl_dhchap_secret_store+0x8f/0x160 [nvme_core]
+    [<00000000ac06c96a>] kernfs_fop_write_iter+0x12b/0x1c0
+    [<00000000437e7ced>] vfs_write+0x2ba/0x3c0
+    [<00000000f9491baf>] ksys_write+0x5f/0xe0
+    [<000000001c46513d>] do_syscall_64+0x3b/0x90
+    [<00000000ecf348fe>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-The inconsistency is also clear in the current code in lockd_get()
-takes *two* references, one on nlmsvc_serv and one by incrementing
-nlmsvc_users.   This clearly does not match lockd_put().
-
-So: drop that svc_get() from lockd_get() (which used to be in
-lockd_create_svc().
-
-Reported-by: Ido Schimmel <idosch@idosch.org>
-Closes: https://lore.kernel.org/linux-nfs/ZHsI%2FH16VX9kJQX1@shredder/T/#u
-Fixes: b73a2972041b ("lockd: move lockd_start_svc() call into lockd_create_svc()")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/nvme/host/core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index 9a47303b2cba6..0c05668019c2b 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -355,7 +355,6 @@ static int lockd_get(void)
- 	int error;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 8a632bf7f5a8f..8a706ca1b3e14 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3872,8 +3872,10 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
+ 		int ret;
  
- 	if (nlmsvc_serv) {
--		svc_get(nlmsvc_serv);
- 		nlmsvc_users++;
- 		return 0;
- 	}
+ 		ret = nvme_auth_generate_key(dhchap_secret, &key);
+-		if (ret)
++		if (ret) {
++			kfree(dhchap_secret);
+ 			return ret;
++		}
+ 		kfree(opts->dhchap_secret);
+ 		opts->dhchap_secret = dhchap_secret;
+ 		host_key = ctrl->host_key;
+@@ -3881,7 +3883,8 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
+ 		ctrl->host_key = key;
+ 		mutex_unlock(&ctrl->dhchap_auth_mutex);
+ 		nvme_auth_free_key(host_key);
+-	}
++	} else
++		kfree(dhchap_secret);
+ 	/* Start re-authentication */
+ 	dev_info(ctrl->device, "re-authenticating controller\n");
+ 	queue_work(nvme_wq, &ctrl->dhchap_auth_work);
 -- 
 2.39.2
 
