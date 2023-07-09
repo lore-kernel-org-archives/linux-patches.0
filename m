@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CC2522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA47BC433C7;
-	Sun,  9 Jul 2023 11:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35846522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0ED3C433C8;
+	Sun,  9 Jul 2023 11:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901560;
-	bh=5oj0Oh/qqw+ZETpDIJ4JtdfnfpvuvSIXqopL1OZEYRg=;
+	s=korg; t=1688901563;
+	bh=yyH2au+Rqak31HUVZhw6F4nlzzchIFf7ftg7lXYNzHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oCs31jOcQIntWTYsICa7TEQTf4u+LRudZGmxhTAK1J3aKQkKYs0rkhgmiDQWbFPTG
-	 Eo9DB0TE6txY1qNHBqGA+ET87pgJMUFwF5A4TH8tGBXwUcHamLB+Kd5eBkaGCM2/LU
-	 izXCOwhrwiogI4Pdp7hmKexDa26MZe4VS0i3Cr/M=
+	b=ORfpy1kF940tlQt1UkF1qm8nuG5iiakh+jKPwVF1J3ZwtDlF06KdkX3rq/nazZWuB
+	 2H8ErH1Qhp3yFWbzFjmD5gRBZuQWBnovGlIedj3aypsX+2zxuXofJ8x2TRnY5Kd5kT
+	 i2mGNSzJIh82SO+XpE3wL4Xsu6TlUkqGUIOSEPME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Anand Jain <anand.jain@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 035/431] tracing/timer: Add missing hrtimer modes to decode_hrtimer_mode().
-Date: Sun,  9 Jul 2023 13:09:43 +0200
-Message-ID: <20230709111451.920374746@linuxfoundation.org>
+Subject: [PATCH 6.3 036/431] btrfs: make btrfs_split_bio work on struct btrfs_bio
+Date: Sun,  9 Jul 2023 13:09:44 +0200
+Message-ID: <20230709111451.944139638@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,45 +38,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 2951580ba6adb082bb6b7154a5ecb24e7c1f7569 ]
+[ Upstream commit 2cef0c79bb81d8bae1dbc45195771a824ca45e76 ]
 
-The trace output for the HRTIMER_MODE_.*_HARD modes is seen as a number
-since these modes are not decoded. The author was not aware of the fancy
-decoding function which makes the life easier.
+btrfs_split_bio expects a btrfs_bio as argument and always allocates one.
+Type both the orig_bio argument and the return value as struct btrfs_bio
+to improve type safety.
 
-Extend decode_hrtimer_mode() with the additional HRTIMER_MODE_.*_HARD
-modes.
-
-Fixes: ae6683d815895 ("hrtimer: Introduce HARD expiry mode")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/20230418143854.8vHWQKLM@linutronix.de
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: c731cd0b6d25 ("btrfs: fix file_offset for REQ_BTRFS_ONE_ORDERED bios that get split")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/timer.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/btrfs/bio.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/include/trace/events/timer.h b/include/trace/events/timer.h
-index 3e8619c72f774..b4bc2828fa09f 100644
---- a/include/trace/events/timer.h
-+++ b/include/trace/events/timer.h
-@@ -158,7 +158,11 @@ DEFINE_EVENT(timer_class, timer_cancel,
- 		{ HRTIMER_MODE_ABS_SOFT,	"ABS|SOFT"	},	\
- 		{ HRTIMER_MODE_REL_SOFT,	"REL|SOFT"	},	\
- 		{ HRTIMER_MODE_ABS_PINNED_SOFT,	"ABS|PINNED|SOFT" },	\
--		{ HRTIMER_MODE_REL_PINNED_SOFT,	"REL|PINNED|SOFT" })
-+		{ HRTIMER_MODE_REL_PINNED_SOFT,	"REL|PINNED|SOFT" },	\
-+		{ HRTIMER_MODE_ABS_HARD,	"ABS|HARD" },		\
-+		{ HRTIMER_MODE_REL_HARD,	"REL|HARD" },		\
-+		{ HRTIMER_MODE_ABS_PINNED_HARD, "ABS|PINNED|HARD" },	\
-+		{ HRTIMER_MODE_REL_PINNED_HARD,	"REL|PINNED|HARD" })
+diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+index ada899613486a..67e5156f940d3 100644
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -59,30 +59,31 @@ struct bio *btrfs_bio_alloc(unsigned int nr_vecs, blk_opf_t opf,
+ 	return bio;
+ }
  
- /**
-  * hrtimer_init - called when the hrtimer is initialized
+-static struct bio *btrfs_split_bio(struct btrfs_fs_info *fs_info,
+-				   struct bio *orig, u64 map_length,
+-				   bool use_append)
++static struct btrfs_bio *btrfs_split_bio(struct btrfs_fs_info *fs_info,
++					 struct btrfs_bio *orig_bbio,
++					 u64 map_length, bool use_append)
+ {
+-	struct btrfs_bio *orig_bbio = btrfs_bio(orig);
++	struct btrfs_bio *bbio;
+ 	struct bio *bio;
+ 
+ 	if (use_append) {
+ 		unsigned int nr_segs;
+ 
+-		bio = bio_split_rw(orig, &fs_info->limits, &nr_segs,
++		bio = bio_split_rw(&orig_bbio->bio, &fs_info->limits, &nr_segs,
+ 				   &btrfs_clone_bioset, map_length);
+ 	} else {
+-		bio = bio_split(orig, map_length >> SECTOR_SHIFT, GFP_NOFS,
+-				&btrfs_clone_bioset);
++		bio = bio_split(&orig_bbio->bio, map_length >> SECTOR_SHIFT,
++				GFP_NOFS, &btrfs_clone_bioset);
+ 	}
+-	btrfs_bio_init(btrfs_bio(bio), orig_bbio->inode, NULL, orig_bbio);
++	bbio = btrfs_bio(bio);
++	btrfs_bio_init(bbio, orig_bbio->inode, NULL, orig_bbio);
+ 
+-	btrfs_bio(bio)->file_offset = orig_bbio->file_offset;
+-	if (!(orig->bi_opf & REQ_BTRFS_ONE_ORDERED))
++	bbio->file_offset = orig_bbio->file_offset;
++	if (!(orig_bbio->bio.bi_opf & REQ_BTRFS_ONE_ORDERED))
+ 		orig_bbio->file_offset += map_length;
+ 
+ 	atomic_inc(&orig_bbio->pending_ios);
+-	return bio;
++	return bbio;
+ }
+ 
+ static void btrfs_orig_write_end_io(struct bio *bio);
+@@ -631,8 +632,8 @@ static bool btrfs_submit_chunk(struct bio *bio, int mirror_num)
+ 		map_length = min(map_length, fs_info->max_zone_append_size);
+ 
+ 	if (map_length < length) {
+-		bio = btrfs_split_bio(fs_info, bio, map_length, use_append);
+-		bbio = btrfs_bio(bio);
++		bbio = btrfs_split_bio(fs_info, bbio, map_length, use_append);
++		bio = &bbio->bio;
+ 	}
+ 
+ 	/*
 -- 
 2.39.2
 
