@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E884A522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A745C433C7;
-	Sun,  9 Jul 2023 11:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D2F522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AD6C433C8;
+	Sun,  9 Jul 2023 11:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901554;
-	bh=gSFMdE26uMJr+YJfjdvUfjH0EENDnqfNzD2H+Ozblc0=;
+	s=korg; t=1688901557;
+	bh=44wYcN7dU3HjPXSPPhoYLcbj/0dBYkBjyGKjKQzP/0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkoXDXJyDAeUM0KqnTns4NGgQga6rawFL6wdH3Mw5FpL8U17NmTX6DT9ALA5w1Hmr
-	 P8t9B0uyYeEOx0X6VMij2pdrrwg2VfcAYi9TMCCQc38M9AWs4TrNGOubslYKtrPvfm
-	 jEOvmSJSLXE8+M9ObdX7rEFjPJgaboZWuBAFNdo4=
+	b=AwEUvKDnPpHwdr4V/uufPXUnUENuDvlolUMrKYQBOPOlrphNngHHQQQEQMZEr3tVu
+	 aystpxCRCK7MC0L6NVGCexVmO0P5sljVSrk7sH36nokClCCLZ1lQeXt/HPkJi7CcKd
+	 EhnLNyplPIiE2gELP2qwB2bXXZ3sw7weSfzfaQy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Wen Yang <wenyang.linux@foxmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 060/431] rcutorture: Correct name of use_softirq module parameter
-Date: Sun,  9 Jul 2023 13:10:08 +0200
-Message-ID: <20230709111452.543966539@linuxfoundation.org>
+Subject: [PATCH 6.3 034/431] tick/rcu: Fix bogus ratelimit condition
+Date: Sun,  9 Jul 2023 13:09:42 +0200
+Message-ID: <20230709111451.897136502@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,43 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Wen Yang <wenyang.linux@foxmail.com>
 
-[ Upstream commit b409afe0268faeb77267f028ea85f2d93438fced ]
+[ Upstream commit a7e282c77785c7eabf98836431b1f029481085ad ]
 
-The BUSTED-BOOST and TREE03 scenarios specify a mythical tree.use_softirq
-module parameter, which means a failure to get full test coverage.  This
-commit therefore corrects the name to rcutree.use_softirq.
+The ratelimit logic in report_idle_softirq() is broken because the
+exit condition is always true:
 
-Fixes: e2b949d54392 ("rcutorture: Make TREE03 use real-time tree.use_softirq setting")
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+	static int ratelimit;
+
+	if (ratelimit < 10)
+		return false;  ---> always returns here
+
+	ratelimit++;           ---> no chance to run
+
+Make it check for >= 10 instead.
+
+Fixes: 0345691b24c0 ("tick/rcu: Stop allowing RCU_SOFTIRQ in idle")
+Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/tencent_5AAA3EEAB42095C9B7740BE62FBF9A67E007@qq.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot  | 2 +-
- tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/time/tick-sched.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot b/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot
-index f57720c52c0f9..84f6bb98ce993 100644
---- a/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot
-+++ b/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot
-@@ -5,4 +5,4 @@ rcutree.gp_init_delay=3
- rcutree.gp_cleanup_delay=3
- rcutree.kthread_prio=2
- threadirqs
--tree.use_softirq=0
-+rcutree.use_softirq=0
-diff --git a/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot b/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot
-index 64f864f1f361f..8e50bfd4b710d 100644
---- a/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot
-+++ b/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot
-@@ -4,4 +4,4 @@ rcutree.gp_init_delay=3
- rcutree.gp_cleanup_delay=3
- rcutree.kthread_prio=2
- threadirqs
--tree.use_softirq=0
-+rcutree.use_softirq=0
+diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
+index d6fb6a676bbbb..1ad89eec2a55f 100644
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -1046,7 +1046,7 @@ static bool report_idle_softirq(void)
+ 			return false;
+ 	}
+ 
+-	if (ratelimit < 10)
++	if (ratelimit >= 10)
+ 		return false;
+ 
+ 	/* On RT, softirqs handling may be waiting on some lock */
 -- 
 2.39.2
 
