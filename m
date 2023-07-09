@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BA1522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E55C433C8;
-	Sun,  9 Jul 2023 11:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A65522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0DAC433C8;
+	Sun,  9 Jul 2023 11:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902545;
-	bh=+fHDIzySRnnHmFJzKNYfD4czu+DrzCi+Gq8FpGBTcOE=;
+	s=korg; t=1688902548;
+	bh=lrSTKECLh5UyieDOYBCmMbD/hbAb3/C1glw8GSIIOGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YoEPiTKLaK8pM0V5EvXSc0E0G/k6uMoQTWdA7QFxbAPydakPcCk16snag8O0E2Z4Z
-	 eFwiGTKXGTOFQX6YsWsvbQVwAouRZTYNFsq0EbcvDKXXR0RN6P+TjQ6auRoi3eKGdK
-	 AUZfguAXSlZWt1G3FdFJrYrIpBtWt8F1EUuLNXJM=
+	b=GNZDZlWt6Udd9sMCilUWpD6SygaXq08rrwp5d5eR69/kz9hVirqtIcV7mpzUp1fWB
+	 uK/TIkZGCJSPzJ0frlOzhTp9/5FlNh6PcgWMpwtbdZB5rS3xDiwV/jx+wvr1LEqkss
+	 nx0kuiPFoNTncfny/pe5OP/2p4CK9ptiZhVZis9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tarun Sahu <tsahu@linux.ibm.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
+	Martin Kaiser <martin@kaiser.cx>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 414/431] dax/kmem: Pass valid argument to memory_group_register_static
-Date: Sun,  9 Jul 2023 13:16:02 +0200
-Message-ID: <20230709111500.892615932@linuxfoundation.org>
+Subject: [PATCH 6.3 415/431] hwrng: st - keep clock enabled while hwrng is registered
+Date: Sun,  9 Jul 2023 13:16:03 +0200
+Message-ID: <20230709111500.915671582@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,74 +35,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tarun Sahu <tsahu@linux.ibm.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 46e66dab8565f742374e9cc4ff7d35f344d774e2 ]
+[ Upstream commit 501e197a02d4aef157f53ba3a0b9049c3e52fedc ]
 
-memory_group_register_static takes maximum number of pages as the argument
-while dev_dax_kmem_probe passes total_len (in bytes) as the argument.
+The st-rng driver uses devres to register itself with the hwrng core,
+the driver will be unregistered from hwrng when its device goes out of
+scope. This happens after the driver's remove function is called.
 
-IIUC, I don't see any crash/panic impact as such. As,
-memory_group_register_static just set the max_pages limit which is used in
-auto_movable_zone_for_pfn to determine the zone.
+However, st-rng's clock is disabled in the remove function. There's a
+short timeframe where st-rng is still registered with the hwrng core
+although its clock is disabled. I suppose the clock must be active to
+access the hardware and serve requests from the hwrng core.
 
-which might cause these condition to behave differently,
+Switch to devm_clk_get_enabled and let devres disable the clock and
+unregister the hwrng. This avoids the race condition.
 
-This will be true always so jump will happen to kernel_zone
-    ...
-    if (!auto_movable_can_online_movable(NUMA_NO_NODE, group, nr_pages))
-        goto kernel_zone;
-
-    ...
-    kernel_zone:
-        return default_kernel_zone_for_pfn(nid, pfn, nr_pages);
-
-Here, In below, zone_intersects compare range will be larger as nr_pages
-will be higher (derived from total_len passed in dev_dax_kmem_probe).
-
-    ...
-    static struct zone *default_kernel_zone_for_pfn(int nid, unsigned long start_pfn,
-    		unsigned long nr_pages)
-    {
-    	struct pglist_data *pgdat = NODE_DATA(nid);
-    	int zid;
-
-    	for (zid = 0; zid < ZONE_NORMAL; zid++) {
-    		struct zone *zone = &pgdat->node_zones[zid];
-
-    		if (zone_intersects(zone, start_pfn, nr_pages))
-    			return zone;
-    	}
-
-    	return &pgdat->node_zones[ZONE_NORMAL];
-    }
-
-Incorrect zone will be returned here, which in later time might cause bigger
-problem.
-
-Fixes: eedf634aac3b ("dax/kmem: use a single static memory group for a single probed unit")
-Signed-off-by: Tarun Sahu <tsahu@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230621155025.370672-1-tsahu@linux.ibm.com
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
+Fixes: 3e75241be808 ("hwrng: drivers - Use device-managed registration API")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/kmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/hw_random/st-rng.c | 21 +--------------------
+ 1 file changed, 1 insertion(+), 20 deletions(-)
 
-diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
-index 7b36db6f1cbdc..898ca95057547 100644
---- a/drivers/dax/kmem.c
-+++ b/drivers/dax/kmem.c
-@@ -99,7 +99,7 @@ static int dev_dax_kmem_probe(struct dev_dax *dev_dax)
- 	if (!data->res_name)
- 		goto err_res_name;
+diff --git a/drivers/char/hw_random/st-rng.c b/drivers/char/hw_random/st-rng.c
+index 15ba1e6fae4d2..6e9dfac9fc9f4 100644
+--- a/drivers/char/hw_random/st-rng.c
++++ b/drivers/char/hw_random/st-rng.c
+@@ -42,7 +42,6 @@
  
--	rc = memory_group_register_static(numa_node, total_len);
-+	rc = memory_group_register_static(numa_node, PFN_UP(total_len));
- 	if (rc < 0)
- 		goto err_reg_mgid;
- 	data->mgid = rc;
+ struct st_rng_data {
+ 	void __iomem	*base;
+-	struct clk	*clk;
+ 	struct hwrng	ops;
+ };
+ 
+@@ -85,26 +84,18 @@ static int st_rng_probe(struct platform_device *pdev)
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+ 
+-	clk = devm_clk_get(&pdev->dev, NULL);
++	clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
+ 
+-	ret = clk_prepare_enable(clk);
+-	if (ret)
+-		return ret;
+-
+ 	ddata->ops.priv	= (unsigned long)ddata;
+ 	ddata->ops.read	= st_rng_read;
+ 	ddata->ops.name	= pdev->name;
+ 	ddata->base	= base;
+-	ddata->clk	= clk;
+-
+-	dev_set_drvdata(&pdev->dev, ddata);
+ 
+ 	ret = devm_hwrng_register(&pdev->dev, &ddata->ops);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Failed to register HW RNG\n");
+-		clk_disable_unprepare(clk);
+ 		return ret;
+ 	}
+ 
+@@ -113,15 +104,6 @@ static int st_rng_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int st_rng_remove(struct platform_device *pdev)
+-{
+-	struct st_rng_data *ddata = dev_get_drvdata(&pdev->dev);
+-
+-	clk_disable_unprepare(ddata->clk);
+-
+-	return 0;
+-}
+-
+ static const struct of_device_id st_rng_match[] __maybe_unused = {
+ 	{ .compatible = "st,rng" },
+ 	{},
+@@ -134,7 +116,6 @@ static struct platform_driver st_rng_driver = {
+ 		.of_match_table = of_match_ptr(st_rng_match),
+ 	},
+ 	.probe = st_rng_probe,
+-	.remove = st_rng_remove
+ };
+ 
+ module_platform_driver(st_rng_driver);
 -- 
 2.39.2
 
