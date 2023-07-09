@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0525232
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDBEC433C9;
-	Sun,  9 Jul 2023 11:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B4E522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE1AC433C7;
+	Sun,  9 Jul 2023 11:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901605;
-	bh=S1bhMmEx2KHIOEtDt9bz+DrLS0IylhqsMLqlB3Kof6A=;
+	s=korg; t=1688901608;
+	bh=neE1chFXpfZORzNczK4N1nHMXPhYPTvU+ZqRU1fFvNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMYFNUaX1hnyMiT0Ruu8jNFG0c0/qbGFb4+lsnq1BHYgjO+p3Okgzp59Ll3XfEfYq
-	 leya/w4NApPBqAlP6Rd9uxi6/FmVt7xVE9eUH67f1BXddn0i5FNIAzf1+tj+1LIvz3
-	 F+pI9AT+L+nvKlYnPvBbi87MDpOpWoMkC9kRT+Io=
+	b=TnPcCRL4FBZj0x9TbaESqKTe1xLi/6VmbWXrmKOn6hve+BCRJiXs8+/kEW1FJz73m
+	 n1CPazYb+KlMQO4ST+RwvrujXME/x8k826yu7gLjQf0mmu6WMT8Jff03UwnYdILAzH
+	 VZj3qTMAM6RzzYdHU3QSglBtHwuv96p/KVIjJ8Dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yhs@fb.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 080/431] libbpf: btf_dump_type_data_check_overflow needs to consider BTF_MEMBER_BITFIELD_SIZE
-Date: Sun,  9 Jul 2023 13:10:28 +0200
-Message-ID: <20230709111453.028275715@linuxfoundation.org>
+Subject: [PATCH 6.3 063/431] rcu/rcuscale: Stop kfree_scale_thread thread(s) after unloading rcuscale
+Date: Sun,  9 Jul 2023 13:10:11 +0200
+Message-ID: <20230709111452.621527079@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,117 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit c39028b333f3a3a765c5c0b9726b8e38aedf0ba1 ]
+[ Upstream commit 23fc8df26dead16687ae6eb47b0561a4a832e2f6 ]
 
-The btf_dump/struct_data selftest is failing with:
+Running the 'kfree_rcu_test' test case [1] results in a splat [2].
+The root cause is the kfree_scale_thread thread(s) continue running
+after unloading the rcuscale module.  This commit fixes that isue by
+invoking kfree_scale_cleanup() from rcu_scale_cleanup() when removing
+the rcuscale module.
 
-  [...]
-  test_btf_dump_struct_data:FAIL:unexpected return value dumping fs_context unexpected unexpected return value dumping fs_context: actual -7 != expected 264
-  [...]
+[1] modprobe rcuscale kfree_rcu_test=1
+    // After some time
+    rmmod rcuscale
+    rmmod torture
 
-The reason is in btf_dump_type_data_check_overflow(). It does not use
-BTF_MEMBER_BITFIELD_SIZE from the struct's member (btf_member). Instead,
-it is using the enum size which is 4. It had been working till the recent
-commit 4e04143c869c ("fs_context: drop the unused lsm_flags member")
-removed an integer member which also removed the 4 bytes padding at the
-end of the fs_context. Missing this 4 bytes padding exposed this bug. In
-particular, when btf_dump_type_data_check_overflow() reaches the member
-'phase', -E2BIG is returned.
+[2] BUG: unable to handle page fault for address: ffffffffc0601a87
+    #PF: supervisor instruction fetch in kernel mode
+    #PF: error_code(0x0010) - not-present page
+    PGD 11de4f067 P4D 11de4f067 PUD 11de51067 PMD 112f4d067 PTE 0
+    Oops: 0010 [#1] PREEMPT SMP NOPTI
+    CPU: 1 PID: 1798 Comm: kfree_scale_thr Not tainted 6.3.0-rc1-rcu+ #1
+    Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 0.0.0 02/06/2015
+    RIP: 0010:0xffffffffc0601a87
+    Code: Unable to access opcode bytes at 0xffffffffc0601a5d.
+    RSP: 0018:ffffb25bc2e57e18 EFLAGS: 00010297
+    RAX: 0000000000000000 RBX: ffffffffc061f0b6 RCX: 0000000000000000
+    RDX: 0000000000000000 RSI: ffffffff962fd0de RDI: ffffffff962fd0de
+    RBP: ffffb25bc2e57ea8 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000001 R11: 0000000000000001 R12: 0000000000000000
+    R13: 0000000000000000 R14: 000000000000000a R15: 00000000001c1dbe
+    FS:  0000000000000000(0000) GS:ffff921fa2200000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: ffffffffc0601a5d CR3: 000000011de4c006 CR4: 0000000000370ee0
+    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+    Call Trace:
+     <TASK>
+     ? kvfree_call_rcu+0xf0/0x3a0
+     ? kthread+0xf3/0x120
+     ? kthread_complete_and_exit+0x20/0x20
+     ? ret_from_fork+0x1f/0x30
+     </TASK>
+    Modules linked in: rfkill sunrpc ... [last unloaded: torture]
+    CR2: ffffffffc0601a87
+    ---[ end trace 0000000000000000 ]---
 
-The fix is to pass bit_sz to btf_dump_type_data_check_overflow(). In
-btf_dump_type_data_check_overflow(), it does a different size check when
-bit_sz is not zero.
-
-The current fs_context:
-
-[3600] ENUM 'fs_context_purpose' encoding=UNSIGNED size=4 vlen=3
-	'FS_CONTEXT_FOR_MOUNT' val=0
-	'FS_CONTEXT_FOR_SUBMOUNT' val=1
-	'FS_CONTEXT_FOR_RECONFIGURE' val=2
-[3601] ENUM 'fs_context_phase' encoding=UNSIGNED size=4 vlen=7
-	'FS_CONTEXT_CREATE_PARAMS' val=0
-	'FS_CONTEXT_CREATING' val=1
-	'FS_CONTEXT_AWAITING_MOUNT' val=2
-	'FS_CONTEXT_AWAITING_RECONF' val=3
-	'FS_CONTEXT_RECONF_PARAMS' val=4
-	'FS_CONTEXT_RECONFIGURING' val=5
-	'FS_CONTEXT_FAILED' val=6
-[3602] STRUCT 'fs_context' size=264 vlen=21
-	'ops' type_id=3603 bits_offset=0
-	'uapi_mutex' type_id=235 bits_offset=64
-	'fs_type' type_id=872 bits_offset=1216
-	'fs_private' type_id=21 bits_offset=1280
-	'sget_key' type_id=21 bits_offset=1344
-	'root' type_id=781 bits_offset=1408
-	'user_ns' type_id=251 bits_offset=1472
-	'net_ns' type_id=984 bits_offset=1536
-	'cred' type_id=1785 bits_offset=1600
-	'log' type_id=3621 bits_offset=1664
-	'source' type_id=42 bits_offset=1792
-	'security' type_id=21 bits_offset=1856
-	's_fs_info' type_id=21 bits_offset=1920
-	'sb_flags' type_id=20 bits_offset=1984
-	'sb_flags_mask' type_id=20 bits_offset=2016
-	's_iflags' type_id=20 bits_offset=2048
-	'purpose' type_id=3600 bits_offset=2080 bitfield_size=8
-	'phase' type_id=3601 bits_offset=2088 bitfield_size=8
-	'need_free' type_id=67 bits_offset=2096 bitfield_size=1
-	'global' type_id=67 bits_offset=2097 bitfield_size=1
-	'oldapi' type_id=67 bits_offset=2098 bitfield_size=1
-
-Fixes: 920d16af9b42 ("libbpf: BTF dumper support for typed data")
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20230428013638.1581263-1-martin.lau@linux.dev
+Fixes: e6e78b004fa7 ("rcuperf: Add kfree_rcu() performance Tests")
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf_dump.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ kernel/rcu/rcuscale.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 580985ee55458..4d9f30bf7f014 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -2250,9 +2250,25 @@ static int btf_dump_type_data_check_overflow(struct btf_dump *d,
- 					     const struct btf_type *t,
- 					     __u32 id,
- 					     const void *data,
--					     __u8 bits_offset)
-+					     __u8 bits_offset,
-+					     __u8 bit_sz)
- {
--	__s64 size = btf__resolve_size(d->btf, id);
-+	__s64 size;
-+
-+	if (bit_sz) {
-+		/* bits_offset is at most 7. bit_sz is at most 128. */
-+		__u8 nr_bytes = (bits_offset + bit_sz + 7) / 8;
-+
-+		/* When bit_sz is non zero, it is called from
-+		 * btf_dump_struct_data() where it only cares about
-+		 * negative error value.
-+		 * Return nr_bytes in success case to make it
-+		 * consistent as the regular integer case below.
-+		 */
-+		return data + nr_bytes > d->typed_dump->data_end ? -E2BIG : nr_bytes;
+diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
+index dd25d306559a5..602f0958e4362 100644
+--- a/kernel/rcu/rcuscale.c
++++ b/kernel/rcu/rcuscale.c
+@@ -797,6 +797,11 @@ rcu_scale_cleanup(void)
+ 	if (gp_exp && gp_async)
+ 		SCALEOUT_ERRSTRING("No expedited async GPs, so went with async!");
+ 
++	if (kfree_rcu_test) {
++		kfree_scale_cleanup();
++		return;
 +	}
 +
-+	size = btf__resolve_size(d->btf, id);
- 
- 	if (size < 0 || size >= INT_MAX) {
- 		pr_warn("unexpected size [%zu] for id [%u]\n",
-@@ -2407,7 +2423,7 @@ static int btf_dump_dump_type_data(struct btf_dump *d,
- {
- 	int size, err = 0;
- 
--	size = btf_dump_type_data_check_overflow(d, t, id, data, bits_offset);
-+	size = btf_dump_type_data_check_overflow(d, t, id, data, bits_offset, bit_sz);
- 	if (size < 0)
- 		return size;
- 	err = btf_dump_type_data_check_zero(d, t, id, data, bits_offset, bit_sz);
+ 	if (torture_cleanup_begin())
+ 		return;
+ 	if (!cur_ops) {
 -- 
 2.39.2
 
