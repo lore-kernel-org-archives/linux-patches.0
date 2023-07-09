@@ -1,85 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B6B185C
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE14C433C8;
-	Sun,  9 Jul 2023 11:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09C4185C
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D2AC433C8;
+	Sun,  9 Jul 2023 11:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901262;
-	bh=+WHFJjUrMwolUAWbF0/L7OwyJp6Po2fQZ723RPilcXs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GlTrwd45ZdAP7dcH/Y5FNcrwr0DF/O7mAOgAyTxYz/P/9+FnOiBABof8T/kiJcesp
-	 inZyhPxwiQRfs08e7KfHEPsIZpasO0VqWhgbH8p9aDobFFuSD/ZgM6PzfIqN0E6W1E
-	 SYM4TlsgKTHoprsFKMtB2YXwV+aI0qZ3VXqNBgzc=
+	s=korg; t=1688901264;
+	bh=6NG0UDJmojKsjSjmW5IQPJUwWL5kB0Z5e43SQ5ydKCw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=i9brZNQi1EBxa9c4j6iveBU9uZINqjfpsqFHdlqccjC9sRRNKs9RGgnj4e4McPv3R
+	 D6TAVoNhg5nDprv7becVG2lySfF5w0Ut5JMWTaXUHjyEuh2BMYUuzFtzzjMHqw2XAj
+	 5Bog3VH8G76hw/kiPZWKefQHRNm8XAI8a2mvWqlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Jacob Young <jacobly.alt@gmail.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	=?UTF-8?q?Holger=20Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 1/8] mm: disable CONFIG_PER_VMA_LOCK until its fixed
-Date: Sun,  9 Jul 2023 13:14:07 +0200
-Message-ID: <20230709111345.351078148@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org
+Subject: [PATCH 6.4 0/8] 6.4.3-rc1 review
+Date: Sun,  9 Jul 2023 13:14:06 +0200
+Message-ID: <20230709111345.297026264@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230709111345.297026264@linuxfoundation.org>
-References: <20230709111345.297026264@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.3-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.4.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.4.3-rc1
+X-KernelTest-Deadline: 2023-07-11T11:13+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Suren Baghdasaryan <surenb@google.com>
+This is the start of the stable review cycle for the 6.4.3 release.
+There are 8 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit f96c48670319d685d18d50819ed0c1ef751ed2ac upstream.
+Responses should be made by Tue, 11 Jul 2023 11:13:33 +0000.
+Anything received after that time might be too late.
 
-A memory corruption was reported in [1] with bisection pointing to the
-patch [2] enabling per-VMA locks for x86.  Disable per-VMA locks config to
-prevent this issue until the fix is confirmed.  This is expected to be a
-temporary measure.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.3-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+and the diffstat can be found below.
 
-[1] https://bugzilla.kernel.org/show_bug.cgi?id=217624
-[2] https://lore.kernel.org/all/20230227173632.3292573-30-surenb@google.com
+thanks,
 
-Link: https://lkml.kernel.org/r/20230706011400.2949242-3-surenb@google.com
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Closes: https://lore.kernel.org/all/dbdef34c-3a07-5951-e1ae-e9c6e3cdf51b@kernel.org/
-Reported-by: Jacob Young <jacobly.alt@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217624
-Fixes: 0bff0aaea03e ("x86/mm: try VMA lock-based page fault handling first")
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Holger Hoffstätte <holger@applied-asynchrony.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- mm/Kconfig |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+greg k-h
 
---- a/mm/Kconfig
-+++ b/mm/Kconfig
-@@ -1198,8 +1198,9 @@ config ARCH_SUPPORTS_PER_VMA_LOCK
-        def_bool n
- 
- config PER_VMA_LOCK
--	def_bool y
-+	bool "Enable per-vma locking during page fault handling."
- 	depends on ARCH_SUPPORTS_PER_VMA_LOCK && MMU && SMP
-+	depends on BROKEN
- 	help
- 	  Allow per-vma locking during page fault handling.
- 
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.4.3-rc1
+
+Suren Baghdasaryan <surenb@google.com>
+    fork: lock VMAs of the parent process when forking, again
+
+Suren Baghdasaryan <surenb@google.com>
+    fork: lock VMAs of the parent process when forking
+
+Liu Shixin <liushixin2@huawei.com>
+    bootmem: remove the vmemmap pages from kmemleak in free_bootmem_page
+
+Peter Collingbourne <pcc@google.com>
+    mm: call arch_swap_restore() from do_swap_page()
+
+Hugh Dickins <hughd@google.com>
+    mm: lock newly mapped VMA with corrected ordering
+
+Suren Baghdasaryan <surenb@google.com>
+    mm: lock newly mapped VMA which can be modified after it becomes visible
+
+Suren Baghdasaryan <surenb@google.com>
+    mm: lock a vma before stack expansion
+
+Suren Baghdasaryan <surenb@google.com>
+    mm: disable CONFIG_PER_VMA_LOCK until its fixed
+
+
+-------------
+
+Diffstat:
+
+ Makefile                     | 4 ++--
+ include/linux/bootmem_info.h | 2 ++
+ kernel/fork.c                | 7 +++++++
+ mm/Kconfig                   | 3 ++-
+ mm/memory.c                  | 7 +++++++
+ mm/mmap.c                    | 6 ++++++
+ 6 files changed, 26 insertions(+), 3 deletions(-)
 
 
