@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9CB522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C265C433C8;
-	Sun,  9 Jul 2023 11:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66858522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD4DC433C8;
+	Sun,  9 Jul 2023 11:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902447;
-	bh=jXJXyTPnfzD3E87H7ZSgoAAWIucKoAZyuDP9xss2pFs=;
+	s=korg; t=1688902450;
+	bh=3mHwm5A/3Fa8cJOt/mS8kVyUwqZMIjyUP6tuVguET4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cgn4nRBMiVvNPLyCQ6+QAnm74sesew2KXJAc4SiaN7IzEpT4q7NZPpKTzfKHgTk52
-	 KKV72t4yWpXkIljCh3vvB5Fi8S0yLjtcZaKMQ4vJZWaa0kbSywfFU0ZbFB3gK5QKZK
-	 jnaeZ9yVA9VLBw/sq2KQGJNgJruHOxFxma42jslI=
+	b=QPIi7pv+K8IhG4WgQNbY/W2CE+WHS/k9dD34vOjY1SVsfzdgXyVnoKOgWNXSvh7Is
+	 3bFRwoncubp+09G9ZBk2OeXW1lyr1tkbWUc1Xpon+X/9XZhSr7nMwXW4EsC5fxa9Kc
+	 cSXoar9MStCFLx/hXcgQQar5RhxyLUyeXJ1NI9N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sachin Sant <sachinp@linux.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Xi Pardee <xi.pardee@intel.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 380/431] powerpc/64s: Fix VAS mm use after free
-Date: Sun,  9 Jul 2023 13:15:28 +0200
-Message-ID: <20230709111500.073464458@linuxfoundation.org>
+Subject: [PATCH 6.3 363/431] platform/x86:intel/pmc: Remove Meteor Lake S platform support
+Date: Sun,  9 Jul 2023 13:15:11 +0200
+Message-ID: <20230709111459.680040768@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,53 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Xi Pardee <xi.pardee@intel.com>
 
-[ Upstream commit b4bda59b47879cce38a6ec5a01cd3cac702b5331 ]
+[ Upstream commit 416a87c972b978d71ab828442d1d48e3bd194855 ]
 
-The refcount on mm is dropped before the coprocessor is detached.
+commit c5ad454a12c6 ("platform/x86: intel/pmc/core: Add Meteor Lake
+support to pmc core driver") was supposed to add support for Meter
+Lake P/M and mistakenly added support for Meteor Lake S instead. Meteor
+Lake P/M support was added later and MTL-S support needs to be removed
+since its currently assigned to the wrong register maps.
 
-Reported-by: Sachin Sant <sachinp@linux.ibm.com>
-Fixes: 7bc6f71bdff5f ("powerpc/vas: Define and use common vas_window struct")
-Fixes: b22f2d88e435c ("powerpc/pseries/vas: Integrate API with open/close windows")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Sachin Sant <sachinp@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230607101024.14559-1-npiggin@gmail.com
+Fixes: c5ad454a12c6 ("platform/x86: intel/pmc/core: Add Meteor Lake support to pmc core driver")
+Signed-off-by: Xi Pardee <xi.pardee@intel.com>
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
+Link: https://lore.kernel.org/r/20230601004706.871528-1-xi.pardee@intel.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/vas-window.c | 2 +-
- arch/powerpc/platforms/pseries/vas.c        | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/intel/pmc/core.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/powernv/vas-window.c b/arch/powerpc/platforms/powernv/vas-window.c
-index 0072682531d80..b664838008c12 100644
---- a/arch/powerpc/platforms/powernv/vas-window.c
-+++ b/arch/powerpc/platforms/powernv/vas-window.c
-@@ -1310,8 +1310,8 @@ int vas_win_close(struct vas_window *vwin)
- 	/* if send window, drop reference to matching receive window */
- 	if (window->tx_win) {
- 		if (window->user_win) {
--			put_vas_user_win_ref(&vwin->task_ref);
- 			mm_context_remove_vas_window(vwin->task_ref.mm);
-+			put_vas_user_win_ref(&vwin->task_ref);
- 		}
- 		put_rx_win(window->rxwin);
- 	}
-diff --git a/arch/powerpc/platforms/pseries/vas.c b/arch/powerpc/platforms/pseries/vas.c
-index 513180467562b..9a44a98ba3420 100644
---- a/arch/powerpc/platforms/pseries/vas.c
-+++ b/arch/powerpc/platforms/pseries/vas.c
-@@ -507,8 +507,8 @@ static int vas_deallocate_window(struct vas_window *vwin)
- 	vascaps[win->win_type].nr_open_windows--;
- 	mutex_unlock(&vas_pseries_mutex);
- 
--	put_vas_user_win_ref(&vwin->task_ref);
- 	mm_context_remove_vas_window(vwin->task_ref.mm);
-+	put_vas_user_win_ref(&vwin->task_ref);
- 
- 	kfree(win);
- 	return 0;
+diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
+index b9591969e0fa1..bed083525fbe7 100644
+--- a/drivers/platform/x86/intel/pmc/core.c
++++ b/drivers/platform/x86/intel/pmc/core.c
+@@ -1039,7 +1039,6 @@ static const struct x86_cpu_id intel_pmc_core_ids[] = {
+ 	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,        tgl_core_init),
+ 	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,		adl_core_init),
+ 	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,	adl_core_init),
+-	X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE,          mtl_core_init),
+ 	X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE_L,	mtl_core_init),
+ 	{}
+ };
 -- 
 2.39.2
 
