@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBB9522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:29:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8AAEC433C8;
-	Sun,  9 Jul 2023 11:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46556522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:29:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC087C433C7;
+	Sun,  9 Jul 2023 11:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902168;
-	bh=jeQOp/0M/y0bCMb9ovldkmULv3kxiy8cJvlxleSDxSY=;
+	s=korg; t=1688902171;
+	bh=lnjt2UIPEtT5sRAH0neg2Jts7JYlcr+W2jXQbpBpx9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMk2zzOsYPN9Pa+StImNtDh4beO0VgPqc3kim0TCJvODk9CjtPHKbtoT3qNAQQGcj
-	 F5p+XarqNq7FGCzrWjz/QkxVhArPz9TqabfgWbDU8suJ1i22knUElVkSYbgI5kBOB5
-	 2IlyB/M0xEkFqP8Gc+IvP4LXw7LVa3csJWMCOyAs=
+	b=o9GTcX9uA9XJfv4Uh0jrCWJqsFkymGRYiUUtA5V5m15j04qXCyKpFSxXguKaEU2rJ
+	 DnvKKeqDGDG977T00W8ubl1nAE9w/tn+s6/tYDQGB6p2bNAjawxXdwSKLCRn9qjcTU
+	 YNdCa1EK/sioRGdSeXQRldVoRh0wINNLvRekfk/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Maxime Ripard <maxime@cerno.tech>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 242/431] arm64: dts: qcom: apq8016-sbc: Fix regulator constraints
-Date: Sun,  9 Jul 2023 13:13:10 +0200
-Message-ID: <20230709111456.831010446@linuxfoundation.org>
+Subject: [PATCH 6.3 273/431] clk: Export clk_hw_forward_rate_request()
+Date: Sun,  9 Jul 2023 13:13:41 +0200
+Message-ID: <20230709111457.545707418@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,184 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Maxime Ripard <maxime@cerno.tech>
 
-[ Upstream commit e27654df20d77ad7549a3cf6739ebaa3aa59a088 ]
+[ Upstream commit ed046ac74da0b5602566073023a1519b5ae657b7 ]
 
-For some reason DB410c has completely bogus regulator constraints that
-actually just correspond to the programmable voltages which are already
-provided by the regulator driver. Some of them are not just outside the
-recommended operating conditions of the APQ8016E SoC but even exceed
-the absolute maximum ratings, potentially risking permanent device
-damage.
+Commit 262ca38f4b6e ("clk: Stop forwarding clk_rate_requests to the
+parent") introduced the public clk_hw_forward_rate_request() function,
+but didn't export the symbol. Make sure it's the case.
 
-In practice it's not quite as dangerous thanks to the RPM firmware:
-It turns out that it has its own voltage constraints and silently
-clamps all regulator requests. For example, requesting 3.3V for L5
-(allowed by the current regulator constraints!) still results in 1.8V
-being programmed in the actual regulator hardware.
-
-Experimentation with various voltages shows that the internal RPM
-voltage constraints roughly correspond to the safe "specified range"
-in the PM8916 Device Specification (rather than the "programmable
-range" used inside apq8016-sbc.dtsi right now).
-
-Combine those together with some fixed voltages used in the old
-msm-3.10 device tree from Qualcomm to give DB410c some actually valid
-voltage constraints.
-
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Fixes: 4c7d53d16d77 ("arm64: dts: apq8016-sbc: add regulators support")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230510-msm8916-regulators-v1-1-54d4960a05fc@gerhold.net
+Fixes: 262ca38f4b6e ("clk: Stop forwarding clk_rate_requests to the parent")
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://lore.kernel.org/r/20221018-clk-range-checks-fixes-v4-1-971d5077e7d2@cerno.tech
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 64 ++++++++++++------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ drivers/clk/clk.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index 27ceaa94c8bda..d7d7a826b8be4 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -447,21 +447,21 @@ &smd_rpm_regulators {
- 	vdd_l7-supply = <&pm8916_s4>;
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index ae07685c7588b..657b27743c4dd 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -1547,6 +1547,7 @@ void clk_hw_forward_rate_request(const struct clk_hw *hw,
+ 				  parent->core, req,
+ 				  parent_rate);
+ }
++EXPORT_SYMBOL_GPL(clk_hw_forward_rate_request);
  
- 	s3 {
--		regulator-min-microvolt = <375000>;
--		regulator-max-microvolt = <1562000>;
-+		regulator-min-microvolt = <1250000>;
-+		regulator-max-microvolt = <1350000>;
- 	};
- 
- 	s4 {
--		regulator-min-microvolt = <1800000>;
--		regulator-max-microvolt = <1800000>;
-+		regulator-min-microvolt = <1850000>;
-+		regulator-max-microvolt = <2150000>;
- 
- 		regulator-always-on;
- 		regulator-boot-on;
- 	};
- 
- 	l1 {
--		regulator-min-microvolt = <375000>;
--		regulator-max-microvolt = <1525000>;
-+		regulator-min-microvolt = <1225000>;
-+		regulator-max-microvolt = <1225000>;
- 	};
- 
- 	l2 {
-@@ -470,13 +470,13 @@ l2 {
- 	};
- 
- 	l4 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2050000>;
-+		regulator-max-microvolt = <2050000>;
- 	};
- 
- 	l5 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
- 	};
- 
- 	l6 {
-@@ -485,45 +485,45 @@ l6 {
- 	};
- 
- 	l7 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
- 	};
- 
- 	l8 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2900000>;
-+		regulator-max-microvolt = <2900000>;
- 	};
- 
- 	l9 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
- 	};
- 
- 	l10 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2800000>;
-+		regulator-max-microvolt = <2800000>;
- 	};
- 
- 	l11 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2950000>;
-+		regulator-max-microvolt = <2950000>;
- 		regulator-allow-set-load;
- 		regulator-system-load = <200000>;
- 	};
- 
- 	l12 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2950000>;
- 	};
- 
- 	l13 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <3075000>;
-+		regulator-max-microvolt = <3075000>;
- 	};
- 
- 	l14 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
- 	};
- 
- 	/**
-@@ -531,14 +531,14 @@ l14 {
- 	 * for mezzanine boards
- 	 */
- 	l15 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
- 		regulator-always-on;
- 	};
- 
- 	l16 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
- 	};
- 
- 	l17 {
-@@ -547,8 +547,8 @@ l17 {
- 	};
- 
- 	l18 {
--		regulator-min-microvolt = <1750000>;
--		regulator-max-microvolt = <3337000>;
-+		regulator-min-microvolt = <2700000>;
-+		regulator-max-microvolt = <2700000>;
- 	};
- };
- 
+ static bool clk_core_can_round(struct clk_core * const core)
+ {
 -- 
 2.39.2
 
