@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDB1522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59E6C433C9;
-	Sun,  9 Jul 2023 11:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021075232
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76982C433C7;
+	Sun,  9 Jul 2023 11:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901828;
-	bh=Ftgr9zCQnnw6XK1lD44AOmzKvb1tllo58GWe1IE9+qE=;
+	s=korg; t=1688901830;
+	bh=dWnzD2/iUoxtbUo7QQ3iDRvj6259MIwDkp1LaI1spEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kvaPxPM2HMGzVkybQ0YlTS6OA8T04+F6KjFo9L90FQkbenYuoLYPkUVHZakADYynZ
-	 L8wz3QujN/s3AJh/4X8I67+EGT3xvdMnQN0pHX83R3ReaIxyz6yjHaQ3ynXnFa79Kw
-	 YNyDFk3qCJJWmLLuasmX4IlYt4CjngWVjkqyeF6g=
+	b=ntAqZm2oHGNf3agCScFtM+UfJZFPwJE1ylBXFeZWiAqRbTFZXJS4TevcgxV3Hq3m6
+	 SKehUgHUBJaVEKx0bUmAX9BcGcCEoJhLRnWewV67LRc+ZS1nfZSAsad+7knvHxzp4+
+	 BPrmx3CzH+Zq4GaQwycM7+Uru6PUyaSMazjvJwyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 151/431] lib/ts_bm: reset initial match offset for every block of text
-Date: Sun,  9 Jul 2023 13:11:39 +0200
-Message-ID: <20230709111454.707815424@linuxfoundation.org>
+Subject: [PATCH 6.3 160/431] drm/amd/display: Explicitly specify update type per plane info change
+Date: Sun,  9 Jul 2023 13:11:48 +0200
+Message-ID: <20230709111454.918521072@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,59 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 6f67fbf8192da80c4db01a1800c7fceaca9cf1f9 ]
+[ Upstream commit 710cc1e7cd461446a9325c9bd1e9a54daa462952 ]
 
-The `shift` variable which indicates the offset in the string at which
-to start matching the pattern is initialized to `bm->patlen - 1`, but it
-is not reset when a new block is retrieved.  This means the implemen-
-tation may start looking at later and later positions in each successive
-block and miss occurrences of the pattern at the beginning.  E.g.,
-consider a HTTP packet held in a non-linear skb, where the HTTP request
-line occurs in the second block:
+[Why]
+The bit for flip addr is being set causing the determination for
+FAST vs MEDIUM to always return MEDIUM when plane info is provided
+as a surface update. This causes extreme stuttering for the typical
+atomic update path on Linux.
 
-  [... 52 bytes of packet headers ...]
-  GET /bmtest HTTP/1.1\r\nHost: www.example.com\r\n\r\n
+[How]
+Don't use update_flags->raw for determining FAST vs MEDIUM. It's too
+fragile to changes like this.
 
-and the pattern is "GET /bmtest".
+Explicitly specify the update type per update flag instead. It's not
+as clever as checking the bits itself but at least it's correct.
 
-Once the first block comprising the packet headers has been examined,
-`shift` will be pointing to somewhere near the end of the block, and so
-when the second block is examined the request line at the beginning will
-be missed.
-
-Reinitialize the variable for each new block.
-
-Fixes: 8082e4ed0a61 ("[LIB]: Boyer-Moore extension for textsearch infrastructure strike #2")
-Link: https://bugzilla.netfilter.org/show_bug.cgi?id=1390
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: aa5fdb1ab5b6 ("drm/amd/display: Explicitly specify update type per plane info change")
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/ts_bm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/lib/ts_bm.c b/lib/ts_bm.c
-index 1f2234221dd11..c8ecbf74ef295 100644
---- a/lib/ts_bm.c
-+++ b/lib/ts_bm.c
-@@ -60,10 +60,12 @@ static unsigned int bm_find(struct ts_config *conf, struct ts_state *state)
- 	struct ts_bm *bm = ts_config_priv(conf);
- 	unsigned int i, text_len, consumed = state->offset;
- 	const u8 *text;
--	int shift = bm->patlen - 1, bs;
-+	int bs;
- 	const u8 icase = conf->flags & TS_IGNORECASE;
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -2540,9 +2540,6 @@ static enum surface_update_type det_surf
+ 	enum surface_update_type overall_type = UPDATE_TYPE_FAST;
+ 	union surface_update_flags *update_flags = &u->surface->update_flags;
  
- 	for (;;) {
-+		int shift = bm->patlen - 1;
-+
- 		text_len = conf->get_next_block(consumed, &text, conf, state);
- 
- 		if (unlikely(text_len == 0))
--- 
-2.39.2
-
+-	if (u->flip_addr)
+-		update_flags->bits.addr_update = 1;
+-
+ 	if (!is_surface_in_context(context, u->surface) || u->surface->force_full_update) {
+ 		update_flags->raw = 0xFFFFFFFF;
+ 		return UPDATE_TYPE_FULL;
 
 
