@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB47522D
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:16:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4A0C433C8;
-	Sun,  9 Jul 2023 11:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC22522D
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:16:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8CCC433C7;
+	Sun,  9 Jul 2023 11:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901412;
-	bh=63N7b/QfskdTcYiMc3aXy1pmfWiFs06Om8DTBpdwH6o=;
+	s=korg; t=1688901415;
+	bh=bBBoWLc+LqIFaX+5FcXfxGKwK9xiiRajkAZYiu4WXsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGub+O48qDMKAwyvg39bJ8ao2LHGr8zJz5Rb+lFyuVtALu/KaCHfoyKxvQdZuCNjv
-	 B6CtnGByGt7uNV5pvJtHIDGshfyYMbg0tEqNitBw1D5WFZe0+yy1ySmxRRMnSvxzGU
-	 /FSN6Y6nfSVoCZUdNYYsQO0wHjKePjFVAihUZF+U=
+	b=vrxe/D2sn/lfwNBnwl0QvI1Qk1h/2v5v46V0ci23qltL/mFp6XMyMbAVn9KL7oUGi
+	 Ezrbf6JR7xjuFrtXuA3/0iZmSMB/4MH3B6MEgxWWS1PXXiVlnTkFfjsJ9y14on7Zrf
+	 fkT1+AzuiPcAIr/CaD0vfd2z881ddIvx/5wC2+i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ido Schimmel <idosch@idosch.org>,
+	NeilBrown <neilb@suse.de>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 012/431] blk-mq: fix potential io hang by wrong wake_batch
-Date: Sun,  9 Jul 2023 13:09:20 +0200
-Message-ID: <20230709111451.396154309@linuxfoundation.org>
+Subject: [PATCH 6.3 013/431] lockd: drop inappropriate svc_get() from locked_get()
+Date: Sun,  9 Jul 2023 13:09:21 +0200
+Message-ID: <20230709111451.419165026@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,124 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 4f1731df60f9033669f024d06ae26a6301260b55 ]
+[ Upstream commit 665e89ab7c5af1f2d260834c861a74b01a30f95f ]
 
-In __blk_mq_tag_busy/idle(), updating 'active_queues' and calculating
-'wake_batch' is not atomic:
+The below-mentioned patch was intended to simplify refcounting on the
+svc_serv used by locked.  The goal was to only ever have a single
+reference from the single thread.  To that end we dropped a call to
+lockd_start_svc() (except when creating thread) which would take a
+reference, and dropped the svc_put(serv) that would drop that reference.
 
-t1:			t2:
-_blk_mq_tag_busy	blk_mq_tag_busy
-inc active_queues
-// assume 1->2
-			inc active_queues
-			// 2 -> 3
-			blk_mq_update_wake_batch
-			// calculate based on 3
-blk_mq_update_wake_batch
-/* calculate based on 2, while active_queues is actually 3. */
+Unfortunately we didn't also remove the svc_get() from
+lockd_create_svc() in the case where the svc_serv already existed.
+So after the patch:
+ - on the first call the svc_serv was allocated and the one reference
+   was given to the thread, so there are no extra references
+ - on subsequent calls svc_get() was called so there is now an extra
+   reference.
+This is clearly not consistent.
 
-Fix this problem by protecting them wih 'tags->lock', this is not a hot
-path, so performance should not be concerned. And now that all writers
-are inside the lock, switch 'actives_queues' from atomic to unsigned
-int.
+The inconsistency is also clear in the current code in lockd_get()
+takes *two* references, one on nlmsvc_serv and one by incrementing
+nlmsvc_users.   This clearly does not match lockd_put().
 
-Fixes: 180dccb0dba4 ("blk-mq: fix tag_get wait task can't be awakened")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230610023043.2559121-1-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+So: drop that svc_get() from lockd_get() (which used to be in
+lockd_create_svc().
+
+Reported-by: Ido Schimmel <idosch@idosch.org>
+Closes: https://lore.kernel.org/linux-nfs/ZHsI%2FH16VX9kJQX1@shredder/T/#u
+Fixes: b73a2972041b ("lockd: move lockd_start_svc() call into lockd_create_svc()")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-debugfs.c |  2 +-
- block/blk-mq-tag.c     | 15 ++++++++++-----
- block/blk-mq.h         |  3 +--
- include/linux/blk-mq.h |  3 +--
- 4 files changed, 13 insertions(+), 10 deletions(-)
+ fs/lockd/svc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index b01818f8e216e..c152276736832 100644
---- a/block/blk-mq-debugfs.c
-+++ b/block/blk-mq-debugfs.c
-@@ -427,7 +427,7 @@ static void blk_mq_debugfs_tags_show(struct seq_file *m,
- 	seq_printf(m, "nr_tags=%u\n", tags->nr_tags);
- 	seq_printf(m, "nr_reserved_tags=%u\n", tags->nr_reserved_tags);
- 	seq_printf(m, "active_queues=%d\n",
--		   atomic_read(&tags->active_queues));
-+		   READ_ONCE(tags->active_queues));
+diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
+index 9a47303b2cba6..0c05668019c2b 100644
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -355,7 +355,6 @@ static int lockd_get(void)
+ 	int error;
  
- 	seq_puts(m, "\nbitmap_tags:\n");
- 	sbitmap_queue_show(&tags->bitmap_tags, m);
-diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
-index a80d7c62bdfe6..100889c276c3f 100644
---- a/block/blk-mq-tag.c
-+++ b/block/blk-mq-tag.c
-@@ -40,6 +40,7 @@ static void blk_mq_update_wake_batch(struct blk_mq_tags *tags,
- void __blk_mq_tag_busy(struct blk_mq_hw_ctx *hctx)
- {
- 	unsigned int users;
-+	struct blk_mq_tags *tags = hctx->tags;
- 
- 	/*
- 	 * calling test_bit() prior to test_and_set_bit() is intentional,
-@@ -57,9 +58,11 @@ void __blk_mq_tag_busy(struct blk_mq_hw_ctx *hctx)
- 			return;
+ 	if (nlmsvc_serv) {
+-		svc_get(nlmsvc_serv);
+ 		nlmsvc_users++;
+ 		return 0;
  	}
- 
--	users = atomic_inc_return(&hctx->tags->active_queues);
--
--	blk_mq_update_wake_batch(hctx->tags, users);
-+	spin_lock_irq(&tags->lock);
-+	users = tags->active_queues + 1;
-+	WRITE_ONCE(tags->active_queues, users);
-+	blk_mq_update_wake_batch(tags, users);
-+	spin_unlock_irq(&tags->lock);
- }
- 
- /*
-@@ -92,9 +95,11 @@ void __blk_mq_tag_idle(struct blk_mq_hw_ctx *hctx)
- 			return;
- 	}
- 
--	users = atomic_dec_return(&tags->active_queues);
--
-+	spin_lock_irq(&tags->lock);
-+	users = tags->active_queues - 1;
-+	WRITE_ONCE(tags->active_queues, users);
- 	blk_mq_update_wake_batch(tags, users);
-+	spin_unlock_irq(&tags->lock);
- 
- 	blk_mq_tag_wakeup_all(tags, false);
- }
-diff --git a/block/blk-mq.h b/block/blk-mq.h
-index a7482d2cc82e7..4542308c8e62f 100644
---- a/block/blk-mq.h
-+++ b/block/blk-mq.h
-@@ -362,8 +362,7 @@ static inline bool hctx_may_queue(struct blk_mq_hw_ctx *hctx,
- 			return true;
- 	}
- 
--	users = atomic_read(&hctx->tags->active_queues);
--
-+	users = READ_ONCE(hctx->tags->active_queues);
- 	if (!users)
- 		return true;
- 
-diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
-index de0b0c3e7395a..4110d6e99b2b9 100644
---- a/include/linux/blk-mq.h
-+++ b/include/linux/blk-mq.h
-@@ -748,8 +748,7 @@ struct request *blk_mq_alloc_request_hctx(struct request_queue *q,
- struct blk_mq_tags {
- 	unsigned int nr_tags;
- 	unsigned int nr_reserved_tags;
--
--	atomic_t active_queues;
-+	unsigned int active_queues;
- 
- 	struct sbitmap_queue bitmap_tags;
- 	struct sbitmap_queue breserved_tags;
 -- 
 2.39.2
 
