@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA5C522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0E5C433C7;
-	Sun,  9 Jul 2023 11:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA54522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBEDC433C7;
+	Sun,  9 Jul 2023 11:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901914;
-	bh=4dfYZu7lTbQS+MEGQvxf2A32+YSh6k4CTYYUB3cM0QI=;
+	s=korg; t=1688901917;
+	bh=O5tfy2f+NqCyEVKDNNyClJIt8/1iw0VQtdQDl9NNyEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EIK86AO8LEq7E0ndbEXKgSHIzuJTijn6iuhNnywwqbYX3u+9DmvAVAF7je/c/SLar
-	 gNY+9Cd4CW/8wVOwg28lDGp0O8eGXYgkKPyEQoEH8QDztejHU6ABuGlm1l1BvmWZPo
-	 ccZO6SlVQia1TzL/KtqWAogysxdukvjIG3BEivsw=
+	b=AG4Sp7vbD74Znwv2p+jEdtmLFQi8YbV4LHBmPqsOUqXuUf1ddUlQ5VLy5YOSzrAI8
+	 guG/6foPp8n/lJ9lCDzIYdd0GEkJ4e2s+GQz3dE+iQiho2vPaPmGJdp8Wvba5bFqR8
+	 VhKQJi+pg1NvxY/mH+cNMgzfRarID9Y9Y7HvjpVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 190/431] ASoC: dt-bindings: mediatek,mt8188-afe: correct clock name
-Date: Sun,  9 Jul 2023 13:12:18 +0200
-Message-ID: <20230709111455.630475095@linuxfoundation.org>
+Subject: [PATCH 6.3 191/431] ASoC: Intel: sof_sdw: remove SOF_SDW_TGL_HDMI for MeteorLake devices
+Date: Sun,  9 Jul 2023 13:12:19 +0200
+Message-ID: <20230709111455.653864741@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -33,80 +33,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trevor Wu <trevor.wu@mediatek.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 1e4fe75e9746be8e40c57132bb3fba1ce3dd24af ]
+[ Upstream commit 0db94947c9d3da16aa31d152b7d26fab78b02cb9 ]
 
-The original clock names are different from the list in driver code.
-Correct the mismatched binding names in the patch.
+Topologies support three HDMI links on MeteorLake devices only.
 
-Because no mt8188 upstream dts exists, it doesn't affect the existing
-dts file.
-
-Fixes: 692d25b67e10 ("ASoC: dt-bindings: mediatek,mt8188-afe: add audio afe document")
-Signed-off-by: Trevor Wu <trevor.wu@mediatek.com
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org
-Link: https://lore.kernel.org/r/20230510035526.18137-9-trevor.wu@mediatek.com
+Fixes: 18489174e4fb ("ASoC: intel: sof_sdw: add RT711 SDCA card for MTL platform")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com
+Link: https://lore.kernel.org/r/20230512173305.65399-3-pierre-louis.bossart@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/sound/mediatek,mt8188-afe.yaml   | 36 +++++++++----------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/mediatek,mt8188-afe.yaml b/Documentation/devicetree/bindings/sound/mediatek,mt8188-afe.yaml
-index 82ccb32f08f27..9e877f0d19fbb 100644
---- a/Documentation/devicetree/bindings/sound/mediatek,mt8188-afe.yaml
-+++ b/Documentation/devicetree/bindings/sound/mediatek,mt8188-afe.yaml
-@@ -63,15 +63,15 @@ properties:
-       - const: apll12_div2
-       - const: apll12_div3
-       - const: apll12_div9
--      - const: a1sys_hp_sel
--      - const: aud_intbus_sel
--      - const: audio_h_sel
--      - const: audio_local_bus_sel
--      - const: dptx_m_sel
--      - const: i2so1_m_sel
--      - const: i2so2_m_sel
--      - const: i2si1_m_sel
--      - const: i2si2_m_sel
-+      - const: top_a1sys_hp
-+      - const: top_aud_intbus
-+      - const: top_audio_h
-+      - const: top_audio_local_bus
-+      - const: top_dptx
-+      - const: top_i2so1
-+      - const: top_i2so2
-+      - const: top_i2si1
-+      - const: top_i2si2
-       - const: adsp_audio_26m
- 
-   mediatek,etdm-in1-cowork-source:
-@@ -193,15 +193,15 @@ examples:
-                       "apll12_div2",
-                       "apll12_div3",
-                       "apll12_div9",
--                      "a1sys_hp_sel",
--                      "aud_intbus_sel",
--                      "audio_h_sel",
--                      "audio_local_bus_sel",
--                      "dptx_m_sel",
--                      "i2so1_m_sel",
--                      "i2so2_m_sel",
--                      "i2si1_m_sel",
--                      "i2si2_m_sel",
-+                      "top_a1sys_hp",
-+                      "top_aud_intbus",
-+                      "top_audio_h",
-+                      "top_audio_local_bus",
-+                      "top_dptx",
-+                      "top_i2so1",
-+                      "top_i2so2",
-+                      "top_i2si1",
-+                      "top_i2si2",
-                       "adsp_audio_26m";
-     };
- 
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 767fa89d08708..1ac5abc721c68 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -413,7 +413,7 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		.matches = {
+ 			DMI_MATCH(DMI_PRODUCT_FAMILY, "Intel_mtlrvp"),
+ 		},
+-		.driver_data = (void *)(RT711_JD1 | SOF_SDW_TGL_HDMI),
++		.driver_data = (void *)(RT711_JD1),
+ 	},
+ 	{}
+ };
 -- 
 2.39.2
 
