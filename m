@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B3F522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:21:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FC7C433C7;
-	Sun,  9 Jul 2023 11:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3477522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:21:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473E0C433C8;
+	Sun,  9 Jul 2023 11:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901669;
-	bh=aodLKqIfeAy7x8lErqPn0TghLwhLAwlY0omqe3ICSsQ=;
+	s=korg; t=1688901672;
+	bh=j14J+wGwFesU7svfDm8qir2eJtl0XwdPkNltllxnJJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GXwTHJ/fFWbnN59X1l5EOwkj+Kv1buV7tRsWAoojooI5+JCT/FnU5EZbn9kXWKkYH
-	 4yMpLYvO+j+L9W/2cay/aLZtWX1cFVbNNL39nCFjziPFE2S5j+HBRJ/us3No1nE7Wb
-	 H14VfXN9pRDTMVHJl+KkgnsDpZ7BwgpyMKBjnupA=
+	b=f9Xtd4uaWEAV500rTdgESvVrRqpBB6dGdOhIkLRLbiqyK9q5gWTOK4EiWQuaSS+yb
+	 5x36u7AL6Uu/O0jZ+TVdfTdMwop0Z+JjSTIIaK0/4g6VFOw9k1fAXVxvpfIYkRZ1Uw
+	 DQEl2dDxECQMjooracZjhGfuINlKfs2JsazG0Evc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesper Dangaard Brouer <brouer@redhat.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Youghandhar Chintala <quic_youghand@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 103/431] samples/bpf: xdp1 and xdp2 reduce XDPBUFSIZE to 60
-Date: Sun,  9 Jul 2023 13:10:51 +0200
-Message-ID: <20230709111453.572624716@linuxfoundation.org>
+Subject: [PATCH 6.3 104/431] wifi: ath10k: Trigger STA disconnect after reconfig complete on hardware restart
+Date: Sun,  9 Jul 2023 13:10:52 +0200
+Message-ID: <20230709111453.595625104@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,56 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jesper Dangaard Brouer <brouer@redhat.com>
+From: Youghandhar Chintala <quic_youghand@quicinc.com>
 
-[ Upstream commit 60548b825b082cedf89b275c21c28b1e1d030e50 ]
+[ Upstream commit 75bd32f5ce94bc365ba0b9b68bcf9de84a391d37 ]
 
-Default samples/pktgen scripts send 60 byte packets as hardware adds
-4-bytes FCS checksum, which fulfils minimum Ethernet 64 bytes frame
-size.
+Currently, on WCN3990, the station disconnect after hardware recovery is
+not working as expected. This is because of setting the
+IEEE80211_SDATA_DISCONNECT_HW_RESTART flag very early in the hardware
+recovery process even before the driver invokes ieee80211_hw_restart().
+On the contrary, mac80211 expects this flag to be set after
+ieee80211_hw_restart() is invoked for it to trigger station disconnect.
 
-XDP layer will not necessary have access to the 4-bytes FCS checksum.
+Set the IEEE80211_SDATA_DISCONNECT_HW_RESTART flag in
+ath10k_reconfig_complete() instead to fix this.
 
-This leads to bpf_xdp_load_bytes() failing as it tries to copy 64-bytes
-from an XDP packet that only have 60-bytes available.
+The other targets are not affected by this change, since the hardware
+params flag is not set.
 
-Fixes: 772251742262 ("samples/bpf: fixup some tools to be able to support xdp multibuffer")
-Signed-off-by: Jesper Dangaard Brouer <brouer@redhat.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/bpf/168545704139.2996228.2516528552939485216.stgit@firesoul
+Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
+
+Fixes: 2c3fc50591ff ("ath10k: Trigger sta disconnect on hardware restart")
+Signed-off-by: Youghandhar Chintala <quic_youghand@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230518101515.3820-1-quic_youghand@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/xdp1_kern.c | 2 +-
- samples/bpf/xdp2_kern.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/core.c | 9 ---------
+ drivers/net/wireless/ath/ath10k/mac.c  | 7 +++++++
+ 2 files changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/samples/bpf/xdp1_kern.c b/samples/bpf/xdp1_kern.c
-index 0a5c704badd00..d91f27cbcfa99 100644
---- a/samples/bpf/xdp1_kern.c
-+++ b/samples/bpf/xdp1_kern.c
-@@ -39,7 +39,7 @@ static int parse_ipv6(void *data, u64 nh_off, void *data_end)
- 	return ip6h->nexthdr;
- }
- 
--#define XDPBUFSIZE	64
-+#define XDPBUFSIZE	60
- SEC("xdp.frags")
- int xdp_prog1(struct xdp_md *ctx)
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index 5eb131ab916fd..b6052dcc45ebf 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -2504,7 +2504,6 @@ EXPORT_SYMBOL(ath10k_core_napi_sync_disable);
+ static void ath10k_core_restart(struct work_struct *work)
  {
-diff --git a/samples/bpf/xdp2_kern.c b/samples/bpf/xdp2_kern.c
-index 67804ecf7ce37..8bca674451ed1 100644
---- a/samples/bpf/xdp2_kern.c
-+++ b/samples/bpf/xdp2_kern.c
-@@ -55,7 +55,7 @@ static int parse_ipv6(void *data, u64 nh_off, void *data_end)
- 	return ip6h->nexthdr;
- }
+ 	struct ath10k *ar = container_of(work, struct ath10k, restart_work);
+-	struct ath10k_vif *arvif;
+ 	int ret;
  
--#define XDPBUFSIZE	64
-+#define XDPBUFSIZE	60
- SEC("xdp.frags")
- int xdp_prog1(struct xdp_md *ctx)
+ 	set_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
+@@ -2543,14 +2542,6 @@ static void ath10k_core_restart(struct work_struct *work)
+ 		ar->state = ATH10K_STATE_RESTARTING;
+ 		ath10k_halt(ar);
+ 		ath10k_scan_finish(ar);
+-		if (ar->hw_params.hw_restart_disconnect) {
+-			list_for_each_entry(arvif, &ar->arvifs, list) {
+-				if (arvif->is_up &&
+-				    arvif->vdev_type == WMI_VDEV_TYPE_STA)
+-					ieee80211_hw_restart_disconnect(arvif->vif);
+-			}
+-		}
+-
+ 		ieee80211_restart_hw(ar->hw);
+ 		break;
+ 	case ATH10K_STATE_OFF:
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index ec8d5b29bc72c..f0729acdec50a 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -8108,6 +8108,7 @@ static void ath10k_reconfig_complete(struct ieee80211_hw *hw,
+ 				     enum ieee80211_reconfig_type reconfig_type)
  {
+ 	struct ath10k *ar = hw->priv;
++	struct ath10k_vif *arvif;
+ 
+ 	if (reconfig_type != IEEE80211_RECONFIG_TYPE_RESTART)
+ 		return;
+@@ -8122,6 +8123,12 @@ static void ath10k_reconfig_complete(struct ieee80211_hw *hw,
+ 		ar->state = ATH10K_STATE_ON;
+ 		ieee80211_wake_queues(ar->hw);
+ 		clear_bit(ATH10K_FLAG_RESTARTING, &ar->dev_flags);
++		if (ar->hw_params.hw_restart_disconnect) {
++			list_for_each_entry(arvif, &ar->arvifs, list) {
++				if (arvif->is_up && arvif->vdev_type == WMI_VDEV_TYPE_STA)
++					ieee80211_hw_restart_disconnect(arvif->vif);
++				}
++		}
+ 	}
+ 
+ 	mutex_unlock(&ar->conf_mutex);
 -- 
 2.39.2
 
