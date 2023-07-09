@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229A7522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:26:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A07C433C8;
-	Sun,  9 Jul 2023 11:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7661522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:26:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB06C433C9;
+	Sun,  9 Jul 2023 11:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901993;
-	bh=xFGiy8HkXKZiklmAa5tGGltHHve2Sf6Oc+0wcePUEcQ=;
+	s=korg; t=1688901995;
+	bh=SsQraP3BvkwqFHiG8wLrcDCdS8fyLrN2Cci99QmXN88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPJBnC5uLI8vAJ6pWmId1reDQtJV0gNt1iWLe+9Cg8bZSgaehQB2a95f5huVEj/AH
-	 vKM6nJZWgdpXvRjzsU18BWSDOb/9Mnh5pbbAmDD0E1Zk7KEUUu1JMZgmPpvcYCEj4f
-	 zyW/YVQK+GnVhggOWMepKZ3blshtENqcbDY5DRNs=
+	b=Sjzv41ldf8b38cmYv7j2lYlSlo4vIEPbQesvzN/cthxH29mSrXbV7/uctAdHkj6if
+	 TGAesZv6K4zFuJF8/qUoezjMAdjWjPQ9yer0uSaTYefGMrcn40cj3pDUiLxeHn4nF7
+	 Vaw3OeIACVs30GnyqKyFIxkJr1TjXkmkVP81uXP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michal Simek <michal.simek@amd.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 189/431] driver: soc: xilinx: use _safe loop iterator to avoid a use after free
-Date: Sun,  9 Jul 2023 13:12:17 +0200
-Message-ID: <20230709111455.607975110@linuxfoundation.org>
+Subject: [PATCH 6.3 180/431] clk: vc5: Fix .driver_data content in i2c_device_id
+Date: Sun,  9 Jul 2023 13:12:08 +0200
+Message-ID: <20230709111455.401016698@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,55 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit c58da0ba3e5c86e51e2c1557afaf6f71e00c4533 ]
+[ Upstream commit be3471c5bd9b921c9adfab7948e8021611639164 ]
 
-The hash_for_each_possible() loop dereferences "eve_data" to get the
-next item on the list.  However the loop frees eve_data so it leads to
-a use after free.  Use hash_for_each_possible_safe() instead.
+The .driver_data content in i2c_device_id table must match the
+.data content in of_device_id table, else device_get_match_data()
+would return bogus value on i2c_device_id match. Align the two
+tables.
 
-Fixes: c7fdb2404f66 ("drivers: soc: xilinx: add xilinx event management driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/761e0e4a-4caf-4a71-8f47-1c6ad908a848@kili.mountain
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+The i2c_device_id table is now converted from of_device_id using
+'s@.compatible = "idt,\([^"]\+"\), .data = \(.*\)@"\1, .driver_data = (kernel_ulong_t)\2@'
+
+Fixes: 9adddb01ce5f ("clk: vc5: Add structure to describe particular chip features")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Link: https://lore.kernel.org/r/20230507133906.15061-1-marek.vasut+renesas@mailbox.org
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/xilinx/xlnx_event_manager.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/clk-versaclock5.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/soc/xilinx/xlnx_event_manager.c b/drivers/soc/xilinx/xlnx_event_manager.c
-index c76381899ef49..f9d9b82b562da 100644
---- a/drivers/soc/xilinx/xlnx_event_manager.c
-+++ b/drivers/soc/xilinx/xlnx_event_manager.c
-@@ -192,11 +192,12 @@ static int xlnx_remove_cb_for_suspend(event_cb_func_t cb_fun)
- 	struct registered_event_data *eve_data;
- 	struct agent_cb *cb_pos;
- 	struct agent_cb *cb_next;
-+	struct hlist_node *tmp;
+diff --git a/drivers/clk/clk-versaclock5.c b/drivers/clk/clk-versaclock5.c
+index fa71a57875ce8..5452471b7ba55 100644
+--- a/drivers/clk/clk-versaclock5.c
++++ b/drivers/clk/clk-versaclock5.c
+@@ -1271,14 +1271,14 @@ static const struct vc5_chip_info idt_5p49v6975_info = {
+ };
  
- 	is_need_to_unregister = false;
- 
- 	/* Check for existing entry in hash table for given cb_type */
--	hash_for_each_possible(reg_driver_map, eve_data, hentry, PM_INIT_SUSPEND_CB) {
-+	hash_for_each_possible_safe(reg_driver_map, eve_data, tmp, hentry, PM_INIT_SUSPEND_CB) {
- 		if (eve_data->cb_type == PM_INIT_SUSPEND_CB) {
- 			/* Delete the list of callback */
- 			list_for_each_entry_safe(cb_pos, cb_next, &eve_data->cb_list_head, list) {
-@@ -228,11 +229,12 @@ static int xlnx_remove_cb_for_notify_event(const u32 node_id, const u32 event,
- 	u64 key = ((u64)node_id << 32U) | (u64)event;
- 	struct agent_cb *cb_pos;
- 	struct agent_cb *cb_next;
-+	struct hlist_node *tmp;
- 
- 	is_need_to_unregister = false;
- 
- 	/* Check for existing entry in hash table for given key id */
--	hash_for_each_possible(reg_driver_map, eve_data, hentry, key) {
-+	hash_for_each_possible_safe(reg_driver_map, eve_data, tmp, hentry, key) {
- 		if (eve_data->key == key) {
- 			/* Delete the list of callback */
- 			list_for_each_entry_safe(cb_pos, cb_next, &eve_data->cb_list_head, list) {
+ static const struct i2c_device_id vc5_id[] = {
+-	{ "5p49v5923", .driver_data = IDT_VC5_5P49V5923 },
+-	{ "5p49v5925", .driver_data = IDT_VC5_5P49V5925 },
+-	{ "5p49v5933", .driver_data = IDT_VC5_5P49V5933 },
+-	{ "5p49v5935", .driver_data = IDT_VC5_5P49V5935 },
+-	{ "5p49v60", .driver_data = IDT_VC6_5P49V60 },
+-	{ "5p49v6901", .driver_data = IDT_VC6_5P49V6901 },
+-	{ "5p49v6965", .driver_data = IDT_VC6_5P49V6965 },
+-	{ "5p49v6975", .driver_data = IDT_VC6_5P49V6975 },
++	{ "5p49v5923", .driver_data = (kernel_ulong_t)&idt_5p49v5923_info },
++	{ "5p49v5925", .driver_data = (kernel_ulong_t)&idt_5p49v5925_info },
++	{ "5p49v5933", .driver_data = (kernel_ulong_t)&idt_5p49v5933_info },
++	{ "5p49v5935", .driver_data = (kernel_ulong_t)&idt_5p49v5935_info },
++	{ "5p49v60", .driver_data = (kernel_ulong_t)&idt_5p49v60_info },
++	{ "5p49v6901", .driver_data = (kernel_ulong_t)&idt_5p49v6901_info },
++	{ "5p49v6965", .driver_data = (kernel_ulong_t)&idt_5p49v6965_info },
++	{ "5p49v6975", .driver_data = (kernel_ulong_t)&idt_5p49v6975_info },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(i2c, vc5_id);
 -- 
 2.39.2
 
