@@ -1,115 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09C4185C
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D2AC433C8;
-	Sun,  9 Jul 2023 11:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E59546B8
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B1BC433C8;
+	Sun,  9 Jul 2023 11:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901264;
-	bh=6NG0UDJmojKsjSjmW5IQPJUwWL5kB0Z5e43SQ5ydKCw=;
-	h=From:To:Cc:Subject:Date:From;
-	b=i9brZNQi1EBxa9c4j6iveBU9uZINqjfpsqFHdlqccjC9sRRNKs9RGgnj4e4McPv3R
-	 D6TAVoNhg5nDprv7becVG2lySfF5w0Ut5JMWTaXUHjyEuh2BMYUuzFtzzjMHqw2XAj
-	 5Bog3VH8G76hw/kiPZWKefQHRNm8XAI8a2mvWqlM=
+	s=korg; t=1688901269;
+	bh=Exg2umoa2RAIPiqQWbX4vIcq/IpYSk0UO2K02rH4ug0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=YcxHT1EGh/FN6usYPydpWa2MPJa8wzHFE3ycoH+vYu2IfWFvIedrQLunSuJ2HwtJ/
+	 vXyA9HdoUPt0pceZDYH4buyKIAauj/8PiKil+NwiwKF0tHeXD1cP6vPo7qyw7cF9wE
+	 So5PKF+0FckqlWBAk5gXk/KuQFNhQRmYDheSTRFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org
-Subject: [PATCH 6.4 0/8] 6.4.3-rc1 review
-Date: Sun,  9 Jul 2023 13:14:06 +0200
-Message-ID: <20230709111345.297026264@linuxfoundation.org>
+	Suren Baghdasaryan <surenb@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.4 2/8] mm: lock a vma before stack expansion
+Date: Sun,  9 Jul 2023 13:14:08 +0200
+Message-ID: <20230709111345.373476152@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230709111345.297026264@linuxfoundation.org>
+References: <20230709111345.297026264@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.3-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.4.3-rc1
-X-KernelTest-Deadline: 2023-07-11T11:13+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.4.3 release.
-There are 8 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Suren Baghdasaryan <surenb@google.com>
 
-Responses should be made by Tue, 11 Jul 2023 11:13:33 +0000.
-Anything received after that time might be too late.
+commit c137381f71aec755fbf47cd4e9bd4dce752c054c upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.3-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
-and the diffstat can be found below.
+With recent changes necessitating mmap_lock to be held for write while
+expanding a stack, per-VMA locks should follow the same rules and be
+write-locked to prevent page faults into the VMA being expanded. Add
+the necessary locking.
 
-thanks,
+Cc: stable@vger.kernel.org
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ mm/mmap.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.4.3-rc1
-
-Suren Baghdasaryan <surenb@google.com>
-    fork: lock VMAs of the parent process when forking, again
-
-Suren Baghdasaryan <surenb@google.com>
-    fork: lock VMAs of the parent process when forking
-
-Liu Shixin <liushixin2@huawei.com>
-    bootmem: remove the vmemmap pages from kmemleak in free_bootmem_page
-
-Peter Collingbourne <pcc@google.com>
-    mm: call arch_swap_restore() from do_swap_page()
-
-Hugh Dickins <hughd@google.com>
-    mm: lock newly mapped VMA with corrected ordering
-
-Suren Baghdasaryan <surenb@google.com>
-    mm: lock newly mapped VMA which can be modified after it becomes visible
-
-Suren Baghdasaryan <surenb@google.com>
-    mm: lock a vma before stack expansion
-
-Suren Baghdasaryan <surenb@google.com>
-    mm: disable CONFIG_PER_VMA_LOCK until its fixed
-
-
--------------
-
-Diffstat:
-
- Makefile                     | 4 ++--
- include/linux/bootmem_info.h | 2 ++
- kernel/fork.c                | 7 +++++++
- mm/Kconfig                   | 3 ++-
- mm/memory.c                  | 7 +++++++
- mm/mmap.c                    | 6 ++++++
- 6 files changed, 26 insertions(+), 3 deletions(-)
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -1975,6 +1975,8 @@ static int expand_upwards(struct vm_area
+ 		return -ENOMEM;
+ 	}
+ 
++	/* Lock the VMA before expanding to prevent concurrent page faults */
++	vma_start_write(vma);
+ 	/*
+ 	 * vma->vm_start/vm_end cannot change under us because the caller
+ 	 * is required to hold the mmap_lock in read mode.  We need the
+@@ -2062,6 +2064,8 @@ int expand_downwards(struct vm_area_stru
+ 		return -ENOMEM;
+ 	}
+ 
++	/* Lock the VMA before expanding to prevent concurrent page faults */
++	vma_start_write(vma);
+ 	/*
+ 	 * vma->vm_start/vm_end cannot change under us because the caller
+ 	 * is required to hold the mmap_lock in read mode.  We need the
 
 
