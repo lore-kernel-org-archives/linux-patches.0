@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585F7522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC444C433C8;
-	Sun,  9 Jul 2023 11:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B55522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997A9C433C8;
+	Sun,  9 Jul 2023 11:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902464;
-	bh=cnKWeIKTj6r865bXkmKB3uxUizWw8IXkRUXUT6I2jCk=;
+	s=korg; t=1688902467;
+	bh=sYPtYFtEj1FwIWTlcSLlL1nGK8Xkk50X0waSE4gMvUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FxuQphHei42pjePwLqnwgpeVXMLi2abQ9ZeRXGQPWwh1PLJbM6Te1drXgbJM8sbQ5
-	 ZO52Kyt+ty8XbNzHzzXCLLJtTcdTN7CJu4JkloG0UQLIN4ggH6nQcO+aq1esc8l+J9
-	 FEV2yJaC955GNEBqaLVI1ZVuq2KqC0dIO+/i1eow=
+	b=PgSiJfILYwn80s3v5EMiyoWT0t5mdYU9xuzVj5KcR2QS5jD3MF3hxBFi1OmJzbrwP
+	 AmgTty+q17nGIi1VpvIvf5z8fRvg289ykrB2Z7tt0MqgRZS7bnbn8IYa0JiELogtZE
+	 ygdKIUEBmYHUeTXOLuqSxxC60ybLmJ9KAWQObBYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Can Guo <quic_cang@quicinc.com>,
+	Stanley Chu <stanley.chu@mediatek.com>,
+	Po-Wen Kao <powen.kao@mediatek.com>,
 	Bart Van Assche <bvanassche@acm.org>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bean Huo <beanhuo@micron.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 385/431] scsi: ufs: core: Remove a ufshcd_add_command_trace() call
-Date: Sun,  9 Jul 2023 13:15:33 +0200
-Message-ID: <20230709111500.191039125@linuxfoundation.org>
+Subject: [PATCH 6.3 386/431] scsi: ufs: core: mcq: Fix the incorrect OCS value for the device command
+Date: Sun,  9 Jul 2023 13:15:34 +0200
+Message-ID: <20230709111500.213671957@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,37 +38,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Stanley Chu <stanley.chu@mediatek.com>
 
-[ Upstream commit 72554035b9797e00e68cd866e6cefa7f0b2c6f76 ]
+[ Upstream commit 0fef6bb730c490fcdc4347dbd21646d3ffe62cf5 ]
 
-ufshcd_add_command_trace() traces SCSI commands. Remove a
-ufshcd_add_command_trace() call from a code path that is not related to
-SCSI commands.
+In MCQ mode, when a device command uses a hardware queue shared with other
+commands, a race condition may occur in the following scenario:
 
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20230531224050.25554-1-bvanassche@acm.org
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+ 1. A device command is completed in CQx with CQE entry "e".
+
+ 2. The interrupt handler copies the "cqe" pointer to "hba->dev_cmd.cqe"
+    and completes "hba->dev_cmd.complete".
+
+ 3. The "ufshcd_wait_for_dev_cmd()" function is awakened and retrieves the
+    OCS value from "hba->dev_cmd.cqe".
+
+However, there is a possibility that the CQE entry "e" will be overwritten
+by newly completed commands in CQx, resulting in an incorrect OCS value
+being received by "ufshcd_wait_for_dev_cmd()".
+
+To avoid this race condition, the OCS value should be immediately copied to
+the struct "lrb" of the device command. Then "ufshcd_wait_for_dev_cmd()"
+can retrieve the OCS value from the struct "lrb".
+
+Fixes: 57b1c0ef89ac ("scsi: ufs: core: mcq: Add support to allocate multiple queues")
+Suggested-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Stanley Chu <stanley.chu@mediatek.com>
+Link: https://lore.kernel.org/r/20230610021553.1213-2-powen.kao@mediatek.com
+Tested-by: Po-Wen Kao <powen.kao@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 0fef6bb730c4 ("scsi: ufs: core: mcq: Fix the incorrect OCS value for the device command")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 10 +++++++---
+ include/ufs/ufshcd.h      |  1 -
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index dc63bd60db77d..b788bd0053330 100644
+index b788bd0053330..e67981317dcbf 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -5420,7 +5420,6 @@ void ufshcd_compl_one_cqe(struct ufs_hba *hba, int task_tag,
+@@ -3069,7 +3069,7 @@ static int ufshcd_wait_for_dev_cmd(struct ufs_hba *hba,
+ 		 * not trigger any race conditions.
+ 		 */
+ 		hba->dev_cmd.complete = NULL;
+-		err = ufshcd_get_tr_ocs(lrbp, hba->dev_cmd.cqe);
++		err = ufshcd_get_tr_ocs(lrbp, NULL);
+ 		if (!err)
+ 			err = ufshcd_dev_cmd_completion(hba, lrbp);
+ 	} else {
+@@ -3156,7 +3156,6 @@ static int ufshcd_exec_dev_cmd(struct ufs_hba *hba,
+ 		goto out;
+ 
+ 	hba->dev_cmd.complete = &wait;
+-	hba->dev_cmd.cqe = NULL;
+ 
+ 	ufshcd_add_query_upiu_trace(hba, UFS_QUERY_SEND, lrbp->ucd_req_ptr);
+ 
+@@ -5404,6 +5403,7 @@ void ufshcd_compl_one_cqe(struct ufs_hba *hba, int task_tag,
+ {
+ 	struct ufshcd_lrb *lrbp;
+ 	struct scsi_cmnd *cmd;
++	enum utp_ocs ocs;
+ 
+ 	lrbp = &hba->lrb[task_tag];
+ 	lrbp->compl_time_stamp = ktime_get();
+@@ -5419,7 +5419,11 @@ void ufshcd_compl_one_cqe(struct ufs_hba *hba, int task_tag,
+ 	} else if (lrbp->command_type == UTP_CMD_TYPE_DEV_MANAGE ||
  		   lrbp->command_type == UTP_CMD_TYPE_UFS_STORAGE) {
  		if (hba->dev_cmd.complete) {
- 			hba->dev_cmd.cqe = cqe;
--			ufshcd_add_command_trace(hba, task_tag, UFS_DEV_COMP);
+-			hba->dev_cmd.cqe = cqe;
++			if (cqe) {
++				ocs = le32_to_cpu(cqe->status) & MASK_OCS;
++				lrbp->utr_descriptor_ptr->header.dword_2 =
++					cpu_to_le32(ocs);
++			}
  			complete(hba->dev_cmd.complete);
  			ufshcd_clk_scaling_update_busy(hba);
  		}
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index db70944c681aa..91803587691a6 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -225,7 +225,6 @@ struct ufs_dev_cmd {
+ 	struct mutex lock;
+ 	struct completion *complete;
+ 	struct ufs_query query;
+-	struct cq_entry *cqe;
+ };
+ 
+ /**
 -- 
 2.39.2
 
