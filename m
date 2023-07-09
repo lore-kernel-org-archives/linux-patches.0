@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981CF4699
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:17:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D04C433C8;
-	Sun,  9 Jul 2023 11:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6280D4699
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:17:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FD4C433C8;
+	Sun,  9 Jul 2023 11:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901435;
-	bh=7cc0PnaJmdFU76YjjptSHjlQuxq+M58aSoWEzgtEz9c=;
+	s=korg; t=1688901438;
+	bh=6jASle8N7hwxYiz01briRWzk6P4qr2XYRv9D6lpQADU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qq5Bs2ulqzHA68tsw3M2sVtVKulgFkiKUGSPIlrJrpQkcs5U7kMiXSwtmwTuuO8RS
-	 nqj6jjpqaxYjaJOO9GN6ZDH2T4DvqqzhXSuRyRRFoIJvNCRu7sSSwErXunB+0Jpx7g
-	 zZ1ZjFd01dz8AytdMS3fPwPh7+Wm/zOCw+Qugq4g=
+	b=HpUdFZYum+D+fWQGF3JZAedv1Ksz+lOj68Af96/rWpSbOTszu/WJbFJJ3MVO+dgGD
+	 +asRXRmQUpC3MYA5DNCkb4m0i5Hc0ZI0Oqt1Ixw1Q7zxUa+QqWmaD8TEowml/pWCmC
+	 w6cTVmazKXBk6V9U5t6wJQROt9ujEEt1TTIcOuDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Lyude Paul <lyude@redhat.com>,
-	"Limonciello, Mario" <mario.limonciello@amd.com>
-Subject: [PATCH 6.3 002/431] drm: use mgr->dev in drm_dbg_kms in drm_dp_add_payload_part2
-Date: Sun,  9 Jul 2023 13:09:10 +0200
-Message-ID: <20230709111451.163952244@linuxfoundation.org>
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 020/431] md/raid10: fix wrong setting of max_corr_read_errors
+Date: Sun,  9 Jul 2023 13:09:28 +0200
+Message-ID: <20230709111451.577167715@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,43 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Li Nan <linan122@huawei.com>
 
-commit 54d217406afe250d7a768783baaa79a035f21d38 upstream.
+[ Upstream commit f8b20a405428803bd9881881d8242c9d72c6b2b2 ]
 
-I've been experiencing some intermittent crashes down in the display
-driver code. The symptoms are ususally a line like this in dmesg:
+There is no input check when echo md/max_read_errors and overflow might
+occur. Add check of input number.
 
-    amdgpu 0000:30:00.0: [drm] Failed to create MST payload for port 000000006d3a3885: -5
-
-...followed by an Oops due to a NULL pointer dereference.
-
-Switch to using mgr->dev instead of state->dev since "state" can be
-NULL in some cases.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2184855
-Suggested-by: Jani Nikula <jani.nikula@linux.intel.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230419112447.18471-1-jlayton@kernel.org
-Cc: "Limonciello, Mario" <mario.limonciello@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1e50915fe0bb ("raid: improve MD/raid10 handling of correctable read errors.")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230522072535.1523740-3-linan666@huaweicloud.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -3404,7 +3404,7 @@ int drm_dp_add_payload_part2(struct drm_
- 
- 	/* Skip failed payloads */
- 	if (payload->vc_start_slot == -1) {
--		drm_dbg_kms(state->dev, "Part 1 of payload creation for %s failed, skipping part 2\n",
-+		drm_dbg_kms(mgr->dev, "Part 1 of payload creation for %s failed, skipping part 2\n",
- 			    payload->port->connector->name);
- 		return -EIO;
- 	}
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 61ad7dfe0e99a..2674cb1d699c0 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -4498,6 +4498,8 @@ max_corrected_read_errors_store(struct mddev *mddev, const char *buf, size_t len
+ 	rv = kstrtouint(buf, 10, &n);
+ 	if (rv < 0)
+ 		return rv;
++	if (n > INT_MAX)
++		return -EINVAL;
+ 	atomic_set(&mddev->max_corr_read_errors, n);
+ 	return len;
+ }
+-- 
+2.39.2
+
 
 
