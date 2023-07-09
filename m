@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4481522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:36:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D71C433C8;
-	Sun,  9 Jul 2023 11:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F99522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:36:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25901C433C7;
+	Sun,  9 Jul 2023 11:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902564;
-	bh=Aa6ybBovXgwBOTjt/BETc5rGGrLEYkMVeVsuSWTB3ok=;
+	s=korg; t=1688902567;
+	bh=4HnyfsApdWx8U2P+xgc8O4ZUYmzNRr2w1a4AjFiJl+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5zDXwZ0r/tPeknST9f0EfIc2e7stUMvQhwtGYX4DpNaodjgkV9h5RHhs/XZtH7aV
-	 eS7R4HwKcMyMzzfSmzcx4LCPelt/Qev4WK0dV5vA3ueS/ZqV/Ja0aV42BZVbtPZ7CE
-	 W6VlW5Psnm6Y0liVqb6feO/Qf6iMxRhkMBLAzX8w=
+	b=btfrk8CSi+4gyOjnAgYl/O5yNa2MVqapK2ISQR0+D0Sxc0JPRC1PXx8lL5kt/pMrZ
+	 5aNPOyrOxj0JoIXy0MKpenS86KeDmGBCe16mBw26mr5Pm8nic2QpOiACYmXcWJFXox
+	 u+7pmomFqf1hxFWqScNEjTyKafhwB5AHY5S5y4TE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Triplett <josh@joshtriplett.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 421/431] kbuild: builddeb: always make modules_install, to install modules.builtin*
-Date: Sun,  9 Jul 2023 13:16:09 +0200
-Message-ID: <20230709111501.055755783@linuxfoundation.org>
+Subject: [PATCH 6.3 395/431] PCI: endpoint: functions/pci-epf-test: Fix dma_chan direction
+Date: Sun,  9 Jul 2023 13:15:43 +0200
+Message-ID: <20230709111500.432685051@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,42 +38,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Triplett <josh@joshtriplett.org>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 4243afdb932677a03770753be8c54b3190a512e8 ]
+[ Upstream commit 880d51c729a3fa944794feb19f605eefe55916fc ]
 
-Even for a non-modular kernel, the kernel builds modules.builtin and
-modules.builtin.modinfo, with information about the built-in modules.
-Tools such as initramfs-tools need these files to build a working
-initramfs on some systems, such as those requiring firmware.
+In pci_epf_test_init_dma_chan() epf_test->dma_chan_rx is assigned from
+dma_request_channel() with DMA_DEV_TO_MEM as filter.dma_mask.
 
-Now that `make modules_install` works even in non-modular kernels and
-installs these files, unconditionally invoke it when building a Debian
-package.
+However, in pci_epf_test_data_transfer() if the dir is DMA_DEV_TO_MEM,
+epf->dma_chan_rx should be used but instead we are using
+epf_test->dma_chan_tx.
 
-Signed-off-by: Josh Triplett <josh@joshtriplett.org>
-Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Stable-dep-of: 1240dabe8d58 ("kbuild: deb-pkg: remove the CONFIG_MODULES check in buildeb")
+Fix it.
+
+Link: https://lore.kernel.org/r/20230412063447.2841177-1-yoshihiro.shimoda.uh@renesas.com
+Fixes: 8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
+Tested-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/package/builddeb | 2 +-
+ drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/package/builddeb b/scripts/package/builddeb
-index 7b23f52c70c5f..07087ca68fe4b 100755
---- a/scripts/package/builddeb
-+++ b/scripts/package/builddeb
-@@ -62,8 +62,8 @@ install_linux_image () {
- 		${MAKE} -f ${srctree}/Makefile INSTALL_DTBS_PATH="${pdir}/usr/lib/linux-image-${KERNELRELEASE}" dtbs_install
- 	fi
- 
-+	${MAKE} -f ${srctree}/Makefile INSTALL_MOD_PATH="${pdir}" modules_install
- 	if is_enabled CONFIG_MODULES; then
--		${MAKE} -f ${srctree}/Makefile INSTALL_MOD_PATH="${pdir}" modules_install
- 		rm -f "${pdir}/lib/modules/${KERNELRELEASE}/build"
- 		rm -f "${pdir}/lib/modules/${KERNELRELEASE}/source"
- 		if [ "${SRCARCH}" = um ] ; then
+diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+index 0f9d2ec822ac6..172e5ac0bd96c 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -112,7 +112,7 @@ static int pci_epf_test_data_transfer(struct pci_epf_test *epf_test,
+ 				      size_t len, dma_addr_t dma_remote,
+ 				      enum dma_transfer_direction dir)
+ {
+-	struct dma_chan *chan = (dir == DMA_DEV_TO_MEM) ?
++	struct dma_chan *chan = (dir == DMA_MEM_TO_DEV) ?
+ 				 epf_test->dma_chan_tx : epf_test->dma_chan_rx;
+ 	dma_addr_t dma_local = (dir == DMA_MEM_TO_DEV) ? dma_src : dma_dst;
+ 	enum dma_ctrl_flags flags = DMA_CTRL_ACK | DMA_PREP_INTERRUPT;
 -- 
 2.39.2
 
