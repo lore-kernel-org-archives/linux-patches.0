@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7520E538C
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9788C433C7;
-	Sun,  9 Jul 2023 11:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD7F538C
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1487C433C7;
+	Sun,  9 Jul 2023 11:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901636;
-	bh=i7uih+24jYbrPu5DxwVGvZ3QitkVp6MhvX3slJqvBm8=;
+	s=korg; t=1688901639;
+	bh=nwzaWUh+D6HVv7fvkW4kQMWhiZooWbmeQx+P7rKIIKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rE8OM/A5HRlk0w9t2h5GX6lEAMhSO8dpWSYEjdbezInJdoGr/cvq7aAe5EZrgBBl1
-	 8/OiLYEhXbOZtrdwkVhago9wONFsfW6JlEsT2tEJCzjrROtWIoaHl0RlrZ6afzlDlR
-	 Iu8XbtCzfjF0WcwZ/tyu/lhkaMHB9qhKdOqKlW+c=
+	b=v0wk5QUetRszpPH9t08VHvBiu045/GJDlcblFZ8fkFVDsBigeShOa6NtCoQ2jwJgt
+	 jbTuO51ZPsEImHOU+i0Bf1H/TY4ouPUzYCLcTAmjQT8K2a396l587p7YqJbUdJXqb7
+	 xA7sREC8Z9rXq6koz3NHZPLAs0uYkR4ygYS9dbY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicky Veitch <nicky.veitch@oracle.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Quentin Monnet <quentin@isovalent.com>,
+	Juergen Gross <jgross@suse.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Michael Kelley <mikelley@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 090/431] bpftool: JIT limited misreported as negative value on aarch64
-Date: Sun,  9 Jul 2023 13:10:38 +0200
-Message-ID: <20230709111453.263405392@linuxfoundation.org>
+Subject: [PATCH 6.3 064/431] x86/mtrr: Remove physical address size calculation
+Date: Sun,  9 Jul 2023 13:10:12 +0200
+Message-ID: <20230709111452.645991992@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -38,148 +36,277 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 04cb8453a91c7c22f60ddadb6cef0d19abb33bb5 ]
+[ Upstream commit f6b980646b93a8c585b4ed991b8a34e8fc6ef847 ]
 
-On aarch64, "bpftool feature" reports an incorrect BPF JIT limit:
+The physical address width calculation in mtrr_bp_init() can easily be
+replaced with using the already available value x86_phys_bits from
+struct cpuinfo_x86.
 
-$ sudo /sbin/bpftool feature
-Scanning system configuration...
-bpf() syscall restricted to privileged users
-JIT compiler is enabled
-JIT compiler hardening is disabled
-JIT compiler kallsyms exports are enabled for root
-skipping kernel config, can't open file: No such file or directory
-Global memory limit for JIT compiler for unprivileged users is -201326592 bytes
+The same information source can be used in mtrr/cleanup.c, removing the
+need to pass that value on to mtrr_cleanup().
 
-This is because /proc/sys/net/core/bpf_jit_limit reports
+In print_mtrr_state() use x86_phys_bits instead of recalculating it
+from size_or_mask.
 
-$ sudo cat /proc/sys/net/core/bpf_jit_limit
-68169519595520
+Move setting of size_or_mask and size_and_mask into a dedicated new
+function in mtrr/generic.c, enabling to make those 2 variables static,
+as they are used in generic.c only now.
 
-...and an int is assumed in read_procfs().  Change read_procfs()
-to return a long to avoid negative value reporting.
-
-Fixes: 7a4522bbef0c ("tools: bpftool: add probes for /proc/ eBPF parameters")
-Reported-by: Nicky Veitch <nicky.veitch@oracle.com>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Quentin Monnet <quentin@isovalent.com>
-Link: https://lore.kernel.org/bpf/20230512113134.58996-1-alan.maguire@oracle.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20230502120931.20719-2-jgross@suse.com
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Stable-dep-of: a153f254e5cd ("x86/xen: Set MTRR state when running as Xen PV initial domain")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/feature.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ arch/x86/kernel/cpu/mtrr/cleanup.c | 16 ++++----
+ arch/x86/kernel/cpu/mtrr/generic.c | 12 +++++-
+ arch/x86/kernel/cpu/mtrr/mtrr.c    | 61 ++++--------------------------
+ arch/x86/kernel/cpu/mtrr/mtrr.h    |  4 +-
+ 4 files changed, 29 insertions(+), 64 deletions(-)
 
-diff --git a/tools/bpf/bpftool/feature.c b/tools/bpf/bpftool/feature.c
-index da16e6a27cccd..0675d6a464138 100644
---- a/tools/bpf/bpftool/feature.c
-+++ b/tools/bpf/bpftool/feature.c
-@@ -167,12 +167,12 @@ static int get_vendor_id(int ifindex)
- 	return strtol(buf, NULL, 0);
+diff --git a/arch/x86/kernel/cpu/mtrr/cleanup.c b/arch/x86/kernel/cpu/mtrr/cleanup.c
+index b5f43049fa5f7..70314093bb9b5 100644
+--- a/arch/x86/kernel/cpu/mtrr/cleanup.c
++++ b/arch/x86/kernel/cpu/mtrr/cleanup.c
+@@ -173,7 +173,7 @@ early_param("mtrr_cleanup_debug", mtrr_cleanup_debug_setup);
+ 
+ static void __init
+ set_var_mtrr(unsigned int reg, unsigned long basek, unsigned long sizek,
+-	     unsigned char type, unsigned int address_bits)
++	     unsigned char type)
+ {
+ 	u32 base_lo, base_hi, mask_lo, mask_hi;
+ 	u64 base, mask;
+@@ -183,7 +183,7 @@ set_var_mtrr(unsigned int reg, unsigned long basek, unsigned long sizek,
+ 		return;
+ 	}
+ 
+-	mask = (1ULL << address_bits) - 1;
++	mask = (1ULL << boot_cpu_data.x86_phys_bits) - 1;
+ 	mask &= ~((((u64)sizek) << 10) - 1);
+ 
+ 	base = ((u64)basek) << 10;
+@@ -209,7 +209,7 @@ save_var_mtrr(unsigned int reg, unsigned long basek, unsigned long sizek,
+ 	range_state[reg].type = type;
  }
  
--static int read_procfs(const char *path)
-+static long read_procfs(const char *path)
+-static void __init set_var_mtrr_all(unsigned int address_bits)
++static void __init set_var_mtrr_all(void)
  {
- 	char *endptr, *line = NULL;
- 	size_t len = 0;
- 	FILE *fd;
--	int res;
-+	long res;
+ 	unsigned long basek, sizek;
+ 	unsigned char type;
+@@ -220,7 +220,7 @@ static void __init set_var_mtrr_all(unsigned int address_bits)
+ 		sizek = range_state[reg].size_pfn << (PAGE_SHIFT - 10);
+ 		type = range_state[reg].type;
  
- 	fd = fopen(path, "r");
- 	if (!fd)
-@@ -194,7 +194,7 @@ static int read_procfs(const char *path)
- 
- static void probe_unprivileged_disabled(void)
- {
--	int res;
-+	long res;
- 
- 	/* No support for C-style ouptut */
- 
-@@ -216,14 +216,14 @@ static void probe_unprivileged_disabled(void)
- 			printf("Unable to retrieve required privileges for bpf() syscall\n");
- 			break;
- 		default:
--			printf("bpf() syscall restriction has unknown value %d\n", res);
-+			printf("bpf() syscall restriction has unknown value %ld\n", res);
- 		}
- 	}
- }
- 
- static void probe_jit_enable(void)
- {
--	int res;
-+	long res;
- 
- 	/* No support for C-style ouptut */
- 
-@@ -245,7 +245,7 @@ static void probe_jit_enable(void)
- 			printf("Unable to retrieve JIT-compiler status\n");
- 			break;
- 		default:
--			printf("JIT-compiler status has unknown value %d\n",
-+			printf("JIT-compiler status has unknown value %ld\n",
- 			       res);
- 		}
- 	}
-@@ -253,7 +253,7 @@ static void probe_jit_enable(void)
- 
- static void probe_jit_harden(void)
- {
--	int res;
-+	long res;
- 
- 	/* No support for C-style ouptut */
- 
-@@ -275,7 +275,7 @@ static void probe_jit_harden(void)
- 			printf("Unable to retrieve JIT hardening status\n");
- 			break;
- 		default:
--			printf("JIT hardening status has unknown value %d\n",
-+			printf("JIT hardening status has unknown value %ld\n",
- 			       res);
- 		}
- 	}
-@@ -283,7 +283,7 @@ static void probe_jit_harden(void)
- 
- static void probe_jit_kallsyms(void)
- {
--	int res;
-+	long res;
- 
- 	/* No support for C-style ouptut */
- 
-@@ -302,14 +302,14 @@ static void probe_jit_kallsyms(void)
- 			printf("Unable to retrieve JIT kallsyms export status\n");
- 			break;
- 		default:
--			printf("JIT kallsyms exports status has unknown value %d\n", res);
-+			printf("JIT kallsyms exports status has unknown value %ld\n", res);
- 		}
+-		set_var_mtrr(reg, basek, sizek, type, address_bits);
++		set_var_mtrr(reg, basek, sizek, type);
  	}
  }
  
- static void probe_jit_limit(void)
+@@ -680,7 +680,7 @@ static int __init mtrr_search_optimal_index(void)
+ 	return index_good;
+ }
+ 
+-int __init mtrr_cleanup(unsigned address_bits)
++int __init mtrr_cleanup(void)
  {
--	int res;
-+	long res;
+ 	unsigned long x_remove_base, x_remove_size;
+ 	unsigned long base, size, def, dummy;
+@@ -742,7 +742,7 @@ int __init mtrr_cleanup(unsigned address_bits)
+ 		mtrr_print_out_one_result(i);
  
- 	/* No support for C-style ouptut */
+ 		if (!result[i].bad) {
+-			set_var_mtrr_all(address_bits);
++			set_var_mtrr_all();
+ 			pr_debug("New variable MTRRs\n");
+ 			print_out_mtrr_range_state();
+ 			return 1;
+@@ -786,7 +786,7 @@ int __init mtrr_cleanup(unsigned address_bits)
+ 		gran_size = result[i].gran_sizek;
+ 		gran_size <<= 10;
+ 		x86_setup_var_mtrrs(range, nr_range, chunk_size, gran_size);
+-		set_var_mtrr_all(address_bits);
++		set_var_mtrr_all();
+ 		pr_debug("New variable MTRRs\n");
+ 		print_out_mtrr_range_state();
+ 		return 1;
+@@ -802,7 +802,7 @@ int __init mtrr_cleanup(unsigned address_bits)
+ 	return 0;
+ }
+ #else
+-int __init mtrr_cleanup(unsigned address_bits)
++int __init mtrr_cleanup(void)
+ {
+ 	return 0;
+ }
+diff --git a/arch/x86/kernel/cpu/mtrr/generic.c b/arch/x86/kernel/cpu/mtrr/generic.c
+index ee09d359e08f0..3922552340b13 100644
+--- a/arch/x86/kernel/cpu/mtrr/generic.c
++++ b/arch/x86/kernel/cpu/mtrr/generic.c
+@@ -38,6 +38,16 @@ u64 mtrr_tom2;
+ struct mtrr_state_type mtrr_state;
+ EXPORT_SYMBOL_GPL(mtrr_state);
  
-@@ -322,7 +322,7 @@ static void probe_jit_limit(void)
- 			printf("Unable to retrieve global memory limit for JIT compiler for unprivileged users\n");
++static u64 size_or_mask, size_and_mask;
++
++void __init mtrr_set_mask(void)
++{
++	unsigned int phys_addr = boot_cpu_data.x86_phys_bits;
++
++	size_or_mask = ~GENMASK_ULL(phys_addr - PAGE_SHIFT - 1, 0);
++	size_and_mask = ~size_or_mask & GENMASK_ULL(39, 20);
++}
++
+ /*
+  * BIOS is expected to clear MtrrFixDramModEn bit, see for example
+  * "BIOS and Kernel Developer's Guide for the AMD Athlon 64 and AMD
+@@ -422,7 +432,7 @@ static void __init print_mtrr_state(void)
+ 	}
+ 	pr_debug("MTRR variable ranges %sabled:\n",
+ 		 mtrr_state.enabled & MTRR_STATE_MTRR_ENABLED ? "en" : "dis");
+-	high_width = (__ffs64(size_or_mask) - (32 - PAGE_SHIFT) + 3) / 4;
++	high_width = (boot_cpu_data.x86_phys_bits - (32 - PAGE_SHIFT) + 3) / 4;
+ 
+ 	for (i = 0; i < num_var_ranges; ++i) {
+ 		if (mtrr_state.var_ranges[i].mask_lo & (1 << 11))
+diff --git a/arch/x86/kernel/cpu/mtrr/mtrr.c b/arch/x86/kernel/cpu/mtrr/mtrr.c
+index 783f3210d5827..1bdab16f16bdc 100644
+--- a/arch/x86/kernel/cpu/mtrr/mtrr.c
++++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
+@@ -67,8 +67,6 @@ static bool mtrr_enabled(void)
+ unsigned int mtrr_usage_table[MTRR_MAX_VAR_RANGES];
+ static DEFINE_MUTEX(mtrr_mutex);
+ 
+-u64 size_or_mask, size_and_mask;
+-
+ const struct mtrr_ops *mtrr_if;
+ 
+ /*  Returns non-zero if we have the write-combining memory type  */
+@@ -619,77 +617,34 @@ static struct syscore_ops mtrr_syscore_ops = {
+ 
+ int __initdata changed_by_mtrr_cleanup;
+ 
+-#define SIZE_OR_MASK_BITS(n)  (~((1ULL << ((n) - PAGE_SHIFT)) - 1))
+ /**
+- * mtrr_bp_init - initialize mtrrs on the boot CPU
++ * mtrr_bp_init - initialize MTRRs on the boot CPU
+  *
+  * This needs to be called early; before any of the other CPUs are
+  * initialized (i.e. before smp_init()).
+- *
+  */
+ void __init mtrr_bp_init(void)
+ {
+ 	const char *why = "(not available)";
+-	u32 phys_addr;
+ 
+-	phys_addr = 32;
++	mtrr_set_mask();
+ 
+-	if (boot_cpu_has(X86_FEATURE_MTRR)) {
++	if (cpu_feature_enabled(X86_FEATURE_MTRR)) {
+ 		mtrr_if = &generic_mtrr_ops;
+-		size_or_mask = SIZE_OR_MASK_BITS(36);
+-		size_and_mask = 0x00f00000;
+-		phys_addr = 36;
+-
+-		/*
+-		 * This is an AMD specific MSR, but we assume(hope?) that
+-		 * Intel will implement it too when they extend the address
+-		 * bus of the Xeon.
+-		 */
+-		if (cpuid_eax(0x80000000) >= 0x80000008) {
+-			phys_addr = cpuid_eax(0x80000008) & 0xff;
+-			/* CPUID workaround for Intel 0F33/0F34 CPU */
+-			if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL &&
+-			    boot_cpu_data.x86 == 0xF &&
+-			    boot_cpu_data.x86_model == 0x3 &&
+-			    (boot_cpu_data.x86_stepping == 0x3 ||
+-			     boot_cpu_data.x86_stepping == 0x4))
+-				phys_addr = 36;
+-
+-			size_or_mask = SIZE_OR_MASK_BITS(phys_addr);
+-			size_and_mask = ~size_or_mask & 0xfffff00000ULL;
+-		} else if (boot_cpu_data.x86_vendor == X86_VENDOR_CENTAUR &&
+-			   boot_cpu_data.x86 == 6) {
+-			/*
+-			 * VIA C* family have Intel style MTRRs,
+-			 * but don't support PAE
+-			 */
+-			size_or_mask = SIZE_OR_MASK_BITS(32);
+-			size_and_mask = 0;
+-			phys_addr = 32;
+-		}
+ 	} else {
+ 		switch (boot_cpu_data.x86_vendor) {
+ 		case X86_VENDOR_AMD:
+-			if (cpu_feature_enabled(X86_FEATURE_K6_MTRR)) {
+-				/* Pre-Athlon (K6) AMD CPU MTRRs */
++			/* Pre-Athlon (K6) AMD CPU MTRRs */
++			if (cpu_feature_enabled(X86_FEATURE_K6_MTRR))
+ 				mtrr_if = &amd_mtrr_ops;
+-				size_or_mask = SIZE_OR_MASK_BITS(32);
+-				size_and_mask = 0;
+-			}
+ 			break;
+ 		case X86_VENDOR_CENTAUR:
+-			if (cpu_feature_enabled(X86_FEATURE_CENTAUR_MCR)) {
++			if (cpu_feature_enabled(X86_FEATURE_CENTAUR_MCR))
+ 				mtrr_if = &centaur_mtrr_ops;
+-				size_or_mask = SIZE_OR_MASK_BITS(32);
+-				size_and_mask = 0;
+-			}
+ 			break;
+ 		case X86_VENDOR_CYRIX:
+-			if (cpu_feature_enabled(X86_FEATURE_CYRIX_ARR)) {
++			if (cpu_feature_enabled(X86_FEATURE_CYRIX_ARR))
+ 				mtrr_if = &cyrix_mtrr_ops;
+-				size_or_mask = SIZE_OR_MASK_BITS(32);
+-				size_and_mask = 0;
+-			}
  			break;
  		default:
--			printf("Global memory limit for JIT compiler for unprivileged users is %d bytes\n", res);
-+			printf("Global memory limit for JIT compiler for unprivileged users is %ld bytes\n", res);
- 		}
- 	}
- }
+ 			break;
+@@ -703,7 +658,7 @@ void __init mtrr_bp_init(void)
+ 			/* BIOS may override */
+ 			if (get_mtrr_state()) {
+ 				memory_caching_control |= CACHE_MTRR;
+-				changed_by_mtrr_cleanup = mtrr_cleanup(phys_addr);
++				changed_by_mtrr_cleanup = mtrr_cleanup();
+ 			} else {
+ 				mtrr_if = NULL;
+ 				why = "by BIOS";
+diff --git a/arch/x86/kernel/cpu/mtrr/mtrr.h b/arch/x86/kernel/cpu/mtrr/mtrr.h
+index 02eb5871492d0..a00987e6cc1c1 100644
+--- a/arch/x86/kernel/cpu/mtrr/mtrr.h
++++ b/arch/x86/kernel/cpu/mtrr/mtrr.h
+@@ -51,7 +51,6 @@ void fill_mtrr_var_range(unsigned int index,
+ 		u32 base_lo, u32 base_hi, u32 mask_lo, u32 mask_hi);
+ bool get_mtrr_state(void);
+ 
+-extern u64 size_or_mask, size_and_mask;
+ extern const struct mtrr_ops *mtrr_if;
+ 
+ #define is_cpu(vnd)	(mtrr_if && mtrr_if->vendor == X86_VENDOR_##vnd)
+@@ -60,6 +59,7 @@ extern unsigned int num_var_ranges;
+ extern u64 mtrr_tom2;
+ extern struct mtrr_state_type mtrr_state;
+ 
++void mtrr_set_mask(void);
+ void mtrr_state_warn(void);
+ const char *mtrr_attrib_to_str(int x);
+ void mtrr_wrmsr(unsigned, unsigned, unsigned);
+@@ -70,4 +70,4 @@ extern const struct mtrr_ops cyrix_mtrr_ops;
+ extern const struct mtrr_ops centaur_mtrr_ops;
+ 
+ extern int changed_by_mtrr_cleanup;
+-extern int mtrr_cleanup(unsigned address_bits);
++extern int mtrr_cleanup(void);
 -- 
 2.39.2
 
