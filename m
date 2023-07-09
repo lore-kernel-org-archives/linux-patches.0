@@ -1,38 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF98522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC09C433C8;
-	Sun,  9 Jul 2023 11:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2FE522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B7AC433C7;
+	Sun,  9 Jul 2023 11:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902436;
-	bh=WvwUjWJMfD0SL9pbZfYk/rYV+dUpluyu12Sr1ip0kUI=;
+	s=korg; t=1688902439;
+	bh=NRFJa74ckjxQsHN0APTOipxGEglvwSnL5vPcFgFgiKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uepqhF5c+xLwxraOswkUcGgs50NwrEYs2VG+CWNY6rqV7PgXzlorarU4Xb5MdMKv3
-	 P6qUw0w36nYqx/SW5+ylMNqHUJka3v/fKYKRS8jCyabp8AfM8u4F0y2n6t/JeLV09f
-	 mmZ/VsGeZqm5gLMDCMFIR40yxEGyotvmOzoZs8AA=
+	b=dVM+yZCOXgDL3gSN5rCEYYMKSvV5RMgvD1TwdgSTmX1p/+ByUGZE7RrBVjOq/bWNQ
+	 XcxTClyL7yo6WcmZwPNCmD19HT+eQvBK4iNi34H26l2W41+dzo5y2OjLFlwD/hn3zP
+	 B8Xdh2U5h0ihUVTPiKhPb8t2Eo+aqDnQCbTL2SWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Gupta <adityag@linux.ibm.com>,
-	Disha Goel <disgoel@linux.vnet.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Petar Gligoric <petar.gligoric@rohde-schwarz.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	linuxppc-dev@lists.ozlabs.org,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Michal Wilczynski <michal.wilczynski@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 376/431] perf tests task_analyzer: Skip tests if no libtraceevent support
-Date: Sun,  9 Jul 2023 13:15:24 +0200
-Message-ID: <20230709111459.977977079@linuxfoundation.org>
+Subject: [PATCH 6.3 377/431] platform/x86/dell/dell-rbtn: Fix resources leaking on error path
+Date: Sun,  9 Jul 2023 13:15:25 +0200
+Message-ID: <20230709111500.001999799@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -46,104 +39,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: Michal Wilczynski <michal.wilczynski@intel.com>
 
-[ Upstream commit c3ac3b0779770acd3ad7eecb5099ab4419ef2e2e ]
+[ Upstream commit 966cca72ab20289083521a385fa56035d85a222d ]
 
-Test "perf script task-analyzer tests" fails in environment with missing
-libtraceevent support, as perf record fails to create the perf.data
-file, which further tests depend on.
+Currently rbtn_add() in case of failure is leaking resources. Fix this
+by adding a proper rollback. Move devm_kzalloc() before rbtn_acquire(),
+so it doesn't require rollback in case of failure. While at it, remove
+unnecessary assignment of NULL to device->driver_data and unnecessary
+whitespace, plus add a break for the default case in a switch.
 
-Instead, when perf is not compiled with libtraceevent support, skip
-those tests instead of failing them, by checking the output of `perf
-record --dry-run` to see if it prints the error "libtraceevent is
-necessary for tracepoint support"
-
-For the following output, perf compiled with: `make NO_LIBTRACEEVENT=1`
-
-Before the patch:
-
-108: perf script task-analyzer tests                                 :
-test child forked, pid 24105
-failed to open perf.data: No such file or directory  (try 'perf record' first)
-FAIL: "invokation of perf script report task-analyzer command failed" Error message: ""
-FAIL: "test_basic" Error message: "Failed to find required string:'Comm'."
-failed to open perf.data: No such file or directory  (try 'perf record' first)
-FAIL: "invokation of perf script report task-analyzer --ns --rename-comms-by-tids 0:random command failed" Error message: ""
-FAIL: "test_ns_rename" Error message: "Failed to find required string:'Comm'."
-failed to open perf.data: No such file or directory  (try 'perf record' first)
-<...>
-perf script task-analyzer tests: FAILED!
-
-With this patch, the script instead returns 2 signifying SKIP, and after
-the patch:
-
-108: perf script task-analyzer tests                                 :
-test child forked, pid 26010
-libtraceevent is necessary for tracepoint support
-WARN: Skipping tests. No libtraceevent support
-test child finished with -2
-perf script task-analyzer tests: Skip
-
-Fixes: e8478b84d6ba9ccf ("perf test: Add new task-analyzer tests")
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Disha Goel <disgoel@linux.vnet.ibm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Petar Gligoric <petar.gligoric@rohde-schwarz.com>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: linuxppc-dev@lists.ozlabs.org
-Link: https://lore.kernel.org/r/20230613164145.50488-18-atrajeev@linux.vnet.ibm.com
-Signed-off-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Suggested-by: Pali Rohár <pali@kernel.org>
+Fixes: 817a5cdb40c8 ("dell-rbtn: Dell Airplane Mode Switch driver")
+Signed-off-by: Michal Wilczynski <michal.wilczynski@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Link: https://lore.kernel.org/r/20230613084310.2775896-1-michal.wilczynski@intel.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_task_analyzer.sh | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/platform/x86/dell/dell-rbtn.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/tests/shell/test_task_analyzer.sh b/tools/perf/tests/shell/test_task_analyzer.sh
-index 6b3343234a6b2..1b7f3c1ec218b 100755
---- a/tools/perf/tests/shell/test_task_analyzer.sh
-+++ b/tools/perf/tests/shell/test_task_analyzer.sh
-@@ -44,9 +44,20 @@ find_str_or_fail() {
- 	fi
- }
+diff --git a/drivers/platform/x86/dell/dell-rbtn.c b/drivers/platform/x86/dell/dell-rbtn.c
+index aa0e6c9074942..c8fcb537fd65d 100644
+--- a/drivers/platform/x86/dell/dell-rbtn.c
++++ b/drivers/platform/x86/dell/dell-rbtn.c
+@@ -395,16 +395,16 @@ static int rbtn_add(struct acpi_device *device)
+ 		return -EINVAL;
+ 	}
  
-+# check if perf is compiled with libtraceevent support
-+skip_no_probe_record_support() {
-+	perf record -e "sched:sched_switch" -a -- sleep 1 2>&1 | grep "libtraceevent is necessary for tracepoint support" && return 2
-+	return 0
-+}
++	rbtn_data = devm_kzalloc(&device->dev, sizeof(*rbtn_data), GFP_KERNEL);
++	if (!rbtn_data)
++		return -ENOMEM;
 +
- prepare_perf_data() {
- 	# 1s should be sufficient to catch at least some switches
- 	perf record -e sched:sched_switch -a -- sleep 1 > /dev/null 2>&1
-+	# check if perf data file got created in above step.
-+	if [ ! -e "perf.data" ]; then
-+		printf "FAIL: perf record failed to create \"perf.data\" \n"
-+		return 1
-+	fi
+ 	ret = rbtn_acquire(device, true);
+ 	if (ret < 0) {
+ 		dev_err(&device->dev, "Cannot enable device\n");
+ 		return ret;
+ 	}
+ 
+-	rbtn_data = devm_kzalloc(&device->dev, sizeof(*rbtn_data), GFP_KERNEL);
+-	if (!rbtn_data)
+-		return -ENOMEM;
+-
+ 	rbtn_data->type = type;
+ 	device->driver_data = rbtn_data;
+ 
+@@ -420,10 +420,12 @@ static int rbtn_add(struct acpi_device *device)
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
++		break;
+ 	}
++	if (ret)
++		rbtn_acquire(device, false);
+ 
+ 	return ret;
+-
  }
  
- # check standard inkvokation with no arguments
-@@ -134,6 +145,13 @@ test_csvsummary_extended() {
- 	find_str_or_fail "Out-Out;" csvsummary ${FUNCNAME[0]}
+ static void rbtn_remove(struct acpi_device *device)
+@@ -442,7 +444,6 @@ static void rbtn_remove(struct acpi_device *device)
+ 	}
+ 
+ 	rbtn_acquire(device, false);
+-	device->driver_data = NULL;
  }
  
-+skip_no_probe_record_support
-+err=$?
-+if [ $err -ne 0 ]; then
-+	echo "WARN: Skipping tests. No libtraceevent support"
-+	cleanup
-+	exit $err
-+fi
- prepare_perf_data
- test_basic
- test_ns_rename
+ static void rbtn_notify(struct acpi_device *device, u32 event)
 -- 
 2.39.2
 
