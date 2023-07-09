@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2C3522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:36:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82261C433C8;
-	Sun,  9 Jul 2023 11:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0A7522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:36:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB20C433C7;
+	Sun,  9 Jul 2023 11:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902611;
-	bh=cqySQXH39UEEVd+jB/HCVb8rs7KaLg8eqv6QL1OR6sc=;
+	s=korg; t=1688902614;
+	bh=aUH1+H3ZBwLcP/D4HPbZiNUQTUEOXLOazC4xTQeRDUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uj3LupnKN/UcVlTJlVxUwRyRwWGv77iAHmuUAauwdlr8rTUtD/MQVZBes6K9hv+lA
-	 aQ5KOwKVolYdZn/IacNFGE0xtTumC8FJ+RY9mpg0oNW79yyY5GJ5ZuBQqFhvhwJcGI
-	 AIk+aodkM1ziN+rzr+R/XKBukhvHRuht5ZTRdN5I=
+	b=XCytdr0X9xohuoIdUfSSuhrczhAWgXQM6MNaj19GKSpkfzMFQr6Z+HeNFj4qLM9nJ
+	 y/e4XmDjr8KSwms5JyvgtczMgPRuvnGWnhO2fo6EIsCp+Fu6ReSG6bKeN6B6wZvFYK
+	 TJYYiN0rgElUlhuLLJZVu0HY8CNephAgYB8ONN08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.3 431/431] md/raid1-10: fix casting from randomized structure in raid1_submit_write()
-Date: Sun,  9 Jul 2023 13:16:19 +0200
-Message-ID: <20230709111501.292907181@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 422/431] kbuild: deb-pkg: remove the CONFIG_MODULES check in buildeb
+Date: Sun,  9 Jul 2023 13:16:10 +0200
+Message-ID: <20230709111501.078314766@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,41 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit b5a99602b74bbfa655be509c615181dd95b0719e upstream.
+[ Upstream commit 1240dabe8d58b4eff09e7edf1560da0360f997aa ]
 
-Following build error triggered while build with clang version 17.0.0
-with W=1(this can't be reporduced with gcc 13.1.0):
+When CONFIG_MODULES is disabled for ARCH=um, 'make (bin)deb-pkg' fails
+with an error like follows:
 
-drivers/md/raid1-10.c:117:25: error: casting from randomized structure
-pointer type 'struct block_device *' to 'struct md_rdev *'
-     117 |         struct md_rdev *rdev = (struct md_rdev *)bio->bi_bdev;
-         |                                ^
+  cp: cannot create regular file 'debian/linux-image/usr/lib/uml/modules/6.4.0-rc2+/System.map': No such file or directory
 
-Fix this by casting 'bio->bi_bdev' to 'void *', as it used to be.
+Remove the CONFIG_MODULES check completely so ${pdir}/usr/lib/uml/modules
+will always be created and modules.builtin.(modinfo) will be installed
+under it for ARCH=um.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202306142042.fmjfmTF8-lkp@intel.com/
-Fixes: 8295efbe68c0 ("md/raid1-10: factor out a helper to submit normal write")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230616012136.3047071-1-yukuai1@huaweicloud.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b611daae5efc ("kbuild: deb-pkg: split image and debug objects staging out into functions")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1-10.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/package/builddeb | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/drivers/md/raid1-10.c
-+++ b/drivers/md/raid1-10.c
-@@ -113,7 +113,7 @@ static void md_bio_reset_resync_pages(st
+diff --git a/scripts/package/builddeb b/scripts/package/builddeb
+index 07087ca68fe4b..a0af4c0f971ca 100755
+--- a/scripts/package/builddeb
++++ b/scripts/package/builddeb
+@@ -63,17 +63,13 @@ install_linux_image () {
+ 	fi
  
- static inline void raid1_submit_write(struct bio *bio)
- {
--	struct md_rdev *rdev = (struct md_rdev *)bio->bi_bdev;
-+	struct md_rdev *rdev = (void *)bio->bi_bdev;
+ 	${MAKE} -f ${srctree}/Makefile INSTALL_MOD_PATH="${pdir}" modules_install
+-	if is_enabled CONFIG_MODULES; then
+-		rm -f "${pdir}/lib/modules/${KERNELRELEASE}/build"
+-		rm -f "${pdir}/lib/modules/${KERNELRELEASE}/source"
+-		if [ "${SRCARCH}" = um ] ; then
+-			mkdir -p "${pdir}/usr/lib/uml/modules"
+-			mv "${pdir}/lib/modules/${KERNELRELEASE}" "${pdir}/usr/lib/uml/modules/${KERNELRELEASE}"
+-		fi
+-	fi
++	rm -f "${pdir}/lib/modules/${KERNELRELEASE}/build"
++	rm -f "${pdir}/lib/modules/${KERNELRELEASE}/source"
  
- 	bio->bi_next = NULL;
- 	bio_set_dev(bio, rdev->bdev);
+ 	# Install the kernel
+ 	if [ "${ARCH}" = um ] ; then
++		mkdir -p "${pdir}/usr/lib/uml/modules"
++		mv "${pdir}/lib/modules/${KERNELRELEASE}" "${pdir}/usr/lib/uml/modules/${KERNELRELEASE}"
+ 		mkdir -p "${pdir}/usr/bin" "${pdir}/usr/share/doc/${pname}"
+ 		cp System.map "${pdir}/usr/lib/uml/modules/${KERNELRELEASE}/System.map"
+ 		cp ${KCONFIG_CONFIG} "${pdir}/usr/share/doc/${pname}/config"
+-- 
+2.39.2
+
 
 
