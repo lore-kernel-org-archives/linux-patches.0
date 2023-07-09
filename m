@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73104522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:32:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E9AC433C8;
-	Sun,  9 Jul 2023 11:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DF0522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:32:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4A2C433C7;
+	Sun,  9 Jul 2023 11:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902339;
-	bh=3zj4oZUJyZWCGWg8Zukn8g9TG9uTMq5TEYYjkZ2RAHc=;
+	s=korg; t=1688902342;
+	bh=UVor3HjPP/6Ia6VEvtyvhtsbP+3FKNtKYEcEHPQQ/q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2/PMnMQqVtPTBSSnpaj9H/kE/s8M0QKKz5L3uv8BrbD8fKD297eN+n17krXqrrE4
-	 QBlQFfUE1nv52Ue2a2GlHA2mhR2inbAIVuqy/+ZEWJUT6uLl2JdjKWfgB/LD0XtZPW
-	 +/RIxn4BqDVZ1VkfbQSvEJyuD/YiILnOz80W4HN8=
+	b=aeyRtMYpu/I5iYxAwCdmjnjmRzw3DCSUf80QMpLo5crQ8CHT30cIKDUg21ZrecnA9
+	 Yldsru+YcehdRwAcP4Ti6qRcXkt2v6FvKoDtJ7/2Bu3RR+gjb5Mi1NsQnXxNVJEeDx
+	 7b/XAD7qsIWBIxDihdk0CFr88K05sDduMFWq11rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 333/431] ARM: dts: lan966x: kontron-d10: fix SPI CS
-Date: Sun,  9 Jul 2023 13:14:41 +0200
-Message-ID: <20230709111458.980874506@linuxfoundation.org>
+Subject: [PATCH 6.3 342/431] pinctrl: bcm2835: Handle gpiochip_add_pin_range() errors
+Date: Sun,  9 Jul 2023 13:14:50 +0200
+Message-ID: <20230709111459.186224320@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,49 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <mwalle@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit fcb79ee3f0b15ed15f35eca5f24e952fdced9c61 ]
+[ Upstream commit cdf7e616120065007687fe1df0412154f259daec ]
 
-The pinctrl node was missing which change the pin mux to GPIO mode.
-Add it so we don't have to rely on the bootloader to set the correct
-mode.
+gpiochip_add_pin_range() can fail, so better return its error code than
+a hard coded '0'.
 
-Fixes: 79d83b3a458e ("ARM: dts: lan966x: add basic Kontron KSwitch D10 support")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230616-feature-d10-dt-cleanups-v1-2-50dd0452b8fe@kernel.org
+Fixes: d2b67744fd99 ("pinctrl: bcm2835: implement hook for missing gpio-ranges")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/98c3b5890bb72415145c9fe4e1d974711edae376.1681681402.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/pinctrl/bcm/pinctrl-bcm2835.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-index 42be207509a46..f4df4cc1dfa5e 100644
---- a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-+++ b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
-@@ -41,7 +41,7 @@ &flx3 {
- 	status = "okay";
+diff --git a/drivers/pinctrl/bcm/pinctrl-bcm2835.c b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
+index 7435173e10f43..1489191a213fe 100644
+--- a/drivers/pinctrl/bcm/pinctrl-bcm2835.c
++++ b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
+@@ -376,10 +376,8 @@ static int bcm2835_add_pin_ranges_fallback(struct gpio_chip *gc)
+ 	if (!pctldev)
+ 		return 0;
  
- 	spi3: spi@400 {
--		pinctrl-0 = <&fc3_b_pins>;
-+		pinctrl-0 = <&fc3_b_pins>, <&spi3_cs_pins>;
- 		pinctrl-names = "default";
- 		status = "okay";
- 		cs-gpios = <&gpio 46 GPIO_ACTIVE_LOW>;
-@@ -79,6 +79,12 @@ sgpio_b_pins: sgpio-b-pins {
- 		function = "sgpio_b";
- 	};
+-	gpiochip_add_pin_range(gc, pinctrl_dev_get_devname(pctldev), 0, 0,
+-			       gc->ngpio);
+-
+-	return 0;
++	return gpiochip_add_pin_range(gc, pinctrl_dev_get_devname(pctldev), 0, 0,
++				      gc->ngpio);
+ }
  
-+	spi3_cs_pins: spi3-cs-pins {
-+		/* CS# */
-+		pins = "GPIO_46";
-+		function = "gpio";
-+	};
-+
- 	usart0_pins: usart0-pins {
- 		/* RXD, TXD */
- 		pins = "GPIO_25", "GPIO_26";
+ static const struct gpio_chip bcm2835_gpio_chip = {
 -- 
 2.39.2
 
