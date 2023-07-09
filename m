@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCDB522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:22:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8E3C433C7;
-	Sun,  9 Jul 2023 11:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E46522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C56EC433C8;
+	Sun,  9 Jul 2023 11:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901740;
-	bh=YLtuFiXczejt71s4hv91zMwl5I7hIsP9cwNdR5sn5ws=;
+	s=korg; t=1688901742;
+	bh=pliFVdMuf51GMDN9egQxiP92mH1yOS+LjzSYlEzTJBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmd7S4IZ0veIV4fqUAirkKSfJZig+s0GsraRrPGvvOAORkL48MTVjZeiHRAJN3bAw
-	 TKcjMBsf5exrbRCG7t3l86q4ndTsy4Mj1OJsAWRBkicAKGVxRIr/6O+I87wY0/wLb2
-	 Z3Jk91iZo0yfca5fNiG2/G9WP4QsAcY+4MpgK/CY=
+	b=1Zu8xNcxJgNL6zkDAT/4pDgjRZy/06FuOs9qGbJQRQ9T0pVCAUTIoSEJBJifjHpN3
+	 nPRxa8mUDVPYXyzRs1WBx36HUHI7n4RHeGl4K38P+5y75ZlkOGUqZKGQulwgPR9pXz
+	 Gft5nzuB3CvBDAJAdBJD24d6UnmMgUoo7z38kUI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Song Liu <song@kernel.org>,
-	Jiri Olsa <olsajiri@gmail.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 091/431] bpf: Remove bpf trampoline selector
-Date: Sun,  9 Jul 2023 13:10:39 +0200
-Message-ID: <20230709111453.286801273@linuxfoundation.org>
+Subject: [PATCH 6.3 121/431] wifi: ath11k: Add missing check for ioremap
+Date: Sun,  9 Jul 2023 13:11:09 +0200
+Message-ID: <20230709111453.995043679@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,100 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 47e79cbeea4b3891ad476047f4c68543eb51c8e0 ]
+[ Upstream commit 16e0077e14a73866e9b0f4a6bf4ad3d4a5cb0f2a ]
 
-After commit e21aa341785c ("bpf: Fix fexit trampoline."), the selector is only
-used to indicate how many times the bpf trampoline image are updated and been
-displayed in the trampoline ksym name. After the trampoline is freed, the
-selector will start from 0 again. So the selector is a useless value to the
-user. We can remove it.
+Add check for ioremap() and return the error if it fails in order to
+guarantee the success of ioremap(), same as in
+ath11k_qmi_load_file_target_mem().
 
-If the user want to check whether the bpf trampoline image has been updated
-or not, the user can compare the address. Each time the trampoline image is
-updated, the address will change consequently. Jiri also pointed out another
-issue that perf is still using the old name "bpf_trampoline_%lu", so this
-change can fix the issue in perf.
-
-Fixes: e21aa341785c ("bpf: Fix fexit trampoline.")
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Song Liu <song@kernel.org>
-Cc: Jiri Olsa <olsajiri@gmail.com>
-Link: https://lore.kernel.org/bpf/ZFvOOlrmHiY9AgXE@krava
-Link: https://lore.kernel.org/bpf/20230515130849.57502-3-laoar.shao@gmail.com
+Fixes: 6ac04bdc5edb ("ath11k: Use reserved host DDR addresses from DT for PCI devices")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230608022858.27405-1-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h     |  1 -
- kernel/bpf/trampoline.c | 11 ++++-------
- 2 files changed, 4 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath11k/qmi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 5bd6ac04773aa..18397e54bac18 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1082,7 +1082,6 @@ struct bpf_trampoline {
- 	int progs_cnt[BPF_TRAMP_MAX];
- 	/* Executable image of trampoline */
- 	struct bpf_tramp_image *cur_image;
--	u64 selector;
- 	struct module *mod;
- };
- 
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index d0ed7d6f5eec5..213d9b3cb06ad 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -372,7 +372,7 @@ static void bpf_tramp_image_put(struct bpf_tramp_image *im)
- 	call_rcu_tasks_trace(&im->rcu, __bpf_tramp_image_put_rcu_tasks);
- }
- 
--static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key, u32 idx)
-+static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key)
- {
- 	struct bpf_tramp_image *im;
- 	struct bpf_ksym *ksym;
-@@ -399,7 +399,7 @@ static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key, u32 idx)
- 
- 	ksym = &im->ksym;
- 	INIT_LIST_HEAD_RCU(&ksym->lnode);
--	snprintf(ksym->name, KSYM_NAME_LEN, "bpf_trampoline_%llu_%u", key, idx);
-+	snprintf(ksym->name, KSYM_NAME_LEN, "bpf_trampoline_%llu", key);
- 	bpf_image_ksym_add(image, ksym);
- 	return im;
- 
-@@ -429,11 +429,10 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
- 		err = unregister_fentry(tr, tr->cur_image->image);
- 		bpf_tramp_image_put(tr->cur_image);
- 		tr->cur_image = NULL;
--		tr->selector = 0;
- 		goto out;
- 	}
- 
--	im = bpf_tramp_image_alloc(tr->key, tr->selector);
-+	im = bpf_tramp_image_alloc(tr->key);
- 	if (IS_ERR(im)) {
- 		err = PTR_ERR(im);
- 		goto out;
-@@ -470,8 +469,7 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
- 
- 	set_memory_rox((long)im->image, 1);
- 
--	WARN_ON(tr->cur_image && tr->selector == 0);
--	WARN_ON(!tr->cur_image && tr->selector);
-+	WARN_ON(tr->cur_image && total == 0);
- 	if (tr->cur_image)
- 		/* progs already running at this address */
- 		err = modify_fentry(tr, tr->cur_image->image, im->image, lock_direct_mutex);
-@@ -501,7 +499,6 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
- 	if (tr->cur_image)
- 		bpf_tramp_image_put(tr->cur_image);
- 	tr->cur_image = im;
--	tr->selector++;
- out:
- 	/* If any error happens, restore previous flags */
- 	if (err)
+diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
+index ab923e24b0a9c..2328b9447cf1b 100644
+--- a/drivers/net/wireless/ath/ath11k/qmi.c
++++ b/drivers/net/wireless/ath/ath11k/qmi.c
+@@ -2058,6 +2058,9 @@ static int ath11k_qmi_assign_target_mem_chunk(struct ath11k_base *ab)
+ 			ab->qmi.target_mem[idx].iaddr =
+ 				ioremap(ab->qmi.target_mem[idx].paddr,
+ 					ab->qmi.target_mem[i].size);
++			if (!ab->qmi.target_mem[idx].iaddr)
++				return -EIO;
++
+ 			ab->qmi.target_mem[idx].size = ab->qmi.target_mem[i].size;
+ 			host_ddr_sz = ab->qmi.target_mem[i].size;
+ 			ab->qmi.target_mem[idx].type = ab->qmi.target_mem[i].type;
+@@ -2083,6 +2086,8 @@ static int ath11k_qmi_assign_target_mem_chunk(struct ath11k_base *ab)
+ 					ab->qmi.target_mem[idx].iaddr =
+ 						ioremap(ab->qmi.target_mem[idx].paddr,
+ 							ab->qmi.target_mem[i].size);
++					if (!ab->qmi.target_mem[idx].iaddr)
++						return -EIO;
+ 				} else {
+ 					ab->qmi.target_mem[idx].paddr =
+ 						ATH11K_QMI_CALDB_ADDRESS;
 -- 
 2.39.2
 
