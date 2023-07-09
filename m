@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D07E522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:29:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44A3C433C7;
-	Sun,  9 Jul 2023 11:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A06522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:29:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A69C433C7;
+	Sun,  9 Jul 2023 11:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902182;
-	bh=w8ECqtR7M4AT+PxaL9qqPkJxhQoxNuJYGKoeoJPOc8U=;
+	s=korg; t=1688902184;
+	bh=SORK1aoTIiGQJFzCcLYGUvM8u2A529jDTokNZs7c/Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrfwnRpIKv66YSxtWaqYr2iEImY6AlEtWoF3/y20NSe5Wlk1G5S/KNRDJ2Q8tbedr
-	 BSEA4fs1CtlqPMfVMkYTkBCVyPXQd4cTIzTJEuLrOrQFYXL7DMFf315ZZzHV/03r3X
-	 0eaeCP6b3BDz/D47IjUrjSfab69VWGb5HL0uCnIQ=
+	b=YMEeCVpAfvhqJSsPK08eRoTMcPomIYt6YaXOJiKomWO4lteEqWOwNy35u6okjWjN6
+	 9aViz+RxcgokwFApTGktOky3Nb2kDy66zpB2Mas4EX0gWZJivMnf1ocpdIDkoAygJh
+	 mpV7ISkX7PVltbKSSzW+S02ybtsrPVfiBpOsx5RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Skladowski <a39.skl@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@chromium.org>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 285/431] drm/msm/a5xx: really check for A510 in a5xx_gpu_init
-Date: Sun,  9 Jul 2023 13:13:53 +0200
-Message-ID: <20230709111457.827886912@linuxfoundation.org>
+Subject: [PATCH 6.3 286/431] RDMA/bnxt_re: wraparound mbox producer index
+Date: Sun,  9 Jul 2023 13:13:54 +0200
+Message-ID: <20230709111457.851754804@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,48 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 736a9327365644b460e4498b1ce172ca411efcbc ]
+[ Upstream commit 0af91306e17ef3d18e5f100aa58aa787869118af ]
 
-The commit 010c8bbad2cb ("drm: msm: adreno: Disable preemption on Adreno
-510") added special handling for a510 (this SKU doesn't seem to support
-preemption, so the driver should clamp nr_rings to 1). However the
-gpu->revn is not yet set (it is set later, in adreno_gpu_init()) and
-thus the condition is always false. Check config->rev instead.
+Driver is not handling the wraparound of the mbox producer index correctly.
+Currently the wraparound happens once u32 max is reached.
 
-Fixes: 010c8bbad2cb ("drm: msm: adreno: Disable preemption on Adreno 510")
-Reported-by: Adam Skladowski <a39.skl@gmail.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Adam Skladowski <a39.skl@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/531511/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Bit 31 of the producer index register is special and should be set
+only once for the first command. Because the producer index overflow
+setting bit31 after a long time, FW goes to initialization sequence
+and this causes FW hang.
+
+Fix is to wraparound the mbox producer index once it reaches u16 max.
+
+Fixes: cee0c7bba486 ("RDMA/bnxt_re: Refactor command queue management code")
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1686308514-11996-2-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index 0372f89082022..660c830c68764 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -1740,6 +1740,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct platform_device *pdev = priv->gpu_pdev;
-+	struct adreno_platform_config *config = pdev->dev.platform_data;
- 	struct a5xx_gpu *a5xx_gpu = NULL;
- 	struct adreno_gpu *adreno_gpu;
- 	struct msm_gpu *gpu;
-@@ -1766,7 +1767,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+index 9c63b8b62edfc..3d76fa71641a4 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+@@ -181,7 +181,7 @@ static int __send_message(struct bnxt_qplib_rcfw *rcfw, struct cmdq_base *req,
+ 	} while (size > 0);
+ 	cmdq->seq_num++;
  
- 	nr_rings = 4;
+-	cmdq_prod = hwq->prod;
++	cmdq_prod = hwq->prod & 0xFFFF;
+ 	if (test_bit(FIRMWARE_FIRST_FLAG, &cmdq->flags)) {
+ 		/* The very first doorbell write
+ 		 * is required to set this flag
+@@ -598,7 +598,7 @@ int bnxt_qplib_alloc_rcfw_channel(struct bnxt_qplib_res *res,
+ 		rcfw->cmdq_depth = BNXT_QPLIB_CMDQE_MAX_CNT_8192;
  
--	if (adreno_is_a510(adreno_gpu))
-+	if (adreno_cmp_rev(ADRENO_REV(5, 1, 0, ANY_ID), config->rev))
- 		nr_rings = 1;
- 
- 	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, nr_rings);
+ 	sginfo.pgsize = bnxt_qplib_cmdqe_page_size(rcfw->cmdq_depth);
+-	hwq_attr.depth = rcfw->cmdq_depth;
++	hwq_attr.depth = rcfw->cmdq_depth & 0x7FFFFFFF;
+ 	hwq_attr.stride = BNXT_QPLIB_CMDQE_UNITS;
+ 	hwq_attr.type = HWQ_TYPE_CTX;
+ 	if (bnxt_qplib_alloc_init_hwq(&cmdq->hwq, &hwq_attr)) {
 -- 
 2.39.2
 
