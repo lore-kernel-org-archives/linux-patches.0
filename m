@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E5D522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:28:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73135C433C7;
-	Sun,  9 Jul 2023 11:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED83522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:28:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B02C433C7;
+	Sun,  9 Jul 2023 11:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902080;
-	bh=fTlSuJUtvmfv/YzgOXQtYcuPDh6hHD5XPsQ4CXL5UAI=;
+	s=korg; t=1688902083;
+	bh=rJbJ5dbHadLA+e0Lyeh8vKhF6hT2DijOWtDDSrMQy6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HvWVR/fiMqfc8OfJW+Yf/RS8MagAzp3yaQ8HsPr69BFpV3xCKkK9Q5npiQoqzI457
-	 AU3XABJuvnAjv1mhl6RKVmqIYe+AC3Rw/L5gKtfchKawq9S8xmpPXh5k/1AWNKFELR
-	 oil1cYeJxwEudELtnK6Qomd79/Ip8fCq22GhN9iA=
+	b=MSzsWNRStAv8Ij5Jlryo2fEy/QrjJdjBwxCVhecf/Dy8nCBFvaQjn549DHgH+9m0j
+	 ZyNE/JNAJaeKeiFVrOWEIB31g/LEG7DGzpCvvi1CgGQfUWVfkv4XmlpGi8Llb6BMV6
+	 0wzFFjCrfZ+u2H7Bpo6sEMg+g9q9/P6+tJu3uIbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 220/431] ARM: omap1: Exorcise the legacy GPIO header
-Date: Sun,  9 Jul 2023 13:12:48 +0200
-Message-ID: <20230709111456.319948924@linuxfoundation.org>
+Subject: [PATCH 6.3 211/431] iommu/virtio: Return size mapped for a detached domain
+Date: Sun,  9 Jul 2023 13:12:39 +0200
+Message-ID: <20230709111456.113892342@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -34,75 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-[ Upstream commit c729baa8604226a8f878296bd145ab4046c80b12 ]
+[ Upstream commit 7061b6af34686e7e2364b7240cfb061293218f2d ]
 
-After fixing all the offending users referencing the global GPIO
-numberspace in OMAP1, a few sites still remain including the
-legacy <linus/gpio.h> header for no reason.
+When map() is called on a detached domain, the domain does not exist in
+the device so we do not send a MAP request, but we do update the
+internal mapping tree, to be replayed on the next attach. Since this
+constitutes a successful iommu_map() call, return *mapped in this case
+too.
 
-Delete the last remaining users, and OMAP1 is free from legacy
-GPIO dependencies.
-
-Fixes: 92bf78b33b0b ("gpio: omap: use dynamic allocation of base")
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 7e62edd7a33a ("iommu/virtio: Add map/unmap_pages() callbacks implementation")
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20230515113946.1017624-3-jean-philippe@linaro.org
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap1/devices.c  | 1 -
- arch/arm/mach-omap1/gpio15xx.c | 1 -
- arch/arm/mach-omap1/gpio16xx.c | 1 -
- arch/arm/mach-omap1/irq.c      | 1 -
- 4 files changed, 4 deletions(-)
+ drivers/iommu/virtio-iommu.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/arch/arm/mach-omap1/devices.c b/arch/arm/mach-omap1/devices.c
-index 5304699c7a97e..8b2c5f911e973 100644
---- a/arch/arm/mach-omap1/devices.c
-+++ b/arch/arm/mach-omap1/devices.c
-@@ -6,7 +6,6 @@
-  */
+diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
+index fd316a37d7562..3551ed057774e 100644
+--- a/drivers/iommu/virtio-iommu.c
++++ b/drivers/iommu/virtio-iommu.c
+@@ -833,25 +833,26 @@ static int viommu_map_pages(struct iommu_domain *domain, unsigned long iova,
+ 	if (ret)
+ 		return ret;
  
- #include <linux/dma-mapping.h>
--#include <linux/gpio.h>
- #include <linux/module.h>
- #include <linux/kernel.h>
- #include <linux/init.h>
-diff --git a/arch/arm/mach-omap1/gpio15xx.c b/arch/arm/mach-omap1/gpio15xx.c
-index 61fa26efd8653..6724af4925f24 100644
---- a/arch/arm/mach-omap1/gpio15xx.c
-+++ b/arch/arm/mach-omap1/gpio15xx.c
-@@ -8,7 +8,6 @@
-  *	Charulatha V <charu@ti.com>
-  */
+-	map = (struct virtio_iommu_req_map) {
+-		.head.type	= VIRTIO_IOMMU_T_MAP,
+-		.domain		= cpu_to_le32(vdomain->id),
+-		.virt_start	= cpu_to_le64(iova),
+-		.phys_start	= cpu_to_le64(paddr),
+-		.virt_end	= cpu_to_le64(end),
+-		.flags		= cpu_to_le32(flags),
+-	};
+-
+-	if (!vdomain->nr_endpoints)
+-		return 0;
++	if (vdomain->nr_endpoints) {
++		map = (struct virtio_iommu_req_map) {
++			.head.type	= VIRTIO_IOMMU_T_MAP,
++			.domain		= cpu_to_le32(vdomain->id),
++			.virt_start	= cpu_to_le64(iova),
++			.phys_start	= cpu_to_le64(paddr),
++			.virt_end	= cpu_to_le64(end),
++			.flags		= cpu_to_le32(flags),
++		};
  
--#include <linux/gpio.h>
- #include <linux/platform_data/gpio-omap.h>
- #include <linux/soc/ti/omap1-soc.h>
- #include <asm/irq.h>
-diff --git a/arch/arm/mach-omap1/gpio16xx.c b/arch/arm/mach-omap1/gpio16xx.c
-index cf052714b3f8a..55acec22fef4e 100644
---- a/arch/arm/mach-omap1/gpio16xx.c
-+++ b/arch/arm/mach-omap1/gpio16xx.c
-@@ -8,7 +8,6 @@
-  *	Charulatha V <charu@ti.com>
-  */
+-	ret = viommu_send_req_sync(vdomain->viommu, &map, sizeof(map));
+-	if (ret)
+-		viommu_del_mappings(vdomain, iova, end);
+-	else if (mapped)
++		ret = viommu_send_req_sync(vdomain->viommu, &map, sizeof(map));
++		if (ret) {
++			viommu_del_mappings(vdomain, iova, end);
++			return ret;
++		}
++	}
++	if (mapped)
+ 		*mapped = size;
  
--#include <linux/gpio.h>
- #include <linux/platform_data/gpio-omap.h>
- #include <linux/soc/ti/omap1-io.h>
+-	return ret;
++	return 0;
+ }
  
-diff --git a/arch/arm/mach-omap1/irq.c b/arch/arm/mach-omap1/irq.c
-index 9ccc784fd6140..c780fa56bc638 100644
---- a/arch/arm/mach-omap1/irq.c
-+++ b/arch/arm/mach-omap1/irq.c
-@@ -35,7 +35,6 @@
-  * with this program; if not, write  to the Free Software Foundation, Inc.,
-  * 675 Mass Ave, Cambridge, MA 02139, USA.
-  */
--#include <linux/gpio.h>
- #include <linux/init.h>
- #include <linux/module.h>
- #include <linux/sched.h>
+ static size_t viommu_unmap_pages(struct iommu_domain *domain, unsigned long iova,
 -- 
 2.39.2
 
