@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8568A5232
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:26:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00141C433C8;
-	Sun,  9 Jul 2023 11:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6DD522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:26:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12B2C433C7;
+	Sun,  9 Jul 2023 11:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901970;
-	bh=j97IC3UZTTirl69QGwvmrQh8aZGq4tIqkya9dvtFx1M=;
+	s=korg; t=1688901973;
+	bh=pVM7GPptxHFQxGTx/Wgytsm2f/3PDluteTRb/IrAYEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+pkgKreRvNm6KhTLh4FhfP1Z+01IRn2r2y/XIWDsYbfZur5eGKWe2H7ugtJAL/yy
-	 QiyOZiw2j6Sy3O0HnDMLWp7u1Km7ShSEGV5DOONOuRQxjhr2T9kLOwALtyV4jVN6EG
-	 NChHgSv/EtEnMDne6lVqVBz722U44bQQrSaHZzqY=
+	b=ohTwkWS2lT11HObSdi5zdxfzy2s8fKDzFqmpUXLooWvY0CwDjHsAsNS71snO64Qhs
+	 LU+VFGs+jIsWEXDmZWhrpbJDbWhf3IBi6ApnxnB/xqroSRdeNzY+f7IzZRd7uyz54U
+	 LqDs8L2WXwSp21crpiDvJDmQ0HPOcpUEJUtf2vos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Karol Herbst <kherbst@redhat.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Marek Vasut <marex@denx.de>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 209/431] drm/nouveau: dispnv50: fix missing-prototypes warning
-Date: Sun,  9 Jul 2023 13:12:37 +0200
-Message-ID: <20230709111456.068771983@linuxfoundation.org>
+Subject: [PATCH 6.3 183/431] clk: rs9: Support device specific dif bit calculation
+Date: Sun,  9 Jul 2023 13:12:11 +0200
+Message-ID: <20230709111455.469722012@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,51 +36,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 504e72ed3a1b1c0d4450712a42ae6070d3a05a8e ]
+[ Upstream commit 603df193ec5174ff81c32cf1a78b7819ce984b8c ]
 
-nv50_display_create() is declared in another header, along with
-a couple of declarations that are now outdated:
+The calculation DIFx is BIT(n) +1 is only true for 9FGV0241. With
+additional devices this is getting more complicated.
+Support a base bit for the DIF calculation, currently only devices
+with consecutive bits are supported, e.g. the 6-channel device needs
+additional logic.
 
-drivers/gpu/drm/nouveau/dispnv50/disp.c:2517:1: error: no previous prototype for 'nv50_display_create'
-
-Fixes: ba801ef068c1 ("drm/nouveau/kms: display destroy/init/fini hooks can be static")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Karol Herbst <kherbst@redhat.com>
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230417210329.2469722-1-arnd@kernel.org
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20230310075535.3476580-3-alexander.stein@ew.tq-group.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: ad527ca87e4e ("clk: rs9: Fix .driver_data content in i2c_device_id")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/dispnv50/disp.c | 1 +
- drivers/gpu/drm/nouveau/nv50_display.h  | 4 +---
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/clk/clk-renesas-pcie.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/dispnv50/disp.c b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-index 5bb777ff13130..9b6824f6b9e4b 100644
---- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-@@ -64,6 +64,7 @@
- #include "nouveau_connector.h"
- #include "nouveau_encoder.h"
- #include "nouveau_fence.h"
-+#include "nv50_display.h"
+diff --git a/drivers/clk/clk-renesas-pcie.c b/drivers/clk/clk-renesas-pcie.c
+index f4e9f70f412af..0710362b2545b 100644
+--- a/drivers/clk/clk-renesas-pcie.c
++++ b/drivers/clk/clk-renesas-pcie.c
+@@ -18,7 +18,6 @@
+ #include <linux/regmap.h>
  
- #include <subdev/bios/dp.h>
+ #define RS9_REG_OE				0x0
+-#define RS9_REG_OE_DIF_OE(n)			BIT((n) + 1)
+ #define RS9_REG_SS				0x1
+ #define RS9_REG_SS_AMP_0V6			0x0
+ #define RS9_REG_SS_AMP_0V7			0x1
+@@ -31,9 +30,6 @@
+ #define RS9_REG_SS_SSC_MASK			(3 << 3)
+ #define RS9_REG_SS_SSC_LOCK			BIT(5)
+ #define RS9_REG_SR				0x2
+-#define RS9_REG_SR_2V0_DIF(n)			0
+-#define RS9_REG_SR_3V0_DIF(n)			BIT((n) + 1)
+-#define RS9_REG_SR_DIF_MASK(n)		BIT((n) + 1)
+ #define RS9_REG_REF				0x3
+ #define RS9_REG_REF_OE				BIT(4)
+ #define RS9_REG_REF_OD				BIT(5)
+@@ -160,17 +156,27 @@ static const struct regmap_config rs9_regmap_config = {
+ 	.reg_read = rs9_regmap_i2c_read,
+ };
  
-diff --git a/drivers/gpu/drm/nouveau/nv50_display.h b/drivers/gpu/drm/nouveau/nv50_display.h
-index fbd3b15583bc8..60f77766766e9 100644
---- a/drivers/gpu/drm/nouveau/nv50_display.h
-+++ b/drivers/gpu/drm/nouveau/nv50_display.h
-@@ -31,7 +31,5 @@
- #include "nouveau_reg.h"
- 
- int  nv50_display_create(struct drm_device *);
--void nv50_display_destroy(struct drm_device *);
--int  nv50_display_init(struct drm_device *);
--void nv50_display_fini(struct drm_device *);
++static u8 rs9_calc_dif(const struct rs9_driver_data *rs9, int idx)
++{
++	enum rs9_model model = rs9->chip_info->model;
 +
- #endif /* __NV50_DISPLAY_H__ */
++	if (model == RENESAS_9FGV0241)
++		return BIT(idx) + 1;
++
++	return 0;
++}
++
+ static int rs9_get_output_config(struct rs9_driver_data *rs9, int idx)
+ {
+ 	struct i2c_client *client = rs9->client;
++	u8 dif = rs9_calc_dif(rs9, idx);
+ 	unsigned char name[5] = "DIF0";
+ 	struct device_node *np;
+ 	int ret;
+ 	u32 sr;
+ 
+ 	/* Set defaults */
+-	rs9->clk_dif_sr &= ~RS9_REG_SR_DIF_MASK(idx);
+-	rs9->clk_dif_sr |= RS9_REG_SR_3V0_DIF(idx);
++	rs9->clk_dif_sr |= dif;
+ 
+ 	snprintf(name, 5, "DIF%d", idx);
+ 	np = of_get_child_by_name(client->dev.of_node, name);
+@@ -182,11 +188,9 @@ static int rs9_get_output_config(struct rs9_driver_data *rs9, int idx)
+ 	of_node_put(np);
+ 	if (!ret) {
+ 		if (sr == 2000000) {		/* 2V/ns */
+-			rs9->clk_dif_sr &= ~RS9_REG_SR_DIF_MASK(idx);
+-			rs9->clk_dif_sr |= RS9_REG_SR_2V0_DIF(idx);
++			rs9->clk_dif_sr &= ~dif;
+ 		} else if (sr == 3000000) {	/* 3V/ns (default) */
+-			rs9->clk_dif_sr &= ~RS9_REG_SR_DIF_MASK(idx);
+-			rs9->clk_dif_sr |= RS9_REG_SR_3V0_DIF(idx);
++			rs9->clk_dif_sr |= dif;
+ 		} else
+ 			ret = dev_err_probe(&client->dev, -EINVAL,
+ 					    "Invalid renesas,slew-rate value\n");
+@@ -257,11 +261,13 @@ static void rs9_update_config(struct rs9_driver_data *rs9)
+ 	}
+ 
+ 	for (i = 0; i < rs9->chip_info->num_clks; i++) {
+-		if (rs9->clk_dif_sr & RS9_REG_SR_3V0_DIF(i))
++		u8 dif = rs9_calc_dif(rs9, i);
++
++		if (rs9->clk_dif_sr & dif)
+ 			continue;
+ 
+-		regmap_update_bits(rs9->regmap, RS9_REG_SR, RS9_REG_SR_3V0_DIF(i),
+-				   rs9->clk_dif_sr & RS9_REG_SR_3V0_DIF(i));
++		regmap_update_bits(rs9->regmap, RS9_REG_SR, dif,
++				   rs9->clk_dif_sr & dif);
+ 	}
+ }
+ 
 -- 
 2.39.2
 
