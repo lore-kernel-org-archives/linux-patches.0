@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7940C522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F270CC433C8;
-	Sun,  9 Jul 2023 11:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429AF522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B45C433C7;
+	Sun,  9 Jul 2023 11:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902414;
-	bh=Be224LAlFle4iKmpYDwf/Pi+CcItcObuC7IlieF5R3E=;
+	s=korg; t=1688902417;
+	bh=b4aDIJsYHPCcG85cEpSQBYX4Ui66WK5ExCnv8e0O/i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t2bS8rEcPjqTnkSY8Mf1sbxVQbtwPjjQL4DGAKCdYN1F7XGc6iyezq1usBNV1xkFa
-	 4D08wQRmVOPoJrKj+3ejYA8ivSIX2VaXbP1f1T2d3w5NJ/s1Ue+QwxIZ2I83yaBtLU
-	 u9jD4G0r4qYbwoI/9v59T/CHk/2UbtEgVKiF68+U=
+	b=HXTzxcLzI+vz4BhO00BRhpcaRrjV88+3ytEBESLcHpS/hwpqKPiNCtXIoimK3zNZd
+	 mgNZVh+7Q4n/6ffVSIOmdP/tTOGpoo+YsUpTiqQNBAwvmx8OhxHEsnL4THfZfoxb1M
+	 Xpx0R8Oq/DWnQPuCTKLKmYb6lC7zyPZgO/5zYXAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinhong Zhu <jinhongzhu@hust.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 341/431] scsi: qedf: Fix NULL dereference in error handling
-Date: Sun,  9 Jul 2023 13:14:49 +0200
-Message-ID: <20230709111459.163380714@linuxfoundation.org>
+Subject: [PATCH 6.3 332/431] ARM: dts: lan966x: kontron-d10: fix board reset
+Date: Sun,  9 Jul 2023 13:14:40 +0200
+Message-ID: <20230709111458.958681261@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,45 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinhong Zhu <jinhongzhu@hust.edu.cn>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit f025312b089474a54e4859f3453771314d9e3d4f ]
+[ Upstream commit bfcd5714f6424c03e385e0e9296dcd69855cfea7 ]
 
-Smatch reported:
+The pinctrl node was missing which change the pin mux to GPIO mode. Add
+it.
 
-drivers/scsi/qedf/qedf_main.c:3056 qedf_alloc_global_queues()
-warn: missing unwind goto?
-
-At this point in the function, nothing has been allocated so we can return
-directly. In particular the "qedf->global_queues" have not been allocated
-so calling qedf_free_global_queues() will lead to a NULL dereference when
-we check if (!gl[i]) and "gl" is NULL.
-
-Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
-Signed-off-by: Jinhong Zhu <jinhongzhu@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230502140022.2852-1-jinhongzhu@hust.edu.cn
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 79d83b3a458e ("ARM: dts: lan966x: add basic Kontron KSwitch D10 support")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+[claudiu.beznea: moved pinctrl-* bindings after compatible]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230616-feature-d10-dt-cleanups-v1-1-50dd0452b8fe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_main.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
-index 35e16600fc637..f2c7dd4db9c64 100644
---- a/drivers/scsi/qedf/qedf_main.c
-+++ b/drivers/scsi/qedf/qedf_main.c
-@@ -3043,9 +3043,8 @@ static int qedf_alloc_global_queues(struct qedf_ctx *qedf)
- 	 * addresses of our queues
- 	 */
- 	if (!qedf->p_cpuq) {
--		status = -EINVAL;
- 		QEDF_ERR(&qedf->dbg_ctx, "p_cpuq is NULL.\n");
--		goto mem_alloc_failure;
-+		return -EINVAL;
- 	}
+diff --git a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
+index 0097e72e3fb22..42be207509a46 100644
+--- a/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
++++ b/arch/arm/boot/dts/lan966x-kontron-kswitch-d10-mmt.dtsi
+@@ -18,6 +18,8 @@ chosen {
  
- 	qedf->global_queues = kzalloc((sizeof(struct global_queue *)
+ 	gpio-restart {
+ 		compatible = "gpio-restart";
++		pinctrl-0 = <&reset_pins>;
++		pinctrl-names = "default";
+ 		gpios = <&gpio 56 GPIO_ACTIVE_LOW>;
+ 		priority = <200>;
+ 	};
+@@ -59,6 +61,12 @@ miim_c_pins: miim-c-pins {
+ 		function = "miim_c";
+ 	};
+ 
++	reset_pins: reset-pins {
++		/* SYS_RST# */
++		pins = "GPIO_56";
++		function = "gpio";
++	};
++
+ 	sgpio_a_pins: sgpio-a-pins {
+ 		/* SCK, D0, D1 */
+ 		pins = "GPIO_32", "GPIO_33", "GPIO_34";
 -- 
 2.39.2
 
