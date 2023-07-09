@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB45522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93ADC433C8;
-	Sun,  9 Jul 2023 11:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284FE522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C642C433C8;
+	Sun,  9 Jul 2023 11:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902520;
-	bh=1bI9VTkb064C9miAHigDSoX5dmCr6mkoMBRm9f4279A=;
+	s=korg; t=1688902523;
+	bh=CjEeqMPI2n/OTGK31VVR8XLwKS+V+r9xCLRenEbjhOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKZV1laTD8+AxnknB/hE2V4jGN118Lb5aCaaJ4pI+8GlszPU7G2TD0/77LQsXGfti
-	 kw1OoRtLSEBq3Qkm/wVh0ac6pG4nbZmssvemfR2ZoG+svZMtBBWQ9eCuAtHLVZ5nZI
-	 3U6eb5j3fZKOvs8IlJBvVrUZShCLFPSHWNO/ZdIk=
+	b=gkMYehF8CsQNxJ/VbW204Aq6OSOqlDxIUXcOFr2d+efFAY9EgMY3UuhNN6HF+Id/J
+	 QJN0CPH+Q6ZJKITYVTjcSAQeO93VMrreCdxdhJ0kOjEkDL5ew0NwFihoJooxdjePFh
+	 TflpwXJ7PJaJJWcRj9ym2cwDJXsLuNoyaS/3pY58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>,
+	Bolemx Sivanagaleela <bolemx.sivanagaleela@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 406/431] ARC: define ASM_NL and __ALIGN(_STR) outside #ifdef __ASSEMBLY__ guard
-Date: Sun,  9 Jul 2023 13:15:54 +0200
-Message-ID: <20230709111500.702639961@linuxfoundation.org>
+Subject: [PATCH 6.3 407/431] crypto: qat - unmap buffer before free for DH
+Date: Sun,  9 Jul 2023 13:15:55 +0200
+Message-ID: <20230709111500.726924747@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -34,59 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>
 
-[ Upstream commit 92e2921eeafdfca9acd9b83f07d2b7ca099bac24 ]
+[ Upstream commit eb7713f5ca97697b92f225127440d1525119b8de ]
 
-ASM_NL is useful not only in *.S files but also in .c files for using
-inline assembler in C code.
+The callback function for DH frees the memory allocated for the
+destination buffer before unmapping it.
+This sequence is wrong.
 
-On ARC, however, ASM_NL is evaluated inconsistently. It is expanded to
-a backquote (`) in *.S files, but a semicolon (;) in *.c files because
-arch/arc/include/asm/linkage.h defines it inside #ifdef __ASSEMBLY__,
-so the definition for C code falls back to the default value defined in
-include/linux/linkage.h.
+Change the cleanup sequence to unmap the buffer before freeing it.
 
-If ASM_NL is used in inline assembler in .c files, it will result in
-wrong assembly code because a semicolon is not an instruction separator,
-but the start of a comment for ARC.
-
-Move ASM_NL (also __ALIGN and __ALIGN_STR) out of the #ifdef.
-
-Fixes: 9df62f054406 ("arch: use ASM_NL instead of ';' for assembler new line character in the macro")
-Fixes: 8d92e992a785 ("ARC: define __ALIGN_STR and __ALIGN symbols for ARC")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 029aa4624a7f ("crypto: qat - remove dma_free_coherent() for DH")
+Signed-off-by: Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>
+Co-developed-by: Bolemx Sivanagaleela <bolemx.sivanagaleela@intel.com>
+Signed-off-by: Bolemx Sivanagaleela <bolemx.sivanagaleela@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/include/asm/linkage.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/crypto/qat/qat_common/qat_asym_algs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arc/include/asm/linkage.h b/arch/arc/include/asm/linkage.h
-index c9434ff3aa4ce..8a3fb71e9cfad 100644
---- a/arch/arc/include/asm/linkage.h
-+++ b/arch/arc/include/asm/linkage.h
-@@ -8,6 +8,10 @@
+diff --git a/drivers/crypto/qat/qat_common/qat_asym_algs.c b/drivers/crypto/qat/qat_common/qat_asym_algs.c
+index 935a7e012946e..8806242469a06 100644
+--- a/drivers/crypto/qat/qat_common/qat_asym_algs.c
++++ b/drivers/crypto/qat/qat_common/qat_asym_algs.c
+@@ -170,15 +170,14 @@ static void qat_dh_cb(struct icp_qat_fw_pke_resp *resp)
+ 	}
  
- #include <asm/dwarf.h>
+ 	areq->dst_len = req->ctx.dh->p_size;
++	dma_unmap_single(dev, req->out.dh.r, req->ctx.dh->p_size,
++			 DMA_FROM_DEVICE);
+ 	if (req->dst_align) {
+ 		scatterwalk_map_and_copy(req->dst_align, areq->dst, 0,
+ 					 areq->dst_len, 1);
+ 		kfree_sensitive(req->dst_align);
+ 	}
  
-+#define ASM_NL		 `	/* use '`' to mark new line in macro */
-+#define __ALIGN		.align 4
-+#define __ALIGN_STR	__stringify(__ALIGN)
-+
- #ifdef __ASSEMBLY__
- 
- .macro ST2 e, o, off
-@@ -28,10 +32,6 @@
- #endif
- .endm
- 
--#define ASM_NL		 `	/* use '`' to mark new line in macro */
--#define __ALIGN		.align 4
--#define __ALIGN_STR	__stringify(__ALIGN)
+-	dma_unmap_single(dev, req->out.dh.r, req->ctx.dh->p_size,
+-			 DMA_FROM_DEVICE);
 -
- /* annotation for data we want in DCCM - if enabled in .config */
- .macro ARCFP_DATA nm
- #ifdef CONFIG_ARC_HAS_DCCM
+ 	dma_unmap_single(dev, req->phy_in, sizeof(struct qat_dh_input_params),
+ 			 DMA_TO_DEVICE);
+ 	dma_unmap_single(dev, req->phy_out,
 -- 
 2.39.2
 
