@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86524522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:31:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A42C433C7;
-	Sun,  9 Jul 2023 11:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FFB522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:31:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD88CC433C7;
+	Sun,  9 Jul 2023 11:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902280;
-	bh=pT9oQ4BzMcVwhGlxL2/bGZ7IEIkYg1PgfMYNj8/7h6A=;
+	s=korg; t=1688902283;
+	bh=pkTyLnTXoNNImM0BC9ZLSeogMBrGkxl1xXEMvkA8rJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+L7R0Rvj3Ifg22X8mCodGAejFSKyfGM4P7SKL6D5zmiCYmLamJ5LEmjnWcjS40Bt
-	 IFtOz+KGFYJvmsSb+ppeI3KuacZup8lhJ8y53L9ewJCQhvRPnmBZCNq1x4a0TFHVaf
-	 nreu/8nr9Pp7Vdh96sQsR7rg64PICZoMdSxhSx5Q=
+	b=UDGVddiIhpUFPg+N5Ol8l8BsX5rkS3I2HBQ12sGijrK4Qi+ZDTKR5a/kaYkmTmSTs
+	 hivWGjQM99c9e3ExwM7IyEI2/u0LmoC1TwvnYb0C+KOuxWBOZc9zSQtf1vb+RAD33x
+	 LkA+TEoqiwctt47QAH45oL1jVsxXZd58ynxAMN20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 320/431] clk: mediatek: clk-mt8173-apmixedsys: Fix iomap not released issue
-Date: Sun,  9 Jul 2023 13:14:28 +0200
-Message-ID: <20230709111458.680659612@linuxfoundation.org>
+Subject: [PATCH 6.3 321/431] clk: vc5: check memory returned by kasprintf()
+Date: Sun,  9 Jul 2023 13:14:29 +0200
+Message-ID: <20230709111458.703690787@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,47 +36,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit b270ae61730e0ebccee39a21dd3311d6896a38ae ]
+[ Upstream commit 144601f6228de5598f03e693822b60a95c367a17 ]
 
-In case of error after of_ioremap() the resource must be released:
-call iounmap() where appropriate to fix that.
+kasprintf() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-Fixes: 41138fbf876c ("clk: mediatek: mt8173: Migrate to platform driver and common probe")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230615122051.546985-4-angelogioacchino.delregno@collabora.com
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Fixes: f491276a5168 ("clk: vc5: Allow Versaclock driver to support multiple instances")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230530093913.1656095-2-claudiu.beznea@microchip.com
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt8173-apmixedsys.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/clk-versaclock5.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/clk/mediatek/clk-mt8173-apmixedsys.c b/drivers/clk/mediatek/clk-mt8173-apmixedsys.c
-index a335d076d3f28..0b95d14c18042 100644
---- a/drivers/clk/mediatek/clk-mt8173-apmixedsys.c
-+++ b/drivers/clk/mediatek/clk-mt8173-apmixedsys.c
-@@ -95,8 +95,10 @@ static int clk_mt8173_apmixed_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/drivers/clk/clk-versaclock5.c b/drivers/clk/clk-versaclock5.c
+index 5452471b7ba55..e9a7f3c91ae0e 100644
+--- a/drivers/clk/clk-versaclock5.c
++++ b/drivers/clk/clk-versaclock5.c
+@@ -1028,6 +1028,11 @@ static int vc5_probe(struct i2c_client *client)
+ 	}
  
- 	clk_data = mtk_alloc_clk_data(CLK_APMIXED_NR_CLK);
--	if (IS_ERR_OR_NULL(clk_data))
-+	if (IS_ERR_OR_NULL(clk_data)) {
-+		iounmap(base);
- 		return -ENOMEM;
+ 	init.name = kasprintf(GFP_KERNEL, "%pOFn.mux", client->dev.of_node);
++	if (!init.name) {
++		ret = -ENOMEM;
++		goto err_clk;
 +	}
- 
- 	r = mtk_clk_register_plls(node, plls, ARRAY_SIZE(plls), clk_data);
- 	if (r)
-@@ -127,6 +129,7 @@ static int clk_mt8173_apmixed_probe(struct platform_device *pdev)
- 	mtk_clk_unregister_plls(plls, ARRAY_SIZE(plls), clk_data);
- free_clk_data:
- 	mtk_free_clk_data(clk_data);
-+	iounmap(base);
- 	return r;
- }
- 
++
+ 	init.ops = &vc5_mux_ops;
+ 	init.flags = 0;
+ 	init.parent_names = parent_names;
+@@ -1042,6 +1047,10 @@ static int vc5_probe(struct i2c_client *client)
+ 		memset(&init, 0, sizeof(init));
+ 		init.name = kasprintf(GFP_KERNEL, "%pOFn.dbl",
+ 				      client->dev.of_node);
++		if (!init.name) {
++			ret = -ENOMEM;
++			goto err_clk;
++		}
+ 		init.ops = &vc5_dbl_ops;
+ 		init.flags = CLK_SET_RATE_PARENT;
+ 		init.parent_names = parent_names;
+@@ -1057,6 +1066,10 @@ static int vc5_probe(struct i2c_client *client)
+ 	/* Register PFD */
+ 	memset(&init, 0, sizeof(init));
+ 	init.name = kasprintf(GFP_KERNEL, "%pOFn.pfd", client->dev.of_node);
++	if (!init.name) {
++		ret = -ENOMEM;
++		goto err_clk;
++	}
+ 	init.ops = &vc5_pfd_ops;
+ 	init.flags = CLK_SET_RATE_PARENT;
+ 	init.parent_names = parent_names;
+@@ -1074,6 +1087,10 @@ static int vc5_probe(struct i2c_client *client)
+ 	/* Register PLL */
+ 	memset(&init, 0, sizeof(init));
+ 	init.name = kasprintf(GFP_KERNEL, "%pOFn.pll", client->dev.of_node);
++	if (!init.name) {
++		ret = -ENOMEM;
++		goto err_clk;
++	}
+ 	init.ops = &vc5_pll_ops;
+ 	init.flags = CLK_SET_RATE_PARENT;
+ 	init.parent_names = parent_names;
+@@ -1093,6 +1110,10 @@ static int vc5_probe(struct i2c_client *client)
+ 		memset(&init, 0, sizeof(init));
+ 		init.name = kasprintf(GFP_KERNEL, "%pOFn.fod%d",
+ 				      client->dev.of_node, idx);
++		if (!init.name) {
++			ret = -ENOMEM;
++			goto err_clk;
++		}
+ 		init.ops = &vc5_fod_ops;
+ 		init.flags = CLK_SET_RATE_PARENT;
+ 		init.parent_names = parent_names;
+@@ -1111,6 +1132,10 @@ static int vc5_probe(struct i2c_client *client)
+ 	memset(&init, 0, sizeof(init));
+ 	init.name = kasprintf(GFP_KERNEL, "%pOFn.out0_sel_i2cb",
+ 			      client->dev.of_node);
++	if (!init.name) {
++		ret = -ENOMEM;
++		goto err_clk;
++	}
+ 	init.ops = &vc5_clk_out_ops;
+ 	init.flags = CLK_SET_RATE_PARENT;
+ 	init.parent_names = parent_names;
+@@ -1137,6 +1162,10 @@ static int vc5_probe(struct i2c_client *client)
+ 		memset(&init, 0, sizeof(init));
+ 		init.name = kasprintf(GFP_KERNEL, "%pOFn.out%d",
+ 				      client->dev.of_node, idx + 1);
++		if (!init.name) {
++			ret = -ENOMEM;
++			goto err_clk;
++		}
+ 		init.ops = &vc5_clk_out_ops;
+ 		init.flags = CLK_SET_RATE_PARENT;
+ 		init.parent_names = parent_names;
 -- 
 2.39.2
 
