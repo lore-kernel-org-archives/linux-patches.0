@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2357522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CA8C433C8;
-	Sun,  9 Jul 2023 11:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92840522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F8AC433C7;
+	Sun,  9 Jul 2023 11:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901833;
-	bh=LZtVAwtME7iP+q2uqEAfoqIyf7Iti8DPLXHXcXXzCPQ=;
+	s=korg; t=1688901836;
+	bh=FsYL38Lg6mo+P1dW9U0WoXVn8cNFBgdXR+obqNHGfPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u42OVnNuM3TgW3VOAisVGY2y/Cn4VU0sshi6OhJQsFy21Yw27ER5tNK69JxqgQKHv
-	 igXAtE1GoFhYuDIQebllQQt3EsD9Yqmj/KDpu7jqbHmz7l9pGiUP9vMHIZ+dBfdG3t
-	 Fs4f8U8M/UfIt6S4qAJ1zBaCfGY+XHYZopUYdjo4=
+	b=dwvUKtNNqBWvBgwGXRgNsu7r+/wUKY2SjDaCElRN0f8SBLa5PBu0tgM4akeGpS6Ed
+	 I8kuDT36BzMXbmaKJztOnOqvyH/stQA1fG8Ugfe+iS7wymSnA3pCjXruaZbAjJ5sd4
+	 mGebnW/OxajPFUq9qjZypjKB31/6KQTO4kjqRk+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 161/431] bootmem: remove the vmemmap pages from kmemleak in free_bootmem_page
-Date: Sun,  9 Jul 2023 13:11:49 +0200
-Message-ID: <20230709111454.948463588@linuxfoundation.org>
+	John Harrison <John.C.Harrison@Intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 162/431] drm/i915/guc: More debug print updates - GuC SLPC
+Date: Sun,  9 Jul 2023 13:11:50 +0200
+Message-ID: <20230709111454.973426993@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -38,49 +35,267 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-commit 028725e73375a1ff080bbdf9fb503306d0116f28 upstream.
+[ Upstream commit 9847ffce9b5f83a7707504b0127aeb6a05dbd378 ]
 
-commit dd0ff4d12dd2 ("bootmem: remove the vmemmap pages from kmemleak in
-put_page_bootmem") fix an overlaps existing problem of kmemleak.  But the
-problem still existed when HAVE_BOOTMEM_INFO_NODE is disabled, because in
-this case, free_bootmem_page() will call free_reserved_page() directly.
+Update a bunch more debug prints to use the new GT based scheme.
 
-Fix the problem by adding kmemleak_free_part() in free_bootmem_page() when
-HAVE_BOOTMEM_INFO_NODE is disabled.
+v2: Also change prints to use %pe for error values (MichalW).
 
-Link: https://lkml.kernel.org/r/20230704101942.2819426-1-liushixin2@huawei.com
-Fixes: f41f2ed43ca5 ("mm: hugetlb: free the vmemmap pages associated with each HugeTLB page")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Acked-by: Muchun Song <songmuchun@bytedance.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230207050717.1833718-6-John.C.Harrison@Intel.com
+Stable-dep-of: 55f9720dbf23 ("drm/i915/guc/slpc: Provide sysfs for efficient freq")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bootmem_info.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c   |  8 +--
+ drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c | 61 ++++++++-------------
+ 2 files changed, 26 insertions(+), 43 deletions(-)
 
---- a/include/linux/bootmem_info.h
-+++ b/include/linux/bootmem_info.h
-@@ -3,6 +3,7 @@
- #define __LINUX_BOOTMEM_INFO_H
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c
+index 8f8dd05835c5a..1adec6de223c7 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c
+@@ -6,6 +6,7 @@
+ #include <linux/string_helpers.h>
  
- #include <linux/mm.h>
-+#include <linux/kmemleak.h>
+ #include "intel_guc_rc.h"
++#include "intel_guc_print.h"
+ #include "gt/intel_gt.h"
+ #include "i915_drv.h"
  
- /*
-  * Types for free bootmem stored in page->lru.next. These have to be in
-@@ -59,6 +60,7 @@ static inline void get_page_bootmem(unsi
+@@ -59,13 +60,12 @@ static int __guc_rc_control(struct intel_guc *guc, bool enable)
  
- static inline void free_bootmem_page(struct page *page)
- {
-+	kmemleak_free_part(page_to_virt(page), PAGE_SIZE);
- 	free_reserved_page(page);
+ 	ret = guc_action_control_gucrc(guc, enable);
+ 	if (ret) {
+-		i915_probe_error(guc_to_gt(guc)->i915, "Failed to %s GuC RC (%pe)\n",
+-				 str_enable_disable(enable), ERR_PTR(ret));
++		guc_probe_error(guc, "Failed to %s RC (%pe)\n",
++				str_enable_disable(enable), ERR_PTR(ret));
+ 		return ret;
+ 	}
+ 
+-	drm_info(&gt->i915->drm, "GuC RC: %s\n",
+-		 str_enabled_disabled(enable));
++	guc_info(guc, "RC %s\n", str_enabled_disabled(enable));
+ 
+ 	return 0;
  }
- #endif
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
+index 63464933cbceb..026d73855f36c 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
+@@ -9,6 +9,7 @@
+ #include "i915_drv.h"
+ #include "i915_reg.h"
+ #include "intel_guc_slpc.h"
++#include "intel_guc_print.h"
+ #include "intel_mchbar_regs.h"
+ #include "gt/intel_gt.h"
+ #include "gt/intel_gt_regs.h"
+@@ -171,14 +172,12 @@ static int guc_action_slpc_query(struct intel_guc *guc, u32 offset)
+ static int slpc_query_task_state(struct intel_guc_slpc *slpc)
+ {
+ 	struct intel_guc *guc = slpc_to_guc(slpc);
+-	struct drm_i915_private *i915 = slpc_to_i915(slpc);
+ 	u32 offset = intel_guc_ggtt_offset(guc, slpc->vma);
+ 	int ret;
+ 
+ 	ret = guc_action_slpc_query(guc, offset);
+ 	if (unlikely(ret))
+-		i915_probe_error(i915, "Failed to query task state (%pe)\n",
+-				 ERR_PTR(ret));
++		guc_probe_error(guc, "Failed to query task state: %pe\n", ERR_PTR(ret));
+ 
+ 	drm_clflush_virt_range(slpc->vaddr, SLPC_PAGE_SIZE_BYTES);
+ 
+@@ -188,15 +187,14 @@ static int slpc_query_task_state(struct intel_guc_slpc *slpc)
+ static int slpc_set_param(struct intel_guc_slpc *slpc, u8 id, u32 value)
+ {
+ 	struct intel_guc *guc = slpc_to_guc(slpc);
+-	struct drm_i915_private *i915 = slpc_to_i915(slpc);
+ 	int ret;
+ 
+ 	GEM_BUG_ON(id >= SLPC_MAX_PARAM);
+ 
+ 	ret = guc_action_slpc_set_param(guc, id, value);
+ 	if (ret)
+-		i915_probe_error(i915, "Failed to set param %d to %u (%pe)\n",
+-				 id, value, ERR_PTR(ret));
++		guc_probe_error(guc, "Failed to set param %d to %u: %pe\n",
++				id, value, ERR_PTR(ret));
+ 
+ 	return ret;
+ }
+@@ -212,8 +210,8 @@ static int slpc_unset_param(struct intel_guc_slpc *slpc, u8 id)
+ 
+ static int slpc_force_min_freq(struct intel_guc_slpc *slpc, u32 freq)
+ {
+-	struct drm_i915_private *i915 = slpc_to_i915(slpc);
+ 	struct intel_guc *guc = slpc_to_guc(slpc);
++	struct drm_i915_private *i915 = slpc_to_i915(slpc);
+ 	intel_wakeref_t wakeref;
+ 	int ret = 0;
+ 
+@@ -236,9 +234,8 @@ static int slpc_force_min_freq(struct intel_guc_slpc *slpc, u32 freq)
+ 					SLPC_PARAM_GLOBAL_MIN_GT_UNSLICE_FREQ_MHZ,
+ 					freq);
+ 		if (ret)
+-			drm_notice(&i915->drm,
+-				   "Failed to send set_param for min freq(%d): (%d)\n",
+-				   freq, ret);
++			guc_notice(guc, "Failed to send set_param for min freq(%d): %pe\n",
++				   freq, ERR_PTR(ret));
+ 	}
+ 
+ 	return ret;
+@@ -267,7 +264,6 @@ static void slpc_boost_work(struct work_struct *work)
+ int intel_guc_slpc_init(struct intel_guc_slpc *slpc)
+ {
+ 	struct intel_guc *guc = slpc_to_guc(slpc);
+-	struct drm_i915_private *i915 = slpc_to_i915(slpc);
+ 	u32 size = PAGE_ALIGN(sizeof(struct slpc_shared_data));
+ 	int err;
+ 
+@@ -275,9 +271,7 @@ int intel_guc_slpc_init(struct intel_guc_slpc *slpc)
+ 
+ 	err = intel_guc_allocate_and_map_vma(guc, size, &slpc->vma, (void **)&slpc->vaddr);
+ 	if (unlikely(err)) {
+-		i915_probe_error(i915,
+-				 "Failed to allocate SLPC struct (err=%pe)\n",
+-				 ERR_PTR(err));
++		guc_probe_error(guc, "Failed to allocate SLPC struct: %pe\n", ERR_PTR(err));
+ 		return err;
+ 	}
+ 
+@@ -338,7 +332,6 @@ static int guc_action_slpc_reset(struct intel_guc *guc, u32 offset)
+ 
+ static int slpc_reset(struct intel_guc_slpc *slpc)
+ {
+-	struct drm_i915_private *i915 = slpc_to_i915(slpc);
+ 	struct intel_guc *guc = slpc_to_guc(slpc);
+ 	u32 offset = intel_guc_ggtt_offset(guc, slpc->vma);
+ 	int ret;
+@@ -346,15 +339,14 @@ static int slpc_reset(struct intel_guc_slpc *slpc)
+ 	ret = guc_action_slpc_reset(guc, offset);
+ 
+ 	if (unlikely(ret < 0)) {
+-		i915_probe_error(i915, "SLPC reset action failed (%pe)\n",
+-				 ERR_PTR(ret));
++		guc_probe_error(guc, "SLPC reset action failed: %pe\n", ERR_PTR(ret));
+ 		return ret;
+ 	}
+ 
+ 	if (!ret) {
+ 		if (wait_for(slpc_is_running(slpc), SLPC_RESET_TIMEOUT_MS)) {
+-			i915_probe_error(i915, "SLPC not enabled! State = %s\n",
+-					 slpc_get_state_string(slpc));
++			guc_probe_error(guc, "SLPC not enabled! State = %s\n",
++					slpc_get_state_string(slpc));
+ 			return -EIO;
+ 		}
+ 	}
+@@ -495,8 +487,8 @@ int intel_guc_slpc_set_min_freq(struct intel_guc_slpc *slpc, u32 val)
+ 			     SLPC_PARAM_IGNORE_EFFICIENT_FREQUENCY,
+ 			     val < slpc->rp1_freq);
+ 	if (ret) {
+-		i915_probe_error(i915, "Failed to toggle efficient freq (%pe)\n",
+-				 ERR_PTR(ret));
++		guc_probe_error(slpc_to_guc(slpc), "Failed to toggle efficient freq: %pe\n",
++				ERR_PTR(ret));
+ 		goto out;
+ 	}
+ 
+@@ -611,15 +603,12 @@ static int slpc_set_softlimits(struct intel_guc_slpc *slpc)
+ 
+ static bool is_slpc_min_freq_rpmax(struct intel_guc_slpc *slpc)
+ {
+-	struct drm_i915_private *i915 = slpc_to_i915(slpc);
+ 	int slpc_min_freq;
+ 	int ret;
+ 
+ 	ret = intel_guc_slpc_get_min_freq(slpc, &slpc_min_freq);
+ 	if (ret) {
+-		drm_err(&i915->drm,
+-			"Failed to get min freq: (%d)\n",
+-			ret);
++		guc_err(slpc_to_guc(slpc), "Failed to get min freq: %pe\n", ERR_PTR(ret));
+ 		return false;
+ 	}
+ 
+@@ -685,9 +674,8 @@ int intel_guc_slpc_override_gucrc_mode(struct intel_guc_slpc *slpc, u32 mode)
+ 	with_intel_runtime_pm(&i915->runtime_pm, wakeref) {
+ 		ret = slpc_set_param(slpc, SLPC_PARAM_PWRGATE_RC_MODE, mode);
+ 		if (ret)
+-			drm_err(&i915->drm,
+-				"Override gucrc mode %d failed %d\n",
+-				mode, ret);
++			guc_err(slpc_to_guc(slpc), "Override RC mode %d failed: %pe\n",
++				mode, ERR_PTR(ret));
+ 	}
+ 
+ 	return ret;
+@@ -702,9 +690,7 @@ int intel_guc_slpc_unset_gucrc_mode(struct intel_guc_slpc *slpc)
+ 	with_intel_runtime_pm(&i915->runtime_pm, wakeref) {
+ 		ret = slpc_unset_param(slpc, SLPC_PARAM_PWRGATE_RC_MODE);
+ 		if (ret)
+-			drm_err(&i915->drm,
+-				"Unsetting gucrc mode failed %d\n",
+-				ret);
++			guc_err(slpc_to_guc(slpc), "Unsetting RC mode failed: %pe\n", ERR_PTR(ret));
+ 	}
+ 
+ 	return ret;
+@@ -725,7 +711,7 @@ int intel_guc_slpc_unset_gucrc_mode(struct intel_guc_slpc *slpc)
+  */
+ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
+ {
+-	struct drm_i915_private *i915 = slpc_to_i915(slpc);
++	struct intel_guc *guc = slpc_to_guc(slpc);
+ 	int ret;
+ 
+ 	GEM_BUG_ON(!slpc->vma);
+@@ -734,8 +720,7 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
+ 
+ 	ret = slpc_reset(slpc);
+ 	if (unlikely(ret < 0)) {
+-		i915_probe_error(i915, "SLPC Reset event returned (%pe)\n",
+-				 ERR_PTR(ret));
++		guc_probe_error(guc, "SLPC Reset event returned: %pe\n", ERR_PTR(ret));
+ 		return ret;
+ 	}
+ 
+@@ -743,7 +728,7 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
+ 	if (unlikely(ret < 0))
+ 		return ret;
+ 
+-	intel_guc_pm_intrmsk_enable(to_gt(i915));
++	intel_guc_pm_intrmsk_enable(slpc_to_gt(slpc));
+ 
+ 	slpc_get_rp_values(slpc);
+ 
+@@ -753,16 +738,14 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
+ 	/* Set SLPC max limit to RP0 */
+ 	ret = slpc_use_fused_rp0(slpc);
+ 	if (unlikely(ret)) {
+-		i915_probe_error(i915, "Failed to set SLPC max to RP0 (%pe)\n",
+-				 ERR_PTR(ret));
++		guc_probe_error(guc, "Failed to set SLPC max to RP0: %pe\n", ERR_PTR(ret));
+ 		return ret;
+ 	}
+ 
+ 	/* Revert SLPC min/max to softlimits if necessary */
+ 	ret = slpc_set_softlimits(slpc);
+ 	if (unlikely(ret)) {
+-		i915_probe_error(i915, "Failed to set SLPC softlimits (%pe)\n",
+-				 ERR_PTR(ret));
++		guc_probe_error(guc, "Failed to set SLPC softlimits: %pe\n", ERR_PTR(ret));
+ 		return ret;
+ 	}
+ 
+-- 
+2.39.2
+
 
 
