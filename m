@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD90522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:30:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCEFBC433C7;
-	Sun,  9 Jul 2023 11:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244D1522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:30:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97DC6C433C7;
+	Sun,  9 Jul 2023 11:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902235;
-	bh=t/TYWDCOeYX6MMhr1xnokdmnP2tjOveGRxeU3fbIfVM=;
+	s=korg; t=1688902238;
+	bh=utLTqTO/SVByZxBCLv7kkP36GQI0GMHWPwqbxuFIOPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=boo/ONi851+v3lnejXsqabczAnNEmwmzDnBF5LDv7jSlbJGUte948BvL5sbMgUo8T
-	 Hfa7BDNAz/d5gVBortCJc60M5umv2jYQJzBGGbN84l4E7KgnWYGKleFWJkAuutDFg5
-	 zlZons63j+IvXoi4lJbe7fFzRaM/C+o7WvpMA8lc=
+	b=JvpKkMqZ/8657I3quJAwSJYcKXX9ZsQ/69K6GHhqL45x5lX6V5EoOPr8cwf7Y0nZp
+	 p6oVJjDUBGimYVRH7SW40WELeP4vBA/6N2hiEJPxbXLcd5bTUq6JE2VKZJtmnWAuPp
+	 1UznVkvtke8HFbms8yquO2IK1E4Mfxv1cqXVKI1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 276/431] drm/amd/display: Fix a test dml32_rq_dlg_get_rq_reg()
-Date: Sun,  9 Jul 2023 13:13:44 +0200
-Message-ID: <20230709111457.615244952@linuxfoundation.org>
+Subject: [PATCH 6.3 277/431] drm/amdkfd: Fix potential deallocation of previously deallocated memory.
+Date: Sun,  9 Jul 2023 13:13:45 +0200
+Message-ID: <20230709111457.639871238@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,37 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit bafc31166aa7df5fa26ae0ad8196d1717e6cdea9 ]
+[ Upstream commit cabbdea1f1861098991768d7bbf5a49ed1608213 ]
 
-It is likely p1_min_meta_chunk_bytes was expected here, instead of
-min_meta_chunk_bytes.
+Pointer mqd_mem_obj can be deallocated in kfd_gtt_sa_allocate().
+The function then returns non-zero value, which causes the second deallocation.
 
-Test the correct variable.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: dda4fb85e433 ("drm/amd/display: DML changes for DCN32/321")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Fixes: d1f8f0d17d40 ("drm/amdkfd: Move non-sdma mqd allocation out of init_mqd")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c   | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-index 395ae8761980f..9ba6cb67655f4 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-@@ -116,7 +116,7 @@ void dml32_rq_dlg_get_rq_reg(display_rq_regs_st *rq_regs,
- 	else
- 		rq_regs->rq_regs_l.min_meta_chunk_size = dml_log2(min_meta_chunk_bytes) - 6 + 1;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+index 0778e587a2d68..eaf084acb706f 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+@@ -115,18 +115,19 @@ static struct kfd_mem_obj *allocate_mqd(struct kfd_dev *kfd,
+ 			&(mqd_mem_obj->gtt_mem),
+ 			&(mqd_mem_obj->gpu_addr),
+ 			(void *)&(mqd_mem_obj->cpu_ptr), true);
++
++		if (retval) {
++			kfree(mqd_mem_obj);
++			return NULL;
++		}
+ 	} else {
+ 		retval = kfd_gtt_sa_allocate(kfd, sizeof(struct v9_mqd),
+ 				&mqd_mem_obj);
+-	}
+-
+-	if (retval) {
+-		kfree(mqd_mem_obj);
+-		return NULL;
++		if (retval)
++			return NULL;
+ 	}
  
--	if (min_meta_chunk_bytes == 0)
-+	if (p1_min_meta_chunk_bytes == 0)
- 		rq_regs->rq_regs_c.min_meta_chunk_size = 0;
- 	else
- 		rq_regs->rq_regs_c.min_meta_chunk_size = dml_log2(p1_min_meta_chunk_bytes) - 6 + 1;
+ 	return mqd_mem_obj;
+-
+ }
+ 
+ static void init_mqd(struct mqd_manager *mm, void **mqd,
 -- 
 2.39.2
 
