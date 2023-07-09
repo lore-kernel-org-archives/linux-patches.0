@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D240A522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:21:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C3BC433C7;
-	Sun,  9 Jul 2023 11:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42C0522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:22:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E82DC433C8;
+	Sun,  9 Jul 2023 11:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901717;
-	bh=AVSPoR5fVw312H/2t4iXkTZ0JOHb/kkKiY5WJk9zUOw=;
+	s=korg; t=1688901720;
+	bh=jaogtDk8XSrSU4yHzqA876y7Dr+sbZjzo3wvtqAtf3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8wrMiOX2qa/xEHLmsE5r1PzjMJirSvmjbmMEf8HzTMm2SJQIr4UjH4Jv5CTZEXNC
-	 fk+WlTPBh5XK+Vd1SxA2lhGi2qVC+7peBfgPJX88pvVTpoTKvFK1IrzjYdmV5EaOcy
-	 uIv1pWM1knVoIW6t7na0024LJqLdsmSGURrFEO0s=
+	b=W73oDAnPAi50JV7XM9KNypJvSWZy1ZRO4vv+Tx6DyccwG2SOilOLQ+AiO4jIfn1PU
+	 ak95LTJZ5xW78zKA675ga6veMnuAGCw5eYm+shRRsR6tLAlclDArbSKWHlcIgZOaR9
+	 mQTPRDhZxDPOkZ65Z2446lIzKAI0ExCMYU5KjgWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 119/431] wifi: mac80211: Fix permissions for valid_links debugfs entry
-Date: Sun,  9 Jul 2023 13:11:07 +0200
-Message-ID: <20230709111453.947515274@linuxfoundation.org>
+Subject: [PATCH 6.3 094/431] regulator: core: Fix more error checking for debugfs_create_dir()
+Date: Sun,  9 Jul 2023 13:10:42 +0200
+Message-ID: <20230709111453.355972995@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,36 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 4cacadc0dbd8013e6161aa8843d8e9d8ad435b47 ]
+[ Upstream commit 2715bb11cfff964aa33946847f9527cfbd4874f5 ]
 
-The entry should be a read only one and not a write only one. Fix it.
+In case of failure, debugfs_create_dir() does not return NULL, but an
+error pointer.  Most incorrect error checks were fixed, but the one in
+create_regulator() was forgotten.
 
-Fixes: 3d9011029227 ("wifi: mac80211: implement link switching")
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230611121219.c75316990411.I1565a7fcba8a37f83efffb0cc6b71c572b896e94@changeid
-[remove x16 change since it doesn't work yet]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix the remaining error check.
+
+Fixes: 2bf1c45be3b8f3a3 ("regulator: Fix error checking for debugfs_create_dir")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/ee980a108b5854dd8ce3630f8f673e784e057d17.1685013051.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs_netdev.c | 2 +-
+ drivers/regulator/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/debugfs_netdev.c b/net/mac80211/debugfs_netdev.c
-index 0bac9af3ca966..371add9061f1f 100644
---- a/net/mac80211/debugfs_netdev.c
-+++ b/net/mac80211/debugfs_netdev.c
-@@ -691,7 +691,7 @@ static void add_sta_files(struct ieee80211_sub_if_data *sdata)
- 	DEBUGFS_ADD_MODE(uapsd_queues, 0600);
- 	DEBUGFS_ADD_MODE(uapsd_max_sp_len, 0600);
- 	DEBUGFS_ADD_MODE(tdls_wider_bw, 0600);
--	DEBUGFS_ADD_MODE(valid_links, 0200);
-+	DEBUGFS_ADD_MODE(valid_links, 0400);
- 	DEBUGFS_ADD_MODE(active_links, 0600);
- }
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 323e8187a98ff..2997a26a9ce3b 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1918,7 +1918,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
  
+ 	if (err != -EEXIST)
+ 		regulator->debugfs = debugfs_create_dir(supply_name, rdev->debugfs);
+-	if (!regulator->debugfs) {
++	if (IS_ERR(regulator->debugfs)) {
+ 		rdev_dbg(rdev, "Failed to create debugfs directory\n");
+ 	} else {
+ 		debugfs_create_u32("uA_load", 0444, regulator->debugfs,
 -- 
 2.39.2
 
