@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29C3522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:29:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A392C433C7;
-	Sun,  9 Jul 2023 11:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E891522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:29:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211D8C433C7;
+	Sun,  9 Jul 2023 11:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902187;
-	bh=JYD6Bkj3QT5PG4Cl4zR2Hzuv9ExacfK6kohb7fWcNdc=;
+	s=korg; t=1688902190;
+	bh=x+npZbv8mH+79cB6bj0I7u9mYEceT9vRQ5CndDDH0Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dmsAKztokf5Lrq4ex1JRrCq8HJTgpo78N4frWH+V3tOGuNcL9UQsQ2/C3fED8tZE4
-	 sJJkiq4j3tqYC4wvKq2uzDOrXyqdd1vyAVMWj8tWQHFy51eT9BdIhWPEqVSRNY7RDO
-	 avKpw8W3X3p+L2O61+sgebAYIEj7gFezHDFOpSFI=
+	b=Tk+qZErlDCBLwaLJA/TxAjky0mmQcQyAgYC/VUPQFBp+uG1YMJeiZ49tt9Xi1T136
+	 lxnb/5n7M5LOoP5FWtIMvINky/pIjXrB3MU7sMvWhp73GAY7/mOqadZd7AnohKGqoe
+	 CrlAfETGsIvkHykILXzQ0Lm1k3FOSQy609LPgVAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kai Ma <kaima@hust.edu.cn>,
+	Peng Fan <peng.fan@nxp.com>,
+	Jesse Taube <Mr.Bossman075@gmail.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 287/431] RDMA/bnxt_re: Avoid calling wake_up threads from spin_lock context
-Date: Sun,  9 Jul 2023 13:13:55 +0200
-Message-ID: <20230709111457.874908896@linuxfoundation.org>
+Subject: [PATCH 6.3 288/431] clk: imx: clk-imxrt1050: fix memory leak in imxrt1050_clocks_probe
+Date: Sun,  9 Jul 2023 13:13:56 +0200
+Message-ID: <20230709111457.898429376@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,97 +37,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Kai Ma <kaima@hust.edu.cn>
 
-[ Upstream commit 3099bcdc19b701f732f638ee45679858c08559bb ]
+[ Upstream commit 1b280598ab3bd8a2dc8b96a12530d5b1ee7a8f4a ]
 
-bnxt_qplib_service_creq can be called from interrupt or tasklet or
-process context. So the function take irq variant  of spin_lock.
-But when wake_up is invoked with the lock held, it is putting the
-calling context to sleep.
+Use devm_of_iomap() instead of of_iomap() to automatically
+handle the unused ioremap region. If any error occurs, regions allocated by
+kzalloc() will leak, but using devm_kzalloc() instead will automatically
+free the memory using devm_kfree().
 
-[exception RIP: __wake_up_common+190]
-RIP: ffffffffb7539d7e  RSP: ffffa73300207ad8  RFLAGS: 00000083
-RAX: 0000000000000001  RBX: ffff91fa295f69b8  RCX: dead000000000200
-RDX: ffffa733344af940  RSI: ffffa73336527940  RDI: ffffa73336527940
-RBP: 000000000000001c   R8: 0000000000000002   R9: 00000000000299c0
-R10: 0000017230de82c5  R11: 0000000000000002  R12: ffffa73300207b28
-R13: 0000000000000000  R14: ffffa733341bf928  R15: 0000000000000000
-ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+Also, fix error handling of hws by adding unregister_hws label, which
+unregisters remaining hws when iomap failed.
 
-Call the wakeup after releasing the lock.
-
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://lore.kernel.org/r/1686308514-11996-3-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 7154b046d8f3 ("clk: imx: Add initial support for i.MXRT1050 clock driver")
+Signed-off-by: Kai Ma <kaima@hust.edu.cn>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Acked-by: Jesse Taube <Mr.Bossman075@gmail.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20230418113451.151312-1-kaima@hust.edu.cn
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/clk/imx/clk-imxrt1050.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index 3d76fa71641a4..75e0c42f6f424 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -299,7 +299,8 @@ static int bnxt_qplib_process_func_event(struct bnxt_qplib_rcfw *rcfw,
- }
+diff --git a/drivers/clk/imx/clk-imxrt1050.c b/drivers/clk/imx/clk-imxrt1050.c
+index fd5c51fc92c0e..08d155feb035a 100644
+--- a/drivers/clk/imx/clk-imxrt1050.c
++++ b/drivers/clk/imx/clk-imxrt1050.c
+@@ -42,7 +42,7 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
+ 	struct device_node *anp;
+ 	int ret;
  
- static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
--				       struct creq_qp_event *qp_event)
-+				       struct creq_qp_event *qp_event,
-+				       u32 *num_wait)
- {
- 	struct creq_qp_error_notification *err_event;
- 	struct bnxt_qplib_hwq *hwq = &rcfw->cmdq.hwq;
-@@ -308,6 +309,7 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
- 	u16 cbit, blocked = 0;
- 	struct pci_dev *pdev;
- 	unsigned long flags;
-+	u32 wait_cmds = 0;
- 	__le16  mcookie;
- 	u16 cookie;
- 	int rc = 0;
-@@ -367,9 +369,10 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
- 		crsqe->req_size = 0;
+-	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
++	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws,
+ 					  IMXRT1050_CLK_END), GFP_KERNEL);
+ 	if (WARN_ON(!clk_hw_data))
+ 		return -ENOMEM;
+@@ -53,10 +53,12 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
+ 	hws[IMXRT1050_CLK_OSC] = imx_get_clk_hw_by_name(np, "osc");
  
- 		if (!blocked)
--			wake_up(&rcfw->cmdq.waitq);
-+			wait_cmds++;
- 		spin_unlock_irqrestore(&hwq->lock, flags);
+ 	anp = of_find_compatible_node(NULL, NULL, "fsl,imxrt-anatop");
+-	pll_base = of_iomap(anp, 0);
++	pll_base = devm_of_iomap(dev, anp, 0, NULL);
+ 	of_node_put(anp);
+-	if (WARN_ON(!pll_base))
+-		return -ENOMEM;
++	if (WARN_ON(IS_ERR(pll_base))) {
++		ret = PTR_ERR(pll_base);
++		goto unregister_hws;
++	}
+ 
+ 	/* Anatop clocks */
+ 	hws[IMXRT1050_CLK_DUMMY] = imx_clk_hw_fixed("dummy", 0UL);
+@@ -104,8 +106,10 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
+ 
+ 	/* CCM clocks */
+ 	ccm_base = devm_platform_ioremap_resource(pdev, 0);
+-	if (WARN_ON(IS_ERR(ccm_base)))
+-		return PTR_ERR(ccm_base);
++	if (WARN_ON(IS_ERR(ccm_base))) {
++		ret = PTR_ERR(ccm_base);
++		goto unregister_hws;
++	}
+ 
+ 	hws[IMXRT1050_CLK_ARM_PODF] = imx_clk_hw_divider("arm_podf", "pll1_arm", ccm_base + 0x10, 0, 3);
+ 	hws[IMXRT1050_CLK_PRE_PERIPH_SEL] = imx_clk_hw_mux("pre_periph_sel", ccm_base + 0x18, 18, 2,
+@@ -149,8 +153,12 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
+ 	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to register clks for i.MXRT1050.\n");
+-		imx_unregister_hw_clocks(hws, IMXRT1050_CLK_END);
++		goto unregister_hws;
  	}
-+	*num_wait += wait_cmds;
- 	return rc;
++	return 0;
++
++unregister_hws:
++	imx_unregister_hw_clocks(hws, IMXRT1050_CLK_END);
+ 	return ret;
  }
- 
-@@ -383,6 +386,7 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
- 	struct creq_base *creqe;
- 	u32 sw_cons, raw_cons;
- 	unsigned long flags;
-+	u32 num_wakeup = 0;
- 
- 	/* Service the CREQ until budget is over */
- 	spin_lock_irqsave(&hwq->lock, flags);
-@@ -401,7 +405,8 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
- 		switch (type) {
- 		case CREQ_BASE_TYPE_QP_EVENT:
- 			bnxt_qplib_process_qp_event
--				(rcfw, (struct creq_qp_event *)creqe);
-+				(rcfw, (struct creq_qp_event *)creqe,
-+				 &num_wakeup);
- 			creq->stats.creq_qp_event_processed++;
- 			break;
- 		case CREQ_BASE_TYPE_FUNC_EVENT:
-@@ -429,6 +434,8 @@ static void bnxt_qplib_service_creq(struct tasklet_struct *t)
- 				      rcfw->res->cctx, true);
- 	}
- 	spin_unlock_irqrestore(&hwq->lock, flags);
-+	if (num_wakeup)
-+		wake_up_nr(&rcfw->cmdq.waitq, num_wakeup);
- }
- 
- static irqreturn_t bnxt_qplib_creq_irq(int irq, void *dev_instance)
+ static const struct of_device_id imxrt1050_clk_of_match[] = {
 -- 
 2.39.2
 
