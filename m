@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DBA522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3117EC433C7;
-	Sun,  9 Jul 2023 11:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64971522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB7FC433C7;
+	Sun,  9 Jul 2023 11:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901822;
-	bh=2eNHxzRt++3pK/YV+f1yL2DFh8Nw/8IhVs90TvSRafQ=;
+	s=korg; t=1688901825;
+	bh=2UyzTTlTNK8wzDU/ggil5t1LtwXk2SZLmxD5TqTyWpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1egFjRHW4pTuBGHhs2xAHqrq25IcVjktOaYKu+lloqweDlHzlkeR0UB/+fZJKqLoJ
-	 9JUSh6ffmyznof2pTcXqE6Xif81TIHSxJJVjU21vy94diJLdsK1uae5wk20rtExu56
-	 0AdlFy3InK4TvP2qew+Tc5lOLeuOOzMLb6wXPeZI=
+	b=2A9CjtAQNvLU56V25rx6ROC1S+d30qzFEpd8rzWFXmirkpPEIPD3G7tn1dLJrEuh4
+	 RqaGIi/JP46tPhg5rxN16D9ihHHOpVnzK2MjSM4GjPBW4Axk6JJNppeLHGLz+uif+v
+	 cryFENHEWlSn5u/WT5vFqwH/wFBHBiXb/WmGXDQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Edwin Peer <edwin.peer@broadcom.com>,
+	Edwin Peer <espeer@gmail.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 129/431] wifi: cfg80211: drop incorrect nontransmitted BSS update code
-Date: Sun,  9 Jul 2023 13:11:17 +0200
-Message-ID: <20230709111454.179841563@linuxfoundation.org>
+Subject: [PATCH 6.3 120/431] rtnetlink: extend RTEXT_FILTER_SKIP_STATS to IFLA_VF_INFO
+Date: Sun,  9 Jul 2023 13:11:08 +0200
+Message-ID: <20230709111453.972105720@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,216 +37,165 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Edwin Peer <edwin.peer@broadcom.com>
 
-[ Upstream commit 39432f8a3752a87a53fd8d5e51824a43aaae5cab ]
+[ Upstream commit fa0e21fa44438a0e856d42224bfa24641d37b979 ]
 
-The removed code ran for any BSS that was not included in the MBSSID
-element in order to update it. However, instead of using the correct
-inheritance rules, it would simply copy the elements from the
-transmitting AP. The result is that we would report incorrect elements
-in this case.
+This filter already exists for excluding IPv6 SNMP stats. Extend its
+definition to also exclude IFLA_VF_INFO stats in RTM_GETLINK.
 
-After some discussions, it seems that there are likely not even APs
-actually using this feature. Either way, removing the code decreases
-complexity and makes the cfg80211 behaviour more correct.
+This patch constitutes a partial fix for a netlink attribute nesting
+overflow bug in IFLA_VFINFO_LIST. By excluding the stats when the
+requester doesn't need them, the truncation of the VF list is avoided.
 
-Fixes: 0b8fb8235be8 ("cfg80211: Parsing of Multiple BSSID information in scanning")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230616094949.cfd6d8db1f26.Ia1044902b86cd7d366400a4bfb93691b8f05d68c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+While it was technically only the stats added in commit c5a9f6f0ab40
+("net/core: Add drop counters to VF statistics") breaking the camel's
+back, the appreciable size of the stats data should never have been
+included without due consideration for the maximum number of VFs
+supported by PCI.
+
+Fixes: 3b766cd83232 ("net/core: Add reading VF statistics through the PF netdevice")
+Fixes: c5a9f6f0ab40 ("net/core: Add drop counters to VF statistics")
+Signed-off-by: Edwin Peer <edwin.peer@broadcom.com>
+Cc: Edwin Peer <espeer@gmail.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://lore.kernel.org/r/20230611105108.122586-1-gal@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 154 ++++----------------------------------------
- 1 file changed, 11 insertions(+), 143 deletions(-)
+ net/core/rtnetlink.c | 96 +++++++++++++++++++++++---------------------
+ 1 file changed, 51 insertions(+), 45 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index bb1b2cd73dd21..68f9b6f7bf584 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2301,118 +2301,6 @@ cfg80211_inform_bss_data(struct wiphy *wiphy,
- }
- EXPORT_SYMBOL(cfg80211_inform_bss_data);
- 
--static void
--cfg80211_parse_mbssid_frame_data(struct wiphy *wiphy,
--				 struct cfg80211_inform_bss *data,
--				 struct ieee80211_mgmt *mgmt, size_t len,
--				 struct cfg80211_non_tx_bss *non_tx_data,
--				 gfp_t gfp)
--{
--	enum cfg80211_bss_frame_type ftype;
--	const u8 *ie = mgmt->u.probe_resp.variable;
--	size_t ielen = len - offsetof(struct ieee80211_mgmt,
--				      u.probe_resp.variable);
--
--	ftype = ieee80211_is_beacon(mgmt->frame_control) ?
--		CFG80211_BSS_FTYPE_BEACON : CFG80211_BSS_FTYPE_PRESP;
--
--	cfg80211_parse_mbssid_data(wiphy, data, ftype, mgmt->bssid,
--				   le64_to_cpu(mgmt->u.probe_resp.timestamp),
--				   le16_to_cpu(mgmt->u.probe_resp.beacon_int),
--				   ie, ielen, non_tx_data, gfp);
--}
--
--static void
--cfg80211_update_notlisted_nontrans(struct wiphy *wiphy,
--				   struct cfg80211_bss *nontrans_bss,
--				   struct ieee80211_mgmt *mgmt, size_t len)
--{
--	u8 *ie, *new_ie, *pos;
--	const struct element *nontrans_ssid;
--	const u8 *trans_ssid, *mbssid;
--	size_t ielen = len - offsetof(struct ieee80211_mgmt,
--				      u.probe_resp.variable);
--	size_t new_ie_len;
--	struct cfg80211_bss_ies *new_ies;
--	const struct cfg80211_bss_ies *old;
--	size_t cpy_len;
--
--	lockdep_assert_held(&wiphy_to_rdev(wiphy)->bss_lock);
--
--	ie = mgmt->u.probe_resp.variable;
--
--	new_ie_len = ielen;
--	trans_ssid = cfg80211_find_ie(WLAN_EID_SSID, ie, ielen);
--	if (!trans_ssid)
--		return;
--	new_ie_len -= trans_ssid[1];
--	mbssid = cfg80211_find_ie(WLAN_EID_MULTIPLE_BSSID, ie, ielen);
--	/*
--	 * It's not valid to have the MBSSID element before SSID
--	 * ignore if that happens - the code below assumes it is
--	 * after (while copying things inbetween).
--	 */
--	if (!mbssid || mbssid < trans_ssid)
--		return;
--	new_ie_len -= mbssid[1];
--
--	nontrans_ssid = ieee80211_bss_get_elem(nontrans_bss, WLAN_EID_SSID);
--	if (!nontrans_ssid)
--		return;
--
--	new_ie_len += nontrans_ssid->datalen;
--
--	/* generate new ie for nontrans BSS
--	 * 1. replace SSID with nontrans BSS' SSID
--	 * 2. skip MBSSID IE
--	 */
--	new_ie = kzalloc(new_ie_len, GFP_ATOMIC);
--	if (!new_ie)
--		return;
--
--	new_ies = kzalloc(sizeof(*new_ies) + new_ie_len, GFP_ATOMIC);
--	if (!new_ies)
--		goto out_free;
--
--	pos = new_ie;
--
--	/* copy the nontransmitted SSID */
--	cpy_len = nontrans_ssid->datalen + 2;
--	memcpy(pos, nontrans_ssid, cpy_len);
--	pos += cpy_len;
--	/* copy the IEs between SSID and MBSSID */
--	cpy_len = trans_ssid[1] + 2;
--	memcpy(pos, (trans_ssid + cpy_len), (mbssid - (trans_ssid + cpy_len)));
--	pos += (mbssid - (trans_ssid + cpy_len));
--	/* copy the IEs after MBSSID */
--	cpy_len = mbssid[1] + 2;
--	memcpy(pos, mbssid + cpy_len, ((ie + ielen) - (mbssid + cpy_len)));
--
--	/* update ie */
--	new_ies->len = new_ie_len;
--	new_ies->tsf = le64_to_cpu(mgmt->u.probe_resp.timestamp);
--	new_ies->from_beacon = ieee80211_is_beacon(mgmt->frame_control);
--	memcpy(new_ies->data, new_ie, new_ie_len);
--	if (ieee80211_is_probe_resp(mgmt->frame_control)) {
--		old = rcu_access_pointer(nontrans_bss->proberesp_ies);
--		rcu_assign_pointer(nontrans_bss->proberesp_ies, new_ies);
--		rcu_assign_pointer(nontrans_bss->ies, new_ies);
--		if (old)
--			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
--	} else {
--		old = rcu_access_pointer(nontrans_bss->beacon_ies);
--		rcu_assign_pointer(nontrans_bss->beacon_ies, new_ies);
--		cfg80211_update_hidden_bsses(bss_from_pub(nontrans_bss),
--					     new_ies, old);
--		rcu_assign_pointer(nontrans_bss->ies, new_ies);
--		if (old)
--			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
--	}
--
--out_free:
--	kfree(new_ie);
--}
--
- /* cfg80211_inform_bss_width_frame helper */
- static struct cfg80211_bss *
- cfg80211_inform_single_bss_frame_data(struct wiphy *wiphy,
-@@ -2554,51 +2442,31 @@ cfg80211_inform_bss_frame_data(struct wiphy *wiphy,
- 			       struct ieee80211_mgmt *mgmt, size_t len,
- 			       gfp_t gfp)
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index f235cc6832767..bbecc31a2703f 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -958,24 +958,27 @@ static inline int rtnl_vfinfo_size(const struct net_device *dev,
+ 			 nla_total_size(sizeof(struct ifla_vf_rate)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_link_state)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_rss_query_en)) +
+-			 nla_total_size(0) + /* nest IFLA_VF_STATS */
+-			 /* IFLA_VF_STATS_RX_PACKETS */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_PACKETS */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_RX_BYTES */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_BYTES */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_BROADCAST */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_MULTICAST */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_RX_DROPPED */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+-			 /* IFLA_VF_STATS_TX_DROPPED */
+-			 nla_total_size_64bit(sizeof(__u64)) +
+ 			 nla_total_size(sizeof(struct ifla_vf_trust)));
++		if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
++			size += num_vfs *
++				(nla_total_size(0) + /* nest IFLA_VF_STATS */
++				 /* IFLA_VF_STATS_RX_PACKETS */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_PACKETS */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_RX_BYTES */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_BYTES */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_BROADCAST */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_MULTICAST */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_RX_DROPPED */
++				 nla_total_size_64bit(sizeof(__u64)) +
++				 /* IFLA_VF_STATS_TX_DROPPED */
++				 nla_total_size_64bit(sizeof(__u64)));
++		}
+ 		return size;
+ 	} else
+ 		return 0;
+@@ -1267,7 +1270,8 @@ static noinline_for_stack int rtnl_fill_stats(struct sk_buff *skb,
+ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
+ 					       struct net_device *dev,
+ 					       int vfs_num,
+-					       struct nlattr *vfinfo)
++					       struct nlattr *vfinfo,
++					       u32 ext_filter_mask)
  {
--	struct cfg80211_bss *res, *tmp_bss;
-+	struct cfg80211_bss *res;
- 	const u8 *ie = mgmt->u.probe_resp.variable;
--	const struct cfg80211_bss_ies *ies1, *ies2;
- 	size_t ielen = len - offsetof(struct ieee80211_mgmt,
- 				      u.probe_resp.variable);
-+	enum cfg80211_bss_frame_type ftype;
- 	struct cfg80211_non_tx_bss non_tx_data = {};
+ 	struct ifla_vf_rss_query_en vf_rss_query_en;
+ 	struct nlattr *vf, *vfstats, *vfvlanlist;
+@@ -1373,33 +1377,35 @@ static noinline_for_stack int rtnl_fill_vfinfo(struct sk_buff *skb,
+ 		goto nla_put_vf_failure;
+ 	}
+ 	nla_nest_end(skb, vfvlanlist);
+-	memset(&vf_stats, 0, sizeof(vf_stats));
+-	if (dev->netdev_ops->ndo_get_vf_stats)
+-		dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
+-						&vf_stats);
+-	vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
+-	if (!vfstats)
+-		goto nla_put_vf_failure;
+-	if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
+-			      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
+-			      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
+-			      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
+-			      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
+-			      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
+-			      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
+-			      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
+-	    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
+-			      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
+-		nla_nest_cancel(skb, vfstats);
+-		goto nla_put_vf_failure;
++	if (~ext_filter_mask & RTEXT_FILTER_SKIP_STATS) {
++		memset(&vf_stats, 0, sizeof(vf_stats));
++		if (dev->netdev_ops->ndo_get_vf_stats)
++			dev->netdev_ops->ndo_get_vf_stats(dev, vfs_num,
++							  &vf_stats);
++		vfstats = nla_nest_start_noflag(skb, IFLA_VF_STATS);
++		if (!vfstats)
++			goto nla_put_vf_failure;
++		if (nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_PACKETS,
++				      vf_stats.rx_packets, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_PACKETS,
++				      vf_stats.tx_packets, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_BYTES,
++				      vf_stats.rx_bytes, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_BYTES,
++				      vf_stats.tx_bytes, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_BROADCAST,
++				      vf_stats.broadcast, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_MULTICAST,
++				      vf_stats.multicast, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_RX_DROPPED,
++				      vf_stats.rx_dropped, IFLA_VF_STATS_PAD) ||
++		    nla_put_u64_64bit(skb, IFLA_VF_STATS_TX_DROPPED,
++				      vf_stats.tx_dropped, IFLA_VF_STATS_PAD)) {
++			nla_nest_cancel(skb, vfstats);
++			goto nla_put_vf_failure;
++		}
++		nla_nest_end(skb, vfstats);
+ 	}
+-	nla_nest_end(skb, vfstats);
+ 	nla_nest_end(skb, vf);
+ 	return 0;
  
- 	res = cfg80211_inform_single_bss_frame_data(wiphy, data, mgmt,
- 						    len, gfp);
-+	if (!res)
-+		return NULL;
+@@ -1432,7 +1438,7 @@ static noinline_for_stack int rtnl_fill_vf(struct sk_buff *skb,
+ 		return -EMSGSIZE;
  
- 	/* don't do any further MBSSID handling for S1G */
- 	if (ieee80211_is_s1g_beacon(mgmt->frame_control))
- 		return res;
+ 	for (i = 0; i < num_vfs; i++) {
+-		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo))
++		if (rtnl_fill_vfinfo(skb, dev, i, vfinfo, ext_filter_mask))
+ 			return -EMSGSIZE;
+ 	}
  
--	if (!res || !wiphy->support_mbssid ||
--	    !cfg80211_find_elem(WLAN_EID_MULTIPLE_BSSID, ie, ielen))
--		return res;
--	if (wiphy->support_only_he_mbssid &&
--	    !cfg80211_find_ext_elem(WLAN_EID_EXT_HE_CAPABILITY, ie, ielen))
--		return res;
--
-+	ftype = ieee80211_is_beacon(mgmt->frame_control) ?
-+		CFG80211_BSS_FTYPE_BEACON : CFG80211_BSS_FTYPE_PRESP;
- 	non_tx_data.tx_bss = res;
--	/* process each non-transmitting bss */
--	cfg80211_parse_mbssid_frame_data(wiphy, data, mgmt, len,
--					 &non_tx_data, gfp);
--
--	spin_lock_bh(&wiphy_to_rdev(wiphy)->bss_lock);
- 
--	/* check if the res has other nontransmitting bss which is not
--	 * in MBSSID IE
--	 */
--	ies1 = rcu_access_pointer(res->ies);
--
--	/* go through nontrans_list, if the timestamp of the BSS is
--	 * earlier than the timestamp of the transmitting BSS then
--	 * update it
--	 */
--	list_for_each_entry(tmp_bss, &res->nontrans_list,
--			    nontrans_list) {
--		ies2 = rcu_access_pointer(tmp_bss->ies);
--		if (ies2->tsf < ies1->tsf)
--			cfg80211_update_notlisted_nontrans(wiphy, tmp_bss,
--							   mgmt, len);
--	}
--	spin_unlock_bh(&wiphy_to_rdev(wiphy)->bss_lock);
-+	/* process each non-transmitting bss */
-+	cfg80211_parse_mbssid_data(wiphy, data, ftype, mgmt->bssid,
-+				   le64_to_cpu(mgmt->u.probe_resp.timestamp),
-+				   le16_to_cpu(mgmt->u.probe_resp.beacon_int),
-+				   ie, ielen, &non_tx_data, gfp);
- 
- 	return res;
- }
 -- 
 2.39.2
 
