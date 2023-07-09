@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B66522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342C5C433C7;
-	Sun,  9 Jul 2023 11:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BAC522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D5CC433C8;
+	Sun,  9 Jul 2023 11:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902528;
-	bh=bZ4mPcvZXM0pZba6TbjXQQu+FGoZKOLzIyV/qR0Xkwc=;
+	s=korg; t=1688902531;
+	bh=gk6IpAgoWJJzexSpJO6tYXHQX34bRcr7VndktHl6aHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J7K5aVvnLklW9fhRTRcANOrN/V5TPDteVsh9S4oHwTDPeC2nlYGkxMAmeJw/UnQJ+
-	 xvSnPc7t+/IBUQFjVuwjj+vTfns3xrbjF1i/rJRy2xs4hMA9tN5n4MGAZwMKV5p8sE
-	 ZMNmz3gMWcssTtkMUfXs9bvsLuzv7qFt5eBHi3BE=
+	b=Og25prRZhNczGve7jHtFMLBhJ+NktQD141SqOdRSbalUR3NfZc4zw1to8hSFO3S5u
+	 XlxhpibJ0EVhI4pnx3kWE1rNjNXUmnPHVTmzDaS+S0C775XqlFP3zG68nMAbGCdfQq
+	 8sVzdKBCUlfruilEuKU/c2a1p63htSG9enCbuIzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Olga Kornievskaia <kolga@netapp.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 409/431] NFSv4.2: fix wrong shrinker_id
-Date: Sun,  9 Jul 2023 13:15:57 +0200
-Message-ID: <20230709111500.776814689@linuxfoundation.org>
+Subject: [PATCH 6.3 410/431] NFSv4.1: freeze the session table upon receiving NFS4ERR_BADSESSION
+Date: Sun,  9 Jul 2023 13:15:58 +0200
+Message-ID: <20230709111500.800997349@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,168 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit 7f7ab336898f281e58540ef781a8fb375acc32a9 ]
+[ Upstream commit c907e72f58ed979a24a9fdcadfbc447c51d5e509 ]
 
-Currently, the list_lru::shrinker_id corresponding to the nfs4_xattr
-shrinkers is wrong:
+When the client received NFS4ERR_BADSESSION, it schedules recovery
+and start the state manager thread which in turn freezes the
+session table and does not allow for any new requests to use the
+no-longer valid session. However, it is possible that before
+the state manager thread runs, a new operation would use the
+released slot that received BADSESSION and was therefore not
+updated its sequence number. Such re-use of the slot can lead
+the application errors.
 
->>> prog["nfs4_xattr_cache_lru"].shrinker_id
-(int)0
->>> prog["nfs4_xattr_entry_lru"].shrinker_id
-(int)0
->>> prog["nfs4_xattr_large_entry_lru"].shrinker_id
-(int)0
->>> prog["nfs4_xattr_cache_shrinker"].id
-(int)18
->>> prog["nfs4_xattr_entry_shrinker"].id
-(int)19
->>> prog["nfs4_xattr_large_entry_shrinker"].id
-(int)20
-
-This is not what we expect, which will cause these shrinkers
-not to be found in shrink_slab_memcg().
-
-We should assign shrinker::id before calling list_lru_init_memcg(),
-so that the corresponding list_lru::shrinker_id will be assigned
-the correct value like below:
-
->>> prog["nfs4_xattr_cache_lru"].shrinker_id
-(int)16
->>> prog["nfs4_xattr_entry_lru"].shrinker_id
-(int)17
->>> prog["nfs4_xattr_large_entry_lru"].shrinker_id
-(int)18
->>> prog["nfs4_xattr_cache_shrinker"].id
-(int)16
->>> prog["nfs4_xattr_entry_shrinker"].id
-(int)17
->>> prog["nfs4_xattr_large_entry_shrinker"].id
-(int)18
-
-So just do it.
-
-Fixes: 95ad37f90c33 ("NFSv4.2: add client side xattr caching.")
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Fixes: 5c441544f045 ("NFSv4.x: Handle bad/dead sessions correctly in nfs41_sequence_process()")
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs42xattr.c | 79 +++++++++++++++++++++++++--------------------
- 1 file changed, 44 insertions(+), 35 deletions(-)
+ fs/nfs/nfs4proc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/nfs42xattr.c b/fs/nfs/nfs42xattr.c
-index 76ae118342066..911f634ba3da7 100644
---- a/fs/nfs/nfs42xattr.c
-+++ b/fs/nfs/nfs42xattr.c
-@@ -991,6 +991,29 @@ static void nfs4_xattr_cache_init_once(void *p)
- 	INIT_LIST_HEAD(&cache->dispose);
- }
- 
-+static int nfs4_xattr_shrinker_init(struct shrinker *shrinker,
-+				    struct list_lru *lru, const char *name)
-+{
-+	int ret = 0;
-+
-+	ret = register_shrinker(shrinker, name);
-+	if (ret)
-+		return ret;
-+
-+	ret = list_lru_init_memcg(lru, shrinker);
-+	if (ret)
-+		unregister_shrinker(shrinker);
-+
-+	return ret;
-+}
-+
-+static void nfs4_xattr_shrinker_destroy(struct shrinker *shrinker,
-+					struct list_lru *lru)
-+{
-+	unregister_shrinker(shrinker);
-+	list_lru_destroy(lru);
-+}
-+
- int __init nfs4_xattr_cache_init(void)
- {
- 	int ret = 0;
-@@ -1002,44 +1025,30 @@ int __init nfs4_xattr_cache_init(void)
- 	if (nfs4_xattr_cache_cachep == NULL)
- 		return -ENOMEM;
- 
--	ret = list_lru_init_memcg(&nfs4_xattr_large_entry_lru,
--	    &nfs4_xattr_large_entry_shrinker);
--	if (ret)
--		goto out4;
--
--	ret = list_lru_init_memcg(&nfs4_xattr_entry_lru,
--	    &nfs4_xattr_entry_shrinker);
--	if (ret)
--		goto out3;
--
--	ret = list_lru_init_memcg(&nfs4_xattr_cache_lru,
--	    &nfs4_xattr_cache_shrinker);
--	if (ret)
--		goto out2;
--
--	ret = register_shrinker(&nfs4_xattr_cache_shrinker, "nfs-xattr_cache");
-+	ret = nfs4_xattr_shrinker_init(&nfs4_xattr_cache_shrinker,
-+				       &nfs4_xattr_cache_lru,
-+				       "nfs-xattr_cache");
- 	if (ret)
- 		goto out1;
- 
--	ret = register_shrinker(&nfs4_xattr_entry_shrinker, "nfs-xattr_entry");
-+	ret = nfs4_xattr_shrinker_init(&nfs4_xattr_entry_shrinker,
-+				       &nfs4_xattr_entry_lru,
-+				       "nfs-xattr_entry");
- 	if (ret)
--		goto out;
-+		goto out2;
- 
--	ret = register_shrinker(&nfs4_xattr_large_entry_shrinker,
--				"nfs-xattr_large_entry");
-+	ret = nfs4_xattr_shrinker_init(&nfs4_xattr_large_entry_shrinker,
-+				       &nfs4_xattr_large_entry_lru,
-+				       "nfs-xattr_large_entry");
- 	if (!ret)
- 		return 0;
- 
--	unregister_shrinker(&nfs4_xattr_entry_shrinker);
--out:
--	unregister_shrinker(&nfs4_xattr_cache_shrinker);
--out1:
--	list_lru_destroy(&nfs4_xattr_cache_lru);
-+	nfs4_xattr_shrinker_destroy(&nfs4_xattr_entry_shrinker,
-+				    &nfs4_xattr_entry_lru);
- out2:
--	list_lru_destroy(&nfs4_xattr_entry_lru);
--out3:
--	list_lru_destroy(&nfs4_xattr_large_entry_lru);
--out4:
-+	nfs4_xattr_shrinker_destroy(&nfs4_xattr_cache_shrinker,
-+				    &nfs4_xattr_cache_lru);
-+out1:
- 	kmem_cache_destroy(nfs4_xattr_cache_cachep);
- 
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 5607b1e2b8212..23a23387211ba 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -921,6 +921,7 @@ static int nfs41_sequence_process(struct rpc_task *task,
+ out_noaction:
  	return ret;
-@@ -1047,11 +1056,11 @@ int __init nfs4_xattr_cache_init(void)
- 
- void nfs4_xattr_cache_exit(void)
- {
--	unregister_shrinker(&nfs4_xattr_large_entry_shrinker);
--	unregister_shrinker(&nfs4_xattr_entry_shrinker);
--	unregister_shrinker(&nfs4_xattr_cache_shrinker);
--	list_lru_destroy(&nfs4_xattr_large_entry_lru);
--	list_lru_destroy(&nfs4_xattr_entry_lru);
--	list_lru_destroy(&nfs4_xattr_cache_lru);
-+	nfs4_xattr_shrinker_destroy(&nfs4_xattr_large_entry_shrinker,
-+				    &nfs4_xattr_large_entry_lru);
-+	nfs4_xattr_shrinker_destroy(&nfs4_xattr_entry_shrinker,
-+				    &nfs4_xattr_entry_lru);
-+	nfs4_xattr_shrinker_destroy(&nfs4_xattr_cache_shrinker,
-+				    &nfs4_xattr_cache_lru);
- 	kmem_cache_destroy(nfs4_xattr_cache_cachep);
- }
+ session_recover:
++	set_bit(NFS4_SLOT_TBL_DRAINING, &session->fc_slot_table.slot_tbl_state);
+ 	nfs4_schedule_session_recovery(session, status);
+ 	dprintk("%s ERROR: %d Reset session\n", __func__, status);
+ 	nfs41_sequence_free_slot(res);
 -- 
 2.39.2
 
