@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EED84699
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:17:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C00FC433C8;
-	Sun,  9 Jul 2023 11:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AED4699
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:17:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD0EC433C8;
+	Sun,  9 Jul 2023 11:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901463;
-	bh=y82BXBa3gUHLtgZibOoUflmazoHlF/tfiVIIOVK3dHA=;
+	s=korg; t=1688901466;
+	bh=jZO2063i91QECqQ7TuP0YDjU9NWEHxl5U0XvjjXaoxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DR6vqWlbBgWK2AOcnjNK8a5xSp5gVSihMU8D5tkA67J124Nq76Vbp4mD0R22lq8il
-	 ewyAv66ZM5KHIaPboIMOYtGEgWRy1rZQBCywzflx2CplWql8fgjOcPG5pKx5ln7t8U
-	 /7UQbvSeXqlcNM/ZODxT9/x9et7FKMbg+bqcrKAg=
+	b=ah/Wc8l1CgPJ7Rlf5BEYOCWvI0gLiMIuRFISl0a24Qh4lYhWeIROVX1wvw92Q8FE9
+	 nnXFqtA2Z13SKFDxLYZ7I/Dynm+D1CpEOpD2nyX8XcJK8cT4IQw+nphkvit7l1aCOd
+	 I9T8hReAMEWlrIM9DTx8d1CSuYKlq+0Mc58pKRVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 029/431] irqchip/stm32-exti: Fix warning on initialized field overwritten
-Date: Sun,  9 Jul 2023 13:09:37 +0200
-Message-ID: <20230709111451.782410798@linuxfoundation.org>
+Subject: [PATCH 6.3 003/431] fs: pipe: reveal missing function protoypes
+Date: Sun,  9 Jul 2023 13:09:11 +0200
+Message-ID: <20230709111451.187896658@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,60 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Antonio Borneo <antonio.borneo@foss.st.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 48f31e496488a25f443c0df52464da446fb1d10c ]
+[ Upstream commit 247c8d2f9837a3e29e3b6b7a4aa9c36c37659dd4 ]
 
-While compiling with W=1, both gcc and clang complain about a
-tricky way to initialize an array by filling it with a non-zero
-value and then overrride some of the array elements.
-In this case the override is intentional, so just disable the
-specific warning for only this part of the code.
+A couple of functions from fs/pipe.c are used both internally
+and for the watch queue code, but the declaration is only
+visible when the latter is enabled:
 
-Note: the flag "-Woverride-init" is recognized by both compilers,
-but the warning msg from clang reports "-Winitializer-overrides".
-The doc of clang clarifies that the two flags are synonyms, so use
-here only the flag name common on both compilers.
+fs/pipe.c:1254:5: error: no previous prototype for 'pipe_resize_ring'
+fs/pipe.c:758:15: error: no previous prototype for 'account_pipe_buffers'
+fs/pipe.c:764:6: error: no previous prototype for 'too_many_pipe_buffers_soft'
+fs/pipe.c:771:6: error: no previous prototype for 'too_many_pipe_buffers_hard'
+fs/pipe.c:777:6: error: no previous prototype for 'pipe_is_unprivileged_user'
 
-Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Fixes: c297493336b7 ("irqchip/stm32-exti: Simplify irq description table")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230601155614.34490-1-antonio.borneo@foss.st.com
+Make the visible unconditionally to avoid these warnings.
+
+Fixes: c73be61cede5 ("pipe: Add general notification queue support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Message-Id: <20230516195629.551602-1-arnd@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-stm32-exti.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/linux/pipe_fs_i.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/irqchip/irq-stm32-exti.c b/drivers/irqchip/irq-stm32-exti.c
-index 6a3f7498ea8ea..8bbb2b114636c 100644
---- a/drivers/irqchip/irq-stm32-exti.c
-+++ b/drivers/irqchip/irq-stm32-exti.c
-@@ -173,6 +173,16 @@ static struct irq_chip stm32_exti_h_chip_direct;
- #define EXTI_INVALID_IRQ       U8_MAX
- #define STM32MP1_DESC_IRQ_SIZE (ARRAY_SIZE(stm32mp1_exti_banks) * IRQS_PER_BANK)
+diff --git a/include/linux/pipe_fs_i.h b/include/linux/pipe_fs_i.h
+index d2c3f16cf6b18..02e0086b10f6f 100644
+--- a/include/linux/pipe_fs_i.h
++++ b/include/linux/pipe_fs_i.h
+@@ -261,18 +261,14 @@ void generic_pipe_buf_release(struct pipe_inode_info *, struct pipe_buffer *);
  
-+/*
-+ * Use some intentionally tricky logic here to initialize the whole array to
-+ * EXTI_INVALID_IRQ, but then override certain fields, requiring us to indicate
-+ * that we "know" that there are overrides in this structure, and we'll need to
-+ * disable that warning from W=1 builds.
-+ */
-+__diag_push();
-+__diag_ignore_all("-Woverride-init",
-+		  "logic to initialize all and then override some is OK");
-+
- static const u8 stm32mp1_desc_irq[] = {
- 	/* default value */
- 	[0 ... (STM32MP1_DESC_IRQ_SIZE - 1)] = EXTI_INVALID_IRQ,
-@@ -266,6 +276,8 @@ static const u8 stm32mp13_desc_irq[] = {
- 	[70] = 98,
- };
+ extern const struct pipe_buf_operations nosteal_pipe_buf_ops;
  
-+__diag_pop();
-+
- static const struct stm32_exti_drv_data stm32mp1_drv_data = {
- 	.exti_banks = stm32mp1_exti_banks,
- 	.bank_nr = ARRAY_SIZE(stm32mp1_exti_banks),
+-#ifdef CONFIG_WATCH_QUEUE
+ unsigned long account_pipe_buffers(struct user_struct *user,
+ 				   unsigned long old, unsigned long new);
+ bool too_many_pipe_buffers_soft(unsigned long user_bufs);
+ bool too_many_pipe_buffers_hard(unsigned long user_bufs);
+ bool pipe_is_unprivileged_user(void);
+-#endif
+ 
+ /* for F_SETPIPE_SZ and F_GETPIPE_SZ */
+-#ifdef CONFIG_WATCH_QUEUE
+ int pipe_resize_ring(struct pipe_inode_info *pipe, unsigned int nr_slots);
+-#endif
+ long pipe_fcntl(struct file *, unsigned int, unsigned long arg);
+ struct pipe_inode_info *get_pipe_info(struct file *file, bool for_splice);
+ 
 -- 
 2.39.2
 
