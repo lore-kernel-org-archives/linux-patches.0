@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B55522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997A9C433C8;
-	Sun,  9 Jul 2023 11:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CE9522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 566C5C433C8;
+	Sun,  9 Jul 2023 11:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902467;
-	bh=sYPtYFtEj1FwIWTlcSLlL1nGK8Xkk50X0waSE4gMvUg=;
+	s=korg; t=1688902469;
+	bh=eGcAX/1bW5tKG8PuNnYX4jFIAjuCwurlRGbFLQ654Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PgSiJfILYwn80s3v5EMiyoWT0t5mdYU9xuzVj5KcR2QS5jD3MF3hxBFi1OmJzbrwP
-	 AmgTty+q17nGIi1VpvIvf5z8fRvg289ykrB2Z7tt0MqgRZS7bnbn8IYa0JiELogtZE
-	 ygdKIUEBmYHUeTXOLuqSxxC60ybLmJ9KAWQObBYA=
+	b=pyJ3AZ2IHdKJ4enbFvBtzBKE73iHBpZnW+CI0WXGisKonvRUWBd4gsMAHD5gqTxbh
+	 8qpZ/HkkKQYcSXSUK+B2wRVhnJZYwrQKtmir2FTzg6gUY/xwsJboMqVuN1DxIbtUYm
+	 z3p6tKWgJ7FkQWRkZgtmpYpnnkBirttPXNiotW1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Guo <quic_cang@quicinc.com>,
-	Stanley Chu <stanley.chu@mediatek.com>,
-	Po-Wen Kao <powen.kao@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 386/431] scsi: ufs: core: mcq: Fix the incorrect OCS value for the device command
-Date: Sun,  9 Jul 2023 13:15:34 +0200
-Message-ID: <20230709111500.213671957@linuxfoundation.org>
+Subject: [PATCH 6.3 387/431] powerpc/powernv/sriov: perform null check on iov before dereferencing iov
+Date: Sun,  9 Jul 2023 13:15:35 +0200
+Message-ID: <20230709111500.241414222@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -38,96 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanley Chu <stanley.chu@mediatek.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 0fef6bb730c490fcdc4347dbd21646d3ffe62cf5 ]
+[ Upstream commit f4f913c980bc6abe0ccfe88fe3909c125afe4a2d ]
 
-In MCQ mode, when a device command uses a hardware queue shared with other
-commands, a race condition may occur in the following scenario:
+Currently pointer iov is being dereferenced before the null check of iov
+which can lead to null pointer dereference errors. Fix this by moving the
+iov null check before the dereferencing.
 
- 1. A device command is completed in CQx with CQE entry "e".
+Detected using cppcheck static analysis:
+linux/arch/powerpc/platforms/powernv/pci-sriov.c:597:12: warning: Either
+the condition '!iov' is redundant or there is possible null pointer
+dereference: iov. [nullPointerRedundantCheck]
+ num_vfs = iov->num_vfs;
+           ^
 
- 2. The interrupt handler copies the "cqe" pointer to "hba->dev_cmd.cqe"
-    and completes "hba->dev_cmd.complete".
-
- 3. The "ufshcd_wait_for_dev_cmd()" function is awakened and retrieves the
-    OCS value from "hba->dev_cmd.cqe".
-
-However, there is a possibility that the CQE entry "e" will be overwritten
-by newly completed commands in CQx, resulting in an incorrect OCS value
-being received by "ufshcd_wait_for_dev_cmd()".
-
-To avoid this race condition, the OCS value should be immediately copied to
-the struct "lrb" of the device command. Then "ufshcd_wait_for_dev_cmd()"
-can retrieve the OCS value from the struct "lrb".
-
-Fixes: 57b1c0ef89ac ("scsi: ufs: core: mcq: Add support to allocate multiple queues")
-Suggested-by: Can Guo <quic_cang@quicinc.com>
-Signed-off-by: Stanley Chu <stanley.chu@mediatek.com>
-Link: https://lore.kernel.org/r/20230610021553.1213-2-powen.kao@mediatek.com
-Tested-by: Po-Wen Kao <powen.kao@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 052da31d45fc ("powerpc/powernv/sriov: De-indent setup and teardown")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230608095849.1147969-1-colin.i.king@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 10 +++++++---
- include/ufs/ufshcd.h      |  1 -
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ arch/powerpc/platforms/powernv/pci-sriov.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index b788bd0053330..e67981317dcbf 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -3069,7 +3069,7 @@ static int ufshcd_wait_for_dev_cmd(struct ufs_hba *hba,
- 		 * not trigger any race conditions.
- 		 */
- 		hba->dev_cmd.complete = NULL;
--		err = ufshcd_get_tr_ocs(lrbp, hba->dev_cmd.cqe);
-+		err = ufshcd_get_tr_ocs(lrbp, NULL);
- 		if (!err)
- 			err = ufshcd_dev_cmd_completion(hba, lrbp);
- 	} else {
-@@ -3156,7 +3156,6 @@ static int ufshcd_exec_dev_cmd(struct ufs_hba *hba,
- 		goto out;
+diff --git a/arch/powerpc/platforms/powernv/pci-sriov.c b/arch/powerpc/platforms/powernv/pci-sriov.c
+index 7195133b26bb9..59882da3e7425 100644
+--- a/arch/powerpc/platforms/powernv/pci-sriov.c
++++ b/arch/powerpc/platforms/powernv/pci-sriov.c
+@@ -594,12 +594,12 @@ static void pnv_pci_sriov_disable(struct pci_dev *pdev)
+ 	struct pnv_iov_data   *iov;
  
- 	hba->dev_cmd.complete = &wait;
--	hba->dev_cmd.cqe = NULL;
+ 	iov = pnv_iov_get(pdev);
+-	num_vfs = iov->num_vfs;
+-	base_pe = iov->vf_pe_arr[0].pe_number;
+-
+ 	if (WARN_ON(!iov))
+ 		return;
  
- 	ufshcd_add_query_upiu_trace(hba, UFS_QUERY_SEND, lrbp->ucd_req_ptr);
++	num_vfs = iov->num_vfs;
++	base_pe = iov->vf_pe_arr[0].pe_number;
++
+ 	/* Release VF PEs */
+ 	pnv_ioda_release_vf_PE(pdev);
  
-@@ -5404,6 +5403,7 @@ void ufshcd_compl_one_cqe(struct ufs_hba *hba, int task_tag,
- {
- 	struct ufshcd_lrb *lrbp;
- 	struct scsi_cmnd *cmd;
-+	enum utp_ocs ocs;
- 
- 	lrbp = &hba->lrb[task_tag];
- 	lrbp->compl_time_stamp = ktime_get();
-@@ -5419,7 +5419,11 @@ void ufshcd_compl_one_cqe(struct ufs_hba *hba, int task_tag,
- 	} else if (lrbp->command_type == UTP_CMD_TYPE_DEV_MANAGE ||
- 		   lrbp->command_type == UTP_CMD_TYPE_UFS_STORAGE) {
- 		if (hba->dev_cmd.complete) {
--			hba->dev_cmd.cqe = cqe;
-+			if (cqe) {
-+				ocs = le32_to_cpu(cqe->status) & MASK_OCS;
-+				lrbp->utr_descriptor_ptr->header.dword_2 =
-+					cpu_to_le32(ocs);
-+			}
- 			complete(hba->dev_cmd.complete);
- 			ufshcd_clk_scaling_update_busy(hba);
- 		}
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index db70944c681aa..91803587691a6 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -225,7 +225,6 @@ struct ufs_dev_cmd {
- 	struct mutex lock;
- 	struct completion *complete;
- 	struct ufs_query query;
--	struct cq_entry *cqe;
- };
- 
- /**
 -- 
 2.39.2
 
