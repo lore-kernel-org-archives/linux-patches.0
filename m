@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC96E522D
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D889C433C8;
-	Sun,  9 Jul 2023 11:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B754A522D
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B8AC433C7;
+	Sun,  9 Jul 2023 11:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901275;
-	bh=UjjBGhzKOxEVuuaGuLBSd+9oLMENGkyHQzkPSfEKTso=;
+	s=korg; t=1688901278;
+	bh=JZk0yN1cG4O5ARik7AJnsNBIkCv+udHoqBWNdnRb4tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VkudsO6YSH5oY98Y5ggs2OpxIdxc4Bb3/1Nkw4Cp0u2Mb6oyUWkATIRlBXAgaFcBu
-	 l5lbQ4qrfALbsjFZt/xjMd26BLPVwEfSo/7yfgPQv5DyEe1CbXtA/m52iXBGxOcnQe
-	 ssGjfwefgT94LaifPKHgYnEGUjESarBfR+Q9QxZI=
+	b=B4Zhre8c7JMkUYakh08ltQQcEUH0LB2ZRJ1SEZpKPaiTIDqA2kjzmR0cwYh5xBwzv
+	 s3oXE1ropjeU+l/YyokAb0YDYdsFPwidRHFJCVD+E1l/J2IK/RBunz9zhWkwZ5yzfM
+	 +j9Xa5EQ/b5spMuHgO/Q75Lqqm2VPUmzTywVpvj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.4 4/8] mm: lock newly mapped VMA with corrected ordering
-Date: Sun,  9 Jul 2023 13:14:10 +0200
-Message-ID: <20230709111345.430583721@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	Qun-wei Lin <Qun-wei.Lin@mediatek.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Steven Price <steven.price@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.4 5/8] mm: call arch_swap_restore() from do_swap_page()
+Date: Sun,  9 Jul 2023 13:14:11 +0200
+Message-ID: <20230709111345.460811210@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111345.297026264@linuxfoundation.org>
 References: <20230709111345.297026264@linuxfoundation.org>
@@ -35,43 +39,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hugh Dickins <hughd@google.com>
+From: Peter Collingbourne <pcc@google.com>
 
-commit 1c7873e3364570ec89343ff4877e0f27a7b21a61 upstream.
+commit 6dca4ac6fc91fd41ea4d6c4511838d37f4e0eab2 upstream.
 
-Lockdep is certainly right to complain about
+Commit c145e0b47c77 ("mm: streamline COW logic in do_swap_page()") moved
+the call to swap_free() before the call to set_pte_at(), which meant that
+the MTE tags could end up being freed before set_pte_at() had a chance to
+restore them.  Fix it by adding a call to the arch_swap_restore() hook
+before the call to swap_free().
 
-  (&vma->vm_lock->lock){++++}-{3:3}, at: vma_start_write+0x2d/0x3f
-                 but task is already holding lock:
-  (&mapping->i_mmap_rwsem){+.+.}-{3:3}, at: mmap_region+0x4dc/0x6db
-
-Invert those to the usual ordering.
-
-Fixes: 33313a747e81 ("mm: lock newly mapped VMA which can be modified after it becomes visible")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Tested-by: Suren Baghdasaryan <surenb@google.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lkml.kernel.org/r/20230523004312.1807357-2-pcc@google.com
+Link: https://linux-review.googlesource.com/id/I6470efa669e8bd2f841049b8c61020c510678965
+Fixes: c145e0b47c77 ("mm: streamline COW logic in do_swap_page()")
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Reported-by: Qun-wei Lin <Qun-wei.Lin@mediatek.com>
+Closes: https://lore.kernel.org/all/5050805753ac469e8d727c797c2218a9d780d434.camel@mediatek.com/
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: "Huang, Ying" <ying.huang@intel.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: <stable@vger.kernel.org>	[6.1+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mmap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/memory.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -2801,11 +2801,11 @@ cannot_expand:
- 	if (vma_iter_prealloc(&vmi))
- 		goto close_and_free_vma;
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3933,6 +3933,13 @@ vm_fault_t do_swap_page(struct vm_fault
+ 	}
  
-+	/* Lock the VMA since it is modified after insertion into VMA tree */
-+	vma_start_write(vma);
- 	if (vma->vm_file)
- 		i_mmap_lock_write(vma->vm_file->f_mapping);
- 
--	/* Lock the VMA since it is modified after insertion into VMA tree */
--	vma_start_write(vma);
- 	vma_iter_store(&vmi, vma);
- 	mm->map_count++;
- 	if (vma->vm_file) {
+ 	/*
++	 * Some architectures may have to restore extra metadata to the page
++	 * when reading from swap. This metadata may be indexed by swap entry
++	 * so this must be called before swap_free().
++	 */
++	arch_swap_restore(entry, folio);
++
++	/*
+ 	 * Remove the swap entry and conditionally try to free up the swapcache.
+ 	 * We're already holding a reference on the page but haven't mapped it
+ 	 * yet.
 
 
