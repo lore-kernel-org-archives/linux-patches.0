@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD81F538C
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FCDC433C8;
-	Sun,  9 Jul 2023 11:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7520E538C
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9788C433C7;
+	Sun,  9 Jul 2023 11:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901633;
-	bh=SbQ2Pzw342501cCoPIFsRAKwylSS6ZXdlJkz/+hlcls=;
+	s=korg; t=1688901636;
+	bh=i7uih+24jYbrPu5DxwVGvZ3QitkVp6MhvX3slJqvBm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YruUD+2RoEuwa/ZzBJtfQuIDiQCmADZ5vRhbL11XiahMAyeOk4vPCy/Jjq47o1jBO
-	 ZuJQaivJWhap8M6Dv9o4m3/vBc9YuEUwHfmjhW0sjkUQoSWnyy/jVjz8jgsxQyM1f8
-	 A9043P67yEJ8AYT1wp1bHTxi2lGO/hZrWfcLUEkg=
+	b=rE8OM/A5HRlk0w9t2h5GX6lEAMhSO8dpWSYEjdbezInJdoGr/cvq7aAe5EZrgBBl1
+	 8/OiLYEhXbOZtrdwkVhago9wONFsfW6JlEsT2tEJCzjrROtWIoaHl0RlrZ6afzlDlR
+	 Iu8XbtCzfjF0WcwZ/tyu/lhkaMHB9qhKdOqKlW+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Nicky Veitch <nicky.veitch@oracle.com>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Quentin Monnet <quentin@isovalent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 089/431] nfc: llcp: fix possible use of uninitialized variable in nfc_llcp_send_connect()
-Date: Sun,  9 Jul 2023 13:10:37 +0200
-Message-ID: <20230709111453.238808997@linuxfoundation.org>
+Subject: [PATCH 6.3 090/431] bpftool: JIT limited misreported as negative value on aarch64
+Date: Sun,  9 Jul 2023 13:10:38 +0200
+Message-ID: <20230709111453.263405392@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,38 +38,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit 0d9b41daa5907756a31772d8af8ac5ff25cf17c1 ]
+[ Upstream commit 04cb8453a91c7c22f60ddadb6cef0d19abb33bb5 ]
 
-If sock->service_name is NULL, the local variable
-service_name_tlv_length will not be assigned by nfc_llcp_build_tlv(),
-later leading to using value frmo the stack.  Smatch warning:
+On aarch64, "bpftool feature" reports an incorrect BPF JIT limit:
 
-  net/nfc/llcp_commands.c:442 nfc_llcp_send_connect() error: uninitialized symbol 'service_name_tlv_length'.
+$ sudo /sbin/bpftool feature
+Scanning system configuration...
+bpf() syscall restricted to privileged users
+JIT compiler is enabled
+JIT compiler hardening is disabled
+JIT compiler kallsyms exports are enabled for root
+skipping kernel config, can't open file: No such file or directory
+Global memory limit for JIT compiler for unprivileged users is -201326592 bytes
 
-Fixes: de9e5aeb4f40 ("NFC: llcp: Fix usage of llcp_add_tlv()")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This is because /proc/sys/net/core/bpf_jit_limit reports
+
+$ sudo cat /proc/sys/net/core/bpf_jit_limit
+68169519595520
+
+...and an int is assumed in read_procfs().  Change read_procfs()
+to return a long to avoid negative value reporting.
+
+Fixes: 7a4522bbef0c ("tools: bpftool: add probes for /proc/ eBPF parameters")
+Reported-by: Nicky Veitch <nicky.veitch@oracle.com>
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Quentin Monnet <quentin@isovalent.com>
+Link: https://lore.kernel.org/bpf/20230512113134.58996-1-alan.maguire@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_commands.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/bpf/bpftool/feature.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/net/nfc/llcp_commands.c b/net/nfc/llcp_commands.c
-index 41e3a20c89355..cdb001de06928 100644
---- a/net/nfc/llcp_commands.c
-+++ b/net/nfc/llcp_commands.c
-@@ -390,7 +390,8 @@ int nfc_llcp_send_connect(struct nfc_llcp_sock *sock)
- 	const u8 *service_name_tlv = NULL;
- 	const u8 *miux_tlv = NULL;
- 	const u8 *rw_tlv = NULL;
--	u8 service_name_tlv_length, miux_tlv_length,  rw_tlv_length, rw;
-+	u8 service_name_tlv_length = 0;
-+	u8 miux_tlv_length,  rw_tlv_length, rw;
- 	int err;
- 	u16 size = 0;
- 	__be16 miux;
+diff --git a/tools/bpf/bpftool/feature.c b/tools/bpf/bpftool/feature.c
+index da16e6a27cccd..0675d6a464138 100644
+--- a/tools/bpf/bpftool/feature.c
++++ b/tools/bpf/bpftool/feature.c
+@@ -167,12 +167,12 @@ static int get_vendor_id(int ifindex)
+ 	return strtol(buf, NULL, 0);
+ }
+ 
+-static int read_procfs(const char *path)
++static long read_procfs(const char *path)
+ {
+ 	char *endptr, *line = NULL;
+ 	size_t len = 0;
+ 	FILE *fd;
+-	int res;
++	long res;
+ 
+ 	fd = fopen(path, "r");
+ 	if (!fd)
+@@ -194,7 +194,7 @@ static int read_procfs(const char *path)
+ 
+ static void probe_unprivileged_disabled(void)
+ {
+-	int res;
++	long res;
+ 
+ 	/* No support for C-style ouptut */
+ 
+@@ -216,14 +216,14 @@ static void probe_unprivileged_disabled(void)
+ 			printf("Unable to retrieve required privileges for bpf() syscall\n");
+ 			break;
+ 		default:
+-			printf("bpf() syscall restriction has unknown value %d\n", res);
++			printf("bpf() syscall restriction has unknown value %ld\n", res);
+ 		}
+ 	}
+ }
+ 
+ static void probe_jit_enable(void)
+ {
+-	int res;
++	long res;
+ 
+ 	/* No support for C-style ouptut */
+ 
+@@ -245,7 +245,7 @@ static void probe_jit_enable(void)
+ 			printf("Unable to retrieve JIT-compiler status\n");
+ 			break;
+ 		default:
+-			printf("JIT-compiler status has unknown value %d\n",
++			printf("JIT-compiler status has unknown value %ld\n",
+ 			       res);
+ 		}
+ 	}
+@@ -253,7 +253,7 @@ static void probe_jit_enable(void)
+ 
+ static void probe_jit_harden(void)
+ {
+-	int res;
++	long res;
+ 
+ 	/* No support for C-style ouptut */
+ 
+@@ -275,7 +275,7 @@ static void probe_jit_harden(void)
+ 			printf("Unable to retrieve JIT hardening status\n");
+ 			break;
+ 		default:
+-			printf("JIT hardening status has unknown value %d\n",
++			printf("JIT hardening status has unknown value %ld\n",
+ 			       res);
+ 		}
+ 	}
+@@ -283,7 +283,7 @@ static void probe_jit_harden(void)
+ 
+ static void probe_jit_kallsyms(void)
+ {
+-	int res;
++	long res;
+ 
+ 	/* No support for C-style ouptut */
+ 
+@@ -302,14 +302,14 @@ static void probe_jit_kallsyms(void)
+ 			printf("Unable to retrieve JIT kallsyms export status\n");
+ 			break;
+ 		default:
+-			printf("JIT kallsyms exports status has unknown value %d\n", res);
++			printf("JIT kallsyms exports status has unknown value %ld\n", res);
+ 		}
+ 	}
+ }
+ 
+ static void probe_jit_limit(void)
+ {
+-	int res;
++	long res;
+ 
+ 	/* No support for C-style ouptut */
+ 
+@@ -322,7 +322,7 @@ static void probe_jit_limit(void)
+ 			printf("Unable to retrieve global memory limit for JIT compiler for unprivileged users\n");
+ 			break;
+ 		default:
+-			printf("Global memory limit for JIT compiler for unprivileged users is %d bytes\n", res);
++			printf("Global memory limit for JIT compiler for unprivileged users is %ld bytes\n", res);
+ 		}
+ 	}
+ }
 -- 
 2.39.2
 
