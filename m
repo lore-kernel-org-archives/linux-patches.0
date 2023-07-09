@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312F5522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:26:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B57C433C7;
-	Sun,  9 Jul 2023 11:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8568A5232
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:26:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00141C433C8;
+	Sun,  9 Jul 2023 11:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901967;
-	bh=7Vw2EoA933dX0Ph7HivtUsfb0xROmgq9otxV0iU4hpI=;
+	s=korg; t=1688901970;
+	bh=j97IC3UZTTirl69QGwvmrQh8aZGq4tIqkya9dvtFx1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JCg8pwjza4/zm/rdas3NCUO9ZDjNqnnIy9IkC3nwiYnF1mG4YsqLYUav2xVHmZRM
-	 PKexKpNQPlLe7gotfzmYpufJvv12DTGU0nFq0uatNRVshhF5R0qFexrf1dtS30eZbe
-	 W2Ucib/YQ1A7c9RcOI57U6dvB8WnFs95QO5owfQs=
+	b=K+pkgKreRvNm6KhTLh4FhfP1Z+01IRn2r2y/XIWDsYbfZur5eGKWe2H7ugtJAL/yy
+	 QiyOZiw2j6Sy3O0HnDMLWp7u1Km7ShSEGV5DOONOuRQxjhr2T9kLOwALtyV4jVN6EG
+	 NChHgSv/EtEnMDne6lVqVBz722U44bQQrSaHZzqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Karol Herbst <kherbst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 208/431] drm/msm/dpu: Set DPU_DATA_HCTL_EN for in INTF_SC7180_MASK
-Date: Sun,  9 Jul 2023 13:12:36 +0200
-Message-ID: <20230709111456.046115413@linuxfoundation.org>
+Subject: [PATCH 6.3 209/431] drm/nouveau: dispnv50: fix missing-prototypes warning
+Date: Sun,  9 Jul 2023 13:12:37 +0200
+Message-ID: <20230709111456.068771983@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,46 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a7129231edf329a00e92dbd2d741f6da728a4a06 ]
+[ Upstream commit 504e72ed3a1b1c0d4450712a42ae6070d3a05a8e ]
 
-DPU5 and newer targets enable this unconditionally. Move it from the
-SC7280 mask to the SC7180 one.
+nv50_display_create() is declared in another header, along with
+a couple of declarations that are now outdated:
 
-Fixes: 7e6ee55320f0 ("drm/msm/disp/dpu1: enable DATA_HCTL_EN for sc7280 target")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/538159/
-Link: https://lore.kernel.org/r/20230508-topic-hctl_en-v2-1-e7bea9f1f5dd@linaro.org
-[DB: removed BIT(DPU_INTF_DATA_COMPRESS), which is not yet merged]
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+drivers/gpu/drm/nouveau/dispnv50/disp.c:2517:1: error: no previous prototype for 'nv50_display_create'
+
+Fixes: ba801ef068c1 ("drm/nouveau/kms: display destroy/init/fini hooks can be static")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Karol Herbst <kherbst@redhat.com>
+Signed-off-by: Karol Herbst <kherbst@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230417210329.2469722-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/dispnv50/disp.c | 1 +
+ drivers/gpu/drm/nouveau/nv50_display.h  | 4 +---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 900cdb40c7b40..f41bbceef70cf 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -95,9 +95,12 @@
- #define INTF_SDM845_MASK (0)
+diff --git a/drivers/gpu/drm/nouveau/dispnv50/disp.c b/drivers/gpu/drm/nouveau/dispnv50/disp.c
+index 5bb777ff13130..9b6824f6b9e4b 100644
+--- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
++++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
+@@ -64,6 +64,7 @@
+ #include "nouveau_connector.h"
+ #include "nouveau_encoder.h"
+ #include "nouveau_fence.h"
++#include "nv50_display.h"
  
- #define INTF_SC7180_MASK \
--	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
-+	(BIT(DPU_INTF_INPUT_CTRL) | \
-+	 BIT(DPU_INTF_TE) | \
-+	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
-+	 BIT(DPU_DATA_HCTL_EN))
+ #include <subdev/bios/dp.h>
  
--#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
-+#define INTF_SC7280_MASK (INTF_SC7180_MASK)
+diff --git a/drivers/gpu/drm/nouveau/nv50_display.h b/drivers/gpu/drm/nouveau/nv50_display.h
+index fbd3b15583bc8..60f77766766e9 100644
+--- a/drivers/gpu/drm/nouveau/nv50_display.h
++++ b/drivers/gpu/drm/nouveau/nv50_display.h
+@@ -31,7 +31,5 @@
+ #include "nouveau_reg.h"
  
- #define IRQ_SDM845_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
- 			 BIT(MDP_SSPP_TOP0_INTR2) | \
+ int  nv50_display_create(struct drm_device *);
+-void nv50_display_destroy(struct drm_device *);
+-int  nv50_display_init(struct drm_device *);
+-void nv50_display_fini(struct drm_device *);
++
+ #endif /* __NV50_DISPLAY_H__ */
 -- 
 2.39.2
 
