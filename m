@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80A3522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:29:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6986EC433C7;
-	Sun,  9 Jul 2023 11:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FE9522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:29:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EC8C433C7;
+	Sun,  9 Jul 2023 11:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902159;
-	bh=j+Za9LH4KLNBu+n+19lmjDMAOtzAHGisoFpXP3o7yDA=;
+	s=korg; t=1688902162;
+	bh=PltAq0/wNJwDl9iOnEuiXmifPwpDT4Jg6wk/vb9PwiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cT26vP2IF0v3VOWJUj01nI+XsYa8q88wZOIhvbpyRHb4ynS4V/hpErMuKLYJ2aSC8
-	 Iz6OSlKEoW7OK0p8Yf8r+H/aCrsqHdIoXXjH88GdJ/I5RL9u3uD5GLVA8lGiObywjQ
-	 8+vXEqGClW8PAEMjDi12z4bp9uBeFaTSgQNjBSFQ=
+	b=sNCu62MJasS/CL501XdEWz8kJXzbzpocl8AXFAwDFsp6UYkAxS9zUiRm7DFzMJw78
+	 m+iptPFk+rzuoVF7jq59sShuNqO5U2pbpw36Sw1XU2Wtp27TFUt/Nsqb6rThwyfW9o
+	 KoROwtuEi3S4doDyNxVJjwD3b2wk/BxBlCsrIgJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Julius Werner <jwerner@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 249/431] arm64: dts: qcom: apq8096: fix fixed regulator name property
-Date: Sun,  9 Jul 2023 13:13:17 +0200
-Message-ID: <20230709111456.996459623@linuxfoundation.org>
+Subject: [PATCH 6.3 250/431] arm64: dts: mediatek: mt8183: Add mediatek,broken-save-restore-fw to kukui
+Date: Sun,  9 Jul 2023 13:13:18 +0200
+Message-ID: <20230709111457.018837839@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,47 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit c77612a07d18d4425fd8ddd532a8a9b8e1970c53 ]
+[ Upstream commit 42127f578ebde652d1373e0233356fbd351675c4 ]
 
-Correct the typo in 'regulator-name' property.
+Firmware shipped on mt8183 Chromebooks is affected by the GICR
+save/restore issue as described by the patch ("dt-bindings:
+interrupt-controller: arm,gic-v3: Add quirk for Mediatek SoCs w/
+broken FW"). Add the quirk property.
 
-  apq8096-ifc6640.dtb: v1p05-regulator: 'regulator-name' is a required property
-  apq8096-ifc6640.dtb: v1p05-regulator: Unevaluated properties are not allowed ('reglator-name' was unexpected)
-
-Fixes: 6cbdec2d3ca6 ("arm64: dts: qcom: msm8996: Introduce IFC6640")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230507174516.264936-3-krzysztof.kozlowski@linaro.org
+Fixes: cd894e274b74 ("arm64: dts: mt8183: Add krane-sku176 board")
+Reviewed-by: Julius Werner <jwerner@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230515131353.v2.3.I525a2ed4260046d43c885ee1275e91707743df1c@changeid
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-index 71e0a500599c8..ed2e2f6c6775a 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-@@ -26,7 +26,7 @@ chosen {
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+index fbe14b13051a6..4836ad55fd4ae 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+@@ -292,6 +292,10 @@ dsi_out: endpoint {
+ 	};
+ };
  
- 	v1p05: v1p05-regulator {
- 		compatible = "regulator-fixed";
--		reglator-name = "v1p05";
-+		regulator-name = "v1p05";
- 		regulator-always-on;
- 		regulator-boot-on;
- 
-@@ -38,7 +38,7 @@ v1p05: v1p05-regulator {
- 
- 	v12_poe: v12-poe-regulator {
- 		compatible = "regulator-fixed";
--		reglator-name = "v12_poe";
-+		regulator-name = "v12_poe";
- 		regulator-always-on;
- 		regulator-boot-on;
- 
++&gic {
++	mediatek,broken-save-restore-fw;
++};
++
+ &gpu {
+ 	mali-supply = <&mt6358_vgpu_reg>;
+ 	sram-supply = <&mt6358_vsram_gpu_reg>;
 -- 
 2.39.2
 
