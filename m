@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08562522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:24:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF2AC433C9;
-	Sun,  9 Jul 2023 11:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880AA5232
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:24:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08621C433CA;
+	Sun,  9 Jul 2023 11:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901847;
-	bh=oSXOFgtcyXlpIAsrvAp1cvh7AyyhdxLWT25YlAShx8Y=;
+	s=korg; t=1688901850;
+	bh=/Gb+7d5on5ldbUvYUatmLzZgwsfbIb2xtlY4bWoTHfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bfJ9gBhKuGFlwqYXqU/O//26u7GKl7RjdSeHRLrNztjbh7kCPKViWk3te2mo9xLQ3
-	 O7Pt0Yq08T5iNqpLrnhLwhQ3M2NXS731OKIIkUegK+SwyGR/snEn+juUTuiKBH+/uc
-	 qXFqhQAs63YKQF/f2lUqwE3sLFmcvbzXyuV6Cn+U=
+	b=WpQ4TGWMoiWWkRoHdzjOXz5j7hvQA//M+sePjIUvC43p9KONtG+dSvCJZk1S6Vjpu
+	 oklr8lLRTV96/RIDzN0pPyz4Xmrj4tw+qYj288Zw6H9LcSfDmqlvJyKuCXKcsIfsN9
+	 38xIzz9uS760irOQNUTrbwxiEC2eC07JBQV/6tZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 166/431] Input: cyttsp4_core - change del_timer_sync() to timer_shutdown_sync()
-Date: Sun,  9 Jul 2023 13:11:54 +0200
-Message-ID: <20230709111455.066265670@linuxfoundation.org>
+Subject: [PATCH 6.3 167/431] drm/bridge: ti-sn65dsi83: Fix enable error path
+Date: Sun,  9 Jul 2023 13:11:55 +0200
+Message-ID: <20230709111455.088793546@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,69 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit dbe836576f12743a7d2d170ad4ad4fd324c4d47a ]
+[ Upstream commit 8a91b29f1f50ce7742cdbe5cf11d17f128511f3f ]
 
-The watchdog_timer can schedule tx_timeout_task and watchdog_work
-can also arm watchdog_timer. The process is shown below:
+If PLL locking failed, the regulator needs to be disabled again.
 
------------ timer schedules work ------------
-cyttsp4_watchdog_timer() //timer handler
-  schedule_work(&cd->watchdog_work)
-
------------ work arms timer ------------
-cyttsp4_watchdog_work() //workqueue callback function
-  cyttsp4_start_wd_timer()
-    mod_timer(&cd->watchdog_timer, ...)
-
-Although del_timer_sync() and cancel_work_sync() are called in
-cyttsp4_remove(), the timer and workqueue could still be rearmed.
-As a result, the possible use after free bugs could happen. The
-process is shown below:
-
-  (cleanup routine)           |  (timer and workqueue routine)
-cyttsp4_remove()              | cyttsp4_watchdog_timer() //timer
-  cyttsp4_stop_wd_timer()     |   schedule_work()
-    del_timer_sync()          |
-                              | cyttsp4_watchdog_work() //worker
-                              |   cyttsp4_start_wd_timer()
-                              |     mod_timer()
-    cancel_work_sync()        |
-                              | cyttsp4_watchdog_timer() //timer
-                              |   schedule_work()
-    del_timer_sync()          |
-  kfree(cd) //FREE            |
-                              | cyttsp4_watchdog_work() // reschedule!
-                              |   cd-> //USE
-
-This patch changes del_timer_sync() to timer_shutdown_sync(),
-which could prevent rearming of the timer from the workqueue.
-
-Fixes: 17fb1563d69b ("Input: cyttsp4 - add core driver for Cypress TMA4XX touchscreen devices")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230421082919.8471-1-duoming@zju.edu.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 5664e3c907e2 ("drm/bridge: ti-sn65dsi83: Add vcc supply regulator support")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230504065316.2640739-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/cyttsp4_core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/input/touchscreen/cyttsp4_core.c b/drivers/input/touchscreen/cyttsp4_core.c
-index 0cd6f626adec5..7cb26929dc732 100644
---- a/drivers/input/touchscreen/cyttsp4_core.c
-+++ b/drivers/input/touchscreen/cyttsp4_core.c
-@@ -1263,9 +1263,8 @@ static void cyttsp4_stop_wd_timer(struct cyttsp4 *cd)
- 	 * Ensure we wait until the watchdog timer
- 	 * running on a different CPU finishes
- 	 */
--	del_timer_sync(&cd->watchdog_timer);
-+	timer_shutdown_sync(&cd->watchdog_timer);
- 	cancel_work_sync(&cd->watchdog_work);
--	del_timer_sync(&cd->watchdog_timer);
- }
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+index 91ecfbe45bf90..a6534011c9214 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -478,6 +478,7 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
+ 		dev_err(ctx->dev, "failed to lock PLL, ret=%i\n", ret);
+ 		/* On failure, disable PLL again and exit. */
+ 		regmap_write(ctx->regmap, REG_RC_PLL_EN, 0x00);
++		regulator_disable(ctx->vcc);
+ 		return;
+ 	}
  
- static void cyttsp4_watchdog_timer(struct timer_list *t)
 -- 
 2.39.2
 
