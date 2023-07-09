@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE99F522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B20C433C8;
-	Sun,  9 Jul 2023 11:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B66522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342C5C433C7;
+	Sun,  9 Jul 2023 11:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902525;
-	bh=XMuA7nh0BQwZUUMeFkOezyFXWyBpxIiuq4Q67HyTXfU=;
+	s=korg; t=1688902528;
+	bh=bZ4mPcvZXM0pZba6TbjXQQu+FGoZKOLzIyV/qR0Xkwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZuewMDDmQaPVcSTNV0Tkineg4RKz1+u1hXtZn5pOnUNl75K/qEHfG9DuRU+hV7QCI
-	 ZHus6pUHFqerX1Xrniib33NZZ+g/5nuhmy7UxXwNcMhntUyqQ7bpz4sofqnUZik3Il
-	 rQDemhLmgpsS81Mf0Q4J2bNnNia4Qpzlm+V1C3js=
+	b=J7K5aVvnLklW9fhRTRcANOrN/V5TPDteVsh9S4oHwTDPeC2nlYGkxMAmeJw/UnQJ+
+	 xvSnPc7t+/IBUQFjVuwjj+vTfns3xrbjF1i/rJRy2xs4hMA9tN5n4MGAZwMKV5p8sE
+	 ZMNmz3gMWcssTtkMUfXs9bvsLuzv7qFt5eBHi3BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>,
-	Bolemx Sivanagaleela <bolemx.sivanagaleela@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 408/431] crypto: qat - unmap buffers before free for RSA
-Date: Sun,  9 Jul 2023 13:15:56 +0200
-Message-ID: <20230709111500.750035139@linuxfoundation.org>
+Subject: [PATCH 6.3 409/431] NFSv4.2: fix wrong shrinker_id
+Date: Sun,  9 Jul 2023 13:15:57 +0200
+Message-ID: <20230709111500.776814689@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -38,60 +35,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-[ Upstream commit d776b25495f2c71b9dbf1f5e53b642215ba72f3c ]
+[ Upstream commit 7f7ab336898f281e58540ef781a8fb375acc32a9 ]
 
-The callback function for RSA frees the memory allocated for the source
-and destination buffers before unmapping them.
-This sequence is wrong.
+Currently, the list_lru::shrinker_id corresponding to the nfs4_xattr
+shrinkers is wrong:
 
-Change the cleanup sequence to unmap the buffers before freeing them.
+>>> prog["nfs4_xattr_cache_lru"].shrinker_id
+(int)0
+>>> prog["nfs4_xattr_entry_lru"].shrinker_id
+(int)0
+>>> prog["nfs4_xattr_large_entry_lru"].shrinker_id
+(int)0
+>>> prog["nfs4_xattr_cache_shrinker"].id
+(int)18
+>>> prog["nfs4_xattr_entry_shrinker"].id
+(int)19
+>>> prog["nfs4_xattr_large_entry_shrinker"].id
+(int)20
 
-Fixes: 3dfaf0071ed7 ("crypto: qat - remove dma_free_coherent() for RSA")
-Signed-off-by: Hareshx Sankar Raj <hareshx.sankar.raj@intel.com>
-Co-developed-by: Bolemx Sivanagaleela <bolemx.sivanagaleela@intel.com>
-Signed-off-by: Bolemx Sivanagaleela <bolemx.sivanagaleela@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This is not what we expect, which will cause these shrinkers
+not to be found in shrink_slab_memcg().
+
+We should assign shrinker::id before calling list_lru_init_memcg(),
+so that the corresponding list_lru::shrinker_id will be assigned
+the correct value like below:
+
+>>> prog["nfs4_xattr_cache_lru"].shrinker_id
+(int)16
+>>> prog["nfs4_xattr_entry_lru"].shrinker_id
+(int)17
+>>> prog["nfs4_xattr_large_entry_lru"].shrinker_id
+(int)18
+>>> prog["nfs4_xattr_cache_shrinker"].id
+(int)16
+>>> prog["nfs4_xattr_entry_shrinker"].id
+(int)17
+>>> prog["nfs4_xattr_large_entry_shrinker"].id
+(int)18
+
+So just do it.
+
+Fixes: 95ad37f90c33 ("NFSv4.2: add client side xattr caching.")
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_common/qat_asym_algs.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/nfs/nfs42xattr.c | 79 +++++++++++++++++++++++++--------------------
+ 1 file changed, 44 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/crypto/qat/qat_common/qat_asym_algs.c b/drivers/crypto/qat/qat_common/qat_asym_algs.c
-index 8806242469a06..4128200a90329 100644
---- a/drivers/crypto/qat/qat_common/qat_asym_algs.c
-+++ b/drivers/crypto/qat/qat_common/qat_asym_algs.c
-@@ -520,12 +520,14 @@ static void qat_rsa_cb(struct icp_qat_fw_pke_resp *resp)
+diff --git a/fs/nfs/nfs42xattr.c b/fs/nfs/nfs42xattr.c
+index 76ae118342066..911f634ba3da7 100644
+--- a/fs/nfs/nfs42xattr.c
++++ b/fs/nfs/nfs42xattr.c
+@@ -991,6 +991,29 @@ static void nfs4_xattr_cache_init_once(void *p)
+ 	INIT_LIST_HEAD(&cache->dispose);
+ }
  
- 	err = (err == ICP_QAT_FW_COMN_STATUS_FLAG_OK) ? 0 : -EINVAL;
- 
--	kfree_sensitive(req->src_align);
--
- 	dma_unmap_single(dev, req->in.rsa.enc.m, req->ctx.rsa->key_sz,
- 			 DMA_TO_DEVICE);
- 
-+	kfree_sensitive(req->src_align);
++static int nfs4_xattr_shrinker_init(struct shrinker *shrinker,
++				    struct list_lru *lru, const char *name)
++{
++	int ret = 0;
 +
- 	areq->dst_len = req->ctx.rsa->key_sz;
-+	dma_unmap_single(dev, req->out.rsa.enc.c, req->ctx.rsa->key_sz,
-+			 DMA_FROM_DEVICE);
- 	if (req->dst_align) {
- 		scatterwalk_map_and_copy(req->dst_align, areq->dst, 0,
- 					 areq->dst_len, 1);
-@@ -533,9 +535,6 @@ static void qat_rsa_cb(struct icp_qat_fw_pke_resp *resp)
- 		kfree_sensitive(req->dst_align);
- 	}
++	ret = register_shrinker(shrinker, name);
++	if (ret)
++		return ret;
++
++	ret = list_lru_init_memcg(lru, shrinker);
++	if (ret)
++		unregister_shrinker(shrinker);
++
++	return ret;
++}
++
++static void nfs4_xattr_shrinker_destroy(struct shrinker *shrinker,
++					struct list_lru *lru)
++{
++	unregister_shrinker(shrinker);
++	list_lru_destroy(lru);
++}
++
+ int __init nfs4_xattr_cache_init(void)
+ {
+ 	int ret = 0;
+@@ -1002,44 +1025,30 @@ int __init nfs4_xattr_cache_init(void)
+ 	if (nfs4_xattr_cache_cachep == NULL)
+ 		return -ENOMEM;
  
--	dma_unmap_single(dev, req->out.rsa.enc.c, req->ctx.rsa->key_sz,
--			 DMA_FROM_DEVICE);
+-	ret = list_lru_init_memcg(&nfs4_xattr_large_entry_lru,
+-	    &nfs4_xattr_large_entry_shrinker);
+-	if (ret)
+-		goto out4;
 -
- 	dma_unmap_single(dev, req->phy_in, sizeof(struct qat_rsa_input_params),
- 			 DMA_TO_DEVICE);
- 	dma_unmap_single(dev, req->phy_out,
+-	ret = list_lru_init_memcg(&nfs4_xattr_entry_lru,
+-	    &nfs4_xattr_entry_shrinker);
+-	if (ret)
+-		goto out3;
+-
+-	ret = list_lru_init_memcg(&nfs4_xattr_cache_lru,
+-	    &nfs4_xattr_cache_shrinker);
+-	if (ret)
+-		goto out2;
+-
+-	ret = register_shrinker(&nfs4_xattr_cache_shrinker, "nfs-xattr_cache");
++	ret = nfs4_xattr_shrinker_init(&nfs4_xattr_cache_shrinker,
++				       &nfs4_xattr_cache_lru,
++				       "nfs-xattr_cache");
+ 	if (ret)
+ 		goto out1;
+ 
+-	ret = register_shrinker(&nfs4_xattr_entry_shrinker, "nfs-xattr_entry");
++	ret = nfs4_xattr_shrinker_init(&nfs4_xattr_entry_shrinker,
++				       &nfs4_xattr_entry_lru,
++				       "nfs-xattr_entry");
+ 	if (ret)
+-		goto out;
++		goto out2;
+ 
+-	ret = register_shrinker(&nfs4_xattr_large_entry_shrinker,
+-				"nfs-xattr_large_entry");
++	ret = nfs4_xattr_shrinker_init(&nfs4_xattr_large_entry_shrinker,
++				       &nfs4_xattr_large_entry_lru,
++				       "nfs-xattr_large_entry");
+ 	if (!ret)
+ 		return 0;
+ 
+-	unregister_shrinker(&nfs4_xattr_entry_shrinker);
+-out:
+-	unregister_shrinker(&nfs4_xattr_cache_shrinker);
+-out1:
+-	list_lru_destroy(&nfs4_xattr_cache_lru);
++	nfs4_xattr_shrinker_destroy(&nfs4_xattr_entry_shrinker,
++				    &nfs4_xattr_entry_lru);
+ out2:
+-	list_lru_destroy(&nfs4_xattr_entry_lru);
+-out3:
+-	list_lru_destroy(&nfs4_xattr_large_entry_lru);
+-out4:
++	nfs4_xattr_shrinker_destroy(&nfs4_xattr_cache_shrinker,
++				    &nfs4_xattr_cache_lru);
++out1:
+ 	kmem_cache_destroy(nfs4_xattr_cache_cachep);
+ 
+ 	return ret;
+@@ -1047,11 +1056,11 @@ int __init nfs4_xattr_cache_init(void)
+ 
+ void nfs4_xattr_cache_exit(void)
+ {
+-	unregister_shrinker(&nfs4_xattr_large_entry_shrinker);
+-	unregister_shrinker(&nfs4_xattr_entry_shrinker);
+-	unregister_shrinker(&nfs4_xattr_cache_shrinker);
+-	list_lru_destroy(&nfs4_xattr_large_entry_lru);
+-	list_lru_destroy(&nfs4_xattr_entry_lru);
+-	list_lru_destroy(&nfs4_xattr_cache_lru);
++	nfs4_xattr_shrinker_destroy(&nfs4_xattr_large_entry_shrinker,
++				    &nfs4_xattr_large_entry_lru);
++	nfs4_xattr_shrinker_destroy(&nfs4_xattr_entry_shrinker,
++				    &nfs4_xattr_entry_lru);
++	nfs4_xattr_shrinker_destroy(&nfs4_xattr_cache_shrinker,
++				    &nfs4_xattr_cache_lru);
+ 	kmem_cache_destroy(nfs4_xattr_cache_cachep);
+ }
 -- 
 2.39.2
 
