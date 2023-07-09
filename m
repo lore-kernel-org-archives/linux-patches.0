@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446CA522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C73C433C7;
-	Sun,  9 Jul 2023 11:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D92522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F51BC433C7;
+	Sun,  9 Jul 2023 11:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901814;
-	bh=oFFKqr2oZ5mp+C5sEL+TV3fd/44qwTT00JsVd85esgE=;
+	s=korg; t=1688901816;
+	bh=gPvR8WsfLC8bgVhmgdPD+sObLj676baT02srq73MJKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDi8AWlacm0poSLnnVaWarPNUGkqnq9hgmLv0qH6gOw8KU6RB27vlZsqGetwmwl3q
-	 zSyd5Xh2mM6D17dzT23zqX/e5PN4KYanx3ZUlb/6jNWzgl+Qgn1pY+0y1BEG4JOQXw
-	 u6odbieNceo0MIczZDCFPtK7GLWgYrSELSPgcLdg=
+	b=EbL2cxzDpWAO6a/h3xRZozfEBchQNbjHlvyyNA7pT0kZbL4QbiSW9+0xg7BYqAT2P
+	 WtqxvYUTM2NIkUifORWzrsQQBTtzyx9VC5ICUKtoaj6JHjekkNXZ9zEQy3VhtXAdTz
+	 JpKO6KLGtft3eNzWYWNuRSxQsCGcAn7TLwDJN4So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
+	Simon Horman <simon.horman@corigine.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 126/431] wifi: iwlwifi: pcie: fix NULL pointer dereference in iwl_pcie_irq_rx_msix_handler()
-Date: Sun,  9 Jul 2023 13:11:14 +0200
-Message-ID: <20230709111454.110071854@linuxfoundation.org>
+Subject: [PATCH 6.3 127/431] wifi: mac80211: Remove "Missing iftype sband data/EHT cap" spam
+Date: Sun,  9 Jul 2023 13:11:15 +0200
+Message-ID: <20230709111454.133385321@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,53 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
 
-[ Upstream commit 1902f1953b8ba100ee8705cb8a6f1a9795550eca ]
+[ Upstream commit 6e21e7b8cd897193cee3c2649640efceb3004ba5 ]
 
-rxq can be NULL only when trans_pcie->rxq is NULL and entry->entry
-is zero. For the case when entry->entry is not equal to 0, rxq
-won't be NULL even if trans_pcie->rxq is NULL. Modify checker to
-check for trans_pcie->rxq.
+In mesh mode, ieee80211_chandef_he_6ghz_oper() is called by
+mesh_matches_local() for every received mesh beacon.
 
-Fixes: abc599efa67b ("iwlwifi: pcie: don't crash when rx queues aren't allocated in interrupt")
-Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230614123446.5a5eb3889a4a.I375a1d58f16b48cd2044e7b7caddae512d7c86fd@changeid
+On a 6 GHz mesh of a HE-only phy, this spams that the hardware does not
+have EHT capabilities, even if the received mesh beacon does not have an
+EHT element.
+
+Unlike HE, not supporting EHT in the 6 GHz band is not an error so do
+not print anything in this case.
+
+Fixes: 5dca295dd767 ("mac80211: Add initial support for EHT and 320 MHz channels")
+
+Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230614132648.28995-1-nicolas.cavallari@green-communications.fr
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/rx.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mac80211/util.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-index 9c9f87fe83777..b455e981faa1f 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/rx.c
-@@ -1620,14 +1620,14 @@ irqreturn_t iwl_pcie_irq_rx_msix_handler(int irq, void *dev_id)
- 	struct msix_entry *entry = dev_id;
- 	struct iwl_trans_pcie *trans_pcie = iwl_pcie_get_trans_pcie(entry);
- 	struct iwl_trans *trans = trans_pcie->trans;
--	struct iwl_rxq *rxq = &trans_pcie->rxq[entry->entry];
-+	struct iwl_rxq *rxq;
- 
- 	trace_iwlwifi_dev_irq_msix(trans->dev, entry, false, 0, 0);
- 
- 	if (WARN_ON(entry->entry >= trans->num_rx_queues))
- 		return IRQ_NONE;
- 
--	if (!rxq) {
-+	if (!trans_pcie->rxq) {
- 		if (net_ratelimit())
- 			IWL_ERR(trans,
- 				"[%d] Got MSI-X interrupt before we have Rx queues\n",
-@@ -1635,6 +1635,7 @@ irqreturn_t iwl_pcie_irq_rx_msix_handler(int irq, void *dev_id)
- 		return IRQ_NONE;
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 1a0d38cd46337..ce25d14db4d28 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -3707,10 +3707,8 @@ bool ieee80211_chandef_he_6ghz_oper(struct ieee80211_sub_if_data *sdata,
  	}
  
-+	rxq = &trans_pcie->rxq[entry->entry];
- 	lock_map_acquire(&trans->sync_cmd_lockdep_map);
- 	IWL_DEBUG_ISR(trans, "[%d] Got interrupt\n", entry->entry);
+ 	eht_cap = ieee80211_get_eht_iftype_cap(sband, iftype);
+-	if (!eht_cap) {
+-		sdata_info(sdata, "Missing iftype sband data/EHT cap");
++	if (!eht_cap)
+ 		eht_oper = NULL;
+-	}
+ 
+ 	he_6ghz_oper = ieee80211_he_6ghz_oper(he_oper);
  
 -- 
 2.39.2
