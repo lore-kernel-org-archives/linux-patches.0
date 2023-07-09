@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EA6522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD9CC433C8;
-	Sun,  9 Jul 2023 11:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B205522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2F5C433C9;
+	Sun,  9 Jul 2023 11:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901808;
-	bh=0YrTWkP791Q6pbwnTipRK9YXyjAr5xDWSDx9eXN6DNw=;
+	s=korg; t=1688901811;
+	bh=+AAk+VYTmDNqiLu+1bCTqvw65rgwQS8RivAgkBhJa4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UU0PCP1qTWkQiN2RKIGJuqSWa3JoynuLNSllEYKC/a2ychVAkOtWKzMkKa34BiHLO
-	 SyzwUDAxXr3xNf2g+pHa4OIni0ZkGGXD0UZuxD6aOlFgsko1x5xNk3mMHY7WC51hEN
-	 JzL+dzzyS3UrQU8Qb0mAI14GICeZfCvchUO9y5Yc=
+	b=QVWpcKsQOHjW6JX3FsYUkTIqCBbcslnToGwi6KxIqv5BLdzDx0Qz08lLN90Ki/iUb
+	 apPVRjwlOTSnpHZMwu2aVikyP6es2DmeyjBt3m+nlbqfzmMXFoNbcqiRB/VfA/WA6m
+	 Vr1Bf1PONUuiiSPgY+uSqlMz17T7e30ZjvHCmX10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Huang <hzyitc@outlook.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 124/431] wifi: ath11k: Add missing hw_ops->get_ring_selector() for IPQ5018
-Date: Sun,  9 Jul 2023 13:11:12 +0200
-Message-ID: <20230709111454.063573588@linuxfoundation.org>
+Subject: [PATCH 6.3 125/431] wifi: iwlwifi: pull from TXQs with softirqs disabled
+Date: Sun,  9 Jul 2023 13:11:13 +0200
+Message-ID: <20230709111454.086909641@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,65 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Huang <hzyitc@outlook.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ce282d8de71f07f0056ea319541141152c65f552 ]
+[ Upstream commit 96fb6f47db24a712d650b0a9b9074873f273fb0e ]
 
-During sending data after clients connected, hw_ops->get_ring_selector()
-will be called. But for IPQ5018, this member isn't set, and the
-following NULL pointer exception will be occurred:
+In mac80211, it's required that we pull from TXQs by calling
+ieee80211_tx_dequeue() only with softirqs disabled. However,
+in iwl_mvm_queue_state_change() we're often called with them
+enabled, e.g. from flush if anything was flushed, triggering
+a mac80211 warning.
 
-	[   38.840478] 8<--- cut here ---
-	[   38.840517] Unable to handle kernel NULL pointer dereference at virtual address 00000000
-	...
-	[   38.923161] PC is at 0x0
-	[   38.927930] LR is at ath11k_dp_tx+0x70/0x730 [ath11k]
-	...
-	[   39.063264] Process hostapd (pid: 1034, stack limit = 0x801ceb3d)
-	[   39.068994] Stack: (0x856a9a68 to 0x856aa000)
-	...
-	[   39.438467] [<7f323804>] (ath11k_dp_tx [ath11k]) from [<7f314e6c>] (ath11k_mac_op_tx+0x80/0x190 [ath11k])
-	[   39.446607] [<7f314e6c>] (ath11k_mac_op_tx [ath11k]) from [<7f17dbe0>] (ieee80211_handle_wake_tx_queue+0x7c/0xc0 [mac80211])
-	[   39.456162] [<7f17dbe0>] (ieee80211_handle_wake_tx_queue [mac80211]) from [<7f174450>] (ieee80211_probereq_get+0x584/0x704 [mac80211])
-	[   39.467443] [<7f174450>] (ieee80211_probereq_get [mac80211]) from [<7f178c40>] (ieee80211_tx_prepare_skb+0x1f8/0x248 [mac80211])
-	[   39.479334] [<7f178c40>] (ieee80211_tx_prepare_skb [mac80211]) from [<7f179e28>] (__ieee80211_subif_start_xmit+0x32c/0x3d4 [mac80211])
-	[   39.491053] [<7f179e28>] (__ieee80211_subif_start_xmit [mac80211]) from [<7f17af08>] (ieee80211_tx_control_port+0x19c/0x288 [mac80211])
-	[   39.502946] [<7f17af08>] (ieee80211_tx_control_port [mac80211]) from [<7f0fc704>] (nl80211_tx_control_port+0x174/0x1d4 [cfg80211])
-	[   39.515017] [<7f0fc704>] (nl80211_tx_control_port [cfg80211]) from [<808ceac4>] (genl_rcv_msg+0x154/0x340)
-	[   39.526814] [<808ceac4>] (genl_rcv_msg) from [<808cdb74>] (netlink_rcv_skb+0xb8/0x11c)
-	[   39.536446] [<808cdb74>] (netlink_rcv_skb) from [<808ce1d0>] (genl_rcv+0x28/0x34)
-	[   39.544344] [<808ce1d0>] (genl_rcv) from [<808cd234>] (netlink_unicast+0x174/0x274)
-	[   39.551895] [<808cd234>] (netlink_unicast) from [<808cd510>] (netlink_sendmsg+0x1dc/0x440)
-	[   39.559362] [<808cd510>] (netlink_sendmsg) from [<808596e0>] (____sys_sendmsg+0x1a8/0x1fc)
-	[   39.567697] [<808596e0>] (____sys_sendmsg) from [<8085b1a8>] (___sys_sendmsg+0xa4/0xdc)
-	[   39.575941] [<8085b1a8>] (___sys_sendmsg) from [<8085b310>] (sys_sendmsg+0x44/0x74)
-	[   39.583841] [<8085b310>] (sys_sendmsg) from [<80300060>] (ret_fast_syscall+0x0/0x40)
-	...
-	[   39.620734] Code: bad PC value
-	[   39.625869] ---[ end trace 8aef983ad3cbc032 ]---
+Fix that by disabling the softirqs across the TX call.
 
-Fixes: ba60f2793d3a ("wifi: ath11k: initialize hw_ops for IPQ5018")
-Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/TYZPR01MB5556D6E3F63EAB5129D11420C953A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+Fixes: cfbc6c4c5b91 ("iwlwifi: mvm: support mac80211 TXQs model")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230614123446.0feef7fa81db.I4dd62542d955b40dd8f0af34fa4accb9d0d17c7e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/hw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/hw.c b/drivers/net/wireless/ath/ath11k/hw.c
-index ab8f0ccacc6be..727e6a785bb98 100644
---- a/drivers/net/wireless/ath/ath11k/hw.c
-+++ b/drivers/net/wireless/ath/ath11k/hw.c
-@@ -1165,7 +1165,7 @@ const struct ath11k_hw_ops ipq5018_ops = {
- 	.mpdu_info_get_peerid = ath11k_hw_ipq8074_mpdu_info_get_peerid,
- 	.rx_desc_mac_addr2_valid = ath11k_hw_ipq9074_rx_desc_mac_addr2_valid,
- 	.rx_desc_mpdu_start_addr2 = ath11k_hw_ipq9074_rx_desc_mpdu_start_addr2,
--
-+	.get_ring_selector = ath11k_hw_ipq8074_get_tcl_ring_selector,
- };
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+index 9711841bb4564..3d91293cc250d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+@@ -1697,8 +1697,11 @@ static void iwl_mvm_queue_state_change(struct iwl_op_mode *op_mode,
+ 		else
+ 			set_bit(IWL_MVM_TXQ_STATE_STOP_FULL, &mvmtxq->state);
  
- #define ATH11K_TX_RING_MASK_0 BIT(0)
+-		if (start && mvmsta->sta_state != IEEE80211_STA_NOTEXIST)
++		if (start && mvmsta->sta_state != IEEE80211_STA_NOTEXIST) {
++			local_bh_disable();
+ 			iwl_mvm_mac_itxq_xmit(mvm->hw, txq);
++			local_bh_enable();
++		}
+ 	}
+ 
+ out:
 -- 
 2.39.2
 
