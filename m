@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92840522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F8AC433C7;
-	Sun,  9 Jul 2023 11:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFEC20EB
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0100C433C7;
+	Sun,  9 Jul 2023 11:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901836;
-	bh=FsYL38Lg6mo+P1dW9U0WoXVn8cNFBgdXR+obqNHGfPU=;
+	s=korg; t=1688901839;
+	bh=j6kS7LQm9jiAtqEA+kWOkRi9TYmlZD9KukE45Fd8jhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dwvUKtNNqBWvBgwGXRgNsu7r+/wUKY2SjDaCElRN0f8SBLa5PBu0tgM4akeGpS6Ed
-	 I8kuDT36BzMXbmaKJztOnOqvyH/stQA1fG8Ugfe+iS7wymSnA3pCjXruaZbAjJ5sd4
-	 mGebnW/OxajPFUq9qjZypjKB31/6KQTO4kjqRk+A=
+	b=U3rx32aFwKhRoH8Zqrr9Rngjc0D0gShXw1QneVY4GLQ5NCEUocltWybKouMC1ysxq
+	 76OUVC5xPxxHNKxEZmZtkr2KJGmaKg+RFJR5D1/4hHwQQU6Qln4KA/DdamKSIknVIA
+	 vUNaOTfpHtENrOs9Ocv8o//DTYuqWofDitYL5k0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
 	John Harrison <John.C.Harrison@Intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 162/431] drm/i915/guc: More debug print updates - GuC SLPC
-Date: Sun,  9 Jul 2023 13:11:50 +0200
-Message-ID: <20230709111454.973426993@linuxfoundation.org>
+Subject: [PATCH 6.3 163/431] drm/i915/guc/slpc: Provide sysfs for efficient freq
+Date: Sun,  9 Jul 2023 13:11:51 +0200
+Message-ID: <20230709111454.995846149@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,265 +38,203 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
 
-[ Upstream commit 9847ffce9b5f83a7707504b0127aeb6a05dbd378 ]
+[ Upstream commit 55f9720dbf23ed640a51ea5564c22305efa8a467 ]
 
-Update a bunch more debug prints to use the new GT based scheme.
+SLPC enables use of efficient freq at init by default. It is
+possible for GuC to request frequencies that are higher than
+the 'software' max if user has set it lower than the efficient
+level.
 
-v2: Also change prints to use %pe for error values (MichalW).
+Scenarios/tests that require strict fixing of freq below the efficient
+level will need to disable it through this interface.
 
+v2: Keep just one interface to toggle sysfs. With this, user will
+be completely responsible for toggling efficient frequency if need
+be. There will be no implicit disabling when user sets min < RP1 (Ashutosh)
+
+v3: Remove unused label, review comments (Ashutosh)
+
+v4: Toggle efficient freq usage in SLPC selftest and checkpatch fixes
+
+v5: Review comments (Andi) and add a separate patch for selftest updates
+
+Fixes: 95ccf312a1e4 ("drm/i915/guc/slpc: Allow SLPC to use efficient frequency")
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
 Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230207050717.1833718-6-John.C.Harrison@Intel.com
-Stable-dep-of: 55f9720dbf23 ("drm/i915/guc/slpc: Provide sysfs for efficient freq")
+Link: https://patchwork.freedesktop.org/patch/msgid/20230426003942.1924347-1-vinay.belgaumkar@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c   |  8 +--
- drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c | 61 ++++++++-------------
- 2 files changed, 26 insertions(+), 43 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c   | 35 +++++++++++++++++
+ drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c   | 38 +++++++++++++------
+ drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h   |  1 +
+ .../gpu/drm/i915/gt/uc/intel_guc_slpc_types.h |  1 +
+ 4 files changed, 64 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c
-index 8f8dd05835c5a..1adec6de223c7 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_rc.c
-@@ -6,6 +6,7 @@
- #include <linux/string_helpers.h>
- 
- #include "intel_guc_rc.h"
-+#include "intel_guc_print.h"
- #include "gt/intel_gt.h"
- #include "i915_drv.h"
- 
-@@ -59,13 +60,12 @@ static int __guc_rc_control(struct intel_guc *guc, bool enable)
- 
- 	ret = guc_action_control_gucrc(guc, enable);
- 	if (ret) {
--		i915_probe_error(guc_to_gt(guc)->i915, "Failed to %s GuC RC (%pe)\n",
--				 str_enable_disable(enable), ERR_PTR(ret));
-+		guc_probe_error(guc, "Failed to %s RC (%pe)\n",
-+				str_enable_disable(enable), ERR_PTR(ret));
- 		return ret;
- 	}
- 
--	drm_info(&gt->i915->drm, "GuC RC: %s\n",
--		 str_enabled_disabled(enable));
-+	guc_info(guc, "RC %s\n", str_enabled_disabled(enable));
- 
- 	return 0;
+diff --git a/drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c b/drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c
+index 28f27091cd3b7..ee2b44f896a27 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c
++++ b/drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c
+@@ -451,6 +451,33 @@ static ssize_t punit_req_freq_mhz_show(struct kobject *kobj,
+ 	return sysfs_emit(buff, "%u\n", preq);
  }
+ 
++static ssize_t slpc_ignore_eff_freq_show(struct kobject *kobj,
++					 struct kobj_attribute *attr,
++					 char *buff)
++{
++	struct intel_gt *gt = intel_gt_sysfs_get_drvdata(kobj, attr->attr.name);
++	struct intel_guc_slpc *slpc = &gt->uc.guc.slpc;
++
++	return sysfs_emit(buff, "%u\n", slpc->ignore_eff_freq);
++}
++
++static ssize_t slpc_ignore_eff_freq_store(struct kobject *kobj,
++					  struct kobj_attribute *attr,
++					  const char *buff, size_t count)
++{
++	struct intel_gt *gt = intel_gt_sysfs_get_drvdata(kobj, attr->attr.name);
++	struct intel_guc_slpc *slpc = &gt->uc.guc.slpc;
++	int err;
++	u32 val;
++
++	err = kstrtou32(buff, 0, &val);
++	if (err)
++		return err;
++
++	err = intel_guc_slpc_set_ignore_eff_freq(slpc, val);
++	return err ?: count;
++}
++
+ struct intel_gt_bool_throttle_attr {
+ 	struct attribute attr;
+ 	ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr,
+@@ -663,6 +690,8 @@ static struct kobj_attribute attr_media_freq_factor_scale =
+ INTEL_GT_ATTR_RO(media_RP0_freq_mhz);
+ INTEL_GT_ATTR_RO(media_RPn_freq_mhz);
+ 
++INTEL_GT_ATTR_RW(slpc_ignore_eff_freq);
++
+ static const struct attribute *media_perf_power_attrs[] = {
+ 	&attr_media_freq_factor.attr,
+ 	&attr_media_freq_factor_scale.attr,
+@@ -744,6 +773,12 @@ void intel_gt_sysfs_pm_init(struct intel_gt *gt, struct kobject *kobj)
+ 	if (ret)
+ 		gt_warn(gt, "failed to create punit_req_freq_mhz sysfs (%pe)", ERR_PTR(ret));
+ 
++	if (intel_uc_uses_guc_slpc(&gt->uc)) {
++		ret = sysfs_create_file(kobj, &attr_slpc_ignore_eff_freq.attr);
++		if (ret)
++			gt_warn(gt, "failed to create ignore_eff_freq sysfs (%pe)", ERR_PTR(ret));
++	}
++
+ 	if (i915_mmio_reg_valid(intel_gt_perf_limit_reasons_reg(gt))) {
+ 		ret = sysfs_create_files(kobj, throttle_reason_attrs);
+ 		if (ret)
 diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-index 63464933cbceb..026d73855f36c 100644
+index 026d73855f36c..56dbba1ef6684 100644
 --- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
 +++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-@@ -9,6 +9,7 @@
- #include "i915_drv.h"
- #include "i915_reg.h"
- #include "intel_guc_slpc.h"
-+#include "intel_guc_print.h"
- #include "intel_mchbar_regs.h"
- #include "gt/intel_gt.h"
- #include "gt/intel_gt_regs.h"
-@@ -171,14 +172,12 @@ static int guc_action_slpc_query(struct intel_guc *guc, u32 offset)
- static int slpc_query_task_state(struct intel_guc_slpc *slpc)
- {
- 	struct intel_guc *guc = slpc_to_guc(slpc);
--	struct drm_i915_private *i915 = slpc_to_i915(slpc);
- 	u32 offset = intel_guc_ggtt_offset(guc, slpc->vma);
- 	int ret;
+@@ -277,6 +277,7 @@ int intel_guc_slpc_init(struct intel_guc_slpc *slpc)
  
- 	ret = guc_action_slpc_query(guc, offset);
- 	if (unlikely(ret))
--		i915_probe_error(i915, "Failed to query task state (%pe)\n",
--				 ERR_PTR(ret));
-+		guc_probe_error(guc, "Failed to query task state: %pe\n", ERR_PTR(ret));
+ 	slpc->max_freq_softlimit = 0;
+ 	slpc->min_freq_softlimit = 0;
++	slpc->ignore_eff_freq = false;
+ 	slpc->min_is_rpmax = false;
  
- 	drm_clflush_virt_range(slpc->vaddr, SLPC_PAGE_SIZE_BYTES);
- 
-@@ -188,15 +187,14 @@ static int slpc_query_task_state(struct intel_guc_slpc *slpc)
- static int slpc_set_param(struct intel_guc_slpc *slpc, u8 id, u32 value)
- {
- 	struct intel_guc *guc = slpc_to_guc(slpc);
--	struct drm_i915_private *i915 = slpc_to_i915(slpc);
- 	int ret;
- 
- 	GEM_BUG_ON(id >= SLPC_MAX_PARAM);
- 
- 	ret = guc_action_slpc_set_param(guc, id, value);
- 	if (ret)
--		i915_probe_error(i915, "Failed to set param %d to %u (%pe)\n",
--				 id, value, ERR_PTR(ret));
-+		guc_probe_error(guc, "Failed to set param %d to %u: %pe\n",
-+				id, value, ERR_PTR(ret));
- 
+ 	slpc->boost_freq = 0;
+@@ -457,6 +458,29 @@ int intel_guc_slpc_get_max_freq(struct intel_guc_slpc *slpc, u32 *val)
  	return ret;
  }
-@@ -212,8 +210,8 @@ static int slpc_unset_param(struct intel_guc_slpc *slpc, u8 id)
  
- static int slpc_force_min_freq(struct intel_guc_slpc *slpc, u32 freq)
- {
--	struct drm_i915_private *i915 = slpc_to_i915(slpc);
- 	struct intel_guc *guc = slpc_to_guc(slpc);
++int intel_guc_slpc_set_ignore_eff_freq(struct intel_guc_slpc *slpc, bool val)
++{
 +	struct drm_i915_private *i915 = slpc_to_i915(slpc);
- 	intel_wakeref_t wakeref;
- 	int ret = 0;
++	intel_wakeref_t wakeref;
++	int ret;
++
++	mutex_lock(&slpc->lock);
++	wakeref = intel_runtime_pm_get(&i915->runtime_pm);
++
++	ret = slpc_set_param(slpc,
++			     SLPC_PARAM_IGNORE_EFFICIENT_FREQUENCY,
++			     val);
++	if (ret)
++		guc_probe_error(slpc_to_guc(slpc), "Failed to set efficient freq(%d): %pe\n",
++				val, ERR_PTR(ret));
++	else
++		slpc->ignore_eff_freq = val;
++
++	intel_runtime_pm_put(&i915->runtime_pm, wakeref);
++	mutex_unlock(&slpc->lock);
++	return ret;
++}
++
+ /**
+  * intel_guc_slpc_set_min_freq() - Set min frequency limit for SLPC.
+  * @slpc: pointer to intel_guc_slpc.
+@@ -482,16 +506,6 @@ int intel_guc_slpc_set_min_freq(struct intel_guc_slpc *slpc, u32 val)
+ 	mutex_lock(&slpc->lock);
+ 	wakeref = intel_runtime_pm_get(&i915->runtime_pm);
  
-@@ -236,9 +234,8 @@ static int slpc_force_min_freq(struct intel_guc_slpc *slpc, u32 freq)
- 					SLPC_PARAM_GLOBAL_MIN_GT_UNSLICE_FREQ_MHZ,
- 					freq);
- 		if (ret)
--			drm_notice(&i915->drm,
--				   "Failed to send set_param for min freq(%d): (%d)\n",
--				   freq, ret);
-+			guc_notice(guc, "Failed to send set_param for min freq(%d): %pe\n",
-+				   freq, ERR_PTR(ret));
- 	}
+-	/* Ignore efficient freq if lower min freq is requested */
+-	ret = slpc_set_param(slpc,
+-			     SLPC_PARAM_IGNORE_EFFICIENT_FREQUENCY,
+-			     val < slpc->rp1_freq);
+-	if (ret) {
+-		guc_probe_error(slpc_to_guc(slpc), "Failed to toggle efficient freq: %pe\n",
+-				ERR_PTR(ret));
+-		goto out;
+-	}
+-
+ 	ret = slpc_set_param(slpc,
+ 			     SLPC_PARAM_GLOBAL_MIN_GT_UNSLICE_FREQ_MHZ,
+ 			     val);
+@@ -499,7 +513,6 @@ int intel_guc_slpc_set_min_freq(struct intel_guc_slpc *slpc, u32 val)
+ 	if (!ret)
+ 		slpc->min_freq_softlimit = val;
  
- 	return ret;
-@@ -267,7 +264,6 @@ static void slpc_boost_work(struct work_struct *work)
- int intel_guc_slpc_init(struct intel_guc_slpc *slpc)
- {
- 	struct intel_guc *guc = slpc_to_guc(slpc);
--	struct drm_i915_private *i915 = slpc_to_i915(slpc);
- 	u32 size = PAGE_ALIGN(sizeof(struct slpc_shared_data));
- 	int err;
+-out:
+ 	intel_runtime_pm_put(&i915->runtime_pm, wakeref);
+ 	mutex_unlock(&slpc->lock);
  
-@@ -275,9 +271,7 @@ int intel_guc_slpc_init(struct intel_guc_slpc *slpc)
+@@ -752,6 +765,9 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
+ 	/* Set cached media freq ratio mode */
+ 	intel_guc_slpc_set_media_ratio_mode(slpc, slpc->media_ratio_mode);
  
- 	err = intel_guc_allocate_and_map_vma(guc, size, &slpc->vma, (void **)&slpc->vaddr);
- 	if (unlikely(err)) {
--		i915_probe_error(i915,
--				 "Failed to allocate SLPC struct (err=%pe)\n",
--				 ERR_PTR(err));
-+		guc_probe_error(guc, "Failed to allocate SLPC struct: %pe\n", ERR_PTR(err));
- 		return err;
- 	}
++	/* Set cached value of ignore efficient freq */
++	intel_guc_slpc_set_ignore_eff_freq(slpc, slpc->ignore_eff_freq);
++
+ 	return 0;
+ }
  
-@@ -338,7 +332,6 @@ static int guc_action_slpc_reset(struct intel_guc *guc, u32 offset)
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h
+index 17ed515f6a852..597eb5413ddf2 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h
+@@ -46,5 +46,6 @@ void intel_guc_slpc_boost(struct intel_guc_slpc *slpc);
+ void intel_guc_slpc_dec_waiters(struct intel_guc_slpc *slpc);
+ int intel_guc_slpc_unset_gucrc_mode(struct intel_guc_slpc *slpc);
+ int intel_guc_slpc_override_gucrc_mode(struct intel_guc_slpc *slpc, u32 mode);
++int intel_guc_slpc_set_ignore_eff_freq(struct intel_guc_slpc *slpc, bool val);
  
- static int slpc_reset(struct intel_guc_slpc *slpc)
- {
--	struct drm_i915_private *i915 = slpc_to_i915(slpc);
- 	struct intel_guc *guc = slpc_to_guc(slpc);
- 	u32 offset = intel_guc_ggtt_offset(guc, slpc->vma);
- 	int ret;
-@@ -346,15 +339,14 @@ static int slpc_reset(struct intel_guc_slpc *slpc)
- 	ret = guc_action_slpc_reset(guc, offset);
+ #endif
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc_types.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc_types.h
+index a6ef53b04e047..a886513314977 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc_types.h
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc_types.h
+@@ -31,6 +31,7 @@ struct intel_guc_slpc {
+ 	/* frequency softlimits */
+ 	u32 min_freq_softlimit;
+ 	u32 max_freq_softlimit;
++	bool ignore_eff_freq;
  
- 	if (unlikely(ret < 0)) {
--		i915_probe_error(i915, "SLPC reset action failed (%pe)\n",
--				 ERR_PTR(ret));
-+		guc_probe_error(guc, "SLPC reset action failed: %pe\n", ERR_PTR(ret));
- 		return ret;
- 	}
- 
- 	if (!ret) {
- 		if (wait_for(slpc_is_running(slpc), SLPC_RESET_TIMEOUT_MS)) {
--			i915_probe_error(i915, "SLPC not enabled! State = %s\n",
--					 slpc_get_state_string(slpc));
-+			guc_probe_error(guc, "SLPC not enabled! State = %s\n",
-+					slpc_get_state_string(slpc));
- 			return -EIO;
- 		}
- 	}
-@@ -495,8 +487,8 @@ int intel_guc_slpc_set_min_freq(struct intel_guc_slpc *slpc, u32 val)
- 			     SLPC_PARAM_IGNORE_EFFICIENT_FREQUENCY,
- 			     val < slpc->rp1_freq);
- 	if (ret) {
--		i915_probe_error(i915, "Failed to toggle efficient freq (%pe)\n",
--				 ERR_PTR(ret));
-+		guc_probe_error(slpc_to_guc(slpc), "Failed to toggle efficient freq: %pe\n",
-+				ERR_PTR(ret));
- 		goto out;
- 	}
- 
-@@ -611,15 +603,12 @@ static int slpc_set_softlimits(struct intel_guc_slpc *slpc)
- 
- static bool is_slpc_min_freq_rpmax(struct intel_guc_slpc *slpc)
- {
--	struct drm_i915_private *i915 = slpc_to_i915(slpc);
- 	int slpc_min_freq;
- 	int ret;
- 
- 	ret = intel_guc_slpc_get_min_freq(slpc, &slpc_min_freq);
- 	if (ret) {
--		drm_err(&i915->drm,
--			"Failed to get min freq: (%d)\n",
--			ret);
-+		guc_err(slpc_to_guc(slpc), "Failed to get min freq: %pe\n", ERR_PTR(ret));
- 		return false;
- 	}
- 
-@@ -685,9 +674,8 @@ int intel_guc_slpc_override_gucrc_mode(struct intel_guc_slpc *slpc, u32 mode)
- 	with_intel_runtime_pm(&i915->runtime_pm, wakeref) {
- 		ret = slpc_set_param(slpc, SLPC_PARAM_PWRGATE_RC_MODE, mode);
- 		if (ret)
--			drm_err(&i915->drm,
--				"Override gucrc mode %d failed %d\n",
--				mode, ret);
-+			guc_err(slpc_to_guc(slpc), "Override RC mode %d failed: %pe\n",
-+				mode, ERR_PTR(ret));
- 	}
- 
- 	return ret;
-@@ -702,9 +690,7 @@ int intel_guc_slpc_unset_gucrc_mode(struct intel_guc_slpc *slpc)
- 	with_intel_runtime_pm(&i915->runtime_pm, wakeref) {
- 		ret = slpc_unset_param(slpc, SLPC_PARAM_PWRGATE_RC_MODE);
- 		if (ret)
--			drm_err(&i915->drm,
--				"Unsetting gucrc mode failed %d\n",
--				ret);
-+			guc_err(slpc_to_guc(slpc), "Unsetting RC mode failed: %pe\n", ERR_PTR(ret));
- 	}
- 
- 	return ret;
-@@ -725,7 +711,7 @@ int intel_guc_slpc_unset_gucrc_mode(struct intel_guc_slpc *slpc)
-  */
- int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
- {
--	struct drm_i915_private *i915 = slpc_to_i915(slpc);
-+	struct intel_guc *guc = slpc_to_guc(slpc);
- 	int ret;
- 
- 	GEM_BUG_ON(!slpc->vma);
-@@ -734,8 +720,7 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
- 
- 	ret = slpc_reset(slpc);
- 	if (unlikely(ret < 0)) {
--		i915_probe_error(i915, "SLPC Reset event returned (%pe)\n",
--				 ERR_PTR(ret));
-+		guc_probe_error(guc, "SLPC Reset event returned: %pe\n", ERR_PTR(ret));
- 		return ret;
- 	}
- 
-@@ -743,7 +728,7 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
- 	if (unlikely(ret < 0))
- 		return ret;
- 
--	intel_guc_pm_intrmsk_enable(to_gt(i915));
-+	intel_guc_pm_intrmsk_enable(slpc_to_gt(slpc));
- 
- 	slpc_get_rp_values(slpc);
- 
-@@ -753,16 +738,14 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
- 	/* Set SLPC max limit to RP0 */
- 	ret = slpc_use_fused_rp0(slpc);
- 	if (unlikely(ret)) {
--		i915_probe_error(i915, "Failed to set SLPC max to RP0 (%pe)\n",
--				 ERR_PTR(ret));
-+		guc_probe_error(guc, "Failed to set SLPC max to RP0: %pe\n", ERR_PTR(ret));
- 		return ret;
- 	}
- 
- 	/* Revert SLPC min/max to softlimits if necessary */
- 	ret = slpc_set_softlimits(slpc);
- 	if (unlikely(ret)) {
--		i915_probe_error(i915, "Failed to set SLPC softlimits (%pe)\n",
--				 ERR_PTR(ret));
-+		guc_probe_error(guc, "Failed to set SLPC softlimits: %pe\n", ERR_PTR(ret));
- 		return ret;
- 	}
- 
+ 	/* cached media ratio mode */
+ 	u32 media_ratio_mode;
 -- 
 2.39.2
 
