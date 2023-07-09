@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFE3522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39A6C433C8;
-	Sun,  9 Jul 2023 11:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E884A522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A745C433C7;
+	Sun,  9 Jul 2023 11:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901552;
-	bh=4rTdc/T2DNXWxcPuwMno5T5ZJrQ9yC3prMiN+PNcexQ=;
+	s=korg; t=1688901554;
+	bh=gSFMdE26uMJr+YJfjdvUfjH0EENDnqfNzD2H+Ozblc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCZDRx0Pr1XqX7qgxB6EDYjED7pzQIVjYczR8d48Xy9KrqmkzZN6GMRsLkpzt1YFj
-	 uWDKsoKF7OC04jm1+f4PTJ+sd5zYCzpmMWH/IvaWA68AZYtuidbyR2nePrByZBx4/y
-	 55Vt7rylFhi9yjLsrG/EFtuNycGkE7XicEfrJ6uM=
+	b=RkoXDXJyDAeUM0KqnTns4NGgQga6rawFL6wdH3Mw5FpL8U17NmTX6DT9ALA5w1Hmr
+	 P8t9B0uyYeEOx0X6VMij2pdrrwg2VfcAYi9TMCCQc38M9AWs4TrNGOubslYKtrPvfm
+	 jEOvmSJSLXE8+M9ObdX7rEFjPJgaboZWuBAFNdo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 033/431] posix-timers: Prevent RT livelock in itimer_delete()
-Date: Sun,  9 Jul 2023 13:09:41 +0200
-Message-ID: <20230709111451.873736270@linuxfoundation.org>
+Subject: [PATCH 6.3 060/431] rcutorture: Correct name of use_softirq module parameter
+Date: Sun,  9 Jul 2023 13:10:08 +0200
+Message-ID: <20230709111452.543966539@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,108 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 9d9e522010eb5685d8b53e8a24320653d9d4cbbf ]
+[ Upstream commit b409afe0268faeb77267f028ea85f2d93438fced ]
 
-itimer_delete() has a retry loop when the timer is concurrently expired. On
-non-RT kernels this just spin-waits until the timer callback has completed,
-except for posix CPU timers which have HAVE_POSIX_CPU_TIMERS_TASK_WORK
-enabled.
+The BUSTED-BOOST and TREE03 scenarios specify a mythical tree.use_softirq
+module parameter, which means a failure to get full test coverage.  This
+commit therefore corrects the name to rcutree.use_softirq.
 
-In that case and on RT kernels the existing task could live lock when
-preempting the task which does the timer delivery.
-
-Replace spin_unlock() with an invocation of timer_wait_running() to handle
-it the same way as the other retry loops in the posix timer code.
-
-Fixes: ec8f954a40da ("posix-timers: Use a callback for cancel synchronization on PREEMPT_RT")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://lore.kernel.org/r/87v8g7c50d.ffs@tglx
+Fixes: e2b949d54392 ("rcutorture: Make TREE03 use real-time tree.use_softirq setting")
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-timers.c | 43 +++++++++++++++++++++++++++++++-------
- 1 file changed, 35 insertions(+), 8 deletions(-)
+ .../testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot  | 2 +-
+ tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index 808a247205a9a..ed3c4a9543982 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -1037,27 +1037,52 @@ SYSCALL_DEFINE1(timer_delete, timer_t, timer_id)
- }
- 
- /*
-- * return timer owned by the process, used by exit_itimers
-+ * Delete a timer if it is armed, remove it from the hash and schedule it
-+ * for RCU freeing.
-  */
- static void itimer_delete(struct k_itimer *timer)
- {
--retry_delete:
--	spin_lock_irq(&timer->it_lock);
-+	unsigned long flags;
-+
-+	/*
-+	 * irqsave is required to make timer_wait_running() work.
-+	 */
-+	spin_lock_irqsave(&timer->it_lock, flags);
- 
-+retry_delete:
-+	/*
-+	 * Even if the timer is not longer accessible from other tasks
-+	 * it still might be armed and queued in the underlying timer
-+	 * mechanism. Worse, that timer mechanism might run the expiry
-+	 * function concurrently.
-+	 */
- 	if (timer_delete_hook(timer) == TIMER_RETRY) {
--		spin_unlock_irq(&timer->it_lock);
-+		/*
-+		 * Timer is expired concurrently, prevent livelocks
-+		 * and pointless spinning on RT.
-+		 *
-+		 * timer_wait_running() drops timer::it_lock, which opens
-+		 * the possibility for another task to delete the timer.
-+		 *
-+		 * That's not possible here because this is invoked from
-+		 * do_exit() only for the last thread of the thread group.
-+		 * So no other task can access and delete that timer.
-+		 */
-+		if (WARN_ON_ONCE(timer_wait_running(timer, &flags) != timer))
-+			return;
-+
- 		goto retry_delete;
- 	}
- 	list_del(&timer->list);
- 
--	spin_unlock_irq(&timer->it_lock);
-+	spin_unlock_irqrestore(&timer->it_lock, flags);
- 	release_posix_timer(timer, IT_ID_SET);
- }
- 
- /*
-- * This is called by do_exit or de_thread, only when nobody else can
-- * modify the signal->posix_timers list. Yet we need sighand->siglock
-- * to prevent the race with /proc/pid/timers.
-+ * Invoked from do_exit() when the last thread of a thread group exits.
-+ * At that point no other task can access the timers of the dying
-+ * task anymore.
-  */
- void exit_itimers(struct task_struct *tsk)
- {
-@@ -1067,10 +1092,12 @@ void exit_itimers(struct task_struct *tsk)
- 	if (list_empty(&tsk->signal->posix_timers))
- 		return;
- 
-+	/* Protect against concurrent read via /proc/$PID/timers */
- 	spin_lock_irq(&tsk->sighand->siglock);
- 	list_replace_init(&tsk->signal->posix_timers, &timers);
- 	spin_unlock_irq(&tsk->sighand->siglock);
- 
-+	/* The timers are not longer accessible via tsk::signal */
- 	while (!list_empty(&timers)) {
- 		tmr = list_first_entry(&timers, struct k_itimer, list);
- 		itimer_delete(tmr);
+diff --git a/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot b/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot
+index f57720c52c0f9..84f6bb98ce993 100644
+--- a/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot
++++ b/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot
+@@ -5,4 +5,4 @@ rcutree.gp_init_delay=3
+ rcutree.gp_cleanup_delay=3
+ rcutree.kthread_prio=2
+ threadirqs
+-tree.use_softirq=0
++rcutree.use_softirq=0
+diff --git a/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot b/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot
+index 64f864f1f361f..8e50bfd4b710d 100644
+--- a/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot
++++ b/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot
+@@ -4,4 +4,4 @@ rcutree.gp_init_delay=3
+ rcutree.gp_cleanup_delay=3
+ rcutree.kthread_prio=2
+ threadirqs
+-tree.use_softirq=0
++rcutree.use_softirq=0
 -- 
 2.39.2
 
