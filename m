@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EDE522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C2EC433C9;
-	Sun,  9 Jul 2023 11:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD60522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6834C433C8;
+	Sun,  9 Jul 2023 11:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901591;
-	bh=o2HE8FSTJpG2d46A+YUA2qvrok8h2oVk4IK33mRwZdk=;
+	s=korg; t=1688901594;
+	bh=B7Yi6X3NpnwVMVONPwLd4CLgowPgEwOsWYm1FXPeHEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJ50+YrGLHJ8fXAzjGb7yATDp+5ejug1M68HBeC/LNcqQbHbxEKNmHloAd3I7iSVK
-	 ulNVXUDrPuQmDLpMvp0YZwMhxIS5D80W2pgUIouN0TTd6Du7ySx1RxYAhOHxKMp0QI
-	 aMCRKInaVKJz6Nv/JBJbZ8krgyuQ1l42JJhS0nJI=
+	b=IOCJPk4tFR6LNPG/wBAv5nEmd4W7jjg0rZJEiimM6/4Q6Chl8aM/wjVYQDBtJICH/
+	 s1MoVmevKiNmBjPvZ8/lgANf+l2WC6utLgtRYmU/9MFKQlxryS/X5/vfmx7kV0o7ug
+	 di75d7JpNWFHul0cVTCfWW0yxeqpK2SjSn8eRC6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Kees Cook <keescook@chromium.org>,
+	Ben Segall <bsegall@google.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Hao Jia <jiahao.os@bytedance.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 075/431] pstore/ram: Add check for kstrdup
-Date: Sun,  9 Jul 2023 13:10:23 +0200
-Message-ID: <20230709111452.913113658@linuxfoundation.org>
+Subject: [PATCH 6.3 076/431] sched/core: Avoid multiple calling update_rq_clock() in __cfsb_csd_unthrottle()
+Date: Sun,  9 Jul 2023 13:10:24 +0200
+Message-ID: <20230709111452.937283728@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,35 +37,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Hao Jia <jiahao.os@bytedance.com>
 
-[ Upstream commit d97038d5ec2062733c1e016caf9baaf68cf64ea1 ]
+[ Upstream commit ebb83d84e49b54369b0db67136a5fe1087124dcc ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
+After commit 8ad075c2eb1f ("sched: Async unthrottling for cfs
+bandwidth"), we may update the rq clock multiple times in the loop of
+__cfsb_csd_unthrottle().
 
-Fixes: e163fdb3f7f8 ("pstore/ram: Regularize prz label allocation lifetime")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230614093733.36048-1-jiasheng@iscas.ac.cn
+A prior (although less common) instance of this problem exists in
+unthrottle_offline_cfs_rqs().
+
+Cure both by ensuring update_rq_clock() is called before the loop and
+setting RQCF_ACT_SKIP during the loop, to supress further updates.
+The alternative would be pulling update_rq_clock() out of
+unthrottle_cfs_rq(), but that gives an even bigger mess.
+
+Fixes: 8ad075c2eb1f ("sched: Async unthrottling for cfs bandwidth")
+Reviewed-By: Ben Segall <bsegall@google.com>
+Suggested-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Hao Jia <jiahao.os@bytedance.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20230613082012.49615-4-jiahao.os@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/sched/fair.c  | 18 ++++++++++++++++++
+ kernel/sched/sched.h | 22 ++++++++++++++++++++++
+ 2 files changed, 40 insertions(+)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index 966191d3a5ba2..85aaf0fc6d7d1 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -599,6 +599,8 @@ struct persistent_ram_zone *persistent_ram_new(phys_addr_t start, size_t size,
- 	raw_spin_lock_init(&prz->buffer_lock);
- 	prz->flags = flags;
- 	prz->label = kstrdup(label, GFP_KERNEL);
-+	if (!prz->label)
-+		goto err;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index ed89be0aa6503..853b7ef9dcafc 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -5519,6 +5519,14 @@ static void __cfsb_csd_unthrottle(void *arg)
  
- 	ret = persistent_ram_buffer_map(start, size, prz, memtype);
- 	if (ret)
+ 	rq_lock(rq, &rf);
+ 
++	/*
++	 * Iterating over the list can trigger several call to
++	 * update_rq_clock() in unthrottle_cfs_rq().
++	 * Do it once and skip the potential next ones.
++	 */
++	update_rq_clock(rq);
++	rq_clock_start_loop_update(rq);
++
+ 	/*
+ 	 * Since we hold rq lock we're safe from concurrent manipulation of
+ 	 * the CSD list. However, this RCU critical section annotates the
+@@ -5538,6 +5546,7 @@ static void __cfsb_csd_unthrottle(void *arg)
+ 
+ 	rcu_read_unlock();
+ 
++	rq_clock_stop_loop_update(rq);
+ 	rq_unlock(rq, &rf);
+ }
+ 
+@@ -6054,6 +6063,13 @@ static void __maybe_unused unthrottle_offline_cfs_rqs(struct rq *rq)
+ 
+ 	lockdep_assert_rq_held(rq);
+ 
++	/*
++	 * The rq clock has already been updated in the
++	 * set_rq_offline(), so we should skip updating
++	 * the rq clock again in unthrottle_cfs_rq().
++	 */
++	rq_clock_start_loop_update(rq);
++
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(tg, &task_groups, list) {
+ 		struct cfs_rq *cfs_rq = tg->cfs_rq[cpu_of(rq)];
+@@ -6076,6 +6092,8 @@ static void __maybe_unused unthrottle_offline_cfs_rqs(struct rq *rq)
+ 			unthrottle_cfs_rq(cfs_rq);
+ 	}
+ 	rcu_read_unlock();
++
++	rq_clock_stop_loop_update(rq);
+ }
+ 
+ #else /* CONFIG_CFS_BANDWIDTH */
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 3e8df6d31c1e3..3adac73b17ca5 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1546,6 +1546,28 @@ static inline void rq_clock_cancel_skipupdate(struct rq *rq)
+ 	rq->clock_update_flags &= ~RQCF_REQ_SKIP;
+ }
+ 
++/*
++ * During cpu offlining and rq wide unthrottling, we can trigger
++ * an update_rq_clock() for several cfs and rt runqueues (Typically
++ * when using list_for_each_entry_*)
++ * rq_clock_start_loop_update() can be called after updating the clock
++ * once and before iterating over the list to prevent multiple update.
++ * After the iterative traversal, we need to call rq_clock_stop_loop_update()
++ * to clear RQCF_ACT_SKIP of rq->clock_update_flags.
++ */
++static inline void rq_clock_start_loop_update(struct rq *rq)
++{
++	lockdep_assert_rq_held(rq);
++	SCHED_WARN_ON(rq->clock_update_flags & RQCF_ACT_SKIP);
++	rq->clock_update_flags |= RQCF_ACT_SKIP;
++}
++
++static inline void rq_clock_stop_loop_update(struct rq *rq)
++{
++	lockdep_assert_rq_held(rq);
++	rq->clock_update_flags &= ~RQCF_ACT_SKIP;
++}
++
+ struct rq_flags {
+ 	unsigned long flags;
+ 	struct pin_cookie cookie;
 -- 
 2.39.2
 
