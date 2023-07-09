@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F08522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:30:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D1BC433C8;
-	Sun,  9 Jul 2023 11:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9122C522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:30:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12989C433C8;
+	Sun,  9 Jul 2023 11:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902246;
-	bh=eChpkFqjQpgHo+0kp79sDAgmC8+UC7KJ0eA+G6EKAcQ=;
+	s=korg; t=1688902249;
+	bh=5Xs0rP7IrtOLhUV4Wke7GmulTfWYdBbBkBkJ00NlK0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hlYtOMnvchD0Qcu96/TXjPFw4KMHKwr2nXEyDIkODCZWJOj041IbwG6rL1CGS/0Yo
-	 bxkErMXqqNSMi6cN35lcladnQV9/3hWk67I/z/3Ph/xnZdxRaqzV1K0bHdcXFUQnII
-	 Z8/jSIHzXOtTNnRYYd4cFkILuF897VV4admGPvx8=
+	b=X5luueQceBhs7ZF1xDl0b3thlXGgV99O4zN04sY6aTgO/i+cmYXdIhlpzVpCnthuS
+	 v05f9oW1b98brv4mLYe3Zqimth6gB3iyNVFoRb4OnpItwVuD65c51y94ceX+YX29JM
+	 c8WxQS4lkmmRmYhEEQUVz9BdItzl0QcV6LncI4sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	David Gow <davidgow@google.com>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 280/431] drm/radeon: fix possible division-by-zero errors
-Date: Sun,  9 Jul 2023 13:13:48 +0200
-Message-ID: <20230709111457.710735747@linuxfoundation.org>
+Subject: [PATCH 6.3 281/431] HID: uclogic: Modular KUnit tests should not depend on KUNIT=y
+Date: Sun,  9 Jul 2023 13:13:49 +0200
+Message-ID: <20230709111457.732882267@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,92 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 1becc57cd1a905e2aa0e1eca60d2a37744525c4a ]
+[ Upstream commit 49904a0ebf23b15aad288a10f5354e7cd8193121 ]
 
-Function rv740_get_decoded_reference_divider() may return 0 due to
-unpredictable reference divider value calculated in
-radeon_atom_get_clock_dividers(). This will lead to
-division-by-zero error once that value is used as a divider
-in calculating 'clk_s'.
-While unlikely, this issue should nonetheless be prevented so add a
-sanity check for such cases by testing 'decoded_ref' value against 0.
+While KUnit tests that cannot be built as a loadable module must depend
+on "KUNIT=y", this is not true for modular tests, where it adds an
+unnecessary limitation.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+Fix this by relaxing the dependency to "KUNIT".
 
-v2: minor coding style fixes (Alex)
-In practice this should actually happen as the vbios should be
-properly populated.
-
-Fixes: 66229b200598 ("drm/radeon/kms: add dpm support for rv7xx (v4)")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 08809e482a1c44d9 ("HID: uclogic: KUnit best practices and naming conventions")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: David Gow <davidgow@google.com>
+Reviewed-by: José Expósito <jose.exposito89@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/cypress_dpm.c | 8 ++++++--
- drivers/gpu/drm/radeon/ni_dpm.c      | 8 ++++++--
- drivers/gpu/drm/radeon/rv740_dpm.c   | 8 ++++++--
- 3 files changed, 18 insertions(+), 6 deletions(-)
+ drivers/hid/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/cypress_dpm.c b/drivers/gpu/drm/radeon/cypress_dpm.c
-index fdddbbaecbb74..72a0768df00f7 100644
---- a/drivers/gpu/drm/radeon/cypress_dpm.c
-+++ b/drivers/gpu/drm/radeon/cypress_dpm.c
-@@ -557,8 +557,12 @@ static int cypress_populate_mclk_value(struct radeon_device *rdev,
- 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
- 			u32 reference_clock = rdev->clock.mpll.reference_freq;
- 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
--			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
--			u32 clk_v = ss.percentage *
-+			u32 clk_s, clk_v;
-+
-+			if (!decoded_ref)
-+				return -EINVAL;
-+			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
-+			clk_v = ss.percentage *
- 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
+diff --git a/drivers/hid/Kconfig b/drivers/hid/Kconfig
+index 4ce012f83253e..b977450cac752 100644
+--- a/drivers/hid/Kconfig
++++ b/drivers/hid/Kconfig
+@@ -1285,7 +1285,7 @@ config HID_MCP2221
  
- 			mpll_ss1 &= ~CLKV_MASK;
-diff --git a/drivers/gpu/drm/radeon/ni_dpm.c b/drivers/gpu/drm/radeon/ni_dpm.c
-index 672d2239293e0..3e1c1a392fb7b 100644
---- a/drivers/gpu/drm/radeon/ni_dpm.c
-+++ b/drivers/gpu/drm/radeon/ni_dpm.c
-@@ -2241,8 +2241,12 @@ static int ni_populate_mclk_value(struct radeon_device *rdev,
- 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
- 			u32 reference_clock = rdev->clock.mpll.reference_freq;
- 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
--			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
--			u32 clk_v = ss.percentage *
-+			u32 clk_s, clk_v;
-+
-+			if (!decoded_ref)
-+				return -EINVAL;
-+			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
-+			clk_v = ss.percentage *
- 				(0x4000 * dividers.whole_fb_div + 0x800 * dividers.frac_fb_div) / (clk_s * 625);
- 
- 			mpll_ss1 &= ~CLKV_MASK;
-diff --git a/drivers/gpu/drm/radeon/rv740_dpm.c b/drivers/gpu/drm/radeon/rv740_dpm.c
-index d57a3e1df8d63..4464fd21a3029 100644
---- a/drivers/gpu/drm/radeon/rv740_dpm.c
-+++ b/drivers/gpu/drm/radeon/rv740_dpm.c
-@@ -249,8 +249,12 @@ int rv740_populate_mclk_value(struct radeon_device *rdev,
- 						     ASIC_INTERNAL_MEMORY_SS, vco_freq)) {
- 			u32 reference_clock = rdev->clock.mpll.reference_freq;
- 			u32 decoded_ref = rv740_get_decoded_reference_divider(dividers.ref_div);
--			u32 clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
--			u32 clk_v = 0x40000 * ss.percentage *
-+			u32 clk_s, clk_v;
-+
-+			if (!decoded_ref)
-+				return -EINVAL;
-+			clk_s = reference_clock * 5 / (decoded_ref * ss.rate);
-+			clk_v = 0x40000 * ss.percentage *
- 				(dividers.whole_fb_div + (dividers.frac_fb_div / 8)) / (clk_s * 10000);
- 
- 			mpll_ss1 &= ~CLKV_MASK;
+ config HID_KUNIT_TEST
+ 	tristate "KUnit tests for HID" if !KUNIT_ALL_TESTS
+-	depends on KUNIT=y
++	depends on KUNIT
+ 	depends on HID_BATTERY_STRENGTH
+ 	depends on HID_UCLOGIC
+ 	default KUNIT_ALL_TESTS
 -- 
 2.39.2
 
