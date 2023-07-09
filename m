@@ -1,37 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D5B522D
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:16:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F44AC433C7;
-	Sun,  9 Jul 2023 11:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD4B522D
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:16:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7C8C433C8;
+	Sun,  9 Jul 2023 11:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901404;
-	bh=eWUD0JCjdAlO6MgKHYvybEqDaVxmuzCvYvA/tzXVLE4=;
+	s=korg; t=1688901407;
+	bh=v9ItTI2Z0Kia6ORxclEXmdUn+0LHBmrRHO0uyh4ytnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uFKlqEWH468+ItmiJTExii2QuREd/5ZH3hsE5CEsFneGPbMd9NT5vKTxmMrbAOJzP
-	 HouBjKx8Qkeg7dpNiON6dD3x+U+yPZ/NhzEvEpaDfr5UGxzccQWpk805J3L12MFqHr
-	 GFnz9MCP41lsg2ZWhm+2tY11UH3mGrX6Re+C9CCQ=
+	b=wudHhJP0FKARA7qejpsA++7R1ckVM6qcS9o/fFnkkAqkaKH9HQ7mtbTlpXPbqtgw2
+	 x+Ox5zHSwpW5H7gj05J4MvydVcM5T3fHsPgV1DGof8PNjgkugQswPtOSm/2neS8Fm9
+	 Sld6rl5xQWkkjljiBXs4jMxMFek65YcG7plqyuHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Collingbourne <pcc@google.com>,
-	Qun-wei Lin <Qun-wei.Lin@mediatek.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Steven Price <steven.price@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 001/431] mm: call arch_swap_restore() from do_swap_page()
-Date: Sun,  9 Jul 2023 13:09:09 +0200
-Message-ID: <20230709111451.140448187@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 010/431] blk-cgroup: Reinit blkg_iostat_set after clearing in blkcg_reset_stats()
+Date: Sun,  9 Jul 2023 13:09:18 +0200
+Message-ID: <20230709111451.350124111@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,48 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Collingbourne <pcc@google.com>
+From: Waiman Long <longman@redhat.com>
 
-commit 6dca4ac6fc91fd41ea4d6c4511838d37f4e0eab2 upstream.
+[ Upstream commit 3d2af77e31ade05ff7ccc3658c3635ec1bea0979 ]
 
-Commit c145e0b47c77 ("mm: streamline COW logic in do_swap_page()") moved
-the call to swap_free() before the call to set_pte_at(), which meant that
-the MTE tags could end up being freed before set_pte_at() had a chance to
-restore them.  Fix it by adding a call to the arch_swap_restore() hook
-before the call to swap_free().
+When blkg_alloc() is called to allocate a blkcg_gq structure
+with the associated blkg_iostat_set's, there are 2 fields within
+blkg_iostat_set that requires proper initialization - blkg & sync.
+The former field was introduced by commit 3b8cc6298724 ("blk-cgroup:
+Optimize blkcg_rstat_flush()") while the later one was introduced by
+commit f73316482977 ("blk-cgroup: reimplement basic IO stats using
+cgroup rstat").
 
-Link: https://lkml.kernel.org/r/20230523004312.1807357-2-pcc@google.com
-Link: https://linux-review.googlesource.com/id/I6470efa669e8bd2f841049b8c61020c510678965
-Fixes: c145e0b47c77 ("mm: streamline COW logic in do_swap_page()")
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Reported-by: Qun-wei Lin <Qun-wei.Lin@mediatek.com>
-Closes: https://lore.kernel.org/all/5050805753ac469e8d727c797c2218a9d780d434.camel@mediatek.com/
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: "Huang, Ying" <ying.huang@intel.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: <stable@vger.kernel.org>	[6.1+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Unfortunately those fields in the blkg_iostat_set's are not properly
+re-initialized when they are cleared in v1's blkcg_reset_stats(). This
+can lead to a kernel panic due to NULL pointer access of the blkg
+pointer. The missing initialization of sync is less problematic and
+can be a problem in a debug kernel due to missing lockdep initialization.
+
+Fix these problems by re-initializing them after memory clearing.
+
+Fixes: 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()")
+Fixes: f73316482977 ("blk-cgroup: reimplement basic IO stats using cgroup rstat")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230606180724.2455066-1-longman@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ block/blk-cgroup.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3915,6 +3915,13 @@ vm_fault_t do_swap_page(struct vm_fault
- 	}
- 
- 	/*
-+	 * Some architectures may have to restore extra metadata to the page
-+	 * when reading from swap. This metadata may be indexed by swap entry
-+	 * so this must be called before swap_free().
-+	 */
-+	arch_swap_restore(entry, folio);
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index ad0cd992a6519..c50da8b3af029 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -585,8 +585,13 @@ static int blkcg_reset_stats(struct cgroup_subsys_state *css,
+ 			struct blkg_iostat_set *bis =
+ 				per_cpu_ptr(blkg->iostat_cpu, cpu);
+ 			memset(bis, 0, sizeof(*bis));
 +
-+	/*
- 	 * Remove the swap entry and conditionally try to free up the swapcache.
- 	 * We're already holding a reference on the page but haven't mapped it
- 	 * yet.
++			/* Re-initialize the cleared blkg_iostat_set */
++			u64_stats_init(&bis->sync);
++			bis->blkg = blkg;
+ 		}
+ 		memset(&blkg->iostat, 0, sizeof(blkg->iostat));
++		u64_stats_init(&blkg->iostat.sync);
+ 
+ 		for (i = 0; i < BLKCG_MAX_POLS; i++) {
+ 			struct blkcg_policy *pol = blkcg_policy[i];
+-- 
+2.39.2
+
 
 
