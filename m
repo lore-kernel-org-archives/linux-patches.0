@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2744E20EB
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:24:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F30CC433C8;
-	Sun,  9 Jul 2023 11:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C02446B8
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:24:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F92EC433C8;
+	Sun,  9 Jul 2023 11:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901842;
-	bh=WhRLqJwL2XzYZQDeRugeUOihRub/oI3wxyEgEUCzMzo=;
+	s=korg; t=1688901844;
+	bh=LTxDahle6YaZGXZLSQV5iDddTtg5pM13vCY2Tynhp2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqLMz9FyylxZihJXq3f0H1Kvb0h5wZViWlDnwz+uTF0ZtU1VrdCVedDy5UjhLOZ1i
-	 dMSuhJeJiCuZN+a6Y2nY6YmVqSyW2+IiBLJfoyHLzfJ4DoYt8NHPnQn1rh2S4Mu2v3
-	 vlQhkwHPLsz4LCLROASioGAS1N9Pg7E2MDJ6vTng=
+	b=n1lfVOf3owhx0nbdSm4UdV5Ga9/UgzRKd3a8hQEOnnVJ920r8PY6nJ6Wl/LqAPO2n
+	 xTXwUqdMMsewJ5KnIl9y23rRPKx8gU43VuxKNOtttSqR/d5Hg6G8sJLvUsk8ndOjo4
+	 MF+9Pys2+ZnlmWWivYpRRxEflg2zIo8ZATBAiZxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Robert Foss <rfoss@kernel.org>,
+	Luca Weiss <luca@z3ntu.xyz>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 164/431] drm/bridge: it6505: Move a variable assignment behind a null pointer check in receive_timing_debugfs_show()
-Date: Sun,  9 Jul 2023 13:11:52 +0200
-Message-ID: <20230709111455.019130152@linuxfoundation.org>
+Subject: [PATCH 6.3 165/431] Input: drv260x - sleep between polling GO bit
+Date: Sun,  9 Jul 2023 13:11:53 +0200
+Message-ID: <20230709111455.042077485@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,50 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-[ Upstream commit 0be05a75de2916421e88e0d64b001984f54df0bd ]
+[ Upstream commit efef661dfa6bf8cbafe4cd6a97433fcef0118967 ]
 
-The address of a data structure member was determined before
-a corresponding null pointer check in the implementation of
-the function “receive_timing_debugfs_show”.
+When doing the initial startup there's no need to poll without any
+delay and spam the I2C bus.
 
-Thus avoid the risk for undefined behaviour by moving the assignment
-for the variable “vid” behind the null pointer check.
+Let's sleep 15ms between each attempt, which is the same time as used
+in the vendor driver.
 
-This issue was detected by using the Coccinelle software.
-
-Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Link: https://patchwork.freedesktop.org/patch/msgid/fa69384f-1485-142b-c4ee-3df54ac68a89@web.de
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
+Fixes: 7132fe4f5687 ("Input: drv260x - add TI drv260x haptics driver")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Link: https://lore.kernel.org/r/20230430-drv260x-improvements-v1-2-1fb28b4cc698@z3ntu.xyz
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/misc/drv260x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index bc451b2a77c28..32ea61b79965e 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -3195,7 +3195,7 @@ static ssize_t receive_timing_debugfs_show(struct file *file, char __user *buf,
- 					   size_t len, loff_t *ppos)
- {
- 	struct it6505 *it6505 = file->private_data;
--	struct drm_display_mode *vid = &it6505->video_info;
-+	struct drm_display_mode *vid;
- 	u8 read_buf[READ_BUFFER_SIZE];
- 	u8 *str = read_buf, *end = read_buf + READ_BUFFER_SIZE;
- 	ssize_t ret, count;
-@@ -3204,6 +3204,7 @@ static ssize_t receive_timing_debugfs_show(struct file *file, char __user *buf,
- 		return -ENODEV;
+diff --git a/drivers/input/misc/drv260x.c b/drivers/input/misc/drv260x.c
+index 8a9ebfc04a2d9..85371fa1a03ed 100644
+--- a/drivers/input/misc/drv260x.c
++++ b/drivers/input/misc/drv260x.c
+@@ -435,6 +435,7 @@ static int drv260x_init(struct drv260x_data *haptics)
+ 	}
  
- 	it6505_calc_video_info(it6505);
-+	vid = &it6505->video_info;
- 	str += scnprintf(str, end - str, "---video timing---\n");
- 	str += scnprintf(str, end - str, "PCLK:%d.%03dMHz\n",
- 			 vid->clock / 1000, vid->clock % 1000);
+ 	do {
++		usleep_range(15000, 15500);
+ 		error = regmap_read(haptics->regmap, DRV260X_GO, &cal_buf);
+ 		if (error) {
+ 			dev_err(&haptics->client->dev,
 -- 
 2.39.2
 
