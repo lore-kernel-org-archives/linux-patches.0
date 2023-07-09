@@ -1,53 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D048522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:21:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F451C433C7;
-	Sun,  9 Jul 2023 11:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB375232
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:21:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA64C433C8;
+	Sun,  9 Jul 2023 11:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901701;
-	bh=RUnDs38rEXzt4nBIUhcjnV7MnUM6Lf5+ejGIqcpVrpw=;
+	s=korg; t=1688901706;
+	bh=Zci2n30MyAXDmjYQLmou7yO1S0q6uFFBCdCyVxVfHWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yDYTVhyDE8+rsjC3nrtyygSTxx7an6V52gj4RlqoJLS5PD1cg8iLCV1SSnVwcPRAL
-	 0TrKYj6GQ9RDJU3t8PhDHRQH6TChWkRoNb0QcsSQ98ghfMj7f38OkT7Lj6UFpn1Wt+
-	 /AcOWvV58CKDOgWauEpXMoPbN02iWEYjCMakPla0=
+	b=uz1/le0jpSqwVZBM7if6Vh3VpyQ0oXoXFtbgeex8X788HiKB687J1hC9f/Ga+UrwS
+	 lck0G84Wvs7zqn5/YDe25vHPenr3yiWUgVe0GinJrCroxtH4tV5n3OmbXmxsJYcdFz
+	 BFC08gLdN6J1IXdB67sUS1AB1nWF8Q5yblD3/v2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Douglas Anderson <dianders@chromium.org>,
-	Andi Kleen <ak@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Colin Cross <ccross@android.com>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Guenter Roeck <groeck@chromium.org>,
-	Ian Rogers <irogers@google.com>,
-	Lecopzer Chen <lecopzer.chen@mediatek.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masayoshi Mizuma <msys.mizuma@gmail.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Pingfan Liu <kernelfans@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Ravi V. Shankar" <ravi.v.shankar@intel.com>,
-	Ricardo Neri <ricardo.neri@intel.com>,
-	Stephane Eranian <eranian@google.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Tzung-Bi Shih <tzungbi@chromium.org>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 113/431] watchdog/perf: more properly prevent false positives with turbo modes
-Date: Sun,  9 Jul 2023 13:11:01 +0200
-Message-ID: <20230709111453.804312418@linuxfoundation.org>
+Subject: [PATCH 6.3 115/431] mmc: mediatek: Avoid ugly error message when SDIO wakeup IRQ isnt used
+Date: Sun,  9 Jul 2023 13:11:03 +0200
+Message-ID: <20230709111453.851225192@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -63,80 +38,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 4379e59fe5665cfda737e45b8bf2f05321ef049c ]
+[ Upstream commit a3332b7aad346b14770797e03ddd02ebdb14db41 ]
 
-Currently, in the watchdog_overflow_callback() we first check to see if
-the watchdog had been touched and _then_ we handle the workaround for
-turbo mode.  This order should be reversed.
+When I boot a kukui-kodama board, I see an ugly warning in my kernel
+log:
+  mtk-msdc 11240000.mmc: error -ENXIO: IRQ sdio_wakeup not found
 
-Specifically, "touching" the hardlockup detector's watchdog should avoid
-lockups being detected for one period that should be roughly the same
-regardless of whether we're running turbo or not.  That means that we
-should do the extra accounting for turbo _before_ we look at (and clear)
-the global indicating that we've been touched.
+It's pretty normal not to have an "sdio_wakeup" IRQ defined. In fact,
+no device trees in mainline seem to have it. Let's use the
+platform_get_irq_byname_optional() to avoid the error message.
 
-NOTE: this fix is made based on code inspection.  I am not aware of any
-reports where the old code would have generated false positives.  That
-being said, this order seems more correct and also makes it easier down
-the line to share code with the "buddy" hardlockup detector.
-
-Link: https://lkml.kernel.org/r/20230519101840.v5.2.I843b0d1de3e096ba111a179f3adb16d576bef5c7@changeid
-Fixes: 7edaeb6841df ("kernel/watchdog: Prevent false positives with turbo modes")
+Fixes: 527f36f5efa4 ("mmc: mediatek: add support for SDIO eint wakup IRQ")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Chen-Yu Tsai <wens@csie.org>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Colin Cross <ccross@android.com>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Lecopzer Chen <lecopzer.chen@mediatek.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masayoshi Mizuma <msys.mizuma@gmail.com>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Pingfan Liu <kernelfans@gmail.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: "Ravi V. Shankar" <ravi.v.shankar@intel.com>
-Cc: Ricardo Neri <ricardo.neri@intel.com>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Sumit Garg <sumit.garg@linaro.org>
-Cc: Tzung-Bi Shih <tzungbi@chromium.org>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20230510064434.1.I935404c5396e6bf952e99bb7ffb744c6f7fd430b@changeid
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watchdog_hld.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mmc/host/mtk-sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/watchdog_hld.c b/kernel/watchdog_hld.c
-index 247bf0b1582ca..1e8a49dc956e2 100644
---- a/kernel/watchdog_hld.c
-+++ b/kernel/watchdog_hld.c
-@@ -114,14 +114,14 @@ static void watchdog_overflow_callback(struct perf_event *event,
- 	/* Ensure the watchdog never gets throttled */
- 	event->hw.interrupts = 0;
+diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+index 9785ec91654f7..97c42aacaf346 100644
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -2707,7 +2707,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
  
-+	if (!watchdog_check_timestamp())
-+		return;
-+
- 	if (__this_cpu_read(watchdog_nmi_touch) == true) {
- 		__this_cpu_write(watchdog_nmi_touch, false);
- 		return;
- 	}
- 
--	if (!watchdog_check_timestamp())
--		return;
--
- 	/* check for a hardlockup
- 	 * This is done by making sure our timer interrupt
- 	 * is incrementing.  The timer interrupt should have
+ 	/* Support for SDIO eint irq ? */
+ 	if ((mmc->pm_caps & MMC_PM_WAKE_SDIO_IRQ) && (mmc->pm_caps & MMC_PM_KEEP_POWER)) {
+-		host->eint_irq = platform_get_irq_byname(pdev, "sdio_wakeup");
++		host->eint_irq = platform_get_irq_byname_optional(pdev, "sdio_wakeup");
+ 		if (host->eint_irq > 0) {
+ 			host->pins_eint = pinctrl_lookup_state(host->pinctrl, "state_eint");
+ 			if (IS_ERR(host->pins_eint)) {
 -- 
 2.39.2
 
