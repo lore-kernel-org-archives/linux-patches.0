@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076C1522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:26:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CCDC433C8;
-	Sun,  9 Jul 2023 11:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312F5522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:26:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B57C433C7;
+	Sun,  9 Jul 2023 11:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901964;
-	bh=VnkEzlZ37DBm92cPfkTqD8hHVghXLlFKWrb40OeHZsI=;
+	s=korg; t=1688901967;
+	bh=7Vw2EoA933dX0Ph7HivtUsfb0xROmgq9otxV0iU4hpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ScXOY+3x8ld0lEEoPh59mC4Py06OYNX10UGfihwudYVblEsR1LQgwvSKu2m793z8
-	 x7m0Z5pKsOzkNnHNmZeERvJisC5X70gVihXXqxTu1GRPtj4bP7TKe8FHwb2a6vmARv
-	 o1nMZjCV97sx3m9KVboH/zy6It5AQtjmt7zD6ct4=
+	b=1JCg8pwjza4/zm/rdas3NCUO9ZDjNqnnIy9IkC3nwiYnF1mG4YsqLYUav2xVHmZRM
+	 PKexKpNQPlLe7gotfzmYpufJvv12DTGU0nFq0uatNRVshhF5R0qFexrf1dtS30eZbe
+	 W2Ucib/YQ1A7c9RcOI57U6dvB8WnFs95QO5owfQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Polimera <quic_vpolimer@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 207/431] drm/msm/disp/dpu: get timing engine status from intf status register
-Date: Sun,  9 Jul 2023 13:12:35 +0200
-Message-ID: <20230709111456.023358479@linuxfoundation.org>
+Subject: [PATCH 6.3 208/431] drm/msm/dpu: Set DPU_DATA_HCTL_EN for in INTF_SC7180_MASK
+Date: Sun,  9 Jul 2023 13:12:36 +0200
+Message-ID: <20230709111456.046115413@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,98 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinod Polimera <quic_vpolimer@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit e3969eadc8ee78a5bdca65b8ed0a421a359e4090 ]
+[ Upstream commit a7129231edf329a00e92dbd2d741f6da728a4a06 ]
 
-Recommended way of reading the interface timing gen status is via
-status register. Timing gen status register will give a reliable status
-of the interface especially during ON/OFF transitions. This support was
-added from DPU version 5.0.0.
+DPU5 and newer targets enable this unconditionally. Move it from the
+SC7280 mask to the SC7180 one.
 
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+Fixes: 7e6ee55320f0 ("drm/msm/disp/dpu1: enable DATA_HCTL_EN for sc7280 target")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/524724/
-Link: https://lore.kernel.org/r/1677774797-31063-6-git-send-email-quic_vpolimer@quicinc.com
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/538159/
+Link: https://lore.kernel.org/r/20230508-topic-hctl_en-v2-1-e7bea9f1f5dd@linaro.org
+[DB: removed BIT(DPU_INTF_DATA_COMPRESS), which is not yet merged]
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Stable-dep-of: a7129231edf3 ("drm/msm/dpu: Set DPU_DATA_HCTL_EN for in INTF_SC7180_MASK")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  3 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 12 +++++++-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c    |  8 +++++++-
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index f7214c4401e19..900cdb40c7b40 100644
+index 900cdb40c7b40..f41bbceef70cf 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -94,7 +94,8 @@
- 
+@@ -95,9 +95,12 @@
  #define INTF_SDM845_MASK (0)
  
--#define INTF_SC7180_MASK BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE)
-+#define INTF_SC7180_MASK \
-+	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
+ #define INTF_SC7180_MASK \
+-	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
++	(BIT(DPU_INTF_INPUT_CTRL) | \
++	 BIT(DPU_INTF_TE) | \
++	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
++	 BIT(DPU_DATA_HCTL_EN))
  
- #define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
+-#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
++#define INTF_SC7280_MASK (INTF_SC7180_MASK)
  
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 5f96dd8def092..d7d45e1e7b310 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -214,17 +214,19 @@ enum {
- 
- /**
-  * INTF sub-blocks
-- * @DPU_INTF_INPUT_CTRL         Supports the setting of pp block from which
-- *                              pixel data arrives to this INTF
-- * @DPU_INTF_TE                 INTF block has TE configuration support
-- * @DPU_DATA_HCTL_EN            Allows data to be transferred at different rate
--                                than video timing
-+ * @DPU_INTF_INPUT_CTRL             Supports the setting of pp block from which
-+ *                                  pixel data arrives to this INTF
-+ * @DPU_INTF_TE                     INTF block has TE configuration support
-+ * @DPU_DATA_HCTL_EN                Allows data to be transferred at different rate
-+ *                                  than video timing
-+ * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
-  * @DPU_INTF_MAX
-  */
- enum {
- 	DPU_INTF_INPUT_CTRL = 0x1,
- 	DPU_INTF_TE,
- 	DPU_DATA_HCTL_EN,
-+	DPU_INTF_STATUS_SUPPORTED,
- 	DPU_INTF_MAX
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-index b2a94b9a3e987..b9dddf576c029 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-@@ -57,6 +57,7 @@
- #define   INTF_PROG_FETCH_START         0x170
- #define   INTF_PROG_ROT_START           0x174
- #define   INTF_MUX                      0x25C
-+#define   INTF_STATUS                   0x26C
- 
- #define INTF_CFG_ACTIVE_H_EN	BIT(29)
- #define INTF_CFG_ACTIVE_V_EN	BIT(30)
-@@ -292,8 +293,13 @@ static void dpu_hw_intf_get_status(
- 		struct intf_status *s)
- {
- 	struct dpu_hw_blk_reg_map *c = &intf->hw;
-+	unsigned long cap = intf->cap->features;
-+
-+	if (cap & BIT(DPU_INTF_STATUS_SUPPORTED))
-+		s->is_en = DPU_REG_READ(c, INTF_STATUS) & BIT(0);
-+	else
-+		s->is_en = DPU_REG_READ(c, INTF_TIMING_ENGINE_EN);
- 
--	s->is_en = DPU_REG_READ(c, INTF_TIMING_ENGINE_EN);
- 	s->is_prog_fetch_en = !!(DPU_REG_READ(c, INTF_CONFIG) & BIT(31));
- 	if (s->is_en) {
- 		s->frame_count = DPU_REG_READ(c, INTF_FRAME_COUNT);
+ #define IRQ_SDM845_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
+ 			 BIT(MDP_SSPP_TOP0_INTR2) | \
 -- 
 2.39.2
 
