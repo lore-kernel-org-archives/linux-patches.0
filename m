@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 829BB522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064B4C433C7;
-	Sun,  9 Jul 2023 11:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F125522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:33:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C295BC433C8;
+	Sun,  9 Jul 2023 11:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902397;
-	bh=wwn6gTY0zKcfNNTELl8wpp1wC8Oz5cI+oRoIEGrsXzg=;
+	s=korg; t=1688902400;
+	bh=WGshtL4AUNAYowDOlv7UohyIEj9uIHjV7Y4Gf0dv4C4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ty5Tapdrv5EO0Fb/83MFy0ZhII0SS02Gh8UeLGhK912vcfJVPft7ljy8rGUztDQb9
-	 zLFTHAtjbnGf+zYvDV0VAuVhHtJlj3kDRQg/8gPHtWwLXL+KZUx/NH06bPXJsx0tQY
-	 HIrRIM2VM2M7twaUSg7lHfH39AdDeVlQwCeo3Pwc=
+	b=sOljEmx8tH51QwVhCGtOx1ndJRDHzm0fkt6htcVoK7014MsaG3unnb4tOEn7An9Ct
+	 /mKz+RFlckc56oetqzCP8AellUbj7XjSl094FZ4GBIiFhLAcfuDfi6wl7YFS+K9GzZ
+	 ct8JcqKRTe8T6GUh1QqnVQJl8a3d/c9we85uNn1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paul Cercueil <paul@crapouillou.net>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 335/431] MIPS: DTS: CI20: Add parent supplies to ACT8600 regulators
-Date: Sun,  9 Jul 2023 13:14:43 +0200
-Message-ID: <20230709111459.026697461@linuxfoundation.org>
+Subject: [PATCH 6.3 336/431] MIPS: DTS: CI20: Raise VDDCORE voltage to 1.125 volts
+Date: Sun,  9 Jul 2023 13:14:44 +0200
+Message-ID: <20230709111459.049673931@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,68 +37,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit fbf1e42093f8d6346baf17079585fbcebb2ff284 ]
+[ Upstream commit 944520f85d5b1fb2f9ea243be41f9c9af3d4cef3 ]
 
-Provide parent regulators to the ACT8600 regulators that need one.
+Commit 08384e80a70f ("MIPS: DTS: CI20: Fix ACT8600 regulator node
+names") caused the VDDCORE power supply (regulated by the ACT8600's
+DCDC1 output) to drop from a voltage of 1.2V configured by the
+bootloader, to the 1.1V set in the Device Tree.
 
+According to the documentation, the VDDCORE supply should be between
+0.99V and 1.21V; both values are therefore within the supported range.
+
+However, VDDCORE being 1.1V results in the CI20 being very unstable,
+with corrupted memory, failures to boot, or reboots at random. The
+reason might be succint drops of the voltage below the minimum required.
+
+Raising the minimum voltage to 1.125 volts seems to be enough to address
+this issue, while still keeping a relatively low core voltage which
+helps for power consumption and thermals.
+
+Fixes: 08384e80a70f ("MIPS: DTS: CI20: Fix ACT8600 regulator node names")
 Signed-off-by: Paul Cercueil <paul@crapouillou.net>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Stable-dep-of: 944520f85d5b ("MIPS: DTS: CI20: Raise VDDCORE voltage to 1.125 volts")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/boot/dts/ingenic/ci20.dts | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/mips/boot/dts/ingenic/ci20.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/mips/boot/dts/ingenic/ci20.dts b/arch/mips/boot/dts/ingenic/ci20.dts
-index 2b1284c6c64a6..eac6b3411b5f7 100644
+index eac6b3411b5f7..c0f6c4d3618e1 100644
 --- a/arch/mips/boot/dts/ingenic/ci20.dts
 +++ b/arch/mips/boot/dts/ingenic/ci20.dts
-@@ -242,16 +242,19 @@ regulators {
+@@ -240,8 +240,8 @@ act8600: act8600@5a {
+ 
+ 		regulators {
  			vddcore: DCDC1 {
- 				regulator-min-microvolt = <1100000>;
- 				regulator-max-microvolt = <1100000>;
-+				vp1-supply = <&vcc_33v>;
+-				regulator-min-microvolt = <1100000>;
+-				regulator-max-microvolt = <1100000>;
++				regulator-min-microvolt = <1125000>;
++				regulator-max-microvolt = <1125000>;
+ 				vp1-supply = <&vcc_33v>;
  				regulator-always-on;
  			};
- 			vddmem: DCDC2 {
- 				regulator-min-microvolt = <1500000>;
- 				regulator-max-microvolt = <1500000>;
-+				vp2-supply = <&vcc_33v>;
- 				regulator-always-on;
- 			};
- 			vcc_33: DCDC3 {
- 				regulator-min-microvolt = <3300000>;
- 				regulator-max-microvolt = <3300000>;
-+				vp3-supply = <&vcc_33v>;
- 				regulator-always-on;
- 			};
- 			vcc_50: SUDCDC_REG4 {
-@@ -262,21 +265,25 @@ vcc_50: SUDCDC_REG4 {
- 			vcc_25: LDO5 {
- 				regulator-min-microvolt = <2500000>;
- 				regulator-max-microvolt = <2500000>;
-+				inl-supply = <&vcc_33v>;
- 				regulator-always-on;
- 			};
- 			wifi_io: LDO6 {
- 				regulator-min-microvolt = <2500000>;
- 				regulator-max-microvolt = <2500000>;
-+				inl-supply = <&vcc_33v>;
- 				regulator-always-on;
- 			};
- 			cim_io_28: LDO7 {
- 				regulator-min-microvolt = <2800000>;
- 				regulator-max-microvolt = <2800000>;
-+				inl-supply = <&vcc_33v>;
- 				regulator-always-on;
- 			};
- 			cim_io_15: LDO8 {
- 				regulator-min-microvolt = <1500000>;
- 				regulator-max-microvolt = <1500000>;
-+				inl-supply = <&vcc_33v>;
- 				regulator-always-on;
- 			};
- 			vrtc_18: LDO_REG9 {
 -- 
 2.39.2
 
