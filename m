@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70DE538C
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B43C433C8;
-	Sun,  9 Jul 2023 11:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD81F538C
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FCDC433C8;
+	Sun,  9 Jul 2023 11:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901630;
-	bh=x1xaCyfs/40/QdrviXHnSgB6OljJy8ENDw0urg45+Qw=;
+	s=korg; t=1688901633;
+	bh=SbQ2Pzw342501cCoPIFsRAKwylSS6ZXdlJkz/+hlcls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DXHrwWF6oV1/ZXbPqM2M4UzOQzmOX2wmdvAkDb5G5LKrBZahXzHZDyAce6A/5ZhAU
-	 zLMFvPtG7i8WERcvVD1NxTusEFcAjrL8DUEasN6PMuoV5EiQc8bnG02qNL0x9BXBb3
-	 txdpZXGE42WUzQGg/qVutqhLiU/iOiHJTTAc5zkY=
+	b=YruUD+2RoEuwa/ZzBJtfQuIDiQCmADZ5vRhbL11XiahMAyeOk4vPCy/Jjq47o1jBO
+	 ZuJQaivJWhap8M6Dv9o4m3/vBc9YuEUwHfmjhW0sjkUQoSWnyy/jVjz8jgsxQyM1f8
+	 A9043P67yEJ8AYT1wp1bHTxi2lGO/hZrWfcLUEkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 088/431] spi: dw: Round of n_bytes to power of 2
-Date: Sun,  9 Jul 2023 13:10:36 +0200
-Message-ID: <20230709111453.214991267@linuxfoundation.org>
+Subject: [PATCH 6.3 089/431] nfc: llcp: fix possible use of uninitialized variable in nfc_llcp_send_connect()
+Date: Sun,  9 Jul 2023 13:10:37 +0200
+Message-ID: <20230709111453.238808997@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -33,57 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joy Chakraborty <joychakr@google.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 9f34baf67e4d08908fd94ff29c825bb673295336 ]
+[ Upstream commit 0d9b41daa5907756a31772d8af8ac5ff25cf17c1 ]
 
-n_bytes variable in the driver represents the number of bytes per word
-that needs to be sent/copied to fifo. Bits/word can be between 8 and 32
-bits from the client but in memory they are a power of 2, same is mentioned
-in spi.h header:
-"
- * @bits_per_word: Data transfers involve one or more words; word sizes
- *      like eight or 12 bits are common.  In-memory wordsizes are
- *      powers of two bytes (e.g. 20 bit samples use 32 bits).
- *      This may be changed by the device's driver, or left at the
- *      default (0) indicating protocol words are eight bit bytes.
- *      The spi_transfer.bits_per_word can override this for each transfer.
-"
+If sock->service_name is NULL, the local variable
+service_name_tlv_length will not be assigned by nfc_llcp_build_tlv(),
+later leading to using value frmo the stack.  Smatch warning:
 
-Hence, round of n_bytes to a power of 2 to avoid values like 3 which
-would generate unalligned/odd accesses to memory/fifo.
+  net/nfc/llcp_commands.c:442 nfc_llcp_send_connect() error: uninitialized symbol 'service_name_tlv_length'.
 
-* tested on Baikal-T1 based system with DW SPI-looped back interface
-transferring a chunk of data with DFS:8,12,16.
-
-Fixes: a51acc2400d4 ("spi: dw: Add support for 32-bits max xfer size")
-Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com
-Signed-off-by: Joy Chakraborty <joychakr@google.com
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com
-Tested-by: Serge Semin <fancer.lancer@gmail.com
-Link: https://lore.kernel.org/r/20230512104746.1797865-4-joychakr@google.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+Fixes: de9e5aeb4f40 ("NFC: llcp: Fix usage of llcp_add_tlv()")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-dw-core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/nfc/llcp_commands.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-dw-core.c b/drivers/spi/spi-dw-core.c
-index c3bfb6c84cab2..4976e3b8923ee 100644
---- a/drivers/spi/spi-dw-core.c
-+++ b/drivers/spi/spi-dw-core.c
-@@ -426,7 +426,10 @@ static int dw_spi_transfer_one(struct spi_controller *master,
- 	int ret;
- 
- 	dws->dma_mapped = 0;
--	dws->n_bytes = DIV_ROUND_UP(transfer->bits_per_word, BITS_PER_BYTE);
-+	dws->n_bytes =
-+		roundup_pow_of_two(DIV_ROUND_UP(transfer->bits_per_word,
-+						BITS_PER_BYTE));
-+
- 	dws->tx = (void *)transfer->tx_buf;
- 	dws->tx_len = transfer->len / dws->n_bytes;
- 	dws->rx = transfer->rx_buf;
+diff --git a/net/nfc/llcp_commands.c b/net/nfc/llcp_commands.c
+index 41e3a20c89355..cdb001de06928 100644
+--- a/net/nfc/llcp_commands.c
++++ b/net/nfc/llcp_commands.c
+@@ -390,7 +390,8 @@ int nfc_llcp_send_connect(struct nfc_llcp_sock *sock)
+ 	const u8 *service_name_tlv = NULL;
+ 	const u8 *miux_tlv = NULL;
+ 	const u8 *rw_tlv = NULL;
+-	u8 service_name_tlv_length, miux_tlv_length,  rw_tlv_length, rw;
++	u8 service_name_tlv_length = 0;
++	u8 miux_tlv_length,  rw_tlv_length, rw;
+ 	int err;
+ 	u16 size = 0;
+ 	__be16 miux;
 -- 
 2.39.2
 
