@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC90522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:21:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2F1C433C8;
-	Sun,  9 Jul 2023 11:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31ED522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:21:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C74C433C8;
+	Sun,  9 Jul 2023 11:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901692;
-	bh=sBUJ8ybF0GOqBJDIqoc1bqU5xEkn/bcDBo49I0iRFN0=;
+	s=korg; t=1688901695;
+	bh=XTBEET2PloCM0pbAweaiGlWgqTPBbOqqrVvszYh2AFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shug2pp8f27bdr5DF+jYVod2JFebLxdODj86o0yP/pMBPXyO14mSdDqn0jqLDVLxv
-	 TJtRu7Q34FmzTPB0LHIrDE1IvfgxS9HpmyPz+VCWFQ0+6dpYkKC+79Xj03SBY7PohA
-	 hMyvYXSp8bffU8cCQ3zsTzQa3H6/642FPkqDPbNg=
+	b=KZNrTnjW8aTl3LvvdfohEHiT1SLwXDJjd9ZStWaboNW5Yslnpn6NUCVLC+BWKl81R
+	 xE4gshKNZ0sA2k7cJsfiXswJtKU8jzAOu91GtmlKgnXYpj61dk3QDgYkfeos6GIIC0
+	 0RTyeIi8SV0+meHshTyFUaKDfDS2l7SrmB/MENis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Gladkov <legion@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Stanislav Fomichev <sdf@google.com>,
+	Haifeng Xu <haifeng.xu@shopee.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeelb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 093/431] selftests/bpf: Do not use sign-file as testcase
-Date: Sun,  9 Jul 2023 13:10:41 +0200
-Message-ID: <20230709111453.332030229@linuxfoundation.org>
+Subject: [PATCH 6.3 111/431] selftests: cgroup: fix unexpected failure on test_memcg_low
+Date: Sun,  9 Jul 2023 13:10:59 +0200
+Message-ID: <20230709111453.757070650@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,50 +39,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Gladkov <legion@kernel.org>
+From: Haifeng Xu <haifeng.xu@shopee.com>
 
-[ Upstream commit f04a32b2c5b539e3c097cb5c7c1df12a8f4a0cf0 ]
+[ Upstream commit 19ab365762c6cc39dfdee9e13ab0d12fe4b5540d ]
 
-The sign-file utility (from scripts/) is used in prog_tests/verify_pkcs7_sig.c,
-but the utility should not be called as a test. Executing this utility produces
-the following error:
+Since commit f079a020ba95 ("selftests: memcg: factor out common parts of
+memory.{low,min} tests"), the value used in second alloc_anon has changed
+from 148M to 170M.  Because memory.low allows reclaiming page cache in
+child cgroups, so the memory.current is close to 30M instead of 50M.
+Therefore, adjust the expected value of parent cgroup.
 
-  selftests: /linux/tools/testing/selftests/bpf: urandom_read
-  ok 16 selftests: /linux/tools/testing/selftests/bpf: urandom_read
-
-  selftests: /linux/tools/testing/selftests/bpf: sign-file
-  not ok 17 selftests: /linux/tools/testing/selftests/bpf: sign-file # exit=2
-
-Also, urandom_read is mistakenly used as a test. It does not lead to an error,
-but should be moved over to TEST_GEN_FILES as well. The empty TEST_CUSTOM_PROGS
-can then be removed.
-
-Fixes: fc97590668ae ("selftests/bpf: Add test for bpf_verify_pkcs7_signature() kfunc")
-Signed-off-by: Alexey Gladkov <legion@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/bpf/ZEuWFk3QyML9y5QQ@example.org
-Link: https://lore.kernel.org/bpf/88e3ab23029d726a2703adcf6af8356f7a2d3483.1684316821.git.legion@kernel.org
+Link: https://lkml.kernel.org/r/20230522095233.4246-2-haifeng.xu@shopee.com
+Fixes: f079a020ba95 ("selftests: memcg: factor out common parts of memory.{low,min} tests")
+Signed-off-by: Haifeng Xu <haifeng.xu@shopee.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeelb@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/Makefile | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/cgroup/test_memcontrol.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-index ad01c9e1ff12b..625eedb84eecc 100644
---- a/tools/testing/selftests/bpf/Makefile
-+++ b/tools/testing/selftests/bpf/Makefile
-@@ -88,8 +88,7 @@ TEST_GEN_PROGS_EXTENDED = test_sock_addr test_skb_cgroup_id_user \
- 	xskxceiver xdp_redirect_multi xdp_synproxy veristat xdp_hw_metadata \
- 	xdp_features
+diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
+index f4f7c0aef702b..a2a90f4bfe9fe 100644
+--- a/tools/testing/selftests/cgroup/test_memcontrol.c
++++ b/tools/testing/selftests/cgroup/test_memcontrol.c
+@@ -292,6 +292,7 @@ static int test_memcg_protection(const char *root, bool min)
+ 	char *children[4] = {NULL};
+ 	const char *attribute = min ? "memory.min" : "memory.low";
+ 	long c[4];
++	long current;
+ 	int i, attempts;
+ 	int fd;
  
--TEST_CUSTOM_PROGS = $(OUTPUT)/urandom_read $(OUTPUT)/sign-file
--TEST_GEN_FILES += liburandom_read.so
-+TEST_GEN_FILES += liburandom_read.so urandom_read sign-file
+@@ -400,7 +401,8 @@ static int test_memcg_protection(const char *root, bool min)
+ 		goto cleanup;
+ 	}
  
- # Emit succinct information message describing current building step
- # $1 - generic step name (e.g., CC, LINK, etc);
+-	if (!values_close(cg_read_long(parent[1], "memory.current"), MB(50), 3))
++	current = min ? MB(50) : MB(30);
++	if (!values_close(cg_read_long(parent[1], "memory.current"), current, 3))
+ 		goto cleanup;
+ 
+ 	if (!reclaim_until(children[0], MB(10)))
 -- 
 2.39.2
 
