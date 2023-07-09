@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F47522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8966FC433C7;
-	Sun,  9 Jul 2023 11:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0219522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:23:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C435C433C7;
+	Sun,  9 Jul 2023 11:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901784;
-	bh=3fjmqFK1qyrIIS8tWeW4NNVC18bCfgM2AyElii30Ag0=;
+	s=korg; t=1688901787;
+	bh=gpQ15Jos1wl9AUvXibhrhCwVnITuiN+4c6NO4LVTLzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMvndmT8cjOEUXr4DGmHLelh1zHPGQW0GuyistD1Bzh99V7EsCd5vJ9u54U8D1JQ7
-	 dEHqjR7R/qeWxktQPnoMkx7r9we8+6/9Kr+Bfkwk3gDXYD2WvLb7XFl/Xsni/qU/Ye
-	 FtIxX2WCoaHlm7tR8PEfNGAM8aLtcoBhaC03RZks=
+	b=Cp1tHWnQ9YA1Jsv5X2t1vq8rmRFSrsMkyePuoj2NebQr6kWIJzxZR3j6drUQUs7nD
+	 qLHw9X34Azt9MlsizQucaPAavy7O7UlBtIcxAvp5FbCOcslkq0JcMZKRsU5RcM2Kpz
+	 ee+t5Do9KRRjPOS3I2OEaesipr564qoJa0scD2Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
+	Jarod Wilson <jarod@redhat.com>,
+	Moshe Tal <moshet@nvidia.com>,
+	Jussi Maki <joamaki@gmail.com>,
+	Jay Vosburgh <j.vosburgh@gmail.com>,
+	Andy Gospodarek <andy@greyhouse.net>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 143/431] netlink: do not hard code device address lenth in fdb dumps
-Date: Sun,  9 Jul 2023 13:11:31 +0200
-Message-ID: <20230709111454.518880113@linuxfoundation.org>
+Subject: [PATCH 6.3 144/431] bonding: do not assume skb mac_header is set
+Date: Sun,  9 Jul 2023 13:11:32 +0200
+Message-ID: <20230709111454.543326142@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -39,152 +44,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit aa5406950726e336c5c9585b09799a734b6e77bf ]
+[ Upstream commit 6a940abdef3162e5723f1495b8a49859d1708f79 ]
 
-syzbot reports that some netdev devices do not have a six bytes
-address [1]
+Drivers must not assume in their ndo_start_xmit() that
+skbs have their mac_header set. skb->data is all what is needed.
 
-Replace ETH_ALEN by dev->addr_len.
+bonding seems to be one of the last offender as caught by syzbot:
 
-[1] (Case of a device where dev->addr_len = 4)
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 skb_mac_offset include/linux/skbuff.h:2913 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_xmit_hash drivers/net/bonding/bond_main.c:4170 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_xmit_3ad_xor_slave_get drivers/net/bonding/bond_main.c:5149 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_3ad_xor_xmit drivers/net/bonding/bond_main.c:5186 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 __bond_start_xmit drivers/net/bonding/bond_main.c:5442 [inline]
+WARNING: CPU: 1 PID: 12155 at include/linux/skbuff.h:2907 bond_start_xmit+0x14ab/0x19d0 drivers/net/bonding/bond_main.c:5470
+Modules linked in:
+CPU: 1 PID: 12155 Comm: syz-executor.3 Not tainted 6.1.30-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/25/2023
+RIP: 0010:skb_mac_header include/linux/skbuff.h:2907 [inline]
+RIP: 0010:skb_mac_offset include/linux/skbuff.h:2913 [inline]
+RIP: 0010:bond_xmit_hash drivers/net/bonding/bond_main.c:4170 [inline]
+RIP: 0010:bond_xmit_3ad_xor_slave_get drivers/net/bonding/bond_main.c:5149 [inline]
+RIP: 0010:bond_3ad_xor_xmit drivers/net/bonding/bond_main.c:5186 [inline]
+RIP: 0010:__bond_start_xmit drivers/net/bonding/bond_main.c:5442 [inline]
+RIP: 0010:bond_start_xmit+0x14ab/0x19d0 drivers/net/bonding/bond_main.c:5470
+Code: 8b 7c 24 30 e8 76 dd 1a 01 48 85 c0 74 0d 48 89 c3 e8 29 67 2e fe e9 15 ef ff ff e8 1f 67 2e fe e9 10 ef ff ff e8 15 67 2e fe <0f> 0b e9 45 f8 ff ff e8 09 67 2e fe e9 dc fa ff ff e8 ff 66 2e fe
+RSP: 0018:ffffc90002fff6e0 EFLAGS: 00010283
+RAX: ffffffff835874db RBX: 000000000000ffff RCX: 0000000000040000
+RDX: ffffc90004dcf000 RSI: 00000000000000b5 RDI: 00000000000000b6
+RBP: ffffc90002fff8b8 R08: ffffffff83586d16 R09: ffffffff83586584
+R10: 0000000000000007 R11: ffff8881599fc780 R12: ffff88811b6a7b7e
+R13: 1ffff110236d4f6f R14: ffff88811b6a7ac0 R15: 1ffff110236d4f76
+FS: 00007f2e9eb47700(0000) GS:ffff8881f6b00000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b2e421000 CR3: 000000010e6d4000 CR4: 00000000003526e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+[<ffffffff8471a49f>] netdev_start_xmit include/linux/netdevice.h:4925 [inline]
+[<ffffffff8471a49f>] __dev_direct_xmit+0x4ef/0x850 net/core/dev.c:4380
+[<ffffffff851d845b>] dev_direct_xmit include/linux/netdevice.h:3043 [inline]
+[<ffffffff851d845b>] packet_direct_xmit+0x18b/0x300 net/packet/af_packet.c:284
+[<ffffffff851c7472>] packet_snd net/packet/af_packet.c:3112 [inline]
+[<ffffffff851c7472>] packet_sendmsg+0x4a22/0x64d0 net/packet/af_packet.c:3143
+[<ffffffff8467a4b2>] sock_sendmsg_nosec net/socket.c:716 [inline]
+[<ffffffff8467a4b2>] sock_sendmsg net/socket.c:736 [inline]
+[<ffffffff8467a4b2>] __sys_sendto+0x472/0x5f0 net/socket.c:2139
+[<ffffffff8467a715>] __do_sys_sendto net/socket.c:2151 [inline]
+[<ffffffff8467a715>] __se_sys_sendto net/socket.c:2147 [inline]
+[<ffffffff8467a715>] __x64_sys_sendto+0xe5/0x100 net/socket.c:2147
+[<ffffffff8553071f>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+[<ffffffff8553071f>] do_syscall_64+0x2f/0x50 arch/x86/entry/common.c:80
+[<ffffffff85600087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-BUG: KMSAN: kernel-infoleak in copyout+0xb8/0x100 lib/iov_iter.c:169
-instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-copyout+0xb8/0x100 lib/iov_iter.c:169
-_copy_to_iter+0x6d8/0x1d00 lib/iov_iter.c:536
-copy_to_iter include/linux/uio.h:206 [inline]
-simple_copy_to_iter+0x68/0xa0 net/core/datagram.c:513
-__skb_datagram_iter+0x123/0xdc0 net/core/datagram.c:419
-skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:527
-skb_copy_datagram_msg include/linux/skbuff.h:3960 [inline]
-netlink_recvmsg+0x4ae/0x15a0 net/netlink/af_netlink.c:1970
-sock_recvmsg_nosec net/socket.c:1019 [inline]
-sock_recvmsg net/socket.c:1040 [inline]
-____sys_recvmsg+0x283/0x7f0 net/socket.c:2722
-___sys_recvmsg+0x223/0x840 net/socket.c:2764
-do_recvmmsg+0x4f9/0xfd0 net/socket.c:2858
-__sys_recvmmsg net/socket.c:2937 [inline]
-__do_sys_recvmmsg net/socket.c:2960 [inline]
-__se_sys_recvmmsg net/socket.c:2953 [inline]
-__x64_sys_recvmmsg+0x397/0x490 net/socket.c:2953
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Uninit was stored to memory at:
-__nla_put lib/nlattr.c:1009 [inline]
-nla_put+0x1c6/0x230 lib/nlattr.c:1067
-nlmsg_populate_fdb_fill+0x2b8/0x600 net/core/rtnetlink.c:4071
-nlmsg_populate_fdb net/core/rtnetlink.c:4418 [inline]
-ndo_dflt_fdb_dump+0x616/0x840 net/core/rtnetlink.c:4456
-rtnl_fdb_dump+0x14ff/0x1fc0 net/core/rtnetlink.c:4629
-netlink_dump+0x9d1/0x1310 net/netlink/af_netlink.c:2268
-netlink_recvmsg+0xc5c/0x15a0 net/netlink/af_netlink.c:1995
-sock_recvmsg_nosec+0x7a/0x120 net/socket.c:1019
-____sys_recvmsg+0x664/0x7f0 net/socket.c:2720
-___sys_recvmsg+0x223/0x840 net/socket.c:2764
-do_recvmmsg+0x4f9/0xfd0 net/socket.c:2858
-__sys_recvmmsg net/socket.c:2937 [inline]
-__do_sys_recvmmsg net/socket.c:2960 [inline]
-__se_sys_recvmmsg net/socket.c:2953 [inline]
-__x64_sys_recvmmsg+0x397/0x490 net/socket.c:2953
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Uninit was created at:
-slab_post_alloc_hook+0x12d/0xb60 mm/slab.h:716
-slab_alloc_node mm/slub.c:3451 [inline]
-__kmem_cache_alloc_node+0x4ff/0x8b0 mm/slub.c:3490
-kmalloc_trace+0x51/0x200 mm/slab_common.c:1057
-kmalloc include/linux/slab.h:559 [inline]
-__hw_addr_create net/core/dev_addr_lists.c:60 [inline]
-__hw_addr_add_ex+0x2e5/0x9e0 net/core/dev_addr_lists.c:118
-__dev_mc_add net/core/dev_addr_lists.c:867 [inline]
-dev_mc_add+0x9a/0x130 net/core/dev_addr_lists.c:885
-igmp6_group_added+0x267/0xbc0 net/ipv6/mcast.c:680
-ipv6_mc_up+0x296/0x3b0 net/ipv6/mcast.c:2754
-ipv6_mc_remap+0x1e/0x30 net/ipv6/mcast.c:2708
-addrconf_type_change net/ipv6/addrconf.c:3731 [inline]
-addrconf_notify+0x4d3/0x1d90 net/ipv6/addrconf.c:3699
-notifier_call_chain kernel/notifier.c:93 [inline]
-raw_notifier_call_chain+0xe4/0x430 kernel/notifier.c:461
-call_netdevice_notifiers_info net/core/dev.c:1935 [inline]
-call_netdevice_notifiers_extack net/core/dev.c:1973 [inline]
-call_netdevice_notifiers+0x1ee/0x2d0 net/core/dev.c:1987
-bond_enslave+0xccd/0x53f0 drivers/net/bonding/bond_main.c:1906
-do_set_master net/core/rtnetlink.c:2626 [inline]
-rtnl_newlink_create net/core/rtnetlink.c:3460 [inline]
-__rtnl_newlink net/core/rtnetlink.c:3660 [inline]
-rtnl_newlink+0x378c/0x40e0 net/core/rtnetlink.c:3673
-rtnetlink_rcv_msg+0x16a6/0x1840 net/core/rtnetlink.c:6395
-netlink_rcv_skb+0x371/0x650 net/netlink/af_netlink.c:2546
-rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6413
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0xf28/0x1230 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x122f/0x13d0 net/netlink/af_netlink.c:1913
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0x999/0xd50 net/socket.c:2503
-___sys_sendmsg+0x28d/0x3c0 net/socket.c:2557
-__sys_sendmsg net/socket.c:2586 [inline]
-__do_sys_sendmsg net/socket.c:2595 [inline]
-__se_sys_sendmsg net/socket.c:2593 [inline]
-__x64_sys_sendmsg+0x304/0x490 net/socket.c:2593
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Bytes 2856-2857 of 3500 are uninitialized
-Memory access of size 3500 starts at ffff888018d99104
-Data copied to user address 0000000020000480
-
-Fixes: d83b06036048 ("net: add fdb generic dump routine")
+Fixes: 7b8fc0103bb5 ("bonding: add a vlan+srcmac tx hashing option")
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20230621174720.1845040-1-edumazet@google.com
+Cc: Jarod Wilson <jarod@redhat.com>
+Cc: Moshe Tal <moshet@nvidia.com>
+Cc: Jussi Maki <joamaki@gmail.com>
+Cc: Jay Vosburgh <j.vosburgh@gmail.com>
+Cc: Andy Gospodarek <andy@greyhouse.net>
+Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20230622152304.2137482-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/bonding/bond_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index bbecc31a2703f..f21254a9cd373 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -4093,7 +4093,7 @@ static int nlmsg_populate_fdb_fill(struct sk_buff *skb,
- 	ndm->ndm_ifindex = dev->ifindex;
- 	ndm->ndm_state   = ndm_state;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 806d33d9f7124..172939e275a3b 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -4171,7 +4171,7 @@ u32 bond_xmit_hash(struct bonding *bond, struct sk_buff *skb)
+ 		return skb->hash;
  
--	if (nla_put(skb, NDA_LLADDR, ETH_ALEN, addr))
-+	if (nla_put(skb, NDA_LLADDR, dev->addr_len, addr))
- 		goto nla_put_failure;
- 	if (vid)
- 		if (nla_put(skb, NDA_VLAN, sizeof(u16), &vid))
-@@ -4107,10 +4107,10 @@ static int nlmsg_populate_fdb_fill(struct sk_buff *skb,
- 	return -EMSGSIZE;
+ 	return __bond_xmit_hash(bond, skb, skb->data, skb->protocol,
+-				skb_mac_offset(skb), skb_network_offset(skb),
++				0, skb_network_offset(skb),
+ 				skb_headlen(skb));
  }
- 
--static inline size_t rtnl_fdb_nlmsg_size(void)
-+static inline size_t rtnl_fdb_nlmsg_size(const struct net_device *dev)
- {
- 	return NLMSG_ALIGN(sizeof(struct ndmsg)) +
--	       nla_total_size(ETH_ALEN) +	/* NDA_LLADDR */
-+	       nla_total_size(dev->addr_len) +	/* NDA_LLADDR */
- 	       nla_total_size(sizeof(u16)) +	/* NDA_VLAN */
- 	       0;
- }
-@@ -4122,7 +4122,7 @@ static void rtnl_fdb_notify(struct net_device *dev, u8 *addr, u16 vid, int type,
- 	struct sk_buff *skb;
- 	int err = -ENOBUFS;
- 
--	skb = nlmsg_new(rtnl_fdb_nlmsg_size(), GFP_ATOMIC);
-+	skb = nlmsg_new(rtnl_fdb_nlmsg_size(dev), GFP_ATOMIC);
- 	if (!skb)
- 		goto errout;
  
 -- 
 2.39.2
