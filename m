@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66142522D
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7ACBC433C7;
-	Sun,  9 Jul 2023 11:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376E4522D
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:14:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BD7C433C7;
+	Sun,  9 Jul 2023 11:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901284;
-	bh=sV4YBn+G8ZizGGXiQwRVyGZfVtTXbdvSWs2u/sc5Ifs=;
+	s=korg; t=1688901287;
+	bh=TXdyKbUgf13XY3EU8v7zY3HU3a45Pxaq7itkdHG7sN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVLL28inRhCtT6//kbX20C0qPKSRtOhCFirzsQipkSlxuW6EBzjJ3rWeeQ+D1Xh0A
-	 CSYAhGxKMbpLXa7+3N26gIeU6CK95Q8essRdx+ISJl4Xn/I9SAMNRbf0TKPj7A4xB5
-	 VbaCc2wn4Rx1OLdnWLepmYQGx7Wj6b2OIkVxD8WQ=
+	b=NlpezaRxJoRzgD0f96S71FTdyriWoihGx8iekLlHDNWMNG/N8yTWE1642yBpoVc9s
+	 o+tz/eFm/5RUe7Pw3LA6uqLP97AoBwVdwpKhx5Bdz1RUwpu5KAFOM2QESJVZKMZD7i
+	 N+a5ANRRyZ/Ebbp0LVoWgvLJXMlfDmhGxjpeRcwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suren Baghdasaryan <surenb@google.com>,
 	David Hildenbrand <david@redhat.com>,
 	Jiri Slaby <jirislaby@kernel.org>,
 	=?UTF-8?q?Holger=20Hoffst=C3=A4tte?= <holger@applied-asynchrony.com>,
 	Jacob Young <jacobly.alt@gmail.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 7/8] fork: lock VMAs of the parent process when forking
-Date: Sun,  9 Jul 2023 13:14:13 +0200
-Message-ID: <20230709111345.516444847@linuxfoundation.org>
+	Suren Baghdasaryan <surenb@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.4 8/8] fork: lock VMAs of the parent process when forking, again
+Date: Sun,  9 Jul 2023 13:14:14 +0200
+Message-ID: <20230709111345.543400132@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111345.297026264@linuxfoundation.org>
 References: <20230709111345.297026264@linuxfoundation.org>
@@ -41,85 +40,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Suren Baghdasaryan <surenb@google.com>
 
-commit 2b4f3b4987b56365b981f44a7e843efa5b6619b9 upstream.
+commit fb49c455323ff8319a123dd312be9082c49a23a5 upstream.
 
-Patch series "Avoid memory corruption caused by per-VMA locks", v4.
+When forking a child process, the parent write-protects anonymous pages
+and COW-shares them with the child being forked using copy_present_pte().
 
-A memory corruption was reported in [1] with bisection pointing to the
-patch [2] enabling per-VMA locks for x86.  Based on the reproducer
-provided in [1] we suspect this is caused by the lack of VMA locking while
-forking a child process.
+We must not take any concurrent page faults on the source vma's as they
+are being processed, as we expect both the vma and the pte's behind it
+to be stable.  For example, the anon_vma_fork() expects the parents
+vma->anon_vma to not change during the vma copy.
 
-Patch 1/2 in the series implements proper VMA locking during fork.  I
-tested the fix locally using the reproducer and was unable to reproduce
-the memory corruption problem.
+A concurrent page fault on a page newly marked read-only by the page
+copy might trigger wp_page_copy() and a anon_vma_prepare(vma) on the
+source vma, defeating the anon_vma_clone() that wasn't done because the
+parent vma originally didn't have an anon_vma, but we now might end up
+copying a pte entry for a page that has one.
 
-This fix can potentially regress some fork-heavy workloads.  Kernel build
-time did not show noticeable regression on a 56-core machine while a
-stress test mapping 10000 VMAs and forking 5000 times in a tight loop
-shows ~7% regression.  If such fork time regression is unacceptable,
+Before the per-vma lock based changes, the mmap_lock guaranteed
+exclusion with concurrent page faults.  But now we need to do a
+vma_start_write() to make sure no concurrent faults happen on this vma
+while it is being processed.
+
+This fix can potentially regress some fork-heavy workloads.  Kernel
+build time did not show noticeable regression on a 56-core machine while
+a stress test mapping 10000 VMAs and forking 5000 times in a tight loop
+shows ~5% regression.  If such fork time regression is unacceptable,
 disabling CONFIG_PER_VMA_LOCK should restore its performance.  Further
 optimizations are possible if this regression proves to be problematic.
 
-Patch 2/2 disables per-VMA locks until the fix is tested and verified.
-
-
-This patch (of 2):
-
-When forking a child process, parent write-protects an anonymous page and
-COW-shares it with the child being forked using copy_present_pte().
-Parent's TLB is flushed right before we drop the parent's mmap_lock in
-dup_mmap().  If we get a write-fault before that TLB flush in the parent,
-and we end up replacing that anonymous page in the parent process in
-do_wp_page() (because, COW-shared with the child), this might lead to some
-stale writable TLB entries targeting the wrong (old) page.  Similar issue
-happened in the past with userfaultfd (see flush_tlb_page() call inside
-do_wp_page()).
-
-Lock VMAs of the parent process when forking a child, which prevents
-concurrent page faults during fork operation and avoids this issue.  This
-fix can potentially regress some fork-heavy workloads.  Kernel build time
-did not show noticeable regression on a 56-core machine while a stress
-test mapping 10000 VMAs and forking 5000 times in a tight loop shows ~7%
-regression.  If such fork time regression is unacceptable, disabling
-CONFIG_PER_VMA_LOCK should restore its performance.  Further optimizations
-are possible if this regression proves to be problematic.
-
-Link: https://lkml.kernel.org/r/20230706011400.2949242-1-surenb@google.com
-Link: https://lkml.kernel.org/r/20230706011400.2949242-2-surenb@google.com
-Fixes: 0bff0aaea03e ("x86/mm: try VMA lock-based page fault handling first")
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
 Suggested-by: David Hildenbrand <david@redhat.com>
 Reported-by: Jiri Slaby <jirislaby@kernel.org>
 Closes: https://lore.kernel.org/all/dbdef34c-3a07-5951-e1ae-e9c6e3cdf51b@kernel.org/
 Reported-by: Holger Hoffstätte <holger@applied-asynchrony.com>
 Closes: https://lore.kernel.org/all/b198d649-f4bf-b971-31d0-e8433ec2a34c@applied-asynchrony.com/
 Reported-by: Jacob Young <jacobly.alt@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=3D217624
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Tested-by: Holger Hoffsttte <holger@applied-asynchrony.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217624
+Fixes: 0bff0aaea03e ("x86/mm: try VMA lock-based page fault handling first")
+Cc: stable@vger.kernel.org
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/fork.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/fork.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
-@@ -662,6 +662,12 @@ static __latent_entropy int dup_mmap(str
- 		retval = -EINTR;
- 		goto fail_uprobe_end;
- 	}
-+#ifdef CONFIG_PER_VMA_LOCK
-+	/* Disallow any page faults before calling flush_cache_dup_mm */
-+	for_each_vma(old_vmi, mpnt)
+@@ -696,6 +696,7 @@ static __latent_entropy int dup_mmap(str
+ 	for_each_vma(old_vmi, mpnt) {
+ 		struct file *file;
+ 
 +		vma_start_write(mpnt);
-+	vma_iter_set(&old_vmi, 0);
-+#endif
- 	flush_cache_dup_mm(oldmm);
- 	uprobe_dup_mmap(oldmm, mm);
- 	/*
+ 		if (mpnt->vm_flags & VM_DONTCOPY) {
+ 			vm_stat_account(mm, mpnt->vm_flags, -vma_pages(mpnt));
+ 			continue;
 
 
