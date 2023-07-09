@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08607522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79DA7C433C8;
-	Sun,  9 Jul 2023 11:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1557522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A2FC433C8;
+	Sun,  9 Jul 2023 11:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901936;
-	bh=rBnXE+jknYFFhK+JvTATZOvZCiopdsGUxgjnBYSM0YU=;
+	s=korg; t=1688901939;
+	bh=mCzF67IMLzGbRzEoXNmbp5j4Wa06crgi6TgOYVWOW68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMC08wPNBuE5cHJHOvROnjfbuFNn8x6yTWr9ULPeqvfbGo3+nZDu4PED0bS3nh7mH
-	 jwvdupuzx/ShXZ2SerONUm0ewcIWuGI57lrWszR/+U4AESLyzWxH7OQ0UyDP9Pb1WK
-	 F41kfjOWNcODsTHnb8GRkeiRG+9Q64eyavJoEfXU=
+	b=Dr+ItERvfhMIrYJlzItA7z5oTEyhMPdRfszm6NTnSBMuSRQnWZgzrP8VcsRKosd8E
+	 m3A9YqgJEfaVD4w+4RlhRNP4+mQXaUSSBQb0RFr9hNGXO9r4sMHe7qMignh/LP6Viz
+	 sNvavk4W6Wf3QafhCH42gHgxIY24UWL5c5vwRvUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 198/431] drm/bridge: tc358767: Switch to devm MIPI-DSI helpers
-Date: Sun,  9 Jul 2023 13:12:26 +0200
-Message-ID: <20230709111455.814259766@linuxfoundation.org>
+Subject: [PATCH 6.3 199/431] clk: imx: scu: use _safe list iterator to avoid a use after free
+Date: Sun,  9 Jul 2023 13:12:27 +0200
+Message-ID: <20230709111455.837186716@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,45 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit f47d6140b7a4c858d82d263e7577ff6fb5279a9c ]
+[ Upstream commit 632c60ecd25dbacee54d5581fe3aeb834b57010a ]
 
-DSI device registering and attaching needs to be undone upon
-deregistration. This fixes module unload/load.
+This loop is freeing "clk" so it needs to use list_for_each_entry_safe().
+Otherwise it dereferences a freed variable to get the next item on the
+loop.
 
-Fixes: bbfd3190b656 ("drm/bridge: tc358767: Add DSI-to-DPI mode support")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230517122107.1766673-1-alexander.stein@ew.tq-group.com
+Fixes: 77d8f3068c63 ("clk: imx: scu: add two cells binding support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/0793fbd1-d2b5-4ec2-9403-3c39343a3e2d@kili.mountain
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358767.c | 4 ++--
+ drivers/clk/imx/clk-scu.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
-index 6d16ec45ea614..232e23a1bfcc0 100644
---- a/drivers/gpu/drm/bridge/tc358767.c
-+++ b/drivers/gpu/drm/bridge/tc358767.c
-@@ -1890,7 +1890,7 @@ static int tc_mipi_dsi_host_attach(struct tc_data *tc)
- 	if (dsi_lanes < 0)
- 		return dsi_lanes;
+diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
+index 1e6870f3671f6..db307890e4c16 100644
+--- a/drivers/clk/imx/clk-scu.c
++++ b/drivers/clk/imx/clk-scu.c
+@@ -707,11 +707,11 @@ struct clk_hw *imx_clk_scu_alloc_dev(const char *name,
  
--	dsi = mipi_dsi_device_register_full(host, &info);
-+	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
- 	if (IS_ERR(dsi))
- 		return dev_err_probe(dev, PTR_ERR(dsi),
- 				     "failed to create dsi device\n");
-@@ -1901,7 +1901,7 @@ static int tc_mipi_dsi_host_attach(struct tc_data *tc)
- 	dsi->format = MIPI_DSI_FMT_RGB888;
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE;
+ void imx_clk_scu_unregister(void)
+ {
+-	struct imx_scu_clk_node *clk;
++	struct imx_scu_clk_node *clk, *n;
+ 	int i;
  
--	ret = mipi_dsi_attach(dsi);
-+	ret = devm_mipi_dsi_attach(dev, dsi);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to attach dsi to host: %d\n", ret);
- 		return ret;
+ 	for (i = 0; i < IMX_SC_R_LAST; i++) {
+-		list_for_each_entry(clk, &imx_scu_clks[i], node) {
++		list_for_each_entry_safe(clk, n, &imx_scu_clks[i], node) {
+ 			clk_hw_unregister(clk->hw);
+ 			kfree(clk);
+ 		}
 -- 
 2.39.2
 
