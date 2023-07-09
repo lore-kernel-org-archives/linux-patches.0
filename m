@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C57522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A2FC433C7;
-	Sun,  9 Jul 2023 11:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77A45232
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:35:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D2FC433C9;
+	Sun,  9 Jul 2023 11:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902508;
-	bh=nMHmZ8UaeAsg7LtNm1mf2R8kHtuBz+81MdAZrNG1mJU=;
+	s=korg; t=1688902514;
+	bh=GkWTux36hETjWavF7BEv1VhI2waDC62Dp+gNcL3pfn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rL1wKtnYm3B8dVeS50KnphrLrCl+WESDY6ELWlGEKgUu92XrbK8I8xQrc2aJpeg5H
-	 rfPTROzOPb7PmB/BK2JpmN9kkkSf7A9RIyWO0k0+LDftXuUrRcvcazeBKvzwpcYFpc
-	 Ku8WvQDP8x+vgkYRYXtbJJ4IUvpHucKCwiC/2GMU=
+	b=dbbtP20su8QOrMXQY3jrMaMzVAm2Yzb1rJoMaYp1mI+t+dl3YGdPCRsRX0dgrSvcX
+	 5VMyBuOQ4EGKSdpbp499FFle4XrWGzwjb8BOvoKL4xc9AeSOxOCGsolrV4GhRxHb/Z
+	 Ligt7CJsHhhNrUmhQaP+Ka4yspf+NFhpQcp0n/zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Joachim Vandersmissen <git@jvdsn.com>,
+	Stephan Mueller <smueller@chronox.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 402/431] modpost: fix section mismatch message for R_ARM_{PC24,CALL,JUMP24}
-Date: Sun,  9 Jul 2023 13:15:50 +0200
-Message-ID: <20230709111500.606213440@linuxfoundation.org>
+Subject: [PATCH 6.3 404/431] crypto: jitter - correct health test during initialization
+Date: Sun,  9 Jul 2023 13:15:52 +0200
+Message-ID: <20230709111500.651894380@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -34,104 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Stephan Müller <smueller@chronox.de>
 
-[ Upstream commit 56a24b8ce6a7f9c4a21b2276a8644f6f3d8fc14d ]
+[ Upstream commit d23659769ad1bf2cbafaa0efcbae20ef1a74f77e ]
 
-addend_arm_rel() processes R_ARM_PC24, R_ARM_CALL, R_ARM_JUMP24 in a
-wrong way.
+With the update of the permanent and intermittent health errors, the
+actual indicator for the health test indicates a potential error only
+for the one offending time stamp gathered in the current iteration
+round. The next iteration round will "overwrite" the health test result.
 
-Here, test code.
+Thus, the entropy collection loop in jent_gen_entropy checks for
+the health test failure upon each loop iteration. However, the
+initialization operation checked for the APT health test once for
+an APT window which implies it would not catch most errors.
 
-[test code for R_ARM_JUMP24]
+Thus, the check for all health errors is now invoked unconditionally
+during each loop iteration for the startup test.
 
-  .section .init.text,"ax"
-  bar:
-          bx      lr
+With the change, the error JENT_ERCT becomes unused as all health
+errors are only reported with the JENT_HEALTH return code. This
+allows the removal of the error indicator.
 
-  .section .text,"ax"
-  .globl foo
-  foo:
-          b       bar
-
-[test code for R_ARM_CALL]
-
-  .section .init.text,"ax"
-  bar:
-          bx      lr
-
-  .section .text,"ax"
-  .globl foo
-  foo:
-          push    {lr}
-          bl      bar
-          pop     {pc}
-
-If you compile it with ARM multi_v7_defconfig, modpost will show the
-symbol name, (unknown).
-
-  WARNING: modpost: vmlinux.o: section mismatch in reference: foo (section: .text) -> (unknown) (section: .init.text)
-
-(You need to use GNU linker instead of LLD to reproduce it.)
-
-Fix the code to make modpost show the correct symbol name.
-
-I imported (with adjustment) sign_extend32() from include/linux/bitops.h.
-
-The '+8' is the compensation for pc-relative instruction. It is
-documented in "ELF for the Arm Architecture" [1].
-
-  "If the relocation is pc-relative then compensation for the PC bias
-  (the PC value is 8 bytes ahead of the executing instruction in Arm
-  state and 4 bytes in Thumb state) must be encoded in the relocation
-  by the object producer."
-
-[1]: https://github.com/ARM-software/abi-aa/blob/main/aaelf32/aaelf32.rst
-
-Fixes: 56a974fa2d59 ("kbuild: make better section mismatch reports on arm")
-Fixes: 6e2e340b59d2 ("ARM: 7324/1: modpost: Fix section warnings for ARM for many compilers")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 3fde2fe99aa6 ("crypto: jitter - permanent and intermittent health errors"
+)
+Reported-by: Joachim Vandersmissen <git@jvdsn.com>
+Signed-off-by: Stephan Mueller <smueller@chronox.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ crypto/jitterentropy.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index ff7a8df9e54cd..30d2ebc391f4a 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1417,12 +1417,20 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- #define	R_ARM_THM_JUMP19	51
- #endif
+diff --git a/crypto/jitterentropy.c b/crypto/jitterentropy.c
+index 22f48bf4c6f57..227cedfa4f0ae 100644
+--- a/crypto/jitterentropy.c
++++ b/crypto/jitterentropy.c
+@@ -117,7 +117,6 @@ struct rand_data {
+ 				   * zero). */
+ #define JENT_ESTUCK		8 /* Too many stuck results during init. */
+ #define JENT_EHEALTH		9 /* Health test failed during initialization */
+-#define JENT_ERCT		10 /* RCT failed during initialization */
  
-+static int32_t sign_extend32(int32_t value, int index)
-+{
-+	uint8_t shift = 31 - index;
-+
-+	return (int32_t)(value << shift) >> shift;
-+}
-+
- static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- {
- 	unsigned int r_typ = ELF_R_TYPE(r->r_info);
- 	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
- 	void *loc = reloc_location(elf, sechdr, r);
- 	uint32_t inst;
-+	int32_t offset;
+ /*
+  * The output n bits can receive more than n bits of min entropy, of course,
+@@ -762,14 +761,12 @@ int jent_entropy_init(void)
+ 			if ((nonstuck % JENT_APT_WINDOW_SIZE) == 0) {
+ 				jent_apt_reset(&ec,
+ 					       delta & JENT_APT_WORD_MASK);
+-				if (jent_health_failure(&ec))
+-					return JENT_EHEALTH;
+ 			}
+ 		}
  
- 	switch (r_typ) {
- 	case R_ARM_ABS32:
-@@ -1432,6 +1440,10 @@ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
- 	case R_ARM_PC24:
- 	case R_ARM_CALL:
- 	case R_ARM_JUMP24:
-+		inst = TO_NATIVE(*(uint32_t *)loc);
-+		offset = sign_extend32((inst & 0x00ffffff) << 2, 25);
-+		r->r_addend = offset + sym->st_value + 8;
-+		break;
- 	case R_ARM_THM_CALL:
- 	case R_ARM_THM_JUMP24:
- 	case R_ARM_THM_JUMP19:
+-		/* Validate RCT */
+-		if (jent_rct_failure(&ec))
+-			return JENT_ERCT;
++		/* Validate health test result */
++		if (jent_health_failure(&ec))
++			return JENT_EHEALTH;
+ 
+ 		/* test whether we have an increasing timer */
+ 		if (!(time2 > time))
 -- 
 2.39.2
 
