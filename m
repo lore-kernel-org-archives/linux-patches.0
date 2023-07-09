@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8724522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:27:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5993EC433C7;
-	Sun,  9 Jul 2023 11:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB64522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:27:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF3AC433C7;
+	Sun,  9 Jul 2023 11:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902044;
-	bh=75cFerAQotKqUoikXEsEURBc56afA3c3awWGSVlUobE=;
+	s=korg; t=1688902047;
+	bh=zN87L2q1rEFGmtqVcBx4KmK8Qa6TYgQWTRexwSSZ5Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6iXnCr9o8eVhlh5MUuNdNtiUsfQztUgy0Ubc8gHZ2YU9iCy2QYPMkh1RpDPncoqp
-	 zSXM1y5LNuwDpGot+Z43MiFFPCafyv9BhojHsYv47RNJC5B2RSdFaGVcMVHV3/eT1Z
-	 GUmwEz1MOstT4FZkj8Dsha8q+La9t6D19pxR9eYQ=
+	b=Gfn7Y2p3XDLfeMkwCutRZI5WjbqvR2ObNSEbgVIaU9dsa0qI5143fHD9Q9phbsE/d
+	 vZwFShrUe0O5qQxW/NmGYxhq8JFDOvh7f4GNxwsn0Zr1kb+KioO2jVbEhY7erQ9Pp1
+	 0fPfdVcLdlbArK1vI1iARRF68/FEdPtClJ67hSSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 235/431] arm64: dts: qcom: sm6115: correct thermal-sensor unit address
-Date: Sun,  9 Jul 2023 13:13:03 +0200
-Message-ID: <20230709111456.672738797@linuxfoundation.org>
+Subject: [PATCH 6.3 236/431] arm64: dts: qcom: sm8350: correct DMA controller unit address
+Date: Sun,  9 Jul 2023 13:13:04 +0200
+Message-ID: <20230709111456.695667576@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -38,35 +38,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 2358b43256080459fcc5642265ed4fec75558f8c ]
+[ Upstream commit 41d6bca799b3f40d4d3c22dd4545aeac7c210e33 ]
 
 Match unit-address to reg entry to fix dtbs W=1 warnings:
 
-  Warning (simple_bus_reg): /soc@0/thermal-sensor@4410000: simple-bus unit address format error, expected "4411000"
+  Warning (simple_bus_reg): /soc@0/dma-controller@900000: simple-bus unit address format error, expected "9800000"
 
-Fixes: 7b74cba6b13f ("arm64: dts: qcom: sm6115: Add TSENS node")
+Fixes: bc08fbf49bc8 ("arm64: dts: qcom: sm8350: Define GPI DMA engines")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-12-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230419211856.79332-13-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index fbd67d2c8d781..62b1c1674a68d 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -693,7 +693,7 @@ spmi_bus: spmi@1c40000 {
- 			#interrupt-cells = <4>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 9cb52d7efdd8d..f0453730ab59b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -892,7 +892,7 @@ spi19: spi@894000 {
+ 			};
  		};
  
--		tsens0: thermal-sensor@4410000 {
-+		tsens0: thermal-sensor@4411000 {
- 			compatible = "qcom,sm6115-tsens", "qcom,tsens-v2";
- 			reg = <0x0 0x04411000 0x0 0x1ff>, /* TM */
- 			      <0x0 0x04410000 0x0 0x8>; /* SROT */
+-		gpi_dma0: dma-controller@900000 {
++		gpi_dma0: dma-controller@9800000 {
+ 			compatible = "qcom,sm8350-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0 0x09800000 0 0x60000>;
+ 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.39.2
 
