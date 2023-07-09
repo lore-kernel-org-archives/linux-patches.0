@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3F3522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:29:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59950C433C8;
-	Sun,  9 Jul 2023 11:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FDC522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:30:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25018C433C8;
+	Sun,  9 Jul 2023 11:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902198;
-	bh=7IsLcgyZWkABgduqNenDFnyhy/pC7IyJFNC9AJYdvoc=;
+	s=korg; t=1688902201;
+	bh=7CyZ9Se5iyVlpgCPS0OulQndlhx6cRyDUzwrdGVPgI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dSHTuadQQWkxQQS+HoPk/Ae4gUg7su3p4b8BcFQ5xChmIvNpdh4V/NSq41LCNUWNH
-	 EWU0k47KVcAJm8noADDu40oZbUPrrRsyp1fDhiPVZb3oB2+KzDJ3WZfHhu9xgFCsCV
-	 31yiPtKhEhTwParBIdQtOhb4sjzaC0vNwsa6jGII=
+	b=gRCAvwtwatmiOZTFxGVxK1NI6NCaW9pNoOlAkt7c53PLQ4Dz4YLMtU5lJtF2fuobF
+	 CSICcTVz36sFF838xvV8dcj2KjQpRU6NWGsKmyGlX6h1WrjC5ADhtkcWG8bPh4uiMS
+	 NpzrF+QDRTdemNyx9IkvbwoUAhx+THLyYKmskNZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuxing Liu <lyx2022@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 291/431] clk: imx: clk-imx8mp: improve error handling in imx8mp_clocks_probe()
-Date: Sun,  9 Jul 2023 13:13:59 +0200
-Message-ID: <20230709111457.968596166@linuxfoundation.org>
+Subject: [PATCH 6.3 274/431] MIPS: DTS: CI20: Fix ACT8600 regulator node names
+Date: Sun,  9 Jul 2023 13:13:42 +0200
+Message-ID: <20230709111457.568629575@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,83 +35,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuxing Liu <lyx2022@hust.edu.cn>
+From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit 878b02d5f3b56cb090dbe2c70c89273be144087f ]
+[ Upstream commit 08384e80a70fb1942510ab5f0ce27bad134e634e ]
 
-Replace of_iomap() and kzalloc() with devm_of_iomap() and devm_kzalloc()
-which can automatically release the related memory when the device
-or driver is removed or unloaded to avoid potential memory leak.
+The Device Tree was using invalid node names for the ACT8600 regulators.
+To be fair, it is not the original committer's fault, as the
+documentation did gives invalid names as well.
 
-In this case, iounmap(anatop_base) in line 427,433 are removed
-as manual release is not required.
+In theory, the fix should have been to modify the driver to accept the
+alternative names. However, even though the act8865 driver spits
+warnings, the kernel seemed to work fine with what is currently
+supported upstream. For that reason, I think it is okay to just update
+the DTS.
 
-Besides, referring to clk-imx8mq.c, check the return code of
-of_clk_add_hw_provider, if it returns negtive, print error info
-and unregister hws, which makes the program more robust.
+I removed the "regulator-name" too, since they really didn't bring any
+information. The node names are enough.
 
-Fixes: 9c140d992676 ("clk: imx: Add support for i.MX8MP clock driver")
-Signed-off-by: Yuxing Liu <lyx2022@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230503070607.2462-1-lyx2022@hust.edu.cn
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 73f2b940474d ("MIPS: CI20: DTS: Add I2C nodes")
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ arch/mips/boot/dts/ingenic/ci20.dts | 27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
-index 3253589851ffb..de7d2d2176bea 100644
---- a/drivers/clk/imx/clk-imx8mp.c
-+++ b/drivers/clk/imx/clk-imx8mp.c
-@@ -414,25 +414,22 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct device_node *np;
- 	void __iomem *anatop_base, *ccm_base;
-+	int err;
+diff --git a/arch/mips/boot/dts/ingenic/ci20.dts b/arch/mips/boot/dts/ingenic/ci20.dts
+index 239c4537484d0..2b1284c6c64a6 100644
+--- a/arch/mips/boot/dts/ingenic/ci20.dts
++++ b/arch/mips/boot/dts/ingenic/ci20.dts
+@@ -237,59 +237,49 @@ &i2c0 {
+ 	act8600: act8600@5a {
+ 		compatible = "active-semi,act8600";
+ 		reg = <0x5a>;
+-		status = "okay";
  
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mp-anatop");
--	anatop_base = of_iomap(np, 0);
-+	anatop_base = devm_of_iomap(dev, np, 0, NULL);
- 	of_node_put(np);
--	if (WARN_ON(!anatop_base))
--		return -ENOMEM;
-+	if (WARN_ON(IS_ERR(anatop_base)))
-+		return PTR_ERR(anatop_base);
- 
- 	np = dev->of_node;
- 	ccm_base = devm_platform_ioremap_resource(pdev, 0);
--	if (WARN_ON(IS_ERR(ccm_base))) {
--		iounmap(anatop_base);
-+	if (WARN_ON(IS_ERR(ccm_base)))
- 		return PTR_ERR(ccm_base);
--	}
- 
--	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws, IMX8MP_CLK_END), GFP_KERNEL);
--	if (WARN_ON(!clk_hw_data)) {
--		iounmap(anatop_base);
-+	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws, IMX8MP_CLK_END), GFP_KERNEL);
-+	if (WARN_ON(!clk_hw_data))
- 		return -ENOMEM;
--	}
- 
- 	clk_hw_data->num = IMX8MP_CLK_END;
- 	hws = clk_hw_data->hws;
-@@ -721,7 +718,12 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
- 
- 	imx_check_clk_hws(hws, IMX8MP_CLK_END);
- 
--	of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
-+	err = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, clk_hw_data);
-+	if (err < 0) {
-+		dev_err(dev, "failed to register hws for i.MX8MP\n");
-+		imx_unregister_hw_clocks(hws, IMX8MP_CLK_END);
-+		return err;
-+	}
- 
- 	imx_register_uart_clocks();
- 
+ 		regulators {
+-			vddcore: SUDCDC1 {
+-				regulator-name = "DCDC_REG1";
++			vddcore: DCDC1 {
+ 				regulator-min-microvolt = <1100000>;
+ 				regulator-max-microvolt = <1100000>;
+ 				regulator-always-on;
+ 			};
+-			vddmem: SUDCDC2 {
+-				regulator-name = "DCDC_REG2";
++			vddmem: DCDC2 {
+ 				regulator-min-microvolt = <1500000>;
+ 				regulator-max-microvolt = <1500000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_33: SUDCDC3 {
+-				regulator-name = "DCDC_REG3";
++			vcc_33: DCDC3 {
+ 				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_50: SUDCDC4 {
+-				regulator-name = "SUDCDC_REG4";
++			vcc_50: SUDCDC_REG4 {
+ 				regulator-min-microvolt = <5000000>;
+ 				regulator-max-microvolt = <5000000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_25: LDO_REG5 {
+-				regulator-name = "LDO_REG5";
++			vcc_25: LDO5 {
+ 				regulator-min-microvolt = <2500000>;
+ 				regulator-max-microvolt = <2500000>;
+ 				regulator-always-on;
+ 			};
+-			wifi_io: LDO_REG6 {
+-				regulator-name = "LDO_REG6";
++			wifi_io: LDO6 {
+ 				regulator-min-microvolt = <2500000>;
+ 				regulator-max-microvolt = <2500000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_28: LDO_REG7 {
+-				regulator-name = "LDO_REG7";
++			cim_io_28: LDO7 {
+ 				regulator-min-microvolt = <2800000>;
+ 				regulator-max-microvolt = <2800000>;
+ 				regulator-always-on;
+ 			};
+-			vcc_15: LDO_REG8 {
+-				regulator-name = "LDO_REG8";
++			cim_io_15: LDO8 {
+ 				regulator-min-microvolt = <1500000>;
+ 				regulator-max-microvolt = <1500000>;
+ 				regulator-always-on;
+ 			};
+ 			vrtc_18: LDO_REG9 {
+-				regulator-name = "LDO_REG9";
+ 				/* Despite the datasheet stating 3.3V
+ 				 * for REG9 and the driver expecting that,
+ 				 * REG9 outputs 1.8V.
+@@ -303,7 +293,6 @@ vrtc_18: LDO_REG9 {
+ 				regulator-always-on;
+ 			};
+ 			vcc_11: LDO_REG10 {
+-				regulator-name = "LDO_REG10";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <1200000>;
+ 				regulator-always-on;
 -- 
 2.39.2
 
