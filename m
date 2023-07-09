@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A885B522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E600C433C8;
-	Sun,  9 Jul 2023 11:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D886522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA17CC433C8;
+	Sun,  9 Jul 2023 11:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901571;
-	bh=IJusEHLCIZFQ1IRfMWu2dJPNMN75fxZh/dGrURmSSZo=;
+	s=korg; t=1688901574;
+	bh=+SoqVG6RoguNPN15+w6YkeW507traoDvh9eGkjN/N3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZxrX5hAjOeDDgkPUp7pvVgwQTusFEYZyVt14N2kUTQyA6pualF72pBC2+w+MuhhP
-	 XZGMbqDXlp4Kx9bz583ycFG+fvryGqvZDW8Hmv5f5vgqLBI/j1AfnFx1B31chIA3Mr
-	 /QtA+NDVjRR6GS9jyR4bh+xsUjvC9/CDckYW6qpk=
+	b=uWy5BO6EK4ypX0FHqu7YgI83n+O94H8O2mZ/5bSa6rzg9pXKFGSKBHc1HIeQFp1zi
+	 utEyQKEGJ1RtV6id5VxBzbruF3qxgYofCSf7CAyZ8C4rnGVfYZxolkt8Xvm3wiqEVl
+	 rxpqs3kJrqBFwdJ1ja9i1GypVzObj4CG5TAZbohY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Rob Landley <rob@landley.net>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 039/431] PM: domains: fix integer overflow issues in genpd_parse_state()
-Date: Sun,  9 Jul 2023 13:09:47 +0200
-Message-ID: <20230709111452.012215236@linuxfoundation.org>
+Subject: [PATCH 6.3 030/431] irqchip/jcore-aic: Fix missing allocation of IRQ descriptors
+Date: Sun,  9 Jul 2023 13:09:38 +0200
+Message-ID: <20230709111451.804813460@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,46 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 
-[ Upstream commit e5d1c8722083f0332dcd3c85fa1273d85fb6bed8 ]
+[ Upstream commit 4848229494a323eeaab62eee5574ef9f7de80374 ]
 
-Currently, while calculating residency and latency values, right
-operands may overflow if resulting values are big enough.
+The initialization function for the J-Core AIC aic_irq_of_init() is
+currently missing the call to irq_alloc_descs() which allocates and
+initializes all the IRQ descriptors. Add missing function call and
+return the error code from irq_alloc_descs() in case the allocation
+fails.
 
-To prevent this, albeit unlikely case, play it safe and convert
-right operands to left ones' type s64.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 30f604283e05 ("PM / Domains: Allow domain power states to be read from DT")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 981b58f66cfc ("irqchip/jcore-aic: Add J-Core AIC driver")
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Tested-by: Rob Landley <rob@landley.net>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230510163343.43090-1-glaubitz@physik.fu-berlin.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/irqchip/irq-jcore-aic.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index 32084e38b73d0..51b9d4eaab5ea 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2939,10 +2939,10 @@ static int genpd_parse_state(struct genpd_power_state *genpd_state,
+diff --git a/drivers/irqchip/irq-jcore-aic.c b/drivers/irqchip/irq-jcore-aic.c
+index 5f47d8ee4ae39..b9dcc8e78c750 100644
+--- a/drivers/irqchip/irq-jcore-aic.c
++++ b/drivers/irqchip/irq-jcore-aic.c
+@@ -68,6 +68,7 @@ static int __init aic_irq_of_init(struct device_node *node,
+ 	unsigned min_irq = JCORE_AIC2_MIN_HWIRQ;
+ 	unsigned dom_sz = JCORE_AIC_MAX_HWIRQ+1;
+ 	struct irq_domain *domain;
++	int ret;
  
- 	err = of_property_read_u32(state_node, "min-residency-us", &residency);
- 	if (!err)
--		genpd_state->residency_ns = 1000 * residency;
-+		genpd_state->residency_ns = 1000LL * residency;
+ 	pr_info("Initializing J-Core AIC\n");
  
--	genpd_state->power_on_latency_ns = 1000 * exit_latency;
--	genpd_state->power_off_latency_ns = 1000 * entry_latency;
-+	genpd_state->power_on_latency_ns = 1000LL * exit_latency;
-+	genpd_state->power_off_latency_ns = 1000LL * entry_latency;
- 	genpd_state->fwnode = &state_node->fwnode;
+@@ -100,6 +101,12 @@ static int __init aic_irq_of_init(struct device_node *node,
+ 	jcore_aic.irq_unmask = noop;
+ 	jcore_aic.name = "AIC";
  
- 	return 0;
++	ret = irq_alloc_descs(-1, min_irq, dom_sz - min_irq,
++			      of_node_to_nid(node));
++
++	if (ret < 0)
++		return ret;
++
+ 	domain = irq_domain_add_legacy(node, dom_sz - min_irq, min_irq, min_irq,
+ 				       &jcore_aic_irqdomain_ops,
+ 				       &jcore_aic);
 -- 
 2.39.2
 
