@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AABA522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:18:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A86C433C8;
-	Sun,  9 Jul 2023 11:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46553522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:18:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFDFC433C7;
+	Sun,  9 Jul 2023 11:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901535;
-	bh=AhE3nGaxByt1KVpOFJkLvGhoifcwsy+02hn0fzoxXqk=;
+	s=korg; t=1688901538;
+	bh=Nt+52grGNqASAjikAMK8wLfYfgdSwdoCioxdeUHqvas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OZxICKtp4ezbK4vD1H8Cst9Eq1K/trrteQTotU//D7w4HgQ04AC+SASK6mz6p+6eG
-	 iVtvt7LIpvFCPqIMZ5YQ3FZKMThl9e0JVqYg9aS4IAxuOxNlhluAu2zTH2sudDNKPq
-	 pVbOG1tQS0lZgd/JHPOC5r7IPXYpE6tT7qBViNYc=
+	b=hly4nCsoQ+e0/h56o9KzkvhQsLWkO21e18YEMRwl/641g7hkbIzAyb0xYH5Vr6BdF
+	 0h91HDCU9/gxCwd4ABscPFd7rLpNwH/G5YMtkxIZkdGAZSBNI4rrI3vNnv3QtMktzf
+	 8MF9a+uCY+poqVNQmU6+qBDWJmqGyHHXmbuWK+hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 054/431] thermal/drivers/qcom/tsens-v0_1: Add mdm9607 correction offsets
-Date: Sun,  9 Jul 2023 13:10:02 +0200
-Message-ID: <20230709111452.384156443@linuxfoundation.org>
+Subject: [PATCH 6.3 055/431] thermal/drivers/sun8i: Fix some error handling paths in sun8i_ths_probe()
+Date: Sun,  9 Jul 2023 13:10:03 +0200
+Message-ID: <20230709111452.409795036@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,131 +36,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit b6f739da0070c36655118618a173a59fa14c7adc ]
+[ Upstream commit 89382022b370dfd34eaae9c863baa123fcd4d132 ]
 
-According to the msm-3.18 vendor kernel from Qualcomm, mdm9607 needs
-"correction factors" to adjust for additional offsets observed after the
-factory calibration values in the fuses [1, 2].
+Should an error occur after calling sun8i_ths_resource_init() in the probe
+function, some resources need to be released, as already done in the
+.remove() function.
 
-The fixed offsets should be applied unless there is a special
-calibration mode value that indicates that no offsets are needed [3].
+Switch to the devm_clk_get_enabled() helper and add a new devm_action to
+turn sun8i_ths_resource_init() into a fully managed function.
 
-Note that the new calibration mode values are called differently in this
-patch compared to the vendor kernel:
-  - TSENS_TWO_POINT_CALIB_N_WA        -> ONE_PT_CALIB2_NO_OFFSET
-  - TSENS_TWO_POINT_CALIB_N_OFFSET_WA -> TWO_PT_CALIB_NO_OFFSET
-This is because close inspection of the calibration function [3] reveals
-that TSENS_TWO_POINT_CALIB_N_WA is actually a "one point" calibration
-because the if statements skip all "point2" related code for it.
+Move the place where reset_control_deassert() is called so that the
+recommended order of reset release/clock enable steps is kept.
+A64 manual states that:
 
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/d9d2db1b82bf3f72f5de0803d55e6849eb5b671e
-[2]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/commit/d75aef53a760e8ff7bac54049d00c8b2ee1b193e
-[3]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LE.UM.4.3.2.r1-04200-9x07/drivers/thermal/msm-tsens.c#L2987-3136
+	3.3.6.4. Gating and reset
 
-Fixes: a2149ab815fc ("thermal/drivers/qcom/tsens-v0_1: Add support for MDM9607")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+	Make sure that the reset signal has been released before the release of
+	module clock gating;
+
+This fixes the issue and removes some LoC at the same time.
+
+Fixes: dccc5c3b6f30 ("thermal/drivers/sun8i: Add thermal driver for H6/H5/H3/A64/A83T/R40")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Maxime Ripard <maxime@cerno.tech>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230508-msm8909-tsens-v5-3-5eb632235ba7@kernkonzept.com
+Link: https://lore.kernel.org/r/a8ae84bd2dc4b55fe428f8e20f31438bf8bb6762.1684089931.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/qcom/tsens-v0_1.c | 11 +++++++++++
- drivers/thermal/qcom/tsens.c      | 16 +++++++++++++++-
- drivers/thermal/qcom/tsens.h      |  4 ++++
- 3 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/thermal/sun8i_thermal.c | 55 +++++++++++----------------------
+ 1 file changed, 18 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
-index e89a0da4b4e14..e9ce7b62b3818 100644
---- a/drivers/thermal/qcom/tsens-v0_1.c
-+++ b/drivers/thermal/qcom/tsens-v0_1.c
-@@ -277,6 +277,17 @@ static int __init init_9607(struct tsens_priv *priv)
- 	for (i = 0; i < priv->num_sensors; ++i)
- 		priv->sensor[i].slope = 3000;
- 
-+	priv->sensor[0].p1_calib_offset = 1;
-+	priv->sensor[0].p2_calib_offset = 1;
-+	priv->sensor[1].p1_calib_offset = -4;
-+	priv->sensor[1].p2_calib_offset = -2;
-+	priv->sensor[2].p1_calib_offset = 4;
-+	priv->sensor[2].p2_calib_offset = 8;
-+	priv->sensor[3].p1_calib_offset = -3;
-+	priv->sensor[3].p2_calib_offset = -5;
-+	priv->sensor[4].p1_calib_offset = -4;
-+	priv->sensor[4].p2_calib_offset = -4;
-+
- 	return init_common(priv);
+diff --git a/drivers/thermal/sun8i_thermal.c b/drivers/thermal/sun8i_thermal.c
+index 497beac63e5d9..31063e82afb69 100644
+--- a/drivers/thermal/sun8i_thermal.c
++++ b/drivers/thermal/sun8i_thermal.c
+@@ -319,6 +319,11 @@ static int sun8i_ths_calibrate(struct ths_device *tmdev)
+ 	return ret;
  }
  
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index eb33a8bf0488d..2c02c86db6527 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -134,10 +134,12 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
- 			p1[i] = p1[i] + (base1 << shift);
- 		break;
- 	case TWO_PT_CALIB:
-+	case TWO_PT_CALIB_NO_OFFSET:
- 		for (i = 0; i < priv->num_sensors; i++)
- 			p2[i] = (p2[i] + base2) << shift;
- 		fallthrough;
- 	case ONE_PT_CALIB2:
-+	case ONE_PT_CALIB2_NO_OFFSET:
- 		for (i = 0; i < priv->num_sensors; i++)
- 			p1[i] = (p1[i] + base1) << shift;
- 		break;
-@@ -149,6 +151,18 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
- 		}
++static void sun8i_ths_reset_control_assert(void *data)
++{
++	reset_control_assert(data);
++}
++
+ static int sun8i_ths_resource_init(struct ths_device *tmdev)
+ {
+ 	struct device *dev = tmdev->dev;
+@@ -339,47 +344,35 @@ static int sun8i_ths_resource_init(struct ths_device *tmdev)
+ 		if (IS_ERR(tmdev->reset))
+ 			return PTR_ERR(tmdev->reset);
+ 
+-		tmdev->bus_clk = devm_clk_get(&pdev->dev, "bus");
++		ret = reset_control_deassert(tmdev->reset);
++		if (ret)
++			return ret;
++
++		ret = devm_add_action_or_reset(dev, sun8i_ths_reset_control_assert,
++					       tmdev->reset);
++		if (ret)
++			return ret;
++
++		tmdev->bus_clk = devm_clk_get_enabled(&pdev->dev, "bus");
+ 		if (IS_ERR(tmdev->bus_clk))
+ 			return PTR_ERR(tmdev->bus_clk);
  	}
  
-+	/* Apply calibration offset workaround except for _NO_OFFSET modes */
-+	switch (mode) {
-+	case TWO_PT_CALIB:
-+		for (i = 0; i < priv->num_sensors; i++)
-+			p2[i] += priv->sensor[i].p2_calib_offset;
-+		fallthrough;
-+	case ONE_PT_CALIB2:
-+		for (i = 0; i < priv->num_sensors; i++)
-+			p1[i] += priv->sensor[i].p1_calib_offset;
-+		break;
-+	}
-+
- 	return mode;
+ 	if (tmdev->chip->has_mod_clk) {
+-		tmdev->mod_clk = devm_clk_get(&pdev->dev, "mod");
++		tmdev->mod_clk = devm_clk_get_enabled(&pdev->dev, "mod");
+ 		if (IS_ERR(tmdev->mod_clk))
+ 			return PTR_ERR(tmdev->mod_clk);
+ 	}
+ 
+-	ret = reset_control_deassert(tmdev->reset);
+-	if (ret)
+-		return ret;
+-
+-	ret = clk_prepare_enable(tmdev->bus_clk);
+-	if (ret)
+-		goto assert_reset;
+-
+ 	ret = clk_set_rate(tmdev->mod_clk, 24000000);
+ 	if (ret)
+-		goto bus_disable;
+-
+-	ret = clk_prepare_enable(tmdev->mod_clk);
+-	if (ret)
+-		goto bus_disable;
++		return ret;
+ 
+ 	ret = sun8i_ths_calibrate(tmdev);
+ 	if (ret)
+-		goto mod_disable;
++		return ret;
+ 
+ 	return 0;
+-
+-mod_disable:
+-	clk_disable_unprepare(tmdev->mod_clk);
+-bus_disable:
+-	clk_disable_unprepare(tmdev->bus_clk);
+-assert_reset:
+-	reset_control_assert(tmdev->reset);
+-
+-	return ret;
  }
  
-@@ -254,7 +268,7 @@ void compute_intercept_slope(struct tsens_priv *priv, u32 *p1,
+ static int sun8i_h3_thermal_init(struct ths_device *tmdev)
+@@ -530,17 +523,6 @@ static int sun8i_ths_probe(struct platform_device *pdev)
+ 	return 0;
+ }
  
- 		if (!priv->sensor[i].slope)
- 			priv->sensor[i].slope = SLOPE_DEFAULT;
--		if (mode == TWO_PT_CALIB) {
-+		if (mode == TWO_PT_CALIB || mode == TWO_PT_CALIB_NO_OFFSET) {
- 			/*
- 			 * slope (m) = adc_code2 - adc_code1 (y2 - y1)/
- 			 *	temp_120_degc - temp_30_degc (x2 - x1)
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index 433eba370998c..1cd8f4fe0971f 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -10,6 +10,8 @@
- #define ONE_PT_CALIB		0x1
- #define ONE_PT_CALIB2		0x2
- #define TWO_PT_CALIB		0x3
-+#define ONE_PT_CALIB2_NO_OFFSET	0x6
-+#define TWO_PT_CALIB_NO_OFFSET	0x7
- #define CAL_DEGC_PT1		30
- #define CAL_DEGC_PT2		120
- #define SLOPE_FACTOR		1000
-@@ -57,6 +59,8 @@ struct tsens_sensor {
- 	unsigned int			hw_id;
- 	int				slope;
- 	u32				status;
-+	int				p1_calib_offset;
-+	int				p2_calib_offset;
- };
+-static int sun8i_ths_remove(struct platform_device *pdev)
+-{
+-	struct ths_device *tmdev = platform_get_drvdata(pdev);
+-
+-	clk_disable_unprepare(tmdev->mod_clk);
+-	clk_disable_unprepare(tmdev->bus_clk);
+-	reset_control_assert(tmdev->reset);
+-
+-	return 0;
+-}
+-
+ static const struct ths_thermal_chip sun8i_a83t_ths = {
+ 	.sensor_num = 3,
+ 	.scale = 705,
+@@ -642,7 +624,6 @@ MODULE_DEVICE_TABLE(of, of_ths_match);
  
- /**
+ static struct platform_driver ths_driver = {
+ 	.probe = sun8i_ths_probe,
+-	.remove = sun8i_ths_remove,
+ 	.driver = {
+ 		.name = "sun8i-thermal",
+ 		.of_match_table = of_ths_match,
 -- 
 2.39.2
 
