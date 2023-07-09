@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04E05388
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31FFEC433C7;
-	Sun,  9 Jul 2023 11:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA8120EB
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:20:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E886AC433C9;
+	Sun,  9 Jul 2023 11:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901647;
-	bh=VHsxXXCr2Qjp99LS03mMQsWyWU8tiXQthxzWivfPO1o=;
+	s=korg; t=1688901650;
+	bh=+JsoD3/Ew/MrNiybiQTDdd2DhUln0RvweiKORh5LQ/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KUiuTtpnHQZVGW7pRaO/s9kWLtL5Wr380VaO4Dj3sQu07QOr5cR80ft/p+c+Prmzg
-	 Aq7QNg90C2uMHaPD0J8R+9x4OgA2GStiSAo6NZ4jLnIPeegbi6baSoYf0baxbnncbd
-	 4UOfKnLxYkFYoc7nm3ZDIHxBM2G450BRJZvKCp0I=
+	b=PLPHxW2qpnsAwu65VL5mpHHIAKpYyHW5KLJQ2tNf5Np6vwrI0Ls9+xIBrHCInEgSV
+	 mkFhfg+x681uzI6KzcUAB7YzTr0gHFcWLxi8QtSuEKN5fsNw9W/DqDm0t6AR9qkIWp
+	 xLUO7vcIPNvlvd7hVtW/3uB/FpLl/W7gxtEpWoTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Michael Kelley <mikelley@microsoft.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 067/431] x86/xen: Set MTRR state when running as Xen PV initial domain
-Date: Sun,  9 Jul 2023 13:10:15 +0200
-Message-ID: <20230709111452.719067559@linuxfoundation.org>
+Subject: [PATCH 6.3 068/431] kselftest: vDSO: Fix accumulation of uninitialized ret when CLOCK_REALTIME is undefined
+Date: Sun,  9 Jul 2023 13:10:16 +0200
+Message-ID: <20230709111452.743532942@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,121 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit a153f254e5cdf8fa3a1df90a6ffed3063fede154 ]
+[ Upstream commit 375b9ff53cb6f9c042817b75f2be0a650626dc4f ]
 
-When running as Xen PV initial domain (aka dom0), MTRRs are disabled
-by the hypervisor, but the system should nevertheless use correct
-cache memory types. This has always kind of worked, as disabled MTRRs
-resulted in disabled PAT, too, so that the kernel avoided code paths
-resulting in inconsistencies. This bypassed all of the sanity checks
-the kernel is doing with enabled MTRRs in order to avoid memory
-mappings with conflicting memory types.
+In the unlikely case that CLOCK_REALTIME is not defined, variable ret is
+not initialized and further accumulation of return values to ret can leave
+ret in an undefined state. Fix this by initialized ret to zero and changing
+the assignment of ret to an accumulation for the CLOCK_REALTIME case.
 
-This has been changed recently, leading to PAT being accepted to be
-enabled, while MTRRs stayed disabled. The result is that
-mtrr_type_lookup() no longer is accepting all memory type requests,
-but started to return WB even if UC- was requested. This led to
-driver failures during initialization of some devices.
-
-In reality MTRRs are still in effect, but they are under complete
-control of the Xen hypervisor. It is possible, however, to retrieve
-the MTRR settings from the hypervisor.
-
-In order to fix those problems, overwrite the MTRR state via
-mtrr_overwrite_state() with the MTRR data from the hypervisor, if the
-system is running as a Xen dom0.
-
-Fixes: 72cbc8f04fe2 ("x86/PAT: Have pat_enabled() properly reflect state when running on Xen")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Tested-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20230502120931.20719-6-jgross@suse.com
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Fixes: 03f55c7952c9 ("kselftest: Extend vDSO selftest to clock_getres")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/enlighten_pv.c | 52 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+ tools/testing/selftests/vDSO/vdso_test_clock_getres.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
-index 093b78c8bbec0..8732b85d56505 100644
---- a/arch/x86/xen/enlighten_pv.c
-+++ b/arch/x86/xen/enlighten_pv.c
-@@ -68,6 +68,7 @@
- #include <asm/reboot.h>
- #include <asm/hypervisor.h>
- #include <asm/mach_traps.h>
-+#include <asm/mtrr.h>
- #include <asm/mwait.h>
- #include <asm/pci_x86.h>
- #include <asm/cpu.h>
-@@ -119,6 +120,54 @@ static int __init parse_xen_msr_safe(char *str)
- }
- early_param("xen_msr_safe", parse_xen_msr_safe);
+diff --git a/tools/testing/selftests/vDSO/vdso_test_clock_getres.c b/tools/testing/selftests/vDSO/vdso_test_clock_getres.c
+index 15dcee16ff726..38d46a8bf7cba 100644
+--- a/tools/testing/selftests/vDSO/vdso_test_clock_getres.c
++++ b/tools/testing/selftests/vDSO/vdso_test_clock_getres.c
+@@ -84,12 +84,12 @@ static inline int vdso_test_clock(unsigned int clock_id)
  
-+/* Get MTRR settings from Xen and put them into mtrr_state. */
-+static void __init xen_set_mtrr_data(void)
-+{
-+#ifdef CONFIG_MTRR
-+	struct xen_platform_op op = {
-+		.cmd = XENPF_read_memtype,
-+		.interface_version = XENPF_INTERFACE_VERSION,
-+	};
-+	unsigned int reg;
-+	unsigned long mask;
-+	uint32_t eax, width;
-+	static struct mtrr_var_range var[MTRR_MAX_VAR_RANGES] __initdata;
-+
-+	/* Get physical address width (only 64-bit cpus supported). */
-+	width = 36;
-+	eax = cpuid_eax(0x80000000);
-+	if ((eax >> 16) == 0x8000 && eax >= 0x80000008) {
-+		eax = cpuid_eax(0x80000008);
-+		width = eax & 0xff;
-+	}
-+
-+	for (reg = 0; reg < MTRR_MAX_VAR_RANGES; reg++) {
-+		op.u.read_memtype.reg = reg;
-+		if (HYPERVISOR_platform_op(&op))
-+			break;
-+
-+		/*
-+		 * Only called in dom0, which has all RAM PFNs mapped at
-+		 * RAM MFNs, and all PCI space etc. is identity mapped.
-+		 * This means we can treat MFN == PFN regarding MTRR settings.
-+		 */
-+		var[reg].base_lo = op.u.read_memtype.type;
-+		var[reg].base_lo |= op.u.read_memtype.mfn << PAGE_SHIFT;
-+		var[reg].base_hi = op.u.read_memtype.mfn >> (32 - PAGE_SHIFT);
-+		mask = ~((op.u.read_memtype.nr_mfns << PAGE_SHIFT) - 1);
-+		mask &= (1UL << width) - 1;
-+		if (mask)
-+			mask |= MTRR_PHYSMASK_V;
-+		var[reg].mask_lo = mask;
-+		var[reg].mask_hi = mask >> 32;
-+	}
-+
-+	/* Only overwrite MTRR state if any MTRR could be got from Xen. */
-+	if (reg)
-+		mtrr_overwrite_state(var, reg, MTRR_TYPE_UNCACHABLE);
-+#endif
-+}
-+
- static void __init xen_pv_init_platform(void)
+ int main(int argc, char **argv)
  {
- 	/* PV guests can't operate virtio devices without grants. */
-@@ -135,6 +184,9 @@ static void __init xen_pv_init_platform(void)
+-	int ret;
++	int ret = 0;
  
- 	/* pvclock is in shared info area */
- 	xen_init_time_ops();
-+
-+	if (xen_initial_domain())
-+		xen_set_mtrr_data();
- }
+ #if _POSIX_TIMERS > 0
  
- static void __init xen_pv_guest_late_init(void)
+ #ifdef CLOCK_REALTIME
+-	ret = vdso_test_clock(CLOCK_REALTIME);
++	ret += vdso_test_clock(CLOCK_REALTIME);
+ #endif
+ 
+ #ifdef CLOCK_BOOTTIME
 -- 
 2.39.2
 
