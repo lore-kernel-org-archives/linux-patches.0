@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061CB522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76ED5C433C8;
-	Sun,  9 Jul 2023 11:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46B9522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:25:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3509BC433C8;
+	Sun,  9 Jul 2023 11:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901947;
-	bh=ZWjhlKlGVrYku7+M5gP6mticYYdSfWzpvWrGJI0QSfY=;
+	s=korg; t=1688901950;
+	bh=xNCwMWciGskOXqgafz38fG8flMZa59fR/gSEK5tPP4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ms2uQz67F+HRw5C1/8TogodbA/ojub875ocUlenJ60dto3veffdekPnnPj7xVi/wo
-	 2DldZZEgkku991kzxtABby8HggR0WQtUU9bgRhWgOEK+9DCnGTbm1SvoJqriNjHZIh
-	 HYZoFK9kCr6z0z9pEvEbADL55xbn6MpJN1fJX8NE=
+	b=wfL+EGOs+urd1qm80zI3gCEZ1f+vjO52EoXh12hGYr37Lup5JULsYrxya1NM9Gn5Q
+	 zcXqnuq7Ee0jQvhUB62lWJvhapOOxqlM/j0yOMWcxJ9VfRUM54QDDyZ1t/eYv74BLb
+	 1uHeRTZ5ArHNJJjsG+W4yWDXcvMikavYO2JjDxOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
 	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 201/431] RDMA/bnxt_re: Disable/kill tasklet only if it is enabled
-Date: Sun,  9 Jul 2023 13:12:29 +0200
-Message-ID: <20230709111455.883342853@linuxfoundation.org>
+Subject: [PATCH 6.3 202/431] RDMA/bnxt_re: Fix to remove unnecessary return labels
+Date: Sun,  9 Jul 2023 13:12:30 +0200
+Message-ID: <20230709111455.905683870@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,148 +38,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit ab112ee7899d6171da5acd77a7ed7ae103f488de ]
+[ Upstream commit 9b3ee47796f529e5bc31a355d6cb756d68a7079a ]
 
-When the ulp hook to start the IRQ fails because the rings are not
-available, tasklets are not enabled. In this case when the driver is
-unloaded, driver calls CREQ tasklet_kill. This causes an indefinite hang
-as the tasklet is not enabled.
-
-Driver shouldn't call tasklet_kill if it is not enabled. So using the
-creq->requested and nq->requested flags to identify if both tasklets/irqs
-are registered. Checking this flag while scheduling the tasklet from
-ISR. Also, added a cleanup for disabling tasklet, in case request_irq
-fails during start_irq.
-
-Check for return value for bnxt_qplib_rcfw_start_irq and in case the
-bnxt_qplib_rcfw_start_irq fails, return bnxt_re_start_irq without
-attempting to start NQ IRQs.
+If there is no cleanup needed then just return directly.  This cleans up
+the code and improve readability.
 
 Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Link: https://lore.kernel.org/r/1684478897-12247-2-git-send-email-selvin.xavier@broadcom.com
+Link: https://lore.kernel.org/r/1684478897-12247-3-git-send-email-selvin.xavier@broadcom.com
+Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
 Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/main.c       | 12 +++++++++---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c   | 16 ++++++++++------
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 14 +++++++++-----
- 3 files changed, 28 insertions(+), 14 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/main.c b/drivers/infiniband/hw/bnxt_re/main.c
-index 85e36c9f8e797..a9cc65614a9ee 100644
---- a/drivers/infiniband/hw/bnxt_re/main.c
-+++ b/drivers/infiniband/hw/bnxt_re/main.c
-@@ -283,15 +283,21 @@ static void bnxt_re_start_irq(void *handle, struct bnxt_msix_entry *ent)
- 	for (indx = 0; indx < rdev->num_msix; indx++)
- 		rdev->en_dev->msix_entries[indx].vector = ent[indx].vector;
- 
--	bnxt_qplib_rcfw_start_irq(rcfw, msix_ent[BNXT_RE_AEQ_IDX].vector,
--				  false);
-+	rc = bnxt_qplib_rcfw_start_irq(rcfw, msix_ent[BNXT_RE_AEQ_IDX].vector,
-+				       false);
-+	if (rc) {
-+		ibdev_warn(&rdev->ibdev, "Failed to reinit CREQ\n");
-+		return;
-+	}
- 	for (indx = BNXT_RE_NQ_IDX ; indx < rdev->num_msix; indx++) {
- 		nq = &rdev->nq[indx - 1];
- 		rc = bnxt_qplib_nq_start_irq(nq, indx - 1,
- 					     msix_ent[indx].vector, false);
--		if (rc)
-+		if (rc) {
- 			ibdev_warn(&rdev->ibdev, "Failed to reinit NQ index %d\n",
- 				   indx - 1);
-+			return;
-+		}
- 	}
- }
- 
 diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index ab2cc1c67f70b..a143bd3580a27 100644
+index a143bd3580a27..4abe1f59b3689 100644
 --- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
 +++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -405,6 +405,9 @@ static irqreturn_t bnxt_qplib_nq_irq(int irq, void *dev_instance)
+@@ -1605,7 +1605,7 @@ static int bnxt_qplib_put_inline(struct bnxt_qplib_qp *qp,
+ 		il_src = (void *)wqe->sg_list[indx].addr;
+ 		t_len += len;
+ 		if (t_len > qp->max_inline_data)
+-			goto bad;
++			return -ENOMEM;
+ 		while (len) {
+ 			if (pull_dst) {
+ 				pull_dst = false;
+@@ -1629,8 +1629,6 @@ static int bnxt_qplib_put_inline(struct bnxt_qplib_qp *qp,
+ 	}
  
- void bnxt_qplib_nq_stop_irq(struct bnxt_qplib_nq *nq, bool kill)
- {
-+	if (!nq->requested)
-+		return;
-+
- 	tasklet_disable(&nq->nq_tasklet);
- 	/* Mask h/w interrupt */
- 	bnxt_qplib_ring_nq_db(&nq->nq_db.dbinfo, nq->res->cctx, false);
-@@ -412,11 +415,10 @@ void bnxt_qplib_nq_stop_irq(struct bnxt_qplib_nq *nq, bool kill)
- 	synchronize_irq(nq->msix_vec);
- 	if (kill)
- 		tasklet_kill(&nq->nq_tasklet);
--	if (nq->requested) {
--		irq_set_affinity_hint(nq->msix_vec, NULL);
--		free_irq(nq->msix_vec, nq);
--		nq->requested = false;
--	}
-+
-+	irq_set_affinity_hint(nq->msix_vec, NULL);
-+	free_irq(nq->msix_vec, nq);
-+	nq->requested = false;
+ 	return t_len;
+-bad:
+-	return -ENOMEM;
  }
  
- void bnxt_qplib_disable_nq(struct bnxt_qplib_nq *nq)
-@@ -455,8 +457,10 @@ int bnxt_qplib_nq_start_irq(struct bnxt_qplib_nq *nq, int nq_indx,
+ static u32 bnxt_qplib_put_sges(struct bnxt_qplib_hwq *hwq,
+@@ -2060,7 +2058,7 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
+ 	hwq_attr.sginfo = &cq->sg_info;
+ 	rc = bnxt_qplib_alloc_init_hwq(&cq->hwq, &hwq_attr);
+ 	if (rc)
+-		goto exit;
++		return rc;
  
- 	snprintf(nq->name, sizeof(nq->name), "bnxt_qplib_nq-%d", nq_indx);
- 	rc = request_irq(nq->msix_vec, bnxt_qplib_nq_irq, 0, nq->name, nq);
--	if (rc)
-+	if (rc) {
-+		tasklet_disable(&nq->nq_tasklet);
- 		return rc;
-+	}
+ 	RCFW_CMD_PREP(req, CREATE_CQ, cmd_flags);
  
- 	cpumask_clear(&nq->mask);
- 	cpumask_set_cpu(nq_indx, &nq->mask);
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index 061b2895dd9b5..e28f0eb5b55d4 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -635,6 +635,10 @@ void bnxt_qplib_rcfw_stop_irq(struct bnxt_qplib_rcfw *rcfw, bool kill)
- 	struct bnxt_qplib_creq_ctx *creq;
+@@ -2101,7 +2099,6 @@ int bnxt_qplib_create_cq(struct bnxt_qplib_res *res, struct bnxt_qplib_cq *cq)
  
- 	creq = &rcfw->creq;
-+
-+	if (!creq->requested)
-+		return;
-+
- 	tasklet_disable(&creq->creq_tasklet);
- 	/* Mask h/w interrupts */
- 	bnxt_qplib_ring_nq_db(&creq->creq_db.dbinfo, rcfw->res->cctx, false);
-@@ -643,10 +647,8 @@ void bnxt_qplib_rcfw_stop_irq(struct bnxt_qplib_rcfw *rcfw, bool kill)
- 	if (kill)
- 		tasklet_kill(&creq->creq_tasklet);
- 
--	if (creq->requested) {
--		free_irq(creq->msix_vec, rcfw);
--		creq->requested = false;
--	}
-+	free_irq(creq->msix_vec, rcfw);
-+	creq->requested = false;
+ fail:
+ 	bnxt_qplib_free_hwq(res, &cq->hwq);
+-exit:
+ 	return rc;
  }
  
- void bnxt_qplib_disable_rcfw_channel(struct bnxt_qplib_rcfw *rcfw)
-@@ -692,8 +694,10 @@ int bnxt_qplib_rcfw_start_irq(struct bnxt_qplib_rcfw *rcfw, int msix_vector,
- 		tasklet_enable(&creq->creq_tasklet);
- 	rc = request_irq(creq->msix_vec, bnxt_qplib_creq_irq, 0,
- 			 "bnxt_qplib_creq", rcfw);
--	if (rc)
-+	if (rc) {
-+		tasklet_disable(&creq->creq_tasklet);
- 		return rc;
-+	}
- 	creq->requested = true;
- 
- 	bnxt_qplib_ring_nq_db(&creq->creq_db.dbinfo, rcfw->res->cctx, true);
 -- 
 2.39.2
 
