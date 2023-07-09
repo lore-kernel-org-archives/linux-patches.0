@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C451522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44B8C433C7;
-	Sun,  9 Jul 2023 11:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24315522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B13C433C8;
+	Sun,  9 Jul 2023 11:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902478;
-	bh=6aA1n+PwuxV39DByCKJBPk8LXhWjNlUOrF11QTq1ccc=;
+	s=korg; t=1688902481;
+	bh=i9LECIh5CVhsss1UjbHzW4V7tGoX1gPjVLyuYAmd2j8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9QjYuRImIsH2aglpfcd1iYm+za8O+tZynyfkz+vzYgS6BuqPaCd30MT2acc2+SF3
-	 xHuGXTw+a9sdhgmknxwONo0oF3OE3fiUr+nxWr7HNHyxPngQrWcSaBLwE642kEvQOE
-	 DMUjms8S4LbBtsYavdMPxBAvC3ookhSSDPJuynTU=
+	b=tF+FAYlZ5iBH9Tnxot2eGiq6OhKWZVLAsjjlw02n31Ae9xSlOXIw2KMItUbCGA3jA
+	 EtKrLAnFia2/NOVurUk/lIQqxA0Seb7q9baM0UQr0a86PcovvmV1HJ2O7q1aLnMxNV
+	 JZqhbgU0hDG59uKeJifiQcT9pHkjd1w37VO6dtc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 390/431] riscv: uprobes: Restore thread.bad_cause
-Date: Sun,  9 Jul 2023 13:15:38 +0200
-Message-ID: <20230709111500.315241124@linuxfoundation.org>
+Subject: [PATCH 6.3 364/431] platform/x86: think-lmi: mutex protection around multiple WMI calls
+Date: Sun,  9 Jul 2023 13:15:12 +0200
+Message-ID: <20230709111459.702952694@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,45 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 58b1294dd1d65bb62f08dddbf418f954210c2057 ]
+[ Upstream commit c41e0121a1221894a1a9c4666156db9e1def4d6c ]
 
-thread.bad_cause is saved in arch_uprobe_pre_xol(), it should be restored
-in arch_uprobe_{post,abort}_xol() accordingly, otherwise the save operation
-is meaningless, this change is similar with x86 and powerpc.
+When an attribute is being changed if the Admin account is enabled, or if
+a password is being updated then multiple WMI calls are needed.
+Add mutex protection to ensure no race conditions are introduced.
 
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Fixes: 74784081aac8 ("riscv: Add uprobes supported")
-Link: https://lore.kernel.org/r/1682214146-3756-1-git-send-email-yangtiezhu@loongson.cn
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: b49f72e7f96d ("platform/x86: think-lmi: Certificate authentication support")
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230601200552.4396-1-mpearson-lenovo@squebb.ca
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/probes/uprobes.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/think-lmi.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/riscv/kernel/probes/uprobes.c b/arch/riscv/kernel/probes/uprobes.c
-index c976a21cd4bd5..194f166b2cc40 100644
---- a/arch/riscv/kernel/probes/uprobes.c
-+++ b/arch/riscv/kernel/probes/uprobes.c
-@@ -67,6 +67,7 @@ int arch_uprobe_post_xol(struct arch_uprobe *auprobe, struct pt_regs *regs)
- 	struct uprobe_task *utask = current->utask;
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index 78dc82bda4dde..7a145f578ef49 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -14,6 +14,7 @@
+ #include <linux/acpi.h>
+ #include <linux/errno.h>
+ #include <linux/fs.h>
++#include <linux/mutex.h>
+ #include <linux/string.h>
+ #include <linux/types.h>
+ #include <linux/dmi.h>
+@@ -195,6 +196,7 @@ static const char * const level_options[] = {
+ };
+ static struct think_lmi tlmi_priv;
+ static struct class *fw_attr_class;
++static DEFINE_MUTEX(tlmi_mutex);
  
- 	WARN_ON_ONCE(current->thread.bad_cause != UPROBE_TRAP_NR);
-+	current->thread.bad_cause = utask->autask.saved_cause;
+ /* ------ Utility functions ------------*/
+ /* Strip out CR if one is present */
+@@ -437,6 +439,9 @@ static ssize_t new_password_store(struct kobject *kobj,
+ 	/* Strip out CR if one is present, setting password won't work if it is present */
+ 	strip_cr(new_pwd);
  
- 	instruction_pointer_set(regs, utask->vaddr + auprobe->insn_size);
++	/* Use lock in case multiple WMI operations needed */
++	mutex_lock(&tlmi_mutex);
++
+ 	pwdlen = strlen(new_pwd);
+ 	/* pwdlen == 0 is allowed to clear the password */
+ 	if (pwdlen && ((pwdlen < setting->minlen) || (pwdlen > setting->maxlen))) {
+@@ -493,6 +498,7 @@ static ssize_t new_password_store(struct kobject *kobj,
+ 		kfree(auth_str);
+ 	}
+ out:
++	mutex_unlock(&tlmi_mutex);
+ 	kfree(new_pwd);
+ 	return ret ?: count;
+ }
+@@ -982,6 +988,9 @@ static ssize_t current_value_store(struct kobject *kobj,
+ 	/* Strip out CR if one is present */
+ 	strip_cr(new_setting);
  
-@@ -102,6 +103,7 @@ void arch_uprobe_abort_xol(struct arch_uprobe *auprobe, struct pt_regs *regs)
- {
- 	struct uprobe_task *utask = current->utask;
- 
-+	current->thread.bad_cause = utask->autask.saved_cause;
- 	/*
- 	 * Task has received a fatal signal, so reset back to probbed
- 	 * address.
++	/* Use lock in case multiple WMI operations needed */
++	mutex_lock(&tlmi_mutex);
++
+ 	/* Check if certificate authentication is enabled and active */
+ 	if (tlmi_priv.certificate_support && tlmi_priv.pwd_admin->cert_installed) {
+ 		if (!tlmi_priv.pwd_admin->signature || !tlmi_priv.pwd_admin->save_signature) {
+@@ -1040,6 +1049,7 @@ static ssize_t current_value_store(struct kobject *kobj,
+ 		kobject_uevent(&tlmi_priv.class_dev->kobj, KOBJ_CHANGE);
+ 	}
+ out:
++	mutex_unlock(&tlmi_mutex);
+ 	kfree(auth_str);
+ 	kfree(set_str);
+ 	kfree(new_setting);
 -- 
 2.39.2
 
