@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1033522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:24:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216DFC433C7;
-	Sun,  9 Jul 2023 11:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F65522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:24:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF16C433C8;
+	Sun,  9 Jul 2023 11:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901861;
-	bh=t3WZ2nlXdqrxcTfuiMgYoBnV6hMiprrjpi6Hc7fnAC4=;
+	s=korg; t=1688901864;
+	bh=JVxLT2CdNFYtjwq2SYOvpsoCzexWg/AVF5Tjmmpx96k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VffTu4vAQq+4wAOydOx7o0QnOydarson8+dNVC1ZacTaoee0YEwjc0HxnYL61GQPK
-	 PRVKiinFGqTFiMR442eQfSGfiUT+4Fh7xsBwS2MdPupxXr4N0nXLKrx6g4GJIZgFbV
-	 led6/T9TacTRZNv9WyXMmSFteZzbBjXTuyoBKxkA=
+	b=QSPsc+fFMiJtt1iB7kTOuygUs5t4qD87r0PnokRHesTB7082Ff/ZVgCWsbKB1DHgE
+	 ps8uLI+d7OxVkmQutstIcZnvpJVwhXJWEHb/FwfZXW9l5/gIYOnKnyMbqhux44uXfK
+	 wIHmDcc1NiEyAvp6sDH7B3e2puBJ/pJYCzMQXX7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 170/431] drm/bridge: tc358768: fix PLL target frequency
-Date: Sun,  9 Jul 2023 13:11:58 +0200
-Message-ID: <20230709111455.158048981@linuxfoundation.org>
+Subject: [PATCH 6.3 171/431] drm/bridge: tc358768: fix TCLK_ZEROCNT computation
+Date: Sun,  9 Jul 2023 13:11:59 +0200
+Message-ID: <20230709111455.180635366@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -37,69 +37,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit ffd2e4bbea626d565b9817312b0fcfb382fecb88 ]
+[ Upstream commit f9cf811374f42fca31ac34aaf59ee2ae72b89879 ]
 
-Correctly compute the PLL target frequency, the current formula works
-correctly only when the input bus width is 24bit, actually to properly
-compute the PLL target frequency what is relevant is the bits-per-pixel
-on the DSI link.
+Correct computation of TCLK_ZEROCNT register.
 
-No regression expected since the DSI format is currently hard-coded as
-MIPI_DSI_FMT_RGB888.
+This register must be set to a value that ensure that
+(TCLK-PREPARECNT + TCLK-ZERO) > 300ns
+
+with the actual value of (TCLK-PREPARECNT + TCLK-ZERO) being
+
+(1 to 2) + (TCLK_ZEROCNT + 1)) x HSByteClkCycle + (PHY output delay)
+
+with PHY output delay being about
+
+(2 to 3) x MIPIBitClk cycle in the BitClk conversion.
 
 Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
 Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 Reviewed-by: Robert Foss <rfoss@kernel.org>
 Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index e9e3f9e02bba0..dba1bf3912f1e 100644
+index dba1bf3912f1e..aff400c360662 100644
 --- a/drivers/gpu/drm/bridge/tc358768.c
 +++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -146,6 +146,7 @@ struct tc358768_priv {
+@@ -742,10 +742,10 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
  
- 	u32 pd_lines; /* number of Parallel Port Input Data Lines */
- 	u32 dsi_lanes; /* number of DSI Lanes */
-+	u32 dsi_bpp; /* number of Bits Per Pixel over DSI */
- 
- 	/* Parameters for PLL programming */
- 	u32 fbd;	/* PLL feedback divider */
-@@ -284,12 +285,12 @@ static void tc358768_hw_disable(struct tc358768_priv *priv)
- 
- static u32 tc358768_pll_to_pclk(struct tc358768_priv *priv, u32 pll_clk)
- {
--	return (u32)div_u64((u64)pll_clk * priv->dsi_lanes, priv->pd_lines);
-+	return (u32)div_u64((u64)pll_clk * priv->dsi_lanes, priv->dsi_bpp);
- }
- 
- static u32 tc358768_pclk_to_pll(struct tc358768_priv *priv, u32 pclk)
- {
--	return (u32)div_u64((u64)pclk * priv->pd_lines, priv->dsi_lanes);
-+	return (u32)div_u64((u64)pclk * priv->dsi_bpp, priv->dsi_lanes);
- }
- 
- static int tc358768_calc_pll(struct tc358768_priv *priv,
-@@ -426,6 +427,7 @@ static int tc358768_dsi_host_attach(struct mipi_dsi_host *host,
- 	priv->output.panel = panel;
- 
- 	priv->dsi_lanes = dev->lanes;
-+	priv->dsi_bpp = mipi_dsi_pixel_format_to_bpp(dev->format);
- 
- 	/* get input ep (port0/endpoint0) */
- 	ret = -EINVAL;
-@@ -437,7 +439,7 @@ static int tc358768_dsi_host_attach(struct mipi_dsi_host *host,
- 	}
- 
- 	if (ret)
--		priv->pd_lines = mipi_dsi_pixel_format_to_bpp(dev->format);
-+		priv->pd_lines = priv->dsi_bpp;
- 
- 	drm_bridge_add(&priv->bridge);
+ 	/* 38ns < TCLK_PREPARE < 95ns */
+ 	val = tc358768_ns_to_cnt(65, dsibclk_nsk) - 1;
+-	/* TCLK_PREPARE > 300ns */
+-	val2 = tc358768_ns_to_cnt(300 + tc358768_to_ns(3 * ui_nsk),
+-				  dsibclk_nsk);
+-	val |= (val2 - tc358768_to_ns(phy_delay_nsk - dsibclk_nsk)) << 8;
++	/* TCLK_PREPARE + TCLK_ZERO > 300ns */
++	val2 = tc358768_ns_to_cnt(300 - tc358768_to_ns(2 * ui_nsk),
++				  dsibclk_nsk) - 2;
++	val |= val2 << 8;
+ 	dev_dbg(priv->dev, "TCLK_HEADERCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_TCLK_HEADERCNT, val);
  
 -- 
 2.39.2
