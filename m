@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF305522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:27:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CDEC433C8;
-	Sun,  9 Jul 2023 11:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652C8522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:27:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC43EC433C7;
+	Sun,  9 Jul 2023 11:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902072;
-	bh=d8KXM6zNOLHtK2ETmfcjl5NQUFFmS8LgIItknJ0VzVE=;
+	s=korg; t=1688902075;
+	bh=SLJ9YWUEtU+W/QUmpPNUZ+LwYHmU9pFdsIE9St+jDcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnqBQEdgzB/HlV1DpdBpj3nL269r9pglhB6C9zajUMc/k3KHNdP3BxWuuUBTPdECr
-	 THH5ztBac1SH8t230xEuEQaj/RfvjNwLnH5IkLjd75kFLGdUuaqsAEzJ8wN5dSumP7
-	 XqAbZszf+tPUAVtamx+EJJjrSapdZ0objhT1gRiU=
+	b=o9SpmrQ8RuZVyy+z0VMPf8t4+JLR47mrBS8Rik07IWV8mlGl76fYpVHJkyxDsix/1
+	 aTkFvHvCVJvPd1NHvxDEfD08Z1r9BuVd3pO/PBIrZLcYfWMlBZFOKSqbb7RmEDJeXz
+	 kmqnqnDBiGyZz7A121zqVoeaFHutuDkrEyTXD+dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 217/431] ARM: omap1: Remove reliance on GPIO numbers from PalmTE
-Date: Sun,  9 Jul 2023 13:12:45 +0200
-Message-ID: <20230709111456.249575063@linuxfoundation.org>
+Subject: [PATCH 6.3 218/431] ARM: omap1: Remove reliance on GPIO numbers from SX1
+Date: Sun,  9 Jul 2023 13:12:46 +0200
+Message-ID: <20230709111456.272764621@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,7 +36,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 4c40db6249ff1da335b276bdd6c3c3462efbc2ab ]
+[ Upstream commit 480c82daa3e41873421dc2c9e2918ad7e21d7a0b ]
 
 It appears this happens because the OMAP driver now
 allocates GPIO numbers dynamically, so all that is
@@ -51,95 +51,79 @@ Fixes: 92bf78b33b0b ("gpio: omap: use dynamic allocation of base")
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap1/board-palmte.c | 51 ++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 20 deletions(-)
+ arch/arm/mach-omap1/board-sx1.c | 40 +++++++++++++++++++++++++++------
+ 1 file changed, 33 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm/mach-omap1/board-palmte.c b/arch/arm/mach-omap1/board-palmte.c
-index f79c497f04d57..49b7757cb2fd3 100644
---- a/arch/arm/mach-omap1/board-palmte.c
-+++ b/arch/arm/mach-omap1/board-palmte.c
-@@ -13,7 +13,8 @@
-  *
-  * Copyright (c) 2006 Andrzej Zaborowski  <balrog@zabor.org>
-  */
+diff --git a/arch/arm/mach-omap1/board-sx1.c b/arch/arm/mach-omap1/board-sx1.c
+index 0c0cdd5e77c79..a13c630be7b7f 100644
+--- a/arch/arm/mach-omap1/board-sx1.c
++++ b/arch/arm/mach-omap1/board-sx1.c
+@@ -11,7 +11,8 @@
+ * Maintainters : Vladimir Ananiev (aka Vovan888), Sergge
+ *		oslik.ru
+ */
 -#include <linux/gpio.h>
 +#include <linux/gpio/machine.h>
 +#include <linux/gpio/consumer.h>
  #include <linux/kernel.h>
  #include <linux/init.h>
  #include <linux/input.h>
-@@ -187,23 +188,6 @@ static struct spi_board_info palmte_spi_info[] __initdata = {
- 	},
- };
+@@ -304,8 +305,23 @@ static struct platform_device *sx1_devices[] __initdata = {
  
--static void __init palmte_misc_gpio_setup(void)
--{
--	/* Set TSC2102 PINTDAV pin as input (used by TSC2102 driver) */
--	if (gpio_request(PALMTE_PINTDAV_GPIO, "TSC2102 PINTDAV") < 0) {
--		printk(KERN_ERR "Could not reserve PINTDAV GPIO!\n");
--		return;
--	}
--	gpio_direction_input(PALMTE_PINTDAV_GPIO);
--
--	/* Set USB-or-DC-IN pin as input (unused) */
--	if (gpio_request(PALMTE_USB_OR_DC_GPIO, "USB/DC-IN") < 0) {
--		printk(KERN_ERR "Could not reserve cable signal GPIO!\n");
--		return;
--	}
--	gpio_direction_input(PALMTE_USB_OR_DC_GPIO);
--}
--
- #if IS_ENABLED(CONFIG_MMC_OMAP)
+ /*-----------------------------------------*/
  
- static struct omap_mmc_platform_data _palmte_mmc_config = {
-@@ -231,8 +215,23 @@ static void palmte_mmc_init(void)
- 
- #endif /* CONFIG_MMC_OMAP */
- 
-+static struct gpiod_lookup_table palmte_irq_gpio_table = {
++static struct gpiod_lookup_table sx1_gpio_table = {
 +	.dev_id = NULL,
 +	.table = {
-+		/* GPIO used for TSC2102 PINTDAV IRQ */
-+		GPIO_LOOKUP("gpio-0-15", PALMTE_PINTDAV_GPIO, "tsc2102_irq",
++		GPIO_LOOKUP("gpio-0-15", 1, "irda_off",
 +			    GPIO_ACTIVE_HIGH),
-+		/* GPIO used for USB or DC input detection */
-+		GPIO_LOOKUP("gpio-0-15", PALMTE_USB_OR_DC_GPIO, "usb_dc_irq",
++		GPIO_LOOKUP("gpio-0-15", 11, "switch",
++			    GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("gpio-0-15", 15, "usb_on",
 +			    GPIO_ACTIVE_HIGH),
 +		{ }
 +	},
 +};
 +
- static void __init omap_palmte_init(void)
+ static void __init omap_sx1_init(void)
  {
 +	struct gpio_desc *d;
 +
  	/* mux pins for uarts */
  	omap_cfg_reg(UART1_TX);
  	omap_cfg_reg(UART1_RTS);
-@@ -243,9 +242,21 @@ static void __init omap_palmte_init(void)
+@@ -320,15 +336,25 @@ static void __init omap_sx1_init(void)
+ 	omap_register_i2c_bus(1, 100, NULL, 0);
+ 	omap1_usb_init(&sx1_usb_config);
+ 	sx1_mmc_init();
++	gpiod_add_lookup_table(&sx1_gpio_table);
  
- 	platform_add_devices(palmte_devices, ARRAY_SIZE(palmte_devices));
- 
--	palmte_spi_info[0].irq = gpio_to_irq(PALMTE_PINTDAV_GPIO);
-+	gpiod_add_lookup_table(&palmte_irq_gpio_table);
-+	d = gpiod_get(NULL, "tsc2102_irq", GPIOD_IN);
+ 	/* turn on USB power */
+ 	/* sx1_setusbpower(1); can't do it here because i2c is not ready */
+-	gpio_request(1, "A_IRDA_OFF");
+-	gpio_request(11, "A_SWITCH");
+-	gpio_request(15, "A_USB_ON");
+-	gpio_direction_output(1, 1);	/*A_IRDA_OFF = 1 */
+-	gpio_direction_output(11, 0);	/*A_SWITCH = 0 */
+-	gpio_direction_output(15, 0);	/*A_USB_ON = 0 */
++	d = gpiod_get(NULL, "irda_off", GPIOD_OUT_HIGH);
 +	if (IS_ERR(d))
-+		pr_err("Unable to get TSC2102 IRQ GPIO descriptor\n");
-+	else
-+		palmte_spi_info[0].irq = gpiod_to_irq(d);
- 	spi_register_board_info(palmte_spi_info, ARRAY_SIZE(palmte_spi_info));
--	palmte_misc_gpio_setup();
-+
-+	/* We are getting this just to set it up as input */
-+	d = gpiod_get(NULL, "usb_dc_irq", GPIOD_IN);
-+	if (IS_ERR(d))
-+		pr_err("Unable to get USB/DC IRQ GPIO descriptor\n");
++		pr_err("Unable to get IRDA OFF GPIO descriptor\n");
 +	else
 +		gpiod_put(d);
-+
- 	omap_serial_init();
- 	omap1_usb_init(&palmte_usb_config);
- 	omap_register_i2c_bus(1, 100, NULL, 0);
++	d = gpiod_get(NULL, "switch", GPIOD_OUT_LOW);
++	if (IS_ERR(d))
++		pr_err("Unable to get SWITCH GPIO descriptor\n");
++	else
++		gpiod_put(d);
++	d = gpiod_get(NULL, "usb_on", GPIOD_OUT_LOW);
++	if (IS_ERR(d))
++		pr_err("Unable to get USB ON GPIO descriptor\n");
++	else
++		gpiod_put(d);
+ 
+ 	omapfb_set_lcd_config(&sx1_lcd_config);
+ }
 -- 
 2.39.2
 
