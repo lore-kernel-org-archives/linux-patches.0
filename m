@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD32C522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:32:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB02C433C8;
-	Sun,  9 Jul 2023 11:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D46522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:32:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211D5C433C8;
+	Sun,  9 Jul 2023 11:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902358;
-	bh=nJB6YtktESUQfGuLoaTC2UwrfGeGo1r0x0uFdXuRyR0=;
+	s=korg; t=1688902361;
+	bh=8kCy9KQudzzjGwmru/cwlp2BmA4T/EgVCl1ng4BQcWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0io+F24Ew1LHwOTG7a2NK9hAVUt4LLPJK/s4OfZGLwb6a7wyLMr0eDB/7TE3fXLb
-	 H8G4vFrMuELy/atK7/ACrqmp0KRKMEOEF51h6DlSYJyGiWex71VapOfj2ZAIYsktm6
-	 9t9eee12OJ38f/o4/JhgvwLipcg0n7X/BnZJh1Gs=
+	b=Mg8lpBt88ikD2rnEAYPg/R8BvKfRlT2fbycqpS4v69gYF5TyS9/iE1DkNfQ0R5pnz
+	 b1ZFtbw7YQkBQTOX6WdoQDzEhrQro5y4QiehJgoXtCL2yZUWWJyQkKmLw52AiJ9ctp
+	 Wo6vI1Z3z/uV7zeO2lyO7cWq9cfJosAdZidB4u5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 348/431] pinctrl: at91: Dont mix non-devm calls with devm ones
-Date: Sun,  9 Jul 2023 13:14:56 +0200
-Message-ID: <20230709111459.324594517@linuxfoundation.org>
+Subject: [PATCH 6.3 349/431] pinctrl: at91: Use dev_err_probe() instead of custom messaging
+Date: Sun,  9 Jul 2023 13:14:57 +0200
+Message-ID: <20230709111459.349493446@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -38,66 +38,168 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 415a099ea55ae716b69beefdcaa654b96087c016 ]
+[ Upstream commit 472bbb2cfd6384fe4c4b956af2170c1225fe2a92 ]
 
-Replace devm_clk_get() by devm_clk_get_enabled() and drop
-unneeded code pieces. This will make sure we keep the ordering
-of the resource allocation correct.
+The custom message has no value except printing the error code,
+the same does dev_err_probe(). Let's use the latter for the sake
+of unification.
+
+Note that some APIs already have messaging in them and some simply
+do not require the current noise.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
 Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230215134242.37618-3-andriy.shevchenko@linux.intel.com
+Link: https://lore.kernel.org/r/20230215134242.37618-5-andriy.shevchenko@linux.intel.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Stable-dep-of: 35216718c9ac ("pinctrl: at91: fix a couple NULL vs IS_ERR() checks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-at91.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ drivers/pinctrl/pinctrl-at91.c | 64 +++++++++++-----------------------
+ 1 file changed, 21 insertions(+), 43 deletions(-)
 
 diff --git a/drivers/pinctrl/pinctrl-at91.c b/drivers/pinctrl/pinctrl-at91.c
-index 9fa68ca4a412d..f0b139a1cc3ed 100644
+index f0b139a1cc3ed..e3664aafccef9 100644
 --- a/drivers/pinctrl/pinctrl-at91.c
 +++ b/drivers/pinctrl/pinctrl-at91.c
-@@ -1849,19 +1849,13 @@ static int at91_gpio_probe(struct platform_device *pdev)
- 	at91_chip->pioc_virq = irq;
+@@ -1294,10 +1294,11 @@ static const struct of_device_id at91_pinctrl_of_match[] = {
+ static int at91_pinctrl_probe_dt(struct platform_device *pdev,
+ 				 struct at91_pinctrl *info)
+ {
++	struct device *dev = &pdev->dev;
+ 	int ret = 0;
+ 	int i, j, ngpio_chips_enabled = 0;
+ 	uint32_t *tmp;
+-	struct device_node *np = pdev->dev.of_node;
++	struct device_node *np = dev->of_node;
+ 	struct device_node *child;
+ 
+ 	if (!np)
+@@ -1361,9 +1362,8 @@ static int at91_pinctrl_probe_dt(struct platform_device *pdev,
+ 			continue;
+ 		ret = at91_pinctrl_parse_functions(child, info, i++);
+ 		if (ret) {
+-			dev_err(&pdev->dev, "failed to parse function\n");
+ 			of_node_put(child);
+-			return ret;
++			return dev_err_probe(dev, ret, "failed to parse function\n");
+ 		}
+ 	}
+ 
+@@ -1416,11 +1416,8 @@ static int at91_pinctrl_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, info);
+ 	info->pctl = devm_pinctrl_register(&pdev->dev, &at91_pinctrl_desc,
+ 					   info);
+-
+-	if (IS_ERR(info->pctl)) {
+-		dev_err(&pdev->dev, "could not register AT91 pinctrl driver\n");
+-		return PTR_ERR(info->pctl);
+-	}
++	if (IS_ERR(info->pctl))
++		return dev_err_probe(dev, PTR_ERR(info->pctl), "could not register AT91 pinctrl driver\n");
+ 
+ 	/* We will handle a range of GPIO pins */
+ 	for (i = 0; i < gpio_banks; i++)
+@@ -1821,28 +1818,20 @@ static int at91_gpio_probe(struct platform_device *pdev)
+ 	char **names;
+ 
+ 	BUG_ON(alias_idx >= ARRAY_SIZE(gpio_chips));
+-	if (gpio_chips[alias_idx]) {
+-		ret = -EBUSY;
+-		goto err;
+-	}
++	if (gpio_chips[alias_idx])
++		return dev_err_probe(dev, -EBUSY, "%d slot is occupied.\n", alias_idx);
+ 
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0) {
+-		ret = irq;
+-		goto err;
+-	}
++	if (irq < 0)
++		return irq;
+ 
+ 	at91_chip = devm_kzalloc(&pdev->dev, sizeof(*at91_chip), GFP_KERNEL);
+-	if (!at91_chip) {
+-		ret = -ENOMEM;
+-		goto err;
+-	}
++	if (!at91_chip)
++		return -ENOMEM;
+ 
+ 	at91_chip->regbase = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(at91_chip->regbase)) {
+-		ret = PTR_ERR(at91_chip->regbase);
+-		goto err;
+-	}
++	if (IS_ERR(at91_chip->regbase))
++		return PTR_ERR(at91_chip->regbase);
+ 
+ 	at91_chip->ops = (const struct at91_pinctrl_mux_ops *)
+ 		of_match_device(at91_gpio_of_match, &pdev->dev)->data;
+@@ -1850,11 +1839,8 @@ static int at91_gpio_probe(struct platform_device *pdev)
  	at91_chip->pioc_idx = alias_idx;
  
--	at91_chip->clock = devm_clk_get(&pdev->dev, NULL);
-+	at91_chip->clock = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(at91_chip->clock)) {
- 		dev_err(&pdev->dev, "failed to get clock, ignoring.\n");
- 		ret = PTR_ERR(at91_chip->clock);
- 		goto err;
- 	}
- 
--	ret = clk_prepare_enable(at91_chip->clock);
--	if (ret) {
--		dev_err(&pdev->dev, "failed to prepare and enable clock, ignoring.\n");
--		goto clk_enable_err;
+ 	at91_chip->clock = devm_clk_get_enabled(&pdev->dev, NULL);
+-	if (IS_ERR(at91_chip->clock)) {
+-		dev_err(&pdev->dev, "failed to get clock, ignoring.\n");
+-		ret = PTR_ERR(at91_chip->clock);
+-		goto err;
 -	}
--
++	if (IS_ERR(at91_chip->clock))
++		return dev_err_probe(dev, PTR_ERR(at91_chip->clock), "failed to get clock, ignoring.\n");
+ 
  	at91_chip->chip = at91_gpio_template;
  	at91_chip->id = alias_idx;
+@@ -1867,17 +1853,15 @@ static int at91_gpio_probe(struct platform_device *pdev)
  
-@@ -1882,7 +1876,7 @@ static int at91_gpio_probe(struct platform_device *pdev)
- 	names = devm_kasprintf_strarray(dev, "pio", chip->ngpio);
- 	if (!names) {
- 		ret = -ENOMEM;
--		goto clk_enable_err;
-+		goto err;
+ 	if (!of_property_read_u32(np, "#gpio-lines", &ngpio)) {
+ 		if (ngpio >= MAX_NB_GPIO_PER_BANK)
+-			pr_err("at91_gpio.%d, gpio-nb >= %d failback to %d\n",
+-			       alias_idx, MAX_NB_GPIO_PER_BANK, MAX_NB_GPIO_PER_BANK);
++			dev_err(dev, "at91_gpio.%d, gpio-nb >= %d failback to %d\n",
++				alias_idx, MAX_NB_GPIO_PER_BANK, MAX_NB_GPIO_PER_BANK);
+ 		else
+ 			chip->ngpio = ngpio;
  	}
  
+ 	names = devm_kasprintf_strarray(dev, "pio", chip->ngpio);
+-	if (!names) {
+-		ret = -ENOMEM;
+-		goto err;
+-	}
++	if (!names)
++		return -ENOMEM;
+ 
  	for (i = 0; i < chip->ngpio; i++)
-@@ -1915,8 +1909,6 @@ static int at91_gpio_probe(struct platform_device *pdev)
+ 		strreplace(names[i], '-', alias_idx + 'A');
+@@ -1894,11 +1878,11 @@ static int at91_gpio_probe(struct platform_device *pdev)
+ 
+ 	ret = at91_gpio_of_irq_setup(pdev, at91_chip);
+ 	if (ret)
+-		goto gpiochip_add_err;
++		return ret;
+ 
+ 	ret = gpiochip_add_data(chip, at91_chip);
+ 	if (ret)
+-		goto gpiochip_add_err;
++		return ret;
+ 
+ 	gpio_chips[alias_idx] = at91_chip;
+ 	platform_set_drvdata(pdev, at91_chip);
+@@ -1907,12 +1891,6 @@ static int at91_gpio_probe(struct platform_device *pdev)
+ 	dev_info(&pdev->dev, "at address %p\n", at91_chip->regbase);
+ 
  	return 0;
+-
+-gpiochip_add_err:
+-err:
+-	dev_err(&pdev->dev, "Failure %i for GPIO %i\n", ret, alias_idx);
+-
+-	return ret;
+ }
  
- gpiochip_add_err:
--clk_enable_err:
--	clk_disable_unprepare(at91_chip->clock);
- err:
- 	dev_err(&pdev->dev, "Failure %i for GPIO %i\n", ret, alias_idx);
- 
+ static const struct dev_pm_ops at91_gpio_pm_ops = {
 -- 
 2.39.2
 
