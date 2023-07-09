@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50503522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:22:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C753EC433C8;
-	Sun,  9 Jul 2023 11:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCDB522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:22:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8E3C433C7;
+	Sun,  9 Jul 2023 11:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901737;
-	bh=L1wG8uioyVxzXj0n1Y+MpZAjL8kx8ct24mWV5y3cwns=;
+	s=korg; t=1688901740;
+	bh=YLtuFiXczejt71s4hv91zMwl5I7hIsP9cwNdR5sn5ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=etDRO+Yl8VQzCOzzUr5vw/mvBm72tI9KGTdZlTzIwIsMyMylaBH2RB46gtLlXGi8A
-	 IuPRWV4gmxxmmxbIOhyitqUuLbtwTU9IKkgGhVgETSL7L3RHXGgjrRo0lfZbWnKkdi
-	 /G+DlAzTjX6x7byU+0auWBteUrDkCZsNbYHphRt8=
+	b=wmd7S4IZ0veIV4fqUAirkKSfJZig+s0GsraRrPGvvOAORkL48MTVjZeiHRAJN3bAw
+	 TKcjMBsf5exrbRCG7t3l86q4ndTsy4Mj1OJsAWRBkicAKGVxRIr/6O+I87wY0/wLb2
+	 Z3Jk91iZo0yfca5fNiG2/G9WP4QsAcY+4MpgK/CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Song Liu <song@kernel.org>,
+	Jiri Olsa <olsajiri@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 100/431] wifi: ray_cs: Fix an error handling path in ray_probe()
-Date: Sun,  9 Jul 2023 13:10:48 +0200
-Message-ID: <20230709111453.503596871@linuxfoundation.org>
+Subject: [PATCH 6.3 091/431] bpf: Remove bpf trampoline selector
+Date: Sun,  9 Jul 2023 13:10:39 +0200
+Message-ID: <20230709111453.286801273@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,67 +37,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 4f8d66a9fb2edcd05c1e563456a55a08910bfb37 ]
+[ Upstream commit 47e79cbeea4b3891ad476047f4c68543eb51c8e0 ]
 
-Should ray_config() fail, some resources need to be released as already
-done in the remove function.
+After commit e21aa341785c ("bpf: Fix fexit trampoline."), the selector is only
+used to indicate how many times the bpf trampoline image are updated and been
+displayed in the trampoline ksym name. After the trampoline is freed, the
+selector will start from 0 again. So the selector is a useless value to the
+user. We can remove it.
 
-While at it, remove a useless and erroneous comment. The probe is
-ray_probe(), not ray_attach().
+If the user want to check whether the bpf trampoline image has been updated
+or not, the user can compare the address. Each time the trampoline image is
+updated, the address will change consequently. Jiri also pointed out another
+issue that perf is still using the old name "bpf_trampoline_%lu", so this
+change can fix the issue in perf.
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/8c544d18084f8b37dd108e844f7e79e85ff708ff.1684570373.git.christophe.jaillet@wanadoo.fr
+Fixes: e21aa341785c ("bpf: Fix fexit trampoline.")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Song Liu <song@kernel.org>
+Cc: Jiri Olsa <olsajiri@gmail.com>
+Link: https://lore.kernel.org/bpf/ZFvOOlrmHiY9AgXE@krava
+Link: https://lore.kernel.org/bpf/20230515130849.57502-3-laoar.shao@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ray_cs.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ include/linux/bpf.h     |  1 -
+ kernel/bpf/trampoline.c | 11 ++++-------
+ 2 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ray_cs.c b/drivers/net/wireless/ray_cs.c
-index 1f57a0055bbd8..38782d4c4694a 100644
---- a/drivers/net/wireless/ray_cs.c
-+++ b/drivers/net/wireless/ray_cs.c
-@@ -270,13 +270,14 @@ static int ray_probe(struct pcmcia_device *p_dev)
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 5bd6ac04773aa..18397e54bac18 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1082,7 +1082,6 @@ struct bpf_trampoline {
+ 	int progs_cnt[BPF_TRAMP_MAX];
+ 	/* Executable image of trampoline */
+ 	struct bpf_tramp_image *cur_image;
+-	u64 selector;
+ 	struct module *mod;
+ };
+ 
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index d0ed7d6f5eec5..213d9b3cb06ad 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -372,7 +372,7 @@ static void bpf_tramp_image_put(struct bpf_tramp_image *im)
+ 	call_rcu_tasks_trace(&im->rcu, __bpf_tramp_image_put_rcu_tasks);
+ }
+ 
+-static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key, u32 idx)
++static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key)
  {
- 	ray_dev_t *local;
- 	struct net_device *dev;
-+	int ret;
+ 	struct bpf_tramp_image *im;
+ 	struct bpf_ksym *ksym;
+@@ -399,7 +399,7 @@ static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key, u32 idx)
  
- 	dev_dbg(&p_dev->dev, "ray_attach()\n");
+ 	ksym = &im->ksym;
+ 	INIT_LIST_HEAD_RCU(&ksym->lnode);
+-	snprintf(ksym->name, KSYM_NAME_LEN, "bpf_trampoline_%llu_%u", key, idx);
++	snprintf(ksym->name, KSYM_NAME_LEN, "bpf_trampoline_%llu", key);
+ 	bpf_image_ksym_add(image, ksym);
+ 	return im;
  
- 	/* Allocate space for private device-specific data */
- 	dev = alloc_etherdev(sizeof(ray_dev_t));
- 	if (!dev)
--		goto fail_alloc_dev;
-+		return -ENOMEM;
+@@ -429,11 +429,10 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 		err = unregister_fentry(tr, tr->cur_image->image);
+ 		bpf_tramp_image_put(tr->cur_image);
+ 		tr->cur_image = NULL;
+-		tr->selector = 0;
+ 		goto out;
+ 	}
  
- 	local = netdev_priv(dev);
- 	local->finder = p_dev;
-@@ -313,11 +314,16 @@ static int ray_probe(struct pcmcia_device *p_dev)
- 	timer_setup(&local->timer, NULL, 0);
+-	im = bpf_tramp_image_alloc(tr->key, tr->selector);
++	im = bpf_tramp_image_alloc(tr->key);
+ 	if (IS_ERR(im)) {
+ 		err = PTR_ERR(im);
+ 		goto out;
+@@ -470,8 +469,7 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
  
- 	this_device = p_dev;
--	return ray_config(p_dev);
-+	ret = ray_config(p_dev);
-+	if (ret)
-+		goto err_free_dev;
-+
-+	return 0;
+ 	set_memory_rox((long)im->image, 1);
  
--fail_alloc_dev:
--	return -ENOMEM;
--} /* ray_attach */
-+err_free_dev:
-+	free_netdev(dev);
-+	return ret;
-+}
- 
- static void ray_detach(struct pcmcia_device *link)
- {
+-	WARN_ON(tr->cur_image && tr->selector == 0);
+-	WARN_ON(!tr->cur_image && tr->selector);
++	WARN_ON(tr->cur_image && total == 0);
+ 	if (tr->cur_image)
+ 		/* progs already running at this address */
+ 		err = modify_fentry(tr, tr->cur_image->image, im->image, lock_direct_mutex);
+@@ -501,7 +499,6 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 	if (tr->cur_image)
+ 		bpf_tramp_image_put(tr->cur_image);
+ 	tr->cur_image = im;
+-	tr->selector++;
+ out:
+ 	/* If any error happens, restore previous flags */
+ 	if (err)
 -- 
 2.39.2
 
