@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A75522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:22:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E74C433C8;
-	Sun,  9 Jul 2023 11:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50503522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:22:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C753EC433C8;
+	Sun,  9 Jul 2023 11:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901734;
-	bh=A/MalDIto8ZcXAGagnesCMHnrzFeETs0MT/EXgKM7Jo=;
+	s=korg; t=1688901737;
+	bh=L1wG8uioyVxzXj0n1Y+MpZAjL8kx8ct24mWV5y3cwns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imzKSSYge6wQwm3AazM4p2LiE9jZcKWcTmtWIrVT4nmjZifTtodMZIvdGksqWh1mV
-	 xJe9jSMGAhTgF71XuUhtOvRnRd2SCzOyFS16pMMe1WzOyhSrtrLKcl+/tY2MJJoyD2
-	 gwvnwGLbPolsi8KixW+Seg8G2y2ESAxOxY8yMEFU=
+	b=etDRO+Yl8VQzCOzzUr5vw/mvBm72tI9KGTdZlTzIwIsMyMylaBH2RB46gtLlXGi8A
+	 IuPRWV4gmxxmmxbIOhyitqUuLbtwTU9IKkgGhVgETSL7L3RHXGgjrRo0lfZbWnKkdi
+	 /G+DlAzTjX6x7byU+0auWBteUrDkCZsNbYHphRt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <simon.horman@corigine.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 099/431] wifi: wl3501_cs: Fix an error handling path in wl3501_probe()
-Date: Sun,  9 Jul 2023 13:10:47 +0200
-Message-ID: <20230709111453.480691661@linuxfoundation.org>
+Subject: [PATCH 6.3 100/431] wifi: ray_cs: Fix an error handling path in ray_probe()
+Date: Sun,  9 Jul 2023 13:10:48 +0200
+Message-ID: <20230709111453.503596871@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -38,62 +38,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 391af06a02e7642039ac5f6c4b2c034ab0992b5d ]
+[ Upstream commit 4f8d66a9fb2edcd05c1e563456a55a08910bfb37 ]
 
-Should wl3501_config() fail, some resources need to be released as already
+Should ray_config() fail, some resources need to be released as already
 done in the remove function.
+
+While at it, remove a useless and erroneous comment. The probe is
+ray_probe(), not ray_attach().
 
 Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/7cc9c9316489b7d69b36aeb0edd3123538500b41.1684569865.git.christophe.jaillet@wanadoo.fr
+Link: https://lore.kernel.org/r/8c544d18084f8b37dd108e844f7e79e85ff708ff.1684570373.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/wl3501_cs.c | 16 +++++++++++-----
+ drivers/net/wireless/ray_cs.c | 16 +++++++++++-----
  1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/wl3501_cs.c b/drivers/net/wireless/wl3501_cs.c
-index 7fb2f95134760..c45c4b7cbbaf1 100644
---- a/drivers/net/wireless/wl3501_cs.c
-+++ b/drivers/net/wireless/wl3501_cs.c
-@@ -1862,6 +1862,7 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
+diff --git a/drivers/net/wireless/ray_cs.c b/drivers/net/wireless/ray_cs.c
+index 1f57a0055bbd8..38782d4c4694a 100644
+--- a/drivers/net/wireless/ray_cs.c
++++ b/drivers/net/wireless/ray_cs.c
+@@ -270,13 +270,14 @@ static int ray_probe(struct pcmcia_device *p_dev)
  {
+ 	ray_dev_t *local;
  	struct net_device *dev;
- 	struct wl3501_card *this;
 +	int ret;
  
- 	/* The io structure describes IO port mapping */
- 	p_dev->resource[0]->end	= 16;
-@@ -1873,8 +1874,7 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
+ 	dev_dbg(&p_dev->dev, "ray_attach()\n");
  
- 	dev = alloc_etherdev(sizeof(struct wl3501_card));
+ 	/* Allocate space for private device-specific data */
+ 	dev = alloc_etherdev(sizeof(ray_dev_t));
  	if (!dev)
--		goto out_link;
--
+-		goto fail_alloc_dev;
 +		return -ENOMEM;
  
- 	dev->netdev_ops		= &wl3501_netdev_ops;
- 	dev->watchdog_timeo	= 5 * HZ;
-@@ -1887,9 +1887,15 @@ static int wl3501_probe(struct pcmcia_device *p_dev)
- 	netif_stop_queue(dev);
- 	p_dev->priv = dev;
+ 	local = netdev_priv(dev);
+ 	local->finder = p_dev;
+@@ -313,11 +314,16 @@ static int ray_probe(struct pcmcia_device *p_dev)
+ 	timer_setup(&local->timer, NULL, 0);
  
--	return wl3501_config(p_dev);
--out_link:
--	return -ENOMEM;
-+	ret = wl3501_config(p_dev);
+ 	this_device = p_dev;
+-	return ray_config(p_dev);
++	ret = ray_config(p_dev);
 +	if (ret)
-+		goto out_free_etherdev;
++		goto err_free_dev;
 +
 +	return 0;
-+
-+out_free_etherdev:
+ 
+-fail_alloc_dev:
+-	return -ENOMEM;
+-} /* ray_attach */
++err_free_dev:
 +	free_netdev(dev);
 +	return ret;
- }
++}
  
- static int wl3501_config(struct pcmcia_device *link)
+ static void ray_detach(struct pcmcia_device *link)
+ {
 -- 
 2.39.2
 
