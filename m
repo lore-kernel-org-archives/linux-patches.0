@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601BA522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69CEC433C7;
-	Sun,  9 Jul 2023 11:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFE3522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:19:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39A6C433C8;
+	Sun,  9 Jul 2023 11:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901549;
-	bh=O1ACnV1X/r0Nxp0Orfuu5zeLmaoej/ouymZxHTGecjk=;
+	s=korg; t=1688901552;
+	bh=4rTdc/T2DNXWxcPuwMno5T5ZJrQ9yC3prMiN+PNcexQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CgUhtI9KC/rMJD+EM2n35KPSVyZGYnOcJW8fehLOs7x8hx75aM/YMhCWHzZ9Mzql7
-	 kegxtnzJqpczAiTCfVK8HZ8MO3s+hXs54xcGg4IW/HSZyIY8mhSNzeXAsD/2wi+9Uk
-	 f59xnLrv6KELfCItK8NU3ffG9XtDu8l9hL22CTS8=
+	b=hCZDRx0Pr1XqX7qgxB6EDYjED7pzQIVjYczR8d48Xy9KrqmkzZN6GMRsLkpzt1YFj
+	 uWDKsoKF7OC04jm1+f4PTJ+sd5zYCzpmMWH/IvaWA68AZYtuidbyR2nePrByZBx4/y
+	 55Vt7rylFhi9yjLsrG/EFtuNycGkE7XicEfrJ6uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 059/431] rcu-tasks: Stop rcu_tasks_invoke_cbs() from using never-onlined CPUs
-Date: Sun,  9 Jul 2023 13:10:07 +0200
-Message-ID: <20230709111452.518174066@linuxfoundation.org>
+Subject: [PATCH 6.3 033/431] posix-timers: Prevent RT livelock in itimer_delete()
+Date: Sun,  9 Jul 2023 13:09:41 +0200
+Message-ID: <20230709111451.873736270@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -35,123 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 401b0de3ae4fa49d1014c8941e26d9a25f37e7cf ]
+[ Upstream commit 9d9e522010eb5685d8b53e8a24320653d9d4cbbf ]
 
-The rcu_tasks_invoke_cbs() function relies on queue_work_on() to silently
-fall back to WORK_CPU_UNBOUND when the specified CPU is offline.  However,
-the queue_work_on() function's silent fallback mechanism relies on that
-CPU having been online at some time in the past.  When queue_work_on()
-is passed a CPU that has never been online, workqueue lockups ensue,
-which can be bad for your kernel's general health and well-being.
+itimer_delete() has a retry loop when the timer is concurrently expired. On
+non-RT kernels this just spin-waits until the timer callback has completed,
+except for posix CPU timers which have HAVE_POSIX_CPU_TIMERS_TASK_WORK
+enabled.
 
-This commit therefore checks whether a given CPU has ever been online,
-and, if not substitutes WORK_CPU_UNBOUND in the subsequent call to
-queue_work_on().  Why not simply omit the queue_work_on() call entirely?
-Because this function is flooding callback-invocation notifications
-to all CPUs, and must deal with possibilities that include a sparse
-cpu_possible_mask.
+In that case and on RT kernels the existing task could live lock when
+preempting the task which does the timer delivery.
 
-This commit also moves the setting of the rcu_data structure's
-->beenonline field to rcu_cpu_starting(), which executes on the
-incoming CPU before that CPU has ever enabled interrupts.  This ensures
-that the required workqueues are present.  In addition, because the
-incoming CPU has not yet enabled its interrupts, there cannot yet have
-been any softirq handlers running on this CPU, which means that the
-WARN_ON_ONCE(!rdp->beenonline) within the RCU_SOFTIRQ handler cannot
-have triggered yet.
+Replace spin_unlock() with an invocation of timer_wait_running() to handle
+it the same way as the other retry loops in the posix timer code.
 
-Fixes: d363f833c6d88 ("rcu-tasks: Use workqueues for multiple rcu_tasks_invoke_cbs() invocations")
-Reported-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: ec8f954a40da ("posix-timers: Use a callback for cancel synchronization on PREEMPT_RT")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/87v8g7c50d.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcu.h   |  6 ++++++
- kernel/rcu/tasks.h |  7 +++++--
- kernel/rcu/tree.c  | 12 +++++++++++-
- 3 files changed, 22 insertions(+), 3 deletions(-)
+ kernel/time/posix-timers.c | 43 +++++++++++++++++++++++++++++++-------
+ 1 file changed, 35 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/rcu/rcu.h b/kernel/rcu/rcu.h
-index 115616ac3bfa6..2d7e85dbf6734 100644
---- a/kernel/rcu/rcu.h
-+++ b/kernel/rcu/rcu.h
-@@ -603,4 +603,10 @@ void show_rcu_tasks_trace_gp_kthread(void);
- static inline void show_rcu_tasks_trace_gp_kthread(void) {}
- #endif
- 
-+#ifdef CONFIG_TINY_RCU
-+static inline bool rcu_cpu_beenfullyonline(int cpu) { return true; }
-+#else
-+bool rcu_cpu_beenfullyonline(int cpu);
-+#endif
-+
- #endif /* __LINUX_RCU_H */
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index bfb5e1549f2b2..dfa6ff2eb32f2 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -455,6 +455,7 @@ static void rcu_tasks_invoke_cbs(struct rcu_tasks *rtp, struct rcu_tasks_percpu
- {
- 	int cpu;
- 	int cpunext;
-+	int cpuwq;
- 	unsigned long flags;
- 	int len;
- 	struct rcu_head *rhp;
-@@ -465,11 +466,13 @@ static void rcu_tasks_invoke_cbs(struct rcu_tasks *rtp, struct rcu_tasks_percpu
- 	cpunext = cpu * 2 + 1;
- 	if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
- 		rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
--		queue_work_on(cpunext, system_wq, &rtpcp_next->rtp_work);
-+		cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
-+		queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
- 		cpunext++;
- 		if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
- 			rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
--			queue_work_on(cpunext, system_wq, &rtpcp_next->rtp_work);
-+			cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
-+			queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
- 		}
- 	}
- 
-diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index 954a91fec912c..be490f55cb834 100644
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -4279,7 +4279,6 @@ int rcutree_prepare_cpu(unsigned int cpu)
- 	 */
- 	rnp = rdp->mynode;
- 	raw_spin_lock_rcu_node(rnp);		/* irqs already disabled. */
--	rdp->beenonline = true;	 /* We have now been online. */
- 	rdp->gp_seq = READ_ONCE(rnp->gp_seq);
- 	rdp->gp_seq_needed = rdp->gp_seq;
- 	rdp->cpu_no_qs.b.norm = true;
-@@ -4306,6 +4305,16 @@ static void rcutree_affinity_setting(unsigned int cpu, int outgoing)
- 	rcu_boost_kthread_setaffinity(rdp->mynode, outgoing);
+diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+index 808a247205a9a..ed3c4a9543982 100644
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -1037,27 +1037,52 @@ SYSCALL_DEFINE1(timer_delete, timer_t, timer_id)
  }
  
-+/*
-+ * Has the specified (known valid) CPU ever been fully online?
-+ */
-+bool rcu_cpu_beenfullyonline(int cpu)
-+{
-+	struct rcu_data *rdp = per_cpu_ptr(&rcu_data, cpu);
-+
-+	return smp_load_acquire(&rdp->beenonline);
-+}
-+
  /*
-  * Near the end of the CPU-online process.  Pretty much all services
-  * enabled, and the CPU is now very much alive.
-@@ -4409,6 +4418,7 @@ void rcu_cpu_starting(unsigned int cpu)
- 		raw_spin_unlock_rcu_node(rnp);
+- * return timer owned by the process, used by exit_itimers
++ * Delete a timer if it is armed, remove it from the hash and schedule it
++ * for RCU freeing.
+  */
+ static void itimer_delete(struct k_itimer *timer)
+ {
+-retry_delete:
+-	spin_lock_irq(&timer->it_lock);
++	unsigned long flags;
++
++	/*
++	 * irqsave is required to make timer_wait_running() work.
++	 */
++	spin_lock_irqsave(&timer->it_lock, flags);
+ 
++retry_delete:
++	/*
++	 * Even if the timer is not longer accessible from other tasks
++	 * it still might be armed and queued in the underlying timer
++	 * mechanism. Worse, that timer mechanism might run the expiry
++	 * function concurrently.
++	 */
+ 	if (timer_delete_hook(timer) == TIMER_RETRY) {
+-		spin_unlock_irq(&timer->it_lock);
++		/*
++		 * Timer is expired concurrently, prevent livelocks
++		 * and pointless spinning on RT.
++		 *
++		 * timer_wait_running() drops timer::it_lock, which opens
++		 * the possibility for another task to delete the timer.
++		 *
++		 * That's not possible here because this is invoked from
++		 * do_exit() only for the last thread of the thread group.
++		 * So no other task can access and delete that timer.
++		 */
++		if (WARN_ON_ONCE(timer_wait_running(timer, &flags) != timer))
++			return;
++
+ 		goto retry_delete;
  	}
- 	arch_spin_unlock(&rcu_state.ofl_lock);
-+	smp_store_release(&rdp->beenonline, true);
- 	smp_mb(); /* Ensure RCU read-side usage follows above initialization. */
+ 	list_del(&timer->list);
+ 
+-	spin_unlock_irq(&timer->it_lock);
++	spin_unlock_irqrestore(&timer->it_lock, flags);
+ 	release_posix_timer(timer, IT_ID_SET);
  }
  
+ /*
+- * This is called by do_exit or de_thread, only when nobody else can
+- * modify the signal->posix_timers list. Yet we need sighand->siglock
+- * to prevent the race with /proc/pid/timers.
++ * Invoked from do_exit() when the last thread of a thread group exits.
++ * At that point no other task can access the timers of the dying
++ * task anymore.
+  */
+ void exit_itimers(struct task_struct *tsk)
+ {
+@@ -1067,10 +1092,12 @@ void exit_itimers(struct task_struct *tsk)
+ 	if (list_empty(&tsk->signal->posix_timers))
+ 		return;
+ 
++	/* Protect against concurrent read via /proc/$PID/timers */
+ 	spin_lock_irq(&tsk->sighand->siglock);
+ 	list_replace_init(&tsk->signal->posix_timers, &timers);
+ 	spin_unlock_irq(&tsk->sighand->siglock);
+ 
++	/* The timers are not longer accessible via tsk::signal */
+ 	while (!list_empty(&timers)) {
+ 		tmr = list_first_entry(&timers, struct k_itimer, list);
+ 		itimer_delete(tmr);
 -- 
 2.39.2
 
