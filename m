@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8E2522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107FBC433C7;
-	Sun,  9 Jul 2023 11:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CCC522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE2BC433C7;
+	Sun,  9 Jul 2023 11:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902489;
-	bh=KxqU6Rcoj7pVw6ohZb4m4imvyjWUs5ekwVkk6S+qIbQ=;
+	s=korg; t=1688902492;
+	bh=VVh4nhVbkA3LNIZ+8jXpsyTeMDZ3FScErTp+UEIEdAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=niydz/Y04hFUws1Eej23vWuEb8T5yLktDv8GaxZvDbZDcPPwgn5ja0NHeQjn0Uv3o
-	 CrncJFre4c3rDPVDA887AQKFzcIRGwHZjiNti11R1tati8+CaEpfiGqlbwUYpaOaQD
-	 vdGcpEfkgAakV5AceUWAhl3qWBD4oldn+Oj+mNbQ=
+	b=eK7KqxMd20s+atYLLSDxFLKxoQo6BeYc/PcNCf6fLV2UEoZpybRnQspedH7w+DNeE
+	 974S1oUJYOx19bu8OdWkBBki2XHl/PIFKZE9C/RirETA+maILtJ8AbQlxD9EUIJO8z
+	 VwntnhYLX2F4nHcFzRzTIxZ1nG1zzzUMMaHXNyc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Wells Lu <wellslutw@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 366/431] platform/x86: think-lmi: Correct NVME password handling
-Date: Sun,  9 Jul 2023 13:15:14 +0200
-Message-ID: <20230709111459.748433706@linuxfoundation.org>
+Subject: [PATCH 6.3 367/431] pinctrl:sunplus: Add check for kmalloc
+Date: Sun,  9 Jul 2023 13:15:15 +0200
+Message-ID: <20230709111459.770767264@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,43 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Wells Lu <wellslutw@gmail.com>
 
-[ Upstream commit 4cebb42412248d28df6de01420cfac5654428d41 ]
+[ Upstream commit 73f8ce7f961afcb3be49352efeb7c26cc1c00cc4 ]
 
-NVME passwords identifier have been standardised across the Lenovo
-systems and now use udrp and adrp (user and admin level) instead of
-unvp and mnvp.
+Fix Smatch static checker warning:
+potential null dereference 'configs'. (kmalloc returns null)
 
-This should apparently be backwards compatible.
+Changes in v2:
+1. Add free allocated memory before returned -ENOMEM.
+2. Add call of_node_put() before returned -ENOMEM.
 
-Fixes: 640a5fa50a42 ("platform/x86: think-lmi: Opcode support")
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230601200552.4396-6-mpearson-lenovo@squebb.ca
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: aa74c44be19c ("pinctrl: Add driver for Sunplus SP7021")
+Signed-off-by: Wells Lu <wellslutw@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/1685277277-12209-1-git-send-email-wellslutw@gmail.com
+[Rebased on the patch from Lu Hongfei]
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/sunplus/sppctl.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index cd755ef48ce40..4b7f2a969dfec 100644
---- a/drivers/platform/x86/think-lmi.c
-+++ b/drivers/platform/x86/think-lmi.c
-@@ -461,9 +461,9 @@ static ssize_t new_password_store(struct kobject *kobj,
- 				sprintf(pwd_type, "mhdp%d", setting->index);
- 		} else if (setting == tlmi_priv.pwd_nvme) {
- 			if (setting->level == TLMI_LEVEL_USER)
--				sprintf(pwd_type, "unvp%d", setting->index);
-+				sprintf(pwd_type, "udrp%d", setting->index);
- 			else
--				sprintf(pwd_type, "mnvp%d", setting->index);
-+				sprintf(pwd_type, "adrp%d", setting->index);
- 		} else {
- 			sprintf(pwd_type, "%s", setting->pwd_type);
- 		}
+diff --git a/drivers/pinctrl/sunplus/sppctl.c b/drivers/pinctrl/sunplus/sppctl.c
+index e91ce5b5d5598..150996949ede7 100644
+--- a/drivers/pinctrl/sunplus/sppctl.c
++++ b/drivers/pinctrl/sunplus/sppctl.c
+@@ -971,8 +971,7 @@ static int sppctl_dt_node_to_map(struct pinctrl_dev *pctldev, struct device_node
+ 
+ sppctl_map_err:
+ 	for (i = 0; i < (*num_maps); i++)
+-		if (((*map)[i].type == PIN_MAP_TYPE_CONFIGS_PIN) &&
+-		    (*map)[i].data.configs.configs)
++		if ((*map)[i].type == PIN_MAP_TYPE_CONFIGS_PIN)
+ 			kfree((*map)[i].data.configs.configs);
+ 	kfree(*map);
+ 	of_node_put(parent);
 -- 
 2.39.2
 
