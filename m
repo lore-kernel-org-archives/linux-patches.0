@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2BD522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:22:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76B0C433C8;
-	Sun,  9 Jul 2023 11:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E86C522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:22:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47EFC433C7;
+	Sun,  9 Jul 2023 11:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901765;
-	bh=XOiepkwzMBJW4MFw08teIqhey++/Ws80B96dQ/1kiik=;
+	s=korg; t=1688901768;
+	bh=S2IysE5cjDZnldfaaLOpDzqSoRcHr4dVBnU2lnTmXS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eT9VfDfJeWcogXY+3b9jTMhKQLM+c9tQthhSdOIErTgJYCP+b1IA//CaQy83OkE+X
-	 WBUyLxG+ByQbEcRdYvEcgU7s7ALUZSJ/MLC9RbH5Yf+m/J+vKovPQblukETYz6Q/M3
-	 sP2xS1xoexQDCwfHjW1eAQ9YARmfO3x7rXl0KtPM=
+	b=W2+DeOOr+HqdD7VBnr7znI6sHlXxFus0mU4q7xNm4k6zdEuskq7hSpG08fY+dX/bQ
+	 tgsurFWm6kJ6L/2SlggyZWqrlO0b3IkujZNxET5lnKxrnZ13G235lwm6SXBL5tGVgH
+	 eX+FJJpJruQKsFFlzsRMH7L+YG6Q1vl4K7uHbmjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilad Sever <gilad9366@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Shmulik Ladkani <shmulik.ladkani@gmail.com>,
-	Eyal Birger <eyal.birger@gmail.com>,
-	Stanislav Fomichev <sdf@google.com>,
-	David Ahern <dsahern@kernel.org>,
+	Thomas Kopp <Thomas.Kopp@microchip.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 137/431] bpf: Fix bpf socket lookup from tc/xdp to respect socket VRF bindings
-Date: Sun,  9 Jul 2023 13:11:25 +0200
-Message-ID: <20230709111454.374305753@linuxfoundation.org>
+Subject: [PATCH 6.3 138/431] can: length: fix bitstuffing count
+Date: Sun,  9 Jul 2023 13:11:26 +0200
+Message-ID: <20230709111454.397427448@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -39,248 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gilad Sever <gilad9366@gmail.com>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit 9a5cb79762e0eda17ca15c2a6eaca4622383c21c ]
+[ Upstream commit 9fde4c557f78ee2f3626e92b4089ce9d54a2573a ]
 
-When calling bpf_sk_lookup_tcp(), bpf_sk_lookup_udp() or
-bpf_skc_lookup_tcp() from tc/xdp ingress, VRF socket bindings aren't
-respoected, i.e. unbound sockets are returned, and bound sockets aren't
-found.
+The Stuff Bit Count is always coded on 4 bits [1]. Update the Stuff
+Bit Count size accordingly.
 
-VRF binding is determined by the sdif argument to sk_lookup(), however
-when called from tc the IP SKB control block isn't initialized and thus
-inet{,6}_sdif() always returns 0.
+In addition, the CRC fields of CAN FD Frames contain stuff bits at
+fixed positions called fixed stuff bits [2]. The CRC field starts with
+a fixed stuff bit and then has another fixed stuff bit after each
+fourth bit [2], which allows us to derive this formula:
 
-Fix by calculating sdif for the tc/xdp flows by observing the device's
-l3 enslaved state.
+  FSB count = 1 + round_down(len(CRC field)/4)
 
-The cg/sk_skb hooking points which are expected to support
-inet{,6}_sdif() pass sdif=-1 which makes __bpf_skc_lookup() use the
-existing logic.
+The length of the CRC field is [1]:
 
-Fixes: 6acc9b432e67 ("bpf: Add helper to retrieve socket in BPF")
-Signed-off-by: Gilad Sever <gilad9366@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Shmulik Ladkani <shmulik.ladkani@gmail.com>
-Reviewed-by: Eyal Birger <eyal.birger@gmail.com>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Cc: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/bpf/20230621104211.301902-4-gilad9366@gmail.com
+  len(CRC field) = len(Stuff Bit Count) + len(CRC)
+                 = 4 + len(CRC)
+
+with len(CRC) either 17 or 21 bits depending of the payload length.
+
+In conclusion, for CRC17:
+
+  FSB count = 1 + round_down((4 + 17)/4)
+            = 6
+
+and for CRC 21:
+
+  FSB count = 1 + round_down((4 + 21)/4)
+            = 7
+
+Add a Fixed Stuff bits (FSB) field with above values and update
+CANFD_FRAME_OVERHEAD_SFF and CANFD_FRAME_OVERHEAD_EFF accordingly.
+
+[1] ISO 11898-1:2015 section 10.4.2.6 "CRC field":
+
+  The CRC field shall contain the CRC sequence followed by a recessive
+  CRC delimiter. For FD Frames, the CRC field shall also contain the
+  stuff count.
+
+  Stuff count
+
+  If FD Frames, the stuff count shall be at the beginning of the CRC
+  field. It shall consist of the stuff bit count modulo 8 in a 3-bit
+  gray code followed by a parity bit [...]
+
+[2] ISO 11898-1:2015 paragraph 10.5 "Frame coding":
+
+  In the CRC field of FD Frames, the stuff bits shall be inserted at
+  fixed positions; they are called fixed stuff bits. There shall be a
+  fixed stuff bit before the first bit of the stuff count, even if the
+  last bits of the preceding field are a sequence of five consecutive
+  bits of identical value, there shall be only the fixed stuff bit,
+  there shall not be two consecutive stuff bits. A further fixed stuff
+  bit shall be inserted after each fourth bit of the CRC field [...]
+
+Fixes: 85d99c3e2a13 ("can: length: can_skb_get_frame_len(): introduce function to get data length of frame in data link layer")
+Suggested-by: Thomas Kopp <Thomas.Kopp@microchip.com>
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Reviewed-by: Thomas Kopp <Thomas.Kopp@microchip.com>
+Link: https://lore.kernel.org/all/20230611025728.450837-2-mailhol.vincent@wanadoo.fr
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  9 +++++
- net/core/filter.c         | 69 ++++++++++++++++++++++-----------------
- 2 files changed, 48 insertions(+), 30 deletions(-)
+ include/linux/can/length.h | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 7ed63f5bbe056..02ac3a058c09f 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -5063,6 +5063,15 @@ static inline bool netif_is_l3_slave(const struct net_device *dev)
- 	return dev->priv_flags & IFF_L3MDEV_SLAVE;
- }
+diff --git a/include/linux/can/length.h b/include/linux/can/length.h
+index 6995092b774ec..ef1fd32cef16b 100644
+--- a/include/linux/can/length.h
++++ b/include/linux/can/length.h
+@@ -69,17 +69,18 @@
+  * Error Status Indicator (ESI)		1
+  * Data length code (DLC)		4
+  * Data field				0...512
+- * Stuff Bit Count (SBC)		0...16: 4 20...64:5
++ * Stuff Bit Count (SBC)		4
+  * CRC					0...16: 17 20...64:21
+  * CRC delimiter (CD)			1
++ * Fixed Stuff bits (FSB)		0...16: 6 20...64:7
+  * ACK slot (AS)			1
+  * ACK delimiter (AD)			1
+  * End-of-frame (EOF)			7
+  * Inter frame spacing			3
+  *
+- * assuming CRC21, rounded up and ignoring bitstuffing
++ * assuming CRC21, rounded up and ignoring dynamic bitstuffing
+  */
+-#define CANFD_FRAME_OVERHEAD_SFF DIV_ROUND_UP(61, 8)
++#define CANFD_FRAME_OVERHEAD_SFF DIV_ROUND_UP(67, 8)
  
-+static inline int dev_sdif(const struct net_device *dev)
-+{
-+#ifdef CONFIG_NET_L3_MASTER_DEV
-+	if (netif_is_l3_slave(dev))
-+		return dev->ifindex;
-+#endif
-+	return 0;
-+}
-+
- static inline bool netif_is_bridge_master(const struct net_device *dev)
- {
- 	return dev->priv_flags & IFF_EBRIDGE;
-diff --git a/net/core/filter.c b/net/core/filter.c
-index f43f86fc12356..ebbab8c24beaf 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6529,12 +6529,11 @@ static struct sock *sk_lookup(struct net *net, struct bpf_sock_tuple *tuple,
- static struct sock *
- __bpf_skc_lookup(struct sk_buff *skb, struct bpf_sock_tuple *tuple, u32 len,
- 		 struct net *caller_net, u32 ifindex, u8 proto, u64 netns_id,
--		 u64 flags)
-+		 u64 flags, int sdif)
- {
- 	struct sock *sk = NULL;
- 	struct net *net;
- 	u8 family;
--	int sdif;
+ /*
+  * Size of a CAN-FD Extended Frame
+@@ -98,17 +99,18 @@
+  * Error Status Indicator (ESI)		1
+  * Data length code (DLC)		4
+  * Data field				0...512
+- * Stuff Bit Count (SBC)		0...16: 4 20...64:5
++ * Stuff Bit Count (SBC)		4
+  * CRC					0...16: 17 20...64:21
+  * CRC delimiter (CD)			1
++ * Fixed Stuff bits (FSB)		0...16: 6 20...64:7
+  * ACK slot (AS)			1
+  * ACK delimiter (AD)			1
+  * End-of-frame (EOF)			7
+  * Inter frame spacing			3
+  *
+- * assuming CRC21, rounded up and ignoring bitstuffing
++ * assuming CRC21, rounded up and ignoring dynamic bitstuffing
+  */
+-#define CANFD_FRAME_OVERHEAD_EFF DIV_ROUND_UP(80, 8)
++#define CANFD_FRAME_OVERHEAD_EFF DIV_ROUND_UP(86, 8)
  
- 	if (len == sizeof(tuple->ipv4))
- 		family = AF_INET;
-@@ -6546,10 +6545,12 @@ __bpf_skc_lookup(struct sk_buff *skb, struct bpf_sock_tuple *tuple, u32 len,
- 	if (unlikely(flags || !((s32)netns_id < 0 || netns_id <= S32_MAX)))
- 		goto out;
- 
--	if (family == AF_INET)
--		sdif = inet_sdif(skb);
--	else
--		sdif = inet6_sdif(skb);
-+	if (sdif < 0) {
-+		if (family == AF_INET)
-+			sdif = inet_sdif(skb);
-+		else
-+			sdif = inet6_sdif(skb);
-+	}
- 
- 	if ((s32)netns_id < 0) {
- 		net = caller_net;
-@@ -6569,10 +6570,11 @@ __bpf_skc_lookup(struct sk_buff *skb, struct bpf_sock_tuple *tuple, u32 len,
- static struct sock *
- __bpf_sk_lookup(struct sk_buff *skb, struct bpf_sock_tuple *tuple, u32 len,
- 		struct net *caller_net, u32 ifindex, u8 proto, u64 netns_id,
--		u64 flags)
-+		u64 flags, int sdif)
- {
- 	struct sock *sk = __bpf_skc_lookup(skb, tuple, len, caller_net,
--					   ifindex, proto, netns_id, flags);
-+					   ifindex, proto, netns_id, flags,
-+					   sdif);
- 
- 	if (sk) {
- 		struct sock *sk2 = sk_to_full_sk(sk);
-@@ -6612,7 +6614,7 @@ bpf_skc_lookup(struct sk_buff *skb, struct bpf_sock_tuple *tuple, u32 len,
- 	}
- 
- 	return __bpf_skc_lookup(skb, tuple, len, caller_net, ifindex, proto,
--				netns_id, flags);
-+				netns_id, flags, -1);
- }
- 
- static struct sock *
-@@ -6704,12 +6706,13 @@ static const struct bpf_func_proto bpf_sk_lookup_udp_proto = {
- BPF_CALL_5(bpf_tc_skc_lookup_tcp, struct sk_buff *, skb,
- 	   struct bpf_sock_tuple *, tuple, u32, len, u64, netns_id, u64, flags)
- {
--	struct net *caller_net = dev_net(skb->dev);
--	int ifindex = skb->dev->ifindex;
-+	struct net_device *dev = skb->dev;
-+	int ifindex = dev->ifindex, sdif = dev_sdif(dev);
-+	struct net *caller_net = dev_net(dev);
- 
- 	return (unsigned long)__bpf_skc_lookup(skb, tuple, len, caller_net,
- 					       ifindex, IPPROTO_TCP, netns_id,
--					       flags);
-+					       flags, sdif);
- }
- 
- static const struct bpf_func_proto bpf_tc_skc_lookup_tcp_proto = {
-@@ -6727,12 +6730,13 @@ static const struct bpf_func_proto bpf_tc_skc_lookup_tcp_proto = {
- BPF_CALL_5(bpf_tc_sk_lookup_tcp, struct sk_buff *, skb,
- 	   struct bpf_sock_tuple *, tuple, u32, len, u64, netns_id, u64, flags)
- {
--	struct net *caller_net = dev_net(skb->dev);
--	int ifindex = skb->dev->ifindex;
-+	struct net_device *dev = skb->dev;
-+	int ifindex = dev->ifindex, sdif = dev_sdif(dev);
-+	struct net *caller_net = dev_net(dev);
- 
- 	return (unsigned long)__bpf_sk_lookup(skb, tuple, len, caller_net,
- 					      ifindex, IPPROTO_TCP, netns_id,
--					      flags);
-+					      flags, sdif);
- }
- 
- static const struct bpf_func_proto bpf_tc_sk_lookup_tcp_proto = {
-@@ -6750,12 +6754,13 @@ static const struct bpf_func_proto bpf_tc_sk_lookup_tcp_proto = {
- BPF_CALL_5(bpf_tc_sk_lookup_udp, struct sk_buff *, skb,
- 	   struct bpf_sock_tuple *, tuple, u32, len, u64, netns_id, u64, flags)
- {
--	struct net *caller_net = dev_net(skb->dev);
--	int ifindex = skb->dev->ifindex;
-+	struct net_device *dev = skb->dev;
-+	int ifindex = dev->ifindex, sdif = dev_sdif(dev);
-+	struct net *caller_net = dev_net(dev);
- 
- 	return (unsigned long)__bpf_sk_lookup(skb, tuple, len, caller_net,
- 					      ifindex, IPPROTO_UDP, netns_id,
--					      flags);
-+					      flags, sdif);
- }
- 
- static const struct bpf_func_proto bpf_tc_sk_lookup_udp_proto = {
-@@ -6787,12 +6792,13 @@ static const struct bpf_func_proto bpf_sk_release_proto = {
- BPF_CALL_5(bpf_xdp_sk_lookup_udp, struct xdp_buff *, ctx,
- 	   struct bpf_sock_tuple *, tuple, u32, len, u32, netns_id, u64, flags)
- {
--	struct net *caller_net = dev_net(ctx->rxq->dev);
--	int ifindex = ctx->rxq->dev->ifindex;
-+	struct net_device *dev = ctx->rxq->dev;
-+	int ifindex = dev->ifindex, sdif = dev_sdif(dev);
-+	struct net *caller_net = dev_net(dev);
- 
- 	return (unsigned long)__bpf_sk_lookup(NULL, tuple, len, caller_net,
- 					      ifindex, IPPROTO_UDP, netns_id,
--					      flags);
-+					      flags, sdif);
- }
- 
- static const struct bpf_func_proto bpf_xdp_sk_lookup_udp_proto = {
-@@ -6810,12 +6816,13 @@ static const struct bpf_func_proto bpf_xdp_sk_lookup_udp_proto = {
- BPF_CALL_5(bpf_xdp_skc_lookup_tcp, struct xdp_buff *, ctx,
- 	   struct bpf_sock_tuple *, tuple, u32, len, u32, netns_id, u64, flags)
- {
--	struct net *caller_net = dev_net(ctx->rxq->dev);
--	int ifindex = ctx->rxq->dev->ifindex;
-+	struct net_device *dev = ctx->rxq->dev;
-+	int ifindex = dev->ifindex, sdif = dev_sdif(dev);
-+	struct net *caller_net = dev_net(dev);
- 
- 	return (unsigned long)__bpf_skc_lookup(NULL, tuple, len, caller_net,
- 					       ifindex, IPPROTO_TCP, netns_id,
--					       flags);
-+					       flags, sdif);
- }
- 
- static const struct bpf_func_proto bpf_xdp_skc_lookup_tcp_proto = {
-@@ -6833,12 +6840,13 @@ static const struct bpf_func_proto bpf_xdp_skc_lookup_tcp_proto = {
- BPF_CALL_5(bpf_xdp_sk_lookup_tcp, struct xdp_buff *, ctx,
- 	   struct bpf_sock_tuple *, tuple, u32, len, u32, netns_id, u64, flags)
- {
--	struct net *caller_net = dev_net(ctx->rxq->dev);
--	int ifindex = ctx->rxq->dev->ifindex;
-+	struct net_device *dev = ctx->rxq->dev;
-+	int ifindex = dev->ifindex, sdif = dev_sdif(dev);
-+	struct net *caller_net = dev_net(dev);
- 
- 	return (unsigned long)__bpf_sk_lookup(NULL, tuple, len, caller_net,
- 					      ifindex, IPPROTO_TCP, netns_id,
--					      flags);
-+					      flags, sdif);
- }
- 
- static const struct bpf_func_proto bpf_xdp_sk_lookup_tcp_proto = {
-@@ -6858,7 +6866,8 @@ BPF_CALL_5(bpf_sock_addr_skc_lookup_tcp, struct bpf_sock_addr_kern *, ctx,
- {
- 	return (unsigned long)__bpf_skc_lookup(NULL, tuple, len,
- 					       sock_net(ctx->sk), 0,
--					       IPPROTO_TCP, netns_id, flags);
-+					       IPPROTO_TCP, netns_id, flags,
-+					       -1);
- }
- 
- static const struct bpf_func_proto bpf_sock_addr_skc_lookup_tcp_proto = {
-@@ -6877,7 +6886,7 @@ BPF_CALL_5(bpf_sock_addr_sk_lookup_tcp, struct bpf_sock_addr_kern *, ctx,
- {
- 	return (unsigned long)__bpf_sk_lookup(NULL, tuple, len,
- 					      sock_net(ctx->sk), 0, IPPROTO_TCP,
--					      netns_id, flags);
-+					      netns_id, flags, -1);
- }
- 
- static const struct bpf_func_proto bpf_sock_addr_sk_lookup_tcp_proto = {
-@@ -6896,7 +6905,7 @@ BPF_CALL_5(bpf_sock_addr_sk_lookup_udp, struct bpf_sock_addr_kern *, ctx,
- {
- 	return (unsigned long)__bpf_sk_lookup(NULL, tuple, len,
- 					      sock_net(ctx->sk), 0, IPPROTO_UDP,
--					      netns_id, flags);
-+					      netns_id, flags, -1);
- }
- 
- static const struct bpf_func_proto bpf_sock_addr_sk_lookup_udp_proto = {
+ /*
+  * Maximum size of a Classical CAN frame
 -- 
 2.39.2
 
