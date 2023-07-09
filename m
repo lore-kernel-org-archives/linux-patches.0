@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B774699
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0316CC433C8;
-	Sun,  9 Jul 2023 11:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B994699
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:17:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF1FC433C8;
+	Sun,  9 Jul 2023 11:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688901455;
-	bh=20RzdbbO837WvEkxJP/2eS3il2gcFcbaJw7CnWVqIt4=;
+	s=korg; t=1688901458;
+	bh=CXJPnuNPVFbreSBqxV+PzZP85Lus4EBNuYijVPTflRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGAbHJkKhE7XwNjhr+nLFqywxQ2F2K9SB7RtB0ekDI64YAIORplZ4GIx6S5F+GJmG
-	 5iNZPz4b6cW6QA028VHOcg55rUBMOhqSLRlwlFbBs7uL+c2kU6Wrn5uWYwSLVluq4D
-	 XCQEXuuWQwe0S1U6a7DC1s68IM8Zs0lXVmajJJuA=
+	b=IW4VbQlRNdklZZML34J3r9EjON/5c5h6ONPNiYWFQwUsILSlU1w/Zb86VpfAaXvbI
+	 pXo+Lc8SUyu2We1DpmjDyVxPHJAD550NbZyy9KnKqUrC5++IEdhemyz5snZH3ZKCWw
+	 D1CFfFBMaSwLKjOhYdrDJBJZiBGhz0B43aiGv0Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	yangqiming <yangqiming@loongson.cn>,
+	Jianmin Lv <lvjianmin@loongson.cn>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 026/431] block: fix blktrace debugfs entries leakage
-Date: Sun,  9 Jul 2023 13:09:34 +0200
-Message-ID: <20230709111451.714061297@linuxfoundation.org>
+Subject: [PATCH 6.3 027/431] irqchip/loongson-eiointc: Fix irq affinity setting during resume
+Date: Sun,  9 Jul 2023 13:09:35 +0200
+Message-ID: <20230709111451.736909026@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,57 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Jianmin Lv <lvjianmin@loongson.cn>
 
-[ Upstream commit dd7de3704af9989b780693d51eaea49a665bd9c2 ]
+[ Upstream commit fb07b8f83441febeb0daf199b5f18c6de9bbab03 ]
 
-Commit 99d055b4fd4b ("block: remove per-disk debugfs files in
-blk_unregister_queue") moves blk_trace_shutdown() from
-blk_release_queue() to blk_unregister_queue(), this is safe if blktrace
-is created through sysfs, however, there is a regression in corner
-case.
+The hierarchy of PCH PIC, PCH PCI MSI and EIONTC is as following:
 
-blktrace can still be enabled after del_gendisk() through ioctl if
-the disk is opened before del_gendisk(), and if blktrace is not shutdown
-through ioctl before closing the disk, debugfs entries will be leaked.
+        PCH PIC ------->|
+                        |---->EIOINTC
+        PCH PCI MSI --->|
 
-Fix this problem by shutdown blktrace in disk_release(), this is safe
-because blk_trace_remove() is reentrant.
+so the irq_data list of irq_desc for IRQs on PCH PIC and PCH PCI MSI
+is like this:
 
-Fixes: 99d055b4fd4b ("block: remove per-disk debugfs files in blk_unregister_queue")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230610022003.2557284-4-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+irq_desc->irq_data(domain: PCH PIC)->parent_data(domain: EIOINTC)
+irq_desc->irq_data(domain: PCH PCI MSI)->parent_data(domain: EIOINTC)
+
+In eiointc_resume(), the irq_data passed into eiointc_set_irq_affinity()
+should be matched to EIOINTC domain instead of PCH PIC or PCH PCI MSI
+domain, so fix it.
+
+Fixes: a90335c2dfb4 ("irqchip/loongson-eiointc: Add suspend/resume support")
+
+Reported-by: yangqiming <yangqiming@loongson.cn>
+Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230614115936.5950-6-lvjianmin@loongson.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-loongson-eiointc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 7f874737af682..c5a35e1b462fa 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -25,8 +25,9 @@
- #include <linux/pm_runtime.h>
- #include <linux/badblocks.h>
- #include <linux/part_stat.h>
--#include "blk-throttle.h"
-+#include <linux/blktrace_api.h>
- 
-+#include "blk-throttle.h"
- #include "blk.h"
- #include "blk-mq-sched.h"
- #include "blk-rq-qos.h"
-@@ -1183,6 +1184,8 @@ static void disk_release(struct device *dev)
- 	might_sleep();
- 	WARN_ON_ONCE(disk_live(disk));
- 
-+	blk_trace_remove(disk->queue);
-+
- 	/*
- 	 * To undo the all initialization from blk_mq_init_allocated_queue in
- 	 * case of a probe failure where add_disk is never called we have to
+diff --git a/drivers/irqchip/irq-loongson-eiointc.c b/drivers/irqchip/irq-loongson-eiointc.c
+index 90181c42840b4..873a326ed6cbc 100644
+--- a/drivers/irqchip/irq-loongson-eiointc.c
++++ b/drivers/irqchip/irq-loongson-eiointc.c
+@@ -317,7 +317,7 @@ static void eiointc_resume(void)
+ 			desc = irq_resolve_mapping(eiointc_priv[i]->eiointc_domain, j);
+ 			if (desc && desc->handle_irq && desc->handle_irq != handle_bad_irq) {
+ 				raw_spin_lock(&desc->lock);
+-				irq_data = &desc->irq_data;
++				irq_data = irq_domain_get_irq_data(eiointc_priv[i]->eiointc_domain, irq_desc_get_irq(desc));
+ 				eiointc_set_irq_affinity(irq_data, irq_data->common->affinity, 0);
+ 				raw_spin_unlock(&desc->lock);
+ 			}
 -- 
 2.39.2
 
