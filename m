@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66858522E
-	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD4DC433C8;
-	Sun,  9 Jul 2023 11:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2526B522E
+	for <patches@lists.linux.dev>; Sun,  9 Jul 2023 11:34:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF58C433C7;
+	Sun,  9 Jul 2023 11:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1688902450;
-	bh=3mHwm5A/3Fa8cJOt/mS8kVyUwqZMIjyUP6tuVguET4s=;
+	s=korg; t=1688902453;
+	bh=To9bNd2JTYZ+mreilwJbdLU3Qjzpy3d9eUON6y2dxQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPIi7pv+K8IhG4WgQNbY/W2CE+WHS/k9dD34vOjY1SVsfzdgXyVnoKOgWNXSvh7Is
-	 3bFRwoncubp+09G9ZBk2OeXW1lyr1tkbWUc1Xpon+X/9XZhSr7nMwXW4EsC5fxa9Kc
-	 cSXoar9MStCFLx/hXcgQQar5RhxyLUyeXJ1NI9N4=
+	b=w3WOCEwz4nfvNh3ufTDYhrYlYlFcExZmQvB4O5/azsnWBkz5J98AS1bXvO5gGL//g
+	 xiGijKN/mEzidVEsITyhQlAcY2p2uz9z6tLZDPjORU3K6PqD15aQuKB3UkGfMoecdb
+	 AB3ejn8iAjGDp+ES2X5jzxrW8+pcCK6hnSht5UyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Pardee <xi.pardee@intel.com>,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 363/431] platform/x86:intel/pmc: Remove Meteor Lake S platform support
-Date: Sun,  9 Jul 2023 13:15:11 +0200
-Message-ID: <20230709111459.680040768@linuxfoundation.org>
+Subject: [PATCH 6.3 381/431] pinctrl: freescale: Fix a memory out of bounds when num_configs is 1
+Date: Sun,  9 Jul 2023 13:15:29 +0200
+Message-ID: <20230709111500.096007823@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230709111451.101012554@linuxfoundation.org>
 References: <20230709111451.101012554@linuxfoundation.org>
@@ -36,38 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xi Pardee <xi.pardee@intel.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit 416a87c972b978d71ab828442d1d48e3bd194855 ]
+[ Upstream commit 9063777ca1e2e895c5fdd493ee0c3f18fa710ed4 ]
 
-commit c5ad454a12c6 ("platform/x86: intel/pmc/core: Add Meteor Lake
-support to pmc core driver") was supposed to add support for Meter
-Lake P/M and mistakenly added support for Meteor Lake S instead. Meteor
-Lake P/M support was added later and MTL-S support needs to be removed
-since its currently assigned to the wrong register maps.
+The config passed in by pad wakeup is 1, when num_configs is 1,
+Configuration [1] should not be fetched, which will be detected
+by KASAN as a memory out of bounds condition. Modify to get
+configs[1] when num_configs is 2.
 
-Fixes: c5ad454a12c6 ("platform/x86: intel/pmc/core: Add Meteor Lake support to pmc core driver")
-Signed-off-by: Xi Pardee <xi.pardee@intel.com>
-Signed-off-by: David E. Box <david.e.box@linux.intel.com>
-Link: https://lore.kernel.org/r/20230601004706.871528-1-xi.pardee@intel.com
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: f60c9eac54af ("gpio: mxc: enable pad wakeup on i.MX8x platforms")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20230504233736.3766296-1-xiaolei.wang@windriver.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/pmc/core.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/pinctrl/freescale/pinctrl-scu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/pmc/core.c b/drivers/platform/x86/intel/pmc/core.c
-index b9591969e0fa1..bed083525fbe7 100644
---- a/drivers/platform/x86/intel/pmc/core.c
-+++ b/drivers/platform/x86/intel/pmc/core.c
-@@ -1039,7 +1039,6 @@ static const struct x86_cpu_id intel_pmc_core_ids[] = {
- 	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,        tgl_core_init),
- 	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,		adl_core_init),
- 	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,	adl_core_init),
--	X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE,          mtl_core_init),
- 	X86_MATCH_INTEL_FAM6_MODEL(METEORLAKE_L,	mtl_core_init),
- 	{}
- };
+diff --git a/drivers/pinctrl/freescale/pinctrl-scu.c b/drivers/pinctrl/freescale/pinctrl-scu.c
+index ea261b6e74581..3b252d684d723 100644
+--- a/drivers/pinctrl/freescale/pinctrl-scu.c
++++ b/drivers/pinctrl/freescale/pinctrl-scu.c
+@@ -90,7 +90,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
+ 	struct imx_sc_msg_req_pad_set msg;
+ 	struct imx_sc_rpc_msg *hdr = &msg.hdr;
+ 	unsigned int mux = configs[0];
+-	unsigned int conf = configs[1];
++	unsigned int conf;
+ 	unsigned int val;
+ 	int ret;
+ 
+@@ -115,6 +115,7 @@ int imx_pinconf_set_scu(struct pinctrl_dev *pctldev, unsigned pin_id,
+ 	 * Set mux and conf together in one IPC call
+ 	 */
+ 	WARN_ON(num_configs != 2);
++	conf = configs[1];
+ 
+ 	val = conf | BM_PAD_CTL_IFMUX_ENABLE | BM_PAD_CTL_GP_ENABLE;
+ 	val |= mux << BP_PAD_CTL_IFMUX;
 -- 
 2.39.2
 
