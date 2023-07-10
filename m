@@ -1,98 +1,142 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170F7154B1
-	for <patches@lists.linux.dev>; Mon, 10 Jul 2023 23:14:22 +0000 (UTC)
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-4fa16c6a85cso7681651e87.3
-        for <patches@lists.linux.dev>; Mon, 10 Jul 2023 16:14:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1689030861; x=1691622861;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VIA0vS9CGVZu/dKUtt1DEeTq+za3hXZ7GjZyvjklTUs=;
-        b=wbebkbLh9K+s7RqRbnPjkJnBGX5Q2tQ8wr1xPosokwNjTydGAOTVas0VGA6zyRvd8W
-         WPyz+AzJVi309tna+AIGoxvDbPTKSBqHQhlDFTkuO0K7N/LXJ+6lBIA4a0/d9bQl4L5V
-         2u5aXF3lCrjW8ZVuffdH+voZjPSyNhDf7YA8Pn5PaW98cNENUYJDCXNaPPMiOVE/owwg
-         T1Q5RnfMgUW/9WFfuhI7SWR1RJxpKbsAkgkD+QTqkZ4KScpOELTy7xA1xbGH3aMYFxFE
-         WthVHtgBB+4NQP+RVltsVo14IXrQLyjuhWpqF0JjkiE+VOTMeGhWn182IwNCWlc1KsVT
-         Xn+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689030861; x=1691622861;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VIA0vS9CGVZu/dKUtt1DEeTq+za3hXZ7GjZyvjklTUs=;
-        b=Fp20jD2zwj0xfe54myo1378SMhwg2XtdrfJ0AjXjI0Ct0gPI5rR7INnwjxxITyUDJs
-         XL0HdWG/wzPJeWI1ZfpcvPwGdJH3XdtnRoUihftFUu0heq5HE6MFnZm+/ra3/DGalPtI
-         ZJOjgmupuOyGTcgk0v8vdbfyTuPk8WxQ4wp6BH5WUg7RV7/0h3OVrwiIMw8GcpRMG3lK
-         fm7fGx8gbvEsNAyIO86KwVHb8ixlBA+CNjwkDr+Pq+J+T7hNTAw8ab2QQ/auhhHfi0yz
-         T7Y956JVwbVxwMmy7tfNLtVycncACajuwHfulkxvQ7bIklXkyi1JEYNtetX78XH+T/TW
-         ScbQ==
-X-Gm-Message-State: ABy/qLYOKxuAU6PVjZiRGcE6phl5yqa9lFuh4jfiPeBARXAc8r00mwKt
-	GatrFWRhv7XypPb5WPlplfOEfDzgN5mnDPeZTJ0/Gg==
-X-Google-Smtp-Source: APBJJlEcIKfj6d06z0ZSWaBeY8VonHC9pf+QP0h3+s903O5LXh6RbAYPuokBP+PaRwBXogdljmL9fsDD46SWpNIEctM=
-X-Received: by 2002:a19:e006:0:b0:4f8:6bbe:8a0b with SMTP id
- x6-20020a19e006000000b004f86bbe8a0bmr10101748lfg.16.1689030860745; Mon, 10
- Jul 2023 16:14:20 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1822154B1
+	for <patches@lists.linux.dev>; Mon, 10 Jul 2023 23:35:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1689032155; x=1720568155;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=tFbXAaj7P8nAVQ+f9ECcnlO8BUDW6scbPt26NrFxtyo=;
+  b=m6fyJLc6fn0KlB43dEajGW/hDmaX8VuFh2ebN0/t/JMAp8ur6cQWIUH+
+   jTipdIaYVXz+XbKy0aJR325rSE2ZCkOS3SE4j9EGeC4AI/ojcxGdjxRhA
+   SiqFWhRg44e7F/23kaAWGsvevL59mJ6rmpokVS7JY0mtuxqgyJPeYdwFw
+   BsL1AywfvHhhnccxByeARcd3NDuqUxFCpDfdergTgWCSJg9hVo45n31ov
+   JWLFk9sZWlN4T2JExjqk0LtJNiQS8DmADClHlhvhoxp2Uxy6tDrAUwReg
+   lKb7gA23AC4Ja0i0JaNo9dwE4YL1GfzfKZR9xaw8umzNVKZPZEL+x8BwH
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="395269309"
+X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
+   d="scan'208";a="395269309"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2023 16:35:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="720867161"
+X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
+   d="scan'208";a="720867161"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2023 16:35:53 -0700
+Date: Mon, 10 Jul 2023 16:35:52 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Peter Newman <peternewman@google.com>
+Cc: James Morse <james.morse@arm.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
+	"Chatre, Reinette" <reinette.chatre@intel.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Babu Moger <Babu.Moger@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	H Peter Anvin <hpa@zytor.com>,
+	"shameerali.kolothum.thodi@huawei.com" <shameerali.kolothum.thodi@huawei.com>,
+	D Scott Phillips OS <scott@os.amperecomputing.com>,
+	"carl@os.amperecomputing.com" <carl@os.amperecomputing.com>,
+	"lcherian@marvell.com" <lcherian@marvell.com>,
+	"bobo.shaobowang@huawei.com" <bobo.shaobowang@huawei.com>,
+	"tan.shaopeng@fujitsu.com" <tan.shaopeng@fujitsu.com>,
+	"xingxin.hx@openanolis.org" <xingxin.hx@openanolis.org>,
+	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Xin Hao <xhao@linux.alibaba.com>,
+	"Pitre, Nicolas" <npitre@baylibre.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	"aricciardi@baylibre.com" <aricciardi@baylibre.com>,
+	"x86@kernel.org" <x86@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	Stephane Eranian <eranian@google.com>
+Subject: Re: [RFC PATCH 2/2] resctrl2: Arch x86 modules for most of the
+ legacy control/monitor functions
+Message-ID: <ZKyV2DWp0FN9sNzS@agluck-desk3>
+References: <20230620033702.33344-1-tony.luck@intel.com>
+ <20230620033702.33344-3-tony.luck@intel.com>
+ <CALPaoChdFLTfA5g=vawTuOLk5T6dEkG79XXqm27shh-VeqNCOw@mail.gmail.com>
+ <SJ1PR11MB6083FF68838400D053C884B0FC2FA@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <CALPaoCic3zYLxwUET5WCMUCwN8dk-B9JJvuOeUQ2o3hsgNZdQg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230709203826.141774942@linuxfoundation.org>
-In-Reply-To: <20230709203826.141774942@linuxfoundation.org>
-From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 11 Jul 2023 08:14:09 +0900
-Message-ID: <CAKL4bV7eHZerKW5F2_Zx_fEpmotZ3YvGYht1H1Evro6M5CBHxA@mail.gmail.com>
-Subject: Re: [PATCH 6.4 0/6] 6.4.3-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALPaoCic3zYLxwUET5WCMUCwN8dk-B9JJvuOeUQ2o3hsgNZdQg@mail.gmail.com>
 
-Hi Greg
+On Thu, Jul 06, 2023 at 12:22:03PM +0200, Peter Newman wrote:
+> Hi Tony,
+> 
+> On Wed, Jul 5, 2023 at 6:46 AM Luck, Tony <tony.luck@intel.com> wrote:
+> > The mbm_poll() code that makes sure that counters don't wrap is
+> > doing all the expensive wrmsr(QM_EVTSEL);rdmsr(QM_COUNT)
+> > once per second to give you the data you want.
+> 
+> I was doing that in the soft RMID series I posted earlier because it
+> simplified things, but then I had some realizations about how much
+> error +/- 1 second on the sampling point could result in[1]. We
+> usually measure the bandwidth rate with a 5-second window, so a
+> reading that's up to one second old would mean a 20% error in the
+> bandwidth calculation.
 
-On Mon, Jul 10, 2023 at 5:45=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.4.3 release.
-> There are 6 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Tue, 11 Jul 2023 20:38:10 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.4.3-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.4.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+I just pushed the latest version of the resctrl2 patches to the
+resctrl2_v65rc1 branch of git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git
 
-6.4.3-rc2 tested.
+As well as locking, bug fixes, and general updates it includes an
+experimental feature to provide summary MBM information for each
+node. E.g. (both "total" and "local" rates are provided). Note
+that you have to load modules rdt_mbm_local_bytes and
+rdt_mbm_total_bytes so that the MBM overflow threads are
+running. I should fix the code to print "n/a" instead of
+"0" if they are not.
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+$ cat /sys/fs/resctrl/mon_data/mon_L3_00/mbm_summary
+    3638     3638 /g2
+    3087     3087 /g2/m2
+    3267     3267 /g2/m1
+    3443     3443 /g1
+    3629     3629 /g1/m2
+    3588     3587 /g1/m1
+    3999     3993 /
+    3370     3369 /m2
+    3432     3432 /m1
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64), arch linux)
+The rates are produced once per second by the MBM overflow
+code. They compute MBytes/sec as "chunks since last poll"
+divided by (now - then). I'm using jiffies for the times
+which may be good enough. "now - then" is one second (maybe
+more if the kernel thread doing the MBM polling is delayed
+from running).
 
-Thanks
+I should fix the summarization code to work the same as the
+regular MBM files (i.e. make the parent control directory
+report the sum of all its children).
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+The code also attempts (but fails) to make these mbm_summary
+files poll(2)-able. With the wakeup dependent on aggregate
+measure bandwidth compared against a configurable threshold:
+
+$ cat /sys/fs/resctrl/info/L3_MON/mbm_poll_threshold
+10000000
+
+There's something wrong though. Poll(2) always says there is
+data to be read.  I only see one other piece of kernel code
+implementing poll on kernfs (in the cgroup code). Perhaps
+my problem is inability to write an appliction that uses
+poll(2) correctly.
+
+Let me know if this all seems like a useful direction. Maybe
+the polling part is overkill and it is sufficient to just
+have a cheap way to get all the bandwidths even if the values
+seen might be up to one second old.
+
+-Tony
