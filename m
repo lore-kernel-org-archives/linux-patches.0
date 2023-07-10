@@ -1,81 +1,98 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3382581
-	for <patches@lists.linux.dev>; Mon, 10 Jul 2023 18:47:08 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-bfe6ea01ff5so5921773276.3
-        for <patches@lists.linux.dev>; Mon, 10 Jul 2023 11:47:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170F7154B1
+	for <patches@lists.linux.dev>; Mon, 10 Jul 2023 23:14:22 +0000 (UTC)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-4fa16c6a85cso7681651e87.3
+        for <patches@lists.linux.dev>; Mon, 10 Jul 2023 16:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689014828; x=1691606828;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l+e9Uwr5qc+lETVgqhuxS2sDSgDIyaCoLKWXGQhfhM8=;
-        b=EWRHAx0bvPOAglJM0S8gK5Hv9aoMSGq2QqlxfcB8wusYDCJ5OBepPkmptt3/XfyNRC
-         SQmiL0wVcnkGLiyHC0ifgymkojTs1kSq9m3OWxDD42HD6cRmjlQszYW3G4wVwOiISE1p
-         bZYywsQlZDnE6pFMDRL2x0u6pnBlkU+zRSiABvT4qUwUlQgb86/8iabqtisNH2uM0KWX
-         iaQVpfAofBzrghuBYpS2gCDApI/4hMVH4fZdmpusUZ3DEYBCTAjuTLWmq5kWnygg0Bz8
-         Mehibba4+SYuc6g3H5sNOhx49fDI2IsLRwOrLTVLu4JG4LHvK5yKR30RX2xbCZddrrDp
-         jK5w==
+        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1689030861; x=1691622861;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VIA0vS9CGVZu/dKUtt1DEeTq+za3hXZ7GjZyvjklTUs=;
+        b=wbebkbLh9K+s7RqRbnPjkJnBGX5Q2tQ8wr1xPosokwNjTydGAOTVas0VGA6zyRvd8W
+         WPyz+AzJVi309tna+AIGoxvDbPTKSBqHQhlDFTkuO0K7N/LXJ+6lBIA4a0/d9bQl4L5V
+         2u5aXF3lCrjW8ZVuffdH+voZjPSyNhDf7YA8Pn5PaW98cNENUYJDCXNaPPMiOVE/owwg
+         T1Q5RnfMgUW/9WFfuhI7SWR1RJxpKbsAkgkD+QTqkZ4KScpOELTy7xA1xbGH3aMYFxFE
+         WthVHtgBB+4NQP+RVltsVo14IXrQLyjuhWpqF0JjkiE+VOTMeGhWn182IwNCWlc1KsVT
+         Xn+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689014828; x=1691606828;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1689030861; x=1691622861;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=l+e9Uwr5qc+lETVgqhuxS2sDSgDIyaCoLKWXGQhfhM8=;
-        b=i5dNMFE45cTp304OwR3n3NqmvYWErLTcnCTvnyFZGDcfTWOVyXkuVPKuMfOr0gPZ7G
-         l4WFg+hoKp+9PeMGiw6fOCzklJV8jPU1PeGT6c4wPaQU46wHijPdxama2UlUZcEjikxX
-         Gc96Fz7/Dgge7/Fotj0nfxqlyScsvGzjk6We4rbdsMl3K4z8UslpgpUK9Mnt0sPjMjwn
-         dcheuwSiEG24rXJSWd/yb5Jp1yUcY2bV8R6HGFgW2mRS2+FrArzyB6AKdtyZGm1C+k95
-         UO8BWIawb07TLMU/TbViq/N80e9glfg1YmO3Ws2lVHXkZMHEE3HMzHU71idVYqD3SCrf
-         DsaA==
-X-Gm-Message-State: ABy/qLasfNxIBW9z5Bd4WgrVVjGnA4We8L+iFpPwbSVmoeGEApKKbxre
-	Y+fLx04q44K6qSRjq25xm2I=
-X-Google-Smtp-Source: APBJJlE41i05qAHdgQLCqK7cflEjRGKFjOomlZ9w+N0fqyZicN3jiKw6stBSCJdKy8ilqTwlPRgvzQ==
-X-Received: by 2002:a25:a409:0:b0:c81:ea4:c660 with SMTP id f9-20020a25a409000000b00c810ea4c660mr4849770ybi.8.1689014827889;
-        Mon, 10 Jul 2023 11:47:07 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id y18-20020a259292000000b00be45a29d440sm86689ybl.12.2023.07.10.11.47.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jul 2023 11:47:07 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Mon, 10 Jul 2023 11:47:05 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.4 0/6] 6.4.3-rc2 review
-Message-ID: <720d1a58-9f0b-4647-8cf7-047f830f68be@roeck-us.net>
-References: <20230709203826.141774942@linuxfoundation.org>
+        bh=VIA0vS9CGVZu/dKUtt1DEeTq+za3hXZ7GjZyvjklTUs=;
+        b=Fp20jD2zwj0xfe54myo1378SMhwg2XtdrfJ0AjXjI0Ct0gPI5rR7INnwjxxITyUDJs
+         XL0HdWG/wzPJeWI1ZfpcvPwGdJH3XdtnRoUihftFUu0heq5HE6MFnZm+/ra3/DGalPtI
+         ZJOjgmupuOyGTcgk0v8vdbfyTuPk8WxQ4wp6BH5WUg7RV7/0h3OVrwiIMw8GcpRMG3lK
+         fm7fGx8gbvEsNAyIO86KwVHb8ixlBA+CNjwkDr+Pq+J+T7hNTAw8ab2QQ/auhhHfi0yz
+         T7Y956JVwbVxwMmy7tfNLtVycncACajuwHfulkxvQ7bIklXkyi1JEYNtetX78XH+T/TW
+         ScbQ==
+X-Gm-Message-State: ABy/qLYOKxuAU6PVjZiRGcE6phl5yqa9lFuh4jfiPeBARXAc8r00mwKt
+	GatrFWRhv7XypPb5WPlplfOEfDzgN5mnDPeZTJ0/Gg==
+X-Google-Smtp-Source: APBJJlEcIKfj6d06z0ZSWaBeY8VonHC9pf+QP0h3+s903O5LXh6RbAYPuokBP+PaRwBXogdljmL9fsDD46SWpNIEctM=
+X-Received: by 2002:a19:e006:0:b0:4f8:6bbe:8a0b with SMTP id
+ x6-20020a19e006000000b004f86bbe8a0bmr10101748lfg.16.1689030860745; Mon, 10
+ Jul 2023 16:14:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20230709203826.141774942@linuxfoundation.org>
 In-Reply-To: <20230709203826.141774942@linuxfoundation.org>
+From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 11 Jul 2023 08:14:09 +0900
+Message-ID: <CAKL4bV7eHZerKW5F2_Zx_fEpmotZ3YvGYht1H1Evro6M5CBHxA@mail.gmail.com>
+Subject: Re: [PATCH 6.4 0/6] 6.4.3-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jul 09, 2023 at 10:45:16PM +0200, Greg Kroah-Hartman wrote:
+Hi Greg
+
+On Mon, Jul 10, 2023 at 5:45=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.4.3 release.
 > There are 6 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Tue, 11 Jul 2023 20:38:10 +0000.
 > Anything received after that time might be too late.
-> 
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.4.3-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.4.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Build results:
-	total: 157 pass: 157 fail: 0
-Qemu test results:
-	total: 520 pass: 520 fail: 0
+6.4.3-rc2 tested.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-Guenter
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64), arch linux)
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
