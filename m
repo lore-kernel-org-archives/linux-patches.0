@@ -1,32 +1,32 @@
-Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2129.outbound.protection.outlook.com [40.107.114.129])
+Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2104.outbound.protection.outlook.com [40.107.114.104])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D45111C96
-	for <patches@lists.linux.dev>; Mon, 10 Jul 2023 14:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD4611C96
+	for <patches@lists.linux.dev>; Mon, 10 Jul 2023 14:19:25 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QE5L7axDZXl+eF9mylLaWQuYglyMbt202/IwRCMeDxOrWNQXUuTJ5zJG2ibtRq3S1RZO3q4qiesCHDYhxiLBehmeYpJRowUQSd3z1MyqpUuTfqTbEKIVKsCGZDj9aOR+LI0oZq+K94q2H8r+qGa60W22JOVCINPiQeWsP0PD+lbGYV6kRD6VuyBllRRhqoBRq3vnrYGetsX+CDdeuV4ewW+equc2fNWDe2gRsd84GXebfCWarumcY999ClEsDk3H6ZWaSMMst7JcWm1PkFFBe+cNwg7yHR2vDHoLoRH8q+qJW7BeKY9aLtQ6c0bz0p8bbDStr/qAIcpvQQ0lchr3BA==
+ b=WpoYN0kiHtgHnyxk22oUvtmQ1J3Ii9HFhsheo9xA7AqudgGwxgq2D6Gd1hvrYBepAz0xgxws3h9z1NdIQG/dlhfBUxQNJVXbR+TjkxbSlrujPs40jLZYpiH7scax2SsOaJRO8/RR8/0DLsUuddFmFM+RW3KnlgxP0LU2g9mM77Sw84XBVJSOVbXsqMd+08tRQmROhiwCCQxGEtjqFXM7gPjGPSinBjzZTEmaxGxymlDYKsd1kVFNQpDyG3DQYjptH9cx9iqj2ebwA2bz+AoHgVOVpLRIzHH25CJZIkG23dVeeQzjaKn7nA7kWwGK0QbpJJau/XWcQz82Yek2sCRB3g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/Go/qEYT/FyQXH9z2U2NBDapdDuOAdX6whj4yiUNYKs=;
- b=lDmz+vn4J7/rStY7NhMi97fQgZ3CVcDVbSaczaL7ArdR0X6w9Mq8p/+rZNzv3LPLM9J5GwR/2c45Cs8ZUte6f95LSk5ZtyK6VqUzPZb4rGSzwNSTcDkUCTAuqwIBUYUiPTOjBZ+TH4RB1LySqdkSo8N1QUvxo3WLe03rtwFJE9Xhxc3K8fZrM/srkQIbdqAZo04L9XtwpkuZuKmnNasdXjuuan0b6I0zAXZdIrkj+YixHOFgCEN27Sjeb4y5M3pHV7JNGu5aK9T5JYWUjOK9h7ga4bw4B97bsLTZsMkSi3xRE1rzYBcW0hdCAw0HMt6YijdDhMlESYk62iYz+92C7w==
+ bh=+jWgIOH51bTOMBRx9uwp0/8saAFS8fIOUYXCQ9rUBSA=;
+ b=jchDM0sQ+VVjBB4wDl0K9yxAEZnH8p/io3XnHBzV224JztmBUhHcyChuH5S9VHpPXuigZzFLQiM/MqSJJyYY4ciG6BeV0yMRkgoIl7VVQXCrNRYVRHN3NB8hXv/krycQZvWV1O57CDA81grd+BqCwe34v98Rw+qp2wo9XSpuN9/RnSIY1h2UrnXVZjaAgDKzrd5lQHvB0A6fsKflklYOc4eB7pF10UC5MXuwKGKh5Z3yip3CE3rFHM+7jroRiEQmTn0nGmtiM57FrdOZ/J5aaY6rR3kDvlv/OutpEzs7TDpxrD+GkRwDODEd0lQMXKv1gw01+KqboHCuYGss/qDipw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
  dkim=pass header.d=renesas.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/Go/qEYT/FyQXH9z2U2NBDapdDuOAdX6whj4yiUNYKs=;
- b=NBmvIqyw0GZvZzCGFrhHGz9LQ6N6Af37zId14lFIqGYUuhW0QfiLCm7LRZjtzU8o8GFP0ZyGC3MGytnSpvfmMpCZuZSPRtcqR37GyjFDpLFnen5M2I//NMrFcy1tbj96A/B1Qt56Pg0GLDnbz6OaxjCGiJeV5UAa/kaYOf/k0iY=
+ bh=+jWgIOH51bTOMBRx9uwp0/8saAFS8fIOUYXCQ9rUBSA=;
+ b=mjUviFBHeLcCxzGof2pfZp3Lx3zdmMHUw1QRdV1wiz+EkE4wCrpleoaBinV0ffA1iFs0JtxGZVxud2pkAcZ1DKB7rfs3DF5vMxl5zVgY+XxvlahyJJHBmWvCd2ssup08QU2/I4wztkQOVzk4RjK4GMwDuSsKfjIN2q3vklXLxpE=
 Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
  by TY3PR01MB11259.jpnprd01.prod.outlook.com (2603:1096:400:3d7::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.31; Mon, 10 Jul
- 2023 14:18:21 +0000
+ 2023 14:19:23 +0000
 Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
  ([fe80::6f67:84a4:13d9:2f28]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
  ([fe80::6f67:84a4:13d9:2f28%4]) with mapi id 15.20.6565.028; Mon, 10 Jul 2023
- 14:18:21 +0000
+ 14:19:23 +0000
 From: Chris Paterson <Chris.Paterson2@renesas.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
 	<stable@vger.kernel.org>
@@ -41,14 +41,14 @@ CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
 	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
 	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
 	"rwarsow@gmx.de" <rwarsow@gmx.de>, "conor@kernel.org" <conor@kernel.org>
-Subject: RE: [PATCH 6.3 000/426] 6.3.13-rc3 review
-Thread-Topic: [PATCH 6.3 000/426] 6.3.13-rc3 review
-Thread-Index: AQHZsvJ1mXxVL4YMfEWhRkQoYwRBqa+zDIJg
-Date: Mon, 10 Jul 2023 14:18:21 +0000
+Subject: RE: [PATCH 6.4 0/6] 6.4.3-rc2 review
+Thread-Topic: [PATCH 6.4 0/6] 6.4.3-rc2 review
+Thread-Index: AQHZsqZUbbvybBc3W0yYcUqMddzI7K+zDYMw
+Date: Mon, 10 Jul 2023 14:19:23 +0000
 Message-ID:
- <TY2PR01MB378835A1769A6747F00189D2B730A@TY2PR01MB3788.jpnprd01.prod.outlook.com>
-References: <20230710054619.475084489@linuxfoundation.org>
-In-Reply-To: <20230710054619.475084489@linuxfoundation.org>
+ <TY2PR01MB3788B6F5CEDF6800E56BA784B730A@TY2PR01MB3788.jpnprd01.prod.outlook.com>
+References: <20230709203826.141774942@linuxfoundation.org>
+In-Reply-To: <20230709203826.141774942@linuxfoundation.org>
 Accept-Language: en-US, en-GB
 Content-Language: en-US
 X-MS-Has-Attach:
@@ -57,45 +57,45 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=renesas.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|TY3PR01MB11259:EE_
-x-ms-office365-filtering-correlation-id: acd2764c-0832-4a62-a185-08db815083f4
+x-ms-office365-filtering-correlation-id: 11c91919-40ad-4081-4aea-08db8150a8ed
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
 x-microsoft-antispam-message-info:
- uOoVpZ4VbsWoC592rQvhRdldWB5fWo8wqikJMSY/NBcKpW8bQG1MyhGGoxEB4nHHvsfl02gtpTjRxozmoJ8vp2zFir/0Dzdn9W+SmUNVxJUmGYKMqvc3mZUwN8GP0nG+NlZaloMaEqhBWFsUv3Q6rHuVGigqmer5RLoHqywBKtOSYo1YkKJZVI03aiFkbCrS6/0TJCItiKmzkwl+piY9AKdcOOvoc65mPtApABJN/R4Kf5TJBxqy03jYQUpSpmkF6xpnFypwj3cdkrELA//jdUETAqmufPja27lrnBGpttmby4F/PqMj0msNbmch9TBFetrj9t09jZw8Oss7LX5ZM94CSlVaYta6ed5CCklFC1ZpUeqikgWR2KrGFraNkhFvLvhNRXYKxACZ6g+upxLwgfOGYq4TRVF9dqzea4StmVCc1kK/9rOzInIE0qFAqjnsDkx3n88KMgtENgBHPVVe5Vbxa0i4iVMylxtzyUtbDLNMZcBU6NxmM5lCx7kTF1pEbuHW8CON801dvBOl646R8wgbLQOPfGDWkKTX9vkSoBlbXRvFqcWa3e0sqfTd2nNplhx4KpJE/+yo9FvnS9E9rOrLoynhZO9PeikS5gMJn6t2t7tb5jJjM7Rzup3yPKUSr3C57L51g7OyV5ssJP/43A==
+ UxQkGu77rAD7gkWlixARlWBY/g/3frmiwiGwtNoYbaNESlPMHRPaXuSlFsdgT8lLntRP1cc6Gqz9qP9vUd3R1C5e7HG1cjo/6z7WUiYrrBV7yLsYqxaGi6/9MU6mSNH48jbtkFsb/zcItPMYnL+m5eR/Q9vxVjohehwyPEXwBk+dgktn962g2zVzz5ZH+iIuWrpgdqnFvUfLw1TjUfK/dqxRJQl+9cs2GWx8ruELs3oHZ+tH95afo7sU3PI30XJ+DKhea7WdPsnzlnVFpmSvnc94W8t9TLB7viXq+6K9g/o978LSynIGwsytQJmVzcJNaMWjMwUwjTciz75NK4kLNk/w2GWMc2Snf0JXkFbRFq8zAgc2k+8hJKE6Z+ECFZX3HzPsav9k7Fbm52usKDipc065y3asqBy4ydwfG1dSjDyxuUvha2fX3FuubnfMKx2ZcdprxWu6Ufvxs8rI075o4ALXwHz8SZBLHXwBKXGZ4b/cwXmUETdtl4KmMVVCJ2w/fpY0b+fW8QrsfuVOcaYVvvnbwwqF0s75Ldh9EzJABZlxuhuuV7CCOM++NKiz8zA1W4ggYRi/GIHyImEWOea43Fsg7EZYsVArRys6sqS0MRkVccPvALmpkqKxaLFAqObeEQRzvM6hRgwmMW4xiU+FSA==
 x-forefront-antispam-report:
  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(39860400002)(396003)(366004)(346002)(376002)(451199021)(7696005)(33656002)(71200400001)(478600001)(26005)(6506007)(186003)(9686003)(55016003)(966005)(316002)(2906002)(41300700001)(4744005)(38100700002)(122000001)(64756008)(66446008)(66476007)(76116006)(66946007)(66556008)(4326008)(86362001)(7416002)(8676002)(8936002)(38070700005)(5660300002)(52536014)(110136005)(54906003);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?Windows-1252?Q?1JfYtZoABKBA0So0Y4+KeCyZbWwqDq7GHRvU3x5ITyjBudQPQzw3WE+Q?=
- =?Windows-1252?Q?Y9P26ZHOao5qJU2WGuizNLchusvOZRJ4v+NAfx2qUOLb57VacXuC6IB4?=
- =?Windows-1252?Q?iTwA4uTZbS/dtZQqTFMfSzasrvW9iLu4ubJ3FLRmEZIvRj3eSEcpDU3l?=
- =?Windows-1252?Q?eyV8zXLj9W4hejWlucvpPLvRzfLwpE65Ur9eRxHcYtOSGedmwqx8ZfuU?=
- =?Windows-1252?Q?TLfm3E1n9QnN258O8rsmO2+H+pkrcQRLv/7etJ3EHfSXauOZGfLRCO4+?=
- =?Windows-1252?Q?ng2SlSNFtkqTYt78+4nkcbUCPYReHoT6Y43W/j1tVZ67QfD7gNCe2lBW?=
- =?Windows-1252?Q?vNT+KsPTBEW9A/yQxnKQ267jQP7OaWHB8gt/EPDqT8yY0PmycenBf17z?=
- =?Windows-1252?Q?/FiUFsPeIK2t8NwHPpQGWe68ME++gdOXD0NwFdpmlSS4dsh0n7gnz475?=
- =?Windows-1252?Q?66JqMplLheHp4lBJlYMkYkgUWLhDGayr8veti6PIvmU1SE7OP1B6gBSh?=
- =?Windows-1252?Q?yN16NJDyY1cabYQKxMGOioZMJWzuIlONas0R9e3nDGzLv0gzTZkds6I5?=
- =?Windows-1252?Q?RJSW0N+64AHR6JYR4BGL+iquREEyAPCOHhu0N4WjWcNFOfftXc3rviOs?=
- =?Windows-1252?Q?1OU0NduKbUdgzaBNVyRnlzMhSjhAQuUSWY0qNTwI9DlAfuXLjSJTpwwH?=
- =?Windows-1252?Q?nMcfyeoTWhAp3EC/3SZCAD3b23EuwRDHJTim7V4jxG5A9IAzbJ5ykzDI?=
- =?Windows-1252?Q?VCRkjhDwX10EvytMY9aatXgJpkUumgpQ9mCnaIuTn6jNcSAaPzKY1dGc?=
- =?Windows-1252?Q?ZdtDpxTnaYR1J6cATPt659+4b7B6bVjYWJhe1lRK04fhGYfNIwdJRf9F?=
- =?Windows-1252?Q?Lo5c5JYrFiNOjEDD3USCMFWSWoIrHWfkiq8h6TVIxgqINibfTRSHujWD?=
- =?Windows-1252?Q?kIlEN3wvLotLxpaGHPG6Vc8ZJmdGBEFoiYLVsndureKPhI1Rn8TTma1K?=
- =?Windows-1252?Q?cyIgPp7AKFUQqA2OJ1uaPNfiD7hYWcgGa5jSIWk1hR/l5h2N5LFGeAp0?=
- =?Windows-1252?Q?2f9/FjzsIG6FalNTzvd1K9Q6pyDdmEvGftDFdT+z8hgRqOWvjy6Jx+PU?=
- =?Windows-1252?Q?7gnNFD5+ffg9QjU7u4ekhSrnWKUsCfALFacpSJND/K3W7MNhM256K57/?=
- =?Windows-1252?Q?w4dqLrqdWnq/RqW4JENnNZ4qS6GJCAOow2r9RmbDgfnWNFsKAKV9gDTm?=
- =?Windows-1252?Q?qiGNXL2SZ1bSMhNXiOCAVhGhz30xZNpAElqyVxxrV2Ph8TOZMOcwaqLZ?=
- =?Windows-1252?Q?v8xwMzg9/0GXO6J6RD1QCEzissnoAIaOOIUhTtlY1HfDhl5jNG07R/2i?=
- =?Windows-1252?Q?QtkJSsDb50lplWki6BS8AJLzom8NFjFg5ZIp8v4MN7/hgJhV6OSUKbAZ?=
- =?Windows-1252?Q?Ikd/pAEF8a7+lxEeFohagb35GYfNLP66bnXD6m2RsFDT4MQagO9+yNLX?=
- =?Windows-1252?Q?5Zyrxlpxtl2FLfYm3YdDu8mqWze04NpA5QH5IkmOWyIOFSe2LrWCylN/?=
- =?Windows-1252?Q?6ErMjnEgDrBpBgqNhpTwII9EdKbMCFP4M6J+H57/FL4j5Y8rHEGtZCF5?=
- =?Windows-1252?Q?oufP7HO4sBOE45EHUMJ5lG0dbMcrri3UrMVfekA1VqbhTYV0VjP/meQD?=
- =?Windows-1252?Q?50E+wV/UeM0VvqPRylVWravXR0U2C9sCo5iCV8SM/khK3YcGJyleUA?=
+ =?Windows-1252?Q?u62XlYmZ631IKq4iqT8LLlHAU+TUcSPccpZ2yUYukTO8jcX/uExNr450?=
+ =?Windows-1252?Q?CW6HPQc8ox7J89sG/IqSZygpV7qokDGOy9mxZOs3scztMKEA9IDu0zjn?=
+ =?Windows-1252?Q?9x/AcgNp1hyBHICelSTkJeepk7IXa1Ze42H4IdKfGnmXW8OmYhreH+Cq?=
+ =?Windows-1252?Q?50sho1lpictg8UWW9mkVrH7brEofh0HBSCu+QyAeucedoiTkVC2GTQgL?=
+ =?Windows-1252?Q?SNoOfaG89onENteha/By1zv6VaLdgWE3CwDdhnL+nGW6rGaD3CO9zCsy?=
+ =?Windows-1252?Q?7Ren8pMmx9fEALrxM4DyNEneNw9n9d18fvwZADhWf63HNfJvrRReortB?=
+ =?Windows-1252?Q?nLfCscXmcoK6LzYgR5yZV6QyZcmYMFaC6o0FUEz/F5VIgTbeogcZWZTL?=
+ =?Windows-1252?Q?TJ93hX0yUEkGBuG2amooeWuB/Z2mLK2zqgRpvmQOISObby7POWNxr/bn?=
+ =?Windows-1252?Q?nv0O7HkL42IzmkRa0FyX0xGQTGQwwO/4Q2wPehPgZj6J/yLr6GJmLYHV?=
+ =?Windows-1252?Q?w1CfEDGXFhXPtZxlX87w/vf7HlguUdMxmMCbV1t4MpoO90EkDVqE8k0u?=
+ =?Windows-1252?Q?apBc+90PBR0mfHfjoXJaEGLMq43enf9p7LEJk0ZNjplVfkeMaI2Thebb?=
+ =?Windows-1252?Q?mfwbcRQoUldkPLeQY8XLrJJEkNbFsgl6kKx0Tj3gxLUwQXIK9guVv1R7?=
+ =?Windows-1252?Q?jyGXTqqh5tmNNpufReUNdx9xiLR9OInbi8FZ4+wlyrpsBPv8XN9pdANe?=
+ =?Windows-1252?Q?clvAzzDvo0pqpfNyMAAUC96vVyzyLZBT6Okp/fKP3Kn87bxNvxsiIEHo?=
+ =?Windows-1252?Q?2eOrarSbP081EOUSIPbx1SByW4Rz6392Dh9n6DlbQ9PxXYL5IkWSxzuJ?=
+ =?Windows-1252?Q?lUmARjHc9xnvY0SOAwRxEkE2LyJ6o2bf6VhLl3zZages7XB30qKW1hOe?=
+ =?Windows-1252?Q?OY99ZdZW/XQV6N0jmtjHy5lsceusUMWR/n0a2MqZyh53/McNhX93jw17?=
+ =?Windows-1252?Q?6xIVkVUaqoMYu1bb1II3uLCxMIHislEv9iw/WVvHrHjFrGBxgqOW43RT?=
+ =?Windows-1252?Q?wpXVRj/6IYHqLpM47OwZUA/rQLo69cEOBa7XkoPIyJ7y2Ccd57L23pio?=
+ =?Windows-1252?Q?yGBECacHLJMGPzVCSgToUtB5Se/0aOFNoyXg3vXErCqwq3f7Z3oGB1+p?=
+ =?Windows-1252?Q?S2StwPQ05X3q38xHgkG2B2nJs+g3aoIoR67fC1djDtlU6wnv3ZOhYts5?=
+ =?Windows-1252?Q?xYXje3r2EznS6hWS92ySXgMOF+5+qwGPGyoWKhs4OmVHBY3eElT89lpJ?=
+ =?Windows-1252?Q?r07hAPb/l3zHNJX0S7AHs/9XaxKM7zK5tDqFbda3PUd9rQxIxRco9lHN?=
+ =?Windows-1252?Q?EmkkrZA7wsJ6Rmpuvdi4FvjekgeCLndHalgv5GrvwjbyuRtMVg0cQbOS?=
+ =?Windows-1252?Q?OjvwJWW8R2zdIVjHoKS+KW0XX3uVv1zXd1TPIqHfeIh8q1BdNOjjTtoj?=
+ =?Windows-1252?Q?F5FKgkCa79gqAsCf6logi8SGBXVKIqMvj1IxNXrt/1ytUQEeJk+jDcmK?=
+ =?Windows-1252?Q?sAvlCB2G3MgfEKpvJZWXsg1BIUjY9hi2zaOAjTstJLMHad+w6yZRbWBU?=
+ =?Windows-1252?Q?P5+FZ16WOT4dEBzReuZSXoJXlGs9wm8ntZ0PcMJi6FTfDiqx6SpiL6Ye?=
+ =?Windows-1252?Q?LtxC/iwE8+e6kI3wA9ZPIX+WmX86cZaweMJH1KBydpwnMzLqmfh5XQ?=
  =?Windows-1252?Q?=3D=3D?=
 Content-Type: text/plain; charset="Windows-1252"
 Content-Transfer-Encoding: quoted-printable
@@ -108,36 +108,36 @@ MIME-Version: 1.0
 X-OriginatorOrg: renesas.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: acd2764c-0832-4a62-a185-08db815083f4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jul 2023 14:18:21.3724
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11c91919-40ad-4081-4aea-08db8150a8ed
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jul 2023 14:19:23.4284
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 0e9luPr2Nuef1QukLieADYOp6I79E31KW3QNj9C57v8dATOnMq799iE5S6hKsQD7HOOvlbnEBoAnd7QX++eJQ2ZUCSJIT0ZJQhE4ypxg96o=
+X-MS-Exchange-CrossTenant-userprincipalname: b1lsA72ky8kGJEGsrriODbph56P9Aj3MO/F8Jc+CJioADKOfkqHwsYBlXgIWxMFQ3G6Risf4cvkTY1UFD2no3Hm8XGLh6O7MTJEqQJ3XwVI=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY3PR01MB11259
 
 Hello Greg,
 
 > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Sent: Monday, July 10, 2023 6:47 AM
+> Sent: Sunday, July 9, 2023 9:45 PM
 >=20
-> This is the start of the stable review cycle for the 6.3.13 release.
-> There are 426 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.4.3 release.
+> There are 6 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >=20
-> Responses should be made by Wed, 12 Jul 2023 05:45:32 +0000.
+> Responses should be made by Tue, 11 Jul 2023 20:38:10 +0000.
 > Anything received after that time might be too late.
 
 Thank you for the release!
 
-CIP configurations built and booted okay with Linux 6.3.13-rc3 (b95b5708242=
-0):
+CIP configurations built and booted okay with Linux 6.4.3-rc2 (3e37df3ffd9a=
+):
 https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/9=
-25837172
+25644687
 https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
-ux-6.3.y
+ux-6.4.y
 
 Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
 
