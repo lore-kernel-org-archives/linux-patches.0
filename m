@@ -1,196 +1,136 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2056.outbound.protection.outlook.com [40.107.244.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3801C182AE
-	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 09:56:49 +0000 (UTC)
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-57704af0e64so61439447b3.0
-        for <patches@lists.linux.dev>; Tue, 11 Jul 2023 02:56:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1689069408; x=1691661408;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WVqEtgaoR84mlWb1xo2bD1CrEq4VPJW4ZXsIrXT2SxY=;
-        b=JiS7r4oSjpoYeZAQokPiDZbRIRNXbzoWPZL7NF+5rzbH6mH2Rcy5+beBc9ND3C54Cz
-         Aus5Cg913qXuDxwKJCGdRWmHr05KJU0rJAHeg88AZD7kauK/bKXdTeDKY4hHqsiAXQQL
-         giwWgikoRtreQUO/DBn4FxwrAoqmcTXpHQalZUi4p2Udagcl0C2V8fzJ4YAZqbRHjs39
-         J4t57iEQpS8/MHp0zwe9jwefzUlWJejQ8XzKTLzsg3oq45gSz8Ajf7nQvIF4XLItT28/
-         qIgL6zZDPEwioH0kLhbOCQCI7+NjZMZFYtDBdbaMW78mZpZzOwkCwthKHdajV8J2epzt
-         5zxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689069408; x=1691661408;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WVqEtgaoR84mlWb1xo2bD1CrEq4VPJW4ZXsIrXT2SxY=;
-        b=BKRK0vsZXeG34toYkippNr2QkPxIMCYYPLcMiRMXkhZnKCCQmDQR02zRvE+XRY3Hm9
-         Lg8MQFrp8a5Pg9lgcL15ZuVpi/H/51HBsGebXBXI+nJm4lu/oA3A0fI8lecZGix1qXOA
-         e+bg4NwC9elFFTr1y3kGLf749ubjvHxoGZHTLSzED3uOMwN4Bfih3f59113YkEarTVPZ
-         IqZrevdf6Ltci6xwqadOkT6qsN1GNEcT5mC9vccDhxJ7MZaXuBPajmG1WJh0EsF2JyvP
-         FEWqYpOBZennugTTYdk5e2tj3Th312ORf+uLh5jYchcfcs6XZRFZ91ivjX35fZagZKOH
-         5vXg==
-X-Gm-Message-State: ABy/qLYRdZeqte1qnlaz3CNx7o6YxQCYAPU/cKrKSfHS+Q3hU20eHwks
-	Aep4AUJHLT+FiUQm2OC8TyT3A2LTTig8RNQ=
-X-Google-Smtp-Source: APBJJlFwdJ2E18U3JX8SbmAFB8eni9sLplKZ6ovLgHTWvsced2a62emZj0SesAoyMkw4Bdoxegyik2qJMVn43mc=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a81:764f:0:b0:57a:141f:b4f5 with SMTP id
- j15-20020a81764f000000b0057a141fb4f5mr139132ywk.7.1689069408101; Tue, 11 Jul
- 2023 02:56:48 -0700 (PDT)
-Date: Tue, 11 Jul 2023 09:33:03 +0000
-In-Reply-To: <20230711093303.1433770-1-aliceryhl@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D49617AD4
+	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 10:15:25 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=TDBG1fepRLxUOz1r1TLxh9NVNBDwWShxW28xnwCvj5sjWMrV2xV5reMlR/xU99S+edZYDIhee5UYgYIYgncdcc4de1ZNyCObGPTxcpQXJttj/raIEyFdiXYijl0DLbGzMrNzqtbGAlMdzNKyRlxqDO+nptbf4pDSiu1k9tUBdagW5aVB8/wfsPYqXY5eo24OD1zfhE22qfl+AyLAoaPfWyge6XTgenQJCwq8Jy+zA0PhUB3+m8NLBooc3yoUltiADuJfVcNK456jdcwB9NzhcwVlS07m1Hy7e52fvbJbWCshQmVta7Y6YrR1pdBYx/SvGvFcZOrehZ2hCPhrhYx1DA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bgE87rkP2JPSMAeBo5lIxDWbsA6msdbeXMSiAJW/QI0=;
+ b=bHCDVJZDVNLvYXA0kVQnXubQV2UTVxe56cugae7D8fLWkify0kMHs9agsoasnQ6sg+zkZyUgTFjTs3JBYbnHckDM27omtZ4aRhRepqTPL0yot2VbKpQaPmVKc3OzLayac3QDalii6vljFHOmd1enRc9tUVXJ5pYvGFQUQkSHeqfCZW9MSE5TaqgSvLqHEDhPIk8DXB3Ra/rDxC8AtYS2/CF3rCA7YEVB4eHpwnpEQhBV9zq3xMxdru6BQDO2QLaOwbwPkxjJgr5JvBp1HuUmqgF+aUiAisHSsdLQsBaK426k+6aEOCoGx7zGfFBkLkN/6IkJyw3JYPMEBnkNC2+UyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bgE87rkP2JPSMAeBo5lIxDWbsA6msdbeXMSiAJW/QI0=;
+ b=m7Jjgryl4YtqC9x0y9KOmLGNEL7HcfTziq0B7UTYEN1VmmMZvUFXolPKil3dS+Paqfgy98+wml9TpveVQA6Z7xYUYl85zY2+MrK+7UQjpuJ5TOieo0RJo8/EsDN8oFhSl2X7dlxqjVQjylwZ+OWp+4meoY0iNpFgIJ/GM6Cdc3yGhG4M2GT/PaVNsxiyz+h+ztrh16Fk7yvWFXEKcUcZn9PQm89CHcKDuDNxnIopDLUA/6ZjjZdFkzvcbtxW8sKm9pV32LqGmGYDZUDbM1a8VZIDQseSwj2nzxc6J4UjgOw8S/9oszXxVr48rtQ1PVm4Jzq6T1q5hYw9268Cks8Wng==
+Received: from MW4PR03CA0241.namprd03.prod.outlook.com (2603:10b6:303:b4::6)
+ by SA3PR12MB7806.namprd12.prod.outlook.com (2603:10b6:806:31d::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.30; Tue, 11 Jul
+ 2023 10:15:23 +0000
+Received: from CO1NAM11FT107.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:303:b4:cafe::d8) by MW4PR03CA0241.outlook.office365.com
+ (2603:10b6:303:b4::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6565.31 via Frontend
+ Transport; Tue, 11 Jul 2023 10:15:23 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CO1NAM11FT107.mail.protection.outlook.com (10.13.175.97) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6588.20 via Frontend Transport; Tue, 11 Jul 2023 10:15:22 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Tue, 11 Jul 2023
+ 03:15:11 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.37; Tue, 11 Jul 2023 03:15:10 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Tue, 11 Jul 2023 03:15:10 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <linux-tegra@vger.kernel.org>,
+	<stable@vger.kernel.org>
+Subject: Re: [PATCH 6.3 000/424] 6.3.13-rc4 review
+In-Reply-To: <20230710142227.965586663@linuxfoundation.org>
+References: <20230710142227.965586663@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20230711093303.1433770-1-aliceryhl@google.com>
-X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
-Message-ID: <20230711093303.1433770-10-aliceryhl@google.com>
-Subject: [PATCH v3 9/9] rust: workqueue: add examples
-From: Alice Ryhl <aliceryhl@google.com>
-To: rust-for-linux@vger.kernel.org, Tejun Heo <tj@kernel.org>, 
-	Miguel Ojeda <ojeda@kernel.org>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, 
-	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
-	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Martin Rodriguez Reboredo <yakoyoku@gmail.com>, 
-	Andreas Hindborg <nmi@metaspace.dk>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Message-ID: <e11d34c0-0b89-410e-a162-4be35ba8695b@drhqmail202.nvidia.com>
+Date: Tue, 11 Jul 2023 03:15:10 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT107:EE_|SA3PR12MB7806:EE_
+X-MS-Office365-Filtering-Correlation-Id: 901dba81-60a2-4d2c-3479-08db81f7bcf3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	7zpwBGVG+EKo8e2GgYnCzVcC5Is7MsO1XfjcHa6ze/GFOuBi1VwJD3x1IXfxgPjccukdNLBtTrQU9VefefjTZdd8JewFFUE8k3LeHCWsStH6DKtzGfuTgOliw/CaBfm9Lq1oxnBxmEvx12WpOd156DtZHOFmVcyx/3hBw/Zum96DQ4xtm1iPHt6z4Nl79kHlao1VKcKtHdoty0b0ciQeaw1SuZdbLIdJNZAUXP5vCqAtX8Gsg7fw11VYr931R5ZYZdJDUfIYaTGTplQfdWk0LepVVhFzrJ08xFZhTImv+/Prb5RGupurQ1ezc11HAGT0BJfREAJ8ziWKf6EsDx1bnoTFkbcD7WK8GzP/zhdrvH17k6XfT0wHuKuoY0va02Sq79oHgK2n6NPBUDC4v4ZWhyoS351W5OBrvMyKJWuZ0I2+8FZp0Dz8+9J+9emwvwX3ySrF0tR9Ho9sZfsXGW4GTXpu6gsJBp/cCIAkYnZ7DK3xqD4ZXLy2CcnUBnJOeehE2fTObYUdeetNrJ6Fkkyl5nHm/A5EKPgtUl6rmoj5CTTJUN2eXg36WG9g/V4czl/KpFhFDLB+IIDJlq129b+UQjd8VTkqLNyFhHmQzQrco7eFBPqhdG+N42McMGSVdfvpDwQEAI3uBtg8ViyYPGZ08clapYg1IDNJnpvbJqmAmR8lW4MAZ9ZcqOckOpmtOMdrAmW1RkaLL22SyuImnf6im4OPkB1f72gj2mO1nIbQFHaM6tLqGNcxQzzoUxlRpcnJL80JcveralUHCNFd9RjZAx9jv1uVNT0GuWbj7mXv/8o=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(376002)(39860400002)(136003)(346002)(396003)(451199021)(36840700001)(40470700004)(46966006)(40460700003)(186003)(26005)(966005)(36860700001)(478600001)(426003)(336012)(4326008)(41300700001)(47076005)(2906002)(5660300002)(7416002)(316002)(8936002)(8676002)(6916009)(70586007)(70206006)(54906003)(40480700001)(356005)(7636003)(82310400005)(86362001)(31696002)(82740400003)(31686004);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jul 2023 10:15:22.9080
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 901dba81-60a2-4d2c-3479-08db81f7bcf3
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1NAM11FT107.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB7806
 
-This adds two examples of how to use the workqueue. The first example
-shows how to use it when you only have one `work_struct` field, and the
-second example shows how to use it when you have multiple `work_struct`
-fields.
+On Mon, 10 Jul 2023 16:23:32 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.3.13 release.
+> There are 424 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 12 Jul 2023 14:21:05 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.13-rc4.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Andreas Hindborg (Samsung) <nmi@metaspace.dk>
-Reviewed-by: Benno Lossin <benno.lossin@proton.me>
----
-v2 -> v3:
- * Use LockClassKey in constructors in examples.
- * Add Reviewed-by from Martin, Gary, Andreas, Benno.
+All tests passing for Tegra ...
 
- rust/kernel/workqueue.rs | 104 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
+Test results for stable-v6.3:
+    7 builds:	7 pass, 0 fail
+    22 boots:	22 pass, 0 fail
+    104 tests:	104 pass, 0 fail
 
-diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-index 3a3a8b52bfd9..482d3eeae7d8 100644
---- a/rust/kernel/workqueue.rs
-+++ b/rust/kernel/workqueue.rs
-@@ -26,6 +26,110 @@
- //!  * The `WorkItemPointer` trait is implemented for the pointer type that points at a something
- //!    that implements `WorkItem`.
- //!
-+//! ## Example
-+//!
-+//! This example defines a struct that holds an integer and can be scheduled on the workqueue. When
-+//! the struct is executed, it will print the integer. Since there is only one `work_struct` field,
-+//! we do not need to specify ids for the fields.
-+//!
-+//! ```
-+//! use kernel::prelude::*;
-+//! use kernel::sync::Arc;
-+//! use kernel::workqueue::{self, Work, WorkItem};
-+//!
-+//! #[pin_data]
-+//! struct MyStruct {
-+//!     value: i32,
-+//!     #[pin]
-+//!     work: Work<MyStruct>,
-+//! }
-+//!
-+//! impl_has_work! {
-+//!     impl HasWork<Self> for MyStruct { self.work }
-+//! }
-+//!
-+//! impl MyStruct {
-+//!     fn new(value: i32) -> Result<Arc<Self>> {
-+//!         Arc::pin_init(pin_init!(MyStruct {
-+//!             value,
-+//!             work <- Work::new(kernel::static_lock_class!()),
-+//!         }))
-+//!     }
-+//! }
-+//!
-+//! impl WorkItem for MyStruct {
-+//!     type Pointer = Arc<MyStruct>;
-+//!
-+//!     fn run(this: Arc<MyStruct>) {
-+//!         pr_info!("The value is: {}", this.value);
-+//!     }
-+//! }
-+//!
-+//! /// This method will enqueue the struct for execution on the system workqueue, where its value
-+//! /// will be printed.
-+//! fn print_later(val: Arc<MyStruct>) {
-+//!     let _ = workqueue::system().enqueue(val);
-+//! }
-+//! ```
-+//!
-+//! The following example shows how multiple `work_struct` fields can be used:
-+//!
-+//! ```
-+//! use kernel::prelude::*;
-+//! use kernel::sync::Arc;
-+//! use kernel::workqueue::{self, Work, WorkItem};
-+//!
-+//! #[pin_data]
-+//! struct MyStruct {
-+//!     value_1: i32,
-+//!     value_2: i32,
-+//!     #[pin]
-+//!     work_1: Work<MyStruct, 1>,
-+//!     #[pin]
-+//!     work_2: Work<MyStruct, 2>,
-+//! }
-+//!
-+//! impl_has_work! {
-+//!     impl HasWork<Self, 1> for MyStruct { self.work_1 }
-+//!     impl HasWork<Self, 2> for MyStruct { self.work_2 }
-+//! }
-+//!
-+//! impl MyStruct {
-+//!     fn new(value_1: i32, value_2: i32) -> Result<Arc<Self>> {
-+//!         Arc::pin_init(pin_init!(MyStruct {
-+//!             value_1,
-+//!             value_2,
-+//!             work_1 <- Work::new(kernel::static_lock_class!()),
-+//!             work_2 <- Work::new(kernel::static_lock_class!()),
-+//!         }))
-+//!     }
-+//! }
-+//!
-+//! impl WorkItem<1> for MyStruct {
-+//!     type Pointer = Arc<MyStruct>;
-+//!
-+//!     fn run(this: Arc<MyStruct>) {
-+//!         pr_info!("The value is: {}", this.value_1);
-+//!     }
-+//! }
-+//!
-+//! impl WorkItem<2> for MyStruct {
-+//!     type Pointer = Arc<MyStruct>;
-+//!
-+//!     fn run(this: Arc<MyStruct>) {
-+//!         pr_info!("The second value is: {}", this.value_2);
-+//!     }
-+//! }
-+//!
-+//! fn print_1_later(val: Arc<MyStruct>) {
-+//!     let _ = workqueue::system().enqueue::<Arc<MyStruct>, 1>(val);
-+//! }
-+//!
-+//! fn print_2_later(val: Arc<MyStruct>) {
-+//!     let _ = workqueue::system().enqueue::<Arc<MyStruct>, 2>(val);
-+//! }
-+//! ```
-+//!
- //! C header: [`include/linux/workqueue.h`](../../../../include/linux/workqueue.h)
- 
- use crate::{bindings, prelude::*, sync::Arc, sync::LockClassKey, types::Opaque};
--- 
-2.41.0.255.g8b1d071c50-goog
+Linux version:	6.3.13-rc4-g4882b85b0b1d
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra210-p2371-2180, tegra210-p3450-0000,
+                tegra30-cardhu-a04
 
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
