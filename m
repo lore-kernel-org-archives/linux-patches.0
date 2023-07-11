@@ -1,275 +1,84 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35EF1DDEE
-	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 22:24:20 +0000 (UTC)
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-98de21518fbso803059666b.0
-        for <patches@lists.linux.dev>; Tue, 11 Jul 2023 15:24:20 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDD537A
+	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 23:44:59 +0000 (UTC)
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-bfe6ea01ff5so7213042276.3
+        for <patches@lists.linux.dev>; Tue, 11 Jul 2023 16:44:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689114259; x=1691706259;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1689119098; x=1691711098;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PrcIyOaJSd/7YI26QorfI+WMWDNNra1F3KRdh8w9hnY=;
-        b=hvI09kJNWn86TsfOg083UNhM3eA/skdkjwUzAqPzGkti80sK8buNYmOvCaVZlKBLn0
-         sHEYSS3fNsPbRK00StcMVUM/RJC3QMjSAjYDBmRk7poZB6PZylnIAo0AlC9tEIQvP4Xa
-         BoLkT+jD/pj14Fr2bvYB/kjKicUS5sBlr+1CQ9d3V4yQqsRG4D9fINhLAs8QhC3nQXgm
-         +za5xpplTlHlzyi5gJP0aaMtK0oAbHPNl0SI6D18BBbf6CEpHPgxJFobziZTDfwMy/7J
-         r7f7EnyfXchPGsdhwBqoeV6YRNRJ/hXBPAsaPXdt7AOg395m/ghG7er6hmdAyjGAqfp8
-         GL2A==
+        bh=kqagiTUmZB/5CFgUf1pF1GfTaJyc9bRwpeqvA9m39kQ=;
+        b=XoT0SZ2pcH+fLkNz8tah/GIkgFpsyRNFrGuwdykAPATYOvc8Uh2hdpzCj82Jl9s/B7
+         pp4t+YFaWVM83bO2XJ310WUSBtxX2cqELm6tyZMtdizpZrhghKW4p4ifCHo4FsYfv2hV
+         SqwhXxPtnAKRSjpYhcxIylzI/D88chilt+zuvTcIeOvcpDtOQohXbieQj1hG30x5K/+E
+         aVJQrO8I+EzZIu3v2r/4JkS9pis7SQohptXbGXn78I0mlLXlbEwmOWOn599/g5cGD7lz
+         Nr2S8d1c1r11JsFoEbqBFKBUJZwjY/K9BkBfMW01nSL3PUCT5irpcoSNTljklIGo3fao
+         fIDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689114259; x=1691706259;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1689119098; x=1691711098;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PrcIyOaJSd/7YI26QorfI+WMWDNNra1F3KRdh8w9hnY=;
-        b=ErVc6169mf0l6MHtlD8a7C1IegGS7yjVJ2bcW8Q5cvSnVYxhQB9d7TcXRwGPwMqRkb
-         rqkwS8fgpXAKhpi31q4TqCwcmZnutNcO0zH4ReadZaJUb3AXI217/dhqGxgTCBsTISxf
-         2YWWqh2BueQBaiKNA2RafgyxlGUWTfIOzizZZQA6y+wnjsZRDXPHSHmTZtylAYTZshXG
-         fuFqKaVufYVOLN+HoiBORCCOKhNn4dzWoIbCBHD7DKkbGEGoWLTUTfsS2vz+nH6weKNl
-         roUWJc5r2Etf7+vBnDprXPPkHUXIKCG0/+0ZVDnlupItKtJCc1sUqdk6CC+lqOAkmeRU
-         O2zQ==
-X-Gm-Message-State: ABy/qLb+agcJZqism4tA2XSQN6drhrqGBWcbCy1ROShSQ9fV5qXKGF+l
-	WzIJWt6mY5viU76PD8BgU6c=
-X-Google-Smtp-Source: APBJJlGwjN7HTkBa8/rzC3GAU86r3r05TimGx5LEewS3QtYGrhdZApBYefvDj2j+qlq4Ow6MOMSQmw==
-X-Received: by 2002:a17:906:649c:b0:993:e695:b589 with SMTP id e28-20020a170906649c00b00993e695b589mr12581589ejm.20.1689114258598;
-        Tue, 11 Jul 2023 15:24:18 -0700 (PDT)
-Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com. [66.111.4.228])
-        by smtp.gmail.com with ESMTPSA id t10-20020a1709066bca00b00993a37aebc5sm1672846ejs.50.2023.07.11.15.24.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jul 2023 15:24:18 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailauth.nyi.internal (Postfix) with ESMTP id D4F0227C0054;
-	Tue, 11 Jul 2023 18:24:15 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 11 Jul 2023 18:24:15 -0400
-X-ME-Sender: <xms:jtatZH3OHiyB1zZeiMd15Ea9WwnlBW_6OUan7_-JpT3IiVeZ_2rfLg>
-    <xme:jtatZGFV1H9byMIPVq835_hLZNPJz6oFND5_cCs-oj8VgvOdSHjfaFYaiF82Sfiud
-    4ZBonGGkv7nVORhJw>
-X-ME-Received: <xmr:jtatZH7Y6fzIRzm39RBK56LIwzujBid9dQT5gehoyz-1EUZfGZO92mw7Uhc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrfedugddutdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhn
-    ucfhvghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrth
-    htvghrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudff
-    iedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsg
-    hoqhhunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieeg
-    qddujeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigi
-    hmvgdrnhgrmhgv
-X-ME-Proxy: <xmx:jtatZM3NHeXVawZcQFwlI0dnyeHCkpZWidrggi8DixA10qFJo9-8wg>
-    <xmx:jtatZKGS1g-KlqkmrLnlUhUzZsYjfsTVT2lAd21iR_PuHDGTYqUL-w>
-    <xmx:jtatZN-wa9G8bTq6kAfdwCfoMvgHhS-jjZJ5wp3SL7U9XSYLN-VClQ>
-    <xmx:j9atZGGejfcBXaxB5S0uZbqSgv8gVLfkOrNzamuu-5UTfb7rG76N6Q>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Jul 2023 18:24:14 -0400 (EDT)
-Date: Tue, 11 Jul 2023 15:23:12 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: rust-for-linux@vger.kernel.org, Tejun Heo <tj@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
-	Andreas Hindborg <nmi@metaspace.dk>
-Subject: Re: [PATCH v3 4/9] rust: workqueue: add low-level workqueue bindings
-Message-ID: <ZK3WUBTb1dHfjnh8@boqun-archlinux>
-References: <20230711093303.1433770-1-aliceryhl@google.com>
- <20230711093303.1433770-5-aliceryhl@google.com>
+        bh=kqagiTUmZB/5CFgUf1pF1GfTaJyc9bRwpeqvA9m39kQ=;
+        b=U9Y2oAGLutSB0D1/LqxLnFFIUOoj8CwM9zbfQhub3R2s3/71Ik/2sQSZPOK7LzFNO1
+         L8e2Q6235U3aPcM+ZyzLa3gX0D4hnNmetqUEFFAT9yKFPvkYEiV6RqtchTfYTU8mhyGV
+         hUPcHKEXYNxkY3q73FlNMKL26Ag4bQW2HvaPKQXYpN2P8fkwXI4i7q926xrxe35nFgWx
+         Dh5k6GgRvesAEsrdjoP/6kHKAnSFVEsx041PTtHyOPliTIKlg61DOBcCIDT7iLanink1
+         +VHjwhQTNSIrkEzUUTKN5ljVLue4ilU5clwzrUJ+uKr15WUN+ZgLQM7+zG90LnPRjfct
+         /pcA==
+X-Gm-Message-State: ABy/qLaqP9WhJOrqFgkiaCD30uD8poCTSTIWF/Z4MpexRZ2trCTmJgGy
+	sNrxVGuuAku5qasZ9yi+pnWbXL/xq4TTzrq/Nxs=
+X-Google-Smtp-Source: APBJJlGqWFfcEk/Yuzd7pg0bifj+QyCg9f3zWHFbBvad184C8din+q5CRZcghJectXmQ/PKE9FofTcznqbOu7yRztKo=
+X-Received: by 2002:a25:b988:0:b0:c13:7b11:e786 with SMTP id
+ r8-20020a25b988000000b00c137b11e786mr13933242ybg.17.1689119098672; Tue, 11
+ Jul 2023 16:44:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230711093303.1433770-5-aliceryhl@google.com>
+References: <20230711093303.1433770-1-aliceryhl@google.com> <ZK3VEPeBEyErmerR@slm.duckdns.org>
+In-Reply-To: <ZK3VEPeBEyErmerR@slm.duckdns.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 12 Jul 2023 01:44:47 +0200
+Message-ID: <CANiq72nktgf_j-+S7snysQgwqeqB12sfjc-vrLsnOUKiZZ5WJw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/9] rust: workqueue: add bindings for the workqueue
+To: Tejun Heo <tj@kernel.org>
+Cc: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	Miguel Ojeda <ojeda@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 11, 2023 at 09:32:58AM +0000, Alice Ryhl wrote:
-> Define basic low-level bindings to a kernel workqueue. The API defined
-> here can only be used unsafely. Later commits will provide safe
-> wrappers.
-> 
-> Co-developed-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Gary Guo <gary@garyguo.net>
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-> Reviewed-by: Andreas Hindborg (Samsung) <nmi@metaspace.dk>
-> Reviewed-by: Benno Lossin <benno.lossin@proton.me>
-> ---
-> v2 -> v3:
->  * Update documentation to say "guarantees section".
->  * Add Reviewed-by from Martin, Andreas, Benno.
-> 
->  rust/bindings/bindings_helper.h |   1 +
->  rust/kernel/lib.rs              |   1 +
->  rust/kernel/workqueue.rs        | 108 ++++++++++++++++++++++++++++++++
->  3 files changed, 110 insertions(+)
->  create mode 100644 rust/kernel/workqueue.rs
-> 
-> diff --git a/rust/bindings/bindings_helper.h b/rust/bindings/bindings_helper.h
-> index 3e601ce2548d..4e1c0938c8cb 100644
-> --- a/rust/bindings/bindings_helper.h
-> +++ b/rust/bindings/bindings_helper.h
-> @@ -11,6 +11,7 @@
->  #include <linux/refcount.h>
->  #include <linux/wait.h>
->  #include <linux/sched.h>
-> +#include <linux/workqueue.h>
->  
->  /* `bindgen` gets confused at certain things. */
->  const gfp_t BINDINGS_GFP_KERNEL = GFP_KERNEL;
-> diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-> index 6963d11092c4..6d63f4f6bb8a 100644
-> --- a/rust/kernel/lib.rs
-> +++ b/rust/kernel/lib.rs
-> @@ -45,6 +45,7 @@
->  pub mod sync;
->  pub mod task;
->  pub mod types;
-> +pub mod workqueue;
->  
->  #[doc(hidden)]
->  pub use bindings;
-> diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-> new file mode 100644
-> index 000000000000..060d26dfcc7d
-> --- /dev/null
-> +++ b/rust/kernel/workqueue.rs
-> @@ -0,0 +1,108 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +//! Work queues.
-> +//!
-> +//! C header: [`include/linux/workqueue.h`](../../../../include/linux/workqueue.h)
-> +
-> +use crate::{bindings, types::Opaque};
-> +
-> +/// A kernel work queue.
-> +///
-> +/// Wraps the kernel's C `struct workqueue_struct`.
-> +///
-> +/// It allows work items to be queued to run on thread pools managed by the kernel. Several are
-> +/// always available, for example, `system`, `system_highpri`, `system_long`, etc.
-> +#[repr(transparent)]
-> +pub struct Queue(Opaque<bindings::workqueue_struct>);
-> +
-> +// SAFETY: Kernel workqueues are usable from any thread.
-> +unsafe impl Send for Queue {}
-> +unsafe impl Sync for Queue {}
+On Wed, Jul 12, 2023 at 12:17=E2=80=AFAM Tejun Heo <tj@kernel.org> wrote:
+>
+> I don't understand a lot but the part that I understand (Alice helped me =
+a
+> lot, thanks) and the example usages look fine to me. While the interface
+> leaves some workqueue features uncovered (e.g. flushing, creating custom
+> workqueues, queueing on a specific CPU), there's nothing blocking adding
+> them later and this looks like a good place to start. So, from workqueue
+> POV:
+>
+>  Acked-by: Tejun Heo <tj@kernel.org>
 
-I don't think "usable from any thread" is the accurate wording here, it
-sounds to me that there are types that cannot be used for a particular
-type of threads ;-)
+Thanks a lot Tejun!
 
-Maybe
+> Please feel free to route the patches through the rust tree. If you want
+> them to go through the workqueue tree, please let me know.
 
-	// SAFETY: Accesses to workqueues used by [`Queue`] are
-	// thread-safe.
+As you prefer -- if you are willing to take them and/or maintain or
+co-maintain patches to it, and it is not a lot of work for you, then
+it would be great to get you involved, of course. Otherwise, we can
+apply them to the Rust tree too.
 
-?
-
-Rest of this patch looks good to me.
-
-Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-
-Regards,
-Boqun
-
-> +
-> +impl Queue {
-> +    /// Use the provided `struct workqueue_struct` with Rust.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The caller must ensure that the provided raw pointer is not dangling, that it points at a
-> +    /// valid workqueue, and that it remains valid until the end of 'a.
-> +    pub unsafe fn from_raw<'a>(ptr: *const bindings::workqueue_struct) -> &'a Queue {
-> +        // SAFETY: The `Queue` type is `#[repr(transparent)]`, so the pointer cast is valid. The
-> +        // caller promises that the pointer is not dangling.
-> +        unsafe { &*(ptr as *const Queue) }
-> +    }
-> +
-> +    /// Enqueues a work item.
-> +    ///
-> +    /// This may fail if the work item is already enqueued in a workqueue.
-> +    ///
-> +    /// The work item will be submitted using `WORK_CPU_UNBOUND`.
-> +    pub fn enqueue<W, const ID: u64>(&self, w: W) -> W::EnqueueOutput
-> +    where
-> +        W: RawWorkItem<ID> + Send + 'static,
-> +    {
-> +        let queue_ptr = self.0.get();
-> +
-> +        // SAFETY: We only return `false` if the `work_struct` is already in a workqueue. The other
-> +        // `__enqueue` requirements are not relevant since `W` is `Send` and static.
-> +        //
-> +        // The call to `bindings::queue_work_on` will dereference the provided raw pointer, which
-> +        // is ok because `__enqueue` guarantees that the pointer is valid for the duration of this
-> +        // closure.
-> +        //
-> +        // Furthermore, if the C workqueue code accesses the pointer after this call to
-> +        // `__enqueue`, then the work item was successfully enqueued, and `bindings::queue_work_on`
-> +        // will have returned true. In this case, `__enqueue` promises that the raw pointer will
-> +        // stay valid until we call the function pointer in the `work_struct`, so the access is ok.
-> +        unsafe {
-> +            w.__enqueue(move |work_ptr| {
-> +                bindings::queue_work_on(bindings::WORK_CPU_UNBOUND as _, queue_ptr, work_ptr)
-> +            })
-> +        }
-> +    }
-> +}
-> +
-> +/// A raw work item.
-> +///
-> +/// This is the low-level trait that is designed for being as general as possible.
-> +///
-> +/// The `ID` parameter to this trait exists so that a single type can provide multiple
-> +/// implementations of this trait. For example, if a struct has multiple `work_struct` fields, then
-> +/// you will implement this trait once for each field, using a different id for each field. The
-> +/// actual value of the id is not important as long as you use different ids for different fields
-> +/// of the same struct. (Fields of different structs need not use different ids.)
-> +///
-> +/// Note that the id is used only to select the right method to call during compilation. It wont be
-> +/// part of the final executable.
-> +///
-> +/// # Safety
-> +///
-> +/// Implementers must ensure that any pointers passed to a `queue_work_on` closure by `__enqueue`
-> +/// remain valid for the duration specified in the guarantees section of the documentation for
-> +/// `__enqueue`.
-> +pub unsafe trait RawWorkItem<const ID: u64> {
-> +    /// The return type of [`Queue::enqueue`].
-> +    type EnqueueOutput;
-> +
-> +    /// Enqueues this work item on a queue using the provided `queue_work_on` method.
-> +    ///
-> +    /// # Guarantees
-> +    ///
-> +    /// If this method calls the provided closure, then the raw pointer is guaranteed to point at a
-> +    /// valid `work_struct` for the duration of the call to the closure. If the closure returns
-> +    /// true, then it is further guaranteed that the pointer remains valid until someone calls the
-> +    /// function pointer stored in the `work_struct`.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The provided closure may only return `false` if the `work_struct` is already in a workqueue.
-> +    ///
-> +    /// If the work item type is annotated with any lifetimes, then you must not call the function
-> +    /// pointer after any such lifetime expires. (Never calling the function pointer is okay.)
-> +    ///
-> +    /// If the work item type is not [`Send`], then the function pointer must be called on the same
-> +    /// thread as the call to `__enqueue`.
-> +    unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutput
-> +    where
-> +        F: FnOnce(*mut bindings::work_struct) -> bool;
-> +}
-> -- 
-> 2.41.0.255.g8b1d071c50-goog
-> 
+Cheers,
+Miguel
