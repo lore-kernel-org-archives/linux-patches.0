@@ -1,113 +1,91 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3DF18C29
-	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 13:46:42 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 4C55622194;
-	Tue, 11 Jul 2023 13:46:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1689083195; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tmUBux5e1ki7qsINZJpfH2z48bDyzUotuR1CpySUCaQ=;
-	b=acou4bQDVy0hM/ezQGCbnhuyyCV9OLbnLgbSiZoPMwqDjzfAzSHDOEQJjm6aYd3JfDHlVj
-	r0Fjy37Mqysf4/J2PoT1S7cvQ9QWZfg748Z2/30rFo/RHgBkBJZci40fZkmnVpjUCqi2ny
-	KmklcGac+XrfSY+ck1hbZkSPX3VBgyY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1689083195;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tmUBux5e1ki7qsINZJpfH2z48bDyzUotuR1CpySUCaQ=;
-	b=Zi00M2H/+Fsp5apSaRxx6+D9RGOqEN/LSG9K6C5JqftooNT+gO4g1U1LZpCEJeqiKToo7C
-	UbXejMpQOCshQ7Cw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 10FBB13A63;
-	Tue, 11 Jul 2023 13:46:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id iPqDAztdrWTSYwAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 11 Jul 2023 13:46:35 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: Christoph Lameter <cl@linux.com>,
-	David Rientjes <rientjes@google.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>
-Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	linux-mm@kvack.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Matteo Rizzo <matteorizzo@google.com>,
-	Jann Horn <jannh@google.com>,
-	Andrey Konovalov <andreyknvl@google.com>,
-	Marco Elver <elver@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	kasan-dev@googlegroups.com,
-	Kees Cook <keescook@chromium.org>,
-	linux-hardening@vger.kernel.org,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 2/2] mm/slub: remove freelist_dereference()
-Date: Tue, 11 Jul 2023 15:46:25 +0200
-Message-ID: <20230711134623.12695-4-vbabka@suse.cz>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230711134623.12695-3-vbabka@suse.cz>
-References: <20230711134623.12695-3-vbabka@suse.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D8718AFE
+	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 15:16:54 +0000 (UTC)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-570877f7838so69109987b3.0
+        for <patches@lists.linux.dev>; Tue, 11 Jul 2023 08:16:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689088614; x=1691680614;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6rp97t0SvD8s0Who/ua4azUvnOtZZ5RKlcFsre7+/tw=;
+        b=No/ajTRwPSPjGzw+zqK0C69lRYUT2GhTjdCRrCRDXXmjkKMkA7u0t9bxfamMWUsZMt
+         rjiXGXvAvUQplRIpbmim6tjhU5iJCxEobjfjoACNMYKRuffkZERoX+iMLV0cdOxYCn2D
+         B3QvR7Xm+GMI1vZjpardxcQT5H8Wlh2ovgT8urdgLPItS14kEbrYRScRLUQMOGUCnhE7
+         gnEr7IAjJ5oL2N9sdzkFSZ/8MPHFAxZ09awKmj+p74Zli7l7jwq4qY3OW1GM2Z4srt5B
+         jo+bfvSmwV458iKcYxJO7ZhD1CzVeXntjVBk6SR3AAVO1S+9YHYdzADn5DVw4/yemO1G
+         L8Jw==
+X-Gm-Message-State: ABy/qLa2joyjbsBaeNWUXdGxggRch/1tgimzxBEuqQc/ZNl+XEhLQB+I
+	/qp1jl7LMKouPHFx+DP2EHTD0Ax421cedA==
+X-Google-Smtp-Source: APBJJlGi4URzz0Kz5hfI0cVZ7kZWOGgFZM/1TS6QvOZKrR32k7EEiW+m6A6Q+COY+682Lu2PqWMYvg==
+X-Received: by 2002:a0d:d5c8:0:b0:570:6d74:21d5 with SMTP id x191-20020a0dd5c8000000b005706d7421d5mr16867344ywd.13.1689088613756;
+        Tue, 11 Jul 2023 08:16:53 -0700 (PDT)
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com. [209.85.219.181])
+        by smtp.gmail.com with ESMTPSA id s130-20020a815e88000000b005731dbd4928sm609235ywb.69.2023.07.11.08.16.53
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jul 2023 08:16:53 -0700 (PDT)
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-c84fd44593aso2585688276.0
+        for <patches@lists.linux.dev>; Tue, 11 Jul 2023 08:16:53 -0700 (PDT)
+X-Received: by 2002:a25:cd85:0:b0:c60:fb80:99f7 with SMTP id
+ d127-20020a25cd85000000b00c60fb8099f7mr13925299ybf.16.1689088612983; Tue, 11
+ Jul 2023 08:16:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230710142227.965586663@linuxfoundation.org>
+In-Reply-To: <20230710142227.965586663@linuxfoundation.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 11 Jul 2023 17:16:38 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdVcZ2W7o42ZAdMHfPYZ9d0MCRat_PKWoh=JDHK=m=dM1g@mail.gmail.com>
+Message-ID: <CAMuHMdVcZ2W7o42ZAdMHfPYZ9d0MCRat_PKWoh=JDHK=m=dM1g@mail.gmail.com>
+Subject: Re: [PATCH 6.3 000/424] 6.3.13-rc4 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-freelist_dereference() is a one-liner only used from get_freepointer().
-Remove it and make get_freepointer() call freelist_ptr_decode()
-directly to make the code easier to follow.
+Hi Greg,
 
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
----
- mm/slub.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+On Mon, Jul 10, 2023 at 4:29=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+> This is the start of the stable review cycle for the 6.3.13 release.
+> There are 424 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 12 Jul 2023 14:21:05 +0000.
+> Anything received after that time might be too late.
 
-diff --git a/mm/slub.c b/mm/slub.c
-index 07edad305512..c4556a5dab4b 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -397,18 +397,14 @@ static inline void *freelist_ptr_decode(const struct kmem_cache *s,
- 	return decoded;
- }
- 
--/* Returns the freelist pointer recorded at location ptr_addr. */
--static inline void *freelist_dereference(const struct kmem_cache *s,
--					 void *ptr_addr)
--{
--	return freelist_ptr_decode(s, *(freeptr_t *)(ptr_addr),
--			    (unsigned long)ptr_addr);
--}
--
- static inline void *get_freepointer(struct kmem_cache *s, void *object)
- {
--	object = kasan_reset_tag(object);
--	return freelist_dereference(s, (freeptr_t *)(object + s->offset));
-+	unsigned long ptr_addr;
-+	freeptr_t p;
-+
-+	ptr_addr = ((unsigned long)kasan_reset_tag(object)) + s->offset;
-+	p = *(freeptr_t *)(ptr_addr);
-+	return freelist_ptr_decode(s, p, ptr_addr);
- }
- 
- #ifndef CONFIG_SLUB_TINY
--- 
-2.41.0
+> Zhanhao Hu <zero12113@hust.edu.cn>
+>     clk: imx93: fix memory leak and missing unwind goto in imx93_clocks_p=
+robe
 
+This commit was flagged to contain a bug by two reporters almost 4 weeks
+ago, but no one took any action. Hence I have sent a fix
+https://lore.kernel.org/all/20230711150812.3562221-1-geert+renesas@glider.b=
+e
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
