@@ -1,228 +1,116 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7545D3D81
-	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 06:32:56 +0000 (UTC)
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-47e35eba3e9so1621156e0c.2
-        for <patches@lists.linux.dev>; Mon, 10 Jul 2023 23:32:56 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA5417FE9
+	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 09:33:58 +0000 (UTC)
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-c64ef5bde93so6488299276.0
+        for <patches@lists.linux.dev>; Tue, 11 Jul 2023 02:33:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689057175; x=1691649175;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OoV7wHi0BKt48VDU7rudRkLkDSl0F6bArKQxs2XKWH8=;
-        b=t6X/P1fRgTle6kOoOp6BFmV2Tp4ee4Navqh9Fi4PptgcwbjmwqvhH3XKL7/XH1JxWW
-         krc6U5rFqYashM2zrHOOY6ogMLeV/wBdP1xgXFR4mJHp/nSWSJG5Y/EKDFZ+eg0Ieqfk
-         9mlqoZUxOMgl/bie9Kir9E016+4OYIaHAbiOKiVhuVP+79y8jxdFSdPQW/2HAebuT303
-         RZbyOfF9H8xyVUUdCmlq8dU8TC1FUF4CN0G/YpClxoEz3cGFzN4lo1f9rLT4mPLzb7ek
-         OGKo46Lg713VIqF0x+OzwYM1o6TRSMsRo/vKuQc4jF1EbD8to7bA6eLcr4Cpz5kyCMtu
-         jSEA==
+        d=google.com; s=20221208; t=1689068037; x=1691660037;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=i+zDEU10wYnr89r/fFOaqQkCw/zLk+nePTObPe5KGak=;
+        b=4cOhTU9J7VvWcpswEGbcooTo36VAK9TcuU2c6+Hur/0i1hcy3Tc3+j8tqPjGWJXh0F
+         vArzmq0YYav0AhtC0YABYFyw/vGTZZpGTBVKGjSalFfCd7p/Fd+PfJ4rTr5MA+KypJMg
+         jZziMqtHCxaXQ016l56d+FP+93N0bs9EwvrcEEZ5+N56TDyB0LHezclxnDyS4HSFuwyw
+         V+bLokMXh1FDeCHSlcb1iy8WqLa2VcAQe37sb2wCt3dwSTJ1vDEsbryfbBh7TZ5pRgCe
+         7BbsjesnBgGZDUCAVfSLO5jRzgC3EL3PPkd0piev9chZHjo/otF3aQWm/CBDy12n5FyI
+         AAYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689057175; x=1691649175;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OoV7wHi0BKt48VDU7rudRkLkDSl0F6bArKQxs2XKWH8=;
-        b=liZLVfFV7V0J8yqBJ2ZVepYGqQVak/ET3dAH5mEbRlyQP7cyvx20UiJ8wNHw2BImst
-         JgfDwChIRGv/57BnNqy0OkXwrzFwFQY/ohhIp3XpmrZjBwmuKDTByGeJRvsI+O6W61O/
-         4CDZekkZuAkSKc54PclYYJaujjmH9lCnEH4bi1Kr+8JvOXnZ0z9hYH6Tz5MGyQvC6jV6
-         3rgpj6hfVtvwticFPgdf0jFf40VeaaI06jmN0u35fQhX4JKubBdArbw4sKB38kxNcMUK
-         DZU8NrhkQxckt3tgi4Ngr58PVNtNDOpTGAXy2sjiZ917ew3QXy2KsFooNs+peZ1Z+DC5
-         UUSw==
-X-Gm-Message-State: ABy/qLbPifIK8xycbGD9tltuNLIjXdAILuf/Ifblp+4MpxkMhs9hrInw
-	MAVWLiPSyqYjxkopUrYEzwkNhyozsNW7xTfAClbgrQ==
-X-Google-Smtp-Source: APBJJlEqsJAqUnLJm2yvVaj5bm+mRbslSMN2Dmhfo0eGS5oS8hTszDthHaChlPLhBHw6B/4JE61l+mkeCA1SizfzCZg=
-X-Received: by 2002:a1f:6041:0:b0:471:b14a:fc48 with SMTP id
- u62-20020a1f6041000000b00471b14afc48mr7107050vkb.13.1689057174951; Mon, 10
- Jul 2023 23:32:54 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689068037; x=1691660037;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i+zDEU10wYnr89r/fFOaqQkCw/zLk+nePTObPe5KGak=;
+        b=l7QGU/qKe2HBw1wJXhMcyNzPOSDBMs7rZ9P4Cg4m5fatMpmeL7AkFMT6CUUj+Ufbnx
+         Hbe9bN1xz70wFJFYxXqwJdKhHhWduRvLzNMCY4tWZnEbj6SWaKdRcjIzzRKXMuOcKYOc
+         Us1SY9oxCWJ+MwPagRl8PIPYbqxNIg+Is/jZJ81RtI/Rfr1GerWO4Bm7GUCcgrm3A4Tq
+         iwSxLgE2EtHJDVfx7FtBSkbIzgfGZB/wN6mjMptt6gecTVMeebj/bdiohQxjnyCHp+u2
+         Q9+yqcnn/xrUhW7OPz9WSUCeIoyNYSs2s9MaFzF8bo6qJON5KfsJKjiFRU7s4eS0AHib
+         4lJg==
+X-Gm-Message-State: ABy/qLZQHyqQ8mF1076lQ3xH1qkfk8bIYV6sVsWqDwYARDZ+F48Y1Lwk
+	J5xcug5LYTXz4ZsD0HhJexwrP4a3D0+Wvt8=
+X-Google-Smtp-Source: APBJJlG7CVg8ZIjiHugsIIAwsKz38An7XLFFQ67zguULn2KMYeTniDrNRdInRiElbolNDz0ZuyBpq8JoTzIBmpc=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a25:ad54:0:b0:c1a:dc07:1d74 with SMTP id
+ l20-20020a25ad54000000b00c1adc071d74mr135384ybe.0.1689068037722; Tue, 11 Jul
+ 2023 02:33:57 -0700 (PDT)
+Date: Tue, 11 Jul 2023 09:32:54 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20230710142227.965586663@linuxfoundation.org>
-In-Reply-To: <20230710142227.965586663@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 11 Jul 2023 12:02:43 +0530
-Message-ID: <CA+G9fYtokiZUYJr9RZth_iEfhrJhYv5=53G7Gxds8jWhxRfEyQ@mail.gmail.com>
-Subject: Re: [PATCH 6.3 000/424] 6.3.13-rc4 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.41.0.255.g8b1d071c50-goog
+Message-ID: <20230711093303.1433770-1-aliceryhl@google.com>
+Subject: [PATCH v3 0/9] rust: workqueue: add bindings for the workqueue
+From: Alice Ryhl <aliceryhl@google.com>
+To: rust-for-linux@vger.kernel.org, Tejun Heo <tj@kernel.org>, 
+	Miguel Ojeda <ojeda@kernel.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, 
+	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
+	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, 10 Jul 2023 at 19:53, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.3.13 release.
-> There are 424 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 12 Jul 2023 14:21:05 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.3.13-rc4.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.3.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+This patchset contains Rust bindings for the kernel workqueue.
+
+One of the primary goals behind the design used in this patch is that we
+must support embedding the `work_struct` as a field in user-provided
+types, because this allows you to submit things to the workqueue without
+having to allocate, making the submission infallible. If we didn't have
+to support this, then the patch would be much simpler. One of the main
+things that make it complicated is that we must ensure that the function
+pointer in the `work_struct` is compatible with the struct it is
+contained within.
+
+The original version of the workqueue bindings was written by Wedson,
+but I have rewritten much of it so that it uses the pin-init
+infrastructure and can be used with containers other than `Arc`.
+
+Changes v2 -> v3:
+
+ * Moved dependency patches so they are first.
+ * Various documentation and comment improvements.
+ * Changed implementation of `Arc::from_raw`.
+ * Use __INIT_WORK_WITH_KEY instead of __INIT_WORK and use `LockClassKey`
+   where appropriate.
+ * Removed PhantomPinned from Work. This depends on [1] for correctness.
+
+More detailed changelogs can be found on the individual patches.
+
+v1: https://lore.kernel.org/all/20230517203119.3160435-1-aliceryhl@google.com/
+v2: https://lore.kernel.org/all/20230601134946.3887870-1-aliceryhl@google.com/
+
+[1]: https://lore.kernel.org/all/20230630150216.109789-1-benno.lossin@proton.me/
+
+Alice Ryhl (5):
+  rust: workqueue: add low-level workqueue bindings
+  rust: workqueue: add helper for defining work_struct fields
+  rust: workqueue: implement `WorkItemPointer` for pointer types
+  rust: workqueue: add `try_spawn` helper method
+  rust: workqueue: add examples
+
+Wedson Almeida Filho (4):
+  rust: add offset_of! macro
+  rust: sync: add `Arc::{from_raw, into_raw}`
+  workqueue: introduce `__INIT_WORK_WITH_KEY`
+  rust: workqueue: define built-in queues
+
+ include/linux/workqueue.h       |  17 +-
+ rust/bindings/bindings_helper.h |   1 +
+ rust/helpers.c                  |   8 +
+ rust/kernel/lib.rs              |  39 ++
+ rust/kernel/sync/arc.rs         |  49 ++-
+ rust/kernel/workqueue.rs        | 659 ++++++++++++++++++++++++++++++++
+ scripts/Makefile.build          |   2 +-
+ 7 files changed, 767 insertions(+), 8 deletions(-)
+ create mode 100644 rust/kernel/workqueue.rs
 
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+base-commit: d2e3115d717197cb2bc020dd1f06b06538474ac3
+-- 
+2.41.0.255.g8b1d071c50-goog
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 6.3.13-rc4
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.3.y
-* git commit: 4882b85b0b1dc42e2ee6554fdb1eb956bd2c6015
-* git describe: v6.3.11-439-g4882b85b0b1d
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.3.y/build/v6.3.1=
-1-439-g4882b85b0b1d
-
-## Test Regressions (compared to v6.3.11)
-
-## Metric Regressions (compared to v6.3.11)
-
-## Test Fixes (compared to v6.3.11)
-
-## Metric Fixes (compared to v6.3.11)
-
-## Test result summary
-total: 170788, pass: 146856, fail: 1976, skip: 21790, xfail: 166
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 145 total, 144 passed, 1 failed
-* arm64: 54 total, 53 passed, 1 failed
-* i386: 41 total, 40 passed, 1 failed
-* mips: 30 total, 28 passed, 2 failed
-* parisc: 4 total, 4 passed, 0 failed
-* powerpc: 38 total, 36 passed, 2 failed
-* riscv: 26 total, 25 passed, 1 failed
-* s390: 16 total, 14 passed, 2 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 46 total, 46 passed, 0 failed
-
-## Test suites summary
-* boot
-* fwts
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
