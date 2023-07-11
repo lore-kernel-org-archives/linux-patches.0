@@ -1,142 +1,105 @@
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1822154B1
-	for <patches@lists.linux.dev>; Mon, 10 Jul 2023 23:35:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1689032155; x=1720568155;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=tFbXAaj7P8nAVQ+f9ECcnlO8BUDW6scbPt26NrFxtyo=;
-  b=m6fyJLc6fn0KlB43dEajGW/hDmaX8VuFh2ebN0/t/JMAp8ur6cQWIUH+
-   jTipdIaYVXz+XbKy0aJR325rSE2ZCkOS3SE4j9EGeC4AI/ojcxGdjxRhA
-   SiqFWhRg44e7F/23kaAWGsvevL59mJ6rmpokVS7JY0mtuxqgyJPeYdwFw
-   BsL1AywfvHhhnccxByeARcd3NDuqUxFCpDfdergTgWCSJg9hVo45n31ov
-   JWLFk9sZWlN4T2JExjqk0LtJNiQS8DmADClHlhvhoxp2Uxy6tDrAUwReg
-   lKb7gA23AC4Ja0i0JaNo9dwE4YL1GfzfKZR9xaw8umzNVKZPZEL+x8BwH
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="395269309"
-X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
-   d="scan'208";a="395269309"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2023 16:35:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10767"; a="720867161"
-X-IronPort-AV: E=Sophos;i="6.01,195,1684825200"; 
-   d="scan'208";a="720867161"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2023 16:35:53 -0700
-Date: Mon, 10 Jul 2023 16:35:52 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Peter Newman <peternewman@google.com>
-Cc: James Morse <james.morse@arm.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
-	"Chatre, Reinette" <reinette.chatre@intel.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Babu Moger <Babu.Moger@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	H Peter Anvin <hpa@zytor.com>,
-	"shameerali.kolothum.thodi@huawei.com" <shameerali.kolothum.thodi@huawei.com>,
-	D Scott Phillips OS <scott@os.amperecomputing.com>,
-	"carl@os.amperecomputing.com" <carl@os.amperecomputing.com>,
-	"lcherian@marvell.com" <lcherian@marvell.com>,
-	"bobo.shaobowang@huawei.com" <bobo.shaobowang@huawei.com>,
-	"tan.shaopeng@fujitsu.com" <tan.shaopeng@fujitsu.com>,
-	"xingxin.hx@openanolis.org" <xingxin.hx@openanolis.org>,
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Xin Hao <xhao@linux.alibaba.com>,
-	"Pitre, Nicolas" <npitre@baylibre.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	"aricciardi@baylibre.com" <aricciardi@baylibre.com>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Stephane Eranian <eranian@google.com>
-Subject: Re: [RFC PATCH 2/2] resctrl2: Arch x86 modules for most of the
- legacy control/monitor functions
-Message-ID: <ZKyV2DWp0FN9sNzS@agluck-desk3>
-References: <20230620033702.33344-1-tony.luck@intel.com>
- <20230620033702.33344-3-tony.luck@intel.com>
- <CALPaoChdFLTfA5g=vawTuOLk5T6dEkG79XXqm27shh-VeqNCOw@mail.gmail.com>
- <SJ1PR11MB6083FF68838400D053C884B0FC2FA@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <CALPaoCic3zYLxwUET5WCMUCwN8dk-B9JJvuOeUQ2o3hsgNZdQg@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3033D196
+	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 00:56:27 +0000 (UTC)
+Received: from progateway7-pub.mail.pro1.eigbox.com (gproxy5-pub.mail.unifiedlayer.com [67.222.38.55])
+	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id 91B8B80258D1
+	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 00:31:35 +0000 (UTC)
+Received: from cmgw12.mail.unifiedlayer.com (unknown [10.0.90.127])
+	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id C805510042F98
+	for <patches@lists.linux.dev>; Tue, 11 Jul 2023 00:31:28 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id J1HsqR4gh5FhmJ1HsqdVwt; Tue, 11 Jul 2023 00:31:28 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=Vpnmv86n c=1 sm=1 tr=0 ts=64aca2e0
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10:nop_charset_1 a=ws7JD89P4LkA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=6xjQCxcbpo9Lr0TBgzc0qHnozptu/wWKmOm+qvGvczI=; b=U/4+UWLY9lpvufz7upMy93Hx+u
+	tZWRh8+NKzjFc7BtThtXj+7vc/Ub6BVE3h7tCugDqF2icVXEo9taATX4nZJMrWVw228D7uDkqSS9m
+	HtvvCp86p6c8GZdE6IqedAsr0kiUY3yxyMJJmxczZzjUmNhksJ/+xaL+7XIE07+BZ6ug1Nkqu8dJD
+	ZC6ppRrzd+TVGgNUydq3KWnCAQ9B3GEDI1ygFXmRKkgzQ/2lpkhqhlQl464GsQrzvYMgk9bB5+oTj
+	XSwYQdZQDZQmHDu3JeJgTSOQyXpv1YCzbfDxyNu4Lem7ixIfIltzMcnQU4k0jsW+9ME/DlOm04jR0
+	hlJauq7g==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:47342 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <re@w6rz.net>)
+	id 1qJ1Hr-001z2t-0d;
+	Mon, 10 Jul 2023 18:31:27 -0600
+Subject: Re: [PATCH 6.4 0/6] 6.4.3-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org
+References: <20230709203826.141774942@linuxfoundation.org>
+In-Reply-To: <20230709203826.141774942@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <5a89404c-16f5-7ec2-689b-756527d25265@w6rz.net>
+Date: Mon, 10 Jul 2023 17:31:24 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALPaoCic3zYLxwUET5WCMUCwN8dk-B9JJvuOeUQ2o3hsgNZdQg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1qJ1Hr-001z2t-0d
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:47342
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Thu, Jul 06, 2023 at 12:22:03PM +0200, Peter Newman wrote:
-> Hi Tony,
-> 
-> On Wed, Jul 5, 2023 at 6:46 AM Luck, Tony <tony.luck@intel.com> wrote:
-> > The mbm_poll() code that makes sure that counters don't wrap is
-> > doing all the expensive wrmsr(QM_EVTSEL);rdmsr(QM_COUNT)
-> > once per second to give you the data you want.
-> 
-> I was doing that in the soft RMID series I posted earlier because it
-> simplified things, but then I had some realizations about how much
-> error +/- 1 second on the sampling point could result in[1]. We
-> usually measure the bandwidth rate with a 5-second window, so a
-> reading that's up to one second old would mean a 20% error in the
-> bandwidth calculation.
+On 7/9/23 1:45 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.4.3 release.
+> There are 6 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 11 Jul 2023 20:38:10 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.4.3-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.4.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-I just pushed the latest version of the resctrl2 patches to the
-resctrl2_v65rc1 branch of git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-As well as locking, bug fixes, and general updates it includes an
-experimental feature to provide summary MBM information for each
-node. E.g. (both "total" and "local" rates are provided). Note
-that you have to load modules rdt_mbm_local_bytes and
-rdt_mbm_total_bytes so that the MBM overflow threads are
-running. I should fix the code to print "n/a" instead of
-"0" if they are not.
+Tested-by: Ron Economos <re@w6rz.net>
 
-$ cat /sys/fs/resctrl/mon_data/mon_L3_00/mbm_summary
-    3638     3638 /g2
-    3087     3087 /g2/m2
-    3267     3267 /g2/m1
-    3443     3443 /g1
-    3629     3629 /g1/m2
-    3588     3587 /g1/m1
-    3999     3993 /
-    3370     3369 /m2
-    3432     3432 /m1
-
-The rates are produced once per second by the MBM overflow
-code. They compute MBytes/sec as "chunks since last poll"
-divided by (now - then). I'm using jiffies for the times
-which may be good enough. "now - then" is one second (maybe
-more if the kernel thread doing the MBM polling is delayed
-from running).
-
-I should fix the summarization code to work the same as the
-regular MBM files (i.e. make the parent control directory
-report the sum of all its children).
-
-The code also attempts (but fails) to make these mbm_summary
-files poll(2)-able. With the wakeup dependent on aggregate
-measure bandwidth compared against a configurable threshold:
-
-$ cat /sys/fs/resctrl/info/L3_MON/mbm_poll_threshold
-10000000
-
-There's something wrong though. Poll(2) always says there is
-data to be read.  I only see one other piece of kernel code
-implementing poll on kernfs (in the cgroup code). Perhaps
-my problem is inability to write an appliction that uses
-poll(2) correctly.
-
-Let me know if this all seems like a useful direction. Maybe
-the polling part is overkill and it is sufficient to just
-have a cheap way to get all the bandwidths even if the values
-seen might be up to one second old.
-
--Tony
