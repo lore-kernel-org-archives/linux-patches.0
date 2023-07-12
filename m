@@ -1,76 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737DB1F95D;
-	Wed, 12 Jul 2023 18:02:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23DCC433C7;
-	Wed, 12 Jul 2023 18:02:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1689184961;
-	bh=U2OA5AbewW9cU7RByClE25sKH4R8ibU9NqasHsYKFjg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=RwyPZx8jjn/q4m6QFr9vjgdNYSHMv/HGmvdyVS4EWdrY8pNAMltUL/Bd6cclvip6m
-	 XlfSKduwD/ku5DcbQxzGFwFhcC1loub39lct/8iwzwguArUCLep7w3TriUS0P7vsx7
-	 vUhgc0cgcFWObt3qyioVatpC73K/fng86l96MKHbqhR5Mq8e8vETYj1wYEfrAcfLkL
-	 K6bg0jiNanHSizFefp/P1pCUBiL0hXWdYdVU+SFSKMPnuglpj08S3m3eGuxnfzEDzd
-	 jv+4zmi7b2L7PbXYIcxLXL9YwXVZPkmxoD16n1yI8IoCxrLkcOZIS2P50CCNt/kVKZ
-	 G36pWSwWtwyrg==
-Date: Wed, 12 Jul 2023 11:02:40 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: David Ahern <dsahern@gmail.com>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, Netdev
- <netdev@vger.kernel.org>, "open list:KERNEL SELFTEST FRAMEWORK"
- <linux-kselftest@vger.kernel.org>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, jonathanh@nvidia.com, f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, Qingfang DENG <qingfang.deng@siflower.com.cn>, "David S.
- Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo
- Abeni <pabeni@redhat.com>, YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>,
- Masahide NAKAMURA <nakam@linux-ipv6.org>, Ville Nuorvala
- <vnuorval@tcs.hut.fi>, Arnd Bergmann <arnd@arndb.de>, Pavel Machek
- <pavel@denx.de>
-Subject: Re: [PATCH 6.4 0/6] 6.4.3-rc2 review
-Message-ID: <20230712110240.2b232f84@kernel.org>
-In-Reply-To: <CA+G9fYvEJgcNhvJk6pvdQOkaS_+x105ZgSM1BVvYy0RRW+1TvA@mail.gmail.com>
-References: <20230709203826.141774942@linuxfoundation.org>
-	<CA+G9fYtEr-=GbcXNDYo3XOkwR+uYgehVoDjsP0pFLUpZ_AZcyg@mail.gmail.com>
-	<20230711201506.25cc464d@kernel.org>
-	<ZK5k7YnVA39sSXOv@duo.ucw.cz>
-	<CA+G9fYvEJgcNhvJk6pvdQOkaS_+x105ZgSM1BVvYy0RRW+1TvA@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1152DDDC8
+	for <patches@lists.linux.dev>; Wed, 12 Jul 2023 20:46:30 +0000 (UTC)
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-1b00b0ab0daso5913609fac.0
+        for <patches@lists.linux.dev>; Wed, 12 Jul 2023 13:46:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689194790; x=1691786790;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hjYp/GGGt1suSt9XKydx09ugNwhwrtHkiMgpJkM/lOc=;
+        b=ncfNislj9zkZDbzfooNQKCoi3fZ/tNoj/jW86RpRgvnL/xWidIpWcLH6ayF7AetyXO
+         qAHUWsEqwvY/NGG3fsTp3T5S1FjT/PNbxOToVwEQ82BTZcQAerhxx85WCv+6o+sVl5oF
+         XmOVP70uv/1ZWlrvgrOlOXDPHUprmR+TjTvWD8V9/i5t9gafRdk/jZI6bg0k1+FuwnIr
+         KDe5lzQr+yOdL9AFvjfJwOFbG9AxD/BxnV7lqt9o4cpBP1ytub13wm+8xwY46e7QiBIF
+         FJcf4gGhW5HVpz9WAXW8y74oeWD0SGnqtQNxrrbAWkLXZPuzgApTeQiyIVeFFzaghT2V
+         I36Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689194790; x=1691786790;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hjYp/GGGt1suSt9XKydx09ugNwhwrtHkiMgpJkM/lOc=;
+        b=GXfMwzNwdclpNIPsq0FEXmvZVmUaUZTUNrm3Y+sn0oAz4WwBzX8/JWLQLgjMXquu0G
+         YifG6MjFSzAkrenDcQB2yGsYMDw3bMitAgO7RXfVDytRVcq3Z0Axzg9/mp2txYtkW5k2
+         yH208qgiAvFp00cPT1X2s/R5B+2tP6K4rUTVs5BsRGNEqRdhAk2Bd8M1gOz2o8q9dfTp
+         Ukab+yOxqRu59zklHZbnWVz2BpZzi2uQDjkmWR9X5UUor+bi7mVN9hjIN+moSLwfQ0LN
+         euB05kAIesIMmCYim7ltw3WVhjbxPVTi9EVzB82nnTI1sr6DaaJTt8F+0M7hBrJF5Pn5
+         95wg==
+X-Gm-Message-State: ABy/qLaaQLZoyQwJInEs2oIOr29dUXUmOcLUDQVU0FOgAiEnM25FYY44
+	qD0B+JloSH3cBanxoOO00Qk=
+X-Google-Smtp-Source: APBJJlGB8IZyS5AEyRlG5pMJgxfMJIQfz18Bl/ywWLjb12fdCb0ahZIw7N3RXMtz/5OOeQxQTXct2g==
+X-Received: by 2002:a05:6870:e313:b0:1b7:8950:f583 with SMTP id z19-20020a056870e31300b001b78950f583mr297915oad.33.1689194789797;
+        Wed, 12 Jul 2023 13:46:29 -0700 (PDT)
+Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
+        by smtp.gmail.com with ESMTPSA id ds53-20020a0568705b3500b001a6d15fc52fsm2397384oab.4.2023.07.12.13.46.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Jul 2023 13:46:29 -0700 (PDT)
+Message-ID: <4b92e8be-32c8-0ac4-723f-59f2fc42e6b3@gmail.com>
+Date: Wed, 12 Jul 2023 17:33:12 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 2/9] rust: sync: add `Arc::{from_raw, into_raw}`
+Content-Language: en-US
+To: Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
+ Tejun Heo <tj@kernel.org>, Miguel Ojeda <ojeda@kernel.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Wedson Almeida Filho <walmeida@microsoft.com>
+References: <20230711093303.1433770-1-aliceryhl@google.com>
+ <20230711093303.1433770-3-aliceryhl@google.com>
+From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+In-Reply-To: <20230711093303.1433770-3-aliceryhl@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Wed, 12 Jul 2023 18:41:46 +0530 Naresh Kamboju wrote:
-> That is the commit id from stable-rc tree.
+On 7/11/23 06:32, Alice Ryhl wrote:
+> From: Wedson Almeida Filho <walmeida@microsoft.com>
 > 
-> I have re-tested the reported issues multiple times and
-> it seems that it is intermittently reproducible.
-> Following list of links shows kernel crashes while testing
-> selftest net pmtu.sh
+> These methods can be used to turn an `Arc` into a raw pointer and back,
+> in a way that preserves the metadata for fat pointers.
 > 
-> 1)
-> Unable to handle kernel paging request at virtual address
-> https://lkft.validation.linaro.org/scheduler/job/6579624#L4648
+> This is done using the unstable ptr_metadata feature [1]. However, it
+> could also be done using the unstable pointer_byte_offsets feature [2],
+> which is likely to have a shorter path to stabilization than
+> ptr_metadata.
 > 
-> 
-> 2)
-> include/net/neighbour.h:302 suspicious rcu_dereference_check() usage!
-> 
-> https://lkft.validation.linaro.org/scheduler/job/6579625#L7500
-> https://lkft.validation.linaro.org/scheduler/job/6579626#L7509
-> https://lkft.validation.linaro.org/scheduler/job/6579622#L7537
-> https://lkft.validation.linaro.org/scheduler/job/6579623#L7469
+> Link: https://github.com/rust-lang/rust/issues/81513 [1]
+> Link: https://github.com/rust-lang/rust/issues/96283 [2]
+> Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
+> Co-developed-by: Alice Ryhl <aliceryhl@google.com>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> Reviewed-by: Gary Guo <gary@garyguo.net>
+> ---
+> [...]
 
-Nothing jumps out at me.
-
-David, any ideas?
+Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
