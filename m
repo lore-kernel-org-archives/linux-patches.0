@@ -1,102 +1,151 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1308200DA
-	for <patches@lists.linux.dev>; Wed, 12 Jul 2023 13:11:59 +0000 (UTC)
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-47e4d002e0bso2510037e0c.0
-        for <patches@lists.linux.dev>; Wed, 12 Jul 2023 06:11:59 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E06214F9
+	for <patches@lists.linux.dev>; Wed, 12 Jul 2023 16:23:20 +0000 (UTC)
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-55bc29a909dso3705543a12.3
+        for <patches@lists.linux.dev>; Wed, 12 Jul 2023 09:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1689167518; x=1691759518;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mMTX55rsuAtxs8eoTMF0zmRGfyj0Pb2SnfXciWnbDRk=;
-        b=oODGvdD932AIbLChg31AWvPktzZ4m7FTZ6aQ1gLyUuWlnI3wXkOvvrIbbIi8uCqd6K
-         2DqwWEDw/fQbtPRvLRedVPOOzTHHsf/4HRHxNFxP2Pk6AD3zGU495vP9iEFnx3zwtWlR
-         2U9wGjnFkQAVowaGRwGExOWZmczAT6UqND7v5XIqWbDiLIB4+pd1kEjNyEUPRXB2t+cd
-         KSbQccVpwUXW9MgFExadDhAfNc6PtxFhlmkd9Qf3Xr8zxwO/yEbyTLdJSY2y1F+sI6hw
-         OZ0Z6hSly9/ApfbBL7ai06kUQFpp3+K3Qd325h0IqPNZ3Q4h3cKxEYPBZU3Hr9g2pzfX
-         0XEA==
+        d=gmail.com; s=20221208; t=1689179000; x=1691771000;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/mvKlKHSg/A3EuJ2PFCJvzfOkyyunP0cNJw9XZ1YoG4=;
+        b=VHnuNATviqOgKPuyo3fuh1fXRy2OtRR/omFx+1Sa0YyCS83h8RtoeVoirEmi33KxVj
+         g1K4O/CD8L6aR7SXF02veyJT2HS+FHZLswYIM+kpjJKG4qXi54M6HzSgrgccjBhdZM16
+         7dkoE6XTRFpoldjZiEjKPk2sndtlxAE3IeSKB9XknsPXks/RyD6ePGFqztpdC2CocYgR
+         XSByCC97A4XUlkhuinayUvwLt2+JXyvZ3iH8fN7QKSbCBuUKmzt4gro0OCSm83GQHUDj
+         kLUajaa9ldIx42KMzNTTWuIe/PA2h/G1AZULj6qVniKflEdR/S8tU49+KDbfde7ePfir
+         EnCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689167518; x=1691759518;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mMTX55rsuAtxs8eoTMF0zmRGfyj0Pb2SnfXciWnbDRk=;
-        b=c2li5oKSFLyJUsIjeyYzexVCAolic/UrfJrbWPWz88ui+cxZ4k8Ae0qmkaz5FWAGwx
-         2GPd4KgevSFtJQmewEtYQQy/pXkfO0KNgDvTWVJ9Xi2CP3n4KH/d7jCIh7NHSyNVdxw0
-         gHS6GcjjA1Cx9nZQBHFvOGvMvQ98oJ7Kha8mTGyG4EUQiMOgFn+LkrsCqO1jLVbDby8H
-         eVaSLWGvyWabHHBuzc7n6RxQl/708aaCm8NwdrJ6LthvGvv5iOybqcHKDPplv2ChjwkI
-         UrgxbLwG/WsLYNCYqS5NUcglA0mDFOIx8tLnzvOaYfh5taPXCYj5SfSFKd++ESxo3AM2
-         tc5g==
-X-Gm-Message-State: ABy/qLZrpOW06AOFZV5kygc04FyceTnf+VUgE+f9JM89fIs8FvMZOMk0
-	W6MCZUkETvJEAioTwt03utnmfXLr3yFqrnOtSKWCew==
-X-Google-Smtp-Source: APBJJlHszP/BzjPgRktgE9ZmebvyBVKr6pfvWwTZjRe8dSb5sh4qROzT6nYqpk/0QxLKUnz2CT1ElQ7dwOmGZ7kEQMc=
-X-Received: by 2002:a1f:3fd0:0:b0:481:2ff5:c9a9 with SMTP id
- m199-20020a1f3fd0000000b004812ff5c9a9mr938260vka.13.1689167518233; Wed, 12
- Jul 2023 06:11:58 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1689179000; x=1691771000;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/mvKlKHSg/A3EuJ2PFCJvzfOkyyunP0cNJw9XZ1YoG4=;
+        b=Hptaf16CeaKVpMqjk+JAaWwG6B7CmvYTn1YHiZCIWOAVx916nV1ak35DBYjcHQFmNW
+         68v0RWF0yWH6BrMMRoS1f5+afLdtrBZ/dIaFHMSGGuI/CRu9BBe4UUxidCjOi4kzqf9Y
+         aP8OupOzR3DwAIw+RIexaoT+r8UYxAcO7MZLC5eNuDhRz1HWqd3fkBpEBDwg11IraoEu
+         1O3Cftu9U/rQy7lqyPmd7l22JeWvWVBIe6u5mJwROInwEs9iFBJpVVWTQmt+J+c7p+bq
+         GuKOgsTF9XFJZF3LmPfx+TF+oAhk0iBWWT0phoffxND1Izg6csZDL+U/kLnFbLvbnEhf
+         7xHw==
+X-Gm-Message-State: ABy/qLa3txgyQvwlVBB86d6EpHOsmtkqtdRDmapFGxkB4ssqc+cbwrNa
+	z4DYnF9XB5zMWuDSD0q1jjQWDztut4NM2j+RpVs=
+X-Google-Smtp-Source: APBJJlF3rf+aZ7Dic0YZaGil/jwvb4h4itZZ9wPU2RvqES1B/ZcPeLeQYICZfi8bU6WCHwKtU9BfGohX9VYGxKiHV3U=
+X-Received: by 2002:a17:90b:400a:b0:263:f5a5:fb98 with SMTP id
+ ie10-20020a17090b400a00b00263f5a5fb98mr15776385pjb.28.1689178999981; Wed, 12
+ Jul 2023 09:23:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230709203826.141774942@linuxfoundation.org> <CA+G9fYtEr-=GbcXNDYo3XOkwR+uYgehVoDjsP0pFLUpZ_AZcyg@mail.gmail.com>
- <20230711201506.25cc464d@kernel.org> <ZK5k7YnVA39sSXOv@duo.ucw.cz>
-In-Reply-To: <ZK5k7YnVA39sSXOv@duo.ucw.cz>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 12 Jul 2023 18:41:46 +0530
-Message-ID: <CA+G9fYvEJgcNhvJk6pvdQOkaS_+x105ZgSM1BVvYy0RRW+1TvA@mail.gmail.com>
-Subject: Re: [PATCH 6.4 0/6] 6.4.3-rc2 review
-To: Jakub Kicinski <kuba@kernel.org>, Netdev <netdev@vger.kernel.org>, 
-	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	Qingfang DENG <qingfang.deng@siflower.com.cn>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, 
-	YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>, Masahide NAKAMURA <nakam@linux-ipv6.org>, 
-	Ville Nuorvala <vnuorval@tcs.hut.fi>, Arnd Bergmann <arnd@arndb.de>, Pavel Machek <pavel@denx.de>
+References: <20230711134623.12695-3-vbabka@suse.cz>
+In-Reply-To: <20230711134623.12695-3-vbabka@suse.cz>
+From: Andrey Konovalov <andreyknvl@gmail.com>
+Date: Wed, 12 Jul 2023 18:23:09 +0200
+Message-ID: <CA+fCnZci9E8Snjuc-rJqSeX+Gn84_AVO5OjQwyFT=vL+pw22HQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] mm/slub: remove redundant kasan_reset_tag() from
+ freelist_ptr calculations
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>, Pekka Enberg <penberg@kernel.org>, 
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, 
+	Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, Matteo Rizzo <matteorizzo@google.com>, 
+	Jann Horn <jannh@google.com>, Andrey Konovalov <andreyknvl@google.com>, Marco Elver <elver@google.com>, 
+	Alexander Potapenko <glider@google.com>, kasan-dev@googlegroups.com, 
+	Kees Cook <keescook@chromium.org>, linux-hardening@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 12 Jul 2023 at 14:01, Pavel Machek <pavel@denx.de> wrote:
+On Tue, Jul 11, 2023 at 3:46=E2=80=AFPM Vlastimil Babka <vbabka@suse.cz> wr=
+ote:
 >
-> Hi!
+> Commit d36a63a943e3 ("kasan, slub: fix more conflicts with
+> CONFIG_SLAB_FREELIST_HARDENED") has introduced kasan_reset_tags() to
+> freelist_ptr() encoding/decoding when CONFIG_SLAB_FREELIST_HARDENED is
+> enabled to resolve issues when passing tagged or untagged pointers
+> inconsistently would lead to incorrect calculations.
 >
-> > >   git_repo: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-> > >   git_sha: 3e37df3ffd9a648c9f88f6bbca158e43d5077bef
-> >
-> > I can't find this sha :( Please report back if you can still repro this
-> > and how we get get the relevant code
+> Later, commit aa1ef4d7b3f6 ("kasan, mm: reset tags when accessing
+> metadata") made sure all pointers have tags reset regardless of
+> CONFIG_SLAB_FREELIST_HARDENED, because there was no other way to access
+> the freepointer metadata safely with hw tag-based KASAN.
 >
-> That sha seems to be:
+> Therefore the kasan_reset_tag() usage in freelist_ptr_encode()/decode()
+> is now redundant, as all callers use kasan_reset_tag() unconditionally
+> when constructing ptr_addr. Remove the redundant calls and simplify the
+> code and remove obsolete comments.
 >
-> commit 3e37df3ffd9a648c9f88f6bbca158e43d5077bef
-> Author: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Date:   Sun Jul 9 22:38:22 2023 +0200
+> Also in freelist_ptr_encode() introduce an 'encoded' variable to make
+> the lines shorter and make it similar to the _decode() one.
 >
->     Linux 6.4.3-rc2
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> ---
+> These 2 patches build on top of:
+> https://lore.kernel.org/all/20230704135834.3884421-1-matteorizzo@google.c=
+om/
+>
+>  mm/slub.c | 22 ++++++----------------
+>  1 file changed, 6 insertions(+), 16 deletions(-)
+>
+> diff --git a/mm/slub.c b/mm/slub.c
+> index f8cc47eff742..07edad305512 100644
+> --- a/mm/slub.c
+> +++ b/mm/slub.c
+> @@ -374,22 +374,14 @@ typedef struct { unsigned long v; } freeptr_t;
+>  static inline freeptr_t freelist_ptr_encode(const struct kmem_cache *s,
+>                                             void *ptr, unsigned long ptr_=
+addr)
+>  {
+> +       unsigned long encoded;
+> +
+>  #ifdef CONFIG_SLAB_FREELIST_HARDENED
+> -       /*
+> -        * When CONFIG_KASAN_SW/HW_TAGS is enabled, ptr_addr might be tag=
+ged.
+> -        * Normally, this doesn't cause any issues, as both set_freepoint=
+er()
+> -        * and get_freepointer() are called with a pointer with the same =
+tag.
+> -        * However, there are some issues with CONFIG_SLUB_DEBUG code. Fo=
+r
+> -        * example, when __free_slub() iterates over objects in a cache, =
+it
+> -        * passes untagged pointers to check_object(). check_object() in =
+turns
+> -        * calls get_freepointer() with an untagged pointer, which causes=
+ the
+> -        * freepointer to be restored incorrectly.
+> -        */
+> -       return (freeptr_t){.v =3D (unsigned long)ptr ^ s->random ^
+> -                       swab((unsigned long)kasan_reset_tag((void *)ptr_a=
+ddr))};
+> +       encoded =3D (unsigned long)ptr ^ s->random ^ swab(ptr_addr);
+>  #else
+> -       return (freeptr_t){.v =3D (unsigned long)ptr};
+> +       encoded =3D (unsigned long)ptr;
+>  #endif
+> +       return (freeptr_t){.v =3D encoded};
+>  }
+>
+>  static inline void *freelist_ptr_decode(const struct kmem_cache *s,
+> @@ -398,9 +390,7 @@ static inline void *freelist_ptr_decode(const struct =
+kmem_cache *s,
+>         void *decoded;
+>
+>  #ifdef CONFIG_SLAB_FREELIST_HARDENED
+> -       /* See the comment in freelist_ptr_encode */
+> -       decoded =3D (void *)(ptr.v ^ s->random ^
+> -               swab((unsigned long)kasan_reset_tag((void *)ptr_addr)));
+> +       decoded =3D (void *)(ptr.v ^ s->random ^ swab(ptr_addr));
+>  #else
+>         decoded =3D (void *)ptr.v;
+>  #endif
+> --
+> 2.41.0
 
-That is the commit id from stable-rc tree.
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
 
-I have re-tested the reported issues multiple times and
-it seems that it is intermittently reproducible.
-Following list of links shows kernel crashes while testing
-selftest net pmtu.sh
-
-1)
-Unable to handle kernel paging request at virtual address
-https://lkft.validation.linaro.org/scheduler/job/6579624#L4648
-
-
-2)
-include/net/neighbour.h:302 suspicious rcu_dereference_check() usage!
-
-https://lkft.validation.linaro.org/scheduler/job/6579625#L7500
-https://lkft.validation.linaro.org/scheduler/job/6579626#L7509
-https://lkft.validation.linaro.org/scheduler/job/6579622#L7537
-https://lkft.validation.linaro.org/scheduler/job/6579623#L7469
-
-- Naresh
+Thanks!
