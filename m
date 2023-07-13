@@ -1,30 +1,30 @@
 Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507C71E536
-	for <patches@lists.linux.dev>; Thu, 13 Jul 2023 16:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312D41F166
+	for <patches@lists.linux.dev>; Thu, 13 Jul 2023 16:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1689265956; x=1720801956;
+  t=1689265957; x=1720801957;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=6zdXX9a9XkRDDTwQP2Zu+lk034wDBTkzuL9enDAObXo=;
-  b=gH59sC2zHCv2F6G06fn3Y2I+TX0Vupj8BQ7bQGLdO9cnb+PPDwbIIkzs
-   cGh8nunQZBGKEv1PWSSlI1UaH5NTx/ZZkhmztgaw4DpWTstW/ZyG/m40t
-   t+TP+kji9VG3WrLFPCsgyQl7jOJ9k4NijxrL70ucwI1s8WukaDTUUO3dM
-   DiH9rnMN5sgvCXlEyRfOrx4c0KcbXxBpD2V6voBY3JXOpaYUqy5Q4+9d4
-   wDF1riEsePMw0OPiPVOnvZ2OvVDF1zJFPVKVv8vPY8GRfvkQvL7EILX6D
-   6Qgb7gljydBJbRy77SijRpje6oFuNawF0RoCTFO5gGaojlCN/ufawAfQ5
+  bh=QLPVmH8OKhS156FijxUUbjl5TQT038tMDl99vshP4rU=;
+  b=S4tpj86MzZHMx4xSz24SgkUQqWLt1cpCVmBaMnLHwc+6unGvb6FoZhOl
+   VksVNFxnMiXCAXZtuk4hj+oXkJo9Y1ziJt2dGtLve+bNkTaLmahP2E+05
+   hdEfcqH8aOVOfMysJHz56X+8tq8xiO91SraCaX2DrPTYR+G1Bvwk1EHZH
+   hNw+/cf589q9oZTmY+89ocyamxGpvRSvs5CKpsheCmnvULzXSfch6MK35
+   SD1nLJEbX9UL2RKM2W+HPsNQVstf47lcopTkQncsCL6YfbtxM9O8F88Ox
+   T+YNVp68ynfibhhZQSywXHD4UW1uGU7bY80Q0scYdyaDBAyIAYik/dlW9
    Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10770"; a="362707658"
+X-IronPort-AV: E=McAfee;i="6600,9927,10770"; a="362707671"
 X-IronPort-AV: E=Sophos;i="6.01,203,1684825200"; 
-   d="scan'208";a="362707658"
+   d="scan'208";a="362707671"
 Received: from orsmga002.jf.intel.com ([10.7.209.21])
   by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2023 09:32:24 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10770"; a="722046391"
+X-IronPort-AV: E=McAfee;i="6600,9927,10770"; a="722046397"
 X-IronPort-AV: E=Sophos;i="6.01,203,1684825200"; 
-   d="scan'208";a="722046391"
+   d="scan'208";a="722046397"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
   by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2023 09:32:23 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -43,9 +43,9 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v3 7/8] x86/resctrl: Determine if Sub-NUMA Cluster is enabled and initialize.
-Date: Thu, 13 Jul 2023 09:32:06 -0700
-Message-Id: <20230713163207.219710-8-tony.luck@intel.com>
+Subject: [PATCH v3 8/8] selftests/resctrl: Adjust effective L3 cache size when SNC enabled
+Date: Thu, 13 Jul 2023 09:32:07 -0700
+Message-Id: <20230713163207.219710-9-tony.luck@intel.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230713163207.219710-1-tony.luck@intel.com>
 References: <20230713163207.219710-1-tony.luck@intel.com>
@@ -57,244 +57,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There isn't a simple hardware enumeration to indicate to software that
-a system is running with Sub-NUMA Cluster enabled.
+Sub-NUMA Cluster divides CPUs sharing an L3 cache into separate NUMA
+nodes. Systems may support splitting into either two or four nodes.
 
-Compare the number of NUMA nodes with the number of L3 caches to calculate
-the number of Sub-NUMA nodes per L3 cache.
+When SNC mode is enabled the effective amount of L3 cache available
+for allocation is divided by the number of nodes per L3.
 
-When Sub-NUMA cluster mode is enabled in BIOS setup the RMID counters
-are distributed equally between the SNC nodes within each socket.
+Detect which SNC mode is active by comparing the number of CPUs
+that share a cache with CPU0, with the number of CPUs on node0.
 
-E.g. if there are 400 RMID counters, and the system is configured with
-two SNC nodes per socket, then RMID counter 0..199 are used on SNC node
-0 on the socket, and RMID counter 200..399 on SNC node 1.
-
-A model specific MSR (0xca0) can change the configuration of the RMIDs
-when SNC mode is enabled.
-
-The MSR controls the interpretation of the RMID field in the
-IA32_PQR_ASSOC MSR so that the appropriate hardware counters
-within the SNC node are updated.
-
-Also initialize a per-cpu RMID offset value. Use this
-to calculate the value to write to the IA32_QM_EVTSEL MSR when
-reading RMID event values.
-
-N.B. this works well for well-behaved NUMA applications that access
-memory predominantly from the local memory node. For applications that
-access memory across multiple nodes it may be necessary for the user
-to read counters for all SNC nodes on a socket and add the values to
-get the actual LLC occupancy or memory bandwidth. Perhaps this isn't
-all that different from applications that span across multiple sockets
-in a legacy system.
-
+Reported-by: "Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>
+Closes: https://lore.kernel.org/r/TYAPR01MB6330B9B17686EF426D2C3F308B25A@TYAPR01MB6330.jpnprd01.prod.outlook.com
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Peter Newman <peternewman@google.com>
-Tested-by: Peter Newman <peternewman@google.com>
 ---
- arch/x86/include/asm/resctrl.h         |  2 +
- arch/x86/kernel/cpu/resctrl/core.c     | 99 +++++++++++++++++++++++++-
- arch/x86/kernel/cpu/resctrl/monitor.c  |  2 +-
- arch/x86/kernel/cpu/resctrl/rdtgroup.c |  2 +-
- 4 files changed, 100 insertions(+), 5 deletions(-)
+ tools/testing/selftests/resctrl/resctrl.h   |  1 +
+ tools/testing/selftests/resctrl/resctrlfs.c | 57 +++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
 
-diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
-index 255a78d9d906..f95e69bacc65 100644
---- a/arch/x86/include/asm/resctrl.h
-+++ b/arch/x86/include/asm/resctrl.h
-@@ -35,6 +35,8 @@ DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
- DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
- DECLARE_STATIC_KEY_FALSE(rdt_mon_enable_key);
- 
-+DECLARE_PER_CPU(int, rmid_offset);
-+
- /*
-  * __resctrl_sched_in() - Writes the task's CLOSid/RMID to IA32_PQR_MSR
-  *
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index af3be3c2db96..a03ff1a95624 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -16,11 +16,14 @@
- 
- #define pr_fmt(fmt)	"resctrl: " fmt
- 
-+#include <linux/cpu.h>
- #include <linux/slab.h>
- #include <linux/err.h>
- #include <linux/cacheinfo.h>
- #include <linux/cpuhotplug.h>
-+#include <linux/mod_devicetable.h>
- 
-+#include <asm/cpu_device_id.h>
- #include <asm/intel-family.h>
- #include <asm/resctrl.h>
- #include "internal.h"
-@@ -524,6 +527,39 @@ static int get_domain_id(int cpu, enum resctrl_scope scope)
- 	}
+diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
+index 87e39456dee0..a8b43210b573 100644
+--- a/tools/testing/selftests/resctrl/resctrl.h
++++ b/tools/testing/selftests/resctrl/resctrl.h
+@@ -13,6 +13,7 @@
+ #include <signal.h>
+ #include <dirent.h>
+ #include <stdbool.h>
++#include <ctype.h>
+ #include <sys/stat.h>
+ #include <sys/ioctl.h>
+ #include <sys/mount.h>
+diff --git a/tools/testing/selftests/resctrl/resctrlfs.c b/tools/testing/selftests/resctrl/resctrlfs.c
+index fb00245dee92..79eecbf9f863 100644
+--- a/tools/testing/selftests/resctrl/resctrlfs.c
++++ b/tools/testing/selftests/resctrl/resctrlfs.c
+@@ -130,6 +130,61 @@ int get_resource_id(int cpu_no, int *resource_id)
+ 	return 0;
  }
  
-+DEFINE_PER_CPU(int, rmid_offset);
-+
-+static void set_per_cpu_rmid_offset(int cpu, struct rdt_resource *r)
-+{
-+	this_cpu_write(rmid_offset, (cpu_to_node(cpu) % snc_ways) * r->num_rmid);
-+}
-+
 +/*
-+ * This MSR provides for configuration of RMIDs on Sub-NUMA Cluster
-+ * systems.
-+ * Bit0 = 1 (default) For legacy configuration
-+ * Bit0 = 0 RMIDs are divided evenly between SNC nodes.
++ * Count number of CPUs in a /sys bit map
 + */
-+#define MSR_RMID_SNC_CONFIG   0xCA0
-+
-+static void snc_add_pkg(void)
++static int count_sys_bitmap_bits(char *name)
 +{
-+	u64	msrval;
++	FILE *fp = fopen(name, "r");
++	int count = 0, c;
 +
-+	rdmsrl(MSR_RMID_SNC_CONFIG, msrval);
-+	msrval &= ~BIT_ULL(0);
-+	wrmsrl(MSR_RMID_SNC_CONFIG, msrval);
-+}
++	if (!fp)
++		return 0;
 +
-+static void snc_remove_pkg(void)
-+{
-+	u64	msrval;
-+
-+	rdmsrl(MSR_RMID_SNC_CONFIG, msrval);
-+	msrval |= BIT_ULL(0);
-+	wrmsrl(MSR_RMID_SNC_CONFIG, msrval);
-+}
-+
- /*
-  * domain_add_cpu - Add a cpu to a resource's domain list.
-  *
-@@ -555,6 +591,8 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
- 		cpumask_set_cpu(cpu, &d->cpu_mask);
- 		if (r->cache.arch_has_per_cpu_cfg)
- 			rdt_domain_reconfigure_cdp(r);
-+		if (r->mon_capable)
-+			set_per_cpu_rmid_offset(cpu, r);
- 		return;
- 	}
- 
-@@ -573,11 +611,17 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
- 		return;
- 	}
- 
--	if (r->mon_capable && arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
--		domain_free(hw_dom);
--		return;
-+	if (r->mon_capable) {
-+		if (arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
-+			domain_free(hw_dom);
-+			return;
++	while ((c = fgetc(fp)) != EOF) {
++		if (!isxdigit(c))
++			continue;
++		switch (c) {
++		case 'f':
++			count++;
++		case '7': case 'b': case 'd': case 'e':
++			count++;
++		case '3': case '5': case '6': case '9': case 'a': case 'c':
++			count++;
++		case '1': case '2': case '4': case '8':
++			count++;
 +		}
-+		set_per_cpu_rmid_offset(cpu, r);
- 	}
- 
-+	if (r->pkg_actions)
-+		snc_add_pkg();
-+
- 	list_add_tail(&d->list, add_pos);
- 
- 	err = resctrl_online_domain(r, d);
-@@ -613,6 +657,9 @@ static void domain_remove_cpu(int cpu, struct rdt_resource *r)
- 			d->plr->d = NULL;
- 		domain_free(hw_dom);
- 
-+		if (r->pkg_actions)
-+			snc_remove_pkg();
-+
- 		return;
- 	}
- 
-@@ -899,11 +946,57 @@ static __init bool get_rdt_resources(void)
- 	return (rdt_mon_capable || rdt_alloc_capable);
- }
- 
-+static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
-+	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, 0),
-+	X86_MATCH_INTEL_FAM6_MODEL(EMERALDRAPIDS_X, 0),
-+	{}
-+};
-+
-+/*
-+ * There isn't a simple enumeration bit to show whether SNC mode
-+ * is enabled. Look at the ratio of number of NUMA nodes to the
-+ * number of distinct L3 caches. Take care to skip memory-only nodes.
-+ */
-+static __init int find_snc_ways(void)
-+{
-+	unsigned long *node_caches;
-+	int mem_only_nodes = 0;
-+	int cpu, node, ret;
-+
-+	if (!x86_match_cpu(snc_cpu_ids))
-+		return 1;
-+
-+	node_caches = kcalloc(BITS_TO_LONGS(nr_node_ids), sizeof(*node_caches), GFP_KERNEL);
-+	if (!node_caches)
-+		return 1;
-+
-+	cpus_read_lock();
-+	for_each_node(node) {
-+		cpu = cpumask_first(cpumask_of_node(node));
-+		if (cpu < nr_cpu_ids)
-+			set_bit(get_cpu_cacheinfo_id(cpu, 3), node_caches);
-+		else
-+			mem_only_nodes++;
 +	}
-+	cpus_read_unlock();
++	fclose(fp);
 +
-+	ret = (nr_node_ids - mem_only_nodes) / bitmap_weight(node_caches, nr_node_ids);
-+	kfree(node_caches);
-+
-+	if (ret > 1)
-+		rdt_resources_all[RDT_RESOURCE_PKG].r_resctrl.pkg_actions = true;
-+
-+	return ret;
++	return count;
 +}
 +
- static __init void rdt_init_res_defs_intel(void)
- {
- 	struct rdt_hw_resource *hw_res;
- 	struct rdt_resource *r;
- 
-+	snc_ways = find_snc_ways();
++/*
++ * Detect SNC by compating #CPUs in node0 with #CPUs sharing LLC with CPU0
++ * Try to get this right, even if a few CPUs are offline so that the number
++ * of CPUs in node0 is not exactly half or a quarter of the CPUs sharing the
++ * LLC of CPU0.
++ */
++static int snc_ways(void)
++{
++	int node_cpus, cache_cpus;
 +
- 	for_each_rdt_resource(r) {
- 		hw_res = resctrl_to_arch_res(r);
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index da3f36212898..74db99d299e1 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -160,7 +160,7 @@ static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
- 	 * IA32_QM_CTR.Error (bit 63) and IA32_QM_CTR.Unavailable (bit 62)
- 	 * are error bits.
- 	 */
--	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid);
-+	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid + this_cpu_read(rmid_offset));
- 	rdmsrl(MSR_IA32_QM_CTR, msr_val);
- 
- 	if (msr_val & RMID_VAL_ERROR)
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index d037f3da9e55..1a9c38b018ba 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -1354,7 +1354,7 @@ unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
- 		}
++	node_cpus = count_sys_bitmap_bits("/sys/devices/system/node/node0/cpumap");
++	cache_cpus = count_sys_bitmap_bits("/sys/devices/system/cpu/cpu0/cache/index3/shared_cpu_map");
++
++	if (!node_cpus || !cache_cpus) {
++		fprintf(stderr, "Warning could not determine Sub-NUMA Cluster mode\n");
++		return 1;
++	}
++
++	if (4 * node_cpus >= cache_cpus)
++		return 4;
++	else if (2 * node_cpus >= cache_cpus)
++		return 2;
++	return 1;
++}
++
+ /*
+  * get_cache_size - Get cache size for a specified CPU
+  * @cpu_no:	CPU number
+@@ -190,6 +245,8 @@ int get_cache_size(int cpu_no, char *cache_type, unsigned long *cache_size)
+ 			break;
  	}
  
--	return size;
-+	return size / snc_ways;
++	if (cache_num == 3)
++		*cache_size /= snc_ways();
+ 	return 0;
  }
  
- /**
 -- 
 2.40.1
 
