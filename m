@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A71F8F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25CEC433C8;
-	Sun, 16 Jul 2023 20:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DF08F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2DAC433C9;
+	Sun, 16 Jul 2023 20:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539470;
-	bh=Km6hG8ZsTC5iv9Ltr1CUws0IQFbNQzRmKE6aMMqvH0s=;
+	s=korg; t=1689539476;
+	bh=8uLWVgUzKUcTbGBBUWSFtguRGiA/2oFlGn4riYrsJpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ulql2otalMdBAiXcWVhnIRvg5Lmzv6O9fnbWwUpOMmeUvmasoqRQpLXos0q5WrOrU
-	 Sc0OSxOPJloIlXUUxbufaaegYRmtTIxbiey/A59j9NSAbUHPHLfjg7smb6qSV5aCu3
-	 rziZZ2GFO8l7AUOT2xq0Q3+hdVuDUOFVhIGVe1aM=
+	b=SPTRZSbW5ZKCf1X6P9FnmbYkERHQ8luztcnOfo+xe8uP3st2YnDVCY/bajpsak8zV
+	 RRrxqgLPqajnEelHpYH/fBHxxN4tKprZ+Wqdy2Q3lPrFGWsy0jOPr1CoDuz3IhyiDw
+	 iQCjl06TVc3gyiLqJVVDa+kUw1JzPr5ABGJa8ENk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Wang <shawnwang@linux.alibaba.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 009/591] x86/resctrl: Only show tasks pid in current pid namespace
-Date: Sun, 16 Jul 2023 21:42:28 +0200
-Message-ID: <20230716194924.104509818@linuxfoundation.org>
+Subject: [PATCH 6.1 013/591] blk-mq: fix potential io hang by wrong wake_batch
+Date: Sun, 16 Jul 2023 21:42:32 +0200
+Message-ID: <20230716194924.206867704@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,53 +36,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shawn Wang <shawnwang@linux.alibaba.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 2997d94b5dd0e8b10076f5e0b6f18410c73e28bd ]
+[ Upstream commit 4f1731df60f9033669f024d06ae26a6301260b55 ]
 
-When writing a task id to the "tasks" file in an rdtgroup,
-rdtgroup_tasks_write() treats the pid as a number in the current pid
-namespace. But when reading the "tasks" file, rdtgroup_tasks_show() shows
-the list of global pids from the init namespace, which is confusing and
-incorrect.
+In __blk_mq_tag_busy/idle(), updating 'active_queues' and calculating
+'wake_batch' is not atomic:
 
-To be more robust, let the "tasks" file only show pids in the current pid
-namespace.
+t1:			t2:
+_blk_mq_tag_busy	blk_mq_tag_busy
+inc active_queues
+// assume 1->2
+			inc active_queues
+			// 2 -> 3
+			blk_mq_update_wake_batch
+			// calculate based on 3
+blk_mq_update_wake_batch
+/* calculate based on 2, while active_queues is actually 3. */
 
-Fixes: e02737d5b826 ("x86/intel_rdt: Add tasks files")
-Signed-off-by: Shawn Wang <shawnwang@linux.alibaba.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Reinette Chatre <reinette.chatre@intel.com>
-Acked-by: Fenghua Yu <fenghua.yu@intel.com>
-Tested-by: Reinette Chatre <reinette.chatre@intel.com>
-Link: https://lore.kernel.org/all/20230116071246.97717-1-shawnwang@linux.alibaba.com/
+Fix this problem by protecting them wih 'tags->lock', this is not a hot
+path, so performance should not be concerned. And now that all writers
+are inside the lock, switch 'actives_queues' from atomic to unsigned
+int.
+
+Fixes: 180dccb0dba4 ("blk-mq: fix tag_get wait task can't be awakened")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230610023043.2559121-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ block/blk-mq-debugfs.c |  2 +-
+ block/blk-mq-tag.c     | 15 ++++++++++-----
+ block/blk-mq.h         |  3 +--
+ include/linux/blk-mq.h |  3 +--
+ 4 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index c7f1c7cb1963b..15ee89ce8c68c 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -731,11 +731,15 @@ static ssize_t rdtgroup_tasks_write(struct kernfs_open_file *of,
- static void show_rdt_tasks(struct rdtgroup *r, struct seq_file *s)
- {
- 	struct task_struct *p, *t;
-+	pid_t pid;
+diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
+index bd942341b6382..7675e663df365 100644
+--- a/block/blk-mq-debugfs.c
++++ b/block/blk-mq-debugfs.c
+@@ -427,7 +427,7 @@ static void blk_mq_debugfs_tags_show(struct seq_file *m,
+ 	seq_printf(m, "nr_tags=%u\n", tags->nr_tags);
+ 	seq_printf(m, "nr_reserved_tags=%u\n", tags->nr_reserved_tags);
+ 	seq_printf(m, "active_queues=%d\n",
+-		   atomic_read(&tags->active_queues));
++		   READ_ONCE(tags->active_queues));
  
- 	rcu_read_lock();
- 	for_each_process_thread(p, t) {
--		if (is_closid_match(t, r) || is_rmid_match(t, r))
--			seq_printf(s, "%d\n", t->pid);
-+		if (is_closid_match(t, r) || is_rmid_match(t, r)) {
-+			pid = task_pid_vnr(t);
-+			if (pid)
-+				seq_printf(s, "%d\n", pid);
-+		}
+ 	seq_puts(m, "\nbitmap_tags:\n");
+ 	sbitmap_queue_show(&tags->bitmap_tags, m);
+diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
+index a80d7c62bdfe6..100889c276c3f 100644
+--- a/block/blk-mq-tag.c
++++ b/block/blk-mq-tag.c
+@@ -40,6 +40,7 @@ static void blk_mq_update_wake_batch(struct blk_mq_tags *tags,
+ void __blk_mq_tag_busy(struct blk_mq_hw_ctx *hctx)
+ {
+ 	unsigned int users;
++	struct blk_mq_tags *tags = hctx->tags;
+ 
+ 	/*
+ 	 * calling test_bit() prior to test_and_set_bit() is intentional,
+@@ -57,9 +58,11 @@ void __blk_mq_tag_busy(struct blk_mq_hw_ctx *hctx)
+ 			return;
  	}
- 	rcu_read_unlock();
+ 
+-	users = atomic_inc_return(&hctx->tags->active_queues);
+-
+-	blk_mq_update_wake_batch(hctx->tags, users);
++	spin_lock_irq(&tags->lock);
++	users = tags->active_queues + 1;
++	WRITE_ONCE(tags->active_queues, users);
++	blk_mq_update_wake_batch(tags, users);
++	spin_unlock_irq(&tags->lock);
  }
+ 
+ /*
+@@ -92,9 +95,11 @@ void __blk_mq_tag_idle(struct blk_mq_hw_ctx *hctx)
+ 			return;
+ 	}
+ 
+-	users = atomic_dec_return(&tags->active_queues);
+-
++	spin_lock_irq(&tags->lock);
++	users = tags->active_queues - 1;
++	WRITE_ONCE(tags->active_queues, users);
+ 	blk_mq_update_wake_batch(tags, users);
++	spin_unlock_irq(&tags->lock);
+ 
+ 	blk_mq_tag_wakeup_all(tags, false);
+ }
+diff --git a/block/blk-mq.h b/block/blk-mq.h
+index 0b2870839cdd6..c6eca452ea2a2 100644
+--- a/block/blk-mq.h
++++ b/block/blk-mq.h
+@@ -362,8 +362,7 @@ static inline bool hctx_may_queue(struct blk_mq_hw_ctx *hctx,
+ 			return true;
+ 	}
+ 
+-	users = atomic_read(&hctx->tags->active_queues);
+-
++	users = READ_ONCE(hctx->tags->active_queues);
+ 	if (!users)
+ 		return true;
+ 
+diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
+index a9764cbf7f8d2..e4f676e1042b5 100644
+--- a/include/linux/blk-mq.h
++++ b/include/linux/blk-mq.h
+@@ -745,8 +745,7 @@ struct request *blk_mq_alloc_request_hctx(struct request_queue *q,
+ struct blk_mq_tags {
+ 	unsigned int nr_tags;
+ 	unsigned int nr_reserved_tags;
+-
+-	atomic_t active_queues;
++	unsigned int active_queues;
+ 
+ 	struct sbitmap_queue bitmap_tags;
+ 	struct sbitmap_queue breserved_tags;
 -- 
 2.39.2
 
