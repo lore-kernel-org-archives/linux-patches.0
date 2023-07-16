@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670098F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44A8C433C8;
-	Sun, 16 Jul 2023 20:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260C98F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D322C433C8;
+	Sun, 16 Jul 2023 20:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537877;
-	bh=e0N3p8uRHXQve+zbh0CDUO0JjhMVGFsVtKuFCej/vbM=;
+	s=korg; t=1689537880;
+	bh=xFGiy8HkXKZiklmAa5tGGltHHve2Sf6Oc+0wcePUEcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hXbFtRoyvCgr8UR6CzhTqY/w4NqaGWh1AUW+UiPmqVjsnCrvd4Om73ZffEswmg7sG
-	 QZKjw+y+AZzEL8Ac9V0dzRy7eb35aDZndc6paKSzSq7SbmZiXfQHmDX5qLSFBduo5v
-	 ar1iPvRA5lbC3icbhoS7KPGzLCISq39EtPUkO4mg=
+	b=10R7BoZSWlRe19I0szZ4ry6aoCO87zWBOvqayAsvDWCq7A2UrCWxsTaiEIQzv3JLz
+	 RLwREU4QYh6f/sgZH6GJ3L+R9/y4kAcP70rqdfWINwnBFLU2L6QWLo0uA9JvsrrCY6
+	 Clv5ODZQ67q06LbHu1S3iSNW9Bh3913ifuy95IHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 253/800] drm/panel: sharp-ls043t1le01: adjust mode settings
-Date: Sun, 16 Jul 2023 21:41:46 +0200
-Message-ID: <20230716194954.974138066@linuxfoundation.org>
+Subject: [PATCH 6.4 254/800] driver: soc: xilinx: use _safe loop iterator to avoid a use after free
+Date: Sun, 16 Jul 2023 21:41:47 +0200
+Message-ID: <20230716194954.996439318@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,58 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit dee23b2c9e3ff46d59c5d45e1436eceb878e7c9a ]
+[ Upstream commit c58da0ba3e5c86e51e2c1557afaf6f71e00c4533 ]
 
-Using current settings causes panel flickering on APQ8074 dragonboard.
-Adjust panel settings to follow the vendor-provided mode. This also
-enables MIPI_DSI_MODE_VIDEO_SYNC_PULSE, which is also specified by the
-vendor dtsi for the mentioned dragonboard.
+The hash_for_each_possible() loop dereferences "eve_data" to get the
+next item on the list.  However the loop frees eve_data so it leads to
+a use after free.  Use hash_for_each_possible_safe() instead.
 
-Fixes: ee0172383190 ("drm/panel: Add Sharp LS043T1LE01 MIPI DSI panel")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230507172639.2320934-1-dmitry.baryshkov@linaro.org
+Fixes: c7fdb2404f66 ("drivers: soc: xilinx: add xilinx event management driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/761e0e4a-4caf-4a71-8f47-1c6ad908a848@kili.mountain
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/soc/xilinx/xlnx_event_manager.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-index d1ec80a3e3c72..ef148504cf24a 100644
---- a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-+++ b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-@@ -192,15 +192,15 @@ static int sharp_nt_panel_enable(struct drm_panel *panel)
- }
+diff --git a/drivers/soc/xilinx/xlnx_event_manager.c b/drivers/soc/xilinx/xlnx_event_manager.c
+index c76381899ef49..f9d9b82b562da 100644
+--- a/drivers/soc/xilinx/xlnx_event_manager.c
++++ b/drivers/soc/xilinx/xlnx_event_manager.c
+@@ -192,11 +192,12 @@ static int xlnx_remove_cb_for_suspend(event_cb_func_t cb_fun)
+ 	struct registered_event_data *eve_data;
+ 	struct agent_cb *cb_pos;
+ 	struct agent_cb *cb_next;
++	struct hlist_node *tmp;
  
- static const struct drm_display_mode default_mode = {
--	.clock = 41118,
-+	.clock = (540 + 48 + 32 + 80) * (960 + 3 + 10 + 15) * 60 / 1000,
- 	.hdisplay = 540,
- 	.hsync_start = 540 + 48,
--	.hsync_end = 540 + 48 + 80,
--	.htotal = 540 + 48 + 80 + 32,
-+	.hsync_end = 540 + 48 + 32,
-+	.htotal = 540 + 48 + 32 + 80,
- 	.vdisplay = 960,
- 	.vsync_start = 960 + 3,
--	.vsync_end = 960 + 3 + 15,
--	.vtotal = 960 + 3 + 15 + 1,
-+	.vsync_end = 960 + 3 + 10,
-+	.vtotal = 960 + 3 + 10 + 15,
- };
+ 	is_need_to_unregister = false;
  
- static int sharp_nt_panel_get_modes(struct drm_panel *panel,
-@@ -280,6 +280,7 @@ static int sharp_nt_panel_probe(struct mipi_dsi_device *dsi)
- 	dsi->lanes = 2;
- 	dsi->format = MIPI_DSI_FMT_RGB888;
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
-+			MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
- 			MIPI_DSI_MODE_VIDEO_HSE |
- 			MIPI_DSI_CLOCK_NON_CONTINUOUS |
- 			MIPI_DSI_MODE_NO_EOT_PACKET;
+ 	/* Check for existing entry in hash table for given cb_type */
+-	hash_for_each_possible(reg_driver_map, eve_data, hentry, PM_INIT_SUSPEND_CB) {
++	hash_for_each_possible_safe(reg_driver_map, eve_data, tmp, hentry, PM_INIT_SUSPEND_CB) {
+ 		if (eve_data->cb_type == PM_INIT_SUSPEND_CB) {
+ 			/* Delete the list of callback */
+ 			list_for_each_entry_safe(cb_pos, cb_next, &eve_data->cb_list_head, list) {
+@@ -228,11 +229,12 @@ static int xlnx_remove_cb_for_notify_event(const u32 node_id, const u32 event,
+ 	u64 key = ((u64)node_id << 32U) | (u64)event;
+ 	struct agent_cb *cb_pos;
+ 	struct agent_cb *cb_next;
++	struct hlist_node *tmp;
+ 
+ 	is_need_to_unregister = false;
+ 
+ 	/* Check for existing entry in hash table for given key id */
+-	hash_for_each_possible(reg_driver_map, eve_data, hentry, key) {
++	hash_for_each_possible_safe(reg_driver_map, eve_data, tmp, hentry, key) {
+ 		if (eve_data->key == key) {
+ 			/* Delete the list of callback */
+ 			list_for_each_entry_safe(cb_pos, cb_next, &eve_data->cb_list_head, list) {
 -- 
 2.39.2
 
