@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E051D8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:29:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BFCC433C7;
-	Sun, 16 Jul 2023 20:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7885A8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:29:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EE2C433C7;
+	Sun, 16 Jul 2023 20:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539363;
-	bh=eOKgwWNmIAIJPW22r7D/3ZTnJYVOsyMo6upcA9qISc8=;
+	s=korg; t=1689539366;
+	bh=YD8PeVKYec326jB4vb1w1BlrF8rUeEsg8mCZ2sXsE5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V7mHQC9c+c2+itJa6AhTEEDIgKiEJ7ktPMqGmik3GR4gN5cGU2PT+C4DlHTupKv7/
-	 zdXNPypzABR3HSW6aYoWVQUmJSi6DhbndF2WySULMk2D+wMPfX45CqCdgbi633sXIg
-	 iwmdtW4goYu9o1S/xIrrzkfyYsiPA3bdf9j2imiM=
+	b=CoeAkpQPFl9g2FqJd0IGg8bWjeLqXTmrwkmUlslYICC4OcFPNwpO2E+4idEqfwDuw
+	 M2zYohKntpw1iXgdK56S/W5nkctV69vUCiKgR9BcovJ4YtBhzXsb9daYJ4FqABF3wU
+	 4jY9lSFoYVZZeTWG3p+KgeaMvXlwgPdRvxISLEwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.4 781/800] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
-Date: Sun, 16 Jul 2023 21:50:34 +0200
-Message-ID: <20230716195007.288247507@linuxfoundation.org>
+	Tom Rini <trini@konsulko.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.4 782/800] kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS
+Date: Sun, 16 Jul 2023 21:50:35 +0200
+Message-ID: <20230716195007.310692828@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,57 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 43fc0a99906e04792786edf8534d8d58d1e9de0c upstream.
+commit feb843a469fb0ab00d2d23cfb9bcc379791011bb upstream.
 
-After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
-KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
-assembly files with clang:
+When preprocessing arch/*/kernel/vmlinux.lds.S, the target triple is
+not passed to $(CPP) because we add it only to KBUILD_{C,A}FLAGS.
 
-  arch/powerpc/lib/copypage_power7.S: Assembler messages:
-  arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
-  arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
-  arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
-  arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
-  arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
-  clang: error: assembler command failed with exit code 1 (use -v to see invocation)
+As a result, the linker script is preprocessed with predefined macros
+for the build host instead of the target.
 
-as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
-KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
-result of those missing flags, the host target
-will be tested during as-option calls and likely fail, meaning necessary
-flags may not get added when building assembly files, resulting in
-errors like seen above.
+Assuming you use an x86 build machine, compare the following:
 
-Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
-This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
-assembler calls to use proper flags and language target"), which
-switched from using the assembler target to the assembler-with-cpp
-target, so flags that affect preprocessing are passed along in all
-relevant tests. as-option now mirrors cc-option.
+ $ clang -dM -E -x c /dev/null
+ $ clang -dM -E -x c /dev/null -target aarch64-linux-gnu
 
-Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+There is no actual problem presumably because our linker scripts do not
+rely on such predefined macros, but it is better to define correct ones.
+
+Move $(CLANG_FLAGS) to KBUILD_CPPFLAGS, so that all *.c, *.S, *.lds.S
+will be processed with the proper target triple.
+
+[Note]
+After the patch submission, we got an actual problem that needs this
+commit. (CBL issue 1859)
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1859
+Reported-by: Tom Rini <trini@konsulko.com>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Makefile.compiler |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/Makefile.clang |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/scripts/Makefile.compiler
-+++ b/scripts/Makefile.compiler
-@@ -32,7 +32,7 @@ try-run = $(shell set -e;		\
- # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
- 
- as-option = $(call try-run,\
--	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
-+	$(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
- 
- # as-instr
- # Usage: aflags-y += $(call as-instr,instr,option1,option2)
+--- a/scripts/Makefile.clang
++++ b/scripts/Makefile.clang
+@@ -34,6 +34,5 @@ CLANG_FLAGS	+= -Werror=unknown-warning-o
+ CLANG_FLAGS	+= -Werror=ignored-optimization-argument
+ CLANG_FLAGS	+= -Werror=option-ignored
+ CLANG_FLAGS	+= -Werror=unused-command-line-argument
+-KBUILD_CFLAGS	+= $(CLANG_FLAGS)
+-KBUILD_AFLAGS	+= $(CLANG_FLAGS)
++KBUILD_CPPFLAGS	+= $(CLANG_FLAGS)
+ export CLANG_FLAGS
 
 
