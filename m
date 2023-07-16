@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C428F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:35:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5065FC433C8;
-	Sun, 16 Jul 2023 20:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9728933F1
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:35:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2E8C433C9;
+	Sun, 16 Jul 2023 20:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539725;
-	bh=bSR8qeaK8v9y2Xwds24r0TeFIek7b3PNAt7BG/gXXV4=;
+	s=korg; t=1689539728;
+	bh=cgfTOxyRrI59hsuhKGSL6VtWXAC6MVGSDOYDNLnAu2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eYFqG8VnQ2oSlMDjmVx+Ubzc1eeA6M0r3Fn9zYySC0WoNZ0kKFpY23z56RT0F5S/T
-	 x7sIzIZtS/22af+BHaF1Bw7ExHkovGqgi3mjcRxD1nuX27NY1EkHfuwSZZfKY9vMiX
-	 sCu2+fepO0W1C1A2gKVFaV2qCfc/WTFbW9VfuXAM=
+	b=utVHKKl8+xyMQ6JQw0UihXvA0tJmnZ6rQkt08xRIL6UZWp/5hlY6v942kvduQ+KU0
+	 n9oe6KamEd7ich/axIkNJ4yH2PHhQMwaj40g3RgzRrWevEN3vPKL6QsEdZm2j9MgUw
+	 Gx0gvjADMaaxKY8id0b8U/4OL0Cv6Okseiu+FyU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Douglas Anderson <dianders@chromium.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/591] spi: spi-geni-qcom: Correct CS_TOGGLE bit in SPI_TRANS_CFG
-Date: Sun, 16 Jul 2023 21:43:31 +0200
-Message-ID: <20230716194925.749007200@linuxfoundation.org>
+Subject: [PATCH 6.1 103/591] mmc: mediatek: Avoid ugly error message when SDIO wakeup IRQ isnt used
+Date: Sun, 16 Jul 2023 21:44:02 +0200
+Message-ID: <20230716194926.540170201@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -33,42 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 5fd7c99ecf45c8ee8a9b1268f0ffc91cc6271da2 ]
+[ Upstream commit a3332b7aad346b14770797e03ddd02ebdb14db41 ]
 
-The CS_TOGGLE bit when set is supposed to instruct FW to
-toggle CS line between words. The driver with intent of
-disabling this behaviour has been unsetting BIT(0). This has
-not caused any trouble so far because the original BIT(1)
-is untouched and BIT(0) likely wasn't being used.
+When I boot a kukui-kodama board, I see an ugly warning in my kernel
+log:
+  mtk-msdc 11240000.mmc: error -ENXIO: IRQ sdio_wakeup not found
 
-Correct this to prevent a potential future bug.
+It's pretty normal not to have an "sdio_wakeup" IRQ defined. In fact,
+no device trees in mainline seem to have it. Let's use the
+platform_get_irq_byname_optional() to avoid the error message.
 
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org
-Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
-Reviewed-by: Douglas Anderson <dianders@chromium.org
-Link: https://lore.kernel.org/r/1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+Fixes: 527f36f5efa4 ("mmc: mediatek: add support for SDIO eint wakup IRQ")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20230510064434.1.I935404c5396e6bf952e99bb7ffb744c6f7fd430b@changeid
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-geni-qcom.c | 2 +-
+ drivers/mmc/host/mtk-sd.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index dd1581893fe72..689b94fc5570a 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -35,7 +35,7 @@
- #define CS_DEMUX_OUTPUT_SEL	GENMASK(3, 0)
+diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
+index 425efb3fba048..1a0d4dc24717c 100644
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -2685,7 +2685,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
  
- #define SE_SPI_TRANS_CFG	0x25c
--#define CS_TOGGLE		BIT(0)
-+#define CS_TOGGLE		BIT(1)
- 
- #define SE_SPI_WORD_LEN		0x268
- #define WORD_LEN_MSK		GENMASK(9, 0)
+ 	/* Support for SDIO eint irq ? */
+ 	if ((mmc->pm_caps & MMC_PM_WAKE_SDIO_IRQ) && (mmc->pm_caps & MMC_PM_KEEP_POWER)) {
+-		host->eint_irq = platform_get_irq_byname(pdev, "sdio_wakeup");
++		host->eint_irq = platform_get_irq_byname_optional(pdev, "sdio_wakeup");
+ 		if (host->eint_irq > 0) {
+ 			host->pins_eint = pinctrl_lookup_state(host->pinctrl, "state_eint");
+ 			if (IS_ERR(host->pins_eint)) {
 -- 
 2.39.2
 
