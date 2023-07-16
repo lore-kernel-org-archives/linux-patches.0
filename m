@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70948F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373BBC433C9;
-	Sun, 16 Jul 2023 20:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726E28F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9297C433C8;
+	Sun, 16 Jul 2023 20:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539013;
-	bh=zRCxc49ZdtsKPK3VpXN5vetKmod5IJ7xsEEHxwIU1OA=;
+	s=korg; t=1689539016;
+	bh=56XUQ/F3ZtbkENU8tp0iF+/lDWSpEwS+Fd4XFlq8/Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsQ9d+L13e+rvV7eYnRRFDJErirdxotNKAxEqDc83zXd00319zy1nXO+bO+ie1eGl
-	 J+LFgxkP7H8JkMS9ac5cVqrGtCs6ob8cThvpS6gW9bk/gsYPPf1SVuUbfJbBRWwAWz
-	 hD7nNTz/SOTkQmboOc2lFuDxKmtsN2tseyr4nx6A=
+	b=l9EvNlRlayczB2pe5WkStXEewlW8X6zXcQk0wz7scVEmVg+6iWANq309ZBaBJsBOz
+	 j4zVvW5V+V3ORq8L0iQCzma+YdKAY1M/E84GKS7McxBq9Ci8tqycSFspx6KDZ822zH
+	 ZV+Sc3UkMaajXL1hFwYjtf7C60xekJ9ry4n7fGtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 655/800] drm/i915/guc/slpc: Apply min softlimit correctly
-Date: Sun, 16 Jul 2023 21:48:28 +0200
-Message-ID: <20230716195004.325527685@linuxfoundation.org>
+Subject: [PATCH 6.4 627/800] drivers: fwnode: fix fwnode_irq_get[_byname]()
+Date: Sun, 16 Jul 2023 21:48:00 +0200
+Message-ID: <20230716195003.675050913@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,51 +38,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 3e49de73fb89272dea01ba420c7ccbcf6b96aed7 ]
+[ Upstream commit 39d422555e43379516d4d13f5b7162a3dee6e646 ]
 
-The scenario being fixed here is depicted in the following sequence-
+The fwnode_irq_get() and the fwnode_irq_get_byname() return 0 upon
+device-tree IRQ mapping failure. This is contradicting the
+fwnode_irq_get_byname() function documentation and can potentially be a
+source of errors like:
 
-modprobe i915
-echo 1 > /sys/class/drm/card0/gt/gt0/slpc_ignore_eff_freq
-echo 300 > /sys/class/drm/card0/gt_min_freq_mhz (RPn)
-cat /sys/class/drm/card0/gt_cur_freq_mhz --> cur == RPn as expected
-echo 1 > /sys/kernel/debug/dri/0/gt0/reset --> reset
-cat /sys/class/drm/card0/gt_min_freq_mhz --> cached freq is RPn
-cat /sys/class/drm/card0/gt_cur_freq_mhz --> it's not RPn, but RPe!!
+int probe(...) {
+	...
 
-When SLPC reinitializes, it sets SLPC min freq to efficient frequency.
-Even if we disable efficient freq post that, we should restore the cached
-min freq (via H2G) for it to take effect.
+	irq = fwnode_irq_get_byname();
+	if (irq <= 0)
+		return irq;
 
-v2: Clarify commit message (Ashutosh)
+	...
+}
 
-Fixes: 95ccf312a1e4 ("drm/i915/guc/slpc: Allow SLPC to use efficient frequency")
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230621014257.1769564-1-vinay.belgaumkar@intel.com
-(cherry picked from commit da86b2b13f1d1ca26745b951ac94421f3137539a)
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Here we do correctly check the return value from fwnode_irq_get_byname()
+but the driver probe will now return success. (There was already one
+such user in-tree).
+
+Change the fwnode_irq_get_byname() to work as documented and make also the
+fwnode_irq_get() follow same common convention returning a negative errno
+upon failure.
+
+Fixes: ca0acb511c21 ("device property: Add fwnode_irq_get_byname")
+Suggested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+Message-ID: <3e64fe592dc99e27ef9a0b247fc49fa26b6b8a58.1685340157.git.mazziesaccount@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/property.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-index 56dbba1ef6684..cc18e8f664864 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-@@ -606,7 +606,7 @@ static int slpc_set_softlimits(struct intel_guc_slpc *slpc)
- 		if (unlikely(ret))
- 			return ret;
- 		slpc_to_gt(slpc)->defaults.min_freq = slpc->min_freq_softlimit;
--	} else if (slpc->min_freq_softlimit != slpc->min_freq) {
-+	} else {
- 		return intel_guc_slpc_set_min_freq(slpc,
- 						   slpc->min_freq_softlimit);
- 	}
+diff --git a/drivers/base/property.c b/drivers/base/property.c
+index f6117ec9805c4..8c40abed78524 100644
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -987,12 +987,18 @@ EXPORT_SYMBOL(fwnode_iomap);
+  * @fwnode:	Pointer to the firmware node
+  * @index:	Zero-based index of the IRQ
+  *
+- * Return: Linux IRQ number on success. Other values are determined
+- * according to acpi_irq_get() or of_irq_get() operation.
++ * Return: Linux IRQ number on success. Negative errno on failure.
+  */
+ int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index)
+ {
+-	return fwnode_call_int_op(fwnode, irq_get, index);
++	int ret;
++
++	ret = fwnode_call_int_op(fwnode, irq_get, index);
++	/* We treat mapping errors as invalid case */
++	if (ret == 0)
++		return -EINVAL;
++
++	return ret;
+ }
+ EXPORT_SYMBOL(fwnode_irq_get);
+ 
 -- 
 2.39.2
 
