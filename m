@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C18C8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C81C433C8;
-	Sun, 16 Jul 2023 20:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CEF8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD511C433C7;
+	Sun, 16 Jul 2023 20:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537619;
-	bh=30j7666sz+Yu4TOxp/E7J1XHTzZPU3HtzLsr2ufLYKk=;
+	s=korg; t=1689537622;
+	bh=ZxwFepWlDRQl2Oc8lPMRRVaOFFGWS5VyGj/xBTj7UvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzJBPdOEcVwBguewTTFVXUGZwXOaez3Gxw4LhRg5l3OLfG2fyR6G6FclPI+UDYyIf
-	 kkucYY08vI8NptesGD4aSbMDQhU8fJQiy47SvSUo3PykQIjZ/at79HLuSXr46qFZu0
-	 OMZ7mfHuwFKptq3PgpLlqxmec2bd0frT1EaN9oio=
+	b=lK5qEWOTPvkjD7Io1MO5UISQFg/QnQPALbTsiappSVQfnuM5G0+OtX6nQduutimSZ
+	 xDaJwHmOl8tvb5xo924OVo6waiSPNUAPiWGoOoEe65qwSUNzA4ot1IEaC8F7fipB10
+	 mmChzs+gUHiwzOQNyVth40GfsIagb8jXwyNUGGuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Nicolas Escande <nico.escande@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 161/800] wifi: ath9k: Fix possible stall on ath9k_txq_list_has_key()
-Date: Sun, 16 Jul 2023 21:40:14 +0200
-Message-ID: <20230716194952.851142683@linuxfoundation.org>
+Subject: [PATCH 6.4 162/800] bpf: Use scalar ids in mark_chain_precision()
+Date: Sun, 16 Jul 2023 21:40:15 +0200
+Message-ID: <20230716194952.873757267@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,106 +35,233 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 75086cc6dee046e3fbb3dba148b376d8802f83bc ]
+[ Upstream commit 904e6ddf4133c52fdb9654c2cd2ad90f320d48b9 ]
 
-On EDMA capable hardware, ath9k_txq_list_has_key() can enter infinite
-loop if it is called while all txq_fifos have packets that use different
-key that the one we are looking for. Fix it by exiting the loop if all
-txq_fifos have been checked already.
+Change mark_chain_precision() to track precision in situations
+like below:
 
-Because this loop is called under spin_lock_bh() (see ath_txq_lock) it
-causes the following rcu stall:
+    r2 = unknown value
+    ...
+  --- state #0 ---
+    ...
+    r1 = r2                 // r1 and r2 now share the same ID
+    ...
+  --- state #1 {r1.id = A, r2.id = A} ---
+    ...
+    if (r2 > 10) goto exit; // find_equal_scalars() assigns range to r1
+    ...
+  --- state #2 {r1.id = A, r2.id = A} ---
+    r3 = r10
+    r3 += r1                // need to mark both r1 and r2
 
-rcu: INFO: rcu_sched self-detected stall on CPU
-ath10k_pci 0000:01:00.0: failed to read temperature -11
-rcu:    1-....: (5254 ticks this GP) idle=189/1/0x4000000000000002 softirq=8442983/8442984 fqs=2579
-        (t=5257 jiffies g=17983297 q=334)
-Task dump for CPU 1:
-task:hostapd         state:R  running task     stack:    0 pid:  297 ppid:   289 flags:0x0000000a
-Call trace:
- dump_backtrace+0x0/0x170
- show_stack+0x1c/0x24
- sched_show_task+0x140/0x170
- dump_cpu_task+0x48/0x54
- rcu_dump_cpu_stacks+0xf0/0x134
- rcu_sched_clock_irq+0x8d8/0x9fc
- update_process_times+0xa0/0xec
- tick_sched_timer+0x5c/0xd0
- __hrtimer_run_queues+0x154/0x320
- hrtimer_interrupt+0x120/0x2f0
- arch_timer_handler_virt+0x38/0x44
- handle_percpu_devid_irq+0x9c/0x1e0
- handle_domain_irq+0x64/0x90
- gic_handle_irq+0x78/0xb0
- call_on_irq_stack+0x28/0x38
- do_interrupt_handler+0x54/0x5c
- el1_interrupt+0x2c/0x4c
- el1h_64_irq_handler+0x14/0x1c
- el1h_64_irq+0x74/0x78
- ath9k_txq_has_key+0x1bc/0x250 [ath9k]
- ath9k_set_key+0x1cc/0x3dc [ath9k]
- drv_set_key+0x78/0x170
- ieee80211_key_replace+0x564/0x6cc
- ieee80211_key_link+0x174/0x220
- ieee80211_add_key+0x11c/0x300
- nl80211_new_key+0x12c/0x330
- genl_family_rcv_msg_doit+0xbc/0x11c
- genl_rcv_msg+0xd8/0x1c4
- netlink_rcv_skb+0x40/0x100
- genl_rcv+0x3c/0x50
- netlink_unicast+0x1ec/0x2c0
- netlink_sendmsg+0x198/0x3c0
- ____sys_sendmsg+0x210/0x250
- ___sys_sendmsg+0x78/0xc4
- __sys_sendmsg+0x4c/0x90
- __arm64_sys_sendmsg+0x28/0x30
- invoke_syscall.constprop.0+0x60/0x100
- do_el0_svc+0x48/0xd0
- el0_svc+0x14/0x50
- el0t_64_sync_handler+0xa8/0xb0
- el0t_64_sync+0x158/0x15c
+At the beginning of the processing of each state, ensure that if a
+register with a scalar ID is marked as precise, all registers sharing
+this ID are also marked as precise.
 
-This rcu stall is hard to reproduce as is, but changing ATH_TXFIFO_DEPTH
-from 8 to 2 makes it reasonably easy to reproduce.
+This property would be used by a follow-up change in regsafe().
 
-Fixes: ca2848022c12 ("ath9k: Postpone key cache entry deletion for TXQ frames reference it")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Tested-by: Nicolas Escande <nico.escande@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230609093744.1985-1-repk@triplefau.lt
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230613153824.3324830-2-eddyz87@gmail.com
+Stable-dep-of: 1ffc85d9298e ("bpf: Verify scalar ids mapping in regsafe() using check_ids()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/linux/bpf_verifier.h                  |  10 +-
+ kernel/bpf/verifier.c                         | 115 ++++++++++++++++++
+ .../testing/selftests/bpf/verifier/precise.c  |   8 +-
+ 3 files changed, 128 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/main.c b/drivers/net/wireless/ath/ath9k/main.c
-index a4197c14f0a92..7f9f06ea8a05f 100644
---- a/drivers/net/wireless/ath/ath9k/main.c
-+++ b/drivers/net/wireless/ath/ath9k/main.c
-@@ -850,7 +850,7 @@ static bool ath9k_txq_list_has_key(struct list_head *txq_list, u32 keyix)
- static bool ath9k_txq_has_key(struct ath_softc *sc, u32 keyix)
- {
- 	struct ath_hw *ah = sc->sc_ah;
--	int i;
-+	int i, j;
- 	struct ath_txq *txq;
- 	bool key_in_use = false;
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index 5b11a3b0fec0b..22fb13c738a9a 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -557,6 +557,11 @@ struct backtrack_state {
+ 	u64 stack_masks[MAX_CALL_FRAMES];
+ };
  
-@@ -868,8 +868,9 @@ static bool ath9k_txq_has_key(struct ath_softc *sc, u32 keyix)
- 		if (sc->sc_ah->caps.hw_caps & ATH9K_HW_CAP_EDMA) {
- 			int idx = txq->txq_tailidx;
++struct bpf_idset {
++	u32 count;
++	u32 ids[BPF_ID_MAP_SIZE];
++};
++
+ /* single container for all structs
+  * one verifier_env per bpf_check() call
+  */
+@@ -588,7 +593,10 @@ struct bpf_verifier_env {
+ 	const struct bpf_line_info *prev_linfo;
+ 	struct bpf_verifier_log log;
+ 	struct bpf_subprog_info subprog_info[BPF_MAX_SUBPROGS + 1];
+-	struct bpf_id_pair idmap_scratch[BPF_ID_MAP_SIZE];
++	union {
++		struct bpf_id_pair idmap_scratch[BPF_ID_MAP_SIZE];
++		struct bpf_idset idset_scratch;
++	};
+ 	struct {
+ 		int *insn_state;
+ 		int *insn_stack;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 8e4ccbc0ae604..70056b7d5960c 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -3603,6 +3603,96 @@ static void mark_all_scalars_imprecise(struct bpf_verifier_env *env, struct bpf_
+ 	}
+ }
  
--			while (!key_in_use &&
--			       !list_empty(&txq->txq_fifo[idx])) {
-+			for (j = 0; !key_in_use &&
-+			     !list_empty(&txq->txq_fifo[idx]) &&
-+			     j < ATH_TXFIFO_DEPTH; j++) {
- 				key_in_use = ath9k_txq_list_has_key(
- 					&txq->txq_fifo[idx], keyix);
- 				INCR(idx, ATH_TXFIFO_DEPTH);
++static bool idset_contains(struct bpf_idset *s, u32 id)
++{
++	u32 i;
++
++	for (i = 0; i < s->count; ++i)
++		if (s->ids[i] == id)
++			return true;
++
++	return false;
++}
++
++static int idset_push(struct bpf_idset *s, u32 id)
++{
++	if (WARN_ON_ONCE(s->count >= ARRAY_SIZE(s->ids)))
++		return -EFAULT;
++	s->ids[s->count++] = id;
++	return 0;
++}
++
++static void idset_reset(struct bpf_idset *s)
++{
++	s->count = 0;
++}
++
++/* Collect a set of IDs for all registers currently marked as precise in env->bt.
++ * Mark all registers with these IDs as precise.
++ */
++static int mark_precise_scalar_ids(struct bpf_verifier_env *env, struct bpf_verifier_state *st)
++{
++	struct bpf_idset *precise_ids = &env->idset_scratch;
++	struct backtrack_state *bt = &env->bt;
++	struct bpf_func_state *func;
++	struct bpf_reg_state *reg;
++	DECLARE_BITMAP(mask, 64);
++	int i, fr;
++
++	idset_reset(precise_ids);
++
++	for (fr = bt->frame; fr >= 0; fr--) {
++		func = st->frame[fr];
++
++		bitmap_from_u64(mask, bt_frame_reg_mask(bt, fr));
++		for_each_set_bit(i, mask, 32) {
++			reg = &func->regs[i];
++			if (!reg->id || reg->type != SCALAR_VALUE)
++				continue;
++			if (idset_push(precise_ids, reg->id))
++				return -EFAULT;
++		}
++
++		bitmap_from_u64(mask, bt_frame_stack_mask(bt, fr));
++		for_each_set_bit(i, mask, 64) {
++			if (i >= func->allocated_stack / BPF_REG_SIZE)
++				break;
++			if (!is_spilled_scalar_reg(&func->stack[i]))
++				continue;
++			reg = &func->stack[i].spilled_ptr;
++			if (!reg->id)
++				continue;
++			if (idset_push(precise_ids, reg->id))
++				return -EFAULT;
++		}
++	}
++
++	for (fr = 0; fr <= st->curframe; ++fr) {
++		func = st->frame[fr];
++
++		for (i = BPF_REG_0; i < BPF_REG_10; ++i) {
++			reg = &func->regs[i];
++			if (!reg->id)
++				continue;
++			if (!idset_contains(precise_ids, reg->id))
++				continue;
++			bt_set_frame_reg(bt, fr, i);
++		}
++		for (i = 0; i < func->allocated_stack / BPF_REG_SIZE; ++i) {
++			if (!is_spilled_scalar_reg(&func->stack[i]))
++				continue;
++			reg = &func->stack[i].spilled_ptr;
++			if (!reg->id)
++				continue;
++			if (!idset_contains(precise_ids, reg->id))
++				continue;
++			bt_set_frame_slot(bt, fr, i);
++		}
++	}
++
++	return 0;
++}
++
+ /*
+  * __mark_chain_precision() backtracks BPF program instruction sequence and
+  * chain of verifier states making sure that register *regno* (if regno >= 0)
+@@ -3733,6 +3823,31 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
+ 				bt->frame, last_idx, first_idx);
+ 		}
+ 
++		/* If some register with scalar ID is marked as precise,
++		 * make sure that all registers sharing this ID are also precise.
++		 * This is needed to estimate effect of find_equal_scalars().
++		 * Do this at the last instruction of each state,
++		 * bpf_reg_state::id fields are valid for these instructions.
++		 *
++		 * Allows to track precision in situation like below:
++		 *
++		 *     r2 = unknown value
++		 *     ...
++		 *   --- state #0 ---
++		 *     ...
++		 *     r1 = r2                 // r1 and r2 now share the same ID
++		 *     ...
++		 *   --- state #1 {r1.id = A, r2.id = A} ---
++		 *     ...
++		 *     if (r2 > 10) goto exit; // find_equal_scalars() assigns range to r1
++		 *     ...
++		 *   --- state #2 {r1.id = A, r2.id = A} ---
++		 *     r3 = r10
++		 *     r3 += r1                // need to mark both r1 and r2
++		 */
++		if (mark_precise_scalar_ids(env, st))
++			return -EFAULT;
++
+ 		if (last_idx < 0) {
+ 			/* we are at the entry into subprog, which
+ 			 * is expected for global funcs, but only if
+diff --git a/tools/testing/selftests/bpf/verifier/precise.c b/tools/testing/selftests/bpf/verifier/precise.c
+index a928c53432999..ac5eeea094683 100644
+--- a/tools/testing/selftests/bpf/verifier/precise.c
++++ b/tools/testing/selftests/bpf/verifier/precise.c
+@@ -46,7 +46,7 @@
+ 	mark_precise: frame0: regs=r2 stack= before 20\
+ 	mark_precise: frame0: parent state regs=r2 stack=:\
+ 	mark_precise: frame0: last_idx 19 first_idx 10\
+-	mark_precise: frame0: regs=r2 stack= before 19\
++	mark_precise: frame0: regs=r2,r9 stack= before 19\
+ 	mark_precise: frame0: regs=r9 stack= before 18\
+ 	mark_precise: frame0: regs=r8,r9 stack= before 17\
+ 	mark_precise: frame0: regs=r0,r9 stack= before 15\
+@@ -106,10 +106,10 @@
+ 	mark_precise: frame0: regs=r2 stack= before 22\
+ 	mark_precise: frame0: parent state regs=r2 stack=:\
+ 	mark_precise: frame0: last_idx 20 first_idx 20\
+-	mark_precise: frame0: regs=r2 stack= before 20\
+-	mark_precise: frame0: parent state regs=r2 stack=:\
++	mark_precise: frame0: regs=r2,r9 stack= before 20\
++	mark_precise: frame0: parent state regs=r2,r9 stack=:\
+ 	mark_precise: frame0: last_idx 19 first_idx 17\
+-	mark_precise: frame0: regs=r2 stack= before 19\
++	mark_precise: frame0: regs=r2,r9 stack= before 19\
+ 	mark_precise: frame0: regs=r9 stack= before 18\
+ 	mark_precise: frame0: regs=r8,r9 stack= before 17\
+ 	mark_precise: frame0: parent state regs= stack=:",
 -- 
 2.39.2
 
