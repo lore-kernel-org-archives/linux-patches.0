@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D7E8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6549FC433C7;
-	Sun, 16 Jul 2023 20:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C4A8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403CBC433C7;
+	Sun, 16 Jul 2023 20:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538861;
-	bh=OVpzEYXIcKHz40d2vmShbRYKi/NDi9ENrrnx3dggL0w=;
+	s=korg; t=1689538864;
+	bh=E0LdzPPJDWGtCnA+R6OrlSvFmioLcTLQe52YTwJ+kuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYulQc1f9zEJqVrGH/lD0pGUzCl1B67oX738f3LgzobeGeOCkchS4XcnOm+0hyjRp
-	 pjno09flp80/1W30BRT/aYT6bh2YHN9Y/PLyq9ufAje2cLvvRYPe7cwBc9L13exwm/
-	 Th9CnwbV4eICW2GOdCAgJKCUyDSXparQnXjDDmxk=
+	b=v8CnhdJAoivJraoZB3pVlo7CT+SCrwXHHpgUIUcJTvy4L1hyMX2E0DXwptJX6a9FY
+	 vCGqTINh7Vp6hWzWQjixq/ohyh/NqfBKYdZUeQXAkjZ969fhxjT6g3vB1/zDAYyC67
+	 h4U6Vpxvt4kPlI+GKzOjgR/7vCm+JVBdIjJrwme8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	ChiYuan Huang <cy_huang@richtek.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 603/800] coresight: etm4x: Fix missing trctraceidr file in sysfs
-Date: Sun, 16 Jul 2023 21:47:36 +0200
-Message-ID: <20230716195003.111390651@linuxfoundation.org>
+Subject: [PATCH 6.4 604/800] power: supply: rt9467: Make charger-enable control as logic level
+Date: Sun, 16 Jul 2023 21:47:37 +0200
+Message-ID: <20230716195003.134456813@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,82 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Leach <mike.leach@linaro.org>
+From: ChiYuan Huang <cy_huang@richtek.com>
 
-[ Upstream commit 9f37d3798026f9a7447d851a2cb356610852e426 ]
+[ Upstream commit 5d80a86a99d524b0d89ff3906c6200b9f57b66f8 ]
 
-The trace ID patchset adjusted the handling of the TRCTRACEIDR register
-sysfs to allocate on read.
+The current coding make 'charger-enable-gpio' control as real hardware
+level. This conflicts with the default binding example. For driver
+behavior, no need to use real hardware level, just logic level is
+enough. This change can make this flexibility keep in dts gpio active
+level about this pin.
 
-Although this was initally correct, the final version of the patch series
-introduced an error which resulted in the mgmt/trctraceidr file in sysfs
-not being visible.
-
-This patch fixes that issue.
-
-Fixes: df4871204e5d ("coresight: etm4x: Update ETM4 driver to use Trace ID API")
-Reported-by: Junhao He <hejunhao3@huawei.com>
-Link: https://lists.linaro.org/archives/list/coresight@lists.linaro.org/thread/KK3CVVMRHJWVUORKMFJRSXYCEDFKENQJ/
-Signed-off-by: Mike Leach <mike.leach@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230512133054.235073-1-mike.leach@linaro.org
+Fixes: 6f7f70e3a8dd ("power: supply: rt9467: Add Richtek RT9467 charger driver")
+Signed-off-by: ChiYuan Huang <cy_huang@richtek.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../coresight/coresight-etm4x-sysfs.c         | 27 ++++++++++++-------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ drivers/power/supply/rt9467-charger.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-index 5e62aa40ecd0f..a9f19629f3f84 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-@@ -2411,7 +2411,6 @@ static ssize_t trctraceid_show(struct device *dev,
+diff --git a/drivers/power/supply/rt9467-charger.c b/drivers/power/supply/rt9467-charger.c
+index ea33693b69779..b0b9ff8667459 100644
+--- a/drivers/power/supply/rt9467-charger.c
++++ b/drivers/power/supply/rt9467-charger.c
+@@ -1192,7 +1192,7 @@ static int rt9467_charger_probe(struct i2c_client *i2c)
+ 	i2c_set_clientdata(i2c, data);
  
- 	return sysfs_emit(buf, "0x%x\n", trace_id);
- }
--static DEVICE_ATTR_RO(trctraceid);
- 
- struct etmv4_reg {
- 	struct coresight_device *csdev;
-@@ -2528,13 +2527,23 @@ coresight_etm4x_attr_reg_implemented(struct kobject *kobj,
- 	return 0;
- }
- 
--#define coresight_etm4x_reg(name, offset)				\
--	&((struct dev_ext_attribute[]) {				\
--	   {								\
--		__ATTR(name, 0444, coresight_etm4x_reg_show, NULL),	\
--		(void *)(unsigned long)offset				\
--	   }								\
--	})[0].attr.attr
-+/*
-+ * Macro to set an RO ext attribute with offset and show function.
-+ * Offset is used in mgmt group to ensure only correct registers for
-+ * the ETM / ETE variant are visible.
-+ */
-+#define coresight_etm4x_reg_showfn(name, offset, showfn) (	\
-+	&((struct dev_ext_attribute[]) {			\
-+	   {							\
-+		__ATTR(name, 0444, showfn, NULL),		\
-+		(void *)(unsigned long)offset			\
-+	   }							\
-+	})[0].attr.attr						\
-+	)
-+
-+/* macro using the default coresight_etm4x_reg_show function */
-+#define coresight_etm4x_reg(name, offset)	\
-+	coresight_etm4x_reg_showfn(name, offset, coresight_etm4x_reg_show)
- 
- static struct attribute *coresight_etmv4_mgmt_attrs[] = {
- 	coresight_etm4x_reg(trcpdcr, TRCPDCR),
-@@ -2549,7 +2558,7 @@ static struct attribute *coresight_etmv4_mgmt_attrs[] = {
- 	coresight_etm4x_reg(trcpidr3, TRCPIDR3),
- 	coresight_etm4x_reg(trcoslsr, TRCOSLSR),
- 	coresight_etm4x_reg(trcconfig, TRCCONFIGR),
--	&dev_attr_trctraceid.attr,
-+	coresight_etm4x_reg_showfn(trctraceid, TRCTRACEIDR, trctraceid_show),
- 	coresight_etm4x_reg(trcdevarch, TRCDEVARCH),
- 	NULL,
- };
+ 	/* Default pull charge enable gpio to make 'CHG_EN' by SW control only */
+-	ceb_gpio = devm_gpiod_get_optional(dev, "charge-enable", GPIOD_OUT_LOW);
++	ceb_gpio = devm_gpiod_get_optional(dev, "charge-enable", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(ceb_gpio))
+ 		return dev_err_probe(dev, PTR_ERR(ceb_gpio),
+ 				     "Failed to config charge enable gpio\n");
 -- 
 2.39.2
 
