@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73F08F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E49C433C8;
-	Sun, 16 Jul 2023 20:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815528F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE279C433C7;
+	Sun, 16 Jul 2023 20:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539024;
-	bh=Q28LyStVbehDrWtWY3BQfU9sutZfWqRYpn2cxnh32Io=;
+	s=korg; t=1689539027;
+	bh=HNcm50W+2vCtQXl0UZ1yI42Y7a66j6bJuSLl5oW1nmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lg2XSDCo0H2vLXdHbS3Lq3czBYXwEIDjJGxoOP7whu7rrAAQXmoBEWk4cY+VSLzPy
-	 rMl3HWtKgmgHO+/nJBAWJjXNfrA6kKyMiELK9rgmKjj5KV62PG5iG23/Txn2nXrsjS
-	 nTokMeknRxsA9GvKn0jg0HvS0METTpM+Olg/iqMU=
+	b=oESMrh3zInK3sA/S/4ZJnFpY6cszfNJYZ11qz2mMjpEisFEzToGpmywOLXv44dJCs
+	 WAm+l2h1ibn+OrwFeYC+MnGDXIZdFnvqCh42TPa3vHysNHNHr+XK1fPvbgvTJeLdR0
+	 yl0Wf4LmtGUR19BgxteyPlPQ62sXqkN1Xw9aiW58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Richard Leitner <richard.leitner@skidata.com>
-Subject: [PATCH 6.4 630/800] nvmem: imx-ocotp: Reverse MAC addresses on all i.MX derivates
-Date: Sun, 16 Jul 2023 21:48:03 +0200
-Message-ID: <20230716195003.745083865@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Kees Cook <keescook@chromium.org>,
+	"Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>,
+	Scott Branden <sbranden@broadcom.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.4 631/800] test_firmware: return ENOMEM instead of ENOSPC on failed memory allocation
+Date: Sun, 16 Jul 2023 21:48:04 +0200
+Message-ID: <20230716195003.768768638@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,79 +42,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 
-[ Upstream commit 8a00fc606312c68b98add8fe8e6f7a013ce29e78 ]
+[ Upstream commit 7dae593cd226a0bca61201cf85ceb9335cf63682 ]
 
-Not just i.MX8M, but all i.MX6/7 (and subtypes) need to reverse the
-MAC address read from fuses. Exceptions are i.MX6SLL and i.MX7ULP which
-do not support ethernet at all.
+In a couple of situations like
 
-Fixes: d0221a780cbc ("nvmem: imx-ocotp: add support for post processing")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Tested-by: Richard Leitner <richard.leitner@skidata.com> # imx6q
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <20230611140330.154222-3-srinivas.kandagatla@linaro.org>
+	name = kstrndup(buf, count, GFP_KERNEL);
+	if (!name)
+		return -ENOSPC;
+
+the error is not actually "No space left on device", but "Out of memory".
+
+It is semantically correct to return -ENOMEM in all failed kstrndup()
+and kzalloc() cases in this driver, as it is not a problem with disk
+space, but with kernel memory allocator failing allocation.
+
+The semantically correct should be:
+
+        name = kstrndup(buf, count, GFP_KERNEL);
+        if (!name)
+                return -ENOMEM;
+
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Takashi Iwai <tiwai@suse.de>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: "Luis R. Rodriguez" <mcgrof@ruslug.rutgers.edu>
+Cc: Scott Branden <sbranden@broadcom.com>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Brian Norris <briannorris@chromium.org>
+Fixes: c92316bf8e948 ("test_firmware: add batched firmware tests")
+Fixes: 0a8adf584759c ("test: add firmware_class loader test")
+Fixes: 548193cba2a7d ("test_firmware: add support for firmware_request_platform")
+Fixes: eb910947c82f9 ("test: firmware_class: add asynchronous request trigger")
+Fixes: 061132d2b9c95 ("test_firmware: add test custom fallback trigger")
+Fixes: 7feebfa487b92 ("test_firmware: add support for request_firmware_into_buf")
+Signed-off-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Message-ID: <20230606070808.9300-1-mirsad.todorovac@alu.unizg.hr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/imx-ocotp.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ lib/test_firmware.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvmem/imx-ocotp.c b/drivers/nvmem/imx-ocotp.c
-index ac0edb6398f1e..c1af271052276 100644
---- a/drivers/nvmem/imx-ocotp.c
-+++ b/drivers/nvmem/imx-ocotp.c
-@@ -97,7 +97,6 @@ struct ocotp_params {
- 	unsigned int bank_address_words;
- 	void (*set_timing)(struct ocotp_priv *priv);
- 	struct ocotp_ctrl_reg ctrl;
--	bool reverse_mac_address;
- };
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 1d7d480b8eeb3..add4699fc6cd4 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -214,7 +214,7 @@ static int __kstrncpy(char **dst, const char *name, size_t count, gfp_t gfp)
+ {
+ 	*dst = kstrndup(name, count, gfp);
+ 	if (!*dst)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 	return count;
+ }
  
- static int imx_ocotp_wait_for_busy(struct ocotp_priv *priv, u32 flags)
-@@ -545,7 +544,6 @@ static const struct ocotp_params imx8mq_params = {
- 	.bank_address_words = 0,
- 	.set_timing = imx_ocotp_set_imx6_timing,
- 	.ctrl = IMX_OCOTP_BM_CTRL_DEFAULT,
--	.reverse_mac_address = true,
- };
+@@ -671,7 +671,7 @@ static ssize_t trigger_request_store(struct device *dev,
  
- static const struct ocotp_params imx8mm_params = {
-@@ -553,7 +551,6 @@ static const struct ocotp_params imx8mm_params = {
- 	.bank_address_words = 0,
- 	.set_timing = imx_ocotp_set_imx6_timing,
- 	.ctrl = IMX_OCOTP_BM_CTRL_DEFAULT,
--	.reverse_mac_address = true,
- };
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
  
- static const struct ocotp_params imx8mn_params = {
-@@ -561,7 +558,6 @@ static const struct ocotp_params imx8mn_params = {
- 	.bank_address_words = 0,
- 	.set_timing = imx_ocotp_set_imx6_timing,
- 	.ctrl = IMX_OCOTP_BM_CTRL_DEFAULT,
--	.reverse_mac_address = true,
- };
+ 	pr_info("loading '%s'\n", name);
  
- static const struct ocotp_params imx8mp_params = {
-@@ -569,7 +565,6 @@ static const struct ocotp_params imx8mp_params = {
- 	.bank_address_words = 0,
- 	.set_timing = imx_ocotp_set_imx6_timing,
- 	.ctrl = IMX_OCOTP_BM_CTRL_8MP,
--	.reverse_mac_address = true,
- };
+@@ -719,7 +719,7 @@ static ssize_t trigger_request_platform_store(struct device *dev,
  
- static const struct of_device_id imx_ocotp_dt_ids[] = {
-@@ -624,8 +619,7 @@ static int imx_ocotp_probe(struct platform_device *pdev)
- 	imx_ocotp_nvmem_config.size = 4 * priv->params->nregs;
- 	imx_ocotp_nvmem_config.dev = dev;
- 	imx_ocotp_nvmem_config.priv = priv;
--	if (priv->params->reverse_mac_address)
--		imx_ocotp_nvmem_config.layout = &imx_ocotp_layout;
-+	imx_ocotp_nvmem_config.layout = &imx_ocotp_layout;
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
  
- 	priv->config = &imx_ocotp_nvmem_config;
+ 	pr_info("inserting test platform fw '%s'\n", name);
+ 	efi_embedded_fw.name = name;
+@@ -772,7 +772,7 @@ static ssize_t trigger_async_request_store(struct device *dev,
  
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s'\n", name);
+ 
+@@ -817,7 +817,7 @@ static ssize_t trigger_custom_fallback_store(struct device *dev,
+ 
+ 	name = kstrndup(buf, count, GFP_KERNEL);
+ 	if (!name)
+-		return -ENOSPC;
++		return -ENOMEM;
+ 
+ 	pr_info("loading '%s' using custom fallback mechanism\n", name);
+ 
+@@ -868,7 +868,7 @@ static int test_fw_run_batch_request(void *data)
+ 
+ 		test_buf = kzalloc(TEST_FIRMWARE_BUF_SIZE, GFP_KERNEL);
+ 		if (!test_buf)
+-			return -ENOSPC;
++			return -ENOMEM;
+ 
+ 		if (test_fw_config->partial)
+ 			req->rc = request_partial_firmware_into_buf
 -- 
 2.39.2
 
