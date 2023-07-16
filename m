@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C1E8F71
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:54:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D831C433C9;
-	Sun, 16 Jul 2023 19:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2383F8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:54:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B98CC433C7;
+	Sun, 16 Jul 2023 19:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537243;
-	bh=VIHjfcXAm+tNptNO+QMjNBZyJcveG8NdRHDPcmAox2M=;
+	s=korg; t=1689537241;
+	bh=ICxOysXMmltZ/S/DUyfb5SH8ZwZzMSqRHDVO8Nd5UNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MaSVRaYg+6p3E2UAMUV5UUADFBE+AYwYK5xoA8a5egxUKLgKEyxQxEoNh9qDIKi06
-	 D1r4S7VLnJhhQ22XeyG5brRvYvxdgQNbt8e6KNRYiHQiqfSmloUWAtO3RMzkovRuz8
-	 640ejj92dzNpe5PV6HfurU7B94/XxZOu7aVPHp+0=
+	b=zxPnKQvudS4vSEHYIbIeCIIuKE12sv6Q+wSPqRicoNMbl+B63c67bmnXZJBAfd/UZ
+	 U1I3jdUhcnf8HxiCf2pVFoiyTvvyh+DxVTjXAhFcZR4DrrvosqwZdTe247ML1f32H5
+	 U5b/sK1hcjjMdaePnIBzSvOlej+gsesPNO5ZdXmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Fabrizio Lamarque <fl.scratchpad@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.4 007/800] iio: addac: ad74413: dont set DIN_SINK for functions other than digital input
-Date: Sun, 16 Jul 2023 21:37:40 +0200
-Message-ID: <20230716194949.278066437@linuxfoundation.org>
+Subject: [PATCH 6.4 006/800] dt-bindings: iio: ad7192: Add mandatory reference voltage source
+Date: Sun, 16 Jul 2023 21:37:39 +0200
+Message-ID: <20230716194949.255312839@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,61 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Fabrizio Lamarque <fl.scratchpad@gmail.com>
 
-commit a4cba07e64e6ec22d9504a1a45d29afa863dc19c upstream.
+commit c6dab7245604862d86f0b6d764919f470584d24f upstream.
 
-Apparently, despite the name Digital Input Configuration Register, the
-settings in the DIN_CONFIGx registers also affect other channel
-functions. In particular, setting a non-zero value in the DIN_SINK
-field breaks the resistance measurement function.
+Add required reference voltage (VRef) supply regulator.
 
-Now, one can of course argue that specifying a drive-strength-microamp
-property along with a adi,ch-func which is not one of the digital
-input functions is a bug in the device tree. However, we have a rather
-complicated setup with instances of ad74412r on external hardware
-modules, and have set a default drive-strength-microamp in our DT
-fragments describing those, merely modifying the adi,ch-func settings
-to reflect however the modules have been wired up. And restricting
-this setting to just being done for digital input doesn't make the
-driver any more complex.
+AD7192 requires three independent voltage sources: DVdd, AVdd and VRef
+(on REFINx pin pairs).
 
-Fixes: 504eb485589d1 (iio: ad74413r: wire up support for drive-strength-microamp property)
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Link: https://lore.kernel.org/r/20230503105042.453755-1-linux@rasmusvillemoes.dk
+Fixes: b581f748cce0 ("staging: iio: adc: ad7192: move out of staging")
+Signed-off-by: Fabrizio Lamarque <fl.scratchpad@gmail.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230530075311.400686-5-fl.scratchpad@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/addac/ad74413r.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ Documentation/devicetree/bindings/iio/adc/adi,ad7192.yaml |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/iio/addac/ad74413r.c b/drivers/iio/addac/ad74413r.c
-index e3366cf5eb31..6b0e8218f150 100644
---- a/drivers/iio/addac/ad74413r.c
-+++ b/drivers/iio/addac/ad74413r.c
-@@ -1317,13 +1317,14 @@ static int ad74413r_setup_gpios(struct ad74413r_state *st)
- 		}
+--- a/Documentation/devicetree/bindings/iio/adc/adi,ad7192.yaml
++++ b/Documentation/devicetree/bindings/iio/adc/adi,ad7192.yaml
+@@ -47,6 +47,9 @@ properties:
+   avdd-supply:
+     description: AVdd voltage supply
  
- 		if (config->func == CH_FUNC_DIGITAL_INPUT_LOGIC ||
--		    config->func == CH_FUNC_DIGITAL_INPUT_LOOP_POWER)
-+		    config->func == CH_FUNC_DIGITAL_INPUT_LOOP_POWER) {
- 			st->comp_gpio_offsets[comp_gpio_i++] = i;
++  vref-supply:
++    description: VRef voltage supply
++
+   adi,rejection-60-Hz-enable:
+     description: |
+       This bit enables a notch at 60 Hz when the first notch of the sinc
+@@ -89,6 +92,7 @@ required:
+   - interrupts
+   - dvdd-supply
+   - avdd-supply
++  - vref-supply
+   - spi-cpol
+   - spi-cpha
  
--		strength = config->drive_strength;
--		ret = ad74413r_set_comp_drive_strength(st, i, strength);
--		if (ret)
--			return ret;
-+			strength = config->drive_strength;
-+			ret = ad74413r_set_comp_drive_strength(st, i, strength);
-+			if (ret)
-+				return ret;
-+		}
+@@ -115,6 +119,7 @@ examples:
+             interrupt-parent = <&gpio>;
+             dvdd-supply = <&dvdd>;
+             avdd-supply = <&avdd>;
++            vref-supply = <&vref>;
  
- 		ret = ad74413r_set_gpo_config(st, i, gpo_config);
- 		if (ret)
--- 
-2.41.0
-
+             adi,refin2-pins-enable;
+             adi,rejection-60-Hz-enable;
 
 
