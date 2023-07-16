@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6836B8F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:37:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE4AC433C8;
-	Sun, 16 Jul 2023 20:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F309D8F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:37:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7745DC433C8;
+	Sun, 16 Jul 2023 20:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539828;
-	bh=gq4/+l8k/WUMkKmOcnpc+My5IeRJU1SJXIgHezpCJKk=;
+	s=korg; t=1689539831;
+	bh=+9j7cPUgaLawBV1MxcnH46ISc2gyKMgojQ0udJR4+k4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P2+gUPfa9Qy1qq+GkaonDHJBNRSKmHTm71KUQX3Lz+g+lz9vininYO4QvtE8wbzgs
-	 1yYrE+8SjcQm20XIlWj8yGTT+TA9pK8+Q2Asknb+3WmRm9SRITUYz/SUXpsfbXkyK5
-	 F+6iUPK08FpOUhfmDpMB2y1HIA9QGD2rt1HGItwc=
+	b=plKIjRZy/BQ+X/RfwWsRS9VNtv/g6Wpq8MSwoE02lIDsXKnL+yMPgfjr/RnV8Bena
+	 8UTr6BerZSRTA4oeH70bGwdCffok5KcYRxYd7lylncM/BkZ0FZQwIwjR8Q9ocGtqYx
+	 XHj1e0X4OvpdIBMtKKz9qhi31RXX0KE20tVMRTJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 147/591] drm/bridge: tc358768: always enable HS video mode
-Date: Sun, 16 Jul 2023 21:44:46 +0200
-Message-ID: <20230716194927.674346537@linuxfoundation.org>
+Subject: [PATCH 6.1 148/591] drm/bridge: tc358768: fix PLL parameters computation
+Date: Sun, 16 Jul 2023 21:44:47 +0200
+Message-ID: <20230716194927.698896978@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,45 +37,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 75a8aeac2573ab258c53676eba9b3796ea691988 ]
+[ Upstream commit 6a4020b4c63911977aaf8047f904a300d15de739 ]
 
-Always enable HS video mode setting the TXMD bit, without this change no
-video output is present with DSI sinks that are setting
-MIPI_DSI_MODE_LPM flag (tested with LT8912B DSI-HDMI bridge).
-
-Previously the driver was enabling HS mode only when the DSI sink was
-not explicitly setting the MIPI_DSI_MODE_LPM, however this is not
-correct.
-
-The MIPI_DSI_MODE_LPM is supposed to indicate that the sink is willing
-to receive data in low power mode, however clearing the
-TC358768_DSI_CONTROL_TXMD bit will make the TC358768 send video in
-LP mode that is not the intended behavior.
+According to Toshiba documentation the PLL input clock after the divider
+should be not less than 4MHz, fix the PLL parameters computation
+accordingly.
 
 Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
 Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 Reviewed-by: Robert Foss <rfoss@kernel.org>
 Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
+Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index 4c4b77ce8aba3..23a7a1206e900 100644
+index 23a7a1206e900..f961259dc85bd 100644
 --- a/drivers/gpu/drm/bridge/tc358768.c
 +++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -867,8 +867,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	val = TC358768_DSI_CONFW_MODE_SET | TC358768_DSI_CONFW_ADDR_DSI_CONTROL;
- 	val |= (dsi_dev->lanes - 1) << 1;
+@@ -335,13 +335,17 @@ static int tc358768_calc_pll(struct tc358768_priv *priv,
+ 		u32 fbd;
  
--	if (!(dsi_dev->mode_flags & MIPI_DSI_MODE_LPM))
--		val |= TC358768_DSI_CONTROL_TXMD;
-+	val |= TC358768_DSI_CONTROL_TXMD;
+ 		for (fbd = 0; fbd < 512; ++fbd) {
+-			u32 pll, diff;
++			u32 pll, diff, pll_in;
  
- 	if (!(mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
- 		val |= TC358768_DSI_CONTROL_HSCKMD;
+ 			pll = (u32)div_u64((u64)refclk * (fbd + 1), divisor);
+ 
+ 			if (pll >= max_pll || pll < min_pll)
+ 				continue;
+ 
++			pll_in = (u32)div_u64((u64)refclk, prd + 1);
++			if (pll_in < 4000000)
++				continue;
++
+ 			diff = max(pll, target_pll) - min(pll, target_pll);
+ 
+ 			if (diff < best_diff) {
 -- 
 2.39.2
 
