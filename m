@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6BD8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:29:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F18C433C7;
-	Sun, 16 Jul 2023 20:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5F08F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:29:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B1AC433C7;
+	Sun, 16 Jul 2023 20:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539380;
-	bh=VO/YOcRYkB3ACK+LLsZyb4JfULKXa2+W8hqBG38ibjU=;
+	s=korg; t=1689539383;
+	bh=YBXxUtiOP9irPSJNhIF9AQV2FJcqrrBdzJ71qkwF4wM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O65Nce1WldAHeP5CTaY9RxkXY0sPsnrCIBJTPGRbneu7iSwRlhncz1kE6d+VGe8xz
-	 TCvT4ka29qIcGVtIfBfjfkcT5iyJYGptuqktZBog4Upxn0wuOwY60eeoBVRJ9yqb0W
-	 cgvZTcgPgd4Lw1qvdtml3kTO7882h7fRabQiYr8Q=
+	b=Z3WNF8CaYy3vnNFvvfKhc6/lODdn/gOGsnm9ykRuYRWRRMn1YeBB3gsDGg+CWWdW7
+	 riJPSQxAmYo5ix3LvMfxM7LdX1RUYR9qvJKKDmEt7k97DPF/DGCO1J/vZSqmZkBa+e
+	 giuFW2wtbYhILIZpUt6xW7hWBo0HATnQCsjhU3Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 758/800] btrfs: bail out reclaim process if filesystem is read-only
-Date: Sun, 16 Jul 2023 21:50:11 +0200
-Message-ID: <20230716195006.749262755@linuxfoundation.org>
+Subject: [PATCH 6.4 759/800] btrfs: add block-group tree to lockdep classes
+Date: Sun, 16 Jul 2023 21:50:12 +0200
+Message-ID: <20230716195006.774048806@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,47 +33,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naohiro Aota <naota@elisp.net>
+From: David Sterba <dsterba@suse.com>
 
-commit 93463ff7b54626f8276c0bd3d3f968fbf8d5d380 upstream.
+commit 1a1b0e729d227f9f758f7b5f1c997e874e94156e upstream.
 
-When a filesystem is read-only, we cannot reclaim a block group as it
-cannot rewrite the data. Just bail out in that case.
+The block group tree was not present among the lockdep classes. We could
+get potentially lockdep warnings but so far none has been seen, also
+because block-group-tree is a relatively new feature.
 
-Note that it can drop block groups in this case. As we did
-sb_start_write(), read-only filesystem means we got a fatal error and
-forced read-only. There is no chance to reclaim them again.
-
-Fixes: 18bb8bbf13c1 ("btrfs: zoned: automatically reclaim zones")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+CC: stable@vger.kernel.org # 6.1+
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/btrfs/locking.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -1798,8 +1798,15 @@ void btrfs_reclaim_bgs_work(struct work_
- 		}
- 		spin_unlock(&bg->lock);
+--- a/fs/btrfs/locking.c
++++ b/fs/btrfs/locking.c
+@@ -57,8 +57,8 @@
  
--		/* Get out fast, in case we're unmounting the filesystem */
--		if (btrfs_fs_closing(fs_info)) {
-+		/*
-+		 * Get out fast, in case we're read-only or unmounting the
-+		 * filesystem. It is OK to drop block groups from the list even
-+		 * for the read-only case. As we did sb_start_write(),
-+		 * "mount -o remount,ro" won't happen and read-only filesystem
-+		 * means it is forced read-only due to a fatal error. So, it
-+		 * never gets back to read-write to let us reclaim again.
-+		 */
-+		if (btrfs_need_cleaner_sleep(fs_info)) {
- 			up_write(&space_info->groups_sem);
- 			goto next;
- 		}
+ static struct btrfs_lockdep_keyset {
+ 	u64			id;		/* root objectid */
+-	/* Longest entry: btrfs-free-space-00 */
+-	char			names[BTRFS_MAX_LEVEL][20];
++	/* Longest entry: btrfs-block-group-00 */
++	char			names[BTRFS_MAX_LEVEL][24];
+ 	struct lock_class_key	keys[BTRFS_MAX_LEVEL];
+ } btrfs_lockdep_keysets[] = {
+ 	{ .id = BTRFS_ROOT_TREE_OBJECTID,	DEFINE_NAME("root")	},
+@@ -72,6 +72,7 @@ static struct btrfs_lockdep_keyset {
+ 	{ .id = BTRFS_DATA_RELOC_TREE_OBJECTID,	DEFINE_NAME("dreloc")	},
+ 	{ .id = BTRFS_UUID_TREE_OBJECTID,	DEFINE_NAME("uuid")	},
+ 	{ .id = BTRFS_FREE_SPACE_TREE_OBJECTID,	DEFINE_NAME("free-space") },
++	{ .id = BTRFS_BLOCK_GROUP_TREE_OBJECTID, DEFINE_NAME("block-group") },
+ 	{ .id = 0,				DEFINE_NAME("tree")	},
+ };
+ 
 
 
