@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4895F8F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:39:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB0EC433C8;
-	Sun, 16 Jul 2023 20:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171AC8F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:39:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCECC433C8;
+	Sun, 16 Jul 2023 20:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539967;
-	bh=xFGiy8HkXKZiklmAa5tGGltHHve2Sf6Oc+0wcePUEcQ=;
+	s=korg; t=1689539969;
+	bh=4WUeVJuHlvRvNHZpsK894FJJymCsAj/agbtLGYFsVkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFK7D6oJInbnPFq9xpWnWB+T82yKmmxpo5eEkVAuPwEgCMyJb/4DVdf8E32Nk93Rd
-	 b3f833dOzxXjOe6cYJkbdC1M0DiA9yoNHYU4/yN3AHWieo8E8q2Q6VkY/+MYFiSGuj
-	 r9xx/Q8lgbZi7FjdNbFxPj7ZnUYnLIS6Ke9u/KS0=
+	b=emZI/tT3JDRVGw8lxSmhagrZNuBPZWb3Q5iL9WTx7PL6/n7TdY1G/AXKcbw/wB+wo
+	 zfBzqFU389En1mcWx/H6RQCAXZB0lT5F4IrggV/uJY2EQLuBP0f3+gV4VyJu2JaAvj
+	 IUSrAhJvlODv4I9zKe8oZMnQ4Wx6h+IIhHqC/83Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/591] driver: soc: xilinx: use _safe loop iterator to avoid a use after free
-Date: Sun, 16 Jul 2023 21:45:07 +0200
-Message-ID: <20230716194928.211279758@linuxfoundation.org>
+Subject: [PATCH 6.1 169/591] ASoC: Intel: sof_sdw: remove SOF_SDW_TGL_HDMI for MeteorLake devices
+Date: Sun, 16 Jul 2023 21:45:08 +0200
+Message-ID: <20230716194928.238159026@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,55 +33,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit c58da0ba3e5c86e51e2c1557afaf6f71e00c4533 ]
+[ Upstream commit 0db94947c9d3da16aa31d152b7d26fab78b02cb9 ]
 
-The hash_for_each_possible() loop dereferences "eve_data" to get the
-next item on the list.  However the loop frees eve_data so it leads to
-a use after free.  Use hash_for_each_possible_safe() instead.
+Topologies support three HDMI links on MeteorLake devices only.
 
-Fixes: c7fdb2404f66 ("drivers: soc: xilinx: add xilinx event management driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/761e0e4a-4caf-4a71-8f47-1c6ad908a848@kili.mountain
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Fixes: 18489174e4fb ("ASoC: intel: sof_sdw: add RT711 SDCA card for MTL platform")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com
+Link: https://lore.kernel.org/r/20230512173305.65399-3-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/xilinx/xlnx_event_manager.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/xilinx/xlnx_event_manager.c b/drivers/soc/xilinx/xlnx_event_manager.c
-index c76381899ef49..f9d9b82b562da 100644
---- a/drivers/soc/xilinx/xlnx_event_manager.c
-+++ b/drivers/soc/xilinx/xlnx_event_manager.c
-@@ -192,11 +192,12 @@ static int xlnx_remove_cb_for_suspend(event_cb_func_t cb_fun)
- 	struct registered_event_data *eve_data;
- 	struct agent_cb *cb_pos;
- 	struct agent_cb *cb_next;
-+	struct hlist_node *tmp;
- 
- 	is_need_to_unregister = false;
- 
- 	/* Check for existing entry in hash table for given cb_type */
--	hash_for_each_possible(reg_driver_map, eve_data, hentry, PM_INIT_SUSPEND_CB) {
-+	hash_for_each_possible_safe(reg_driver_map, eve_data, tmp, hentry, PM_INIT_SUSPEND_CB) {
- 		if (eve_data->cb_type == PM_INIT_SUSPEND_CB) {
- 			/* Delete the list of callback */
- 			list_for_each_entry_safe(cb_pos, cb_next, &eve_data->cb_list_head, list) {
-@@ -228,11 +229,12 @@ static int xlnx_remove_cb_for_notify_event(const u32 node_id, const u32 event,
- 	u64 key = ((u64)node_id << 32U) | (u64)event;
- 	struct agent_cb *cb_pos;
- 	struct agent_cb *cb_next;
-+	struct hlist_node *tmp;
- 
- 	is_need_to_unregister = false;
- 
- 	/* Check for existing entry in hash table for given key id */
--	hash_for_each_possible(reg_driver_map, eve_data, hentry, key) {
-+	hash_for_each_possible_safe(reg_driver_map, eve_data, tmp, hentry, key) {
- 		if (eve_data->key == key) {
- 			/* Delete the list of callback */
- 			list_for_each_entry_safe(cb_pos, cb_next, &eve_data->cb_list_head, list) {
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index d4f92bb5e29f8..a37c85d301471 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -372,7 +372,7 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		.matches = {
+ 			DMI_MATCH(DMI_PRODUCT_FAMILY, "Intel_mtlrvp"),
+ 		},
+-		.driver_data = (void *)(RT711_JD1 | SOF_SDW_TGL_HDMI),
++		.driver_data = (void *)(RT711_JD1),
+ 	},
+ 	{}
+ };
 -- 
 2.39.2
 
