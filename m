@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3F98F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45564C433C7;
-	Sun, 16 Jul 2023 20:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C36F8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0958BC433C7;
+	Sun, 16 Jul 2023 20:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537770;
-	bh=D3qR7Rw7TW1U8YX1PfSVsazmVpoFDDLkdJUHAB+QyEg=;
+	s=korg; t=1689537773;
+	bh=k2CA7rI2ZOVYfokyffwdv1fmht2eZusReAvJvYCjrT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lE7uOgRCG/5lU8P995dAJAElhmbPSIeDECpl4BnzrfdGypjfm8w/4xoHeDlWpmnw7
-	 uLT79KyNgV+q5uzhj0QOTWxUb9iFH5EPkFeeKHgd0MmGFizZwLiX7kVVT4Gfx2fjXp
-	 JakvapqccyDlBCWep/AIHkSeoGnVj2omy/Lr41o8=
+	b=GH23iP2uoIWXRX1MhcZZrARKsZ3vVgjXwmVrYe+zpg3n6WsdvXE56X2ugkrcyxXuI
+	 nNyd7NNvKPOuAIdi+8lOrYB5R3/XEDQ61WLiXl+12A8lJS3XZSKaRQmN3UgzuzGGPU
+	 E7pTFu+8/0Rta9lyOEieY+bLrGCtYxE+WI49fzlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
 	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 207/800] sch_netem: fix issues in netem_change() vs get_dist_table()
-Date: Sun, 16 Jul 2023 21:41:00 +0200
-Message-ID: <20230716194953.905401084@linuxfoundation.org>
+Subject: [PATCH 6.4 216/800] netfilter: nf_conntrack_sip: fix the ct_sip_parse_numerical_param() return value.
+Date: Sun, 16 Jul 2023 21:41:09 +0200
+Message-ID: <20230716194954.111581377@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -39,150 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 11b73313c12403f617b47752db0ab3deef201af7 ]
+[ Upstream commit f188d30087480eab421cd8ca552fb15f55d57f4d ]
 
-In blamed commit, I missed that get_dist_table() was allocating
-memory using GFP_KERNEL, and acquiring qdisc lock to perform
-the swap of newly allocated table with current one.
+ct_sip_parse_numerical_param() returns only 0 or 1 now.
+But process_register_request() and process_register_response() imply
+checking for a negative value if parsing of a numerical header parameter
+failed.
+The invocation in nf_nat_sip() looks correct:
+ 	if (ct_sip_parse_numerical_param(...) > 0 &&
+ 	    ...) { ... }
 
-In this patch, get_dist_table() is allocating memory and
-copy user data before we acquire the qdisc lock.
+Make the return value of the function ct_sip_parse_numerical_param()
+a tristate to fix all the cases
+a) return 1 if value is found; *val is set
+b) return 0 if value is not found; *val is unchanged
+c) return -1 on error; *val is undefined
 
-Then we perform swap operations while being protected by the lock.
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
 
-Note that after this patch netem_change() no longer can do partial changes.
-If an error is returned, qdisc conf is left unchanged.
-
-Fixes: 2174a08db80d ("sch_netem: acquire qdisc lock in netem_change()")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Stephen Hemminger <stephen@networkplumber.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Fixes: 0f32a40fc91a ("[NETFILTER]: nf_conntrack_sip: create signalling expectations")
+Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230622181503.2327695-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 59 ++++++++++++++++++-------------------------
- 1 file changed, 25 insertions(+), 34 deletions(-)
+ net/netfilter/nf_conntrack_sip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index e79be1b3e74da..b93ec2a3454eb 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -773,12 +773,10 @@ static void dist_free(struct disttable *d)
-  * signed 16 bit values.
-  */
- 
--static int get_dist_table(struct Qdisc *sch, struct disttable **tbl,
--			  const struct nlattr *attr)
-+static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
- {
- 	size_t n = nla_len(attr)/sizeof(__s16);
- 	const __s16 *data = nla_data(attr);
--	spinlock_t *root_lock;
- 	struct disttable *d;
- 	int i;
- 
-@@ -793,13 +791,7 @@ static int get_dist_table(struct Qdisc *sch, struct disttable **tbl,
- 	for (i = 0; i < n; i++)
- 		d->table[i] = data[i];
- 
--	root_lock = qdisc_root_sleeping_lock(sch);
--
--	spin_lock_bh(root_lock);
--	swap(*tbl, d);
--	spin_unlock_bh(root_lock);
--
--	dist_free(d);
-+	*tbl = d;
- 	return 0;
- }
- 
-@@ -956,6 +948,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- {
- 	struct netem_sched_data *q = qdisc_priv(sch);
- 	struct nlattr *tb[TCA_NETEM_MAX + 1];
-+	struct disttable *delay_dist = NULL;
-+	struct disttable *slot_dist = NULL;
- 	struct tc_netem_qopt *qopt;
- 	struct clgstate old_clg;
- 	int old_loss_model = CLG_RANDOM;
-@@ -966,6 +960,18 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	if (ret < 0)
- 		return ret;
- 
-+	if (tb[TCA_NETEM_DELAY_DIST]) {
-+		ret = get_dist_table(&delay_dist, tb[TCA_NETEM_DELAY_DIST]);
-+		if (ret)
-+			goto table_free;
-+	}
-+
-+	if (tb[TCA_NETEM_SLOT_DIST]) {
-+		ret = get_dist_table(&slot_dist, tb[TCA_NETEM_SLOT_DIST]);
-+		if (ret)
-+			goto table_free;
-+	}
-+
- 	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
-@@ -975,26 +981,17 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
- 		if (ret) {
- 			q->loss_model = old_loss_model;
-+			q->clg = old_clg;
- 			goto unlock;
- 		}
- 	} else {
- 		q->loss_model = CLG_RANDOM;
- 	}
- 
--	if (tb[TCA_NETEM_DELAY_DIST]) {
--		ret = get_dist_table(sch, &q->delay_dist,
--				     tb[TCA_NETEM_DELAY_DIST]);
--		if (ret)
--			goto get_table_failure;
--	}
--
--	if (tb[TCA_NETEM_SLOT_DIST]) {
--		ret = get_dist_table(sch, &q->slot_dist,
--				     tb[TCA_NETEM_SLOT_DIST]);
--		if (ret)
--			goto get_table_failure;
--	}
--
-+	if (delay_dist)
-+		swap(q->delay_dist, delay_dist);
-+	if (slot_dist)
-+		swap(q->slot_dist, slot_dist);
- 	sch->limit = qopt->limit;
- 
- 	q->latency = PSCHED_TICKS2NS(qopt->latency);
-@@ -1044,17 +1041,11 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 
- unlock:
- 	sch_tree_unlock(sch);
--	return ret;
- 
--get_table_failure:
--	/* recover clg and loss_model, in case of
--	 * q->clg and q->loss_model were modified
--	 * in get_loss_clg()
--	 */
--	q->clg = old_clg;
--	q->loss_model = old_loss_model;
--
--	goto unlock;
-+table_free:
-+	dist_free(delay_dist);
-+	dist_free(slot_dist);
-+	return ret;
- }
- 
- static int netem_init(struct Qdisc *sch, struct nlattr *opt,
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index 77f5e82d8e3fe..d0eac27f6ba03 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -611,7 +611,7 @@ int ct_sip_parse_numerical_param(const struct nf_conn *ct, const char *dptr,
+ 	start += strlen(name);
+ 	*val = simple_strtoul(start, &end, 0);
+ 	if (start == end)
+-		return 0;
++		return -1;
+ 	if (matchoff && matchlen) {
+ 		*matchoff = start - dptr;
+ 		*matchlen = end - start;
 -- 
 2.39.2
 
