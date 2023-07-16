@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9FC8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E977C433C7;
-	Sun, 16 Jul 2023 20:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A80B8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:00:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D157AC433C7;
+	Sun, 16 Jul 2023 20:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537650;
-	bh=w/vWHht/KPNH2rX9DjdXaty/TyCa1qtRApd53BFSq5o=;
+	s=korg; t=1689537653;
+	bh=xAQz2wMuVN2wSH7Gp+YYt9XtZxEW/mVQjQ4OxYgwcwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ggko8CH6qQz3+hohUrpwHnnh1k9c2vAien6siQk79UU9ANoS7W0K5nTPRRfTq2g7u
-	 DAVZAkd34bXqRkLQnECWs4B4R+s5teYaDVl/caVXM/zKqWe6sU0kUdaPLGe2V2RWA9
-	 99dTohvSRutYVCE5+RGPoXyU65KTgA8uoLlsgxIw=
+	b=bLEUej8CCnYVcTY/bz8qE0/Rj3gd3j6MXDSrpluL5xXEr4xwHZh9LLtMZ8o3DlaQ7
+	 GqWSxIphKeWhPabqjjiUMZrd53KpN2eAFCOBL8H4HQlWk2Sv/jU7jBUKVCFIFGnyPk
+	 wl+NOe3g0YTJh4hiqvCxAzKOlY9qhse2ZZ70i/78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyang Huang <hzyitc@outlook.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 171/800] wifi: ath11k: Add missing hw_ops->get_ring_selector() for IPQ5018
-Date: Sun, 16 Jul 2023 21:40:24 +0200
-Message-ID: <20230716194953.080031383@linuxfoundation.org>
+Subject: [PATCH 6.4 172/800] wifi: mac80211: add helpers to access sband iftype data
+Date: Sun, 16 Jul 2023 21:40:25 +0200
+Message-ID: <20230716194953.102572859@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,65 +35,358 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Huang <hzyitc@outlook.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ce282d8de71f07f0056ea319541141152c65f552 ]
+[ Upstream commit 1ec7291e247055fab3a088e1a333a31e7c06e2dd ]
 
-During sending data after clients connected, hw_ops->get_ring_selector()
-will be called. But for IPQ5018, this member isn't set, and the
-following NULL pointer exception will be occurred:
+There's quite a bit of code accessing sband iftype data
+(HE, HE 6 GHz, EHT) and we always need to remember to use
+the ieee80211_vif_type_p2p() helper. Add new helpers to
+directly get it from the sband/vif rather than having to
+call ieee80211_vif_type_p2p().
 
-	[   38.840478] 8<--- cut here ---
-	[   38.840517] Unable to handle kernel NULL pointer dereference at virtual address 00000000
-	...
-	[   38.923161] PC is at 0x0
-	[   38.927930] LR is at ath11k_dp_tx+0x70/0x730 [ath11k]
-	...
-	[   39.063264] Process hostapd (pid: 1034, stack limit = 0x801ceb3d)
-	[   39.068994] Stack: (0x856a9a68 to 0x856aa000)
-	...
-	[   39.438467] [<7f323804>] (ath11k_dp_tx [ath11k]) from [<7f314e6c>] (ath11k_mac_op_tx+0x80/0x190 [ath11k])
-	[   39.446607] [<7f314e6c>] (ath11k_mac_op_tx [ath11k]) from [<7f17dbe0>] (ieee80211_handle_wake_tx_queue+0x7c/0xc0 [mac80211])
-	[   39.456162] [<7f17dbe0>] (ieee80211_handle_wake_tx_queue [mac80211]) from [<7f174450>] (ieee80211_probereq_get+0x584/0x704 [mac80211])
-	[   39.467443] [<7f174450>] (ieee80211_probereq_get [mac80211]) from [<7f178c40>] (ieee80211_tx_prepare_skb+0x1f8/0x248 [mac80211])
-	[   39.479334] [<7f178c40>] (ieee80211_tx_prepare_skb [mac80211]) from [<7f179e28>] (__ieee80211_subif_start_xmit+0x32c/0x3d4 [mac80211])
-	[   39.491053] [<7f179e28>] (__ieee80211_subif_start_xmit [mac80211]) from [<7f17af08>] (ieee80211_tx_control_port+0x19c/0x288 [mac80211])
-	[   39.502946] [<7f17af08>] (ieee80211_tx_control_port [mac80211]) from [<7f0fc704>] (nl80211_tx_control_port+0x174/0x1d4 [cfg80211])
-	[   39.515017] [<7f0fc704>] (nl80211_tx_control_port [cfg80211]) from [<808ceac4>] (genl_rcv_msg+0x154/0x340)
-	[   39.526814] [<808ceac4>] (genl_rcv_msg) from [<808cdb74>] (netlink_rcv_skb+0xb8/0x11c)
-	[   39.536446] [<808cdb74>] (netlink_rcv_skb) from [<808ce1d0>] (genl_rcv+0x28/0x34)
-	[   39.544344] [<808ce1d0>] (genl_rcv) from [<808cd234>] (netlink_unicast+0x174/0x274)
-	[   39.551895] [<808cd234>] (netlink_unicast) from [<808cd510>] (netlink_sendmsg+0x1dc/0x440)
-	[   39.559362] [<808cd510>] (netlink_sendmsg) from [<808596e0>] (____sys_sendmsg+0x1a8/0x1fc)
-	[   39.567697] [<808596e0>] (____sys_sendmsg) from [<8085b1a8>] (___sys_sendmsg+0xa4/0xdc)
-	[   39.575941] [<8085b1a8>] (___sys_sendmsg) from [<8085b310>] (sys_sendmsg+0x44/0x74)
-	[   39.583841] [<8085b310>] (sys_sendmsg) from [<80300060>] (ret_fast_syscall+0x0/0x40)
-	...
-	[   39.620734] Code: bad PC value
-	[   39.625869] ---[ end trace 8aef983ad3cbc032 ]---
+Convert most code with the following spatch:
 
-Fixes: ba60f2793d3a ("wifi: ath11k: initialize hw_ops for IPQ5018")
-Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/TYZPR01MB5556D6E3F63EAB5129D11420C953A@TYZPR01MB5556.apcprd01.prod.exchangelabs.com
+    @@
+    expression vif, sband;
+    @@
+    -ieee80211_get_he_iftype_cap(sband, ieee80211_vif_type_p2p(vif))
+    +ieee80211_get_he_iftype_cap_vif(sband, vif)
+
+    @@
+    expression vif, sband;
+    @@
+    -ieee80211_get_eht_iftype_cap(sband, ieee80211_vif_type_p2p(vif))
+    +ieee80211_get_eht_iftype_cap_vif(sband, vif)
+
+    @@
+    expression vif, sband;
+    @@
+    -ieee80211_get_he_6ghz_capa(sband, ieee80211_vif_type_p2p(vif))
+    +ieee80211_get_he_6ghz_capa_vif(sband, vif)
+
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230604120651.db099f49e764.Ie892966c49e22c7b7ee1073bc684f142debfdc84@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: f91295987576 ("wifi: iwlwifi: mvm: correctly access HE/EHT sband capa")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/hw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/wireless/intel/iwlwifi/mvm/mac80211.c |  6 +--
+ drivers/net/wireless/intel/iwlwifi/mvm/ops.c  |  5 +--
+ .../net/wireless/intel/iwlwifi/mvm/rs-fw.c    |  5 +--
+ include/net/mac80211.h                        | 44 ++++++++++++++++++-
+ net/mac80211/eht.c                            |  5 +--
+ net/mac80211/he.c                             |  3 +-
+ net/mac80211/mlme.c                           | 30 +++++--------
+ net/mac80211/util.c                           | 11 ++---
+ 8 files changed, 66 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/hw.c b/drivers/net/wireless/ath/ath11k/hw.c
-index eb995f9cf0fa1..72797289b33e2 100644
---- a/drivers/net/wireless/ath/ath11k/hw.c
-+++ b/drivers/net/wireless/ath/ath11k/hw.c
-@@ -1175,7 +1175,7 @@ const struct ath11k_hw_ops ipq5018_ops = {
- 	.mpdu_info_get_peerid = ath11k_hw_ipq8074_mpdu_info_get_peerid,
- 	.rx_desc_mac_addr2_valid = ath11k_hw_ipq9074_rx_desc_mac_addr2_valid,
- 	.rx_desc_mpdu_start_addr2 = ath11k_hw_ipq9074_rx_desc_mpdu_start_addr2,
--
-+	.get_ring_selector = ath11k_hw_ipq8074_get_tcl_ring_selector,
- };
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 17f788a5ff6ba..6c70ca1b524c4 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -2285,8 +2285,7 @@ bool iwl_mvm_is_nic_ack_enabled(struct iwl_mvm *mvm, struct ieee80211_vif *vif)
+ 	 * so take it from one of them.
+ 	 */
+ 	sband = mvm->hw->wiphy->bands[NL80211_BAND_2GHZ];
+-	own_he_cap = ieee80211_get_he_iftype_cap(sband,
+-						 ieee80211_vif_type_p2p(vif));
++	own_he_cap = ieee80211_get_he_iftype_cap_vif(sband, vif);
  
- #define ATH11K_TX_RING_MASK_0 BIT(0)
+ 	return (own_he_cap && (own_he_cap->he_cap_elem.mac_cap_info[2] &
+ 			       IEEE80211_HE_MAC_CAP2_ACK_EN));
+@@ -3468,8 +3467,7 @@ static void iwl_mvm_reset_cca_40mhz_workaround(struct iwl_mvm *mvm,
+ 
+ 	sband->ht_cap.cap |= IEEE80211_HT_CAP_SUP_WIDTH_20_40;
+ 
+-	he_cap = ieee80211_get_he_iftype_cap(sband,
+-					     ieee80211_vif_type_p2p(vif));
++	he_cap = ieee80211_get_he_iftype_cap_vif(sband, vif);
+ 
+ 	if (he_cap) {
+ 		/* we know that ours is writable */
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+index 32625bfacaaef..6ba4ad6b1380b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2012-2014, 2018-2020 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2023 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+  */
+@@ -192,8 +192,7 @@ static void iwl_mvm_rx_monitor_notif(struct iwl_mvm *mvm,
+ 	WARN_ON(!(sband->ht_cap.cap & IEEE80211_HT_CAP_SUP_WIDTH_20_40));
+ 	sband->ht_cap.cap &= ~IEEE80211_HT_CAP_SUP_WIDTH_20_40;
+ 
+-	he_cap = ieee80211_get_he_iftype_cap(sband,
+-					     ieee80211_vif_type_p2p(vif));
++	he_cap = ieee80211_get_he_iftype_cap_vif(sband, vif);
+ 
+ 	if (he_cap) {
+ 		/* we know that ours is writable */
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c
+index c3a00bfbeef2c..f72d1ca3cfedc 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+  * Copyright (C) 2017 Intel Deutschland GmbH
+- * Copyright (C) 2018-2022 Intel Corporation
++ * Copyright (C) 2018-2023 Intel Corporation
+  */
+ #include "rs.h"
+ #include "fw-api.h"
+@@ -94,8 +94,7 @@ static u16 rs_fw_get_config_flags(struct iwl_mvm *mvm,
+ 	    IEEE80211_HE_PHY_CAP1_LDPC_CODING_IN_PAYLOAD))
+ 		flags |= IWL_TLC_MNG_CFG_FLAGS_LDPC_MSK;
+ 
+-	sband_he_cap = ieee80211_get_he_iftype_cap(sband,
+-						   ieee80211_vif_type_p2p(vif));
++	sband_he_cap = ieee80211_get_he_iftype_cap_vif(sband, vif);
+ 	if (sband_he_cap &&
+ 	    !(sband_he_cap->he_cap_elem.phy_cap_info[1] &
+ 			IEEE80211_HE_PHY_CAP1_LDPC_CODING_IN_PAYLOAD))
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index ac0370e768749..65510cfda37af 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -7,7 +7,7 @@
+  * Copyright 2007-2010	Johannes Berg <johannes@sipsolutions.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+  * Copyright (C) 2015 - 2017 Intel Deutschland GmbH
+- * Copyright (C) 2018 - 2022 Intel Corporation
++ * Copyright (C) 2018 - 2023 Intel Corporation
+  */
+ 
+ #ifndef MAC80211_H
+@@ -6861,6 +6861,48 @@ ieee80211_vif_type_p2p(struct ieee80211_vif *vif)
+ 	return ieee80211_iftype_p2p(vif->type, vif->p2p);
+ }
+ 
++/**
++ * ieee80211_get_he_iftype_cap_vif - return HE capabilities for sband/vif
++ * @sband: the sband to search for the iftype on
++ * @vif: the vif to get the iftype from
++ *
++ * Return: pointer to the struct ieee80211_sta_he_cap, or %NULL is none found
++ */
++static inline const struct ieee80211_sta_he_cap *
++ieee80211_get_he_iftype_cap_vif(const struct ieee80211_supported_band *sband,
++				struct ieee80211_vif *vif)
++{
++	return ieee80211_get_he_iftype_cap(sband, ieee80211_vif_type_p2p(vif));
++}
++
++/**
++ * ieee80211_get_he_6ghz_capa_vif - return HE 6 GHz capabilities
++ * @sband: the sband to search for the STA on
++ * @vif: the vif to get the iftype from
++ *
++ * Return: the 6GHz capabilities
++ */
++static inline __le16
++ieee80211_get_he_6ghz_capa_vif(const struct ieee80211_supported_band *sband,
++			       struct ieee80211_vif *vif)
++{
++	return ieee80211_get_he_6ghz_capa(sband, ieee80211_vif_type_p2p(vif));
++}
++
++/**
++ * ieee80211_get_eht_iftype_cap_vif - return ETH capabilities for sband/vif
++ * @sband: the sband to search for the iftype on
++ * @vif: the vif to get the iftype from
++ *
++ * Return: pointer to the struct ieee80211_sta_eht_cap, or %NULL is none found
++ */
++static inline const struct ieee80211_sta_eht_cap *
++ieee80211_get_eht_iftype_cap_vif(const struct ieee80211_supported_band *sband,
++				 struct ieee80211_vif *vif)
++{
++	return ieee80211_get_eht_iftype_cap(sband, ieee80211_vif_type_p2p(vif));
++}
++
+ /**
+  * ieee80211_update_mu_groups - set the VHT MU-MIMO groud data
+  *
+diff --git a/net/mac80211/eht.c b/net/mac80211/eht.c
+index 18bc6b78b2679..ddc7acc68335a 100644
+--- a/net/mac80211/eht.c
++++ b/net/mac80211/eht.c
+@@ -2,7 +2,7 @@
+ /*
+  * EHT handling
+  *
+- * Copyright(c) 2021-2022 Intel Corporation
++ * Copyright(c) 2021-2023 Intel Corporation
+  */
+ 
+ #include "ieee80211_i.h"
+@@ -25,8 +25,7 @@ ieee80211_eht_cap_ie_to_sta_eht_cap(struct ieee80211_sub_if_data *sdata,
+ 	memset(eht_cap, 0, sizeof(*eht_cap));
+ 
+ 	if (!eht_cap_ie_elem ||
+-	    !ieee80211_get_eht_iftype_cap(sband,
+-					 ieee80211_vif_type_p2p(&sdata->vif)))
++	    !ieee80211_get_eht_iftype_cap_vif(sband, &sdata->vif))
+ 		return;
+ 
+ 	mcs_nss_size = ieee80211_eht_mcs_nss_size(he_cap_ie_elem,
+diff --git a/net/mac80211/he.c b/net/mac80211/he.c
+index 0322abae08250..9f5ffdc9db284 100644
+--- a/net/mac80211/he.c
++++ b/net/mac80211/he.c
+@@ -128,8 +128,7 @@ ieee80211_he_cap_ie_to_sta_he_cap(struct ieee80211_sub_if_data *sdata,
+ 		return;
+ 
+ 	own_he_cap_ptr =
+-		ieee80211_get_he_iftype_cap(sband,
+-					    ieee80211_vif_type_p2p(&sdata->vif));
++		ieee80211_get_he_iftype_cap_vif(sband, &sdata->vif);
+ 	if (!own_he_cap_ptr)
+ 		return;
+ 
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 5a4303130ef22..93da8373583be 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -511,16 +511,14 @@ static int ieee80211_config_bw(struct ieee80211_link_data *link,
+ 
+ 	/* don't check HE if we associated as non-HE station */
+ 	if (link->u.mgd.conn_flags & IEEE80211_CONN_DISABLE_HE ||
+-	    !ieee80211_get_he_iftype_cap(sband,
+-					 ieee80211_vif_type_p2p(&sdata->vif))) {
++	    !ieee80211_get_he_iftype_cap_vif(sband, &sdata->vif)) {
+ 		he_oper = NULL;
+ 		eht_oper = NULL;
+ 	}
+ 
+ 	/* don't check EHT if we associated as non-EHT station */
+ 	if (link->u.mgd.conn_flags & IEEE80211_CONN_DISABLE_EHT ||
+-	    !ieee80211_get_eht_iftype_cap(sband,
+-					 ieee80211_vif_type_p2p(&sdata->vif)))
++	    !ieee80211_get_eht_iftype_cap_vif(sband, &sdata->vif))
+ 		eht_oper = NULL;
+ 
+ 	/*
+@@ -776,8 +774,7 @@ static void ieee80211_add_he_ie(struct ieee80211_sub_if_data *sdata,
+ 	const struct ieee80211_sta_he_cap *he_cap;
+ 	u8 he_cap_size;
+ 
+-	he_cap = ieee80211_get_he_iftype_cap(sband,
+-					     ieee80211_vif_type_p2p(&sdata->vif));
++	he_cap = ieee80211_get_he_iftype_cap_vif(sband, &sdata->vif);
+ 	if (WARN_ON(!he_cap))
+ 		return;
+ 
+@@ -806,10 +803,8 @@ static void ieee80211_add_eht_ie(struct ieee80211_sub_if_data *sdata,
+ 	const struct ieee80211_sta_eht_cap *eht_cap;
+ 	u8 eht_cap_size;
+ 
+-	he_cap = ieee80211_get_he_iftype_cap(sband,
+-					     ieee80211_vif_type_p2p(&sdata->vif));
+-	eht_cap = ieee80211_get_eht_iftype_cap(sband,
+-					       ieee80211_vif_type_p2p(&sdata->vif));
++	he_cap = ieee80211_get_he_iftype_cap_vif(sband, &sdata->vif);
++	eht_cap = ieee80211_get_eht_iftype_cap_vif(sband, &sdata->vif);
+ 
+ 	/*
+ 	 * EHT capabilities element is only added if the HE capabilities element
+@@ -3949,8 +3944,7 @@ static bool ieee80211_twt_req_supported(struct ieee80211_sub_if_data *sdata,
+ 					const struct ieee802_11_elems *elems)
+ {
+ 	const struct ieee80211_sta_he_cap *own_he_cap =
+-		ieee80211_get_he_iftype_cap(sband,
+-					    ieee80211_vif_type_p2p(&sdata->vif));
++		ieee80211_get_he_iftype_cap_vif(sband, &sdata->vif);
+ 
+ 	if (elems->ext_capab_len < 10)
+ 		return false;
+@@ -3986,8 +3980,7 @@ static bool ieee80211_twt_bcast_support(struct ieee80211_sub_if_data *sdata,
+ 					struct link_sta_info *link_sta)
+ {
+ 	const struct ieee80211_sta_he_cap *own_he_cap =
+-		ieee80211_get_he_iftype_cap(sband,
+-					    ieee80211_vif_type_p2p(&sdata->vif));
++		ieee80211_get_he_iftype_cap_vif(sband, &sdata->vif);
+ 
+ 	return bss_conf->he_support &&
+ 		(link_sta->pub->he_cap.he_cap_elem.mac_cap_info[2] &
+@@ -4624,8 +4617,7 @@ ieee80211_verify_sta_he_mcs_support(struct ieee80211_sub_if_data *sdata,
+ 				    const struct ieee80211_he_operation *he_op)
+ {
+ 	const struct ieee80211_sta_he_cap *sta_he_cap =
+-		ieee80211_get_he_iftype_cap(sband,
+-					    ieee80211_vif_type_p2p(&sdata->vif));
++		ieee80211_get_he_iftype_cap_vif(sband, &sdata->vif);
+ 	u16 ap_min_req_set;
+ 	int i;
+ 
+@@ -4759,15 +4751,13 @@ static int ieee80211_prep_channel(struct ieee80211_sub_if_data *sdata,
+ 		*conn_flags |= IEEE80211_CONN_DISABLE_EHT;
+ 	}
+ 
+-	if (!ieee80211_get_he_iftype_cap(sband,
+-					 ieee80211_vif_type_p2p(&sdata->vif))) {
++	if (!ieee80211_get_he_iftype_cap_vif(sband, &sdata->vif)) {
+ 		mlme_dbg(sdata, "HE not supported, disabling HE and EHT\n");
+ 		*conn_flags |= IEEE80211_CONN_DISABLE_HE;
+ 		*conn_flags |= IEEE80211_CONN_DISABLE_EHT;
+ 	}
+ 
+-	if (!ieee80211_get_eht_iftype_cap(sband,
+-					  ieee80211_vif_type_p2p(&sdata->vif))) {
++	if (!ieee80211_get_eht_iftype_cap_vif(sband, &sdata->vif)) {
+ 		mlme_dbg(sdata, "EHT not supported, disabling EHT\n");
+ 		*conn_flags |= IEEE80211_CONN_DISABLE_EHT;
+ 	}
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 3bd07a0a782f7..74bcc9590c759 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -6,7 +6,7 @@
+  * Copyright 2007	Johannes Berg <johannes@sipsolutions.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+  * Copyright (C) 2015-2017	Intel Deutschland GmbH
+- * Copyright (C) 2018-2022 Intel Corporation
++ * Copyright (C) 2018-2023 Intel Corporation
+  *
+  * utilities for mac80211
+  */
+@@ -2121,8 +2121,7 @@ static int ieee80211_build_preq_ies_band(struct ieee80211_sub_if_data *sdata,
+ 		*offset = noffset;
+ 	}
+ 
+-	he_cap = ieee80211_get_he_iftype_cap(sband,
+-					     ieee80211_vif_type_p2p(&sdata->vif));
++	he_cap = ieee80211_get_he_iftype_cap_vif(sband, &sdata->vif);
+ 	if (he_cap &&
+ 	    cfg80211_any_usable_channels(local->hw.wiphy, BIT(sband->band),
+ 					 IEEE80211_CHAN_NO_HE)) {
+@@ -2131,8 +2130,7 @@ static int ieee80211_build_preq_ies_band(struct ieee80211_sub_if_data *sdata,
+ 			goto out_err;
+ 	}
+ 
+-	eht_cap = ieee80211_get_eht_iftype_cap(sband,
+-					       ieee80211_vif_type_p2p(&sdata->vif));
++	eht_cap = ieee80211_get_eht_iftype_cap_vif(sband, &sdata->vif);
+ 
+ 	if (eht_cap &&
+ 	    cfg80211_any_usable_channels(local->hw.wiphy, BIT(sband->band),
+@@ -2150,8 +2148,7 @@ static int ieee80211_build_preq_ies_band(struct ieee80211_sub_if_data *sdata,
+ 		struct ieee80211_supported_band *sband6;
+ 
+ 		sband6 = local->hw.wiphy->bands[NL80211_BAND_6GHZ];
+-		he_cap = ieee80211_get_he_iftype_cap(sband6,
+-				ieee80211_vif_type_p2p(&sdata->vif));
++		he_cap = ieee80211_get_he_iftype_cap_vif(sband6, &sdata->vif);
+ 
+ 		if (he_cap) {
+ 			enum nl80211_iftype iftype =
 -- 
 2.39.2
 
