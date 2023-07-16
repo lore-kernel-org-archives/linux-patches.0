@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F848F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CC0C433C8;
-	Sun, 16 Jul 2023 20:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FCF8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4C3C433C7;
+	Sun, 16 Jul 2023 20:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540285;
-	bh=B32SVhQMe+FpiMbO6keH5Pk5eWOnQv6AS1MyQdnAyUk=;
+	s=korg; t=1689540288;
+	bh=VXwv78x6CR3/4rUeJgfQ3V/v0Zxk/HMZdjHH9hU4r0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qug2gUEugicMFJxeaA3bsAnjXO1ilQhLVcOCijK0x5j8VRkRVN5YugOCsMCj1DWa4
-	 k/EO1QsWXgz1mhHQNgfqXTx82xcMXmqay9ZJAwmBJK72uCbGB72kHWduaJHb6pa2Xj
-	 mqgGU8CiJZlIW+uxBfRjXDzAstu1OlhbYMj48VE4=
+	b=dBvVcS8wpThfbxNWJhKtk9kYaBNB7Xbq5utJQzC2DvovzI4ehzToOGc+hfhyLo1pa
+	 fJvPuMlf5QdccLWsMMEqHRE5aGlRswDa2aNSTidFUoKk/0sLO0P3M+bnHgWpIGsz29
+	 7kcTYsI/SJWfpE1lGuaGhBABlpZZ+2MqrHwUKnHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 308/591] powerpc/signal32: Force inlining of __unsafe_save_user_regs() and save_tm_user_regs_unsafe()
-Date: Sun, 16 Jul 2023 21:47:27 +0200
-Message-ID: <20230716194931.859874213@linuxfoundation.org>
+Subject: [PATCH 6.1 309/591] perf script: Fix allocation of evsel->priv related to per-event dump files
+Date: Sun, 16 Jul 2023 21:47:28 +0200
+Message-ID: <20230716194931.886369347@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,76 +39,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit a03b1a0b19398a47489fdcef02ec19c2ba05a15d ]
+[ Upstream commit 36d3e4138e1b6cc9ab179f3f397b5548f8b1eaae ]
 
-Looking at generated code for handle_signal32() shows calls to a
-function called __unsafe_save_user_regs.constprop.0 while user access
-is open.
+When printing output we may want to generate per event files, where the
+--per-event-dump option should be used, creating perf.data.EVENT.dump
+files instead of printing to stdout.
 
-And that __unsafe_save_user_regs.constprop.0 function has two nops at
-the begining, allowing it to be traced, which is unexpected during
-user access open window.
+The callback thar processes event thus expects that evsel->priv->fp
+should point to either the per-event FILE descriptor or to stdout.
 
-The solution could be to mark __unsafe_save_user_regs() no trace, but
-to be on the safe side the most efficient is to flag it __always_inline
-as already done for function __unsafe_restore_general_regs(). The
-function is relatively small and only called twice, so the size
-increase will remain in the noise.
+The a3af66f51bd0bca7 ("perf script: Fix crash because of missing
+evsel->priv") changeset fixed a case where evsel->priv wasn't setup,
+thus set to NULL, causing a segfault when trying to access
+evsel->priv->fp.
 
-Do the same with save_tm_user_regs_unsafe() as it may suffer the
-same issue.
+But it did it for the non --per-event-dump case by allocating a 'struct
+perf_evsel_script' just to set its ->fp to stdout.
 
-Fixes: ef75e7318294 ("powerpc/signal32: Transform save_user_regs() and save_tm_user_regs() in 'unsafe' version")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/7e469c8f01860a69c1ada3ca6a5e2aa65f0f74b2.1685955220.git.christophe.leroy@csgroup.eu
+Since evsel->priv is only freed when --per-event-dump is used, we ended
+up with a memory leak, detected using ASAN.
+
+Fix it by using the same method as perf_script__setup_per_event_dump(),
+and reuse that static 'struct perf_evsel_script'.
+
+Also check if evsel_script__new() failed.
+
+Fixes: a3af66f51bd0bca7 ("perf script: Fix crash because of missing evsel->priv")
+Reported-by: Ian Rogers <irogers@google.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
+Link: https://lore.kernel.org/lkml/ZH+F0wGAWV14zvMP@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/signal_32.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ tools/perf/builtin-script.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/powerpc/kernel/signal_32.c b/arch/powerpc/kernel/signal_32.c
-index c114c7f25645c..7a718ed32b277 100644
---- a/arch/powerpc/kernel/signal_32.c
-+++ b/arch/powerpc/kernel/signal_32.c
-@@ -264,8 +264,9 @@ static void prepare_save_user_regs(int ctx_has_vsx_region)
- #endif
+diff --git a/tools/perf/builtin-script.c b/tools/perf/builtin-script.c
+index 7ca238277d835..a794a3d2e47b7 100644
+--- a/tools/perf/builtin-script.c
++++ b/tools/perf/builtin-script.c
+@@ -2390,6 +2390,9 @@ static int process_sample_event(struct perf_tool *tool,
+ 	return ret;
  }
  
--static int __unsafe_save_user_regs(struct pt_regs *regs, struct mcontext __user *frame,
--				   struct mcontext __user *tm_frame, int ctx_has_vsx_region)
-+static __always_inline int
-+__unsafe_save_user_regs(struct pt_regs *regs, struct mcontext __user *frame,
-+			struct mcontext __user *tm_frame, int ctx_has_vsx_region)
++// Used when scr->per_event_dump is not set
++static struct evsel_script es_stdout;
++
+ static int process_attr(struct perf_tool *tool, union perf_event *event,
+ 			struct evlist **pevlist)
  {
- 	unsigned long msr = regs->msr;
+@@ -2398,7 +2401,6 @@ static int process_attr(struct perf_tool *tool, union perf_event *event,
+ 	struct evsel *evsel, *pos;
+ 	u64 sample_type;
+ 	int err;
+-	static struct evsel_script *es;
  
-@@ -364,8 +365,9 @@ static void prepare_save_tm_user_regs(void)
- 		current->thread.ckvrsave = mfspr(SPRN_VRSAVE);
- }
+ 	err = perf_event__process_attr(tool, event, pevlist);
+ 	if (err)
+@@ -2408,14 +2410,13 @@ static int process_attr(struct perf_tool *tool, union perf_event *event,
+ 	evsel = evlist__last(*pevlist);
  
--static int save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user *frame,
--				    struct mcontext __user *tm_frame, unsigned long msr)
-+static __always_inline int
-+save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user *frame,
-+			 struct mcontext __user *tm_frame, unsigned long msr)
+ 	if (!evsel->priv) {
+-		if (scr->per_event_dump) {
++		if (scr->per_event_dump) { 
+ 			evsel->priv = evsel_script__new(evsel, scr->session->data);
+-		} else {
+-			es = zalloc(sizeof(*es));
+-			if (!es)
++			if (!evsel->priv)
+ 				return -ENOMEM;
+-			es->fp = stdout;
+-			evsel->priv = es;
++		} else { // Replicate what is done in perf_script__setup_per_event_dump()
++			es_stdout.fp = stdout;
++			evsel->priv = &es_stdout;
+ 		}
+ 	}
+ 
+@@ -2721,7 +2722,6 @@ static int perf_script__fopen_per_event_dump(struct perf_script *script)
+ static int perf_script__setup_per_event_dump(struct perf_script *script)
  {
- 	/* Save both sets of general registers */
- 	unsafe_save_general_regs(&current->thread.ckpt_regs, frame, failed);
-@@ -444,8 +446,9 @@ static int save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user
- #else
- static void prepare_save_tm_user_regs(void) { }
+ 	struct evsel *evsel;
+-	static struct evsel_script es_stdout;
  
--static int save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user *frame,
--				    struct mcontext __user *tm_frame, unsigned long msr)
-+static __always_inline int
-+save_tm_user_regs_unsafe(struct pt_regs *regs, struct mcontext __user *frame,
-+			 struct mcontext __user *tm_frame, unsigned long msr)
- {
- 	return 0;
- }
+ 	if (script->per_event_dump)
+ 		return perf_script__fopen_per_event_dump(script);
 -- 
 2.39.2
 
