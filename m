@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FD38F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFEDC433C7;
-	Sun, 16 Jul 2023 20:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A858F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5B3C433C7;
+	Sun, 16 Jul 2023 20:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540240;
-	bh=ZuYXkoNjGp6D8fVKFriqmvprRiocY/enJHcUGzJTes4=;
+	s=korg; t=1689540243;
+	bh=iuWJK9SJxVMKP5LwSNVXIZp5xRy5szBPUxKW9nQngyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MsY7sMEVkYAavVgOxf6l2rAyCMigZfwMz3mmUiaHVqZH9zUVKsyyj6SHNmYN6nz/d
-	 i1wvgg+yxgbhTmzAq61B0O4mcWxUoxM7d1L9YBNlcnjAkmrK0xsF+hmLYcI9Sqinu1
-	 Ub+CVza4cv5bqEA7ZdCmWI7S5Ltz0KxZsrFWUeps=
+	b=MIUU09X9HkR4G7M0kvTvqzpSqKUWIdXcnYT1Tj1nYZWaydFTpGsNqWoa9zbK3iz0k
+	 GvZSCS/LgmVfFaZbJM3ACDiHitqjXRTtVuZfVlz6dtmW2I3gt0jGghkxIf8ejDywxW
+	 hFTEussfGHL9abwko7S6bYSoljKS8vFyZd6OB2sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuchen Yang <u202114568@hust.edu.cn>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Rongguang Wei <weirongguang@kylinos.cn>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 293/591] scsi: 3w-xxxx: Add error handling for initialization failure in tw_probe()
-Date: Sun, 16 Jul 2023 21:47:12 +0200
-Message-ID: <20230716194931.474869913@linuxfoundation.org>
+Subject: [PATCH 6.1 294/591] PCI: pciehp: Cancel bringup sequence if card is not present
+Date: Sun, 16 Jul 2023 21:47:13 +0200
+Message-ID: <20230716194931.500306056@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,44 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuchen Yang <u202114568@hust.edu.cn>
+From: Rongguang Wei <weirongguang@kylinos.cn>
 
-[ Upstream commit 2e2fe5ac695a00ab03cab4db1f4d6be07168ed9d ]
+[ Upstream commit e8afd0d9fccc27c8ad263db5cf5952cfcf72d6fe ]
 
-Smatch complains that:
+If a PCIe hotplug slot has an Attention Button, the normal hot-add flow is:
 
-tw_probe() warn: missing error code 'retval'
+  - Slot is empty and slot power is off
+  - User inserts card in slot and presses Attention Button
+  - OS blinks Power Indicator for 5 seconds
+  - After 5 seconds, OS turns on Power Indicator, turns on slot power, and
+    enumerates the device
 
-This patch adds error checking to tw_probe() to handle initialization
-failure. If tw_reset_sequence() function returns a non-zero value, the
-function will return -EINVAL to indicate initialization failure.
+Previously, if a user pressed the Attention Button on an *empty* slot,
+pciehp logged the following messages and blinked the Power Indicator
+until a second button press:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yuchen Yang <u202114568@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230505141259.7730-1-u202114568@hust.edu.cn
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  [0.000] pciehp: Button press: will power on in 5 sec
+  [0.001] # Power Indicator starts blinking
+  [5.001] # 5 second timeout; slot is empty, so we should cancel the
+            request to power on and turn off Power Indicator
+
+  [7.000] # Power Indicator still blinking
+  [8.000] # possible card insertion
+  [9.000] pciehp: Button press: canceling request to power on
+
+The first button press incorrectly left the slot in BLINKINGON_STATE, so
+the second was interpreted as a "cancel power on" event regardless of
+whether a card was present.
+
+If the slot is empty, turn off the Power Indicator and return from
+BLINKINGON_STATE to OFF_STATE after 5 seconds, effectively canceling the
+request to power on.  Putting the slot in OFF_STATE also means the second
+button press will correctly request a slot power on if the slot is
+occupied.
+
+[bhelgaas: commit log]
+Link: https://lore.kernel.org/r/20230512021518.336460-1-clementwei90@163.com
+Fixes: d331710ea78f ("PCI: pciehp: Become resilient to missed events")
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Rongguang Wei <weirongguang@kylinos.cn>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/3w-xxxx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pci/hotplug/pciehp_ctrl.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/3w-xxxx.c b/drivers/scsi/3w-xxxx.c
-index ffdecb12d654c..9bd70e4618d52 100644
---- a/drivers/scsi/3w-xxxx.c
-+++ b/drivers/scsi/3w-xxxx.c
-@@ -2305,8 +2305,10 @@ static int tw_probe(struct pci_dev *pdev, const struct pci_device_id *dev_id)
- 	TW_DISABLE_INTERRUPTS(tw_dev);
- 
- 	/* Initialize the card */
--	if (tw_reset_sequence(tw_dev))
-+	if (tw_reset_sequence(tw_dev)) {
-+		retval = -EINVAL;
- 		goto out_release_mem_region;
-+	}
- 
- 	/* Set host specific parameters */
- 	host->max_id = TW_MAX_UNITS;
+diff --git a/drivers/pci/hotplug/pciehp_ctrl.c b/drivers/pci/hotplug/pciehp_ctrl.c
+index 529c348084401..32baba1b7f131 100644
+--- a/drivers/pci/hotplug/pciehp_ctrl.c
++++ b/drivers/pci/hotplug/pciehp_ctrl.c
+@@ -256,6 +256,14 @@ void pciehp_handle_presence_or_link_change(struct controller *ctrl, u32 events)
+ 	present = pciehp_card_present(ctrl);
+ 	link_active = pciehp_check_link_active(ctrl);
+ 	if (present <= 0 && link_active <= 0) {
++		if (ctrl->state == BLINKINGON_STATE) {
++			ctrl->state = OFF_STATE;
++			cancel_delayed_work(&ctrl->button_work);
++			pciehp_set_indicators(ctrl, PCI_EXP_SLTCTL_PWR_IND_OFF,
++					      INDICATOR_NOOP);
++			ctrl_info(ctrl, "Slot(%s): Card not present\n",
++				  slot_name(ctrl));
++		}
+ 		mutex_unlock(&ctrl->state_lock);
+ 		return;
+ 	}
 -- 
 2.39.2
 
