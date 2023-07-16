@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9442C8F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E8BC433C7;
-	Sun, 16 Jul 2023 20:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7004E8F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6335C433C7;
+	Sun, 16 Jul 2023 20:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539055;
-	bh=qqEW4Ie0rogmYXJ3S37u/qRsLYimIeT20YAJR/6ieaM=;
+	s=korg; t=1689539058;
+	bh=ofxnNPxg1Dz2c/XBDrVZUlQx598lE5SQnxNntU8iBXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXe6F7ZzMgHdqh043obIMOZl19stIDCuWCsr+opzrh2W+SMfwhTFYX2GfH2G5WDHh
-	 iXnfcIHcbLPwpenfBHjR9fjFte1rJq7MKURXCy3EHyoVCxrqgirB9gRFgoassU0RLN
-	 AOtqwGqgmrwtnAukgHwpijyXdJzB6fkYZr7med5w=
+	b=KORuKg+gP6/QU2iX5d7Orx7pXo1ijuVlCM5VIy2Ca4l1OkEODZ19yiLH5hWmnTXVQ
+	 wulBiEQZU+3E5IYSl9AaotYS/ypeLuW4pPk7SzDl0L+AfIC4nv09NSnI45vFae3SqP
+	 u29L4lya2kUtYWLdLt6oR7vZGfvfyVi3RCJFZn+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 672/800] Bluetooth: fix invalid-bdaddr quirk for non-persistent setup
-Date: Sun, 16 Jul 2023 21:48:45 +0200
-Message-ID: <20230716195004.732733197@linuxfoundation.org>
+Subject: [PATCH 6.4 673/800] Bluetooth: ISO: use hci_sync for setting CIG parameters
+Date: Sun, 16 Jul 2023 21:48:46 +0200
+Message-ID: <20230716195004.755743180@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,65 +36,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 0cb7365850bacb8c2a9975cae672d65714d8daa1 ]
+[ Upstream commit 6b9545dc9f8ff01d8bc1229103960d9cd265343f ]
 
-Devices that lack persistent storage for the device address can indicate
-this by setting the HCI_QUIRK_INVALID_BDADDR which causes the controller
-to be marked as unconfigured until user space has set a valid address.
+When reconfiguring CIG after disconnection of the last CIS, LE Remove
+CIG shall be sent before LE Set CIG Parameters.  Otherwise, it fails
+because CIG is in the inactive state and not configurable (Core v5.3
+Vol 6 Part B Sec. 4.5.14.3). This ordering is currently wrong under
+suitable timing conditions, because LE Remove CIG is sent via the
+hci_sync queue and may be delayed, but Set CIG Parameters is via
+hci_send_cmd.
 
-Once configured, the device address must be set on every setup for
-controllers with HCI_QUIRK_NON_PERSISTENT_SETUP to avoid marking the
-controller as unconfigured and requiring the address to be set again.
+Make the ordering well-defined by sending also Set CIG Parameters via
+hci_sync.
 
-Fixes: 740011cfe948 ("Bluetooth: Add new quirk for non-persistent setup settings")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 28 +++++++++++-----------------
- 1 file changed, 11 insertions(+), 17 deletions(-)
+ net/bluetooth/hci_conn.c | 47 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 39 insertions(+), 8 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 804cde43b4e02..b5b1b610df335 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -4626,23 +4626,17 @@ static int hci_dev_setup_sync(struct hci_dev *hdev)
- 	invalid_bdaddr = test_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 1ef952bda97d8..2275e0d9f8419 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -775,6 +775,11 @@ static void le_conn_timeout(struct work_struct *work)
+ 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
+ }
  
- 	if (!ret) {
--		if (test_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks)) {
--			if (!bacmp(&hdev->public_addr, BDADDR_ANY))
--				hci_dev_get_bd_addr_from_property(hdev);
--
--			if (bacmp(&hdev->public_addr, BDADDR_ANY) &&
--			    hdev->set_bdaddr) {
--				ret = hdev->set_bdaddr(hdev,
--						       &hdev->public_addr);
--
--				/* If setting of the BD_ADDR from the device
--				 * property succeeds, then treat the address
--				 * as valid even if the invalid BD_ADDR
--				 * quirk indicates otherwise.
--				 */
--				if (!ret)
--					invalid_bdaddr = false;
--			}
-+		if (test_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks) &&
-+		    !bacmp(&hdev->public_addr, BDADDR_ANY))
-+			hci_dev_get_bd_addr_from_property(hdev);
++struct iso_cig_params {
++	struct hci_cp_le_set_cig_params cp;
++	struct hci_cis_params cis[0x1f];
++};
 +
-+		if ((invalid_bdaddr ||
-+		     test_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks)) &&
-+		    bacmp(&hdev->public_addr, BDADDR_ANY) &&
-+		    hdev->set_bdaddr) {
-+			ret = hdev->set_bdaddr(hdev, &hdev->public_addr);
-+			if (!ret)
-+				invalid_bdaddr = false;
- 		}
- 	}
+ struct iso_list_data {
+ 	union {
+ 		u8  cig;
+@@ -786,10 +791,7 @@ struct iso_list_data {
+ 		u16 sync_handle;
+ 	};
+ 	int count;
+-	struct {
+-		struct hci_cp_le_set_cig_params cp;
+-		struct hci_cis_params cis[0x11];
+-	} pdu;
++	struct iso_cig_params pdu;
+ };
+ 
+ static void bis_list(struct hci_conn *conn, void *data)
+@@ -1764,10 +1766,33 @@ static int hci_le_create_big(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 	return hci_send_cmd(hdev, HCI_OP_LE_CREATE_BIG, sizeof(cp), &cp);
+ }
+ 
++static void set_cig_params_complete(struct hci_dev *hdev, void *data, int err)
++{
++	struct iso_cig_params *pdu = data;
++
++	bt_dev_dbg(hdev, "");
++
++	if (err)
++		bt_dev_err(hdev, "Unable to set CIG parameters: %d", err);
++
++	kfree(pdu);
++}
++
++static int set_cig_params_sync(struct hci_dev *hdev, void *data)
++{
++	struct iso_cig_params *pdu = data;
++	u32 plen;
++
++	plen = sizeof(pdu->cp) + pdu->cp.num_cis * sizeof(pdu->cis[0]);
++	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_CIG_PARAMS, plen, pdu,
++				     HCI_CMD_TIMEOUT);
++}
++
+ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+ 	struct iso_list_data data;
++	struct iso_cig_params *pdu;
+ 
+ 	memset(&data, 0, sizeof(data));
+ 
+@@ -1837,12 +1862,18 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 	if (qos->ucast.cis == BT_ISO_QOS_CIS_UNSET || !data.pdu.cp.num_cis)
+ 		return false;
+ 
+-	if (hci_send_cmd(hdev, HCI_OP_LE_SET_CIG_PARAMS,
+-			 sizeof(data.pdu.cp) +
+-			 (data.pdu.cp.num_cis * sizeof(*data.pdu.cis)),
+-			 &data.pdu) < 0)
++	pdu = kzalloc(sizeof(*pdu), GFP_KERNEL);
++	if (!pdu)
+ 		return false;
+ 
++	memcpy(pdu, &data.pdu, sizeof(*pdu));
++
++	if (hci_cmd_sync_queue(hdev, set_cig_params_sync, pdu,
++			       set_cig_params_complete) < 0) {
++		kfree(pdu);
++		return false;
++	}
++
+ 	return true;
+ }
  
 -- 
 2.39.2
