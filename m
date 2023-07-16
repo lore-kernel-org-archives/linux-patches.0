@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2338F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B635BC433C8;
-	Sun, 16 Jul 2023 19:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25CF8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:55:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CE3C433C7;
+	Sun, 16 Jul 2023 19:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537348;
-	bh=LXQ1BrzHdL+ckJ9Zos8oiGhFhruWKclmrHLkGmpZHZg=;
+	s=korg; t=1689537350;
+	bh=DSow8DOZxsMUcdmjX5J3+DIhPRMPGY+3x8kQcWMZzGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mvx33vC3AibZC5aPiXI4E3ZdiFoav//boOK0EwBMgTigS7nFdCs868qncRxgi/PQz
-	 9E3l1/ThDRejt9ymyz+uYASTruDSOWAvdy8JnzrVz2Qugx9Rwdj5oDWHEFDRB2fsOR
-	 tyGQfY6JFB9joCMBL/yPECJQ9QZvRtIVWCQLf+lY=
+	b=g0biVBqtLPikcld/ZBfLjKHwrKdv7VJgh/pXAtj40fPS5sQq+DBScOurd0byAOeG+
+	 K771+Jkwj0sMb8LXXaS23OhV/qCXa7tREBL0rnop4jahEHqIeARVWzMhBeG5C8oUEw
+	 t4atHN79DujK6k9JLpJlJ2MymltSRXb6+JH9rsjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Hector Martin <marcan@marcan.st>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Sidharth Kshatriya <sid.kshatriya@gmail.com>,
-	Marc Zyngier <maz@kernel.org>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 064/800] drivers/perf: apple_m1: Force 63bit counters for M2 CPUs
-Date: Sun, 16 Jul 2023 21:38:37 +0200
-Message-ID: <20230716194950.578299296@linuxfoundation.org>
+Subject: [PATCH 6.4 065/800] x86/mm: Allow guest.enc_status_change_prepare() to fail
+Date: Sun, 16 Jul 2023 21:38:38 +0200
+Message-ID: <20230716194950.601847215@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -39,153 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 8be3593b9efa8903d2ee7bb9cdf57a8e56c66f36 ]
+[ Upstream commit 3f6819dd192ef4f0c568ec3e9d6d408b3fa1ad3d ]
 
-Sidharth reports that on M2, the PMU never generates any interrupt
-when using 'perf record', which is a annoying as you get no sample.
-I'm temped to say "no sample, no problem", but others may have
-a different opinion.
+TDX code is going to provide guest.enc_status_change_prepare() that is
+able to fail. TDX will use the call to convert the GPA range from shared
+to private. This operation can fail.
 
-Upon investigation, it appears that the counters on M2 are
-significantly different from the ones on M1, as they count on
-64 bits instead of 48. Which of course, in the fine M1 tradition,
-means that we can only use 63 bits, as the top bit is used to signal
-the interrupt...
+Add a way to return an error from the callback.
 
-This results in having to introduce yet another flag to indicate yet
-another odd counter width. Who knows what the next crazy implementation
-will do...
-
-With this, perf can work out the correct offset, and 'perf record'
-works as intended.
-
-Tested on M2 and M2-Pro CPUs.
-
-Cc: Janne Grunau <j@jannau.net>
-Cc: Hector Martin <marcan@marcan.st>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Fixes: 7d0bfb7c9977 ("drivers/perf: apple_m1: Add Apple M2 support")
-Reported-by: Sidharth Kshatriya <sid.kshatriya@gmail.com>
-Tested-by: Sidharth Kshatriya <sid.kshatriya@gmail.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230528080205.288446-1-maz@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Link: https://lore.kernel.org/all/20230606095622.1939-2-kirill.shutemov%40linux.intel.com
+Stable-dep-of: 195edce08b63 ("x86/tdx: Fix race between set_memory_encrypted() and load_unaligned_zeropad()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/apple_m1_cpu_pmu.c | 30 ++++++++++++++++++++++++------
- drivers/perf/arm_pmu.c          |  2 ++
- include/linux/perf/arm_pmu.h    |  2 ++
- 3 files changed, 28 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/x86_init.h | 2 +-
+ arch/x86/kernel/x86_init.c      | 2 +-
+ arch/x86/mm/mem_encrypt_amd.c   | 4 +++-
+ arch/x86/mm/pat/set_memory.c    | 3 ++-
+ 4 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/perf/apple_m1_cpu_pmu.c b/drivers/perf/apple_m1_cpu_pmu.c
-index 8574c6e58c83a..cd2de44b61b91 100644
---- a/drivers/perf/apple_m1_cpu_pmu.c
-+++ b/drivers/perf/apple_m1_cpu_pmu.c
-@@ -493,6 +493,17 @@ static int m1_pmu_map_event(struct perf_event *event)
- 	return armpmu_map_event(event, &m1_pmu_perf_map, NULL, M1_PMU_CFG_EVENT);
- }
- 
-+static int m2_pmu_map_event(struct perf_event *event)
-+{
-+	/*
-+	 * Same deal as the above, except that M2 has 64bit counters.
-+	 * Which, as far as we're concerned, actually means 63 bits.
-+	 * Yes, this is getting awkward.
-+	 */
-+	event->hw.flags |= ARMPMU_EVT_63BIT;
-+	return armpmu_map_event(event, &m1_pmu_perf_map, NULL, M1_PMU_CFG_EVENT);
-+}
-+
- static void m1_pmu_reset(void *info)
- {
- 	int i;
-@@ -525,7 +536,7 @@ static int m1_pmu_set_event_filter(struct hw_perf_event *event,
- 	return 0;
- }
- 
--static int m1_pmu_init(struct arm_pmu *cpu_pmu)
-+static int m1_pmu_init(struct arm_pmu *cpu_pmu, u32 flags)
- {
- 	cpu_pmu->handle_irq	  = m1_pmu_handle_irq;
- 	cpu_pmu->enable		  = m1_pmu_enable_event;
-@@ -536,7 +547,14 @@ static int m1_pmu_init(struct arm_pmu *cpu_pmu)
- 	cpu_pmu->clear_event_idx  = m1_pmu_clear_event_idx;
- 	cpu_pmu->start		  = m1_pmu_start;
- 	cpu_pmu->stop		  = m1_pmu_stop;
--	cpu_pmu->map_event	  = m1_pmu_map_event;
-+
-+	if (flags & ARMPMU_EVT_47BIT)
-+		cpu_pmu->map_event = m1_pmu_map_event;
-+	else if (flags & ARMPMU_EVT_63BIT)
-+		cpu_pmu->map_event = m2_pmu_map_event;
-+	else
-+		return WARN_ON(-EINVAL);
-+
- 	cpu_pmu->reset		  = m1_pmu_reset;
- 	cpu_pmu->set_event_filter = m1_pmu_set_event_filter;
- 
-@@ -550,25 +568,25 @@ static int m1_pmu_init(struct arm_pmu *cpu_pmu)
- static int m1_pmu_ice_init(struct arm_pmu *cpu_pmu)
- {
- 	cpu_pmu->name = "apple_icestorm_pmu";
--	return m1_pmu_init(cpu_pmu);
-+	return m1_pmu_init(cpu_pmu, ARMPMU_EVT_47BIT);
- }
- 
- static int m1_pmu_fire_init(struct arm_pmu *cpu_pmu)
- {
- 	cpu_pmu->name = "apple_firestorm_pmu";
--	return m1_pmu_init(cpu_pmu);
-+	return m1_pmu_init(cpu_pmu, ARMPMU_EVT_47BIT);
- }
- 
- static int m2_pmu_avalanche_init(struct arm_pmu *cpu_pmu)
- {
- 	cpu_pmu->name = "apple_avalanche_pmu";
--	return m1_pmu_init(cpu_pmu);
-+	return m1_pmu_init(cpu_pmu, ARMPMU_EVT_63BIT);
- }
- 
- static int m2_pmu_blizzard_init(struct arm_pmu *cpu_pmu)
- {
- 	cpu_pmu->name = "apple_blizzard_pmu";
--	return m1_pmu_init(cpu_pmu);
-+	return m1_pmu_init(cpu_pmu, ARMPMU_EVT_63BIT);
- }
- 
- static const struct of_device_id m1_pmu_of_device_ids[] = {
-diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
-index 15bd1e34a88ea..277e29fbd504f 100644
---- a/drivers/perf/arm_pmu.c
-+++ b/drivers/perf/arm_pmu.c
-@@ -109,6 +109,8 @@ static inline u64 arm_pmu_event_max_period(struct perf_event *event)
- {
- 	if (event->hw.flags & ARMPMU_EVT_64BIT)
- 		return GENMASK_ULL(63, 0);
-+	else if (event->hw.flags & ARMPMU_EVT_63BIT)
-+		return GENMASK_ULL(62, 0);
- 	else if (event->hw.flags & ARMPMU_EVT_47BIT)
- 		return GENMASK_ULL(46, 0);
- 	else
-diff --git a/include/linux/perf/arm_pmu.h b/include/linux/perf/arm_pmu.h
-index 525b5d64e3948..c0e4baf940dce 100644
---- a/include/linux/perf/arm_pmu.h
-+++ b/include/linux/perf/arm_pmu.h
-@@ -26,9 +26,11 @@
+diff --git a/arch/x86/include/asm/x86_init.h b/arch/x86/include/asm/x86_init.h
+index 88085f369ff6f..1ca9701917c55 100644
+--- a/arch/x86/include/asm/x86_init.h
++++ b/arch/x86/include/asm/x86_init.h
+@@ -150,7 +150,7 @@ struct x86_init_acpi {
+  * @enc_cache_flush_required	Returns true if a cache flush is needed before changing page encryption status
   */
- #define ARMPMU_EVT_64BIT		0x00001 /* Event uses a 64bit counter */
- #define ARMPMU_EVT_47BIT		0x00002 /* Event uses a 47bit counter */
-+#define ARMPMU_EVT_63BIT		0x00004 /* Event uses a 63bit counter */
+ struct x86_guest {
+-	void (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
++	bool (*enc_status_change_prepare)(unsigned long vaddr, int npages, bool enc);
+ 	bool (*enc_status_change_finish)(unsigned long vaddr, int npages, bool enc);
+ 	bool (*enc_tlb_flush_required)(bool enc);
+ 	bool (*enc_cache_flush_required)(void);
+diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
+index d82f4fa2f1bfe..f230d4d7d8eb4 100644
+--- a/arch/x86/kernel/x86_init.c
++++ b/arch/x86/kernel/x86_init.c
+@@ -130,7 +130,7 @@ struct x86_cpuinit_ops x86_cpuinit = {
  
- static_assert((PERF_EVENT_FLAG_ARCH & ARMPMU_EVT_64BIT) == ARMPMU_EVT_64BIT);
- static_assert((PERF_EVENT_FLAG_ARCH & ARMPMU_EVT_47BIT) == ARMPMU_EVT_47BIT);
-+static_assert((PERF_EVENT_FLAG_ARCH & ARMPMU_EVT_63BIT) == ARMPMU_EVT_63BIT);
+ static void default_nmi_init(void) { };
  
- #define HW_OP_UNSUPPORTED		0xFFFF
- #define C(_x)				PERF_COUNT_HW_CACHE_##_x
+-static void enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { }
++static bool enc_status_change_prepare_noop(unsigned long vaddr, int npages, bool enc) { return true; }
+ static bool enc_status_change_finish_noop(unsigned long vaddr, int npages, bool enc) { return false; }
+ static bool enc_tlb_flush_required_noop(bool enc) { return false; }
+ static bool enc_cache_flush_required_noop(void) { return false; }
+diff --git a/arch/x86/mm/mem_encrypt_amd.c b/arch/x86/mm/mem_encrypt_amd.c
+index e0b51c09109f6..4f95c449a406e 100644
+--- a/arch/x86/mm/mem_encrypt_amd.c
++++ b/arch/x86/mm/mem_encrypt_amd.c
+@@ -319,7 +319,7 @@ static void enc_dec_hypercall(unsigned long vaddr, int npages, bool enc)
+ #endif
+ }
+ 
+-static void amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
++static bool amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool enc)
+ {
+ 	/*
+ 	 * To maintain the security guarantees of SEV-SNP guests, make sure
+@@ -327,6 +327,8 @@ static void amd_enc_status_change_prepare(unsigned long vaddr, int npages, bool
+ 	 */
+ 	if (cc_platform_has(CC_ATTR_GUEST_SEV_SNP) && !enc)
+ 		snp_set_memory_shared(vaddr, npages);
++
++	return true;
+ }
+ 
+ /* Return true unconditionally: return value doesn't matter for the SEV side */
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index 7159cf7876130..b8f48ebe753c7 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -2151,7 +2151,8 @@ static int __set_memory_enc_pgtable(unsigned long addr, int numpages, bool enc)
+ 		cpa_flush(&cpa, x86_platform.guest.enc_cache_flush_required());
+ 
+ 	/* Notify hypervisor that we are about to set/clr encryption attribute. */
+-	x86_platform.guest.enc_status_change_prepare(addr, numpages, enc);
++	if (!x86_platform.guest.enc_status_change_prepare(addr, numpages, enc))
++		return -EIO;
+ 
+ 	ret = __change_page_attr_set_clr(&cpa, 1);
+ 
 -- 
 2.39.2
 
