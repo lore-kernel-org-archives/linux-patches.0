@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30598F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:39:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35279C433C8;
-	Sun, 16 Jul 2023 20:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2468F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:39:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F186CC433C7;
+	Sun, 16 Jul 2023 20:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539992;
-	bh=oXFe6ZLyGfOjlCYG15NYW1B2UwKbMAb3prQgNKNkIxU=;
+	s=korg; t=1689539995;
+	bh=pZWZKPiUp8/1kVpMgmvuHqXbHXJWvnktMhYROObtNTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNyxjOlTMvWcc2Kd9+uhtmUVE7R3YVfnfoNQDXAp9OSjwjVZt78rU7OMUmUtF1dw/
-	 1fM8qo/awHcX51+KlJLOEMRRg/mYK6AejhiJ7bLNk//DI+p02i3uEDe8AoQ0ZOXMmX
-	 nhWU0j5gA5aUPvcbop7+GazBcZVP8PWwCI6G3jkg=
+	b=GpF+EK8ddSDYcXhnisipNU0UabpRwbpLPVUbYbCja4NIv4lp060d9jkOmnt7E2jLm
+	 jUgIKmxJMsEBl41p1D/PBNCIUoAapUBuYJ5vTf8ZKl3ClvBymFxQp8t+TwoK6bZ+5S
+	 Oneu13OA9zPLfDz3EcZRzsI+aiLVCiAnE6I18a9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 205/591] drm/bridge: Introduce pre_enable_prev_first to alter bridge init order
-Date: Sun, 16 Jul 2023 21:45:44 +0200
-Message-ID: <20230716194929.171698195@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>
+Subject: [PATCH 6.1 206/591] drm/bridge: ti-sn65dsi83: Fix enable/disable flow to meet spec
+Date: Sun, 16 Jul 2023 21:45:45 +0200
+Message-ID: <20230716194929.199262898@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,267 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit 4fb912e5e19075874379cfcf074d90bd51ebf8ea ]
+[ Upstream commit dd9e329af7236e34c566d3705ea32a63069b9b13 ]
 
-DSI sink devices typically want the DSI host powered up and configured
-before they are powered up. pre_enable is the place this would normally
-happen, but they are called in reverse order from panel/connector towards
-the encoder, which is the "wrong" order.
+The datasheet describes the following initialization flow including
+minimum delay times between each step:
 
-Add a new flag pre_enable_prev_first that any bridge can set
-to swap the order of pre_enable (and post_disable) for that and the
-immediately previous bridge.
-Should the immediately previous bridge also set the
-pre_enable_prev_first flag, the previous bridge to that will be called
-before either of those which requested pre_enable_prev_first.
+1. DSI data lanes need to be in LP-11 and the clock lane in HS mode
+2. toggle EN signal
+3. initialize registers
+4. enable PLL
+5. soft reset
+6. enable DSI stream
+7. check error status register
 
-eg:
-- Panel
-- Bridge 1
-- Bridge 2 pre_enable_prev_first
-- Bridge 3
-- Bridge 4 pre_enable_prev_first
-- Bridge 5 pre_enable_prev_first
-- Bridge 6
-- Encoder
-Would result in pre_enable's being called as Panel, Bridge 1, Bridge 3,
-Bridge 2, Bridge 6, Bridge 5, Bridge 4, Encoder.
+To meet this requirement we need to make sure the host bridge's
+pre_enable() is called first by using the pre_enable_prev_first
+flag.
 
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Link: https://lore.kernel.org/r/20221205173328.1395350-5-dave.stevenson@raspberrypi.com
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Stable-dep-of: dd9e329af723 ("drm/bridge: ti-sn65dsi83: Fix enable/disable flow to meet spec")
+Furthermore we need to split enable() into pre_enable() which covers
+steps 2-5 from above and enable() which covers step 7 and is called
+after the host bridge's enable().
+
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
+Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com> #TQMa8MxML/MBa8Mx
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230503163313.2640898-3-frieder@fris.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_bridge.c | 145 +++++++++++++++++++++++++++++------
- include/drm/drm_bridge.h     |   8 ++
- 2 files changed, 129 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index 1545c50fd1c8f..7044e339a82cd 100644
---- a/drivers/gpu/drm/drm_bridge.c
-+++ b/drivers/gpu/drm/drm_bridge.c
-@@ -691,6 +691,25 @@ void drm_atomic_bridge_chain_disable(struct drm_bridge *bridge,
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi83.c b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+index 0635b824e3682..55efd3eb66723 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -321,8 +321,8 @@ static u8 sn65dsi83_get_dsi_div(struct sn65dsi83 *ctx)
+ 	return dsi_div - 1;
  }
- EXPORT_SYMBOL(drm_atomic_bridge_chain_disable);
  
-+static void drm_atomic_bridge_call_post_disable(struct drm_bridge *bridge,
-+						struct drm_atomic_state *old_state)
-+{
-+	if (old_state && bridge->funcs->atomic_post_disable) {
-+		struct drm_bridge_state *old_bridge_state;
-+
-+		old_bridge_state =
-+			drm_atomic_get_old_bridge_state(old_state,
-+							bridge);
-+		if (WARN_ON(!old_bridge_state))
-+			return;
-+
-+		bridge->funcs->atomic_post_disable(bridge,
-+						   old_bridge_state);
-+	} else if (bridge->funcs->post_disable) {
-+		bridge->funcs->post_disable(bridge);
-+	}
+-static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
+-				    struct drm_bridge_state *old_bridge_state)
++static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
++					struct drm_bridge_state *old_bridge_state)
+ {
+ 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
+ 	struct drm_atomic_state *state = old_bridge_state->base.state;
+@@ -485,11 +485,22 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
+ 	/* Trigger reset after CSR register update. */
+ 	regmap_write(ctx->regmap, REG_RC_RESET, REG_RC_RESET_SOFT_RESET);
+ 
++	/* Wait for 10ms after soft reset as specified in datasheet */
++	usleep_range(10000, 12000);
 +}
 +
- /**
-  * drm_atomic_bridge_chain_post_disable - cleans up after disabling all bridges
-  *					  in the encoder chain
-@@ -702,36 +721,86 @@ EXPORT_SYMBOL(drm_atomic_bridge_chain_disable);
-  * starting from the first bridge to the last. These are called after completing
-  * &drm_encoder_helper_funcs.atomic_disable
-  *
-+ * If a bridge sets @pre_enable_prev_first, then the @post_disable for that
-+ * bridge will be called before the previous one to reverse the @pre_enable
-+ * calling direction.
-+ *
-  * Note: the bridge passed should be the one closest to the encoder
-  */
- void drm_atomic_bridge_chain_post_disable(struct drm_bridge *bridge,
- 					  struct drm_atomic_state *old_state)
- {
- 	struct drm_encoder *encoder;
-+	struct drm_bridge *next, *limit;
- 
- 	if (!bridge)
- 		return;
- 
- 	encoder = bridge->encoder;
-+
- 	list_for_each_entry_from(bridge, &encoder->bridge_chain, chain_node) {
--		if (bridge->funcs->atomic_post_disable) {
--			struct drm_bridge_state *old_bridge_state;
-+		limit = NULL;
-+
-+		if (!list_is_last(&bridge->chain_node, &encoder->bridge_chain)) {
-+			next = list_next_entry(bridge, chain_node);
-+
-+			if (next->pre_enable_prev_first) {
-+				/* next bridge had requested that prev
-+				 * was enabled first, so disabled last
-+				 */
-+				limit = next;
-+
-+				/* Find the next bridge that has NOT requested
-+				 * prev to be enabled first / disabled last
-+				 */
-+				list_for_each_entry_from(next, &encoder->bridge_chain,
-+							 chain_node) {
-+					if (next->pre_enable_prev_first) {
-+						next = list_prev_entry(next, chain_node);
-+						limit = next;
-+						break;
-+					}
-+				}
-+
-+				/* Call these bridges in reverse order */
-+				list_for_each_entry_from_reverse(next, &encoder->bridge_chain,
-+								 chain_node) {
-+					if (next == bridge)
-+						break;
-+
-+					drm_atomic_bridge_call_post_disable(next,
-+									    old_state);
-+				}
-+			}
-+		}
- 
--			old_bridge_state =
--				drm_atomic_get_old_bridge_state(old_state,
--								bridge);
--			if (WARN_ON(!old_bridge_state))
--				return;
-+		drm_atomic_bridge_call_post_disable(bridge, old_state);
- 
--			bridge->funcs->atomic_post_disable(bridge,
--							   old_bridge_state);
--		} else if (bridge->funcs->post_disable) {
--			bridge->funcs->post_disable(bridge);
--		}
-+		if (limit)
-+			/* Jump all bridges that we have already post_disabled */
-+			bridge = limit;
- 	}
- }
- EXPORT_SYMBOL(drm_atomic_bridge_chain_post_disable);
- 
-+static void drm_atomic_bridge_call_pre_enable(struct drm_bridge *bridge,
-+					      struct drm_atomic_state *old_state)
++static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
++				    struct drm_bridge_state *old_bridge_state)
 +{
-+	if (old_state && bridge->funcs->atomic_pre_enable) {
-+		struct drm_bridge_state *old_bridge_state;
++	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
++	unsigned int pval;
 +
-+		old_bridge_state =
-+			drm_atomic_get_old_bridge_state(old_state,
-+							bridge);
-+		if (WARN_ON(!old_bridge_state))
-+			return;
-+
-+		bridge->funcs->atomic_pre_enable(bridge, old_bridge_state);
-+	} else if (bridge->funcs->pre_enable) {
-+		bridge->funcs->pre_enable(bridge);
-+	}
-+}
-+
- /**
-  * drm_atomic_bridge_chain_pre_enable - prepares for enabling all bridges in
-  *					the encoder chain
-@@ -743,32 +812,60 @@ EXPORT_SYMBOL(drm_atomic_bridge_chain_post_disable);
-  * starting from the last bridge to the first. These are called before calling
-  * &drm_encoder_helper_funcs.atomic_enable
-  *
-+ * If a bridge sets @pre_enable_prev_first, then the pre_enable for the
-+ * prev bridge will be called before pre_enable of this bridge.
-+ *
-  * Note: the bridge passed should be the one closest to the encoder
-  */
- void drm_atomic_bridge_chain_pre_enable(struct drm_bridge *bridge,
- 					struct drm_atomic_state *old_state)
- {
- 	struct drm_encoder *encoder;
--	struct drm_bridge *iter;
-+	struct drm_bridge *iter, *next, *limit;
+ 	/* Clear all errors that got asserted during initialization. */
+ 	regmap_read(ctx->regmap, REG_IRQ_STAT, &pval);
+ 	regmap_write(ctx->regmap, REG_IRQ_STAT, pval);
  
- 	if (!bridge)
- 		return;
+-	usleep_range(10000, 12000);
++	/* Wait for 1ms and check for errors in status register */
++	usleep_range(1000, 1100);
+ 	regmap_read(ctx->regmap, REG_IRQ_STAT, &pval);
+ 	if (pval)
+ 		dev_err(ctx->dev, "Unexpected link status 0x%02x\n", pval);
+@@ -556,6 +567,7 @@ static const struct drm_bridge_funcs sn65dsi83_funcs = {
+ 	.attach			= sn65dsi83_attach,
+ 	.detach			= sn65dsi83_detach,
+ 	.atomic_enable		= sn65dsi83_atomic_enable,
++	.atomic_pre_enable	= sn65dsi83_atomic_pre_enable,
+ 	.atomic_disable		= sn65dsi83_atomic_disable,
+ 	.mode_valid		= sn65dsi83_mode_valid,
  
- 	encoder = bridge->encoder;
-+
- 	list_for_each_entry_reverse(iter, &encoder->bridge_chain, chain_node) {
--		if (iter->funcs->atomic_pre_enable) {
--			struct drm_bridge_state *old_bridge_state;
-+		if (iter->pre_enable_prev_first) {
-+			next = iter;
-+			limit = bridge;
-+			list_for_each_entry_from_reverse(next,
-+							 &encoder->bridge_chain,
-+							 chain_node) {
-+				if (next == bridge)
-+					break;
-+
-+				if (!next->pre_enable_prev_first) {
-+					/* Found first bridge that does NOT
-+					 * request prev to be enabled first
-+					 */
-+					limit = list_prev_entry(next, chain_node);
-+					break;
-+				}
-+			}
-+
-+			list_for_each_entry_from(next, &encoder->bridge_chain, chain_node) {
-+				/* Call requested prev bridge pre_enable
-+				 * in order.
-+				 */
-+				if (next == iter)
-+					/* At the first bridge to request prev
-+					 * bridges called first.
-+					 */
-+					break;
-+
-+				drm_atomic_bridge_call_pre_enable(next, old_state);
-+			}
-+		}
+@@ -696,6 +708,7 @@ static int sn65dsi83_probe(struct i2c_client *client,
  
--			old_bridge_state =
--				drm_atomic_get_old_bridge_state(old_state,
--								iter);
--			if (WARN_ON(!old_bridge_state))
--				return;
-+		drm_atomic_bridge_call_pre_enable(iter, old_state);
+ 	ctx->bridge.funcs = &sn65dsi83_funcs;
+ 	ctx->bridge.of_node = dev->of_node;
++	ctx->bridge.pre_enable_prev_first = true;
+ 	drm_bridge_add(&ctx->bridge);
  
--			iter->funcs->atomic_pre_enable(iter, old_bridge_state);
--		} else if (iter->funcs->pre_enable) {
--			iter->funcs->pre_enable(iter);
--		}
-+		if (iter->pre_enable_prev_first)
-+			/* Jump all bridges that we have already pre_enabled */
-+			iter = limit;
- 
- 		if (iter == bridge)
- 			break;
-diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-index 288c6feda5de2..6b656ea23b964 100644
---- a/include/drm/drm_bridge.h
-+++ b/include/drm/drm_bridge.h
-@@ -768,6 +768,14 @@ struct drm_bridge {
- 	 * modes.
- 	 */
- 	bool interlace_allowed;
-+	/**
-+	 * @pre_enable_prev_first: The bridge requires that the prev
-+	 * bridge @pre_enable function is called before its @pre_enable,
-+	 * and conversely for post_disable. This is most frequently a
-+	 * requirement for DSI devices which need the host to be initialised
-+	 * before the peripheral.
-+	 */
-+	bool pre_enable_prev_first;
- 	/**
- 	 * @ddc: Associated I2C adapter for DDC access, if any.
- 	 */
+ 	ret = sn65dsi83_host_attach(ctx);
 -- 
 2.39.2
 
