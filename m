@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54AD8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591DAC433C7;
-	Sun, 16 Jul 2023 20:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91568F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:57:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D48C433C9;
+	Sun, 16 Jul 2023 20:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689541024;
-	bh=rIXNJXXCl8aqtP36IEA9qVnA270LaBs0WMxvif0/MHY=;
+	s=korg; t=1689541027;
+	bh=j5bjUonKG+UZK6a4Vy8kNrdlInYzsWEqRxjpfcg16c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ii9GE1r6FPor25Xz5nirU8Iwnm+VQ8tIkY1+VObEIqSp5bLo0duL4yJ8CMP745IfU
-	 nDtJl0LJ4mKVw9GM21bngf42swbb8JnOKajJA+9/E+TQUQHeT1hYwgRWzmiamogcX+
-	 NAkAxfHpazlNQw0UGZ1sDDb+EL0Q88xCCg1/YxRg=
+	b=bvQkBI1votEnYSoclgtsUkzX61WldYrapDfJLKL7waEc2/o/8xJwXRWggw3mshui8
+	 lVR4B93v+lhWA2udVvdN2NxpXQmc0WTEY4pN7SkLk2mvrAhePpVfFag4CjSZ0ojw/B
+	 aPjKxr3BJR4BwDhiP5G8rngAB92UmZJts+5M6QxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Chinner <dchinner@redhat.com>,
 	Dave Chinner <david@fromorbit.com>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.1 572/591] xfs: explicitly specify cpu when forcing inodegc delayed work to run immediately
-Date: Sun, 16 Jul 2023 21:51:51 +0200
-Message-ID: <20230716194938.654695582@linuxfoundation.org>
+Subject: [PATCH 6.1 573/591] xfs: check that per-cpu inodegc workers actually run on that cpu
+Date: Sun, 16 Jul 2023 21:51:52 +0200
+Message-ID: <20230716194938.682895999@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,36 +38,12 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <djwong@kernel.org>
 
-commit 03e0add80f4cf3f7393edb574eeb3a89a1db7758 upstream.
+commit b37c4c8339cd394ea6b8b415026603320a185651 upstream.
 
-I've been noticing odd racing behavior in the inodegc code that could
-only be explained by one cpu adding an inode to its inactivation llist
-at the same time that another cpu is processing that cpu's llist.
-Preemption is disabled between get/put_cpu_ptr, so the only explanation
-is scheduler mayhem.  I inserted the following debug code into
-xfs_inodegc_worker (see the next patch):
+Now that we've allegedly worked out the problem of the per-cpu inodegc
+workers being scheduled on the wrong cpu, let's put in a debugging knob
+to let us know if a worker ever gets mis-scheduled again.
 
-	ASSERT(gc->cpu == smp_processor_id());
-
-This assertion tripped during overnight tests on the arm64 machines, but
-curiously not on x86_64.  I think we haven't observed any resource leaks
-here because the lockfree list code can handle simultaneous llist_add
-and llist_del_all functions operating on the same list.  However, the
-whole point of having percpu inodegc lists is to take advantage of warm
-memory caches by inactivating inodes on the last processor to touch the
-inode.
-
-The incorrect scheduling seems to occur after an inodegc worker is
-subjected to mod_delayed_work().  This wraps mod_delayed_work_on with
-WORK_CPU_UNBOUND specified as the cpu number.  Unbound allows for
-scheduling on any cpu, not necessarily the same one that scheduled the
-work.
-
-Because preemption is disabled for as long as we have the gc pointer, I
-think it's safe to use current_cpu() (aka smp_processor_id) to queue the
-delayed work item on the correct cpu.
-
-Fixes: 7cf2b0f9611b ("xfs: bound maximum wait time for inodegc work")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Signed-off-by: Dave Chinner <david@fromorbit.com>
@@ -75,30 +51,45 @@ Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_icache.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_icache.c |    2 ++
+ fs/xfs/xfs_mount.h  |    3 +++
+ fs/xfs/xfs_super.c  |    3 +++
+ 3 files changed, 8 insertions(+)
 
 --- a/fs/xfs/xfs_icache.c
 +++ b/fs/xfs/xfs_icache.c
-@@ -2052,7 +2052,8 @@ xfs_inodegc_queue(
- 		queue_delay = 0;
+@@ -1848,6 +1848,8 @@ xfs_inodegc_worker(
+ 	struct llist_node	*node = llist_del_all(&gc->list);
+ 	struct xfs_inode	*ip, *n;
  
- 	trace_xfs_inodegc_queue(mp, __return_address);
--	mod_delayed_work(mp->m_inodegc_wq, &gc->work, queue_delay);
-+	mod_delayed_work_on(current_cpu(), mp->m_inodegc_wq, &gc->work,
-+			queue_delay);
- 	put_cpu_ptr(gc);
++	ASSERT(gc->cpu == smp_processor_id());
++
+ 	WRITE_ONCE(gc->items, 0);
  
- 	if (xfs_inodegc_want_flush_work(ip, items, shrinker_hits)) {
-@@ -2096,7 +2097,8 @@ xfs_inodegc_cpu_dead(
+ 	if (!node)
+--- a/fs/xfs/xfs_mount.h
++++ b/fs/xfs/xfs_mount.h
+@@ -66,6 +66,9 @@ struct xfs_inodegc {
+ 	/* approximate count of inodes in the list */
+ 	unsigned int		items;
+ 	unsigned int		shrinker_hits;
++#if defined(DEBUG) || defined(XFS_WARN)
++	unsigned int		cpu;
++#endif
+ };
  
- 	if (xfs_is_inodegc_enabled(mp)) {
- 		trace_xfs_inodegc_queue(mp, __return_address);
--		mod_delayed_work(mp->m_inodegc_wq, &gc->work, 0);
-+		mod_delayed_work_on(current_cpu(), mp->m_inodegc_wq, &gc->work,
-+				0);
- 	}
- 	put_cpu_ptr(gc);
- }
+ /*
+--- a/fs/xfs/xfs_super.c
++++ b/fs/xfs/xfs_super.c
+@@ -1084,6 +1084,9 @@ xfs_inodegc_init_percpu(
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		gc = per_cpu_ptr(mp->m_inodegc, cpu);
++#if defined(DEBUG) || defined(XFS_WARN)
++		gc->cpu = cpu;
++#endif
+ 		init_llist_head(&gc->list);
+ 		gc->items = 0;
+ 		INIT_DELAYED_WORK(&gc->work, xfs_inodegc_worker);
 
 
