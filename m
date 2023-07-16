@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40628F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2490BC433C7;
-	Sun, 16 Jul 2023 20:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E628F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:05:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3D9C433C8;
+	Sun, 16 Jul 2023 20:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537899;
-	bh=kSwWEuHZH4v7RbCGNvEiW/j4GFuGkz2LIvxEC+cR2x8=;
+	s=korg; t=1689537902;
+	bh=5bSjYU4IPcgj+0gWhEfrQaWUF+A2w5lIfQCaRQELUs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cd5zZHN/JMnMz+/DW3QGmjgSsJskmXf8cwoWipZwXNceHn5If45xQUXXNsunmHGYZ
-	 SaMQMQbbiJICJ08Q3rBjSZJd3rCbtSyTT+rd2NT5V5G6GBA5gCBL/Doe7olEw+yVH7
-	 KxpGLTU64MY5ICVPBD26e75h2r94F7qztmYZ8BH8=
+	b=Z6xiqAsU+y0VBYY1fhusFLYYofhOG43s6gNESQ2FERtn+dc1j9aizleOPZSp3dPoQ
+	 fttg7oPEHjXFxA4H0bNOKUKs4UzioUnN7T7TX9S1Gp/ztOvFym0dqmrKYkdP5kzlqY
+	 Gl3PWTdYv+nvNJxtWI+GsAZg67Q36KSbz8VPcTzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Arthur Grillo <arthurgrillo@riseup.net>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
+	Marek Vasut <marex@denx.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 260/800] drm/vkms: Fix RGB565 pixel conversion
-Date: Sun, 16 Jul 2023 21:41:53 +0200
-Message-ID: <20230716194955.135706577@linuxfoundation.org>
+Subject: [PATCH 6.4 261/800] ARM: dts: stm32: Move ethernet MAC EEPROM from SoM to carrier boards
+Date: Sun, 16 Jul 2023 21:41:54 +0200
+Message-ID: <20230716194955.158801328@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,61 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit ab87f558dcfb2562c3497e89600dec798a446665 ]
+[ Upstream commit 9660efc2af37f3c12dc6e6a5511ad99e0addc297 ]
 
-Currently, the pixel conversion isn't rounding the fixed-point values
-before assigning it to the RGB coefficients, which is causing the IGT
-pixel-format tests to fail. So, use the drm_fixp2int_round() fixed-point
-helper to round the values when assigning it to the RGB coefficients.
+The ethernet MAC EEPROM is not populated on the SoM itself, it has to be
+populated on each carrier board. Move the EEPROM into the correct place
+in DTs, i.e. the carrier board DTs. Add label to the EEPROM too.
 
-Tested with igt@kms_plane@pixel-format and igt@kms_plane@pixel-format-source-clamping.
-
-[v2]:
-    * Use drm_fixp2int_round() to fix the pixel conversion instead of
-      casting the values to s32 (Melissa Wen).
-
-Fixes: 89b03aeaef16 ("drm/vkms: fix 32bit compilation error by replacing macros")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Arthur Grillo <arthurgrillo@riseup.net>
-Signed-off-by: Maíra Canal <mairacanal@riseup.net>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230512104044.65034-2-mcanal@igalia.com
+Fixes: 7e76f82acd9e1 ("ARM: dts: stm32: Split Avenger96 into DHCOR SoM and Avenger96 board")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vkms/vkms_formats.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi   | 6 ++++++
+ arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi | 6 ++++++
+ arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi         | 6 ------
+ arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi   | 8 ++++++++
+ 4 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/vkms/vkms_formats.c b/drivers/gpu/drm/vkms/vkms_formats.c
-index 8d948c73741ef..b11342026485f 100644
---- a/drivers/gpu/drm/vkms/vkms_formats.c
-+++ b/drivers/gpu/drm/vkms/vkms_formats.c
-@@ -97,9 +97,9 @@ static void RGB565_to_argb_u16(u8 *src_pixels, struct pixel_argb_u16 *out_pixel)
- 	s64 fp_b = drm_int2fixp(rgb_565 & 0x1f);
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
+index 50af4a27d6be4..e67c0fa209cde 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
+@@ -321,6 +321,12 @@ adv7513_i2s0: endpoint {
+ 			};
+ 		};
+ 	};
++
++	dh_mac_eeprom: eeprom@53 {
++		compatible = "atmel,24c02";
++		reg = <0x53>;
++		pagesize = <16>;
++	};
+ };
  
- 	out_pixel->a = (u16)0xffff;
--	out_pixel->r = drm_fixp2int(drm_fixp_mul(fp_r, fp_rb_ratio));
--	out_pixel->g = drm_fixp2int(drm_fixp_mul(fp_g, fp_g_ratio));
--	out_pixel->b = drm_fixp2int(drm_fixp_mul(fp_b, fp_rb_ratio));
-+	out_pixel->r = drm_fixp2int_round(drm_fixp_mul(fp_r, fp_rb_ratio));
-+	out_pixel->g = drm_fixp2int_round(drm_fixp_mul(fp_g, fp_g_ratio));
-+	out_pixel->b = drm_fixp2int_round(drm_fixp_mul(fp_b, fp_rb_ratio));
- }
+ &ltdc {
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi
+index c32c160f97f20..39af79dc654cc 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-drc-compact.dtsi
+@@ -192,6 +192,12 @@ eeprom@50 {
+ 		reg = <0x50>;
+ 		pagesize = <16>;
+ 	};
++
++	dh_mac_eeprom: eeprom@53 {
++		compatible = "atmel,24c02";
++		reg = <0x53>;
++		pagesize = <16>;
++	};
+ };
  
- void vkms_compose_row(struct line_buffer *stage_buffer, struct vkms_plane_state *plane, int y)
-@@ -216,9 +216,9 @@ static void argb_u16_to_RGB565(struct vkms_frame_info *frame_info,
- 		s64 fp_g = drm_int2fixp(in_pixels[x].g);
- 		s64 fp_b = drm_int2fixp(in_pixels[x].b);
+ &sdmmc1 {	/* MicroSD */
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
+index bb40fb46da81d..bba19f21e5277 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
+@@ -213,12 +213,6 @@ watchdog {
+ 			status = "disabled";
+ 		};
+ 	};
+-
+-	eeprom@53 {
+-		compatible = "atmel,24c02";
+-		reg = <0x53>;
+-		pagesize = <16>;
+-	};
+ };
  
--		u16 r = drm_fixp2int(drm_fixp_div(fp_r, fp_rb_ratio));
--		u16 g = drm_fixp2int(drm_fixp_div(fp_g, fp_g_ratio));
--		u16 b = drm_fixp2int(drm_fixp_div(fp_b, fp_rb_ratio));
-+		u16 r = drm_fixp2int_round(drm_fixp_div(fp_r, fp_rb_ratio));
-+		u16 g = drm_fixp2int_round(drm_fixp_div(fp_g, fp_g_ratio));
-+		u16 b = drm_fixp2int_round(drm_fixp_div(fp_b, fp_rb_ratio));
+ &ipcc {
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi
+index 5fdb74b652aca..faed31b6d84a1 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-testbench.dtsi
+@@ -90,6 +90,14 @@ phy0: ethernet-phy@7 {
+ 	};
+ };
  
- 		*dst_pixels = cpu_to_le16(r << 11 | g << 5 | b);
- 	}
++&i2c4 {
++	dh_mac_eeprom: eeprom@53 {
++		compatible = "atmel,24c02";
++		reg = <0x53>;
++		pagesize = <16>;
++	};
++};
++
+ &sdmmc1 {
+ 	pinctrl-names = "default", "opendrain", "sleep";
+ 	pinctrl-0 = <&sdmmc1_b4_pins_a &sdmmc1_dir_pins_b>;
 -- 
 2.39.2
 
