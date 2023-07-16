@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECA28F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207D5C433C8;
-	Sun, 16 Jul 2023 20:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F488F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E23C433C7;
+	Sun, 16 Jul 2023 20:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539672;
-	bh=KLo4viXHZ4dMlleTtve+fXKM/WH3MuMEeYx11aXMzEg=;
+	s=korg; t=1689539675;
+	bh=/cbw91GvUaxkY+uphb9z/G+ChWUnLk4wExz/DElnENc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1aJxxfA5Gr9Md9mTJH9rLwYuJQjqVsjOmEiVgTdwM2ynRUrUmLxn9HiMMQdZNRgA
-	 Ctx7HSAv/wKbxig2BfTD++xH3xeG76qkGVZXl+jX5y30xAvmYc7EJGJ8s1IkDV7a95
-	 dSz1QhOLj83nhdbwA0LtU5Spl4amhGJ0oNQkZgnA=
+	b=otUZtVf+IE1p3hP3GNejzUBUNmvBwOecVmatXMqYe8Wst2yf2HZuqbficCp60qTWI
+	 JTx4vbIgI7z0C6OAv3xTTFLsLXFFyrK9DzROORcCAk0aTUDBkfqqQtt77XHTaABuOY
+	 cCJJyvuOZ2TRV2By4Wx6UYl8AGMPKz43XWfZbUIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/591] wifi: ath9k: dont allow to overwrite ENDPOINT0 attributes
-Date: Sun, 16 Jul 2023 21:43:50 +0200
-Message-ID: <20230716194926.232733103@linuxfoundation.org>
+Subject: [PATCH 6.1 074/591] wifi: mwifiex: Fix the size of a memory allocation in mwifiex_ret_802_11_scan()
+Date: Sun, 16 Jul 2023 21:43:33 +0200
+Message-ID: <20230716194925.800475528@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,49 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 061b0cb9327b80d7a0f63a33e7c3e2a91a71f142 ]
+[ Upstream commit d9aef04fcfa81ee4fb2804a21a3712b7bbd936af ]
 
-A bad USB device is able to construct a service connection response
-message with target endpoint being ENDPOINT0 which is reserved for
-HTC_CTRL_RSVD_SVC and should not be modified to be used for any other
-services.
+The type of "mwifiex_adapter->nd_info" is "struct cfg80211_wowlan_nd_info",
+not "struct cfg80211_wowlan_nd_match".
 
-Reject such service connection responses.
+Use struct_size() to ease the computation of the needed size.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+The current code over-allocates some memory, so is safe.
+But it wastes 32 bytes.
 
-Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
-Reported-by: syzbot+b68fbebe56d8362907e8@syzkaller.appspotmail.com
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230516150427.79469-1-pchelkin@ispras.ru
+Fixes: 7d7f07d8c5d3 ("mwifiex: add wowlan net-detect support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/7a6074fb056d2181e058a3cc6048d8155c20aec7.1683371982.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_hst.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/scan.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_hst.c b/drivers/net/wireless/ath/ath9k/htc_hst.c
-index fe62ff668f757..99667aba289df 100644
---- a/drivers/net/wireless/ath/ath9k/htc_hst.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_hst.c
-@@ -114,7 +114,13 @@ static void htc_process_conn_rsp(struct htc_target *target,
+diff --git a/drivers/net/wireless/marvell/mwifiex/scan.c b/drivers/net/wireless/marvell/mwifiex/scan.c
+index ac8001c842935..644b1e134b01c 100644
+--- a/drivers/net/wireless/marvell/mwifiex/scan.c
++++ b/drivers/net/wireless/marvell/mwifiex/scan.c
+@@ -2187,9 +2187,9 @@ int mwifiex_ret_802_11_scan(struct mwifiex_private *priv,
  
- 	if (svc_rspmsg->status == HTC_SERVICE_SUCCESS) {
- 		epid = svc_rspmsg->endpoint_id;
--		if (epid < 0 || epid >= ENDPOINT_MAX)
-+
-+		/* Check that the received epid for the endpoint to attach
-+		 * a new service is valid. ENDPOINT0 can't be used here as it
-+		 * is already reserved for HTC_CTRL_RSVD_SVC service and thus
-+		 * should not be modified.
-+		 */
-+		if (epid <= ENDPOINT0 || epid >= ENDPOINT_MAX)
- 			return;
+ 	if (nd_config) {
+ 		adapter->nd_info =
+-			kzalloc(sizeof(struct cfg80211_wowlan_nd_match) +
+-				sizeof(struct cfg80211_wowlan_nd_match *) *
+-				scan_rsp->number_of_sets, GFP_ATOMIC);
++			kzalloc(struct_size(adapter->nd_info, matches,
++					    scan_rsp->number_of_sets),
++				GFP_ATOMIC);
  
- 		service_id = be16_to_cpu(svc_rspmsg->service_id);
+ 		if (adapter->nd_info)
+ 			adapter->nd_info->n_matches = scan_rsp->number_of_sets;
 -- 
 2.39.2
 
