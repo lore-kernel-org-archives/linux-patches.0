@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233858F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A575C433C8;
-	Sun, 16 Jul 2023 20:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A5E8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75657C433C7;
+	Sun, 16 Jul 2023 20:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539134;
-	bh=mWKdnO/QJ1Uq7M8Rqm/vcIRRjkWy4orWnr1qf1BYuJo=;
+	s=korg; t=1689539136;
+	bh=c6/cVoWe3D6xvjjZbj67L6GpwG/AxSC9d8/WoTiFvZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wU270ZECPygsgbDQ5k65VNVVtVRnFPJVWGXH+jBSbElIlXoEpQyBu/iqJSVGgB0aW
-	 kYGVqmXqv+T86REyCNwUGyb5mAHhExMESAEiKJT0Y6qLido6TP8+RFPT/kR9Usz1R4
-	 rV9CB18sH1RgQeE6Lx9ZBQ7xkj3xd4szSVdG3Mt8=
+	b=lqD70K3+jDZWgvI7j1KqhM8oJ/M0qklZtt//1SZdzLHNpsRigrHZeoPAaLoKU4IBI
+	 rp/ZoxSgWfRPjRjedqDD3np1/nPD380qdmHxv+GzTNUqRelWGBLomYfsiKbkTs7TZx
+	 ROBh4yjN3fSLXKcXV59jEWXug592SqLqKgV3DA7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
+	Woody Zhang <woodylab@foxmail.com>,
+	Song Shuai <songshuaishuai@tinylab.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 700/800] fanotify: disallow mount/sb marks on kernel internal pseudo fs
-Date: Sun, 16 Jul 2023 21:49:13 +0200
-Message-ID: <20230716195005.379660550@linuxfoundation.org>
+Subject: [PATCH 6.4 701/800] riscv: move memblock_allow_resize() after linear mapping is ready
+Date: Sun, 16 Jul 2023 21:49:14 +0200
+Message-ID: <20230716195005.402728610@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,52 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Woody Zhang <woodylab@foxmail.com>
 
-[ Upstream commit 69562eb0bd3e6bb8e522a7b254334e0fb30dff0c ]
+[ Upstream commit 85fadc0d04119c2fe4a20287767ab904c6d21ba1 ]
 
-Hopefully, nobody is trying to abuse mount/sb marks for watching all
-anonymous pipes/inodes.
+The initial memblock metadata is accessed from kernel image mapping. The
+regions arrays need to "reallocated" from memblock and accessed through
+linear mapping to cover more memblock regions. So the resizing should
+not be allowed until linear mapping is ready. Note that there are
+memblock allocations when building linear mapping.
 
-I cannot think of a good reason to allow this - it looks like an
-oversight that dated back to the original fanotify API.
+This patch is similar to 24cc61d8cb5a ("arm64: memblock: don't permit
+memblock resizing until linear mapping is up").
 
-Link: https://lore.kernel.org/linux-fsdevel/20230628101132.kvchg544mczxv2pm@quack3/
-Fixes: 0ff21db9fcc3 ("fanotify: hooks the fanotify_mark syscall to the vfsmount code")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230629042044.25723-1-amir73il@gmail.com>
+In following log, many memblock regions are reserved before
+create_linear_mapping_page_table(). And then it triggered reallocation
+of memblock.reserved.regions and memcpy the old array in kernel image
+mapping to the new array in linear mapping which caused a page fault.
+
+[    0.000000] memblock_reserve: [0x00000000bf01f000-0x00000000bf01ffff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] memblock_reserve: [0x00000000bf021000-0x00000000bf021fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] memblock_reserve: [0x00000000bf023000-0x00000000bf023fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] memblock_reserve: [0x00000000bf025000-0x00000000bf025fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] memblock_reserve: [0x00000000bf027000-0x00000000bf027fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] memblock_reserve: [0x00000000bf029000-0x00000000bf029fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] memblock_reserve: [0x00000000bf02b000-0x00000000bf02bfff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] memblock_reserve: [0x00000000bf02d000-0x00000000bf02dfff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] memblock_reserve: [0x00000000bf02f000-0x00000000bf02ffff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] memblock_reserve: [0x00000000bf030000-0x00000000bf030fff] early_init_fdt_scan_reserved_mem+0x28c/0x2c6
+[    0.000000] OF: reserved mem: 0x0000000080000000..0x000000008007ffff (512 KiB) map non-reusable mmode_resv0@80000000
+[    0.000000] memblock_reserve: [0x00000000bf000000-0x00000000bf001fed] paging_init+0x19a/0x5ae
+[    0.000000] memblock_phys_alloc_range: 4096 bytes align=0x1000 from=0x0000000000000000 max_addr=0x0000000000000000 alloc_pmd_fixmap+0x14/0x1c
+[    0.000000] memblock_reserve: [0x000000017ffff000-0x000000017fffffff] memblock_alloc_range_nid+0xb8/0x128
+[    0.000000] memblock: reserved is doubled to 256 at [0x000000017fffd000-0x000000017fffe7ff]
+[    0.000000] Unable to handle kernel paging request at virtual address ff600000ffffd000
+[    0.000000] Oops [#1]
+[    0.000000] Modules linked in:
+[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.4.0-rc1-00011-g99a670b2069c #66
+[    0.000000] Hardware name: riscv-virtio,qemu (DT)
+[    0.000000] epc : __memcpy+0x60/0xf8
+[    0.000000]  ra : memblock_double_array+0x192/0x248
+[    0.000000] epc : ffffffff8081d214 ra : ffffffff80a3dfc0 sp : ffffffff81403bd0
+[    0.000000]  gp : ffffffff814fbb38 tp : ffffffff8140dac0 t0 : 0000000001600000
+[    0.000000]  t1 : 0000000000000000 t2 : 000000008f001000 s0 : ffffffff81403c60
+[    0.000000]  s1 : ffffffff80c0bc98 a0 : ff600000ffffd000 a1 : ffffffff80c0bcd8
+[    0.000000]  a2 : 0000000000000c00 a3 : ffffffff80c0c8d8 a4 : 0000000080000000
+[    0.000000]  a5 : 0000000000080000 a6 : 0000000000000000 a7 : 0000000080200000
+[    0.000000]  s2 : ff600000ffffd000 s3 : 0000000000002000 s4 : 0000000000000c00
+[    0.000000]  s5 : ffffffff80c0bc60 s6 : ffffffff80c0bcc8 s7 : 0000000000000000
+[    0.000000]  s8 : ffffffff814fd0a8 s9 : 000000017fffe7ff s10: 0000000000000000
+[    0.000000]  s11: 0000000000001000 t3 : 0000000000001000 t4 : 0000000000000000
+[    0.000000]  t5 : 000000008f003000 t6 : ff600000ffffd000
+[    0.000000] status: 0000000200000100 badaddr: ff600000ffffd000 cause: 000000000000000f
+[    0.000000] [<ffffffff8081d214>] __memcpy+0x60/0xf8
+[    0.000000] [<ffffffff80a3e1a2>] memblock_add_range.isra.14+0x12c/0x162
+[    0.000000] [<ffffffff80a3e36a>] memblock_reserve+0x6e/0x8c
+[    0.000000] [<ffffffff80a123fc>] memblock_alloc_range_nid+0xb8/0x128
+[    0.000000] [<ffffffff80a1256a>] memblock_phys_alloc_range+0x5e/0x6a
+[    0.000000] [<ffffffff80a04732>] alloc_pmd_fixmap+0x14/0x1c
+[    0.000000] [<ffffffff80a0475a>] alloc_p4d_fixmap+0xc/0x14
+[    0.000000] [<ffffffff80a04a36>] create_pgd_mapping+0x98/0x17c
+[    0.000000] [<ffffffff80a04e9e>] create_linear_mapping_range.constprop.10+0xe4/0x112
+[    0.000000] [<ffffffff80a05bb8>] paging_init+0x3ec/0x5ae
+[    0.000000] [<ffffffff80a03354>] setup_arch+0xb2/0x576
+[    0.000000] [<ffffffff80a00726>] start_kernel+0x72/0x57e
+[    0.000000] Code: b303 0285 b383 0305 be03 0385 be83 0405 bf03 0485 (b023) 00ef
+[    0.000000] ---[ end trace 0000000000000000 ]---
+[    0.000000] Kernel panic - not syncing: Attempted to kill the idle task!
+[    0.000000] ---[ end Kernel panic - not syncing: Attempted to kill the idle task! ]---
+
+Fixes: 671f9a3e2e24 ("RISC-V: Setup initial page tables in two stages")
+Signed-off-by: Woody Zhang <woodylab@foxmail.com>
+Tested-by: Song Shuai <songshuaishuai@tinylab.org>
+Link: https://lore.kernel.org/r/tencent_FBB94CE615C5CCE7701CD39C15CCE0EE9706@qq.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/riscv/mm/init.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 22fb1cf7e1fc5..f7e11ac763907 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1623,6 +1623,20 @@ static int fanotify_events_supported(struct fsnotify_group *group,
- 	    path->mnt->mnt_sb->s_type->fs_flags & FS_DISALLOW_NOTIFY_PERM)
- 		return -EINVAL;
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 4fa420faa7808..1306149aad57a 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -267,7 +267,6 @@ static void __init setup_bootmem(void)
+ 	dma_contiguous_reserve(dma32_phys_limit);
+ 	if (IS_ENABLED(CONFIG_64BIT))
+ 		hugetlb_cma_reserve(PUD_SHIFT - PAGE_SHIFT);
+-	memblock_allow_resize();
+ }
  
-+	/*
-+	 * mount and sb marks are not allowed on kernel internal pseudo fs,
-+	 * like pipe_mnt, because that would subscribe to events on all the
-+	 * anonynous pipes in the system.
-+	 *
-+	 * SB_NOUSER covers all of the internal pseudo fs whose objects are not
-+	 * exposed to user's mount namespace, but there are other SB_KERNMOUNT
-+	 * fs, like nsfs, debugfs, for which the value of allowing sb and mount
-+	 * mark is questionable. For now we leave them alone.
-+	 */
-+	if (mark_type != FAN_MARK_INODE &&
-+	    path->mnt->mnt_sb->s_flags & SB_NOUSER)
-+		return -EINVAL;
+ #ifdef CONFIG_MMU
+@@ -1370,6 +1369,9 @@ void __init paging_init(void)
+ {
+ 	setup_bootmem();
+ 	setup_vm_final();
 +
- 	/*
- 	 * We shouldn't have allowed setting dirent events and the directory
- 	 * flags FAN_ONDIR and FAN_EVENT_ON_CHILD in mask of non-dir inode,
++	/* Depend on that Linear Mapping is ready */
++	memblock_allow_resize();
+ }
+ 
+ void __init misc_mem_init(void)
 -- 
 2.39.2
 
