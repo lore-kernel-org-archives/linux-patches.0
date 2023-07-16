@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2686A33F1
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:35:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9D5C433C9;
-	Sun, 16 Jul 2023 20:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC8933F1
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:35:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D95AC433C8;
+	Sun, 16 Jul 2023 20:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539720;
-	bh=bRgny+4ViXIMQcE84GK7DZDKpjLAjh73tXHqXFr7rV0=;
+	s=korg; t=1689539722;
+	bh=FMffp9bl6w3AoUWCJamGOlX7wj1LoFlONsrbGrNd/iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ywk3m4mbI9F3DBfVBEuGa/+o3VsS9mhOq3JFe6B5Vs7DibvFtAFoQRd8v1/JTfGcA
-	 EF9AaGgZmcgKp0CKn9bAAww8WC9g+/DPfUAsc7PQdO6knI/1vu3WIk69YrkLl8lgt+
-	 NAy1GcHGm/unFNcmynzBT3F9br5C8KFPizGZ8L08=
+	b=eYUfIWPKuYMYB0+hPLeiKfoCnvtnd1cxCHVePfDzYesgulRmiHO88gk02bxIXJk6K
+	 fy/TPIyRGraHVPbaScJXtaYmrgd1gBNNK/B3+tO3x8gblscwJLzuWwWu9nVjScAmcU
+	 GUUWMkZgq9Mvn9FCKg1CuH/WeMjlWQ9JCgXy8dKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicky Veitch <nicky.veitch@oracle.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Quentin Monnet <quentin@isovalent.com>,
+	Song Liu <song@kernel.org>,
+	Jiri Olsa <olsajiri@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/591] bpftool: JIT limited misreported as negative value on aarch64
-Date: Sun, 16 Jul 2023 21:43:39 +0200
-Message-ID: <20230716194925.952615615@linuxfoundation.org>
+Subject: [PATCH 6.1 081/591] bpf: Remove bpf trampoline selector
+Date: Sun, 16 Jul 2023 21:43:40 +0200
+Message-ID: <20230716194925.977502131@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,148 +37,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 04cb8453a91c7c22f60ddadb6cef0d19abb33bb5 ]
+[ Upstream commit 47e79cbeea4b3891ad476047f4c68543eb51c8e0 ]
 
-On aarch64, "bpftool feature" reports an incorrect BPF JIT limit:
+After commit e21aa341785c ("bpf: Fix fexit trampoline."), the selector is only
+used to indicate how many times the bpf trampoline image are updated and been
+displayed in the trampoline ksym name. After the trampoline is freed, the
+selector will start from 0 again. So the selector is a useless value to the
+user. We can remove it.
 
-$ sudo /sbin/bpftool feature
-Scanning system configuration...
-bpf() syscall restricted to privileged users
-JIT compiler is enabled
-JIT compiler hardening is disabled
-JIT compiler kallsyms exports are enabled for root
-skipping kernel config, can't open file: No such file or directory
-Global memory limit for JIT compiler for unprivileged users is -201326592 bytes
+If the user want to check whether the bpf trampoline image has been updated
+or not, the user can compare the address. Each time the trampoline image is
+updated, the address will change consequently. Jiri also pointed out another
+issue that perf is still using the old name "bpf_trampoline_%lu", so this
+change can fix the issue in perf.
 
-This is because /proc/sys/net/core/bpf_jit_limit reports
-
-$ sudo cat /proc/sys/net/core/bpf_jit_limit
-68169519595520
-
-...and an int is assumed in read_procfs().  Change read_procfs()
-to return a long to avoid negative value reporting.
-
-Fixes: 7a4522bbef0c ("tools: bpftool: add probes for /proc/ eBPF parameters")
-Reported-by: Nicky Veitch <nicky.veitch@oracle.com>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Fixes: e21aa341785c ("bpf: Fix fexit trampoline.")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Quentin Monnet <quentin@isovalent.com>
-Link: https://lore.kernel.org/bpf/20230512113134.58996-1-alan.maguire@oracle.com
+Acked-by: Song Liu <song@kernel.org>
+Cc: Jiri Olsa <olsajiri@gmail.com>
+Link: https://lore.kernel.org/bpf/ZFvOOlrmHiY9AgXE@krava
+Link: https://lore.kernel.org/bpf/20230515130849.57502-3-laoar.shao@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/feature.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ include/linux/bpf.h     |  1 -
+ kernel/bpf/trampoline.c | 11 ++++-------
+ 2 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/tools/bpf/bpftool/feature.c b/tools/bpf/bpftool/feature.c
-index 36cf0f1517c94..4460399bc8ed8 100644
---- a/tools/bpf/bpftool/feature.c
-+++ b/tools/bpf/bpftool/feature.c
-@@ -167,12 +167,12 @@ static int get_vendor_id(int ifindex)
- 	return strtol(buf, NULL, 0);
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 942f9ac9fa7b6..8cef9ec3a89c2 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -933,7 +933,6 @@ struct bpf_trampoline {
+ 	int progs_cnt[BPF_TRAMP_MAX];
+ 	/* Executable image of trampoline */
+ 	struct bpf_tramp_image *cur_image;
+-	u64 selector;
+ 	struct module *mod;
+ };
+ 
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index f1504cb5b6e19..91d8de938a3dd 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -372,7 +372,7 @@ static void bpf_tramp_image_put(struct bpf_tramp_image *im)
+ 	call_rcu_tasks_trace(&im->rcu, __bpf_tramp_image_put_rcu_tasks);
  }
  
--static int read_procfs(const char *path)
-+static long read_procfs(const char *path)
+-static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key, u32 idx)
++static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key)
  {
- 	char *endptr, *line = NULL;
- 	size_t len = 0;
- 	FILE *fd;
--	int res;
-+	long res;
+ 	struct bpf_tramp_image *im;
+ 	struct bpf_ksym *ksym;
+@@ -399,7 +399,7 @@ static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key, u32 idx)
  
- 	fd = fopen(path, "r");
- 	if (!fd)
-@@ -194,7 +194,7 @@ static int read_procfs(const char *path)
+ 	ksym = &im->ksym;
+ 	INIT_LIST_HEAD_RCU(&ksym->lnode);
+-	snprintf(ksym->name, KSYM_NAME_LEN, "bpf_trampoline_%llu_%u", key, idx);
++	snprintf(ksym->name, KSYM_NAME_LEN, "bpf_trampoline_%llu", key);
+ 	bpf_image_ksym_add(image, ksym);
+ 	return im;
  
- static void probe_unprivileged_disabled(void)
- {
--	int res;
-+	long res;
- 
- 	/* No support for C-style ouptut */
- 
-@@ -216,14 +216,14 @@ static void probe_unprivileged_disabled(void)
- 			printf("Unable to retrieve required privileges for bpf() syscall\n");
- 			break;
- 		default:
--			printf("bpf() syscall restriction has unknown value %d\n", res);
-+			printf("bpf() syscall restriction has unknown value %ld\n", res);
- 		}
+@@ -429,11 +429,10 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 		err = unregister_fentry(tr, tr->cur_image->image);
+ 		bpf_tramp_image_put(tr->cur_image);
+ 		tr->cur_image = NULL;
+-		tr->selector = 0;
+ 		goto out;
  	}
- }
  
- static void probe_jit_enable(void)
- {
--	int res;
-+	long res;
+-	im = bpf_tramp_image_alloc(tr->key, tr->selector);
++	im = bpf_tramp_image_alloc(tr->key);
+ 	if (IS_ERR(im)) {
+ 		err = PTR_ERR(im);
+ 		goto out;
+@@ -471,8 +470,7 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 	set_memory_ro((long)im->image, 1);
+ 	set_memory_x((long)im->image, 1);
  
- 	/* No support for C-style ouptut */
- 
-@@ -245,7 +245,7 @@ static void probe_jit_enable(void)
- 			printf("Unable to retrieve JIT-compiler status\n");
- 			break;
- 		default:
--			printf("JIT-compiler status has unknown value %d\n",
-+			printf("JIT-compiler status has unknown value %ld\n",
- 			       res);
- 		}
- 	}
-@@ -253,7 +253,7 @@ static void probe_jit_enable(void)
- 
- static void probe_jit_harden(void)
- {
--	int res;
-+	long res;
- 
- 	/* No support for C-style ouptut */
- 
-@@ -275,7 +275,7 @@ static void probe_jit_harden(void)
- 			printf("Unable to retrieve JIT hardening status\n");
- 			break;
- 		default:
--			printf("JIT hardening status has unknown value %d\n",
-+			printf("JIT hardening status has unknown value %ld\n",
- 			       res);
- 		}
- 	}
-@@ -283,7 +283,7 @@ static void probe_jit_harden(void)
- 
- static void probe_jit_kallsyms(void)
- {
--	int res;
-+	long res;
- 
- 	/* No support for C-style ouptut */
- 
-@@ -302,14 +302,14 @@ static void probe_jit_kallsyms(void)
- 			printf("Unable to retrieve JIT kallsyms export status\n");
- 			break;
- 		default:
--			printf("JIT kallsyms exports status has unknown value %d\n", res);
-+			printf("JIT kallsyms exports status has unknown value %ld\n", res);
- 		}
- 	}
- }
- 
- static void probe_jit_limit(void)
- {
--	int res;
-+	long res;
- 
- 	/* No support for C-style ouptut */
- 
-@@ -322,7 +322,7 @@ static void probe_jit_limit(void)
- 			printf("Unable to retrieve global memory limit for JIT compiler for unprivileged users\n");
- 			break;
- 		default:
--			printf("Global memory limit for JIT compiler for unprivileged users is %d bytes\n", res);
-+			printf("Global memory limit for JIT compiler for unprivileged users is %ld bytes\n", res);
- 		}
- 	}
- }
+-	WARN_ON(tr->cur_image && tr->selector == 0);
+-	WARN_ON(!tr->cur_image && tr->selector);
++	WARN_ON(tr->cur_image && total == 0);
+ 	if (tr->cur_image)
+ 		/* progs already running at this address */
+ 		err = modify_fentry(tr, tr->cur_image->image, im->image, lock_direct_mutex);
+@@ -502,7 +500,6 @@ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mut
+ 	if (tr->cur_image)
+ 		bpf_tramp_image_put(tr->cur_image);
+ 	tr->cur_image = im;
+-	tr->selector++;
+ out:
+ 	/* If any error happens, restore previous flags */
+ 	if (err)
 -- 
 2.39.2
 
