@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D7D8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:06:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0BCC433C7;
-	Sun, 16 Jul 2023 20:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EEE8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:06:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D3BC433C7;
+	Sun, 16 Jul 2023 20:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537964;
-	bh=XLScQ5AKDtvtrk2kNuXzi09UEOcedD6+vOvyNnJtcZk=;
+	s=korg; t=1689537966;
+	bh=LwYh+/OP6RUY5udHQUnWWfkMZuIfY1s0LJg+JBO5MW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWcAzWYrs9UiAKODUqPm9e5A/5VOvuYOTCj+AMAAKnngT2waeRLO2SLXKH+TUN5Le
-	 6KrtkvPQ6BT1GMj56wd5uiqBpjs7SZgy4ezpNrgDtDYhu0XKFMWg8u+c5DAQf5sDtN
-	 8ucVBVEEMPOnC4GNOLFT94Uvyh+BT//FgspMNSm4=
+	b=slGAt1A17kRxqJMfk3/aNcXBELvwLqPjLZBAk5/4lnVtSW8GnbuGYx9eX862JVM21
+	 h0K8uZMcnDGLHTMPS3If7FcK3E8eU5Q8uulHfVFpstfdZYU9oVFHHrFY5aaDswXgs1
+	 01udIByq0WwdcjqjFEfPy8FpNb/dHmUAqHXHBpK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"kernelci.org bot" <bot@kernelci.org>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	andy.shevchenko@gmail.com,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Lee Jones <lee@kernel.org>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 284/800] drm/bridge: anx7625: Prevent endless probe loop
-Date: Sun, 16 Jul 2023 21:42:17 +0200
-Message-ID: <20230716194955.684723619@linuxfoundation.org>
+Subject: [PATCH 6.4 285/800] ARM/mfd/gpio: Fixup TPS65010 regression on OMAP1 OSK1
+Date: Sun, 16 Jul 2023 21:42:18 +0200
+Message-ID: <20230716194955.707364710@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,259 +39,390 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 1464e48d69ab7a50a377c9d39f5e5eb3cee2722e ]
+[ Upstream commit c32c81f3dbdfd68f6ab20a29ad86f811aed36e4e ]
 
-During probe, the driver registers i2c dummy devices and populates the
-aux bus, which registers a device for the panel. After doing that, the
-driver can still defer probe if needed. This ordering of operations is
-troublesome however, because the deferred probe work will retry probing
-all pending devices every time a new device is registered. Therefore, if
-modules need to be loaded in order to satisfy the dependencies for this
-driver to complete probe, the kernel will stall, since it'll keep trying
-to probe the anx7625 driver, but never succeed, given that modules would
-only be loaded after the deferred probe work completes.
+Aaro reports problems on the OSK1 board after we altered
+the dynamic base for GPIO allocations.
 
-Two changes are required to avoid this issue:
-* Move of_find_mipi_dsi_host_by_node(), which can defer probe, to before
-  anx7625_register_i2c_dummy_clients() and
-  devm_of_dp_aux_populate_ep_devices(), which register devices.
-* Make use of the done_probing callback when populating the aux bus,
-  so that the bridge registration is only done after the panel is
-  probed. This is required because the panel might need to defer probe,
-  but the aux bus population needs the i2c dummy devices working, so
-  this call couldn't just be moved to an earlier point in probe.
-  One caveat is that if the panel is described outside the aux bus, the
-  probe loop issue can still happen, but we don't have a way to avoid
-  it in that case since there's no callback available.
+It appears this happens because the OMAP driver now
+allocates GPIO numbers dynamically, so all that is
+references by number is a bit up in the air.
 
-With this patch applied, it's possible to boot on
-mt8192-asurada-spherion with
+Let's bite the bullet and try to just move the gpio_chip
+in the tps65010 MFD driver over to using dynamic allocations.
+Alter everything in the OSK1 board file to use a GPIO
+descriptor table and lookups.
 
-CONFIG_DRM_ANALOGIX_ANX7625=y
-CONFIG_MTK_MMSYS=m
-CONFIG_BACKLIGHT_PWM=y
+Utilize the NULL device to define some board-specific
+GPIO lookups and use these to immediately look up the
+same GPIOs, convert to IRQ numbers and pass as resources
+to the devices. This is ugly but should work.
 
-and also with
+The .setup() callback for tps65010 was used for some GPIO
+hogging, but since the OSK1 is the only user in the entire
+kernel we can alter the signatures to something that
+is helpful and make a clean transition.
 
-CONFIG_DRM_ANALOGIX_ANX7625=y
-CONFIG_MTK_MMSYS=y
-CONFIG_BACKLIGHT_PWM=m
-
-Fixes: adca62ec370c ("drm/bridge: anx7625: Support reading edid through aux channel")
-Fixes: 269332997a16 ("drm/bridge: anx7625: Return -EPROBE_DEFER if the dsi host was not found")
-Reported-by: "kernelci.org bot" <bot@kernelci.org>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230518193902.891121-1-nfraprado@collabora.com
+Fixes: 92bf78b33b0b ("gpio: omap: use dynamic allocation of base")
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: andy.shevchenko@gmail.com
+Cc: Andreas Kemnade <andreas@kemnade.info>
+Acked-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Reported-by: Aaro Koskinen <aaro.koskinen@iki.fi>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/analogix/anx7625.c | 128 +++++++++++++++-------
- 1 file changed, 88 insertions(+), 40 deletions(-)
+ arch/arm/mach-omap1/board-osk.c | 139 ++++++++++++++++++++++----------
+ drivers/mfd/tps65010.c          |  14 ++--
+ include/linux/mfd/tps65010.h    |  11 +--
+ 3 files changed, 104 insertions(+), 60 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index 6846199a2ee14..9e387c3e9b696 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -1687,6 +1687,14 @@ static int anx7625_parse_dt(struct device *dev,
- 	if (of_property_read_bool(np, "analogix,audio-enable"))
- 		pdata->audio_en = 1;
+diff --git a/arch/arm/mach-omap1/board-osk.c b/arch/arm/mach-omap1/board-osk.c
+index df758c1f92373..a8ca8d427182d 100644
+--- a/arch/arm/mach-omap1/board-osk.c
++++ b/arch/arm/mach-omap1/board-osk.c
+@@ -25,7 +25,8 @@
+  * with this program; if not, write  to the Free Software Foundation, Inc.,
+  * 675 Mass Ave, Cambridge, MA 02139, USA.
+  */
+-#include <linux/gpio.h>
++#include <linux/gpio/consumer.h>
++#include <linux/gpio/driver.h>
+ #include <linux/gpio/machine.h>
+ #include <linux/kernel.h>
+ #include <linux/init.h>
+@@ -64,13 +65,12 @@
+ /* TPS65010 has four GPIOs.  nPG and LED2 can be treated like GPIOs with
+  * alternate pin configurations for hardware-controlled blinking.
+  */
+-#define OSK_TPS_GPIO_BASE		(OMAP_MAX_GPIO_LINES + 16 /* MPUIO */)
+-#	define OSK_TPS_GPIO_USB_PWR_EN	(OSK_TPS_GPIO_BASE + 0)
+-#	define OSK_TPS_GPIO_LED_D3	(OSK_TPS_GPIO_BASE + 1)
+-#	define OSK_TPS_GPIO_LAN_RESET	(OSK_TPS_GPIO_BASE + 2)
+-#	define OSK_TPS_GPIO_DSP_PWR_EN	(OSK_TPS_GPIO_BASE + 3)
+-#	define OSK_TPS_GPIO_LED_D9	(OSK_TPS_GPIO_BASE + 4)
+-#	define OSK_TPS_GPIO_LED_D2	(OSK_TPS_GPIO_BASE + 5)
++#define OSK_TPS_GPIO_USB_PWR_EN	0
++#define OSK_TPS_GPIO_LED_D3	1
++#define OSK_TPS_GPIO_LAN_RESET	2
++#define OSK_TPS_GPIO_DSP_PWR_EN	3
++#define OSK_TPS_GPIO_LED_D9	4
++#define OSK_TPS_GPIO_LED_D2	5
  
-+	return 0;
-+}
+ static struct mtd_partition osk_partitions[] = {
+ 	/* bootloader (U-Boot, etc) in first sector */
+@@ -174,11 +174,20 @@ static const struct gpio_led tps_leds[] = {
+ 	/* NOTE:  D9 and D2 have hardware blink support.
+ 	 * Also, D9 requires non-battery power.
+ 	 */
+-	{ .gpio = OSK_TPS_GPIO_LED_D9, .name = "d9",
+-			.default_trigger = "disk-activity", },
+-	{ .gpio = OSK_TPS_GPIO_LED_D2, .name = "d2", },
+-	{ .gpio = OSK_TPS_GPIO_LED_D3, .name = "d3", .active_low = 1,
+-			.default_trigger = "heartbeat", },
++	{ .name = "d9", .default_trigger = "disk-activity", },
++	{ .name = "d2", },
++	{ .name = "d3", .default_trigger = "heartbeat", },
++};
 +
-+static int anx7625_parse_dt_panel(struct device *dev,
-+				  struct anx7625_platform_data *pdata)
-+{
-+	struct device_node *np = dev->of_node;
++static struct gpiod_lookup_table tps_leds_gpio_table = {
++	.dev_id = "leds-gpio",
++	.table = {
++		/* Use local offsets on TPS65010 */
++		GPIO_LOOKUP_IDX("tps65010", OSK_TPS_GPIO_LED_D9, NULL, 0, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP_IDX("tps65010", OSK_TPS_GPIO_LED_D2, NULL, 1, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP_IDX("tps65010", OSK_TPS_GPIO_LED_D3, NULL, 2, GPIO_ACTIVE_LOW),
++		{ }
++	},
+ };
+ 
+ static struct gpio_led_platform_data tps_leds_data = {
+@@ -192,29 +201,34 @@ static struct platform_device osk5912_tps_leds = {
+ 	.dev.platform_data	= &tps_leds_data,
+ };
+ 
+-static int osk_tps_setup(struct i2c_client *client, void *context)
++/* The board just hold these GPIOs hogged from setup to teardown */
++static struct gpio_desc *eth_reset;
++static struct gpio_desc *vdd_dsp;
 +
- 	pdata->panel_bridge = devm_drm_of_get_bridge(dev, np, 1, 0);
- 	if (IS_ERR(pdata->panel_bridge)) {
- 		if (PTR_ERR(pdata->panel_bridge) == -ENODEV) {
-@@ -2032,7 +2040,7 @@ static int anx7625_register_audio(struct device *dev, struct anx7625_data *ctx)
++static int osk_tps_setup(struct i2c_client *client, struct gpio_chip *gc)
+ {
++	struct gpio_desc *d;
+ 	if (!IS_BUILTIN(CONFIG_TPS65010))
+ 		return -ENOSYS;
+ 
+ 	/* Set GPIO 1 HIGH to disable VBUS power supply;
+ 	 * OHCI driver powers it up/down as needed.
+ 	 */
+-	gpio_request(OSK_TPS_GPIO_USB_PWR_EN, "n_vbus_en");
+-	gpio_direction_output(OSK_TPS_GPIO_USB_PWR_EN, 1);
++	d = gpiochip_request_own_desc(gc, OSK_TPS_GPIO_USB_PWR_EN, "n_vbus_en",
++				      GPIO_ACTIVE_HIGH, GPIOD_OUT_HIGH);
+ 	/* Free the GPIO again as the driver will request it */
+-	gpio_free(OSK_TPS_GPIO_USB_PWR_EN);
++	gpiochip_free_own_desc(d);
+ 
+ 	/* Set GPIO 2 high so LED D3 is off by default */
+ 	tps65010_set_gpio_out_value(GPIO2, HIGH);
+ 
+ 	/* Set GPIO 3 low to take ethernet out of reset */
+-	gpio_request(OSK_TPS_GPIO_LAN_RESET, "smc_reset");
+-	gpio_direction_output(OSK_TPS_GPIO_LAN_RESET, 0);
++	eth_reset = gpiochip_request_own_desc(gc, OSK_TPS_GPIO_LAN_RESET, "smc_reset",
++					      GPIO_ACTIVE_HIGH, GPIOD_OUT_LOW);
+ 
+ 	/* GPIO4 is VDD_DSP */
+-	gpio_request(OSK_TPS_GPIO_DSP_PWR_EN, "dsp_power");
+-	gpio_direction_output(OSK_TPS_GPIO_DSP_PWR_EN, 1);
++	vdd_dsp = gpiochip_request_own_desc(gc, OSK_TPS_GPIO_DSP_PWR_EN, "dsp_power",
++					    GPIO_ACTIVE_HIGH, GPIOD_OUT_HIGH);
+ 	/* REVISIT if DSP support isn't configured, power it off ... */
+ 
+ 	/* Let LED1 (D9) blink; leds-gpio may override it */
+@@ -232,15 +246,22 @@ static int osk_tps_setup(struct i2c_client *client, void *context)
+ 
+ 	/* register these three LEDs */
+ 	osk5912_tps_leds.dev.parent = &client->dev;
++	gpiod_add_lookup_table(&tps_leds_gpio_table);
+ 	platform_device_register(&osk5912_tps_leds);
+ 
  	return 0;
  }
  
--static int anx7625_attach_dsi(struct anx7625_data *ctx)
-+static int anx7625_setup_dsi_device(struct anx7625_data *ctx)
- {
- 	struct mipi_dsi_device *dsi;
- 	struct device *dev = &ctx->client->dev;
-@@ -2042,9 +2050,6 @@ static int anx7625_attach_dsi(struct anx7625_data *ctx)
- 		.channel = 0,
- 		.node = NULL,
- 	};
--	int ret;
--
--	DRM_DEV_DEBUG_DRIVER(dev, "attach dsi\n");
- 
- 	host = of_find_mipi_dsi_host_by_node(ctx->pdata.mipi_host_node);
- 	if (!host) {
-@@ -2065,14 +2070,24 @@ static int anx7625_attach_dsi(struct anx7625_data *ctx)
- 		MIPI_DSI_MODE_VIDEO_HSE	|
- 		MIPI_DSI_HS_PKT_END_ALIGNED;
- 
--	ret = devm_mipi_dsi_attach(dev, dsi);
-+	ctx->dsi = dsi;
-+
-+	return 0;
++static void osk_tps_teardown(struct i2c_client *client, struct gpio_chip *gc)
++{
++	gpiochip_free_own_desc(eth_reset);
++	gpiochip_free_own_desc(vdd_dsp);
 +}
 +
-+static int anx7625_attach_dsi(struct anx7625_data *ctx)
-+{
-+	struct device *dev = &ctx->client->dev;
-+	int ret;
-+
-+	DRM_DEV_DEBUG_DRIVER(dev, "attach dsi\n");
-+
-+	ret = devm_mipi_dsi_attach(dev, ctx->dsi);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "fail to attach dsi to host.\n");
- 		return ret;
- 	}
+ static struct tps65010_board tps_board = {
+-	.base		= OSK_TPS_GPIO_BASE,
+ 	.outmask	= 0x0f,
+ 	.setup		= osk_tps_setup,
++	.teardown	= osk_tps_teardown,
+ };
  
--	ctx->dsi = dsi;
--
- 	DRM_DEV_DEBUG_DRIVER(dev, "attach dsi succeeded.\n");
- 
- 	return 0;
-@@ -2560,6 +2575,40 @@ static void anx7625_runtime_disable(void *data)
- 	pm_runtime_disable(data);
- }
- 
-+static int anx7625_link_bridge(struct drm_dp_aux *aux)
-+{
-+	struct anx7625_data *platform = container_of(aux, struct anx7625_data, aux);
-+	struct device *dev = aux->dev;
-+	int ret;
-+
-+	ret = anx7625_parse_dt_panel(dev, &platform->pdata);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "fail to parse DT for panel : %d\n", ret);
-+		return ret;
-+	}
-+
-+	platform->bridge.funcs = &anx7625_bridge_funcs;
-+	platform->bridge.of_node = dev->of_node;
-+	if (!anx7625_of_panel_on_aux_bus(dev))
-+		platform->bridge.ops |= DRM_BRIDGE_OP_EDID;
-+	if (!platform->pdata.panel_bridge)
-+		platform->bridge.ops |= DRM_BRIDGE_OP_HPD |
-+					DRM_BRIDGE_OP_DETECT;
-+	platform->bridge.type = platform->pdata.panel_bridge ?
-+				    DRM_MODE_CONNECTOR_eDP :
-+				    DRM_MODE_CONNECTOR_DisplayPort;
-+
-+	drm_bridge_add(&platform->bridge);
-+
-+	if (!platform->pdata.is_dpi) {
-+		ret = anx7625_attach_dsi(platform);
-+		if (ret)
-+			drm_bridge_remove(&platform->bridge);
-+	}
-+
-+	return ret;
-+}
-+
- static int anx7625_i2c_probe(struct i2c_client *client)
+ static struct i2c_board_info __initdata osk_i2c_board_info[] = {
+@@ -263,11 +284,6 @@ static void __init osk_init_smc91x(void)
  {
- 	struct anx7625_data *platform;
-@@ -2634,6 +2683,24 @@ static int anx7625_i2c_probe(struct i2c_client *client)
- 	platform->aux.wait_hpd_asserted = anx7625_wait_hpd_asserted;
- 	drm_dp_aux_init(&platform->aux);
+ 	u32 l;
  
-+	ret = anx7625_parse_dt(dev, pdata);
-+	if (ret) {
-+		if (ret != -EPROBE_DEFER)
-+			DRM_DEV_ERROR(dev, "fail to parse DT : %d\n", ret);
-+		goto free_wq;
-+	}
-+
-+	if (!platform->pdata.is_dpi) {
-+		ret = anx7625_setup_dsi_device(platform);
-+		if (ret < 0)
-+			goto free_wq;
-+	}
-+
-+	/*
-+	 * Registering the i2c devices will retrigger deferred probe, so it
-+	 * needs to be done after calls that might return EPROBE_DEFER,
-+	 * otherwise we can get an infinite loop.
-+	 */
- 	if (anx7625_register_i2c_dummy_clients(platform, client) != 0) {
- 		ret = -ENOMEM;
- 		DRM_DEV_ERROR(dev, "fail to reserve I2C bus.\n");
-@@ -2648,13 +2715,21 @@ static int anx7625_i2c_probe(struct i2c_client *client)
- 	if (ret)
- 		goto free_wq;
- 
--	devm_of_dp_aux_populate_ep_devices(&platform->aux);
--
--	ret = anx7625_parse_dt(dev, pdata);
-+	/*
-+	 * Populating the aux bus will retrigger deferred probe, so it needs to
-+	 * be done after calls that might return EPROBE_DEFER, otherwise we can
-+	 * get an infinite loop.
-+	 */
-+	ret = devm_of_dp_aux_populate_bus(&platform->aux, anx7625_link_bridge);
- 	if (ret) {
--		if (ret != -EPROBE_DEFER)
--			DRM_DEV_ERROR(dev, "fail to parse DT : %d\n", ret);
--		goto free_wq;
-+		if (ret != -ENODEV) {
-+			DRM_DEV_ERROR(dev, "failed to populate aux bus : %d\n", ret);
-+			goto free_wq;
-+		}
-+
-+		ret = anx7625_link_bridge(&platform->aux);
-+		if (ret)
-+			goto free_wq;
- 	}
- 
- 	if (!platform->pdata.low_power_mode) {
-@@ -2667,27 +2742,6 @@ static int anx7625_i2c_probe(struct i2c_client *client)
- 	if (platform->pdata.intp_irq)
- 		queue_work(platform->workqueue, &platform->work);
- 
--	platform->bridge.funcs = &anx7625_bridge_funcs;
--	platform->bridge.of_node = client->dev.of_node;
--	if (!anx7625_of_panel_on_aux_bus(&client->dev))
--		platform->bridge.ops |= DRM_BRIDGE_OP_EDID;
--	if (!platform->pdata.panel_bridge)
--		platform->bridge.ops |= DRM_BRIDGE_OP_HPD |
--					DRM_BRIDGE_OP_DETECT;
--	platform->bridge.type = platform->pdata.panel_bridge ?
--				    DRM_MODE_CONNECTOR_eDP :
--				    DRM_MODE_CONNECTOR_DisplayPort;
--
--	drm_bridge_add(&platform->bridge);
--
--	if (!platform->pdata.is_dpi) {
--		ret = anx7625_attach_dsi(platform);
--		if (ret) {
--			DRM_DEV_ERROR(dev, "Fail to attach to dsi : %d\n", ret);
--			goto unregister_bridge;
--		}
+-	if ((gpio_request(0, "smc_irq")) < 0) {
+-		printk("Error requesting gpio 0 for smc91x irq\n");
+-		return;
 -	}
 -
- 	if (platform->pdata.audio_en)
- 		anx7625_register_audio(dev, platform);
+ 	/* Check EMIFS wait states to fix errors with SMC_GET_PKT_HDR */
+ 	l = omap_readl(EMIFS_CCS(1));
+ 	l |= 0x3;
+@@ -279,10 +295,6 @@ static void __init osk_init_cf(int seg)
+ 	struct resource *res = &osk5912_cf_resources[1];
  
-@@ -2695,12 +2749,6 @@ static int anx7625_i2c_probe(struct i2c_client *client)
+ 	omap_cfg_reg(M7_1610_GPIO62);
+-	if ((gpio_request(62, "cf_irq")) < 0) {
+-		printk("Error requesting gpio 62 for CF irq\n");
+-		return;
+-	}
  
- 	return 0;
- 
--unregister_bridge:
--	drm_bridge_remove(&platform->bridge);
+ 	switch (seg) {
+ 	/* NOTE: CS0 could be configured too ... */
+@@ -308,18 +320,17 @@ static void __init osk_init_cf(int seg)
+ 		seg, omap_readl(EMIFS_CCS(seg)), omap_readl(EMIFS_ACS(seg)));
+ 	omap_writel(0x0004a1b3, EMIFS_CCS(seg));	/* synch mode 4 etc */
+ 	omap_writel(0x00000000, EMIFS_ACS(seg));	/* OE hold/setup */
 -
--	if (!platform->pdata.low_power_mode)
--		pm_runtime_put_sync_suspend(&client->dev);
+-	/* the CF I/O IRQ is really active-low */
+-	irq_set_irq_type(gpio_to_irq(62), IRQ_TYPE_EDGE_FALLING);
+ }
+ 
+ static struct gpiod_lookup_table osk_usb_gpio_table = {
+ 	.dev_id = "ohci",
+ 	.table = {
+ 		/* Power GPIO on the I2C-attached TPS65010 */
+-		GPIO_LOOKUP("tps65010", 0, "power", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("tps65010", OSK_TPS_GPIO_USB_PWR_EN, "power",
++			    GPIO_ACTIVE_HIGH),
+ 		GPIO_LOOKUP(OMAP_GPIO_LABEL, 9, "overcurrent",
+ 			    GPIO_ACTIVE_HIGH),
++		{ }
+ 	},
+ };
+ 
+@@ -341,8 +352,25 @@ static struct omap_usb_config osk_usb_config __initdata = {
+ 
+ #define EMIFS_CS3_VAL	(0x88013141)
+ 
++static struct gpiod_lookup_table osk_irq_gpio_table = {
++	.dev_id = NULL,
++	.table = {
++		/* GPIO used for SMC91x IRQ */
++		GPIO_LOOKUP(OMAP_GPIO_LABEL, 0, "smc_irq",
++			    GPIO_ACTIVE_HIGH),
++		/* GPIO used for CF IRQ */
++		GPIO_LOOKUP("gpio-48-63", 14, "cf_irq",
++			    GPIO_ACTIVE_HIGH),
++		/* GPIO used by the TPS65010 chip */
++		GPIO_LOOKUP("mpuio", 1, "tps65010",
++			    GPIO_ACTIVE_HIGH),
++		{ }
++	},
++};
++
+ static void __init osk_init(void)
+ {
++	struct gpio_desc *d;
+ 	u32 l;
+ 
+ 	osk_init_smc91x();
+@@ -359,10 +387,31 @@ static void __init osk_init(void)
+ 
+ 	osk_flash_resource.end = osk_flash_resource.start = omap_cs3_phys();
+ 	osk_flash_resource.end += SZ_32M - 1;
+-	osk5912_smc91x_resources[1].start = gpio_to_irq(0);
+-	osk5912_smc91x_resources[1].end = gpio_to_irq(0);
+-	osk5912_cf_resources[0].start = gpio_to_irq(62);
+-	osk5912_cf_resources[0].end = gpio_to_irq(62);
++
++	/*
++	 * Add the GPIOs to be used as IRQs and immediately look them up
++	 * to be passed as an IRQ resource. This is ugly but should work
++	 * until the day we convert to device tree.
++	 */
++	gpiod_add_lookup_table(&osk_irq_gpio_table);
++
++	d = gpiod_get(NULL, "smc_irq", GPIOD_IN);
++	if (IS_ERR(d)) {
++		pr_err("Unable to get SMC IRQ GPIO descriptor\n");
++	} else {
++		irq_set_irq_type(gpiod_to_irq(d), IRQ_TYPE_EDGE_RISING);
++		osk5912_smc91x_resources[1] = DEFINE_RES_IRQ(gpiod_to_irq(d));
++	}
++
++	d = gpiod_get(NULL, "cf_irq", GPIOD_IN);
++	if (IS_ERR(d)) {
++		pr_err("Unable to get CF IRQ GPIO descriptor\n");
++	} else {
++		/* the CF I/O IRQ is really active-low */
++		irq_set_irq_type(gpiod_to_irq(d), IRQ_TYPE_EDGE_FALLING);
++		osk5912_cf_resources[0] = DEFINE_RES_IRQ(gpiod_to_irq(d));
++	}
++
+ 	platform_add_devices(osk5912_devices, ARRAY_SIZE(osk5912_devices));
+ 
+ 	l = omap_readl(USB_TRANSCEIVER_CTRL);
+@@ -372,13 +421,15 @@ static void __init osk_init(void)
+ 	gpiod_add_lookup_table(&osk_usb_gpio_table);
+ 	omap1_usb_init(&osk_usb_config);
+ 
++	omap_serial_init();
++
+ 	/* irq for tps65010 chip */
+ 	/* bootloader effectively does:  omap_cfg_reg(U19_1610_MPUIO1); */
+-	if (gpio_request(OMAP_MPUIO(1), "tps65010") == 0)
+-		gpio_direction_input(OMAP_MPUIO(1));
 -
- free_wq:
- 	if (platform->workqueue)
- 		destroy_workqueue(platform->workqueue);
+-	omap_serial_init();
+-	osk_i2c_board_info[0].irq = gpio_to_irq(OMAP_MPUIO(1));
++	d = gpiod_get(NULL, "tps65010", GPIOD_IN);
++	if (IS_ERR(d))
++		pr_err("Unable to get TPS65010 IRQ GPIO descriptor\n");
++	else
++		osk_i2c_board_info[0].irq = gpiod_to_irq(d);
+ 	omap_register_i2c_bus(1, 400, osk_i2c_board_info,
+ 			      ARRAY_SIZE(osk_i2c_board_info));
+ }
+diff --git a/drivers/mfd/tps65010.c b/drivers/mfd/tps65010.c
+index fb733288cca3b..faea4ff44c6fe 100644
+--- a/drivers/mfd/tps65010.c
++++ b/drivers/mfd/tps65010.c
+@@ -506,12 +506,8 @@ static void tps65010_remove(struct i2c_client *client)
+ 	struct tps65010		*tps = i2c_get_clientdata(client);
+ 	struct tps65010_board	*board = dev_get_platdata(&client->dev);
+ 
+-	if (board && board->teardown) {
+-		int status = board->teardown(client, board->context);
+-		if (status < 0)
+-			dev_dbg(&client->dev, "board %s %s err %d\n",
+-				"teardown", client->name, status);
+-	}
++	if (board && board->teardown)
++		board->teardown(client, &tps->chip);
+ 	if (client->irq > 0)
+ 		free_irq(client->irq, tps);
+ 	cancel_delayed_work_sync(&tps->work);
+@@ -619,7 +615,7 @@ static int tps65010_probe(struct i2c_client *client)
+ 				tps, DEBUG_FOPS);
+ 
+ 	/* optionally register GPIOs */
+-	if (board && board->base != 0) {
++	if (board) {
+ 		tps->outmask = board->outmask;
+ 
+ 		tps->chip.label = client->name;
+@@ -632,7 +628,7 @@ static int tps65010_probe(struct i2c_client *client)
+ 		/* NOTE:  only partial support for inputs; nyet IRQs */
+ 		tps->chip.get = tps65010_gpio_get;
+ 
+-		tps->chip.base = board->base;
++		tps->chip.base = -1;
+ 		tps->chip.ngpio = 7;
+ 		tps->chip.can_sleep = 1;
+ 
+@@ -641,7 +637,7 @@ static int tps65010_probe(struct i2c_client *client)
+ 			dev_err(&client->dev, "can't add gpiochip, err %d\n",
+ 					status);
+ 		else if (board->setup) {
+-			status = board->setup(client, board->context);
++			status = board->setup(client, &tps->chip);
+ 			if (status < 0) {
+ 				dev_dbg(&client->dev,
+ 					"board %s %s err %d\n",
+diff --git a/include/linux/mfd/tps65010.h b/include/linux/mfd/tps65010.h
+index a1fb9bc5311de..5edf1aef11185 100644
+--- a/include/linux/mfd/tps65010.h
++++ b/include/linux/mfd/tps65010.h
+@@ -28,6 +28,8 @@
+ #ifndef __LINUX_I2C_TPS65010_H
+ #define __LINUX_I2C_TPS65010_H
+ 
++struct gpio_chip;
++
+ /*
+  * ----------------------------------------------------------------------------
+  * Registers, all 8 bits
+@@ -176,12 +178,10 @@ struct i2c_client;
+ 
+ /**
+  * struct tps65010_board - packages GPIO and LED lines
+- * @base: the GPIO number to assign to GPIO-1
+  * @outmask: bit (N-1) is set to allow GPIO-N to be used as an
+  *	(open drain) output
+  * @setup: optional callback issued once the GPIOs are valid
+  * @teardown: optional callback issued before the GPIOs are invalidated
+- * @context: optional parameter passed to setup() and teardown()
+  *
+  * Board data may be used to package the GPIO (and LED) lines for use
+  * in by the generic GPIO and LED frameworks.  The first four GPIOs
+@@ -193,12 +193,9 @@ struct i2c_client;
+  * devices in their initial states using these GPIOs.
+  */
+ struct tps65010_board {
+-	int				base;
+ 	unsigned			outmask;
+-
+-	int		(*setup)(struct i2c_client *client, void *context);
+-	int		(*teardown)(struct i2c_client *client, void *context);
+-	void		*context;
++	int		(*setup)(struct i2c_client *client, struct gpio_chip *gc);
++	void		(*teardown)(struct i2c_client *client, struct gpio_chip *gc);
+ };
+ 
+ #endif /*  __LINUX_I2C_TPS65010_H */
 -- 
 2.39.2
 
