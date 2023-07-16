@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA078F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C614EC433C7;
-	Sun, 16 Jul 2023 20:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7ED8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B7FC433C7;
+	Sun, 16 Jul 2023 20:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537748;
-	bh=QSf/KIAm1ANSPVBcpe+CVWX6ZKrcPfCxwR+F7bvvM7s=;
+	s=korg; t=1689537751;
+	bh=LPAQug94vgYk9BmoBI6j+kZdHOYW0ScNhV7n5XdNrHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWKJIo+FmM5LmOk3eEW7xW/0i7Qx8kzR/3BavJiJDlSY0cqQ2LFky2M7Exmyn8c3b
-	 EvLTd9Dz/3blOb+147tkIq0hsqOdnwjGhHIcj4jlq/3ORTrfv0e2TgKEHI4VTQpWeQ
-	 3tKijum0rQPgSvTYjSdTzeiGHEWZvZqCb+8lR5kw=
+	b=h2aSg7neK2bzuf2czs4/917IHkC2GRjvXZ+OOQnSYkf7/xWYR6M/tKTUx7Nsi4uls
+	 gWjx1irVy3AevCYy45XCRn2915GavoywY4vuZyJKQuHNi7LAJftKgKauXHIE8IDhG+
+	 fiLf1hQObfha7LFerBCHo1ymTuKIGOl+ZLTm6uFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 205/800] netlink: do not hard code device address lenth in fdb dumps
-Date: Sun, 16 Jul 2023 21:40:58 +0200
-Message-ID: <20230716194953.860097669@linuxfoundation.org>
+Subject: [PATCH 6.4 178/800] wifi: cfg80211: rewrite merging of inherited elements
+Date: Sun, 16 Jul 2023 21:40:31 +0200
+Message-ID: <20230716194953.239442069@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,154 +36,287 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit aa5406950726e336c5c9585b09799a734b6e77bf ]
+[ Upstream commit dfd9aa3e7a456d57b18021d66472ab7ff8373ab7 ]
 
-syzbot reports that some netdev devices do not have a six bytes
-address [1]
+The cfg80211_gen_new_ie function merges the IEs using inheritance rules.
+Rewrite this function to fix issues around inheritance rules. In
+particular, vendor elements do not require any special handling, as they
+are either all inherited or overridden by the subprofile.
+Also, add fragmentation handling as this may be needed in some cases.
 
-Replace ETH_ALEN by dev->addr_len.
+This also changes the function to not require making a copy. The new
+version could be optimized a bit by explicitly tracking which IEs have
+been handled already rather than looking that up again every time.
 
-[1] (Case of a device where dev->addr_len = 4)
+Note that a small behavioural change is the removal of the SSID special
+handling. This should be fine for the MBSSID element, as the SSID must
+be included in the subelement.
 
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-BUG: KMSAN: kernel-infoleak in copyout+0xb8/0x100 lib/iov_iter.c:169
-instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-copyout+0xb8/0x100 lib/iov_iter.c:169
-_copy_to_iter+0x6d8/0x1d00 lib/iov_iter.c:536
-copy_to_iter include/linux/uio.h:206 [inline]
-simple_copy_to_iter+0x68/0xa0 net/core/datagram.c:513
-__skb_datagram_iter+0x123/0xdc0 net/core/datagram.c:419
-skb_copy_datagram_iter+0x5c/0x200 net/core/datagram.c:527
-skb_copy_datagram_msg include/linux/skbuff.h:3960 [inline]
-netlink_recvmsg+0x4ae/0x15a0 net/netlink/af_netlink.c:1970
-sock_recvmsg_nosec net/socket.c:1019 [inline]
-sock_recvmsg net/socket.c:1040 [inline]
-____sys_recvmsg+0x283/0x7f0 net/socket.c:2722
-___sys_recvmsg+0x223/0x840 net/socket.c:2764
-do_recvmmsg+0x4f9/0xfd0 net/socket.c:2858
-__sys_recvmmsg net/socket.c:2937 [inline]
-__do_sys_recvmmsg net/socket.c:2960 [inline]
-__se_sys_recvmmsg net/socket.c:2953 [inline]
-__x64_sys_recvmmsg+0x397/0x490 net/socket.c:2953
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Uninit was stored to memory at:
-__nla_put lib/nlattr.c:1009 [inline]
-nla_put+0x1c6/0x230 lib/nlattr.c:1067
-nlmsg_populate_fdb_fill+0x2b8/0x600 net/core/rtnetlink.c:4071
-nlmsg_populate_fdb net/core/rtnetlink.c:4418 [inline]
-ndo_dflt_fdb_dump+0x616/0x840 net/core/rtnetlink.c:4456
-rtnl_fdb_dump+0x14ff/0x1fc0 net/core/rtnetlink.c:4629
-netlink_dump+0x9d1/0x1310 net/netlink/af_netlink.c:2268
-netlink_recvmsg+0xc5c/0x15a0 net/netlink/af_netlink.c:1995
-sock_recvmsg_nosec+0x7a/0x120 net/socket.c:1019
-____sys_recvmsg+0x664/0x7f0 net/socket.c:2720
-___sys_recvmsg+0x223/0x840 net/socket.c:2764
-do_recvmmsg+0x4f9/0xfd0 net/socket.c:2858
-__sys_recvmmsg net/socket.c:2937 [inline]
-__do_sys_recvmmsg net/socket.c:2960 [inline]
-__se_sys_recvmmsg net/socket.c:2953 [inline]
-__x64_sys_recvmmsg+0x397/0x490 net/socket.c:2953
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Uninit was created at:
-slab_post_alloc_hook+0x12d/0xb60 mm/slab.h:716
-slab_alloc_node mm/slub.c:3451 [inline]
-__kmem_cache_alloc_node+0x4ff/0x8b0 mm/slub.c:3490
-kmalloc_trace+0x51/0x200 mm/slab_common.c:1057
-kmalloc include/linux/slab.h:559 [inline]
-__hw_addr_create net/core/dev_addr_lists.c:60 [inline]
-__hw_addr_add_ex+0x2e5/0x9e0 net/core/dev_addr_lists.c:118
-__dev_mc_add net/core/dev_addr_lists.c:867 [inline]
-dev_mc_add+0x9a/0x130 net/core/dev_addr_lists.c:885
-igmp6_group_added+0x267/0xbc0 net/ipv6/mcast.c:680
-ipv6_mc_up+0x296/0x3b0 net/ipv6/mcast.c:2754
-ipv6_mc_remap+0x1e/0x30 net/ipv6/mcast.c:2708
-addrconf_type_change net/ipv6/addrconf.c:3731 [inline]
-addrconf_notify+0x4d3/0x1d90 net/ipv6/addrconf.c:3699
-notifier_call_chain kernel/notifier.c:93 [inline]
-raw_notifier_call_chain+0xe4/0x430 kernel/notifier.c:461
-call_netdevice_notifiers_info net/core/dev.c:1935 [inline]
-call_netdevice_notifiers_extack net/core/dev.c:1973 [inline]
-call_netdevice_notifiers+0x1ee/0x2d0 net/core/dev.c:1987
-bond_enslave+0xccd/0x53f0 drivers/net/bonding/bond_main.c:1906
-do_set_master net/core/rtnetlink.c:2626 [inline]
-rtnl_newlink_create net/core/rtnetlink.c:3460 [inline]
-__rtnl_newlink net/core/rtnetlink.c:3660 [inline]
-rtnl_newlink+0x378c/0x40e0 net/core/rtnetlink.c:3673
-rtnetlink_rcv_msg+0x16a6/0x1840 net/core/rtnetlink.c:6395
-netlink_rcv_skb+0x371/0x650 net/netlink/af_netlink.c:2546
-rtnetlink_rcv+0x34/0x40 net/core/rtnetlink.c:6413
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0xf28/0x1230 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x122f/0x13d0 net/netlink/af_netlink.c:1913
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0x999/0xd50 net/socket.c:2503
-___sys_sendmsg+0x28d/0x3c0 net/socket.c:2557
-__sys_sendmsg net/socket.c:2586 [inline]
-__do_sys_sendmsg net/socket.c:2595 [inline]
-__se_sys_sendmsg net/socket.c:2593 [inline]
-__x64_sys_sendmsg+0x304/0x490 net/socket.c:2593
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Bytes 2856-2857 of 3500 are uninitialized
-Memory access of size 3500 starts at ffff888018d99104
-Data copied to user address 0000000020000480
-
-Fixes: d83b06036048 ("net: add fdb generic dump routine")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20230621174720.1845040-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0b8fb8235be8 ("cfg80211: Parsing of Multiple BSSID information in scanning")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230616094949.bc6152e146db.I2b5f3bc45085e1901e5b5192a674436adaf94748@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/wireless/scan.c | 213 ++++++++++++++++++++++++++------------------
+ 1 file changed, 124 insertions(+), 89 deletions(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index d1815122298d5..2fe6a3379aaed 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -4096,7 +4096,7 @@ static int nlmsg_populate_fdb_fill(struct sk_buff *skb,
- 	ndm->ndm_ifindex = dev->ifindex;
- 	ndm->ndm_state   = ndm_state;
- 
--	if (nla_put(skb, NDA_LLADDR, ETH_ALEN, addr))
-+	if (nla_put(skb, NDA_LLADDR, dev->addr_len, addr))
- 		goto nla_put_failure;
- 	if (vid)
- 		if (nla_put(skb, NDA_VLAN, sizeof(u16), &vid))
-@@ -4110,10 +4110,10 @@ static int nlmsg_populate_fdb_fill(struct sk_buff *skb,
- 	return -EMSGSIZE;
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index c501db7bbdb3d..ae1f249d04ab3 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -259,117 +259,152 @@ bool cfg80211_is_element_inherited(const struct element *elem,
  }
+ EXPORT_SYMBOL(cfg80211_is_element_inherited);
  
--static inline size_t rtnl_fdb_nlmsg_size(void)
-+static inline size_t rtnl_fdb_nlmsg_size(const struct net_device *dev)
+-static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
+-				  const u8 *subelement, size_t subie_len,
+-				  u8 *new_ie, gfp_t gfp)
++static size_t cfg80211_copy_elem_with_frags(const struct element *elem,
++					    const u8 *ie, size_t ie_len,
++					    u8 **pos, u8 *buf, size_t buf_len)
  {
- 	return NLMSG_ALIGN(sizeof(struct ndmsg)) +
--	       nla_total_size(ETH_ALEN) +	/* NDA_LLADDR */
-+	       nla_total_size(dev->addr_len) +	/* NDA_LLADDR */
- 	       nla_total_size(sizeof(u16)) +	/* NDA_VLAN */
- 	       0;
- }
-@@ -4125,7 +4125,7 @@ static void rtnl_fdb_notify(struct net_device *dev, u8 *addr, u16 vid, int type,
- 	struct sk_buff *skb;
- 	int err = -ENOBUFS;
+-	u8 *pos, *tmp;
+-	const u8 *tmp_old, *tmp_new;
+-	const struct element *non_inherit_elem;
+-	u8 *sub_copy;
++	if (WARN_ON((u8 *)elem < ie || elem->data > ie + ie_len ||
++		    elem->data + elem->datalen > ie + ie_len))
++		return 0;
  
--	skb = nlmsg_new(rtnl_fdb_nlmsg_size(), GFP_ATOMIC);
-+	skb = nlmsg_new(rtnl_fdb_nlmsg_size(dev), GFP_ATOMIC);
- 	if (!skb)
- 		goto errout;
+-	/* copy subelement as we need to change its content to
+-	 * mark an ie after it is processed.
+-	 */
+-	sub_copy = kmemdup(subelement, subie_len, gfp);
+-	if (!sub_copy)
++	if (elem->datalen + 2 > buf + buf_len - *pos)
+ 		return 0;
+ 
+-	pos = &new_ie[0];
++	memcpy(*pos, elem, elem->datalen + 2);
++	*pos += elem->datalen + 2;
+ 
+-	/* set new ssid */
+-	tmp_new = cfg80211_find_ie(WLAN_EID_SSID, sub_copy, subie_len);
+-	if (tmp_new) {
+-		memcpy(pos, tmp_new, tmp_new[1] + 2);
+-		pos += (tmp_new[1] + 2);
++	/* Finish if it is not fragmented  */
++	if (elem->datalen != 255)
++		return *pos - buf;
++
++	ie_len = ie + ie_len - elem->data - elem->datalen;
++	ie = (const u8 *)elem->data + elem->datalen;
++
++	for_each_element(elem, ie, ie_len) {
++		if (elem->id != WLAN_EID_FRAGMENT)
++			break;
++
++		if (elem->datalen + 2 > buf + buf_len - *pos)
++			return 0;
++
++		memcpy(*pos, elem, elem->datalen + 2);
++		*pos += elem->datalen + 2;
++
++		if (elem->datalen != 255)
++			break;
+ 	}
+ 
+-	/* get non inheritance list if exists */
+-	non_inherit_elem =
+-		cfg80211_find_ext_elem(WLAN_EID_EXT_NON_INHERITANCE,
+-				       sub_copy, subie_len);
++	return *pos - buf;
++}
+ 
+-	/* go through IEs in ie (skip SSID) and subelement,
+-	 * merge them into new_ie
++static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
++				  const u8 *subie, size_t subie_len,
++				  u8 *new_ie, size_t new_ie_len)
++{
++	const struct element *non_inherit_elem, *parent, *sub;
++	u8 *pos = new_ie;
++	u8 id, ext_id;
++	unsigned int match_len;
++
++	non_inherit_elem = cfg80211_find_ext_elem(WLAN_EID_EXT_NON_INHERITANCE,
++						  subie, subie_len);
++
++	/* We copy the elements one by one from the parent to the generated
++	 * elements.
++	 * If they are not inherited (included in subie or in the non
++	 * inheritance element), then we copy all occurrences the first time
++	 * we see this element type.
+ 	 */
+-	tmp_old = cfg80211_find_ie(WLAN_EID_SSID, ie, ielen);
+-	tmp_old = (tmp_old) ? tmp_old + tmp_old[1] + 2 : ie;
+-
+-	while (tmp_old + 2 - ie <= ielen &&
+-	       tmp_old + tmp_old[1] + 2 - ie <= ielen) {
+-		if (tmp_old[0] == 0) {
+-			tmp_old++;
++	for_each_element(parent, ie, ielen) {
++		if (parent->id == WLAN_EID_FRAGMENT)
+ 			continue;
++
++		if (parent->id == WLAN_EID_EXTENSION) {
++			if (parent->datalen < 1)
++				continue;
++
++			id = WLAN_EID_EXTENSION;
++			ext_id = parent->data[0];
++			match_len = 1;
++		} else {
++			id = parent->id;
++			match_len = 0;
+ 		}
+ 
+-		if (tmp_old[0] == WLAN_EID_EXTENSION)
+-			tmp = (u8 *)cfg80211_find_ext_ie(tmp_old[2], sub_copy,
+-							 subie_len);
+-		else
+-			tmp = (u8 *)cfg80211_find_ie(tmp_old[0], sub_copy,
+-						     subie_len);
++		/* Find first occurrence in subie */
++		sub = cfg80211_find_elem_match(id, subie, subie_len,
++					       &ext_id, match_len, 0);
+ 
+-		if (!tmp) {
+-			const struct element *old_elem = (void *)tmp_old;
++		/* Copy from parent if not in subie and inherited */
++		if (!sub &&
++		    cfg80211_is_element_inherited(parent, non_inherit_elem)) {
++			if (!cfg80211_copy_elem_with_frags(parent,
++							   ie, ielen,
++							   &pos, new_ie,
++							   new_ie_len))
++				return 0;
+ 
+-			/* ie in old ie but not in subelement */
+-			if (cfg80211_is_element_inherited(old_elem,
+-							  non_inherit_elem)) {
+-				memcpy(pos, tmp_old, tmp_old[1] + 2);
+-				pos += tmp_old[1] + 2;
+-			}
+-		} else {
+-			/* ie in transmitting ie also in subelement,
+-			 * copy from subelement and flag the ie in subelement
+-			 * as copied (by setting eid field to WLAN_EID_SSID,
+-			 * which is skipped anyway).
+-			 * For vendor ie, compare OUI + type + subType to
+-			 * determine if they are the same ie.
+-			 */
+-			if (tmp_old[0] == WLAN_EID_VENDOR_SPECIFIC) {
+-				if (tmp_old[1] >= 5 && tmp[1] >= 5 &&
+-				    !memcmp(tmp_old + 2, tmp + 2, 5)) {
+-					/* same vendor ie, copy from
+-					 * subelement
+-					 */
+-					memcpy(pos, tmp, tmp[1] + 2);
+-					pos += tmp[1] + 2;
+-					tmp[0] = WLAN_EID_SSID;
+-				} else {
+-					memcpy(pos, tmp_old, tmp_old[1] + 2);
+-					pos += tmp_old[1] + 2;
+-				}
+-			} else {
+-				/* copy ie from subelement into new ie */
+-				memcpy(pos, tmp, tmp[1] + 2);
+-				pos += tmp[1] + 2;
+-				tmp[0] = WLAN_EID_SSID;
+-			}
++			continue;
+ 		}
+ 
+-		if (tmp_old + tmp_old[1] + 2 - ie == ielen)
+-			break;
++		/* Already copied if an earlier element had the same type */
++		if (cfg80211_find_elem_match(id, ie, (u8 *)parent - ie,
++					     &ext_id, match_len, 0))
++			continue;
+ 
+-		tmp_old += tmp_old[1] + 2;
++		/* Not inheriting, copy all similar elements from subie */
++		while (sub) {
++			if (!cfg80211_copy_elem_with_frags(sub,
++							   subie, subie_len,
++							   &pos, new_ie,
++							   new_ie_len))
++				return 0;
++
++			sub = cfg80211_find_elem_match(id,
++						       sub->data + sub->datalen,
++						       subie_len + subie -
++						       (sub->data +
++							sub->datalen),
++						       &ext_id, match_len, 0);
++		}
+ 	}
+ 
+-	/* go through subelement again to check if there is any ie not
+-	 * copied to new ie, skip ssid, capability, bssid-index ie
++	/* The above misses elements that are included in subie but not in the
++	 * parent, so do a pass over subie and append those.
++	 * Skip the non-tx BSSID caps and non-inheritance element.
+ 	 */
+-	tmp_new = sub_copy;
+-	while (tmp_new + 2 - sub_copy <= subie_len &&
+-	       tmp_new + tmp_new[1] + 2 - sub_copy <= subie_len) {
+-		if (!(tmp_new[0] == WLAN_EID_NON_TX_BSSID_CAP ||
+-		      tmp_new[0] == WLAN_EID_SSID)) {
+-			memcpy(pos, tmp_new, tmp_new[1] + 2);
+-			pos += tmp_new[1] + 2;
++	for_each_element(sub, subie, subie_len) {
++		if (sub->id == WLAN_EID_NON_TX_BSSID_CAP)
++			continue;
++
++		if (sub->id == WLAN_EID_FRAGMENT)
++			continue;
++
++		if (sub->id == WLAN_EID_EXTENSION) {
++			if (sub->datalen < 1)
++				continue;
++
++			id = WLAN_EID_EXTENSION;
++			ext_id = sub->data[0];
++			match_len = 1;
++
++			if (ext_id == WLAN_EID_EXT_NON_INHERITANCE)
++				continue;
++		} else {
++			id = sub->id;
++			match_len = 0;
+ 		}
+-		if (tmp_new + tmp_new[1] + 2 - sub_copy == subie_len)
+-			break;
+-		tmp_new += tmp_new[1] + 2;
++
++		/* Processed if one was included in the parent */
++		if (cfg80211_find_elem_match(id, ie, ielen,
++					     &ext_id, match_len, 0))
++			continue;
++
++		if (!cfg80211_copy_elem_with_frags(sub, subie, subie_len,
++						   &pos, new_ie, new_ie_len))
++			return 0;
+ 	}
+ 
+-	kfree(sub_copy);
+ 	return pos - new_ie;
+ }
+ 
+@@ -2212,7 +2247,7 @@ static void cfg80211_parse_mbssid_data(struct wiphy *wiphy,
+ 			new_ie_len = cfg80211_gen_new_ie(ie, ielen,
+ 							 profile,
+ 							 profile_len, new_ie,
+-							 gfp);
++							 IEEE80211_MAX_DATA_LEN);
+ 			if (!new_ie_len)
+ 				continue;
  
 -- 
 2.39.2
