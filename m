@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2EF8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430D3C433C8;
-	Sun, 16 Jul 2023 20:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0AC8F6A
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D27C433C9;
+	Sun, 16 Jul 2023 20:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540526;
-	bh=tOFIa/fxNLcAu6h6GuVST2YWjk38g77k1sRQ6RyZxeI=;
+	s=korg; t=1689540529;
+	bh=iYTekjNKkmEGDKBmB09O++cqqZm4w0ktLimgiNwIHfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xf4Vw005zMe0yet/T2nDdTIarxiC99NsRMs1/45ANEm7jAdrPYXAWh7dIRWme+4Ga
-	 Y6eFoY5fPig98nCPwbcAXtAeDl+1IiK4LHcEioLX95pMnm688eTiagdkuG1yyqDzNj
-	 V8zQc7KBNlEtlR27ffD1iY9vUO5htuE+153V2ATw=
+	b=P7m2dsDY4sjnXNbX8ohZjdVUeqICuRvGEaYrwKeb5upMJYuT6t6adQrTubIhpvqjK
+	 c2nn6cQA+e9QWjRMdJPifCUtQR3WLT0tsgmGYt+M6I49vFS8d62sMfHwFFSEulCvMC
+	 /gbEZLIx2RQ/rwerpSYRG61QyLgghnhtm08J6WIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
+	Ming Qian <ming.qian@nxp.com>,
+	"xiahong.bao" <xiahong.bao@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 394/591] media: usb: Check az6007_read() return value
-Date: Sun, 16 Jul 2023 21:48:53 +0200
-Message-ID: <20230716194934.110923525@linuxfoundation.org>
+Subject: [PATCH 6.1 395/591] media: amphion: drop repeated codec data for vc1l format
+Date: Sun, 16 Jul 2023 21:48:54 +0200
+Message-ID: <20230716194934.137221600@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,36 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit fdaca63186f59fc664b346c45b76576624b48e57 ]
+[ Upstream commit 668ee1a3a1870381225002c246972419b98e4253 ]
 
-If az6007_read() returns error, there is no sence to continue.
+For format V4L2_PIX_FMT_VC1_ANNEX_L,
+the codec data is replaced with startcode,
+and then driver drop it, otherwise it may led to decoding error.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+It's amphion vpu's limitation
 
-Fixes: 3af2f4f15a61 ("[media] az6007: Change the az6007 read/write routine parameter")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Driver has dropped the first codec data,
+but need to drop the repeated codec data too.
+
+Fixes: e670f5d672ef ("media: amphion: only insert the first sequence startcode for vc1l format")
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Tested-by: xiahong.bao <xiahong.bao@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/az6007.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/amphion/vpu_malone.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/az6007.c b/drivers/media/usb/dvb-usb-v2/az6007.c
-index 62ee09f28a0bc..7524c90f5da61 100644
---- a/drivers/media/usb/dvb-usb-v2/az6007.c
-+++ b/drivers/media/usb/dvb-usb-v2/az6007.c
-@@ -202,7 +202,8 @@ static int az6007_rc_query(struct dvb_usb_device *d)
- 	unsigned code;
- 	enum rc_proto proto;
+diff --git a/drivers/media/platform/amphion/vpu_malone.c b/drivers/media/platform/amphion/vpu_malone.c
+index ae094cdc9bfc8..36e563d29621f 100644
+--- a/drivers/media/platform/amphion/vpu_malone.c
++++ b/drivers/media/platform/amphion/vpu_malone.c
+@@ -1317,6 +1317,8 @@ static int vpu_malone_insert_scode_vc1_l_seq(struct malone_scode_t *scode)
+ 	int size = 0;
+ 	u8 rcv_seqhdr[MALONE_VC1_RCV_SEQ_HEADER_LEN];
  
--	az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10);
-+	if (az6007_read(d, AZ6007_READ_IR, 0, 0, st->data, 10) < 0)
-+		return -EIO;
- 
- 	if (st->data[1] == 0x44)
++	if (vpu_vb_is_codecconfig(to_vb2_v4l2_buffer(scode->vb)))
++		scode->need_data = 0;
+ 	if (scode->inst->total_input_count)
  		return 0;
+ 	scode->need_data = 0;
 -- 
 2.39.2
 
