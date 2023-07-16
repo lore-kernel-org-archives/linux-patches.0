@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6438F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2C3C433C7;
-	Sun, 16 Jul 2023 20:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91BD8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699FFC433C7;
+	Sun, 16 Jul 2023 20:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537810;
-	bh=j6kS7LQm9jiAtqEA+kWOkRi9TYmlZD9KukE45Fd8jhQ=;
+	s=korg; t=1689537812;
+	bh=Yi5yyz+6DpwNbbrezZUUc53Sb7rg4u/CD4JKSxfzVog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qD2ZyWfjkSsguFkpS7rsZJfc+jtMl23D6Dc6FmUp0KZeMC0GhjJuPI3b9Pr2oT0WT
-	 FERKJQMJggjREvDUVKeHPNu6dgZAN8terHHDWxCcJske1DurT2/UbsxBOAzDWAAXd7
-	 YJDWPBRj592qCuiIzZ9T/4hnoNllCqpS9tMfB9BQ=
+	b=VINnbLBQJthr/e7NkDKFS5TcY5RBQQmZLZ7L13QpunGWBE6svv53GwAydpjPaNrv/
+	 yG2KYJuTW9KTqP0awK0fVDXdhGHCttDis0CrNeiI20qwoi7l7oTs+PK4osZdMJCKl9
+	 avJcj7zMLe0VxKpbeWcpL2TWs+8Dn9H/p4zrRw7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
+	Markus Elfring <elfring@users.sourceforge.net>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 228/800] drm/i915/guc/slpc: Provide sysfs for efficient freq
-Date: Sun, 16 Jul 2023 21:41:21 +0200
-Message-ID: <20230716194954.385381525@linuxfoundation.org>
+Subject: [PATCH 6.4 229/800] drm/bridge: it6505: Move a variable assignment behind a null pointer check in receive_timing_debugfs_show()
+Date: Sun, 16 Jul 2023 21:41:22 +0200
+Message-ID: <20230716194954.408416024@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,203 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+From: Markus Elfring <elfring@users.sourceforge.net>
 
-[ Upstream commit 55f9720dbf23ed640a51ea5564c22305efa8a467 ]
+[ Upstream commit 0be05a75de2916421e88e0d64b001984f54df0bd ]
 
-SLPC enables use of efficient freq at init by default. It is
-possible for GuC to request frequencies that are higher than
-the 'software' max if user has set it lower than the efficient
-level.
+The address of a data structure member was determined before
+a corresponding null pointer check in the implementation of
+the function “receive_timing_debugfs_show”.
 
-Scenarios/tests that require strict fixing of freq below the efficient
-level will need to disable it through this interface.
+Thus avoid the risk for undefined behaviour by moving the assignment
+for the variable “vid” behind the null pointer check.
 
-v2: Keep just one interface to toggle sysfs. With this, user will
-be completely responsible for toggling efficient frequency if need
-be. There will be no implicit disabling when user sets min < RP1 (Ashutosh)
+This issue was detected by using the Coccinelle software.
 
-v3: Remove unused label, review comments (Ashutosh)
-
-v4: Toggle efficient freq usage in SLPC selftest and checkpatch fixes
-
-v5: Review comments (Andi) and add a separate patch for selftest updates
-
-Fixes: 95ccf312a1e4 ("drm/i915/guc/slpc: Allow SLPC to use efficient frequency")
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230426003942.1924347-1-vinay.belgaumkar@intel.com
+Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
+Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+Link: https://patchwork.freedesktop.org/patch/msgid/fa69384f-1485-142b-c4ee-3df54ac68a89@web.de
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c   | 35 +++++++++++++++++
- drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c   | 38 +++++++++++++------
- drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h   |  1 +
- .../gpu/drm/i915/gt/uc/intel_guc_slpc_types.h |  1 +
- 4 files changed, 64 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/bridge/ite-it6505.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c b/drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c
-index 28f27091cd3b7..ee2b44f896a27 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_sysfs_pm.c
-@@ -451,6 +451,33 @@ static ssize_t punit_req_freq_mhz_show(struct kobject *kobj,
- 	return sysfs_emit(buff, "%u\n", preq);
- }
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index abaf6e23775eb..45f579c365e7f 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -3207,7 +3207,7 @@ static ssize_t receive_timing_debugfs_show(struct file *file, char __user *buf,
+ 					   size_t len, loff_t *ppos)
+ {
+ 	struct it6505 *it6505 = file->private_data;
+-	struct drm_display_mode *vid = &it6505->video_info;
++	struct drm_display_mode *vid;
+ 	u8 read_buf[READ_BUFFER_SIZE];
+ 	u8 *str = read_buf, *end = read_buf + READ_BUFFER_SIZE;
+ 	ssize_t ret, count;
+@@ -3216,6 +3216,7 @@ static ssize_t receive_timing_debugfs_show(struct file *file, char __user *buf,
+ 		return -ENODEV;
  
-+static ssize_t slpc_ignore_eff_freq_show(struct kobject *kobj,
-+					 struct kobj_attribute *attr,
-+					 char *buff)
-+{
-+	struct intel_gt *gt = intel_gt_sysfs_get_drvdata(kobj, attr->attr.name);
-+	struct intel_guc_slpc *slpc = &gt->uc.guc.slpc;
-+
-+	return sysfs_emit(buff, "%u\n", slpc->ignore_eff_freq);
-+}
-+
-+static ssize_t slpc_ignore_eff_freq_store(struct kobject *kobj,
-+					  struct kobj_attribute *attr,
-+					  const char *buff, size_t count)
-+{
-+	struct intel_gt *gt = intel_gt_sysfs_get_drvdata(kobj, attr->attr.name);
-+	struct intel_guc_slpc *slpc = &gt->uc.guc.slpc;
-+	int err;
-+	u32 val;
-+
-+	err = kstrtou32(buff, 0, &val);
-+	if (err)
-+		return err;
-+
-+	err = intel_guc_slpc_set_ignore_eff_freq(slpc, val);
-+	return err ?: count;
-+}
-+
- struct intel_gt_bool_throttle_attr {
- 	struct attribute attr;
- 	ssize_t (*show)(struct kobject *kobj, struct kobj_attribute *attr,
-@@ -663,6 +690,8 @@ static struct kobj_attribute attr_media_freq_factor_scale =
- INTEL_GT_ATTR_RO(media_RP0_freq_mhz);
- INTEL_GT_ATTR_RO(media_RPn_freq_mhz);
- 
-+INTEL_GT_ATTR_RW(slpc_ignore_eff_freq);
-+
- static const struct attribute *media_perf_power_attrs[] = {
- 	&attr_media_freq_factor.attr,
- 	&attr_media_freq_factor_scale.attr,
-@@ -744,6 +773,12 @@ void intel_gt_sysfs_pm_init(struct intel_gt *gt, struct kobject *kobj)
- 	if (ret)
- 		gt_warn(gt, "failed to create punit_req_freq_mhz sysfs (%pe)", ERR_PTR(ret));
- 
-+	if (intel_uc_uses_guc_slpc(&gt->uc)) {
-+		ret = sysfs_create_file(kobj, &attr_slpc_ignore_eff_freq.attr);
-+		if (ret)
-+			gt_warn(gt, "failed to create ignore_eff_freq sysfs (%pe)", ERR_PTR(ret));
-+	}
-+
- 	if (i915_mmio_reg_valid(intel_gt_perf_limit_reasons_reg(gt))) {
- 		ret = sysfs_create_files(kobj, throttle_reason_attrs);
- 		if (ret)
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-index 026d73855f36c..56dbba1ef6684 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.c
-@@ -277,6 +277,7 @@ int intel_guc_slpc_init(struct intel_guc_slpc *slpc)
- 
- 	slpc->max_freq_softlimit = 0;
- 	slpc->min_freq_softlimit = 0;
-+	slpc->ignore_eff_freq = false;
- 	slpc->min_is_rpmax = false;
- 
- 	slpc->boost_freq = 0;
-@@ -457,6 +458,29 @@ int intel_guc_slpc_get_max_freq(struct intel_guc_slpc *slpc, u32 *val)
- 	return ret;
- }
- 
-+int intel_guc_slpc_set_ignore_eff_freq(struct intel_guc_slpc *slpc, bool val)
-+{
-+	struct drm_i915_private *i915 = slpc_to_i915(slpc);
-+	intel_wakeref_t wakeref;
-+	int ret;
-+
-+	mutex_lock(&slpc->lock);
-+	wakeref = intel_runtime_pm_get(&i915->runtime_pm);
-+
-+	ret = slpc_set_param(slpc,
-+			     SLPC_PARAM_IGNORE_EFFICIENT_FREQUENCY,
-+			     val);
-+	if (ret)
-+		guc_probe_error(slpc_to_guc(slpc), "Failed to set efficient freq(%d): %pe\n",
-+				val, ERR_PTR(ret));
-+	else
-+		slpc->ignore_eff_freq = val;
-+
-+	intel_runtime_pm_put(&i915->runtime_pm, wakeref);
-+	mutex_unlock(&slpc->lock);
-+	return ret;
-+}
-+
- /**
-  * intel_guc_slpc_set_min_freq() - Set min frequency limit for SLPC.
-  * @slpc: pointer to intel_guc_slpc.
-@@ -482,16 +506,6 @@ int intel_guc_slpc_set_min_freq(struct intel_guc_slpc *slpc, u32 val)
- 	mutex_lock(&slpc->lock);
- 	wakeref = intel_runtime_pm_get(&i915->runtime_pm);
- 
--	/* Ignore efficient freq if lower min freq is requested */
--	ret = slpc_set_param(slpc,
--			     SLPC_PARAM_IGNORE_EFFICIENT_FREQUENCY,
--			     val < slpc->rp1_freq);
--	if (ret) {
--		guc_probe_error(slpc_to_guc(slpc), "Failed to toggle efficient freq: %pe\n",
--				ERR_PTR(ret));
--		goto out;
--	}
--
- 	ret = slpc_set_param(slpc,
- 			     SLPC_PARAM_GLOBAL_MIN_GT_UNSLICE_FREQ_MHZ,
- 			     val);
-@@ -499,7 +513,6 @@ int intel_guc_slpc_set_min_freq(struct intel_guc_slpc *slpc, u32 val)
- 	if (!ret)
- 		slpc->min_freq_softlimit = val;
- 
--out:
- 	intel_runtime_pm_put(&i915->runtime_pm, wakeref);
- 	mutex_unlock(&slpc->lock);
- 
-@@ -752,6 +765,9 @@ int intel_guc_slpc_enable(struct intel_guc_slpc *slpc)
- 	/* Set cached media freq ratio mode */
- 	intel_guc_slpc_set_media_ratio_mode(slpc, slpc->media_ratio_mode);
- 
-+	/* Set cached value of ignore efficient freq */
-+	intel_guc_slpc_set_ignore_eff_freq(slpc, slpc->ignore_eff_freq);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h
-index 17ed515f6a852..597eb5413ddf2 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc.h
-@@ -46,5 +46,6 @@ void intel_guc_slpc_boost(struct intel_guc_slpc *slpc);
- void intel_guc_slpc_dec_waiters(struct intel_guc_slpc *slpc);
- int intel_guc_slpc_unset_gucrc_mode(struct intel_guc_slpc *slpc);
- int intel_guc_slpc_override_gucrc_mode(struct intel_guc_slpc *slpc, u32 mode);
-+int intel_guc_slpc_set_ignore_eff_freq(struct intel_guc_slpc *slpc, bool val);
- 
- #endif
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc_types.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc_types.h
-index a6ef53b04e047..a886513314977 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc_types.h
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_slpc_types.h
-@@ -31,6 +31,7 @@ struct intel_guc_slpc {
- 	/* frequency softlimits */
- 	u32 min_freq_softlimit;
- 	u32 max_freq_softlimit;
-+	bool ignore_eff_freq;
- 
- 	/* cached media ratio mode */
- 	u32 media_ratio_mode;
+ 	it6505_calc_video_info(it6505);
++	vid = &it6505->video_info;
+ 	str += scnprintf(str, end - str, "---video timing---\n");
+ 	str += scnprintf(str, end - str, "PCLK:%d.%03dMHz\n",
+ 			 vid->clock / 1000, vid->clock % 1000);
 -- 
 2.39.2
 
