@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAD68F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:53:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FBBC433C7;
-	Sun, 16 Jul 2023 20:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69C98F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:53:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5A3C433C7;
+	Sun, 16 Jul 2023 20:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540799;
-	bh=oyTpk6QWYS8R1ZC3mGdP27MFibbw1ulX2WFlmU42itc=;
+	s=korg; t=1689540801;
+	bh=anADLG2yJBjurdAhIA1aG+IL5b9z6R+xGSE+Q8Pugow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gkTacNys3g4yn8InoFE2q3QPOu/MLyk6LziiEQiJOSGBSpp9zeR2OiJVYyEYIPS45
-	 2zoxbzFzS4Yf6bUXRyrg0gbuxnCU6r7/CjcvEXZvKHEzjPybVuTkZEC6vAyZZ0jvsX
-	 P/lunuBjQbzM6FvGUbPAim1LFjdc2DZoPvugb3uo=
+	b=pTitGUp1YYkQltR8X2GrC3imffGofksI7NjmRboAGOlR5FDdXUc0fpnzip11rTwTj
+	 1Sk9GbWAsi/JPlV65sPXKPmddXujQ1GR4qsXegGqlR4+GkfuxdCJmL7lDE1OAOMpcD
+	 aCAqhzvZAnfiYvtFA6XVnuiibZc9dm1lIiigKO10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <andrea.righi@canonical.com>,
-	Jinke Han <hanjinke.666@bytedance.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 464/591] blk-throttle: Fix io statistics for cgroup v1
-Date: Sun, 16 Jul 2023 21:50:03 +0200
-Message-ID: <20230716194935.907582674@linuxfoundation.org>
+Subject: [PATCH 6.1 465/591] rtc: st-lpc: Release some resources in st_rtc_probe() in case of error
+Date: Sun, 16 Jul 2023 21:50:04 +0200
+Message-ID: <20230716194935.933663379@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,93 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinke Han <hanjinke.666@bytedance.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit ad7c3b41e86b59943a903d23c7b037d820e6270c ]
+[ Upstream commit 06c6e1b01d9261f03629cefd1f3553503291e6cf ]
 
-After commit f382fb0bcef4 ("block: remove legacy IO schedulers"),
-blkio.throttle.io_serviced and blkio.throttle.io_service_bytes become
-the only stable io stats interface of cgroup v1, and these statistics
-are done in the blk-throttle code. But the current code only counts the
-bios that are actually throttled. When the user does not add the throttle
-limit, the io stats for cgroup v1 has nothing. I fix it according to the
-statistical method of v2, and made it count all ios accurately.
+If an error occurs after clk_get(), the corresponding resources should be
+released.
 
-Fixes: a7b36ee6ba29 ("block: move blk-throtl fast path inline")
-Tested-by: Andrea Righi <andrea.righi@canonical.com>
-Signed-off-by: Jinke Han <hanjinke.666@bytedance.com>
-Acked-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230507170631.89607-1-hanjinke.666@bytedance.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Use devm_clk_get() to fix it.
+
+Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/866af6adbc7454a7b4505eb6c28fbdc86ccff39e.1686251455.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c   | 6 ++++--
- block/blk-throttle.c | 6 ------
- block/blk-throttle.h | 9 +++++++++
- 3 files changed, 13 insertions(+), 8 deletions(-)
+ drivers/rtc/rtc-st-lpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 5ee0ae8ddbf6f..e812e48d5bb8a 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -2008,6 +2008,9 @@ void blk_cgroup_bio_start(struct bio *bio)
- 	struct blkg_iostat_set *bis;
- 	unsigned long flags;
+diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
+index 0f8e4231098ef..d04d46f9cc65a 100644
+--- a/drivers/rtc/rtc-st-lpc.c
++++ b/drivers/rtc/rtc-st-lpc.c
+@@ -228,7 +228,7 @@ static int st_rtc_probe(struct platform_device *pdev)
+ 	enable_irq_wake(rtc->irq);
+ 	disable_irq(rtc->irq);
  
-+	if (!cgroup_subsys_on_dfl(io_cgrp_subsys))
-+		return;
-+
- 	/* Root-level stats are sourced from system-wide IO stats */
- 	if (!cgroup_parent(blkcg->css.cgroup))
- 		return;
-@@ -2039,8 +2042,7 @@ void blk_cgroup_bio_start(struct bio *bio)
- 	}
- 
- 	u64_stats_update_end_irqrestore(&bis->sync, flags);
--	if (cgroup_subsys_on_dfl(io_cgrp_subsys))
--		cgroup_rstat_updated(blkcg->css.cgroup, cpu);
-+	cgroup_rstat_updated(blkcg->css.cgroup, cpu);
- 	put_cpu();
- }
- 
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index f1bc600c4ded6..d88147d1358fc 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -2167,12 +2167,6 @@ bool __blk_throtl_bio(struct bio *bio)
- 
- 	rcu_read_lock();
- 
--	if (!cgroup_subsys_on_dfl(io_cgrp_subsys)) {
--		blkg_rwstat_add(&tg->stat_bytes, bio->bi_opf,
--				bio->bi_iter.bi_size);
--		blkg_rwstat_add(&tg->stat_ios, bio->bi_opf, 1);
--	}
--
- 	spin_lock_irq(&q->queue_lock);
- 
- 	throtl_update_latency_buckets(td);
-diff --git a/block/blk-throttle.h b/block/blk-throttle.h
-index ef4b7a4de987d..d1ccbfe9f7978 100644
---- a/block/blk-throttle.h
-+++ b/block/blk-throttle.h
-@@ -185,6 +185,15 @@ static inline bool blk_should_throtl(struct bio *bio)
- 	struct throtl_grp *tg = blkg_to_tg(bio->bi_blkg);
- 	int rw = bio_data_dir(bio);
- 
-+	if (!cgroup_subsys_on_dfl(io_cgrp_subsys)) {
-+		if (!bio_flagged(bio, BIO_CGROUP_ACCT)) {
-+			bio_set_flag(bio, BIO_CGROUP_ACCT);
-+			blkg_rwstat_add(&tg->stat_bytes, bio->bi_opf,
-+					bio->bi_iter.bi_size);
-+		}
-+		blkg_rwstat_add(&tg->stat_ios, bio->bi_opf, 1);
-+	}
-+
- 	/* iops limit is always counted */
- 	if (tg->has_rules_iops[rw])
- 		return true;
+-	rtc->clk = clk_get(&pdev->dev, NULL);
++	rtc->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(rtc->clk)) {
+ 		dev_err(&pdev->dev, "Unable to request clock\n");
+ 		return PTR_ERR(rtc->clk);
 -- 
 2.39.2
 
