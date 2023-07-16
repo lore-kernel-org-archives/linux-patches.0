@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EF18F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10FCC433C7;
-	Sun, 16 Jul 2023 20:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154708F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871ADC433C8;
+	Sun, 16 Jul 2023 20:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537863;
-	bh=5aTeKyXvANEJZRkfhVinKmKB3XeZdIyA2OgfN2Jxnac=;
+	s=korg; t=1689537865;
+	bh=/f/qe/x5uw5guA6TWeQzDNDdWGfZFolipMOvbV/kCZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlZmf21qzVLdhVsmfRqYzlnLneDMAhyQ2obZwAiP9aqCb7V4K4JSuxgnSGBM6hBB7
-	 shN9pKbNOVrg34iKCzR4Ii/sdCeI4hXbr6HbAX23uFDemcgeEwSJIUvxML38O0FUFg
-	 AmUr8N24ieiNlo6Iv8/57iy/Rd6y+HzUe9Fxn64o=
+	b=BUZBZNki3agqkEPpswCfXtcCJW09mWcF4GpP821zHgISeZnOBdUEJPM6zr+jA0Mhs
+	 k6hLaE2Kkos0HMJIuQQCGVlqQNIXy/Nrjr2+a5XFqDVe3x7u/20ysV8P5Rp1HS8Kap
+	 pqPtYjBIdolHmzXB9TnjvLnmc6oQk3oW4v6zGSOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 240/800] drm/bridge: tc358768: fix TCLK_TRAILCNT computation
-Date: Sun, 16 Jul 2023 21:41:33 +0200
-Message-ID: <20230716194954.674265312@linuxfoundation.org>
+Subject: [PATCH 6.4 249/800] clk: vc7: Fix .driver_data content in i2c_device_id
+Date: Sun, 16 Jul 2023 21:41:42 +0200
+Message-ID: <20230716194954.883848988@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,90 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit ee18698e212b1659dd0850d7e2ae0f22e16ed3d3 ]
+[ Upstream commit b5e10beeafaa3266559c582dde7534ae3fe8cefb ]
 
-Correct computation of TCLK_TRAILCNT register.
+The .driver_data content in i2c_device_id table must match the
+.data content in of_device_id table, else device_get_match_data()
+would return bogus value on i2c_device_id match. Align the two
+tables.
 
-The driver does not implement non-continuous clock mode, so the actual
-value doesn't make a practical difference yet. However this change also
-ensures that the value does not write to reserved registers bits in case
-of under/overflow.
+The i2c_device_id table is now converted from of_device_id using
+'s@.compatible = "renesas,\([^"]\+"\), .data = \(.*\)@"\1, .driver_data = (kernel_ulong_t)\2@'
 
-This register must be set to a value that ensures that
-
-TCLK-TRAIL > 60ns
- and
-TEOT <= (105 ns + 12 x UI)
-
-with the actual value of TCLK-TRAIL being
-
-(TCLK_TRAILCNT + (1 to 2)) xHSByteClkCycle +
- (2 + (1 to 2)) * HSBYTECLKCycle - (PHY output delay)
-
-with PHY output delay being about
-
-(2 to 3) x MIPIBitClk cycle in the BitClk conversion.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-2-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-3-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-4-francesco@dolcini.it
-Link: https://patchwork.freedesktop.org/patch/msgid/20230427142934.55435-5-francesco@dolcini.it
+Fixes: 48c5e98fedd9 ("clk: Renesas versaclock7 ccf device driver")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Link: https://lore.kernel.org/r/20230507133906.15061-2-marek.vasut+renesas@mailbox.org
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/clk/clk-versaclock7.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index 487bfe33edc88..4cb46a3e6be8c 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -10,6 +10,7 @@
- #include <linux/i2c.h>
- #include <linux/kernel.h>
- #include <linux/media-bus-format.h>
-+#include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
-@@ -639,6 +640,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	struct mipi_dsi_device *dsi_dev = priv->output.dev;
- 	unsigned long mode_flags = dsi_dev->mode_flags;
- 	u32 val, val2, lptxcnt, hact, data_type;
-+	s32 raw_val;
- 	const struct drm_display_mode *mode;
- 	u32 dsibclk_nsk, dsiclk_nsk, ui_nsk, phy_delay_nsk;
- 	u32 dsiclk, dsibclk, video_start;
-@@ -750,9 +752,9 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	dev_dbg(priv->dev, "TCLK_HEADERCNT: 0x%x\n", val);
- 	tc358768_write(priv, TC358768_TCLK_HEADERCNT, val);
+diff --git a/drivers/clk/clk-versaclock7.c b/drivers/clk/clk-versaclock7.c
+index 8e4f86e852aa0..0ae191f50b4b2 100644
+--- a/drivers/clk/clk-versaclock7.c
++++ b/drivers/clk/clk-versaclock7.c
+@@ -1282,7 +1282,7 @@ static const struct regmap_config vc7_regmap_config = {
+ };
  
--	/* TCLK_TRAIL > 60ns + 3*UI */
--	val = 60 + tc358768_to_ns(3 * ui_nsk);
--	val = tc358768_ns_to_cnt(val, dsibclk_nsk) - 5;
-+	/* TCLK_TRAIL > 60ns AND TEOT <= 105 ns + 12*UI */
-+	raw_val = tc358768_ns_to_cnt(60 + tc358768_to_ns(2 * ui_nsk), dsibclk_nsk) - 5;
-+	val = clamp(raw_val, 0, 127);
- 	dev_dbg(priv->dev, "TCLK_TRAILCNT: 0x%x\n", val);
- 	tc358768_write(priv, TC358768_TCLK_TRAILCNT, val);
- 
+ static const struct i2c_device_id vc7_i2c_id[] = {
+-	{ "rc21008a", VC7_RC21008A },
++	{ "rc21008a", .driver_data = (kernel_ulong_t)&vc7_rc21008a_info },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(i2c, vc7_i2c_id);
 -- 
 2.39.2
 
