@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AADF8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F348AC433C8;
-	Sun, 16 Jul 2023 20:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C33F8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9CCC433C7;
+	Sun, 16 Jul 2023 20:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538579;
-	bh=36Jb0ECvCjsUN1MaQrM17AQKhClLRU6tjgI8Ie/Ffks=;
+	s=korg; t=1689538582;
+	bh=ABpqqXsY/BdXLSQfaagpk/BttOeQmEQF/H5TBFGNAS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSytb5DE0GlqkEJ63MwC6EkHm04pEoRqjOWvlBlshuIHh9+uLttIsWK5SG53ortYc
-	 DEzvieIl9AkNXvaA4i9zCmlyE4mD3kT7CzVuii02RL5dhXQiF13JDNdC+2E0/uCxZs
-	 Yc7r2kxWG+yspMbAx4i/SCqIPi+mXHzonZZYPsj8=
+	b=JF1gZQBYu/6hDLiX/TFpR2gZ4qHcx28EPjf+FJyTssBDQt8zlATha6GJE3rsssugC
+	 cxUSojlLdPZsvShTsfdKTcCUtDynwmsaTwH+N2XTPMicnwyQE3MJROxfhKe3hXr00a
+	 3U3DNS9Tt8upx+nNV7qitnMcTKuu56ptfdY8bcQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 502/800] modpost: fix section mismatch message for R_ARM_ABS32
-Date: Sun, 16 Jul 2023 21:45:55 +0200
-Message-ID: <20230716195000.754923044@linuxfoundation.org>
+Subject: [PATCH 6.4 503/800] modpost: fix section mismatch message for R_ARM_{PC24,CALL,JUMP24}
+Date: Sun, 16 Jul 2023 21:45:56 +0200
+Message-ID: <20230716195000.777684268@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,129 +36,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit b7c63520f6703a25eebb4f8138fed764fcae1c6f ]
+[ Upstream commit 56a24b8ce6a7f9c4a21b2276a8644f6f3d8fc14d ]
 
-addend_arm_rel() processes R_ARM_ABS32 in a wrong way.
+addend_arm_rel() processes R_ARM_PC24, R_ARM_CALL, R_ARM_JUMP24 in a
+wrong way.
 
 Here, test code.
 
-  [test code 1]
+[test code for R_ARM_JUMP24]
 
-    #include <linux/init.h>
+  .section .init.text,"ax"
+  bar:
+          bx      lr
 
-    int __initdata foo;
-    int get_foo(void) { return foo; }
+  .section .text,"ax"
+  .globl foo
+  foo:
+          b       bar
 
-If you compile it with ARM versatile_defconfig, modpost will show the
+[test code for R_ARM_CALL]
+
+  .section .init.text,"ax"
+  bar:
+          bx      lr
+
+  .section .text,"ax"
+  .globl foo
+  foo:
+          push    {lr}
+          bl      bar
+          pop     {pc}
+
+If you compile it with ARM multi_v7_defconfig, modpost will show the
 symbol name, (unknown).
 
-  WARNING: modpost: vmlinux.o: section mismatch in reference: get_foo (section: .text) -> (unknown) (section: .init.data)
+  WARNING: modpost: vmlinux.o: section mismatch in reference: foo (section: .text) -> (unknown) (section: .init.text)
 
 (You need to use GNU linker instead of LLD to reproduce it.)
 
-If you compile it for other architectures, modpost will show the correct
-symbol name.
+Fix the code to make modpost show the correct symbol name.
 
-  WARNING: modpost: vmlinux.o: section mismatch in reference: get_foo (section: .text) -> foo (section: .init.data)
+I imported (with adjustment) sign_extend32() from include/linux/bitops.h.
 
-For R_ARM_ABS32, addend_arm_rel() sets r->r_addend to a wrong value.
+The '+8' is the compensation for pc-relative instruction. It is
+documented in "ELF for the Arm Architecture" [1].
 
-I just mimicked the code in arch/arm/kernel/module.c.
+  "If the relocation is pc-relative then compensation for the PC bias
+  (the PC value is 8 bytes ahead of the executing instruction in Arm
+  state and 4 bytes in Thumb state) must be encoded in the relocation
+  by the object producer."
 
-However, there is more difficulty for ARM.
-
-Here, test code.
-
-  [test code 2]
-
-    #include <linux/init.h>
-
-    int __initdata foo;
-    int get_foo(void) { return foo; }
-
-    int __initdata bar;
-    int get_bar(void) { return bar; }
-
-With this commit applied, modpost will show the following messages
-for ARM versatile_defconfig:
-
-  WARNING: modpost: vmlinux.o: section mismatch in reference: get_foo (section: .text) -> foo (section: .init.data)
-  WARNING: modpost: vmlinux.o: section mismatch in reference: get_bar (section: .text) -> foo (section: .init.data)
-
-The reference from 'get_bar' to 'foo' seems wrong.
-
-I have no solution for this because it is true in assembly level.
-
-In the following output, relocation at 0x1c is no longer associated
-with 'bar'. The two relocation entries point to the same symbol, and
-the offset to 'bar' is encoded in the instruction 'r0, [r3, #4]'.
-
-  Disassembly of section .text:
-
-  00000000 <get_foo>:
-     0: e59f3004          ldr     r3, [pc, #4]   @ c <get_foo+0xc>
-     4: e5930000          ldr     r0, [r3]
-     8: e12fff1e          bx      lr
-     c: 00000000          .word   0x00000000
-
-  00000010 <get_bar>:
-    10: e59f3004          ldr     r3, [pc, #4]   @ 1c <get_bar+0xc>
-    14: e5930004          ldr     r0, [r3, #4]
-    18: e12fff1e          bx      lr
-    1c: 00000000          .word   0x00000000
-
-  Relocation section '.rel.text' at offset 0x244 contains 2 entries:
-   Offset     Info    Type            Sym.Value  Sym. Name
-  0000000c  00000c02 R_ARM_ABS32       00000000   .init.data
-  0000001c  00000c02 R_ARM_ABS32       00000000   .init.data
-
-When find_elf_symbol() gets into a situation where relsym->st_name is
-zero, there is no guarantee to get the symbol name as written in C.
-
-I am keeping the current logic because it is useful in many architectures,
-but the symbol name is not always correct depending on the optimization.
-I left some comments in find_tosym().
+[1]: https://github.com/ARM-software/abi-aa/blob/main/aaelf32/aaelf32.rst
 
 Fixes: 56a974fa2d59 ("kbuild: make better section mismatch reports on arm")
+Fixes: 6e2e340b59d2 ("ARM: 7324/1: modpost: Fix section warnings for ARM for many compilers")
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ scripts/mod/modpost.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 9b6e8109af83f..6c2371f684a94 100644
+index 6c2371f684a94..d97cbd753d2c3 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
-@@ -1150,6 +1150,10 @@ static Elf_Sym *find_elf_symbol(struct elf_info *elf, Elf64_Sword addr,
- 	if (relsym->st_name != 0)
- 		return relsym;
+@@ -1411,12 +1411,20 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
+ #define	R_ARM_THM_JUMP19	51
+ #endif
  
-+	/*
-+	 * Strive to find a better symbol name, but the resulting name may not
-+	 * match the symbol referenced in the original code.
-+	 */
- 	relsym_secindex = get_secindex(elf, relsym);
- 	for (sym = elf->symtab_start; sym < elf->symtab_stop; sym++) {
- 		if (get_secindex(elf, sym) != relsym_secindex)
-@@ -1410,12 +1414,14 @@ static int addend_386_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
++static int32_t sign_extend32(int32_t value, int index)
++{
++	uint8_t shift = 31 - index;
++
++	return (int32_t)(value << shift) >> shift;
++}
++
  static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
  {
  	unsigned int r_typ = ELF_R_TYPE(r->r_info);
-+	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
-+	void *loc = reloc_location(elf, sechdr, r);
-+	uint32_t inst;
+ 	Elf_Sym *sym = elf->symtab_start + ELF_R_SYM(r->r_info);
+ 	void *loc = reloc_location(elf, sechdr, r);
+ 	uint32_t inst;
++	int32_t offset;
  
  	switch (r_typ) {
  	case R_ARM_ABS32:
--		/* From ARM ABI: (S + A) | T */
--		r->r_addend = (int)(long)
--			      (elf->symtab_start + ELF_R_SYM(r->r_info));
-+		inst = TO_NATIVE(*(uint32_t *)loc);
-+		r->r_addend = inst + sym->st_value;
- 		break;
+@@ -1426,6 +1434,10 @@ static int addend_arm_rel(struct elf_info *elf, Elf_Shdr *sechdr, Elf_Rela *r)
  	case R_ARM_PC24:
  	case R_ARM_CALL:
+ 	case R_ARM_JUMP24:
++		inst = TO_NATIVE(*(uint32_t *)loc);
++		offset = sign_extend32((inst & 0x00ffffff) << 2, 25);
++		r->r_addend = offset + sym->st_value + 8;
++		break;
+ 	case R_ARM_THM_CALL:
+ 	case R_ARM_THM_JUMP24:
+ 	case R_ARM_THM_JUMP19:
 -- 
 2.39.2
 
