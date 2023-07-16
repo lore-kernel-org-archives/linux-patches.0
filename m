@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9AE8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B10C433C9;
-	Sun, 16 Jul 2023 20:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37D18F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48449C433C7;
+	Sun, 16 Jul 2023 20:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539178;
-	bh=OAwa4yHFrLFWnhI9AOF1MEHPvOmbJPFxZWG6pgcXj+I=;
+	s=korg; t=1689539181;
+	bh=p8Jd3e4FFowg8tlM84/UtAS1uuLCDN5sL4XtCbVdwj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3c+Zy9U/HEnmzxNz/rgKt41aRaoogNm5Hl94lOsoioCoUjezPsGgVnibtQur32iI
-	 eRpa/3YRclqO+4jdKrJLHe77Uwo2zRoA+TlB6G+IKejSVUxUm91PjwJzJe0h0QZcO1
-	 06MaY+Oi2bZ+XypEzy8uiCDMPEDOtT6tVsgE+4eQ=
+	b=ew0R7zVjU+JbuO8Dh3lK2DfaehXPduabHeEtRCmWTF//EJduKkwahYXBQraUjuyud
+	 rF0yWX366IqJ4050u7pSh4PWc3Xvl3M7uF+IvlktpkeJP/lcxC34o7LcywLxPsoUNl
+	 pcIKNofphqIggiISmPRbiyZ41CX6m8yfDqgfL+I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jan Kara <jack@suse.cz>,
-	Dave Chinner <david@fromorbit.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 715/800] writeback: account the number of pages written back
-Date: Sun, 16 Jul 2023 21:49:28 +0200
-Message-ID: <20230716195005.725847022@linuxfoundation.org>
+Subject: [PATCH 6.4 716/800] lib: dhry: fix sleeping allocations inside non-preemptable section
+Date: Sun, 16 Jul 2023 21:49:29 +0200
+Message-ID: <20230716195005.749034577@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,76 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 8344a3d44be3d18671e18c4ba23bb03dd21e14ad ]
+[ Upstream commit 8ba388c06bc8056935ec1814b2689bfb42f3b89a ]
 
-nr_to_write is a count of pages, so we need to decrease it by the number
-of pages in the folio we just wrote, not by 1.  Most callers specify
-either LONG_MAX or 1, so are unaffected, but writeback_sb_inodes() might
-end up writing 512x as many pages as it asked for.
+The Smatch static checker reports the following warnings:
 
-Dave added:
+    lib/dhry_run.c:38 dhry_benchmark() warn: sleeping in atomic context
+    lib/dhry_run.c:43 dhry_benchmark() warn: sleeping in atomic context
 
-: XFS is the only filesystem this would affect, right?  AFAIA, nothing
-: else enables large folios and uses writeback through
-: write_cache_pages() at this point...
-:
-: In which case, I'd be surprised if much difference, if any, gets
-: noticed by anyone.
+Indeed, dhry() does sleeping allocations inside the non-preemptable
+section delimited by get_cpu()/put_cpu().
 
-Link: https://lkml.kernel.org/r/20230628185548.981888-1-willy@infradead.org
-Fixes: 793917d997df ("mm/readahead: Add large folio readahead")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Dave Chinner <david@fromorbit.com>
+Fix this by using atomic allocations instead.
+Add error handling, as atomic these allocations may fail.
+
+Link: https://lkml.kernel.org/r/bac6d517818a7cd8efe217c1ad649fffab9cc371.1688568764.git.geert+renesas@glider.be
+Fixes: 13684e966d46283e ("lib: dhry: fix unstable smp_processor_id(_) usage")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/0469eb3a-02eb-4b41-b189-de20b931fa56@moroto.mountain
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page-writeback.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ lib/dhry_1.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/mm/page-writeback.c b/mm/page-writeback.c
-index db79439990073..6faa09f1783b3 100644
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -2434,6 +2434,7 @@ int write_cache_pages(struct address_space *mapping,
+diff --git a/lib/dhry_1.c b/lib/dhry_1.c
+index 83247106824cc..08edbbb19f573 100644
+--- a/lib/dhry_1.c
++++ b/lib/dhry_1.c
+@@ -139,8 +139,15 @@ int dhry(int n)
  
- 		for (i = 0; i < nr_folios; i++) {
- 			struct folio *folio = fbatch.folios[i];
-+			unsigned long nr;
+ 	/* Initializations */
  
- 			done_index = folio->index;
+-	Next_Ptr_Glob = (Rec_Pointer)kzalloc(sizeof(Rec_Type), GFP_KERNEL);
+-	Ptr_Glob = (Rec_Pointer)kzalloc(sizeof(Rec_Type), GFP_KERNEL);
++	Next_Ptr_Glob = (Rec_Pointer)kzalloc(sizeof(Rec_Type), GFP_ATOMIC);
++	if (!Next_Ptr_Glob)
++		return -ENOMEM;
++
++	Ptr_Glob = (Rec_Pointer)kzalloc(sizeof(Rec_Type), GFP_ATOMIC);
++	if (!Ptr_Glob) {
++		kfree(Next_Ptr_Glob);
++		return -ENOMEM;
++	}
  
-@@ -2471,6 +2472,7 @@ int write_cache_pages(struct address_space *mapping,
- 
- 			trace_wbc_writepage(wbc, inode_to_bdi(mapping->host));
- 			error = writepage(folio, wbc, data);
-+			nr = folio_nr_pages(folio);
- 			if (unlikely(error)) {
- 				/*
- 				 * Handle errors according to the type of
-@@ -2489,8 +2491,7 @@ int write_cache_pages(struct address_space *mapping,
- 					error = 0;
- 				} else if (wbc->sync_mode != WB_SYNC_ALL) {
- 					ret = error;
--					done_index = folio->index +
--						folio_nr_pages(folio);
-+					done_index = folio->index + nr;
- 					done = 1;
- 					break;
- 				}
-@@ -2504,7 +2505,8 @@ int write_cache_pages(struct address_space *mapping,
- 			 * keep going until we have written all the pages
- 			 * we tagged for writeback prior to entering this loop.
- 			 */
--			if (--wbc->nr_to_write <= 0 &&
-+			wbc->nr_to_write -= nr;
-+			if (wbc->nr_to_write <= 0 &&
- 			    wbc->sync_mode == WB_SYNC_NONE) {
- 				done = 1;
- 				break;
+ 	Ptr_Glob->Ptr_Comp = Next_Ptr_Glob;
+ 	Ptr_Glob->Discr = Ident_1;
 -- 
 2.39.2
 
