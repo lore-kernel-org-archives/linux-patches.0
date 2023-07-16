@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5F08F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:29:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B1AC433C7;
-	Sun, 16 Jul 2023 20:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152C08F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:29:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E443C433C7;
+	Sun, 16 Jul 2023 20:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539383;
-	bh=YBXxUtiOP9irPSJNhIF9AQV2FJcqrrBdzJ71qkwF4wM=;
+	s=korg; t=1689539385;
+	bh=PCvQDR+/kKuLY05zJi2ZYIZBuBuP4+tg31evnloapVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z3WNF8CaYy3vnNFvvfKhc6/lODdn/gOGsnm9ykRuYRWRRMn1YeBB3gsDGg+CWWdW7
-	 riJPSQxAmYo5ix3LvMfxM7LdX1RUYR9qvJKKDmEt7k97DPF/DGCO1J/vZSqmZkBa+e
-	 giuFW2wtbYhILIZpUt6xW7hWBo0HATnQCsjhU3Ys=
+	b=uQu/sNLqQjaiMzSPUvbeTuc3yR13KddokUEdu4NnsIP8FABPBV8eswLUw9KgsvbXf
+	 pXNMlOFyrUyu3JBNnEfpN8MlYnq7lwvuCv1/JnqhEbOiBCcsvC3z4P+AXZ8ePUDHWh
+	 43M1doVOB7FbdWT66LZv3sKbXRqkGEyJuPHqUtSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 759/800] btrfs: add block-group tree to lockdep classes
-Date: Sun, 16 Jul 2023 21:50:12 +0200
-Message-ID: <20230716195006.774048806@linuxfoundation.org>
+Subject: [PATCH 6.4 760/800] btrfs: reinsert BGs failed to reclaim
+Date: Sun, 16 Jul 2023 21:50:13 +0200
+Message-ID: <20230716195006.798089564@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -33,41 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Sterba <dsterba@suse.com>
+From: Naohiro Aota <naota@elisp.net>
 
-commit 1a1b0e729d227f9f758f7b5f1c997e874e94156e upstream.
+commit 7e27180994383b7c741ad87749db01e4989a02ba upstream.
 
-The block group tree was not present among the lockdep classes. We could
-get potentially lockdep warnings but so far none has been seen, also
-because block-group-tree is a relatively new feature.
+The reclaim process can temporarily fail. For example, if the space is
+getting tight, it fails to make the block group read-only. If there are no
+further writes on that block group, the block group will never get back to
+the reclaim list, and the BG never gets reclaimed. In a certain workload,
+we can leave many such block groups never reclaimed.
 
-CC: stable@vger.kernel.org # 6.1+
+So, let's get it back to the list and give it a chance to be reclaimed.
+
+Fixes: 18bb8bbf13c1 ("btrfs: zoned: automatically reclaim zones")
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/locking.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/block-group.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/btrfs/locking.c
-+++ b/fs/btrfs/locking.c
-@@ -57,8 +57,8 @@
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1837,6 +1837,8 @@ void btrfs_reclaim_bgs_work(struct work_
+ 		}
  
- static struct btrfs_lockdep_keyset {
- 	u64			id;		/* root objectid */
--	/* Longest entry: btrfs-free-space-00 */
--	char			names[BTRFS_MAX_LEVEL][20];
-+	/* Longest entry: btrfs-block-group-00 */
-+	char			names[BTRFS_MAX_LEVEL][24];
- 	struct lock_class_key	keys[BTRFS_MAX_LEVEL];
- } btrfs_lockdep_keysets[] = {
- 	{ .id = BTRFS_ROOT_TREE_OBJECTID,	DEFINE_NAME("root")	},
-@@ -72,6 +72,7 @@ static struct btrfs_lockdep_keyset {
- 	{ .id = BTRFS_DATA_RELOC_TREE_OBJECTID,	DEFINE_NAME("dreloc")	},
- 	{ .id = BTRFS_UUID_TREE_OBJECTID,	DEFINE_NAME("uuid")	},
- 	{ .id = BTRFS_FREE_SPACE_TREE_OBJECTID,	DEFINE_NAME("free-space") },
-+	{ .id = BTRFS_BLOCK_GROUP_TREE_OBJECTID, DEFINE_NAME("block-group") },
- 	{ .id = 0,				DEFINE_NAME("tree")	},
- };
+ next:
++		if (ret)
++			btrfs_mark_bg_to_reclaim(bg);
+ 		btrfs_put_block_group(bg);
  
+ 		mutex_unlock(&fs_info->reclaim_bgs_lock);
 
 
