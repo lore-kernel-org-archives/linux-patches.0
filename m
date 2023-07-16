@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159048F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3C6C433C7;
-	Sun, 16 Jul 2023 19:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C315F8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BB0C433C7;
+	Sun, 16 Jul 2023 19:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537557;
-	bh=n/nPPCASgNPtiiRJvsdOWFOszVPSlUKJjEtpxQ4+EaU=;
+	s=korg; t=1689537560;
+	bh=aodLKqIfeAy7x8lErqPn0TghLwhLAwlY0omqe3ICSsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NrwITgNhqa4p5QZV43FD56tOvHYoaRFsQjfDFOzkuE8cmEo2bihQO2PQFSDA0weHi
-	 Wt4vmjafWVRMWc9+QVz6XeS3awx9+JxuGZBltgdwnEle2/lUEKXQ93yy1TrWCX2C0D
-	 Au4w4thA1yBiJx5IhiRPm0mTHY2Z0OOJl8VLSN5g=
+	b=oXLAWzzjIafaYUAKT7ti+cAHvHBj0JVcz1rQ+VTvHCs3/kSsbFATL2USA8qW4U9Ru
+	 vf2ukLN3JMwCAs8hmgtlgDRRsXAW+r/QJhaGbXzT+3JKLhYHT5HQ+O+yLEkrSwSj0C
+	 emhdcQZJgAZS8YzVoWEg3sGue7q7018XnilVDllc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Jesper Dangaard Brouer <brouer@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 138/800] wifi: rtw88: usb: silence log flooding error message
-Date: Sun, 16 Jul 2023 21:39:51 +0200
-Message-ID: <20230716194952.302696844@linuxfoundation.org>
+Subject: [PATCH 6.4 139/800] samples/bpf: xdp1 and xdp2 reduce XDPBUFSIZE to 60
+Date: Sun, 16 Jul 2023 21:39:52 +0200
+Message-ID: <20230716194952.325809365@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,49 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Jesper Dangaard Brouer <brouer@redhat.com>
 
-[ Upstream commit 1f1784a59caf3eefd127908a1a3cf224017ff9c7 ]
+[ Upstream commit 60548b825b082cedf89b275c21c28b1e1d030e50 ]
 
-When receiving more rx packets than the kernel can handle the driver
-drops the packets and issues an error message. This is bad for two
-reasons. The logs are flooded with myriads of messages, but then time
-consumed for printing messages in that critical code path brings down
-the device. After some time of excessive rx load the driver responds
-with:
+Default samples/pktgen scripts send 60 byte packets as hardware adds
+4-bytes FCS checksum, which fulfils minimum Ethernet 64 bytes frame
+size.
 
-rtw_8822cu 1-1:1.2: failed to get tx report from firmware
-rtw_8822cu 1-1:1.2: firmware failed to report density after scan
-rtw_8822cu 1-1:1.2: firmware failed to report density after scan
+XDP layer will not necessary have access to the 4-bytes FCS checksum.
 
-The device stops working until being replugged.
+This leads to bpf_xdp_load_bytes() failing as it tries to copy 64-bytes
+from an XDP packet that only have 60-bytes available.
 
-Fix this by lowering the priority to debug level and also by
-ratelimiting it.
-
-Fixes: a82dfd33d1237 ("wifi: rtw88: Add common USB chip support")
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230524103934.1019096-1-s.hauer@pengutronix.de
+Fixes: 772251742262 ("samples/bpf: fixup some tools to be able to support xdp multibuffer")
+Signed-off-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://lore.kernel.org/bpf/168545704139.2996228.2516528552939485216.stgit@firesoul
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/usb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ samples/bpf/xdp1_kern.c | 2 +-
+ samples/bpf/xdp2_kern.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
-index 44a5fafb99055..976eafa739a2d 100644
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -535,7 +535,7 @@ static void rtw_usb_rx_handler(struct work_struct *work)
- 		}
+diff --git a/samples/bpf/xdp1_kern.c b/samples/bpf/xdp1_kern.c
+index 0a5c704badd00..d91f27cbcfa99 100644
+--- a/samples/bpf/xdp1_kern.c
++++ b/samples/bpf/xdp1_kern.c
+@@ -39,7 +39,7 @@ static int parse_ipv6(void *data, u64 nh_off, void *data_end)
+ 	return ip6h->nexthdr;
+ }
  
- 		if (skb_queue_len(&rtwusb->rx_queue) >= RTW_USB_MAX_RXQ_LEN) {
--			rtw_err(rtwdev, "failed to get rx_queue, overflow\n");
-+			dev_dbg_ratelimited(rtwdev->dev, "failed to get rx_queue, overflow\n");
- 			dev_kfree_skb_any(skb);
- 			continue;
- 		}
+-#define XDPBUFSIZE	64
++#define XDPBUFSIZE	60
+ SEC("xdp.frags")
+ int xdp_prog1(struct xdp_md *ctx)
+ {
+diff --git a/samples/bpf/xdp2_kern.c b/samples/bpf/xdp2_kern.c
+index 67804ecf7ce37..8bca674451ed1 100644
+--- a/samples/bpf/xdp2_kern.c
++++ b/samples/bpf/xdp2_kern.c
+@@ -55,7 +55,7 @@ static int parse_ipv6(void *data, u64 nh_off, void *data_end)
+ 	return ip6h->nexthdr;
+ }
+ 
+-#define XDPBUFSIZE	64
++#define XDPBUFSIZE	60
+ SEC("xdp.frags")
+ int xdp_prog1(struct xdp_md *ctx)
+ {
 -- 
 2.39.2
 
