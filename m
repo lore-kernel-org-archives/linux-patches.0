@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861288F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A358C433C9;
-	Sun, 16 Jul 2023 20:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689268F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB3DC433C8;
+	Sun, 16 Jul 2023 20:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538141;
-	bh=HM7I7J9gI7XI2PQoDXi6SvCYdi0+HgYTc5gaRylWJfQ=;
+	s=korg; t=1689538144;
+	bh=eN9iYqE3h29MCPXsOIWVhvu5qLv12dE3Wtzh5T33h5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=myXP4t0sbpHkcKAiGqEoUIUoygI5taJCOghTEnXL0kRdgxHtInnVLDBwdfDGP1Hpr
-	 v+3RrAuikt0qF8nH4QeQx+katGeXwX4mFgsOkLkULrdKQcRHXcpC37iv69ktRhmZ5o
-	 FHoOA2CRZgL3kLcXZkwoDd6aDFYOdQdlhbW6rEbI=
+	b=t6cjqmedQB3nihEbCwnptL65rNR6oXbDh6tZqSckWb3PyQjm4BBYcb5YEOeEO/Xqs
+	 IFg0T5GklOFUvyNhhIeB/x5+VpIxEqXjCkwouKqIieNMz39oCuLjYkZVQB2UsuZ3Ap
+	 h/XbQTtEXCaPD0s5HfNwlUhWyF3ueIhIND+uafwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Helge Deller <deller@gmx.de>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 344/800] fbdev: omapfb: lcd_mipid: Fix an error handling path in mipid_spi_probe()
-Date: Sun, 16 Jul 2023 21:43:17 +0200
-Message-ID: <20230716194957.071584013@linuxfoundation.org>
+Subject: [PATCH 6.4 345/800] dt-bindings: arm-smmu: Fix SC8280XP Adreno binding
+Date: Sun, 16 Jul 2023 21:43:18 +0200
+Message-ID: <20230716194957.094429276@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,41 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 79a3908d1ea6c35157a6d907b1a9d8ec06015e7a ]
+[ Upstream commit 84b8a7fe29205016cffd4eff91b45830d318b53d ]
 
-If 'mipid_detect()' fails, we must free 'md' to avoid a memory leak.
+The qcom,sc8280xp-smmu-500 Adreno SMMU binding has clocks, so fix up the
+binding to allow this.
 
-Fixes: 66d2f99d0bb5 ("omapfb: add support for MIPI-DCS compatible LCDs")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 38db6b41b2f4 ("dt-bindings: arm-smmu: Add compatible for Qualcomm SC8280XP")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230523010441.63236-1-quic_bjorande@quicinc.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/omap/lcd_mipid.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/omap/lcd_mipid.c b/drivers/video/fbdev/omap/lcd_mipid.c
-index e4a7f0b824ff4..a0fc4570403b8 100644
---- a/drivers/video/fbdev/omap/lcd_mipid.c
-+++ b/drivers/video/fbdev/omap/lcd_mipid.c
-@@ -571,11 +571,15 @@ static int mipid_spi_probe(struct spi_device *spi)
- 
- 	r = mipid_detect(md);
- 	if (r < 0)
--		return r;
-+		goto free_md;
- 
- 	omapfb_register_panel(&md->panel);
- 
- 	return 0;
-+
-+free_md:
-+	kfree(md);
-+	return r;
- }
- 
- static void mipid_spi_remove(struct spi_device *spi)
+diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+index ba677d401e240..6cb04f35642aa 100644
+--- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
++++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+@@ -80,6 +80,7 @@ properties:
+         items:
+           - enum:
+               - qcom,sc7280-smmu-500
++              - qcom,sc8280xp-smmu-500
+               - qcom,sm6115-smmu-500
+               - qcom,sm6125-smmu-500
+               - qcom,sm8150-smmu-500
+@@ -331,7 +332,9 @@ allOf:
+       properties:
+         compatible:
+           contains:
+-            const: qcom,sc7280-smmu-500
++            enum:
++              - qcom,sc7280-smmu-500
++              - qcom,sc8280xp-smmu-500
+     then:
+       properties:
+         clock-names:
+@@ -416,7 +419,6 @@ allOf:
+               - qcom,sa8775p-smmu-500
+               - qcom,sc7180-smmu-500
+               - qcom,sc8180x-smmu-500
+-              - qcom,sc8280xp-smmu-500
+               - qcom,sdm670-smmu-500
+               - qcom,sdm845-smmu-500
+               - qcom,sdx55-smmu-500
 -- 
 2.39.2
 
