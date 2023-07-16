@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B8D8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBEBC433C7;
-	Sun, 16 Jul 2023 20:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A50D8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:09:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F074EC433C8;
+	Sun, 16 Jul 2023 20:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538166;
-	bh=3qz8EJ7hTRGXbin7BuhpUZTN1bx4XT97fLb9vNacx28=;
+	s=korg; t=1689538169;
+	bh=rJ54VsJpc/Chgin/VuG+dC3jgJlOjK1fMvUINC7qfbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrzuSEhQLodWb2Z/B6RuE1EDlYhEaJcV0uXkTJ4Em39qaPhsY3a+gz5tUfoBjGkrA
-	 27qMjPIUWxGOD0iBuOL9SGrbQtf/FRLewEci++vHMnQcfdb9McLkApX2wJUb3A8cET
-	 FyN9PNpZMvFCGGZpTssgEuHz4F2JLyCNn/92rGEI=
+	b=U4hCLeaQjj5aE8VJ+VDz+KT0q0Ts2sr2SYi+L/cLZ4z7p+QSIKHNIe0314xMozj34
+	 enisoFRF6eVJXC1GVN7bXTlBRkFdF2XvICigHe57PDpzlHbylKG7npPCjvdIEdSjtH
+	 /5QLTfMWts91J6hnNbBaXDbiX0x9Xq7RmfAeAPXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 347/800] drm/i915: hide mkwrite_device_info() better
-Date: Sun, 16 Jul 2023 21:43:20 +0200
-Message-ID: <20230716194957.140001589@linuxfoundation.org>
+Subject: [PATCH 6.4 356/800] arm64: dts: rockchip: Fix compatible for Bluetooth on rk3566-anbernic
+Date: Sun, 16 Jul 2023 21:43:29 +0200
+Message-ID: <20230716194957.347470052@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,145 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit 446a20c9ba622bb531f1705eab88b64d478ee434 ]
+[ Upstream commit a325956fa7048906e26a4535ac2e87e111788fe8 ]
 
-The goal has been to just make device info a pointer to static const
-data, i.e. the static const structs in i915_pci.c. See [1]. However,
-there were issues with intel_device_info_runtime_init() clearing the
-display sub-struct of device info on the !HAS_DISPLAY() path, which
-consequently disables a lot of display functionality, like it
-should. Looks like we'd have to cover all those paths, and maybe
-sprinkle HAS_DISPLAY() checks in them, which we haven't gotten around
-to.
+The realtek Bluetooth module uses the same driver as the
+realtek,rtl8822cs-bt and the realtek,rtl8723bs-bt, however by selecting
+the 8723bs advanced power saving features are disabled that appear
+to interfere with normal operation of the bluetooth module. This
+change switches the compatible string to disable power saving. Without
+this patch evtest of a paired bluetooth controller fails, with this
+patch the controller operates as expected.
 
-In the mean time, hide mkwrite_device_info() better within
-intel_device_info.c by adding a intel_device_info_driver_create() for
-the very early initialization of the device info and initial runtime
-info. This also lets us declutter i915_drv.h a bit, and stops promoting
-mkwrite_device_info() as something that could be used.
-
-[1] https://lore.kernel.org/r/a0422f0a8ac055f65b7922bcd3119b180a41e79e.1655712106.git.jani.nikula@intel.com
-
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230411105643.292416-1-jani.nikula@intel.com
-Stable-dep-of: 19db2062094c ("drm/i915: No 10bit gamma on desktop gen3 parts")
+Fixes: b6986b7920bb ("arm64: dts: rockchip: Update compatible for bluetooth")
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Link: https://lore.kernel.org/r/20230508160811.3568213-3-macroalpha82@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_driver.c       | 12 ++--------
- drivers/gpu/drm/i915/i915_drv.h          |  7 ------
- drivers/gpu/drm/i915/intel_device_info.c | 29 ++++++++++++++++++++++++
- drivers/gpu/drm/i915/intel_device_info.h |  2 ++
- 4 files changed, 33 insertions(+), 17 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_driver.c b/drivers/gpu/drm/i915/i915_driver.c
-index 93fdc40d724fa..2980ccdef6cd6 100644
---- a/drivers/gpu/drm/i915/i915_driver.c
-+++ b/drivers/gpu/drm/i915/i915_driver.c
-@@ -720,8 +720,6 @@ i915_driver_create(struct pci_dev *pdev, const struct pci_device_id *ent)
- {
- 	const struct intel_device_info *match_info =
- 		(struct intel_device_info *)ent->driver_data;
--	struct intel_device_info *device_info;
--	struct intel_runtime_info *runtime;
- 	struct drm_i915_private *i915;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi
+index 8fadd8afb1906..ad43fa199ca55 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rgxx3.dtsi
+@@ -716,7 +716,7 @@ &uart1 {
+ 	status = "okay";
  
- 	i915 = devm_drm_dev_alloc(&pdev->dev, &i915_drm_driver,
-@@ -734,14 +732,8 @@ i915_driver_create(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	/* Device parameters start as a copy of module parameters. */
- 	i915_params_copy(&i915->params, &i915_modparams);
- 
--	/* Setup the write-once "constant" device info */
--	device_info = mkwrite_device_info(i915);
--	memcpy(device_info, match_info, sizeof(*device_info));
--
--	/* Initialize initial runtime info from static const data and pdev. */
--	runtime = RUNTIME_INFO(i915);
--	memcpy(runtime, &INTEL_INFO(i915)->__runtime, sizeof(*runtime));
--	runtime->device_id = pdev->device;
-+	/* Set up device info and initial runtime info. */
-+	intel_device_info_driver_create(i915, pdev->device, match_info);
- 
- 	return i915;
- }
-diff --git a/drivers/gpu/drm/i915/i915_drv.h b/drivers/gpu/drm/i915/i915_drv.h
-index e771fdc3099c2..fe7eeafe9cff6 100644
---- a/drivers/gpu/drm/i915/i915_drv.h
-+++ b/drivers/gpu/drm/i915/i915_drv.h
-@@ -931,11 +931,4 @@ IS_SUBPLATFORM(const struct drm_i915_private *i915,
- #define HAS_LMEMBAR_SMEM_STOLEN(i915) (!HAS_LMEM(i915) && \
- 				       GRAPHICS_VER_FULL(i915) >= IP_VER(12, 70))
- 
--/* intel_device_info.c */
--static inline struct intel_device_info *
--mkwrite_device_info(struct drm_i915_private *dev_priv)
--{
--	return (struct intel_device_info *)INTEL_INFO(dev_priv);
--}
--
- #endif
-diff --git a/drivers/gpu/drm/i915/intel_device_info.c b/drivers/gpu/drm/i915/intel_device_info.c
-index fc5cd14adfccb..4e23be2995bf6 100644
---- a/drivers/gpu/drm/i915/intel_device_info.c
-+++ b/drivers/gpu/drm/i915/intel_device_info.c
-@@ -381,6 +381,13 @@ void intel_device_info_runtime_init_early(struct drm_i915_private *i915)
- 	intel_device_info_subplatform_init(i915);
- }
- 
-+/* FIXME: Remove this, and make device info a const pointer to rodata. */
-+static struct intel_device_info *
-+mkwrite_device_info(struct drm_i915_private *i915)
-+{
-+	return (struct intel_device_info *)INTEL_INFO(i915);
-+}
-+
- /**
-  * intel_device_info_runtime_init - initialize runtime info
-  * @dev_priv: the i915 device
-@@ -548,6 +555,28 @@ void intel_device_info_runtime_init(struct drm_i915_private *dev_priv)
- 		dev_priv->drm.driver_features &= ~DRIVER_ATOMIC;
- }
- 
-+/*
-+ * Set up device info and initial runtime info at driver create.
-+ *
-+ * Note: i915 is only an allocated blob of memory at this point.
-+ */
-+void intel_device_info_driver_create(struct drm_i915_private *i915,
-+				     u16 device_id,
-+				     const struct intel_device_info *match_info)
-+{
-+	struct intel_device_info *info;
-+	struct intel_runtime_info *runtime;
-+
-+	/* Setup the write-once "constant" device info */
-+	info = mkwrite_device_info(i915);
-+	memcpy(info, match_info, sizeof(*info));
-+
-+	/* Initialize initial runtime info from static const data and pdev. */
-+	runtime = RUNTIME_INFO(i915);
-+	memcpy(runtime, &INTEL_INFO(i915)->__runtime, sizeof(*runtime));
-+	runtime->device_id = device_id;
-+}
-+
- void intel_driver_caps_print(const struct intel_driver_caps *caps,
- 			     struct drm_printer *p)
- {
-diff --git a/drivers/gpu/drm/i915/intel_device_info.h b/drivers/gpu/drm/i915/intel_device_info.h
-index 080a4557899b6..f032f2500f505 100644
---- a/drivers/gpu/drm/i915/intel_device_info.h
-+++ b/drivers/gpu/drm/i915/intel_device_info.h
-@@ -317,6 +317,8 @@ struct intel_driver_caps {
- 
- const char *intel_platform_name(enum intel_platform platform);
- 
-+void intel_device_info_driver_create(struct drm_i915_private *i915, u16 device_id,
-+				     const struct intel_device_info *match_info);
- void intel_device_info_runtime_init_early(struct drm_i915_private *dev_priv);
- void intel_device_info_runtime_init(struct drm_i915_private *dev_priv);
- 
+ 	bluetooth {
+-		compatible = "realtek,rtl8821cs-bt", "realtek,rtl8822cs-bt";
++		compatible = "realtek,rtl8821cs-bt", "realtek,rtl8723bs-bt";
+ 		device-wake-gpios = <&gpio4 4 GPIO_ACTIVE_HIGH>;
+ 		enable-gpios = <&gpio4 3 GPIO_ACTIVE_HIGH>;
+ 		host-wake-gpios = <&gpio4 5 GPIO_ACTIVE_HIGH>;
 -- 
 2.39.2
 
