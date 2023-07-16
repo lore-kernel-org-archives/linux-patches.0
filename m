@@ -1,35 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821A28F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:27:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D29AC433C7;
-	Sun, 16 Jul 2023 20:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091948F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:27:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA27C433C8;
+	Sun, 16 Jul 2023 20:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539252;
-	bh=rbCMWdjoCfI/se8YRBAHHl0r5B/qL29jT+Br5uRZQQ4=;
+	s=korg; t=1689539254;
+	bh=ZO6GXEu8ExPLioPg8uE6mWMIoZF1YO5hcJ9dNu+zi5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xlU5lZB+a2CE0sJobI74x1QJeHy7W51OcNSPGM2FSfYwVgjg2meX2+NGgA87kkReP
-	 0kOKk3Npom8p67afg9al1Eeq21g41QNXalq66s9LQwrdrmPVYH8viWvPo17xuv/qzX
-	 DmV9i1TqUQlu//hpvaYgv+cw6eWaXFoGVPrJjYNs=
+	b=C+bY7Nbx16sXcOn23wcaZRZ/YVTSUiW14pftXMBbgB3lkLOOpvyzLRdKf9GwlqcpX
+	 jDGXm9fLp9MtMJr3N7ngbYJ+azR6AnSVVKq8G+fd+kBuzinknMpBL864KhJT2nKBEq
+	 s6Caq7PpViEKgldpdc7QR93cm2mMvjzICvBsyikg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	SeongJae Park <sj@kernel.org>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Yu Zhao <yuzhao@google.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Hugh Dickins <hughd@google.com>,
+	David Howells <dhowells@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.4 741/800] mm/damon/ops-common: atomically test and clear young on ptes and pmds
-Date: Sun, 16 Jul 2023 21:49:54 +0200
-Message-ID: <20230716195006.332796651@linuxfoundation.org>
+Subject: [PATCH 6.4 742/800] shmem: use ramfs_kill_sb() for kill_sb method of ramfs-based tmpfs
+Date: Sun, 16 Jul 2023 21:49:55 +0200
+Message-ID: <20230716195006.355766215@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -43,138 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-commit c11d34fa139e4b0fb4249a30f37b178353533fa1 upstream.
+commit 36ce9d76b0a93bae799e27e4f5ac35478c676592 upstream.
 
-It is racy to non-atomically read a pte, then clear the young bit, then
-write it back as this could discard dirty information.  Further, it is bad
-practice to directly set a pte entry within a table.  Instead clearing
-young must go through the arch-provided helper,
-ptep_test_and_clear_young() to ensure it is modified atomically and to
-give the arch code visibility and allow it to check (and potentially
-modify) the operation.
+As the ramfs-based tmpfs uses ramfs_init_fs_context() for the
+init_fs_context method, which allocates fc->s_fs_info, use ramfs_kill_sb()
+to free it and avoid a memory leak.
 
-Link: https://lkml.kernel.org/r/20230602092949.545577-3-ryan.roberts@arm.com
-Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces").
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Lorenzo Stoakes <lstoakes@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Uladzislau Rezki (Sony) <urezki@gmail.com>
-Cc: Yu Zhao <yuzhao@google.com>
+Link: https://lkml.kernel.org/r/20230607161523.2876433-1-roberto.sassu@huaweicloud.com
+Fixes: c3b1b1cbf002 ("ramfs: add support for "mode=" mount option")
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/ops-common.c |   16 ++++++----------
- mm/damon/ops-common.h |    4 ++--
- mm/damon/paddr.c      |    4 ++--
- mm/damon/vaddr.c      |    4 ++--
- 4 files changed, 12 insertions(+), 16 deletions(-)
+ fs/ramfs/inode.c      |    2 +-
+ include/linux/ramfs.h |    1 +
+ mm/shmem.c            |    2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -37,7 +37,7 @@ struct folio *damon_get_folio(unsigned l
- 	return folio;
- }
- 
--void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr)
-+void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr)
- {
- 	bool referenced = false;
- 	struct folio *folio = damon_get_folio(pte_pfn(*pte));
-@@ -45,13 +45,11 @@ void damon_ptep_mkold(pte_t *pte, struct
- 	if (!folio)
- 		return;
- 
--	if (pte_young(*pte)) {
-+	if (ptep_test_and_clear_young(vma, addr, pte))
- 		referenced = true;
--		*pte = pte_mkold(*pte);
--	}
- 
- #ifdef CONFIG_MMU_NOTIFIER
--	if (mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE))
-+	if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE))
- 		referenced = true;
- #endif /* CONFIG_MMU_NOTIFIER */
- 
-@@ -62,7 +60,7 @@ void damon_ptep_mkold(pte_t *pte, struct
- 	folio_put(folio);
- }
- 
--void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr)
-+void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr)
- {
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
- 	bool referenced = false;
-@@ -71,13 +69,11 @@ void damon_pmdp_mkold(pmd_t *pmd, struct
- 	if (!folio)
- 		return;
- 
--	if (pmd_young(*pmd)) {
-+	if (pmdp_test_and_clear_young(vma, addr, pmd))
- 		referenced = true;
--		*pmd = pmd_mkold(*pmd);
--	}
- 
- #ifdef CONFIG_MMU_NOTIFIER
--	if (mmu_notifier_clear_young(mm, addr, addr + HPAGE_PMD_SIZE))
-+	if (mmu_notifier_clear_young(vma->vm_mm, addr, addr + HPAGE_PMD_SIZE))
- 		referenced = true;
- #endif /* CONFIG_MMU_NOTIFIER */
- 
---- a/mm/damon/ops-common.h
-+++ b/mm/damon/ops-common.h
-@@ -9,8 +9,8 @@
- 
- struct folio *damon_get_folio(unsigned long pfn);
- 
--void damon_ptep_mkold(pte_t *pte, struct mm_struct *mm, unsigned long addr);
--void damon_pmdp_mkold(pmd_t *pmd, struct mm_struct *mm, unsigned long addr);
-+void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr);
-+void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr);
- 
- int damon_cold_score(struct damon_ctx *c, struct damon_region *r,
- 			struct damos *s);
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -24,9 +24,9 @@ static bool __damon_pa_mkold(struct foli
- 	while (page_vma_mapped_walk(&pvmw)) {
- 		addr = pvmw.address;
- 		if (pvmw.pte)
--			damon_ptep_mkold(pvmw.pte, vma->vm_mm, addr);
-+			damon_ptep_mkold(pvmw.pte, vma, addr);
- 		else
--			damon_pmdp_mkold(pvmw.pmd, vma->vm_mm, addr);
-+			damon_pmdp_mkold(pvmw.pmd, vma, addr);
- 	}
- 	return true;
- }
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -311,7 +311,7 @@ static int damon_mkold_pmd_entry(pmd_t *
- 		}
- 
- 		if (pmd_trans_huge(*pmd)) {
--			damon_pmdp_mkold(pmd, walk->mm, addr);
-+			damon_pmdp_mkold(pmd, walk->vma, addr);
- 			spin_unlock(ptl);
- 			return 0;
- 		}
-@@ -323,7 +323,7 @@ static int damon_mkold_pmd_entry(pmd_t *
- 	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
- 	if (!pte_present(*pte))
- 		goto out;
--	damon_ptep_mkold(pte, walk->mm, addr);
-+	damon_ptep_mkold(pte, walk->vma, addr);
- out:
- 	pte_unmap_unlock(pte, ptl);
+--- a/fs/ramfs/inode.c
++++ b/fs/ramfs/inode.c
+@@ -278,7 +278,7 @@ int ramfs_init_fs_context(struct fs_cont
  	return 0;
+ }
+ 
+-static void ramfs_kill_sb(struct super_block *sb)
++void ramfs_kill_sb(struct super_block *sb)
+ {
+ 	kfree(sb->s_fs_info);
+ 	kill_litter_super(sb);
+--- a/include/linux/ramfs.h
++++ b/include/linux/ramfs.h
+@@ -7,6 +7,7 @@
+ struct inode *ramfs_get_inode(struct super_block *sb, const struct inode *dir,
+ 	 umode_t mode, dev_t dev);
+ extern int ramfs_init_fs_context(struct fs_context *fc);
++extern void ramfs_kill_sb(struct super_block *sb);
+ 
+ #ifdef CONFIG_MMU
+ static inline int
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -4196,7 +4196,7 @@ static struct file_system_type shmem_fs_
+ 	.name		= "tmpfs",
+ 	.init_fs_context = ramfs_init_fs_context,
+ 	.parameters	= ramfs_fs_parameters,
+-	.kill_sb	= kill_litter_super,
++	.kill_sb	= ramfs_kill_sb,
+ 	.fs_flags	= FS_USERNS_MOUNT,
+ };
+ 
 
 
