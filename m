@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4998F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97660C433C8;
-	Sun, 16 Jul 2023 19:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F70D8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69B4C433C7;
+	Sun, 16 Jul 2023 19:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537454;
-	bh=gSFMdE26uMJr+YJfjdvUfjH0EENDnqfNzD2H+Ozblc0=;
+	s=korg; t=1689537457;
+	bh=o2HE8FSTJpG2d46A+YUA2qvrok8h2oVk4IK33mRwZdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NNTrN0xLD3SORk76ZNkefNJUjKXlERqe+sM0nQXlq/9vyUEptbk4BQqiXNbHS3QvX
-	 cWhZsT15pXHL+oHCsQ3MVwCDiD64e3QDDT0Yf2sDC9bQglQywpk+fNQb9klag3qaII
-	 nM4enKc7DTCKzjt0xIRjrlQb0OlwFLn/Khjqm3C0=
+	b=HfRTc206BTIH9taHdv0S90AWvq7nMxAM/S+aAPzAaKPSl0hnZLzsUiu/OJZfgqsf0
+	 9f3uQXZfbd1kdrmN7USwmOnHWVhWuqtrTHuWOs8hGLNQGthRWdHoU6oNkRVHaK6jLd
+	 t2oD7Jm8erAfqT2ZTMdRBq0P6thxLjik2+MtI7LY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 084/800] rcutorture: Correct name of use_softirq module parameter
-Date: Sun, 16 Jul 2023 21:38:57 +0200
-Message-ID: <20230716194951.059475993@linuxfoundation.org>
+Subject: [PATCH 6.4 102/800] pstore/ram: Add check for kstrdup
+Date: Sun, 16 Jul 2023 21:39:15 +0200
+Message-ID: <20230716194951.484110960@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,43 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit b409afe0268faeb77267f028ea85f2d93438fced ]
+[ Upstream commit d97038d5ec2062733c1e016caf9baaf68cf64ea1 ]
 
-The BUSTED-BOOST and TREE03 scenarios specify a mythical tree.use_softirq
-module parameter, which means a failure to get full test coverage.  This
-commit therefore corrects the name to rcutree.use_softirq.
+Add check for the return value of kstrdup() and return the error
+if it fails in order to avoid NULL pointer dereference.
 
-Fixes: e2b949d54392 ("rcutorture: Make TREE03 use real-time tree.use_softirq setting")
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Fixes: e163fdb3f7f8 ("pstore/ram: Regularize prz label allocation lifetime")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230614093733.36048-1-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot  | 2 +-
- tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/pstore/ram_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot b/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot
-index f57720c52c0f9..84f6bb98ce993 100644
---- a/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot
-+++ b/tools/testing/selftests/rcutorture/configs/rcu/BUSTED-BOOST.boot
-@@ -5,4 +5,4 @@ rcutree.gp_init_delay=3
- rcutree.gp_cleanup_delay=3
- rcutree.kthread_prio=2
- threadirqs
--tree.use_softirq=0
-+rcutree.use_softirq=0
-diff --git a/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot b/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot
-index 64f864f1f361f..8e50bfd4b710d 100644
---- a/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot
-+++ b/tools/testing/selftests/rcutorture/configs/rcu/TREE03.boot
-@@ -4,4 +4,4 @@ rcutree.gp_init_delay=3
- rcutree.gp_cleanup_delay=3
- rcutree.kthread_prio=2
- threadirqs
--tree.use_softirq=0
-+rcutree.use_softirq=0
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index 966191d3a5ba2..85aaf0fc6d7d1 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -599,6 +599,8 @@ struct persistent_ram_zone *persistent_ram_new(phys_addr_t start, size_t size,
+ 	raw_spin_lock_init(&prz->buffer_lock);
+ 	prz->flags = flags;
+ 	prz->label = kstrdup(label, GFP_KERNEL);
++	if (!prz->label)
++		goto err;
+ 
+ 	ret = persistent_ram_buffer_map(start, size, prz, memtype);
+ 	if (ret)
 -- 
 2.39.2
 
