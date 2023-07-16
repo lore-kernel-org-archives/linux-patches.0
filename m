@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE928833
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F77C433C7;
-	Sun, 16 Jul 2023 20:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58618F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364C6C433C7;
+	Sun, 16 Jul 2023 20:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540646;
-	bh=5rpOE4GsLknOK2Wrlcnwwt9DRdRQzV7IFxCEADy54xc=;
+	s=korg; t=1689540649;
+	bh=DBzeiMAhCC//4UDH8V1HGr0gctDV5Wuu1c1yqqnhMvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u40WZJeIDCSRsNVJtCkbUgwTCy8uFhm4WztYxwvqK56rmPtS1DUMgMvN6Bbkkzmt6
-	 uZwksywvK9I7exrsrD+DHHPRQGiE01EqcPAuN3zjlPWs8ge4+C5Q76o9O116fhZaMm
-	 Ow5sxW8WekHsqvA0eC8E5msdvC5YAivaQJXe0lf8=
+	b=wOWrMhJoXJ9emHcrpUe8zLsRKqjBrb5JPbg+9Z+DfpXewiQeY141+BmyiSLIK4lJU
+	 2Fl2b/jvHXyrfRhqbbAJ3QwJBgw616PtHKKgYVfenL66n2ygatHP2lfa5W3aX1+Ea4
+	 PWoUbc6tMXyxspyl2C3TcZ6GrzK2qfZxS6aI7K2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Nico Boehr <nrb@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 400/591] media: i2c: Correct format propagation for st-mipid02
-Date: Sun, 16 Jul 2023 21:48:59 +0200
-Message-ID: <20230716194934.267853959@linuxfoundation.org>
+Subject: [PATCH 6.1 431/591] KVM: s390: fix KVM_S390_GET_CMMA_BITS for GFNs in memslot holes
+Date: Sun, 16 Jul 2023 21:49:30 +0200
+Message-ID: <20230716194935.067710005@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,45 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Scally <dan.scally@ideasonboard.com>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-[ Upstream commit 306c3190b30d4d6a098888b9d7d4cefaa0ddcb91 ]
+[ Upstream commit 285cff4c0454340a4dc53f46e67f2cb1c293bd74 ]
 
-Format propagation in the st-mipid02 driver is incorrect in that when
-setting format for V4L2_SUBDEV_FORMAT_TRY on the source pad, the
-_active_ rather than _try_ format from the sink pad is propagated.
-This causes problems with format negotiation - update the function to
-propagate the correct format.
+The KVM_S390_GET_CMMA_BITS ioctl may return incorrect values when userspace
+specifies a start_gfn outside of memslots.
 
-Fixes: 642bb5e88fed ("media: st-mipid02: MIPID02 CSI-2 to PARALLEL bridge driver")
-Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+This can occur when a VM has multiple memslots with a hole in between:
+
++-----+----------+--------+--------+
+| ... | Slot N-1 | <hole> | Slot N |
++-----+----------+--------+--------+
+      ^          ^        ^        ^
+      |          |        |        |
+GFN   A          A+B      |        |
+                          A+B+C    |
+			           A+B+C+D
+
+When userspace specifies a GFN in [A+B, A+B+C), it would expect to get the
+CMMA values of the first dirty page in Slot N. However, userspace may get a
+start_gfn of A+B+C+D with a count of 0, hence completely skipping over any
+dirty pages in slot N.
+
+The error is in kvm_s390_next_dirty_cmma(), which assumes
+gfn_to_memslot_approx() will return the memslot _below_ the specified GFN
+when the specified GFN lies outside a memslot. In reality it may return
+either the memslot below or above the specified GFN.
+
+When a memslot above the specified GFN is returned this happens:
+
+- ofs is calculated, but since the memslot's base_gfn is larger than the
+  specified cur_gfn, ofs will underflow to a huge number.
+- ofs is passed to find_next_bit(). Since ofs will exceed the memslot's
+  number of pages, the number of pages in the memslot is returned,
+  completely skipping over all bits in the memslot userspace would be
+  interested in.
+
+Fix this by resetting ofs to zero when a memslot _above_ cur_gfn is
+returned (cur_gfn < ms->base_gfn).
+
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Fixes: afdad61615cc ("KVM: s390: Fix storage attributes migration with memory slots")
+Message-Id: <20230324145424.293889-2-nrb@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/st-mipid02.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/s390/kvm/kvm-s390.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/i2c/st-mipid02.c b/drivers/media/i2c/st-mipid02.c
-index 31b89aff0e86a..f20f87562bf11 100644
---- a/drivers/media/i2c/st-mipid02.c
-+++ b/drivers/media/i2c/st-mipid02.c
-@@ -736,8 +736,13 @@ static void mipid02_set_fmt_source(struct v4l2_subdev *sd,
- {
- 	struct mipid02_dev *bridge = to_mipid02_dev(sd);
- 
--	/* source pad mirror active sink pad */
--	format->format = bridge->fmt;
-+	/* source pad mirror sink pad */
-+	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE)
-+		format->format = bridge->fmt;
-+	else
-+		format->format = *v4l2_subdev_get_try_format(sd, sd_state,
-+							     MIPID02_SINK_0);
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 26f89ec3062ba..3775363471f0c 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -2147,6 +2147,10 @@ static unsigned long kvm_s390_next_dirty_cmma(struct kvm_memslots *slots,
+ 		ms = container_of(mnode, struct kvm_memory_slot, gfn_node[slots->node_idx]);
+ 		ofs = 0;
+ 	}
 +
- 	/* but code may need to be converted */
- 	format->format.code = serial_to_parallel_code(format->format.code);
- 
++	if (cur_gfn < ms->base_gfn)
++		ofs = 0;
++
+ 	ofs = find_next_bit(kvm_second_dirty_bitmap(ms), ms->npages, ofs);
+ 	while (ofs >= ms->npages && (mnode = rb_next(mnode))) {
+ 		ms = container_of(mnode, struct kvm_memory_slot, gfn_node[slots->node_idx]);
 -- 
 2.39.2
 
