@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541248F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2DFC433C8;
-	Sun, 16 Jul 2023 20:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185CB8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E120C433C7;
+	Sun, 16 Jul 2023 20:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540602;
-	bh=I/OFoFv17kJnFy4vrXrjKYDJqDnIUd9a4CPtVf08Ftk=;
+	s=korg; t=1689540604;
+	bh=hDpL2A7ocdiTfNxc9l3GHz7iVW4RnqulqfgJ/1KS4Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDuL77QRFchycsxcPAiQEY5+3f/Z4oLrK8Slt8JrS0NK8BmpV+nL3TtDns1KR3b22
-	 kdZqOtvESpsr2Ang6m6/S6TjC/TUs/UaucXy4T4t6gW7oU5R9NK/uX2PWebiKtIFx/
-	 Al5Q15cklVktJlacUeD28fPApXNB9pV1mlKVYCUQ=
+	b=wXjUcPA93nW+rWHgl+JzNyTALHotuWPR/dGhuEtUhsDAvjm3nX6Ya4sBmHG1FkYNK
+	 LpC2mffKG2gq7YMYariFB363E9gQjIUy3zj6sgl7U4FoSvIbqOCsUqejhNnIvPZvu/
+	 FEhB8tnC+/t55DCdCP4FqwVB88jF4XWyWDdipgdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Zhao <findns94@gmail.com>,
-	Kees Cook <keescook@chromium.org>,
+	Clark Wang <xiaoning.wang@nxp.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 421/591] lkdtm: replace ll_rw_block with submit_bh
-Date: Sun, 16 Jul 2023 21:49:20 +0200
-Message-ID: <20230716194934.807908043@linuxfoundation.org>
+Subject: [PATCH 6.1 422/591] i3c: master: svc: fix cpu schedule in spin lock
+Date: Sun, 16 Jul 2023 21:49:21 +0200
+Message-ID: <20230716194934.833584091@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,54 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yue Zhao <findns94@gmail.com>
+From: Clark Wang <xiaoning.wang@nxp.com>
 
-[ Upstream commit b290df06811852d4cc36f4b8a2a30c2063197a74 ]
+[ Upstream commit 33beadb3b1ab74e69db2c49d9663f3a93a273943 ]
 
-Function ll_rw_block was removed in commit 79f597842069 ("fs/buffer:
-remove ll_rw_block() helper"). There is no unified function to sumbit
-read or write buffer in block layer for now. Consider similar sematics,
-we can choose submit_bh() to replace ll_rw_block() as predefined crash
-point. In submit_bh(), it also takes read or write flag as the first
-argument and invoke submit_bio() to submit I/O request to block layer.
+pm_runtime_resume_and_get() may call sleep(). It cannot be used in
+svc_i3c_master_start_xfer_locked(), because it is in a spin lock.
 
-Fixes: 79f597842069 ("fs/buffer: remove ll_rw_block() helper")
-Signed-off-by: Yue Zhao <findns94@gmail.com>
-Acked-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230503162944.3969-1-findns94@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Move the pm runtime operations to svc_i3c_master_enqueue_xfer().
+
+Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
+Fixes: 05be23ef78f7 ("i3c: master: svc: add runtime pm support")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20230517033030.3068085-2-xiaoning.wang@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/fault-injection/provoke-crashes.rst | 2 +-
- drivers/misc/lkdtm/core.c                         | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/i3c/master/svc-i3c-master.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/fault-injection/provoke-crashes.rst b/Documentation/fault-injection/provoke-crashes.rst
-index 3abe842256139..1f087e502ca6d 100644
---- a/Documentation/fault-injection/provoke-crashes.rst
-+++ b/Documentation/fault-injection/provoke-crashes.rst
-@@ -29,7 +29,7 @@ recur_count
- cpoint_name
- 	Where in the kernel to trigger the action. It can be
- 	one of INT_HARDWARE_ENTRY, INT_HW_IRQ_EN, INT_TASKLET_ENTRY,
--	FS_DEVRW, MEM_SWAPOUT, TIMERADD, SCSI_QUEUE_RQ, or DIRECT.
-+	FS_SUBMIT_BH, MEM_SWAPOUT, TIMERADD, SCSI_QUEUE_RQ, or DIRECT.
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index d6e9ed74cdcf4..d47360f8a1f36 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -1090,12 +1090,6 @@ static void svc_i3c_master_start_xfer_locked(struct svc_i3c_master *master)
+ 	if (!xfer)
+ 		return;
  
- cpoint_type
- 	Indicates the action to be taken on hitting the crash point.
-diff --git a/drivers/misc/lkdtm/core.c b/drivers/misc/lkdtm/core.c
-index b4712ff196b4e..0772e4a4757e9 100644
---- a/drivers/misc/lkdtm/core.c
-+++ b/drivers/misc/lkdtm/core.c
-@@ -79,7 +79,7 @@ static struct crashpoint crashpoints[] = {
- 	CRASHPOINT("INT_HARDWARE_ENTRY", "do_IRQ"),
- 	CRASHPOINT("INT_HW_IRQ_EN",	 "handle_irq_event"),
- 	CRASHPOINT("INT_TASKLET_ENTRY",	 "tasklet_action"),
--	CRASHPOINT("FS_DEVRW",		 "ll_rw_block"),
-+	CRASHPOINT("FS_SUBMIT_BH",		 "submit_bh"),
- 	CRASHPOINT("MEM_SWAPOUT",	 "shrink_inactive_list"),
- 	CRASHPOINT("TIMERADD",		 "hrtimer_start"),
- 	CRASHPOINT("SCSI_QUEUE_RQ",	 "scsi_queue_rq"),
+-	ret = pm_runtime_resume_and_get(master->dev);
+-	if (ret < 0) {
+-		dev_err(master->dev, "<%s> Cannot get runtime PM.\n", __func__);
+-		return;
+-	}
+-
+ 	svc_i3c_master_clear_merrwarn(master);
+ 	svc_i3c_master_flush_fifo(master);
+ 
+@@ -1110,9 +1104,6 @@ static void svc_i3c_master_start_xfer_locked(struct svc_i3c_master *master)
+ 			break;
+ 	}
+ 
+-	pm_runtime_mark_last_busy(master->dev);
+-	pm_runtime_put_autosuspend(master->dev);
+-
+ 	xfer->ret = ret;
+ 	complete(&xfer->comp);
+ 
+@@ -1133,6 +1124,13 @@ static void svc_i3c_master_enqueue_xfer(struct svc_i3c_master *master,
+ 					struct svc_i3c_xfer *xfer)
+ {
+ 	unsigned long flags;
++	int ret;
++
++	ret = pm_runtime_resume_and_get(master->dev);
++	if (ret < 0) {
++		dev_err(master->dev, "<%s> Cannot get runtime PM.\n", __func__);
++		return;
++	}
+ 
+ 	init_completion(&xfer->comp);
+ 	spin_lock_irqsave(&master->xferqueue.lock, flags);
+@@ -1143,6 +1141,9 @@ static void svc_i3c_master_enqueue_xfer(struct svc_i3c_master *master,
+ 		svc_i3c_master_start_xfer_locked(master);
+ 	}
+ 	spin_unlock_irqrestore(&master->xferqueue.lock, flags);
++
++	pm_runtime_mark_last_busy(master->dev);
++	pm_runtime_put_autosuspend(master->dev);
+ }
+ 
+ static bool
 -- 
 2.39.2
 
