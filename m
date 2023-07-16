@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3E48F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:58:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C764C433C8;
-	Sun, 16 Jul 2023 20:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C92A8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:58:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0712EC433C8;
+	Sun, 16 Jul 2023 20:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689541097;
-	bh=rE00nsTelNN9dyFmvwGWbyYm/2WqW6CqhFeMwqy9xMI=;
+	s=korg; t=1689541100;
+	bh=PT85VmMSCmhF8xBs/JYdQvdWlBnmjrxUSUkYFLmAVTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gt5jaTc8HYhLAB/hZ5hEQBIag0ilrnwYD2hnvHKinDyXJ70XTEvi4QNUuYqszYkQH
-	 JaO8Tfj//C8DINMykgsy3lbQcjbwbrv6hbfdZVMxDGaoWVUA2Noe1YF8LU6TWAxAoJ
-	 NZKrcpcTJ/4Qi9GNhHapqb2/7yGMYRU7Y5xXlMHw=
+	b=CxjRwC40TRjFuWw7H5KWyrnuARh+oxFLirztv+TaXP7GidZcZc7Tkd+0DGQJhoIZY
+	 aApAICwQNq10lGNN1zA/3BO4NpSQDTzMuty39nNvEQFnyNV6s4gKRb0cdGWiHwwWoZ
+	 Pb8E7EzkmRKYUDNHdpLzqhOCnq2Mz4OsWjTtRfuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@canonical.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 588/591] netfilter: nf_tables: prevent OOB access in nft_byteorder_eval
-Date: Sun, 16 Jul 2023 21:52:07 +0200
-Message-ID: <20230716194939.064148756@linuxfoundation.org>
+	Imre Deak <imre.deak@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>
+Subject: [PATCH 6.1 579/591] drm/i915/tc: Fix system resume MST mode restore for DP-alt sinks
+Date: Sun, 16 Jul 2023 21:51:58 +0200
+Message-ID: <20230716194938.837928439@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,211 +34,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit caf3ef7468f7534771b5c44cd8dbd6f7f87c2cbd upstream.
+commit 06f66261a1567d66b9d35c87393b6edfbea4c8f8 upstream.
 
-When evaluating byteorder expressions with size 2, a union with 32-bit and
-16-bit members is used. Since the 16-bit members are aligned to 32-bit,
-the array accesses will be out-of-bounds.
+At least restoring the MST topology during system resume needs to use
+AUX before the display HW readout->sanitization sequence is complete,
+but on TC ports the PHY may be in the wrong mode for this, resulting in
+the AUX transfers to fail.
 
-It may lead to a stack-out-of-bounds access like the one below:
+The initial TC port mode is kept fixed as BIOS left it for the above HW
+readout sequence (to prevent changing the mode on an enabled port).  If
+the port is disabled this initial mode is TBT - as in any case the PHY
+ownership is not held - even if a DP-alt sink is connected. Thus, the
+AUX transfers during this time will use TBT mode instead of the expected
+DP-alt mode and so time out.
 
-[   23.095215] ==================================================================
-[   23.095625] BUG: KASAN: stack-out-of-bounds in nft_byteorder_eval+0x13c/0x320
-[   23.096020] Read of size 2 at addr ffffc90000007948 by task ping/115
-[   23.096358]
-[   23.096456] CPU: 0 PID: 115 Comm: ping Not tainted 6.4.0+ #413
-[   23.096770] Call Trace:
-[   23.096910]  <IRQ>
-[   23.097030]  dump_stack_lvl+0x60/0xc0
-[   23.097218]  print_report+0xcf/0x630
-[   23.097388]  ? nft_byteorder_eval+0x13c/0x320
-[   23.097577]  ? kasan_addr_to_slab+0xd/0xc0
-[   23.097760]  ? nft_byteorder_eval+0x13c/0x320
-[   23.097949]  kasan_report+0xc9/0x110
-[   23.098106]  ? nft_byteorder_eval+0x13c/0x320
-[   23.098298]  __asan_load2+0x83/0xd0
-[   23.098453]  nft_byteorder_eval+0x13c/0x320
-[   23.098659]  nft_do_chain+0x1c8/0xc50
-[   23.098852]  ? __pfx_nft_do_chain+0x10/0x10
-[   23.099078]  ? __kasan_check_read+0x11/0x20
-[   23.099295]  ? __pfx___lock_acquire+0x10/0x10
-[   23.099535]  ? __pfx___lock_acquire+0x10/0x10
-[   23.099745]  ? __kasan_check_read+0x11/0x20
-[   23.099929]  nft_do_chain_ipv4+0xfe/0x140
-[   23.100105]  ? __pfx_nft_do_chain_ipv4+0x10/0x10
-[   23.100327]  ? lock_release+0x204/0x400
-[   23.100515]  ? nf_hook.constprop.0+0x340/0x550
-[   23.100779]  nf_hook_slow+0x6c/0x100
-[   23.100977]  ? __pfx_nft_do_chain_ipv4+0x10/0x10
-[   23.101223]  nf_hook.constprop.0+0x334/0x550
-[   23.101443]  ? __pfx_ip_local_deliver_finish+0x10/0x10
-[   23.101677]  ? __pfx_nf_hook.constprop.0+0x10/0x10
-[   23.101882]  ? __pfx_ip_rcv_finish+0x10/0x10
-[   23.102071]  ? __pfx_ip_local_deliver_finish+0x10/0x10
-[   23.102291]  ? rcu_read_lock_held+0x4b/0x70
-[   23.102481]  ip_local_deliver+0xbb/0x110
-[   23.102665]  ? __pfx_ip_rcv+0x10/0x10
-[   23.102839]  ip_rcv+0x199/0x2a0
-[   23.102980]  ? __pfx_ip_rcv+0x10/0x10
-[   23.103140]  __netif_receive_skb_one_core+0x13e/0x150
-[   23.103362]  ? __pfx___netif_receive_skb_one_core+0x10/0x10
-[   23.103647]  ? mark_held_locks+0x48/0xa0
-[   23.103819]  ? process_backlog+0x36c/0x380
-[   23.103999]  __netif_receive_skb+0x23/0xc0
-[   23.104179]  process_backlog+0x91/0x380
-[   23.104350]  __napi_poll.constprop.0+0x66/0x360
-[   23.104589]  ? net_rx_action+0x1cb/0x610
-[   23.104811]  net_rx_action+0x33e/0x610
-[   23.105024]  ? _raw_spin_unlock+0x23/0x50
-[   23.105257]  ? __pfx_net_rx_action+0x10/0x10
-[   23.105485]  ? mark_held_locks+0x48/0xa0
-[   23.105741]  __do_softirq+0xfa/0x5ab
-[   23.105956]  ? __dev_queue_xmit+0x765/0x1c00
-[   23.106193]  do_softirq.part.0+0x49/0xc0
-[   23.106423]  </IRQ>
-[   23.106547]  <TASK>
-[   23.106670]  __local_bh_enable_ip+0xf5/0x120
-[   23.106903]  __dev_queue_xmit+0x789/0x1c00
-[   23.107131]  ? __pfx___dev_queue_xmit+0x10/0x10
-[   23.107381]  ? find_held_lock+0x8e/0xb0
-[   23.107585]  ? lock_release+0x204/0x400
-[   23.107798]  ? neigh_resolve_output+0x185/0x350
-[   23.108049]  ? mark_held_locks+0x48/0xa0
-[   23.108265]  ? neigh_resolve_output+0x185/0x350
-[   23.108514]  neigh_resolve_output+0x246/0x350
-[   23.108753]  ? neigh_resolve_output+0x246/0x350
-[   23.109003]  ip_finish_output2+0x3c3/0x10b0
-[   23.109250]  ? __pfx_ip_finish_output2+0x10/0x10
-[   23.109510]  ? __pfx_nf_hook+0x10/0x10
-[   23.109732]  __ip_finish_output+0x217/0x390
-[   23.109978]  ip_finish_output+0x2f/0x130
-[   23.110207]  ip_output+0xc9/0x170
-[   23.110404]  ip_push_pending_frames+0x1a0/0x240
-[   23.110652]  raw_sendmsg+0x102e/0x19e0
-[   23.110871]  ? __pfx_raw_sendmsg+0x10/0x10
-[   23.111093]  ? lock_release+0x204/0x400
-[   23.111304]  ? __mod_lruvec_page_state+0x148/0x330
-[   23.111567]  ? find_held_lock+0x8e/0xb0
-[   23.111777]  ? find_held_lock+0x8e/0xb0
-[   23.111993]  ? __rcu_read_unlock+0x7c/0x2f0
-[   23.112225]  ? aa_sk_perm+0x18a/0x550
-[   23.112431]  ? filemap_map_pages+0x4f1/0x900
-[   23.112665]  ? __pfx_aa_sk_perm+0x10/0x10
-[   23.112880]  ? find_held_lock+0x8e/0xb0
-[   23.113098]  inet_sendmsg+0xa0/0xb0
-[   23.113297]  ? inet_sendmsg+0xa0/0xb0
-[   23.113500]  ? __pfx_inet_sendmsg+0x10/0x10
-[   23.113727]  sock_sendmsg+0xf4/0x100
-[   23.113924]  ? move_addr_to_kernel.part.0+0x4f/0xa0
-[   23.114190]  __sys_sendto+0x1d4/0x290
-[   23.114391]  ? __pfx___sys_sendto+0x10/0x10
-[   23.114621]  ? __pfx_mark_lock.part.0+0x10/0x10
-[   23.114869]  ? lock_release+0x204/0x400
-[   23.115076]  ? find_held_lock+0x8e/0xb0
-[   23.115287]  ? rcu_is_watching+0x23/0x60
-[   23.115503]  ? __rseq_handle_notify_resume+0x6e2/0x860
-[   23.115778]  ? __kasan_check_write+0x14/0x30
-[   23.116008]  ? blkcg_maybe_throttle_current+0x8d/0x770
-[   23.116285]  ? mark_held_locks+0x28/0xa0
-[   23.116503]  ? do_syscall_64+0x37/0x90
-[   23.116713]  __x64_sys_sendto+0x7f/0xb0
-[   23.116924]  do_syscall_64+0x59/0x90
-[   23.117123]  ? irqentry_exit_to_user_mode+0x25/0x30
-[   23.117387]  ? irqentry_exit+0x77/0xb0
-[   23.117593]  ? exc_page_fault+0x92/0x140
-[   23.117806]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[   23.118081] RIP: 0033:0x7f744aee2bba
-[   23.118282] Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
-[   23.119237] RSP: 002b:00007ffd04a7c9f8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-[   23.119644] RAX: ffffffffffffffda RBX: 00007ffd04a7e0a0 RCX: 00007f744aee2bba
-[   23.120023] RDX: 0000000000000040 RSI: 000056488e9e6300 RDI: 0000000000000003
-[   23.120413] RBP: 000056488e9e6300 R08: 00007ffd04a80320 R09: 0000000000000010
-[   23.120809] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000040
-[   23.121219] R13: 00007ffd04a7dc38 R14: 00007ffd04a7ca00 R15: 00007ffd04a7e0a0
-[   23.121617]  </TASK>
-[   23.121749]
-[   23.121845] The buggy address belongs to the virtual mapping at
-[   23.121845]  [ffffc90000000000, ffffc90000009000) created by:
-[   23.121845]  irq_init_percpu_irqstack+0x1cf/0x270
-[   23.122707]
-[   23.122803] The buggy address belongs to the physical page:
-[   23.123104] page:0000000072ac19f0 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x24a09
-[   23.123609] flags: 0xfffffc0001000(reserved|node=0|zone=1|lastcpupid=0x1fffff)
-[   23.123998] page_type: 0xffffffff()
-[   23.124194] raw: 000fffffc0001000 ffffea0000928248 ffffea0000928248 0000000000000000
-[   23.124610] raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
-[   23.125023] page dumped because: kasan: bad access detected
-[   23.125326]
-[   23.125421] Memory state around the buggy address:
-[   23.125682]  ffffc90000007800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   23.126072]  ffffc90000007880: 00 00 00 00 00 f1 f1 f1 f1 f1 f1 00 00 f2 f2 00
-[   23.126455] >ffffc90000007900: 00 00 00 00 00 00 00 00 00 f2 f2 f2 f2 00 00 00
-[   23.126840]                                               ^
-[   23.127138]  ffffc90000007980: 00 00 00 00 00 00 00 00 00 00 00 00 00 f3 f3 f3
-[   23.127522]  ffffc90000007a00: f3 00 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1
-[   23.127906] ==================================================================
-[   23.128324] Disabling lock debugging due to kernel taint
+Fix the above by connecting the PHY during port initialization if the
+port is disabled, which will switch to the expected mode (DP-alt in the
+above case).
 
-Using simple s16 pointers for the 16-bit accesses fixes the problem. For
-the 32-bit accesses, src and dst can be used directly.
+As the encoder/pipe HW state isn't read-out yet at this point, check if
+the port is enabled based on the DDI_BUF enabled flag. Save the read-out
+initial mode, so intel_tc_port_sanitize_mode() can check this wrt. the
+read-out encoder HW state.
 
-Fixes: 96518518cc41 ("netfilter: add nftables")
-Cc: stable@vger.kernel.org
-Reported-by: Tanguy DUBROCA (@SidewayRE) from @Synacktiv working with ZDI
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230316131724.359612-5-imre.deak@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_byteorder.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_types.h |    1 
+ drivers/gpu/drm/i915/display/intel_tc.c            |   49 +++++++++++++++++++--
+ 2 files changed, 47 insertions(+), 3 deletions(-)
 
---- a/net/netfilter/nft_byteorder.c
-+++ b/net/netfilter/nft_byteorder.c
-@@ -30,11 +30,11 @@ void nft_byteorder_eval(const struct nft
- 	const struct nft_byteorder *priv = nft_expr_priv(expr);
- 	u32 *src = &regs->data[priv->sreg];
- 	u32 *dst = &regs->data[priv->dreg];
--	union { u32 u32; u16 u16; } *s, *d;
-+	u16 *s16, *d16;
- 	unsigned int i;
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -1763,6 +1763,7 @@ struct intel_digital_port {
+ 	bool tc_legacy_port:1;
+ 	char tc_port_name[8];
+ 	enum tc_port_mode tc_mode;
++	enum tc_port_mode tc_init_mode;
+ 	enum phy_fia tc_phy_fia;
+ 	u8 tc_phy_fia_idx;
  
--	s = (void *)src;
--	d = (void *)dst;
-+	s16 = (void *)src;
-+	d16 = (void *)dst;
+--- a/drivers/gpu/drm/i915/display/intel_tc.c
++++ b/drivers/gpu/drm/i915/display/intel_tc.c
+@@ -5,6 +5,7 @@
  
- 	switch (priv->size) {
- 	case 8: {
-@@ -62,11 +62,11 @@ void nft_byteorder_eval(const struct nft
- 		switch (priv->op) {
- 		case NFT_BYTEORDER_NTOH:
- 			for (i = 0; i < priv->len / 4; i++)
--				d[i].u32 = ntohl((__force __be32)s[i].u32);
-+				dst[i] = ntohl((__force __be32)src[i]);
- 			break;
- 		case NFT_BYTEORDER_HTON:
- 			for (i = 0; i < priv->len / 4; i++)
--				d[i].u32 = (__force __u32)htonl(s[i].u32);
-+				dst[i] = (__force __u32)htonl(src[i]);
- 			break;
- 		}
- 		break;
-@@ -74,11 +74,11 @@ void nft_byteorder_eval(const struct nft
- 		switch (priv->op) {
- 		case NFT_BYTEORDER_NTOH:
- 			for (i = 0; i < priv->len / 2; i++)
--				d[i].u16 = ntohs((__force __be16)s[i].u16);
-+				d16[i] = ntohs((__force __be16)s16[i]);
- 			break;
- 		case NFT_BYTEORDER_HTON:
- 			for (i = 0; i < priv->len / 2; i++)
--				d[i].u16 = (__force __u16)htons(s[i].u16);
-+				d16[i] = (__force __u16)htons(s16[i]);
- 			break;
- 		}
- 		break;
+ #include "i915_drv.h"
+ #include "i915_reg.h"
++#include "intel_de.h"
+ #include "intel_display.h"
+ #include "intel_display_power_map.h"
+ #include "intel_display_types.h"
+@@ -116,6 +117,24 @@ assert_tc_cold_blocked(struct intel_digi
+ 	drm_WARN_ON(&i915->drm, !enabled);
+ }
+ 
++static enum intel_display_power_domain
++tc_port_power_domain(struct intel_digital_port *dig_port)
++{
++	struct drm_i915_private *i915 = to_i915(dig_port->base.base.dev);
++	enum tc_port tc_port = intel_port_to_tc(i915, dig_port->base.port);
++
++	return POWER_DOMAIN_PORT_DDI_LANES_TC1 + tc_port - TC_PORT_1;
++}
++
++static void
++assert_tc_port_power_enabled(struct intel_digital_port *dig_port)
++{
++	struct drm_i915_private *i915 = to_i915(dig_port->base.base.dev);
++
++	drm_WARN_ON(&i915->drm,
++		    !intel_display_power_is_enabled(i915, tc_port_power_domain(dig_port)));
++}
++
+ u32 intel_tc_port_get_lane_mask(struct intel_digital_port *dig_port)
+ {
+ 	struct drm_i915_private *i915 = to_i915(dig_port->base.base.dev);
+@@ -693,6 +712,16 @@ static void __intel_tc_port_put_link(str
+ 	dig_port->tc_link_refcount--;
+ }
+ 
++static bool tc_port_is_enabled(struct intel_digital_port *dig_port)
++{
++	struct drm_i915_private *i915 = to_i915(dig_port->base.base.dev);
++
++	assert_tc_port_power_enabled(dig_port);
++
++	return intel_de_read(i915, DDI_BUF_CTL(dig_port->base.port)) &
++	       DDI_BUF_CTL_ENABLE;
++}
++
+ /**
+  * intel_tc_port_init_mode: Read out HW state and init the given port's TypeC mode
+  * @dig_port: digital port
+@@ -715,9 +744,23 @@ void intel_tc_port_init_mode(struct inte
+ 	tc_cold_wref = tc_cold_block(dig_port, &domain);
+ 
+ 	dig_port->tc_mode = intel_tc_port_get_current_mode(dig_port);
++	/*
++	 * Save the initial mode for the state check in
++	 * intel_tc_port_sanitize_mode().
++	 */
++	dig_port->tc_init_mode = dig_port->tc_mode;
++	dig_port->tc_lock_wakeref = tc_cold_block(dig_port, &dig_port->tc_lock_power_domain);
++
++	/*
++	 * The PHY needs to be connected for AUX to work during HW readout and
++	 * MST topology resume, but the PHY mode can only be changed if the
++	 * port is disabled.
++	 */
++	if (!tc_port_is_enabled(dig_port))
++		intel_tc_port_update_mode(dig_port, 1, false);
++
+ 	/* Prevent changing dig_port->tc_mode until intel_tc_port_sanitize_mode() is called. */
+ 	__intel_tc_port_get_link(dig_port);
+-	dig_port->tc_lock_wakeref = tc_cold_block(dig_port, &dig_port->tc_lock_power_domain);
+ 
+ 	tc_cold_unblock(dig_port, domain, tc_cold_wref);
+ 
+@@ -764,11 +807,11 @@ void intel_tc_port_sanitize_mode(struct
+ 		 * we'll just switch to disconnected mode from it here without
+ 		 * a note.
+ 		 */
+-		if (dig_port->tc_mode != TC_PORT_TBT_ALT)
++		if (dig_port->tc_init_mode != TC_PORT_TBT_ALT)
+ 			drm_dbg_kms(&i915->drm,
+ 				    "Port %s: PHY left in %s mode on disabled port, disconnecting it\n",
+ 				    dig_port->tc_port_name,
+-				    tc_port_mode_name(dig_port->tc_mode));
++				    tc_port_mode_name(dig_port->tc_init_mode));
+ 		icl_tc_phy_disconnect(dig_port);
+ 		__intel_tc_port_put_link(dig_port);
+ 
 
 
