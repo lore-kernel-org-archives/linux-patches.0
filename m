@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1718F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE93C433C8;
-	Sun, 16 Jul 2023 20:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82548F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:08:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AAFFC433C7;
+	Sun, 16 Jul 2023 20:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538094;
-	bh=nI9mD7Tsyq6ezv9cXjjx/m5dpHoclwWtSBp/x/SXw4A=;
+	s=korg; t=1689538096;
+	bh=VCPObwJKw2KDnJ/HE9R9aYasW/LYYVO96WHrFZff1KU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M90DVOVB9WFVzHZ9rNPIu8jGMdrclCQlDGXmsYeVMvI4227lFMIx+XNsPT65GBYmq
-	 L9b6AthxEbNZpicAkwWzqYWP918FsT/+j2cEy4FSkA533sGR4TwlXTkbXbmvSr6cwC
-	 GnpJ6Ii88NSimqLlO4FQjYzE3cpI9ADhev/F7M1M=
+	b=RqeD+55SNjGK2OHdfyzvwEv8EPQ2iFmpGM3mJBybaE0p8L+TxJtfIbDwY1v+/Vxv6
+	 52SgNs3Pxt9lmGjoohlYY/Snc+yew1SLzd+BYUbfCJn4uo8PEGy6M4qE4f7lKJVEsT
+	 YG/SHuZtKg3ArHpKI4PIJ37amWRm2uOtmbguKi0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Julius Werner <jwerner@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 311/800] arm64: dts: qcom: sm6115: correct thermal-sensor unit address
-Date: Sun, 16 Jul 2023 21:42:44 +0200
-Message-ID: <20230716194956.298390225@linuxfoundation.org>
+Subject: [PATCH 6.4 329/800] arm64: dts: mediatek: mt8195: Add mediatek,broken-save-restore-fw to cherry
+Date: Sun, 16 Jul 2023 21:43:02 +0200
+Message-ID: <20230716194956.725679058@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,37 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 2358b43256080459fcc5642265ed4fec75558f8c ]
+[ Upstream commit ea6c5f21efecbaa3a14cb21c5bc0e23c84473a11 ]
 
-Match unit-address to reg entry to fix dtbs W=1 warnings:
+Firmware shipped on mt8195 Chromebooks is affected by the GICR
+save/restore issue as described by the patch ("dt-bindings:
+interrupt-controller: arm,gic-v3: Add quirk for Mediatek SoCs w/
+broken FW"). Add the quirk property.
 
-  Warning (simple_bus_reg): /soc@0/thermal-sensor@4410000: simple-bus unit address format error, expected "4411000"
-
-Fixes: 7b74cba6b13f ("arm64: dts: qcom: sm6115: Add TSENS node")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-12-krzysztof.kozlowski@linaro.org
+Fixes: 5eb2e303ec6b ("arm64: dts: mediatek: Introduce MT8195 Cherry platform's Tomato")
+Reviewed-by: Julius Werner <jwerner@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230515131353.v2.5.Ia0b6ebbaa351e3cd67e201355b9ae67783c7d718@changeid
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 43f31c1b9d5a7..ea71249bbdf3f 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -700,7 +700,7 @@ spmi_bus: spmi@1c40000 {
- 			#interrupt-cells = <4>;
- 		};
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+index 8ac80a136c371..f2d0726546c77 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+@@ -255,6 +255,10 @@ dptx_out: endpoint {
+ 	};
+ };
  
--		tsens0: thermal-sensor@4410000 {
-+		tsens0: thermal-sensor@4411000 {
- 			compatible = "qcom,sm6115-tsens", "qcom,tsens-v2";
- 			reg = <0x0 0x04411000 0x0 0x1ff>, /* TM */
- 			      <0x0 0x04410000 0x0 0x8>; /* SROT */
++&gic {
++	mediatek,broken-save-restore-fw;
++};
++
+ &gpu {
+ 	status = "okay";
+ 	mali-supply = <&mt6315_7_vbuck1>;
 -- 
 2.39.2
 
