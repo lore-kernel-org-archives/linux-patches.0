@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22C98F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:36:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5691EC433C7;
-	Sun, 16 Jul 2023 20:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE048F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:36:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C89BC433C8;
+	Sun, 16 Jul 2023 20:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539806;
-	bh=x68mS2r2gBvCa2ErOvoXX/QObzir5PBJSG0U56DjDiU=;
+	s=korg; t=1689539809;
+	bh=IQtIcNTURUzponNxCrNbImvdqSjS+Ni+1eam1LhYSxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVT2qSOie/6/IR8+OiUj0/fyrOuUjSJtsVuFaHtZ1ltMEdLfw/pH2LTwosDxzE5lp
-	 6YfaUVOoNRvWgsiqWSi6pB7yPHnZC6LpOBQ59+kIboewelQfP6+7z+KgCqIkhe2ogG
-	 xln/Q2mIJxqSRP11FAcCRrNq0sBrNm2PUOE+W1Jo=
+	b=AJSIksSNNFtqc3W10bTULu+NTMT+u+4LIOrk6sreTqmiEbcQSk7aYprCC+5aUm+5K
+	 w9GVdh42aM0rFeFW74VMdpMe8d35Y52o7f/X4ms4iE14vIW0o0bdjTkan1ov6u7PmD
+	 7625tkdKmsGdhuAJdMww2m4re++EyYxsbkWB3aqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Baoquan He <bhe@redhat.com>,
-	Cong Wang <amwang@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Maxim Kochetkov <fido_max@inbox.ru>,
+	Robert Hancock <robert.hancock@calian.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/591] kexec: fix a memory leak in crash_shrink_memory()
-Date: Sun, 16 Jul 2023 21:44:01 +0200
-Message-ID: <20230716194926.515501596@linuxfoundation.org>
+Subject: [PATCH 6.1 132/591] net: axienet: Move reset before 64-bit DMA detection
+Date: Sun, 16 Jul 2023 21:44:31 +0200
+Message-ID: <20230716194927.290288566@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -39,91 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Maxim Kochetkov <fido_max@inbox.ru>
 
-[ Upstream commit 1cba6c4309f03de570202c46f03df3f73a0d4c82 ]
+[ Upstream commit f1bc9fc4a06de0108e0dca2a9a7e99ba1fc632f9 ]
 
-Patch series "kexec: enable kexec_crash_size to support two crash kernel
-regions".
+64-bit DMA detection will fail if axienet was started before (by boot
+loader, boot ROM, etc). In this state axienet will not start properly.
+XAXIDMA_TX_CDESC_OFFSET + 4 register (MM2S_CURDESC_MSB) is used to detect
+64-bit DMA capability here. But datasheet says: When DMACR.RS is 1
+(axienet is in enabled state), CURDESC_PTR becomes Read Only (RO) and
+is used to fetch the first descriptor. So iowrite32()/ioread32() trick
+to this register to detect 64-bit DMA will not work.
+So move axienet reset before 64-bit DMA detection.
 
-When crashkernel=X fails to reserve region under 4G, it will fall back to
-reserve region above 4G and a region of the default size will also be
-reserved under 4G.  Unfortunately, /sys/kernel/kexec_crash_size only
-supports one crash kernel region now, the user cannot sense the low memory
-reserved by reading /sys/kernel/kexec_crash_size.  Also, low memory cannot
-be freed by writing this file.
-
-For example:
-resource_size(crashk_res) = 512M
-resource_size(crashk_low_res) = 256M
-
-The result of 'cat /sys/kernel/kexec_crash_size' is 512M, but it should be
-768M.  When we execute 'echo 0 > /sys/kernel/kexec_crash_size', the size
-of crashk_res becomes 0 and resource_size(crashk_low_res) is still 256 MB,
-which is incorrect.
-
-Since crashk_res manages the memory with high address and crashk_low_res
-manages the memory with low address, crashk_low_res is shrunken only when
-all crashk_res is shrunken.  And because when there is only one crash
-kernel region, crashk_res is always used.  Therefore, if all crashk_res is
-shrunken and crashk_low_res still exists, swap them.
-
-This patch (of 6):
-
-If the value of parameter 'new_size' is in the semi-open and semi-closed
-interval (crashk_res.end - KEXEC_CRASH_MEM_ALIGN + 1, crashk_res.end], the
-calculation result of ram_res is:
-
-	ram_res->start = crashk_res.end + 1
-	ram_res->end   = crashk_res.end
-
-The operation of insert_resource() fails, and ram_res is not added to
-iomem_resource.  As a result, the memory of the control block ram_res is
-leaked.
-
-In fact, on all architectures, the start address and size of crashk_res
-are already aligned by KEXEC_CRASH_MEM_ALIGN.  Therefore, we do not need
-to round up crashk_res.start again.  Instead, we should round up
-'new_size' in advance.
-
-Link: https://lkml.kernel.org/r/20230527123439.772-1-thunder.leizhen@huawei.com
-Link: https://lkml.kernel.org/r/20230527123439.772-2-thunder.leizhen@huawei.com
-Fixes: 6480e5a09237 ("kdump: add missing RAM resource in crash_shrink_memory()")
-Fixes: 06a7f711246b ("kexec: premit reduction of the reserved memory size")
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: Cong Wang <amwang@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f735c40ed93c ("net: axienet: Autodetect 64-bit DMA capability")
+Signed-off-by: Maxim Kochetkov <fido_max@inbox.ru>
+Reviewed-by: Robert Hancock <robert.hancock@calian.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/20230622192245.116864-1-fido_max@inbox.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_core.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
-index ca2743f9c634e..79c012fbb49c8 100644
---- a/kernel/kexec_core.c
-+++ b/kernel/kexec_core.c
-@@ -1035,6 +1035,7 @@ int crash_shrink_memory(unsigned long new_size)
- 	start = crashk_res.start;
- 	end = crashk_res.end;
- 	old_size = (end == 0) ? 0 : end - start + 1;
-+	new_size = roundup(new_size, KEXEC_CRASH_MEM_ALIGN);
- 	if (new_size >= old_size) {
- 		ret = (new_size == old_size) ? 0 : -EINVAL;
- 		goto unlock;
-@@ -1046,9 +1047,7 @@ int crash_shrink_memory(unsigned long new_size)
- 		goto unlock;
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index d1d772580da98..d14648558338b 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -2043,6 +2043,11 @@ static int axienet_probe(struct platform_device *pdev)
+ 		goto cleanup_clk;
  	}
  
--	start = roundup(start, KEXEC_CRASH_MEM_ALIGN);
--	end = roundup(start + new_size, KEXEC_CRASH_MEM_ALIGN);
--
-+	end = start + new_size;
- 	crash_free_reserved_phys_range(end, crashk_res.end);
++	/* Reset core now that clocks are enabled, prior to accessing MDIO */
++	ret = __axienet_device_reset(lp);
++	if (ret)
++		goto cleanup_clk;
++
+ 	/* Autodetect the need for 64-bit DMA pointers.
+ 	 * When the IP is configured for a bus width bigger than 32 bits,
+ 	 * writing the MSB registers is mandatory, even if they are all 0.
+@@ -2097,11 +2102,6 @@ static int axienet_probe(struct platform_device *pdev)
+ 	lp->coalesce_count_tx = XAXIDMA_DFT_TX_THRESHOLD;
+ 	lp->coalesce_usec_tx = XAXIDMA_DFT_TX_USEC;
  
- 	if ((start == end) && (crashk_res.parent != NULL))
+-	/* Reset core now that clocks are enabled, prior to accessing MDIO */
+-	ret = __axienet_device_reset(lp);
+-	if (ret)
+-		goto cleanup_clk;
+-
+ 	ret = axienet_mdio_setup(lp);
+ 	if (ret)
+ 		dev_warn(&pdev->dev,
 -- 
 2.39.2
 
