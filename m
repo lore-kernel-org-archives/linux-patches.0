@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243138F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:53:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5E3C433C8;
-	Sun, 16 Jul 2023 20:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E754C8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:53:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68178C433C7;
+	Sun, 16 Jul 2023 20:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540827;
-	bh=YAsotvrNMiPGAqllvHLoMnfarJENIyWh8Nx2BpSkrWk=;
+	s=korg; t=1689540829;
+	bh=71tj3icSu+aIy/1IuQ0gm8OMglN5UvEHtdqd/b0Fg1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PBA1NmCR4/yvifP+j4TEZiwlKb63wApQ+fVHueBqKbn4AhNbKisALzZjT95yUr7+N
-	 hofLDVnKOyFXeke3+ylpCJncvnStjv2fRwsOAHC/TlvcT1Mi/s98e4AeRHUJ7UA6vu
-	 6pvUErJHgcpFUv1a2sZyinsVfY3gojK00O7+vK18=
+	b=2uDGIBvDA3uNidt9xoqvHv4B2lWAR7yUbZxJW5Y8HkqRQAH8KDI/X6CiwRarI9wHl
+	 0R3+LTK6ptRYcJOH7eYmsh8/j57QAdKDEP+sdWIZRiZ3fL0ffOIpmgmGoXwfW3q0w5
+	 wsRCNBkyKlQ25eN8iXQSyjRU8POu2C88Z4HrOY2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Alexander Egorenkov <Alexander.Egorenkov@ibm.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 502/591] tcp: annotate data races in __tcp_oow_rate_limited()
-Date: Sun, 16 Jul 2023 21:50:41 +0200
-Message-ID: <20230716194936.880633798@linuxfoundation.org>
+Subject: [PATCH 6.1 503/591] bpf, btf: Warn but return no error for NULL btf from __register_btf_kfunc_id_set()
+Date: Sun, 16 Jul 2023 21:50:42 +0200
+Message-ID: <20230716194936.905452214@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,53 +38,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 998127cdb4699b9d470a9348ffe9f1154346be5f ]
+[ Upstream commit 3de4d22cc9ac7c9f38e10edcf54f9a8891a9c2aa ]
 
-request sockets are lockless, __tcp_oow_rate_limited() could be called
-on the same object from different cpus. This is harmless.
+__register_btf_kfunc_id_set() assumes .BTF to be part of the module's .ko
+file if CONFIG_DEBUG_INFO_BTF is enabled. If that's not the case, the
+function prints an error message and return an error. As a result, such
+modules cannot be loaded.
 
-Add READ_ONCE()/WRITE_ONCE() annotations to avoid a KCSAN report.
+However, the section could be stripped out during a build process. It would
+be better to let the modules loaded, because their basic functionalities
+have no problem [0], though the BTF functionalities will not be supported.
+Make the function to lower the level of the message from error to warn, and
+return no error.
 
-Fixes: 4ce7e93cb3fe ("tcp: rate limit ACK sent by SYN_RECV request sockets")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  [0] https://lore.kernel.org/bpf/20220219082037.ow2kbq5brktf4f2u@apollo.legion
+
+Fixes: c446fdacb10d ("bpf: fix register_btf_kfunc_id_set for !CONFIG_DEBUG_INFO_BTF")
+Reported-by: Alexander Egorenkov <Alexander.Egorenkov@ibm.com>
+Suggested-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/87y228q66f.fsf@oc8242746057.ibm.com
+Link: https://lore.kernel.org/bpf/20220219082037.ow2kbq5brktf4f2u@apollo.legion
+Link: https://lore.kernel.org/bpf/20230701171447.56464-1-sj@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ kernel/bpf/btf.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 5dabb38b857ff..e2d3ea2e34561 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -3590,8 +3590,11 @@ static int tcp_ack_update_window(struct sock *sk, const struct sk_buff *skb, u32
- static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
- 				   u32 *last_oow_ack_time)
- {
--	if (*last_oow_ack_time) {
--		s32 elapsed = (s32)(tcp_jiffies32 - *last_oow_ack_time);
-+	/* Paired with the WRITE_ONCE() in this function. */
-+	u32 val = READ_ONCE(*last_oow_ack_time);
-+
-+	if (val) {
-+		s32 elapsed = (s32)(tcp_jiffies32 - val);
- 
- 		if (0 <= elapsed &&
- 		    elapsed < READ_ONCE(net->ipv4.sysctl_tcp_invalid_ratelimit)) {
-@@ -3600,7 +3603,10 @@ static bool __tcp_oow_rate_limited(struct net *net, int mib_idx,
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 8220caa488c54..fb78bb26786fc 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -7469,10 +7469,8 @@ int register_btf_kfunc_id_set(enum bpf_prog_type prog_type,
+ 			pr_err("missing vmlinux BTF, cannot register kfuncs\n");
+ 			return -ENOENT;
  		}
+-		if (kset->owner && IS_ENABLED(CONFIG_DEBUG_INFO_BTF_MODULES)) {
+-			pr_err("missing module BTF, cannot register kfuncs\n");
+-			return -ENOENT;
+-		}
++		if (kset->owner && IS_ENABLED(CONFIG_DEBUG_INFO_BTF_MODULES))
++			pr_warn("missing module BTF, cannot register kfuncs\n");
+ 		return 0;
  	}
- 
--	*last_oow_ack_time = tcp_jiffies32;
-+	/* Paired with the prior READ_ONCE() and with itself,
-+	 * as we might be lockless.
-+	 */
-+	WRITE_ONCE(*last_oow_ack_time, tcp_jiffies32);
- 
- 	return false;	/* not rate-limited: go ahead, send dupack now! */
- }
+ 	if (IS_ERR(btf))
 -- 
 2.39.2
 
