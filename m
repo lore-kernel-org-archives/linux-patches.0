@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5CC8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314E2C433C7;
-	Sun, 16 Jul 2023 20:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796678F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4C7C433C8;
+	Sun, 16 Jul 2023 20:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538590;
-	bh=uKPyK+Pc7JZg48MAe+fgXGwF8PbvxfRnA2D2QFWBClQ=;
+	s=korg; t=1689538593;
+	bh=0Wb3YN3LSSc+Q9OQiUzx0KyYdz06qQFnu6448qEC0cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0toZeJBIMHOscElAL5ZApFdsEl5DKy/pNQFQQRtC5R6klx3DelB4qY7jnq4oJe2Io
-	 GzZ7ztmWv4xp7saPgerIYfAbXQjENcoflyFkQE0Rzn9Ih+CESejDpQZAsGDSt6msRb
-	 FebH57n/SI98xDi+smflNDH8hwKRld6KU/Y9cdPM=
+	b=qmR0ScXelJpe7kP1JA+YyeW+jwRqpls9aYXh38X0SUCy8APUPKjOfFDaahICNExtA
+	 iz5okkz1213xN3YY+vgTV5JjWmqslI0oO1ZWkOkTCkAnczxuS0/HeRsCJX/VXK2sRe
+	 fWk/vcsuVX+viN5qNmYqjqSHItTnAM4A1KdFpo/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Pierre-Cl=C3=A9ment=20Tosi?= <ptosi@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 506/800] dt-bindings: qcom-qce: Fix compatible combinations for SM8150 and IPQ4019 SoCs
-Date: Sun, 16 Jul 2023 21:45:59 +0200
-Message-ID: <20230716195000.846549297@linuxfoundation.org>
+Subject: [PATCH 6.4 507/800] scripts/mksysmap: Fix badly escaped $
+Date: Sun, 16 Jul 2023 21:46:00 +0200
+Message-ID: <20230716195000.869222265@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -39,45 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+From: Pierre-Clément Tosi <ptosi@google.com>
 
-[ Upstream commit b3b266fa15552ba342831653f2b8b02c91451e73 ]
+[ Upstream commit ec336aa83162fe0f3d554baed2d4e2589b69ec6e ]
 
-Currently the compatible list available in 'qce' dt-bindings does not
-support SM8150 and IPQ4019 SoCs directly which may lead to potential
-'dtbs_check' error(s).
+The backslash characters escaping '$' in the command to sed (intended to
+prevent it from interpreting '$' as "end-of-line") are currently being
+consumed by the Shell (where they mean that sh should not evaluate what
+follows '$' as a variable name). This means that
 
-Fix the same.
+    sed -e "/ \$/d"
 
-Fixes: 00f3bc2db351 ("dt-bindings: qcom-qce: Add new SoC compatible strings for Qualcomm QCE IP")
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Acked-by: Rob Herring <robh@kernel.org>
-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+executes the script
+
+    / $/d
+
+instead of the intended
+
+    / \$/d
+
+So escape twice in mksysmap any '$' that actually needs to reach sed
+escaped so that the backslash survives the Shell.
+
+Fixes: c4802044a0a7 ("scripts/mksysmap: use sed with in-line comments")
+Fixes: 320e7c9d4494 ("scripts/kallsyms: move compiler-generated symbol patterns to mksysmap")
+Signed-off-by: Pierre-Clément Tosi <ptosi@google.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+ scripts/mksysmap | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-index e375bd9813009..90ddf98a6df92 100644
---- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-+++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-@@ -24,6 +24,12 @@ properties:
-         deprecated: true
-         description: Kept only for ABI backward compatibility
+diff --git a/scripts/mksysmap b/scripts/mksysmap
+index cb3b1fff3eee8..ec33385261022 100755
+--- a/scripts/mksysmap
++++ b/scripts/mksysmap
+@@ -32,7 +32,7 @@ ${NM} -n ${1} | sed >${2} -e "
+ #  (do not forget a space before each pattern)
  
-+      - items:
-+          - enum:
-+              - qcom,ipq4019-qce
-+              - qcom,sm8150-qce
-+          - const: qcom,qce
-+
-       - items:
-           - enum:
-               - qcom,ipq6018-qce
+ # local symbols for ARM, MIPS, etc.
+-/ \$/d
++/ \\$/d
+ 
+ # local labels, .LBB, .Ltmpxxx, .L__unnamed_xx, .LASANPC, etc.
+ / \.L/d
+@@ -41,7 +41,7 @@ ${NM} -n ${1} | sed >${2} -e "
+ / __efistub_/d
+ 
+ # arm64 local symbols in non-VHE KVM namespace
+-/ __kvm_nvhe_\$/d
++/ __kvm_nvhe_\\$/d
+ / __kvm_nvhe_\.L/d
+ 
+ # arm64 lld
 -- 
 2.39.2
 
