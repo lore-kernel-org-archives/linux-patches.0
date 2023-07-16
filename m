@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F7F8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4E1C433C8;
-	Sun, 16 Jul 2023 20:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A188F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:04:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCA4C433C8;
+	Sun, 16 Jul 2023 20:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537846;
-	bh=/RDsoYawP7q2Mcx5uugTIzMM+BqsKBP+Pp+1RpPf5L0=;
+	s=korg; t=1689537849;
+	bh=h+lbDox9nEPp8JR8EJMLT3dbpHjQMjZOTHVeaNxnQ5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXAcb60KcocUHdx88c2GPDWJfqn1meP68zFttfjQ7J9udlbLT/wOEUiLzptrfi0fY
-	 sUDvGx+MG25Pw1BBGV/r9IqLCoXwDH8/3q0eKaTEs6gOJS0DANZqWzdBb0HxpnT3z9
-	 v9dYrbKKmE8aClBexgiqWzKBEB0l2y8azuOPyKoo=
+	b=fzLeaZ2JxCgmGBxFzYigZQWrtK3KZSoYQKL8ruTfC8WxQTlgw/Ol0JXkYgUzO8JSe
+	 ZusarRQYoOqgB9EpOi6fMl+gxgTzQTeb9k7NecgJyHMPZv4GLy0zNjqAAeqSik0Iyi
+	 7pJzid/GHJwIZ5yI515dQzNsUnqWPoJkr6eHTZHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Kurt Hackel <kurt.hackel@oracle.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	ocfs2-devel@oss.oracle.com,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 211/800] ocfs2: Fix use of slab data with sendpage
-Date: Sun, 16 Jul 2023 21:41:04 +0200
-Message-ID: <20230716194953.998197744@linuxfoundation.org>
+Subject: [PATCH 6.4 212/800] sfc: fix crash when reading stats while NIC is resetting
+Date: Sun, 16 Jul 2023 21:41:05 +0200
+Message-ID: <20230716194954.020746150@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -40,87 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Edward Cree <ecree.xilinx@gmail.com>
 
-[ Upstream commit 86d7bd6e66e9925f0f04a7bcf3c92c05fdfefb5a ]
+[ Upstream commit d1b355438b8325a486f087e506d412c4e852f37b ]
 
-ocfs2 uses kzalloc() to allocate buffers for o2net_hand, o2net_keep_req and
-o2net_keep_resp and then passes these to sendpage.  This isn't really
-allowed as the lifetime of slab objects is not controlled by page ref -
-though in this case it will probably work.  sendmsg() with MSG_SPLICE_PAGES
-will, however, print a warning and give an error.
+efx_net_stats() (.ndo_get_stats64) can be called during an ethtool
+ selftest, during which time nic_data->mc_stats is NULL as the NIC has
+ been fini'd.  In this case do not attempt to fetch the latest stats
+ from the hardware, else we will crash on a NULL dereference:
+    BUG: kernel NULL pointer dereference, address: 0000000000000038
+    RIP efx_nic_update_stats
+    abridged calltrace:
+    efx_ef10_update_stats_pf
+    efx_net_stats
+    dev_get_stats
+    dev_seq_printf_stats
+Skipping the read is safe, we will simply give out stale stats.
+To ensure that the free in efx_ef10_fini_nic() does not race against
+ efx_ef10_update_stats_pf(), which could cause a TOCTTOU bug, take the
+ efx->stats_lock in fini_nic (it is already held across update_stats).
 
-Fix it to use folio_alloc() instead to allocate a buffer for the handshake
-message, keepalive request and reply messages.
-
-Fixes: 98211489d414 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Mark Fasheh <mark@fasheh.com>
-cc: Kurt Hackel <kurt.hackel@oracle.com>
-cc: Joel Becker <jlbec@evilplan.org>
-cc: Joseph Qi <joseph.qi@linux.alibaba.com>
-cc: ocfs2-devel@oss.oracle.com
-Link: https://lore.kernel.org/r/20230623225513.2732256-14-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d3142c193dca ("sfc: refactor EF10 stats handling")
+Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/tcp.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/sfc/ef10.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
-index aecbd712a00cf..929a1133bc180 100644
---- a/fs/ocfs2/cluster/tcp.c
-+++ b/fs/ocfs2/cluster/tcp.c
-@@ -2087,18 +2087,24 @@ void o2net_stop_listening(struct o2nm_node *node)
- 
- int o2net_init(void)
+diff --git a/drivers/net/ethernet/sfc/ef10.c b/drivers/net/ethernet/sfc/ef10.c
+index b63e47af63655..8c019f382a7f3 100644
+--- a/drivers/net/ethernet/sfc/ef10.c
++++ b/drivers/net/ethernet/sfc/ef10.c
+@@ -1297,8 +1297,10 @@ static void efx_ef10_fini_nic(struct efx_nic *efx)
  {
-+	struct folio *folio;
-+	void *p;
- 	unsigned long i;
+ 	struct efx_ef10_nic_data *nic_data = efx->nic_data;
  
- 	o2quo_init();
--
- 	o2net_debugfs_init();
- 
--	o2net_hand = kzalloc(sizeof(struct o2net_handshake), GFP_KERNEL);
--	o2net_keep_req = kzalloc(sizeof(struct o2net_msg), GFP_KERNEL);
--	o2net_keep_resp = kzalloc(sizeof(struct o2net_msg), GFP_KERNEL);
--	if (!o2net_hand || !o2net_keep_req || !o2net_keep_resp)
-+	folio = folio_alloc(GFP_KERNEL | __GFP_ZERO, 0);
-+	if (!folio)
- 		goto out;
- 
-+	p = folio_address(folio);
-+	o2net_hand = p;
-+	p += sizeof(struct o2net_handshake);
-+	o2net_keep_req = p;
-+	p += sizeof(struct o2net_msg);
-+	o2net_keep_resp = p;
-+
- 	o2net_hand->protocol_version = cpu_to_be64(O2NET_PROTOCOL_VERSION);
- 	o2net_hand->connector_id = cpu_to_be64(1);
- 
-@@ -2124,9 +2130,6 @@ int o2net_init(void)
- 	return 0;
- 
- out:
--	kfree(o2net_hand);
--	kfree(o2net_keep_req);
--	kfree(o2net_keep_resp);
- 	o2net_debugfs_exit();
- 	o2quo_exit();
- 	return -ENOMEM;
-@@ -2135,8 +2138,6 @@ int o2net_init(void)
- void o2net_exit(void)
- {
- 	o2quo_exit();
--	kfree(o2net_hand);
--	kfree(o2net_keep_req);
--	kfree(o2net_keep_resp);
- 	o2net_debugfs_exit();
-+	folio_put(virt_to_folio(o2net_hand));
++	spin_lock_bh(&efx->stats_lock);
+ 	kfree(nic_data->mc_stats);
+ 	nic_data->mc_stats = NULL;
++	spin_unlock_bh(&efx->stats_lock);
  }
+ 
+ static int efx_ef10_init_nic(struct efx_nic *efx)
+@@ -1852,9 +1854,14 @@ static size_t efx_ef10_update_stats_pf(struct efx_nic *efx, u64 *full_stats,
+ 
+ 	efx_ef10_get_stat_mask(efx, mask);
+ 
+-	efx_nic_copy_stats(efx, nic_data->mc_stats);
+-	efx_nic_update_stats(efx_ef10_stat_desc, EF10_STAT_COUNT,
+-			     mask, stats, nic_data->mc_stats, false);
++	/* If NIC was fini'd (probably resetting), then we can't read
++	 * updated stats right now.
++	 */
++	if (nic_data->mc_stats) {
++		efx_nic_copy_stats(efx, nic_data->mc_stats);
++		efx_nic_update_stats(efx_ef10_stat_desc, EF10_STAT_COUNT,
++				     mask, stats, nic_data->mc_stats, false);
++	}
+ 
+ 	/* Update derived statistics */
+ 	efx_nic_fix_nodesc_drop_stat(efx,
 -- 
 2.39.2
 
