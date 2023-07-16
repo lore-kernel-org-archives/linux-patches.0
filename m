@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F014D8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7576DC433C7;
-	Sun, 16 Jul 2023 20:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43C78F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35ED1C433C8;
+	Sun, 16 Jul 2023 20:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540660;
-	bh=UDFHIa//qAXE0YJ441616BDGSkFA+R0YV+9DQ3865zk=;
+	s=korg; t=1689540663;
+	bh=J2lDcGqvpfLrSAW3RkTH9qO3IByZ+BTwfVAiaR7rBE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7sBG22C7GLIxwEAfK2OORCKiqLVpejQ/8Gpw1DshEVvrzG7kPFCJrFyP9cBjjjT6
-	 ZSL1zTdx5X/WxFJpjx8bDSGferCVBVJ7N7b3qRCmmWFeEkhNxRclsHOtKpQEt4K2hV
-	 igF09wfe2X1xVRapXavLcGk8tlH1y35D3zfo36i8=
+	b=W9Qc4xr0wzjxzxaATQs22Hjo5z2YDnh69mSk0E7QFDruZZb3qXRo/6lu2Fq83Lpd8
+	 Y39OBXFMC7pYifW/uwwb/t9w9QEdzPIEMPOYMXP5SMtqQ1brHSyyePyC9iolvEkxMW
+	 lkLo83mFdDqOIMoe/TvgmTrnH5ylpEKAGPUmGKPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yingao <m202271736@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
+	Phil Elwell <phil@raspberrypi.com>,
+	"Ivan T. Ivanov" <iivanov@suse.de>,
+	Stefan Wahren <stefan.wahren@i2se.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 443/591] nvmem: sunplus-ocotp: release otp->clk before return
-Date: Sun, 16 Jul 2023 21:49:42 +0200
-Message-ID: <20230716194935.370435109@linuxfoundation.org>
+Subject: [PATCH 6.1 444/591] nvmem: rmem: Use NVMEM_DEVID_AUTO
+Date: Sun, 16 Jul 2023 21:49:43 +0200
+Message-ID: <20230716194935.395231879@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,57 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yi Yingao <m202271736@hust.edu.cn>
+From: Phil Elwell <phil@raspberrypi.com>
 
-[ Upstream commit 095bb8ba45f28ed15296eb5b7662e03e57d5e34e ]
+[ Upstream commit 09dd7b993eddb3b48634fd5ddf27aa799785a9ee ]
 
-Smatch reports:
-drivers/nvmem/sunplus-ocotp.c:205 sp_ocotp_probe()
-warn: 'otp->clk' from clk_prepare() not released on lines: 196.
+It is reasonable to declare multiple nvmem blocks. Unless a unique 'id'
+is passed in for each block there may be name clashes.
 
-In the function sp_ocotp_probe(struct platform_device *pdev), otp->clk may
-not be released before return.
+Avoid this by using the magic token NVMEM_DEVID_AUTO.
 
-To fix this issue, using function clk_unprepare() to release otp->clk.
-
-Fixes: 8747ec2e9762 ("nvmem: Add driver for OCOTP in Sunplus SP7021")
-Signed-off-by: Yi Yingao <m202271736@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Message-ID: <20230509085237.5917-1-m202271736@hust.edu.cn>
+Fixes: 5a3fa75a4d9c ("nvmem: Add driver to expose reserved memory as nvmem")
+Signed-off-by: Phil Elwell <phil@raspberrypi.com>
+Signed-off-by: Ivan T. Ivanov <iivanov@suse.de>
+Reviewed-by: Stefan Wahren <stefan.wahren@i2se.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <20230611140330.154222-6-srinivas.kandagatla@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/sunplus-ocotp.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/nvmem/rmem.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvmem/sunplus-ocotp.c b/drivers/nvmem/sunplus-ocotp.c
-index 52b928a7a6d58..f85350b17d672 100644
---- a/drivers/nvmem/sunplus-ocotp.c
-+++ b/drivers/nvmem/sunplus-ocotp.c
-@@ -192,9 +192,11 @@ static int sp_ocotp_probe(struct platform_device *pdev)
- 	sp_ocotp_nvmem_config.dev = dev;
+diff --git a/drivers/nvmem/rmem.c b/drivers/nvmem/rmem.c
+index 80cb187f14817..752d0bf4445ee 100644
+--- a/drivers/nvmem/rmem.c
++++ b/drivers/nvmem/rmem.c
+@@ -71,6 +71,7 @@ static int rmem_probe(struct platform_device *pdev)
+ 	config.dev = dev;
+ 	config.priv = priv;
+ 	config.name = "rmem";
++	config.id = NVMEM_DEVID_AUTO;
+ 	config.size = mem->size;
+ 	config.reg_read = rmem_read;
  
- 	nvmem = devm_nvmem_register(dev, &sp_ocotp_nvmem_config);
--	if (IS_ERR(nvmem))
--		return dev_err_probe(&pdev->dev, PTR_ERR(nvmem),
-+	if (IS_ERR(nvmem)) {
-+		ret = dev_err_probe(&pdev->dev, PTR_ERR(nvmem),
- 						"register nvmem device fail\n");
-+		goto err;
-+	}
- 
- 	platform_set_drvdata(pdev, nvmem);
- 
-@@ -203,6 +205,9 @@ static int sp_ocotp_probe(struct platform_device *pdev)
- 		(int)OTP_WORD_SIZE, (int)QAC628_OTP_SIZE);
- 
- 	return 0;
-+err:
-+	clk_unprepare(otp->clk);
-+	return ret;
- }
- 
- static const struct of_device_id sp_ocotp_dt_ids[] = {
 -- 
 2.39.2
 
