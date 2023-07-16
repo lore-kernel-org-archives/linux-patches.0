@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD06B8F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:38:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F68C433C9;
-	Sun, 16 Jul 2023 20:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60618F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:38:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A87FC433C7;
+	Sun, 16 Jul 2023 20:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539882;
-	bh=k2CA7rI2ZOVYfokyffwdv1fmht2eZusReAvJvYCjrT0=;
+	s=korg; t=1689539885;
+	bh=vQpHe41j9Z0+7Cxw81hEY7xP7WZhtH6uXbzvAH6n4ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c44EQ9S9CKJ5lyX53rh0QBnjfFGpprBCHTQYS8QVTK7fgYBGB5jPD4KLhDNcCgaQP
-	 hC9MX15qSSE5EGo59dkJ6b8EJ+cRq94Ve0/MkB546lJSmZ2V6KcrMgFYaIE2bEHrti
-	 ba+5kl4Ko89DNPMJYJafy6LRDCHjhLptwME4vPeI=
+	b=Cklphd9DmAl63Er3nTOZrRTXLnxG4V0AAxzBF/JkMiN7Xbt4R8JftkDW3IKCAaDDt
+	 1LaDI+L2fn2wZ8bziHDrTswDX3w+yX38CTD1DF4NUDSSfGl62pWBrxlkVSoXjespEE
+	 idzSWc6AESSLtwWU5G4+ZX/+szSRDKH6KQ0otiHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
-	Simon Horman <simon.horman@corigine.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Cambda Zhu <cambda@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/591] netfilter: nf_conntrack_sip: fix the ct_sip_parse_numerical_param() return value.
-Date: Sun, 16 Jul 2023 21:44:37 +0200
-Message-ID: <20230716194927.443731566@linuxfoundation.org>
+Subject: [PATCH 6.1 139/591] ipvlan: Fix return value of ipvlan_queue_xmit()
+Date: Sun, 16 Jul 2023 21:44:38 +0200
+Message-ID: <20230716194927.467913910@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,50 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
+From: Cambda Zhu <cambda@linux.alibaba.com>
 
-[ Upstream commit f188d30087480eab421cd8ca552fb15f55d57f4d ]
+[ Upstream commit 8a9922e7be6d042fa00f894c376473b17a162b66 ]
 
-ct_sip_parse_numerical_param() returns only 0 or 1 now.
-But process_register_request() and process_register_response() imply
-checking for a negative value if parsing of a numerical header parameter
-failed.
-The invocation in nf_nat_sip() looks correct:
- 	if (ct_sip_parse_numerical_param(...) > 0 &&
- 	    ...) { ... }
+ipvlan_queue_xmit() should return NET_XMIT_XXX, but
+ipvlan_xmit_mode_l2/l3() returns rx_handler_result_t or NET_RX_XXX
+in some cases. ipvlan_rcv_frame() will only return RX_HANDLER_CONSUMED
+in ipvlan_xmit_mode_l2/l3() because 'local' is true. It's equal to
+NET_XMIT_SUCCESS. But dev_forward_skb() can return NET_RX_SUCCESS or
+NET_RX_DROP, and returning NET_RX_DROP(NET_XMIT_DROP) will increase
+both ipvlan and ipvlan->phy_dev drops counter.
 
-Make the return value of the function ct_sip_parse_numerical_param()
-a tristate to fix all the cases
-a) return 1 if value is found; *val is set
-b) return 0 if value is not found; *val is unchanged
-c) return -1 on error; *val is undefined
+The skb to forward can be treated as xmitted successfully. This patch
+makes ipvlan_queue_xmit() return NET_XMIT_SUCCESS for forward skb.
 
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with SVACE.
-
-Fixes: 0f32a40fc91a ("[NETFILTER]: nf_conntrack_sip: create signalling expectations")
-Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
+Signed-off-by: Cambda Zhu <cambda@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20230626093347.7492-1-cambda@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_sip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ipvlan/ipvlan_core.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index 77f5e82d8e3fe..d0eac27f6ba03 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -611,7 +611,7 @@ int ct_sip_parse_numerical_param(const struct nf_conn *ct, const char *dptr,
- 	start += strlen(name);
- 	*val = simple_strtoul(start, &end, 0);
- 	if (start == end)
--		return 0;
-+		return -1;
- 	if (matchoff && matchlen) {
- 		*matchoff = start - dptr;
- 		*matchlen = end - start;
+diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
+index 2de3bd3b0c278..59e29e08398a0 100644
+--- a/drivers/net/ipvlan/ipvlan_core.c
++++ b/drivers/net/ipvlan/ipvlan_core.c
+@@ -585,7 +585,8 @@ static int ipvlan_xmit_mode_l3(struct sk_buff *skb, struct net_device *dev)
+ 				consume_skb(skb);
+ 				return NET_XMIT_DROP;
+ 			}
+-			return ipvlan_rcv_frame(addr, &skb, true);
++			ipvlan_rcv_frame(addr, &skb, true);
++			return NET_XMIT_SUCCESS;
+ 		}
+ 	}
+ out:
+@@ -611,7 +612,8 @@ static int ipvlan_xmit_mode_l2(struct sk_buff *skb, struct net_device *dev)
+ 					consume_skb(skb);
+ 					return NET_XMIT_DROP;
+ 				}
+-				return ipvlan_rcv_frame(addr, &skb, true);
++				ipvlan_rcv_frame(addr, &skb, true);
++				return NET_XMIT_SUCCESS;
+ 			}
+ 		}
+ 		skb = skb_share_check(skb, GFP_ATOMIC);
+@@ -623,7 +625,8 @@ static int ipvlan_xmit_mode_l2(struct sk_buff *skb, struct net_device *dev)
+ 		 * the skb for the main-dev. At the RX side we just return
+ 		 * RX_PASS for it to be processed further on the stack.
+ 		 */
+-		return dev_forward_skb(ipvlan->phy_dev, skb);
++		dev_forward_skb(ipvlan->phy_dev, skb);
++		return NET_XMIT_SUCCESS;
+ 
+ 	} else if (is_multicast_ether_addr(eth->h_dest)) {
+ 		skb_reset_mac_header(skb);
 -- 
 2.39.2
 
