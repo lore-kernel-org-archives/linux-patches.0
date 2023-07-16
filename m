@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3E18F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020D9C433C7;
-	Sun, 16 Jul 2023 20:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BC28F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8640C433C8;
+	Sun, 16 Jul 2023 20:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540849;
-	bh=4L/lGcZDP99+yKAZMmMt57khA5Xzuwl0k7JPJBt3Exg=;
+	s=korg; t=1689540852;
+	bh=qULJVDIIBfIn8eSjtQWuXTA33qRrNmamBYyU7NVU44c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vkZbmlMrdzz2XftooBE5xUXHDDTxZw/is6HPj2Fr1ML40aKr2RvULGtqBweBDncdv
-	 3BwOWHZSaH7dM9SIOt9RMMKM0ZcfjV8ANTn3LMDKkcztBjP/2apiXETa0BAk9PBO64
-	 ANEWl1xLRq2huC/y5CbSSSZR4SAwcv6b8nQw/qO0=
+	b=QPxTIWrey0XDRrxS0ydLB0n0Fn6HCQ/Z0hVxZv5CNl1dLBcuQsqd2wfFszOatXNXY
+	 cIIzpDtR/M6Zn7Nbb/pqZbwXKYloviPhFfhhDDh3TyHfEWHcGBntoeh+aPtgag6QGG
+	 jdiIOgzgAVk/Agnv5YyLTPgOYbLGnJ+89KE/UErs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 509/591] net: dsa: tag_sja1105: fix MAC DA patching from meta frames
-Date: Sun, 16 Jul 2023 21:50:48 +0200
-Message-ID: <20230716194937.055286343@linuxfoundation.org>
+Subject: [PATCH 6.1 510/591] net: dsa: sja1105: always enable the send_meta options
+Date: Sun, 16 Jul 2023 21:50:49 +0200
+Message-ID: <20230716194937.079776376@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -39,42 +39,311 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 1dcf6efd5f0c1f4496b3ef7ec5a7db104a53b38c ]
+[ Upstream commit a372d66af48506d9f7aaae2a474cd18f14d98cb8 ]
 
-The SJA1105 manual says that at offset 4 into the meta frame payload we
-have "MAC destination byte 2" and at offset 5 we have "MAC destination
-byte 1". These are counted from the LSB, so byte 1 is h_dest[ETH_HLEN-2]
-aka h_dest[4] and byte 2 is h_dest[ETH_HLEN-3] aka h_dest[3].
+incl_srcpt has the limitation, mentioned in commit b4638af8885a ("net:
+dsa: sja1105: always enable the INCL_SRCPT option"), that frames with a
+MAC DA of 01:80:c2:xx:yy:zz will be received as 01:80:c2:00:00:zz unless
+PTP RX timestamping is enabled.
 
-The sja1105_meta_unpack() function decodes these the other way around,
-so a frame with MAC DA 01:80:c2:11:22:33 is received by the network
-stack as having 01:80:c2:22:11:33.
+The incl_srcpt option was initially unconditionally enabled, then that
+changed with commit 42824463d38d ("net: dsa: sja1105: Limit use of
+incl_srcpt to bridge+vlan mode"), then again with b4638af8885a ("net:
+dsa: sja1105: always enable the INCL_SRCPT option"). Bottom line is that
+it now needs to be always enabled, otherwise the driver does not have a
+reliable source of information regarding source_port and switch_id for
+link-local traffic (tag_8021q VLANs may be imprecise since now they
+identify an entire bridging domain when ports are not standalone).
 
-Fixes: e53e18a6fe4d ("net: dsa: sja1105: Receive and decode meta frames")
+If we accept that PTP RX timestamping (and therefore, meta frame
+generation) is always enabled in hardware, then that limitation could be
+avoided and packets with any MAC DA can be properly received, because
+meta frames do contain the original bytes from the MAC DA of their
+associated link-local packet.
+
+This change enables meta frame generation unconditionally, which also
+has the nice side effects of simplifying the switch control path
+(a switch reset is no longer required on hwtstamping settings change)
+and the tagger data path (it no longer needs to be informed whether to
+expect meta frames or not - it always does).
+
+Fixes: 227d07a07ef1 ("net: dsa: sja1105: Add support for traffic through standalone ports")
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/tag_sja1105.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/sja1105/sja1105.h      |  2 +-
+ drivers/net/dsa/sja1105/sja1105_main.c |  5 ++-
+ drivers/net/dsa/sja1105/sja1105_ptp.c  | 48 +++-----------------------
+ include/linux/dsa/sja1105.h            |  4 ---
+ net/dsa/tag_sja1105.c                  | 45 ------------------------
+ 5 files changed, 7 insertions(+), 97 deletions(-)
 
+diff --git a/drivers/net/dsa/sja1105/sja1105.h b/drivers/net/dsa/sja1105/sja1105.h
+index 9ba2ec2b966d9..fb3cd4c78faa8 100644
+--- a/drivers/net/dsa/sja1105/sja1105.h
++++ b/drivers/net/dsa/sja1105/sja1105.h
+@@ -250,6 +250,7 @@ struct sja1105_private {
+ 	unsigned long ucast_egress_floods;
+ 	unsigned long bcast_egress_floods;
+ 	unsigned long hwts_tx_en;
++	unsigned long hwts_rx_en;
+ 	const struct sja1105_info *info;
+ 	size_t max_xfer_len;
+ 	struct spi_device *spidev;
+@@ -287,7 +288,6 @@ struct sja1105_spi_message {
+ /* From sja1105_main.c */
+ enum sja1105_reset_reason {
+ 	SJA1105_VLAN_FILTERING = 0,
+-	SJA1105_RX_HWTSTAMPING,
+ 	SJA1105_AGEING_TIME,
+ 	SJA1105_SCHEDULING,
+ 	SJA1105_BEST_EFFORT_POLICING,
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index 8bd61f2ebb2ad..947e8f7c09880 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -867,11 +867,11 @@ static int sja1105_init_general_params(struct sja1105_private *priv)
+ 		.mac_fltres1 = SJA1105_LINKLOCAL_FILTER_A,
+ 		.mac_flt1    = SJA1105_LINKLOCAL_FILTER_A_MASK,
+ 		.incl_srcpt1 = true,
+-		.send_meta1  = false,
++		.send_meta1  = true,
+ 		.mac_fltres0 = SJA1105_LINKLOCAL_FILTER_B,
+ 		.mac_flt0    = SJA1105_LINKLOCAL_FILTER_B_MASK,
+ 		.incl_srcpt0 = true,
+-		.send_meta0  = false,
++		.send_meta0  = true,
+ 		/* Default to an invalid value */
+ 		.mirr_port = priv->ds->num_ports,
+ 		/* No TTEthernet */
+@@ -2215,7 +2215,6 @@ static int sja1105_reload_cbs(struct sja1105_private *priv)
+ 
+ static const char * const sja1105_reset_reasons[] = {
+ 	[SJA1105_VLAN_FILTERING] = "VLAN filtering",
+-	[SJA1105_RX_HWTSTAMPING] = "RX timestamping",
+ 	[SJA1105_AGEING_TIME] = "Ageing time",
+ 	[SJA1105_SCHEDULING] = "Time-aware scheduling",
+ 	[SJA1105_BEST_EFFORT_POLICING] = "Best-effort policing",
+diff --git a/drivers/net/dsa/sja1105/sja1105_ptp.c b/drivers/net/dsa/sja1105/sja1105_ptp.c
+index 30fb2cc40164b..a7d41e7813982 100644
+--- a/drivers/net/dsa/sja1105/sja1105_ptp.c
++++ b/drivers/net/dsa/sja1105/sja1105_ptp.c
+@@ -58,35 +58,10 @@ enum sja1105_ptp_clk_mode {
+ #define ptp_data_to_sja1105(d) \
+ 		container_of((d), struct sja1105_private, ptp_data)
+ 
+-/* Must be called only while the RX timestamping state of the tagger
+- * is turned off
+- */
+-static int sja1105_change_rxtstamping(struct sja1105_private *priv,
+-				      bool on)
+-{
+-	struct sja1105_ptp_data *ptp_data = &priv->ptp_data;
+-	struct sja1105_general_params_entry *general_params;
+-	struct sja1105_table *table;
+-
+-	table = &priv->static_config.tables[BLK_IDX_GENERAL_PARAMS];
+-	general_params = table->entries;
+-	general_params->send_meta1 = on;
+-	general_params->send_meta0 = on;
+-
+-	ptp_cancel_worker_sync(ptp_data->clock);
+-	skb_queue_purge(&ptp_data->skb_txtstamp_queue);
+-	skb_queue_purge(&ptp_data->skb_rxtstamp_queue);
+-
+-	return sja1105_static_config_reload(priv, SJA1105_RX_HWTSTAMPING);
+-}
+-
+ int sja1105_hwtstamp_set(struct dsa_switch *ds, int port, struct ifreq *ifr)
+ {
+-	struct sja1105_tagger_data *tagger_data = sja1105_tagger_data(ds);
+ 	struct sja1105_private *priv = ds->priv;
+ 	struct hwtstamp_config config;
+-	bool rx_on;
+-	int rc;
+ 
+ 	if (copy_from_user(&config, ifr->ifr_data, sizeof(config)))
+ 		return -EFAULT;
+@@ -104,26 +79,13 @@ int sja1105_hwtstamp_set(struct dsa_switch *ds, int port, struct ifreq *ifr)
+ 
+ 	switch (config.rx_filter) {
+ 	case HWTSTAMP_FILTER_NONE:
+-		rx_on = false;
++		priv->hwts_rx_en &= ~BIT(port);
+ 		break;
+ 	default:
+-		rx_on = true;
++		priv->hwts_rx_en |= BIT(port);
+ 		break;
+ 	}
+ 
+-	if (rx_on != tagger_data->rxtstamp_get_state(ds)) {
+-		tagger_data->rxtstamp_set_state(ds, false);
+-
+-		rc = sja1105_change_rxtstamping(priv, rx_on);
+-		if (rc < 0) {
+-			dev_err(ds->dev,
+-				"Failed to change RX timestamping: %d\n", rc);
+-			return rc;
+-		}
+-		if (rx_on)
+-			tagger_data->rxtstamp_set_state(ds, true);
+-	}
+-
+ 	if (copy_to_user(ifr->ifr_data, &config, sizeof(config)))
+ 		return -EFAULT;
+ 	return 0;
+@@ -131,7 +93,6 @@ int sja1105_hwtstamp_set(struct dsa_switch *ds, int port, struct ifreq *ifr)
+ 
+ int sja1105_hwtstamp_get(struct dsa_switch *ds, int port, struct ifreq *ifr)
+ {
+-	struct sja1105_tagger_data *tagger_data = sja1105_tagger_data(ds);
+ 	struct sja1105_private *priv = ds->priv;
+ 	struct hwtstamp_config config;
+ 
+@@ -140,7 +101,7 @@ int sja1105_hwtstamp_get(struct dsa_switch *ds, int port, struct ifreq *ifr)
+ 		config.tx_type = HWTSTAMP_TX_ON;
+ 	else
+ 		config.tx_type = HWTSTAMP_TX_OFF;
+-	if (tagger_data->rxtstamp_get_state(ds))
++	if (priv->hwts_rx_en & BIT(port))
+ 		config.rx_filter = HWTSTAMP_FILTER_PTP_V2_L2_EVENT;
+ 	else
+ 		config.rx_filter = HWTSTAMP_FILTER_NONE;
+@@ -413,11 +374,10 @@ static long sja1105_rxtstamp_work(struct ptp_clock_info *ptp)
+ 
+ bool sja1105_rxtstamp(struct dsa_switch *ds, int port, struct sk_buff *skb)
+ {
+-	struct sja1105_tagger_data *tagger_data = sja1105_tagger_data(ds);
+ 	struct sja1105_private *priv = ds->priv;
+ 	struct sja1105_ptp_data *ptp_data = &priv->ptp_data;
+ 
+-	if (!tagger_data->rxtstamp_get_state(ds))
++	if (!(priv->hwts_rx_en & BIT(port)))
+ 		return false;
+ 
+ 	/* We need to read the full PTP clock to reconstruct the Rx
+diff --git a/include/linux/dsa/sja1105.h b/include/linux/dsa/sja1105.h
+index 159e43171cccf..c177322f793d6 100644
+--- a/include/linux/dsa/sja1105.h
++++ b/include/linux/dsa/sja1105.h
+@@ -48,13 +48,9 @@ struct sja1105_deferred_xmit_work {
+ 
+ /* Global tagger data */
+ struct sja1105_tagger_data {
+-	/* Tagger to switch */
+ 	void (*xmit_work_fn)(struct kthread_work *work);
+ 	void (*meta_tstamp_handler)(struct dsa_switch *ds, int port, u8 ts_id,
+ 				    enum sja1110_meta_tstamp dir, u64 tstamp);
+-	/* Switch to tagger */
+-	bool (*rxtstamp_get_state)(struct dsa_switch *ds);
+-	void (*rxtstamp_set_state)(struct dsa_switch *ds, bool on);
+ };
+ 
+ struct sja1105_skb_cb {
 diff --git a/net/dsa/tag_sja1105.c b/net/dsa/tag_sja1105.c
-index 6e3699d859dbd..d3f27cd5fe244 100644
+index d3f27cd5fe244..143348962a216 100644
 --- a/net/dsa/tag_sja1105.c
 +++ b/net/dsa/tag_sja1105.c
-@@ -113,8 +113,8 @@ static void sja1105_meta_unpack(const struct sk_buff *skb,
- 	 * a unified unpacking command for both device series.
+@@ -53,11 +53,8 @@
+ #define SJA1110_TX_TRAILER_LEN			4
+ #define SJA1110_MAX_PADDING_LEN			15
+ 
+-#define SJA1105_HWTS_RX_EN			0
+-
+ struct sja1105_tagger_private {
+ 	struct sja1105_tagger_data data; /* Must be first */
+-	unsigned long state;
+ 	/* Protects concurrent access to the meta state machine
+ 	 * from taggers running on multiple ports on SMP systems
  	 */
- 	packing(buf,     &meta->tstamp,     31, 0, 4, UNPACK, 0);
--	packing(buf + 4, &meta->dmac_byte_4, 7, 0, 1, UNPACK, 0);
--	packing(buf + 5, &meta->dmac_byte_3, 7, 0, 1, UNPACK, 0);
-+	packing(buf + 4, &meta->dmac_byte_3, 7, 0, 1, UNPACK, 0);
-+	packing(buf + 5, &meta->dmac_byte_4, 7, 0, 1, UNPACK, 0);
- 	packing(buf + 6, &meta->source_port, 7, 0, 1, UNPACK, 0);
- 	packing(buf + 7, &meta->switch_id,   7, 0, 1, UNPACK, 0);
+@@ -387,10 +384,6 @@ static struct sk_buff
+ 
+ 		priv = sja1105_tagger_private(ds);
+ 
+-		if (!test_bit(SJA1105_HWTS_RX_EN, &priv->state))
+-			/* Do normal processing. */
+-			return skb;
+-
+ 		spin_lock(&priv->meta_lock);
+ 		/* Was this a link-local frame instead of the meta
+ 		 * that we were expecting?
+@@ -426,12 +419,6 @@ static struct sk_buff
+ 
+ 		priv = sja1105_tagger_private(ds);
+ 
+-		/* Drop the meta frame if we're not in the right state
+-		 * to process it.
+-		 */
+-		if (!test_bit(SJA1105_HWTS_RX_EN, &priv->state))
+-			return NULL;
+-
+ 		spin_lock(&priv->meta_lock);
+ 
+ 		stampable_skb = priv->stampable_skb;
+@@ -467,30 +454,6 @@ static struct sk_buff
+ 	return skb;
  }
+ 
+-static bool sja1105_rxtstamp_get_state(struct dsa_switch *ds)
+-{
+-	struct sja1105_tagger_private *priv = sja1105_tagger_private(ds);
+-
+-	return test_bit(SJA1105_HWTS_RX_EN, &priv->state);
+-}
+-
+-static void sja1105_rxtstamp_set_state(struct dsa_switch *ds, bool on)
+-{
+-	struct sja1105_tagger_private *priv = sja1105_tagger_private(ds);
+-
+-	if (on)
+-		set_bit(SJA1105_HWTS_RX_EN, &priv->state);
+-	else
+-		clear_bit(SJA1105_HWTS_RX_EN, &priv->state);
+-
+-	/* Initialize the meta state machine to a known state */
+-	if (!priv->stampable_skb)
+-		return;
+-
+-	kfree_skb(priv->stampable_skb);
+-	priv->stampable_skb = NULL;
+-}
+-
+ static bool sja1105_skb_has_tag_8021q(const struct sk_buff *skb)
+ {
+ 	u16 tpid = ntohs(eth_hdr(skb)->h_proto);
+@@ -547,9 +510,6 @@ static struct sk_buff *sja1105_rcv(struct sk_buff *skb,
+ 		 */
+ 		source_port = hdr->h_dest[3];
+ 		switch_id = hdr->h_dest[4];
+-		/* Clear the DMAC bytes that were mangled by the switch */
+-		hdr->h_dest[3] = 0;
+-		hdr->h_dest[4] = 0;
+ 	} else if (is_meta) {
+ 		sja1105_meta_unpack(skb, &meta);
+ 		source_port = meta.source_port;
+@@ -780,7 +740,6 @@ static void sja1105_disconnect(struct dsa_switch *ds)
+ 
+ static int sja1105_connect(struct dsa_switch *ds)
+ {
+-	struct sja1105_tagger_data *tagger_data;
+ 	struct sja1105_tagger_private *priv;
+ 	struct kthread_worker *xmit_worker;
+ 	int err;
+@@ -800,10 +759,6 @@ static int sja1105_connect(struct dsa_switch *ds)
+ 	}
+ 
+ 	priv->xmit_worker = xmit_worker;
+-	/* Export functions for switch driver use */
+-	tagger_data = &priv->data;
+-	tagger_data->rxtstamp_get_state = sja1105_rxtstamp_get_state;
+-	tagger_data->rxtstamp_set_state = sja1105_rxtstamp_set_state;
+ 	ds->tagger_data = priv;
+ 
+ 	return 0;
 -- 
 2.39.2
 
