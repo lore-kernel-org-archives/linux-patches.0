@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EBA8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0A5C433C8;
-	Sun, 16 Jul 2023 20:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D626A8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:47:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579A3C433C8;
+	Sun, 16 Jul 2023 20:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540436;
-	bh=cqySQXH39UEEVd+jB/HCVb8rs7KaLg8eqv6QL1OR6sc=;
+	s=korg; t=1689540439;
+	bh=ZVAjFBOIiZqTllOdsL2izGmL4Zv10JOIcoF7WTvg5tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kiv/XAqMJxXglqawR16pCebpCQ30TptF1Bz8ZLkLn4TV4r/sA6Zo+RxnjfbIZNgUE
-	 1cR6RrjOEX8rDP+GyWCPUIuKGTBhvbDuWpGyz+IATV+LlxEHZaJsTwBRCfLgdX50cl
-	 M5mAZ6UftzY0oLvxGZ45uTicF47KINCpPUqEW4jI=
+	b=VF8fPiXVua++QeJIjry+hP5yudu/GICiMhPfevYv9foRcem/hC3LRiJ7qy98jaI2H
+	 tWFv/WO7X66DMig2FNeu6vDHaf8rtxsdtu1lzVqWF7ekuRl7XXJ82IXXguwDGEA0SC
+	 L2t5hP4WFMFZcaiQr3dpgTTP1zbnCAtjGaN+bXMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.1 362/591] md/raid1-10: fix casting from randomized structure in raid1_submit_write()
-Date: Sun, 16 Jul 2023 21:48:21 +0200
-Message-ID: <20230716194933.282253574@linuxfoundation.org>
+	Davide Tronchin <davide.tronchin.94@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 363/591] USB: serial: option: add LARA-R6 01B PIDs
+Date: Sun, 16 Jul 2023 21:48:22 +0200
+Message-ID: <20230716194933.310166221@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,41 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Davide Tronchin <davide.tronchin.94@gmail.com>
 
-commit b5a99602b74bbfa655be509c615181dd95b0719e upstream.
+commit ffa5f7a3bf28c1306eef85d4056539c2d4b8eb09 upstream.
 
-Following build error triggered while build with clang version 17.0.0
-with W=1(this can't be reporduced with gcc 13.1.0):
+The new LARA-R6 product variant identified by the "01B" string can be
+configured (by AT interface) in three different USB modes:
 
-drivers/md/raid1-10.c:117:25: error: casting from randomized structure
-pointer type 'struct block_device *' to 'struct md_rdev *'
-     117 |         struct md_rdev *rdev = (struct md_rdev *)bio->bi_bdev;
-         |                                ^
+* Default mode (Vendor ID: 0x1546 Product ID: 0x1311) with 4 serial
+interfaces
 
-Fix this by casting 'bio->bi_bdev' to 'void *', as it used to be.
+* RmNet mode (Vendor ID: 0x1546 Product ID: 0x1312) with 4 serial
+interfaces and 1 RmNet virtual network interface
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202306142042.fmjfmTF8-lkp@intel.com/
-Fixes: 8295efbe68c0 ("md/raid1-10: factor out a helper to submit normal write")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230616012136.3047071-1-yukuai1@huaweicloud.com
+* CDC-ECM mode (Vendor ID: 0x1546 Product ID: 0x1313) with 4 serial
+interface and 1 CDC-ECM virtual network interface
+The first 4 interfaces of all the 3 USB configurations (default, RmNet,
+CDC-ECM) are the same.
+
+In default mode LARA-R6 01B exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+
+In RmNet mode LARA-R6 01B exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+If 4: RMNET interface
+
+In CDC-ECM mode LARA-R6 01B exposes the following interfaces:
+If 0: Diagnostic
+If 1: AT parser
+If 2: AT parser
+If 3: AT parser/alternative functions
+If 4: CDC-ECM interface
+
+Signed-off-by: Davide Tronchin <davide.tronchin.94@gmail.com>
+Link: https://lore.kernel.org/r/20230622092921.12651-1-davide.tronchin.94@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid1-10.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/md/raid1-10.c
-+++ b/drivers/md/raid1-10.c
-@@ -113,7 +113,7 @@ static void md_bio_reset_resync_pages(st
- 
- static inline void raid1_submit_write(struct bio *bio)
- {
--	struct md_rdev *rdev = (struct md_rdev *)bio->bi_bdev;
-+	struct md_rdev *rdev = (void *)bio->bi_bdev;
- 
- 	bio->bi_next = NULL;
- 	bio_set_dev(bio, rdev->bdev);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1151,6 +1151,10 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90fa),
+ 	  .driver_info = RSVD(3) },
+ 	/* u-blox products */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1311) },	/* u-blox LARA-R6 01B */
++	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1312),		/* u-blox LARA-R6 01B (RMNET) */
++	  .driver_info = RSVD(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(UBLOX_VENDOR_ID, 0x1313, 0xff) },	/* u-blox LARA-R6 01B (ECM) */
+ 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1341) },	/* u-blox LARA-L6 */
+ 	{ USB_DEVICE(UBLOX_VENDOR_ID, 0x1342),		/* u-blox LARA-L6 (RMNET) */
+ 	  .driver_info = RSVD(4) },
 
 
