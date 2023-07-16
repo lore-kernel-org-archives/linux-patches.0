@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F108F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E413C433C7;
-	Sun, 16 Jul 2023 20:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDC98F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE2CC433C8;
+	Sun, 16 Jul 2023 20:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540680;
-	bh=EtXBL588rAZue7eXHuBVVNlYaLjtCL31FUVUTsGisoA=;
+	s=korg; t=1689540683;
+	bh=t5dc8HQpTwI7tli9JanaKj+q2mIcDbz75/FufcyVGEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a97cPkOde0CYxNtzlfqe3Wd29sMikELRLoZ4KCIgirCbU9xFU2/DKXxkXo9FfzRtz
-	 cRwjlxqdurV5urBiJcCf+s/oRqMj42RhSXsEZpVOszyT80UW2Vk+vPzC/HNUA2k9rL
-	 mhLi9jD338vARfVozUhnBMZTQl68P5q0qHu6tmUA=
+	b=sOLXc1+4TrOPNk8Nk70KdmKDCMW+2ojstEa1Yk/8R1BILrRMBV8XMvKbttrpDCPd+
+	 e8A5q4bzpQDwU+Qc/YZO2MzF7h0JE48BvcdZm1HUuQcH3tnNgIAIdV1EzPKApOhs+h
+	 5FU1vX1OuZ8bSJ3ci00W7E8UD32UOrfE4WZy0Adg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Andrew Halaney <ahalaney@redhat.com>,
+	Jia-wei Chang <Jia-wei.Chang@mediatek.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 432/591] usb: dwc3: qcom: Release the correct resources in dwc3_qcom_remove()
-Date: Sun, 16 Jul 2023 21:49:31 +0200
-Message-ID: <20230716194935.091975758@linuxfoundation.org>
+Subject: [PATCH 6.1 450/591] cpufreq: mediatek: correct voltages for MT7622 and MT7623
+Date: Sun, 16 Jul 2023 21:49:49 +0200
+Message-ID: <20230716194935.551903619@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,48 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 8fd95da2cfb5046c4bb5a3cdc9eb7963ba8b10dd ]
+[ Upstream commit f85534113f5ae90a52521cdb9e9977a43ee42626 ]
 
-In the probe, some resources are allocated with
-dwc3_qcom_of_register_core() or dwc3_qcom_acpi_register_core(). The
-corresponding resources are already coorectly freed in the error handling
-path of the probe, but not in the remove function.
+The MT6380 regulator typically used together with MT7622 does not
+support the current maximum processor and SRAM voltage in the cpufreq
+driver (1360000uV).
+For MT7622 limit processor and SRAM supply voltages to 1350000uV to
+avoid having the tracking algorithm request unsupported voltages from
+the regulator.
 
-Fix it.
+On MT7623 there is no separate SRAM supply and the maximum voltage used
+is 1300000uV. Create dedicated platform data for MT7623 to cover that
+case as well.
 
-Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-Message-ID: <c0215a84cdf18fb3514c81842783ec53cf149deb.1685891059.git.christophe.jaillet@wanadoo.fr>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0883426fd07e3 ("cpufreq: mediatek: Raise proc and sram max voltage for MT7622/7623")
+Suggested-by: Jia-wei Chang <Jia-wei.Chang@mediatek.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/cpufreq/mediatek-cpufreq.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 482260182d656..9c01e963ae467 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -950,11 +950,15 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- static int dwc3_qcom_remove(struct platform_device *pdev)
- {
- 	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
-+	struct device_node *np = pdev->dev.of_node;
- 	struct device *dev = &pdev->dev;
- 	int i;
+diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
+index 9a39a7ccfae96..fef68cb2b38f7 100644
+--- a/drivers/cpufreq/mediatek-cpufreq.c
++++ b/drivers/cpufreq/mediatek-cpufreq.c
+@@ -696,9 +696,16 @@ static const struct mtk_cpufreq_platform_data mt2701_platform_data = {
+ static const struct mtk_cpufreq_platform_data mt7622_platform_data = {
+ 	.min_volt_shift = 100000,
+ 	.max_volt_shift = 200000,
+-	.proc_max_volt = 1360000,
++	.proc_max_volt = 1350000,
+ 	.sram_min_volt = 0,
+-	.sram_max_volt = 1360000,
++	.sram_max_volt = 1350000,
++	.ccifreq_supported = false,
++};
++
++static const struct mtk_cpufreq_platform_data mt7623_platform_data = {
++	.min_volt_shift = 100000,
++	.max_volt_shift = 200000,
++	.proc_max_volt = 1300000,
+ 	.ccifreq_supported = false,
+ };
  
- 	device_remove_software_node(&qcom->dwc3->dev);
--	of_platform_depopulate(dev);
-+	if (np)
-+		of_platform_depopulate(&pdev->dev);
-+	else
-+		platform_device_put(pdev);
- 
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
- 		clk_disable_unprepare(qcom->clks[i]);
+@@ -734,7 +741,7 @@ static const struct of_device_id mtk_cpufreq_machines[] __initconst = {
+ 	{ .compatible = "mediatek,mt2701", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt2712", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt7622", .data = &mt7622_platform_data },
+-	{ .compatible = "mediatek,mt7623", .data = &mt7622_platform_data },
++	{ .compatible = "mediatek,mt7623", .data = &mt7623_platform_data },
+ 	{ .compatible = "mediatek,mt8167", .data = &mt8516_platform_data },
+ 	{ .compatible = "mediatek,mt817x", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt8173", .data = &mt2701_platform_data },
 -- 
 2.39.2
 
