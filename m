@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD2F8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF08C433C7;
-	Sun, 16 Jul 2023 20:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCBD8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12144C433C8;
+	Sun, 16 Jul 2023 20:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538039;
-	bh=mSgG5gkOV1LJklX3i/ip3vlnOJhVYMT1KOPUoF0J6sc=;
+	s=korg; t=1689538042;
+	bh=XXonAq+0fvF7sUGPm7qYILO4ClJY6V23u++f0iYQs+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=beiloiz9tOmuiTZoM9/8TXYErRfcVpGdtuX0J5rnW5zrJXphHxzel+gB3uUOOKOhG
-	 mn/ed2uDRqjJl0t2NSMa6q2VxOEzfxLlQLH6s+ev0Eh5pvAXLWTZYjJp//7+amIEEF
-	 be5SIu++vd8SivxwR3zHdTYznGQE7gBEsH7IwkK4=
+	b=jMBFp6Wv3w8K77+QRhGRjVFyYI6qpsDqpbvI2zFE9kIMyYOeAl0YPfygxkCBMUShg
+	 S9WcT0qqTn6fYQkGxe1B8JbLmlIbh8J2lwlBvg4WLEFDWLt4vn7FB98tPnybjG4+zb
+	 QeYmwhWr/hsfuCC+iVMFMmxSoP8N5iMBFcakBnAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaud Vrac <avrac@freebox.fr>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 275/800] drm/msm/dpu: fix cursor block register bit offset in msm8998 hw catalog
-Date: Sun, 16 Jul 2023 21:42:08 +0200
-Message-ID: <20230716194955.479732802@linuxfoundation.org>
+Subject: [PATCH 6.4 276/800] drm/msm/dpu: Use V4.0 PCC DSPP sub-block in SC7[12]80
+Date: Sun, 16 Jul 2023 21:42:09 +0200
+Message-ID: <20230716194955.503064163@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,39 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnaud Vrac <avrac@freebox.fr>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit c95771905c494aa5c2abbb56b3e2f7d4aa3b34f9 ]
+[ Upstream commit 853b292b92d50d1b30628c92229e93d670304e51 ]
 
-This matches the value for both fbdev and sde implementations in the
-downstream msm-4.4 repository.
+According to various downstream sources the PCC sub-block inside DSPP is
+version 4.0 since DPU 4.0 and higher, including SC7[12]80 at DPU version
+6.2 and 7.2 respectively.  After correcting the version this struct
+becomes identical to sm8150_dspp_sblk which is used all across the
+catalog: replace uses of sc7180_dspp_sblk with that and remove
+the struct definition for sc7180_dspp_sblk entirely.
 
-Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
-Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
+Fixes: 4259ff7ae509e ("drm/msm/dpu: add support for pcc color block in dpu driver")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/532899/
-Link: https://lore.kernel.org/r/20230419-dpu-tweaks-v1-8-d1bac46db075@freebox.fr
+Patchwork: https://patchwork.freedesktop.org/patch/537899/
+Link: https://lore.kernel.org/r/20230518-dpu-sc7180-pcc-version-v1-1-ec9ca4949e3e@somainline.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c         | 5 -----
+ 3 files changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index bdcd554fc8a80..9116129527797 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -39,8 +39,8 @@ static const struct dpu_mdp_cfg msm8998_mdp[] = {
- 	.clk_ctrls[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
- 	.clk_ctrls[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
- 	.clk_ctrls[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 12 },
--	.clk_ctrls[DPU_CLK_CTRL_CURSOR0] = { .reg_off = 0x3a8, .bit_off = 15 },
--	.clk_ctrls[DPU_CLK_CTRL_CURSOR1] = { .reg_off = 0x3b0, .bit_off = 15 },
-+	.clk_ctrls[DPU_CLK_CTRL_CURSOR0] = { .reg_off = 0x3a8, .bit_off = 16 },
-+	.clk_ctrls[DPU_CLK_CTRL_CURSOR1] = { .reg_off = 0x3b0, .bit_off = 16 },
- 	},
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+index a46b11730a4d4..b08b3e9237b3a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+@@ -76,7 +76,7 @@ static const struct dpu_lm_cfg sc7180_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sc7180_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sc7180_dspp_sblk),
++		 &sm8150_dspp_sblk),
  };
  
+ static const struct dpu_pingpong_cfg sc7180_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+index 6b2c7eae71d99..9248479c60101 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+@@ -83,7 +83,7 @@ static const struct dpu_lm_cfg sc7280_lm[] = {
+ 
+ static const struct dpu_dspp_cfg sc7280_dspp[] = {
+ 	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+-		 &sc7180_dspp_sblk),
++		 &sm8150_dspp_sblk),
+ };
+ 
+ static const struct dpu_pingpong_cfg sc7280_pp[] = {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 5d994bce696f9..5369b1e61ba7f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -453,11 +453,6 @@ static const struct dpu_dspp_sub_blks msm8998_dspp_sblk = {
+ 		.len = 0x90, .version = 0x10007},
+ };
+ 
+-static const struct dpu_dspp_sub_blks sc7180_dspp_sblk = {
+-	.pcc = {.id = DPU_DSPP_PCC, .base = 0x1700,
+-		.len = 0x90, .version = 0x10000},
+-};
+-
+ static const struct dpu_dspp_sub_blks sm8150_dspp_sblk = {
+ 	.pcc = {.id = DPU_DSPP_PCC, .base = 0x1700,
+ 		.len = 0x90, .version = 0x40000},
 -- 
 2.39.2
 
