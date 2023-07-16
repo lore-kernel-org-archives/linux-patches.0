@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197488F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91961C433C8;
-	Sun, 16 Jul 2023 20:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50438F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D28C433C8;
+	Sun, 16 Jul 2023 20:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537781;
-	bh=UpH7KtfEf8kS9CKfrFr0FbLTlw4g3WbDvJBKyWt7d54=;
+	s=korg; t=1689537784;
+	bh=KxK7Yu5MW08+cJk/UCWZMio9vEQLgMvG8LfRrSMlWc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tceWHhY0lW9Svu2x8F4ultNoDje0JQ6nW8h+rBPkmwGbhkxsr4XU8zAKTa6xP8jHA
-	 psuFv5Jb4L1ijyDGjKXAxZC9kYLPCu2/P2Nie1MlynstbuF+oek5FuKoCpxYDo/aW3
-	 Rriwj1usqM/9n4w4offaGLA+dC4IJcqUWCCo/T0Q=
+	b=Yhg8MDQ/EgI4ZKlj5HTwP/CF4qD5p2pQizLNkvDGW/BgOmg2VIe3tWNWXX9GLBFhb
+	 KnYnSsRDPVHmiJqcMA728gKwhGYRQVtksyhLkwNahbdERsfcFl2M2TthI6qw8riJLG
+	 JN8/RsujHmm9WX2aB2RhA+eg8tbcCXnaUei9sK38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cambda Zhu <cambda@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 219/800] ipvlan: Fix return value of ipvlan_queue_xmit()
-Date: Sun, 16 Jul 2023 21:41:12 +0200
-Message-ID: <20230716194954.180980779@linuxfoundation.org>
+Subject: [PATCH 6.4 220/800] net: dsa: avoid suspicious RCU usage for synced VLAN-aware MAC addresses
+Date: Sun, 16 Jul 2023 21:41:13 +0200
+Message-ID: <20230716194954.203288868@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,64 +35,346 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cambda Zhu <cambda@linux.alibaba.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 8a9922e7be6d042fa00f894c376473b17a162b66 ]
+[ Upstream commit d06f925f13976ab82167c93467c70a337a0a3cda ]
 
-ipvlan_queue_xmit() should return NET_XMIT_XXX, but
-ipvlan_xmit_mode_l2/l3() returns rx_handler_result_t or NET_RX_XXX
-in some cases. ipvlan_rcv_frame() will only return RX_HANDLER_CONSUMED
-in ipvlan_xmit_mode_l2/l3() because 'local' is true. It's equal to
-NET_XMIT_SUCCESS. But dev_forward_skb() can return NET_RX_SUCCESS or
-NET_RX_DROP, and returning NET_RX_DROP(NET_XMIT_DROP) will increase
-both ipvlan and ipvlan->phy_dev drops counter.
+When using the felix driver (the only one which supports UC filtering
+and MC filtering) as a DSA master for a random other DSA switch, one can
+see the following stack trace when the downstream switch ports join a
+VLAN-aware bridge:
 
-The skb to forward can be treated as xmitted successfully. This patch
-makes ipvlan_queue_xmit() return NET_XMIT_SUCCESS for forward skb.
+=============================
+WARNING: suspicious RCU usage
+-----------------------------
+net/8021q/vlan_core.c:238 suspicious rcu_dereference_protected() usage!
 
-Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
-Signed-off-by: Cambda Zhu <cambda@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230626093347.7492-1-cambda@linux.alibaba.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+stack backtrace:
+Workqueue: dsa_ordered dsa_slave_switchdev_event_work
+Call trace:
+ lockdep_rcu_suspicious+0x170/0x210
+ vlan_for_each+0x8c/0x188
+ dsa_slave_sync_uc+0x128/0x178
+ __hw_addr_sync_dev+0x138/0x158
+ dsa_slave_set_rx_mode+0x58/0x70
+ __dev_set_rx_mode+0x88/0xa8
+ dev_uc_add+0x74/0xa0
+ dsa_port_bridge_host_fdb_add+0xec/0x180
+ dsa_slave_switchdev_event_work+0x7c/0x1c8
+ process_one_work+0x290/0x568
+
+What it's saying is that vlan_for_each() expects rtnl_lock() context and
+it's not getting it, when it's called from the DSA master's ndo_set_rx_mode().
+
+The caller of that - dsa_slave_set_rx_mode() - is the slave DSA
+interface's dsa_port_bridge_host_fdb_add() which comes from the deferred
+dsa_slave_switchdev_event_work().
+
+We went to great lengths to avoid the rtnl_lock() context in that call
+path in commit 0faf890fc519 ("net: dsa: drop rtnl_lock from
+dsa_slave_switchdev_event_work"), and calling rtnl_lock() is simply not
+an option due to the possibility of deadlocking when calling
+dsa_flush_workqueue() from the call paths that do hold rtnl_lock() -
+basically all of them.
+
+So, when the DSA master calls vlan_for_each() from its ndo_set_rx_mode(),
+the state of the 8021q driver on this device is really not protected
+from concurrent access by anything.
+
+Looking at net/8021q/, I don't think that vlan_info->vid_list was
+particularly designed with RCU traversal in mind, so introducing an RCU
+read-side form of vlan_for_each() - vlan_for_each_rcu() - won't be so
+easy, and it also wouldn't be exactly what we need anyway.
+
+In general I believe that the solution isn't in net/8021q/ anyway;
+vlan_for_each() is not cut out for this task. DSA doesn't need rtnl_lock()
+to be held per se - since it's not a netdev state change that we're
+blocking, but rather, just concurrent additions/removals to a VLAN list.
+We don't even need sleepable context - the callback of vlan_for_each()
+just schedules deferred work.
+
+The proposed escape is to remove the dependency on vlan_for_each() and
+to open-code a non-sleepable, rtnl-free alternative to that, based on
+copies of the VLAN list modified from .ndo_vlan_rx_add_vid() and
+.ndo_vlan_rx_kill_vid().
+
+Fixes: 64fdc5f341db ("net: dsa: sync unicast and multicast addresses for VLAN filters too")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20230626154402.3154454-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_core.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/net/dsa.h | 12 +++++--
+ net/dsa/dsa.c     |  2 +-
+ net/dsa/slave.c   | 84 ++++++++++++++++++++++++++++++++---------------
+ net/dsa/switch.c  |  4 +--
+ net/dsa/switch.h  |  3 ++
+ 5 files changed, 74 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
-index ab5133eb1d517..e45817caaee8d 100644
---- a/drivers/net/ipvlan/ipvlan_core.c
-+++ b/drivers/net/ipvlan/ipvlan_core.c
-@@ -585,7 +585,8 @@ static int ipvlan_xmit_mode_l3(struct sk_buff *skb, struct net_device *dev)
- 				consume_skb(skb);
- 				return NET_XMIT_DROP;
- 			}
--			return ipvlan_rcv_frame(addr, &skb, true);
-+			ipvlan_rcv_frame(addr, &skb, true);
-+			return NET_XMIT_SUCCESS;
- 		}
- 	}
- out:
-@@ -611,7 +612,8 @@ static int ipvlan_xmit_mode_l2(struct sk_buff *skb, struct net_device *dev)
- 					consume_skb(skb);
- 					return NET_XMIT_DROP;
- 				}
--				return ipvlan_rcv_frame(addr, &skb, true);
-+				ipvlan_rcv_frame(addr, &skb, true);
-+				return NET_XMIT_SUCCESS;
- 			}
- 		}
- 		skb = skb_share_check(skb, GFP_ATOMIC);
-@@ -623,7 +625,8 @@ static int ipvlan_xmit_mode_l2(struct sk_buff *skb, struct net_device *dev)
- 		 * the skb for the main-dev. At the RX side we just return
- 		 * RX_PASS for it to be processed further on the stack.
- 		 */
--		return dev_forward_skb(ipvlan->phy_dev, skb);
-+		dev_forward_skb(ipvlan->phy_dev, skb);
-+		return NET_XMIT_SUCCESS;
+diff --git a/include/net/dsa.h b/include/net/dsa.h
+index ab0f0a5b08602..197c5a6ca8f7f 100644
+--- a/include/net/dsa.h
++++ b/include/net/dsa.h
+@@ -314,9 +314,17 @@ struct dsa_port {
+ 	struct list_head	fdbs;
+ 	struct list_head	mdbs;
  
- 	} else if (is_multicast_ether_addr(eth->h_dest)) {
- 		skb_reset_mac_header(skb);
+-	/* List of VLANs that CPU and DSA ports are members of. */
+ 	struct mutex		vlans_lock;
+-	struct list_head	vlans;
++	union {
++		/* List of VLANs that CPU and DSA ports are members of.
++		 * Access to this is serialized by the sleepable @vlans_lock.
++		 */
++		struct list_head	vlans;
++		/* List of VLANs that user ports are members of.
++		 * Access to this is serialized by netif_addr_lock_bh().
++		 */
++		struct list_head	user_vlans;
++	};
+ };
+ 
+ /* TODO: ideally DSA ports would have a single dp->link_dp member,
+diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
+index 1afed89e03c00..ccbdb98109f80 100644
+--- a/net/dsa/dsa.c
++++ b/net/dsa/dsa.c
+@@ -1106,7 +1106,7 @@ static struct dsa_port *dsa_port_touch(struct dsa_switch *ds, int index)
+ 	mutex_init(&dp->vlans_lock);
+ 	INIT_LIST_HEAD(&dp->fdbs);
+ 	INIT_LIST_HEAD(&dp->mdbs);
+-	INIT_LIST_HEAD(&dp->vlans);
++	INIT_LIST_HEAD(&dp->vlans); /* also initializes &dp->user_vlans */
+ 	INIT_LIST_HEAD(&dp->list);
+ 	list_add_tail(&dp->list, &dst->ports);
+ 
+diff --git a/net/dsa/slave.c b/net/dsa/slave.c
+index 165bb2cb84316..527b1d576460f 100644
+--- a/net/dsa/slave.c
++++ b/net/dsa/slave.c
+@@ -27,6 +27,7 @@
+ #include "master.h"
+ #include "netlink.h"
+ #include "slave.h"
++#include "switch.h"
+ #include "tag.h"
+ 
+ struct dsa_switchdev_event_work {
+@@ -161,8 +162,7 @@ static int dsa_slave_schedule_standalone_work(struct net_device *dev,
+ 	return 0;
+ }
+ 
+-static int dsa_slave_host_vlan_rx_filtering(struct net_device *vdev, int vid,
+-					    void *arg)
++static int dsa_slave_host_vlan_rx_filtering(void *arg, int vid)
+ {
+ 	struct dsa_host_vlan_rx_filtering_ctx *ctx = arg;
+ 
+@@ -170,6 +170,28 @@ static int dsa_slave_host_vlan_rx_filtering(struct net_device *vdev, int vid,
+ 						  ctx->addr, vid);
+ }
+ 
++static int dsa_slave_vlan_for_each(struct net_device *dev,
++				   int (*cb)(void *arg, int vid), void *arg)
++{
++	struct dsa_port *dp = dsa_slave_to_port(dev);
++	struct dsa_vlan *v;
++	int err;
++
++	lockdep_assert_held(&dev->addr_list_lock);
++
++	err = cb(arg, 0);
++	if (err)
++		return err;
++
++	list_for_each_entry(v, &dp->user_vlans, list) {
++		err = cb(arg, v->vid);
++		if (err)
++			return err;
++	}
++
++	return 0;
++}
++
+ static int dsa_slave_sync_uc(struct net_device *dev,
+ 			     const unsigned char *addr)
+ {
+@@ -180,18 +202,14 @@ static int dsa_slave_sync_uc(struct net_device *dev,
+ 		.addr = addr,
+ 		.event = DSA_UC_ADD,
+ 	};
+-	int err;
+ 
+ 	dev_uc_add(master, addr);
+ 
+ 	if (!dsa_switch_supports_uc_filtering(dp->ds))
+ 		return 0;
+ 
+-	err = dsa_slave_schedule_standalone_work(dev, DSA_UC_ADD, addr, 0);
+-	if (err)
+-		return err;
+-
+-	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
++	return dsa_slave_vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering,
++				       &ctx);
+ }
+ 
+ static int dsa_slave_unsync_uc(struct net_device *dev,
+@@ -204,18 +222,14 @@ static int dsa_slave_unsync_uc(struct net_device *dev,
+ 		.addr = addr,
+ 		.event = DSA_UC_DEL,
+ 	};
+-	int err;
+ 
+ 	dev_uc_del(master, addr);
+ 
+ 	if (!dsa_switch_supports_uc_filtering(dp->ds))
+ 		return 0;
+ 
+-	err = dsa_slave_schedule_standalone_work(dev, DSA_UC_DEL, addr, 0);
+-	if (err)
+-		return err;
+-
+-	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
++	return dsa_slave_vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering,
++				       &ctx);
+ }
+ 
+ static int dsa_slave_sync_mc(struct net_device *dev,
+@@ -228,18 +242,14 @@ static int dsa_slave_sync_mc(struct net_device *dev,
+ 		.addr = addr,
+ 		.event = DSA_MC_ADD,
+ 	};
+-	int err;
+ 
+ 	dev_mc_add(master, addr);
+ 
+ 	if (!dsa_switch_supports_mc_filtering(dp->ds))
+ 		return 0;
+ 
+-	err = dsa_slave_schedule_standalone_work(dev, DSA_MC_ADD, addr, 0);
+-	if (err)
+-		return err;
+-
+-	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
++	return dsa_slave_vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering,
++				       &ctx);
+ }
+ 
+ static int dsa_slave_unsync_mc(struct net_device *dev,
+@@ -252,18 +262,14 @@ static int dsa_slave_unsync_mc(struct net_device *dev,
+ 		.addr = addr,
+ 		.event = DSA_MC_DEL,
+ 	};
+-	int err;
+ 
+ 	dev_mc_del(master, addr);
+ 
+ 	if (!dsa_switch_supports_mc_filtering(dp->ds))
+ 		return 0;
+ 
+-	err = dsa_slave_schedule_standalone_work(dev, DSA_MC_DEL, addr, 0);
+-	if (err)
+-		return err;
+-
+-	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
++	return dsa_slave_vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering,
++				       &ctx);
+ }
+ 
+ void dsa_slave_sync_ha(struct net_device *dev)
+@@ -1759,6 +1765,7 @@ static int dsa_slave_vlan_rx_add_vid(struct net_device *dev, __be16 proto,
+ 	struct netlink_ext_ack extack = {0};
+ 	struct dsa_switch *ds = dp->ds;
+ 	struct netdev_hw_addr *ha;
++	struct dsa_vlan *v;
+ 	int ret;
+ 
+ 	/* User port... */
+@@ -1782,8 +1789,17 @@ static int dsa_slave_vlan_rx_add_vid(struct net_device *dev, __be16 proto,
+ 	    !dsa_switch_supports_mc_filtering(ds))
+ 		return 0;
+ 
++	v = kzalloc(sizeof(*v), GFP_KERNEL);
++	if (!v) {
++		ret = -ENOMEM;
++		goto rollback;
++	}
++
+ 	netif_addr_lock_bh(dev);
+ 
++	v->vid = vid;
++	list_add_tail(&v->list, &dp->user_vlans);
++
+ 	if (dsa_switch_supports_mc_filtering(ds)) {
+ 		netdev_for_each_synced_mc_addr(ha, dev) {
+ 			dsa_slave_schedule_standalone_work(dev, DSA_MC_ADD,
+@@ -1803,6 +1819,12 @@ static int dsa_slave_vlan_rx_add_vid(struct net_device *dev, __be16 proto,
+ 	dsa_flush_workqueue();
+ 
+ 	return 0;
++
++rollback:
++	dsa_port_host_vlan_del(dp, &vlan);
++	dsa_port_vlan_del(dp, &vlan);
++
++	return ret;
+ }
+ 
+ static int dsa_slave_vlan_rx_kill_vid(struct net_device *dev, __be16 proto,
+@@ -1816,6 +1838,7 @@ static int dsa_slave_vlan_rx_kill_vid(struct net_device *dev, __be16 proto,
+ 	};
+ 	struct dsa_switch *ds = dp->ds;
+ 	struct netdev_hw_addr *ha;
++	struct dsa_vlan *v;
+ 	int err;
+ 
+ 	err = dsa_port_vlan_del(dp, &vlan);
+@@ -1832,6 +1855,15 @@ static int dsa_slave_vlan_rx_kill_vid(struct net_device *dev, __be16 proto,
+ 
+ 	netif_addr_lock_bh(dev);
+ 
++	v = dsa_vlan_find(&dp->user_vlans, &vlan);
++	if (!v) {
++		netif_addr_unlock_bh(dev);
++		return -ENOENT;
++	}
++
++	list_del(&v->list);
++	kfree(v);
++
+ 	if (dsa_switch_supports_mc_filtering(ds)) {
+ 		netdev_for_each_synced_mc_addr(ha, dev) {
+ 			dsa_slave_schedule_standalone_work(dev, DSA_MC_DEL,
+diff --git a/net/dsa/switch.c b/net/dsa/switch.c
+index 8c9a9f94b756a..1a42f93173345 100644
+--- a/net/dsa/switch.c
++++ b/net/dsa/switch.c
+@@ -673,8 +673,8 @@ static bool dsa_port_host_vlan_match(struct dsa_port *dp,
+ 	return false;
+ }
+ 
+-static struct dsa_vlan *dsa_vlan_find(struct list_head *vlan_list,
+-				      const struct switchdev_obj_port_vlan *vlan)
++struct dsa_vlan *dsa_vlan_find(struct list_head *vlan_list,
++			       const struct switchdev_obj_port_vlan *vlan)
+ {
+ 	struct dsa_vlan *v;
+ 
+diff --git a/net/dsa/switch.h b/net/dsa/switch.h
+index 15e67b95eb6e1..ea034677da153 100644
+--- a/net/dsa/switch.h
++++ b/net/dsa/switch.h
+@@ -111,6 +111,9 @@ struct dsa_notifier_master_state_info {
+ 	bool operational;
+ };
+ 
++struct dsa_vlan *dsa_vlan_find(struct list_head *vlan_list,
++			       const struct switchdev_obj_port_vlan *vlan);
++
+ int dsa_tree_notify(struct dsa_switch_tree *dst, unsigned long e, void *v);
+ int dsa_broadcast(unsigned long e, void *v);
+ 
 -- 
 2.39.2
 
