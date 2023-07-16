@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE06C8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF70C433C8;
-	Sun, 16 Jul 2023 20:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D628F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:25:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D37AC433C8;
+	Sun, 16 Jul 2023 20:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539139;
-	bh=r+FlfAbIP8ckeXSsm9jCb65xvNDiJ0QbOaXot60pAl0=;
+	s=korg; t=1689539142;
+	bh=j3rUGH3sszwz5vsFc1sVPIf8UsRqhllXduDf8utNI58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7R23/APGAnD7W7O78xgdbbb5qX0HaQvFBTi5PJuYRUtc65JqJAAzFUya1Nbb8WKo
-	 dUzbeNINBu/DrryHcPJS5gK4sZi+hj7hNXXJrjI84lcX2N5c2JEva3+Qd004v6OUt7
-	 8aeqXjdxRdtxAbuR6bOBMox8L019gkHChN7/a5m8=
+	b=EEnyPgVuGNpN+iEhKPAOKuxuhpoXcHzVI95DDbYF1EBFy6BqFYpvtXyaB8gFbJSBM
+	 dhZ7QxlIJ9wiok5v5Wf8yaorRuJnpjDsNIe8bhH5zz8oLV+nFG7LiAUomXkbbRtEee
+	 OThJoyaSpq4KQgvsRG9GUgCUjelkjtY2SjamqgAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 702/800] pptp: Fix fib lookup calls.
-Date: Sun, 16 Jul 2023 21:49:15 +0200
-Message-ID: <20230716195005.425442143@linuxfoundation.org>
+Subject: [PATCH 6.4 703/800] net: dsa: tag_sja1105: fix MAC DA patching from meta frames
+Date: Sun, 16 Jul 2023 21:49:16 +0200
+Message-ID: <20230716195005.448731906@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,114 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 84bef5b6037c15180ef88ac4216dc621d16df1a6 ]
+[ Upstream commit 1dcf6efd5f0c1f4496b3ef7ec5a7db104a53b38c ]
 
-PPTP uses pppox sockets (struct pppox_sock). These sockets don't embed
-an inet_sock structure, so it's invalid to call inet_sk() on them.
+The SJA1105 manual says that at offset 4 into the meta frame payload we
+have "MAC destination byte 2" and at offset 5 we have "MAC destination
+byte 1". These are counted from the LSB, so byte 1 is h_dest[ETH_HLEN-2]
+aka h_dest[4] and byte 2 is h_dest[ETH_HLEN-3] aka h_dest[3].
 
-Therefore, the ip_route_output_ports() call in pptp_connect() has two
-problems:
+The sja1105_meta_unpack() function decodes these the other way around,
+so a frame with MAC DA 01:80:c2:11:22:33 is received by the network
+stack as having 01:80:c2:22:11:33.
 
-  * The tos variable is set with RT_CONN_FLAGS(sk), which calls
-    inet_sk() on the pppox socket.
-
-  * ip_route_output_ports() tries to retrieve routing flags using
-    inet_sk_flowi_flags(), which is also going to call inet_sk() on the
-    pppox socket.
-
-While PPTP doesn't use inet sockets, it's actually really layered on
-top of IP and therefore needs a proper way to do fib lookups. So let's
-define pptp_route_output() to get a struct rtable from a pptp socket.
-Let's also replace the ip_route_output_ports() call of pptp_xmit() for
-consistency.
-
-In practice, this means that:
-
-  * pptp_connect() sets ->flowi4_tos and ->flowi4_flags to zero instead
-    of using bits of unrelated struct pppox_sock fields.
-
-  * pptp_xmit() now respects ->sk_mark and ->sk_uid.
-
-  * pptp_xmit() now calls the security_sk_classify_flow() security
-    hook, thus allowing to set ->flowic_secid.
-
-  * pptp_xmit() now passes the pppox socket to xfrm_lookup_route().
-
-Found by code inspection.
-
-Fixes: 00959ade36ac ("PPTP: PPP over IPv4 (Point-to-Point Tunneling Protocol)")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Fixes: e53e18a6fe4d ("net: dsa: sja1105: Receive and decode meta frames")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/pptp.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ net/dsa/tag_sja1105.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
-index 0fe78826c8fa4..32183f24e63ff 100644
---- a/drivers/net/ppp/pptp.c
-+++ b/drivers/net/ppp/pptp.c
-@@ -24,6 +24,7 @@
- #include <linux/in.h>
- #include <linux/ip.h>
- #include <linux/rcupdate.h>
-+#include <linux/security.h>
- #include <linux/spinlock.h>
- 
- #include <net/sock.h>
-@@ -128,6 +129,23 @@ static void del_chan(struct pppox_sock *sock)
- 	spin_unlock(&chan_lock);
+diff --git a/net/dsa/tag_sja1105.c b/net/dsa/tag_sja1105.c
+index db0a6ac674708..ec48165673edb 100644
+--- a/net/dsa/tag_sja1105.c
++++ b/net/dsa/tag_sja1105.c
+@@ -118,8 +118,8 @@ static void sja1105_meta_unpack(const struct sk_buff *skb,
+ 	 * a unified unpacking command for both device series.
+ 	 */
+ 	packing(buf,     &meta->tstamp,     31, 0, 4, UNPACK, 0);
+-	packing(buf + 4, &meta->dmac_byte_4, 7, 0, 1, UNPACK, 0);
+-	packing(buf + 5, &meta->dmac_byte_3, 7, 0, 1, UNPACK, 0);
++	packing(buf + 4, &meta->dmac_byte_3, 7, 0, 1, UNPACK, 0);
++	packing(buf + 5, &meta->dmac_byte_4, 7, 0, 1, UNPACK, 0);
+ 	packing(buf + 6, &meta->source_port, 7, 0, 1, UNPACK, 0);
+ 	packing(buf + 7, &meta->switch_id,   7, 0, 1, UNPACK, 0);
  }
- 
-+static struct rtable *pptp_route_output(struct pppox_sock *po,
-+					struct flowi4 *fl4)
-+{
-+	struct sock *sk = &po->sk;
-+	struct net *net;
-+
-+	net = sock_net(sk);
-+	flowi4_init_output(fl4, sk->sk_bound_dev_if, sk->sk_mark, 0,
-+			   RT_SCOPE_UNIVERSE, IPPROTO_GRE, 0,
-+			   po->proto.pptp.dst_addr.sin_addr.s_addr,
-+			   po->proto.pptp.src_addr.sin_addr.s_addr,
-+			   0, 0, sock_net_uid(net, sk));
-+	security_sk_classify_flow(sk, flowi4_to_flowi_common(fl4));
-+
-+	return ip_route_output_flow(net, fl4, sk);
-+}
-+
- static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- {
- 	struct sock *sk = (struct sock *) chan->private;
-@@ -151,11 +169,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 	if (sk_pppox(po)->sk_state & PPPOX_DEAD)
- 		goto tx_error;
- 
--	rt = ip_route_output_ports(net, &fl4, NULL,
--				   opt->dst_addr.sin_addr.s_addr,
--				   opt->src_addr.sin_addr.s_addr,
--				   0, 0, IPPROTO_GRE,
--				   RT_TOS(0), sk->sk_bound_dev_if);
-+	rt = pptp_route_output(po, &fl4);
- 	if (IS_ERR(rt))
- 		goto tx_error;
- 
-@@ -438,12 +452,7 @@ static int pptp_connect(struct socket *sock, struct sockaddr *uservaddr,
- 	po->chan.private = sk;
- 	po->chan.ops = &pptp_chan_ops;
- 
--	rt = ip_route_output_ports(sock_net(sk), &fl4, sk,
--				   opt->dst_addr.sin_addr.s_addr,
--				   opt->src_addr.sin_addr.s_addr,
--				   0, 0,
--				   IPPROTO_GRE, RT_CONN_FLAGS(sk),
--				   sk->sk_bound_dev_if);
-+	rt = pptp_route_output(po, &fl4);
- 	if (IS_ERR(rt)) {
- 		error = -EHOSTUNREACH;
- 		goto end;
 -- 
 2.39.2
 
