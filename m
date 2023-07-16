@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFF78F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBDAC433C8;
-	Sun, 16 Jul 2023 20:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B24A8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815A1C433C7;
+	Sun, 16 Jul 2023 20:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538901;
-	bh=lJyTzmpmLEKb6OuldQt4ezrELGjxmj0Qpl9HeM63lWs=;
+	s=korg; t=1689538903;
+	bh=DvVNDZj08XdUBWyW7SU0R5lUaoa7TwIED40WbY0wjMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o8l/QrAfk1aORKupmGWTwHwmYZIjfFtf05C560oM1k/CNhPKupAy44RAI5uc3xhCS
-	 efjC5ttLrHr239HWbZeuJsadKR+MxJoeahpZ2TpEIPm99Eq3OvphQmZXVt+x25vvYM
-	 Xgdx49y548chzocaTf97UTaZ1hA60AW5P5/sie9M=
+	b=r3fG2jSxjH+g9xYmlmsbLplseptKeY8CMQ0CfZEV8zluse5PrLKoOKy/AT1urKHbA
+	 xTutpw4kPWEfe6BcfjlIeFXIytncrIwlQ9S65ErRoYpgEuXmcdEMFNPAIKA1ugsL/e
+	 i0pgIcuonAzpGGK57r66F3eC6bWffhmGB5FHBdKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Nico Boehr <nrb@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 616/800] f2fs: flush error flags in workqueue
-Date: Sun, 16 Jul 2023 21:47:49 +0200
-Message-ID: <20230716195003.419322357@linuxfoundation.org>
+Subject: [PATCH 6.4 617/800] KVM: s390: fix KVM_S390_GET_CMMA_BITS for GFNs in memslot holes
+Date: Sun, 16 Jul 2023 21:47:50 +0200
+Message-ID: <20230716195003.444261638@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,103 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-[ Upstream commit 901c12d144570ed2558f4a6806201453c5b01bea ]
+[ Upstream commit 285cff4c0454340a4dc53f46e67f2cb1c293bd74 ]
 
-In IRQ context, it wakes up workqueue to record errors into on-disk
-superblock fields rather than in-memory fields.
+The KVM_S390_GET_CMMA_BITS ioctl may return incorrect values when userspace
+specifies a start_gfn outside of memslots.
 
-Fixes: 1aa161e43106 ("f2fs: fix scheduling while atomic in decompression path")
-Fixes: 95fa90c9e5a7 ("f2fs: support recording errors into superblock")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+This can occur when a VM has multiple memslots with a hole in between:
+
++-----+----------+--------+--------+
+| ... | Slot N-1 | <hole> | Slot N |
++-----+----------+--------+--------+
+      ^          ^        ^        ^
+      |          |        |        |
+GFN   A          A+B      |        |
+                          A+B+C    |
+			           A+B+C+D
+
+When userspace specifies a GFN in [A+B, A+B+C), it would expect to get the
+CMMA values of the first dirty page in Slot N. However, userspace may get a
+start_gfn of A+B+C+D with a count of 0, hence completely skipping over any
+dirty pages in slot N.
+
+The error is in kvm_s390_next_dirty_cmma(), which assumes
+gfn_to_memslot_approx() will return the memslot _below_ the specified GFN
+when the specified GFN lies outside a memslot. In reality it may return
+either the memslot below or above the specified GFN.
+
+When a memslot above the specified GFN is returned this happens:
+
+- ofs is calculated, but since the memslot's base_gfn is larger than the
+  specified cur_gfn, ofs will underflow to a huge number.
+- ofs is passed to find_next_bit(). Since ofs will exceed the memslot's
+  number of pages, the number of pages in the memslot is returned,
+  completely skipping over all bits in the memslot userspace would be
+  interested in.
+
+Fix this by resetting ofs to zero when a memslot _above_ cur_gfn is
+returned (cur_gfn < ms->base_gfn).
+
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Fixes: afdad61615cc ("KVM: s390: Fix storage attributes migration with memory slots")
+Message-Id: <20230324145424.293889-2-nrb@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c |  2 +-
- fs/f2fs/f2fs.h     |  1 +
- fs/f2fs/super.c    | 26 +++++++++++++++++++++++---
- 3 files changed, 25 insertions(+), 4 deletions(-)
+ arch/s390/kvm/kvm-s390.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 905b7c39a2b32..1132d3cd8f337 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -744,7 +744,7 @@ void f2fs_decompress_cluster(struct decompress_io_ctx *dic, bool in_task)
- 
- 		/* Avoid f2fs_commit_super in irq context */
- 		if (!in_task)
--			f2fs_save_errors(sbi, ERROR_FAIL_DECOMPRESSION);
-+			f2fs_handle_error_async(sbi, ERROR_FAIL_DECOMPRESSION);
- 		else
- 			f2fs_handle_error(sbi, ERROR_FAIL_DECOMPRESSION);
- 		goto out_release;
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 35a025d7e305b..d867056a01f65 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3558,6 +3558,7 @@ void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag);
- void f2fs_handle_critical_error(struct f2fs_sb_info *sbi, unsigned char reason,
- 							bool irq_context);
- void f2fs_handle_error(struct f2fs_sb_info *sbi, unsigned char error);
-+void f2fs_handle_error_async(struct f2fs_sb_info *sbi, unsigned char error);
- int f2fs_commit_super(struct f2fs_sb_info *sbi, bool recover);
- int f2fs_sync_fs(struct super_block *sb, int sync);
- int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi);
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 51812f4595813..17082dc3c1a34 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3980,6 +3980,11 @@ static void f2fs_record_stop_reason(struct f2fs_sb_info *sbi)
- 	f2fs_down_write(&sbi->sb_lock);
- 
- 	spin_lock_irqsave(&sbi->error_lock, flags);
-+	if (sbi->error_dirty) {
-+		memcpy(F2FS_RAW_SUPER(sbi)->s_errors, sbi->errors,
-+							MAX_F2FS_ERRORS);
-+		sbi->error_dirty = false;
-+	}
- 	memcpy(raw_super->s_stop_reason, sbi->stop_reason, MAX_STOP_REASON);
- 	spin_unlock_irqrestore(&sbi->error_lock, flags);
- 
-@@ -4019,12 +4024,10 @@ static bool f2fs_update_errors(struct f2fs_sb_info *sbi)
- 	return need_update;
- }
- 
--void f2fs_handle_error(struct f2fs_sb_info *sbi, unsigned char error)
-+static void f2fs_record_errors(struct f2fs_sb_info *sbi, unsigned char error)
- {
- 	int err;
- 
--	f2fs_save_errors(sbi, error);
--
- 	f2fs_down_write(&sbi->sb_lock);
- 
- 	if (!f2fs_update_errors(sbi))
-@@ -4038,6 +4041,23 @@ void f2fs_handle_error(struct f2fs_sb_info *sbi, unsigned char error)
- 	f2fs_up_write(&sbi->sb_lock);
- }
- 
-+void f2fs_handle_error(struct f2fs_sb_info *sbi, unsigned char error)
-+{
-+	f2fs_save_errors(sbi, error);
-+	f2fs_record_errors(sbi, error);
-+}
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 17b81659cdb20..6700196964648 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -2156,6 +2156,10 @@ static unsigned long kvm_s390_next_dirty_cmma(struct kvm_memslots *slots,
+ 		ms = container_of(mnode, struct kvm_memory_slot, gfn_node[slots->node_idx]);
+ 		ofs = 0;
+ 	}
 +
-+void f2fs_handle_error_async(struct f2fs_sb_info *sbi, unsigned char error)
-+{
-+	f2fs_save_errors(sbi, error);
++	if (cur_gfn < ms->base_gfn)
++		ofs = 0;
 +
-+	if (!sbi->error_dirty)
-+		return;
-+	if (!test_bit(error, (unsigned long *)sbi->errors))
-+		return;
-+	schedule_work(&sbi->s_error_work);
-+}
-+
- static bool system_going_down(void)
- {
- 	return system_state == SYSTEM_HALT || system_state == SYSTEM_POWER_OFF
+ 	ofs = find_next_bit(kvm_second_dirty_bitmap(ms), ms->npages, ofs);
+ 	while (ofs >= ms->npages && (mnode = rb_next(mnode))) {
+ 		ms = container_of(mnode, struct kvm_memory_slot, gfn_node[slots->node_idx]);
 -- 
 2.39.2
 
