@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0AC8F6A
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D27C433C9;
-	Sun, 16 Jul 2023 20:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7092E8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FCFC433C7;
+	Sun, 16 Jul 2023 20:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540529;
-	bh=iYTekjNKkmEGDKBmB09O++cqqZm4w0ktLimgiNwIHfc=;
+	s=korg; t=1689540532;
+	bh=s3R8g4QE40GllNpqSeri+HBhfyFpnkFaMvtFqGoMgPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7m2dsDY4sjnXNbX8ohZjdVUeqICuRvGEaYrwKeb5upMJYuT6t6adQrTubIhpvqjK
-	 c2nn6cQA+e9QWjRMdJPifCUtQR3WLT0tsgmGYt+M6I49vFS8d62sMfHwFFSEulCvMC
-	 /gbEZLIx2RQ/rwerpSYRG61QyLgghnhtm08J6WIY=
+	b=O7iAYChmI/iRwt87wfDLuwjsYYmm4OlfWQcTbpRoM65ncxxgKn8ArRoUEJYk7LVJQ
+	 epvYM/oxwmZtyLMekG+2SwPx0/Zejtam/R0wFBEGbd4DQvxmW99bESTYKgx0SRHLGu
+	 xvVEEPqQYf9CH2sQYmdAHTBpHJPXyatolIs2CpMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"xiahong.bao" <xiahong.bao@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 395/591] media: amphion: drop repeated codec data for vc1l format
-Date: Sun, 16 Jul 2023 21:48:54 +0200
-Message-ID: <20230716194934.137221600@linuxfoundation.org>
+Subject: [PATCH 6.1 396/591] media: amphion: drop repeated codec data for vc1g format
+Date: Sun, 16 Jul 2023 21:48:55 +0200
+Message-ID: <20230716194934.163737503@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,16 +38,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit 668ee1a3a1870381225002c246972419b98e4253 ]
+[ Upstream commit e1d2ccc2cdd6333584aa3d5386dc667d0837c48f ]
 
-For format V4L2_PIX_FMT_VC1_ANNEX_L,
-the codec data is replaced with startcode,
-and then driver drop it, otherwise it may led to decoding error.
+For format V4L2_PIX_FMT_VC1_ANNEX_G,
+the separate codec data is required only once.
+The repeated codec data may introduce some decoding error.
+so drop the repeated codec data.
 
 It's amphion vpu's limitation
-
-Driver has dropped the first codec data,
-but need to drop the repeated codec data too.
 
 Fixes: e670f5d672ef ("media: amphion: only insert the first sequence startcode for vc1l format")
 Signed-off-by: Ming Qian <ming.qian@nxp.com>
@@ -55,22 +53,37 @@ Tested-by: xiahong.bao <xiahong.bao@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_malone.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/amphion/vpu_malone.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/drivers/media/platform/amphion/vpu_malone.c b/drivers/media/platform/amphion/vpu_malone.c
-index ae094cdc9bfc8..36e563d29621f 100644
+index 36e563d29621f..c2f4fb12c3b64 100644
 --- a/drivers/media/platform/amphion/vpu_malone.c
 +++ b/drivers/media/platform/amphion/vpu_malone.c
-@@ -1317,6 +1317,8 @@ static int vpu_malone_insert_scode_vc1_l_seq(struct malone_scode_t *scode)
- 	int size = 0;
- 	u8 rcv_seqhdr[MALONE_VC1_RCV_SEQ_HEADER_LEN];
+@@ -1286,6 +1286,15 @@ static int vpu_malone_insert_scode_pic(struct malone_scode_t *scode, u32 codec_i
+ 	return sizeof(hdr);
+ }
  
++static int vpu_malone_insert_scode_vc1_g_seq(struct malone_scode_t *scode)
++{
++	if (!scode->inst->total_input_count)
++		return 0;
 +	if (vpu_vb_is_codecconfig(to_vb2_v4l2_buffer(scode->vb)))
 +		scode->need_data = 0;
- 	if (scode->inst->total_input_count)
- 		return 0;
- 	scode->need_data = 0;
++	return 0;
++}
++
+ static int vpu_malone_insert_scode_vc1_g_pic(struct malone_scode_t *scode)
+ {
+ 	struct vb2_v4l2_buffer *vbuf;
+@@ -1423,6 +1432,7 @@ static const struct malone_scode_handler scode_handlers[] = {
+ 	},
+ 	{
+ 		.pixelformat = V4L2_PIX_FMT_VC1_ANNEX_G,
++		.insert_scode_seq = vpu_malone_insert_scode_vc1_g_seq,
+ 		.insert_scode_pic = vpu_malone_insert_scode_vc1_g_pic,
+ 	},
+ 	{
 -- 
 2.39.2
 
