@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB708F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B778C433C8;
-	Sun, 16 Jul 2023 20:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B6D8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AA6C433C8;
+	Sun, 16 Jul 2023 20:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540220;
-	bh=bWAkDfDK2FZoit3t0CvM1Fh5j1tQCps5OwpjAk4ySL4=;
+	s=korg; t=1689540223;
+	bh=FbeqQIkoxBavCEMtKq33puqzVh7nOi7NF2RboA8QGU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0f21i5lmxNcIo53o8QlBQ8piqFS99njR3Ysu9eR1+Io4ZJSRtN2U2x0Jf/QYZayXY
-	 ULBhXFdRnkHiHYzYTVKjSJRmYMO/VG+8LaQ1RHGuKotd4IWggWWpDwifFbWJ6b+Fex
-	 6hmyxf4RFQt8mSM/mPwYJQKtvyDFp9hvdpOSrNsc=
+	b=DpM24MweUh0YHAAk8peoxitNau8wn6YZGKHHsAv+plSx2atb+JAtCduE+jn+vyNXN
+	 ZtfXfYiCCN5wIRm1FYzaaI5ylOKxHV2vYLqgvemjkmXRcvQMkq/qqqJjNs7/AOpaO5
+	 alMBfJvGA0X8QAMN0Vlk/dxzGgXWnGhtv0KVmqzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 258/591] clk: tegra: tegra124-emc: Fix potential memory leak
-Date: Sun, 16 Jul 2023 21:46:37 +0200
-Message-ID: <20230716194930.558949581@linuxfoundation.org>
+Subject: [PATCH 6.1 259/591] ALSA: ac97: Fix possible NULL dereference in snd_ac97_mixer
+Date: Sun, 16 Jul 2023 21:46:38 +0200
+Message-ID: <20230716194930.583478559@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,43 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 53a06e5924c0d43c11379a08c5a78529c3e61595 ]
+[ Upstream commit 79597c8bf64ca99eab385115743131d260339da5 ]
 
-The tegra and tegra needs to be freed in the error handling path, otherwise
-it will be leaked.
+smatch error:
+sound/pci/ac97/ac97_codec.c:2354 snd_ac97_mixer() error:
+we previously assumed 'rac97' could be null (see line 2072)
 
-Fixes: 2db04f16b589 ("clk: tegra: Add EMC clock driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221209094124.71043-1-yuancan@huawei.com
-Acked-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+remove redundant assignment, return error if rac97 is NULL.
+
+Fixes: da3cec35dd3c ("ALSA: Kill snd_assert() in sound/pci/*")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20230615021732.1972194-1-suhui@nfschina.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/tegra/clk-tegra124-emc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/ac97/ac97_codec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/tegra/clk-tegra124-emc.c b/drivers/clk/tegra/clk-tegra124-emc.c
-index 219c80653dbdb..2a6db04342815 100644
---- a/drivers/clk/tegra/clk-tegra124-emc.c
-+++ b/drivers/clk/tegra/clk-tegra124-emc.c
-@@ -464,6 +464,7 @@ static int load_timings_from_dt(struct tegra_clk_emc *tegra,
- 		err = load_one_timing_from_dt(tegra, timing, child);
- 		if (err) {
- 			of_node_put(child);
-+			kfree(tegra->timings);
- 			return err;
- 		}
+diff --git a/sound/pci/ac97/ac97_codec.c b/sound/pci/ac97/ac97_codec.c
+index ff685321f1a11..534ea7a256ec3 100644
+--- a/sound/pci/ac97/ac97_codec.c
++++ b/sound/pci/ac97/ac97_codec.c
+@@ -2070,8 +2070,8 @@ int snd_ac97_mixer(struct snd_ac97_bus *bus, struct snd_ac97_template *template,
+ 		.dev_disconnect =	snd_ac97_dev_disconnect,
+ 	};
  
-@@ -515,6 +516,7 @@ struct clk *tegra124_clk_register_emc(void __iomem *base, struct device_node *np
- 		err = load_timings_from_dt(tegra, node, node_ram_code);
- 		if (err) {
- 			of_node_put(node);
-+			kfree(tegra);
- 			return ERR_PTR(err);
- 		}
- 	}
+-	if (rac97)
+-		*rac97 = NULL;
++	if (!rac97)
++		return -EINVAL;
+ 	if (snd_BUG_ON(!bus || !template))
+ 		return -EINVAL;
+ 	if (snd_BUG_ON(template->num >= 4))
 -- 
 2.39.2
 
