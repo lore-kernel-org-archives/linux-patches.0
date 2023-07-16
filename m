@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794D68F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5AEC433C7;
-	Sun, 16 Jul 2023 20:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A71F8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25CEC433C8;
+	Sun, 16 Jul 2023 20:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539467;
-	bh=wKWC2KPSLhfDuCAUTsjPhculpc52tO9fg5QLopGaGfw=;
+	s=korg; t=1689539470;
+	bh=Km6hG8ZsTC5iv9Ltr1CUws0IQFbNQzRmKE6aMMqvH0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ysqaLhuSmFBSAS/kntpJIzvlsUoS+qaRDjl6q/yJBvRpoy/CujhMMdLUrdpysosZ+
-	 L+sSwlqC2Vb0G8e6pNExVL+Ufm4OStmiu4TxnL1+mBnPPsLjyb9TzAxv0X32z3jjyI
-	 Gz87kmRPJsRqApKWdagjXH4xDkKMthYYtaRLUQ30=
+	b=ulql2otalMdBAiXcWVhnIRvg5Lmzv6O9fnbWwUpOMmeUvmasoqRQpLXos0q5WrOrU
+	 Sc0OSxOPJloIlXUUxbufaaegYRmtTIxbiey/A59j9NSAbUHPHLfjg7smb6qSV5aCu3
+	 rziZZ2GFO8l7AUOT2xq0Q3+hdVuDUOFVhIGVe1aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Yue Hu <huyue2@coolpad.com>,
+	Shawn Wang <shawnwang@linux.alibaba.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/591] erofs: kill hooked chains to avoid loops on deduplicated compressed images
-Date: Sun, 16 Jul 2023 21:42:27 +0200
-Message-ID: <20230716194924.078950630@linuxfoundation.org>
+Subject: [PATCH 6.1 009/591] x86/resctrl: Only show tasks pid in current pid namespace
+Date: Sun, 16 Jul 2023 21:42:28 +0200
+Message-ID: <20230716194924.104509818@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,221 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Shawn Wang <shawnwang@linux.alibaba.com>
 
-[ Upstream commit 967c28b23f6c89bb8eef6a046ea88afe0d7c1029 ]
+[ Upstream commit 2997d94b5dd0e8b10076f5e0b6f18410c73e28bd ]
 
-After heavily stressing EROFS with several images which include a
-hand-crafted image of repeated patterns for more than 46 days, I found
-two chains could be linked with each other almost simultaneously and
-form a loop so that the entire loop won't be submitted.  As a
-consequence, the corresponding file pages will remain locked forever.
+When writing a task id to the "tasks" file in an rdtgroup,
+rdtgroup_tasks_write() treats the pid as a number in the current pid
+namespace. But when reading the "tasks" file, rdtgroup_tasks_show() shows
+the list of global pids from the init namespace, which is confusing and
+incorrect.
 
-It can be _only_ observed on data-deduplicated compressed images.
-For example, consider two chains with five pclusters in total:
-	Chain 1:  2->3->4->5    -- The tail pcluster is 5;
-        Chain 2:  5->1->2       -- The tail pcluster is 2.
+To be more robust, let the "tasks" file only show pids in the current pid
+namespace.
 
-Chain 2 could link to Chain 1 with pcluster 5; and Chain 1 could link
-to Chain 2 at the same time with pcluster 2.
-
-Since hooked chains are all linked locklessly now, I have no idea how
-to simply avoid the race.  Instead, let's avoid hooked chains completely
-until I could work out a proper way to fix this and end users finally
-tell us that it's needed to add it back.
-
-Actually, this optimization can be found with multi-threaded workloads
-(especially even more often on deduplicated compressed images), yet I'm
-not sure about the overall system impacts of not having this compared
-with implementation complexity.
-
-Fixes: 267f2492c8f7 ("erofs: introduce multi-reference pclusters (fully-referenced)")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Link: https://lore.kernel.org/r/20230526201459.128169-4-hsiangkao@linux.alibaba.com
+Fixes: e02737d5b826 ("x86/intel_rdt: Add tasks files")
+Signed-off-by: Shawn Wang <shawnwang@linux.alibaba.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Reinette Chatre <reinette.chatre@intel.com>
+Acked-by: Fenghua Yu <fenghua.yu@intel.com>
+Tested-by: Reinette Chatre <reinette.chatre@intel.com>
+Link: https://lore.kernel.org/all/20230116071246.97717-1-shawnwang@linux.alibaba.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 72 ++++++++----------------------------------------
- 1 file changed, 11 insertions(+), 61 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index aaddb6781465e..92b2e4ddb7ce9 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -94,11 +94,8 @@ struct z_erofs_pcluster {
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index c7f1c7cb1963b..15ee89ce8c68c 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -731,11 +731,15 @@ static ssize_t rdtgroup_tasks_write(struct kernfs_open_file *of,
+ static void show_rdt_tasks(struct rdtgroup *r, struct seq_file *s)
+ {
+ 	struct task_struct *p, *t;
++	pid_t pid;
  
- /* let's avoid the valid 32-bit kernel addresses */
- 
--/* the chained workgroup has't submitted io (still open) */
-+/* the end of a chain of pclusters */
- #define Z_EROFS_PCLUSTER_TAIL           ((void *)0x5F0ECAFE)
--/* the chained workgroup has already submitted io */
--#define Z_EROFS_PCLUSTER_TAIL_CLOSED    ((void *)0x5F0EDEAD)
--
- #define Z_EROFS_PCLUSTER_NIL            (NULL)
- 
- struct z_erofs_decompressqueue {
-@@ -375,20 +372,6 @@ int __init z_erofs_init_zip_subsystem(void)
- 
- enum z_erofs_pclustermode {
- 	Z_EROFS_PCLUSTER_INFLIGHT,
--	/*
--	 * The current pclusters was the tail of an exist chain, in addition
--	 * that the previous processed chained pclusters are all decided to
--	 * be hooked up to it.
--	 * A new chain will be created for the remaining pclusters which are
--	 * not processed yet, so different from Z_EROFS_PCLUSTER_FOLLOWED,
--	 * the next pcluster cannot reuse the whole page safely for inplace I/O
--	 * in the following scenario:
--	 *  ________________________________________________________________
--	 * |      tail (partial) page     |       head (partial) page       |
--	 * |   (belongs to the next pcl)  |   (belongs to the current pcl)  |
--	 * |_______PCLUSTER_FOLLOWED______|________PCLUSTER_HOOKED__________|
--	 */
--	Z_EROFS_PCLUSTER_HOOKED,
- 	/*
- 	 * a weak form of Z_EROFS_PCLUSTER_FOLLOWED, the difference is that it
- 	 * could be dispatched into bypass queue later due to uptodated managed
-@@ -406,8 +389,8 @@ enum z_erofs_pclustermode {
- 	 *  ________________________________________________________________
- 	 * |  tail (partial) page |          head (partial) page           |
- 	 * |  (of the current cl) |      (of the previous collection)      |
--	 * | PCLUSTER_FOLLOWED or |                                        |
--	 * |_____PCLUSTER_HOOKED__|___________PCLUSTER_FOLLOWED____________|
-+	 * |                      |                                        |
-+	 * |__PCLUSTER_FOLLOWED___|___________PCLUSTER_FOLLOWED____________|
- 	 *
- 	 * [  (*) the above page can be used as inplace I/O.               ]
- 	 */
-@@ -420,7 +403,7 @@ struct z_erofs_decompress_frontend {
- 	struct z_erofs_bvec_iter biter;
- 
- 	struct page *candidate_bvpage;
--	struct z_erofs_pcluster *pcl, *tailpcl;
-+	struct z_erofs_pcluster *pcl;
- 	z_erofs_next_pcluster_t owned_head;
- 	enum z_erofs_pclustermode mode;
- 
-@@ -626,19 +609,7 @@ static void z_erofs_try_to_claim_pcluster(struct z_erofs_decompress_frontend *f)
- 		return;
+ 	rcu_read_lock();
+ 	for_each_process_thread(p, t) {
+-		if (is_closid_match(t, r) || is_rmid_match(t, r))
+-			seq_printf(s, "%d\n", t->pid);
++		if (is_closid_match(t, r) || is_rmid_match(t, r)) {
++			pid = task_pid_vnr(t);
++			if (pid)
++				seq_printf(s, "%d\n", pid);
++		}
  	}
- 
--	/*
--	 * type 2, link to the end of an existing open chain, be careful
--	 * that its submission is controlled by the original attached chain.
--	 */
--	if (*owned_head != &pcl->next && pcl != f->tailpcl &&
--	    cmpxchg(&pcl->next, Z_EROFS_PCLUSTER_TAIL,
--		    *owned_head) == Z_EROFS_PCLUSTER_TAIL) {
--		*owned_head = Z_EROFS_PCLUSTER_TAIL;
--		f->mode = Z_EROFS_PCLUSTER_HOOKED;
--		f->tailpcl = NULL;
--		return;
--	}
--	/* type 3, it belongs to a chain, but it isn't the end of the chain */
-+	/* type 2, it belongs to an ongoing chain */
- 	f->mode = Z_EROFS_PCLUSTER_INFLIGHT;
+ 	rcu_read_unlock();
  }
- 
-@@ -699,9 +670,6 @@ static int z_erofs_register_pcluster(struct z_erofs_decompress_frontend *fe)
- 			goto err_out;
- 		}
- 	}
--	/* used to check tail merging loop due to corrupted images */
--	if (fe->owned_head == Z_EROFS_PCLUSTER_TAIL)
--		fe->tailpcl = pcl;
- 	fe->owned_head = &pcl->next;
- 	fe->pcl = pcl;
- 	return 0;
-@@ -722,7 +690,6 @@ static int z_erofs_collector_begin(struct z_erofs_decompress_frontend *fe)
- 
- 	/* must be Z_EROFS_PCLUSTER_TAIL or pointed to previous pcluster */
- 	DBG_BUGON(fe->owned_head == Z_EROFS_PCLUSTER_NIL);
--	DBG_BUGON(fe->owned_head == Z_EROFS_PCLUSTER_TAIL_CLOSED);
- 
- 	if (!(map->m_flags & EROFS_MAP_META)) {
- 		grp = erofs_find_workgroup(fe->inode->i_sb,
-@@ -741,10 +708,6 @@ static int z_erofs_collector_begin(struct z_erofs_decompress_frontend *fe)
- 
- 	if (ret == -EEXIST) {
- 		mutex_lock(&fe->pcl->lock);
--		/* used to check tail merging loop due to corrupted images */
--		if (fe->owned_head == Z_EROFS_PCLUSTER_TAIL)
--			fe->tailpcl = fe->pcl;
--
- 		z_erofs_try_to_claim_pcluster(fe);
- 	} else if (ret) {
- 		return ret;
-@@ -901,8 +864,7 @@ static int z_erofs_do_read_page(struct z_erofs_decompress_frontend *fe,
- 	 * those chains are handled asynchronously thus the page cannot be used
- 	 * for inplace I/O or bvpage (should be processed in a strict order.)
- 	 */
--	tight &= (fe->mode >= Z_EROFS_PCLUSTER_HOOKED &&
--		  fe->mode != Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE);
-+	tight &= (fe->mode > Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE);
- 
- 	cur = end - min_t(unsigned int, offset + end - map->m_la, end);
- 	if (!(map->m_flags & EROFS_MAP_MAPPED)) {
-@@ -1283,10 +1245,7 @@ static void z_erofs_decompress_queue(const struct z_erofs_decompressqueue *io,
- 	};
- 	z_erofs_next_pcluster_t owned = io->head;
- 
--	while (owned != Z_EROFS_PCLUSTER_TAIL_CLOSED) {
--		/* impossible that 'owned' equals Z_EROFS_WORK_TPTR_TAIL */
--		DBG_BUGON(owned == Z_EROFS_PCLUSTER_TAIL);
--		/* impossible that 'owned' equals Z_EROFS_PCLUSTER_NIL */
-+	while (owned != Z_EROFS_PCLUSTER_TAIL) {
- 		DBG_BUGON(owned == Z_EROFS_PCLUSTER_NIL);
- 
- 		be.pcl = container_of(owned, struct z_erofs_pcluster, next);
-@@ -1303,7 +1262,7 @@ static void z_erofs_decompressqueue_work(struct work_struct *work)
- 		container_of(work, struct z_erofs_decompressqueue, u.work);
- 	struct page *pagepool = NULL;
- 
--	DBG_BUGON(bgq->head == Z_EROFS_PCLUSTER_TAIL_CLOSED);
-+	DBG_BUGON(bgq->head == Z_EROFS_PCLUSTER_TAIL);
- 	z_erofs_decompress_queue(bgq, &pagepool);
- 
- 	erofs_release_pages(&pagepool);
-@@ -1465,7 +1424,7 @@ static struct z_erofs_decompressqueue *jobqueue_init(struct super_block *sb,
- 		q->sync = true;
- 	}
- 	q->sb = sb;
--	q->head = Z_EROFS_PCLUSTER_TAIL_CLOSED;
-+	q->head = Z_EROFS_PCLUSTER_TAIL;
- 	return q;
- }
- 
-@@ -1483,11 +1442,7 @@ static void move_to_bypass_jobqueue(struct z_erofs_pcluster *pcl,
- 	z_erofs_next_pcluster_t *const submit_qtail = qtail[JQ_SUBMIT];
- 	z_erofs_next_pcluster_t *const bypass_qtail = qtail[JQ_BYPASS];
- 
--	DBG_BUGON(owned_head == Z_EROFS_PCLUSTER_TAIL_CLOSED);
--	if (owned_head == Z_EROFS_PCLUSTER_TAIL)
--		owned_head = Z_EROFS_PCLUSTER_TAIL_CLOSED;
--
--	WRITE_ONCE(pcl->next, Z_EROFS_PCLUSTER_TAIL_CLOSED);
-+	WRITE_ONCE(pcl->next, Z_EROFS_PCLUSTER_TAIL);
- 
- 	WRITE_ONCE(*submit_qtail, owned_head);
- 	WRITE_ONCE(*bypass_qtail, &pcl->next);
-@@ -1558,15 +1513,10 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 		unsigned int i = 0;
- 		bool bypass = true;
- 
--		/* no possible 'owned_head' equals the following */
--		DBG_BUGON(owned_head == Z_EROFS_PCLUSTER_TAIL_CLOSED);
- 		DBG_BUGON(owned_head == Z_EROFS_PCLUSTER_NIL);
--
- 		pcl = container_of(owned_head, struct z_erofs_pcluster, next);
-+		owned_head = READ_ONCE(pcl->next);
- 
--		/* close the main owned chain at first */
--		owned_head = cmpxchg(&pcl->next, Z_EROFS_PCLUSTER_TAIL,
--				     Z_EROFS_PCLUSTER_TAIL_CLOSED);
- 		if (z_erofs_is_inline_pcluster(pcl)) {
- 			move_to_bypass_jobqueue(pcl, qtail, owned_head);
- 			continue;
 -- 
 2.39.2
 
