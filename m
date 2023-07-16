@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0E48F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:22:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EAFC433C8;
-	Sun, 16 Jul 2023 20:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3188F6D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:22:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A00C433C8;
+	Sun, 16 Jul 2023 20:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538957;
-	bh=q5UAS5Nui34djyXulS6JauA8VFifRPbLLFsoRAI07qU=;
+	s=korg; t=1689538960;
+	bh=t5dc8HQpTwI7tli9JanaKj+q2mIcDbz75/FufcyVGEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yq5e8Qvf7v3dXkiiatywnd/d+gsv6nkmx5msNjpfdrBvTZiFoK6AU4ERnL373Do+g
-	 TdN9hZo7XYkp3+vmwbKo9ihjGflBZNkWhAQRr7ZqQsji/Skq/uOKaA12db4ieCU+uT
-	 pBhhEwaENKFi3cxy3vveSwtmX/GqXVwuhlxD52I0=
+	b=mjRXrgQM7fitmAQ4RV8qfuVuWbslS/2XfDb3z/JBWWFkdXfJh8/y5t2klR8mVvnsR
+	 AMUsJ7x+LVcGNoGPq0LQShrbrkEw9vrKcKThJZNIFq/Z1+Icfyvb09tj8C4kNjsyxV
+	 0AyqPpgd5p9b3icdq/srqW6N6tjMnp5q6i58EsGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Morel <pmorel@linux.ibm.com>,
-	Marc Hartmayer <mhartmay@linux.ibm.com>,
-	Nico Boehr <nrb@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
+	Jia-wei Chang <Jia-wei.Chang@mediatek.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 637/800] KVM: s390/diag: fix racy access of physical cpu number in diag 9c handler
-Date: Sun, 16 Jul 2023 21:48:10 +0200
-Message-ID: <20230716195003.908948835@linuxfoundation.org>
+Subject: [PATCH 6.4 638/800] cpufreq: mediatek: correct voltages for MT7622 and MT7623
+Date: Sun, 16 Jul 2023 21:48:11 +0200
+Message-ID: <20230716195003.933469914@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,57 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 0bc380beb78aa352eadbc21d934dd9606fcee808 ]
+[ Upstream commit f85534113f5ae90a52521cdb9e9977a43ee42626 ]
 
-We do check for target CPU == -1, but this might change at the time we
-are going to use it. Hold the physical target CPU in a local variable to
-avoid out-of-bound accesses to the cpu arrays.
+The MT6380 regulator typically used together with MT7622 does not
+support the current maximum processor and SRAM voltage in the cpufreq
+driver (1360000uV).
+For MT7622 limit processor and SRAM supply voltages to 1350000uV to
+avoid having the tracking algorithm request unsupported voltages from
+the regulator.
 
-Cc: Pierre Morel <pmorel@linux.ibm.com>
-Fixes: 87e28a15c42c ("KVM: s390: diag9c (directed yield) forwarding")
-Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
-Reviewed-by: Nico Boehr <nrb@linux.ibm.com>
-Reviewed-by: Pierre Morel <pmorel@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+On MT7623 there is no separate SRAM supply and the maximum voltage used
+is 1300000uV. Create dedicated platform data for MT7623 to cover that
+case as well.
+
+Fixes: 0883426fd07e3 ("cpufreq: mediatek: Raise proc and sram max voltage for MT7622/7623")
+Suggested-by: Jia-wei Chang <Jia-wei.Chang@mediatek.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/diag.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/cpufreq/mediatek-cpufreq.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/kvm/diag.c b/arch/s390/kvm/diag.c
-index 807fa9da1e721..3c65b8258ae67 100644
---- a/arch/s390/kvm/diag.c
-+++ b/arch/s390/kvm/diag.c
-@@ -166,6 +166,7 @@ static int diag9c_forwarding_overrun(void)
- static int __diag_time_slice_end_directed(struct kvm_vcpu *vcpu)
- {
- 	struct kvm_vcpu *tcpu;
-+	int tcpu_cpu;
- 	int tid;
+diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
+index 9a39a7ccfae96..fef68cb2b38f7 100644
+--- a/drivers/cpufreq/mediatek-cpufreq.c
++++ b/drivers/cpufreq/mediatek-cpufreq.c
+@@ -696,9 +696,16 @@ static const struct mtk_cpufreq_platform_data mt2701_platform_data = {
+ static const struct mtk_cpufreq_platform_data mt7622_platform_data = {
+ 	.min_volt_shift = 100000,
+ 	.max_volt_shift = 200000,
+-	.proc_max_volt = 1360000,
++	.proc_max_volt = 1350000,
+ 	.sram_min_volt = 0,
+-	.sram_max_volt = 1360000,
++	.sram_max_volt = 1350000,
++	.ccifreq_supported = false,
++};
++
++static const struct mtk_cpufreq_platform_data mt7623_platform_data = {
++	.min_volt_shift = 100000,
++	.max_volt_shift = 200000,
++	.proc_max_volt = 1300000,
+ 	.ccifreq_supported = false,
+ };
  
- 	tid = vcpu->run->s.regs.gprs[(vcpu->arch.sie_block->ipa & 0xf0) >> 4];
-@@ -181,14 +182,15 @@ static int __diag_time_slice_end_directed(struct kvm_vcpu *vcpu)
- 		goto no_yield;
- 
- 	/* target guest VCPU already running */
--	if (READ_ONCE(tcpu->cpu) >= 0) {
-+	tcpu_cpu = READ_ONCE(tcpu->cpu);
-+	if (tcpu_cpu >= 0) {
- 		if (!diag9c_forwarding_hz || diag9c_forwarding_overrun())
- 			goto no_yield;
- 
- 		/* target host CPU already running */
--		if (!vcpu_is_preempted(tcpu->cpu))
-+		if (!vcpu_is_preempted(tcpu_cpu))
- 			goto no_yield;
--		smp_yield_cpu(tcpu->cpu);
-+		smp_yield_cpu(tcpu_cpu);
- 		VCPU_EVENT(vcpu, 5,
- 			   "diag time slice end directed to %d: yield forwarded",
- 			   tid);
+@@ -734,7 +741,7 @@ static const struct of_device_id mtk_cpufreq_machines[] __initconst = {
+ 	{ .compatible = "mediatek,mt2701", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt2712", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt7622", .data = &mt7622_platform_data },
+-	{ .compatible = "mediatek,mt7623", .data = &mt7622_platform_data },
++	{ .compatible = "mediatek,mt7623", .data = &mt7623_platform_data },
+ 	{ .compatible = "mediatek,mt8167", .data = &mt8516_platform_data },
+ 	{ .compatible = "mediatek,mt817x", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt8173", .data = &mt2701_platform_data },
 -- 
 2.39.2
 
