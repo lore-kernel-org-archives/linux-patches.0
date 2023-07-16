@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096448F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822A1C433C7;
-	Sun, 16 Jul 2023 20:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E898F55
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6374FC433C7;
+	Sun, 16 Jul 2023 20:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540056;
-	bh=E1Tp7pLUqn+2cX9FbA9td496pDIY1nEkO+0u5Pme7e4=;
+	s=korg; t=1689540059;
+	bh=dS3RfzImIkh0u/q5OPx5Zo84ixze5DIOE0aP09OEsD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=md7/WAef9w/NDqLQOLRal28lM/2TK6SR/CeR8XOEk+bFaXppZom9wbEASUYAC8u4l
-	 J1ulHldEwKjU529brauW2by1zZb1wmwsUFfr7rJKGE9LPTOE4CWyhHffJ8cu9SkB99
-	 qvvpq62P3Y7Qt0tn+05ix/Kmgao+KagEE4J23cCo=
+	b=FcJEDuTx8SnKBhdMnBx8EU7TEon1CTpzxL+94sUMNJkQM/6LQ6Q/BKDvd0hqE3cWX
+	 rwkZIUzMeEwx95D3gvlaMdTqPORxjuS1Fn5HThl5RQiRkhxBqOU/CvQfxM4T9OIr+U
+	 Cbq+VeMiqasTCDSOpAnxUafw3TWCJFzu3jdcZZL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Robert Foss <robert.foss@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 200/591] arm64: dts: qcom: sm8350: Add GPI DMA compatible fallback
-Date: Sun, 16 Jul 2023 21:45:39 +0200
-Message-ID: <20230716194929.046683397@linuxfoundation.org>
+Subject: [PATCH 6.1 191/591] drm/bridge: anx7625: Convert to i2cs .probe_new()
+Date: Sun, 16 Jul 2023 21:45:30 +0200
+Message-ID: <20230716194928.817824606@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,54 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit b561e225dee5412609fd98340ca71ba0ab2e4b36 ]
+[ Upstream commit 71450f8c824f5571d4af9e6e021b733085c8e690 ]
 
-Use SM6350 as fallback for GPI DMA, to indicate devices are compatible
-and that drivers can bind with only one compatible.
+The probe function doesn't make use of the i2c_device_id * parameter so it
+can be trivially converted.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221018230352.1238479-5-krzysztof.kozlowski@linaro.org
-Stable-dep-of: 41d6bca799b3 ("arm64: dts: qcom: sm8350: correct DMA controller unit address")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20221118224540.619276-18-uwe@kleine-koenig.org
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Stable-dep-of: 1464e48d69ab ("drm/bridge: anx7625: Prevent endless probe loop")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index ca7c428a741d4..9430166ee45b5 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -678,7 +678,7 @@ ipcc: mailbox@408000 {
- 		};
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index b0ff1ecb80a50..86a52c5f4fbc4 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -2562,8 +2562,7 @@ static void anx7625_runtime_disable(void *data)
+ 	pm_runtime_disable(data);
+ }
  
- 		gpi_dma2: dma-controller@800000 {
--			compatible = "qcom,sm8350-gpi-dma";
-+			compatible = "qcom,sm8350-gpi-dma", "qcom,sm6350-gpi-dma";
- 			reg = <0 0x00800000 0 0x60000>;
- 			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 589 IRQ_TYPE_LEVEL_HIGH>,
-@@ -904,7 +904,7 @@ spi19: spi@894000 {
- 		};
+-static int anx7625_i2c_probe(struct i2c_client *client,
+-			     const struct i2c_device_id *id)
++static int anx7625_i2c_probe(struct i2c_client *client)
+ {
+ 	struct anx7625_data *platform;
+ 	struct anx7625_platform_data *pdata;
+@@ -2756,7 +2755,7 @@ static struct i2c_driver anx7625_driver = {
+ 		.of_match_table = anx_match_table,
+ 		.pm = &anx7625_pm_ops,
+ 	},
+-	.probe = anx7625_i2c_probe,
++	.probe_new = anx7625_i2c_probe,
+ 	.remove = anx7625_i2c_remove,
  
- 		gpi_dma0: dma-controller@900000 {
--			compatible = "qcom,sm8350-gpi-dma";
-+			compatible = "qcom,sm8350-gpi-dma", "qcom,sm6350-gpi-dma";
- 			reg = <0 0x09800000 0 0x60000>;
- 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1207,7 +1207,7 @@ spi7: spi@99c000 {
- 		};
- 
- 		gpi_dma1: dma-controller@a00000 {
--			compatible = "qcom,sm8350-gpi-dma";
-+			compatible = "qcom,sm8350-gpi-dma", "qcom,sm6350-gpi-dma";
- 			reg = <0 0x00a00000 0 0x60000>;
- 			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
+ 	.id_table = anx7625_id,
 -- 
 2.39.2
 
