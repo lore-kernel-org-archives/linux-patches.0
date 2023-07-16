@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D35E8F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C22C433C8;
-	Sun, 16 Jul 2023 20:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053F28F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:26:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BDFC433C7;
+	Sun, 16 Jul 2023 20:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539204;
-	bh=HWM7TZENMA2w2P9bMWxiyBk2+vAHYmUZrAk4T6vv+vE=;
+	s=korg; t=1689539206;
+	bh=Y5HPuNF436/Hd3+GuB2D25fM4XvVm4AEF5TWKw2OUg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8sG/aEp+YLPbVVkj5yGYdI8HN7rcLVgtFG9bwfFYI2hN9fDmnFA+w3bFgbuHXU8h
-	 n9H+UkvRABRHhEO+fwT+YWmQ2ZxruHhu+Jl1mThYzGeogJsECxvGz+cGjt2scIXh8+
-	 +AzfPdTIlbyTg8UQFE9TsAG9BYLzRkTOoNFwnQ9A=
+	b=n9FfF0odR8iPVQyirqrM/t1NGjMZ197e6P2ChP1TngVLlxSfSq3gryHNHDSt29/Re
+	 6fP4vFpE/en3LC90NCwJhtuNnmNS9ouWvuS6oBnU267ftf91KH3LdSNRH7d0kd58zq
+	 Evq+Q7eS1I4lDdIgQHXfq9NZN9oMYNaSOxMH7D9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xieyongji@bytedance.com,
-	Maxime Coquelin <maxime.coquelin@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Alexander Egorenkov <Alexander.Egorenkov@ibm.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 695/800] vduse: fix NULL pointer dereference
-Date: Sun, 16 Jul 2023 21:49:08 +0200
-Message-ID: <20230716195005.265227799@linuxfoundation.org>
+Subject: [PATCH 6.4 696/800] bpf, btf: Warn but return no error for NULL btf from __register_btf_kfunc_id_set()
+Date: Sun, 16 Jul 2023 21:49:09 +0200
+Message-ID: <20230716195005.288287230@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,92 +38,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxime Coquelin <maxime.coquelin@redhat.com>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit f06cf1e1a503169280467d12d2ec89bf2c30ace7 ]
+[ Upstream commit 3de4d22cc9ac7c9f38e10edcf54f9a8891a9c2aa ]
 
-vduse_vdpa_set_vq_affinity callback can be called
-with NULL value as cpu_mask when deleting the vduse
-device.
+__register_btf_kfunc_id_set() assumes .BTF to be part of the module's .ko
+file if CONFIG_DEBUG_INFO_BTF is enabled. If that's not the case, the
+function prints an error message and return an error. As a result, such
+modules cannot be loaded.
 
-This patch resets virtqueue's IRQ affinity mask value
-to set all CPUs instead of dereferencing NULL cpu_mask.
+However, the section could be stripped out during a build process. It would
+be better to let the modules loaded, because their basic functionalities
+have no problem [0], though the BTF functionalities will not be supported.
+Make the function to lower the level of the message from error to warn, and
+return no error.
 
-[ 4760.952149] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[ 4760.959110] #PF: supervisor read access in kernel mode
-[ 4760.964247] #PF: error_code(0x0000) - not-present page
-[ 4760.969385] PGD 0 P4D 0
-[ 4760.971927] Oops: 0000 [#1] PREEMPT SMP PTI
-[ 4760.976112] CPU: 13 PID: 2346 Comm: vdpa Not tainted 6.4.0-rc6+ #4
-[ 4760.982291] Hardware name: Dell Inc. PowerEdge R640/0W23H8, BIOS 2.8.1 06/26/2020
-[ 4760.989769] RIP: 0010:memcpy_orig+0xc5/0x130
-[ 4760.994049] Code: 16 f8 4c 89 07 4c 89 4f 08 4c 89 54 17 f0 4c 89 5c 17 f8 c3 cc cc cc cc 66 66 2e 0f 1f 84 00 00 00 00 00 66 90 83 fa 08 72 1b <4c> 8b 06 4c 8b 4c 16 f8 4c 89 07 4c 89 4c 17 f8 c3 cc cc cc cc 66
-[ 4761.012793] RSP: 0018:ffffb1d565abb830 EFLAGS: 00010246
-[ 4761.018020] RAX: ffff9f4bf6b27898 RBX: ffff9f4be23969c0 RCX: ffff9f4bcadf6400
-[ 4761.025152] RDX: 0000000000000008 RSI: 0000000000000000 RDI: ffff9f4bf6b27898
-[ 4761.032286] RBP: 0000000000000000 R08: 0000000000000008 R09: 0000000000000000
-[ 4761.039416] R10: 0000000000000000 R11: 0000000000000600 R12: 0000000000000000
-[ 4761.046549] R13: 0000000000000000 R14: 0000000000000080 R15: ffffb1d565abbb10
-[ 4761.053680] FS:  00007f64c2ec2740(0000) GS:ffff9f635f980000(0000) knlGS:0000000000000000
-[ 4761.061765] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 4761.067513] CR2: 0000000000000000 CR3: 0000001875270006 CR4: 00000000007706e0
-[ 4761.074645] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[ 4761.081775] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[ 4761.088909] PKRU: 55555554
-[ 4761.091620] Call Trace:
-[ 4761.094074]  <TASK>
-[ 4761.096180]  ? __die+0x1f/0x70
-[ 4761.099238]  ? page_fault_oops+0x171/0x4f0
-[ 4761.103340]  ? exc_page_fault+0x7b/0x180
-[ 4761.107265]  ? asm_exc_page_fault+0x22/0x30
-[ 4761.111460]  ? memcpy_orig+0xc5/0x130
-[ 4761.115126]  vduse_vdpa_set_vq_affinity+0x3e/0x50 [vduse]
-[ 4761.120533]  virtnet_clean_affinity.part.0+0x3d/0x90 [virtio_net]
-[ 4761.126635]  remove_vq_common+0x1a4/0x250 [virtio_net]
-[ 4761.131781]  virtnet_remove+0x5d/0x70 [virtio_net]
-[ 4761.136580]  virtio_dev_remove+0x3a/0x90
-[ 4761.140509]  device_release_driver_internal+0x19b/0x200
-[ 4761.145742]  bus_remove_device+0xc2/0x130
-[ 4761.149755]  device_del+0x158/0x3e0
-[ 4761.153245]  ? kernfs_find_ns+0x35/0xc0
-[ 4761.157086]  device_unregister+0x13/0x60
-[ 4761.161010]  unregister_virtio_device+0x11/0x20
-[ 4761.165543]  device_release_driver_internal+0x19b/0x200
-[ 4761.170770]  bus_remove_device+0xc2/0x130
-[ 4761.174782]  device_del+0x158/0x3e0
-[ 4761.178276]  ? __pfx_vdpa_name_match+0x10/0x10 [vdpa]
-[ 4761.183336]  device_unregister+0x13/0x60
-[ 4761.187260]  vdpa_nl_cmd_dev_del_set_doit+0x63/0xe0 [vdpa]
+  [0] https://lore.kernel.org/bpf/20220219082037.ow2kbq5brktf4f2u@apollo.legion
 
-Fixes: 28f6288eb63d ("vduse: Support set_vq_affinity callback")
-Cc: xieyongji@bytedance.com
-Signed-off-by: Maxime Coquelin <maxime.coquelin@redhat.com>
-Message-Id: <20230622204851.318125-1-maxime.coquelin@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Fixes: c446fdacb10d ("bpf: fix register_btf_kfunc_id_set for !CONFIG_DEBUG_INFO_BTF")
+Reported-by: Alexander Egorenkov <Alexander.Egorenkov@ibm.com>
+Suggested-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/87y228q66f.fsf@oc8242746057.ibm.com
+Link: https://lore.kernel.org/bpf/20220219082037.ow2kbq5brktf4f2u@apollo.legion
+Link: https://lore.kernel.org/bpf/20230701171447.56464-1-sj@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/bpf/btf.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index 5f5c21674fdce..0d84e6a9c3cca 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -726,7 +726,11 @@ static int vduse_vdpa_set_vq_affinity(struct vdpa_device *vdpa, u16 idx,
- {
- 	struct vduse_dev *dev = vdpa_to_vduse(vdpa);
- 
--	cpumask_copy(&dev->vqs[idx]->irq_affinity, cpu_mask);
-+	if (cpu_mask)
-+		cpumask_copy(&dev->vqs[idx]->irq_affinity, cpu_mask);
-+	else
-+		cpumask_setall(&dev->vqs[idx]->irq_affinity);
-+
- 	return 0;
- }
- 
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 72b32b7cd9cd9..25ca17a8e1964 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -7848,10 +7848,8 @@ static int __register_btf_kfunc_id_set(enum btf_kfunc_hook hook,
+ 			pr_err("missing vmlinux BTF, cannot register kfuncs\n");
+ 			return -ENOENT;
+ 		}
+-		if (kset->owner && IS_ENABLED(CONFIG_DEBUG_INFO_BTF_MODULES)) {
+-			pr_err("missing module BTF, cannot register kfuncs\n");
+-			return -ENOENT;
+-		}
++		if (kset->owner && IS_ENABLED(CONFIG_DEBUG_INFO_BTF_MODULES))
++			pr_warn("missing module BTF, cannot register kfuncs\n");
+ 		return 0;
+ 	}
+ 	if (IS_ERR(btf))
 -- 
 2.39.2
 
