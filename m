@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A9D8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:01:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC2D8C433C8;
-	Sun, 16 Jul 2023 20:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4572A8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:01:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA813C433C7;
+	Sun, 16 Jul 2023 20:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537664;
-	bh=nFEGZ5+2DFaaUlC1wPd3QXgv9jAuD//KLcWqW9MwZZY=;
+	s=korg; t=1689537667;
+	bh=72Wdag3HtINeUPKkZpzVSkCAH0zOhcVQ60Ga7Sn8XSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BqqnGe5OIr8+WB6kDWjyAhnX2tH+wfkZ0ZK19XXb5tsVhJX0cqnb+Phf1GeKWpQOH
-	 r9zY+iPk+lqk3+QV3QLpXgjgIuzK+VCZd/5CKNPAFOokFkRdFumvvd2zEYu/JQA6/k
-	 nDLspiKVumwu5DOohXhV1HWIS1dLYuQp1CkN9GcI=
+	b=LUdb3a6ynYuUKbxV3AAktLnnO+rZqHouStFGpJCTlCEtZrzFouNYKxP8iVMrS3Aq1
+	 SC0sa4+7WW6As0ZchHnEBTukqG3We7ArJiyR33XxQLWIU6BYWPMKCotv7SYCwvHLen
+	 r3XhCOYNympTtUm3NJbb85C9AV9YuRTI7vjSeIyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
 	Douglas Anderson <dianders@chromium.org>,
+	Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 149/800] soc: qcom: geni-se: Add interfaces geni_se_tx_init_dma() and geni_se_rx_init_dma()
-Date: Sun, 16 Jul 2023 21:40:02 +0200
-Message-ID: <20230716194952.555732298@linuxfoundation.org>
+Subject: [PATCH 6.4 150/800] spi: spi-geni-qcom: Do not do DMA map/unmap inside driver, use framework instead
+Date: Sun, 16 Jul 2023 21:40:03 +0200
+Message-ID: <20230716194952.578266316@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -39,154 +39,224 @@ Content-Transfer-Encoding: 8bit
 
 From: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 
-[ Upstream commit 6d6e57594957ee9131bc3802dfc8657ca6f78fee ]
+[ Upstream commit 3a76c7ca9e77269dd10cf21465a055274cfa40c6 ]
 
-The geni_se_xx_dma_prep() interfaces necessarily do DMA mapping before
-initiating DMA transfers. This is not suitable for spi where framework
-is expected to handle map/unmap.
+The spi geni driver in SE DMA mode, unlike GSI DMA, is not making use of
+DMA mapping functionality available in the framework.
+The driver does mapping internally which makes dma buffer fields available
+in spi_transfer struct superfluous while requiring additional members in
+spi_geni_master struct.
 
-Expose new interfaces geni_se_xx_init_dma() which do only DMA transfer.
+Conform to the design by having framework handle map/unmap and do only
+DMA transfer in the driver; this also simplifies code a bit.
 
+Fixes: e5f0dfa78ac7 ("spi: spi-geni-qcom: Add support for SE DMA mode")
+Suggested-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/1684325894-30252-2-git-send-email-quic_vnivarth@quicinc.com
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/1684325894-30252-3-git-send-email-quic_vnivarth@quicinc.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 3a76c7ca9e77 ("spi: spi-geni-qcom: Do not do DMA map/unmap inside driver, use framework instead")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/qcom-geni-se.c  | 67 +++++++++++++++++++++++---------
- include/linux/soc/qcom/geni-se.h |  4 ++
- 2 files changed, 53 insertions(+), 18 deletions(-)
+ drivers/spi/spi-geni-qcom.c | 103 +++++++++++++++++-------------------
+ 1 file changed, 50 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index 795a2e1d59b3a..dd50a255fa6cb 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -682,6 +682,30 @@ EXPORT_SYMBOL(geni_se_clk_freq_match);
- #define GENI_SE_DMA_EOT_EN BIT(1)
- #define GENI_SE_DMA_AHB_ERR_EN BIT(2)
- #define GENI_SE_DMA_EOT_BUF BIT(0)
-+
-+/**
-+ * geni_se_tx_init_dma() - Initiate TX DMA transfer on the serial engine
-+ * @se:			Pointer to the concerned serial engine.
-+ * @iova:		Mapped DMA address.
-+ * @len:		Length of the TX buffer.
-+ *
-+ * This function is used to initiate DMA TX transfer.
-+ */
-+void geni_se_tx_init_dma(struct geni_se *se, dma_addr_t iova, size_t len)
-+{
-+	u32 val;
-+
-+	val = GENI_SE_DMA_DONE_EN;
-+	val |= GENI_SE_DMA_EOT_EN;
-+	val |= GENI_SE_DMA_AHB_ERR_EN;
-+	writel_relaxed(val, se->base + SE_DMA_TX_IRQ_EN_SET);
-+	writel_relaxed(lower_32_bits(iova), se->base + SE_DMA_TX_PTR_L);
-+	writel_relaxed(upper_32_bits(iova), se->base + SE_DMA_TX_PTR_H);
-+	writel_relaxed(GENI_SE_DMA_EOT_BUF, se->base + SE_DMA_TX_ATTR);
-+	writel(len, se->base + SE_DMA_TX_LEN);
-+}
-+EXPORT_SYMBOL(geni_se_tx_init_dma);
-+
- /**
-  * geni_se_tx_dma_prep() - Prepare the serial engine for TX DMA transfer
-  * @se:			Pointer to the concerned serial engine.
-@@ -697,7 +721,6 @@ int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
- 			dma_addr_t *iova)
- {
- 	struct geni_wrapper *wrapper = se->wrapper;
--	u32 val;
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 08672a961fbbe..26ce959d98dfa 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -97,8 +97,6 @@ struct spi_geni_master {
+ 	struct dma_chan *tx;
+ 	struct dma_chan *rx;
+ 	int cur_xfer_mode;
+-	dma_addr_t tx_se_dma;
+-	dma_addr_t rx_se_dma;
+ };
  
- 	if (!wrapper)
- 		return -EINVAL;
-@@ -706,17 +729,34 @@ int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
- 	if (dma_mapping_error(wrapper->dev, *iova))
- 		return -EIO;
- 
-+	geni_se_tx_init_dma(se, *iova, len);
-+	return 0;
-+}
-+EXPORT_SYMBOL(geni_se_tx_dma_prep);
-+
-+/**
-+ * geni_se_rx_init_dma() - Initiate RX DMA transfer on the serial engine
-+ * @se:			Pointer to the concerned serial engine.
-+ * @iova:		Mapped DMA address.
-+ * @len:		Length of the RX buffer.
-+ *
-+ * This function is used to initiate DMA RX transfer.
-+ */
-+void geni_se_rx_init_dma(struct geni_se *se, dma_addr_t iova, size_t len)
-+{
-+	u32 val;
-+
- 	val = GENI_SE_DMA_DONE_EN;
- 	val |= GENI_SE_DMA_EOT_EN;
- 	val |= GENI_SE_DMA_AHB_ERR_EN;
--	writel_relaxed(val, se->base + SE_DMA_TX_IRQ_EN_SET);
--	writel_relaxed(lower_32_bits(*iova), se->base + SE_DMA_TX_PTR_L);
--	writel_relaxed(upper_32_bits(*iova), se->base + SE_DMA_TX_PTR_H);
--	writel_relaxed(GENI_SE_DMA_EOT_BUF, se->base + SE_DMA_TX_ATTR);
--	writel(len, se->base + SE_DMA_TX_LEN);
--	return 0;
-+	writel_relaxed(val, se->base + SE_DMA_RX_IRQ_EN_SET);
-+	writel_relaxed(lower_32_bits(iova), se->base + SE_DMA_RX_PTR_L);
-+	writel_relaxed(upper_32_bits(iova), se->base + SE_DMA_RX_PTR_H);
-+	/* RX does not have EOT buffer type bit. So just reset RX_ATTR */
-+	writel_relaxed(0, se->base + SE_DMA_RX_ATTR);
-+	writel(len, se->base + SE_DMA_RX_LEN);
+ static int get_spi_clk_cfg(unsigned int speed_hz,
+@@ -174,7 +172,7 @@ static void handle_se_timeout(struct spi_master *spi,
+ unmap_if_dma:
+ 	if (mas->cur_xfer_mode == GENI_SE_DMA) {
+ 		if (xfer) {
+-			if (xfer->tx_buf && mas->tx_se_dma) {
++			if (xfer->tx_buf) {
+ 				spin_lock_irq(&mas->lock);
+ 				reinit_completion(&mas->tx_reset_done);
+ 				writel(1, se->base + SE_DMA_TX_FSM_RST);
+@@ -182,9 +180,8 @@ static void handle_se_timeout(struct spi_master *spi,
+ 				time_left = wait_for_completion_timeout(&mas->tx_reset_done, HZ);
+ 				if (!time_left)
+ 					dev_err(mas->dev, "DMA TX RESET failed\n");
+-				geni_se_tx_dma_unprep(se, mas->tx_se_dma, xfer->len);
+ 			}
+-			if (xfer->rx_buf && mas->rx_se_dma) {
++			if (xfer->rx_buf) {
+ 				spin_lock_irq(&mas->lock);
+ 				reinit_completion(&mas->rx_reset_done);
+ 				writel(1, se->base + SE_DMA_RX_FSM_RST);
+@@ -192,7 +189,6 @@ static void handle_se_timeout(struct spi_master *spi,
+ 				time_left = wait_for_completion_timeout(&mas->rx_reset_done, HZ);
+ 				if (!time_left)
+ 					dev_err(mas->dev, "DMA RX RESET failed\n");
+-				geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
+ 			}
+ 		} else {
+ 			/*
+@@ -523,17 +519,36 @@ static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas
+ 	return 1;
  }
--EXPORT_SYMBOL(geni_se_tx_dma_prep);
-+EXPORT_SYMBOL(geni_se_rx_init_dma);
  
- /**
-  * geni_se_rx_dma_prep() - Prepare the serial engine for RX DMA transfer
-@@ -733,7 +773,6 @@ int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
- 			dma_addr_t *iova)
++static u32 get_xfer_len_in_words(struct spi_transfer *xfer,
++				struct spi_geni_master *mas)
++{
++	u32 len;
++
++	if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
++		len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
++	else
++		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
++	len &= TRANS_LEN_MSK;
++
++	return len;
++}
++
+ static bool geni_can_dma(struct spi_controller *ctlr,
+ 			 struct spi_device *slv, struct spi_transfer *xfer)
  {
- 	struct geni_wrapper *wrapper = se->wrapper;
--	u32 val;
+ 	struct spi_geni_master *mas = spi_master_get_devdata(slv->master);
++	u32 len, fifo_size;
  
- 	if (!wrapper)
- 		return -EINVAL;
-@@ -742,15 +781,7 @@ int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
- 	if (dma_mapping_error(wrapper->dev, *iova))
- 		return -EIO;
- 
--	val = GENI_SE_DMA_DONE_EN;
--	val |= GENI_SE_DMA_EOT_EN;
--	val |= GENI_SE_DMA_AHB_ERR_EN;
--	writel_relaxed(val, se->base + SE_DMA_RX_IRQ_EN_SET);
--	writel_relaxed(lower_32_bits(*iova), se->base + SE_DMA_RX_PTR_L);
--	writel_relaxed(upper_32_bits(*iova), se->base + SE_DMA_RX_PTR_H);
--	/* RX does not have EOT buffer type bit. So just reset RX_ATTR */
--	writel_relaxed(0, se->base + SE_DMA_RX_ATTR);
--	writel(len, se->base + SE_DMA_RX_LEN);
-+	geni_se_rx_init_dma(se, *iova, len);
- 	return 0;
+-	/*
+-	 * Return true if transfer needs to be mapped prior to
+-	 * calling transfer_one which is the case only for GPI_DMA.
+-	 * For SE_DMA mode, map/unmap is done in geni_se_*x_dma_prep.
+-	 */
+-	return mas->cur_xfer_mode == GENI_GPI_DMA;
++	if (mas->cur_xfer_mode == GENI_GPI_DMA)
++		return true;
++
++	len = get_xfer_len_in_words(xfer, mas);
++	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
++
++	if (len > fifo_size)
++		return true;
++	else
++		return false;
  }
- EXPORT_SYMBOL(geni_se_rx_dma_prep);
-diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
-index c55a0bc8cb0e9..821a19135bb66 100644
---- a/include/linux/soc/qcom/geni-se.h
-+++ b/include/linux/soc/qcom/geni-se.h
-@@ -490,9 +490,13 @@ int geni_se_clk_freq_match(struct geni_se *se, unsigned long req_freq,
- 			   unsigned int *index, unsigned long *res_freq,
- 			   bool exact);
  
-+void geni_se_tx_init_dma(struct geni_se *se, dma_addr_t iova, size_t len);
-+
- int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
- 			dma_addr_t *iova);
+ static int spi_geni_prepare_message(struct spi_master *spi,
+@@ -774,7 +789,7 @@ static int setup_se_xfer(struct spi_transfer *xfer,
+ 				u16 mode, struct spi_master *spi)
+ {
+ 	u32 m_cmd = 0;
+-	u32 len, fifo_size;
++	u32 len;
+ 	struct geni_se *se = &mas->se;
+ 	int ret;
  
-+void geni_se_rx_init_dma(struct geni_se *se, dma_addr_t iova, size_t len);
-+
- int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
- 			dma_addr_t *iova);
+@@ -806,11 +821,7 @@ static int setup_se_xfer(struct spi_transfer *xfer,
+ 	mas->tx_rem_bytes = 0;
+ 	mas->rx_rem_bytes = 0;
  
+-	if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
+-		len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
+-	else
+-		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
+-	len &= TRANS_LEN_MSK;
++	len = get_xfer_len_in_words(xfer, mas);
+ 
+ 	mas->cur_xfer = xfer;
+ 	if (xfer->tx_buf) {
+@@ -825,9 +836,20 @@ static int setup_se_xfer(struct spi_transfer *xfer,
+ 		mas->rx_rem_bytes = xfer->len;
+ 	}
+ 
+-	/* Select transfer mode based on transfer length */
+-	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
+-	mas->cur_xfer_mode = (len <= fifo_size) ? GENI_SE_FIFO : GENI_SE_DMA;
++	/*
++	 * Select DMA mode if sgt are present; and with only 1 entry
++	 * This is not a serious limitation because the xfer buffers are
++	 * expected to fit into in 1 entry almost always, and if any
++	 * doesn't for any reason we fall back to FIFO mode anyway
++	 */
++	if (!xfer->tx_sg.nents && !xfer->rx_sg.nents)
++		mas->cur_xfer_mode = GENI_SE_FIFO;
++	else if (xfer->tx_sg.nents > 1 || xfer->rx_sg.nents > 1) {
++		dev_warn_once(mas->dev, "Doing FIFO, cannot handle tx_nents-%d, rx_nents-%d\n",
++			xfer->tx_sg.nents, xfer->rx_sg.nents);
++		mas->cur_xfer_mode = GENI_SE_FIFO;
++	} else
++		mas->cur_xfer_mode = GENI_SE_DMA;
+ 	geni_se_select_mode(se, mas->cur_xfer_mode);
+ 
+ 	/*
+@@ -838,35 +860,17 @@ static int setup_se_xfer(struct spi_transfer *xfer,
+ 	geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
+ 
+ 	if (mas->cur_xfer_mode == GENI_SE_DMA) {
+-		if (m_cmd & SPI_RX_ONLY) {
+-			ret =  geni_se_rx_dma_prep(se, xfer->rx_buf,
+-				xfer->len, &mas->rx_se_dma);
+-			if (ret) {
+-				dev_err(mas->dev, "Failed to setup Rx dma %d\n", ret);
+-				mas->rx_se_dma = 0;
+-				goto unlock_and_return;
+-			}
+-		}
+-		if (m_cmd & SPI_TX_ONLY) {
+-			ret =  geni_se_tx_dma_prep(se, (void *)xfer->tx_buf,
+-				xfer->len, &mas->tx_se_dma);
+-			if (ret) {
+-				dev_err(mas->dev, "Failed to setup Tx dma %d\n", ret);
+-				mas->tx_se_dma = 0;
+-				if (m_cmd & SPI_RX_ONLY) {
+-					/* Unmap rx buffer if duplex transfer */
+-					geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
+-					mas->rx_se_dma = 0;
+-				}
+-				goto unlock_and_return;
+-			}
+-		}
++		if (m_cmd & SPI_RX_ONLY)
++			geni_se_rx_init_dma(se, sg_dma_address(xfer->rx_sg.sgl),
++				sg_dma_len(xfer->rx_sg.sgl));
++		if (m_cmd & SPI_TX_ONLY)
++			geni_se_tx_init_dma(se, sg_dma_address(xfer->tx_sg.sgl),
++				sg_dma_len(xfer->tx_sg.sgl));
+ 	} else if (m_cmd & SPI_TX_ONLY) {
+ 		if (geni_spi_handle_tx(mas))
+ 			writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
+ 	}
+ 
+-unlock_and_return:
+ 	spin_unlock_irq(&mas->lock);
+ 	return ret;
+ }
+@@ -967,14 +971,6 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+ 		if (dma_rx_status & RX_RESET_DONE)
+ 			complete(&mas->rx_reset_done);
+ 		if (!mas->tx_rem_bytes && !mas->rx_rem_bytes && xfer) {
+-			if (xfer->tx_buf && mas->tx_se_dma) {
+-				geni_se_tx_dma_unprep(se, mas->tx_se_dma, xfer->len);
+-				mas->tx_se_dma = 0;
+-			}
+-			if (xfer->rx_buf && mas->rx_se_dma) {
+-				geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
+-				mas->rx_se_dma = 0;
+-			}
+ 			spi_finalize_current_transfer(spi);
+ 			mas->cur_xfer = NULL;
+ 		}
+@@ -1059,6 +1055,7 @@ static int spi_geni_probe(struct platform_device *pdev)
+ 	spi->bits_per_word_mask = SPI_BPW_RANGE_MASK(4, 32);
+ 	spi->num_chipselect = 4;
+ 	spi->max_speed_hz = 50000000;
++	spi->max_dma_len = 0xffff0; /* 24 bits for tx/rx dma length */
+ 	spi->prepare_message = spi_geni_prepare_message;
+ 	spi->transfer_one = spi_geni_transfer_one;
+ 	spi->can_dma = geni_can_dma;
 -- 
 2.39.2
 
