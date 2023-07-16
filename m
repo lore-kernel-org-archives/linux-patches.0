@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F032C8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70945C433C7;
-	Sun, 16 Jul 2023 19:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF86A8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:57:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E46C433C8;
+	Sun, 16 Jul 2023 19:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537439;
-	bh=aNZ79TRuYE9AabEZpTW3AOU83Gak0BtyEQwaFS8AAzg=;
+	s=korg; t=1689537442;
+	bh=NqJG7Fkwpga/NjLu29Ijm12s9y3G4oW6eHMeW8u+gZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jki4sSImLzDALwOyVclPmQteAhwgjF2HuAI9S3nuUH4zalI1F0K8HgNX8ZH4MswU+
-	 CaIJSqQXEczXdawntN7jKurjqAK+QV5w7Qk7SD4SkqtbJAfGJLbf+8iFH59YsGjtl0
-	 GD/Af0ZtqzQ/Ynkdutve37BjjkuVnytN+3l2dggw=
+	b=H2HhC+VAeVzQVxgeaEsFkR+Kosp25Us4BjjWNQVfkZLpBa1gKgdatD8V+3i8uhVve
+	 DxLWO4HwyOd/lH4/l82U4iw74bnWFoxI3lxLTi37vP9kNSgeN2hoTpH0PUdPq4RDmF
+	 IiYHP1RiVbYyLDTQu3kmfZff7OxmCBvPvvuBvylU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+00a3779539a23cbee38c@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Paul Moore <paul@paul-moore.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 097/800] reiserfs: Initialize sec->length in reiserfs_security_init().
-Date: Sun, 16 Jul 2023 21:39:10 +0200
-Message-ID: <20230716194951.366859558@linuxfoundation.org>
+Subject: [PATCH 6.4 098/800] locking/atomic: arm: fix sync ops
+Date: Sun, 16 Jul 2023 21:39:11 +0200
+Message-ID: <20230716194951.390140693@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,38 +36,189 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit d031f4e8b493df299123fbb4ec13db870584ed28 ]
+[ Upstream commit dda5f312bb09e56e7a1c3e3851f2000eb2e9c879 ]
 
-syzbot is reporting that sec->length is not initialized.
+The sync_*() ops on arch/arm are defined in terms of the regular bitops
+with no special handling. This is not correct, as UP kernels elide
+barriers for the fully-ordered operations, and so the required ordering
+is lost when such UP kernels are run under a hypervsior on an SMP
+system.
 
-Since security_inode_init_security() returns 0 when initxattrs is provided
-but call_int_hook(inode_init_security) returned -EOPNOTSUPP, control will
-reach to "if (sec->length && ...) {" without initializing sec->length.
+Fix this by defining sync ops with the required barriers.
 
-Reported-by: syzbot <syzbot+00a3779539a23cbee38c@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=00a3779539a23cbee38c
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Fixes: 52ca4b6435a4 ("reiserfs: Switch to security_inode_init_security()")
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Note: On 32-bit arm, the sync_*() ops are currently only used by Xen,
+which requires ARMv7, but the semantics can be implemented for ARMv6+.
+
+Fixes: e54d2f61528165bb ("xen/arm: sync_bitops")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230605070124.3741859-2-mark.rutland@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/reiserfs/xattr_security.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/include/asm/assembler.h   | 17 +++++++++++++++++
+ arch/arm/include/asm/sync_bitops.h | 29 +++++++++++++++++++++++++----
+ arch/arm/lib/bitops.h              | 14 +++++++++++---
+ arch/arm/lib/testchangebit.S       |  4 ++++
+ arch/arm/lib/testclearbit.S        |  4 ++++
+ arch/arm/lib/testsetbit.S          |  4 ++++
+ 6 files changed, 65 insertions(+), 7 deletions(-)
 
-diff --git a/fs/reiserfs/xattr_security.c b/fs/reiserfs/xattr_security.c
-index 6e0a099dd7886..078dd8cc312fc 100644
---- a/fs/reiserfs/xattr_security.c
-+++ b/fs/reiserfs/xattr_security.c
-@@ -67,6 +67,7 @@ int reiserfs_security_init(struct inode *dir, struct inode *inode,
+diff --git a/arch/arm/include/asm/assembler.h b/arch/arm/include/asm/assembler.h
+index 505a306e0271a..aebe2c8f6a686 100644
+--- a/arch/arm/include/asm/assembler.h
++++ b/arch/arm/include/asm/assembler.h
+@@ -394,6 +394,23 @@ ALT_UP_B(.L0_\@)
+ #endif
+ 	.endm
  
- 	sec->name = NULL;
- 	sec->value = NULL;
-+	sec->length = 0;
++/*
++ * Raw SMP data memory barrier
++ */
++	.macro	__smp_dmb mode
++#if __LINUX_ARM_ARCH__ >= 7
++	.ifeqs "\mode","arm"
++	dmb	ish
++	.else
++	W(dmb)	ish
++	.endif
++#elif __LINUX_ARM_ARCH__ == 6
++	mcr	p15, 0, r0, c7, c10, 5	@ dmb
++#else
++	.error "Incompatible SMP platform"
++#endif
++	.endm
++
+ #if defined(CONFIG_CPU_V7M)
+ 	/*
+ 	 * setmode is used to assert to be in svc mode during boot. For v7-M
+diff --git a/arch/arm/include/asm/sync_bitops.h b/arch/arm/include/asm/sync_bitops.h
+index 6f5d627c44a3c..f46b3c570f92e 100644
+--- a/arch/arm/include/asm/sync_bitops.h
++++ b/arch/arm/include/asm/sync_bitops.h
+@@ -14,14 +14,35 @@
+  * ops which are SMP safe even on a UP kernel.
+  */
  
- 	/* Don't add selinux attributes on xattrs - they'll never get used */
- 	if (IS_PRIVATE(dir))
++/*
++ * Unordered
++ */
++
+ #define sync_set_bit(nr, p)		_set_bit(nr, p)
+ #define sync_clear_bit(nr, p)		_clear_bit(nr, p)
+ #define sync_change_bit(nr, p)		_change_bit(nr, p)
+-#define sync_test_and_set_bit(nr, p)	_test_and_set_bit(nr, p)
+-#define sync_test_and_clear_bit(nr, p)	_test_and_clear_bit(nr, p)
+-#define sync_test_and_change_bit(nr, p)	_test_and_change_bit(nr, p)
+ #define sync_test_bit(nr, addr)		test_bit(nr, addr)
+-#define arch_sync_cmpxchg		arch_cmpxchg
+ 
++/*
++ * Fully ordered
++ */
++
++int _sync_test_and_set_bit(int nr, volatile unsigned long * p);
++#define sync_test_and_set_bit(nr, p)	_sync_test_and_set_bit(nr, p)
++
++int _sync_test_and_clear_bit(int nr, volatile unsigned long * p);
++#define sync_test_and_clear_bit(nr, p)	_sync_test_and_clear_bit(nr, p)
++
++int _sync_test_and_change_bit(int nr, volatile unsigned long * p);
++#define sync_test_and_change_bit(nr, p)	_sync_test_and_change_bit(nr, p)
++
++#define arch_sync_cmpxchg(ptr, old, new)				\
++({									\
++	__typeof__(*(ptr)) __ret;					\
++	__smp_mb__before_atomic();					\
++	__ret = arch_cmpxchg_relaxed((ptr), (old), (new));		\
++	__smp_mb__after_atomic();					\
++	__ret;								\
++})
+ 
+ #endif
+diff --git a/arch/arm/lib/bitops.h b/arch/arm/lib/bitops.h
+index 95bd359912889..f069d1b2318e6 100644
+--- a/arch/arm/lib/bitops.h
++++ b/arch/arm/lib/bitops.h
+@@ -28,7 +28,7 @@ UNWIND(	.fnend		)
+ ENDPROC(\name		)
+ 	.endm
+ 
+-	.macro	testop, name, instr, store
++	.macro	__testop, name, instr, store, barrier
+ ENTRY(	\name		)
+ UNWIND(	.fnstart	)
+ 	ands	ip, r1, #3
+@@ -38,7 +38,7 @@ UNWIND(	.fnstart	)
+ 	mov	r0, r0, lsr #5
+ 	add	r1, r1, r0, lsl #2	@ Get word offset
+ 	mov	r3, r2, lsl r3		@ create mask
+-	smp_dmb
++	\barrier
+ #if __LINUX_ARM_ARCH__ >= 7 && defined(CONFIG_SMP)
+ 	.arch_extension	mp
+ 	ALT_SMP(W(pldw)	[r1])
+@@ -50,13 +50,21 @@ UNWIND(	.fnstart	)
+ 	strex	ip, r2, [r1]
+ 	cmp	ip, #0
+ 	bne	1b
+-	smp_dmb
++	\barrier
+ 	cmp	r0, #0
+ 	movne	r0, #1
+ 2:	bx	lr
+ UNWIND(	.fnend		)
+ ENDPROC(\name		)
+ 	.endm
++
++	.macro	testop, name, instr, store
++	__testop \name, \instr, \store, smp_dmb
++	.endm
++
++	.macro	sync_testop, name, instr, store
++	__testop \name, \instr, \store, __smp_dmb
++	.endm
+ #else
+ 	.macro	bitop, name, instr
+ ENTRY(	\name		)
+diff --git a/arch/arm/lib/testchangebit.S b/arch/arm/lib/testchangebit.S
+index 4ebecc67e6e04..f13fe9bc2399a 100644
+--- a/arch/arm/lib/testchangebit.S
++++ b/arch/arm/lib/testchangebit.S
+@@ -10,3 +10,7 @@
+                 .text
+ 
+ testop	_test_and_change_bit, eor, str
++
++#if __LINUX_ARM_ARCH__ >= 6
++sync_testop	_sync_test_and_change_bit, eor, str
++#endif
+diff --git a/arch/arm/lib/testclearbit.S b/arch/arm/lib/testclearbit.S
+index 009afa0f5b4a7..4d2c5ca620ebf 100644
+--- a/arch/arm/lib/testclearbit.S
++++ b/arch/arm/lib/testclearbit.S
+@@ -10,3 +10,7 @@
+                 .text
+ 
+ testop	_test_and_clear_bit, bicne, strne
++
++#if __LINUX_ARM_ARCH__ >= 6
++sync_testop	_sync_test_and_clear_bit, bicne, strne
++#endif
+diff --git a/arch/arm/lib/testsetbit.S b/arch/arm/lib/testsetbit.S
+index f3192e55acc87..649dbab65d8d0 100644
+--- a/arch/arm/lib/testsetbit.S
++++ b/arch/arm/lib/testsetbit.S
+@@ -10,3 +10,7 @@
+                 .text
+ 
+ testop	_test_and_set_bit, orreq, streq
++
++#if __LINUX_ARM_ARCH__ >= 6
++sync_testop	_sync_test_and_set_bit, orreq, streq
++#endif
 -- 
 2.39.2
 
