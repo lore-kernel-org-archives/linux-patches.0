@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466F18F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:37:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD148C433C8;
-	Sun, 16 Jul 2023 20:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A41C8F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:37:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A56C433C8;
+	Sun, 16 Jul 2023 20:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539863;
-	bh=eTh/RmIXxqxecOc/U8gT3bV+TVcVpoSdDbNBLl4b7xc=;
+	s=korg; t=1689539865;
+	bh=ylzs9bovlwddSU1dIP4bGc3d8m0t7NEgvWJbKtvEyE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ex5TmGYfcmVfJUE+9uxpk0IbBFox7mzEjrQJl6eZyZRP/8ZZloZPY1r4+YFgO64I1
-	 C71U7Q+u7CyqXlHD+2vpKrAr6uIyoKCE87xZGjvZd/BqIVblyrP2IfczlOfUg80QhN
-	 mWkKzbWDoSQMDWnEchTex2z0Nefb047N1vs61WFs=
+	b=s29FU9+1oxOWsXKIAiRWJNrSP3XOVqmQoqrBW+FBbUvcnox0Bp2HYJnONP4NQS364
+	 6EHW2WadWhhbhsNGQKDuGYmW17oeLJLmS/AJ/JzWpHwMWvjgKLjij/K+X0p7Xb/cE+
+	 BaY/Y+WwNeoI2RWBO7jJ43ozQ0x71RvBCVNPI5LE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans-Frieder Vogt <hfdevel@gmx.net>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 158/591] ARM: dts: meson8b: correct uart_B and uart_C clock references
-Date: Sun, 16 Jul 2023 21:44:57 +0200
-Message-ID: <20230716194927.953857209@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	Qun-wei Lin <Qun-wei.Lin@mediatek.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Steven Price <steven.price@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 159/591] mm: call arch_swap_restore() from do_swap_page()
+Date: Sun, 16 Jul 2023 21:44:58 +0200
+Message-ID: <20230716194927.979530602@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,47 +39,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: hfdevel@gmx.net <hfdevel@gmx.net>
+From: Peter Collingbourne <pcc@google.com>
 
-[ Upstream commit d542ce8d4769cdef6a7bc3437e59cfed9c68f0e4 ]
+commit 6dca4ac6fc91fd41ea4d6c4511838d37f4e0eab2 upstream.
 
-With the current device tree for meson8b, uarts B (e.g. available on pins
-8/10 on Odroid-C1) and C (pins 3/5 on Odroid-C1) do not work, because they
-are relying on incorrect clocks. Change the references of pclk to the
-correct CLKID, to allow use of the two uarts.
+Commit c145e0b47c77 ("mm: streamline COW logic in do_swap_page()") moved
+the call to swap_free() before the call to set_pte_at(), which meant that
+the MTE tags could end up being freed before set_pte_at() had a chance to
+restore them.  Fix it by adding a call to the arch_swap_restore() hook
+before the call to swap_free().
 
-Fixes: 3375aa77135f ("ARM: dts: meson8b: Fix the UART device-tree schema validation")
-Signed-off-by: Hans-Frieder Vogt <hfdevel@gmx.net>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/trinity-bf20bcb9-790b-4ab9-99e3-0831ef8257f4-1680878185420@3c-app-gmx-bap55
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230523004312.1807357-2-pcc@google.com
+Link: https://linux-review.googlesource.com/id/I6470efa669e8bd2f841049b8c61020c510678965
+Fixes: c145e0b47c77 ("mm: streamline COW logic in do_swap_page()")
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Reported-by: Qun-wei Lin <Qun-wei.Lin@mediatek.com>
+Closes: https://lore.kernel.org/all/5050805753ac469e8d727c797c2218a9d780d434.camel@mediatek.com/
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: "Huang, Ying" <ying.huang@intel.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: <stable@vger.kernel.org>	[6.1+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/meson8b.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/memory.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm/boot/dts/meson8b.dtsi b/arch/arm/boot/dts/meson8b.dtsi
-index cf9c04a61ba3c..d3e0f085904db 100644
---- a/arch/arm/boot/dts/meson8b.dtsi
-+++ b/arch/arm/boot/dts/meson8b.dtsi
-@@ -737,13 +737,13 @@ &uart_A {
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3981,6 +3981,13 @@ vm_fault_t do_swap_page(struct vm_fault
+ 	}
  
- &uart_B {
- 	compatible = "amlogic,meson8b-uart";
--	clocks = <&xtal>, <&clkc CLKID_UART0>, <&clkc CLKID_CLK81>;
-+	clocks = <&xtal>, <&clkc CLKID_UART1>, <&clkc CLKID_CLK81>;
- 	clock-names = "xtal", "pclk", "baud";
- };
- 
- &uart_C {
- 	compatible = "amlogic,meson8b-uart";
--	clocks = <&xtal>, <&clkc CLKID_UART0>, <&clkc CLKID_CLK81>;
-+	clocks = <&xtal>, <&clkc CLKID_UART2>, <&clkc CLKID_CLK81>;
- 	clock-names = "xtal", "pclk", "baud";
- };
- 
--- 
-2.39.2
-
+ 	/*
++	 * Some architectures may have to restore extra metadata to the page
++	 * when reading from swap. This metadata may be indexed by swap entry
++	 * so this must be called before swap_free().
++	 */
++	arch_swap_restore(entry, folio);
++
++	/*
+ 	 * Remove the swap entry and conditionally try to free up the swapcache.
+ 	 * We're already holding a reference on the page but haven't mapped it
+ 	 * yet.
 
 
