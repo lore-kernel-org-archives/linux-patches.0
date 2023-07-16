@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865E58F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD36C433CB;
-	Sun, 16 Jul 2023 20:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6208F75
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:10:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1D6C433C8;
+	Sun, 16 Jul 2023 20:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538200;
-	bh=t/TYWDCOeYX6MMhr1xnokdmnP2tjOveGRxeU3fbIfVM=;
+	s=korg; t=1689538205;
+	bh=xAa1JIoGXStC9d2UBb0oF6qYIBYAVWX/JMz5LBppIls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Svr4/n9iwwUwI7fzt7jCKAHaOvVyMB6EESlEnxHxeErXzRusNpG/AL222STZU78J9
-	 ITOylsEfx1nvp7ys3HjkrNULH8HUmG/nsNrBeftZ7U6QASJYMOzsC8ZMWG6uxN4em0
-	 LYvR2fzYv1/3BmolYEadE/bJZBRNIurTShCo6DPQ=
+	b=BREggxCrSPWs4ASkbQBQ08dh4UyHjQUqOFmVMl5BAuN+IWxjmEOLYop7D9BCKHwuX
+	 EyWEq29cDOZe/qm4b+uIa9oDZZydOLJdRbV+HltyBecjnC25PVysf1do+h6Y8Vq4le
+	 H98yXlphoj7MDzBDaGnarcRvWLB1XyfMpPynztJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 366/800] drm/amd/display: Fix a test dml32_rq_dlg_get_rq_reg()
-Date: Sun, 16 Jul 2023 21:43:39 +0200
-Message-ID: <20230716194957.578933897@linuxfoundation.org>
+Subject: [PATCH 6.4 368/800] soc: mediatek: SVS: Fix MT8192 GPU node name
+Date: Sun, 16 Jul 2023 21:43:41 +0200
+Message-ID: <20230716194957.624062678@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,37 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit bafc31166aa7df5fa26ae0ad8196d1717e6cdea9 ]
+[ Upstream commit 95094495401bdf6a0649d220dfd095e6079b5e39 ]
 
-It is likely p1_min_meta_chunk_bytes was expected here, instead of
-min_meta_chunk_bytes.
+Device tree node names should be generic. The planned device node name
+for the GPU, according to the bindings and posted DT changes, is "gpu",
+not "mali".
 
-Test the correct variable.
+Fix the GPU node name in the SVS driver to follow.
 
-Fixes: dda4fb85e433 ("drm/amd/display: DML changes for DCN32/321")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 0bbb09b2af9d ("soc: mediatek: SVS: add mt8192 SVS GPU driver")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Link: https://lore.kernel.org/r/20230531063532.2240038-1-wenst@chromium.org
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c   | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/mediatek/mtk-svs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-index 395ae8761980f..9ba6cb67655f4 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_rq_dlg_calc_32.c
-@@ -116,7 +116,7 @@ void dml32_rq_dlg_get_rq_reg(display_rq_regs_st *rq_regs,
- 	else
- 		rq_regs->rq_regs_l.min_meta_chunk_size = dml_log2(min_meta_chunk_bytes) - 6 + 1;
+diff --git a/drivers/soc/mediatek/mtk-svs.c b/drivers/soc/mediatek/mtk-svs.c
+index 81585733c8a99..3a2f97cd52720 100644
+--- a/drivers/soc/mediatek/mtk-svs.c
++++ b/drivers/soc/mediatek/mtk-svs.c
+@@ -2061,9 +2061,9 @@ static int svs_mt8192_platform_probe(struct svs_platform *svsp)
+ 		svsb = &svsp->banks[idx];
  
--	if (min_meta_chunk_bytes == 0)
-+	if (p1_min_meta_chunk_bytes == 0)
- 		rq_regs->rq_regs_c.min_meta_chunk_size = 0;
- 	else
- 		rq_regs->rq_regs_c.min_meta_chunk_size = dml_log2(p1_min_meta_chunk_bytes) - 6 + 1;
+ 		if (svsb->type == SVSB_HIGH)
+-			svsb->opp_dev = svs_add_device_link(svsp, "mali");
++			svsb->opp_dev = svs_add_device_link(svsp, "gpu");
+ 		else if (svsb->type == SVSB_LOW)
+-			svsb->opp_dev = svs_get_subsys_device(svsp, "mali");
++			svsb->opp_dev = svs_get_subsys_device(svsp, "gpu");
+ 
+ 		if (IS_ERR(svsb->opp_dev))
+ 			return dev_err_probe(svsp->dev, PTR_ERR(svsb->opp_dev),
 -- 
 2.39.2
 
