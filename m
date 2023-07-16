@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E988F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C80CC433C7;
-	Sun, 16 Jul 2023 20:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D425E8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575B1C433C7;
+	Sun, 16 Jul 2023 20:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538873;
-	bh=kHPX4Ov12ZRg1jPFlP8ipf2JA6+9RgVxmjQfkcDvdl8=;
+	s=korg; t=1689538875;
+	bh=qpaxR4VC4lJxEIuDUdVGtOHl8qxXvZdNl/a4jFajblc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AkQV0XaCv2W2P9wEm9hWDZ3E+mBHRhRHBmHeMJl0j9DURROi4z9c796CLdkERt7Rk
-	 BbcVlBRn53Jn37UW6TDWFerSa1fkC6X9eaO/Dci+6zRYub9XKsFHztteJ7rIVeRWiw
-	 5Vwp+SuzOV2ObfresHNgbhXK2sfaaIqOA/ur2NbU=
+	b=RVs4qkY5nvzUhbo0QvPswLDfZHQcTBPeUatHkWqLKKnesrAUxGLXJ3wQW4/L7Oa3R
+	 5W+Pgx2Ro7SAApXolT9j1IcanUoWt1WHEnE8Cx+LJ+lILPVUtJHw8Dd/3rDyeSTHQX
+	 nC0NJfWzsKEKTI/sqZTyUHw6BFy77fG00P/+t1Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 607/800] media: atomisp: gc0310: Fix double free in gc0310_remove()
-Date: Sun, 16 Jul 2023 21:47:40 +0200
-Message-ID: <20230716195003.206062187@linuxfoundation.org>
+Subject: [PATCH 6.4 608/800] media: atomisp: gmin_platform: fix out_len in gmin_get_config_dsm_var()
+Date: Sun, 16 Jul 2023 21:47:41 +0200
+Message-ID: <20230716195003.229220624@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,40 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 2746a966f9f05fdb0727f4e1e8f2d51ec79e071d ]
+[ Upstream commit 1657f2934daf89e8d9fa4b2697008909eb22c73e ]
 
-gc0310_remove() must not call kfree(dev) since the gc0310_device struct
-is devm managed so explicitly freeing it causes a double free.
+Ideally, strlen(cur->string.pointer) and strlen(out) would be the same.
+But this code is using strscpy() to avoid a potential buffer overflow.
+So in the same way we should take the strlen() of the smaller string to
+avoid a buffer overflow in the caller, gmin_get_var_int().
 
-While at it add a missing mutex_destroy() call for the input_lock.
+Link: https://lore.kernel.org/r/26124bcd-8132-4483-9d67-225c87d424e8@kili.mountain
 
-Link: https://lore.kernel.org/r/20230518153214.194976-6-hdegoede@redhat.com
-
-Fixes: 340b4dd6c183 ("media: atomisp: gc0310: Use devm_kzalloc() for data struct")
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Fixes: 387041cda44e ("media: atomisp: improve sensor detection code to use _DSM table")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/atomisp/i2c/atomisp-gc0310.c | 2 +-
+ drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/atomisp/i2c/atomisp-gc0310.c b/drivers/staging/media/atomisp/i2c/atomisp-gc0310.c
-index 273155308fe36..eb6db1571dc0d 100644
---- a/drivers/staging/media/atomisp/i2c/atomisp-gc0310.c
-+++ b/drivers/staging/media/atomisp/i2c/atomisp-gc0310.c
-@@ -377,8 +377,8 @@ static void gc0310_remove(struct i2c_client *client)
- 	v4l2_device_unregister_subdev(sd);
- 	media_entity_cleanup(&dev->sd.entity);
- 	v4l2_ctrl_handler_free(&dev->ctrls.handler);
-+	mutex_destroy(&dev->input_lock);
- 	pm_runtime_disable(&client->dev);
--	kfree(dev);
- }
+diff --git a/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c b/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c
+index c718a74ea70a3..88d4499233b98 100644
+--- a/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_gmin_platform.c
+@@ -1357,7 +1357,7 @@ static int gmin_get_config_dsm_var(struct device *dev,
+ 	dev_info(dev, "found _DSM entry for '%s': %s\n", var,
+ 		 cur->string.pointer);
+ 	strscpy(out, cur->string.pointer, *out_len);
+-	*out_len = strlen(cur->string.pointer);
++	*out_len = strlen(out);
  
- static int gc0310_probe(struct i2c_client *client)
+ 	ACPI_FREE(obj);
+ 	return 0;
 -- 
 2.39.2
 
