@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341788F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:29:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB1FC433C7;
-	Sun, 16 Jul 2023 20:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04588F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:29:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735AFC433C7;
+	Sun, 16 Jul 2023 20:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539341;
-	bh=zhv7/yKnff0rHuQjc5y5w20/q61JCsYFvyDBchEBnNQ=;
+	s=korg; t=1689539343;
+	bh=QJo7hMnKjNvCErSeuQpWNr0b5EOJDH+mwZwQH30bBtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kfkubu1mSFzj8tqzlbQ9y0R2NZA0cpYNXBhv4Yty0M5A6Zh/DX2HztUpJs6//uU1e
-	 eu6b1gSWbKVWJd9KtH7QcgaBIMDWeH+TVfJ5xvjpfuHmxEQOtipTgS0ujLBoNhl6la
-	 lNtA4zNfpT8CYDlfDA6oF9nOcVxe/uhyGJzVXhfU=
+	b=kZvfF/glFTlN9K3yfcUNGoPHkrGAO8V/3aUlSP4QDlFv3M382i8evsxVlHPG99NCr
+	 Kixn3x1yGKL8lK8cuwVuKp2UJxzgr9JRgtiDWNM8nQ3F1yz09sqzeXY7kQJV0ib+Ft
+	 xfv05N8KSO3I249/+NSk2EgGgeinXOrj2W7cvsB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.4 756/800] btrfs: warn on invalid slot in tree mod log rewind
-Date: Sun, 16 Jul 2023 21:50:09 +0200
-Message-ID: <20230716195006.703082100@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.4 774/800] Input: ads7846 - Fix usage of match data
+Date: Sun, 16 Jul 2023 21:50:27 +0200
+Message-ID: <20230716195007.126529199@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,111 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Boris Burkov <boris@bur.io>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 95c8e349d8e8f190e28854e7ca96de866d2dc5a4 upstream.
+commit 8f7913c04f6a7b90bcf998ece17395d7090f6d44 upstream.
 
-The way that tree mod log tracks the ultimate length of the eb, the
-variable 'n', eventually turns up the correct value, but at intermediate
-steps during the rewind, n can be inaccurate as a representation of the
-end of the eb. For example, it doesn't get updated on move rewinds, and
-it does get updated for add/remove in the middle of the eb.
+device_get_match_data() returns the match data directly, fix
+this up and fix the probe crash.
 
-To detect cases with invalid moves, introduce a separate variable called
-max_slot which tries to track the maximum valid slot in the rewind eb.
-We can then warn if we do a move whose src range goes beyond the max
-valid slot.
-
-There is a commented caveat that it is possible to have this value be an
-overestimate due to the challenge of properly handling 'add' operations
-in the middle of the eb, but in practice it doesn't cause enough of a
-problem to throw out the max idea in favor of tracking every valid slot.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 767d83361aaa ("Input: ads7846 - Convert to use software nodes")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/r/20230606191304.3804174-1-linus.walleij@linaro.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-mod-log.c |   42 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ drivers/input/touchscreen/ads7846.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/fs/btrfs/tree-mod-log.c
-+++ b/fs/btrfs/tree-mod-log.c
-@@ -719,10 +719,27 @@ static void tree_mod_log_rewind(struct b
- 	unsigned long o_dst;
- 	unsigned long o_src;
- 	unsigned long p_size = sizeof(struct btrfs_key_ptr);
-+	/*
-+	 * max_slot tracks the maximum valid slot of the rewind eb at every
-+	 * step of the rewind. This is in contrast with 'n' which eventually
-+	 * matches the number of items, but can be wrong during moves or if
-+	 * removes overlap on already valid slots (which is probably separately
-+	 * a bug). We do this to validate the offsets of memmoves for rewinding
-+	 * moves and detect invalid memmoves.
-+	 *
-+	 * Since a rewind eb can start empty, max_slot is a signed integer with
-+	 * a special meaning for -1, which is that no slot is valid to move out
-+	 * of. Any other negative value is invalid.
-+	 */
-+	int max_slot;
-+	int move_src_end_slot;
-+	int move_dst_end_slot;
+--- a/drivers/input/touchscreen/ads7846.c
++++ b/drivers/input/touchscreen/ads7846.c
+@@ -1117,20 +1117,13 @@ MODULE_DEVICE_TABLE(of, ads7846_dt_ids);
+ static const struct ads7846_platform_data *ads7846_get_props(struct device *dev)
+ {
+ 	struct ads7846_platform_data *pdata;
+-	const struct platform_device_id *pdev_id;
+ 	u32 value;
  
- 	n = btrfs_header_nritems(eb);
-+	max_slot = n - 1;
- 	read_lock(&fs_info->tree_mod_log_lock);
- 	while (tm && tm->seq >= time_seq) {
-+		ASSERT(max_slot >= -1);
- 		/*
- 		 * All the operations are recorded with the operator used for
- 		 * the modification. As we're going backwards, we do the
-@@ -739,6 +756,8 @@ static void tree_mod_log_rewind(struct b
- 			btrfs_set_node_ptr_generation(eb, tm->slot,
- 						      tm->generation);
- 			n++;
-+			if (tm->slot > max_slot)
-+				max_slot = tm->slot;
- 			break;
- 		case BTRFS_MOD_LOG_KEY_REPLACE:
- 			BUG_ON(tm->slot >= n);
-@@ -748,14 +767,37 @@ static void tree_mod_log_rewind(struct b
- 						      tm->generation);
- 			break;
- 		case BTRFS_MOD_LOG_KEY_ADD:
-+			/*
-+			 * It is possible we could have already removed keys
-+			 * behind the known max slot, so this will be an
-+			 * overestimate. In practice, the copy operation
-+			 * inserts them in increasing order, and overestimating
-+			 * just means we miss some warnings, so it's OK. It
-+			 * isn't worth carefully tracking the full array of
-+			 * valid slots to check against when moving.
-+			 */
-+			if (tm->slot == max_slot)
-+				max_slot--;
- 			/* if a move operation is needed it's in the log */
- 			n--;
- 			break;
- 		case BTRFS_MOD_LOG_MOVE_KEYS:
-+			ASSERT(tm->move.nr_items > 0);
-+			move_src_end_slot = tm->move.dst_slot + tm->move.nr_items - 1;
-+			move_dst_end_slot = tm->slot + tm->move.nr_items - 1;
- 			o_dst = btrfs_node_key_ptr_offset(eb, tm->slot);
- 			o_src = btrfs_node_key_ptr_offset(eb, tm->move.dst_slot);
-+			if (WARN_ON(move_src_end_slot > max_slot ||
-+				    tm->move.nr_items <= 0)) {
-+				btrfs_warn(fs_info,
-+"move from invalid tree mod log slot eb %llu slot %d dst_slot %d nr_items %d seq %llu n %u max_slot %d",
-+					   eb->start, tm->slot,
-+					   tm->move.dst_slot, tm->move.nr_items,
-+					   tm->seq, n, max_slot);
-+			}
- 			memmove_extent_buffer(eb, o_dst, o_src,
- 					      tm->move.nr_items * p_size);
-+			max_slot = move_dst_end_slot;
- 			break;
- 		case BTRFS_MOD_LOG_ROOT_REPLACE:
- 			/*
+-	pdev_id = device_get_match_data(dev);
+-	if (!pdev_id) {
+-		dev_err(dev, "Unknown device model\n");
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+ 	pdata = devm_kzalloc(dev, sizeof(*pdata), GFP_KERNEL);
+ 	if (!pdata)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	pdata->model = (unsigned long)pdev_id->driver_data;
++	pdata->model = (u32)device_get_match_data(dev);
+ 
+ 	device_property_read_u16(dev, "ti,vref-delay-usecs",
+ 				 &pdata->vref_delay_usecs);
 
 
