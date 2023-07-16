@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083698F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE21C433C8;
-	Sun, 16 Jul 2023 20:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97FF8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58578C433C8;
+	Sun, 16 Jul 2023 20:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538057;
-	bh=rJbJ5dbHadLA+e0Lyeh8vKhF6hT2DijOWtDDSrMQy6g=;
+	s=korg; t=1689538060;
+	bh=w54u5yvgqbfpZ7B+eblfgWr3V142jshsCCp4iovDTuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AI9qph337DYYdk9FlXXLI9fd7alxXXxPqaWfyPQf8IOv6xMc253A7vp6ndiyAba1k
-	 03jIUZyyLLDVS119HF6i2/LGCUrPiq6SsEBOPtd0QuK7vZJT6gZ9wDST6DDVVOS2dA
-	 k5YRwegKQYyCD1Wpx/N9Co1xeV8xXiNjDfZa+BL0=
+	b=xRBdQQxXAui+ffrUZqL6+obZIRoLoZa7zOZOSunzn68MmdkObJRqkvFesdEcOlpfd
+	 JwehhBbU3tXSNMDLCtM3bnaG5lbGNkqoBaKgIsX4jzVdlRb8ubNKbTHlEBn1atqrG6
+	 YEZX14+tlAJBi+3mWAxKiiPhx0nvUTKdGgqcRoEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
+	Ajit Khaparde <ajit.khaparde@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 280/800] iommu/virtio: Return size mapped for a detached domain
-Date: Sun, 16 Jul 2023 21:42:13 +0200
-Message-ID: <20230716194955.593408030@linuxfoundation.org>
+Subject: [PATCH 6.4 271/800] RDMA/bnxt_re: Remove a redundant check inside bnxt_re_update_gid
+Date: Sun, 16 Jul 2023 21:42:04 +0200
+Message-ID: <20230716194955.388887058@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,73 +39,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 7061b6af34686e7e2364b7240cfb061293218f2d ]
+[ Upstream commit b989f90cef0af48aa5679b6a75476371705ec53c ]
 
-When map() is called on a detached domain, the domain does not exist in
-the device so we do not send a MAP request, but we do update the
-internal mapping tree, to be replayed on the next attach. Since this
-constitutes a successful iommu_map() call, return *mapped in this case
-too.
+The NULL check inside bnxt_re_update_gid() always return false.  If
+sgid_tbl->tbl is not allocated, then dev_init would have failed.
 
-Fixes: 7e62edd7a33a ("iommu/virtio: Add map/unmap_pages() callbacks implementation")
-Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20230515113946.1017624-3-jean-philippe@linaro.org
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 5fac5b1b297f ("RDMA/bnxt_re: Add vlan tag for untagged RoCE traffic when PFC is configured")
+Link: https://lore.kernel.org/r/1684478897-12247-5-git-send-email-selvin.xavier@broadcom.com
+Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Reviewed-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
+Reviewed-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/virtio-iommu.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ drivers/infiniband/hw/bnxt_re/main.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
-index fd316a37d7562..3551ed057774e 100644
---- a/drivers/iommu/virtio-iommu.c
-+++ b/drivers/iommu/virtio-iommu.c
-@@ -833,25 +833,26 @@ static int viommu_map_pages(struct iommu_domain *domain, unsigned long iova,
- 	if (ret)
- 		return ret;
+diff --git a/drivers/infiniband/hw/bnxt_re/main.c b/drivers/infiniband/hw/bnxt_re/main.c
+index cb4465b0792b9..1936f4b4002a7 100644
+--- a/drivers/infiniband/hw/bnxt_re/main.c
++++ b/drivers/infiniband/hw/bnxt_re/main.c
+@@ -969,12 +969,6 @@ static int bnxt_re_update_gid(struct bnxt_re_dev *rdev)
+ 	if (!ib_device_try_get(&rdev->ibdev))
+ 		return 0;
  
--	map = (struct virtio_iommu_req_map) {
--		.head.type	= VIRTIO_IOMMU_T_MAP,
--		.domain		= cpu_to_le32(vdomain->id),
--		.virt_start	= cpu_to_le64(iova),
--		.phys_start	= cpu_to_le64(paddr),
--		.virt_end	= cpu_to_le64(end),
--		.flags		= cpu_to_le32(flags),
--	};
+-	if (!sgid_tbl) {
+-		ibdev_err(&rdev->ibdev, "QPLIB: SGID table not allocated");
+-		rc = -EINVAL;
+-		goto out;
+-	}
 -
--	if (!vdomain->nr_endpoints)
--		return 0;
-+	if (vdomain->nr_endpoints) {
-+		map = (struct virtio_iommu_req_map) {
-+			.head.type	= VIRTIO_IOMMU_T_MAP,
-+			.domain		= cpu_to_le32(vdomain->id),
-+			.virt_start	= cpu_to_le64(iova),
-+			.phys_start	= cpu_to_le64(paddr),
-+			.virt_end	= cpu_to_le64(end),
-+			.flags		= cpu_to_le32(flags),
-+		};
+ 	for (index = 0; index < sgid_tbl->active; index++) {
+ 		gid_idx = sgid_tbl->hw_id[index];
  
--	ret = viommu_send_req_sync(vdomain->viommu, &map, sizeof(map));
--	if (ret)
--		viommu_del_mappings(vdomain, iova, end);
--	else if (mapped)
-+		ret = viommu_send_req_sync(vdomain->viommu, &map, sizeof(map));
-+		if (ret) {
-+			viommu_del_mappings(vdomain, iova, end);
-+			return ret;
-+		}
-+	}
-+	if (mapped)
- 		*mapped = size;
- 
--	return ret;
-+	return 0;
+@@ -992,7 +986,7 @@ static int bnxt_re_update_gid(struct bnxt_re_dev *rdev)
+ 		rc = bnxt_qplib_update_sgid(sgid_tbl, &gid, gid_idx,
+ 					    rdev->qplib_res.netdev->dev_addr);
+ 	}
+-out:
++
+ 	ib_device_put(&rdev->ibdev);
+ 	return rc;
  }
- 
- static size_t viommu_unmap_pages(struct iommu_domain *domain, unsigned long iova,
 -- 
 2.39.2
 
