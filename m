@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39FF8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DDFC433C7;
-	Sun, 16 Jul 2023 20:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B688F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:51:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32314C433C7;
+	Sun, 16 Jul 2023 20:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540705;
-	bh=WcFOS/IfkDVGmt+ERW5ejMwfifxZGIBOXiYq1aUFI54=;
+	s=korg; t=1689540708;
+	bh=rdJAI9EbsBAXhn0C9LVplba24PBsH/+/m+vs0Edv/XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C07KZL1Qj8r7uVzOOI33zvGzTMF8k2zGJZGwJpG7LkjLEhzSiUxkjqPjFfecR8zLt
-	 MS7mA+HGnPdgTYxRfrjZFHyFs2R9r0qOw0QUFkIZlmeoaelvuvlNLztUsKTy+7m3EI
-	 OvCWjusoDqnsnutdhVf5TmijtKjLnP/9kQwdcjiI=
+	b=L03MNc4TnAOcsbyFbcLCdUitO4NiG7bsjM62SimxB9wF6/AatEpXc2NtzmNJyrR5h
+	 ST1H4BJrPn3XeRZhLGlPL6djehGCMk0rRlSSXM9U9o5wvBSnNg+l6fSLiI2fvKWvi3
+	 oBGMzPfiuRmO4rBuDbUikb1Yh2iDUZ15XWE/0ue0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Brian Norris <briannorris@chromium.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Andrew Halaney <ahalaney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 458/591] pwm: sysfs: Do not apply state to already disabled PWMs
-Date: Sun, 16 Jul 2023 21:49:57 +0200
-Message-ID: <20230716194935.754463095@linuxfoundation.org>
+Subject: [PATCH 6.1 433/591] usb: dwc3: qcom: Fix an error handling path in dwc3_qcom_probe()
+Date: Sun, 16 Jul 2023 21:49:32 +0200
+Message-ID: <20230716194935.116810765@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,85 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 38ba83598633373f47951384cfc389181c8d1bed ]
+[ Upstream commit 4a944da707123686d372ec01ea60056902fadf35 ]
 
-If the PWM is exported but not enabled, do not call pwm_class_apply_state().
-First of all, in this case, period may still be unconfigured and this would
-make pwm_class_apply_state() return -EINVAL, and then suspend would fail.
-Second, it makes little sense to apply state onto PWM that is not enabled
-before suspend.
+If dwc3_qcom_create_urs_usb_platdev() fails, some resources still need to
+be released, as already done in the other error handling path of the
+probe.
 
-Failing case:
-"
-$ echo 1 > /sys/class/pwm/pwmchip4/export
-$ echo mem > /sys/power/state
-...
-pwm pwmchip4: PM: dpm_run_callback(): pwm_class_suspend+0x1/0xa8 returns -22
-pwm pwmchip4: PM: failed to suspend: error -22
-PM: Some devices failed to suspend, or early wake event detected
-"
-
-Working case:
-"
-$ echo 1 > /sys/class/pwm/pwmchip4/export
-$ echo 100 > /sys/class/pwm/pwmchip4/pwm1/period
-$ echo 10 > /sys/class/pwm/pwmchip4/pwm1/duty_cycle
-$ echo mem > /sys/power/state
-...
-"
-
-Do not call pwm_class_apply_state() in case the PWM is disabled
-to fix this issue.
-
-Fixes: 7fd4edc57bbae ("pwm: sysfs: Add suspend/resume support")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Fixes: ef2bf4997f7d ("pwm: Improve args checking in pwm_apply_state()")
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: c25c210f590e ("usb: dwc3: qcom: add URS Host support for sdm845 ACPI boot")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Message-ID: <b69fa8dd68d816e7d24c88d3eda776ceb28c5dc5.1685890571.git.christophe.jaillet@wanadoo.fr>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/sysfs.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/usb/dwc3/dwc3-qcom.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/sysfs.c b/drivers/pwm/sysfs.c
-index e7db8e45001cf..ba125253857ea 100644
---- a/drivers/pwm/sysfs.c
-+++ b/drivers/pwm/sysfs.c
-@@ -424,6 +424,13 @@ static int pwm_class_resume_npwm(struct device *parent, unsigned int npwm)
- 		if (!export)
- 			continue;
- 
-+		/* If pwmchip was not enabled before suspend, do nothing. */
-+		if (!export->suspend.enabled) {
-+			/* release lock taken in pwm_class_get_state */
-+			mutex_unlock(&export->lock);
-+			continue;
-+		}
-+
- 		state.enabled = export->suspend.enabled;
- 		ret = pwm_class_apply_state(export, pwm, &state);
- 		if (ret < 0)
-@@ -448,7 +455,17 @@ static int pwm_class_suspend(struct device *parent)
- 		if (!export)
- 			continue;
- 
-+		/*
-+		 * If pwmchip was not enabled before suspend, save
-+		 * state for resume time and do nothing else.
-+		 */
- 		export->suspend = state;
-+		if (!state.enabled) {
-+			/* release lock taken in pwm_class_get_state */
-+			mutex_unlock(&export->lock);
-+			continue;
-+		}
-+
- 		state.enabled = false;
- 		ret = pwm_class_apply_state(export, pwm, &state);
- 		if (ret < 0) {
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 9c01e963ae467..72c22851d7eef 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -865,9 +865,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 			if (IS_ERR_OR_NULL(qcom->urs_usb)) {
+ 				dev_err(dev, "failed to create URS USB platdev\n");
+ 				if (!qcom->urs_usb)
+-					return -ENODEV;
++					ret = -ENODEV;
+ 				else
+-					return PTR_ERR(qcom->urs_usb);
++					ret = PTR_ERR(qcom->urs_usb);
++				goto clk_disable;
+ 			}
+ 		}
+ 	}
 -- 
 2.39.2
 
