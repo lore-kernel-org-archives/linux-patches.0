@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799548F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD8BC433C7;
-	Sun, 16 Jul 2023 19:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0269E8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FCEC433C8;
+	Sun, 16 Jul 2023 19:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537580;
-	bh=/cbw91GvUaxkY+uphb9z/G+ChWUnLk4wExz/DElnENc=;
+	s=korg; t=1689537582;
+	bh=MfCGnfutks5Lvll2yVjRrb1WAy0uTa5zKSZ1/VDgM9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjDQqnzvsBHxZi2DWoMB1N7hq2/en0KVdhz8R2+WmRyPEg51eJMKnn7RXHZbesYp1
-	 YyId5GevrtIVTxTeIzyoIRYfwX/QauluAq6b/lC+spWelEZm5lNjbA6tEwskruD1s/
-	 T+rejPI9ns92VC+c1f3U4enpYtcRBhMHGiGh0+7k=
+	b=026oryvR3+2rxwbpbsxzZTXMYlJ1hM2ENss81P1OLZ+kgaucQdMYY2HmdRR7xCzsx
+	 6caaQaGAdbOM36WQqMeTf85ag+rXHXYEk82e+Z7PYD+LiicUw8GXZHiirmbMIoz56r
+	 oaBMFgvVCR6J45RNJdoky0/VCfdNzM/tP6g3TVBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Jakub Kacinski <kuba@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 117/800] wifi: mwifiex: Fix the size of a memory allocation in mwifiex_ret_802_11_scan()
-Date: Sun, 16 Jul 2023 21:39:30 +0200
-Message-ID: <20230716194951.825843331@linuxfoundation.org>
+Subject: [PATCH 6.4 118/800] net/handshake: Unpin sock->file if a handshake is cancelled
+Date: Sun, 16 Jul 2023 21:39:31 +0200
+Message-ID: <20230716194951.848894569@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,45 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit d9aef04fcfa81ee4fb2804a21a3712b7bbd936af ]
+[ Upstream commit f921bd41001ccff2249f5f443f2917f7ef937daf ]
 
-The type of "mwifiex_adapter->nd_info" is "struct cfg80211_wowlan_nd_info",
-not "struct cfg80211_wowlan_nd_match".
+If user space never calls DONE, sock->file's reference count remains
+elevated. Enable sock->file to be freed eventually in this case.
 
-Use struct_size() to ease the computation of the needed size.
-
-The current code over-allocates some memory, so is safe.
-But it wastes 32 bytes.
-
-Fixes: 7d7f07d8c5d3 ("mwifiex: add wowlan net-detect support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/7a6074fb056d2181e058a3cc6048d8155c20aec7.1683371982.git.christophe.jaillet@wanadoo.fr
+Reported-by: Jakub Kacinski <kuba@kernel.org>
+Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/scan.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/handshake/handshake.h | 1 +
+ net/handshake/request.c   | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/scan.c b/drivers/net/wireless/marvell/mwifiex/scan.c
-index ac8001c842935..644b1e134b01c 100644
---- a/drivers/net/wireless/marvell/mwifiex/scan.c
-+++ b/drivers/net/wireless/marvell/mwifiex/scan.c
-@@ -2187,9 +2187,9 @@ int mwifiex_ret_802_11_scan(struct mwifiex_private *priv,
+diff --git a/net/handshake/handshake.h b/net/handshake/handshake.h
+index 4dac965c99df0..8aeaadca844fd 100644
+--- a/net/handshake/handshake.h
++++ b/net/handshake/handshake.h
+@@ -31,6 +31,7 @@ struct handshake_req {
+ 	struct list_head		hr_list;
+ 	struct rhash_head		hr_rhash;
+ 	unsigned long			hr_flags;
++	struct file			*hr_file;
+ 	const struct handshake_proto	*hr_proto;
+ 	struct sock			*hr_sk;
+ 	void				(*hr_odestruct)(struct sock *sk);
+diff --git a/net/handshake/request.c b/net/handshake/request.c
+index 94d5cef3e048b..d78d41abb3d99 100644
+--- a/net/handshake/request.c
++++ b/net/handshake/request.c
+@@ -239,6 +239,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 	}
+ 	req->hr_odestruct = req->hr_sk->sk_destruct;
+ 	req->hr_sk->sk_destruct = handshake_sk_destruct;
++	req->hr_file = sock->file;
  
- 	if (nd_config) {
- 		adapter->nd_info =
--			kzalloc(sizeof(struct cfg80211_wowlan_nd_match) +
--				sizeof(struct cfg80211_wowlan_nd_match *) *
--				scan_rsp->number_of_sets, GFP_ATOMIC);
-+			kzalloc(struct_size(adapter->nd_info, matches,
-+					    scan_rsp->number_of_sets),
-+				GFP_ATOMIC);
+ 	ret = -EOPNOTSUPP;
+ 	net = sock_net(req->hr_sk);
+@@ -334,6 +335,9 @@ bool handshake_req_cancel(struct sock *sk)
+ 		return false;
+ 	}
  
- 		if (adapter->nd_info)
- 			adapter->nd_info->n_matches = scan_rsp->number_of_sets;
++	/* Request accepted and waiting for DONE */
++	fput(req->hr_file);
++
+ out_true:
+ 	trace_handshake_cancel(net, req, sk);
+ 
 -- 
 2.39.2
 
