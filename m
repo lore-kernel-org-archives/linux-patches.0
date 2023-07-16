@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA3E8F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:30:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51272C433C8;
-	Sun, 16 Jul 2023 20:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70E48F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AB9C433C7;
+	Sun, 16 Jul 2023 20:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539447;
-	bh=tq39gsiQQFMkqmbSItC2BezvCqQzE4nnUSO+HakxkBM=;
+	s=korg; t=1689539450;
+	bh=ycImygvbZDTq4k5kMjlqHNll0+3pnHoUPou8YLUYNUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knaGixV1wzj/jg11my75blq37Sh+NtWmzOlzDAp5gbdbNx+pccnr9Ux74g9xcCuXC
-	 T2kcFCPXc1FXHyHOBvHVul+qq+babzQRtMVXHAtmFywECBjBC/reUeqA93IUgybHrb
-	 VG6WksW1akVTCaXTn46ye6UwRV1iDtyyWpBuOM8I=
+	b=oObSnY4LD5DKf6lOhNOQNJLEL0DcvNZMmkTkjYOc7fKV4oQYzh3hky4MSw/kQ2G7g
+	 Fhgn9XvKHy6Lwenj/H7SkYjQssuzYRuTdNdsO4JJKi/AM37UC4Pl+IhhO/tuhPflI3
+	 w2hsNJeu4SclF+v7zLayOpEXzV3q3y2ZMFsLXE94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/591] x86/sev: Fix calculation of end address based on number of pages
-Date: Sun, 16 Jul 2023 21:42:30 +0200
-Message-ID: <20230716194924.156588657@linuxfoundation.org>
+Subject: [PATCH 6.1 002/591] fs: pipe: reveal missing function protoypes
+Date: Sun, 16 Jul 2023 21:42:21 +0200
+Message-ID: <20230716194923.929729751@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,132 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5dee19b6b2b194216919b99a1f5af2949a754016 ]
+[ Upstream commit 247c8d2f9837a3e29e3b6b7a4aa9c36c37659dd4 ]
 
-When calculating an end address based on an unsigned int number of pages,
-any value greater than or equal to 0x100000 that is shift PAGE_SHIFT bits
-results in a 0 value, resulting in an invalid end address. Change the
-number of pages variable in various routines from an unsigned int to an
-unsigned long to calculate the end address correctly.
+A couple of functions from fs/pipe.c are used both internally
+and for the watch queue code, but the declaration is only
+visible when the latter is enabled:
 
-Fixes: 5e5ccff60a29 ("x86/sev: Add helper for validating pages in early enc attribute changes")
-Fixes: dc3f3d2474b8 ("x86/mm: Validate memory when changing the C-bit")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/6a6e4eea0e1414402bac747744984fa4e9c01bb6.1686063086.git.thomas.lendacky@amd.com
+fs/pipe.c:1254:5: error: no previous prototype for 'pipe_resize_ring'
+fs/pipe.c:758:15: error: no previous prototype for 'account_pipe_buffers'
+fs/pipe.c:764:6: error: no previous prototype for 'too_many_pipe_buffers_soft'
+fs/pipe.c:771:6: error: no previous prototype for 'too_many_pipe_buffers_hard'
+fs/pipe.c:777:6: error: no previous prototype for 'pipe_is_unprivileged_user'
+
+Make the visible unconditionally to avoid these warnings.
+
+Fixes: c73be61cede5 ("pipe: Add general notification queue support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Message-Id: <20230516195629.551602-1-arnd@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/sev.h | 16 ++++++++--------
- arch/x86/kernel/sev.c      | 14 +++++++-------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ include/linux/pipe_fs_i.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/arch/x86/include/asm/sev.h b/arch/x86/include/asm/sev.h
-index ebc271bb6d8ed..a0a58c4122ec3 100644
---- a/arch/x86/include/asm/sev.h
-+++ b/arch/x86/include/asm/sev.h
-@@ -187,12 +187,12 @@ static inline int pvalidate(unsigned long vaddr, bool rmp_psize, bool validate)
- }
- void setup_ghcb(void);
- void __init early_snp_set_memory_private(unsigned long vaddr, unsigned long paddr,
--					 unsigned int npages);
-+					 unsigned long npages);
- void __init early_snp_set_memory_shared(unsigned long vaddr, unsigned long paddr,
--					unsigned int npages);
-+					unsigned long npages);
- void __init snp_prep_memory(unsigned long paddr, unsigned int sz, enum psc_op op);
--void snp_set_memory_shared(unsigned long vaddr, unsigned int npages);
--void snp_set_memory_private(unsigned long vaddr, unsigned int npages);
-+void snp_set_memory_shared(unsigned long vaddr, unsigned long npages);
-+void snp_set_memory_private(unsigned long vaddr, unsigned long npages);
- void snp_set_wakeup_secondary_cpu(void);
- bool snp_init(struct boot_params *bp);
- void __init __noreturn snp_abort(void);
-@@ -207,12 +207,12 @@ static inline int pvalidate(unsigned long vaddr, bool rmp_psize, bool validate)
- static inline int rmpadjust(unsigned long vaddr, bool rmp_psize, unsigned long attrs) { return 0; }
- static inline void setup_ghcb(void) { }
- static inline void __init
--early_snp_set_memory_private(unsigned long vaddr, unsigned long paddr, unsigned int npages) { }
-+early_snp_set_memory_private(unsigned long vaddr, unsigned long paddr, unsigned long npages) { }
- static inline void __init
--early_snp_set_memory_shared(unsigned long vaddr, unsigned long paddr, unsigned int npages) { }
-+early_snp_set_memory_shared(unsigned long vaddr, unsigned long paddr, unsigned long npages) { }
- static inline void __init snp_prep_memory(unsigned long paddr, unsigned int sz, enum psc_op op) { }
--static inline void snp_set_memory_shared(unsigned long vaddr, unsigned int npages) { }
--static inline void snp_set_memory_private(unsigned long vaddr, unsigned int npages) { }
-+static inline void snp_set_memory_shared(unsigned long vaddr, unsigned long npages) { }
-+static inline void snp_set_memory_private(unsigned long vaddr, unsigned long npages) { }
- static inline void snp_set_wakeup_secondary_cpu(void) { }
- static inline bool snp_init(struct boot_params *bp) { return false; }
- static inline void snp_abort(void) { }
-diff --git a/arch/x86/kernel/sev.c b/arch/x86/kernel/sev.c
-index c680ac6342bb3..afda719dd7253 100644
---- a/arch/x86/kernel/sev.c
-+++ b/arch/x86/kernel/sev.c
-@@ -643,7 +643,7 @@ static u64 __init get_jump_table_addr(void)
- 	return ret;
- }
+diff --git a/include/linux/pipe_fs_i.h b/include/linux/pipe_fs_i.h
+index 6cb65df3e3ba5..28b3c6a673975 100644
+--- a/include/linux/pipe_fs_i.h
++++ b/include/linux/pipe_fs_i.h
+@@ -241,18 +241,14 @@ void generic_pipe_buf_release(struct pipe_inode_info *, struct pipe_buffer *);
  
--static void pvalidate_pages(unsigned long vaddr, unsigned int npages, bool validate)
-+static void pvalidate_pages(unsigned long vaddr, unsigned long npages, bool validate)
- {
- 	unsigned long vaddr_end;
- 	int rc;
-@@ -660,7 +660,7 @@ static void pvalidate_pages(unsigned long vaddr, unsigned int npages, bool valid
- 	}
- }
+ extern const struct pipe_buf_operations nosteal_pipe_buf_ops;
  
--static void __init early_set_pages_state(unsigned long paddr, unsigned int npages, enum psc_op op)
-+static void __init early_set_pages_state(unsigned long paddr, unsigned long npages, enum psc_op op)
- {
- 	unsigned long paddr_end;
- 	u64 val;
-@@ -699,7 +699,7 @@ static void __init early_set_pages_state(unsigned long paddr, unsigned int npage
- }
+-#ifdef CONFIG_WATCH_QUEUE
+ unsigned long account_pipe_buffers(struct user_struct *user,
+ 				   unsigned long old, unsigned long new);
+ bool too_many_pipe_buffers_soft(unsigned long user_bufs);
+ bool too_many_pipe_buffers_hard(unsigned long user_bufs);
+ bool pipe_is_unprivileged_user(void);
+-#endif
  
- void __init early_snp_set_memory_private(unsigned long vaddr, unsigned long paddr,
--					 unsigned int npages)
-+					 unsigned long npages)
- {
- 	/*
- 	 * This can be invoked in early boot while running identity mapped, so
-@@ -721,7 +721,7 @@ void __init early_snp_set_memory_private(unsigned long vaddr, unsigned long padd
- }
+ /* for F_SETPIPE_SZ and F_GETPIPE_SZ */
+-#ifdef CONFIG_WATCH_QUEUE
+ int pipe_resize_ring(struct pipe_inode_info *pipe, unsigned int nr_slots);
+-#endif
+ long pipe_fcntl(struct file *, unsigned int, unsigned long arg);
+ struct pipe_inode_info *get_pipe_info(struct file *file, bool for_splice);
  
- void __init early_snp_set_memory_shared(unsigned long vaddr, unsigned long paddr,
--					unsigned int npages)
-+					unsigned long npages)
- {
- 	/*
- 	 * This can be invoked in early boot while running identity mapped, so
-@@ -877,7 +877,7 @@ static void __set_pages_state(struct snp_psc_desc *data, unsigned long vaddr,
- 		sev_es_terminate(SEV_TERM_SET_LINUX, GHCB_TERM_PSC);
- }
- 
--static void set_pages_state(unsigned long vaddr, unsigned int npages, int op)
-+static void set_pages_state(unsigned long vaddr, unsigned long npages, int op)
- {
- 	unsigned long vaddr_end, next_vaddr;
- 	struct snp_psc_desc *desc;
-@@ -902,7 +902,7 @@ static void set_pages_state(unsigned long vaddr, unsigned int npages, int op)
- 	kfree(desc);
- }
- 
--void snp_set_memory_shared(unsigned long vaddr, unsigned int npages)
-+void snp_set_memory_shared(unsigned long vaddr, unsigned long npages)
- {
- 	if (!cc_platform_has(CC_ATTR_GUEST_SEV_SNP))
- 		return;
-@@ -912,7 +912,7 @@ void snp_set_memory_shared(unsigned long vaddr, unsigned int npages)
- 	set_pages_state(vaddr, npages, SNP_PAGE_STATE_SHARED);
- }
- 
--void snp_set_memory_private(unsigned long vaddr, unsigned int npages)
-+void snp_set_memory_private(unsigned long vaddr, unsigned long npages)
- {
- 	if (!cc_platform_has(CC_ATTR_GUEST_SEV_SNP))
- 		return;
 -- 
 2.39.2
 
