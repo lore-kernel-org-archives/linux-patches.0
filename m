@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD608F5B
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48CDC433C8;
-	Sun, 16 Jul 2023 20:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247AD8F5B
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:28:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95421C433C8;
+	Sun, 16 Jul 2023 20:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539327;
-	bh=t0q7hWDDmB95pLpmNdBJHani2wC1DX8DURrk7cL5Va8=;
+	s=korg; t=1689539330;
+	bh=0L5yrgvaF46IHRKW6sg6uiwR1ROOGNtyadbWlv9Csr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9fJm2LvXNWfAE4XvSNqTkpHkwf4kLw7jvpY0FzIgDrqHLHXsT/aQ4OKw9ZCYHimV
-	 E0TycvV57VKbwvKpVnR7R5gNxukuy3BRm7lW9J/Karqo2p4suKFTy0tuHdEi8osm7C
-	 2byhRz8NDPCVeTJoHwJcs+Yueq4QahGJyC77x7GI=
+	b=iCXHy5KAqC1CAT/kL2D9BrGSkJF3uMwsBTOeDQ6HeRzpGrjBsR5VEugXQBcYhFk1F
+	 qV6mgy35yEztg5i/fUUpB0zCNzM1GdQmYkRERM1sXAb5HN06dwd2tQN1ZfJp3Ln8dA
+	 4syDqC3XSEuS2mZsVIQA9FLNzbLoqq2ZItpPRI8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.4 769/800] ARM: dts: qcom: msm8660: Fix regulator node names
-Date: Sun, 16 Jul 2023 21:50:22 +0200
-Message-ID: <20230716195007.011667697@linuxfoundation.org>
+Subject: [PATCH 6.4 770/800] ARM: dts: qcom: ipq4019: fix broken NAND controller properties override
+Date: Sun, 16 Jul 2023 21:50:23 +0200
+Message-ID: <20230716195007.034165019@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -34,44 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit a0f19091d4f5bbe97485592257b88007eb5b1998 upstream.
+commit edcbdd57de499305e2a3737d4a73fe387f71d84c upstream.
 
-commit 04715461abf7 altered the node names in a DTSI file
-used by qcom-apq8060-dragonboard.dts breaking the board.
-Align the node names in the DTS file and the board boots
-again.
+After renaming NAND controller node name from "qpic-nand" to
+"nand-controller", the board DTS/DTSI also have to be updated:
 
-Cc: stable@vger.kernel.org
-Fixes: 85055a1eecc1 ("ARM: dts: qcom-msm8660: align RPM regulators node name with bindings")
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+  Warning (unit_address_vs_reg): /soc/qpic-nand@79b0000: node has a unit name, but no reg or ranges property
+
+Cc: <stable@vger.kernel.org>
+Fixes: 9e1e00f18afc ("ARM: dts: qcom: Fix node name for NAND controller node")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230414135747.34994-1-linus.walleij@linaro.org
+Link: https://lore.kernel.org/r/20230420072811.36947-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/qcom-apq8060-dragonboard.dts |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts |    8 ++++----
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi   |   10 +++++-----
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi   |   12 ++++++------
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
---- a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-@@ -451,7 +451,7 @@
- 	 * PM8901 supplies "preliminary regulators" whatever
- 	 * that means
- 	 */
--	pm8901-regulators {
-+	regulators-0 {
- 		vdd_l0-supply = <&pm8901_s4>;
- 		vdd_l1-supply = <&vph>;
- 		vdd_l2-supply = <&vph>;
-@@ -537,7 +537,7 @@
- 
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
+@@ -11,9 +11,9 @@
+ 		dma-controller@7984000 {
+ 			status = "okay";
+ 		};
+-
+-		qpic-nand@79b0000 {
+-			status = "okay";
+-		};
  	};
- 
--	pm8058-regulators {
-+	regulators-1 {
- 		vdd_l0_l1_lvs-supply = <&pm8058_s3>;
- 		vdd_l2_l11_l12-supply = <&vph>;
- 		vdd_l3_l4_l5-supply = <&vph>;
+ };
++
++&nand {
++	status = "okay";
++};
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi
+@@ -102,10 +102,10 @@
+ 			status = "okay";
+ 			perst-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
+ 		};
+-
+-		qpic-nand@79b0000 {
+-			pinctrl-0 = <&nand_pins>;
+-			pinctrl-names = "default";
+-		};
+ 	};
+ };
++
++&nand {
++	pinctrl-0 = <&nand_pins>;
++	pinctrl-names = "default";
++};
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi
+@@ -65,11 +65,11 @@
+ 		dma-controller@7984000 {
+ 			status = "okay";
+ 		};
+-
+-		qpic-nand@79b0000 {
+-			pinctrl-0 = <&nand_pins>;
+-			pinctrl-names = "default";
+-			status = "okay";
+-		};
+ 	};
+ };
++
++&nand {
++	pinctrl-0 = <&nand_pins>;
++	pinctrl-names = "default";
++	status = "okay";
++};
 
 
