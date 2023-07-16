@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631788F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB33DC433C9;
-	Sun, 16 Jul 2023 20:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2931A8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1192C433C8;
+	Sun, 16 Jul 2023 20:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540147;
-	bh=qepKOyubWEemUPw9SAzbuQ9h9FpiDqF6Dp6f6K17c2g=;
+	s=korg; t=1689540150;
+	bh=AIs4TM6qFhPWaaOEEp0k66DbhXiXWcecuxXuUZIp5rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+4P4LAopKr/l7KLoGjAYHzKQw53Zdus2jxyb9HixPxf+eZsDvj5k0qGDNGe3EuZW
-	 f4lL8n4MHXfW9WlfYIL3oG4qVzZkq5jpsPjGZwhv+PFsHu8/mn0V4Zb7F+uq4nQz1d
-	 h9L8+v9bn0Ze7PJkqzIZPhlWbCJDnUpmcckbBd78=
+	b=yxkwoD5rf0daX3HUWjNfzFGLoPeQvATj3mMY8nU87hmAkuLjxamfy4mdHtIn7GMrd
+	 U5InTMM3+7eNvxB0TB5Sk2kCWPCp0QjEocgpT57ZlrCm6bk7cqGgCokP6QaEIVH/tX
+	 zWrVu0vICoS+SNdL2bzMBJqdnE5dOixigLJvyRWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhanhao Hu <zero12113@hust.edu.cn>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 252/591] clk: imx93: fix memory leak and missing unwind goto in imx93_clocks_probe
-Date: Sun, 16 Jul 2023 21:46:31 +0200
-Message-ID: <20230716194930.391760082@linuxfoundation.org>
+Subject: [PATCH 6.1 261/591] drm/msm/dpu: Fix slice_last_group_size calculation
+Date: Sun, 16 Jul 2023 21:46:40 +0200
+Message-ID: <20230716194930.636049998@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,81 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhanhao Hu <zero12113@hust.edu.cn>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-[ Upstream commit e02ba11b457647050cb16e7cad16cec3c252fade ]
+[ Upstream commit c223059e6f8340f7eac2319470984cbfc39c433b ]
 
-In function probe(), it returns directly without unregistered hws
-when error occurs.
+Correct the math for slice_last_group_size so that it matches the
+calculations downstream.
 
-Fix this by adding 'goto unregister_hws;' on line 295 and
-line 310.
-
-Use devm_kzalloc() instead of kzalloc() to automatically
-free the memory using devm_kfree() when error occurs.
-
-Replace of_iomap() with devm_of_iomap() to automatically
-handle the unused ioremap region and delete 'iounmap(anatop_base);'
-in unregister_hws.
-
-Fixes: 24defbe194b6 ("clk: imx: add i.MX93 clk")
-Signed-off-by: Zhanhao Hu <zero12113@hust.edu.cn>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230601033825.336558-1-zero12113@hust.edu.cn
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: c110cfd1753e ("drm/msm/disp/dpu1: Add support for DSC")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/539269/
+Link: https://lore.kernel.org/r/20230329-rfc-msm-dsc-helper-v14-7-bafc7be95691@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx93.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx93.c b/drivers/clk/imx/clk-imx93.c
-index 02d6a9894521d..5e3d299190c89 100644
---- a/drivers/clk/imx/clk-imx93.c
-+++ b/drivers/clk/imx/clk-imx93.c
-@@ -261,7 +261,7 @@ static int imx93_clocks_probe(struct platform_device *pdev)
- 	void __iomem *base, *anatop_base;
- 	int i, ret;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+index 3662df698dae5..c8f14555834a8 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+@@ -52,9 +52,10 @@ static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
+ 	if (is_cmd_mode)
+ 		initial_lines += 1;
  
--	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
-+	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws,
- 					  IMX93_CLK_END), GFP_KERNEL);
- 	if (!clk_hw_data)
- 		return -ENOMEM;
-@@ -285,10 +285,12 @@ static int imx93_clocks_probe(struct platform_device *pdev)
- 								    "sys_pll_pfd2", 1, 2);
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx93-anatop");
--	anatop_base = of_iomap(np, 0);
-+	anatop_base = devm_of_iomap(dev, np, 0, NULL);
- 	of_node_put(np);
--	if (WARN_ON(!anatop_base))
--		return -ENOMEM;
-+	if (WARN_ON(IS_ERR(anatop_base))) {
-+		ret = PTR_ERR(base);
-+		goto unregister_hws;
-+	}
- 
- 	clks[IMX93_CLK_AUDIO_PLL] = imx_clk_fracn_gppll("audio_pll", "osc_24m", anatop_base + 0x1200,
- 							&imx_fracn_gppll);
-@@ -298,8 +300,8 @@ static int imx93_clocks_probe(struct platform_device *pdev)
- 	np = dev->of_node;
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (WARN_ON(IS_ERR(base))) {
--		iounmap(anatop_base);
--		return PTR_ERR(base);
-+		ret = PTR_ERR(base);
-+		goto unregister_hws;
- 	}
- 
- 	for (i = 0; i < ARRAY_SIZE(root_array); i++) {
-@@ -329,7 +331,6 @@ static int imx93_clocks_probe(struct platform_device *pdev)
- 
- unregister_hws:
- 	imx_unregister_hw_clocks(clks, IMX93_CLK_END);
--	iounmap(anatop_base);
- 
- 	return ret;
- }
+-	slice_last_group_size = 3 - (dsc->slice_width % 3);
++	slice_last_group_size = (dsc->slice_width + 2) % 3;
++
+ 	data = (initial_lines << 20);
+-	data |= ((slice_last_group_size - 1) << 18);
++	data |= (slice_last_group_size << 18);
+ 	/* bpp is 6.4 format, 4 LSBs bits are for fractional part */
+ 	data |= (dsc->bits_per_pixel << 8);
+ 	data |= (dsc->block_pred_enable << 7);
 -- 
 2.39.2
 
