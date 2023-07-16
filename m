@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461078F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56146C433C8;
-	Sun, 16 Jul 2023 19:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D898F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC7AC433C8;
+	Sun, 16 Jul 2023 19:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537571;
-	bh=3nyrhwRm6a+EYnTLEq8Gr/gby3jonHe+zCXHUCLvLlE=;
+	s=korg; t=1689537574;
+	bh=znMCHaVmtZ+T9MYF6KsrB2BszaTI2N/WrfL3EXTa/gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H071vYvM5diQkrrPDIeymW1h0g1JBuacRQKeeYXGbKWMoNHpJtKm8FZf7QDpSzOEy
-	 9Lwy7gfnUVogNPTRIVYRrWxLMbSh8CBOOqSgcVOiznVOSyr+j6NbrMuuN4FXHn46eU
-	 PbcKrfeef2A7G/tjYTgdCH2cSTIvp4MZafXQ6wDs=
+	b=NCw9zeIEdTCjco7EjPrgz1WUHleE4AnmJicI8jUwZI3wRmpkE2vIgJXJSJ90otPK0
+	 qgDL5YvSFkgX1VlIdl3ecegu7lp5CwUPjqIxf2/Pwq8zKzdRGom8RAbiMBdYkTeaVK
+	 GJ28zk3Fqv/U8R/7UMFqPQCPZaDsZIVnoF0W3d6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Marchevsky <davemarchevsky@fb.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 142/800] bpf: Set kptr_struct_meta for node param to list and rbtree insert funcs
-Date: Sun, 16 Jul 2023 21:39:55 +0200
-Message-ID: <20230716194952.394684282@linuxfoundation.org>
+Subject: [PATCH 6.4 143/800] bpf: Fix __bpf_{list,rbtree}_adds beginning-of-node calculation
+Date: Sun, 16 Jul 2023 21:39:56 +0200
+Message-ID: <20230716194952.416913425@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,59 +37,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Marchevsky <davemarchevsky@fb.com>
 
-[ Upstream commit 2140a6e3422de22e6ebe77d4d18b6c0c9c425426 ]
+[ Upstream commit cc0d76cafebbd3e1ffab9c4252d48ecc9e0737f6 ]
 
-In verifier.c, fixup_kfunc_call uses struct bpf_insn_aux_data's
-kptr_struct_meta field to pass information about local kptr types to
-various helpers and kfuncs at runtime. The recent bpf_refcount series
-added a few functions to the set that need this information:
+Given the pointer to struct bpf_{rb,list}_node within a local kptr and
+the byte offset of that field within the kptr struct, the calculation changed
+by this patch is meant to find the beginning of the kptr so that it can
+be passed to bpf_obj_drop.
 
-  * bpf_refcount_acquire
-    * Needs to know where the refcount field is in order to increment
-  * Graph collection insert kfuncs: bpf_rbtree_add, bpf_list_push_{front,back}
-    * Were migrated to possibly fail by the bpf_refcount series. If
-      insert fails, the input node is bpf_obj_drop'd. bpf_obj_drop needs
-      the kptr_struct_meta in order to decr refcount and properly free
-      special fields.
+Unfortunately instead of doing
 
-Unfortunately the verifier handling of collection insert kfuncs was not
-modified to actually populate kptr_struct_meta. Accordingly, when the
-node input to those kfuncs is passed to bpf_obj_drop, it is done so
-without the information necessary to decr refcount.
+  ptr_to_kptr = ptr_to_node_field - offset_bytes
 
-This patch fixes the issue by populating kptr_struct_meta for those
-kfuncs.
+the calculation is erroneously doing
+
+  ptr_to_ktpr = ptr_to_node_field - (offset_bytes * sizeof(struct bpf_rb_node))
+
+or the bpf_list_node equivalent.
+
+This patch fixes the calculation.
 
 Fixes: d2dcc67df910 ("bpf: Migrate bpf_rbtree_add and bpf_list_push_{front,back} to possibly fail")
 Signed-off-by: Dave Marchevsky <davemarchevsky@fb.com>
-Link: https://lore.kernel.org/r/20230602022647.1571784-3-davemarchevsky@fb.com
+Link: https://lore.kernel.org/r/20230602022647.1571784-4-davemarchevsky@fb.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/bpf/helpers.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4b3d0ead703f4..405f29079a8cb 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -10286,6 +10286,8 @@ __process_kf_arg_ptr_to_graph_node(struct bpf_verifier_env *env,
- 			node_off, btf_name_by_offset(reg->btf, t->name_off));
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 8d368fa353f99..27b9f78195b2c 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -1943,7 +1943,7 @@ static int __bpf_list_add(struct bpf_list_node *node, struct bpf_list_head *head
+ 		INIT_LIST_HEAD(h);
+ 	if (!list_empty(n)) {
+ 		/* Only called from BPF prog, no need to migrate_disable */
+-		__bpf_obj_drop_impl(n - off, rec);
++		__bpf_obj_drop_impl((void *)n - off, rec);
  		return -EINVAL;
  	}
-+	meta->arg_btf = reg->btf;
-+	meta->arg_btf_id = reg->btf_id;
  
- 	if (node_off != field->graph_root.node_offset) {
- 		verbose(env, "arg#1 offset=%d, but expected %s at offset=%d in struct %s\n",
-@@ -10833,6 +10835,7 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 	    meta.func_id == special_kfunc_list[KF_bpf_rbtree_add_impl]) {
- 		release_ref_obj_id = regs[BPF_REG_2].ref_obj_id;
- 		insn_aux->insert_off = regs[BPF_REG_2].off;
-+		insn_aux->kptr_struct_meta = btf_find_struct_meta(meta.arg_btf, meta.arg_btf_id);
- 		err = ref_convert_owning_non_owning(env, release_ref_obj_id);
- 		if (err) {
- 			verbose(env, "kfunc %s#%d conversion of owning ref to non-owning failed\n",
+@@ -2025,7 +2025,7 @@ static int __bpf_rbtree_add(struct bpf_rb_root *root, struct bpf_rb_node *node,
+ 
+ 	if (!RB_EMPTY_NODE(n)) {
+ 		/* Only called from BPF prog, no need to migrate_disable */
+-		__bpf_obj_drop_impl(n - off, rec);
++		__bpf_obj_drop_impl((void *)n - off, rec);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.39.2
 
