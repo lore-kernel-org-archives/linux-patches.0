@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB0C8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8395DC433C8;
-	Sun, 16 Jul 2023 20:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A568F75
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:13:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C5BC433C8;
+	Sun, 16 Jul 2023 20:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538397;
-	bh=OG+o7ENvenI1LO8yawpHtl1zafpz8T71YyI6z7Ho7rI=;
+	s=korg; t=1689538403;
+	bh=9P9kM6IpkhDOKDcWf9Bqdy+aX30Bqt56Q+QC3y7SJRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xU7pQ+CVl+WgE8iXR8+AQQLv5tiLca3Z5ppgrhb0DE2rc/fp2tpdAeTduZv4IBTaf
-	 rDxa3tLL1mJHTECLfrPwvkqTZbOKMLVTz+ZhZ125JLIMHAIS/bvkU4gTI6emXM6YwC
-	 Gqg5akD9GuJCyBtOS9fb2dIAj1AQtMfQ+95COCJ0=
+	b=QCajLa01Vet5wi9fbDT+KYGfW4BPF8+m6AZ42bqT8jQniHWvQyLHez/16fWeiMZTY
+	 Miw+NMeYiSzq4Fl+VbevM10dzkvpZTZ4Vny13tnItaYhHillXiamLa0khdm+A9EHBZ
+	 UUzz6DSFpmZIX67y8tsYUKnRMFP4j6SJn8vqDDKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinhong Zhu <jinhongzhu@hust.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 437/800] scsi: qedf: Fix NULL dereference in error handling
-Date: Sun, 16 Jul 2023 21:44:50 +0200
-Message-ID: <20230716194959.234261598@linuxfoundation.org>
+Subject: [PATCH 6.4 439/800] platform/x86: lenovo-yogabook: Fix work race on remove()
+Date: Sun, 16 Jul 2023 21:44:52 +0200
+Message-ID: <20230716194959.280690598@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,45 +34,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinhong Zhu <jinhongzhu@hust.edu.cn>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit f025312b089474a54e4859f3453771314d9e3d4f ]
+[ Upstream commit 9148cd2eb4450a8e9c49c8a14201fb82f651128f ]
 
-Smatch reported:
+When yogabook_wmi_remove() runs yogabook_wmi_work might still be running
+and using the devices which yogabook_wmi_remove() puts.
 
-drivers/scsi/qedf/qedf_main.c:3056 qedf_alloc_global_queues()
-warn: missing unwind goto?
+To avoid this move to explicitly cancelling the work rather then using
+devm_work_autocancel().
 
-At this point in the function, nothing has been allocated so we can return
-directly. In particular the "qedf->global_queues" have not been allocated
-so calling qedf_free_global_queues() will lead to a NULL dereference when
-we check if (!gl[i]) and "gl" is NULL.
+This requires also making the yogabook_backside_hall_irq handler non
+devm managed, so that it cannot re-queue the work while
+yogabook_wmi_remove() runs.
 
-Fixes: 61d8658b4a43 ("scsi: qedf: Add QLogic FastLinQ offload FCoE driver framework.")
-Signed-off-by: Jinhong Zhu <jinhongzhu@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230502140022.2852-1-jinhongzhu@hust.edu.cn
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c0549b72d99d ("platform/x86: lenovo-yogabook-wmi: Add driver for Lenovo Yoga Book")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230430165807.472798-3-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_main.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/platform/x86/lenovo-yogabook-wmi.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
-index 3b64de81ea0d3..2a31ddc99dde5 100644
---- a/drivers/scsi/qedf/qedf_main.c
-+++ b/drivers/scsi/qedf/qedf_main.c
-@@ -3041,9 +3041,8 @@ static int qedf_alloc_global_queues(struct qedf_ctx *qedf)
- 	 * addresses of our queues
- 	 */
- 	if (!qedf->p_cpuq) {
--		status = -EINVAL;
- 		QEDF_ERR(&qedf->dbg_ctx, "p_cpuq is NULL.\n");
--		goto mem_alloc_failure;
-+		return -EINVAL;
+diff --git a/drivers/platform/x86/lenovo-yogabook-wmi.c b/drivers/platform/x86/lenovo-yogabook-wmi.c
+index 5f4bd1eec38a9..3a6de4ab74a41 100644
+--- a/drivers/platform/x86/lenovo-yogabook-wmi.c
++++ b/drivers/platform/x86/lenovo-yogabook-wmi.c
+@@ -2,7 +2,6 @@
+ /* WMI driver for Lenovo Yoga Book YB1-X90* / -X91* tablets */
+ 
+ #include <linux/acpi.h>
+-#include <linux/devm-helpers.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/gpio/machine.h>
+ #include <linux/interrupt.h>
+@@ -248,10 +247,7 @@ static int yogabook_wmi_probe(struct wmi_device *wdev, const void *context)
+ 	data->brightness = YB_KBD_BL_DEFAULT;
+ 	set_bit(YB_KBD_IS_ON, &data->flags);
+ 	set_bit(YB_DIGITIZER_IS_ON, &data->flags);
+-
+-	r = devm_work_autocancel(&wdev->dev, &data->work, yogabook_wmi_work);
+-	if (r)
+-		return r;
++	INIT_WORK(&data->work, yogabook_wmi_work);
+ 
+ 	data->kbd_adev = acpi_dev_get_first_match_dev("GDIX1001", NULL, -1);
+ 	if (!data->kbd_adev) {
+@@ -299,10 +295,9 @@ static int yogabook_wmi_probe(struct wmi_device *wdev, const void *context)
+ 	}
+ 	data->backside_hall_irq = r;
+ 
+-	r = devm_request_irq(&wdev->dev, data->backside_hall_irq,
+-			     yogabook_backside_hall_irq,
+-			     IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING,
+-			     "backside_hall_sw", data);
++	r = request_irq(data->backside_hall_irq, yogabook_backside_hall_irq,
++			IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING,
++			"backside_hall_sw", data);
+ 	if (r) {
+ 		dev_err_probe(&wdev->dev, r, "Requesting backside_hall_sw IRQ\n");
+ 		goto error_put_devs;
+@@ -318,11 +313,14 @@ static int yogabook_wmi_probe(struct wmi_device *wdev, const void *context)
+ 	r = devm_led_classdev_register(&wdev->dev, &data->kbd_bl_led);
+ 	if (r < 0) {
+ 		dev_err_probe(&wdev->dev, r, "Registering backlight LED device\n");
+-		goto error_put_devs;
++		goto error_free_irq;
  	}
  
- 	qedf->global_queues = kzalloc((sizeof(struct global_queue *)
+ 	return 0;
+ 
++error_free_irq:
++	free_irq(data->backside_hall_irq, data);
++	cancel_work_sync(&data->work);
+ error_put_devs:
+ 	put_device(data->dig_dev);
+ 	put_device(data->kbd_dev);
+@@ -335,6 +333,8 @@ static void yogabook_wmi_remove(struct wmi_device *wdev)
+ {
+ 	struct yogabook_wmi *data = dev_get_drvdata(&wdev->dev);
+ 
++	free_irq(data->backside_hall_irq, data);
++	cancel_work_sync(&data->work);
+ 	put_device(data->dig_dev);
+ 	put_device(data->kbd_dev);
+ 	acpi_dev_put(data->dig_adev);
 -- 
 2.39.2
 
