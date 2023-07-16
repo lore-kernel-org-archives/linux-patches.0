@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64298F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BADAC433C9;
-	Sun, 16 Jul 2023 20:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3AB8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1163EC433C8;
+	Sun, 16 Jul 2023 20:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540484;
-	bh=w62NsMXgYitHZoLxNzRJa/ijgKhotOSQz0kuWoVT9pQ=;
+	s=korg; t=1689540487;
+	bh=FtUgPIsJ9BMI6BYaYUiUBpsR5DKK1ZMOXTJDt2lqhEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GFfFUA2swt4UFo7N71qBTRsgZmROrsaLtAQ+oMQrxY5LbxkbiQ7XA55yObe4Y1uiF
-	 sYw3PHW6UaAAfpp2hUFk8q7jqbvzmXDemPc0eNgT/rEmWOd4H4sLyhcRlpkcJoDtOr
-	 lgY+iJFehOXqI9R8H64QgKKzLUezAoAz7TiE9R60=
+	b=zC21KM0NOLBO1lBI7SW1Hbv718h2XhreIFmL9ugXKgG2oMstv+Q01BK5K/w8lDcpV
+	 4iygLoaTJic5x7e6Ns9eFSOfdybEQ5IEkGFafWhNzzF54cdok5AsoHHhxPJVP9xFeV
+	 vugbiAq22suPt7D2UjVFAW8QyOUe0RNSHIyF0Tdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 380/591] btrfs: fix race when deleting free space root from the dirty cow roots list
-Date: Sun, 16 Jul 2023 21:48:39 +0200
-Message-ID: <20230716194933.752769708@linuxfoundation.org>
+	Ding Hui <dinghui@sangfor.com.cn>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 381/591] SUNRPC: Fix UAF in svc_tcp_listen_data_ready()
+Date: Sun, 16 Jul 2023 21:48:40 +0200
+Message-ID: <20230716194933.779500046@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -34,85 +34,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ding Hui <dinghui@sangfor.com.cn>
 
-commit babebf023e661b90b1c78b2baa384fb03a226879 upstream.
+commit fc80fc2d4e39137869da3150ee169b40bf879287 upstream.
 
-When deleting the free space tree we are deleting the free space root
-from the list fs_info->dirty_cowonly_roots without taking the lock that
-protects it, which is struct btrfs_fs_info::trans_lock.
-This unsynchronized list manipulation may cause chaos if there's another
-concurrent manipulation of this list, such as when adding a root to it
-with ctree.c:add_root_to_dirty_list().
+After the listener svc_sock is freed, and before invoking svc_tcp_accept()
+for the established child sock, there is a window that the newsock
+retaining a freed listener svc_sock in sk_user_data which cloning from
+parent. In the race window, if data is received on the newsock, we will
+observe use-after-free report in svc_tcp_listen_data_ready().
 
-This can result in all sorts of weird failures caused by a race, such as
-the following crash:
+Reproduce by two tasks:
 
-  [337571.278245] general protection fault, probably for non-canonical address 0xdead000000000108: 0000 [#1] PREEMPT SMP PTI
-  [337571.278933] CPU: 1 PID: 115447 Comm: btrfs Tainted: G        W          6.4.0-rc6-btrfs-next-134+ #1
-  [337571.279153] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-  [337571.279572] RIP: 0010:commit_cowonly_roots+0x11f/0x250 [btrfs]
-  [337571.279928] Code: 85 38 06 00 (...)
-  [337571.280363] RSP: 0018:ffff9f63446efba0 EFLAGS: 00010206
-  [337571.280582] RAX: ffff942d98ec2638 RBX: ffff9430b82b4c30 RCX: 0000000449e1c000
-  [337571.280798] RDX: dead000000000100 RSI: ffff9430021e4900 RDI: 0000000000036070
-  [337571.281015] RBP: ffff942d98ec2000 R08: ffff942d98ec2000 R09: 000000000000015b
-  [337571.281254] R10: 0000000000000009 R11: 0000000000000001 R12: ffff942fe8fbf600
-  [337571.281476] R13: ffff942dabe23040 R14: ffff942dabe20800 R15: ffff942d92cf3b48
-  [337571.281723] FS:  00007f478adb7340(0000) GS:ffff94349fa40000(0000) knlGS:0000000000000000
-  [337571.281950] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [337571.282184] CR2: 00007f478ab9a3d5 CR3: 000000001e02c001 CR4: 0000000000370ee0
-  [337571.282416] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  [337571.282647] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  [337571.282874] Call Trace:
-  [337571.283101]  <TASK>
-  [337571.283327]  ? __die_body+0x1b/0x60
-  [337571.283570]  ? die_addr+0x39/0x60
-  [337571.283796]  ? exc_general_protection+0x22e/0x430
-  [337571.284022]  ? asm_exc_general_protection+0x22/0x30
-  [337571.284251]  ? commit_cowonly_roots+0x11f/0x250 [btrfs]
-  [337571.284531]  btrfs_commit_transaction+0x42e/0xf90 [btrfs]
-  [337571.284803]  ? _raw_spin_unlock+0x15/0x30
-  [337571.285031]  ? release_extent_buffer+0x103/0x130 [btrfs]
-  [337571.285305]  reset_balance_state+0x152/0x1b0 [btrfs]
-  [337571.285578]  btrfs_balance+0xa50/0x11e0 [btrfs]
-  [337571.285864]  ? __kmem_cache_alloc_node+0x14a/0x410
-  [337571.286086]  btrfs_ioctl+0x249a/0x3320 [btrfs]
-  [337571.286358]  ? mod_objcg_state+0xd2/0x360
-  [337571.286577]  ? refill_obj_stock+0xb0/0x160
-  [337571.286798]  ? seq_release+0x25/0x30
-  [337571.287016]  ? __rseq_handle_notify_resume+0x3ba/0x4b0
-  [337571.287235]  ? percpu_counter_add_batch+0x2e/0xa0
-  [337571.287455]  ? __x64_sys_ioctl+0x88/0xc0
-  [337571.287675]  __x64_sys_ioctl+0x88/0xc0
-  [337571.287901]  do_syscall_64+0x38/0x90
-  [337571.288126]  entry_SYSCALL_64_after_hwframe+0x72/0xdc
-  [337571.288352] RIP: 0033:0x7f478aaffe9b
+1. while :; do rpc.nfsd 0 ; rpc.nfsd; done
+2. while :; do echo "" | ncat -4 127.0.0.1 2049 ; done
 
-So fix this by locking struct btrfs_fs_info::trans_lock before deleting
-the free space root from that list.
+KASAN report:
 
-Fixes: a5ed91828518 ("Btrfs: implement the free space B-tree")
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in svc_tcp_listen_data_ready+0x1cf/0x1f0 [sunrpc]
+  Read of size 8 at addr ffff888139d96228 by task nc/102553
+  CPU: 7 PID: 102553 Comm: nc Not tainted 6.3.0+ #18
+  Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
+  Call Trace:
+   <IRQ>
+   dump_stack_lvl+0x33/0x50
+   print_address_description.constprop.0+0x27/0x310
+   print_report+0x3e/0x70
+   kasan_report+0xae/0xe0
+   svc_tcp_listen_data_ready+0x1cf/0x1f0 [sunrpc]
+   tcp_data_queue+0x9f4/0x20e0
+   tcp_rcv_established+0x666/0x1f60
+   tcp_v4_do_rcv+0x51c/0x850
+   tcp_v4_rcv+0x23fc/0x2e80
+   ip_protocol_deliver_rcu+0x62/0x300
+   ip_local_deliver_finish+0x267/0x350
+   ip_local_deliver+0x18b/0x2d0
+   ip_rcv+0x2fb/0x370
+   __netif_receive_skb_one_core+0x166/0x1b0
+   process_backlog+0x24c/0x5e0
+   __napi_poll+0xa2/0x500
+   net_rx_action+0x854/0xc90
+   __do_softirq+0x1bb/0x5de
+   do_softirq+0xcb/0x100
+   </IRQ>
+   <TASK>
+   ...
+   </TASK>
+
+  Allocated by task 102371:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   __kasan_kmalloc+0x7b/0x90
+   svc_setup_socket+0x52/0x4f0 [sunrpc]
+   svc_addsock+0x20d/0x400 [sunrpc]
+   __write_ports_addfd+0x209/0x390 [nfsd]
+   write_ports+0x239/0x2c0 [nfsd]
+   nfsctl_transaction_write+0xac/0x110 [nfsd]
+   vfs_write+0x1c3/0xae0
+   ksys_write+0xed/0x1c0
+   do_syscall_64+0x38/0x90
+   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+  Freed by task 102551:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   kasan_save_free_info+0x2a/0x50
+   __kasan_slab_free+0x106/0x190
+   __kmem_cache_free+0x133/0x270
+   svc_xprt_free+0x1e2/0x350 [sunrpc]
+   svc_xprt_destroy_all+0x25a/0x440 [sunrpc]
+   nfsd_put+0x125/0x240 [nfsd]
+   nfsd_svc+0x2cb/0x3c0 [nfsd]
+   write_threads+0x1ac/0x2a0 [nfsd]
+   nfsctl_transaction_write+0xac/0x110 [nfsd]
+   vfs_write+0x1c3/0xae0
+   ksys_write+0xed/0x1c0
+   do_syscall_64+0x38/0x90
+   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Fix the UAF by simply doing nothing in svc_tcp_listen_data_ready()
+if state != TCP_LISTEN, that will avoid dereferencing svsk for all
+child socket.
+
+Link: https://lore.kernel.org/lkml/20230507091131.23540-1-dinghui@sangfor.com.cn/
+Fixes: fa9251afc33c ("SUNRPC: Call the default socket callbacks instead of open coding")
+Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/free-space-tree.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sunrpc/svcsock.c |   23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
---- a/fs/btrfs/free-space-tree.c
-+++ b/fs/btrfs/free-space-tree.c
-@@ -1275,7 +1275,10 @@ int btrfs_delete_free_space_tree(struct
- 		goto abort;
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -688,12 +688,6 @@ static void svc_tcp_listen_data_ready(st
+ {
+ 	struct svc_sock	*svsk = (struct svc_sock *)sk->sk_user_data;
  
- 	btrfs_global_root_delete(free_space_root);
+-	if (svsk) {
+-		/* Refer to svc_setup_socket() for details. */
+-		rmb();
+-		svsk->sk_odata(sk);
+-	}
+-
+ 	/*
+ 	 * This callback may called twice when a new connection
+ 	 * is established as a child socket inherits everything
+@@ -702,13 +696,18 @@ static void svc_tcp_listen_data_ready(st
+ 	 *    when one of child sockets become ESTABLISHED.
+ 	 * 2) data_ready method of the child socket may be called
+ 	 *    when it receives data before the socket is accepted.
+-	 * In case of 2, we should ignore it silently.
++	 * In case of 2, we should ignore it silently and DO NOT
++	 * dereference svsk.
+ 	 */
+-	if (sk->sk_state == TCP_LISTEN) {
+-		if (svsk) {
+-			set_bit(XPT_CONN, &svsk->sk_xprt.xpt_flags);
+-			svc_xprt_enqueue(&svsk->sk_xprt);
+-		}
++	if (sk->sk_state != TCP_LISTEN)
++		return;
 +
-+	spin_lock(&fs_info->trans_lock);
- 	list_del(&free_space_root->dirty_list);
-+	spin_unlock(&fs_info->trans_lock);
++	if (svsk) {
++		/* Refer to svc_setup_socket() for details. */
++		rmb();
++		svsk->sk_odata(sk);
++		set_bit(XPT_CONN, &svsk->sk_xprt.xpt_flags);
++		svc_xprt_enqueue(&svsk->sk_xprt);
+ 	}
+ }
  
- 	btrfs_tree_lock(free_space_root->node);
- 	btrfs_clean_tree_block(free_space_root->node);
 
 
