@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A278F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:19:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD374C433C7;
-	Sun, 16 Jul 2023 20:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CFB8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:19:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9953BC433C8;
+	Sun, 16 Jul 2023 20:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538789;
-	bh=rhu/ApJ2l+uClfHnn+bAgVtOU6+dPXY2VjGaUWCfjyo=;
+	s=korg; t=1689538792;
+	bh=5w/SXJvSSN0lvDF8NdC5CubC4dBvV/ZW1pOyj+a4LPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZjGb7FrRn6qH1JvEKXWxUDqh9D8vF7munf8XMGS4uqNbPewQknEVD+r4vylGsqsQ
-	 E9wzN6/NfGmBodhNz0Mb9yZnYCBAO3FjVSfomn50C/cbUNn6wwPboof2dZduRhWBcX
-	 YDQwJSByHztItfyKmHBLtKpE5JIoRTdMg7l7mWAs=
+	b=Da9J3AVRSgPxv5gitqnSEpdFOqf4q9p9u3SZDd8OkgQ+XEmsx0yQ6jHIlvtQ32tjN
+	 bNLOZZqIc2WSiwQE9EMIX+VxzDfLp1+TTNAHB3p/25oZvicCsJNpeazovQlKM+qGyl
+	 N+6cfejMrJRiCjnE8LCbV6INp4EWlhQkraqfKQjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Robert Marko <robimarko@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 577/800] media: mediatek: vcodec: using decoder status instead of core work count
-Date: Sun, 16 Jul 2023 21:47:10 +0200
-Message-ID: <20230716195002.485449226@linuxfoundation.org>
+Subject: [PATCH 6.4 578/800] clk: qcom: ipq6018: fix networking resets
+Date: Sun, 16 Jul 2023 21:47:11 +0200
+Message-ID: <20230716195002.509771371@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,149 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Robert Marko <robimarko@gmail.com>
 
-[ Upstream commit 2864e304faec04c2674328aad0e820a9cd84cdec ]
+[ Upstream commit 349b5bed539b491b7894a5186a895751fd8ba6c7 ]
 
-Adding the definition of decoder status to separate different decoder
-period for core hardware.
+Networking resets in IPQ6018 all use bitmask as they require multiple
+bits to be set and cleared instead of a single bit.
 
-core_work_cnt is the number of core work queued to work queue, the control
-is very complex, leading to some unreasonable test result.
+So, current networking resets have the same register and bit 0 set which
+is clearly incorrect.
 
-Using parameter status to indicate whether queue core work to work queue.
-
-Fixes: 2e0ef56d81cb ("media: mediatek: vcodec: making sure queue_work successfully")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: d9db07f088af ("clk: qcom: Add ipq6018 Global Clock Controller support")
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230526190855.2941291-2-robimarko@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/mediatek/vcodec/vdec_msg_queue.c | 33 ++++++++-----------
- .../platform/mediatek/vcodec/vdec_msg_queue.h | 16 +++++++--
- 2 files changed, 28 insertions(+), 21 deletions(-)
+ drivers/clk/qcom/gcc-ipq6018.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-index f3073d1e7f420..03f8d7cd8eddc 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-@@ -71,7 +71,6 @@ static void vdec_msg_queue_dec(struct vdec_msg_queue *msg_queue, int hardware_in
- int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf *buf)
- {
- 	struct list_head *head;
--	int status;
- 
- 	head = vdec_get_buf_list(msg_ctx->hardware_index, buf);
- 	if (!head) {
-@@ -87,12 +86,9 @@ int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf
- 	if (msg_ctx->hardware_index != MTK_VDEC_CORE) {
- 		wake_up_all(&msg_ctx->ready_to_use);
- 	} else {
--		if (buf->ctx->msg_queue.core_work_cnt <
--			atomic_read(&buf->ctx->msg_queue.core_list_cnt)) {
--			status = queue_work(buf->ctx->dev->core_workqueue,
--					    &buf->ctx->msg_queue.core_work);
--			if (status)
--				buf->ctx->msg_queue.core_work_cnt++;
-+		if (!(buf->ctx->msg_queue.status & CONTEXT_LIST_QUEUED)) {
-+			queue_work(buf->ctx->dev->core_workqueue, &buf->ctx->msg_queue.core_work);
-+			buf->ctx->msg_queue.status |= CONTEXT_LIST_QUEUED;
- 		}
- 	}
- 
-@@ -261,7 +257,10 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
- 		container_of(msg_queue, struct mtk_vcodec_ctx, msg_queue);
- 	struct mtk_vcodec_dev *dev = ctx->dev;
- 	struct vdec_lat_buf *lat_buf;
--	int status;
-+
-+	spin_lock(&ctx->dev->msg_queue_core_ctx.ready_lock);
-+	ctx->msg_queue.status &= ~CONTEXT_LIST_QUEUED;
-+	spin_unlock(&ctx->dev->msg_queue_core_ctx.ready_lock);
- 
- 	lat_buf = vdec_msg_queue_dqbuf(&dev->msg_queue_core_ctx);
- 	if (!lat_buf)
-@@ -278,17 +277,13 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
- 	vdec_msg_queue_qbuf(&ctx->msg_queue.lat_ctx, lat_buf);
- 
- 	wake_up_all(&ctx->msg_queue.core_dec_done);
--	spin_lock(&dev->msg_queue_core_ctx.ready_lock);
--	lat_buf->ctx->msg_queue.core_work_cnt--;
--
--	if (lat_buf->ctx->msg_queue.core_work_cnt <
--		atomic_read(&lat_buf->ctx->msg_queue.core_list_cnt)) {
--		status = queue_work(lat_buf->ctx->dev->core_workqueue,
--				    &lat_buf->ctx->msg_queue.core_work);
--		if (status)
--			lat_buf->ctx->msg_queue.core_work_cnt++;
-+	if (!(ctx->msg_queue.status & CONTEXT_LIST_QUEUED) &&
-+	    atomic_read(&msg_queue->core_list_cnt)) {
-+		spin_lock(&ctx->dev->msg_queue_core_ctx.ready_lock);
-+		ctx->msg_queue.status |= CONTEXT_LIST_QUEUED;
-+		spin_unlock(&ctx->dev->msg_queue_core_ctx.ready_lock);
-+		queue_work(ctx->dev->core_workqueue, &msg_queue->core_work);
- 	}
--	spin_unlock(&dev->msg_queue_core_ctx.ready_lock);
- }
- 
- int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
-@@ -303,13 +298,13 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
- 		return 0;
- 
- 	msg_queue->ctx = ctx;
--	msg_queue->core_work_cnt = 0;
- 	vdec_msg_queue_init_ctx(&msg_queue->lat_ctx, MTK_VDEC_LAT0);
- 	INIT_WORK(&msg_queue->core_work, vdec_msg_queue_core_work);
- 
- 	atomic_set(&msg_queue->lat_list_cnt, 0);
- 	atomic_set(&msg_queue->core_list_cnt, 0);
- 	init_waitqueue_head(&msg_queue->core_dec_done);
-+	msg_queue->status = CONTEXT_LIST_EMPTY;
- 
- 	msg_queue->wdma_addr.size =
- 		vde_msg_queue_get_trans_size(ctx->picinfo.buf_w,
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-index a5d44bc97c16b..8f82d14847726 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-@@ -21,6 +21,18 @@ struct mtk_vcodec_ctx;
- struct mtk_vcodec_dev;
- typedef int (*core_decode_cb_t)(struct vdec_lat_buf *lat_buf);
- 
-+/**
-+ * enum core_ctx_status - Context decode status for core hardwre.
-+ * @CONTEXT_LIST_EMPTY: No buffer queued on core hardware(must always be 0)
-+ * @CONTEXT_LIST_QUEUED: Buffer queued to core work list
-+ * @CONTEXT_LIST_DEC_DONE: context decode done
-+ */
-+enum core_ctx_status {
-+	CONTEXT_LIST_EMPTY = 0,
-+	CONTEXT_LIST_QUEUED,
-+	CONTEXT_LIST_DEC_DONE,
-+};
-+
- /**
-  * struct vdec_msg_queue_ctx - represents a queue for buffers ready to be processed
-  * @ready_to_use: ready used queue used to signalize when get a job queue
-@@ -77,7 +89,7 @@ struct vdec_lat_buf {
-  * @lat_list_cnt: used to record each instance lat list count
-  * @core_list_cnt: used to record each instance core list count
-  * @core_dec_done: core work queue decode done event
-- * @core_work_cnt: the number of core work in work queue
-+ * @status: current context decode status for core hardware
-  */
- struct vdec_msg_queue {
- 	struct vdec_lat_buf lat_buf[NUM_BUFFER_COUNT];
-@@ -93,7 +105,7 @@ struct vdec_msg_queue {
- 	atomic_t lat_list_cnt;
- 	atomic_t core_list_cnt;
- 	wait_queue_head_t core_dec_done;
--	int core_work_cnt;
-+	int status;
- };
- 
- /**
+diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+index 5c5d1b04ea7af..cde62a11f5736 100644
+--- a/drivers/clk/qcom/gcc-ipq6018.c
++++ b/drivers/clk/qcom/gcc-ipq6018.c
+@@ -4517,24 +4517,24 @@ static const struct qcom_reset_map gcc_ipq6018_resets[] = {
+ 	[GCC_PCIE0_AHB_ARES] = { 0x75040, 5 },
+ 	[GCC_PCIE0_AXI_MASTER_STICKY_ARES] = { 0x75040, 6 },
+ 	[GCC_PCIE0_AXI_SLAVE_STICKY_ARES] = { 0x75040, 7 },
+-	[GCC_PPE_FULL_RESET] = { 0x68014, 0 },
+-	[GCC_UNIPHY0_SOFT_RESET] = { 0x56004, 0 },
++	[GCC_PPE_FULL_RESET] = { .reg = 0x68014, .bitmask = 0xf0000 },
++	[GCC_UNIPHY0_SOFT_RESET] = { .reg = 0x56004, .bitmask = 0x3ff2 },
+ 	[GCC_UNIPHY0_XPCS_RESET] = { 0x56004, 2 },
+-	[GCC_UNIPHY1_SOFT_RESET] = { 0x56104, 0 },
++	[GCC_UNIPHY1_SOFT_RESET] = { .reg = 0x56104, .bitmask = 0x32 },
+ 	[GCC_UNIPHY1_XPCS_RESET] = { 0x56104, 2 },
+-	[GCC_EDMA_HW_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT1_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT2_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT3_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT4_RESET] = { 0x68014, 0 },
+-	[GCC_NSSPORT5_RESET] = { 0x68014, 0 },
+-	[GCC_UNIPHY0_PORT1_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT2_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT3_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT4_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT5_ARES] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT_4_5_RESET] = { 0x56004, 0 },
+-	[GCC_UNIPHY0_PORT_4_RESET] = { 0x56004, 0 },
++	[GCC_EDMA_HW_RESET] = { .reg = 0x68014, .bitmask = 0x300000 },
++	[GCC_NSSPORT1_RESET] = { .reg = 0x68014, .bitmask = 0x1000003 },
++	[GCC_NSSPORT2_RESET] = { .reg = 0x68014, .bitmask = 0x200000c },
++	[GCC_NSSPORT3_RESET] = { .reg = 0x68014, .bitmask = 0x4000030 },
++	[GCC_NSSPORT4_RESET] = { .reg = 0x68014, .bitmask = 0x8000300 },
++	[GCC_NSSPORT5_RESET] = { .reg = 0x68014, .bitmask = 0x10000c00 },
++	[GCC_UNIPHY0_PORT1_ARES] = { .reg = 0x56004, .bitmask = 0x30 },
++	[GCC_UNIPHY0_PORT2_ARES] = { .reg = 0x56004, .bitmask = 0xc0 },
++	[GCC_UNIPHY0_PORT3_ARES] = { .reg = 0x56004, .bitmask = 0x300 },
++	[GCC_UNIPHY0_PORT4_ARES] = { .reg = 0x56004, .bitmask = 0xc00 },
++	[GCC_UNIPHY0_PORT5_ARES] = { .reg = 0x56004, .bitmask = 0x3000 },
++	[GCC_UNIPHY0_PORT_4_5_RESET] = { .reg = 0x56004, .bitmask = 0x3c02 },
++	[GCC_UNIPHY0_PORT_4_RESET] = { .reg = 0x56004, .bitmask = 0xc02 },
+ 	[GCC_LPASS_BCR] = {0x1F000, 0},
+ 	[GCC_UBI32_TBU_BCR] = {0x65000, 0},
+ 	[GCC_LPASS_TBU_BCR] = {0x6C000, 0},
 -- 
 2.39.2
 
