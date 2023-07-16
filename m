@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB6B8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BCEC433C8;
-	Sun, 16 Jul 2023 20:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842BC8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071BCC433C8;
+	Sun, 16 Jul 2023 20:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538293;
-	bh=32bIBJrzYt4IWeuS1C9n0+wAAujBPREGIex+VnxGCfg=;
+	s=korg; t=1689538296;
+	bh=EyYRh+3otg3D/HkayMLbR/CSzGXR5oVy6A/UB67R580=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aX5Ro6CF1wcHfs86BU416ZbX+p+sIVR5ZbkLOCtPaxRhecyv0qGrKEJQPGuPcBW1A
-	 ChMf295SSh4k9Tyi/cheoqME1HsQatqdTE5aQPejFQlKfnOU5DoNQVbwLjh37CR2mk
-	 iTpmzID7oeTfuO3Hav0Yy2pROWMztXtMXqfbt6bA=
+	b=cCrbqKEo9Q0/UY6OKHoG87vkROS1tkVsQHFOO9M0zIiiQMsd4fp48esoTwMzzdwyB
+	 RGZ6s89ukkAo8RLxNgyqgaSxmU29GCXg3fTYBZGavdv3amb9JVnPoC5m08cGpdJns5
+	 qbvhpMqPqOtSZFJIQNXkJxTcUUn9xTLNmL4FYlKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Andrew Davis <afd@ti.com>,
+	Nishanth Menon <nm@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 346/800] drm/i915: Fix limited range csc matrix
-Date: Sun, 16 Jul 2023 21:43:19 +0200
-Message-ID: <20230716194957.117528114@linuxfoundation.org>
+Subject: [PATCH 6.4 393/800] arm64: dts: ti: k3-j721e-beagleboneai64: Fix mailbox node status
+Date: Sun, 16 Jul 2023 21:44:06 +0200
+Message-ID: <20230716194958.199688437@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,61 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 404c3acda4b65924c05bc63242e94f954f84c165 ]
+[ Upstream commit 155e7635ed1f3814d94d12556a3a0fed41d05b76 ]
 
-Our current limited range matrix is a bit off. I think it
-was originally calculated with rounding, as if we wanted
-the normal pixel replication type of behaviour.
-That is, since the 8bpc max value is 0xeb we assumed the
-16bpc max value should be 0xebeb, but what the HDMI spec
-actually says it should be is 0xeb00.
+Mailbox nodes are now disabled by default. The BeagleBoard AI64 DT
+addition went in at around the same time and must have missed that
+change so the mailboxes are not re-enabled. Do that here.
 
-So to get what we want we make the formula
- out = in * (235-16) << (12-8) / in_max + 16 << (12-8),
-with 12 being precision of the csc, 8 being the precision
-of the constants we used.
-
-The hardware takes its coefficients as floating point
-values, but the (235−16)/255 = ~.86, so exponent 0
-is what we want anyway, so it works out perfectly without
-having to hardcode it in hex or start playing with floats.
-
-In terms of raw numbers we are feeding the hardware the
-post offset changes from 0x101 to 0x100, and the coefficient
-changes from 0xdc0 to 0xdb0 (~.860->~.855). So this should
-make everything come out just a tad darker.
-
-I already used better constants in lut_limited_range() earlier
-so the output of the two paths should be closer now.
-
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230329135002.3096-2-ville.syrjala@linux.intel.com
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Stable-dep-of: 19db2062094c ("drm/i915: No 10bit gamma on desktop gen3 parts")
+Fixes: fae14a1cb8dd ("arm64: dts: ti: Add k3-j721e-beagleboneai64")
+Signed-off-by: Andrew Davis <afd@ti.com>
+Reviewed-by: Nishanth Menon <nm@ti.com>
+Link: https://lore.kernel.org/r/20230515172137.474626-1-afd@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_color.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_color.c b/drivers/gpu/drm/i915/display/intel_color.c
-index 36aac88143ac1..3c3e2f5a5cdec 100644
---- a/drivers/gpu/drm/i915/display/intel_color.c
-+++ b/drivers/gpu/drm/i915/display/intel_color.c
-@@ -116,10 +116,9 @@ struct intel_color_funcs {
- #define ILK_CSC_COEFF_FP(coeff, fbits)	\
- 	(clamp_val(((coeff) >> (32 - (fbits) - 3)) + 4, 0, 0xfff) & 0xff8)
+diff --git a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
+index 37c24b077b6aa..8a62ac263b89a 100644
+--- a/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
++++ b/arch/arm64/boot/dts/ti/k3-j721e-beagleboneai64.dts
+@@ -936,6 +936,7 @@ &ufs_wrapper {
+ };
  
--#define ILK_CSC_COEFF_LIMITED_RANGE 0x0dc0
- #define ILK_CSC_COEFF_1_0 0x7800
--
--#define ILK_CSC_POSTOFF_LIMITED_RANGE (16 * (1 << 12) / 255)
-+#define ILK_CSC_COEFF_LIMITED_RANGE ((235 - 16) << (12 - 8)) /* exponent 0 */
-+#define ILK_CSC_POSTOFF_LIMITED_RANGE (16 << (12 - 8))
+ &mailbox0_cluster0 {
++	status = "okay";
+ 	interrupts = <436>;
  
- /* Nop pre/post offsets */
- static const u16 ilk_csc_off_zero[3] = {};
+ 	mbox_mcu_r5fss0_core0: mbox-mcu-r5fss0-core0 {
+@@ -950,6 +951,7 @@ mbox_mcu_r5fss0_core1: mbox-mcu-r5fss0-core1 {
+ };
+ 
+ &mailbox0_cluster1 {
++	status = "okay";
+ 	interrupts = <432>;
+ 
+ 	mbox_main_r5fss0_core0: mbox-main-r5fss0-core0 {
+@@ -964,6 +966,7 @@ mbox_main_r5fss0_core1: mbox-main-r5fss0-core1 {
+ };
+ 
+ &mailbox0_cluster2 {
++	status = "okay";
+ 	interrupts = <428>;
+ 
+ 	mbox_main_r5fss1_core0: mbox-main-r5fss1-core0 {
+@@ -978,6 +981,7 @@ mbox_main_r5fss1_core1: mbox-main-r5fss1-core1 {
+ };
+ 
+ &mailbox0_cluster3 {
++	status = "okay";
+ 	interrupts = <424>;
+ 
+ 	mbox_c66_0: mbox-c66-0 {
+@@ -992,6 +996,7 @@ mbox_c66_1: mbox-c66-1 {
+ };
+ 
+ &mailbox0_cluster4 {
++	status = "okay";
+ 	interrupts = <420>;
+ 
+ 	mbox_c71_0: mbox-c71-0 {
 -- 
 2.39.2
 
