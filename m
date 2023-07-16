@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F978F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDACC433C7;
-	Sun, 16 Jul 2023 20:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3C38F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:34:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F172C433C8;
+	Sun, 16 Jul 2023 20:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539641;
-	bh=pNZQUXElj2tqSANVpFjUZ+qmXArUN07ARQ5sikHBHp4=;
+	s=korg; t=1689539644;
+	bh=CrDk+++5ChoP16jYx7IjFZCwTiGLvv7vVvuOPn2tUj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MnEp7lEYq2n8cx5rNsejXYr6a69hm4gSpAfMz+JF4uV6tz9quyuL/TdGJvhVSZ8Sc
-	 AAwpHZIwBWWaRdb6AvxTUM1gThnbbj2IVdGkdWIErr9A5asCip//sFa3a8a90aKHld
-	 +wV01vB97qayy2WLF1Sp4P1pRg8VLTGlovp0Q96g=
+	b=zjGuEQrivUvEpI/HmqXgFdIDQsteZNAbKg2+sUmYn5APAgEMuCKvM0v4LCIqPPFEO
+	 QISNsG8LSRXQb6CfCtqx8tG8FseF7tzDzmsedWZ5h1WojfelHOMAQuHU7qQKyZRxPD
+	 zJAvypdeJrR8+4z5+HBMNWFgly5/RF98jGz7a0cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Amisha Patel <amisha.patel@microchip.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/591] PM: domains: fix integer overflow issues in genpd_parse_state()
-Date: Sun, 16 Jul 2023 21:43:01 +0200
-Message-ID: <20230716194924.970438201@linuxfoundation.org>
+Subject: [PATCH 6.1 073/591] wifi: wilc1000: fix for absent RSN capabilities WFA testcase
+Date: Sun, 16 Jul 2023 21:43:32 +0200
+Message-ID: <20230716194925.775991548@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,46 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Amisha Patel <amisha.patel@microchip.com>
 
-[ Upstream commit e5d1c8722083f0332dcd3c85fa1273d85fb6bed8 ]
+[ Upstream commit 9ce4bb09123e9754996e358bd808d39f5d112899 ]
 
-Currently, while calculating residency and latency values, right
-operands may overflow if resulting values are big enough.
+Mandatory WFA testcase
+CT_Security_WPA2Personal_STA_RSNEBoundsVerification-AbsentRSNCap,
+performs bounds verfication on Beacon and/or Probe response frames. It
+failed and observed the reason to be absence of cipher suite and AKM
+suite in RSN information. To fix this, enable the RSN flag before extracting RSN
+capabilities.
 
-To prevent this, albeit unlikely case, play it safe and convert
-right operands to left ones' type s64.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 30f604283e05 ("PM / Domains: Allow domain power states to be read from DT")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: cd21d99e595e ("wifi: wilc1000: validate pairwise and authentication suite offsets")
+Signed-off-by: Amisha Patel <amisha.patel@microchip.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230421181005.4865-1-amisha.patel@microchip.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/microchip/wilc1000/hif.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index b411201f75bfb..b33fc322e0928 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2923,10 +2923,10 @@ static int genpd_parse_state(struct genpd_power_state *genpd_state,
+diff --git a/drivers/net/wireless/microchip/wilc1000/hif.c b/drivers/net/wireless/microchip/wilc1000/hif.c
+index 67df8221b5aeb..a1b75feec6edf 100644
+--- a/drivers/net/wireless/microchip/wilc1000/hif.c
++++ b/drivers/net/wireless/microchip/wilc1000/hif.c
+@@ -485,6 +485,9 @@ void *wilc_parse_join_bss_param(struct cfg80211_bss *bss,
+ 		int rsn_ie_len = sizeof(struct element) + rsn_ie[1];
+ 		int offset = 8;
  
- 	err = of_property_read_u32(state_node, "min-residency-us", &residency);
- 	if (!err)
--		genpd_state->residency_ns = 1000 * residency;
-+		genpd_state->residency_ns = 1000LL * residency;
++		param->mode_802_11i = 2;
++		param->rsn_found = true;
++
+ 		/* extract RSN capabilities */
+ 		if (offset < rsn_ie_len) {
+ 			/* skip over pairwise suites */
+@@ -494,11 +497,8 @@ void *wilc_parse_join_bss_param(struct cfg80211_bss *bss,
+ 				/* skip over authentication suites */
+ 				offset += (rsn_ie[offset] * 4) + 2;
  
--	genpd_state->power_on_latency_ns = 1000 * exit_latency;
--	genpd_state->power_off_latency_ns = 1000 * entry_latency;
-+	genpd_state->power_on_latency_ns = 1000LL * exit_latency;
-+	genpd_state->power_off_latency_ns = 1000LL * entry_latency;
- 	genpd_state->fwnode = &state_node->fwnode;
- 
- 	return 0;
+-				if (offset + 1 < rsn_ie_len) {
+-					param->mode_802_11i = 2;
+-					param->rsn_found = true;
++				if (offset + 1 < rsn_ie_len)
+ 					memcpy(param->rsn_cap, &rsn_ie[offset], 2);
+-				}
+ 			}
+ 		}
+ 	}
 -- 
 2.39.2
 
