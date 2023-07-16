@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6828F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29CFC433C7;
-	Sun, 16 Jul 2023 20:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BF58F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:48:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D547C433C7;
+	Sun, 16 Jul 2023 20:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540518;
-	bh=iZtEMpetjq9RvHLXlACO4Mf0j3utTALl6hRW+zLAfnM=;
+	s=korg; t=1689540521;
+	bh=+1hMspF/G9VnTE1U8jAUe9oapUDtIFZeqHZj3czvEns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDu51uy884QapTNmLxuUymWJmbGDnMq9b4PEkFULxzPsfqkqr2rEdarotBfnS+k5b
-	 YEXATmYVCfCqKvKs8nBRddRTXs+xaKv+4GHMoi9kJcvyw96vm3XdGhxFGPPfCp6st9
-	 Lr/K9oPsYY99bzgyLlhoOpQk4JV4vu5mY+kH2SKc=
+	b=OOthrHtgYoMOrwRFn/iAJG2mI0diPzB4I8b4ptaUeEZwK1RTS918mrnUZlVCO3IF6
+	 LxxU/R9BvZFqt2i8KtWwZuOFgPcLEJVL1EziZK/gm5dpBoWpwlVJScyrmdONuK5GSZ
+	 1kR98CXkMTO4vo08WQe2iaUM7CRkWgvOTEN/KR1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Mantas Pucka <mantas@8devices.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 391/591] clk: qcom: camcc-sc7180: Add parent dependency to all camera GDSCs
-Date: Sun, 16 Jul 2023 21:48:50 +0200
-Message-ID: <20230716194934.031956068@linuxfoundation.org>
+Subject: [PATCH 6.1 392/591] clk: qcom: gcc-ipq6018: Use floor ops for sdcc clocks
+Date: Sun, 16 Jul 2023 21:48:51 +0200
+Message-ID: <20230716194934.058668720@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,86 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Mantas Pucka <mantas@8devices.com>
 
-[ Upstream commit 3e4d179532423f299554cd0dedabdd9d2fdd238d ]
+[ Upstream commit 56e5ae0116aef87273cf1812d608645b076e4f02 ]
 
-Camera titan top GDSC is a parent supply to all other camera GDSCs. Titan
-top GDSC is required to be enabled before enabling any other camera GDSCs
-and it should be disabled only after all other camera GDSCs are disabled.
-Ensure this behavior by marking titan top GDSC as parent of all other
-camera GDSCs.
+SDCC clocks must be rounded down to avoid overclocking the controller.
 
-Fixes: 15d09e830bbc ("clk: qcom: camcc: Add camera clock controller driver for SC7180")
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Fixes: d9db07f088af ("clk: qcom: Add ipq6018 Global Clock Controller support")
+Signed-off-by: Mantas Pucka <mantas@8devices.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230501142932.13049-1-quic_tdas@quicinc.com
+Link: https://lore.kernel.org/r/1682413909-24927-1-git-send-email-mantas@8devices.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sc7180.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/clk/qcom/gcc-ipq6018.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
-index e2b4804695f37..8a4ba7a19ed12 100644
---- a/drivers/clk/qcom/camcc-sc7180.c
-+++ b/drivers/clk/qcom/camcc-sc7180.c
-@@ -1480,12 +1480,21 @@ static struct clk_branch cam_cc_sys_tmr_clk = {
+diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+index 3f9c2f61a5d93..5c5d1b04ea7af 100644
+--- a/drivers/clk/qcom/gcc-ipq6018.c
++++ b/drivers/clk/qcom/gcc-ipq6018.c
+@@ -1654,7 +1654,7 @@ static struct clk_rcg2 sdcc1_apps_clk_src = {
+ 		.name = "sdcc1_apps_clk_src",
+ 		.parent_data = gcc_xo_gpll0_gpll2_gpll0_out_main_div2,
+ 		.num_parents = 4,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_floor_ops,
  	},
  };
  
-+static struct gdsc titan_top_gdsc = {
-+	.gdscr = 0xb134,
-+	.pd = {
-+		.name = "titan_top_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+};
-+
- static struct gdsc bps_gdsc = {
- 	.gdscr = 0x6004,
- 	.pd = {
- 		.name = "bps_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- 	.flags = HW_CTRL,
- };
- 
-@@ -1495,6 +1504,7 @@ static struct gdsc ife_0_gdsc = {
- 		.name = "ife_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- };
- 
- static struct gdsc ife_1_gdsc = {
-@@ -1503,6 +1513,7 @@ static struct gdsc ife_1_gdsc = {
- 		.name = "ife_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- };
- 
- static struct gdsc ipe_0_gdsc = {
-@@ -1512,15 +1523,9 @@ static struct gdsc ipe_0_gdsc = {
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
- 	.flags = HW_CTRL,
-+	.parent = &titan_top_gdsc.pd,
- };
- 
--static struct gdsc titan_top_gdsc = {
--	.gdscr = 0xb134,
--	.pd = {
--		.name = "titan_top_gdsc",
--	},
--	.pwrsts = PWRSTS_OFF_ON,
--};
- 
- static struct clk_hw *cam_cc_sc7180_hws[] = {
- 	[CAM_CC_PLL2_OUT_EARLY] = &cam_cc_pll2_out_early.hw,
 -- 
 2.39.2
 
