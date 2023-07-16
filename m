@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA3D8F70
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB07DC433C8;
-	Sun, 16 Jul 2023 19:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0546E8F70
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:58:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C850C433C8;
+	Sun, 16 Jul 2023 19:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537488;
-	bh=35LrmGxqWGSnXjz94GWEQ4ojFEIF62doX/hHyOEb7IA=;
+	s=korg; t=1689537490;
+	bh=KqJUsXewUx641q3FFlypYit6JUTuGazMO3xqHqBn9pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QvGWexIKR5c2tFSFhm/yMMAg5CNf7JPoAV9nqIGStNJPVTRQFozYuiYfWGbmJnbBX
-	 4zTk0j+ADUJ5xkzV4a/vHNlLElUGJncEbIGzq9ndyxjcVHfFQ0sMQN2bUm7u3kmmOQ
-	 Auai/3GPAaLy4NKs1urRP5IgKg3vlwSWLiIA51RU=
+	b=YezEk0jNCddxoCuc2JXHZks/XUTbjiS9vaMEARy9rQhtvGZpMTKPmk7usZ2h73QBY
+	 xlarfg3OgbktBnI6sqfk/ptKomvfp/ihIgWaWVa8R3cQVmVxVzX9B7ynaNh+o0wDa3
+	 Ror+aWUt2+ThOddd9JA+hUTPVUQz7SMi/V4l2rq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Michael Kelley <mikelley@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 086/800] rcu/rcuscale: Stop kfree_scale_thread thread(s) after unloading rcuscale
-Date: Sun, 16 Jul 2023 21:38:59 +0200
-Message-ID: <20230716194951.106387422@linuxfoundation.org>
+Subject: [PATCH 6.4 087/800] x86/mtrr: Remove physical address size calculation
+Date: Sun, 16 Jul 2023 21:39:00 +0200
+Message-ID: <20230716194951.129960684@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -37,78 +36,277 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 23fc8df26dead16687ae6eb47b0561a4a832e2f6 ]
+[ Upstream commit f6b980646b93a8c585b4ed991b8a34e8fc6ef847 ]
 
-Running the 'kfree_rcu_test' test case [1] results in a splat [2].
-The root cause is the kfree_scale_thread thread(s) continue running
-after unloading the rcuscale module.  This commit fixes that isue by
-invoking kfree_scale_cleanup() from rcu_scale_cleanup() when removing
-the rcuscale module.
+The physical address width calculation in mtrr_bp_init() can easily be
+replaced with using the already available value x86_phys_bits from
+struct cpuinfo_x86.
 
-[1] modprobe rcuscale kfree_rcu_test=1
-    // After some time
-    rmmod rcuscale
-    rmmod torture
+The same information source can be used in mtrr/cleanup.c, removing the
+need to pass that value on to mtrr_cleanup().
 
-[2] BUG: unable to handle page fault for address: ffffffffc0601a87
-    #PF: supervisor instruction fetch in kernel mode
-    #PF: error_code(0x0010) - not-present page
-    PGD 11de4f067 P4D 11de4f067 PUD 11de51067 PMD 112f4d067 PTE 0
-    Oops: 0010 [#1] PREEMPT SMP NOPTI
-    CPU: 1 PID: 1798 Comm: kfree_scale_thr Not tainted 6.3.0-rc1-rcu+ #1
-    Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 0.0.0 02/06/2015
-    RIP: 0010:0xffffffffc0601a87
-    Code: Unable to access opcode bytes at 0xffffffffc0601a5d.
-    RSP: 0018:ffffb25bc2e57e18 EFLAGS: 00010297
-    RAX: 0000000000000000 RBX: ffffffffc061f0b6 RCX: 0000000000000000
-    RDX: 0000000000000000 RSI: ffffffff962fd0de RDI: ffffffff962fd0de
-    RBP: ffffb25bc2e57ea8 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000001 R11: 0000000000000001 R12: 0000000000000000
-    R13: 0000000000000000 R14: 000000000000000a R15: 00000000001c1dbe
-    FS:  0000000000000000(0000) GS:ffff921fa2200000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: ffffffffc0601a5d CR3: 000000011de4c006 CR4: 0000000000370ee0
-    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-    Call Trace:
-     <TASK>
-     ? kvfree_call_rcu+0xf0/0x3a0
-     ? kthread+0xf3/0x120
-     ? kthread_complete_and_exit+0x20/0x20
-     ? ret_from_fork+0x1f/0x30
-     </TASK>
-    Modules linked in: rfkill sunrpc ... [last unloaded: torture]
-    CR2: ffffffffc0601a87
-    ---[ end trace 0000000000000000 ]---
+In print_mtrr_state() use x86_phys_bits instead of recalculating it
+from size_or_mask.
 
-Fixes: e6e78b004fa7 ("rcuperf: Add kfree_rcu() performance Tests")
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Move setting of size_or_mask and size_and_mask into a dedicated new
+function in mtrr/generic.c, enabling to make those 2 variables static,
+as they are used in generic.c only now.
+
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20230502120931.20719-2-jgross@suse.com
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Stable-dep-of: c957f1f3c498 ("x86/hyperv: Set MTRR state when running as SEV-SNP Hyper-V guest")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcuscale.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/kernel/cpu/mtrr/cleanup.c | 16 ++++----
+ arch/x86/kernel/cpu/mtrr/generic.c | 12 +++++-
+ arch/x86/kernel/cpu/mtrr/mtrr.c    | 61 ++++--------------------------
+ arch/x86/kernel/cpu/mtrr/mtrr.h    |  4 +-
+ 4 files changed, 29 insertions(+), 64 deletions(-)
 
-diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
-index 7e8965b0827a9..d1221731c7cfd 100644
---- a/kernel/rcu/rcuscale.c
-+++ b/kernel/rcu/rcuscale.c
-@@ -797,6 +797,11 @@ rcu_scale_cleanup(void)
- 	if (gp_exp && gp_async)
- 		SCALEOUT_ERRSTRING("No expedited async GPs, so went with async!");
+diff --git a/arch/x86/kernel/cpu/mtrr/cleanup.c b/arch/x86/kernel/cpu/mtrr/cleanup.c
+index b5f43049fa5f7..70314093bb9b5 100644
+--- a/arch/x86/kernel/cpu/mtrr/cleanup.c
++++ b/arch/x86/kernel/cpu/mtrr/cleanup.c
+@@ -173,7 +173,7 @@ early_param("mtrr_cleanup_debug", mtrr_cleanup_debug_setup);
  
-+	if (kfree_rcu_test) {
-+		kfree_scale_cleanup();
-+		return;
-+	}
-+
- 	if (torture_cleanup_begin())
+ static void __init
+ set_var_mtrr(unsigned int reg, unsigned long basek, unsigned long sizek,
+-	     unsigned char type, unsigned int address_bits)
++	     unsigned char type)
+ {
+ 	u32 base_lo, base_hi, mask_lo, mask_hi;
+ 	u64 base, mask;
+@@ -183,7 +183,7 @@ set_var_mtrr(unsigned int reg, unsigned long basek, unsigned long sizek,
  		return;
- 	if (!cur_ops) {
+ 	}
+ 
+-	mask = (1ULL << address_bits) - 1;
++	mask = (1ULL << boot_cpu_data.x86_phys_bits) - 1;
+ 	mask &= ~((((u64)sizek) << 10) - 1);
+ 
+ 	base = ((u64)basek) << 10;
+@@ -209,7 +209,7 @@ save_var_mtrr(unsigned int reg, unsigned long basek, unsigned long sizek,
+ 	range_state[reg].type = type;
+ }
+ 
+-static void __init set_var_mtrr_all(unsigned int address_bits)
++static void __init set_var_mtrr_all(void)
+ {
+ 	unsigned long basek, sizek;
+ 	unsigned char type;
+@@ -220,7 +220,7 @@ static void __init set_var_mtrr_all(unsigned int address_bits)
+ 		sizek = range_state[reg].size_pfn << (PAGE_SHIFT - 10);
+ 		type = range_state[reg].type;
+ 
+-		set_var_mtrr(reg, basek, sizek, type, address_bits);
++		set_var_mtrr(reg, basek, sizek, type);
+ 	}
+ }
+ 
+@@ -680,7 +680,7 @@ static int __init mtrr_search_optimal_index(void)
+ 	return index_good;
+ }
+ 
+-int __init mtrr_cleanup(unsigned address_bits)
++int __init mtrr_cleanup(void)
+ {
+ 	unsigned long x_remove_base, x_remove_size;
+ 	unsigned long base, size, def, dummy;
+@@ -742,7 +742,7 @@ int __init mtrr_cleanup(unsigned address_bits)
+ 		mtrr_print_out_one_result(i);
+ 
+ 		if (!result[i].bad) {
+-			set_var_mtrr_all(address_bits);
++			set_var_mtrr_all();
+ 			pr_debug("New variable MTRRs\n");
+ 			print_out_mtrr_range_state();
+ 			return 1;
+@@ -786,7 +786,7 @@ int __init mtrr_cleanup(unsigned address_bits)
+ 		gran_size = result[i].gran_sizek;
+ 		gran_size <<= 10;
+ 		x86_setup_var_mtrrs(range, nr_range, chunk_size, gran_size);
+-		set_var_mtrr_all(address_bits);
++		set_var_mtrr_all();
+ 		pr_debug("New variable MTRRs\n");
+ 		print_out_mtrr_range_state();
+ 		return 1;
+@@ -802,7 +802,7 @@ int __init mtrr_cleanup(unsigned address_bits)
+ 	return 0;
+ }
+ #else
+-int __init mtrr_cleanup(unsigned address_bits)
++int __init mtrr_cleanup(void)
+ {
+ 	return 0;
+ }
+diff --git a/arch/x86/kernel/cpu/mtrr/generic.c b/arch/x86/kernel/cpu/mtrr/generic.c
+index ee09d359e08f0..3922552340b13 100644
+--- a/arch/x86/kernel/cpu/mtrr/generic.c
++++ b/arch/x86/kernel/cpu/mtrr/generic.c
+@@ -38,6 +38,16 @@ u64 mtrr_tom2;
+ struct mtrr_state_type mtrr_state;
+ EXPORT_SYMBOL_GPL(mtrr_state);
+ 
++static u64 size_or_mask, size_and_mask;
++
++void __init mtrr_set_mask(void)
++{
++	unsigned int phys_addr = boot_cpu_data.x86_phys_bits;
++
++	size_or_mask = ~GENMASK_ULL(phys_addr - PAGE_SHIFT - 1, 0);
++	size_and_mask = ~size_or_mask & GENMASK_ULL(39, 20);
++}
++
+ /*
+  * BIOS is expected to clear MtrrFixDramModEn bit, see for example
+  * "BIOS and Kernel Developer's Guide for the AMD Athlon 64 and AMD
+@@ -422,7 +432,7 @@ static void __init print_mtrr_state(void)
+ 	}
+ 	pr_debug("MTRR variable ranges %sabled:\n",
+ 		 mtrr_state.enabled & MTRR_STATE_MTRR_ENABLED ? "en" : "dis");
+-	high_width = (__ffs64(size_or_mask) - (32 - PAGE_SHIFT) + 3) / 4;
++	high_width = (boot_cpu_data.x86_phys_bits - (32 - PAGE_SHIFT) + 3) / 4;
+ 
+ 	for (i = 0; i < num_var_ranges; ++i) {
+ 		if (mtrr_state.var_ranges[i].mask_lo & (1 << 11))
+diff --git a/arch/x86/kernel/cpu/mtrr/mtrr.c b/arch/x86/kernel/cpu/mtrr/mtrr.c
+index 783f3210d5827..1bdab16f16bdc 100644
+--- a/arch/x86/kernel/cpu/mtrr/mtrr.c
++++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
+@@ -67,8 +67,6 @@ static bool mtrr_enabled(void)
+ unsigned int mtrr_usage_table[MTRR_MAX_VAR_RANGES];
+ static DEFINE_MUTEX(mtrr_mutex);
+ 
+-u64 size_or_mask, size_and_mask;
+-
+ const struct mtrr_ops *mtrr_if;
+ 
+ /*  Returns non-zero if we have the write-combining memory type  */
+@@ -619,77 +617,34 @@ static struct syscore_ops mtrr_syscore_ops = {
+ 
+ int __initdata changed_by_mtrr_cleanup;
+ 
+-#define SIZE_OR_MASK_BITS(n)  (~((1ULL << ((n) - PAGE_SHIFT)) - 1))
+ /**
+- * mtrr_bp_init - initialize mtrrs on the boot CPU
++ * mtrr_bp_init - initialize MTRRs on the boot CPU
+  *
+  * This needs to be called early; before any of the other CPUs are
+  * initialized (i.e. before smp_init()).
+- *
+  */
+ void __init mtrr_bp_init(void)
+ {
+ 	const char *why = "(not available)";
+-	u32 phys_addr;
+ 
+-	phys_addr = 32;
++	mtrr_set_mask();
+ 
+-	if (boot_cpu_has(X86_FEATURE_MTRR)) {
++	if (cpu_feature_enabled(X86_FEATURE_MTRR)) {
+ 		mtrr_if = &generic_mtrr_ops;
+-		size_or_mask = SIZE_OR_MASK_BITS(36);
+-		size_and_mask = 0x00f00000;
+-		phys_addr = 36;
+-
+-		/*
+-		 * This is an AMD specific MSR, but we assume(hope?) that
+-		 * Intel will implement it too when they extend the address
+-		 * bus of the Xeon.
+-		 */
+-		if (cpuid_eax(0x80000000) >= 0x80000008) {
+-			phys_addr = cpuid_eax(0x80000008) & 0xff;
+-			/* CPUID workaround for Intel 0F33/0F34 CPU */
+-			if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL &&
+-			    boot_cpu_data.x86 == 0xF &&
+-			    boot_cpu_data.x86_model == 0x3 &&
+-			    (boot_cpu_data.x86_stepping == 0x3 ||
+-			     boot_cpu_data.x86_stepping == 0x4))
+-				phys_addr = 36;
+-
+-			size_or_mask = SIZE_OR_MASK_BITS(phys_addr);
+-			size_and_mask = ~size_or_mask & 0xfffff00000ULL;
+-		} else if (boot_cpu_data.x86_vendor == X86_VENDOR_CENTAUR &&
+-			   boot_cpu_data.x86 == 6) {
+-			/*
+-			 * VIA C* family have Intel style MTRRs,
+-			 * but don't support PAE
+-			 */
+-			size_or_mask = SIZE_OR_MASK_BITS(32);
+-			size_and_mask = 0;
+-			phys_addr = 32;
+-		}
+ 	} else {
+ 		switch (boot_cpu_data.x86_vendor) {
+ 		case X86_VENDOR_AMD:
+-			if (cpu_feature_enabled(X86_FEATURE_K6_MTRR)) {
+-				/* Pre-Athlon (K6) AMD CPU MTRRs */
++			/* Pre-Athlon (K6) AMD CPU MTRRs */
++			if (cpu_feature_enabled(X86_FEATURE_K6_MTRR))
+ 				mtrr_if = &amd_mtrr_ops;
+-				size_or_mask = SIZE_OR_MASK_BITS(32);
+-				size_and_mask = 0;
+-			}
+ 			break;
+ 		case X86_VENDOR_CENTAUR:
+-			if (cpu_feature_enabled(X86_FEATURE_CENTAUR_MCR)) {
++			if (cpu_feature_enabled(X86_FEATURE_CENTAUR_MCR))
+ 				mtrr_if = &centaur_mtrr_ops;
+-				size_or_mask = SIZE_OR_MASK_BITS(32);
+-				size_and_mask = 0;
+-			}
+ 			break;
+ 		case X86_VENDOR_CYRIX:
+-			if (cpu_feature_enabled(X86_FEATURE_CYRIX_ARR)) {
++			if (cpu_feature_enabled(X86_FEATURE_CYRIX_ARR))
+ 				mtrr_if = &cyrix_mtrr_ops;
+-				size_or_mask = SIZE_OR_MASK_BITS(32);
+-				size_and_mask = 0;
+-			}
+ 			break;
+ 		default:
+ 			break;
+@@ -703,7 +658,7 @@ void __init mtrr_bp_init(void)
+ 			/* BIOS may override */
+ 			if (get_mtrr_state()) {
+ 				memory_caching_control |= CACHE_MTRR;
+-				changed_by_mtrr_cleanup = mtrr_cleanup(phys_addr);
++				changed_by_mtrr_cleanup = mtrr_cleanup();
+ 			} else {
+ 				mtrr_if = NULL;
+ 				why = "by BIOS";
+diff --git a/arch/x86/kernel/cpu/mtrr/mtrr.h b/arch/x86/kernel/cpu/mtrr/mtrr.h
+index 02eb5871492d0..a00987e6cc1c1 100644
+--- a/arch/x86/kernel/cpu/mtrr/mtrr.h
++++ b/arch/x86/kernel/cpu/mtrr/mtrr.h
+@@ -51,7 +51,6 @@ void fill_mtrr_var_range(unsigned int index,
+ 		u32 base_lo, u32 base_hi, u32 mask_lo, u32 mask_hi);
+ bool get_mtrr_state(void);
+ 
+-extern u64 size_or_mask, size_and_mask;
+ extern const struct mtrr_ops *mtrr_if;
+ 
+ #define is_cpu(vnd)	(mtrr_if && mtrr_if->vendor == X86_VENDOR_##vnd)
+@@ -60,6 +59,7 @@ extern unsigned int num_var_ranges;
+ extern u64 mtrr_tom2;
+ extern struct mtrr_state_type mtrr_state;
+ 
++void mtrr_set_mask(void);
+ void mtrr_state_warn(void);
+ const char *mtrr_attrib_to_str(int x);
+ void mtrr_wrmsr(unsigned, unsigned, unsigned);
+@@ -70,4 +70,4 @@ extern const struct mtrr_ops cyrix_mtrr_ops;
+ extern const struct mtrr_ops centaur_mtrr_ops;
+ 
+ extern int changed_by_mtrr_cleanup;
+-extern int mtrr_cleanup(unsigned address_bits);
++extern int mtrr_cleanup(void);
 -- 
 2.39.2
 
