@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5F88F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BDD4C433C9;
-	Sun, 16 Jul 2023 20:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A662B8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9F8C433C7;
+	Sun, 16 Jul 2023 20:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539461;
-	bh=JBc2Jo75qwMc3kdTIC620agapLJ7tOwUc+7EGv49kGo=;
+	s=korg; t=1689539464;
+	bh=YPTWu21ZpgPv2dPsqNu6vVE6vK9C54r2v9t9VsV/j+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WSuF2fBiN6WFbpIBV8x7Fu3lj17SLpohkfsXWwIaPPzWL/sqLwo58b3nn0fJBCHaM
-	 8VOzwgbmlOneVqz2BIo/lSsA7EqzA3SKRiywQUOjwShA9LzA5RJD+27qw6CBOf42j8
-	 07CDWfM/cD3xsBwzg8MvmHpikd9VTVxoLLUZfuc8=
+	b=0ndaxZRY7BwzD94OwhEnaf76KSwFHA7gm+26ibKVmPgSjNcG3NmRoHKIHvB5HUIqd
+	 iyEDmsatS0I8Qb67Meu3G4YP8r2EnIdwKkW1ojRQvUkXKBx/IW1An009Zn/7QACC2T
+	 TRFA4rrEIWc41CUZKSPxlYJBKujnM8aYcECqfuW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/591] erofs: remove tagged pointer helpers
-Date: Sun, 16 Jul 2023 21:42:25 +0200
-Message-ID: <20230716194924.028974031@linuxfoundation.org>
+Subject: [PATCH 6.1 007/591] erofs: move zdata.h into zdata.c
+Date: Sun, 16 Jul 2023 21:42:26 +0200
+Message-ID: <20230716194924.053446521@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,222 +38,389 @@ Content-Transfer-Encoding: 8bit
 
 From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit b1ed220c6262bff63cdcb53692e492be0b05206c ]
+[ Upstream commit a9a94d9373349e1a53f149d2015eb6f03a8517cf ]
 
-Just open-code the remaining one to simplify the code.
+Definitions in zdata.h are only used in zdata.c and for internal
+use only.  No logic changes.
 
 Reviewed-by: Yue Hu <huyue2@coolpad.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230204093040.97967-3-hsiangkao@linux.alibaba.com
+Link: https://lore.kernel.org/r/20230204093040.97967-4-hsiangkao@linux.alibaba.com
 Stable-dep-of: 967c28b23f6c ("erofs: kill hooked chains to avoid loops on deduplicated compressed images")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/tagptr.h | 107 ----------------------------------------------
- fs/erofs/zdata.c  |  26 +++--------
- fs/erofs/zdata.h  |   1 -
- 3 files changed, 6 insertions(+), 128 deletions(-)
- delete mode 100644 fs/erofs/tagptr.h
+ fs/erofs/zdata.c | 166 +++++++++++++++++++++++++++++++++++++++++++-
+ fs/erofs/zdata.h | 177 -----------------------------------------------
+ 2 files changed, 165 insertions(+), 178 deletions(-)
+ delete mode 100644 fs/erofs/zdata.h
 
-diff --git a/fs/erofs/tagptr.h b/fs/erofs/tagptr.h
-deleted file mode 100644
-index 64ceb7270b5c1..0000000000000
---- a/fs/erofs/tagptr.h
-+++ /dev/null
-@@ -1,107 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-only */
--/*
-- * A tagged pointer implementation
-- */
--#ifndef __EROFS_FS_TAGPTR_H
--#define __EROFS_FS_TAGPTR_H
--
--#include <linux/types.h>
--#include <linux/build_bug.h>
--
--/*
-- * the name of tagged pointer types are tagptr{1, 2, 3...}_t
-- * avoid directly using the internal structs __tagptr{1, 2, 3...}
-- */
--#define __MAKE_TAGPTR(n) \
--typedef struct __tagptr##n {	\
--	uintptr_t v;	\
--} tagptr##n##_t;
--
--__MAKE_TAGPTR(1)
--__MAKE_TAGPTR(2)
--__MAKE_TAGPTR(3)
--__MAKE_TAGPTR(4)
--
--#undef __MAKE_TAGPTR
--
--extern void __compiletime_error("bad tagptr tags")
--	__bad_tagptr_tags(void);
--
--extern void __compiletime_error("bad tagptr type")
--	__bad_tagptr_type(void);
--
--/* fix the broken usage of "#define tagptr2_t tagptr3_t" by users */
--#define __tagptr_mask_1(ptr, n)	\
--	__builtin_types_compatible_p(typeof(ptr), struct __tagptr##n) ? \
--		(1UL << (n)) - 1 :
--
--#define __tagptr_mask(ptr)	(\
--	__tagptr_mask_1(ptr, 1) ( \
--	__tagptr_mask_1(ptr, 2) ( \
--	__tagptr_mask_1(ptr, 3) ( \
--	__tagptr_mask_1(ptr, 4) ( \
--	__bad_tagptr_type(), 0)))))
--
--/* generate a tagged pointer from a raw value */
--#define tagptr_init(type, val) \
--	((typeof(type)){ .v = (uintptr_t)(val) })
--
--/*
-- * directly cast a tagged pointer to the native pointer type, which
-- * could be used for backward compatibility of existing code.
-- */
--#define tagptr_cast_ptr(tptr) ((void *)(tptr).v)
--
--/* encode tagged pointers */
--#define tagptr_fold(type, ptr, _tags) ({ \
--	const typeof(_tags) tags = (_tags); \
--	if (__builtin_constant_p(tags) && (tags & ~__tagptr_mask(type))) \
--		__bad_tagptr_tags(); \
--tagptr_init(type, (uintptr_t)(ptr) | tags); })
--
--/* decode tagged pointers */
--#define tagptr_unfold_ptr(tptr) \
--	((void *)((tptr).v & ~__tagptr_mask(tptr)))
--
--#define tagptr_unfold_tags(tptr) \
--	((tptr).v & __tagptr_mask(tptr))
--
--/* operations for the tagger pointer */
--#define tagptr_eq(_tptr1, _tptr2) ({ \
--	typeof(_tptr1) tptr1 = (_tptr1); \
--	typeof(_tptr2) tptr2 = (_tptr2); \
--	(void)(&tptr1 == &tptr2); \
--(tptr1).v == (tptr2).v; })
--
--/* lock-free CAS operation */
--#define tagptr_cmpxchg(_ptptr, _o, _n) ({ \
--	typeof(_ptptr) ptptr = (_ptptr); \
--	typeof(_o) o = (_o); \
--	typeof(_n) n = (_n); \
--	(void)(&o == &n); \
--	(void)(&o == ptptr); \
--tagptr_init(o, cmpxchg(&ptptr->v, o.v, n.v)); })
--
--/* wrap WRITE_ONCE if atomic update is needed */
--#define tagptr_replace_tags(_ptptr, tags) ({ \
--	typeof(_ptptr) ptptr = (_ptptr); \
--	*ptptr = tagptr_fold(*ptptr, tagptr_unfold_ptr(*ptptr), tags); \
--*ptptr; })
--
--#define tagptr_set_tags(_ptptr, _tags) ({ \
--	typeof(_ptptr) ptptr = (_ptptr); \
--	const typeof(_tags) tags = (_tags); \
--	if (__builtin_constant_p(tags) && (tags & ~__tagptr_mask(*ptptr))) \
--		__bad_tagptr_tags(); \
--	ptptr->v |= tags; \
--*ptptr; })
--
--#define tagptr_clear_tags(_ptptr, _tags) ({ \
--	typeof(_ptptr) ptptr = (_ptptr); \
--	const typeof(_tags) tags = (_tags); \
--	if (__builtin_constant_p(tags) && (tags & ~__tagptr_mask(*ptptr))) \
--		__bad_tagptr_tags(); \
--	ptptr->v &= ~tags; \
--*ptptr; })
--
--#endif	/* __EROFS_FS_TAGPTR_H */
 diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 8e80871a8c1d7..3b5f73224c22a 100644
+index 3b5f73224c22a..aaddb6781465e 100644
 --- a/fs/erofs/zdata.c
 +++ b/fs/erofs/zdata.c
-@@ -175,15 +175,6 @@ static void z_erofs_free_pcluster(struct z_erofs_pcluster *pcl)
- 	DBG_BUGON(1);
- }
+@@ -4,13 +4,177 @@
+  *             https://www.huawei.com/
+  * Copyright (C) 2022 Alibaba Cloud
+  */
+-#include "zdata.h"
+ #include "compress.h"
+ #include <linux/prefetch.h>
+ #include <linux/psi.h>
  
--/*
-- * tagged pointer with 1-bit tag for all compressed pages
-- * tag 0 - the page is just found with an extra page reference
-- */
--typedef tagptr1_t compressed_page_t;
--
--#define tag_compressed_page_justfound(page) \
--	tagptr_fold(compressed_page_t, page, 1)
--
- static struct workqueue_struct *z_erofs_workqueue __read_mostly;
+ #include <trace/events/erofs.h>
  
- void z_erofs_exit_zip_subsystem(void)
-@@ -319,7 +310,7 @@ static void z_erofs_bind_cache(struct z_erofs_decompress_frontend *fe,
- 
- 	for (i = 0; i < pcl->pclusterpages; ++i) {
- 		struct page *page;
--		compressed_page_t t;
-+		void *t;	/* mark pages just found for debugging */
- 		struct page *newpage = NULL;
- 
- 		/* the compressed page was loaded before */
-@@ -329,7 +320,7 @@ static void z_erofs_bind_cache(struct z_erofs_decompress_frontend *fe,
- 		page = find_get_page(mc, pcl->obj.index + i);
- 
- 		if (page) {
--			t = tag_compressed_page_justfound(page);
-+			t = (void *)((unsigned long)page | 1);
- 		} else {
- 			/* I/O is needed, no possible to decompress directly */
- 			standalone = false;
-@@ -345,11 +336,10 @@ static void z_erofs_bind_cache(struct z_erofs_decompress_frontend *fe,
- 			if (!newpage)
- 				continue;
- 			set_page_private(newpage, Z_EROFS_PREALLOCATED_PAGE);
--			t = tag_compressed_page_justfound(newpage);
-+			t = (void *)((unsigned long)newpage | 1);
- 		}
- 
--		if (!cmpxchg_relaxed(&pcl->compressed_bvecs[i].page, NULL,
--				     tagptr_cast_ptr(t)))
-+		if (!cmpxchg_relaxed(&pcl->compressed_bvecs[i].page, NULL, t))
- 			continue;
- 
- 		if (page)
-@@ -1192,8 +1182,6 @@ static struct page *pickup_page_for_submission(struct z_erofs_pcluster *pcl,
- 
- 	struct address_space *mapping;
- 	struct page *oldpage, *page;
--
--	compressed_page_t t;
- 	int justfound;
- 
- repeat:
-@@ -1203,10 +1191,8 @@ static struct page *pickup_page_for_submission(struct z_erofs_pcluster *pcl,
- 	if (!page)
- 		goto out_allocpage;
- 
--	/* process the target tagged pointer */
--	t = tagptr_init(compressed_page_t, page);
--	justfound = tagptr_unfold_tags(t);
--	page = tagptr_unfold_ptr(t);
-+	justfound = (unsigned long)page & 1UL;
-+	page = (struct page *)((unsigned long)page & ~1UL);
- 
- 	/*
- 	 * preallocated cached pages, which is used to avoid direct reclaim
++#define Z_EROFS_PCLUSTER_MAX_PAGES	(Z_EROFS_PCLUSTER_MAX_SIZE / PAGE_SIZE)
++#define Z_EROFS_INLINE_BVECS		2
++
++/*
++ * let's leave a type here in case of introducing
++ * another tagged pointer later.
++ */
++typedef void *z_erofs_next_pcluster_t;
++
++struct z_erofs_bvec {
++	struct page *page;
++	int offset;
++	unsigned int end;
++};
++
++#define __Z_EROFS_BVSET(name, total) \
++struct name { \
++	/* point to the next page which contains the following bvecs */ \
++	struct page *nextpage; \
++	struct z_erofs_bvec bvec[total]; \
++}
++__Z_EROFS_BVSET(z_erofs_bvset,);
++__Z_EROFS_BVSET(z_erofs_bvset_inline, Z_EROFS_INLINE_BVECS);
++
++/*
++ * Structure fields follow one of the following exclusion rules.
++ *
++ * I: Modifiable by initialization/destruction paths and read-only
++ *    for everyone else;
++ *
++ * L: Field should be protected by the pcluster lock;
++ *
++ * A: Field should be accessed / updated in atomic for parallelized code.
++ */
++struct z_erofs_pcluster {
++	struct erofs_workgroup obj;
++	struct mutex lock;
++
++	/* A: point to next chained pcluster or TAILs */
++	z_erofs_next_pcluster_t next;
++
++	/* L: the maximum decompression size of this round */
++	unsigned int length;
++
++	/* L: total number of bvecs */
++	unsigned int vcnt;
++
++	/* I: page offset of start position of decompression */
++	unsigned short pageofs_out;
++
++	/* I: page offset of inline compressed data */
++	unsigned short pageofs_in;
++
++	union {
++		/* L: inline a certain number of bvec for bootstrap */
++		struct z_erofs_bvset_inline bvset;
++
++		/* I: can be used to free the pcluster by RCU. */
++		struct rcu_head rcu;
++	};
++
++	union {
++		/* I: physical cluster size in pages */
++		unsigned short pclusterpages;
++
++		/* I: tailpacking inline compressed size */
++		unsigned short tailpacking_size;
++	};
++
++	/* I: compression algorithm format */
++	unsigned char algorithmformat;
++
++	/* L: whether partial decompression or not */
++	bool partial;
++
++	/* L: indicate several pageofs_outs or not */
++	bool multibases;
++
++	/* A: compressed bvecs (can be cached or inplaced pages) */
++	struct z_erofs_bvec compressed_bvecs[];
++};
++
++/* let's avoid the valid 32-bit kernel addresses */
++
++/* the chained workgroup has't submitted io (still open) */
++#define Z_EROFS_PCLUSTER_TAIL           ((void *)0x5F0ECAFE)
++/* the chained workgroup has already submitted io */
++#define Z_EROFS_PCLUSTER_TAIL_CLOSED    ((void *)0x5F0EDEAD)
++
++#define Z_EROFS_PCLUSTER_NIL            (NULL)
++
++struct z_erofs_decompressqueue {
++	struct super_block *sb;
++	atomic_t pending_bios;
++	z_erofs_next_pcluster_t head;
++
++	union {
++		struct completion done;
++		struct work_struct work;
++	} u;
++	bool eio, sync;
++};
++
++static inline bool z_erofs_is_inline_pcluster(struct z_erofs_pcluster *pcl)
++{
++	return !pcl->obj.index;
++}
++
++static inline unsigned int z_erofs_pclusterpages(struct z_erofs_pcluster *pcl)
++{
++	if (z_erofs_is_inline_pcluster(pcl))
++		return 1;
++	return pcl->pclusterpages;
++}
++
++/*
++ * bit 30: I/O error occurred on this page
++ * bit 0 - 29: remaining parts to complete this page
++ */
++#define Z_EROFS_PAGE_EIO			(1 << 30)
++
++static inline void z_erofs_onlinepage_init(struct page *page)
++{
++	union {
++		atomic_t o;
++		unsigned long v;
++	} u = { .o = ATOMIC_INIT(1) };
++
++	set_page_private(page, u.v);
++	smp_wmb();
++	SetPagePrivate(page);
++}
++
++static inline void z_erofs_onlinepage_split(struct page *page)
++{
++	atomic_inc((atomic_t *)&page->private);
++}
++
++static inline void z_erofs_page_mark_eio(struct page *page)
++{
++	int orig;
++
++	do {
++		orig = atomic_read((atomic_t *)&page->private);
++	} while (atomic_cmpxchg((atomic_t *)&page->private, orig,
++				orig | Z_EROFS_PAGE_EIO) != orig);
++}
++
++static inline void z_erofs_onlinepage_endio(struct page *page)
++{
++	unsigned int v;
++
++	DBG_BUGON(!PagePrivate(page));
++	v = atomic_dec_return((atomic_t *)&page->private);
++	if (!(v & ~Z_EROFS_PAGE_EIO)) {
++		set_page_private(page, 0);
++		ClearPagePrivate(page);
++		if (!(v & Z_EROFS_PAGE_EIO))
++			SetPageUptodate(page);
++		unlock_page(page);
++	}
++}
++
++#define Z_EROFS_ONSTACK_PAGES		32
++
+ /*
+  * since pclustersize is variable for big pcluster feature, introduce slab
+  * pools implementation for different pcluster sizes.
 diff --git a/fs/erofs/zdata.h b/fs/erofs/zdata.h
-index b139de5473a97..f196a729c7e85 100644
+deleted file mode 100644
+index f196a729c7e85..0000000000000
 --- a/fs/erofs/zdata.h
-+++ b/fs/erofs/zdata.h
-@@ -7,7 +7,6 @@
- #define __EROFS_FS_ZDATA_H
- 
- #include "internal.h"
--#include "tagptr.h"
- 
- #define Z_EROFS_PCLUSTER_MAX_PAGES	(Z_EROFS_PCLUSTER_MAX_SIZE / PAGE_SIZE)
- #define Z_EROFS_INLINE_BVECS		2
++++ /dev/null
+@@ -1,177 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (C) 2018 HUAWEI, Inc.
+- *             https://www.huawei.com/
+- */
+-#ifndef __EROFS_FS_ZDATA_H
+-#define __EROFS_FS_ZDATA_H
+-
+-#include "internal.h"
+-
+-#define Z_EROFS_PCLUSTER_MAX_PAGES	(Z_EROFS_PCLUSTER_MAX_SIZE / PAGE_SIZE)
+-#define Z_EROFS_INLINE_BVECS		2
+-
+-/*
+- * let's leave a type here in case of introducing
+- * another tagged pointer later.
+- */
+-typedef void *z_erofs_next_pcluster_t;
+-
+-struct z_erofs_bvec {
+-	struct page *page;
+-	int offset;
+-	unsigned int end;
+-};
+-
+-#define __Z_EROFS_BVSET(name, total) \
+-struct name { \
+-	/* point to the next page which contains the following bvecs */ \
+-	struct page *nextpage; \
+-	struct z_erofs_bvec bvec[total]; \
+-}
+-__Z_EROFS_BVSET(z_erofs_bvset,);
+-__Z_EROFS_BVSET(z_erofs_bvset_inline, Z_EROFS_INLINE_BVECS);
+-
+-/*
+- * Structure fields follow one of the following exclusion rules.
+- *
+- * I: Modifiable by initialization/destruction paths and read-only
+- *    for everyone else;
+- *
+- * L: Field should be protected by the pcluster lock;
+- *
+- * A: Field should be accessed / updated in atomic for parallelized code.
+- */
+-struct z_erofs_pcluster {
+-	struct erofs_workgroup obj;
+-	struct mutex lock;
+-
+-	/* A: point to next chained pcluster or TAILs */
+-	z_erofs_next_pcluster_t next;
+-
+-	/* L: the maximum decompression size of this round */
+-	unsigned int length;
+-
+-	/* L: total number of bvecs */
+-	unsigned int vcnt;
+-
+-	/* I: page offset of start position of decompression */
+-	unsigned short pageofs_out;
+-
+-	/* I: page offset of inline compressed data */
+-	unsigned short pageofs_in;
+-
+-	union {
+-		/* L: inline a certain number of bvec for bootstrap */
+-		struct z_erofs_bvset_inline bvset;
+-
+-		/* I: can be used to free the pcluster by RCU. */
+-		struct rcu_head rcu;
+-	};
+-
+-	union {
+-		/* I: physical cluster size in pages */
+-		unsigned short pclusterpages;
+-
+-		/* I: tailpacking inline compressed size */
+-		unsigned short tailpacking_size;
+-	};
+-
+-	/* I: compression algorithm format */
+-	unsigned char algorithmformat;
+-
+-	/* L: whether partial decompression or not */
+-	bool partial;
+-
+-	/* L: indicate several pageofs_outs or not */
+-	bool multibases;
+-
+-	/* A: compressed bvecs (can be cached or inplaced pages) */
+-	struct z_erofs_bvec compressed_bvecs[];
+-};
+-
+-/* let's avoid the valid 32-bit kernel addresses */
+-
+-/* the chained workgroup has't submitted io (still open) */
+-#define Z_EROFS_PCLUSTER_TAIL           ((void *)0x5F0ECAFE)
+-/* the chained workgroup has already submitted io */
+-#define Z_EROFS_PCLUSTER_TAIL_CLOSED    ((void *)0x5F0EDEAD)
+-
+-#define Z_EROFS_PCLUSTER_NIL            (NULL)
+-
+-struct z_erofs_decompressqueue {
+-	struct super_block *sb;
+-	atomic_t pending_bios;
+-	z_erofs_next_pcluster_t head;
+-
+-	union {
+-		struct completion done;
+-		struct work_struct work;
+-	} u;
+-
+-	bool eio, sync;
+-};
+-
+-static inline bool z_erofs_is_inline_pcluster(struct z_erofs_pcluster *pcl)
+-{
+-	return !pcl->obj.index;
+-}
+-
+-static inline unsigned int z_erofs_pclusterpages(struct z_erofs_pcluster *pcl)
+-{
+-	if (z_erofs_is_inline_pcluster(pcl))
+-		return 1;
+-	return pcl->pclusterpages;
+-}
+-
+-/*
+- * bit 30: I/O error occurred on this page
+- * bit 0 - 29: remaining parts to complete this page
+- */
+-#define Z_EROFS_PAGE_EIO			(1 << 30)
+-
+-static inline void z_erofs_onlinepage_init(struct page *page)
+-{
+-	union {
+-		atomic_t o;
+-		unsigned long v;
+-	} u = { .o = ATOMIC_INIT(1) };
+-
+-	set_page_private(page, u.v);
+-	smp_wmb();
+-	SetPagePrivate(page);
+-}
+-
+-static inline void z_erofs_onlinepage_split(struct page *page)
+-{
+-	atomic_inc((atomic_t *)&page->private);
+-}
+-
+-static inline void z_erofs_page_mark_eio(struct page *page)
+-{
+-	int orig;
+-
+-	do {
+-		orig = atomic_read((atomic_t *)&page->private);
+-	} while (atomic_cmpxchg((atomic_t *)&page->private, orig,
+-				orig | Z_EROFS_PAGE_EIO) != orig);
+-}
+-
+-static inline void z_erofs_onlinepage_endio(struct page *page)
+-{
+-	unsigned int v;
+-
+-	DBG_BUGON(!PagePrivate(page));
+-	v = atomic_dec_return((atomic_t *)&page->private);
+-	if (!(v & ~Z_EROFS_PAGE_EIO)) {
+-		set_page_private(page, 0);
+-		ClearPagePrivate(page);
+-		if (!(v & Z_EROFS_PAGE_EIO))
+-			SetPageUptodate(page);
+-		unlock_page(page);
+-	}
+-}
+-
+-#define Z_EROFS_ONSTACK_PAGES		32
+-
+-#endif
 -- 
 2.39.2
 
