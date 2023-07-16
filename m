@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4EA8F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D32CC433C8;
-	Sun, 16 Jul 2023 20:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7050C8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E617CC433C7;
+	Sun, 16 Jul 2023 20:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539506;
-	bh=OQwUDxUZut63Iz4v5xigsxKLefG9Mjr1/mSDKCTPGxw=;
+	s=korg; t=1689539509;
+	bh=UZVPbcctiy2oDrd4lBLw5oQMC+sGPLOxg7nNDYe3BLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VubmYBeQQDmgOT/qtJ7Xpck3Uvf9+R8wSXt1Y9JKWT+QANxPkmqHLUtrXyDlvLuwb
-	 8+h2jhoPG8qDXqZ7BrskqWFJ8oM/bzE9LVfom98A51Ze+IrR5+1yk9EogwVj6Xf0pT
-	 BJlM+dP52ljsBm06QW1YZa64+8DK/h/alIXCGD5M=
+	b=TRFuWI3c8XCVU/TFesklp28DcNeQtdrKZseL50LmufrNLzK/Rrk0iGW+UdLtJMI/p
+	 jLa80uckhPgxZ3l/KejdO+11QK9FUPXkNI4D4rZSaAZdZmCZ8rqUjOtiH8hJ+NVygq
+	 2sqLMrSux9RiZ+c1DEaqR2nKPvIVrWt4dFct14Y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	NeilBrown <neilb@suse.de>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/591] lockd: drop inappropriate svc_get() from locked_get()
-Date: Sun, 16 Jul 2023 21:42:33 +0200
-Message-ID: <20230716194924.234374869@linuxfoundation.org>
+Subject: [PATCH 6.1 032/591] block: fix blktrace debugfs entries leakage
+Date: Sun, 16 Jul 2023 21:42:51 +0200
+Message-ID: <20230716194924.713463921@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,55 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neilb@suse.de>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 665e89ab7c5af1f2d260834c861a74b01a30f95f ]
+[ Upstream commit dd7de3704af9989b780693d51eaea49a665bd9c2 ]
 
-The below-mentioned patch was intended to simplify refcounting on the
-svc_serv used by locked.  The goal was to only ever have a single
-reference from the single thread.  To that end we dropped a call to
-lockd_start_svc() (except when creating thread) which would take a
-reference, and dropped the svc_put(serv) that would drop that reference.
+Commit 99d055b4fd4b ("block: remove per-disk debugfs files in
+blk_unregister_queue") moves blk_trace_shutdown() from
+blk_release_queue() to blk_unregister_queue(), this is safe if blktrace
+is created through sysfs, however, there is a regression in corner
+case.
 
-Unfortunately we didn't also remove the svc_get() from
-lockd_create_svc() in the case where the svc_serv already existed.
-So after the patch:
- - on the first call the svc_serv was allocated and the one reference
-   was given to the thread, so there are no extra references
- - on subsequent calls svc_get() was called so there is now an extra
-   reference.
-This is clearly not consistent.
+blktrace can still be enabled after del_gendisk() through ioctl if
+the disk is opened before del_gendisk(), and if blktrace is not shutdown
+through ioctl before closing the disk, debugfs entries will be leaked.
 
-The inconsistency is also clear in the current code in lockd_get()
-takes *two* references, one on nlmsvc_serv and one by incrementing
-nlmsvc_users.   This clearly does not match lockd_put().
+Fix this problem by shutdown blktrace in disk_release(), this is safe
+because blk_trace_remove() is reentrant.
 
-So: drop that svc_get() from lockd_get() (which used to be in
-lockd_create_svc().
-
-Reported-by: Ido Schimmel <idosch@idosch.org>
-Closes: https://lore.kernel.org/linux-nfs/ZHsI%2FH16VX9kJQX1@shredder/T/#u
-Fixes: b73a2972041b ("lockd: move lockd_start_svc() call into lockd_create_svc()")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 99d055b4fd4b ("block: remove per-disk debugfs files in blk_unregister_queue")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230610022003.2557284-4-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/svc.c | 1 -
- 1 file changed, 1 deletion(-)
+ block/genhd.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/lockd/svc.c b/fs/lockd/svc.c
-index 59ef8a1f843f3..5579e67da17db 100644
---- a/fs/lockd/svc.c
-+++ b/fs/lockd/svc.c
-@@ -355,7 +355,6 @@ static int lockd_get(void)
- 	int error;
+diff --git a/block/genhd.c b/block/genhd.c
+index 62a61388e752d..afab646d12c85 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -25,8 +25,9 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/badblocks.h>
+ #include <linux/part_stat.h>
+-#include "blk-throttle.h"
++#include <linux/blktrace_api.h>
  
- 	if (nlmsvc_serv) {
--		svc_get(nlmsvc_serv);
- 		nlmsvc_users++;
- 		return 0;
- 	}
++#include "blk-throttle.h"
+ #include "blk.h"
+ #include "blk-mq-sched.h"
+ #include "blk-rq-qos.h"
+@@ -1181,6 +1182,8 @@ static void disk_release(struct device *dev)
+ 	might_sleep();
+ 	WARN_ON_ONCE(disk_live(disk));
+ 
++	blk_trace_remove(disk->queue);
++
+ 	/*
+ 	 * To undo the all initialization from blk_mq_init_allocated_queue in
+ 	 * case of a probe failure where add_disk is never called we have to
 -- 
 2.39.2
 
