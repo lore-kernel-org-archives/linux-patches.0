@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F20C8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912CCC433C7;
-	Sun, 16 Jul 2023 20:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54058F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:54:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5985AC433C8;
+	Sun, 16 Jul 2023 20:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540865;
-	bh=jxi+goY4KB+JA48yB3wc2QEdYqtff746JnWfJFwU1V0=;
+	s=korg; t=1689540868;
+	bh=ZXPofESxp1dbH7kkG0S0/JoCnNbR31UYppnh5LhsB2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cD5iGjTgvKtoo2hkL14ibUAtY2Om9Pr7gtLlKUvEN0QdUR0DzxneXbryDIhw7TWGr
-	 Fa/QUzKWAECLeyU7+Pdg1C+b1InfwR+/xhW1jFSgWDK3f5GN4TCtRqzuBTbZuAaLFG
-	 /ngt6sNHAVsTx4+Fp53IBui/wl71KOgwo4H2/Ub8=
+	b=v9keqgD8lxh+yrQRXVvzX8MrZKcftABwPlV1ek1aNt0nkFF8JGvYwpV67wei2fUqI
+	 kSwliv/Ka3OoYPYSrfdlj19JMgvCxzt7Crj5GV41TdZs/uqR5GqsPYHGfu/l5SpSPI
+	 B58el8uJYD/NugqCmliKiolhw0zkCLTrjzzC3wuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	John Johansen <john.johansen@canonical.com>,
+	Robert Hancock <robert.hancock@calian.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 515/591] apparmor: fix missing error check for rhashtable_insert_fast
-Date: Sun, 16 Jul 2023 21:50:54 +0200
-Message-ID: <20230716194937.203317537@linuxfoundation.org>
+Subject: [PATCH 6.1 516/591] i2c: xiic: Dont try to handle more interrupt events after error
+Date: Sun, 16 Jul 2023 21:50:55 +0200
+Message-ID: <20230716194937.228451030@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,45 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Robert Hancock <robert.hancock@calian.com>
 
-[ Upstream commit 000518bc5aef25d3f703592a0296d578c98b1517 ]
+[ Upstream commit cb6e45c9a0ad9e0f8664fd06db0227d185dc76ab ]
 
- rhashtable_insert_fast() could return err value when memory allocation is
- failed. but unpack_profile() do not check values and this always returns
- success value. This patch just adds error check code.
+In xiic_process, it is possible that error events such as arbitration
+lost or TX error can be raised in conjunction with other interrupt flags
+such as TX FIFO empty or bus not busy. Error events result in the
+controller being reset and the error returned to the calling request,
+but the function could potentially try to keep handling the other
+events, such as by writing more messages into the TX FIFO. Since the
+transaction has already failed, this is not helpful and will just cause
+issues.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This problem has been present ever since:
 
-Fixes: e025be0f26d5 ("apparmor: support querying extended trusted helper extra data")
+commit 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
 
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+which allowed non-error events to be handled after errors, but became
+more obvious after:
+
+commit 743e227a8959 ("i2c: xiic: Defer xiic_wakeup() and
+__xiic_start_xfer() in xiic_process()")
+
+which reworked the code to add a WARN_ON which triggers if both the
+xfer_more and wakeup_req flags were set, since this combination is
+not supposed to happen, but was occurring in this scenario.
+
+Skip further interrupt handling after error flags are detected to avoid
+this problem.
+
+Fixes: 7f9906bd7f72 ("i2c: xiic: Service all interrupts in isr")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_unpack.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-xiic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index 9d26bbb901338..9c3fec2c7cf6b 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -917,8 +917,13 @@ static struct aa_profile *unpack_profile(struct aa_ext *e, char **ns_name)
- 				goto fail;
- 			}
- 
--			rhashtable_insert_fast(profile->data, &data->head,
--					       profile->data->p);
-+			if (rhashtable_insert_fast(profile->data, &data->head,
-+						   profile->data->p)) {
-+				kfree_sensitive(data->key);
-+				kfree_sensitive(data);
-+				info = "failed to insert data to table";
-+				goto fail;
-+			}
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index effae4d467291..b41a6709e47f2 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -431,6 +431,8 @@ static irqreturn_t xiic_process(int irq, void *dev_id)
+ 			wakeup_req = 1;
+ 			wakeup_code = STATE_ERROR;
  		}
- 
- 		if (!unpack_nameX(e, AA_STRUCTEND, NULL)) {
++		/* don't try to handle other events */
++		goto out;
+ 	}
+ 	if (pend & XIIC_INTR_RX_FULL_MASK) {
+ 		/* Receive register/FIFO is full */
 -- 
 2.39.2
 
