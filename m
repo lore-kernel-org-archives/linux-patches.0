@@ -1,37 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779318F55
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF030C433C8;
-	Sun, 16 Jul 2023 20:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707D28F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:40:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FC2C433C7;
+	Sun, 16 Jul 2023 20:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540034;
-	bh=TsMM2clemeACUsTCzTeJUymJha9TsDKJPtDWybjLNVg=;
+	s=korg; t=1689540037;
+	bh=tDEY2Jg+E3JWJHtY7yGVeW6buAETziqXevjbXQJTiX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UtxtueBrTbj/cHGf7C7NfyFA1uN4HDqnOkK5NqBAv+LdYD7g1/IZmr7/6AX4ynJMd
-	 MjFjPlKkZCewOG00f3F1ClGUQ8AVmb4M3yhgFRCtU8feQDaTYTvV5/eZvlLhyaKk9e
-	 NM2sB0dZi/EWTKaHjXJylF4XGB4a0+pKySDVF2nA=
+	b=1iwJpii0NBkUTSyIWanrVkyiPaID7B0N4uR7UpG/6fHaK3q/zS6rCwTvaj6PVMzG/
+	 U8qJ6f7vrsG17nl5Q4UJdtn072V+4yR0M8SyuYOZLfX3KcMbwQmRSj2GRXHWfLCC5g
+	 SOymm0UMniFH69ESBQ/bWlim7UrYCDHbNmd4fvoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Leo Li <leoyang.li@nxp.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Qiang Zhao <qiang.zhao@nxp.com>,
-	linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Kumar Gala <galak@kernel.crashing.org>,
-	Nicolas Schier <nicolas@jasle.eu>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 219/591] soc/fsl/qe: fix usb.c build errors
-Date: Sun, 16 Jul 2023 21:45:58 +0200
-Message-ID: <20230716194929.537396705@linuxfoundation.org>
+Subject: [PATCH 6.1 220/591] RDMA/irdma: avoid fortify-string warning in irdma_clr_wqes
+Date: Sun, 16 Jul 2023 21:45:59 +0200
+Message-ID: <20230716194929.562766840@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -45,58 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7b1a78babd0d2cd27aa07255dee0c2d7ac0f31e3 ]
+[ Upstream commit b002760f877c0d91ecd3c78565b52f4bbac379dd ]
 
-Fix build errors in soc/fsl/qe/usb.c when QUICC_ENGINE is not set.
-This happens when PPC_EP88XC is set, which selects CPM1 & CPM.
-When CPM is set, USB_FSL_QE can be set without QUICC_ENGINE
-being set. When USB_FSL_QE is set, QE_USB deafults to y, which
-causes build errors when QUICC_ENGINE is not set. Making
-QE_USB depend on QUICC_ENGINE prevents QE_USB from defaulting to y.
+Commit df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3") triggers a
+warning for fortified memset():
 
-Fixes these build errors:
+In function 'fortify_memset_chk',
+    inlined from 'irdma_clr_wqes' at drivers/infiniband/hw/irdma/uk.c:103:4:
+include/linux/fortify-string.h:493:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  493 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-drivers/soc/fsl/qe/usb.o: in function `qe_usb_clock_set':
-usb.c:(.text+0x1e): undefined reference to `qe_immr'
-powerpc-linux-ld: usb.c:(.text+0x2a): undefined reference to `qe_immr'
-powerpc-linux-ld: usb.c:(.text+0xbc): undefined reference to `qe_setbrg'
-powerpc-linux-ld: usb.c:(.text+0xca): undefined reference to `cmxgcr_lock'
-powerpc-linux-ld: usb.c:(.text+0xce): undefined reference to `cmxgcr_lock'
+The problem here isthat the inner array only has four 8-byte elements, so
+clearing 4096 bytes overflows that. As this structure is part of an outer
+array, change the code to pass a pointer to the irdma_qp_quanta instead,
+and change the size argument for readability, matching the comment above
+it.
 
-Fixes: 5e41486c408e ("powerpc/QE: add support for QE USB clocks routing")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/all/202301101500.pillNv6R-lkp@intel.com/
-Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Leo Li <leoyang.li@nxp.com>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: Qiang Zhao <qiang.zhao@nxp.com>
-Cc: linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: Kumar Gala <galak@kernel.crashing.org>
-Acked-by: Nicolas Schier <nicolas@jasle.eu>
-Signed-off-by: Li Yang <leoyang.li@nxp.com>
+Fixes: 551c46edc769 ("RDMA/irdma: Add user/kernel shared libraries")
+Link: https://lore.kernel.org/r/20230523111859.2197825-1-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qe/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/irdma/uk.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/fsl/qe/Kconfig b/drivers/soc/fsl/qe/Kconfig
-index 357c5800b112f..7afa796dbbb89 100644
---- a/drivers/soc/fsl/qe/Kconfig
-+++ b/drivers/soc/fsl/qe/Kconfig
-@@ -39,6 +39,7 @@ config QE_TDM
+diff --git a/drivers/infiniband/hw/irdma/uk.c b/drivers/infiniband/hw/irdma/uk.c
+index 16183e894da77..dd428d915c175 100644
+--- a/drivers/infiniband/hw/irdma/uk.c
++++ b/drivers/infiniband/hw/irdma/uk.c
+@@ -93,16 +93,18 @@ static int irdma_nop_1(struct irdma_qp_uk *qp)
+  */
+ void irdma_clr_wqes(struct irdma_qp_uk *qp, u32 qp_wqe_idx)
+ {
+-	__le64 *wqe;
++	struct irdma_qp_quanta *sq;
+ 	u32 wqe_idx;
  
- config QE_USB
- 	bool
-+	depends on QUICC_ENGINE
- 	default y if USB_FSL_QE
- 	help
- 	  QE USB Controller support
+ 	if (!(qp_wqe_idx & 0x7F)) {
+ 		wqe_idx = (qp_wqe_idx + 128) % qp->sq_ring.size;
+-		wqe = qp->sq_base[wqe_idx].elem;
++		sq = qp->sq_base + wqe_idx;
+ 		if (wqe_idx)
+-			memset(wqe, qp->swqe_polarity ? 0 : 0xFF, 0x1000);
++			memset(sq, qp->swqe_polarity ? 0 : 0xFF,
++			       128 * sizeof(*sq));
+ 		else
+-			memset(wqe, qp->swqe_polarity ? 0xFF : 0, 0x1000);
++			memset(sq, qp->swqe_polarity ? 0xFF : 0,
++			       128 * sizeof(*sq));
+ 	}
+ }
+ 
 -- 
 2.39.2
 
