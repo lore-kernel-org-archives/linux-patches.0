@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DA08F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B51C433C7;
-	Sun, 16 Jul 2023 20:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3F98F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45564C433C7;
+	Sun, 16 Jul 2023 20:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537767;
-	bh=iqDqjgSTtgxavhLrQvhbsZTaaGyWDlnURyRzZUZDE7Y=;
+	s=korg; t=1689537770;
+	bh=D3qR7Rw7TW1U8YX1PfSVsazmVpoFDDLkdJUHAB+QyEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjC1I/UCQuISbURX6WD0WOmlptOYNXevQvGtlQeqnJ1f9uYOG7UQuF7jjd/vpJ7qR
-	 qLZUPn5yJ6r18UhrQvMvMkkjIs3Fb2zP9Yd7bO/R/1NhwOjEqjrJPMFzpnkRmQ2z4m
-	 1yk4R9dRtIFDRZcjy+gKC7Zih8TEKJ3rbKJWrLc4=
+	b=lE7uOgRCG/5lU8P995dAJAElhmbPSIeDECpl4BnzrfdGypjfm8w/4xoHeDlWpmnw7
+	 uLT79KyNgV+q5uzhj0QOTWxUb9iFH5EPkFeeKHgd0MmGFizZwLiX7kVVT4Gfx2fjXp
+	 JakvapqccyDlBCWep/AIHkSeoGnVj2omy/Lr41o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 174/800] wifi: iwlwifi: mvm: correctly access HE/EHT sband capa
-Date: Sun, 16 Jul 2023 21:40:27 +0200
-Message-ID: <20230716194953.148399300@linuxfoundation.org>
+Subject: [PATCH 6.4 207/800] sch_netem: fix issues in netem_change() vs get_dist_table()
+Date: Sun, 16 Jul 2023 21:41:00 +0200
+Message-ID: <20230716194953.905401084@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,172 +39,150 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f912959875761084fda351e1257dcfa9d1fa3037 ]
+[ Upstream commit 11b73313c12403f617b47752db0ab3deef201af7 ]
 
-We can't just dereference the sband->iftype_data pointer,
-that's an array so we need to access the right entry. Use
-the previously introduced helper functions to do that.
+In blamed commit, I missed that get_dist_table() was allocating
+memory using GFP_KERNEL, and acquiring qdisc lock to perform
+the swap of newly allocated table with current one.
 
-There are also cases, e.g. when loading with disable_11ax=1,
-where the pointer might be NULL but we still attempt to use
-it, causing a crash.
+In this patch, get_dist_table() is allocating memory and
+copy user data before we acquire the qdisc lock.
 
-Fixes: 529281bdf0fc ("iwlwifi: mvm: limit TLC according to our HE capabilities")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230614123446.a1f2b17ee39b.I8808120be744be8804815ce9e3e24ce6d2b424e3@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Then we perform swap operations while being protected by the lock.
+
+Note that after this patch netem_change() no longer can do partial changes.
+If an error is returned, qdisc conf is left unchanged.
+
+Fixes: 2174a08db80d ("sch_netem: acquire qdisc lock in netem_change()")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Stephen Hemminger <stephen@networkplumber.org>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230622181503.2327695-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/mvm/rs-fw.c    | 46 +++++++++++--------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+ net/sched/sch_netem.c | 59 ++++++++++++++++++-------------------------
+ 1 file changed, 25 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c
-index 8a5341c37aa21..680180b894794 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c
-@@ -63,12 +63,11 @@ static u8 rs_fw_sgi_cw_support(struct ieee80211_link_sta *link_sta)
- static u16 rs_fw_get_config_flags(struct iwl_mvm *mvm,
- 				  struct ieee80211_vif *vif,
- 				  struct ieee80211_link_sta *link_sta,
--				  struct ieee80211_supported_band *sband)
-+				  const struct ieee80211_sta_he_cap *sband_he_cap)
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index e79be1b3e74da..b93ec2a3454eb 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -773,12 +773,10 @@ static void dist_free(struct disttable *d)
+  * signed 16 bit values.
+  */
+ 
+-static int get_dist_table(struct Qdisc *sch, struct disttable **tbl,
+-			  const struct nlattr *attr)
++static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
  {
- 	struct ieee80211_sta_ht_cap *ht_cap = &link_sta->ht_cap;
- 	struct ieee80211_sta_vht_cap *vht_cap = &link_sta->vht_cap;
- 	struct ieee80211_sta_he_cap *he_cap = &link_sta->he_cap;
--	const struct ieee80211_sta_he_cap *sband_he_cap;
- 	bool vht_ena = vht_cap->vht_supported;
- 	u16 flags = 0;
- 
-@@ -94,7 +93,6 @@ static u16 rs_fw_get_config_flags(struct iwl_mvm *mvm,
- 	    IEEE80211_HE_PHY_CAP1_LDPC_CODING_IN_PAYLOAD))
- 		flags |= IWL_TLC_MNG_CFG_FLAGS_LDPC_MSK;
- 
--	sband_he_cap = ieee80211_get_he_iftype_cap_vif(sband, vif);
- 	if (sband_he_cap &&
- 	    !(sband_he_cap->he_cap_elem.phy_cap_info[1] &
- 			IEEE80211_HE_PHY_CAP1_LDPC_CODING_IN_PAYLOAD))
-@@ -196,16 +194,14 @@ static u16 rs_fw_he_ieee80211_mcs_to_rs_mcs(u16 mcs)
- 
- static void
- rs_fw_he_set_enabled_rates(const struct ieee80211_link_sta *link_sta,
--			   struct ieee80211_supported_band *sband,
-+			   const struct ieee80211_sta_he_cap *sband_he_cap,
- 			   struct iwl_tlc_config_cmd_v4 *cmd)
- {
- 	const struct ieee80211_sta_he_cap *he_cap = &link_sta->he_cap;
- 	u16 mcs_160 = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_160);
- 	u16 mcs_80 = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_80);
--	u16 tx_mcs_80 =
--		le16_to_cpu(sband->iftype_data->he_cap.he_mcs_nss_supp.tx_mcs_80);
--	u16 tx_mcs_160 =
--		le16_to_cpu(sband->iftype_data->he_cap.he_mcs_nss_supp.tx_mcs_160);
-+	u16 tx_mcs_80 = le16_to_cpu(sband_he_cap->he_mcs_nss_supp.tx_mcs_80);
-+	u16 tx_mcs_160 = le16_to_cpu(sband_he_cap->he_mcs_nss_supp.tx_mcs_160);
+ 	size_t n = nla_len(attr)/sizeof(__s16);
+ 	const __s16 *data = nla_data(attr);
+-	spinlock_t *root_lock;
+ 	struct disttable *d;
  	int i;
- 	u8 nss = link_sta->rx_nss;
  
-@@ -288,7 +284,8 @@ rs_fw_rs_mcs2eht_mcs(enum IWL_TLC_MCS_PER_BW bw,
- static void
- rs_fw_eht_set_enabled_rates(struct ieee80211_vif *vif,
- 			    const struct ieee80211_link_sta *link_sta,
--			    struct ieee80211_supported_band *sband,
-+			    const struct ieee80211_sta_he_cap *sband_he_cap,
-+			    const struct ieee80211_sta_eht_cap *sband_eht_cap,
- 			    struct iwl_tlc_config_cmd_v4 *cmd)
+@@ -793,13 +791,7 @@ static int get_dist_table(struct Qdisc *sch, struct disttable **tbl,
+ 	for (i = 0; i < n; i++)
+ 		d->table[i] = data[i];
+ 
+-	root_lock = qdisc_root_sleeping_lock(sch);
+-
+-	spin_lock_bh(root_lock);
+-	swap(*tbl, d);
+-	spin_unlock_bh(root_lock);
+-
+-	dist_free(d);
++	*tbl = d;
+ 	return 0;
+ }
+ 
+@@ -956,6 +948,8 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
  {
- 	/* peer RX mcs capa */
-@@ -296,7 +293,7 @@ rs_fw_eht_set_enabled_rates(struct ieee80211_vif *vif,
- 		&link_sta->eht_cap.eht_mcs_nss_supp;
- 	/* our TX mcs capa */
- 	const struct ieee80211_eht_mcs_nss_supp *eht_tx_mcs =
--		&sband->iftype_data->eht_cap.eht_mcs_nss_supp;
-+		&sband_eht_cap->eht_mcs_nss_supp;
+ 	struct netem_sched_data *q = qdisc_priv(sch);
+ 	struct nlattr *tb[TCA_NETEM_MAX + 1];
++	struct disttable *delay_dist = NULL;
++	struct disttable *slot_dist = NULL;
+ 	struct tc_netem_qopt *qopt;
+ 	struct clgstate old_clg;
+ 	int old_loss_model = CLG_RANDOM;
+@@ -966,6 +960,18 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	if (ret < 0)
+ 		return ret;
  
- 	enum IWL_TLC_MCS_PER_BW bw;
- 	struct ieee80211_eht_mcs_nss_supp_20mhz_only mcs_rx_20;
-@@ -315,7 +312,7 @@ rs_fw_eht_set_enabled_rates(struct ieee80211_vif *vif,
++	if (tb[TCA_NETEM_DELAY_DIST]) {
++		ret = get_dist_table(&delay_dist, tb[TCA_NETEM_DELAY_DIST]);
++		if (ret)
++			goto table_free;
++	}
++
++	if (tb[TCA_NETEM_SLOT_DIST]) {
++		ret = get_dist_table(&slot_dist, tb[TCA_NETEM_SLOT_DIST]);
++		if (ret)
++			goto table_free;
++	}
++
+ 	sch_tree_lock(sch);
+ 	/* backup q->clg and q->loss_model */
+ 	old_clg = q->clg;
+@@ -975,26 +981,17 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 		ret = get_loss_clg(q, tb[TCA_NETEM_LOSS]);
+ 		if (ret) {
+ 			q->loss_model = old_loss_model;
++			q->clg = old_clg;
+ 			goto unlock;
+ 		}
+ 	} else {
+ 		q->loss_model = CLG_RANDOM;
  	}
  
- 	/* nic is 20Mhz only */
--	if (!(sband->iftype_data->he_cap.he_cap_elem.phy_cap_info[0] &
-+	if (!(sband_he_cap->he_cap_elem.phy_cap_info[0] &
- 	      IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_MASK_ALL)) {
- 		mcs_tx_20 = eht_tx_mcs->only_20mhz;
- 	} else {
-@@ -369,6 +366,8 @@ rs_fw_eht_set_enabled_rates(struct ieee80211_vif *vif,
- static void rs_fw_set_supp_rates(struct ieee80211_vif *vif,
- 				 struct ieee80211_link_sta *link_sta,
- 				 struct ieee80211_supported_band *sband,
-+				 const struct ieee80211_sta_he_cap *sband_he_cap,
-+				 const struct ieee80211_sta_eht_cap *sband_eht_cap,
- 				 struct iwl_tlc_config_cmd_v4 *cmd)
- {
- 	int i;
-@@ -387,12 +386,13 @@ static void rs_fw_set_supp_rates(struct ieee80211_vif *vif,
- 	cmd->mode = IWL_TLC_MNG_MODE_NON_HT;
+-	if (tb[TCA_NETEM_DELAY_DIST]) {
+-		ret = get_dist_table(sch, &q->delay_dist,
+-				     tb[TCA_NETEM_DELAY_DIST]);
+-		if (ret)
+-			goto get_table_failure;
+-	}
+-
+-	if (tb[TCA_NETEM_SLOT_DIST]) {
+-		ret = get_dist_table(sch, &q->slot_dist,
+-				     tb[TCA_NETEM_SLOT_DIST]);
+-		if (ret)
+-			goto get_table_failure;
+-	}
+-
++	if (delay_dist)
++		swap(q->delay_dist, delay_dist);
++	if (slot_dist)
++		swap(q->slot_dist, slot_dist);
+ 	sch->limit = qopt->limit;
  
- 	/* HT/VHT rates */
--	if (link_sta->eht_cap.has_eht) {
-+	if (link_sta->eht_cap.has_eht && sband_he_cap && sband_eht_cap) {
- 		cmd->mode = IWL_TLC_MNG_MODE_EHT;
--		rs_fw_eht_set_enabled_rates(vif, link_sta, sband, cmd);
--	} else if (he_cap->has_he) {
-+		rs_fw_eht_set_enabled_rates(vif, link_sta, sband_he_cap,
-+					    sband_eht_cap, cmd);
-+	} else if (he_cap->has_he && sband_he_cap) {
- 		cmd->mode = IWL_TLC_MNG_MODE_HE;
--		rs_fw_he_set_enabled_rates(link_sta, sband, cmd);
-+		rs_fw_he_set_enabled_rates(link_sta, sband_he_cap, cmd);
- 	} else if (vht_cap->vht_supported) {
- 		cmd->mode = IWL_TLC_MNG_MODE_VHT;
- 		rs_fw_vht_set_enabled_rates(link_sta, vht_cap, cmd);
-@@ -575,13 +575,17 @@ void iwl_mvm_rs_fw_rate_init(struct iwl_mvm *mvm,
- 	u32 cmd_id = WIDE_ID(DATA_PATH_GROUP, TLC_MNG_CONFIG_CMD);
- 	struct ieee80211_supported_band *sband = hw->wiphy->bands[band];
- 	u16 max_amsdu_len = rs_fw_get_max_amsdu_len(sta, link_conf, link_sta);
-+	const struct ieee80211_sta_he_cap *sband_he_cap =
-+		ieee80211_get_he_iftype_cap_vif(sband, vif);
-+	const struct ieee80211_sta_eht_cap *sband_eht_cap =
-+		ieee80211_get_eht_iftype_cap_vif(sband, vif);
- 	struct iwl_mvm_link_sta *mvm_link_sta;
- 	struct iwl_lq_sta_rs_fw *lq_sta;
- 	struct iwl_tlc_config_cmd_v4 cfg_cmd = {
- 		.max_ch_width = mvmsta->authorized ?
- 			rs_fw_bw_from_sta_bw(link_sta) : IWL_TLC_MNG_CH_WIDTH_20MHZ,
- 		.flags = cpu_to_le16(rs_fw_get_config_flags(mvm, vif, link_sta,
--							    sband)),
-+							    sband_he_cap)),
- 		.chains = rs_fw_set_active_chains(iwl_mvm_get_valid_tx_ant(mvm)),
- 		.sgi_ch_width_supp = rs_fw_sgi_cw_support(link_sta),
- 		.max_mpdu_len = iwl_mvm_is_csum_supported(mvm) ?
-@@ -595,9 +599,9 @@ void iwl_mvm_rs_fw_rate_init(struct iwl_mvm *mvm,
- 	 * mutual support by AP and client
- 	 */
- 	if (CSR_HW_REV_TYPE(mvm->trans->hw_rev) == IWL_CFG_MAC_TYPE_GL &&
--	    sband->iftype_data->eht_cap.has_eht &&
--	    sband->iftype_data->eht_cap.eht_cap_elem.phy_cap_info[5] &
--	    IEEE80211_EHT_PHY_CAP5_SUPP_EXTRA_EHT_LTF &&
-+	    sband_eht_cap &&
-+	    sband_eht_cap->eht_cap_elem.phy_cap_info[5] &
-+		IEEE80211_EHT_PHY_CAP5_SUPP_EXTRA_EHT_LTF &&
- 	    link_sta->eht_cap.has_eht &&
- 	    link_sta->eht_cap.eht_cap_elem.phy_cap_info[5] &
- 	    IEEE80211_EHT_PHY_CAP5_SUPP_EXTRA_EHT_LTF) {
-@@ -623,7 +627,9 @@ void iwl_mvm_rs_fw_rate_init(struct iwl_mvm *mvm,
- #ifdef CONFIG_IWLWIFI_DEBUGFS
- 	iwl_mvm_reset_frame_stats(mvm);
- #endif
--	rs_fw_set_supp_rates(vif, link_sta, sband, &cfg_cmd);
-+	rs_fw_set_supp_rates(vif, link_sta, sband,
-+			     sband_he_cap, sband_eht_cap,
-+			     &cfg_cmd);
+ 	q->latency = PSCHED_TICKS2NS(qopt->latency);
+@@ -1044,17 +1041,11 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
  
- 	/*
- 	 * since TLC offload works with one mode we can assume
+ unlock:
+ 	sch_tree_unlock(sch);
+-	return ret;
+ 
+-get_table_failure:
+-	/* recover clg and loss_model, in case of
+-	 * q->clg and q->loss_model were modified
+-	 * in get_loss_clg()
+-	 */
+-	q->clg = old_clg;
+-	q->loss_model = old_loss_model;
+-
+-	goto unlock;
++table_free:
++	dist_free(delay_dist);
++	dist_free(slot_dist);
++	return ret;
+ }
+ 
+ static int netem_init(struct Qdisc *sch, struct nlattr *opt,
 -- 
 2.39.2
 
