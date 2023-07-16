@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792558F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3172C433C7;
-	Sun, 16 Jul 2023 20:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465538F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05BCC433C8;
+	Sun, 16 Jul 2023 20:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538052;
-	bh=j97IC3UZTTirl69QGwvmrQh8aZGq4tIqkya9dvtFx1M=;
+	s=korg; t=1689538055;
+	bh=iKLTh0xBqzIrPLXK+Eh1VJ/riM9VXM9o2bHUZQvE8jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D3VjJhA7HeRuVZWPINZWaF5Aw6hMnAHhAnULlqNT3YFRsT/1Q7y74KdQqoaBN+eYX
-	 zGl2WhFXPad0VEHWgDXTV2d1JtmM4YZlc7yveIsSXflyhhzmigBTl1zp9EHE+w2dBK
-	 9qXJUYWxN+DtGVpaSrqjVjyXErVl+mCnO9rOiabA=
+	b=yGxINFwJXZVN6PXyzEofJ7JDmD2BUbhgIACYhZMFLj+OQREiEWuO63PHyjYvybsgH
+	 fH8OLCpeSM54RI3i8XPcw4l2ywb2DHyn6vg3Xu91yDbDHQ4E6qizF51uwIahslIrkr
+	 h2M6yduPD+MyjQVlvb/0/aqjRwXovsEPqEyc4/U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Karol Herbst <kherbst@redhat.com>,
+	Akihiko Odaki <akihiko.odaki@daynix.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 278/800] drm/nouveau: dispnv50: fix missing-prototypes warning
-Date: Sun, 16 Jul 2023 21:42:11 +0200
-Message-ID: <20230716194955.548165576@linuxfoundation.org>
+Subject: [PATCH 6.4 279/800] iommu/virtio: Detach domain on endpoint release
+Date: Sun, 16 Jul 2023 21:42:12 +0200
+Message-ID: <20230716194955.570744812@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,51 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-[ Upstream commit 504e72ed3a1b1c0d4450712a42ae6070d3a05a8e ]
+[ Upstream commit 809d0810e3520da669d231303608cdf5fe5c1a70 ]
 
-nv50_display_create() is declared in another header, along with
-a couple of declarations that are now outdated:
+When an endpoint is released, for example a PCIe VF being destroyed or a
+function hot-unplugged, it should be detached from its domain. Send a
+DETACH request.
 
-drivers/gpu/drm/nouveau/dispnv50/disp.c:2517:1: error: no previous prototype for 'nv50_display_create'
-
-Fixes: ba801ef068c1 ("drm/nouveau/kms: display destroy/init/fini hooks can be static")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Karol Herbst <kherbst@redhat.com>
-Signed-off-by: Karol Herbst <kherbst@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230417210329.2469722-1-arnd@kernel.org
+Fixes: edcd69ab9a32 ("iommu: Add virtio-iommu driver")
+Reported-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Link: https://lore.kernel.org/all/15bf1b00-3aa0-973a-3a86-3fa5c4d41d2c@daynix.com/
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Link: https://lore.kernel.org/r/20230515113946.1017624-2-jean-philippe@linaro.org
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/dispnv50/disp.c | 1 +
- drivers/gpu/drm/nouveau/nv50_display.h  | 4 +---
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/iommu/virtio-iommu.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/dispnv50/disp.c b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-index 5bb777ff13130..9b6824f6b9e4b 100644
---- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-@@ -64,6 +64,7 @@
- #include "nouveau_connector.h"
- #include "nouveau_encoder.h"
- #include "nouveau_fence.h"
-+#include "nv50_display.h"
+diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
+index 5b8fe9bfa9a5b..fd316a37d7562 100644
+--- a/drivers/iommu/virtio-iommu.c
++++ b/drivers/iommu/virtio-iommu.c
+@@ -788,6 +788,29 @@ static int viommu_attach_dev(struct iommu_domain *domain, struct device *dev)
+ 	return 0;
+ }
  
- #include <subdev/bios/dp.h>
- 
-diff --git a/drivers/gpu/drm/nouveau/nv50_display.h b/drivers/gpu/drm/nouveau/nv50_display.h
-index fbd3b15583bc8..60f77766766e9 100644
---- a/drivers/gpu/drm/nouveau/nv50_display.h
-+++ b/drivers/gpu/drm/nouveau/nv50_display.h
-@@ -31,7 +31,5 @@
- #include "nouveau_reg.h"
- 
- int  nv50_display_create(struct drm_device *);
--void nv50_display_destroy(struct drm_device *);
--int  nv50_display_init(struct drm_device *);
--void nv50_display_fini(struct drm_device *);
++static void viommu_detach_dev(struct viommu_endpoint *vdev)
++{
++	int i;
++	struct virtio_iommu_req_detach req;
++	struct viommu_domain *vdomain = vdev->vdomain;
++	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(vdev->dev);
 +
- #endif /* __NV50_DISPLAY_H__ */
++	if (!vdomain)
++		return;
++
++	req = (struct virtio_iommu_req_detach) {
++		.head.type	= VIRTIO_IOMMU_T_DETACH,
++		.domain		= cpu_to_le32(vdomain->id),
++	};
++
++	for (i = 0; i < fwspec->num_ids; i++) {
++		req.endpoint = cpu_to_le32(fwspec->ids[i]);
++		WARN_ON(viommu_send_req_sync(vdev->viommu, &req, sizeof(req)));
++	}
++	vdomain->nr_endpoints--;
++	vdev->vdomain = NULL;
++}
++
+ static int viommu_map_pages(struct iommu_domain *domain, unsigned long iova,
+ 			    phys_addr_t paddr, size_t pgsize, size_t pgcount,
+ 			    int prot, gfp_t gfp, size_t *mapped)
+@@ -990,6 +1013,7 @@ static void viommu_release_device(struct device *dev)
+ {
+ 	struct viommu_endpoint *vdev = dev_iommu_priv_get(dev);
+ 
++	viommu_detach_dev(vdev);
+ 	iommu_put_resv_regions(dev, &vdev->resv_regions);
+ 	kfree(vdev);
+ }
 -- 
 2.39.2
 
