@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF958F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3EC9C433C9;
-	Sun, 16 Jul 2023 20:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18B28F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:50:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E93C433C8;
+	Sun, 16 Jul 2023 20:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540613;
-	bh=7N5G2bGX+7G/I3zvHWsiv6QgBktqzc1dB9oEgAw4+3k=;
+	s=korg; t=1689540610;
+	bh=QjQ9+ZRVVF1kYwZj8SlYs5LOBQAX1yIgn5kqt+hbM50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EemsrK7QvKGG/ACPcsljF4AmIJYcQJ6aC9A7mCGuZOzC76VhRvCbmRKXABTeqkT+E
-	 uGfhDt+xhaBYp39VCTsnIzeUbNAcU3M/jfEdMx66YYCdPedFt37JysqtgnOSvyTy8j
-	 JGRsL+gv59Ch5oCWrNAYTtr+oAoyu8bZd8LpFcQE=
+	b=IRBZo5SrrYvmaM1B2cu4njPiq5CmZPcuRm4y54EK+4GUKsPaSmYCbBcEMEd/hZiC3
+	 QfV1KTjNbOyCweOtO5RfPcyzCkdNWWwTdw3hFV6eh4eDkK4MjaOGmqJoJZqP3Pz3K9
+	 HLqmm5A+04CQZEtzUP77bJImA36y6QVBOcajDOsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rikard Falkeborn <rikard.falkeborn@gmail.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Jakob Hauser <jahau@rocketmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 425/591] media: venus: helpers: Fix ALIGN() of non power of two
-Date: Sun, 16 Jul 2023 21:49:24 +0200
-Message-ID: <20230716194934.910530493@linuxfoundation.org>
+Subject: [PATCH 6.1 424/591] mfd: rt5033: Drop rt5033-battery sub-device
+Date: Sun, 16 Jul 2023 21:49:23 +0200
+Message-ID: <20230716194934.885802751@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,49 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rikard Falkeborn <rikard.falkeborn@gmail.com>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-[ Upstream commit 927e78ac8bc58155316cf6f46026e1912bbbbcfc ]
+[ Upstream commit 43db1344e0f8c1eb687a1d6cd5b0de3009ab66cb ]
 
-ALIGN() expects its second argument to be a power of 2, otherwise
-incorrect results are produced for some inputs. The output can be
-both larger or smaller than what is expected.
+The fuel gauge in the RT5033 PMIC (rt5033-battery) has its own I2C bus
+and interrupt lines. Therefore, it is not part of the MFD device
+and needs to be specified separately in the device tree.
 
-For example, ALIGN(304, 192) equals 320 instead of 384, and
-ALIGN(65, 192) equals 256 instead of 192.
-
-However, nestling two ALIGN() as is done in this case seem to only
-produce results equal to or bigger than the expected result if ALIGN()
-had handled non powers of two, and that in turn results in framesizes
-that are either the correct size or too large.
-
-Fortunately, since 192 * 4 / 3 equals 256, it turns out that one ALIGN()
-is sufficient.
-
-Fixes: ab1eda449c6e ("media: venus: vdec: handle 10bit bitstreams")
-Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 0b271258544b ("mfd: rt5033: Add Richtek RT5033 driver core.")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Signed-off-by: Jakob Hauser <jahau@rocketmail.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/6a8a19bc67b5be3732882e8131ad2ffcb546ac03.1684182964.git.jahau@rocketmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mfd/rt5033.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index ab6a29ffc81e2..ca6555bdc92fa 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -1036,8 +1036,8 @@ static u32 get_framesize_raw_yuv420_tp10_ubwc(u32 width, u32 height)
- 	u32 extradata = SZ_16K;
- 	u32 size;
- 
--	y_stride = ALIGN(ALIGN(width, 192) * 4 / 3, 256);
--	uv_stride = ALIGN(ALIGN(width, 192) * 4 / 3, 256);
-+	y_stride = ALIGN(width * 4 / 3, 256);
-+	uv_stride = ALIGN(width * 4 / 3, 256);
- 	y_sclines = ALIGN(height, 16);
- 	uv_sclines = ALIGN((height + 1) >> 1, 16);
- 
+diff --git a/drivers/mfd/rt5033.c b/drivers/mfd/rt5033.c
+index f1236a9acf304..df095e91e2666 100644
+--- a/drivers/mfd/rt5033.c
++++ b/drivers/mfd/rt5033.c
+@@ -41,9 +41,6 @@ static const struct mfd_cell rt5033_devs[] = {
+ 	{
+ 		.name = "rt5033-charger",
+ 		.of_compatible = "richtek,rt5033-charger",
+-	}, {
+-		.name = "rt5033-battery",
+-		.of_compatible = "richtek,rt5033-battery",
+ 	}, {
+ 		.name = "rt5033-led",
+ 		.of_compatible = "richtek,rt5033-led",
 -- 
 2.39.2
 
