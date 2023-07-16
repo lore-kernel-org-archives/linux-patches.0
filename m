@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B63F8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:21:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FE8C433C7;
-	Sun, 16 Jul 2023 20:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845D28F7D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:22:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D92FC433C8;
+	Sun, 16 Jul 2023 20:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538918;
-	bh=idIg/BBJfsxnWNgLXXxjhl0qTe+yXQAeXnMDUsDeXJI=;
+	s=korg; t=1689538921;
+	bh=h7qiG4x3uUb4ByGbXkBhVkj4IPtszaIsoWUFFoEd1Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VlSzmtKG8PXD82J/bv525CWaJl1ektrdPrfmhANDFK8CV9jNVODovmHsa0hI3AUpt
-	 0hSrhE66axzL/wGUpK3qrONaaQgnU5yarzo6CLgi/cGJ4mRcrdliSkU6p480njk2ix
-	 xMa/PzTMfkaYjNv8n4aflX4RefmtsofHt0FohJx4=
+	b=IZf/gmOBj18Udjo0LnMAo+gLv/mHOM7UxFAyFTmuSxBW/Sv5/VpYJSV+irVYmzbFj
+	 8A5lyPnraBRAk/mUpvGglXBSfEBfxP9qu/ewta1by6fo2zE+d4g+ZOdO5yzPh/kfHS
+	 7jQbkOHVubj5yCU7yNVB7Fx6evYYCTGcmpNL+seo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	William White <chwhite@redhat.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Daniel Bristot de Oliveira <bristot@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 621/800] usb: dwc3-meson-g12a: Fix an error handling path in dwc3_meson_g12a_probe()
-Date: Sun, 16 Jul 2023 21:47:54 +0200
-Message-ID: <20230716195003.538189176@linuxfoundation.org>
+Subject: [PATCH 6.4 622/800] rtla/hwnoise: Reduce runtime to 75%
+Date: Sun, 16 Jul 2023 21:47:55 +0200
+Message-ID: <20230716195003.560952083@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,48 +38,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-[ Upstream commit 01052b91c9808e3c3b068ae2721cb728ec9aa4c0 ]
+[ Upstream commit 7bc4d3089a50050d4df0af63423a5d907c3bdb1a ]
 
-If dwc3_meson_g12a_otg_init() fails, resources allocated by the previous
-of_platform_populate() call should be released, as already done in the
-error handling path.
+osnoise runs 100% of time by default. It makes sense because osnoise
+is preemptive. hwnoise checks preemption once a second, so it
+reduces system progress.
 
-Fixes: 1e355f21d3fb ("usb: dwc3: Add Amlogic A1 DWC3 glue")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Message-ID: <9d28466de1808ccc756b4cc25fc72c482d133d13.1686403934.git.christophe.jaillet@wanadoo.fr>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reduce runtime to 75% to avoid problems by default. I added a Fixes
+as it might avoid problems for first time users as it lands on distros.
+
+Link: https://lkml.kernel.org/r/af0b7113ffc00031b9af4bb40ef5889a27dadf8c.1686066600.git.bristot@kernel.org
+
+Cc: William White <chwhite@redhat.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Tested-by: Juri Lelli <juri.lelli@redhat.com>
+Fixes: 1f428356c38d ("rtla: Add hwnoise tool")
+Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-meson-g12a.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/tracing/rtla/src/osnoise_top.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-meson-g12a.c b/drivers/usb/dwc3/dwc3-meson-g12a.c
-index b282ad0e69c6d..eaea944ebd2ce 100644
---- a/drivers/usb/dwc3/dwc3-meson-g12a.c
-+++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
-@@ -805,7 +805,7 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
+diff --git a/tools/tracing/rtla/src/osnoise_top.c b/tools/tracing/rtla/src/osnoise_top.c
+index 562f2e4b18c57..3ece8c09ecd95 100644
+--- a/tools/tracing/rtla/src/osnoise_top.c
++++ b/tools/tracing/rtla/src/osnoise_top.c
+@@ -340,8 +340,14 @@ struct osnoise_top_params *osnoise_top_parse_args(int argc, char **argv)
+ 	if (!params)
+ 		exit(1);
  
- 	ret = dwc3_meson_g12a_otg_init(pdev, priv);
- 	if (ret)
--		goto err_phys_power;
-+		goto err_plat_depopulate;
+-	if (strcmp(argv[0], "hwnoise") == 0)
++	if (strcmp(argv[0], "hwnoise") == 0) {
+ 		params->mode = MODE_HWNOISE;
++		/*
++		 * Reduce CPU usage for 75% to avoid killing the system.
++		 */
++		params->runtime = 750000;
++		params->period = 1000000;
++	}
  
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
-@@ -813,6 +813,9 @@ static int dwc3_meson_g12a_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
-+err_plat_depopulate:
-+	of_platform_depopulate(dev);
-+
- err_phys_power:
- 	for (i = 0 ; i < PHY_COUNT ; ++i)
- 		phy_power_off(priv->phys[i]);
+ 	while (1) {
+ 		static struct option long_options[] = {
 -- 
 2.39.2
 
