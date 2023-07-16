@@ -1,53 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331CD8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87318C433C8;
-	Sun, 16 Jul 2023 20:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DA08F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B51C433C7;
+	Sun, 16 Jul 2023 20:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537765;
-	bh=NY59dffSGlJSFxkaQNqMr7fxXegmbd8oIDGZI/xyknU=;
+	s=korg; t=1689537767;
+	bh=iqDqjgSTtgxavhLrQvhbsZTaaGyWDlnURyRzZUZDE7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGE6XH0E+Ry+mdSQKMW8BoMPAo+MVXvP86eZOyc/+Jgdm/vEqftbdH1sYgHyZwL6A
-	 5YXYvUtNZWCxt8gYBXtb/iCx7lNd5R8ZYplI5BUjJ/OWJjAQpmMdkBrQvaPFdFYfJ3
-	 RjSDD33EVwlqYMJw5ppF0Uws9bUVq0AMY2fNVMas=
+	b=wjC1I/UCQuISbURX6WD0WOmlptOYNXevQvGtlQeqnJ1f9uYOG7UQuF7jjd/vpJ7qR
+	 qLZUPn5yJ6r18UhrQvMvMkkjIs3Fb2zP9Yd7bO/R/1NhwOjEqjrJPMFzpnkRmQ2z4m
+	 1yk4R9dRtIFDRZcjy+gKC7Zih8TEKJ3rbKJWrLc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pingfan Liu <kernelfans@gmail.com>,
-	Lecopzer Chen <lecopzer.chen@mediatek.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Colin Cross <ccross@android.com>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Guenter Roeck <groeck@chromium.org>,
-	Ian Rogers <irogers@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masayoshi Mizuma <msys.mizuma@gmail.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Ravi V. Shankar" <ravi.v.shankar@intel.com>,
-	Ricardo Neri <ricardo.neri@intel.com>,
-	Stephane Eranian <eranian@google.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Tzung-Bi Shih <tzungbi@chromium.org>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 183/800] watchdog: remove WATCHDOG_DEFAULT
-Date: Sun, 16 Jul 2023 21:40:36 +0200
-Message-ID: <20230716194953.354046942@linuxfoundation.org>
+Subject: [PATCH 6.4 174/800] wifi: iwlwifi: mvm: correctly access HE/EHT sband capa
+Date: Sun, 16 Jul 2023 21:40:27 +0200
+Message-ID: <20230716194953.148399300@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -61,62 +35,172 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lecopzer Chen <lecopzer.chen@mediatek.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 810b560e8985725dbd57bbb3f188c231365eb5ae ]
+[ Upstream commit f912959875761084fda351e1257dcfa9d1fa3037 ]
 
-No reference to WATCHDOG_DEFAULT, remove it.
+We can't just dereference the sband->iftype_data pointer,
+that's an array so we need to access the right entry. Use
+the previously introduced helper functions to do that.
 
-Link: https://lkml.kernel.org/r/20230519101840.v5.3.I6a729209a1320e0ad212176e250ff945b8f91b2a@changeid
-Signed-off-by: Pingfan Liu <kernelfans@gmail.com>
-Signed-off-by: Lecopzer Chen <lecopzer.chen@mediatek.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Chen-Yu Tsai <wens@csie.org>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Colin Cross <ccross@android.com>
-Cc: Daniel Thompson <daniel.thompson@linaro.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masayoshi Mizuma <msys.mizuma@gmail.com>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: "Ravi V. Shankar" <ravi.v.shankar@intel.com>
-Cc: Ricardo Neri <ricardo.neri@intel.com>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Sumit Garg <sumit.garg@linaro.org>
-Cc: Tzung-Bi Shih <tzungbi@chromium.org>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 9ec272c586b0 ("watchdog/hardlockup: keep kernel.nmi_watchdog sysctl as 0444 if probe fails")
+There are also cases, e.g. when loading with disable_11ax=1,
+where the pointer might be NULL but we still attempt to use
+it, causing a crash.
+
+Fixes: 529281bdf0fc ("iwlwifi: mvm: limit TLC according to our HE capabilities")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230614123446.a1f2b17ee39b.I8808120be744be8804815ce9e3e24ce6d2b424e3@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watchdog.c | 2 --
- 1 file changed, 2 deletions(-)
+ .../net/wireless/intel/iwlwifi/mvm/rs-fw.c    | 46 +++++++++++--------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
-diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 8e61f21e7e33e..582d572e13797 100644
---- a/kernel/watchdog.c
-+++ b/kernel/watchdog.c
-@@ -30,10 +30,8 @@
- static DEFINE_MUTEX(watchdog_mutex);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c
+index 8a5341c37aa21..680180b894794 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs-fw.c
+@@ -63,12 +63,11 @@ static u8 rs_fw_sgi_cw_support(struct ieee80211_link_sta *link_sta)
+ static u16 rs_fw_get_config_flags(struct iwl_mvm *mvm,
+ 				  struct ieee80211_vif *vif,
+ 				  struct ieee80211_link_sta *link_sta,
+-				  struct ieee80211_supported_band *sband)
++				  const struct ieee80211_sta_he_cap *sband_he_cap)
+ {
+ 	struct ieee80211_sta_ht_cap *ht_cap = &link_sta->ht_cap;
+ 	struct ieee80211_sta_vht_cap *vht_cap = &link_sta->vht_cap;
+ 	struct ieee80211_sta_he_cap *he_cap = &link_sta->he_cap;
+-	const struct ieee80211_sta_he_cap *sband_he_cap;
+ 	bool vht_ena = vht_cap->vht_supported;
+ 	u16 flags = 0;
  
- #if defined(CONFIG_HARDLOCKUP_DETECTOR) || defined(CONFIG_HAVE_NMI_WATCHDOG)
--# define WATCHDOG_DEFAULT	(SOFT_WATCHDOG_ENABLED | NMI_WATCHDOG_ENABLED)
- # define NMI_WATCHDOG_DEFAULT	1
- #else
--# define WATCHDOG_DEFAULT	(SOFT_WATCHDOG_ENABLED)
- # define NMI_WATCHDOG_DEFAULT	0
+@@ -94,7 +93,6 @@ static u16 rs_fw_get_config_flags(struct iwl_mvm *mvm,
+ 	    IEEE80211_HE_PHY_CAP1_LDPC_CODING_IN_PAYLOAD))
+ 		flags |= IWL_TLC_MNG_CFG_FLAGS_LDPC_MSK;
+ 
+-	sband_he_cap = ieee80211_get_he_iftype_cap_vif(sband, vif);
+ 	if (sband_he_cap &&
+ 	    !(sband_he_cap->he_cap_elem.phy_cap_info[1] &
+ 			IEEE80211_HE_PHY_CAP1_LDPC_CODING_IN_PAYLOAD))
+@@ -196,16 +194,14 @@ static u16 rs_fw_he_ieee80211_mcs_to_rs_mcs(u16 mcs)
+ 
+ static void
+ rs_fw_he_set_enabled_rates(const struct ieee80211_link_sta *link_sta,
+-			   struct ieee80211_supported_band *sband,
++			   const struct ieee80211_sta_he_cap *sband_he_cap,
+ 			   struct iwl_tlc_config_cmd_v4 *cmd)
+ {
+ 	const struct ieee80211_sta_he_cap *he_cap = &link_sta->he_cap;
+ 	u16 mcs_160 = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_160);
+ 	u16 mcs_80 = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_80);
+-	u16 tx_mcs_80 =
+-		le16_to_cpu(sband->iftype_data->he_cap.he_mcs_nss_supp.tx_mcs_80);
+-	u16 tx_mcs_160 =
+-		le16_to_cpu(sband->iftype_data->he_cap.he_mcs_nss_supp.tx_mcs_160);
++	u16 tx_mcs_80 = le16_to_cpu(sband_he_cap->he_mcs_nss_supp.tx_mcs_80);
++	u16 tx_mcs_160 = le16_to_cpu(sband_he_cap->he_mcs_nss_supp.tx_mcs_160);
+ 	int i;
+ 	u8 nss = link_sta->rx_nss;
+ 
+@@ -288,7 +284,8 @@ rs_fw_rs_mcs2eht_mcs(enum IWL_TLC_MCS_PER_BW bw,
+ static void
+ rs_fw_eht_set_enabled_rates(struct ieee80211_vif *vif,
+ 			    const struct ieee80211_link_sta *link_sta,
+-			    struct ieee80211_supported_band *sband,
++			    const struct ieee80211_sta_he_cap *sband_he_cap,
++			    const struct ieee80211_sta_eht_cap *sband_eht_cap,
+ 			    struct iwl_tlc_config_cmd_v4 *cmd)
+ {
+ 	/* peer RX mcs capa */
+@@ -296,7 +293,7 @@ rs_fw_eht_set_enabled_rates(struct ieee80211_vif *vif,
+ 		&link_sta->eht_cap.eht_mcs_nss_supp;
+ 	/* our TX mcs capa */
+ 	const struct ieee80211_eht_mcs_nss_supp *eht_tx_mcs =
+-		&sband->iftype_data->eht_cap.eht_mcs_nss_supp;
++		&sband_eht_cap->eht_mcs_nss_supp;
+ 
+ 	enum IWL_TLC_MCS_PER_BW bw;
+ 	struct ieee80211_eht_mcs_nss_supp_20mhz_only mcs_rx_20;
+@@ -315,7 +312,7 @@ rs_fw_eht_set_enabled_rates(struct ieee80211_vif *vif,
+ 	}
+ 
+ 	/* nic is 20Mhz only */
+-	if (!(sband->iftype_data->he_cap.he_cap_elem.phy_cap_info[0] &
++	if (!(sband_he_cap->he_cap_elem.phy_cap_info[0] &
+ 	      IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_MASK_ALL)) {
+ 		mcs_tx_20 = eht_tx_mcs->only_20mhz;
+ 	} else {
+@@ -369,6 +366,8 @@ rs_fw_eht_set_enabled_rates(struct ieee80211_vif *vif,
+ static void rs_fw_set_supp_rates(struct ieee80211_vif *vif,
+ 				 struct ieee80211_link_sta *link_sta,
+ 				 struct ieee80211_supported_band *sband,
++				 const struct ieee80211_sta_he_cap *sband_he_cap,
++				 const struct ieee80211_sta_eht_cap *sband_eht_cap,
+ 				 struct iwl_tlc_config_cmd_v4 *cmd)
+ {
+ 	int i;
+@@ -387,12 +386,13 @@ static void rs_fw_set_supp_rates(struct ieee80211_vif *vif,
+ 	cmd->mode = IWL_TLC_MNG_MODE_NON_HT;
+ 
+ 	/* HT/VHT rates */
+-	if (link_sta->eht_cap.has_eht) {
++	if (link_sta->eht_cap.has_eht && sband_he_cap && sband_eht_cap) {
+ 		cmd->mode = IWL_TLC_MNG_MODE_EHT;
+-		rs_fw_eht_set_enabled_rates(vif, link_sta, sband, cmd);
+-	} else if (he_cap->has_he) {
++		rs_fw_eht_set_enabled_rates(vif, link_sta, sband_he_cap,
++					    sband_eht_cap, cmd);
++	} else if (he_cap->has_he && sband_he_cap) {
+ 		cmd->mode = IWL_TLC_MNG_MODE_HE;
+-		rs_fw_he_set_enabled_rates(link_sta, sband, cmd);
++		rs_fw_he_set_enabled_rates(link_sta, sband_he_cap, cmd);
+ 	} else if (vht_cap->vht_supported) {
+ 		cmd->mode = IWL_TLC_MNG_MODE_VHT;
+ 		rs_fw_vht_set_enabled_rates(link_sta, vht_cap, cmd);
+@@ -575,13 +575,17 @@ void iwl_mvm_rs_fw_rate_init(struct iwl_mvm *mvm,
+ 	u32 cmd_id = WIDE_ID(DATA_PATH_GROUP, TLC_MNG_CONFIG_CMD);
+ 	struct ieee80211_supported_band *sband = hw->wiphy->bands[band];
+ 	u16 max_amsdu_len = rs_fw_get_max_amsdu_len(sta, link_conf, link_sta);
++	const struct ieee80211_sta_he_cap *sband_he_cap =
++		ieee80211_get_he_iftype_cap_vif(sband, vif);
++	const struct ieee80211_sta_eht_cap *sband_eht_cap =
++		ieee80211_get_eht_iftype_cap_vif(sband, vif);
+ 	struct iwl_mvm_link_sta *mvm_link_sta;
+ 	struct iwl_lq_sta_rs_fw *lq_sta;
+ 	struct iwl_tlc_config_cmd_v4 cfg_cmd = {
+ 		.max_ch_width = mvmsta->authorized ?
+ 			rs_fw_bw_from_sta_bw(link_sta) : IWL_TLC_MNG_CH_WIDTH_20MHZ,
+ 		.flags = cpu_to_le16(rs_fw_get_config_flags(mvm, vif, link_sta,
+-							    sband)),
++							    sband_he_cap)),
+ 		.chains = rs_fw_set_active_chains(iwl_mvm_get_valid_tx_ant(mvm)),
+ 		.sgi_ch_width_supp = rs_fw_sgi_cw_support(link_sta),
+ 		.max_mpdu_len = iwl_mvm_is_csum_supported(mvm) ?
+@@ -595,9 +599,9 @@ void iwl_mvm_rs_fw_rate_init(struct iwl_mvm *mvm,
+ 	 * mutual support by AP and client
+ 	 */
+ 	if (CSR_HW_REV_TYPE(mvm->trans->hw_rev) == IWL_CFG_MAC_TYPE_GL &&
+-	    sband->iftype_data->eht_cap.has_eht &&
+-	    sband->iftype_data->eht_cap.eht_cap_elem.phy_cap_info[5] &
+-	    IEEE80211_EHT_PHY_CAP5_SUPP_EXTRA_EHT_LTF &&
++	    sband_eht_cap &&
++	    sband_eht_cap->eht_cap_elem.phy_cap_info[5] &
++		IEEE80211_EHT_PHY_CAP5_SUPP_EXTRA_EHT_LTF &&
+ 	    link_sta->eht_cap.has_eht &&
+ 	    link_sta->eht_cap.eht_cap_elem.phy_cap_info[5] &
+ 	    IEEE80211_EHT_PHY_CAP5_SUPP_EXTRA_EHT_LTF) {
+@@ -623,7 +627,9 @@ void iwl_mvm_rs_fw_rate_init(struct iwl_mvm *mvm,
+ #ifdef CONFIG_IWLWIFI_DEBUGFS
+ 	iwl_mvm_reset_frame_stats(mvm);
  #endif
+-	rs_fw_set_supp_rates(vif, link_sta, sband, &cfg_cmd);
++	rs_fw_set_supp_rates(vif, link_sta, sband,
++			     sband_he_cap, sband_eht_cap,
++			     &cfg_cmd);
  
+ 	/*
+ 	 * since TLC offload works with one mode we can assume
 -- 
 2.39.2
 
