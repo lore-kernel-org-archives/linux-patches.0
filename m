@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828A59442
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0404BC433C8;
-	Sun, 16 Jul 2023 19:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA5D9442
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 19:59:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC051C433C8;
+	Sun, 16 Jul 2023 19:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537594;
-	bh=MadIgmNYIgoiNF38A9g8sWRuWgD1M5IN5qDNF2STTOM=;
+	s=korg; t=1689537597;
+	bh=q8pIUxaKfg2Nho1GIGs5F8+Q7Aded75fIWRJBbnU1Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTgio9jF1tzj9QNB8vOQknaODxHtEiRnnlqmIS6X7I9sqaa2VUuXg5AYIZIV8rlWi
-	 3l4kx2ZAra9uPRRUX9uBxkl3IE9droTzDS9/MJ8ACPyh2S53fsoGVicKxBRMkqIF5w
-	 54z/1BgUblxfj7bDQTr8Z1l/KR9RCz/52XsSLSq8=
+	b=UKhQFfvcFLykGbSeiWCPwRl5GZCvDL6+wcsiVoqQdDmHlRrp+QyFA7UXYD4WnJvcx
+	 OygSDRfvEOe8lVc/kt5K0wyN8hhxAN0q5BqbRBWzQC6ayqNd0q9w9TA0Rz+euHUuI3
+	 wGPls5OGJvawi5zu9UuXSOLQwIp24H5Pj+nWdaH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 112/800] wifi: rtw89: fix rtw89_read_chip_ver() for RTL8852B and RTL8851B
-Date: Sun, 16 Jul 2023 21:39:25 +0200
-Message-ID: <20230716194951.712514935@linuxfoundation.org>
+Subject: [PATCH 6.4 145/800] tools/resolve_btfids: Fix setting HOSTCFLAGS
+Date: Sun, 16 Jul 2023 21:39:58 +0200
+Message-ID: <20230716194952.462284605@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,39 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit 9d4f491b860ea6d04471c3342093b86a46eee63e ]
+[ Upstream commit edd75c802855271c8610f58a2fc9e54aefc49ce5 ]
 
-The if statement is reversed so it will not record the chip version.
-This was detected using Smatch:
+Building BPF selftests with custom HOSTCFLAGS yields an error:
 
-    drivers/net/wireless/realtek/rtw89/core.c:3593 rtw89_read_chip_ver()
-    error: uninitialized symbol 'val'.
+    # make HOSTCFLAGS="-O2"
+    [...]
+      HOSTCC  ./tools/testing/selftests/bpf/tools/build/resolve_btfids/main.o
+    main.c:73:10: fatal error: linux/rbtree.h: No such file or directory
+       73 | #include <linux/rbtree.h>
+          |          ^~~~~~~~~~~~~~~~
 
-Fixes: a6fb2bb84654 ("wifi: rtw89: read version of analog hardware")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/e4d912a2-37f8-4068-8861-7b9494ae731b@kili.mountain
+The reason is that tools/bpf/resolve_btfids/Makefile passes header
+include paths by extending HOSTCFLAGS which is overridden by setting
+HOSTCFLAGS in the make command (because of Makefile rules [1]).
+
+This patch fixes the above problem by passing the include paths via
+`HOSTCFLAGS_resolve_btfids` which is used by tools/build/Build.include
+and can be combined with overridding HOSTCFLAGS.
+
+[1] https://www.gnu.org/software/make/manual/html_node/Overriding.html
+
+Fixes: 56a2df7615fa ("tools/resolve_btfids: Compile resolve_btfids as host program")
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20230530123352.1308488-1-vmalik@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/bpf/resolve_btfids/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index bad864d56bd5c..5423f8ae187f1 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -3584,7 +3584,7 @@ static void rtw89_read_chip_ver(struct rtw89_dev *rtwdev)
+diff --git a/tools/bpf/resolve_btfids/Makefile b/tools/bpf/resolve_btfids/Makefile
+index ac548a7baa73e..4b8079f294f65 100644
+--- a/tools/bpf/resolve_btfids/Makefile
++++ b/tools/bpf/resolve_btfids/Makefile
+@@ -67,7 +67,7 @@ $(BPFOBJ): $(wildcard $(LIBBPF_SRC)/*.[ch] $(LIBBPF_SRC)/Makefile) | $(LIBBPF_OU
+ LIBELF_FLAGS := $(shell $(HOSTPKG_CONFIG) libelf --cflags 2>/dev/null)
+ LIBELF_LIBS  := $(shell $(HOSTPKG_CONFIG) libelf --libs 2>/dev/null || echo -lelf)
  
- 	if (chip->chip_id == RTL8852B || chip->chip_id == RTL8851B) {
- 		ret = rtw89_mac_read_xtal_si(rtwdev, XTAL_SI_CV, &val);
--		if (!ret)
-+		if (ret)
- 			return;
+-HOSTCFLAGS += -g \
++HOSTCFLAGS_resolve_btfids += -g \
+           -I$(srctree)/tools/include \
+           -I$(srctree)/tools/include/uapi \
+           -I$(LIBBPF_INCLUDE) \
+@@ -76,7 +76,7 @@ HOSTCFLAGS += -g \
  
- 		rtwdev->hal.acv = u8_get_bits(val, XTAL_SI_ACV_MASK);
+ LIBS = $(LIBELF_LIBS) -lz
+ 
+-export srctree OUTPUT HOSTCFLAGS Q HOSTCC HOSTLD HOSTAR
++export srctree OUTPUT HOSTCFLAGS_resolve_btfids Q HOSTCC HOSTLD HOSTAR
+ include $(srctree)/tools/build/Makefile.include
+ 
+ $(BINARY_IN): fixdep FORCE prepare | $(OUTPUT)
 -- 
 2.39.2
 
