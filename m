@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE04B8F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3171DC433C8;
-	Sun, 16 Jul 2023 20:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B22E8F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:31:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26A5C433C7;
+	Sun, 16 Jul 2023 20:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539481;
-	bh=DWwm2jD3aUP2IfbN+nFeLl2sbAySC0nmyPP+KD+q3R4=;
+	s=korg; t=1689539484;
+	bh=v2P1dcjtzwO4mEF4H2YHODrt9wFYqzbaz5JiG4P0dT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1FoEbwWAaeM70SuB0kVGxPFTWj2JwSn8V0yxnMfnpSCLSLfz1ljMUEQiSMJqTRUF5
-	 mTkWREUnvBShhcLSyYXX2RdUrB3Ncs3O/+/9HiEFIPPx/u14ctE43nscq87z/FFsTe
-	 YofghgfHj1JJmqrDtB5FINfBTVeJIZkR3nSaccss=
+	b=eNyDNKzpdORRen/o9yl4wbMVq725WywL40K2sU94Z6a/3Dl6mcLWJJPHwEIaKd17A
+	 QoMhMC5uAWt/ImN388KSoY2j9BHGa6DYJcp3tyHm449Vbe1VLQ1Hr7x+/1vkKzcekQ
+	 3I15oBt+mRX18g73xBn1cwLUXXj99zf90C4BGHUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/591] nvme-core: fix dev_pm_qos memleak
-Date: Sun, 16 Jul 2023 21:42:42 +0200
-Message-ID: <20230716194924.463106132@linuxfoundation.org>
+Subject: [PATCH 6.1 024/591] md/raid10: check slab-out-of-bounds in md_bitmap_get_counter
+Date: Sun, 16 Jul 2023 21:42:43 +0200
+Message-ID: <20230716194924.488937452@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,57 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 7ed5cf8e6d9bfb6a78d0471317edff14f0f2b4dd ]
+[ Upstream commit 301867b1c16805aebbc306aafa6ecdc68b73c7e5 ]
 
-Call dev_pm_qos_hide_latency_tolerance() in the error unwind patch to
-avoid following kmemleak:-
+If we write a large number to md/bitmap_set_bits, md_bitmap_checkpage()
+will return -EINVAL because 'page >= bitmap->pages', but the return value
+was not checked immediately in md_bitmap_get_counter() in order to set
+*blocks value and slab-out-of-bounds occurs.
 
-blktests (master) # kmemleak-clear; ./check nvme/044;
-blktests (master) # kmemleak-scan ; kmemleak-show
-nvme/044 (Test bi-directional authentication)                [passed]
-    runtime  2.111s  ...  2.124s
-unreferenced object 0xffff888110c46240 (size 96):
-  comm "nvme", pid 33461, jiffies 4345365353 (age 75.586s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000069ac2cec>] kmalloc_trace+0x25/0x90
-    [<000000006acc66d5>] dev_pm_qos_update_user_latency_tolerance+0x6f/0x100
-    [<00000000cc376ea7>] nvme_init_ctrl+0x38e/0x410 [nvme_core]
-    [<000000007df61b4b>] 0xffffffffc05e88b3
-    [<00000000d152b985>] 0xffffffffc05744cb
-    [<00000000f04a4041>] vfs_write+0xc5/0x3c0
-    [<00000000f9491baf>] ksys_write+0x5f/0xe0
-    [<000000001c46513d>] do_syscall_64+0x3b/0x90
-    [<00000000ecf348fe>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
+Move check of 'page >= bitmap->pages' to md_bitmap_get_counter() and
+return directly if true.
 
-Link: https://lore.kernel.org/linux-nvme/CAHj4cs-nDaKzMx2txO4dbE+Mz9ePwLtU0e3egz+StmzOUgWUrA@mail.gmail.com/
-Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: ef4256733506 ("md/bitmap: optimise scanning of empty bitmaps.")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230515134808.3936750-2-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/md-bitmap.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 8414e1a036464..560ce2f05a96d 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -5178,6 +5178,7 @@ int nvme_init_ctrl(struct nvme_ctrl *ctrl, struct device *dev,
- 	return 0;
- out_free_cdev:
- 	nvme_fault_inject_fini(&ctrl->fault_inject);
-+	dev_pm_qos_hide_latency_tolerance(ctrl->device);
- 	cdev_device_del(&ctrl->cdev, ctrl->device);
- out_free_name:
- 	nvme_put_ctrl(ctrl);
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index e7cc6ba1b657f..9640741e8d369 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -54,14 +54,7 @@ __acquires(bitmap->lock)
+ {
+ 	unsigned char *mappage;
+ 
+-	if (page >= bitmap->pages) {
+-		/* This can happen if bitmap_start_sync goes beyond
+-		 * End-of-device while looking for a whole page.
+-		 * It is harmless.
+-		 */
+-		return -EINVAL;
+-	}
+-
++	WARN_ON_ONCE(page >= bitmap->pages);
+ 	if (bitmap->bp[page].hijacked) /* it's hijacked, don't try to alloc */
+ 		return 0;
+ 
+@@ -1364,6 +1357,14 @@ __acquires(bitmap->lock)
+ 	sector_t csize;
+ 	int err;
+ 
++	if (page >= bitmap->pages) {
++		/*
++		 * This can happen if bitmap_start_sync goes beyond
++		 * End-of-device while looking for a whole page or
++		 * user set a huge number to sysfs bitmap_set_bits.
++		 */
++		return NULL;
++	}
+ 	err = md_bitmap_checkpage(bitmap, page, create, 0);
+ 
+ 	if (bitmap->bp[page].hijacked ||
 -- 
 2.39.2
 
