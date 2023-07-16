@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50438F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D28C433C8;
-	Sun, 16 Jul 2023 20:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA76E8F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:03:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3E7C433C7;
+	Sun, 16 Jul 2023 20:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537784;
-	bh=KxK7Yu5MW08+cJk/UCWZMio9vEQLgMvG8LfRrSMlWc4=;
+	s=korg; t=1689537787;
+	bh=8Q/lCO/qwb8kV8bF+AItTxz9wAdCXBr0IAGy8sfq+8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yhg8MDQ/EgI4ZKlj5HTwP/CF4qD5p2pQizLNkvDGW/BgOmg2VIe3tWNWXX9GLBFhb
-	 KnYnSsRDPVHmiJqcMA728gKwhGYRQVtksyhLkwNahbdERsfcFl2M2TthI6qw8riJLG
-	 JN8/RsujHmm9WX2aB2RhA+eg8tbcCXnaUei9sK38=
+	b=XuXqCUjZ8dQzZMCVBPz4YewoalCC5lQHNZYwKBH/XUtp5Z6svrwdOYIMw3Qf/nwIb
+	 7iPKnZ8IVsdi5yQ74TJqx8Gl/BwJ/KmVYPITAxrTWJr7Ry5mP0af8JN47hiebwfyzF
+	 B7PJyxMLj9RKghD5asW3f2VTtTmqEsZcULkCoWd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	syzbot+5da61cf6a9bc1902d422@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 220/800] net: dsa: avoid suspicious RCU usage for synced VLAN-aware MAC addresses
-Date: Sun, 16 Jul 2023 21:41:13 +0200
-Message-ID: <20230716194954.203288868@linuxfoundation.org>
+Subject: [PATCH 6.4 221/800] netlink: Add __sock_i_ino() for __netlink_diag_dump().
+Date: Sun, 16 Jul 2023 21:41:14 +0200
+Message-ID: <20230716194954.225825119@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,346 +37,150 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit d06f925f13976ab82167c93467c70a337a0a3cda ]
+[ Upstream commit 25a9c8a4431c364f97f75558cb346d2ad3f53fbb ]
 
-When using the felix driver (the only one which supports UC filtering
-and MC filtering) as a DSA master for a random other DSA switch, one can
-see the following stack trace when the downstream switch ports join a
-VLAN-aware bridge:
+syzbot reported a warning in __local_bh_enable_ip(). [0]
 
-=============================
-WARNING: suspicious RCU usage
------------------------------
-net/8021q/vlan_core.c:238 suspicious rcu_dereference_protected() usage!
+Commit 8d61f926d420 ("netlink: fix potential deadlock in
+netlink_set_err()") converted read_lock(&nl_table_lock) to
+read_lock_irqsave() in __netlink_diag_dump() to prevent a deadlock.
 
-stack backtrace:
-Workqueue: dsa_ordered dsa_slave_switchdev_event_work
-Call trace:
- lockdep_rcu_suspicious+0x170/0x210
- vlan_for_each+0x8c/0x188
- dsa_slave_sync_uc+0x128/0x178
- __hw_addr_sync_dev+0x138/0x158
- dsa_slave_set_rx_mode+0x58/0x70
- __dev_set_rx_mode+0x88/0xa8
- dev_uc_add+0x74/0xa0
- dsa_port_bridge_host_fdb_add+0xec/0x180
- dsa_slave_switchdev_event_work+0x7c/0x1c8
- process_one_work+0x290/0x568
+However, __netlink_diag_dump() calls sock_i_ino() that uses
+read_lock_bh() and read_unlock_bh().  If CONFIG_TRACE_IRQFLAGS=y,
+read_unlock_bh() finally enables IRQ even though it should stay
+disabled until the following read_unlock_irqrestore().
 
-What it's saying is that vlan_for_each() expects rtnl_lock() context and
-it's not getting it, when it's called from the DSA master's ndo_set_rx_mode().
+Using read_lock() in sock_i_ino() would trigger a lockdep splat
+in another place that was fixed in commit f064af1e500a ("net: fix
+a lockdep splat"), so let's add __sock_i_ino() that would be safe
+to use under BH disabled.
 
-The caller of that - dsa_slave_set_rx_mode() - is the slave DSA
-interface's dsa_port_bridge_host_fdb_add() which comes from the deferred
-dsa_slave_switchdev_event_work().
+[0]:
+WARNING: CPU: 0 PID: 5012 at kernel/softirq.c:376 __local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
+Modules linked in:
+CPU: 0 PID: 5012 Comm: syz-executor487 Not tainted 6.4.0-rc7-syzkaller-00202-g6f68fc395f49 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/27/2023
+RIP: 0010:__local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
+Code: 45 bf 01 00 00 00 e8 91 5b 0a 00 e8 3c 15 3d 00 fb 65 8b 05 ec e9 b5 7e 85 c0 74 58 5b 5d c3 65 8b 05 b2 b6 b4 7e 85 c0 75 a2 <0f> 0b eb 9e e8 89 15 3d 00 eb 9f 48 89 ef e8 6f 49 18 00 eb a8 0f
+RSP: 0018:ffffc90003a1f3d0 EFLAGS: 00010046
+RAX: 0000000000000000 RBX: 0000000000000201 RCX: 1ffffffff1cf5996
+RDX: 0000000000000000 RSI: 0000000000000201 RDI: ffffffff8805c6f3
+RBP: ffffffff8805c6f3 R08: 0000000000000001 R09: ffff8880152b03a3
+R10: ffffed1002a56074 R11: 0000000000000005 R12: 00000000000073e4
+R13: dffffc0000000000 R14: 0000000000000002 R15: 0000000000000000
+FS:  0000555556726300(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000000045ad50 CR3: 000000007c646000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ sock_i_ino+0x83/0xa0 net/core/sock.c:2559
+ __netlink_diag_dump+0x45c/0x790 net/netlink/diag.c:171
+ netlink_diag_dump+0xd6/0x230 net/netlink/diag.c:207
+ netlink_dump+0x570/0xc50 net/netlink/af_netlink.c:2269
+ __netlink_dump_start+0x64b/0x910 net/netlink/af_netlink.c:2374
+ netlink_dump_start include/linux/netlink.h:329 [inline]
+ netlink_diag_handler_dump+0x1ae/0x250 net/netlink/diag.c:238
+ __sock_diag_cmd net/core/sock_diag.c:238 [inline]
+ sock_diag_rcv_msg+0x31e/0x440 net/core/sock_diag.c:269
+ netlink_rcv_skb+0x165/0x440 net/netlink/af_netlink.c:2547
+ sock_diag_rcv+0x2a/0x40 net/core/sock_diag.c:280
+ netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+ netlink_unicast+0x547/0x7f0 net/netlink/af_netlink.c:1365
+ netlink_sendmsg+0x925/0xe30 net/netlink/af_netlink.c:1914
+ sock_sendmsg_nosec net/socket.c:724 [inline]
+ sock_sendmsg+0xde/0x190 net/socket.c:747
+ ____sys_sendmsg+0x71c/0x900 net/socket.c:2503
+ ___sys_sendmsg+0x110/0x1b0 net/socket.c:2557
+ __sys_sendmsg+0xf7/0x1c0 net/socket.c:2586
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f5303aaabb9
+Code: 28 c3 e8 2a 14 00 00 66 2e 0f 1f 84 00 00 00 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffc7506e548 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f5303aaabb9
+RDX: 0000000000000000 RSI: 0000000020000180 RDI: 0000000000000003
+RBP: 00007f5303a6ed60 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f5303a6edf0
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
 
-We went to great lengths to avoid the rtnl_lock() context in that call
-path in commit 0faf890fc519 ("net: dsa: drop rtnl_lock from
-dsa_slave_switchdev_event_work"), and calling rtnl_lock() is simply not
-an option due to the possibility of deadlocking when calling
-dsa_flush_workqueue() from the call paths that do hold rtnl_lock() -
-basically all of them.
-
-So, when the DSA master calls vlan_for_each() from its ndo_set_rx_mode(),
-the state of the 8021q driver on this device is really not protected
-from concurrent access by anything.
-
-Looking at net/8021q/, I don't think that vlan_info->vid_list was
-particularly designed with RCU traversal in mind, so introducing an RCU
-read-side form of vlan_for_each() - vlan_for_each_rcu() - won't be so
-easy, and it also wouldn't be exactly what we need anyway.
-
-In general I believe that the solution isn't in net/8021q/ anyway;
-vlan_for_each() is not cut out for this task. DSA doesn't need rtnl_lock()
-to be held per se - since it's not a netdev state change that we're
-blocking, but rather, just concurrent additions/removals to a VLAN list.
-We don't even need sleepable context - the callback of vlan_for_each()
-just schedules deferred work.
-
-The proposed escape is to remove the dependency on vlan_for_each() and
-to open-code a non-sleepable, rtnl-free alternative to that, based on
-copies of the VLAN list modified from .ndo_vlan_rx_add_vid() and
-.ndo_vlan_rx_kill_vid().
-
-Fixes: 64fdc5f341db ("net: dsa: sync unicast and multicast addresses for VLAN filters too")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20230626154402.3154454-1-vladimir.oltean@nxp.com
+Fixes: 8d61f926d420 ("netlink: fix potential deadlock in netlink_set_err()")
+Reported-by: syzbot+5da61cf6a9bc1902d422@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=5da61cf6a9bc1902d422
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230626164313.52528-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dsa.h | 12 +++++--
- net/dsa/dsa.c     |  2 +-
- net/dsa/slave.c   | 84 ++++++++++++++++++++++++++++++++---------------
- net/dsa/switch.c  |  4 +--
- net/dsa/switch.h  |  3 ++
- 5 files changed, 74 insertions(+), 31 deletions(-)
+ include/net/sock.h |  1 +
+ net/core/sock.c    | 17 ++++++++++++++---
+ net/netlink/diag.c |  2 +-
+ 3 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/dsa.h b/include/net/dsa.h
-index ab0f0a5b08602..197c5a6ca8f7f 100644
---- a/include/net/dsa.h
-+++ b/include/net/dsa.h
-@@ -314,9 +314,17 @@ struct dsa_port {
- 	struct list_head	fdbs;
- 	struct list_head	mdbs;
- 
--	/* List of VLANs that CPU and DSA ports are members of. */
- 	struct mutex		vlans_lock;
--	struct list_head	vlans;
-+	union {
-+		/* List of VLANs that CPU and DSA ports are members of.
-+		 * Access to this is serialized by the sleepable @vlans_lock.
-+		 */
-+		struct list_head	vlans;
-+		/* List of VLANs that user ports are members of.
-+		 * Access to this is serialized by netif_addr_lock_bh().
-+		 */
-+		struct list_head	user_vlans;
-+	};
- };
- 
- /* TODO: ideally DSA ports would have a single dp->link_dp member,
-diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
-index 1afed89e03c00..ccbdb98109f80 100644
---- a/net/dsa/dsa.c
-+++ b/net/dsa/dsa.c
-@@ -1106,7 +1106,7 @@ static struct dsa_port *dsa_port_touch(struct dsa_switch *ds, int index)
- 	mutex_init(&dp->vlans_lock);
- 	INIT_LIST_HEAD(&dp->fdbs);
- 	INIT_LIST_HEAD(&dp->mdbs);
--	INIT_LIST_HEAD(&dp->vlans);
-+	INIT_LIST_HEAD(&dp->vlans); /* also initializes &dp->user_vlans */
- 	INIT_LIST_HEAD(&dp->list);
- 	list_add_tail(&dp->list, &dst->ports);
- 
-diff --git a/net/dsa/slave.c b/net/dsa/slave.c
-index 165bb2cb84316..527b1d576460f 100644
---- a/net/dsa/slave.c
-+++ b/net/dsa/slave.c
-@@ -27,6 +27,7 @@
- #include "master.h"
- #include "netlink.h"
- #include "slave.h"
-+#include "switch.h"
- #include "tag.h"
- 
- struct dsa_switchdev_event_work {
-@@ -161,8 +162,7 @@ static int dsa_slave_schedule_standalone_work(struct net_device *dev,
- 	return 0;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 6f428a7f35675..ad468fe71413a 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2100,6 +2100,7 @@ static inline void sock_graft(struct sock *sk, struct socket *parent)
  }
  
--static int dsa_slave_host_vlan_rx_filtering(struct net_device *vdev, int vid,
--					    void *arg)
-+static int dsa_slave_host_vlan_rx_filtering(void *arg, int vid)
+ kuid_t sock_i_uid(struct sock *sk);
++unsigned long __sock_i_ino(struct sock *sk);
+ unsigned long sock_i_ino(struct sock *sk);
+ 
+ static inline kuid_t sock_net_uid(const struct net *net, const struct sock *sk)
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 6e5662ca00fe5..4a0edccf86066 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2550,13 +2550,24 @@ kuid_t sock_i_uid(struct sock *sk)
+ }
+ EXPORT_SYMBOL(sock_i_uid);
+ 
+-unsigned long sock_i_ino(struct sock *sk)
++unsigned long __sock_i_ino(struct sock *sk)
  {
- 	struct dsa_host_vlan_rx_filtering_ctx *ctx = arg;
+ 	unsigned long ino;
  
-@@ -170,6 +170,28 @@ static int dsa_slave_host_vlan_rx_filtering(struct net_device *vdev, int vid,
- 						  ctx->addr, vid);
- }
- 
-+static int dsa_slave_vlan_for_each(struct net_device *dev,
-+				   int (*cb)(void *arg, int vid), void *arg)
-+{
-+	struct dsa_port *dp = dsa_slave_to_port(dev);
-+	struct dsa_vlan *v;
-+	int err;
-+
-+	lockdep_assert_held(&dev->addr_list_lock);
-+
-+	err = cb(arg, 0);
-+	if (err)
-+		return err;
-+
-+	list_for_each_entry(v, &dp->user_vlans, list) {
-+		err = cb(arg, v->vid);
-+		if (err)
-+			return err;
-+	}
-+
-+	return 0;
+-	read_lock_bh(&sk->sk_callback_lock);
++	read_lock(&sk->sk_callback_lock);
+ 	ino = sk->sk_socket ? SOCK_INODE(sk->sk_socket)->i_ino : 0;
+-	read_unlock_bh(&sk->sk_callback_lock);
++	read_unlock(&sk->sk_callback_lock);
++	return ino;
 +}
++EXPORT_SYMBOL(__sock_i_ino);
 +
- static int dsa_slave_sync_uc(struct net_device *dev,
- 			     const unsigned char *addr)
- {
-@@ -180,18 +202,14 @@ static int dsa_slave_sync_uc(struct net_device *dev,
- 		.addr = addr,
- 		.event = DSA_UC_ADD,
- 	};
--	int err;
- 
- 	dev_uc_add(master, addr);
- 
- 	if (!dsa_switch_supports_uc_filtering(dp->ds))
- 		return 0;
- 
--	err = dsa_slave_schedule_standalone_work(dev, DSA_UC_ADD, addr, 0);
--	if (err)
--		return err;
--
--	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
-+	return dsa_slave_vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering,
-+				       &ctx);
++unsigned long sock_i_ino(struct sock *sk)
++{
++	unsigned long ino;
++
++	local_bh_disable();
++	ino = __sock_i_ino(sk);
++	local_bh_enable();
+ 	return ino;
  }
- 
- static int dsa_slave_unsync_uc(struct net_device *dev,
-@@ -204,18 +222,14 @@ static int dsa_slave_unsync_uc(struct net_device *dev,
- 		.addr = addr,
- 		.event = DSA_UC_DEL,
- 	};
--	int err;
- 
- 	dev_uc_del(master, addr);
- 
- 	if (!dsa_switch_supports_uc_filtering(dp->ds))
- 		return 0;
- 
--	err = dsa_slave_schedule_standalone_work(dev, DSA_UC_DEL, addr, 0);
--	if (err)
--		return err;
--
--	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
-+	return dsa_slave_vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering,
-+				       &ctx);
- }
- 
- static int dsa_slave_sync_mc(struct net_device *dev,
-@@ -228,18 +242,14 @@ static int dsa_slave_sync_mc(struct net_device *dev,
- 		.addr = addr,
- 		.event = DSA_MC_ADD,
- 	};
--	int err;
- 
- 	dev_mc_add(master, addr);
- 
- 	if (!dsa_switch_supports_mc_filtering(dp->ds))
- 		return 0;
- 
--	err = dsa_slave_schedule_standalone_work(dev, DSA_MC_ADD, addr, 0);
--	if (err)
--		return err;
--
--	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
-+	return dsa_slave_vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering,
-+				       &ctx);
- }
- 
- static int dsa_slave_unsync_mc(struct net_device *dev,
-@@ -252,18 +262,14 @@ static int dsa_slave_unsync_mc(struct net_device *dev,
- 		.addr = addr,
- 		.event = DSA_MC_DEL,
- 	};
--	int err;
- 
- 	dev_mc_del(master, addr);
- 
- 	if (!dsa_switch_supports_mc_filtering(dp->ds))
- 		return 0;
- 
--	err = dsa_slave_schedule_standalone_work(dev, DSA_MC_DEL, addr, 0);
--	if (err)
--		return err;
--
--	return vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering, &ctx);
-+	return dsa_slave_vlan_for_each(dev, dsa_slave_host_vlan_rx_filtering,
-+				       &ctx);
- }
- 
- void dsa_slave_sync_ha(struct net_device *dev)
-@@ -1759,6 +1765,7 @@ static int dsa_slave_vlan_rx_add_vid(struct net_device *dev, __be16 proto,
- 	struct netlink_ext_ack extack = {0};
- 	struct dsa_switch *ds = dp->ds;
- 	struct netdev_hw_addr *ha;
-+	struct dsa_vlan *v;
- 	int ret;
- 
- 	/* User port... */
-@@ -1782,8 +1789,17 @@ static int dsa_slave_vlan_rx_add_vid(struct net_device *dev, __be16 proto,
- 	    !dsa_switch_supports_mc_filtering(ds))
- 		return 0;
- 
-+	v = kzalloc(sizeof(*v), GFP_KERNEL);
-+	if (!v) {
-+		ret = -ENOMEM;
-+		goto rollback;
-+	}
-+
- 	netif_addr_lock_bh(dev);
- 
-+	v->vid = vid;
-+	list_add_tail(&v->list, &dp->user_vlans);
-+
- 	if (dsa_switch_supports_mc_filtering(ds)) {
- 		netdev_for_each_synced_mc_addr(ha, dev) {
- 			dsa_slave_schedule_standalone_work(dev, DSA_MC_ADD,
-@@ -1803,6 +1819,12 @@ static int dsa_slave_vlan_rx_add_vid(struct net_device *dev, __be16 proto,
- 	dsa_flush_workqueue();
- 
- 	return 0;
-+
-+rollback:
-+	dsa_port_host_vlan_del(dp, &vlan);
-+	dsa_port_vlan_del(dp, &vlan);
-+
-+	return ret;
- }
- 
- static int dsa_slave_vlan_rx_kill_vid(struct net_device *dev, __be16 proto,
-@@ -1816,6 +1838,7 @@ static int dsa_slave_vlan_rx_kill_vid(struct net_device *dev, __be16 proto,
- 	};
- 	struct dsa_switch *ds = dp->ds;
- 	struct netdev_hw_addr *ha;
-+	struct dsa_vlan *v;
- 	int err;
- 
- 	err = dsa_port_vlan_del(dp, &vlan);
-@@ -1832,6 +1855,15 @@ static int dsa_slave_vlan_rx_kill_vid(struct net_device *dev, __be16 proto,
- 
- 	netif_addr_lock_bh(dev);
- 
-+	v = dsa_vlan_find(&dp->user_vlans, &vlan);
-+	if (!v) {
-+		netif_addr_unlock_bh(dev);
-+		return -ENOENT;
-+	}
-+
-+	list_del(&v->list);
-+	kfree(v);
-+
- 	if (dsa_switch_supports_mc_filtering(ds)) {
- 		netdev_for_each_synced_mc_addr(ha, dev) {
- 			dsa_slave_schedule_standalone_work(dev, DSA_MC_DEL,
-diff --git a/net/dsa/switch.c b/net/dsa/switch.c
-index 8c9a9f94b756a..1a42f93173345 100644
---- a/net/dsa/switch.c
-+++ b/net/dsa/switch.c
-@@ -673,8 +673,8 @@ static bool dsa_port_host_vlan_match(struct dsa_port *dp,
- 	return false;
- }
- 
--static struct dsa_vlan *dsa_vlan_find(struct list_head *vlan_list,
--				      const struct switchdev_obj_port_vlan *vlan)
-+struct dsa_vlan *dsa_vlan_find(struct list_head *vlan_list,
-+			       const struct switchdev_obj_port_vlan *vlan)
- {
- 	struct dsa_vlan *v;
- 
-diff --git a/net/dsa/switch.h b/net/dsa/switch.h
-index 15e67b95eb6e1..ea034677da153 100644
---- a/net/dsa/switch.h
-+++ b/net/dsa/switch.h
-@@ -111,6 +111,9 @@ struct dsa_notifier_master_state_info {
- 	bool operational;
- };
- 
-+struct dsa_vlan *dsa_vlan_find(struct list_head *vlan_list,
-+			       const struct switchdev_obj_port_vlan *vlan);
-+
- int dsa_tree_notify(struct dsa_switch_tree *dst, unsigned long e, void *v);
- int dsa_broadcast(unsigned long e, void *v);
- 
+ EXPORT_SYMBOL(sock_i_ino);
+diff --git a/net/netlink/diag.c b/net/netlink/diag.c
+index 4143b2ea4195a..e4f21b1067bcc 100644
+--- a/net/netlink/diag.c
++++ b/net/netlink/diag.c
+@@ -168,7 +168,7 @@ static int __netlink_diag_dump(struct sk_buff *skb, struct netlink_callback *cb,
+ 				 NETLINK_CB(cb->skb).portid,
+ 				 cb->nlh->nlmsg_seq,
+ 				 NLM_F_MULTI,
+-				 sock_i_ino(sk)) < 0) {
++				 __sock_i_ino(sk)) < 0) {
+ 			ret = 1;
+ 			break;
+ 		}
 -- 
 2.39.2
 
