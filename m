@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307728F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49E5C433C7;
-	Sun, 16 Jul 2023 20:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7FE8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:44:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B82C433C7;
+	Sun, 16 Jul 2023 20:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540294;
-	bh=uZg6siGsGP9BPVl8qb5HcCYYE05B4Iy6rUl/9DaK99w=;
+	s=korg; t=1689540296;
+	bh=g2hguSafZg+GmzcksWcO1pOba7zrKI0L7w3SPFdmEYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUUB7Aa9sXQYfEeHxWo4NQjL/SrsyS8DMNr7KKpWj9OcAZqhmEFPIosvi42DI+Fex
-	 q54CJnisfthfiO2R33UX8adjzm/cuuRKppPxcNvDKDopyHjjaDxEkD/2BV1ppfP/Gs
-	 cpyLJXJh8vEMIa4SkdUJLTAx2hnwukuZ712KA588=
+	b=0+6Qp7PMEaqaZtsKd0gysw0kfb6MipVfHTgWu4WrKytAf5jsYojnLy24KsT0AGdH0
+	 ++ERmETSoiWIxZlR+5MHyjgbEa2nqdgs4XsxQcow7sLjP+5rn8k6ZByFNb31yabwck
+	 MIp+zCrbtRl20HgMTmU6wySBEi2H4XNk4D6Lbzc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Syed Saba Kareem <Syed.SabaKareem@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 284/591] ASoC: amd: acp: clear pdm dma interrupt mask
-Date: Sun, 16 Jul 2023 21:47:03 +0200
-Message-ID: <20230716194931.241180754@linuxfoundation.org>
+Subject: [PATCH 6.1 285/591] PCI: cadence: Fix Gen2 Link Retraining process
+Date: Sun, 16 Jul 2023 21:47:04 +0200
+Message-ID: <20230716194931.267534625@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,36 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Syed Saba Kareem <Syed.SabaKareem@amd.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit ad60672394bd1f95c58d3d9336902f47e05126fc ]
+[ Upstream commit 0e12f830236928b6fadf40d917a7527f0a048d2f ]
 
-Clear pdm dma interrupt mask in acp_dmic_shutdown().
+The Link Retraining process is initiated to account for the Gen2 defect in
+the Cadence PCIe controller in J721E SoC. The errata corresponding to this
+is i2085, documented at:
+https://www.ti.com/lit/er/sprz455c/sprz455c.pdf
 
-'Fixes: c32bd332ce5c9 ("ASoC: amd: acp: Add generic support for
-PDM controller on ACP")'
+The existing workaround implemented for the errata waits for the Data Link
+initialization to complete and assumes that the link retraining process
+at the Physical Layer has completed. However, it is possible that the
+Physical Layer training might be ongoing as indicated by the
+PCI_EXP_LNKSTA_LT bit in the PCI_EXP_LNKSTA register.
 
-Signed-off-by: Syed Saba Kareem <Syed.SabaKareem@amd.com>
-Link: https://lore.kernel.org/r/Message-Id: <20230622152406.3709231-1-Syed.SabaKareem@amd.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix the existing workaround, to ensure that the Physical Layer training
+has also completed, in addition to the Data Link initialization.
+
+Link: https://lore.kernel.org/r/20230315070800.1615527-1-s-vadapalli@ti.com
+Fixes: 4740b969aaf5 ("PCI: cadence: Retrain Link to work around Gen2 training defect")
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-pdm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../controller/cadence/pcie-cadence-host.c    | 27 +++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/sound/soc/amd/acp/acp-pdm.c b/sound/soc/amd/acp/acp-pdm.c
-index 66ec6b6a59723..f8030b79ac17c 100644
---- a/sound/soc/amd/acp/acp-pdm.c
-+++ b/sound/soc/amd/acp/acp-pdm.c
-@@ -176,7 +176,7 @@ static void acp_dmic_dai_shutdown(struct snd_pcm_substream *substream,
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
+index 940c7dd701d68..5b14f7ee3c798 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-host.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
+@@ -12,6 +12,8 @@
  
- 	/* Disable DMIC interrupts */
- 	ext_int_ctrl = readl(ACP_EXTERNAL_INTR_CNTL(adata, 0));
--	ext_int_ctrl |= ~PDM_DMA_INTR_MASK;
-+	ext_int_ctrl &= ~PDM_DMA_INTR_MASK;
- 	writel(ext_int_ctrl, ACP_EXTERNAL_INTR_CNTL(adata, 0));
- }
+ #include "pcie-cadence.h"
  
++#define LINK_RETRAIN_TIMEOUT HZ
++
+ static u64 bar_max_size[] = {
+ 	[RP_BAR0] = _ULL(128 * SZ_2G),
+ 	[RP_BAR1] = SZ_2G,
+@@ -77,6 +79,27 @@ static struct pci_ops cdns_pcie_host_ops = {
+ 	.write		= pci_generic_config_write,
+ };
+ 
++static int cdns_pcie_host_training_complete(struct cdns_pcie *pcie)
++{
++	u32 pcie_cap_off = CDNS_PCIE_RP_CAP_OFFSET;
++	unsigned long end_jiffies;
++	u16 lnk_stat;
++
++	/* Wait for link training to complete. Exit after timeout. */
++	end_jiffies = jiffies + LINK_RETRAIN_TIMEOUT;
++	do {
++		lnk_stat = cdns_pcie_rp_readw(pcie, pcie_cap_off + PCI_EXP_LNKSTA);
++		if (!(lnk_stat & PCI_EXP_LNKSTA_LT))
++			break;
++		usleep_range(0, 1000);
++	} while (time_before(jiffies, end_jiffies));
++
++	if (!(lnk_stat & PCI_EXP_LNKSTA_LT))
++		return 0;
++
++	return -ETIMEDOUT;
++}
++
+ static int cdns_pcie_host_wait_for_link(struct cdns_pcie *pcie)
+ {
+ 	struct device *dev = pcie->dev;
+@@ -118,6 +141,10 @@ static int cdns_pcie_retrain(struct cdns_pcie *pcie)
+ 		cdns_pcie_rp_writew(pcie, pcie_cap_off + PCI_EXP_LNKCTL,
+ 				    lnk_ctl);
+ 
++		ret = cdns_pcie_host_training_complete(pcie);
++		if (ret)
++			return ret;
++
+ 		ret = cdns_pcie_host_wait_for_link(pcie);
+ 	}
+ 	return ret;
 -- 
 2.39.2
 
