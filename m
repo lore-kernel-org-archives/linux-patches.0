@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C900B8F6D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460B7C433C7;
-	Sun, 16 Jul 2023 20:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884938F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:24:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A312C433C8;
+	Sun, 16 Jul 2023 20:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539069;
-	bh=yKRhpxQqzHjW3xb8mhXW/sIBU5BwG3EwqHOtCkEDWfo=;
+	s=korg; t=1689539072;
+	bh=0WuSaP4EjiSH6VHmUmG8yHgktuI1tL9+3zQXoJtMFBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbRnAGtXq4A1Je3iCyqF+ymhvSJGOaoJ5vWm/yAmcK7u5OETKP5HxaQFXRILHQSQn
-	 98FCJ94Jf0Abc0UWAWE+D2tFpwHE47r3PaLxFfyg8UQg1kg/Up8fwHEX9DPdtyViZE
-	 paWdRmH4f4SwbzkHLrCicLFekTI1xcGZ0zBPOsyI=
+	b=k++YMGR5ABhzEHfVMNffW0jbscxTrQi59y78UeW+n5bGJAP8aWDUIpnh6L73PLPNa
+	 naIa2v1XCBJfRGHv5s5M9ue4EaBl9eFaCrXf9jkn50erFjLIzacWmY2K4DZRKqg3af
+	 40GEg+1b06Aw20VuS5pY9W74HwFURooL51VgMPkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Child <nnac123@linux.ibm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Pawel Dembicki <paweldembicki@gmail.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 676/800] ibmvnic: Do not reset dql stats on NON_FATAL err
-Date: Sun, 16 Jul 2023 21:48:49 +0200
-Message-ID: <20230716195004.826892183@linuxfoundation.org>
+Subject: [PATCH 6.4 677/800] net: dsa: vsc73xx: fix MTU configuration
+Date: Sun, 16 Jul 2023 21:48:50 +0200
+Message-ID: <20230716195004.851064994@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,80 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Child <nnac123@linux.ibm.com>
+From: Pawel Dembicki <paweldembicki@gmail.com>
 
-[ Upstream commit 48538ccb825b05544ec308a509e2cc9c013402db ]
+[ Upstream commit 3cf62c8177adb0db9e15c8b898c44f997acf3ebf ]
 
-All ibmvnic resets, make a call to netdev_tx_reset_queue() when
-re-opening the device. netdev_tx_reset_queue() resets the num_queued
-and num_completed byte counters. These stats are used in Byte Queue
-Limit (BQL) algorithms. The difference between these two stats tracks
-the number of bytes currently sitting on the physical NIC. ibmvnic
-increases the number of queued bytes though calls to
-netdev_tx_sent_queue() in the drivers xmit function. When, VIOS reports
-that it is done transmitting bytes, the ibmvnic device increases the
-number of completed bytes through calls to netdev_tx_completed_queue().
-It is important to note that the driver batches its transmit calls and
-num_queued is increased every time that an skb is added to the next
-batch, not necessarily when the batch is sent to VIOS for transmission.
+Switch in MAXLEN register stores the maximum size of a data frame.
+The MTU size is 18 bytes smaller than the frame size.
 
-Unlike other reset types, a NON FATAL reset will not flush the sub crq
-tx buffers. Therefore, it is possible for the batched skb array to be
-partially full. So if there is call to netdev_tx_reset_queue() when
-re-opening the device, the value of num_queued (0) would not account
-for the skb's that are currently batched. Eventually, when the batch
-is sent to VIOS, the call to netdev_tx_completed_queue() would increase
-num_completed to a value greater than the num_queued. This causes a
-BUG_ON crash:
+The current settings are causing problems with packet forwarding.
+This patch fixes the MTU settings to proper values.
 
-ibmvnic 30000002: Firmware reports error, cause: adapter problem.
-Starting recovery...
-ibmvnic 30000002: tx error 600
-ibmvnic 30000002: tx error 600
-ibmvnic 30000002: tx error 600
-ibmvnic 30000002: tx error 600
-------------[ cut here ]------------
-kernel BUG at lib/dynamic_queue_limits.c:27!
-Oops: Exception in kernel mode, sig: 5
-[....]
-NIP dql_completed+0x28/0x1c0
-LR ibmvnic_complete_tx.isra.0+0x23c/0x420 [ibmvnic]
-Call Trace:
-ibmvnic_complete_tx.isra.0+0x3f8/0x420 [ibmvnic] (unreliable)
-ibmvnic_interrupt_tx+0x40/0x70 [ibmvnic]
-__handle_irq_event_percpu+0x98/0x270
----[ end trace ]---
-
-Therefore, do not reset the dql stats when performing a NON_FATAL reset.
-
-Fixes: 0d973388185d ("ibmvnic: Introduce xmit_more support using batched subCRQ hcalls")
-Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Fixes: fb77ffc6ec86 ("net: dsa: vsc73xx: make the MTU configurable")
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://lore.kernel.org/r/20230628194327.1765644-1-paweldembicki@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmvnic.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/dsa/vitesse-vsc73xx-core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
-index c63d3ec9d3284..763d613adbcc0 100644
---- a/drivers/net/ethernet/ibm/ibmvnic.c
-+++ b/drivers/net/ethernet/ibm/ibmvnic.c
-@@ -1816,7 +1816,14 @@ static int __ibmvnic_open(struct net_device *netdev)
- 		if (prev_state == VNIC_CLOSED)
- 			enable_irq(adapter->tx_scrq[i]->irq);
- 		enable_scrq_irq(adapter, adapter->tx_scrq[i]);
--		netdev_tx_reset_queue(netdev_get_tx_queue(netdev, i));
-+		/* netdev_tx_reset_queue will reset dql stats. During NON_FATAL
-+		 * resets, don't reset the stats because there could be batched
-+		 * skb's waiting to be sent. If we reset dql stats, we risk
-+		 * num_completed being greater than num_queued. This will cause
-+		 * a BUG_ON in dql_completed().
-+		 */
-+		if (adapter->reset_reason != VNIC_RESET_NON_FATAL)
-+			netdev_tx_reset_queue(netdev_get_tx_queue(netdev, i));
- 	}
+diff --git a/drivers/net/dsa/vitesse-vsc73xx-core.c b/drivers/net/dsa/vitesse-vsc73xx-core.c
+index ae55167ce0a6f..ef1a4a7c47b23 100644
+--- a/drivers/net/dsa/vitesse-vsc73xx-core.c
++++ b/drivers/net/dsa/vitesse-vsc73xx-core.c
+@@ -1025,17 +1025,17 @@ static int vsc73xx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
+ 	struct vsc73xx *vsc = ds->priv;
  
- 	rc = set_link_state(adapter, IBMVNIC_LOGICAL_LNK_UP);
+ 	return vsc73xx_write(vsc, VSC73XX_BLOCK_MAC, port,
+-			     VSC73XX_MAXLEN, new_mtu);
++			     VSC73XX_MAXLEN, new_mtu + ETH_HLEN + ETH_FCS_LEN);
+ }
+ 
+ /* According to application not "VSC7398 Jumbo Frames" setting
+- * up the MTU to 9.6 KB does not affect the performance on standard
++ * up the frame size to 9.6 KB does not affect the performance on standard
+  * frames. It is clear from the application note that
+  * "9.6 kilobytes" == 9600 bytes.
+  */
+ static int vsc73xx_get_max_mtu(struct dsa_switch *ds, int port)
+ {
+-	return 9600;
++	return 9600 - ETH_HLEN - ETH_FCS_LEN;
+ }
+ 
+ static const struct dsa_switch_ops vsc73xx_ds_ops = {
 -- 
 2.39.2
 
