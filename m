@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DED08F40
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:30:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A78C433C8;
-	Sun, 16 Jul 2023 20:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F868F40
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:30:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3E6C433C8;
+	Sun, 16 Jul 2023 20:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539456;
-	bh=U8rygmy/NNzqIfjpdhgdIhQFmkO6da+uaLRhQr0fe1U=;
+	s=korg; t=1689539458;
+	bh=4wdoPoDoU/I0fBOLHS9pBXLVVZzKXJs+p+bUTI6z/y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xoiVo7GdgB1MBVTzDDP5vmDV73DLHmY1TWmVP0zgFQU9I67AUD0hkjboYP5mPxThs
-	 7Cdwh2Z3Mdj2k37VOfqsdjsjmTIiNBIdLZwEk22w6IwYU5kPzREVJYsybo9omIaDCx
-	 sdB5jSdJ0weqwJqVT6A9GLAEVBfNNVt7L5omQAQg=
+	b=E46iiybdkXq4XPaMvjbcTdwiPyLzrc0EczyQPER9b18XlpjkUtoTPrJTghWRMEmxh
+	 BGJnVJ4Al0j/uaeKm06EuvErGdY7V14j1ay0FYI8hHmmv3AzjL0LebSvU9Mm+Ijm5m
+	 TjAa28tayPWWvpuFUUGHhPvCI92JAz859iDI/8PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/591] erofs: clean up cached I/O strategies
-Date: Sun, 16 Jul 2023 21:42:23 +0200
-Message-ID: <20230716194923.980209437@linuxfoundation.org>
+Subject: [PATCH 6.1 005/591] erofs: avoid tagged pointers to mark sync decompression
+Date: Sun, 16 Jul 2023 21:42:24 +0200
+Message-ID: <20230716194924.004567620@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -38,159 +38,155 @@ Content-Transfer-Encoding: 8bit
 
 From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 1282dea37b09087b8aec59f0774572c16b52276a ]
+[ Upstream commit cdba55067f2f9fdc7870ffcb6aef912d3468cff8 ]
 
-After commit 4c7e42552b3a ("erofs: remove useless cache strategy of
-DELAYEDALLOC"), only one cached I/O allocation strategy is supported:
-
-  When cached I/O is preferred, page allocation is applied without
-  direct reclaim.  If allocation fails, fall back to inplace I/O.
-
-Let's get rid of z_erofs_cache_alloctype.  No logical changes.
+We could just use a boolean in z_erofs_decompressqueue for sync
+decompression to simplify the code.
 
 Reviewed-by: Yue Hu <huyue2@coolpad.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Yue Hu <huyue2@coolpad.com>
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20221206060352.152830-1-xiang@kernel.org
+Link: https://lore.kernel.org/r/20230204093040.97967-2-hsiangkao@linux.alibaba.com
 Stable-dep-of: 967c28b23f6c ("erofs: kill hooked chains to avoid loops on deduplicated compressed images")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 77 +++++++++++++++++++-----------------------------
- 1 file changed, 31 insertions(+), 46 deletions(-)
+ fs/erofs/zdata.c | 42 ++++++++++++++++--------------------------
+ fs/erofs/zdata.h |  2 +-
+ 2 files changed, 17 insertions(+), 27 deletions(-)
 
 diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index cf4871834ebb2..ccf7c55d477fe 100644
+index ccf7c55d477fe..8e80871a8c1d7 100644
 --- a/fs/erofs/zdata.c
 +++ b/fs/erofs/zdata.c
-@@ -175,16 +175,6 @@ static void z_erofs_free_pcluster(struct z_erofs_pcluster *pcl)
- 	DBG_BUGON(1);
+@@ -1157,12 +1157,12 @@ static void z_erofs_decompressqueue_work(struct work_struct *work)
  }
  
--/* how to allocate cached pages for a pcluster */
--enum z_erofs_cache_alloctype {
--	DONTALLOC,	/* don't allocate any cached pages */
--	/*
--	 * try to use cached I/O if page allocation succeeds or fallback
--	 * to in-place I/O instead to avoid any direct reclaim.
--	 */
--	TRYALLOC,
--};
--
- /*
-  * tagged pointer with 1-bit tag for all compressed pages
-  * tag 0 - the page is just found with an extra page reference
-@@ -292,12 +282,29 @@ struct z_erofs_decompress_frontend {
- 	.inode = __i, .owned_head = Z_EROFS_PCLUSTER_TAIL, \
- 	.mode = Z_EROFS_PCLUSTER_FOLLOWED, .backmost = true }
- 
-+static bool z_erofs_should_alloc_cache(struct z_erofs_decompress_frontend *fe)
-+{
-+	unsigned int cachestrategy = EROFS_I_SB(fe->inode)->opt.cache_strategy;
-+
-+	if (cachestrategy <= EROFS_ZIP_CACHE_DISABLED)
-+		return false;
-+
-+	if (fe->backmost)
-+		return true;
-+
-+	if (cachestrategy >= EROFS_ZIP_CACHE_READAROUND &&
-+	    fe->map.m_la < fe->headoffset)
-+		return true;
-+
-+	return false;
-+}
-+
- static void z_erofs_bind_cache(struct z_erofs_decompress_frontend *fe,
--			       enum z_erofs_cache_alloctype type,
- 			       struct page **pagepool)
+ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+-				       bool sync, int bios)
++				       int bios)
  {
- 	struct address_space *mc = MNGD_MAPPING(EROFS_I_SB(fe->inode));
- 	struct z_erofs_pcluster *pcl = fe->pcl;
-+	bool shouldalloc = z_erofs_should_alloc_cache(fe);
- 	bool standalone = true;
- 	/*
- 	 * optimistic allocation without direct reclaim since inplace I/O
-@@ -326,18 +333,19 @@ static void z_erofs_bind_cache(struct z_erofs_decompress_frontend *fe,
- 		} else {
- 			/* I/O is needed, no possible to decompress directly */
- 			standalone = false;
--			switch (type) {
--			case TRYALLOC:
--				newpage = erofs_allocpage(pagepool, gfp);
--				if (!newpage)
--					continue;
--				set_page_private(newpage,
--						 Z_EROFS_PREALLOCATED_PAGE);
--				t = tag_compressed_page_justfound(newpage);
--				break;
--			default:        /* DONTALLOC */
-+			if (!shouldalloc)
- 				continue;
--			}
-+
-+			/*
-+			 * try to use cached I/O if page allocation
-+			 * succeeds or fallback to in-place I/O instead
-+			 * to avoid any direct reclaim.
-+			 */
-+			newpage = erofs_allocpage(pagepool, gfp);
-+			if (!newpage)
-+				continue;
-+			set_page_private(newpage, Z_EROFS_PREALLOCATED_PAGE);
-+			t = tag_compressed_page_justfound(newpage);
- 		}
+ 	struct erofs_sb_info *const sbi = EROFS_SB(io->sb);
  
- 		if (!cmpxchg_relaxed(&pcl->compressed_bvecs[i].page, NULL,
-@@ -638,20 +646,6 @@ static bool z_erofs_collector_end(struct z_erofs_decompress_frontend *fe)
- 	return true;
+ 	/* wake up the caller thread for sync decompression */
+-	if (sync) {
++	if (io->sync) {
+ 		if (!atomic_add_return(bios, &io->pending_bios))
+ 			complete(&io->u.done);
+ 		return;
+@@ -1294,9 +1294,8 @@ static struct page *pickup_page_for_submission(struct z_erofs_pcluster *pcl,
+ 	return page;
  }
  
--static bool should_alloc_managed_pages(struct z_erofs_decompress_frontend *fe,
--				       unsigned int cachestrategy,
--				       erofs_off_t la)
+-static struct z_erofs_decompressqueue *
+-jobqueue_init(struct super_block *sb,
+-	      struct z_erofs_decompressqueue *fgq, bool *fg)
++static struct z_erofs_decompressqueue *jobqueue_init(struct super_block *sb,
++			      struct z_erofs_decompressqueue *fgq, bool *fg)
+ {
+ 	struct z_erofs_decompressqueue *q;
+ 
+@@ -1313,6 +1312,7 @@ jobqueue_init(struct super_block *sb,
+ 		init_completion(&fgq->u.done);
+ 		atomic_set(&fgq->pending_bios, 0);
+ 		q->eio = false;
++		q->sync = true;
+ 	}
+ 	q->sb = sb;
+ 	q->head = Z_EROFS_PCLUSTER_TAIL_CLOSED;
+@@ -1326,20 +1326,6 @@ enum {
+ 	NR_JOBQUEUES,
+ };
+ 
+-static void *jobqueueset_init(struct super_block *sb,
+-			      struct z_erofs_decompressqueue *q[],
+-			      struct z_erofs_decompressqueue *fgq, bool *fg)
 -{
--	if (cachestrategy <= EROFS_ZIP_CACHE_DISABLED)
--		return false;
+-	/*
+-	 * if managed cache is enabled, bypass jobqueue is needed,
+-	 * no need to read from device for all pclusters in this queue.
+-	 */
+-	q[JQ_BYPASS] = jobqueue_init(sb, fgq + JQ_BYPASS, NULL);
+-	q[JQ_SUBMIT] = jobqueue_init(sb, fgq + JQ_SUBMIT, fg);
 -
--	if (fe->backmost)
--		return true;
--
--	return cachestrategy >= EROFS_ZIP_CACHE_READAROUND &&
--		la < fe->headoffset;
+-	return tagptr_cast_ptr(tagptr_fold(tagptr1_t, q[JQ_SUBMIT], *fg));
 -}
 -
- static int z_erofs_read_fragment(struct inode *inode, erofs_off_t pos,
- 				 struct page *page, unsigned int pageofs,
- 				 unsigned int len)
-@@ -688,12 +682,9 @@ static int z_erofs_do_read_page(struct z_erofs_decompress_frontend *fe,
- 				struct page *page, struct page **pagepool)
- {
- 	struct inode *const inode = fe->inode;
--	struct erofs_sb_info *const sbi = EROFS_I_SB(inode);
- 	struct erofs_map_blocks *const map = &fe->map;
- 	const loff_t offset = page_offset(page);
- 	bool tight = true, exclusive;
--
--	enum z_erofs_cache_alloctype cache_strategy;
- 	unsigned int cur, end, spiltted;
- 	int err = 0;
+ static void move_to_bypass_jobqueue(struct z_erofs_pcluster *pcl,
+ 				    z_erofs_next_pcluster_t qtail[],
+ 				    z_erofs_next_pcluster_t owned_head)
+@@ -1361,8 +1347,7 @@ static void move_to_bypass_jobqueue(struct z_erofs_pcluster *pcl,
  
-@@ -747,13 +738,7 @@ static int z_erofs_do_read_page(struct z_erofs_decompress_frontend *fe,
- 		fe->mode = Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE;
- 	} else {
- 		/* bind cache first when cached decompression is preferred */
--		if (should_alloc_managed_pages(fe, sbi->opt.cache_strategy,
--					       map->m_la))
--			cache_strategy = TRYALLOC;
--		else
--			cache_strategy = DONTALLOC;
--
--		z_erofs_bind_cache(fe, cache_strategy, pagepool);
-+		z_erofs_bind_cache(fe, pagepool);
+ static void z_erofs_decompressqueue_endio(struct bio *bio)
+ {
+-	tagptr1_t t = tagptr_init(tagptr1_t, bio->bi_private);
+-	struct z_erofs_decompressqueue *q = tagptr_unfold_ptr(t);
++	struct z_erofs_decompressqueue *q = bio->bi_private;
+ 	blk_status_t err = bio->bi_status;
+ 	struct bio_vec *bvec;
+ 	struct bvec_iter_all iter_all;
+@@ -1381,7 +1366,7 @@ static void z_erofs_decompressqueue_endio(struct bio *bio)
  	}
- hitted:
- 	/*
+ 	if (err)
+ 		q->eio = true;
+-	z_erofs_decompress_kickoff(q, tagptr_unfold_tags(t), -1);
++	z_erofs_decompress_kickoff(q, -1);
+ 	bio_put(bio);
+ }
+ 
+@@ -1394,7 +1379,6 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
+ 	struct address_space *mc = MNGD_MAPPING(EROFS_SB(sb));
+ 	z_erofs_next_pcluster_t qtail[NR_JOBQUEUES];
+ 	struct z_erofs_decompressqueue *q[NR_JOBQUEUES];
+-	void *bi_private;
+ 	z_erofs_next_pcluster_t owned_head = f->owned_head;
+ 	/* bio is NULL initially, so no need to initialize last_{index,bdev} */
+ 	pgoff_t last_index;
+@@ -1404,7 +1388,13 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
+ 	unsigned long pflags;
+ 	int memstall = 0;
+ 
+-	bi_private = jobqueueset_init(sb, q, fgq, force_fg);
++	/*
++	 * if managed cache is enabled, bypass jobqueue is needed,
++	 * no need to read from device for all pclusters in this queue.
++	 */
++	q[JQ_BYPASS] = jobqueue_init(sb, fgq + JQ_BYPASS, NULL);
++	q[JQ_SUBMIT] = jobqueue_init(sb, fgq + JQ_SUBMIT, force_fg);
++
+ 	qtail[JQ_BYPASS] = &q[JQ_BYPASS]->head;
+ 	qtail[JQ_SUBMIT] = &q[JQ_SUBMIT]->head;
+ 
+@@ -1473,7 +1463,7 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
+ 				last_bdev = mdev.m_bdev;
+ 				bio->bi_iter.bi_sector = (sector_t)cur <<
+ 					LOG_SECTORS_PER_BLOCK;
+-				bio->bi_private = bi_private;
++				bio->bi_private = q[JQ_SUBMIT];
+ 				if (f->readahead)
+ 					bio->bi_opf |= REQ_RAHEAD;
+ 				++nr_bios;
+@@ -1506,7 +1496,7 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
+ 		kvfree(q[JQ_SUBMIT]);
+ 		return;
+ 	}
+-	z_erofs_decompress_kickoff(q[JQ_SUBMIT], *force_fg, nr_bios);
++	z_erofs_decompress_kickoff(q[JQ_SUBMIT], nr_bios);
+ }
+ 
+ static void z_erofs_runqueue(struct z_erofs_decompress_frontend *f,
+diff --git a/fs/erofs/zdata.h b/fs/erofs/zdata.h
+index d98c952129852..b139de5473a97 100644
+--- a/fs/erofs/zdata.h
++++ b/fs/erofs/zdata.h
+@@ -110,7 +110,7 @@ struct z_erofs_decompressqueue {
+ 		struct work_struct work;
+ 	} u;
+ 
+-	bool eio;
++	bool eio, sync;
+ };
+ 
+ static inline bool z_erofs_is_inline_pcluster(struct z_erofs_pcluster *pcl)
 -- 
 2.39.2
 
