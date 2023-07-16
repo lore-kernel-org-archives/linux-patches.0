@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996FF8F75
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FC6C433C9;
-	Sun, 16 Jul 2023 20:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708C98F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:11:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75DEC433C7;
+	Sun, 16 Jul 2023 20:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538282;
-	bh=a+Ht65i+TOptcDvSAPVjApQH813d/w0a91YkuQF7cGg=;
+	s=korg; t=1689538285;
+	bh=0PtIYive8b/RYSKz5SvHu5OKERzc2exDMUsiW5EeQJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBKdhzr2YTEEF8l5rsfbBGcY8hQkoT/cQAOS5ZZndJFif+DnWx6moUGLI0tCbe4BR
-	 znrXgCpQEGQgRu0CwMJJrWVyiiEzPfCVoD++we2MC+0XrQPZ4eQ1hNoawA0fx47+Cb
-	 8eExzoKhqAt9ksqQzHgkq23DwXrMxdFFPZnWZRqA=
+	b=d9mtza2Zl/u4OeWpQO8W0ZCobVHEHHNMck4Xg8OvNl9ZZeoldWe+Eqt1ii0hz5ctK
+	 S0pTyn/RMw28vUyhcX4EgstDYst7ZUEZrziX5yhVquWhsHOrSsxo7nKkjZ2Db96Z2d
+	 7LHFUI5Q+qM1IoaHZK4my9YWBImNS6gaXVXX8Aqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 352/800] drm/i915: No 10bit gamma on desktop gen3 parts
-Date: Sun, 16 Jul 2023 21:43:25 +0200
-Message-ID: <20230716194957.255346725@linuxfoundation.org>
+Subject: [PATCH 6.4 353/800] arm64: dts: rockchip: Assign ES8316 MCLK rate on rk3588-rock-5b
+Date: Sun, 16 Jul 2023 21:43:26 +0200
+Message-ID: <20230716194957.279055789@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -35,98 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 19db2062094c75c64039d820c2547aad4dcfd905 ]
+[ Upstream commit 28ee08cef4f838c343013330a3cd12674c4dd113 ]
 
-Apparently desktop gen3 parts don't support the
-10bit gamma mode at all. Stop claiming otherwise.
+The I2S0_8CH_MCLKOUT clock rate on Rock 5B board defaults to 12 MHz and
+it is used to provide the master clock (MCLK) for the ES8316 audio
+codec.
 
-As is the case with pipe A on gen3 mobile parts, the
-PIPECONF gamma mode bit can be set but it has no
-effect on the output.
+On sound card initialization, this limits the allowed sample rates
+according to the MCLK/LRCK ratios supported by the codec, which results
+in the following non-standard rates: 15625, 30000, 31250, 46875.
 
-PNV seems to be the only slight exception, but generally
-the desktop PNV variant looks more like a mobile part so
-this is not entirely surprising.
+Hence, the very first access of the sound card fails:
 
-Fixes: 67630bacae23 ("drm/i915: Add 10bit gamma mode for gen2/3")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230531135625.3467-1-ville.syrjala@linux.intel.com
+  Broken configuration for playback: no configurations available: Invalid argument
+  Setting of hwparams failed: Invalid argument
+
+However, all subsequent attempts will succeed, as the audio graph card
+will request a correct clock frequency, based on the stream sample rate
+and the multiplication factor.
+
+Assign MCLK to 12.288 MHz, which allows the codec to advertise most of
+the standard sample rates.
+
+Fixes: 55529fe3f32d ("arm64: dts: rockchip: Add rk3588-rock-5b analog audio")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20230530181140.483936-4-cristian.ciocaltea@collabora.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/i915/display/intel_display_device.c  | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display_device.c b/drivers/gpu/drm/i915/display/intel_display_device.c
-index 3e2f4cd0b9f56..8c57d48e8270f 100644
---- a/drivers/gpu/drm/i915/display/intel_display_device.c
-+++ b/drivers/gpu/drm/i915/display/intel_display_device.c
-@@ -216,7 +216,6 @@ static const struct intel_display_device_info i865g_display = {
- 	.has_overlay = 1, \
- 	I9XX_PIPE_OFFSETS, \
- 	I9XX_CURSOR_OFFSETS, \
--	I9XX_COLORS, \
- 	\
- 	.__runtime_defaults.ip.ver = 3, \
- 	.__runtime_defaults.pipe_mask = BIT(PIPE_A) | BIT(PIPE_B), \
-@@ -225,12 +224,14 @@ static const struct intel_display_device_info i865g_display = {
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts b/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
+index 3e4aee8f70c1b..30cdd366813fb 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
+@@ -133,6 +133,8 @@ es8316: audio-codec@11 {
+ 		reg = <0x11>;
+ 		clocks = <&cru I2S0_8CH_MCLKOUT>;
+ 		clock-names = "mclk";
++		assigned-clocks = <&cru I2S0_8CH_MCLKOUT>;
++		assigned-clock-rates = <12288000>;
+ 		#sound-dai-cells = <0>;
  
- static const struct intel_display_device_info i915g_display = {
- 	GEN3_DISPLAY,
-+	I845_COLORS,
- 	.cursor_needs_physical = 1,
- 	.overlay_needs_physical = 1,
- };
- 
- static const struct intel_display_device_info i915gm_display = {
- 	GEN3_DISPLAY,
-+	I9XX_COLORS,
- 	.cursor_needs_physical = 1,
- 	.overlay_needs_physical = 1,
- 	.supports_tv = 1,
-@@ -240,6 +241,7 @@ static const struct intel_display_device_info i915gm_display = {
- 
- static const struct intel_display_device_info i945g_display = {
- 	GEN3_DISPLAY,
-+	I845_COLORS,
- 	.has_hotplug = 1,
- 	.cursor_needs_physical = 1,
- 	.overlay_needs_physical = 1,
-@@ -247,6 +249,7 @@ static const struct intel_display_device_info i945g_display = {
- 
- static const struct intel_display_device_info i945gm_display = {
- 	GEN3_DISPLAY,
-+	I9XX_COLORS,
- 	.has_hotplug = 1,
- 	.cursor_needs_physical = 1,
- 	.overlay_needs_physical = 1,
-@@ -257,6 +260,13 @@ static const struct intel_display_device_info i945gm_display = {
- 
- static const struct intel_display_device_info g33_display = {
- 	GEN3_DISPLAY,
-+	I845_COLORS,
-+	.has_hotplug = 1,
-+};
-+
-+static const struct intel_display_device_info pnv_display = {
-+	GEN3_DISPLAY,
-+	I9XX_COLORS,
- 	.has_hotplug = 1,
- };
- 
-@@ -669,8 +679,8 @@ static const struct {
- 	INTEL_I965GM_IDS(&i965gm_display),
- 	INTEL_GM45_IDS(&gm45_display),
- 	INTEL_G45_IDS(&g45_display),
--	INTEL_PINEVIEW_G_IDS(&g33_display),
--	INTEL_PINEVIEW_M_IDS(&g33_display),
-+	INTEL_PINEVIEW_G_IDS(&pnv_display),
-+	INTEL_PINEVIEW_M_IDS(&pnv_display),
- 	INTEL_IRONLAKE_D_IDS(&ilk_d_display),
- 	INTEL_IRONLAKE_M_IDS(&ilk_m_display),
- 	INTEL_SNB_D_IDS(&snb_display),
+ 		port {
 -- 
 2.39.2
 
