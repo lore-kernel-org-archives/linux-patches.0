@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABA68F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4D2C433C7;
-	Sun, 16 Jul 2023 20:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3D48F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:49:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AB8C433C8;
+	Sun, 16 Jul 2023 20:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540593;
-	bh=Vfbj6mqGQcx16PxbsYVKOs27NtH+3mcO06Yer8Puhlg=;
+	s=korg; t=1689540596;
+	bh=rhu/ApJ2l+uClfHnn+bAgVtOU6+dPXY2VjGaUWCfjyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7YZNUOn1savx/u16VCXAVocMynXPRfopo5ZPpNUv1ApjpiOiLOGSzxcpiEwPxTrV
-	 JqKhkCbeUpvCZfDwOaqN1nspdl2vgWHvy52ZsmMNy8oJjffF1+Ors3nwOkAhITbmC9
-	 ktsdSJcrGZWQ34e/aI7IrsLduDd5EFKsJJzWhyeE=
+	b=cA+xp9v++RlKpUy5I+es9hNz8XPKVHVPp5VhMrzJ05kRF3Kp0vGaTdcvxVxwKuq0L
+	 ZkY/4Fvzk5tYC1McBtxgIRPkED8QS0BHqvye8NIjymSoH6nzTDMpI/3RC29QGbibL/
+	 Alis6YkwEocQloi5Zcv6YyNeuoWLVTOdaSxUJj+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Tony Lindgren <tony@atomide.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 419/591] serial: 8250: lock port for UART_IER access in omap8250_irq()
-Date: Sun, 16 Jul 2023 21:49:18 +0200
-Message-ID: <20230716194934.755989603@linuxfoundation.org>
+Subject: [PATCH 6.1 402/591] media: mediatek: vcodec: using decoder status instead of core work count
+Date: Sun, 16 Jul 2023 21:49:01 +0200
+Message-ID: <20230716194934.320037823@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -35,55 +37,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 25614735a647693c1260f253dc3ab32127697806 ]
+[ Upstream commit 2864e304faec04c2674328aad0e820a9cd84cdec ]
 
-omap8250_irq() accesses UART_IER. This register is modified twice
-by each console write (serial8250_console_write()) under the port
-lock. omap8250_irq() must also take the port lock to guanentee
-synchronized access to UART_IER.
+Adding the definition of decoder status to separate different decoder
+period for core hardware.
 
-Since the port lock is already being taken for the stop_rx() callback
-and since it is safe to call cancel_delayed_work() while holding the
-port lock, simply extend the port lock region to include UART_IER
-access.
+core_work_cnt is the number of core work queued to work queue, the control
+is very complex, leading to some unreasonable test result.
 
-Fixes: 1fe0e1fa3209 ("serial: 8250_omap: Handle optional overrun-throttle-ms property")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20230525093159.223817-8-john.ogness@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Using parameter status to indicate whether queue core work to work queue.
+
+Fixes: 2e0ef56d81cb ("media: mediatek: vcodec: making sure queue_work successfully")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../platform/mediatek/vcodec/vdec_msg_queue.c | 33 ++++++++-----------
+ .../platform/mediatek/vcodec/vdec_msg_queue.h | 16 +++++++--
+ 2 files changed, 28 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 7ecd2d379292b..17a230281ebe0 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -639,17 +639,18 @@ static irqreturn_t omap8250_irq(int irq, void *dev_id)
- 	if ((lsr & UART_LSR_OE) && up->overrun_backoff_time_ms > 0) {
- 		unsigned long delay;
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+index f3073d1e7f420..03f8d7cd8eddc 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+@@ -71,7 +71,6 @@ static void vdec_msg_queue_dec(struct vdec_msg_queue *msg_queue, int hardware_in
+ int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf *buf)
+ {
+ 	struct list_head *head;
+-	int status;
  
-+		/* Synchronize UART_IER access against the console. */
-+		spin_lock(&port->lock);
- 		up->ier = port->serial_in(port, UART_IER);
- 		if (up->ier & (UART_IER_RLSI | UART_IER_RDI)) {
--			spin_lock(&port->lock);
- 			port->ops->stop_rx(port);
--			spin_unlock(&port->lock);
- 		} else {
- 			/* Keep restarting the timer until
- 			 * the input overrun subsides.
- 			 */
- 			cancel_delayed_work(&up->overrun_backoff);
+ 	head = vdec_get_buf_list(msg_ctx->hardware_index, buf);
+ 	if (!head) {
+@@ -87,12 +86,9 @@ int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf
+ 	if (msg_ctx->hardware_index != MTK_VDEC_CORE) {
+ 		wake_up_all(&msg_ctx->ready_to_use);
+ 	} else {
+-		if (buf->ctx->msg_queue.core_work_cnt <
+-			atomic_read(&buf->ctx->msg_queue.core_list_cnt)) {
+-			status = queue_work(buf->ctx->dev->core_workqueue,
+-					    &buf->ctx->msg_queue.core_work);
+-			if (status)
+-				buf->ctx->msg_queue.core_work_cnt++;
++		if (!(buf->ctx->msg_queue.status & CONTEXT_LIST_QUEUED)) {
++			queue_work(buf->ctx->dev->core_workqueue, &buf->ctx->msg_queue.core_work);
++			buf->ctx->msg_queue.status |= CONTEXT_LIST_QUEUED;
  		}
-+		spin_unlock(&port->lock);
+ 	}
  
- 		delay = msecs_to_jiffies(up->overrun_backoff_time_ms);
- 		schedule_delayed_work(&up->overrun_backoff, delay);
+@@ -261,7 +257,10 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
+ 		container_of(msg_queue, struct mtk_vcodec_ctx, msg_queue);
+ 	struct mtk_vcodec_dev *dev = ctx->dev;
+ 	struct vdec_lat_buf *lat_buf;
+-	int status;
++
++	spin_lock(&ctx->dev->msg_queue_core_ctx.ready_lock);
++	ctx->msg_queue.status &= ~CONTEXT_LIST_QUEUED;
++	spin_unlock(&ctx->dev->msg_queue_core_ctx.ready_lock);
+ 
+ 	lat_buf = vdec_msg_queue_dqbuf(&dev->msg_queue_core_ctx);
+ 	if (!lat_buf)
+@@ -278,17 +277,13 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
+ 	vdec_msg_queue_qbuf(&ctx->msg_queue.lat_ctx, lat_buf);
+ 
+ 	wake_up_all(&ctx->msg_queue.core_dec_done);
+-	spin_lock(&dev->msg_queue_core_ctx.ready_lock);
+-	lat_buf->ctx->msg_queue.core_work_cnt--;
+-
+-	if (lat_buf->ctx->msg_queue.core_work_cnt <
+-		atomic_read(&lat_buf->ctx->msg_queue.core_list_cnt)) {
+-		status = queue_work(lat_buf->ctx->dev->core_workqueue,
+-				    &lat_buf->ctx->msg_queue.core_work);
+-		if (status)
+-			lat_buf->ctx->msg_queue.core_work_cnt++;
++	if (!(ctx->msg_queue.status & CONTEXT_LIST_QUEUED) &&
++	    atomic_read(&msg_queue->core_list_cnt)) {
++		spin_lock(&ctx->dev->msg_queue_core_ctx.ready_lock);
++		ctx->msg_queue.status |= CONTEXT_LIST_QUEUED;
++		spin_unlock(&ctx->dev->msg_queue_core_ctx.ready_lock);
++		queue_work(ctx->dev->core_workqueue, &msg_queue->core_work);
+ 	}
+-	spin_unlock(&dev->msg_queue_core_ctx.ready_lock);
+ }
+ 
+ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
+@@ -303,13 +298,13 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
+ 		return 0;
+ 
+ 	msg_queue->ctx = ctx;
+-	msg_queue->core_work_cnt = 0;
+ 	vdec_msg_queue_init_ctx(&msg_queue->lat_ctx, MTK_VDEC_LAT0);
+ 	INIT_WORK(&msg_queue->core_work, vdec_msg_queue_core_work);
+ 
+ 	atomic_set(&msg_queue->lat_list_cnt, 0);
+ 	atomic_set(&msg_queue->core_list_cnt, 0);
+ 	init_waitqueue_head(&msg_queue->core_dec_done);
++	msg_queue->status = CONTEXT_LIST_EMPTY;
+ 
+ 	msg_queue->wdma_addr.size =
+ 		vde_msg_queue_get_trans_size(ctx->picinfo.buf_w,
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
+index a5d44bc97c16b..8f82d14847726 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
++++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
+@@ -21,6 +21,18 @@ struct mtk_vcodec_ctx;
+ struct mtk_vcodec_dev;
+ typedef int (*core_decode_cb_t)(struct vdec_lat_buf *lat_buf);
+ 
++/**
++ * enum core_ctx_status - Context decode status for core hardwre.
++ * @CONTEXT_LIST_EMPTY: No buffer queued on core hardware(must always be 0)
++ * @CONTEXT_LIST_QUEUED: Buffer queued to core work list
++ * @CONTEXT_LIST_DEC_DONE: context decode done
++ */
++enum core_ctx_status {
++	CONTEXT_LIST_EMPTY = 0,
++	CONTEXT_LIST_QUEUED,
++	CONTEXT_LIST_DEC_DONE,
++};
++
+ /**
+  * struct vdec_msg_queue_ctx - represents a queue for buffers ready to be processed
+  * @ready_to_use: ready used queue used to signalize when get a job queue
+@@ -77,7 +89,7 @@ struct vdec_lat_buf {
+  * @lat_list_cnt: used to record each instance lat list count
+  * @core_list_cnt: used to record each instance core list count
+  * @core_dec_done: core work queue decode done event
+- * @core_work_cnt: the number of core work in work queue
++ * @status: current context decode status for core hardware
+  */
+ struct vdec_msg_queue {
+ 	struct vdec_lat_buf lat_buf[NUM_BUFFER_COUNT];
+@@ -93,7 +105,7 @@ struct vdec_msg_queue {
+ 	atomic_t lat_list_cnt;
+ 	atomic_t core_list_cnt;
+ 	wait_queue_head_t core_dec_done;
+-	int core_work_cnt;
++	int status;
+ };
+ 
+ /**
 -- 
 2.39.2
 
