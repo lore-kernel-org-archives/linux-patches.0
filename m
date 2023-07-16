@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E918F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7EAC433C8;
-	Sun, 16 Jul 2023 20:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8D98F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:07:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F75C433C8;
+	Sun, 16 Jul 2023 20:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689538028;
-	bh=xukQpDAT8F1awCCf6wjXZoLQ2P7/PckyQVhIC3BiM9U=;
+	s=korg; t=1689538031;
+	bh=KoJyIzYIMCfrneoOw4yugJqD326vfBByGStGse5TieQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=so4AYIpLpzzDEXh0DfR/QODIVYfdsBNOewRitnU+z1znrTy4hfLZ00LdJC1VCnUyQ
-	 ZOs90kZsU6q9ts8SEXvPZS0j8Nb3/iQ51e1+YVRRXv30mRRCM3F2O2WYLMZ8MQA1gy
-	 8YFFeY50y68e+D7Ws9woZFdUQEafJcU5FSYDWz7Q=
+	b=lbPkUo+UwOnZLOc9GhZS3Y97Y9UXGS0VpXGjishtFHxrHpFL1VmDWgLSTCylgTLyr
+	 PKfaFxhOv2T9NHPhtqIPMPgEx0xjSYthmom9RC7Sl86YCWnp7FFgGXyQU+AO58I9I/
+	 jTrkTjCmjTierGcOvWi7cq7RDy1AVNqb8GzhIa6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 305/800] arm64: dts: qcom: msm8953: correct WCNSS unit address
-Date: Sun, 16 Jul 2023 21:42:38 +0200
-Message-ID: <20230716194956.161468750@linuxfoundation.org>
+Subject: [PATCH 6.4 306/800] arm64: dts: qcom: msm8976: correct MMC unit address
+Date: Sun, 16 Jul 2023 21:42:39 +0200
+Message-ID: <20230716194956.184281824@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,35 +40,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 751038676e3075a5cb816034f7d5ba6e95f4486d ]
+[ Upstream commit 80284797a4cb8ceae71e3c403bafc6648263a060 ]
 
 Match unit-address to reg entry to fix dtbs W=1 warnings:
 
-  Warning (simple_bus_reg): /soc@0/remoteproc@a21b000: simple-bus unit address format error, expected "a204000"
+  Warning (simple_bus_reg): /soc@0/mmc@7824000: simple-bus unit address format error, expected "7824900"
+  Warning (simple_bus_reg): /soc@0/mmc@7864000: simple-bus unit address format error, expected "7864900"
+  Warning (simple_bus_reg): /soc@0/mmc@7a24000: simple-bus unit address format error, expected "7a24900"
 
-Fixes: b12428640ebe ("arm64: dts: MSM8953: Add wcnss nodes")
+Fixes: 0484d3ce0902 ("arm64: dts: qcom: Add DTS for MSM8976 and MSM8956 SoCs")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230419211856.79332-6-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230419211856.79332-7-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8953.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8976.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index 4038e47a4610e..d1d6f80bb2e6b 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -1425,7 +1425,7 @@ i2c_8: i2c@7af8000 {
+diff --git a/arch/arm64/boot/dts/qcom/msm8976.dtsi b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+index f47fb8ea71e20..753b9a2105edd 100644
+--- a/arch/arm64/boot/dts/qcom/msm8976.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8976.dtsi
+@@ -822,7 +822,7 @@ spmi_bus: spmi@200f000 {
+ 			#interrupt-cells = <4>;
+ 		};
+ 
+-		sdhc_1: mmc@7824000 {
++		sdhc_1: mmc@7824900 {
+ 			compatible = "qcom,msm8976-sdhci", "qcom,sdhci-msm-v4";
+ 			reg = <0x07824900 0x500>, <0x07824000 0x800>;
+ 			reg-names = "hc", "core";
+@@ -838,7 +838,7 @@ sdhc_1: mmc@7824000 {
  			status = "disabled";
  		};
  
--		wcnss: remoteproc@a21b000 {
-+		wcnss: remoteproc@a204000 {
- 			compatible = "qcom,pronto-v3-pil", "qcom,pronto";
- 			reg = <0x0a204000 0x2000>, <0x0a202000 0x1000>, <0x0a21b000 0x3000>;
- 			reg-names = "ccu", "dxe", "pmu";
+-		sdhc_2: mmc@7864000 {
++		sdhc_2: mmc@7864900 {
+ 			compatible = "qcom,msm8976-sdhci", "qcom,sdhci-msm-v4";
+ 			reg = <0x07864900 0x11c>, <0x07864000 0x800>;
+ 			reg-names = "hc", "core";
+@@ -957,7 +957,7 @@ otg: usb@78db000 {
+ 			#reset-cells = <1>;
+ 		};
+ 
+-		sdhc_3: mmc@7a24000 {
++		sdhc_3: mmc@7a24900 {
+ 			compatible = "qcom,msm8976-sdhci", "qcom,sdhci-msm-v4";
+ 			reg = <0x07a24900 0x11c>, <0x07a24000 0x800>;
+ 			reg-names = "hc", "core";
 -- 
 2.39.2
 
