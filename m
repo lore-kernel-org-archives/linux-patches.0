@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA588F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D7DC433C8;
-	Sun, 16 Jul 2023 20:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3608F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:43:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1332C433C7;
+	Sun, 16 Jul 2023 20:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540192;
-	bh=m3MN6iNSXzX7PWvHuaNtSu/W2QwNhkIubJYUn40I3X4=;
+	s=korg; t=1689540195;
+	bh=pm1L9YGMsJGm2ixjsVM96woEy1RUWaTCNgFMYFSc6qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dxngp7fM6vyeBOMzau8IVogqYGtTic7/3ncA51UGHqsztJDRSvWdL9s7zSQe3+gtp
-	 6RJR21B+2w2ZIFNmM/NPpDKYPpbkpP+YzvQ8hf7LUa2GKmaHqz4hoqEgL3uZJ6at/X
-	 KL+8WP+2fVGmed5b47xkwQ83/4Lj4DtUjxidI7EE=
+	b=x89zLCXatJfoX0nLfPcCAmDnbxNvksPohc8pygS1z6YCvSoJAJ1dw98XOV8ObtDtJ
+	 W/kz8AXyOlWPbkXQR6L7tt8fxGwO+V1mSRMQPB4LegW/EAbtmA4qU32z7Ri8wAKFPh
+	 t5G6Rqx0Buy1Fyqy+sz8w4jgf1fZljz6sTNMdO10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 275/591] clk: si5341: free unused memory on probe failure
-Date: Sun, 16 Jul 2023 21:46:54 +0200
-Message-ID: <20230716194931.011152043@linuxfoundation.org>
+Subject: [PATCH 6.1 276/591] clk: keystone: sci-clk: check return value of kasprintf()
+Date: Sun, 16 Jul 2023 21:46:55 +0200
+Message-ID: <20230716194931.036896843@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,82 +38,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 267ad94b13c53d8c99a336f0841b1fa1595b1d0f ]
+[ Upstream commit b73ed981da6d25c921aaefa7ca3df85bbd85b7fc ]
 
-Pointers from synth_clock_names[] should be freed at the end of probe
-either on probe success or failure path.
+kasprintf() returns a pointer to dynamically allocated memory.
+Pointer could be NULL in case allocation fails. Check pointer validity.
+Identified with coccinelle (kmerr.cocci script).
 
-Fixes: b7bbf6ec4940 ("clk: si5341: Allow different output VDD_SEL values")
-Fixes: 9b13ff4340df ("clk: si5341: Add sysfs properties to allow checking/resetting device faults")
+Fixes: b745c0794e2f ("clk: keystone: Add sci-clk driver support")
+Depends-on: 96488c09b0f4 ("clk: keystone: sci-clk: cut down the clock name length")
 Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230530093913.1656095-6-claudiu.beznea@microchip.com
+Link: https://lore.kernel.org/r/20230530093913.1656095-7-claudiu.beznea@microchip.com
+Reviewed-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-si5341.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/clk/keystone/sci-clk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/clk-si5341.c b/drivers/clk/clk-si5341.c
-index b2cf7edc8b308..c7d8cbd22bacc 100644
---- a/drivers/clk/clk-si5341.c
-+++ b/drivers/clk/clk-si5341.c
-@@ -1744,7 +1744,7 @@ static int si5341_probe(struct i2c_client *client)
- 		if (err) {
- 			dev_err(&client->dev,
- 				"output %u registration failed\n", i);
--			goto cleanup;
-+			goto free_clk_names;
- 		}
- 		if (config[i].always_on)
- 			clk_prepare(data->clk[i].hw.clk);
-@@ -1754,7 +1754,7 @@ static int si5341_probe(struct i2c_client *client)
- 			data);
- 	if (err) {
- 		dev_err(&client->dev, "unable to add clk provider\n");
--		goto cleanup;
-+		goto free_clk_names;
- 	}
+diff --git a/drivers/clk/keystone/sci-clk.c b/drivers/clk/keystone/sci-clk.c
+index d4b4e74e22da6..254f2cf24be21 100644
+--- a/drivers/clk/keystone/sci-clk.c
++++ b/drivers/clk/keystone/sci-clk.c
+@@ -294,6 +294,8 @@ static int _sci_clk_build(struct sci_clk_provider *provider,
  
- 	if (initialization_required) {
-@@ -1762,11 +1762,11 @@ static int si5341_probe(struct i2c_client *client)
- 		regcache_cache_only(data->regmap, false);
- 		err = regcache_sync(data->regmap);
- 		if (err < 0)
--			goto cleanup;
-+			goto free_clk_names;
+ 	name = kasprintf(GFP_KERNEL, "clk:%d:%d", sci_clk->dev_id,
+ 			 sci_clk->clk_id);
++	if (!name)
++		return -ENOMEM;
  
- 		err = si5341_finalize_defaults(data);
- 		if (err < 0)
--			goto cleanup;
-+			goto free_clk_names;
- 	}
+ 	init.name = name;
  
- 	/* wait for device to report input clock present and PLL lock */
-@@ -1775,21 +1775,19 @@ static int si5341_probe(struct i2c_client *client)
- 	       10000, 250000);
- 	if (err) {
- 		dev_err(&client->dev, "Error waiting for input clock or PLL lock\n");
--		goto cleanup;
-+		goto free_clk_names;
- 	}
- 
- 	/* clear sticky alarm bits from initialization */
- 	err = regmap_write(data->regmap, SI5341_STATUS_STICKY, 0);
- 	if (err) {
- 		dev_err(&client->dev, "unable to clear sticky status\n");
--		goto cleanup;
-+		goto free_clk_names;
- 	}
- 
- 	err = sysfs_create_files(&client->dev.kobj, si5341_attributes);
--	if (err) {
-+	if (err)
- 		dev_err(&client->dev, "unable to create sysfs files\n");
--		goto cleanup;
--	}
- 
- free_clk_names:
- 	/* Free the names, clk framework makes copies */
 -- 
 2.39.2
 
