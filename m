@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD0C8F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF223C433C7;
-	Sun, 16 Jul 2023 20:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F638F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:02:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32E2C433C7;
+	Sun, 16 Jul 2023 20:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537720;
-	bh=S2IysE5cjDZnldfaaLOpDzqSoRcHr4dVBnU2lnTmXS0=;
+	s=korg; t=1689537723;
+	bh=boVdpV2eEkLttcRwuRiDKz0ykHfBXpqVmgBOLnjGmXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qOeKMZgzgLDH1RIfsQxgzdJzg1Ms9A9wxA0Nv1AeG85ZDIM9Elg7rxA8a3nhC7RUY
-	 27ceu2lqFFXIwN9+fd8xhr5tSJ6sHM1neZwcs2BsvhqSsQH4ji51a8AKbvTBVj6UNZ
-	 cjtAdxlniV9wBo6eCb5X5HR4QVWaIifNuywF3NrY=
+	b=D0pVYfIzdTMjuBQOSkA91QI1jIBFFUMvH8Kc4V/WZdsxPMJ1VjPH9qbgGoEEG+6ES
+	 52/F0b9abNRKg2DY8oQee5y3XV6mRgUlvwusbNSO4xlN7WL25Xoa5e44WjAxAI+hzt
+	 nDRUq1FFRwgY3BiQ1hdoyAdkRpl7NND15bwn+6gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Kopp <Thomas.Kopp@microchip.com>,
+	Jimmy Assarsson <extja@kvaser.com>,
 	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 196/800] can: length: fix bitstuffing count
-Date: Sun, 16 Jul 2023 21:40:49 +0200
-Message-ID: <20230716194953.655637006@linuxfoundation.org>
+Subject: [PATCH 6.4 197/800] can: kvaser_pciefd: Add function to set skb hwtstamps
+Date: Sun, 16 Jul 2023 21:40:50 +0200
+Message-ID: <20230716194953.679004890@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -36,121 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-[ Upstream commit 9fde4c557f78ee2f3626e92b4089ce9d54a2573a ]
+[ Upstream commit 2d55e9f9b4427e1ad59b974f2267767aac3788d3 ]
 
-The Stuff Bit Count is always coded on 4 bits [1]. Update the Stuff
-Bit Count size accordingly.
+Add new function, kvaser_pciefd_set_skb_timestamp(), to set skb hwtstamps.
 
-In addition, the CRC fields of CAN FD Frames contain stuff bits at
-fixed positions called fixed stuff bits [2]. The CRC field starts with
-a fixed stuff bit and then has another fixed stuff bit after each
-fourth bit [2], which allows us to derive this formula:
-
-  FSB count = 1 + round_down(len(CRC field)/4)
-
-The length of the CRC field is [1]:
-
-  len(CRC field) = len(Stuff Bit Count) + len(CRC)
-                 = 4 + len(CRC)
-
-with len(CRC) either 17 or 21 bits depending of the payload length.
-
-In conclusion, for CRC17:
-
-  FSB count = 1 + round_down((4 + 17)/4)
-            = 6
-
-and for CRC 21:
-
-  FSB count = 1 + round_down((4 + 21)/4)
-            = 7
-
-Add a Fixed Stuff bits (FSB) field with above values and update
-CANFD_FRAME_OVERHEAD_SFF and CANFD_FRAME_OVERHEAD_EFF accordingly.
-
-[1] ISO 11898-1:2015 section 10.4.2.6 "CRC field":
-
-  The CRC field shall contain the CRC sequence followed by a recessive
-  CRC delimiter. For FD Frames, the CRC field shall also contain the
-  stuff count.
-
-  Stuff count
-
-  If FD Frames, the stuff count shall be at the beginning of the CRC
-  field. It shall consist of the stuff bit count modulo 8 in a 3-bit
-  gray code followed by a parity bit [...]
-
-[2] ISO 11898-1:2015 paragraph 10.5 "Frame coding":
-
-  In the CRC field of FD Frames, the stuff bits shall be inserted at
-  fixed positions; they are called fixed stuff bits. There shall be a
-  fixed stuff bit before the first bit of the stuff count, even if the
-  last bits of the preceding field are a sequence of five consecutive
-  bits of identical value, there shall be only the fixed stuff bit,
-  there shall not be two consecutive stuff bits. A further fixed stuff
-  bit shall be inserted after each fourth bit of the CRC field [...]
-
-Fixes: 85d99c3e2a13 ("can: length: can_skb_get_frame_len(): introduce function to get data length of frame in data link layer")
-Suggested-by: Thomas Kopp <Thomas.Kopp@microchip.com>
-Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Reviewed-by: Thomas Kopp <Thomas.Kopp@microchip.com>
-Link: https://lore.kernel.org/all/20230611025728.450837-2-mailhol.vincent@wanadoo.fr
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/all/20230529134248.752036-4-extja@kvaser.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: ec681b91befa ("can: kvaser_pciefd: Set hardware timestamp on transmitted packets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/can/length.h | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/can/kvaser_pciefd.c | 27 ++++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
 
-diff --git a/include/linux/can/length.h b/include/linux/can/length.h
-index 6995092b774ec..ef1fd32cef16b 100644
---- a/include/linux/can/length.h
-+++ b/include/linux/can/length.h
-@@ -69,17 +69,18 @@
-  * Error Status Indicator (ESI)		1
-  * Data length code (DLC)		4
-  * Data field				0...512
-- * Stuff Bit Count (SBC)		0...16: 4 20...64:5
-+ * Stuff Bit Count (SBC)		4
-  * CRC					0...16: 17 20...64:21
-  * CRC delimiter (CD)			1
-+ * Fixed Stuff bits (FSB)		0...16: 6 20...64:7
-  * ACK slot (AS)			1
-  * ACK delimiter (AD)			1
-  * End-of-frame (EOF)			7
-  * Inter frame spacing			3
-  *
-- * assuming CRC21, rounded up and ignoring bitstuffing
-+ * assuming CRC21, rounded up and ignoring dynamic bitstuffing
-  */
--#define CANFD_FRAME_OVERHEAD_SFF DIV_ROUND_UP(61, 8)
-+#define CANFD_FRAME_OVERHEAD_SFF DIV_ROUND_UP(67, 8)
+diff --git a/drivers/net/can/kvaser_pciefd.c b/drivers/net/can/kvaser_pciefd.c
+index be189edb256ce..404eb90db4ca1 100644
+--- a/drivers/net/can/kvaser_pciefd.c
++++ b/drivers/net/can/kvaser_pciefd.c
+@@ -538,6 +538,13 @@ static int kvaser_pciefd_set_tx_irq(struct kvaser_pciefd_can *can)
+ 	return 0;
+ }
  
- /*
-  * Size of a CAN-FD Extended Frame
-@@ -98,17 +99,18 @@
-  * Error Status Indicator (ESI)		1
-  * Data length code (DLC)		4
-  * Data field				0...512
-- * Stuff Bit Count (SBC)		0...16: 4 20...64:5
-+ * Stuff Bit Count (SBC)		4
-  * CRC					0...16: 17 20...64:21
-  * CRC delimiter (CD)			1
-+ * Fixed Stuff bits (FSB)		0...16: 6 20...64:7
-  * ACK slot (AS)			1
-  * ACK delimiter (AD)			1
-  * End-of-frame (EOF)			7
-  * Inter frame spacing			3
-  *
-- * assuming CRC21, rounded up and ignoring bitstuffing
-+ * assuming CRC21, rounded up and ignoring dynamic bitstuffing
-  */
--#define CANFD_FRAME_OVERHEAD_EFF DIV_ROUND_UP(80, 8)
-+#define CANFD_FRAME_OVERHEAD_EFF DIV_ROUND_UP(86, 8)
++static inline void kvaser_pciefd_set_skb_timestamp(const struct kvaser_pciefd *pcie,
++						   struct sk_buff *skb, u64 timestamp)
++{
++	skb_hwtstamps(skb)->hwtstamp =
++		ns_to_ktime(div_u64(timestamp * 1000, pcie->freq_to_ticks_div));
++}
++
+ static void kvaser_pciefd_setup_controller(struct kvaser_pciefd_can *can)
+ {
+ 	u32 mode;
+@@ -1171,7 +1178,6 @@ static int kvaser_pciefd_handle_data_packet(struct kvaser_pciefd *pcie,
+ 	struct canfd_frame *cf;
+ 	struct can_priv *priv;
+ 	struct net_device_stats *stats;
+-	struct skb_shared_hwtstamps *shhwtstamps;
+ 	u8 ch_id = (p->header[1] >> KVASER_PCIEFD_PACKET_CHID_SHIFT) & 0x7;
  
- /*
-  * Maximum size of a Classical CAN frame
+ 	if (ch_id >= pcie->nr_channels)
+@@ -1214,12 +1220,7 @@ static int kvaser_pciefd_handle_data_packet(struct kvaser_pciefd *pcie,
+ 		stats->rx_bytes += cf->len;
+ 	}
+ 	stats->rx_packets++;
+-
+-	shhwtstamps = skb_hwtstamps(skb);
+-
+-	shhwtstamps->hwtstamp =
+-		ns_to_ktime(div_u64(p->timestamp * 1000,
+-				    pcie->freq_to_ticks_div));
++	kvaser_pciefd_set_skb_timestamp(pcie, skb, p->timestamp);
+ 
+ 	return netif_rx(skb);
+ }
+@@ -1282,7 +1283,6 @@ static int kvaser_pciefd_rx_error_frame(struct kvaser_pciefd_can *can,
+ 	struct net_device *ndev = can->can.dev;
+ 	struct sk_buff *skb;
+ 	struct can_frame *cf = NULL;
+-	struct skb_shared_hwtstamps *shhwtstamps;
+ 	struct net_device_stats *stats = &ndev->stats;
+ 
+ 	old_state = can->can.state;
+@@ -1323,10 +1323,7 @@ static int kvaser_pciefd_rx_error_frame(struct kvaser_pciefd_can *can,
+ 		return -ENOMEM;
+ 	}
+ 
+-	shhwtstamps = skb_hwtstamps(skb);
+-	shhwtstamps->hwtstamp =
+-		ns_to_ktime(div_u64(p->timestamp * 1000,
+-				    can->kv_pcie->freq_to_ticks_div));
++	kvaser_pciefd_set_skb_timestamp(can->kv_pcie, skb, p->timestamp);
+ 	cf->can_id |= CAN_ERR_BUSERROR | CAN_ERR_CNT;
+ 
+ 	cf->data[6] = bec.txerr;
+@@ -1374,7 +1371,6 @@ static int kvaser_pciefd_handle_status_resp(struct kvaser_pciefd_can *can,
+ 		struct net_device *ndev = can->can.dev;
+ 		struct sk_buff *skb;
+ 		struct can_frame *cf;
+-		struct skb_shared_hwtstamps *shhwtstamps;
+ 
+ 		skb = alloc_can_err_skb(ndev, &cf);
+ 		if (!skb) {
+@@ -1394,10 +1390,7 @@ static int kvaser_pciefd_handle_status_resp(struct kvaser_pciefd_can *can,
+ 			cf->can_id |= CAN_ERR_RESTARTED;
+ 		}
+ 
+-		shhwtstamps = skb_hwtstamps(skb);
+-		shhwtstamps->hwtstamp =
+-			ns_to_ktime(div_u64(p->timestamp * 1000,
+-					    can->kv_pcie->freq_to_ticks_div));
++		kvaser_pciefd_set_skb_timestamp(can->kv_pcie, skb, p->timestamp);
+ 
+ 		cf->data[6] = bec.txerr;
+ 		cf->data[7] = bec.rxerr;
 -- 
 2.39.2
 
