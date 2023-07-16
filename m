@@ -1,23 +1,23 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A708F74
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:01:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102F6C433D9;
-	Sun, 16 Jul 2023 20:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1D18F74
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:01:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8A6C433C7;
+	Sun, 16 Jul 2023 20:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689537686;
-	bh=J7hhPNFSb0VXdv94bNPWK6U7vkCBah6dhsQLwuGsU7E=;
+	s=korg; t=1689537689;
+	bh=bfBoMgPWkrCe47KeX1FvgOI7Uz5mM0JrTLq3OIEgn2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sfu++qohNPO8MHix9rQ8YpUiJVce0Sc7R5Q/DYCHy74EQ3KPhnbjzGM1kkwYgVTAv
-	 8Pcd8PwZV+N3jcOvt2md6UpoPHY7rVjWL3EXycIwVsTCjhby+WshVsf/BLJYlHtqDw
-	 PCaWFMdPNcPv+EUVFvOxwBTodq8EgCVNUONwg6Tc=
+	b=fvjyfapIkqpgSiKBZGmmAk/85iQPCsMyf3NSqu+qw3xZCYSqRRsd2s/iC5OPs1/7q
+	 w2El6KeDLVPSPS2oCVBk3SWKpvonlkAiROQAhmdFsWydsyM0qEBPV0otzTR7UPrK41
+	 JWgz/c7DKvoG9hCcnYsOGjpDOkF8xSpYT1ETm6GE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Douglas Anderson <dianders@chromium.org>,
-	Petr Mladek <pmladek@suse.com>,
+	Tom Rix <trix@redhat.com>,
 	Andi Kleen <ak@linux.intel.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Chen-Yu Tsai <wens@csie.org>,
@@ -34,6 +34,7 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthias Kaehlcke <mka@chromium.org>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Nicholas Piggin <npiggin@gmail.com>,
+	Petr Mladek <pmladek@suse.com>,
 	Pingfan Liu <kernelfans@gmail.com>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	"Ravi V. Shankar" <ravi.v.shankar@intel.com>,
@@ -45,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Will Deacon <will@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 185/800] watchdog/hardlockup: move perf hardlockup checking/panic to common watchdog.c
-Date: Sun, 16 Jul 2023 21:40:38 +0200
-Message-ID: <20230716194953.401487088@linuxfoundation.org>
+Subject: [PATCH 6.4 186/800] watchdog/hardlockup: rename some "NMI watchdog" constants/function
+Date: Sun, 16 Jul 2023 21:40:39 +0200
+Message-ID: <20230716194953.424767033@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -63,44 +64,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 81972551df9d168a8183b786ff4de06008469c2e ]
+[ Upstream commit df95d3085caa5b99a60eb033d7ad6c2ff2b43dbf ]
 
-The perf hardlockup detector works by looking at interrupt counts and
-seeing if they change from run to run.  The interrupt counts are managed
-by the common watchdog code via its watchdog_timer_fn().
+Do a search and replace of:
+- NMI_WATCHDOG_ENABLED => WATCHDOG_HARDLOCKUP_ENABLED
+- SOFT_WATCHDOG_ENABLED => WATCHDOG_SOFTOCKUP_ENABLED
+- watchdog_nmi_ => watchdog_hardlockup_
+- nmi_watchdog_available => watchdog_hardlockup_available
+- nmi_watchdog_user_enabled => watchdog_hardlockup_user_enabled
+- soft_watchdog_user_enabled => watchdog_softlockup_user_enabled
+- NMI_WATCHDOG_DEFAULT => WATCHDOG_HARDLOCKUP_DEFAULT
 
-Currently the API between the perf detector and the common code is a
-function: is_hardlockup().  When the hard lockup detector sees that
-function return true then it handles printing out debug info and inducing
-a panic if necessary.
+Then update a few comments near where names were changed.
 
-Let's change the API a little bit in preparation for the buddy hardlockup
-detector.  The buddy hardlockup detector wants to print nearly the same
-debug info and have nearly the same panic behavior.  That means we want to
-move all that code to the common file.  For now, the code in the common
-file will only be there if the perf hardlockup detector is enabled, but
-eventually it will be selected by a common config.
+This is specifically to make it less confusing when we want to introduce
+the buddy hardlockup detector, which isn't using NMIs.  As part of this,
+we sanitized a few names for consistency.
 
-Right now, this _just_ moves the code from the perf detector file to the
-common file and changes the names.  It doesn't make the changes that the
-buddy hardlockup detector will need and doesn't do any style cleanups.  A
-future patch will do cleanup to make it more obvious what changed.
-
-With the above, we no longer have any callers of is_hardlockup() outside
-of the "watchdog.c" file, so we can remove it from the header, make it
-static, and move it to the same "#ifdef" block as our new
-watchdog_hardlockup_check().  While doing this, it can be noted that even
-if no hardlockup detectors were configured the existing code used to still
-have the code for counting/checking "hrtimer_interrupts" even if the perf
-hardlockup detector wasn't configured.  We didn't need to do that, so move
-all the "hrtimer_interrupts" counting to only be there if the perf
-hardlockup detector is configured as well.
-
-This change is expected to be a no-op.
-
-Link: https://lkml.kernel.org/r/20230519101840.v5.8.Id4133d3183e798122dc3b6205e7852601f289071@changeid
+[trix@redhat.com: make variables static]
+  Link: https://lkml.kernel.org/r/20230525162822.1.I0fb41d138d158c9230573eaa37dc56afa2fb14ee@changeid
+Link: https://lkml.kernel.org/r/20230519101840.v5.12.I91f7277bab4bf8c0cb238732ed92e7ce7bbd71a6@changeid
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Tom Rix <trix@redhat.com>
+Reviewed-by: Tom Rix <trix@redhat.com>
 Cc: Andi Kleen <ak@linux.intel.com>
 Cc: Catalin Marinas <catalin.marinas@arm.com>
 Cc: Chen-Yu Tsai <wens@csie.org>
@@ -117,6 +103,7 @@ Cc: Masayoshi Mizuma <msys.mizuma@gmail.com>
 Cc: Matthias Kaehlcke <mka@chromium.org>
 Cc: Michael Ellerman <mpe@ellerman.id.au>
 Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Petr Mladek <pmladek@suse.com>
 Cc: Pingfan Liu <kernelfans@gmail.com>
 Cc: Randy Dunlap <rdunlap@infradead.org>
 Cc: "Ravi V. Shankar" <ravi.v.shankar@intel.com>
@@ -130,224 +117,501 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 9ec272c586b0 ("watchdog/hardlockup: keep kernel.nmi_watchdog sysctl as 0444 if probe fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/nmi.h   |  5 ++-
- kernel/watchdog.c     | 93 +++++++++++++++++++++++++++++++++----------
- kernel/watchdog_hld.c | 42 +------------------
- 3 files changed, 78 insertions(+), 62 deletions(-)
+ arch/powerpc/include/asm/nmi.h            |   4 +-
+ arch/powerpc/kernel/watchdog.c            |  12 +--
+ arch/powerpc/platforms/pseries/mobility.c |   4 +-
+ arch/sparc/kernel/nmi.c                   |   4 +-
+ include/linux/nmi.h                       |  24 +++--
+ kernel/watchdog.c                         | 113 +++++++++++-----------
+ kernel/watchdog_hld.c                     |   2 +-
+ 7 files changed, 81 insertions(+), 82 deletions(-)
 
-diff --git a/include/linux/nmi.h b/include/linux/nmi.h
-index 454fe99c48747..97ba114bc21e7 100644
---- a/include/linux/nmi.h
-+++ b/include/linux/nmi.h
-@@ -15,7 +15,6 @@
- void lockup_detector_init(void);
- void lockup_detector_soft_poweroff(void);
- void lockup_detector_cleanup(void);
--bool is_hardlockup(void);
- 
- extern int watchdog_user_enabled;
- extern int nmi_watchdog_user_enabled;
-@@ -88,6 +87,10 @@ extern unsigned int hardlockup_panic;
- static inline void hardlockup_detector_disable(void) {}
+diff --git a/arch/powerpc/include/asm/nmi.h b/arch/powerpc/include/asm/nmi.h
+index c3c7adef74de0..43bfd4de868f8 100644
+--- a/arch/powerpc/include/asm/nmi.h
++++ b/arch/powerpc/include/asm/nmi.h
+@@ -5,10 +5,10 @@
+ #ifdef CONFIG_PPC_WATCHDOG
+ extern void arch_touch_nmi_watchdog(void);
+ long soft_nmi_interrupt(struct pt_regs *regs);
+-void watchdog_nmi_set_timeout_pct(u64 pct);
++void watchdog_hardlockup_set_timeout_pct(u64 pct);
+ #else
+ static inline void arch_touch_nmi_watchdog(void) {}
+-static inline void watchdog_nmi_set_timeout_pct(u64 pct) {}
++static inline void watchdog_hardlockup_set_timeout_pct(u64 pct) {}
  #endif
  
-+#if defined(CONFIG_HARDLOCKUP_DETECTOR_PERF)
-+void watchdog_hardlockup_check(struct pt_regs *regs);
-+#endif
-+
- #if defined(CONFIG_HAVE_NMI_WATCHDOG) || defined(CONFIG_HARDLOCKUP_DETECTOR)
- # define NMI_WATCHDOG_SYSCTL_PERM	0644
- #else
-diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index c705a18b26bf1..12ce37d76e7d2 100644
---- a/kernel/watchdog.c
-+++ b/kernel/watchdog.c
-@@ -85,6 +85,78 @@ __setup("nmi_watchdog=", hardlockup_panic_setup);
+ #ifdef CONFIG_NMI_IPI
+diff --git a/arch/powerpc/kernel/watchdog.c b/arch/powerpc/kernel/watchdog.c
+index dbcc4a793f0b9..edb2dd1f53ebc 100644
+--- a/arch/powerpc/kernel/watchdog.c
++++ b/arch/powerpc/kernel/watchdog.c
+@@ -438,7 +438,7 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
+ {
+ 	int cpu = smp_processor_id();
  
- #endif /* CONFIG_HARDLOCKUP_DETECTOR */
- 
-+#if defined(CONFIG_HARDLOCKUP_DETECTOR_PERF)
-+
-+static DEFINE_PER_CPU(unsigned long, hrtimer_interrupts);
-+static DEFINE_PER_CPU(unsigned long, hrtimer_interrupts_saved);
-+static DEFINE_PER_CPU(bool, hard_watchdog_warn);
-+static unsigned long hardlockup_allcpu_dumped;
-+
-+static bool is_hardlockup(void)
-+{
-+	unsigned long hrint = __this_cpu_read(hrtimer_interrupts);
-+
-+	if (__this_cpu_read(hrtimer_interrupts_saved) == hrint)
-+		return true;
-+
-+	__this_cpu_write(hrtimer_interrupts_saved, hrint);
-+	return false;
-+}
-+
-+static void watchdog_hardlockup_kick(void)
-+{
-+	__this_cpu_inc(hrtimer_interrupts);
-+}
-+
-+void watchdog_hardlockup_check(struct pt_regs *regs)
-+{
-+	/* check for a hardlockup
-+	 * This is done by making sure our timer interrupt
-+	 * is incrementing.  The timer interrupt should have
-+	 * fired multiple times before we overflow'd.  If it hasn't
-+	 * then this is a good indication the cpu is stuck
-+	 */
-+	if (is_hardlockup()) {
-+		int this_cpu = smp_processor_id();
-+
-+		/* only print hardlockups once */
-+		if (__this_cpu_read(hard_watchdog_warn) == true)
-+			return;
-+
-+		pr_emerg("Watchdog detected hard LOCKUP on cpu %d\n",
-+			 this_cpu);
-+		print_modules();
-+		print_irqtrace_events(current);
-+		if (regs)
-+			show_regs(regs);
-+		else
-+			dump_stack();
-+
-+		/*
-+		 * Perform all-CPU dump only once to avoid multiple hardlockups
-+		 * generating interleaving traces
-+		 */
-+		if (sysctl_hardlockup_all_cpu_backtrace &&
-+				!test_and_set_bit(0, &hardlockup_allcpu_dumped))
-+			trigger_allbutself_cpu_backtrace();
-+
-+		if (hardlockup_panic)
-+			nmi_panic(regs, "Hard LOCKUP");
-+
-+		__this_cpu_write(hard_watchdog_warn, true);
-+		return;
-+	}
-+
-+	__this_cpu_write(hard_watchdog_warn, false);
-+	return;
-+}
-+
-+#else /* CONFIG_HARDLOCKUP_DETECTOR_PERF */
-+
-+static inline void watchdog_hardlockup_kick(void) { }
-+
-+#endif /* !CONFIG_HARDLOCKUP_DETECTOR_PERF */
-+
- /*
-  * These functions can be overridden if an architecture implements its
-  * own hardlockup detector.
-@@ -176,8 +248,6 @@ static DEFINE_PER_CPU(unsigned long, watchdog_touch_ts);
- static DEFINE_PER_CPU(unsigned long, watchdog_report_ts);
- static DEFINE_PER_CPU(struct hrtimer, watchdog_hrtimer);
- static DEFINE_PER_CPU(bool, softlockup_touch_sync);
--static DEFINE_PER_CPU(unsigned long, hrtimer_interrupts);
--static DEFINE_PER_CPU(unsigned long, hrtimer_interrupts_saved);
- static unsigned long soft_lockup_nmi_warn;
- 
- static int __init nowatchdog_setup(char *str)
-@@ -312,22 +382,6 @@ static int is_softlockup(unsigned long touch_ts,
- }
- 
- /* watchdog detector functions */
--bool is_hardlockup(void)
--{
--	unsigned long hrint = __this_cpu_read(hrtimer_interrupts);
--
--	if (__this_cpu_read(hrtimer_interrupts_saved) == hrint)
--		return true;
--
--	__this_cpu_write(hrtimer_interrupts_saved, hrint);
--	return false;
--}
--
--static void watchdog_interrupt_count(void)
--{
--	__this_cpu_inc(hrtimer_interrupts);
--}
--
- static DEFINE_PER_CPU(struct completion, softlockup_completion);
- static DEFINE_PER_CPU(struct cpu_stop_work, softlockup_stop_work);
- 
-@@ -358,8 +412,7 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
- 	if (!watchdog_enabled)
+-	if (!(watchdog_enabled & NMI_WATCHDOG_ENABLED))
++	if (!(watchdog_enabled & WATCHDOG_HARDLOCKUP_ENABLED))
  		return HRTIMER_NORESTART;
  
--	/* kick the hardlockup detector */
--	watchdog_interrupt_count();
-+	watchdog_hardlockup_kick();
- 
- 	/* kick the softlockup detector */
- 	if (completion_done(this_cpu_ptr(&softlockup_completion))) {
-diff --git a/kernel/watchdog_hld.c b/kernel/watchdog_hld.c
-index 1e8a49dc956e2..2e0e1e11227c5 100644
---- a/kernel/watchdog_hld.c
-+++ b/kernel/watchdog_hld.c
-@@ -20,13 +20,11 @@
- #include <asm/irq_regs.h>
- #include <linux/perf_event.h>
- 
--static DEFINE_PER_CPU(bool, hard_watchdog_warn);
- static DEFINE_PER_CPU(bool, watchdog_nmi_touch);
- static DEFINE_PER_CPU(struct perf_event *, watchdog_ev);
- static DEFINE_PER_CPU(struct perf_event *, dead_event);
- static struct cpumask dead_events_mask;
- 
--static unsigned long hardlockup_allcpu_dumped;
- static atomic_t watchdog_cpus = ATOMIC_INIT(0);
- 
- notrace void arch_touch_nmi_watchdog(void)
-@@ -122,45 +120,7 @@ static void watchdog_overflow_callback(struct perf_event *event,
+ 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
+@@ -479,7 +479,7 @@ static void start_watchdog(void *arg)
  		return;
  	}
  
--	/* check for a hardlockup
--	 * This is done by making sure our timer interrupt
--	 * is incrementing.  The timer interrupt should have
--	 * fired multiple times before we overflow'd.  If it hasn't
--	 * then this is a good indication the cpu is stuck
--	 */
--	if (is_hardlockup()) {
--		int this_cpu = smp_processor_id();
--
--		/* only print hardlockups once */
--		if (__this_cpu_read(hard_watchdog_warn) == true)
--			return;
--
--		pr_emerg("Watchdog detected hard LOCKUP on cpu %d\n",
--			 this_cpu);
--		print_modules();
--		print_irqtrace_events(current);
--		if (regs)
--			show_regs(regs);
--		else
--			dump_stack();
--
--		/*
--		 * Perform all-CPU dump only once to avoid multiple hardlockups
--		 * generating interleaving traces
--		 */
--		if (sysctl_hardlockup_all_cpu_backtrace &&
--				!test_and_set_bit(0, &hardlockup_allcpu_dumped))
--			trigger_allbutself_cpu_backtrace();
--
--		if (hardlockup_panic)
--			nmi_panic(regs, "Hard LOCKUP");
--
--		__this_cpu_write(hard_watchdog_warn, true);
--		return;
--	}
--
--	__this_cpu_write(hard_watchdog_warn, false);
--	return;
-+	watchdog_hardlockup_check(regs);
+-	if (!(watchdog_enabled & NMI_WATCHDOG_ENABLED))
++	if (!(watchdog_enabled & WATCHDOG_HARDLOCKUP_ENABLED))
+ 		return;
+ 
+ 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
+@@ -546,7 +546,7 @@ static void watchdog_calc_timeouts(void)
+ 	wd_timer_period_ms = watchdog_thresh * 1000 * 2 / 5;
  }
  
- static int hardlockup_detector_event_create(void)
+-void watchdog_nmi_stop(void)
++void watchdog_hardlockup_stop(void)
+ {
+ 	int cpu;
+ 
+@@ -554,7 +554,7 @@ void watchdog_nmi_stop(void)
+ 		stop_watchdog_on_cpu(cpu);
+ }
+ 
+-void watchdog_nmi_start(void)
++void watchdog_hardlockup_start(void)
+ {
+ 	int cpu;
+ 
+@@ -566,7 +566,7 @@ void watchdog_nmi_start(void)
+ /*
+  * Invoked from core watchdog init.
+  */
+-int __init watchdog_nmi_probe(void)
++int __init watchdog_hardlockup_probe(void)
+ {
+ 	int err;
+ 
+@@ -582,7 +582,7 @@ int __init watchdog_nmi_probe(void)
+ }
+ 
+ #ifdef CONFIG_PPC_PSERIES
+-void watchdog_nmi_set_timeout_pct(u64 pct)
++void watchdog_hardlockup_set_timeout_pct(u64 pct)
+ {
+ 	pr_info("Set the NMI watchdog timeout factor to %llu%%\n", pct);
+ 	WRITE_ONCE(wd_timeout_pct, pct);
+diff --git a/arch/powerpc/platforms/pseries/mobility.c b/arch/powerpc/platforms/pseries/mobility.c
+index 6f30113b5468e..cd632ba9ebfff 100644
+--- a/arch/powerpc/platforms/pseries/mobility.c
++++ b/arch/powerpc/platforms/pseries/mobility.c
+@@ -750,7 +750,7 @@ static int pseries_migrate_partition(u64 handle)
+ 		goto out;
+ 
+ 	if (factor)
+-		watchdog_nmi_set_timeout_pct(factor);
++		watchdog_hardlockup_set_timeout_pct(factor);
+ 
+ 	ret = pseries_suspend(handle);
+ 	if (ret == 0) {
+@@ -766,7 +766,7 @@ static int pseries_migrate_partition(u64 handle)
+ 		pseries_cancel_migration(handle, ret);
+ 
+ 	if (factor)
+-		watchdog_nmi_set_timeout_pct(0);
++		watchdog_hardlockup_set_timeout_pct(0);
+ 
+ out:
+ 	vas_migration_handler(VAS_RESUME);
+diff --git a/arch/sparc/kernel/nmi.c b/arch/sparc/kernel/nmi.c
+index 5dcf31f7e81f1..9d9e29b75c43a 100644
+--- a/arch/sparc/kernel/nmi.c
++++ b/arch/sparc/kernel/nmi.c
+@@ -282,7 +282,7 @@ __setup("nmi_watchdog=", setup_nmi_watchdog);
+  * sparc specific NMI watchdog enable function.
+  * Enables watchdog if it is not enabled already.
+  */
+-void watchdog_nmi_enable(unsigned int cpu)
++void watchdog_hardlockup_enable(unsigned int cpu)
+ {
+ 	if (atomic_read(&nmi_active) == -1) {
+ 		pr_warn("NMI watchdog cannot be enabled or disabled\n");
+@@ -303,7 +303,7 @@ void watchdog_nmi_enable(unsigned int cpu)
+  * sparc specific NMI watchdog disable function.
+  * Disables watchdog if it is not disabled already.
+  */
+-void watchdog_nmi_disable(unsigned int cpu)
++void watchdog_hardlockup_disable(unsigned int cpu)
+ {
+ 	if (atomic_read(&nmi_active) == -1)
+ 		pr_warn_once("NMI watchdog cannot be enabled or disabled\n");
+diff --git a/include/linux/nmi.h b/include/linux/nmi.h
+index 97ba114bc21e7..600a61c65a9a9 100644
+--- a/include/linux/nmi.h
++++ b/include/linux/nmi.h
+@@ -17,8 +17,6 @@ void lockup_detector_soft_poweroff(void);
+ void lockup_detector_cleanup(void);
+ 
+ extern int watchdog_user_enabled;
+-extern int nmi_watchdog_user_enabled;
+-extern int soft_watchdog_user_enabled;
+ extern int watchdog_thresh;
+ extern unsigned long watchdog_enabled;
+ 
+@@ -68,17 +66,17 @@ static inline void reset_hung_task_detector(void) { }
+  * 'watchdog_enabled' variable. Each lockup detector has its dedicated bit -
+  * bit 0 for the hard lockup detector and bit 1 for the soft lockup detector.
+  *
+- * 'watchdog_user_enabled', 'nmi_watchdog_user_enabled' and
+- * 'soft_watchdog_user_enabled' are variables that are only used as an
++ * 'watchdog_user_enabled', 'watchdog_hardlockup_user_enabled' and
++ * 'watchdog_softlockup_user_enabled' are variables that are only used as an
+  * 'interface' between the parameters in /proc/sys/kernel and the internal
+  * state bits in 'watchdog_enabled'. The 'watchdog_thresh' variable is
+  * handled differently because its value is not boolean, and the lockup
+  * detectors are 'suspended' while 'watchdog_thresh' is equal zero.
+  */
+-#define NMI_WATCHDOG_ENABLED_BIT   0
+-#define SOFT_WATCHDOG_ENABLED_BIT  1
+-#define NMI_WATCHDOG_ENABLED      (1 << NMI_WATCHDOG_ENABLED_BIT)
+-#define SOFT_WATCHDOG_ENABLED     (1 << SOFT_WATCHDOG_ENABLED_BIT)
++#define WATCHDOG_HARDLOCKUP_ENABLED_BIT  0
++#define WATCHDOG_SOFTOCKUP_ENABLED_BIT   1
++#define WATCHDOG_HARDLOCKUP_ENABLED     (1 << WATCHDOG_HARDLOCKUP_ENABLED_BIT)
++#define WATCHDOG_SOFTOCKUP_ENABLED      (1 << WATCHDOG_SOFTOCKUP_ENABLED_BIT)
+ 
+ #if defined(CONFIG_HARDLOCKUP_DETECTOR)
+ extern void hardlockup_detector_disable(void);
+@@ -119,11 +117,11 @@ static inline int hardlockup_detector_perf_init(void) { return 0; }
+ # endif
+ #endif
+ 
+-void watchdog_nmi_stop(void);
+-void watchdog_nmi_start(void);
+-int watchdog_nmi_probe(void);
+-void watchdog_nmi_enable(unsigned int cpu);
+-void watchdog_nmi_disable(unsigned int cpu);
++void watchdog_hardlockup_stop(void);
++void watchdog_hardlockup_start(void);
++int watchdog_hardlockup_probe(void);
++void watchdog_hardlockup_enable(unsigned int cpu);
++void watchdog_hardlockup_disable(unsigned int cpu);
+ 
+ void lockup_detector_reconfigure(void);
+ 
+diff --git a/kernel/watchdog.c b/kernel/watchdog.c
+index 12ce37d76e7d2..06ea59c05ee94 100644
+--- a/kernel/watchdog.c
++++ b/kernel/watchdog.c
+@@ -30,17 +30,17 @@
+ static DEFINE_MUTEX(watchdog_mutex);
+ 
+ #if defined(CONFIG_HARDLOCKUP_DETECTOR) || defined(CONFIG_HAVE_NMI_WATCHDOG)
+-# define NMI_WATCHDOG_DEFAULT	1
++# define WATCHDOG_HARDLOCKUP_DEFAULT	1
+ #else
+-# define NMI_WATCHDOG_DEFAULT	0
++# define WATCHDOG_HARDLOCKUP_DEFAULT	0
+ #endif
+ 
+ unsigned long __read_mostly watchdog_enabled;
+ int __read_mostly watchdog_user_enabled = 1;
+-int __read_mostly nmi_watchdog_user_enabled = NMI_WATCHDOG_DEFAULT;
+-int __read_mostly soft_watchdog_user_enabled = 1;
++static int __read_mostly watchdog_hardlockup_user_enabled = WATCHDOG_HARDLOCKUP_DEFAULT;
++static int __read_mostly watchdog_softlockup_user_enabled = 1;
+ int __read_mostly watchdog_thresh = 10;
+-static int __read_mostly nmi_watchdog_available;
++static int __read_mostly watchdog_hardlockup_available;
+ 
+ struct cpumask watchdog_cpumask __read_mostly;
+ unsigned long *watchdog_cpumask_bits = cpumask_bits(&watchdog_cpumask);
+@@ -66,7 +66,7 @@ unsigned int __read_mostly hardlockup_panic =
+  */
+ void __init hardlockup_detector_disable(void)
+ {
+-	nmi_watchdog_user_enabled = 0;
++	watchdog_hardlockup_user_enabled = 0;
+ }
+ 
+ static int __init hardlockup_panic_setup(char *str)
+@@ -76,9 +76,9 @@ static int __init hardlockup_panic_setup(char *str)
+ 	else if (!strncmp(str, "nopanic", 7))
+ 		hardlockup_panic = 0;
+ 	else if (!strncmp(str, "0", 1))
+-		nmi_watchdog_user_enabled = 0;
++		watchdog_hardlockup_user_enabled = 0;
+ 	else if (!strncmp(str, "1", 1))
+-		nmi_watchdog_user_enabled = 1;
++		watchdog_hardlockup_user_enabled = 1;
+ 	return 1;
+ }
+ __setup("nmi_watchdog=", hardlockup_panic_setup);
+@@ -161,40 +161,40 @@ static inline void watchdog_hardlockup_kick(void) { }
+  * These functions can be overridden if an architecture implements its
+  * own hardlockup detector.
+  *
+- * watchdog_nmi_enable/disable can be implemented to start and stop when
++ * watchdog_hardlockup_enable/disable can be implemented to start and stop when
+  * softlockup watchdog start and stop. The arch must select the
+  * SOFTLOCKUP_DETECTOR Kconfig.
+  */
+-void __weak watchdog_nmi_enable(unsigned int cpu)
++void __weak watchdog_hardlockup_enable(unsigned int cpu)
+ {
+ 	hardlockup_detector_perf_enable();
+ }
+ 
+-void __weak watchdog_nmi_disable(unsigned int cpu)
++void __weak watchdog_hardlockup_disable(unsigned int cpu)
+ {
+ 	hardlockup_detector_perf_disable();
+ }
+ 
+-/* Return 0, if a NMI watchdog is available. Error code otherwise */
+-int __weak __init watchdog_nmi_probe(void)
++/* Return 0, if a hardlockup watchdog is available. Error code otherwise */
++int __weak __init watchdog_hardlockup_probe(void)
+ {
+ 	return hardlockup_detector_perf_init();
+ }
+ 
+ /**
+- * watchdog_nmi_stop - Stop the watchdog for reconfiguration
++ * watchdog_hardlockup_stop - Stop the watchdog for reconfiguration
+  *
+  * The reconfiguration steps are:
+- * watchdog_nmi_stop();
++ * watchdog_hardlockup_stop();
+  * update_variables();
+- * watchdog_nmi_start();
++ * watchdog_hardlockup_start();
+  */
+-void __weak watchdog_nmi_stop(void) { }
++void __weak watchdog_hardlockup_stop(void) { }
+ 
+ /**
+- * watchdog_nmi_start - Start the watchdog after reconfiguration
++ * watchdog_hardlockup_start - Start the watchdog after reconfiguration
+  *
+- * Counterpart to watchdog_nmi_stop().
++ * Counterpart to watchdog_hardlockup_stop().
+  *
+  * The following variables have been updated in update_variables() and
+  * contain the currently valid configuration:
+@@ -202,23 +202,23 @@ void __weak watchdog_nmi_stop(void) { }
+  * - watchdog_thresh
+  * - watchdog_cpumask
+  */
+-void __weak watchdog_nmi_start(void) { }
++void __weak watchdog_hardlockup_start(void) { }
+ 
+ /**
+  * lockup_detector_update_enable - Update the sysctl enable bit
+  *
+- * Caller needs to make sure that the NMI/perf watchdogs are off, so this
+- * can't race with watchdog_nmi_disable().
++ * Caller needs to make sure that the hard watchdogs are off, so this
++ * can't race with watchdog_hardlockup_disable().
+  */
+ static void lockup_detector_update_enable(void)
+ {
+ 	watchdog_enabled = 0;
+ 	if (!watchdog_user_enabled)
+ 		return;
+-	if (nmi_watchdog_available && nmi_watchdog_user_enabled)
+-		watchdog_enabled |= NMI_WATCHDOG_ENABLED;
+-	if (soft_watchdog_user_enabled)
+-		watchdog_enabled |= SOFT_WATCHDOG_ENABLED;
++	if (watchdog_hardlockup_available && watchdog_hardlockup_user_enabled)
++		watchdog_enabled |= WATCHDOG_HARDLOCKUP_ENABLED;
++	if (watchdog_softlockup_user_enabled)
++		watchdog_enabled |= WATCHDOG_SOFTOCKUP_ENABLED;
+ }
+ 
+ #ifdef CONFIG_SOFTLOCKUP_DETECTOR
+@@ -259,7 +259,7 @@ __setup("nowatchdog", nowatchdog_setup);
+ 
+ static int __init nosoftlockup_setup(char *str)
+ {
+-	soft_watchdog_user_enabled = 0;
++	watchdog_softlockup_user_enabled = 0;
+ 	return 1;
+ }
+ __setup("nosoftlockup", nosoftlockup_setup);
+@@ -373,7 +373,7 @@ static int is_softlockup(unsigned long touch_ts,
+ 			 unsigned long period_ts,
+ 			 unsigned long now)
+ {
+-	if ((watchdog_enabled & SOFT_WATCHDOG_ENABLED) && watchdog_thresh){
++	if ((watchdog_enabled & WATCHDOG_SOFTOCKUP_ENABLED) && watchdog_thresh) {
+ 		/* Warn about unreasonable delays. */
+ 		if (time_after(now, period_ts + get_softlockup_thresh()))
+ 			return now - touch_ts;
+@@ -508,7 +508,7 @@ static void watchdog_enable(unsigned int cpu)
+ 	complete(done);
+ 
+ 	/*
+-	 * Start the timer first to prevent the NMI watchdog triggering
++	 * Start the timer first to prevent the hardlockup watchdog triggering
+ 	 * before the timer has a chance to fire.
+ 	 */
+ 	hrtimer_init(hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_HARD);
+@@ -518,9 +518,9 @@ static void watchdog_enable(unsigned int cpu)
+ 
+ 	/* Initialize timestamp */
+ 	update_touch_ts();
+-	/* Enable the perf event */
+-	if (watchdog_enabled & NMI_WATCHDOG_ENABLED)
+-		watchdog_nmi_enable(cpu);
++	/* Enable the hardlockup detector */
++	if (watchdog_enabled & WATCHDOG_HARDLOCKUP_ENABLED)
++		watchdog_hardlockup_enable(cpu);
+ }
+ 
+ static void watchdog_disable(unsigned int cpu)
+@@ -530,11 +530,11 @@ static void watchdog_disable(unsigned int cpu)
+ 	WARN_ON_ONCE(cpu != smp_processor_id());
+ 
+ 	/*
+-	 * Disable the perf event first. That prevents that a large delay
+-	 * between disabling the timer and disabling the perf event causes
+-	 * the perf NMI to detect a false positive.
++	 * Disable the hardlockup detector first. That prevents that a large
++	 * delay between disabling the timer and disabling the hardlockup
++	 * detector causes a false positive.
+ 	 */
+-	watchdog_nmi_disable(cpu);
++	watchdog_hardlockup_disable(cpu);
+ 	hrtimer_cancel(hrtimer);
+ 	wait_for_completion(this_cpu_ptr(&softlockup_completion));
+ }
+@@ -590,7 +590,7 @@ int lockup_detector_offline_cpu(unsigned int cpu)
+ static void __lockup_detector_reconfigure(void)
+ {
+ 	cpus_read_lock();
+-	watchdog_nmi_stop();
++	watchdog_hardlockup_stop();
+ 
+ 	softlockup_stop_all();
+ 	set_sample_period();
+@@ -598,7 +598,7 @@ static void __lockup_detector_reconfigure(void)
+ 	if (watchdog_enabled && watchdog_thresh)
+ 		softlockup_start_all();
+ 
+-	watchdog_nmi_start();
++	watchdog_hardlockup_start();
+ 	cpus_read_unlock();
+ 	/*
+ 	 * Must be called outside the cpus locked section to prevent
+@@ -639,9 +639,9 @@ static __init void lockup_detector_setup(void)
+ static void __lockup_detector_reconfigure(void)
+ {
+ 	cpus_read_lock();
+-	watchdog_nmi_stop();
++	watchdog_hardlockup_stop();
+ 	lockup_detector_update_enable();
+-	watchdog_nmi_start();
++	watchdog_hardlockup_start();
+ 	cpus_read_unlock();
+ }
+ void lockup_detector_reconfigure(void)
+@@ -696,14 +696,14 @@ static void proc_watchdog_update(void)
+ /*
+  * common function for watchdog, nmi_watchdog and soft_watchdog parameter
+  *
+- * caller             | table->data points to      | 'which'
+- * -------------------|----------------------------|--------------------------
+- * proc_watchdog      | watchdog_user_enabled      | NMI_WATCHDOG_ENABLED |
+- *                    |                            | SOFT_WATCHDOG_ENABLED
+- * -------------------|----------------------------|--------------------------
+- * proc_nmi_watchdog  | nmi_watchdog_user_enabled  | NMI_WATCHDOG_ENABLED
+- * -------------------|----------------------------|--------------------------
+- * proc_soft_watchdog | soft_watchdog_user_enabled | SOFT_WATCHDOG_ENABLED
++ * caller             | table->data points to            | 'which'
++ * -------------------|----------------------------------|-------------------------------
++ * proc_watchdog      | watchdog_user_enabled            | WATCHDOG_HARDLOCKUP_ENABLED |
++ *                    |                                  | WATCHDOG_SOFTOCKUP_ENABLED
++ * -------------------|----------------------------------|-------------------------------
++ * proc_nmi_watchdog  | watchdog_hardlockup_user_enabled | WATCHDOG_HARDLOCKUP_ENABLED
++ * -------------------|----------------------------------|-------------------------------
++ * proc_soft_watchdog | watchdog_softlockup_user_enabled | WATCHDOG_SOFTOCKUP_ENABLED
+  */
+ static int proc_watchdog_common(int which, struct ctl_table *table, int write,
+ 				void *buffer, size_t *lenp, loff_t *ppos)
+@@ -735,7 +735,8 @@ static int proc_watchdog_common(int which, struct ctl_table *table, int write,
+ int proc_watchdog(struct ctl_table *table, int write,
+ 		  void *buffer, size_t *lenp, loff_t *ppos)
+ {
+-	return proc_watchdog_common(NMI_WATCHDOG_ENABLED|SOFT_WATCHDOG_ENABLED,
++	return proc_watchdog_common(WATCHDOG_HARDLOCKUP_ENABLED |
++				    WATCHDOG_SOFTOCKUP_ENABLED,
+ 				    table, write, buffer, lenp, ppos);
+ }
+ 
+@@ -745,9 +746,9 @@ int proc_watchdog(struct ctl_table *table, int write,
+ int proc_nmi_watchdog(struct ctl_table *table, int write,
+ 		      void *buffer, size_t *lenp, loff_t *ppos)
+ {
+-	if (!nmi_watchdog_available && write)
++	if (!watchdog_hardlockup_available && write)
+ 		return -ENOTSUPP;
+-	return proc_watchdog_common(NMI_WATCHDOG_ENABLED,
++	return proc_watchdog_common(WATCHDOG_HARDLOCKUP_ENABLED,
+ 				    table, write, buffer, lenp, ppos);
+ }
+ 
+@@ -757,7 +758,7 @@ int proc_nmi_watchdog(struct ctl_table *table, int write,
+ int proc_soft_watchdog(struct ctl_table *table, int write,
+ 			void *buffer, size_t *lenp, loff_t *ppos)
+ {
+-	return proc_watchdog_common(SOFT_WATCHDOG_ENABLED,
++	return proc_watchdog_common(WATCHDOG_SOFTOCKUP_ENABLED,
+ 				    table, write, buffer, lenp, ppos);
+ }
+ 
+@@ -825,7 +826,7 @@ static struct ctl_table watchdog_sysctls[] = {
+ 	},
+ 	{
+ 		.procname       = "nmi_watchdog",
+-		.data		= &nmi_watchdog_user_enabled,
++		.data		= &watchdog_hardlockup_user_enabled,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= NMI_WATCHDOG_SYSCTL_PERM,
+ 		.proc_handler   = proc_nmi_watchdog,
+@@ -842,7 +843,7 @@ static struct ctl_table watchdog_sysctls[] = {
+ #ifdef CONFIG_SOFTLOCKUP_DETECTOR
+ 	{
+ 		.procname       = "soft_watchdog",
+-		.data		= &soft_watchdog_user_enabled,
++		.data		= &watchdog_softlockup_user_enabled,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+ 		.proc_handler   = proc_soft_watchdog,
+@@ -911,8 +912,8 @@ void __init lockup_detector_init(void)
+ 	cpumask_copy(&watchdog_cpumask,
+ 		     housekeeping_cpumask(HK_TYPE_TIMER));
+ 
+-	if (!watchdog_nmi_probe())
+-		nmi_watchdog_available = true;
++	if (!watchdog_hardlockup_probe())
++		watchdog_hardlockup_available = true;
+ 	lockup_detector_setup();
+ 	watchdog_sysctl_init();
+ }
+diff --git a/kernel/watchdog_hld.c b/kernel/watchdog_hld.c
+index 2e0e1e11227c5..6e66e0938bbc1 100644
+--- a/kernel/watchdog_hld.c
++++ b/kernel/watchdog_hld.c
+@@ -228,7 +228,7 @@ void __init hardlockup_detector_perf_restart(void)
+ 
+ 	lockdep_assert_cpus_held();
+ 
+-	if (!(watchdog_enabled & NMI_WATCHDOG_ENABLED))
++	if (!(watchdog_enabled & WATCHDOG_HARDLOCKUP_ENABLED))
+ 		return;
+ 
+ 	for_each_online_cpu(cpu) {
 -- 
 2.39.2
 
