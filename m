@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EEA9443
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E037EC433CB;
-	Sun, 16 Jul 2023 20:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A449443
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6657C433C7;
+	Sun, 16 Jul 2023 20:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689539002;
-	bh=WN8vyeOMvPxJQAgJkCINF63gFRKQqO+gMX2fj8i3OUk=;
+	s=korg; t=1689539005;
+	bh=HSL/msk+JLwq7zXwr37qM52G9lNmY8bmms+Lczo0zhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRBaTs/AaV8mP5QVK4/tzQM27llAtjwpEouOODuUPv8OV6pIVQCHjJawQLjWn6+l7
-	 s0lzWXIkNxE/In8+xitMik+v9Cfhj8vrh0ystzhUKfM7pMWN3L2kXGMRIq54bF3Mjp
-	 fybIznJ7jndy4J/dkDoSHCRjztwyV1HGwGHUZu6c=
+	b=xgaNqgCLwpBopjsh4H7BySR7XFAnq00cQUjG4B4nXEysKWoqN7JkAXbzg14ab0Rw+
+	 Q+vxCI4h9Ew7qQx+Hb3M6C/9q3yZiJcvPCjNg0TQS3CIZeCulNxr2XyBBNfCBSc+NA
+	 Sj4IuWy6+FzsYi4t0dztPltkmYzoSW8J74TYVEAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <andrea.righi@canonical.com>,
-	Jinke Han <hanjinke.666@bytedance.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Tony Lindgren <tony@atomide.com>,
+	Dhruva Gole <d-gole@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.4 652/800] blk-throttle: Fix io statistics for cgroup v1
-Date: Sun, 16 Jul 2023 21:48:25 +0200
-Message-ID: <20230716195004.257582729@linuxfoundation.org>
+Subject: [PATCH 6.4 626/800] serial: 8250_omap: Use force_suspend and resume for system suspend
+Date: Sun, 16 Jul 2023 21:47:59 +0200
+Message-ID: <20230716195003.651898648@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194949.099592437@linuxfoundation.org>
 References: <20230716194949.099592437@linuxfoundation.org>
@@ -38,93 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinke Han <hanjinke.666@bytedance.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit ad7c3b41e86b59943a903d23c7b037d820e6270c ]
+[ Upstream commit 20a41a62618df85f3a2981008edec5cadd785e0a ]
 
-After commit f382fb0bcef4 ("block: remove legacy IO schedulers"),
-blkio.throttle.io_serviced and blkio.throttle.io_service_bytes become
-the only stable io stats interface of cgroup v1, and these statistics
-are done in the blk-throttle code. But the current code only counts the
-bios that are actually throttled. When the user does not add the throttle
-limit, the io stats for cgroup v1 has nothing. I fix it according to the
-statistical method of v2, and made it count all ios accurately.
+We should not rely on autosuspend timeout for system suspend. Instead,
+let's use force_suspend and force_resume functions. Otherwise the serial
+port controller device may not be idled on suspend.
 
-Fixes: a7b36ee6ba29 ("block: move blk-throtl fast path inline")
-Tested-by: Andrea Righi <andrea.righi@canonical.com>
-Signed-off-by: Jinke Han <hanjinke.666@bytedance.com>
-Acked-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230507170631.89607-1-hanjinke.666@bytedance.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+As we are doing a register write on suspend to configure the serial port,
+we still need to runtime PM resume the port on suspend.
+
+While at it, let's switch to pm_runtime_resume_and_get() and check for
+errors returned. And let's add the missing line break before return to the
+suspend function while at it.
+
+Fixes: 09d8b2bdbc5c ("serial: 8250: omap: Provide ability to enable/disable UART as wakeup source")
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Tested-by: Dhruva Gole <d-gole@ti.com>
+Message-ID: <20230614045922.4798-1-tony@atomide.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c   | 6 ++++--
- block/blk-throttle.c | 6 ------
- block/blk-throttle.h | 9 +++++++++
- 3 files changed, 13 insertions(+), 8 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index aaf9903ad7b2f..fc49be622e05b 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -2086,6 +2086,9 @@ void blk_cgroup_bio_start(struct bio *bio)
- 	struct blkg_iostat_set *bis;
- 	unsigned long flags;
+diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
+index 0a90ddc0bdf66..b758e9b613c74 100644
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -1584,25 +1584,35 @@ static int omap8250_suspend(struct device *dev)
+ {
+ 	struct omap8250_priv *priv = dev_get_drvdata(dev);
+ 	struct uart_8250_port *up = serial8250_get_port(priv->line);
++	int err;
  
-+	if (!cgroup_subsys_on_dfl(io_cgrp_subsys))
-+		return;
+ 	serial8250_suspend_port(priv->line);
+ 
+-	pm_runtime_get_sync(dev);
++	err = pm_runtime_resume_and_get(dev);
++	if (err)
++		return err;
+ 	if (!device_may_wakeup(dev))
+ 		priv->wer = 0;
+ 	serial_out(up, UART_OMAP_WER, priv->wer);
+-	pm_runtime_mark_last_busy(dev);
+-	pm_runtime_put_autosuspend(dev);
+-
++	err = pm_runtime_force_suspend(dev);
+ 	flush_work(&priv->qos_work);
+-	return 0;
 +
- 	/* Root-level stats are sourced from system-wide IO stats */
- 	if (!cgroup_parent(blkcg->css.cgroup))
- 		return;
-@@ -2116,8 +2119,7 @@ void blk_cgroup_bio_start(struct bio *bio)
- 	}
- 
- 	u64_stats_update_end_irqrestore(&bis->sync, flags);
--	if (cgroup_subsys_on_dfl(io_cgrp_subsys))
--		cgroup_rstat_updated(blkcg->css.cgroup, cpu);
-+	cgroup_rstat_updated(blkcg->css.cgroup, cpu);
- 	put_cpu();
++	return err;
  }
  
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index 9d010d867fbf4..7397ff199d669 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -2178,12 +2178,6 @@ bool __blk_throtl_bio(struct bio *bio)
+ static int omap8250_resume(struct device *dev)
+ {
+ 	struct omap8250_priv *priv = dev_get_drvdata(dev);
++	int err;
  
- 	rcu_read_lock();
- 
--	if (!cgroup_subsys_on_dfl(io_cgrp_subsys)) {
--		blkg_rwstat_add(&tg->stat_bytes, bio->bi_opf,
--				bio->bi_iter.bi_size);
--		blkg_rwstat_add(&tg->stat_ios, bio->bi_opf, 1);
--	}
--
- 	spin_lock_irq(&q->queue_lock);
- 
- 	throtl_update_latency_buckets(td);
-diff --git a/block/blk-throttle.h b/block/blk-throttle.h
-index ef4b7a4de987d..d1ccbfe9f7978 100644
---- a/block/blk-throttle.h
-+++ b/block/blk-throttle.h
-@@ -185,6 +185,15 @@ static inline bool blk_should_throtl(struct bio *bio)
- 	struct throtl_grp *tg = blkg_to_tg(bio->bi_blkg);
- 	int rw = bio_data_dir(bio);
- 
-+	if (!cgroup_subsys_on_dfl(io_cgrp_subsys)) {
-+		if (!bio_flagged(bio, BIO_CGROUP_ACCT)) {
-+			bio_set_flag(bio, BIO_CGROUP_ACCT);
-+			blkg_rwstat_add(&tg->stat_bytes, bio->bi_opf,
-+					bio->bi_iter.bi_size);
-+		}
-+		blkg_rwstat_add(&tg->stat_ios, bio->bi_opf, 1);
-+	}
++	err = pm_runtime_force_resume(dev);
++	if (err)
++		return err;
+ 	serial8250_resume_port(priv->line);
++	/* Paired with pm_runtime_resume_and_get() in omap8250_suspend() */
++	pm_runtime_mark_last_busy(dev);
++	pm_runtime_put_autosuspend(dev);
 +
- 	/* iops limit is always counted */
- 	if (tg->has_rules_iops[rw])
- 		return true;
+ 	return 0;
+ }
+ #else
 -- 
 2.39.2
 
