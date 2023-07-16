@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35A38F5D
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:41:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657ABC433C7;
-	Sun, 16 Jul 2023 20:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11C18F5D
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:41:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416B7C433C8;
+	Sun, 16 Jul 2023 20:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540098;
-	bh=xlt2rCYQK8j9KdN5cAp7h4zDjdxEVsFvgl5MYrFHLEE=;
+	s=korg; t=1689540101;
+	bh=cvSSfh4wwDHLiwUSoKZB0SHWM8ynB9l7FxRkPJC5pLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ap2M3EkvRaXfilNXZt3FMC8C4bLkMEufEfJZa3lHusA2yeQvd2NFVPv5uRqH/92Ne
-	 6mXggMdkwYqNUwSCzde/z79yAanyk23wFe+YsxwD5AlCBDYRTWv/HzRGHPJMaWeTsR
-	 m45WN6c47ZrekiwJ0WGQQLVA8kF2qwwEkVxZzfz0=
+	b=FG9X1aWr5ihDT0uQPk03dDLraKut9A9aMRMMHPF7URflHUhhYzP31/xqqi/NFfA/t
+	 aQ4/Hvrv58H6yEz4fJPGVVADxoDr65JYTK7Wcg4RND5QvQrKcnTvD7W35xn11cOTBn
+	 eINh+ZPJ8ACiCa2L9zABwz5LnIWmVIq+X6Qb5lFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	David Gow <davidgow@google.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 242/591] HID: uclogic: Modular KUnit tests should not depend on KUNIT=y
-Date: Sun, 16 Jul 2023 21:46:21 +0200
-Message-ID: <20230716194930.129922991@linuxfoundation.org>
+Subject: [PATCH 6.1 243/591] RDMA/rxe: Add ibdev_dbg macros for rxe
+Date: Sun, 16 Jul 2023 21:46:22 +0200
+Message-ID: <20230716194930.156731531@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -37,36 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 49904a0ebf23b15aad288a10f5354e7cd8193121 ]
+[ Upstream commit 4554bac48a8c464ff00136a64efe8847e4da4ea8 ]
 
-While KUnit tests that cannot be built as a loadable module must depend
-on "KUNIT=y", this is not true for modular tests, where it adds an
-unnecessary limitation.
+Add macros borrowed from siw to call dynamic debug macro ibdev_dbg.
 
-Fix this by relaxing the dependency to "KUNIT".
-
-Fixes: 08809e482a1c44d9 ("HID: uclogic: KUnit best practices and naming conventions")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: David Gow <davidgow@google.com>
-Reviewed-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Link: https://lore.kernel.org/r/20221103171013.20659-2-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 425e1c9018fd ("RDMA/rxe: Fix access checks in rxe_check_bind_mw")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe.h | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/hid/Kconfig
-+++ b/drivers/hid/Kconfig
-@@ -1262,7 +1262,7 @@ config HID_MCP2221
+diff --git a/drivers/infiniband/sw/rxe/rxe.h b/drivers/infiniband/sw/rxe/rxe.h
+index 30fbdf3bc76a3..ab334900fcc3d 100644
+--- a/drivers/infiniband/sw/rxe/rxe.h
++++ b/drivers/infiniband/sw/rxe/rxe.h
+@@ -38,6 +38,25 @@
  
- config HID_KUNIT_TEST
- 	tristate "KUnit tests for HID" if !KUNIT_ALL_TESTS
--	depends on KUNIT=y
-+	depends on KUNIT
- 	depends on HID_UCLOGIC
- 	default KUNIT_ALL_TESTS
- 	help
+ #define RXE_ROCE_V2_SPORT		(0xc000)
+ 
++#define rxe_dbg(rxe, fmt, ...) ibdev_dbg(&(rxe)->ib_dev,		\
++		"%s: " fmt, __func__, ##__VA_ARGS__)
++#define rxe_dbg_uc(uc, fmt, ...) ibdev_dbg((uc)->ibuc.device,		\
++		"uc#%d %s: " fmt, (uc)->elem.index, __func__, ##__VA_ARGS__)
++#define rxe_dbg_pd(pd, fmt, ...) ibdev_dbg((pd)->ibpd.device,		\
++		"pd#%d %s: " fmt, (pd)->elem.index, __func__, ##__VA_ARGS__)
++#define rxe_dbg_ah(ah, fmt, ...) ibdev_dbg((ah)->ibah.device,		\
++		"ah#%d %s: " fmt, (ah)->elem.index, __func__, ##__VA_ARGS__)
++#define rxe_dbg_srq(srq, fmt, ...) ibdev_dbg((srq)->ibsrq.device,	\
++		"srq#%d %s: " fmt, (srq)->elem.index, __func__, ##__VA_ARGS__)
++#define rxe_dbg_qp(qp, fmt, ...) ibdev_dbg((qp)->ibqp.device,		\
++		"qp#%d %s: " fmt, (qp)->elem.index, __func__, ##__VA_ARGS__)
++#define rxe_dbg_cq(cq, fmt, ...) ibdev_dbg((cq)->ibcq.device,		\
++		"cq#%d %s: " fmt, (cq)->elem.index, __func__, ##__VA_ARGS__)
++#define rxe_dbg_mr(mr, fmt, ...) ibdev_dbg((mr)->ibmr.device,		\
++		"mr#%d %s:  " fmt, (mr)->elem.index, __func__, ##__VA_ARGS__)
++#define rxe_dbg_mw(mw, fmt, ...) ibdev_dbg((mw)->ibmw.device,		\
++		"mw#%d %s:  " fmt, (mw)->elem.index, __func__, ##__VA_ARGS__)
++
+ void rxe_set_mtu(struct rxe_dev *rxe, unsigned int dev_mtu);
+ 
+ int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name);
+-- 
+2.39.2
+
 
 
