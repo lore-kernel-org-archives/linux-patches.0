@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D4E8F57
-	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267EEC433C7;
-	Sun, 16 Jul 2023 20:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C8F8F57
+	for <patches@lists.linux.dev>; Sun, 16 Jul 2023 20:42:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC08C433C8;
+	Sun, 16 Jul 2023 20:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1689540158;
-	bh=ov6jnpQwA0T6VfwXWdOWIydfLauGYeMoVYSJJ/129Sg=;
+	s=korg; t=1689540161;
+	bh=SGV2eZrGv0ELcO+NNNWFcR2B/2lcLQDcOf786xj8ExM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOFMHrek9/1fQJxRQCUUVFN/hizLRlO1xLsIgiWe5mljYfEiDjEgAAw3I0vAzz2IZ
-	 Xr5h553uTWAzMS0yzYMyPXF5lZZcCAIqGk+ve8e/Gbo4VH9tIXC6fiAuJDpagmkY6W
-	 kcfn0WSA2VPMdg83pCjtXFBKH3Jf50bwJvXf6GXc=
+	b=PF1SfOy9Kt55IJkMBSX/rvosOeHfXaa9Ui2xodWzf40LT0SkoWqnFEa2asKLnvVo7
+	 feXtjaH+iHIRDgmmInpfi3pM9cz8rXAsYTsHrnY9RvO9gG5V3qoQ2jVH7wESXbXSK8
+	 0l3OCGGN2arHl0oCeol9UEQi4OxqXaSPfEedyLNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 264/591] drm/msm/dsi: Remove incorrect references to slice_count
-Date: Sun, 16 Jul 2023 21:46:43 +0200
-Message-ID: <20230716194930.728539850@linuxfoundation.org>
+Subject: [PATCH 6.1 265/591] drm/msm/dp: Free resources after unregistering them
+Date: Sun, 16 Jul 2023 21:46:44 +0200
+Message-ID: <20230716194930.755027013@linuxfoundation.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20230716194923.861634455@linuxfoundation.org>
 References: <20230716194923.861634455@linuxfoundation.org>
@@ -36,81 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 155fa3a91d64221eb0885fd221cc8085dbef908f ]
+[ Upstream commit fa0048a4b1fa7a50c8b0e514f5b428abdf69a6f8 ]
 
-Currently, slice_count is being used to calculate word count and
-pkt_per_line. Instead, these values should be calculated using slice per
-packet, which is not the same as slice_count.
+The DP component's unbind operation walks through the submodules to
+unregister and clean things up. But if the unbind happens because the DP
+controller itself is being removed, all the memory for those submodules
+has just been freed.
 
-Slice count represents the number of slices per interface, and its value
-will not always match that of slice per packet. For example, it is possible
-to have cases where there are multiple slices per interface but the panel
-specifies only one slice per packet.
+Change the order of these operations to avoid the many use-after-free
+that otherwise happens in this code path.
 
-Thus, use the default value of one slice per packet and remove slice_count
-from the aforementioned calculations.
-
-Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-Fixes: bc6b6ff8135c ("drm/msm/dsi: Use DSC slice(s) packet size to compute word count")
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/541965/
-Link: https://lore.kernel.org/r/20230405-add-dsc-support-v6-5-95eab864d1b6@quicinc.com
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/542166/
+Link: https://lore.kernel.org/r/20230612220259.1884381-1-quic_bjorande@quicinc.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index ef988e4c21045..b433ccfe4d7da 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -853,18 +853,17 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	 */
- 	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 57b82e5d0ab12..d16c12351adb6 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1342,9 +1342,9 @@ static int dp_display_remove(struct platform_device *pdev)
+ {
+ 	struct dp_display_private *dp = dev_get_dp_display_private(&pdev->dev);
  
--	/*
--	 * If slice_count is greater than slice_per_intf
--	 * then default to 1. This can happen during partial
--	 * update.
--	 */
--	if (dsc->slice_count > slice_per_intf)
--		dsc->slice_count = 1;
--
- 	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
++	component_del(&pdev->dev, &dp_display_comp_ops);
+ 	dp_display_deinit_sub_modules(dp);
  
- 	eol_byte_num = total_bytes_per_intf % 3;
--	pkt_per_line = slice_per_intf / dsc->slice_count;
-+
-+	/*
-+	 * Typically, pkt_per_line = slice_per_intf * slice_per_pkt.
-+	 *
-+	 * Since the current driver only supports slice_per_pkt = 1,
-+	 * pkt_per_line will be equal to slice per intf for now.
-+	 */
-+	pkt_per_line = slice_per_intf;
+-	component_del(&pdev->dev, &dp_display_comp_ops);
+ 	platform_set_drvdata(pdev, NULL);
  
- 	if (is_cmd_mode) /* packet data type */
- 		reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
-@@ -988,7 +987,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		if (!msm_host->dsc)
- 			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
- 		else
--			wc = msm_host->dsc->slice_chunk_size * msm_host->dsc->slice_count + 1;
-+			/*
-+			 * When DSC is enabled, WC = slice_chunk_size * slice_per_pkt + 1.
-+			 * Currently, the driver only supports default value of slice_per_pkt = 1
-+			 *
-+			 * TODO: Expand mipi_dsi_device struct to hold slice_per_pkt info
-+			 *       and adjust DSC math to account for slice_per_pkt.
-+			 */
-+			wc = msm_host->dsc->slice_chunk_size + 1;
- 
- 		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
- 			DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+ 	return 0;
 -- 
 2.39.2
 
